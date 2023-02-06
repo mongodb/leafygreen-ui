@@ -11,12 +11,14 @@ import {
 } from '@leafygreen-ui/leafygreen-provider';
 import { fontFamilies, typeScales } from '@leafygreen-ui/tokens';
 
-import { injectGlobalStyles } from './globalStyles';
-import { LeafyGreenHighlightResult } from './highlight';
-import { languageParsers, SupportedLanguages } from './languages';
-import renderingPlugin, { TableContent } from './renderingPlugin';
-import { SyntaxContext } from './SyntaxContext';
-import { Language, SyntaxProps } from './types';
+import { injectGlobalStyles } from '../globalStyles';
+import { LeafyGreenHighlightResult } from '../highlight';
+import { languageParsers, SupportedLanguages } from '../languages';
+import renderingPlugin, {
+  TableContent,
+} from '../renderingPlugin/renderingPlugin';
+import { SyntaxContext } from '../Syntax/SyntaxContext';
+import { Language, SyntaxProps } from '../types';
 
 type FilteredSupportedLanguagesEnum = Omit<
   typeof SupportedLanguages,

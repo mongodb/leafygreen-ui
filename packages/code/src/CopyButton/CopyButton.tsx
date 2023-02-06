@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ClipboardJS from 'clipboard';
 
 import { VisuallyHidden } from '@leafygreen-ui/a11y';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -10,54 +10,9 @@ import {
   useDarkMode,
   usePopoverPortalContainer,
 } from '@leafygreen-ui/leafygreen-provider';
-import { Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
 
-const copiedThemeStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.white};
-    background-color: ${palette.green.dark1};
-
-    &:focus,
-    &:hover {
-      color: ${palette.white};
-
-      &:before {
-        background-color: ${palette.green.dark1};
-      }
-    }
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.dark3};
-    background-color: ${palette.green.base};
-
-    &:focus,
-    &:hover {
-      color: ${palette.gray.dark3};
-
-      &:before {
-        background-color: ${palette.green.base};
-      }
-    }
-  `,
-};
-
-const copyButtonThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    align-self: center;
-    color: ${palette.gray.base};
-  `,
-  [Theme.Dark]: css`
-    align-self: center;
-    color: ${palette.gray.light1};
-  `,
-};
-
-interface CopyProps {
-  onCopy?: Function;
-  contents: string;
-  withLanguageSwitcher?: boolean;
-}
+import { copiedThemeStyle, copyButtonThemeStyles } from './CopyButton.styles';
+import { CopyProps } from './CopyButton.types';
 
 function CopyButton({ onCopy, contents }: CopyProps) {
   const [copied, setCopied] = useState(false);
