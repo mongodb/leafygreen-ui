@@ -1,23 +1,21 @@
 import React, { useCallback, useContext, useState } from 'react';
 import { Transition } from 'react-transition-group';
-import { ExitHandler } from 'react-transition-group/Transition';
 import PropTypes from 'prop-types';
 
-import Box, { BoxProps } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
 import ChevronUpIcon from '@leafygreen-ui/icon/dist/ChevronUp';
 import IconButton from '@leafygreen-ui/icon-button';
+import { getNodeTextContent } from '@leafygreen-ui/lib';
 import {
-  createUniqueClassName,
-  getNodeTextContent,
-  HTMLElementProps,
-  Theme,
-} from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
-import { transitionDuration } from '@leafygreen-ui/tokens';
+  InferredPolymorphic,
+  InferredPolymorphicProps,
+  PolymorphicAs,
+  PolymorphicPropsWithRef,
+  useInferredPolymorphic,
+} from '@leafygreen-ui/polymorphic';
 
-import MenuContext from './MenuContext';
+import { MenuContext } from '../MenuContext';
 import {
   activeDescriptionTextStyle,
   activeIconStyle,
@@ -41,315 +39,34 @@ import {
   paddingLeftWithoutGlyph,
   textContainer,
   titleTextStyle,
-} from './styles';
-import { Size } from './types';
+} from '../styles';
+import { Size } from '../types';
 
-const subMenuContainerClassName = createUniqueClassName('sub-menu-container');
-const iconButtonClassName = createUniqueClassName('icon-button');
-const chevronClassName = createUniqueClassName('icon-button-chevron');
-
-const iconButtonContainerSize = 28;
-
-const subMenuStyle = css`
-  padding-right: ${iconButtonContainerSize + 16}px;
-  align-items: center;
-  justify-content: flex-start;
-`;
-
-const subMenuThemeStyle: Record<Theme, string> = {
-  [Theme.Light]: cx(
-    subMenuStyle,
-    css`
-      background-color: ${palette.black};
-    `,
-  ),
-  [Theme.Dark]: cx(
-    subMenuStyle,
-    css`
-      background-color: ${palette.gray.light2};
-    `,
-  ),
-};
-
-const subMenuOpenStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    background-color: transparent;
-
-    &:hover {
-      background-color: ${palette.gray.dark3};
-    }
-  `,
-  [Theme.Dark]: css`
-    background-color: transparent;
-
-    &:hover {
-      background-color: ${palette.gray.light1};
-    }
-  `,
-};
-
-const closedIconStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    transition: color 200ms ease-in-out;
-    color: ${palette.gray.light1};
-  `,
-  [Theme.Dark]: css`
-    transition: color 200ms ease-in-out;
-    color: ${palette.gray.dark1};
-  `,
-};
-
-const openIconStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.gray.light1};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.dark1};
-  `,
-};
-
-const iconButtonStyle = css`
-  position: absolute;
-  z-index: 1;
-  right: 8px;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  transition: background-color ${transitionDuration.default}ms ease-in-out;
-`;
-
-const iconButtonThemeStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    background-color: ${palette.black};
-
-    &:hover {
-      background-color: ${palette.gray.dark2};
-    }
-  `,
-  [Theme.Dark]: css`
-    background-color: ${palette.gray.light2};
-
-    &:hover {
-      &:before {
-        background-color: ${palette.gray.light3};
-      }
-    }
-  `,
-};
-
-const iconButtonFocusedThemeStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    &:focus-visible {
-      .${chevronClassName} {
-        color: ${palette.white};
-      }
-    }
-  `,
-  [Theme.Dark]: css`
-    &:focus-visible {
-      .${chevronClassName} {
-        color: ${palette.black};
-      }
-    }
-  `,
-};
-
-const openIconButtonStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    background-color: ${palette.black};
-  `,
-  [Theme.Dark]: css`
-    background-color: ${palette.gray.light2};
-  `,
-};
-
-const ulStyle = css`
-  list-style: none;
-  padding: 0;
-  height: 0;
-  overflow: hidden;
-  transition: height ${transitionDuration.default}ms ease-in-out;
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    height: 1px;
-    right: 0;
-    z-index: 1;
-  }
-
-  &::before {
-    top: 0;
-  }
-
-  &::after {
-    bottom: 0;
-  }
-`;
-
-const ulThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    &::before,
-    &::after {
-      background-color: ${palette.gray.dark2};
-    }
-  `,
-  [Theme.Dark]: css`
-    &::before,
-    &::after {
-      background-color: ${palette.gray.light1};
-    }
-  `,
-};
-
-const menuItemText = css`
-  width: 100%;
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 16px;
-  padding-left: 16px;
-  text-shadow: none;
-`;
-
-const menuItemBorder = css`
-  position: absolute;
-  width: 100%;
-  height: 1px;
-  background: ${palette.gray.dark2};
-  top: 0;
-`;
-
-const menuItemBorderBottom = css`
-  ${menuItemBorder};
-  top: unset;
-  bottom: 0;
-`;
-
-const subItemStyle = css`
-  // Reassign the variable for specificity
-  --lg-menu-item-text-color: ${palette.gray.light1};
-  position: relative;
-  min-height: 32px;
-
-  > div {
-    padding-left: 16px;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    height: 1px;
-    right: 0;
-    z-index: 1;
-    bottom: 0;
-  }
-`;
-
-const subItemThemeStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.gray.light1};
-
-    &::after {
-      background-color: ${palette.gray.dark2};
-    }
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.dark2};
-
-    &:hover {
-      color: ${palette.black};
-    }
-
-    &::after {
-      background-color: ${palette.gray.light1};
-    }
-  `,
-};
+import {
+  chevronClassName,
+  closedIconStyle,
+  iconButtonClassName,
+  iconButtonFocusedThemeStyle,
+  iconButtonStyle,
+  iconButtonThemeStyle,
+  menuItemBorder,
+  menuItemBorderBottom,
+  menuItemText,
+  openIconButtonStyle,
+  openIconStyle,
+  subItemStyle,
+  subItemThemeStyle,
+  subMenuContainerClassName,
+  subMenuOpenStyle,
+  subMenuThemeStyle,
+  ulStyle,
+  ulThemeStyles,
+} from './SubMenu.styles';
+import { SubMenuProps } from './SubMenu.types';
 
 const subMenuItemHeight = 32;
 
-interface BaseSubMenuProps extends HTMLElementProps<'button'> {
-  /**
-   * Determines if `<SubMenu />` item appears open
-   */
-  open?: boolean;
-
-  /**
-   * Function to set the value of `open` in `<SubMenu />`
-   */
-  setOpen?: (value: boolean) => void;
-
-  /**
-   * className applied to `SubMenu` root element
-   */
-  className?: string;
-
-  /**
-   * Content to appear below main text of SubMenu
-   */
-  description?: string | React.ReactElement;
-
-  /**
-   * Determines if `<SubMenu />` item appears disabled
-   */
-  disabled?: boolean;
-
-  /**
-   * Determines if `<SubMenu />` item appears active
-   */
-  active?: boolean;
-
-  /**
-   * Slot to pass in an Icon rendered to the left of `SubMenu` text.
-   *
-   * @type `<Icon />` component
-   *
-   */
-  glyph?: React.ReactElement;
-
-  /**
-   * Main text rendered in `SubMenu`.
-   */
-  title?: string;
-
-  /**
-   * Content rendered inside of `SubMenu`.
-   * @type `<MenuItem />` | `<SubMenu />` | `<MenuGroup />` | `<MenuSeparator />`
-   */
-  children?: React.ReactNode;
-
-  onClick?: React.MouseEventHandler;
-
-  onExited?: ExitHandler<HTMLElement>;
-
-  href?: string;
-
-  /**
-   * Size of the MenuItem component, can be `default` or `large`. This size only affects the parent MenuItem, nested child MenuItems do not change.
-   */
-  size?: Size;
-
-  /**
-   * The component or HTML Element that the button is rendered as.
-   *
-   * To use with NextJS Links, pass in a component that wraps the Link:
-   * ```js
-   * const Linker = ({ href, children, ...props }) => (
-   *  <NextLink href={href}>
-   *    <a {...props}>{children}</a>
-   *  </NextLink>
-   * );
-   * <Button as={Linker} />
-   * ```
-   * @type HTMLElement | React.Component
-   */
-  as?: React.ElementType<any>;
-}
-
-export type SubMenuProps = BoxProps<'button', BaseSubMenuProps>;
-
-const SubMenu = React.forwardRef(
+export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
   (
     {
       title,
@@ -364,10 +81,12 @@ const SubMenu = React.forwardRef(
       active = false,
       disabled = false,
       size = Size.Default,
+      as = 'button' as PolymorphicAs,
       ...rest
-    }: SubMenuProps,
+    },
     ref: React.Ref<any>,
-  ) => {
+  ): React.ReactElement => {
+    const { Component } = useInferredPolymorphic(as, rest);
     const { theme, darkMode } = useContext(MenuContext);
     const hoverStyles = getHoverStyles(subMenuContainerClassName, theme);
     const focusStyles = getFocusedStyles(subMenuContainerClassName, theme);
@@ -411,7 +130,7 @@ const SubMenu = React.forwardRef(
     // TODO: This code is duplicated in `MenuItem`
     // We should consider combining these.
     // See: https://github.com/mongodb/leafygreen-ui/pull/1176
-    const isAnchor = typeof rest.href === 'string';
+    const isAnchor = Component === 'a';
 
     const updatedGlyph =
       glyph &&
@@ -428,7 +147,7 @@ const SubMenu = React.forwardRef(
         ),
       });
 
-    const boxProps = {
+    const baseProps = {
       ref,
       role: 'menuitem',
       'aria-haspopup': true,
@@ -472,7 +191,7 @@ const SubMenu = React.forwardRef(
                 {
                   [activeDescriptionTextStyle[theme]]: active,
                   [disabledTextStyle[theme]]: disabled,
-                  [linkDescriptionTextStyle]: typeof rest.href === 'string',
+                  [linkDescriptionTextStyle]: isAnchor,
                 },
                 focusStyles.descriptionStyle,
               )}
@@ -484,13 +203,10 @@ const SubMenu = React.forwardRef(
       </>
     );
 
-    const as = isAnchor ? 'a' : 'button';
-
     return (
       <li role="none">
-        <Box
-          as={as}
-          {...boxProps}
+        <Component
+          {...baseProps}
           {...anchorProps}
           {...rest}
           className={cx(
@@ -532,7 +248,7 @@ const SubMenu = React.forwardRef(
               size={14}
             />
           </IconButton>
-        </Box>
+        </Component>
 
         <Transition
           in={open}
@@ -650,7 +366,9 @@ SubMenu.propTypes = {
 
 export default SubMenu;
 
-export type SubMenuElement = React.ReactComponentElement<
-  typeof SubMenu,
-  BoxProps<'button', SubMenuProps & { ref?: React.Ref<any> }>
+export type SubMenuElementProps = PolymorphicPropsWithRef<
+  PolymorphicAs,
+  InferredPolymorphicProps<SubMenuProps>
 >;
+
+export type SubMenuElement = React.Component<SubMenuElementProps>;
