@@ -4,7 +4,7 @@ import ClipboardJS from 'clipboard';
 import { axe } from 'jest-axe';
 
 import Icon from '@leafygreen-ui/icon';
-import IconButton from '@leafygreen-ui/icon-button';
+import IconButton from '@leafygreen-ui/icon-button/dist/IconButton/index';
 import { typeIs } from '@leafygreen-ui/lib';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 

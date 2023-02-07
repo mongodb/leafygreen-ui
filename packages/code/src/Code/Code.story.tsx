@@ -3,7 +3,7 @@ import React from 'react';
 import { Story } from '@storybook/react';
 
 import Icon from '@leafygreen-ui/icon';
-import IconButton from '@leafygreen-ui/icon-button';
+import IconButton from '@leafygreen-ui/icon-button/dist/IconButton/index';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import LanguageSwitcherExample from '../LanguageSwitcher/LanguageSwitcherExample';

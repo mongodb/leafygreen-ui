@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Button from '@leafygreen-ui/button';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
-import IconButton from '@leafygreen-ui/icon-button';
+import IconButton from '@leafygreen-ui/icon-button/dist/IconButton/index';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 

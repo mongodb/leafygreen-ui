@@ -5,7 +5,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
 import ChevronRightIcon from '@leafygreen-ui/icon/dist/ChevronRight';
-import IconButton from '@leafygreen-ui/icon-button';
+import IconButton from '@leafygreen-ui/icon-button/dist/IconButton/index';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { HTMLElementProps, isComponentType, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';

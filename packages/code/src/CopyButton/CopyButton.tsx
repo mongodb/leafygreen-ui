@@ -5,7 +5,7 @@ import { VisuallyHidden } from '@leafygreen-ui/a11y';
 import { cx } from '@leafygreen-ui/emotion';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
-import IconButton from '@leafygreen-ui/icon-button';
+import IconButton from '@leafygreen-ui/icon-button/dist/IconButton/index';
 import {
   useDarkMode,
   usePopoverPortalContainer,

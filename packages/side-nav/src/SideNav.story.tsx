@@ -4,7 +4,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
-import IconButton from '@leafygreen-ui/icon-button';
+import IconButton from '@leafygreen-ui/icon-button/dist/IconButton/index';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { storybookArgTypes, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';

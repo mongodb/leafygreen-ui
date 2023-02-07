@@ -8,7 +8,7 @@ import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import ExportIcon from '@leafygreen-ui/icon/dist/Export';
 import SaveIcon from '@leafygreen-ui/icon/dist/Save';
-import IconButton from '@leafygreen-ui/icon-button';
+import IconButton from '@leafygreen-ui/icon-button/dist/IconButton/index';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { Body, Subtitle } from '@leafygreen-ui/typography';
 

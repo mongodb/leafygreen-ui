@@ -6,7 +6,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import ChevronLeft from '@leafygreen-ui/icon/dist/ChevronLeft';
 import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
-import IconButton from '@leafygreen-ui/icon-button';
+import IconButton from '@leafygreen-ui/icon-button/dist/IconButton/index';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Option, Select } from '@leafygreen-ui/select';

@@ -3,7 +3,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { focusRing, transitionDuration } from '@leafygreen-ui/tokens';
 
-import { Size } from './types';
+import { Size } from './IconButton.types';
 
 export const removeButtonStyle = css`
   border: none;

@@ -7,7 +7,7 @@ import Box, { BoxProps } from '@leafygreen-ui/box';
 import { css, cx } from '@leafygreen-ui/emotion';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
 import ChevronUpIcon from '@leafygreen-ui/icon/dist/ChevronUp';
-import IconButton from '@leafygreen-ui/icon-button';
+import IconButton from '@leafygreen-ui/icon-button/dist/IconButton/index';
 import {
   createUniqueClassName,
   getNodeTextContent,

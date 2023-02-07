@@ -21,7 +21,7 @@ import {
   usePrevious,
 } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
-import IconButton from '@leafygreen-ui/icon-button';
+import IconButton from '@leafygreen-ui/icon-button/dist/IconButton/index';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';

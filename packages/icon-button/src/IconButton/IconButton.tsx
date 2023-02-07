@@ -17,8 +17,8 @@ import {
   iconButtonSizes,
   iconStyle,
   removeButtonStyle,
-} from './styles';
-import { AccessibleIconButtonProps, IconProps, Size } from './types';
+} from './IconButton.styles';
+import { AccessibleIconButtonProps, IconProps, Size } from './IconButton.types';
 
 export const IconButton = React.forwardRef(
   (

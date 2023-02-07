@@ -4,7 +4,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import SortAscendingIcon from '@leafygreen-ui/icon/dist/SortAscending';
 import SortDescendingIcon from '@leafygreen-ui/icon/dist/SortDescending';
 import UnsortedIcon from '@leafygreen-ui/icon/dist/Unsorted';
-import IconButton from '@leafygreen-ui/icon-button';
+import IconButton from '@leafygreen-ui/icon-button/dist/IconButton/index';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { enforceExhaustive, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';

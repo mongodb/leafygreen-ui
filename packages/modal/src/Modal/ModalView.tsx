@@ -5,7 +5,7 @@ import FocusTrap from 'focus-trap-react';
 import { cx } from '@leafygreen-ui/emotion';
 import { useEscapeKey, useIdAllocator } from '@leafygreen-ui/hooks';
 import XIcon from '@leafygreen-ui/icon/dist/X';
-import IconButton from '@leafygreen-ui/icon-button';
+import IconButton from '@leafygreen-ui/icon-button/dist/IconButton/index';
 import LeafyGreenProvider, {
   PortalContextProvider,
   useDarkMode,

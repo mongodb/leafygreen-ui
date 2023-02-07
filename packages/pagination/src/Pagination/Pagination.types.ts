@@ -1,4 +1,4 @@
-import { AccessibleIconButtonProps } from '@leafygreen-ui/icon-button';
+import { AccessibleIconButtonProps } from '@leafygreen-ui/icon-button/dist/IconButton/index';
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 import { SelectProps } from '@leafygreen-ui/select';
 
