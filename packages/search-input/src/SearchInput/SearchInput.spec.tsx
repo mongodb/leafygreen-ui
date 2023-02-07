@@ -294,7 +294,7 @@ describe('packages/search-input', () => {
           expect(inputEl).not.toHaveFocus();
         });
 
-        test('Closes menu when tabbing away', () => {
+        test('Closes menu when tabbing away', async () => {
           const { getMenuElements, inputEl } = renderSearchInput({
             ...defaultProps,
           });
@@ -303,7 +303,8 @@ describe('packages/search-input', () => {
           expect(menuContainerEl).toBeInTheDocument();
           userEvent.tab();
           expect(inputEl).not.toHaveFocus();
-          waitForElementToBeRemoved(menuContainerEl);
+          await waitForElementToBeRemoved(menuContainerEl);
+          expect(menuContainerEl).not.toBeInTheDocument();
         });
       });
 
