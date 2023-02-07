@@ -328,7 +328,6 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
                   searchIconSizeStyle[sizeVariant],
                   { [searchIconDisabledStyle[theme]]: disabled },
                 )}
-                aria-label="Search Icon"
                 role="presentation"
               />
               <input
