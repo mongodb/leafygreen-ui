@@ -252,7 +252,31 @@ describe('packages/search-input', () => {
         const { resultsElements } = getMenuElements();
 
         userEvent.click(resultsElements![0]);
-        expect(resultClickHandler).toHaveBeenCalled();
+        expect(resultClickHandler).toHaveBeenCalledWith(
+          expect.objectContaining({
+            type: 'click',
+          }),
+        );
+      });
+
+      test('clicking a result fires the onSubmit handler', () => {
+        const submitHandler = jest.fn();
+
+        const { getMenuElements, inputEl, containerEl } = renderSearchInput({
+          ...defaultProps,
+          onSubmit: submitHandler,
+        });
+        userEvent.click(inputEl);
+        const { resultsElements } = getMenuElements();
+
+        userEvent.click(resultsElements![0]);
+        expect(submitHandler).toHaveBeenCalledWith(
+          expect.objectContaining({
+            type: 'submit',
+          }),
+        );
+        const submitEvent = submitHandler.mock.calls[0][0]; // the first parameter of the first call
+        expect(submitEvent.target).toBe(containerEl);
       });
     });
 
@@ -385,39 +409,53 @@ describe('packages/search-input', () => {
           expect(submitEvent.defaultPrevented).toBeTruthy();
         });
 
-        test('submit event does not prevent default without typeahead', () => {
+        test('submit event prevents default without typeahead', () => {
           const { containerEl } = renderSearchInput({
             ...defaultProps,
             children: undefined,
           });
           const submitEvent = createEvent.submit(containerEl);
           fireEvent(containerEl, submitEvent);
-          expect(submitEvent.defaultPrevented).toBeFalsy();
+          expect(submitEvent.defaultPrevented).toBeTruthy();
         });
 
         test('fires onSubmit without typeahead', () => {
           const submitHandler = jest.fn();
-          const { inputEl } = renderSearchInput({
+          const { inputEl, containerEl } = renderSearchInput({
             ...defaultProps,
             children: undefined,
             onSubmit: submitHandler,
           });
           userEvent.type(inputEl, 'abc{enter}');
 
-          expect(submitHandler).toHaveBeenCalled();
+          expect(submitHandler).toHaveBeenCalledWith(
+            expect.objectContaining({
+              type: 'submit',
+            }),
+          );
+          const submitEvent = submitHandler.mock.calls[0][0]; // the first parameter of the first call
+          expect(submitEvent.target).toBe(containerEl);
+          // TODO: test that the event has the correct value
+          // expect(submitEvent.target.elements[0].value).toBe('Banana');
         });
 
-        test('selects the highlighted result and fires onSubmit  with typeahead', () => {
+        test('selects the highlighted result and fires onSubmit with typeahead', async () => {
           const submitHandler = jest.fn();
 
-          const { inputEl, openMenu } = renderSearchInput({
+          const { inputEl, containerEl, openMenu } = renderSearchInput({
             ...defaultProps,
             onSubmit: submitHandler,
           });
           openMenu();
           userEvent.type(inputEl, '{arrowdown}{enter}');
           expect(resultClickHandler).toHaveBeenCalled();
-          expect(submitHandler).toHaveBeenCalled();
+          expect(submitHandler).toHaveBeenCalledWith(
+            expect.objectContaining({
+              type: 'submit',
+            }),
+          );
+          const submitEvent = submitHandler.mock.calls[0][0]; // the first parameter of the first call
+          expect(submitEvent.target).toBe(containerEl);
         });
       });
     });

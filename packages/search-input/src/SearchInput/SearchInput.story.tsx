@@ -220,8 +220,10 @@ export const LiveSearch: ComponentStory<typeof SearchInput> = args => {
   };
 
   const handleSelect: FormEventHandler<HTMLFormElement> = e => {
-    /// @ts-ignore
-    setPage(data.find(item => item.name === kebabCase(e.target?.[0].value)));
+    setPage(
+      /// @ts-ignore
+      data.find(item => item.name === kebabCase(e.target?.elements[0].value)),
+    );
   };
 
   return (
