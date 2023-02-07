@@ -4,7 +4,9 @@ import { Story } from '@storybook/react';
 
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
+import LeafygreenProvider, {
+  BaseFontSize,
+} from '@leafygreen-ui/leafygreen-provider';
 
 import LanguageSwitcherExample from '../LanguageSwitcher/LanguageSwitcherExample';
 import LGCode, { CodeProps, Language } from '..';
@@ -76,7 +78,7 @@ export default {
     chromeTitle: { control: 'text' },
     lineNumberStart: { control: 'number' },
     baseFontSize: {
-      options: [14, 16],
+      options: [13, 16],
       control: { type: 'radio' },
       description:
         '[STORYBOOK ONLY]\n\nThis font size is passed into the LeafygreenProvider.',
@@ -102,8 +104,6 @@ export default {
     },
   },
 };
-
-type BaseFontSize = 14 | 16;
 
 const Template: Story<CodeProps & { baseFontSize: BaseFontSize }> = ({
   // eslint-disable-next-line react/prop-types

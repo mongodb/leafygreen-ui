@@ -3,7 +3,9 @@ import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
+import LeafygreenProvider, {
+  BaseFontSize,
+} from '@leafygreen-ui/leafygreen-provider';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
@@ -51,7 +53,7 @@ export default {
   },
   argTypes: {
     baseFontSize: {
-      options: [14, 16],
+      options: [13, 16],
       control: { type: 'radio' },
       description:
         'Storybook prop only. This font size is passed into the LeafygreenProvider.',
@@ -65,7 +67,7 @@ export const AllTypography = ({
   baseFontSize,
   darkMode,
 }: {
-  baseFontSize: 14 | 16;
+  baseFontSize: BaseFontSize;
   darkMode: boolean;
 }) => {
   return (

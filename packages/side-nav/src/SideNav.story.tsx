@@ -362,7 +362,7 @@ OrgSettings.args = {
 };
 OrgSettings.argTypes = {
   baseFontSize: {
-    options: [14, 16],
+    options: [13, 16],
     control: { type: 'select' },
   },
 };

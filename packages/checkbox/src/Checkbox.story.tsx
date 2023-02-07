@@ -2,7 +2,9 @@ import React from 'react';
 import { ComponentMeta, Story } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
+import LeafygreenProvider, {
+  BaseFontSize,
+} from '@leafygreen-ui/leafygreen-provider';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 import { CheckboxProps } from './types';
@@ -27,13 +29,11 @@ export default {
     indeterminate: { control: 'boolean' },
     animate: { control: 'boolean', default: true },
     baseFontSize: {
-      options: [14, 16],
+      options: [13, 16],
       control: { type: 'radio' },
     },
   },
 } as ComponentMeta<typeof Checkbox>;
-
-type BaseFontSize = 14 | 16;
 
 const Template: Story<CheckboxProps & { baseFontSize: BaseFontSize }> = ({
   // eslint-disable-next-line react/prop-types

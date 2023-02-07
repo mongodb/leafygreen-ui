@@ -1,13 +1,12 @@
 import React, { createContext, useContext } from 'react';
-
-type BaseFontSize = 14 | 16;
+import { BaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 
 interface FontSizeProviderInterface {
   baseFontSize: BaseFontSize;
   children: React.ReactNode;
 }
 
-const FontSizeContext = createContext<BaseFontSize>(14);
+const FontSizeContext = createContext<BaseFontSize>(13);
 
 export function FontSizeProvider({
   children,

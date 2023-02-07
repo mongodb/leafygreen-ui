@@ -10,7 +10,7 @@ import {
 import { TextAreaProps } from './TextArea/TextArea.types';
 import TextArea from '.';
 
-type LGProviderBaseFontSize = 14 | 16;
+type LGProviderBaseFontSize = 13 | 16;
 
 const StoryTextArea: React.FC<
   TextAreaProps & { lgProviderBaseFontSize: LGProviderBaseFontSize }
@@ -64,12 +64,12 @@ export const WithProvider: ComponentStory<typeof StoryTextArea> = ({
 );
 WithProvider.argTypes = {
   lgProviderBaseFontSize: {
-    options: [14, 16],
+    options: [13, 16],
     control: { type: 'radio' },
     description:
       'Storybook prop only. This font size is passed into the LeafygreenProvider. ',
   },
 };
 WithProvider.args = {
-  lgProviderBaseFontSize: 14,
+  lgProviderBaseFontSize: 13,
 };

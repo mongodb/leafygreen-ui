@@ -1,4 +1,7 @@
 import { BaseFontSize } from '@leafygreen-ui/leafygreen-provider';
+
+export { BaseFontSize };
+
 /**
  * Defines font sizes and line heights of common typographic elements.
  * Units are in `px`

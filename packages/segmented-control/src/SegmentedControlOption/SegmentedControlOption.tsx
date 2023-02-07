@@ -51,7 +51,7 @@ export const SegmentedControlOption = forwardRef<
   ) => {
     const { size, theme, followFocus } = useContext(SegmentedControlContext);
     const { usingKeyboard } = useUsingKeyboardContext();
-    const baseFontSize = useBaseFontSize();
+    const { baseFontSize } = useBaseFontSize();
 
     const onClick = () => {
       _onClick?.(value);

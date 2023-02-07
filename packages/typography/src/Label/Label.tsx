@@ -33,6 +33,8 @@ export const Label = Polymorphic<LabelProps>(
     const { baseFontSize } = useBaseFontSize(baseFontSizeOverride);
     const { Component } = usePolymorphic(as);
 
+    console.log({ baseFontSize, baseFontSizeOverride });
+
     return (
       <Component
         className={cx(

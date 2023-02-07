@@ -9,6 +9,7 @@ import {
 } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
   useDarkMode,
+  BaseFontSize,
 } from '@leafygreen-ui/leafygreen-provider';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
@@ -128,7 +129,7 @@ export interface TableProps<Shape> extends HTMLElementProps<'table'> {
   /**
    * Override the global `baseFontSize` set in LeafygreenProvider
    */
-  baseFontSize?: 14 | 16;
+  baseFontSize?: BaseFontSize;
 
   /**
    * Determines whether or not the component will appear in dark mode.

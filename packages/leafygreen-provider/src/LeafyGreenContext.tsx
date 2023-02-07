@@ -23,7 +23,7 @@ export type LeafyGreenProviderProps = {
   /**
    * Define a baseFontSize for components that inherit a typography scale.
    */
-  baseFontSize: BaseFontSize;
+  baseFontSize?: BaseFontSize;
 } & DarkModeProps;
 
 function LeafyGreenProvider({
@@ -63,7 +63,7 @@ function LeafyGreenProvider({
     <UsingKeyboardProvider>
       <PortalContextProvider popover={popoverPortalContainer}>
         <TypographyProvider
-          baseFontSize={baseFontSizeState}
+          contextBaseFontSize={baseFontSizeState}
           setBaseFontSize={setBaseFontSize}
         >
           <DarkModeProvider

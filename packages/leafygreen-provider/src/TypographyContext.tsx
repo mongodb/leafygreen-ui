@@ -29,6 +29,7 @@ export const useBaseFontSize: useBaseFontSize = localBaseFontSize => {
   const { contextBaseFontSize, setBaseFontSize } = useBaseFontSizeContext();
   const baseFontSize =
     localBaseFontSize ?? contextBaseFontSize ?? BaseFontSize.Body1;
+
   return { baseFontSize, setBaseFontSize };
 };
 

@@ -48,7 +48,7 @@ const knobsConfig: KnobsConfigInterface<{
     type: 'select',
     default: 14,
     label: 'Base Font Size',
-    options: [14, 16],
+    options: [13, 16],
   },
   darkMode: {
     type: 'boolean',
