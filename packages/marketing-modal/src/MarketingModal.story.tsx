@@ -25,9 +25,6 @@ export default {
     `,
   },
   argTypes: {
-    open: { control: false },
-    onClose: { control: false },
-    graphic: { control: false },
     graphicStyle: {
       control: 'radio',
       options: Object.values(GraphicStyle),
@@ -43,6 +40,11 @@ export default {
     },
     children: storybookArgTypes.children,
     darkMode: storybookArgTypes.darkMode,
+  },
+  parameters: {
+    controls: {
+      exclude: ['open', 'onClose', 'graphic', 'onButtonClick', 'onLinkClick'],
+    },
   },
 } as Meta<typeof MarketingModal>;
 
@@ -70,12 +72,12 @@ const ControlledTemplate: ComponentStory<typeof MarketingModal> = ({
           graphicStyle === GraphicStyle.Center ? (
             <img
               alt=""
-              src={`examples/${graphicCenterImage}`}
+              src={`/examples/${graphicCenterImage}`}
               width={275}
               height={220}
             />
           ) : (
-            <img alt="Marketing Modal" src={`examples/${graphicFillImage}`} />
+            <img alt="Marketing Modal" src={`/examples/${graphicFillImage}`} />
           )
         }
         open={open}
