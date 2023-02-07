@@ -15,24 +15,7 @@ export default {
   component: PasswordInput,
   args: {
     label: 'label',
-    stateNotifications: [
-      {
-        notification: "i'm an error",
-        state: 'error',
-      },
-      {
-        notification: "i'm a warning",
-        state: 'warning',
-      },
-      {
-        notification: "i'm valid",
-        state: 'valid',
-      },
-      {
-        notification: "i'm waiting",
-        state: 'none',
-      },
-    ],
+    stateNotifications: [],
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -71,6 +54,68 @@ const Template: Story<PasswordInputProps> = props => {
 };
 
 export const Basic = Template.bind({});
+
+export const Error = Template.bind({});
+Error.args = {
+  stateNotifications: [
+    {
+      notification: "i'm an error",
+      state: 'error',
+    },
+  ],
+};
+
+export const Warning = Template.bind({});
+Warning.args = {
+  stateNotifications: [
+    {
+      notification: "i'm a warning",
+      state: 'warning',
+    },
+  ],
+};
+
+export const Valid = Template.bind({});
+Valid.args = {
+  stateNotifications: [
+    {
+      notification: "i'm valid",
+      state: 'valid',
+    },
+  ],
+};
+
+export const None = Template.bind({});
+None.args = {
+  stateNotifications: [
+    {
+      notification: "i'm waiting",
+      state: 'none',
+    },
+  ],
+};
+
+export const Mixed = Template.bind({});
+Mixed.args = {
+  stateNotifications: [
+    {
+      notification: "i'm an error",
+      state: 'error',
+    },
+    {
+      notification: "i'm a warning",
+      state: 'warning',
+    },
+    {
+      notification: "i'm valid",
+      state: 'valid',
+    },
+    {
+      notification: "i'm waiting",
+      state: 'none',
+    },
+  ],
+};
 
 export const CustomContainer = ({
   stateNotifications,
