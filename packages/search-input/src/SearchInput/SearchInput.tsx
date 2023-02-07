@@ -208,10 +208,6 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       handleOpenMenuAction(e);
     };
 
-    const handleSearchBoxBlur: FocusEventHandler = _ => {
-      closeMenu();
-    };
-
     const handleClearButton: MouseEventHandler<HTMLButtonElement> = e => {
       // We convert the click event into a Change event,
       // Update the target & value,
@@ -269,11 +265,8 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       }
     };
 
-    const handleBlur: FocusEventHandler = e => {
-      if (
-        !isElementInComponent(e.target) &&
-        !isElementInComponent(document.activeElement)
-      ) {
+    const handleBlur: FocusEventHandler = _ => {
+      if (!isElementInComponent(document.activeElement)) {
         closeMenu();
       }
     };
@@ -312,7 +305,6 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
               onMouseDown={handleSearchBoxMousedown}
               onClick={handleSearchBoxClick}
               onFocus={handleSearchBoxFocus}
-              onBlur={handleSearchBoxBlur}
               onKeyDown={handleKeyDown}
               className={cx(
                 inputWrapperStyle,
