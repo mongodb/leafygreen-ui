@@ -245,14 +245,6 @@ export const activeIconStyle: Record<Theme, string> = {
 /**
  * Disabled styles
  */
-export const disabledIconStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.gray.dark2};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.base};
-  `,
-};
 
 const disabledMenuItemContainerStyle = css`
   cursor: not-allowed;
