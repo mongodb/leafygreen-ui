@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/tabs",
-  "version": "11.0.3",
+  "version": "11.0.4",
   "description": "leafyGreen UI Kit Tabs",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -24,7 +24,7 @@
     "@leafygreen-ui/box": "^3.1.1",
     "@leafygreen-ui/emotion": "^4.0.3",
     "@leafygreen-ui/hooks": "^7.3.3",
-    "@leafygreen-ui/lib": "^10.0.0",
+    "@leafygreen-ui/lib": "^10.1.0",
     "@leafygreen-ui/palette": "^3.4.7",
     "@leafygreen-ui/portal": "^4.0.9",
     "@leafygreen-ui/tokens": "^2.0.0"

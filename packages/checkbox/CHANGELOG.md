@@ -1,5 +1,11 @@
 # @leafygreen-ui/checkbox
 
+## 12.0.5
+
+### Patch Changes
+
+- cccc1cebe: Removes useUsingKeyboard from component in favor of `&:focus-visible`
+
 ## 12.0.4
 
 ### Patch Changes
