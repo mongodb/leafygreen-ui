@@ -9,10 +9,11 @@
 - [Variable placement](#Variable-placement)
 - [Whitespace and line breaks](#Whitespace-and-line-breaks)
 - [JSX/React](#JSX-React)
+- [Forwarding refs](#Forwarding-Refs)
+- [Passing darkMode to children](#Passing-DarkMode-To-Children)
 - [CSS-in-JS](#CSS-in-JS)
 - [File Structure](https://github.com/mongodb/leafygreen-ui/blob/main/stories/Folder-Structure.stories.mdx)
 - [API Patterns](#API-Patterns)
-- [Forwarding Refs](#Forwarding-Refs)
 - [References](#References)
 
 ## <a id="To-Contribute">To Contribute</a>
@@ -323,9 +324,7 @@ function changeValues(object) {
 
 ---
 
-## <a id="Forwarding-Refs">Forwarding Refs</a>
-
----
+## <a id="Forwarding-Refs">Forwarding refs</a>
 
 Ref forwarding allows us to expose the components wrapper DOM element when a `ref` is passed to a LG component. For more information on ref forwarding, check out the React [docs](https://reactjs.org/docs/forwarding-refs.html).
 
@@ -344,10 +343,40 @@ const ref = useRef<null | HTMLButtonElement>(null);
 #### Avoid
 
 ```typescript
-const Button = (props, ref) => <button ref={ref}>{props.children}</button>;
+const Button = props => <button>{props.children}</button>;
 
-// This ref will give you direct access to the DOM button
+// Does not accept a ref
 <Button>Click me!</Button>;
+```
+
+---
+
+// TODO: add topic on useDarkMode hook and not setting the default value of darkMode in a component
+
+## <a id="Passing-DarkMode-To-Children">Passing darkMode to children</a>
+
+Rather than pass `darkMode` to each child component, it is recommended to wrap all children in the `LeafyGreenProvider` and pass the `darkMode` value directly to the `LeafyGreenProvider`. All LG components consume the `useDarkMode()` hook which grabs the value of `darkMode` from the `LeafyGreenProvider` which prevents having to pass `darkMode` to each child.
+
+#### Prefer
+
+```typescript
+return (
+  <>
+    <Button darkMode={darkMode}>This is a button</Button>
+    <Button darkMode={darkMode}>This is another button</Button>
+  </>
+);
+```
+
+#### Avoid
+
+```typescript
+return (
+  <LeafyGreenProvider darkMode={darkMode}>
+    <Button>This is a button</Button>
+    <Button>This is another button</Button>
+  </LeafyGreenProvider>
+);
 ```
 
 ---
