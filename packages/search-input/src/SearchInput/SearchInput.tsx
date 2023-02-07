@@ -9,7 +9,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import cloneDeep from 'lodash/cloneDeep';
 import isUndefined from 'lodash/isUndefined';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -73,6 +72,8 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       value: valueProp,
       onChange: onChangeProp,
       onSubmit: onSubmitProp,
+      'aria-label': ariaLabel,
+      'aria-labelledby': ariaLabelledBy,
       ...rest
     }: SearchInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
@@ -317,8 +318,8 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
                   [inputWrapperInteractiveStyles[theme]]: !disabled,
                 },
               )}
-              aria-label={rest['aria-label']}
-              aria-labelledby={rest['aria-labelledby']}
+              aria-label={ariaLabel}
+              aria-labelledby={ariaLabelledBy}
             >
               <MagnifyingGlass
                 className={cx(
