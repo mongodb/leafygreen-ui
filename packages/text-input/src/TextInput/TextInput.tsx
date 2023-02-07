@@ -34,8 +34,13 @@ import {
   stateIndicatorStyles,
   textContainerStyle,
   wrapperStyle,
-} from './style';
-import { SizeVariant, State, TextInputProps, TextInputType } from './types';
+} from './TextInput.style';
+import {
+  SizeVariant,
+  State,
+  TextInputProps,
+  TextInputType,
+} from './TextInput.types';
 
 /**
  * # TextInput
