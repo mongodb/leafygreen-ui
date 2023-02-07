@@ -15,12 +15,15 @@ import { isComponentType, keyMap, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 
-import { FocusableMenuItemElement } from './FocusableMenuItem';
-import { MenuContext } from './MenuContext';
-import { MenuItemElement } from './MenuItem';
-import MenuSeparator, { MenuSeparatorElement } from './MenuSeparator';
-import { SubMenuElement } from './SubMenu';
-import { MenuProps } from './types';
+import { MenuContext } from '../MenuContext/MenuContext';
+import { FocusableMenuItemElement } from '../MenuItem/FocusableMenuItem';
+import { MenuItemElement } from '../MenuItem/MenuItem';
+import MenuSeparator, {
+  MenuSeparatorElement,
+} from '../MenuSeparator/MenuSeparator';
+import { SubMenuElement } from '../SubMenu/SubMenu';
+
+import { MenuProps } from './Menu.types';
 
 const rootMenuStyle = css`
   width: 210px;
@@ -65,7 +68,7 @@ const scrollContainerStyle = css`
  * @param props.trigger Trigger element can be ReactNode or function, and, if present, internally manages active state of Menu.
  * @param props.darkMode Determines whether or not the component will be rendered in dark theme.
  */
-function Menu({
+export function Menu({
   align = Align.Bottom,
   justify = Justify.End,
   adjustOnMutation = false,

@@ -10,9 +10,6 @@
   ],
   "references": [
     {
-      "path": "../box"
-    },
-    {
       "path": "../emotion"
     },
     {
@@ -32,6 +29,9 @@
     },
     {
       "path": "../popover"
+    },
+    {
+      "path": "../polymorphic"
     },
     {
       "path": "../tokens"
