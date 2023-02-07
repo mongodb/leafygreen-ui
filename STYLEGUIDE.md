@@ -323,6 +323,35 @@ function changeValues(object) {
 
 ---
 
+## <a id="Forwarding-Refs">Forwarding Refs</a>
+
+---
+
+Ref forwarding allows us to expose the components wrapper DOM element when a `ref` is passed to a LG component. For more information on ref forwarding, check out the React [docs](https://reactjs.org/docs/forwarding-refs.html).
+
+#### Prefer
+
+```typescript
+const Button = React.forwardRef((props, ref) => (
+  <button ref={ref}>{props.children}</button>
+));
+
+// This ref will give you directly to the DOM button
+const ref = useRef<null | HTMLButtonElement>(null);
+<Button ref={ref}>Click me!</Button>;
+```
+
+#### Avoid
+
+```typescript
+const Button = (props, ref) => <button ref={ref}>{props.children}</button>;
+
+// This ref will give you directly to the DOM button
+<Button>Click me!</Button>;
+```
+
+---
+
 ## <a id="CSS-in-JS">CSS in JS</a>
 
 ### Avoid writing Emotion styles directly in JSX
@@ -411,26 +440,6 @@ const childStyles = css`
 - Use `state='error'` to show the input with a warning icon and red border. This property must be set to `error` in order for an `errorMessage` to render, otherwise the `errorMessage` will be ignored.
 - Use `errorMessage` prop to set the error message that is displayed next to the input.
 - If `state='error'` but `errorMessage` is not defined, require `aria-describedby`
-
----
-
-## <a id="Forwarding-Refs">Forwarding Refs</a>
-
----
-
-Ref forwarding allows us to expose the parent wrapper DOM element when a `ref` is passed to a LG component. For more information on ref forwarding, check out the React [docs](https://reactjs.org/docs/forwarding-refs.html).
-
-#### Prefer
-
-```typescript
-const Button = React.forwardRef((props, ref) => (
-  <button ref={ref}>{props.children}</button>
-));
-
-// You can now get a ref directly to the DOM button:
-const ref = useRef<null | HTMLButtonElement>(null);
-<Button ref={ref}>Click me!</Button>;
-```
 
 ---
 
