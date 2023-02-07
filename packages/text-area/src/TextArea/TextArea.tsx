@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
 import Warning from '@leafygreen-ui/icon/dist/Warning';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import {
   bodyTypeScaleStyles,
   Description,
@@ -72,7 +74,6 @@ export const TextArea: TextArea = forwardRef<
   forwardedRef: React.Ref<HTMLTextAreaElement>,
 ) {
   const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
-  const errorBaseFontSize = useUpdatedBaseFontSize();
   const id = useIdAllocator({ prefix: 'textarea', id: idProp });
   const { darkMode, theme } = useDarkMode(darkModeProp);
 
@@ -110,50 +111,58 @@ export const TextArea: TextArea = forwardRef<
   }
 
   return (
-    <div className={cx(containerStyles, className)}>
-      {label && (
-        <Label darkMode={darkMode} htmlFor={id} disabled={disabled}>
-          {label}
-        </Label>
-      )}
-      {description && (
-        <Description darkMode={darkMode} disabled={disabled}>
-          {description}
-        </Description>
-      )}
-      <textarea
-        {...rest}
-        ref={forwardedRef}
-        title={label != null ? label : undefined}
-        id={id}
-        className={cx(
-          textAreaStyle,
-          bodyTypeScaleStyles[baseFontSize],
-          colorSets[theme].textArea,
-          {
-            [colorSets[theme].errorBorder]: state === State.Error && !disabled,
-          },
+    <LeafyGreenProvider
+      darkMode={darkMode}
+      // TODO: We cannot simply pass baseFontSize to the Provider, since the updatedBaseFontSize values are not in line with those accepted by the Provider.
+      // Once we fix this in this Provider, we should update to pass baseFontSize here rather than coercing the value.
+      // This works as-is because all of the Typography elements are using useUpdatedBaseFontSize to convert 14 to 13px.
+      baseFontSize={baseFontSize === 16 ? 16 : 14}
+    >
+      <div className={cx(containerStyles, className)}>
+        {label && (
+          <Label htmlFor={id} disabled={disabled}>
+            {label}
+          </Label>
         )}
-        disabled={disabled}
-        onChange={onValueChange}
-        onBlur={onBlurHandler}
-        value={value}
-      />
-      {!disabled && state === State.Error && errorMessage && (
-        <div className={errorContainerStyle}>
-          <Warning className={cx(errorIconStyle, colorSets[theme].errorIcon)} />
-          <Error
-            darkMode={darkMode}
-            className={cx(
-              bodyTypeScaleStyles[errorBaseFontSize],
-              errorMessageLabelStyles,
-            )}
-          >
-            {errorMessage}
-          </Error>
-        </div>
-      )}
-    </div>
+        {description && (
+          <Description disabled={disabled}>{description}</Description>
+        )}
+        <textarea
+          {...rest}
+          ref={forwardedRef}
+          title={label != null ? label : undefined}
+          id={id}
+          className={cx(
+            textAreaStyle,
+            bodyTypeScaleStyles[baseFontSize],
+            colorSets[theme].textArea,
+            {
+              [colorSets[theme].errorBorder]:
+                state === State.Error && !disabled,
+            },
+          )}
+          disabled={disabled}
+          onChange={onValueChange}
+          onBlur={onBlurHandler}
+          value={value}
+        />
+        {!disabled && state === State.Error && errorMessage && (
+          <div className={errorContainerStyle}>
+            <Warning
+              className={cx(errorIconStyle, colorSets[theme].errorIcon)}
+            />
+            <Error
+              className={cx(
+                bodyTypeScaleStyles[baseFontSize],
+                errorMessageLabelStyles,
+              )}
+            >
+              {errorMessage}
+            </Error>
+          </div>
+        )}
+      </div>
+    </LeafyGreenProvider>
   );
 });
 

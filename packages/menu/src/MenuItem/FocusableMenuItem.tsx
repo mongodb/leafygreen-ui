@@ -1,16 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export interface FocusableMenuItemProps {
-  children: React.ReactElement;
-  onFocus?: React.FocusEventHandler;
-}
+import { FocusableMenuItemProps } from './MenuItem.types';
 
 /**
  * For internal use only: Component to allow us to include non-MenuItems in a Menu's group of focusable elements
  * @internal
  */
-const FocusableMenuItem = React.forwardRef(
+export const FocusableMenuItem = React.forwardRef(
   ({ children }: FocusableMenuItemProps, forwardRef) => {
     return React.cloneElement(children, {
       ref: forwardRef,

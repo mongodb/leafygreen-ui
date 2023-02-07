@@ -1,22 +1,23 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import Box, { BoxProps } from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
+import { createUniqueClassName, getNodeTextContent } from '@leafygreen-ui/lib';
 import {
-  createUniqueClassName,
-  getNodeTextContent,
-  HTMLElementProps,
-} from '@leafygreen-ui/lib';
+  InferredPolymorphic,
+  InferredPolymorphicProps,
+  PolymorphicAs,
+  PolymorphicPropsWithRef,
+  useInferredPolymorphic,
+} from '@leafygreen-ui/polymorphic';
 
-import MenuContext from './MenuContext';
+import MenuContext from '../MenuContext/MenuContext';
 import {
   activeDescriptionTextStyle,
   activeIconStyle,
   activeMenuItemContainerStyle,
   activeTitleTextStyle,
   descriptionTextThemeStyle,
-  disabledIconStyle,
   disabledMenuItemContainerThemeStyle,
   disabledTextStyle,
   focusedMenuItemContainerStyle,
@@ -31,72 +32,15 @@ import {
   menuItemHeight,
   textContainer,
   titleTextStyle,
-} from './styles';
-import { Size } from './types';
+} from '../styles';
+import { Size } from '../types';
+
+import { disabledIconStyle } from './MenuItem.styles';
+import { MenuItemProps } from './MenuItem.types';
 
 const menuItemContainerClassName = createUniqueClassName('menu-item-container');
-interface BaseMenuItemProps extends HTMLElementProps<'button'> {
-  /**
-   * Determines whether or not the MenuItem is active.
-   */
-  active?: boolean;
 
-  /**
-   * Description element displayed below title in MenuItem.
-   */
-  description?: React.ReactNode;
-
-  /**
-   * Determines whether or not the MenuItem is disabled.
-   */
-  disabled?: boolean;
-
-  /**
-   * Slot to pass in an Icon rendered to the left of `MenuItem` text.
-   * @type `<Icon />` component
-   */
-  glyph?: React.ReactElement;
-
-  /**
-   * Size of the MenuItem component, can be `default` or `large`
-   */
-  size?: Size;
-
-  /**
-   * className applied to  `li` element
-   */
-  className?: string;
-
-  /**
-   * Content to appear inside of `<MenuItem />` component
-   */
-  children?: React.ReactNode;
-
-  /**
-   * Causes the item to be rendered as an `anchor` instead of a `button`
-   */
-  href?: string;
-
-  /**
-   * The component or HTML Element that the button is rendered as.
-   *
-   * To use with NextJS Links, pass in a component that wraps the Link:
-   * ```js
-   * const Linker = ({ href, children, ...props }) => (
-   *  <NextLink href={href}>
-   *    <a {...props}>{children}</a>
-   *  </NextLink>
-   * );
-   * <Button as={Linker} />
-   * ```
-   * @type HTMLElement | React.Component
-   */
-  as?: React.ElementType<any>;
-}
-
-export type MenuItemProps = BoxProps<'button', BaseMenuItemProps>;
-
-const MenuItem = React.forwardRef(
+export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
   (
     {
       disabled = false,
@@ -106,15 +50,17 @@ const MenuItem = React.forwardRef(
       children,
       description,
       glyph,
+      as = 'button' as PolymorphicAs,
       ...rest
-    }: MenuItemProps,
+    },
     ref: React.Ref<any>,
   ) => {
+    const { Component } = useInferredPolymorphic(as, rest);
     const { theme } = useContext(MenuContext);
     const hoverStyles = getHoverStyles(menuItemContainerClassName, theme);
     const focusStyles = getFocusedStyles(menuItemContainerClassName, theme);
 
-    const isAnchor = typeof rest.href === 'string';
+    const isAnchor = Component === 'a';
 
     const updatedGlyph =
       glyph &&
@@ -132,7 +78,7 @@ const MenuItem = React.forwardRef(
         ),
       });
 
-    const boxProps = {
+    const baseProps = {
       ref,
       role: 'menuitem',
       tabIndex: disabled ? -1 : undefined,
@@ -176,8 +122,7 @@ const MenuItem = React.forwardRef(
                 {
                   [activeDescriptionTextStyle[theme]]: active,
                   [disabledTextStyle[theme]]: disabled,
-
-                  [linkDescriptionTextStyle]: typeof rest.href === 'string',
+                  [linkDescriptionTextStyle]: isAnchor,
                 },
                 focusStyles.descriptionStyle,
               )}
@@ -189,13 +134,10 @@ const MenuItem = React.forwardRef(
       </>
     );
 
-    const as = isAnchor ? 'a' : 'button';
-
     return (
       <li role="none">
-        <Box
-          as={as}
-          {...boxProps}
+        <Component
+          {...baseProps}
           {...anchorProps}
           {...rest}
           className={cx(
@@ -213,7 +155,7 @@ const MenuItem = React.forwardRef(
           )}
         >
           {content}
-        </Box>
+        </Component>
       </li>
     );
   },
@@ -222,7 +164,6 @@ const MenuItem = React.forwardRef(
 MenuItem.displayName = 'MenuItem';
 
 MenuItem.propTypes = {
-  href: PropTypes.string,
   onClick: PropTypes.func,
   className: PropTypes.string,
   description: PropTypes.node,
@@ -233,7 +174,9 @@ MenuItem.propTypes = {
 
 export default MenuItem;
 
-export type MenuItemElement = React.ReactComponentElement<
-  typeof MenuItem,
-  BoxProps<'button', MenuItemProps & { ref?: React.Ref<any> }>
+export type MenuItemElementProps = PolymorphicPropsWithRef<
+  PolymorphicAs,
+  InferredPolymorphicProps<MenuItemProps>
 >;
+
+export type MenuItemElement = React.Component<MenuItemElementProps>;

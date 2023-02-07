@@ -6,6 +6,7 @@ export type {
   LineHighlightingDefinition,
   SyntaxProps,
 } from './types';
+export type { LanguageOption } from './types';
 export { Language, Mode } from './types';
 
 export default Code;
