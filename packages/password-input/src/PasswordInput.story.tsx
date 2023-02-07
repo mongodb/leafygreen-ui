@@ -140,5 +140,5 @@ CustomContainer.argTypes = {
 };
 
 CustomContainer.args = {
-  stateNotifications: States.Error,
+  stateNotifications: States.Warning,
 };
