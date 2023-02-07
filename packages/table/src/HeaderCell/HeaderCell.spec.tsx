@@ -1,23 +1,18 @@
-import React, { useRef, useState } from 'react';
-import { getByText, waitFor } from '@testing-library/dom';
-import { fireEvent, render } from '@testing-library/react';
+import React from 'react';
+import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
+import { getTestColumnsProps, useTestHookCall } from '../utils/testHookCalls';
 
-import HeaderCell, { HeaderCellProps } from ".";
-import { getDefaultTestColumns, getDefaultTestData, getTestColumnsProps, useTestHookCall } from '../utils/testHookCalls';
-import useLeafygreenTable from '../useLeafygreenTable';
-import { getCoreRowModel, SortingState } from '..';
-import { Person } from '../utils/makeData';
+import HeaderCell, { HeaderCellProps } from '.';
 
 function renderSimpleHeaderCell(props: HeaderCellProps<unknown>) {
   return render(
     <table>
       <thead>
         <tr>
-          <HeaderCell {...props}>
+          <HeaderCell {...props} data-testid="lg-header-cell-test">
             test header cell
           </HeaderCell>
           <th>th 2</th>
@@ -29,14 +24,14 @@ function renderSimpleHeaderCell(props: HeaderCellProps<unknown>) {
           <td>td 2</td>
         </tr>
       </tbody>
-    </table>
+    </table>,
   );
 }
 
 const HeaderCellWithHook = (props: getTestColumnsProps) => {
   const { containerRef, table } = useTestHookCall({
-    columnProps: props
-  })
+    columnProps: props,
+  });
 
   return (
     <div ref={containerRef}>
@@ -61,7 +56,7 @@ const HeaderCellWithHook = (props: getTestColumnsProps) => {
       </table>
     </div>
   );
-}
+};
 
 describe('packages/table/HeaderCell', () => {
   describe('a11y', () => {
@@ -74,6 +69,11 @@ describe('packages/table/HeaderCell', () => {
 
   describe('align prop', () => {
     test('align prop aligns th content', async () => {
+      const { getByTestId } = renderSimpleHeaderCell({ align: 'right' });
+      const headerCellContent = getByTestId(
+        'lg-header-cell-test',
+      ).querySelectorAll('div')[0];
+      expect(getComputedStyle(headerCellContent).justifyContent).toBe('right');
     });
 
     // test for aligning the corresponding body cell will be handled in Cell.spec.tsx
@@ -91,14 +91,18 @@ describe('packages/table/HeaderCell', () => {
       expect(sortIcon).toBeInTheDocument();
     });
     test('clicking sort icon switches to sort descending', async () => {
-      const { getByTestId, queryByLabelText } = render(<HeaderCellWithHook enableSorting />);
+      const { getByTestId, queryByLabelText } = render(
+        <HeaderCellWithHook enableSorting />,
+      );
       const sortIconButton = getByTestId('lg-table-sort-icon-button');
       userEvent.click(sortIconButton);
       const sortIcon = queryByLabelText('Sort Descending Icon');
       expect(sortIcon).toBeInTheDocument();
     });
     test('clicking sort icon twice switches to sort ascending', async () => {
-      const { getByTestId, queryByLabelText } = render(<HeaderCellWithHook enableSorting />);
+      const { getByTestId, queryByLabelText } = render(
+        <HeaderCellWithHook enableSorting />,
+      );
       const sortIconButton = getByTestId('lg-table-sort-icon-button');
       userEvent.click(sortIconButton);
       userEvent.click(sortIconButton);
@@ -106,7 +110,9 @@ describe('packages/table/HeaderCell', () => {
       expect(sortIcon).toBeInTheDocument();
     });
     test('clicking sort icon three times reverts to unsorted icon', async () => {
-      const { getByTestId, queryByLabelText } = render(<HeaderCellWithHook enableSorting />);
+      const { getByTestId, queryByLabelText } = render(
+        <HeaderCellWithHook enableSorting />,
+      );
       const sortIconButton = getByTestId('lg-table-sort-icon-button');
       userEvent.click(sortIconButton);
       userEvent.click(sortIconButton);
@@ -117,9 +123,11 @@ describe('packages/table/HeaderCell', () => {
   });
   describe('width prop', () => {
     test('setting custom size changes HeaderCell width', async () => {
-      const { getByTestId } = render(<HeaderCellWithHook enableSorting size={700} />);
+      const { getByTestId } = render(
+        <HeaderCellWithHook enableSorting size={700} />,
+      );
       const headerCell = getByTestId('lg-header-cell-test');
-      expect(getComputedStyle(headerCell).width).toBe('700px')
+      expect(getComputedStyle(headerCell).width).toBe('700px');
     });
   });
 });

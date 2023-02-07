@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useRef } from 'react';
+import React, { PropsWithChildren } from 'react';
 
 import { InternalCellWithRTProps } from './Cell.types';
 import InternalCellBase from './InternalCellBase';

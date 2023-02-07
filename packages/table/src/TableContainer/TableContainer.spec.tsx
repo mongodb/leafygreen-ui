@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import TableContainer, { TableContainerProps } from ".";
+import TableContainer, { TableContainerProps } from '.';
 
 const onScroll = jest.fn();
 
@@ -11,7 +11,9 @@ const defaultProps: TableContainerProps = {
 };
 
 function renderTableContainer(props: TableContainerProps) {
-  return render(<TableContainer {...props} data-testid="table-container-test" />);
+  return render(
+    <TableContainer {...props} data-testid="lg-test-table-container" />,
+  );
 }
 
 describe('packages/table/TableContainer', () => {
@@ -25,17 +27,14 @@ describe('packages/table/TableContainer', () => {
 
   describe('onScroll prop', () => {
     test('onScroll prop is called on scroll', async () => {
-      const { container } = render(
-        <TableContainer>
-          <div style={{ height: '100px' }} />
-        </TableContainer>
-      );
-      let onScrollCallback = jest.fn();
-      container.addEventListener('scroll', () => {
-        onScrollCallback();
+      const { getByTestId } = renderTableContainer({
+        onScroll: onScroll,
+        children: <div style={{ height: '4000px' }} />,
       });
-      fireEvent.scroll(container, { target: { scrollY: 100 } });
-      expect(onScrollCallback).toHaveBeenCalledTimes(1);
+      fireEvent.scroll(getByTestId('lg-test-table-container'), {
+        target: { scrollY: 100 },
+      });
+      expect(onScroll).toHaveBeenCalledTimes(1);
     });
   });
 });

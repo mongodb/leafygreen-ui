@@ -1,45 +1,60 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState } from 'react';
 
+import useLeafygreenTable, {
+  LeafygreenTable,
+  LeafygreenTableOptions,
+} from '../useLeafygreenTable';
 import {
   ColumnDef,
+  ExpandedState,
   getCoreRowModel,
-  SortingState
-} from '..'
-import useLeafygreenTable, { LeafygreenTable } from '../useLeafygreenTable'
-import { Person } from './makeData'
+  getExpandedRowModel,
+  getSortedRowModel,
+  SortingState,
+} from '..';
 
-export const getDefaultTestData: () => Person[] = () => [
-  {
-    id: 1,
-    firstName: 'tanner',
-    lastName: 'linsley',
-    age: 29,
-    visits: 100,
-    status: 'relationship',
-  },
-  {
-    id: 2,
-    firstName: 'derek',
-    lastName: 'perkins',
-    age: 40,
-    visits: 40,
-    status: 'single',
-  },
-  {
-    id: 3,
-    firstName: 'joe',
-    lastName: 'bergevin',
-    age: 45,
-    visits: 20,
-    status: 'complicated',
-  },
-]
+import { Person } from './makeData';
 
-export type getTestColumnsProps = ({} | Omit<ColumnDef<Person, any>, 'accessorKey' | 'header'>) & {
+export const getDefaultTestData: (
+  rowProps: object,
+) => Array<Person> = rowProps => {
+  return [
+    {
+      id: 1,
+      firstName: 'tanner',
+      lastName: 'linsley',
+      age: 29,
+      visits: 100,
+      status: 'relationship',
+      ...rowProps,
+    },
+    {
+      id: 2,
+      firstName: 'derek',
+      lastName: 'perkins',
+      age: 40,
+      visits: 40,
+      status: 'single',
+    },
+    {
+      id: 3,
+      firstName: 'joe',
+      lastName: 'bergevin',
+      age: 45,
+      visits: 20,
+      status: 'complicated',
+    },
+  ];
+};
 
-}
+export type getTestColumnsProps = (
+  | {}
+  | Omit<ColumnDef<Person, any>, 'accessorKey' | 'header'>
+) & {};
 
-export const getDefaultTestColumns: (props: getTestColumnsProps) => ColumnDef<Person>[] = (props) => [
+export const getDefaultTestColumns: (
+  props: getTestColumnsProps,
+) => Array<ColumnDef<Person>> = props => [
   {
     accessorKey: 'id',
     header: 'ID',
@@ -74,19 +89,28 @@ export const getDefaultTestColumns: (props: getTestColumnsProps) => ColumnDef<Pe
     header: 'Status',
     size: 90,
   },
-]
+];
 
-interface TestTableWithHookProps {
+export interface TestTableWithHookProps {
+  rowProps?: object;
   columnProps?: getTestColumnsProps;
+  hookProps?: Partial<LeafygreenTableOptions<Person>>;
+  stateProps?: any;
 }
 
 export const useTestHookCall = ({
-  columnProps
+  rowProps,
+  columnProps,
+  hookProps,
 }: TestTableWithHookProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [data] = useState<Person[]>(getDefaultTestData)
-  const [columns] = useState(() => getDefaultTestColumns(columnProps ?? {}))
+  const [data] = useState<Array<Person>>(() =>
+    getDefaultTestData(rowProps ?? {}),
+  );
+  const [columns] = useState(() => getDefaultTestColumns(columnProps ?? {}));
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [expanded, setExpanded] = React.useState<ExpandedState>({});
+  const [rowSelection, setRowSelection] = React.useState({});
 
   const table: LeafygreenTable<Person> = useLeafygreenTable({
     containerRef,
@@ -94,10 +118,18 @@ export const useTestHookCall = ({
     columns,
     state: {
       sorting,
+      expanded,
+      rowSelection,
     },
     onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
     getCoreRowModel: getCoreRowModel(),
-  })
+    getSubRows: row => row.subRows,
+    onExpandedChange: setExpanded,
+    getExpandedRowModel: getExpandedRowModel(),
+    onRowSelectionChange: setRowSelection,
+    ...hookProps,
+  });
 
-  return { containerRef, table }
-}
+  return { containerRef, table, rowSelection };
+};

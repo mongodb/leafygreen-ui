@@ -12,21 +12,24 @@ const ToggleExpandedIcon = ({
   isExpanded,
   toggleExpanded,
   disabled,
+  ...rest
 }: ToggleExpandedIconProps) => {
   const { theme } = useDarkMode();
   return !isExpanded ? (
     <IconButton
-      aria-label="collapse row"
+      aria-label="expand row"
       onClick={toggleExpanded}
       className={iconButtonStyles}
+      {...rest}
     >
       <Icon glyph="ChevronDown" fill={iconFills(theme, !!disabled)} />
     </IconButton>
   ) : (
     <IconButton
-      aria-label="expand row"
+      aria-label="collapse row"
       onClick={toggleExpanded}
       className={iconButtonStyles}
+      {...rest}
     >
       <Icon glyph="ChevronUp" fill={iconFills(theme, !!disabled)} />
     </IconButton>

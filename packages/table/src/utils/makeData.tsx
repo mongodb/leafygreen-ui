@@ -76,6 +76,5 @@ export function makeData(
   };
 
   const data = makeDataLevel();
-
   return data;
 }

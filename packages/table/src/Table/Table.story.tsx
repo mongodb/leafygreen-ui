@@ -18,7 +18,6 @@ import Cell from '../Cell/Cell';
 import HeaderCell from '../HeaderCell/HeaderCell';
 import HeaderRow from '../HeaderRow/HeaderRow';
 import Row from '../Row/Row';
-import Table from './Table';
 import TableBody from '../TableBody/TableBody';
 import TableContainer from '../TableContainer/TableContainer';
 import TableHead from '../TableHead/TableHead';
@@ -26,6 +25,8 @@ import { LeafygreenTableCell, LeafygreenTableRow } from '../useLeafygreenTable';
 import useLeafygreenTable from '../useLeafygreenTable/useLeafygreenTable';
 import { makeData, Person } from '../utils/makeData';
 import { AnyDict } from '../utils/types';
+
+import Table from './Table';
 
 export default {
   title: 'Components/Table',
@@ -482,7 +483,6 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
     onExpandedChange: setExpanded,
     getCoreRowModel: getCoreRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
-    getSubRows: row => row.subRows,
   });
 
   const { rows } = table.getRowModel();
@@ -602,13 +602,13 @@ export const WithPagination: ComponentStory<typeof Table> = args => {
 
       <Pagination
         itemsPerPage={table.getState().pagination.pageSize}
-        onItemsPerPageOptionChange={(value, e) => {
-          table.setPageSize(Number(value))
+        onItemsPerPageOptionChange={(value, _) => {
+          table.setPageSize(Number(value));
         }}
         numTotalItems={data.length}
         currentPage={table.getState().pagination.pageIndex + 1}
-        onCurrentPageOptionChange={(value, e) => {
-          table.setPageIndex(Number(value) - 1)
+        onCurrentPageOptionChange={(value, _) => {
+          table.setPageIndex(Number(value) - 1);
         }}
         onBackArrowClick={() => table.previousPage()}
         onForwardArrowClick={() => table.nextPage()}
@@ -654,8 +654,7 @@ export const WithPagination: ComponentStory<typeof Table> = args => {
       </TableContainer>
     </>
   );
-}
-
+};
 
 export const KitchenSink: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);

@@ -93,8 +93,5 @@ export const disabledStyles: Record<Theme, string> = {
     pointer-events: none;
     background-color: ${palette.gray.light2};
     color: ${palette.gray.base};
-    &:not(:first-of-type) {
-      border-top: 1px inset ${palette.gray.dark1};
-    }
   `,
 };

@@ -21,7 +21,7 @@ const defaultStyle = {
   height: 0,
   maxHeight: 0,
   opacity: 0,
-}
+};
 
 const transitionStyles: any = {
   entering: {
@@ -67,7 +67,7 @@ const CellContentWrapper = ({ depth, cellIndex, align, children }: any) => {
               ref={nodeRef}
               style={{
                 ...defaultStyle,
-                ...transitionStyles[state]
+                ...transitionStyles[state],
               }}
             >
               <div
@@ -75,7 +75,9 @@ const CellContentWrapper = ({ depth, cellIndex, align, children }: any) => {
                   [depthPadding(depth)]: cellIndex === 0,
                   [alignmentStyles(align)]: !!align,
                 })}
-              >{children}</div>
+              >
+                {children}
+              </div>
             </div>
           )}
         </Transition>
@@ -85,11 +87,13 @@ const CellContentWrapper = ({ depth, cellIndex, align, children }: any) => {
             [depthPadding(depth)]: cellIndex === 0,
             [alignmentStyles(align)]: !!align,
           })}
-        >{children}</div>
+        >
+          {children}
+        </div>
       )}
     </>
-  )
-}
+  );
+};
 
 const InternalCellBase = ({
   children,
@@ -112,13 +116,12 @@ const InternalCellBase = ({
 
   return (
     <td className={cx(baseStyles, className)} {...rest}>
-      <CellContentWrapper
-        cellIndex={cellIndex}
-        depth={depth}
-        align={align}
-      >
+      <CellContentWrapper cellIndex={cellIndex} depth={depth} align={align}>
         {!!toggleExpandedIconProps && (
-          <ToggleExpandedIcon {...toggleExpandedIconProps} />
+          <ToggleExpandedIcon
+            {...toggleExpandedIconProps}
+            data-testid="lg-table-expand-icon-button"
+          />
         )}
         {children}
       </CellContentWrapper>

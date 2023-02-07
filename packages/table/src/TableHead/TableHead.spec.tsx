@@ -1,22 +1,14 @@
 import React from 'react';
-import { getByText, waitFor } from '@testing-library/dom';
 import { fireEvent, render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
-
-import TableHead, { TableHeadProps } from ".";
+import TableHead, { TableHeadProps } from '.';
 
 const renderTableHeadScrollTest = (props: TableHeadProps = {}) => {
   return render(
-    <div
-      style={{ height: '500px', overflowY: 'scroll', position: 'relative' }}
-    >
+    <div style={{ height: '500px', overflowY: 'scroll', position: 'relative' }}>
       <table>
-        <TableHead
-          {...props}
-        >
+        <TableHead {...props}>
           <tr>
             <td>thead test</td>
           </tr>
@@ -24,16 +16,14 @@ const renderTableHeadScrollTest = (props: TableHeadProps = {}) => {
         <tbody>
           <tr>
             <td>
-              <div style={{ height: '5000px' }}>
-                test div
-              </div>
+              <div style={{ height: '5000px' }}>test div</div>
             </td>
           </tr>
         </tbody>
       </table>
-    </div>
+    </div>,
   );
-}
+};
 
 describe('packages/table/TableHead', () => {
   describe('a11y', () => {
@@ -41,7 +31,7 @@ describe('packages/table/TableHead', () => {
       const { container } = render(
         <table>
           <TableHead />
-        </table>
+        </table>,
       );
       const results = await axe(container);
       expect(results).toHaveNoViolations();
@@ -50,30 +40,34 @@ describe('packages/table/TableHead', () => {
 
   describe('isSticky prop', () => {
     // this is not supported by jsdom. need cypress or puppeteer
+    // eslint-disable-next-line jest/no-disabled-tests
     test.skip('non-sticky header is not visible after long scroll', async () => {
       const { container, getByText } = renderTableHeadScrollTest();
-      let onScrollCallback = jest.fn();
+      const onScrollCallback = jest.fn();
       container.addEventListener('scroll', () => {
         onScrollCallback();
       });
       fireEvent.scroll(container, { target: { scrollY: 4000 } });
       expect(onScrollCallback).toHaveBeenCalledTimes(1);
 
-      let theadText = getByText('thead test')
+      const theadText = getByText('thead test');
       expect(theadText).not.toBeVisible();
     });
 
     // this is not supported by jsdom. need cypress or puppeteer
+    // eslint-disable-next-line jest/no-disabled-tests
     test.skip('sticky header is visible after long scroll', async () => {
-      const { container, getByText } = renderTableHeadScrollTest({ isSticky: true });
-      let onScrollCallback = jest.fn();
+      const { container, getByText } = renderTableHeadScrollTest({
+        isSticky: true,
+      });
+      const onScrollCallback = jest.fn();
       container.addEventListener('scroll', () => {
         onScrollCallback();
       });
       fireEvent.scroll(container, { target: { scrollY: 4000 } });
       expect(onScrollCallback).toHaveBeenCalledTimes(1);
 
-      let theadText = getByText('thead test')
+      const theadText = getByText('thead test');
       expect(theadText).toBeVisible();
     });
   });

@@ -32,6 +32,7 @@ const InternalRowWithRT = <T extends unknown>({
         <tbody
           {...props}
           ref={virtualRow ? virtualRow.measureRef : undefined}
+          data-testid="lg-table-expandable-row-tbody"
         />
       )
     : Fragment;

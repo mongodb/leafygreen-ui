@@ -7,9 +7,12 @@ import { cx } from '@leafygreen-ui/emotion';
 
 import { baseStyles, headerStyles } from './Checkbox.styles';
 
-const CheckboxCell = (props: CheckboxProps & { isHeader?: boolean }) => (
-  <div className={cx(baseStyles, { [headerStyles]: props.isHeader })}>
-    <Checkbox {...props} />
+const CheckboxCell = ({
+  isHeader,
+  ...rest
+}: CheckboxProps & { isHeader?: boolean }) => (
+  <div className={cx(baseStyles, { [headerStyles]: isHeader })}>
+    <Checkbox {...rest} />
   </div>
 );
 

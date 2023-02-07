@@ -32,13 +32,13 @@ const TableBody = <T extends unknown>({
   return (
     <ContainerElement {...rest}>
       {paddingTop > 0 && (
-        <tr>
+        <tr aria-hidden>
           <td style={{ height: `${paddingTop}px` }} />
         </tr>
       )}
       {children}
       {paddingBottom > 0 && (
-        <tr>
+        <tr aria-hidden>
           <td style={{ height: `${paddingBottom}px` }} />
         </tr>
       )}

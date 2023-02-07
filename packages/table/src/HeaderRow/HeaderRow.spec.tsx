@@ -2,10 +2,9 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import HeaderRow, { HeaderRowProps } from ".";
+import HeaderRow, { HeaderRowProps } from '.';
 
-const defaultProps: HeaderRowProps = {
-};
+const defaultProps: HeaderRowProps = {};
 
 function renderHeaderRow(props: HeaderRowProps) {
   return render(
@@ -13,7 +12,8 @@ function renderHeaderRow(props: HeaderRowProps) {
       <thead>
         <HeaderRow {...props} />
       </thead>
-    </table>);
+    </table>,
+  );
 }
 
 describe('packages/table/HeaderRow', () => {
