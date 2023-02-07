@@ -48,15 +48,14 @@ interface BaseSearchInputProps
   value?: string;
 
   /**
-   * Callback fired when the input value changes
+   * Callback fired when the input value changes.
+   * Use this callback to filter the `SearchResult` options
    */
   onChange?: ChangeEventHandler<HTMLInputElement>;
 
   /**
-   * Callback fired when the enter key is pressed.
-   *
-   * Ignored when there search results available
-   * (in this case the enter key fires the `onClick` handler on the search result)
+   * Callback fired when a search result is clicked,
+   * or the enter key is pressed.
    */
   onSubmit?: FormEventHandler<HTMLFormElement>;
 

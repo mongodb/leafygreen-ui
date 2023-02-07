@@ -6,6 +6,8 @@ import React, {
   KeyboardEventHandler,
   MouseEventHandler,
   SyntheticEvent,
+  useCallback,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -19,15 +21,20 @@ import {
   useForwardedRef,
 } from '@leafygreen-ui/hooks';
 import MagnifyingGlass from '@leafygreen-ui/icon/dist/MagnifyingGlass';
-import XIcon from '@leafygreen-ui/icon/dist/X';
+import XIcon from '@leafygreen-ui/icon/dist/XWithCircle';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { isComponentType, keyMap } from '@leafygreen-ui/lib';
+import {
+  getNodeTextContent,
+  isComponentType,
+  keyMap,
+} from '@leafygreen-ui/lib';
 
 import { SearchInputContextProvider } from '../SearchInputContext';
 import { SearchResultsMenu } from '../SearchResultsMenu';
+import { convertEvent } from '../utils/convertEvent';
 
 import {
   baseInputStyle,
@@ -97,11 +104,21 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
 
     const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
 
+    const setInputValue = useCallback(
+      (value: string) => {
+        if (inputRef.current) {
+          inputRef.current.value = value;
+        }
+      },
+      [inputRef],
+    );
+
     /**
      * Helper function that both counts the number of `SearchResult` descendants
      * and adds the appropriate props to said children
      */
-    const processChildren = () => {
+    const processChildren = useCallback(() => {
+      // Count results (not just children, since groups are still children)
       let resultsCount = 0;
 
       const processChild = (
@@ -110,11 +127,32 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
         if (isComponentType(child, 'SearchResult')) {
           resultsCount += 1;
           const index = resultsCount - 1;
+
+          const textValue = getNodeTextContent(child);
+
+          const onElementClick: MouseEventHandler = e => {
+            setInputValue(textValue);
+            child.props.onClick?.(e);
+
+            const wasClickedWithMouse = e.detail >= 1;
+
+            if (wasClickedWithMouse && formRef.current && inputRef.current) {
+              // Selecting an option fires the `submit` event
+              // We only fire a new `submit` event if the element was clicked with the mouse,
+              // since the enter key also fires the `submit` event
+              formRef.current?.dispatchEvent(
+                new Event('submit', { cancelable: true, bubbles: true }),
+              );
+            }
+          };
+
           return React.cloneElement(child, {
             ...child.props,
             id: `result-${index}`,
+            key: `result-${index}`,
             ref: child.props.ref ?? resultRefs?.(`${index}`),
             focused: index === highlightIndex,
+            onClick: onElementClick,
           });
         } else if (isComponentType(child, 'SearchResultGroup')) {
           const nestedChildren = React.Children.map(
@@ -137,9 +175,12 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
         resultsCount,
         updatedChildren,
       };
-    };
+    }, [children, highlightIndex, inputRef, resultRefs, setInputValue]);
 
-    const { updatedChildren, resultsCount } = processChildren();
+    const { updatedChildren, resultsCount } = useMemo(
+      () => processChildren(),
+      [processChildren],
+    );
 
     type Direction = 'next' | 'prev' | 'first' | 'last';
     const updateHighlight = (direction: Direction) => {
@@ -213,11 +254,10 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       // We convert the click event into a Change event,
       // Update the target & value,
       // Then fire any `onChange` handler
-      const changeEvent: ChangeEvent<any> = {
-        ...e,
+      const changeEvent = convertEvent<ChangeEvent<HTMLInputElement>>(e, {
         type: 'change',
         target: inputRef.current as EventTarget,
-      };
+      });
       changeEvent.target.value = '';
       handleChange(changeEvent);
       inputRef?.current?.focus();
@@ -234,6 +274,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       if (isFocusInComponent) {
         switch (e.keyCode) {
           case keyMap.Enter: {
+            e.stopPropagation();
             const highlightedElementRef = resultRefs(`${highlightIndex}`);
             highlightedElementRef?.current?.click();
             break;
@@ -273,10 +314,10 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     };
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
+      e.preventDefault(); // prevent page reload
+      onSubmitProp?.(e);
       if (withTypeAhead) {
-        e.preventDefault();
-      } else {
-        onSubmitProp?.(e);
+        closeMenu();
       }
     };
 

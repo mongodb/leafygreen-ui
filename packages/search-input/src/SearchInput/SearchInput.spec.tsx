@@ -407,7 +407,7 @@ describe('packages/search-input', () => {
           expect(submitHandler).toHaveBeenCalled();
         });
 
-        test('selects the highlighted result with typeahead', () => {
+        test('selects the highlighted result and fires onSubmit  with typeahead', () => {
           const submitHandler = jest.fn();
 
           const { inputEl, openMenu } = renderSearchInput({
@@ -417,7 +417,7 @@ describe('packages/search-input', () => {
           openMenu();
           userEvent.type(inputEl, '{arrowdown}{enter}');
           expect(resultClickHandler).toHaveBeenCalled();
-          expect(submitHandler).not.toHaveBeenCalled();
+          expect(submitHandler).toHaveBeenCalled();
         });
       });
     });

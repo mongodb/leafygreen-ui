@@ -47,6 +47,7 @@ export const SearchResult = Polymorphic<
 
     return (
       <InputOption
+        {...rest}
         as={as}
         ref={ref}
         className={cx(
@@ -60,7 +61,6 @@ export const SearchResult = Polymorphic<
         disabled={disabled}
         aria-labelledby={rest['aria-labelledby']}
         aria-label={ariaLabel}
-        {...rest}
       >
         <div className={titleClassName}>{children}</div>
         {description && (
