@@ -7,16 +7,15 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import {
+  BaseFontSize,
+  useBaseFontSize,
+} from '@leafygreen-ui/leafygreen-provider';
+import {
   useDarkMode,
   usePopoverPortalContainer,
 } from '@leafygreen-ui/leafygreen-provider';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
 import Tooltip, { Align, Justify, TriggerEvent } from '@leafygreen-ui/tooltip';
-import {
-  Description,
-  Label,
-  useUpdatedBaseFontSize,
-} from '@leafygreen-ui/typography';
+import { Description, Label } from '@leafygreen-ui/typography';
 
 import {
   buttonContainerStyle,
@@ -55,7 +54,7 @@ export default function Copyable({
 
   const { portalContainer } = usePopoverPortalContainer();
 
-  const baseFontSize = useUpdatedBaseFontSize();
+  const { baseFontSize } = useBaseFontSize();
 
   // If there is a size use that Size, if not then use the baseFontSize to set the size
   const size = SizeProp

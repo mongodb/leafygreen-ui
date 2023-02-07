@@ -1,4 +1,5 @@
 import { css, cx } from '@leafygreen-ui/emotion';
+import { BaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
@@ -74,11 +75,11 @@ export const optionSizeStyle: Record<Size, string> = {
 export const optionStyle = ({
   theme,
   size = 'default',
-  baseFontSize = 14,
+  baseFontSize = BaseFontSize.Body1,
 }: {
   theme: Theme;
   size: Size;
-  baseFontSize: 14 | 16;
+  baseFontSize: BaseFontSize;
 }) =>
   cx(
     optionThemeStyle[theme],
@@ -122,7 +123,7 @@ export const optionStyle = ({
       // Update font size according to baseFontSize
       [css`
         --font-size: 16px;
-      `]: size === 'default' && baseFontSize === 16,
+      `]: size === 'default' && baseFontSize === BaseFontSize.Body2,
     },
   );
 

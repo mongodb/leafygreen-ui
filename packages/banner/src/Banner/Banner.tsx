@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
 import {
-  bodyTypeScaleStyles,
-  useUpdatedBaseFontSize,
-} from '@leafygreen-ui/typography';
+  BaseFontSize,
+  useBaseFontSize,
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
+import { bodyTypeScaleStyles } from '@leafygreen-ui/typography';
 
 import BannerDismissButton from '../BannerDismissButton';
 import BannerIcon from '../BannerIcon';
@@ -43,7 +43,7 @@ export default function Banner({
   ...rest
 }: BannerProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
-  const baseFontSize: BaseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
+  const { baseFontSize } = useBaseFontSize(baseFontSizeProp);
 
   return (
     <div

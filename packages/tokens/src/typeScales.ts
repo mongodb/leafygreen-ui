@@ -1,10 +1,4 @@
-export const BaseFontSize = {
-  Body1: 13,
-  Body2: 16,
-} as const;
-
-export type BaseFontSize = typeof BaseFontSize[keyof typeof BaseFontSize];
-
+import { BaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 /**
  * Defines font sizes and line heights of common typographic elements.
  * Units are in `px`

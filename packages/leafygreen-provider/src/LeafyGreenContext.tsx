@@ -9,8 +9,8 @@ import PortalContextProvider, {
   usePopoverPortalContainer,
 } from './PortalContext';
 import TypographyProvider, {
-  TypographyProviderProps,
-  useBaseFontSize,
+  BaseFontSize,
+  useBaseFontSizeContext,
 } from './TypographyContext';
 import UsingKeyboardProvider from './UsingKeyboardContext';
 
@@ -19,8 +19,12 @@ export type LeafyGreenProviderProps = {
    * Define a container HTMLElement for components that utilize the `Portal` component
    */
   popoverPortalContainer?: PortalContextValues['popover'];
-} & TypographyProviderProps &
-  DarkModeProps;
+
+  /**
+   * Define a baseFontSize for components that inherit a typography scale.
+   */
+  baseFontSize: BaseFontSize;
+} & DarkModeProps;
 
 function LeafyGreenProvider({
   children,
@@ -40,8 +44,16 @@ function LeafyGreenProvider({
   }, [darkModeProp, inheritedDarkMode]);
 
   // Similarly with base font size
-  const inheritedFontSize = useBaseFontSize();
-  const baseFontSize = fontSizeProp ?? inheritedFontSize;
+  const { contextBaseFontSize: inheritedBaseFontSize } =
+    useBaseFontSizeContext();
+  const [baseFontSizeState, setBaseFontSize] = useState(
+    fontSizeProp ?? inheritedBaseFontSize,
+  );
+
+  useEffect(() => {
+    setBaseFontSize(fontSizeProp ?? inheritedBaseFontSize);
+  }, [fontSizeProp, inheritedBaseFontSize]);
+
   // and popover portal container
   const inheritedContainer = usePopoverPortalContainer();
   const popoverPortalContainer =
@@ -50,7 +62,10 @@ function LeafyGreenProvider({
   return (
     <UsingKeyboardProvider>
       <PortalContextProvider popover={popoverPortalContainer}>
-        <TypographyProvider baseFontSize={baseFontSize}>
+        <TypographyProvider
+          baseFontSize={baseFontSizeState}
+          setBaseFontSize={setBaseFontSize}
+        >
           <DarkModeProvider
             contextDarkMode={darkModeState}
             setDarkMode={setDarkMode}
@@ -72,7 +87,7 @@ LeafyGreenProvider.propTypes = {
       scrollContainer: PropTypes.elementType,
     }),
   }),
-  baseFontSize: PropTypes.oneOf([14, 16]),
+  baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
   darkMode: PropTypes.bool,
 };
 

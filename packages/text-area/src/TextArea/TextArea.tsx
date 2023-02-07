@@ -4,13 +4,15 @@ import PropTypes from 'prop-types';
 import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
 import Warning from '@leafygreen-ui/icon/dist/Warning';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import {
+  useBaseFontSize,
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import {
   bodyTypeScaleStyles,
   Description,
   Error,
   Label,
-  useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 
 import {
@@ -71,8 +73,7 @@ export const TextArea: TextArea = forwardRef<
   }: TextAreaProps,
   forwardedRef: React.Ref<HTMLTextAreaElement>,
 ) {
-  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
-  const errorBaseFontSize = useUpdatedBaseFontSize();
+  const { baseFontSize } = useBaseFontSize(baseFontSizeProp);
   const id = useIdAllocator({ prefix: 'textarea', id: idProp });
   const { darkMode, theme } = useDarkMode(darkModeProp);
 
@@ -145,7 +146,7 @@ export const TextArea: TextArea = forwardRef<
           <Error
             darkMode={darkMode}
             className={cx(
-              bodyTypeScaleStyles[errorBaseFontSize],
+              bodyTypeScaleStyles[baseFontSize],
               errorMessageLabelStyles,
             )}
           >

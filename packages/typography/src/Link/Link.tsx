@@ -3,11 +3,13 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
 import OpenNewTabIcon from '@leafygreen-ui/icon/dist/OpenNewTab';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import {
+  useBaseFontSize,
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import { Polymorphic, usePolymorphic } from '@leafygreen-ui/polymorphic';
 
 import { bodyTypeScaleStyles } from '../styles';
-import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
 
 import {
   anchorClassName,
@@ -48,7 +50,7 @@ const Link = Polymorphic<LinkProps>(
       return httpRegex.test(href) ? new URL(href).hostname : currentHostname;
     }, [href, currentHostname]);
 
-    const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
+    const { baseFontSize } = useBaseFontSize(baseFontSizeOverride);
 
     let target, icon, rel;
 

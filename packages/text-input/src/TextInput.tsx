@@ -6,15 +6,13 @@ import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import {
+  useBaseFontSize,
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
-import {
-  Description,
-  Error,
-  Label,
-  useUpdatedBaseFontSize,
-} from '@leafygreen-ui/typography';
+import { Description, Error, Label } from '@leafygreen-ui/typography';
 
 import {
   baseInputStyle,
@@ -92,7 +90,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     const [uncontrolledValue, setValue] = useState('');
     const value = isControlled ? controlledValue : uncontrolledValue;
     const id = useIdAllocator({ prefix: 'textinput', id: propsId });
-    const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
+    const { baseFontSize } = useBaseFontSize(baseFontSizeProp);
 
     // Validation
     const validation = useValidation<HTMLInputElement>(handleValidation);

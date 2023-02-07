@@ -1,7 +1,10 @@
 import React from 'react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import {
+  useBaseFontSize,
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import {
   Polymorphic,
   PolymorphicAs,
@@ -13,7 +16,6 @@ import {
   bodyTypeScaleStyles,
   defaultTextColor,
 } from '../styles';
-import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
 
 import { BodyFontWeight, BodyProps } from './Body.types';
 
@@ -41,7 +43,7 @@ const Body = Polymorphic<BodyProps>(
     ...rest
   }) => {
     const { theme } = useDarkMode(darkModeProp);
-    const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
+    const { baseFontSize } = useBaseFontSize(baseFontSizeOverride);
     const { Component } = usePolymorphic(as);
 
     // Currently hardcoding selectors to keys; could consider a dynamic solution that runs once

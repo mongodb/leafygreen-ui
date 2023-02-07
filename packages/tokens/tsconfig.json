@@ -10,7 +10,10 @@
   ],
   "references": [
     {
+      "path": "../leafygreen-provider"
+    }, 
+    {
       "path": "../palette"
-    }
+    }, 
   ]
 }

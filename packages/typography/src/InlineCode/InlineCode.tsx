@@ -2,11 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import {
+  useBaseFontSize,
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { codeTypeScaleStyles } from '../styles';
-import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
 
 import {
   anchorClassName,
@@ -32,7 +34,7 @@ const InlineCode = React.forwardRef<HTMLElement, InlineCodeProps>(
     forwardedRef,
   ) => {
     const { theme } = useDarkMode(darkModeProp);
-    const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
+    const { baseFontSize } = useBaseFontSize(baseFontSizeOverride);
 
     const whiteSpace =
       ((typeof children === 'string' && children.match(/./gu)?.length) ?? 0) <=

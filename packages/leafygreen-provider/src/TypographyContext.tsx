@@ -1,27 +1,46 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
 import PropTypes from 'prop-types';
 
-// TODO: Refresh - update to 13 | 16
-type FontSize = 14 | 16;
-export interface TypographyProviderProps {
-  /**
-   * The base font size of all LeafyGreen components unless overridden.
-   */
-  baseFontSize?: FontSize;
+export const BaseFontSize = {
+  Body1: 13,
+  Body2: 16,
+} as const;
+
+export type BaseFontSize = typeof BaseFontSize[keyof typeof BaseFontSize];
+
+interface BaseFontSizeContextProps {
+  contextBaseFontSize?: BaseFontSize;
+  setBaseFontSize: React.Dispatch<BaseFontSize>;
 }
 
-const BaseFontSizeContext = createContext<FontSize>(14);
+const BaseFontSizeContext = createContext<BaseFontSizeContextProps>({
+  contextBaseFontSize: BaseFontSize.Body1,
+  setBaseFontSize: () => {},
+});
 
-export function useBaseFontSize() {
-  return useContext(BaseFontSizeContext);
-}
+export const useBaseFontSizeContext = () => useContext(BaseFontSizeContext);
+
+type useBaseFontSize = (localBaseFontSize?: BaseFontSize) => {
+  baseFontSize: BaseFontSize;
+  setBaseFontSize: React.Dispatch<BaseFontSize>;
+};
+
+export const useBaseFontSize: useBaseFontSize = localBaseFontSize => {
+  const { contextBaseFontSize, setBaseFontSize } = useBaseFontSizeContext();
+  const baseFontSize =
+    localBaseFontSize ?? contextBaseFontSize ?? BaseFontSize.Body1;
+  return { baseFontSize, setBaseFontSize };
+};
 
 function TypographyProvider({
   children,
-  baseFontSize = 14,
-}: PropsWithChildren<TypographyProviderProps>) {
+  contextBaseFontSize = BaseFontSize.Body1,
+  setBaseFontSize,
+}: PropsWithChildren<BaseFontSizeContextProps>) {
   return (
-    <BaseFontSizeContext.Provider value={baseFontSize}>
+    <BaseFontSizeContext.Provider
+      value={{ contextBaseFontSize, setBaseFontSize }}
+    >
       {children}
     </BaseFontSizeContext.Provider>
   );
@@ -31,7 +50,7 @@ TypographyProvider.displayName = 'TypographyProvider';
 
 TypographyProvider.propTypes = {
   children: PropTypes.node,
-  baseFontSize: PropTypes.number,
+  baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
 };
 
 export default TypographyProvider;

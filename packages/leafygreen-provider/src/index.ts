@@ -9,5 +9,5 @@ export {
   default as PortalContextProvider,
   usePopoverPortalContainer,
 } from './PortalContext';
-export { useBaseFontSize } from './TypographyContext';
+export { BaseFontSize,useBaseFontSize } from './TypographyContext';
 export { useUsingKeyboardContext } from './UsingKeyboardContext';

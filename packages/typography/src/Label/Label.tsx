@@ -1,14 +1,15 @@
 import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import {
+  useBaseFontSize,
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import {
   Polymorphic,
   PolymorphicAs,
   usePolymorphic,
 } from '@leafygreen-ui/polymorphic';
-
-import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
 
 import {
   disabledLabelColorStyle,
@@ -29,7 +30,7 @@ export const Label = Polymorphic<LabelProps>(
     ...rest
   }) => {
     const { theme } = useDarkMode(darkModeProp);
-    const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
+    const { baseFontSize } = useBaseFontSize(baseFontSizeOverride);
     const { Component } = usePolymorphic(as);
 
     return (

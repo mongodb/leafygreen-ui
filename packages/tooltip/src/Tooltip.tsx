@@ -11,6 +11,7 @@ import {
 } from '@leafygreen-ui/hooks';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import LeafyGreenProvider, {
+  useBaseFontSize,
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
@@ -22,10 +23,7 @@ import Popover, {
   PopoverProps,
 } from '@leafygreen-ui/popover';
 import { BaseFontSize, fontFamilies } from '@leafygreen-ui/tokens';
-import {
-  bodyTypeScaleStyles,
-  useUpdatedBaseFontSize,
-} from '@leafygreen-ui/typography';
+import { bodyTypeScaleStyles } from '@leafygreen-ui/typography';
 
 import SvgNotch from './Notch';
 import { borderRadius, notchWidth } from './tooltipConstants';
@@ -233,7 +231,7 @@ function Tooltip({
 }: TooltipProps) {
   const isControlled = typeof controlledOpen === 'boolean';
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
-  const size = useUpdatedBaseFontSize(baseFontSizeOverride);
+  const { baseFontSize: size } = useBaseFontSize(baseFontSizeOverride);
   const open = isControlled ? controlledOpen : uncontrolledOpen;
   // typescript is not recognizing isControlled checks that controlledSetOpen exists
   const setOpen =

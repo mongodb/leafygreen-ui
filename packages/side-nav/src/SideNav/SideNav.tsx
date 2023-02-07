@@ -6,11 +6,11 @@ import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useEventListener, useIdAllocator } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
+  useBaseFontSize,
   useDarkMode,
   useUsingKeyboardContext,
 } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
-import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { CollapseToggle } from '../CollapseToggle';
 
@@ -71,7 +71,7 @@ function SideNav({
 }: SideNavProps) {
   const { Provider: SideNavProvider } = SideNavContext;
   const [uncontrolledCollapsed, uncontrolledSetCollapsed] = useState(false);
-  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
+  const { baseFontSize } = useBaseFontSize(baseFontSizeProp);
   const { usingKeyboard } = useUsingKeyboardContext();
 
   const { darkMode, theme } = useDarkMode(darkModeProp);
@@ -142,7 +142,7 @@ function SideNav({
             theme,
           }}
         >
-          <LeafyGreenProvider darkMode={darkMode}>
+          <LeafyGreenProvider darkMode={darkMode} baseFontSize={baseFontSize}>
             <div
               data-testid="side-nav-container"
               className={cx(

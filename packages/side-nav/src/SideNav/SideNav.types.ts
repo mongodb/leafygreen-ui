@@ -1,5 +1,5 @@
+import { BaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
-
 export interface SideNavProps extends HTMLElementProps<'nav'>, DarkModeProps {
   /**
    * Content that will be rendered inside the root-level element.
@@ -13,7 +13,7 @@ export interface SideNavProps extends HTMLElementProps<'nav'>, DarkModeProps {
   /**
    * Determines the base font size (in pixels) of the Side Nav
    */
-  baseFontSize?: 14 | 16;
+  baseFontSize?: BaseFontSize;
 
   /**
    * Provides an override for the SideNav width (in pixels).

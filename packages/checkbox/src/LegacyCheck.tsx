@@ -1,8 +1,11 @@
 import React from 'react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
-import { BaseFontSize, transitionDuration } from '@leafygreen-ui/tokens';
-import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
+import {
+  BaseFontSize,
+  useBaseFontSize,
+} from '@leafygreen-ui/leafygreen-provider';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import {
   disabledLight,
@@ -67,7 +70,7 @@ export function LegacyCheck({
   animate,
   selector,
 }: CheckProps) {
-  const baseFontSize = useUpdatedBaseFontSize();
+  const { baseFontSize } = useBaseFontSize();
   const checkboxBackgroundImage = (() => {
     if (disabled) {
       if (isChecked) {

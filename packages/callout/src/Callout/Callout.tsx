@@ -2,14 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
+import {
+  BaseFontSize,
+  useBaseFontSize,
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import {
   anchorClassName,
   bodyTypeScaleStyles,
   Overline,
   Subtitle,
-  useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 
 import {
@@ -40,7 +42,7 @@ function Callout({
   ...rest
 }: CalloutProps) {
   const { theme } = useDarkMode(darkModeProp);
-  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
+  const { baseFontSize } = useBaseFontSize(baseFontSizeProp);
   const colorSet = colorSets[theme][variant];
   const Icon = headerIcons[variant];
 

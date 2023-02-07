@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import {
+  BaseFontSize,
   useBaseFontSize,
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
@@ -104,9 +105,9 @@ function Syntax({
 
   const { theme, darkMode } = useDarkMode();
 
-  const baseFontSize = useBaseFontSize();
-  // TODO: remove 14 check when useBaseFontSize is updated
-  const typeScale = baseFontSize === 14 ? typeScales.code1 : typeScales.code2;
+  const { baseFontSize } = useBaseFontSize();
+  const typeScale =
+    baseFontSize === BaseFontSize.Body1 ? typeScales.code1 : typeScales.code2;
   const codeFontStyles = css`
     font-size: ${typeScale.fontSize}px;
     line-height: ${typeScale.lineHeight}px;
