@@ -213,7 +213,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       // Update the target & value,
       // Then fire any `onChange` handler
       const changeEvent: ChangeEvent<any> = {
-        ...cloneDeep(e),
+        ...e,
         type: 'change',
         target: inputRef.current as EventTarget,
       };

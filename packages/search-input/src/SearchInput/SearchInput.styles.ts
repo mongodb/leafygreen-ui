@@ -174,7 +174,6 @@ export const inputThemeStyle: Record<Theme, string> = {
         &:focus {
           box-shadow: ${autofillShadowOverride(palette.white)},
             ${focusRing.light.input};
-          /* border-color: ${palette.white}; */
         }
 
         &:hover:not(:focus) {
