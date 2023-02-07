@@ -58,19 +58,19 @@ describe('packages/search-input', () => {
       expect(getByPlaceholderText(defaultProps.placeholder)).toBeVisible();
     });
 
-    test(`Passes className to root element`, () => {
+    test(`passes className to root element`, () => {
       const { containerEl } = renderSearchInput(defaultProps);
       expect(
         containerEl.classList.contains(defaultProps.className),
       ).toBeTruthy();
     });
 
-    test('Clear button is not rendered when there is no text', () => {
+    test('clear button is not rendered when there is no text', () => {
       const { queryByRole } = renderSearchInput();
       expect(queryByRole('button')).not.toBeInTheDocument();
     });
 
-    test('Clear button is rendered when there is text', () => {
+    test('clear button is rendered when there is text', () => {
       const { queryByRole, inputEl } = renderSearchInput();
       userEvent.type(inputEl, 'abc');
       expect(queryByRole('button')).toBeInTheDocument();
@@ -109,14 +109,14 @@ describe('packages/search-input', () => {
   });
 
   describe('Basic Search Results rendering', () => {
-    test('No results appear when there are no children', () => {
+    test('no results appear when there are no children', () => {
       const { getMenuElements, openMenu } = renderSearchInput();
       openMenu();
       const { menuContainerEl } = getMenuElements();
       expect(menuContainerEl).not.toBeInTheDocument();
     });
 
-    test('All children render in the menu', () => {
+    test('all children render in the menu', () => {
       const { openMenu } = renderSearchInput({
         ...defaultProps,
       });
@@ -124,7 +124,7 @@ describe('packages/search-input', () => {
       expect(resultsElements).toHaveLength(4);
     });
 
-    test('Results change dynamically while menu is open', () => {
+    test('results change dynamically while menu is open', () => {
       const { getMenuElements, openMenu, rerenderWithProps } =
         renderSearchInput({
           children: defaultProps.children,
@@ -140,7 +140,7 @@ describe('packages/search-input', () => {
   });
 
   describe('Interaction', () => {
-    test('Menu is not initially opened', () => {
+    test('menu is not initially opened', () => {
       const { getMenuElements } = renderSearchInput({
         ...defaultProps,
       });
@@ -150,7 +150,7 @@ describe('packages/search-input', () => {
     });
 
     describe('Any character key', () => {
-      test('Updates the input', () => {
+      test('updates the input', () => {
         const { inputEl } = renderSearchInput({
           onChange: defaultProps.onChange,
         });
@@ -159,7 +159,7 @@ describe('packages/search-input', () => {
         expect(inputEl.value).toBe('a');
         expect(defaultProps.onChange).toHaveBeenCalledTimes(1);
       });
-      test("Opens the menu if it's closed", () => {
+      test("opens the menu if it's closed", () => {
         const { getMenuElements, inputEl } = renderSearchInput({
           ...defaultProps,
         });
@@ -171,7 +171,7 @@ describe('packages/search-input', () => {
     });
 
     describe('Clear button', () => {
-      test('Clears any input', () => {
+      test('clears any input', () => {
         const { queryByRole, inputEl } = renderSearchInput();
         userEvent.type(inputEl, 'abc');
         userEvent.click(queryByRole('button')!);
@@ -179,7 +179,7 @@ describe('packages/search-input', () => {
         expect(inputEl).toHaveFocus();
       });
 
-      test('Fires `onChange`', () => {
+      test('fires `onChange`', () => {
         const props = { ...defaultProps };
         const { queryByRole, inputEl } = renderSearchInput(props);
         userEvent.type(inputEl, 'abc');
@@ -189,7 +189,7 @@ describe('packages/search-input', () => {
     });
 
     describe('Mouse interaction', () => {
-      test('Clicking the input sets focus to the input', () => {
+      test('clicking the input sets focus to the input', () => {
         const { inputEl } = renderSearchInput({
           ...defaultProps,
         });
@@ -198,7 +198,7 @@ describe('packages/search-input', () => {
         expect(inputEl).toHaveFocus();
       });
 
-      test('Clicking the input opens the menu', () => {
+      test('clicking the input opens the menu', () => {
         const { getMenuElements, inputEl } = renderSearchInput({
           ...defaultProps,
         });
@@ -209,7 +209,7 @@ describe('packages/search-input', () => {
         expect(menuContainerEl).toBeInTheDocument();
       });
 
-      test('Clicking anywhere on the searchBox opens the menu & sets focus', () => {
+      test('clicking anywhere on the searchBox opens the menu & sets focus', () => {
         const { getMenuElements, searchBoxEl, inputEl } = renderSearchInput({
           ...defaultProps,
         });
@@ -221,7 +221,7 @@ describe('packages/search-input', () => {
         expect(inputEl).toHaveFocus();
       });
 
-      test('Menu closes on click-away', async () => {
+      test('menu closes on click-away', async () => {
         const { openMenu, containerEl, inputEl } = renderSearchInput({
           ...defaultProps,
         });
@@ -232,7 +232,7 @@ describe('packages/search-input', () => {
         expect(inputEl).toHaveFocus();
       });
 
-      test('Text remains when the menu closes', async () => {
+      test('text remains when the menu closes', async () => {
         const { openMenu, containerEl, inputEl } = renderSearchInput({
           ...defaultProps,
         });
@@ -244,7 +244,7 @@ describe('packages/search-input', () => {
         expect(inputEl).toHaveValue('abc');
       });
 
-      test('Clicking a result fires its onClick handler', () => {
+      test('clicking a result fires its onClick handler', () => {
         const { getMenuElements, inputEl } = renderSearchInput({
           ...defaultProps,
         });
@@ -257,7 +257,7 @@ describe('packages/search-input', () => {
     });
 
     describe('Keyboard interaction', () => {
-      test('First result is highlighted on menu open', () => {
+      test('first result is highlighted on menu open', () => {
         const { openMenu } = renderSearchInput({ ...defaultProps });
         const { resultsElements } = openMenu();
         expect(resultsElements).not.toBeUndefined();
@@ -265,7 +265,7 @@ describe('packages/search-input', () => {
       });
 
       describe('Tab key', () => {
-        test('Tab focuses the input', () => {
+        test('tab focuses the input', () => {
           const { getMenuElements, inputEl } = renderSearchInput({
             ...defaultProps,
           });
@@ -275,7 +275,7 @@ describe('packages/search-input', () => {
           expect(menuContainerEl).toBeInTheDocument();
         });
 
-        test('Focuses clear button', () => {
+        test('focuses clear button', () => {
           const { inputEl, queryByRole } = renderSearchInput({
             ...defaultProps,
           });
@@ -284,7 +284,7 @@ describe('packages/search-input', () => {
           expect(queryByRole('button')).toHaveFocus();
         });
 
-        test('Moves focus off input if there is no input value', () => {
+        test('moves focus off input if there is no input value', () => {
           const { inputEl } = renderSearchInput({
             ...defaultProps,
           });
@@ -310,7 +310,7 @@ describe('packages/search-input', () => {
       });
 
       describe('Escape key', () => {
-        test('Closes the menu', async () => {
+        test('closes the menu', async () => {
           const { inputEl, openMenu } = renderSearchInput({
             ...defaultProps,
           });
@@ -319,7 +319,7 @@ describe('packages/search-input', () => {
           await waitForElementToBeRemoved(menuContainerEl);
           expect(menuContainerEl).not.toBeInTheDocument();
         });
-        test('Returns focus to the input', () => {
+        test('returns focus to the input', () => {
           const { containerEl, openMenu, inputEl } = renderSearchInput({
             ...defaultProps,
           });
@@ -329,7 +329,7 @@ describe('packages/search-input', () => {
         });
       });
 
-      test('Space key types a space character', () => {
+      test('space key types a space character', () => {
         const { inputEl } = renderSearchInput({
           ...defaultProps,
         });
@@ -338,7 +338,7 @@ describe('packages/search-input', () => {
       });
 
       describe('Arrow keys', () => {
-        test('Down arrow moves highlight down', () => {
+        test('down arrow moves highlight down', () => {
           const { openMenu, inputEl, getByRole } = renderSearchInput({
             ...defaultProps,
           });
@@ -351,7 +351,7 @@ describe('packages/search-input', () => {
           expect(highlight).toHaveTextContent('Banana');
         });
 
-        test('Up arrow moves highlight up', () => {
+        test('up arrow moves highlight up', () => {
           const { openMenu, inputEl, getByRole } = renderSearchInput({
             ...defaultProps,
           });
@@ -364,7 +364,7 @@ describe('packages/search-input', () => {
           expect(highlight).toHaveTextContent('Banana');
         });
 
-        test('Down arrow key opens menu when its closed', () => {
+        test('down arrow key opens menu when its closed', () => {
           const { inputEl, getMenuElements } = renderSearchInput({
             ...defaultProps,
           });
@@ -422,7 +422,7 @@ describe('packages/search-input', () => {
     });
 
     test.todo(
-      'Highlight moves to first result if the previously highlighted result no longer exists',
+      'highlight moves to first result if the previously highlighted result no longer exists',
     );
   });
 
