@@ -30,11 +30,6 @@ export interface MenuItemProps extends HTMLElementProps<'button'> {
   size?: Size;
 
   /**
-   * className applied to  `li` element
-   */
-  className?: string;
-
-  /**
    * Content to appear inside of `<MenuItem />` component
    */
   children?: React.ReactNode;

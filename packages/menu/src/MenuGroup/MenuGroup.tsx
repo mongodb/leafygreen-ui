@@ -11,7 +11,6 @@ import { MenuGroupProps } from './MenuGroup.types';
   <MenuGroup>Hello World!</MenuGroup>
 </MenuGroup>
  * ```
- * @param props.className ClassName applied to MenuGroup.
  * @param props.children Content to appear inside of the MenuGroup.
  *
  */
@@ -27,8 +26,6 @@ MenuGroup.displayName = 'MenuGroup';
 
 MenuGroup.propTypes = {
   children: PropTypes.node,
-  className: PropTypes.string,
-  title: PropTypes.string,
 };
 
 export default MenuGroup;

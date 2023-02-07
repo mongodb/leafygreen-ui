@@ -66,7 +66,7 @@ import { SubMenuProps } from './SubMenu.types';
 
 const subMenuItemHeight = 32;
 
-export const SubMenu = InferredPolymorphic<SubMenuProps>(
+export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
   (
     {
       title,
