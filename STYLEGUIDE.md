@@ -336,7 +336,7 @@ const Button = React.forwardRef((props, ref) => (
   <button ref={ref}>{props.children}</button>
 ));
 
-// This ref will give you directly to the DOM button
+// This ref will give you direct access to the DOM button
 const ref = useRef<null | HTMLButtonElement>(null);
 <Button ref={ref}>Click me!</Button>;
 ```
@@ -346,7 +346,7 @@ const ref = useRef<null | HTMLButtonElement>(null);
 ```typescript
 const Button = (props, ref) => <button ref={ref}>{props.children}</button>;
 
-// This ref will give you directly to the DOM button
+// This ref will give you direct access to the DOM button
 <Button>Click me!</Button>;
 ```
 
