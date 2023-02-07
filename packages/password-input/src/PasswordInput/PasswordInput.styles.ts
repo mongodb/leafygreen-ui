@@ -79,11 +79,8 @@ export const inputBaseStyles = css`
 
 export const inputBaseThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
-    &,
-    &:-webkit-autofill {
-      color: ${palette.black};
-      background: ${palette.white};
-    }
+    color: ${palette.black};
+    background: ${palette.white};
 
     &:focus-visible {
       box-shadow: ${focusRing.light.input};
@@ -93,6 +90,7 @@ export const inputBaseThemeStyles: Record<Theme, string> = {
     &:-webkit-autofill {
       -webkit-text-fill-color: ${palette.black};
       box-shadow: ${autofillShadowOverride(palette.white)};
+      background: ${palette.white};
 
       &:focus-visible {
         box-shadow: ${autofillShadowOverride(palette.white)},
@@ -102,11 +100,8 @@ export const inputBaseThemeStyles: Record<Theme, string> = {
     }
   `,
   [Theme.Dark]: css`
-    &,
-    &:-webkit-autofill {
-      background-color: ${palette.gray.dark4};
-      color: ${palette.gray.light2};
-    }
+    background-color: ${palette.gray.dark4};
+    color: ${palette.gray.light2};
 
     &:focus-visible {
       box-shadow: ${focusRing.dark.input};
@@ -116,6 +111,7 @@ export const inputBaseThemeStyles: Record<Theme, string> = {
     &:-webkit-autofill {
       -webkit-text-fill-color: ${palette.gray.light2};
       box-shadow: ${autofillShadowOverride(palette.gray.dark4)};
+      background-color: ${palette.gray.dark4};
 
       &:focus-visible {
         box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
@@ -311,6 +307,14 @@ export const inputDisabledThemeStyles: Record<Theme, string> = {
 
     &:-webkit-autofill {
       -webkit-text-fill-color: ${palette.gray.base};
+      border-color: ${palette.gray.light1};
+      box-shadow: ${autofillShadowOverride(palette.gray.light2)};
+
+      &:focus-visible {
+        -webkit-text-fill-color: ${palette.gray.base};
+        box-shadow: ${autofillShadowOverride(palette.gray.light2)},
+          ${focusRing.light.input};
+      }
     }
   `,
   [Theme.Dark]: css`
@@ -320,6 +324,14 @@ export const inputDisabledThemeStyles: Record<Theme, string> = {
 
     &:-webkit-autofill {
       -webkit-text-fill-color: ${palette.gray.dark1};
+      border-color: ${palette.gray.dark2};
+      box-shadow: ${autofillShadowOverride(palette.gray.dark3)};
+
+      &:focus-visible {
+        -webkit-text-fill-color: ${palette.gray.dark1};
+        box-shadow: ${autofillShadowOverride(palette.gray.dark3)},
+          ${focusRing.dark.input};
+      }
     }
   `,
 };
