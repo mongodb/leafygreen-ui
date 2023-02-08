@@ -1,145 +1,25 @@
 import React, { useContext, useEffect, useMemo, useRef } from 'react';
 
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
-import { keyMap, Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
-import { transitionDuration, typeScales } from '@leafygreen-ui/tokens';
+import { keyMap } from '@leafygreen-ui/lib';
 
-import { ChipProps, ComboboxSize as Size } from '../Combobox.types';
-import {
-  chipClassName,
-  chipWrapperPaddingY,
-  inputHeight,
-} from '../Combobox/Combobox.styles';
+import { ChipProps } from '../Combobox.types';
+import { chipClassName } from '../Combobox/Combobox.styles';
 import { ComboboxContext } from '../ComboboxContext';
 
-const chipWrapperBaseStyle = css`
-  display: inline-flex;
-  align-items: center;
-  overflow: hidden;
-  white-space: nowrap;
-  box-sizing: border-box;
-`;
-
-const chipWrapperSizeStyle: Record<Size, string> = {
-  [Size.Default]: css`
-    font-size: ${typeScales.body1.fontSize}px;
-    line-height: ${typeScales.body1.lineHeight}px;
-    border-radius: 4px;
-  `,
-  [Size.Large]: css`
-    font-size: ${typeScales.body2.fontSize}px;
-    line-height: ${typeScales.body2.lineHeight}px;
-    border-radius: 4px;
-  `,
-};
-
-const chipWrapperThemeStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.black};
-    background-color: ${palette.gray.light2};
-
-    // TODO: - refine these styles with Design
-    &:focus-within {
-      background-color: ${palette.blue.light2};
-    }
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.light2};
-    background-color: ${palette.gray.dark2};
-
-    &:focus-within {
-      background-color: ${palette.blue.dark2};
-    }
-  `,
-};
-
-const disabledChipWrapperStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    cursor: not-allowed;
-    color: ${palette.gray.base};
-    background-color: ${palette.gray.light3};
-  `,
-  [Theme.Dark]: css`
-    cursor: not-allowed;
-    color: ${palette.gray.dark2};
-    background-color: ${palette.gray.dark4};
-    box-shadow: inset 0 0 1px 1px ${palette.gray.dark2}; ;
-  `,
-};
-
-const chipTextSizeStyle: Record<Size, string> = {
-  [Size.Default]: css`
-    padding-inline: 6px;
-    padding-block: ${chipWrapperPaddingY[Size.Default]}px;
-  `,
-  [Size.Large]: css`
-    padding-inline: 10px;
-    padding-block: ${chipWrapperPaddingY[Size.Large]}px;
-  `,
-};
-
-const chipButtonStyle = css`
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  outline: none;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  transition: background-color ${transitionDuration.faster}ms ease-in-out;
-`;
-
-const chipButtonSizeStyle: Record<Size, string> = {
-  [Size.Default]: css`
-    height: ${inputHeight[Size.Default]}px;
-  `,
-  [Size.Large]: css`
-    height: ${inputHeight[Size.Large]}px;
-  `,
-};
-
-const chipButtonThemeStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.gray.dark2};
-
-    &:hover {
-      color: ${palette.black};
-      background-color: ${palette.gray.light1};
-    }
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.light1};
-
-    &:hover {
-      color: ${palette.gray.light3};
-      background-color: ${palette.gray.dark1};
-    }
-  `,
-};
-
-const chipButtonDisabledStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    cursor: not-allowed;
-    color: ${palette.gray.dark2};
-    &:hover {
-      color: inherit;
-      background-color: unset;
-    }
-  `,
-  [Theme.Dark]: css`
-    cursor: not-allowed;
-    color: ${palette.gray.dark2};
-    &:hover {
-      color: inherit;
-      background-color: unset;
-    }
-  `,
-};
+import {
+  chipButtonDisabledStyle,
+  chipButtonSizeStyle,
+  chipButtonStyle,
+  chipButtonThemeStyle,
+  chipTextSizeStyle,
+  chipWrapperBaseStyle,
+  chipWrapperSizeStyle,
+  chipWrapperThemeStyle,
+  disabledChipWrapperStyle,
+} from './Chip.styles';
 
 export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
   ({ displayName, isFocused, onRemove, onFocus }: ChipProps, forwardedRef) => {
