@@ -40,7 +40,6 @@ import {
   baseInputStyle,
   clearButtonSizeStyle,
   formStyle,
-  inputSizeStyles,
   inputThemeStyle,
   inputWrapperDisabledStyle,
   inputWrapperFocusStyles,
@@ -50,7 +49,6 @@ import {
   inputWrapperThemeStyle,
   searchIconDisabledStyle,
   searchIconSizeStyle,
-  searchIconStyle,
   searchIconThemeStyle,
 } from './SearchInput.styles';
 import { SearchInputProps, SizeVariant, State } from './SearchInput.types';
@@ -364,7 +362,6 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
             >
               <MagnifyingGlass
                 className={cx(
-                  searchIconStyle,
                   searchIconThemeStyle[theme],
                   searchIconSizeStyle[sizeVariant],
                   { [searchIconDisabledStyle[theme]]: disabled },
@@ -373,11 +370,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
               />
               <input
                 type="search"
-                className={cx(
-                  baseInputStyle,
-                  inputThemeStyle[theme],
-                  inputSizeStyles[sizeVariant],
-                )}
+                className={cx(baseInputStyle, inputThemeStyle[theme])}
                 value={value}
                 onChange={handleChange}
                 placeholder={placeholder}

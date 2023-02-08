@@ -251,14 +251,6 @@ export const inputThemeStyle: Record<Theme, string> = {
   `,
 };
 
-export const inputSizeStyles: Record<SizeVariant, string> = {
-  [SizeVariant.Small]: css``,
-  [SizeVariant.Default]: css``,
-  [SizeVariant.Large]: css``,
-};
-
-export const searchIconStyle = css``;
-
 export const searchIconThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.gray.dark1};
