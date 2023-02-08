@@ -72,37 +72,6 @@ describe('packages/search-input', () => {
       userEvent.type(inputEl, 'abc');
       expect(queryByRole('button')).toBeInTheDocument();
     });
-
-    describe('when the "size" is not "large"', () => {
-      // TODO: This type of check should be done with a visual regression test
-      // As written this test does not pass even if the font-size is inherited correctly
-      // eslint-disable-next-line jest/no-disabled-tests
-      test.skip('check if font-size is 13px', () => {
-        const { containerEl } = renderSearchInput({
-          value: 'test',
-        });
-
-        expect(containerEl).toHaveStyle({
-          fontSize: '13px',
-        });
-      });
-    });
-
-    describe('when the "size" is "large"', () => {
-      // TODO: This type of check should be done with a visual regression test
-      // As written this test does not pass even if the font-size is inherited correctly
-      // eslint-disable-next-line jest/no-disabled-tests
-      test.skip('check if font-size is 18px', () => {
-        const { containerEl } = renderSearchInput({
-          value: 'test',
-          size: Size.Large,
-        });
-
-        expect(containerEl).toHaveStyle({
-          fontSize: '18px',
-        });
-      });
-    });
   });
 
   describe('Basic Search Results rendering', () => {
