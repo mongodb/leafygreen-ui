@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { Label } from '@leafygreen-ui/typography';
+
+import { Size } from '../types';
 
 import {
   containerMargin,
@@ -16,11 +19,10 @@ import {
   inputDisplayWrapperClassName,
   inputThemeStyles,
   labelBaseStyle,
-  labelThemeStyles,
   radioBoxBaseStyle,
   radioBoxSizeStyles,
-} from './styles';
-import { RadioProps, Size } from './types';
+} from './Radio.styles';
+import { RadioProps } from './Radio.types';
 
 /**
  * # Radio
@@ -51,19 +53,19 @@ function Radio({
   size = Size.Default,
   ...rest
 }: RadioProps) {
+  const { darkMode } = useDarkMode(darkModeProp);
   const normalizedSize =
     size === Size.Small || size === Size.XSmall ? Size.Small : Size.Default;
   const { theme } = useDarkMode(darkModeProp);
 
   return (
     <div className={containerMargin}>
-      <label
-        htmlFor={id}
+      <Label
+        darkMode={darkMode}
+        htmlFor={id!}
         className={cx(
           labelBaseStyle,
-          labelThemeStyles[theme].base,
           {
-            [labelThemeStyles[theme].disabled]: disabled,
             [css`
               font-size: 12px;
             `]: size === Size.XSmall, // TODO: keeping this style until XS is deprecated
@@ -114,7 +116,7 @@ function Radio({
         </div>
 
         <div>{children}</div>
-      </label>
+      </Label>
     </div>
   );
 }

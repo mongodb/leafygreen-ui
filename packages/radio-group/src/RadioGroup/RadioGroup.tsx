@@ -5,7 +5,9 @@ import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
 
-import { RadioGroupProps, Size } from './types';
+import { Size } from '../types';
+
+import { RadioGroupProps } from './RadioGroup.types';
 
 /**
  *
