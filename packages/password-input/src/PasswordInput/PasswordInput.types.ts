@@ -104,12 +104,6 @@ interface BasePasswordInputProps
   size?: Size;
 
   /**
-   * Determines whether the field is currently disabled.
-   * @default false
-   */
-  disabled?: boolean;
-
-  /**
    * Callback fired when the input value changes
    */
   onChange?: ChangeEventHandler<HTMLInputElement>;

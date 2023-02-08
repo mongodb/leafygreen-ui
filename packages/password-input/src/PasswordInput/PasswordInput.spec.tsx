@@ -34,7 +34,7 @@ const iconAriaLabels = {
 
 function renderPasswordInput(props = {}) {
   const utils = render(
-    // @ts-expect-error
+    // @ts-expect-error - data-testid gives an error but passes in types checks test below
     <PasswordInput data-testid="password-input" {...props} />,
   );
   const passwordInput = utils.getByTestId('password-input');
@@ -212,7 +212,7 @@ describe('packages/password-input', () => {
         label: defaultProps.label,
       });
       expect(
-        container.querySelector(`[aria-label='${iconAriaLabels.error}']`),
+        container.querySelector(`svg[aria-label='${iconAriaLabels.error}']`),
       ).toBeInTheDocument();
     });
 
@@ -223,7 +223,7 @@ describe('packages/password-input', () => {
         label: defaultProps.label,
       });
       expect(
-        container.querySelector(`[aria-label='${iconAriaLabels.warning}']`),
+        container.querySelector(`svg[aria-label='${iconAriaLabels.warning}']`),
       ).toBeInTheDocument();
     });
 
@@ -234,7 +234,7 @@ describe('packages/password-input', () => {
         label: defaultProps.label,
       });
       expect(
-        container.querySelector(`[aria-label='${iconAriaLabels.valid}']`),
+        container.querySelector(`svg[aria-label='${iconAriaLabels.valid}']`),
       ).toBeInTheDocument();
     });
 
@@ -245,7 +245,7 @@ describe('packages/password-input', () => {
         label: defaultProps.label,
       });
       expect(
-        container.querySelector(`[aria-label='${iconAriaLabels.valid}']`),
+        container.querySelector(`svg[aria-label='${iconAriaLabels.valid}']`),
       ).not.toBeInTheDocument();
     });
   });

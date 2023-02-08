@@ -70,7 +70,7 @@ export const PasswordInput = React.forwardRef<
 
     if (!label && !ariaLabelledbyProp && !rest['aria-label']) {
       console.warn(
-        'For screen-reader accessibility, label, aria-labelledby, or aria-label must be provided',
+        'For screen-reader accessibility, label, aria-labelledby, or aria-label must be provided to PasswordInput component',
       );
     }
 
@@ -137,7 +137,7 @@ export const PasswordInput = React.forwardRef<
               readOnly={disabled ? true : false}
               {...rest}
             />
-            {/* Visual icons inside the input will only render if aria-describedby is set and the state is not `none`. `none` does not need a visible icon */}
+            {/* If a custom message container is used, an icon will render inside the input to represent the state of the input. In the case that stateNotification === `none`, no icon will appear. */}
             {!hasNotifications && state !== States.None && (
               <InputIcon state={state} size={size} />
             )}

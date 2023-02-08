@@ -49,7 +49,6 @@ export const StateNotifications = ({
             />
             <span>{notification}</span>
             <VisuallyHidden aria-live="assertive">
-              {/* TODO: is this message clear enough for screen readers? */}
               {`${notification}: ${state}`}
             </VisuallyHidden>
           </li>
