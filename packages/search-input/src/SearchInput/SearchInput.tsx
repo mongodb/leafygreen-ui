@@ -51,7 +51,7 @@ import {
   searchIconSizeStyle,
   searchIconThemeStyle,
 } from './SearchInput.styles';
-import { SearchInputProps, SizeVariant, State } from './SearchInput.types';
+import { SearchInputProps, Size, State } from './SearchInput.types';
 
 /**
  * # SearchInput
@@ -60,8 +60,8 @@ import { SearchInputProps, SizeVariant, State } from './SearchInput.types';
  *
  * @param props.state The current state of the SearchInput. This can be none, or loading.
  * @param props.darkMode determines whether or not the component appears in dark theme.
- * @param props.sizeVariant determines the size of the text and the height of the input.
- * @param props.baseFontSize determines the base font size if sizeVariant is set to default.
+ * @param props.size determines the size of the text and the height of the input.
+ * @param props.baseFontSize determines the base font size if size is set to default.
  */
 
 export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
@@ -70,7 +70,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       placeholder = 'Search',
       className,
       darkMode: darkModeProp,
-      sizeVariant = SizeVariant.Default,
+      size = Size.Default,
       disabled,
       children,
       state = State.Unset,
@@ -348,7 +348,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
               onKeyDown={handleKeyDown}
               className={cx(
                 inputWrapperStyle,
-                inputWrapperSizeStyle[sizeVariant],
+                inputWrapperSizeStyle[size],
                 inputWrapperThemeStyle[theme],
                 {
                   [inputWrapperFocusStyles[theme]]:
@@ -363,7 +363,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
               <MagnifyingGlass
                 className={cx(
                   searchIconThemeStyle[theme],
-                  searchIconSizeStyle[sizeVariant],
+                  searchIconSizeStyle[size],
                   { [searchIconDisabledStyle[theme]]: disabled },
                 )}
                 role="presentation"
@@ -383,7 +383,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
                   type="button"
                   aria-label="Clear search"
                   onClick={handleClearButton}
-                  className={clearButtonSizeStyle[sizeVariant]}
+                  className={clearButtonSizeStyle[size]}
                 >
                   <XIcon />
                 </IconButton>

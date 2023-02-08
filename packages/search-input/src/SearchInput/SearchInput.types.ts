@@ -14,13 +14,13 @@ export const State = {
 
 export type State = typeof State[keyof typeof State];
 
-export const SizeVariant = {
+export const Size = {
   Small: 'small',
   Default: 'default',
   Large: 'large',
 } as const;
 
-export type SizeVariant = typeof SizeVariant[keyof typeof SizeVariant];
+export type Size = typeof Size[keyof typeof Size];
 
 interface BaseSearchInputProps
   extends DarkModeProps,
@@ -31,10 +31,9 @@ interface BaseSearchInputProps
   state?: State;
 
   /**
-   * Determines the font size and padding.
+   * Determines the font size, padding and spacing.
    */
-
-  sizeVariant?: SizeVariant;
+  size?: Size;
 
   /**
    * Determines whether the field is currently disabled.
