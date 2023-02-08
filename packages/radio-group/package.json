@@ -24,7 +24,8 @@
     "@leafygreen-ui/hooks": "^7.3.3",
     "@leafygreen-ui/lib": "^10.1.0",
     "@leafygreen-ui/palette": "^3.4.7",
-    "@leafygreen-ui/tokens": "^2.0.0"
+    "@leafygreen-ui/tokens": "^2.0.0",
+    "@leafygreen-ui/typography": "^16.0.0"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.0"
