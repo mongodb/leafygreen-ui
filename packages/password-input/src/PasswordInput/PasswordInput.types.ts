@@ -11,13 +11,13 @@ export const States = {
 
 export type States = typeof States[keyof typeof States];
 
-export const SizeVariant = {
+export const Size = {
   Small: 'small',
   Default: 'default',
   Large: 'large',
 } as const;
 
-export type SizeVariant = typeof SizeVariant[keyof typeof SizeVariant];
+export type Size = typeof Size[keyof typeof Size];
 
 export interface NotificationProps {
   notification?: string;
@@ -89,7 +89,7 @@ type ConditionalProps = LabelProps & StateNotificationProps;
 interface BasePasswordInputProps
   extends Omit<
       ComponentPropsWithoutRef<'input'>,
-      'onChange' | 'type' | AriaLabelkeys | 'aria-describedby'
+      'onChange' | 'type' | AriaLabelkeys | 'aria-describedby' | 'size'
     >,
     DarkModeProps {
   /**
@@ -101,7 +101,7 @@ interface BasePasswordInputProps
    * Determines the font size and padding.
    */
 
-  sizeVariant?: SizeVariant;
+  size?: Size;
 
   /**
    * Determines whether the field is currently disabled.

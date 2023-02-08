@@ -3,7 +3,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
-import { SizeVariant, States } from '../PasswordInput/PasswordInput.types';
+import { Size, States } from '../PasswordInput/PasswordInput.types';
 
 import { StateProps } from './InputIcon.types';
 
@@ -14,14 +14,14 @@ export const baseStyles = css`
   transform: translate(0%, -50%);
 `;
 
-export const sizeStyles: Record<SizeVariant, string> = {
-  [SizeVariant.Small]: css`
+export const sizeStyles: Record<Size, string> = {
+  [Size.Small]: css`
     right: ${spacing[1] * 7}px;
   `,
-  [SizeVariant.Default]: css`
+  [Size.Default]: css`
     right: ${spacing[5]}px;
   `,
-  [SizeVariant.Large]: css`
+  [Size.Large]: css`
     right: ${spacing[1] * 10}px;
   `,
 };

@@ -5,7 +5,7 @@ import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 import {
   PasswordInputProps,
-  SizeVariant,
+  Size,
   States,
 } from './PasswordInput/PasswordInput.types';
 import { PasswordInput } from '.';
@@ -28,9 +28,9 @@ export default {
     placeholder: {
       control: 'text',
     },
-    sizeVariant: {
+    size: {
       control: 'select',
-      options: Object.values(SizeVariant),
+      options: Object.values(Size),
     },
   },
   parameters: {

@@ -17,7 +17,7 @@ const validationIcons: Record<StateProps, React.ComponentType<any>> = {
   [States.Valid]: CheckmarkIcon,
 };
 
-export const InputIcon = ({ state, sizeVariant }: InputIconProps) => {
+export const InputIcon = ({ state, size }: InputIconProps) => {
   const ValidationIcon = validationIcons[state];
 
   const { theme } = useDarkMode();
@@ -26,7 +26,7 @@ export const InputIcon = ({ state, sizeVariant }: InputIconProps) => {
     <ValidationIcon
       className={cx(
         baseStyles,
-        sizeStyles[sizeVariant],
+        sizeStyles[size],
         themeStateStyles[theme][state],
       )}
     />

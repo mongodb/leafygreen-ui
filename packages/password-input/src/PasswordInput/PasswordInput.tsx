@@ -27,7 +27,7 @@ import {
 import {
   type NotificationProps,
   PasswordInputProps,
-  SizeVariant,
+  Size,
   States,
 } from './PasswordInput.types';
 import { getStateFromArray } from './utils';
@@ -44,7 +44,7 @@ export const PasswordInput = React.forwardRef<
       id: idProp,
       'aria-describedby': ariaDescribedbyProp,
       'aria-labelledby': ariaLabelledbyProp,
-      sizeVariant = SizeVariant.Default,
+      size = Size.Default,
       stateNotifications = [],
       disabled = false,
       autoComplete = 'new-password',
@@ -101,7 +101,7 @@ export const PasswordInput = React.forwardRef<
             <Label
               id={labelId}
               className={cx(labelBaseStyles, {
-                [labelLargeOverrideStyles]: sizeVariant === SizeVariant.Large,
+                [labelLargeOverrideStyles]: size === Size.Large,
               })}
               htmlFor={inputId}
               disabled={disabled}
@@ -121,7 +121,7 @@ export const PasswordInput = React.forwardRef<
               aria-invalid={state === States.Error || state === States.Warning}
               className={cx(
                 inputBaseStyles,
-                inputSizeStyles[sizeVariant],
+                inputSizeStyles[size],
                 inputBaseThemeStyles[theme],
                 {
                   [inputThemeStyles[theme][state]]: !disabled,
@@ -129,7 +129,7 @@ export const PasswordInput = React.forwardRef<
                     inputDisabledBaseStyles,
                     inputDisabledThemeStyles[theme],
                   )]: disabled,
-                  [inputIconSizeStyles[sizeVariant]]:
+                  [inputIconSizeStyles[size]]:
                     !hasNotifications && state !== States.None,
                 },
               )}
@@ -139,13 +139,13 @@ export const PasswordInput = React.forwardRef<
             />
             {/* Visual icons inside the input will only render if aria-describedby is set and the state is not `none`. `none` does not need a visible icon */}
             {!hasNotifications && state !== States.None && (
-              <InputIcon state={state} sizeVariant={sizeVariant} />
+              <InputIcon state={state} size={size} />
             )}
             <TogglePassword
               disabled={disabled}
               showPassword={showPassword}
               handleTogglePasswordClick={handleTogglePasswordClick}
-              sizeVariant={sizeVariant}
+              size={size}
             />
           </div>
           {hasNotifications && (
@@ -201,7 +201,7 @@ PasswordInput.propTypes = {
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
   placeholder: PropTypes.string,
-  sizeVariant: PropTypes.oneOf(Object.values(SizeVariant)),
+  size: PropTypes.oneOf(Object.values(Size)),
   value: PropTypes.string,
   /// @ts-ignore
   stateNotifications: stateNotificationCheck,

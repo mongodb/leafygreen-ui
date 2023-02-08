@@ -273,7 +273,7 @@ describe('packages/password-input', () => {
         stateNotifications={[{ notification: 'hi', state: 'error' }]}
         autoComplete="new-password"
         value="the value"
-        sizeVariant="small"
+        size="small"
         disabled
       />
       <PasswordInput

@@ -12,7 +12,7 @@ export const TogglePassword = ({
   showPassword,
   disabled,
   handleTogglePasswordClick,
-  sizeVariant,
+  size,
 }: TogglePasswordProps) => {
   const showPasswordIcon = showPassword ? 'Visibility' : 'VisibilityOff';
 
@@ -23,7 +23,7 @@ export const TogglePassword = ({
         aria-disabled={disabled}
         disabled={disabled}
         onClick={handleTogglePasswordClick}
-        className={cx(baseStyles, sizeStyles[sizeVariant])}
+        className={cx(baseStyles, sizeStyles[size])}
         role="switch"
         aria-checked={showPassword ? true : false}
       >

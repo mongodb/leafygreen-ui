@@ -10,7 +10,7 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { SizeVariant, States } from './PasswordInput.types';
+import { Size, States } from './PasswordInput.types';
 
 /**
  * Adds an inset box shadow to hide the UA background styles for autofilled inputs
@@ -122,20 +122,20 @@ export const inputBaseThemeStyles: Record<Theme, string> = {
   `,
 };
 
-export const inputSizeStyles: Record<SizeVariant, string> = {
-  [SizeVariant.Small]: css`
+export const inputSizeStyles: Record<Size, string> = {
+  [Size.Small]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
     height: 28px;
     padding: 0 ${spacing[5]}px 0 10px;
   `,
-  [SizeVariant.Default]: css`
+  [Size.Default]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
     height: 36px;
     padding: 0 ${spacing[2] * 5}px 0 ${spacing[3]}px;
   `,
-  [SizeVariant.Large]: css`
+  [Size.Large]: css`
     font-size: 18px;
     line-height: ${typeScales.body1.lineHeight}px;
     height: 48px;
@@ -283,14 +283,14 @@ export const inputThemeStyles: Record<Theme, Record<States, string>> = {
   },
 };
 
-export const inputIconSizeStyles: Record<SizeVariant, string> = {
-  [SizeVariant.Small]: css`
+export const inputIconSizeStyles: Record<Size, string> = {
+  [Size.Small]: css`
     padding-right: ${spacing[1] * 13}px;
   `,
-  [SizeVariant.Default]: css`
+  [Size.Default]: css`
     padding-right: ${spacing[1] * 14}px;
   `,
-  [SizeVariant.Large]: css`
+  [Size.Large]: css`
     padding-right: ${spacing[1] * 16}px;
   `,
 };

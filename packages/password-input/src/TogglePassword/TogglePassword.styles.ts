@@ -1,6 +1,6 @@
 import { css } from '@leafygreen-ui/emotion';
 
-import { SizeVariant } from '../PasswordInput/PasswordInput.types';
+import { Size } from '../PasswordInput/PasswordInput.types';
 
 export const baseStyles = css`
   position: absolute;
@@ -8,16 +8,16 @@ export const baseStyles = css`
   transform: translate(0px, -50%);
 `;
 
-export const sizeStyles: Record<SizeVariant, string> = {
-  [SizeVariant.Small]: css`
+export const sizeStyles: Record<Size, string> = {
+  [Size.Small]: css`
     right: 5px;
     width: 22px;
     height: 22px;
   `,
-  [SizeVariant.Default]: css`
+  [Size.Default]: css`
     right: 5px;
   `,
-  [SizeVariant.Large]: css`
+  [Size.Large]: css`
     right: 10px;
   `,
 };
