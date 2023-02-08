@@ -59,22 +59,6 @@ export const inputBaseStyles = css`
   &::placeholder {
     ${inheritTypeScale};
   }
-
-  /* clears the ‘X’ from Internet Explorer & Chrome */
-  &[type='search'] {
-    &::-ms-clear,
-    &::-ms-reveal {
-      display: none;
-      width: 0;
-      height: 0;
-    }
-    &::-webkit-search-decoration,
-    &::-webkit-search-cancel-button,
-    &::-webkit-search-results-button,
-    &::-webkit-search-results-decoration {
-      display: none;
-    }
-  }
 `;
 
 export const inputBaseThemeStyles: Record<Theme, string> = {
