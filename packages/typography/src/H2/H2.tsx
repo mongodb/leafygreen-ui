@@ -25,7 +25,6 @@ const H2 = Polymorphic<H2Props>(
 
     return (
       <Component
-        as="h1"
         className={cx(
           baseTypographyStyles,
           h2Styles,
