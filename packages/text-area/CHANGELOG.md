@@ -1,5 +1,18 @@
 # @leafygreen-ui/text-area
 
+## 8.0.5
+
+### Patch Changes
+
+- 509f1b1d9: Label, Description, and Error respect baseFontSize prop
+- fc7a1cadd: Storybook: Updates `Basic` story
+- Updated dependencies [ffb99f417]
+- Updated dependencies [bf2fedf6d]
+- Updated dependencies [b7a29ea38]
+  - @leafygreen-ui/hooks@7.5.0
+  - @leafygreen-ui/leafygreen-provider@3.1.1
+  - @leafygreen-ui/typography@16.0.1
+
 ## 8.0.4
 
 ### Patch Changes

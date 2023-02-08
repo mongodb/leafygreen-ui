@@ -1,5 +1,17 @@
 # @leafygreen-ui/a11y
 
+## 1.4.0
+
+### Minor Changes
+
+- 51c544e2e: Exports `AriaLabelProps`, A union interface requiring _either_ `aria-label` or `aria-labelledby`
+
+### Patch Changes
+
+- bf2fedf6d: Version bumps lib
+- Updated dependencies [ffb99f417]
+  - @leafygreen-ui/hooks@7.5.0
+
 ## 1.3.4
 
 ### Patch Changes

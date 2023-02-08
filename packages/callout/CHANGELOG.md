@@ -1,5 +1,15 @@
 # @leafygreen-ui/callout
 
+## 9.0.4
+
+### Patch Changes
+
+- bf2fedf6d: Version bumps lib
+- Updated dependencies [bf2fedf6d]
+- Updated dependencies [b7a29ea38]
+  - @leafygreen-ui/leafygreen-provider@3.1.1
+  - @leafygreen-ui/typography@16.0.1
+
 ## 9.0.3
 
 ### Patch Changes
