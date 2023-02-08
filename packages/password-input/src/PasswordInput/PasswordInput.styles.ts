@@ -82,6 +82,10 @@ export const inputBaseThemeStyles: Record<Theme, string> = {
         border-color: ${palette.white};
       }
     }
+
+    &::placeholder {
+      color: ${palette.gray.light1};
+    }
   `,
   [Theme.Dark]: css`
     background-color: ${palette.gray.dark4};
@@ -102,6 +106,10 @@ export const inputBaseThemeStyles: Record<Theme, string> = {
           ${focusRing.dark.input};
         border-color: ${palette.gray.dark4};
       }
+    }
+
+    &::placeholder {
+      color: ${palette.gray.dark1};
     }
   `,
 };
