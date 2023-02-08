@@ -1137,6 +1137,7 @@ export function Combobox<M extends boolean>({
    *
    */
 
+  // TODO: Replace this with `useBackdropClick`
   /**
    * We add two event handlers to the document to handle the backdrop click behavior.
    * Intended behavior is to close the menu, and keep focus on the Combobox.

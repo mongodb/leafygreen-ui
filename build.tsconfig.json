@@ -60,6 +60,9 @@
       "path": "./packages/inline-definition"
     },
     {
+      "path": "./packages/input-option"
+    },
+    {
       "path": "./packages/leafygreen-provider"
     },
     {
