@@ -7,7 +7,6 @@ import { Label } from '@leafygreen-ui/typography';
 
 import { Size } from '../types';
 
-import { RadioProps } from './Radio.types';
 import {
   containerMargin,
   hoverThemeStyles,
@@ -22,7 +21,8 @@ import {
   labelBaseStyle,
   radioBoxBaseStyle,
   radioBoxSizeStyles,
-} from './styles';
+} from './Radio.styles';
+import { RadioProps } from './Radio.types';
 
 /**
  * # Radio
