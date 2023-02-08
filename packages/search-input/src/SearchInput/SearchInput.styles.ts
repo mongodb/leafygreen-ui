@@ -9,7 +9,7 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { SizeVariant } from './SearchInput.types';
+import { Size } from './SearchInput.types';
 
 /**
  * Adds an inset box shadow to hide the UA background styles for autofilled inputs
@@ -33,22 +33,22 @@ export const inputWrapperStyle = css`
   transition-property: border-color, box-shadow;
 `;
 
-export const inputWrapperSizeStyle: Record<SizeVariant, string> = {
-  [SizeVariant.Small]: css`
+export const inputWrapperSizeStyle: Record<Size, string> = {
+  [Size.Small]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
     height: 28px;
     grid-template-columns: 28px 1fr;
     grid-auto-columns: 28px;
   `,
-  [SizeVariant.Default]: css`
+  [Size.Default]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
     height: 36px;
     grid-template-columns: 36px 1fr;
     grid-auto-columns: 36px;
   `,
-  [SizeVariant.Large]: css`
+  [Size.Large]: css`
     font-size: 18px;
     line-height: 32px;
     height: 48px;
@@ -260,14 +260,14 @@ export const searchIconThemeStyle: Record<Theme, string> = {
   `,
 };
 
-export const searchIconSizeStyle: Record<SizeVariant, string> = {
-  [SizeVariant.Small]: css`
+export const searchIconSizeStyle: Record<Size, string> = {
+  [Size.Small]: css`
     left: 10px;
   `,
-  [SizeVariant.Default]: css`
+  [Size.Default]: css`
     left: 12px;
   `,
-  [SizeVariant.Large]: css`
+  [Size.Large]: css`
     left: 16px;
   `,
 };
@@ -282,16 +282,16 @@ export const searchIconDisabledStyle: Record<Theme, string> = {
 };
 
 export const clearButtonStyle = css``;
-export const clearButtonSizeStyle: Record<SizeVariant, string> = {
-  [SizeVariant.Small]: css`
+export const clearButtonSizeStyle: Record<Size, string> = {
+  [Size.Small]: css`
     height: 26px;
     width: 26px;
   `,
-  [SizeVariant.Default]: css`
+  [Size.Default]: css`
     height: 28px;
     width: 28px;
   `,
-  [SizeVariant.Large]: css`
+  [Size.Large]: css`
     height: 28px;
     width: 28px;
   `,

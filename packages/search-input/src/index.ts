@@ -1,4 +1,4 @@
-export { SearchInput, type SearchInputProps, SizeVariant } from './SearchInput';
+export { SearchInput, type SearchInputProps, Size, State } from './SearchInput';
 export { SearchResult, type SearchResultProps } from './SearchResult';
 export {
   SearchResultGroup,

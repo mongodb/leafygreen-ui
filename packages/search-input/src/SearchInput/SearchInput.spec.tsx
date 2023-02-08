@@ -10,7 +10,7 @@ import { axe } from 'jest-axe';
 import * as _LGTL from '@leafygreen-ui/testing-lib';
 
 import { renderSearchInput } from '../utils/SearchInput.testutils';
-import { SearchInput, SearchResult, SizeVariant } from '..';
+import { SearchInput, SearchResult, Size } from '..';
 
 import { State } from './SearchInput.types';
 
@@ -76,7 +76,7 @@ describe('packages/search-input', () => {
       expect(queryByRole('button')).toBeInTheDocument();
     });
 
-    describe('when the "sizeVariant" is not "large"', () => {
+    describe('when the "size" is not "large"', () => {
       // TODO: This type of check should be done with a visual regression test
       // As written this test does not pass even if the font-size is inherited correctly
       // eslint-disable-next-line jest/no-disabled-tests
@@ -91,14 +91,14 @@ describe('packages/search-input', () => {
       });
     });
 
-    describe('when the "sizeVariant" is "large"', () => {
+    describe('when the "size" is "large"', () => {
       // TODO: This type of check should be done with a visual regression test
       // As written this test does not pass even if the font-size is inherited correctly
       // eslint-disable-next-line jest/no-disabled-tests
       test.skip('check if font-size is 18px', () => {
         const { containerEl } = renderSearchInput({
           value: 'test',
-          sizeVariant: SizeVariant.Large,
+          size: Size.Large,
         });
 
         expect(containerEl).toHaveStyle({
