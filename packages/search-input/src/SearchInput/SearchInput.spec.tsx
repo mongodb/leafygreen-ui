@@ -19,9 +19,6 @@ const resultClickHandler = jest.fn();
 const defaultProps = {
   className: 'test-text-input-class',
   placeholder: 'This is some placeholder text',
-  onChange: jest.fn(),
-  onClear: jest.fn(),
-  onBlur: jest.fn(),
   children: [
     <SearchResult key="a" onClick={resultClickHandler}>
       Apple
@@ -151,13 +148,14 @@ describe('packages/search-input', () => {
 
     describe('Any character key', () => {
       test('updates the input', () => {
+        const changeHandler = jest.fn();
         const { inputEl } = renderSearchInput({
-          onChange: defaultProps.onChange,
+          onChange: changeHandler,
         });
         expect(inputEl.value).toBe('');
         userEvent.type(inputEl, 'a');
         expect(inputEl.value).toBe('a');
-        expect(defaultProps.onChange).toHaveBeenCalledTimes(1);
+        expect(changeHandler).toHaveBeenCalledTimes(1);
       });
       test("opens the menu if it's closed", () => {
         const { getMenuElements, inputEl } = renderSearchInput({
@@ -180,11 +178,14 @@ describe('packages/search-input', () => {
       });
 
       test('fires `onChange`', () => {
-        const props = { ...defaultProps };
-        const { queryByRole, inputEl } = renderSearchInput(props);
+        const changeHandler = jest.fn();
+        const { queryByRole, inputEl } = renderSearchInput({
+          ...defaultProps,
+          onChange: changeHandler,
+        });
         userEvent.type(inputEl, 'abc');
         userEvent.click(queryByRole('button')!);
-        expect(props.onChange).toHaveBeenCalled();
+        expect(changeHandler).toHaveBeenCalled();
       });
     });
 
@@ -277,6 +278,32 @@ describe('packages/search-input', () => {
         );
         const submitEvent = submitHandler.mock.calls[0][0]; // the first parameter of the first call
         expect(submitEvent.target).toBe(containerEl);
+      });
+
+      test('clicking a result populates the input with the result text', () => {
+        const { getMenuElements, inputEl } = renderSearchInput({
+          ...defaultProps,
+        });
+        userEvent.click(inputEl);
+        const { resultsElements } = getMenuElements();
+        userEvent.click(resultsElements![0]);
+        expect(inputEl.value).toBe('Apple');
+      });
+
+      test('populating the input after clicking result fires the change handler', () => {
+        const changeHandler = jest.fn();
+        const { getMenuElements, inputEl } = renderSearchInput({
+          ...defaultProps,
+          onChange: changeHandler,
+        });
+        userEvent.click(inputEl);
+        const { resultsElements } = getMenuElements();
+        userEvent.click(resultsElements![0]);
+        expect(changeHandler).toHaveBeenCalledWith(
+          expect.objectContaining({
+            type: 'change',
+          }),
+        );
       });
     });
 

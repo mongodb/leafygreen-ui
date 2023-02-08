@@ -1,5 +1,5 @@
 import React, {
-  ChangeEvent,
+  ChangeEventHandler,
   EventHandler,
   FocusEventHandler,
   FormEventHandler,
@@ -34,7 +34,7 @@ import {
 
 import { SearchInputContextProvider } from '../SearchInputContext';
 import { SearchResultsMenu } from '../SearchResultsMenu';
-import { convertEvent } from '../utils/convertEvent';
+import { createSyntheticEvent } from '../utils/createSyntheticEvent';
 
 import {
   baseInputStyle,
@@ -102,13 +102,24 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
 
     const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
 
-    const setInputValue = useCallback(
-      (value: string) => {
+    const changeInputValue = useCallback(
+      (newVal: string) => {
         if (inputRef.current) {
-          inputRef.current.value = value;
+          // We change the element's value
+          // and then make sure that the change event is fired
+          inputRef.current.value = newVal;
+          const nativeChangeEvent = new Event('change', {
+            cancelable: true,
+            bubbles: true,
+          });
+          const syntheticChangeEvent = createSyntheticEvent(
+            nativeChangeEvent,
+            inputRef.current,
+          );
+          handleChange(syntheticChangeEvent);
         }
       },
-      [inputRef],
+      [handleChange, inputRef],
     );
 
     /**
@@ -129,8 +140,9 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
           const textValue = getNodeTextContent(child);
 
           const onElementClick: MouseEventHandler = e => {
-            setInputValue(textValue);
-            child.props.onClick?.(e);
+            child.props.onClick?.(e); // call the child's onClick handler
+
+            changeInputValue(textValue);
 
             const wasClickedWithMouse = e.detail >= 1;
 
@@ -138,9 +150,11 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
               // Selecting an option fires the `submit` event
               // We only fire a new `submit` event if the element was clicked with the mouse,
               // since the enter key also fires the `submit` event
-              formRef.current?.dispatchEvent(
-                new Event('submit', { cancelable: true, bubbles: true }),
-              );
+              const submitEvent = new Event('submit', {
+                cancelable: true,
+                bubbles: true,
+              });
+              formRef.current?.dispatchEvent(submitEvent);
             }
           };
 
@@ -173,7 +187,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
         resultsCount,
         updatedChildren,
       };
-    }, [children, highlightIndex, inputRef, resultRefs, setInputValue]);
+    }, [children, highlightIndex, inputRef, resultRefs, changeInputValue]);
 
     const { updatedChildren, resultsCount } = useMemo(
       () => processChildren(),
@@ -218,6 +232,10 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
 
     /** Event Handlers */
 
+    const handleInputChange: ChangeEventHandler<HTMLInputElement> = e => {
+      handleChange?.(e);
+    };
+
     const handleOpenMenuAction: EventHandler<SyntheticEvent<any>> = e => {
       if (disabled) {
         e.preventDefault();
@@ -227,40 +245,34 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       }
     };
 
-    const handleSearchBoxMousedown = (e: React.MouseEvent) => {
+    const handleSearchBoxMousedown: MouseEventHandler<HTMLDivElement> = e => {
       if (disabled) {
         // Prevent container from gaining focus by default
         e.preventDefault();
       }
     };
 
-    const handleSearchBoxClick: MouseEventHandler = handleOpenMenuAction;
+    const handleSearchBoxClick: MouseEventHandler<HTMLDivElement> =
+      handleOpenMenuAction;
 
     // Fired whenever the wrapper gains focus,
     // and any time the focus within changes
-    const handleSearchBoxFocus: FocusEventHandler = e => {
+    const handleSearchBoxFocus: FocusEventHandler<HTMLDivElement> = e => {
+      const eventTarget = e.target as HTMLElement;
       const target =
-        e.target !== clearButtonRef.current
-          ? inputRef.current ?? (e.target as HTMLElement)
-          : clearButtonRef.current;
+        eventTarget === clearButtonRef.current // If the click was on the button
+          ? clearButtonRef.current // keep it there
+          : inputRef.current ?? eventTarget; // otherwise move the focus to the input
       target.focus();
       trackFocusedElement(target);
     };
 
-    const handleClearButton: MouseEventHandler<HTMLButtonElement> = e => {
-      // We convert the click event into a Change event,
-      // Update the target & value,
-      // Then fire any `onChange` handler
-      const changeEvent = convertEvent<ChangeEvent<HTMLInputElement>>(e, {
-        type: 'change',
-        target: inputRef.current as EventTarget,
-      });
-      changeEvent.target.value = '';
-      handleChange(changeEvent);
+    const handleClearButton: MouseEventHandler<HTMLButtonElement> = () => {
+      changeInputValue('');
       inputRef?.current?.focus();
     };
 
-    const handleKeyDown: KeyboardEventHandler = e => {
+    const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
       const isFocusInMenu = menuRef.current?.contains(document.activeElement);
       const isFocusOnSearchBox = searchBoxRef.current?.contains(
         document.activeElement,
@@ -312,7 +324,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       }
     };
 
-    const handleBlur: FocusEventHandler = _ => {
+    const handleBlur: FocusEventHandler<HTMLFormElement> = () => {
       if (!isElementInComponent(document.activeElement)) {
         closeMenu();
       }
@@ -320,6 +332,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
       e.preventDefault(); // prevent page reload
+
       onSubmitProp?.(e);
       if (withTypeAhead) {
         closeMenu();
@@ -379,7 +392,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
                 type="search"
                 className={cx(baseInputStyle, inputThemeStyle[theme])}
                 value={value}
-                onChange={handleChange}
+                onChange={handleInputChange}
                 placeholder={placeholder}
                 ref={inputRef}
                 disabled={disabled}

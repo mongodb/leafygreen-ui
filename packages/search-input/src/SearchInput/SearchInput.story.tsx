@@ -216,6 +216,8 @@ export const LiveSearch: ComponentStory<typeof SearchInput> = args => {
   const [searchResults, setSearchResults] = useState(data);
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
+    console.log('change');
+
     setSearchResults(data.filter(datum => datum.name.includes(target.value)));
   };
 
