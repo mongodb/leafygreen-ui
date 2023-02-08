@@ -245,7 +245,6 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
           : clearButtonRef.current;
       target.focus();
       trackFocusedElement(target);
-      handleOpenMenuAction(e);
     };
 
     const handleClearButton: MouseEventHandler<HTMLButtonElement> = e => {
@@ -287,6 +286,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
           case keyMap.ArrowDown: {
             if (withTypeAhead) {
               inputRef.current?.focus();
+              openMenu();
               e.preventDefault(); // Stop page scroll
               updateHighlight('next');
             }
@@ -296,10 +296,17 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
           case keyMap.ArrowUp: {
             if (withTypeAhead) {
               inputRef.current?.focus();
+              openMenu();
               e.preventDefault(); // Stop page scroll
               updateHighlight('prev');
             }
             break;
+          }
+
+          default: {
+            if (withTypeAhead) {
+              openMenu();
+            }
           }
         }
       }

@@ -290,13 +290,20 @@ describe('packages/search-input', () => {
 
       describe('Tab key', () => {
         test('tab focuses the input', () => {
-          const { getMenuElements, inputEl } = renderSearchInput({
+          const { inputEl } = renderSearchInput({
             ...defaultProps,
           });
           userEvent.tab();
           expect(inputEl).toHaveFocus();
+        });
+
+        test('menu does NOT open on first focus', () => {
+          const { getMenuElements } = renderSearchInput({
+            ...defaultProps,
+          });
+          userEvent.tab();
           const { menuContainerEl } = getMenuElements();
-          expect(menuContainerEl).toBeInTheDocument();
+          expect(menuContainerEl).not.toBeInTheDocument();
         });
 
         test('focuses clear button', () => {
@@ -363,6 +370,15 @@ describe('packages/search-input', () => {
       });
 
       describe('Arrow keys', () => {
+        test('down arrow opens menu', () => {
+          const { inputEl, getMenuElements } = renderSearchInput({
+            ...defaultProps,
+          });
+          userEvent.type(inputEl, '{arrowdown}');
+          const { menuContainerEl } = getMenuElements();
+          expect(menuContainerEl).toBeInTheDocument();
+        });
+
         test('down arrow moves highlight down', () => {
           const { openMenu, inputEl, getByRole } = renderSearchInput({
             ...defaultProps,
