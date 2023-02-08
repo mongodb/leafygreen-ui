@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useMemo, useRef } from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 
 import { ChipProps } from '../Combobox.types';
@@ -23,9 +24,8 @@ import {
 
 export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
   ({ displayName, isFocused, onRemove, onFocus }: ChipProps, forwardedRef) => {
+    const { darkMode, theme } = useDarkMode();
     const {
-      darkMode,
-      theme,
       size,
       disabled,
       chipTruncationLocation = 'end',

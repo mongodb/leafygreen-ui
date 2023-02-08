@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { InputOption } from '@leafygreen-ui/input-option';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import {
   ComboboxOptionProps,
@@ -37,7 +38,8 @@ export const InternalComboboxOption = React.forwardRef<
     }: InternalComboboxOptionProps,
     forwardedRef,
   ) => {
-    const { darkMode, size } = useContext(ComboboxContext);
+    const { darkMode } = useDarkMode();
+    const { size } = useContext(ComboboxContext);
     const optionRef = useForwardedRef(forwardedRef, null);
 
     const handleOptionClick = useCallback(

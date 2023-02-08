@@ -4,6 +4,7 @@ import Checkbox from '@leafygreen-ui/checkbox';
 import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import Icon, { isComponentGlyph } from '@leafygreen-ui/icon';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { palette } from '@leafygreen-ui/palette';
 
 import { InternalComboboxOptionProps } from '../Combobox.types';
@@ -26,7 +27,8 @@ export const OptionContent = ({
   InternalComboboxOptionProps,
   'disabled' | 'displayName' | 'glyph' | 'isSelected'
 >) => {
-  const { multiselect, darkMode, withIcons, inputValue, size } =
+  const { darkMode } = useDarkMode();
+  const { multiselect, withIcons, inputValue, size } =
     useContext(ComboboxContext);
   const optionTextId = useIdAllocator({ prefix: 'combobox-option-text' });
 
