@@ -5,6 +5,7 @@ import getNodeTextContent from './getNodeTextContent';
 import DarkModeProps, { Theme } from './DarkModeProps';
 import getTheme from './getTheme';
 export { validateChildren } from './validateChildren';
+export { createSyntheticEvent } from './createSyntheticEvent';
 
 export {
   storybookArgTypes,

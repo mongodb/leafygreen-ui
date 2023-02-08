@@ -1,5 +1,7 @@
 /**
- * Creates a React SyntheticEvent based on the provided event and target
+ * Creates a React SyntheticEvent based on the provided native event and target.
+ *
+ * Based on https://stackoverflow.com/a/68979462/2200383
  */
 export const createSyntheticEvent = <T extends Element, E extends Event>(
   event: E,

@@ -27,6 +27,7 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import {
+  createSyntheticEvent,
   getNodeTextContent,
   isComponentType,
   keyMap,
@@ -34,7 +35,6 @@ import {
 
 import { SearchInputContextProvider } from '../SearchInputContext';
 import { SearchResultsMenu } from '../SearchResultsMenu';
-import { createSyntheticEvent } from '../utils/createSyntheticEvent';
 
 import {
   baseInputStyle,
