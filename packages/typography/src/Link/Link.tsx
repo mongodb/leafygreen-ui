@@ -30,6 +30,7 @@ const Link = Polymorphic<LinkProps>(
     hideExternalIcon = false,
     baseFontSize: baseFontSizeOverride,
     target: targetProp,
+    rel: relProp,
     darkMode: darkModeProp,
     as,
     ...rest
@@ -50,16 +51,21 @@ const Link = Polymorphic<LinkProps>(
 
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
 
-    let target, icon, rel;
+    let target, rel, icon;
 
-    if (targetProp) {
+    // Respect passed values
+    if (targetProp || relProp) {
       target = targetProp;
+      rel = relProp;
     } else {
-      if (hrefHostname === currentHostname) {
-        target = '_self';
-      } else {
-        target = '_blank';
-        rel = 'noopener noreferrer';
+      // Only manually set values if not provided and we are rendering an anchor tag
+      if (Component === 'a') {
+        if (hrefHostname === currentHostname) {
+          target = '_self';
+        } else {
+          target = '_blank';
+          rel = 'noopener noreferrer';
+        }
       }
     }
 
@@ -81,8 +87,6 @@ const Link = Polymorphic<LinkProps>(
       );
     }
 
-    const elementProps = Component === 'a' && ({ href, target, rel } as const);
-
     return (
       <Component
         className={cx(
@@ -92,7 +96,9 @@ const Link = Polymorphic<LinkProps>(
           linkModeStyles[theme],
           className,
         )}
-        {...elementProps}
+        href={href}
+        target={target}
+        rel={rel}
         {...rest}
       >
         <span className={cx(underlineStyles, underlineModeStyles[theme])}>

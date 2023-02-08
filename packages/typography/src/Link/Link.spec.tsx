@@ -155,4 +155,47 @@ describe('packages/typography', () => {
       expect(div!.tagName.toLowerCase()).toBe('div');
     });
   });
+
+  describe('anchor props', () => {
+    test('href is always passed to rendered component when the prop is supplied', () => {
+      renderLink({ href: 'test' });
+      const div = screen.getByText('Link').parentElement;
+      expect(div).toHaveAttribute('href');
+      expect(div?.getAttribute('href')).toBe('test');
+    });
+
+    test('it respects "target" and "rel" values when target is set', () => {
+      renderLink({ target: 'test' });
+      const div = screen.getByText('Link').parentElement;
+      expect(div).toHaveAttribute('target');
+      expect(div).not.toHaveAttribute('rel');
+      expect(div?.getAttribute('target')).toBe('test');
+    });
+
+    test('it respects "target" and "rel" values when rel is set', () => {
+      renderLink({ rel: 'test' });
+      const div = screen.getByText('Link').parentElement;
+      expect(div).toHaveAttribute('rel');
+      expect(div).not.toHaveAttribute('target');
+      expect(div?.getAttribute('rel')).toBe('test');
+    });
+
+    test('it respects "target" and "rel" values when both is set', () => {
+      renderLink({ rel: 'rel', target: 'target' });
+      const div = screen.getByText('Link').parentElement;
+      expect(div).toHaveAttribute('rel');
+      expect(div).toHaveAttribute('target');
+      expect(div?.getAttribute('rel')).toBe('rel');
+      expect(div?.getAttribute('target')).toBe('target');
+    });
+
+    test('it sets "target" and "rel" values when href is set', () => {
+      renderLink({ href: 'http://mongodb.design' });
+      const anchor = screen.getByText('Link').parentElement;
+      expect(anchor).toHaveAttribute('rel');
+      expect(anchor).toHaveAttribute('target');
+      expect(anchor).toHaveAttribute('href');
+      expect(anchor?.tagName.toLowerCase()).toBe('a');
+    });
+  });
 });
