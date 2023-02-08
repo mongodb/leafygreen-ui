@@ -1,6 +1,8 @@
 import React, { useMemo } from 'react';
+import isUndefined from 'lodash/isUndefined';
 
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useAvailableSpace } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import Popover from '@leafygreen-ui/popover';
 import { spacing } from '@leafygreen-ui/tokens';
@@ -16,6 +18,8 @@ import {
 } from './SearchResultsMenu.style';
 import { SearchResultsMenuProps } from './SearchResultsMenu.types';
 
+const MAX_MENU_HEIGHT = 256;
+
 export const SearchResultsMenu = React.forwardRef<
   HTMLUListElement,
   SearchResultsMenuProps
@@ -28,6 +32,12 @@ export const SearchResultsMenu = React.forwardRef<
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [refEl, open],
   );
+
+  /** The max height of the menu element */
+  const availableSpace = useAvailableSpace(refEl);
+  const maxHeightValue = !isUndefined(availableSpace)
+    ? `${Math.min(availableSpace, MAX_MENU_HEIGHT)}px`
+    : 'unset';
 
   return (
     <Popover
@@ -55,7 +65,12 @@ export const SearchResultsMenu = React.forwardRef<
           aria-relevant="additions removals"
           aria-expanded={open}
           ref={ref}
-          className={searchResultsListStyles}
+          className={cx(
+            searchResultsListStyles,
+            css`
+              max-height: ${maxHeightValue};
+            `,
+          )}
         >
           {React.Children.count(children) ? children : <EmptyOption />}
         </ul>

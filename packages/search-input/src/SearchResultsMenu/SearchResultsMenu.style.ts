@@ -22,4 +22,7 @@ export const searchResultsMenuThemeStyles: Record<Theme, string> = {
 export const searchResultsListStyles = css`
   padding: 0;
   margin: 0;
+  border-radius: inherit;
+  overflow-y: auto;
+  scroll-behavior: smooth;
 `;
