@@ -1,4 +1,9 @@
 import React, {
+  ChangeEventHandler,
+  FocusEventHandler,
+  KeyboardEventHandler,
+  MouseEventHandler,
+  TransitionEventHandler,
   useCallback,
   useEffect,
   useMemo,
@@ -750,63 +755,6 @@ export function Combobox<M extends boolean>({
   ]);
 
   /**
-   * The rendered JSX for the input icons (clear, warn & caret)
-   */
-  const renderedInputIcons = useMemo(() => {
-    const handleClearButtonClick = (
-      e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    ) => {
-      if (!disabled) {
-        updateSelection(null);
-        onClear?.(e);
-        onFilter?.('');
-        if (!isOpen) {
-          openMenu();
-        }
-      }
-    };
-
-    return (
-      <>
-        {clearable && doesSelectionExist && (
-          <IconButton
-            aria-label="Clear selection"
-            aria-disabled={disabled}
-            disabled={disabled}
-            ref={clearButtonRef}
-            onClick={handleClearButtonClick}
-            onFocus={handleClearButtonFocus}
-            className={cx(clearButtonStyle)}
-            darkMode={darkMode}
-          >
-            <Icon glyph="XWithCircle" />
-          </IconButton>
-        )}
-        {state === 'error' ? (
-          <Icon
-            glyph="Warning"
-            color={darkMode ? palette.red.light1 : palette.red.base}
-            className={endIconStyle(size)}
-          />
-        ) : (
-          <Icon glyph="CaretDown" className={endIconStyle(size)} />
-        )}
-      </>
-    );
-  }, [
-    clearable,
-    doesSelectionExist,
-    disabled,
-    state,
-    darkMode,
-    size,
-    updateSelection,
-    onClear,
-    onFilter,
-    isOpen,
-  ]);
-
-  /**
    * Flag to determine whether the rendered options have icons
    */
   const withIcons = useMemo(
@@ -937,26 +885,26 @@ export function Combobox<M extends boolean>({
     setMenuWidth(comboboxRef.current?.clientWidth ?? 0);
   }, [comboboxRef, isOpen, highlightedOption, selection]);
 
-  // Handler fired when the menu has finished transitioning in/out
-  const handleTransitionEnd = () => {
-    setMenuWidth(comboboxRef.current?.clientWidth ?? 0);
-  };
-
   /**
    *
    * Event Handlers
    *
    */
 
+  // Handler fired when the menu has finished transitioning in/out
+  const handleTransitionEnd: TransitionEventHandler<HTMLDivElement> = () => {
+    setMenuWidth(comboboxRef.current?.clientWidth ?? 0);
+  };
+
   // Prevent combobox from gaining focus by default
-  const handleInputWrapperMousedown = (e: React.MouseEvent) => {
+  const handleInputWrapperMousedown: MouseEventHandler<HTMLDivElement> = e => {
     if (disabled) {
       e.preventDefault();
     }
   };
 
   // Set focus to the input element on click
-  const handleComboboxClick = (e: React.MouseEvent) => {
+  const handleComboboxClick: MouseEventHandler<HTMLDivElement> = e => {
     // If we clicked the wrapper, not the input itself.
     // (Focus is set automatically if the click is on the input)
     if (e.target !== inputRef.current) {
@@ -978,13 +926,13 @@ export function Combobox<M extends boolean>({
 
   // Fired whenever the wrapper gains focus,
   // and any time the focus within changes
-  const handleComboboxFocus = (e: React.FocusEvent) => {
+  const handleComboboxFocus: FocusEventHandler<HTMLDivElement> = e => {
     scrollInputToEnd();
     trackFocusedElement(getNameFromElement(e.target));
   };
 
   // Fired onChange
-  const handleInputChange = ({
+  const handleInputChange: ChangeEventHandler<HTMLInputElement> = ({
     target: { value },
   }: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(value);
@@ -992,11 +940,22 @@ export function Combobox<M extends boolean>({
     onFilter?.(value);
   };
 
-  const handleClearButtonFocus = () => {
+  const handleClearButtonFocus: FocusEventHandler<HTMLButtonElement> = () => {
     setHighlightedOption(null);
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent) => {
+  const handleClearButtonClick: MouseEventHandler<HTMLButtonElement> = e => {
+    if (!disabled) {
+      updateSelection(null);
+      onClear?.(e);
+      onFilter?.('');
+      if (!isOpen) {
+        openMenu();
+      }
+    }
+  };
+
+  const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = event => {
     const isFocusInMenu = menuRef.current?.contains(document.activeElement);
     const isFocusOnCombobox = comboboxRef.current?.contains(
       document.activeElement,
@@ -1244,7 +1203,29 @@ export function Combobox<M extends boolean>({
                 autoComplete="off"
               />
             </div>
-            {renderedInputIcons}
+            {clearable && doesSelectionExist && (
+              <IconButton
+                aria-label="Clear selection"
+                aria-disabled={disabled}
+                disabled={disabled}
+                ref={clearButtonRef}
+                onClick={handleClearButtonClick}
+                onFocus={handleClearButtonFocus}
+                className={cx(clearButtonStyle)}
+                darkMode={darkMode}
+              >
+                <Icon glyph="XWithCircle" />
+              </IconButton>
+            )}
+            {state === 'error' ? (
+              <Icon
+                glyph="Warning"
+                color={darkMode ? palette.red.light1 : palette.red.base}
+                className={endIconStyle(size)}
+              />
+            ) : (
+              <Icon glyph="CaretDown" className={endIconStyle(size)} />
+            )}
           </div>
 
           {state === 'error' && errorMessage && (
