@@ -227,10 +227,6 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       }
     };
 
-    const isElementInComponent = (el: Element | null) => {
-      return formRef.current?.contains(el) || menuRef.current?.contains(el);
-    };
-
     /** Event Handlers */
 
     const handleInputChange: ChangeEventHandler<HTMLInputElement> = e => {
@@ -316,18 +312,19 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
             break;
           }
 
+          case keyMap.Tab: {
+            if (isOpen) {
+              closeMenu();
+            }
+            break;
+          }
+
           default: {
             if (withTypeAhead) {
               openMenu();
             }
           }
         }
-      }
-    };
-
-    const handleBlur: FocusEventHandler<HTMLFormElement> = () => {
-      if (!isElementInComponent(document.activeElement)) {
-        closeMenu();
       }
     };
 
@@ -354,7 +351,6 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
             ref={formRef}
             className={cx(formStyle, className)}
             onSubmit={handleSubmit}
-            onBlur={handleBlur}
             {...rest}
           >
             {/* Disable eslint: onClick sets focus. Key events would already have focus */}

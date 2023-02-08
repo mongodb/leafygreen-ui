@@ -216,12 +216,14 @@ export const LiveSearch: ComponentStory<typeof SearchInput> = args => {
   const [searchResults, setSearchResults] = useState(data);
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
-    console.log('change');
+    console.log('handleChange');
 
     setSearchResults(data.filter(datum => datum.name.includes(target.value)));
   };
 
   const handleSelect: FormEventHandler<HTMLFormElement> = e => {
+    console.log('handleSelect');
+
     setPage(
       data.find(
         /// @ts-ignore
@@ -243,7 +245,11 @@ export const LiveSearch: ComponentStory<typeof SearchInput> = args => {
         {...args}
       >
         {searchResults.map(item => (
-          <SearchResult key={item.name} description={item.description}>
+          <SearchResult
+            key={item.name}
+            description={item.description}
+            onClick={() => console.log('Clicked', item.name)}
+          >
             {startCase(item.name)}
           </SearchResult>
         ))}

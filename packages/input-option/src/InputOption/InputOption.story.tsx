@@ -2,7 +2,6 @@ import React from 'react';
 
 import {
   storybookArgTypes,
-  // @ts-ignore
   storybookExcludedControlParams,
 } from '@leafygreen-ui/lib';
 
