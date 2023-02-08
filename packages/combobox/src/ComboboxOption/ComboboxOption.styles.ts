@@ -1,7 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies, spacing, typeScales } from '@leafygreen-ui/tokens';
+import { spacing, typeScales } from '@leafygreen-ui/tokens';
 
 import { ComboboxSize } from '../Combobox.types';
 import { menuItemHeight, menuItemPadding } from '../ComboboxMenu/Menu.styles';
@@ -11,45 +9,11 @@ import { menuItemHeight, menuItemPadding } from '../ComboboxMenu/Menu.styles';
  */
 
 export const comboboxOptionBaseStyle = css`
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   list-style: none;
-  color: inherit;
-  cursor: pointer;
-  overflow: hidden;
-  font-family: ${fontFamilies.default};
-
-  // Left wedge
-  &:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    width: 4px;
-    height: calc(100% - 14px);
-    background-color: rgba(255, 255, 255, 0);
-    border-radius: 0 6px 6px 0;
-    transform: scale3d(0, 0.3, 0);
-    transition: 200ms ease-in-out;
-    transition-property: transform, background-color;
-  }
 `;
-
-export const comboboxOptionThemeStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    &:hover {
-      outline: none;
-      background-color: ${palette.gray.light2};
-    }
-  `,
-  [Theme.Dark]: css`
-    &:hover {
-      outline: none;
-      background-color: ${palette.gray.dark4};
-    }
-  `,
-};
 
 export const comboboxOptionSizeStyle: Record<ComboboxSize, string> = {
   [ComboboxSize.Default]: css`
@@ -75,56 +39,6 @@ export const comboboxOptionSizeStyle: Record<ComboboxSize, string> = {
     &:before {
       max-height: ${menuItemHeight[ComboboxSize.Large]}px;
     }
-  `,
-};
-
-const _comboboxOptionBaseActiveStyle = css`
-  outline: none;
-
-  &:before {
-    transform: scaleY(1);
-  }
-`;
-
-export const comboboxOptionActiveStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    ${_comboboxOptionBaseActiveStyle};
-    background-color: ${palette.blue.light3};
-
-    &:before {
-      background-color: ${palette.blue.base};
-    }
-  `,
-  [Theme.Dark]: css`
-    ${_comboboxOptionBaseActiveStyle};
-    background-color: ${palette.blue.dark3};
-
-    &:before {
-      background-color: ${palette.blue.light1};
-    }
-  `,
-};
-
-const _comboboxOptionBaseDisabledStyle = css`
-  cursor: not-allowed;
-
-  &:hover {
-    background-color: inherit;
-  }
-
-  &:before {
-    content: unset;
-  }
-`;
-
-export const comboboxOptionDisabledStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    ${_comboboxOptionBaseDisabledStyle};
-    color: ${palette.gray.light1};
-  `,
-  [Theme.Dark]: css`
-    ${_comboboxOptionBaseDisabledStyle};
-    color: ${palette.gray.dark1};
   `,
 };
 
