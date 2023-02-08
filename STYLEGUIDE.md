@@ -332,9 +332,11 @@ Ref forwarding allows us to provide direct access to the underlying parent eleme
 #### Prefer
 
 ```typescript
-const Button = React.forwardRef((props, forwardedRef) => (
-  <button ref={forwardedRef}>{props.children}</button>
-));
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ children }: ButtonProps, forwardedRef) => (
+    <button ref={forwardedRef}>{children}</button>
+  ),
+);
 
 // This ref will give you direct access to the DOM button
 const ref = useRef<null | HTMLButtonElement>(null);
@@ -359,7 +361,7 @@ The `useDarkMode()` hook allows components to read the value of the `darkMode` p
 #### Prefer
 
 ```typescript
-const Button = React.forwardRef(
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ children, darkMode: darkModeProp }: ButtonProps, forwardedRef) => {
     const { darkMode, theme, setDarkMode } = useDarkMode(darkModeProp);
 
@@ -375,7 +377,7 @@ const Button = React.forwardRef(
 #### Avoid
 
 ```typescript
-const Button = React.forwardRef(
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ children, darkMode = false }: ButtonProps, forwardedRef) => {
     return (
       <LeafyGreenProvider darkMode={darkMode}>
