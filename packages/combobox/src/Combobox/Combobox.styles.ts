@@ -10,7 +10,7 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { ComboboxSize as Size, Overflow } from './Combobox.types';
+import { ComboboxSize as Size, Overflow } from '../Combobox.types';
 
 /**
  * Width of the widest character (in px)

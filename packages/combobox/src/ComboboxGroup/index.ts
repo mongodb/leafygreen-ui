@@ -1,1 +1,1 @@
-export { ComboboxGroup } from './ComboboxGroup';
+export { ComboboxGroup, InternalComboboxGroup } from './ComboboxGroup';

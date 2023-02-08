@@ -1,1 +1,1 @@
-export { ComboboxOption } from './ComboboxOption';
+export { ComboboxOption, InternalComboboxOption } from './ComboboxOption';

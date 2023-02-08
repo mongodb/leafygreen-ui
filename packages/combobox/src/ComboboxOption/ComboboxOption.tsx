@@ -9,14 +9,14 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies, spacing, typeScales } from '@leafygreen-ui/tokens';
 
-import { menuItemHeight, menuItemPadding } from './ComboboxMenu/Menu.styles';
 import {
   ComboboxOptionProps,
   ComboboxSize as Size,
   InternalComboboxOptionProps,
-} from './Combobox.types';
-import { ComboboxContext } from './ComboboxContext';
-import { wrapJSX } from './utils';
+} from '../Combobox.types';
+import { ComboboxContext } from '../ComboboxContext';
+import { menuItemHeight, menuItemPadding } from '../ComboboxMenu/Menu.styles';
+import { wrapJSX } from '../utils';
 
 /**
  * Styles
@@ -168,7 +168,7 @@ const displayNameStyle = (isSelected: boolean) => css`
 /**
  * Component
  */
-const InternalComboboxOption = React.forwardRef<
+export const InternalComboboxOption = React.forwardRef<
   HTMLLIElement,
   InternalComboboxOptionProps
 >(
@@ -312,7 +312,6 @@ const InternalComboboxOption = React.forwardRef<
 );
 InternalComboboxOption.displayName = 'ComboboxOption';
 
-export { InternalComboboxOption };
 export function ComboboxOption(_: ComboboxOptionProps): JSX.Element {
   throw Error('`ComboboxOption` must be a child of a `Combobox` instance');
 }

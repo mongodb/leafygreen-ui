@@ -18,7 +18,7 @@ import startCase from 'lodash/startCase';
 import Button from '@leafygreen-ui/button';
 import { keyMap } from '@leafygreen-ui/lib';
 
-import { OptionObject } from './Combobox.types';
+import { OptionObject } from '../Combobox.types';
 import {
   defaultOptions,
   getComboboxJSX,
@@ -27,7 +27,7 @@ import {
   renderCombobox,
   Select,
   testif,
-} from './ComboboxTestUtils';
+} from '../utils/ComboboxTestUtils';
 
 /**
  * Tests

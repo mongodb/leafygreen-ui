@@ -7,7 +7,7 @@ import {
   SearchState,
   State,
   TruncationLocation,
-} from './Combobox.types';
+} from '../Combobox.types';
 
 interface ComboboxData {
   multiselect: boolean;

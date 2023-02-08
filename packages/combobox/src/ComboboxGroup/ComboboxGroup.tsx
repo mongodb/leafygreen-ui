@@ -6,8 +6,8 @@ import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
-import { ComboboxGroupProps } from './Combobox.types';
-import { ComboboxContext } from './ComboboxContext';
+import { ComboboxGroupProps } from '../Combobox.types';
+import { ComboboxContext } from '../ComboboxContext';
 
 const comboboxGroupStyle: Record<Theme, string> = {
   [Theme.Light]: css`
@@ -75,6 +75,6 @@ ComboboxGroup.propTypes = {
   label: PropTypes.string.isRequired,
 };
 
-export default function ComboboxGroup(_: ComboboxGroupProps): JSX.Element {
+export function ComboboxGroup(_: ComboboxGroupProps): JSX.Element {
   throw Error('`ComboboxGroup` must be a child of a `Combobox` instance');
 }

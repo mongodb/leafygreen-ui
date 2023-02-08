@@ -12,8 +12,8 @@ import {
   SearchState,
   State,
   TruncationLocation,
-} from './Combobox.types';
-import { Combobox, ComboboxGroup, ComboboxOption } from '.';
+} from '../Combobox.types';
+import { Combobox, ComboboxGroup, ComboboxOption } from '..';
 
 const wrapperStyle = css`
   width: 256px;

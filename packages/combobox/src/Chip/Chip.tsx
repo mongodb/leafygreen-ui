@@ -7,13 +7,13 @@ import { keyMap, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { transitionDuration, typeScales } from '@leafygreen-ui/tokens';
 
+import { ChipProps, ComboboxSize as Size } from '../Combobox.types';
 import {
   chipClassName,
   chipWrapperPaddingY,
   inputHeight,
-} from './Combobox.styles';
-import { ChipProps, ComboboxSize as Size } from './Combobox.types';
-import { ComboboxContext } from './ComboboxContext';
+} from '../Combobox/Combobox.styles';
+import { ComboboxContext } from '../ComboboxContext';
 
 const chipWrapperBaseStyle = css`
   display: inline-flex;

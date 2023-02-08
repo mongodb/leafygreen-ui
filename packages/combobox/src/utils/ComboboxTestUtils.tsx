@@ -18,8 +18,8 @@ import {
   BaseComboboxProps,
   ComboboxMultiselectProps,
   OptionObject,
-} from './Combobox.types';
-import { Combobox, ComboboxGroup, ComboboxOption } from '.';
+} from '../Combobox.types';
+import { Combobox, ComboboxGroup, ComboboxOption } from '..';
 
 export interface NestedObject {
   label: string;

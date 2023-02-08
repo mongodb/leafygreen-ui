@@ -27,8 +27,32 @@ import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { Description, Label } from '@leafygreen-ui/typography';
 
-import { ComboboxMenu } from './ComboboxMenu/ComboboxMenu';
-import { Chip } from './Chip';
+import { Chip } from '../Chip';
+import {
+  ComboboxElement,
+  ComboboxProps,
+  ComboboxSize,
+  getNullSelection,
+  onChangeType,
+  OptionObject,
+  Overflow,
+  SearchState,
+  SelectValueType,
+  State,
+  TruncationLocation,
+} from '../Combobox.types';
+import { ComboboxContext } from '../ComboboxContext';
+import { InternalComboboxGroup } from '../ComboboxGroup';
+import { ComboboxMenu } from '../ComboboxMenu';
+import { InternalComboboxOption } from '../ComboboxOption';
+import {
+  flattenChildren,
+  getDisplayNameForValue,
+  getNameAndValue,
+  getOptionObjectFromValue,
+  getValueForDisplayName,
+} from '../utils';
+
 import {
   baseComboboxStyles,
   baseInputElementStyle,
@@ -50,29 +74,6 @@ import {
   labelDescriptionContainerStyle,
   multiselectInputElementStyle,
 } from './Combobox.styles';
-import {
-  ComboboxElement,
-  ComboboxProps,
-  ComboboxSize,
-  getNullSelection,
-  onChangeType,
-  OptionObject,
-  Overflow,
-  SearchState,
-  SelectValueType,
-  State,
-  TruncationLocation,
-} from './Combobox.types';
-import { ComboboxContext } from './ComboboxContext';
-import { InternalComboboxGroup } from './ComboboxGroup';
-import { InternalComboboxOption } from './ComboboxOption';
-import {
-  flattenChildren,
-  getDisplayNameForValue,
-  getNameAndValue,
-  getOptionObjectFromValue,
-  getValueForDisplayName,
-} from './utils';
 
 /**
  * Combobox is a combination of a Select and TextInput,
