@@ -102,6 +102,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
 
     const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
 
+    /** Fires a change event to update the input value */
     const changeInputValue = useCallback(
       (newVal: string) => {
         if (inputRef.current) {
