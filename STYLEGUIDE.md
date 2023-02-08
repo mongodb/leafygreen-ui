@@ -10,6 +10,7 @@
 - [Whitespace and line breaks](#Whitespace-and-line-breaks)
 - [JSX/React](#JSX-React)
 - [Forwarding refs](#Forwarding-Refs)
+- [Consuming darkMode from `LeafyGreenProvider`](#Consuming-Darkmode-From-Leafygreenprovider)
 - [Passing darkMode to children](#Passing-DarkMode-To-Children)
 - [CSS-in-JS](#CSS-in-JS)
 - [File Structure](https://github.com/mongodb/leafygreen-ui/blob/main/stories/Folder-Structure.stories.mdx)
@@ -326,13 +327,13 @@ function changeValues(object) {
 
 ## <a id="Forwarding-Refs">Forwarding refs</a>
 
-Ref forwarding allows us to expose the components wrapper DOM element when a `ref` is passed to a LG component. For more information on ref forwarding, check out the React [docs](https://reactjs.org/docs/forwarding-refs.html).
+Ref forwarding allows us to provide direct access to the underlying parent element. For more information on ref forwarding, check out the React [docs](https://reactjs.org/docs/forwarding-refs.html).
 
 #### Prefer
 
 ```typescript
-const Button = React.forwardRef((props, ref) => (
-  <button ref={ref}>{props.children}</button>
+const Button = React.forwardRef((props, forwardedRef) => (
+  <button ref={forwardedRef}>{props.children}</button>
 ));
 
 // This ref will give you direct access to the DOM button
@@ -351,24 +352,47 @@ const Button = props => <button>{props.children}</button>;
 
 ---
 
-// TODO: add topic on useDarkMode hook and not setting the default value of darkMode in a component
+## <a id="Consuming-Darkmode-From-Leafygreenprovider">Consuming darkMode from `LeafyGreenProvider`</a>
 
-## <a id="Passing-DarkMode-To-Children">Passing darkMode to children</a>
-
-Rather than pass `darkMode` to each child component, it is recommended to wrap all children in the `LeafyGreenProvider` and pass the `darkMode` value directly to the `LeafyGreenProvider`. All LG components consume the `useDarkMode()` hook which grabs the value of `darkMode` from the `LeafyGreenProvider` which prevents having to pass `darkMode` to each child.
+The `useDarkMode()` hook allows components to read the value of the `darkMode` prop from the LeafyGreen provider and overwrite the value locally if necessary.
 
 #### Prefer
 
 ```typescript
-return (
-  <>
-    <Button darkMode={darkMode}>This is a button</Button>
-    <Button darkMode={darkMode}>This is another button</Button>
-  </>
+const Button = React.forwardRef(
+  ({ children, darkMode: darkModeProp }: ButtonProps, forwardedRef) => {
+    const { darkMode, theme, setDarkMode } = useDarkMode(darkModeProp);
+
+    return (
+      <LeafyGreenProvider darkMode={darkMode}>
+        <button ref={forwardedRef}>{children}</button>
+      </LeafyGreenProvider>
+    );
+  },
 );
 ```
 
 #### Avoid
+
+```typescript
+const Button = React.forwardRef(
+  ({ children, darkMode = false }: ButtonProps, forwardedRef) => {
+    return (
+      <LeafyGreenProvider darkMode={darkMode}>
+        <button ref={forwardedRef}>{children}</button>
+      </LeafyGreenProvider>
+    );
+  },
+);
+```
+
+---
+
+## <a id="Passing-DarkMode-To-Children">Passing darkMode to children</a>
+
+Rather than pass `darkMode` to each child component, it is recommended to wrap all children in the `LeafyGreenProvider` and pass the `darkMode` value directly to the `LeafyGreenProvider`. All LG components consume the `useDarkMode()` hook which reads the value of `darkMode` from the most outer `LeafyGreenProvider`.
+
+#### Prefer
 
 ```typescript
 return (
@@ -376,6 +400,17 @@ return (
     <Button>This is a button</Button>
     <Button>This is another button</Button>
   </LeafyGreenProvider>
+);
+```
+
+#### Avoid
+
+```typescript
+return (
+  <>
+    <Button darkMode={darkMode}>This is a button</Button>
+    <Button darkMode={darkMode}>This is another button</Button>
+  </>
 );
 ```
 
