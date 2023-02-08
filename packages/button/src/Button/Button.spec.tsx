@@ -61,11 +61,10 @@ describe('packages/button', () => {
       expect(button.title).toBe(title);
     });
 
-    test(`renders the disabled and aria-disabled attributes when disabled is set`, () => {
+    test(`renders aria-disabled attribute when disabled is set`, () => {
       const { button } = renderButton({
         disabled: true,
       });
-      expect((button as HTMLButtonElement).disabled).toBe(true);
       expect(button.getAttribute('aria-disabled')).toBe('true');
     });
 
