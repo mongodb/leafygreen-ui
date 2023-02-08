@@ -134,12 +134,12 @@ export const PasswordInput = React.forwardRef<
                 },
               )}
               onChange={handleChange}
-              readOnly={disabled ? true : false}
+              readOnly={disabled}
               {...rest}
             />
             {/* If a custom message container is used, an icon will render inside the input to represent the state of the input. In the case that stateNotification === `none`, no icon will appear. */}
             {!hasNotifications && state !== States.None && (
-              <InputIcon state={state} size={size} />
+              <InputIcon state={state} size={size} disabled={disabled} />
             )}
             <TogglePassword
               disabled={disabled}

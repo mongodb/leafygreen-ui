@@ -50,3 +50,12 @@ export const themeStateStyles: Record<Theme, Record<StateProps, string>> = {
     `,
   },
 };
+
+export const disabledStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.light1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.dark1};
+  `,
+};

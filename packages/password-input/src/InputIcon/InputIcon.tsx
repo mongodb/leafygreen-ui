@@ -8,7 +8,12 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { States } from '../PasswordInput/PasswordInput.types';
 
-import { baseStyles, sizeStyles, themeStateStyles } from './InputIcon.styles';
+import {
+  baseStyles,
+  disabledStyles,
+  sizeStyles,
+  themeStateStyles,
+} from './InputIcon.styles';
 import { InputIconProps, StateProps } from './InputIcon.types';
 
 const validationIcons: Record<StateProps, React.ComponentType<any>> = {
@@ -17,7 +22,7 @@ const validationIcons: Record<StateProps, React.ComponentType<any>> = {
   [States.Valid]: CheckmarkIcon,
 };
 
-export const InputIcon = ({ state, size }: InputIconProps) => {
+export const InputIcon = ({ state, size, disabled }: InputIconProps) => {
   const ValidationIcon = validationIcons[state];
 
   const { theme } = useDarkMode();
@@ -28,6 +33,9 @@ export const InputIcon = ({ state, size }: InputIconProps) => {
         baseStyles,
         sizeStyles[size],
         themeStateStyles[theme][state],
+        {
+          [disabledStyles[theme]]: disabled,
+        },
       )}
     />
   );

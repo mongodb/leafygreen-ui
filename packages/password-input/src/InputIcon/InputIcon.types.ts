@@ -5,4 +5,5 @@ export type StateProps = Exclude<States, 'none'>;
 export interface InputIconProps {
   state: StateProps;
   size: Size;
+  disabled: boolean;
 }

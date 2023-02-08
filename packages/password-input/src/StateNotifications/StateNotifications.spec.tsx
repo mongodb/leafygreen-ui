@@ -35,7 +35,7 @@ const iconAriaLabels = {
 
 function renderStateNotifications(props = {}) {
   const utils = render(
-    // @ts-expect-error
+    // @ts-expect-error - data-testid produces an error but it works
     <StateNotifications data-testid="state-notifications" {...props} />,
   );
   const stateNotification = utils.getByTestId('state-notifications');
