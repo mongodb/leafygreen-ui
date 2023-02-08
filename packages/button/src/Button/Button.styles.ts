@@ -38,11 +38,6 @@ const baseButtonStyles = css`
     outline: none;
   }
 
-  &[disabled],
-  &:disabled {
-    pointer-events: none;
-  }
-
   &:active,
   &:focus,
   &:hover {
