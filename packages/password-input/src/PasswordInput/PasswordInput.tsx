@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -74,11 +74,6 @@ export const PasswordInput = React.forwardRef<
       );
     }
 
-    // If disabled then hide password
-    useEffect(() => {
-      if (disabled) setShowPassword(false);
-    }, [disabled]);
-
     const handleTogglePasswordClick = () => setShowPassword(s => !s);
 
     /**
@@ -142,7 +137,6 @@ export const PasswordInput = React.forwardRef<
               <InputIcon state={state} size={size} disabled={disabled} />
             )}
             <TogglePassword
-              disabled={disabled}
               showPassword={showPassword}
               handleTogglePasswordClick={handleTogglePasswordClick}
               size={size}
@@ -185,15 +179,12 @@ const stateNotificationCheck = function (
   return new Error('Error');
 };
 
+/// @ts-ignore
 PasswordInput.propTypes = {
   id: PropTypes.string,
-  /// @ts-ignore
   'aria-label': PropTypes.string,
-  /// @ts-ignore
   'aria-labelledby': PropTypes.string,
-  /// @ts-ignore
   label: PropTypes.string,
-  /// @ts-ignore
   'aria-describedby': PropTypes.string,
   className: PropTypes.string,
   darkMode: PropTypes.bool,
@@ -203,6 +194,5 @@ PasswordInput.propTypes = {
   placeholder: PropTypes.string,
   size: PropTypes.oneOf(Object.values(Size)),
   value: PropTypes.string,
-  /// @ts-ignore
   stateNotifications: stateNotificationCheck,
-};
+} as unknown;

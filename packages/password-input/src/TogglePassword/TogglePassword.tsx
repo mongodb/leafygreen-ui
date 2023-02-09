@@ -10,7 +10,6 @@ import { TogglePasswordProps } from './TogglePassword.types';
 
 export const TogglePassword = ({
   showPassword,
-  disabled,
   handleTogglePasswordClick,
   size,
 }: TogglePasswordProps) => {
@@ -20,8 +19,6 @@ export const TogglePassword = ({
     <>
       <IconButton
         aria-label="Toggle password visibility"
-        aria-disabled={disabled}
-        disabled={disabled}
         onClick={handleTogglePasswordClick}
         className={cx(baseStyles, sizeStyles[size])}
         role="switch"
