@@ -754,6 +754,7 @@ export function Combobox<M extends boolean>({
       e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     ) => {
       if (!disabled) {
+        // Prevents triggering the setOpen function called by clicking anywhere within the input wrapper.
         e.stopPropagation();
         updateSelection(null);
         onClear?.(e);
