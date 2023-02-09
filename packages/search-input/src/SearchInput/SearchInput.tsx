@@ -15,6 +15,7 @@ import isUndefined from 'lodash/isUndefined';
 
 import { cx } from '@leafygreen-ui/emotion';
 import {
+  useAutoScroll,
   useBackdropClick,
   useControlledValue,
   useDynamicRefs,
@@ -97,8 +98,10 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     const inputRef = useForwardedRef(forwardRef, null);
     const clearButtonRef = useRef<HTMLButtonElement>(null);
     const resultRefs = useDynamicRefs<HTMLElement>({ prefix: 'result' });
-    const withTypeAhead = !isUndefined(children);
     const [focusedElement, trackFocusedElement] = useState<Element>();
+    const highlightedElementRef = resultRefs(`${highlightIndex}`);
+
+    const withTypeAhead = !isUndefined(children);
 
     const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
 
@@ -281,7 +284,6 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
         switch (e.keyCode) {
           case keyMap.Enter: {
             e.stopPropagation();
-            const highlightedElementRef = resultRefs(`${highlightIndex}`);
             highlightedElementRef?.current?.click();
             break;
           }
@@ -337,6 +339,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       }
     };
 
+    useAutoScroll(highlightedElementRef, menuRef, 12);
     useBackdropClick(closeMenu, [searchBoxRef, menuRef], isOpen);
 
     return (
