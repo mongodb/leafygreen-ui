@@ -413,9 +413,31 @@ describe('packages/search-input', () => {
           expect(highlight).toHaveTextContent('Banana');
         });
 
-        test('down arrow cycles highlight to top', () => {});
+        test('up arrow cycles highlight to bottom', () => {
+          const { openMenu, inputEl, getByRole } = renderSearchInput({
+            ...defaultProps,
+          });
+          openMenu();
+          userEvent.type(inputEl, '{arrowup}');
+          const highlight = getByRole('option', {
+            selected: true,
+          });
+          expect(highlight).toBeInTheDocument();
+          expect(highlight).toHaveTextContent('Dragonfruit');
+        });
 
-        test('up arrow cycles highlight to bottom', () => {});
+        test('down arrow cycles highlight to top', () => {
+          const { openMenu, inputEl, getByRole } = renderSearchInput({
+            ...defaultProps,
+          });
+          openMenu();
+          userEvent.type(inputEl, '{arrowup}{arrowdown}');
+          const highlight = getByRole('option', {
+            selected: true,
+          });
+          expect(highlight).toBeInTheDocument();
+          expect(highlight).toHaveTextContent('Apple');
+        });
 
         test('down arrow key opens menu when its closed', () => {
           const { inputEl, getMenuElements } = renderSearchInput({
