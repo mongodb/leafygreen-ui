@@ -252,8 +252,14 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       }
     };
 
-    const handleSearchBoxClick: MouseEventHandler<HTMLDivElement> =
-      handleOpenMenuAction;
+    const handleSearchBoxClick: MouseEventHandler<HTMLDivElement> = e => {
+      if (e.target !== clearButtonRef.current) {
+        // Don't open the menu if it was the clear button that was clicked.
+        // Could use `e.stopPropagation` in clear button handler instead,
+        // but users may still want to handle that click event
+        handleOpenMenuAction(e);
+      }
+    };
 
     // Fired whenever the wrapper gains focus,
     // and any time the focus within changes
@@ -267,12 +273,12 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       trackFocusedElement(target);
     };
 
-    const handleClearButton: MouseEventHandler<HTMLButtonElement> = () => {
+    const handleClearButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
       changeInputValue('');
       inputRef?.current?.focus();
     };
 
-    const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
+    const handleSearchBoxKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
       const isFocusInMenu = menuRef.current?.contains(document.activeElement);
       const isFocusOnSearchBox = searchBoxRef.current?.contains(
         document.activeElement,
@@ -330,7 +336,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       }
     };
 
-    const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
+    const handleFormSubmit: FormEventHandler<HTMLFormElement> = e => {
       e.preventDefault(); // prevent page reload
 
       onSubmitProp?.(e);
@@ -353,7 +359,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
             role="search"
             ref={formRef}
             className={cx(formStyle, className)}
-            onSubmit={handleSubmit}
+            onSubmit={handleFormSubmit}
             {...rest}
           >
             {/* Disable eslint: onClick sets focus. Key events would already have focus */}
@@ -365,7 +371,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
               onMouseDown={handleSearchBoxMousedown}
               onClick={handleSearchBoxClick}
               onFocus={handleSearchBoxFocus}
-              onKeyDown={handleKeyDown}
+              onKeyDown={handleSearchBoxKeyDown}
               className={cx(
                 inputWrapperStyle,
                 inputWrapperSizeStyle[size],
@@ -402,7 +408,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
                   ref={clearButtonRef}
                   type="button"
                   aria-label="Clear search"
-                  onClick={handleClearButton}
+                  onClick={handleClearButtonClick}
                   className={clearButtonSizeStyle[size]}
                 >
                   <XIcon />
