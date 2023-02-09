@@ -57,6 +57,7 @@ const Link = InferredPolymorphic<LinkProps, 'span'>(
     }, []);
 
     const { theme } = useDarkMode(darkModeProp);
+    const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
     const { Component } = useInferredPolymorphic(as, rest);
 
     const hrefHostname = useMemo(() => {
@@ -67,8 +68,6 @@ const Link = InferredPolymorphic<LinkProps, 'span'>(
           : currentHostname;
       }
     }, [rest, currentHostname]);
-
-    const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
 
     let target, rel, icon;
 

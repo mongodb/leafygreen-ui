@@ -233,6 +233,8 @@ describe('packages/typography', () => {
         <Link target="_blank">Content</Link>
         <Link href="string" as={AnchorComponent} />
         <Link target="_blank" as={AnchorComponent} />
+        {/* @ts-expect-error as anchor is not allowed without an href */}
+        <Link as="a">Content</Link>
       </>;
     });
   });
