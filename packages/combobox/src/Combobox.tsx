@@ -754,12 +754,10 @@ export function Combobox<M extends boolean>({
       e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     ) => {
       if (!disabled) {
+        e.stopPropagation();
         updateSelection(null);
         onClear?.(e);
         onFilter?.('');
-        if (!isOpen) {
-          openMenu();
-        }
       }
     };
 
