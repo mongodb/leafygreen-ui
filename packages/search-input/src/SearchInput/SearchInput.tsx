@@ -392,7 +392,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
                 onChange={handleInputChange}
                 placeholder={placeholder}
                 ref={inputRef}
-                disabled={disabled}
+                readOnly={disabled}
               />
               {value && (
                 <IconButton

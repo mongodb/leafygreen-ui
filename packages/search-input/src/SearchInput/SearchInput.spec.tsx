@@ -116,16 +116,16 @@ describe('packages/search-input', () => {
     });
 
     describe('When disabled', () => {
-      test('searchbox is not clickable when `disabled`', () => {
+      test('searchbox is focusable when `disabled`', () => {
+        const { inputEl } = renderSearchInput({ disabled: true });
+        userEvent.tab();
+        expect(inputEl).toHaveFocus();
+      });
+
+      test('searchbox is NOT clickable when `disabled`', () => {
         const { searchBoxEl } = renderSearchInput({ disabled: true });
         userEvent.click(searchBoxEl);
         expect(document.body).toHaveFocus();
-      });
-
-      test('searchbox IS focusable when `disabled`', () => {
-        const { inputEl } = renderSearchInput({ disabled: true });
-        userEvent.type(document.body, '{tab}');
-        expect(inputEl).toHaveFocus();
       });
     });
 
