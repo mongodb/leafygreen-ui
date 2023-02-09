@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import { NotificationProps, State } from './PasswordInput.types';
 
 /**
@@ -34,3 +36,29 @@ export function getStateFromArray(
 
   return State.None;
 }
+
+/**
+ * Custom PropType check that ensures that the stateNotification prop has the correct prop type.
+ */
+export const stateNotificationCheck = function (
+  props: { [x: string]: any },
+  propName: string,
+  ...rest: ['componentName', 'location', 'propFullName']
+) {
+  const stateStringProp = PropTypes.oneOf(Object.values(State)).isRequired;
+  const arrayProp = PropTypes.arrayOf(
+    PropTypes.shape({
+      state: PropTypes.oneOf(Object.values(State)).isRequired,
+      notification: PropTypes.string.isRequired,
+    }),
+  );
+  const ariaProp = 'aria-describedby';
+
+  const stateStringType = stateStringProp(props, propName, ...rest);
+  const arrayType = arrayProp(props, propName, ...rest);
+
+  if (typeof props[ariaProp] === 'string') return stateStringType;
+  if (typeof props[ariaProp] === 'undefined') return arrayType;
+
+  return new Error('Error');
+};

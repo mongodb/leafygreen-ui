@@ -30,7 +30,7 @@ import {
   Size,
   State,
 } from './PasswordInput.types';
-import { getStateFromArray } from './utils';
+import { getStateFromArray, stateNotificationCheck } from './utils';
 
 export const PasswordInput = React.forwardRef<
   HTMLInputElement,
@@ -155,29 +155,6 @@ export const PasswordInput = React.forwardRef<
 );
 
 PasswordInput.displayName = 'PasswordInput';
-
-const stateNotificationCheck = function (
-  props: { [x: string]: any },
-  propName: string,
-  ...rest: ['componentName', 'location', 'propFullName']
-) {
-  const stateStringProp = PropTypes.oneOf(Object.values(State)).isRequired;
-  const arrayProp = PropTypes.arrayOf(
-    PropTypes.shape({
-      state: PropTypes.oneOf(Object.values(State)).isRequired,
-      notification: PropTypes.string.isRequired,
-    }),
-  );
-  const ariaProp = 'aria-describedby';
-
-  const stateStringType = stateStringProp(props, propName, ...rest);
-  const arrayType = arrayProp(props, propName, ...rest);
-
-  if (typeof props[ariaProp] === 'string') return stateStringType;
-  if (typeof props[ariaProp] === 'undefined') return arrayType;
-
-  return new Error('Error');
-};
 
 /// @ts-ignore
 PasswordInput.propTypes = {
