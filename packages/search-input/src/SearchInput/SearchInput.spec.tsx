@@ -10,7 +10,7 @@ import { axe } from 'jest-axe';
 import * as _LGTL from '@leafygreen-ui/testing-lib';
 
 import { renderSearchInput } from '../utils/SearchInput.testutils';
-import { SearchInput, SearchResult, Size } from '..';
+import { SearchInput, SearchResult } from '..';
 
 import { State } from './SearchInput.types';
 
