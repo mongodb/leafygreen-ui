@@ -151,11 +151,12 @@ describe('packages/search-input', () => {
 
     describe('Clear button', () => {
       test('clears any input', () => {
-        const { queryByRole, inputEl } = renderSearchInput();
+        const { queryByRole, inputEl } = renderSearchInput({
+          ...defaultProps,
+        });
         userEvent.type(inputEl, 'abc');
         userEvent.click(queryByRole('button')!);
         expect(inputEl).toHaveValue('');
-        expect(inputEl).toHaveFocus();
       });
 
       test('fires `onChange`', () => {
@@ -167,6 +168,17 @@ describe('packages/search-input', () => {
         userEvent.type(inputEl, 'abc');
         userEvent.click(queryByRole('button')!);
         expect(changeHandler).toHaveBeenCalled();
+      });
+
+      test('focuses input, but does not open the menu', () => {
+        const { queryByRole, inputEl, getMenuElements } = renderSearchInput({
+          ...defaultProps,
+          value: 'abc',
+        });
+        userEvent.click(queryByRole('button')!);
+        const { menuContainerEl } = getMenuElements();
+        expect(inputEl).toHaveFocus();
+        expect(menuContainerEl).not.toBeInTheDocument();
       });
     });
 
