@@ -3,8 +3,7 @@ import { Meta } from '@storybook/react';
 
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
-import { RadioGroupProps, Size } from './types';
-import { Radio, RadioGroup } from '.';
+import { Radio, RadioGroup, RadioGroupProps, Size } from '.';
 
 export default {
   title: 'Components/RadioGroup',
