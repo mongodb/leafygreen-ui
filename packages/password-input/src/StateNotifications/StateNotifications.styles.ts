@@ -3,7 +3,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing, typeScales } from '@leafygreen-ui/tokens';
 
-import { States } from '../PasswordInput/PasswordInput.types';
+import { State } from '../PasswordInput/PasswordInput.types';
 
 export const wrapperStyles = css`
   padding: 0;
@@ -23,32 +23,32 @@ export const baseStyles = css`
   gap: ${spacing[1]}px;
 `;
 
-export const themeStyles: Record<Theme, Record<States, string>> = {
+export const themeStyles: Record<Theme, Record<State, string>> = {
   [Theme.Light]: {
-    [States.Error]: css`
+    [State.Error]: css`
       color: ${palette.red.base};
     `,
-    [States.Warning]: css`
+    [State.Warning]: css`
       color: ${palette.red.base};
     `,
-    [States.Valid]: css`
+    [State.Valid]: css`
       color: ${palette.black};
     `,
-    [States.None]: css`
+    [State.None]: css`
       color: ${palette.gray.light1};
     `,
   },
   [Theme.Dark]: {
-    [States.Error]: css`
+    [State.Error]: css`
       color: ${palette.red.light1};
     `,
-    [States.Warning]: css`
+    [State.Warning]: css`
       color: ${palette.red.light1};
     `,
-    [States.Valid]: css`
+    [State.Valid]: css`
       color: ${palette.gray.light2};
     `,
-    [States.None]: css`
+    [State.None]: css`
       color: ${palette.gray.base};
     `,
   },
@@ -58,32 +58,32 @@ export const iconBaseStyles = css`
   margin-top: 2px;
 `;
 
-export const iconThemeStateStyles: Record<Theme, Record<States, string>> = {
+export const iconThemeStateStyles: Record<Theme, Record<State, string>> = {
   [Theme.Light]: {
-    [States.Error]: css`
+    [State.Error]: css`
       color: ${palette.red.base};
     `,
-    [States.Warning]: css`
+    [State.Warning]: css`
       color: ${palette.red.base};
     `,
-    [States.Valid]: css`
+    [State.Valid]: css`
       color: ${palette.green.dark1};
     `,
-    [States.None]: css`
+    [State.None]: css`
       color: ${palette.gray.light1};
     `,
   },
   [Theme.Dark]: {
-    [States.Error]: css`
+    [State.Error]: css`
       color: ${palette.red.light1};
     `,
-    [States.Warning]: css`
+    [State.Warning]: css`
       color: ${palette.red.light1};
     `,
-    [States.Valid]: css`
+    [State.Valid]: css`
       color: ${palette.green.base};
     `,
-    [States.None]: css`
+    [State.None]: css`
       color: ${palette.gray.base};
     `,
   },

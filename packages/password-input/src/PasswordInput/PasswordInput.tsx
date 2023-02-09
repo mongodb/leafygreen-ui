@@ -28,7 +28,7 @@ import {
   type NotificationProps,
   PasswordInputProps,
   Size,
-  States,
+  State,
 } from './PasswordInput.types';
 import { getStateFromArray } from './utils';
 
@@ -84,7 +84,7 @@ export const PasswordInput = React.forwardRef<
     /**
      * The overall state of the component
      */
-    const state: States = Array.isArray(stateNotifications)
+    const state: State = Array.isArray(stateNotifications)
       ? getStateFromArray(stateNotifications)
       : stateNotifications;
 
@@ -118,7 +118,7 @@ export const PasswordInput = React.forwardRef<
               aria-describedby={descriptionId}
               aria-labelledby={labelId}
               aria-disabled={disabled}
-              aria-invalid={state === States.Error || state === States.Warning}
+              aria-invalid={state === State.Error || state === State.Warning}
               className={cx(
                 inputBaseStyles,
                 inputSizeStyles[size],
@@ -130,7 +130,7 @@ export const PasswordInput = React.forwardRef<
                     inputDisabledThemeStyles[theme],
                   )]: disabled,
                   [inputIconSizeStyles[size]]:
-                    !hasNotifications && state !== States.None,
+                    !hasNotifications && state !== State.None,
                 },
               )}
               onChange={handleChange}
@@ -138,7 +138,7 @@ export const PasswordInput = React.forwardRef<
               {...rest}
             />
             {/* If a custom message container is used, an icon will render inside the input to represent the state of the input. In the case that stateNotification === `none`, no icon will appear. */}
-            {!hasNotifications && state !== States.None && (
+            {!hasNotifications && state !== State.None && (
               <InputIcon state={state} size={size} disabled={disabled} />
             )}
             <TogglePassword
@@ -167,10 +167,10 @@ const stateNotificationCheck = function (
   propName: string,
   ...rest: ['componentName', 'location', 'propFullName']
 ) {
-  const stateStringProp = PropTypes.oneOf(Object.values(States)).isRequired;
+  const stateStringProp = PropTypes.oneOf(Object.values(State)).isRequired;
   const arrayProp = PropTypes.arrayOf(
     PropTypes.shape({
-      state: PropTypes.oneOf(Object.values(States)).isRequired,
+      state: PropTypes.oneOf(Object.values(State)).isRequired,
       notification: PropTypes.string.isRequired,
     }),
   );

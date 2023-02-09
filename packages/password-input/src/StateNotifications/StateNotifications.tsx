@@ -7,7 +7,7 @@ import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import ErrorIcon from '@leafygreen-ui/icon/dist/X';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { States } from '../PasswordInput/PasswordInput.types';
+import { State } from '../PasswordInput/PasswordInput.types';
 
 import {
   baseStyles,
@@ -18,11 +18,11 @@ import {
 } from './StateNotifications.styles';
 import { StateNotificationsProps } from './StateNotifications.types';
 
-const icons: Record<States, React.ComponentType<any>> = {
-  [States.Error]: ErrorIcon,
-  [States.Warning]: WarningIcon,
-  [States.Valid]: CheckmarkIcon,
-  [States.None]: CheckmarkIcon,
+const icons: Record<State, React.ComponentType<any>> = {
+  [State.Error]: ErrorIcon,
+  [State.Warning]: WarningIcon,
+  [State.Valid]: CheckmarkIcon,
+  [State.None]: CheckmarkIcon,
 };
 
 export const StateNotifications = ({
@@ -42,7 +42,7 @@ export const StateNotifications = ({
           <li
             key={`${index}-${state}`}
             className={cx(baseStyles, themeStyles[theme][state])}
-            aria-hidden={state === States.None}
+            aria-hidden={state === State.None}
           >
             <ValidationIcon
               className={cx(iconBaseStyles, iconThemeStateStyles[theme][state])}

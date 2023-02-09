@@ -2,14 +2,14 @@ import { ChangeEventHandler, ComponentPropsWithoutRef } from 'react';
 
 import { DarkModeProps, Either } from '@leafygreen-ui/lib';
 
-export const States = {
+export const State = {
   Error: 'error', // red x icon, red text
   Warning: 'warning', // red warning icon, red text
   Valid: 'valid', // green checkmark, black text
   None: 'none', // gray checkmark, gray text
 } as const;
 
-export type States = typeof States[keyof typeof States];
+export type State = typeof State[keyof typeof State];
 
 export const Size = {
   Small: 'small',
@@ -21,7 +21,7 @@ export type Size = typeof Size[keyof typeof Size];
 
 export interface NotificationProps {
   notification?: string;
-  state: States;
+  state: State;
 }
 
 interface AriaLabelProps {
@@ -64,7 +64,7 @@ interface StateOnlyProps {
    *
    * @default 'none'
    */
-  stateNotifications: States;
+  stateNotifications: State;
 }
 
 // using default notification container, no aria-describedby

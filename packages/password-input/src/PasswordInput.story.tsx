@@ -6,7 +6,7 @@ import { storybookArgTypes } from '@leafygreen-ui/lib';
 import {
   PasswordInputProps,
   Size,
-  States,
+  State,
 } from './PasswordInput/PasswordInput.types';
 import { PasswordInput } from '.';
 
@@ -125,7 +125,7 @@ export const CustomContainer = ({
   return (
     <PasswordInput
       {...rest}
-      stateNotifications={stateNotifications as States}
+      stateNotifications={stateNotifications as State}
       aria-describedby={'my-id'}
       ref={ref}
     />
@@ -135,10 +135,10 @@ export const CustomContainer = ({
 CustomContainer.argTypes = {
   stateNotifications: {
     control: 'select',
-    options: Object.values(States),
+    options: Object.values(State),
   },
 };
 
 CustomContainer.args = {
-  stateNotifications: States.Warning,
+  stateNotifications: State.Warning,
 };

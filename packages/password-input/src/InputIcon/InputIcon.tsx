@@ -6,7 +6,7 @@ import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import ErrorIcon from '@leafygreen-ui/icon/dist/X';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { States } from '../PasswordInput/PasswordInput.types';
+import { State } from '../PasswordInput/PasswordInput.types';
 
 import {
   baseStyles,
@@ -17,9 +17,9 @@ import {
 import { InputIconProps, StateProps } from './InputIcon.types';
 
 const validationIcons: Record<StateProps, React.ComponentType<any>> = {
-  [States.Error]: ErrorIcon,
-  [States.Warning]: WarningIcon,
-  [States.Valid]: CheckmarkIcon,
+  [State.Error]: ErrorIcon,
+  [State.Warning]: WarningIcon,
+  [State.Valid]: CheckmarkIcon,
 };
 
 export const InputIcon = ({ state, size, disabled }: InputIconProps) => {

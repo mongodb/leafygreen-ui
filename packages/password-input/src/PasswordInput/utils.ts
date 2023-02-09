@@ -1,4 +1,4 @@
-import { NotificationProps, States } from './PasswordInput.types';
+import { NotificationProps, State } from './PasswordInput.types';
 
 /**
  * Utility function that checks if the values in an array are all equal
@@ -7,7 +7,7 @@ import { NotificationProps, States } from './PasswordInput.types';
  *
  * @param arr `Array<States>`
  */
-export function allEqual(arr: Array<States>): boolean {
+export function allEqual(arr: Array<State>): boolean {
   return new Set(arr).size == 1;
 }
 
@@ -20,17 +20,17 @@ export function allEqual(arr: Array<States>): boolean {
  */
 export function getStateFromArray(
   stateNotifications: Array<NotificationProps>,
-): States {
-  if (stateNotifications.length === 0) return States.None;
+): State {
+  if (stateNotifications.length === 0) return State.None;
 
-  const statesArray: Array<States> = (
+  const statesArray: Array<State> = (
     stateNotifications as Array<NotificationProps>
   ).map((notification: NotificationProps) => notification.state);
 
   if (statesArray.length === 1) return statesArray[0];
   if (allEqual(statesArray)) return statesArray[0];
-  if (statesArray.includes(States.Error)) return States.Error;
-  if (statesArray.includes(States.Warning)) return States.Warning;
+  if (statesArray.includes(State.Error)) return State.Error;
+  if (statesArray.includes(State.Warning)) return State.Warning;
 
-  return States.None;
+  return State.None;
 }

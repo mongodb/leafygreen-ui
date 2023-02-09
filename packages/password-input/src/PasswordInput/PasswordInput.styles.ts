@@ -10,7 +10,7 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { Size, States } from './PasswordInput.types';
+import { Size, State } from './PasswordInput.types';
 
 /**
  * Adds an inset box shadow to hide the UA background styles for autofilled inputs
@@ -176,15 +176,15 @@ export const errorWarningLightThemeStyles = css`
   }
 `;
 
-export const inputThemeStyles: Record<Theme, Record<States, string>> = {
+export const inputThemeStyles: Record<Theme, Record<State, string>> = {
   [Theme.Light]: {
-    [States.Error]: css`
+    [State.Error]: css`
       ${errorWarningLightThemeStyles};
     `,
-    [States.Warning]: css`
+    [State.Warning]: css`
       ${errorWarningLightThemeStyles};
     `,
-    [States.Valid]: css`
+    [State.Valid]: css`
       &,
       &:-webkit-autofill {
         border-color: ${palette.green.dark1};
@@ -204,7 +204,7 @@ export const inputThemeStyles: Record<Theme, Record<States, string>> = {
         }
       }
     `,
-    [States.None]: css`
+    [State.None]: css`
       &,
       &:-webkit-autofill {
         border-color: ${palette.gray.base};
@@ -226,13 +226,13 @@ export const inputThemeStyles: Record<Theme, Record<States, string>> = {
     `,
   },
   [Theme.Dark]: {
-    [States.Error]: css`
+    [State.Error]: css`
       ${errorWarningDarkThemeStyles};
     `,
-    [States.Warning]: css`
+    [State.Warning]: css`
       ${errorWarningDarkThemeStyles};
     `,
-    [States.Valid]: css`
+    [State.Valid]: css`
       &,
       &:-webkit-autofill {
         border-color: ${palette.green.dark1};
@@ -252,7 +252,7 @@ export const inputThemeStyles: Record<Theme, Record<States, string>> = {
         }
       }
     `,
-    [States.None]: css`
+    [State.None]: css`
       &,
       &:-webkit-autofill {
         border-color: ${palette.gray.base};
