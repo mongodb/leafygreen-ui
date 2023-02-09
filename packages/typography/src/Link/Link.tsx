@@ -8,8 +8,8 @@ import {
   InferredPolymorphic,
   useInferredPolymorphic,
   PolymorphicAs,
-  Polymorphic,
-  usePolymorphic,
+  InferredPolymorphicProps,
+  PolymorphicProps,
 } from '@leafygreen-ui/polymorphic';
 
 import { bodyTypeScaleStyles } from '../styles';
@@ -27,6 +27,19 @@ import {
 } from './Link.styles';
 import { ArrowAppearance, LinkProps } from './Link.types';
 
+type LinkRenderProps = PolymorphicProps<
+  PolymorphicAs,
+  InferredPolymorphicProps<LinkProps>
+>;
+
+type AnchorLikeProps = PolymorphicProps<'a', LinkProps>;
+
+const hasAnchorLikeProps = (
+  props: LinkRenderProps | AnchorLikeProps,
+): props is AnchorLikeProps => {
+  return (props as AnchorLikeProps).href !== undefined;
+};
+
 const Link = InferredPolymorphic<LinkProps, 'span'>(
   ({
     children,
@@ -34,9 +47,6 @@ const Link = InferredPolymorphic<LinkProps, 'span'>(
     arrowAppearance = ArrowAppearance.None,
     hideExternalIcon = false,
     baseFontSize: baseFontSizeOverride,
-    // href,
-    target: targetProp,
-    rel: relProp,
     darkMode: darkModeProp,
     as = 'span' as PolymorphicAs,
     ...rest
@@ -50,30 +60,25 @@ const Link = InferredPolymorphic<LinkProps, 'span'>(
     const { Component } = useInferredPolymorphic(as, rest);
 
     const hrefHostname = useMemo(() => {
-      if (!rest.href) return;
-      const httpRegex = /^http(s)?:\/\//;
-      return httpRegex.test(rest.href)
-        ? new URL(rest.href).hostname
-        : currentHostname;
-    }, [rest.href, currentHostname]);
+      if (hasAnchorLikeProps(rest)) {
+        const httpRegex = /^http(s)?:\/\//;
+        return httpRegex.test(rest.href)
+          ? new URL(rest.href).hostname
+          : currentHostname;
+      }
+    }, [rest, currentHostname]);
 
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
 
     let target, rel, icon;
 
-    // Respect passed values
-    if (targetProp || relProp) {
-      target = targetProp;
-      rel = relProp;
-    } else {
-      // Only manually set values if not provided and we are rendering an anchor tag
-      if (Component === 'a') {
-        if (hrefHostname === currentHostname) {
-          target = '_self';
-        } else {
-          target = '_blank';
-          rel = 'noopener noreferrer';
-        }
+    // Sets defaults for target and rel props when Component is an anchor tag
+    if (Component === 'a') {
+      if (hrefHostname === currentHostname) {
+        target = '_self';
+      } else {
+        target = '_blank';
+        rel = 'noopener noreferrer';
       }
     }
 
