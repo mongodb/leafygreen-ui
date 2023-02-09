@@ -115,6 +115,20 @@ describe('packages/search-input', () => {
       expect(menuContainerEl).not.toBeInTheDocument();
     });
 
+    describe('When disabled', () => {
+      test('searchbox is not clickable when `disabled`', () => {
+        const { searchBoxEl } = renderSearchInput({ disabled: true });
+        userEvent.click(searchBoxEl);
+        expect(document.body).toHaveFocus();
+      });
+
+      test('searchbox IS focusable when `disabled`', () => {
+        const { inputEl } = renderSearchInput({ disabled: true });
+        userEvent.type(document.body, '{tab}');
+        expect(inputEl).toHaveFocus();
+      });
+    });
+
     describe('Any character key', () => {
       test('updates the input', () => {
         const changeHandler = jest.fn();
@@ -400,6 +414,10 @@ describe('packages/search-input', () => {
           expect(highlight).toBeInTheDocument();
           expect(highlight).toHaveTextContent('Banana');
         });
+
+        test('down arrow cycles highlight to top', () => {});
+
+        test('up arrow cycles highlight to bottom', () => {});
 
         test('down arrow key opens menu when its closed', () => {
           const { inputEl, getMenuElements } = renderSearchInput({
