@@ -1,15 +1,22 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import { PolymorphicAs, PolymorphicProps } from '@leafygreen-ui/polymorphic';
+import {
+  PolymorphicAs,
+  PolymorphicProps,
+  InferredPolymorphicProps,
+} from '@leafygreen-ui/polymorphic';
 
 import { Link } from '..';
 
 import { LinkProps } from './Link.types';
 
-type TypedLinkProps<T extends PolymorphicAs> = PolymorphicProps<T, LinkProps>;
+type LinkRenderProps = PolymorphicProps<
+  PolymorphicAs,
+  InferredPolymorphicProps<LinkProps>
+>;
 
-const renderLink = <T extends PolymorphicAs>(props: TypedLinkProps<T>) => {
+const renderLink = (props: LinkRenderProps) => {
   render(<Link {...props}>Link</Link>);
 };
 
@@ -159,34 +166,34 @@ describe('packages/typography', () => {
   describe('anchor props', () => {
     test('href is always passed to rendered component when the prop is supplied', () => {
       renderLink({ href: 'test' });
-      const div = screen.getByText('Link').parentElement;
-      expect(div).toHaveAttribute('href');
-      expect(div?.getAttribute('href')).toBe('test');
+      const a = screen.getByText('Link').parentElement;
+      expect(a).toHaveAttribute('href');
+      expect(a?.getAttribute('href')).toBe('test');
     });
 
     test('it respects "target" and "rel" values when target is set', () => {
-      renderLink({ target: 'test' });
-      const div = screen.getByText('Link').parentElement;
-      expect(div).toHaveAttribute('target');
-      expect(div).not.toHaveAttribute('rel');
-      expect(div?.getAttribute('target')).toBe('test');
+      renderLink({ href: 'string', target: 'test' });
+      const a = screen.getByText('Link').parentElement;
+      expect(a).toHaveAttribute('target');
+      expect(a).not.toHaveAttribute('rel');
+      expect(a?.getAttribute('target')).toBe('test');
     });
 
     test('it respects "target" and "rel" values when rel is set', () => {
-      renderLink({ rel: 'test' });
-      const div = screen.getByText('Link').parentElement;
-      expect(div).toHaveAttribute('rel');
-      expect(div).not.toHaveAttribute('target');
-      expect(div?.getAttribute('rel')).toBe('test');
+      renderLink({ href: 'string', rel: 'test' });
+      const a = screen.getByText('Link').parentElement;
+      expect(a).toHaveAttribute('rel');
+      expect(a).not.toHaveAttribute('target');
+      expect(a?.getAttribute('rel')).toBe('test');
     });
 
     test('it respects "target" and "rel" values when both is set', () => {
-      renderLink({ rel: 'rel', target: 'target' });
-      const div = screen.getByText('Link').parentElement;
-      expect(div).toHaveAttribute('rel');
-      expect(div).toHaveAttribute('target');
-      expect(div?.getAttribute('rel')).toBe('rel');
-      expect(div?.getAttribute('target')).toBe('target');
+      renderLink({ href: 'string', rel: 'rel', target: 'target' });
+      const a = screen.getByText('Link').parentElement;
+      expect(a).toHaveAttribute('rel');
+      expect(a).toHaveAttribute('target');
+      expect(a?.getAttribute('rel')).toBe('rel');
+      expect(a?.getAttribute('target')).toBe('target');
     });
 
     test('it sets "target" and "rel" values when href is set', () => {
@@ -196,6 +203,37 @@ describe('packages/typography', () => {
       expect(anchor).toHaveAttribute('target');
       expect(anchor).toHaveAttribute('href');
       expect(anchor?.tagName.toLowerCase()).toBe('a');
+    });
+  });
+
+  describe('TypeSCript types are correct', () => {
+    test.skip('Types', () => {
+      const WrapperComponent = (props: JSX.IntrinsicElements['button']) => {
+        return <button {...props} />;
+      };
+
+      const AnchorComponent = (props: JSX.IntrinsicElements['a']) => {
+        return <a {...props} />;
+      };
+
+      <>
+        <Link />
+        <Link>some content</Link>
+        <Link href="string">some content</Link>
+        <Link as="div">some content</Link>
+        {/* @ts-expect-error href is not allowed on explicit div */}
+        <Link as="div" href="string">
+          some content
+        </Link>
+        {/* @ts-expect-error href is not allowed on a Wrapper component that does not accept anchor props */}
+        <Link as={WrapperComponent} href="string">
+          some content
+        </Link>
+        {/* @ts-expect-error target is not allowed on a default span */}
+        <Link target="_blank">Content</Link>
+        <Link href="string" as={AnchorComponent} />
+        <Link target="_blank" as={AnchorComponent} />
+      </>;
     });
   });
 });

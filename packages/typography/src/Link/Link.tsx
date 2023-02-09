@@ -4,7 +4,13 @@ import { cx } from '@leafygreen-ui/emotion';
 import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
 import OpenNewTabIcon from '@leafygreen-ui/icon/dist/OpenNewTab';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { Polymorphic, usePolymorphic } from '@leafygreen-ui/polymorphic';
+import {
+  InferredPolymorphic,
+  useInferredPolymorphic,
+  PolymorphicAs,
+  Polymorphic,
+  usePolymorphic,
+} from '@leafygreen-ui/polymorphic';
 
 import { bodyTypeScaleStyles } from '../styles';
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
@@ -21,18 +27,18 @@ import {
 } from './Link.styles';
 import { ArrowAppearance, LinkProps } from './Link.types';
 
-const Link = Polymorphic<LinkProps>(
+const Link = InferredPolymorphic<LinkProps, 'span'>(
   ({
-    href,
     children,
     className,
     arrowAppearance = ArrowAppearance.None,
     hideExternalIcon = false,
     baseFontSize: baseFontSizeOverride,
+    // href,
     target: targetProp,
     rel: relProp,
     darkMode: darkModeProp,
-    as,
+    as = 'span' as PolymorphicAs,
     ...rest
   }) => {
     const [currentHostname, setCurrentHostname] = useState('');
@@ -41,13 +47,15 @@ const Link = Polymorphic<LinkProps>(
     }, []);
 
     const { theme } = useDarkMode(darkModeProp);
-    const { Component } = usePolymorphic(as ? as : href ? 'a' : 'span');
+    const { Component } = useInferredPolymorphic(as, rest);
 
     const hrefHostname = useMemo(() => {
-      if (!href) return;
+      if (!rest.href) return;
       const httpRegex = /^http(s)?:\/\//;
-      return httpRegex.test(href) ? new URL(href).hostname : currentHostname;
-    }, [href, currentHostname]);
+      return httpRegex.test(rest.href)
+        ? new URL(rest.href).hostname
+        : currentHostname;
+    }, [rest.href, currentHostname]);
 
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
 
@@ -96,7 +104,6 @@ const Link = Polymorphic<LinkProps>(
           linkModeStyles[theme],
           className,
         )}
-        href={href}
         target={target}
         rel={rel}
         {...rest}
