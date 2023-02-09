@@ -7,8 +7,6 @@ import {
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import * as _LGTL from '@leafygreen-ui/testing-lib';
-
 import { renderSearchInput } from '../utils/SearchInput.testutils';
 import { SearchInput, SearchResult } from '..';
 
