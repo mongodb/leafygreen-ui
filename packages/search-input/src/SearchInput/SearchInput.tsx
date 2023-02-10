@@ -409,6 +409,8 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
                   aria-label="Clear search"
                   onClick={handleClearButtonClick}
                   className={clearButtonSizeStyle[size]}
+                  tabIndex={disabled ? -1 : 0}
+                  disabled={disabled}
                 >
                   <XIcon />
                 </IconButton>

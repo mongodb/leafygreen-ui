@@ -146,16 +146,16 @@ describe('packages/search-input', () => {
         expect(changeHandler).not.toHaveBeenCalled();
       });
 
-      test('clear button does not focus on tab', () => {
+      test('clear button does not focus on {tab}', () => {
         const { queryByRole } = renderSearchInput({
           ...defaultProps,
           disabled: true,
           value: 'abc',
         });
         const button = queryByRole('button');
-        userEvent.tab();
+        userEvent.tab(); // could focus on input (but shouldn't)
         expect(button).not.toHaveFocus();
-        userEvent.tab();
+        userEvent.tab(); // check again in case input got focused
         expect(button).not.toHaveFocus();
       });
     });
