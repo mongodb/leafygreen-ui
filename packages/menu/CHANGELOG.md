@@ -1,5 +1,20 @@
 # @leafygreen-ui/menu
 
+## 20.0.0
+
+### Major Changes
+
+- 2f732ca50: Migrate component to use `Polymorphic` instead of `Box` internally. This should allow better support of the `styled` API. Additionally, this fixes a bug with the `as` prop, which should now work as expected and allow consuming applications to choose what component MenuItem and SubMenu components are rendered as.
+
+### Patch Changes
+
+- bf2fedf6d: Version bumps lib
+- Updated dependencies [ffb99f417]
+- Updated dependencies [bf2fedf6d]
+  - @leafygreen-ui/hooks@7.5.0
+  - @leafygreen-ui/icon-button@15.0.6
+  - @leafygreen-ui/leafygreen-provider@3.1.1
+
 ## 19.0.4
 
 ### Patch Changes

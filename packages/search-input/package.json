@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/search-input",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "leafyGreen UI Kit Search Input",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -35,6 +35,6 @@
     "@leafygreen-ui/tokens": "^2.0.0"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.0"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.1"
   }
 }
