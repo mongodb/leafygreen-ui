@@ -28,7 +28,7 @@ export default {
     disabled: {
       control: 'boolean',
     },
-    focused: {
+    highlighted: {
       control: 'boolean',
     },
     href: {

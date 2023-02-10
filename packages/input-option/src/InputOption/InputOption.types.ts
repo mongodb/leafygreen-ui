@@ -22,26 +22,26 @@ export interface BaseInputOptionProps {
   disabled?: boolean;
 
   /**
-   * Defines the currently focused option element for keyboard navigation.
+   * Defines the currently highlighted option element for keyboard navigation.
    * Not to be confused with `selected`, which identifies the currently selected option
    * @default false
    */
-  focused?: boolean;
+  highlighted?: boolean;
+
+  /**
+   * Whether the component is selected, regardless of keyboard navigation
+   */
+  selected?: boolean;
 
   /**
    * Whether a wedge displays on the left side of the item
-   * when the element is focused or active
+   * when the element is highlighted or selected
    * @default true
    */
   showWedge?: boolean;
 
   /**
-   * Whether the component is active, regardless of keyboard navigation
-   */
-  active?: boolean;
-
-  /**
-   * Determines whether to show hover, focus and active styles
+   * Determines whether to show hover, highlight and selected styles
    * @default true
    */
   isInteractive?: boolean;

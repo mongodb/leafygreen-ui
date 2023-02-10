@@ -35,6 +35,8 @@ import {
 } from '@leafygreen-ui/lib';
 
 import { SearchInputContextProvider } from '../SearchInputContext';
+import { SearchResultProps } from '../SearchResult';
+import { SearchResultGroupProps } from '../SearchResultGroup';
 import { SearchResultsMenu } from '../SearchResultsMenu';
 
 import {
@@ -167,9 +169,9 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
             id: `result-${index}`,
             key: `result-${index}`,
             ref: child.props.ref ?? resultRefs?.(`${index}`),
-            focused: index === highlightIndex,
+            highlighted: index === highlightIndex,
             onClick: onElementClick,
-          });
+          } as SearchResultProps);
         } else if (isComponentType(child, 'SearchResultGroup')) {
           const nestedChildren = React.Children.map(
             child.props.children,
@@ -180,7 +182,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
             return React.cloneElement(child, {
               ...child.props,
               children: nestedChildren,
-            });
+            } as SearchResultGroupProps);
           }
         }
       };

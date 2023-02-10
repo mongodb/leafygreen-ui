@@ -27,10 +27,10 @@ export default {
     disabled: {
       control: 'boolean',
     },
-    focused: {
+    highlighted: {
       control: 'boolean',
     },
-    active: {
+    selected: {
       control: 'boolean',
     },
     showWedge: {
