@@ -271,65 +271,68 @@ describe('packages/search-input', () => {
         expect(inputEl).toHaveValue('abc');
       });
 
-      test('clicking a result fires its onClick handler', () => {
-        const { getMenuElements, inputEl } = renderSearchInput({
-          ...defaultProps,
+      describe('clicking a result', () => {
+        test('fires its onClick handler', () => {
+          const { getMenuElements, inputEl } = renderSearchInput({
+            ...defaultProps,
+          });
+          userEvent.click(inputEl);
+          const { resultsElements } = getMenuElements();
+
+          userEvent.click(resultsElements![0]);
+          expect(resultClickHandler).toHaveBeenCalledWith(
+            expect.objectContaining({
+              type: 'click',
+            }),
+          );
         });
-        userEvent.click(inputEl);
-        const { resultsElements } = getMenuElements();
 
-        userEvent.click(resultsElements![0]);
-        expect(resultClickHandler).toHaveBeenCalledWith(
-          expect.objectContaining({
-            type: 'click',
-          }),
-        );
-      });
+        test('fires the onSubmit handler', () => {
+          const submitHandler = jest.fn();
 
-      test('clicking a result fires the onSubmit handler', () => {
-        const submitHandler = jest.fn();
+          const { getMenuElements, inputEl, containerEl } = renderSearchInput({
+            ...defaultProps,
+            onSubmit: submitHandler,
+          });
+          userEvent.click(inputEl);
+          const { resultsElements } = getMenuElements();
 
-        const { getMenuElements, inputEl, containerEl } = renderSearchInput({
-          ...defaultProps,
-          onSubmit: submitHandler,
+          userEvent.click(resultsElements![0]);
+          expect(submitHandler).toHaveBeenCalledWith(
+            expect.objectContaining({
+              type: 'submit',
+            }),
+          );
+          const submitEvent = submitHandler.mock.calls[0][0]; // the first parameter of the first call
+          expect(submitEvent.target).toBe(containerEl);
         });
-        userEvent.click(inputEl);
-        const { resultsElements } = getMenuElements();
 
-        userEvent.click(resultsElements![0]);
-        expect(submitHandler).toHaveBeenCalledWith(
-          expect.objectContaining({
-            type: 'submit',
-          }),
-        );
-        const submitEvent = submitHandler.mock.calls[0][0]; // the first parameter of the first call
-        expect(submitEvent.target).toBe(containerEl);
-      });
-
-      test('clicking a result populates the input with the result text', () => {
-        const { getMenuElements, inputEl } = renderSearchInput({
-          ...defaultProps,
+        test('fires the change handler', () => {
+          const changeHandler = jest.fn();
+          const { getMenuElements, inputEl } = renderSearchInput({
+            ...defaultProps,
+            onChange: changeHandler,
+          });
+          userEvent.click(inputEl);
+          const { resultsElements } = getMenuElements();
+          userEvent.click(resultsElements![0]);
+          expect(changeHandler).toHaveBeenCalledWith(
+            expect.objectContaining({
+              type: 'change',
+            }),
+          );
         });
-        userEvent.click(inputEl);
-        const { resultsElements } = getMenuElements();
-        userEvent.click(resultsElements![0]);
-        expect(inputEl.value).toBe('Apple');
-      });
 
-      test('populating the input after clicking result fires the change handler', () => {
-        const changeHandler = jest.fn();
-        const { getMenuElements, inputEl } = renderSearchInput({
-          ...defaultProps,
-          onChange: changeHandler,
+        test('does not populate the input with the result text', () => {
+          // https://mongodb.slack.com/archives/G01500NFVPS/p1676059715272479
+          const { getMenuElements, inputEl } = renderSearchInput({
+            ...defaultProps,
+          });
+          userEvent.click(inputEl);
+          const { resultsElements } = getMenuElements();
+          userEvent.click(resultsElements![0]);
+          expect(inputEl.value).toBe('');
         });
-        userEvent.click(inputEl);
-        const { resultsElements } = getMenuElements();
-        userEvent.click(resultsElements![0]);
-        expect(changeHandler).toHaveBeenCalledWith(
-          expect.objectContaining({
-            type: 'change',
-          }),
-        );
       });
     });
 

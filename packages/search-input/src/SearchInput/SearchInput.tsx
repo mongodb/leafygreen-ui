@@ -148,6 +148,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
           const onElementClick: MouseEventHandler = e => {
             child.props.onClick?.(e); // call the child's onClick handler
 
+            // Update the input value so the submit event has a target.value
             changeInputValue(textValue);
 
             const wasClickedWithMouse = e.detail >= 1;
@@ -341,6 +342,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       onSubmitProp?.(e);
       if (withTypeAhead) {
         closeMenu();
+        changeInputValue(''); // Clear the input
       }
     };
 
