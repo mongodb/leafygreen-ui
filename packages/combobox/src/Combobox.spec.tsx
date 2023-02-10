@@ -1299,6 +1299,18 @@ describe('packages/combobox', () => {
       expect(onClear).toHaveBeenCalled();
     });
 
+    test('Clear button does not force the menu to reopen', () => {
+      const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+      const onClear = jest.fn();
+      const { clearButtonEl, queryByRole } = renderCombobox(select, {
+        initialValue,
+        onClear,
+      });
+      expect(queryByRole('listbox')).not.toBeInTheDocument();
+      userEvent.click(clearButtonEl!);
+      expect(queryByRole('listbox')).not.toBeInTheDocument();
+    });
+
     /**
      * onChange
      */
