@@ -1288,27 +1288,40 @@ describe('packages/combobox', () => {
     /**
      * onClear
      */
-    test('Clear button calls onClear callback', () => {
-      const initialValue = select === 'multiple' ? ['apple'] : 'apple';
-      const onClear = jest.fn();
-      const { clearButtonEl } = renderCombobox(select, {
-        initialValue,
-        onClear,
+    describe('onClear', () => {
+      test('Clear button calls onClear callback', () => {
+        const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+        const onClear = jest.fn();
+        const { clearButtonEl } = renderCombobox(select, {
+          initialValue,
+          onClear,
+        });
+        userEvent.click(clearButtonEl!);
+        expect(onClear).toHaveBeenCalled();
       });
-      userEvent.click(clearButtonEl!);
-      expect(onClear).toHaveBeenCalled();
-    });
 
-    test('Clear button does not force the menu to reopen', () => {
-      const initialValue = select === 'multiple' ? ['apple'] : 'apple';
-      const onClear = jest.fn();
-      const { clearButtonEl, queryByRole } = renderCombobox(select, {
-        initialValue,
-        onClear,
+      test('Clear button does not force the menu to reopen', () => {
+        const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+        const onClear = jest.fn();
+        const { clearButtonEl, queryByRole } = renderCombobox(select, {
+          initialValue,
+          onClear,
+        });
+        expect(queryByRole('listbox')).not.toBeInTheDocument();
+        userEvent.click(clearButtonEl!);
+        expect(queryByRole('listbox')).not.toBeInTheDocument();
       });
-      expect(queryByRole('listbox')).not.toBeInTheDocument();
-      userEvent.click(clearButtonEl!);
-      expect(queryByRole('listbox')).not.toBeInTheDocument();
+
+      test('Clear button clears the value of the input', () => {
+        let value = 'apple';
+        const { inputEl, clearButtonEl } = renderCombobox(select, {
+          value,
+        });
+
+        expect(inputEl).toHaveValue('Apple');
+        userEvent.click(clearButtonEl!);
+        expect(inputEl).toHaveValue('');
+      });
     });
 
     /**
