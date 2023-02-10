@@ -759,7 +759,13 @@ export function Combobox<M extends boolean>({
         updateSelection(null);
         onClear?.(e);
         onFilter?.('');
+        setInputFocus();
       }
+    };
+
+    const handleClearButtonKeyDown = (e: React.KeyboardEvent) => {
+      e.stopPropagation();
+      setInputFocus();
     };
 
     return (
@@ -772,7 +778,7 @@ export function Combobox<M extends boolean>({
             ref={clearButtonRef}
             onClick={handleClearButtonClick}
             onFocus={handleClearButtonFocus}
-            onKeyDown={(e: React.KeyboardEvent) => e.stopPropagation()}
+            onKeyDown={handleClearButtonKeyDown}
             className={cx(clearButtonStyle)}
             darkMode={darkMode}
           >

@@ -1322,6 +1322,11 @@ describe('packages/combobox', () => {
         userEvent.click(clearButtonEl!);
         expect(inputEl).toHaveValue('');
       });
+
+      test('Focus returns to input element after clear button is clicked', () => {
+        const { inputEl, clearButtonEl } = renderCombobox(select);
+        userEvent.click(clearButtonEl!);
+      });
     });
 
     /**
