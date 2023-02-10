@@ -9,8 +9,8 @@ import LeafyGreenProvider, {
 import { Label } from '@leafygreen-ui/typography';
 
 import { InputIcon } from '../InputIcon';
+import { PasswordToggle } from '../PasswordToggle';
 import { StateNotifications } from '../StateNotifications';
-import { TogglePassword } from '../TogglePassword';
 
 import {
   inputBaseStyles,
@@ -74,7 +74,7 @@ export const PasswordInput = React.forwardRef<
       );
     }
 
-    const handleTogglePasswordClick = () => setShowPassword(s => !s);
+    const handlePasswordToggleClick = () => setShowPassword(s => !s);
 
     /**
      * The overall state of the component
@@ -136,9 +136,9 @@ export const PasswordInput = React.forwardRef<
             {!hasNotifications && state !== State.None && (
               <InputIcon state={state} size={size} disabled={disabled} />
             )}
-            <TogglePassword
+            <PasswordToggle
               showPassword={showPassword}
-              handleTogglePasswordClick={handleTogglePasswordClick}
+              handlePasswordToggleClick={handlePasswordToggleClick}
               size={size}
             />
           </div>

@@ -1,7 +1,7 @@
 import { Size } from '../PasswordInput/PasswordInput.types';
 
-export interface TogglePasswordProps {
+export interface PasswordToggleProps {
   showPassword: boolean;
-  handleTogglePasswordClick: () => void;
+  handlePasswordToggleClick: () => void;
   size: Size;
 }

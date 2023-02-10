@@ -5,21 +5,21 @@ import { cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 
-import { baseStyles, sizeStyles } from './TogglePassword.styles';
-import { TogglePasswordProps } from './TogglePassword.types';
+import { baseStyles, sizeStyles } from './PasswordToggle.styles';
+import { PasswordToggleProps } from './PasswordToggle.types';
 
-export const TogglePassword = ({
+export const PasswordToggle = ({
   showPassword,
-  handleTogglePasswordClick,
+  handlePasswordToggleClick,
   size,
-}: TogglePasswordProps) => {
+}: PasswordToggleProps) => {
   const showPasswordIcon = showPassword ? 'Visibility' : 'VisibilityOff';
 
   return (
     <>
       <IconButton
         aria-label="Toggle password visibility"
-        onClick={handleTogglePasswordClick}
+        onClick={handlePasswordToggleClick}
         className={cx(baseStyles, sizeStyles[size])}
         role="switch"
         aria-checked={showPassword ? true : false}
@@ -33,4 +33,4 @@ export const TogglePassword = ({
   );
 };
 
-TogglePassword.displayName = 'TogglePassword';
+PasswordToggle.displayName = 'PasswordToggle';
