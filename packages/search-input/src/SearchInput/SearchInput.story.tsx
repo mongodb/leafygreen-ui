@@ -226,7 +226,7 @@ export const LiveSearch: ComponentStory<typeof SearchInput> = args => {
   };
 
   const handleSelect: FormEventHandler<HTMLFormElement> = e => {
-    const { value } = e.target[0];
+    const { value } = (e.target as HTMLFormElement)[0] as HTMLInputElement;
     args.onSelect?.(e);
     console.log('Storybook: handleSelect', { value });
 
