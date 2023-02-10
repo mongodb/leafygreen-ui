@@ -1,5 +1,15 @@
 # @leafygreen-ui/stepper
 
+## 3.1.7
+
+### Patch Changes
+
+- bf2fedf6d: Version bumps lib
+- Updated dependencies [bf2fedf6d]
+- Updated dependencies [b7a29ea38]
+  - @leafygreen-ui/tooltip@9.1.4
+  - @leafygreen-ui/typography@16.0.1
+
 ## 3.1.6
 
 ### Patch Changes

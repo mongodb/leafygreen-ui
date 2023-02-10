@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/typography",
-  "version": "16.0.0",
+  "version": "16.0.1",
   "description": "leafyGreen UI Kit Typography",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -31,7 +31,7 @@
     "@leafygreen-ui/inline-definition": "^6.0.1"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.0"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.1"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/typography",
   "repository": {
