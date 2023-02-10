@@ -215,19 +215,25 @@ export const LiveSearch: ComponentStory<typeof SearchInput> = args => {
   const [currentPage, setPage] = useState<typeof data[0]>();
   const [searchResults, setSearchResults] = useState(data);
 
-  const handleChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
-    console.log('handleChange');
+  const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
+    const { value } = e.target;
+    console.log('Storybook: handleChange', { value });
+    args.onChange?.(e);
 
-    setSearchResults(data.filter(datum => datum.name.includes(target.value)));
+    setSearchResults(
+      data.filter(datum => datum.name.includes(kebabCase(value))),
+    );
   };
 
   const handleSelect: FormEventHandler<HTMLFormElement> = e => {
-    console.log('handleSelect');
+    const { value } = e.target[0];
+    args.onSelect?.(e);
+    console.log('Storybook: handleSelect', { value });
 
     setPage(
       data.find(
         /// @ts-ignore
-        item => kebabCase(item.name) === kebabCase(e.target?.elements[0].value),
+        item => kebabCase(item.name) === kebabCase(value),
       ),
     );
   };
@@ -248,7 +254,7 @@ export const LiveSearch: ComponentStory<typeof SearchInput> = args => {
           <SearchResult
             key={item.name}
             description={item.description}
-            onClick={() => console.log('Clicked', item.name)}
+            onClick={() => console.log('Storybook: Clicked', item.name)}
           >
             {startCase(item.name)}
           </SearchResult>
@@ -263,4 +269,8 @@ export const LiveSearch: ComponentStory<typeof SearchInput> = args => {
     </div>
   );
 };
-LiveSearch.argTypes = {};
+LiveSearch.argTypes = {
+  onChange: { action: 'Change' },
+  onSubmit: { action: 'Submit' },
+  onClick: { action: 'Click' },
+};
