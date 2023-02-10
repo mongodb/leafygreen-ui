@@ -6,7 +6,6 @@ import { kebabCase, startCase } from 'lodash';
 import { css } from '@leafygreen-ui/emotion';
 import {
   storybookArgTypes,
-  // @ts-ignore
   storybookExcludedControlParams,
 } from '@leafygreen-ui/lib';
 import { Body, H1 } from '@leafygreen-ui/typography';
