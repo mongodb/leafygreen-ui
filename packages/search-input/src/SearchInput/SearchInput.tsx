@@ -255,12 +255,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     };
 
     const handleSearchBoxClick: MouseEventHandler<HTMLDivElement> = e => {
-      if (e.target !== clearButtonRef.current) {
-        // Don't open the menu if it was the clear button that was clicked.
-        // Could use `e.stopPropagation` in clear button handler instead,
-        // but users may still want to handle that click event
-        handleOpenMenuAction(e);
-      }
+      handleOpenMenuAction(e);
     };
 
     // Fired whenever the wrapper gains focus,
@@ -275,7 +270,9 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       trackFocusedElement(target);
     };
 
-    const handleClearButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
+    const handleClearButtonClick: MouseEventHandler<HTMLButtonElement> = e => {
+      // Don't open the menu if it was the clear button that was clicked.
+      e.stopPropagation();
       changeInputValue('');
       inputRef?.current?.focus();
     };
