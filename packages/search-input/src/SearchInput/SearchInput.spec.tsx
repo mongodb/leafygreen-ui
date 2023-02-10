@@ -115,15 +115,48 @@ describe('packages/search-input', () => {
 
     describe('When disabled', () => {
       test('searchbox is focusable when `disabled`', () => {
-        const { inputEl } = renderSearchInput({ disabled: true });
+        const { inputEl } = renderSearchInput({
+          disabled: true,
+          ...defaultProps,
+        });
         userEvent.tab();
         expect(inputEl).toHaveFocus();
       });
 
       test('searchbox is NOT clickable when `disabled`', () => {
-        const { searchBoxEl } = renderSearchInput({ disabled: true });
+        const { searchBoxEl } = renderSearchInput({
+          disabled: true,
+          ...defaultProps,
+        });
         userEvent.click(searchBoxEl);
         expect(document.body).toHaveFocus();
+      });
+
+      test('clear button is not clickable', () => {
+        const changeHandler = jest.fn();
+        const { inputEl, queryByRole } = renderSearchInput({
+          ...defaultProps,
+          disabled: true,
+          value: 'abc',
+          onChange: changeHandler,
+        });
+
+        userEvent.click(queryByRole('button')!);
+        expect(inputEl).toHaveValue('abc');
+        expect(changeHandler).not.toHaveBeenCalled();
+      });
+
+      test('clear button does not focus on tab', () => {
+        const { queryByRole } = renderSearchInput({
+          ...defaultProps,
+          disabled: true,
+          value: 'abc',
+        });
+        const button = queryByRole('button');
+        userEvent.tab();
+        expect(button).not.toHaveFocus();
+        userEvent.tab();
+        expect(button).not.toHaveFocus();
       });
     });
 
