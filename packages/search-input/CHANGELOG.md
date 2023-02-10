@@ -1,5 +1,13 @@
 # @leafygreen-ui/search-input
 
+## 1.0.4
+
+### Patch Changes
+
+- bf2fedf6d: Version bumps lib
+- Updated dependencies [bf2fedf6d]
+  - @leafygreen-ui/leafygreen-provider@3.1.1
+
 ## 1.0.3
 
 ### Patch Changes
