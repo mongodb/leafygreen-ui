@@ -2,7 +2,6 @@ import { ChangeEvent } from 'react';
 import { act } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 
-// const { act } = TestRenderer;
 import { useControlledValue } from './useControlledValue';
 
 describe('packages/lib/useControlledValue', () => {

@@ -17,7 +17,7 @@ describe('packages/input-option', () => {
   describe.skip('Types behave as expected', () => {
     // eslint-disable-next-line jest/expect-expect
     test('Aria labels', () => {
-      /** @ts-expect-error */
+      /** @ts-expect-error - requires label or labelledby*/
       render(<InputOption />);
       render(<InputOption aria-label="Some Label" />);
       render(<InputOption aria-labelledby="some-id" />);
@@ -25,11 +25,11 @@ describe('packages/input-option', () => {
 
     // eslint-disable-next-line jest/expect-expect
     test('as prop', () => {
-      /** @ts-expect-error */
+      /** @ts-expect-error - requires label, anchor requires href */
       render(<InputOption as="a" />);
-      /** @ts-expect-error */
+      /** @ts-expect-error - anchor requires href */
       render(<InputOption as="a" aria-label="Some-label" />);
-      /** @ts-expect-error */
+      /** @ts-expect-error - requires label*/
       render(<InputOption as="a" href="mongodb.design" />);
       render(
         <InputOption as="a" href="mongodb.design" aria-label="Some Label" />,

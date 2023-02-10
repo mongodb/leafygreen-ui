@@ -111,18 +111,22 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     const changeInputValue = useCallback(
       (newVal: string) => {
         if (inputRef.current) {
-          // We change the element's value
-          // and then make sure that the change event is fired
+          /**
+           * Change the element's value
+           * and then trigger the change event handler with a new synthetic event.
+           * This makes sure that programmatically changing the value affects
+           * both controlled & uncontrolled components
+           */
           inputRef.current.value = newVal;
-          const nativeChangeEvent = new Event('change', {
-            cancelable: true,
-            bubbles: true,
-          });
-          const syntheticChangeEvent = createSyntheticEvent(
-            nativeChangeEvent,
-            inputRef.current,
+          handleChange(
+            createSyntheticEvent(
+              new Event('change', {
+                cancelable: true,
+                bubbles: true,
+              }),
+              inputRef.current,
+            ),
           );
-          handleChange(syntheticChangeEvent);
         }
       },
       [handleChange, inputRef],
@@ -154,9 +158,14 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
             const wasClickedWithMouse = e.detail >= 1;
 
             if (wasClickedWithMouse && formRef.current && inputRef.current) {
-              // Selecting an option fires the `submit` event
-              // We only fire a new `submit` event if the element was clicked with the mouse,
-              // since the enter key also fires the `submit` event
+              /**
+               * Selecting an option should fire a a `submit` event,
+               * so users can provide a single `onSubmit` handler
+               * instead of providing individual `onClick` handlers for each result.
+               *
+               * We only fire a new `submit` event if the element was clicked with the mouse,
+               * since the `Enter` key also fires the `submit` event
+               */
               const submitEvent = new Event('submit', {
                 cancelable: true,
                 bubbles: true,
