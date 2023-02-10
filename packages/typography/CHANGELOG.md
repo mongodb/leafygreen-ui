@@ -1,5 +1,14 @@
 # @leafygreen-ui/typography
 
+## 16.0.1
+
+### Patch Changes
+
+- bf2fedf6d: Version bumps lib
+- b7a29ea38: Removes "as" prop from HTML in H1 and H2 components.
+- Updated dependencies [bf2fedf6d]
+  - @leafygreen-ui/leafygreen-provider@3.1.1
+
 ## 16.0.0
 
 ### Major Changes

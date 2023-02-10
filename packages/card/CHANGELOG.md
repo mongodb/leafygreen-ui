@@ -1,5 +1,13 @@
 # @leafygreen-ui/card
 
+## 9.0.5
+
+### Patch Changes
+
+- bf2fedf6d: Version bumps lib
+- Updated dependencies [bf2fedf6d]
+  - @leafygreen-ui/leafygreen-provider@3.1.1
+
 ## 9.0.4
 
 ### Patch Changes

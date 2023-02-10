@@ -1,5 +1,20 @@
 # @leafygreen-ui/side-nav
 
+## 13.0.3
+
+### Patch Changes
+
+- bf2fedf6d: Version bumps lib
+- Updated dependencies [51c544e2e]
+- Updated dependencies [ffb99f417]
+- Updated dependencies [bf2fedf6d]
+- Updated dependencies [b7a29ea38]
+  - @leafygreen-ui/a11y@1.4.0
+  - @leafygreen-ui/hooks@7.5.0
+  - @leafygreen-ui/leafygreen-provider@3.1.1
+  - @leafygreen-ui/tooltip@9.1.4
+  - @leafygreen-ui/typography@16.0.1
+
 ## 13.0.2
 
 ### Patch Changes
