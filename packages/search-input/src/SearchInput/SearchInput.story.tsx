@@ -8,6 +8,7 @@ import {
   storybookArgTypes,
   storybookExcludedControlParams,
 } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import { Body, H1 } from '@leafygreen-ui/typography';
 
 import { SearchInput, SearchResult, SearchResultGroup } from '..';
@@ -260,7 +261,14 @@ export const LiveSearch: ComponentStory<typeof SearchInput> = args => {
         ))}
       </SearchInput>
       {currentPage && (
-        <div>
+        <div
+          className={css`
+            min-width: min-content;
+            margin-block: 20px;
+            padding: 20px;
+            outline: 1px solid ${palette.green.dark2};
+          `}
+        >
           <H1>{startCase(currentPage.name)}</H1>
           <Body>{currentPage.description}</Body>
         </div>
