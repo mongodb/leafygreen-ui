@@ -1,17 +1,8 @@
 import PropTypes from 'prop-types';
 
-import { NotificationProps, State } from './PasswordInput.types';
+import { allEqual } from '@leafygreen-ui/lib';
 
-/**
- * Utility function that checks if the values in an array are all equal
- *
- * Returns a boolean
- *
- * @param arr `Array<States>`
- */
-export function allEqual(arr: Array<State>): boolean {
-  return new Set(arr).size == 1;
-}
+import { NotificationProps, State } from './PasswordInput.types';
 
 /**
  * Utility function that takes in an array of `NotificationProps` objects to compute the overall input state.
