@@ -1140,14 +1140,14 @@ describe('packages/combobox', () => {
       });
 
       describe('Right arrow key', () => {
-        test('Does nothing when focus is on clear button', () => {
+        test('Focuses on inputEl when on clear button', () => {
           const initialValue =
             select === 'multiple' ? ['apple', 'banana', 'carrot'] : 'apple';
           const { inputEl, clearButtonEl } = renderCombobox(select, {
             initialValue,
           });
           userEvent.type(inputEl, '{arrowright}{arrowright}');
-          expect(clearButtonEl).toHaveFocus();
+          expect(inputEl).toHaveFocus();
         });
 
         test('Focuses clear button when cursor is at the end of input', () => {
@@ -1313,7 +1313,7 @@ describe('packages/combobox', () => {
       });
 
       test('Clear button clears the value of the input', () => {
-        let value = 'apple';
+        const value = 'apple';
         const { inputEl, clearButtonEl } = renderCombobox(select, {
           value,
         });
@@ -1323,9 +1323,16 @@ describe('packages/combobox', () => {
         expect(inputEl).toHaveValue('');
       });
 
-      test('Focus returns to input element after clear button is clicked', () => {
-        const { inputEl, clearButtonEl } = renderCombobox(select);
+      test('Focus returns to input element after clear button is clicked', async () => {
+        const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+        const { inputEl, clearButtonEl } = renderCombobox(select, {
+          initialValue,
+        });
         userEvent.click(clearButtonEl!);
+
+        await waitFor(() => {
+          expect(inputEl).toHaveFocus();
+        });
       });
     });
 
