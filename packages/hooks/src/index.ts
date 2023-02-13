@@ -1,3 +1,4 @@
+export { useAutoScroll } from './useAutoScroll';
 export { default as useAvailableSpace } from './useAvailableSpace';
 export { useBackdropClick } from './useBackdropClick';
 export { useControlledValue } from './useControlledValue';

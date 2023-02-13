@@ -593,6 +593,7 @@ export function Combobox<M extends boolean>({
     }
   }, [inputValue, isOpen, prevValue, updateHighlightedOption]);
 
+  // TODO: Replace this with hooks/useAutoScroll
   // When the focused option changes, update the menu scroll if necessary
   useEffect(() => {
     if (highlightedOption) {
@@ -1135,6 +1136,7 @@ export function Combobox<M extends boolean>({
    *
    */
 
+  // TODO: Replace this with `useBackdropClick`
   /**
    * We add two event handlers to the document to handle the backdrop click behavior.
    * Intended behavior is to close the menu, and keep focus on the Combobox.
