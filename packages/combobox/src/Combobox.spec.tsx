@@ -1140,14 +1140,14 @@ describe('packages/combobox', () => {
       });
 
       describe('Right arrow key', () => {
-        test('Focuses on inputEl when on clear button', () => {
+        test('Does nothing when focus is on clear button', () => {
           const initialValue =
             select === 'multiple' ? ['apple', 'banana', 'carrot'] : 'apple';
-          const { inputEl } = renderCombobox(select, {
+          const { inputEl, clearButtonEl } = renderCombobox(select, {
             initialValue,
           });
           userEvent.type(inputEl, '{arrowright}{arrowright}');
-          expect(inputEl).toHaveFocus();
+          expect(clearButtonEl).toHaveFocus();
         });
 
         test('Focuses clear button when cursor is at the end of input', () => {

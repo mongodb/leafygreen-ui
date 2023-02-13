@@ -765,7 +765,6 @@ export function Combobox<M extends boolean>({
 
     const handleClearButtonKeyDown = (e: React.KeyboardEvent) => {
       e.stopPropagation();
-      setInputFocus();
     };
 
     return (
