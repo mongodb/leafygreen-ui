@@ -164,6 +164,19 @@ describe('packages/password-input', () => {
       fireEvent.click(toggleButton as HTMLButtonElement);
       expect(passwordInput.getAttribute('type')).toBe('password');
     });
+
+    test('toggles password type on click of toggle icon when input is disabled', () => {
+      const { passwordInput, toggleButton } = renderPasswordInput({
+        label: defaultProps.label,
+        disabled: true,
+      });
+
+      expect(passwordInput.getAttribute('type')).toBe('password');
+      fireEvent.click(toggleButton as HTMLButtonElement);
+      expect(passwordInput.getAttribute('type')).toBe('text');
+      fireEvent.click(toggleButton as HTMLButtonElement);
+      expect(passwordInput.getAttribute('type')).toBe('password');
+    });
   });
 
   describe('Password input with stateNotifications array', () => {
