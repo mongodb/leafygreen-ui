@@ -6,6 +6,7 @@ import DarkModeProps, { Theme } from './DarkModeProps';
 import getTheme from './getTheme';
 
 export {
+  StoryMeta,
   storybookArgTypes,
   storybookExcludedControlParams,
   IntrinsicElements,
