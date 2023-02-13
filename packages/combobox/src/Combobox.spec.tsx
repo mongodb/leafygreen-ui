@@ -1313,12 +1313,20 @@ describe('packages/combobox', () => {
       });
 
       test('Clear button clears the value of the input', () => {
-        const value = 'apple';
-        const { inputEl, clearButtonEl } = renderCombobox(select, {
-          value,
-        });
+        const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+        const { inputEl, clearButtonEl, queryChipsByName } = renderCombobox(
+          select,
+          {
+            initialValue,
+          },
+        );
 
-        expect(inputEl).toHaveValue('Apple');
+        if (select === 'multiple') {
+          expect(queryChipsByName('Apple')).toBeInTheDocument();
+        } else {
+          expect(inputEl).toHaveValue('Apple');
+        }
+
         userEvent.click(clearButtonEl!);
         expect(inputEl).toHaveValue('');
       });
