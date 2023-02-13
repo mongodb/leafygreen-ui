@@ -285,9 +285,10 @@ describe('packages/combobox', () => {
         expect(document.body).toHaveFocus();
       });
 
+      // TODO: Fix this test. Combobox SHOULD be focusable
       test('Combobox is not focusable when `disabled`', () => {
         renderCombobox(select, { disabled: true });
-        userEvent.type(document.body, '{tab');
+        userEvent.type(document.body, '{tab}');
         expect(document.body).toHaveFocus();
       });
     });
@@ -1032,6 +1033,10 @@ describe('packages/combobox', () => {
           });
           expect(highlight).toHaveTextContent('Banana');
         });
+
+        test.todo('Down arrow cycles highlight to top');
+
+        test.todo('Up arrow cycles highlight to bottom');
 
         test('Down arrow key opens menu when its closed', async () => {
           const { inputEl, openMenu, findByRole } = renderCombobox(select);
