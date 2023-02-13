@@ -801,6 +801,7 @@ export function Combobox<M extends boolean>({
     onClear,
     onFilter,
     isOpen,
+    setInputFocus,
   ]);
 
   /**
