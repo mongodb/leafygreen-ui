@@ -763,10 +763,6 @@ export function Combobox<M extends boolean>({
       }
     };
 
-    const handleClearButtonKeyDown = (e: React.KeyboardEvent) => {
-      e.stopPropagation();
-    };
-
     return (
       <>
         {clearable && doesSelectionExist && (
@@ -777,7 +773,6 @@ export function Combobox<M extends boolean>({
             ref={clearButtonRef}
             onClick={handleClearButtonClick}
             onFocus={handleClearButtonFocus}
-            onKeyDown={handleClearButtonKeyDown}
             className={cx(clearButtonStyle)}
             darkMode={darkMode}
           >
@@ -1054,10 +1049,7 @@ export function Combobox<M extends boolean>({
         }
 
         case keyMap.Enter: {
-          if (!isOpen) {
-            // If the menu is not open, enter should open the menu
-            openMenu();
-          } else if (
+          if (
             // Select the highlighted option iff
             // the menu is open,
             // we're focused on input element,

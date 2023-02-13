@@ -1099,15 +1099,14 @@ describe('packages/combobox', () => {
           waitFor(() => expect(inputEl).toHaveFocus());
         });
 
-        // eslint-disable-next-line jest/no-disabled-tests
-        test.skip('When focus is on clear button, Left arrow moves focus to input', async () => {
+        test('When focus is on clear button, Left arrow moves focus to input', async () => {
           const initialValue = select === 'multiple' ? ['apple'] : 'apple';
           const { inputEl } = renderCombobox(select, {
             initialValue,
           });
           userEvent.type(inputEl!, '{arrowright}{arrowleft}');
           expect(inputEl!).toHaveFocus();
-          expect(inputEl!.selectionEnd).toEqual(select === 'multiple' ? 0 : 5);
+          expect(inputEl!.selectionEnd).toEqual(select === 'multiple' ? 0 : 4);
         });
 
         testMultiSelect(
