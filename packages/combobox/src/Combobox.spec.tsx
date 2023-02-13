@@ -1143,7 +1143,7 @@ describe('packages/combobox', () => {
         test('Focuses on inputEl when on clear button', () => {
           const initialValue =
             select === 'multiple' ? ['apple', 'banana', 'carrot'] : 'apple';
-          const { inputEl, clearButtonEl } = renderCombobox(select, {
+          const { inputEl } = renderCombobox(select, {
             initialValue,
           });
           userEvent.type(inputEl, '{arrowright}{arrowright}');
