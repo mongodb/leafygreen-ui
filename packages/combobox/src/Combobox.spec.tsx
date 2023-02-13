@@ -145,6 +145,14 @@ describe('packages/combobox', () => {
         expect(optionElements).toHaveLength(defaultOptions.length);
       });
 
+      test('option accepts data attribute', () => {
+        const { openMenu } = renderCombobox(select);
+        const { optionElements } = openMenu();
+        expect(optionElements?.[0].getAttribute('data-testid')).toBe(
+          defaultOptions[0].value,
+        );
+      });
+
       test('Options render with provided displayName', async () => {
         const { openMenu } = renderCombobox(select);
         const { optionElements } = openMenu();
