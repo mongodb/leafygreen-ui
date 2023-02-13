@@ -754,12 +754,12 @@ export function Combobox<M extends boolean>({
       e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     ) => {
       if (!disabled) {
+        // Prevents triggering the setOpen function called by clicking anywhere within the input wrapper.
+        e.stopPropagation();
         updateSelection(null);
         onClear?.(e);
         onFilter?.('');
-        if (!isOpen) {
-          openMenu();
-        }
+        setInputFocus();
       }
     };
 
@@ -801,6 +801,7 @@ export function Combobox<M extends boolean>({
     onClear,
     onFilter,
     isOpen,
+    setInputFocus,
   ]);
 
   /**
@@ -1049,10 +1050,7 @@ export function Combobox<M extends boolean>({
         }
 
         case keyMap.Enter: {
-          if (!isOpen) {
-            // If the menu is not open, enter should open the menu
-            openMenu();
-          } else if (
+          if (
             // Select the highlighted option iff
             // the menu is open,
             // we're focused on input element,
