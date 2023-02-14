@@ -624,7 +624,7 @@ export function Combobox<M extends boolean>({
         const { value, displayName } = getNameAndValue(child.props);
 
         if (shouldOptionBeVisible(value)) {
-          const { className, glyph, disabled } = child.props;
+          const { className, glyph, disabled, ...rest } = child.props;
           const index = allOptions.findIndex(opt => opt.value === value);
 
           const isFocused = highlightedOption === value;
@@ -646,6 +646,7 @@ export function Combobox<M extends boolean>({
 
           return (
             <InternalComboboxOption
+              {...rest}
               value={value}
               displayName={displayName}
               isFocused={isFocused}
