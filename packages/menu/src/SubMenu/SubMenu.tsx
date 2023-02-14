@@ -12,7 +12,8 @@ import {
   InferredPolymorphicProps,
   PolymorphicAs,
   PolymorphicPropsWithRef,
-  useInferredPolymorphic,
+  usePolymorphic,
+  PolymorphicProps,
 } from '@leafygreen-ui/polymorphic';
 
 import { MenuContext } from '../MenuContext';
@@ -66,6 +67,14 @@ import { SubMenuProps } from './SubMenu.types';
 
 const subMenuItemHeight = 32;
 
+type AnchorLikeProps = PolymorphicProps<'a', SubMenuProps>;
+
+const hasAnchorLikeProps = (
+  props: SubMenuProps | AnchorLikeProps,
+): props is AnchorLikeProps => {
+  return (props as AnchorLikeProps).href !== undefined;
+};
+
 export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
   (
     {
@@ -81,12 +90,14 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
       active = false,
       disabled = false,
       size = Size.Default,
-      as = 'button' as PolymorphicAs,
+      as,
       ...rest
     },
     ref: React.Ref<any>,
   ): React.ReactElement => {
-    const { Component } = useInferredPolymorphic(as, rest);
+    const getAs = as ? as : hasAnchorLikeProps(rest) ? 'a' : 'button';
+    const { Component } = usePolymorphic(getAs);
+
     const { theme, darkMode } = useContext(MenuContext);
     const hoverStyles = getHoverStyles(subMenuContainerClassName, theme);
     const focusStyles = getFocusedStyles(subMenuContainerClassName, theme);
@@ -155,7 +166,7 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
       tabIndex: disabled ? -1 : undefined,
       'aria-disabled': disabled,
       // only add a disabled prop if not an anchor
-      ...(typeof rest.href !== 'string' && { disabled }),
+      ...(typeof !hasAnchorLikeProps(rest) && { disabled }),
     };
 
     const anchorProps = isAnchor
@@ -351,7 +362,6 @@ SubMenu.displayName = 'SubMenu';
 SubMenu.propTypes = {
   title: PropTypes.string,
   description: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  href: PropTypes.string,
   children: PropTypes.node,
   setOpen: PropTypes.func,
   onKeyDown: PropTypes.func,

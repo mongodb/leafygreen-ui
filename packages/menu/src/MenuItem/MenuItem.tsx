@@ -4,11 +4,14 @@ import PropTypes from 'prop-types';
 import { cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, getNodeTextContent } from '@leafygreen-ui/lib';
 import {
-  InferredPolymorphic,
+  Polymorphic,
   InferredPolymorphicProps,
   PolymorphicAs,
   PolymorphicPropsWithRef,
+  usePolymorphic,
+  InferredPolymorphic,
   useInferredPolymorphic,
+  PolymorphicProps,
 } from '@leafygreen-ui/polymorphic';
 
 import MenuContext from '../MenuContext/MenuContext';
@@ -40,6 +43,14 @@ import { MenuItemProps } from './MenuItem.types';
 
 const menuItemContainerClassName = createUniqueClassName('menu-item-container');
 
+type AnchorLikeProps = PolymorphicProps<'a', MenuItemProps>;
+
+const hasAnchorLikeProps = (
+  props: MenuItemProps | AnchorLikeProps,
+): props is AnchorLikeProps => {
+  return (props as AnchorLikeProps).href !== undefined;
+};
+
 export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
   (
     {
@@ -50,12 +61,14 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
       children,
       description,
       glyph,
-      as = 'button' as PolymorphicAs,
+      as,
       ...rest
     },
     ref: React.Ref<any>,
   ) => {
-    const { Component } = useInferredPolymorphic(as, rest);
+    const getAs = as ? as : hasAnchorLikeProps(rest) ? 'a' : 'button';
+    const { Component } = usePolymorphic(getAs);
+
     const { theme } = useContext(MenuContext);
     const hoverStyles = getHoverStyles(menuItemContainerClassName, theme);
     const focusStyles = getFocusedStyles(menuItemContainerClassName, theme);

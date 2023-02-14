@@ -1,0 +1,164 @@
+$ NEXT_TELEMETRY_DISABLED=1 next build && next export -o hosting/files/
+info  - Linting and checking validity of types...
+warn  - The Next.js plugin was not detected in your ESLint configuration. See https://nextjs.org/docs/basic-features/eslint#migrating-existing-config
+info  - Creating an optimized production build...
+info  - Disabled SWC as replacement for Babel because of custom Babel configuration ".babelrc" https://nextjs.org/docs/messages/swc-disabled
+info  - Compiled successfully
+info  - Collecting page data...
+info  - Generating static pages (0/129)
+info  - Generating static pages (32/129)
+info  - Generating static pages (64/129)
+info  - Generating static pages (96/129)
+info  - Generating static pages (129/129)
+info  - Finalizing page optimization...
+
+Route (pages)                                    Size     First Load JS
+┌ ● /                                            2.77 kB         255 kB
+├   /_app                                        0 B             252 kB
+├ ● /_getComponentResources                      270 B           252 kB
+├ ○ /404                                         1.5 kB          253 kB
+├ ● /component/badge/documentation               373 B           368 kB
+├ ○ /component/badge/example                     2.02 kB         274 kB
+├ ○ /component/badge/guidelines                  1.49 kB         253 kB
+├ ● /component/banner/documentation              376 B           368 kB
+├ ○ /component/banner/example                    614 B           277 kB
+├ ○ /component/banner/guidelines                 3.28 kB         264 kB
+├ ● /component/box/documentation                 373 B           368 kB
+├ ○ /component/box/example                       996 B           273 kB
+├ ○ /component/box/guidelines                    617 B           252 kB
+├ ● /component/button/documentation              373 B           368 kB
+├ ○ /component/button/example                    1.19 kB         273 kB
+├ ○ /component/button/guidelines                 1.47 kB         253 kB
+├ ● /component/callout/documentation             375 B           368 kB
+├ ○ /component/callout/example                   1.14 kB         277 kB
+├ ○ /component/callout/guidelines                1.18 kB         253 kB
+├ ● /component/card/documentation                373 B           368 kB
+├ ○ /component/card/example                      1.27 kB         273 kB
+├ ○ /component/card/guidelines                   616 B           252 kB
+├ ● /component/checkbox/documentation            378 B           368 kB
+├ ○ /component/checkbox/example                  4.56 kB         276 kB
+├ ○ /component/checkbox/guidelines               1.24 kB         253 kB
+├ ● /component/code/documentation                373 B           368 kB
+├ ○ /component/code/example                      1.24 kB         322 kB
+├ ○ /component/code/guidelines                   2.65 kB         259 kB
+├ ● /component/combobox/documentation            377 B           368 kB
+├ ○ /component/combobox/example                  20.6 kB         292 kB
+├ ○ /component/combobox/guidelines               705 B           252 kB
+├ ● /component/confirmation-modal/documentation  383 B           368 kB
+├ ○ /component/confirmation-modal/example        5.97 kB         286 kB
+├ ○ /component/confirmation-modal/guidelines     454 B           252 kB
+├ ● /component/copyable/documentation            376 B           368 kB
+├ ○ /component/copyable/example                  4.42 kB         280 kB
+├ ○ /component/copyable/guidelines               619 B           252 kB
+├ ● /component/expandable-card/documentation     381 B           368 kB
+├ ○ /component/expandable-card/example           3.55 kB         275 kB
+├ ○ /component/expandable-card/guidelines        626 B           252 kB
+├ ● /component/form-footer/documentation         380 B           368 kB
+├ ○ /component/form-footer/example               2.78 kB         279 kB
+├ ○ /component/form-footer/guidelines            928 B           253 kB
+├ ● /component/guide-cue/documentation           376 B           368 kB
+├ ○ /component/guide-cue/example                 10.6 kB         284 kB
+├ ○ /component/guide-cue/guidelines              701 B           252 kB
+├ ● /component/icon-button/documentation         379 B           368 kB
+├ ○ /component/icon-button/example               2.28 kB         274 kB
+├ ○ /component/icon-button/guidelines            623 B           252 kB
+├ ● /component/icon/documentation                373 B           368 kB
+├ ○ /component/icon/example                      1.18 kB         276 kB
+├ ○ /component/icon/guidelines                   2.76 kB         259 kB
+├ ● /component/inline-definition/documentation   382 B           368 kB
+├ ○ /component/inline-definition/example         1.95 kB         274 kB
+├ ○ /component/inline-definition/guidelines      624 B           252 kB
+├ ● /component/logo/documentation                373 B           368 kB
+├ ○ /component/logo/example                      1.26 kB         273 kB
+├ ○ /component/logo/guidelines                   617 B           252 kB
+├ ● /component/marketing-modal/documentation     386 B           368 kB
+├ ○ /component/marketing-modal/example           7.66 kB         288 kB
+├ ○ /component/marketing-modal/guidelines        457 B           252 kB
+├ ● /component/menu/documentation                372 B           368 kB
+├ ○ /component/menu/example                      9.47 kB         281 kB
+├ ○ /component/menu/guidelines                   1.17 kB         253 kB
+├ ● /component/modal/documentation               375 B           368 kB
+├ ○ /component/modal/example                     4.83 kB         285 kB
+├ ○ /component/modal/guidelines                  1.75 kB         253 kB
+├ ● /component/palette/documentation             376 B           368 kB
+├ ○ /component/palette/example                   1.4 kB          277 kB
+├ ○ /component/palette/guidelines                619 B           252 kB
+├ ● /component/pipeline/documentation            376 B           368 kB
+├ ○ /component/pipeline/example                  9.29 kB         281 kB
+├ ○ /component/pipeline/guidelines               618 B           252 kB
+├ ● /component/popover/documentation             375 B           368 kB
+├ ○ /component/popover/example                   1.34 kB         273 kB
+├ ○ /component/popover/guidelines                620 B           252 kB
+├ ● /component/portal/documentation              376 B           368 kB
+├ ○ /component/portal/example                    1.03 kB         273 kB
+├ ○ /component/portal/guidelines                 619 B           252 kB
+├ ● /component/radio-box-group/documentation     386 B           368 kB
+├ ○ /component/radio-box-group/example           3.67 kB         275 kB
+├ ○ /component/radio-box-group/guidelines        623 B           252 kB
+├ ● /component/radio-group/documentation         382 B           368 kB
+├ ○ /component/radio-group/example               3.79 kB         276 kB
+├ ○ /component/radio-group/guidelines            623 B           252 kB
+├ ● /component/segmented-control/documentation   383 B           368 kB
+├ ○ /component/segmented-control/example         6.08 kB         278 kB
+├ ○ /component/segmented-control/guidelines      2.63 kB         254 kB
+├ ● /component/select/documentation              371 B           368 kB
+├ ○ /component/select/example                    3.14 kB         275 kB
+├ ○ /component/select/guidelines                 1.27 kB         253 kB
+├ ● /component/side-nav/documentation            376 B           368 kB
+├ ○ /component/side-nav/example                  2.15 kB         274 kB
+├ ○ /component/side-nav/guidelines               1.13 kB         253 kB
+├ ● /component/stepper/documentation             374 B           368 kB
+├ ○ /component/stepper/example                   5.01 kB         277 kB
+├ ○ /component/stepper/guidelines                620 B           252 kB
+├ ● /component/table/documentation               374 B           368 kB
+├ ○ /component/table/example                     1.26 kB         282 kB
+├ ○ /component/table/guidelines                  1.87 kB         254 kB
+├ ● /component/tabs/documentation                373 B           368 kB
+├ ○ /component/tabs/example                      1.73 kB         273 kB
+├ ○ /component/tabs/guidelines                   616 B           252 kB
+├ ● /component/text-area/documentation           380 B           368 kB
+├ ○ /component/text-area/example                 1.03 kB         273 kB
+├ ○ /component/text-area/guidelines              618 B           252 kB
+├ ● /component/text-input/documentation          378 B           368 kB
+├ ○ /component/text-input/example                1.15 kB         273 kB
+├ ○ /component/text-input/guidelines             4.28 kB         260 kB
+├ ● /component/toast/documentation               374 B           368 kB
+├ ○ /component/toast/example                     6.53 kB         278 kB
+├ ○ /component/toast/guidelines                  3.12 kB         264 kB
+├ ● /component/toggle/documentation              375 B           368 kB
+├ ○ /component/toggle/example                    1.07 kB         273 kB
+├ ○ /component/toggle/guidelines                 618 B           252 kB
+├ ● /component/tokens/documentation              374 B           368 kB
+├ ○ /component/tokens/example                    1.3 kB          273 kB
+├ ○ /component/tokens/guidelines                 618 B           252 kB
+├ ● /component/tooltip/documentation             375 B           368 kB
+├ ○ /component/tooltip/example                   1.1 kB          273 kB
+├ ○ /component/tooltip/guidelines                1.19 kB         253 kB
+├ ● /component/typography/documentation          381 B           368 kB
+├ ○ /component/typography/example                1.29 kB         273 kB
+├ ○ /component/typography/guidelines             3.1 kB          255 kB
+├ ○ /foundation/accessibility                    2.87 kB         255 kB
+├ ○ /foundation/forms                            4.18 kB         256 kB
+├ ○ /foundation/grid                             1.37 kB         253 kB
+├ ○ /foundation/icon-creation                    1.63 kB         253 kB
+└ ○ /foundation/refresh-guide                    2.32 kB         254 kB
++ First Load JS shared by all                    252 kB
+  ├ chunks/framework-81942bc1e06a8d22.js         42.1 kB
+  ├ chunks/main-e87dff110a4f1ebe.js              29.7 kB
+  ├ chunks/pages/_app-ada751e9ab871784.js        178 kB
+  └ chunks/webpack-41df7bf04293cc5f.js           1.85 kB
+
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+●  (SSG)     automatically generated as static HTML + JSON (uses getStaticProps)
+
+info  - using build directory: /Users/brooke.yalof/mdb/leafygreen-ui/website/.next
+info  - Copying "static build" directory
+info  - No "exportPathMap" found in "/Users/brooke.yalof/mdb/leafygreen-ui/website/next.config.js". Generating map from "./pages"
+info  - Launching 9 workers
+info  - Exporting (0/129)
+info  - Copying "public" directory
+info  - Exporting (32/129)
+info  - Exporting (64/129)
+info  - Exporting (96/129)
+info  - Exporting (129/129)
+Export successful. Files written to /Users/brooke.yalof/mdb/leafygreen-ui/website/hosting/files

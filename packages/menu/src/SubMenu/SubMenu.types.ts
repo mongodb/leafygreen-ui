@@ -58,8 +58,6 @@ export interface SubMenuProps extends HTMLElementProps<'button'> {
 
   onExited?: ExitHandler<HTMLElement>;
 
-  href?: string;
-
   /**
    * Size of the MenuItem component, can be `default` or `large`. This size only affects the parent MenuItem, nested child MenuItems do not change.
    */
