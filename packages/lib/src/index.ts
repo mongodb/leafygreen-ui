@@ -4,8 +4,14 @@ import createUniqueClassName from './createUniqueClassName';
 import getNodeTextContent from './getNodeTextContent';
 import DarkModeProps, { Theme } from './DarkModeProps';
 import getTheme from './getTheme';
+export { validateChildren } from './validateChildren';
+export { createSyntheticEvent } from './createSyntheticEvent';
 
-export { storybookArgTypes } from './storybook/storybookArgTypes';
+export {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  IntrinsicElements,
+} from './storybook';
 
 export { typeIs, createUniqueClassName, getNodeTextContent, getTheme, Theme };
 export type { DarkModeProps };

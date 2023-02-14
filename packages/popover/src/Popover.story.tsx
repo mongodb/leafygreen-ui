@@ -104,6 +104,15 @@ export default {
   },
   parameters: {
     default: 'Basic',
+    controls: {
+      exclude: [
+        'active',
+        'refEl',
+        'portalClassName',
+        'refButtonPosition',
+        'usePortal',
+      ],
+    },
   },
 } as Meta<typeof Popover>;
 

@@ -181,6 +181,7 @@ const InternalComboboxOption = React.forwardRef<
       disabled,
       setSelected,
       className,
+      ...rest
     }: InternalComboboxOptionProps,
     forwardedRef,
   ) => {
@@ -287,6 +288,7 @@ const InternalComboboxOption = React.forwardRef<
 
     return (
       <li
+        {...rest}
         ref={optionRef}
         role="option"
         aria-selected={isFocused}

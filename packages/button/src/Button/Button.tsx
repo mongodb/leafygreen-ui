@@ -52,10 +52,9 @@ export const Button = React.forwardRef(function Button(
     // Provide a default value for the as prop
     // If consuming application passes a value for as, it will override the default set here
     as: as ? as : ((isAnchor ? 'a' : 'button') as keyof JSX.IntrinsicElements),
-    // only add a disabled prop if not an anchor
-    ...(typeof rest.href !== 'string' && { disabled }),
     'aria-disabled': disabled,
     onClick: !disabled ? onClick : undefined,
+    href: disabled ? undefined : rest.href,
     ...rest,
   } as const;
 

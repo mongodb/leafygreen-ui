@@ -1,5 +1,16 @@
 # @leafygreen-ui/combobox
 
+## 5.0.7
+
+### Patch Changes
+
+- 64eee134d: TSDoc: Updates some exported TSDoc interfaces. Storybook: Updates story files.
+- Updated dependencies [64eee134d]
+- Updated dependencies [64eee134d]
+  - @leafygreen-ui/inline-definition@6.0.2
+  - @leafygreen-ui/popover@11.0.5
+  - @leafygreen-ui/lib@10.1.0
+
 ## 5.0.6
 
 ### Patch Changes
