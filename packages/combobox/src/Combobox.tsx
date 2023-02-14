@@ -593,6 +593,7 @@ export function Combobox<M extends boolean>({
     }
   }, [inputValue, isOpen, prevValue, updateHighlightedOption]);
 
+  // TODO: Replace this with hooks/useAutoScroll
   // When the focused option changes, update the menu scroll if necessary
   useEffect(() => {
     if (highlightedOption) {
@@ -754,12 +755,12 @@ export function Combobox<M extends boolean>({
       e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     ) => {
       if (!disabled) {
+        // Prevents triggering the setOpen function called by clicking anywhere within the input wrapper.
+        e.stopPropagation();
         updateSelection(null);
         onClear?.(e);
         onFilter?.('');
-        if (!isOpen) {
-          openMenu();
-        }
+        setInputFocus();
       }
     };
 
@@ -801,6 +802,7 @@ export function Combobox<M extends boolean>({
     onClear,
     onFilter,
     isOpen,
+    setInputFocus,
   ]);
 
   /**
@@ -1049,10 +1051,7 @@ export function Combobox<M extends boolean>({
         }
 
         case keyMap.Enter: {
-          if (!isOpen) {
-            // If the menu is not open, enter should open the menu
-            openMenu();
-          } else if (
+          if (
             // Select the highlighted option iff
             // the menu is open,
             // we're focused on input element,
@@ -1137,6 +1136,7 @@ export function Combobox<M extends boolean>({
    *
    */
 
+  // TODO: Replace this with `useBackdropClick`
   /**
    * We add two event handlers to the document to handle the backdrop click behavior.
    * Intended behavior is to close the menu, and keep focus on the Combobox.

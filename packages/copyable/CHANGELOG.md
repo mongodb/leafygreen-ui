@@ -1,5 +1,20 @@
 # @leafygreen-ui/copyable
 
+## 8.0.5
+
+### Patch Changes
+
+- bf2fedf6d: Version bumps lib
+- Updated dependencies [1cff328a3]
+- Updated dependencies [ffb99f417]
+- Updated dependencies [bf2fedf6d]
+- Updated dependencies [b7a29ea38]
+  - @leafygreen-ui/button@20.0.0
+  - @leafygreen-ui/hooks@7.5.0
+  - @leafygreen-ui/leafygreen-provider@3.1.1
+  - @leafygreen-ui/tooltip@9.1.4
+  - @leafygreen-ui/typography@16.0.1
+
 ## 8.0.4
 
 ### Patch Changes

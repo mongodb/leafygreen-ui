@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/text-area",
-  "version": "8.0.4",
+  "version": "8.0.5",
   "description": "leafyGreen UI Kit Text Area",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -21,15 +21,15 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.3",
-    "@leafygreen-ui/hooks": "^7.4.0",
+    "@leafygreen-ui/hooks": "^7.5.0",
     "@leafygreen-ui/icon": "^11.12.4",
     "@leafygreen-ui/lib": "^10.1.0",
     "@leafygreen-ui/palette": "^3.4.7",
     "@leafygreen-ui/tokens": "^2.0.0",
-    "@leafygreen-ui/typography": "^16.0.0"
+    "@leafygreen-ui/typography": "^16.0.1"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.0"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.1"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/text-area",
   "repository": {
