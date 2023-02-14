@@ -4,13 +4,11 @@ import PropTypes from 'prop-types';
 import { cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, getNodeTextContent } from '@leafygreen-ui/lib';
 import {
-  Polymorphic,
   InferredPolymorphicProps,
   PolymorphicAs,
   PolymorphicPropsWithRef,
   usePolymorphic,
   InferredPolymorphic,
-  useInferredPolymorphic,
   PolymorphicProps,
 } from '@leafygreen-ui/polymorphic';
 
