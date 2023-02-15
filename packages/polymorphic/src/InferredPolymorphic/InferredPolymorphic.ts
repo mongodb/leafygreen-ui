@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Polymorphic, PolymorphicAs } from '../Polymorphic';
+import { PolymorphicAs } from '../Polymorphic';
 
 import {
   // InferredAnchorLikeProps as InfAProps,
