@@ -25,8 +25,9 @@ export const InferredPolymorphic = <
   //   displayName,
   // ) as InferredPolymorphicComponentType<XP, DefaultAs>;
 
+  /// @ts-expect-error - types are too complex
   const PolyComponent: InferredPolymorphicComponentType<XP, DefaultAs> =
-    /// @ts-expect-error
+    /// @ts-expect-error - types are too complex
     render.length === 1 ? render : React.forwardRef(render);
 
   PolyComponent.displayName =
