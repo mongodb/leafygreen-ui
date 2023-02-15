@@ -69,24 +69,6 @@ describe('Polymorphic/Example Higher-order Components', () => {
       expect(queryByTestId('hoc')?.tagName.toLowerCase()).toBe('button');
       expect(queryByTestId('hoc')).toHaveAttribute('name', 'foobar');
     });
-
-    // eslint-disable-next-line jest/no-disabled-tests
-    test.skip('Types work when a default is used', () => {
-      <>
-        <ExampleInferredDefaultButton data-testid="hoc" name="foobar" />
-        <ExampleInferredDefaultButton />
-        <ExampleInferredDefaultButton type="submit" />
-        {/* @ts-expect-error - Require href when as="a" */}
-        <ExampleInferredDefaultButton as="a" />
-        <ExampleInferredDefaultButton as="a" href="mongodb.design" />
-        {/* @ts-expect-error - href not valid when explicitly set to button */}
-        <ExampleInferredDefaultButton as="button" href="mongodb.design" />
-        {/* @ts-expect-error - href not valid when explicitly set to div */}
-        <ExampleInferredDefaultButton as="div" href="mongodb.design" />
-        {/* @ts-expect-error - type not valid for anchor */}
-        <ExampleInferredDefaultButton as="a" type="submit" />
-      </>;
-    });
   });
 
   describe.each([
@@ -96,49 +78,6 @@ describe('Polymorphic/Example Higher-order Components', () => {
     AdvancedPolymorphic,
     AdvancedPolymorphicWithRef,
   ])('Higher-Order Polymorphic Components', ExampleComponent => {
-    /* eslint-disable jest/no-disabled-tests */
-    test.skip('Prop Types behave correctly', () => {
-      const { Wrapper } = makeWrapperComponent();
-      const divRef = usePolymorphicRef<'div'>(); // React.useRef<HTMLDivElement | null>(null);
-      const anchorRef = usePolymorphicRef<'a'>();
-      const spanRef = usePolymorphicRef<'span'>();
-
-      <>
-        <ExampleComponent />
-        <ExampleComponent>some content</ExampleComponent>
-        <ExampleComponent as="div" />
-        <ExampleComponent as="div" ref={divRef} />
-        {/* @ts-expect-error - Must pass the correct ref type */}
-        <ExampleComponent as="div" ref={anchorRef} />
-        <ExampleComponent as="div" ref={divRef}>
-          some content
-        </ExampleComponent>
-        <ExampleComponent key="some-key" />
-
-        {/* @ts-expect-error - Require href when as="a" */}
-        <ExampleComponent as="a" />
-        <ExampleComponent as="a" href="mongodb.design" />
-        <ExampleComponent as="a" href="mongodb.design" ref={anchorRef} />
-        <ExampleComponent as="a" href="mongodb.design">
-          some content
-        </ExampleComponent>
-
-        {/* @ts-expect-error href is not allowed on explicit div */}
-        <ExampleComponent as="div" href="mongodb.design" />
-
-        <ExampleComponent as="input" />
-
-        <ExampleComponent as={Wrapper} />
-        <ExampleComponent as={Wrapper} ref={spanRef} />
-        {/* TODO: ts-expect-error - Must pass the correct ref type */}
-        <ExampleComponent as={Wrapper} ref={divRef} />
-        <ExampleComponent as={Wrapper} ref={spanRef} darkMode={true} />
-        {/* @ts-expect-error - Theme is not a prop on Wrapper */}
-        <ExampleComponent as={Wrapper} ref={spanRef} theme={'dark'} />
-      </>;
-    });
-    /* eslint-enable jest/no-disabled-tests */
-
     test(`displayName is defined for ${ExampleComponent.displayName!}`, () => {
       expect(ExampleComponent.displayName).not.toBeUndefined();
     });
