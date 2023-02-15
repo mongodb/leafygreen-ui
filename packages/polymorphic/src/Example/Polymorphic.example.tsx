@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
+import { PolymorphicRenderFunction } from '../Polymorphic/Polymorphic.types';
 import {
   InferredPolymorphic,
   Polymorph,
@@ -96,9 +97,7 @@ type AdvancedProps<T extends PolymorphicAs> = PolymorphicPropsWithRef<
  * Extends Polymorphic
  * @example
  */
-export const AdvancedPolymorphic: PolymorphicComponentType<PolymorphicAs> = <
-  T extends PolymorphicAs = 'div',
->({
+export const AdvancedPolymorphic = <T extends PolymorphicAs = 'div'>({
   as,
   title,
   ...rest
@@ -115,19 +114,22 @@ AdvancedPolymorphic.displayName = 'AdvancedPolymorphic';
  * Extends Polymorphic
  * @example
  */
-export const AdvancedPolymorphicWithRef: PolymorphicComponentType<PolymorphicAs> =
-  React.forwardRef(
-    <T extends PolymorphicAs = 'div'>(
-      { as, title, ...rest }: AdvancedProps<T>,
-      ref: PolymorphicRef<T>,
-    ) => {
-      return (
-        <Polymorph as={as as PolymorphicAs} {...rest} ref={ref}>
-          {title}
-        </Polymorph>
-      );
-    },
+
+const AdvRenderFn: PolymorphicRenderFunction<ExampleProps> = <
+  T extends PolymorphicAs = 'div',
+>(
+  { as, title, ...rest }: AdvancedProps<T>,
+  ref: PolymorphicRef<T>,
+) => {
+  return (
+    <Polymorph as={as as PolymorphicAs} {...rest} ref={ref}>
+      {title}
+    </Polymorph>
   );
+};
+
+export const AdvancedPolymorphicWithRef: PolymorphicComponentType<ExampleProps> =
+  React.forwardRef(AdvRenderFn);
 AdvancedPolymorphicWithRef.displayName = 'AdvancedPolymorphicWithRef';
 
 /**
