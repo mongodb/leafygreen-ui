@@ -6,9 +6,9 @@ import {
 } from 'react';
 
 import {
+  AsProp,
   InheritedProps,
   PolymorphicAs,
-  PolymorphicProps,
   PropsToOmit,
 } from '../Polymorphic/Polymorphic.types';
 import { PolymorphicRef } from '..';
@@ -26,19 +26,22 @@ type InferredAnchorLikeProps<T extends AnchorLike | undefined, P = {}> = {
 } & P;
 
 /**
- * Inferred clone of {@link PolymorphicProps}
+ * Inferred extension of {@link PolymorphicProps}
  *
  * If `T` is an anchor, or undefined, then we explicitly add an `href`
  *
- * else if href is defined, we force `as` to be 'a',
- * otherwise we just extend standard polymorphic props
+ * else if T is something else and href is defined, we force `as` to be 'a',
+ * otherwise, href is `never`
  */
 export type InferredProps<T extends PolymorphicAs, XP = {}> = T extends
   | AnchorLike
   | undefined
   ? PropsWithChildren<InferredAnchorLikeProps<T, XP>> &
       Omit<InheritedProps<T>, PropsToOmit<T, XP>>
-  : PolymorphicProps<T, XP>;
+  : PropsWithChildren<
+      ({ href: string; as?: 'a' } | ({ href?: never } & AsProp<T>)) & XP
+    > &
+      Omit<InheritedProps<T>, PropsToOmit<T, XP>>;
 
 /**
  * Inferred props clone of {@link PolymorphicPropsWithRef}
