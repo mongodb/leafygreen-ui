@@ -66,9 +66,9 @@ export interface InferredPolymorphicComponentType<
     ref: PolymorphicRef<T>,
   ): ReactElement | null;
   displayName?: string;
-  propTypes?:
-    | WeakValidationMap<InferredProps<PolymorphicAs, XP> & RefAttributes<any>>
-    | unknown;
+  propTypes?: WeakValidationMap<
+    InferredProps<PolymorphicAs, XP> & RefAttributes<any>
+  >;
 }
 
 /**

@@ -3,7 +3,6 @@ import React from 'react';
 import { PolymorphicAs } from '../Polymorphic';
 
 import {
-  // InferredAnchorLikeProps as InfAProps,
   InferredPolymorphicComponentType,
   InferredPolymorphicRenderFunction,
 } from './InferredPolymorphic.types';

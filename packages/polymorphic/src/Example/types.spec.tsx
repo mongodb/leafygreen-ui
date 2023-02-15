@@ -10,7 +10,6 @@
 
 import React from 'react';
 
-import { PolymorphicAs, PolymorphicProps } from '../Polymorphic';
 import { WrapperProps } from '../utils/Polymorphic.testutils';
 import { usePolymorphicRef } from '..';
 
