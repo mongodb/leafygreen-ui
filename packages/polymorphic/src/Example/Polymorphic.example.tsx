@@ -96,7 +96,9 @@ type AdvancedProps<T extends PolymorphicAs> = PolymorphicPropsWithRef<
  * Extends Polymorphic
  * @example
  */
-export const AdvancedPolymorphic = <T extends PolymorphicAs = 'div'>({
+export const AdvancedPolymorphic: PolymorphicComponentType<PolymorphicAs> = <
+  T extends PolymorphicAs = 'div',
+>({
   as,
   title,
   ...rest
@@ -113,18 +115,19 @@ AdvancedPolymorphic.displayName = 'AdvancedPolymorphic';
  * Extends Polymorphic
  * @example
  */
-export const AdvancedPolymorphicWithRef = React.forwardRef(
-  <T extends PolymorphicAs = 'div'>(
-    { as, title, ...rest }: AdvancedProps<T>,
-    ref: PolymorphicRef<T>,
-  ) => {
-    return (
-      <Polymorph as={as as React.ElementType} {...rest} ref={ref}>
-        {title}
-      </Polymorph>
-    );
-  },
-);
+export const AdvancedPolymorphicWithRef: PolymorphicComponentType<PolymorphicAs> =
+  React.forwardRef(
+    <T extends PolymorphicAs = 'div'>(
+      { as, title, ...rest }: AdvancedProps<T>,
+      ref: PolymorphicRef<T>,
+    ) => {
+      return (
+        <Polymorph as={as as PolymorphicAs} {...rest} ref={ref}>
+          {title}
+        </Polymorph>
+      );
+    },
+  );
 AdvancedPolymorphicWithRef.displayName = 'AdvancedPolymorphicWithRef';
 
 /**
