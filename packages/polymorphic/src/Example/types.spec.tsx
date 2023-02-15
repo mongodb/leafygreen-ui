@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * This test file ensures that all Typescript types behave as intended
  * for components extending Polymorphic/InferredPolymorphic
@@ -9,6 +10,7 @@
 
 import React from 'react';
 
+import { PolymorphicAs, PolymorphicProps } from '../Polymorphic';
 import { WrapperProps } from '../utils/Polymorphic.testutils';
 import { usePolymorphicRef } from '..';
 
@@ -74,7 +76,7 @@ describe('Typescript types', () => {
       {/* @ts-expect-error - Theme is not a prop on WrapperWithRef */}
       <ExamplePolymorphic as={WrapperWithRef} ref={spanRef} theme={'dark'} />
       {/* @ts-expect-error - href is not a prop on WrapperWithRef */}
-      <ExamplePolymorphic as={WrapperWithRef} ref={spanRef} href=".design" />
+      <ExamplePolymorphic as={WrapperWithRef} href=".design" />
     </>;
   });
 
@@ -227,9 +229,9 @@ describe('Typescript types', () => {
       {/* TODO: ts-expect-error - Must pass the correct ref type */}
       <ExampleInferred as={WrapperWithRef} ref={divRef} />
       {/* @ts-expect-error - Theme is not a prop on WrapperWithRef */}
-      <ExampleInferred as={WrapperWithRef} ref={spanRef} theme={'dark'} />
+      <ExampleInferred as={WrapperWithRef} theme={'dark'} />
       {/* @ts-expect-error - href is not a prop on WrapperWithRef */}
-      <ExampleInferred as={WrapperWithRef} ref={spanRef} href=".design" />
+      <ExampleInferred as={WrapperWithRef} href=".design" />
 
       <ExampleInferred as={AnchorLikeWrapper} href=".design" />
     </>;

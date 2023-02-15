@@ -79,22 +79,6 @@ export type PolymorphicPropsWithRef<
 };
 
 /**
- * An explicit definition of the component render function
- *
- * Differs from `PolymorphicComponentType` only by the `propTypes` attribute
- */
-export interface PolymorphicRenderFunction<
-  XP = {},
-  DefaultAs extends PolymorphicAs = PolymorphicAs,
-> {
-  <T extends PolymorphicAs = DefaultAs>(
-    props: PolymorphicPropsWithRef<T, XP>,
-    ref: PolymorphicRef<T>,
-  ): ReactElement | null;
-  displayName?: string;
-  propTypes?: never;
-}
-/**
  * An explicit definition of the component type
  *
  * Components returned by the `Polymorphic` factory function
@@ -113,7 +97,34 @@ export interface PolymorphicComponentType<
   ): ReactElement | null;
   displayName?: string;
   propTypes?: WeakValidationMap<
-    PropsWithoutRef<PolymorphicPropsWithRef<PolymorphicAs, XP>> &
-      RefAttributes<any>
+    PropsWithoutRef<
+      PolymorphicPropsWithRef<PolymorphicAs, XP> & RefAttributes<any>
+    >
   >;
 }
+
+/**
+ * An explicit definition of the component render function
+ *
+ * Differs from `PolymorphicComponentType` only by the `propTypes` attribute.
+ *
+ */
+export interface PolymorphicRenderFunction<
+  XP = {},
+  DefaultAs extends PolymorphicAs = PolymorphicAs,
+> {
+  <T extends PolymorphicAs = DefaultAs>(
+    props: PolymorphicPropsWithRef<T, XP>,
+    ref: PolymorphicRef<T>,
+  ): ReactElement | null;
+  displayName?: string;
+  propTypes?: never;
+}
+
+// (I'm not entirely clear why we can't use `Omit`, but that doesn't work - AT)
+// export type PolymorphicRenderFunction<
+//   XP = {},
+//   DefaultAs extends PolymorphicAs = PolymorphicAs,
+// > = Omit<PolymorphicComponentType<XP, DefaultAs>, 'propTypes'> & {
+//   propTypes: never;
+// };
