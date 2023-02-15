@@ -50,6 +50,8 @@ describe('Typescript types', () => {
 
       {/* @ts-expect-error href is not allowed on explicit div */}
       <ExamplePolymorphic as="div" href="mongodb.design" />
+      {/* @ts-expect-error target is not allowed on explicit div */}
+      <ExamplePolymorphic as="divtarget h_blankmongodb.design" />
 
       <ExamplePolymorphic as="input" />
 
@@ -88,6 +90,8 @@ describe('Typescript types', () => {
 
       {/* @ts-expect-error href is not allowed on explicit div */}
       <ExamplePolymorphicWithRef as="div" href="mongodb.design" />
+      {/* @ts-expect-error target is not allowed on explicit div */}
+      <ExamplePolymorphicWithRef target="_blank" />
 
       <ExamplePolymorphicWithRef as="input" />
 
@@ -126,6 +130,8 @@ describe('Typescript types', () => {
 
       {/* @ts-expect-error href is not allowed on explicit div */}
       <AdvancedPolymorphic as="div" href="mongodb.design" />
+      {/* @ts-expect-error target is not allowed on explicit div */}
+      <AdvancedPolymorphic as="div" targe="_blank" />
 
       <AdvancedPolymorphic as="input" />
 
@@ -168,6 +174,8 @@ describe('Typescript types', () => {
 
       {/* @ts-expect-error href is not allowed on explicit div */}
       <AdvancedPolymorphicWithRef as="div" href="mongodb.design" />
+      {/* @ts-expect-error target is not allowed on explicit div */}
+      <AdvancedPolymorphicWithRef as="div" target="_blank" />
 
       <AdvancedPolymorphicWithRef as="input" />
 
@@ -206,6 +214,8 @@ describe('Typescript types', () => {
 
       {/* @ts-expect-error href is not allowed on explicit div */}
       <ExampleInferred as="div" href="mongodb.design" />
+      {/* @ts-expect-error target is not allowed on explicit div */}
+      <ExampleInferred as="div" target="_blank" />
 
       <ExampleInferred as="input" />
 
@@ -251,6 +261,8 @@ describe('Typescript types', () => {
       <ExampleInferredDefaultButton as="button" href="mongodb.design" />
       {/* @ts-expect-error href is not allowed on explicit div */}
       <ExampleInferredDefaultButton as="div" href="mongodb.design" />
+      {/* @ts-expect-error target is not allowed on explicit div */}
+      <ExampleInferredDefaultButton as="div" target="_blank" />
 
       <ExampleInferredDefaultButton as="input" />
 
