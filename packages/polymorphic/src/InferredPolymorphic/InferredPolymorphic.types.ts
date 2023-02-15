@@ -29,6 +29,9 @@ type InferredAnchorLikeProps<T extends AnchorLike | undefined, P = {}> = {
  * Inferred clone of {@link PolymorphicProps}
  *
  * If `T` is an anchor, or undefined, then we explicitly add an `href`
+ *
+ * else if href is defined, we force `as` to be 'a',
+ * otherwise we just extend standard polymorphic props
  */
 export type InferredProps<T extends PolymorphicAs, XP = {}> = T extends
   | AnchorLike
