@@ -191,6 +191,10 @@ describe('Typescript types', () => {
     </>;
   });
 
+  const AnchorLikeWrapper = (props: JSX.IntrinsicElements['a']) => {
+    return <a {...props}>content</a>;
+  };
+
   test.skip('ExampleInferred', () => {
     <>
       <ExampleInferred />
@@ -206,6 +210,7 @@ describe('Typescript types', () => {
 
       {/* @ts-expect-error - Require href when as="a" */}
       <ExampleInferred as="a" />
+      <ExampleInferred href="mongodb.design" />
       <ExampleInferred as="a" href="mongodb.design" />
       <ExampleInferred as="a" href="mongodb.design" ref={anchorRef} />
       <ExampleInferred as="a" href="mongodb.design">
@@ -228,6 +233,8 @@ describe('Typescript types', () => {
       <ExampleInferred as={Wrapper} ref={spanRef} theme={'dark'} />
       {/* @ts-expect-error - href is not a prop on Wrapper */}
       <ExampleInferred as={Wrapper} ref={spanRef} href=".design" />
+
+      <ExampleInferred as={AnchorLikeWrapper} href=".design" />
     </>;
   });
 
@@ -246,6 +253,7 @@ describe('Typescript types', () => {
 
       {/* @ts-expect-error - Require href when as="a" */}
       <ExampleInferredDefaultButton as="a" />
+      <ExampleInferredDefaultButton href="mongodb.design" />
       <ExampleInferredDefaultButton as="a" href="mongodb.design" />
       <ExampleInferredDefaultButton
         as="a"
@@ -255,6 +263,7 @@ describe('Typescript types', () => {
       <ExampleInferredDefaultButton as="a" href="mongodb.design">
         some content
       </ExampleInferredDefaultButton>
+
       {/* @ts-expect-error - type not valid for anchor */}
       <ExampleInferredDefaultButton as="a" type="submit" />
       {/* @ts-expect-error - href not valid when explicitly set to button */}
@@ -275,10 +284,13 @@ describe('Typescript types', () => {
       />
       {/* TODO: ts-expect-error - Must pass the correct ref type */}
       <ExampleInferredDefaultButton as={Wrapper} ref={divRef} />
+      <ExampleInferredDefaultButton as={Wrapper} ref={divRef} />
       {/* @ts-expect-error - Theme is not a prop on Wrapper */}
       <ExampleInferredDefaultButton as={Wrapper} ref={spanRef} theme={'dark'} />
       {/* @ts-expect-error - href is not a prop on Wrapper */}
-      <ExampleInferredDefaultButton as={Wrapper} ref={spanRef} href=".design" />
+      <ExampleInferredDefaultButton as={Wrapper} href=".design" />
+
+      <ExampleInferredDefaultButton as={AnchorLikeWrapper} href=".design" />
     </>;
   });
 });
