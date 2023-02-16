@@ -10,13 +10,8 @@ function getInferredPolymorphComponent(
   rest?: { [key: string]: any },
   defaultAs?: PolymorphicAs,
 ): PolymorphicAs | undefined {
-  if (typeof rest?.href === 'string' && (!as || as === defaultAs)) {
-    as = 'a' as PolymorphicAs;
-  } else if (!as) {
-    as = 'div' as PolymorphicAs;
-  }
-
-  return as;
+  defaultAs = defaultAs ?? ('div' as PolymorphicAs);
+  return as ? as : typeof rest?.href === 'string' ? 'a' : defaultAs;
 }
 
 /**
