@@ -27,11 +27,11 @@ export interface ExampleProps {
  * @example
  */
 export const ExamplePolymorphic = Polymorphic<ExampleProps>(
-  ({ as, title, ...rest }) => {
+  ({ as, title, children, ...rest }) => {
     const { Component, ref } = usePolymorphic(as);
     return (
       <Component ref={ref} {...rest}>
-        {title}
+        {title || children}
       </Component>
     );
   },
@@ -42,11 +42,11 @@ export const ExamplePolymorphic = Polymorphic<ExampleProps>(
  * @example
  */
 export const ExamplePolymorphicWithRef = Polymorphic<ExampleProps>(
-  ({ as, title, ...rest }, ref) => {
+  ({ as, title, children, ...rest }, ref) => {
     const { Component } = usePolymorphic(as);
     return (
       <Component ref={ref} {...rest}>
-        {title}
+        {title || children}
       </Component>
     );
   },
@@ -57,11 +57,11 @@ export const ExamplePolymorphicWithRef = Polymorphic<ExampleProps>(
  * @example
  */
 export const ExampleInferred = InferredPolymorphic<ExampleProps>(
-  ({ as, title, ...rest }) => {
+  ({ as, title, children, ...rest }) => {
     const { Component, ref } = useInferredPolymorphic(as, rest);
     return (
       <Component ref={ref} {...rest}>
-        {title}
+        {title || children}
       </Component>
     );
   },
@@ -75,12 +75,12 @@ export const ExampleInferred = InferredPolymorphic<ExampleProps>(
 export const ExampleInferredDefaultButton = InferredPolymorphic<
   ExampleProps,
   'button'
->(({ as, title, ...rest }) => {
+>(({ as, title, children, ...rest }) => {
   const { Component, ref } = useInferredPolymorphic(as, rest, 'button');
 
   return (
     <Component ref={ref} {...rest}>
-      {title}
+      {title || children}
     </Component>
   );
 }, 'ExampleInferredDefaultButton');
@@ -101,11 +101,12 @@ export const AdvancedPolymorphic: PolymorphicComponentType<ExampleProps> = <
 >({
   as,
   title,
+  children,
   ...rest
 }: AdvancedProps<T>) => {
   return (
     <Polymorph as={as as React.ElementType} {...rest}>
-      {title}
+      {title || children}
     </Polymorph>
   );
 };
@@ -119,12 +120,12 @@ AdvancedPolymorphic.displayName = 'AdvancedPolymorphic';
 const AdvRenderFn: PolymorphicRenderFunction<ExampleProps> = <
   T extends PolymorphicAs = 'div',
 >(
-  { as, title, ...rest }: AdvancedProps<T>,
+  { as, title, children, ...rest }: AdvancedProps<T>,
   ref: PolymorphicRef<T>,
 ) => {
   return (
     <Polymorph as={as as PolymorphicAs} {...rest} ref={ref}>
-      {title}
+      {title || children}
     </Polymorph>
   );
 };
