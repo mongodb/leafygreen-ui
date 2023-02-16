@@ -11,7 +11,6 @@
 import React from 'react';
 
 import { WrapperProps } from '../utils/Polymorphic.testutils';
-import { usePolymorphicRef } from '..';
 
 import {
   AdvancedPolymorphic,
