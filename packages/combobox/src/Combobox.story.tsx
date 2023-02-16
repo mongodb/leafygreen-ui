@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { ComponentStory } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
-import { storybookExcludedControlParams } from '@leafygreen-ui/lib';
+import { StoryMeta } from '@leafygreen-ui/lib';
 
 import {
   ComboboxSize,
@@ -20,24 +20,13 @@ const wrapperStyle = css`
   padding-block: 64px;
 `;
 
-export default {
+export default StoryMeta({
   title: 'Components/Combobox',
   component: Combobox,
   parameters: {
     default: 'Demo',
     controls: {
-      exclude: [
-        ...storybookExcludedControlParams,
-        'onChange',
-        'onClear',
-        'onFilter',
-        'children',
-        'aria-label',
-        'setError',
-        'filteredOptions',
-        'initialValue',
-        'value',
-      ],
+      exclude: ['setError', 'filteredOptions', 'initialValue', 'value'],
     },
   },
   argTypes: {
@@ -110,7 +99,7 @@ export default {
     disabled: false,
     clearable: true,
   },
-} as ComponentMeta<typeof Combobox>;
+});
 
 const ComboboxOptions = [
   <ComboboxOption key="apple" value="apple" displayName="Apple" />,
