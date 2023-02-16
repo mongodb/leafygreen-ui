@@ -39,9 +39,11 @@ describe('Typescript types', () => {
     return <a {...props}>content</a>;
   };
 
-  const divRef = usePolymorphicRef<'div'>(); // React.useRef<HTMLDivElement | null>(null);
-  const anchorRef = usePolymorphicRef<'a'>();
-  const spanRef = usePolymorphicRef<'span'>();
+
+  const divRef: React.MutableRefObject<HTMLDivElement | null> = {current: null}
+  const anchorRef: React.MutableRefObject<HTMLAnchorElement | null> = {current: null}
+  const spanRef: React.MutableRefObject<HTMLSpanElement | null> = {current: null}
+
 
   test.skip('ExamplePolymorphic', () => {
     <>

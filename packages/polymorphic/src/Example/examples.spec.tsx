@@ -50,57 +50,96 @@ describe('Polymorphic/Example Higher-order Components', () => {
       expect(queryByTestId('hoc')).toHaveAttribute('href', 'mongodb.design');
     });
 
-    test('works with `styled`', () => {
-      const StyledExample = styled(ExampleInferred)`
-        color: #ff69b4;
-      ` as typeof ExampleInferred;
+    describe('with default', () => {
+      test('sets default props', () => {
+        const { queryByTestId } = render(
+          <ExampleInferredDefaultButton data-testid="hoc" name="foobar" />,
+        );
+        expect(queryByTestId('hoc')).toBeInTheDocument();
+        expect(queryByTestId('hoc')?.tagName.toLowerCase()).toBe('button');
+        expect(queryByTestId('hoc')).toHaveAttribute('name', 'foobar');
+      });
 
-      const { getByTestId } = render(
-        <StyledExample href="mongodb.design" data-testid="styled">
-          Some text
-        </StyledExample>,
-      );
-      expect(getByTestId('styled')).toBeInTheDocument();
-      expect(getByTestId('styled').tagName.toLowerCase()).toBe('a');
-      expect(getByTestId('styled')).toHaveAttribute('href', 'mongodb.design');
-      expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
+      test('infers href', () => {
+        const { queryByTestId } = render(
+          <ExampleInferredDefaultButton
+            data-testid="hoc"
+            href="mongodb.design"
+          />,
+        );
+        expect(queryByTestId('hoc')).toBeInTheDocument();
+        expect(queryByTestId('hoc')?.tagName.toLowerCase()).toBe('a');
+        expect(queryByTestId('hoc')).toHaveAttribute('href', 'mongodb.design');
+      });
+
+      test('respects `as` for HTML elements', () => {
+        const { queryByTestId } = render(
+          <ExampleInferredDefaultButton
+            as="div"
+            data-testid="hoc"
+            name="foobar"
+          />,
+        );
+        expect(queryByTestId('hoc')).toBeInTheDocument();
+        expect(queryByTestId('hoc')?.tagName.toLowerCase()).toBe('div');
+        expect(queryByTestId('hoc')).toHaveAttribute('name', 'foobar');
+      });
+
+      test('respects `as` for custom components', () => {
+        const { Wrapper } = makeWrapperComponent();
+        const { queryByTestId } = render(
+          <ExampleInferredDefaultButton as={Wrapper} name="foobar" />,
+        );
+        expect(queryByTestId('wrapper')).toBeInTheDocument();
+        expect(queryByTestId('wrapper')?.tagName.toLowerCase()).toBe('span');
+        expect(queryByTestId('wrapper')).toHaveAttribute('name', 'foobar');
+      });
     });
 
-    test('works with `styled` props', () => {
-      // We need to define the additional props that styled should expect
-      interface StyledProps {
-        color?: string;
-        size?: string;
-      }
-      const StyledExample = styled(ExampleInferred)<StyledProps>`
-        color: ${props => props.color};
-        font-size: ${props => props.size}px;
-      ` as StyledComponent<
-        StyledProps & InferredProps<PolymorphicAs, ExampleProps>
-      >;
+    describe('styled', () => {
+      test('works with `styled`', () => {
+        const StyledExample = styled(ExampleInferred)`
+          color: #ff69b4;
+        ` as typeof ExampleInferred;
 
-      const { getByTestId } = render(
-        <StyledExample
-          href="mongodb.design"
-          data-testid="styled"
-          color="#ff69b4"
-        >
-          Some text
-        </StyledExample>,
-      );
-      expect(getByTestId('styled')).toBeInTheDocument();
-      expect(getByTestId('styled').tagName.toLowerCase()).toBe('a');
-      expect(getByTestId('styled')).toHaveAttribute('href', 'mongodb.design');
-      expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
-    });
+        const { getByTestId } = render(
+          <StyledExample href="mongodb.design" data-testid="styled">
+            Some text
+          </StyledExample>,
+        );
+        expect(getByTestId('styled')).toBeInTheDocument();
+        expect(getByTestId('styled').tagName.toLowerCase()).toBe('a');
+        expect(getByTestId('styled')).toHaveAttribute('href', 'mongodb.design');
+        expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
+      });
 
-    test('Works with a default, and sets default props', () => {
-      const { queryByTestId } = render(
-        <ExampleInferredDefaultButton data-testid="hoc" name="foobar" />,
-      );
-      expect(queryByTestId('hoc')).toBeInTheDocument();
-      expect(queryByTestId('hoc')?.tagName.toLowerCase()).toBe('button');
-      expect(queryByTestId('hoc')).toHaveAttribute('name', 'foobar');
+      test('works with `styled` props', () => {
+        // We need to define the additional props that styled should expect
+        interface StyledProps {
+          color?: string;
+          size?: string;
+        }
+        const StyledExample = styled(ExampleInferred)<StyledProps>`
+          color: ${props => props.color};
+          font-size: ${props => props.size}px;
+        ` as StyledComponent<
+          StyledProps & InferredProps<PolymorphicAs, ExampleProps>
+        >;
+
+        const { getByTestId } = render(
+          <StyledExample
+            href="mongodb.design"
+            data-testid="styled"
+            color="#ff69b4"
+          >
+            Some text
+          </StyledExample>,
+        );
+        expect(getByTestId('styled')).toBeInTheDocument();
+        expect(getByTestId('styled').tagName.toLowerCase()).toBe('a');
+        expect(getByTestId('styled')).toHaveAttribute('href', 'mongodb.design');
+        expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
+      });
     });
   });
 
