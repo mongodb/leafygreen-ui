@@ -20,15 +20,16 @@ export const InferredPolymorphic = <
   render: InferredPolymorphicRenderFunction<XP, DefaultAs>,
   displayName?: string,
 ): InferredPolymorphicComponentType<XP, DefaultAs> => {
-  // return Polymorphic<XP, DefaultAs>(
-  //   render,
-  //   displayName,
-  // ) as InferredPolymorphicComponentType<XP, DefaultAs>;
+  let PolyComponent: InferredPolymorphicComponentType<XP, DefaultAs>;
 
-  /// @ts-expect-error - types are too complex
-  const PolyComponent: InferredPolymorphicComponentType<XP, DefaultAs> =
-    /// @ts-expect-error - types are too complex
-    render.length === 1 ? render : React.forwardRef(render);
+  if (render.length === 1) {
+    PolyComponent = render;
+  } else {
+    type PropTypes = Parameters<typeof render>[0];
+    type RefType = Parameters<typeof render>[1];
+    /// @ts-expect-error - types too complex. Return type is still computed correctly
+    PolyComponent = React.forwardRef<RefType, PropTypes>(render);
+  }
 
   PolyComponent.displayName =
     displayName ?? render.displayName ?? 'PolymorphicComponent';
