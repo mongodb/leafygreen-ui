@@ -14,7 +14,7 @@ import {
   usePolymorphic,
 } from '..';
 
-interface ExampleProps {
+export interface ExampleProps {
   /** An arbitrary title */
   title?: string;
   /** Flag for dark mode */
@@ -97,7 +97,9 @@ type AdvancedProps<T extends PolymorphicAs> = PolymorphicPropsWithRef<
  * Extends Polymorphic
  * @example
  */
-export const AdvancedPolymorphic = <T extends PolymorphicAs = 'div'>({
+export const AdvancedPolymorphic: PolymorphicComponentType<ExampleProps> = <
+  T extends PolymorphicAs = 'div',
+>({
   as,
   title,
   ...rest

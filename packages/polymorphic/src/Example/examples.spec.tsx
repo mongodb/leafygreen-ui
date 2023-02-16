@@ -1,12 +1,18 @@
 import React from 'react';
-import styled from '@emotion/styled';
+import styled, { StyledComponent } from '@emotion/styled';
 import { render } from '@testing-library/react';
 
 import { parseTSDoc } from '../../../../scripts/utils/tsDocParser';
-import { InferredPolymorphicComponentType } from '../InferredPolymorphic';
 import { makeWrapperComponent } from '../utils/Polymorphic.testutils';
-import { type PolymorphicComponentType, usePolymorphicRef } from '..';
+import {
+  InferredProps,
+  PolymorphicAs,
+  type PolymorphicComponentType,
+  PolymorphicProps,
+  usePolymorphicRef,
+} from '..';
 
+import { ExampleProps } from './Polymorphic.example';
 import {
   AdvancedPolymorphic,
   AdvancedPolymorphicWithRef,
@@ -16,7 +22,6 @@ import {
   ExamplePolymorphicWithRef,
   RestrictedExample,
 } from '.';
-
 /**
  * Here we test Example Higher-order components
  * and ensure Polymorphic behavior is properly extendable
@@ -48,10 +53,38 @@ describe('Polymorphic/Example Higher-order Components', () => {
     test('works with `styled`', () => {
       const StyledExample = styled(ExampleInferred)`
         color: #ff69b4;
-      ` as InferredPolymorphicComponentType;
+      ` as typeof ExampleInferred;
 
       const { getByTestId } = render(
         <StyledExample href="mongodb.design" data-testid="styled">
+          Some text
+        </StyledExample>,
+      );
+      expect(getByTestId('styled')).toBeInTheDocument();
+      expect(getByTestId('styled').tagName.toLowerCase()).toBe('a');
+      expect(getByTestId('styled')).toHaveAttribute('href', 'mongodb.design');
+      expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
+    });
+
+    test('works with `styled` props', () => {
+      // We need to define the additional props that styled should expect
+      interface StyledProps {
+        color?: string;
+        size?: string;
+      }
+      const StyledExample = styled(ExampleInferred)<StyledProps>`
+        color: ${props => props.color};
+        font-size: ${props => props.size}px;
+      ` as StyledComponent<
+        StyledProps & InferredProps<PolymorphicAs, ExampleProps>
+      >;
+
+      const { getByTestId } = render(
+        <StyledExample
+          href="mongodb.design"
+          data-testid="styled"
+          color="#ff69b4"
+        >
           Some text
         </StyledExample>,
       );
@@ -125,7 +158,7 @@ describe('Polymorphic/Example Higher-order Components', () => {
         test('Basic styled component', () => {
           const StyledExample = styled(ExampleComponent)`
             color: #ff69b4;
-          `;
+          ` as typeof ExampleComponent;
 
           const { getByTestId } = render(
             <StyledExample title="Title" data-testid="styled">
@@ -187,10 +220,13 @@ describe('Polymorphic/Example Higher-order Components', () => {
           const StyledExample = styled(ExampleComponent)<StyledProps>`
             color: ${props => props.color};
             font-size: ${props => props.size}px;
-          `;
+          ` as StyledComponent<
+            StyledProps & PolymorphicProps<PolymorphicAs, ExampleProps>
+          >;
 
           const { getByTestId } = render(
             <StyledExample
+              as="span"
               title="Title"
               data-testid="styled"
               color="#ff69b4"
@@ -200,7 +236,7 @@ describe('Polymorphic/Example Higher-order Components', () => {
             </StyledExample>,
           );
           expect(getByTestId('styled')).toBeInTheDocument();
-          expect(getByTestId('styled').tagName.toLowerCase()).toBe('div');
+          expect(getByTestId('styled').tagName.toLowerCase()).toBe('span');
           expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
           expect(getByTestId('styled')).toHaveStyle(`font-size: 16px;`);
         });
