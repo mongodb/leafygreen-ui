@@ -7,6 +7,7 @@ import { Theme } from './DarkModeProps';
  * @param darkMode
  * @returns `Theme.Dark || Theme.Light`
  */
-const getTheme = (darkMode: boolean) => (darkMode ? Theme.Dark : Theme.Light);
+const getTheme = (darkMode: boolean): Theme =>
+  darkMode ? Theme.Dark : Theme.Light;
 
 export default getTheme;

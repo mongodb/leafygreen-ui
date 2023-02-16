@@ -10,10 +10,19 @@
   ],
   "references": [
     {
+      "path": "../a11y"
+    },
+    {
       "path": "../emotion"
     },
     {
       "path": "../icon"
+    },
+    {
+      "path": "../icon-button"
+    },
+    {
+      "path": "../input-option"
     },
     {
       "path": "../lib"
@@ -22,7 +31,16 @@
       "path": "../palette"
     },
     {
+      "path": "../polymorphic"
+    },
+    {
+      "path": "../popover"
+    },
+    {
       "path": "../tokens"
+    },
+    {
+      "path": "../typography"
     },
     {
       "path": "../leafygreen-provider"

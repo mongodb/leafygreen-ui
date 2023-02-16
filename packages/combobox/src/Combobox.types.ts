@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode } from 'react';
+import { ComponentPropsWithoutRef, ReactElement, ReactNode } from 'react';
 
 import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
 
@@ -278,7 +278,7 @@ export type ComboboxProps<M extends boolean> = Either<
  * Combobox Option Props
  */
 
-interface BaseComboboxOptionProps {
+interface BaseComboboxOptionProps extends ComponentPropsWithoutRef<'li'> {
   /**
    * The internal value of the option. Used as the identifier in Combobox `initialValue`, value and filteredOptions.
    * When undefined, this is set to `_.kebabCase(displayName)`
@@ -320,7 +320,8 @@ export interface OptionObject {
   hasGlyph?: boolean;
 }
 
-export interface InternalComboboxOptionProps {
+export interface InternalComboboxOptionProps
+  extends ComponentPropsWithoutRef<'li'> {
   value: string;
   displayName: string;
   isSelected: boolean;

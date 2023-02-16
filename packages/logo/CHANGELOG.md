@@ -1,5 +1,11 @@
 # @leafygreen-ui/logo
 
+## 7.0.2
+
+### Patch Changes
+
+- bf2fedf6d: Version bumps lib
+
 ## 7.0.1
 
 ### Patch Changes
