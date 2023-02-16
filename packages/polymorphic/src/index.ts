@@ -1,8 +1,8 @@
 export {
   InferredPolymorphic,
   type InferredPolymorphicComponentType,
-  InferredPolymorphicProps,
-  InferredPolymorphicPropsWithRef,
+  type InferredPolymorphicProps,
+  type InferredPolymorphicPropsWithRef,
   useInferredPolymorphic,
 } from './InferredPolymorphic';
 export {
@@ -16,4 +16,4 @@ export {
   usePolymorphic,
   usePolymorphicRef,
 } from './Polymorphic';
-export { PropsOf } from './utils/Polymorphic.utils';
+export { type PropsOf } from './utils/Polymorphic.utils';
