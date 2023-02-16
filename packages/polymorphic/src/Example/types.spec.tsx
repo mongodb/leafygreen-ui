@@ -51,21 +51,22 @@ describe('Typescript types', () => {
       <ExamplePolymorphic>some content</ExamplePolymorphic>
       <ExamplePolymorphic as="div" />
       <ExamplePolymorphic as="div" ref={divRef} />
-      {/* @ts-expect-error - Must pass the correct ref type */}
-      <ExamplePolymorphic as="div" ref={anchorRef} />
       <ExamplePolymorphic as="div" ref={divRef}>content</ExamplePolymorphic>
       <ExamplePolymorphic key="some-key" />
+      {/* @ts-expect-error - Must pass the correct ref type */}
+      <ExamplePolymorphic as="div" ref={anchorRef} />
+      {/* @ts-expect-error href is not allowed on explicit div */}
+      <ExamplePolymorphic as="div" href="mongodb.design" />
+      {/* @ts-expect-error target is not allowed on explicit div */}
+      <ExamplePolymorphic as="div" target="_blank" />
+      {/* @ts-expect-error - href not allowed on strict polymorphic */}
+      <ExamplePolymorphic href="mongodb.design" />
 
       {/* @ts-expect-error - Require href when as="a" */}
       <ExamplePolymorphic as="a" />
       <ExamplePolymorphic as="a" href="mongodb.design" />
       <ExamplePolymorphic as="a" href="mongodb.design" ref={anchorRef} />
       <ExamplePolymorphic as="a" href="mongodb.design">content</ExamplePolymorphic>
-
-      {/* @ts-expect-error href is not allowed on explicit div */}
-      <ExamplePolymorphic as="div" href="mongodb.design" />
-      {/* @ts-expect-error target is not allowed on explicit div */}
-      <ExamplePolymorphic as="divtarget h_blankmongodb.design" />
 
       <ExamplePolymorphic as="input" />
 
@@ -87,25 +88,22 @@ describe('Typescript types', () => {
       <ExamplePolymorphicWithRef>some content</ExamplePolymorphicWithRef>
       <ExamplePolymorphicWithRef as="div" />
       <ExamplePolymorphicWithRef as="div" ref={divRef} />
+      <ExamplePolymorphicWithRef as="div" ref={divRef}>content</ExamplePolymorphicWithRef>
+      <ExamplePolymorphicWithRef key="some-key" />
       {/* @ts-expect-error - Must pass the correct ref type */}
       <ExamplePolymorphicWithRef as="div" ref={anchorRef} />
-      <ExamplePolymorphicWithRef as="div" ref={divRef}>
-        some content
-      </ExamplePolymorphicWithRef>
-      <ExamplePolymorphicWithRef key="some-key" />
+      {/* @ts-expect-error href is not allowed on explicit div */}
+      <ExamplePolymorphicWithRef as="div" href="mongodb.design" />
+      {/* @ts-expect-error target is not allowed on explicit div */}
+      <ExamplePolymorphicWithRef target="_blank" />
+      {/* @ts-expect-error - href not allowed on strict polymorphic */}
+      <ExamplePolymorphicWithRef href="mongodb.design" />
 
       {/* @ts-expect-error - Require href when as="a" */}
       <ExamplePolymorphicWithRef as="a" />
       <ExamplePolymorphicWithRef as="a" href="mongodb.design" />
       <ExamplePolymorphicWithRef as="a" href="mongodb.design" ref={anchorRef} />
-      <ExamplePolymorphicWithRef as="a" href="mongodb.design">
-        some content
-      </ExamplePolymorphicWithRef>
-
-      {/* @ts-expect-error href is not allowed on explicit div */}
-      <ExamplePolymorphicWithRef as="div" href="mongodb.design" />
-      {/* @ts-expect-error target is not allowed on explicit div */}
-      <ExamplePolymorphicWithRef target="_blank" />
+      <ExamplePolymorphicWithRef as="a" href="mongodb.design">content</ExamplePolymorphicWithRef>
 
       <ExamplePolymorphicWithRef as="input" />
 
@@ -127,25 +125,22 @@ describe('Typescript types', () => {
       <AdvancedPolymorphic>some content</AdvancedPolymorphic>
       <AdvancedPolymorphic as="div" />
       <AdvancedPolymorphic as="div" ref={divRef} />
+      <AdvancedPolymorphic as="div" ref={divRef}>content</AdvancedPolymorphic>
+      <AdvancedPolymorphic key="some-key" />
       {/* @ts-expect-error - Must pass the correct ref type */}
       <AdvancedPolymorphic as="div" ref={anchorRef} />
-      <AdvancedPolymorphic as="div" ref={divRef}>
-        some content
-      </AdvancedPolymorphic>
-      <AdvancedPolymorphic key="some-key" />
+      {/* @ts-expect-error href is not allowed on explicit div */}
+      <AdvancedPolymorphic as="div" href="mongodb.design" />
+      {/* @ts-expect-error target is not allowed on explicit div */}
+      <AdvancedPolymorphic as="div" targe="_blank" />
+      {/* @ts-expect-error - href not allowed on strict polymorphic */}
+      <AdvancedPolymorphic href="mongodb.design" />
 
       {/* @ts-expect-error - Require href when as="a" */}
       <AdvancedPolymorphic as="a" />
       <AdvancedPolymorphic as="a" href="mongodb.design" />
       <AdvancedPolymorphic as="a" href="mongodb.design" ref={anchorRef} />
-      <AdvancedPolymorphic as="a" href="mongodb.design">
-        some content
-      </AdvancedPolymorphic>
-
-      {/* @ts-expect-error href is not allowed on explicit div */}
-      <AdvancedPolymorphic as="div" href="mongodb.design" />
-      {/* @ts-expect-error target is not allowed on explicit div */}
-      <AdvancedPolymorphic as="div" targe="_blank" />
+      <AdvancedPolymorphic as="a" href="mongodb.design">content</AdvancedPolymorphic>
 
       <AdvancedPolymorphic as="input" />
 
@@ -167,21 +162,22 @@ describe('Typescript types', () => {
       <AdvancedPolymorphicWithRef>some content</AdvancedPolymorphicWithRef>
       <AdvancedPolymorphicWithRef as="div" />
       <AdvancedPolymorphicWithRef as="div" ref={divRef} />
-      {/* @ts-expect-error - Must pass the correct ref type */}
-      <AdvancedPolymorphicWithRef as="div" ref={anchorRef} />
       <AdvancedPolymorphicWithRef as="div" ref={divRef}>content</AdvancedPolymorphicWithRef>
       <AdvancedPolymorphicWithRef key="some-key" />
+      {/* @ts-expect-error - Must pass the correct ref type */}
+      <AdvancedPolymorphicWithRef as="div" ref={anchorRef} />
+      {/* @ts-expect-error href is not allowed on explicit div */}
+      <AdvancedPolymorphicWithRef as="div" href="mongodb.design" />
+      {/* @ts-expect-error href is not allowed on strict polymorphic */}
+      <AdvancedPolymorphicWithRef href="mongodb.design" />
+      {/* @ts-expect-error target is not allowed on explicit div */}
+      <AdvancedPolymorphicWithRef as="div" target="_blank" />
 
       {/* @ts-expect-error - Require href when as="a" */}
       <AdvancedPolymorphicWithRef as="a" />
       <AdvancedPolymorphicWithRef as="a" href="mongodb.design" />
       <AdvancedPolymorphicWithRef as="a" href="mongodb.design" ref={anchorRef} />
       <AdvancedPolymorphicWithRef as="a" href="mongodb.design">content</AdvancedPolymorphicWithRef>
-
-      {/* @ts-expect-error href is not allowed on explicit div */}
-      <AdvancedPolymorphicWithRef as="div" href="mongodb.design" />
-      {/* @ts-expect-error target is not allowed on explicit div */}
-      <AdvancedPolymorphicWithRef as="div" target="_blank" />
 
       <AdvancedPolymorphicWithRef as="input" />
 
@@ -203,24 +199,22 @@ describe('Typescript types', () => {
       <ExampleInferred>some content</ExampleInferred>
       <ExampleInferred as="div" />
       <ExampleInferred as="div" ref={divRef} />
-      {/* @ts-expect-error - Must pass the correct ref type */}
-      <ExampleInferred as="div" ref={anchorRef} />
       <ExampleInferred as="div" ref={divRef}>content</ExampleInferred>
       <ExampleInferred key="some-key" />
-
-      {/* @ts-expect-error - Require href when as="a" */}
-      <ExampleInferred as="a" />
-      <ExampleInferred href="mongodb.design" />
-      <ExampleInferred as="a" href="mongodb.design" />
-      <ExampleInferred as="a" href="mongodb.design" ref={anchorRef} />
-      <ExampleInferred as="a" href="mongodb.design">
-        some content
-      </ExampleInferred>
-
+      {/* @ts-expect-error - Must pass the correct ref type */}
+      <ExampleInferred as="div" ref={anchorRef} />
       {/* @ts-expect-error href is not allowed on explicit div */}
       <ExampleInferred as="div" href="mongodb.design" />
       {/* @ts-expect-error target is not allowed on explicit div */}
       <ExampleInferred as="div" target="_blank" />
+
+      {/* @ts-expect-error - Require href when as="a" */}
+      <ExampleInferred as="a" />
+      <ExampleInferred href="mongodb.design" /> {/* This IS allowed for `inferred` */}
+      <ExampleInferred as="a" href="mongodb.design" />
+      <ExampleInferred as="a" href="mongodb.design" ref={anchorRef} />
+      <ExampleInferred as="a" href="mongodb.design">content</ExampleInferred>
+
 
       <ExampleInferred as="input" />
 
@@ -244,22 +238,10 @@ describe('Typescript types', () => {
       <ExampleInferredDefaultButton>some content</ExampleInferredDefaultButton>
       <ExampleInferredDefaultButton as="div" />
       <ExampleInferredDefaultButton as="div" ref={divRef} />
+      <ExampleInferredDefaultButton as="div" ref={divRef}>content</ExampleInferredDefaultButton>
+      <ExampleInferredDefaultButton key="some-key" />
       {/* @ts-expect-error - Must pass the correct ref type */}
       <ExampleInferredDefaultButton as="div" ref={anchorRef} />
-      <ExampleInferredDefaultButton as="div" ref={divRef}>
-        some content
-      </ExampleInferredDefaultButton>
-      <ExampleInferredDefaultButton key="some-key" />
-
-      {/* @ts-expect-error - Require href when as="a" */}
-      <ExampleInferredDefaultButton as="a" />
-      <ExampleInferredDefaultButton href="mongodb.design" />
-      <ExampleInferredDefaultButton as="a" href="mongodb.design" />
-      <ExampleInferredDefaultButton as="a" href="mongodb.design" ref={anchorRef} />
-      <ExampleInferredDefaultButton as="a" href="mongodb.design">
-        some content
-      </ExampleInferredDefaultButton>
-
       {/* @ts-expect-error - type not valid for anchor */}
       <ExampleInferredDefaultButton as="a" type="submit" />
       {/* @ts-expect-error - href not valid when explicitly set to button */}
@@ -268,6 +250,13 @@ describe('Typescript types', () => {
       <ExampleInferredDefaultButton as="div" href="mongodb.design" />
       {/* @ts-expect-error target is not allowed on explicit div */}
       <ExampleInferredDefaultButton as="div" target="_blank" />
+
+      {/* @ts-expect-error - Require href when as="a" */}
+      <ExampleInferredDefaultButton as="a" />
+      <ExampleInferredDefaultButton href="mongodb.design" /> {/* This IS allowed for `inferred` */}
+      <ExampleInferredDefaultButton as="a" href="mongodb.design" />
+      <ExampleInferredDefaultButton as="a" href="mongodb.design" ref={anchorRef} />
+      <ExampleInferredDefaultButton as="a" href="mongodb.design">content</ExampleInferredDefaultButton>
 
       <ExampleInferredDefaultButton as="input" />
 
