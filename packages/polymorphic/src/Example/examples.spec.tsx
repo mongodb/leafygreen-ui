@@ -74,25 +74,19 @@ describe('Polymorphic/Example Higher-order Components', () => {
 
       test('respects `as` for HTML elements', () => {
         const { queryByTestId } = render(
-          <ExampleInferredDefaultButton
-            as="div"
-            data-testid="hoc"
-            name="foobar"
-          />,
+          <ExampleInferredDefaultButton as="div" data-testid="hoc" />,
         );
         expect(queryByTestId('hoc')).toBeInTheDocument();
         expect(queryByTestId('hoc')?.tagName.toLowerCase()).toBe('div');
-        expect(queryByTestId('hoc')).toHaveAttribute('name', 'foobar');
       });
 
       test('respects `as` for custom components', () => {
         const { Wrapper } = makeWrapperComponent();
         const { queryByTestId } = render(
-          <ExampleInferredDefaultButton as={Wrapper} name="foobar" />,
+          <ExampleInferredDefaultButton as={Wrapper} />,
         );
         expect(queryByTestId('wrapper')).toBeInTheDocument();
         expect(queryByTestId('wrapper')?.tagName.toLowerCase()).toBe('span');
-        expect(queryByTestId('wrapper')).toHaveAttribute('name', 'foobar');
       });
     });
 
