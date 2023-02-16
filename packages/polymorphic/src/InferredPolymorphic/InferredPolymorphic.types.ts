@@ -13,8 +13,22 @@ import {
 } from '../Polymorphic/Polymorphic.types';
 import { PolymorphicRef } from '..';
 
+interface NodeUrlLike {
+  auth?: any;
+  hash?: any;
+  host?: any;
+  hostname?: any;
+  href?: string | null | undefined;
+  pathname?: any;
+  protocol?: any;
+  search?: any;
+  slashes?: any;
+  port?: any;
+  query?: any;
+}
+
 /** Either an anchor tag, or a component that accepts an `href` */
-type AnchorLike = 'a' | React.ComponentType<{ href: string }>;
+type AnchorLike = 'a' | React.ComponentType<{ href: string | NodeUrlLike }>;
 
 /**
  * Wrapping props in this type ensures that if `href` is defined,
