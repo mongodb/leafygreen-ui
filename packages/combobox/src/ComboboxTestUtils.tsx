@@ -111,6 +111,7 @@ export const getComboboxJSX = (props?: renderComboboxProps) => {
           value={value}
           displayName={displayName}
           disabled={isDisabled}
+          data-testid={value}
         />
       );
     }
