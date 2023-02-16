@@ -16,12 +16,10 @@ import { palette } from '@leafygreen-ui/palette';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 
 import { MenuContext } from '../MenuContext/MenuContext';
-import { FocusableMenuItemElement } from '../MenuItem/FocusableMenuItem';
-import { MenuItemElement } from '../MenuItem/MenuItem';
-import MenuSeparator, {
-  MenuSeparatorElement,
-} from '../MenuSeparator/MenuSeparator';
-import { SubMenuElement } from '../SubMenu/SubMenu';
+import { MenuItemProps } from '../MenuItem/MenuItem.types';
+import MenuSeparator from '../MenuSeparator/MenuSeparator';
+import { SubMenu } from '../SubMenu/SubMenu';
+import { ElementOf } from '../types';
 
 import { MenuProps } from './Menu.types';
 
@@ -95,9 +93,9 @@ export function Menu({
   const hasSetInitialOpen = useRef(false);
 
   const [, setClosed] = useState(false);
-  const [currentSubMenu, setCurrentSubMenu] = useState<SubMenuElement | null>(
-    null,
-  );
+  const [currentSubMenu, setCurrentSubMenu] = useState<ElementOf<
+    typeof SubMenu
+  > | null>(null);
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
 
   const setOpen =
@@ -152,7 +150,10 @@ export function Menu({
           setFocused(target);
         };
 
-        if (isComponentType<SubMenuElement>(child, 'SubMenu') && title) {
+        if (
+          isComponentType<ElementOf<typeof SubMenu>>(child, 'SubMenu') &&
+          title
+        ) {
           if (titleArr.includes(title)) {
             throw new Error('SubMenu titles must be unique');
           }
@@ -164,7 +165,8 @@ export function Menu({
             hasSetInitialOpen.current = true;
           }
 
-          const isCurrentSubMenu = currentSubMenu?.props.title === title;
+          const isCurrentSubMenu =
+            (currentSubMenu?.props as MenuItemProps).title === title;
 
           return React.cloneElement(child, {
             ref: setRef,
@@ -193,23 +195,21 @@ export function Menu({
           });
         }
 
-        if (isComponentType<MenuItemElement>(child, 'MenuItem')) {
+        if (isComponentType(child, 'MenuItem')) {
           return React.cloneElement(child, {
             ref: setRef,
             onFocus,
           });
         }
 
-        if (
-          isComponentType<FocusableMenuItemElement>(child, 'FocusableMenuItem')
-        ) {
+        if (isComponentType(child, 'FocusableMenuItem')) {
           return React.cloneElement(child, {
             ref: setRef,
             onFocus,
           });
         }
 
-        if (isComponentType<MenuSeparatorElement>(child, 'MenuSeparator')) {
+        if (isComponentType(child, 'MenuSeparator')) {
           return <MenuSeparator {...props} />;
         }
 

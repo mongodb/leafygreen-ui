@@ -10,7 +10,7 @@ import { getNodeTextContent } from '@leafygreen-ui/lib';
 import {
   InferredPolymorphic,
   PolymorphicAs,
-  PropsOf,
+  // PropsOf,
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
@@ -350,7 +350,7 @@ SubMenu.displayName = 'SubMenu';
 SubMenu.propTypes = {
   title: PropTypes.string,
   description: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  href: PropTypes.string,
+  href: PropTypes.oneOfType([PropTypes.string, PropTypes.any]),
   children: PropTypes.node,
   setOpen: PropTypes.func,
   onKeyDown: PropTypes.func,
@@ -361,10 +361,6 @@ SubMenu.propTypes = {
   open: PropTypes.bool,
   active: PropTypes.bool,
   disabled: PropTypes.bool,
-} as unknown;
+};
 
 export default SubMenu;
-
-export type SubMenuElementProps = PropsOf<typeof SubMenu>;
-
-export type SubMenuElement = React.Component<SubMenuElementProps>;

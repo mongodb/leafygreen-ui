@@ -23,8 +23,3 @@ FocusableMenuItem.propTypes = {
 };
 
 export default FocusableMenuItem;
-
-export type FocusableMenuItemElement = React.ReactComponentElement<
-  typeof FocusableMenuItem,
-  FocusableMenuItemProps & { ref?: React.Ref<any> }
->;

@@ -6,7 +6,6 @@ import { createUniqueClassName, getNodeTextContent } from '@leafygreen-ui/lib';
 import {
   InferredPolymorphic,
   PolymorphicAs,
-  PropsOf,
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
@@ -172,7 +171,3 @@ MenuItem.propTypes = {
 };
 
 export default MenuItem;
-
-export type MenuItemElementProps = PropsOf<typeof MenuItem>;
-
-export type MenuItemElement = React.Component<MenuItemElementProps>;
