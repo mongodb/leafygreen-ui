@@ -9,9 +9,8 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
 import {
   InferredPolymorphic,
-  InferredPolymorphicProps,
   PolymorphicAs,
-  PolymorphicPropsWithRef,
+  PropsOf,
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
@@ -362,13 +361,10 @@ SubMenu.propTypes = {
   open: PropTypes.bool,
   active: PropTypes.bool,
   disabled: PropTypes.bool,
-};
+} as unknown;
 
 export default SubMenu;
 
-export type SubMenuElementProps = PolymorphicPropsWithRef<
-  PolymorphicAs,
-  InferredPolymorphicProps<SubMenuProps>
->;
+export type SubMenuElementProps = PropsOf<typeof SubMenu>;
 
 export type SubMenuElement = React.Component<SubMenuElementProps>;

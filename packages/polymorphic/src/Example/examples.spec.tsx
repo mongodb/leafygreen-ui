@@ -5,7 +5,7 @@ import { render } from '@testing-library/react';
 import { parseTSDoc } from '../../../../scripts/utils/tsDocParser';
 import { makeWrapperComponent } from '../utils/Polymorphic.testutils';
 import {
-  InferredProps,
+  InferredPolymorphicProps,
   PolymorphicAs,
   type PolymorphicComponentType,
   PolymorphicProps,
@@ -117,7 +117,7 @@ describe('Polymorphic/Example Higher-order Components', () => {
           color: ${props => props.color};
           font-size: ${props => props.size}px;
         ` as StyledComponent<
-          StyledProps & InferredProps<PolymorphicAs, ExampleProps>
+          StyledProps & InferredPolymorphicProps<PolymorphicAs, ExampleProps>
         >;
 
         const { getByTestId } = render(

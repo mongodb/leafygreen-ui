@@ -33,9 +33,10 @@ type InferredAnchorLikeProps<T extends AnchorLike | undefined, P = {}> = {
  * else if T is something else and href is defined, we force `as` to be 'a',
  * otherwise, href is `never`
  */
-export type InferredProps<T extends PolymorphicAs, XP = {}> = T extends
-  | AnchorLike
-  | undefined
+export type InferredPolymorphicProps<
+  T extends PolymorphicAs,
+  XP = {},
+> = T extends AnchorLike | undefined
   ? PropsWithChildren<InferredAnchorLikeProps<T, XP>> &
       Omit<InheritedProps<T>, PropsToOmit<T, XP>>
   : PropsWithChildren<
@@ -46,10 +47,10 @@ export type InferredProps<T extends PolymorphicAs, XP = {}> = T extends
 /**
  * Inferred props clone of {@link PolymorphicPropsWithRef}
  */
-export type InferredPropsWithRef<
+export type InferredPolymorphicPropsWithRef<
   T extends PolymorphicAs,
   XP = {},
-> = InferredProps<T, XP> & {
+> = InferredPolymorphicProps<T, XP> & {
   /** The ref object returned by `React.useRef` */
   ref?: PolymorphicRef<T>;
 };
@@ -62,13 +63,15 @@ export interface InferredPolymorphicComponentType<
   DefaultAs extends PolymorphicAs = PolymorphicAs,
 > {
   <T extends PolymorphicAs = DefaultAs>(
-    props: InferredPropsWithRef<T, XP>,
+    props: InferredPolymorphicPropsWithRef<T, XP>,
     ref: PolymorphicRef<T>,
   ): ReactElement | null;
   displayName?: string;
-  propTypes?: WeakValidationMap<
-    InferredProps<PolymorphicAs, XP> & RefAttributes<any>
-  >;
+  propTypes?:
+    | WeakValidationMap<
+        InferredPolymorphicProps<PolymorphicAs, XP> & RefAttributes<any>
+      >
+    | undefined;
 }
 
 /**
@@ -79,7 +82,7 @@ export interface InferredPolymorphicRenderFunction<
   DefaultAs extends PolymorphicAs = PolymorphicAs,
 > {
   <T extends PolymorphicAs = DefaultAs>(
-    props: InferredPropsWithRef<T, XP>,
+    props: InferredPolymorphicPropsWithRef<T, XP>,
     ref: PolymorphicRef<T>,
   ): ReactElement | null;
   displayName?: string;

@@ -96,11 +96,13 @@ export interface PolymorphicComponentType<
     ref: PolymorphicRef<T>,
   ): ReactElement | null;
   displayName?: string;
-  propTypes?: WeakValidationMap<
-    PropsWithoutRef<
-      PolymorphicPropsWithRef<PolymorphicAs, XP> & RefAttributes<any>
-    >
-  >;
+  propTypes?:
+    | WeakValidationMap<
+        PropsWithoutRef<
+          PolymorphicPropsWithRef<PolymorphicAs, XP> & RefAttributes<any>
+        >
+      >
+    | undefined;
 }
 
 /**

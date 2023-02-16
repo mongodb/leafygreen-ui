@@ -5,9 +5,8 @@ import { cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, getNodeTextContent } from '@leafygreen-ui/lib';
 import {
   InferredPolymorphic,
-  InferredPolymorphicProps,
   PolymorphicAs,
-  PolymorphicPropsWithRef,
+  PropsOf,
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
@@ -174,9 +173,6 @@ MenuItem.propTypes = {
 
 export default MenuItem;
 
-export type MenuItemElementProps = PolymorphicPropsWithRef<
-  PolymorphicAs,
-  InferredPolymorphicProps<MenuItemProps>
->;
+export type MenuItemElementProps = PropsOf<typeof MenuItem>;
 
 export type MenuItemElement = React.Component<MenuItemElementProps>;
