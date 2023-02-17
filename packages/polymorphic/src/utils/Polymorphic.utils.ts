@@ -3,8 +3,10 @@ import { ComponentProps, ComponentType, PropsWithChildren } from 'react';
 import { AsProp } from '../Polymorphic/Polymorphic.types';
 import {
   InferredPolymorphicComponentType,
+  InferredPolymorphicPropsWithRef,
   PolymorphicAs,
   PolymorphicComponentType,
+  PolymorphicPropsWithRef,
 } from '..';
 
 /**
@@ -33,10 +35,10 @@ export type PropsOf<
     | PolymorphicComponentType
     | InferredPolymorphicComponentType
     | ComponentType,
-> = C extends
-  | PolymorphicComponentType<infer P>
-  | InferredPolymorphicComponentType<infer P>
-  ? P
+> = C extends PolymorphicComponentType<infer P, infer T>
+  ? PolymorphicPropsWithRef<T, P>
+  : C extends InferredPolymorphicComponentType<infer P, infer T>
+  ? InferredPolymorphicPropsWithRef<T, P>
   : C extends ComponentType
   ? ComponentProps<C>
   : never;

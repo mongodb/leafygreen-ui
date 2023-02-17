@@ -295,7 +295,9 @@ describe('packages/menu/sub-menu', () => {
   });
 
   test('renders as `div` tag when the "as" prop is set', () => {
-    const { getByTestId } = renderSubMenuItem({ as: 'div' as PolymorphicAs });
+    const { getByTestId } = renderSubMenuItem({
+      as: 'div' as PolymorphicAs,
+    } as PropsOf<typeof SubMenu>);
     const subMenu = getByTestId('sub-menu-a');
     expect(subMenu.tagName.toLowerCase()).toBe('div');
   });
