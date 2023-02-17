@@ -9,6 +9,7 @@
 /* eslint-disable jest/no-disabled-tests */
 
 import React from 'react';
+import NextLink from 'next/link';
 
 import { WrapperProps } from '../utils/Polymorphic.testutils';
 
@@ -78,6 +79,9 @@ describe('Typescript types', () => {
       <ExamplePolymorphic as={WrapperWithRef} ref={spanRef} theme={'dark'} />
       {/* @ts-expect-error - href is not a prop on WrapperWithRef */}
       <ExamplePolymorphic as={WrapperWithRef} href=".design" />
+
+      <ExamplePolymorphic as={AnchorLikeWrapper} href=".design" />
+      <ExamplePolymorphic as={NextLink} href=".design" />
     </>;
   });
 
@@ -115,6 +119,9 @@ describe('Typescript types', () => {
       <ExamplePolymorphicWithRef as={WrapperWithRef} ref={spanRef} theme={'dark'} />
       {/* @ts-expect-error - href is not a prop on WrapperWithRef */}
       <ExamplePolymorphicWithRef as={WrapperWithRef} ref={spanRef} href=".design" />
+
+      <ExamplePolymorphicWithRef as={AnchorLikeWrapper} href=".design" />
+      <ExamplePolymorphicWithRef as={NextLink} href=".design" />
     </>;
   });
 
@@ -152,6 +159,9 @@ describe('Typescript types', () => {
       <AdvancedPolymorphic as={WrapperWithRef} ref={spanRef} theme={'dark'} />
       {/* @ts-expect-error - href is not a prop on WrapperWithRef */}
       <AdvancedPolymorphic as={WrapperWithRef} ref={spanRef} href=".design" />
+
+      <AdvancedPolymorphic as={AnchorLikeWrapper} href=".design" />
+      <AdvancedPolymorphic as={NextLink} href=".design" />
     </>;
   });
 
@@ -189,6 +199,9 @@ describe('Typescript types', () => {
       <AdvancedPolymorphicWithRef as={WrapperWithRef} ref={spanRef} theme={'dark'} />
       {/* @ts-expect-error - href is not a prop on WrapperWithRef */}
       <AdvancedPolymorphicWithRef as={WrapperWithRef} ref={spanRef} href=".design" />
+
+      <AdvancedPolymorphicWithRef as={AnchorLikeWrapper} href=".design" />
+      <AdvancedPolymorphicWithRef as={NextLink} href=".design" />
     </>;
   });
 
@@ -228,6 +241,7 @@ describe('Typescript types', () => {
       <ExampleInferred as={WrapperWithRef} href=".design" />
 
       <ExampleInferred as={AnchorLikeWrapper} href=".design" />
+      <ExampleInferred as={NextLink} href=".design" />
     </>;
   });
 
@@ -271,6 +285,7 @@ describe('Typescript types', () => {
       <ExampleInferredDefaultButton as={WrapperWithRef} href=".design" />
 
       <ExampleInferredDefaultButton as={AnchorLikeWrapper} href=".design" />
+      <ExampleInferredDefaultButton as={NextLink} href=".design" />
     </>;
   });
 });

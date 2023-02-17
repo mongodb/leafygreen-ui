@@ -13,6 +13,10 @@ import {
 } from '../Polymorphic/Polymorphic.types';
 import { PolymorphicRef } from '..';
 
+/**
+ * A mock of the @types/node URLObject.
+ * Used by libraries like Next
+ * */
 interface NodeUrlLike {
   auth?: any;
   hash?: any;
@@ -28,15 +32,21 @@ interface NodeUrlLike {
 }
 
 /** Either an anchor tag, or a component that accepts an `href` */
-type AnchorLike = 'a' | React.ComponentType<{ href: string | NodeUrlLike }>;
+export type AnchorLike =
+  | 'a'
+  | React.ComponentType<{ href: string }>
+  | React.ComponentType<{ href: NodeUrlLike }>;
 
 /**
  * Wrapping props in this type ensures that if `href` is defined,
  * the `as` type is set to `AnchorLike`, and all anchor props are accepted
  */
-type InferredAnchorLikeProps<T extends AnchorLike | undefined, P = {}> = {
-  href: string;
-  as?: T extends AnchorLike ? AnchorLike : 'a';
+export type InferredAnchorLikeProps<
+  T extends AnchorLike | undefined,
+  P = {},
+> = {
+  href: string | NodeUrlLike;
+  as?: T extends AnchorLike ? T : 'a';
 } & P;
 
 /**
