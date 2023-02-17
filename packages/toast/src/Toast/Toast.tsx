@@ -10,15 +10,16 @@ import Portal from '@leafygreen-ui/portal';
 import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
+import { ProgressBar } from '../ProgressBar';
+
 import {
   baseElementStyles,
   toastThemeStyles,
   toastTransitionStateStyles,
   variantIcons,
   variantStyles,
-} from './styles';
-import ProgressBar from './ToastProgressBar';
-import { ToastProps, Variant } from './types';
+} from './Toast.styles';
+import { ToastProps, Variant } from './Toast.types';
 
 function Toast({
   title,
