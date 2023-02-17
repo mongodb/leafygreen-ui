@@ -241,7 +241,8 @@ describe('packages/menu/menu-item', () => {
     });
 
     test('Accepts component as `as` prop', () => {
-      <MenuItem as={() => <></>} />;
+      const As = ({ children }: PropsWithChildren<{}>) => <>{children}</>;
+      render(<MenuItem as={As} />);
     });
   });
   /* eslint-enable jest/no-disabled-tests, jest/expect-expect */
@@ -300,7 +301,8 @@ describe('packages/menu/sub-menu', () => {
       <SubMenu as="p" />;
     });
     test('Accepts component as `as` prop', () => {
-      <SubMenu as={() => <></>} />;
+      const As = ({ children }: PropsWithChildren<{}>) => <>{children}</>;
+      render(<SubMenu as={As} />);
     });
   });
   /* eslint-enable jest/no-disabled-tests, jest/expect-expect */
