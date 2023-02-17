@@ -2,12 +2,12 @@ import React, { useRef } from 'react';
 import { Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import Portal from '@leafygreen-ui/portal';
-import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
 import { ProgressBar } from '../ProgressBar';
