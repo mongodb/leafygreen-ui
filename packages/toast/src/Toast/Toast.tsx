@@ -107,7 +107,6 @@ function Toast({
                   <XIcon />
                 </IconButton>
               )}
-
               {variant === Variant.Progress && (
                 <ProgressBar theme={theme} progress={progress} />
               )}
