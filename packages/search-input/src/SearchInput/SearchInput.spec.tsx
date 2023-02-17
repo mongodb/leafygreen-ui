@@ -7,10 +7,8 @@ import {
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import * as _LGTL from '@leafygreen-ui/testing-lib';
-
 import { renderSearchInput } from '../utils/SearchInput.testutils';
-import { SearchInput, SearchResult, Size } from '..';
+import { SearchInput, SearchResult } from '..';
 
 import { State } from './SearchInput.types';
 
@@ -19,9 +17,6 @@ const resultClickHandler = jest.fn();
 const defaultProps = {
   className: 'test-text-input-class',
   placeholder: 'This is some placeholder text',
-  onChange: jest.fn(),
-  onClear: jest.fn(),
-  onBlur: jest.fn(),
   children: [
     <SearchResult key="a" onClick={resultClickHandler}>
       Apple
@@ -75,37 +70,6 @@ describe('packages/search-input', () => {
       userEvent.type(inputEl, 'abc');
       expect(queryByRole('button')).toBeInTheDocument();
     });
-
-    describe('when the "size" is not "large"', () => {
-      // TODO: This type of check should be done with a visual regression test
-      // As written this test does not pass even if the font-size is inherited correctly
-      // eslint-disable-next-line jest/no-disabled-tests
-      test.skip('check if font-size is 13px', () => {
-        const { containerEl } = renderSearchInput({
-          value: 'test',
-        });
-
-        expect(containerEl).toHaveStyle({
-          fontSize: '13px',
-        });
-      });
-    });
-
-    describe('when the "size" is "large"', () => {
-      // TODO: This type of check should be done with a visual regression test
-      // As written this test does not pass even if the font-size is inherited correctly
-      // eslint-disable-next-line jest/no-disabled-tests
-      test.skip('check if font-size is 18px', () => {
-        const { containerEl } = renderSearchInput({
-          value: 'test',
-          size: Size.Large,
-        });
-
-        expect(containerEl).toHaveStyle({
-          fontSize: '18px',
-        });
-      });
-    });
   });
 
   describe('Basic Search Results rendering', () => {
@@ -149,15 +113,63 @@ describe('packages/search-input', () => {
       expect(menuContainerEl).not.toBeInTheDocument();
     });
 
+    describe('When disabled', () => {
+      test('searchbox is focusable when `disabled`', () => {
+        const { inputEl } = renderSearchInput({
+          disabled: true,
+          ...defaultProps,
+        });
+        userEvent.tab();
+        expect(inputEl).toHaveFocus();
+      });
+
+      test('searchbox is NOT clickable when `disabled`', () => {
+        const { searchBoxEl } = renderSearchInput({
+          disabled: true,
+          ...defaultProps,
+        });
+        userEvent.click(searchBoxEl);
+        expect(document.body).toHaveFocus();
+      });
+
+      test('clear button is not clickable', () => {
+        const changeHandler = jest.fn();
+        const { inputEl, queryByRole } = renderSearchInput({
+          ...defaultProps,
+          disabled: true,
+          value: 'abc',
+          onChange: changeHandler,
+        });
+
+        userEvent.click(queryByRole('button')!);
+        expect(inputEl).toHaveValue('abc');
+        expect(changeHandler).not.toHaveBeenCalled();
+      });
+
+      test('clear button does not focus on {tab}', () => {
+        const { queryByRole } = renderSearchInput({
+          ...defaultProps,
+          disabled: true,
+          value: 'abc',
+        });
+        const button = queryByRole('button');
+        userEvent.tab(); // could focus on input (but shouldn't)
+        expect(button).not.toHaveFocus();
+        userEvent.tab(); // check again in case input got focused
+        expect(button).not.toHaveFocus();
+      });
+    });
+
     describe('Any character key', () => {
       test('updates the input', () => {
+        const changeHandler = jest.fn();
         const { inputEl } = renderSearchInput({
-          onChange: defaultProps.onChange,
+          onChange: changeHandler,
         });
         expect(inputEl.value).toBe('');
         userEvent.type(inputEl, 'a');
         expect(inputEl.value).toBe('a');
-        expect(defaultProps.onChange).toHaveBeenCalledTimes(1);
+        expect(changeHandler).toHaveBeenCalledTimes(1);
       });
       test("opens the menu if it's closed", () => {
         const { getMenuElements, inputEl } = renderSearchInput({
@@ -172,19 +184,34 @@ describe('packages/search-input', () => {
 
     describe('Clear button', () => {
       test('clears any input', () => {
-        const { queryByRole, inputEl } = renderSearchInput();
+        const { queryByRole, inputEl } = renderSearchInput({
+          ...defaultProps,
+        });
         userEvent.type(inputEl, 'abc');
         userEvent.click(queryByRole('button')!);
         expect(inputEl).toHaveValue('');
-        expect(inputEl).toHaveFocus();
       });
 
       test('fires `onChange`', () => {
-        const props = { ...defaultProps };
-        const { queryByRole, inputEl } = renderSearchInput(props);
+        const changeHandler = jest.fn();
+        const { queryByRole, inputEl } = renderSearchInput({
+          ...defaultProps,
+          onChange: changeHandler,
+        });
         userEvent.type(inputEl, 'abc');
         userEvent.click(queryByRole('button')!);
-        expect(props.onChange).toHaveBeenCalled();
+        expect(changeHandler).toHaveBeenCalled();
+      });
+
+      test('focuses input, but does not open the menu', () => {
+        const { queryByRole, inputEl, getMenuElements } = renderSearchInput({
+          ...defaultProps,
+          value: 'abc',
+        });
+        userEvent.click(queryByRole('button')!);
+        const { menuContainerEl } = getMenuElements();
+        expect(inputEl).toHaveFocus();
+        expect(menuContainerEl).not.toBeInTheDocument();
       });
     });
 
@@ -244,39 +271,68 @@ describe('packages/search-input', () => {
         expect(inputEl).toHaveValue('abc');
       });
 
-      test('clicking a result fires its onClick handler', () => {
-        const { getMenuElements, inputEl } = renderSearchInput({
-          ...defaultProps,
+      describe('clicking a result', () => {
+        test('fires its onClick handler', () => {
+          const { getMenuElements, inputEl } = renderSearchInput({
+            ...defaultProps,
+          });
+          userEvent.click(inputEl);
+          const { resultsElements } = getMenuElements();
+
+          userEvent.click(resultsElements![0]);
+          expect(resultClickHandler).toHaveBeenCalledWith(
+            expect.objectContaining({
+              type: 'click',
+            }),
+          );
         });
-        userEvent.click(inputEl);
-        const { resultsElements } = getMenuElements();
 
-        userEvent.click(resultsElements![0]);
-        expect(resultClickHandler).toHaveBeenCalledWith(
-          expect.objectContaining({
-            type: 'click',
-          }),
-        );
-      });
+        test('fires the onSubmit handler', () => {
+          const submitHandler = jest.fn();
 
-      test('clicking a result fires the onSubmit handler', () => {
-        const submitHandler = jest.fn();
+          const { getMenuElements, inputEl, containerEl } = renderSearchInput({
+            ...defaultProps,
+            onSubmit: submitHandler,
+          });
+          userEvent.click(inputEl);
+          const { resultsElements } = getMenuElements();
 
-        const { getMenuElements, inputEl, containerEl } = renderSearchInput({
-          ...defaultProps,
-          onSubmit: submitHandler,
+          userEvent.click(resultsElements![0]);
+          expect(submitHandler).toHaveBeenCalledWith(
+            expect.objectContaining({
+              type: 'submit',
+            }),
+          );
+          const submitEvent = submitHandler.mock.calls[0][0]; // the first parameter of the first call
+          expect(submitEvent.target).toBe(containerEl);
         });
-        userEvent.click(inputEl);
-        const { resultsElements } = getMenuElements();
 
-        userEvent.click(resultsElements![0]);
-        expect(submitHandler).toHaveBeenCalledWith(
-          expect.objectContaining({
-            type: 'submit',
-          }),
-        );
-        const submitEvent = submitHandler.mock.calls[0][0]; // the first parameter of the first call
-        expect(submitEvent.target).toBe(containerEl);
+        test('fires the change handler', () => {
+          const changeHandler = jest.fn();
+          const { getMenuElements, inputEl } = renderSearchInput({
+            ...defaultProps,
+            onChange: changeHandler,
+          });
+          userEvent.click(inputEl);
+          const { resultsElements } = getMenuElements();
+          userEvent.click(resultsElements![0]);
+          expect(changeHandler).toHaveBeenCalledWith(
+            expect.objectContaining({
+              type: 'change',
+            }),
+          );
+        });
+
+        test('does not populate the input with the result text', () => {
+          // https://mongodb.slack.com/archives/G01500NFVPS/p1676059715272479
+          const { getMenuElements, inputEl } = renderSearchInput({
+            ...defaultProps,
+          });
+          userEvent.click(inputEl);
+          const { resultsElements } = getMenuElements();
+          userEvent.click(resultsElements![0]);
+          expect(inputEl.value).toBe('');
+        });
       });
     });
 
@@ -290,13 +346,20 @@ describe('packages/search-input', () => {
 
       describe('Tab key', () => {
         test('tab focuses the input', () => {
-          const { getMenuElements, inputEl } = renderSearchInput({
+          const { inputEl } = renderSearchInput({
             ...defaultProps,
           });
           userEvent.tab();
           expect(inputEl).toHaveFocus();
+        });
+
+        test('menu does NOT open on first focus', () => {
+          const { getMenuElements } = renderSearchInput({
+            ...defaultProps,
+          });
+          userEvent.tab();
           const { menuContainerEl } = getMenuElements();
-          expect(menuContainerEl).toBeInTheDocument();
+          expect(menuContainerEl).not.toBeInTheDocument();
         });
 
         test('focuses clear button', () => {
@@ -363,6 +426,15 @@ describe('packages/search-input', () => {
       });
 
       describe('Arrow keys', () => {
+        test('down arrow opens menu', () => {
+          const { inputEl, getMenuElements } = renderSearchInput({
+            ...defaultProps,
+          });
+          userEvent.type(inputEl, '{arrowdown}');
+          const { menuContainerEl } = getMenuElements();
+          expect(menuContainerEl).toBeInTheDocument();
+        });
+
         test('down arrow moves highlight down', () => {
           const { openMenu, inputEl, getByRole } = renderSearchInput({
             ...defaultProps,
@@ -387,6 +459,32 @@ describe('packages/search-input', () => {
           });
           expect(highlight).toBeInTheDocument();
           expect(highlight).toHaveTextContent('Banana');
+        });
+
+        test('up arrow cycles highlight to bottom', () => {
+          const { openMenu, inputEl, getByRole } = renderSearchInput({
+            ...defaultProps,
+          });
+          openMenu();
+          userEvent.type(inputEl, '{arrowup}');
+          const highlight = getByRole('option', {
+            selected: true,
+          });
+          expect(highlight).toBeInTheDocument();
+          expect(highlight).toHaveTextContent('Dragonfruit');
+        });
+
+        test('down arrow cycles highlight to top', () => {
+          const { openMenu, inputEl, getByRole } = renderSearchInput({
+            ...defaultProps,
+          });
+          openMenu();
+          userEvent.type(inputEl, '{arrowup}{arrowdown}');
+          const highlight = getByRole('option', {
+            selected: true,
+          });
+          expect(highlight).toBeInTheDocument();
+          expect(highlight).toHaveTextContent('Apple');
         });
 
         test('down arrow key opens menu when its closed', () => {

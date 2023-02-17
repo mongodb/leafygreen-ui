@@ -3,13 +3,11 @@ import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   focusRing,
-  fontFamilies,
   hoverRing,
   transitionDuration,
-  typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { Size } from './types';
+import { Size } from '../types';
 
 export const inputDisplayClassName = createUniqueClassName('radio-group');
 export const inputDisplayWrapperClassName =
@@ -22,37 +20,11 @@ export const containerMargin = css`
   }
 `;
 
-export const labelThemeStyles = {
-  [Theme.Light]: {
-    base: css`
-      color: ${palette.black};
-      font-family: ${fontFamilies.default};
-    `,
-
-    disabled: css`
-      cursor: not-allowed;
-      color: ${palette.gray.dark1};
-    `,
-  },
-
-  [Theme.Dark]: {
-    base: css`
-      color: ${palette.gray.light2};
-    `,
-
-    disabled: css`
-      cursor: not-allowed;
-      color: ${palette.gray.base};
-    `,
-  },
-};
-
 export const labelBaseStyle = css`
   display: flex;
   line-height: 20px;
   cursor: pointer;
   align-items: flex-start;
-  font-size: ${typeScales.body1.fontSize}px;
   font-weight: 700;
 `;
 

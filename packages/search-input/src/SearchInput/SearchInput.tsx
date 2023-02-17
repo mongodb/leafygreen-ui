@@ -1,5 +1,5 @@
 import React, {
-  ChangeEvent,
+  ChangeEventHandler,
   EventHandler,
   FocusEventHandler,
   FormEventHandler,
@@ -15,6 +15,7 @@ import isUndefined from 'lodash/isUndefined';
 
 import { cx } from '@leafygreen-ui/emotion';
 import {
+  useAutoScroll,
   useBackdropClick,
   useControlledValue,
   useDynamicRefs,
@@ -27,14 +28,16 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import {
+  createSyntheticEvent,
   getNodeTextContent,
   isComponentType,
   keyMap,
 } from '@leafygreen-ui/lib';
 
 import { SearchInputContextProvider } from '../SearchInputContext';
+import { SearchResultProps } from '../SearchResult';
+import { SearchResultGroupProps } from '../SearchResultGroup';
 import { SearchResultsMenu } from '../SearchResultsMenu';
-import { convertEvent } from '../utils/convertEvent';
 
 import {
   baseInputStyle,
@@ -97,18 +100,36 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     const inputRef = useForwardedRef(forwardRef, null);
     const clearButtonRef = useRef<HTMLButtonElement>(null);
     const resultRefs = useDynamicRefs<HTMLElement>({ prefix: 'result' });
-    const withTypeAhead = !isUndefined(children);
     const [focusedElement, trackFocusedElement] = useState<Element>();
+    const highlightedElementRef = resultRefs(`${highlightIndex}`);
+
+    const withTypeAhead = !isUndefined(children);
 
     const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
 
-    const setInputValue = useCallback(
-      (value: string) => {
+    /** Fires a change event to update the input value */
+    const changeInputValue = useCallback(
+      (newVal: string) => {
         if (inputRef.current) {
-          inputRef.current.value = value;
+          /**
+           * Change the element's value
+           * and then trigger the change event handler with a new synthetic event.
+           * This makes sure that programmatically changing the value affects
+           * both controlled & uncontrolled components
+           */
+          inputRef.current.value = newVal;
+          handleChange(
+            createSyntheticEvent(
+              new Event('change', {
+                cancelable: true,
+                bubbles: true,
+              }),
+              inputRef.current,
+            ),
+          );
         }
       },
-      [inputRef],
+      [handleChange, inputRef],
     );
 
     /**
@@ -129,18 +150,27 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
           const textValue = getNodeTextContent(child);
 
           const onElementClick: MouseEventHandler = e => {
-            setInputValue(textValue);
-            child.props.onClick?.(e);
+            child.props.onClick?.(e); // call the child's onClick handler
+
+            // Update the input value so the submit event has a target.value
+            changeInputValue(textValue);
 
             const wasClickedWithMouse = e.detail >= 1;
 
             if (wasClickedWithMouse && formRef.current && inputRef.current) {
-              // Selecting an option fires the `submit` event
-              // We only fire a new `submit` event if the element was clicked with the mouse,
-              // since the enter key also fires the `submit` event
-              formRef.current?.dispatchEvent(
-                new Event('submit', { cancelable: true, bubbles: true }),
-              );
+              /**
+               * Selecting an option should fire a a `submit` event,
+               * so users can provide a single `onSubmit` handler
+               * instead of providing individual `onClick` handlers for each result.
+               *
+               * We only fire a new `submit` event if the element was clicked with the mouse,
+               * since the `Enter` key also fires the `submit` event
+               */
+              const submitEvent = new Event('submit', {
+                cancelable: true,
+                bubbles: true,
+              });
+              formRef.current?.dispatchEvent(submitEvent);
             }
           };
 
@@ -149,9 +179,9 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
             id: `result-${index}`,
             key: `result-${index}`,
             ref: child.props.ref ?? resultRefs?.(`${index}`),
-            focused: index === highlightIndex,
+            highlighted: index === highlightIndex,
             onClick: onElementClick,
-          });
+          } as SearchResultProps);
         } else if (isComponentType(child, 'SearchResultGroup')) {
           const nestedChildren = React.Children.map(
             child.props.children,
@@ -162,7 +192,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
             return React.cloneElement(child, {
               ...child.props,
               children: nestedChildren,
-            });
+            } as SearchResultGroupProps);
           }
         }
       };
@@ -173,7 +203,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
         resultsCount,
         updatedChildren,
       };
-    }, [children, highlightIndex, inputRef, resultRefs, setInputValue]);
+    }, [children, highlightIndex, inputRef, resultRefs, changeInputValue]);
 
     const { updatedChildren, resultsCount } = useMemo(
       () => processChildren(),
@@ -212,11 +242,11 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       }
     };
 
-    const isElementInComponent = (el: Element | null) => {
-      return formRef.current?.contains(el) || menuRef.current?.contains(el);
-    };
-
     /** Event Handlers */
+
+    const handleInputChange: ChangeEventHandler<HTMLInputElement> = e => {
+      handleChange?.(e);
+    };
 
     const handleOpenMenuAction: EventHandler<SyntheticEvent<any>> = e => {
       if (disabled) {
@@ -227,41 +257,37 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       }
     };
 
-    const handleSearchBoxMousedown = (e: React.MouseEvent) => {
+    const handleSearchBoxMousedown: MouseEventHandler<HTMLDivElement> = e => {
       if (disabled) {
         // Prevent container from gaining focus by default
         e.preventDefault();
       }
     };
 
-    const handleSearchBoxClick: MouseEventHandler = handleOpenMenuAction;
-
-    // Fired whenever the wrapper gains focus,
-    // and any time the focus within changes
-    const handleSearchBoxFocus: FocusEventHandler = e => {
-      const target =
-        e.target !== clearButtonRef.current
-          ? inputRef.current ?? (e.target as HTMLElement)
-          : clearButtonRef.current;
-      target.focus();
-      trackFocusedElement(target);
+    const handleSearchBoxClick: MouseEventHandler<HTMLDivElement> = e => {
       handleOpenMenuAction(e);
     };
 
-    const handleClearButton: MouseEventHandler<HTMLButtonElement> = e => {
-      // We convert the click event into a Change event,
-      // Update the target & value,
-      // Then fire any `onChange` handler
-      const changeEvent = convertEvent<ChangeEvent<HTMLInputElement>>(e, {
-        type: 'change',
-        target: inputRef.current as EventTarget,
-      });
-      changeEvent.target.value = '';
-      handleChange(changeEvent);
+    // Fired whenever the wrapper gains focus,
+    // and any time the focus within changes
+    const handleSearchBoxFocus: FocusEventHandler<HTMLDivElement> = e => {
+      const eventTarget = e.target as HTMLElement;
+      const target =
+        eventTarget === clearButtonRef.current // If the click was on the button
+          ? clearButtonRef.current // keep it there
+          : inputRef.current ?? eventTarget; // otherwise move the focus to the input
+      target.focus();
+      trackFocusedElement(target);
+    };
+
+    const handleClearButtonClick: MouseEventHandler<HTMLButtonElement> = e => {
+      // Don't open the menu if it was the clear button that was clicked.
+      e.stopPropagation();
+      changeInputValue('');
       inputRef?.current?.focus();
     };
 
-    const handleKeyDown: KeyboardEventHandler = e => {
+    const handleSearchBoxKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
       const isFocusInMenu = menuRef.current?.contains(document.activeElement);
       const isFocusOnSearchBox = searchBoxRef.current?.contains(
         document.activeElement,
@@ -273,7 +299,6 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
         switch (e.keyCode) {
           case keyMap.Enter: {
             e.stopPropagation();
-            const highlightedElementRef = resultRefs(`${highlightIndex}`);
             highlightedElementRef?.current?.click();
             break;
           }
@@ -287,6 +312,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
           case keyMap.ArrowDown: {
             if (withTypeAhead) {
               inputRef.current?.focus();
+              openMenu();
               e.preventDefault(); // Stop page scroll
               updateHighlight('next');
             }
@@ -296,29 +322,40 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
           case keyMap.ArrowUp: {
             if (withTypeAhead) {
               inputRef.current?.focus();
+              openMenu();
               e.preventDefault(); // Stop page scroll
               updateHighlight('prev');
             }
             break;
           }
+
+          case keyMap.Tab: {
+            if (isOpen) {
+              closeMenu();
+            }
+            break;
+          }
+
+          default: {
+            if (withTypeAhead) {
+              openMenu();
+            }
+          }
         }
       }
     };
 
-    const handleBlur: FocusEventHandler = _ => {
-      if (!isElementInComponent(document.activeElement)) {
-        closeMenu();
-      }
-    };
-
-    const handleSubmit: FormEventHandler<HTMLFormElement> = e => {
+    const handleFormSubmit: FormEventHandler<HTMLFormElement> = e => {
       e.preventDefault(); // prevent page reload
+
       onSubmitProp?.(e);
       if (withTypeAhead) {
         closeMenu();
+        changeInputValue(''); // Clear the input
       }
     };
 
+    useAutoScroll(highlightedElementRef, menuRef, 12);
     useBackdropClick(closeMenu, [searchBoxRef, menuRef], isOpen);
 
     return (
@@ -332,8 +369,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
             role="search"
             ref={formRef}
             className={cx(formStyle, className)}
-            onSubmit={handleSubmit}
-            onBlur={handleBlur}
+            onSubmit={handleFormSubmit}
             {...rest}
           >
             {/* Disable eslint: onClick sets focus. Key events would already have focus */}
@@ -345,7 +381,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
               onMouseDown={handleSearchBoxMousedown}
               onClick={handleSearchBoxClick}
               onFocus={handleSearchBoxFocus}
-              onKeyDown={handleKeyDown}
+              onKeyDown={handleSearchBoxKeyDown}
               className={cx(
                 inputWrapperStyle,
                 inputWrapperSizeStyle[size],
@@ -372,18 +408,20 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
                 type="search"
                 className={cx(baseInputStyle, inputThemeStyle[theme])}
                 value={value}
-                onChange={handleChange}
+                onChange={handleInputChange}
                 placeholder={placeholder}
                 ref={inputRef}
-                disabled={disabled}
+                readOnly={disabled}
               />
               {value && (
                 <IconButton
                   ref={clearButtonRef}
                   type="button"
                   aria-label="Clear search"
-                  onClick={handleClearButton}
+                  onClick={handleClearButtonClick}
                   className={clearButtonSizeStyle[size]}
+                  tabIndex={disabled ? -1 : 0}
+                  disabled={disabled}
                 >
                   <XIcon />
                 </IconButton>

@@ -601,6 +601,7 @@ export function Combobox<M extends boolean>({
     }
   }, [inputValue, isOpen, prevValue, updateHighlightedOption]);
 
+  // TODO: Replace this with hooks/useAutoScroll
   // When the focused option changes, update the menu scroll if necessary
   useEffect(() => {
     if (highlightedOption) {
@@ -631,7 +632,7 @@ export function Combobox<M extends boolean>({
         const { value, displayName } = getNameAndValue(child.props);
 
         if (shouldOptionBeVisible(value)) {
-          const { className, glyph, disabled } = child.props;
+          const { className, glyph, disabled, ...rest } = child.props;
           const index = allOptions.findIndex(opt => opt.value === value);
 
           const isFocused = highlightedOption === value;
@@ -653,6 +654,7 @@ export function Combobox<M extends boolean>({
 
           return (
             <InternalComboboxOption
+              {...rest}
               value={value}
               displayName={displayName}
               isFocused={isFocused}
@@ -1011,10 +1013,7 @@ export function Combobox<M extends boolean>({
         }
 
         case keyMap.Enter: {
-          if (!isOpen) {
-            // If the menu is not open, enter should open the menu
-            openMenu();
-          } else if (
+          if (
             // Select the highlighted option iff
             // the menu is open,
             // we're focused on input element,

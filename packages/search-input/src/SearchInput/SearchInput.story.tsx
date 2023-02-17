@@ -6,9 +6,9 @@ import { kebabCase, startCase } from 'lodash';
 import { css } from '@leafygreen-ui/emotion';
 import {
   storybookArgTypes,
-  // @ts-ignore
   storybookExcludedControlParams,
 } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import { Body, H1 } from '@leafygreen-ui/typography';
 
 import { SearchInput, SearchResult, SearchResultGroup } from '..';
@@ -215,15 +215,25 @@ export const LiveSearch: ComponentStory<typeof SearchInput> = args => {
   const [currentPage, setPage] = useState<typeof data[0]>();
   const [searchResults, setSearchResults] = useState(data);
 
-  const handleChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
-    setSearchResults(data.filter(datum => datum.name.includes(target.value)));
+  const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
+    const { value } = e.target;
+    console.log('Storybook: handleChange', { value });
+    args.onChange?.(e);
+
+    setSearchResults(
+      data.filter(datum => datum.name.includes(kebabCase(value))),
+    );
   };
 
   const handleSelect: FormEventHandler<HTMLFormElement> = e => {
+    const { value } = (e.target as HTMLFormElement)[0] as HTMLInputElement;
+    args.onSelect?.(e);
+    console.log('Storybook: handleSelect', { value });
+
     setPage(
       data.find(
         /// @ts-ignore
-        item => kebabCase(item.name) === kebabCase(e.target?.elements[0].value),
+        item => kebabCase(item.name) === kebabCase(value),
       ),
     );
   };
@@ -241,13 +251,24 @@ export const LiveSearch: ComponentStory<typeof SearchInput> = args => {
         {...args}
       >
         {searchResults.map(item => (
-          <SearchResult key={item.name} description={item.description}>
+          <SearchResult
+            key={item.name}
+            description={item.description}
+            onClick={() => console.log('Storybook: Clicked', item.name)}
+          >
             {startCase(item.name)}
           </SearchResult>
         ))}
       </SearchInput>
       {currentPage && (
-        <div>
+        <div
+          className={css`
+            min-width: min-content;
+            margin-block: 20px;
+            padding: 20px;
+            outline: 1px solid ${palette.green.dark2};
+          `}
+        >
           <H1>{startCase(currentPage.name)}</H1>
           <Body>{currentPage.description}</Body>
         </div>
@@ -255,4 +276,8 @@ export const LiveSearch: ComponentStory<typeof SearchInput> = args => {
     </div>
   );
 };
-LiveSearch.argTypes = {};
+LiveSearch.argTypes = {
+  onChange: { action: 'Change' },
+  onSubmit: { action: 'Submit' },
+  onClick: { action: 'Click' },
+};

@@ -14,6 +14,7 @@ import { SearchResultGroupProps } from './SearchResultGroup.types';
 export const SearchResultGroup = ({
   children,
   label,
+  ...rest
 }: SearchResultGroupProps) => {
   const validatedChildren = validateChildren(children, [
     'SearchResult',
@@ -28,6 +29,7 @@ export const SearchResultGroup = ({
         aria-label={label}
         isInteractive={false}
         className={searchResultLabelWrapperStyle}
+        {...rest}
       >
         <Overline className={searchResultLabelStyle[theme]}>{label}</Overline>
       </InputOption>

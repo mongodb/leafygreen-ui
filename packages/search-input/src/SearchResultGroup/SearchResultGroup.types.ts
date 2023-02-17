@@ -1,6 +1,8 @@
-import { PropsWithChildren, ReactNode } from 'react';
+import { ReactNode } from 'react';
 
-export type SearchResultGroupProps = PropsWithChildren<{
+import { HTMLElementProps } from '@leafygreen-ui/lib';
+
+export interface SearchResultGroupProps extends HTMLElementProps<'div'> {
   /**
    * Title for the group of options
    */
@@ -10,4 +12,4 @@ export type SearchResultGroupProps = PropsWithChildren<{
    * Must be <SearchResult /> or <SearchResultGroup />
    */
   children: ReactNode;
-}>;
+}

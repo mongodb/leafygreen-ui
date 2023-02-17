@@ -1,5 +1,17 @@
 # @leafygreen-ui/hooks
 
+## 7.6.0
+
+### Minor Changes
+
+- ec2a3d66d: Creates `useAutoScroll` to automatically scroll a container
+
+## 7.5.0
+
+### Minor Changes
+
+- ffb99f417: Creates `useControlledValue` hook
+
 ## 7.4.0
 
 ### Minor Changes

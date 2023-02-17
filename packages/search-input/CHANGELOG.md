@@ -1,5 +1,29 @@
 # @leafygreen-ui/search-input
 
+## 2.0.0
+
+### Major Changes
+
+- ec2a3d66d: Adds typehead functionality. Developers can now provide `SearchResult` elements as children to display a menu of results. `SearchInput` fires a `change` event when search text changes, and a form `submit` event when a result is clicked, and whenever the `enter` key is pressed (note: the default `submit` event behavior is prevented). `SearchResult` elements also fire a `click` event when clicked
+
+### Patch Changes
+
+- Updated dependencies [0541bd776]
+- Updated dependencies [ec2a3d66d]
+- Updated dependencies [ec2a3d66d]
+- Updated dependencies [ec2a3d66d]
+  - @leafygreen-ui/lib@10.2.0
+  - @leafygreen-ui/hooks@7.6.0
+  - @leafygreen-ui/input-option@1.0.0
+
+## 1.0.4
+
+### Patch Changes
+
+- bf2fedf6d: Version bumps lib
+- Updated dependencies [bf2fedf6d]
+  - @leafygreen-ui/leafygreen-provider@3.1.1
+
 ## 1.0.3
 
 ### Patch Changes

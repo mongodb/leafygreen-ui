@@ -2,7 +2,6 @@ import React from 'react';
 
 import {
   storybookArgTypes,
-  // @ts-ignore
   storybookExcludedControlParams,
 } from '@leafygreen-ui/lib';
 
@@ -28,10 +27,10 @@ export default {
     disabled: {
       control: 'boolean',
     },
-    focused: {
+    highlighted: {
       control: 'boolean',
     },
-    active: {
+    selected: {
       control: 'boolean',
     },
     showWedge: {

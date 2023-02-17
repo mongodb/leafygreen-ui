@@ -43,7 +43,7 @@ export const SearchResult = Polymorphic<
      * if neither exist we set the label to `textContent`
      */
     const ariaLabel =
-      rest['aria-label'] ?? rest['aria-labelledby'] ? '' : textContent;
+      rest['aria-label'] ?? (rest['aria-labelledby'] ? '' : textContent);
 
     return (
       <InputOption
