@@ -53,6 +53,8 @@ export const baseToastStyle = css`
     text-underline-offset: 3px;
     text-decoration-thickness: 2px;
     border-radius: 4px;
+    color: inherit;
+
     &:hover,
     &:focus,
     &:focus-visible {
