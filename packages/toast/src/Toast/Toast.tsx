@@ -13,13 +13,21 @@ import { Body } from '@leafygreen-ui/typography';
 import { ProgressBar } from '../ProgressBar';
 
 import {
-  baseElementStyles,
+  baseIconStyle,
+  baseToastStyle,
+  bodyThemeStyle,
+  contentWrapperStyle,
+  dismissButtonStyle,
+  dismissButtonThemeStyle,
+  titleStyle,
+  titleThemeStyle,
   toastThemeStyles,
   toastTransitionStateStyles,
-  variantIcons,
-  variantStyles,
+  variantIconStyle,
+  // variantStyles,
 } from './Toast.styles';
 import { ToastProps, Variant } from './Toast.types';
+import { variantIcons } from './VariantIcon';
 
 function Toast({
   title,
@@ -37,8 +45,7 @@ function Toast({
   const dismissible = typeof close === 'function';
 
   const VariantIcon = variantIcons[variant];
-
-  const currentVariantStyles = variantStyles[variant][theme];
+  const iconThemeStyle = variantIconStyle[variant];
 
   return (
     <Portal>
@@ -59,31 +66,17 @@ function Toast({
             <div
               ref={nodeRef}
               className={cx(
-                baseElementStyles.toast,
+                baseToastStyle,
                 toastThemeStyles[theme],
-                currentVariantStyles.toast,
                 toastTransitionStateStyles[state],
                 className,
               )}
               {...rest}
             >
-              <div
-                className={cx(
-                  baseElementStyles.contentWrapper,
-                  currentVariantStyles.contentWrapper,
-                  {
-                    [css`
-                      padding-right: ${spacing[3] * 2}px;
-                    `]: dismissible,
-                  },
-                )}
-              >
+              <div className={cx(contentWrapperStyle)}>
                 <VariantIcon
                   aria-hidden
-                  className={cx(
-                    baseElementStyles.icon,
-                    currentVariantStyles.icon,
-                  )}
+                  className={cx(baseIconStyle, iconThemeStyle[theme])}
                   size={32}
                 />
 
@@ -91,24 +84,21 @@ function Toast({
                   {title && (
                     <Body
                       data-testid="toast-title"
-                      className={cx(
-                        currentVariantStyles.body,
-                        baseElementStyles.title,
-                      )}
+                      className={cx(titleStyle, titleThemeStyle[theme])}
                     >
                       {title}
                     </Body>
                   )}
 
-                  <Body className={cx(currentVariantStyles.body)}>{body}</Body>
+                  <Body className={cx(bodyThemeStyle[theme])}>{body}</Body>
                 </div>
               </div>
 
               {dismissible && (
                 <IconButton
                   className={cx(
-                    baseElementStyles.dismissButton,
-                    currentVariantStyles.dismissButton,
+                    dismissButtonStyle,
+                    dismissButtonThemeStyle[theme],
                   )}
                   aria-label="Close Message"
                   onClick={close}

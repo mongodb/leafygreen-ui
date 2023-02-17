@@ -1,11 +1,3 @@
-export type StyledElements =
-  | 'toast'
-  | 'body'
-  | 'icon'
-  | 'contentWrapper'
-  | 'dismissButton'
-  | 'title';
-
 const Variant = {
   Success: 'success',
   Note: 'note',
