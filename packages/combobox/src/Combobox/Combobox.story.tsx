@@ -26,7 +26,7 @@ export default StoryMeta({
   parameters: {
     default: 'Demo',
     controls: {
-      exclude: ['setError', 'filteredOptions', 'initialValue', 'value'],
+      exclude: ['as', 'filteredOptions', 'initialValue', 'setError', 'value'],
     },
   },
   argTypes: {
