@@ -15,7 +15,7 @@ import { PolymorphicRef } from '..';
 
 /**
  * A mock of the @types/node URLObject.
- * Used by libraries like Next
+ * Used by libraries like NextJS
  * */
 interface NodeUrlLike {
   auth?: any;
@@ -55,7 +55,11 @@ export type InferredAnchorLikeProps<
  * If `T` is an anchor, or undefined, then we explicitly add an `href`
  *
  * else if T is something else and href is defined, we force `as` to be 'a',
- * otherwise, href is `never`
+ * otherwise, href is `never`.
+ *
+ * Note: It's a known issue that passing a component with no props (`() => <></>`)
+ * as the `as` prop will be improperly flagged as `AnchorLike`.
+ * We have decided not to add additional type complexity to address this minor edge case.
  */
 export type InferredPolymorphicProps<
   T extends PolymorphicAs,
