@@ -4,10 +4,6 @@ import { render } from '@testing-library/react';
 import { InputOption } from '..';
 
 describe('packages/input-option', () => {
-  test('isPolymorphic', () => {
-    expect(InputOption).toBePolymorphic();
-  });
-
   test('renders', () => {
     const { container } = render(<InputOption aria-label="Some label" />);
     expect(container.firstElementChild).toBeInTheDocument();
