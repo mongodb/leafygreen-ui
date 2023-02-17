@@ -102,7 +102,7 @@ function Toast({
                   )}
                   aria-label="Close Message"
                   onClick={close}
-                  darkMode={darkMode}
+                  darkMode={!darkMode}
                 >
                   <XIcon />
                 </IconButton>

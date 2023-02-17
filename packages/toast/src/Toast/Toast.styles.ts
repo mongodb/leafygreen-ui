@@ -135,6 +135,13 @@ export const dismissButtonThemeStyle: Record<Theme, string> = {
   `,
   [Theme.Dark]: css`
     color: ${palette.gray.dark2};
+
+    &:hover,
+    &:focus-visible {
+      &::before {
+        background-color: ${palette.gray.light1};
+      }
+    }
   `,
 };
 
