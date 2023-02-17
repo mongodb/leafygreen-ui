@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
 import Toast from './Toast';
-import { ToastProps, Variant } from './types';
+import { ToastProps, Variant } from './Toast.types';
 
 function renderToast(props: ToastProps) {
   return render(<Toast {...props} />);

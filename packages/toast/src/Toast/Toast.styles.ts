@@ -17,7 +17,7 @@ import {
 } from '@leafygreen-ui/tokens';
 import { anchorClassName } from '@leafygreen-ui/typography';
 
-import { StyledElements, Variant } from './types';
+import { StyledElements, Variant } from './Toast.types';
 
 export const toastWidth = 400;
 
