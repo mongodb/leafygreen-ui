@@ -67,7 +67,7 @@ export const InternalComboboxOption = React.forwardRef<
         {...rest}
         as="li"
         ref={optionRef}
-        focused={isFocused}
+        highlighted={isFocused}
         disabled={disabled}
         aria-label={displayName}
         darkMode={darkMode}
