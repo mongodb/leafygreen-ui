@@ -948,12 +948,12 @@ export function Combobox<M extends boolean>({
 
   const handleClearButtonClick: MouseEventHandler<HTMLButtonElement> = e => {
     if (!disabled) {
+      // Prevents triggering the setOpen function called by clicking anywhere within the input wrapper.
+      e.stopPropagation();
       updateSelection(null);
       onClear?.(e);
       onFilter?.('');
-      if (!isOpen) {
-        openMenu();
-      }
+      setInputFocus();
     }
   };
 
