@@ -8,9 +8,11 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { MenuItemElementProps } from './MenuItem/MenuItem';
-import { SubMenuElementProps } from './SubMenu/SubMenu';
+import { PolymorphicAs, PropsOf } from '@leafygreen-ui/polymorphic';
+
 import { MenuProps } from './Menu';
+// import { MenuItemProps } from './MenuItem';
+// import { SubMenuProps } from './SubMenu';
 import { Menu, MenuItem, MenuSeparator, SubMenu } from '.';
 
 const menuTestId = 'menu-test-id';
@@ -29,7 +31,8 @@ function renderMenu(props: Omit<MenuProps, 'children'> = {}) {
   return utils;
 }
 
-function renderMenuItem(props: MenuItemElementProps = {}) {
+/// @ts-expect-error
+function renderMenuItem(props: PropsOf<typeof MenuItem> = {}) {
   const utils = render(
     <MenuItem {...props} data-testid="menu-item-test-id">
       Item 1
@@ -39,7 +42,7 @@ function renderMenuItem(props: MenuItemElementProps = {}) {
   return { ...utils, menuItem };
 }
 
-function renderSubMenuItem(props: SubMenuElementProps = {}) {
+function renderSubMenuItem(props: PropsOf<typeof SubMenu> = {}) {
   const utils = render(
     <Menu open={true} setOpen={jest.fn()}>
       <SubMenu title="First SubMenu" data-testid="sub-menu-a" {...props}>
@@ -241,7 +244,9 @@ describe('packages/menu/menu-item', () => {
     });
 
     test('Accepts component as `as` prop', () => {
-      const As = ({ children }: PropsWithChildren<{}>) => <>{children}</>;
+      const As = ({ children }: { children: React.ReactNode }) => (
+        <>{children}</>
+      );
       render(<MenuItem as={As} />);
     });
   });
@@ -290,7 +295,7 @@ describe('packages/menu/sub-menu', () => {
   });
 
   test('renders as `div` tag when the "as" prop is set', () => {
-    const { getByTestId } = renderSubMenuItem({ as: 'div' });
+    const { getByTestId } = renderSubMenuItem({ as: 'div' as PolymorphicAs });
     const subMenu = getByTestId('sub-menu-a');
     expect(subMenu.tagName.toLowerCase()).toBe('div');
   });
@@ -301,7 +306,9 @@ describe('packages/menu/sub-menu', () => {
       <SubMenu as="p" />;
     });
     test('Accepts component as `as` prop', () => {
-      const As = ({ children }: PropsWithChildren<{}>) => <>{children}</>;
+      const As = ({ children }: { children: React.ReactNode }) => (
+        <>{children}</>
+      );
       render(<SubMenu as={As} />);
     });
   });

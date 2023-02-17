@@ -11,25 +11,8 @@ import {
   PolymorphicAs,
   PropsToOmit,
 } from '../Polymorphic/Polymorphic.types';
+import { NodeUrlLike } from '../utils/Polymorphic.utils';
 import { PolymorphicRef } from '..';
-
-/**
- * A mock of the @types/node URLObject.
- * Used by libraries like NextJS
- * */
-interface NodeUrlLike {
-  auth?: any;
-  hash?: any;
-  host?: any;
-  hostname?: any;
-  href?: string | null | undefined;
-  pathname?: any;
-  protocol?: any;
-  search?: any;
-  slashes?: any;
-  port?: any;
-  query?: any;
-}
 
 /** Either an anchor tag, or a component that accepts an `href` */
 export type AnchorLike =

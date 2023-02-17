@@ -16,9 +16,8 @@ import { palette } from '@leafygreen-ui/palette';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 
 import { MenuContext } from '../MenuContext/MenuContext';
-import { MenuItemProps } from '../MenuItem/MenuItem.types';
 import MenuSeparator from '../MenuSeparator/MenuSeparator';
-import { SubMenu } from '../SubMenu/SubMenu';
+import { SubMenu, type SubMenuProps } from '../SubMenu/';
 import { ElementOf } from '../types';
 
 import { MenuProps } from './Menu.types';
@@ -166,7 +165,7 @@ export function Menu({
           }
 
           const isCurrentSubMenu =
-            (currentSubMenu?.props as MenuItemProps).title === title;
+            (currentSubMenu?.props as SubMenuProps).title === title;
 
           return React.cloneElement(child, {
             ref: setRef,

@@ -16,4 +16,7 @@ export {
   usePolymorphic,
   usePolymorphicRef,
 } from './Polymorphic';
-export { type PropsOf } from './utils/Polymorphic.utils';
+export {
+  type LoosePolymorphicProps,
+  type PropsOf,
+} from './utils/Polymorphic.utils';

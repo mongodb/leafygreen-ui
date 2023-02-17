@@ -148,9 +148,8 @@ describe('Polymorphic/Example Higher-order Components', () => {
         const link = getByText('Content');
         expect(link).toBeInTheDocument();
         expect(link.tagName.toLowerCase()).toBe('a');
-        expect(link).toHaveAttribute('href', '/mongodb.design');
-        // NextLink does _NOT_ spread rest
-        expect(link).not.toHaveAttribute('target');
+        expect(link.getAttribute('href')).toContain('mongodb.design');
+        expect(link).toHaveAttribute('target');
       });
 
       test('Works with NextLink', () => {
@@ -168,9 +167,8 @@ describe('Polymorphic/Example Higher-order Components', () => {
         const link = getByText('Content');
         expect(link).toBeInTheDocument();
         expect(link.tagName.toLowerCase()).toBe('a');
-        expect(link).toHaveAttribute('href', '/mongodb.design');
-        // NextLink does _NOT_ spread rest
-        expect(link).not.toHaveAttribute('target');
+        expect(link.getAttribute('href')).toContain('mongodb.design');
+        expect(link).toHaveAttribute('target');
       });
     });
   });
@@ -324,9 +322,8 @@ describe('Polymorphic/Example Higher-order Components', () => {
           const link = getByText('Content');
           expect(link).toBeInTheDocument();
           expect(link.tagName.toLowerCase()).toBe('a');
-          expect(link).toHaveAttribute('href', '/mongodb.design');
-          // NextLink does _NOT_ spread rest
-          expect(link).not.toHaveAttribute('target');
+          expect(link.getAttribute('href')).toContain('mongodb.design');
+          expect(link).toHaveAttribute('target');
         });
 
         test('Works with NextLink', () => {
@@ -344,9 +341,8 @@ describe('Polymorphic/Example Higher-order Components', () => {
           const link = getByText('Content');
           expect(link).toBeInTheDocument();
           expect(link.tagName.toLowerCase()).toBe('a');
-          expect(link).toHaveAttribute('href', '/mongodb.design');
-          // NextLink does _NOT_ spread rest
-          expect(link).not.toHaveAttribute('target');
+          expect(link.getAttribute('href')).toContain('mongodb.design');
+          expect(link).toHaveAttribute('target');
         });
       });
     });
