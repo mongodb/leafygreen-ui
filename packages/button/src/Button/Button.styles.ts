@@ -34,7 +34,8 @@ const baseButtonStyles = css`
   font-family: ${fontFamilies.default};
   border-radius: 6px;
 
-  &:focus {
+  &:focus,
+  &:focus-visible {
     outline: none;
   }
 
@@ -52,6 +53,11 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       border-color: ${palette.gray.base};
       color: ${palette.black};
 
+      // needed to override team specific global styles
+      &:focus {
+        color: ${palette.black};
+      }
+
       &:hover,
       &:active {
         color: ${palette.black};
@@ -64,6 +70,10 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       background-color: ${palette.green.dark2};
       border-color: ${palette.green.dark2};
       color: ${palette.white};
+
+      &:focus {
+        color: ${palette.white};
+      }
 
       &:hover,
       &:active {
@@ -79,6 +89,10 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       border-color: ${palette.green.dark2};
       color: ${palette.green.dark2};
 
+      &:focus {
+        color: ${palette.green.dark2};
+      }
+
       &:hover,
       &:active {
         color: ${palette.green.dark2};
@@ -91,6 +105,10 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       background-color: ${palette.red.base};
       border-color: ${palette.red.base};
       color: ${palette.white};
+
+      &:focus {
+        color: ${palette.white};
+      }
 
       &:hover,
       &:active {
@@ -106,6 +124,10 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       border-color: ${palette.red.light1};
       color: ${palette.red.base};
 
+      &:focus {
+        color: ${palette.red.base};
+      }
+
       &:hover,
       &:active {
         color: ${palette.red.dark2};
@@ -119,6 +141,10 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       background-color: ${palette.green.base};
       border-color: ${palette.green.dark2};
       color: ${palette.green.dark3};
+
+      &:focus {
+        color: ${palette.green.dark3};
+      }
 
       &:hover,
       &:active {
@@ -219,6 +245,10 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       background-color: ${palette.green.base};
       border-color: ${palette.green.dark2};
       color: ${palette.green.dark3};
+
+      &:focus {
+        color: ${palette.green.dark3};
+      }
 
       &:hover,
       &:active {
