@@ -31,7 +31,6 @@ function renderMenu(props: Omit<MenuProps, 'children'> = {}) {
   return utils;
 }
 
-/// @ts-expect-error
 function renderMenuItem(props: PropsOf<typeof MenuItem> = {}) {
   const utils = render(
     <MenuItem {...props} data-testid="menu-item-test-id">

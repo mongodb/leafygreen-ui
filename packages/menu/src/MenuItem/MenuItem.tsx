@@ -40,7 +40,7 @@ const menuItemContainerClassName = createUniqueClassName('menu-item-container');
 export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
   (
     {
-      as,
+      as = 'button' as PolymorphicAs,
       disabled = false,
       active = false,
       size = Size.Default,
