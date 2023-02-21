@@ -48,6 +48,49 @@ describe('Typescript types', () => {
   const spanRef: React.MutableRefObject<HTMLSpanElement | null> = {current: null}
 
 
+  // Make sure our type tests actually pass on the base components
+  test.skip('Control', () => {
+    <>
+      <div />
+      <div>some content</div>
+      <div />
+      <div ref={divRef} />
+      <div ref={divRef}>content</div>
+      <div key="some-key" />
+      {/* @ts-expect-error - Must pass the correct ref type */}
+      <div ref={anchorRef} />
+      {/* @ts-expect-error href is not allowed on explicit div */}
+      <div href="mongodb.design" />
+      {/* @ts-expect-error target is not allowed on explicit div */}
+      <div target="_blank" />
+      {/* @ts-expect-error - href not allowed on strict polymorphic */}
+      <div href="mongodb.design" />
+
+      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+      <a>content</a>
+      <a href="mongodb.design">content</a>
+      <a href="mongodb.design" ref={anchorRef} >content</a>
+      <a href="mongodb.design">content</a>
+
+      <input />
+
+      <WrapperWithRef />
+      <WrapperWithRef ref={spanRef} />
+      <WrapperWithRef ref={spanRef} darkMode={true} />
+      {/* TODO: ts-expect-error - Must pass the correct ref type */}
+      <WrapperWithRef ref={divRef} />
+      {/* @ts-expect-error - Theme is not a prop on WrapperWithRef */}
+      <WrapperWithRef ref={spanRef} theme={'dark'} />
+      {/* @ts-expect-error - href is not a prop on WrapperWithRef */}
+      <WrapperWithRef href=".design" />
+      {/* @ts-expect-error href is not valid on buttonWrapper */}
+      <ButtonLikeWrapper href=".design" />
+
+      <AnchorLikeWrapper href=".design" />
+      <NextLink href=".design" />
+    </>
+  })
+
   test.skip('ExamplePolymorphic', () => {
     <>
       <ExamplePolymorphic />
@@ -249,7 +292,6 @@ describe('Typescript types', () => {
       <ExampleInferred as="a" href="mongodb.design" />
       <ExampleInferred as="a" href="mongodb.design" ref={anchorRef} />
       <ExampleInferred as="a" href="mongodb.design">content</ExampleInferred>
-
 
       <ExampleInferred as="input" />
 
