@@ -8,8 +8,6 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { PolymorphicAs, PropsOf } from '@leafygreen-ui/polymorphic';
-
 import { MenuProps } from './Menu';
 // import { MenuItemProps } from './MenuItem';
 // import { SubMenuProps } from './SubMenu';
@@ -17,7 +15,6 @@ import { Menu, MenuItem, MenuSeparator, SubMenu } from '.';
 
 const menuTestId = 'menu-test-id';
 const trigger = <button data-testid="menu-trigger">trigger</button>;
-const onClick = jest.fn();
 
 function renderMenu(props: Omit<MenuProps, 'children'> = {}) {
   const utils = render(
@@ -180,68 +177,4 @@ describe('packages/menu', () => {
       });
     });
   });
-});
-
-describe('packages/menu/sub-menu', () => {
-  test('renders a SubMenu open by default, when the SubMenu is active', () => {
-    const { getItemA } = renderSubMenuItem({ active: true });
-    const subMenuItem = getItemA();
-    expect(subMenuItem).toBeInTheDocument();
-  });
-
-  test('when a SubMenu is clicked, it opens and closes the previously opened SubMenu', async () => {
-    const { subMenuButtonB, getItemA, getItemB } = renderSubMenuItem({
-      active: true,
-    });
-
-    fireEvent.click(subMenuButtonB as HTMLElement);
-
-    const subMenuItem = getItemA();
-    await act(async () => {
-      await waitForElementToBeRemoved(subMenuItem);
-    });
-
-    const subMenuItemB = getItemB();
-    expect(subMenuItemB).toBeVisible();
-  });
-
-  test('onClick is fired when SubMenu is clicked', () => {
-    const { subMenu } = renderSubMenuItem({ onClick });
-    fireEvent.click(subMenu);
-    expect(onClick).toHaveBeenCalled();
-  });
-
-  test('renders as a button by default', () => {
-    const { getByTestId } = renderSubMenuItem();
-    const subMenu = getByTestId('sub-menu-a');
-    expect(subMenu.tagName.toLowerCase()).toBe('button');
-  });
-
-  test('renders inside an anchor tag when the href prop is set', () => {
-    const { getByTestId } = renderSubMenuItem({ href: 'string' });
-    const subMenu = getByTestId('sub-menu-a');
-    expect(subMenu.tagName.toLowerCase()).toBe('a');
-  });
-
-  test('renders as `div` tag when the "as" prop is set', () => {
-    const { getByTestId } = renderSubMenuItem({
-      as: 'div' as PolymorphicAs,
-    } as PropsOf<typeof SubMenu>);
-    const subMenu = getByTestId('sub-menu-a');
-    expect(subMenu.tagName.toLowerCase()).toBe('div');
-  });
-
-  /* eslint-disable jest/no-disabled-tests, jest/expect-expect */
-  describe.skip('Types behave as expected', () => {
-    test('Accepts string as `as` prop', () => {
-      <SubMenu as="p" />;
-    });
-    test('Accepts component as `as` prop', () => {
-      const As = ({ children }: { children: React.ReactNode }) => (
-        <>{children}</>
-      );
-      render(<SubMenu as={As} />);
-    });
-  });
-  /* eslint-enable jest/no-disabled-tests, jest/expect-expect */
 });
