@@ -72,7 +72,6 @@ describe('packages/menu/sub-menu', () => {
     );
     const subMenu = getByTestId('sub-menu-a');
     expect(subMenu.tagName.toLowerCase()).toBe('button');
-    const subMenu = getByTestId('sub-menu-a');
   });
 
   test('renders inside an anchor tag when the href prop is set', () => {

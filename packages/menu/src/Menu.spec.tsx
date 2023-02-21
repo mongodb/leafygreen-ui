@@ -9,9 +9,7 @@ import {
 import userEvent from '@testing-library/user-event';
 
 import { MenuProps } from './Menu';
-// import { MenuItemProps } from './MenuItem';
-// import { SubMenuProps } from './SubMenu';
-import { Menu, MenuItem, MenuSeparator, SubMenu } from '.';
+import { Menu, MenuItem, MenuSeparator } from '.';
 
 const menuTestId = 'menu-test-id';
 const trigger = <button data-testid="menu-trigger">trigger</button>;
@@ -25,37 +23,6 @@ function renderMenu(props: Omit<MenuProps, 'children'> = {}) {
     </Menu>,
   );
   return utils;
-}
-
-function renderSubMenuItem(props: PropsOf<typeof SubMenu> = {}) {
-  const utils = render(
-    <Menu open={true} setOpen={jest.fn()}>
-      <SubMenu title="First SubMenu" data-testid="sub-menu-a" {...props}>
-        <MenuItem data-testid="sub-menu-item-a">SubMenu Item One</MenuItem>
-      </SubMenu>
-      <SubMenu title="Second SubMenu" data-testid="sub-menu-b">
-        <MenuItem data-testid="sub-menu-item-b">SubMenu Item Two</MenuItem>
-      </SubMenu>
-    </Menu>,
-  );
-  const subMenu = utils.getByTestId('sub-menu-a');
-  const subMenuB = utils.getByTestId('sub-menu-b');
-  const [subMenuButtonA, subMenuButtonB] = utils.getAllByTestId(
-    'lg-sub-menu-icon-button',
-  );
-
-  const getItemA = () => utils.getByTestId('sub-menu-item-a');
-  const getItemB = () => utils.getByTestId('sub-menu-item-b');
-
-  return {
-    subMenu,
-    subMenuB,
-    subMenuButtonA,
-    subMenuButtonB,
-    getItemA,
-    getItemB,
-    ...utils,
-  };
 }
 
 describe('packages/menu', () => {

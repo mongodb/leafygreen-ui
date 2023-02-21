@@ -14,21 +14,25 @@ describe('packages/menu/menu-item', () => {
     });
 
     test('anchor when href is supplied', () => {
-      const utils = render(
+      const { getByTestId } = render(
         <MenuItem data-testid="menu-item" href="string">
           Example 2
         </MenuItem>,
       );
-      expect(utils.getByRole('menuitem').tagName.toLowerCase()).toBe('a');
+      const menuItem = getByTestId('menu-item');
+
+      expect(menuItem.tagName.toLowerCase()).toBe('a');
     });
 
     test('div when "as" is supplied', () => {
-      const utils = render(
+      const { getByTestId } = render(
         <MenuItem data-testid="menu-item" as="div">
           Test Content
         </MenuItem>,
       );
-      expect(utils.getByRole('menuitem').tagName.toLowerCase()).toBe('div');
+      const menuItem = getByTestId('menu-item');
+
+      expect(menuItem.tagName.toLowerCase()).toBe('div');
     });
 
     test('fires onClick callback when clicked', () => {
@@ -44,7 +48,7 @@ describe('packages/menu/menu-item', () => {
 
     test(`renders className in the MenuItem container's classList`, () => {
       const { getByTestId } = render(
-        <MenuItem className="menu-item-class-name" />,
+        <MenuItem data-testid="menu-item" className="menu-item-class-name" />,
       );
       const menuItem = getByTestId('menu-item');
       expect(menuItem.classList.contains('menu-item-class-name')).toBe(true);
@@ -58,7 +62,7 @@ describe('packages/menu/menu-item', () => {
 
     test('renders inside of an `a` instead of a `button` tag, when `href` prop is supplied', () => {
       const { getByTestId } = render(
-        <MenuItem href="https://mongodb.design" />,
+        <MenuItem href="https://mongodb.design" data-testid="menu-item" />,
       );
       const menuItem = getByTestId('menu-item');
       expect(menuItem.tagName.toLowerCase()).toBe('a');
@@ -71,6 +75,7 @@ describe('packages/menu/menu-item', () => {
           href="https://mongodb.design"
           target="_blank"
           rel="help"
+          data-testid="menu-item"
         />,
       );
       const menuItem = getByTestId('menu-item');
