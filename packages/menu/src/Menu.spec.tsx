@@ -16,7 +16,6 @@ import { MenuProps } from './Menu';
 import { Menu, MenuItem, MenuSeparator, SubMenu } from '.';
 
 const menuTestId = 'menu-test-id';
-const className = 'menu-item-class-name';
 const trigger = <button data-testid="menu-trigger">trigger</button>;
 const onClick = jest.fn();
 
@@ -29,16 +28,6 @@ function renderMenu(props: Omit<MenuProps, 'children'> = {}) {
     </Menu>,
   );
   return utils;
-}
-
-function renderMenuItem(props: PropsOf<typeof MenuItem> = {}) {
-  const utils = render(
-    <MenuItem {...props} data-testid="menu-item-test-id">
-      Item 1
-    </MenuItem>,
-  );
-  const menuItem = utils.getByTestId('menu-item-test-id');
-  return { ...utils, menuItem };
 }
 
 function renderSubMenuItem(props: PropsOf<typeof SubMenu> = {}) {
@@ -191,65 +180,6 @@ describe('packages/menu', () => {
       });
     });
   });
-});
-
-describe('packages/menu/menu-item', () => {
-  test('fires onClick callback when clicked', () => {
-    const { menuItem } = renderMenuItem({ onClick });
-    fireEvent.click(menuItem);
-    expect(onClick).toHaveBeenCalledTimes(1);
-  });
-
-  test(`renders "${className}" in the MenuItem container's classList`, () => {
-    const { menuItem } = renderMenuItem({ className });
-    expect(menuItem.classList.contains(className)).toBe(true);
-  });
-
-  test('renders MenuItem inside button tag by default', () => {
-    const { menuItem } = renderMenuItem();
-    expect(menuItem.tagName.toLowerCase()).toBe('button');
-  });
-
-  test('renders inside of an `a` instead of a `button` tag, when `href` prop is supplied', () => {
-    const { menuItem } = renderMenuItem({ href: 'https://mongodb.design' });
-    expect(menuItem.tagName.toLowerCase()).toBe('a');
-  });
-
-  test('renders with correct target and rel values when set', () => {
-    const { menuItem } = renderMenuItem({
-      href: 'https://mongodb.design',
-      target: '_blank',
-      rel: 'help',
-    });
-
-    expect((menuItem as HTMLAnchorElement).target).toBe('_blank');
-    expect((menuItem as HTMLAnchorElement).rel).toBe('help');
-  });
-
-  test('renders as `div` tag when the "as" prop is set', () => {
-    const { menuItem } = renderMenuItem({ as: 'div' });
-    expect(menuItem.tagName.toLowerCase()).toBe('div');
-  });
-
-  test('has the `aria-current` attribute when active', () => {
-    const { menuItem } = renderMenuItem({ active: true });
-    expect(menuItem).toHaveAttribute('aria-current', 'true');
-  });
-
-  /* eslint-disable jest/no-disabled-tests, jest/expect-expect */
-  describe.skip('Types behave as expected', () => {
-    test('Accepts string as `as` prop', () => {
-      <MenuItem as="p" />;
-    });
-
-    test('Accepts component as `as` prop', () => {
-      const As = ({ children }: { children: React.ReactNode }) => (
-        <>{children}</>
-      );
-      render(<MenuItem as={As} />);
-    });
-  });
-  /* eslint-enable jest/no-disabled-tests, jest/expect-expect */
 });
 
 describe('packages/menu/sub-menu', () => {
