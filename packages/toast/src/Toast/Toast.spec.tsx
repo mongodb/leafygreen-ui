@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
 import Toast from './Toast';
@@ -14,7 +15,7 @@ describe('packages/toast', () => {
     test('does not have basic accessibility issues', async () => {
       const { container } = renderToast({
         open: true,
-        body: 'hello world',
+        title: 'hello world',
         variant: Variant.Success,
       });
       const results = await axe(container);
@@ -22,10 +23,10 @@ describe('packages/toast', () => {
     });
   });
 
-  describe(`when 'open' prop is`, () => {
+  describe(`'open' prop`, () => {
     test(`undefined, Toast doesn't render`, () => {
       const { queryByRole } = renderToast({
-        body: 'hello world',
+        title: 'hello world',
         variant: Variant.Success,
       });
 
@@ -36,7 +37,7 @@ describe('packages/toast', () => {
 
     test(`false, Toast doesn't render`, () => {
       const { queryByRole } = renderToast({
-        body: 'hello world',
+        title: 'hello world',
         variant: Variant.Success,
         open: false,
       });
@@ -48,7 +49,7 @@ describe('packages/toast', () => {
 
     test('true, Toast is visible', () => {
       const { queryByRole } = renderToast({
-        body: 'hello world',
+        title: 'hello world',
         variant: Variant.Success,
         open: true,
       });
@@ -59,11 +60,25 @@ describe('packages/toast', () => {
     });
   });
 
-  describe(`when 'close' prop is`, () => {
-    test('undefined, Modal is closed', () => {
+  describe(`'dismissible' prop`, () => {
+    test('when `true`, renders the close button', () => {
       const { queryByRole } = renderToast({
         open: true,
-        body: 'hello world',
+        title: 'hello world',
+        variant: Variant.Success,
+        dismissible: true,
+      });
+      const closeButton = queryByRole('button');
+      expect(closeButton).toBeInTheDocument();
+      expect(closeButton).toBeVisible();
+    });
+  });
+
+  describe(`'onClose' prop`, () => {
+    test('when undefined, Toast is closed', () => {
+      const { queryByRole } = renderToast({
+        open: true,
+        title: 'hello world',
         variant: Variant.Success,
       });
 
@@ -71,24 +86,33 @@ describe('packages/toast', () => {
       expect(toast).not.toBeInTheDocument();
     });
 
-    test('a function, Modal is closed', () => {
+    test('does not render close button if `dismissible` is not set', () => {
       const mockFn = jest.fn();
       const { queryByRole } = renderToast({
         open: true,
-        body: 'hello world',
+        title: 'hello world',
         variant: Variant.Success,
-        close: mockFn,
+        onClose: mockFn,
+      });
+      const closeButton = queryByRole('button');
+      expect(closeButton).not.toBeInTheDocument();
+    });
+
+    test('when a function, Toast is closed', () => {
+      const mockFn = jest.fn();
+      const { queryByRole } = renderToast({
+        open: true,
+        title: 'hello world',
+        variant: Variant.Success,
+        dismissible: true,
+        onClose: mockFn,
       });
 
       const closeButton = queryByRole('button');
+      expect(closeButton).toBeInTheDocument();
       expect(closeButton).toBeVisible();
 
-      if (!closeButton) {
-        // Prevents TS from seeing closeButton as Element | null when passed to click method below.
-        throw new ReferenceError('`closeButton` is not defined.');
-      }
-
-      fireEvent.click(closeButton);
+      userEvent.click(closeButton!);
 
       expect(mockFn.mock.instances.length).toBe(1);
     });
@@ -98,7 +122,7 @@ describe('packages/toast', () => {
     test(`when 'progress' is undefined`, () => {
       const { queryByRole } = renderToast({
         open: true,
-        body: 'hello world',
+        title: 'hello world',
         variant: Variant.Progress,
       });
 
@@ -109,7 +133,7 @@ describe('packages/toast', () => {
     test(`when 'progress' is '0'`, () => {
       const { queryByRole } = renderToast({
         open: true,
-        body: 'hello world',
+        title: 'hello world',
         variant: Variant.Progress,
         progress: 0,
       });
@@ -121,7 +145,7 @@ describe('packages/toast', () => {
     test(`when 'progress' is '0.5'`, () => {
       const { queryByRole } = renderToast({
         open: true,
-        body: 'hello world',
+        title: 'hello world',
         variant: Variant.Progress,
         progress: 0,
       });
@@ -135,7 +159,7 @@ describe('packages/toast', () => {
     test(`when 'progress' is undefined`, () => {
       const { queryByRole } = renderToast({
         open: true,
-        body: 'hello world',
+        title: 'hello world',
         variant: Variant.Success,
       });
 
@@ -146,7 +170,7 @@ describe('packages/toast', () => {
     test(`when 'progress' is '0'`, () => {
       const { queryByRole } = renderToast({
         open: true,
-        body: 'hello world',
+        title: 'hello world',
         variant: Variant.Success,
         progress: 0,
       });
@@ -158,7 +182,7 @@ describe('packages/toast', () => {
     test(`when 'progress' is '0.5'`, () => {
       const { queryByRole } = renderToast({
         open: true,
-        body: 'hello world',
+        title: 'hello world',
         variant: Variant.Success,
         progress: 0,
       });
@@ -182,7 +206,7 @@ describe('packages/toast', () => {
       variant => {
         const { getByLabelText } = renderToast({
           open: true,
-          body: 'hello world',
+          title: 'hello world',
           variant,
         });
 
@@ -191,70 +215,74 @@ describe('packages/toast', () => {
     );
   });
 
-  describe(`when 'title' prop is`, () => {
-    test('undefined, the title element does not render', () => {
+  describe(`'description' prop`, () => {
+    test('undefined, the description element does not render', () => {
       const { queryByTestId } = renderToast({
         open: true,
-        body: 'hello world',
+        title: 'hello world',
         variant: Variant.Success,
       });
 
-      const body = queryByTestId('toast-title');
-      expect(body).not.toBeInTheDocument();
+      const description = queryByTestId('toast-description');
+      expect(description).not.toBeInTheDocument();
     });
 
     test('a string, the title element renders', () => {
-      const titleText = 'this is the title';
-      const { queryByText } = renderToast({
+      const descriptionText = 'this is the description';
+      const { queryByTestId } = renderToast({
         open: true,
-        body: 'hello world',
+        title: 'hello world',
+        description: descriptionText,
+        variant: Variant.Success,
+      });
+
+      const description = queryByTestId('toast-description');
+      expect(description).toBeInTheDocument();
+      expect(description).toHaveTextContent(descriptionText);
+    });
+
+    test('a JSX element, the title element renders', () => {
+      const descriptionText = 'this is the description';
+      const descriptionElement = <span>{descriptionText}</span>;
+      const { queryByTestId } = renderToast({
+        open: true,
+        title: 'hello world',
+        description: descriptionElement,
+        variant: Variant.Success,
+      });
+
+      const description = queryByTestId('toast-description');
+      expect(description).toBeInTheDocument();
+      expect(description).toHaveTextContent(descriptionText);
+    });
+  });
+
+  describe(`'title'`, () => {
+    test('a string, the title element renders', () => {
+      const titleText = 'this is the title';
+      const { queryByTestId } = renderToast({
+        open: true,
         title: titleText,
         variant: Variant.Success,
       });
 
-      const body = queryByText(titleText);
-      expect(body).toBeVisible();
+      const title = queryByTestId('toast-title');
+      expect(title).toBeInTheDocument();
+      expect(title).toHaveTextContent(titleText);
     });
 
     test('a JSX element, the title element renders', () => {
       const titleText = 'this is the title';
       const titleElement = <span>{titleText}</span>;
-      const { queryByText } = renderToast({
+      const { queryByTestId } = renderToast({
         open: true,
-        body: 'hello world',
         title: titleElement,
         variant: Variant.Success,
       });
 
-      const titleSpan = queryByText(titleText);
-      expect(titleSpan).toBeVisible();
-    });
-  });
-
-  describe(`when 'body' prop is`, () => {
-    test('a string, the title element renders', () => {
-      const bodyText = 'this is the title';
-      const { queryByText } = renderToast({
-        open: true,
-        body: bodyText,
-        variant: Variant.Success,
-      });
-
-      const body = queryByText(bodyText);
-      expect(body).toBeVisible();
-    });
-
-    test('a JSX element, the body element renders', () => {
-      const bodyText = 'this is the body';
-      const bodyElement = <span>{bodyText}</span>;
-      const { queryByText } = renderToast({
-        open: true,
-        body: bodyElement,
-        variant: Variant.Success,
-      });
-
-      const bodySpan = queryByText(bodyText);
-      expect(bodySpan).toBeVisible();
+      const title = queryByTestId('toast-title');
+      expect(title).toBeInTheDocument();
+      expect(title).toHaveTextContent(titleText);
     });
   });
 });

@@ -18,12 +18,12 @@ export interface ToastProps
   /**
    * Primary text of the Toast
    */
-  title?: React.ReactNode;
+  title: React.ReactNode;
 
   /**
    * Additional body text
    */
-  description: React.ReactNode;
+  description?: React.ReactNode;
 
   /**
    * Determines whether the Toast is rendered
