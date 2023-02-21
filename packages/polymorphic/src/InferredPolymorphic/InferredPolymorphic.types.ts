@@ -12,25 +12,37 @@ import {
   PropsToOmit,
 } from '../Polymorphic/Polymorphic.types';
 import { NodeUrlLike } from '../utils/Polymorphic.utils';
+import { React18UpdatedComponentType } from '../utils/React18UpdatedComponentType';
 import { PolymorphicRef } from '..';
 
 /** Either an anchor tag, or a component that accepts an `href` */
 export type AnchorLike =
   | 'a'
-  | React.ComponentType<{ href: string }>
-  | React.ComponentType<{ href: NodeUrlLike }>;
+  | React18UpdatedComponentType<{ href: string }>
+  | React18UpdatedComponentType<{ href: NodeUrlLike }>;
 
 /**
  * Wrapping props in this type ensures that if `href` is defined,
  * the `as` type is set to `AnchorLike`, and all anchor props are accepted
  */
-export type InferredAnchorLikeProps<
+export type AnchorLikeProps<
   T extends AnchorLike | undefined,
   P = {},
-> = {
-  href: string | NodeUrlLike;
-  as?: T extends AnchorLike ? T : 'a';
-} & P;
+> = PropsWithChildren<
+  {
+    href: string | NodeUrlLike;
+    as?: T extends AnchorLike ? T : 'a';
+  } & P
+>;
+
+/**
+ * If `href` is provided to the compomnent as a prop,
+ * but `as` is not
+ * then we infer that the `as` prop is `a`, and inherit anchor props
+ */
+export type InferredProps<T extends PolymorphicAs, XP = {}> = PropsWithChildren<
+  ({ href: string; as?: 'a' } | ({ href?: never } & AsProp<T>)) & XP
+>;
 
 /**
  * Inferred extension of {@link PolymorphicProps}
@@ -47,13 +59,10 @@ export type InferredAnchorLikeProps<
 export type InferredPolymorphicProps<
   T extends PolymorphicAs,
   XP = {},
-> = T extends AnchorLike | undefined
-  ? PropsWithChildren<InferredAnchorLikeProps<T, XP>> &
-      Omit<InheritedProps<T>, PropsToOmit<T, XP>>
-  : PropsWithChildren<
-      ({ href: string; as?: 'a' } | ({ href?: never } & AsProp<T>)) & XP
-    > &
-      Omit<InheritedProps<T>, PropsToOmit<T, XP>>;
+> = (T extends AnchorLike | undefined
+  ? AnchorLikeProps<T, XP>
+  : InferredProps<T, XP>) &
+  Omit<InheritedProps<T>, PropsToOmit<T, XP>>;
 
 /**
  * Inferred props clone of {@link PolymorphicPropsWithRef}
