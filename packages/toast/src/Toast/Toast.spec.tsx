@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
@@ -71,6 +71,17 @@ describe('packages/toast', () => {
       const closeButton = queryByRole('button');
       expect(closeButton).toBeInTheDocument();
       expect(closeButton).toBeVisible();
+    });
+
+    test('close button is not rendered when false', () => {
+      const { queryByRole } = renderToast({
+        open: true,
+        title: 'hello world',
+        variant: Variant.Success,
+        dismissible: false,
+      });
+      const closeButton = queryByRole('button');
+      expect(closeButton).not.toBeInTheDocument();
     });
   });
 
@@ -257,7 +268,7 @@ describe('packages/toast', () => {
     });
   });
 
-  describe(`'title'`, () => {
+  describe(`'title' prop`, () => {
     test('a string, the title element renders', () => {
       const titleText = 'this is the title';
       const { queryByTestId } = renderToast({
@@ -285,4 +296,30 @@ describe('packages/toast', () => {
       expect(title).toHaveTextContent(titleText);
     });
   });
+});
+
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip('TS types', () => {
+  render(
+    <>
+      <Toast title="string" />
+      {/* @ts-expect-error - title is required */}
+      <Toast />
+      {/* @ts-expect-error - title is required */}
+      <Toast description="string" />
+      {/* @ts-expect-error - title is required */}
+      <Toast body="string" />
+      {/* @ts-expect-error - `body` prop no longer valid */}
+      <Toast title="string" body="string" />
+
+      <Toast title="string" description="string" />
+      <Toast title="string" description="string" onClose={() => {}} />
+      <Toast
+        title="string"
+        description="string"
+        onClose={() => {}}
+        dismissible={true}
+      />
+    </>,
+  );
 });
