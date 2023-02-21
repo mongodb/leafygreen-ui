@@ -15,10 +15,12 @@ import { ProgressBar } from '../ProgressBar';
 import {
   baseIconStyle,
   baseToastStyle,
-  bodyThemeStyle,
   contentWrapperStyle,
+  descriptionStyle,
+  descriptionThemeStyle,
   dismissButtonStyle,
   dismissButtonThemeStyle,
+  textContentStyle,
   titleStyle,
   titleThemeStyle,
   toastThemeStyles,
@@ -79,7 +81,7 @@ function Toast({
                   size={32}
                 />
 
-                <div>
+                <div className={textContentStyle}>
                   <Body
                     data-testid="toast-title"
                     className={cx(titleStyle, titleThemeStyle[theme])}
@@ -90,7 +92,10 @@ function Toast({
                   {description && (
                     <Body
                       data-testid="toast-description"
-                      className={cx(bodyThemeStyle[theme])}
+                      className={cx(
+                        descriptionStyle,
+                        descriptionThemeStyle[theme],
+                      )}
                     >
                       {description}
                     </Body>

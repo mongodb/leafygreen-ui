@@ -22,8 +22,7 @@ export const baseToastStyle = css`
   bottom: ${spacing[6]}px;
   left: ${spacing[4]}px;
   width: ${toastWidth}px;
-  max-width: calc(100vw - ${spacing[4] * 2}px);
-  max-height: ${toastHeight}px;
+  height: ${toastHeight}px;
 
   display: flex;
   align-items: center;
@@ -88,6 +87,7 @@ export const contentWrapperStyle = css`
   display: flex;
   align-items: center;
   gap: ${spacing[3]}px;
+  width: 100%;
 `;
 
 export const baseIconStyle = css`
@@ -96,8 +96,17 @@ export const baseIconStyle = css`
   flex-shrink: 0;
 `;
 
+export const textContentStyle = css`
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
 export const titleStyle = css`
   font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const titleThemeStyle: Record<Theme, string> = {
@@ -109,7 +118,13 @@ export const titleThemeStyle: Record<Theme, string> = {
   `,
 };
 
-export const bodyThemeStyle: Record<Theme, string> = {
+export const descriptionStyle = css`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+export const descriptionThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.gray.light2};
   `,
