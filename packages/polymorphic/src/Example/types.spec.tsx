@@ -289,6 +289,7 @@ describe('Typescript types', () => {
       {/* @ts-expect-error - Require href when as="a" */}
       <ExampleInferred as="a" />
       <ExampleInferred href="mongodb.design" /> {/* This IS allowed for `inferred` */}
+      <ExampleInferred href="mongodb.design" target="_blank" /> {/* This IS allowed for `inferred` */}
       <ExampleInferred as="a" href="mongodb.design" />
       <ExampleInferred as="a" href="mongodb.design" ref={anchorRef} />
       <ExampleInferred as="a" href="mongodb.design">content</ExampleInferred>
@@ -338,6 +339,7 @@ describe('Typescript types', () => {
       {/* @ts-expect-error - Require href when as="a" */}
       <ExampleInferredDefaultButton as="a" />
       <ExampleInferredDefaultButton href="mongodb.design" /> {/* This IS allowed for `inferred` */}
+      <ExampleInferredDefaultButton href="mongodb.design" target="_blank" /> {/* This IS allowed for `inferred` */}
       <ExampleInferredDefaultButton as="a" href="mongodb.design" />
       <ExampleInferredDefaultButton as="a" href="mongodb.design" ref={anchorRef} />
       <ExampleInferredDefaultButton as="a" href="mongodb.design">content</ExampleInferredDefaultButton>

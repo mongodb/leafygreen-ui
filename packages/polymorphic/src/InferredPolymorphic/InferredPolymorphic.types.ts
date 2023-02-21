@@ -9,7 +9,6 @@ import {
   AsProp,
   InheritedProps,
   PolymorphicAs,
-  PropsToOmit,
 } from '../Polymorphic/Polymorphic.types';
 import { NodeUrlLike } from '../utils/Polymorphic.utils';
 import { React18UpdatedComponentType } from '../utils/React18UpdatedComponentType';
@@ -23,7 +22,7 @@ export type AnchorLike =
 
 /**
  * Wrapping props in this type ensures that if `href` is defined,
- * the `as` type is set to `AnchorLike`, and all anchor props are accepted
+ * the `as` type can only be `AnchorLike`, and all anchor props are accepted
  */
 export type AnchorLikeProps<
   T extends AnchorLike | undefined,
@@ -36,12 +35,16 @@ export type AnchorLikeProps<
 >;
 
 /**
- * If `href` is provided to the compomnent as a prop,
- * but `as` is not
- * then we infer that the `as` prop is `a`, and inherit anchor props
+ * If `href` is provided to the compomnent as a prop, but `as` is not
+ * then we infer that the `as` prop is `a`, and inherit anchor props.
+ * Otherwise `href` is invalid, and we treat the `as` prop as usual
  */
 export type InferredProps<T extends PolymorphicAs, XP = {}> = PropsWithChildren<
-  ({ href: string; as?: 'a' } | ({ href?: never } & AsProp<T>)) & XP
+  XP &
+    (
+      | ({ href: string; as?: 'a' } & InheritedProps<'a', XP>)
+      | (({ href?: never } & AsProp<T>) & InheritedProps<T, XP>)
+    )
 >;
 
 /**
@@ -59,10 +62,9 @@ export type InferredProps<T extends PolymorphicAs, XP = {}> = PropsWithChildren<
 export type InferredPolymorphicProps<
   T extends PolymorphicAs,
   XP = {},
-> = (T extends AnchorLike | undefined
-  ? AnchorLikeProps<T, XP>
-  : InferredProps<T, XP>) &
-  Omit<InheritedProps<T>, PropsToOmit<T, XP>>;
+> = T extends AnchorLike | undefined
+  ? AnchorLikeProps<T, XP> & InheritedProps<T, XP>
+  : InferredProps<T, XP>;
 
 /**
  * Inferred props clone of {@link PolymorphicPropsWithRef}
