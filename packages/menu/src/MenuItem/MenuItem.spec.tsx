@@ -24,6 +24,10 @@ describe('MenuItem', () => {
   describe('types behave as expected', () => {
     // eslint-disable-next-line jest/no-disabled-tests
     test.skip('types', () => {
+      const AnchorLikeWrapper = (props: JSX.IntrinsicElements['a']) => {
+        return <a {...props}>content</a>;
+      };
+
       const ButtonWrapper = (props: JSX.IntrinsicElements['button']) => {
         return <button {...props} />;
       };
@@ -33,12 +37,15 @@ describe('MenuItem', () => {
         <MenuItem as="a" href="allowed">
           Children
         </MenuItem>
-        {/* @ts-expect-error href not allowed when as is div*/}
+        {/* @ts-expect-error - href not allowed when as is div*/}
         <MenuItem as="div" href="string">
           Children
         </MenuItem>
-        {/* @ts-expect-error */}
+        {/* @ts-expect-error - href not allowed on ButtonWrapper */}
         <MenuItem as={ButtonWrapper} href="string">
+          Children
+        </MenuItem>
+        <MenuItem as={AnchorLikeWrapper} href="string">
           Children
         </MenuItem>
       </>;
