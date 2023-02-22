@@ -3,23 +3,22 @@ import { ComponentStory } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import { StoryMeta } from '@leafygreen-ui/lib';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
 import Toast, { Variant } from '.';
 
-export default StoryMeta({
+export default {
   title: 'Components/Toast',
   component: Toast,
   parameters: {
-    default: 'Basic',
     controls: {
-      exclude: ['open', 'onClose', 'className', 'as'],
+      exclude: ['open', 'close', 'className'],
     },
   },
   args: {
-    title: 'This is a toast title',
-    description: 'This is a toast description',
+    title: 'Velit ea exercitation qui aute dolor proident.',
+    body: 'Exercitation incididunt ea proident velit mollit',
     open: true,
     variant: Variant.Note,
     darkMode: false,
@@ -38,17 +37,15 @@ export default StoryMeta({
       control: { type: 'range', min: 0, max: 1, step: 0.1 },
       if: { arg: 'variant', eq: Variant.Progress },
     },
+    darkMode: storybookArgTypes.darkMode,
+    body: {
+      control: 'text',
+    },
     title: {
       control: 'text',
     },
-    description: {
-      control: 'text',
-    },
-    dismissible: {
-      control: 'boolean',
-    },
   },
-});
+};
 
 export const Basic: ComponentStory<typeof Toast> = args => {
   const [open, setOpen] = useState(true);
@@ -73,14 +70,14 @@ export const Dismissible: ComponentStory<typeof Toast> = args => {
       <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
         {open ? 'Close' : 'Open'} Toast
       </Button>
-      <Toast {...args} open={open} onClose={() => setOpen(false)} />
+      <Toast {...args} open={open} close={() => setOpen(false)} />
     </>
   );
 };
 
 export const WithLink = Basic.bind({});
 WithLink.args = {
-  description: (
+  body: (
     <>
       Exercitation incididunt ea proident. &nbsp;
       <Link href="http://localhost:9001">Link style</Link>

@@ -26,24 +26,25 @@ import {
   toastThemeStyles,
   toastTransitionStateStyles,
   variantIconStyle,
+  // variantStyles,
 } from './Toast.styles';
 import { ToastProps, Variant } from './Toast.types';
 import { variantIcons } from './VariantIcon';
 
 function Toast({
   title,
-  description,
+  body,
   className,
   variant = Variant.Note,
   progress = 1.0,
   open = false,
   darkMode: darkModeProp,
-  onClose,
-  dismissible,
+  close,
   ...rest
 }: ToastProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const nodeRef = useRef(null);
+  const dismissible = typeof close === 'function';
 
   const VariantIcon = variantIcons[variant];
   const iconThemeStyle = variantIconStyle[variant];
@@ -82,24 +83,23 @@ function Toast({
                 />
 
                 <div className={textContentStyle}>
-                  <Body
-                    data-testid="toast-title"
-                    className={cx(titleStyle, titleThemeStyle[theme])}
-                  >
-                    {title}
-                  </Body>
-
-                  {description && (
+                  {title && (
                     <Body
-                      data-testid="toast-description"
-                      className={cx(
-                        descriptionStyle,
-                        descriptionThemeStyle[theme],
-                      )}
+                      data-testid="toast-title"
+                      className={cx(titleStyle, titleThemeStyle[theme])}
                     >
-                      {description}
+                      {title}
                     </Body>
                   )}
+
+                  <Body
+                    className={cx(
+                      descriptionStyle,
+                      descriptionThemeStyle[theme],
+                    )}
+                  >
+                    {body}
+                  </Body>
                 </div>
               </div>
 
@@ -110,7 +110,7 @@ function Toast({
                     dismissButtonThemeStyle[theme],
                   )}
                   aria-label="Close Message"
-                  onClick={onClose}
+                  onClick={close}
                   darkMode={!darkMode}
                 >
                   <XIcon />
@@ -131,13 +131,13 @@ Toast.displayName = 'Toast';
 
 Toast.propTypes = {
   darkMode: PropTypes.bool,
-  title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]).isRequired,
-  description: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+  title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+  body: PropTypes.oneOfType([PropTypes.element, PropTypes.string]).isRequired,
+  className: PropTypes.string,
   variant: PropTypes.oneOf(Object.values(Variant)).isRequired,
   progress: PropTypes.number,
   open: PropTypes.bool,
-  onClose: PropTypes.func,
-  dismissible: PropTypes.bool,
+  close: PropTypes.func,
 };
 
 export default Toast;
