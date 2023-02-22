@@ -1,8 +1,7 @@
-import { InputType } from '@storybook/csf';
 import { ComponentMeta } from '@storybook/react';
-import { defaultsDeep } from 'lodash';
+import mergeWith from 'lodash/mergeWith';
 import { ComponentProps, JSXElementConstructor } from 'react';
-import { storybookArgTypes } from './storybookArgTypes';
+import { StoryArgType, storybookArgTypes } from './storybookArgTypes';
 import { storybookExcludedControlParams } from './storybookExcludedControlParams';
 
 export interface StoryMeta<
@@ -15,21 +14,16 @@ export interface StoryMeta<
     default: string;
   };
   argTypes?: Partial<{
-    [name in keyof ComponentProps<T>]: InputType & {
-      /**
-       * Identify an arg to render a control on Storybook only,
-       * and not on `mongodb.design`
-       */
-      storybookOnly?: boolean;
-    };
+    [name in keyof ComponentProps<T>]: StoryArgType;
   }>;
 }
 
-const baseMeta = {
+const baseMeta: StoryMeta<any> = {
   argTypes: {
     ...storybookArgTypes,
   },
   parameters: {
+    default: 'Basic',
     controls: {
       exclude: [...storybookExcludedControlParams],
     },
@@ -39,7 +33,11 @@ const baseMeta = {
 export const StoryMeta = <
   T extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>,
 >(
-  meta: StoryMeta<T>,
+  meta: StoryMeta<T> = baseMeta,
 ): StoryMeta<T> => {
-  return defaultsDeep(meta, baseMeta);
+  return mergeWith(meta, baseMeta, (metaVal, baseVal) => {
+    if (Array.isArray(metaVal)) return metaVal.concat(baseVal);
+    if (typeof metaVal === 'string') return metaVal;
+    // default to _.merge behavior
+  });
 };

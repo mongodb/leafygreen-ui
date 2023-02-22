@@ -10,7 +10,11 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { ComboboxSize as Size, Overflow } from './Combobox.types';
+import { chipHeight } from '../Chip/Chip.styles';
+import { ComboboxSize as Size, Overflow } from '../Combobox.types';
+
+// Rename the variable defined in chip styles
+const inputHeight = chipHeight;
 
 /**
  * Width of the widest character (in px)
@@ -18,24 +22,6 @@ import { ComboboxSize as Size, Overflow } from './Combobox.types';
 export const maxCharWidth: Record<Size, number> = {
   [Size.Default]: typeScales.body1.fontSize,
   [Size.Large]: typeScales.body2.fontSize,
-};
-
-/**
- * Vertical padding on a chip (in px)
- */
-export const chipWrapperPaddingY = {
-  [Size.Default]: 2,
-  [Size.Large]: 4,
-} as const;
-
-/**
- * Height of the input element (in px)
- */
-export const inputHeight: Record<Size, number> = {
-  [Size.Default]:
-    typeScales.body1.lineHeight + 2 * chipWrapperPaddingY[Size.Default], // 20
-  [Size.Large]:
-    typeScales.body2.lineHeight + 2 * chipWrapperPaddingY[Size.Large], // 28
 };
 
 /**
