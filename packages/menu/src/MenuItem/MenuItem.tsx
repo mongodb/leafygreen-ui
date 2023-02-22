@@ -5,7 +5,6 @@ import { cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, getNodeTextContent } from '@leafygreen-ui/lib';
 import {
   InferredPolymorphic,
-  PolymorphicAs,
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
@@ -41,6 +40,7 @@ const menuItemContainerClassName = createUniqueClassName('menu-item-container');
 export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
   (
     {
+      as,
       disabled = false,
       active = false,
       size = Size.Default,
@@ -48,7 +48,6 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
       children,
       description,
       glyph,
-      as = 'button' as PolymorphicAs,
       ...rest
     },
     ref: React.Ref<any>,
@@ -138,6 +137,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
           {...baseProps}
           {...anchorProps}
           {...rest}
+          data-test="MENU-ITEM"
           className={cx(
             menuItemContainerClassName,
             menuItemContainerStyle,

@@ -165,7 +165,7 @@ export function Menu({
           }
 
           const isCurrentSubMenu =
-            (currentSubMenu?.props as SubMenuProps).title === title;
+            (currentSubMenu?.props as SubMenuProps)?.title === title;
 
           return React.cloneElement(child, {
             ref: setRef,

@@ -39,11 +39,57 @@ describe('Typescript types', () => {
     return <a {...props}>content</a>;
   };
 
+  const ButtonLikeWrapper = (props: JSX.IntrinsicElements['button']) => {
+    return <button {...props}/>
+  };
 
   const divRef: React.MutableRefObject<HTMLDivElement | null> = {current: null}
   const anchorRef: React.MutableRefObject<HTMLAnchorElement | null> = {current: null}
   const spanRef: React.MutableRefObject<HTMLSpanElement | null> = {current: null}
 
+
+  // Make sure our type tests actually pass on the base components
+  test.skip('Control', () => {
+    <>
+      <div />
+      <div>some content</div>
+      <div />
+      <div ref={divRef} />
+      <div ref={divRef}>content</div>
+      <div key="some-key" />
+      {/* @ts-expect-error - Must pass the correct ref type */}
+      <div ref={anchorRef} />
+      {/* @ts-expect-error href is not allowed on explicit div */}
+      <div href="mongodb.design" />
+      {/* @ts-expect-error target is not allowed on explicit div */}
+      <div target="_blank" />
+      {/* @ts-expect-error - href not allowed on strict polymorphic */}
+      <div href="mongodb.design" />
+
+      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+      <a>content</a>
+      <a href="mongodb.design">content</a>
+      <a href="mongodb.design" ref={anchorRef} >content</a>
+      <a href="mongodb.design">content</a>
+
+      <input />
+
+      <WrapperWithRef />
+      <WrapperWithRef ref={spanRef} />
+      <WrapperWithRef ref={spanRef} darkMode={true} />
+      {/* TODO: ts-expect-error - Must pass the correct ref type */}
+      <WrapperWithRef ref={divRef} />
+      {/* @ts-expect-error - Theme is not a prop on WrapperWithRef */}
+      <WrapperWithRef ref={spanRef} theme={'dark'} />
+      {/* @ts-expect-error - href is not a prop on WrapperWithRef */}
+      <WrapperWithRef href=".design" />
+      {/* @ts-expect-error href is not valid on buttonWrapper */}
+      <ButtonLikeWrapper href=".design" />
+
+      <AnchorLikeWrapper href=".design" />
+      <NextLink href=".design" />
+    </>
+  })
 
   test.skip('ExamplePolymorphic', () => {
     <>
@@ -79,6 +125,8 @@ describe('Typescript types', () => {
       <ExamplePolymorphic as={WrapperWithRef} ref={spanRef} theme={'dark'} />
       {/* @ts-expect-error - href is not a prop on WrapperWithRef */}
       <ExamplePolymorphic as={WrapperWithRef} href=".design" />
+      {/* @ts-expect-error href is not valid on buttonWrapper */}
+      <ExamplePolymorphic as={ButtonLikeWrapper} href=".design" />
 
       <ExamplePolymorphic as={AnchorLikeWrapper} href=".design" />
       <ExamplePolymorphic as={NextLink} href=".design" />
@@ -122,6 +170,8 @@ describe('Typescript types', () => {
       <ExamplePolymorphicWithRef as={WrapperWithRef} ref={spanRef} theme={'dark'} />
       {/* @ts-expect-error - href is not a prop on WrapperWithRef */}
       <ExamplePolymorphicWithRef as={WrapperWithRef} ref={spanRef} href=".design" />
+      {/* @ts-expect-error href is not valid on buttonWrapper */}
+      <ExamplePolymorphicWithRef as={ButtonLikeWrapper} href=".design" />
 
       <ExamplePolymorphicWithRef as={AnchorLikeWrapper} href=".design" />
       <ExamplePolymorphicWithRef as={NextLink} href=".design" />
@@ -165,6 +215,8 @@ describe('Typescript types', () => {
       <AdvancedPolymorphic as={WrapperWithRef} ref={spanRef} theme={'dark'} />
       {/* @ts-expect-error - href is not a prop on WrapperWithRef */}
       <AdvancedPolymorphic as={WrapperWithRef} ref={spanRef} href=".design" />
+      {/* @ts-expect-error href is not valid on buttonWrapper */}
+      <AdvancedPolymorphic as={ButtonLikeWrapper} href=".design" />
 
       <AdvancedPolymorphic as={AnchorLikeWrapper} href=".design" />
       <AdvancedPolymorphic as={NextLink} href=".design" />
@@ -208,6 +260,8 @@ describe('Typescript types', () => {
       <AdvancedPolymorphicWithRef as={WrapperWithRef} ref={spanRef} theme={'dark'} />
       {/* @ts-expect-error - href is not a prop on WrapperWithRef */}
       <AdvancedPolymorphicWithRef as={WrapperWithRef} ref={spanRef} href=".design" />
+      {/* @ts-expect-error href is not valid on buttonWrapper */}
+      <AdvancedPolymorphicWithRef as={ButtonLikeWrapper} href=".design" />
 
       <AdvancedPolymorphicWithRef as={AnchorLikeWrapper} href=".design" />
       <AdvancedPolymorphicWithRef as={NextLink} href=".design" />
@@ -235,10 +289,10 @@ describe('Typescript types', () => {
       {/* @ts-expect-error - Require href when as="a" */}
       <ExampleInferred as="a" />
       <ExampleInferred href="mongodb.design" /> {/* This IS allowed for `inferred` */}
+      <ExampleInferred href="mongodb.design" target="_blank" /> {/* This IS allowed for `inferred` */}
       <ExampleInferred as="a" href="mongodb.design" />
       <ExampleInferred as="a" href="mongodb.design" ref={anchorRef} />
       <ExampleInferred as="a" href="mongodb.design">content</ExampleInferred>
-
 
       <ExampleInferred as="input" />
 
@@ -251,6 +305,8 @@ describe('Typescript types', () => {
       <ExampleInferred as={WrapperWithRef} theme={'dark'} />
       {/* @ts-expect-error - href is not a prop on WrapperWithRef */}
       <ExampleInferred as={WrapperWithRef} href=".design" />
+      {/* @ts-expect-error href is not valid on buttonWrapper */}
+      <ExampleInferred as={ButtonLikeWrapper} href=".design" />
 
       <ExampleInferred as={AnchorLikeWrapper} href=".design" />
       <ExampleInferred as={NextLink} href=".design" />
@@ -283,6 +339,7 @@ describe('Typescript types', () => {
       {/* @ts-expect-error - Require href when as="a" */}
       <ExampleInferredDefaultButton as="a" />
       <ExampleInferredDefaultButton href="mongodb.design" /> {/* This IS allowed for `inferred` */}
+      <ExampleInferredDefaultButton href="mongodb.design" target="_blank" /> {/* This IS allowed for `inferred` */}
       <ExampleInferredDefaultButton as="a" href="mongodb.design" />
       <ExampleInferredDefaultButton as="a" href="mongodb.design" ref={anchorRef} />
       <ExampleInferredDefaultButton as="a" href="mongodb.design">content</ExampleInferredDefaultButton>
@@ -299,6 +356,8 @@ describe('Typescript types', () => {
       <ExampleInferredDefaultButton as={WrapperWithRef} ref={spanRef} theme={'dark'} />
       {/* @ts-expect-error - href is not a prop on WrapperWithRef */}
       <ExampleInferredDefaultButton as={WrapperWithRef} href=".design" />
+      {/* @ts-expect-error href is not valid on buttonWrapper */}
+      <ExampleInferredDefaultButton as={ButtonLikeWrapper} href=".design" />
 
       <ExampleInferredDefaultButton as={AnchorLikeWrapper} href=".design" />
       <ExampleInferredDefaultButton as={NextLink} href=".design" />

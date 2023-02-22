@@ -48,9 +48,17 @@ export type AnchorProps = Omit<ComponentPropsWithoutRef<'a'>, 'href'> & {
  * Parses the expected inherited Props,
  * and adds restrictions based on the passed in type
  */
-export type InheritedProps<T extends PolymorphicAs> = T extends 'a'
+export type AllInheritedProps<T extends PolymorphicAs> = T extends 'a'
   ? AnchorProps
   : ComponentPropsWithoutRef<T>;
+
+/**
+ * Omits any props inclided in type `P` from the inherited props
+ */
+export type InheritedProps<T extends PolymorphicAs, XP = {}> = Omit<
+  AllInheritedProps<T>,
+  PropsToOmit<T, XP>
+>;
 
 /**
  * The basic props for the Polymorphic component.
@@ -60,8 +68,7 @@ export type InheritedProps<T extends PolymorphicAs> = T extends 'a'
 export type PolymorphicProps<
   T extends PolymorphicAs,
   XP = {},
-> = PropsWithChildren<XP & AsProp<T>> &
-  Omit<InheritedProps<T>, PropsToOmit<T, XP>>;
+> = PropsWithChildren<XP & AsProp<T>> & InheritedProps<T, XP>;
 
 /**
  * Add the `ref` prop type to PolymorphicProps
