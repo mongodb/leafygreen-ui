@@ -394,7 +394,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
 ---
 
-## Passing darkMode to children
+## Passing `darkMode` to children
 
 #### Why
 
@@ -424,7 +424,7 @@ return (
 
 ---
 
-## <a id="CSS-in-JS">CSS in JS</a>
+## CSS in JS
 
 ### Avoid writing Emotion styles directly in JSX
 
