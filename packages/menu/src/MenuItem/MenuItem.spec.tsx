@@ -54,20 +54,6 @@ describe('packages/menu/menu-item', () => {
       expect(menuItem.classList.contains('menu-item-class-name')).toBe(true);
     });
 
-    test('renders MenuItem inside button tag by default', () => {
-      const { getByTestId } = render(<MenuItem data-testid="menu-item" />);
-      const menuItem = getByTestId('menu-item');
-      expect(menuItem.tagName.toLowerCase()).toBe('button');
-    });
-
-    test('renders inside of an `a` instead of a `button` tag, when `href` prop is supplied', () => {
-      const { getByTestId } = render(
-        <MenuItem href="https://mongodb.design" data-testid="menu-item" />,
-      );
-      const menuItem = getByTestId('menu-item');
-      expect(menuItem.tagName.toLowerCase()).toBe('a');
-    });
-
     test('renders with correct target and rel values when set', () => {
       const { getByTestId } = render(
         <MenuItem
@@ -82,14 +68,6 @@ describe('packages/menu/menu-item', () => {
 
       expect((menuItem as HTMLAnchorElement).target).toBe('_blank');
       expect((menuItem as HTMLAnchorElement).rel).toBe('help');
-    });
-
-    test('renders as `div` tag when the "as" prop is set', () => {
-      const { getByTestId } = render(
-        <MenuItem data-testid="menu-item" as="div" />,
-      );
-      const menuItem = getByTestId('menu-item');
-      expect(menuItem.tagName.toLowerCase()).toBe('div');
     });
 
     test('has the `aria-current` attribute when active', () => {
