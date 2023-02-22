@@ -137,6 +137,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
           {...baseProps}
           {...anchorProps}
           {...rest}
+          data-test="MENU-ITEM"
           className={cx(
             menuItemContainerClassName,
             menuItemContainerStyle,
