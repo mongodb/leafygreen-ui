@@ -52,7 +52,6 @@ export const baseToastStyle = css`
     text-underline-offset: 3px;
     text-decoration-thickness: 2px;
     border-radius: 4px;
-    color: inherit;
 
     &:hover,
     &:focus,
@@ -73,13 +72,29 @@ export const baseToastStyle = css`
 export const toastThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     background-color: ${palette.black};
-    color: ${palette.white};
     border-color: ${palette.gray.dark2};
+
+    .${anchorClassName}, a {
+      color: ${palette.gray.light3};
+
+      &:hover,
+      &:focus-visible {
+        color: ${palette.gray.light2};
+      }
+    }
   `,
   [Theme.Dark]: css`
     background-color: ${palette.gray.light2};
-    color: ${palette.black};
     border-color: ${palette.gray.light1};
+
+    .${anchorClassName}, a {
+      color: ${palette.gray.dark3};
+
+      &:hover,
+      &:focus-visible {
+        color: ${palette.gray.dark2};
+      }
+    }
   `,
 };
 
