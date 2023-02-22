@@ -125,7 +125,7 @@ export const inputSizeStyles: Record<Size, string> = {
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
     height: 36px;
-    padding: 0 ${spacing[2] * 5}px 0 ${spacing[3]}px;
+    padding: 0 ${spacing[2] * 5}px 0 ${spacing[1] * 3}px;
   `,
   [Size.Large]: css`
     font-size: 18px;

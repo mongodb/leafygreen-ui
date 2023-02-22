@@ -44,6 +44,7 @@ export const PasswordInput = React.forwardRef<
       id: idProp,
       'aria-describedby': ariaDescribedbyProp,
       'aria-labelledby': ariaLabelledbyProp,
+      'aria-label': ariaLabelProp,
       size = Size.Default,
       stateNotifications = [],
       disabled = false,
@@ -61,14 +62,10 @@ export const PasswordInput = React.forwardRef<
       prefix,
       id: ariaDescribedbyProp,
     });
-    const labelId = useIdAllocator({
-      prefix,
-      id: ariaLabelledbyProp,
-    });
     const { theme, darkMode } = useDarkMode(darkModeProp);
     const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
 
-    if (!label && !ariaLabelledbyProp && !rest['aria-label']) {
+    if (!label && !ariaLabelledbyProp && !ariaLabelProp) {
       console.warn(
         'For screen-reader accessibility, label, aria-labelledby, or aria-label must be provided to PasswordInput component',
       );
@@ -94,7 +91,6 @@ export const PasswordInput = React.forwardRef<
         <div className={className} ref={forwardedRef}>
           {label && (
             <Label
-              id={labelId}
               className={cx(labelBaseStyles, {
                 [labelLargeOverrideStyles]: size === Size.Large,
               })}
@@ -111,7 +107,10 @@ export const PasswordInput = React.forwardRef<
               id={inputId}
               autoComplete={autoComplete}
               aria-describedby={descriptionId}
-              aria-labelledby={labelId}
+              aria-labelledby={
+                !label && ariaLabelledbyProp ? ariaLabelledbyProp : undefined
+              }
+              aria-label={!label && ariaLabelProp ? ariaLabelProp : undefined}
               aria-disabled={disabled}
               aria-invalid={state === State.Error || state === State.Warning}
               className={cx(
