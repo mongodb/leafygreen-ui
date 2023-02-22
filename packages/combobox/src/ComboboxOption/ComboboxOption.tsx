@@ -19,7 +19,9 @@ import {
 import { OptionContent } from './OptionContent';
 
 /**
- * Component
+ * Internal ComboboxOption Component for use within Combobox only.
+ *
+ * Prefer using {@link ComboboxOption}
  */
 export const InternalComboboxOption = React.forwardRef<
   HTMLLIElement,
