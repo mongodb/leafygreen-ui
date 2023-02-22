@@ -12,8 +12,8 @@ import {
   SearchState,
   State,
   TruncationLocation,
-} from './Combobox.types';
-import { Combobox, ComboboxGroup, ComboboxOption } from '.';
+} from '../Combobox.types';
+import { Combobox, ComboboxGroup, ComboboxOption } from '..';
 
 const wrapperStyle = css`
   width: 256px;
@@ -26,7 +26,7 @@ export default StoryMeta({
   parameters: {
     default: 'Demo',
     controls: {
-      exclude: ['setError', 'filteredOptions', 'initialValue', 'value'],
+      exclude: ['as', 'filteredOptions', 'initialValue', 'setError', 'value'],
     },
   },
   argTypes: {

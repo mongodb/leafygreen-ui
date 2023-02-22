@@ -1,4 +1,9 @@
 import React, {
+  ChangeEventHandler,
+  FocusEventHandler,
+  KeyboardEventHandler,
+  MouseEventHandler,
+  TransitionEventHandler,
   useCallback,
   useEffect,
   useMemo,
@@ -15,20 +20,46 @@ import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import {
+  useBackdropClick,
   useDynamicRefs,
-  useEventListener,
   useIdAllocator,
   usePrevious,
 } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { Description, Label } from '@leafygreen-ui/typography';
 
-import { ComboboxMenu } from './ComboboxMenu/ComboboxMenu';
-import { Chip } from './Chip';
+import { Chip } from '../Chip';
+import {
+  ComboboxElement,
+  ComboboxProps,
+  ComboboxSize,
+  getNullSelection,
+  onChangeType,
+  OptionObject,
+  Overflow,
+  SearchState,
+  SelectValueType,
+  State,
+  TruncationLocation,
+} from '../Combobox.types';
+import { ComboboxContext } from '../ComboboxContext';
+import { InternalComboboxGroup } from '../ComboboxGroup';
+import { ComboboxMenu } from '../ComboboxMenu';
+import { InternalComboboxOption } from '../ComboboxOption';
+import {
+  flattenChildren,
+  getDisplayNameForValue,
+  getNameAndValue,
+  getOptionObjectFromValue,
+  getValueForDisplayName,
+} from '../utils';
+
 import {
   baseComboboxStyles,
   baseInputElementStyle,
@@ -50,29 +81,6 @@ import {
   labelDescriptionContainerStyle,
   multiselectInputElementStyle,
 } from './Combobox.styles';
-import {
-  ComboboxElement,
-  ComboboxProps,
-  ComboboxSize,
-  getNullSelection,
-  onChangeType,
-  OptionObject,
-  Overflow,
-  SearchState,
-  SelectValueType,
-  State,
-  TruncationLocation,
-} from './Combobox.types';
-import { ComboboxContext } from './ComboboxContext';
-import { InternalComboboxGroup } from './ComboboxGroup';
-import { InternalComboboxOption } from './ComboboxOption';
-import {
-  flattenChildren,
-  getDisplayNameForValue,
-  getNameAndValue,
-  getOptionObjectFromValue,
-  getValueForDisplayName,
-} from './utils';
 
 /**
  * Combobox is a combination of a Select and TextInput,
@@ -749,64 +757,6 @@ export function Combobox<M extends boolean>({
   ]);
 
   /**
-   * The rendered JSX for the input icons (clear, warn & caret)
-   */
-  const renderedInputIcons = useMemo(() => {
-    const handleClearButtonClick = (
-      e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    ) => {
-      if (!disabled) {
-        // Prevents triggering the setOpen function called by clicking anywhere within the input wrapper.
-        e.stopPropagation();
-        updateSelection(null);
-        onClear?.(e);
-        onFilter?.('');
-        setInputFocus();
-      }
-    };
-
-    return (
-      <>
-        {clearable && doesSelectionExist && (
-          <IconButton
-            aria-label="Clear selection"
-            aria-disabled={disabled}
-            disabled={disabled}
-            ref={clearButtonRef}
-            onClick={handleClearButtonClick}
-            onFocus={handleClearButtonFocus}
-            className={cx(clearButtonStyle)}
-            darkMode={darkMode}
-          >
-            <Icon glyph="XWithCircle" />
-          </IconButton>
-        )}
-        {state === 'error' ? (
-          <Icon
-            glyph="Warning"
-            color={darkMode ? palette.red.light1 : palette.red.base}
-            className={endIconStyle(size)}
-          />
-        ) : (
-          <Icon glyph="CaretDown" className={endIconStyle(size)} />
-        )}
-      </>
-    );
-  }, [
-    clearable,
-    doesSelectionExist,
-    disabled,
-    state,
-    darkMode,
-    size,
-    updateSelection,
-    onClear,
-    onFilter,
-    isOpen,
-    setInputFocus,
-  ]);
-
-  /**
    * Flag to determine whether the rendered options have icons
    */
   const withIcons = useMemo(
@@ -937,26 +887,26 @@ export function Combobox<M extends boolean>({
     setMenuWidth(comboboxRef.current?.clientWidth ?? 0);
   }, [comboboxRef, isOpen, highlightedOption, selection]);
 
-  // Handler fired when the menu has finished transitioning in/out
-  const handleTransitionEnd = () => {
-    setMenuWidth(comboboxRef.current?.clientWidth ?? 0);
-  };
-
   /**
    *
    * Event Handlers
    *
    */
 
+  // Handler fired when the menu has finished transitioning in/out
+  const handleTransitionEnd: TransitionEventHandler<HTMLDivElement> = () => {
+    setMenuWidth(comboboxRef.current?.clientWidth ?? 0);
+  };
+
   // Prevent combobox from gaining focus by default
-  const handleInputWrapperMousedown = (e: React.MouseEvent) => {
+  const handleInputWrapperMousedown: MouseEventHandler<HTMLDivElement> = e => {
     if (disabled) {
       e.preventDefault();
     }
   };
 
   // Set focus to the input element on click
-  const handleComboboxClick = (e: React.MouseEvent) => {
+  const handleComboboxClick: MouseEventHandler<HTMLDivElement> = e => {
     // If we clicked the wrapper, not the input itself.
     // (Focus is set automatically if the click is on the input)
     if (e.target !== inputRef.current) {
@@ -978,13 +928,13 @@ export function Combobox<M extends boolean>({
 
   // Fired whenever the wrapper gains focus,
   // and any time the focus within changes
-  const handleComboboxFocus = (e: React.FocusEvent) => {
+  const handleComboboxFocus: FocusEventHandler<HTMLDivElement> = e => {
     scrollInputToEnd();
     trackFocusedElement(getNameFromElement(e.target));
   };
 
   // Fired onChange
-  const handleInputChange = ({
+  const handleInputChange: ChangeEventHandler<HTMLInputElement> = ({
     target: { value },
   }: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(value);
@@ -992,11 +942,22 @@ export function Combobox<M extends boolean>({
     onFilter?.(value);
   };
 
-  const handleClearButtonFocus = () => {
+  const handleClearButtonFocus: FocusEventHandler<HTMLButtonElement> = () => {
     setHighlightedOption(null);
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent) => {
+  const handleClearButtonClick: MouseEventHandler<HTMLButtonElement> = e => {
+    if (!disabled) {
+      // Prevents triggering the setOpen function called by clicking anywhere within the input wrapper.
+      e.stopPropagation();
+      updateSelection(null);
+      onClear?.(e);
+      onFilter?.('');
+      setInputFocus();
+    }
+  };
+
+  const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = event => {
     const isFocusInMenu = menuRef.current?.contains(document.activeElement);
     const isFocusOnCombobox = comboboxRef.current?.contains(
       document.activeElement,
@@ -1137,44 +1098,7 @@ export function Combobox<M extends boolean>({
    *
    */
 
-  // TODO: Replace this with `useBackdropClick`
-  /**
-   * We add two event handlers to the document to handle the backdrop click behavior.
-   * Intended behavior is to close the menu, and keep focus on the Combobox.
-   * No other click event handlers should fire on backdrop click
-   *
-   * 1. Mousedown event fires
-   * 2. We prevent `mousedown`'s default behavior, to prevent focus from being applied to the body (or other target)
-   * 3. Click event fires
-   * 4. We handle this event on _capture_, and stop propagation before the `click` event propagates all the way to any other element.
-   *  This ensures that even if we click on a button, that handler is not fired
-   * 5. Then we call `closeMenu`, setting `isOpen = false`, and rerender the component
-   */
-  useEventListener(
-    'mousedown',
-    (mousedown: MouseEvent) => {
-      if (!doesComponentContainEventTarget(mousedown)) {
-        mousedown.preventDefault(); // Prevent focus from being applied to body
-        mousedown.stopPropagation(); // Stop any other mousedown events from firing
-      }
-    },
-    {
-      enabled: isOpen,
-    },
-  );
-  useEventListener(
-    'click',
-    (click: MouseEvent) => {
-      if (!doesComponentContainEventTarget(click)) {
-        click.stopPropagation(); // Stop any other click events from firing
-        closeMenu();
-      }
-    },
-    {
-      options: { capture: true },
-      enabled: isOpen,
-    },
-  );
+  useBackdropClick(closeMenu, [menuRef, comboboxRef], isOpen);
 
   const popoverProps = {
     popoverZIndex,
@@ -1189,143 +1113,154 @@ export function Combobox<M extends boolean>({
   } as const;
 
   return (
-    <ComboboxContext.Provider
-      value={{
-        multiselect,
-        darkMode,
-        theme,
-        size,
-        withIcons,
-        disabled,
-        isOpen,
-        state,
-        searchState,
-        chipTruncationLocation,
-        chipCharacterLimit,
-        inputValue,
-      }}
-    >
-      <div className={cx(comboboxParentStyle(size), className)} {...rest}>
-        {(label || description) && (
-          <div className={labelDescriptionContainerStyle}>
-            {label && (
-              <Label id={labelId} htmlFor={inputId} darkMode={darkMode}>
-                {label}
-              </Label>
-            )}
-            {description && (
-              <Description darkMode={darkMode}>{description}</Description>
-            )}
-          </div>
-        )}
-
-        {/* Disable eslint: onClick sets focus. Key events would already have focus */}
-        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-        <div
-          ref={comboboxRef}
-          role="combobox"
-          aria-expanded={isOpen}
-          aria-controls={menuId}
-          aria-owns={menuId}
-          tabIndex={-1}
-          onMouseDown={handleInputWrapperMousedown}
-          onClick={handleComboboxClick}
-          onFocus={handleComboboxFocus}
-          onKeyDown={handleKeyDown}
-          onTransitionEnd={handleTransitionEnd}
-          className={cx(
-            baseComboboxStyles,
-            comboboxThemeStyles[theme],
-            comboboxSizeStyles(size),
-            {
-              [comboboxSelectionStyles]: clearable && doesSelectionExist,
-              [comboboxDisabledStyles[theme]]: disabled,
-              [comboboxErrorStyles[theme]]: state === State.error,
-              [comboboxFocusStyle[theme]]: isElementFocused(
-                ComboboxElement.Input,
-              ),
-            },
-          )}
-        >
-          <div
-            ref={inputWrapperRef}
-            className={inputWrapperStyle({
-              size,
-              overflow,
-            })}
-          >
-            {renderedChips}
-            <input
-              aria-label={ariaLabel ?? label}
-              aria-autocomplete="list"
-              aria-controls={menuId}
-              aria-labelledby={labelId}
-              ref={inputRef}
-              id={inputId}
-              className={cx(
-                baseInputElementStyle,
-                inputElementSizeStyle[size],
-                inputElementThemeStyle[theme],
-                inputElementTransitionStyles(isOpen),
-                {
-                  [multiselectInputElementStyle(size, inputValue)]:
-                    isMultiselect(selection),
-                },
+    <LeafyGreenProvider darkMode={darkMode}>
+      <ComboboxContext.Provider
+        value={{
+          multiselect,
+          size,
+          withIcons,
+          disabled,
+          isOpen,
+          state,
+          searchState,
+          chipTruncationLocation,
+          chipCharacterLimit,
+          inputValue,
+        }}
+      >
+        <div className={cx(comboboxParentStyle(size), className)} {...rest}>
+          {(label || description) && (
+            <div className={labelDescriptionContainerStyle}>
+              {label && (
+                <Label id={labelId} htmlFor={inputId} darkMode={darkMode}>
+                  {label}
+                </Label>
               )}
-              placeholder={placeholderValue}
-              disabled={disabled ?? undefined}
-              onChange={handleInputChange}
-              value={inputValue}
-              autoComplete="off"
-            />
-          </div>
-          {renderedInputIcons}
-        </div>
+              {description && (
+                <Description darkMode={darkMode}>{description}</Description>
+              )}
+            </div>
+          )}
 
-        {state === 'error' && errorMessage && (
+          {/* Disable eslint: onClick sets focus. Key events would already have focus */}
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
           <div
+            ref={comboboxRef}
+            role="combobox"
+            aria-expanded={isOpen}
+            aria-controls={menuId}
+            aria-owns={menuId}
+            tabIndex={-1}
+            onMouseDown={handleInputWrapperMousedown}
+            onClick={handleComboboxClick}
+            onFocus={handleComboboxFocus}
+            onKeyDown={handleKeyDown}
+            onTransitionEnd={handleTransitionEnd}
             className={cx(
-              errorMessageThemeStyle[theme],
-              errorMessageSizeStyle[size],
+              baseComboboxStyles,
+              comboboxThemeStyles[theme],
+              comboboxSizeStyles(size),
+              {
+                [comboboxSelectionStyles]: clearable && doesSelectionExist,
+                [comboboxDisabledStyles[theme]]: disabled,
+                [comboboxErrorStyles[theme]]: state === State.error,
+                [comboboxFocusStyle[theme]]: isElementFocused(
+                  ComboboxElement.Input,
+                ),
+              },
             )}
           >
-            {errorMessage}
+            <div
+              ref={inputWrapperRef}
+              className={inputWrapperStyle({
+                size,
+                overflow,
+              })}
+            >
+              {renderedChips}
+              <input
+                aria-label={ariaLabel ?? label}
+                aria-autocomplete="list"
+                aria-controls={menuId}
+                aria-labelledby={labelId}
+                ref={inputRef}
+                id={inputId}
+                className={cx(
+                  baseInputElementStyle,
+                  inputElementSizeStyle[size],
+                  inputElementThemeStyle[theme],
+                  inputElementTransitionStyles(isOpen),
+                  {
+                    [multiselectInputElementStyle(size, inputValue)]:
+                      isMultiselect(selection),
+                  },
+                )}
+                placeholder={placeholderValue}
+                disabled={disabled ?? undefined}
+                onChange={handleInputChange}
+                value={inputValue}
+                autoComplete="off"
+              />
+            </div>
+            {clearable && doesSelectionExist && (
+              <IconButton
+                aria-label="Clear selection"
+                aria-disabled={disabled}
+                disabled={disabled}
+                ref={clearButtonRef}
+                onClick={handleClearButtonClick}
+                onFocus={handleClearButtonFocus}
+                className={cx(clearButtonStyle)}
+                darkMode={darkMode}
+              >
+                <Icon glyph="XWithCircle" />
+              </IconButton>
+            )}
+            {state === 'error' ? (
+              <Icon
+                glyph="Warning"
+                color={darkMode ? palette.red.light1 : palette.red.base}
+                className={endIconStyle(size)}
+              />
+            ) : (
+              <Icon glyph="CaretDown" className={endIconStyle(size)} />
+            )}
           </div>
-        )}
 
-        {/******* /
+          {state === 'error' && errorMessage && (
+            <div
+              className={cx(
+                errorMessageThemeStyle[theme],
+                errorMessageSizeStyle[size],
+              )}
+            >
+              {errorMessage}
+            </div>
+          )}
+
+          {/******* /
           *  Menu  *
           / *******/}
 
-        <ComboboxMenu
-          id={menuId}
-          labelId={labelId}
-          refEl={comboboxRef}
-          ref={menuRef}
-          menuWidth={menuWidth}
-          searchLoadingMessage={searchLoadingMessage}
-          searchErrorMessage={searchErrorMessage}
-          searchEmptyMessage={searchEmptyMessage}
-          {...popoverProps}
-        >
-          {renderedOptionsJSX}
-        </ComboboxMenu>
-      </div>
-    </ComboboxContext.Provider>
+          <ComboboxMenu
+            id={menuId}
+            labelId={labelId}
+            refEl={comboboxRef}
+            ref={menuRef}
+            menuWidth={menuWidth}
+            searchLoadingMessage={searchLoadingMessage}
+            searchErrorMessage={searchErrorMessage}
+            searchEmptyMessage={searchEmptyMessage}
+            {...popoverProps}
+          >
+            {renderedOptionsJSX}
+          </ComboboxMenu>
+        </div>
+      </ComboboxContext.Provider>
+    </LeafyGreenProvider>
   );
 
   // Closure-dependant utils
-
-  /**
-   * Returns whether the event target is a Combobox element
-   */
-  function doesComponentContainEventTarget({ target }: MouseEvent): boolean {
-    return (
-      menuRef.current?.contains(target as Node) ||
-      comboboxRef.current?.contains(target as Node) ||
-      false
-    );
-  }
 
   /**
    * Scrolls the combobox to the far right.
