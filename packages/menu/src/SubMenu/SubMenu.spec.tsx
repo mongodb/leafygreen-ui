@@ -27,7 +27,7 @@ describe('packages/menu/sub-menu', () => {
       </SubMenuTestWrapper>,
     );
 
-    // TODO: The submenu is closed on initial render, but opens on second render
+    // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
     waitFor(() => {
       const subMenuItem = getByTestId('sub-menu-item-a');
       expect(subMenuItem).toBeInTheDocument();
@@ -48,7 +48,7 @@ describe('packages/menu/sub-menu', () => {
 
     userEvent.click(subMenuButtonA as HTMLElement);
 
-    // TODO: The submenu is closed on initial render, but opens on second render
+    // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
     waitFor(async () => {
       const subMenuItem = queryByTestId('sub-menu-item-a');
       expect(subMenuItem).not.toBeNull();
