@@ -7,6 +7,8 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 
+import { PolymorphicAs } from '@leafygreen-ui/polymorphic';
+
 import { Menu, MenuItem, SubMenu } from '..';
 
 const SubMenuTestWrapper = ({ children }: { children: React.ReactNode }) => {
