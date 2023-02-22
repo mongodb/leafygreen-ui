@@ -11,14 +11,14 @@ import {
   PolymorphicAs,
 } from '../Polymorphic/Polymorphic.types';
 import { NodeUrlLike } from '../utils/Polymorphic.utils';
-import { React18UpdatedComponentType } from '../utils/React18UpdatedComponentType';
+import { React18ChildlessComponentType } from '../utils/React18ChildlessComponentType';
 import { PolymorphicRef } from '..';
 
 /** Either an anchor tag, or a component that accepts an `href` */
 export type AnchorLike =
   | 'a'
-  | React18UpdatedComponentType<{ href: string }>
-  | React18UpdatedComponentType<{ href: NodeUrlLike }>;
+  | React18ChildlessComponentType<{ href: string }>
+  | React18ChildlessComponentType<{ href: NodeUrlLike }>;
 
 /**
  * Wrapping props in this type ensures that if `href` is defined,

@@ -15,12 +15,12 @@ interface React18FunctionComponent<P = {}> {
 
 /**
  * React 18 slightly modifies the typing of `FunctionComponent`.
- * This discrepancy causes issues with checkling for anchor-link
+ * This discrepancy causes issues with checking for anchor-link
  * inferred polymorphic components.
  *
  * @deprecated
  * This should be removed when we upgrade to React 18
  */
-export type React18UpdatedComponentType<P = {}> =
+export type React18ChildlessComponentType<P = {}> =
   | ComponentClass<P>
   | React18FunctionComponent<P>;
