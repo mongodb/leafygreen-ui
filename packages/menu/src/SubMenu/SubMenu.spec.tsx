@@ -28,6 +28,7 @@ describe('packages/menu/sub-menu', () => {
     );
 
     // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
+    // https://jira.mongodb.org/browse/LG-2904
     waitFor(() => {
       const subMenuItem = getByTestId('sub-menu-item-a');
       expect(subMenuItem).toBeInTheDocument();
@@ -49,6 +50,7 @@ describe('packages/menu/sub-menu', () => {
     userEvent.click(subMenuButtonA as HTMLElement);
 
     // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
+    // https://jira.mongodb.org/browse/LG-2904
     waitFor(async () => {
       const subMenuItem = queryByTestId('sub-menu-item-a');
       expect(subMenuItem).not.toBeNull();
