@@ -4,6 +4,7 @@ import isUndefined from 'lodash/isUndefined';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useAvailableSpace, useForwardedRef } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { palette } from '@leafygreen-ui/palette';
 import Popover from '@leafygreen-ui/popover';
 
@@ -55,8 +56,8 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
     }: ComboboxMenuProps,
     forwardedRef,
   ) => {
-    const { disabled, darkMode, theme, size, isOpen, searchState } =
-      useContext(ComboboxContext);
+    const { darkMode, theme } = useDarkMode();
+    const { disabled, size, isOpen, searchState } = useContext(ComboboxContext);
     const ref = useForwardedRef(forwardedRef, null);
 
     /** The max height of the menu element */
