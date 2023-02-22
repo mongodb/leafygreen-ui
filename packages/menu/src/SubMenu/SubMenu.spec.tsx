@@ -121,6 +121,24 @@ describe('packages/menu/sub-menu', () => {
         </SubMenuTestWrapper>,
       );
     });
+
+    <>
+      <SubMenu href="allowed">Children</SubMenu>
+      <SubMenu as="a" href="allowed">
+        Children
+      </SubMenu>
+      {/* @ts-expect-error - href not allowed when as is div*/}
+      <SubMenu as="div" href="string">
+        Children
+      </SubMenu>
+      {/* @ts-expect-error - href not allowed on ButtonWrapper */}
+      <SubMenu as={ButtonWrapper} href="string">
+        Children
+      </SubMenu>
+      <SubMenu as={AnchorLikeWrapper} href="string">
+        Children
+      </SubMenu>
+    </>;
   });
   /* eslint-enable jest/no-disabled-tests, jest/expect-expect */
 });
