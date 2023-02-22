@@ -263,24 +263,15 @@ describe('packages/toast', () => {
 describe.skip('TS types', () => {
   render(
     <>
-      <Toast title="string" />
-      {/* @ts-expect-error - title is required */}
+      <Toast body="string" />
+      {/* @ts-expect-error - body is required */}
       <Toast />
       {/* @ts-expect-error - title is required */}
-      <Toast description="string" />
-      {/* @ts-expect-error - title is required */}
-      <Toast body="string" />
-      {/* @ts-expect-error - `body` prop no longer valid */}
-      <Toast title="string" body="string" />
+      <Toast title="string" />
 
-      <Toast title="string" description="string" />
-      <Toast title="string" description="string" onClose={() => {}} />
-      <Toast
-        title="string"
-        description="string"
-        onClose={() => {}}
-        dismissible={true}
-      />
+      <Toast title="string" body="string" />
+      <Toast title="string" body="string" close={() => {}} />
+      <Toast title="string" body="string" close={() => {}} />
     </>,
   );
 });
