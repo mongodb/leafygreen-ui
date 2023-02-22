@@ -3,7 +3,7 @@
 ## Table of Contents
 
 - [To Contribute](#To-Contribute)
-- [Typing](#Typing)
+- [Typing](#typing)
 - [Functions](#Functions)
 - [Variable naming](#Variable-naming)
 - [Variable placement](#Variable-placement)
@@ -39,7 +39,7 @@ _Example_
 
 ---
 
-## <a id="Typing">Typing</a>
+## Typing
 
 ### Prefer constants and types over enums.
 
