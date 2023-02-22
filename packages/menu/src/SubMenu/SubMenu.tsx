@@ -9,6 +9,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
 import {
   InferredPolymorphic,
+  PolymorphicAs,
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
@@ -78,7 +79,7 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
       active = false,
       disabled = false,
       size = Size.Default,
-      as,
+      as = 'button' as PolymorphicAs,
       ...rest
     },
     ref: React.Ref<any>,

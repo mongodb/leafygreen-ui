@@ -6,8 +6,6 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { PolymorphicAs } from '@leafygreen-ui/polymorphic';
-
 import { Menu, MenuItem, SubMenu } from '..';
 
 const SubMenuTestWrapper = ({ children }: { children: React.ReactNode }) => {
@@ -101,7 +99,7 @@ describe('packages/menu/sub-menu', () => {
   test('renders as `div` tag when the "as" prop is set', () => {
     const { getByTestId } = render(
       <SubMenuTestWrapper>
-        <SubMenu data-testid="sub-menu-a" as={'div' as PolymorphicAs} />
+        <SubMenu data-testid="sub-menu-a" as="div" />
       </SubMenuTestWrapper>,
     );
     const subMenu = getByTestId('sub-menu-a');
