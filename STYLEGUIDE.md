@@ -2,22 +2,22 @@
 
 ## Table of Contents
 
-- [To Contribute](#To-Contribute)
+- [To Contribute](#to-contribute)
 - [Typing](#typing)
-- [Functions](#Functions)
-- [Variable naming](#Variable-naming)
-- [Variable placement](#Variable-placement)
-- [Whitespace and line breaks](#Whitespace-and-line-breaks)
-- [JSX/React](#JSX-React)
+- [Functions](#functions)
+- [Variable naming](#variable-naming)
+- [Variable placement](#variable-placement)
+- [Whitespace and line breaks](#whitespace-and-line-breaks)
+- [JSX/React](#jsxreact)
 - [Forwarding refs](#forwarding-refs)
 - [Consuming darkMode from `LeafyGreenProvider`](#consuming-darkmode-from-leafygreenprovider)
-- [Passing darkMode to children](#Passing-DarkMode-To-Children)
-- [CSS-in-JS](#CSS-in-JS)
+- [Passing darkMode to children](#passing-darkMode-to-children)
+- [CSS-in-JS](#css-in-js)
 - [File Structure](https://github.com/mongodb/leafygreen-ui/blob/main/stories/Folder-Structure.stories.mdx)
-- [API Patterns](#API-Patterns)
-- [References](#References)
+- [API Patterns](#api-patterns)
+- [References](#references)
 
-## <a id="To-Contribute">To Contribute</a>
+## To Contribute
 
 To propose updates to this style guide, please make the relevant changes in a branch and submit a PR. We review these PRs synchronously in our weekly Team Code Review and collectively gavel on new standards there.
 
@@ -77,7 +77,7 @@ Maintains organization within files and makes them consistently more readable.
 
 ---
 
-## <a id="Functions">Functions</a>
+## Functions
 
 ### Prefer ternaries over simple `if/else` blocks
 
@@ -176,7 +176,7 @@ Keeps functions pure.
 
 ---
 
-## <a id="Variable-naming">Variable Naming</a>
+## Variable Naming
 
 ### Use UPPERCASE for static constants, and refactor to a shared file if needed
 
@@ -194,7 +194,7 @@ Keeps functions pure.
 
 ---
 
-## <a id="Variable-placement">Variable placement</a>
+## Variable placement
 
 ### Avoid inline declaration of static variables when they can be moved to top of file or refactored into new file
 
@@ -212,13 +212,13 @@ Keeps functions pure.
 
 ---
 
-## <a id="Whitespace-and-line-breaks">Whitespace and line breaks</a>
+## Whitespace and line breaks
 
 ### Use a space before every prop defined in an interface
 
 ---
 
-## <a id="JSX-React">JSX/React</a>
+## JSX/React
 
 ### Prefer factoring out any more-than-1-line event handlers into their own functions
 
@@ -394,7 +394,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
 ---
 
-## <a id="Passing-DarkMode-To-Children">Passing darkMode to children</a>
+## Passing darkMode to children
 
 #### Why
 
@@ -501,7 +501,7 @@ const childStyles = css`
 
 ---
 
-## <a id="API-Patterns">API Patterns</a>
+## API Patterns
 
 ---
 
@@ -515,7 +515,7 @@ const childStyles = css`
 
 ---
 
-## <a id="References">References</a>
+## References
 
 - [Airbnb Javascript Style Guide](https://github.com/airbnb/javascript)
 - [DHH On Writing Software Well](https://www.youtube.com/watch?v=H5i1gdwe1Ls)
