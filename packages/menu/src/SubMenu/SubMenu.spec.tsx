@@ -124,23 +124,33 @@ describe('packages/menu/sub-menu', () => {
       );
     });
 
-    <>
-      <SubMenu href="allowed">Children</SubMenu>
-      <SubMenu as="a" href="allowed">
-        Children
-      </SubMenu>
-      {/* @ts-expect-error - href not allowed when as is div*/}
-      <SubMenu as="div" href="string">
-        Children
-      </SubMenu>
-      {/* @ts-expect-error - href not allowed on ButtonWrapper */}
-      <SubMenu as={ButtonWrapper} href="string">
-        Children
-      </SubMenu>
-      <SubMenu as={AnchorLikeWrapper} href="string">
-        Children
-      </SubMenu>
-    </>;
+    test.skip('types', () => {
+      const AnchorLikeWrapper = (props: JSX.IntrinsicElements['a']) => {
+        return <a {...props}>content</a>;
+      };
+
+      const ButtonWrapper = (props: JSX.IntrinsicElements['button']) => {
+        return <button {...props} />;
+      };
+
+      <>
+        <SubMenu href="allowed">Children</SubMenu>
+        <SubMenu as="a" href="allowed">
+          Children
+        </SubMenu>
+        {/* @ts-expect-error - href not allowed when as is div*/}
+        <SubMenu as="div" href="string">
+          Children
+        </SubMenu>
+        {/* @ts-expect-error - href not allowed on ButtonWrapper */}
+        <SubMenu as={ButtonWrapper} href="string">
+          Children
+        </SubMenu>
+        <SubMenu as={AnchorLikeWrapper} href="string">
+          Children
+        </SubMenu>
+      </>;
+    });
   });
   /* eslint-enable jest/no-disabled-tests, jest/expect-expect */
 });
