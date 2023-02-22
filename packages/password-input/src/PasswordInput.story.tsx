@@ -120,9 +120,9 @@ const userFriendlyObj: { [key: string]: Array<NotificationProps> } = {
   ],
 };
 
-type userFriendlyObj = keyof typeof userFriendlyObj;
+type UserFriendlyObj = keyof typeof userFriendlyObj;
 type UserFriendlyProps = PasswordInputProps & {
-  stateNotificationsSelect: userFriendlyObj;
+  stateNotificationsSelect: UserFriendlyObj;
 };
 
 const UserFriendlyTemplate: Story<UserFriendlyProps> = ({
@@ -137,7 +137,7 @@ const UserFriendlyTemplate: Story<UserFriendlyProps> = ({
       {...rest}
       label={label as string}
       stateNotifications={stateNotifications as Array<NotificationProps>}
-      aria-describedby={undefined} // TS cannot infer what this is when using ...rest
+      aria-describedby={undefined} //TODO: TS cannot infer what this is when using ...rest?
     />
   );
 };
