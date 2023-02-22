@@ -285,6 +285,11 @@ describe('packages/password-input', () => {
         label="label"
         stateNotifications={[{ notification: 'hi', state: 'error' }]}
         autoComplete="new-password"
+      />
+      <PasswordInput
+        label="label"
+        stateNotifications={[{ notification: 'hi', state: 'error' }]}
+        autoComplete="new-password"
         value="the value"
         size="small"
         disabled

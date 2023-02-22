@@ -1,6 +1,7 @@
 import { ChangeEventHandler, ComponentPropsWithoutRef } from 'react';
 
-import { DarkModeProps, Either } from '@leafygreen-ui/lib';
+import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export const State = {
   Error: 'error', // red x icon, red text
@@ -24,33 +25,7 @@ export interface NotificationProps {
   state: State;
 }
 
-interface AriaLabelProps {
-  /**
-   * Text shown in bold above the input element.
-   *
-   * Optional if `aria-labelledby` or `aria-label` is provided
-   */
-  label?: string;
-
-  /**
-   * Screen-reader label element.
-   *
-   * Optional if `label` or `aria-label` is provided
-   */
-  ['aria-labelledby']?: string;
-
-  /**
-   * Screen reader label text
-   *
-   * Optional if `label` or `aria-labelledby` is provided
-   *
-   */
-  ['aria-label']?: string;
-}
-
-type AriaLabelkeys = keyof AriaLabelProps;
-
-type LabelProps = Either<AriaLabelProps, AriaLabelkeys>;
+type AriaLabelkeys = keyof AriaLabelPropsWithLabel;
 
 // Using custom notification container with aria-describedby
 interface StateOnlyProps {
@@ -84,7 +59,7 @@ interface StateAndNotificationProps {
 
 export type StateNotificationProps = StateAndNotificationProps | StateOnlyProps;
 
-type ConditionalProps = LabelProps & StateNotificationProps;
+type ConditionalProps = AriaLabelPropsWithLabel & StateNotificationProps;
 
 interface BasePasswordInputProps
   extends Omit<
