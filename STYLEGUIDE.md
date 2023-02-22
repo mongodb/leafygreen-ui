@@ -9,8 +9,8 @@
 - [Variable placement](#Variable-placement)
 - [Whitespace and line breaks](#Whitespace-and-line-breaks)
 - [JSX/React](#JSX-React)
-- [Forwarding refs](#Forwarding-Refs)
-- [Consuming darkMode from `LeafyGreenProvider`](#Consuming-Darkmode-From-Leafygreenprovider)
+- [Forwarding refs](#forwarding-refs)
+- [Consuming darkMode from `LeafyGreenProvider`](#consuming-darkmode-from-leafygreenprovider)
 - [Passing darkMode to children](#Passing-DarkMode-To-Children)
 - [CSS-in-JS](#CSS-in-JS)
 - [File Structure](https://github.com/mongodb/leafygreen-ui/blob/main/stories/Folder-Structure.stories.mdx)
@@ -325,7 +325,7 @@ function changeValues(object) {
 
 ---
 
-## <a id="Forwarding-Refs">Forwarding refs</a>
+## Forwarding refs
 
 #### Why
 
@@ -356,7 +356,7 @@ const Button = props => <button>{props.children}</button>;
 
 ---
 
-## <a id="Consuming-Darkmode-From-Leafygreenprovider">Consuming `darkMode` from `LeafyGreenProvider`</a>
+## Consuming `darkMode` from `LeafyGreenProvider`
 
 #### Why
 
