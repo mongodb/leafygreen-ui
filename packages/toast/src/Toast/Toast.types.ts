@@ -14,7 +14,7 @@ export interface ToastProps extends Omit<React.ComponentProps<'div'>, 'title'> {
   /**
    * Optional text shown in bold above the body text.
    */
-  title: React.ReactNode;
+  title?: React.ReactNode;
 
   /**
    * Required main text for the Toast.

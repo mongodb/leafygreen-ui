@@ -26,7 +26,6 @@ import {
   toastThemeStyles,
   toastTransitionStateStyles,
   variantIconStyle,
-  // variantStyles,
 } from './Toast.styles';
 import { ToastProps, Variant } from './Toast.types';
 import { variantIcons } from './VariantIcon';
