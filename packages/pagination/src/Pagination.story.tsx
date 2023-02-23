@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { ComponentStory } from '@storybook/react';
 
-import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 import Pagination, { PaginationProps } from '.';
 
-export default StoryMeta({
+export default {
   title: 'Components/Pagination',
   component: Pagination,
   args: {
@@ -24,7 +24,7 @@ export default StoryMeta({
   parameters: {
     default: 'Basic',
   },
-});
+};
 
 const Template: ComponentStory<typeof Pagination> = props => (
   <div style={{ width: '700px' }}>
