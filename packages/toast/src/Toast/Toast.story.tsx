@@ -28,6 +28,11 @@ export default {
     `,
   },
   argTypes: {
+    variant: {
+      control: 'select',
+      options: Object.values(Variant),
+      default: Variant.Note,
+    },
     progress: {
       control: { type: 'range', min: 0, max: 1, step: 0.1 },
       if: { arg: 'variant', eq: Variant.Progress },
@@ -43,7 +48,7 @@ export default {
 };
 
 export const Basic: ComponentStory<typeof Toast> = args => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const { darkMode } = args;
 
   return (
@@ -57,7 +62,7 @@ export const Basic: ComponentStory<typeof Toast> = args => {
 };
 
 export const Dismissible: ComponentStory<typeof Toast> = args => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const { darkMode } = args;
 
   return (
