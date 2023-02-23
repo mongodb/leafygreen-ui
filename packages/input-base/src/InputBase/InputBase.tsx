@@ -1,8 +1,11 @@
-
 import React from 'react';
 
-export function InputBase({}) {
-  return <div>your content here</div>;
-}
+import { InputBaseProps } from './InputBase.types';
+
+export const InputBase = React.forwardRef<HTMLInputElement, InputBaseProps>(
+  ({ className, ...rest }: InputBaseProps, forwardedRef) => {
+    return <input ref={forwardedRef} className={className} {...rest} />;
+  },
+);
 
 InputBase.displayName = 'InputBase';
