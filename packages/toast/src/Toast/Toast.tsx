@@ -2,23 +2,33 @@ import React, { useRef } from 'react';
 import { Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import Portal from '@leafygreen-ui/portal';
-import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
+import { ProgressBar } from '../ProgressBar';
+
 import {
-  baseElementStyles,
+  baseIconStyle,
+  baseToastStyle,
+  contentWrapperStyle,
+  descriptionStyle,
+  descriptionThemeStyle,
+  dismissButtonStyle,
+  dismissButtonThemeStyle,
+  textContentStyle,
+  titleStyle,
+  titleThemeStyle,
   toastThemeStyles,
   toastTransitionStateStyles,
-  variantIcons,
-  variantStyles,
-} from './styles';
-import ProgressBar from './ToastProgressBar';
-import { ToastProps, Variant } from './types';
+  variantIconStyle,
+} from './Toast.styles';
+import { ToastProps, Variant } from './Toast.types';
+import { variantIcons } from './VariantIcon';
 
 function Toast({
   title,
@@ -36,8 +46,7 @@ function Toast({
   const dismissible = typeof close === 'function';
 
   const VariantIcon = variantIcons[variant];
-
-  const currentVariantStyles = variantStyles[variant][theme];
+  const iconThemeStyle = variantIconStyle[variant];
 
   return (
     <Portal>
@@ -58,65 +67,54 @@ function Toast({
             <div
               ref={nodeRef}
               className={cx(
-                baseElementStyles.toast,
+                baseToastStyle,
                 toastThemeStyles[theme],
-                currentVariantStyles.toast,
                 toastTransitionStateStyles[state],
                 className,
               )}
               {...rest}
             >
-              <div
-                className={cx(
-                  baseElementStyles.contentWrapper,
-                  currentVariantStyles.contentWrapper,
-                  {
-                    [css`
-                      padding-right: ${spacing[3] * 2}px;
-                    `]: dismissible,
-                  },
-                )}
-              >
+              <div className={cx(contentWrapperStyle)}>
                 <VariantIcon
                   aria-hidden
-                  className={cx(
-                    baseElementStyles.icon,
-                    currentVariantStyles.icon,
-                  )}
+                  className={cx(baseIconStyle, iconThemeStyle[theme])}
                   size={32}
                 />
 
-                <div>
+                <div className={textContentStyle}>
                   {title && (
                     <Body
                       data-testid="toast-title"
-                      className={cx(
-                        currentVariantStyles.body,
-                        baseElementStyles.title,
-                      )}
+                      className={cx(titleStyle, titleThemeStyle[theme])}
                     >
                       {title}
                     </Body>
                   )}
 
-                  <Body className={cx(currentVariantStyles.body)}>{body}</Body>
+                  <Body
+                    className={cx(
+                      descriptionStyle,
+                      descriptionThemeStyle[theme],
+                    )}
+                  >
+                    {body}
+                  </Body>
                 </div>
               </div>
 
               {dismissible && (
                 <IconButton
                   className={cx(
-                    baseElementStyles.dismissButton,
-                    currentVariantStyles.dismissButton,
+                    dismissButtonStyle,
+                    dismissButtonThemeStyle[theme],
                   )}
                   aria-label="Close Message"
                   onClick={close}
-                  darkMode={darkMode}
+                  darkMode={!darkMode}
                 >
                   <XIcon />
                 </IconButton>
               )}
-
               {variant === Variant.Progress && (
                 <ProgressBar theme={theme} progress={progress} />
               )}
