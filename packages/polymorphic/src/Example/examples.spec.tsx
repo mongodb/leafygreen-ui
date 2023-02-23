@@ -4,6 +4,10 @@ import { render } from '@testing-library/react';
 import NextLink from 'next/link';
 
 import { parseTSDoc } from '../../../../scripts/utils/tsDocParser';
+import {
+  InferredPolymorphic,
+  useInferredPolymorphic,
+} from '../InferredPolymorphic';
 import { makeWrapperComponent } from '../utils/Polymorphic.testutils';
 import {
   InferredPolymorphicProps,
@@ -88,6 +92,32 @@ describe('Polymorphic/Example Higher-order Components', () => {
         );
         expect(queryByTestId('wrapper')).toBeInTheDocument();
         expect(queryByTestId('wrapper')?.tagName.toLowerCase()).toBe('span');
+      });
+
+      describe('Improperly implemented InferredPolymorphic components', () => {
+        const TestComponent = InferredPolymorphic<{}, 'button'>(
+          // NOTE: in general, `as` should *not* be given a default JS value
+          ({ as = 'button' as PolymorphicAs, ...rest }) => {
+            const { Component } = useInferredPolymorphic(as, rest, 'button');
+            return <Component data-testid="component" />;
+          },
+        );
+
+        test('should render with the given default', () => {
+          const { getByTestId } = render(<TestComponent />);
+          const component = getByTestId('component');
+
+          expect(component.tagName.toLowerCase()).toBe('button');
+        });
+
+        test('will NOT infer as from href', () => {
+          const { getByTestId } = render(<TestComponent href="string" />);
+          const component = getByTestId('component');
+
+          // This is NOT what we want generally,
+          // but is a sign of an improperly implemented InferredPolymorphic component
+          expect(component.tagName.toLowerCase()).not.toBe('a');
+        });
       });
     });
 
