@@ -84,10 +84,15 @@ We also have a link script, such that you can test components that are in develo
 The mongodb.design website will automatically import the `*.story.tsx` file from its installed package directory to render its live example. By default, the first exported story from the `*.story.tsx` file will be rendered. To specify a different story to be rendered, define the following in the Storybook file's Meta object:
 
 ```
-export default {
-  ...,
+import { StoryMeta } from '@leafygreen-ui/lib';
+
+export default StoryMeta({
+  title: 'Components/name',
+  component: Component,
   parameters: {
     default: 'StoryName',
   }
-}
+})
 ```
+
+The `StoryMeta` utility from `@leafygreen-ui/lib` will extend default controls and exclude parameters by default to clean up the Meta object. While it is not required to make the import into mongodb.design work, it is recommended to make use of this utility.
