@@ -1,5 +1,15 @@
 # @leafygreen-ui/combobox
 
+## 5.0.9
+
+### Patch Changes
+
+- 2e8a572db: Internal refactoring. Adds `input-option` as a dependency
+- Updated dependencies [2e8a572db]
+- Updated dependencies [4ccc353e7]
+- Updated dependencies [4ccc353e7]
+  - @leafygreen-ui/lib@10.2.1
+
 ## 5.0.8
 
 ### Patch Changes

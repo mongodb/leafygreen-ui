@@ -1,5 +1,18 @@
 # @leafygreen-ui/toast
 
+## 5.0.0
+
+### Major Changes
+
+- dd2c42ceb: Updates Toast design to align with Toast v3 in Figma
+
+### Patch Changes
+
+- Updated dependencies [2e8a572db]
+- Updated dependencies [4ccc353e7]
+- Updated dependencies [4ccc353e7]
+  - @leafygreen-ui/lib@10.2.1
+
 ## 4.0.4
 
 ### Patch Changes
