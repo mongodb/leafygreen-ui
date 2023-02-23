@@ -16,7 +16,7 @@ import {
 } from './SearchResult.styles';
 import { SearchResultProps } from './SearchResult.types';
 
-export const SearchResult = InferredPolymorphic<SearchResultProps>(
+export const SearchResult = InferredPolymorphic<SearchResultProps, 'li'>(
   (
     {
       as = 'li' as PolymorphicAs,

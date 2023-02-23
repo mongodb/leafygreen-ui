@@ -113,6 +113,7 @@ describe('packages/menu/sub-menu', () => {
     test('Accepts string as `as` prop', () => {
       <SubMenu data-testid="sub-menu-a" as="p" />;
     });
+
     test('Accepts component as `as` prop', () => {
       const As = ({ children }: { children: React.ReactNode }) => (
         <>{children}</>

@@ -79,7 +79,7 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
       active = false,
       disabled = false,
       size = Size.Default,
-      as = 'button' as PolymorphicAs,
+      as,
       ...rest
     },
     ref: React.Ref<any>,
@@ -349,7 +349,6 @@ SubMenu.displayName = 'SubMenu';
 SubMenu.propTypes = {
   title: PropTypes.string,
   description: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  href: PropTypes.oneOfType([PropTypes.string, PropTypes.any]),
   children: PropTypes.node,
   setOpen: PropTypes.func,
   onKeyDown: PropTypes.func,
