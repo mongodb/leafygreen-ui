@@ -58,7 +58,3 @@ jobs:
       - name: Publish storybook with package updates
         if: steps.changesets.outputs.published == 'true'
         run: yarn publish:storybook
-
-      - name: Publish mongodb.design with package updates
-        if: steps.changesets.outputs.published == 'true'
-        run: yarn publish:website
