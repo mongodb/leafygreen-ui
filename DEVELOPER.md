@@ -78,3 +78,16 @@ We also have a link script, such that you can test components that are in develo
 - Add the new component to `build.tsconfig.json`
 - If you are using any `leafygreen-ui` dependencies in your new component, add the dependency to the component directory's `tsconfig.json`.
 - Run `yarn run init` to link all packages before starting development
+
+## Marking a Storybook story to be imported in mongodb.design
+
+The mongodb.design website will automatically import the `*.story.tsx` file from its installed package directory to render its live example. By default, the first exported story from the `*.story.tsx` file will be rendered. To specify a different story to be rendered, define the following in the Storybook file's Meta object:
+
+```
+export default {
+  ...,
+  parameters: {
+    default: 'StoryName',
+  }
+}
+```

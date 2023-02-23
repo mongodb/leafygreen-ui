@@ -21,6 +21,9 @@ export default {
     onBackArrowClick: { control: false },
     onForwardArrowClick: { control: false },
   },
+  parameters: {
+    default: 'Basic'
+  }
 };
 
 const Template: ComponentStory<typeof Pagination> = props => (
