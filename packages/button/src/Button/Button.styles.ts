@@ -53,7 +53,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       border-color: ${palette.gray.base};
       color: ${palette.black};
 
-      // needed to override team specific global styles
+      // needed to override any global button styles
       &:focus {
         color: ${palette.black};
       }
