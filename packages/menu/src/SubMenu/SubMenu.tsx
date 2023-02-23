@@ -9,7 +9,6 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
 import {
   InferredPolymorphic,
-  PolymorphicAs,
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
