@@ -9,7 +9,6 @@ import {
   EnterpriseAdvancedLogoLockup,
   MongoDBLogo,
   MongoDBLogoMark,
-  RealmLogoLockup,
   UniversityLogoLockup,
 } from '@leafygreen-ui/logo';
 import { uiColors } from '@leafygreen-ui/palette';
@@ -102,7 +101,6 @@ export default function LogoLiveExample() {
           <div className={logoContainer}>
             <AtlasLogoLockup color={color} height={54} />
             <AtlasForGovernmentLogoLockup color={color} height={54} />
-            <RealmLogoLockup color={color} height={54} />
             <EnterpriseAdvancedLogoLockup color={color} height={54} />
             <CommunityEditionLogoLockup color={color} height={54} />
             <UniversityLogoLockup color={color} height={36} />
