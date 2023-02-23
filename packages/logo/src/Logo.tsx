@@ -8,7 +8,6 @@ import CommunityEditionLogoLockup from './CommunityEditionLogoLockup';
 import EnterpriseAdvancedLogoLockup from './EnterpriseAdvancedLogoLockup';
 import MongoDBLogo from './MongoDBLogo';
 import MongoDBLogoMark from './MongoDBLogoMark';
-import RealmLogoLockup from './RealmLogoLockup';
 import UniversityLogoLockup from './UniversityLogoLockup';
 import { LogoProps } from './utils';
 
@@ -18,7 +17,6 @@ export const LogoNames = [
   'AtlasNavGraphic',
   'AtlasLogoLockup',
   'AtlasForGovernmentLogoLockup',
-  'RealmLogoLockup',
   'EnterpriseAdvancedLogoLockup',
   'CommunityEditionLogoLockup',
   'UniversityLogoLockup',
@@ -49,7 +47,6 @@ export default function GenericLogo({
     AtlasNavGraphic,
     AtlasLogoLockup,
     AtlasForGovernmentLogoLockup,
-    RealmLogoLockup,
     EnterpriseAdvancedLogoLockup,
     CommunityEditionLogoLockup,
     UniversityLogoLockup,
