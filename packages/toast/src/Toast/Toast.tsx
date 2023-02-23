@@ -32,18 +32,20 @@ import { variantIcons } from './VariantIcon';
 
 function Toast({
   title,
-  body,
+  description,
   className,
   variant = Variant.Note,
   progress = 1.0,
   open = false,
   darkMode: darkModeProp,
-  close,
+  onClose,
+  timeout = 6_000,
+  dismissible = true,
+  action,
   ...rest
 }: ToastProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const nodeRef = useRef(null);
-  const dismissible = typeof close === 'function';
 
   const VariantIcon = variantIcons[variant];
   const iconThemeStyle = variantIconStyle[variant];
@@ -82,23 +84,23 @@ function Toast({
                 />
 
                 <div className={textContentStyle}>
-                  {title && (
+                  <Body
+                    data-testid="toast-title"
+                    className={cx(titleStyle, titleThemeStyle[theme])}
+                  >
+                    {title}
+                  </Body>
+
+                  {description && (
                     <Body
-                      data-testid="toast-title"
-                      className={cx(titleStyle, titleThemeStyle[theme])}
+                      className={cx(
+                        descriptionStyle,
+                        descriptionThemeStyle[theme],
+                      )}
                     >
-                      {title}
+                      {description}
                     </Body>
                   )}
-
-                  <Body
-                    className={cx(
-                      descriptionStyle,
-                      descriptionThemeStyle[theme],
-                    )}
-                  >
-                    {body}
-                  </Body>
                 </div>
               </div>
 
@@ -131,7 +133,8 @@ Toast.displayName = 'Toast';
 Toast.propTypes = {
   darkMode: PropTypes.bool,
   title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
-  body: PropTypes.oneOfType([PropTypes.element, PropTypes.string]).isRequired,
+  description: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
+    .isRequired,
   className: PropTypes.string,
   variant: PropTypes.oneOf(Object.values(Variant)).isRequired,
   progress: PropTypes.number,

@@ -1,3 +1,5 @@
+import { DarkModeProps } from '@leafygreen-ui/lib';
+
 const Variant = {
   Success: 'success',
   Note: 'note',
@@ -10,51 +12,78 @@ type Variant = typeof Variant[keyof typeof Variant];
 
 export { Variant };
 
-export interface ToastProps extends Omit<React.ComponentProps<'div'>, 'title'> {
+export interface ToastProps
+  extends DarkModeProps,
+    Omit<React.ComponentProps<'div'>, 'title'> {
   /**
-   * Optional text shown in bold above the body text.
+   * Primary text for the toast
    */
-  title?: React.ReactNode;
+  title: React.ReactNode;
 
   /**
-   * Required main text for the Toast.
+   * Additional body text
    */
-  body: React.ReactNode;
+  description?: React.ReactNode;
 
   /**
-   * Optional className passed to the wrapping <div /> for the toast.
+   * Required boolean that renders the Toast and makes it visible when true.
+   *
+   * Note: open is not a valid prop when rendering toasts programmatically
+   *
+   * @default false
    */
-  className?: string;
+  open: boolean;
+
+  /**
+   * Required callback. Fired either when the close button is clicked, or when timeout has elapsed.
+   *
+   * You can detect the reason for close by looking at `e.target` or `e.type`
+   * (TODO: exact event type & target TBD)
+   */
+  onClose: React.MouseEventHandler;
+
+  /**
+   * Optional action button (only rendered if variant==='progress')
+   *
+   * This should be a shortcut only—and not the _only_ way to perform the action.
+   *
+   * The provided action element should have an `aria-description` attribute
+   * that describes how to alternatively perform the action
+   */
+  action?: React.ReactNode;
 
   /**
    * Required style variant to render the Toast as.
+   *
+   * Progress variants will ignore the `timeout` prop
    *
    * @default `note`
    */
   variant?: Variant;
 
   /**
-   * Optional number between 0 and 1 that sets the progress bar's progress. Note that the progress bar is only rendered when the Toast variant is set to `'progress'`.
+   * Optional number between 0 and 1 that sets the progress bar's progress.
    *
-   * **Default:** `1`
+   * Note: the progress bar is only rendered when the Toast variant is set to `'progress'`.
    */
   progress?: number;
 
   /**
-   * Optional boolean that renders the Toast and makes it visible when true.
+   * Dismiss the Toast after `timeout` milliseconds
    *
-   * **Default:** `false`
-   */
-  open?: boolean;
-
-  /**
-   * Optional click event handler that, when set, renders a close button that receives the passed handler.
-   */
-  close?: React.MouseEventHandler;
-
-  /**
-   * Determines whether or not the component will be rendered in dark theme.
+   * If timeout is `null | 0`, the Toast will never dismiss automatically.
    *
+   * Note: Timeout timer will be paused when a user is interacting with a Toast
+   *
+   * @default 6_000
    */
-  darkMode?: boolean;
+  timeout?: number | null;
+  /**
+   * Determines whether to render the close button.
+   *
+   * If `timeout === null`, then `dismissible` is forced to `true`
+   *
+   * @default true
+   */
+  dismissible?: boolean;
 }

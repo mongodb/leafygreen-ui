@@ -3,22 +3,23 @@ import { ComponentStory } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { StoryMeta } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
 import Toast, { Variant } from '.';
 
-export default {
+export default StoryMeta<typeof Toast>({
   title: 'Components/Toast',
   component: Toast,
   parameters: {
+    default: 'Basic',
     controls: {
-      exclude: ['open', 'close', 'className'],
+      exclude: ['open', 'onClose'],
     },
   },
   args: {
     title: 'Velit ea exercitation qui aute dolor proident.',
-    body: 'Exercitation incididunt ea proident velit mollit',
+    description: 'Exercitation incididunt ea proident velit mollit',
     open: true,
     variant: Variant.Note,
     darkMode: false,
@@ -37,15 +38,14 @@ export default {
       control: { type: 'range', min: 0, max: 1, step: 0.1 },
       if: { arg: 'variant', eq: Variant.Progress },
     },
-    darkMode: storybookArgTypes.darkMode,
-    body: {
+    description: {
       control: 'text',
     },
     title: {
       control: 'text',
     },
   },
-};
+});
 
 export const Basic: ComponentStory<typeof Toast> = args => {
   const [open, setOpen] = useState(true);
