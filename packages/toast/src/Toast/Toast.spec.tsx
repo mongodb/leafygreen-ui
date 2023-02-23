@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
 import Toast from './Toast';
-import { ToastProps, Variant } from './types';
+import { ToastProps, Variant } from './Toast.types';
 
 function renderToast(props: ToastProps) {
   return render(<Toast {...props} />);
@@ -257,4 +257,21 @@ describe('packages/toast', () => {
       expect(bodySpan).toBeVisible();
     });
   });
+});
+
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip('TS types', () => {
+  render(
+    <>
+      <Toast body="string" />
+      {/* @ts-expect-error - body is required */}
+      <Toast />
+      {/* @ts-expect-error - title is required */}
+      <Toast title="string" />
+
+      <Toast title="string" body="string" />
+      <Toast title="string" body="string" close={() => {}} />
+      <Toast title="string" body="string" close={() => {}} />
+    </>,
+  );
 });
