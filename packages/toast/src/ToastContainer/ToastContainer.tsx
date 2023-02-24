@@ -13,7 +13,6 @@ import {
   notificationBarHeight,
   toastHeight,
   toastInset,
-  yOffset,
 } from '../constants';
 import Toast from '../Toast/Toast';
 import { toastBGColor } from '../Toast/Toast.styles';
@@ -22,12 +21,11 @@ import { ToastId, ToastStack } from '../ToastContext/ToastContext.types';
 import { useToast } from '../ToastContext/useToast';
 
 import { NotificationBar } from './NotificationBar/NotificationBar';
+import { notificationBarTransitionStyles } from './NotificationBar/NotificationBar.styles';
 import {
   getToastTransitionStyles,
   toastContainerStyles,
-  // toastHoverStyles,
 } from './ToastContainer.styles';
-import { notificationBarTransitionStyles } from './NotificationBar/NotificationBar.styles';
 
 const portalClassName = createUniqueClassName('toast-portal');
 const toastClassName = createUniqueClassName('toast');

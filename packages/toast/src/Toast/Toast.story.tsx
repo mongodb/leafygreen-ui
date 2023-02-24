@@ -70,7 +70,7 @@ export const Dismissible: ComponentStory<typeof Toast> = args => {
       <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
         {open ? 'Close' : 'Open'} Toast
       </Button>
-      <Toast {...args} open={open} close={() => setOpen(false)} />
+      <Toast {...args} open={open} onClose={() => setOpen(false)} />
     </>
   );
 };
