@@ -1,5 +1,18 @@
 # @leafygreen-ui/logo
 
+## 8.0.0
+
+### Major Changes
+
+- 4f4590fb0: Removes Realm lockup logo from logo package
+
+### Patch Changes
+
+- Updated dependencies [2e8a572db]
+- Updated dependencies [4ccc353e7]
+- Updated dependencies [4ccc353e7]
+  - @leafygreen-ui/lib@10.2.1
+
 ## 7.0.2
 
 ### Patch Changes

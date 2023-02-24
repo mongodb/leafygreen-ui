@@ -1,5 +1,15 @@
 # @leafygreen-ui/tooltip
 
+## 9.1.5
+
+### Patch Changes
+
+- fc85e3f7a: Fix README formatting
+- Updated dependencies [2e8a572db]
+- Updated dependencies [4ccc353e7]
+- Updated dependencies [4ccc353e7]
+  - @leafygreen-ui/lib@10.2.1
+
 ## 9.1.4
 
 ### Patch Changes

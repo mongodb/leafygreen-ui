@@ -1,5 +1,17 @@
 # @leafygreen-ui/select
 
+## 10.2.2
+
+### Patch Changes
+
+- fc85e3f7a: Fix README formatting
+- Updated dependencies [82e320ed4]
+- Updated dependencies [2e8a572db]
+- Updated dependencies [4ccc353e7]
+- Updated dependencies [4ccc353e7]
+  - @leafygreen-ui/button@20.0.1
+  - @leafygreen-ui/lib@10.2.1
+
 ## 10.2.1
 
 ### Patch Changes
