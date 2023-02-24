@@ -7,8 +7,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
   InferredPolymorphic,
   useInferredPolymorphic,
-  PolymorphicAs,
-  InferredPolymorphicProps,
+  PolymorphicPropsWithRef,
   PolymorphicProps,
 } from '@leafygreen-ui/polymorphic';
 
@@ -27,10 +26,7 @@ import {
 } from './Link.styles';
 import { ArrowAppearance, LinkProps } from './Link.types';
 
-type LinkRenderProps = PolymorphicProps<
-  PolymorphicAs,
-  InferredPolymorphicProps<LinkProps>
->;
+type LinkRenderProps = PolymorphicPropsWithRef<'span', LinkProps>;
 
 type AnchorLikeProps = PolymorphicProps<'a', LinkProps>;
 
@@ -48,7 +44,7 @@ const Link = InferredPolymorphic<LinkProps, 'span'>(
     hideExternalIcon = false,
     baseFontSize: baseFontSizeOverride,
     darkMode: darkModeProp,
-    as = 'span' as PolymorphicAs,
+    as,
     ...rest
   }) => {
     const [currentHostname, setCurrentHostname] = useState('');
@@ -58,7 +54,7 @@ const Link = InferredPolymorphic<LinkProps, 'span'>(
 
     const { theme } = useDarkMode(darkModeProp);
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
-    const { Component } = useInferredPolymorphic(as, rest);
+    const { Component } = useInferredPolymorphic(as, rest, 'span');
 
     const hrefHostname = useMemo(() => {
       if (hasAnchorLikeProps(rest)) {

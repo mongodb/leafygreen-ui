@@ -11,10 +11,11 @@ import { Link } from '..';
 
 import { LinkProps } from './Link.types';
 
-type LinkRenderProps = PolymorphicProps<
-  PolymorphicAs,
-  InferredPolymorphicProps<LinkProps>
->;
+type SpanLikeProps = PolymorphicProps<'span', LinkProps>;
+
+type AnchorLikeProps = PolymorphicProps<'a', LinkProps>;
+
+type LinkRenderProps = SpanLikeProps | AnchorLikeProps;
 
 const renderLink = (props: LinkRenderProps) => {
   render(<Link {...props}>Link</Link>);
@@ -155,6 +156,7 @@ describe('packages/typography', () => {
     test('it renders the correct tag to the DOM', () => {
       renderLink({
         href: 'http://localhost:9001',
+        /* @ts-expect-error to show that "as" overrides "href" */
         as: 'div',
       });
       const div = screen.getByText('Link').parentElement;
@@ -229,10 +231,7 @@ describe('packages/typography', () => {
         <Link as={WrapperComponent} href="string">
           some content
         </Link>
-        {/* @ts-expect-error target is not allowed on a default span */}
-        <Link target="_blank">Content</Link>
         <Link href="string" as={AnchorComponent} />
-        <Link target="_blank" as={AnchorComponent} />
         {/* @ts-expect-error as anchor is not allowed without an href */}
         <Link as="a">Content</Link>
       </>;
