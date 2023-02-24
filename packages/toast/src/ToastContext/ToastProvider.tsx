@@ -1,10 +1,13 @@
 import React from 'react';
+import { Transition, TransitionGroup } from 'react-transition-group';
 
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
 import Portal from '@leafygreen-ui/portal';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import Toast from '../Toast/Toast';
+import { toastTransitionStateStyles } from '../Toast/Toast.styles';
 
 import { ToastContext } from './ToastContext';
 import { useToastReducer } from './ToastReducer';
@@ -24,17 +27,26 @@ export const ToastProvider = ({ children }: React.PropsWithChildren<{}>) => {
 
       <Portal className={portalClassName}>
         <div id={regionId} role="status" aria-live="polite" aria-relevant="all">
-          {Array.from(stack).map(([id, props]) => {
-            return (
-              <Toast
-                key={id}
-                open={true}
-                onClose={() => popToast(id)}
-                {...props}
-                description={id}
-              />
-            );
-          })}
+          <TransitionGroup appear exit component={null}>
+            {Array.from(stack).map(([id, props]) => {
+              return (
+                <Transition key={id} timeout={transitionDuration.default}>
+                  {state => (
+                    <Toast
+                      open={true}
+                      onClose={() => {
+                        props.onClose?.({});
+                        popToast(id);
+                      }}
+                      className={toastTransitionStateStyles[state]}
+                      {...props}
+                      description={id}
+                    />
+                  )}
+                </Transition>
+              );
+            })}
+          </TransitionGroup>
         </div>
       </Portal>
     </ToastContext.Provider>
