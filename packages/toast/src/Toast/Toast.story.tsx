@@ -9,7 +9,7 @@ import { Link } from '@leafygreen-ui/typography';
 import Toast, { Variant } from '.';
 
 export default StoryMeta<typeof Toast>({
-  title: 'Components/Toast',
+  title: 'Components/Toast/Standlone',
   component: Toast,
   parameters: {
     default: 'Basic',
@@ -77,7 +77,7 @@ export const Dismissible: ComponentStory<typeof Toast> = args => {
 
 export const WithLink = Basic.bind({});
 WithLink.args = {
-  body: (
+  description: (
     <>
       Exercitation incididunt ea proident. &nbsp;
       <Link href="http://localhost:9001">Link style</Link>

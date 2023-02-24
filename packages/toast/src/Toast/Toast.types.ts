@@ -26,12 +26,12 @@ export interface ToastProps
   description?: React.ReactNode;
 
   /**
-   * Required callback. Fired either when the close button is clicked, or when timeout has elapsed.
+   * Fired either when the close button is clicked, or when timeout has elapsed.
    *
    * You can detect the reason for close by looking at `e.target` or `e.type`
    * (TODO: exact event type & target TBD)
    */
-  onClose: React.MouseEventHandler;
+  onClose?: React.MouseEventHandler;
 
   /**
    * Optional action button (only rendered if variant==='progress')
@@ -79,6 +79,10 @@ export interface ToastProps
   dismissible?: boolean;
 }
 
+/**
+ * Props for the JSX component
+ */
+
 export interface ToastComponentProps extends ToastProps {
   /**
    * Required boolean that renders the Toast and makes it visible when true.
@@ -88,4 +92,5 @@ export interface ToastComponentProps extends ToastProps {
    * @default false
    */
   open: boolean;
+  onClose: React.MouseEventHandler;
 }
