@@ -6,9 +6,9 @@ import OpenNewTabIcon from '@leafygreen-ui/icon/dist/OpenNewTab';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
   InferredPolymorphic,
-  useInferredPolymorphic,
-  PolymorphicPropsWithRef,
   PolymorphicProps,
+  PolymorphicPropsWithRef,
+  useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
 import { bodyTypeScaleStyles } from '../styles';
@@ -65,19 +65,27 @@ const Link = InferredPolymorphic<LinkProps, 'span'>(
       }
     }, [rest, currentHostname]);
 
-    let target, rel, icon;
+    let icon;
+
+    const defaultAnchorProps: Pick<
+      JSX.IntrinsicElements['a'],
+      'target' | 'rel'
+    > = {
+      target: undefined,
+      rel: undefined,
+    };
 
     // Sets defaults for target and rel props when Component is an anchor tag
     if (Component === 'a') {
       if (hrefHostname === currentHostname) {
-        target = '_self';
+        defaultAnchorProps.target = '_self';
       } else {
-        target = '_blank';
-        rel = 'noopener noreferrer';
+        defaultAnchorProps.target = '_blank';
+        defaultAnchorProps.rel = 'noopener noreferrer';
       }
     }
 
-    if (target === '_blank' && !hideExternalIcon) {
+    if (defaultAnchorProps.target === '_blank' && !hideExternalIcon) {
       icon = (
         <OpenNewTabIcon role="presentation" className={openInNewTabStyles} />
       );
@@ -104,8 +112,7 @@ const Link = InferredPolymorphic<LinkProps, 'span'>(
           linkModeStyles[theme],
           className,
         )}
-        target={target}
-        rel={rel}
+        {...defaultAnchorProps}
         {...rest}
       >
         <span className={cx(underlineStyles, underlineModeStyles[theme])}>

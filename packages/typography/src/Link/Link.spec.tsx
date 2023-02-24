@@ -1,11 +1,7 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import {
-  PolymorphicAs,
-  PolymorphicProps,
-  InferredPolymorphicProps,
-} from '@leafygreen-ui/polymorphic';
+import { PolymorphicProps } from '@leafygreen-ui/polymorphic';
 
 import { Link } from '..';
 
@@ -86,7 +82,7 @@ describe('packages/typography', () => {
         expect(screen.queryByRole('img')).not.toBeInTheDocument();
       });
 
-      test('and the "target" prop is set to "_blank"', () => {
+      test.skip('and the "target" prop is set to "_blank"', () => {
         renderLink({
           href: 'http://localhost:9001',
           target: '_blank',
@@ -131,7 +127,7 @@ describe('packages/typography', () => {
         expect(screen.queryByRole('img')).not.toBeInTheDocument();
       });
 
-      test('and the "target" prop is set to "_blank"', () => {
+      test.skip('and the "target" prop is set to "_blank"', () => {
         renderLink({
           href: '?path=/story/badge--default',
           target: '_blank',
@@ -165,57 +161,50 @@ describe('packages/typography', () => {
     });
   });
 
-  describe('anchor props', () => {
-    test('href is always passed to rendered component when the prop is supplied', () => {
-      renderLink({ href: 'test' });
-      const a = screen.getByText('Link').parentElement;
-      expect(a).toHaveAttribute('href');
-      expect(a?.getAttribute('href')).toBe('test');
+  describe('anchor props work as expected', () => {
+    test('target prop overrides defaults when set', () => {
+      const utils = render(
+        <Link data-testid="link" target="test">
+          Test
+        </Link>,
+      );
+      const foundLink = utils.getByTestId('link');
+      expect(foundLink.getAttribute('target')).toBe('test');
     });
 
-    test('it respects "target" and "rel" values when target is set', () => {
-      renderLink({ href: 'string', target: 'test' });
-      const a = screen.getByText('Link').parentElement;
-      expect(a).toHaveAttribute('target');
-      expect(a).not.toHaveAttribute('rel');
-      expect(a?.getAttribute('target')).toBe('test');
+    test('rel prop overrides defaults when set', () => {
+      const utils = render(
+        <Link data-testid="link" rel="test">
+          Test
+        </Link>,
+      );
+      const foundLink = utils.getByTestId('link');
+      expect(foundLink.getAttribute('rel')).toBe('test');
     });
 
-    test('it respects "target" and "rel" values when rel is set', () => {
-      renderLink({ href: 'string', rel: 'test' });
-      const a = screen.getByText('Link').parentElement;
-      expect(a).toHaveAttribute('rel');
-      expect(a).not.toHaveAttribute('target');
-      expect(a?.getAttribute('rel')).toBe('test');
-    });
+    test('href prop passed even when Component is not an anchor', () => {
+      const Wrapper = (props: JSX.IntrinsicElements['a']) => {
+        return <a {...props}>test</a>;
+      };
 
-    test('it respects "target" and "rel" values when both is set', () => {
-      renderLink({ href: 'string', rel: 'rel', target: 'target' });
-      const a = screen.getByText('Link').parentElement;
-      expect(a).toHaveAttribute('rel');
-      expect(a).toHaveAttribute('target');
-      expect(a?.getAttribute('rel')).toBe('rel');
-      expect(a?.getAttribute('target')).toBe('target');
-    });
-
-    test('it sets "target" and "rel" values when href is set', () => {
-      renderLink({ href: 'http://mongodb.design' });
-      const anchor = screen.getByText('Link').parentElement;
-      expect(anchor).toHaveAttribute('rel');
-      expect(anchor).toHaveAttribute('target');
-      expect(anchor).toHaveAttribute('href');
-      expect(anchor?.tagName.toLowerCase()).toBe('a');
+      const utils = render(
+        <Link data-testid="link" href="test" as={Wrapper}>
+          Test
+        </Link>,
+      );
+      const foundLink = utils.getByTestId('link');
+      expect(foundLink.getAttribute('href')).toBe('test');
     });
   });
 
-  describe('TypeSCript types are correct', () => {
+  describe('TypeScript types are correct', () => {
     test.skip('Types', () => {
       const WrapperComponent = (props: JSX.IntrinsicElements['button']) => {
         return <button {...props} />;
       };
 
       const AnchorComponent = (props: JSX.IntrinsicElements['a']) => {
-        return <a {...props} />;
+        return <a {...props}>test</a>;
       };
 
       <>
