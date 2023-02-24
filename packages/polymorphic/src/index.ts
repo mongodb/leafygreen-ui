@@ -2,6 +2,7 @@ export {
   InferredPolymorphic,
   type InferredPolymorphicComponentType,
   type InferredPolymorphicProps,
+  type InferredPolymorphicPropsWithRef,
   useInferredPolymorphic,
 } from './InferredPolymorphic';
 export {
@@ -15,3 +16,7 @@ export {
   usePolymorphic,
   usePolymorphicRef,
 } from './Polymorphic';
+export {
+  type LoosePolymorphicProps,
+  type PropsOf,
+} from './utils/Polymorphic.utils';
