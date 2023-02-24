@@ -1,9 +1,11 @@
 import React from 'react';
+import { sample } from 'lodash';
 
 import Button from '@leafygreen-ui/button';
 import { StoryMeta } from '@leafygreen-ui/lib';
 
 import Toast from '../Toast/Toast';
+import { Variant } from '../Toast/Toast.types';
 
 import { ToastProvider } from './ToastProvider';
 import { useToast } from './useToast';
@@ -22,8 +24,10 @@ const BasicChildren = () => {
   return (
     <Button
       onClick={() => {
+        const variant = sample(Variant);
         pushToast({
-          title: "I'm a toast",
+          title: `I'm a ${variant} toast`,
+          variant,
         });
       }}
     >

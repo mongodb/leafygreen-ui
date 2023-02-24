@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
@@ -6,7 +6,6 @@ import { cx } from '@leafygreen-ui/emotion';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import Portal from '@leafygreen-ui/portal';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
@@ -70,80 +69,66 @@ function Toast({
   }, [timeout, startTimer]);
 
   return (
-    <Portal>
-      <div
-        role="status"
-        aria-live="polite"
-        aria-atomic="true"
-        aria-relevant="all"
-      >
-        <Transition
-          in={open}
-          timeout={transitionDuration.default}
-          mountOnEnter
-          unmountOnExit
-          nodeRef={nodeRef}
+    <Transition
+      in={open}
+      timeout={transitionDuration.default}
+      mountOnEnter
+      unmountOnExit
+      nodeRef={nodeRef}
+    >
+      {state => (
+        <div
+          ref={nodeRef}
+          className={cx(
+            baseToastStyle,
+            toastThemeStyles[theme],
+            toastTransitionStateStyles[state],
+            className,
+          )}
+          aria-atomic="true"
+          {...rest}
         >
-          {state => (
-            <div
-              ref={nodeRef}
-              className={cx(
-                baseToastStyle,
-                toastThemeStyles[theme],
-                toastTransitionStateStyles[state],
-                className,
-              )}
-              {...rest}
-            >
-              <div className={cx(contentWrapperStyle)}>
-                <VariantIcon
-                  aria-hidden
-                  className={cx(baseIconStyle, iconThemeStyle[theme])}
-                  size={32}
-                />
+          <div className={cx(contentWrapperStyle)}>
+            <VariantIcon
+              aria-hidden
+              className={cx(baseIconStyle, iconThemeStyle[theme])}
+              size={32}
+            />
 
-                <div className={textContentStyle}>
-                  <Body
-                    data-testid="toast-title"
-                    className={cx(titleStyle, titleThemeStyle[theme])}
-                  >
-                    {title}
-                  </Body>
+            <div className={textContentStyle}>
+              <Body
+                data-testid="toast-title"
+                className={cx(titleStyle, titleThemeStyle[theme])}
+              >
+                {title}
+              </Body>
 
-                  {description && (
-                    <Body
-                      className={cx(
-                        descriptionStyle,
-                        descriptionThemeStyle[theme],
-                      )}
-                    >
-                      {description}
-                    </Body>
-                  )}
-                </div>
-              </div>
-
-              {dismissible && (
-                <IconButton
-                  className={cx(
-                    dismissButtonStyle,
-                    dismissButtonThemeStyle[theme],
-                  )}
-                  aria-label="Close Message"
-                  onClick={close}
-                  darkMode={!darkMode}
+              {description && (
+                <Body
+                  className={cx(descriptionStyle, descriptionThemeStyle[theme])}
                 >
-                  <XIcon />
-                </IconButton>
-              )}
-              {variant === Variant.Progress && (
-                <ProgressBar theme={theme} progress={progress} />
+                  {description}
+                </Body>
               )}
             </div>
+          </div>
+
+          {dismissible && (
+            <IconButton
+              className={cx(dismissButtonStyle, dismissButtonThemeStyle[theme])}
+              aria-label="Close Message"
+              onClick={onClose}
+              darkMode={!darkMode}
+            >
+              <XIcon />
+            </IconButton>
           )}
-        </Transition>
-      </div>
-    </Portal>
+          {variant === Variant.Progress && (
+            <ProgressBar theme={theme} progress={progress} />
+          )}
+        </div>
+      )}
+    </Transition>
   );
 }
 
