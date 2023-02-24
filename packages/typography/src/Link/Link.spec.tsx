@@ -82,7 +82,7 @@ describe('packages/typography', () => {
         expect(screen.queryByRole('img')).not.toBeInTheDocument();
       });
 
-      test.skip('and the "target" prop is set to "_blank"', () => {
+      test('and the "target" prop is set to "_blank"', () => {
         renderLink({
           href: 'http://localhost:9001',
           target: '_blank',
@@ -127,7 +127,7 @@ describe('packages/typography', () => {
         expect(screen.queryByRole('img')).not.toBeInTheDocument();
       });
 
-      test.skip('and the "target" prop is set to "_blank"', () => {
+      test('and the "target" prop is set to "_blank"', () => {
         renderLink({
           href: '?path=/story/badge--default',
           target: '_blank',
@@ -198,6 +198,7 @@ describe('packages/typography', () => {
   });
 
   describe('TypeScript types are correct', () => {
+    // eslint-disable-next-line
     test.skip('Types', () => {
       const WrapperComponent = (props: JSX.IntrinsicElements['button']) => {
         return <button {...props} />;

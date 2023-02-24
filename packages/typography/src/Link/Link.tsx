@@ -71,8 +71,8 @@ const Link = InferredPolymorphic<LinkProps, 'span'>(
       JSX.IntrinsicElements['a'],
       'target' | 'rel'
     > = {
-      target: undefined,
-      rel: undefined,
+      target: (rest as AnchorLikeProps).target ?? undefined,
+      rel: (rest as AnchorLikeProps).rel ?? undefined,
     };
 
     // Sets defaults for target and rel props when Component is an anchor tag
