@@ -26,15 +26,6 @@ export interface ToastProps
   description?: React.ReactNode;
 
   /**
-   * Required boolean that renders the Toast and makes it visible when true.
-   *
-   * Note: open is not a valid prop when rendering toasts programmatically
-   *
-   * @default false
-   */
-  open: boolean;
-
-  /**
    * Required callback. Fired either when the close button is clicked, or when timeout has elapsed.
    *
    * You can detect the reason for close by looking at `e.target` or `e.type`
@@ -86,4 +77,15 @@ export interface ToastProps
    * @default true
    */
   dismissible?: boolean;
+}
+
+export interface ToastComponentProps extends ToastProps {
+  /**
+   * Required boolean that renders the Toast and makes it visible when true.
+   *
+   * Note: open is not a valid prop when rendering toasts programmatically
+   *
+   * @default false
+   */
+  open: boolean;
 }

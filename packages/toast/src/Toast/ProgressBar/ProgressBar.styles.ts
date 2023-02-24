@@ -3,7 +3,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
-import { toastWidth } from '../Toast/Toast.styles';
+import { toastWidth } from '../Toast.styles';
 
 const barHeight = 4;
 

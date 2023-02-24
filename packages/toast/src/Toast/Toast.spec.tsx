@@ -3,9 +3,9 @@ import { fireEvent, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
 import Toast from './Toast';
-import { ToastProps, Variant } from './Toast.types';
+import { ToastComponentProps, Variant } from './Toast.types';
 
-function renderToast(props: ToastProps) {
+function renderToast(props: ToastComponentProps) {
   return render(<Toast {...props} />);
 }
 
@@ -265,7 +265,7 @@ describe.skip('TS types', () => {
     title: 'string',
     open: false,
     onClose: () => {},
-  } as ToastProps;
+  } as ToastComponentProps;
 
   render(
     <>

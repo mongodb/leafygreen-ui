@@ -10,8 +10,7 @@ import Portal from '@leafygreen-ui/portal';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
-import { ProgressBar } from '../ProgressBar';
-
+import { ProgressBar } from './ProgressBar';
 import {
   baseIconStyle,
   baseToastStyle,
@@ -27,7 +26,7 @@ import {
   toastTransitionStateStyles,
   variantIconStyle,
 } from './Toast.styles';
-import { ToastProps, Variant } from './Toast.types';
+import { ToastComponentProps, Variant } from './Toast.types';
 import { variantIcons } from './VariantIcon';
 
 function Toast({
@@ -43,7 +42,7 @@ function Toast({
   dismissible = true,
   action,
   ...rest
-}: ToastProps) {
+}: ToastComponentProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const nodeRef = useRef(null);
 
