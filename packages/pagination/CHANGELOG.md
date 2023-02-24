@@ -1,5 +1,17 @@
 # @leafygreen-ui/pagination
 
+## 1.0.2
+
+### Patch Changes
+
+- 227c0bc76: Changing Storybook to be rendered on mongodb.design
+- Updated dependencies [2e8a572db]
+- Updated dependencies [4ccc353e7]
+- Updated dependencies [4ccc353e7]
+- Updated dependencies [fc85e3f7a]
+  - @leafygreen-ui/lib@10.2.1
+  - @leafygreen-ui/select@10.2.2
+
 ## 1.0.1
 
 ### Patch Changes
