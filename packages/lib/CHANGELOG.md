@@ -1,5 +1,13 @@
 # @leafygreen-ui/lib
 
+## 10.2.1
+
+### Patch Changes
+
+- 2e8a572db: Improves array handling on StoryMeta factory function. Adds tests for factory function
+- 4ccc353e7: Adds 'allEqual`util function`. Also removes circular dependency in `getTheme`.
+- 4ccc353e7: Excludes a few more storybook controls
+
 ## 10.2.0
 
 ### Minor Changes

@@ -1,5 +1,15 @@
 # @leafygreen-ui/button
 
+## 20.0.1
+
+### Patch Changes
+
+- 82e320ed4: Add focus styles to to override any global button styles
+- Updated dependencies [2e8a572db]
+- Updated dependencies [4ccc353e7]
+- Updated dependencies [4ccc353e7]
+  - @leafygreen-ui/lib@10.2.1
+
 ## 20.0.0
 
 ### Major Changes
