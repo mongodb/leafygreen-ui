@@ -1,8 +1,6 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
-
 import { Size } from '../types';
 
-export interface MenuItemProps extends HTMLElementProps<'button'> {
+export interface MenuItemProps {
   /**
    * Determines whether or not the MenuItem is active.
    */

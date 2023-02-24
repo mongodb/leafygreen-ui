@@ -1,2 +1,2 @@
-export { SubMenu, SubMenuElement } from './SubMenu';
+export { SubMenu } from './SubMenu';
 export { SubMenuProps } from './SubMenu.types';

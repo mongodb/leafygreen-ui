@@ -5,9 +5,6 @@ import { cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, getNodeTextContent } from '@leafygreen-ui/lib';
 import {
   InferredPolymorphic,
-  InferredPolymorphicProps,
-  PolymorphicAs,
-  PolymorphicPropsWithRef,
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
@@ -43,6 +40,7 @@ const menuItemContainerClassName = createUniqueClassName('menu-item-container');
 export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
   (
     {
+      as,
       disabled = false,
       active = false,
       size = Size.Default,
@@ -50,12 +48,11 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
       children,
       description,
       glyph,
-      as = 'button' as PolymorphicAs,
       ...rest
     },
     ref: React.Ref<any>,
   ) => {
-    const { Component } = useInferredPolymorphic(as, rest);
+    const { Component } = useInferredPolymorphic(as, rest, 'button');
     const { theme } = useContext(MenuContext);
     const hoverStyles = getHoverStyles(menuItemContainerClassName, theme);
     const focusStyles = getFocusedStyles(menuItemContainerClassName, theme);
@@ -173,10 +170,3 @@ MenuItem.propTypes = {
 };
 
 export default MenuItem;
-
-export type MenuItemElementProps = PolymorphicPropsWithRef<
-  PolymorphicAs,
-  InferredPolymorphicProps<MenuItemProps>
->;
-
-export type MenuItemElement = React.Component<MenuItemElementProps>;
