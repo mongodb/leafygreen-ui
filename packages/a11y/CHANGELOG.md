@@ -1,5 +1,15 @@
 # @leafygreen-ui/a11y
 
+## 1.4.1
+
+### Patch Changes
+
+- 4ccc353e7: Add ts docs to `AriaLabelProps`
+- Updated dependencies [2e8a572db]
+- Updated dependencies [4ccc353e7]
+- Updated dependencies [4ccc353e7]
+  - @leafygreen-ui/lib@10.2.1
+
 ## 1.4.0
 
 ### Minor Changes

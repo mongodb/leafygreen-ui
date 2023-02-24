@@ -1,5 +1,27 @@
 # @leafygreen-ui/combobox
 
+## 5.0.9
+
+### Patch Changes
+
+- 2e8a572db: Internal refactoring. Adds `input-option` as a dependency
+- Updated dependencies [2e8a572db]
+- Updated dependencies [4ccc353e7]
+- Updated dependencies [4ccc353e7]
+  - @leafygreen-ui/lib@10.2.1
+
+## 5.0.8
+
+### Patch Changes
+
+- 95eeb5a06: Spread `...rest` to `ComboboxOption`
+- d58af1054: Fixes bug where clicking the clear icon button triggered the menu to reopen.
+- Updated dependencies [0541bd776]
+- Updated dependencies [ec2a3d66d]
+- Updated dependencies [ec2a3d66d]
+  - @leafygreen-ui/lib@10.2.0
+  - @leafygreen-ui/hooks@7.6.0
+
 ## 5.0.7
 
 ### Patch Changes

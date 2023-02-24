@@ -4,16 +4,25 @@ import createUniqueClassName from './createUniqueClassName';
 import getNodeTextContent from './getNodeTextContent';
 import DarkModeProps, { Theme } from './DarkModeProps';
 import getTheme from './getTheme';
+import { allEqual } from './allEqual';
 export { validateChildren } from './validateChildren';
 export { createSyntheticEvent } from './createSyntheticEvent';
 
 export {
+  StoryMeta,
   storybookArgTypes,
   storybookExcludedControlParams,
   IntrinsicElements,
 } from './storybook';
 
-export { typeIs, createUniqueClassName, getNodeTextContent, getTheme, Theme };
+export {
+  typeIs,
+  createUniqueClassName,
+  getNodeTextContent,
+  getTheme,
+  Theme,
+  allEqual,
+};
 export type { DarkModeProps };
 
 /** Helper type to extract an HTML element's valid props */
