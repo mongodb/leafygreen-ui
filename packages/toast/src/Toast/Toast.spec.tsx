@@ -254,9 +254,9 @@ describe.skip('TS types', () => {
       <Toast title="string" onClose={() => {}} />
       {/* @ts-expect-error - title is required */}
       <Toast open={false} onClose={() => {}} />
-      ``
       {/* @ts-expect-error - onClose is required */}
       <Toast title="string" open={false} />
+
       <Toast title="string" open={false} onClose={() => {}} />
     </>,
   );
