@@ -71,6 +71,17 @@ export const useToastReducer = () => {
   const getToast: ToastContextProps['getToast'] = (id: ToastId) =>
     stack.get(id);
 
+  const popToast: ToastContextProps['popToast'] = (payload: ToastId) => {
+    dispatch({
+      type: ToastReducerActionType.Pop,
+      payload,
+    });
+
+    console.log('popping toast', { id: payload });
+
+    return getToast(payload);
+  };
+
   const pushToast: ToastContextProps['pushToast'] = (props: ToastProps) => {
     const id = generateToastId();
 
@@ -82,14 +93,6 @@ export const useToastReducer = () => {
     console.log('pushing toast', { ...props, id });
 
     return id;
-  };
-
-  const popToast: ToastContextProps['popToast'] = (payload: ToastId) => {
-    dispatch({
-      type: ToastReducerActionType.Pop,
-      payload,
-    });
-    return getToast(payload);
   };
 
   const updateToast: ToastContextProps['updateToast'] = (payload: {

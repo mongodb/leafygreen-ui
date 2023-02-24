@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
@@ -44,10 +44,30 @@ function Toast({
   ...rest
 }: ToastComponentProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
+  const timeoutId = useRef<NodeJS.Timeout>();
   const nodeRef = useRef(null);
 
   const VariantIcon = variantIcons[variant];
   const iconThemeStyle = variantIconStyle[variant];
+
+  const startTimer = useCallback(() => {
+    if (timeout) {
+      const _timeoutId = setTimeout(() => {
+        onClose?.({});
+      }, timeout);
+
+      timeoutId.current = _timeoutId;
+    }
+  }, [onClose, timeout]);
+
+  const stopTimer = () => {
+    if (timeoutId.current) clearTimeout(timeoutId.current);
+  };
+
+  useEffect(() => {
+    stopTimer();
+    startTimer();
+  }, [timeout, startTimer]);
 
   return (
     <Portal>
@@ -131,14 +151,12 @@ Toast.displayName = 'Toast';
 
 Toast.propTypes = {
   darkMode: PropTypes.bool,
-  title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
-  description: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
-    .isRequired,
-  className: PropTypes.string,
-  variant: PropTypes.oneOf(Object.values(Variant)).isRequired,
+  title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]).isRequired,
+  description: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+  variant: PropTypes.oneOf(Object.values(Variant)),
   progress: PropTypes.number,
   open: PropTypes.bool,
-  close: PropTypes.func,
+  onClose: PropTypes.func,
 };
 
 export default Toast;

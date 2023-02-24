@@ -31,7 +31,7 @@ export interface ToastProps
    * You can detect the reason for close by looking at `e.target` or `e.type`
    * (TODO: exact event type & target TBD)
    */
-  onClose?: React.MouseEventHandler;
+  onClose?: React.EventHandler<any>;
 
   /**
    * Optional action button (only rendered if variant==='progress')
@@ -92,5 +92,5 @@ export interface ToastComponentProps extends ToastProps {
    * @default false
    */
   open: boolean;
-  onClose: React.MouseEventHandler;
+  onClose: React.EventHandler<any>;
 }
