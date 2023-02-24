@@ -28,6 +28,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@emotion/styled": "^11.10.5"
+    "@emotion/styled": "^11.10.5",
+    "next": "^13.1.6"
   }
 }
