@@ -7,4 +7,5 @@ export const ToastContext = React.createContext<ToastContextProps>({
   popToast: () => undefined,
   updateToast: () => undefined,
   getToast: () => undefined,
+  getStack: () => undefined,
 });

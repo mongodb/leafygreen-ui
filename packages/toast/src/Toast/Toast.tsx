@@ -68,12 +68,7 @@ function Toast({
   return (
     <div
       ref={nodeRef}
-      className={cx(
-        baseToastStyle,
-        toastThemeStyles[theme],
-        // toastTransitionStateStyles[state],
-        className,
-      )}
+      className={cx(baseToastStyle, toastThemeStyles[theme], className)}
       aria-atomic="true"
       {...rest}
     >

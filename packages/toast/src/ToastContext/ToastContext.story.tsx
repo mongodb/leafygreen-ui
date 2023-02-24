@@ -28,7 +28,7 @@ const BasicChildren = () => {
         pushToast({
           title: `I'm a ${variant} toast`,
           variant,
-          timeout: 3_000,
+          timeout: null,
         });
       }}
     >

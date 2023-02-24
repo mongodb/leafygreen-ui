@@ -14,6 +14,7 @@ export interface ToastContextProps {
     props: Partial<ToastProps>;
   }) => ToastProps | undefined;
   getToast: (id: ToastId) => ToastProps | undefined;
+  getStack: () => ToastStack | undefined;
 }
 
 /**

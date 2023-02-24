@@ -77,7 +77,7 @@ export const useToastReducer = () => {
       payload,
     });
 
-    console.log('popping toast', { id: payload });
+    // console.log('popping toast', { id: payload });
 
     return getToast(payload);
   };
@@ -90,7 +90,7 @@ export const useToastReducer = () => {
       payload: { id, props },
     });
 
-    console.log('pushing toast', { ...props, id });
+    // console.log('pushing toast', { ...props, id });
 
     return id;
   };
