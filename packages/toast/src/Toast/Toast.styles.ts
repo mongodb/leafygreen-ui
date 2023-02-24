@@ -11,9 +11,9 @@ import {
 } from '@leafygreen-ui/tokens';
 import { anchorClassName } from '@leafygreen-ui/typography';
 
+import { toastHeight, toastInset, toastWidth } from '../constants';
+
 import { Variant } from './Toast.types';
-export const toastWidth = 400;
-export const toastHeight = 56;
 
 export const toastBGColor: Record<Theme, string> = {
   [Theme.Light]: palette.black,
@@ -22,8 +22,8 @@ export const toastBGColor: Record<Theme, string> = {
 
 export const baseToastStyle = css`
   position: fixed;
-  left: ${spacing[1]}px;
-  bottom: ${spacing[1]}px;
+  left: ${toastInset}px;
+  bottom: ${toastInset}px;
   width: ${toastWidth}px;
   min-height: ${toastHeight - 2}px; // -2 for border
 

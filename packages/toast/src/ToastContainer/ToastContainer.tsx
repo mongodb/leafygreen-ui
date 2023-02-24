@@ -8,19 +8,26 @@ import { createUniqueClassName } from '@leafygreen-ui/lib';
 import Portal from '@leafygreen-ui/portal';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
+import {
+  gap,
+  notificationBarHeight,
+  toastHeight,
+  toastInset,
+  yOffset,
+} from '../constants';
 import Toast from '../Toast/Toast';
-import { toastHeight } from '../Toast/Toast.styles';
+import { toastBGColor } from '../Toast/Toast.styles';
 import { ToastProps } from '../Toast/Toast.types';
 import { ToastId, ToastStack } from '../ToastContext/ToastContext.types';
 import { useToast } from '../ToastContext/useToast';
 
+import { NotificationBar } from './NotificationBar/NotificationBar';
 import {
-  gap,
   getToastTransitionStyles,
   toastContainerStyles,
-  toastHoverStyles,
-  yOffset,
+  // toastHoverStyles,
 } from './ToastContainer.styles';
+import { notificationBarTransitionStyles } from './NotificationBar/NotificationBar.styles';
 
 const portalClassName = createUniqueClassName('toast-portal');
 const toastClassName = createUniqueClassName('toast');
@@ -33,6 +40,8 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
 
   const { recentToasts, remainingToasts } = getDividedStack(stack);
   const indexFromTop = (i: number) => recentToasts.length - 1 - i;
+  const showNotifBar = isHovered && remainingToasts.length > 0;
+  const notifBarSpacing = showNotifBar ? notificationBarHeight + gap : 0;
 
   return (
     <Portal className={portalClassName}>
@@ -43,14 +52,13 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
         aria-relevant="all"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        className={cx(
-          toastContainerStyles,
-          css`
-            &:hover {
-              height: ${recentToasts.length * (toastHeight + gap) + yOffset}px;
-            }
-          `,
-        )}
+        className={cx(toastContainerStyles, {
+          [css`
+            height: ${toastInset +
+            recentToasts.length * (toastHeight + gap) +
+            notifBarSpacing}px;
+          `]: isHovered,
+        })}
       >
         <TransitionGroup appear exit component={null}>
           {recentToasts.map(
@@ -69,10 +77,17 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
                         getToastTransitionStyles({
                           state,
                           theme,
-                          index: indexFromTop(i),
+                          indexFromTop: indexFromTop(i),
                         }),
                         {
-                          [toastHoverStyles({ index: i, theme })]: isHovered,
+                          [css`
+                            background-color: ${toastBGColor[theme]};
+                            transform: translate3d(
+                              0,
+                              -${i * (toastHeight + gap) + notifBarSpacing}px,
+                              0
+                            );
+                          `]: isHovered,
                         },
                         className,
                       )}
@@ -87,7 +102,15 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
             },
           )}
         </TransitionGroup>
-        {remainingToasts && <div>{remainingToasts.length} more</div>}
+        <Transition in={showNotifBar} timeout={transitionDuration.slower}>
+          {state => (
+            <NotificationBar
+              count={remainingToasts.length}
+              onClick={() => {}}
+              className={notificationBarTransitionStyles[state]}
+            />
+          )}
+        </Transition>
       </div>
     </Portal>
   );
