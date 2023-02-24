@@ -243,10 +243,7 @@ describe('packages/polymorphic', () => {
     });
 
     // TODO: Waiting on https://jira.mongodb.org/browse/LG-2733
-    // eslint-disable-next-line jest/no-disabled-tests
-    test.skip('Passes the `expect.toBePolymorphic` rule', () => {
-      // expect(Polymorph).toBePolymorphic();
-    });
+    test.todo('Passes the `expect.toBePolymorphic` rule');
   });
 
   describe('TSDoc output', () => {
