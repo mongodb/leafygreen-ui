@@ -36,7 +36,8 @@
     "@leafygreen-ui/leafygreen-provider": "^3.1.0"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "^20.0.1"
+    "@leafygreen-ui/button": "^20.0.1",
+    "@leafygreen-ui/testing-lib": "0.2.1"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/toast",
   "repository": {

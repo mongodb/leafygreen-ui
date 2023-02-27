@@ -84,6 +84,7 @@ export function InternalToast({
           aria-label="Close Message"
           onClick={onClose}
           darkMode={!darkMode}
+          data-testid="lg-toast-dismiss-button"
         >
           <XIcon />
         </IconButton>

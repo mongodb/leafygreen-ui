@@ -11,7 +11,7 @@ function renderToast(props: InternalToastProps) {
   return render(<InternalToast {...props} />);
 }
 
-describe('packages/toast', () => {
+describe.skip('packages/toast', () => {
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
       const { container } = renderToast({

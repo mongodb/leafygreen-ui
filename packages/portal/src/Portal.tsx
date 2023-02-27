@@ -66,6 +66,11 @@ function Portal(props: PortalProps) {
     if (container && !props.container) {
       container.className = props.className ?? '';
     }
+
+    return () => {
+      container?.remove();
+      props.container?.remove();
+    };
   }, [container, props.container, props.className]);
 
   if (!container) {

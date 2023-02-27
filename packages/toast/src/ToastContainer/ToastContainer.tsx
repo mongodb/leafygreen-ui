@@ -27,7 +27,7 @@ import {
 } from './ToastContainer.styles';
 import { useTimers } from './useTimers';
 
-const portalClassName = createUniqueClassName('toast-portal');
+export const toastPortalClassName = createUniqueClassName('toast-portal');
 const toastClassName = createUniqueClassName('toast');
 
 export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
@@ -50,7 +50,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
   );
 
   return (
-    <Portal className={portalClassName}>
+    <Portal className={toastPortalClassName}>
       <div
         id={regionId}
         role="status"
