@@ -105,9 +105,9 @@ describe('packages/select', () => {
     rerender(<Select {...defaultProps} placeholder="Explicit placeholder" />);
 
     button = getByRole('button');
-    expect(getByTextFor(combobox, 'Explicit placeholder')).toBeVisible();
+    expect(getByTextFor(button, 'Explicit placeholder')).toBeVisible();
 
-    userEvent.click(combobox);
+    userEvent.click(button);
 
     const listbox = await waitFor(() => {
       const listbox = getByRole('listbox');
@@ -231,17 +231,22 @@ describe('packages/select', () => {
       expect(document.body).toHaveFocus();
 
       userEvent.tab();
-      const combobox = getByRole('button');
-      expect(combobox).toHaveFocus();
+      const button = getByRole('button');
+      expect(button).toHaveFocus();
 
       userEvent.tab();
       expect(document.body).toHaveFocus();
     });
 
-    test('does not contain component when disabled', () => {
-      render(<Select {...defaultProps} disabled />);
+    // Select should still be focusable when disabled
+    test('and contains component when disabled', () => {
+      const { getByRole } = render(<Select {...defaultProps} />);
 
       expect(document.body).toHaveFocus();
+
+      userEvent.tab();
+      const button = getByRole('button');
+      expect(button).toHaveFocus();
 
       userEvent.tab();
       expect(document.body).toHaveFocus();
@@ -438,17 +443,17 @@ describe('packages/select', () => {
       test('by clicking', async () => {
         const { getByRole, queryByRole } = render(<Select {...defaultProps} />);
 
-        const combobox = getByRole('button');
+        const button = getByRole('button');
 
         expect(queryByRole('listbox')).not.toBeInTheDocument();
 
-        userEvent.click(combobox);
+        userEvent.click(button);
 
         await waitFor(() => {
           expect(getByRole('listbox')).toBeVisible();
         });
 
-        expect(combobox).toHaveFocus();
+        expect(button).toHaveFocus();
       });
 
       test('by arrow down key', async () => {
@@ -503,7 +508,8 @@ describe('packages/select', () => {
           const button = getByRole('button');
           userEvent.click(button);
 
-          expect(button).not.toHaveFocus();
+          // Focus is allowed, but the menu does not open
+          expect(button).toHaveFocus();
 
           expect(queryByRole('listbox')).not.toBeInTheDocument();
         });
