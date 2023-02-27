@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 
-import { InternalToastProps } from '../InternalToast';
 import { useToast } from '../ToastContext/useToast';
 
-export const Toast = (props: InternalToastProps) => {
+import { ToastComponentProps } from './ToastComponentProps.types';
+
+export const Toast = (props: ToastComponentProps) => {
   const { pushToast } = useToast();
 
   useEffect(() => {

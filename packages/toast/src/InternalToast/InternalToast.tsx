@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -7,7 +7,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
-import { Variant } from '../Toast.types';
+import { ToastProps, Variant } from '../Toast.types';
 
 import {
   baseIconStyle,
@@ -23,7 +23,6 @@ import {
   toastThemeStyles,
   variantIconStyle,
 } from './InternalToast.styles';
-import { InternalToastProps } from './InternalToast.types';
 import { ProgressBar } from './ProgressBar';
 import { variantIcons } from './VariantIcon';
 
@@ -36,36 +35,16 @@ export function InternalToast({
   // open = false,
   darkMode: darkModeProp,
   onClose,
-  timeout = 6_000,
+  // timeout = 6_000,
   dismissible = true,
   action,
   ...rest
-}: InternalToastProps) {
+}: ToastProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
-  const timeoutId = useRef<NodeJS.Timeout>();
   const nodeRef = useRef(null);
 
   const VariantIcon = variantIcons[variant];
   const iconThemeStyle = variantIconStyle[variant];
-
-  const startTimer = useCallback(() => {
-    if (timeout) {
-      const _timeoutId = setTimeout(() => {
-        onClose?.({});
-      }, timeout);
-
-      timeoutId.current = _timeoutId;
-    }
-  }, [onClose, timeout]);
-
-  const stopTimer = () => {
-    if (timeoutId.current) clearTimeout(timeoutId.current);
-  };
-
-  useEffect(() => {
-    stopTimer();
-    startTimer();
-  }, [timeout, startTimer]);
 
   return (
     <div

@@ -44,7 +44,7 @@ export const baseToastStyle = css`
   overflow: hidden;
   transform: translate3d(0, ${spacing[3]}px, 0) scale(0.95);
   transform-origin: bottom center;
-  transition: all ${transitionDuration.default}ms ease-out;
+  transition: all ${transitionDuration.default}ms ease-in-out;
 
   .${anchorClassName}, a {
     font-size: inherit;

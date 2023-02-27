@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Transition, TransitionGroup } from 'react-transition-group';
 
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -25,6 +25,7 @@ import {
   getToastTransitionStyles,
   toastContainerStyles,
 } from './ToastContainer.styles';
+import { useTimers } from './useTimers';
 
 const portalClassName = createUniqueClassName('toast-portal');
 const toastClassName = createUniqueClassName('toast');
@@ -39,6 +40,12 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
   const indexFromTop = (i: number) => recentToasts.length - 1 - i;
   const showNotifBar = isHovered && remainingToasts.length > 0;
   const notifBarSpacing = showNotifBar ? notificationBarHeight + gap : 0;
+
+  useTimers({
+    stack,
+    popToast,
+    isHovered,
+  });
 
   return (
     <Portal className={portalClassName}>
@@ -64,11 +71,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
                 <Transition key={id} timeout={transitionDuration.default}>
                   {state => (
                     <InternalToast
-                      open={true}
-                      onClose={() => {
-                        onClose?.({});
-                        popToast(id);
-                      }}
+                      onClose={onClose}
                       className={cx(
                         toastClassName,
                         getToastTransitionStyles({

@@ -4,7 +4,7 @@
 
 import { ToastProps } from '../Toast.types';
 
-export interface InternalToastProps extends ToastProps {
+export interface ToastComponentProps extends ToastProps {
   /**
    * Required boolean that renders the Toast and makes it visible when true.
    *
