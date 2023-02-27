@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ComponentType, useState } from 'react';
 import { ComponentStory } from '@storybook/react';
 
 import { StoryMeta } from '@leafygreen-ui/lib';
@@ -7,7 +7,7 @@ import Pagination, { PaginationProps } from '.';
 
 export default StoryMeta({
   title: 'Components/Pagination',
-  component: Pagination,
+  component: Pagination as ComponentType,
   args: {
     onCurrentPageOptionChange: undefined,
   },
