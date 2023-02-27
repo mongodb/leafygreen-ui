@@ -129,10 +129,10 @@ describe('packages/confirmation-modal', () => {
       });
 
       const confirmationButton = getByText('Confirm').closest('button');
-      expect(confirmationButton).toBeDisabled();
+      expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
 
       const cancelButton = getByText('Cancel').closest('button');
-      expect(cancelButton).not.toBeDisabled();
+      expect(cancelButton).not.toHaveAttribute('aria-disabled', 'true');
 
       const textInput = getByLabelText('Type "Confirm" to confirm your action');
 
@@ -141,18 +141,18 @@ describe('packages/confirmation-modal', () => {
 
       // Should still be disabled after partial entry
       fireEvent.change(textInput, { target: { value: 'Confir' } });
-      expect(confirmationButton).toBeDisabled();
+      expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
 
       fireEvent.change(textInput, { target: { value: 'Confirm' } });
-      expect(confirmationButton).not.toBeDisabled();
+      expect(confirmationButton).not.toHaveAttribute('aria-disabled', 'true');
 
       // Should be disabled again
       fireEvent.change(textInput, { target: { value: 'Confirm?' } });
-      expect(confirmationButton).toBeDisabled();
+      expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
 
       // Case matters
       fireEvent.change(textInput, { target: { value: 'confirm' } });
-      expect(confirmationButton).toBeDisabled();
+      expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
     });
   });
 
@@ -164,7 +164,7 @@ describe('packages/confirmation-modal', () => {
       });
 
       const confirmationButton = getByText('Confirm').closest('button');
-      expect(confirmationButton).toBeDisabled();
+      expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
 
       const button = getByText('Confirm');
       expect(button).toBeVisible();
@@ -182,13 +182,13 @@ describe('packages/confirmation-modal', () => {
       });
 
       const confirmationButton = getByText('Confirm').closest('button');
-      expect(confirmationButton).toBeDisabled();
+      expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
 
       const textInput = getByLabelText('Type "Confirm" to confirm your action');
       expect(textInput).toBeVisible();
 
       fireEvent.change(textInput, { target: { value: 'Confirm' } });
-      expect(confirmationButton).toBeDisabled();
+      expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
     });
   });
 });
