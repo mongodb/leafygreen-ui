@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { defaults } from 'lodash';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -9,6 +10,7 @@ import { Body } from '@leafygreen-ui/typography';
 
 import { ToastProps, Variant } from '../Toast.types';
 
+import { defaultToastProps } from './defaultProps';
 import {
   baseIconStyle,
   baseToastStyle,
@@ -30,16 +32,17 @@ export function InternalToast({
   title,
   description,
   className,
-  variant = Variant.Note,
-  progress = 1.0,
-  // open = false,
   darkMode: darkModeProp,
   onClose,
-  timeout = 6_000,
-  dismissible = true,
   action,
   ...rest
 }: ToastProps) {
+  const {
+    variant,
+    progress,
+    dismissible,
+    // timeout,
+  } = defaults(defaultToastProps);
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const nodeRef = useRef(null);
 

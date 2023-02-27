@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import defaultsDeep from 'lodash/defaultsDeep';
 
-import { ToastProps, Variant } from '../Toast.types';
+import { defaultToastProps } from '../InternalToast/defaultProps';
 import { ToastId } from '../ToastContext/ToastContext.types';
 import { useToast } from '../ToastContext/useToast';
 
 import { ControlledToastProps } from './ControlledToast.types';
-
-const ToastDefaultProps: Partial<ToastProps> = {
-  variant: Variant.Note,
-  progress: 1.0,
-  timeout: 6_000,
-  dismissible: true,
-};
 
 /**
  * A controlled toast component.
@@ -22,7 +15,7 @@ const ToastDefaultProps: Partial<ToastProps> = {
  * It's recommended to use the hook `useToast` instead
  */
 export const Toast = ({ open, ...props }: ControlledToastProps) => {
-  props = defaultsDeep(props, ToastDefaultProps);
+  props = defaultsDeep(props, defaultToastProps);
   const { pushToast, popToast } = useToast();
   const [toastId, setToastId] = useState<ToastId | null>(null);
 
