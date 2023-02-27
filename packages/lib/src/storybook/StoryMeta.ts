@@ -4,9 +4,8 @@ import { ComponentProps, JSXElementConstructor } from 'react';
 import { StoryArgType, storybookArgTypes } from './storybookArgTypes';
 import { storybookExcludedControlParams } from './storybookExcludedControlParams';
 
-export interface StoryMeta<
-  T extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>,
-> extends ComponentMeta<T> {
+export interface StoryMeta<T extends React.ElementType>
+  extends Omit<ComponentMeta<T>, 'component'> {
   parameters: ComponentMeta<T>['parameters'] & {
     /**
      * The default story to be displayed on `mongodb.design`
@@ -16,9 +15,10 @@ export interface StoryMeta<
   argTypes?: Partial<{
     [name in keyof ComponentProps<T>]: StoryArgType;
   }>;
+  component: T;
 }
 
-const baseMeta: StoryMeta<any> = {
+const baseMeta: Partial<StoryMeta<any>> = {
   argTypes: {
     ...storybookArgTypes,
   },
@@ -33,7 +33,7 @@ const baseMeta: StoryMeta<any> = {
 export const StoryMeta = <
   T extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>,
 >(
-  meta: StoryMeta<T> = baseMeta,
+  meta: StoryMeta<T>,
 ): StoryMeta<T> => {
   return mergeWith(meta, baseMeta, (metaVal, baseVal) => {
     if (Array.isArray(metaVal)) return metaVal.concat(baseVal);
