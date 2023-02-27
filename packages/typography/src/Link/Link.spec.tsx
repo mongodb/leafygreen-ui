@@ -148,8 +148,8 @@ describe('packages/typography', () => {
     });
   });
 
-  describe('when the "as" prop is supplied', () => {
-    test('it renders the correct tag to the DOM', () => {
+  describe('inferred polymorphic behavior', () => {
+    test('when the "as" prop is supplied its value is respected', () => {
       renderLink({
         href: 'http://localhost:9001',
         /* @ts-expect-error to show that "as" overrides "href" */
@@ -158,6 +158,20 @@ describe('packages/typography', () => {
       const div = screen.getByText('Link').parentElement;
       expect(div).toBeVisible();
       expect(div!.tagName.toLowerCase()).toBe('div');
+    });
+
+    test('when an href prop is supplied, its rendered as an anchor', () => {
+      renderLink({ href: 'string' });
+      const anchor = screen.getByText('Link').parentElement;
+      expect(anchor).toBeVisible();
+      expect(anchor!.tagName.toLowerCase()).toBe('a');
+    });
+
+    test('by default it renders as a span', () => {
+      renderLink({});
+      const span = screen.getByText('Link').parentElement;
+      expect(span).toBeVisible();
+      expect(span!.tagName.toLowerCase()).toBe('span');
     });
   });
 
