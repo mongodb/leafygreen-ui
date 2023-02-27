@@ -118,21 +118,21 @@ describe('packages/select', () => {
     expect(getByTextFor(listbox, 'Explicit placeholder')).toBeVisible();
   });
 
-  test('combobox button has selected value', () => {
+  test('button has selected value', () => {
     const { getByRole, rerender } = render(<Select {...defaultProps} />);
 
-    const combobox = getByRole('button') as HTMLButtonElement;
-    expect(combobox).toBeInstanceOf(HTMLButtonElement);
+    const button = getByRole('button') as HTMLButtonElement;
+    expect(button).toBeInstanceOf(HTMLButtonElement);
 
-    expect(combobox.name).toEqual(defaultProps.name);
-    expect(combobox.disabled).toEqual(false);
-    expect(combobox).toHaveValue('');
+    expect(button.name).toEqual(defaultProps.name);
+    expect(button.disabled).toEqual(false);
+    expect(button).toHaveValue('');
 
     rerender(<Select {...defaultProps} name="explicit_name" />);
-    expect(combobox.name).toEqual('explicit_name');
+    expect(button.name).toEqual('explicit_name');
 
     rerender(<Select {...defaultProps} disabled />);
-    expect(combobox.disabled).toEqual(true);
+    expect(button).toHaveAttribute('aria-disabled', 'true');
   });
 
   test('must render options in <Select>', () => {
@@ -252,18 +252,20 @@ describe('packages/select', () => {
     ['enabled', true],
     ['disabled', false],
   ])('has initially selected option when %p', (_, enabled) => {
+    const isDisabled = !enabled;
+
     test('when uncontrolled', () => {
       const { getByRole } = render(
         <Select
           {...defaultProps}
-          disabled={!enabled}
+          disabled={isDisabled}
           defaultValue={Color.Blue}
         />,
       );
 
-      const combobox = getByRole('button') as HTMLButtonElement;
-      expect(getByTextFor(combobox, 'Blue')).toBeVisible();
-      expect(combobox).toHaveValue('Blue');
+      const button = getByRole('button') as HTMLButtonElement;
+      expect(getByTextFor(button, 'Blue')).toBeVisible();
+      expect(button).toHaveValue('Blue');
     });
 
     test('when controlled', () => {
@@ -273,13 +275,14 @@ describe('packages/select', () => {
           {...defaultProps}
           value={Color.Blue}
           onChange={onChangeSpy}
-          disabled={!enabled}
+          disabled={isDisabled}
         />,
       );
 
-      const combobox = getByRole('button') as HTMLButtonElement;
-      expect(getByTextFor(combobox, 'Blue')).toBeVisible();
-      expect(combobox).toHaveValue('Blue');
+      const button = getByRole('button') as HTMLButtonElement;
+      expect(getByTextFor(button, 'Blue')).toBeVisible();
+      expect(button).toHaveValue('Blue');
+      expect(button).toHaveAttribute('aria-disabled', `${isDisabled}`);
 
       expect(onChangeSpy).not.toHaveBeenCalled();
     });
