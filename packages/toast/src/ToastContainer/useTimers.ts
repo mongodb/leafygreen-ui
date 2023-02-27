@@ -1,33 +1,32 @@
 import { useCallback, useEffect, useRef } from 'react';
 
-import {
-  ToastContextProps,
-  ToastId,
-  ToastStack,
-} from '../ToastContext/ToastContext.types';
+import { ToastId, ToastStack } from '../ToastContext/ToastContext.types';
 
 /**
  * Sets a timeout when an element is added to the stack.
  * Clears the timeout when the container is hovered.
  * Restores the timers when un-hovered.
  */
-export const useTimers = ({
-  stack,
-  popToast,
-  isHovered,
-}: {
-  stack: ToastStack;
-  popToast: ToastContextProps['popToast'];
-  isHovered: boolean;
-}) => {
+export const useTimers = (
+  {
+    stack,
+    isHovered,
+  }: {
+    stack: ToastStack;
+    isHovered: boolean;
+  },
+  callback: Function,
+) => {
   const setTimer = useCallback(
     (id: ToastId, timeout?: number | null) => {
       if (timeout && !timers.current.has(id)) {
-        const _timerId = setTimeout(() => popToast(id), timeout);
+        const _timerId = setTimeout(() => {
+          callback(id);
+        }, timeout);
         timers.current.set(id, _timerId);
       }
     },
-    [popToast],
+    [callback],
   );
 
   const timers = useRef<Map<ToastId, NodeJS.Timeout | null>>(new Map());
@@ -37,7 +36,7 @@ export const useTimers = ({
     stack.forEach(({ timeout }, id) => {
       setTimer(id, timeout);
     });
-  }, [popToast, setTimer, stack]);
+  }, [setTimer, stack]);
 
   useEffect(() => {
     if (isHovered) {

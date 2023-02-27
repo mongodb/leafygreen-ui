@@ -35,7 +35,7 @@ export function InternalToast({
   // open = false,
   darkMode: darkModeProp,
   onClose,
-  // timeout = 6_000,
+  timeout = 6_000,
   dismissible = true,
   action,
   ...rest

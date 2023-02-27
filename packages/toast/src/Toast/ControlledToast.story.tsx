@@ -4,15 +4,14 @@ import { ComponentStory } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import { StoryMeta } from '@leafygreen-ui/lib';
-import { Link } from '@leafygreen-ui/typography';
 
-import { Variant } from '../Toast.types';
+import { ToastProvider, Variant } from '..';
 
-import { InternalToast } from '.';
+import { Toast } from './Toast';
 
-export default StoryMeta<typeof InternalToast>({
-  title: 'Components/Toast/Internal',
-  component: InternalToast,
+export default StoryMeta({
+  title: 'Components/Toast/Controlled',
+  component: Toast,
   parameters: {
     default: 'Basic',
     controls: {
@@ -22,6 +21,7 @@ export default StoryMeta<typeof InternalToast>({
   args: {
     title: 'Velit ea exercitation qui aute dolor proident.',
     description: 'Exercitation incididunt ea proident velit mollit',
+    open: true,
     variant: Variant.Note,
     darkMode: false,
     progress: 0,
@@ -48,40 +48,22 @@ export default StoryMeta<typeof InternalToast>({
   },
 });
 
-export const Basic: ComponentStory<typeof InternalToast> = args => {
-  const [open, setOpen] = useState(true);
+export const Basic: ComponentStory<typeof Toast> = args => {
+  const [open, setOpen] = useState(false);
   const { darkMode } = args;
 
   return (
-    <>
+    <ToastProvider>
       <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
         {open ? 'Close' : 'Open'} Toast
       </Button>
-      <InternalToast {...args} open={open} />
-    </>
+      <Toast
+        {...args}
+        open={open}
+        onClose={() => {
+          setOpen(false);
+        }}
+      />
+    </ToastProvider>
   );
-};
-
-export const Dismissible: ComponentStory<typeof InternalToast> = args => {
-  const [open, setOpen] = useState(true);
-  const { darkMode } = args;
-
-  return (
-    <>
-      <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
-        {open ? 'Close' : 'Open'} Toast
-      </Button>
-      <InternalToast {...args} open={open} onClose={() => setOpen(false)} />
-    </>
-  );
-};
-
-export const WithLink = Basic.bind({});
-WithLink.args = {
-  description: (
-    <>
-      Exercitation incididunt ea proident. &nbsp;
-      <Link href="http://localhost:9001">Link style</Link>
-    </>
-  ),
 };
