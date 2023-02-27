@@ -20,6 +20,8 @@ export default {
     darkMode: storybookArgTypes.darkMode,
     onBackArrowClick: { control: false },
     onForwardArrowClick: { control: false },
+    onCurrentPageOptionChange: { control: false },
+    onItemsPerPageOptionChange: { control: false },
   },
   parameters: {
     default: 'Basic',
