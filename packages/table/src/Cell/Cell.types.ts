@@ -3,11 +3,11 @@ import { HTMLElementProps } from '@leafygreen-ui/lib';
 import ToggleExpandedIconProps from '../ToggleExpandedIcon/ToggleExpandedIcon.types';
 import { LeafygreenTableCell } from '../useLeafygreenTable';
 
-export interface InternalCellBaseProps extends HTMLElementProps<'td'> {
+export type CellProps<T extends unknown> = HTMLElementProps<'td'> & {
   /**
    * Index of the cell in its parent row.
    */
-  cellIndex: number;
+  cellIndex?: number;
   /**
    * Depth of nesting its parent row has.
    */
@@ -16,15 +16,10 @@ export interface InternalCellBaseProps extends HTMLElementProps<'td'> {
    * Props passed to the ToggleExpandedIcon
    */
   toggleExpandedIconProps?: ToggleExpandedIconProps;
-}
-
-export interface InternalCellWithRTProps<T extends unknown>
-  extends InternalCellBaseProps {
   /**
    * `Cell` object returned from the `useLeafygreenTable` hook
    */
-  cell: LeafygreenTableCell<T>;
-}
-
-export type CellProps<T extends unknown> = HTMLElementProps<'td'> &
-  Partial<Pick<InternalCellWithRTProps<T>, 'cell'>>;
+  cell?: LeafygreenTableCell<T>;
+  isSubRowCell?: boolean;
+  isRenderedSubRowCell?: boolean;
+};

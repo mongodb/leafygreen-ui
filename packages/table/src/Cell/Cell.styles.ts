@@ -36,3 +36,14 @@ export const cellContentContainerStyles = css`
   align-items: center;
   padding: 10px 8px;
 `;
+
+export const subRowStyles = css`
+  transition: all 0.2s ease-in;
+`;
+
+export const hiddenSubRowStyles = css`
+  height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  opacity: 0;
+`;

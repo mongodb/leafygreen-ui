@@ -64,7 +64,7 @@ export function makeData(
         ...newPerson(),
         ...(hasSubRows &&
           lens[depth + 1] &&
-          randomIntFromInterval(1, 3) == 1 && {
+          randomIntFromInterval(1, 2) == 1 && {
             subRows: makeDataLevel(depth + 1),
           }),
         ...(renderingExpandableRows &&

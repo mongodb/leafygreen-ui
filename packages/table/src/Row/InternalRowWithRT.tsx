@@ -4,8 +4,10 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-import InternalCellWithRT from '../Cell/InternalCellWithRT';
-import { LeafygreenTableRow } from '../useLeafygreenTable';
+import Cell from '../Cell';
+import { useTableContext } from '../TableContext/TableContext';
+import { LeafygreenTableCell, LeafygreenTableRow } from '../useLeafygreenTable';
+import { flexRender } from '..';
 
 import InternalRowBase from './InternalRowBase';
 import {
@@ -24,8 +26,9 @@ const InternalRowWithRT = <T extends unknown>({
   ...rest
 }: InternalRowWithRTProps<T>) => {
   const { theme } = useDarkMode();
-  const isNestedRowParent = row.depth === 0 && row.getIsExpanded();
-  const isNestedRowOrParent = row.getIsExpanded() || row.depth > 0;
+  const { isExpandedRow } = useTableContext();
+  const isNestedRowParent = row.depth === 0 && isExpandedRow(row.id);
+  const isNestedRowOrParent = isExpandedRow(row.id) || row.depth > 0;
   const ExpandedContentRowProp = row?.original.renderExpandedContent;
   const ContainerElement = ExpandedContentRowProp
     ? (props: HTMLElementProps<'tbody'>) => (
@@ -38,39 +41,69 @@ const InternalRowWithRT = <T extends unknown>({
     : Fragment;
 
   return (
-    <ContainerElement>
-      <InternalRowBase
-        className={cx(
-          {
-            [nestedBorderTopStyles[theme]]: isNestedRowParent,
-            [nestedBgStyles[theme]]: isNestedRowOrParent,
-          },
-          className,
+    <>
+      <ContainerElement>
+        <InternalRowBase
+          className={cx(
+            {
+              [nestedBorderTopStyles[theme]]: isNestedRowParent,
+              [nestedBgStyles[theme]]: isNestedRowOrParent,
+            },
+            className,
+          )}
+          disabled={disabled}
+          data-depth={row.depth}
+          {...rest}
+        >
+          {React.Children.map(children, (child: ReactNode, index: number) => {
+            return React.createElement(Cell, {
+              ...(child as ReactElement)?.props,
+              cellIndex: index,
+              depth: row.depth,
+              disabled,
+            });
+          })}
+        </InternalRowBase>
+        {isExpandedRow(row.id) && ExpandedContentRowProp && (
+          <tr>
+            <td
+              colSpan={row?.getVisibleCells().length}
+              className={expandedContentStyles[theme]}
+            >
+              {ExpandedContentRowProp(row as LeafygreenTableRow<T>)}
+            </td>
+          </tr>
         )}
-        disabled={disabled}
-        data-depth={row.depth}
-        {...rest}
-      >
-        {React.Children.map(children, (child: ReactNode, index: number) => {
-          return React.createElement(InternalCellWithRT, {
-            ...(child as ReactElement)?.props,
-            cellIndex: index,
-            depth: row.depth,
-            disabled,
-          });
-        })}
-      </InternalRowBase>
-      {row.getIsExpanded() && ExpandedContentRowProp && (
-        <tr>
-          <td
-            colSpan={row?.getVisibleCells().length}
-            className={expandedContentStyles[theme]}
+      </ContainerElement>
+      {row.subRows &&
+        row.subRows.map(subRow => (
+          <InternalRowWithRT
+            key={subRow.id}
+            row={subRow}
+            virtualRow={virtualRow}
+            className={className}
+            disabled={disabled}
+            aria-hidden={!isExpandedRow(row.id)}
+            {...rest}
           >
-            {ExpandedContentRowProp(row as LeafygreenTableRow<T>)}
-          </td>
-        </tr>
-      )}
-    </ContainerElement>
+            {subRow
+              .getVisibleCells()
+              .map((cell: LeafygreenTableCell<T>, index: number) => {
+                return (
+                  <Cell
+                    key={cell.id}
+                    cell={cell}
+                    cellIndex={index}
+                    isSubRowCell={true}
+                    isRenderedSubRowCell={isExpandedRow(row.id)}
+                  >
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </Cell>
+                );
+              })}
+          </InternalRowWithRT>
+        ))}
+    </>
   );
 };
 

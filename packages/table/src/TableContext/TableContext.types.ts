@@ -11,4 +11,10 @@ export type TableContextValues = PropsWithChildren<
   setColumnAlignments: React.Dispatch<
     React.SetStateAction<Record<number, ColumnAlignment> | undefined>
   >;
+  internalExpandedRows: Array<Record<string, boolean>>;
+  setInternalExpandedRows: React.Dispatch<
+    React.SetStateAction<Record<string, boolean> | undefined>
+  >;
+  isExpandedRow: (rowId: string) => boolean;
+  toggleExpandedRow: (rowId: string) => void;
 };

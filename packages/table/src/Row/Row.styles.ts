@@ -4,10 +4,8 @@ import { palette } from '@leafygreen-ui/palette';
 import { focusRing, hoverRing } from '@leafygreen-ui/tokens';
 
 export const baseStyles = css`
-  border-top: 1px solid transparent;
-
   // emulating a border bottom on the last nested row
-  &:not([data-depth='0']) + tr[data-depth='0'] {
+  &:not([data-depth='0'])[aria-hidden='false'] + tr[data-depth='0'] {
     border-top: 1px solid ${palette.gray.light2};
   }
 `;

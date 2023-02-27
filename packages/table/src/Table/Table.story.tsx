@@ -86,7 +86,6 @@ ZebraStripes.args = {
 export const NestedRows: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 100, 5, 3))[0];
-  const [expanded, setExpanded] = React.useState<ExpandedState>({});
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
     () => [
@@ -132,12 +131,8 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
     containerRef: tableContainerRef,
     data,
     columns,
-    state: {
-      expanded,
-    },
-    onExpandedChange: setExpanded,
     getCoreRowModel: getCoreRowModel(),
-    getExpandedRowModel: getExpandedRowModel(),
+    // getExpandedRowModel: getExpandedRowModel(),
     getSubRows: row => row.subRows,
   });
 
@@ -147,7 +142,6 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
     <>
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
-        <pre>Expanded rows: {JSON.stringify(expanded, null, 2)}</pre>
       </div>
 
       <TableContainer ref={tableContainerRef}>

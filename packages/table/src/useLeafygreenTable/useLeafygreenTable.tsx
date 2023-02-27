@@ -87,6 +87,7 @@ function useLeafygreenTable<T extends unknown>(
       );
     },
     enableSortingRemoval: true,
+    manualExpanding: true,
     ...rest,
   });
   let rowVirtualizer: VirtualizerValues | undefined;
