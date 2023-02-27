@@ -14,9 +14,8 @@ import {
   toastHeight,
   toastInset,
 } from '../constants';
-import Toast from '../Toast/Toast';
-import { toastBGColor } from '../Toast/Toast.styles';
-import { ToastProps } from '../Toast/Toast.types';
+import { InternalToast, toastBGColor } from '../InternalToast';
+import { ToastProps } from '../Toast.types';
 import { ToastId, ToastStack } from '../ToastContext/ToastContext.types';
 import { useToast } from '../ToastContext/useToast';
 
@@ -64,7 +63,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
               return (
                 <Transition key={id} timeout={transitionDuration.default}>
                   {state => (
-                    <Toast
+                    <InternalToast
                       open={true}
                       onClose={() => {
                         onClose?.({});

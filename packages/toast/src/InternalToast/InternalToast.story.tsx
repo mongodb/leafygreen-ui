@@ -6,11 +6,13 @@ import { css } from '@leafygreen-ui/emotion';
 import { StoryMeta } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
-import Toast, { Variant } from '.';
+import { Variant } from '../Toast.types';
 
-export default StoryMeta<typeof Toast>({
+import { InternalToast } from '.';
+
+export default StoryMeta<typeof InternalToast>({
   title: 'Components/Toast/Standlone',
-  component: Toast,
+  component: InternalToast,
   parameters: {
     default: 'Basic',
     controls: {
@@ -47,7 +49,7 @@ export default StoryMeta<typeof Toast>({
   },
 });
 
-export const Basic: ComponentStory<typeof Toast> = args => {
+export const Basic: ComponentStory<typeof InternalToast> = args => {
   const [open, setOpen] = useState(true);
   const { darkMode } = args;
 
@@ -56,12 +58,12 @@ export const Basic: ComponentStory<typeof Toast> = args => {
       <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
         {open ? 'Close' : 'Open'} Toast
       </Button>
-      <Toast {...args} open={open} />
+      <InternalToast {...args} open={open} />
     </>
   );
 };
 
-export const Dismissible: ComponentStory<typeof Toast> = args => {
+export const Dismissible: ComponentStory<typeof InternalToast> = args => {
   const [open, setOpen] = useState(true);
   const { darkMode } = args;
 
@@ -70,7 +72,7 @@ export const Dismissible: ComponentStory<typeof Toast> = args => {
       <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
         {open ? 'Close' : 'Open'} Toast
       </Button>
-      <Toast {...args} open={open} onClose={() => setOpen(false)} />
+      <InternalToast {...args} open={open} onClose={() => setOpen(false)} />
     </>
   );
 };

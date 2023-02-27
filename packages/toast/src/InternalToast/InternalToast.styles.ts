@@ -12,8 +12,7 @@ import {
 import { anchorClassName } from '@leafygreen-ui/typography';
 
 import { toastHeight, toastInset, toastWidth } from '../constants';
-
-import { Variant } from './Toast.types';
+import { Variant } from '../Toast.types';
 
 export const toastBGColor: Record<Theme, string> = {
   [Theme.Light]: palette.black,

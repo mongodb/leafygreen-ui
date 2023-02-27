@@ -7,7 +7,7 @@ import { palette } from '@leafygreen-ui/palette';
 import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
 import { toastHeight, toastInset, toastWidth, yOffset } from '../constants';
-import { toastBGColor } from '../Toast/Toast.styles';
+import { toastBGColor } from '../InternalToast';
 
 export const toastContainerStyles = css`
   outline: 1px solid teal;

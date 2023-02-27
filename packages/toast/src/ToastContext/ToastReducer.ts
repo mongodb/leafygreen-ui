@@ -1,6 +1,6 @@
 import { Reducer, useReducer } from 'react';
 
-import { ToastProps } from '../Toast/Toast.types';
+import { ToastProps } from '../Toast.types';
 
 import { generateToastId } from './utils/generateToastId';
 import {

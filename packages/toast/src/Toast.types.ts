@@ -78,19 +78,3 @@ export interface ToastProps
    */
   dismissible?: boolean;
 }
-
-/**
- * Props for the JSX component
- */
-
-export interface ToastComponentProps extends ToastProps {
-  /**
-   * Required boolean that renders the Toast and makes it visible when true.
-   *
-   * Note: open is not a valid prop when rendering toasts programmatically
-   *
-   * @default false
-   */
-  open: boolean;
-  onClose: React.EventHandler<any>;
-}

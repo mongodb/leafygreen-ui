@@ -7,7 +7,8 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
-import { ProgressBar } from './ProgressBar';
+import { Variant } from '../Toast.types';
+
 import {
   baseIconStyle,
   baseToastStyle,
@@ -21,11 +22,12 @@ import {
   titleThemeStyle,
   toastThemeStyles,
   variantIconStyle,
-} from './Toast.styles';
-import { ToastComponentProps, Variant } from './Toast.types';
+} from './InternalToast.styles';
+import { InternalToastProps } from './InternalToast.types';
+import { ProgressBar } from './ProgressBar';
 import { variantIcons } from './VariantIcon';
 
-function Toast({
+export function InternalToast({
   title,
   description,
   className,
@@ -38,7 +40,7 @@ function Toast({
   dismissible = true,
   action,
   ...rest
-}: ToastComponentProps) {
+}: InternalToastProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const timeoutId = useRef<NodeJS.Timeout>();
   const nodeRef = useRef(null);
@@ -114,9 +116,9 @@ function Toast({
   );
 }
 
-Toast.displayName = 'Toast';
+InternalToast.displayName = 'InternalToast';
 
-Toast.propTypes = {
+InternalToast.propTypes = {
   darkMode: PropTypes.bool,
   title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]).isRequired,
   description: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
@@ -125,5 +127,3 @@ Toast.propTypes = {
   open: PropTypes.bool,
   onClose: PropTypes.func,
 };
-
-export default Toast;

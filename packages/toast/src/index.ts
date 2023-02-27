@@ -1,1 +1,2 @@
-export { default, type Variant } from './Toast';
+export { InternalToast } from './InternalToast';
+export { Variant } from './Toast.types';

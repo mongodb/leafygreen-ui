@@ -1,4 +1,4 @@
-import { ToastProps } from '../Toast/Toast.types';
+import { ToastProps } from '../Toast.types';
 
 /**
  * The type of Toast ids

@@ -2,11 +2,13 @@ import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import Toast from './Toast';
-import { ToastComponentProps, Variant } from './Toast.types';
+import { Variant } from '../Toast.types';
 
-function renderToast(props: ToastComponentProps) {
-  return render(<Toast {...props} />);
+import { InternalToast } from './InternalToast';
+import { InternalToastProps } from './InternalToast.types';
+
+function renderToast(props: InternalToastProps) {
+  return render(<InternalToast {...props} />);
 }
 
 describe('packages/toast', () => {
@@ -249,15 +251,15 @@ describe.skip('TS types', () => {
   render(
     <>
       {/* @ts-expect-error - title, open & onClose are required */}
-      <Toast />
+      <InternalToast />
       {/* @ts-expect-error - open is required */}
-      <Toast title="string" onClose={() => {}} />
+      <InternalToast title="string" onClose={() => {}} />
       {/* @ts-expect-error - title is required */}
-      <Toast open={false} onClose={() => {}} />
+      <InternalToast open={false} onClose={() => {}} />
       {/* @ts-expect-error - onClose is required */}
-      <Toast title="string" open={false} />
+      <InternalToast title="string" open={false} />
 
-      <Toast title="string" open={false} onClose={() => {}} />
+      <InternalToast title="string" open={false} onClose={() => {}} />
     </>,
   );
 
@@ -265,22 +267,22 @@ describe.skip('TS types', () => {
     title: 'string',
     open: false,
     onClose: () => {},
-  } as ToastComponentProps;
+  } as InternalToastProps;
 
   render(
     <>
       {/*TODO: @ts-expect-error - timeout cannot be null while dismissible is false */}
-      <Toast {...requiredProps} timeout={null} dismissible={false} />
+      <InternalToast {...requiredProps} timeout={null} dismissible={false} />
 
-      <Toast {...requiredProps} dismissible={true} />
+      <InternalToast {...requiredProps} dismissible={true} />
 
-      <Toast {...requiredProps} dismissible={false} />
-      <Toast {...requiredProps} timeout={null} />
+      <InternalToast {...requiredProps} dismissible={false} />
+      <InternalToast {...requiredProps} timeout={null} />
 
-      <Toast {...requiredProps} timeout={5000} />
-      <Toast {...requiredProps} timeout={5000} dismissible={true} />
-      <Toast {...requiredProps} timeout={5000} dismissible={false} />
-      <Toast {...requiredProps} timeout={null} dismissible={true} />
+      <InternalToast {...requiredProps} timeout={5000} />
+      <InternalToast {...requiredProps} timeout={5000} dismissible={true} />
+      <InternalToast {...requiredProps} timeout={5000} dismissible={false} />
+      <InternalToast {...requiredProps} timeout={null} dismissible={true} />
     </>,
   );
 });

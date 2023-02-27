@@ -4,15 +4,15 @@ import { sample } from 'lodash';
 import Button from '@leafygreen-ui/button';
 import { StoryMeta } from '@leafygreen-ui/lib';
 
-import Toast from '../Toast/Toast';
-import { Variant } from '../Toast/Toast.types';
+import { InternalToast } from '../InternalToast';
+import { Variant } from '../Toast.types';
 
 import { ToastProvider } from './ToastProvider';
 import { useToast } from './useToast';
 
-export default StoryMeta<typeof Toast>({
+export default StoryMeta<typeof InternalToast>({
   title: 'Components/Toast',
-  component: Toast,
+  component: InternalToast,
   parameters: {
     default: 'Basic',
   },
