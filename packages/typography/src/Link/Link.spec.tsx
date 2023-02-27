@@ -49,16 +49,6 @@ describe('packages/typography', () => {
     });
 
     describe('when the current host is the same as the destination URL host', () => {
-      describe('by default', () => {
-        test('it renders the correct tag to the DOM', () => {
-          renderLink({
-            href: 'http://localhost:9001',
-          });
-          const anchor = screen.getByText('Link').parentNode;
-          expect((anchor as HTMLElement).tagName.toLowerCase()).toBe('a');
-        });
-      });
-
       test('and the "arrowAppearance" prop is set to "persist"', () => {
         renderLink({
           href: 'http://localhost:9001',
@@ -86,6 +76,7 @@ describe('packages/typography', () => {
         renderLink({
           href: 'http://localhost:9001',
           target: '_blank',
+          arrowAppearance: 'persist',
         });
 
         const icon = screen.getByRole('presentation', { hidden: true });
@@ -94,16 +85,6 @@ describe('packages/typography', () => {
     });
 
     describe('when the destination URL is relative', () => {
-      describe('by default', () => {
-        test('it renders the correct tag to the DOM', () => {
-          renderLink({
-            href: '?path=/story/badge--default',
-          });
-          const anchor = screen.getByText('Link').parentNode;
-          expect((anchor as HTMLElement).tagName.toLowerCase()).toBe('a');
-        });
-      });
-
       test('and the "arrowAppearance" prop is set to "persist"', () => {
         renderLink({
           href: '?path=/story/badge--default',
@@ -137,108 +118,99 @@ describe('packages/typography', () => {
         expect(icon).toBeInTheDocument();
       });
     });
-  });
 
-  describe('when no "href" prop is passed and the "as" prop is not supplied', () => {
-    test('it renders the Link inside of "span" tags', () => {
-      renderLink({});
-      const span = screen.getByText('Link').parentElement;
-      expect(span).not.toBeNull();
-      expect(span!.tagName.toLowerCase()).toBe('span');
-    });
-  });
-
-  describe('inferred polymorphic behavior', () => {
-    test('when the "as" prop is supplied its value is respected', () => {
-      renderLink({
-        href: 'http://localhost:9001',
-        /* @ts-expect-error to show that "as" overrides "href" */
-        as: 'div',
+    describe('inferred polymorphic behavior', () => {
+      test('when the "as" prop is supplied its value is respected', () => {
+        renderLink({
+          href: 'http://localhost:9001',
+          /* @ts-expect-error to show that "as" overrides "href" */
+          as: 'div',
+        });
+        const div = screen.getByText('Link').parentElement;
+        expect(div).toBeVisible();
+        expect(div!.tagName.toLowerCase()).toBe('div');
       });
-      const div = screen.getByText('Link').parentElement;
-      expect(div).toBeVisible();
-      expect(div!.tagName.toLowerCase()).toBe('div');
+
+      test('when an href prop is supplied, its rendered as an anchor', () => {
+        renderLink({ href: 'string' });
+        const anchor = screen.getByText('Link').parentElement;
+        expect(anchor).toBeVisible();
+        expect(anchor!.tagName.toLowerCase()).toBe('a');
+      });
+
+      test('by default it renders as a span', () => {
+        renderLink({});
+        const span = screen.getByText('Link').parentElement;
+        expect(span).toBeVisible();
+        expect(span!.tagName.toLowerCase()).toBe('span');
+      });
     });
 
-    test('when an href prop is supplied, its rendered as an anchor', () => {
-      renderLink({ href: 'string' });
-      const anchor = screen.getByText('Link').parentElement;
-      expect(anchor).toBeVisible();
-      expect(anchor!.tagName.toLowerCase()).toBe('a');
+    describe('anchor props work as expected', () => {
+      test('target prop overrides defaults when set', () => {
+        const utils = render(
+          <Link data-testid="link" target="test">
+            Test
+          </Link>,
+        );
+        const foundLink = utils.getByTestId('link');
+        expect(foundLink.getAttribute('target')).toBe('test');
+      });
+
+      test('rel prop overrides defaults when set', () => {
+        const utils = render(
+          <Link data-testid="link" rel="test">
+            Test
+          </Link>,
+        );
+        const foundLink = utils.getByTestId('link');
+        expect(foundLink.getAttribute('rel')).toBe('test');
+      });
+
+      test('href prop passed even when Component is not an anchor', () => {
+        const Wrapper = (props: JSX.IntrinsicElements['a']) => {
+          return <a {...props}>test</a>;
+        };
+
+        const utils = render(
+          <Link data-testid="link" href="test" as={Wrapper}>
+            Test
+          </Link>,
+        );
+        const foundLink = utils.getByTestId('link');
+        expect(foundLink.getAttribute('href')).toBe('test');
+      });
     });
 
-    test('by default it renders as a span', () => {
-      renderLink({});
-      const span = screen.getByText('Link').parentElement;
-      expect(span).toBeVisible();
-      expect(span!.tagName.toLowerCase()).toBe('span');
-    });
-  });
+    describe('TypeScript types are correct', () => {
+      // eslint-disable-next-line
+      test.skip('Types', () => {
+        const WrapperComponent = (props: JSX.IntrinsicElements['button']) => {
+          return <button {...props} />;
+        };
 
-  describe('anchor props work as expected', () => {
-    test('target prop overrides defaults when set', () => {
-      const utils = render(
-        <Link data-testid="link" target="test">
-          Test
-        </Link>,
-      );
-      const foundLink = utils.getByTestId('link');
-      expect(foundLink.getAttribute('target')).toBe('test');
-    });
+        const AnchorComponent = (props: JSX.IntrinsicElements['a']) => {
+          return <a {...props}>test</a>;
+        };
 
-    test('rel prop overrides defaults when set', () => {
-      const utils = render(
-        <Link data-testid="link" rel="test">
-          Test
-        </Link>,
-      );
-      const foundLink = utils.getByTestId('link');
-      expect(foundLink.getAttribute('rel')).toBe('test');
-    });
-
-    test('href prop passed even when Component is not an anchor', () => {
-      const Wrapper = (props: JSX.IntrinsicElements['a']) => {
-        return <a {...props}>test</a>;
-      };
-
-      const utils = render(
-        <Link data-testid="link" href="test" as={Wrapper}>
-          Test
-        </Link>,
-      );
-      const foundLink = utils.getByTestId('link');
-      expect(foundLink.getAttribute('href')).toBe('test');
-    });
-  });
-
-  describe('TypeScript types are correct', () => {
-    // eslint-disable-next-line
-    test.skip('Types', () => {
-      const WrapperComponent = (props: JSX.IntrinsicElements['button']) => {
-        return <button {...props} />;
-      };
-
-      const AnchorComponent = (props: JSX.IntrinsicElements['a']) => {
-        return <a {...props}>test</a>;
-      };
-
-      <>
-        <Link />
-        <Link>some content</Link>
-        <Link href="string">some content</Link>
-        <Link as="div">some content</Link>
-        {/* @ts-expect-error href is not allowed on explicit div */}
-        <Link as="div" href="string">
-          some content
-        </Link>
-        {/* @ts-expect-error href is not allowed on a Wrapper component that does not accept anchor props */}
-        <Link as={WrapperComponent} href="string">
-          some content
-        </Link>
-        <Link href="string" as={AnchorComponent} />
-        {/* @ts-expect-error as anchor is not allowed without an href */}
-        <Link as="a">Content</Link>
-      </>;
+        <>
+          <Link />
+          <Link>some content</Link>
+          <Link href="string">some content</Link>
+          <Link as="div">some content</Link>
+          {/* @ts-expect-error href is not allowed on explicit div */}
+          <Link as="div" href="string">
+            some content
+          </Link>
+          {/* @ts-expect-error href is not allowed on a Wrapper component that does not accept anchor props */}
+          <Link as={WrapperComponent} href="string">
+            some content
+          </Link>
+          <Link href="string" as={AnchorComponent} />
+          {/* @ts-expect-error as anchor is not allowed without an href */}
+          <Link as="a">Content</Link>
+        </>;
+      });
     });
   });
 });
