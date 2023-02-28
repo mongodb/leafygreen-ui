@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { cleanup, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
 import { Variant } from '../Toast.types';
@@ -14,6 +14,8 @@ import { InternalToastProps } from './InternalToast.types';
  * (see `ControlledToast.spec`)
  */
 describe('packages/toast/internal-toast', () => {
+  afterEach(cleanup);
+
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
       const { container } = render(

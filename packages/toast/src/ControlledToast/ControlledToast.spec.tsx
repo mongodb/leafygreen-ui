@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  cleanup,
   render,
   waitFor,
   waitForElementToBeRemoved,
@@ -24,6 +25,7 @@ import { ControlledToast as Toast } from './ControlledToast';
 describe('packages/toast/controlled', () => {
   // Clear the portals after each test
   afterEach(() => {
+    cleanup();
     const portal = document.querySelector('.' + toastPortalClassName);
 
     if (portal) {
