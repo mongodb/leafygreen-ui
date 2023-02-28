@@ -138,7 +138,7 @@ describe('packages/typography', () => {
         expect(anchor!.tagName.toLowerCase()).toBe('a');
       });
 
-      test('by default it renders as a span', () => {
+      test('renders as a span when no "as" or "href" is provided', () => {
         renderLink({});
         const span = screen.getByText('Link').parentElement;
         expect(span).toBeVisible();
