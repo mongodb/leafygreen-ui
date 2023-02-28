@@ -62,8 +62,6 @@ const Cell = <T extends unknown>({
           [hiddenSubRowStyles]: isSubRowCell && isRenderedSubRowCell !== true,
         })}
       >
-        {isSubRowCell}
-        {isRenderedSubRowCell}
         {shouldRenderArrow && (
           <ToggleExpandedIcon
             isExpanded={isExpandedRow(cell.row.id)}

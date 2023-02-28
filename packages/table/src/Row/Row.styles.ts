@@ -10,6 +10,13 @@ export const baseStyles = css`
   }
 `;
 
+export const expandedContentParentStyles = css`
+  &[aria-expanded='true'] + tr,
+  &[aria-expanded='true'] + tbody {
+    border-top: 1px solid ${palette.gray.light2};
+  }
+`;
+
 export const nestedBorderTopStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     border-top: 1px solid ${palette.gray.dark2};

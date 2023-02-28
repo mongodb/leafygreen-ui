@@ -149,7 +149,6 @@ export const Basic: ComponentStory<typeof Table> = args => {
 export const NestedRows: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 5000, 5, 3))[0];
-  const [expanded, setExpanded] = React.useState<ExpandedState>({});
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
     () => [
@@ -195,12 +194,8 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
     containerRef: tableContainerRef,
     data,
     columns,
-    state: {
-      expanded,
-    },
-    onExpandedChange: setExpanded,
     getCoreRowModel: getCoreRowModel(),
-    getExpandedRowModel: getExpandedRowModel(),
+    // getExpandedRowModel: getExpandedRowModel(),
     getSubRows: row => row.subRows,
     useVirtualScrolling: true,
   });
@@ -212,7 +207,6 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
         <p>{table.virtualRows.length} virtual rows rendered</p>
-        <pre>Expanded rows: {JSON.stringify(expanded, null, 2)}</pre>
       </div>
 
       <TableContainer ref={tableContainerRef}>
@@ -233,7 +227,7 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
               </HeaderRow>
             ))}
           </TableHead>
-          <TableBody table={table}>
+          <TableBody table={table} renderingExpandableRows>
             {/* Not sure why this is showing an error. It's not checking the second type in the conditional type */}
             {/* @ts-ignore */}
             {table.virtualRows.map((virtualRow: VirtualItem) => {

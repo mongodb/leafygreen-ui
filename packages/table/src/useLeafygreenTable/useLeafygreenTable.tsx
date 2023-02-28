@@ -68,10 +68,10 @@ function useLeafygreenTable<T extends unknown>(
       : []),
     ...columnsProp.map(
       propColumn =>
-        ({
-          ...propColumn,
-          enableSorting: propColumn.enableSorting ?? false,
-        } as ColumnDef<LeafygreenTableType<T>>),
+      ({
+        ...propColumn,
+        enableSorting: propColumn.enableSorting ?? false,
+      } as ColumnDef<LeafygreenTableType<T>>),
     ),
   ];
 
@@ -82,10 +82,10 @@ function useLeafygreenTable<T extends unknown>(
     columns,
     getRowCanExpand: (row: LeafygreenTableRow<T>) => {
       return (
-        !!row.original.renderExpandedContent ||
-        ((table.options.enableExpanding ?? true) && !!row.subRows?.length)
+        !!row.original.renderExpandedContent || !!row.subRows?.length
       );
     },
+    enableExpanding: true,
     enableSortingRemoval: true,
     manualExpanding: true,
     ...rest,
@@ -98,6 +98,7 @@ function useLeafygreenTable<T extends unknown>(
     rowVirtualizer = useVirtual({
       parentRef: containerRef,
       size: rows.length,
+      overscan: 30,
     });
   }
 

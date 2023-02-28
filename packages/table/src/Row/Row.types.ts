@@ -24,6 +24,7 @@ export interface InternalRowWithRTProps<T extends unknown>
    * Virtual row object passed from the `useLeafygreenTable` hook
    */
   virtualRow?: VirtualItem;
+  isNestedRow?: boolean;
 }
 
 export type RowProps<T extends unknown> = PropsWithChildren<

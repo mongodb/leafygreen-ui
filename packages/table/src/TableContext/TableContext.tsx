@@ -47,7 +47,6 @@ const TableContextProvider = ({
           shouldAlternateRowColor,
           columnAlignments,
           setColumnAlignments,
-          internalExpandedRows,
           isExpandedRow,
           toggleExpandedRow,
         }}

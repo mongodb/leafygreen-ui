@@ -6,6 +6,7 @@ import { Align } from '../HeaderCell/HeaderCell.types';
 const baseSidePadding = spacing[4];
 
 export const baseStyles = css`
+  padding: 0;
   &:focus-visible {
     box-shadow: inset;
   }
@@ -46,4 +47,5 @@ export const hiddenSubRowStyles = css`
   padding-top: 0;
   padding-bottom: 0;
   opacity: 0;
+  margin: 0;
 `;
