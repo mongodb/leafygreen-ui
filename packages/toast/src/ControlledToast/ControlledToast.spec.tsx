@@ -8,13 +8,24 @@ import {
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { expectElementToNotBeRemoved } from '@leafygreen-ui/testing-lib';
-
 import { toastPortalClassName } from '../ToastContainer/ToastContainer';
 import { ToastProvider } from '../ToastContext';
 
 import { ControlledToast as Toast } from './ControlledToast';
 
+async function expectElementToNotBeRemoved(element: HTMLElement) {
+  try {
+    await waitForElementToBeRemoved(element);
+    throw new Error('Expected to catch error.');
+  } catch (error) {
+    // eslint-disable-next-line jest/no-try-expect
+    if (error instanceof Error) {
+      expect(error.toString()).toMatch(
+        'Timed out in waitForElementToBeRemoved.',
+      );
+    }
+  }
+}
 /**
  * This suite checks rendering specific to the controlled behavior.
  * i.e. `open` and `onClose` props.
