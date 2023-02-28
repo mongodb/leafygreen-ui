@@ -16,8 +16,8 @@ import {
 } from '../constants';
 import { InternalToast, toastBGColor } from '../InternalToast';
 import { ToastProps } from '../Toast.types';
+import { useToast } from '../ToastContext';
 import { ToastId, ToastStack } from '../ToastContext/ToastContext.types';
-import { useToast } from '../ToastContext/useToast';
 
 import { NotificationBar } from './NotificationBar/NotificationBar';
 import { notificationBarTransitionStyles } from './NotificationBar/NotificationBar.styles';

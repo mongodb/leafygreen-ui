@@ -7,7 +7,7 @@ import { StoryMeta } from '@leafygreen-ui/lib';
 import { InternalToast } from '../InternalToast';
 import { Variant } from '../Toast.types';
 
-import { ToastProvider } from './ToastProvider';
+import { ToastProvider } from './ToastContext';
 import { useToast } from './useToast';
 
 export default StoryMeta<typeof InternalToast>({

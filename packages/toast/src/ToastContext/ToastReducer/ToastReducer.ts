@@ -1,8 +1,7 @@
 import { Reducer, useReducer } from 'react';
 
-import { ToastProps } from '../Toast.types';
-
-import { generateToastId } from './utils/generateToastId';
+import { defaultToastProps } from '../../InternalToast/defaultProps';
+import { ToastProps } from '../../Toast.types';
 import {
   ToastContextProps,
   ToastId,
@@ -10,7 +9,8 @@ import {
   ToastReducerActionType,
   ToastReducerState,
   ToastStack,
-} from './ToastContext.types';
+} from '../ToastContext.types';
+import { generateToastId } from '../utils/generateToastId';
 
 /**
  *
@@ -28,7 +28,7 @@ const toastReducer = (
       const { stack } = state;
       const { id, props } = action.payload;
       return {
-        stack: stack.set(id, props),
+        stack: stack.set(id, { ...defaultToastProps, ...props }),
       };
     }
 
