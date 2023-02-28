@@ -1,1 +1,1 @@
-export { useToastReducer } from './ToastReducer';
+export { useToastReducer } from './useToastReducer';
