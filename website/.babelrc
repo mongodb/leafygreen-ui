@@ -1,9 +1,0 @@
-{
-  "presets": [
-    "next/babel",
-    // We shouldn't need this, but emotion breaks without it
-    // https://github.com/emotion-js/emotion/blob/HEAD/docs/css-prop.mdx#babel-preset
-    "@emotion/babel-preset-css-prop"
-  ],
-  "plugins": ["@emotion/babel-plugin"]
-}
