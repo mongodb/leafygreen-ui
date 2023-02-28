@@ -16,7 +16,6 @@ import {
   EnterpriseAdvancedLogoLockup,
   MongoDBLogo,
   MongoDBLogoMark,
-  RealmLogoLockup,
   RealmLogoMark,
   UniversityLogoLockup,
 } from '.';
@@ -100,7 +99,6 @@ export const MongoDBMark = (args: LogoProps) => Template(MongoDBLogoMark, args);
 export const AtlasLockup = (args: LogoProps) => Template(AtlasLogoLockup, args);
 export const AtlasForGovernmentLockup = (args: LogoProps) =>
   Template(AtlasForGovernmentLogoLockup, args);
-export const RealmLockup = (args: LogoProps) => Template(RealmLogoLockup, args);
 export const EnterpriseAdvancedLockup = (args: LogoProps) =>
   Template(EnterpriseAdvancedLogoLockup, args);
 export const CommunityEditionLockup = (args: LogoProps) =>

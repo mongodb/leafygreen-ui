@@ -9,9 +9,6 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
 import {
   InferredPolymorphic,
-  InferredPolymorphicProps,
-  PolymorphicAs,
-  PolymorphicPropsWithRef,
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
@@ -81,12 +78,12 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
       active = false,
       disabled = false,
       size = Size.Default,
-      as = 'button' as PolymorphicAs,
+      as,
       ...rest
     },
     ref: React.Ref<any>,
   ): React.ReactElement => {
-    const { Component } = useInferredPolymorphic(as, rest);
+    const { Component } = useInferredPolymorphic(as, rest, 'button');
     const { theme, darkMode } = useContext(MenuContext);
     const hoverStyles = getHoverStyles(subMenuContainerClassName, theme);
     const focusStyles = getFocusedStyles(subMenuContainerClassName, theme);
@@ -351,7 +348,6 @@ SubMenu.displayName = 'SubMenu';
 SubMenu.propTypes = {
   title: PropTypes.string,
   description: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  href: PropTypes.string,
   children: PropTypes.node,
   setOpen: PropTypes.func,
   onKeyDown: PropTypes.func,
@@ -365,10 +361,3 @@ SubMenu.propTypes = {
 };
 
 export default SubMenu;
-
-export type SubMenuElementProps = PolymorphicPropsWithRef<
-  PolymorphicAs,
-  InferredPolymorphicProps<SubMenuProps>
->;
-
-export type SubMenuElement = React.Component<SubMenuElementProps>;

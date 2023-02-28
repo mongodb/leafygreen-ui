@@ -26,7 +26,3 @@ export function MenuSeparator({ className }: MenuSeparatorProps) {
 MenuSeparator.displayName = 'MenuSeparator';
 
 export default MenuSeparator;
-
-export type MenuSeparatorElement = React.ReactComponentElement<
-  typeof MenuSeparator
->;

@@ -1,27 +1,33 @@
-import React, { useState } from 'react';
+import React, { ComponentType, useState } from 'react';
 import { ComponentStory } from '@storybook/react';
 
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { StoryMeta } from '@leafygreen-ui/lib';
 
 import Pagination, { PaginationProps } from '.';
 
-export default {
+export default StoryMeta({
   title: 'Components/Pagination',
-  component: Pagination,
+  component: Pagination as ComponentType,
   args: {
     onCurrentPageOptionChange: undefined,
   },
   argTypes: {
-    currentPage: { control: false },
     numTotalItems: { control: 'number' },
-    itemsPerPage: { control: false },
-    className: { control: false },
-    ref: { control: false },
-    darkMode: storybookArgTypes.darkMode,
-    onBackArrowClick: { control: false },
-    onForwardArrowClick: { control: false },
   },
-};
+  parameters: {
+    default: 'Basic',
+    controls: {
+      exclude: [
+        'currentPage',
+        'itemsPerPage',
+        'onBackArrowClick',
+        'onForwardArrowClick',
+        'onCurrentPageOptionChange',
+        'onItemsPerPageOptionChange',
+      ],
+    },
+  },
+});
 
 const Template: ComponentStory<typeof Pagination> = props => (
   <div style={{ width: '700px' }}>

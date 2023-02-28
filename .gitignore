@@ -28,9 +28,6 @@ yarn-error.log
 # TypeScript type-checking artifact
 tsconfig.tsbuildinfo
 
-# Website build files
-website/hosting/
-
 # Environment variables
 .env
 
