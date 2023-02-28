@@ -4,7 +4,12 @@ import { cx } from '@leafygreen-ui/emotion';
 import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
 import OpenNewTabIcon from '@leafygreen-ui/icon/dist/OpenNewTab';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { Polymorphic, usePolymorphic } from '@leafygreen-ui/polymorphic';
+import {
+  InferredPolymorphic,
+  PolymorphicProps,
+  PolymorphicPropsWithRef,
+  useInferredPolymorphic,
+} from '@leafygreen-ui/polymorphic';
 
 import { bodyTypeScaleStyles } from '../styles';
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
@@ -21,15 +26,23 @@ import {
 } from './Link.styles';
 import { ArrowAppearance, LinkProps } from './Link.types';
 
-const Link = Polymorphic<LinkProps>(
+type LinkRenderProps = PolymorphicPropsWithRef<'span', LinkProps>;
+
+type AnchorLikeProps = PolymorphicProps<'a', LinkProps>;
+
+const hasAnchorLikeProps = (
+  props: LinkRenderProps | AnchorLikeProps,
+): props is AnchorLikeProps => {
+  return (props as AnchorLikeProps).href !== undefined;
+};
+
+const Link = InferredPolymorphic<LinkProps, 'span'>(
   ({
-    href,
     children,
     className,
     arrowAppearance = ArrowAppearance.None,
     hideExternalIcon = false,
     baseFontSize: baseFontSizeOverride,
-    target: targetProp,
     darkMode: darkModeProp,
     as,
     ...rest
@@ -40,30 +53,42 @@ const Link = Polymorphic<LinkProps>(
     }, []);
 
     const { theme } = useDarkMode(darkModeProp);
-    const { Component } = usePolymorphic(as ? as : href ? 'a' : 'span');
+    const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
+    const { Component } = useInferredPolymorphic(as, rest, 'span');
 
     const hrefHostname = useMemo(() => {
-      if (!href) return;
-      const httpRegex = /^http(s)?:\/\//;
-      return httpRegex.test(href) ? new URL(href).hostname : currentHostname;
-    }, [href, currentHostname]);
+      if (hasAnchorLikeProps(rest)) {
+        const httpRegex = /^http(s)?:\/\//;
+        return httpRegex.test(rest.href)
+          ? new URL(rest.href).hostname
+          : currentHostname;
+      }
+    }, [rest, currentHostname]);
 
-    const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
+    let icon;
 
-    let target, icon, rel;
+    const defaultAnchorProps: Pick<
+      JSX.IntrinsicElements['a'],
+      'target' | 'rel'
+    > = {
+      target: undefined,
+      rel: undefined,
+    };
 
-    if (targetProp) {
-      target = targetProp;
-    } else {
+    if ((rest as AnchorLikeProps).target || (rest as AnchorLikeProps).rel) {
+      defaultAnchorProps.target = (rest as AnchorLikeProps).target;
+      defaultAnchorProps.rel = (rest as AnchorLikeProps).rel;
+    } else if (Component === 'a') {
+      // Sets defaults for target and rel props when Component is an anchor tag
       if (hrefHostname === currentHostname) {
-        target = '_self';
+        defaultAnchorProps.target = '_self';
       } else {
-        target = '_blank';
-        rel = 'noopener noreferrer';
+        defaultAnchorProps.target = '_blank';
+        defaultAnchorProps.rel = 'noopener noreferrer';
       }
     }
 
-    if (target === '_blank' && !hideExternalIcon) {
+    if (defaultAnchorProps.target === '_blank' && !hideExternalIcon) {
       icon = (
         <OpenNewTabIcon role="presentation" className={openInNewTabStyles} />
       );
@@ -81,8 +106,6 @@ const Link = Polymorphic<LinkProps>(
       );
     }
 
-    const elementProps = Component === 'a' && ({ href, target, rel } as const);
-
     return (
       <Component
         className={cx(
@@ -92,7 +115,7 @@ const Link = Polymorphic<LinkProps>(
           linkModeStyles[theme],
           className,
         )}
-        {...elementProps}
+        {...defaultAnchorProps}
         {...rest}
       >
         <span className={cx(underlineStyles, underlineModeStyles[theme])}>
