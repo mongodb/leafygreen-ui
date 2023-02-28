@@ -110,10 +110,7 @@ export const AllTypography = ({
           <Link href="?path=/story/button--icon-only" arrowAppearance="persist">
             Internal (Persist Arrow)
           </Link>
-          <Link
-            href="https://mongodb.github.io/leafygreen-ui/?path=/story/*"
-            arrowAppearance="persist"
-          >
+          <Link href="https://mongodb.github.io/leafygreen-ui/?path=/story/*">
             External
           </Link>
         </div>

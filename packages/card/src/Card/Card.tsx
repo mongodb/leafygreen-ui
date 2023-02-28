@@ -49,5 +49,5 @@ Card.displayName = 'Card';
 Card.propTypes = {
   className: PropTypes.string,
   darkMode: PropTypes.bool,
-  contentStyle: PropTypes.oneOf(['None', 'Clickable']),
+  contentStyle: PropTypes.oneOf(Object.values(ContentStyle)),
 };
