@@ -12,7 +12,7 @@ import { expectElementToNotBeRemoved } from '@leafygreen-ui/testing-lib';
 import { toastPortalClassName } from '../ToastContainer/ToastContainer';
 import { ToastProvider } from '../ToastContext';
 
-import { Toast } from './Toast';
+import { ControlledToast as Toast } from './ControlledToast';
 
 /**
  * This suite checks rendering specific to the controlled behavior.

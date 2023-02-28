@@ -14,7 +14,7 @@ import { ControlledToastProps } from './ControlledToast.types';
  *
  * It's recommended to use the hook `useToast` instead
  */
-export const Toast = ({ open, ...props }: ControlledToastProps) => {
+export const ControlledToast = ({ open, ...props }: ControlledToastProps) => {
   props = defaultsDeep(props, defaultToastProps);
   const { pushToast, popToast } = useToast();
   const [toastId, setToastId] = useState<ToastId | null>(null);
