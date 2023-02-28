@@ -38,9 +38,9 @@ import {
 import {
   SizeVariant,
   State,
+  TextInputComponentType,
   TextInputProps,
   TextInputType,
-  TextInputComponentType,
 } from './TextInput.types';
 
 /**

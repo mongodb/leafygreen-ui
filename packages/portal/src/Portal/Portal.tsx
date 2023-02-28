@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
+
 import { PortalProps } from './Portal.types';
 
 export function usePortalContainer(customContainer?: HTMLElement) {

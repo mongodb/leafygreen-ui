@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { OneOf } from '@leafygreen-ui/lib';
 
 export type PortalProps = {
