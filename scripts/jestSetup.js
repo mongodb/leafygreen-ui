@@ -1,5 +1,6 @@
 const React = require('react');
-const ReactDOM = require('react-dom');
+const { createRoot } = require('react-dom/client');
+const {TextEncoder} = require('util')
 
 // As of Jest 24 (https://jestjs.io/blog/2019/01/25/jest-24-refreshing-polished-typescript-friendly#breaking-changes)
 // this is no longer included by default for async tests
@@ -19,9 +20,10 @@ global.IntersectionObserver = class {
   disconnect() {}
 };
 
-const originalRender = ReactDOM.render;
+globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 
-ReactDOM.render = (element, container, callback) => {
-  element = React.createElement(React.StrictMode, [], element);
-  return originalRender(element, container, callback);
-};
+global.TextEncoder = TextEncoder
+
+const domNode = document.createElement('div');
+const root = createRoot(domNode); 
+root.render(React.createElement(React.StrictMode, []));

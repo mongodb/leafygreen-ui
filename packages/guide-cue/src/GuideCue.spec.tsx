@@ -158,10 +158,11 @@ describe('packages/guide-cue', () => {
     });
 
     test('content should render in a portal', () => {
-      const { container, getByTestId } = renderGuideCue({
+      const { container, queryByTestId } = renderGuideCue({
         open: true,
       });
-      expect(container).not.toContain(getByTestId(guideCueTestId));
+      const guideCue = queryByTestId(guideCueTestId);
+      expect(container).not.toContainElement(guideCue);
     });
 
     test('number of steps should not be visible', () => {
@@ -324,16 +325,14 @@ describe('packages/guide-cue', () => {
     });
 
     test('content should render in a portal', async () => {
-      const { container, getByTestId } = renderGuideCue({
+      const { container, findByTestId } = renderGuideCue({
         open: true,
         numberOfSteps: 2,
         currentStep: 1,
       });
-      await act(async () => {
-        await waitFor(() =>
-          expect(container).not.toContain(getByTestId(guideCueTestId)),
-        );
-      });
+
+      const guideCue = await findByTestId(guideCueTestId);
+      expect(container).not.toContainElement(guideCue);
     });
 
     test('number of steps should be visible', async () => {
@@ -391,18 +390,16 @@ describe('packages/guide-cue', () => {
     test('will render inside portal and scroll container', async () => {
       const elem = document.createElement('div');
       document.body.appendChild(elem);
-      renderGuideCue({
+      const { findByText } = renderGuideCue({
         open: true,
         numberOfSteps: 2,
         currentStep: 1,
         portalContainer: elem,
         scrollContainer: elem,
       });
-      await act(async () => {
-        await waitFor(() =>
-          expect(elem.innerHTML.includes(guideCueTitle)).toBe(true),
-        );
-      });
+
+      const guideCue = await findByText(guideCueTitle);
+      expect(elem).toContainElement(guideCue);
     });
   });
 });
