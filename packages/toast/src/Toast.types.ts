@@ -77,4 +77,10 @@ export interface ToastProps
    * @default true
    */
   dismissible?: boolean;
+
+  /**
+   * Whether the toast has been rendered with the context
+   * or the controolled JSX component
+   */
+  isControlled?: boolean;
 }

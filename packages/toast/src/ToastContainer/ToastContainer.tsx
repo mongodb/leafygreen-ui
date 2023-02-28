@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { SyntheticEvent, useState } from 'react';
 import { Transition, TransitionGroup } from 'react-transition-group';
 
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -41,12 +41,24 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
   const showNotifBar = isHovered && remainingToasts.length > 0;
   const notifBarSpacing = showNotifBar ? notificationBarHeight + gap : 0;
 
+  const handleClose = (id: ToastId, e?: SyntheticEvent) => {
+    const toast = stack.get(id);
+
+    if (toast) {
+      // We only self-close the toast if it's not externally controlled
+      if (!toast.isControlled) {
+        popToast(id);
+      }
+      toast.onClose?.(e);
+    }
+  };
+
   useTimers(
     {
       stack,
       isHovered,
     },
-    popToast,
+    handleClose,
   );
 
   return (
@@ -73,10 +85,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
                 <Transition key={id} timeout={transitionDuration.default}>
                   {state => (
                     <InternalToast
-                      onClose={e => {
-                        popToast(e);
-                        onClose?.(e);
-                      }}
+                      onClose={e => handleClose(id, e)}
                       className={cx(
                         toastClassName,
                         getToastTransitionStyles({

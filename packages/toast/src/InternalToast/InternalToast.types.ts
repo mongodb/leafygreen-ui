@@ -6,12 +6,7 @@ import { ToastProps } from '../Toast.types';
 
 export interface InternalToastProps extends ToastProps {
   /**
-   * Required boolean that renders the Toast and makes it visible when true.
-   *
-   * Note: open is not a valid prop when rendering toasts programmatically
-   *
-   * @default false
+   * defines whether the component is controlled
    */
-  open: boolean;
-  onClose?: React.EventHandler<any>;
+  isControlled?: boolean;
 }

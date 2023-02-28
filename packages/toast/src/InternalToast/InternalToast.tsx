@@ -25,6 +25,7 @@ import {
   toastThemeStyles,
   variantIconStyle,
 } from './InternalToast.styles';
+import { InternalToastProps } from './InternalToast.types';
 import { ProgressBar } from './ProgressBar';
 import { variantIcons } from './VariantIcon';
 
@@ -36,7 +37,7 @@ export function InternalToast({
   onClose,
   action,
   ...rest
-}: ToastProps) {
+}: InternalToastProps) {
   const {
     variant,
     progress,

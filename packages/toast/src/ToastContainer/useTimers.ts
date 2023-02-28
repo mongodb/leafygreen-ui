@@ -15,7 +15,7 @@ export const useTimers = (
     stack: ToastStack;
     isHovered: boolean;
   },
-  callback: Function,
+  callback: (id: ToastId) => void,
 ) => {
   const setTimer = useCallback(
     (id: ToastId, timeout?: number | null) => {

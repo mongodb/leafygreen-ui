@@ -21,7 +21,7 @@ export const Toast = ({ open, ...props }: ControlledToastProps) => {
 
   useEffect(() => {
     if (open && !toastId) {
-      const _id = pushToast(props);
+      const _id = pushToast({ isControlled: true, ...props });
       setToastId(_id);
     } else if (!open && toastId) {
       popToast(toastId);
