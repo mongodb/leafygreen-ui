@@ -57,7 +57,7 @@ export const Basic: ComponentStory<typeof InternalToast> = args => {
       <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
         {open ? 'Close' : 'Open'} Toast
       </Button>
-      <InternalToast {...args} open={open} />
+      <InternalToast {...args} />
     </>
   );
 };
@@ -71,7 +71,7 @@ export const Dismissible: ComponentStory<typeof InternalToast> = args => {
       <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
         {open ? 'Close' : 'Open'} Toast
       </Button>
-      <InternalToast {...args} open={open} onClose={() => setOpen(false)} />
+      <InternalToast {...args} onClose={() => setOpen(false)} />
     </>
   );
 };

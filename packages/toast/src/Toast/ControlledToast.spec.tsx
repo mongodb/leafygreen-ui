@@ -5,6 +5,7 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { axe } from 'jest-axe';
 
 import { expectElementToNotBeRemoved } from '@leafygreen-ui/testing-lib';
 
@@ -13,6 +14,13 @@ import { ToastProvider } from '../ToastContext';
 
 import { Toast } from './Toast';
 
+/**
+ * This suite checks rendering specific to the controlled behavior.
+ * i.e. `open` and `onClose` props.
+ *
+ * Other individual toast behavior is tested in `InternalToast.spec`
+ * and multi-toast behavior is tested in `ToastContext.spec`
+ */
 describe('packages/toast/controlled', () => {
   // Clear the portals after each test
   afterEach(() => {
@@ -23,7 +31,17 @@ describe('packages/toast/controlled', () => {
     }
   });
 
-  describe('open', () => {
+  describe('a11y', () => {
+    test('does not have basic accessibility issues', async () => {
+      const { container } = render(
+        <Toast open={true} onClose={() => {}} title={'hello world'} />,
+      );
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+  });
+
+  describe('`open` prop', () => {
     test('renders when `open` is true', async () => {
       const { findByTestId } = render(
         <ToastProvider>

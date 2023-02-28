@@ -8,7 +8,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
-import { ToastProps, Variant } from '../Toast.types';
+import { Variant } from '../Toast.types';
 
 import { defaultToastProps } from './defaultProps';
 import {

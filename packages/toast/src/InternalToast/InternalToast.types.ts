@@ -9,4 +9,6 @@ export interface InternalToastProps extends ToastProps {
    * defines whether the component is controlled
    */
   isControlled?: boolean;
+
+  open?: never;
 }
