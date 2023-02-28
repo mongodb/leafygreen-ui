@@ -4,7 +4,7 @@ import { cleanup, render } from '@testing-library/react';
 
 import { typeIs } from '@leafygreen-ui/lib';
 
-import Portal from '.';
+import Portal from '..';
 
 afterEach(async () => {
   await cleanup();

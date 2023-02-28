@@ -34,8 +34,14 @@ import {
   stateIndicatorStyles,
   textContainerStyle,
   wrapperStyle,
-} from './style';
-import { SizeVariant, State, TextInputProps, TextInputType } from './types';
+} from './TextInput.styles';
+import {
+  SizeVariant,
+  State,
+  TextInputComponentType,
+  TextInputProps,
+  TextInputType,
+} from './TextInput.types';
 
 /**
  * # TextInput
@@ -61,7 +67,6 @@ import { SizeVariant, State, TextInputProps, TextInputType } from './types';
  * @param props.sizeVariant determines the size of the text and the height of the input.
  */
 
-type TextInputComponentType = React.ForwardRefExoticComponent<TextInputProps>;
 const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
   (
     {
