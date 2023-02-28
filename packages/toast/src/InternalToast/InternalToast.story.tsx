@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { ComponentStory } from '@storybook/react';
 
-import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import { StoryMeta } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
@@ -10,7 +9,7 @@ import { Variant } from '../Toast.types';
 
 import { InternalToast } from '.';
 
-export default StoryMeta<typeof InternalToast>({
+export default StoryMeta({
   title: 'Components/Toast/Internal',
   component: InternalToast,
   parameters: {
@@ -48,33 +47,9 @@ export default StoryMeta<typeof InternalToast>({
   },
 });
 
-export const Basic: ComponentStory<typeof InternalToast> = args => {
-  const [open, setOpen] = useState(true);
-  const { darkMode } = args;
-
-  return (
-    <>
-      <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
-        {open ? 'Close' : 'Open'} Toast
-      </Button>
-      <InternalToast {...args} />
-    </>
-  );
-};
-
-export const Dismissible: ComponentStory<typeof InternalToast> = args => {
-  const [open, setOpen] = useState(true);
-  const { darkMode } = args;
-
-  return (
-    <>
-      <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
-        {open ? 'Close' : 'Open'} Toast
-      </Button>
-      <InternalToast {...args} onClose={() => setOpen(false)} />
-    </>
-  );
-};
+export const Basic: ComponentStory<typeof InternalToast> = args => (
+  <InternalToast {...args} />
+);
 
 export const WithLink = Basic.bind({});
 WithLink.args = {

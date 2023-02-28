@@ -43,7 +43,7 @@ export function InternalToast({
     progress,
     dismissible,
     // timeout,
-  } = defaults(defaultToastProps);
+  } = defaults(rest, defaultToastProps);
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const nodeRef = useRef(null);
 

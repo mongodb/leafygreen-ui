@@ -30,6 +30,9 @@ import { useTimers } from './useTimers';
 export const toastPortalClassName = createUniqueClassName('toast-portal');
 const toastClassName = createUniqueClassName('toast');
 
+/**
+ * ToastContainer is responsible for rendering the stack of toasts provided
+ */
 export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
   const regionId = useIdAllocator({ id: 'lg-toast-region' });
   const { theme } = useDarkMode();

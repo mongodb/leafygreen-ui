@@ -53,13 +53,13 @@ export const getToastTransitionStyles = ({
       `;
     case 'entering':
       return css`
-        transform: translate3d(0, ${yOffset}px, -100) scale(0.9);
+        transform: translate3d(0, ${yOffset}px, -100px) scale(0.9);
         opacity: 0;
       `;
     case 'exited':
     case 'exiting':
       return css`
-        transform: translate3d(0, -${yOffset}px, 100) scale(0.9);
+        transform: translate3d(0, ${yOffset}px, -100px) scale(0.9);
         opacity: 0;
       `;
     default:

@@ -40,9 +40,7 @@ export const baseToastStyle = css`
   border: 1px solid;
   box-shadow: 0px 18px 18px -15px ${transparentize(0.8, '#06161E')};
 
-  opacity: 0;
   overflow: hidden;
-  transform: translate3d(0, ${spacing[3]}px, 0) scale(0.95);
   transform-origin: bottom center;
   transition: all ${transitionDuration.default}ms ease-in-out;
 
