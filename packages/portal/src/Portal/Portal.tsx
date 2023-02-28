@@ -1,42 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
-import { OneOf } from '@leafygreen-ui/lib';
 
-type PortalProps = {
-  children?: React.ReactNode;
-} & OneOf<
-  {
-    /**
-     * A custom container element. By default, the container will be a `div` appended to the document body.
-     * @required
-     */
-    container: HTMLElement;
-    /**
-     * `className` prop passed to the container element.
-     */
-    className?: never;
-  },
-  {
-    /**
-     * `className` prop passed to the container element.
-     */
-    className?: string;
-    /**
-     * A custom container element. By default, the container will be a `div` appended to the document body.
-     */
-    container?: null;
-  }
->;
+import { PortalProps } from './Portal.types';
 
-function usePortalContainer(customContainer?: HTMLElement) {
+export function usePortalContainer(customContainer?: HTMLElement) {
   // Make container initially undefined so that the portal is not created
   // or rendered on initial render. This allows server-side rendering since:
   //  - ReactDOMServer cannot render portals
   //  - A component's initial hydrated render should match the server render
-  const [container, setContainer] = useState<HTMLElement | undefined>();
+  const [container, setContainer] = React.useState<HTMLElement | undefined>();
 
   useIsomorphicLayoutEffect(() => {
     if (customContainer) {
