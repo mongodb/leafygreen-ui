@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
 
-import Portal from './Portal';
+import Portal from '.';
 
 const portalChildrenStyle = css`
   text-align: center;

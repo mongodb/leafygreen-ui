@@ -10,7 +10,7 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { SizeVariant, State } from './types';
+import { SizeVariant, State } from './TextInput.types';
 
 /**
  * Adds an inset box shadow to hide the UA background styles for autofilled inputs
