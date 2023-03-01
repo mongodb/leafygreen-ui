@@ -6,7 +6,13 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
-import { toastHeight, toastInset, toastWidth, yOffset } from '../constants';
+import {
+  gap,
+  toastHeight,
+  toastInset,
+  toastWidth,
+  yOffset,
+} from '../constants';
 import { toastBGColor } from '../InternalToast';
 
 export const toastContainerStyles = css`
@@ -21,6 +27,16 @@ export const toastContainerStyles = css`
   perspective: 1600px;
   perspective-origin: bottom;
   transform-style: preserve-3d;
+`;
+
+export const getContainerHoverStyles = ({
+  count,
+  offset,
+}: {
+  count: number;
+  offset: number;
+}) => css`
+  height: ${toastInset + count * (toastHeight + gap) + offset}px;
 `;
 
 export const getToastTransitionStyles = ({
@@ -70,15 +86,19 @@ export const getToastTransitionStyles = ({
   }
 };
 
-// export const toastHoverStyles = ({
-//   indexInStack,
-//   theme,
-// }: {
-//   theme: Theme;
-//   indexInStack: number;
-// }) => {
-//   return css`
-//     background-color: ${toastBGColor[theme]};
-//     transform: translate3d(0, -${indexInStack * (toastHeight + gap)}px, 0);
-//   `;
-// };
+export const getToastHoverStyles = ({
+  theme,
+  indexFromBottom,
+  offset,
+}: {
+  theme: Theme;
+  indexFromBottom: number;
+  offset: number;
+}) => css`
+  background-color: ${toastBGColor[theme]};
+  transform: translate3d(
+    0,
+    -${indexFromBottom * (toastHeight + gap) + offset}px,
+    0
+  );
+`;

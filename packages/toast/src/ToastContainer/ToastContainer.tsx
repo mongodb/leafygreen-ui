@@ -1,20 +1,15 @@
 import React, { SyntheticEvent, useState } from 'react';
 import { Transition, TransitionGroup } from 'react-transition-group';
 
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
 import Portal from '@leafygreen-ui/portal';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
-import {
-  gap,
-  notificationBarHeight,
-  toastHeight,
-  toastInset,
-} from '../constants';
-import { InternalToast, toastBGColor } from '../InternalToast';
+import { gap, notificationBarHeight } from '../constants';
+import { InternalToast } from '../InternalToast';
 import { ToastProps } from '../Toast.types';
 import { useToast } from '../ToastContext';
 import { ToastId, ToastStack } from '../ToastContext/ToastContext.types';
@@ -22,6 +17,8 @@ import { ToastId, ToastStack } from '../ToastContext/ToastContext.types';
 import { NotificationBar } from './NotificationBar/NotificationBar';
 import { notificationBarTransitionStyles } from './NotificationBar/NotificationBar.styles';
 import {
+  getContainerHoverStyles,
+  getToastHoverStyles,
   getToastTransitionStyles,
   toastContainerStyles,
 } from './ToastContainer.styles';
@@ -56,13 +53,11 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
     }
   };
 
-  useTimers(
-    {
-      stack,
-      isHovered,
-    },
-    handleClose,
-  );
+  useTimers({
+    stack,
+    isHovered,
+    callback: handleClose,
+  });
 
   return (
     <Portal className={toastPortalClassName}>
@@ -75,11 +70,10 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         className={cx(toastContainerStyles, {
-          [css`
-            height: ${toastInset +
-            recentToasts.length * (toastHeight + gap) +
-            notifBarSpacing}px;
-          `]: isHovered,
+          [getContainerHoverStyles({
+            count: recentToasts.length,
+            offset: notifBarSpacing,
+          })]: isHovered,
         })}
       >
         <TransitionGroup appear exit component={null}>
@@ -98,14 +92,11 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
                           indexFromTop: indexFromTop(i),
                         }),
                         {
-                          [css`
-                            background-color: ${toastBGColor[theme]};
-                            transform: translate3d(
-                              0,
-                              -${i * (toastHeight + gap) + notifBarSpacing}px,
-                              0
-                            );
-                          `]: isHovered,
+                          [getToastHoverStyles({
+                            theme,
+                            indexFromBottom: i,
+                            offset: notifBarSpacing,
+                          })]: isHovered,
                         },
                         className,
                       )}

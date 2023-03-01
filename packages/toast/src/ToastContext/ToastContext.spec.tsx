@@ -22,7 +22,7 @@ describe('packages/toast/context', () => {
     expect(div).toBeInTheDocument();
   });
 
-  describe('open', () => {
+  describe('opening toasts', () => {
     test('opens toast when triggered', async () => {
       const { getByTestId } = render(<ContextStory />);
       const button = getByTestId('toast-trigger');
@@ -42,7 +42,7 @@ describe('packages/toast/context', () => {
     });
   });
 
-  describe('close', () => {
+  describe('closing toasts', () => {
     test('toast closes after timeout', async () => {
       const { getByTestId } = render(<ContextStory timeout={50} />);
       const button = getByTestId('toast-trigger');
@@ -79,5 +79,11 @@ describe('packages/toast/context', () => {
       userEvent.click(dismiss);
       await waitForElementToBeRemoved(toast);
     });
+  });
+
+  describe('onClose', () => {
+    test.todo(
+      'is called with a payload that differentiates timeout vs dismiss',
+    );
   });
 });
