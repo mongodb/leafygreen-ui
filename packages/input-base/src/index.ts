@@ -1,1 +1,1 @@
-export { InputBase, InputBaseProps } from './InputBase';
+export { InputBase, type InputBaseProps, State } from './InputBase';

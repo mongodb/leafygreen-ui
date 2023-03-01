@@ -13,6 +13,15 @@
     },
     {
       "path": "../lib"
+    },
+    {
+      "path": "../tokens"
+    },
+    {
+      "path": "../palette"
+    },
+    {
+      "path": "../leafygreen-provider"
     }
   ]
 }

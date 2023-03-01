@@ -1,3 +1,2 @@
-
-export  { NumberInput } from './NumberInput';
-export { NumberInputProps } from './NumberInput.types';
+export { NumberInput } from './NumberInput';
+export { type NumberInputProps } from './NumberInput.types';
