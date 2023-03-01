@@ -55,6 +55,7 @@ export function InternalToast({
       ref={nodeRef}
       className={cx(baseToastStyle, toastThemeStyles[theme], className)}
       aria-atomic="true"
+      data-testid="lg-toast"
       {...rest}
     >
       <div className={cx(contentWrapperStyle)}>
@@ -110,4 +111,5 @@ InternalToast.propTypes = {
   progress: PropTypes.number,
   open: PropTypes.bool,
   onClose: PropTypes.func,
+  dismmissible: PropTypes.bool,
 };

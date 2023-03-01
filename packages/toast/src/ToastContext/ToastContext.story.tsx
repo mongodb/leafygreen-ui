@@ -23,6 +23,7 @@ const BasicChildren = () => {
 
   return (
     <Button
+      data-testid="toast-trigger"
       onClick={() => {
         const variant = sample(Variant);
         pushToast({

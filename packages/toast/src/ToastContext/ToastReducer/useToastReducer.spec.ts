@@ -1,7 +1,8 @@
-import { cleanup } from '@testing-library/react';
+import { act, cleanup } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 
 import { Variant } from '../../Toast.types';
+import { ToastId } from '../ToastContext.types';
 
 import { useToastReducer } from '.';
 
@@ -22,9 +23,12 @@ describe('packages/toast/useToastReducer', () => {
   });
 
   describe('pushToast', () => {
-    test('pushes a toast to the stack', () => {
+    test('pushes a toast to the stack', async () => {
       const { result, rerender } = renderHook(useToastReducer);
-      const toastId = result.current.pushToast({ title: 'test' });
+      let toastId: ToastId = '';
+      act(() => {
+        toastId = result.current.pushToast({ title: 'test' });
+      });
       rerender();
       const { stack } = result.current;
       const toast = stack.get(toastId);
@@ -36,7 +40,10 @@ describe('packages/toast/useToastReducer', () => {
   describe('getToast', () => {
     test('returns the requested toast', () => {
       const { result, rerender } = renderHook(useToastReducer);
-      const toastId = result.current.pushToast({ title: 'test' });
+      let toastId: ToastId = '';
+      act(() => {
+        toastId = result.current.pushToast({ title: 'test' });
+      });
       rerender();
       const toast = result.current.getToast(toastId);
       expect(toast).toBeDefined();
@@ -47,9 +54,14 @@ describe('packages/toast/useToastReducer', () => {
   describe('popToast', () => {
     test('removes toast from the stack', () => {
       const { result, rerender } = renderHook(useToastReducer);
-      const toastId = result.current.pushToast({ title: 'test' });
+      let toastId: ToastId = '';
+      act(() => {
+        toastId = result.current.pushToast({ title: 'test' });
+      });
       rerender();
-      result.current.popToast(toastId);
+      act(() => {
+        result.current.popToast(toastId);
+      });
       rerender();
       const { stack } = result.current;
       const toast = stack.get(toastId);
@@ -60,13 +72,18 @@ describe('packages/toast/useToastReducer', () => {
   describe('updateToast', () => {
     test('updates the progress variable', () => {
       const { result, rerender } = renderHook(useToastReducer);
-      const toastId = result.current.pushToast({
-        title: 'test',
-        variant: Variant.Progress,
-        progress: 0,
+      let toastId: ToastId = '';
+      act(() => {
+        toastId = result.current.pushToast({
+          title: 'test',
+          variant: Variant.Progress,
+          progress: 0,
+        });
       });
       rerender();
-      result.current.updateToast({ id: toastId, props: { progress: 0.5 } });
+      act(() => {
+        result.current.updateToast({ id: toastId, props: { progress: 0.5 } });
+      });
       rerender();
 
       const { stack } = result.current;
