@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { Label } from '@leafygreen-ui/typography';
+import { Description, Label } from '@leafygreen-ui/typography';
 
 import { Size } from '../types';
 
 import {
-  containerMargin,
+  containerSizeStyle,
+  containerStyle,
   hoverThemeStyles,
   inputBaseStyle,
   inputClassName,
@@ -51,6 +52,7 @@ function Radio({
   darkMode: darkModeProp,
   checked,
   size = Size.Default,
+  description,
   ...rest
 }: RadioProps) {
   const { darkMode } = useDarkMode(darkModeProp);
@@ -59,7 +61,7 @@ function Radio({
   const { theme } = useDarkMode(darkModeProp);
 
   return (
-    <div className={containerMargin}>
+    <div className={cx(containerStyle, containerSizeStyle[normalizedSize])}>
       <Label
         darkMode={darkMode}
         htmlFor={id!}
@@ -115,8 +117,18 @@ function Radio({
           />
         </div>
 
-        <div>{children}</div>
+        <>{children}</>
       </Label>
+
+      {description && (
+        <Description
+          className={css`
+            grid-area: description;
+          `}
+        >
+          {description}
+        </Description>
+      )}
     </div>
   );
 }

@@ -14,13 +14,26 @@ export const inputDisplayWrapperClassName =
   createUniqueClassName('radio-group');
 export const inputClassName = createUniqueClassName('radio-group');
 
-export const containerMargin = css`
+export const containerStyle = css`
+  display: grid;
+  grid-template-areas: 'label label' '. description';
+
   & + & {
     margin-top: 8px;
   }
 `;
 
+export const containerSizeStyle: Omit<Record<Size, string>, 'xsmall'> = {
+  [Size.Small]: css`
+    grid-template-columns: ${14 + 8}px auto;
+  `,
+  [Size.Default]: css`
+    grid-template-columns: ${20 + 8}px auto;
+  `,
+};
+
 export const labelBaseStyle = css`
+  grid-area: label;
   display: flex;
   line-height: 20px;
   cursor: pointer;
