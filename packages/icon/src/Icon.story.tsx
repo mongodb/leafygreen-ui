@@ -87,3 +87,5 @@ export const AllIcons: ComponentStory<typeof Icon> = (
     })}
   </div>
 );
+
+export const Error = () => <Icon glyph="error" />;
