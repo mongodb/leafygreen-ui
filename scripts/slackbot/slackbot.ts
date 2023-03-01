@@ -50,6 +50,10 @@ cli.addHelpText(
 const { channel, test, dry }: Opts = cli.opts();
 
 try {
+  /**
+   * Obtain a bot token by logging into the slack API docs here: https://api.slack.com/apps/A02H2UGAMDM
+   * Click "OAuth & Permissions", and copy the "Bot User OAuth Token"
+   */
   const botToken = process.env.SLACK_BOT_TOKEN;
   const channelName: keyof typeof Channels = test
     ? 'design-system-testing'
