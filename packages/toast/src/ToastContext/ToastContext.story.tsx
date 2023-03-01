@@ -4,7 +4,7 @@ import { sample } from 'lodash';
 import Button from '@leafygreen-ui/button';
 import { StoryMeta } from '@leafygreen-ui/lib';
 
-import { InternalToast } from '../InternalToast';
+import { InternalToast, InternalToastProps } from '../InternalToast';
 import { Variant } from '../Toast.types';
 
 import { ToastProvider } from './ToastContext';
@@ -18,7 +18,7 @@ export default StoryMeta<typeof InternalToast>({
   },
 });
 
-const BasicChildren = () => {
+const BasicChildren = (toastProps: Partial<InternalToastProps>) => {
   const { pushToast } = useToast();
 
   return (
@@ -29,6 +29,7 @@ const BasicChildren = () => {
         pushToast({
           title: `I'm a ${variant} toast`,
           variant,
+          ...toastProps,
         });
       }}
     >
@@ -37,10 +38,10 @@ const BasicChildren = () => {
   );
 };
 
-export const Basic = () => {
+export const Basic = (toastProps: Partial<InternalToastProps>) => {
   return (
     <ToastProvider>
-      <BasicChildren />
+      <BasicChildren {...toastProps} />
     </ToastProvider>
   );
 };

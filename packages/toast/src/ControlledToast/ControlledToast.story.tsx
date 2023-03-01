@@ -7,7 +7,7 @@ import { StoryMeta } from '@leafygreen-ui/lib';
 
 import { ToastProvider, Variant } from '..';
 
-import { Toast } from './Toast';
+import { ControlledToast as Toast } from './ControlledToast';
 
 export default StoryMeta({
   title: 'Components/Toast/Controlled',

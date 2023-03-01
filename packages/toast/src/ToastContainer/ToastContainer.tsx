@@ -68,6 +68,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
     <Portal className={toastPortalClassName}>
       <div
         id={regionId}
+        data-testid="lg-toast-region"
         role="status"
         aria-live="polite"
         aria-relevant="all"

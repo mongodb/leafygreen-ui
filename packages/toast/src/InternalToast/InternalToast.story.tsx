@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ComponentStory } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
