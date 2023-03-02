@@ -52,7 +52,7 @@
     "publish": "npm-run-all --serial publish:*",
     "publish:packages": "yarn changeset publish --public",
     "publish:storybook": "build-storybook && gh-pages --dist ./storybook-static",
-    "slackbot": "yarn ts-node ./scripts/slackbot.ts",
+    "slackbot": "yarn ts-node ./scripts/slackbot",
     "start": "yarn start:storybook",
     "start:all": "npm-run-all --parallel start:storybook",
     "start:storybook": "start-storybook -p 9001 --no-version-updates",
