@@ -11,7 +11,7 @@ describe('packages/toast/useToastReducer', () => {
 
   test('returns the expected stack & functions', () => {
     const { result } = renderHook(useToastReducer);
-    const { stack, pushToast, popToast, updateToast, getToast } =
+    const { stack, pushToast, popToast, updateToast, getToast, clearStack } =
       result.current;
 
     expect(stack).toBeDefined();
@@ -20,6 +20,7 @@ describe('packages/toast/useToastReducer', () => {
     expect(popToast).toBeDefined();
     expect(updateToast).toBeDefined();
     expect(getToast).toBeDefined();
+    expect(clearStack).toBeDefined();
   });
 
   describe('pushToast', () => {
@@ -90,6 +91,23 @@ describe('packages/toast/useToastReducer', () => {
       const toast = stack.get(toastId);
       expect(toast).toBeDefined();
       expect(toast).toStrictEqual(expect.objectContaining({ progress: 0.5 }));
+    });
+  });
+
+  describe('clearStack', () => {
+    test('clears the stack', () => {
+      const { result, rerender } = renderHook(useToastReducer);
+      act(() => {
+        result.current.pushToast({ title: 'test' });
+      });
+      rerender();
+
+      act(() => {
+        result.current.clearStack();
+      });
+      rerender();
+
+      expect(result.current.stack.size).toBe(0);
     });
   });
 });

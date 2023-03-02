@@ -15,6 +15,7 @@ export interface ToastContextProps {
   }) => ToastProps | undefined;
   getToast: (id: ToastId) => ToastProps | undefined;
   getStack: () => ToastStack | undefined;
+  clearStack: () => void;
 }
 
 /**
@@ -24,6 +25,7 @@ export enum ToastReducerActionType {
   Push = 'push',
   Pop = 'pop',
   Update = 'update',
+  Clear = 'clear',
 }
 
 /**
@@ -47,6 +49,9 @@ export type ToastReducerAction =
         id: ToastId;
         props: Partial<ToastProps>;
       };
+    }
+  | {
+      type: ToastReducerActionType.Clear;
     };
 
 export interface ToastReducerState {

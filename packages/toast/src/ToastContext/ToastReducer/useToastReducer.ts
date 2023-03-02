@@ -56,6 +56,12 @@ const toastReducer = (
       return { stack };
     }
 
+    case ToastReducerActionType.Clear: {
+      const { stack } = state;
+      stack.clear();
+      return { stack };
+    }
+
     default:
       return state;
   }
@@ -102,11 +108,18 @@ export const useToastReducer = () => {
     return getToast(payload.id);
   };
 
+  const clearStack: ToastContextProps['clearStack'] = () => {
+    dispatch({
+      type: ToastReducerActionType.Clear,
+    });
+  };
+
   return {
     stack,
     pushToast,
     popToast,
     updateToast,
     getToast,
+    clearStack,
   };
 };

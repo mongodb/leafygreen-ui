@@ -11,10 +11,11 @@ export const ToastContext = React.createContext<ToastContextProps>({
   updateToast: () => undefined,
   getToast: () => undefined,
   getStack: () => undefined,
+  clearStack: () => {},
 });
 
 export const ToastProvider = ({ children }: React.PropsWithChildren<{}>) => {
-  const { stack, pushToast, popToast, updateToast, getToast } =
+  const { stack, pushToast, popToast, updateToast, getToast, clearStack } =
     useToastReducer();
 
   return (
@@ -25,6 +26,7 @@ export const ToastProvider = ({ children }: React.PropsWithChildren<{}>) => {
         updateToast,
         getToast,
         getStack: () => stack,
+        clearStack,
       }}
     >
       {children}

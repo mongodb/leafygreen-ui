@@ -7,11 +7,14 @@ describe('packages/toast/useToast', () => {
 
   test('returns the expected stack & functions', () => {
     const { result } = renderHook(useToast);
-    const { pushToast, popToast, updateToast, getToast } = result.current;
+    const { pushToast, popToast, updateToast, getToast, getStack, clearStack } =
+      result.current;
 
     expect(pushToast).toBeDefined();
     expect(popToast).toBeDefined();
     expect(updateToast).toBeDefined();
     expect(getToast).toBeDefined();
+    expect(getStack).toBeDefined();
+    expect(clearStack).toBeDefined();
   });
 });
