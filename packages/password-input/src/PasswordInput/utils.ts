@@ -34,7 +34,7 @@ export function getStateFromArray(
 export const stateNotificationCheck = function (
   props: { [x: string]: any },
   propName: string,
-  ...rest: ['componentName', 'location', 'propFullName']
+  ...rest: [string, string, string]
 ) {
   const stateStringProp = PropTypes.oneOf(Object.values(State)).isRequired;
   const arrayProp = PropTypes.arrayOf(
