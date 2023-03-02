@@ -57,6 +57,11 @@ export interface NumberInputProps
   label?: string;
 
   /**
+   * Text that gives more detail about the requirements for the input.
+   */
+  description?: string;
+
+  /**
    * The message shown below the input element if the value is invalid.
    */
   errorMessage?: string;

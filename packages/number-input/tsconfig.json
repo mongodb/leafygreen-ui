@@ -26,6 +26,12 @@
     {
       "path": "../typography"
     },
+    {
+      "path": "../icon"
+    },
+    {
+      "path": "../icon-button"
+    }
   ]
 }
  

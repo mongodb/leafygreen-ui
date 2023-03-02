@@ -3,22 +3,30 @@ import { ComponentStory } from '@storybook/react';
 
 import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
 
+import { Size } from './NumberInput/NumberInput.types';
 import { NumberInput } from '.';
 
 export default StoryMeta({
   title: 'Components/NumberInput',
   component: NumberInput,
   args: {
-    // label: 'label',
+    label: 'label',
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
+    size: {
+      control: 'select',
+      options: Object.values(Size),
+    },
     // disabled: {
     //   control: 'boolean',
     // },
-    // label: {
-    //   control: 'text',
-    // },
+    label: {
+      control: 'text',
+    },
+    description: {
+      control: 'text',
+    },
   },
   parameters: {
     default: 'Demo',

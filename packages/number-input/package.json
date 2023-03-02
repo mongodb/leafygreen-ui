@@ -30,6 +30,8 @@
       "@leafygreen-ui/emotion": "^4.0.3",
       "@leafygreen-ui/input-base": "^0.9.0",
       "@leafygreen-ui/hooks": "^7.6.0",
-      "@leafygreen-ui/typography": "^16.0.1"
+      "@leafygreen-ui/typography": "^16.0.1",
+      "@leafygreen-ui/icon": "^11.12.4",
+      "@leafygreen-ui/icon-button": "^15.0.6"
     }
   }
