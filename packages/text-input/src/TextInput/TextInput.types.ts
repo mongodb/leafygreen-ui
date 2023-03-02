@@ -158,3 +158,6 @@ export type TextInputProps = Either<
   BaseTextInputProps & AriaLabelProps & TextInputTypeProp,
   AriaLabels
 >;
+
+export type TextInputComponentType =
+  React.ForwardRefExoticComponent<TextInputProps>;
