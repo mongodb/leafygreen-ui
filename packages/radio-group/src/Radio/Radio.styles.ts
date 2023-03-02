@@ -17,18 +17,17 @@ export const inputClassName = createUniqueClassName('radio-group');
 export const containerStyle = css`
   display: grid;
   grid-template-areas: 'label label' '. description';
-
-  & + & {
-    margin-top: 8px;
-  }
+  gap: 0 8px;
+  margin: 8px 0;
 `;
 
 export const containerSizeStyle: Omit<Record<Size, string>, 'xsmall'> = {
+  // size of `inputDisplay` element
   [Size.Small]: css`
-    grid-template-columns: ${14 + 8}px auto;
+    grid-template-columns: ${14}px auto;
   `,
   [Size.Default]: css`
-    grid-template-columns: ${20 + 8}px auto;
+    grid-template-columns: ${20}px auto;
   `,
 };
 
@@ -230,4 +229,8 @@ export const radioBoxSizeStyles: Omit<Record<Size, string>, 'xsmall'> = {
 export const radioBoxBaseStyle = css`
   position: relative;
   flex-shrink: 0;
+`;
+
+export const descriptionStyles = css`
+  grid-area: description;
 `;

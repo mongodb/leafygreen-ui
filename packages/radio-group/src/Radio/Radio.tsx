@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Description, Label } from '@leafygreen-ui/typography';
 
@@ -10,6 +11,7 @@ import { Size } from '../types';
 import {
   containerSizeStyle,
   containerStyle,
+  descriptionStyles,
   hoverThemeStyles,
   inputBaseStyle,
   inputClassName,
@@ -59,6 +61,7 @@ function Radio({
   const normalizedSize =
     size === Size.Small || size === Size.XSmall ? Size.Small : Size.Default;
   const { theme } = useDarkMode(darkModeProp);
+  const descriptionId = useIdAllocator({});
 
   return (
     <div className={cx(containerStyle, containerSizeStyle[normalizedSize])}>
@@ -86,6 +89,7 @@ function Radio({
           aria-checked={checked}
           disabled={disabled}
           aria-disabled={disabled}
+          aria-describedby={descriptionId}
           className={cx(
             inputClassName,
             inputBaseStyle,
@@ -121,11 +125,7 @@ function Radio({
       </Label>
 
       {description && (
-        <Description
-          className={css`
-            grid-area: description;
-          `}
-        >
+        <Description id={descriptionId} className={descriptionStyles}>
           {description}
         </Description>
       )}
@@ -147,6 +147,7 @@ Radio.propTypes = {
   size: PropTypes.oneOf(Object.values(Size)),
   default: PropTypes.bool,
   darkMode: PropTypes.bool,
+  description: PropTypes.string,
 };
 
 export default Radio;
