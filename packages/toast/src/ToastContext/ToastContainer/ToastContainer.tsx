@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useCallback, useRef, useState } from 'react';
+import React, { SyntheticEvent, useRef, useState } from 'react';
 import { Transition, TransitionGroup } from 'react-transition-group';
 
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -50,12 +50,11 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
   const [isHovered, setHovered] = useState(false);
 
   const { recentToasts, remainingToasts } = getDividedStack(stack);
-  // const indexFromBottom = (i: number) => recentToasts.length - 1 - i;
 
   const showNotifBar = isHovered && remainingToasts.length > 0;
   const notifBarSpacing = showNotifBar ? notificationBarHeight + gap : 0;
 
-  const handleClose = (id: ToastId, e?: SyntheticEvent) => {
+  function handleClose(id: ToastId, e?: SyntheticEvent) {
     const toast = stack.get(id);
 
     if (toast) {
@@ -65,7 +64,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
       }
       toast.onClose?.(e);
     }
-  };
+  }
 
   useTimers({
     stack,
@@ -77,7 +76,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
    * Keep track of all the toasts' heights
    * so we know how to absolutely position the rest of them
    */
-  const calcToastHeights = useCallback(() => {
+  function calcToastHeights() {
     return Array.from(stack)
       .reverse() // reversing since the stack is oldest-first
       .map(([id]) => {
@@ -93,7 +92,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
         return 0;
       })
       .filter(h => h >= 0);
-  }, [getToastRef, stack]);
+  }
 
   const [toastHeights, setToastHeights] = useState<Array<number>>([]);
 
@@ -104,8 +103,24 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
       attributes: true,
       subtree: true,
     },
-    () => setToastHeights(calcToastHeights()),
+    () => {
+      // When elements are added/removed,
+      // Calculate all toast heights
+      setToastHeights(calcToastHeights());
+    },
   );
+
+  function handleTransitionExit() {
+    // When a toast is removed,
+    // wait for an empty queue, then
+    // Check whether the toast container is still hovered
+    setImmediate(() => {
+      if (toastContainerRef.current) {
+        const _isHovered = toastContainerRef.current.matches(':hover');
+        setHovered(_isHovered);
+      }
+    });
+  }
 
   return (
     <Portal className={toastPortalClassName}>
@@ -118,6 +133,8 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
         aria-relevant="all"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
+        onFocus={() => setHovered(true)}
+        onBlur={() => setHovered(false)}
         className={cx(
           toastContainerStyles,
           css`
@@ -162,6 +179,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
                 <Transition
                   mountOnEnter
                   unmountOnExit
+                  onExited={handleTransitionExit}
                   key={id}
                   timeout={transitionDuration.default}
                 >
@@ -205,12 +223,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
                       )}
                       {...toastProps}
                       description={
-                        // TODO: Remove debug comments
-                        // ` (${i_fromBottom} from bottom)` +
-                        // ` scrollHeight ${toastRef?.current?.scrollHeight} ` +
-                        // ` clientHeight ${toastRef?.current?.clientHeight} ` +
-                        // ` saved height: ${toastHeights[index]}` +
-                        // ` Offest ${hoveredYPosition} ` +
+                        // TODO: Remove debug strings
                         toastProps.description + ` (${id} index #${index}.)`
                       }
                     />

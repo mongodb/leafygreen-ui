@@ -16,7 +16,7 @@ import {
 import { toastBGColor } from '../../InternalToast';
 
 export const toastContainerStyles = css`
-  /* outline: 1px solid teal; */
+  outline: 1px solid teal;
   position: fixed;
   left: ${spacing[3] - toastInset}px;
   bottom: ${spacing[3] - toastInset}px;
