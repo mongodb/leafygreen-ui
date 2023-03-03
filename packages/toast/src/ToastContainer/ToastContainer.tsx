@@ -1,10 +1,4 @@
-import React, {
-  SyntheticEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { SyntheticEvent, useCallback, useRef, useState } from 'react';
 import { Transition, TransitionGroup } from 'react-transition-group';
 
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -32,8 +26,8 @@ import { NotificationBar } from './NotificationBar/NotificationBar';
 import { notificationBarTransitionStyles } from './NotificationBar/NotificationBar.styles';
 import { getDividedStack } from './utils/getDividedStack';
 import {
-  getContainerHoverStyles,
-  getToastHoverStyles,
+  // getContainerHoverStyles,
+  // getToastHoverStyles,
   getToastTransitionStyles,
   toastContainerStyles,
 } from './ToastContainer.styles';
@@ -54,7 +48,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
   const [isHovered, setHovered] = useState(false);
 
   const { recentToasts, remainingToasts } = getDividedStack(stack);
-  const indexFromBottom = (i: number) => recentToasts.length - 1 - i;
+  // const indexFromBottom = (i: number) => recentToasts.length - 1 - i;
 
   const showNotifBar = isHovered && remainingToasts.length > 0;
   const notifBarSpacing = showNotifBar ? notificationBarHeight + gap : 0;
@@ -133,16 +127,6 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
                 0,
               )}px;
             `]: isHovered,
-            // [getContainerHoverStyles({
-            //   count: recentToasts.length,
-            //   offset: notifBarSpacing,
-            // })]: isHovered,
-            // [css`
-            //   height: ${stackHeight +
-            //   toastInset +
-            //   recentToasts.length * gap +
-            //   notifBarSpacing}px;
-            // `]: isHovered,
           },
         )}
       >
@@ -150,7 +134,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
           {recentToasts
             .reverse() // reversing so they're in the DOM with most recent first
             .map(([id, { onClose, className, ...toastProps }], index) => {
-              const i_fromBottom = indexFromBottom(index);
+              // const i_fromBottom = indexFromBottom(index);
               const toastRef = getToastRef(id);
               const hoveredYPosition =
                 toastHeights.reduce(
