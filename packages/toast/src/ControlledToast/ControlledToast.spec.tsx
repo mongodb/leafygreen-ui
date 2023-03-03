@@ -148,6 +148,7 @@ describe('packages/toast/controlled', () => {
       userEvent.click(closeBtn);
       expect(handleClose).toHaveBeenCalled();
     });
+
     test('`onClose` method is called after timeout', () => {
       const handleClose = jest.fn();
 

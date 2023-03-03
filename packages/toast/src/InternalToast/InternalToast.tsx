@@ -29,6 +29,11 @@ import { InternalToastProps } from './InternalToast.types';
 import { ProgressBar } from './ProgressBar';
 import { variantIcons } from './VariantIcon';
 
+/**
+ * The internal toast component
+ *
+ * Only responsible for rendering itself
+ */
 export const InternalToast = React.forwardRef<
   HTMLDivElement,
   InternalToastProps

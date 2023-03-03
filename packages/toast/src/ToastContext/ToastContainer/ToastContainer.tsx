@@ -16,7 +16,9 @@ import {
   gap,
   notificationBarHeight,
   shortStackCount,
+  toastHeight,
   toastInset,
+  yOffset,
 } from '../../constants';
 import { InternalToast, toastBGColor } from '../../InternalToast';
 import { ToastId, ToastStack } from '../ToastContext.types';
@@ -71,6 +73,10 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
     callback: handleClose,
   });
 
+  /**
+   * Keep track of all the toasts' heights
+   * so we know how to absolutely position the rest of them
+   */
   const calcToastHeights = useCallback(() => {
     return Array.from(stack)
       .reverse() // reversing since the stack is oldest-first
@@ -116,7 +122,13 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
           toastContainerStyles,
           css`
             // The height of the first toast + inset
-            height: ${toastInset * 2 + toastHeights[0]}px;
+            height: ${toastInset * 2 + toastHeights[0] ?? toastHeight}px;
+
+            // The whole thing moves as toasts get added
+            // so the bottom toast is always 16px from the bottom
+            transform: translateY(
+              -${isHovered ? 0 : yOffset * (recentToasts.length - 1)}px
+            );
           `,
           {
             [css`

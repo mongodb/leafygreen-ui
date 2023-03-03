@@ -85,5 +85,9 @@ describe('packages/toast/context', () => {
     test.todo(
       'is called with a payload that differentiates timeout vs dismiss',
     );
+
+    test.todo(
+      'is _NOT_ called after timeout if `variant` is progress, and `progress` is < 1',
+    );
   });
 });

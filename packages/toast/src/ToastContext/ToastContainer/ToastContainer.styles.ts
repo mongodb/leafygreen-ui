@@ -27,6 +27,7 @@ export const toastContainerStyles = css`
   perspective: 1600px;
   perspective-origin: bottom;
   transform-style: preserve-3d;
+  transition: transform ease-in-out ${transitionDuration.default}ms;
 `;
 
 export const getContainerHoverStyles = ({

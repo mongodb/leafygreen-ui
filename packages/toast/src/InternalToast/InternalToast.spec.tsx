@@ -26,89 +26,91 @@ describe('packages/toast/internal-toast', () => {
     });
   });
 
-  describe(`when 'variant' is 'progress', the progress bar renders`, () => {
-    test(`when 'progress' is undefined`, () => {
-      const { queryByRole } = render(
-        <InternalToast title="hello world" variant={Variant.Progress} />,
-      );
-
-      const progressBar = queryByRole('progressbar');
-      expect(progressBar).toBeVisible();
-    });
-
-    test(`when 'progress' is '0'`, () => {
-      const { queryByRole } = render(
-        <InternalToast
-          title="hello world"
-          variant={Variant.Progress}
-          progress={0}
-        />,
-      );
-
-      const progressBar = queryByRole('progressbar');
-      expect(progressBar).toBeVisible();
-    });
-
-    test(`when 'progress' is '0.5'`, () => {
-      const { queryByRole } = render(
-        <InternalToast
-          title="hello world"
-          variant={Variant.Progress}
-          progress={0.5}
-        />,
-      );
-
-      const progressBar = queryByRole('progressbar');
-      expect(progressBar).toBeVisible();
-    });
-  });
-
-  describe(`when 'variant' is not 'progress', the progress bar does not render`, () => {
-    test(`when 'progress' is undefined`, () => {
-      const { queryByRole } = render(
-        <InternalToast title="hello world" variant={Variant.Success} />,
-      );
-
-      const progressBar = queryByRole('progressbar');
-      expect(progressBar).not.toBeInTheDocument();
-    });
-
-    test(`when 'progress' is set`, () => {
-      const { queryByRole } = render(
-        <InternalToast
-          title="hello world"
-          variant={Variant.Success}
-          progress={0}
-        />,
-      );
-
-      const progressBar = queryByRole('progressbar');
-      expect(progressBar).not.toBeInTheDocument();
-    });
-  });
-
-  describe('the correct icon is rendered', () => {
-    const expectedVariantIcons: Record<Variant, string> = {
-      [Variant.Success]: 'Checkmark With Circle Icon',
-      [Variant.Note]: 'Info With Circle Icon',
-      [Variant.Warning]: 'Warning Icon',
-      [Variant.Important]: 'Important With Circle Icon',
-      [Variant.Progress]: 'Refresh Icon',
-    };
-
-    test.each(Object.values(Variant) as Array<Variant>)(
-      `when 'variant' is '%s'`,
-      variant => {
-        const { getByLabelText } = render(
-          <InternalToast title="hello world" variant={variant} />,
+  describe('`variant` prop', () => {
+    describe(`when 'variant' is 'progress', the progress bar renders`, () => {
+      test(`when 'progress' is undefined`, () => {
+        const { queryByRole } = render(
+          <InternalToast title="hello world" variant={Variant.Progress} />,
         );
 
-        expect(getByLabelText(expectedVariantIcons[variant])).toBeVisible();
-      },
-    );
+        const progressBar = queryByRole('progressbar');
+        expect(progressBar).toBeVisible();
+      });
+
+      test(`when 'progress' is '0'`, () => {
+        const { queryByRole } = render(
+          <InternalToast
+            title="hello world"
+            variant={Variant.Progress}
+            progress={0}
+          />,
+        );
+
+        const progressBar = queryByRole('progressbar');
+        expect(progressBar).toBeVisible();
+      });
+
+      test(`when 'progress' is '0.5'`, () => {
+        const { queryByRole } = render(
+          <InternalToast
+            title="hello world"
+            variant={Variant.Progress}
+            progress={0.5}
+          />,
+        );
+
+        const progressBar = queryByRole('progressbar');
+        expect(progressBar).toBeVisible();
+      });
+    });
+
+    describe(`when 'variant' is not 'progress', the progress bar does not render`, () => {
+      test(`when 'progress' is undefined`, () => {
+        const { queryByRole } = render(
+          <InternalToast title="hello world" variant={Variant.Success} />,
+        );
+
+        const progressBar = queryByRole('progressbar');
+        expect(progressBar).not.toBeInTheDocument();
+      });
+
+      test(`when 'progress' is set`, () => {
+        const { queryByRole } = render(
+          <InternalToast
+            title="hello world"
+            variant={Variant.Success}
+            progress={0}
+          />,
+        );
+
+        const progressBar = queryByRole('progressbar');
+        expect(progressBar).not.toBeInTheDocument();
+      });
+    });
+
+    describe('the correct icon is rendered', () => {
+      const expectedVariantIcons: Record<Variant, string> = {
+        [Variant.Success]: 'Checkmark With Circle Icon',
+        [Variant.Note]: 'Info With Circle Icon',
+        [Variant.Warning]: 'Warning Icon',
+        [Variant.Important]: 'Important With Circle Icon',
+        [Variant.Progress]: 'Refresh Icon',
+      };
+
+      test.each(Object.values(Variant) as Array<Variant>)(
+        `when 'variant' is '%s'`,
+        variant => {
+          const { getByLabelText } = render(
+            <InternalToast title="hello world" variant={variant} />,
+          );
+
+          expect(getByLabelText(expectedVariantIcons[variant])).toBeVisible();
+        },
+      );
+    });
   });
 
-  describe(`when 'title' prop is`, () => {
+  describe('`title` prop', () => {
     test('a string, the title element renders', () => {
       const titleText = 'this is the title';
       const { queryByText } = render(
@@ -131,7 +133,7 @@ describe('packages/toast/internal-toast', () => {
     });
   });
 
-  describe(`when 'description' prop is`, () => {
+  describe('`description` prop', () => {
     test('a string, the title element renders', () => {
       const bodyText = 'this is the title';
       const { queryByText } = render(
