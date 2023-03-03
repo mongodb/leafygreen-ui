@@ -1,4 +1,4 @@
-export interface NumberSelectProps {
+export interface SelectProps {
   /**
    * Specifies that the popover content should be rendered at the end of the DOM,
    * rather than in the DOM tree.

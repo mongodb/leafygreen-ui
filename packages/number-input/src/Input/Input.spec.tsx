@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { NumberSelect } from '.';
+import { Input } from '.';
 
-describe('packages/number-select', () => {
+describe('packages/input', () => {
   test('condition', () => {});
 });

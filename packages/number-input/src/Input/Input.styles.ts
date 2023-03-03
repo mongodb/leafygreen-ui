@@ -6,23 +6,7 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { Size } from './NumberInput.types';
-
-export const wrapperBaseStyles = css`
-  display: flex;
-`;
-
-export const wrapperSizeStyles: Record<Size, string> = {
-  [Size.XSmall]: css`
-    height: 22px;
-  `,
-  [Size.Small]: css`
-    height: 28px;
-  `,
-  [Size.Default]: css`
-    height: 36px;
-  `,
-};
+import { Size } from '../NumberInput/NumberInput.types';
 
 export const baseInputStyles = css`
   all: unset;

@@ -1,18 +1,27 @@
 import { ChangeEventHandler, ComponentPropsWithoutRef } from 'react';
 
 import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
-import { State } from '@leafygreen-ui/input-base';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
-export type StateProp = Exclude<State, 'warning' | 'valid'>;
+export const State = {
+  Error: 'error',
+  None: 'none',
+} as const;
+
+export type State = typeof State[keyof typeof State];
 
 export const Size = {
+  XSmall: 'xsmall',
   Small: 'small',
   Default: 'default',
-  Large: 'large',
 } as const;
 
 export type Size = typeof Size[keyof typeof Size];
+
+export interface UnitOption {
+  displayName: string;
+  value: string;
+}
 
 type AriaLabelkeys = keyof AriaLabelPropsWithLabel;
 
@@ -27,7 +36,7 @@ export interface NumberInputProps
    *
    * @default 'none'
    */
-  state: StateProp;
+  state?: State;
 
   /**
    * The current value of the input. If a value is passed to this prop, component will be controlled by consumer.
@@ -70,6 +79,19 @@ export interface NumberInputProps
    * Determines the font size and padding.
    */
   size?: Size;
+
+  /**
+   * The string unit that appears to the right of the input if using a single unit.
+   *
+   * Required if using `unitOptions`. When using `unitOptions` this value becomes the controlled value of the select input.
+   *
+   */
+  unit?: string;
+
+  /**
+   * The options that appear in the select element attached to the right of the input.
+   */
+  unitOptions?: Array<UnitOption>;
 
   /**
    * Specifies that the popover content should be rendered at the end of the DOM,

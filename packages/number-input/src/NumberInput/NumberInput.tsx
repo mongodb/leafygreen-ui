@@ -1,18 +1,24 @@
 import React, { ChangeEvent, useRef } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { useIdAllocator } from '@leafygreen-ui/hooks';
+import { useControlledValue, useIdAllocator } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
-import IconButton from '@leafygreen-ui/icon-button';
-import { InputBase } from '@leafygreen-ui/input-base';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { createSyntheticEvent } from '@leafygreen-ui/lib';
 import { Description, Label } from '@leafygreen-ui/typography';
 
-import { baseStyles } from './NumberInput.styles';
-import { NumberInputProps } from './NumberInput.types';
+import {
+  arrowBaseStyles,
+  arrowsBaseStyles,
+  baseInputStyles,
+  inputWrapperBaseStyles,
+  sizeInputStyles,
+  wrapperBaseStyles,
+  wrapperSizeStyles,
+} from './NumberInput.styles';
+import { NumberInputProps, Size } from './NumberInput.types';
 
 export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
   (
@@ -22,8 +28,14 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       disabled,
       label,
       id: idProp,
-      value,
+      value: valueProp,
       description,
+      onChange: onChangeProp,
+      size = Size.Default,
+      unit,
+      unitOptions,
+      onSelectChange,
+      ...rest
     }: NumberInputProps,
     forwardedRef,
   ) => {
@@ -32,9 +44,15 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
     const { darkMode } = useDarkMode(darkModeProp);
     const inputRef = useRef<HTMLInputElement | null>(null);
 
+    const { value, handleChange: handleChangeProp } = useControlledValue(
+      valueProp,
+      onChangeProp,
+    );
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       // eslint-disable-next-line no-console
       console.log(e.target.value);
+      handleChangeProp?.(e);
     };
 
     const handleSyntheticEvent = () => {
@@ -53,9 +71,16 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       handleSyntheticEvent();
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+      if (!disabled) {
+        if (e.key === 'ArrowUp') handleIncrementClick();
+        if (e.key === 'ArrowDown') handleDecrementClick();
+      }
+    };
+
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <div ref={forwardedRef}>
+        <div ref={forwardedRef} className={className}>
           {label && (
             <Label className={cx()} htmlFor={inputId} disabled={disabled}>
               {label}
@@ -66,29 +91,44 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
               {description}
             </Description>
           )}
-          <div>
-            <InputBase
-              ref={inputRef}
-              className={cx(baseStyles, className)}
-              type="number"
-              value={value}
-              onChange={handleChange}
-            />
-            <div>
-              <IconButton
-                aria-label="Increment number"
-                onClick={handleIncrementClick}
-                className={cx()}
-              >
-                <Icon aria-hidden={true} glyph="CaretUp" />
-              </IconButton>
-              <IconButton
-                aria-label="Increment number"
-                onClick={handleDecrementClick}
-                className={cx()}
-              >
-                <Icon aria-hidden={true} glyph="CaretDown" />
-              </IconButton>
+          {/* TODO: separate component */}
+          <div className={cx(wrapperBaseStyles, wrapperSizeStyles[size])}>
+            <div className={cx(inputWrapperBaseStyles)}>
+              <input
+                ref={inputRef}
+                className={cx(baseInputStyles, sizeInputStyles[size])}
+                type="number"
+                value={value}
+                onChange={handleChange}
+                aria-disabled={disabled}
+                readOnly={disabled}
+                // TODO: keyPress to remove letters
+                {...rest}
+              />
+              <div className={cx(arrowsBaseStyles)}>
+                {/* TODO: should not have focus styles. These should only appear on hover*/}
+                {/* TODO: should have active styles */}
+                <button
+                  aria-label="Increment number"
+                  onClick={handleIncrementClick}
+                  onKeyDown={handleKeyDown}
+                  className={cx(arrowBaseStyles)}
+                  type="button"
+                  tabIndex={-1} // Mimicking native behavior; you cannot focus on a button.
+                >
+                  <Icon aria-hidden={true} glyph="CaretUp" size={16} />
+                </button>
+                <button
+                  aria-label="Increment number"
+                  onClick={handleDecrementClick}
+                  onKeyDown={handleKeyDown}
+                  className={cx(arrowBaseStyles)}
+                  type="button"
+                  tabIndex={-1}
+                >
+                  <Icon aria-hidden={true} glyph="CaretDown" size={16} />
+                </button>
+              </div>
             </div>
           </div>
         </div>
