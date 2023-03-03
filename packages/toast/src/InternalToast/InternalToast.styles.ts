@@ -103,6 +103,7 @@ export const contentWrapperStyle = css`
   align-items: center;
   gap: ${spacing[3]}px;
   width: 100%;
+  transition: opacity ease-out ${transitionDuration.default}ms;
 `;
 
 export const baseIconStyle = css`

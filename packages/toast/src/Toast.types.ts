@@ -14,7 +14,7 @@ export { Variant };
 
 export interface ToastProps
   extends DarkModeProps,
-    Omit<React.ComponentProps<'div'>, 'title'> {
+    Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /**
    * Primary text for the toast
    */

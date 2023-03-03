@@ -1,5 +1,6 @@
 import React from 'react';
-import { sample } from 'lodash';
+import { faker } from '@faker-js/faker';
+import { random, sample } from 'lodash';
 
 import Button from '@leafygreen-ui/button';
 import { StoryMeta } from '@leafygreen-ui/lib';
@@ -19,22 +20,27 @@ export default StoryMeta<typeof InternalToast>({
 });
 
 const BasicChildren = (toastProps: Partial<InternalToastProps>) => {
-  const { pushToast } = useToast();
+  const { pushToast, clearStack } = useToast();
 
   return (
-    <Button
-      data-testid="toast-trigger"
-      onClick={() => {
-        const variant = sample(Variant);
-        pushToast({
-          title: `I'm a ${variant} toast`,
-          variant,
-          ...toastProps,
-        });
-      }}
-    >
-      Push toast
-    </Button>
+    <>
+      <Button
+        data-testid="toast-trigger"
+        onClick={() => {
+          const variant = sample(Variant);
+          pushToast({
+            title: `I'm a ${variant} toast`,
+            description: faker.lorem.lines(random(1, 2)),
+            variant,
+            ...toastProps,
+            timeout: null,
+          });
+        }}
+      >
+        Push toast
+      </Button>
+      <Button onClick={() => clearStack()}>Clear all</Button>
+    </>
   );
 };
 

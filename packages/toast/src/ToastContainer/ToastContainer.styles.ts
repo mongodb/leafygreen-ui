@@ -67,20 +67,10 @@ export const getToastTransitionStyles = ({
         // Slow down any hover animations
         transition-duration: ${transitionDuration.slower}ms;
       `;
-    case 'entering':
-      return css`
-        transform: translate3d(0, ${yOffset}px, -100px) scale(0.9);
-        opacity: 0;
-      `;
-    case 'exited':
-    case 'exiting':
-      return css`
-        transform: translate3d(0, ${yOffset}px, -100px) scale(0.9);
-        opacity: 0;
-      `;
+
     default:
       return css`
-        transform: translate3d(0, 0, 0) scale(1);
+        transform: translate3d(0, ${yOffset}px, -100px) scale(0.9);
         opacity: 0;
       `;
   }

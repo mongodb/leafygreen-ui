@@ -28,3 +28,8 @@ export const yOffset = 8;
  * The gap between toasts when the stack is expanded
  */
 export const gap = 4;
+
+/**
+ * The number of toasts featured on hover
+ */
+export const shortStackCount = 3;

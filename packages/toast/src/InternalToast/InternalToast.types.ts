@@ -10,5 +10,15 @@ export interface InternalToastProps extends ToastProps {
    */
   isControlled?: boolean;
 
-  open?: never;
+  // open?: never;
+
+  /**
+   * The index of the toast (from the top)
+   */
+  index?: number;
+
+  /**
+   * Whether the toast container is hovered (or being interacted with)
+   */
+  isHovered?: boolean;
 }
