@@ -38,7 +38,6 @@ export const InternalToast = React.forwardRef<
       title,
       description,
       className,
-      darkMode: darkModeProp,
       onClose,
       action,
       index,
@@ -47,13 +46,11 @@ export const InternalToast = React.forwardRef<
     }: InternalToastProps,
     forwardedRef,
   ) => {
-    const {
-      variant,
-      progress,
-      dismissible,
-      // timeout,
-    } = defaults(rest, defaultToastProps);
-    const { theme, darkMode } = useDarkMode(darkModeProp);
+    const { variant, progress, dismissible } = defaults(
+      rest,
+      defaultToastProps,
+    );
+    const { theme, darkMode } = useDarkMode();
     const showContent = index === 0 || isHovered;
     const VariantIcon = variantIcons[variant];
     const iconThemeStyle = variantIconStyle[variant];
@@ -120,7 +117,6 @@ export const InternalToast = React.forwardRef<
 InternalToast.displayName = 'InternalToast';
 
 InternalToast.propTypes = {
-  darkMode: PropTypes.bool,
   title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]).isRequired,
   description: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   variant: PropTypes.oneOf(Object.values(Variant)),

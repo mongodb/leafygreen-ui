@@ -4,7 +4,8 @@ import { random, sample } from 'lodash';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import { StoryMeta } from '@leafygreen-ui/lib';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import { DarkModeProps, StoryMeta } from '@leafygreen-ui/lib';
 
 import { InternalToast, InternalToastProps } from '../InternalToast';
 import { Variant } from '../Toast.types';
@@ -39,7 +40,7 @@ export default StoryMeta<typeof InternalToast>({
   },
 });
 
-const BasicChildren = ({ timeout }: Partial<InternalToastProps>) => {
+const BasicChildren = (props: Partial<InternalToastProps>) => {
   const { pushToast, clearStack } = useToast();
 
   return (
@@ -57,7 +58,7 @@ const BasicChildren = ({ timeout }: Partial<InternalToastProps>) => {
             title: `I'm a ${variant} toast`,
             description: faker.lorem.lines(random(1, 2)),
             variant,
-            timeout,
+            ...props,
           });
         }}
       >
@@ -68,10 +69,15 @@ const BasicChildren = ({ timeout }: Partial<InternalToastProps>) => {
   );
 };
 
-export const Basic = (toastProps: Partial<InternalToastProps>) => {
+export const Basic = ({
+  darkMode,
+  ...props
+}: Partial<InternalToastProps> & DarkModeProps) => {
   return (
-    <ToastProvider>
-      <BasicChildren {...toastProps} />
-    </ToastProvider>
+    <LeafyGreenProvider darkMode={darkMode}>
+      <ToastProvider>
+        <BasicChildren {...props} />
+      </ToastProvider>
+    </LeafyGreenProvider>
   );
 };

@@ -13,8 +13,7 @@ type Variant = typeof Variant[keyof typeof Variant];
 export { Variant };
 
 export interface ToastProps
-  extends DarkModeProps,
-    Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
+  extends Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
   /**
    * Primary text for the toast
    */
