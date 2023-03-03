@@ -22,7 +22,6 @@ export default StoryMeta({
     title: 'Velit ea exercitation qui aute dolor proident.',
     description: 'Exercitation incididunt ea proident velit mollit',
     variant: Variant.Note,
-    darkMode: false,
     progress: 0,
     className: css`
       z-index: 1;

@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { ToastContainer } from '../ToastContainer/ToastContainer';
-
+import { ToastContainer } from './ToastContainer';
 import { ToastContextProps } from './ToastContext.types';
 import { useToastReducer } from './ToastReducer';
 

@@ -23,7 +23,6 @@ export default StoryMeta({
     description: 'Exercitation incididunt ea proident velit mollit',
     open: true,
     variant: Variant.Note,
-    darkMode: false,
     progress: 0,
     className: css`
       z-index: 1;
@@ -50,11 +49,10 @@ export default StoryMeta({
 
 export const Basic: ComponentStory<typeof Toast> = args => {
   const [open, setOpen] = useState(false);
-  const { darkMode } = args;
 
   return (
     <ToastProvider>
-      <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
+      <Button onClick={() => setOpen(!open)}>
         {open ? 'Close' : 'Open'} Toast
       </Button>
       <Toast

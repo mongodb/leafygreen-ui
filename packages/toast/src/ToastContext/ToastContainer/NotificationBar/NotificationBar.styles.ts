@@ -15,7 +15,7 @@ import {
   toastInset,
   toastWidth,
   yOffset,
-} from '../../constants';
+} from '../../../constants';
 
 export const notificationBarStyles = css`
   border: unset;

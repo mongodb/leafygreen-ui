@@ -1,5 +1,3 @@
-import { DarkModeProps } from '@leafygreen-ui/lib';
-
 const Variant = {
   Success: 'success',
   Note: 'note',

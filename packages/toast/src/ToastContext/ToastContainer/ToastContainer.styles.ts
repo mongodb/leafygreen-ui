@@ -12,8 +12,8 @@ import {
   toastInset,
   toastWidth,
   yOffset,
-} from '../constants';
-import { toastBGColor } from '../InternalToast';
+} from '../../constants';
+import { toastBGColor } from '../../InternalToast';
 
 export const toastContainerStyles = css`
   /* outline: 1px solid teal; */

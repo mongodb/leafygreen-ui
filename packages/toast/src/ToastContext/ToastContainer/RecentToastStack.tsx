@@ -6,9 +6,9 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
-import { InternalToast } from '../InternalToast';
-import { ToastProps } from '../Toast.types';
-import { ToastId } from '../ToastContext/ToastContext.types';
+import { InternalToast } from '../../InternalToast';
+import { ToastProps } from '../../Toast.types';
+import { ToastId } from '../ToastContext.types';
 
 import {
   getToastHoverStyles,

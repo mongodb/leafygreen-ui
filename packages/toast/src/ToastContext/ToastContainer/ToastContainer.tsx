@@ -17,10 +17,10 @@ import {
   notificationBarHeight,
   shortStackCount,
   toastInset,
-} from '../constants';
-import { InternalToast, toastBGColor } from '../InternalToast';
-import { useToast } from '../ToastContext';
-import { ToastId, ToastStack } from '../ToastContext/ToastContext.types';
+} from '../../constants';
+import { InternalToast, toastBGColor } from '../../InternalToast';
+import { ToastId, ToastStack } from '../ToastContext.types';
+import { useToast } from '..';
 
 import { NotificationBar } from './NotificationBar/NotificationBar';
 import { notificationBarTransitionStyles } from './NotificationBar/NotificationBar.styles';

@@ -8,8 +8,7 @@ import {
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { toastPortalClassName } from '../ToastContainer/ToastContainer';
-import { ToastProvider } from '../ToastContext';
+import { toastPortalClassName, ToastProvider } from '../ToastContext';
 
 import { ControlledToast as Toast } from './ControlledToast';
 

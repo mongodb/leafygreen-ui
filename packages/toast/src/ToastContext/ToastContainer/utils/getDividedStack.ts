@@ -1,6 +1,6 @@
-import { shortStackCount } from '../../constants';
-import { ToastProps } from '../../Toast.types';
-import { ToastId, ToastStack } from '../../ToastContext/ToastContext.types';
+import { shortStackCount } from '../../../constants';
+import { ToastProps } from '../../../Toast.types';
+import { ToastId, ToastStack } from '../../ToastContext.types';
 
 /**
  * Returns 2 array from the orioginal toast stack.
