@@ -28,7 +28,7 @@ import {
   getToastUnhoveredStyles,
   toastContainerStyles,
 } from './ToastContainer.styles';
-import { useTimers } from './useTimers';
+import { useToastTimers } from './useToastTimers';
 
 export const toastPortalClassName = createUniqueClassName('toast-portal');
 const toastClassName = createUniqueClassName('toast');
@@ -65,7 +65,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
     }
   }
 
-  useTimers({
+  useToastTimers({
     stack,
     isHovered,
     callback: handleClose,
@@ -103,8 +103,8 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
       subtree: true,
     },
     () => {
-      // When elements are added/removed,
-      // Calculate all toast heights
+      // When toast elements are changed
+      // re-calculate all toast heights
       setToastHeights(calcToastHeights());
     },
   );

@@ -120,10 +120,10 @@ export function getToastUnhoveredStyles({
 }) {
   return css`
     /**
-  * When not hovered,
-  * Set the max-height of all toasts
-  * to the height of the top-most toast
-  */
+    * When not hovered,
+    * Set the max-height of each toast to the height of the top-most toast
+    * so tall toasts below the top don't peek out
+    */
     max-height: ${toastHeights[0]}px;
     color: ${index > 0 ? toastBGColor[theme] : 'initial'} !important;
   `;
@@ -140,6 +140,7 @@ export function getToastHoverStyles({
   index: number;
   bottomOffset: number;
 }) {
+  // The toast position when hovered
   const hoveredYPosition =
     toastHeights.reduce(
       (sum, x, j) =>

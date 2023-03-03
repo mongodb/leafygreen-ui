@@ -7,7 +7,7 @@ import { ToastId, ToastStack } from '../ToastContext.types';
  * Clears the timeout when the container is hovered.
  * Restores the timers when un-hovered.
  */
-export const useTimers = ({
+export const useToastTimers = ({
   stack,
   isHovered,
   callback,
