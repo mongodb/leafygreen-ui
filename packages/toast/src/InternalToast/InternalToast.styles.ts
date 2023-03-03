@@ -193,18 +193,18 @@ export const variantIconStyle: Record<Variant, Record<Theme, string>> = {
   },
   [Variant.Warning]: {
     [Theme.Light]: css`
-      color: ${palette.yellow.base};
-    `,
-    [Theme.Dark]: css`
-      color: ${palette.yellow.dark2};
-    `,
-  },
-  [Variant.Important]: {
-    [Theme.Light]: css`
       color: ${palette.red.light1};
     `,
     [Theme.Dark]: css`
       color: ${palette.red.base};
+    `,
+  },
+  [Variant.Important]: {
+    [Theme.Light]: css`
+      color: ${palette.yellow.base};
+    `,
+    [Theme.Dark]: css`
+      color: ${palette.yellow.dark2};
     `,
   },
   [Variant.Progress]: {
