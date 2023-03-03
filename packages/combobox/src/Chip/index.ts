@@ -1,1 +1,0 @@
-export { Chip } from './Chip';

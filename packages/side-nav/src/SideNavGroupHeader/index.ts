@@ -1,1 +1,0 @@
-export { SideNavGroupHeader } from './SideNavGroupHeader';
