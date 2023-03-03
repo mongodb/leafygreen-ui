@@ -69,6 +69,8 @@ export const InternalToast = React.forwardRef<
         {...rest}
       >
         <div
+          data-testid="lg-toast-content"
+          aria-hidden={!showContent}
           className={cx(
             contentWrapperStyle,
             css`
