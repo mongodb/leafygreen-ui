@@ -8,6 +8,7 @@ import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
 import {
   gap,
+  shortStackCount,
   toastHeight,
   toastInset,
   toastWidth,
@@ -30,17 +31,48 @@ export const toastContainerStyles = css`
   transition: transform ease-in-out ${transitionDuration.default}ms;
 `;
 
-export const getContainerHoverStyles = ({
-  count,
-  offset,
+export function getContainerStatefulStyles({
+  recentToastsLength,
+  isHovered,
+  topToastHeight,
 }: {
-  count: number;
-  offset: number;
-}) => css`
-  height: ${toastInset + count * (toastHeight + gap) + offset}px;
-`;
+  recentToastsLength: number;
+  isHovered: boolean;
+  topToastHeight: number;
+}) {
+  return css`
+    // The height of the first toast + inset
+    height: ${toastInset * 2 + topToastHeight ?? toastHeight}px;
 
-export const getToastTransitionStyles = ({
+    // The whole thing moves as toasts get added
+    // so the bottom toast is always 16px from the bottom
+    transform: translateY(
+      -${isHovered ? 0 : yOffset * (recentToastsLength - 1)}px
+    );
+  `;
+}
+
+export function getContainerHoverStyles({
+  toastHeights,
+  bottomOffset,
+}: {
+  toastHeights: Array<number>;
+  bottomOffset: number;
+}) {
+  // the combined heights of visible toasts
+  const combinedHeight = toastHeights.reduce(
+    (sum, x, i) => (i < shortStackCount ? sum + x + gap : sum),
+    0,
+  );
+  return css`
+    height: ${toastInset * 2 + bottomOffset + combinedHeight}px;
+  `;
+}
+
+/**
+ * Stateful Toast styling
+ */
+export function getToastTransitionStyles({
   state,
   theme,
   indexFromTop,
@@ -48,7 +80,7 @@ export const getToastTransitionStyles = ({
   state: TransitionStatus;
   theme: Theme;
   indexFromTop: number;
-}) => {
+}) {
   switch (state) {
     case 'entered':
       return css`
@@ -75,21 +107,52 @@ export const getToastTransitionStyles = ({
         opacity: 0;
       `;
   }
-};
+}
 
-export const getToastHoverStyles = ({
+export function getToastUnhoveredStyles({
   theme,
-  indexFromBottom,
-  offset,
+  index,
+  toastHeights,
 }: {
   theme: Theme;
-  indexFromBottom: number;
-  offset: number;
-}) => css`
-  background-color: ${toastBGColor[theme]};
-  transform: translate3d(
-    0,
-    -${indexFromBottom * (toastHeight + gap) + offset}px,
-    0
-  );
-`;
+  index: number;
+  toastHeights: Array<number>;
+}) {
+  return css`
+    /**
+  * When not hovered,
+  * Set the max-height of all toasts
+  * to the height of the top-most toast
+  */
+    max-height: ${toastHeights[0]}px;
+    color: ${index > 0 ? toastBGColor[theme] : 'initial'} !important;
+  `;
+}
+
+export function getToastHoverStyles({
+  index,
+  theme,
+  bottomOffset,
+  toastHeights,
+}: {
+  toastHeights: Array<number>;
+  theme: Theme;
+  index: number;
+  bottomOffset: number;
+}) {
+  const hoveredYPosition =
+    toastHeights.reduce(
+      (sum, x, j) =>
+        // if the comparing toast is below the current toast
+        // but also less than the shortStackCount
+        // add that toast's height to this toast's offset
+        j > index && j < shortStackCount ? sum + x + gap : sum,
+      0,
+    ) + bottomOffset;
+
+  return css`
+    max-height: ${toastHeights[index] * 2}px;
+    background-color: ${toastBGColor[theme]};
+    transform: translate3d(0, -${hoveredYPosition}px, 0);
+  `;
+}

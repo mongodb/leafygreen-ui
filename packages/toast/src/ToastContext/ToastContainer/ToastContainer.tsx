@@ -1,7 +1,7 @@
 import React, { SyntheticEvent, useRef, useState } from 'react';
 import { Transition, TransitionGroup } from 'react-transition-group';
 
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import {
   useDynamicRefs,
   useIdAllocator,
@@ -12,15 +12,8 @@ import { createUniqueClassName } from '@leafygreen-ui/lib';
 import Portal from '@leafygreen-ui/portal';
 import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
-import {
-  gap,
-  notificationBarHeight,
-  shortStackCount,
-  toastHeight,
-  toastInset,
-  yOffset,
-} from '../../constants';
-import { InternalToast, toastBGColor } from '../../InternalToast';
+import { gap, notificationBarHeight } from '../../constants';
+import { InternalToast } from '../../InternalToast';
 import { ToastId, ToastStack } from '../ToastContext.types';
 import { useToast } from '..';
 
@@ -28,9 +21,11 @@ import { NotificationBar } from './NotificationBar/NotificationBar';
 import { notificationBarTransitionStyles } from './NotificationBar/NotificationBar.styles';
 import { getDividedStack } from './utils/getDividedStack';
 import {
-  // getContainerHoverStyles,
-  // getToastHoverStyles,
+  getContainerHoverStyles,
+  getContainerStatefulStyles,
+  getToastHoverStyles,
   getToastTransitionStyles,
+  getToastUnhoveredStyles,
   toastContainerStyles,
 } from './ToastContainer.styles';
 import { useTimers } from './useTimers';
@@ -54,6 +49,10 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
   const showNotifBar = isHovered && remainingToasts.length > 0;
   const notifBarSpacing = showNotifBar ? notificationBarHeight + gap : 0;
 
+  /**
+   * Callback passed into the InternalToast component as `onClose`
+   * Also fired when timeout timers expires
+   */
   function handleClose(id: ToastId, e?: SyntheticEvent) {
     const toast = stack.get(id);
 
@@ -110,6 +109,9 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
     },
   );
 
+  /**
+   * Callback fired when the <Transition> element exits
+   */
   function handleTransitionExit() {
     // When a toast is removed,
     // wait for an empty queue, then
@@ -137,25 +139,16 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
         onBlur={() => setHovered(false)}
         className={cx(
           toastContainerStyles,
-          css`
-            // The height of the first toast + inset
-            height: ${toastInset * 2 + toastHeights[0] ?? toastHeight}px;
-
-            // The whole thing moves as toasts get added
-            // so the bottom toast is always 16px from the bottom
-            transform: translateY(
-              -${isHovered ? 0 : yOffset * (recentToasts.length - 1)}px
-            );
-          `,
+          getContainerStatefulStyles({
+            isHovered,
+            topToastHeight: toastHeights[0],
+            recentToastsLength: recentToasts.length,
+          }),
           {
-            [css`
-              height: ${toastInset * 2 +
-              notifBarSpacing +
-              toastHeights.reduce(
-                (sum, x, i) => (i < shortStackCount ? sum + x + gap : sum),
-                0,
-              )}px;
-            `]: isHovered,
+            [getContainerHoverStyles({
+              toastHeights,
+              bottomOffset: notifBarSpacing,
+            })]: isHovered,
           },
         )}
       >
@@ -163,17 +156,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
           {recentToasts
             .reverse() // reversing so they're in the DOM with most recent first
             .map(([id, { onClose, className, ...toastProps }], index) => {
-              // const i_fromBottom = indexFromBottom(index);
               const toastRef = getToastRef(id);
-              const hoveredYPosition =
-                toastHeights.reduce(
-                  (sum, x, j) =>
-                    // if the comparing toast is below the current toast
-                    // but also less than the shortStackCount
-                    // add that toast's height to this toast's offset
-                    j > index && j < shortStackCount ? sum + x + gap : sum,
-                  0,
-                ) + notifBarSpacing;
 
               return (
                 <Transition
@@ -198,26 +181,17 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
                           indexFromTop: index,
                         }),
                         {
-                          [css`
-                            /**
-                            * When not hovered,
-                            * Set the max-height of all toasts
-                            * to the height of the top-most toast
-                            */
-                            max-height: ${toastHeights[0]}px;
-                            color: ${index > 0
-                              ? toastBGColor[theme]
-                              : 'initial'} !important;
-                          `]: !isHovered,
-                          [css`
-                            max-height: ${toastHeights[index] * 2}px;
-                            background-color: ${toastBGColor[theme]};
-                            transform: translate3d(
-                              0,
-                              -${hoveredYPosition}px,
-                              0
-                            );
-                          `]: isHovered,
+                          [getToastUnhoveredStyles({
+                            theme,
+                            index,
+                            toastHeights,
+                          })]: !isHovered,
+                          [getToastHoverStyles({
+                            index,
+                            toastHeights,
+                            theme,
+                            bottomOffset: notifBarSpacing,
+                          })]: isHovered,
                         },
                         className,
                       )}
