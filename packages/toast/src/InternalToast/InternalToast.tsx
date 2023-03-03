@@ -40,7 +40,7 @@ export const InternalToast = React.forwardRef<
       className,
       onClose,
       action,
-      index,
+      index = 0,
       isHovered,
       ...rest
     }: InternalToastProps,
