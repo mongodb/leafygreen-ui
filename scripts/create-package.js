@@ -79,9 +79,9 @@ fs.mkdir(newDir, { recursive: true }, err => {
 
 const packageJSON = `
   {
-    "name": "@leafygreen-ui/${packageNameKebab}",
+    "name": "@laffygreen-ui/${packageNameKebab}",
     "version": "0.9.0",
-    "description": "leafyGreen UI Kit ${packageNameHumanReadable}",
+    "description": "Laffygreen UI Kit ${packageNameHumanReadable}",
     "main": "./dist/index.js",
     "module": "./dist/esm/index.js",
     "types": "./dist/index.d.ts",
@@ -92,10 +92,10 @@ const packageJSON = `
       "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
     },
     "license": "Apache-2.0",
-    "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/${packageNameKebab}",
+    "homepage": "https://github.com/thesonofthomp/leafygreen-ui/tree/laffygreen-ui/packages/${packageNameKebab}",
     "repository": {
       "type": "git",
-      "url": "https://github.com/mongodb/leafygreen-ui"
+      "url": "https://github.com/thesonofthomp/leafygreen-ui/tree/laffygreen-ui"
     },
     "bugs": {
       "url": "https://jira.mongodb.org/projects/PD/summary"
@@ -137,13 +137,13 @@ const readMe = `
 ### Yarn
 
 \`\`\`shell
-yarn add @leafygreen-ui/${packageNameKebab}
+yarn add @laffygreen-ui/${packageNameKebab}
 \`\`\`
 
 ### NPM
 
 \`\`\`shell
-npm install @leafygreen-ui/${packageNameKebab}
+npm install @laffygreen-ui/${packageNameKebab}
 \`\`\`
 
 ## Example
