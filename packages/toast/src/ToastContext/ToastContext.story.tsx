@@ -34,7 +34,7 @@ export default StoryMeta<typeof InternalToast>({
   argTypes: {
     timeout: {
       control: 'number',
-      defaultValue: 6000,
+      defaultValue: 1000,
       description:
         'Dismiss the Toast after `timeout` milliseconds. If timeout is `null | 0`, the Toast will never dismiss automatically.',
     },

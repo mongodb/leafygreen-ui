@@ -25,8 +25,9 @@ export interface ToastProps
   /**
    * Fired either when the close button is clicked, or when timeout has elapsed.
    *
-   * You can detect the reason for close by looking at `e.target` or `e.type`
-   * (TODO: exact event type & target TBD)
+   * When triggered by button click, `event.type === "click"`
+   *
+   * When triggered by timeout, `event.type === "timeout"`
    */
   onClose?: React.EventHandler<any>;
 

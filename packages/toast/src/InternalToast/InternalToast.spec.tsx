@@ -8,7 +8,10 @@ import { InternalToast } from './InternalToast';
 import { InternalToastProps } from './InternalToast.types';
 
 /**
- * This suite checks the rendering of a toast
+ * This suite checks the rendering of a toast.
+ *
+ * Does not test interactivity
+ * (see `ToastContext.spec.tsx`)
  *
  * Does not check controlled rendering
  * (see `ControlledToast.spec`)

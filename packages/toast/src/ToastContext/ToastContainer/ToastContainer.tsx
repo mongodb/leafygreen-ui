@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Transition, TransitionGroup } from 'react-transition-group';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -8,7 +8,10 @@ import {
   useMutationObserver,
 } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { createUniqueClassName } from '@leafygreen-ui/lib';
+import {
+  createSyntheticEvent,
+  createUniqueClassName,
+} from '@leafygreen-ui/lib';
 import Portal from '@leafygreen-ui/portal';
 import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
@@ -41,8 +44,10 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
   const toastContainerRef = useRef<HTMLDivElement>(null);
   const getToastRef = useDynamicRefs<HTMLDivElement>({ prefix: 'toast' });
   const { theme } = useDarkMode();
-  const { popToast } = useToast();
-  const [isHovered, setHovered] = useState(false);
+  const { popToast, getToast } = useToast();
+  const [isHovered, setHoveredState] = useState(false);
+  const setHovered = () => setHoveredState(true);
+  const setUnhovered = () => setHoveredState(false);
 
   const { recentToasts, remainingToasts } = getDividedStack(stack);
 
@@ -53,17 +58,26 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
    * Callback passed into the InternalToast component as `onClose`
    * Also fired when timeout timers expires
    */
-  function handleClose(id: ToastId, e?: SyntheticEvent) {
-    const toast = stack.get(id);
+  const handleClose = useCallback(
+    (id: ToastId, e?: MouseEvent) => {
+      const toast = getToast(id);
+      const toastRef = getToastRef(id);
 
-    if (toast) {
-      // We only self-close the toast if it's not externally controlled
-      if (!toast.isControlled) {
-        popToast(id);
+      if (toast && toastRef?.current) {
+        // We only self-close the toast if it's not externally controlled
+        if (!toast.isControlled) {
+          popToast(id);
+        }
+
+        toast.onClose?.(
+          // Call the close handler either with the default click event,
+          // or a synthetic "timeout" event
+          e ?? createSyntheticEvent(new Event('timeout'), toastRef.current),
+        );
       }
-      toast.onClose?.(e);
-    }
-  }
+    },
+    [getToast, getToastRef, popToast],
+  );
 
   useToastTimers({
     stack,
@@ -119,7 +133,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
     setImmediate(() => {
       if (toastContainerRef.current) {
         const _isHovered = toastContainerRef.current.matches(':hover');
-        setHovered(_isHovered);
+        setHoveredState(_isHovered);
       }
     });
   }
@@ -133,10 +147,10 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
         role="status"
         aria-live="polite"
         aria-relevant="all"
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        onFocus={() => setHovered(true)}
-        onBlur={() => setHovered(false)}
+        onMouseEnter={setHovered}
+        onMouseLeave={setUnhovered}
+        onFocus={setHovered}
+        onBlur={setUnhovered}
         className={cx(
           toastContainerStyles,
           getContainerStatefulStyles({
@@ -169,6 +183,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
                   {state => (
                     <InternalToast
                       key={id}
+                      id={id}
                       ref={toastRef}
                       onClose={e => handleClose(id, e)}
                       index={index}
@@ -206,7 +221,11 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
               );
             })}
         </TransitionGroup>
-        <Transition in={showNotifBar} timeout={transitionDuration.slower}>
+        <Transition
+          mountOnEnter
+          in={showNotifBar}
+          timeout={transitionDuration.slower}
+        >
           {state => (
             <NotificationBar
               count={remainingToasts.length}

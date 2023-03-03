@@ -1,16 +1,31 @@
 import React from 'react';
 import {
-  fireEvent,
   render,
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { transitionDuration } from '@leafygreen-ui/tokens';
+
 import { Basic as ContextStory } from './ToastContext.story';
 import { ToastProvider } from '.';
 
-describe('packages/toast/context', () => {
+async function delay(t: number) {
+  return await new Promise(_ => setTimeout(_, t));
+}
+
+/**
+ * Tests interactivity of ToastContext and ToastContainer
+ *
+ * For hook specific tests,
+ * see `useToast.spec.ts`
+ *
+ * For individual Toast rendering,m
+ * see `InternalToast.spec.tsx` (or `ControlledToast.spec.tsx`)
+ *
+ */
+describe('packages/toast/context-provider', () => {
   test('renders children', () => {
     const { getByTestId } = render(
       <ToastProvider>
@@ -44,34 +59,35 @@ describe('packages/toast/context', () => {
 
   describe('closing toasts', () => {
     test('toast closes after timeout', async () => {
-      const { getByTestId } = render(<ContextStory timeout={50} />);
+      const timeout = 50;
+      const { getByTestId } = render(<ContextStory timeout={timeout} />);
       const button = getByTestId('toast-trigger');
       userEvent.click(button);
       const toast = await waitFor(() => getByTestId('lg-toast'));
       expect(toast).toBeInTheDocument();
-
-      setTimeout(() => {
-        expect(toast).not.toBeInTheDocument();
-      }, 51);
+      await waitForElementToBeRemoved(toast);
     });
 
-    // TODO: find a way to test this adequately
-    // eslint-disable-next-line jest/no-disabled-tests
-    test.skip('toast does _NOT_ close after timeout when container is hovered', async () => {
-      const { getByTestId } = render(<ContextStory timeout={50} />);
+    test('toast does _NOT_ close after timeout when container is hovered', async () => {
+      const timeout = 100;
+      const { getByTestId } = render(<ContextStory timeout={timeout} />);
       const button = getByTestId('toast-trigger');
       userEvent.click(button);
       const container = getByTestId('lg-toast-region');
       const toast = await waitFor(() => getByTestId('lg-toast'));
       expect(toast).toBeInTheDocument();
-      fireEvent(container, new Event('mouseenter', { bubbles: true }));
-      setTimeout(() => {
-        expect(toast).toBeInTheDocument();
-      }, 51);
+      userEvent.hover(container);
+      await delay(timeout + transitionDuration.slower);
+      expect(toast).toBeInTheDocument();
     });
 
+    test.todo(
+      'toast does _NOT_ close after timeout if `variant` is progress, and `progress` is < 1s',
+      // async () => {},
+    );
+
     test('toast closes when the dismiss button is clicked', async () => {
-      const { getByTestId } = render(<ContextStory timeout={50} />);
+      const { getByTestId } = render(<ContextStory timeout={null} />);
       const button = getByTestId('toast-trigger');
       userEvent.click(button);
       const toast = await waitFor(() => getByTestId('lg-toast'));
@@ -82,12 +98,40 @@ describe('packages/toast/context', () => {
   });
 
   describe('onClose', () => {
-    test.todo(
-      'is called with a payload that differentiates timeout vs dismiss',
-    );
-
-    test.todo(
-      'is _NOT_ called after timeout if `variant` is progress, and `progress` is < 1',
-    );
+    describe('is called with different arguments for timeout vs dismiss', () => {
+      test('timeout', async () => {
+        const closeHandler = jest.fn();
+        const timeout = 50;
+        const { getByTestId } = render(
+          <ContextStory timeout={timeout} onClose={closeHandler} />,
+        );
+        const button = getByTestId('toast-trigger');
+        userEvent.click(button);
+        await waitFor(() => {
+          expect(closeHandler).toHaveBeenCalledWith(
+            expect.objectContaining({
+              type: 'timeout',
+            }),
+          );
+        });
+      });
+      test('dismiss button', async () => {
+        const closeHandler = jest.fn();
+        const { getByTestId } = render(
+          <ContextStory timeout={null} onClose={closeHandler} />,
+        );
+        const button = getByTestId('toast-trigger');
+        userEvent.click(button);
+        const dismiss = getByTestId('lg-toast-dismiss-button');
+        userEvent.click(dismiss);
+        await waitFor(() => {
+          expect(closeHandler).toHaveBeenCalledWith(
+            expect.objectContaining({
+              type: 'click',
+            }),
+          );
+        });
+      });
+    });
   });
 });
