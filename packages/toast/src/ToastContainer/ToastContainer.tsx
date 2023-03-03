@@ -194,13 +194,12 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
                       {...toastProps}
                       description={
                         // TODO: Remove debug comments
-                        `${id} index #${index}. ` +
                         // ` (${i_fromBottom} from bottom)` +
                         // ` scrollHeight ${toastRef?.current?.scrollHeight} ` +
                         // ` clientHeight ${toastRef?.current?.clientHeight} ` +
                         // ` saved height: ${toastHeights[index]}` +
                         // ` Offest ${hoveredYPosition} ` +
-                        toastProps.description
+                        toastProps.description + ` (${id} index #${index}.)`
                       }
                     />
                   )}

@@ -3,6 +3,7 @@ import { faker } from '@faker-js/faker';
 import { random, sample } from 'lodash';
 
 import Button from '@leafygreen-ui/button';
+import { css } from '@leafygreen-ui/emotion';
 import { StoryMeta } from '@leafygreen-ui/lib';
 
 import { InternalToast, InternalToastProps } from '../InternalToast';
@@ -16,14 +17,38 @@ export default StoryMeta<typeof InternalToast>({
   component: InternalToast,
   parameters: {
     default: 'Basic',
+    controls: {
+      exclude: [
+        'as',
+        'title',
+        'description',
+        'dismissible',
+        'onClose',
+        'progress',
+        'variant',
+      ],
+    },
+  },
+  argTypes: {
+    timeout: {
+      control: 'number',
+      defaultValue: 6000,
+      description:
+        'Dismiss the Toast after `timeout` milliseconds. If timeout is `null | 0`, the Toast will never dismiss automatically.',
+    },
   },
 });
 
-const BasicChildren = (toastProps: Partial<InternalToastProps>) => {
+const BasicChildren = ({ timeout }: Partial<InternalToastProps>) => {
   const { pushToast, clearStack } = useToast();
 
   return (
-    <>
+    <div
+      className={css`
+        display: flex;
+        gap: 8px;
+      `}
+    >
       <Button
         data-testid="toast-trigger"
         onClick={() => {
@@ -32,15 +57,14 @@ const BasicChildren = (toastProps: Partial<InternalToastProps>) => {
             title: `I'm a ${variant} toast`,
             description: faker.lorem.lines(random(1, 2)),
             variant,
-            ...toastProps,
-            timeout: null,
+            timeout,
           });
         }}
       >
         Push toast
       </Button>
       <Button onClick={() => clearStack()}>Clear all</Button>
-    </>
+    </div>
   );
 };
 
