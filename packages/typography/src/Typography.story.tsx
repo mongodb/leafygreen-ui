@@ -2,7 +2,6 @@ import React from 'react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
-import InlineDefinition from '@leafygreen-ui/inline-definition';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
@@ -123,16 +122,6 @@ export const AllTypography = ({
 
         <Overline className={displayBlock}>Overline</Overline>
         <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
-
-        <div
-          className={css`
-            color: ${darkMode ? palette.gray.light2 : palette.black};
-          `}
-        >
-          <InlineDefinition definition="Tooltip Definition">
-            Inline definition
-          </InlineDefinition>
-        </div>
 
         <Error>Hello I am an Error!</Error>
 

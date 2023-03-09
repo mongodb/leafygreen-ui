@@ -9,216 +9,43 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  tests:
-    name: Run tests
+  build:
+    name: 'Validate with Node v${{ matrix.node-version }}'
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ['14.17.0', '16.13.0']
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2
-      - name: Use Node.js 14.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: '14.x'
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/cache@v2
-        id: yarn-cache
-        with:
-          path: |
-            ${{ steps.yarn-cache-dir-path.outputs.dir }}
-            **/node_modules
-          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-cache-
-      - run: yarn install --frozen-lockfile
-      - uses: actions/cache@v2
-        id: build-cache
-        with:
-          path: |
-            **/dist
-            !**/node_modules
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/rollup.config.js', '**/babel.config.js', '**/src/', '**/scripts/', '!**/node_modules', '!**/dist') }}
-      - name: build
-        if: steps.build-cache.outputs.cache-hit != 'true'
-        run: yarn build:packages --diff --deps
-      - name: tests
-        run: yarn test --diff --deps --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
-        env:
-          JEST_JUNIT_OUTPUT: 'reports/junit/js-test-results.xml'
+      - name: Checkout branch
+        uses: actions/checkout@v3
 
-  tests-ssr:
-    name: Run tests with artificial server rendering
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2
-      - name: Use Node.js 14.x
-        uses: actions/setup-node@v1
+      - name: Setup Node with v${{ matrix.node-version }}
+        uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/cache@v2
-        id: yarn-cache
-        with:
-          path: |
-            ${{ steps.yarn-cache-dir-path.outputs.dir }}
-            **/node_modules
-          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-cache-
-      - run: yarn install --frozen-lockfile
-      - uses: actions/cache@v2
-        id: build-cache
-        with:
-          path: |
-            **/dist
-            !**/node_modules
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/rollup.config.js', '**/babel.config.js', '**/src/', '**/scripts/', '!**/node_modules', '!**/dist') }}
-      - name: build
-        if: steps.build-cache.outputs.cache-hit != 'true'
-        run: yarn build:packages --diff --deps
-      - name: tests
-        run: yarn test --ssr --diff --deps --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
-        env:
-          JEST_JUNIT_OUTPUT: 'reports/junit/js-test-ssr-results.xml'
+          node-version: ${{ matrix.node-version }}
+          cache: yarn
 
-  lints:
-    name: Check lints
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2
-      - name: Use Node.js 14.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: '14.x'
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/cache@v2
-        id: yarn-cache
+      - name: Restore cache
+        uses: actions/cache@v3
         with:
           path: |
-            ${{ steps.yarn-cache-dir-path.outputs.dir }}
-            **/node_modules
-          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+            **/.eslintcache
+            **/.turbo
+            node_modules/.cache/turbo
+          key: ${{ runner.os }}-node${{ matrix.node-version }}-test-v1-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-yarn-cache-
-      - run: yarn install --frozen-lockfile
-      - name: prettier
-        run: yarn check:prettier
-      - name: eslint
-        run: yarn check:eslint --format junit -o reports/junit/js-lint-results.xml
+            ${{ runner.os }}-node${{ matrix.node-version }}-test-v1-
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
 
-  types:
-    name: Check types
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2
-      - name: Use Node.js 14.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: '14.x'
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/cache@v2
-        id: yarn-cache
-        with:
-          path: |
-            ${{ steps.yarn-cache-dir-path.outputs.dir }}
-            **/node_modules
-          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-cache-
-      - run: yarn install --frozen-lockfile
-      - name: types
-        run: yarn check:ts
+      - name: Build packages
+        run: yarn build
 
-  deps:
-    name: Check dependencies
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2
-      - name: Use Node.js 14.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: '14.x'
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/cache@v2
-        id: yarn-cache
-        with:
-          path: |
-            ${{ steps.yarn-cache-dir-path.outputs.dir }}
-            **/node_modules
-          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-cache-
-      - run: yarn install --frozen-lockfile
-      - name: deps
-        run: yarn check:deps
-      - name: package.json versions
-        run: yarn check:package-json
+      - name: Lint
+        run: yarn lint
 
-  builds:
-    name: Check builds
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2
-      - name: Use Node.js 14.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: '14.x'
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/cache@v2
-        id: yarn-cache
-        with:
-          path: |
-            ${{ steps.yarn-cache-dir-path.outputs.dir }}
-            **/node_modules
-          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-cache-
-      - run: yarn install --frozen-lockfile
-      - name: build
-        run: yarn build --diff --deps
-      - name: check builds
-        run: yarn check:builds --diff --deps
+      - name: Type check
+        run: yarn type-check
 
-  sizeDiff:
-    name: Check file size
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2
-      - name: Use Node.js 14.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: '14.x'
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/cache@v2
-        id: yarn-cache
-        with:
-          path: |
-            ${{ steps.yarn-cache-dir-path.outputs.dir }}
-            **/node_modules
-          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-cache-
-      - uses: preactjs/compressed-size-action@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          clean-script: 'clean:builds && clean:modules'
-          build-script: 'build:packages'
+      - name: Test
+        run: yarn test
