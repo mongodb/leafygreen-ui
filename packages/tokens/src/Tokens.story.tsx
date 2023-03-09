@@ -1,10 +1,8 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 import React from 'react';
 import { startCase } from 'lodash';
-
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { H2, InlineCode } from '@leafygreen-ui/typography';
 
 import { Mode } from './mode';
 import {
@@ -61,9 +59,9 @@ const spacingBlockVariants = Object.keys(spacing).reduce(
 function SpacingBlock({ space }: { space: keyof typeof spacing }) {
   return (
     <div className={gutter}>
-      <InlineCode>
+      <p>
         spacing[{space}]: {spacing[space]}
-      </InlineCode>
+      </p>
       <div className={spacingBlockVariants[space]}></div>
     </div>
   );
@@ -71,7 +69,7 @@ function SpacingBlock({ space }: { space: keyof typeof spacing }) {
 
 export const Spacing = () => (
   <div>
-    <H2>Spacing</H2>
+    <p>Spacing</p>
     <div
       className={css`
         display: flex;
@@ -90,7 +88,7 @@ export const Spacing = () => (
 export const TypeScales = () => {
   return (
     <div>
-      <H2>Typescales</H2>
+      <p>Typescales</p>
       {Object.keys(typeScales).map((_scale: string) => {
         const scale = _scale as TypeScale;
         return (
@@ -105,9 +103,9 @@ export const TypeScales = () => {
               margin: ${spacing[3]}px 0;
             `}
           >
-            <InlineCode>
+            <p>
               typeScales.{scale}: {JSON.stringify(typeScales[scale])}
-            </InlineCode>{' '}
+            </p>{' '}
             <div>{scale}</div>
           </div>
         );
@@ -118,7 +116,7 @@ export const TypeScales = () => {
 
 export const FontFamilies = () => (
   <div>
-    <H2>Font Families</H2>
+    <p>Font Families</p>
     {Object.keys(fontFamilies).map((_family: string) => {
       const family = _family as FontFamily;
       return (
@@ -129,9 +127,9 @@ export const FontFamilies = () => (
             margin: ${spacing[3]}px 0;
           `}
         >
-          <InlineCode>
+          <p>
             fontFamilies.{family}: {fontFamilies[family]}
-          </InlineCode>
+          </p>
           <div>{family}</div>
         </div>
       );
@@ -168,7 +166,7 @@ export const InteractionRings = () => {
 
   return (
     <div>
-      <H2>Interaction States</H2>
+      <p>Interaction States</p>
       <div>
         {Object.values(Mode).map((mode: Mode) => (
           <div key={mode} className={modeWrapper(mode)}>
