@@ -42,7 +42,7 @@ jobs:
         run: yarn build
 
       - name: Lint
-        run: yarn lint
+        run: yarn check:prettier 
 
       - name: Type check
         run: yarn type-check
