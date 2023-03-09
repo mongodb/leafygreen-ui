@@ -1,5 +1,5 @@
-name:  Node.js CI
- 
+name: Node.js CI
+
 on:
   pull_request:
     types: [opened, synchronize, reopened]
@@ -7,45 +7,43 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
- 
+
 jobs:
   build:
-      name: Build, Test, Lint
-      timeout-minutes: 15
-      runs-on: ubuntu-latest
-      # env:
-      #  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      #  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
- 
-      steps:
-        - name: Check out code
-          uses: actions/checkout@v3
-          with:
-            fetch-depth: 2
- 
-        - name: Setup Node.js environment
-          uses: actions/setup-node@v3
-          with:
-            node-version: '14.x'
-            cache: 'yarn'
- 
-        - name: Install dependencies
-          run: yarn
- 
-        - name: Build
-          run: yarn build
- 
-        - name: Test
-          run: yarn test --ssr --diff --deps --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
-          env:
-            JEST_JUNIT_OUTPUT: 'reports/junit/js-test-ssr-results.xml'
-        
-        - name: Prettier
-          run: yarn check:prettier
-        - name: ESlint
-          run: yarn check:eslint --format junit -o reports/junit/js-lint-results.xml
+    name: Build, Test, Lint
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    # env:
+    #  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+    #  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
 
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
 
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14.x'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Build
+        run: yarn build
+
+      - name: Test
+        run: yarn test --ssr --diff --deps --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
+        env:
+          JEST_JUNIT_OUTPUT: 'reports/junit/js-test-ssr-results.xml'
+
+      - name: Prettier
+        run: yarn check:prettier
+      - name: ESlint
+        run: yarn check:eslint --format junit -o reports/junit/js-lint-results.xml
 # name: Node.js CI
 
 # on:
