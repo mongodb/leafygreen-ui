@@ -41,10 +41,24 @@ jobs:
         run: yarn build
 
       - name: Lint
-        run: yarn check:prettier
+        run: yarn check:prettier && yarn check:eslint --format junit -o reports/junit/js-lint-results.xml
 
       - name: Type check
-        run: yarn type-check
+        run: yarn check:ts
 
-      - name: Test
-        run: yarn test
+      - name: Tests
+        run: yarn test --diff --deps --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
+        env:
+          JEST_JUNIT_OUTPUT: 'reports/junit/js-test-results.xml'
+
+      - name: Tests SSR
+        run: yarn test --ssr --diff --deps --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
+        env:
+          JEST_JUNIT_OUTPUT: 'reports/junit/js-test-ssr-results.xml'
+
+      - name: Check dependencies
+        run: yarn check:deps
+      - name: package.json versions
+        run: yarn check:package-json
+      - name: check builds
+        run: yarn check:builds --diff --deps
