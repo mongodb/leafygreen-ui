@@ -12,17 +12,15 @@ jobs:
   build:
     name: 'Validate with Node v${{ matrix.node-version }}'
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: ['14.17.0', '16.13.0']
+
     steps:
       - name: Checkout branch
         uses: actions/checkout@v3
 
-      - name: Setup Node with v${{ matrix.node-version }}
+      - name: Setup Node.js 14.x
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: '14.x'
           cache: yarn
 
       - name: Restore cache
@@ -32,9 +30,10 @@ jobs:
             **/.eslintcache
             **/.turbo
             node_modules/.cache/turbo
-          key: ${{ runner.os }}-node${{ matrix.node-version }}-test-v1-${{ github.sha }}
+          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-node${{ matrix.node-version }}-test-v1-
+            ${{ runner.os }}-yarn-cache-
+            
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
@@ -42,7 +41,7 @@ jobs:
         run: yarn build
 
       - name: Lint
-        run: yarn check:prettier 
+        run: yarn check:prettier
 
       - name: Type check
         run: yarn type-check
