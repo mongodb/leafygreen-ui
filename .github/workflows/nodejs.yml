@@ -10,7 +10,7 @@ concurrency:
 
 jobs:
   build:
-    name: 'Validate with Node v${{ matrix.node-version }}'
+    name: Validate
     runs-on: ubuntu-latest
 
     steps:
@@ -33,7 +33,7 @@ jobs:
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-cache-
-            
+
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
