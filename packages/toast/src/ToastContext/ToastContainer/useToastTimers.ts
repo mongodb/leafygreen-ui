@@ -30,32 +30,40 @@ export const useToastTimers = ({
     [callback],
   );
 
+  const startTimers = useCallback(
+    (stack: ToastStack) => {
+      stack.forEach(({ timeout, variant, progress }, id) => {
+        // We don't set the timer for `progress` toasts until they're complete
+        if (variant !== 'progress' || progress === 1) {
+          setTimer(id, timeout);
+        }
+      });
+    },
+    [setTimer],
+  );
+
+  // When the stack changes we create a timer
+  // and pop the toast when the timer expires
+  useEffect(() => {
+    startTimers(stack);
+    return () => clearAllTimers();
+  }, [setTimer, stack, startTimers]);
+
+  // When isHovered changes, pause the timers
+  useEffect(() => {
+    if (isHovered) {
+      clearAllTimers();
+    } else {
+      startTimers(stack);
+    }
+
+    return () => clearAllTimers();
+  }, [isHovered, setTimer, stack, startTimers]);
+
   function clearAllTimers() {
     timers.current.forEach((timerId, toastId) => {
       if (timerId) clearTimeout(timerId);
       timers.current.delete(toastId);
     });
   }
-
-  // When the stack changes we create a timer
-  // and pop the toast when the timer expires
-  useEffect(() => {
-    stack.forEach(({ timeout }, id) => {
-      setTimer(id, timeout);
-    });
-
-    return () => clearAllTimers();
-  }, [setTimer, stack]);
-
-  useEffect(() => {
-    if (isHovered) {
-      clearAllTimers();
-    } else {
-      stack.forEach(({ timeout }, id) => {
-        setTimer(id, timeout);
-      });
-    }
-
-    return () => clearAllTimers();
-  }, [isHovered, setTimer, stack]);
 };
