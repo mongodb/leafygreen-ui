@@ -51,7 +51,9 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
 
   const { recentToasts, remainingToasts } = getDividedStack(stack);
 
+  /** is the "N more" bar visible? */
   const showNotifBar = isHovered && remainingToasts.length > 0;
+  /** How much vertical space is the "N more" bar taking up  */
   const notifBarSpacing = showNotifBar ? notificationBarHeight + gap : 0;
 
   /**
@@ -70,8 +72,8 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
         }
 
         toast.onClose?.(
-          // Call the close handler either with the default click event,
-          // or a synthetic "timeout" event
+          // Call the close handler either with the default click event (if it exists),
+          // or a synthetic custom "timeout" event
           e ?? createSyntheticEvent(new Event('timeout'), toastRef.current),
         );
       }
@@ -79,6 +81,9 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
     [getToast, getToastRef, popToast],
   );
 
+  /**
+   * Set & keep track of timers for each toast in the stack
+   */
   useToastTimers({
     stack,
     isHovered,
@@ -107,8 +112,17 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
       .filter(h => h >= 0);
   }
 
-  const [toastHeights, setToastHeights] = useState<Array<number>>([]);
+  /**
+   * Keep track of the vertical height of each toast in the stack, so we know how to render them all
+   */
+  const [toastHeights, setToastHeights] = useState<Array<number>>(
+    calcToastHeights(),
+  );
 
+  /**
+   * We watch the toast container,
+   * and update the toast height variables
+   */
   useMutationObserver(
     toastContainerRef.current,
     {

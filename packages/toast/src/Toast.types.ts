@@ -77,8 +77,9 @@ export interface ToastProps
   dismissible?: boolean;
 
   /**
-   * Whether the toast has been rendered with the context
-   * or the controolled JSX component
+   * Internal prop that defines whether the toast has been rendered with the context,
+   * or by the `ControlledToast` JSX component. Set automatically by the `ControlledToast` component
+   * @internal
    */
   isControlled?: boolean;
 }
