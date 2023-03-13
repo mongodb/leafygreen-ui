@@ -50,6 +50,7 @@ type ListMenuProps = {
   referenceElement: React.MutableRefObject<HTMLElement | null>;
   className?: string;
   labelId?: string;
+  dropdownAutoWidth?: boolean;
 } & Omit<PopoverProps, 'active' | 'refEl'>;
 
 const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
@@ -60,6 +61,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
       referenceElement,
       className,
       labelId,
+      dropdownAutoWidth,
       usePortal = true,
       portalContainer,
       scrollContainer,
@@ -99,7 +101,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
         active={open && !disabled}
         spacing={6}
         align={Align.Bottom}
-        justify={Justify.Middle}
+        justify={dropdownAutoWidth ? Justify.Start : Justify.Middle}
         adjustOnMutation
         className={className}
         refEl={referenceElement}

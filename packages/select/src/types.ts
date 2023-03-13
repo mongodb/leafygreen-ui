@@ -73,6 +73,12 @@ interface BaseSelectProps
    *  determines the base font size if sizeVariant is set to default.
    */
   baseFontSize?: BaseFontSize;
+  /**
+   *  If true, the width of the dropdown will be as wide as the widest option. By default the width of the dropdown will be the same width as the menu button.
+   *
+   * @default false
+   */
+  dropdownAutoWidth?: boolean;
 
   /**
    * @internal

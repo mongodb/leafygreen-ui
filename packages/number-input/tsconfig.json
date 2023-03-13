@@ -28,6 +28,9 @@
     },
     {
       "path": "../icon-button"
+    },
+    {
+      "path": "../select"
     }
   ]
 }

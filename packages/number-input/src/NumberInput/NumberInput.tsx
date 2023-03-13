@@ -7,7 +7,9 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { createSyntheticEvent } from '@leafygreen-ui/lib';
-import { Description, Label } from '@leafygreen-ui/typography';
+import { Description, Label, Overline } from '@leafygreen-ui/typography';
+
+import { Select } from '../Select';
 
 import {
   arrowBaseStyles,
@@ -18,7 +20,7 @@ import {
   wrapperBaseStyles,
   wrapperSizeStyles,
 } from './NumberInput.styles';
-import { NumberInputProps, Size } from './NumberInput.types';
+import { NumberInputProps, Size, UnitOption } from './NumberInput.types';
 
 export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
   (
@@ -32,8 +34,8 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       description,
       onChange: onChangeProp,
       size = Size.Default,
-      unit,
-      unitOptions,
+      unit: unitProp,
+      unitOptions = [],
       onSelectChange,
       ...rest
     }: NumberInputProps,
@@ -43,6 +45,8 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
     const inputId = useIdAllocator({ prefix, id: idProp });
     const { darkMode } = useDarkMode(darkModeProp);
     const inputRef = useRef<HTMLInputElement | null>(null);
+
+    const hasSelectOptions = unitOptions.length > 1;
 
     const { value, handleChange: handleChangeProp } = useControlledValue(
       valueProp,
@@ -54,6 +58,10 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       console.log(e.target.value);
       handleChangeProp?.(e);
     };
+
+    // const handleSelectChange = ()
+    // eslint-disable-next-line no-console
+    console.log({ unitProp });
 
     const handleSyntheticEvent = () => {
       const nativeEvent = new Event('change', { bubbles: true });
@@ -73,10 +81,15 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
       if (!disabled) {
+        // TODO: use vars for keys
         if (e.key === 'ArrowUp') handleIncrementClick();
         if (e.key === 'ArrowDown') handleDecrementClick();
       }
     };
+
+    const currentUnitOption = unitOptions?.find(
+      unit => unit.displayName === unitProp,
+    );
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
@@ -91,8 +104,8 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
               {description}
             </Description>
           )}
-          {/* TODO: separate component */}
           <div className={cx(wrapperBaseStyles, wrapperSizeStyles[size])}>
+            {/* TODO: separate component */}
             <div className={cx(inputWrapperBaseStyles)}>
               <input
                 ref={inputRef}
@@ -114,7 +127,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
                   onKeyDown={handleKeyDown}
                   className={cx(arrowBaseStyles)}
                   type="button"
-                  tabIndex={-1} // Mimicking native behavior; you cannot focus on a button.
+                  tabIndex={-1} // Mimicking native behavior; you cannot focus on a arrow.
                 >
                   <Icon aria-hidden={true} glyph="CaretUp" size={16} />
                 </button>
@@ -130,6 +143,16 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
                 </button>
               </div>
             </div>
+            {!!unitProp && !hasSelectOptions && (
+              <Overline>{`${unitProp}(S)`}</Overline>
+            )}
+            {!!unitProp && hasSelectOptions && (
+              <Select
+                unit={currentUnitOption as UnitOption}
+                unitOptions={unitOptions}
+                onChange={onSelectChange} //TODO: make required if options are passed in
+              />
+            )}
           </div>
         </div>
       </LeafyGreenProvider>

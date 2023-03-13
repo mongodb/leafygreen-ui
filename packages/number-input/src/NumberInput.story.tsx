@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ComponentStory } from '@storybook/react';
 
 import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
 
-import { Size } from './NumberInput/NumberInput.types';
+import {
+  NumberInputProps,
+  Size,
+  UnitOption,
+} from './NumberInput/NumberInput.types';
 import { NumberInput } from '.';
 
 export default StoryMeta({
@@ -27,6 +31,9 @@ export default StoryMeta({
     description: {
       control: 'text',
     },
+    unit: {
+      control: 'text',
+    },
   },
   parameters: {
     default: 'Demo',
@@ -38,6 +45,7 @@ export default StoryMeta({
         'aria-describedby',
         'aria-label',
         'value',
+        'onSelectChange',
       ],
     },
   },
@@ -47,4 +55,47 @@ const Template: ComponentStory<typeof NumberInput> = props => (
   <NumberInput {...props} />
 );
 
+const unitOptions = [
+  {
+    displayName: 'One',
+    value: 'one',
+  },
+  {
+    displayName: 'Two',
+    value: 'two',
+  },
+  {
+    displayName: 'Three',
+    value: 'three',
+  },
+  {
+    displayName: 'FourFiveSixSeven',
+    value: 'four',
+  },
+];
+
 export const Basic = Template.bind({});
+
+export const Unit = Template.bind({});
+Unit.args = {
+  unit: 'Month',
+};
+
+export const Select = (props: NumberInputProps) => {
+  const [unit, setUnit] = useState<UnitOption>(unitOptions[0]);
+
+  const handleChange = (unit: UnitOption) => {
+    setUnit(unit);
+    // eslint-disable-next-line no-console
+    console.log('story', unit?.displayName);
+  };
+
+  return (
+    <NumberInput
+      {...props}
+      unit={unit?.displayName}
+      unitOptions={unitOptions}
+      onSelectChange={handleChange}
+    />
+  );
+};

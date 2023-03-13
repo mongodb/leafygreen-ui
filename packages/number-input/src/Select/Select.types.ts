@@ -1,3 +1,6 @@
+import { UnitOption } from '../NumberInput/NumberInput.types';
+
+// TODO: extend popover props?
 export interface SelectProps {
   /**
    * Specifies that the popover content should be rendered at the end of the DOM,
@@ -26,4 +29,19 @@ export interface SelectProps {
    * Number that controls the z-index of the popover element directly.
    */
   popoverZIndex?: number;
+
+  /**
+   * The controlled value of the select input.
+   */
+  unit: UnitOption;
+
+  /**
+   * The options that appear in the select input.
+   */
+  unitOptions: Array<UnitOption>;
+
+  /**
+   * Callback fired when the unit option changes.
+   */
+  onChange: (unit: UnitOption) => void;
 }

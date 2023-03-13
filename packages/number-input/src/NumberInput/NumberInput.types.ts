@@ -51,7 +51,7 @@ export interface NumberInputProps
   /**
    * Callback fired when the select value changes
    */
-  onSelectChange?: ChangeEventHandler<HTMLSelectElement>;
+  onSelectChange?: (unit: UnitOption) => void;
 
   /**
    * id associated with the PasswordInput component, referenced by `<label>` with the `for` attribute.
@@ -77,6 +77,8 @@ export interface NumberInputProps
 
   /**
    * Determines the font size and padding.
+   *
+   * @default 'default'
    */
   size?: Size;
 
@@ -97,7 +99,7 @@ export interface NumberInputProps
    * Specifies that the popover content should be rendered at the end of the DOM,
    * rather than in the DOM tree.
    *
-   * default: `true`
+   * @default true
    */
   usePortal?: boolean;
 

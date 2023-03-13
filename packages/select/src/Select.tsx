@@ -77,26 +77,27 @@ export default function Select({
   size = Size.Default,
   disabled = false,
   allowDeselect = true,
+  usePortal = true,
   placeholder = 'Select',
-  className,
+  errorMessage = 'error message right here',
+  state = State.None,
+  dropdownAutoWidth = false,
+  baseFontSize = BaseFontSize.Body1,
   id: idProp,
-  label,
   'aria-labelledby': ariaLabelledby,
   'aria-label': ariaLabel,
+  className,
+  label,
   description,
   name,
   defaultValue,
   value,
   onChange,
   readOnly,
-  usePortal = true,
   portalContainer,
   scrollContainer,
   portalClassName,
   popoverZIndex,
-  errorMessage = 'error message right here',
-  state = State.None,
-  baseFontSize = BaseFontSize.Body1,
   __INTERNAL__menuButtonSlot__,
   ...rest
 }: SelectProps) {
@@ -583,9 +584,12 @@ export default function Select({
             id={menuId}
             referenceElement={menuButtonRef}
             ref={listMenuRef}
-            className={css`
-              width: ${menuButtonRef.current?.clientWidth}px;
-            `}
+            className={cx({
+              [css`
+                width: ${menuButtonRef.current?.clientWidth}px;
+              `]: !dropdownAutoWidth,
+            })}
+            dropdownAutoWidth={dropdownAutoWidth}
             {...popoverProps}
           >
             {allowDeselect && deselectionOption}

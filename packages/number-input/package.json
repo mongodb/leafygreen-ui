@@ -31,6 +31,7 @@
       "@leafygreen-ui/hooks": "^7.6.0",
       "@leafygreen-ui/typography": "^16.0.1",
       "@leafygreen-ui/icon": "^11.12.4",
-      "@leafygreen-ui/icon-button": "^15.0.6"
+      "@leafygreen-ui/icon-button": "^15.0.6",
+      "@leafygreen-ui/select": "^10.2.2"
     }
   }
