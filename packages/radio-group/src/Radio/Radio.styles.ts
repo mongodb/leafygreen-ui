@@ -4,6 +4,7 @@ import { palette } from '@leafygreen-ui/palette';
 import {
   focusRing,
   hoverRing,
+  spacing,
   transitionDuration,
 } from '@leafygreen-ui/tokens';
 
@@ -14,13 +15,24 @@ export const inputDisplayWrapperClassName =
   createUniqueClassName('radio-group');
 export const inputClassName = createUniqueClassName('radio-group');
 
-export const containerMargin = css`
-  & + & {
-    margin-top: 8px;
-  }
+export const containerStyle = css`
+  display: grid;
+  grid-template-areas: 'label label' '. description';
+  gap: 0 ${spacing[2]}px;
 `;
 
+export const containerSizeStyle: Omit<Record<Size, string>, 'xsmall'> = {
+  // size of `inputDisplay` element
+  [Size.Small]: css`
+    grid-template-columns: 14px auto;
+  `,
+  [Size.Default]: css`
+    grid-template-columns: 20px auto;
+  `,
+};
+
 export const labelBaseStyle = css`
+  grid-area: label;
   display: flex;
   line-height: 20px;
   cursor: pointer;
@@ -217,4 +229,8 @@ export const radioBoxSizeStyles: Omit<Record<Size, string>, 'xsmall'> = {
 export const radioBoxBaseStyle = css`
   position: relative;
   flex-shrink: 0;
+`;
+
+export const descriptionStyles = css`
+  grid-area: description;
 `;
