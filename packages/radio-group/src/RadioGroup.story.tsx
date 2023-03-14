@@ -28,7 +28,7 @@ export const Uncontrolled = ({ darkMode, ...args }: RadioGroupProps) => (
   <RadioGroup name="radio-group-default" darkMode={darkMode} {...args}>
     <Radio value="1">Radio Input Copy</Radio>
     <Radio value="2">Radio Input Copy</Radio>
-    <Radio default value="3">
+    <Radio default value="3" description="This is a description">
       Radio Input Copy
     </Radio>
     <Radio disabled value="Selection-4">

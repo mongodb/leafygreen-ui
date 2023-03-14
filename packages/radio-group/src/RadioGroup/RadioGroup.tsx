@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
 
 import { Size } from '../types';
 
+import { radioGroupStyles } from './RadioGroup.styles';
 import { RadioGroupProps } from './RadioGroup.types';
 
 /**
@@ -89,7 +91,12 @@ function RadioGroup({
   });
 
   return (
-    <div className={className} role="group" aria-label={name} {...rest}>
+    <div
+      className={cx(radioGroupStyles, className)}
+      role="group"
+      aria-label={name}
+      {...rest}
+    >
       {renderedChildren}
     </div>
   );
