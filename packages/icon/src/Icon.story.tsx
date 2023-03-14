@@ -88,4 +88,4 @@ export const AllIcons: ComponentStory<typeof Icon> = (
   </div>
 );
 
-export const Error = () => <Icon glyph="error" />;
+export const Error = () => <Icon glyph="glyph-does-not-exist" />;
