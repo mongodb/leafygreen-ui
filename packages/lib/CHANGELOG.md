@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 10.2.2
+
+### Patch Changes
+
+- 26e341a0b: Minor type fixes to `StoryMeta` function
+
 ## 10.2.1
 
 ### Patch Changes
