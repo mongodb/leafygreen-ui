@@ -86,12 +86,6 @@ export const arrowBaseStyles = css`
     cursor: pointer;
   }
 
-  &:focus {
-    svg {
-      color: red;
-    }
-  }
-
   svg {
     position: absolute;
     translate: -50% -50%;
@@ -99,6 +93,25 @@ export const arrowBaseStyles = css`
     left: 50%;
   }
 `;
+
+export const arrowThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.base};
+
+    &:hover,
+    &:active {
+      color: ${palette.gray.dark3};
+    }
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.base};
+
+    &:hover,
+    &:active {
+      color: ${palette.gray.light1};
+    }
+  `,
+};
 
 export const selectBaseStyles = css`
   border-top-right-radius: 0;

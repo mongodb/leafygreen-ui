@@ -10,7 +10,13 @@ import { Description, Label, Overline } from '@leafygreen-ui/typography';
 import { Input } from '../Input';
 import { Select } from '../Select';
 
-import { wrapperBaseStyles, wrapperSizeStyles } from './NumberInput.styles';
+import {
+  unitBaseStyles,
+  unitThemeStyles,
+  wrapperBaseStyles,
+  wrapperGapStyles,
+  wrapperSizeStyles,
+} from './NumberInput.styles';
 import { NumberInputProps, Size, State, UnitOption } from './NumberInput.types';
 
 export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
@@ -40,7 +46,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
   ) => {
     const prefix = 'lg-numberinput';
     const inputId = useIdAllocator({ prefix, id: idProp });
-    const { darkMode } = useDarkMode(darkModeProp);
+    const { darkMode, theme } = useDarkMode(darkModeProp);
 
     /**
      * Checks if there is a unit
@@ -50,6 +56,9 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
      * Checks if the select option will render
      */
     const hasSelectOptions = unitOptions.length > 1;
+
+    const renderUnitOnly = hasUnit && !hasSelectOptions;
+    const renderSelectOnly = hasUnit && hasSelectOptions;
 
     /**
      * Gets the current unit option using the unit string
@@ -79,21 +88,27 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
               {description}
             </Description>
           )}
-          <div className={cx(wrapperBaseStyles, wrapperSizeStyles[size])}>
+          <div
+            className={cx(wrapperBaseStyles, wrapperSizeStyles[size], {
+              [wrapperGapStyles]: renderUnitOnly,
+            })}
+          >
             <Input
               value={value}
               onChange={onChange}
               disabled={disabled}
               size={size}
               id={inputId}
-              hasSelectOptions={hasSelectOptions && hasUnit}
+              hasSelectOptions={renderSelectOnly}
               state={state}
               {...rest}
             />
-            {!hasSelectOptions && hasUnit && (
-              <Overline>{`${unitProp}(S)`}</Overline>
+            {renderUnitOnly && (
+              <Overline
+                className={cx(unitBaseStyles, unitThemeStyles[theme])}
+              >{`${unitProp}(S)`}</Overline>
             )}
-            {hasSelectOptions && hasUnit && (
+            {renderSelectOnly && (
               // TODO: needs id to associate with label
               <Select
                 disabled={disabled}

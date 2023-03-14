@@ -11,6 +11,7 @@ import { Size, State } from '../NumberInput/NumberInput.types';
 import {
   arrowBaseStyles,
   arrowsBaseStyles,
+  arrowThemeStyles,
   baseInputStyles,
   selectBaseStyles,
   sizeInputStyles,
@@ -109,7 +110,7 @@ export function Input({
           aria-label="Increment number"
           onClick={handleIncrementClick}
           onKeyDown={handleKeyDown}
-          className={cx(arrowBaseStyles)}
+          className={cx(arrowBaseStyles, arrowThemeStyles[theme])}
           type="button"
           tabIndex={-1} // Mimicking native behavior; you cannot focus on an arrow.
         >
@@ -119,7 +120,7 @@ export function Input({
           aria-label="Increment number"
           onClick={handleDecrementClick}
           onKeyDown={handleKeyDown}
-          className={cx(arrowBaseStyles)}
+          className={cx(arrowBaseStyles, arrowThemeStyles[theme])}
           type="button"
           tabIndex={-1}
         >
