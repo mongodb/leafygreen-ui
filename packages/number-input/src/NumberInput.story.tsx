@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ComponentStory } from '@storybook/react';
 
+import { css } from '@leafygreen-ui/emotion';
 import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
 
 import {
@@ -34,6 +35,9 @@ export default StoryMeta({
     unit: {
       control: 'text',
     },
+    errorMessage: {
+      control: 'text',
+    },
   },
   parameters: {
     default: 'Demo',
@@ -52,7 +56,14 @@ export default StoryMeta({
 });
 
 const Template: ComponentStory<typeof NumberInput> = props => (
-  <NumberInput {...props} />
+  <NumberInput
+    className={css`
+      input {
+        width: 200px;
+      }
+    `}
+    {...props}
+  />
 );
 
 const unitOptions = [

@@ -1,7 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { spacing } from '@leafygreen-ui/tokens';
+import { spacing, typeScales } from '@leafygreen-ui/tokens';
 
 import { Size } from './NumberInput.types';
 
@@ -37,3 +37,8 @@ export const unitThemeStyles: Record<Theme, string> = {
     color: ${palette.gray.base};
   `,
 };
+
+export const errorMessageStyles = css`
+  font-size: ${typeScales.body1.fontSize}px;
+  line-height: ${typeScales.body1.lineHeight}px;
+`;

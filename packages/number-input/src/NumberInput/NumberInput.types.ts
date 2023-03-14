@@ -28,7 +28,7 @@ type AriaLabelkeys = keyof AriaLabelPropsWithLabel;
 export interface NumberInputProps
   extends Omit<
       ComponentPropsWithoutRef<'input'>,
-      'type' | AriaLabelkeys | 'aria-describedby' | 'size'
+      'type' | AriaLabelkeys | 'size'
     >,
     DarkModeProps {
   /**

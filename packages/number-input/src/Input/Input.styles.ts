@@ -1,5 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   focusRing,
@@ -12,6 +12,11 @@ import {
 
 import { Size, State } from '../NumberInput/NumberInput.types';
 
+export const wrapperClassName = createUniqueClassName('number-input-wrapper');
+export const warningIconClassName = createUniqueClassName(
+  'number-input-wrapper',
+);
+
 export const baseInputStyles = css`
   all: unset;
   font-family: ${fontFamilies.default};
@@ -21,9 +26,7 @@ export const baseInputStyles = css`
   line-height: ${typeScales.body1.lineHeight}px;
   height: inherit;
   box-sizing: border-box;
-
-  // border-top-right-radius: 0;
-  // border-bottom-right-radius: 0;
+  transition: padding ${transitionDuration.default}ms;
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -34,17 +37,61 @@ export const baseInputStyles = css`
   &[type='number'] {
     -moz-appearance: textfield;
   }
+
+  .${wrapperClassName}:hover &,
+  .${wrapperClassName}:focus-within & {
+    padding-right: ${spacing[1] * 6}px;
+  }
 `;
+
+export const iconErrorStyles: Record<Size, string> = {
+  [Size.XSmall]: css`
+    translate: 4px 0;
+  `,
+  [Size.Small]: css`
+    translate: 4px 0;
+  `,
+  [Size.Default]: css`
+    translate: 4px 0;
+  `,
+};
 
 export const sizeInputStyles: Record<Size, string> = {
   [Size.XSmall]: css`
-    padding: 0 ${spacing[1] * 3}px;
+    padding: 0 0 0 ${spacing[1] * 3}px;
   `,
   [Size.Small]: css`
-    padding: 0 ${spacing[1] * 3}px;
+    padding: 0 0 0 ${spacing[1] * 3}px;
   `,
   [Size.Default]: css`
-    padding: 0 ${spacing[1] * 3}px;
+    padding: 0 0 0 ${spacing[1] * 3}px;
+  `,
+};
+
+export const errorInputStyles: Record<Size, string> = {
+  [Size.XSmall]: css`
+    padding-right: ${spacing[1] * 9}px;
+
+    .${wrapperClassName}:hover &,
+    .${wrapperClassName}:focus-within & {
+      padding-right: ${spacing[1] * 11}px;
+    }
+  `,
+  [Size.Small]: css`
+    padding-right: ${spacing[1] * 9}px;
+
+    .${wrapperClassName}:hover &,
+    .${wrapperClassName}:focus-within & {
+      padding-right: ${spacing[1] * 11}px;
+    }
+  `,
+  [Size.Default]: css`
+    padding-right: ${spacing[1] * 9}px;
+
+    .${wrapperClassName}:hover &,
+    .${wrapperClassName}:focus-within & {
+      padding-right: ${spacing[1] * 11}px;
+    }
   `,
 };
 
@@ -57,6 +104,7 @@ export const wrapperBaseStyles = css`
   overflow: hidden;
   display: flex;
   align-items: center;
+  flex-grow: 1;
 
   &:focus-within,
   &:hover,
@@ -65,14 +113,30 @@ export const wrapperBaseStyles = css`
   }
 `;
 
+export const wrapperErrorStyles = css`
+  &:focus-within,
+  &:hover {
+    .${warningIconClassName} {
+      translate: -12px 0;
+    }
+  }
+`;
+
 export const arrowsBaseStyles = css`
   display: flex;
   flex-direction: column;
   position: absolute;
   top: 0;
-  right: 5px;
+  right: ${spacing[2]}px;
   height: 100%;
   justify-content: center;
+  translate: 16px 0;
+  transition: translate ${transitionDuration.default}ms;
+
+  .${wrapperClassName}:hover &,
+  .${wrapperClassName}:focus-within & {
+    translate: 0 0;
+  }
 `;
 
 export const arrowBaseStyles = css`
@@ -315,4 +379,37 @@ export const wrapperStateStyles: Record<Theme, Record<State, string>> = {
       }
     `,
   },
+};
+
+export const iconBaseStyles = css`
+  position: absolute;
+  display: flex;
+  transition: translate ${transitionDuration.default}ms;
+  translate: 30px 0;
+
+  // .${wrapperClassName}:hover &,
+  // .${wrapperClassName}:focus-within & {
+  //   translate: -12px 0;
+  // }
+`;
+
+export const iconThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.red.base};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.red.light1};
+  `,
+};
+
+export const iconSizeStyles: Record<Size, string> = {
+  [Size.XSmall]: css`
+    right: 10px;
+  `,
+  [Size.Small]: css`
+    right: 10px;
+  `,
+  [Size.Default]: css`
+    right: 12px;
+  `,
 };

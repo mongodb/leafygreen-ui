@@ -3,6 +3,7 @@ import React, { ChangeEvent, useRef } from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 import { useControlledValue } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
+import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { createSyntheticEvent } from '@leafygreen-ui/lib';
 
@@ -13,9 +14,17 @@ import {
   arrowsBaseStyles,
   arrowThemeStyles,
   baseInputStyles,
+  errorInputStyles,
+  iconBaseStyles,
+  iconErrorStyles,
+  iconSizeStyles,
+  iconThemeStyles,
   selectBaseStyles,
   sizeInputStyles,
+  warningIconClassName,
   wrapperBaseStyles,
+  wrapperClassName,
+  wrapperErrorStyles,
   wrapperStateStyles,
   wrapperThemeStyles,
 } from './Input.styles';
@@ -32,10 +41,13 @@ export function Input({
   size,
   hasSelectOptions,
   state,
+  errorMessage,
   ...rest
 }: InputProps) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const { theme } = useDarkMode();
+
+  const renderErrorIcon = state === State.Error && !!errorMessage;
 
   const { value, handleChange: handleChangeProp } = useControlledValue(
     valueProp,
@@ -84,17 +96,21 @@ export function Input({
   return (
     <div
       className={cx(
+        wrapperClassName,
         wrapperBaseStyles,
         wrapperThemeStyles[theme],
         wrapperStateStyles[theme][state as State],
         {
           [selectBaseStyles]: hasSelectOptions,
+          [wrapperErrorStyles]: renderErrorIcon,
         },
       )}
     >
       <input
         ref={inputRef}
-        className={cx(baseInputStyles, sizeInputStyles[size as Size])}
+        className={cx(baseInputStyles, sizeInputStyles[size as Size], {
+          [errorInputStyles[size as Size]]: renderErrorIcon,
+        })}
         type="number"
         value={value}
         onChange={handleChange}
@@ -103,6 +119,20 @@ export function Input({
         // TODO: keyPress to remove letters
         {...rest}
       />
+      <div
+        className={cx(
+          warningIconClassName,
+          iconBaseStyles,
+          iconThemeStyles[theme],
+          iconSizeStyles[size as Size],
+          {
+            [iconErrorStyles[size as Size]]: renderErrorIcon,
+          },
+        )}
+      >
+        <WarningIcon role="presentation" />
+      </div>
+
       <div className={cx(arrowsBaseStyles)}>
         {/* TODO: should not have focus styles. These should only appear on hover*/}
         {/* TODO: should have active styles */}

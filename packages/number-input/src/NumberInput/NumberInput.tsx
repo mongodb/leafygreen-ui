@@ -5,12 +5,13 @@ import { useIdAllocator } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { Description, Label, Overline } from '@leafygreen-ui/typography';
+import { Description, Error, Label, Overline } from '@leafygreen-ui/typography';
 
 import { Input } from '../Input';
 import { Select } from '../Select';
 
 import {
+  errorMessageStyles,
   unitBaseStyles,
   unitThemeStyles,
   wrapperBaseStyles,
@@ -22,19 +23,21 @@ import { NumberInputProps, Size, State, UnitOption } from './NumberInput.types';
 export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
   (
     {
-      className,
-      disabled,
-      label,
-      value,
-      description,
-      onChange,
-      onSelectChange,
       state = State.None,
       size = Size.Default,
       unitOptions = [],
       unit: unitProp,
       darkMode: darkModeProp,
       id: idProp,
+      'aria-describedby': ariaDescribedbyProp,
+      className,
+      disabled,
+      label,
+      value,
+      description,
+      errorMessage,
+      onChange,
+      onSelectChange,
       popoverZIndex,
       usePortal,
       portalClassName,
@@ -46,6 +49,8 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
   ) => {
     const prefix = 'lg-numberinput';
     const inputId = useIdAllocator({ prefix, id: idProp });
+    const errorMessageId = useIdAllocator({ prefix, id: ariaDescribedbyProp });
+    const descriptionId = useIdAllocator({ prefix });
     const { darkMode, theme } = useDarkMode(darkModeProp);
 
     /**
@@ -59,6 +64,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
 
     const renderUnitOnly = hasUnit && !hasSelectOptions;
     const renderSelectOnly = hasUnit && hasSelectOptions;
+    const renderError = state === State.Error && errorMessage;
 
     /**
      * Gets the current unit option using the unit string
@@ -84,7 +90,11 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
             </Label>
           )}
           {description && (
-            <Description disabled={disabled} className={cx()}>
+            <Description
+              id={descriptionId}
+              disabled={disabled}
+              className={cx()}
+            >
               {description}
             </Description>
           )}
@@ -93,6 +103,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
               [wrapperGapStyles]: renderUnitOnly,
             })}
           >
+            {/* //TODO: aria label stuff */}
             <Input
               value={value}
               onChange={onChange}
@@ -101,6 +112,10 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
               id={inputId}
               hasSelectOptions={renderSelectOnly}
               state={state}
+              errorMessage={errorMessage}
+              aria-describedby={`${errorMessageId} ${
+                description ? descriptionId : ''
+              }`} //TODO: check this
               {...rest}
             />
             {renderUnitOnly && (
@@ -120,7 +135,14 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
               />
             )}
           </div>
-          {/* TODO: Error Message */}
+          <div
+            className={errorMessageStyles}
+            aria-live="polite"
+            aria-relevant="all"
+            id={errorMessageId}
+          >
+            {renderError && <Error>{errorMessage}</Error>}
+          </div>
         </div>
       </LeafyGreenProvider>
     );
