@@ -84,10 +84,15 @@ Unit.args = {
 export const Select = (props: NumberInputProps) => {
   const [unit, setUnit] = useState<UnitOption>(unitOptions[0]);
 
-  const handleChange = (unit: UnitOption) => {
+  const handleSelectChange = (unit: UnitOption) => {
     setUnit(unit);
     // eslint-disable-next-line no-console
-    console.log('story', unit?.displayName);
+    console.log('story: select value', unit?.displayName);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // eslint-disable-next-line no-console
+    console.log('story: input value: ', e.target.value);
   };
 
   return (
@@ -95,7 +100,8 @@ export const Select = (props: NumberInputProps) => {
       {...props}
       unit={unit?.displayName}
       unitOptions={unitOptions}
-      onSelectChange={handleChange}
+      onSelectChange={handleSelectChange}
+      onChange={handleChange}
     />
   );
 };

@@ -1,4 +1,4 @@
-import { UnitOption } from '../NumberInput/NumberInput.types';
+import { Size, UnitOption } from '../NumberInput/NumberInput.types';
 
 // TODO: extend popover props?
 export interface SelectProps {
@@ -44,4 +44,16 @@ export interface SelectProps {
    * Callback fired when the unit option changes.
    */
   onChange: (unit: UnitOption) => void;
+
+  /**
+   * Determines if the dropdown is disabled.
+   */
+  disabled?: boolean;
+
+  /**
+   * Determines the font size and padding.
+   *
+   * @default 'default'
+   */
+  size?: Size;
 }
