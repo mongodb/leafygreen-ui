@@ -105,6 +105,7 @@ export const wrapperBaseStyles = css`
   display: flex;
   align-items: center;
   flex-grow: 1;
+  flex-shrink: 0;
 
   &:focus-within,
   &:hover,

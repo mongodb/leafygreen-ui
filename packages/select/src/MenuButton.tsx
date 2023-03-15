@@ -4,7 +4,11 @@ import Button, { Size as ButtonSize, Variant } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
-import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
+import {
+  createUniqueClassName,
+  HTMLElementProps,
+  Theme,
+} from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   BaseFontSize,
@@ -17,6 +21,8 @@ import SelectContext from './SelectContext';
 import { mobileSizeSet, sizeSets } from './styleSets';
 import { Size, State } from './types';
 import { MobileMediaQuery, useForwardedRef } from './utils';
+
+export const textClassName = createUniqueClassName('select-text');
 
 const menuButtonStyleOverrides = css`
   // Override button defaults
@@ -326,7 +332,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
       })}
     >
       <div className={menuButtonTextWrapperStyle}>
-        <div className={menuButtonTextStyle}>{text}</div>
+        <div className={cx(textClassName, menuButtonTextStyle)}>{text}</div>
         {state === State.Error && errorMessage && (
           <WarningIcon
             role="presentation"

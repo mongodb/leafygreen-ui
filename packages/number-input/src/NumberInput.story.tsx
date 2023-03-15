@@ -68,7 +68,7 @@ const Template: ComponentStory<typeof NumberInput> = props => (
 
 const unitOptions = [
   {
-    displayName: 'One',
+    displayName: 'OneTwoThreeFourFiveSix',
     value: 'one',
   },
   {
@@ -113,6 +113,13 @@ export const Select = (props: NumberInputProps) => {
       unitOptions={unitOptions}
       onSelectChange={handleSelectChange}
       onChange={handleChange}
+      className={css`
+        max-width: 200px;
+
+        input {
+          width: 100px;
+        }
+      `}
     />
   );
 };

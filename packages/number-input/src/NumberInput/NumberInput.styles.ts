@@ -7,6 +7,7 @@ import { Size } from './NumberInput.types';
 
 export const wrapperBaseStyles = css`
   display: flex;
+  flex-wrap: no-wrap;
 `;
 
 export const wrapperSizeStyles: Record<Size, string> = {
