@@ -74,6 +74,20 @@ export function getContainerStatefulStyles({
   );
 }
 
+export const scrollContainerStyles = css`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: inherit;
+`;
+
+export function scrollContainerExpandedStyles(totalStackHeight: number) {
+  return css`
+    position: relative;
+    min-height: ${totalStackHeight + spacing[3]}px;
+  `;
+}
+
 /**
  * Stateful Toast styling
  */
@@ -87,20 +101,20 @@ export function getToastTransitionStyles({
   index: number;
 }) {
   switch (state) {
-    case 'entered':
+    case 'entered': {
+      const y = index * TOAST.yOffset;
+      const z = -index * 100;
+      const bgColor = mix(1 - index * 0.2, toastBGColor[theme], palette.white);
+
       return css`
         opacity: 1;
         z-index: ${3 - index};
-        transform: translate3d(0, ${index * TOAST.yOffset}px, -${index * 100}px)
-          scale(1);
-        background-color: ${mix(
-          1 - index * 0.2,
-          toastBGColor[theme],
-          palette.white,
-        )};
+        transform: translate3d(0, ${y}px, ${z}px) scale(1);
+        background-color: ${bgColor};
         // Slow down any hover animations
         transition-duration: ${transitionDuration.slower}ms;
       `;
+    }
 
     default:
       return css`
@@ -113,11 +127,11 @@ export function getToastTransitionStyles({
 export function getToastUnhoveredStyles({
   theme,
   index,
-  toastHeights,
+  topToastHeight,
 }: {
   theme: Theme;
   index: number;
-  toastHeights: Array<number>;
+  topToastHeight: number;
 }) {
   return css`
     /**
@@ -125,7 +139,7 @@ export function getToastUnhoveredStyles({
     * Set the max-height of each toast to the height of the top-most toast
     * so tall toasts below the top don't peek out
     */
-    max-height: ${toastHeights[0]}px;
+    max-height: ${topToastHeight}px;
     color: ${index > 0 ? toastBGColor[theme] : 'initial'} !important;
   `;
 }

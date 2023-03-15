@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { Transition, TransitionGroup } from 'react-transition-group';
 
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import {
   useBackdropClick,
   useDynamicRefs,
@@ -15,7 +15,7 @@ import {
   createUniqueClassName,
 } from '@leafygreen-ui/lib';
 import Portal from '@leafygreen-ui/portal';
-import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { TOAST } from '../../constants';
 import { InternalToast } from '../../InternalToast';
@@ -30,6 +30,8 @@ import {
   getToastHoverStyles,
   getToastTransitionStyles,
   getToastUnhoveredStyles,
+  scrollContainerExpandedStyles,
+  scrollContainerStyles,
   toastContainerStyles,
 } from './ToastContainer.styles';
 import { useToastHeights } from './useToastHeights';
@@ -174,22 +176,9 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
       >
         <div
           ref={scrollContainerRef}
-          className={cx(
-            css`
-              position: relative;
-              width: 100%;
-              height: 100%;
-              transform-style: inherit;
-              /* background-color: rgba(255, 0, 255, 0.2); */
-            `,
-            {
-              [css`
-                position: relative;
-                /* height: 100vh; */
-                min-height: ${totalStackHeight + spacing[3]}px;
-              `]: isExpanded,
-            },
-          )}
+          className={cx(scrollContainerStyles, {
+            [scrollContainerExpandedStyles(totalStackHeight)]: isExpanded,
+          })}
           data-height={totalStackHeight}
         >
           <TransitionGroup enter exit component={null}>
@@ -223,7 +212,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
                             [getToastUnhoveredStyles({
                               theme,
                               index,
-                              toastHeights,
+                              topToastHeight: toastHeights[0],
                             })]: !isInteracted,
                             [getToastHoverStyles({
                               index,
