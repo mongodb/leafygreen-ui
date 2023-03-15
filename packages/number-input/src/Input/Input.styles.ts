@@ -26,7 +26,7 @@ export const baseInputStyles = css`
   line-height: ${typeScales.body1.lineHeight}px;
   height: inherit;
   box-sizing: border-box;
-  transition: padding ${transitionDuration.default}ms;
+  transition: padding ${transitionDuration.default}ms ease-in-out;
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -131,7 +131,7 @@ export const arrowsBaseStyles = css`
   height: 100%;
   justify-content: center;
   translate: 16px 0;
-  transition: translate ${transitionDuration.default}ms;
+  transition: translate ${transitionDuration.default}ms ease-in-out;
 
   .${wrapperClassName}:hover &,
   .${wrapperClassName}:focus-within & {
@@ -384,7 +384,7 @@ export const wrapperStateStyles: Record<Theme, Record<State, string>> = {
 export const iconBaseStyles = css`
   position: absolute;
   display: flex;
-  transition: translate ${transitionDuration.default}ms;
+  transition: translate ${transitionDuration.default}ms ease-in-out;
   translate: 30px 0;
 
   // .${wrapperClassName}:hover &,
