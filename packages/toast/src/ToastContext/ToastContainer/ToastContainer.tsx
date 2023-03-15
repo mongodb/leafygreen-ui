@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Transition, TransitionGroup } from 'react-transition-group';
 
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -7,6 +7,7 @@ import {
   useDynamicRefs,
   useIdAllocator,
   useMutationObserver,
+  useStateRef,
 } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
@@ -50,7 +51,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
   const [isHovered, setHoveredState] = useState(false);
   const setHovered = () => setHoveredState(true);
   const setUnhovered = () => setHoveredState(false);
-  const [shouldExpand, setShouldExpand] = useState(false);
+  const [shouldExpand, setShouldExpand, getShouldExpand] = useStateRef(false);
   const expandToasts = () => setShouldExpand(true);
   const collapseToasts = () => setShouldExpand(false);
 
@@ -77,17 +78,36 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
     });
 
   /**
+   * We watch the toast container for mutations,
+   * and calculate the toast height variables when they are added to the DOM
+   */
+  useMutationObserver(
+    toastContainerRef.current,
+    {
+      childList: true,
+      attributes: true,
+      subtree: true,
+    },
+    updateToastHeights,
+  );
+
+  /**
    * Keep track of whether the toasts have transitioned in or out
    */
   const { isExpanded, handleTransitionExit, handleTransitionEnter } =
     useToastTransitions({
-      shouldExpand,
       containerRef: toastContainerRef,
+      getShouldExpand,
       setHoveredState,
       totalStackHeight,
     });
 
   const isInteracted = isHovered || shouldExpand;
+
+  /**
+   * When a user clicks away from the expanded stack, collapse the stack
+   */
+  useBackdropClick(collapseToasts, toastContainerRef, isExpanded);
 
   /**
    * Callback passed into the InternalToast component as `onClose`
@@ -123,100 +143,6 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
     callback: handleClose,
   });
 
-  /**
-   * Keep track of all the toasts' heights
-   * so we know how to absolutely position the rest of them
-   */
-  // function calcToastHeights() {
-  //   return Array.from(stack)
-  //     .reverse() // reversing since the stack is oldest-first
-  //     .map(([id]) => {
-  //       const ref = getToastRef(id);
-
-  //       // Height of the content + padding
-  //       if (ref?.current) {
-  //         return ref.current.firstElementChild
-  //           ? ref.current.firstElementChild?.clientHeight + spacing[2] * 2
-  //           : 0;
-  //       }
-
-  //       return 0;
-  //     })
-  //     .filter(h => h >= 0);
-  // }
-
-  /**
-   * Keep track of the vertical height of each toast in the stack, so we know how to render them all
-   */
-  // const [toastHeights, setToastHeights] = useState<Array<number>>(
-  //   calcToastHeights(),
-  // );
-
-  // const totalStackHeight = useMemo(
-  //   () => calcTotalStackHeight(toastHeights, shouldExpand),
-  //   [shouldExpand, toastHeights],
-  // );
-
-  /**
-   * We watch the toast container for mutations,
-   * and calculate the toast height variables when they are added to the DOM
-   */
-  useMutationObserver(
-    toastContainerRef.current,
-    {
-      childList: true,
-      attributes: true,
-      subtree: true,
-    },
-    () => {
-      updateToastHeights();
-    },
-  );
-
-  /**
-   * Callback fired when the <Transition> element exits
-   */
-  // const handleTransitionExit = useMemo(
-  //   () =>
-  //     debounce(() => {
-  //       // When a toast is removed, wait for an empty task queue,
-  //       // then check whether the toast container is still hovered
-  //       setImmediate(() => {
-  //         if (toastContainerRef.current) {
-  //           const _isHovered = toastContainerRef.current.matches(':hover');
-  //           setHoveredState(_isHovered);
-  //           if (shouldExpand) {
-  //             setIsExpanded(false);
-  //           }
-  //         }
-  //       });
-  //     }, 100),
-  //   [shouldExpand],
-  // );
-
-  // const handleTransitionEnter = useMemo(
-  //   () =>
-  //     debounce(() => {
-  //       if (shouldExpand) {
-  //         setImmediate(() => {
-  //           setIsExpanded(true);
-
-  //           if (toastContainerRef.current) {
-  //             toastContainerRef.current.scrollTo({
-  //               top: totalStackHeight,
-  //             });
-  //           }
-  //         });
-  //       }
-  //     }, 100),
-  //   [shouldExpand, totalStackHeight],
-  // );
-
-  /**
-   * When a user clicks away from the expanded stack, collapse the stack
-   */
-  useBackdropClick(collapseToasts, toastContainerRef, shouldExpand);
-
   return (
     <Portal className={toastPortalClassName}>
       <div
@@ -226,6 +152,9 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
         role="status"
         aria-live="polite"
         aria-relevant="all"
+        data-hovered={isHovered}
+        data-shouldExpand={shouldExpand}
+        data-expanded={isExpanded}
         onMouseEnter={setHovered}
         onMouseLeave={setUnhovered}
         onFocus={setHovered}

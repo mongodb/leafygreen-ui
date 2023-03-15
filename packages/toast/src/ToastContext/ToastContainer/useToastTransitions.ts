@@ -4,15 +4,15 @@ import { debounce } from 'lodash';
 const transitionDebounceTime = 100;
 
 interface UseToastTransitionsProps {
-  shouldExpand: boolean;
   containerRef: RefObject<HTMLDivElement>;
+  getShouldExpand: () => boolean;
   setHoveredState: Dispatch<SetStateAction<boolean>>;
   totalStackHeight: number;
 }
 
 export function useToastTransitions({
-  shouldExpand,
   containerRef,
+  getShouldExpand,
   setHoveredState,
   totalStackHeight,
 }: UseToastTransitionsProps) {
@@ -24,28 +24,29 @@ export function useToastTransitions({
   const handleTransitionExit = useMemo(
     () =>
       debounce(() => {
-        // When a toast is removed, wait for an empty task queue,
-        // then check whether the toast container is still hovered
+        // When a toast is removed
+        // wait for an empty task queue before checking the DOM
         setImmediate(() => {
           if (containerRef.current) {
+            // then check whether the toast container is still hovered
             const _isHovered = containerRef.current.matches(':hover');
             setHoveredState(_isHovered);
-            if (shouldExpand) {
+
+            if (!getShouldExpand()) {
               setIsExpanded(false);
             }
           }
         });
       }, transitionDebounceTime),
-    [containerRef, setHoveredState, shouldExpand],
+    [containerRef, getShouldExpand, setHoveredState],
   );
 
   const handleTransitionEnter = useMemo(
     () =>
       debounce(() => {
-        if (shouldExpand) {
+        if (getShouldExpand()) {
           setImmediate(() => {
             setIsExpanded(true);
-
             if (containerRef.current) {
               containerRef.current.scrollTo({
                 top: totalStackHeight,
@@ -54,7 +55,7 @@ export function useToastTransitions({
           });
         }
       }, transitionDebounceTime),
-    [containerRef, shouldExpand, totalStackHeight],
+    [containerRef, getShouldExpand, totalStackHeight],
   );
 
   return {
