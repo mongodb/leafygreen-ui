@@ -20,7 +20,6 @@ export const toastContainerStyles = css`
   min-height: ${TOAST.toastHeight + TOAST.yOffset}px;
   max-height: calc(100vh - ${spacing[3]}px);
   z-index: 0;
-  scroll-behavior: unset; // Not smooth
   overflow: unset;
 
   perspective: 1600px;
@@ -28,6 +27,14 @@ export const toastContainerStyles = css`
   transform-style: preserve-3d;
   transition: ease-in-out ${transitionDuration.default}ms;
   transition-property: transform, bottom, height;
+
+  /* Scrollbars */
+  scroll-behavior: unset; // _not_ smooth. We need this to be instant
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and old Edge */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
 `;
 
 export function getContainerStatefulStyles({
