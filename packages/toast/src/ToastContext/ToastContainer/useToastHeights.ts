@@ -1,10 +1,10 @@
 import { useMemo, useState } from 'react';
+import { debounce } from 'lodash';
 
 import { spacing } from '@leafygreen-ui/tokens';
 
 import { TOAST } from '../../constants';
 import { ToastStack } from '../ToastContext.types';
-import { debounce } from 'lodash';
 
 interface UseToastHeightsProps {
   stack: ToastStack;

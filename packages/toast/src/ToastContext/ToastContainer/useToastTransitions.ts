@@ -43,6 +43,9 @@ export function useToastTransitions({
 
   const handleTransitionEnter = useMemo(
     () =>
+      // When a new toast enters, if we should expand,
+      // wait for an empty task queue, then set the expanded state
+      // and scroll the container to the bottom
       debounce(() => {
         if (getShouldExpand()) {
           setImmediate(() => {

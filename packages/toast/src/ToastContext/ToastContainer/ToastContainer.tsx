@@ -15,7 +15,7 @@ import {
   createUniqueClassName,
 } from '@leafygreen-ui/lib';
 import Portal from '@leafygreen-ui/portal';
-import { transitionDuration } from '@leafygreen-ui/tokens';
+import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
 import { TOAST } from '../../constants';
 import { InternalToast } from '../../InternalToast';
@@ -162,9 +162,11 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
         className={cx(
           toastContainerStyles,
           getContainerStatefulStyles({
-            isExpanded: isExpanded,
+            isExpanded,
             isHovered,
-            toastHeights,
+            shouldExpand,
+            totalStackHeight,
+            topToastHeight: toastHeights[0],
             recentToastsLength: recentToasts.length,
             bottomOffset: notifBarSpacing,
           }),
@@ -178,14 +180,17 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
               width: 100%;
               height: 100%;
               transform-style: inherit;
+              /* background-color: rgba(255, 0, 255, 0.2); */
             `,
             {
               [css`
                 position: relative;
-                min-height: ${totalStackHeight}px;
+                /* height: 100vh; */
+                min-height: ${totalStackHeight + spacing[3]}px;
               `]: isExpanded,
             },
           )}
+          data-height={totalStackHeight}
         >
           <TransitionGroup enter exit component={null}>
             {displayedToasts

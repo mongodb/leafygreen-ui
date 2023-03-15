@@ -21,35 +21,38 @@ export const toastContainerStyles = css`
   max-height: calc(100vh - ${spacing[3]}px);
   z-index: 0;
   scroll-behavior: unset; // Not smooth
+  overflow: unset;
 
   perspective: 1600px;
   perspective-origin: bottom;
   transform-style: preserve-3d;
-  transition: transform ease-in-out ${transitionDuration.default}ms;
+  transition: ease-in-out ${transitionDuration.default}ms;
+  transition-property: transform, bottom, height;
 `;
 
 export function getContainerStatefulStyles({
   recentToastsLength,
   isHovered,
   isExpanded,
-  toastHeights,
+  shouldExpand,
+  totalStackHeight,
+  topToastHeight,
   bottomOffset,
 }: {
   recentToastsLength: number;
   isHovered: boolean;
   isExpanded: boolean;
-  toastHeights: Array<number>;
+  shouldExpand: boolean;
+  totalStackHeight: number;
+  topToastHeight: number;
   bottomOffset: number;
 }) {
   const isInteracted = isHovered || isExpanded;
-  const topToastHeight = toastHeights[0];
-  // the combined heights of visible toasts
-  const combinedHeight = calcTotalStackHeight(toastHeights, isExpanded);
 
   return cx(
     css`
       // The height of the first toast + inset
-      height: ${TOAST.toastInset * 2 + topToastHeight ?? TOAST.toastHeight}px;
+      height: ${TOAST.toastInset * 2 + topToastHeight}px;
 
       // Move the entire container as toasts get added,
       // so the bottom toast is always 16px from the bottom
@@ -59,11 +62,14 @@ export function getContainerStatefulStyles({
       [css`
         // set the container back when hovered/expanded
         transform: translateY(0);
-        height: ${TOAST.toastInset * 2 + bottomOffset + combinedHeight + 'px'};
-
-        // We want auto scroll bars when expanded
-        overflow: ${isExpanded ? 'auto' : 'unset'};
+        height: ${TOAST.toastInset * 2 + bottomOffset + totalStackHeight}px;
       `]: isInteracted,
+
+      [css`
+        // We want auto scroll bars when expanded
+        height: 100vh;
+        overflow: auto;
+      `]: shouldExpand,
     },
   );
 }
