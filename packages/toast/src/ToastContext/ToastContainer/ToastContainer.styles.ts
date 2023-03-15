@@ -14,10 +14,10 @@ import { calcTotalStackHeight } from './useToastHeights';
 export const toastContainerStyles = css`
   /* outline: 1px solid teal; */
   position: fixed;
-  left: ${spacing[3] - TOAST.toastInset}px;
-  bottom: ${spacing[3] - TOAST.toastInset}px;
-  width: ${TOAST.toastWidth + 2 * TOAST.toastInset}px;
-  min-height: ${TOAST.toastHeight + TOAST.yOffset}px;
+  left: ${spacing[3] - TOAST.inset}px;
+  bottom: ${spacing[3] - TOAST.inset}px;
+  width: ${TOAST.width + 2 * TOAST.inset}px;
+  min-height: ${TOAST.minHeight + TOAST.yOffset}px;
   max-height: calc(100vh - ${spacing[3]}px);
   z-index: 0;
   overflow: unset;
@@ -59,7 +59,7 @@ export function getContainerStatefulStyles({
   return cx(
     css`
       // The height of the first toast + inset
-      height: ${TOAST.toastInset * 2 + topToastHeight}px;
+      height: ${TOAST.inset * 2 + topToastHeight}px;
 
       // Move the entire container as toasts get added,
       // so the bottom toast is always 16px from the bottom
@@ -69,7 +69,7 @@ export function getContainerStatefulStyles({
       [css`
         // set the container back when hovered/expanded
         transform: translateY(0);
-        height: ${TOAST.toastInset * 2 + bottomOffset + totalStackHeight}px;
+        height: ${TOAST.inset * 2 + bottomOffset + totalStackHeight}px;
       `]: isInteracted,
 
       [css`
@@ -85,6 +85,7 @@ export const scrollContainerStyles = css`
   position: relative;
   width: 100%;
   height: 100%;
+  min-height: ${TOAST.minHeight + TOAST.yOffset}px;
   transform-style: inherit;
 `;
 

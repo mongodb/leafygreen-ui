@@ -21,10 +21,10 @@ export const toastBGColor: Record<Theme, string> = {
 
 export const baseToastStyle = css`
   position: fixed;
-  left: ${TOAST.toastInset}px;
-  bottom: ${TOAST.toastInset}px;
-  width: ${TOAST.toastWidth}px;
-  min-height: ${TOAST.toastHeight - 2}px; // -2 for border
+  left: ${TOAST.inset}px;
+  bottom: ${TOAST.inset}px;
+  width: ${TOAST.width}px;
+  min-height: ${TOAST.minHeight - 2}px; // -2 for border: ;
 
   display: flex;
   align-items: center;

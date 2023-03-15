@@ -17,9 +17,9 @@ export const notificationBarStyles = css`
   outline: unset;
 
   position: absolute;
-  left: ${TOAST.toastInset}px;
-  bottom: ${TOAST.toastInset}px;
-  width: ${TOAST.toastWidth}px;
+  left: ${TOAST.inset}px;
+  bottom: ${TOAST.inset}px;
+  width: ${TOAST.width}px;
   height: ${TOAST.notificationBarHeight}px;
   z-index: 0;
 

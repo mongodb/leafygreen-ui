@@ -25,18 +25,18 @@ export const progressBarBackgroundThemeStyle: Record<Theme, string> = {
 
 const backgroundShimmer = keyframes`
   0% {
-    background-position: ${-TOAST.toastWidth}px;
+    background-position: ${-TOAST.width}px;
   }
 
   100% {
-    background-position: ${TOAST.toastWidth * 2}px;
+    background-position: ${TOAST.width * 2}px;
   }
 `;
 
 export const progressBarStyle = css`
   overflow: hidden;
   height: ${TOAST.progressBarHeight}px;
-  background-size: ${TOAST.toastWidth * 2}px;
+  background-size: ${TOAST.width * 2}px;
   animation: ${backgroundShimmer} 4s infinite linear;
   transition: width ${transitionDuration.slower}ms ease-in-out;
 `;
@@ -47,8 +47,8 @@ export const progressBarThemeStyle: Record<Theme, string> = {
     background-image: linear-gradient(
       90deg,
       #083c90 0px,
-      #c3e7fe ${TOAST.toastWidth / 2}px,
-      #083c90 ${TOAST.toastWidth}px
+      #c3e7fe ${TOAST.width / 2}px,
+      #083c90 ${TOAST.width}px
     );
   `,
   [Theme.Dark]: css`
@@ -56,8 +56,8 @@ export const progressBarThemeStyle: Record<Theme, string> = {
     background-image: linear-gradient(
       90deg,
       #0498ec 0px,
-      #c3e7fe ${TOAST.toastWidth / 2}px,
-      #0498ec ${TOAST.toastWidth}px
+      #c3e7fe ${TOAST.width / 2}px,
+      #0498ec ${TOAST.width}px
     );
   `,
 };
