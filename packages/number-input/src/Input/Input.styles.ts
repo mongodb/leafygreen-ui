@@ -106,12 +106,7 @@ export const wrapperBaseStyles = css`
   align-items: center;
   flex-grow: 1;
   flex-shrink: 0;
-
-  &:focus-within,
-  &:hover,
-  &:active {
-    z-index: 1;
-  }
+  z-index: 1;
 `;
 
 export const wrapperErrorStyles = css`

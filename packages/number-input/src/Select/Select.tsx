@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 
 import Button, { ButtonProps } from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
@@ -11,7 +11,12 @@ import {
 } from '@leafygreen-ui/select';
 import Tooltip from '@leafygreen-ui/tooltip';
 
-import { baseStyles, themeStyles, wrapperBaseStyles } from './Select.styles';
+import {
+  baseStyles,
+  menuThemeStyles,
+  themeStyles,
+  wrapperBaseStyles,
+} from './Select.styles';
 import { SelectProps } from './Select.types';
 
 /**
@@ -55,9 +60,9 @@ export function Select({
    * Tooltip will show up if there is an ellipse.
    */
   // eslint-disable-next-line react/display-name
-  const UnitButton = React.forwardRef(
+  const CustomMenuButton = React.forwardRef(
     ({ className, children, ...props }: ButtonProps, forwardedRef) => {
-      // TODO: halp with TS
+      // TODO: HALP with TS
       //@ts-ignore
       const wrapperRef: React.MutableRefObject<HTMLElement> = useForwardedRef(
         forwardedRef,
@@ -72,7 +77,11 @@ export function Select({
           enabled={textNode?.offsetWidth < textNode?.scrollWidth}
           justify="middle"
           trigger={
-            <Button {...props} className={cx(className)} ref={wrapperRef}>
+            <Button
+              {...props}
+              className={cx(menuThemeStyles[theme], className)}
+              ref={wrapperRef}
+            >
               {children}
             </Button>
           }
@@ -97,7 +106,7 @@ export function Select({
         {...popoverProps}
         // Component missing displayName
         // eslint-disable-next-line
-        __INTERNAL__menuButtonSlot__={UnitButton}
+        __INTERNAL__menuButtonSlot__={CustomMenuButton}
       >
         {unitOptions?.map(option => (
           <Option key={option?.displayName} value={option?.displayName}>
