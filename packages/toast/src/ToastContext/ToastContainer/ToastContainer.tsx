@@ -1,8 +1,9 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Transition, TransitionGroup } from 'react-transition-group';
 
-import { cx } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import {
+  useBackdropClick,
   useDynamicRefs,
   useIdAllocator,
   useMutationObserver,
@@ -24,17 +25,17 @@ import { NotificationBar } from './NotificationBar/NotificationBar';
 import { notificationBarTransitionStyles } from './NotificationBar/NotificationBar.styles';
 import { getDividedStack } from './utils/getDividedStack';
 import {
-  getContainerHoverStyles,
   getContainerStatefulStyles,
   getToastHoverStyles,
   getToastTransitionStyles,
   getToastUnhoveredStyles,
   toastContainerStyles,
 } from './ToastContainer.styles';
+import { useToastHeights } from './useToastHeights';
 import { useToastTimers } from './useToastTimers';
+import { useToastTransitions } from './useToastTransitions';
 
 export const toastPortalClassName = createUniqueClassName('toast-portal');
-const toastClassName = createUniqueClassName('toast');
 
 /**
  * ToastContainer is responsible for rendering the stack of toasts provided
@@ -42,17 +43,42 @@ const toastClassName = createUniqueClassName('toast');
 export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
   const regionId = useIdAllocator({ id: 'lg-toast-region' });
   const toastContainerRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const getToastRef = useDynamicRefs<HTMLDivElement>({ prefix: 'toast' });
   const { theme } = useDarkMode();
   const { popToast, getToast } = useToast();
   const [isHovered, setHoveredState] = useState(false);
   const setHovered = () => setHoveredState(true);
   const setUnhovered = () => setHoveredState(false);
+  const [shouldExpand, setShouldExpand] = useState(false);
+  const expandToasts = () => setShouldExpand(true);
+  const collapseToasts = () => setShouldExpand(false);
+  // const [isExpanded, setIsExpanded] = useState(false);
+
+  const { toastHeights, totalStackHeight, updateToastHeights } =
+    useToastHeights({
+      stack,
+      getToastRef,
+      shouldExpand,
+    });
+
+  const { isExpanded, handleTransitionExit, handleTransitionEnter } =
+    useToastTransitions({
+      shouldExpand,
+      containerRef: toastContainerRef,
+      setHoveredState,
+      totalStackHeight,
+    });
+
+  const isInteracted = isHovered || shouldExpand;
 
   const { recentToasts, remainingToasts } = getDividedStack(stack);
+  const displayedToasts = shouldExpand
+    ? [...remainingToasts, ...recentToasts]
+    : recentToasts;
 
   /** is the "N more" bar visible? */
-  const showNotifBar = isHovered && remainingToasts.length > 0;
+  const showNotifBar = isHovered && !shouldExpand && remainingToasts.length > 0;
   /** How much vertical space is the "N more" bar taking up  */
   const notifBarSpacing = showNotifBar ? notificationBarHeight + gap : 0;
 
@@ -94,34 +120,39 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
    * Keep track of all the toasts' heights
    * so we know how to absolutely position the rest of them
    */
-  function calcToastHeights() {
-    return Array.from(stack)
-      .reverse() // reversing since the stack is oldest-first
-      .map(([id]) => {
-        const ref = getToastRef(id);
+  // function calcToastHeights() {
+  //   return Array.from(stack)
+  //     .reverse() // reversing since the stack is oldest-first
+  //     .map(([id]) => {
+  //       const ref = getToastRef(id);
 
-        // Height of the content + padding
-        if (ref?.current) {
-          return ref.current.firstElementChild
-            ? ref.current.firstElementChild?.clientHeight + spacing[2] * 2
-            : 0;
-        }
+  //       // Height of the content + padding
+  //       if (ref?.current) {
+  //         return ref.current.firstElementChild
+  //           ? ref.current.firstElementChild?.clientHeight + spacing[2] * 2
+  //           : 0;
+  //       }
 
-        return 0;
-      })
-      .filter(h => h >= 0);
-  }
+  //       return 0;
+  //     })
+  //     .filter(h => h >= 0);
+  // }
 
   /**
    * Keep track of the vertical height of each toast in the stack, so we know how to render them all
    */
-  const [toastHeights, setToastHeights] = useState<Array<number>>(
-    calcToastHeights(),
-  );
+  // const [toastHeights, setToastHeights] = useState<Array<number>>(
+  //   calcToastHeights(),
+  // );
+
+  // const totalStackHeight = useMemo(
+  //   () => calcTotalStackHeight(toastHeights, shouldExpand),
+  //   [shouldExpand, toastHeights],
+  // );
 
   /**
-   * We watch the toast container,
-   * and update the toast height variables
+   * We watch the toast container for mutations,
+   * and calculate the toast height variables when they are added to the DOM
    */
   useMutationObserver(
     toastContainerRef.current,
@@ -131,26 +162,53 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
       subtree: true,
     },
     () => {
-      // When toast elements are changed
-      // re-calculate all toast heights
-      setToastHeights(calcToastHeights());
+      updateToastHeights();
     },
   );
 
   /**
    * Callback fired when the <Transition> element exits
    */
-  function handleTransitionExit() {
-    // When a toast is removed,
-    // wait for an empty queue, then
-    // Check whether the toast container is still hovered
-    setImmediate(() => {
-      if (toastContainerRef.current) {
-        const _isHovered = toastContainerRef.current.matches(':hover');
-        setHoveredState(_isHovered);
-      }
-    });
-  }
+  // const handleTransitionExit = useMemo(
+  //   () =>
+  //     debounce(() => {
+  //       // When a toast is removed, wait for an empty task queue,
+  //       // then check whether the toast container is still hovered
+  //       setImmediate(() => {
+  //         if (toastContainerRef.current) {
+  //           const _isHovered = toastContainerRef.current.matches(':hover');
+  //           setHoveredState(_isHovered);
+  //           if (shouldExpand) {
+  //             setIsExpanded(false);
+  //           }
+  //         }
+  //       });
+  //     }, 100),
+  //   [shouldExpand],
+  // );
+
+  // const handleTransitionEnter = useMemo(
+  //   () =>
+  //     debounce(() => {
+  //       if (shouldExpand) {
+  //         setImmediate(() => {
+  //           setIsExpanded(true);
+
+  //           if (toastContainerRef.current) {
+  //             toastContainerRef.current.scrollTo({
+  //               top: totalStackHeight,
+  //             });
+  //           }
+  //         });
+  //       }
+  //     }, 100),
+  //   [shouldExpand, totalStackHeight],
+  // );
+
+  /**
+   * When a user clicks away from the expanded stack, collapse the stack
+   */
+  useBackdropClick(collapseToasts, toastContainerRef, shouldExpand);
 
   return (
     <Portal className={toastPortalClassName}>
@@ -168,86 +226,98 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
         className={cx(
           toastContainerStyles,
           getContainerStatefulStyles({
+            isExpanded: isExpanded,
             isHovered,
-            topToastHeight: toastHeights[0],
+            toastHeights,
             recentToastsLength: recentToasts.length,
+            bottomOffset: notifBarSpacing,
           }),
-          {
-            [getContainerHoverStyles({
-              toastHeights,
-              bottomOffset: notifBarSpacing,
-            })]: isHovered,
-          },
         )}
       >
-        <TransitionGroup enter exit component={null}>
-          {recentToasts
-            .reverse() // reversing so they're in the DOM with most recent first
-            .map(([id, { onClose, className, ...toastProps }], index) => {
-              const toastRef = getToastRef(id);
-
-              return (
-                <Transition
-                  mountOnEnter
-                  unmountOnExit
-                  onExited={handleTransitionExit}
-                  key={id}
-                  timeout={transitionDuration.default}
-                >
-                  {state => (
-                    <InternalToast
-                      key={id}
-                      id={id}
-                      ref={toastRef}
-                      onClose={e => handleClose(id, e)}
-                      index={index}
-                      isHovered={isHovered}
-                      className={cx(
-                        toastClassName,
-                        getToastTransitionStyles({
-                          state,
-                          theme,
-                          indexFromTop: index,
-                        }),
-                        {
-                          [getToastUnhoveredStyles({
-                            theme,
-                            index,
-                            toastHeights,
-                          })]: !isHovered,
-                          [getToastHoverStyles({
-                            index,
-                            toastHeights,
-                            theme,
-                            bottomOffset: notifBarSpacing,
-                          })]: isHovered,
-                        },
-                        className,
-                      )}
-                      {...toastProps}
-                      description={
-                        // TODO: Remove debug strings
-                        toastProps.description + ` (${id} index #${index}.)`
-                      }
-                    />
-                  )}
-                </Transition>
-              );
-            })}
-        </TransitionGroup>
-        <Transition
-          mountOnEnter
-          in={showNotifBar}
-          timeout={transitionDuration.slower}
-        >
-          {state => (
-            <NotificationBar
-              count={remainingToasts.length}
-              onClick={() => {}}
-              className={notificationBarTransitionStyles[state]}
-            />
+        <div
+          ref={scrollContainerRef}
+          className={cx(
+            css`
+              position: relative;
+              width: 100%;
+              height: 100%;
+              transform-style: inherit;
+            `,
+            {
+              [css`
+                position: relative;
+                min-height: ${totalStackHeight}px;
+              `]: isExpanded,
+            },
           )}
-        </Transition>
+        >
+          <TransitionGroup enter exit component={null}>
+            {displayedToasts
+              .reverse() // reversing so they're in the DOM with most recent first
+              .map(([id, { onClose, className, ...toastProps }], index) => {
+                const toastRef = getToastRef(id);
+
+                return (
+                  <Transition
+                    onEntered={handleTransitionEnter}
+                    onExited={handleTransitionExit}
+                    key={id}
+                    timeout={transitionDuration.default}
+                  >
+                    {state => (
+                      <InternalToast
+                        id={id}
+                        ref={toastRef}
+                        onClose={e => handleClose(id, e)}
+                        index={index}
+                        data-index={index}
+                        isHovered={isInteracted}
+                        className={cx(
+                          getToastTransitionStyles({
+                            state,
+                            theme,
+                            index,
+                          }),
+                          {
+                            [getToastUnhoveredStyles({
+                              theme,
+                              index,
+                              toastHeights,
+                            })]: !isInteracted,
+                            [getToastHoverStyles({
+                              index,
+                              toastHeights,
+                              theme,
+                              bottomOffset: notifBarSpacing,
+                              isExpanded, //: shouldExpand,
+                            })]: isInteracted,
+                          },
+                          className,
+                        )}
+                        {...toastProps}
+                        description={
+                          // TODO: Remove debug strings
+                          toastProps.description + ` (${id} index #${index}.)`
+                        }
+                      />
+                    )}
+                  </Transition>
+                );
+              })}
+          </TransitionGroup>
+
+          <Transition in={showNotifBar} timeout={transitionDuration.slower}>
+            {state =>
+              !shouldExpand && (
+                <NotificationBar
+                  count={remainingToasts.length}
+                  onClick={expandToasts}
+                  className={notificationBarTransitionStyles[state]}
+                />
+              )
+            }
+          </Transition>
+        </div>
       </div>
     </Portal>
   );

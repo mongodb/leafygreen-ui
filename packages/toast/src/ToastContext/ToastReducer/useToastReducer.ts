@@ -1,7 +1,9 @@
 import { Reducer, useReducer } from 'react';
+import { faker } from '@faker-js/faker';
+import { random, range, sample } from 'lodash';
 
 import { defaultToastProps } from '../../InternalToast/defaultProps';
-import { ToastProps } from '../../Toast.types';
+import { ToastProps, Variant } from '../../Toast.types';
 import {
   ToastContextProps,
   ToastId,
@@ -11,6 +13,18 @@ import {
   ToastStack,
 } from '../ToastContext.types';
 import { generateToastId } from '../utils/generateToastId';
+
+const _DEBUG_TOASTS: Array<[ToastId, ToastProps]> = range(12).map(i => {
+  const variant = sample(Variant);
+  return [
+    generateToastId(),
+    {
+      title: `I'm a ${variant} toast`,
+      description: faker.lorem.lines(random(1, 2)),
+      variant,
+    },
+  ];
+});
 
 /**
  *
@@ -71,7 +85,10 @@ export const useToastReducer = () => {
   const [{ stack }, dispatch] = useReducer<
     Reducer<ToastReducerState, ToastReducerAction>
   >(toastReducer, {
-    stack: new Map<ToastId, ToastProps>() as ToastStack,
+    stack: new Map<ToastId, ToastProps>(
+      // TODO: REMOVE DEBUG
+      _DEBUG_TOASTS,
+    ) as ToastStack,
   });
 
   const getToast: ToastContextProps['getToast'] = (id: ToastId) =>

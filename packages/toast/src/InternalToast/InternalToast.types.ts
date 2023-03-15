@@ -15,7 +15,7 @@ export interface InternalToastProps extends ToastProps {
   /**
    * The index of the toast (from the top)
    */
-  index?: number;
+  index: number;
 
   /**
    * Whether the toast container is hovered (or being interacted with)

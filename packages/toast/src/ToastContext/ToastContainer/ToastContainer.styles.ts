@@ -1,29 +1,26 @@
 import { TransitionStatus } from 'react-transition-group';
 import { mix } from 'polished';
 
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
-import {
-  gap,
-  shortStackCount,
-  toastHeight,
-  toastInset,
-  toastWidth,
-  yOffset,
-} from '../../constants';
+import { toastHeight, toastInset, toastWidth, yOffset } from '../../constants';
 import { toastBGColor } from '../../InternalToast';
 
+import { calcTotalStackHeight } from './useToastHeights';
+
 export const toastContainerStyles = css`
-  outline: 1px solid teal;
+  /* outline: 1px solid teal; */
   position: fixed;
   left: ${spacing[3] - toastInset}px;
   bottom: ${spacing[3] - toastInset}px;
   width: ${toastWidth + 2 * toastInset}px;
   min-height: ${toastHeight + yOffset}px;
+  max-height: calc(100vh - ${spacing[3]}px);
   z-index: 0;
+  scroll-behavior: unset; // Not smooth
 
   perspective: 1600px;
   perspective-origin: bottom;
@@ -34,39 +31,41 @@ export const toastContainerStyles = css`
 export function getContainerStatefulStyles({
   recentToastsLength,
   isHovered,
-  topToastHeight,
-}: {
-  recentToastsLength: number;
-  isHovered: boolean;
-  topToastHeight: number;
-}) {
-  return css`
-    // The height of the first toast + inset
-    height: ${toastInset * 2 + topToastHeight ?? toastHeight}px;
-
-    // The whole thing moves as toasts get added
-    // so the bottom toast is always 16px from the bottom
-    transform: translateY(
-      -${isHovered ? 0 : yOffset * (recentToastsLength - 1)}px
-    );
-  `;
-}
-
-export function getContainerHoverStyles({
+  isExpanded,
   toastHeights,
   bottomOffset,
 }: {
+  recentToastsLength: number;
+  isHovered: boolean;
+  isExpanded: boolean;
   toastHeights: Array<number>;
   bottomOffset: number;
 }) {
+  const isInteracted = isHovered || isExpanded;
+  const topToastHeight = toastHeights[0];
   // the combined heights of visible toasts
-  const combinedHeight = toastHeights.reduce(
-    (sum, x, i) => (i < shortStackCount ? sum + x + gap : sum),
-    0,
+  const combinedHeight = calcTotalStackHeight(toastHeights, isExpanded);
+
+  return cx(
+    css`
+      // The height of the first toast + inset
+      height: ${toastInset * 2 + topToastHeight ?? toastHeight}px;
+
+      // Move the entire container as toasts get added,
+      // so the bottom toast is always 16px from the bottom
+      transform: translateY(-${yOffset * (recentToastsLength - 1)}px);
+    `,
+    {
+      [css`
+        // set the container back when hovered/expanded
+        transform: translateY(0);
+        height: ${toastInset * 2 + bottomOffset + combinedHeight + 'px'};
+
+        // We want auto scroll bars when expanded
+        overflow: ${isExpanded ? 'auto' : 'unset'};
+      `]: isInteracted,
+    },
   );
-  return css`
-    height: ${toastInset * 2 + bottomOffset + combinedHeight}px;
-  `;
 }
 
 /**
@@ -75,25 +74,21 @@ export function getContainerHoverStyles({
 export function getToastTransitionStyles({
   state,
   theme,
-  indexFromTop,
+  index,
 }: {
   state: TransitionStatus;
   theme: Theme;
-  indexFromTop: number;
+  index: number;
 }) {
   switch (state) {
     case 'entered':
       return css`
         opacity: 1;
-        z-index: ${3 - indexFromTop};
-        transform: translate3d(
-            0,
-            ${indexFromTop * yOffset}px,
-            -${indexFromTop * 100}px
-          )
+        z-index: ${3 - index};
+        transform: translate3d(0, ${index * yOffset}px, -${index * 100}px)
           scale(1);
         background-color: ${mix(
-          1 - indexFromTop * 0.2,
+          1 - index * 0.2,
           toastBGColor[theme],
           palette.white,
         )};
@@ -134,22 +129,17 @@ export function getToastHoverStyles({
   theme,
   bottomOffset,
   toastHeights,
+  isExpanded,
 }: {
   toastHeights: Array<number>;
   theme: Theme;
   index: number;
   bottomOffset: number;
+  isExpanded: boolean;
 }) {
   // The toast position when hovered
   const hoveredYPosition =
-    toastHeights.reduce(
-      (sum, x, j) =>
-        // if the comparing toast is below the current toast
-        // but also less than the shortStackCount
-        // add that toast's height to this toast's offset
-        j > index && j < shortStackCount ? sum + x + gap : sum,
-      0,
-    ) + bottomOffset;
+    calcTotalStackHeight(toastHeights, isExpanded, index) + bottomOffset;
 
   return css`
     max-height: ${toastHeights[index] * 2}px;
