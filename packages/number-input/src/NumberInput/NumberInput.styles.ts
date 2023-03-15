@@ -43,3 +43,7 @@ export const errorMessageStyles = css`
   font-size: ${typeScales.body1.fontSize}px;
   line-height: ${typeScales.body1.lineHeight}px;
 `;
+
+export const labelDescriptionStyles = css`
+  margin-bottom: ${spacing[1]}px;
+`;

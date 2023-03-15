@@ -25,7 +25,33 @@ export interface UnitOption {
 
 type AriaLabelkeys = keyof AriaLabelPropsWithLabel;
 
-export interface NumberInputProps
+export interface WithSelectProps {
+  /**
+   * The options that appear in the select element attached to the right of the input.
+   */
+  unitOptions: Array<UnitOption>;
+
+  /**
+   * Callback fired when the select value changes
+   */
+  onSelectChange: (unit: UnitOption) => void;
+}
+
+export interface WithoutSelectProps {
+  /**
+   * The options that appear in the select element attached to the right of the input.
+   */
+  unitOptions?: never;
+
+  /**
+   * Callback fired when the select value changes
+   */
+  onSelectChange?: never;
+}
+
+export type SelectProps = WithSelectProps | WithoutSelectProps;
+
+export interface BaseNumberInputProps
   extends Omit<
       ComponentPropsWithoutRef<'input'>,
       'type' | AriaLabelkeys | 'size'
@@ -47,11 +73,6 @@ export interface NumberInputProps
    * Callback fired when the input value changes
    */
   onChange?: ChangeEventHandler<HTMLInputElement>;
-
-  /**
-   * Callback fired when the select value changes
-   */
-  onSelectChange?: (unit: UnitOption) => void;
 
   /**
    * id associated with the PasswordInput component, referenced by `<label>` with the `for` attribute.
@@ -91,11 +112,6 @@ export interface NumberInputProps
   unit?: string;
 
   /**
-   * The options that appear in the select element attached to the right of the input.
-   */
-  unitOptions?: Array<UnitOption>;
-
-  /**
    * Specifies that the popover content should be rendered at the end of the DOM,
    * rather than in the DOM tree.
    *
@@ -123,3 +139,7 @@ export interface NumberInputProps
    */
   popoverZIndex?: number;
 }
+
+export type NumberInputProps = BaseNumberInputProps &
+  SelectProps &
+  AriaLabelPropsWithLabel;

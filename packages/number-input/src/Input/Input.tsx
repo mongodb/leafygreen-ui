@@ -116,7 +116,6 @@ export function Input({
         onChange={handleChange}
         aria-disabled={disabled}
         readOnly={disabled}
-        // TODO: keyPress to remove letters
         {...rest}
       />
       <div
@@ -134,8 +133,6 @@ export function Input({
       </div>
 
       <div className={cx(arrowsBaseStyles)}>
-        {/* TODO: should not have focus styles. These should only appear on hover*/}
-        {/* TODO: should have active styles */}
         <button
           aria-label="Increment number"
           onClick={handleIncrementClick}

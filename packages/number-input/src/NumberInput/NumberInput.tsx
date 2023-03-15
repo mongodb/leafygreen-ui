@@ -12,6 +12,7 @@ import { Select } from '../Select';
 
 import {
   errorMessageStyles,
+  labelDescriptionStyles,
   unitBaseStyles,
   unitThemeStyles,
   wrapperBaseStyles,
@@ -30,6 +31,8 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       darkMode: darkModeProp,
       id: idProp,
       'aria-describedby': ariaDescribedbyProp,
+      'aria-labelledby': ariaLabelledbyProp,
+      'aria-label': ariaLabelProp,
       className,
       disabled,
       label,
@@ -37,7 +40,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       description,
       errorMessage,
       onChange,
-      onSelectChange,
+      onSelectChange = () => {},
       popoverZIndex,
       usePortal,
       portalClassName,
@@ -84,26 +87,29 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <div ref={forwardedRef} className={className}>
-          {label && (
-            <Label className={cx()} htmlFor={inputId} disabled={disabled}>
-              {label}
-            </Label>
-          )}
-          {description && (
-            <Description
-              id={descriptionId}
-              disabled={disabled}
-              className={cx()}
-            >
-              {description}
-            </Description>
+          {(label || description) && (
+            <div className={labelDescriptionStyles}>
+              {label && (
+                <Label className={cx()} htmlFor={inputId} disabled={disabled}>
+                  {label}
+                </Label>
+              )}
+              {description && (
+                <Description
+                  id={descriptionId}
+                  disabled={disabled}
+                  className={cx()}
+                >
+                  {description}
+                </Description>
+              )}
+            </div>
           )}
           <div
             className={cx(wrapperBaseStyles, wrapperSizeStyles[size], {
               [wrapperGapStyles]: renderUnitOnly,
             })}
           >
-            {/* //TODO: aria label stuff */}
             <Input
               value={value}
               onChange={onChange}
@@ -114,8 +120,12 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
               state={state}
               errorMessage={errorMessage}
               aria-describedby={`${errorMessageId} ${
-                description ? descriptionId : ''
+                description ? descriptionId : undefined
               }`} //TODO: check this
+              aria-labelledby={
+                !label && ariaLabelledbyProp ? ariaLabelledbyProp : undefined
+              }
+              aria-label={!label && ariaLabelProp ? ariaLabelProp : undefined}
               {...rest}
             />
             {renderUnitOnly && (
@@ -129,7 +139,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
                 disabled={disabled}
                 unit={currentUnitOption as UnitOption}
                 unitOptions={unitOptions}
-                onChange={onSelectChange} //TODO: make required if options are passed in
+                onChange={onSelectChange}
                 size={size}
                 {...popoverProps}
               />
