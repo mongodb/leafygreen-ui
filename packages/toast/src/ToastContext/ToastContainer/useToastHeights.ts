@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 
 import { spacing } from '@leafygreen-ui/tokens';
 
-import { gap, shortStackCount } from '../../constants';
+import { TOAST } from '../../constants';
 import { ToastStack } from '../ToastContext.types';
 
 interface UseToastHeightsProps {
@@ -79,8 +79,8 @@ export function calcTotalStackHeight(
       // if the comparing toast is below the current toast
       // but also less than the shortStackCount
       // add that toast's height to this toast's offset
-      j > stopIndex && (isExpanded || j < shortStackCount)
-        ? sum + x + gap
+      j > stopIndex && (isExpanded || j < TOAST.shortStackCount)
+        ? sum + x + TOAST.gap
         : sum,
     0,
   );

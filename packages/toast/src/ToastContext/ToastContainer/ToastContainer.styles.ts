@@ -6,7 +6,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
-import { toastHeight, toastInset, toastWidth, yOffset } from '../../constants';
+import { TOAST } from '../../constants';
 import { toastBGColor } from '../../InternalToast';
 
 import { calcTotalStackHeight } from './useToastHeights';
@@ -14,10 +14,10 @@ import { calcTotalStackHeight } from './useToastHeights';
 export const toastContainerStyles = css`
   /* outline: 1px solid teal; */
   position: fixed;
-  left: ${spacing[3] - toastInset}px;
-  bottom: ${spacing[3] - toastInset}px;
-  width: ${toastWidth + 2 * toastInset}px;
-  min-height: ${toastHeight + yOffset}px;
+  left: ${spacing[3] - TOAST.toastInset}px;
+  bottom: ${spacing[3] - TOAST.toastInset}px;
+  width: ${TOAST.toastWidth + 2 * TOAST.toastInset}px;
+  min-height: ${TOAST.toastHeight + TOAST.yOffset}px;
   max-height: calc(100vh - ${spacing[3]}px);
   z-index: 0;
   scroll-behavior: unset; // Not smooth
@@ -49,17 +49,17 @@ export function getContainerStatefulStyles({
   return cx(
     css`
       // The height of the first toast + inset
-      height: ${toastInset * 2 + topToastHeight ?? toastHeight}px;
+      height: ${TOAST.toastInset * 2 + topToastHeight ?? TOAST.toastHeight}px;
 
       // Move the entire container as toasts get added,
       // so the bottom toast is always 16px from the bottom
-      transform: translateY(-${yOffset * (recentToastsLength - 1)}px);
+      transform: translateY(-${TOAST.yOffset * (recentToastsLength - 1)}px);
     `,
     {
       [css`
         // set the container back when hovered/expanded
         transform: translateY(0);
-        height: ${toastInset * 2 + bottomOffset + combinedHeight + 'px'};
+        height: ${TOAST.toastInset * 2 + bottomOffset + combinedHeight + 'px'};
 
         // We want auto scroll bars when expanded
         overflow: ${isExpanded ? 'auto' : 'unset'};
@@ -85,7 +85,7 @@ export function getToastTransitionStyles({
       return css`
         opacity: 1;
         z-index: ${3 - index};
-        transform: translate3d(0, ${index * yOffset}px, -${index * 100}px)
+        transform: translate3d(0, ${index * TOAST.yOffset}px, -${index * 100}px)
           scale(1);
         background-color: ${mix(
           1 - index * 0.2,
@@ -98,7 +98,7 @@ export function getToastTransitionStyles({
 
     default:
       return css`
-        transform: translate3d(0, ${yOffset}px, -100px) scale(0.9);
+        transform: translate3d(0, ${TOAST.yOffset}px, -100px) scale(0.9);
         opacity: 0;
       `;
   }

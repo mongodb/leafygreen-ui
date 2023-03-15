@@ -14,9 +14,9 @@ import {
   createUniqueClassName,
 } from '@leafygreen-ui/lib';
 import Portal from '@leafygreen-ui/portal';
-import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
-import { gap, notificationBarHeight } from '../../constants';
+import { TOAST } from '../../constants';
 import { InternalToast } from '../../InternalToast';
 import { ToastId, ToastStack } from '../ToastContext.types';
 import { useToast } from '..';
@@ -53,24 +53,6 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
   const [shouldExpand, setShouldExpand] = useState(false);
   const expandToasts = () => setShouldExpand(true);
   const collapseToasts = () => setShouldExpand(false);
-  // const [isExpanded, setIsExpanded] = useState(false);
-
-  const { toastHeights, totalStackHeight, updateToastHeights } =
-    useToastHeights({
-      stack,
-      getToastRef,
-      shouldExpand,
-    });
-
-  const { isExpanded, handleTransitionExit, handleTransitionEnter } =
-    useToastTransitions({
-      shouldExpand,
-      containerRef: toastContainerRef,
-      setHoveredState,
-      totalStackHeight,
-    });
-
-  const isInteracted = isHovered || shouldExpand;
 
   const { recentToasts, remainingToasts } = getDividedStack(stack);
   const displayedToasts = shouldExpand
@@ -80,7 +62,32 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
   /** is the "N more" bar visible? */
   const showNotifBar = isHovered && !shouldExpand && remainingToasts.length > 0;
   /** How much vertical space is the "N more" bar taking up  */
-  const notifBarSpacing = showNotifBar ? notificationBarHeight + gap : 0;
+  const notifBarSpacing = showNotifBar
+    ? TOAST.notificationBarHeight + TOAST.gap
+    : 0;
+
+  /**
+   * Keep track of the DOM height of each toast element
+   */
+  const { toastHeights, totalStackHeight, updateToastHeights } =
+    useToastHeights({
+      stack,
+      getToastRef,
+      shouldExpand,
+    });
+
+  /**
+   * Keep track of whether the toasts have transitioned in or out
+   */
+  const { isExpanded, handleTransitionExit, handleTransitionEnter } =
+    useToastTransitions({
+      shouldExpand,
+      containerRef: toastContainerRef,
+      setHoveredState,
+      totalStackHeight,
+    });
+
+  const isInteracted = isHovered || shouldExpand;
 
   /**
    * Callback passed into the InternalToast component as `onClose`

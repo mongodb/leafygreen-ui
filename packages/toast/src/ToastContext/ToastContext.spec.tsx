@@ -9,7 +9,7 @@ import userEvent from '@testing-library/user-event';
 
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
-import { shortStackCount } from '../constants';
+import { TOAST } from '../constants';
 
 import { Basic as ContextStory } from './ToastContext.story';
 import { ToastProvider } from '.';
@@ -80,7 +80,7 @@ describe('packages/toast/context-provider', () => {
       });
     });
 
-    test(`shows the top ${shortStackCount} toasts`, async () => {
+    test(`shows the top ${TOAST.shortStackCount} toasts`, async () => {
       const { getByTestId, getAllByTestId } = render(
         <ContextStory timeout={null} />,
       );

@@ -1,7 +1,7 @@
 import { Dispatch, RefObject, SetStateAction, useMemo, useState } from 'react';
 import { debounce } from 'lodash';
 
-const debounceTime = 100;
+const transitionDebounceTime = 100;
 
 interface UseToastTransitionsProps {
   shouldExpand: boolean;
@@ -35,7 +35,7 @@ export function useToastTransitions({
             }
           }
         });
-      }, debounceTime),
+      }, transitionDebounceTime),
     [containerRef, setHoveredState, shouldExpand],
   );
 
@@ -53,7 +53,7 @@ export function useToastTransitions({
             }
           });
         }
-      }, debounceTime),
+      }, transitionDebounceTime),
     [containerRef, shouldExpand, totalStackHeight],
   );
 
