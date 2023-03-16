@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/marketing-modal",
-  "version": "4.0.4",
+  "version": "4.0.5",
   "description": "leafyGreen UI Kit Marketing Modal",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -20,12 +20,12 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/button": "^20.0.0",
+    "@leafygreen-ui/button": "^20.0.2",
     "@leafygreen-ui/emotion": "^4.0.3",
-    "@leafygreen-ui/modal": "^14.0.2",
-    "@leafygreen-ui/palette": "^3.4.7",
-    "@leafygreen-ui/tokens": "^2.0.0",
-    "@leafygreen-ui/typography": "^16.0.1"
+    "@leafygreen-ui/modal": "^14.0.3",
+    "@leafygreen-ui/palette": "^4.0.0",
+    "@leafygreen-ui/tokens": "^2.0.1",
+    "@leafygreen-ui/typography": "^16.1.0"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.1"
