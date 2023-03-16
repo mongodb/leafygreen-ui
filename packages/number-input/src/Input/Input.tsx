@@ -56,7 +56,7 @@ export function Input({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // eslint-disable-next-line no-console
-    console.log(e.target.value);
+    console.log('😈', e.target.value);
     handleChangeProp?.(e);
   };
 
@@ -93,6 +93,24 @@ export function Input({
     }
   };
 
+  const handleInputKeyDown = (e: React.KeyboardEvent) => {
+    /**
+     * Allowing: Integers | Backspace | Tab | Delete | All arrow keys
+     * Does not allow copy/paste
+     **/
+
+    const regex = new RegExp(
+      /(^\d*\.?\d*$)|(Backspace|Tab|Delete|ArrowLeft|ArrowRight|ArrowUp|ArrowDown)/,
+    );
+
+    console.group();
+    console.log('key', e.key);
+    console.log(!e.key.match(regex));
+    console.groupEnd();
+
+    return !e.key.match(regex) && e.preventDefault();
+  };
+
   return (
     <div
       className={cx(
@@ -116,6 +134,7 @@ export function Input({
         onChange={handleChange}
         aria-disabled={disabled}
         readOnly={disabled}
+        onKeyDown={handleInputKeyDown}
         {...rest}
       />
       <div
