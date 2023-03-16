@@ -4,7 +4,6 @@ import { random, sample, startCase } from 'lodash';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { DarkModeProps, StoryMeta } from '@leafygreen-ui/lib';
 import { Body, InlineCode, Label, Link } from '@leafygreen-ui/typography';

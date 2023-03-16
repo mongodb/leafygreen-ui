@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import defaultsDeep from 'lodash/defaultsDeep';
 
 import { defaultToastProps } from '../InternalToast/defaultProps';
-import { ToastId } from '../ToastContext/ToastContext.types';
-import { useToast } from '../ToastContext/useToast';
+import { ToastId, useToast } from '../ToastContext';
 
 import { ControlledToastProps } from './ControlledToast.types';
 

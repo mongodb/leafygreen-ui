@@ -19,12 +19,12 @@ import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { TOAST } from '../constants';
 import { InternalToast } from '../InternalToast';
-import { useToast } from '../ToastContext';
-import { ToastId, ToastStack } from '../ToastContext/ToastContext.types';
+import { ToastId, ToastStack, useToast } from '../ToastContext';
 
-import { NotificationBar } from './NotificationBar/NotificationBar';
-import { notificationBarTransitionStyles } from './NotificationBar/NotificationBar.styles';
-import { getDividedStack } from './utils/getDividedStack';
+import {
+  NotificationBar,
+  notificationBarTransitionStyles,
+} from './NotificationBar';
 import {
   getContainerStatefulStyles,
   getToastHoverStyles,
@@ -34,9 +34,12 @@ import {
   scrollContainerStyles,
   toastContainerStyles,
 } from './ToastContainer.styles';
-import { useToastHeights } from './useToastHeights';
-import { useToastTimers } from './useToastTimers';
-import { useToastTransitions } from './useToastTransitions';
+import {
+  getDividedStack,
+  useToastHeights,
+  useToastTimers,
+  useToastTransitions,
+} from './utils';
 
 export const toastPortalClassName = createUniqueClassName('toast-portal');
 

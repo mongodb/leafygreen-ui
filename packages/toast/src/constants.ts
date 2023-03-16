@@ -1,3 +1,6 @@
+/**
+ * Constants used throughout the Toast package
+ */
 export const TOAST = {
   /**
    * The fixed width of a toast

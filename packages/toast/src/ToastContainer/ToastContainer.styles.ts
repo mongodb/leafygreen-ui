@@ -9,7 +9,7 @@ import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 import { TOAST } from '../constants';
 import { toastBGColor } from '../InternalToast';
 
-import { calcTotalStackHeight } from './useToastHeights';
+import { calcTotalStackHeight } from './utils/useToastHeights';
 
 export const toastContainerStyles = css`
   /* outline: 1px solid teal; */
