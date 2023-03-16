@@ -2,6 +2,9 @@ import { cleanup, renderHook } from '@testing-library/react-hooks';
 
 import { useToast } from '.';
 
+/**
+ * Tests the external `useToast` hook
+ */
 describe('packages/toast/useToast', () => {
   afterEach(cleanup);
 

@@ -67,6 +67,9 @@ const toastReducer = (
   }
 };
 
+/**
+ * An abstraction of `useReducer` for the toast context
+ */
 export const useToastReducer = () => {
   const [{ stack }, dispatch] = useReducer<
     Reducer<ToastReducerState, ToastReducerAction>
@@ -97,15 +100,18 @@ export const useToastReducer = () => {
     return id;
   };
 
-  const updateToast: ToastContextProps['updateToast'] = (payload: {
-    id: ToastId;
-    props: Partial<ToastProps>;
-  }) => {
+  const updateToast: ToastContextProps['updateToast'] = (
+    id: ToastId,
+    props: Partial<ToastProps>,
+  ) => {
     dispatch({
       type: ToastReducerActionType.Update,
-      payload,
+      payload: {
+        id,
+        props,
+      },
     });
-    return getToast(payload.id);
+    return getToast(id);
   };
 
   const clearStack: ToastContextProps['clearStack'] = () => {

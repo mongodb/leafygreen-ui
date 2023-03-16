@@ -9,10 +9,10 @@ export type ToastStack = Map<ToastId, ToastProps>;
 export interface ToastContextProps {
   pushToast: (payload: ToastProps) => ToastId;
   popToast: (payload: ToastId) => ToastProps | undefined;
-  updateToast: (payload: {
-    id: ToastId;
-    props: Partial<ToastProps>;
-  }) => ToastProps | undefined;
+  updateToast: (
+    id: ToastId,
+    props: Partial<ToastProps>,
+  ) => ToastProps | undefined;
   getToast: (id: ToastId) => ToastProps | undefined;
   getStack: () => ToastStack | undefined;
   clearStack: () => void;

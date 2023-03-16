@@ -86,7 +86,7 @@ describe('packages/toast/useToastReducer', () => {
       });
       rerender();
       act(() => {
-        result.current.updateToast({ id: toastId, props: { progress: 0.5 } });
+        result.current.updateToast(toastId, { progress: 0.5 });
       });
       rerender();
 
