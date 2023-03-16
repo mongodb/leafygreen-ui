@@ -58,7 +58,7 @@ const BasicChildren = (props: Partial<InternalToastProps>) => {
         <Button
           data-testid="toast-trigger"
           onClick={() => {
-            const variant = sample(Variant);
+            const variant = props.variant || sample(Variant);
             pushToast({
               title: `I'm a ${variant} toast`,
               description: faker.lorem.lines(random(1, 2)),
@@ -154,11 +154,8 @@ const VariantsChildren = (props: Partial<InternalToastProps>) => {
               setProgress(_progress);
 
               progressToasts.forEach(([id]) => {
-                updateToast({
-                  id,
-                  props: {
-                    progress: _progress,
-                  },
+                updateToast(id, {
+                  progress: _progress,
                 });
               });
             }}
