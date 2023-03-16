@@ -1,5 +1,11 @@
 # @leafygreen-ui/palette
 
+## 4.0.0
+
+### Major Changes
+
+- 5b036515e: Removes old `uiColors` token
+
 ## 3.4.7
 
 ### Patch Changes
