@@ -57,3 +57,7 @@ export type ToastReducerAction =
 export interface ToastReducerState {
   stack: ToastStack;
 }
+
+export interface ToastProviderProps {
+  initialValue?: ToastStack;
+}

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ToastContainer } from '../ToastContainer';
 
-import { ToastContextProps } from './ToastContext.types';
+import { ToastContextProps, ToastProviderProps } from './ToastContext.types';
 import { useToastReducer } from './ToastReducer';
 
 export const ToastContext = React.createContext<ToastContextProps>({
@@ -14,9 +14,13 @@ export const ToastContext = React.createContext<ToastContextProps>({
   clearStack: () => {},
 });
 
-export const ToastProvider = ({ children }: React.PropsWithChildren<{}>) => {
+// TODO: support initial stack
+export const ToastProvider = ({
+  children,
+  initialValue,
+}: React.PropsWithChildren<ToastProviderProps>) => {
   const { stack, pushToast, popToast, updateToast, getToast, clearStack } =
-    useToastReducer();
+    useToastReducer(initialValue);
 
   return (
     <ToastContext.Provider

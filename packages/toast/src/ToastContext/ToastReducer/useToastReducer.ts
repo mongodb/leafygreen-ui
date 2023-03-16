@@ -70,11 +70,11 @@ const toastReducer = (
 /**
  * An abstraction of `useReducer` for the toast context
  */
-export const useToastReducer = () => {
+export const useToastReducer = (initialValue?: ToastStack) => {
   const [{ stack }, dispatch] = useReducer<
     Reducer<ToastReducerState, ToastReducerAction>
   >(toastReducer, {
-    stack: new Map<ToastId, ToastProps>() as ToastStack,
+    stack: initialValue ?? (new Map<ToastId, ToastProps>() as ToastStack),
   });
 
   const getToast: ToastContextProps['getToast'] = (id: ToastId) =>

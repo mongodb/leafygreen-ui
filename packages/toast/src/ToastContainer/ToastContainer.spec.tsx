@@ -6,7 +6,6 @@ import {
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
-import { renderHook } from '@testing-library/react-hooks';
 import userEvent from '@testing-library/user-event';
 
 import { transitionDuration } from '@leafygreen-ui/tokens';
@@ -14,7 +13,6 @@ import { transitionDuration } from '@leafygreen-ui/tokens';
 import { TOAST } from '../constants';
 import { InternalToastProps } from '../InternalToast';
 import { Basic as ContextStory } from '../ToastContext.story';
-import { ToastProvider, useToast } from '../ToastContext';
 
 async function delay(t: number) {
   return await new Promise(_ => setTimeout(_, t));
@@ -50,22 +48,14 @@ describe('packages/toast/container', () => {
     ReactDOM.createPortal = node => node as React.ReactPortal;
   });
 
+  describe('initial state', () => {
+    test.todo('renders initial stack');
+  });
+
   describe('opening toasts', () => {
     test('opens toast when triggered', async () => {
       const { getByTestId, triggerToast } = renderToastContainer();
       triggerToast();
-
-      // const { result, rerender } = renderHook(useToast, {
-      //   wrapper: ToastProvider,
-      // });
-
-      // const { pushToast } = result.current;
-
-      // pushToast({
-      //   title: 'Some Toast',
-      // });
-
-      // rerender();
 
       const toast = await waitFor(() => getByTestId('lg-toast'));
 
@@ -156,6 +146,7 @@ describe('packages/toast/container', () => {
         expect(toast).toBeInTheDocument();
       });
 
+      // eslint-disable-next-line jest/no-disabled-tests
       test.skip('toast does close after timeout once `progress` == 1', async () => {
         const timeout = 50;
         const { getByTestId, triggerToast } = renderToastContainer({
