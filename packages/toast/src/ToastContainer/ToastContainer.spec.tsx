@@ -10,9 +10,8 @@ import userEvent from '@testing-library/user-event';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { TOAST } from '../constants';
-
-import { Basic as ContextStory } from './ToastContext.story';
-import { ToastProvider } from '.';
+import { ToastProvider } from '../ToastContext';
+import { Basic as ContextStory } from '../ToastContext.story';
 
 async function delay(t: number) {
   return await new Promise(_ => setTimeout(_, t));
@@ -22,13 +21,13 @@ async function delay(t: number) {
  * Tests interactivity of ToastContext and ToastContainer
  *
  * For hook specific tests,
- * see `useToast.spec.ts`
+ * see `useToast.spec` and `useToastReducer.spec`
  *
- * For individual Toast rendering,m
- * see `InternalToast.spec.tsx` (or `ControlledToast.spec.tsx`)
+ * For individual Toast rendering,
+ * see `InternalToast.spec` (or `ControlledToast.spec`)
  *
  */
-describe('packages/toast/context-provider', () => {
+describe('packages/toast/container', () => {
   test('renders children', () => {
     const { getByTestId } = render(
       <ToastProvider>
@@ -113,7 +112,7 @@ describe('packages/toast/context-provider', () => {
       });
 
       test('toast does _NOT_ close after timeout when container is hovered', async () => {
-        const timeout = 100;
+        const timeout = 50;
         const { getByTestId } = render(<ContextStory timeout={timeout} />);
         const button = getByTestId('toast-trigger');
         userEvent.click(button);
@@ -125,10 +124,19 @@ describe('packages/toast/context-provider', () => {
         expect(toast).toBeInTheDocument();
       });
 
-      test.todo(
-        'toast does _NOT_ close after timeout if `variant` is progress, and `progress` is < 1s',
-        // async () => {},
-      );
+      test.skip('toast does _NOT_ close after timeout if `variant` is progress, and `progress` is < 1', async () => {
+        const timeout = 50;
+        const { getByTestId } = render(<ContextStory timeout={timeout} />);
+        const button = getByTestId('toast-trigger');
+        userEvent.click(button);
+
+        const container = getByTestId('lg-toast-region');
+        const toast = await waitFor(() => getByTestId('lg-toast'));
+        expect(toast).toBeInTheDocument();
+
+        await delay(timeout + transitionDuration.slower);
+        expect(toast).toBeInTheDocument();
+      });
     });
 
     describe('dismiss', () => {

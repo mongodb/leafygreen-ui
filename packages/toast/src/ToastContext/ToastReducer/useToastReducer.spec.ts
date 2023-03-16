@@ -6,6 +6,9 @@ import { ToastId } from '../ToastContext.types';
 
 import { useToastReducer } from '.';
 
+/**
+ * Tests that the `useReducer` abstraction returns the expected values
+ */
 describe('packages/toast/useToastReducer', () => {
   afterEach(cleanup);
 

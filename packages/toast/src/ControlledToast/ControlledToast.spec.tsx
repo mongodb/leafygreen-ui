@@ -30,7 +30,7 @@ async function expectElementToNotBeRemoved(element: HTMLElement) {
  * i.e. `open` and `onClose` props.
  *
  * Other individual toast behavior is tested in `InternalToast.spec`
- * and multi-toast behavior is tested in `ToastContext.spec`
+ * and multi-toast behavior is tested in `ToastContainer.spec`
  */
 describe('packages/toast/controlled', () => {
   // Clear the portals after each test

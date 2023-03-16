@@ -8,12 +8,10 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { DarkModeProps, StoryMeta } from '@leafygreen-ui/lib';
 import { Body, InlineCode, Label, Link } from '@leafygreen-ui/typography';
 
-import { InternalToast, InternalToastProps } from '../InternalToast';
-import { variantIcons } from '../InternalToast/VariantIcon';
-import { Variant } from '../Toast.types';
-
-import { ToastProvider } from './ToastContext';
-import { useToast } from './useToast';
+import { variantIcons } from './InternalToast/VariantIcon';
+import { InternalToast, InternalToastProps } from './InternalToast';
+import { Variant } from './Toast.types';
+import { ToastProvider, useToast } from './ToastContext';
 
 export default StoryMeta<typeof InternalToast>({
   title: 'Components/Toast',
