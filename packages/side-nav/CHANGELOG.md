@@ -1,5 +1,22 @@
 # @leafygreen-ui/side-nav
 
+## 13.0.4
+
+### Patch Changes
+
+- Updated dependencies [5b036515e]
+- Updated dependencies [26e341a0b]
+- Updated dependencies [52dcb3316]
+- Updated dependencies [997121cc3]
+- Updated dependencies [eb0cc4498]
+  - @leafygreen-ui/palette@4.0.0
+  - @leafygreen-ui/lib@10.2.2
+  - @leafygreen-ui/portal@4.1.0
+  - @leafygreen-ui/icon@11.12.5
+  - @leafygreen-ui/typography@16.1.0
+  - @leafygreen-ui/tokens@2.0.1
+  - @leafygreen-ui/tooltip@9.1.6
+
 ## 13.0.3
 
 ### Patch Changes
