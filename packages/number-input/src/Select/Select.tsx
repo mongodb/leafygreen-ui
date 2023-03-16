@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Button, { ButtonProps } from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
@@ -72,22 +72,36 @@ export function Select({
         `.${textClassName}`,
       ) as HTMLElement;
 
+      const [open, setOpen] = useState<boolean>(false);
+
       return (
-        <Tooltip
-          enabled={textNode?.offsetWidth < textNode?.scrollWidth}
-          justify="middle"
-          trigger={
-            <Button
-              {...props}
-              className={cx(menuThemeStyles[theme], className)}
-              ref={wrapperRef}
-            >
-              {children}
-            </Button>
-          }
-        >
-          {unit?.displayName}
-        </Tooltip>
+        <>
+          <Tooltip
+            enabled={textNode?.offsetWidth < textNode?.scrollWidth}
+            justify="middle"
+            // Using refEl instead of a trigger because triggerProps such as onMouseEnter are added to the trigger inside the tooltip component. OnMouseEnter is triggered by hovering over trigger or any of its children. In the case of TODO: finish this
+            refEl={wrapperRef}
+            open={open}
+          >
+            {unit?.displayName}
+          </Tooltip>
+          <Button
+            {...props}
+            className={cx(menuThemeStyles[theme], className)}
+            ref={wrapperRef}
+            onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => {
+              const buttonAncestor = (e.target as HTMLButtonElement).closest(
+                'button',
+              );
+              if (buttonAncestor) setOpen(true);
+            }}
+            onMouseLeave={() => setOpen(false)}
+            onFocus={() => setOpen(true)}
+            onBlur={() => setOpen(false)}
+          >
+            {children}
+          </Button>
+        </>
       );
     },
   );

@@ -68,7 +68,7 @@ const Template: ComponentStory<typeof NumberInput> = props => (
 
 const unitOptions = [
   {
-    displayName: 'OneTwoThreeFourFiveSix',
+    displayName: 'One One One One One',
     value: 'one',
   },
   {

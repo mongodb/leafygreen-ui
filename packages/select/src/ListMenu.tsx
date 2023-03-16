@@ -97,39 +97,41 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
     };
 
     return (
-      <Popover
-        active={open && !disabled}
-        spacing={6}
-        align={Align.Bottom}
-        justify={dropdownAutoWidth ? Justify.Start : Justify.Middle}
-        adjustOnMutation
-        className={className}
-        refEl={referenceElement}
-        {...popoverProps}
-      >
-        {/* Keyboard events handled in Select component through event listener hook */}
-        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-        <ul
-          aria-labelledby={labelId}
-          role="listbox"
-          ref={ref}
-          tabIndex={-1}
-          onClick={onClick}
-          className={cx(
-            baseMenuStyle,
-            getMenuStyles(theme, size),
-            css`
-              max-height: ${maxHeightValue};
-              ${MobileMediaQuery} {
-                font-size: ${mobileSizeSet.option.text}px;
-              }
-            `,
-          )}
-          id={id}
+      <div>
+        <Popover
+          active={open && !disabled}
+          spacing={6}
+          align={Align.Bottom}
+          justify={dropdownAutoWidth ? Justify.Start : Justify.Middle}
+          adjustOnMutation
+          className={className}
+          refEl={referenceElement}
+          {...popoverProps}
         >
-          {children}
-        </ul>
-      </Popover>
+          {/* Keyboard events handled in Select component through event listener hook */}
+          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
+          <ul
+            aria-labelledby={labelId}
+            role="listbox"
+            ref={ref}
+            tabIndex={-1}
+            onClick={onClick}
+            className={cx(
+              baseMenuStyle,
+              getMenuStyles(theme, size),
+              css`
+                max-height: ${maxHeightValue};
+                ${MobileMediaQuery} {
+                  font-size: ${mobileSizeSet.option.text}px;
+                }
+              `,
+            )}
+            id={id}
+          >
+            {children}
+          </ul>
+        </Popover>
+      </div>
     );
   },
 );
