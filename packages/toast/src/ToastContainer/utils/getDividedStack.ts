@@ -1,6 +1,6 @@
-import { TOAST } from '../../../constants';
-import { ToastProps } from '../../../Toast.types';
-import { ToastId, ToastStack } from '../../ToastContext.types';
+import { TOAST } from '../../constants';
+import { ToastProps } from '../../Toast.types';
+import { ToastId, ToastStack } from '../../ToastContext/ToastContext.types';
 
 /**
  * Returns 2 arrays from the original toast stack.

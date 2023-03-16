@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 
-import { ToastId, ToastStack } from '../ToastContext.types';
+import { ToastId, ToastStack } from '../ToastContext/ToastContext.types';
 
 /**
  * Sets a timeout when an element is added to the stack.

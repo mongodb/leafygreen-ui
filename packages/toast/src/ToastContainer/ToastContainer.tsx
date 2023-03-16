@@ -17,10 +17,10 @@ import {
 import Portal from '@leafygreen-ui/portal';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
-import { TOAST } from '../../constants';
-import { InternalToast } from '../../InternalToast';
-import { ToastId, ToastStack } from '../ToastContext.types';
-import { useToast } from '..';
+import { TOAST } from '../constants';
+import { InternalToast } from '../InternalToast';
+import { useToast } from '../ToastContext';
+import { ToastId, ToastStack } from '../ToastContext/ToastContext.types';
 
 import { NotificationBar } from './NotificationBar/NotificationBar';
 import { notificationBarTransitionStyles } from './NotificationBar/NotificationBar.styles';

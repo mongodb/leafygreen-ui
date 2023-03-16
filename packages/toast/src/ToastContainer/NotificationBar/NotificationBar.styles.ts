@@ -10,7 +10,7 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { TOAST } from '../../../constants';
+import { TOAST } from '../../constants';
 
 export const notificationBarStyles = css`
   border: unset;

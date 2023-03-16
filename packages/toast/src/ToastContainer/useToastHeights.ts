@@ -3,8 +3,8 @@ import { debounce } from 'lodash';
 
 import { spacing } from '@leafygreen-ui/tokens';
 
-import { TOAST } from '../../constants';
-import { ToastStack } from '../ToastContext.types';
+import { TOAST } from '../constants';
+import { ToastStack } from '../ToastContext/ToastContext.types';
 
 interface UseToastHeightsProps {
   stack: ToastStack;

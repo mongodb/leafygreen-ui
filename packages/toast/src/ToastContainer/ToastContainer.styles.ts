@@ -6,8 +6,8 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
-import { TOAST } from '../../constants';
-import { toastBGColor } from '../../InternalToast';
+import { TOAST } from '../constants';
+import { toastBGColor } from '../InternalToast';
 
 import { calcTotalStackHeight } from './useToastHeights';
 
