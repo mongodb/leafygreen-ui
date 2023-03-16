@@ -84,31 +84,13 @@ export function Input({
    * Edge case if the user clicks on an arrow button then switches to keyboard click.
    * By default if focus is in the input then the keyboard clicks will work automatically but since the buttons are custom and outside of the input we are mimicking native behavior.
    */
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleArrowKeyDown = (e: React.KeyboardEvent) => {
     if (!disabled) {
       e.preventDefault();
       // TODO: use vars for keys
       if (e.key === 'ArrowUp') handleIncrementClick();
       if (e.key === 'ArrowDown') handleDecrementClick();
     }
-  };
-
-  const handleInputKeyDown = (e: React.KeyboardEvent) => {
-    /**
-     * Allowing: Integers | Backspace | Tab | Delete | All arrow keys
-     * Does not allow copy/paste
-     **/
-
-    const regex = new RegExp(
-      /(^\d*\.?\d*$)|(Backspace|Tab|Delete|ArrowLeft|ArrowRight|ArrowUp|ArrowDown)/,
-    );
-
-    console.group();
-    console.log('key', e.key);
-    console.log(!e.key.match(regex));
-    console.groupEnd();
-
-    return !e.key.match(regex) && e.preventDefault();
   };
 
   return (
@@ -134,7 +116,6 @@ export function Input({
         onChange={handleChange}
         aria-disabled={disabled}
         readOnly={disabled}
-        onKeyDown={handleInputKeyDown}
         {...rest}
       />
       <div
@@ -155,7 +136,7 @@ export function Input({
         <button
           aria-label="Increment number"
           onClick={handleIncrementClick}
-          onKeyDown={handleKeyDown}
+          onKeyDown={handleArrowKeyDown}
           className={cx(arrowBaseStyles, arrowThemeStyles[theme])}
           type="button"
           tabIndex={-1} // Mimicking native behavior; you cannot focus on an arrow.
@@ -165,7 +146,7 @@ export function Input({
         <button
           aria-label="Increment number"
           onClick={handleDecrementClick}
-          onKeyDown={handleKeyDown}
+          onKeyDown={handleArrowKeyDown}
           className={cx(arrowBaseStyles, arrowThemeStyles[theme])}
           type="button"
           tabIndex={-1}

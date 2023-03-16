@@ -94,6 +94,7 @@ Unit.args = {
 
 export const Select = (props: NumberInputProps) => {
   const [unit, setUnit] = useState<UnitOption>(unitOptions[0]);
+  const [value, setValue] = useState<string>('');
 
   const handleSelectChange = (unit: UnitOption) => {
     setUnit(unit);
@@ -104,11 +105,13 @@ export const Select = (props: NumberInputProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // eslint-disable-next-line no-console
     console.log('story: input value: ', e.target.value);
+    setValue(e.target.value);
   };
 
   return (
     <NumberInput
       {...props}
+      value={value}
       unit={unit?.displayName}
       unitOptions={unitOptions}
       onSelectChange={handleSelectChange}
