@@ -4,11 +4,7 @@ import Button, { ButtonProps } from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import {
-  Option,
-  Select as SelectComponent,
-  textClassName,
-} from '@leafygreen-ui/select';
+import { Option, Select as SelectComponent } from '@leafygreen-ui/select';
 import Tooltip from '@leafygreen-ui/tooltip';
 
 import {
@@ -64,12 +60,12 @@ export function Select({
     ({ className, children, ...props }: ButtonProps, forwardedRef) => {
       // TODO: HALP with TS
       //@ts-ignore
-      const wrapperRef: React.MutableRefObject<HTMLElement> = useForwardedRef(
+      const buttonRef: React.MutableRefObject<HTMLElement> = useForwardedRef(
         forwardedRef,
         null,
       );
-      const textNode = wrapperRef.current?.querySelector(
-        `.${textClassName}`,
+      const textNode = buttonRef.current?.querySelector(
+        'div[data-selecttextvalue]',
       ) as HTMLElement;
 
       const [open, setOpen] = useState<boolean>(false);
@@ -80,7 +76,7 @@ export function Select({
             enabled={textNode?.offsetWidth < textNode?.scrollWidth}
             justify="middle"
             // Using refEl instead of a trigger because triggerProps such as onMouseEnter are added to the trigger inside the tooltip component. OnMouseEnter is triggered by hovering over trigger or any of its children. In the case of TODO: finish this
-            refEl={wrapperRef}
+            refEl={buttonRef}
             open={open}
           >
             {unit?.displayName}
@@ -88,12 +84,12 @@ export function Select({
           <Button
             {...props}
             className={cx(menuThemeStyles[theme], className)}
-            ref={wrapperRef}
+            ref={buttonRef}
             onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => {
               const buttonAncestor = (e.target as HTMLButtonElement).closest(
-                'button',
+                'div[data-ispopoverwrapper]',
               );
-              if (buttonAncestor) setOpen(true);
+              if (!buttonAncestor) setOpen(true);
             }}
             onMouseLeave={() => setOpen(false)}
             onFocus={() => setOpen(true)}
