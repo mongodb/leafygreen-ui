@@ -63,26 +63,28 @@ export const BuiltInZebraStripes = ({
   withHeaders,
   ...args
 }: TableArgs<any>) => (
-  <Table
-    {...args}
-    columns={
-      <HeaderRow>
-        <TableHeader key="name" label="Name" dataType="string" />
-        <TableHeader key="age" label="Age" dataType="number" />
-        <TableHeader key="color" label="Color" dataType="string" />
-        <TableHeader key="location" label="Location" />
-      </HeaderRow>
-    }
-  >
-    {({ datum }) => (
-      <Row key={datum.name}>
-        <Cell isHeader={withHeaders}>{datum.name}</Cell>
-        <Cell>{datum.age}</Cell>
-        <Cell>{datum.color}</Cell>
-        <Cell>{datum.location}</Cell>
-      </Row>
-    )}
-  </Table>
+  <V10Adapter>
+    <Table
+      {...args}
+      columns={
+        <HeaderRow>
+          <TableHeader key="name" label="Name" dataType="string" />
+          <TableHeader key="age" label="Age" dataType="number" />
+          <TableHeader key="color" label="Color" dataType="string" />
+          <TableHeader key="location" label="Location" />
+        </HeaderRow>
+      }
+    >
+      {({ datum }) => (
+        <Row key={datum.name}>
+          <Cell isHeader={withHeaders}>{datum.name}</Cell>
+          <Cell>{datum.age}</Cell>
+          <Cell>{datum.color}</Cell>
+          <Cell>{datum.location}</Cell>
+        </Row>
+      )}
+    </Table>
+  </V10Adapter>
 );
 
 export const CustomLogic = ({ withHeaders, ...args }: TableArgs<any>) => (

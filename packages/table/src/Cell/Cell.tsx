@@ -1,19 +1,9 @@
-import React, { PropsWithChildren, useEffect, useState } from 'react';
+import React, { PropsWithChildren } from 'react';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-import { useTableContext } from '../TableContext/TableContext';
-import ToggleExpandedIcon from '../ToggleExpandedIcon/ToggleExpandedIcon';
-
-import {
-  alignmentStyles,
-  baseStyles,
-  cellContentContainerStyles,
-  hiddenSubRowStyles,
-  subRowStyles,
-} from './Cell.styles';
+import { baseStyles, cellContentContainerStyles } from './Cell.styles';
 import { CellProps } from '.';
 
 const Cell = <T extends unknown>({
@@ -23,8 +13,6 @@ const Cell = <T extends unknown>({
   toggleExpandedIconProps,
   cell,
   contentClassName,
-  isSubRowCell,
-  isRenderedSubRowCell,
   ...rest
 }: PropsWithChildren<CellProps<T>>) => {
   return (

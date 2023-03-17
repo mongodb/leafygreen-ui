@@ -28,7 +28,7 @@ export const alignmentStyles = (align: Align = 'left') => css`
   justify-content: ${flexAlignment[align]};
 `;
 
-export const depthPadding = (depth: number) => css`
+export const depthPadding = (depth = 0) => css`
   padding-left: ${Math.max(8, 16 * depth)}px;
 `;
 

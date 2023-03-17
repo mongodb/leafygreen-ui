@@ -20,6 +20,10 @@ export type CellProps<T extends unknown> = HTMLElementProps<'td'> & {
    * `Cell` object returned from the `useLeafygreenTable` hook
    */
   cell?: LeafygreenTableCell<T>;
-  isSubRowCell?: boolean;
-  isRenderedSubRowCell?: boolean;
+  /**
+   * `className` prop passed to the div inside the td that houses the cell's contents
+   *
+   * Mainly intended for internal use.
+   */
+  contentClassName?: string;
 };
