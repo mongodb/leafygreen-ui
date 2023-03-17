@@ -5,6 +5,7 @@ import { ComponentStory, Meta } from '@storybook/react';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 import Cell from './Cell/Cell';
+import ExpandedContent from './ExpandedContent/ExpandedContent';
 import HeaderCell from './HeaderCell/HeaderCell';
 import HeaderRow from './HeaderRow/HeaderRow';
 import Row from './Row/Row';
@@ -24,7 +25,6 @@ import {
   getSortedRowModel,
   SortingState,
 } from '.';
-import ExpandedContent from './ExpandedContent/ExpandedContent';
 
 export default {
   title: 'Components/Table/With Virtualized Scrolling',

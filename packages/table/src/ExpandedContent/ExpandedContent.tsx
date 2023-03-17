@@ -1,16 +1,21 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { expandedContentStyles, hiddenSubRowStyles, subRowStyles } from './ExpandedContent.styles';
+import {
+  expandedContentStyles,
+  hiddenSubRowStyles,
+  subRowStyles,
+} from './ExpandedContent.styles';
 import { ExpandedContentProps } from './ExpandedContent.types';
 
-const ExpandedContent = <T extends unknown>({ row }: ExpandedContentProps<T>) => {
+const ExpandedContent = <T extends unknown>({
+  row,
+}: ExpandedContentProps<T>) => {
   // const { isExpandedRow } = useTableContext();
-  const isExpanded = row.getIsExpanded()
-  const Content = row?.original?.renderExpandedContent(row)
-
+  const isExpanded = row.getIsExpanded();
+  const Content = row?.original?.renderExpandedContent(row);
 
   const { theme } = useDarkMode();
   return (
@@ -20,25 +25,27 @@ const ExpandedContent = <T extends unknown>({ row }: ExpandedContentProps<T>) =>
         className={cx(
           subRowStyles,
           {
-            [hiddenSubRowStyles]: !isExpanded
+            [hiddenSubRowStyles]: !isExpanded,
           },
           expandedContentStyles[theme],
         )}
       >
         <div
           className={cx(
-            css`overflow: hidden;`,
+            css`
+              overflow: hidden;
+            `,
             subRowStyles,
             {
-              [hiddenSubRowStyles]: !isExpanded
-            }
+              [hiddenSubRowStyles]: !isExpanded,
+            },
           )}
         >
           {Content}
         </div>
       </td>
     </tr>
-  )
-}
+  );
+};
 
 export default ExpandedContent;

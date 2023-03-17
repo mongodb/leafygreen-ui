@@ -67,10 +67,10 @@ function useLeafygreenTable<T extends unknown>(
       : []),
     ...columnsProp.map(
       propColumn =>
-      ({
-        ...propColumn,
-        enableSorting: propColumn.enableSorting ?? false,
-      } as ColumnDef<LeafygreenTableType<T>>),
+        ({
+          ...propColumn,
+          enableSorting: propColumn.enableSorting ?? false,
+        } as ColumnDef<LeafygreenTableType<T>>),
     ),
   ];
 

@@ -1,11 +1,9 @@
+import React, { PropsWithChildren } from 'react';
 
+import { cx } from '@leafygreen-ui/emotion';
 
-import React, { PropsWithChildren } from "react";
-
-import { cx } from "@leafygreen-ui/emotion";
-
-import Cell from "./Cell";
-import { depthPadding } from "./Cell.styles";
+import Cell from './Cell';
+import { depthPadding } from './Cell.styles';
 
 export const FirstCell = ({
   children,
@@ -13,14 +11,10 @@ export const FirstCell = ({
   ...rest
 }: PropsWithChildren<any>) => {
   return (
-    <Cell
-      contentClassName={depthPadding(depth)}
-      {...rest}
-    >
+    <Cell contentClassName={depthPadding(depth)} {...rest}>
       {children}
     </Cell>
   );
 };
-
 
 export default FirstCell;

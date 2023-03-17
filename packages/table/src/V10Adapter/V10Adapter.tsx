@@ -1,5 +1,5 @@
 import React, { ReactElement, useMemo, useRef } from 'react';
-import { PropsWithChildren } from "react";
+import { PropsWithChildren } from 'react';
 
 import Cell from '../Cell';
 import HeaderCell from '../HeaderCell';
@@ -14,20 +14,22 @@ import Table, { flexRender, getCoreRowModel } from '..';
 import processColumns from './processColumns';
 import processData from './processData';
 
-type V10AdapterProps = PropsWithChildren<{
-
-}>
+type V10AdapterProps = PropsWithChildren<{}>;
 
 // assumes table is first element in children
 // reads columns from columns' keys
 const V10Adapter = ({ children }: V10AdapterProps) => {
   const containerRef = useRef(null);
   const OldTable = React.Children.toArray(children)[0];
-  const { data, columns, children: childrenFn } = (OldTable as ReactElement).props;
+  const {
+    data,
+    columns,
+    children: childrenFn,
+  } = (OldTable as ReactElement).props;
   const processedColumns = processColumns(columns);
   const processedData = processData(data, processedColumns, childrenFn);
 
-  console.log({ data, processedData })
+  console.log({ data, processedData });
 
   const table = useLeafygreenTable({
     containerRef,
@@ -74,7 +76,7 @@ const V10Adapter = ({ children }: V10AdapterProps) => {
         </TableBody>
       </Table>
     </TableContainer>
-  )
-}
+  );
+};
 
 export default V10Adapter;
