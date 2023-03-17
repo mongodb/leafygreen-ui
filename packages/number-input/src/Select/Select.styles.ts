@@ -15,6 +15,7 @@ export const wrapperBaseStyles = css`
 export const menuBaseStyles = css`
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+  text-transform: uppercase;
 `;
 
 export const menuThemeStyles: Record<Theme, string> = {

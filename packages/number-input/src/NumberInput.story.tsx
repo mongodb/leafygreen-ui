@@ -71,19 +71,19 @@ const Template: ComponentStory<typeof NumberInput> = props => (
 
 const unitOptions = [
   {
-    displayName: 'One One One One One',
+    displayName: 'One One One One One(s)',
     value: 'one',
   },
   {
-    displayName: 'Two',
+    displayName: 'Two(s)',
     value: 'two',
   },
   {
-    displayName: 'Three',
+    displayName: 'Three(s)',
     value: 'three',
   },
   {
-    displayName: 'FourFiveSixSeven',
+    displayName: 'FourFiveSixSeven(s)',
     value: 'four',
   },
 ];
@@ -102,7 +102,7 @@ export const Select = (props: NumberInputProps) => {
   const handleSelectChange = (unit: UnitOption) => {
     setUnit(unit);
     // eslint-disable-next-line no-console
-    console.log('story: select value', unit?.displayName);
+    console.log('story: select value', unit?.value);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

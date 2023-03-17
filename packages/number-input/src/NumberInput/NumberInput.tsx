@@ -14,6 +14,7 @@ import {
   errorMessageStyles,
   labelDescriptionStyles,
   unitBaseStyles,
+  unitDisabledStyles,
   unitThemeStyles,
   wrapperBaseStyles,
   wrapperGapStyles,
@@ -132,8 +133,12 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
             />
             {renderUnitOnly && (
               <Overline
-                className={cx(unitBaseStyles, unitThemeStyles[theme])}
-              >{`${unitProp}(S)`}</Overline>
+                className={cx(unitBaseStyles, unitThemeStyles[theme], {
+                  [unitDisabledStyles[theme]]: disabled,
+                })}
+              >
+                {unitProp}
+              </Overline>
             )}
             {renderSelectOnly && (
               <Select

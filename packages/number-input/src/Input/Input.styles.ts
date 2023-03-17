@@ -12,6 +12,11 @@ import {
 
 import { Size, State } from '../NumberInput/NumberInput.types';
 
+/**
+ * Adds an inset box shadow to hide the UA background styles for autofilled inputs
+ */
+const autofillShadowOverride = (color: string) => `0 0 0 100px ${color} inset`;
+
 export const wrapperClassName = createUniqueClassName('number-input-wrapper');
 export const warningIconClassName = createUniqueClassName(
   'number-input-wrapper',
@@ -60,10 +65,34 @@ export const inputThemeStyles: Record<Theme, string> = {
     &::placeholder {
       color: ${palette.gray.light1};
     }
+
+    &:-webkit-autofill {
+      -webkit-text-fill-color: ${palette.black};
+      border: 0;
+      box-shadow: ${autofillShadowOverride(palette.white)};
+
+      &:focus-visible,
+      &:hover {
+        -webkit-text-fill-color: ${palette.black};
+        box-shadow: ${autofillShadowOverride(palette.white)};
+      }
+    }
   `,
   [Theme.Dark]: css`
     &::placeholder {
       color: ${palette.gray.dark1};
+    }
+
+    &:-webkit-autofill {
+      -webkit-text-fill-color: ${palette.gray.light2};
+      border: 0;
+      box-shadow: ${autofillShadowOverride(palette.gray.dark4)};
+
+      &:focus-visible,
+      &:hover {
+        -webkit-text-fill-color: ${palette.gray.light2};
+        box-shadow: ${autofillShadowOverride(palette.gray.dark4)};
+      }
     }
   `,
 };
@@ -94,7 +123,7 @@ export const sizeInputStyles: Record<Size, string> = {
 
 export const errorInputStyles: Record<Size, string> = {
   [Size.XSmall]: css`
-    padding-right: ${spacing[1] * 9}px;
+    padding-right: ${spacing[1] * 7}px;
 
     .${wrapperClassName}:hover &,
     .${wrapperClassName}:focus-within & {
@@ -102,7 +131,7 @@ export const errorInputStyles: Record<Size, string> = {
     }
   `,
   [Size.Small]: css`
-    padding-right: ${spacing[1] * 9}px;
+    padding-right: ${spacing[1] * 7}px;
 
     .${wrapperClassName}:hover &,
     .${wrapperClassName}:focus-within & {
@@ -110,7 +139,7 @@ export const errorInputStyles: Record<Size, string> = {
     }
   `,
   [Size.Default]: css`
-    padding-right: ${spacing[1] * 9}px;
+    padding-right: ${spacing[1] * 8}px;
 
     .${wrapperClassName}:hover &,
     .${wrapperClassName}:focus-within & {
@@ -204,11 +233,6 @@ export const selectBaseStyles = css`
   border-bottom-right-radius: 0;
 `;
 
-/**
- * Adds an inset box shadow to hide the UA background styles for autofilled inputs
- */
-const autofillShadowOverride = (color: string) => `0 0 0 100px ${color} inset`;
-
 export const wrapperThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.black};
@@ -218,34 +242,6 @@ export const wrapperThemeStyles: Record<Theme, string> = {
       box-shadow: ${focusRing.light.input};
       border-color: ${palette.white};
     }
-
-    // &:-webkit-autofill {
-    //   -webkit-text-fill-color: ${palette.black};
-    //   box-shadow: ${autofillShadowOverride(palette.white)};
-    //   background: ${palette.white};
-
-    //   &:focus-visible {
-    //     box-shadow: ${autofillShadowOverride(palette.white)},
-    //       ${focusRing.light.input};
-    //     border-color: ${palette.white};
-    //   }
-    // }
-
-    // &::placeholder {
-    //   color: ${palette.gray.light1};
-    // }
-
-    // &,
-    // &:-webkit-autofill {
-    //   border-color: ${palette.gray.base};
-    // }
-
-    // &:-webkit-autofill {
-    //   &:hover:not(:focus-visible) {
-    //     box-shadow: ${autofillShadowOverride(palette.white)},
-    //       ${hoverRing.light.gray};
-    //   }
-    // }
   `,
   [Theme.Dark]: css`
     background-color: ${palette.gray.dark4};
@@ -255,128 +251,24 @@ export const wrapperThemeStyles: Record<Theme, string> = {
       box-shadow: ${focusRing.dark.input};
       border-color: ${palette.gray.dark4};
     }
-
-    // &:-webkit-autofill {
-    //   -webkit-text-fill-color: ${palette.gray.light2};
-    //   box-shadow: ${autofillShadowOverride(palette.gray.dark4)};
-    //   background-color: ${palette.gray.dark4};
-
-    //   &:focus-visible {
-    //     box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
-    //       ${focusRing.dark.input};
-    //     border-color: ${palette.gray.dark4};
-    //   }
-    // }
-
-    // &::placeholder {
-    //   color: ${palette.gray.dark1};
-    // }
-
-    // &,
-    // &:-webkit-autofill {
-    //   border-color: ${palette.gray.base};
-    // }
-
-    // &:-webkit-autofill {
-    //   &:hover:not(:focus-visible) {
-    //     box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
-    //       ${hoverRing.dark.gray};
-    //   }
-    // }
   `,
 };
 
 export const wrapperStateStyles: Record<Theme, Record<State, string>> = {
   [Theme.Light]: {
     [State.Error]: css`
-      // &,
-      // &:-webkit-autofill {
-      //   border-color: ${palette.red.base};
-      // }
-
-      // &:-webkit-autofill {
-      //   &:hover:not(:focus-visible) {
-      //     box-shadow: ${autofillShadowOverride(palette.white)},
-      //       ${hoverRing.light.red};
-      //   }
-      // }
-
       border-color: ${palette.red.base};
-
-      // &:hover,
-      // &:active {
-      //   &:not(:focus-within) {
-      //     box-shadow: ${hoverRing.light.red};
-      //   }
-      // }
     `,
     [State.None]: css`
-      // &,
-      // &:-webkit-autofill {
-      //   border-color: ${palette.gray.base};
-      // }
-
-      // &:-webkit-autofill {
-      //   &:hover:not(:focus-visible) {
-      //     box-shadow: ${autofillShadowOverride(palette.white)},
-      //       ${hoverRing.light.gray};
-      //   }
-      // }
-
       border-color: ${palette.gray.base};
-
-      // &:hover,
-      // &:active {
-      //   &:not(:focus-within) {
-      //     box-shadow: ${hoverRing.light.gray};
-      //   }
-      // }
     `,
   },
   [Theme.Dark]: {
     [State.Error]: css`
-      // &,
-      // &:-webkit-autofill {
-      //   border-color: ${palette.red.base};
-      // }
-
-      // &:-webkit-autofill {
-      //   &:hover:not(:focus-visible) {
-      //     box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
-      //       ${hoverRing.dark.red};
-      //   }
-      // }
-
       border-color: ${palette.red.base};
-
-      // &:hover,
-      // &:active {
-      //   &:not(:focus-within) {
-      //     box-shadow: ${hoverRing.dark.red};
-      //   }
-      // }
     `,
     [State.None]: css`
-      // &,
-      // &:-webkit-autofill {
-      //   border-color: ${palette.gray.base};
-      // }
-
-      // &:-webkit-autofill {
-      //   &:hover:not(:focus-visible) {
-      //     box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
-      //       ${hoverRing.dark.gray};
-      //   }
-      // }
-
       border-color: ${palette.gray.base};
-
-      // &:hover,
-      // &:active {
-      //   &:not(:focus-within) {
-      //     box-shadow: ${hoverRing.dark.gray};
-      //   }
-      // }
     `,
   },
 };
@@ -384,18 +276,6 @@ export const wrapperStateStyles: Record<Theme, Record<State, string>> = {
 export const wrapperHoverStyles: Record<Theme, Record<State, string>> = {
   [Theme.Light]: {
     [State.Error]: css`
-      // &,
-      // &:-webkit-autofill {
-      //   border-color: ${palette.red.base};
-      // }
-
-      // &:-webkit-autofill {
-      //   &:hover:not(:focus-visible) {
-      //     box-shadow: ${autofillShadowOverride(palette.white)},
-      //       ${hoverRing.light.red};
-      //   }
-      // }
-
       border-color: ${palette.red.base};
 
       &:hover,
@@ -406,18 +286,6 @@ export const wrapperHoverStyles: Record<Theme, Record<State, string>> = {
       }
     `,
     [State.None]: css`
-      // &,
-      // &:-webkit-autofill {
-      //   border-color: ${palette.gray.base};
-      // }
-
-      // &:-webkit-autofill {
-      //   &:hover:not(:focus-visible) {
-      //     box-shadow: ${autofillShadowOverride(palette.white)},
-      //       ${hoverRing.light.gray};
-      //   }
-      // }
-
       border-color: ${palette.gray.base};
 
       &:hover,
@@ -430,18 +298,6 @@ export const wrapperHoverStyles: Record<Theme, Record<State, string>> = {
   },
   [Theme.Dark]: {
     [State.Error]: css`
-      // &,
-      // &:-webkit-autofill {
-      //   border-color: ${palette.red.base};
-      // }
-
-      // &:-webkit-autofill {
-      //   &:hover:not(:focus-visible) {
-      //     box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
-      //       ${hoverRing.dark.red};
-      //   }
-      // }
-
       border-color: ${palette.red.base};
 
       &:hover,
@@ -452,18 +308,6 @@ export const wrapperHoverStyles: Record<Theme, Record<State, string>> = {
       }
     `,
     [State.None]: css`
-      // &,
-      // &:-webkit-autofill {
-      //   border-color: ${palette.gray.base};
-      // }
-
-      // &:-webkit-autofill {
-      //   &:hover:not(:focus-visible) {
-      //     box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
-      //       ${hoverRing.dark.gray};
-      //   }
-      // }
-
       border-color: ${palette.gray.base};
 
       &:hover,

@@ -42,9 +42,6 @@ export function Select({
   } as const;
 
   const handleChange = (val: string) => {
-    // eslint-disable-next-line no-console
-    console.log({ val });
-
     const selectedUnit = unitOptions.find(unit => unit.displayName === val);
 
     if (selectedUnit !== undefined) {
@@ -56,7 +53,6 @@ export function Select({
    * Custom unit button with a tooltip.
    * Tooltip will show up if there is an ellipse.
    */
-  // eslint-disable-next-line react/display-name
   const CustomMenuButton = React.forwardRef(
     ({ className, children, ...props }: ButtonProps, forwardedRef) => {
       // TODO: HALP with TS
@@ -103,6 +99,8 @@ export function Select({
     },
   );
 
+  CustomMenuButton.displayName = 'CustomMenuButton';
+
   return (
     <div className={cx(wrapperBaseStyles)}>
       <SelectComponent
@@ -118,8 +116,6 @@ export function Select({
         disabled={disabled}
         size={size}
         {...popoverProps}
-        // Component missing displayName
-        // eslint-disable-next-line
         __INTERNAL__menuButtonSlot__={CustomMenuButton}
       >
         {unitOptions?.map(option => (

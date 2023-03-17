@@ -43,9 +43,9 @@ export function Input({
   value: valueProp,
   onChange: onChangeProp,
   disabled,
-  size,
+  size = Size.Default,
   hasSelectOptions,
-  state,
+  state = State.None,
   errorMessage,
   ...rest
 }: InputProps) {
@@ -114,9 +114,9 @@ export function Input({
         wrapperClassName,
         wrapperBaseStyles,
         wrapperThemeStyles[theme],
-        wrapperStateStyles[theme][state as State],
+        wrapperStateStyles[theme][state],
         {
-          [wrapperHoverStyles[theme][state as State]]: !disabled,
+          [wrapperHoverStyles[theme][state]]: !disabled,
           [wrapperDisabledStyles[theme]]: disabled,
           [selectBaseStyles]: hasSelectOptions,
           [wrapperErrorStyles]: renderErrorIcon,
@@ -128,9 +128,9 @@ export function Input({
         className={cx(
           inputBaseStyles,
           inputThemeStyles[theme],
-          sizeInputStyles[size as Size],
+          sizeInputStyles[size],
           {
-            [errorInputStyles[size as Size]]: renderErrorIcon,
+            [errorInputStyles[size]]: renderErrorIcon,
             [inputAnimateStyles]: !disabled,
           },
         )}
@@ -146,9 +146,9 @@ export function Input({
           warningIconClassName,
           iconBaseStyles,
           iconThemeStyles[theme],
-          iconSizeStyles[size as Size],
+          iconSizeStyles[size],
           {
-            [iconErrorStyles[size as Size]]: renderErrorIcon,
+            [iconErrorStyles[size]]: renderErrorIcon,
           },
         )}
       >

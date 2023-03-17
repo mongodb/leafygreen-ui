@@ -35,6 +35,15 @@ export const unitThemeStyles: Record<Theme, string> = {
     color: ${palette.gray.dark1};
   `,
   [Theme.Dark]: css`
+    color: ${palette.gray.light1};
+  `,
+};
+
+export const unitDisabledStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.dark1};
+  `,
+  [Theme.Dark]: css`
     color: ${palette.gray.base};
   `,
 };
