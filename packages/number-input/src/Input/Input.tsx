@@ -95,7 +95,6 @@ export function Input({
    */
   const handleArrowKeyDown = (e: React.KeyboardEvent) => {
     if (!disabled) {
-      // TODO: use vars for keys
       if (e.key === 'ArrowUp') {
         e.preventDefault();
         handleIncrementClick();
