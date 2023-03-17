@@ -1,10 +1,11 @@
-import React, { Fragment, ReactElement, ReactNode, useMemo } from 'react';
+import React, { Fragment, PropsWithRef, RefObject, useMemo } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { HTMLElementProps, isComponentType } from '@leafygreen-ui/lib';
+import { Polymorph } from '@leafygreen-ui/polymorphic';
 
-import Cell from '../Cell';
+import ExpandedContent from '../ExpandedContent/ExpandedContent';
 import { useTableContext } from '../TableContext/TableContext';
 import { LeafygreenTableRow } from '../useLeafygreenTable';
 
@@ -15,7 +16,6 @@ import {
   nestedBorderTopStyles,
 } from './Row.styles';
 import { InternalRowWithRTProps } from './Row.types';
-import ExpandedContent from '../ExpandedContent/ExpandedContent';
 import RowCellChildren from './RowCellChildren';
 
 const InternalRowWithRT = <T extends unknown>({
@@ -24,43 +24,51 @@ const InternalRowWithRT = <T extends unknown>({
   row,
   virtualRow,
   disabled,
-  isNestedRow,
   ...rest
 }: InternalRowWithRTProps<T>) => {
   const { theme } = useDarkMode();
-  const { isExpandedRow } = useTableContext();
-  const isNestedRowParent = isExpandedRow(row.id);
-  const ExpandedContentRowProp = row?.original.renderExpandedContent;
+  const { table, getParentRow } = useTableContext();
+  const parentRow = getParentRow(row.id)
+  const rowRef = virtualRow?.measureRef
+
+  const isTableExpandable = table?.getCanSomeRowsExpand()
+  // Is this row nested within other rows?
+  const isNestedRow = !!parentRow
+  // Is this row currently expanded
+  const isExpanded = row.getIsExpanded()
+
   const CellChildren = React.Children.toArray(children).filter(child =>
     isComponentType(child, 'Cell'),
   );
-  const SubRowChildren = React.Children.toArray(children).filter(child =>
-    isComponentType(child, 'SubRow'),
+
+  const OtherChildren = React.Children.toArray(children).filter(child => !isComponentType(child, 'Cell'),
   );
-  const ContainerElement = useMemo(
-    () =>
-      ExpandedContentRowProp || !isNestedRow
-        ? (props: HTMLElementProps<'tbody'>) => (
-          <tbody
-            {...props}
-            className={expandedContentParentStyles}
-            ref={virtualRow ? virtualRow.measureRef : undefined}
-            aria-expanded={isExpandedRow(row.id)}
-            data-testid="lg-table-expandable-row-tbody"
-          />
-        )
-        : Fragment,
-    [ExpandedContentRowProp, isNestedRow],
-  );
+
+
+  /**
+   * Render the row within a `tbody` if
+   * the table itself has any row that is expandable
+   * but not if this row is nested
+   */
+  const shouldRenderAsTBody = isTableExpandable && !isNestedRow
+  const containerAs = useMemo(() => shouldRenderAsTBody ? 'tbody' : Fragment, [shouldRenderAsTBody])
+
+  const tBodyProps: PropsWithRef<HTMLElementProps<'tbody'>> = {
+    className: expandedContentParentStyles,
+    "data-expanded": isExpanded,
+    "data-testid": "lg-table-expandable-row-tbody",
+    // @ts-expect-error - VirtualItem.measureRef is not typed as a ref
+    ref: rowRef
+  }
 
   return (
     <>
-      <ContainerElement>
+      <Polymorph as={containerAs} {...(shouldRenderAsTBody ?? tBodyProps)}>
         <InternalRowBase
           className={cx(
             {
-              [nestedBorderTopStyles[theme]]: isNestedRowParent && !isNestedRow,
-              [nestedBgStyles[theme]]: isNestedRowParent,
+              [nestedBorderTopStyles[theme]]: isExpanded && !isNestedRow,
+              [nestedBgStyles[theme]]: isExpanded,
             },
             className,
           )}
@@ -72,13 +80,8 @@ const InternalRowWithRT = <T extends unknown>({
             {CellChildren}
           </RowCellChildren>
         </InternalRowBase>
-        {ExpandedContentRowProp && (
-          <ExpandedContent row={row}>
-            {ExpandedContentRowProp(row as LeafygreenTableRow<T>)}
-          </ExpandedContent>
-        )}
-        {SubRowChildren}
-      </ContainerElement>
+        {OtherChildren}
+      </Polymorph>
     </>
   );
 };

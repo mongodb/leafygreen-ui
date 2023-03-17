@@ -1,6 +1,8 @@
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
+import { LeafygreenTableValues } from '../useLeafygreenTable';
+
 export interface TableProps extends HTMLElementProps<'table'>, DarkModeProps {
   /**
    * Determines whether alternating rows will have dark backgrounds.
@@ -12,4 +14,11 @@ export interface TableProps extends HTMLElementProps<'table'>, DarkModeProps {
    * @default 13
    */
   baseFontSize?: BaseFontSize;
+
+  /**
+   * The `useLeafyGreenTable` return value
+   *
+   * TODO: Generic types
+   */
+  table?: LeafygreenTableValues<any, boolean>;
 }
