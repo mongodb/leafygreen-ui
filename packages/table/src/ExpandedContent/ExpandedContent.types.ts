@@ -1,5 +1,8 @@
-import { LeafygreenTableRow } from "../useLeafygreenTable";
+import { RowData } from '@tanstack/react-table';
 
-export interface ExpandedContentProps<T extends unknown> {
+import { LeafygreenTableRow } from '../useLeafygreenTable';
+
+type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] };
+export interface ExpandedContentProps<T extends RowData> {
   row: LeafygreenTableRow<T>;
 }
