@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement, ReactNode } from 'react';
+import React, { Fragment, ReactElement, ReactNode, useMemo } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -33,17 +33,21 @@ const InternalRowWithRT = <T extends unknown>({
   const isNestedRowParent = row.depth === 0 && isExpandedRow(row.id);
   const isNestedRowOrParent = isExpandedRow(row.id) || row.depth > 0;
   const ExpandedContentRowProp = row?.original.renderExpandedContent;
-  const ContainerElement = (ExpandedContentRowProp || !isNestedRow)
-    ? (props: HTMLElementProps<'tbody'>) => (
-      <tbody
-        {...props}
-        className={expandedContentParentStyles}
-        ref={virtualRow ? virtualRow.measureRef : undefined}
-        aria-expanded={isExpandedRow(row.id)}
-        data-testid="lg-table-expandable-row-tbody"
-      />
-    )
-    : Fragment;
+  const ContainerElement = useMemo(
+    () =>
+      ExpandedContentRowProp || !isNestedRow
+        ? (props: HTMLElementProps<'tbody'>) => (
+            <tbody
+              {...props}
+              className={expandedContentParentStyles}
+              ref={virtualRow ? virtualRow.measureRef : undefined}
+              aria-expanded={isExpandedRow(row.id)}
+              data-testid="lg-table-expandable-row-tbody"
+            />
+          )
+        : Fragment,
+    [ExpandedContentRowProp, isNestedRow],
+  );
 
   return (
     <>
@@ -76,18 +80,15 @@ const InternalRowWithRT = <T extends unknown>({
               className={cx(
                 subRowStyles,
                 {
-                  [hiddenSubRowStyles]: !isExpandedRow(row.id)
+                  [hiddenSubRowStyles]: !isExpandedRow(row.id),
                 },
-                expandedContentStyles[theme]
+                expandedContentStyles[theme],
               )}
             >
               <div
-                className={cx(
-                  subRowStyles,
-                  {
-                    [hiddenSubRowStyles]: !isExpandedRow(row.id)
-                  }
-                )}
+                className={cx(subRowStyles, {
+                  [hiddenSubRowStyles]: !isExpandedRow(row.id),
+                })}
               >
                 {ExpandedContentRowProp(row as LeafygreenTableRow<T>)}
               </div>
@@ -117,7 +118,10 @@ const InternalRowWithRT = <T extends unknown>({
                       isSubRowCell={true}
                       isRenderedSubRowCell={isExpandedRow(row.id)}
                     >
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
                     </Cell>
                   );
                 })}

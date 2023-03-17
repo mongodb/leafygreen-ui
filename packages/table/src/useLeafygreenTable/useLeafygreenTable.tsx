@@ -68,10 +68,10 @@ function useLeafygreenTable<T extends unknown>(
       : []),
     ...columnsProp.map(
       propColumn =>
-      ({
-        ...propColumn,
-        enableSorting: propColumn.enableSorting ?? false,
-      } as ColumnDef<LeafygreenTableType<T>>),
+        ({
+          ...propColumn,
+          enableSorting: propColumn.enableSorting ?? false,
+        } as ColumnDef<LeafygreenTableType<T>>),
     ),
   ];
 
@@ -81,9 +81,7 @@ function useLeafygreenTable<T extends unknown>(
     data,
     columns,
     getRowCanExpand: (row: LeafygreenTableRow<T>) => {
-      return (
-        !!row.original.renderExpandedContent || !!row.subRows?.length
-      );
+      return !!row.original.renderExpandedContent || !!row.subRows?.length;
     },
     enableExpanding: true,
     enableSortingRemoval: true,

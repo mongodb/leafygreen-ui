@@ -1,4 +1,4 @@
-import React, { Fragment, PropsWithChildren } from 'react';
+import React, { Fragment, PropsWithChildren, useMemo } from 'react';
 
 import { TableBodyProps } from './TableBody.types';
 
@@ -11,14 +11,18 @@ const TableBody = <T extends unknown>({
   let paddingTop = 0;
   let paddingBottom = 0;
 
-  const ContainerElement = renderingExpandableRows
-    ? Fragment
-    : (
-      props: React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLTableSectionElement>,
-        HTMLTableSectionElement
-      >,
-    ) => <tbody {...props} />;
+  const ContainerElement = useMemo(
+    () =>
+      renderingExpandableRows
+        ? Fragment
+        : (
+            props: React.DetailedHTMLProps<
+              React.HTMLAttributes<HTMLTableSectionElement>,
+              HTMLTableSectionElement
+            >,
+          ) => <tbody {...props} />,
+    [renderingExpandableRows],
+  );
 
   if (table && 'virtualRows' in table) {
     const { virtualRows, totalSize } = table;
