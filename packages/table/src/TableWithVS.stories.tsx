@@ -24,6 +24,7 @@ import {
   getSortedRowModel,
   SortingState,
 } from '.';
+import ExpandedContent from './ExpandedContent/ExpandedContent';
 
 export default {
   title: 'Components/Table/With Virtualized Scrolling',
@@ -122,7 +123,7 @@ export const Basic: ComponentStory<typeof Table> = args => {
               </HeaderRow>
             ))}
           </TableHead>
-          <TableBody table={table}>
+          <TableBody>
             {table.virtualRows.map((virtualRow: VirtualItem) => {
               const row = rows[virtualRow.index];
               return (
@@ -196,7 +197,6 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    // getExpandedRowModel: getExpandedRowModel(),
     getSubRows: row => row.subRows,
     useVirtualScrolling: true,
   });
@@ -228,9 +228,7 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
               </HeaderRow>
             ))}
           </TableHead>
-          <TableBody table={table} renderingExpandableRows>
-            {/* Not sure why this is showing an error. It's not checking the second type in the conditional type */}
-            {/* @ts-ignore */}
+          <TableBody>
             {table.virtualRows.map((virtualRow: VirtualItem) => {
               const row = rows[virtualRow.index];
               return (
@@ -391,7 +389,7 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
               </HeaderRow>
             ))}
           </TableHead>
-          <TableBody table={table}>
+          <TableBody>
             {table.virtualRows.map((virtualRow: VirtualItem) => {
               const row = rows[virtualRow.index];
               return (
@@ -520,7 +518,7 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
               </HeaderRow>
             ))}
           </TableHead>
-          <TableBody table={table}>
+          <TableBody>
             {table.virtualRows.map(virtualRow => {
               const row = rows[virtualRow.index];
               return (
@@ -632,7 +630,7 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
               </HeaderRow>
             ))}
           </TableHead>
-          <TableBody table={table} renderingExpandableRows>
+          <TableBody>
             {table.virtualRows.map(virtualRow => {
               const row = rows[virtualRow.index];
               return (
@@ -647,6 +645,11 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
                       </Cell>
                     );
                   })}
+                  {
+                    row.original.renderExpandedContent && (
+                      <ExpandedContent row={row} />
+                    )
+                  }
                 </Row>
               );
             })}

@@ -1,28 +1,22 @@
 import React, { Fragment, PropsWithChildren, useMemo } from 'react';
 
+import { Polymorph } from '@leafygreen-ui/polymorphic';
+
+import { useTableContext } from '../TableContext/TableContext';
+
 import { TableBodyProps } from './TableBody.types';
 
 const TableBody = <T extends unknown>({
   children,
-  table,
-  renderingExpandableRows = false,
   ...rest
 }: PropsWithChildren<TableBodyProps<T>>) => {
   let paddingTop = 0;
   let paddingBottom = 0;
 
-  const ContainerElement = useMemo(
-    () =>
-      renderingExpandableRows
-        ? Fragment
-        : (
-            props: React.DetailedHTMLProps<
-              React.HTMLAttributes<HTMLTableSectionElement>,
-              HTMLTableSectionElement
-            >,
-          ) => <tbody {...props} />,
-    [renderingExpandableRows],
-  );
+  const { table } = useTableContext()
+  const areSomeRowsExpandable = table?.getCanSomeRowsExpand()
+
+  const bodyAs = useMemo(() => areSomeRowsExpandable ? Fragment : 'tbody', [areSomeRowsExpandable])
 
   if (table && 'virtualRows' in table) {
     const { virtualRows, totalSize } = table;
@@ -34,7 +28,7 @@ const TableBody = <T extends unknown>({
   }
 
   return (
-    <ContainerElement {...rest}>
+    <Polymorph as={bodyAs} {...rest}>
       {paddingTop > 0 && (
         <tr aria-hidden>
           <td style={{ height: `${paddingTop}px` }} />
@@ -46,7 +40,7 @@ const TableBody = <T extends unknown>({
           <td style={{ height: `${paddingBottom}px` }} />
         </tr>
       )}
-    </ContainerElement>
+    </Polymorph>
   );
 };
 

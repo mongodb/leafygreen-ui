@@ -68,10 +68,10 @@ function useLeafygreenTable<T extends unknown>(
       : []),
     ...columnsProp.map(
       propColumn =>
-        ({
-          ...propColumn,
-          enableSorting: propColumn.enableSorting ?? false,
-        } as ColumnDef<LeafygreenTableType<T>>),
+      ({
+        ...propColumn,
+        enableSorting: propColumn.enableSorting ?? false,
+      } as ColumnDef<LeafygreenTableType<T>>),
     ),
   ];
 
@@ -85,7 +85,6 @@ function useLeafygreenTable<T extends unknown>(
     },
     enableExpanding: true,
     enableSortingRemoval: true,
-    manualExpanding: true,
     ...rest,
   });
   let rowVirtualizer: VirtualizerValues | undefined;

@@ -1,20 +1,31 @@
+import React, { PropsWithChildren, ReactElement, ReactNode } from 'react';
+import { Row } from '@tanstack/react-table';
+
 import { isComponentType } from '@leafygreen-ui/lib';
-import React, { ReactElement, ReactNode } from 'react';
+
 import Cell from '../Cell';
 import ExpandingCell from '../Cell/ExpandingCell';
 import FirstCell from '../Cell/FirstCell';
-import { useTableContext } from "../TableContext/TableContext";
 
-const RowCellChildren = ({ row, children, disabled }) => {
-  const { isExpandedRow, toggleExpandedRow } = useTableContext();
+interface RowCellChildrenProps extends PropsWithChildren<{
+  row: Row<any>,
+  disabled?: boolean,
+}> { }
+
+const RowCellChildren = ({ row, children, disabled }: RowCellChildrenProps) => {
+  const isExpandable = row.getCanExpand()
+  const isExpanded = row.getIsExpanded()
+
   const CellChildren = React.Children.toArray(children).filter(child =>
     isComponentType(child, 'Cell'),
   );
   const FirstCellChild = CellChildren[0];
   const OtherCellChildren = CellChildren.slice(1);
+
+
   return (
     <>
-      {row.getCanExpand()
+      {isExpandable
         ? (
           <>
             {
@@ -22,8 +33,8 @@ const RowCellChildren = ({ row, children, disabled }) => {
                 ...(FirstCellChild as ReactElement)?.props,
                 cellIndex: 0,
                 depth: row.depth,
-                isExpanding: isExpandedRow(row.id),
-                toggleIsExpanding: () => toggleExpandedRow(row.id),
+                isExpanding: isExpanded,
+                toggleIsExpanding: () => row.toggleExpanded(),
                 disabled,
               })
             }
