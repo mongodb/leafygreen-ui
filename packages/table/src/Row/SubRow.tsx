@@ -5,27 +5,33 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
 
 import { hiddenSubRowStyles, subRowStyles } from '../Cell/Cell.styles';
-import { useTableContext } from "../TableContext/TableContext";
+import { useTableContext } from '../TableContext/TableContext';
 
 import { nestedBgStyles } from './Row.styles';
-import { InternalRowWithRTProps } from "./Row.types";
-import Row from ".";
+import { InternalRowWithRTProps } from './Row.types';
+import Row from '.';
 
-const SubRow = <T extends unknown>({ className, row: subRow, children, ...rest }: InternalRowWithRTProps<T>) => {
+const SubRow = <T extends unknown>({
+  className,
+  row: subRow,
+  children,
+  ...rest
+}: InternalRowWithRTProps<T>) => {
   const { getParentRow } = useTableContext();
-  const parentRow = getParentRow(subRow.id)
+  const parentRow = getParentRow(subRow.id);
 
   const { theme } = useDarkMode();
-  const isRendered = parentRow?.getIsExpanded()
-  const CellChildren = React.Children.toArray(children).filter((child) => isComponentType(child, 'Cell'));
-  const SubRowChildren = React.Children.toArray(children).filter((child) => isComponentType(child, 'SubRow'));
+  const isRendered = parentRow?.getIsExpanded();
+  const CellChildren = React.Children.toArray(children).filter(child =>
+    isComponentType(child, 'Cell'),
+  );
+  const SubRowChildren = React.Children.toArray(children).filter(child =>
+    isComponentType(child, 'SubRow'),
+  );
 
-  const styles = cx(
-    subRowStyles,
-    {
-      [hiddenSubRowStyles]: !isRendered,
-    }
-  )
+  const styles = cx(subRowStyles, {
+    [hiddenSubRowStyles]: !isRendered,
+  });
 
   return (
     <Row
@@ -51,7 +57,7 @@ const SubRow = <T extends unknown>({ className, row: subRow, children, ...rest }
       })}
       {SubRowChildren}
     </Row>
-  )
-}
+  );
+};
 
 export default SubRow;

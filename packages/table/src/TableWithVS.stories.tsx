@@ -5,6 +5,7 @@ import { ComponentStory, Meta } from '@storybook/react';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 import Cell from './Cell/Cell';
+import ExpandedContent from './ExpandedContent/ExpandedContent';
 import HeaderCell from './HeaderCell/HeaderCell';
 import HeaderRow from './HeaderRow/HeaderRow';
 import Row from './Row/Row';
@@ -24,7 +25,6 @@ import {
   getSortedRowModel,
   SortingState,
 } from '.';
-import ExpandedContent from './ExpandedContent/ExpandedContent';
 
 export default {
   title: 'Components/Table/With Virtualized Scrolling',
@@ -250,21 +250,16 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
                         row={subRow}
                         virtualRow={virtualRow}
                       >
-                        {subRow
-                          .getVisibleCells()
-                          .map((cell) => {
-                            return (
-                              <Cell
-                                key={cell.id}
-                                cell={cell}
-                              >
-                                {flexRender(
-                                  cell.column.columnDef.cell,
-                                  cell.getContext(),
-                                )}
-                              </Cell>
-                            );
-                          })}
+                        {subRow.getVisibleCells().map(cell => {
+                          return (
+                            <Cell key={cell.id} cell={cell}>
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext(),
+                              )}
+                            </Cell>
+                          );
+                        })}
                         {subRow.subRows &&
                           subRow.subRows.map(subSubRow => (
                             <SubRow
@@ -272,21 +267,16 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
                               row={subSubRow}
                               virtualRow={virtualRow}
                             >
-                              {subSubRow
-                                .getVisibleCells()
-                                .map((cell) => {
-                                  return (
-                                    <Cell
-                                      key={cell.id}
-                                      cell={cell}
-                                    >
-                                      {flexRender(
-                                        cell.column.columnDef.cell,
-                                        cell.getContext(),
-                                      )}
-                                    </Cell>
-                                  );
-                                })}
+                              {subSubRow.getVisibleCells().map(cell => {
+                                return (
+                                  <Cell key={cell.id} cell={cell}>
+                                    {flexRender(
+                                      cell.column.columnDef.cell,
+                                      cell.getContext(),
+                                    )}
+                                  </Cell>
+                                );
+                              })}
                             </SubRow>
                           ))}
                       </SubRow>

@@ -13,10 +13,13 @@ const TableBody = <T extends unknown>({
   let paddingTop = 0;
   let paddingBottom = 0;
 
-  const { table } = useTableContext()
-  const areSomeRowsExpandable = table?.getCanSomeRowsExpand()
+  const { table } = useTableContext();
+  const areSomeRowsExpandable = table?.getCanSomeRowsExpand();
 
-  const bodyAs = useMemo(() => areSomeRowsExpandable ? Fragment : 'tbody', [areSomeRowsExpandable])
+  const bodyAs = useMemo(
+    () => (areSomeRowsExpandable ? Fragment : 'tbody'),
+    [areSomeRowsExpandable],
+  );
 
   if (table && 'virtualRows' in table) {
     const { virtualRows, totalSize } = table;

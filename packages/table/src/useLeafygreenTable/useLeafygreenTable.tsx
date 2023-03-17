@@ -23,7 +23,6 @@ const getSelectColumnConfig = <T extends unknown>() => {
     // eslint-disable-next-line react/display-name
     header: ({ table }: { table: LeafygreenTable<T> }) => (
       <CheckboxCell
-        isHeader
         checked={table.getIsAllRowsSelected()}
         indeterminate={table.getIsSomeRowsSelected()}
         onChange={table.getToggleAllRowsSelectedHandler()}
@@ -68,10 +67,10 @@ function useLeafygreenTable<T extends unknown>(
       : []),
     ...columnsProp.map(
       propColumn =>
-      ({
-        ...propColumn,
-        enableSorting: propColumn.enableSorting ?? false,
-      } as ColumnDef<LeafygreenTableType<T>>),
+        ({
+          ...propColumn,
+          enableSorting: propColumn.enableSorting ?? false,
+        } as ColumnDef<LeafygreenTableType<T>>),
     ),
   ];
 

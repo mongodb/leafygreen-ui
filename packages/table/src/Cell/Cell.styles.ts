@@ -29,7 +29,7 @@ export const alignmentStyles = (align: Align = 'left') => css`
 `;
 
 export const depthPadding = (depth: number) => css`
-  padding-left: ${16 * depth}px;
+  padding-left: ${Math.max(8, 16 * depth)}px;
 `;
 
 export const cellContentContainerStyles = css`
