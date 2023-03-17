@@ -23,9 +23,9 @@ export default StoryMeta({
       control: 'select',
       options: Object.values(Size),
     },
-    // disabled: {
-    //   control: 'boolean',
-    // },
+    disabled: {
+      control: 'boolean',
+    },
     label: {
       control: 'text',
     },
@@ -36,6 +36,9 @@ export default StoryMeta({
       control: 'text',
     },
     errorMessage: {
+      control: 'text',
+    },
+    placeholder: {
       control: 'text',
     },
   },

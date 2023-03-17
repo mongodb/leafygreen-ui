@@ -27,6 +27,13 @@ type AriaLabelkeys = keyof AriaLabelPropsWithLabel;
 
 export interface WithSelectProps {
   /**
+   * The string unit that appears to the right of the input if using a single unit.
+   *
+   * Required if using `unitOptions`. When using `unitOptions` this value becomes the controlled value of the select input.
+   *
+   */
+  unit: string;
+  /**
    * The options that appear in the select element attached to the right of the input.
    */
   unitOptions: Array<UnitOption>;
@@ -38,6 +45,13 @@ export interface WithSelectProps {
 }
 
 export interface WithoutSelectProps {
+  /**
+   * The string unit that appears to the right of the input if using a single unit.
+   *
+   * Required if using `unitOptions`. When using `unitOptions` this value becomes the controlled value of the select input.
+   *
+   */
+  unit?: string;
   /**
    * The options that appear in the select element attached to the right of the input.
    */
@@ -102,14 +116,6 @@ export interface BaseNumberInputProps
    * @default 'default'
    */
   size?: Size;
-
-  /**
-   * The string unit that appears to the right of the input if using a single unit.
-   *
-   * Required if using `unitOptions`. When using `unitOptions` this value becomes the controlled value of the select input.
-   *
-   */
-  unit?: string;
 
   /**
    * Specifies that the popover content should be rendered at the end of the DOM,

@@ -8,9 +8,9 @@ import { Option, Select as SelectComponent } from '@leafygreen-ui/select';
 import Tooltip from '@leafygreen-ui/tooltip';
 
 import {
-  baseStyles,
+  menuBaseStyles,
   menuThemeStyles,
-  themeStyles,
+  selectDisabledStyles,
   wrapperBaseStyles,
 } from './Select.styles';
 import { SelectProps } from './Select.types';
@@ -19,6 +19,7 @@ import { SelectProps } from './Select.types';
  * @internal
  */
 export function Select({
+  id,
   unit,
   unitOptions,
   onChange,
@@ -83,13 +84,13 @@ export function Select({
           </Tooltip>
           <Button
             {...props}
-            className={cx(menuThemeStyles[theme], className)}
+            className={cx(menuBaseStyles, menuThemeStyles[theme], className)}
             ref={buttonRef}
             onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => {
-              const buttonAncestor = (e.target as HTMLButtonElement).closest(
+              const popoverParent = (e.target as HTMLButtonElement).closest(
                 'div[data-ispopoverwrapper]',
               );
-              if (!buttonAncestor) setOpen(true);
+              if (!popoverParent) setOpen(true);
             }}
             onMouseLeave={() => setOpen(false)}
             onFocus={() => setOpen(true)}
@@ -105,10 +106,13 @@ export function Select({
   return (
     <div className={cx(wrapperBaseStyles)}>
       <SelectComponent
+        id={id}
         onChange={handleChange}
         aria-labelledby="Unit Picker"
         value={unit?.displayName}
-        className={cx(baseStyles, themeStyles[theme])}
+        className={cx({
+          [selectDisabledStyles[theme]]: disabled,
+        })}
         allowDeselect={false}
         dropdownAutoWidth
         disabled={disabled}

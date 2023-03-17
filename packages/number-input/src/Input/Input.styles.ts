@@ -17,7 +17,7 @@ export const warningIconClassName = createUniqueClassName(
   'number-input-wrapper',
 );
 
-export const baseInputStyles = css`
+export const inputBaseStyles = css`
   all: unset;
   font-family: ${fontFamilies.default};
   font-weight: normal;
@@ -38,11 +38,35 @@ export const baseInputStyles = css`
     -moz-appearance: textfield;
   }
 
+  &[aria-disabled='true'] {
+    cursor: not-allowed;
+
+    &:hover,
+    &:active {
+      box-shadow: none;
+    }
+  }
+`;
+
+export const inputAnimateStyles = css`
   .${wrapperClassName}:hover &,
   .${wrapperClassName}:focus-within & {
     padding-right: ${spacing[1] * 6}px;
   }
 `;
+
+export const inputThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    &::placeholder {
+      color: ${palette.gray.light1};
+    }
+  `,
+  [Theme.Dark]: css`
+    &::placeholder {
+      color: ${palette.gray.dark1};
+    }
+  `,
+};
 
 export const iconErrorStyles: Record<Size, string> = {
   [Size.XSmall]: css`
@@ -128,7 +152,9 @@ export const arrowsBaseStyles = css`
   justify-content: center;
   translate: 16px 0;
   transition: translate ${transitionDuration.default}ms ease-in-out;
+`;
 
+export const arrowsAnimateStyles = css`
   .${wrapperClassName}:hover &,
   .${wrapperClassName}:focus-within & {
     translate: 0 0;
@@ -220,13 +246,6 @@ export const wrapperThemeStyles: Record<Theme, string> = {
     //       ${hoverRing.light.gray};
     //   }
     // }
-
-    &:hover,
-    &:active {
-      &:not(:focus-within) {
-        box-shadow: ${hoverRing.light.gray};
-      }
-    }
   `,
   [Theme.Dark]: css`
     background-color: ${palette.gray.dark4};
@@ -264,66 +283,127 @@ export const wrapperThemeStyles: Record<Theme, string> = {
     //       ${hoverRing.dark.gray};
     //   }
     // }
-
-    &:hover,
-    &:active {
-      &:not(:focus-within) {
-        box-shadow: ${hoverRing.dark.gray};
-      }
-    }
   `,
 };
-
-export const errorWarningDarkThemeStyles = css`
-  // &,
-  // &:-webkit-autofill {
-  //   border-color: ${palette.red.base};
-  // }
-
-  // &:-webkit-autofill {
-  //   &:hover:not(:focus-visible) {
-  //     box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
-  //       ${hoverRing.dark.red};
-  //   }
-  // }
-
-  border-color: ${palette.red.base};
-
-  &:hover,
-  &:active {
-    &:not(:focus-within) {
-      box-shadow: ${hoverRing.dark.red};
-    }
-  }
-`;
-
-export const errorWarningLightThemeStyles = css`
-  // &,
-  // &:-webkit-autofill {
-  //   border-color: ${palette.red.base};
-  // }
-
-  // &:-webkit-autofill {
-  //   &:hover:not(:focus-visible) {
-  //     box-shadow: ${autofillShadowOverride(palette.white)},
-  //       ${hoverRing.light.red};
-  //   }
-  // }
-
-  border-color: ${palette.red.base};
-
-  &:hover,
-  &:active {
-    &:not(:focus-within) {
-      box-shadow: ${hoverRing.light.red};
-    }
-  }
-`;
 
 export const wrapperStateStyles: Record<Theme, Record<State, string>> = {
   [Theme.Light]: {
     [State.Error]: css`
-      ${errorWarningLightThemeStyles};
+      // &,
+      // &:-webkit-autofill {
+      //   border-color: ${palette.red.base};
+      // }
+
+      // &:-webkit-autofill {
+      //   &:hover:not(:focus-visible) {
+      //     box-shadow: ${autofillShadowOverride(palette.white)},
+      //       ${hoverRing.light.red};
+      //   }
+      // }
+
+      border-color: ${palette.red.base};
+
+      // &:hover,
+      // &:active {
+      //   &:not(:focus-within) {
+      //     box-shadow: ${hoverRing.light.red};
+      //   }
+      // }
+    `,
+    [State.None]: css`
+      // &,
+      // &:-webkit-autofill {
+      //   border-color: ${palette.gray.base};
+      // }
+
+      // &:-webkit-autofill {
+      //   &:hover:not(:focus-visible) {
+      //     box-shadow: ${autofillShadowOverride(palette.white)},
+      //       ${hoverRing.light.gray};
+      //   }
+      // }
+
+      border-color: ${palette.gray.base};
+
+      // &:hover,
+      // &:active {
+      //   &:not(:focus-within) {
+      //     box-shadow: ${hoverRing.light.gray};
+      //   }
+      // }
+    `,
+  },
+  [Theme.Dark]: {
+    [State.Error]: css`
+      // &,
+      // &:-webkit-autofill {
+      //   border-color: ${palette.red.base};
+      // }
+
+      // &:-webkit-autofill {
+      //   &:hover:not(:focus-visible) {
+      //     box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
+      //       ${hoverRing.dark.red};
+      //   }
+      // }
+
+      border-color: ${palette.red.base};
+
+      // &:hover,
+      // &:active {
+      //   &:not(:focus-within) {
+      //     box-shadow: ${hoverRing.dark.red};
+      //   }
+      // }
+    `,
+    [State.None]: css`
+      // &,
+      // &:-webkit-autofill {
+      //   border-color: ${palette.gray.base};
+      // }
+
+      // &:-webkit-autofill {
+      //   &:hover:not(:focus-visible) {
+      //     box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
+      //       ${hoverRing.dark.gray};
+      //   }
+      // }
+
+      border-color: ${palette.gray.base};
+
+      // &:hover,
+      // &:active {
+      //   &:not(:focus-within) {
+      //     box-shadow: ${hoverRing.dark.gray};
+      //   }
+      // }
+    `,
+  },
+};
+
+export const wrapperHoverStyles: Record<Theme, Record<State, string>> = {
+  [Theme.Light]: {
+    [State.Error]: css`
+      // &,
+      // &:-webkit-autofill {
+      //   border-color: ${palette.red.base};
+      // }
+
+      // &:-webkit-autofill {
+      //   &:hover:not(:focus-visible) {
+      //     box-shadow: ${autofillShadowOverride(palette.white)},
+      //       ${hoverRing.light.red};
+      //   }
+      // }
+
+      border-color: ${palette.red.base};
+
+      &:hover,
+      &:active {
+        &:not(:focus-within) {
+          box-shadow: ${hoverRing.light.red};
+        }
+      }
     `,
     [State.None]: css`
       // &,
@@ -350,7 +430,26 @@ export const wrapperStateStyles: Record<Theme, Record<State, string>> = {
   },
   [Theme.Dark]: {
     [State.Error]: css`
-      ${errorWarningDarkThemeStyles};
+      // &,
+      // &:-webkit-autofill {
+      //   border-color: ${palette.red.base};
+      // }
+
+      // &:-webkit-autofill {
+      //   &:hover:not(:focus-visible) {
+      //     box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
+      //       ${hoverRing.dark.red};
+      //   }
+      // }
+
+      border-color: ${palette.red.base};
+
+      &:hover,
+      &:active {
+        &:not(:focus-within) {
+          box-shadow: ${hoverRing.dark.red};
+        }
+      }
     `,
     [State.None]: css`
       // &,
@@ -377,16 +476,24 @@ export const wrapperStateStyles: Record<Theme, Record<State, string>> = {
   },
 };
 
+export const wrapperDisabledStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    background-color: ${palette.gray.light2};
+    border-color: ${palette.gray.light1};
+    color: ${palette.gray.base};
+  `,
+  [Theme.Dark]: css`
+    background-color: ${palette.gray.dark4};
+    border-color: ${palette.gray.dark3};
+    color: ${palette.gray.dark1};
+  `,
+};
+
 export const iconBaseStyles = css`
   position: absolute;
   display: flex;
   transition: translate ${transitionDuration.default}ms ease-in-out;
   translate: 30px 0;
-
-  // .${wrapperClassName}:hover &,
-  // .${wrapperClassName}:focus-within & {
-  //   translate: -12px 0;
-  // }
 `;
 
 export const iconThemeStyles: Record<Theme, string> = {

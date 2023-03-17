@@ -3,6 +3,11 @@ import { Size, UnitOption } from '../NumberInput/NumberInput.types';
 // TODO: extend popover props?
 export interface SelectProps {
   /**
+   * Id for the select component.
+   */
+  id?: string;
+
+  /**
    * Specifies that the popover content should be rendered at the end of the DOM,
    * rather than in the DOM tree.
    *

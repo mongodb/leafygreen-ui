@@ -11,20 +11,25 @@ import { Size, State } from '../NumberInput/NumberInput.types';
 
 import {
   arrowBaseStyles,
+  arrowsAnimateStyles,
   arrowsBaseStyles,
   arrowThemeStyles,
-  baseInputStyles,
   errorInputStyles,
   iconBaseStyles,
   iconErrorStyles,
   iconSizeStyles,
   iconThemeStyles,
+  inputAnimateStyles,
+  inputBaseStyles,
+  inputThemeStyles,
   selectBaseStyles,
   sizeInputStyles,
   warningIconClassName,
   wrapperBaseStyles,
   wrapperClassName,
+  wrapperDisabledStyles,
   wrapperErrorStyles,
+  wrapperHoverStyles,
   wrapperStateStyles,
   wrapperThemeStyles,
 } from './Input.styles';
@@ -71,13 +76,17 @@ export function Input({
   };
 
   const handleIncrementClick = () => {
-    inputRef.current?.stepUp();
-    handleSyntheticEvent();
+    if (!disabled) {
+      inputRef.current?.stepUp();
+      handleSyntheticEvent();
+    }
   };
 
   const handleDecrementClick = () => {
-    inputRef.current?.stepDown();
-    handleSyntheticEvent();
+    if (!disabled) {
+      inputRef.current?.stepDown();
+      handleSyntheticEvent();
+    }
   };
 
   /**
@@ -86,21 +95,30 @@ export function Input({
    */
   const handleArrowKeyDown = (e: React.KeyboardEvent) => {
     if (!disabled) {
-      e.preventDefault();
       // TODO: use vars for keys
-      if (e.key === 'ArrowUp') handleIncrementClick();
-      if (e.key === 'ArrowDown') handleDecrementClick();
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        handleIncrementClick();
+      }
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        handleDecrementClick();
+      }
     }
   };
 
   return (
     <div
+      aria-disabled={disabled}
       className={cx(
         wrapperClassName,
         wrapperBaseStyles,
         wrapperThemeStyles[theme],
         wrapperStateStyles[theme][state as State],
         {
+          [wrapperHoverStyles[theme][state as State]]: !disabled,
+          [wrapperDisabledStyles[theme]]: disabled,
           [selectBaseStyles]: hasSelectOptions,
           [wrapperErrorStyles]: renderErrorIcon,
         },
@@ -108,9 +126,15 @@ export function Input({
     >
       <input
         ref={inputRef}
-        className={cx(baseInputStyles, sizeInputStyles[size as Size], {
-          [errorInputStyles[size as Size]]: renderErrorIcon,
-        })}
+        className={cx(
+          inputBaseStyles,
+          inputThemeStyles[theme],
+          sizeInputStyles[size as Size],
+          {
+            [errorInputStyles[size as Size]]: renderErrorIcon,
+            [inputAnimateStyles]: !disabled,
+          },
+        )}
         type="number"
         value={value}
         onChange={handleChange}
@@ -132,7 +156,9 @@ export function Input({
         <WarningIcon role="presentation" />
       </div>
 
-      <div className={cx(arrowsBaseStyles)}>
+      <div
+        className={cx(arrowsBaseStyles, { [arrowsAnimateStyles]: !disabled })}
+      >
         <button
           aria-label="Increment number"
           onClick={handleIncrementClick}

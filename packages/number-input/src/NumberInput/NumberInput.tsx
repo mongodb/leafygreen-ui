@@ -54,6 +54,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
     const inputId = useIdAllocator({ prefix, id: idProp });
     const errorMessageId = useIdAllocator({ prefix, id: ariaDescribedbyProp });
     const descriptionId = useIdAllocator({ prefix });
+    const selectId = useIdAllocator({ prefix });
     const { darkMode, theme } = useDarkMode(darkModeProp);
 
     /**
@@ -67,7 +68,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
 
     const renderUnitOnly = hasUnit && !hasSelectOptions;
     const renderSelectOnly = hasUnit && hasSelectOptions;
-    const renderError = state === State.Error && errorMessage;
+    const renderErrorMessage = state === State.Error && errorMessage;
 
     /**
      * Gets the current unit option using the unit string
@@ -113,6 +114,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
             <Input
               value={value}
               onChange={onChange}
+              readOnly={disabled}
               disabled={disabled}
               size={size}
               id={inputId}
@@ -121,7 +123,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
               errorMessage={errorMessage}
               aria-describedby={`${errorMessageId} ${
                 description ? descriptionId : undefined
-              }`} //TODO: check this
+              } ${renderSelectOnly ? selectId : undefined}`}
               aria-labelledby={
                 !label && ariaLabelledbyProp ? ariaLabelledbyProp : undefined
               }
@@ -134,8 +136,8 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
               >{`${unitProp}(S)`}</Overline>
             )}
             {renderSelectOnly && (
-              // TODO: needs id to associate with label
               <Select
+                id={selectId}
                 disabled={disabled}
                 unit={currentUnitOption as UnitOption}
                 unitOptions={unitOptions}
@@ -151,7 +153,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
             aria-relevant="all"
             id={errorMessageId}
           >
-            {renderError && <Error>{errorMessage}</Error>}
+            {renderErrorMessage && <Error>{errorMessage}</Error>}
           </div>
         </div>
       </LeafyGreenProvider>
