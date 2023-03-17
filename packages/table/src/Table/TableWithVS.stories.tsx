@@ -8,6 +8,7 @@ import Cell from '../Cell/Cell';
 import HeaderCell from '../HeaderCell/HeaderCell';
 import HeaderRow from '../HeaderRow/HeaderRow';
 import Row from '../Row/Row';
+import SubRow from '../Row/SubRow';
 import Table from '../Table/Table';
 import TableBody from '../TableBody/TableBody';
 import TableContainer from '../TableContainer/TableContainer';
@@ -244,6 +245,54 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
                       </Cell>
                     );
                   })}
+                  {row.subRows &&
+                    row.subRows.map(subRow => (
+                      <SubRow
+                        key={subRow.id}
+                        row={subRow}
+                        virtualRow={virtualRow}
+                      >
+                        {subRow
+                          .getVisibleCells()
+                          .map((cell) => {
+                            return (
+                              <Cell
+                                key={cell.id}
+                                cell={cell}
+                              >
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext(),
+                                )}
+                              </Cell>
+                            );
+                          })}
+                        {subRow.subRows &&
+                          subRow.subRows.map(subSubRow => (
+                            <SubRow
+                              key={subSubRow.id}
+                              row={subSubRow}
+                              virtualRow={virtualRow}
+                            >
+                              {subSubRow
+                                .getVisibleCells()
+                                .map((cell) => {
+                                  return (
+                                    <Cell
+                                      key={cell.id}
+                                      cell={cell}
+                                    >
+                                      {flexRender(
+                                        cell.column.columnDef.cell,
+                                        cell.getContext(),
+                                      )}
+                                    </Cell>
+                                  );
+                                })}
+                            </SubRow>
+                          ))}
+                      </SubRow>
+                    ))}
                 </Row>
               );
             })}

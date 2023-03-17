@@ -2,13 +2,12 @@ import React, { Fragment, ReactElement, ReactNode, useMemo } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { HTMLElementProps, isComponentType } from '@leafygreen-ui/lib';
 
 import Cell from '../Cell';
 import { hiddenSubRowStyles, subRowStyles } from '../Cell/Cell.styles';
 import { useTableContext } from '../TableContext/TableContext';
-import { LeafygreenTableCell, LeafygreenTableRow } from '../useLeafygreenTable';
-import { flexRender } from '..';
+import { LeafygreenTableRow } from '../useLeafygreenTable';
 
 import InternalRowBase from './InternalRowBase';
 import {
@@ -33,6 +32,12 @@ const InternalRowWithRT = <T extends unknown>({
   const isNestedRowParent = row.depth === 0 && isExpandedRow(row.id);
   const isNestedRowOrParent = isExpandedRow(row.id) || row.depth > 0;
   const ExpandedContentRowProp = row?.original.renderExpandedContent;
+  const CellChildren = React.Children.toArray(children).filter(child =>
+    isComponentType(child, 'Cell'),
+  );
+  const SubRowChildren = React.Children.toArray(children).filter(child =>
+    isComponentType(child, 'SubRow'),
+  );
   const ContainerElement = useMemo(
     () =>
       ExpandedContentRowProp || !isNestedRow
@@ -64,14 +69,17 @@ const InternalRowWithRT = <T extends unknown>({
           data-depth={row.depth}
           {...rest}
         >
-          {React.Children.map(children, (child: ReactNode, index: number) => {
-            return React.createElement(Cell, {
-              ...(child as ReactElement)?.props,
-              cellIndex: index,
-              depth: row.depth,
-              disabled,
-            });
-          })}
+          {React.Children.map(
+            CellChildren,
+            (CellChild: ReactNode, index: number) => {
+              return React.createElement(Cell, {
+                ...(CellChild as ReactElement)?.props,
+                cellIndex: index,
+                depth: row.depth,
+                disabled,
+              });
+            },
+          )}
         </InternalRowBase>
         {ExpandedContentRowProp && (
           <tr>
@@ -95,38 +103,7 @@ const InternalRowWithRT = <T extends unknown>({
             </td>
           </tr>
         )}
-        {row.subRows &&
-          row.subRows.map(subRow => (
-            <InternalRowWithRT
-              key={subRow.id}
-              row={subRow}
-              virtualRow={virtualRow}
-              className={className}
-              disabled={disabled}
-              isNestedRow
-              aria-hidden={!isExpandedRow(row.id)}
-              {...rest}
-            >
-              {subRow
-                .getVisibleCells()
-                .map((cell: LeafygreenTableCell<T>, index: number) => {
-                  return (
-                    <Cell
-                      key={cell.id}
-                      cell={cell}
-                      cellIndex={index}
-                      isSubRowCell={true}
-                      isRenderedSubRowCell={isExpandedRow(row.id)}
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </Cell>
-                  );
-                })}
-            </InternalRowWithRT>
-          ))}
+        {SubRowChildren}
       </ContainerElement>
     </>
   );
