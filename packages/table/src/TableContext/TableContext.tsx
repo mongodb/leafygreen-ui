@@ -16,6 +16,7 @@ export const useTableContext = () => useContext<any>(TableContext);
 const TableContextProvider = ({
   children,
   darkMode,
+  table,
   shouldAlternateRowColor,
 }: PropsWithChildren<Partial<TableContextValues>>) => {
   const [columnAlignments, setColumnAlignments] =
@@ -49,6 +50,7 @@ const TableContextProvider = ({
           setColumnAlignments,
           isExpandedRow,
           toggleExpandedRow,
+          table,
         }}
       >
         {children}

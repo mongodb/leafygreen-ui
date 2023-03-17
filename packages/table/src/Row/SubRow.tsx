@@ -6,6 +6,10 @@ import { useTableContext } from "../TableContext/TableContext";
 
 import { InternalRowWithRTProps } from "./Row.types";
 import Row from ".";
+import { cx } from '@leafygreen-ui/emotion';
+import { hiddenSubRowStyles, subRowStyles } from '../Cell/Cell.styles';
+import { nestedBgStyles } from './Row.styles';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 const getParentRowId = (childId: string) => {
   const childIds = childId.split('.')
@@ -13,24 +17,42 @@ const getParentRowId = (childId: string) => {
   return parentId
 }
 
-const SubRow = <T extends unknown>({ row: subRow, children, ...rest }: InternalRowWithRTProps<T>) => {
+
+const SubRow = <T extends unknown>({ className, row: subRow, children, ...rest }: InternalRowWithRTProps<T>) => {
   const parentRowId = getParentRowId(subRow.id)
   const { isExpandedRow } = useTableContext();
+  const { theme } = useDarkMode();
+  const isRendered = isExpandedRow(parentRowId)
   const CellChildren = React.Children.toArray(children).filter((child) => isComponentType(child, 'Cell'));
   const SubRowChildren = React.Children.toArray(children).filter((child) => isComponentType(child, 'SubRow'));
+
+  const styles = cx(
+    subRowStyles,
+    {
+      [hiddenSubRowStyles]: !isRendered,
+    }
+  )
+
   return (
     <Row
       row={subRow}
       isNestedRow
-      aria-hidden={!isExpandedRow(parentRowId)}
+      aria-hidden={!isRendered}
+      className={cx(
+        {
+          [nestedBgStyles[theme]]: isRendered,
+        },
+        className,
+      )}
       {...rest}
     >
       {CellChildren.map((CellChild, index) => {
+        const { className, ...rest } = (CellChild as ReactElement)?.props;
         return React.cloneElement(CellChild as ReactElement, {
-          ...(CellChild as ReactElement)?.props,
+          ...rest,
           cellIndex: index,
-          isSubRowCell: true,
-          isRenderedSubRowCell: isExpandedRow(parentRowId)
+          className: cx(styles, className),
+          contentClassName: cx(styles, className),
         });
       })}
       {SubRowChildren}

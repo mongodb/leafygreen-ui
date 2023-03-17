@@ -20,6 +20,7 @@ const Table = ({
   shouldAlternateRowColor = false,
   baseFontSize: baseFontSizeProp,
   darkMode: darkModeProp,
+  table,
   ...rest
 }: PropsWithChildren<TableProps>) => {
   const baseFontSize: BaseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
@@ -29,6 +30,7 @@ const Table = ({
     <TableContextProvider
       shouldAlternateRowColor={shouldAlternateRowColor}
       darkMode={darkMode}
+      table={table}
     >
       <table
         className={cx(

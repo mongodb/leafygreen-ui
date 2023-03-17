@@ -48,15 +48,6 @@ export const zebraStyles: Record<Theme, string> = {
   `,
 };
 
-export const expandedContentStyles: Record<Theme, string> = {
-  [Theme.Dark]: css`
-    background-color: ${palette.gray.dark4};
-  `,
-  [Theme.Light]: css`
-    background-color: ${palette.gray.light3};
-  `,
-};
-
 export const clickableStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     border-radius: 6px;

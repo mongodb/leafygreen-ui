@@ -11,7 +11,6 @@ import {
   alignmentStyles,
   baseStyles,
   cellContentContainerStyles,
-  depthPadding,
   hiddenSubRowStyles,
   subRowStyles,
 } from './Cell.styles';
@@ -21,54 +20,28 @@ const Cell = <T extends unknown>({
   children,
   className,
   cellIndex,
-  depth = 0,
   toggleExpandedIconProps,
-  align: alignProp,
   cell,
+  contentClassName,
   isSubRowCell,
   isRenderedSubRowCell,
   ...rest
 }: PropsWithChildren<CellProps<T>>) => {
-  const { columnAlignments, isExpandedRow, toggleExpandedRow } =
-    useTableContext();
-  const [align, setAlign] =
-    useState<HTMLElementProps<'td'>['align']>(alignProp);
-
-  useEffect(() => {
-    if (columnAlignments !== undefined && cellIndex !== undefined) {
-      setAlign(columnAlignments[cellIndex]);
-    }
-  }, [cellIndex, columnAlignments]);
-
-  const shouldRenderArrow = cell && cell?.row.getCanExpand() && cellIndex === 0;
 
   return (
     <td
       className={cx(
         baseStyles,
-        {
-          [subRowStyles]: isSubRowCell,
-          [hiddenSubRowStyles]: isSubRowCell && isRenderedSubRowCell !== true,
-        },
         className,
       )}
       {...rest}
     >
       <div
-        className={cx(cellContentContainerStyles, {
-          [depthPadding(depth)]: cellIndex === 0,
-          [alignmentStyles(align)]: !!align,
-          [subRowStyles]: isSubRowCell,
-          [hiddenSubRowStyles]: isSubRowCell && isRenderedSubRowCell !== true,
-        })}
-      >
-        {shouldRenderArrow && (
-          <ToggleExpandedIcon
-            isExpanded={isExpandedRow(cell.row.id)}
-            toggleExpanded={() => toggleExpandedRow(cell.row.id)}
-            data-testid="lg-table-expand-icon-button"
-          />
+        className={cx(
+          cellContentContainerStyles,
+          contentClassName,
         )}
+      >
         {children}
       </div>
     </td>

@@ -5,18 +5,18 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { HTMLElementProps, isComponentType } from '@leafygreen-ui/lib';
 
 import Cell from '../Cell';
-import { hiddenSubRowStyles, subRowStyles } from '../Cell/Cell.styles';
 import { useTableContext } from '../TableContext/TableContext';
 import { LeafygreenTableRow } from '../useLeafygreenTable';
 
 import InternalRowBase from './InternalRowBase';
 import {
   expandedContentParentStyles,
-  expandedContentStyles,
   nestedBgStyles,
   nestedBorderTopStyles,
 } from './Row.styles';
 import { InternalRowWithRTProps } from './Row.types';
+import ExpandedContent from '../ExpandedContent/ExpandedContent';
+import RowCellChildren from './RowCellChildren';
 
 const InternalRowWithRT = <T extends unknown>({
   children,
@@ -29,8 +29,7 @@ const InternalRowWithRT = <T extends unknown>({
 }: InternalRowWithRTProps<T>) => {
   const { theme } = useDarkMode();
   const { isExpandedRow } = useTableContext();
-  const isNestedRowParent = row.depth === 0 && isExpandedRow(row.id);
-  const isNestedRowOrParent = isExpandedRow(row.id) || row.depth > 0;
+  const isNestedRowParent = isExpandedRow(row.id);
   const ExpandedContentRowProp = row?.original.renderExpandedContent;
   const CellChildren = React.Children.toArray(children).filter(child =>
     isComponentType(child, 'Cell'),
@@ -42,14 +41,14 @@ const InternalRowWithRT = <T extends unknown>({
     () =>
       ExpandedContentRowProp || !isNestedRow
         ? (props: HTMLElementProps<'tbody'>) => (
-            <tbody
-              {...props}
-              className={expandedContentParentStyles}
-              ref={virtualRow ? virtualRow.measureRef : undefined}
-              aria-expanded={isExpandedRow(row.id)}
-              data-testid="lg-table-expandable-row-tbody"
-            />
-          )
+          <tbody
+            {...props}
+            className={expandedContentParentStyles}
+            ref={virtualRow ? virtualRow.measureRef : undefined}
+            aria-expanded={isExpandedRow(row.id)}
+            data-testid="lg-table-expandable-row-tbody"
+          />
+        )
         : Fragment,
     [ExpandedContentRowProp, isNestedRow],
   );
@@ -60,8 +59,8 @@ const InternalRowWithRT = <T extends unknown>({
         <InternalRowBase
           className={cx(
             {
-              [nestedBorderTopStyles[theme]]: isNestedRowParent,
-              [nestedBgStyles[theme]]: isNestedRowOrParent,
+              [nestedBorderTopStyles[theme]]: isNestedRowParent && !isNestedRow,
+              [nestedBgStyles[theme]]: isNestedRowParent,
             },
             className,
           )}
@@ -69,39 +68,14 @@ const InternalRowWithRT = <T extends unknown>({
           data-depth={row.depth}
           {...rest}
         >
-          {React.Children.map(
-            CellChildren,
-            (CellChild: ReactNode, index: number) => {
-              return React.createElement(Cell, {
-                ...(CellChild as ReactElement)?.props,
-                cellIndex: index,
-                depth: row.depth,
-                disabled,
-              });
-            },
-          )}
+          <RowCellChildren row={row} disabled={disabled}>
+            {CellChildren}
+          </RowCellChildren>
         </InternalRowBase>
         {ExpandedContentRowProp && (
-          <tr>
-            <td
-              colSpan={row?.getVisibleCells().length}
-              className={cx(
-                subRowStyles,
-                {
-                  [hiddenSubRowStyles]: !isExpandedRow(row.id),
-                },
-                expandedContentStyles[theme],
-              )}
-            >
-              <div
-                className={cx(subRowStyles, {
-                  [hiddenSubRowStyles]: !isExpandedRow(row.id),
-                })}
-              >
-                {ExpandedContentRowProp(row as LeafygreenTableRow<T>)}
-              </div>
-            </td>
-          </tr>
+          <ExpandedContent row={row}>
+            {ExpandedContentRowProp(row as LeafygreenTableRow<T>)}
+          </ExpandedContent>
         )}
         {SubRowChildren}
       </ContainerElement>
