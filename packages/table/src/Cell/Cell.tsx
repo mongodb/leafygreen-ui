@@ -27,21 +27,9 @@ const Cell = <T extends unknown>({
   isRenderedSubRowCell,
   ...rest
 }: PropsWithChildren<CellProps<T>>) => {
-
   return (
-    <td
-      className={cx(
-        baseStyles,
-        className,
-      )}
-      {...rest}
-    >
-      <div
-        className={cx(
-          cellContentContainerStyles,
-          contentClassName,
-        )}
-      >
+    <td className={cx(baseStyles, className)} {...rest}>
+      <div className={cx(cellContentContainerStyles, contentClassName)}>
         {children}
       </div>
     </td>

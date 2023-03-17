@@ -19,12 +19,11 @@ import Row from './Row/Row';
 import TableBody from './TableBody/TableBody';
 import TableContainer from './TableContainer/TableContainer';
 import TableHead from './TableHead/TableHead';
-import { LeafygreenTableCell, LeafygreenTableRow } from './useLeafygreenTable';
 import useLeafygreenTable from './useLeafygreenTable/useLeafygreenTable';
 import { makeData, Person } from './utils/makeData';
 import { AnyDict } from './utils/types';
-
 import Table from './Table';
+import { LeafygreenTableCell, LeafygreenTableRow } from './useLeafygreenTable';
 
 export default {
   title: 'Components/Table',

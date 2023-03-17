@@ -1,9 +1,12 @@
 import React, { ReactElement } from "react";
+
+import { isComponentType } from "@leafygreen-ui/lib";
+
 import { TableRowInterface } from "../TableV10/Table"
 
 const processData = (
-  data: any[], 
-  processedColumns: any[], 
+  data: Array<any>,
+  processedColumns: Array<any>,
   childrenFn: ((TableRowArgs: TableRowInterface<unknown>) => JSX.Element)
 ) => {
   const processedData = data.map((oldDatum, index) => {
@@ -11,7 +14,7 @@ const processData = (
     const evaluatedChildren = childrenFn({ datum: oldDatum, index })
     const childrenArray = React.Children.toArray(evaluatedChildren)
     const evaluatedRow = childrenArray[0] as ReactElement;
-    const evaluatedCells = React.Children.toArray(evaluatedRow.props.children)
+    const evaluatedCells = React.Children.toArray(evaluatedRow.props.children).filter(child => isComponentType(child, 'Cell'))
     return evaluatedCells.reduce((acc, currVal, index) => {
       return {
         ...acc,

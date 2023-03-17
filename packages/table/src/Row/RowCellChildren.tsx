@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 import React, { PropsWithChildren, ReactElement, ReactNode } from 'react';
 import { Row } from '@tanstack/react-table';
+=======
+import React, { ReactElement, ReactNode } from 'react';
+>>>>>>> 878c60181 (fixes wip)
 
 import { isComponentType } from '@leafygreen-ui/lib';
 

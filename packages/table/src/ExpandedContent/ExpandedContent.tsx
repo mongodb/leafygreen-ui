@@ -6,7 +6,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { expandedContentStyles, hiddenSubRowStyles, subRowStyles } from './ExpandedContent.styles';
 import { ExpandedContentProps } from './ExpandedContent.types';
 
-const ExpandedContent = <T extends unknown>({ row }: PropsWithChildren<ExpandedContentProps<T>>) => {
+const ExpandedContent = <T extends unknown>({ row }: ExpandedContentProps<T>) => {
   // const { isExpandedRow } = useTableContext();
   const isExpanded = row.getIsExpanded()
   const Content = row?.original?.renderExpandedContent(row)
