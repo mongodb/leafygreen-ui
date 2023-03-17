@@ -1,6 +1,6 @@
 import React from 'react';
 import { useVirtual } from 'react-virtual';
-import { ColumnDef, RowData, useReactTable } from '@tanstack/react-table';
+import { ColumnDef, useReactTable } from '@tanstack/react-table';
 import PropTypes from 'prop-types';
 
 import CheckboxCell from '../CheckboxCell/CheckboxCell';
@@ -8,6 +8,7 @@ import CheckboxCell from '../CheckboxCell/CheckboxCell';
 import {
   LeafygreenTableOptions,
   LeafygreenTableValues,
+  LGRowData,
 } from './useLeafygreenTable.types';
 import {
   LeafygreenTable,
@@ -16,7 +17,7 @@ import {
   VirtualizerValues,
 } from '.';
 
-const getSelectColumnConfig = <T extends RowData>() => {
+const getSelectColumnConfig = <T extends LGRowData>() => {
   return {
     id: 'select',
     size: 32,
@@ -42,15 +43,15 @@ const getSelectColumnConfig = <T extends RowData>() => {
   } as ColumnDef<T, unknown>;
 };
 
-function useLeafygreenTable<T extends RowData, VS extends boolean = true>(
+function useLeafygreenTable<T extends LGRowData, VS extends boolean = true>(
   props: LeafygreenTableOptions<T, VS>,
 ): LeafygreenTableValues<T, VS>;
 
-function useLeafygreenTable<T extends RowData, VS extends boolean = false>(
+function useLeafygreenTable<T extends LGRowData, VS extends boolean = false>(
   props: LeafygreenTableOptions<T, VS>,
 ): LeafygreenTableValues<T, VS>;
 
-function useLeafygreenTable<T extends RowData, VS extends boolean>(
+function useLeafygreenTable<T extends LGRowData, VS extends boolean>(
   {
     containerRef,
     data,
