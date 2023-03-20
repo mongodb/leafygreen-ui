@@ -1,7 +1,9 @@
 import React from 'react';
 import { faker } from '@faker-js/faker';
 
-import { LeafygreenTableRow } from '../useLeafygreenTable';
+import { LeafyGreenTableRow } from '../useLeafyGreenTable';
+
+faker.seed(0);
 
 export interface Person {
   id: number;
@@ -42,7 +44,7 @@ const newPerson = (): Person => {
   };
 };
 
-const ExpandedContentComponent = (row: LeafygreenTableRow<unknown>) => {
+const ExpandedContentComponent = (row: LeafyGreenTableRow<unknown>) => {
   return (
     <>
       Test

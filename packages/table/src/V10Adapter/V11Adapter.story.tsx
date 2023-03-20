@@ -1,8 +1,10 @@
 import React from 'react';
-import { Meta } from "@storybook/react";
-import { Cell, HeaderRow, Row, Table, TableHeader } from "../TableV10";
-import V11Adapter from "./V11Adapter";
+import { Meta } from '@storybook/react';
+
+import { Cell, HeaderRow, Row, Table, TableHeader } from '../TableV10';
 import { defaultData } from '../TableV10/fixtures';
+
+import V11Adapter from './V11Adapter';
 
 export default {
   title: 'Components/Table/V11 Adapter',
@@ -10,7 +12,6 @@ export default {
 } as Meta<typeof V11Adapter>;
 
 export const Basic = () => {
-
   return (
     <V11Adapter>
       <Table
@@ -34,11 +35,10 @@ export const Basic = () => {
         )}
       </Table>
     </V11Adapter>
-  )
-}
+  );
+};
 
 export const DefaultZebraStripes = () => {
-
   return (
     <V11Adapter>
       <Table
@@ -62,5 +62,5 @@ export const DefaultZebraStripes = () => {
         )}
       </Table>
     </V11Adapter>
-  )
-}
+  );
+};

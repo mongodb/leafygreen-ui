@@ -1,6 +1,6 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-export type TableBodyProps<T extends unknown> = {
+export type TableBodyProps = {
   /**
    * Indicate whether the Table is rendering expandable rows in its body.
    */

@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import { RowData } from '@tanstack/react-table';
 
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -15,7 +15,9 @@ const ExpandedContent = <T extends RowData>({
   row,
 }: ExpandedContentProps<T>) => {
   const isExpanded = row.getIsExpanded();
-  const Content = row?.original?.renderExpandedContent && row?.original?.renderExpandedContent(row);
+  const Content =
+    row?.original?.renderExpandedContent &&
+    row?.original?.renderExpandedContent(row);
 
   const { theme } = useDarkMode();
   return (

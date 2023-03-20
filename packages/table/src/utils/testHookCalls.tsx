@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react';
 
-import useLeafygreenTable, {
-  LeafygreenTable,
-  LeafygreenTableOptions,
-} from '../useLeafygreenTable';
+import useLeafyGreenTable, {
+  LeafyGreenTable,
+  LeafyGreenTableOptions,
+} from '../useLeafyGreenTable';
 import {
   ColumnDef,
   ExpandedState,
@@ -94,7 +94,7 @@ export const getDefaultTestColumns: (
 export interface TestTableWithHookProps {
   rowProps?: object;
   columnProps?: getTestColumnsProps;
-  hookProps?: Partial<LeafygreenTableOptions<Person>>;
+  hookProps?: Partial<LeafyGreenTableOptions<Person, boolean>>;
   stateProps?: any;
 }
 
@@ -112,7 +112,7 @@ export const useTestHookCall = ({
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const table: LeafygreenTable<Person> = useLeafygreenTable({
+  const table: LeafyGreenTable<Person> = useLeafyGreenTable({
     containerRef,
     data,
     columns,

@@ -1,11 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { LGRowData } from '../useLeafyGreenTable';
+
 import InternalRowWithoutRT from './InternalRowWithoutRT';
 import InternalRowWithRT from './InternalRowWithRT';
 import { RowProps } from './Row.types';
 
-const Row = <T extends unknown>({ row, virtualRow, ...rest }: RowProps<T>) => {
+/**
+ * Renders the provided cells
+ */
+const Row = <T extends LGRowData>({
+  row,
+  virtualRow,
+  ...rest
+}: RowProps<T>) => {
   if (row) {
     return <InternalRowWithRT row={row} virtualRow={virtualRow} {...rest} />;
   } else {

@@ -6,10 +6,10 @@ import { useTableContext } from '../TableContext/TableContext';
 
 import { TableBodyProps } from './TableBody.types';
 
-const TableBody = <T extends unknown>({
+const TableBody = ({
   children,
   ...rest
-}: PropsWithChildren<TableBodyProps<T>>) => {
+}: PropsWithChildren<TableBodyProps>) => {
   let paddingTop = 0;
   let paddingBottom = 0;
 
