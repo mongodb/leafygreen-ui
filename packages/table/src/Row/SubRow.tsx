@@ -18,7 +18,7 @@ const SubRow = <T extends unknown>({
   ...rest
 }: InternalRowWithRTProps<T>) => {
   const { getParentRow } = useTableContext();
-  const parentRow = getParentRow(subRow.id);
+  const parentRow = getParentRow?.(subRow.id);
 
   const { theme } = useDarkMode();
   const isRendered = parentRow?.getIsExpanded();

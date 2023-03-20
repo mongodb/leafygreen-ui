@@ -1,4 +1,5 @@
 import React, { PropsWithChildren, ReactElement, ReactNode } from 'react';
+import { Row } from '@tanstack/react-table';
 
 import { isComponentType } from '@leafygreen-ui/lib';
 

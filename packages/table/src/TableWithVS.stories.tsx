@@ -106,7 +106,7 @@ export const Basic: ComponentStory<typeof Table> = args => {
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table table={table} {...args}>
+        <Table {...args} table={table}>
           <TableHead>
             {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>
@@ -211,7 +211,7 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table table={table} {...args}>
+        <Table {...args} table={table}>
           <TableHead>
             {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>
@@ -362,7 +362,7 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table table={table} {...args}>
+        <Table {...args} table={table}>
           <TableHead>
             {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>
@@ -491,7 +491,7 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table table={table} {...args}>
+        <Table {...args} table={table}>
           <TableHead>
             {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>
@@ -603,7 +603,7 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table table={table} {...args}>
+        <Table {...args} table={table}>
           <TableHead>
             {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>

@@ -26,7 +26,7 @@ const InternalRowWithRT = <T extends unknown>({
 }: InternalRowWithRTProps<T>) => {
   const { theme } = useDarkMode();
   const { table, getParentRow } = useTableContext();
-  const parentRow = getParentRow(row.id);
+  const parentRow = getParentRow?.(row.id);
   const rowRef = virtualRow?.measureRef;
 
   const isTableExpandable = table?.getCanSomeRowsExpand();

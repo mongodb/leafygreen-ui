@@ -10,11 +10,12 @@ import {
 } from '@leafygreen-ui/typography';
 
 import TableContextProvider from '../TableContext/TableContext';
+import { LGRowData } from '../useLeafygreenTable';
 
 import { baseStyles, themeStyles } from './Table.styles';
 import { TableProps } from './Table.types';
 
-const Table = ({
+const Table = <T extends LGRowData, VS extends boolean>({
   children,
   className,
   shouldAlternateRowColor = false,
@@ -22,7 +23,7 @@ const Table = ({
   darkMode: darkModeProp,
   table,
   ...rest
-}: PropsWithChildren<TableProps>) => {
+}: PropsWithChildren<TableProps<T, VS>>) => {
   const baseFontSize: BaseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
   const { theme, darkMode } = useDarkMode(darkModeProp);
 

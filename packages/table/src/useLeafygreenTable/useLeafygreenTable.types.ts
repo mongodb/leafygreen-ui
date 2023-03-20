@@ -2,57 +2,48 @@ import { RefObject } from 'react';
 import { VirtualItem } from 'react-virtual';
 import { Cell, Row, Table, TableOptions } from '@tanstack/react-table';
 
-// Below is copied from react-virtual as their types are exported
+import { VirtualizerValues } from './reactVirtual.types';
 
-type ScrollAlignment = 'start' | 'center' | 'end' | 'auto';
-
-interface ScrollToOptions {
-  align: ScrollAlignment;
-}
-
-interface ScrollToOffsetOptions extends ScrollToOptions {}
-interface ScrollToIndexOptions extends ScrollToOptions {}
-
-export interface VirtualizerValues {
-  virtualItems: Array<VirtualItem>;
-  totalSize: number;
-  scrollToOffset: (index: number, options?: ScrollToOffsetOptions) => void;
-  scrollToIndex: (index: number, options?: ScrollToIndexOptions) => void;
-  measure: () => void;
-}
-
-// Above is copied from react-virtual as their types are not exported
-
-export type LeafygreenTableType<T extends unknown> = T & {
-  renderExpandedContent?: (row: Row<T>) => JSX.Element;
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+export type LGRowData = {
+  [key: string]: any;
 };
 
-export type LeafygreenTableCell<T extends unknown> = unknown &
-  Cell<LeafygreenTableType<T>, unknown>;
+export type LGTableDataType<T extends LGRowData> = T & {
+  renderExpandedContent?: (row: LeafygreenTableRow<T>) => JSX.Element;
+};
 
-export type LeafygreenTableRow<T extends unknown> = unknown &
-  Row<LeafygreenTableType<T>>;
+export type LeafygreenTableCell<T extends LGRowData> = Cell<
+  LGTableDataType<T>,
+  LGRowData
+>;
 
-export interface LeafygreenTableOptions<T extends unknown>
-  extends TableOptions<LeafygreenTableType<T>> {
+export interface LeafygreenTableRow<T extends LGRowData>
+  extends Row<LGTableDataType<T>> {}
+
+export interface LeafygreenTableOptions<T extends LGRowData, VS extends boolean>
+  extends TableOptions<LGTableDataType<T>> {
   containerRef: RefObject<HTMLDivElement>;
   hasSelectableRows?: boolean;
-  useVirtualScrolling?: boolean;
+  useVirtualScrolling: VS;
 }
 
-interface LeafygreenTableValuesWithoutVS<T extends unknown>
-  extends Table<LeafygreenTableType<T>> {}
+interface LeafygreenTableValuesWithoutVS<T extends LGRowData>
+  extends Table<LGTableDataType<T>> {}
 
-interface LeafygreenTableValuesWithVS<T>
+interface LeafygreenTableValuesWithVS<T extends LGRowData>
   extends LeafygreenTableValuesWithoutVS<T>,
     Pick<VirtualizerValues, 'totalSize'> {
   virtualRows: Array<VirtualItem>;
 }
 
-export type LeafygreenTableValues<T, VS extends boolean> = VS extends true
+export type LeafygreenTableValues<
+  T extends LGRowData,
+  VS extends boolean,
+> = VS extends true
   ? LeafygreenTableValuesWithVS<T>
   : LeafygreenTableValuesWithoutVS<T>;
 
-export type LeafygreenTable<T extends unknown> =
+export type LeafygreenTable<T extends LGRowData> =
   | LeafygreenTableValuesWithVS<T>
   | LeafygreenTableValuesWithoutVS<T>;

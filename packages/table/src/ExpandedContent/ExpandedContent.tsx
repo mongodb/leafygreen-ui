@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
+import { RowData } from '@tanstack/react-table';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -10,12 +11,11 @@ import {
 } from './ExpandedContent.styles';
 import { ExpandedContentProps } from './ExpandedContent.types';
 
-const ExpandedContent = <T extends unknown>({
+const ExpandedContent = <T extends RowData>({
   row,
-}: ExpandedContentProps<T>) => {
-  // const { isExpandedRow } = useTableContext();
+}: PropsWithChildren<ExpandedContentProps<T>>) => {
   const isExpanded = row.getIsExpanded();
-  const Content = row?.original?.renderExpandedContent(row);
+  const Content = row?.original?.renderExpandedContent?.(row);
 
   const { theme } = useDarkMode();
   return (
