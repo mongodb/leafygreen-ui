@@ -3,7 +3,7 @@ import { VirtualItem } from 'react-virtual';
 
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-import { LeafygreenTableRow, LGRowData } from '../useLeafygreenTable';
+import { LeafyGreenTableRow, LGRowData } from '../useLeafygreenTable';
 
 export interface InternalRowBaseProps extends HTMLElementProps<'tr'> {
   /**
@@ -19,7 +19,7 @@ export interface InternalRowWithRTProps<T extends LGRowData>
   /**
    * Row object passed from the `useLeafygreenTable` hook.
    */
-  row: LeafygreenTableRow<T>;
+  row: LeafyGreenTableRow<T>;
   /**
    * Virtual row object passed from the `useLeafygreenTable` hook
    */

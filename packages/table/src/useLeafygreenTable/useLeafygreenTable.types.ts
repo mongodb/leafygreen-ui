@@ -28,7 +28,7 @@ export interface LeafyGreenTableOptions<T extends LGRowData, VS extends boolean>
   extends TableOptions<LGTableDataType<T>> {
   containerRef: RefObject<HTMLDivElement>;
   hasSelectableRows?: boolean;
-  useVirtualScrolling: VS;
+  useVirtualScrolling?: VS;
 }
 
 /** LeafyGreen extension of `useReactTable` {@link Table}*/

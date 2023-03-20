@@ -50,7 +50,7 @@ describe('packages/table/TableBody', () => {
   describe('rendering with virtualized scrolling', () => {
     test('renders padding top and bottom rows', async () => {
       const VirtualizedScrollingTest = () => {
-        const { containerRef, table } = useTestHookCall({
+        const { containerRef } = useTestHookCall({
           hookProps: {
             useVirtualScrolling: true,
           },

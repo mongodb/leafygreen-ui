@@ -159,7 +159,7 @@ export const NestedRows: ComponentStory<typeof Table> = () => {
               </HeaderRow>
             ))}
           </TableHead>
-          <TableBody table={table} renderingExpandableRows>
+          <TableBody>
             {rows.map((row: LeafyGreenTableRow<Person>) => {
               return (
                 <Row key={row.id} row={row}>
@@ -262,7 +262,7 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
               </HeaderRow>
             ))}
           </TableHead>
-          <TableBody table={table} renderingExpandableRows>
+          <TableBody>
             {rows.map((row: LeafyGreenTableRow<Person>) => {
               return (
                 <Row key={row.id} row={row}>
@@ -372,7 +372,7 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
               </HeaderRow>
             ))}
           </TableHead>
-          <TableBody table={table}>
+          <TableBody>
             {rows.map((row: LeafyGreenTableRow<Person>) => {
               return (
                 <Row key={row.id} row={row}>
@@ -498,7 +498,7 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
               </HeaderRow>
             ))}
           </TableHead>
-          <TableBody table={table}>
+          <TableBody>
             {rows.map((row: LeafyGreenTableRow<Person>) => {
               return (
                 <Row key={row.id}>
@@ -616,7 +616,7 @@ export const WithPagination: ComponentStory<typeof Table> = args => {
               </HeaderRow>
             ))}
           </TableHead>
-          <TableBody table={table}>
+          <TableBody>
             {rows.map((row: LeafyGreenTableRow<Person>) => {
               return (
                 <Row key={row.id} row={row}>
