@@ -23,7 +23,7 @@ import useLeafygreenTable from './useLeafygreenTable/useLeafygreenTable';
 import { makeData, Person } from './utils/makeData';
 import { AnyDict } from './utils/types';
 import Table from './Table';
-import { LeafygreenTableCell, LeafygreenTableRow } from './useLeafygreenTable';
+import { LeafyGreenTableCell, LeafyGreenTableRow } from './useLeafygreenTable';
 
 export default {
   title: 'Components/Table',
@@ -160,12 +160,12 @@ export const NestedRows: ComponentStory<typeof Table> = () => {
             ))}
           </TableHead>
           <TableBody table={table} renderingExpandableRows>
-            {rows.map((row: LeafygreenTableRow<Person>) => {
+            {rows.map((row: LeafyGreenTableRow<Person>) => {
               return (
                 <Row key={row.id} row={row}>
                   {row
                     .getVisibleCells()
-                    .map((cell: LeafygreenTableCell<Person>) => {
+                    .map((cell: LeafyGreenTableCell<Person>) => {
                       return (
                         <Cell key={cell.id} cell={cell}>
                           {flexRender(
@@ -263,12 +263,12 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
             ))}
           </TableHead>
           <TableBody table={table} renderingExpandableRows>
-            {rows.map((row: LeafygreenTableRow<Person>) => {
+            {rows.map((row: LeafyGreenTableRow<Person>) => {
               return (
                 <Row key={row.id} row={row}>
                   {row
                     .getVisibleCells()
-                    .map((cell: LeafygreenTableCell<Person>) => {
+                    .map((cell: LeafyGreenTableCell<Person>) => {
                       return (
                         <Cell key={cell.id} cell={cell}>
                           {flexRender(
@@ -373,7 +373,7 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
             ))}
           </TableHead>
           <TableBody table={table}>
-            {rows.map((row: LeafygreenTableRow<Person>) => {
+            {rows.map((row: LeafyGreenTableRow<Person>) => {
               return (
                 <Row key={row.id} row={row}>
                   {row.getVisibleCells().map(cell => {
@@ -499,7 +499,7 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
             ))}
           </TableHead>
           <TableBody table={table}>
-            {rows.map((row: LeafygreenTableRow<Person>) => {
+            {rows.map((row: LeafyGreenTableRow<Person>) => {
               return (
                 <Row key={row.id}>
                   {row.getVisibleCells().map(cell => {
@@ -617,7 +617,7 @@ export const WithPagination: ComponentStory<typeof Table> = args => {
             ))}
           </TableHead>
           <TableBody table={table}>
-            {rows.map((row: LeafygreenTableRow<Person>) => {
+            {rows.map((row: LeafyGreenTableRow<Person>) => {
               return (
                 <Row key={row.id} row={row}>
                   {row.getVisibleCells().map(cell => {

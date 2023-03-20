@@ -1,7 +1,9 @@
 import React from 'react';
 import { faker } from '@faker-js/faker';
 
-import { LeafygreenTableRow } from '../useLeafygreenTable';
+import { LeafyGreenTableRow } from '../useLeafygreenTable';
+
+faker.seed(0)
 
 export interface Person {
   id: number;
@@ -42,7 +44,7 @@ const newPerson = (): Person => {
   };
 };
 
-const ExpandedContentComponent = (row: LeafygreenTableRow<unknown>) => {
+const ExpandedContentComponent = (row: LeafyGreenTableRow<unknown>) => {
   return (
     <>
       Test
@@ -65,12 +67,12 @@ export function makeData(
         ...(hasSubRows &&
           lens[depth + 1] &&
           randomIntFromInterval(1, 2) == 1 && {
-            subRows: makeDataLevel(depth + 1),
-          }),
+          subRows: makeDataLevel(depth + 1),
+        }),
         ...(renderingExpandableRows &&
           randomIntFromInterval(1, 3) == 1 && {
-            renderExpandedContent: ExpandedContentComponent,
-          }),
+          renderExpandedContent: ExpandedContentComponent,
+        }),
       };
     });
   };

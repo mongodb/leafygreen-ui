@@ -1,5 +1,6 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
+import { LGRowData } from '../useLeafygreenTable';
 import { Header } from '..';
 
 export type Align = HTMLElementProps<'td'>['align'];
@@ -17,7 +18,7 @@ export interface SortStates {
   [key: string]: SortState;
 }
 
-export interface HeaderCellProps<T extends unknown>
+export interface HeaderCellProps<T extends LGRowData>
   extends HTMLElementProps<'th'> {
   /**
    * The `align` prop set on a HeaderCell will serve as the default `align` prop on the TableCell corresponding to the HeaderCell's index.
@@ -30,7 +31,7 @@ export interface HeaderCellProps<T extends unknown>
   /**
    * Header object passed from the `useLeafygreenTable` hook.
    */
-  header?: Header<T, any>;
+  header?: Header<T, unknown>;
   /**
    * Index of the HeaderCell set internally in HeaderRow
    */

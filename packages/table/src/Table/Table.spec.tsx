@@ -9,7 +9,7 @@ import Row from '../Row';
 import TableBody from '../TableBody';
 import TableContainer from '../TableContainer';
 import TableHead from '../TableHead';
-import { LeafygreenTableCell, LeafygreenTableRow } from '../useLeafygreenTable';
+import { LeafyGreenTableCell, LeafyGreenTableRow } from '../useLeafygreenTable';
 import { Person } from '../utils/makeData';
 import {
   getDefaultTestData,
@@ -28,7 +28,7 @@ function TableWithHook(props: TestTableWithHookProps) {
       <div data-testid="row-selection-value">
         {JSON.stringify(rowSelection)}
       </div>
-      <Table>
+      <Table table={table}>
         <TableHead>
           {table.getHeaderGroups().map(headerGroup => (
             <HeaderRow key={headerGroup.id}>
@@ -45,13 +45,13 @@ function TableWithHook(props: TestTableWithHookProps) {
             </HeaderRow>
           ))}
         </TableHead>
-        <TableBody table={table}>
-          {rows.map((row: LeafygreenTableRow<Person>) => {
+        <TableBody>
+          {rows.map((row: LeafyGreenTableRow<Person>) => {
             return (
               <Row key={row.id} row={row}>
                 {row
                   .getVisibleCells()
-                  .map((cell: LeafygreenTableCell<Person>) => {
+                  .map((cell: LeafyGreenTableCell<Person>) => {
                     return (
                       <Cell key={cell.id} cell={cell}>
                         {flexRender(

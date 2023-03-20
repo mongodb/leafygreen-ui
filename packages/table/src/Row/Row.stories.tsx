@@ -10,7 +10,7 @@ import Table from '../Table/Table';
 import TableBody from '../TableBody/TableBody';
 import TableContainer from '../TableContainer/TableContainer';
 import TableHead from '../TableHead/TableHead';
-import { LeafygreenTableCell, LeafygreenTableRow } from '../useLeafygreenTable';
+import { LeafyGreenTableCell, LeafyGreenTableRow } from '../useLeafygreenTable';
 import useLeafygreenTable from '../useLeafygreenTable/useLeafygreenTable';
 import { makeData, Person } from '../utils/makeData';
 import { AnyDict } from '../utils/types';
@@ -146,7 +146,7 @@ export const DisabledNestedRows: ComponentStory<typeof Row> = ({
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table>
+        <Table table={table}>
           <TableHead>
             {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>
@@ -163,13 +163,13 @@ export const DisabledNestedRows: ComponentStory<typeof Row> = ({
               </HeaderRow>
             ))}
           </TableHead>
-          <TableBody table={table}>
-            {rows.map((row: LeafygreenTableRow<Person>) => {
+          <TableBody>
+            {rows.map((row: LeafyGreenTableRow<Person>) => {
               return (
                 <Row key={row.id} row={row} {...rest}>
                   {row
                     .getVisibleCells()
-                    .map((cell: LeafygreenTableCell<Person>) => {
+                    .map((cell: LeafyGreenTableCell<Person>) => {
                       return (
                         <Cell key={cell.id} cell={cell}>
                           {flexRender(
@@ -194,11 +194,11 @@ DisabledNestedRows.args = {
 
 export const ClickableRows = Template.bind({});
 ClickableRows.args = {
-  onClick: () => {},
+  onClick: () => { },
 };
 
 export const DisabledClickableRows = Template.bind({});
 DisabledClickableRows.args = {
-  onClick: () => {},
+  onClick: () => { },
   disabled: true,
 };

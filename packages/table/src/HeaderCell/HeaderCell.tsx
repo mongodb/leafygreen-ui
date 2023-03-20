@@ -3,6 +3,7 @@ import React, { PropsWithChildren, useEffect } from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 
 import { useTableContext } from '../TableContext/TableContext';
+import { LGRowData } from '../useLeafygreenTable';
 
 import SortIcon from './SortIcon/SortIcon';
 import {
@@ -22,7 +23,7 @@ const HeaderSortState: SortStates = {
 /**
  * Component to wrap `<th>` elements for use inside `<thead>` elements.
  */
-const HeaderCell = <T extends unknown>({
+const HeaderCell = <T extends LGRowData>({
   children,
   className,
   align,
@@ -49,11 +50,10 @@ const HeaderCell = <T extends unknown>({
     setColumnAlignments &&
       cellIndex !== undefined &&
       align &&
-      setColumnAlignments((oldAlignments?: SortStates) => {
-        return {
-          ...oldAlignments,
-          [cellIndex]: align,
-        };
+      setColumnAlignments((prevAlignments) => {
+        if (prevAlignments) {
+          return [...prevAlignments].splice(cellIndex, 1, align)
+        }
       });
   }, [cellIndex, align, setColumnAlignments]);
 

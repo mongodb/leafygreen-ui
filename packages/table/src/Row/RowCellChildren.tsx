@@ -5,18 +5,18 @@ import { isComponentType } from '@leafygreen-ui/lib';
 import Cell from '../Cell';
 import ExpandingCell from '../Cell/ExpandingCell';
 import FirstCell from '../Cell/FirstCell';
-import { LeafyGreenTableRow } from '../useLeafygreenTable';
+import { LeafyGreenTableRow, LGRowData } from '../useLeafygreenTable';
 
-interface RowCellChildrenProps
+interface RowCellChildrenProps<T extends LGRowData>
   extends PropsWithChildren<{
-    row: LeafyGreenTableRow<any>;
+    row: LeafyGreenTableRow<T>;
     disabled?: boolean;
   }> { }
 
 /**
  * Renders row cells provided by `useReactTable`
  */
-const RowCellChildren = ({ row, children, disabled }: RowCellChildrenProps) => {
+const RowCellChildren = <T extends LGRowData>({ row, children, disabled }: RowCellChildrenProps<T>) => {
   const isExpandable = row.getCanExpand();
   const isExpanded = row.getIsExpanded();
   const toggleExpanded = () => row.toggleExpanded();
@@ -30,36 +30,31 @@ const RowCellChildren = ({ row, children, disabled }: RowCellChildrenProps) => {
   return (
     <>
       {isExpandable ? (
-        <>
-          {React.createElement(ExpandingCell, {
-            ...(FirstCellChild as ReactElement)?.props,
-            cellIndex: 0,
-            depth: row.depth,
-            isExpanded: isExpanded,
-            toggleExpanded,
-            disabled,
-          })}
-        </>
+        <ExpandingCell
+          {...(FirstCellChild as ReactElement)?.props}
+          cellIndex={0}
+          depth={row.depth}
+          isExpanded={isExpanded}
+          toggleExpanded={toggleExpanded}
+          disabled={disabled}
+        />
       ) : (
-        <>
-          {React.createElement(FirstCell, {
-            ...(FirstCellChild as ReactElement)?.props,
-            cellIndex: 0,
-            depth: row.depth,
-            disabled,
-          })}
-        </>
+        <FirstCell
+          {...(FirstCellChild as ReactElement)?.props}
+          cellIndex={0}
+          depth={row.depth}
+          disabled={disabled}
+        />
       )}
       {React.Children.map(
         OtherCellChildren,
-        (CellChild: ReactNode, index: number) => {
-          return React.createElement(Cell, {
-            ...(CellChild as ReactElement)?.props,
-            cellIndex: index + 1,
-            depth: row.depth,
-            disabled,
-          });
-        },
+        (CellChild: ReactNode, index: number) =>
+        (<Cell {
+          ...(CellChild as ReactElement)?.props}
+          cellIndex={index + 1}
+          depth={row.depth}
+          disabled={disabled}
+        />)
       )}
     </>
   );

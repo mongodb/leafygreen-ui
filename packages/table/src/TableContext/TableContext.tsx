@@ -26,6 +26,7 @@ const TableContextProvider = <T extends LGRowData, VS extends boolean>({
   table,
   shouldAlternateRowColor,
 }: PropsWithChildren<Partial<TableContextValues<T, VS>>>) => {
+
   const [columnAlignments, setColumnAlignments] =
     useState<Array<ColumnAlignment>>();
 

@@ -1,5 +1,7 @@
 import { PropsWithChildren } from 'react';
 
+import { HTMLElementProps } from '@leafygreen-ui/lib';
+
 import { TableProps } from '../Table/Table.types';
 import {
   LeafyGreenTableRow,
@@ -7,7 +9,7 @@ import {
   LGRowData,
 } from '../useLeafyGreenTable';
 
-export type ColumnAlignment = 'left' | 'right' | 'center';
+export type ColumnAlignment = HTMLElementProps<'th'>['align']; //'left' | 'right' | 'center';
 
 export type TableContextValues<
   T extends LGRowData,

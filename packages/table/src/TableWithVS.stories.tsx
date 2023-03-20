@@ -126,9 +126,10 @@ export const Basic: ComponentStory<typeof Table> = args => {
           <TableBody>
             {table.virtualRows.map((virtualRow: VirtualItem) => {
               const row = rows[virtualRow.index];
+              const cells = row.getVisibleCells()
               return (
                 <Row key={row.id}>
-                  {row.getVisibleCells().map(cell => {
+                  {cells.map(cell => {
                     return (
                       <Cell key={cell.id}>
                         {flexRender(

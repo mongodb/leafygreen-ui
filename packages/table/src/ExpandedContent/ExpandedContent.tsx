@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import { RowData } from '@tanstack/react-table';
 
 import { css, cx } from '@leafygreen-ui/emotion';

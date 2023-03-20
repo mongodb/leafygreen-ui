@@ -58,7 +58,7 @@ describe('packages/table/TableBody', () => {
         return (
           <div ref={containerRef}>
             <table>
-              <TableBody table={table}>
+              <TableBody>
                 <tr>
                   <td>
                     <div style={{ height: '400px' }} />
