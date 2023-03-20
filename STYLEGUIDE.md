@@ -2,19 +2,22 @@
 
 ## Table of Contents
 
-- [To Contribute](#To-Contribute)
-- [Typing](#Typing)
-- [Functions](#Functions)
-- [Variable naming](#Variable-naming)
-- [Variable placement](#Variable-placement)
-- [Whitespace and line breaks](#Whitespace-and-line-breaks)
-- [JSX/React](#JSX-React)
-- [CSS-in-JS](#CSS-in-JS)
+- [To Contribute](#to-contribute)
+- [Typing](#typing)
+- [Functions](#functions)
+- [Variable naming](#variable-naming)
+- [Variable placement](#variable-placement)
+- [Whitespace and line breaks](#whitespace-and-line-breaks)
+- [JSX/React](#jsxreact)
+- [Forwarding refs](#forwarding-refs)
+- [Consuming darkMode from `LeafyGreenProvider`](#consuming-darkmode-from-leafygreenprovider)
+- [Passing darkMode to children](#passing-darkMode-to-children)
+- [CSS-in-JS](#css-in-js)
 - [File Structure](https://github.com/mongodb/leafygreen-ui/blob/main/stories/Folder-Structure.stories.mdx)
-- [API Patterns](#API-Patterns)
-- [References](#References)
+- [API Patterns](#api-patterns)
+- [References](#references)
 
-## <a id="To-Contribute">To Contribute</a>
+## To Contribute
 
 To propose updates to this style guide, please make the relevant changes in a branch and submit a PR. We review these PRs synchronously in our weekly Team Code Review and collectively gavel on new standards there.
 
@@ -36,7 +39,7 @@ _Example_
 
 ---
 
-## <a id="Typing">Typing</a>
+## Typing
 
 ### Prefer constants and types over enums.
 
@@ -74,7 +77,7 @@ Maintains organization within files and makes them consistently more readable.
 
 ---
 
-## <a id="Functions">Functions</a>
+## Functions
 
 ### Prefer ternaries over simple `if/else` blocks
 
@@ -173,7 +176,7 @@ Keeps functions pure.
 
 ---
 
-## <a id="Variable-naming">Variable Naming</a>
+## Variable Naming
 
 ### Use UPPERCASE for static constants, and refactor to a shared file if needed
 
@@ -191,7 +194,7 @@ Keeps functions pure.
 
 ---
 
-## <a id="Variable-placement">Variable placement</a>
+## Variable placement
 
 ### Avoid inline declaration of static variables when they can be moved to top of file or refactored into new file
 
@@ -209,13 +212,13 @@ Keeps functions pure.
 
 ---
 
-## <a id="Whitespace-and-line-breaks">Whitespace and line breaks</a>
+## Whitespace and line breaks
 
 ### Use a space before every prop defined in an interface
 
 ---
 
-## <a id="JSX-React">JSX/React</a>
+## JSX/React
 
 ### Prefer factoring out any more-than-1-line event handlers into their own functions
 
@@ -322,7 +325,106 @@ function changeValues(object) {
 
 ---
 
-## <a id="CSS-in-JS">CSS in JS</a>
+## Forwarding refs
+
+#### Why
+
+Ref forwarding allows us to provide direct access to the underlying parent element. For more information on ref forwarding, check out the React [docs](https://reactjs.org/docs/forwarding-refs.html).
+
+#### Prefer
+
+```typescript
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ children }: ButtonProps, forwardedRef) => (
+    <button ref={forwardedRef}>{children}</button>
+  ),
+);
+
+// This ref will give you direct access to the DOM button
+const ref = useRef<null | HTMLButtonElement>(null);
+<Button ref={ref}>Click me!</Button>;
+```
+
+#### Avoid
+
+```typescript
+const Button = props => <button>{props.children}</button>;
+
+// Does not accept a ref
+<Button>Click me!</Button>;
+```
+
+---
+
+## Consuming `darkMode` from `LeafyGreenProvider`
+
+#### Why
+
+The `useDarkMode()` hook allows components to read the value of the `darkMode` prop from the `LeafyGreenProvider` and overwrite the value locally if necessary.
+
+#### Prefer
+
+```typescript
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ children, darkMode: darkModeProp }: ButtonProps, forwardedRef) => {
+    const { darkMode, theme, setDarkMode } = useDarkMode(darkModeProp);
+
+    return (
+      <LeafyGreenProvider darkMode={darkMode}>
+        <button ref={forwardedRef}>{children}</button>
+      </LeafyGreenProvider>
+    );
+  },
+);
+```
+
+#### Avoid
+
+```typescript
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ children, darkMode = false }: ButtonProps, forwardedRef) => {
+    return (
+      <LeafyGreenProvider darkMode={darkMode}>
+        <button ref={forwardedRef}>{children}</button>
+      </LeafyGreenProvider>
+    );
+  },
+);
+```
+
+---
+
+## Passing `darkMode` to children
+
+#### Why
+
+Rather than pass `darkMode` to each child component, it is recommended to wrap all children in the `LeafyGreenProvider` and pass the `darkMode` value directly to the `LeafyGreenProvider`. All LG components consume the `useDarkMode()` hook which reads the value of `darkMode` from the innermost `LeafyGreenProvider` wrapper.
+
+#### Prefer
+
+```typescript
+return (
+  <LeafyGreenProvider darkMode={darkMode}>
+    <Button>This is a button</Button>
+    <Button>This is another button</Button>
+  </LeafyGreenProvider>
+);
+```
+
+#### Avoid
+
+```typescript
+return (
+  <>
+    <Button darkMode={darkMode}>This is a button</Button>
+    <Button darkMode={darkMode}>This is another button</Button>
+  </>
+);
+```
+
+---
+
+## CSS in JS
 
 ### Avoid writing Emotion styles directly in JSX
 
@@ -399,7 +501,7 @@ const childStyles = css`
 
 ---
 
-## <a id="API-Patterns">API Patterns</a>
+## API Patterns
 
 ---
 
@@ -413,7 +515,7 @@ const childStyles = css`
 
 ---
 
-## <a id="References">References</a>
+## References
 
 - [Airbnb Javascript Style Guide](https://github.com/airbnb/javascript)
 - [DHH On Writing Software Well](https://www.youtube.com/watch?v=H5i1gdwe1Ls)

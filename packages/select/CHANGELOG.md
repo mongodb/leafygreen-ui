@@ -1,5 +1,56 @@
 # @leafygreen-ui/select
 
+## 10.2.3
+
+### Patch Changes
+
+- Updated dependencies [5b036515e]
+- Updated dependencies [26e341a0b]
+- Updated dependencies [997121cc3]
+- Updated dependencies [eb0cc4498]
+  - @leafygreen-ui/palette@4.0.0
+  - @leafygreen-ui/lib@10.2.2
+  - @leafygreen-ui/icon@11.12.5
+  - @leafygreen-ui/typography@16.1.0
+  - @leafygreen-ui/button@20.0.2
+  - @leafygreen-ui/tokens@2.0.1
+
+## 10.2.2
+
+### Patch Changes
+
+- fc85e3f7a: Fix README formatting
+- Updated dependencies [82e320ed4]
+- Updated dependencies [2e8a572db]
+- Updated dependencies [4ccc353e7]
+- Updated dependencies [4ccc353e7]
+  - @leafygreen-ui/button@20.0.1
+  - @leafygreen-ui/lib@10.2.1
+
+## 10.2.1
+
+### Patch Changes
+
+- bf2fedf6d: Version bumps lib
+- Updated dependencies [1cff328a3]
+- Updated dependencies [ffb99f417]
+- Updated dependencies [bf2fedf6d]
+- Updated dependencies [b7a29ea38]
+  - @leafygreen-ui/button@20.0.0
+  - @leafygreen-ui/hooks@7.5.0
+  - @leafygreen-ui/leafygreen-provider@3.1.1
+  - @leafygreen-ui/typography@16.0.1
+
+## 10.2.0
+
+### Minor Changes
+
+- a089bf899: Allows aria-label as acceptable aria label prop in Select
+
+### Patch Changes
+
+- c1c259036: Exporting types
+
 ## 10.1.1
 
 ### Patch Changes

@@ -1,5 +1,40 @@
 # @leafygreen-ui/confirmation-modal
 
+## 4.0.5
+
+### Patch Changes
+
+- Updated dependencies [5b036515e]
+- Updated dependencies [997121cc3]
+- Updated dependencies [eb0cc4498]
+- Updated dependencies [52dcb3316]
+  - @leafygreen-ui/palette@4.0.0
+  - @leafygreen-ui/icon@11.12.5
+  - @leafygreen-ui/typography@16.1.0
+  - @leafygreen-ui/text-input@12.1.7
+  - @leafygreen-ui/button@20.0.2
+  - @leafygreen-ui/modal@14.0.3
+  - @leafygreen-ui/tokens@2.0.1
+
+## 4.0.4
+
+### Patch Changes
+
+- Updated dependencies [1cff328a3]
+- Updated dependencies [bf2fedf6d]
+- Updated dependencies [b7a29ea38]
+  - @leafygreen-ui/button@20.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.1
+  - @leafygreen-ui/modal@14.0.2
+  - @leafygreen-ui/text-input@12.1.5
+  - @leafygreen-ui/typography@16.0.1
+
+## 4.0.3
+
+### Patch Changes
+
+- 64eee134d: TSDoc: Updates some exported TSDoc interfaces. Storybook: Updates story files.
+
 ## 4.0.2
 
 ### Patch Changes

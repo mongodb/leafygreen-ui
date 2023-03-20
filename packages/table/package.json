@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/table",
-  "version": "10.0.1",
+  "version": "10.0.3",
   "description": "leafyGreen UI Kit Table",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -23,14 +23,14 @@
     "@faker-js/faker": "^7.6.0",
     "@leafygreen-ui/checkbox": "^12.0.0",
     "@leafygreen-ui/emotion": "^4.0.3",
-    "@leafygreen-ui/hooks": "^7.3.3",
-    "@leafygreen-ui/icon": "^11.12.4",
-    "@leafygreen-ui/icon-button": "^15.0.4",
-    "@leafygreen-ui/lib": "^10.0.0",
-    "@leafygreen-ui/pagination": "^0.9.0",
-    "@leafygreen-ui/palette": "^3.4.7",
-    "@leafygreen-ui/tokens": "^2.0.0",
-    "@leafygreen-ui/typography": "^16.0.0",
+    "@leafygreen-ui/hooks": "^7.5.0",
+    "@leafygreen-ui/icon": "^11.12.5",
+    "@leafygreen-ui/icon-button": "^15.0.7",
+    "@leafygreen-ui/lib": "^10.2.2",
+    "@leafygreen-ui/pagination": "^1.0.3",
+    "@leafygreen-ui/palette": "^4.0.0",
+    "@leafygreen-ui/tokens": "^2.0.1",
+    "@leafygreen-ui/typography": "^16.1.0",
     "@tanstack/react-query": "^4.20.4",
     "@tanstack/react-table": "^8.7.3",
     "@tanstack/react-virtual": "^3.0.0-beta.33",
@@ -40,7 +40,7 @@
     "react-transition-group": "^4.4.1"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.0"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.1"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/table",
   "repository": {

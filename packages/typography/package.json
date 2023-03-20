@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/typography",
-  "version": "16.0.0",
+  "version": "16.1.0",
   "description": "leafyGreen UI Kit Typography",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -21,17 +21,17 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.3",
-    "@leafygreen-ui/icon": "^11.12.4",
-    "@leafygreen-ui/lib": "^10.0.0",
-    "@leafygreen-ui/palette": "^3.4.7",
-    "@leafygreen-ui/polymorphic": "^1.1.0",
-    "@leafygreen-ui/tokens": "^2.0.0"
+    "@leafygreen-ui/icon": "^11.12.5",
+    "@leafygreen-ui/lib": "^10.2.2",
+    "@leafygreen-ui/palette": "^4.0.0",
+    "@leafygreen-ui/polymorphic": "^1.2.0",
+    "@leafygreen-ui/tokens": "^2.0.1"
   },
   "devDependencies": {
-    "@leafygreen-ui/inline-definition": "^6.0.1"
+    "@leafygreen-ui/inline-definition": "^6.0.3"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.0"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.1"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/typography",
   "repository": {

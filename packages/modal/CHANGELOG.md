@@ -1,5 +1,31 @@
 # @leafygreen-ui/modal
 
+## 14.0.3
+
+### Patch Changes
+
+- Updated dependencies [5b036515e]
+- Updated dependencies [26e341a0b]
+- Updated dependencies [52dcb3316]
+- Updated dependencies [997121cc3]
+  - @leafygreen-ui/palette@4.0.0
+  - @leafygreen-ui/lib@10.2.2
+  - @leafygreen-ui/portal@4.1.0
+  - @leafygreen-ui/icon@11.12.5
+  - @leafygreen-ui/icon-button@15.0.7
+  - @leafygreen-ui/tokens@2.0.1
+
+## 14.0.2
+
+### Patch Changes
+
+- bf2fedf6d: Version bumps lib
+- Updated dependencies [ffb99f417]
+- Updated dependencies [bf2fedf6d]
+  - @leafygreen-ui/hooks@7.5.0
+  - @leafygreen-ui/icon-button@15.0.6
+  - @leafygreen-ui/leafygreen-provider@3.1.1
+
 ## 14.0.1
 
 ### Patch Changes

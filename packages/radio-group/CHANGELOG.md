@@ -1,5 +1,35 @@
 # @leafygreen-ui/radio-group
 
+## 10.1.0
+
+### Minor Changes
+
+- bc7795932: - Adds a `description` prop to `Radio`.
+  - Updates `RadioGroup` to leverage `flexbox`. Update `flex-direction` to render radios horizontrally
+
+### Patch Changes
+
+- Updated dependencies [5b036515e]
+- Updated dependencies [26e341a0b]
+- Updated dependencies [eb0cc4498]
+  - @leafygreen-ui/palette@4.0.0
+  - @leafygreen-ui/lib@10.2.2
+  - @leafygreen-ui/typography@16.1.0
+  - @leafygreen-ui/tokens@2.0.1
+
+## 10.0.5
+
+### Patch Changes
+
+- bf2fedf6d: Version bumps lib
+- 8c2755a9a: Uses Label from typography package, rather than the html tag. Refactors component to use new directory structure.
+- Updated dependencies [ffb99f417]
+- Updated dependencies [bf2fedf6d]
+- Updated dependencies [b7a29ea38]
+  - @leafygreen-ui/hooks@7.5.0
+  - @leafygreen-ui/leafygreen-provider@3.1.1
+  - @leafygreen-ui/typography@16.0.1
+
 ## 10.0.4
 
 ### Patch Changes

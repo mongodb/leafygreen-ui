@@ -4,6 +4,7 @@ import { ComponentStory } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { CloseIconColor } from '@leafygreen-ui/modal';
 
 import { ConfirmationModal } from './ConfirmationModal/ConfirmationModal';
 import { Variant } from './ConfirmationModal/types';
@@ -19,6 +20,8 @@ export default {
     className: css`
       z-index: 1;
     `,
+    closeIconColor: 'default',
+    variant: 'primary',
   },
   argTypes: {
     requiredInputText: { control: 'text' },
@@ -27,10 +30,18 @@ export default {
     buttonText: { control: 'text' },
     children: storybookArgTypes.children,
     darkMode: storybookArgTypes.darkMode,
+    variant: {
+      control: 'select',
+      options: Object.values(Variant),
+    },
+    closeIconColor: {
+      control: 'select',
+      options: Object.values(CloseIconColor),
+    },
   },
   parameters: {
     controls: {
-      exclude: ['className', 'onConfirm', 'onCancel', 'open', 'variant'],
+      exclude: ['className', 'onConfirm', 'onCancel', 'open', 'initialFocus'],
     },
   },
 };

@@ -1,0 +1,18 @@
+export const storybookExcludedControlParams = [
+  'children',
+  'aria-label',
+  'aria-labelledby',
+  'aria-describedby',
+  'onFilter',
+  'onClear',
+  'onChange',
+  'onClick',
+  'ref',
+  'className',
+  'usePortal',
+  'portalClassName',
+  'portalContainer',
+  'scrollContainer',
+  'popoverZIndex',
+  'id',
+];
