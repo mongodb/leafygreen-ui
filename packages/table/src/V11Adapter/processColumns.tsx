@@ -21,6 +21,7 @@ const processColumns = (columns: ColumnsType) => {
     processedColumns.push({
       accessorKey: headerProps.key ?? headerProps.label,
       header: headerProps.label,
+      // todo: sortBy, compareFn
     });
   });
   return processedColumns;

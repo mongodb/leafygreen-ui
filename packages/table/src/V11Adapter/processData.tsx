@@ -3,6 +3,7 @@ import React, { ReactElement } from 'react';
 import { isComponentType } from '@leafygreen-ui/lib';
 
 import { TableRowInterface } from '../TableV10/Table';
+import { LGRowData, LGTableDataType } from '../useLeafygreenTable';
 
 const processData = (
   data: Array<any>,
@@ -14,19 +15,26 @@ const processData = (
     const evaluatedChildren = childrenFn({ datum: oldDatum, index });
     const childrenArray = React.Children.toArray(evaluatedChildren);
     const evaluatedRow = childrenArray[0] as ReactElement;
-    const evaluatedCells = React.Children.toArray(
+    const rowChildren = React.Children.toArray(
       evaluatedRow.props.children,
-    ).filter(child => isComponentType(child, 'Cell'));
-    const newDatum = evaluatedCells.reduce((acc, currVal, index) => {
+    )
+    const evaluatedCells = rowChildren.filter(child => isComponentType(child, 'Cell'));
+    const newDatum: LGTableDataType<any> = evaluatedCells.reduce((acc, currVal, index) => {
       return {
         ...acc,
         [processedColumns[index].accessorKey]: () =>
           (currVal as ReactElement).props.children,
       };
     }, {});
-    const evaluatedOtherChildren = React.Children.toArray(
-      evaluatedRow.props.children,
-    ).filter(child => !isComponentType(child, 'Cell'));
+
+    const subRowChildren = rowChildren.filter(child => isComponentType(child, 'Row'));
+    subRowChildren.forEach((subRow) => {
+      const firstSubRowCell = React.Children.toArray((subRow as ReactElement).props.children)[0];
+      const firstSubRowCellColSpan = (firstSubRowCell as ReactElement).props.colSpan;
+      if (firstSubRowCellColSpan && firstSubRowCellColSpan === processedColumns.length) {
+        newDatum.renderExpandedContent = () => <div style={{ padding: '10px 8px 10px 32px' }}>{(firstSubRowCell as ReactElement).props.children}</div>
+      }
+    })
 
     return newDatum;
   });

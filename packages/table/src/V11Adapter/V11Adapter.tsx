@@ -13,6 +13,7 @@ import Table, { flexRender, getCoreRowModel, RowData } from '..';
 
 import processColumns from './processColumns';
 import processData from './processData';
+import ExpandedContent from '../ExpandedContent/ExpandedContent';
 
 type V11AdapterProps = PropsWithChildren<{}>;
 
@@ -70,6 +71,9 @@ const V11Adapter = <T extends LeafygreenTableType<RowData>>({ children }: V11Ada
                       </Cell>
                     );
                   })}
+                {row.original.renderExpandedContent && (
+                  <ExpandedContent row={row} />
+                )}
               </Row>
             );
           })}
