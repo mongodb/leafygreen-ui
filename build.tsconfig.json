@@ -60,9 +60,6 @@
       "path": "./packages/inline-definition"
     },
     {
-      "path": "./packages/input-base"
-    },
-    {
       "path": "./packages/input-option"
     },
     {
@@ -82,6 +79,9 @@
     },
     {
       "path": "./packages/modal"
+    },
+    {
+      "path": "./packages/number-input"
     },
     {
       "path": "./packages/pagination"
