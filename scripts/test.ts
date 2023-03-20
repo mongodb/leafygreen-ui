@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
-import { spawnSync } from 'child_process';
+import { spawn } from 'child_process';
 import { Command } from 'commander';
 import { uniq } from 'lodash';
+import { exit } from 'process';
 
 import { getAllPackageNames } from './utils/getAllPackageNames';
 import { getGitDiff } from './utils/getGitDiff';
@@ -76,4 +77,7 @@ if (watch) {
   cmdArgs.push('--watch');
 }
 
-spawnSync('jest', [...cmdArgs, ...packageArgs], { stdio: 'inherit' });
+spawn('jest', [...cmdArgs, ...packageArgs], { stdio: 'inherit' }).on(
+  'exit',
+  code => exit(code || 0),
+);

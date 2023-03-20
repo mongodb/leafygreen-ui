@@ -1,5 +1,37 @@
 # @leafygreen-ui/menu
 
+## 20.0.1
+
+### Patch Changes
+
+- b9841decc: Ensures MenuItem and SubMenu components are rendered with proper HTML elements
+- b9841decc: Improves prop types and polymorphic support
+- Updated dependencies [5b036515e]
+- Updated dependencies [b9841decc]
+- Updated dependencies [26e341a0b]
+- Updated dependencies [997121cc3]
+  - @leafygreen-ui/palette@4.0.0
+  - @leafygreen-ui/polymorphic@1.2.0
+  - @leafygreen-ui/lib@10.2.2
+  - @leafygreen-ui/icon@11.12.5
+  - @leafygreen-ui/icon-button@15.0.7
+  - @leafygreen-ui/tokens@2.0.1
+
+## 20.0.0
+
+### Major Changes
+
+- 2f732ca50: Migrate component to use `Polymorphic` instead of `Box` internally. This should allow better support of the `styled` API. Additionally, this fixes a bug with the `as` prop, which should now work as expected and allow consuming applications to choose what component MenuItem and SubMenu components are rendered as.
+
+### Patch Changes
+
+- bf2fedf6d: Version bumps lib
+- Updated dependencies [ffb99f417]
+- Updated dependencies [bf2fedf6d]
+  - @leafygreen-ui/hooks@7.5.0
+  - @leafygreen-ui/icon-button@15.0.6
+  - @leafygreen-ui/leafygreen-provider@3.1.1
+
 ## 19.0.4
 
 ### Patch Changes

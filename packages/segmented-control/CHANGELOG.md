@@ -1,5 +1,31 @@
 # @leafygreen-ui/segmented-control
 
+## 7.0.4
+
+### Patch Changes
+
+- Updated dependencies [5b036515e]
+- Updated dependencies [26e341a0b]
+- Updated dependencies [997121cc3]
+- Updated dependencies [eb0cc4498]
+  - @leafygreen-ui/palette@4.0.0
+  - @leafygreen-ui/lib@10.2.2
+  - @leafygreen-ui/icon@11.12.5
+  - @leafygreen-ui/typography@16.1.0
+  - @leafygreen-ui/tokens@2.0.1
+
+## 7.0.3
+
+### Patch Changes
+
+- bf2fedf6d: Version bumps lib
+- Updated dependencies [ffb99f417]
+- Updated dependencies [bf2fedf6d]
+- Updated dependencies [b7a29ea38]
+  - @leafygreen-ui/hooks@7.5.0
+  - @leafygreen-ui/leafygreen-provider@3.1.1
+  - @leafygreen-ui/typography@16.0.1
+
 ## 7.0.2
 
 ### Patch Changes

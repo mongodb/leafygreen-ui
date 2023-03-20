@@ -9,7 +9,7 @@ import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 import Pagination, { PaginationProps } from '.';
 
 function renderPagination(props: PaginationProps) {
-  return render(<Pagination {...props} />);
+  return render(<Pagination {...props} data-testid="pagination-test" />);
 }
 
 const onBackArrowClick = jest.fn();

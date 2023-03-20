@@ -1,5 +1,37 @@
 # @leafygreen-ui/button
 
+## 20.0.2
+
+### Patch Changes
+
+- Updated dependencies [5b036515e]
+- Updated dependencies [26e341a0b]
+  - @leafygreen-ui/palette@4.0.0
+  - @leafygreen-ui/lib@10.2.2
+  - @leafygreen-ui/tokens@2.0.1
+
+## 20.0.1
+
+### Patch Changes
+
+- 82e320ed4: Add focus styles to to override any global button styles
+- Updated dependencies [2e8a572db]
+- Updated dependencies [4ccc353e7]
+- Updated dependencies [4ccc353e7]
+  - @leafygreen-ui/lib@10.2.1
+
+## 20.0.0
+
+### Major Changes
+
+- 1cff328a3: No longer sets `pointer-events: "none"` when Button components are disabled.
+
+### Patch Changes
+
+- bf2fedf6d: Version bumps lib
+- Updated dependencies [bf2fedf6d]
+  - @leafygreen-ui/leafygreen-provider@3.1.1
+
 ## 19.0.4
 
 ### Patch Changes

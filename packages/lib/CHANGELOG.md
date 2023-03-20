@@ -1,5 +1,32 @@
 # @leafygreen-ui/lib
 
+## 10.2.2
+
+### Patch Changes
+
+- 26e341a0b: Minor type fixes to `StoryMeta` function
+
+## 10.2.1
+
+### Patch Changes
+
+- 2e8a572db: Improves array handling on StoryMeta factory function. Adds tests for factory function
+- 4ccc353e7: Adds 'allEqual`util function`. Also removes circular dependency in `getTheme`.
+- 4ccc353e7: Excludes a few more storybook controls
+
+## 10.2.0
+
+### Minor Changes
+
+- 0541bd776: Exports `StoryMeta` interface and factory function for generating Storybook default exports that are compatible with the new mongodb.design architecture
+- ec2a3d66d: Adds `createSyntheticEvent` to create a React SyntheticEvent
+
+## 10.1.0
+
+### Minor Changes
+
+- 64eee134d: Adds additional storybook exports from `lib`
+
 ## 10.0.0
 
 ### Major Changes

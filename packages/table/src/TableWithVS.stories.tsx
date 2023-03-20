@@ -635,11 +635,9 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
                       </Cell>
                     );
                   })}
-                  {
-                    row.original.renderExpandedContent && (
-                      <ExpandedContent row={row} />
-                    )
-                  }
+                  {row.original.renderExpandedContent && (
+                    <ExpandedContent row={row} />
+                  )}
                 </Row>
               );
             })}

@@ -1,5 +1,18 @@
 # @leafygreen-ui/polymorphic
 
+## 1.2.0
+
+### Minor Changes
+
+- b9841decc: - Improves support for `InferredPolymorphic` when using anchor-like components (e.g. NextJS Link)
+  - Exports `PropsOf` utility to get the resolved type of a Polymorphic component
+
+## 1.1.1
+
+### Patch Changes
+
+- 97cf09502: Adds additional styled test, and documents `styled` props best practice
+
 ## 1.1.0
 
 ### Minor Changes

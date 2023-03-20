@@ -1,5 +1,56 @@
 # @leafygreen-ui/combobox
 
+## 5.0.10
+
+### Patch Changes
+
+- Updated dependencies [5b036515e]
+- Updated dependencies [26e341a0b]
+- Updated dependencies [997121cc3]
+- Updated dependencies [eb0cc4498]
+  - @leafygreen-ui/palette@4.0.0
+  - @leafygreen-ui/lib@10.2.2
+  - @leafygreen-ui/icon@11.12.5
+  - @leafygreen-ui/typography@16.1.0
+  - @leafygreen-ui/checkbox@12.0.7
+  - @leafygreen-ui/icon-button@15.0.7
+  - @leafygreen-ui/inline-definition@6.0.3
+  - @leafygreen-ui/input-option@1.0.1
+  - @leafygreen-ui/tokens@2.0.1
+
+## 5.0.9
+
+### Patch Changes
+
+- 2e8a572db: Internal refactoring. Adds `input-option` as a dependency
+- Updated dependencies [2e8a572db]
+- Updated dependencies [4ccc353e7]
+- Updated dependencies [4ccc353e7]
+  - @leafygreen-ui/lib@10.2.1
+
+## 5.0.8
+
+### Patch Changes
+
+- 95eeb5a06: Spread `...rest` to `ComboboxOption`
+- d58af1054: Fixes bug where clicking the clear icon button triggered the menu to reopen.
+- Updated dependencies [0541bd776]
+- Updated dependencies [ec2a3d66d]
+- Updated dependencies [ec2a3d66d]
+  - @leafygreen-ui/lib@10.2.0
+  - @leafygreen-ui/hooks@7.6.0
+
+## 5.0.7
+
+### Patch Changes
+
+- 64eee134d: TSDoc: Updates some exported TSDoc interfaces. Storybook: Updates story files.
+- Updated dependencies [64eee134d]
+- Updated dependencies [64eee134d]
+  - @leafygreen-ui/inline-definition@6.0.2
+  - @leafygreen-ui/popover@11.0.5
+  - @leafygreen-ui/lib@10.1.0
+
 ## 5.0.6
 
 ### Patch Changes

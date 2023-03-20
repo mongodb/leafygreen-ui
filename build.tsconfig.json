@@ -60,6 +60,9 @@
       "path": "./packages/inline-definition"
     },
     {
+      "path": "./packages/input-option"
+    },
+    {
       "path": "./packages/leafygreen-provider"
     },
     {
@@ -85,6 +88,9 @@
     },
     {
       "path": "./packages/pipeline"
+    },
+    {
+      "path": "./packages/password-input"
     },
     {
       "path": "./packages/popover"
@@ -145,9 +151,6 @@
     },
     {
       "path": "./packages/typography"
-    },
-    {
-      "path": "./website"
     }
   ]
 }

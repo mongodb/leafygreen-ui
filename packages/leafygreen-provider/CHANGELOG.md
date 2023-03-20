@@ -1,5 +1,13 @@
 # @leafygreen-ui/leafygreen-provider
 
+## 3.1.1
+
+### Patch Changes
+
+- bf2fedf6d: Version bumps lib
+- Updated dependencies [ffb99f417]
+  - @leafygreen-ui/hooks@7.5.0
+
 ## 3.1.0
 
 ### Minor Changes

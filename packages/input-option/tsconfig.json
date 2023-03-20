@@ -1,0 +1,34 @@
+{
+  "extends": "../../package.tsconfig.json",
+  "compilerOptions": {
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "references": [
+    {
+      "path": "../a11y"
+    },
+    {
+      "path": "../emotion"
+    },
+    {
+      "path": "../lib"
+    },
+    {
+      "path": "../palette"
+    },
+    {
+      "path": "../polymorphic"
+    },
+    {
+      "path": "../tokens"
+    },
+    {
+      "path": "../leafygreen-provider"
+    }
+  ]
+}

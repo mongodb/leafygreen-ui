@@ -1,5 +1,41 @@
 # @leafygreen-ui/code
 
+## 14.2.1
+
+### Patch Changes
+
+- Updated dependencies [5b036515e]
+- Updated dependencies [26e341a0b]
+- Updated dependencies [997121cc3]
+  - @leafygreen-ui/palette@4.0.0
+  - @leafygreen-ui/lib@10.2.2
+  - @leafygreen-ui/icon@11.12.5
+  - @leafygreen-ui/button@20.0.2
+  - @leafygreen-ui/icon-button@15.0.7
+  - @leafygreen-ui/select@10.2.3
+  - @leafygreen-ui/tokens@2.0.1
+
+## 14.2.0
+
+### Minor Changes
+
+- 1f8ebbba6: Exports `LanguageOption` type
+- 7edcd1b0f: Adds support for C and C++. Adds HTML alias for XML
+
+### Patch Changes
+
+- bf2fedf6d: Version bumps lib
+- Updated dependencies [1cff328a3]
+- Updated dependencies [51c544e2e]
+- Updated dependencies [ffb99f417]
+- Updated dependencies [bf2fedf6d]
+  - @leafygreen-ui/button@20.0.0
+  - @leafygreen-ui/a11y@1.4.0
+  - @leafygreen-ui/hooks@7.5.0
+  - @leafygreen-ui/icon-button@15.0.6
+  - @leafygreen-ui/leafygreen-provider@3.1.1
+  - @leafygreen-ui/select@10.2.1
+
 ## 14.1.2
 
 ### Patch Changes

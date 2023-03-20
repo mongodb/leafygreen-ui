@@ -1,5 +1,43 @@
 # @leafygreen-ui/toast
 
+## 5.0.1
+
+### Patch Changes
+
+- Updated dependencies [5b036515e]
+- Updated dependencies [26e341a0b]
+- Updated dependencies [52dcb3316]
+- Updated dependencies [997121cc3]
+- Updated dependencies [eb0cc4498]
+  - @leafygreen-ui/palette@4.0.0
+  - @leafygreen-ui/lib@10.2.2
+  - @leafygreen-ui/portal@4.1.0
+  - @leafygreen-ui/icon@11.12.5
+  - @leafygreen-ui/typography@16.1.0
+  - @leafygreen-ui/icon-button@15.0.7
+  - @leafygreen-ui/tokens@2.0.1
+
+## 5.0.0
+
+### Major Changes
+
+- dd2c42ceb: Updates Toast design to align with Toast v3 in Figma
+
+### Patch Changes
+
+- Updated dependencies [2e8a572db]
+- Updated dependencies [4ccc353e7]
+- Updated dependencies [4ccc353e7]
+  - @leafygreen-ui/lib@10.2.1
+
+## 4.0.4
+
+### Patch Changes
+
+- 64eee134d: TSDoc: Updates some exported TSDoc interfaces. Storybook: Updates story files.
+- Updated dependencies [64eee134d]
+  - @leafygreen-ui/lib@10.1.0
+
 ## 4.0.3
 
 ### Patch Changes

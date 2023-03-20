@@ -1,4 +1,6 @@
 import bash from 'highlight.js/lib/languages/bash';
+import c from 'highlight.js/lib/languages/c';
+import cpp from 'highlight.js/lib/languages/cpp';
 import csharp from 'highlight.js/lib/languages/csharp';
 import dart from 'highlight.js/lib/languages/dart';
 import diff from 'highlight.js/lib/languages/diff';
@@ -27,6 +29,8 @@ import yaml from 'highlight.js/lib/languages/yaml';
 export const languageParsers = {
   javascript,
   typescript,
+  c,
+  cpp,
   csharp,
   go,
   http,
@@ -57,9 +61,12 @@ export const SupportedLanguages = {
   JS: 'js', // Javascript alias
   TypeScript: 'typescript',
   TS: 'ts', // Typescript alias
+  C: 'c',
+  Cpp: 'cpp',
   Csharp: 'csharp',
   Cs: 'cs', // C# alias
   Go: 'go',
+  Html: 'xml', // HTML alias
   Http: 'http',
   Ini: 'ini',
   Java: 'java',

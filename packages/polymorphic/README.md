@@ -118,7 +118,7 @@ const StyledPolymorph = styled(Polymorph)`
 
 const MyStyledComponent = styled(MyComponent)`
   color: hotpink;
-` as PolymorphicComponentType;
+` as typeof MyComponent;
 ```
 
 This also works with InferredPolymorphic components
@@ -126,13 +126,12 @@ This also works with InferredPolymorphic components
 ```tsx
 const StyledInferred = styled(MyInferredComponent)`
   color: hotpink;
-` as InferredPolymorphicComponentType;
+` as typeof MyInferredComponent;
 ```
 
 ### With styled props (and Typescript)
 
-Since Polymorphic components are strictly typed, to use styled props with Typescript
-you will need to define the additional props you expect to use within styled, and pass these into styled as generic type.
+Since Polymorphic components are strictly typed, to use styled props with Typescript you will need to define the additional props you expect to use within styled, and pass these into styled as generic type.
 
 ```tsx
 interface StyledProps {
@@ -141,7 +140,10 @@ interface StyledProps {
 
 const MyStyledComponent = styled(MyComponent)<StyledProps>`
   color: ${props => props.color};
-` as PolymorphicComponentType;
+` as StyledComponent<
+  StyledProps & PolymorphicProps<PolymorphicAs, ExampleProps>
+  // or StyledProps & InferredProps<PolymorphicAs, ExampleProps>
+>;
 ```
 
 Note: TSDocs will not compile for styled polymorphs. This can be remedied by creating a wrapper around the styled function that explicitly returns a PolymorphicComponentType
