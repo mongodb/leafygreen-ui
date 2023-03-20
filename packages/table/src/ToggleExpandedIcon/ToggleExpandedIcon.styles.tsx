@@ -4,9 +4,9 @@ import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
 export const iconButtonStyles = css`
-  width: 16px; // match the icon size
-  height: 16px; // match the icon size
-  margin-right: ${spacing[2]}px;
+  /* width: 16px; // match the icon size
+  height: 16px; // match the icon size */
+  /* margin-right: ${spacing[2]}px; */
 `;
 
 export const iconFills = (theme: Theme, disabled: boolean) => {
