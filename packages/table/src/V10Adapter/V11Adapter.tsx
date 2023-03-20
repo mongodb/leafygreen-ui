@@ -14,11 +14,11 @@ import Table, { flexRender, getCoreRowModel, RowData } from '..';
 import processColumns from './processColumns';
 import processData from './processData';
 
-type V10AdapterProps = PropsWithChildren<{}>;
+type V11AdapterProps = PropsWithChildren<{}>;
 
 // assumes table is first element in children
 // reads columns from columns' keys
-const V10Adapter = <T extends LeafygreenTableType<RowData>>({ children }: V10AdapterProps) => {
+const V11Adapter = <T extends LeafygreenTableType<RowData>>({ children }: V11AdapterProps) => {
   const containerRef = useRef(null);
   const OldTable = React.Children.toArray(children)[0];
   const {
@@ -79,4 +79,4 @@ const V10Adapter = <T extends LeafygreenTableType<RowData>>({ children }: V10Ada
   );
 };
 
-export default V10Adapter;
+export default V11Adapter;
