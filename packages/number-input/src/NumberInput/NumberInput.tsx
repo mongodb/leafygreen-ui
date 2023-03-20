@@ -106,7 +106,6 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
             <Input
               value={value}
               onChange={onChange}
-              readOnly={disabled}
               disabled={disabled}
               size={size}
               id={inputId}
