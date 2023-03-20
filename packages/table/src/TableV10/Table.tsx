@@ -126,7 +126,7 @@ export interface TableProps<Shape> extends HTMLElementProps<'table'> {
   children: (TableRowArgs: TableRowInterface<Shape>) => JSX.Element;
 
   /**
-   * Override the global `baseFontSize` set in LeafygreenProvider
+   * Override the global `baseFontSize` set in LeafyGreenProvider
    */
   baseFontSize?: 14 | 16;
 

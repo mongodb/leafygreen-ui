@@ -4,7 +4,7 @@ import { fireEvent, render } from '@testing-library/react';
 
 import Cell from '../Cell';
 import TableBody from '../TableBody';
-import { LeafygreenTableRow } from '../useLeafygreenTable';
+import { LeafyGreenTableRow } from '../useLeafyGreenTable';
 import { Person } from '../utils/makeData';
 import { useTestHookCall } from '../utils/testHookCalls';
 import { flexRender } from '..';
@@ -39,8 +39,8 @@ const RowWithNestedRows = () => {
             </tr>
           ))}
         </thead>
-        <TableBody table={table} renderingExpandableRows>
-          {table.getRowModel().rows.map((row: LeafygreenTableRow<Person>) => {
+        <TableBody>
+          {table.getRowModel().rows.map((row: LeafyGreenTableRow<Person>) => {
             return (
               <Row key={row.id} row={row}>
                 {row.getVisibleCells().map(cell => {

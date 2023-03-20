@@ -1,6 +1,8 @@
 import React, { PropsWithChildren } from 'react';
 
-import ToggleExpandedIcon, { ToggleExpandedIconProps } from '../ToggleExpandedIcon';
+import ToggleExpandedIcon, {
+  ToggleExpandedIconProps,
+} from '../ToggleExpandedIcon';
 import { RowData } from '..';
 
 import FirstCell from './FirstCell';

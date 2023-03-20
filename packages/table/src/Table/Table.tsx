@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -10,7 +10,7 @@ import {
 } from '@leafygreen-ui/typography';
 
 import TableContextProvider from '../TableContext/TableContext';
-import { LGRowData } from '../useLeafygreenTable';
+import { LGRowData } from '../useLeafyGreenTable';
 
 import { baseStyles, themeStyles } from './Table.styles';
 import { TableProps } from './Table.types';
@@ -23,7 +23,7 @@ const Table = <T extends LGRowData, VS extends boolean>({
   darkMode: darkModeProp,
   table,
   ...rest
-}: PropsWithChildren<TableProps<T, VS>>) => {
+}: TableProps<T, VS>) => {
   const baseFontSize: BaseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
   const { theme, darkMode } = useDarkMode(darkModeProp);
 

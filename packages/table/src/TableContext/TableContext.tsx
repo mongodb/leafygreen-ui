@@ -5,9 +5,9 @@ import React, {
   useState,
 } from 'react';
 
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
-import { LGRowData } from '../useLeafygreenTable';
+import { LGRowData } from '../useLeafyGreenTable';
 
 import { ColumnAlignment, TableContextValues } from './TableContext.types';
 
@@ -31,14 +31,18 @@ const TableContextProvider = <T extends LGRowData, VS extends boolean>({
 
   const getRowById = (id?: string) =>
     id ? table?.getRowModel().rowsById?.[id] : undefined;
+
   const getParentRow = (childId?: string) =>
     getRowById(getParentRowId(childId));
 
-  const { Provider } = TableContext as React.Context<TableContextValues<T, VS>>;
+  /** The appropriately typed context provider */
+  const TableProvider = (
+    TableContext as React.Context<TableContextValues<T, VS>>
+  ).Provider;
 
   return (
-    <LeafygreenProvider darkMode={darkMode}>
-      <Provider
+    <LeafyGreenProvider darkMode={darkMode}>
+      <TableProvider
         value={{
           table,
           getRowById,
@@ -49,8 +53,8 @@ const TableContextProvider = <T extends LGRowData, VS extends boolean>({
         }}
       >
         {children}
-      </Provider>
-    </LeafygreenProvider>
+      </TableProvider>
+    </LeafyGreenProvider>
   );
 };
 
