@@ -14,6 +14,7 @@ import Table, { flexRender, getCoreRowModel, RowData } from '..';
 import processColumns from './processColumns';
 import processData from './processData';
 import ExpandedContent from '../ExpandedContent/ExpandedContent';
+import SubRow from '../Row/SubRow';
 
 type V11AdapterProps = PropsWithChildren<{}>;
 
@@ -37,6 +38,7 @@ const V11Adapter = <T extends LeafygreenTableType<RowData>>({ children }: V11Ada
     data: processedData,
     columns: useMemo(() => processedColumns, []),
     getCoreRowModel: getCoreRowModel(),
+    getSubRows: row => row.subRows,
   });
 
   const { rows } = table.getRowModel();
@@ -74,6 +76,38 @@ const V11Adapter = <T extends LeafygreenTableType<RowData>>({ children }: V11Ada
                 {row.original.renderExpandedContent && (
                   <ExpandedContent row={row} />
                 )}
+                {row.subRows &&
+                  row.subRows.map(subRow => (
+                    <SubRow
+                      key={subRow.id}
+                      row={subRow}
+                    // virtualRow={virtualRow}
+                    >
+                      {subRow.getVisibleCells().map(cell => {
+                        return (
+                          <Cell key={cell.id} cell={cell}>
+                            {subRow.original[cell.column.id]()}
+                          </Cell>
+                        );
+                      })}
+                      {subRow.subRows &&
+                        subRow.subRows.map(subSubRow => (
+                          <SubRow
+                            key={subSubRow.id}
+                            row={subSubRow}
+                          // virtualRow={virtualRow}
+                          >
+                            {subSubRow.getVisibleCells().map(cell => {
+                              return (
+                                <Cell key={cell.id} cell={cell}>
+                                  {subRow.original[cell.column.id]()}
+                                </Cell>
+                              );
+                            })}
+                          </SubRow>
+                        ))}
+                    </SubRow>
+                  ))}
               </Row>
             );
           })}

@@ -70,7 +70,7 @@ export const ExpandableContent = () => {
   return (
     <V11Adapter>
       <Table
-        data={defaultData}
+        data={defaultData.slice(0, 8)}
         columns={
           <HeaderRow>
             <TableHeader key="name" label="Name" dataType="string" />
@@ -103,6 +103,42 @@ export const ExpandableContent = () => {
                   Donec ullamcorper nulla non metus auctor fringilla. Donec id elit
                   non mi porta gravida at eget metus.
                 </Cell>
+              </Row>
+            )}
+          </Row>
+        )}
+      </Table>
+    </V11Adapter>
+  )
+}
+
+export const NestedRows = () => {
+
+  return (
+    <V11Adapter>
+      <Table
+        data={defaultData}
+        columns={
+          <HeaderRow>
+            <TableHeader key="name" label="Name" dataType="string" />
+            <TableHeader key="age" label="Age" dataType="number" />
+            <TableHeader key="color" label="Color" dataType="string" />
+            <TableHeader key="location" label="Location" />
+          </HeaderRow>
+        }
+      >
+        {({ datum }: any) => (
+          <Row>
+            <Cell>{datum.name}</Cell>
+            <Cell>{datum.age}</Cell>
+            <Cell>{datum.color}</Cell>
+            <Cell>{datum.location}</Cell>
+            {datum.name !== 'Donna' && (
+              <Row>
+                <Cell>expanded name: {datum.name}</Cell>
+                <Cell>expanded age: {datum.age}</Cell>
+                <Cell>expanded color: {datum.color}</Cell>
+                <Cell>expanded location: {datum.location}</Cell>
               </Row>
             )}
           </Row>
