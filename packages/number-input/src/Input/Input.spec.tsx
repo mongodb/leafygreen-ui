@@ -96,5 +96,3 @@ describe('packages/number-input/input', () => {
     });
   });
 });
-
-// TODO: disabled
