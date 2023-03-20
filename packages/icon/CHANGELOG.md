@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 11.12.5
+
+### Patch Changes
+
+- 997121cc3: Improves error message when entering a glyph name that does not exist. Now, if you make a typo in the glyph name, you'll receive a more helpful console error, instead of a runtime TypeError
+
 ## 11.12.4
 
 ### Patch Changes
