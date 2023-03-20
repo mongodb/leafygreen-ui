@@ -17,6 +17,7 @@ export default StoryMeta({
   component: NumberInput,
   args: {
     label: 'label',
+    unitOptions: [],
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -100,12 +101,16 @@ Unit.args = {
   unit: 'Month',
 };
 
-export const Select = (props: NumberInputProps) => {
-  const [unit, setUnit] = useState<UnitOption>(unitOptions[0]);
+export const Select = ({
+  unit: unitProp,
+  unitOptions,
+  ...rest
+}: NumberInputProps) => {
+  const [unit, setUnit] = useState<string>(unitProp as string);
   const [value, setValue] = useState<string>('');
 
   const handleSelectChange = (unit: UnitOption) => {
-    setUnit(unit);
+    setUnit(unit.displayName);
     // eslint-disable-next-line no-console
     console.log('story: select value', unit?.value);
   };
@@ -118,10 +123,9 @@ export const Select = (props: NumberInputProps) => {
 
   return (
     <NumberInput
-      {...props}
       value={value}
-      unit={unit?.displayName}
-      unitOptions={unitOptions}
+      unit={unit}
+      unitOptions={unitOptions as Array<UnitOption>}
       onSelectChange={handleSelectChange}
       onChange={handleChange}
       className={css`
@@ -131,6 +135,12 @@ export const Select = (props: NumberInputProps) => {
           width: 100px;
         }
       `}
+      {...rest}
     />
   );
+};
+
+Select.args = {
+  unit: unitOptions[0].displayName,
+  unitOptions: unitOptions,
 };
