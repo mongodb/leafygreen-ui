@@ -14,8 +14,8 @@ import Table from './Table/Table';
 import TableBody from './TableBody/TableBody';
 import TableContainer from './TableContainer/TableContainer';
 import TableHead from './TableHead/TableHead';
-import useLeafygreenTable from './useLeafygreenTable/useLeafygreenTable';
 import { makeData, Person } from './utils/makeData';
+import useLeafyGreenTable from './useLeafyGreenTable';
 import {
   ColumnDef,
   ExpandedState,
@@ -87,7 +87,7 @@ export const Basic: ComponentStory<typeof Table> = args => {
     [],
   );
 
-  const table = useLeafygreenTable<Person>({
+  const table = useLeafyGreenTable<Person>({
     containerRef: tableContainerRef,
     data,
     columns,
@@ -126,7 +126,7 @@ export const Basic: ComponentStory<typeof Table> = args => {
           <TableBody>
             {table.virtualRows.map((virtualRow: VirtualItem) => {
               const row = rows[virtualRow.index];
-              const cells = row.getVisibleCells()
+              const cells = row.getVisibleCells();
               return (
                 <Row key={row.id}>
                   {cells.map(cell => {
@@ -193,7 +193,7 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
     [],
   );
 
-  const table = useLeafygreenTable<Person>({
+  const table = useLeafyGreenTable<Person>({
     containerRef: tableContainerRef,
     data,
     columns,
@@ -232,7 +232,7 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
           <TableBody>
             {table.virtualRows.map((virtualRow: VirtualItem) => {
               const row = rows[virtualRow.index];
-              const cells = row.getVisibleCells()
+              const cells = row.getVisibleCells();
 
               return (
                 <Row key={row.id} row={row} virtualRow={virtualRow}>
@@ -342,7 +342,7 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
     [],
   );
 
-  const table = useLeafygreenTable<Person>({
+  const table = useLeafyGreenTable<Person>({
     containerRef: tableContainerRef,
     data,
     columns,
@@ -452,7 +452,7 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
     [],
   );
 
-  const table = useLeafygreenTable<Person>({
+  const table = useLeafyGreenTable<Person>({
     containerRef: tableContainerRef,
     data,
     columns,
@@ -581,7 +581,7 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
     [],
   );
 
-  const table = useLeafygreenTable<Person>({
+  const table = useLeafyGreenTable<Person>({
     containerRef: tableContainerRef,
     data,
     columns,

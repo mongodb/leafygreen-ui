@@ -5,18 +5,22 @@ import { isComponentType } from '@leafygreen-ui/lib';
 import Cell from '../Cell';
 import ExpandingCell from '../Cell/ExpandingCell';
 import FirstCell from '../Cell/FirstCell';
-import { LeafyGreenTableRow, LGRowData } from '../useLeafygreenTable';
+import { LeafyGreenTableRow, LGRowData } from '../useLeafyGreenTable';
 
 interface RowCellChildrenProps<T extends LGRowData>
   extends PropsWithChildren<{
     row: LeafyGreenTableRow<T>;
     disabled?: boolean;
-  }> { }
+  }> {}
 
 /**
  * Renders row cells provided by `useReactTable`
  */
-const RowCellChildren = <T extends LGRowData>({ row, children, disabled }: RowCellChildrenProps<T>) => {
+const RowCellChildren = <T extends LGRowData>({
+  row,
+  children,
+  disabled,
+}: RowCellChildrenProps<T>) => {
   const isExpandable = row.getCanExpand();
   const isExpanded = row.getIsExpanded();
   const toggleExpanded = () => row.toggleExpanded();
@@ -48,13 +52,14 @@ const RowCellChildren = <T extends LGRowData>({ row, children, disabled }: RowCe
       )}
       {React.Children.map(
         OtherCellChildren,
-        (CellChild: ReactNode, index: number) =>
-        (<Cell {
-          ...(CellChild as ReactElement)?.props}
-          cellIndex={index + 1}
-          depth={row.depth}
-          disabled={disabled}
-        />)
+        (CellChild: ReactNode, index: number) => (
+          <Cell
+            {...(CellChild as ReactElement)?.props}
+            cellIndex={index + 1}
+            depth={row.depth}
+            disabled={disabled}
+          />
+        ),
       )}
     </>
   );

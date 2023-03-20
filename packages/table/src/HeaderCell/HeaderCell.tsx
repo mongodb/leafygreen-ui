@@ -3,7 +3,7 @@ import React, { PropsWithChildren, useEffect } from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 
 import { useTableContext } from '../TableContext/TableContext';
-import { LGRowData } from '../useLeafygreenTable';
+import { LGRowData } from '../useLeafyGreenTable';
 
 import SortIcon from './SortIcon/SortIcon';
 import {
@@ -50,9 +50,9 @@ const HeaderCell = <T extends LGRowData>({
     setColumnAlignments &&
       cellIndex !== undefined &&
       align &&
-      setColumnAlignments((prevAlignments) => {
+      setColumnAlignments(prevAlignments => {
         if (prevAlignments) {
-          return [...prevAlignments].splice(cellIndex, 1, align)
+          return [...prevAlignments].splice(cellIndex, 1, align);
         }
       });
   }, [cellIndex, align, setColumnAlignments]);

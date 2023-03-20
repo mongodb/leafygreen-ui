@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 
-import { LGRowData } from '../useLeafygreenTable';
+import { LGRowData } from '../useLeafyGreenTable';
 
 import { baseStyles, cellContentContainerStyles } from './Cell.styles';
 import { CellProps } from '.';

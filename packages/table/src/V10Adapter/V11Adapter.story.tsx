@@ -1,8 +1,10 @@
 import React from 'react';
 import { Meta } from "@storybook/react";
+
 import { Cell, HeaderRow, Row, Table, TableHeader } from "../TableV10";
-import V11Adapter from "./V11Adapter";
 import { defaultData } from '../TableV10/fixtures';
+
+import V11Adapter from "./V11Adapter";
 
 export default {
   title: 'Components/Table/V11 Adapter',

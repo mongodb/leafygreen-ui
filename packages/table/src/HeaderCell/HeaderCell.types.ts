@@ -1,6 +1,6 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-import { LGRowData } from '../useLeafygreenTable';
+import { LGRowData } from '../useLeafyGreenTable';
 import { Header } from '..';
 
 export type Align = HTMLElementProps<'td'>['align'];
@@ -29,7 +29,7 @@ export interface HeaderCellProps<T extends LGRowData>
    */
   sortState?: SortState;
   /**
-   * Header object passed from the `useLeafygreenTable` hook.
+   * Header object passed from the `useLeafyGreenTable` hook.
    */
   header?: Header<T, unknown>;
   /**

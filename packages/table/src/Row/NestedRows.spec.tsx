@@ -4,7 +4,7 @@ import { fireEvent, render } from '@testing-library/react';
 
 import Cell from '../Cell';
 import TableBody from '../TableBody';
-import { LeafyGreenTableRow } from '../useLeafygreenTable';
+import { LeafyGreenTableRow } from '../useLeafyGreenTable';
 import { Person } from '../utils/makeData';
 import { useTestHookCall } from '../utils/testHookCalls';
 import { flexRender } from '..';

@@ -3,7 +3,7 @@ import React, { Fragment, PropsWithChildren, useMemo } from 'react';
 import { Polymorph } from '@leafygreen-ui/polymorphic';
 
 import { useTableContext } from '../TableContext/TableContext';
-import { LGRowData } from '../useLeafygreenTable';
+import { LGRowData } from '../useLeafyGreenTable';
 
 import { TableBodyProps } from './TableBody.types';
 

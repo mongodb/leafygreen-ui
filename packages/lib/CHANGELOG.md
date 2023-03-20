@@ -74,7 +74,7 @@
 
 ### Minor Changes
 
-- 99e20bb9: Reusable DarkModeProps and darkMode prop for LeafygreenProvider
+- 99e20bb9: Reusable DarkModeProps and darkMode prop for LeafyGreenProvider
 
 ### Patch Changes
 

@@ -8,7 +8,11 @@ import Row from '../Row';
 import TableBody from '../TableBody';
 import TableContainer from '../TableContainer';
 import TableHead from '../TableHead';
-import useLeafygreenTable, { LeafyGreenTableCell, LGRowData, LGTableDataType } from '../useLeafygreenTable';
+import useLeafyGreenTable, {
+  LeafyGreenTableCell,
+  LGRowData,
+  LGTableDataType,
+} from '../useLeafyGreenTable';
 import Table, { flexRender, getCoreRowModel } from '..';
 
 import processColumns from './processColumns';
@@ -18,7 +22,9 @@ type V11AdapterProps = PropsWithChildren<{}>;
 
 // assumes table is first element in children
 // reads columns from columns' keys
-const V11Adapter = <T extends LGTableDataType<LGRowData>>({ children }: V11AdapterProps) => {
+const V11Adapter = <T extends LGTableDataType<LGRowData>>({
+  children,
+}: V11AdapterProps) => {
   const containerRef = useRef(null);
   const OldTable = React.Children.toArray(children)[0];
   const {
@@ -31,7 +37,7 @@ const V11Adapter = <T extends LGTableDataType<LGRowData>>({ children }: V11Adapt
 
   console.log({ data, processedData });
 
-  const table = useLeafygreenTable<T>({
+  const table = useLeafyGreenTable<T>({
     containerRef,
     data: processedData,
     columns: useMemo(() => processedColumns, []),

@@ -1,7 +1,7 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 import ToggleExpandedIconProps from '../ToggleExpandedIcon/ToggleExpandedIcon.types';
-import { LeafyGreenTableCell, LGRowData } from '../useLeafygreenTable';
+import { LeafyGreenTableCell, LGRowData } from '../useLeafyGreenTable';
 
 export type CellProps<T extends LGRowData> = HTMLElementProps<'td'> & {
   /**
@@ -17,7 +17,7 @@ export type CellProps<T extends LGRowData> = HTMLElementProps<'td'> & {
    */
   toggleExpandedIconProps?: ToggleExpandedIconProps;
   /**
-   * `Cell` object returned from the `useLeafygreenTable` hook
+   * `Cell` object returned from the `useLeafyGreenTable` hook
    */
   cell?: LeafyGreenTableCell<T>;
   /**

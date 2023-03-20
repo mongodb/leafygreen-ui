@@ -1,9 +1,9 @@
 import React from 'react';
 import { faker } from '@faker-js/faker';
 
-import { LeafyGreenTableRow } from '../useLeafygreenTable';
+import { LeafyGreenTableRow } from '../useLeafyGreenTable';
 
-faker.seed(0)
+faker.seed(0);
 
 export interface Person {
   id: number;
@@ -67,12 +67,12 @@ export function makeData(
         ...(hasSubRows &&
           lens[depth + 1] &&
           randomIntFromInterval(1, 2) == 1 && {
-          subRows: makeDataLevel(depth + 1),
-        }),
+            subRows: makeDataLevel(depth + 1),
+          }),
         ...(renderingExpandableRows &&
           randomIntFromInterval(1, 3) == 1 && {
-          renderExpandedContent: ExpandedContentComponent,
-        }),
+            renderExpandedContent: ExpandedContentComponent,
+          }),
       };
     });
   };

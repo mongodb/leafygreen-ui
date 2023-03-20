@@ -5,9 +5,9 @@ import React, {
   useState,
 } from 'react';
 
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
-import { LGRowData } from '../useLeafygreenTable';
+import { LGRowData } from '../useLeafyGreenTable';
 
 import { ColumnAlignment, TableContextValues } from './TableContext.types';
 
@@ -26,7 +26,6 @@ const TableContextProvider = <T extends LGRowData, VS extends boolean>({
   table,
   shouldAlternateRowColor,
 }: PropsWithChildren<Partial<TableContextValues<T, VS>>>) => {
-
   const [columnAlignments, setColumnAlignments] =
     useState<Array<ColumnAlignment>>();
 
@@ -37,10 +36,12 @@ const TableContextProvider = <T extends LGRowData, VS extends boolean>({
     getRowById(getParentRowId(childId));
 
   /** The appropriately typed context provider */
-  const TableProvider = (TableContext as React.Context<TableContextValues<T, VS>>).Provider;
+  const TableProvider = (
+    TableContext as React.Context<TableContextValues<T, VS>>
+  ).Provider;
 
   return (
-    <LeafygreenProvider darkMode={darkMode}>
+    <LeafyGreenProvider darkMode={darkMode}>
       <TableProvider
         value={{
           table,
@@ -53,7 +54,7 @@ const TableContextProvider = <T extends LGRowData, VS extends boolean>({
       >
         {children}
       </TableProvider>
-    </LeafygreenProvider>
+    </LeafyGreenProvider>
   );
 };
 

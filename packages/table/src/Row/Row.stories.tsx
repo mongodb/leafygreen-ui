@@ -10,8 +10,10 @@ import Table from '../Table/Table';
 import TableBody from '../TableBody/TableBody';
 import TableContainer from '../TableContainer/TableContainer';
 import TableHead from '../TableHead/TableHead';
-import { LeafyGreenTableCell, LeafyGreenTableRow } from '../useLeafygreenTable';
-import useLeafygreenTable from '../useLeafygreenTable/useLeafygreenTable';
+import useLeafyGreenTable, {
+  LeafyGreenTableCell,
+  LeafyGreenTableRow,
+} from '../useLeafyGreenTable';
 import { makeData, Person } from '../utils/makeData';
 import { AnyDict } from '../utils/types';
 import {
@@ -123,7 +125,7 @@ export const DisabledNestedRows: ComponentStory<typeof Row> = ({
     [],
   );
 
-  const table = useLeafygreenTable<Person>({
+  const table = useLeafyGreenTable<Person>({
     containerRef: tableContainerRef,
     data,
     columns,
@@ -194,11 +196,11 @@ DisabledNestedRows.args = {
 
 export const ClickableRows = Template.bind({});
 ClickableRows.args = {
-  onClick: () => { },
+  onClick: () => {},
 };
 
 export const DisabledClickableRows = Template.bind({});
 DisabledClickableRows.args = {
-  onClick: () => { },
+  onClick: () => {},
   disabled: true,
 };

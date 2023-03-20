@@ -10,7 +10,7 @@ import {
 } from '@leafygreen-ui/typography';
 
 import TableContextProvider from '../TableContext/TableContext';
-import { LGRowData } from '../useLeafygreenTable';
+import { LGRowData } from '../useLeafyGreenTable';
 
 import { baseStyles, themeStyles } from './Table.styles';
 import { TableProps } from './Table.types';
