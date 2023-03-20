@@ -1,4 +1,4 @@
-import useLeafygreenTable from './useLeafygreenTable';
+import useLeafyGreenTable from './useLeafyGreenTable';
 export { VirtualizerValues } from './reactVirtual.types';
-export * from './useLeafygreenTable.types';
-export default useLeafygreenTable;
+export * from './useLeafyGreenTable.types';
+export default useLeafyGreenTable;
