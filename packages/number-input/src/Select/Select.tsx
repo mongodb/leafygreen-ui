@@ -68,18 +68,27 @@ export function Select({
         forwardedRef,
         null,
       );
+
+      /**
+       * Gets the text node for the selected option.
+       */
       const textNode = buttonRef.current?.querySelector(
         `.${menuButtonTextClassName}`,
       ) as HTMLElement;
+
+      /**
+       * Checks if the selected option has an ellipse.
+       */
+      const hasEllipse = textNode?.offsetWidth < textNode?.scrollWidth;
 
       const [open, setOpen] = useState<boolean>(false);
 
       return (
         <div className={customMenuButtonWrapperStyles}>
           <Tooltip
-            enabled={textNode?.offsetWidth < textNode?.scrollWidth}
+            enabled={hasEllipse}
             justify="middle"
-            // Using refEl instead of a trigger because triggerProps such as onMouseEnter are added to the trigger inside the tooltip component. OnMouseEnter is triggered by hovering over trigger or any of its children. In the case of TODO: finish this
+            // Using refEl instead of a trigger element because triggerProps by default, such as onMouseEnter, are added to the trigger element inside the tooltip component. OnMouseEnter is triggered by hovering over the trigger or any of its children. In the case of this custom menu button we don't want the tooltip to open when children are hovered so we add our own open logic with onMouseEnter.
             refEl={buttonRef}
             open={open}
             {...popoverProps}

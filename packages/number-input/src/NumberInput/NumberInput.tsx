@@ -59,13 +59,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
     const selectId = useIdAllocator({ prefix });
     const { darkMode, theme } = useDarkMode(darkModeProp);
 
-    /**
-     * Checks if there is a unit
-     */
     const hasUnit = !!unitProp;
-    /**
-     * Checks if the select option will render
-     */
     const hasSelectOptions = unitOptions.length > 1;
 
     const renderUnitOnly = hasUnit && !hasSelectOptions;
