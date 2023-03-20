@@ -1,8 +1,6 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-import { LGRowData } from '../useLeafyGreenTable';
-
-export type TableBodyProps<T extends LGRowData> = {
+export type TableBodyProps = {
   /**
    * Indicate whether the Table is rendering expandable rows in its body.
    */

@@ -3,14 +3,13 @@ import React, { Fragment, PropsWithChildren, useMemo } from 'react';
 import { Polymorph } from '@leafygreen-ui/polymorphic';
 
 import { useTableContext } from '../TableContext/TableContext';
-import { LGRowData } from '../useLeafyGreenTable';
 
 import { TableBodyProps } from './TableBody.types';
 
-const TableBody = <T extends LGRowData>({
+const TableBody = ({
   children,
   ...rest
-}: PropsWithChildren<TableBodyProps<T>>) => {
+}: PropsWithChildren<TableBodyProps>) => {
   let paddingTop = 0;
   let paddingBottom = 0;
 
