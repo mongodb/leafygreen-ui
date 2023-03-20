@@ -1,6 +1,5 @@
 import { Size, UnitOption } from '../NumberInput/NumberInput.types';
 
-// TODO: extend popover props?
 export interface SelectProps {
   /**
    * Id for the select component.

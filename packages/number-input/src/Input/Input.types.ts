@@ -5,4 +5,4 @@ export interface InputProps extends Partial<BaseNumberInputProps> {
    * Determines input styles when the select is rendered.
    */
   hasSelectOptions?: boolean;
-} // TODO: omit popover props
+}
