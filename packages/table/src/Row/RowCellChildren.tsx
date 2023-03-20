@@ -5,8 +5,10 @@ import { isComponentType } from '@leafygreen-ui/lib';
 
 import Cell from '../Cell';
 import { depthPadding } from '../Cell/Cell.styles';
+import { useTableContext } from '../TableContext/TableContext';
 import ToggleExpandedIcon from '../ToggleExpandedIcon';
 import { LeafyGreenTableRow, LGRowData } from '../useLeafyGreenTable';
+import { getAreAncestorsExpanded } from '../utils/areAncestorsExpanded';
 
 interface RowCellChildrenProps<T extends LGRowData>
   extends PropsWithChildren<{
@@ -22,8 +24,16 @@ const RowCellChildren = <T extends LGRowData>({
   children,
   disabled,
 }: RowCellChildrenProps<T>) => {
+  const { getParentRow } = useTableContext();
+  const parentRow = getParentRow?.(row.id);
+  const isNested = !!parentRow
+  const isParentExpanded = !!parentRow && parentRow.getIsExpanded()
+  const areAncestorsExpanded = getAreAncestorsExpanded(row.id, getParentRow)
+  const isRowVisible = areAncestorsExpanded && isParentExpanded || !isNested
+
   const isExpandable = row.getCanExpand();
   const isExpanded = row.getIsExpanded();
+
   const toggleExpanded = () => row.toggleExpanded();
 
   const CellChildren = React.Children.toArray(children)
@@ -31,30 +41,34 @@ const RowCellChildren = <T extends LGRowData>({
       isComponentType(child, 'Cell'),
     );
 
-  const firstCellProps = (CellChildren[0] as ReactElement)?.props
-  const OtherCellChildren = CellChildren.slice(1);
-
   return (
     <>
-      <Cell
-        {...firstCellProps}
-        className={cx(depthPadding(row.depth, isExpandable), firstCellProps.className)}
-        cellIndex={0}
-        disabled={disabled}
-      >
-        {isExpandable && <ToggleExpandedIcon isExpanded={isExpanded} toggleExpanded={toggleExpanded} />}
-        {firstCellProps.children}
-      </Cell>
       {React.Children.map(
-        OtherCellChildren,
-        (CellChild: ReactNode, index: number) => (
-          <Cell
-            {...(CellChild as ReactElement)?.props}
-            cellIndex={index + 1}
-            depth={row.depth}
-            disabled={disabled}
-          />
-        ),
+        CellChildren,
+        (child: ReactNode, index: number) => {
+          const { className, children, ...props } = (child as ReactElement)?.props
+          const isFirstCell = index === 0;
+          return (
+            <Cell
+              {...props}
+              className={cx(
+                {
+                  [
+                    depthPadding(row.depth, isExpandable)
+                  ]: isFirstCell,
+                },
+                className
+              )}
+              cellIndex={index}
+              depth={row.depth}
+              isRowExpanded={isRowVisible}
+              disabled={disabled}
+            >
+              {isFirstCell && isExpandable && <ToggleExpandedIcon isExpanded={isExpanded} toggleExpanded={toggleExpanded} />}
+              {children}
+            </Cell>
+          )
+        },
       )}
     </>
   );

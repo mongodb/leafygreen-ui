@@ -6,9 +6,9 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { useTableContext } from '../TableContext/TableContext';
 
 import {
-  baseStyles,
   clickableStyles,
   disabledStyles,
+  rowBaseStyles,
   zebraStyles,
 } from './Row.styles';
 import { InternalRowBaseProps } from './Row.types';
@@ -30,7 +30,7 @@ const InternalRowBase = ({
       aria-disabled={disabled}
       tabIndex={onClick ? 0 : undefined}
       className={cx(
-        baseStyles,
+        rowBaseStyles,
         {
           [zebraStyles[theme]]: shouldAlternateRowColor,
           [disabledStyles[theme]]: disabled,

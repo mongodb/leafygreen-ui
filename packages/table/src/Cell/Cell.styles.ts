@@ -1,5 +1,7 @@
+import { TransitionStatus } from 'react-transition-group';
+
 import { css } from '@leafygreen-ui/emotion';
-import { spacing } from '@leafygreen-ui/tokens';
+import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
 import { Align } from '../HeaderCell/HeaderCell.types';
 
@@ -7,18 +9,28 @@ const baseSidePadding = spacing[4];
 
 const expandIconSize = 28;
 
-export const baseStyles = css`
+export const baseCellStyles = css`
   padding: 0;
+
   &:focus-visible {
     box-shadow: inset;
   }
-  /* &:first-child {
-    padding-left: ${baseSidePadding}px;
-  } */
   &:last-child {
     padding-right: ${baseSidePadding}px;
   }
 `;
+
+export const cellTransitionStyles: Record<TransitionStatus, string> = {
+  entering: css`
+    opacity: 1;
+    min-height: ${spacing[5] + spacing[2]}px;
+    max-height: ${spacing[5] + spacing[2]}px;
+  `,
+  entered: css``,
+  exiting: css``,
+  exited: css``,
+  unmounted: css``,
+};
 
 const flexAlignment: Record<string, string> = {
   left: 'start',
@@ -37,19 +49,30 @@ export const depthPadding = (depth = 0, isExpandable = false) => css`
 export const cellContentContainerStyles = css`
   display: flex;
   align-items: center;
-  min-height: ${spacing[5] + spacing[2]}px;
-  /* padding: 10px 8px; */
+  transition: ${transitionDuration.default}ms ease-in-out;
+  transition-property: min-height, max-height, opacity;
 `;
 
-export const subRowStyles = css`
-  transition: all 0.2s ease-in;
-`;
-
-export const hiddenSubRowStyles = css`
-  min-height: 0;
-  max-height: 0;
-  padding-top: 0;
-  padding-bottom: 0;
-  opacity: 0;
-  margin: 0;
-`;
+export const cellContentTransitionStyles: Record<TransitionStatus, string> = {
+  entering: css`
+    opacity: 0;
+    min-height: 0;
+    max-height: 0;
+  `,
+  entered: css`
+    opacity: 1;
+    min-height: ${spacing[5] + spacing[2]}px;
+    max-height: ${spacing[5] + spacing[2]}px;
+  `,
+  exiting: css`
+    opacity: 0;
+    min-height: 0;
+    max-height: 0;
+  `,
+  exited: css`
+    opacity: 0;
+    min-height: 0;
+    max-height: 0;
+  `,
+  unmounted: css``,
+};

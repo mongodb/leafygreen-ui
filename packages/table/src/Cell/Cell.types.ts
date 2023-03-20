@@ -26,4 +26,9 @@ export type CellProps<T extends LGRowData> = HTMLElementProps<'td'> & {
    * Mainly intended for internal use.
    */
   contentClassName?: string;
+
+  /**
+   * Defines whether the cell's row is visible (i.e. expanded)
+   */
+  isRowExpanded?: boolean;
 };

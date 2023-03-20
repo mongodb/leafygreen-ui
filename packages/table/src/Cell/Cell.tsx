@@ -1,11 +1,13 @@
 import React from 'react';
+import { Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { LGRowData } from '../useLeafyGreenTable';
 
-import { baseStyles, cellContentContainerStyles } from './Cell.styles';
+import { baseCellStyles, cellContentContainerStyles, cellContentTransitionStyles } from './Cell.styles';
 import { CellProps } from '.';
 
 const Cell = <T extends LGRowData>({
@@ -15,13 +17,25 @@ const Cell = <T extends LGRowData>({
   toggleExpandedIconProps,
   cell,
   contentClassName,
+  isRowExpanded,
   ...rest
 }: CellProps<T>) => {
   return (
-    <td className={cx(baseStyles, className)} {...rest}>
-      <div className={cx(cellContentContainerStyles, contentClassName)}>
-        {children}
-      </div>
+    <td className={cx(baseCellStyles, className)} {...rest}>
+      <Transition in={isRowExpanded} timeout={transitionDuration.default}>
+        {state => (
+          <div
+            data-state={state}
+            className={cx(
+              cellContentContainerStyles,
+              cellContentTransitionStyles[state],
+              contentClassName
+            )}>
+            {children}
+          </div>
+        )}
+
+      </Transition>
     </td>
   );
 };

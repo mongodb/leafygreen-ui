@@ -1,13 +1,12 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
 
-import { hiddenSubRowStyles, subRowStyles } from '../Cell/Cell.styles';
 import { useTableContext } from '../TableContext/TableContext';
 
-import { nestedBgStyles } from './Row.styles';
+import { rowExpandedStyles } from './Row.styles';
 import { InternalRowWithRTProps } from './Row.types';
 import Row from '.';
 
@@ -21,7 +20,7 @@ const SubRow = <T extends unknown>({
   const parentRow = getParentRow?.(subRow.id);
 
   const { theme } = useDarkMode();
-  const isRendered = parentRow?.getIsExpanded();
+  const isExpanded = parentRow?.getIsExpanded();
   const CellChildren = React.Children.toArray(children).filter(child =>
     isComponentType(child, 'Cell'),
   );
@@ -29,33 +28,22 @@ const SubRow = <T extends unknown>({
     child => !isComponentType(child, 'Cell'),
   );
 
-  const styles = cx(subRowStyles, {
-    [hiddenSubRowStyles]: !isRendered,
-  });
-
   return (
     <Row
       row={subRow}
-      isNestedRow
-      aria-hidden={!isRendered}
+      // isNestedRow
+      // aria-hidden={!isExpanded}
       className={cx(
         {
-          [nestedBgStyles[theme]]: isRendered,
+          [rowExpandedStyles[theme]]: isExpanded,
         },
         className,
       )}
       {...rest}
     >
-      {CellChildren.map((CellChild, index) => {
-        const { className, ...rest } = (CellChild as ReactElement)?.props;
-        return React.cloneElement(CellChild as ReactElement, {
-          ...rest,
-          cellIndex: index,
-          className: cx(styles, className),
-          contentClassName: cx(styles, className),
-        });
-      })}
-      {OtherChildren}
+      {children}
+      {/* {CellChildren}
+      {OtherChildren} */}
     </Row>
   );
 };
