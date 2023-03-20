@@ -1,12 +1,11 @@
 import { PropsWithChildren } from 'react';
-import { Row } from '@tanstack/react-table';
 
 import { TableProps } from '../Table/Table.types';
 import {
-  LeafygreenTableRow,
-  LeafygreenTableValues,
+  LeafyGreenTableRow,
+  LeafyGreenTableValues,
   LGRowData,
-} from '../useLeafygreenTable';
+} from '../useLeafyGreenTable';
 
 export type ColumnAlignment = 'left' | 'right' | 'center';
 
@@ -24,21 +23,16 @@ export type TableContextValues<
     React.SetStateAction<Array<ColumnAlignment> | undefined>
   >;
 
-  getRowById?: (id?: string) => LeafygreenTableRow<T> | undefined;
-  getParentRow?: (id?: string) => LeafygreenTableRow<T> | undefined;
+  /** returns the table row object with the provided `id` */
+  getRowById?: (id?: string) => LeafyGreenTableRow<T> | undefined;
+
+  /** returns the parent table row object for the provided `id` if it is nested */
+  getParentRow?: (id?: string) => LeafyGreenTableRow<T> | undefined;
 
   /**
    * The `useLeafyGreenTable` return value
    */
-  table?: LeafygreenTableValues<T, VS>;
-
-  // internalExpandedRows: Array<Record<string, boolean>>;
-  // setInternalExpandedRows: React.Dispatch<
-  //   React.SetStateAction<Record<string, boolean> | undefined>
-  // >;
-
-  // isExpandedRow: (rowId: string) => boolean;
-  // toggleExpandedRow: (rowId: string) => void;
+  table?: LeafyGreenTableValues<T, VS>;
 };
 
 export const initialTableContext: TableContextValues<LGRowData, boolean> = {

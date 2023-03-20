@@ -6,6 +6,7 @@ import { HTMLElementProps, isComponentType } from '@leafygreen-ui/lib';
 import { Polymorph } from '@leafygreen-ui/polymorphic';
 
 import { useTableContext } from '../TableContext/TableContext';
+import { LGRowData } from '../useLeafygreenTable';
 
 import InternalRowBase from './InternalRowBase';
 import {
@@ -16,7 +17,10 @@ import {
 import { InternalRowWithRTProps } from './Row.types';
 import RowCellChildren from './RowCellChildren';
 
-const InternalRowWithRT = <T extends unknown>({
+/**
+ * Renders row data provided by `useReactTable`
+ */
+const InternalRowWithRT = <T extends LGRowData>({
   children,
   className,
   row,
@@ -63,27 +67,25 @@ const InternalRowWithRT = <T extends unknown>({
   };
 
   return (
-    <>
-      <Polymorph as={containerAs} {...(shouldRenderAsTBody ?? tBodyProps)}>
-        <InternalRowBase
-          className={cx(
-            {
-              [nestedBorderTopStyles[theme]]: isExpanded && !isNestedRow,
-              [nestedBgStyles[theme]]: isExpanded,
-            },
-            className,
-          )}
-          disabled={disabled}
-          data-depth={row.depth}
-          {...rest}
-        >
-          <RowCellChildren row={row} disabled={disabled}>
-            {CellChildren}
-          </RowCellChildren>
-        </InternalRowBase>
-        {OtherChildren}
-      </Polymorph>
-    </>
+    <Polymorph as={containerAs} {...(shouldRenderAsTBody ?? tBodyProps)}>
+      <InternalRowBase
+        className={cx(
+          {
+            [nestedBorderTopStyles[theme]]: isExpanded && !isNestedRow,
+            [nestedBgStyles[theme]]: isExpanded,
+          },
+          className,
+        )}
+        disabled={disabled}
+        data-depth={row.depth}
+        {...rest}
+      >
+        <RowCellChildren row={row} disabled={disabled}>
+          {CellChildren}
+        </RowCellChildren>
+      </InternalRowBase>
+      {OtherChildren}
+    </Polymorph>
   );
 };
 

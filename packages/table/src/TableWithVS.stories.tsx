@@ -231,9 +231,11 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
           <TableBody>
             {table.virtualRows.map((virtualRow: VirtualItem) => {
               const row = rows[virtualRow.index];
+              const cells = row.getVisibleCells()
+
               return (
                 <Row key={row.id} row={row} virtualRow={virtualRow}>
-                  {row.getVisibleCells().map(cell => {
+                  {cells.map(cell => {
                     return (
                       <Cell key={cell.id} cell={cell}>
                         {flexRender(

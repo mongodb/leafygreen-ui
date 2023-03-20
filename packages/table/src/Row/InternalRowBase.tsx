@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -13,12 +13,15 @@ import {
 } from './Row.styles';
 import { InternalRowBaseProps } from './Row.types';
 
+/**
+ * The base Row component, extended by `InternalRow(With/Without)RT`
+ */
 const InternalRowBase = ({
   className,
   onClick,
   disabled,
   ...rest
-}: PropsWithChildren<InternalRowBaseProps>) => {
+}: InternalRowBaseProps) => {
   const { theme } = useDarkMode();
   const { shouldAlternateRowColor } = useTableContext();
   return (

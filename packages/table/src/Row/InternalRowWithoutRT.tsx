@@ -5,6 +5,9 @@ import Cell from '../Cell';
 import InternalRowBase from './InternalRowBase';
 import { InternalRowBaseProps } from './Row.types';
 
+/**
+ * Renders basic array row data
+ */
 const InternalRowWithoutRT = ({ children, ...rest }: InternalRowBaseProps) => {
   return (
     <InternalRowBase {...rest}>

@@ -3,10 +3,11 @@ import React, { Fragment, PropsWithChildren, useMemo } from 'react';
 import { Polymorph } from '@leafygreen-ui/polymorphic';
 
 import { useTableContext } from '../TableContext/TableContext';
+import { LGRowData } from '../useLeafygreenTable';
 
 import { TableBodyProps } from './TableBody.types';
 
-const TableBody = <T extends unknown>({
+const TableBody = <T extends LGRowData>({
   children,
   ...rest
 }: PropsWithChildren<TableBodyProps<T>>) => {

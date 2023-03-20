@@ -1,9 +1,9 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 import ToggleExpandedIconProps from '../ToggleExpandedIcon/ToggleExpandedIcon.types';
-import { LeafygreenTableCell } from '../useLeafygreenTable';
+import { LeafyGreenTableCell, LGRowData } from '../useLeafygreenTable';
 
-export type CellProps<T extends unknown> = HTMLElementProps<'td'> & {
+export type CellProps<T extends LGRowData> = HTMLElementProps<'td'> & {
   /**
    * Index of the cell in its parent row.
    */
@@ -19,7 +19,7 @@ export type CellProps<T extends unknown> = HTMLElementProps<'td'> & {
   /**
    * `Cell` object returned from the `useLeafygreenTable` hook
    */
-  cell?: LeafygreenTableCell<T>;
+  cell?: LeafyGreenTableCell<T>;
   /**
    * `className` prop passed to the div inside the td that houses the cell's contents
    *

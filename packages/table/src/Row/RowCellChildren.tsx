@@ -1,19 +1,21 @@
 import React, { PropsWithChildren, ReactElement, ReactNode } from 'react';
-import { Row } from '@tanstack/react-table';
 
 import { isComponentType } from '@leafygreen-ui/lib';
 
 import Cell from '../Cell';
 import ExpandingCell from '../Cell/ExpandingCell';
 import FirstCell from '../Cell/FirstCell';
-import { LeafygreenTableRow } from '../useLeafygreenTable';
+import { LeafyGreenTableRow } from '../useLeafygreenTable';
 
 interface RowCellChildrenProps
   extends PropsWithChildren<{
-    row: LeafygreenTableRow<any>;
+    row: LeafyGreenTableRow<any>;
     disabled?: boolean;
-  }> {}
+  }> { }
 
+/**
+ * Renders row cells provided by `useReactTable`
+ */
 const RowCellChildren = ({ row, children, disabled }: RowCellChildrenProps) => {
   const isExpandable = row.getCanExpand();
   const isExpanded = row.getIsExpanded();

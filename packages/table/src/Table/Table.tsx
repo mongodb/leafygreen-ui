@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -23,7 +23,7 @@ const Table = <T extends LGRowData, VS extends boolean>({
   darkMode: darkModeProp,
   table,
   ...rest
-}: PropsWithChildren<TableProps<T, VS>>) => {
+}: TableProps<T, VS>) => {
   const baseFontSize: BaseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
   const { theme, darkMode } = useDarkMode(darkModeProp);
 

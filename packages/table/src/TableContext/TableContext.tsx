@@ -31,14 +31,16 @@ const TableContextProvider = <T extends LGRowData, VS extends boolean>({
 
   const getRowById = (id?: string) =>
     id ? table?.getRowModel().rowsById?.[id] : undefined;
+
   const getParentRow = (childId?: string) =>
     getRowById(getParentRowId(childId));
 
-  const { Provider } = TableContext as React.Context<TableContextValues<T, VS>>;
+  /** The appropriately typed context provider */
+  const TableProvider = (TableContext as React.Context<TableContextValues<T, VS>>).Provider;
 
   return (
     <LeafygreenProvider darkMode={darkMode}>
-      <Provider
+      <TableProvider
         value={{
           table,
           getRowById,
@@ -49,7 +51,7 @@ const TableContextProvider = <T extends LGRowData, VS extends boolean>({
         }}
       >
         {children}
-      </Provider>
+      </TableProvider>
     </LeafygreenProvider>
   );
 };
