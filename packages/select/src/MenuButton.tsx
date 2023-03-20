@@ -332,10 +332,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
       })}
     >
       <div className={menuButtonTextWrapperStyle}>
-        <div
-          data-selecttextvalue
-          className={cx(menuButtonTextClassName, menuButtonTextStyle)}
-        >
+        <div className={cx(menuButtonTextClassName, menuButtonTextStyle)}>
           {text}
         </div>
         {state === State.Error && errorMessage && (

@@ -1,6 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
+import { menuButtonTextClassName } from '@leafygreen-ui/select';
 import { focusRing } from '@leafygreen-ui/tokens';
 
 export const wrapperBaseStyles = css`
@@ -19,7 +20,10 @@ export const customMenuButtonWrapperStyles = css`
 export const menuBaseStyles = css`
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  text-transform: uppercase;
+
+  .${menuButtonTextClassName} {
+    text-transform: uppercase;
+  }
 `;
 
 export const menuThemeStyles: Record<Theme, string> = {

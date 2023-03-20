@@ -113,7 +113,6 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
           [autoWidthStyles]: dropdownAutoWidth && !usePortal,
         })}
         refEl={referenceElement}
-        data-ispopoverwrapper
         {...popoverProps}
       >
         {/* Keyboard events handled in Select component through event listener hook */}
