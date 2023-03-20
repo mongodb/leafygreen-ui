@@ -21,7 +21,7 @@ import {
   wrapperGapStyles,
   wrapperSizeStyles,
 } from './NumberInput.styles';
-import { NumberInputProps, Size, State, UnitOption } from './NumberInput.types';
+import { NumberInputProps, Size, State } from './NumberInput.types';
 
 export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
   (
@@ -30,7 +30,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       size = Size.Default,
       unitOptions = [],
       onSelectChange = () => {},
-      unit: unitProp,
+      unit,
       darkMode: darkModeProp,
       id: idProp,
       'aria-describedby': ariaDescribedbyProp,
@@ -59,19 +59,13 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
     const selectId = useIdAllocator({ prefix });
     const { darkMode, theme } = useDarkMode(darkModeProp);
 
-    const hasUnit = !!unitProp;
-    const hasSelectOptions = unitOptions.length > 1;
+    const hasUnit = !!unit;
+    const hasSelectOptions =
+      Array.isArray(unitOptions) && unitOptions.length > 1;
 
     const renderUnitOnly = hasUnit && !hasSelectOptions;
     const renderSelectOnly = hasUnit && hasSelectOptions;
     const renderErrorMessage = state === State.Error && errorMessage;
-
-    /**
-     * Gets the current unit option using the unit string
-     */
-    const currentUnitOption = unitOptions?.find(
-      unit => unit.displayName === unitProp,
-    );
 
     const popoverProps = {
       popoverZIndex,
@@ -127,14 +121,14 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
                   [unitDisabledStyles[theme]]: disabled,
                 })}
               >
-                {unitProp}
+                {unit}
               </Overline>
             )}
             {renderSelectOnly && (
               <Select
                 id={selectId}
                 disabled={disabled}
-                unit={currentUnitOption as UnitOption}
+                unit={unit as string}
                 unitOptions={unitOptions}
                 onChange={onSelectChange}
                 size={size}

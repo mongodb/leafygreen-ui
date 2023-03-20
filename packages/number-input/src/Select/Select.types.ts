@@ -37,7 +37,7 @@ export interface SelectProps {
   /**
    * The controlled value of the select input.
    */
-  unit: UnitOption;
+  unit: string;
 
   /**
    * The options that appear in the select input.

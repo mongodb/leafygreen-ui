@@ -25,8 +25,9 @@ import { SelectProps } from './Select.types';
  * @internal
  */
 export function Select({
+  'data-testid': dataTestId,
+  unit: unitProp,
   id,
-  unit,
   unitOptions,
   onChange,
   disabled,
@@ -36,7 +37,6 @@ export function Select({
   portalContainer,
   scrollContainer,
   popoverZIndex,
-  'data-testid': dataTestId,
 }: SelectProps) {
   const { theme } = useDarkMode();
 
@@ -47,6 +47,13 @@ export function Select({
     portalContainer,
     scrollContainer,
   } as const;
+
+  /**
+   * Gets the current unit option using the unit string
+   */
+  const currentUnitOption = unitOptions?.find(
+    unit => unit.displayName === unitProp,
+  );
 
   const handleChange = (val: string) => {
     const selectedUnit = unitOptions.find(unit => unit.displayName === val);
@@ -93,7 +100,7 @@ export function Select({
             open={open}
             {...popoverProps}
           >
-            {unit?.displayName}
+            {currentUnitOption?.displayName}
           </Tooltip>
           <Button
             {...props}
@@ -124,7 +131,7 @@ export function Select({
         id={id}
         onChange={handleChange}
         aria-labelledby="Unit Picker"
-        value={unit?.displayName}
+        value={currentUnitOption?.displayName as string}
         className={cx({
           [selectDisabledStyles[theme]]: disabled,
         })}

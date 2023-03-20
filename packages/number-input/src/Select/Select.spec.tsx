@@ -3,16 +3,9 @@ import { fireEvent, render } from '@testing-library/react';
 
 import { Select } from '.';
 
-const unitProps = {
-  unit: {
-    displayName: 'day',
-    value: 'day',
-  },
-};
-
 const selectProps = {
-  ...unitProps,
   onChange: jest.fn(),
+  unit: 'day',
   unitOptions: [
     {
       displayName: 'day',
@@ -42,21 +35,19 @@ function renderSelect(props = {}) {
 describe('packages/number-input/select', () => {
   test('a collapsed select is rendered, with an active state based on the language prop', () => {
     const { getByRole } = renderSelect({ ...selectProps });
-    expect(
-      getByRole('button', { name: unitProps.unit.displayName }),
-    ).toBeInTheDocument();
+    expect(getByRole('button', { name: selectProps.unit })).toBeInTheDocument();
   });
 
   test('clicking the collapsed select menu button opens a select', () => {
     const { getByRole } = renderSelect({ ...selectProps });
-    const trigger = getByRole('button', { name: unitProps.unit.displayName });
+    const trigger = getByRole('button', { name: selectProps.unit });
     fireEvent.click(trigger);
     expect(getByRole('listbox')).toBeInTheDocument();
   });
 
   test('options displayed in select are based on the languageOptions prop', () => {
     const { getByRole } = renderSelect({ ...selectProps });
-    const trigger = getByRole('button', { name: unitProps.unit.displayName });
+    const trigger = getByRole('button', { name: selectProps.unit });
     fireEvent.click(trigger);
 
     // First option has a checkmark next to it
@@ -76,7 +67,7 @@ describe('packages/number-input/select', () => {
   test('onChange prop gets called when new unit is selected', () => {
     const { getByRole } = renderSelect({ ...selectProps });
 
-    const trigger = getByRole('button', { name: unitProps.unit.displayName });
+    const trigger = getByRole('button', { name: selectProps.unit });
     fireEvent.click(trigger);
 
     fireEvent.click(
@@ -88,7 +79,7 @@ describe('packages/number-input/select', () => {
   test('onChange prop is called with an object that represents the newly selected unit when called', () => {
     const { getByRole } = renderSelect({ ...selectProps });
 
-    const trigger = getByRole('button', { name: unitProps.unit.displayName });
+    const trigger = getByRole('button', { name: selectProps.unit });
     fireEvent.click(trigger);
 
     fireEvent.click(
