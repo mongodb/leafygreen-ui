@@ -6,7 +6,6 @@ import { Table, Row, Cell, TableHeader, HeaderRow, DataType } from '.';
 import { defaultData, multiRowData } from './fixtures';
 import { TableProps } from './Table';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
-import V10Adapter from '../V10Adapter';
 
 export default {
   title: 'Components/Table/V10',
@@ -32,31 +31,29 @@ export default {
 type TableArgs<T = any> = TableProps<T> & { withHeaders?: boolean };
 
 export const Basic = ({ withHeaders, ...args }: TableArgs<any>) => (
-  <V10Adapter>
-    <Table
-      {...args}
-      data={defaultData.slice(0, 8)}
-      columns={
-        <HeaderRow>
-          <TableHeader key="index" label="Index" dataType="number" />
-          <TableHeader key="name" label="Name" dataType="string" />
-          <TableHeader key="age" label="Age" dataType="number" />
-          <TableHeader key="color" label="Color" dataType="string" />
-          <TableHeader key="location" label="Location" />
-        </HeaderRow>
-      }
-    >
-      {({ datum, index }) => (
-        <Row key={datum.name}>
-          <Cell isHeader={withHeaders}>{index}</Cell>
-          <Cell isHeader={withHeaders}>{datum.name}</Cell>
-          <Cell>{datum.age}</Cell>
-          <Cell>{datum.color}</Cell>
-          <Cell>{datum.location}</Cell>
-        </Row>
-      )}
-    </Table>
-  </V10Adapter>
+  <Table
+    {...args}
+    data={defaultData.slice(0, 8)}
+    columns={
+      <HeaderRow>
+        <TableHeader key="index" label="Index" dataType="number" />
+        <TableHeader key="name" label="Name" dataType="string" />
+        <TableHeader key="age" label="Age" dataType="number" />
+        <TableHeader key="color" label="Color" dataType="string" />
+        <TableHeader key="location" label="Location" />
+      </HeaderRow>
+    }
+  >
+    {({ datum, index }) => (
+      <Row key={datum.name}>
+        <Cell isHeader={withHeaders}>{index}</Cell>
+        <Cell isHeader={withHeaders}>{datum.name}</Cell>
+        <Cell>{datum.age}</Cell>
+        <Cell>{datum.color}</Cell>
+        <Cell>{datum.location}</Cell>
+      </Row>
+    )}
+  </Table>
 );
 
 export const BuiltInZebraStripes = ({

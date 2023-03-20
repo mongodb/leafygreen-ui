@@ -17,13 +17,18 @@ const processData = (
     const evaluatedCells = React.Children.toArray(
       evaluatedRow.props.children,
     ).filter(child => isComponentType(child, 'Cell'));
-    return evaluatedCells.reduce((acc, currVal, index) => {
+    const newDatum = evaluatedCells.reduce((acc, currVal, index) => {
       return {
         ...acc,
         [processedColumns[index].accessorKey]: () =>
           (currVal as ReactElement).props.children,
       };
     }, {});
+    const evaluatedOtherChildren = React.Children.toArray(
+      evaluatedRow.props.children,
+    ).filter(child => !isComponentType(child, 'Cell'));
+
+    return newDatum;
   });
   return processedData;
 };

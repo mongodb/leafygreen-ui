@@ -1,20 +1,22 @@
 import React, { PropsWithChildren } from 'react';
 
-import ToggleExpandedIcon from '../ToggleExpandedIcon';
+import ToggleExpandedIcon, { ToggleExpandedIconProps } from '../ToggleExpandedIcon';
+import { RowData } from '..';
 
 import FirstCell from './FirstCell';
+import { CellProps } from '.';
 
-const ExpandingCell = ({
+const ExpandingCell = <T extends RowData>({
   children,
-  toggleIsExpanding,
-  isExpanding,
+  toggleExpanded,
+  isExpanded,
   ...rest
-}: PropsWithChildren<any>) => {
+}: PropsWithChildren<CellProps<T> & ToggleExpandedIconProps>) => {
   return (
     <FirstCell {...rest}>
       <ToggleExpandedIcon
-        isExpanded={isExpanding}
-        toggleExpanded={toggleIsExpanding}
+        isExpanded={isExpanded}
+        toggleExpanded={toggleExpanded}
       />
       {children}
     </FirstCell>

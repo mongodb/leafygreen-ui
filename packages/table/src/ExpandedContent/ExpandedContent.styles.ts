@@ -11,11 +11,11 @@ export const expandedContentStyles: Record<Theme, string> = {
   `,
 };
 
-export const subRowStyles = css`
+export const baseStyles = css`
   transition: all 0.2s ease-in;
 `;
 
-export const hiddenSubRowStyles = css`
+export const hiddenStyles = css`
   max-height: 0;
   padding-top: 0;
   padding-bottom: 0;

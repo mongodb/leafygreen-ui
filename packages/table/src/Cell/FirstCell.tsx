@@ -1,15 +1,16 @@
 import React, { PropsWithChildren } from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
+import { RowData } from '..';
 
 import Cell from './Cell';
 import { depthPadding } from './Cell.styles';
+import { CellProps } from '.';
 
-export const FirstCell = ({
+export const FirstCell = <T extends RowData>({
   children,
   depth,
   ...rest
-}: PropsWithChildren<any>) => {
+}: PropsWithChildren<CellProps<T>>) => {
   return (
     <Cell contentClassName={depthPadding(depth)} {...rest}>
       {children}

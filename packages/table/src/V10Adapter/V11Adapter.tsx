@@ -8,17 +8,17 @@ import Row from '../Row';
 import TableBody from '../TableBody';
 import TableContainer from '../TableContainer';
 import TableHead from '../TableHead';
-import useLeafygreenTable, { LeafygreenTableCell } from '../useLeafygreenTable';
-import Table, { flexRender, getCoreRowModel } from '..';
+import useLeafygreenTable, { LeafygreenTableCell, LeafygreenTableType } from '../useLeafygreenTable';
+import Table, { flexRender, getCoreRowModel, RowData } from '..';
 
 import processColumns from './processColumns';
 import processData from './processData';
 
-type V10AdapterProps = PropsWithChildren<{}>;
+type V11AdapterProps = PropsWithChildren<{}>;
 
 // assumes table is first element in children
 // reads columns from columns' keys
-const V10Adapter = ({ children }: V10AdapterProps) => {
+const V11Adapter = <T extends LeafygreenTableType<RowData>>({ children }: V11AdapterProps) => {
   const containerRef = useRef(null);
   const OldTable = React.Children.toArray(children)[0];
   const {
@@ -31,7 +31,7 @@ const V10Adapter = ({ children }: V10AdapterProps) => {
 
   console.log({ data, processedData });
 
-  const table = useLeafygreenTable({
+  const table = useLeafygreenTable<T>({
     containerRef,
     data: processedData,
     columns: useMemo(() => processedColumns, []),
@@ -42,7 +42,7 @@ const V10Adapter = ({ children }: V10AdapterProps) => {
 
   return (
     <TableContainer ref={containerRef}>
-      <Table>
+      <Table table={table} shouldAlternateRowColor={processedData.length > 10}>
         <TableHead>
           <HeaderRow>
             {table.getHeaderGroups()[0].headers.map(header => {
@@ -57,7 +57,7 @@ const V10Adapter = ({ children }: V10AdapterProps) => {
             })}
           </HeaderRow>
         </TableHead>
-        <TableBody renderingExpandableRows>
+        <TableBody>
           {rows.map((row, rowIndex) => {
             return (
               <Row key={row.id} row={row}>
@@ -79,4 +79,4 @@ const V10Adapter = ({ children }: V10AdapterProps) => {
   );
 };
 
-export default V10Adapter;
+export default V11Adapter;

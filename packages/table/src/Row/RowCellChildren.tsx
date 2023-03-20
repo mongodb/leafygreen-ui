@@ -17,7 +17,7 @@ interface RowCellChildrenProps
 const RowCellChildren = ({ row, children, disabled }: RowCellChildrenProps) => {
   const isExpandable = row.getCanExpand();
   const isExpanded = row.getIsExpanded();
-  const toggleIsExpanding = () => row.toggleExpanded();
+  const toggleExpanded = () => row.toggleExpanded();
 
   const CellChildren = React.Children.toArray(children).filter(child =>
     isComponentType(child, 'Cell'),
@@ -33,8 +33,8 @@ const RowCellChildren = ({ row, children, disabled }: RowCellChildrenProps) => {
             ...(FirstCellChild as ReactElement)?.props,
             cellIndex: 0,
             depth: row.depth,
-            isExpanding: isExpanded,
-            toggleIsExpanding,
+            isExpanded: isExpanded,
+            toggleExpanded,
             disabled,
           })}
         </>

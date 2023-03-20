@@ -25,8 +25,8 @@ const SubRow = <T extends unknown>({
   const CellChildren = React.Children.toArray(children).filter(child =>
     isComponentType(child, 'Cell'),
   );
-  const SubRowChildren = React.Children.toArray(children).filter(child =>
-    isComponentType(child, 'SubRow'),
+  const OtherChildren = React.Children.toArray(children).filter(
+    child => !isComponentType(child, 'Cell'),
   );
 
   const styles = cx(subRowStyles, {
@@ -55,7 +55,7 @@ const SubRow = <T extends unknown>({
           contentClassName: cx(styles, className),
         });
       })}
-      {SubRowChildren}
+      {OtherChildren}
     </Row>
   );
 };

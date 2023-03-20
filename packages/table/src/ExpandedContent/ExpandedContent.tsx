@@ -5,17 +5,17 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import {
+  baseStyles,
   expandedContentStyles,
-  hiddenSubRowStyles,
-  subRowStyles,
+  hiddenStyles,
 } from './ExpandedContent.styles';
 import { ExpandedContentProps } from './ExpandedContent.types';
 
 const ExpandedContent = <T extends RowData>({
   row,
-}: PropsWithChildren<ExpandedContentProps<T>>) => {
+}: ExpandedContentProps<T>) => {
   const isExpanded = row.getIsExpanded();
-  const Content = row?.original?.renderExpandedContent?.(row);
+  const Content = row?.original?.renderExpandedContent && row?.original?.renderExpandedContent(row);
 
   const { theme } = useDarkMode();
   return (
@@ -23,9 +23,9 @@ const ExpandedContent = <T extends RowData>({
       <td
         colSpan={row?.getVisibleCells().length}
         className={cx(
-          subRowStyles,
+          baseStyles,
           {
-            [hiddenSubRowStyles]: !isExpanded,
+            [hiddenStyles]: !isExpanded,
           },
           expandedContentStyles[theme],
         )}
@@ -35,9 +35,9 @@ const ExpandedContent = <T extends RowData>({
             css`
               overflow: hidden;
             `,
-            subRowStyles,
+            baseStyles,
             {
-              [hiddenSubRowStyles]: !isExpanded,
+              [hiddenStyles]: !isExpanded,
             },
           )}
         >
