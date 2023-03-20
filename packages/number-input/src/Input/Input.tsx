@@ -54,14 +54,7 @@ export function Input({
 
   const renderErrorIcon = state === State.Error;
 
-  const { value, handleChange: handleChangeProp } = useControlledValue(
-    valueProp,
-    onChangeProp,
-  );
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    handleChangeProp?.(e);
-  };
+  const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
 
   /**
    * Custom arrow buttons do not trigger a change event on the input.
