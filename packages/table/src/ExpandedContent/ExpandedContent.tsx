@@ -4,12 +4,18 @@ import { RowData } from '@tanstack/react-table';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { expandedContentStyles, hiddenSubRowStyles, subRowStyles } from './ExpandedContent.styles';
+import {
+  expandedContentStyles,
+  hiddenSubRowStyles,
+  subRowStyles,
+} from './ExpandedContent.styles';
 import { ExpandedContentProps } from './ExpandedContent.types';
 
-const ExpandedContent = <T extends RowData>({ row }: PropsWithChildren<ExpandedContentProps<T>>) => {
-  const isExpanded = row.getIsExpanded()
-  const Content = row?.original?.renderExpandedContent?.(row)
+const ExpandedContent = <T extends RowData>({
+  row,
+}: PropsWithChildren<ExpandedContentProps<T>>) => {
+  const isExpanded = row.getIsExpanded();
+  const Content = row?.original?.renderExpandedContent?.(row);
 
   const { theme } = useDarkMode();
   return (
@@ -19,7 +25,7 @@ const ExpandedContent = <T extends RowData>({ row }: PropsWithChildren<ExpandedC
         className={cx(
           subRowStyles,
           {
-            [hiddenSubRowStyles]: !isExpanded
+            [hiddenSubRowStyles]: !isExpanded,
           },
           expandedContentStyles[theme],
         )}
@@ -31,8 +37,8 @@ const ExpandedContent = <T extends RowData>({ row }: PropsWithChildren<ExpandedC
             `,
             subRowStyles,
             {
-              [hiddenSubRowStyles]: !isExpanded
-            }
+              [hiddenSubRowStyles]: !isExpanded,
+            },
           )}
         >
           {Content}

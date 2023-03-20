@@ -50,36 +50,31 @@ function useLeafygreenTable<T extends LGRowData, VS extends boolean = false>(
   props: LeafygreenTableOptions<T, VS>,
 ): LeafygreenTableValues<T, VS>;
 
-function useLeafygreenTable<T extends LGRowData, VS extends boolean>(
-  {
-    containerRef,
-    data,
-    columns: columnsProp,
-    hasSelectableRows,
-    useVirtualScrolling = false as VS,
-    ...rest
-  }: LeafygreenTableOptions<T, VS>,
-): LeafygreenTableValues<T, VS> {
-
-  type ColumnType = ColumnDef<LGTableDataType<T>, unknown>
+function useLeafygreenTable<T extends LGRowData, VS extends boolean>({
+  containerRef,
+  data,
+  columns: columnsProp,
+  hasSelectableRows,
+  useVirtualScrolling = false as VS,
+  ...rest
+}: LeafygreenTableOptions<T, VS>): LeafygreenTableValues<T, VS> {
+  type ColumnType = ColumnDef<LGTableDataType<T>, unknown>;
 
   const columns: Array<ColumnType> = [
-    ...(hasSelectableRows
-      ? [getSelectColumnConfig() as ColumnType]
-      : []),
+    ...(hasSelectableRows ? [getSelectColumnConfig() as ColumnType] : []),
     ...columnsProp.map(
       propColumn =>
-      ({
-        ...propColumn,
-        enableSorting: propColumn.enableSorting ?? false,
-      } as ColumnType),
+        ({
+          ...propColumn,
+          enableSorting: propColumn.enableSorting ?? false,
+        } as ColumnType),
     ),
   ];
 
   const table: LeafygreenTable<T> = useReactTable<LGTableDataType<T>>({
     data,
     columns,
-    getRowCanExpand: (row) => {
+    getRowCanExpand: row => {
       return !!row.original.renderExpandedContent || !!row.subRows?.length;
     },
     enableExpanding: true,

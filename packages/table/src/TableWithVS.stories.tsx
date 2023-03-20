@@ -106,7 +106,7 @@ export const Basic: ComponentStory<typeof Table> = args => {
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table {...args} table={table} >
+        <Table {...args} table={table}>
           <TableHead>
             {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>

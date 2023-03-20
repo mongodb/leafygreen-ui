@@ -1,6 +1,6 @@
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren } from 'react';
 
-import ToggleExpandedIcon from "../ToggleExpandedIcon";
+import ToggleExpandedIcon from '../ToggleExpandedIcon';
 
 import FirstCell from './FirstCell';
 
@@ -11,9 +11,7 @@ const ExpandingCell = ({
   ...rest
 }: PropsWithChildren<any>) => {
   return (
-    <FirstCell
-      {...rest}
-    >
+    <FirstCell {...rest}>
       <ToggleExpandedIcon
         isExpanded={isExpanding}
         toggleExpanded={toggleIsExpanding}

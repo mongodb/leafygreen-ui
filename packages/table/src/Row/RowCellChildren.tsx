@@ -12,7 +12,7 @@ interface RowCellChildrenProps
   extends PropsWithChildren<{
     row: LeafygreenTableRow<any>;
     disabled?: boolean;
-  }> { }
+  }> {}
 
 const RowCellChildren = ({ row, children, disabled }: RowCellChildrenProps) => {
   const isExpandable = row.getCanExpand();

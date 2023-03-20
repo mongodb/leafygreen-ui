@@ -14,7 +14,7 @@ import {
   nestedBorderTopStyles,
 } from './Row.styles';
 import { InternalRowWithRTProps } from './Row.types';
-import RowCellChildren from './RowCellChildren'
+import RowCellChildren from './RowCellChildren';
 
 const InternalRowWithRT = <T extends unknown>({
   children,
@@ -26,38 +26,41 @@ const InternalRowWithRT = <T extends unknown>({
 }: InternalRowWithRTProps<T>) => {
   const { theme } = useDarkMode();
   const { table, getParentRow } = useTableContext();
-  const parentRow = getParentRow?.(row.id)
-  const rowRef = virtualRow?.measureRef
+  const parentRow = getParentRow?.(row.id);
+  const rowRef = virtualRow?.measureRef;
 
-  const isTableExpandable = table?.getCanSomeRowsExpand()
+  const isTableExpandable = table?.getCanSomeRowsExpand();
   // Is this row nested within other rows?
-  const isNestedRow = !!parentRow
+  const isNestedRow = !!parentRow;
   // Is this row currently expanded
-  const isExpanded = row.getIsExpanded()
+  const isExpanded = row.getIsExpanded();
 
   const CellChildren = React.Children.toArray(children).filter(child =>
     isComponentType(child, 'Cell'),
   );
 
-  const OtherChildren = React.Children.toArray(children).filter(child => !isComponentType(child, 'Cell'),
+  const OtherChildren = React.Children.toArray(children).filter(
+    child => !isComponentType(child, 'Cell'),
   );
-
 
   /**
    * Render the row within a `tbody` if
    * the table itself has any row that is expandable
    * but not if this row is nested
    */
-  const shouldRenderAsTBody = isTableExpandable && !isNestedRow
-  const containerAs = useMemo(() => shouldRenderAsTBody ? 'tbody' : Fragment, [shouldRenderAsTBody])
+  const shouldRenderAsTBody = isTableExpandable && !isNestedRow;
+  const containerAs = useMemo(
+    () => (shouldRenderAsTBody ? 'tbody' : Fragment),
+    [shouldRenderAsTBody],
+  );
 
   const tBodyProps: PropsWithRef<HTMLElementProps<'tbody'>> = {
     className: expandedContentParentStyles,
-    "data-expanded": isExpanded,
-    "data-testid": "lg-table-expandable-row-tbody",
+    'data-expanded': isExpanded,
+    'data-testid': 'lg-table-expandable-row-tbody',
     // @ts-expect-error - VirtualItem.measureRef is not typed as a ref
-    ref: rowRef
-  }
+    ref: rowRef,
+  };
 
   return (
     <>
