@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
@@ -123,12 +124,12 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
               state={state}
               errorMessage={errorMessage}
               aria-describedby={`${errorMessageId} ${
-                description ? descriptionId : undefined
-              } ${renderSelectOnly ? selectId : undefined}`}
+                description ? descriptionId : ''
+              } ${renderSelectOnly ? selectId : ''}`}
               aria-labelledby={
-                !label && ariaLabelledbyProp ? ariaLabelledbyProp : undefined
+                !label && ariaLabelledbyProp ? ariaLabelledbyProp : ''
               }
-              aria-label={!label && ariaLabelProp ? ariaLabelProp : undefined}
+              aria-label={!label && ariaLabelProp ? ariaLabelProp : ''}
               {...rest}
             />
             {renderUnitOnly && (
@@ -167,3 +168,41 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
 );
 
 NumberInput.displayName = 'NumberInput';
+
+NumberInput.propTypes = {
+  id: PropTypes.string,
+  'aria-label': PropTypes.string,
+  'aria-labelledby': PropTypes.string,
+  label: PropTypes.string,
+  description: PropTypes.string,
+  errorMessage: PropTypes.string,
+  'aria-describedby': PropTypes.string,
+  className: PropTypes.string,
+  darkMode: PropTypes.bool,
+  disabled: PropTypes.bool,
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func,
+  onSelectChange: PropTypes.func,
+  placeholder: PropTypes.string,
+  size: PropTypes.oneOf(Object.values(Size)),
+  state: PropTypes.oneOf(Object.values(State)),
+  value: PropTypes.string,
+  unit: PropTypes.string,
+  unitOptions: PropTypes.arrayOf(
+    PropTypes.shape({
+      displayName: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+    }),
+  ),
+  // Popover Props
+  popoverZIndex: PropTypes.number,
+  scrollContainer:
+    typeof window !== 'undefined'
+      ? PropTypes.instanceOf(Element)
+      : PropTypes.any,
+  portalContainer:
+    typeof window !== 'undefined'
+      ? PropTypes.instanceOf(Element)
+      : PropTypes.any,
+  portalClassName: PropTypes.string,
+} as any;

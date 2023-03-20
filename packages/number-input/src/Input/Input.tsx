@@ -52,7 +52,7 @@ export function Input({
   const inputRef = useRef<HTMLInputElement | null>(null);
   const { theme } = useDarkMode();
 
-  const renderErrorIcon = state === State.Error && !!errorMessage;
+  const renderErrorIcon = state === State.Error;
 
   const { value, handleChange: handleChangeProp } = useControlledValue(
     valueProp,
@@ -152,7 +152,7 @@ export function Input({
           },
         )}
       >
-        <WarningIcon role="presentation" />
+        <WarningIcon aria-hidden="true" />
       </div>
 
       <div
@@ -169,7 +169,7 @@ export function Input({
           <Icon aria-hidden={true} glyph="CaretUp" size={16} />
         </button>
         <button
-          aria-label="Increment number"
+          aria-label="Decrement number"
           onClick={handleDecrementClick}
           onKeyDown={handleArrowKeyDown}
           className={cx(arrowBaseStyles, arrowThemeStyles[theme])}

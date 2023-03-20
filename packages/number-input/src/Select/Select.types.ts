@@ -61,4 +61,10 @@ export interface SelectProps {
    * @default 'default'
    */
   size?: Size;
+
+  /**
+   *
+   * @internal
+   */
+  ['data-testid']?: string;
 }
