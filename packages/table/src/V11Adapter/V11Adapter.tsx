@@ -16,11 +16,14 @@ import processData from './processData';
 import ExpandedContent from '../ExpandedContent/ExpandedContent';
 import SubRow from '../Row/SubRow';
 
-type V11AdapterProps = PropsWithChildren<{}>;
+type V11AdapterProps<VS extends boolean> = PropsWithChildren<{
+  useVirtualScrolling?: VS;
+}>;
 
 // assumes table is first element in children
 // reads columns from columns' keys
-const V11Adapter = <T extends LeafygreenTableType<RowData>>({ children }: V11AdapterProps) => {
+// supports up to one layer of nested rows
+const V11Adapter = <T extends LeafygreenTableType<RowData>, VS extends boolean>({ children, useVirtualScrolling = false as VS }: V11AdapterProps) => {
   const containerRef = useRef(null);
   const OldTable = React.Children.toArray(children)[0];
   const {
@@ -39,6 +42,7 @@ const V11Adapter = <T extends LeafygreenTableType<RowData>>({ children }: V11Ada
     columns: useMemo(() => processedColumns, []),
     getCoreRowModel: getCoreRowModel(),
     getSubRows: row => row.subRows,
+    useVirtualScrolling,
   });
 
   const { rows } = table.getRowModel();
@@ -66,7 +70,7 @@ const V11Adapter = <T extends LeafygreenTableType<RowData>>({ children }: V11Ada
               <Row key={row.id} row={row}>
                 {row
                   .getVisibleCells()
-                  .map((cell: LeafygreenTableCell<any>, cellIndex) => {
+                  .map((cell: LeafygreenTableCell<any>) => {
                     return (
                       <Cell key={cell.id} cell={cell}>
                         {processedData[rowIndex][cell.column.id]()}
@@ -83,10 +87,10 @@ const V11Adapter = <T extends LeafygreenTableType<RowData>>({ children }: V11Ada
                       row={subRow}
                     // virtualRow={virtualRow}
                     >
-                      {subRow.getVisibleCells().map(cell => {
+                      {subRow.getVisibleCells().map(subRowCell => {
                         return (
-                          <Cell key={cell.id} cell={cell}>
-                            {subRow.original[cell.column.id]()}
+                          <Cell key={subRowCell.id} cell={subRowCell}>
+                            {subRow.original[subRowCell.column.id]()}
                           </Cell>
                         );
                       })}
@@ -97,10 +101,10 @@ const V11Adapter = <T extends LeafygreenTableType<RowData>>({ children }: V11Ada
                             row={subSubRow}
                           // virtualRow={virtualRow}
                           >
-                            {subSubRow.getVisibleCells().map(cell => {
+                            {subSubRow.getVisibleCells().map(subSubRowCell => {
                               return (
-                                <Cell key={cell.id} cell={cell}>
-                                  {subRow.original[cell.column.id]()}
+                                <Cell key={subSubRowCell.id} cell={subSubRowCell}>
+                                  {subRow.original[subSubRowCell.column.id]()}
                                 </Cell>
                               );
                             })}

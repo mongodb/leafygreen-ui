@@ -3,6 +3,7 @@ import { Meta } from "@storybook/react";
 import { Cell, HeaderRow, Row, Table, TableHeader } from "../TableV10";
 import V11Adapter from "./V11Adapter";
 import { defaultData } from '../TableV10/fixtures';
+import Badge from '@leafygreen-ui/badge';
 
 export default {
   title: 'Components/Table/V11 Adapter',
@@ -135,7 +136,14 @@ export const NestedRows = () => {
             <Cell>{datum.location}</Cell>
             {datum.name !== 'Donna' && (
               <Row>
-                <Cell>expanded name: {datum.name}</Cell>
+                <Cell>
+                  {datum.rand < 0.5 && (
+                    <Badge>
+                      Low Rand Value
+                    </Badge>
+                  )}
+                  expanded name: {datum.name}
+                </Cell>
                 <Cell>expanded age: {datum.age}</Cell>
                 <Cell>expanded color: {datum.color}</Cell>
                 <Cell>expanded location: {datum.location}</Cell>
