@@ -26,7 +26,9 @@ const ExpandedContent = <T extends RowData>({ row }: PropsWithChildren<ExpandedC
       >
         <div
           className={cx(
-            css`overflow: hidden;`,
+            css`
+              overflow: hidden;
+            `,
             subRowStyles,
             {
               [hiddenSubRowStyles]: !isExpanded
@@ -37,7 +39,7 @@ const ExpandedContent = <T extends RowData>({ row }: PropsWithChildren<ExpandedC
         </div>
       </td>
     </tr>
-  )
-}
+  );
+};
 
 export default ExpandedContent;

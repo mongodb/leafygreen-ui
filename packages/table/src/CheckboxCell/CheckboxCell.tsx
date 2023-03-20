@@ -3,15 +3,11 @@ import PropTypes from 'prop-types';
 
 import Checkbox from '@leafygreen-ui/checkbox';
 import { CheckboxProps } from '@leafygreen-ui/checkbox/src/types';
-import { cx } from '@leafygreen-ui/emotion';
 
-import { baseStyles, headerStyles } from './Checkbox.styles';
+import { baseStyles } from './Checkbox.styles';
 
-const CheckboxCell = ({
-  isHeader,
-  ...rest
-}: CheckboxProps & { isHeader?: boolean }) => (
-  <div className={cx(baseStyles, { [headerStyles]: isHeader })}>
+const CheckboxCell = ({ ...rest }: CheckboxProps) => (
+  <div className={baseStyles}>
     <Checkbox {...rest} />
   </div>
 );

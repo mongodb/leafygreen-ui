@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from "react";
 
 import ToggleExpandedIcon from "../ToggleExpandedIcon";
 
-import FirstCell from "./FirstCell";
+import FirstCell from './FirstCell';
 
 const ExpandingCell = ({
   children,
@@ -10,7 +10,6 @@ const ExpandingCell = ({
   isExpanding,
   ...rest
 }: PropsWithChildren<any>) => {
-
   return (
     <FirstCell
       {...rest}

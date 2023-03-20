@@ -14,7 +14,7 @@ import {
   nestedBorderTopStyles,
 } from './Row.styles';
 import { InternalRowWithRTProps } from './Row.types';
-import RowCellChildren from './RowCellChildren';
+import RowCellChildren from './RowCellChildren'
 
 const InternalRowWithRT = <T extends unknown>({
   children,
@@ -26,7 +26,7 @@ const InternalRowWithRT = <T extends unknown>({
 }: InternalRowWithRTProps<T>) => {
   const { theme } = useDarkMode();
   const { table, getParentRow } = useTableContext();
-  const parentRow = getParentRow(row.id)
+  const parentRow = getParentRow?.(row.id)
   const rowRef = virtualRow?.measureRef
 
   const isTableExpandable = table?.getCanSomeRowsExpand()

@@ -250,21 +250,16 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
                         row={subRow}
                         virtualRow={virtualRow}
                       >
-                        {subRow
-                          .getVisibleCells()
-                          .map((cell) => {
-                            return (
-                              <Cell
-                                key={cell.id}
-                                cell={cell}
-                              >
-                                {flexRender(
-                                  cell.column.columnDef.cell,
-                                  cell.getContext(),
-                                )}
-                              </Cell>
-                            );
-                          })}
+                        {subRow.getVisibleCells().map(cell => {
+                          return (
+                            <Cell key={cell.id} cell={cell}>
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext(),
+                              )}
+                            </Cell>
+                          );
+                        })}
                         {subRow.subRows &&
                           subRow.subRows.map(subSubRow => (
                             <SubRow
@@ -272,21 +267,16 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
                               row={subSubRow}
                               virtualRow={virtualRow}
                             >
-                              {subSubRow
-                                .getVisibleCells()
-                                .map((cell) => {
-                                  return (
-                                    <Cell
-                                      key={cell.id}
-                                      cell={cell}
-                                    >
-                                      {flexRender(
-                                        cell.column.columnDef.cell,
-                                        cell.getContext(),
-                                      )}
-                                    </Cell>
-                                  );
-                                })}
+                              {subSubRow.getVisibleCells().map(cell => {
+                                return (
+                                  <Cell key={cell.id} cell={cell}>
+                                    {flexRender(
+                                      cell.column.columnDef.cell,
+                                      cell.getContext(),
+                                    )}
+                                  </Cell>
+                                );
+                              })}
                             </SubRow>
                           ))}
                       </SubRow>

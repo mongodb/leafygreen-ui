@@ -24,7 +24,6 @@ const getSelectColumnConfig = <T extends LGRowData>() => {
     // eslint-disable-next-line react/display-name
     header: ({ table }: { table: LeafygreenTable<T> }) => (
       <CheckboxCell
-        isHeader
         checked={table.getIsAllRowsSelected()}
         indeterminate={table.getIsSomeRowsSelected()}
         onChange={table.getToggleAllRowsSelectedHandler()}
