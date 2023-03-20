@@ -31,7 +31,7 @@ export const inputBaseStyles = css`
   line-height: ${typeScales.body1.lineHeight}px;
   height: inherit;
   box-sizing: border-box;
-  transition: padding ${transitionDuration.default}ms ease-in-out;
+  transition: all ${transitionDuration.default}ms ease-in-out;
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {

@@ -3,7 +3,7 @@ import isUndefined from 'lodash/isUndefined';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useAvailableSpace } from '@leafygreen-ui/hooks';
-import { Theme } from '@leafygreen-ui/lib';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 
@@ -11,6 +11,8 @@ import SelectContext from './SelectContext';
 import { colorSets, mobileSizeSet, sizeSets } from './styleSets';
 import { Size } from './types';
 import { MobileMediaQuery, useForwardedRef } from './utils';
+
+export const popoverClassName = createUniqueClassName('select-popover');
 
 const maxMenuHeight = 274;
 const menuMargin = 8;
@@ -25,6 +27,10 @@ const baseMenuStyle = css`
   margin: 0;
   padding: 0;
   overflow: auto;
+`;
+
+const autoWidthStyles = css`
+  width: max-content;
 `;
 
 const getMenuStyles = (theme: Theme, size: Size) => {
@@ -103,7 +109,9 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
         align={Align.Bottom}
         justify={dropdownAutoWidth ? Justify.Start : Justify.Middle}
         adjustOnMutation
-        className={className}
+        className={cx(popoverClassName, className, {
+          [autoWidthStyles]: dropdownAutoWidth && !usePortal,
+        })}
         refEl={referenceElement}
         data-ispopoverwrapper
         {...popoverProps}

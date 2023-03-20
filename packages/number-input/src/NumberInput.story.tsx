@@ -7,6 +7,7 @@ import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
 import {
   NumberInputProps,
   Size,
+  State,
   UnitOption,
 } from './NumberInput/NumberInput.types';
 import { NumberInput } from '.';
@@ -22,6 +23,10 @@ export default StoryMeta({
     size: {
       control: 'select',
       options: Object.values(Size),
+    },
+    state: {
+      control: 'select',
+      options: Object.values(State),
     },
     disabled: {
       control: 'boolean',

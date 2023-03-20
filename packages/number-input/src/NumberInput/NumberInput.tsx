@@ -93,16 +93,12 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
           {(label || description) && (
             <div className={labelDescriptionStyles}>
               {label && (
-                <Label className={cx()} htmlFor={inputId} disabled={disabled}>
+                <Label htmlFor={inputId} disabled={disabled}>
                   {label}
                 </Label>
               )}
               {description && (
-                <Description
-                  id={descriptionId}
-                  disabled={disabled}
-                  className={cx()}
-                >
+                <Description id={descriptionId} disabled={disabled}>
                   {description}
                 </Description>
               )}

@@ -60,8 +60,6 @@ export function Input({
   );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // eslint-disable-next-line no-console
-    console.log('😈', e.target.value);
     handleChangeProp?.(e);
   };
 

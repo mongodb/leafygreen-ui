@@ -12,6 +12,10 @@ export const wrapperBaseStyles = css`
   }
 `;
 
+export const customMenuButtonWrapperStyles = css`
+  position: relative;
+`;
+
 export const menuBaseStyles = css`
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;

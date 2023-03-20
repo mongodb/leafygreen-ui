@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
 
 import Button, { ButtonProps } from '@leafygreen-ui/button';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { Option, Select as SelectComponent } from '@leafygreen-ui/select';
+import {
+  menuButtonTextClassName,
+  Option,
+  popoverClassName,
+  Select as SelectComponent,
+} from '@leafygreen-ui/select';
 import Tooltip from '@leafygreen-ui/tooltip';
 
 import {
+  customMenuButtonWrapperStyles,
   menuBaseStyles,
   menuThemeStyles,
   selectDisabledStyles,
@@ -63,24 +69,20 @@ export function Select({
         null,
       );
       const textNode = buttonRef.current?.querySelector(
-        'div[data-selecttextvalue]',
+        `.${menuButtonTextClassName}`,
       ) as HTMLElement;
 
       const [open, setOpen] = useState<boolean>(false);
 
       return (
-        <div
-          className={css`
-            position: relative;
-          `} //TODO: add style
-        >
+        <div className={customMenuButtonWrapperStyles}>
           <Tooltip
             enabled={textNode?.offsetWidth < textNode?.scrollWidth}
             justify="middle"
             // Using refEl instead of a trigger because triggerProps such as onMouseEnter are added to the trigger inside the tooltip component. OnMouseEnter is triggered by hovering over trigger or any of its children. In the case of TODO: finish this
             refEl={buttonRef}
             open={open}
-            usePortal={false}
+            {...popoverProps}
           >
             {unit?.displayName}
           </Tooltip>
@@ -90,7 +92,7 @@ export function Select({
             ref={buttonRef}
             onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => {
               const popoverParent = (e.target as HTMLButtonElement).closest(
-                'div[data-ispopoverwrapper]', //TODO: prefix lg
+                `.${popoverClassName}`,
               );
               if (!popoverParent) setOpen(true);
             }}
@@ -108,8 +110,8 @@ export function Select({
   CustomMenuButton.displayName = 'CustomMenuButton';
 
   return (
-    <div className={cx(wrapperBaseStyles)}>
-      <SelectComponent //TODO: add width: max-content inside select menu
+    <div className={wrapperBaseStyles}>
+      <SelectComponent
         id={id}
         onChange={handleChange}
         aria-labelledby="Unit Picker"
