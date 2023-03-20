@@ -1,4 +1,4 @@
-import React, { Fragment, PropsWithRef, RefObject, useMemo } from 'react';
+import React, { Fragment, PropsWithRef, useMemo } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
