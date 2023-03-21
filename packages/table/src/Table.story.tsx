@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ComponentStory, Meta } from '@storybook/react';
 import {
   flexRender,
@@ -336,6 +336,13 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
         header: 'ID',
         size: 60,
         enableSorting: true,
+        sortingFn: (rowA, rowB, index) => {
+          return rowA.original.firstName > rowB.original.firstName
+            ? -1
+            : rowB.original.firstName > rowA.original.firstName
+            ? 1
+            : 0;
+        },
       },
       {
         accessorKey: 'firstName',
