@@ -64,10 +64,10 @@ function useLeafyGreenTable<T extends LGRowData, VS extends boolean>({
     ...(hasSelectableRows ? [getSelectColumnConfig() as ColumnType] : []),
     ...columnsProp.map(
       propColumn =>
-        ({
-          ...propColumn,
-          enableSorting: propColumn.enableSorting ?? false,
-        } as ColumnType),
+      ({
+        ...propColumn,
+        enableSorting: propColumn.enableSorting ?? false,
+      } as ColumnType),
     ),
   ];
 

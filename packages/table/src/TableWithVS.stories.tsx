@@ -384,9 +384,11 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
           <TableBody>
             {table.virtualRows.map((virtualRow: VirtualItem) => {
               const row = rows[virtualRow.index];
+              const cells = row.getVisibleCells();
+
               return (
-                <Row key={row.id}>
-                  {row.getVisibleCells().map(cell => {
+                <Row key={row.id} row={row} virtualRow={virtualRow}>
+                  {cells.map(cell => {
                     return (
                       <Cell key={cell.id}>
                         {flexRender(
@@ -513,9 +515,11 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
           <TableBody>
             {table.virtualRows.map(virtualRow => {
               const row = rows[virtualRow.index];
+              const cells = row.getVisibleCells();
+
               return (
-                <Row key={row.id}>
-                  {row.getVisibleCells().map(cell => {
+                <Row key={row.id} row={row} virtualRow={virtualRow}>
+                  {cells.map(cell => {
                     return (
                       <Cell key={cell.id}>
                         {flexRender(

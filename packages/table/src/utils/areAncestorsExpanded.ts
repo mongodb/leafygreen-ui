@@ -17,10 +17,10 @@ export function getAreAncestorsExpanded<
 
   let id = startId;
   let parent = getParentRow(id);
-  let isExpanded = true;
+  let isExpanded;
 
   while (parent) {
-    isExpanded = isExpanded && parent?.getIsExpanded();
+    isExpanded = (isExpanded ?? true) && parent?.getIsExpanded();
     id = parent.id;
     parent = getParentRow(id);
   }
