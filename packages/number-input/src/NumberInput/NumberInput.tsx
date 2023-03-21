@@ -13,6 +13,7 @@ import { Select } from '../Select';
 
 import {
   errorMessageStyles,
+  errorMessageWrapperStyles,
   labelDescriptionStyles,
   unitBaseStyles,
   unitDisabledStyles,
@@ -138,12 +139,14 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
             )}
           </div>
           <div
-            className={errorMessageStyles}
+            className={errorMessageWrapperStyles}
             aria-live="polite"
             aria-relevant="all"
             id={errorMessageId}
           >
-            {renderErrorMessage && <Error>{errorMessage}</Error>}
+            {renderErrorMessage && (
+              <Error className={errorMessageStyles}>{errorMessage}</Error>
+            )}
           </div>
         </div>
       </LeafyGreenProvider>

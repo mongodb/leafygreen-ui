@@ -71,12 +71,11 @@ export function Select({
   const CustomMenuButton = React.forwardRef(
     ({ className, children, ...props }: ButtonProps, forwardedRef) => {
       const [open, setOpen] = useState<boolean>(false);
-      // TODO: HALP with TS
-      //@ts-ignore
-      const buttonRef: React.MutableRefObject<HTMLElement> = useForwardedRef(
-        forwardedRef,
-        null,
-      );
+      const buttonRef: React.MutableRefObject<HTMLElement | null> =
+        useForwardedRef(
+          forwardedRef,
+          null,
+        ) as React.MutableRefObject<HTMLElement | null>;
 
       /**
        * Gets the text node for the selected option.

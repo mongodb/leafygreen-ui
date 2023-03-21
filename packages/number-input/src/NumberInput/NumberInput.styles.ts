@@ -47,9 +47,13 @@ export const unitDisabledStyles: Record<Theme, string> = {
   `,
 };
 
-export const errorMessageStyles = css`
+export const errorMessageWrapperStyles = css`
   font-size: ${typeScales.body1.fontSize}px;
   line-height: ${typeScales.body1.lineHeight}px;
+`;
+
+export const errorMessageStyles = css`
+  margin-top: 4px;
 `;
 
 export const labelDescriptionStyles = css`
