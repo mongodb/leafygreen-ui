@@ -1,7 +1,8 @@
-import React, { ReactElement, useMemo, useRef } from 'react';
+import React, { ReactElement, useMemo, useRef, useState } from 'react';
 import { PropsWithChildren } from 'react';
 
 import { Cell, HeaderCell } from '../Cell';
+import ExpandedContent from '../ExpandedContent/ExpandedContent';
 import HeaderRow from '../HeaderRow';
 import Row from '../Row';
 import TableBody from '../TableBody';
@@ -9,24 +10,42 @@ import TableContainer from '../TableContainer';
 import TableHead from '../TableHead';
 import useLeafyGreenTable, {
   LeafyGreenTableCell,
+  LeafyGreenTableOptions,
   LGRowData,
   LGTableDataType,
 } from '../useLeafyGreenTable';
-import Table, { flexRender, getCoreRowModel } from '..';
+import Table, {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+  TableProps,
+} from '..';
 
 import processColumns from './processColumns';
 import processData from './processData';
-import ExpandedContent from '../ExpandedContent/ExpandedContent';
-import SubRow from '../Row/SubRow';
 
-type V11AdapterProps<VS extends boolean> = PropsWithChildren<{
-  useVirtualScrolling?: VS;
-}>;
+type V11AdapterProps<
+  T extends LGRowData,
+  VS extends boolean,
+  > = PropsWithChildren<
+    Pick<
+      LeafyGreenTableOptions<T, VS>,
+      'useVirtualScrolling' | 'hasSelectableRows'
+    > &
+    Pick<TableProps<T, VS>, 'shouldAlternateRowColor'>
+  >;
 
 // assumes table is first element in children
 // reads columns from columns' keys
 // supports up to one layer of nested rows
-const V11Adapter = <T extends LGRowData, VS extends boolean>({ children, useVirtualScrolling = false as VS }: V11AdapterProps) => {
+// assumes that the key of a column in the original data === column label header in lowercase
+const V11Adapter = <T extends LGRowData, VS extends boolean>({
+  children,
+  shouldAlternateRowColor,
+  useVirtualScrolling = false as VS,
+  hasSelectableRows = false,
+}: V11AdapterProps<T, VS>) => {
   const containerRef = useRef(null);
   const OldTable = React.Children.toArray(children)[0];
   const {
@@ -34,25 +53,35 @@ const V11Adapter = <T extends LGRowData, VS extends boolean>({ children, useVirt
     columns,
     children: childrenFn,
   } = (OldTable as ReactElement).props;
-  const processedColumns = processColumns(columns);
-  const processedData = processData(data, processedColumns, childrenFn);
-
-  console.log({ data, processedData });
+  const processedColumns: Array<ColumnDef<LGTableDataType<T>, any>> = useMemo(
+    () => processColumns(data, columns),
+    [data, columns],
+  );
+  const processedData: Array<LGTableDataType<T>> = useState(() =>
+    processData(data, processedColumns, childrenFn),
+  )[0];
 
   const table = useLeafyGreenTable<T>({
     containerRef,
     data: processedData,
-    columns: useMemo(() => processedColumns, []),
+    columns: processedColumns,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     getSubRows: row => row.subRows,
-    useVirtualScrolling,
+    // useVirtualScrolling,
+    hasSelectableRows,
   });
 
   const { rows } = table.getRowModel();
 
   return (
     <TableContainer ref={containerRef}>
-      <Table table={table} shouldAlternateRowColor={processedData.length > 10}>
+      <Table
+        table={table}
+        shouldAlternateRowColor={
+          shouldAlternateRowColor ?? processedData.length > 10
+        }
+      >
         <TableHead>
           <HeaderRow>
             {table.getHeaderGroups()[0].headers.map(header => {
@@ -68,63 +97,68 @@ const V11Adapter = <T extends LGRowData, VS extends boolean>({ children, useVirt
           </HeaderRow>
         </TableHead>
         <TableBody>
-          {rows.map((row, rowIndex) => {
-            return (
-              <Row key={row.id} row={row}>
-                {row
-                  .getVisibleCells()
-<<<<<<< HEAD:packages/table/src/V11Adapter/V11Adapter.tsx
-                  .map((cell: LeafygreenTableCell<any>) => {
-=======
-                  .map((cell: LeafyGreenTableCell<any>, cellIndex) => {
->>>>>>> eb391f0a39e77234702eb216afff6a13043dddac:packages/table/src/V10Adapter/V11Adapter.tsx
+
+          {
+            rows.map(row => {
+              return (
+                <Row key={row.id} row={row}>
+                  {row.getVisibleCells().map((cell: LeafyGreenTableCell<any>) => {
                     return (
-                      <Cell key={cell.id} cell={cell}>
-                        {processedData[rowIndex][cell.column.id]()}
+                      <Cell key={cell.id}>
+                        {cell.column.id === 'select' ? (
+                          <>{cell.column.columnDef?.cell({ row })}</>
+                        ) : (
+                          // index by row.index, not the index of the loop to get the sorted order
+                          <>{processedData[row.index][cell.column.id]()}</>
+                        )}
                       </Cell>
                     );
                   })}
-                {row.original.renderExpandedContent && (
-                  <ExpandedContent row={row} />
-                )}
-                {row.subRows &&
-                  row.subRows.map(subRow => (
-                    <SubRow
-                      key={subRow.id}
-                      row={subRow}
-                    // virtualRow={virtualRow}
-                    >
-                      {subRow.getVisibleCells().map(subRowCell => {
-                        return (
-                          <Cell key={subRowCell.id} cell={subRowCell}>
-                            {subRow.original[subRowCell.column.id]()}
-                          </Cell>
-                        );
-                      })}
-                      {subRow.subRows &&
-                        subRow.subRows.map(subSubRow => (
-                          <SubRow
-                            key={subSubRow.id}
-                            row={subSubRow}
-                          // virtualRow={virtualRow}
-                          >
-                            {subSubRow.getVisibleCells().map(subSubRowCell => {
-                              return (
-                                <Cell key={subSubRowCell.id} cell={subSubRowCell}>
-                                  {subRow.original[subSubRowCell.column.id]()}
-                                </Cell>
-                              );
-                            })}
-                          </SubRow>
-                        ))}
-                    </SubRow>
-                  ))}
-              </Row>
-            );
-          })}
+                  {row.original.renderExpandedContent && (
+                    <ExpandedContent row={row} />
+                  )}
+                  {row.subRows &&
+                    row.subRows.map(subRow => (
+                      <Row
+                        key={subRow.id}
+                        row={subRow}
+                      // virtualRow={virtualRow}
+                      >
+                        {subRow.getVisibleCells().map(subRowCell => {
+                          return (
+                            <Cell key={subRowCell.id}>
+                              {subRow.original[subRowCell.column.id]()}
+                            </Cell>
+                          );
+                        })}
+                        {subRow.subRows &&
+                          subRow.subRows.map(subSubRow => (
+                            <Row
+                              key={subSubRow.id}
+                              row={subSubRow}
+                            // virtualRow={virtualRow}
+                            >
+                              {subSubRow.getVisibleCells().map(subSubRowCell => {
+                                return (
+                                  <Cell
+                                    key={subSubRowCell.id}
+                                  >
+                                    {subSubRow.original[
+                                      subSubRowCell.column.id
+                                    ]()}
+                                  </Cell>
+                                );
+                              })}
+                            </Row>
+                          ))}
+                      </Row>
+                    ))}
+                </Row>
+              );
+            })}
         </TableBody>
       </Table>
-    </TableContainer>
+    </TableContainer >
   );
 };
 

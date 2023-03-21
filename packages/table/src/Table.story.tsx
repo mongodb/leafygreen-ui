@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ComponentStory, Meta } from '@storybook/react';
 import {
   ColumnDef,
@@ -326,7 +326,6 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
 export const SortableRows: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 100))[0];
-  const [sorting, setSorting] = React.useState<SortingState>([]);
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
     () => [
@@ -335,6 +334,13 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
         header: 'ID',
         size: 60,
         enableSorting: true,
+        sortingFn: (rowA, rowB, index) => {
+          return rowA.original.firstName > rowB.original.firstName
+            ? -1
+            : rowB.original.firstName > rowA.original.firstName
+            ? 1
+            : 0;
+        },
       },
       {
         accessorKey: 'firstName',
@@ -373,10 +379,6 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
     containerRef: tableContainerRef,
     data,
     columns,
-    state: {
-      sorting,
-    },
-    onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
   });
