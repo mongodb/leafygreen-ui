@@ -1,27 +1,44 @@
 import React, { ReactElement } from 'react';
 
-import { HeaderRowProps } from '../TableV10/HeaderRow';
-import { TableHeaderProps } from '../TableV10/TableHeader';
+import { TableProps } from '../TableV10/Table';
+import { LGRowData } from '../useLeafyGreenTable';
+import { ColumnDef } from '..';
 
-type ColumnsType =
-  | React.ReactFragment
-  | Array<
-      React.ReactElement<
-        HeaderRowProps | TableHeaderProps<unknown>,
-        string | React.JSXElementConstructor<any>
-      >
-    >;
-
-const processColumns = (columns: ColumnsType) => {
+const processColumns = <T extends LGRowData>(
+  data: Array<T>,
+  columns: TableProps<any>['columns'],
+) => {
   const HeaderRow = React.Children.toArray(columns)[0] as ReactElement;
   const TableHeaders = React.Children.toArray(HeaderRow.props.children);
-  const processedColumns: Array<any> = [];
+  const processedColumns: Array<ColumnDef<T>> = [];
   TableHeaders.forEach(TableHeader => {
     const headerProps = (TableHeader as ReactElement).props;
+    const hasSorting =
+      !!headerProps.sortBy ||
+      !!headerProps.handleSort ||
+      !!headerProps.compareFn;
     processedColumns.push({
-      accessorKey: headerProps.key ?? headerProps.label,
+      accessorKey: headerProps.label.toLowerCase(),
       header: headerProps.label,
-      // todo: sortBy, compareFn
+      enableSorting: hasSorting,
+      sortingFn: headerProps.compareFn
+        ? (rowA, rowB, columnId) => {
+            const indexA = rowA.index;
+            const indexB = rowB.index;
+            return headerProps.compareFn(data[indexA], data[indexB]);
+          }
+        : hasSorting
+        ? (rowA, rowB, columnId) => {
+            const indexA = rowA.index;
+            const indexB = rowB.index;
+            const columnKey = columnId.toLowerCase();
+            return data[indexA][columnKey] > data[indexB][columnKey]
+              ? -1
+              : data[indexB][columnKey] > data[indexA][columnKey]
+              ? 1
+              : 0;
+          }
+        : undefined,
     });
   });
   return processedColumns;
