@@ -360,3 +360,7 @@ export const iconSizeStyles: Record<Size, string> = {
     right: 12px;
   `,
 };
+
+export const downArrowRotateStyles = css`
+  rotate: 180deg;
+`;

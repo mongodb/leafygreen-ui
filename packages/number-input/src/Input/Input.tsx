@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react';
 
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import { useControlledValue, useForwardedRef } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
@@ -14,6 +14,7 @@ import {
   arrowsAnimateStyles,
   arrowsBaseStyles,
   arrowThemeStyles,
+  downArrowRotateStyles,
   errorInputStyles,
   iconBaseStyles,
   iconErrorStyles,
@@ -179,12 +180,10 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             tabIndex={-1}
           >
             <Icon
-              //  TODO: temp fix until there is a updated icon; CaretUp and CaretDown do not align vertically
-              className={css`
-                left: calc(50% - 0.5px);
-              `}
+              className={downArrowRotateStyles}
               aria-hidden={true}
-              glyph="CaretDown"
+              // TODO: CaretUp and CaretDown icons do not align vertically
+              glyph="CaretUp"
               size={16}
             />
           </button>
