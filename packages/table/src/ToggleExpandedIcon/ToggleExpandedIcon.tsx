@@ -7,7 +7,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { iconButtonStyles, iconFills } from './ToggleExpandedIcon.styles';
-import ToggleExpandedIconProps from './ToggleExpandedIcon.types';
+import { type ToggleExpandedIconProps } from './ToggleExpandedIcon.types';
 
 const ToggleExpandedIcon = ({
   isExpanded,
