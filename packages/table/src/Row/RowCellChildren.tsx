@@ -3,7 +3,7 @@ import React, { PropsWithChildren, ReactElement, ReactNode } from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 import { isComponentType } from '@leafygreen-ui/lib';
 
-import Cell from '../Cell';
+import { Cell } from '../Cell';
 import { cellDepthPadding } from '../Cell/Cell.styles';
 import { useTableContext } from '../TableContext/TableContext';
 import ToggleExpandedIcon from '../ToggleExpandedIcon';

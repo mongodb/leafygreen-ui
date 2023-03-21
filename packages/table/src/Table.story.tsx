@@ -170,7 +170,7 @@ export const NestedRows: ComponentStory<typeof Table> = () => {
                     .getVisibleCells()
                     .map((cell: LeafyGreenTableCell<Person>) => {
                       return (
-                        <Cell key={cell.id} cell={cell}>
+                        <Cell key={cell.id}>
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext(),
@@ -186,7 +186,7 @@ export const NestedRows: ComponentStory<typeof Table> = () => {
                       >
                         {subRow.getVisibleCells().map(cell => {
                           return (
-                            <Cell key={cell.id} cell={cell}>
+                            <Cell key={cell.id}>
                               {flexRender(
                                 cell.column.columnDef.cell,
                                 cell.getContext(),
@@ -202,7 +202,7 @@ export const NestedRows: ComponentStory<typeof Table> = () => {
                             >
                               {subSubRow.getVisibleCells().map(cell => {
                                 return (
-                                  <Cell key={cell.id} cell={cell}>
+                                  <Cell key={cell.id}>
                                     {flexRender(
                                       cell.column.columnDef.cell,
                                       cell.getContext(),
@@ -309,7 +309,7 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
                     .getVisibleCells()
                     .map((cell: LeafyGreenTableCell<Person>) => {
                       return (
-                        <Cell key={cell.id} cell={cell}>
+                        <Cell key={cell.id}>
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext(),
@@ -420,7 +420,7 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
                 <Row key={row.id} row={row}>
                   {row.getVisibleCells().map(cell => {
                     return (
-                      <Cell key={cell.id} cell={cell}>
+                      <Cell key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),
@@ -664,7 +664,7 @@ export const WithPagination: ComponentStory<typeof Table> = args => {
                 <Row key={row.id} row={row}>
                   {row.getVisibleCells().map(cell => {
                     return (
-                      <Cell key={cell.id} cell={cell}>
+                      <Cell key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),

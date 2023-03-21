@@ -2,8 +2,7 @@
 import React from 'react';
 import { ComponentStory, Meta } from '@storybook/react';
 
-import Cell from '../Cell/Cell';
-import HeaderCell from '../HeaderCell/HeaderCell';
+import { Cell, HeaderCell } from '../Cell';
 import HeaderRow from '../HeaderRow/HeaderRow';
 import Row from '../Row/Row';
 import Table from '../Table/Table';
@@ -173,7 +172,7 @@ export const DisabledNestedRows: ComponentStory<typeof Row> = ({
                     .getVisibleCells()
                     .map((cell: LeafyGreenTableCell<Person>) => {
                       return (
-                        <Cell key={cell.id} cell={cell}>
+                        <Cell key={cell.id}>
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext(),
@@ -196,11 +195,11 @@ DisabledNestedRows.args = {
 
 export const ClickableRows = Template.bind({});
 ClickableRows.args = {
-  onClick: () => {},
+  onClick: () => { },
 };
 
 export const DisabledClickableRows = Template.bind({});
 DisabledClickableRows.args = {
-  onClick: () => {},
+  onClick: () => { },
   disabled: true,
 };

@@ -1,7 +1,7 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-import { LGRowData } from '../useLeafyGreenTable';
-import { Header } from '..';
+import { Header } from '../..';
+import { LGRowData } from '../../useLeafyGreenTable';
 
 export type Align = HTMLElementProps<'td'>['align'];
 

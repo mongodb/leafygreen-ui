@@ -1,6 +1,6 @@
 import React, { ReactElement, ReactNode } from 'react';
 
-import Cell from '../Cell';
+import { Cell } from '../Cell';
 
 import InternalRowBase from './InternalRowBase';
 import { InternalRowBaseProps } from './Row.types';

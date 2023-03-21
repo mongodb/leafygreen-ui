@@ -2,9 +2,9 @@ import React, { PropsWithChildren, useEffect } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 
-import { baseCellStyles } from '../Cell/Cell.styles';
-import { useTableContext } from '../TableContext/TableContext';
-import { LGRowData } from '../useLeafyGreenTable';
+import { baseCellStyles } from '../../Cell/Cell.styles';
+import { useTableContext } from '../../TableContext/TableContext';
+import { LGRowData } from '../../useLeafyGreenTable';
 
 import SortIcon from './SortIcon/SortIcon';
 import {

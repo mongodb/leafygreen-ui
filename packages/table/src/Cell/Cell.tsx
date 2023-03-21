@@ -1,6 +1,5 @@
 import React from 'react';
 import { Transition } from 'react-transition-group';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 

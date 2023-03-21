@@ -3,7 +3,7 @@ import { useVirtual } from 'react-virtual';
 import { ColumnDef, useReactTable } from '@tanstack/react-table';
 import PropTypes from 'prop-types';
 
-import CheckboxCell from '../CheckboxCell/CheckboxCell';
+import { CheckboxCell } from '../Cell';
 
 import {
   LeafyGreenTableOptions,

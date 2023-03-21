@@ -2,7 +2,7 @@ import React from 'react';
 import { getAllByRole } from '@testing-library/dom';
 import { fireEvent, render } from '@testing-library/react';
 
-import Cell from '../Cell';
+import { Cell } from '../Cell';
 import TableBody from '../TableBody';
 import { LeafyGreenTableRow } from '../useLeafyGreenTable';
 import { Person } from '../utils/makeData';
@@ -39,7 +39,7 @@ const RowWithExpandableContent = () => {
               <Row key={row.id} row={row}>
                 {row.getVisibleCells().map(cell => {
                   return (
-                    <Cell key={cell.id} cell={cell}>
+                    <Cell key={cell.id} >
                       {cell.row.getCanExpand()}
                       {flexRender(
                         cell.column.columnDef.cell,

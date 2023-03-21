@@ -4,9 +4,7 @@ import { ComponentStory, Meta } from '@storybook/react';
 
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
-import Cell from './Cell/Cell';
 import ExpandedContent from './ExpandedContent/ExpandedContent';
-import HeaderCell from './HeaderCell/HeaderCell';
 import HeaderRow from './HeaderRow/HeaderRow';
 import Row from './Row/Row';
 import Table from './Table/Table';
@@ -14,6 +12,7 @@ import TableBody from './TableBody/TableBody';
 import TableContainer from './TableContainer/TableContainer';
 import TableHead from './TableHead/TableHead';
 import { makeData, Person } from './utils/makeData';
+import { Cell, HeaderCell } from './Cell';
 import useLeafyGreenTable from './useLeafyGreenTable';
 import {
   ColumnDef,
