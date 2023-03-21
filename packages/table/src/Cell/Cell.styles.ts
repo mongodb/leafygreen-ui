@@ -58,26 +58,20 @@ export const cellContentContainerStyles = css`
   text-overflow: ellipsis;
 `;
 
+const _hiddenStyles = css`
+  opacity: 0;
+  min-height: 0;
+  max-height: 0;
+`;
+
 export const cellContentTransitionStyles: Record<TransitionStatus, string> = {
-  entering: css`
-    opacity: 0;
-    min-height: 0;
-    max-height: 0;
-  `,
   entered: css`
     opacity: 1;
     min-height: ${spacing[5] + spacing[2]}px;
     max-height: ${spacing[5] + spacing[2]}px;
   `,
-  exiting: css`
-    opacity: 0;
-    min-height: 0;
-    max-height: 0;
-  `,
-  exited: css`
-    opacity: 0;
-    min-height: 0;
-    max-height: 0;
-  `,
-  unmounted: css``,
+  entering: _hiddenStyles,
+  exiting: _hiddenStyles,
+  exited: _hiddenStyles,
+  unmounted: _hiddenStyles,
 };
