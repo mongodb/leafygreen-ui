@@ -17,6 +17,7 @@ import {
   menuBaseStyles,
   menuThemeStyles,
   selectDisabledStyles,
+  selectStyles,
   wrapperBaseStyles,
 } from './Select.styles';
 import { SelectProps } from './Select.types';
@@ -137,7 +138,7 @@ export function Select({
         onChange={handleChange}
         aria-labelledby="Unit Picker"
         value={currentUnitOption?.displayName as string}
-        className={cx({
+        className={cx(selectStyles, {
           [selectDisabledStyles[theme]]: disabled,
         })}
         allowDeselect={false}

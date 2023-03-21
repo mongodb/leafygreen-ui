@@ -76,3 +76,9 @@ export const selectDisabledStyles: Record<Theme, string> = {
     }
   `,
 };
+
+export const selectStyles = css`
+  > div {
+    display: flex;
+  }
+`;
