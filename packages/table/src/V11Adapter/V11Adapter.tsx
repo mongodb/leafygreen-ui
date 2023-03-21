@@ -116,7 +116,6 @@ const V11Adapter = <T extends LGRowData, VS extends boolean>({
                       </Cell>
                     );
                   })}
-                  =
                   {row.original.renderExpandedContent && (
                     <ExpandedContent row={row} />
                   )}
