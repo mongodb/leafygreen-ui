@@ -20,7 +20,7 @@ const processData = (
       isComponentType(child, 'Cell'),
     );
     const newDatum: LGTableDataType<any> = evaluatedCells.reduce(
-      (acc, currVal, index) => {
+      (acc: object, currVal, index) => {
         return {
           ...acc,
           [processedColumns[index].accessorKey]: () =>
@@ -46,13 +46,14 @@ const processData = (
         firstSubRowCellColSpan &&
         firstSubRowCellColSpan === processedColumns.length
       ) {
+        // eslint-disable-next-line react/display-name
         newDatum.renderExpandedContent = () => (
           <div style={{ padding: '10px 8px 10px 32px' }}>
             {(firstSubRowCell as ReactElement).props.children}
           </div>
         );
       } else {
-        const processedSubRow = subRowCells.reduce((acc, currVal, index) => {
+        const processedSubRow = subRowCells.reduce((acc: object, currVal, index) => {
           return {
             ...acc,
             [processedColumns[index].accessorKey]: () =>
