@@ -1,6 +1,6 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-import ToggleExpandedIconProps from '../ToggleExpandedIcon/ToggleExpandedIcon.types';
+import { ToggleExpandedIconProps } from '../ToggleExpandedIcon/ToggleExpandedIcon.types';
 import { LeafyGreenTableCell, LGRowData } from '../useLeafyGreenTable';
 
 export type CellProps<T extends LGRowData> = HTMLElementProps<'td'> & {
@@ -29,6 +29,8 @@ export type CellProps<T extends LGRowData> = HTMLElementProps<'td'> & {
 
   /**
    * Defines whether the cell's row is visible (i.e. expanded)
+   *
+   * @default true
    */
-  isRowExpanded?: boolean;
+  isVisible?: boolean;
 };

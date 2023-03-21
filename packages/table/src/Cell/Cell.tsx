@@ -16,12 +16,12 @@ const Cell = <T extends LGRowData>({
   toggleExpandedIconProps,
   cell,
   contentClassName,
-  isRowExpanded,
+  isVisible = true,
   ...rest
 }: CellProps<T>) => {
   return (
     <td className={cx(baseCellStyles, className)} {...rest}>
-      <Transition in={isRowExpanded} timeout={0}>
+      <Transition in={isVisible} timeout={0}>
         {state => (
           <div
             data-state={state}

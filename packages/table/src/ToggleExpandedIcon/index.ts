@@ -1,4 +1,3 @@
 import ToggleExpandedIcon from './ToggleExpandedIcon';
-import ToggleExpandedIconProps from './ToggleExpandedIcon.types';
-export { ToggleExpandedIconProps };
+export { ToggleExpandedIconProps } from './ToggleExpandedIcon.types';
 export default ToggleExpandedIcon;

@@ -61,7 +61,7 @@ const RowCellChildren = <T extends LGRowData>({
               )}
               cellIndex={index}
               depth={row.depth}
-              isRowExpanded={isRowVisible}
+              isVisible={isRowVisible}
               disabled={disabled}
             >
               {isFirstCell && isExpandable && (
