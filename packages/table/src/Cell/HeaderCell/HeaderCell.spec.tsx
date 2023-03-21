@@ -3,7 +3,10 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { getTestColumnsProps, useTestHookCall } from '../utils/testHookCalls';
+import {
+  getTestColumnsProps,
+  useTestHookCall,
+} from '../../utils/testHookCalls';
 
 import HeaderCell, { HeaderCellProps } from '.';
 

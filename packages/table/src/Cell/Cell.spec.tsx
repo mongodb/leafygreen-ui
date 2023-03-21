@@ -4,7 +4,7 @@ import { axe } from 'jest-axe';
 
 import { Person } from '../utils/makeData';
 
-import Cell, { CellProps } from '.';
+import { Cell, CellProps } from '.';
 
 const onScroll = jest.fn();
 

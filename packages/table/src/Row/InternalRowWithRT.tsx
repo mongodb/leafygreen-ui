@@ -11,8 +11,9 @@ import { LGRowData } from '../useLeafyGreenTable';
 import InternalRowBase from './InternalRowBase';
 import {
   expandedContentParentStyles,
-  nestedBgStyles,
-  nestedBorderTopStyles,
+  rowExpandedStyles,
+  rowTopLevelExpandedStyles,
+  rowTopLevelStyles,
 } from './Row.styles';
 import { InternalRowWithRTProps } from './Row.types';
 import RowCellChildren from './RowCellChildren';
@@ -34,10 +35,11 @@ const InternalRowWithRT = <T extends LGRowData>({
   const rowRef = virtualRow?.measureRef;
 
   const isTableExpandable = table?.getCanSomeRowsExpand();
-  // Is this row nested within other rows?
-  const isNestedRow = !!parentRow;
-  // Is this row currently expanded
-  const isExpanded = row.getIsExpanded();
+  const isNested = !!parentRow;
+  const isParentExpanded = !!parentRow && parentRow.getIsExpanded();
+  const isRowVisible = isParentExpanded || !isNested;
+
+  const isExpanded = row.getIsExpanded(); // Is this row currently expanded
 
   const CellChildren = React.Children.toArray(children).filter(child =>
     isComponentType(child, 'Cell'),
@@ -52,7 +54,7 @@ const InternalRowWithRT = <T extends LGRowData>({
    * the table itself has any row that is expandable
    * but not if this row is nested
    */
-  const shouldRenderAsTBody = isTableExpandable && !isNestedRow;
+  const shouldRenderAsTBody = isTableExpandable && !isNested;
   const containerAs = useMemo(
     () => (shouldRenderAsTBody ? 'tbody' : Fragment),
     [shouldRenderAsTBody],
@@ -71,13 +73,15 @@ const InternalRowWithRT = <T extends LGRowData>({
       <InternalRowBase
         className={cx(
           {
-            [nestedBorderTopStyles[theme]]: isExpanded && !isNestedRow,
-            [nestedBgStyles[theme]]: isExpanded,
+            [rowTopLevelStyles]: !isNested,
+            [rowTopLevelExpandedStyles[theme]]: isExpanded && !isNested,
+            [rowExpandedStyles[theme]]: isExpanded || isParentExpanded,
           },
           className,
         )}
         disabled={disabled}
-        data-depth={row.depth}
+        aria-hidden={!isRowVisible}
+        aria-expanded={isExpanded}
         {...rest}
       >
         <RowCellChildren row={row} disabled={disabled}>

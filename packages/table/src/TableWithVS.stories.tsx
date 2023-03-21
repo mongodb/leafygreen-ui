@@ -4,17 +4,15 @@ import { ComponentStory, Meta } from '@storybook/react';
 
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
-import Cell from './Cell/Cell';
 import ExpandedContent from './ExpandedContent/ExpandedContent';
-import HeaderCell from './HeaderCell/HeaderCell';
 import HeaderRow from './HeaderRow/HeaderRow';
 import Row from './Row/Row';
-import SubRow from './Row/SubRow';
 import Table from './Table/Table';
 import TableBody from './TableBody/TableBody';
 import TableContainer from './TableContainer/TableContainer';
 import TableHead from './TableHead/TableHead';
 import { makeData, Person } from './utils/makeData';
+import { Cell, HeaderCell } from './Cell';
 import useLeafyGreenTable from './useLeafyGreenTable';
 import {
   ColumnDef,
@@ -238,7 +236,7 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
                 <Row key={row.id} row={row} virtualRow={virtualRow}>
                   {cells.map(cell => {
                     return (
-                      <Cell key={cell.id} cell={cell}>
+                      <Cell key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),
@@ -248,14 +246,10 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
                   })}
                   {row.subRows &&
                     row.subRows.map(subRow => (
-                      <SubRow
-                        key={subRow.id}
-                        row={subRow}
-                        virtualRow={virtualRow}
-                      >
+                      <Row key={subRow.id} row={subRow} virtualRow={virtualRow}>
                         {subRow.getVisibleCells().map(cell => {
                           return (
-                            <Cell key={cell.id} cell={cell}>
+                            <Cell key={cell.id}>
                               {flexRender(
                                 cell.column.columnDef.cell,
                                 cell.getContext(),
@@ -265,14 +259,14 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
                         })}
                         {subRow.subRows &&
                           subRow.subRows.map(subSubRow => (
-                            <SubRow
+                            <Row
                               key={subSubRow.id}
                               row={subSubRow}
                               virtualRow={virtualRow}
                             >
                               {subSubRow.getVisibleCells().map(cell => {
                                 return (
-                                  <Cell key={cell.id} cell={cell}>
+                                  <Cell key={cell.id}>
                                     {flexRender(
                                       cell.column.columnDef.cell,
                                       cell.getContext(),
@@ -280,9 +274,9 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
                                   </Cell>
                                 );
                               })}
-                            </SubRow>
+                            </Row>
                           ))}
-                      </SubRow>
+                      </Row>
                     ))}
                 </Row>
               );
@@ -385,9 +379,11 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
           <TableBody>
             {table.virtualRows.map((virtualRow: VirtualItem) => {
               const row = rows[virtualRow.index];
+              const cells = row.getVisibleCells();
+
               return (
-                <Row key={row.id}>
-                  {row.getVisibleCells().map(cell => {
+                <Row key={row.id} row={row} virtualRow={virtualRow}>
+                  {cells.map(cell => {
                     return (
                       <Cell key={cell.id}>
                         {flexRender(
@@ -472,15 +468,15 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
         <p>{table.virtualRows.length} virtual rows rendered</p>
-        <button
+        {/* <button
           onClick={
             // eslint-disable-next-line no-console
             () => console.info('rowSelection', rowSelection)
           }
         >
           Log rowSelection state
-        </button>
-        <button
+        </button> */}
+        {/* <button
           onClick={() =>
             // eslint-disable-next-line no-console
             console.info(
@@ -490,7 +486,7 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
           }
         >
           Log table.getSelectedFlatRows()
-        </button>
+        </button> */}
       </div>
 
       <TableContainer ref={tableContainerRef}>
@@ -514,9 +510,11 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
           <TableBody>
             {table.virtualRows.map(virtualRow => {
               const row = rows[virtualRow.index];
+              const cells = row.getVisibleCells();
+
               return (
-                <Row key={row.id}>
-                  {row.getVisibleCells().map(cell => {
+                <Row key={row.id} row={row} virtualRow={virtualRow}>
+                  {cells.map(cell => {
                     return (
                       <Cell key={cell.id}>
                         {flexRender(
@@ -602,7 +600,7 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
         <p>{table.virtualRows.length} virtual rows rendered</p>
-        <pre>Expanded rows: {JSON.stringify(expanded, null, 2)}</pre>
+        {/* <pre>Expanded rows: {JSON.stringify(expanded, null, 2)}</pre> */}
       </div>
 
       <TableContainer ref={tableContainerRef}>
@@ -626,11 +624,13 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
           <TableBody>
             {table.virtualRows.map(virtualRow => {
               const row = rows[virtualRow.index];
+              const cells = row.getVisibleCells();
+
               return (
                 <Row key={row.id} row={row} virtualRow={virtualRow}>
-                  {row.getVisibleCells().map(cell => {
+                  {cells.map(cell => {
                     return (
-                      <Cell key={cell.id} cell={cell}>
+                      <Cell key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),

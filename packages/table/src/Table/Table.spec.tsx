@@ -2,8 +2,7 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import Cell from '../Cell';
-import HeaderCell from '../HeaderCell';
+import { Cell, HeaderCell } from '../Cell';
 import HeaderRow from '../HeaderRow';
 import Row from '../Row';
 import TableBody from '../TableBody';
@@ -53,7 +52,7 @@ function TableWithHook(props: TestTableWithHookProps) {
                   .getVisibleCells()
                   .map((cell: LeafyGreenTableCell<Person>) => {
                     return (
-                      <Cell key={cell.id} cell={cell}>
+                      <Cell key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),

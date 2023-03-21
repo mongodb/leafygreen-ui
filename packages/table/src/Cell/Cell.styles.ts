@@ -1,20 +1,26 @@
+import { TransitionStatus } from 'react-transition-group';
+
 import { css } from '@leafygreen-ui/emotion';
-import { spacing } from '@leafygreen-ui/tokens';
+import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
-import { Align } from '../HeaderCell/HeaderCell.types';
+import { Align } from './HeaderCell/HeaderCell.types';
 
-const baseSidePadding = spacing[4];
+/** The base left & right padding in the table */
+const baseTableSidePadding = spacing[4];
 
-export const baseStyles = css`
-  padding: 0;
+/** the default width of the expand icon */
+const iconSize = 28;
+
+export const baseCellStyles = css`
+  padding: 0 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
   &:focus-visible {
     box-shadow: inset;
   }
-  &:first-child {
-    padding-left: ${baseSidePadding}px;
-  }
   &:last-child {
-    padding-right: ${baseSidePadding}px;
+    padding-right: ${baseTableSidePadding}px;
   }
 `;
 
@@ -28,24 +34,61 @@ export const alignmentStyles = (align: Align = 'left') => css`
   justify-content: ${flexAlignment[align]};
 `;
 
-export const depthPadding = (depth = 0) => css`
-  padding-left: ${Math.max(8, 16 * depth)}px;
-`;
+export const getCellPadding = ({
+  depth = 0,
+  isExpandable,
+  isSelectable,
+}: {
+  depth?: number;
+  isExpandable?: boolean;
+  isSelectable?: boolean;
+}) => {
+  if (depth === 0) {
+    // TODO: Make sure padding is correct for selectable rows
+
+    // const sidePadding = isSelectable
+    //   ? baseTableSidePadding - 16
+    //   : baseTableSidePadding;
+
+    return css`
+      /* outline: 1px solid rebeccapurple;
+      outline-offset: -1px; */
+
+      padding-left: ${baseTableSidePadding + (isExpandable ? 0 : 8)}px;
+    `;
+  }
+
+  const parentIconsPadding = 8 * (depth - 1); // how much space do parent icons take up
+  const thisIconPadding = isExpandable ? 8 : 0;
+  const depthPadding =
+    iconSize * depth - (parentIconsPadding + thisIconPadding);
+  return css`
+    padding-left: ${baseTableSidePadding + depthPadding}px;
+  `;
+};
 
 export const cellContentContainerStyles = css`
   display: flex;
   align-items: center;
-  padding: 10px 8px;
+  text-overflow: ellipsis;
+  transition: ${transitionDuration.default}ms ease-in-out;
+  transition-property: min-height, max-height, opacity;
 `;
 
-export const subRowStyles = css`
-  transition: all 0.2s ease-in;
-`;
-
-export const hiddenSubRowStyles = css`
-  height: 0;
-  padding-top: 0;
-  padding-bottom: 0;
+const _hiddenStyles = css`
   opacity: 0;
-  margin: 0;
+  min-height: 0;
+  max-height: 0;
 `;
+
+export const cellContentTransitionStyles: Record<TransitionStatus, string> = {
+  entered: css`
+    opacity: 1;
+    min-height: ${spacing[5] + spacing[2]}px;
+    max-height: ${spacing[5] + spacing[2]}px;
+  `,
+  entering: _hiddenStyles,
+  exiting: _hiddenStyles,
+  exited: _hiddenStyles,
+  unmounted: _hiddenStyles,
+};

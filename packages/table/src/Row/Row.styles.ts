@@ -1,32 +1,50 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { focusRing, hoverRing } from '@leafygreen-ui/tokens';
+import {
+  focusRing,
+  hoverRing,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
 
-export const baseStyles = css`
+export const rowBaseStyles = css`
+  transition: ${transitionDuration.default}ms ease-in-out;
+  transition-property: all;
+  border: 0px solid rgba(255, 255, 255, 0); // transparent
+
   // emulating a border bottom on the last nested row
   &:not([data-depth='0'])[aria-hidden='false'] + tr[data-depth='0'] {
-    border-top: 1px solid ${palette.gray.light2};
+    border-top-width: 1px;
+    border-color: ${palette.gray.light2};
   }
 `;
 
 export const expandedContentParentStyles = css`
   &[aria-expanded='true'] + tr,
   &[aria-expanded='true'] + tbody {
-    border-top: 1px solid ${palette.gray.light2};
+    border-top-width: 1px;
+    border-color: ${palette.gray.light2};
   }
 `;
 
-export const nestedBorderTopStyles: Record<Theme, string> = {
+/** Styles for top-level, un-nested rows */
+export const rowTopLevelStyles = css`
+  // We add an invisible border to the top of every row
+  border-top-width: 1px;
+  margin-top: -1px;
+`;
+
+/** Styles for expanded top-level, un-nested rows */
+export const rowTopLevelExpandedStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
-    border-top: 1px solid ${palette.gray.dark2};
+    border-color: ${palette.gray.dark2};
   `,
   [Theme.Light]: css`
-    border-top: 1px solid ${palette.gray.light2};
+    border-color: ${palette.gray.light2};
   `,
 };
 
-export const nestedBgStyles: Record<Theme, string> = {
+export const rowExpandedStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     background-color: ${palette.gray.dark4};
   `,

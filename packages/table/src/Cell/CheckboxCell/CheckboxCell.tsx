@@ -7,7 +7,7 @@ import { CheckboxProps } from '@leafygreen-ui/checkbox/src/types';
 import { baseStyles } from './Checkbox.styles';
 
 const CheckboxCell = ({ ...rest }: CheckboxProps) => (
-  <div className={baseStyles}>
+  <div className={baseStyles} data-type="checkbox-cell">
     <Checkbox {...rest} />
   </div>
 );

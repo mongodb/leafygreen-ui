@@ -12,8 +12,7 @@ import {
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 import Pagination from '@leafygreen-ui/pagination';
 
-import Cell from './Cell/Cell';
-import HeaderCell from './HeaderCell/HeaderCell';
+import ExpandedContent from './ExpandedContent/ExpandedContent';
 import HeaderRow from './HeaderRow/HeaderRow';
 import Row from './Row/Row';
 import TableBody from './TableBody/TableBody';
@@ -21,6 +20,7 @@ import TableContainer from './TableContainer/TableContainer';
 import TableHead from './TableHead/TableHead';
 import { makeData, Person } from './utils/makeData';
 import { AnyDict } from './utils/types';
+import { Cell, HeaderCell } from './Cell';
 import Table from './Table';
 import useLeafyGreenTable, {
   LeafyGreenTableCell,
@@ -144,7 +144,7 @@ export const NestedRows: ComponentStory<typeof Table> = () => {
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table>
+        <Table table={table}>
           <TableHead>
             {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>
@@ -169,7 +169,7 @@ export const NestedRows: ComponentStory<typeof Table> = () => {
                     .getVisibleCells()
                     .map((cell: LeafyGreenTableCell<Person>) => {
                       return (
-                        <Cell key={cell.id} cell={cell}>
+                        <Cell key={cell.id}>
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext(),
@@ -177,6 +177,36 @@ export const NestedRows: ComponentStory<typeof Table> = () => {
                         </Cell>
                       );
                     })}
+                  {row.subRows &&
+                    row.subRows.map(subRow => (
+                      <Row key={subRow.id} row={subRow}>
+                        {subRow.getVisibleCells().map(cell => {
+                          return (
+                            <Cell key={cell.id}>
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext(),
+                              )}
+                            </Cell>
+                          );
+                        })}
+                        {subRow.subRows &&
+                          subRow.subRows.map(subSubRow => (
+                            <Row key={subSubRow.id} row={subSubRow}>
+                              {subSubRow.getVisibleCells().map(cell => {
+                                return (
+                                  <Cell key={cell.id}>
+                                    {flexRender(
+                                      cell.column.columnDef.cell,
+                                      cell.getContext(),
+                                    )}
+                                  </Cell>
+                                );
+                              })}
+                            </Row>
+                          ))}
+                      </Row>
+                    ))}
                 </Row>
               );
             })}
@@ -247,7 +277,7 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table {...args}>
+        <Table {...args} table={table}>
           <TableHead>
             {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>
@@ -272,7 +302,7 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
                     .getVisibleCells()
                     .map((cell: LeafyGreenTableCell<Person>) => {
                       return (
-                        <Cell key={cell.id} cell={cell}>
+                        <Cell key={cell.id}>
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext(),
@@ -280,6 +310,9 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
                         </Cell>
                       );
                     })}
+                  {row.original.renderExpandedContent && (
+                    <ExpandedContent row={row} />
+                  )}
                 </Row>
               );
             })}
@@ -382,7 +415,7 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
                 <Row key={row.id} row={row}>
                   {row.getVisibleCells().map(cell => {
                     return (
-                      <Cell key={cell.id} cell={cell}>
+                      <Cell key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),
@@ -485,7 +518,7 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table {...args}>
+        <Table {...args} table={table}>
           <TableHead>
             {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>
@@ -626,7 +659,7 @@ export const WithPagination: ComponentStory<typeof Table> = args => {
                 <Row key={row.id} row={row}>
                   {row.getVisibleCells().map(cell => {
                     return (
-                      <Cell key={cell.id} cell={cell}>
+                      <Cell key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),

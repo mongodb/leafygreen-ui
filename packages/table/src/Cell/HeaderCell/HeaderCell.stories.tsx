@@ -1,16 +1,17 @@
 import React from 'react';
 import { ComponentStory, Meta } from '@storybook/react';
 
-import Cell from '../Cell/Cell';
-import HeaderCell from '../HeaderCell/HeaderCell';
-import HeaderRow from '../HeaderRow/HeaderRow';
-import Row from '../Row';
-import Table from '../Table/Table';
-import TableBody from '../TableBody/TableBody';
-import TableContainer from '../TableContainer/TableContainer';
-import TableHead from '../TableHead/TableHead';
-import { makeData } from '../utils/makeData';
-import { AnyDict } from '../utils/types';
+import Cell from '../../Cell/Cell';
+import HeaderRow from '../../HeaderRow/HeaderRow';
+import Row from '../../Row';
+import Table from '../../Table/Table';
+import TableBody from '../../TableBody/TableBody';
+import TableContainer from '../../TableContainer/TableContainer';
+import TableHead from '../../TableHead/TableHead';
+import { makeData } from '../../utils/makeData';
+import { AnyDict } from '../../utils/types';
+
+import HeaderCell from './HeaderCell';
 
 export default {
   title: 'Components/Table/HeaderCell',

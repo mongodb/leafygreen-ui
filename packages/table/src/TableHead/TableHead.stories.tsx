@@ -1,8 +1,7 @@
 import React from 'react';
 import { ComponentStory, Meta } from '@storybook/react';
 
-import Cell from '../Cell/Cell';
-import HeaderCell from '../HeaderCell/HeaderCell';
+import { Cell, HeaderCell } from '../Cell';
 import HeaderRow from '../HeaderRow/HeaderRow';
 import Row from '../Row/Row';
 import Table from '../Table/Table';

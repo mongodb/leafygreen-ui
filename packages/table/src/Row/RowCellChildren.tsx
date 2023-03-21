@@ -2,16 +2,17 @@ import React, { PropsWithChildren, ReactElement, ReactNode } from 'react';
 
 import { isComponentType } from '@leafygreen-ui/lib';
 
-import Cell from '../Cell';
-import ExpandingCell from '../Cell/ExpandingCell';
-import FirstCell from '../Cell/FirstCell';
+import { Cell } from '../Cell';
+import { useTableContext } from '../TableContext/TableContext';
+import ToggleExpandedIcon from '../ToggleExpandedIcon';
 import { LeafyGreenTableRow, LGRowData } from '../useLeafyGreenTable';
+import { getAreAncestorsExpanded } from '../utils/areAncestorsExpanded';
 
 interface RowCellChildrenProps<T extends LGRowData>
   extends PropsWithChildren<{
     row: LeafyGreenTableRow<T>;
     disabled?: boolean;
-  }> {}
+  }> { }
 
 /**
  * Renders row cells provided by `useReactTable`
@@ -21,46 +22,54 @@ const RowCellChildren = <T extends LGRowData>({
   children,
   disabled,
 }: RowCellChildrenProps<T>) => {
+  const { getParentRow, columnAlignments } = useTableContext();
+  const parentRow = getParentRow?.(row.id);
+  const isNested = !!parentRow;
+  const isParentExpanded = !!parentRow && parentRow.getIsExpanded();
+  const areAncestorsExpanded = getAreAncestorsExpanded(row.id, getParentRow);
+  const isRowVisible = (areAncestorsExpanded && isParentExpanded) || !isNested;
+
   const isExpandable = row.getCanExpand();
   const isExpanded = row.getIsExpanded();
+
+  const isSelectable = row.getCanSelect();
+
   const toggleExpanded = () => row.toggleExpanded();
 
   const CellChildren = React.Children.toArray(children).filter(child =>
     isComponentType(child, 'Cell'),
   );
-  const FirstCellChild = CellChildren[0];
-  const OtherCellChildren = CellChildren.slice(1);
 
   return (
     <>
-      {isExpandable ? (
-        <ExpandingCell
-          {...(FirstCellChild as ReactElement)?.props}
-          cellIndex={0}
-          depth={row.depth}
-          isExpanded={isExpanded}
-          toggleExpanded={toggleExpanded}
-          disabled={disabled}
-        />
-      ) : (
-        <FirstCell
-          {...(FirstCellChild as ReactElement)?.props}
-          cellIndex={0}
-          depth={row.depth}
-          disabled={disabled}
-        />
-      )}
-      {React.Children.map(
-        OtherCellChildren,
-        (CellChild: ReactNode, index: number) => (
+      {React.Children.map(CellChildren, (child: ReactNode, colIndex: number) => {
+        const { className, children, ...props } = (child as ReactElement)
+          ?.props;
+        const isFirstCell = colIndex === 0;
+        return (
           <Cell
-            {...(CellChild as ReactElement)?.props}
-            cellIndex={index + 1}
-            depth={row.depth}
+            {...props}
+            className={className}
+            cellIndex={colIndex}
+            isVisible={isRowVisible}
+            isExpandable={isExpandable}
+            isSelectable={isSelectable}
             disabled={disabled}
-          />
-        ),
-      )}
+            depth={row.depth}
+            align={columnAlignments?.[colIndex]}
+          >
+            {isFirstCell && isExpandable && (
+              <ToggleExpandedIcon
+                isExpanded={isExpanded}
+                toggleExpanded={toggleExpanded}
+                aria-hidden={!isRowVisible}
+                tabIndex={isRowVisible ? 0 : -1}
+              />
+            )}
+            {children}
+          </Cell>
+        );
+      })}
     </>
   );
 };
