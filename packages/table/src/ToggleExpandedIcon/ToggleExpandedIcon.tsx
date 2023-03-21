@@ -23,6 +23,7 @@ const ToggleExpandedIcon = ({
       onClick={toggleExpanded}
       className={cx(iconButtonStyles, {
         [css`
+        /* TODO: Rotate ChevronRight 90deg */
           transform: rotate(-180deg);
         `]: isExpanded,
       })}

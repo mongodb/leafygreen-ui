@@ -12,7 +12,7 @@ interface RowCellChildrenProps<T extends LGRowData>
   extends PropsWithChildren<{
     row: LeafyGreenTableRow<T>;
     disabled?: boolean;
-  }> {}
+  }> { }
 
 /**
  * Renders row cells provided by `useReactTable`
@@ -22,7 +22,7 @@ const RowCellChildren = <T extends LGRowData>({
   children,
   disabled,
 }: RowCellChildrenProps<T>) => {
-  const { getParentRow } = useTableContext();
+  const { getParentRow, columnAlignments } = useTableContext();
   const parentRow = getParentRow?.(row.id);
   const isNested = !!parentRow;
   const isParentExpanded = !!parentRow && parentRow.getIsExpanded();
@@ -42,20 +42,21 @@ const RowCellChildren = <T extends LGRowData>({
 
   return (
     <>
-      {React.Children.map(CellChildren, (child: ReactNode, index: number) => {
+      {React.Children.map(CellChildren, (child: ReactNode, colIndex: number) => {
         const { className, children, ...props } = (child as ReactElement)
           ?.props;
-        const isFirstCell = index === 0;
+        const isFirstCell = colIndex === 0;
         return (
           <Cell
             {...props}
             className={className}
-            cellIndex={index}
+            cellIndex={colIndex}
             isVisible={isRowVisible}
             isExpandable={isExpandable}
             isSelectable={isSelectable}
             disabled={disabled}
-            data-depth={row.depth}
+            depth={row.depth}
+            align={columnAlignments?.[colIndex]}
           >
             {isFirstCell && isExpandable && (
               <ToggleExpandedIcon

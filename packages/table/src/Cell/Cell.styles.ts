@@ -44,6 +44,8 @@ export const getCellPadding = ({
   isSelectable?: boolean;
 }) => {
   if (depth === 0) {
+    // TODO: Make sure padding is correct for selectable rows
+
     // const sidePadding = isSelectable
     //   ? baseTableSidePadding - 16
     //   : baseTableSidePadding;
