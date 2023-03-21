@@ -237,7 +237,7 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
                 <Row key={row.id} row={row} virtualRow={virtualRow}>
                   {cells.map(cell => {
                     return (
-                      <Cell key={cell.id} cell={cell}>
+                      <Cell key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),
@@ -254,7 +254,7 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
                       >
                         {subRow.getVisibleCells().map(cell => {
                           return (
-                            <Cell key={cell.id} cell={cell}>
+                            <Cell key={cell.id}>
                               {flexRender(
                                 cell.column.columnDef.cell,
                                 cell.getContext(),
@@ -271,7 +271,7 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
                             >
                               {subSubRow.getVisibleCells().map(cell => {
                                 return (
-                                  <Cell key={cell.id} cell={cell}>
+                                  <Cell key={cell.id}>
                                     {flexRender(
                                       cell.column.columnDef.cell,
                                       cell.getContext(),
@@ -473,15 +473,15 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
         <p>{table.virtualRows.length} virtual rows rendered</p>
-        <button
+        {/* <button
           onClick={
             // eslint-disable-next-line no-console
             () => console.info('rowSelection', rowSelection)
           }
         >
           Log rowSelection state
-        </button>
-        <button
+        </button> */}
+        {/* <button
           onClick={() =>
             // eslint-disable-next-line no-console
             console.info(
@@ -491,7 +491,7 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
           }
         >
           Log table.getSelectedFlatRows()
-        </button>
+        </button> */}
       </div>
 
       <TableContainer ref={tableContainerRef}>
@@ -635,7 +635,7 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
                 <Row key={row.id} row={row} virtualRow={virtualRow}>
                   {cells.map(cell => {
                     return (
-                      <Cell key={cell.id} cell={cell}>
+                      <Cell key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),

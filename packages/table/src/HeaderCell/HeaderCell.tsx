@@ -2,6 +2,7 @@ import React, { PropsWithChildren, useEffect } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 
+import { baseCellStyles } from '../Cell/Cell.styles';
 import { useTableContext } from '../TableContext/TableContext';
 import { LGRowData } from '../useLeafyGreenTable';
 
@@ -60,11 +61,9 @@ const HeaderCell = <T extends LGRowData>({
   return (
     <th
       className={cx(
-        baseStyles,
+        baseCellStyles,
         {
-          // cx boolean should ensure header.getSize() is not undefined
-          // @ts-expect-error
-          [setWidth(header?.getSize())]: !!header?.getSize(),
+          [setWidth(header?.getSize() ?? 0)]: !!header?.getSize(),
         },
         className,
       )}

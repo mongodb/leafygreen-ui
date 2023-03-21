@@ -16,10 +16,10 @@ export type CellProps<T extends LGRowData> = HTMLElementProps<'td'> & {
    * Props passed to the ToggleExpandedIcon
    */
   toggleExpandedIconProps?: ToggleExpandedIconProps;
-  /**
-   * `Cell` object returned from the `useLeafyGreenTable` hook
-   */
-  cell?: LeafyGreenTableCell<T>;
+  // /**
+  //  * `Cell` object returned from the `useLeafyGreenTable` hook
+  //  */
+  // cell?: LeafyGreenTableCell<T>;
   /**
    * `className` prop passed to the div inside the td that houses the cell's contents
    *

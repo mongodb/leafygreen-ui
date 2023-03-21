@@ -24,7 +24,7 @@ const RowCellChildren = <T extends LGRowData>({
   children,
   disabled,
 }: RowCellChildrenProps<T>) => {
-  const { getParentRow } = useTableContext();
+  const { getParentRow, table } = useTableContext();
   const parentRow = getParentRow?.(row.id);
   const isNested = !!parentRow
   const isParentExpanded = !!parentRow && parentRow.getIsExpanded()
@@ -33,6 +33,8 @@ const RowCellChildren = <T extends LGRowData>({
 
   const isExpandable = row.getCanExpand();
   const isExpanded = row.getIsExpanded();
+
+  const isSelectable = row.getCanSelect()
 
   const toggleExpanded = () => row.toggleExpanded();
 
@@ -54,15 +56,17 @@ const RowCellChildren = <T extends LGRowData>({
               className={cx(
                 {
                   [
-                    cellDepthPadding(row.depth, isExpandable)
+                    cellDepthPadding(row.depth, { isExpandable, isSelectable })
                   ]: isFirstCell,
                 },
                 className
               )}
               cellIndex={index}
-              depth={row.depth}
               isVisible={isRowVisible}
               disabled={disabled}
+              data-depth={row.depth}
+              data-selectable={isSelectable}
+              data-expandable={isExpandable}
             >
               {isFirstCell && isExpandable && (
                 <ToggleExpandedIcon

@@ -34,10 +34,23 @@ export const alignmentStyles = (align: Align = 'left') => css`
   justify-content: ${flexAlignment[align]};
 `;
 
-export const cellDepthPadding = (depth = 0, isExpandable = false) => {
+export const cellDepthPadding = (
+  depth = 0,
+  {
+    isExpandable,
+    isSelectable,
+  }: {
+    isExpandable?: boolean;
+    isSelectable?: boolean;
+  },
+) => {
   if (depth === 0) {
+    const sidePadding = isSelectable
+      ? baseTableSidePadding - 16
+      : baseTableSidePadding;
+
     return css`
-      padding-left: ${baseTableSidePadding + (isExpandable ? 0 : 8)}px;
+      padding-left: ${sidePadding + (isExpandable ? 0 : 8)}px;
     `;
   }
 

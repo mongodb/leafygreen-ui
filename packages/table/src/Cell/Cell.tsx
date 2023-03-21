@@ -14,7 +14,6 @@ const Cell = <T extends LGRowData>({
   className,
   cellIndex,
   toggleExpandedIconProps,
-  cell,
   contentClassName,
   isVisible = true,
   ...rest
@@ -39,7 +38,7 @@ const Cell = <T extends LGRowData>({
 };
 
 Cell.propTypes = {
-  cell: PropTypes.any,
+
 };
 
 export default Cell;
