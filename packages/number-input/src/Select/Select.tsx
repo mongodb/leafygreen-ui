@@ -69,6 +69,7 @@ export function Select({
    */
   const CustomMenuButton = React.forwardRef(
     ({ className, children, ...props }: ButtonProps, forwardedRef) => {
+      const [open, setOpen] = useState<boolean>(false);
       // TODO: HALP with TS
       //@ts-ignore
       const buttonRef: React.MutableRefObject<HTMLElement> = useForwardedRef(
@@ -88,7 +89,16 @@ export function Select({
        */
       const hasEllipse = textNode?.offsetWidth < textNode?.scrollWidth;
 
-      const [open, setOpen] = useState<boolean>(false);
+      const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
+        const popoverParent = (e.target as HTMLButtonElement).closest(
+          `.${popoverClassName}`,
+        );
+        if (!popoverParent) setOpen(true);
+      };
+
+      const handleMouseLeave = () => setOpen(false);
+      const handleOnFocus = () => setOpen(true);
+      const handleOnBlur = () => setOpen(false);
 
       return (
         <div className={customMenuButtonWrapperStyles}>
@@ -106,15 +116,10 @@ export function Select({
             {...props}
             className={cx(menuBaseStyles, menuThemeStyles[theme], className)}
             ref={buttonRef}
-            onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => {
-              const popoverParent = (e.target as HTMLButtonElement).closest(
-                `.${popoverClassName}`,
-              );
-              if (!popoverParent) setOpen(true);
-            }}
-            onMouseLeave={() => setOpen(false)}
-            onFocus={() => setOpen(true)}
-            onBlur={() => setOpen(false)}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onFocus={handleOnFocus}
+            onBlur={handleOnBlur}
           >
             {children}
           </Button>

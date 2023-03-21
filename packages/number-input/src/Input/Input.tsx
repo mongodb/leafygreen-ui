@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useRef } from 'react';
+import React, { ChangeEvent } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useControlledValue, useForwardedRef } from '@leafygreen-ui/hooks';
@@ -71,17 +71,19 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       handleChange?.(synthEvent as ChangeEvent<HTMLInputElement>);
     };
 
-    const handleIncrementClick = () => {
-      if (!disabled) {
-        inputRef.current?.stepUp();
-        handleSyntheticEvent();
-      }
-    };
+    const handleValueChange = (value: 'increment' | 'decrement') => {
+      switch (value) {
+        case 'increment': {
+          inputRef.current?.stepUp();
+          handleSyntheticEvent();
+          break;
+        }
 
-    const handleDecrementClick = () => {
-      if (!disabled) {
-        inputRef.current?.stepDown();
-        handleSyntheticEvent();
+        case 'decrement': {
+          inputRef.current?.stepDown();
+          handleSyntheticEvent();
+          break;
+        }
       }
     };
 
@@ -91,14 +93,18 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
      */
     const handleArrowKeyDown = (e: React.KeyboardEvent) => {
       if (!disabled) {
-        if (e.key === 'ArrowUp') {
-          e.preventDefault();
-          handleIncrementClick();
-        }
+        switch (e.key) {
+          case 'ArrowUp': {
+            e.preventDefault();
+            handleValueChange('increment');
+            break;
+          }
 
-        if (e.key === 'ArrowDown') {
-          e.preventDefault();
-          handleDecrementClick();
+          case 'ArrowDown': {
+            e.preventDefault();
+            handleValueChange('decrement');
+            break;
+          }
         }
       }
     };
@@ -156,7 +162,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         >
           <button
             aria-label="Increment number"
-            onClick={handleIncrementClick}
+            onClick={() => handleValueChange('increment')}
             onKeyDown={handleArrowKeyDown}
             className={cx(arrowBaseStyles, arrowThemeStyles[theme])}
             type="button"
@@ -166,7 +172,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           </button>
           <button
             aria-label="Decrement number"
-            onClick={handleDecrementClick}
+            onClick={() => handleValueChange('decrement')}
             onKeyDown={handleArrowKeyDown}
             className={cx(arrowBaseStyles, arrowThemeStyles[theme])}
             type="button"

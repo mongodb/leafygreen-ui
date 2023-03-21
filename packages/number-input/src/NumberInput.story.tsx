@@ -118,9 +118,9 @@ export const Select = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // eslint-disable-next-line no-console
-    console.log('story: input value: ', e.target.value);
+    console.log('story: event: ', e.target.value);
     // eslint-disable-next-line no-console
-    console.log(inputRef.current);
+    console.log('story: ref', inputRef.current?.value);
     setValue(e.target.value);
   };
 
