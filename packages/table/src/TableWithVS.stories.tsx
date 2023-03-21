@@ -9,7 +9,6 @@ import ExpandedContent from './ExpandedContent/ExpandedContent';
 import HeaderCell from './HeaderCell/HeaderCell';
 import HeaderRow from './HeaderRow/HeaderRow';
 import Row from './Row/Row';
-import SubRow from './Row/SubRow';
 import Table from './Table/Table';
 import TableBody from './TableBody/TableBody';
 import TableContainer from './TableContainer/TableContainer';
@@ -248,7 +247,7 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
                   })}
                   {row.subRows &&
                     row.subRows.map(subRow => (
-                      <SubRow
+                      <Row
                         key={subRow.id}
                         row={subRow}
                         virtualRow={virtualRow}
@@ -265,7 +264,7 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
                         })}
                         {subRow.subRows &&
                           subRow.subRows.map(subSubRow => (
-                            <SubRow
+                            <Row
                               key={subSubRow.id}
                               row={subSubRow}
                               virtualRow={virtualRow}
@@ -280,9 +279,9 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
                                   </Cell>
                                 );
                               })}
-                            </SubRow>
+                            </Row>
                           ))}
-                      </SubRow>
+                      </Row>
                     ))}
                 </Row>
               );
