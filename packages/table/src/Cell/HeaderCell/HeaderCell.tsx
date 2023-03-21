@@ -72,7 +72,8 @@ const HeaderCell = <T extends LGRowData>({
         {
           [getCellPadding({ depth: 0, isExpandable: false, isSelectable })]:
             isFirstCell,
-          [getHeaderCellWidthStyles(header?.getSize() ?? 0)]: !!header?.getSize(),
+          [getHeaderCellWidthStyles(header?.getSize() ?? 0)]:
+            !!header?.getSize(),
         },
         className,
       )}

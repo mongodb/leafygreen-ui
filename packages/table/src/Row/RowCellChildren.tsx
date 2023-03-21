@@ -12,7 +12,7 @@ interface RowCellChildrenProps<T extends LGRowData>
   extends PropsWithChildren<{
     row: LeafyGreenTableRow<T>;
     disabled?: boolean;
-  }> { }
+  }> {}
 
 /**
  * Renders row cells provided by `useReactTable`

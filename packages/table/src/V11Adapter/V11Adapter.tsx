@@ -28,13 +28,13 @@ import processData from './processData';
 type V11AdapterProps<
   T extends LGRowData,
   VS extends boolean,
-  > = PropsWithChildren<
-    Pick<
-      LeafyGreenTableOptions<T, VS>,
-      'useVirtualScrolling' | 'hasSelectableRows'
-    > &
+> = PropsWithChildren<
+  Pick<
+    LeafyGreenTableOptions<T, VS>,
+    'useVirtualScrolling' | 'hasSelectableRows'
+  > &
     Pick<TableProps<T, VS>, 'shouldAlternateRowColor'>
-  >;
+>;
 
 // assumes table is first element in children
 // reads columns from columns' keys
@@ -97,68 +97,64 @@ const V11Adapter = <T extends LGRowData, VS extends boolean>({
           </HeaderRow>
         </TableHead>
         <TableBody>
-
-          {
-            rows.map(row => {
-              return (
-                <Row key={row.id} row={row}>
-                  {row.getVisibleCells().map((cell: LeafyGreenTableCell<any>) => {
-                    return (
-                      <Cell key={cell.id}>
-                        {cell.column.id === 'select' ? (
-                          <>{cell.column.columnDef?.cell({ row })}</>
-                        ) : (
-                          // index by row.index, not the index of the loop to get the sorted order
-                          <>{processedData[row.index][cell.column.id]()}</>
-                        )}
-                      </Cell>
-                    );
-                  })}
-                  {row.original.renderExpandedContent && (
-                    <ExpandedContent row={row} />
-                  )}
-                  {row.subRows &&
-                    row.subRows.map(subRow => (
-                      <Row
-                        key={subRow.id}
-                        row={subRow}
+          {rows.map(row => {
+            return (
+              <Row key={row.id} row={row}>
+                {row.getVisibleCells().map((cell: LeafyGreenTableCell<any>) => {
+                  return (
+                    <Cell key={cell.id}>
+                      {cell.column.id === 'select' ? (
+                        <>{cell.column.columnDef?.cell({ row })}</>
+                      ) : (
+                        // index by row.index, not the index of the loop to get the sorted order
+                        <>{processedData[row.index][cell.column.id]()}</>
+                      )}
+                    </Cell>
+                  );
+                })}
+                {row.original.renderExpandedContent && (
+                  <ExpandedContent row={row} />
+                )}
+                {row.subRows &&
+                  row.subRows.map(subRow => (
+                    <Row
+                      key={subRow.id}
+                      row={subRow}
                       // virtualRow={virtualRow}
-                      >
-                        {subRow.getVisibleCells().map(subRowCell => {
-                          return (
-                            <Cell key={subRowCell.id}>
-                              {subRow.original[subRowCell.column.id]()}
-                            </Cell>
-                          );
-                        })}
-                        {subRow.subRows &&
-                          subRow.subRows.map(subSubRow => (
-                            <Row
-                              key={subSubRow.id}
-                              row={subSubRow}
+                    >
+                      {subRow.getVisibleCells().map(subRowCell => {
+                        return (
+                          <Cell key={subRowCell.id}>
+                            {subRow.original[subRowCell.column.id]()}
+                          </Cell>
+                        );
+                      })}
+                      {subRow.subRows &&
+                        subRow.subRows.map(subSubRow => (
+                          <Row
+                            key={subSubRow.id}
+                            row={subSubRow}
                             // virtualRow={virtualRow}
-                            >
-                              {subSubRow.getVisibleCells().map(subSubRowCell => {
-                                return (
-                                  <Cell
-                                    key={subSubRowCell.id}
-                                  >
-                                    {subSubRow.original[
-                                      subSubRowCell.column.id
-                                    ]()}
-                                  </Cell>
-                                );
-                              })}
-                            </Row>
-                          ))}
-                      </Row>
-                    ))}
-                </Row>
-              );
-            })}
+                          >
+                            {subSubRow.getVisibleCells().map(subSubRowCell => {
+                              return (
+                                <Cell key={subSubRowCell.id}>
+                                  {subSubRow.original[
+                                    subSubRowCell.column.id
+                                  ]()}
+                                </Cell>
+                              );
+                            })}
+                          </Row>
+                        ))}
+                    </Row>
+                  ))}
+              </Row>
+            );
+          })}
         </TableBody>
       </Table>
-    </TableContainer >
+    </TableContainer>
   );
 };
 

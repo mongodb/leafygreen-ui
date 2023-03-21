@@ -53,13 +53,16 @@ const processData = (
           </div>
         );
       } else {
-        const processedSubRow = subRowCells.reduce((acc: object, currVal, index) => {
-          return {
-            ...acc,
-            [processedColumns[index].accessorKey]: () =>
-              (currVal as ReactElement).props.children,
-          };
-        }, {});
+        const processedSubRow = subRowCells.reduce(
+          (acc: object, currVal, index) => {
+            return {
+              ...acc,
+              [processedColumns[index].accessorKey]: () =>
+                (currVal as ReactElement).props.children,
+            };
+          },
+          {},
+        );
         newDatum.subRows.push(processedSubRow);
       }
     });
