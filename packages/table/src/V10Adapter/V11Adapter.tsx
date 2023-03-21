@@ -1,8 +1,7 @@
 import React, { ReactElement, useMemo, useRef } from 'react';
 import { PropsWithChildren } from 'react';
 
-import Cell from '../Cell';
-import HeaderCell from '../HeaderCell';
+import { Cell, HeaderCell } from '../Cell';
 import HeaderRow from '../HeaderRow';
 import Row from '../Row';
 import TableBody from '../TableBody';

@@ -18,26 +18,23 @@ import { ExpandedContentProps } from './ExpandedContent.types';
 const ExpandedContent = <T extends RowData>({
   row,
 }: ExpandedContentProps<T>) => {
-
-  const contentRef = useRef<HTMLDivElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null);
   const isExpanded = row.getIsExpanded();
   const content =
     row?.original?.renderExpandedContent &&
     row?.original?.renderExpandedContent(row);
 
-  const { theme } = useDarkMode()
+  const { theme } = useDarkMode();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const contentHeight = useMemo(() => contentRef.current ? contentRef.current.clientHeight : 0, [content])
+  const contentHeight = useMemo(
+    () => (contentRef.current ? contentRef.current.clientHeight : 0),
+    [content],
+  );
 
   return (
     <InternalRowBase>
-      <td
-        colSpan={row?.getVisibleCells().length}
-        className={cx(
-          baseStyles,
-        )}
-      >
+      <td colSpan={row?.getVisibleCells().length} className={cx(baseStyles)}>
         <Transition in={isExpanded} timeout={0}>
           {state => (
             <div
@@ -46,15 +43,14 @@ const ExpandedContent = <T extends RowData>({
                 cellContentContainerStyles,
                 expandedContentStyles[theme],
                 expandedContentTransitionStyles(contentHeight)[state],
-              )}>
-              <div ref={contentRef}>
-                {content}
-              </div>
+              )}
+            >
+              <div ref={contentRef}>{content}</div>
             </div>
           )}
         </Transition>
       </td>
-    </InternalRowBase >
+    </InternalRowBase>
   );
 };
 

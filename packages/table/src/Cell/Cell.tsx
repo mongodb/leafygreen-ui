@@ -5,7 +5,12 @@ import { cx } from '@leafygreen-ui/emotion';
 
 import { LGRowData } from '../useLeafyGreenTable';
 
-import { baseCellStyles, cellContentContainerStyles, cellContentTransitionStyles } from './Cell.styles';
+import {
+  baseCellStyles,
+  cellContentContainerStyles,
+  cellContentTransitionStyles,
+  getCellPadding,
+} from './Cell.styles';
 import { CellProps } from '.';
 
 const Cell = <T extends LGRowData>({
@@ -14,11 +19,25 @@ const Cell = <T extends LGRowData>({
   cellIndex,
   toggleExpandedIconProps,
   contentClassName,
+  depth,
   isVisible = true,
+  isExpandable = false,
+  isSelectable = false,
   ...rest
 }: CellProps<T>) => {
+  const isFirstCell = cellIndex === 0;
+
   return (
-    <td className={cx(baseCellStyles, className)} {...rest}>
+    <td
+      className={cx(
+        baseCellStyles,
+        {
+          [getCellPadding({ depth, isExpandable, isSelectable })]: isFirstCell,
+        },
+        className,
+      )}
+      {...rest}
+    >
       <Transition in={isVisible} timeout={0}>
         {state => (
           <div
@@ -26,8 +45,9 @@ const Cell = <T extends LGRowData>({
             className={cx(
               cellContentContainerStyles,
               cellContentTransitionStyles[state],
-              contentClassName
-            )}>
+              contentClassName,
+            )}
+          >
             {children}
           </div>
         )}
@@ -36,8 +56,6 @@ const Cell = <T extends LGRowData>({
   );
 };
 
-Cell.propTypes = {
-
-};
+Cell.propTypes = {};
 
 export default Cell;

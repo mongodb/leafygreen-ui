@@ -246,11 +246,7 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
                   })}
                   {row.subRows &&
                     row.subRows.map(subRow => (
-                      <Row
-                        key={subRow.id}
-                        row={subRow}
-                        virtualRow={virtualRow}
-                      >
+                      <Row key={subRow.id} row={subRow} virtualRow={virtualRow}>
                         {subRow.getVisibleCells().map(cell => {
                           return (
                             <Cell key={cell.id}>

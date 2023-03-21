@@ -2,16 +2,19 @@ import React, { PropsWithChildren, useEffect } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 
-import { baseCellStyles } from '../../Cell/Cell.styles';
+import {
+  baseCellStyles,
+  cellContentContainerStyles,
+  getCellPadding,
+} from '../../Cell/Cell.styles';
 import { useTableContext } from '../../TableContext/TableContext';
 import { LGRowData } from '../../useLeafyGreenTable';
 
 import SortIcon from './SortIcon/SortIcon';
 import {
-  alignmentStyles,
-  baseStyles,
-  contentContainerStyles,
-  setWidth,
+  cellContentAlignmentStyles,
+  getHeaderCellWidthStyles,
+  headerCellContentStyles,
 } from './HeaderCell.styles';
 import { HeaderCellProps, SortState, SortStates } from './HeaderCell.types';
 
@@ -32,7 +35,11 @@ const HeaderCell = <T extends LGRowData>({
   header,
   ...rest
 }: PropsWithChildren<HeaderCellProps<T>>) => {
-  const { setColumnAlignments } = useTableContext();
+  const { setColumnAlignments, table } = useTableContext();
+
+  const isFirstCell = cellIndex === 0;
+  const isSelectable = !!table?.getSelectedRowModel;
+
   let columnName;
   let sortState;
   let onSortIconClick;
@@ -63,14 +70,22 @@ const HeaderCell = <T extends LGRowData>({
       className={cx(
         baseCellStyles,
         {
-          [setWidth(header?.getSize() ?? 0)]: !!header?.getSize(),
+          [getCellPadding({ depth: 0, isExpandable: false, isSelectable })]:
+            isFirstCell,
+          [getHeaderCellWidthStyles(header?.getSize() ?? 0)]: !!header?.getSize(),
         },
         className,
       )}
       scope="col"
       {...rest}
     >
-      <div className={cx(contentContainerStyles, alignmentStyles(align))}>
+      <div
+        className={cx(
+          cellContentContainerStyles,
+          headerCellContentStyles,
+          cellContentAlignmentStyles(align),
+        )}
+      >
         {children}
         {sortState && onSortIconClick && (
           <SortIcon

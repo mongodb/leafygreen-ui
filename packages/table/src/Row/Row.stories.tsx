@@ -195,11 +195,11 @@ DisabledNestedRows.args = {
 
 export const ClickableRows = Template.bind({});
 ClickableRows.args = {
-  onClick: () => { },
+  onClick: () => {},
 };
 
 export const DisabledClickableRows = Template.bind({});
 DisabledClickableRows.args = {
-  onClick: () => { },
+  onClick: () => {},
   disabled: true,
 };

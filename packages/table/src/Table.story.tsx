@@ -12,9 +12,7 @@ import {
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 import Pagination from '@leafygreen-ui/pagination';
 
-import Cell from './Cell/Cell';
 import ExpandedContent from './ExpandedContent/ExpandedContent';
-import HeaderCell from './HeaderCell/HeaderCell';
 import HeaderRow from './HeaderRow/HeaderRow';
 import Row from './Row/Row';
 import TableBody from './TableBody/TableBody';
@@ -22,6 +20,7 @@ import TableContainer from './TableContainer/TableContainer';
 import TableHead from './TableHead/TableHead';
 import { makeData, Person } from './utils/makeData';
 import { AnyDict } from './utils/types';
+import { Cell, HeaderCell } from './Cell';
 import Table from './Table';
 import useLeafyGreenTable, {
   LeafyGreenTableCell,
@@ -180,10 +179,7 @@ export const NestedRows: ComponentStory<typeof Table> = () => {
                     })}
                   {row.subRows &&
                     row.subRows.map(subRow => (
-                      <Row
-                        key={subRow.id}
-                        row={subRow}
-                      >
+                      <Row key={subRow.id} row={subRow}>
                         {subRow.getVisibleCells().map(cell => {
                           return (
                             <Cell key={cell.id}>
@@ -196,10 +192,7 @@ export const NestedRows: ComponentStory<typeof Table> = () => {
                         })}
                         {subRow.subRows &&
                           subRow.subRows.map(subSubRow => (
-                            <Row
-                              key={subSubRow.id}
-                              row={subSubRow}
-                            >
+                            <Row key={subSubRow.id} row={subSubRow}>
                               {subSubRow.getVisibleCells().map(cell => {
                                 return (
                                   <Cell key={cell.id}>
@@ -523,7 +516,7 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table {...args}>
+        <Table {...args} table={table}>
           <TableHead>
             {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>

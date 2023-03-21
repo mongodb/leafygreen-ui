@@ -13,7 +13,6 @@ import { AnyDict } from '../../utils/types';
 
 import HeaderCell from './HeaderCell';
 
-
 export default {
   title: 'Components/Table/HeaderCell',
   component: HeaderCell,

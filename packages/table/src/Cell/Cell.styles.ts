@@ -34,23 +34,25 @@ export const alignmentStyles = (align: Align = 'left') => css`
   justify-content: ${flexAlignment[align]};
 `;
 
-export const cellDepthPadding = (
+export const getCellPadding = ({
   depth = 0,
-  {
-    isExpandable,
-    isSelectable,
-  }: {
-    isExpandable?: boolean;
-    isSelectable?: boolean;
-  },
-) => {
+  isExpandable,
+  isSelectable,
+}: {
+  depth?: number;
+  isExpandable?: boolean;
+  isSelectable?: boolean;
+}) => {
   if (depth === 0) {
-    const sidePadding = isSelectable
-      ? baseTableSidePadding - 16
-      : baseTableSidePadding;
+    // const sidePadding = isSelectable
+    //   ? baseTableSidePadding - 16
+    //   : baseTableSidePadding;
 
     return css`
-      padding-left: ${sidePadding + (isExpandable ? 0 : 8)}px;
+      /* outline: 1px solid rebeccapurple;
+      outline-offset: -1px; */
+
+      padding-left: ${baseTableSidePadding + (isExpandable ? 0 : 8)}px;
     `;
   }
 
@@ -66,9 +68,9 @@ export const cellDepthPadding = (
 export const cellContentContainerStyles = css`
   display: flex;
   align-items: center;
+  text-overflow: ellipsis;
   transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: min-height, max-height, opacity;
-  text-overflow: ellipsis;
 `;
 
 const _hiddenStyles = css`

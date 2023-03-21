@@ -35,11 +35,11 @@ const InternalRowWithRT = <T extends LGRowData>({
   const rowRef = virtualRow?.measureRef;
 
   const isTableExpandable = table?.getCanSomeRowsExpand();
-  const isNested = !!parentRow
-  const isParentExpanded = !!parentRow && parentRow.getIsExpanded()
-  const isRowVisible = isParentExpanded || !isNested
+  const isNested = !!parentRow;
+  const isParentExpanded = !!parentRow && parentRow.getIsExpanded();
+  const isRowVisible = isParentExpanded || !isNested;
 
-  const isExpanded = row.getIsExpanded();// Is this row currently expanded
+  const isExpanded = row.getIsExpanded(); // Is this row currently expanded
 
   const CellChildren = React.Children.toArray(children).filter(child =>
     isComponentType(child, 'Cell'),

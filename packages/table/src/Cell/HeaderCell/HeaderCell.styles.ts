@@ -1,28 +1,16 @@
 import { css } from '@leafygreen-ui/emotion';
+import { spacing } from '@leafygreen-ui/tokens';
 
 import { Align } from './HeaderCell.types';
 
-export const baseStyles = css`
-  vertical-align: middle;
-  &:first-child {
-    padding-left: 24px;
-  }
-  &:last-child {
-    padding-right: 24px;
-  }
+export const headerCellContentStyles = css`
+  height: ${spacing[5] + spacing[2]}px;
 `;
 
-export const contentContainerStyles = css`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px;
-`;
-
-export const alignmentStyles = (align: Align) => css`
+export const cellContentAlignmentStyles = (align: Align) => css`
   justify-content: ${align};
 `;
 
-export const setWidth = (size: number) => css`
+export const getHeaderCellWidthStyles = (size: number) => css`
   width: ${size}px;
 `;

@@ -19,18 +19,22 @@ const ToggleExpandedIcon = ({
 
   return (
     <IconButton
-      aria-label={`${isExpanded ? "Collapse" : "Expand"} row`}
+      aria-label={`${isExpanded ? 'Collapse' : 'Expand'} row`}
       onClick={toggleExpanded}
       className={cx(iconButtonStyles, {
         [css`
           transform: rotate(-180deg);
-        `]: isExpanded
+        `]: isExpanded,
       })}
       {...rest}
     >
-      <Icon glyph="ChevronDown" role="presentation" fill={iconFills(theme, !!disabled)} />
+      <Icon
+        glyph="ChevronDown"
+        role="presentation"
+        fill={iconFills(theme, !!disabled)}
+      />
     </IconButton>
-  )
+  );
 };
 
 ToggleExpandedIcon.propTypes = {
