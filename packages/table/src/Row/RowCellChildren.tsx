@@ -12,7 +12,7 @@ interface RowCellChildrenProps<T extends LGRowData>
   extends PropsWithChildren<{
     row: LeafyGreenTableRow<T>;
     disabled?: boolean;
-  }> { }
+  }> {}
 
 /**
  * Renders row cells provided by `useReactTable`
@@ -42,34 +42,37 @@ const RowCellChildren = <T extends LGRowData>({
 
   return (
     <>
-      {React.Children.map(CellChildren, (child: ReactNode, colIndex: number) => {
-        const { className, children, ...props } = (child as ReactElement)
-          ?.props;
-        const isFirstCell = colIndex === 0;
-        return (
-          <Cell
-            {...props}
-            className={className}
-            cellIndex={colIndex}
-            isVisible={isRowVisible}
-            isExpandable={isExpandable}
-            isSelectable={isSelectable}
-            disabled={disabled}
-            depth={row.depth}
-            align={columnAlignments?.[colIndex]}
-          >
-            {isFirstCell && isExpandable && (
-              <ToggleExpandedIcon
-                isExpanded={isExpanded}
-                toggleExpanded={toggleExpanded}
-                aria-hidden={!isRowVisible}
-                tabIndex={isRowVisible ? 0 : -1}
-              />
-            )}
-            {children}
-          </Cell>
-        );
-      })}
+      {React.Children.map(
+        CellChildren,
+        (child: ReactNode, colIndex: number) => {
+          const { className, children, ...props } = (child as ReactElement)
+            ?.props;
+          const isFirstCell = colIndex === 0;
+          return (
+            <Cell
+              {...props}
+              className={className}
+              cellIndex={colIndex}
+              isVisible={isRowVisible}
+              isExpandable={isExpandable}
+              isSelectable={isSelectable}
+              disabled={disabled}
+              depth={row.depth}
+              align={columnAlignments?.[colIndex]}
+            >
+              {isFirstCell && isExpandable && (
+                <ToggleExpandedIcon
+                  isExpanded={isExpanded}
+                  toggleExpanded={toggleExpanded}
+                  aria-hidden={!isRowVisible}
+                  tabIndex={isRowVisible ? 0 : -1}
+                />
+              )}
+              {children}
+            </Cell>
+          );
+        },
+      )}
     </>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ComponentStory, Meta } from '@storybook/react';
 import {
   ColumnDef,
@@ -6,7 +6,6 @@ import {
   getCoreRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  SortingState,
 } from '@tanstack/react-table';
 
 import { storybookArgTypes } from '@leafygreen-ui/lib';

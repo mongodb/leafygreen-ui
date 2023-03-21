@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useVirtual } from 'react-virtual';
 import { ColumnDef, useReactTable } from '@tanstack/react-table';
 import PropTypes from 'prop-types';
@@ -17,30 +17,37 @@ import {
   VirtualizerValues,
 } from '.';
 
-const getSelectColumnConfig = <T extends LGRowData>() => {
-  return {
-    id: 'select',
-    size: 32,
+const selectColumnConfig = {
+  id: 'select',
+  size: 32,
+  // eslint-disable-next-line react/display-name
+  header: ({ table }: { table: LeafyGreenTable<unknown> }) => (
+    <CheckboxCell
+      checked={table.getIsAllRowsSelected()}
+      indeterminate={table.getIsSomeRowsSelected()}
+      onChange={table.getToggleAllRowsSelectedHandler()}
+      aria-label="Select all rows"
+    />
+  ),
+  cell:
     // eslint-disable-next-line react/display-name
-    header: ({ table }: { table: LeafyGreenTable<T> }) => (
-      <CheckboxCell
-        checked={table.getIsAllRowsSelected()}
-        indeterminate={table.getIsSomeRowsSelected()}
-        onChange={table.getToggleAllRowsSelectedHandler()}
-        aria-label="Select all rows"
-      />
-    ),
-    // eslint-disable-next-line react/display-name
-    cell: ({ row }: { row: LeafyGreenTableRow<T> }) => (
+    ({
+      row,
+      table,
+    }: {
+      table: LeafyGreenTable<unknown>;
+      row: LeafyGreenTableRow<unknown>;
+    }) => (
       <CheckboxCell
         checked={row.getIsSelected()}
         indeterminate={row.getIsSomeSelected()}
         onChange={row.getToggleSelectedHandler()}
         aria-label={`Select row ${row.index}`}
+        // Don't animate if _all_ rows have been checked (usually, if header row is clicked). Not the _best_ check, but it mostly works
+        animate={!table.getIsAllRowsSelected()}
       />
     ),
-  } as ColumnDef<T, unknown>;
-};
+} as ColumnDef<unknown, unknown>;
 
 function useLeafyGreenTable<T extends LGRowData, VS extends boolean = true>(
   props: LeafyGreenTableOptions<T, VS>,
@@ -61,13 +68,13 @@ function useLeafyGreenTable<T extends LGRowData, VS extends boolean>({
   type ColumnType = ColumnDef<LGTableDataType<T>, unknown>;
 
   const columns: Array<ColumnType> = [
-    ...(hasSelectableRows ? [getSelectColumnConfig() as ColumnType] : []),
+    ...(hasSelectableRows ? [selectColumnConfig as ColumnType] : []),
     ...columnsProp.map(
       propColumn =>
-        ({
-          ...propColumn,
-          enableSorting: propColumn.enableSorting ?? false,
-        } as ColumnType),
+      ({
+        ...propColumn,
+        enableSorting: propColumn.enableSorting ?? false,
+      } as ColumnType),
     ),
   ];
 
