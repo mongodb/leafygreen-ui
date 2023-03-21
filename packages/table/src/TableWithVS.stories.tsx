@@ -605,7 +605,7 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
         <p>{table.virtualRows.length} virtual rows rendered</p>
-        <pre>Expanded rows: {JSON.stringify(expanded, null, 2)}</pre>
+        {/* <pre>Expanded rows: {JSON.stringify(expanded, null, 2)}</pre> */}
       </div>
 
       <TableContainer ref={tableContainerRef}>
@@ -629,9 +629,11 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
           <TableBody>
             {table.virtualRows.map(virtualRow => {
               const row = rows[virtualRow.index];
+              const cells = row.getVisibleCells();
+
               return (
                 <Row key={row.id} row={row} virtualRow={virtualRow}>
-                  {row.getVisibleCells().map(cell => {
+                  {cells.map(cell => {
                     return (
                       <Cell key={cell.id} cell={cell}>
                         {flexRender(
