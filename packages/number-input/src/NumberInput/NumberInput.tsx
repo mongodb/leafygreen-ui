@@ -30,12 +30,12 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       size = Size.Default,
       unitOptions = [],
       onSelectChange = () => {},
-      unit,
       darkMode: darkModeProp,
       id: idProp,
       'aria-describedby': ariaDescribedbyProp,
       'aria-labelledby': ariaLabelledbyProp,
       'aria-label': ariaLabelProp,
+      unit,
       className,
       disabled,
       label,
@@ -77,7 +77,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <div ref={forwardedRef} className={className}>
+        <div className={className}>
           {(label || description) && (
             <div className={labelDescriptionStyles}>
               {label && (
@@ -98,6 +98,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
             })}
           >
             <Input
+              ref={forwardedRef}
               value={value}
               onChange={onChange}
               disabled={disabled}
@@ -128,7 +129,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
               <Select
                 id={selectId}
                 disabled={disabled}
-                unit={unit as string}
+                unit={unit}
                 unitOptions={unitOptions}
                 onChange={onSelectChange}
                 size={size}

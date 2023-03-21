@@ -2,6 +2,10 @@ import { ChangeEventHandler, ComponentPropsWithoutRef } from 'react';
 
 import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
 import { DarkModeProps } from '@leafygreen-ui/lib';
+import {
+  PopoverProps as ImportedPopoverProps,
+  PortalControlProps,
+} from '@leafygreen-ui/popover';
 
 export const State = {
   Error: 'error',
@@ -65,6 +69,13 @@ export interface WithoutSelectProps {
 
 export type SelectProps = WithSelectProps | WithoutSelectProps;
 
+export type PopoverProps = PortalControlProps & {
+  /**
+   * Number that controls the z-index of the popover element directly.
+   */
+  popoverZIndex?: ImportedPopoverProps['popoverZIndex'];
+};
+
 export interface BaseNumberInputProps
   extends Omit<
       ComponentPropsWithoutRef<'input'>,
@@ -116,36 +127,9 @@ export interface BaseNumberInputProps
    * @default 'default'
    */
   size?: Size;
-
-  /**
-   * Specifies that the popover content should be rendered at the end of the DOM,
-   * rather than in the DOM tree.
-   *
-   * @default true
-   */
-  usePortal?: boolean;
-
-  /**
-   * When usePortal is `true`, specifies a class name to apply to the root element of the portal.
-   */
-  portalClassName?: string;
-
-  /**
-   * When usePortal is `true`, specifies an element to portal within. The default behavior is to generate a div at the end of the document to render within.
-   */
-  portalContainer?: HTMLElement | null;
-
-  /**
-   * When usePortal is `true`, specifies the scrollable element to position relative to.
-   */
-  scrollContainer?: HTMLElement | null;
-
-  /**
-   * Number that controls the z-index of the popover element directly.
-   */
-  popoverZIndex?: number;
 }
 
 export type NumberInputProps = BaseNumberInputProps &
   SelectProps &
+  PopoverProps &
   AriaLabelPropsWithLabel;

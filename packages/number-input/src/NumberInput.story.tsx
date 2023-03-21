@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { ComponentStory } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
@@ -108,6 +108,7 @@ export const Select = ({
 }: NumberInputProps) => {
   const [unit, setUnit] = useState<string>(unitProp as string);
   const [value, setValue] = useState<string>('');
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleSelectChange = (unit: UnitOption) => {
     setUnit(unit.displayName);
@@ -118,11 +119,14 @@ export const Select = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // eslint-disable-next-line no-console
     console.log('story: input value: ', e.target.value);
+    // eslint-disable-next-line no-console
+    console.log(inputRef.current);
     setValue(e.target.value);
   };
 
   return (
     <NumberInput
+      ref={inputRef}
       value={value}
       unit={unit}
       unitOptions={unitOptions as Array<UnitOption>}

@@ -26,7 +26,7 @@ import { SelectProps } from './Select.types';
  */
 export function Select({
   'data-testid': dataTestId,
-  unit: unitProp,
+  unit: unitProp = '',
   id,
   unitOptions,
   onChange,

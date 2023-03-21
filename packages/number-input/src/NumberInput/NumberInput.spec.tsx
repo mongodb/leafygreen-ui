@@ -337,6 +337,46 @@ describe('packages/number-input', () => {
         id="1"
         size={Size.Default}
       />
+
+      {/* @ts-expect-error - portalClassName should be undefined */}
+      <NumberInput
+        unit={unitProps.unit}
+        unitOptions={selectProps.unitOptions}
+        onSelectChange={() => {}}
+        label={label}
+        usePortal={false}
+        portalClassName="classname"
+      />
+
+      {/* @ts-expect-error - scrollContainer should be undefined */}
+      <NumberInput
+        unit={unitProps.unit}
+        unitOptions={selectProps.unitOptions}
+        onSelectChange={() => {}}
+        label={label}
+        usePortal={false}
+        scrollContainer={{} as HTMLElement}
+      />
+
+      {/* @ts-expect-error - portalContainer should be undefined */}
+      <NumberInput
+        unit={unitProps.unit}
+        unitOptions={selectProps.unitOptions}
+        onSelectChange={() => {}}
+        label={label}
+        usePortal={false}
+        portalContainer={{} as HTMLElement}
+      />
+
+      <NumberInput
+        unit={unitProps.unit}
+        unitOptions={selectProps.unitOptions}
+        onSelectChange={() => {}}
+        label={label}
+        portalContainer={{} as HTMLElement}
+        scrollContainer={{} as HTMLElement}
+        portalClassName="classname"
+      />
     </>;
   });
 });
