@@ -4,7 +4,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import { isComponentType } from '@leafygreen-ui/lib';
 
 import Cell from '../Cell';
-import { depthPadding } from '../Cell/Cell.styles';
+import { cellDepthPadding } from '../Cell/Cell.styles';
 import { useTableContext } from '../TableContext/TableContext';
 import ToggleExpandedIcon from '../ToggleExpandedIcon';
 import { LeafyGreenTableRow, LGRowData } from '../useLeafyGreenTable';
@@ -54,7 +54,7 @@ const RowCellChildren = <T extends LGRowData>({
               className={cx(
                 {
                   [
-                    depthPadding(row.depth, isExpandable)
+                    cellDepthPadding(row.depth, isExpandable)
                   ]: isFirstCell,
                 },
                 className

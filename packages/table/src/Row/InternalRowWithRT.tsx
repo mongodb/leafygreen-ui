@@ -75,7 +75,7 @@ const InternalRowWithRT = <T extends LGRowData>({
           {
             [rowTopLevelStyles]: !isNested,
             [rowTopLevelExpandedStyles[theme]]: isExpanded && !isNested,
-            [rowExpandedStyles[theme]]: isExpanded,
+            [rowExpandedStyles[theme]]: isExpanded || isParentExpanded,
           },
           className,
         )}

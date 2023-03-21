@@ -3,7 +3,6 @@ import { Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { LGRowData } from '../useLeafyGreenTable';
 
@@ -22,7 +21,7 @@ const Cell = <T extends LGRowData>({
 }: CellProps<T>) => {
   return (
     <td className={cx(baseCellStyles, className)} {...rest}>
-      <Transition in={isRowExpanded} timeout={transitionDuration.default}>
+      <Transition in={isRowExpanded} timeout={0}>
         {state => (
           <div
             data-state={state}
@@ -34,7 +33,6 @@ const Cell = <T extends LGRowData>({
             {children}
           </div>
         )}
-
       </Transition>
     </td>
   );
