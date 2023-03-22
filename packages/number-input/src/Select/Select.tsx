@@ -103,7 +103,7 @@ export function Select({
       return (
         <div className={customMenuButtonWrapperStyles}>
           <Tooltip
-            enabled={hasEllipse}
+            enabled={hasEllipse && !disabled}
             justify="middle"
             // Using refEl instead of a trigger element because triggerProps by default, such as onMouseEnter, are added to the trigger element inside the tooltip component. OnMouseEnter is triggered by hovering over the trigger or any of its children. In the case of this custom menu button we don't want the tooltip to open when children are hovered so we add our own open logic with onMouseEnter.
             refEl={buttonRef}
