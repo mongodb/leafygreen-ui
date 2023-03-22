@@ -15,6 +15,7 @@ import Tooltip from '@leafygreen-ui/tooltip';
 import {
   customMenuButtonWrapperStyles,
   menuBaseStyles,
+  menuThemeDisabledStyles,
   menuThemeStyles,
   selectDisabledStyles,
   selectStyles,
@@ -114,7 +115,14 @@ export function Select({
           </Tooltip>
           <Button
             {...props}
-            className={cx(menuBaseStyles, menuThemeStyles[theme], className)}
+            className={cx(
+              menuBaseStyles,
+              menuThemeStyles[theme],
+              {
+                [menuThemeDisabledStyles[theme]]: disabled,
+              },
+              className,
+            )}
             ref={buttonRef}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}

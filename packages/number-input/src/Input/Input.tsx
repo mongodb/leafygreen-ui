@@ -16,14 +16,15 @@ import {
   arrowsBaseStyles,
   arrowThemeStyles,
   downArrowRotateStyles,
-  errorInputStyles,
   iconBaseStyles,
   iconDisabledStyles,
+  iconErrorDisabledStyles,
   iconErrorStyles,
   iconSizeStyles,
   iconThemeStyles,
   inputAnimateStyles,
   inputBaseStyles,
+  inputErrorAnimateStyles,
   inputThemeStyles,
   selectBaseStyles,
   sizeInputStyles,
@@ -31,7 +32,6 @@ import {
   wrapperBaseStyles,
   wrapperClassName,
   wrapperDisabledStyles,
-  wrapperErrorStyles,
   wrapperHoverStyles,
   wrapperStateStyles,
   wrapperThemeStyles,
@@ -123,7 +123,6 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             [wrapperHoverStyles[theme][state]]: !disabled,
             [wrapperDisabledStyles[theme]]: disabled,
             [selectBaseStyles]: hasSelectOptions,
-            [wrapperErrorStyles]: renderErrorIcon && !disabled,
           },
         )}
       >
@@ -134,8 +133,10 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             inputThemeStyles[theme],
             sizeInputStyles[size],
             {
-              [errorInputStyles[size]]: renderErrorIcon && !disabled,
+              // padding without error icon
               [inputAnimateStyles]: !disabled,
+              // padding with error icon
+              [inputErrorAnimateStyles[size]]: renderErrorIcon && !disabled,
             },
           )}
           type="number"
@@ -153,6 +154,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             iconSizeStyles[size],
             {
               [iconErrorStyles[size]]: renderErrorIcon,
+              [iconErrorDisabledStyles[size]]: renderErrorIcon && !disabled,
               [iconDisabledStyles]: disabled,
             },
           )}

@@ -109,6 +109,27 @@ export const iconErrorStyles: Record<Size, string> = {
   `,
 };
 
+export const iconErrorDisabledStyles: Record<Size, string> = {
+  [Size.XSmall]: css`
+    .${wrapperClassName}:hover &,
+    .${wrapperClassName}:focus-within & {
+      translate: -12px 0;
+    }
+  `,
+  [Size.Small]: css`
+    .${wrapperClassName}:hover &,
+    .${wrapperClassName}:focus-within & {
+      translate: -12px 0;
+    }
+  `,
+  [Size.Default]: css`
+    .${wrapperClassName}:hover &,
+    .${wrapperClassName}:focus-within & {
+      translate: -12px 0;
+    }
+  `,
+};
+
 export const sizeInputStyles: Record<Size, string> = {
   [Size.XSmall]: css`
     padding: 0 0 0 ${spacing[1] * 3}px;
@@ -121,7 +142,7 @@ export const sizeInputStyles: Record<Size, string> = {
   `,
 };
 
-export const errorInputStyles: Record<Size, string> = {
+export const inputErrorAnimateStyles: Record<Size, string> = {
   [Size.XSmall]: css`
     padding-right: ${spacing[1] * 7}px;
 
@@ -160,15 +181,6 @@ export const wrapperBaseStyles = css`
   flex-grow: 1;
   flex-shrink: 0;
   z-index: 1;
-`;
-
-export const wrapperErrorStyles = css`
-  &:focus-within,
-  &:hover {
-    .${warningIconClassName} {
-      translate: -12px 0;
-    }
-  }
 `;
 
 export const arrowsBaseStyles = css`

@@ -40,7 +40,7 @@ export const menuThemeStyles: Record<Theme, string> = {
 
     &:focus-visible {
       box-shadow: ${focusRing['light'].input};
-      border-color: rgba(255, 255, 255, 0);
+      border-color: ${palette.white};
     }
   `,
   [Theme.Dark]: css`
@@ -57,7 +57,33 @@ export const menuThemeStyles: Record<Theme, string> = {
     &:focus-visible {
       background-color: ${palette.gray.dark4};
       box-shadow: ${focusRing['dark'].input};
-      border-color: rgba(255, 255, 255, 0);
+      border-color: ${palette.gray.dark4};
+    }
+  `,
+};
+
+export const menuThemeDisabledStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    &:hover {
+      box-shadow: unset;
+    }
+
+    &:focus {
+      box-shadow: ${focusRing['light'].input};
+      border-color: ${palette.white};
+    }
+  `,
+  [Theme.Dark]: css`
+    &:hover {
+      box-shadow: unset;
+      background-color: ${palette.gray.dark4};
+      border-color: ${palette.gray.dark4};
+    }
+
+    &:focus {
+      background-color: ${palette.gray.dark4};
+      box-shadow: ${focusRing['dark'].input};
+      border-color: ${palette.gray.dark4};
     }
   `,
 };
