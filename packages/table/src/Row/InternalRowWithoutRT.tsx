@@ -13,16 +13,23 @@ import { InternalRowBaseProps } from './Row.types';
 /**
  * Renders basic array row data
  */
-const InternalRowWithoutRT = ({ children, className, ...rest }: InternalRowBaseProps) => {
+const InternalRowWithoutRT = ({
+  children,
+  className,
+  ...rest
+}: InternalRowBaseProps) => {
   const { shouldAlternateRowColor } = useTableContext();
   const { theme } = useDarkMode();
   return (
-    <InternalRowBase className={cx(
-      {
-        [zebraStyles[theme]]: shouldAlternateRowColor,
-      },
-      className
-    )} {...rest}>
+    <InternalRowBase
+      className={cx(
+        {
+          [zebraStyles[theme]]: shouldAlternateRowColor,
+        },
+        className,
+      )}
+      {...rest}
+    >
       {React.Children.map(children, (child: ReactNode, index: number) => {
         return React.createElement(Cell, {
           ...(child as ReactElement)?.props,

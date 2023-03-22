@@ -81,7 +81,7 @@ ZebraStripes.args = {
   shouldAlternateRowColor: true,
 };
 
-export const NestedRows: ComponentStory<typeof Table> = () => {
+export const NestedRows: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 50, 5, 3))[0];
 
@@ -143,7 +143,7 @@ export const NestedRows: ComponentStory<typeof Table> = () => {
       </div>
 
       <TableContainer ref={tableContainerRef}>
-        <Table table={table}>
+        <Table {...args} table={table}>
           <TableHead>
             {table.getHeaderGroups().map(headerGroup => (
               <HeaderRow key={headerGroup.id}>

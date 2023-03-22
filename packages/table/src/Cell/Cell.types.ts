@@ -39,11 +39,4 @@ export type CellProps<T extends LGRowData> = HTMLElementProps<'td'> & {
    * @default false
    */
   isExpandable?: boolean;
-
-  /**
-   * Defines whether the cell's row is selectable
-   *
-   * @default false
-   */
-  isSelectable?: boolean;
 };

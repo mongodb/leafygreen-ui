@@ -20,27 +20,29 @@ const processColumns = <T extends LGRowData>(
       !!headerProps.handleSort ||
       !!headerProps.compareFn;
     processedColumns.push({
-      accessorKey: (headerLabelMapping && headerLabelMapping[headerProps.label]) ?? camelCase(headerProps.label),
+      accessorKey:
+        (headerLabelMapping && headerLabelMapping[headerProps.label]) ??
+        camelCase(headerProps.label),
       header: headerProps.label,
       enableSorting: hasSorting,
       sortingFn: headerProps.compareFn
         ? (rowA, rowB, columnId) => {
-          const indexA = rowA.index;
-          const indexB = rowB.index;
-          return headerProps.compareFn(data[indexA], data[indexB]);
-        }
+            const indexA = rowA.index;
+            const indexB = rowB.index;
+            return headerProps.compareFn(data[indexA], data[indexB]);
+          }
         : hasSorting
-          ? (rowA, rowB, columnId) => {
+        ? (rowA, rowB, columnId) => {
             const indexA = rowA.index;
             const indexB = rowB.index;
             const columnKey = columnId.toLowerCase();
             return data[indexA][columnKey] > data[indexB][columnKey]
               ? -1
               : data[indexB][columnKey] > data[indexA][columnKey]
-                ? 1
-                : 0;
+              ? 1
+              : 0;
           }
-          : undefined,
+        : undefined,
     });
   });
   return processedColumns;

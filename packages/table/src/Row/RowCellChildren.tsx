@@ -32,8 +32,6 @@ const RowCellChildren = <T extends LGRowData>({
   const isExpandable = row.getCanExpand();
   const isExpanded = row.getIsExpanded();
 
-  const isSelectable = row.getCanSelect();
-
   const toggleExpanded = () => row.toggleExpanded();
 
   const CellChildren = React.Children.toArray(children).filter(child =>
@@ -55,7 +53,6 @@ const RowCellChildren = <T extends LGRowData>({
               cellIndex={colIndex}
               isVisible={isRowVisible}
               isExpandable={isExpandable}
-              isSelectable={isSelectable}
               disabled={disabled}
               depth={row.depth}
               align={columnAlignments?.[colIndex]}

@@ -19,7 +19,7 @@ import {
 
 const selectColumnConfig = {
   id: 'select',
-  size: 32,
+  size: 14, // match checkbox width
   // eslint-disable-next-line react/display-name
   header: ({ table }: { table: LeafyGreenTable<unknown> }) => (
     <CheckboxCell
@@ -78,7 +78,7 @@ function useLeafyGreenTable<T extends LGRowData, VS extends boolean>({
     ),
   ];
 
-  const table: LeafyGreenTable<T> = useReactTable<LGTableDataType<T>>({
+  const table = useReactTable<LGTableDataType<T>>({
     data,
     columns,
     getRowCanExpand: row => {
@@ -106,6 +106,7 @@ function useLeafyGreenTable<T extends LGRowData, VS extends boolean>({
       virtualRows: rowVirtualizer.virtualItems,
       totalSize: rowVirtualizer.totalSize,
     }),
+    hasSelectableRows,
   } as LeafyGreenTableValues<T, VS>;
 }
 

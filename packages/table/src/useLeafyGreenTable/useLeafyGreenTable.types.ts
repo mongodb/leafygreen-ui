@@ -33,7 +33,9 @@ export interface LeafyGreenTableOptions<T extends LGRowData, VS extends boolean>
 
 /** LeafyGreen extension of `useReactTable` {@link Table}*/
 interface LeafyGreenTableValuesWithoutVS<T extends LGRowData>
-  extends Table<LGTableDataType<T>> {}
+  extends Table<LGTableDataType<T>> {
+  hasSelectableRows: boolean;
+}
 
 interface LeafyGreenTableValuesWithVS<T extends LGRowData>
   extends LeafyGreenTableValuesWithoutVS<T>,

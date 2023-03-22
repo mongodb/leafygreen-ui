@@ -3,6 +3,7 @@ import { Transition } from 'react-transition-group';
 
 import { cx } from '@leafygreen-ui/emotion';
 
+import { useTableContext } from '../TableContext/TableContext';
 import { LGRowData } from '../useLeafyGreenTable';
 
 import {
@@ -22,10 +23,11 @@ const Cell = <T extends LGRowData>({
   depth,
   isVisible = true,
   isExpandable = false,
-  isSelectable = false,
   ...rest
 }: CellProps<T>) => {
   const isFirstCell = cellIndex === 0;
+  const { table } = useTableContext();
+  const isSelectable = !!table && !!table.hasSelectableRows;
 
   return (
     <td
@@ -48,6 +50,7 @@ const Cell = <T extends LGRowData>({
               contentClassName,
             )}
           >
+            {/* {String(isSelectable)} */}
             {children}
           </div>
         )}
