@@ -1,16 +1,20 @@
 import React, { ReactElement, useMemo, useRef, useState } from 'react';
 import { PropsWithChildren } from 'react';
+import { VirtualItem } from 'react-virtual';
 
-import { Cell, HeaderCell } from '../Cell';
+import Cell from '../Cell';
 import ExpandedContent from '../ExpandedContent/ExpandedContent';
+import HeaderCell from '../HeaderCell';
 import HeaderRow from '../HeaderRow';
 import Row from '../Row';
+import SubRow from '../Row/SubRow';
 import TableBody from '../TableBody';
 import TableContainer from '../TableContainer';
 import TableHead from '../TableHead';
 import useLeafyGreenTable, {
   LeafyGreenTableCell,
   LeafyGreenTableOptions,
+  LeafyGreenTableRow,
   LGRowData,
   LGTableDataType,
 } from '../useLeafyGreenTable';
@@ -28,13 +32,13 @@ import processData from './processData';
 type V11AdapterProps<
   T extends LGRowData,
   VS extends boolean,
-> = PropsWithChildren<
-  Pick<
-    LeafyGreenTableOptions<T, VS>,
-    'useVirtualScrolling' | 'hasSelectableRows'
-  > &
+  > = PropsWithChildren<
+    Pick<
+      LeafyGreenTableOptions<T, VS>,
+      'useVirtualScrolling' | 'hasSelectableRows'
+    > &
     Pick<TableProps<T, VS>, 'shouldAlternateRowColor'>
->;
+  >;
 
 // assumes table is first element in children
 // reads columns from columns' keys
@@ -53,7 +57,7 @@ const V11Adapter = <T extends LGRowData, VS extends boolean>({
     columns,
     children: childrenFn,
   } = (OldTable as ReactElement).props;
-  const processedColumns: Array<ColumnDef<LGTableDataType<T>, any>> = useMemo(
+  const processedColumns: Array<ColumnDef<LGTableDataType<T>, 'string'>> = useMemo(
     () => processColumns(data, columns),
     [data, columns],
   );
@@ -61,19 +65,27 @@ const V11Adapter = <T extends LGRowData, VS extends boolean>({
     processData(data, processedColumns, childrenFn),
   )[0];
 
-  const table = useLeafyGreenTable<T>({
+  const table = useLeafyGreenTable<T, VS>({
     containerRef,
     data: processedData,
     columns: processedColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getSubRows: row => row.subRows,
-    // useVirtualScrolling,
+    useVirtualScrolling,
     hasSelectableRows,
   });
 
   const { rows } = table.getRowModel();
+  let loopedItems;
 
+  if (useVirtualScrolling) {
+    loopedItems = table.virtualRows;
+  } else {
+    loopedItems = rows;
+  }
+
+  let row: LeafyGreenTableRow<T>;
   return (
     <TableContainer ref={containerRef}>
       <Table
@@ -97,12 +109,13 @@ const V11Adapter = <T extends LGRowData, VS extends boolean>({
           </HeaderRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => {
+          {loopedItems.map((loopedItem: LeafyGreenTableRow<T> | VirtualItem) => {
+            row = (useVirtualScrolling ? rows[loopedItem.index] : loopedItem) as LeafyGreenTableRow<T>;
             return (
               <Row key={row.id} row={row}>
                 {row.getVisibleCells().map((cell: LeafyGreenTableCell<any>) => {
                   return (
-                    <Cell key={cell.id}>
+                    <Cell key={cell.id} cell={cell}>
                       {cell.column.id === 'select' ? (
                         <>{cell.column.columnDef?.cell({ row })}</>
                       ) : (
@@ -117,37 +130,40 @@ const V11Adapter = <T extends LGRowData, VS extends boolean>({
                 )}
                 {row.subRows &&
                   row.subRows.map(subRow => (
-                    <Row
+                    <SubRow
                       key={subRow.id}
                       row={subRow}
-                      // virtualRow={virtualRow}
+                    // virtualRow={virtualRow}
                     >
                       {subRow.getVisibleCells().map(subRowCell => {
                         return (
-                          <Cell key={subRowCell.id}>
+                          <Cell key={subRowCell.id} cell={subRowCell}>
                             {subRow.original[subRowCell.column.id]()}
                           </Cell>
                         );
                       })}
                       {subRow.subRows &&
                         subRow.subRows.map(subSubRow => (
-                          <Row
+                          <SubRow
                             key={subSubRow.id}
                             row={subSubRow}
-                            // virtualRow={virtualRow}
+                          // virtualRow={virtualRow}
                           >
                             {subSubRow.getVisibleCells().map(subSubRowCell => {
                               return (
-                                <Cell key={subSubRowCell.id}>
+                                <Cell
+                                  key={subSubRowCell.id}
+                                  cell={subSubRowCell}
+                                >
                                   {subSubRow.original[
                                     subSubRowCell.column.id
                                   ]()}
                                 </Cell>
                               );
                             })}
-                          </Row>
+                          </SubRow>
                         ))}
-                    </Row>
+                    </SubRow>
                   ))}
               </Row>
             );
