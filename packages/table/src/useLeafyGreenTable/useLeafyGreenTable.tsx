@@ -6,10 +6,7 @@ import PropTypes from 'prop-types';
 
 import { CheckboxCell } from '../Cell';
 
-import {
-  LeafyGreenTableOptions,
-  LGRowData,
-} from './useLeafyGreenTable.types';
+import { LeafyGreenTableOptions, LGRowData } from './useLeafyGreenTable.types';
 import {
   LeafyGreenTable,
   LGColumnDef,
@@ -49,31 +46,26 @@ const selectColumnConfig: LGColumnDef<LGRowData> = {
       />
     ),
 };
-
-function useLeafyGreenTable<T extends LGRowData, VS extends boolean = true>(
+function useLeafyGreenTable<T extends LGRowData>(
   props: LeafyGreenTableOptions<T>,
 ): LeafyGreenTable<T>;
 
-function useLeafyGreenTable<T extends LGRowData, VS extends boolean = false>(
-  props: LeafyGreenTableOptions<T>,
-): LeafyGreenTable<T>;
-
-function useLeafyGreenTable<T extends LGRowData, VS extends boolean>({
+function useLeafyGreenTable<T extends LGRowData>({
   containerRef,
   data,
   columns: columnsProp,
   hasSelectableRows,
-  useVirtualScrolling = false as VS,
+  useVirtualScrolling = false,
   ...rest
 }: LeafyGreenTableOptions<T>): LeafyGreenTable<T> {
   const columns: Array<LGColumnDef<T>> = [
     ...(hasSelectableRows ? [selectColumnConfig as LGColumnDef<T>] : []),
     ...columnsProp.map(
       propColumn =>
-      ({
-        ...propColumn,
-        align: propColumn.align ?? 'left',
-      } as LGColumnDef<T>),
+        ({
+          ...propColumn,
+          align: propColumn.align ?? 'left',
+        } as LGColumnDef<T>),
     ),
   ];
 
