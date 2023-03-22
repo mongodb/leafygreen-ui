@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { debounce } from 'lodash';
 
 import { spacing } from '@leafygreen-ui/tokens';
@@ -21,7 +21,7 @@ export function useToastHeights({
    * Keep track of all the toasts' heights
    * so we know how to absolutely position the rest of them
    */
-  function calcToastHeights() {
+  const calcToastHeights = useCallback(() => {
     return Array.from(stack)
       .reverse() // reversing since the stack is oldest-first
       .map(([id]) => {
@@ -37,7 +37,7 @@ export function useToastHeights({
         return 0;
       })
       .filter(h => h >= 0);
-  }
+  }, [getToastRef, stack]);
 
   /**
    * Keep track of the vertical height of each toast in the stack, so we know how to render them all
@@ -51,11 +51,14 @@ export function useToastHeights({
     [shouldExpand, toastHeights],
   );
 
-  function _updateToastHeights() {
+  const _updateToastHeights = useCallback(() => {
     setToastHeights(calcToastHeights());
-  }
+  }, [calcToastHeights]);
 
-  const updateToastHeights = debounce(_updateToastHeights, 100);
+  const updateToastHeights = useMemo(
+    () => debounce(_updateToastHeights, 100),
+    [_updateToastHeights],
+  );
 
   return {
     toastHeights,

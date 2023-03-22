@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Transition, TransitionGroup } from 'react-transition-group';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -7,6 +7,7 @@ import {
   useDynamicRefs,
   useIdAllocator,
   useMutationObserver,
+  usePrevious,
   useStateRef,
 } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -33,6 +34,7 @@ import {
   scrollContainerExpandedStyles,
   scrollContainerStyles,
   toastContainerStyles,
+  toastContainerVisibleStyles,
 } from './ToastContainer.styles';
 import {
   getDividedStack,
@@ -47,12 +49,13 @@ export const toastPortalClassName = createUniqueClassName('toast-portal');
  * ToastContainer is responsible for rendering the stack of toasts provided
  */
 export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
+  const { popToast, getToast } = useToast();
   const regionId = useIdAllocator({ id: 'lg-toast-region' });
+  const stackSize = stack.size;
   const toastContainerRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const getToastRef = useDynamicRefs<HTMLDivElement>({ prefix: 'toast' });
   const { theme } = useDarkMode();
-  const { popToast, getToast } = useToast();
   const [isHovered, setHoveredState] = useState(false);
   const setHovered = () => setHoveredState(true);
   const setUnhovered = () => setHoveredState(false);
@@ -64,6 +67,13 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
   const displayedToasts = shouldExpand
     ? [...remainingToasts, ...recentToasts]
     : recentToasts;
+
+  useEffect(() => {
+    if (shouldExpand && stackSize <= TOAST.shortStackCount) {
+      // We just went below the expanded threshold, so collapse the stack
+      setShouldExpand(false);
+    }
+  }, [setShouldExpand, shouldExpand, stackSize]);
 
   /** is the "N more" bar visible? */
   const showNotifBar = isHovered && !shouldExpand && remainingToasts.length > 0;
@@ -82,9 +92,13 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
       shouldExpand,
     });
 
+  // Update on first render
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(updateToastHeights, []);
+
   /**
    * We watch the toast container for mutations,
-   * and calculate the toast height variables when they are added to the DOM
+   * and calculate the toast height variables once they are added to the DOM
    */
   useMutationObserver(
     toastContainerRef.current,
@@ -94,6 +108,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
       subtree: true,
     },
     updateToastHeights,
+    stackSize > 0,
   );
 
   /**
@@ -112,14 +127,18 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
   /**
    * When a user clicks away from the expanded stack, collapse the stack
    */
-  useBackdropClick(collapseToasts, toastContainerRef, isExpanded);
+  useBackdropClick(
+    collapseToasts,
+    toastContainerRef,
+    isExpanded && stackSize > 0,
+  );
 
   /**
    * Callback passed into the InternalToast component as `onClose`
    * Also fired when timeout timers expires
    */
   const handleClose = useCallback(
-    (id: ToastId, e?: MouseEvent) => {
+    (id: ToastId, e?: CloseEvent) => {
       const toast = getToast(id);
       const toastRef = getToastRef(id);
 
@@ -138,6 +157,9 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
     },
     [getToast, getToastRef, popToast],
   );
+
+  const getHandlerForId = (id: ToastId) => (e: CloseEvent) =>
+    handleClose(id, e);
 
   /**
    * Set & keep track of timers for each toast in the stack
@@ -164,9 +186,9 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
         onMouseLeave={setUnhovered}
         onFocus={setHovered}
         onBlur={setUnhovered}
-        className={cx(
-          toastContainerStyles,
-          getContainerStatefulStyles({
+        className={cx(toastContainerStyles, {
+          [toastContainerVisibleStyles]: stack.size > 0,
+          [getContainerStatefulStyles({
             isExpanded,
             isHovered,
             shouldExpand,
@@ -174,8 +196,8 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
             topToastHeight: toastHeights[0],
             recentToastsLength: recentToasts.length,
             bottomOffset: notifBarSpacing,
-          }),
-        )}
+          })]: stack.size > 0,
+        })}
       >
         <div
           ref={scrollContainerRef}
@@ -189,6 +211,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
               .reverse() // reversing so they're in the DOM with most recent first
               .map(([id, { onClose, className, ...toastProps }], index) => {
                 const toastRef = getToastRef(id);
+                onClose = getHandlerForId(id);
 
                 return (
                   <Transition
@@ -199,9 +222,10 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
                   >
                     {state => (
                       <InternalToast
+                        {...toastProps}
                         id={id}
                         ref={toastRef}
-                        onClose={e => handleClose(id, e)}
+                        onClose={onClose}
                         index={index}
                         data-index={index}
                         isHovered={isInteracted}
@@ -227,7 +251,6 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
                           },
                           className,
                         )}
-                        {...toastProps}
                         description={
                           // TODO: Remove debug strings
                           toastProps.description + ` (${id} index #${index}.)`
@@ -239,16 +262,17 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
               })}
           </TransitionGroup>
 
-          <Transition in={showNotifBar} timeout={transitionDuration.slower}>
-            {state =>
-              !shouldExpand && (
-                <NotificationBar
-                  count={remainingToasts.length}
-                  onClick={expandToasts}
-                  className={notificationBarTransitionStyles[state]}
-                />
-              )
-            }
+          <Transition
+            in={showNotifBar && !shouldExpand}
+            timeout={transitionDuration.slower}
+          >
+            {state => (
+              <NotificationBar
+                count={remainingToasts.length}
+                onClick={expandToasts}
+                className={notificationBarTransitionStyles[state]}
+              />
+            )}
           </Transition>
         </div>
       </div>

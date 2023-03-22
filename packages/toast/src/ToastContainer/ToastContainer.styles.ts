@@ -17,16 +17,21 @@ export const toastContainerStyles = css`
   left: ${spacing[3] - TOAST.inset}px;
   bottom: ${spacing[3] - TOAST.inset}px;
   width: ${TOAST.width + 2 * TOAST.inset}px;
-  min-height: ${TOAST.minHeight + TOAST.yOffset}px;
+  /* min-height: 0px; */
   max-height: calc(100vh - ${spacing[3]}px);
   z-index: 0;
   overflow: unset;
+
+  // Hide the toast initially
+  min-height: ${0}px;
+  opacity: 0;
+  visibility: hidden;
 
   perspective: 1600px;
   perspective-origin: bottom;
   transform-style: preserve-3d;
   transition: ease-in-out ${transitionDuration.default}ms;
-  transition-property: transform, bottom, height;
+  transition-property: transform, bottom, height, opacity;
 
   /* Scrollbars */
   scroll-behavior: unset; // _not_ smooth. We need this to be instant
@@ -35,6 +40,12 @@ export const toastContainerStyles = css`
   &::-webkit-scrollbar {
     display: none; /* Chrome, Safari and Opera */
   }
+`;
+
+export const toastContainerVisibleStyles = css`
+  min-height: ${TOAST.minHeight + TOAST.yOffset}px;
+  opacity: 1;
+  visibility: visible;
 `;
 
 export function getContainerStatefulStyles({
@@ -147,7 +158,7 @@ export function getToastUnhoveredStyles({
     * Set the max-height of each toast to the height of the top-most toast
     * so tall toasts below the top don't peek out
     */
-    max-height: ${topToastHeight}px;
+    max-height: ${index === 0 ? 'unset' : `${topToastHeight}px`};
     color: ${index > 0 ? toastBGColor[theme] : 'initial'} !important;
   `;
 }

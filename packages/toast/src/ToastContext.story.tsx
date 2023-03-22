@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { faker } from '@faker-js/faker';
+import { ComponentStory } from '@storybook/react';
 import { random, sample, startCase } from 'lodash';
 
 import Button from '@leafygreen-ui/button';
@@ -9,9 +10,9 @@ import { DarkModeProps, StoryMeta } from '@leafygreen-ui/lib';
 import { Body, InlineCode, Label, Link } from '@leafygreen-ui/typography';
 
 import { variantIcons } from './InternalToast/VariantIcon';
+import { makeToast, makeToastStack } from './ToastContext/utils/makeToast';
 import { InternalToast, InternalToastProps } from './InternalToast';
-import { Variant } from './Toast.types';
-import { ToastProvider, useToast } from './ToastContext';
+import { Toast, ToastProvider, useToast, Variant } from '.';
 
 export default StoryMeta<typeof InternalToast>({
   title: 'Components/Toast',
@@ -19,7 +20,7 @@ export default StoryMeta<typeof InternalToast>({
   decorators: [
     (Story, meta) => (
       <LeafyGreenProvider darkMode={!!meta.args.darkMode}>
-        <ToastProvider>
+        <ToastProvider initialValue={meta.args.initialValue}>
           <Story />
         </ToastProvider>
       </LeafyGreenProvider>
@@ -50,10 +51,12 @@ export default StoryMeta<typeof InternalToast>({
   args: {
     /// @ts-expect-error
     darkMode: false,
+    initialValue: undefined,
   },
 });
-
-export const Basic = (props: Partial<InternalToastProps> & DarkModeProps) => {
+export const Basic: ComponentStory<typeof Toast> = (
+  props: Partial<InternalToastProps> & DarkModeProps,
+) => {
   const { pushToast, clearStack } = useToast();
 
   return (
@@ -91,7 +94,9 @@ export const Basic = (props: Partial<InternalToastProps> & DarkModeProps) => {
   );
 };
 
-export const Variants = (props: Partial<InternalToastProps>) => {
+export const Variants: ComponentStory<typeof Toast> = (
+  props: Partial<InternalToastProps>,
+) => {
   const { pushToast, clearStack, getStack, updateToast } = useToast();
 
   const stack = getStack();
@@ -174,7 +179,9 @@ export const Variants = (props: Partial<InternalToastProps>) => {
   );
 };
 
-export const WithInitialToasts = (props: Partial<InternalToastProps>) => {
+export const WithInitialToasts: ComponentStory<typeof Toast> = (
+  props: Partial<InternalToastProps>,
+) => {
   const { pushToast, clearStack } = useToast();
 
   return (
@@ -201,4 +208,14 @@ export const WithInitialToasts = (props: Partial<InternalToastProps>) => {
       <Button onClick={() => clearStack()}>Clear all</Button>
     </div>
   );
+};
+
+WithInitialToasts.args = {
+  // @ts-expect-error
+  initialValue: makeToastStack([
+    makeToast({
+      title: 'Initial toast',
+      description: faker.lorem.lines(2),
+    }),
+  ]),
 };
