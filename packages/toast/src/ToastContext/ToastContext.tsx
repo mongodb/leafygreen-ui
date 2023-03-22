@@ -14,7 +14,6 @@ export const ToastContext = React.createContext<ToastContextProps>({
   clearStack: () => {},
 });
 
-// TODO: support initial stack
 export const ToastProvider = ({
   children,
   initialValue,
