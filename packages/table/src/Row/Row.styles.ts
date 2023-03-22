@@ -13,12 +13,20 @@ export const rowBaseStyles = css`
   border: 0px solid rgba(255, 255, 255, 0); // transparent
 `;
 
-export const expandedContentParentStyles = css`
-  background-color: ${palette.gray.light3};
-  tr:last-child {
-    border-bottom: 1px solid ${palette.gray.light2};
-  }
-`;
+export const expandedContentParentStyles: Record<Theme, string> = {
+  [Theme.Dark]: css`
+    background-color: ${palette.gray.dark4};
+    tr:last-child {
+      border-bottom: 1px solid ${palette.gray.dark2};
+    }
+  `,
+  [Theme.Light]: css`
+    background-color: ${palette.gray.light3};
+    tr:last-child {
+      border-bottom: 1px solid ${palette.gray.light2};
+    }
+  `,
+};
 
 /** Styles for top-level, un-nested rows */
 export const rowTopLevelStyles = css`

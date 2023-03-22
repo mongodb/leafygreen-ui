@@ -2,8 +2,7 @@ import React, { ReactElement } from 'react';
 import camelCase from 'lodash/camelCase';
 
 import { TableProps } from '../TableV10/Table';
-import { LGRowData } from '../useLeafyGreenTable';
-import { ColumnDef } from '..';
+import { LGColumnDef, LGRowData } from '../useLeafyGreenTable';
 
 const processColumns = <T extends LGRowData>(
   data: Array<T>,
@@ -12,7 +11,7 @@ const processColumns = <T extends LGRowData>(
 ) => {
   const HeaderRow = React.Children.toArray(columns)[0] as ReactElement;
   const TableHeaders = React.Children.toArray(HeaderRow.props.children);
-  const processedColumns: Array<ColumnDef<T>> = [];
+  const processedColumns: Array<LGColumnDef<T>> = [];
   TableHeaders.forEach(TableHeader => {
     const headerProps = (TableHeader as ReactElement).props;
     const hasSorting =
@@ -24,6 +23,7 @@ const processColumns = <T extends LGRowData>(
         (headerLabelMapping && headerLabelMapping[headerProps.label]) ??
         camelCase(headerProps.label),
       header: headerProps.label,
+      align: headerProps.dataType === 'number' ? 'right' : 'left',
       enableSorting: hasSorting,
       sortingFn: headerProps.compareFn
         ? (rowA, rowB, _) => {

@@ -2,6 +2,9 @@ import React, { ReactElement, useMemo, useRef, useState } from 'react';
 import { PropsWithChildren } from 'react';
 import { VirtualItem } from 'react-virtual';
 
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { DarkModeProps } from '@leafygreen-ui/lib';
+
 import { Cell, HeaderCell } from '../Cell';
 import ExpandedContent from '../ExpandedContent/ExpandedContent';
 import HeaderRow from '../HeaderRow';
@@ -31,18 +34,19 @@ import processData from './processData';
 type V11AdapterProps<
   T extends LGRowData,
   VS extends boolean,
-> = PropsWithChildren<
-  Pick<
-    LeafyGreenTableOptions<T, VS>,
-    'useVirtualScrolling' | 'hasSelectableRows'
-  > &
-    Pick<TableProps<T, VS>, 'shouldAlternateRowColor'> & {
+  > = PropsWithChildren<
+    Pick<
+      LeafyGreenTableOptions<T, VS>,
+      'useVirtualScrolling' | 'hasSelectableRows'
+    > &
+    Pick<TableProps<T, VS>, 'shouldAlternateRowColor'> &
+    DarkModeProps & {
       /**
        * Mapping of TableHeader label to the key of the field in the Table's data
        */
       headerLabelMapping?: { [key: string]: string };
     }
->;
+  >;
 
 // assumes table is first element in children
 // reads columns from columns' keys
@@ -55,6 +59,7 @@ const V11Adapter = <T extends LGRowData, VS extends boolean>({
   hasSelectableRows = false,
   headerLabelMapping,
 }: V11AdapterProps<T, VS>) => {
+  const { darkMode } = useDarkMode();
   const containerRef = useRef(null);
   const OldTable = React.Children.toArray(children)[0];
   const {
@@ -95,6 +100,7 @@ const V11Adapter = <T extends LGRowData, VS extends boolean>({
   return (
     <TableContainer ref={containerRef}>
       <Table
+        darkMode={darkMode}
         table={table}
         shouldAlternateRowColor={
           shouldAlternateRowColor ?? processedData.length > 10

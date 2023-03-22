@@ -63,12 +63,11 @@ const InternalRowWithRT = <T extends LGRowData>({
     [shouldRenderAsTBody],
   );
 
-  const tBodyProps: HTMLElementProps<'tbody'> & Pick<VirtualItem, 'measureRef'> = {
-    className: cx(
-      {
-        [expandedContentParentStyles]: isExpanded,
-      }
-    ),
+  const tBodyProps: HTMLElementProps<'tbody'> &
+    Pick<VirtualItem, 'measureRef'> = {
+    className: cx({
+      [expandedContentParentStyles[theme]]: isExpanded,
+    }),
     'data-expanded': isExpanded,
     'data-testid': 'lg-table-expandable-row-tbody',
     // @ts-expect-error - VirtualItem.measureRef is not typed as a ref
