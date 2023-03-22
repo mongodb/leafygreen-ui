@@ -62,11 +62,11 @@ function useLeafyGreenTable<T extends LGRowData>({
     ...(hasSelectableRows ? [selectColumnConfig as LGColumnDef<T>] : []),
     ...columnsProp.map(
       propColumn =>
-      ({
-        ...propColumn,
-        align: propColumn.align ?? 'left',
-        enableSorting: propColumn.enableSorting ?? false,
-      } as LGColumnDef<T>),
+        ({
+          ...propColumn,
+          align: propColumn.align ?? 'left',
+          enableSorting: propColumn.enableSorting ?? false,
+        } as LGColumnDef<T>),
     ),
   ];
 
