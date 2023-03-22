@@ -10,7 +10,7 @@ import {
   ToastReducerState,
   ToastStack,
 } from '../ToastContext.types';
-import { generateToastId } from '../utils/generateToastId';
+import { makeToast } from '../utils/makeToast';
 
 /**
  *
@@ -26,9 +26,11 @@ const toastReducer = (
   switch (action.type) {
     case ToastReducerActionType.Push: {
       const { stack } = state;
-      const { id, props } = action.payload;
+      const { id, ...toast } = action.payload;
       return {
-        stack: stack.set(id, { ...defaultToastProps, ...props }),
+        // TODO: export a `pushToast` utility that accepts stack & props
+        // pushToast => (props, map) => map.set(...)
+        stack: stack.set(id, { ...defaultToastProps, ...toast }),
       };
     }
 
@@ -77,6 +79,17 @@ export const useToastReducer = (initialValue?: ToastStack) => {
     stack: initialValue ?? (new Map<ToastId, ToastProps>() as ToastStack),
   });
 
+  const pushToast: ToastContextProps['pushToast'] = (props: ToastProps) => {
+    const toast = makeToast(props);
+
+    dispatch({
+      type: ToastReducerActionType.Push,
+      payload: toast,
+    });
+
+    return toast.id;
+  };
+
   const getToast: ToastContextProps['getToast'] = (id: ToastId) =>
     stack.get(id);
 
@@ -87,17 +100,6 @@ export const useToastReducer = (initialValue?: ToastStack) => {
     });
 
     return getToast(payload);
-  };
-
-  const pushToast: ToastContextProps['pushToast'] = (props: ToastProps) => {
-    const id = generateToastId();
-
-    dispatch({
-      type: ToastReducerActionType.Push,
-      payload: { id, props },
-    });
-
-    return id;
   };
 
   const updateToast: ToastContextProps['updateToast'] = (

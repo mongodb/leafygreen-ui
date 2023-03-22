@@ -47,12 +47,20 @@ export const InternalToast = React.forwardRef<
       action,
       index = 0,
       isHovered,
+      isControlled,
+      variant: variantProp,
+      progress: progressProp,
+      dismissible: dismissProp,
       ...rest
     }: InternalToastProps,
     forwardedRef,
   ) => {
     const { variant, progress, dismissible } = defaults(
-      rest,
+      {
+        variant: variantProp,
+        progress: progressProp,
+        dismissible: dismissProp,
+      },
       defaultToastProps,
     );
     const { theme, darkMode } = useDarkMode();

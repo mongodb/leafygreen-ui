@@ -2,7 +2,8 @@ import { act, cleanup } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 
 import { Variant } from '../../Toast.types';
-import { ToastId } from '../ToastContext.types';
+import { ToastId, ToastStack } from '../ToastContext.types';
+import { makeToast, makeToastStack } from '../utils/makeToast';
 
 import { useToastReducer } from '.';
 
@@ -29,10 +30,7 @@ describe('packages/toast/useToastReducer', () => {
   describe('pushToast', () => {
     test('pushes a toast to the stack', async () => {
       const { result, rerender } = renderHook(useToastReducer);
-      let toastId: ToastId = '';
-      act(() => {
-        toastId = result.current.pushToast({ title: 'test' });
-      });
+      const toastId: ToastId = result.current.pushToast({ title: 'test' });
       rerender();
       const { stack } = result.current;
       const toast = stack.get(toastId);
@@ -111,6 +109,18 @@ describe('packages/toast/useToastReducer', () => {
       rerender();
 
       expect(result.current.stack.size).toBe(0);
+    });
+  });
+
+  describe('initialValue', () => {
+    test('sets initial stack', () => {
+      const _toast = makeToast({ title: 'test' });
+      const initialValue: ToastStack = makeToastStack([_toast]);
+
+      const { result } = renderHook(() => useToastReducer(initialValue));
+      const { getToast } = result.current;
+      const toast = getToast(_toast.id);
+      expect(toast).toStrictEqual(expect.objectContaining({ title: 'test' }));
     });
   });
 });

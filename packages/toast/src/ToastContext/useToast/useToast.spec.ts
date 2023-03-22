@@ -20,4 +20,12 @@ describe('packages/toast/useToast', () => {
     expect(getStack).toBeDefined();
     expect(clearStack).toBeDefined();
   });
+
+  /**
+   * Not testing individual functions because
+   * 1. We're already testing their functionality in `useToastReducer.spec`
+   * 2. Jest has issues using `createPortal` within `renderHook`
+   *  - Optional TODO: Get `renderHook(userToast, {wrapper})` working properly,
+   *  and test the hook methods
+   */
 });

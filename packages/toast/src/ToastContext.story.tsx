@@ -16,6 +16,15 @@ import { ToastProvider, useToast } from './ToastContext';
 export default StoryMeta<typeof InternalToast>({
   title: 'Components/Toast',
   component: InternalToast,
+  decorators: [
+    (Story, meta) => (
+      <LeafyGreenProvider darkMode={!!meta.args.darkMode}>
+        <ToastProvider>
+          <Story />
+        </ToastProvider>
+      </LeafyGreenProvider>
+    ),
+  ],
   parameters: {
     default: 'Basic',
     controls: {
@@ -44,7 +53,7 @@ export default StoryMeta<typeof InternalToast>({
   },
 });
 
-const BasicChildren = (props: Partial<InternalToastProps>) => {
+export const Basic = (props: Partial<InternalToastProps> & DarkModeProps) => {
   const { pushToast, clearStack } = useToast();
 
   return (
@@ -82,20 +91,7 @@ const BasicChildren = (props: Partial<InternalToastProps>) => {
   );
 };
 
-export const Basic = ({
-  darkMode,
-  ...props
-}: Partial<InternalToastProps> & DarkModeProps) => {
-  return (
-    <LeafyGreenProvider darkMode={darkMode}>
-      <ToastProvider>
-        <BasicChildren {...props} />
-      </ToastProvider>
-    </LeafyGreenProvider>
-  );
-};
-
-const VariantsChildren = (props: Partial<InternalToastProps>) => {
+export const Variants = (props: Partial<InternalToastProps>) => {
   const { pushToast, clearStack, getStack, updateToast } = useToast();
 
   const stack = getStack();
@@ -178,15 +174,31 @@ const VariantsChildren = (props: Partial<InternalToastProps>) => {
   );
 };
 
-export const Variants = ({
-  darkMode,
-  ...props
-}: Partial<InternalToastProps> & DarkModeProps) => {
+export const WithInitialToasts = (props: Partial<InternalToastProps>) => {
+  const { pushToast, clearStack } = useToast();
+
   return (
-    <LeafyGreenProvider darkMode={darkMode}>
-      <ToastProvider>
-        <VariantsChildren {...props} />
-      </ToastProvider>
-    </LeafyGreenProvider>
+    <div
+      className={css`
+        display: flex;
+        gap: 8px;
+      `}
+    >
+      <Button
+        data-testid="toast-trigger"
+        onClick={() => {
+          const variant = props.variant || sample(Variant);
+          pushToast({
+            title: `I'm a ${variant} toast`,
+            description: faker.lorem.lines(random(1, 2)),
+            variant,
+            ...props,
+          });
+        }}
+      >
+        Push toast
+      </Button>
+      <Button onClick={() => clearStack()}>Clear all</Button>
+    </div>
   );
 };

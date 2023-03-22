@@ -6,6 +6,10 @@ import { ToastProps } from '../Toast.types';
 export type ToastId = string;
 
 export type ToastStack = Map<ToastId, ToastProps>;
+
+export interface ToastWithId extends ToastProps {
+  id: ToastId;
+}
 export interface ToastContextProps {
   pushToast: (payload: ToastProps) => ToastId;
   popToast: (payload: ToastId) => ToastProps | undefined;
@@ -34,10 +38,7 @@ export enum ToastReducerActionType {
 export type ToastReducerAction =
   | {
       type: ToastReducerActionType.Push;
-      payload: {
-        id: ToastId;
-        props: ToastProps;
-      };
+      payload: ToastWithId;
     }
   | {
       type: ToastReducerActionType.Pop;

@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import {
   getByTestId as globalGetByTestId,
   render,
@@ -12,14 +11,27 @@ import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { TOAST } from '../constants';
 import { InternalToastProps } from '../InternalToast';
+import { ToastProvider } from '../ToastContext';
 import { Basic as ContextStory } from '../ToastContext.story';
+import {
+  ToastProviderProps,
+  ToastStack,
+} from '../ToastContext/ToastContext.types';
+import { makeToast, makeToastStack } from '../ToastContext/utils/makeToast';
 
 async function delay(t: number) {
   return await new Promise(_ => setTimeout(_, t));
 }
 
-function renderToastContainer(props?: Partial<InternalToastProps>) {
-  const result = render(<ContextStory {...props} />);
+function renderToastContainer(
+  props?: Partial<InternalToastProps>,
+  initialValue?: ToastProviderProps['initialValue'],
+) {
+  const result = render(
+    <ToastProvider initialValue={initialValue}>
+      <ContextStory {...props} />
+    </ToastProvider>,
+  );
   const button = result.getByTestId('toast-trigger');
 
   function triggerToast() {
@@ -43,21 +55,12 @@ function renderToastContainer(props?: Partial<InternalToastProps>) {
  *
  */
 describe('packages/toast/container', () => {
-  beforeAll(() => {
-    // eslint-disable-next-line react/display-name
-    ReactDOM.createPortal = node => node as React.ReactPortal;
-  });
-
-  describe('initial state', () => {
-    test.todo('renders initial stack');
-  });
-
   describe('opening toasts', () => {
     test('opens toast when triggered', async () => {
-      const { getByTestId, triggerToast } = renderToastContainer();
+      const { findByTestId, triggerToast } = renderToastContainer();
       triggerToast();
 
-      const toast = await waitFor(() => getByTestId('lg-toast'));
+      const toast = await findByTestId('lg-toast');
 
       expect(toast).toBeInTheDocument();
     });
@@ -111,19 +114,22 @@ describe('packages/toast/container', () => {
     describe('timeout', () => {
       test('toast closes after timeout', async () => {
         const timeout = 50;
-        const { getByTestId, triggerToast } = renderToastContainer({ timeout });
+        const { findByTestId, triggerToast } = renderToastContainer({
+          timeout,
+        });
         triggerToast();
-        const toast = await waitFor(() => getByTestId('lg-toast'));
+        const toast = await findByTestId('lg-toast');
         expect(toast).toBeInTheDocument();
         await waitForElementToBeRemoved(toast);
       });
 
       test('toast does _NOT_ close after timeout when container is hovered', async () => {
         const timeout = 50;
-        const { getByTestId, triggerToast } = renderToastContainer({ timeout });
+        const { getByTestId, findByTestId, triggerToast } =
+          renderToastContainer({ timeout });
         triggerToast();
         const container = getByTestId('lg-toast-region');
-        const toast = await waitFor(() => getByTestId('lg-toast'));
+        const toast = await findByTestId('lg-toast');
         expect(toast).toBeInTheDocument();
         userEvent.hover(container);
         await delay(timeout + transitionDuration.slower);
@@ -132,14 +138,14 @@ describe('packages/toast/container', () => {
 
       test('toast does _NOT_ close after timeout if `variant` is progress, and `progress` < 1', async () => {
         const timeout = 50;
-        const { getByTestId, triggerToast } = renderToastContainer({
+        const { findByTestId, triggerToast } = renderToastContainer({
           timeout,
           variant: 'progress',
           progress: 0,
         });
         triggerToast();
 
-        const toast = await waitFor(() => getByTestId('lg-toast'));
+        const toast = await findByTestId('lg-toast');
         expect(toast).toBeInTheDocument();
 
         await delay(timeout + transitionDuration.slower);
@@ -149,14 +155,14 @@ describe('packages/toast/container', () => {
       // eslint-disable-next-line jest/no-disabled-tests
       test.skip('toast does close after timeout once `progress` == 1', async () => {
         const timeout = 50;
-        const { getByTestId, triggerToast } = renderToastContainer({
+        const { findByTestId, triggerToast } = renderToastContainer({
           timeout,
           variant: 'progress',
           progress: 0,
         });
         triggerToast();
 
-        const toast = await waitFor(() => getByTestId('lg-toast'));
+        const toast = await findByTestId('lg-toast');
         expect(toast).toBeInTheDocument();
 
         await delay(timeout + transitionDuration.slower);
@@ -167,9 +173,10 @@ describe('packages/toast/container', () => {
     describe('dismiss', () => {
       test('toast closes when the dismiss button is clicked', async () => {
         const timeout = null;
-        const { getByTestId, triggerToast } = renderToastContainer({ timeout });
+        const { getByTestId, findByTestId, triggerToast } =
+          renderToastContainer({ timeout });
         triggerToast();
-        const toast = await waitFor(() => getByTestId('lg-toast'));
+        const toast = await findByTestId('lg-toast');
         const dismiss = getByTestId('lg-toast-dismiss-button');
         userEvent.click(dismiss);
         await waitForElementToBeRemoved(toast);
@@ -217,6 +224,24 @@ describe('packages/toast/container', () => {
           );
         });
       });
+    });
+  });
+
+  describe('initial state', () => {
+    test('renders nothing initially', async () => {
+      const { queryByTestId } = renderToastContainer();
+      const toast = await waitFor(() => queryByTestId('lg-toast'));
+      expect(toast).not.toBeInTheDocument();
+    });
+
+    test('renders initial stack', async () => {
+      const initialValue: ToastStack = makeToastStack([
+        makeToast({ title: 'test' }),
+      ]);
+      const { findByTestId } = renderToastContainer({}, initialValue);
+
+      const toast = await findByTestId('lg-toast');
+      expect(toast).toBeInTheDocument();
     });
   });
 });

@@ -158,7 +158,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
         aria-live="polite"
         aria-relevant="all"
         data-hovered={isHovered}
-        data-shouldExpand={shouldExpand}
+        data-should-expand={shouldExpand}
         data-expanded={isExpanded}
         onMouseEnter={setHovered}
         onMouseLeave={setUnhovered}
