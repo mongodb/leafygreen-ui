@@ -1,4 +1,5 @@
-import React, { Fragment, PropsWithRef, useMemo } from 'react';
+import React, { Fragment, useMemo } from 'react';
+import { VirtualItem } from 'react-virtual';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -12,7 +13,6 @@ import InternalRowBase from './InternalRowBase';
 import {
   expandedContentParentStyles,
   grayZebraRowStyles,
-  rowExpandedStyles,
   rowTopLevelExpandedStyles,
   rowTopLevelStyles,
   zebraStyles,
@@ -63,8 +63,12 @@ const InternalRowWithRT = <T extends LGRowData>({
     [shouldRenderAsTBody],
   );
 
-  const tBodyProps: PropsWithRef<HTMLElementProps<'tbody'>> = {
-    className: expandedContentParentStyles,
+  const tBodyProps: HTMLElementProps<'tbody'> & Pick<VirtualItem, 'measureRef'> = {
+    className: cx(
+      {
+        [expandedContentParentStyles]: isExpanded,
+      }
+    ),
     'data-expanded': isExpanded,
     'data-testid': 'lg-table-expandable-row-tbody',
     // @ts-expect-error - VirtualItem.measureRef is not typed as a ref
@@ -72,13 +76,12 @@ const InternalRowWithRT = <T extends LGRowData>({
   };
 
   return (
-    <Polymorph as={containerAs} {...(shouldRenderAsTBody ?? tBodyProps)}>
+    <Polymorph as={containerAs} {...(shouldRenderAsTBody && tBodyProps)}>
       <InternalRowBase
         className={cx(
           {
             [rowTopLevelStyles]: !isNested,
             [rowTopLevelExpandedStyles[theme]]: isExpanded && !isNested,
-            [rowExpandedStyles[theme]]: isExpanded || isParentExpanded,
             [grayZebraRowStyles[theme]]: isOddVSRow,
             [zebraStyles[theme]]: !virtualRow && shouldAlternateRowColor,
           },

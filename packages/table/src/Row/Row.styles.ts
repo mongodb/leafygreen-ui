@@ -11,19 +11,12 @@ export const rowBaseStyles = css`
   transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: all;
   border: 0px solid rgba(255, 255, 255, 0); // transparent
-
-  // emulating a border bottom on the last nested row
-  &:not([data-depth='0'])[aria-hidden='false'] + tr[data-depth='0'] {
-    border-top-width: 1px;
-    border-color: ${palette.gray.light2};
-  }
 `;
 
 export const expandedContentParentStyles = css`
-  &[aria-expanded='true'] + tr,
-  &[aria-expanded='true'] + tbody {
-    border-top-width: 1px;
-    border-color: ${palette.gray.light2};
+  background-color: ${palette.gray.light3};
+  tr:last-child {
+    border-bottom: 1px solid ${palette.gray.light2};
   }
 `;
 
@@ -41,15 +34,6 @@ export const rowTopLevelExpandedStyles: Record<Theme, string> = {
   `,
   [Theme.Light]: css`
     border-color: ${palette.gray.light2};
-  `,
-};
-
-export const rowExpandedStyles: Record<Theme, string> = {
-  [Theme.Dark]: css`
-    background-color: ${palette.gray.dark4};
-  `,
-  [Theme.Light]: css`
-    background-color: ${palette.gray.light3};
   `,
 };
 
