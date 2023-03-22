@@ -11,12 +11,14 @@ import { Size, State } from '../NumberInput/NumberInput.types';
 
 import {
   arrowBaseStyles,
+  arrowDisabledStyles,
   arrowsAnimateStyles,
   arrowsBaseStyles,
   arrowThemeStyles,
   downArrowRotateStyles,
   errorInputStyles,
   iconBaseStyles,
+  iconDisabledStyles,
   iconErrorStyles,
   iconSizeStyles,
   iconThemeStyles,
@@ -54,7 +56,6 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     }: InputProps,
     forwardRef,
   ) => {
-    // const inputRef = useRef<HTMLInputElement | null>(null);
     const inputRef = useForwardedRef<HTMLInputElement | null>(forwardRef, null);
     const { theme } = useDarkMode();
 
@@ -122,7 +123,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             [wrapperHoverStyles[theme][state]]: !disabled,
             [wrapperDisabledStyles[theme]]: disabled,
             [selectBaseStyles]: hasSelectOptions,
-            [wrapperErrorStyles]: renderErrorIcon,
+            [wrapperErrorStyles]: renderErrorIcon && !disabled,
           },
         )}
       >
@@ -133,7 +134,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             inputThemeStyles[theme],
             sizeInputStyles[size],
             {
-              [errorInputStyles[size]]: renderErrorIcon,
+              [errorInputStyles[size]]: renderErrorIcon && !disabled,
               [inputAnimateStyles]: !disabled,
             },
           )}
@@ -152,6 +153,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             iconSizeStyles[size],
             {
               [iconErrorStyles[size]]: renderErrorIcon,
+              [iconDisabledStyles]: disabled,
             },
           )}
         >
@@ -159,7 +161,10 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         </div>
 
         <div
-          className={cx(arrowsBaseStyles, { [arrowsAnimateStyles]: !disabled })}
+          className={cx(arrowsBaseStyles, {
+            [arrowsAnimateStyles]: !disabled,
+            [arrowDisabledStyles]: disabled,
+          })}
         >
           <button
             aria-label="Increment number"

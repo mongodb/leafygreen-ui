@@ -190,6 +190,10 @@ export const arrowsAnimateStyles = css`
   }
 `;
 
+export const arrowDisabledStyles = css`
+  pointer-events: none;
+`;
+
 export const arrowBaseStyles = css`
   all: unset;
   display: flex;
@@ -360,6 +364,10 @@ export const iconSizeStyles: Record<Size, string> = {
     right: 12px;
   `,
 };
+
+export const iconDisabledStyles = css`
+  cursor: not-allowed;
+`;
 
 export const downArrowRotateStyles = css`
   rotate: 180deg;
