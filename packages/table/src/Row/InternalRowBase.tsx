@@ -23,7 +23,6 @@ const InternalRowBase = ({
   ...rest
 }: InternalRowBaseProps) => {
   const { theme } = useDarkMode();
-  const { shouldAlternateRowColor } = useTableContext();
   return (
     <tr
       onClick={onClick}
@@ -32,7 +31,6 @@ const InternalRowBase = ({
       className={cx(
         rowBaseStyles,
         {
-          [zebraStyles[theme]]: shouldAlternateRowColor,
           [disabledStyles[theme]]: disabled,
           [clickableStyles[theme]]: !!onClick,
         },

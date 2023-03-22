@@ -53,15 +53,25 @@ export const rowExpandedStyles: Record<Theme, string> = {
   `,
 };
 
+// applied directly to rows for VS
+export const grayZebraRowStyles: Record<Theme, string> = {
+  [Theme.Dark]: css`
+    background-color: ${palette.gray.dark4};
+  `,
+  [Theme.Light]: css`
+    background-color: ${palette.gray.light3};
+  `,
+};
+
 export const zebraStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     &:nth-of-type(even) {
-      background-color: ${palette.gray.dark4};
+      ${grayZebraRowStyles[Theme.Dark]}
     }
   `,
   [Theme.Light]: css`
     &:nth-of-type(even) {
-      background-color: ${palette.gray.light3};
+      ${grayZebraRowStyles[Theme.Light]}
     }
   `,
 };

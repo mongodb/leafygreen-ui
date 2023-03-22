@@ -11,9 +11,11 @@ import { LGRowData } from '../useLeafyGreenTable';
 import InternalRowBase from './InternalRowBase';
 import {
   expandedContentParentStyles,
+  grayZebraRowStyles,
   rowExpandedStyles,
   rowTopLevelExpandedStyles,
   rowTopLevelStyles,
+  zebraStyles,
 } from './Row.styles';
 import { InternalRowWithRTProps } from './Row.types';
 import RowCellChildren from './RowCellChildren';
@@ -30,7 +32,7 @@ const InternalRowWithRT = <T extends LGRowData>({
   ...rest
 }: InternalRowWithRTProps<T>) => {
   const { theme } = useDarkMode();
-  const { table, getParentRow } = useTableContext();
+  const { table, getParentRow, shouldAlternateRowColor } = useTableContext();
   const parentRow = getParentRow?.(row.id);
   const rowRef = virtualRow?.measureRef;
 
@@ -38,6 +40,7 @@ const InternalRowWithRT = <T extends LGRowData>({
   const isNested = !!parentRow;
   const isParentExpanded = !!parentRow && parentRow.getIsExpanded();
   const isRowVisible = isParentExpanded || !isNested;
+  const isOddVSRow = !!virtualRow && virtualRow.index % 2 !== 0;
 
   const isExpanded = row.getIsExpanded(); // Is this row currently expanded
 
@@ -76,6 +79,8 @@ const InternalRowWithRT = <T extends LGRowData>({
             [rowTopLevelStyles]: !isNested,
             [rowTopLevelExpandedStyles[theme]]: isExpanded && !isNested,
             [rowExpandedStyles[theme]]: isExpanded || isParentExpanded,
+            [grayZebraRowStyles[theme]]: isOddVSRow,
+            [zebraStyles[theme]]: !virtualRow && shouldAlternateRowColor,
           },
           className,
         )}
