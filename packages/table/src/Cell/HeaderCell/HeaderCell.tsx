@@ -48,9 +48,6 @@ const HeaderCell = <T extends LGRowData>({
     const headerSortDirection = header.column.getIsSorted().toString();
     sortState = HeaderSortState[headerSortDirection];
     onSortIconClick = header.column.getToggleSortingHandler();
-  } else {
-    columnName = '';
-    sortState = SortState.None;
   }
 
   return (
