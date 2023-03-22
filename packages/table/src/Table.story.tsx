@@ -1,7 +1,6 @@
 import React from 'react';
 import { ComponentStory, Meta } from '@storybook/react';
 import {
-  ColumnDef,
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
@@ -24,6 +23,7 @@ import Table from './Table';
 import useLeafyGreenTable, {
   LeafyGreenTableCell,
   LeafyGreenTableRow,
+  LGColumnDef,
 } from './useLeafyGreenTable';
 
 export default {
@@ -85,7 +85,7 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 50, 5, 3))[0];
 
-  const columns = React.useMemo<Array<ColumnDef<Person>>>(
+  const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
       {
         accessorKey: 'id',
@@ -109,17 +109,20 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
         // eslint-disable-next-line react/display-name
         header: () => 'Age',
         size: 50,
+        align: 'right',
       },
       {
         accessorKey: 'visits',
         // eslint-disable-next-line react/display-name
         header: () => <span>Visits</span>,
         size: 50,
+        align: 'right',
       },
       {
         accessorKey: 'status',
         header: 'Status',
         size: 90,
+        align: 'right',
       },
     ],
     [],
@@ -130,7 +133,6 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    // getExpandedRowModel: getExpandedRowModel(),
     getSubRows: row => row.subRows,
   });
 
@@ -220,7 +222,7 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(true, 100))[0];
 
-  const columns = React.useMemo<Array<ColumnDef<Person>>>(
+  const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
       {
         accessorKey: 'id',
@@ -326,7 +328,7 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 100))[0];
 
-  const columns = React.useMemo<Array<ColumnDef<Person>>>(
+  const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
       {
         accessorKey: 'id',
@@ -437,7 +439,7 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
   const data = React.useState(() => makeData(false, 100))[0];
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const columns = React.useMemo<Array<ColumnDef<Person>>>(
+  const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
       {
         accessorKey: 'id',
@@ -562,7 +564,7 @@ export const WithPagination: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 10000))[0];
 
-  const columns = React.useMemo<Array<ColumnDef<Person>>>(
+  const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
       {
         accessorKey: 'id',

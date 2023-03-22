@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Transition } from 'react-transition-group';
 
 import { cx } from '@leafygreen-ui/emotion';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 import { useTableContext } from '../TableContext/TableContext';
 import { LGRowData } from '../useLeafyGreenTable';
 
 import {
+  alignmentStyles,
   baseCellStyles,
   cellContentContainerStyles,
   cellContentTransitionStyles,
@@ -23,6 +25,7 @@ const Cell = <T extends LGRowData>({
   depth,
   isVisible = true,
   isExpandable = false,
+  align,
   ...rest
 }: CellProps<T>) => {
   const isFirstCell = cellIndex === 0;
@@ -47,10 +50,10 @@ const Cell = <T extends LGRowData>({
             className={cx(
               cellContentContainerStyles,
               cellContentTransitionStyles[state],
+              alignmentStyles(align),
               contentClassName,
             )}
           >
-            {/* {String(isSelectable)} */}
             {children}
           </div>
         )}

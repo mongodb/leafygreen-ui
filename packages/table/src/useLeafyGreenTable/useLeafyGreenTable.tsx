@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { useVirtual } from 'react-virtual';
 import { ColumnDef, useReactTable } from '@tanstack/react-table';
 import PropTypes from 'prop-types';
@@ -13,6 +13,7 @@ import {
 import {
   LeafyGreenTable,
   LeafyGreenTableRow,
+  LGColumnDef,
   LGTableDataType,
   VirtualizerValues,
 } from '.';
@@ -65,16 +66,14 @@ function useLeafyGreenTable<T extends LGRowData, VS extends boolean>({
   useVirtualScrolling = false as VS,
   ...rest
 }: LeafyGreenTableOptions<T, VS>): LeafyGreenTableValues<T, VS> {
-  type ColumnType = ColumnDef<LGTableDataType<T>, unknown>;
-
-  const columns: Array<ColumnType> = [
-    ...(hasSelectableRows ? [selectColumnConfig as ColumnType] : []),
+  const columns: Array<LGColumnDef<T>> = [
+    ...(hasSelectableRows ? [selectColumnConfig as LGColumnDef<T>] : []),
     ...columnsProp.map(
       propColumn =>
         ({
           ...propColumn,
-          enableSorting: propColumn.enableSorting ?? false,
-        } as ColumnType),
+          align: propColumn.align ?? 'left',
+        } as LGColumnDef<T>),
     ),
   ];
 

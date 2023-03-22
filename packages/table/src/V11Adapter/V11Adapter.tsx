@@ -47,7 +47,7 @@ type V11AdapterProps<
 // assumes table is first element in children
 // reads columns from columns' keys
 // supports up to one layer of nested rows
-// assumes that the key of a column in the original data === column label header in lowercase
+// assumes that the key of a column in the original data === column label header in lowercase; can be overridden by `headerLabelMapping`
 const V11Adapter = <T extends LGRowData, VS extends boolean>({
   children,
   shouldAlternateRowColor,

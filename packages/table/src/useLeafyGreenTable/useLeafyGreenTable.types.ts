@@ -2,6 +2,10 @@ import { RefObject } from 'react';
 import { VirtualItem } from 'react-virtual';
 import { Cell, Row, RowData, Table, TableOptions } from '@tanstack/react-table';
 
+import { HTMLElementProps } from '@leafygreen-ui/lib';
+
+import { ColumnDef } from '..';
+
 import { VirtualizerValues } from './reactVirtual.types';
 
 /** LeafyGreen extension of `useReactTable` {@link RowData}*/
@@ -23,12 +27,17 @@ export type LeafyGreenTableCell<T extends LGRowData> = Cell<
 export interface LeafyGreenTableRow<T extends LGRowData>
   extends Row<LGTableDataType<T>> {}
 
+export type LGColumnDef<T extends LGRowData> = ColumnDef<LGTableDataType<T>> & {
+  align?: HTMLElementProps<'td'>['align'];
+};
+
 /** LeafyGreen extension of `useReactTable` {@link TableOptions}*/
 export interface LeafyGreenTableOptions<T extends LGRowData, VS extends boolean>
   extends TableOptions<LGTableDataType<T>> {
   containerRef: RefObject<HTMLDivElement>;
   hasSelectableRows?: boolean;
   useVirtualScrolling?: VS;
+  columns: Array<LGColumnDef<T>>;
 }
 
 /** LeafyGreen extension of `useReactTable` {@link Table}*/

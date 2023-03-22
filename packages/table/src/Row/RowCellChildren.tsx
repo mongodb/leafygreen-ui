@@ -22,7 +22,7 @@ const RowCellChildren = <T extends LGRowData>({
   children,
   disabled,
 }: RowCellChildrenProps<T>) => {
-  const { getParentRow, columnAlignments } = useTableContext();
+  const { getParentRow } = useTableContext();
   const parentRow = getParentRow?.(row.id);
   const isNested = !!parentRow;
   const isParentExpanded = !!parentRow && parentRow.getIsExpanded();
@@ -43,19 +43,19 @@ const RowCellChildren = <T extends LGRowData>({
       {React.Children.map(
         CellChildren,
         (child: ReactNode, colIndex: number) => {
-          const { className, children, ...props } = (child as ReactElement)
-            ?.props;
+          const { children, ...props } = (child as ReactElement)?.props;
           const isFirstCell = colIndex === 0;
+          const cell = row.getVisibleCells()[colIndex];
           return (
             <Cell
               {...props}
-              className={className}
               cellIndex={colIndex}
               isVisible={isRowVisible}
               isExpandable={isExpandable}
               disabled={disabled}
               depth={row.depth}
-              align={columnAlignments?.[colIndex]}
+              // @ts-expect-error Cell is not deeply extended
+              align={cell.column.columnDef.align}
             >
               {isFirstCell && isExpandable && (
                 <ToggleExpandedIcon

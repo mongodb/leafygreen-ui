@@ -8,7 +8,7 @@ import { ColumnDef } from '..';
 const processColumns = <T extends LGRowData>(
   data: Array<T>,
   columns: TableProps<any>['columns'],
-  headerLabelMapping: { [key: string]: string },
+  headerLabelMapping?: { [key: string]: string },
 ) => {
   const HeaderRow = React.Children.toArray(columns)[0] as ReactElement;
   const TableHeaders = React.Children.toArray(HeaderRow.props.children);
@@ -35,10 +35,9 @@ const processColumns = <T extends LGRowData>(
         ? (rowA, rowB, columnId) => {
             const indexA = rowA.index;
             const indexB = rowB.index;
-            const columnKey = columnId.toLowerCase();
-            return data[indexA][columnKey] > data[indexB][columnKey]
+            return data[indexA][columnId] > data[indexB][columnId]
               ? -1
-              : data[indexB][columnKey] > data[indexA][columnKey]
+              : data[indexB][columnId] > data[indexA][columnId]
               ? 1
               : 0;
           }
