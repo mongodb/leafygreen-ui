@@ -18,9 +18,6 @@ import { Size, State } from '../NumberInput/NumberInput.types';
 const autofillShadowOverride = (color: string) => `0 0 0 100px ${color} inset`;
 
 export const wrapperClassName = createUniqueClassName('number-input-wrapper');
-export const warningIconClassName = createUniqueClassName(
-  'number-input-wrapper',
-);
 
 export const inputBaseStyles = css`
   all: unset;

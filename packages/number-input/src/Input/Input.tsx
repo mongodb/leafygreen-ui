@@ -28,7 +28,6 @@ import {
   inputThemeStyles,
   selectBaseStyles,
   sizeInputStyles,
-  warningIconClassName,
   wrapperBaseStyles,
   wrapperClassName,
   wrapperDisabledStyles,
@@ -148,7 +147,6 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         />
         <div
           className={cx(
-            warningIconClassName,
             iconBaseStyles,
             iconThemeStyles[theme],
             iconSizeStyles[size],
