@@ -99,7 +99,7 @@ export const NestedRows = () => {
   return (
     <V11Adapter>
       <Table
-        data={defaultData}
+        data={defaultData.slice(0, 8)}
         columns={
           <HeaderRow>
             <TableHeader key="name" label="Name" dataType="string" />
