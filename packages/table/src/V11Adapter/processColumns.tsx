@@ -26,7 +26,7 @@ const processColumns = <T extends LGRowData>(
       header: headerProps.label,
       enableSorting: hasSorting,
       sortingFn: headerProps.compareFn
-        ? (rowA, rowB, columnId) => {
+        ? (rowA, rowB, _) => {
             const indexA = rowA.index;
             const indexB = rowB.index;
             return headerProps.compareFn(data[indexA], data[indexB]);

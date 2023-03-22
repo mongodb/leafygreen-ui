@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Transition } from 'react-transition-group';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 import { useTableContext } from '../TableContext/TableContext';
 import { LGRowData } from '../useLeafyGreenTable';

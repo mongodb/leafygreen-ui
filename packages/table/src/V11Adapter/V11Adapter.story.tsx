@@ -157,7 +157,7 @@ export const NestedRowsVS = () => {
               <Row>
                 <Cell>
                   <div>
-                    <Badge>Lots o' visits</Badge>
+                    <Badge>Lots of visits</Badge>
                     expanded first name: {datum.firstName}
                   </div>
                 </Cell>

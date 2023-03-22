@@ -65,7 +65,7 @@ const V11Adapter = <T extends LGRowData, VS extends boolean>({
   const processedColumns: Array<ColumnDef<LGTableDataType<T>, 'string'>> =
     useMemo(
       () => processColumns(data, columns, headerLabelMapping),
-      [data, columns],
+      [data, columns, headerLabelMapping],
     );
   const processedData: Array<LGTableDataType<T>> = useState(() =>
     processData(data, processedColumns, childrenFn),

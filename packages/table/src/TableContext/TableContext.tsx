@@ -1,15 +1,10 @@
-import React, {
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useState,
-} from 'react';
+import React, { createContext, PropsWithChildren, useContext } from 'react';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { LGRowData } from '../useLeafyGreenTable';
 
-import { ColumnAlignment, TableContextValues } from './TableContext.types';
+import { TableContextValues } from './TableContext.types';
 
 export const TableContext = createContext<
   TableContextValues<LGRowData, boolean>
