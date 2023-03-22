@@ -1,18 +1,18 @@
-import React, { PropsWithChildren, useEffect } from 'react';
+import React, { PropsWithChildren } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 
+import { useTableContext } from '../../TableContext/TableContext';
+import { LGRowData } from '../../useLeafyGreenTable';
 import {
+  alignmentStyles,
   baseCellStyles,
   cellContentContainerStyles,
   getCellPadding,
-} from '../../Cell/Cell.styles';
-import { useTableContext } from '../../TableContext/TableContext';
-import { LGRowData } from '../../useLeafyGreenTable';
+} from '../Cell.styles';
 
 import SortIcon from './SortIcon/SortIcon';
 import {
-  cellContentAlignmentStyles,
   getHeaderCellWidthStyles,
   headerCellContentStyles,
 } from './HeaderCell.styles';
@@ -30,15 +30,14 @@ const HeaderSortState: SortStates = {
 const HeaderCell = <T extends LGRowData>({
   children,
   className,
-  align,
   cellIndex,
   header,
   ...rest
 }: PropsWithChildren<HeaderCellProps<T>>) => {
-  const { setColumnAlignments, table } = useTableContext();
+  const { table } = useTableContext();
 
   const isFirstCell = cellIndex === 0;
-  const isSelectable = !!table?.getSelectedRowModel;
+  const isSelectable = !!table && !!table.hasSelectableRows;
 
   let columnName;
   let sortState;
@@ -53,17 +52,6 @@ const HeaderCell = <T extends LGRowData>({
     columnName = '';
     sortState = SortState.None;
   }
-
-  useEffect(() => {
-    setColumnAlignments &&
-      cellIndex !== undefined &&
-      align &&
-      setColumnAlignments(prevAlignments => {
-        if (prevAlignments) {
-          return [...prevAlignments].splice(cellIndex, 1, align);
-        }
-      });
-  }, [cellIndex, align, setColumnAlignments]);
 
   return (
     <th
@@ -84,7 +72,8 @@ const HeaderCell = <T extends LGRowData>({
         className={cx(
           cellContentContainerStyles,
           headerCellContentStyles,
-          cellContentAlignmentStyles(align),
+          // @ts-expect-error Header types need to be extended or declared in the react-table namespace
+          alignmentStyles(header?.column.columnDef?.align),
         )}
       >
         {children}

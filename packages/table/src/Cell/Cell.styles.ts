@@ -44,11 +44,12 @@ export const getCellPadding = ({
   isSelectable?: boolean;
 }) => {
   if (depth === 0) {
-    // TODO: Make sure padding is correct for selectable rows
-
-    // const sidePadding = isSelectable
-    //   ? baseTableSidePadding - 16
-    //   : baseTableSidePadding;
+    if (isSelectable) {
+      return css`
+        padding-left: 8px;
+        padding-right: 8px;
+      `;
+    }
 
     return css`
       /* outline: 1px solid rebeccapurple;

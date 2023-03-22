@@ -21,7 +21,7 @@ const TableBody = ({
     [areSomeRowsExpandable],
   );
 
-  if (table && 'virtualRows' in table) {
+  if (table && table.virtualRows) {
     const { virtualRows, totalSize } = table;
     paddingTop = virtualRows.length > 0 ? virtualRows?.[0]?.start || 0 : 0;
     paddingBottom =

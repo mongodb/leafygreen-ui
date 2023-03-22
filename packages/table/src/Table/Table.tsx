@@ -15,7 +15,7 @@ import { LGRowData } from '../useLeafyGreenTable';
 import { baseStyles, themeStyles } from './Table.styles';
 import { TableProps } from './Table.types';
 
-const Table = <T extends LGRowData, VS extends boolean>({
+const Table = <T extends LGRowData>({
   children,
   className,
   shouldAlternateRowColor = false,
@@ -23,7 +23,7 @@ const Table = <T extends LGRowData, VS extends boolean>({
   darkMode: darkModeProp,
   table,
   ...rest
-}: TableProps<T, VS>) => {
+}: TableProps<T>) => {
   const baseFontSize: BaseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
   const { theme, darkMode } = useDarkMode(darkModeProp);
 

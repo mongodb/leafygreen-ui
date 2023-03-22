@@ -23,14 +23,13 @@ const ToggleExpandedIcon = ({
       onClick={toggleExpanded}
       className={cx(iconButtonStyles, {
         [css`
-          /* TODO: Rotate ChevronRight 90deg */
-          transform: rotate(-180deg);
+          transform: rotate(90deg);
         `]: isExpanded,
       })}
       {...rest}
     >
       <Icon
-        glyph="ChevronDown"
+        glyph="ChevronRight"
         role="presentation"
         fill={iconFills(theme, !!disabled)}
       />

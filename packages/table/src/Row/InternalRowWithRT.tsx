@@ -1,4 +1,5 @@
-import React, { Fragment, PropsWithRef, useMemo } from 'react';
+import React, { Fragment, useMemo } from 'react';
+import { VirtualItem } from 'react-virtual';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -11,9 +12,10 @@ import { LGRowData } from '../useLeafyGreenTable';
 import InternalRowBase from './InternalRowBase';
 import {
   expandedContentParentStyles,
-  rowExpandedStyles,
+  grayZebraRowStyles,
   rowTopLevelExpandedStyles,
   rowTopLevelStyles,
+  zebraStyles,
 } from './Row.styles';
 import { InternalRowWithRTProps } from './Row.types';
 import RowCellChildren from './RowCellChildren';
@@ -30,7 +32,7 @@ const InternalRowWithRT = <T extends LGRowData>({
   ...rest
 }: InternalRowWithRTProps<T>) => {
   const { theme } = useDarkMode();
-  const { table, getParentRow } = useTableContext();
+  const { table, getParentRow, shouldAlternateRowColor } = useTableContext();
   const parentRow = getParentRow?.(row.id);
   const rowRef = virtualRow?.measureRef;
 
@@ -38,6 +40,7 @@ const InternalRowWithRT = <T extends LGRowData>({
   const isNested = !!parentRow;
   const isParentExpanded = !!parentRow && parentRow.getIsExpanded();
   const isRowVisible = isParentExpanded || !isNested;
+  const isOddVSRow = !!virtualRow && virtualRow.index % 2 !== 0;
 
   const isExpanded = row.getIsExpanded(); // Is this row currently expanded
 
@@ -60,8 +63,11 @@ const InternalRowWithRT = <T extends LGRowData>({
     [shouldRenderAsTBody],
   );
 
-  const tBodyProps: PropsWithRef<HTMLElementProps<'tbody'>> = {
-    className: expandedContentParentStyles,
+  const tBodyProps: HTMLElementProps<'tbody'> &
+    Pick<VirtualItem, 'measureRef'> = {
+    className: cx({
+      [expandedContentParentStyles[theme]]: isExpanded,
+    }),
     'data-expanded': isExpanded,
     'data-testid': 'lg-table-expandable-row-tbody',
     // @ts-expect-error - VirtualItem.measureRef is not typed as a ref
@@ -69,13 +75,14 @@ const InternalRowWithRT = <T extends LGRowData>({
   };
 
   return (
-    <Polymorph as={containerAs} {...(shouldRenderAsTBody ?? tBodyProps)}>
+    <Polymorph as={containerAs} {...(shouldRenderAsTBody && tBodyProps)}>
       <InternalRowBase
         className={cx(
           {
             [rowTopLevelStyles]: !isNested,
             [rowTopLevelExpandedStyles[theme]]: isExpanded && !isNested,
-            [rowExpandedStyles[theme]]: isExpanded || isParentExpanded,
+            [grayZebraRowStyles[theme]]: isOddVSRow,
+            [zebraStyles[theme]]: !virtualRow && shouldAlternateRowColor,
           },
           className,
         )}

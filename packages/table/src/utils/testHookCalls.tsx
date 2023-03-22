@@ -94,7 +94,7 @@ export const getDefaultTestColumns: (
 export interface TestTableWithHookProps {
   rowProps?: object;
   columnProps?: getTestColumnsProps;
-  hookProps?: Partial<LeafyGreenTableOptions<Person, boolean>>;
+  hookProps?: Partial<LeafyGreenTableOptions<Person>>;
   stateProps?: any;
 }
 

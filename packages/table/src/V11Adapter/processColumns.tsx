@@ -1,16 +1,17 @@
 import React, { ReactElement } from 'react';
+import camelCase from 'lodash/camelCase';
 
 import { TableProps } from '../TableV10/Table';
-import { LGRowData } from '../useLeafyGreenTable';
-import { ColumnDef } from '..';
+import { LGColumnDef, LGRowData } from '../useLeafyGreenTable';
 
 const processColumns = <T extends LGRowData>(
   data: Array<T>,
   columns: TableProps<any>['columns'],
+  headerLabelMapping?: { [key: string]: string },
 ) => {
   const HeaderRow = React.Children.toArray(columns)[0] as ReactElement;
   const TableHeaders = React.Children.toArray(HeaderRow.props.children);
-  const processedColumns: Array<ColumnDef<T>> = [];
+  const processedColumns: Array<LGColumnDef<T>> = [];
   TableHeaders.forEach(TableHeader => {
     const headerProps = (TableHeader as ReactElement).props;
     const hasSorting =
@@ -18,11 +19,14 @@ const processColumns = <T extends LGRowData>(
       !!headerProps.handleSort ||
       !!headerProps.compareFn;
     processedColumns.push({
-      accessorKey: headerProps.label.toLowerCase(),
+      accessorKey:
+        (headerLabelMapping && headerLabelMapping[headerProps.label]) ??
+        camelCase(headerProps.label),
       header: headerProps.label,
+      align: headerProps.dataType === 'number' ? 'right' : 'left',
       enableSorting: hasSorting,
       sortingFn: headerProps.compareFn
-        ? (rowA, rowB, columnId) => {
+        ? (rowA, rowB, _) => {
             const indexA = rowA.index;
             const indexB = rowB.index;
             return headerProps.compareFn(data[indexA], data[indexB]);
@@ -31,10 +35,11 @@ const processColumns = <T extends LGRowData>(
         ? (rowA, rowB, columnId) => {
             const indexA = rowA.index;
             const indexB = rowB.index;
-            const columnKey = columnId.toLowerCase();
-            return data[indexA][columnKey] > data[indexB][columnKey]
+            // @ts-ignore
+            return data[indexA][columnId] > data[indexB][columnId]
               ? -1
-              : data[indexB][columnKey] > data[indexA][columnKey]
+              : // @ts-ignore
+              data[indexB][columnId] > data[indexA][columnId]
               ? 1
               : 0;
           }

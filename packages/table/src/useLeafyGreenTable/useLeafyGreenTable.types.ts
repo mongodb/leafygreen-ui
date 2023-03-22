@@ -2,6 +2,10 @@ import { RefObject } from 'react';
 import { VirtualItem } from 'react-virtual';
 import { Cell, Row, RowData, Table, TableOptions } from '@tanstack/react-table';
 
+import { HTMLElementProps } from '@leafygreen-ui/lib';
+
+import { ColumnDef } from '..';
+
 import { VirtualizerValues } from './reactVirtual.types';
 
 /** LeafyGreen extension of `useReactTable` {@link RowData}*/
@@ -23,31 +27,23 @@ export type LeafyGreenTableCell<T extends LGRowData> = Cell<
 export interface LeafyGreenTableRow<T extends LGRowData>
   extends Row<LGTableDataType<T>> {}
 
+export type LGColumnDef<T extends LGRowData> = ColumnDef<LGTableDataType<T>> & {
+  align?: HTMLElementProps<'td'>['align'];
+};
+
 /** LeafyGreen extension of `useReactTable` {@link TableOptions}*/
-export interface LeafyGreenTableOptions<T extends LGRowData, VS extends boolean>
+export interface LeafyGreenTableOptions<T extends LGRowData>
   extends TableOptions<LGTableDataType<T>> {
   containerRef: RefObject<HTMLDivElement>;
   hasSelectableRows?: boolean;
-  useVirtualScrolling?: VS;
+  useVirtualScrolling?: boolean;
+  columns: Array<LGColumnDef<T>>;
 }
 
 /** LeafyGreen extension of `useReactTable` {@link Table}*/
-interface LeafyGreenTableValuesWithoutVS<T extends LGRowData>
-  extends Table<LGTableDataType<T>> {}
-
-interface LeafyGreenTableValuesWithVS<T extends LGRowData>
-  extends LeafyGreenTableValuesWithoutVS<T>,
+export interface LeafyGreenTable<T extends LGRowData>
+  extends Table<LGTableDataType<T>>,
     Pick<VirtualizerValues, 'totalSize'> {
-  virtualRows: Array<VirtualItem>;
+  virtualRows?: Array<VirtualItem>;
+  hasSelectableRows: boolean;
 }
-
-export type LeafyGreenTableValues<
-  T extends LGRowData,
-  VS extends boolean,
-> = VS extends true
-  ? LeafyGreenTableValuesWithVS<T>
-  : LeafyGreenTableValuesWithoutVS<T>;
-
-export type LeafyGreenTable<T extends LGRowData> =
-  | LeafyGreenTableValuesWithVS<T>
-  | LeafyGreenTableValuesWithoutVS<T>;

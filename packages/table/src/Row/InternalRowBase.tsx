@@ -3,14 +3,7 @@ import React from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { useTableContext } from '../TableContext/TableContext';
-
-import {
-  clickableStyles,
-  disabledStyles,
-  rowBaseStyles,
-  zebraStyles,
-} from './Row.styles';
+import { clickableStyles, disabledStyles, rowBaseStyles } from './Row.styles';
 import { InternalRowBaseProps } from './Row.types';
 
 /**
@@ -23,7 +16,6 @@ const InternalRowBase = ({
   ...rest
 }: InternalRowBaseProps) => {
   const { theme } = useDarkMode();
-  const { shouldAlternateRowColor } = useTableContext();
   return (
     <tr
       onClick={onClick}
@@ -32,7 +24,6 @@ const InternalRowBase = ({
       className={cx(
         rowBaseStyles,
         {
-          [zebraStyles[theme]]: shouldAlternateRowColor,
           [disabledStyles[theme]]: disabled,
           [clickableStyles[theme]]: !!onClick,
         },

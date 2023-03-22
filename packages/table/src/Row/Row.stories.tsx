@@ -21,6 +21,7 @@ import {
   flexRender,
   getCoreRowModel,
   getExpandedRowModel,
+  HeaderGroup,
 } from '..';
 
 export default {
@@ -149,7 +150,7 @@ export const DisabledNestedRows: ComponentStory<typeof Row> = ({
       <TableContainer ref={tableContainerRef}>
         <Table table={table}>
           <TableHead>
-            {table.getHeaderGroups().map(headerGroup => (
+            {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
               <HeaderRow key={headerGroup.id}>
                 {headerGroup.headers.map(header => {
                   return (
