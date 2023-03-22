@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { debounce } from 'lodash';
 
 import { spacing } from '@leafygreen-ui/tokens';

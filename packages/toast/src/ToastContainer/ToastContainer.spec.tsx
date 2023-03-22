@@ -24,7 +24,7 @@ async function delay(t: number) {
 }
 
 function renderToastContainer(
-  props?: Partial<InternalToastProps>,
+  props: InternalToastProps = { title: 'test' },
   initialValue?: ToastProviderProps['initialValue'],
 ) {
   const result = render(

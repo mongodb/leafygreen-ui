@@ -12,7 +12,7 @@ import { Body, InlineCode, Label, Link } from '@leafygreen-ui/typography';
 import { variantIcons } from './InternalToast/VariantIcon';
 import { makeToast, makeToastStack } from './ToastContext/utils/makeToast';
 import { InternalToast, InternalToastProps } from './InternalToast';
-import { Toast, ToastProvider, useToast, Variant } from '.';
+import { ToastProvider, useToast, Variant } from '.';
 
 export default StoryMeta<typeof InternalToast>({
   title: 'Components/Toast',
@@ -54,7 +54,7 @@ export default StoryMeta<typeof InternalToast>({
     initialValue: undefined,
   },
 });
-export const Basic: ComponentStory<typeof Toast> = (
+export const Basic: ComponentStory<typeof InternalToast> = (
   props: Partial<InternalToastProps> & DarkModeProps,
 ) => {
   const { pushToast, clearStack } = useToast();
@@ -94,7 +94,7 @@ export const Basic: ComponentStory<typeof Toast> = (
   );
 };
 
-export const Variants: ComponentStory<typeof Toast> = (
+export const Variants: ComponentStory<typeof InternalToast> = (
   props: Partial<InternalToastProps>,
 ) => {
   const { pushToast, clearStack, getStack, updateToast } = useToast();
@@ -179,7 +179,7 @@ export const Variants: ComponentStory<typeof Toast> = (
   );
 };
 
-export const WithInitialToasts: ComponentStory<typeof Toast> = (
+export const WithInitialToasts: ComponentStory<typeof InternalToast> = (
   props: Partial<InternalToastProps>,
 ) => {
   const { pushToast, clearStack } = useToast();

@@ -12,12 +12,11 @@ import { toastBGColor } from '../InternalToast';
 import { calcTotalStackHeight } from './utils/useToastHeights';
 
 export const toastContainerStyles = css`
-  /* outline: 1px solid teal; */
+  outline: 1px solid teal;
   position: fixed;
   left: ${spacing[3] - TOAST.inset}px;
   bottom: ${spacing[3] - TOAST.inset}px;
   width: ${TOAST.width + 2 * TOAST.inset}px;
-  /* min-height: 0px; */
   max-height: calc(100vh - ${spacing[3]}px);
   z-index: 0;
   overflow: unset;
