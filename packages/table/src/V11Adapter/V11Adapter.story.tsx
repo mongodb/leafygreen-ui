@@ -7,6 +7,7 @@ import { Cell, HeaderRow, Row, Table, TableHeader } from '../TableV10';
 import { defaultData } from '../TableV10/fixtures';
 
 import V11Adapter from './V11Adapter';
+import { makeData } from '../utils/makeData';
 
 export default {
   title: 'Components/Table/V11 Adapter',
@@ -18,6 +19,34 @@ export const Basic = () => {
     <V11Adapter>
       <Table
         data={defaultData.slice(0, 8)}
+        columns={
+          <HeaderRow>
+            <TableHeader key="name" label="Name" dataType="string" />
+            <TableHeader key="age" label="Age" dataType="number" />
+            <TableHeader key="color" label="Color" dataType="string" />
+            <TableHeader key="location" label="Location" />
+          </HeaderRow>
+        }
+      >
+        {({ datum }: any) => (
+          <Row>
+            <Cell>{datum.name}</Cell>
+            <Cell>{datum.age}</Cell>
+            <Cell>{datum.color}</Cell>
+            <Cell>{datum.location}</Cell>
+          </Row>
+        )}
+      </Table>
+    </V11Adapter>
+  );
+};
+
+export const BasicVS = () => {
+  const data = React.useState(() => makeData(false, 100))[0];
+  return (
+    <V11Adapter useVirtualScrolling>
+      <Table
+        data={makeData(false, 1000)}
         columns={
           <HeaderRow>
             <TableHeader key="name" label="Name" dataType="string" />
