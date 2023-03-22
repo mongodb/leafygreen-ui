@@ -63,9 +63,6 @@ const toastReducer = (
       stack.clear();
       return { stack };
     }
-
-    default:
-      return state;
   }
 };
 

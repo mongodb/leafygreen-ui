@@ -56,17 +56,12 @@ describe('packages/toast/useToastReducer', () => {
   describe('popToast', () => {
     test('removes toast from the stack', () => {
       const { result, rerender } = renderHook(useToastReducer);
-      let toastId: ToastId = '';
-      act(() => {
-        toastId = result.current.pushToast({ title: 'test' });
-      });
+      const { pushToast, popToast, getToast } = result.current;
+      const toastId: ToastId = pushToast({ title: 'test' });
       rerender();
-      act(() => {
-        result.current.popToast(toastId);
-      });
+      popToast(toastId);
       rerender();
-      const { stack } = result.current;
-      const toast = stack.get(toastId);
+      const toast = getToast(toastId);
       expect(toast).not.toBeDefined();
     });
   });
