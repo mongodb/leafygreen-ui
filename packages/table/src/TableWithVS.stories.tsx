@@ -13,7 +13,10 @@ import TableContainer from './TableContainer/TableContainer';
 import TableHead from './TableHead/TableHead';
 import { makeData, Person } from './utils/makeData';
 import { Cell, HeaderCell } from './Cell';
-import useLeafyGreenTable from './useLeafyGreenTable';
+import useLeafyGreenTable, {
+  LeafyGreenTableCell,
+  LeafyGreenTableRow,
+} from './useLeafyGreenTable';
 import {
   ColumnDef,
   ExpandedState,
@@ -21,6 +24,7 @@ import {
   getCoreRowModel,
   getExpandedRowModel,
   getSortedRowModel,
+  HeaderGroup,
   SortingState,
 } from '.';
 
@@ -100,13 +104,12 @@ export const Basic: ComponentStory<typeof Table> = args => {
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
         {/* Not sure why this is showing an error. It's not checking the second type in the conditional type */}
-        <p>{table.virtualRows.length} virtual rows rendered</p>
       </div>
 
       <TableContainer ref={tableContainerRef}>
         <Table {...args} table={table}>
           <TableHead>
-            {table.getHeaderGroups().map(headerGroup => (
+            {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
               <HeaderRow key={headerGroup.id}>
                 {headerGroup.headers.map(header => {
                   return (
@@ -122,24 +125,25 @@ export const Basic: ComponentStory<typeof Table> = args => {
             ))}
           </TableHead>
           <TableBody>
-            {table.virtualRows.map((virtualRow: VirtualItem) => {
-              const row = rows[virtualRow.index];
-              const cells = row.getVisibleCells();
-              return (
-                <Row key={row.id}>
-                  {cells.map(cell => {
-                    return (
-                      <Cell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
-                </Row>
-              );
-            })}
+            {table.virtualRows &&
+              table.virtualRows.map((virtualRow: VirtualItem) => {
+                const row = rows[virtualRow.index];
+                const cells = row.getVisibleCells();
+                return (
+                  <Row key={row.id}>
+                    {cells.map((cell: LeafyGreenTableCell<Person>) => {
+                      return (
+                        <Cell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
+                  </Row>
+                );
+              })}
           </TableBody>
         </Table>
       </TableContainer>
@@ -206,13 +210,12 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
     <>
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
-        <p>{table.virtualRows.length} virtual rows rendered</p>
       </div>
 
       <TableContainer ref={tableContainerRef}>
         <Table {...args} table={table}>
           <TableHead>
-            {table.getHeaderGroups().map(headerGroup => (
+            {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
               <HeaderRow key={headerGroup.id}>
                 {headerGroup.headers.map(header => {
                   return (
@@ -228,59 +231,68 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
             ))}
           </TableHead>
           <TableBody>
-            {table.virtualRows.map((virtualRow: VirtualItem) => {
-              const row = rows[virtualRow.index];
-              const cells = row.getVisibleCells();
+            {table.virtualRows &&
+              table.virtualRows.map((virtualRow: VirtualItem) => {
+                const row = rows[virtualRow.index];
+                const cells = row.getVisibleCells();
 
-              return (
-                <Row key={row.id} row={row} virtualRow={virtualRow}>
-                  {cells.map(cell => {
-                    return (
-                      <Cell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
-                  {row.subRows &&
-                    row.subRows.map(subRow => (
-                      <Row key={subRow.id} row={subRow} virtualRow={virtualRow}>
-                        {subRow.getVisibleCells().map(cell => {
-                          return (
-                            <Cell key={cell.id}>
-                              {flexRender(
-                                cell.column.columnDef.cell,
-                                cell.getContext(),
-                              )}
-                            </Cell>
-                          );
-                        })}
-                        {subRow.subRows &&
-                          subRow.subRows.map(subSubRow => (
-                            <Row
-                              key={subSubRow.id}
-                              row={subSubRow}
-                              virtualRow={virtualRow}
-                            >
-                              {subSubRow.getVisibleCells().map(cell => {
-                                return (
-                                  <Cell key={cell.id}>
-                                    {flexRender(
-                                      cell.column.columnDef.cell,
-                                      cell.getContext(),
-                                    )}
-                                  </Cell>
-                                );
-                              })}
-                            </Row>
-                          ))}
-                      </Row>
-                    ))}
-                </Row>
-              );
-            })}
+                return (
+                  <Row key={row.id} row={row} virtualRow={virtualRow}>
+                    {cells.map((cell: LeafyGreenTableCell<Person>) => {
+                      return (
+                        <Cell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
+                    {row.subRows &&
+                      row.subRows.map((subRow: LeafyGreenTableRow<Person>) => (
+                        <Row
+                          key={subRow.id}
+                          row={subRow}
+                          virtualRow={virtualRow}
+                        >
+                          {subRow
+                            .getVisibleCells()
+                            .map((cell: LeafyGreenTableCell<Person>) => {
+                              return (
+                                <Cell key={cell.id}>
+                                  {flexRender(
+                                    cell.column.columnDef.cell,
+                                    cell.getContext(),
+                                  )}
+                                </Cell>
+                              );
+                            })}
+                          {subRow.subRows &&
+                            subRow.subRows.map(subSubRow => (
+                              <Row
+                                key={subSubRow.id}
+                                row={subSubRow}
+                                virtualRow={virtualRow}
+                              >
+                                {subSubRow
+                                  .getVisibleCells()
+                                  .map((cell: LeafyGreenTableCell<Person>) => {
+                                    return (
+                                      <Cell key={cell.id}>
+                                        {flexRender(
+                                          cell.column.columnDef.cell,
+                                          cell.getContext(),
+                                        )}
+                                      </Cell>
+                                    );
+                                  })}
+                              </Row>
+                            ))}
+                        </Row>
+                      ))}
+                  </Row>
+                );
+              })}
           </TableBody>
         </Table>
       </TableContainer>
@@ -355,13 +367,12 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
     <>
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
-        <p>{table.virtualRows.length} virtual rows rendered</p>
       </div>
 
       <TableContainer ref={tableContainerRef}>
         <Table {...args} table={table}>
           <TableHead>
-            {table.getHeaderGroups().map(headerGroup => (
+            {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
               <HeaderRow key={headerGroup.id}>
                 {headerGroup.headers.map(header => {
                   return (
@@ -377,25 +388,26 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
             ))}
           </TableHead>
           <TableBody>
-            {table.virtualRows.map((virtualRow: VirtualItem) => {
-              const row = rows[virtualRow.index];
-              const cells = row.getVisibleCells();
+            {table.virtualRows &&
+              table.virtualRows.map((virtualRow: VirtualItem) => {
+                const row = rows[virtualRow.index];
+                const cells = row.getVisibleCells();
 
-              return (
-                <Row key={row.id} row={row} virtualRow={virtualRow}>
-                  {cells.map(cell => {
-                    return (
-                      <Cell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
-                </Row>
-              );
-            })}
+                return (
+                  <Row key={row.id} row={row} virtualRow={virtualRow}>
+                    {cells.map((cell: LeafyGreenTableCell<Person>) => {
+                      return (
+                        <Cell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
+                  </Row>
+                );
+              })}
           </TableBody>
         </Table>
       </TableContainer>
@@ -467,7 +479,6 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
     <>
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
-        <p>{table.virtualRows.length} virtual rows rendered</p>
         {/* <button
           onClick={
             // eslint-disable-next-line no-console
@@ -492,7 +503,7 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
       <TableContainer ref={tableContainerRef}>
         <Table {...args} table={table}>
           <TableHead>
-            {table.getHeaderGroups().map(headerGroup => (
+            {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
               <HeaderRow key={headerGroup.id}>
                 {headerGroup.headers.map(header => {
                   return (
@@ -508,25 +519,26 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
             ))}
           </TableHead>
           <TableBody>
-            {table.virtualRows.map(virtualRow => {
-              const row = rows[virtualRow.index];
-              const cells = row.getVisibleCells();
+            {table.virtualRows &&
+              table.virtualRows.map((virtualRow: VirtualItem) => {
+                const row = rows[virtualRow.index];
+                const cells = row.getVisibleCells();
 
-              return (
-                <Row key={row.id} row={row} virtualRow={virtualRow}>
-                  {cells.map(cell => {
-                    return (
-                      <Cell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
-                </Row>
-              );
-            })}
+                return (
+                  <Row key={row.id} row={row} virtualRow={virtualRow}>
+                    {cells.map((cell: LeafyGreenTableCell<Person>) => {
+                      return (
+                        <Cell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
+                  </Row>
+                );
+              })}
           </TableBody>
         </Table>
       </TableContainer>
@@ -599,14 +611,12 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
     <>
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
-        <p>{table.virtualRows.length} virtual rows rendered</p>
-        {/* <pre>Expanded rows: {JSON.stringify(expanded, null, 2)}</pre> */}
       </div>
 
       <TableContainer ref={tableContainerRef}>
         <Table {...args} table={table}>
           <TableHead>
-            {table.getHeaderGroups().map(headerGroup => (
+            {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
               <HeaderRow key={headerGroup.id}>
                 {headerGroup.headers.map(header => {
                   return (
@@ -622,28 +632,29 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
             ))}
           </TableHead>
           <TableBody>
-            {table.virtualRows.map(virtualRow => {
-              const row = rows[virtualRow.index];
-              const cells = row.getVisibleCells();
+            {table.virtualRows &&
+              table.virtualRows.map((virtualRow: VirtualItem) => {
+                const row = rows[virtualRow.index];
+                const cells = row.getVisibleCells();
 
-              return (
-                <Row key={row.id} row={row} virtualRow={virtualRow}>
-                  {cells.map(cell => {
-                    return (
-                      <Cell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
-                  {row.original.renderExpandedContent && (
-                    <ExpandedContent row={row} />
-                  )}
-                </Row>
-              );
-            })}
+                return (
+                  <Row key={row.id} row={row} virtualRow={virtualRow}>
+                    {cells.map((cell: LeafyGreenTableCell<Person>) => {
+                      return (
+                        <Cell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
+                    {row.original.renderExpandedContent && (
+                      <ExpandedContent row={row} />
+                    )}
+                  </Row>
+                );
+              })}
           </TableBody>
         </Table>
       </TableContainer>

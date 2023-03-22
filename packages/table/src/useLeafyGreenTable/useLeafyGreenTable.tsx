@@ -1,43 +1,43 @@
 import React from 'react';
 import { useVirtual } from 'react-virtual';
-import { ColumnDef, useReactTable } from '@tanstack/react-table';
+import { Table, useReactTable } from '@tanstack/react-table';
+import { Row } from '@tanstack/react-table';
 import PropTypes from 'prop-types';
 
 import { CheckboxCell } from '../Cell';
 
 import {
   LeafyGreenTableOptions,
-  LeafyGreenTableValues,
   LGRowData,
 } from './useLeafyGreenTable.types';
 import {
   LeafyGreenTable,
-  LeafyGreenTableRow,
   LGColumnDef,
   LGTableDataType,
   VirtualizerValues,
 } from '.';
 
-const selectColumnConfig = {
+const selectColumnConfig: LGColumnDef<LGRowData> = {
   id: 'select',
   size: 14, // match checkbox width
-  // eslint-disable-next-line react/display-name
-  header: ({ table }: { table: LeafyGreenTable<unknown> }) => (
-    <CheckboxCell
-      checked={table.getIsAllRowsSelected()}
-      indeterminate={table.getIsSomeRowsSelected()}
-      onChange={table.getToggleAllRowsSelectedHandler()}
-      aria-label="Select all rows"
-    />
-  ),
+  header:
+    // eslint-disable-next-line react/display-name
+    ({ table }: { table: Table<LGTableDataType<LGRowData>> }) => (
+      <CheckboxCell
+        checked={table.getIsAllRowsSelected()}
+        indeterminate={table.getIsSomeRowsSelected()}
+        onChange={table.getToggleAllRowsSelectedHandler()}
+        aria-label="Select all rows"
+      />
+    ),
   cell:
     // eslint-disable-next-line react/display-name
     ({
       row,
       table,
     }: {
-      table: LeafyGreenTable<unknown>;
-      row: LeafyGreenTableRow<unknown>;
+      table: Table<LGTableDataType<LGRowData>>;
+      row: Row<LGTableDataType<LGRowData>>;
     }) => (
       <CheckboxCell
         checked={row.getIsSelected()}
@@ -48,15 +48,15 @@ const selectColumnConfig = {
         animate={!table.getIsAllRowsSelected()}
       />
     ),
-} as ColumnDef<unknown, unknown>;
+};
 
 function useLeafyGreenTable<T extends LGRowData, VS extends boolean = true>(
-  props: LeafyGreenTableOptions<T, VS>,
-): LeafyGreenTableValues<T, VS>;
+  props: LeafyGreenTableOptions<T>,
+): LeafyGreenTable<T>;
 
 function useLeafyGreenTable<T extends LGRowData, VS extends boolean = false>(
-  props: LeafyGreenTableOptions<T, VS>,
-): LeafyGreenTableValues<T, VS>;
+  props: LeafyGreenTableOptions<T>,
+): LeafyGreenTable<T>;
 
 function useLeafyGreenTable<T extends LGRowData, VS extends boolean>({
   containerRef,
@@ -65,15 +65,15 @@ function useLeafyGreenTable<T extends LGRowData, VS extends boolean>({
   hasSelectableRows,
   useVirtualScrolling = false as VS,
   ...rest
-}: LeafyGreenTableOptions<T, VS>): LeafyGreenTableValues<T, VS> {
+}: LeafyGreenTableOptions<T>): LeafyGreenTable<T> {
   const columns: Array<LGColumnDef<T>> = [
     ...(hasSelectableRows ? [selectColumnConfig as LGColumnDef<T>] : []),
     ...columnsProp.map(
       propColumn =>
-        ({
-          ...propColumn,
-          align: propColumn.align ?? 'left',
-        } as LGColumnDef<T>),
+      ({
+        ...propColumn,
+        align: propColumn.align ?? 'left',
+      } as LGColumnDef<T>),
     ),
   ];
 
@@ -106,7 +106,7 @@ function useLeafyGreenTable<T extends LGRowData, VS extends boolean>({
       totalSize: rowVirtualizer.totalSize,
     }),
     hasSelectableRows,
-  } as LeafyGreenTableValues<T, VS>;
+  } as LeafyGreenTable<T>;
 }
 
 useLeafyGreenTable.propTypes = {

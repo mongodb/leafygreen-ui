@@ -1,9 +1,9 @@
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
-import { LeafyGreenTableValues, LGRowData } from '../useLeafyGreenTable';
+import { LeafyGreenTable, LGRowData } from '../useLeafyGreenTable';
 
-export interface TableProps<T extends LGRowData, VS extends boolean>
+export interface TableProps<T extends LGRowData>
   extends HTMLElementProps<'table'>,
     DarkModeProps {
   /**
@@ -20,5 +20,5 @@ export interface TableProps<T extends LGRowData, VS extends boolean>
   /**
    * The `useLeafyGreenTable` return value
    */
-  table?: LeafyGreenTableValues<T, VS>;
+  table?: LeafyGreenTable<T>;
 }

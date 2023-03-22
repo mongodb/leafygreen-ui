@@ -2,17 +2,15 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import { Person } from '../utils/makeData';
-
 import { Cell, CellProps } from '.';
 
 const onScroll = jest.fn();
 
-const defaultProps: CellProps<Person> = {
+const defaultProps: CellProps = {
   onScroll,
 };
 
-function renderCell(props: CellProps<Person>) {
+function renderCell(props: CellProps) {
   return render(
     <table>
       <tbody>

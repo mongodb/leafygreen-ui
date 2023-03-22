@@ -7,20 +7,20 @@ import { LGRowData } from '../useLeafyGreenTable';
 import { TableContextValues } from './TableContext.types';
 
 export const TableContext = createContext<
-  TableContextValues<LGRowData, boolean>
+  Partial<TableContextValues<LGRowData>>
 >({});
 
-export const useTableContext = <T extends LGRowData, VS extends boolean>() =>
-  useContext<TableContextValues<T, VS>>(
-    TableContext as React.Context<TableContextValues<T, VS>>,
+export const useTableContext = <T extends LGRowData>() =>
+  useContext<TableContextValues<T>>(
+    TableContext as React.Context<TableContextValues<T>>,
   );
 
-const TableContextProvider = <T extends LGRowData, VS extends boolean>({
+const TableContextProvider = <T extends LGRowData>({
   children,
   darkMode,
   table,
   shouldAlternateRowColor,
-}: PropsWithChildren<Partial<TableContextValues<T, VS>>>) => {
+}: PropsWithChildren<Partial<TableContextValues<T>>>) => {
   const getRowById = (id?: string) =>
     id ? table?.getRowModel().rowsById?.[id] : undefined;
 
@@ -28,9 +28,8 @@ const TableContextProvider = <T extends LGRowData, VS extends boolean>({
     getRowById(getParentRowId(childId));
 
   /** The appropriately typed context provider */
-  const TableProvider = (
-    TableContext as React.Context<TableContextValues<T, VS>>
-  ).Provider;
+  const TableProvider = (TableContext as React.Context<TableContextValues<T>>)
+    .Provider;
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>

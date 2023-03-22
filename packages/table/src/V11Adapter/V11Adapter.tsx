@@ -1,9 +1,7 @@
 import React, { ReactElement, useMemo, useRef, useState } from 'react';
-import { PropsWithChildren } from 'react';
 import { VirtualItem } from 'react-virtual';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { DarkModeProps } from '@leafygreen-ui/lib';
 
 import { Cell, HeaderCell } from '../Cell';
 import ExpandedContent from '../ExpandedContent/ExpandedContent';
@@ -14,51 +12,28 @@ import TableContainer from '../TableContainer';
 import TableHead from '../TableHead';
 import useLeafyGreenTable, {
   LeafyGreenTableCell,
-  LeafyGreenTableOptions,
   LeafyGreenTableRow,
-  LeafyGreenTableValues,
+  LGColumnDef,
   LGRowData,
   LGTableDataType,
 } from '../useLeafyGreenTable';
-import Table, {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  getSortedRowModel,
-  TableProps,
-} from '..';
+import Table, { flexRender, getCoreRowModel, getSortedRowModel } from '..';
 
 import processColumns from './processColumns';
 import processData from './processData';
-
-type V11AdapterProps<
-  T extends LGRowData,
-  VS extends boolean,
-  > = PropsWithChildren<
-    Pick<
-      LeafyGreenTableOptions<T, VS>,
-      'useVirtualScrolling' | 'hasSelectableRows'
-    > &
-    Pick<TableProps<T, VS>, 'shouldAlternateRowColor'> &
-    DarkModeProps & {
-      /**
-       * Mapping of TableHeader label to the key of the field in the Table's data
-       */
-      headerLabelMapping?: { [key: string]: string };
-    }
-  >;
+import { V11AdapterProps } from './V11Adapter.types';
 
 // assumes table is first element in children
 // reads columns from columns' keys
 // supports up to one layer of nested rows
 // assumes that the key of a column in the original data === column label header in lowercase; can be overridden by `headerLabelMapping`
-const V11Adapter = <T extends LGRowData, VS extends boolean>({
+const V11Adapter = <T extends LGRowData>({
   children,
   shouldAlternateRowColor,
-  useVirtualScrolling = false as VS,
+  useVirtualScrolling = false,
   hasSelectableRows = false,
   headerLabelMapping,
-}: V11AdapterProps<T, VS>) => {
+}: V11AdapterProps<T>) => {
   const { darkMode } = useDarkMode();
   const containerRef = useRef(null);
   const OldTable = React.Children.toArray(children)[0];
@@ -67,21 +42,21 @@ const V11Adapter = <T extends LGRowData, VS extends boolean>({
     columns,
     children: childrenFn,
   } = (OldTable as ReactElement).props;
-  const processedColumns: Array<ColumnDef<LGTableDataType<T>, 'string'>> =
-    useMemo(
-      () => processColumns(data, columns, headerLabelMapping),
-      [data, columns, headerLabelMapping],
-    );
+  const processedColumns: Array<LGColumnDef<T>> = useMemo(
+    () => processColumns(data, columns, headerLabelMapping),
+    [data, columns, headerLabelMapping],
+  );
   const processedData: Array<LGTableDataType<T>> = useState(() =>
     processData(data, processedColumns, childrenFn),
   )[0];
 
-  const table = useLeafyGreenTable<T, VS>({
+  const table = useLeafyGreenTable<T>({
     containerRef,
     data: processedData,
     columns: processedColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    // @ts-ignore
     getSubRows: row => row.subRows,
     useVirtualScrolling,
     hasSelectableRows,
@@ -91,7 +66,7 @@ const V11Adapter = <T extends LGRowData, VS extends boolean>({
   let loopedItems;
 
   if (useVirtualScrolling) {
-    loopedItems = (table as LeafyGreenTableValues<T, true>).virtualRows;
+    loopedItems = table.virtualRows ?? [];
   } else {
     loopedItems = rows;
   }
@@ -130,7 +105,11 @@ const V11Adapter = <T extends LGRowData, VS extends boolean>({
                 <Row
                   key={row.id}
                   row={row}
-                  virtualRow={useVirtualScrolling ? loopedItem : undefined}
+                  virtualRow={
+                    (useVirtualScrolling
+                      ? loopedItem
+                      : undefined) as VirtualItem
+                  }
                 >
                   {row
                     .getVisibleCells()
@@ -138,9 +117,11 @@ const V11Adapter = <T extends LGRowData, VS extends boolean>({
                       return (
                         <Cell key={cell.id}>
                           {cell.column.id === 'select' ? (
+                            // @ts-ignore
                             <>{cell.column.columnDef?.cell({ row, table })}</>
                           ) : (
                             // index by row.index (not the index of the loop) to get the sorted order
+                            // @ts-ignore
                             <>{processedData[row.index][cell.column.id]()}</>
                           )}
                         </Cell>
@@ -155,6 +136,7 @@ const V11Adapter = <T extends LGRowData, VS extends boolean>({
                         {subRow.getVisibleCells().map(subRowCell => {
                           return (
                             <Cell key={subRowCell.id}>
+                              {/* @ts-ignore */}
                               {subRow.original[subRowCell.column.id]()}
                             </Cell>
                           );
@@ -167,6 +149,7 @@ const V11Adapter = <T extends LGRowData, VS extends boolean>({
                                 .map(subSubRowCell => {
                                   return (
                                     <Cell key={subSubRowCell.id}>
+                                      {/* @ts-ignore */}
                                       {subSubRow.original[
                                         subSubRowCell.column.id
                                       ]()}

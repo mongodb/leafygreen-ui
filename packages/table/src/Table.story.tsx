@@ -25,6 +25,7 @@ import useLeafyGreenTable, {
   LeafyGreenTableRow,
   LGColumnDef,
 } from './useLeafyGreenTable';
+import { HeaderGroup } from '.';
 
 export default {
   title: 'Components/Table',
@@ -147,7 +148,7 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
       <TableContainer ref={tableContainerRef}>
         <Table {...args} table={table}>
           <TableHead>
-            {table.getHeaderGroups().map(headerGroup => (
+            {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
               <HeaderRow key={headerGroup.id}>
                 {headerGroup.headers.map(header => {
                   return (
@@ -280,7 +281,7 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
       <TableContainer ref={tableContainerRef}>
         <Table {...args} table={table}>
           <TableHead>
-            {table.getHeaderGroups().map(headerGroup => (
+            {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
               <HeaderRow key={headerGroup.id}>
                 {headerGroup.headers.map(header => {
                   return (
@@ -388,7 +389,7 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
       <TableContainer ref={tableContainerRef}>
         <Table {...args}>
           <TableHead>
-            {table.getHeaderGroups().map(headerGroup => (
+            {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
               <HeaderRow key={headerGroup.id}>
                 {headerGroup.headers.map(header => {
                   return (
@@ -514,7 +515,7 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
       <TableContainer ref={tableContainerRef}>
         <Table {...args} table={table}>
           <TableHead>
-            {table.getHeaderGroups().map(headerGroup => (
+            {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
               <HeaderRow key={headerGroup.id}>
                 {headerGroup.headers.map(header => {
                   return (
@@ -632,7 +633,7 @@ export const WithPagination: ComponentStory<typeof Table> = args => {
       <TableContainer ref={tableContainerRef}>
         <Table {...args}>
           <TableHead>
-            {table.getHeaderGroups().map(headerGroup => (
+            {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
               <HeaderRow key={headerGroup.id}>
                 {headerGroup.headers.map(header => {
                   return (

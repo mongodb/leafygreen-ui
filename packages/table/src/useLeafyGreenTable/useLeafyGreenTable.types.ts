@@ -32,33 +32,18 @@ export type LGColumnDef<T extends LGRowData> = ColumnDef<LGTableDataType<T>> & {
 };
 
 /** LeafyGreen extension of `useReactTable` {@link TableOptions}*/
-export interface LeafyGreenTableOptions<T extends LGRowData, VS extends boolean>
+export interface LeafyGreenTableOptions<T extends LGRowData>
   extends TableOptions<LGTableDataType<T>> {
   containerRef: RefObject<HTMLDivElement>;
   hasSelectableRows?: boolean;
-  useVirtualScrolling?: VS;
+  useVirtualScrolling?: boolean;
   columns: Array<LGColumnDef<T>>;
 }
 
 /** LeafyGreen extension of `useReactTable` {@link Table}*/
-interface LeafyGreenTableValuesWithoutVS<T extends LGRowData>
-  extends Table<LGTableDataType<T>> {
+export interface LeafyGreenTable<T extends LGRowData>
+  extends Table<LGTableDataType<T>>,
+    Pick<VirtualizerValues, 'totalSize'> {
+  virtualRows?: Array<VirtualItem>;
   hasSelectableRows: boolean;
 }
-
-interface LeafyGreenTableValuesWithVS<T extends LGRowData>
-  extends LeafyGreenTableValuesWithoutVS<T>,
-    Pick<VirtualizerValues, 'totalSize'> {
-  virtualRows: Array<VirtualItem>;
-}
-
-export type LeafyGreenTableValues<
-  T extends LGRowData,
-  VS extends boolean,
-> = VS extends true
-  ? LeafyGreenTableValuesWithVS<T>
-  : LeafyGreenTableValuesWithoutVS<T>;
-
-export type LeafyGreenTable<T extends LGRowData> =
-  | LeafyGreenTableValuesWithVS<T>
-  | LeafyGreenTableValuesWithoutVS<T>;

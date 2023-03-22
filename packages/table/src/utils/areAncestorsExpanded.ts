@@ -4,14 +4,11 @@ import { LGRowData } from '../useLeafyGreenTable';
 /**
  * Returns whether a given row has _all_ ancestor rows expanded
  */
-export function getAreAncestorsExpanded<
-  T extends LGRowData,
-  VS extends boolean,
->(
+export function getAreAncestorsExpanded<T extends LGRowData>(
   /** The starting id */
   startId: string,
   /** The parent getter function */
-  getParentRow: TableContextValues<T, VS>['getParentRow'],
+  getParentRow: TableContextValues<T>['getParentRow'],
 ) {
   if (!getParentRow) return false;
 

@@ -35,9 +35,11 @@ const processColumns = <T extends LGRowData>(
         ? (rowA, rowB, columnId) => {
             const indexA = rowA.index;
             const indexB = rowB.index;
+            // @ts-ignore
             return data[indexA][columnId] > data[indexB][columnId]
               ? -1
-              : data[indexB][columnId] > data[indexA][columnId]
+              : // @ts-ignore
+              data[indexB][columnId] > data[indexA][columnId]
               ? 1
               : 0;
           }
