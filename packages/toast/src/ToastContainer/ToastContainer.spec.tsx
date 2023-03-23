@@ -6,6 +6,7 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { defaults } from 'lodash';
 
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
@@ -24,9 +25,10 @@ async function delay(t: number) {
 }
 
 function renderToastContainer(
-  props: InternalToastProps = { title: 'test' },
+  _props?: Partial<InternalToastProps>,
   initialValue?: ToastProviderProps['initialValue'],
 ) {
+  const props = defaults(_props, { title: 'test' });
   const result = render(
     <ToastProvider initialValue={initialValue}>
       <ContextStory {...props} />
