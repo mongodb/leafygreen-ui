@@ -7,7 +7,7 @@ import TableBody from '../TableBody';
 import { LeafyGreenTableRow } from '../useLeafyGreenTable';
 import { Person } from '../utils/makeData';
 import { useTestHookCall } from '../utils/testHookCalls';
-import { flexRender } from '..';
+import Table, { flexRender } from '..';
 
 import Row from '.';
 
@@ -29,7 +29,7 @@ const RowWithNestedRows = () => {
 
   return (
     <div ref={containerRef}>
-      <table>
+      <Table table={table}>
         <thead>
           {table.getHeaderGroups().map(headerGroup => (
             <tr key={headerGroup.id}>
@@ -58,7 +58,7 @@ const RowWithNestedRows = () => {
             );
           })}
         </TableBody>
-      </table>
+      </Table>
     </div>
   );
 };
