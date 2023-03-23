@@ -17,6 +17,7 @@ import { ExpandedContentProps } from './ExpandedContent.types';
 
 const ExpandedContent = <T extends RowData>({
   row,
+  ...rest
 }: ExpandedContentProps<T>) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const isExpanded = row.getIsExpanded();
@@ -35,7 +36,7 @@ const ExpandedContent = <T extends RowData>({
   );
 
   return (
-    <InternalRowBase>
+    <InternalRowBase {...rest}>
       <td colSpan={row?.getVisibleCells().length} className={cx(baseStyles)}>
         <Transition in={isExpanded} timeout={0}>
           {state => (
@@ -55,5 +56,7 @@ const ExpandedContent = <T extends RowData>({
     </InternalRowBase>
   );
 };
+
+ExpandedContent.displayName = 'ExpandedContent';
 
 export default ExpandedContent;

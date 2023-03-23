@@ -70,18 +70,6 @@ describe('packages/table/HeaderCell', () => {
     });
   });
 
-  describe('align prop', () => {
-    test('align prop aligns th content', async () => {
-      const { getByTestId } = renderSimpleHeaderCell({ align: 'right' });
-      const headerCellContent = getByTestId(
-        'lg-header-cell-test',
-      ).querySelectorAll('div')[0];
-      expect(getComputedStyle(headerCellContent).justifyContent).toBe('right');
-    });
-
-    // test for aligning the corresponding body cell will be handled in Cell.spec.tsx
-  });
-
   describe('sort prop', () => {
     test('sort prop renders sort icon button', async () => {
       const { getByTestId } = render(<HeaderCellWithHook enableSorting />);

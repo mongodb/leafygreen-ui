@@ -1,6 +1,6 @@
 import React from 'react';
-import { getAllByRole } from '@testing-library/dom';
 import { fireEvent, render } from '@testing-library/react';
+import { getAllByRole } from '@testing-library/dom';
 
 import { Cell } from '../Cell';
 import TableBody from '../TableBody';
@@ -27,6 +27,8 @@ const RowWithNestedRows = () => {
     },
   });
 
+  const { rows } = table.getRowModel();
+
   return (
     <div ref={containerRef}>
       <Table table={table}>
@@ -40,7 +42,7 @@ const RowWithNestedRows = () => {
           ))}
         </thead>
         <TableBody>
-          {table.getRowModel().rows.map((row: LeafyGreenTableRow<Person>) => {
+          {rows.map((row: LeafyGreenTableRow<Person>) => {
             return (
               <Row key={row.id} row={row}>
                 {row.getVisibleCells().map(cell => {
@@ -54,8 +56,24 @@ const RowWithNestedRows = () => {
                     </Cell>
                   );
                 })}
+                {row.subRows &&
+                  row.subRows.map(subRow => (
+                    <Row key={subRow.id} row={subRow}>
+                      {subRow.getVisibleCells().map(cell => {
+                        return (
+                          <Cell key={cell.id}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext(),
+                            )}
+                          </Cell>
+                        );
+                      })}
+                    </Row>
+                  ))
+                }
               </Row>
-            );
+            )
           })}
         </TableBody>
       </Table>
@@ -71,16 +89,16 @@ describe('packages/table/Row/ExpandableContent', () => {
   });
   test('rows with nested rows render expand icon button', async () => {
     const { getByLabelText } = render(<RowWithNestedRows />);
-    const expandIconButton = getByLabelText('expand row');
+    const expandIconButton = getByLabelText('Expand row');
     expect(expandIconButton).toBeInTheDocument();
   });
   // eslint-disable-next-line jest/no-disabled-tests
   test.skip('clicking expand icon button renders collapse button and nested row content', async () => {
     const { getByLabelText, queryByText } = render(<RowWithNestedRows />);
-    const expandIconButton = getByLabelText('expand row');
+    const expandIconButton = getByLabelText('Expand row');
     expect(queryByText('Expandable content test')).not.toBeInTheDocument();
     fireEvent.click(expandIconButton);
-    const collapseIconButton = getByLabelText('collapse row');
+    const collapseIconButton = getByLabelText('Collapse row');
     // todo: these checks don't currently work, although the feature clearly does
     expect(collapseIconButton).toBeInTheDocument();
     expect(queryByText('nested row name')).toBeInTheDocument();

@@ -54,4 +54,6 @@ Table.propTypes = {
   shouldAlternateRowColor: PropTypes.bool,
 };
 
+Table.displayName = 'Table';
+
 export default Table;

@@ -28,4 +28,6 @@ Row.propTypes = {
   disabled: PropTypes.bool,
 };
 
+Row.displayName = 'Row';
+
 export default Row;

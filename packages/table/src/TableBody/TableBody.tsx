@@ -47,4 +47,6 @@ const TableBody = ({
   );
 };
 
+TableBody.displayName = 'TableBody';
+
 export default TableBody;

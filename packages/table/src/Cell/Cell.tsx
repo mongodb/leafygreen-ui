@@ -60,6 +60,7 @@ const Cell = ({
   );
 };
 
+Cell.displayName = 'Cell';
 Cell.propTypes = {};
 
 export default Cell;

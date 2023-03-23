@@ -18,4 +18,6 @@ const HeaderRow = ({
   );
 };
 
+HeaderRow.displayName = 'HeaderRow';
+
 export default HeaderRow;

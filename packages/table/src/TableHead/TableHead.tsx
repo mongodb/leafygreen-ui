@@ -29,4 +29,6 @@ const TableHead = ({
   );
 };
 
+TableHead.displayName = 'TableHead';
+
 export default TableHead;

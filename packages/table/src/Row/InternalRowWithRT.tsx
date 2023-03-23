@@ -69,7 +69,6 @@ const InternalRowWithRT = <T extends LGRowData>({
       [expandedContentParentStyles[theme]]: isExpanded,
     }),
     'data-expanded': isExpanded,
-    'data-testid': 'lg-table-expandable-row-tbody',
     // @ts-expect-error - VirtualItem.measureRef is not typed as a ref
     ref: rowRef,
   };
