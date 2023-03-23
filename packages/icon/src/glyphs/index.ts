@@ -54,6 +54,7 @@ import Filter from './Filter.svg';
 import Folder from './Folder.svg';
 import FullScreenEnter from './FullScreenEnter.svg';
 import FullScreenExit from './FullScreenExit.svg';
+import Gauge from './Gauge.svg';
 import GlobeAmericas from './GlobeAmericas.svg';
 import GovernmentBuilding from './GovernmentBuilding.svg';
 import Home from './Home.svg';
@@ -170,6 +171,7 @@ const _glyphs = {
   FullScreenEnter,
   FullScreenExit,
   Folder,
+  Gauge,
   GlobeAmericas,
   GovernmentBuilding,
   Home,
