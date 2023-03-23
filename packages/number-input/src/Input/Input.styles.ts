@@ -180,67 +180,6 @@ export const wrapperBaseStyles = css`
   z-index: 1;
 `;
 
-export const arrowsBaseStyles = css`
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 0;
-  right: ${spacing[2]}px;
-  height: 100%;
-  justify-content: center;
-  translate: 16px 0;
-  transition: translate ${transitionDuration.default}ms ease-in-out;
-`;
-
-export const arrowsAnimateStyles = css`
-  .${wrapperClassName}:hover &,
-  .${wrapperClassName}:focus-within & {
-    translate: 0 0;
-  }
-`;
-
-export const arrowDisabledStyles = css`
-  pointer-events: none;
-`;
-
-export const arrowBaseStyles = css`
-  all: unset;
-  display: flex;
-  position: relative;
-  height: 12px;
-  width: 8px;
-
-  &:hover {
-    cursor: pointer;
-  }
-
-  svg {
-    position: absolute;
-    translate: -50% -50%;
-    top: 50%;
-    left: 50%;
-  }
-`;
-
-export const arrowThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.gray.base};
-
-    &:hover,
-    &:active {
-      color: ${palette.gray.dark3};
-    }
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.base};
-
-    &:hover,
-    &:active {
-      color: ${palette.gray.light1};
-    }
-  `,
-};
-
 export const selectBaseStyles = css`
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
@@ -376,8 +315,4 @@ export const iconSizeStyles: Record<Size, string> = {
 
 export const iconDisabledStyles = css`
   cursor: not-allowed;
-`;
-
-export const downArrowRotateStyles = css`
-  rotate: 180deg;
 `;

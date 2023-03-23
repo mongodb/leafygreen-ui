@@ -7,6 +7,13 @@ import {
   PortalControlProps,
 } from '@leafygreen-ui/popover';
 
+export const Direction = {
+  Increment: 'increment',
+  Decrement: 'decrement',
+};
+
+export type Direction = typeof Direction[keyof typeof Direction];
+
 export const State = {
   Error: 'error',
   None: 'none',
