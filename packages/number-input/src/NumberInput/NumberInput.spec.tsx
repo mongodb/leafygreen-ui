@@ -168,7 +168,7 @@ describe('packages/number-input', () => {
       });
 
       const upArrow = container.querySelector(
-        'button[aria-label="Increment number"]',
+        'button[aria-label="increment number"]',
       );
 
       userEvent.click(upArrow as HTMLButtonElement);
@@ -182,7 +182,7 @@ describe('packages/number-input', () => {
       });
 
       const upArrow = container.querySelector(
-        'button[aria-label="Decrement number"]',
+        'button[aria-label="decrement number"]',
       );
 
       userEvent.click(upArrow as HTMLButtonElement);
