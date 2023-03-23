@@ -1,5 +1,20 @@
 # @leafygreen-ui/code
 
+## 14.2.1
+
+### Patch Changes
+
+- Updated dependencies [5b036515e]
+- Updated dependencies [26e341a0b]
+- Updated dependencies [997121cc3]
+  - @leafygreen-ui/palette@4.0.0
+  - @leafygreen-ui/lib@10.2.2
+  - @leafygreen-ui/icon@11.12.5
+  - @leafygreen-ui/button@20.0.2
+  - @leafygreen-ui/icon-button@15.0.7
+  - @leafygreen-ui/select@10.2.3
+  - @leafygreen-ui/tokens@2.0.1
+
 ## 14.2.0
 
 ### Minor Changes
