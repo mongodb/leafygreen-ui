@@ -45,7 +45,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       errorMessage,
       onChange,
       popoverZIndex,
-      usePortal = true,
+      usePortal,
       portalClassName,
       portalContainer,
       scrollContainer,
