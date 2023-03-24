@@ -31,6 +31,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       size = Size.Default,
       unitOptions = [],
       onSelectChange = () => {},
+      disabled = false,
       darkMode: darkModeProp,
       id: idProp,
       'aria-describedby': ariaDescribedbyProp,
@@ -38,14 +39,13 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       'aria-label': ariaLabelProp,
       unit,
       className,
-      disabled,
       label,
       value,
       description,
       errorMessage,
       onChange,
       popoverZIndex,
-      usePortal,
+      usePortal = true,
       portalClassName,
       portalContainer,
       scrollContainer,
@@ -63,9 +63,9 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
     const hasUnit = !!unit;
     const hasSelectOptions =
       Array.isArray(unitOptions) && unitOptions.length > 1;
-
+    const isUnitInOptions = unitOptions.find(u => u.displayName === unit);
     const renderUnitOnly = hasUnit && !hasSelectOptions;
-    const renderSelectOnly = hasUnit && hasSelectOptions;
+    const renderSelectOnly = hasUnit && hasSelectOptions && !!isUnitInOptions;
     const renderErrorMessage = state === State.Error && errorMessage;
 
     const popoverProps = {

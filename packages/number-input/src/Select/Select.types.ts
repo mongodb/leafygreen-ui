@@ -1,11 +1,6 @@
 import { Size, UnitOption } from '../NumberInput/NumberInput.types';
 
-export interface SelectProps {
-  /**
-   * Id for the select component.
-   */
-  id?: string;
-
+export interface PopoverProps {
   /**
    * Specifies that the popover content should be rendered at the end of the DOM,
    * rather than in the DOM tree.
@@ -33,6 +28,13 @@ export interface SelectProps {
    * Number that controls the z-index of the popover element directly.
    */
   popoverZIndex?: number;
+}
+
+export interface SelectProps extends PopoverProps {
+  /**
+   * Id for the select component.
+   */
+  id?: string;
 
   /**
    * The controlled value of the select input.
@@ -52,14 +54,14 @@ export interface SelectProps {
   /**
    * Determines if the dropdown is disabled.
    */
-  disabled?: boolean;
+  disabled: boolean;
 
   /**
    * Determines the font size and padding.
    *
    * @default 'default'
    */
-  size?: Size;
+  size: Size;
 
   /**
    *
