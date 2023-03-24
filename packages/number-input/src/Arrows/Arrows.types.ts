@@ -1,6 +1,6 @@
 import { Direction } from '../NumberInput/NumberInput.types';
 
-export interface ArrowProps {
+export interface ArrowsProps {
   /**
    * Determines if buttons should be disabled
    */
@@ -10,4 +10,8 @@ export interface ArrowProps {
    * Callback called on button interaction
    */
   handleValueChange: (value: Direction) => void;
+}
+
+export interface ArrowProps extends ArrowsProps {
+  direction: Direction;
 }
