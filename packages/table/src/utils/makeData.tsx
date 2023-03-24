@@ -1,6 +1,8 @@
 import React from 'react';
 import { faker } from '@faker-js/faker';
 
+import Code from '@leafygreen-ui/code';
+
 import { LeafyGreenTableRow } from '../useLeafyGreenTable';
 
 faker.seed(0);
@@ -80,3 +82,44 @@ export function makeData(
   const data = makeDataLevel();
   return data;
 }
+
+const randomChoice = (arr: Array<any>) => {
+  return arr[Math.floor(arr.length * Math.random())];
+};
+
+const createDate = () => {
+  const d = new Date();
+  d.setDate(d.getDate() - randomIntFromInterval(0, 10));
+  return d;
+};
+
+const SampleExpandedContent = row => {
+  return (
+    <div style={{ padding: '0 70px' }}>
+      <Code language="js" style={{ width: '100%' }}>
+        {`          
+          function greeting(row) {
+            return \`Hello, you're looking at row ID ${row.id}! Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper.\`;
+          }
+          
+          console.log(greeting(row));
+        `}
+      </Code>
+    </div>
+  );
+};
+
+export const createKitchenSinkData = (depth = 0) => {
+  return {
+    dateCreated: createDate(),
+    frequency: randomChoice(['Daily', 'Weekly', 'Monthly']),
+    clusterType: randomChoice(['Replica set', 'Sharded cluster']),
+    encryptorEnabled: randomChoice([true, false]),
+    mdbVersion: randomChoice(['4.4.10', '4.5.1', '4.6.11']),
+    subRows:
+      depth === 0
+        ? [...Array(3)].map(_ => createKitchenSinkData(depth + 1))
+        : undefined,
+    renderExpandedContent: depth > 0 ? SampleExpandedContent : undefined,
+  };
+};

@@ -34,7 +34,7 @@ const SortIcon = ({ sortState, onSortIconClick, ...rest }: SortIconProps) => {
   const { theme } = useDarkMode();
 
   const handleClick: MouseEventHandler = e => {
-    onSortIconClick && onSortIconClick(e);
+    onSortIconClick?.(e);
   };
 
   return (

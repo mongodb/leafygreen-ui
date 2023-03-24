@@ -31,10 +31,7 @@ const InternalRowWithoutRT = ({
       {...rest}
     >
       {React.Children.map(children, (child: ReactNode, index: number) => {
-        return React.createElement(Cell, {
-          ...(child as ReactElement)?.props,
-          cellIndex: index,
-        });
+        return <Cell {...(child as ReactElement).props} cellIndex={index} />;
       })}
     </InternalRowBase>
   );

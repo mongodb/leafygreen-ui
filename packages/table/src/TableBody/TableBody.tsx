@@ -1,4 +1,4 @@
-import React, { Fragment, PropsWithChildren, useMemo } from 'react';
+import React, { Fragment, useMemo } from 'react';
 
 import { Polymorph } from '@leafygreen-ui/polymorphic';
 
@@ -6,10 +6,7 @@ import { useTableContext } from '../TableContext/TableContext';
 
 import { TableBodyProps } from './TableBody.types';
 
-const TableBody = ({
-  children,
-  ...rest
-}: PropsWithChildren<TableBodyProps>) => {
+const TableBody = ({ children, ...rest }: TableBodyProps) => {
   let paddingTop = 0;
   let paddingBottom = 0;
 

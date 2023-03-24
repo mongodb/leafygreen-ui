@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ComponentStory, Meta } from '@storybook/react';
 import {
   flexRender,
@@ -7,6 +7,9 @@ import {
   getSortedRowModel,
 } from '@tanstack/react-table';
 
+import Badge from '@leafygreen-ui/badge';
+import Icon from '@leafygreen-ui/icon';
+import IconButton from '@leafygreen-ui/icon-button';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 import Pagination from '@leafygreen-ui/pagination';
 
@@ -16,7 +19,7 @@ import Row from './Row/Row';
 import TableBody from './TableBody/TableBody';
 import TableContainer from './TableContainer/TableContainer';
 import TableHead from './TableHead/TableHead';
-import { makeData, Person } from './utils/makeData';
+import { createKitchenSinkData, makeData, Person } from './utils/makeData';
 import { AnyDict } from './utils/types';
 import { Cell, HeaderCell } from './Cell';
 import Table from './Table';
@@ -37,9 +40,10 @@ export default {
     darkMode: storybookArgTypes.darkMode,
     ref: { control: 'none' },
   },
-  // This is needed as a workaround to make arg spreading performant
-  // https://github.com/storybookjs/storybook/issues/11657
   parameters: {
+    default: 'KitchenSink',
+    // This is needed as a workaround to make arg spreading performant
+    // https://github.com/storybookjs/storybook/issues/11657
     docs: {
       source: { type: 'code' },
     },
@@ -662,6 +666,149 @@ export const WithPagination: ComponentStory<typeof Table> = args => {
                       </Cell>
                     );
                   })}
+                </Row>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
+  );
+};
+
+export const KitchenSink: ComponentStory<typeof Table> = args => {
+  const tableContainerRef = React.useRef<HTMLDivElement>(null);
+  const data = useState(() =>
+    [...Array(10)].map(_ => createKitchenSinkData()),
+  )[0];
+
+  const columns = React.useMemo<Array<LGColumnDef<Person>>>(
+    () => [
+      {
+        accessorKey: 'dateCreated',
+        header: 'Date Created',
+        enableSorting: true,
+        cell: info =>
+          (info.getValue() as Date).toLocaleDateString('en-us', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          }),
+      },
+      {
+        accessorKey: 'frequency',
+        header: 'Frequency',
+      },
+      {
+        accessorKey: 'clusterType',
+        header: 'Cluster Type',
+      },
+      {
+        accessorKey: 'encryptorEnabled',
+        header: 'Encryptor',
+        // eslint-disable-next-line react/display-name
+        cell: info => (
+          <Badge variant={info.getValue() ? 'green' : 'red'}>
+            {info.getValue() ? 'Enabled' : 'Not enabled'}
+          </Badge>
+        ),
+      },
+      {
+        accessorKey: 'mdbVersion',
+        header: 'MongoDB Version',
+        size: 90,
+      },
+      {
+        id: 'actions',
+        header: '',
+        size: 60,
+        // eslint-disable-next-line react/display-name
+        cell: info => {
+          return (
+            <>
+              <IconButton aria-label="Download">
+                <Icon glyph="Download" />
+              </IconButton>
+              <IconButton aria-label="Export">
+                <Icon glyph="Export" />
+              </IconButton>
+              <IconButton aria-label="More Options">
+                <Icon glyph="Ellipsis" />
+              </IconButton>
+            </>
+          );
+        },
+      },
+    ],
+    [],
+  );
+
+  const table = useLeafyGreenTable<any>({
+    containerRef: tableContainerRef,
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getSubRows: row => row.subRows,
+  });
+
+  const { rows } = table.getRowModel();
+
+  return (
+    <>
+      <div>
+        <p>{table.getRowModel().rows.length} total rows</p>
+      </div>
+
+      <TableContainer ref={tableContainerRef}>
+        <Table {...args} table={table}>
+          <TableHead>
+            {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+              <HeaderRow key={headerGroup.id}>
+                {headerGroup.headers.map(header => {
+                  return (
+                    <HeaderCell key={header.id} header={header}>
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                    </HeaderCell>
+                  );
+                })}
+              </HeaderRow>
+            ))}
+          </TableHead>
+          <TableBody>
+            {rows.map((row: LeafyGreenTableRow<Person>) => {
+              return (
+                <Row key={row.id} row={row}>
+                  {row.getVisibleCells().map(cell => {
+                    return (
+                      <Cell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Cell>
+                    );
+                  })}
+                  {row.subRows &&
+                    row.subRows.map(subRow => (
+                      <Row key={subRow.id} row={subRow}>
+                        {subRow.getVisibleCells().map(cell => {
+                          return (
+                            <Cell key={cell.id}>
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext(),
+                              )}
+                            </Cell>
+                          );
+                        })}
+                        {subRow.original.renderExpandedContent && (
+                          <ExpandedContent row={subRow} />
+                        )}
+                      </Row>
+                    ))}
                 </Row>
               );
             })}

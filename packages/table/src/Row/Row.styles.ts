@@ -46,6 +46,16 @@ export const rowTopLevelExpandedStyles: Record<Theme, string> = {
 };
 
 // applied directly to rows for VS
+export const selectableRowStyles: Record<Theme, string> = {
+  [Theme.Dark]: css`
+    background-color: ${palette.gray.dark4};
+  `,
+  [Theme.Light]: css`
+    background-color: ${palette.blue.light3};
+  `,
+};
+
+// applied directly to rows for VS
 export const grayZebraRowStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     background-color: ${palette.gray.dark4};

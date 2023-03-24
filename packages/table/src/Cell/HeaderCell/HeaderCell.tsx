@@ -39,9 +39,7 @@ const HeaderCell = <T extends LGRowData>({
   const isFirstCell = cellIndex === 0;
   const isSelectable = !!table && !!table.hasSelectableRows;
 
-  let columnName;
-  let sortState;
-  let onSortIconClick;
+  let columnName, sortState, onSortIconClick;
 
   if (header && header.column.getCanSort()) {
     columnName = header.column.columnDef.header as string;

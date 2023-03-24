@@ -30,7 +30,6 @@ const ExpandedContent = <T extends RowData>({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const contentHeight = useMemo(
     () => (contentRef.current ? contentRef.current.clientHeight : 0),
-    // @adam - should this be a stateful value changed with a useEffect to avoid this eslint error?
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [content],
   );
