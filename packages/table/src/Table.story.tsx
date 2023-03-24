@@ -723,7 +723,7 @@ export const KitchenSink: ComponentStory<typeof Table> = args => {
         header: '',
         size: 60,
         // eslint-disable-next-line react/display-name
-        cell: info => {
+        cell: _ => {
           return (
             <>
               <IconButton aria-label="Download">

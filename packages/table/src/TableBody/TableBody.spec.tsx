@@ -68,7 +68,5 @@ describe('packages/table/TableBody', () => {
     });
   });
 
-  test.todo(
-    'Virtual scrolling features',
-  );
+  test.todo('Virtual scrolling features');
 });

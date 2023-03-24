@@ -93,7 +93,7 @@ const createDate = () => {
   return d;
 };
 
-const SampleExpandedContent = row => {
+const SampleExpandedContent = (row: LeafyGreenTableRow<object>) => {
   return (
     <div style={{ padding: '0 70px' }}>
       <Code language="js" style={{ width: '100%' }}>
@@ -109,7 +109,9 @@ const SampleExpandedContent = row => {
   );
 };
 
-export const createKitchenSinkData = (depth = 0) => {
+export const createKitchenSinkData: (depth?: number) => object = (
+  depth = 0,
+) => {
   return {
     dateCreated: createDate(),
     frequency: randomChoice(['Daily', 'Weekly', 'Monthly']),
