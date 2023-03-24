@@ -5,12 +5,12 @@ import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import {
-  iconBaseStyles,
-  iconErrorAnimateStyles,
-  iconErrorDisabledStyles,
-  iconErrorStyles,
-  iconSizeStyles,
-  iconThemeStyles,
+  animateStyles,
+  disabledStyles,
+  sizeStyles,
+  wrapperBaseStyles,
+  wrapperSizeStyles,
+  wrapperThemeStyles,
 } from './ErrorIcon.styles';
 import { ErrorIconProps } from './ErrorIcon.types';
 
@@ -28,13 +28,13 @@ export const ErrorIcon = ({
   return (
     <div
       className={cx(
-        iconBaseStyles,
-        iconThemeStyles[theme],
-        iconSizeStyles[size],
+        wrapperBaseStyles,
+        wrapperThemeStyles[theme],
+        wrapperSizeStyles[size],
         {
-          [iconErrorStyles[size]]: renderErrorIcon,
-          [iconErrorAnimateStyles[size]]: renderErrorIcon && !disabled,
-          [iconErrorDisabledStyles]: disabled,
+          [sizeStyles[size]]: renderErrorIcon,
+          [animateStyles[size]]: renderErrorIcon && !disabled,
+          [disabledStyles]: disabled,
         },
       )}
     >

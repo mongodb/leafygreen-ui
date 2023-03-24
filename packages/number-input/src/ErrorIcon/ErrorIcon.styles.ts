@@ -1,12 +1,12 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { wrapperClassName } from '../Input/Input.styles';
 import { Size } from '../NumberInput/NumberInput.types';
 
-export const iconErrorStyles: Record<Size, string> = {
+export const sizeStyles: Record<Size, string> = {
   [Size.XSmall]: css`
     translate: 4px 0;
   `,
@@ -18,7 +18,7 @@ export const iconErrorStyles: Record<Size, string> = {
   `,
 };
 
-export const iconErrorAnimateStyles: Record<Size, string> = {
+export const animateStyles: Record<Size, string> = {
   [Size.XSmall]: css`
     .${wrapperClassName}:hover &,
     .${wrapperClassName}:focus-within & {
@@ -39,45 +39,18 @@ export const iconErrorAnimateStyles: Record<Size, string> = {
   `,
 };
 
-export const inputErrorAnimateStyles: Record<Size, string> = {
-  [Size.XSmall]: css`
-    padding-right: ${spacing[1] * 7}px;
-
-    .${wrapperClassName}:hover &,
-    .${wrapperClassName}:focus-within & {
-      padding-right: ${spacing[1] * 11}px;
-    }
-  `,
-  [Size.Small]: css`
-    padding-right: ${spacing[1] * 7}px;
-
-    .${wrapperClassName}:hover &,
-    .${wrapperClassName}:focus-within & {
-      padding-right: ${spacing[1] * 11}px;
-    }
-  `,
-  [Size.Default]: css`
-    padding-right: ${spacing[1] * 8}px;
-
-    .${wrapperClassName}:hover &,
-    .${wrapperClassName}:focus-within & {
-      padding-right: ${spacing[1] * 11}px;
-    }
-  `,
-};
-
-export const iconErrorDisabledStyles = css`
+export const disabledStyles = css`
   cursor: not-allowed;
 `;
 
-export const iconBaseStyles = css`
+export const wrapperBaseStyles = css`
   position: absolute;
   display: flex;
   transition: translate ${transitionDuration.default}ms ease-in-out;
   translate: 30px 0;
 `;
 
-export const iconThemeStyles: Record<Theme, string> = {
+export const wrapperThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.red.base};
   `,
@@ -86,7 +59,7 @@ export const iconThemeStyles: Record<Theme, string> = {
   `,
 };
 
-export const iconSizeStyles: Record<Size, string> = {
+export const wrapperSizeStyles: Record<Size, string> = {
   [Size.XSmall]: css`
     right: 10px;
   `,
