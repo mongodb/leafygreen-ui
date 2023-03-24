@@ -46,9 +46,9 @@ export const rowTopLevelExpandedStyles: Record<Theme, string> = {
 };
 
 // applied directly to rows for VS
-export const selectableRowStyles: Record<Theme, string> = {
+export const selectedRowStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
-    background-color: ${palette.gray.dark4};
+    background-color: ${palette.blue.dark3};
   `,
   [Theme.Light]: css`
     background-color: ${palette.blue.light3};

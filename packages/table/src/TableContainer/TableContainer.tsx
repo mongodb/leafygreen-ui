@@ -21,6 +21,9 @@ const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
           `,
           className,
         )}
+        // allow select by keyboard to allow scroll by keyboard
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+        tabIndex={0}
         {...rest}
       >
         {children}

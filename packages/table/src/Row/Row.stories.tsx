@@ -28,16 +28,17 @@ export default {
   title: 'Components/Table/Row',
   component: Row,
   argTypes: {
-    children: { control: 'none' },
-    ref: { control: 'none' },
     virtualRow: { control: 'none' },
     row: { control: 'none' },
     className: { control: 'none' },
     disabled: { control: 'boolean' },
   },
-  // This is needed as a workaround to make arg spreading performant
-  // https://github.com/storybookjs/storybook/issues/11657
   parameters: {
+    controls: {
+      exclude: ['ref', 'children'],
+    },
+    // This is needed as a workaround to make arg spreading performant
+    // https://github.com/storybookjs/storybook/issues/11657
     docs: {
       source: { type: 'code' },
     },
@@ -196,11 +197,17 @@ DisabledNestedRows.args = {
 
 export const ClickableRows = Template.bind({});
 ClickableRows.args = {
-  onClick: () => {},
+  onClick: () => {
+    // eslint-disable-next-line no-console
+    console.log('row clicked!');
+  },
 };
 
 export const DisabledClickableRows = Template.bind({});
 DisabledClickableRows.args = {
-  onClick: () => {},
+  onClick: () => {
+    // eslint-disable-next-line no-console
+    console.log('row clicked!');
+  },
   disabled: true,
 };

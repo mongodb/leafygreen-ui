@@ -15,7 +15,7 @@ import {
   grayZebraRowStyles,
   rowTopLevelExpandedStyles,
   rowTopLevelStyles,
-  selectableRowStyles,
+  selectedRowStyles,
   zebraStyles,
 } from './Row.styles';
 import { InternalRowWithRTProps } from './Row.types';
@@ -44,7 +44,7 @@ const InternalRowWithRT = <T extends LGRowData>({
   const isOddVSRow = !!virtualRow && virtualRow.index % 2 !== 0;
 
   const isExpanded = row.getIsExpanded(); // Is this row currently expanded
-  const isSelected = row.getIsSelected(); // Is this row currently expanded
+  const isSelected = row.getIsSelected(); // Is this row currently selected
 
   const CellChildren = React.Children.toArray(children).filter(child =>
     isComponentType(child, 'Cell'),
@@ -84,10 +84,11 @@ const InternalRowWithRT = <T extends LGRowData>({
             [rowTopLevelExpandedStyles[theme]]: isExpanded && !isNested,
             [grayZebraRowStyles[theme]]: isOddVSRow && shouldAlternateRowColor,
             [zebraStyles[theme]]: !virtualRow && shouldAlternateRowColor,
-            [selectableRowStyles[theme]]: isSelected,
+            [selectedRowStyles[theme]]: isSelected,
           },
           className,
         )}
+        data-selected={isSelected}
         disabled={disabled}
         aria-hidden={!isRowVisible}
         aria-expanded={isExpanded}

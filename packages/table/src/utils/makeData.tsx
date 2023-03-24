@@ -33,7 +33,7 @@ function randomIntFromInterval(min: number, max: number) {
 
 const newPerson = (): Person => {
   return {
-    id: faker.datatype.number(1000),
+    id: faker.seed(),
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),
     age: faker.datatype.number({ min: 20, max: 100 }),
@@ -95,7 +95,7 @@ const createDate = () => {
 
 const SampleExpandedContent = (row: LeafyGreenTableRow<object>) => {
   return (
-    <div style={{ padding: '0 70px' }}>
+    <div style={{ padding: '12px 70px 24px 70px' }}>
       <Code language="js" style={{ width: '100%' }}>
         {`          
           function greeting(row) {

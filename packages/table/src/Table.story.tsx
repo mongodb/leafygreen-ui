@@ -34,14 +34,22 @@ export default {
   title: 'Components/Table',
   component: Table,
   argTypes: {
-    children: { control: 'none' },
     className: { control: 'none' },
     shouldAlternateRowColor: { control: 'boolean' },
     darkMode: storybookArgTypes.darkMode,
-    ref: { control: 'none' },
   },
   parameters: {
     default: 'KitchenSink',
+    controls: {
+      exclude: [
+        'children',
+        'ref',
+        'aria-describedby',
+        'aria-label',
+        'value',
+        'onSelectChange',
+      ],
+    },
     // This is needed as a workaround to make arg spreading performant
     // https://github.com/storybookjs/storybook/issues/11657
     docs: {
@@ -339,12 +347,12 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
         accessorKey: 'id',
         header: 'ID',
         size: 60,
-        enableSorting: true,
       },
       {
         accessorKey: 'firstName',
         header: 'First Name',
         cell: info => info.getValue(),
+        enableSorting: true,
       },
       {
         accessorFn: row => row.lastName,
@@ -352,18 +360,21 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
         cell: info => info.getValue(),
         // eslint-disable-next-line react/display-name
         header: () => <span>Last Name</span>,
+        enableSorting: true,
       },
       {
         accessorKey: 'age',
         // eslint-disable-next-line react/display-name
         header: () => 'Age',
         size: 50,
+        enableSorting: true,
       },
       {
         accessorKey: 'visits',
         // eslint-disable-next-line react/display-name
         header: () => <span>Visits</span>,
         size: 50,
+        enableSorting: true,
       },
       {
         accessorKey: 'status',
@@ -485,8 +496,8 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
       rowSelection,
     },
     onRowSelectionChange: setRowSelection,
-    hasSelectableRows: true,
     getCoreRowModel: getCoreRowModel(),
+    hasSelectableRows: true,
   });
 
   const { rows } = table.getRowModel();
@@ -537,7 +548,7 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
           <TableBody>
             {rows.map((row: LeafyGreenTableRow<Person>) => {
               return (
-                <Row key={row.id}>
+                <Row key={row.id} row={row}>
                   {row.getVisibleCells().map(cell => {
                     return (
                       <Cell key={cell.id}>
@@ -558,7 +569,11 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
   );
 };
 
-export const WithPagination: ComponentStory<typeof Table> = args => {
+export const WithPagination: ComponentStory<typeof Table> = ({
+  // eslint-disable-next-line react/prop-types
+  darkMode,
+  ...rest
+}) => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 10000))[0];
 
@@ -632,10 +647,11 @@ export const WithPagination: ComponentStory<typeof Table> = args => {
         }}
         onBackArrowClick={() => table.previousPage()}
         onForwardArrowClick={() => table.nextPage()}
+        darkMode={darkMode}
       />
 
       <TableContainer ref={tableContainerRef}>
-        <Table {...args}>
+        <Table darkMode={darkMode} {...rest}>
           <TableHead>
             {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
               <HeaderRow key={headerGroup.id}>
@@ -716,6 +732,7 @@ export const KitchenSink: ComponentStory<typeof Table> = args => {
       {
         accessorKey: 'mdbVersion',
         header: 'MongoDB Version',
+        enableSorting: true,
         size: 90,
       },
       {
@@ -748,6 +765,7 @@ export const KitchenSink: ComponentStory<typeof Table> = args => {
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     getSubRows: row => row.subRows,
   });
 

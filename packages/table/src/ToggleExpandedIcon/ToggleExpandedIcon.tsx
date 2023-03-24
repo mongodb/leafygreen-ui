@@ -20,6 +20,7 @@ const ToggleExpandedIcon = ({
   return (
     <IconButton
       aria-label={`${isExpanded ? 'Collapse' : 'Expand'} row`}
+      disabled={disabled}
       onClick={toggleExpanded}
       className={cx(iconButtonStyles, {
         [css`

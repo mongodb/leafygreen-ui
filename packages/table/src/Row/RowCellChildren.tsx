@@ -62,6 +62,7 @@ const RowCellChildren = <T extends LGRowData>({
                   isExpanded={isExpanded}
                   toggleExpanded={toggleExpanded}
                   aria-hidden={!isRowVisible}
+                  disabled={disabled}
                   tabIndex={isRowVisible ? 0 : -1}
                 />
               )}
