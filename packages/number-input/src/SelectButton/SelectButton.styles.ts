@@ -19,10 +19,11 @@ export const baseStyles = css`
 
 export const themeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
-    &,
+    background-color: ${palette.gray.light3};
+
     &:focus-visible,
     &:hover {
-      background-color: ${palette.gray.light2};
+      background-color: ${palette.white};
     }
 
     &:focus {
