@@ -18,7 +18,7 @@ import { ArrowsProps } from './Arrows.types';
 
 export const Arrows = ({
   disabled,
-  handleValueChange,
+  handleClick,
   handleArrowKeyDown,
 }: ArrowsProps) => {
   return (
@@ -31,13 +31,13 @@ export const Arrows = ({
       <Arrow
         disabled={disabled}
         direction={Direction.Increment}
-        handleValueChange={handleValueChange}
+        handleClick={handleClick}
         handleArrowKeyDown={handleArrowKeyDown}
       />
       <Arrow
         disabled={disabled}
         direction={Direction.Decrement}
-        handleValueChange={handleValueChange}
+        handleClick={handleClick}
         handleArrowKeyDown={handleArrowKeyDown}
       />
     </div>

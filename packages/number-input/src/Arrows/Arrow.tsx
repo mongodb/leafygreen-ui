@@ -19,7 +19,7 @@ import { ArrowProps } from './Arrows.types';
 
 export const Arrow = ({
   disabled,
-  handleValueChange,
+  handleClick,
   handleArrowKeyDown,
   direction,
 }: ArrowProps) => {
@@ -28,7 +28,7 @@ export const Arrow = ({
   return (
     <button
       aria-label={`${direction} number`}
-      onClick={() => handleValueChange(direction)}
+      onClick={() => handleClick(direction)}
       onKeyDown={handleArrowKeyDown}
       className={cx(arrowBaseStyles, arrowThemeStyles[theme])}
       type="button"

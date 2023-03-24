@@ -159,7 +159,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
         <Arrows
           disabled={disabled}
-          handleValueChange={handleValueChange}
+          handleClick={handleValueChange}
           handleArrowKeyDown={handleArrowKeyDown}
         />
       </div>

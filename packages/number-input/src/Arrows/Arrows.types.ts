@@ -9,7 +9,7 @@ export interface ArrowsProps {
   /**
    * Callback called when button is clicked
    */
-  handleValueChange: (value: Direction) => void;
+  handleClick: (value: Direction) => void;
 
   /**
    * Callback called when up/down arrows are pressed
