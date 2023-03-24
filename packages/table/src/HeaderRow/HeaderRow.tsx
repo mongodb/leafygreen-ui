@@ -12,11 +12,8 @@ const HeaderRow = ({
     <tr {...rest}>
       {React.Children.map(children, (child: ReactNode, index: number) => {
         return (
-          <HeaderCell
-            {...(child as ReactElement).props}
-            cellIndex={index}
-          />
-        )
+          <HeaderCell {...(child as ReactElement).props} cellIndex={index} />
+        );
       })}
     </tr>
   );

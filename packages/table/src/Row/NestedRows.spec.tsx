@@ -70,10 +70,9 @@ const RowWithNestedRows = () => {
                         );
                       })}
                     </Row>
-                  ))
-                }
+                  ))}
               </Row>
-            )
+            );
           })}
         </TableBody>
       </Table>

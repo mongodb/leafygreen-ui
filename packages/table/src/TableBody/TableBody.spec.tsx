@@ -3,9 +3,9 @@ import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
 import { useTestHookCall } from '../utils/testHookCalls';
+import Table from '..';
 
 import TableBody from '.';
-import Table from '..';
 
 describe('packages/table/TableBody', () => {
   describe('a11y', () => {

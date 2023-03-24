@@ -49,9 +49,7 @@ const RowWithExpandableContent = () => {
                   );
                 })}
                 {row.original.renderExpandedContent && (
-                  <ExpandedContent
-                    row={row}
-                  />
+                  <ExpandedContent row={row} />
                 )}
               </Row>
             );
