@@ -94,39 +94,6 @@ export const inputThemeStyles: Record<Theme, string> = {
   `,
 };
 
-export const iconErrorStyles: Record<Size, string> = {
-  [Size.XSmall]: css`
-    translate: 4px 0;
-  `,
-  [Size.Small]: css`
-    translate: 4px 0;
-  `,
-  [Size.Default]: css`
-    translate: 4px 0;
-  `,
-};
-
-export const iconErrorDisabledStyles: Record<Size, string> = {
-  [Size.XSmall]: css`
-    .${wrapperClassName}:hover &,
-    .${wrapperClassName}:focus-within & {
-      translate: -12px 0;
-    }
-  `,
-  [Size.Small]: css`
-    .${wrapperClassName}:hover &,
-    .${wrapperClassName}:focus-within & {
-      translate: -12px 0;
-    }
-  `,
-  [Size.Default]: css`
-    .${wrapperClassName}:hover &,
-    .${wrapperClassName}:focus-within & {
-      translate: -12px 0;
-    }
-  `,
-};
-
 export const sizeInputStyles: Record<Size, string> = {
   [Size.XSmall]: css`
     padding: 0 0 0 ${spacing[1] * 3}px;
@@ -136,33 +103,6 @@ export const sizeInputStyles: Record<Size, string> = {
   `,
   [Size.Default]: css`
     padding: 0 0 0 ${spacing[1] * 3}px;
-  `,
-};
-
-export const inputErrorAnimateStyles: Record<Size, string> = {
-  [Size.XSmall]: css`
-    padding-right: ${spacing[1] * 7}px;
-
-    .${wrapperClassName}:hover &,
-    .${wrapperClassName}:focus-within & {
-      padding-right: ${spacing[1] * 11}px;
-    }
-  `,
-  [Size.Small]: css`
-    padding-right: ${spacing[1] * 7}px;
-
-    .${wrapperClassName}:hover &,
-    .${wrapperClassName}:focus-within & {
-      padding-right: ${spacing[1] * 11}px;
-    }
-  `,
-  [Size.Default]: css`
-    padding-right: ${spacing[1] * 8}px;
-
-    .${wrapperClassName}:hover &,
-    .${wrapperClassName}:focus-within & {
-      padding-right: ${spacing[1] * 11}px;
-    }
   `,
 };
 
@@ -285,34 +225,29 @@ export const wrapperDisabledStyles: Record<Theme, string> = {
   `,
 };
 
-export const iconBaseStyles = css`
-  position: absolute;
-  display: flex;
-  transition: translate ${transitionDuration.default}ms ease-in-out;
-  translate: 30px 0;
-`;
-
-export const iconThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.red.base};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.red.light1};
-  `,
-};
-
-export const iconSizeStyles: Record<Size, string> = {
+export const inputErrorAnimateStyles: Record<Size, string> = {
   [Size.XSmall]: css`
-    right: 10px;
+    padding-right: ${spacing[1] * 7}px;
+
+    .${wrapperClassName}:hover &,
+    .${wrapperClassName}:focus-within & {
+      padding-right: ${spacing[1] * 11}px;
+    }
   `,
   [Size.Small]: css`
-    right: 10px;
+    padding-right: ${spacing[1] * 7}px;
+
+    .${wrapperClassName}:hover &,
+    .${wrapperClassName}:focus-within & {
+      padding-right: ${spacing[1] * 11}px;
+    }
   `,
   [Size.Default]: css`
-    right: 12px;
+    padding-right: ${spacing[1] * 8}px;
+
+    .${wrapperClassName}:hover &,
+    .${wrapperClassName}:focus-within & {
+      padding-right: ${spacing[1] * 11}px;
+    }
   `,
 };
-
-export const iconDisabledStyles = css`
-  cursor: not-allowed;
-`;

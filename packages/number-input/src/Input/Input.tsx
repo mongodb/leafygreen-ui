@@ -2,20 +2,14 @@ import React, { ChangeEvent, KeyboardEvent } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useControlledValue, useForwardedRef } from '@leafygreen-ui/hooks';
-import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { createSyntheticEvent } from '@leafygreen-ui/lib';
 
 import { Arrows } from '../Arrows';
+import { ErrorIcon } from '../ErrorIcon';
 import { Direction, Size, State } from '../NumberInput/NumberInput.types';
 
 import {
-  iconBaseStyles,
-  iconDisabledStyles,
-  iconErrorDisabledStyles,
-  iconErrorStyles,
-  iconSizeStyles,
-  iconThemeStyles,
   inputAnimateStyles,
   inputBaseStyles,
   inputErrorAnimateStyles,
@@ -42,8 +36,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       onChange: onChangeProp,
       disabled = false,
       size = Size.Default,
-      hasSelectOptions,
       state = State.None,
+      hasSelectOptions,
       errorMessage,
       ...rest
     }: InputProps,
@@ -142,20 +136,11 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           readOnly={disabled}
           {...rest}
         />
-        <div
-          className={cx(
-            iconBaseStyles,
-            iconThemeStyles[theme],
-            iconSizeStyles[size],
-            {
-              [iconErrorStyles[size]]: renderErrorIcon,
-              [iconErrorDisabledStyles[size]]: renderErrorIcon && !disabled,
-              [iconDisabledStyles]: disabled,
-            },
-          )}
-        >
-          <WarningIcon aria-hidden="true" />
-        </div>
+        <ErrorIcon
+          disabled={disabled}
+          renderErrorIcon={renderErrorIcon}
+          size={size}
+        />
 
         <Arrows
           disabled={disabled}

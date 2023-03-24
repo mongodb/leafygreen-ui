@@ -64,12 +64,17 @@ export const themeDisabledStyles: Record<Theme, string> = {
       box-shadow: ${focusRing['light'].input};
       border-color: ${palette.white};
     }
+
+    &:focus-visible,
+    &:hover {
+      background-color: ${palette.gray.light2};
+    }
   `,
   [Theme.Dark]: css`
     &:hover {
       box-shadow: unset;
       background-color: ${palette.gray.dark4};
-      border-color: ${palette.gray.dark4};
+      border-color: ${palette.gray.dark3};
     }
 
     &:focus {

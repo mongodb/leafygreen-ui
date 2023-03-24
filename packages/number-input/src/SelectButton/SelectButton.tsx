@@ -105,6 +105,7 @@ export const SelectButton = React.forwardRef(
           onMouseLeave={handleMouseLeave}
           onFocus={handleOnFocus}
           onBlur={handleOnBlur}
+          disabled={disabled}
         >
           {children}
         </Button>

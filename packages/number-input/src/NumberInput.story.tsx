@@ -18,6 +18,7 @@ export default StoryMeta({
   args: {
     label: 'label',
     unitOptions: [],
+    disabled: false,
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,

@@ -20,7 +20,7 @@ import { SelectProps } from './Select.types';
  */
 export function Select({
   'data-testid': dataTestId,
-  unit = '',
+  unit,
   id,
   unitOptions,
   onChange,

@@ -1,4 +1,4 @@
-import React, { KeyboardEvent } from 'react';
+import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
