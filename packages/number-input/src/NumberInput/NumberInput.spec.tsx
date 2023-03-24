@@ -373,6 +373,14 @@ describe('packages/number-input', () => {
         unitOptions={selectProps.unitOptions}
         onSelectChange={() => {}}
         label={label}
+        usePortal={false}
+      />
+
+      <NumberInput
+        unit={unitProps.unit}
+        unitOptions={selectProps.unitOptions}
+        onSelectChange={() => {}}
+        label={label}
         portalContainer={{} as HTMLElement}
         scrollContainer={{} as HTMLElement}
         portalClassName="classname"

@@ -110,7 +110,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
         justify={dropdownAutoWidth ? Justify.Start : Justify.Middle}
         adjustOnMutation
         className={cx(popoverClassName, className, {
-          [autoWidthStyles]: dropdownAutoWidth && !usePortal,
+          [autoWidthStyles]: dropdownAutoWidth,
         })}
         refEl={referenceElement}
         {...popoverProps}
