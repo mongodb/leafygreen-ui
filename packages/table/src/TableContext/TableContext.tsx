@@ -3,6 +3,7 @@ import React, { createContext, PropsWithChildren, useContext } from 'react';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { LGRowData } from '../useLeafyGreenTable';
+import getParentRowId from '../utils/getParentRowId';
 
 import { TableContextValues } from './TableContext.types';
 
@@ -48,11 +49,3 @@ const TableContextProvider = <T extends LGRowData>({
 };
 
 export default TableContextProvider;
-
-function getParentRowId(childId?: string) {
-  if (childId) {
-    const childIds = childId.split('.'); // ['0']
-    const parentId = childIds.slice(0, childIds.length - 1).join('.'); // []
-    return parentId.length > 0 ? parentId : undefined;
-  }
-}

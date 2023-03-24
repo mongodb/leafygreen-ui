@@ -5,6 +5,7 @@ import { ToggleExpandedIconProps } from '../ToggleExpandedIcon/ToggleExpandedIco
 export type CellProps = HTMLElementProps<'td'> & {
   /**
    * Index of the cell in its parent row.
+   * Intended for internal use.
    */
   cellIndex?: number;
 
@@ -27,6 +28,7 @@ export type CellProps = HTMLElementProps<'td'> & {
 
   /**
    * Defines whether the cell's row is visible (i.e. expanded)
+   * Intended for internal use.
    *
    * @default true
    */
@@ -34,6 +36,7 @@ export type CellProps = HTMLElementProps<'td'> & {
 
   /**
    * Defines whether the cell's row is expandable
+   * Intended for internal use.
    *
    * @default false
    */

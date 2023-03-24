@@ -4,7 +4,7 @@ import { Table, useReactTable } from '@tanstack/react-table';
 import { Row } from '@tanstack/react-table';
 import PropTypes from 'prop-types';
 
-import { CheckboxCell } from '../Cell';
+import Checkbox from '@leafygreen-ui/checkbox';
 
 import { LeafyGreenTableOptions, LGRowData } from './useLeafyGreenTable.types';
 import {
@@ -20,7 +20,7 @@ const selectColumnConfig: LGColumnDef<LGRowData> = {
   header:
     // eslint-disable-next-line react/display-name
     ({ table }: { table: Table<LGTableDataType<LGRowData>> }) => (
-      <CheckboxCell
+      <Checkbox
         checked={table.getIsAllRowsSelected()}
         indeterminate={table.getIsSomeRowsSelected()}
         onChange={table.getToggleAllRowsSelectedHandler()}
@@ -36,7 +36,7 @@ const selectColumnConfig: LGColumnDef<LGRowData> = {
       table: Table<LGTableDataType<LGRowData>>;
       row: Row<LGTableDataType<LGRowData>>;
     }) => (
-      <CheckboxCell
+      <Checkbox
         checked={row.getIsSelected()}
         indeterminate={row.getIsSomeSelected()}
         onChange={row.getToggleSelectedHandler()}
@@ -62,11 +62,11 @@ function useLeafyGreenTable<T extends LGRowData>({
     ...(hasSelectableRows ? [selectColumnConfig as LGColumnDef<T>] : []),
     ...columnsProp.map(
       propColumn =>
-        ({
-          ...propColumn,
-          align: propColumn.align ?? 'left',
-          enableSorting: propColumn.enableSorting ?? false,
-        } as LGColumnDef<T>),
+      ({
+        ...propColumn,
+        align: propColumn.align ?? 'left',
+        enableSorting: propColumn.enableSorting ?? false,
+      } as LGColumnDef<T>),
     ),
   ];
 

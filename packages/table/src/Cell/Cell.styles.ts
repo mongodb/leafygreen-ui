@@ -49,14 +49,11 @@ export const getCellPadding = ({
         padding-left: 8px;
         padding-right: 8px;
       `;
+    } else {
+      return css`
+        padding-left: ${baseTableSidePadding + (isExpandable ? 0 : 8)}px;
+      `;
     }
-
-    return css`
-      /* outline: 1px solid rebeccapurple;
-      outline-offset: -1px; */
-
-      padding-left: ${baseTableSidePadding + (isExpandable ? 0 : 8)}px;
-    `;
   }
 
   const parentIconsPadding = 8 * (depth - 1); // how much space do parent icons take up

@@ -3,6 +3,7 @@ import { getAllByRole } from '@testing-library/dom';
 import { fireEvent, render } from '@testing-library/react';
 
 import { Cell } from '../Cell';
+import ExpandedContent from '../ExpandedContent/ExpandedContent';
 import TableBody from '../TableBody';
 import { LeafyGreenTableRow } from '../useLeafyGreenTable';
 import { Person } from '../utils/makeData';
@@ -10,7 +11,6 @@ import { useTestHookCall } from '../utils/testHookCalls';
 import Table, { flexRender } from '..';
 
 import Row from '.';
-import ExpandedContent from '../ExpandedContent/ExpandedContent';
 
 const RowWithExpandableContent = () => {
   const { containerRef, table } = useTestHookCall({
@@ -51,7 +51,6 @@ const RowWithExpandableContent = () => {
                 {row.original.renderExpandedContent && (
                   <ExpandedContent
                     row={row}
-                    data-testid='lg-table-expandable-row-tbody'
                   />
                 )}
               </Row>
@@ -64,7 +63,7 @@ const RowWithExpandableContent = () => {
 };
 
 describe('packages/table/Row/ExpandableContent', () => {
-  test('renders the correct number of children', () => {
+  test('renders the correct number of cell children', () => {
     const { getAllByRole: getAllByRoleLocal } = render(
       <RowWithExpandableContent />,
     );
@@ -77,9 +76,8 @@ describe('packages/table/Row/ExpandableContent', () => {
     expect(expandIconButton).toBeInTheDocument();
   });
   test('rows with expandable content render rows as tbody elements', async () => {
-    const { getByTestId } = render(<RowWithExpandableContent />);
-    const expandableRowTbody = getByTestId('lg-table-expandable-row-tbody');
-    expect(expandableRowTbody).toBeInTheDocument();
+    const { getAllByRole } = render(<RowWithExpandableContent />);
+    expect(getAllByRole('rowgroup').length).toBe(4); // 1 for thead, 3 for tbody
   });
   // eslint-disable-next-line jest/no-disabled-tests
   test.skip('clicking expand icon button renders collapse button and expanded content', async () => {
@@ -90,7 +88,6 @@ describe('packages/table/Row/ExpandableContent', () => {
     expect(queryByText('Expandable content test')).not.toBeInTheDocument();
     fireEvent.click(expandIconButton);
     const collapseIconButton = getByLabelText('collapse row');
-    // todo: these checks don't currently work, although the feature clearly does
     expect(collapseIconButton).toBeInTheDocument();
     expect(queryByText('Expandable content test')).toBeInTheDocument();
   });

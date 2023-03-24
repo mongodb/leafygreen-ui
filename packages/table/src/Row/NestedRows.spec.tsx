@@ -1,6 +1,6 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
 import { getAllByRole } from '@testing-library/dom';
+import { fireEvent, render } from '@testing-library/react';
 
 import { Cell } from '../Cell';
 import TableBody from '../TableBody';
@@ -81,7 +81,7 @@ const RowWithNestedRows = () => {
   );
 };
 
-describe('packages/table/Row/ExpandableContent', () => {
+describe('packages/table/Row/NestedRows', () => {
   test('renders the correct number of children', () => {
     const { getAllByRole: getAllByRoleLocal } = render(<RowWithNestedRows />);
     const firstRow = getAllByRoleLocal('row')[1];
@@ -92,15 +92,19 @@ describe('packages/table/Row/ExpandableContent', () => {
     const expandIconButton = getByLabelText('Expand row');
     expect(expandIconButton).toBeInTheDocument();
   });
+  test('having a row with nested rows render all rows as tbody elements', async () => {
+    const { getAllByRole } = render(<RowWithNestedRows />);
+    expect(getAllByRole('rowgroup').length).toBe(4); // 1 for thead, 3 for tbody
+  });
   // eslint-disable-next-line jest/no-disabled-tests
   test.skip('clicking expand icon button renders collapse button and nested row content', async () => {
     const { getByLabelText, queryByText } = render(<RowWithNestedRows />);
     const expandIconButton = getByLabelText('Expand row');
-    expect(queryByText('Expandable content test')).not.toBeInTheDocument();
+    expect(queryByText('nested row name')).not.toBeVisible();
     fireEvent.click(expandIconButton);
     const collapseIconButton = getByLabelText('Collapse row');
-    // todo: these checks don't currently work, although the feature clearly does
     expect(collapseIconButton).toBeInTheDocument();
-    expect(queryByText('nested row name')).toBeInTheDocument();
+    // todo: queryByText finding a phantom tr element between tbody's
+    expect(queryByText('nested row name')).toBeVisible();
   });
 });

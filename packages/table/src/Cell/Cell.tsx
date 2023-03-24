@@ -1,5 +1,6 @@
 import React from 'react';
 import { Transition } from 'react-transition-group';
+import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 
@@ -61,6 +62,13 @@ const Cell = ({
 };
 
 Cell.displayName = 'Cell';
-Cell.propTypes = {};
+Cell.propTypes = {
+  cellIndex: PropTypes.number,
+  depth: PropTypes.number,
+  toggleExpandedIconProps: PropTypes.any,
+  contentClassName: PropTypes.string,
+  isVisible: PropTypes.bool,
+  isExpandable: PropTypes.bool,
+};
 
 export default Cell;
