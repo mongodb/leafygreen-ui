@@ -7,9 +7,14 @@ export interface ArrowsProps {
   disabled: boolean;
 
   /**
-   * Callback called on button interaction
+   * Callback called when button is clicked
    */
   handleValueChange: (value: Direction) => void;
+
+  /**
+   * Callback called when up/down arrows are pressed
+   */
+  handleArrowKeyDown: (e: React.KeyboardEvent) => void;
 }
 
 export interface ArrowProps extends ArrowsProps {

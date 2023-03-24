@@ -20,31 +20,10 @@ import { ArrowProps } from './Arrows.types';
 export const Arrow = ({
   disabled,
   handleValueChange,
+  handleArrowKeyDown,
   direction,
 }: ArrowProps) => {
   const { theme } = useDarkMode();
-
-  /**
-   * Edge case if the user clicks on an arrow button then switches to keyboard click.
-   * By default if focus is in the input then the keyboard clicks will work automatically but since the buttons are custom and outside of the input we are mimicking native behavior.
-   */
-  const handleArrowKeyDown = (e: KeyboardEvent) => {
-    if (!disabled) {
-      switch (e.key) {
-        case 'ArrowUp': {
-          e.preventDefault();
-          handleValueChange(Direction.Increment);
-          break;
-        }
-
-        case 'ArrowDown': {
-          e.preventDefault();
-          handleValueChange(Direction.Decrement);
-          break;
-        }
-      }
-    }
-  };
 
   return (
     <button

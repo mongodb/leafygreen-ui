@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, KeyboardEvent } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useControlledValue, useForwardedRef } from '@leafygreen-ui/hooks';
@@ -66,6 +66,9 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       handleChange?.(synthEvent as ChangeEvent<HTMLInputElement>);
     };
 
+    /**
+     * Callback when up/down arrows are clicked. Triggers handleChange callback.
+     */
     const handleValueChange = (value: Direction) => {
       switch (value) {
         case Direction.Increment: {
@@ -78,6 +81,28 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           inputRef.current?.stepDown();
           handleSyntheticEvent();
           break;
+        }
+      }
+    };
+
+    /**
+     * Edge case if the user clicks on an arrow button then switches to keyboard click.
+     * By default if focus is in the input then the keyboard clicks will work automatically but since the buttons are custom and outside of the input we are mimicking native behavior.
+     */
+    const handleArrowKeyDown = (e: KeyboardEvent) => {
+      if (!disabled) {
+        switch (e.key) {
+          case 'ArrowUp': {
+            e.preventDefault();
+            handleValueChange(Direction.Increment);
+            break;
+          }
+
+          case 'ArrowDown': {
+            e.preventDefault();
+            handleValueChange(Direction.Decrement);
+            break;
+          }
         }
       }
     };
@@ -132,7 +157,11 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           <WarningIcon aria-hidden="true" />
         </div>
 
-        <Arrows disabled={disabled} handleValueChange={handleValueChange} />
+        <Arrows
+          disabled={disabled}
+          handleValueChange={handleValueChange}
+          handleArrowKeyDown={handleArrowKeyDown}
+        />
       </div>
     );
   },
