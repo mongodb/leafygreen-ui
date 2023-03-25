@@ -1,74 +1,39 @@
 import React from 'react';
-import { Transition } from 'react-transition-group';
-import PropTypes from 'prop-types';
 
-import { cx } from '@leafygreen-ui/emotion';
-
-import { useTableContext } from '../TableContext/TableContext';
+import { css, cx } from '@leafygreen-ui/emotion';
 
 import {
   alignmentStyles,
   baseCellStyles,
+  baseTableSidePadding,
   cellContentContainerStyles,
   cellContentTransitionStyles,
-  getCellPadding,
 } from './Cell.styles';
 import { CellProps } from '.';
 
-const Cell = ({
-  children,
-  className,
-  cellIndex,
-  toggleExpandedIconProps,
-  contentClassName,
-  depth,
-  isVisible = true,
-  isExpandable = false,
-  align,
-  ...rest
-}: CellProps) => {
-  const isFirstCell = cellIndex === 0;
-  const { table } = useTableContext();
-  const isSelectable = !!table && !!table.hasSelectableRows;
-
-  return (
-    <td
+const Cell = ({ className, align, children, ...rest }: CellProps) => (
+  <td
+    className={cx(
+      baseCellStyles,
+      css`
+        padding-left: ${baseTableSidePadding}px;
+      `,
+      className,
+    )}
+    {...rest}
+  >
+    <div
       className={cx(
-        baseCellStyles,
-        {
-          [getCellPadding({ depth, isExpandable, isSelectable })]: isFirstCell,
-        },
-        className,
+        cellContentContainerStyles,
+        cellContentTransitionStyles['entered'],
+        alignmentStyles(align),
       )}
-      {...rest}
     >
-      <Transition in={isVisible} timeout={0}>
-        {state => (
-          <div
-            data-state={state}
-            className={cx(
-              cellContentContainerStyles,
-              cellContentTransitionStyles[state],
-              alignmentStyles(align),
-              contentClassName,
-            )}
-          >
-            {children}
-          </div>
-        )}
-      </Transition>
-    </td>
-  );
-};
+      {children}
+    </div>
+  </td>
+);
 
 Cell.displayName = 'Cell';
-Cell.propTypes = {
-  cellIndex: PropTypes.number,
-  depth: PropTypes.number,
-  toggleExpandedIconProps: PropTypes.any,
-  contentClassName: PropTypes.string,
-  isVisible: PropTypes.bool,
-  isExpandable: PropTypes.bool,
-};
 
 export default Cell;

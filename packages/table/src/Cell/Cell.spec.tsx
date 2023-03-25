@@ -30,8 +30,4 @@ describe('packages/table/Cell', () => {
       expect(results).toHaveNoViolations();
     });
   });
-
-  test.todo(
-    'Check that aligning a HeaderCell aligns the corresponding body cell',
-  );
 });

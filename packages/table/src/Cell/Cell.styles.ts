@@ -6,7 +6,7 @@ import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 import { Align } from './HeaderCell/HeaderCell.types';
 
 /** The base left & right padding in the table */
-const baseTableSidePadding = spacing[4];
+export const baseTableSidePadding = spacing[4];
 
 /** the default width of the expand icon */
 const iconSize = 28;

@@ -2,7 +2,7 @@ import React, { PropsWithChildren, ReactElement, ReactNode } from 'react';
 
 import { isComponentType } from '@leafygreen-ui/lib';
 
-import { Cell } from '../Cell';
+import InternalCell from '../Cell/InternalCell';
 import { useTableContext } from '../TableContext/TableContext';
 import ToggleExpandedIcon from '../ToggleExpandedIcon';
 import { LeafyGreenTableRow, LGRowData } from '../useLeafyGreenTable';
@@ -47,7 +47,7 @@ const RowCellChildren = <T extends LGRowData>({
           const isFirstCell = colIndex === 0;
           const cell = row.getVisibleCells()[colIndex];
           return (
-            <Cell
+            <InternalCell
               {...props}
               cellIndex={colIndex}
               isVisible={isRowVisible}
@@ -67,7 +67,7 @@ const RowCellChildren = <T extends LGRowData>({
                 />
               )}
               {children}
-            </Cell>
+            </InternalCell>
           );
         },
       )}
