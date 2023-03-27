@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/icon",
-  "version": "11.12.5",
+  "version": "11.12.6",
   "description": "LeafyGreen UI Kit Icons",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
