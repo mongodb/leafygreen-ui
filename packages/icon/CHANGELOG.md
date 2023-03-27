@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 11.12.6
+
+### Patch Changes
+
+- cb083a826: Adds `Gauge` icon and updates `Drag` icon.
+
 ## 11.12.5
 
 ### Patch Changes
