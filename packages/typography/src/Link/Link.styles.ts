@@ -5,6 +5,14 @@ import { fontFamilies } from '@leafygreen-ui/tokens';
 
 export const anchorClassName = createUniqueClassName();
 
+export const overwriteDefaultStyles = css`
+  &:hover,
+  &:focus,
+  &:visited {
+    text-decoration: none;
+  }
+`;
+
 export const linkStyles = css`
   font-family: ${fontFamilies.default};
   display: inline-flex;
