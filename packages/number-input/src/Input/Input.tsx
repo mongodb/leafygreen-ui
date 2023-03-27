@@ -1,4 +1,4 @@
-import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useControlledValue, useForwardedRef } from '@leafygreen-ui/hooks';
@@ -54,6 +54,12 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       useState<boolean>(false);
     const inputRef = useForwardedRef<HTMLInputElement | null>(forwardRef, null);
     const { theme } = useDarkMode();
+
+    useEffect(() => {
+      return () => {
+        clearTimeout(translateTimeout);
+      };
+    });
 
     const renderErrorIcon = state === State.Error;
 
