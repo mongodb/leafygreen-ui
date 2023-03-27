@@ -36,10 +36,11 @@ export const themeStyles: Record<Theme, string> = {
     }
   `,
   [Theme.Dark]: css`
-    &,
+    background-color: ${palette.gray.dark2};
+
     &:focus-visible,
     &:hover {
-      background-color: ${palette.gray.dark2};
+      background-color: ${palette.gray.dark1};
     }
 
     &:focus {
@@ -47,7 +48,6 @@ export const themeStyles: Record<Theme, string> = {
     }
 
     &:focus-visible {
-      background-color: ${palette.gray.dark4};
       box-shadow: ${focusRing['dark'].input};
       border-color: ${palette.gray.dark4};
     }
