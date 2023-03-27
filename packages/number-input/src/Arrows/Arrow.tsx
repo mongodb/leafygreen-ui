@@ -39,7 +39,7 @@ export const Arrow = ({
         className={
           direction === Direction.Decrement ? downArrowRotateStyles : ''
         }
-        aria-hidden={true}
+        aria-hidden
         glyph="CaretUp"
         size={16}
       />
