@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { ComponentStory, Story } from '@storybook/react';
+import { Story } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
 import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
