@@ -11,5 +11,15 @@ export interface ErrorIconProps {
    */
   renderErrorIcon: boolean;
 
+  /**
+   * Determines the font size and padding.
+   *
+   * @default 'default'
+   */
   size: Size;
+
+  /**
+   * Determines when the error icon should have transitions applied to it.
+   */
+  shouldErrorTransition: boolean;
 }

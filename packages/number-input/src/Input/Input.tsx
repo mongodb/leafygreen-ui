@@ -1,9 +1,10 @@
-import React, { ChangeEvent, KeyboardEvent } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useControlledValue, useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { createSyntheticEvent } from '@leafygreen-ui/lib';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { Arrows } from '../Arrows';
 import { ErrorIcon } from '../ErrorIcon';
@@ -13,6 +14,7 @@ import {
   inputAnimateStyles,
   inputBaseStyles,
   inputErrorAnimateStyles,
+  inputErrorPaddingTransitionStyles,
   inputThemeStyles,
   selectBaseStyles,
   sizeInputStyles,
@@ -43,6 +45,12 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     }: InputProps,
     forwardRef,
   ) => {
+    /**
+     * Timeout for error icon transitions
+     */
+    let translateTimeout: NodeJS.Timeout;
+    const [shouldErrorTransition, setShouldErrorTransition] =
+      useState<boolean>(false);
     const inputRef = useForwardedRef<HTMLInputElement | null>(forwardRef, null);
     const { theme } = useDarkMode();
 
@@ -101,8 +109,38 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       }
     };
 
+    /**
+     * On hover(`onMouseEnter`) or focus(`onFocus`) of the wrapper we want to add a transition to the error icon so that it animates with the arrows. By default, the error icon will not have a transition when shown which is consistent with other LG inputs.
+     *
+     * Here we set state to true which conditionally adds the transition to the CSS.
+     * We also clear the timeout that was created during `mouseLeave` or `onBlur` to prevent execution.
+     *
+     * The purpose of this is to only have the error icon animate when the arrows are visible.
+     */
+    const handleSetErrorTransition = () => {
+      setShouldErrorTransition(true);
+      clearTimeout(translateTimeout);
+    };
+
+    /**
+     * When no longer hovering(`onMouseLeave`) or focused(`onBlur`) we want to remove the transition but we do it on a delay that matches the CSS transition duration. Without the delay the error icon would not animate with the arrows.
+     *
+     * We can't do this with CSS only because if we only have a transition on hover/focus the ease out animation will not execute when the wrapper is no longer hovered or in focus.
+     */
+    const handleRemoveErrorTransition = () => {
+      translateTimeout = setTimeout(
+        () => setShouldErrorTransition(false),
+        transitionDuration.default,
+      );
+    };
+
     return (
       <div
+        onMouseEnter={() => handleSetErrorTransition()}
+        onMouseLeave={() => handleRemoveErrorTransition()}
+        onMouseMove={() => handleSetErrorTransition()}
+        onFocus={() => handleSetErrorTransition()}
+        onBlur={() => handleRemoveErrorTransition()}
         aria-disabled={disabled}
         className={cx(
           wrapperClassName,
@@ -127,6 +165,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
               [inputAnimateStyles]: !disabled,
               // padding with error icon
               [inputErrorAnimateStyles[size]]: renderErrorIcon && !disabled,
+              [inputErrorPaddingTransitionStyles]: shouldErrorTransition,
             },
           )}
           type="number"
@@ -140,6 +179,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           disabled={disabled}
           renderErrorIcon={renderErrorIcon}
           size={size}
+          shouldErrorTransition={shouldErrorTransition}
         />
 
         <Arrows

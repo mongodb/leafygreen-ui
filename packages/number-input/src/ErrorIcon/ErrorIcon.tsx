@@ -8,6 +8,7 @@ import {
   animateStyles,
   disabledStyles,
   sizeStyles,
+  translateStyle,
   wrapperBaseStyles,
   wrapperSizeStyles,
   wrapperThemeStyles,
@@ -22,6 +23,7 @@ export const ErrorIcon = ({
   disabled,
   size,
   renderErrorIcon,
+  shouldErrorTransition,
 }: ErrorIconProps) => {
   const { theme } = useDarkMode();
 
@@ -34,6 +36,7 @@ export const ErrorIcon = ({
         {
           [sizeStyles[size]]: renderErrorIcon,
           [animateStyles[size]]: renderErrorIcon && !disabled,
+          [translateStyle]: shouldErrorTransition,
           [disabledStyles]: disabled,
         },
       )}

@@ -28,7 +28,8 @@ export const inputBaseStyles = css`
   line-height: ${typeScales.body1.lineHeight}px;
   height: inherit;
   box-sizing: border-box;
-  transition: all ${transitionDuration.default}ms ease-in-out;
+  transition: ${transitionDuration.default}ms ease-in-out;
+  transition-property: background-color;
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -48,6 +49,10 @@ export const inputBaseStyles = css`
       box-shadow: none;
     }
   }
+`;
+
+export const inputErrorPaddingTransitionStyles = css`
+  transition-property: padding;
 `;
 
 export const inputAnimateStyles = css`

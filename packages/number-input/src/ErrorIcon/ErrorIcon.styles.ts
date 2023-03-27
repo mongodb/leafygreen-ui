@@ -46,8 +46,12 @@ export const disabledStyles = css`
 export const wrapperBaseStyles = css`
   position: absolute;
   display: flex;
-  transition: translate ${transitionDuration.default}ms ease-in-out;
+
   translate: 30px 0;
+`;
+
+export const translateStyle = css`
+  transition: translate ${transitionDuration.default}ms ease-in-out;
 `;
 
 export const wrapperThemeStyles: Record<Theme, string> = {
