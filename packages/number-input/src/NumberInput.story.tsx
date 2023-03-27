@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { ComponentStory } from '@storybook/react';
+import { ComponentStory, Story } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
 import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
@@ -42,6 +42,9 @@ export default StoryMeta({
     unit: {
       control: 'text',
     },
+    unitOptions: {
+      control: 'none',
+    },
     errorMessage: {
       control: 'text',
     },
@@ -65,15 +68,6 @@ export default StoryMeta({
   },
 });
 
-const Template: ComponentStory<typeof NumberInput> = props => (
-  <NumberInput
-    inputClassName={css`
-      width: 110px;
-    `}
-    {...props}
-  />
-);
-
 const unitOptions = [
   {
     displayName: 'One(s)',
@@ -93,19 +87,11 @@ const unitOptions = [
   },
 ];
 
-export const Basic = Template.bind({});
+type StoryProps = NumberInputProps & { view: string };
 
-export const Unit = Template.bind({});
-Unit.args = {
-  unit: 'Month',
-};
-
-export const Select = ({
-  unit: unitProp,
-  unitOptions,
-  ...rest
-}: NumberInputProps) => {
-  const [unit, setUnit] = useState<string>(unitProp as string);
+const Template: Story<StoryProps> = args => {
+  const { view, unit: unitProp = 'one', ...rest } = args;
+  const [unit, setUnit] = useState<string>(unitOptions[0].displayName);
   const [value, setValue] = useState<string>('');
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -125,10 +111,11 @@ export const Select = ({
 
   return (
     <NumberInput
+      {...rest}
       ref={inputRef}
       value={value}
-      unit={unit}
-      unitOptions={unitOptions as Array<UnitOption>}
+      unit={view === 'unitless' ? '' : view === 'unit' ? unitProp : unit}
+      unitOptions={view === 'select' ? unitOptions : []}
       onSelectChange={handleSelectChange}
       onChange={handleChange}
       inputClassName={css`
@@ -137,12 +124,54 @@ export const Select = ({
       selectClassName={css`
         max-width: 100px;
       `}
-      {...rest}
     />
   );
 };
 
+export const Basic = Template.bind({});
+Basic.argTypes = {
+  unit: {
+    control: 'none',
+  },
+  view: {
+    control: 'select',
+    options: ['unitless', 'unit', 'select'],
+    description: '[STORYBOOK ONLY]',
+  },
+};
+
+export const Unitless = Template.bind({});
+Unitless.args = {
+  view: 'unitless',
+};
+Unitless.argTypes = {
+  unit: {
+    control: 'none',
+  },
+  view: {
+    control: 'none',
+  },
+};
+
+export const Unit = Template.bind({});
+Unit.args = {
+  view: 'unit',
+};
+Unit.argTypes = {
+  view: {
+    control: 'none',
+  },
+};
+
+export const Select = Template.bind({});
 Select.args = {
-  unit: unitOptions[0].displayName,
-  unitOptions: unitOptions,
+  view: 'select',
+};
+Select.argTypes = {
+  unit: {
+    control: 'none',
+  },
+  view: {
+    control: 'none',
+  },
 };
