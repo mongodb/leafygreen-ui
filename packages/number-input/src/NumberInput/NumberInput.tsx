@@ -39,6 +39,8 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       'aria-label': ariaLabelProp,
       unit,
       className,
+      inputClassName,
+      selectClassName,
       label,
       value,
       description,
@@ -100,6 +102,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
           >
             <Input
               ref={forwardedRef}
+              className={inputClassName}
               value={value}
               onChange={onChange}
               disabled={disabled}
@@ -134,6 +137,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
                 unitOptions={unitOptions}
                 onChange={onSelectChange}
                 size={size}
+                className={selectClassName}
                 {...popoverProps}
               />
             )}

@@ -64,6 +64,11 @@ export interface SelectProps extends PopoverProps {
   size: Size;
 
   /**
+   * The className for the select component.
+   */
+  className?: string;
+
+  /**
    *
    * @internal
    */

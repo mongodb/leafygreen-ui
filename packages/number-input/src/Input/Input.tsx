@@ -41,6 +41,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       state = State.None,
       hasSelectOptions,
       errorMessage,
+      className,
       ...rest
     }: InputProps,
     forwardRef,
@@ -152,6 +153,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             [wrapperDisabledStyles[theme]]: disabled,
             [selectBaseStyles]: hasSelectOptions,
           },
+          className,
         )}
       >
         <input

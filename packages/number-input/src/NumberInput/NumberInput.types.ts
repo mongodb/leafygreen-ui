@@ -134,6 +134,16 @@ export interface BaseNumberInputProps
    * @default 'default'
    */
   size?: Size;
+
+  /**
+   * The className for the input component.
+   */
+  inputClassName?: string;
+
+  /**
+   * The className for the select component.
+   */
+  selectClassName?: string;
 }
 
 export type NumberInputProps = BaseNumberInputProps &

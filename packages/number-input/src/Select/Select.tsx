@@ -27,6 +27,7 @@ export function Select({
   disabled,
   usePortal,
   size,
+  className,
   portalClassName,
   portalContainer,
   scrollContainer,
@@ -82,9 +83,13 @@ export function Select({
         onChange={handleChange}
         aria-labelledby="Unit Picker"
         value={currentUnitOption.displayName}
-        className={cx(selectStyles, {
-          [selectDisabledStyles[theme]]: disabled,
-        })}
+        className={cx(
+          selectStyles,
+          {
+            [selectDisabledStyles[theme]]: disabled,
+          },
+          className,
+        )}
         allowDeselect={false}
         dropdownAutoWidth
         disabled={disabled}

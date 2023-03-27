@@ -67,10 +67,8 @@ export default StoryMeta({
 
 const Template: ComponentStory<typeof NumberInput> = props => (
   <NumberInput
-    className={css`
-      input {
-        width: 200px;
-      }
+    inputClassName={css`
+      width: 110px;
     `}
     {...props}
   />
@@ -133,12 +131,11 @@ export const Select = ({
       unitOptions={unitOptions as Array<UnitOption>}
       onSelectChange={handleSelectChange}
       onChange={handleChange}
-      className={css`
-        max-width: 200px;
-
-        input {
-          width: 100px;
-        }
+      inputClassName={css`
+        width: 100px;
+      `}
+      selectClassName={css`
+        max-width: 100px;
       `}
       {...rest}
     />
