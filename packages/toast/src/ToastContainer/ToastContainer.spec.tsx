@@ -10,7 +10,7 @@ import { defaults } from 'lodash';
 
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
-import { TOAST } from '../constants';
+import { TOAST_CONSTANTS } from '../constants';
 import { InternalToastProps } from '../InternalToast';
 import { ToastProvider } from '../ToastContext';
 import { Basic as ContextStory } from '../ToastContext.story';
@@ -94,7 +94,7 @@ describe('packages/toast/container', () => {
       });
     });
 
-    test(`shows the top ${TOAST.shortStackCount} toasts`, async () => {
+    test(`shows the top ${TOAST_CONSTANTS.shortStackCount} toasts`, async () => {
       const { getAllByTestId, getByTestId, triggerToast } =
         renderToastContainer();
       triggerToast();

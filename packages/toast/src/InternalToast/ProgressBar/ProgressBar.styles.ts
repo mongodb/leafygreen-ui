@@ -3,14 +3,14 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
-import { TOAST } from '../../constants';
+import { TOAST_CONSTANTS } from '../../constants';
 
 export const progressBarBackgroundStyle = css`
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: ${TOAST.progressBarHeight}px;
+  height: ${TOAST_CONSTANTS.progressBarHeight}px;
   background-color: ${palette.gray.light2};
 `;
 
@@ -25,18 +25,18 @@ export const progressBarBackgroundThemeStyle: Record<Theme, string> = {
 
 const backgroundShimmer = keyframes`
   0% {
-    background-position: ${-TOAST.width}px;
+    background-position: ${-TOAST_CONSTANTS.width}px;
   }
 
   100% {
-    background-position: ${TOAST.width * 2}px;
+    background-position: ${TOAST_CONSTANTS.width * 2}px;
   }
 `;
 
 export const progressBarStyle = css`
   overflow: hidden;
-  height: ${TOAST.progressBarHeight}px;
-  background-size: ${TOAST.width * 2}px;
+  height: ${TOAST_CONSTANTS.progressBarHeight}px;
+  background-size: ${TOAST_CONSTANTS.width * 2}px;
   animation: ${backgroundShimmer} 4s infinite linear;
   transition: width ${transitionDuration.slower}ms ease-in-out;
 `;
@@ -47,8 +47,8 @@ export const progressBarThemeStyle: Record<Theme, string> = {
     background-image: linear-gradient(
       90deg,
       #083c90 0px,
-      #c3e7fe ${TOAST.width / 2}px,
-      #083c90 ${TOAST.width}px
+      #c3e7fe ${TOAST_CONSTANTS.width / 2}px,
+      #083c90 ${TOAST_CONSTANTS.width}px
     );
   `,
   [Theme.Dark]: css`
@@ -56,8 +56,8 @@ export const progressBarThemeStyle: Record<Theme, string> = {
     background-image: linear-gradient(
       90deg,
       #0498ec 0px,
-      #c3e7fe ${TOAST.width / 2}px,
-      #0498ec ${TOAST.width}px
+      #c3e7fe ${TOAST_CONSTANTS.width / 2}px,
+      #0498ec ${TOAST_CONSTANTS.width}px
     );
   `,
 };

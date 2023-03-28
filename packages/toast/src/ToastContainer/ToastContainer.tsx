@@ -17,7 +17,7 @@ import {
 import Portal from '@leafygreen-ui/portal';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
-import { TOAST } from '../constants';
+import { TOAST_CONSTANTS } from '../constants';
 import { InternalToast } from '../InternalToast';
 import { ToastId, ToastStack, useToast } from '../ToastContext';
 
@@ -26,6 +26,8 @@ import {
   notificationBarTransitionStyles,
 } from './NotificationBar';
 import {
+  containerExpandedStyles,
+  getContainerInteractedStyles,
   getContainerStatefulStyles,
   getToastHoverStyles,
   getToastTransitionStyles,
@@ -51,6 +53,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
   const { popToast, getToast } = useToast();
   const regionId = useIdAllocator({ id: 'lg-toast-region' });
   const stackSize = stack.size;
+  const doesStackExist = stackSize > 0;
   const toastContainerRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const getToastRef = useDynamicRefs<HTMLDivElement>({ prefix: 'toast' });
@@ -68,7 +71,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
     : recentToasts;
 
   useEffect(() => {
-    if (shouldExpand && stackSize <= TOAST.shortStackCount) {
+    if (shouldExpand && stackSize <= TOAST_CONSTANTS.shortStackCount) {
       // We just went below the expanded threshold, so collapse the stack
       setShouldExpand(false);
       // TODO: Check hovered state, and set appropriately
@@ -77,10 +80,11 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
   }, [setShouldExpand, shouldExpand, stackSize]);
 
   /** is the "N more" bar visible? */
-  const showNotifBar = isHovered && !shouldExpand && remainingToasts.length > 0;
+  const showNotificationBar =
+    isHovered && !shouldExpand && remainingToasts.length > 0;
   /** How much vertical space is the "N more" bar taking up  */
-  const notifBarSpacing = showNotifBar
-    ? TOAST.notificationBarHeight + TOAST.gap
+  const notificationBarSpacing = showNotificationBar
+    ? TOAST_CONSTANTS.notificationBarHeight + TOAST_CONSTANTS.gap
     : 0;
 
   /**
@@ -188,16 +192,16 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
         onFocus={setHovered}
         onBlur={setUnhovered}
         className={cx(toastContainerStyles, {
-          [toastContainerVisibleStyles]: stack.size > 0,
+          [toastContainerVisibleStyles]: doesStackExist,
           [getContainerStatefulStyles({
-            isExpanded,
-            isHovered,
-            shouldExpand,
-            totalStackHeight,
             topToastHeight: toastHeights[0],
             recentToastsLength: recentToasts.length,
-            bottomOffset: notifBarSpacing,
-          })]: stack.size > 0,
+          })]: doesStackExist,
+          [getContainerInteractedStyles({
+            totalStackHeight,
+            bottomOffset: notificationBarSpacing,
+          })]: doesStackExist && isInteracted,
+          [containerExpandedStyles]: doesStackExist && shouldExpand,
         })}
       >
         <div
@@ -246,7 +250,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
                               index,
                               toastHeights,
                               theme,
-                              bottomOffset: notifBarSpacing,
+                              bottomOffset: notificationBarSpacing,
                               isExpanded, //: shouldExpand,
                             })]: isInteracted,
                           },
@@ -264,7 +268,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
           </TransitionGroup>
 
           <Transition
-            in={showNotifBar && !shouldExpand}
+            in={showNotificationBar && !shouldExpand}
             timeout={transitionDuration.slower}
           >
             {state => (

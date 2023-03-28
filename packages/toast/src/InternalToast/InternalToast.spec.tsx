@@ -126,12 +126,12 @@ describe('packages/toast/internal-toast', () => {
 
     test('a JSX element, the title element renders', () => {
       const titleText = 'this is the title';
-      const titleElement = <span>{titleText}</span>;
-      const { queryByText } = render(
+      const titleElement = <span data-testid="test-span">{titleText}</span>;
+      const { queryByTestId } = render(
         <InternalToast title={titleElement} variant={Variant.Success} />,
       );
 
-      const titleSpan = queryByText(titleText);
+      const titleSpan = queryByTestId('test-span');
       expect(titleSpan).toBeVisible();
     });
   });
@@ -153,8 +153,8 @@ describe('packages/toast/internal-toast', () => {
 
     test('a JSX element, the body element renders', () => {
       const bodyText = 'this is the body';
-      const bodyElement = <span>{bodyText}</span>;
-      const { queryByText } = render(
+      const bodyElement = <span data-testid="test-span">{bodyText}</span>;
+      const { queryByTestId } = render(
         <InternalToast
           title="hello"
           description={bodyElement}
@@ -162,9 +162,13 @@ describe('packages/toast/internal-toast', () => {
         />,
       );
 
-      const bodySpan = queryByText(bodyText);
+      const bodySpan = queryByTestId('test-span');
       expect(bodySpan).toBeVisible();
     });
+  });
+
+  describe('`actionElement` prop', () => {
+    test.todo('Renders actionElement');
   });
 });
 

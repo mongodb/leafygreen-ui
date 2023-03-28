@@ -32,14 +32,15 @@ export interface ToastProps
   onClose?: React.EventHandler<any>;
 
   /**
-   * Optional action button (only rendered if variant==='progress')
+   * Optional action button, or other element.
+   * Only rendered if `variant === 'progress'`
    *
    * This should be a shortcut only—and not the _only_ way to perform the action.
    *
    * The provided action element should have an `aria-description` attribute
-   * that describes how to alternatively perform the action
+   * that describes how to alternatively perform the action.
    */
-  action?: React.ReactNode;
+  actionElement?: React.ReactNode;
 
   /**
    * Required style variant to render the Toast as.

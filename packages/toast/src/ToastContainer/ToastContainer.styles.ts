@@ -1,12 +1,12 @@
 import { TransitionStatus } from 'react-transition-group';
 import { mix } from 'polished';
 
-import { css, cx } from '@leafygreen-ui/emotion';
+import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
-import { TOAST } from '../constants';
+import { TOAST_CONSTANTS } from '../constants';
 import { toastBGColor } from '../InternalToast';
 
 import { calcTotalStackHeight } from './utils/useToastHeights';
@@ -14,9 +14,9 @@ import { calcTotalStackHeight } from './utils/useToastHeights';
 export const toastContainerStyles = css`
   outline: 1px solid teal;
   position: fixed;
-  left: ${spacing[3] - TOAST.inset}px;
-  bottom: ${spacing[3] - TOAST.inset}px;
-  width: ${TOAST.width + 2 * TOAST.inset}px;
+  left: ${spacing[3] - TOAST_CONSTANTS.inset}px;
+  bottom: ${spacing[3] - TOAST_CONSTANTS.inset}px;
+  width: ${TOAST_CONSTANTS.width + 2 * TOAST_CONSTANTS.inset}px;
   max-height: calc(100vh - ${spacing[3]}px);
   z-index: 0;
   overflow: unset;
@@ -42,60 +42,55 @@ export const toastContainerStyles = css`
 `;
 
 export const toastContainerVisibleStyles = css`
-  min-height: ${TOAST.minHeight + TOAST.yOffset}px;
+  min-height: ${TOAST_CONSTANTS.minHeight + TOAST_CONSTANTS.yOffset}px;
   opacity: 1;
   visibility: visible;
 `;
 
 export function getContainerStatefulStyles({
   recentToastsLength,
-  isHovered,
-  isExpanded,
-  shouldExpand,
-  totalStackHeight,
   topToastHeight,
-  bottomOffset,
 }: {
   recentToastsLength: number;
-  isHovered: boolean;
-  isExpanded: boolean;
-  shouldExpand: boolean;
-  totalStackHeight: number;
   topToastHeight: number;
-  bottomOffset: number;
 }) {
-  const isInteracted = isHovered || isExpanded;
+  return css`
+    // The height of the first toast + inset
+    height: ${TOAST_CONSTANTS.inset * 2 + topToastHeight}px;
 
-  return cx(
-    css`
-      // The height of the first toast + inset
-      height: ${TOAST.inset * 2 + topToastHeight}px;
-
-      // Move the entire container as toasts get added,
-      // so the bottom toast is always 16px from the bottom
-      transform: translateY(-${TOAST.yOffset * (recentToastsLength - 1)}px);
-    `,
-    {
-      [css`
-        // set the container back when hovered/expanded
-        transform: translateY(0);
-        height: ${TOAST.inset * 2 + bottomOffset + totalStackHeight}px;
-      `]: isInteracted,
-
-      [css`
-        // We want auto scroll bars when expanded
-        height: 100vh;
-        overflow: auto;
-      `]: shouldExpand,
-    },
-  );
+    // Move the entire container as toasts get added,
+    // so the bottom toast is always 16px from the bottom
+    transform: translateY(
+      -${TOAST_CONSTANTS.yOffset * (recentToastsLength - 1)}px
+    );
+  `;
 }
+
+export const getContainerInteractedStyles = ({
+  totalStackHeight,
+  bottomOffset,
+}: {
+  totalStackHeight: number;
+  bottomOffset: number;
+}) => {
+  return css`
+    // set the container back when hovered/expanded
+    transform: translateY(0);
+    height: ${TOAST_CONSTANTS.inset * 2 + bottomOffset + totalStackHeight}px;
+  `;
+};
+
+export const containerExpandedStyles = css`
+  // We want auto scroll bars when expanded
+  height: 100vh;
+  overflow: auto;
+`;
 
 export const scrollContainerStyles = css`
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: ${TOAST.minHeight + TOAST.yOffset}px;
+  min-height: ${TOAST_CONSTANTS.minHeight + TOAST_CONSTANTS.yOffset}px;
   transform-style: inherit;
 `;
 
@@ -120,7 +115,7 @@ export function getToastTransitionStyles({
 }) {
   switch (state) {
     case 'entered': {
-      const y = index * TOAST.yOffset;
+      const y = index * TOAST_CONSTANTS.yOffset;
       const z = -index * 100;
       const bgColor = mix(1 - index * 0.2, toastBGColor[theme], palette.white);
 
@@ -136,7 +131,8 @@ export function getToastTransitionStyles({
 
     default:
       return css`
-        transform: translate3d(0, ${TOAST.yOffset}px, -100px) scale(0.9);
+        transform: translate3d(0, ${TOAST_CONSTANTS.yOffset}px, -100px)
+          scale(0.9);
         opacity: 0;
       `;
   }

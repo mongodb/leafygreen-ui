@@ -1,19 +1,19 @@
 import React from 'react';
-import { defaults } from 'lodash';
+import defaults from 'lodash/defaults';
 import PropTypes from 'prop-types';
 
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
-import { Variant } from '../Toast.types';
+import { ToastProps, Variant } from '../Toast.types';
 
-import { defaultToastProps } from './defaultProps';
 import {
   baseIconStyle,
   baseToastStyle,
+  contentVisibleStyles,
   contentWrapperStyle,
   descriptionStyle,
   descriptionThemeStyle,
@@ -28,6 +28,16 @@ import {
 import { InternalToastProps } from './InternalToast.types';
 import { ProgressBar } from './ProgressBar';
 import { variantIcons } from './VariantIcon';
+
+/** The default props. Merged with provided props via `_.defaults` */
+export const defaultToastProps: Required<
+  Pick<ToastProps, 'variant' | 'progress' | 'dismissible' | 'timeout'>
+> = {
+  variant: Variant.Note,
+  progress: 1.0,
+  timeout: 6_000,
+  dismissible: true,
+};
 
 /**
  * The internal toast component
@@ -44,13 +54,13 @@ export const InternalToast = React.forwardRef<
       description,
       className,
       onClose,
-      action,
+      actionElement,
       index = 0,
       isHovered,
       isControlled,
       variant: variantProp,
       progress: progressProp,
-      dismissible: dismissProp,
+      dismissible: dismissibleProp,
       ...rest
     }: InternalToastProps,
     forwardedRef,
@@ -59,7 +69,7 @@ export const InternalToast = React.forwardRef<
       {
         variant: variantProp,
         progress: progressProp,
-        dismissible: dismissProp,
+        dismissible: dismissibleProp,
       },
       defaultToastProps,
     );
@@ -79,12 +89,9 @@ export const InternalToast = React.forwardRef<
         <div
           data-testid="lg-toast-content"
           aria-hidden={!showContent}
-          className={cx(
-            contentWrapperStyle,
-            css`
-              opacity: ${showContent ? 1 : 0};
-            `,
-          )}
+          className={cx(contentWrapperStyle, {
+            [contentVisibleStyles]: showContent,
+          })}
         >
           <VariantIcon
             aria-hidden

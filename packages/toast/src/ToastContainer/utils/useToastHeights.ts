@@ -3,7 +3,7 @@ import { debounce } from 'lodash';
 
 import { spacing } from '@leafygreen-ui/tokens';
 
-import { TOAST } from '../../constants';
+import { TOAST_CONSTANTS } from '../../constants';
 import { ToastStack } from '../../ToastContext';
 
 interface UseToastHeightsProps {
@@ -85,8 +85,8 @@ export function calcTotalStackHeight(
       // if the comparing toast is below the current toast
       // but also less than the shortStackCount
       // add that toast's height to this toast's offset
-      j > stopIndex && (isExpanded || j < TOAST.shortStackCount)
-        ? sum + x + TOAST.gap
+      j > stopIndex && (isExpanded || j < TOAST_CONSTANTS.shortStackCount)
+        ? sum + x + TOAST_CONSTANTS.gap
         : sum,
     0,
   );

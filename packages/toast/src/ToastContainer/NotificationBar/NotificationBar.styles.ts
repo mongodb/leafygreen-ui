@@ -10,17 +10,17 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { TOAST } from '../../constants';
+import { TOAST_CONSTANTS } from '../../constants';
 
 export const notificationBarStyles = css`
   border: unset;
   outline: unset;
 
   position: absolute;
-  left: ${TOAST.inset}px;
-  bottom: ${TOAST.inset}px;
-  width: ${TOAST.width}px;
-  height: ${TOAST.notificationBarHeight}px;
+  left: ${TOAST_CONSTANTS.inset}px;
+  bottom: ${TOAST_CONSTANTS.inset}px;
+  width: ${TOAST_CONSTANTS.width}px;
+  height: ${TOAST_CONSTANTS.notificationBarHeight}px;
   z-index: 0;
 
   font-family: ${fontFamilies.default};
@@ -30,7 +30,7 @@ export const notificationBarStyles = css`
   cursor: pointer;
 
   opacity: 0;
-  transform: translate3d(0, ${TOAST.yOffset}px, -400px);
+  transform: translate3d(0, ${TOAST_CONSTANTS.yOffset}px, -400px);
   transition: ${transitionDuration.slower}ms ease-in-out;
   transition-property: background-color, opacity, transform;
 `;
@@ -66,11 +66,11 @@ export const notificationBarTransitionStyles: Partial<
     opacity: 1;
   `,
   exited: css`
-    transform: translate3d(0, ${3 * TOAST.yOffset}px, -400px);
+    transform: translate3d(0, ${3 * TOAST_CONSTANTS.yOffset}px, -400px);
     opacity: 0;
   `,
   exiting: css`
-    transform: translate3d(0, ${3 * TOAST.yOffset}px, -400px);
+    transform: translate3d(0, ${3 * TOAST_CONSTANTS.yOffset}px, -400px);
     opacity: 0;
   `,
 };

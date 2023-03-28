@@ -11,7 +11,7 @@ import {
 } from '@leafygreen-ui/tokens';
 import { anchorClassName } from '@leafygreen-ui/typography';
 
-import { TOAST } from '../constants';
+import { TOAST_CONSTANTS } from '../constants';
 import { Variant } from '../Toast.types';
 
 export const toastBGColor: Record<Theme, string> = {
@@ -21,10 +21,10 @@ export const toastBGColor: Record<Theme, string> = {
 
 export const baseToastStyle = css`
   position: fixed;
-  left: ${TOAST.inset}px;
-  bottom: ${TOAST.inset}px;
-  width: ${TOAST.width}px;
-  min-height: ${TOAST.minHeight - 2}px; // -2 for border: ;
+  left: ${TOAST_CONSTANTS.inset}px;
+  bottom: ${TOAST_CONSTANTS.inset}px;
+  width: ${TOAST_CONSTANTS.width}px;
+  min-height: ${TOAST_CONSTANTS.minHeight - 2}px; // -2 for border: ;
 
   display: flex;
   align-items: center;
@@ -103,7 +103,12 @@ export const contentWrapperStyle = css`
   align-items: center;
   gap: ${spacing[3]}px;
   width: 100%;
+  opacity: 0;
   transition: opacity ease-out ${transitionDuration.default}ms;
+`;
+
+export const contentVisibleStyles = css`
+  opacity: 1;
 `;
 
 export const baseIconStyle = css`

@@ -1,7 +1,7 @@
 /**
  * Constants used throughout the Toast package
  */
-export const TOAST = {
+export const TOAST_CONSTANTS = {
   /**
    * The fixed width of a toast
    */
@@ -18,7 +18,7 @@ export const TOAST = {
   progressBarHeight: 4,
 
   /**
-   * The fixed height of the notifoication bar
+   * The fixed height of the notification bar
    */
   notificationBarHeight: 24,
 

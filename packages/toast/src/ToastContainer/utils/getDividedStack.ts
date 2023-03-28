@@ -1,4 +1,4 @@
-import { TOAST } from '../../constants';
+import { TOAST_CONSTANTS } from '../../constants';
 import { ToastProps } from '../../Toast.types';
 import { ToastId, ToastStack } from '../../ToastContext';
 
@@ -14,8 +14,8 @@ export function getDividedStack(stack: ToastStack): {
   return Array.from(stack).reduce(
     (acc, toast, i) => {
       if (
-        stack.size <= TOAST.shortStackCount ||
-        i >= stack.size - TOAST.shortStackCount
+        stack.size <= TOAST_CONSTANTS.shortStackCount ||
+        i >= stack.size - TOAST_CONSTANTS.shortStackCount
       ) {
         acc.recentToasts.push(toast);
       } else {
