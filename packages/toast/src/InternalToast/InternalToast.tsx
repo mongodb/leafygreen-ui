@@ -125,7 +125,7 @@ export const InternalToast = React.forwardRef<
             darkMode={!darkMode}
             data-testid="lg-toast-dismiss-button"
           >
-            <XIcon />
+            <XIcon aria-hidden role="presentation" />
           </IconButton>
         )}
         {variant === Variant.Progress && showContent && (

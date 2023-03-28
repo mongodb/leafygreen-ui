@@ -6,9 +6,9 @@ import { ToastStack } from './ToastContext.types';
 import { ToastProvider } from '.';
 
 /**
- * This suite exclusively tests the context its
+ * This suite exclusively tests the context and its functionality.
  *
- * Render-focused tests are included in `ToastContainer.spec.tsx`
+ * Render-based tests are included in `ToastContainer.spec.tsx`
  */
 describe('packages/toast/context', () => {
   test('renders children', async () => {

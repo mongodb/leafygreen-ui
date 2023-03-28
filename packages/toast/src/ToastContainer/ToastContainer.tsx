@@ -256,10 +256,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
                           },
                           className,
                         )}
-                        description={
-                          // TODO: Remove debug strings
-                          toastProps.description + ` (${id} index #${index}.)`
-                        }
+                        description={toastProps.description}
                       />
                     )}
                   </Transition>

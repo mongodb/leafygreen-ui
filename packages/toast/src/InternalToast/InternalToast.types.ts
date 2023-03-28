@@ -7,10 +7,10 @@ import { ToastProps } from '../Toast.types';
 export interface InternalToastProps extends ToastProps {
   /**
    * defines whether the component is controlled
+   *
+   * @internal
    */
   isControlled?: boolean;
-
-  // open?: never;
 
   /**
    * The index of the toast (from the top)
