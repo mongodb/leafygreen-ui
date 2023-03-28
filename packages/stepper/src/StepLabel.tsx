@@ -51,6 +51,7 @@ const StepLabel = ({ children, state }: PropsWithChildren<StepLabelProps>) => {
     <Body
       className={cx(styles[state], stepLabelClassName)}
       weight={isCurrent ? 'medium' : 'regular'}
+      as="div"
     >
       {/*
         TODO: Would prefer to use a centralized font-weight value directly in css so it's not dependent on a ternary operator.
