@@ -109,7 +109,7 @@ async function checkDependencies() {
         listedDeps &&
         // Check if at least one usage of every listed dep is not in any test file
         !listedDeps.every(depName =>
-          using[depName].some(
+          using[depName]?.some(
             file => !testFilePatterns.some(pattern => pattern.test(file)),
           ),
         )
