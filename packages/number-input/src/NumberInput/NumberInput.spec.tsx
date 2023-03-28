@@ -67,7 +67,7 @@ describe('packages/number-input', () => {
   });
 
   describe('unitless number input with default props', () => {
-    test('renders type as "number', async () => {
+    test('render input type as "number"', async () => {
       const { numberInput } = renderNumberInput({ label, ...defaultProps });
       expect(numberInput.getAttribute('type')).toBe('number');
     });
@@ -201,7 +201,7 @@ describe('packages/number-input', () => {
   });
 
   describe('number input with single unit', () => {
-    test('renders type as "number', () => {
+    test('render input type as "number"', () => {
       const { numberInput } = renderNumberInput({
         ...defaultProps,
         ...unitProps,
@@ -219,7 +219,7 @@ describe('packages/number-input', () => {
   });
 
   describe('number input with select options', () => {
-    test('renders type as "number', () => {
+    test('render input type as "number"', () => {
       const { numberInput } = renderNumberInput({
         ...selectProps,
       });

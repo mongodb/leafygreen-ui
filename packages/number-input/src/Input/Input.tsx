@@ -61,7 +61,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       };
     });
 
-    const renderErrorIcon = state === State.Error;
+    const shouldRenderErrorIcon = state === State.Error;
 
     const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
 
@@ -172,7 +172,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
               // padding without error icon
               [inputAnimateStyles]: !disabled,
               // padding with error icon
-              [inputErrorAnimateStyles[size]]: renderErrorIcon && !disabled,
+              [inputErrorAnimateStyles[size]]:
+                shouldRenderErrorIcon && !disabled,
               [inputErrorPaddingTransitionStyles]: shouldErrorTransition,
             },
           )}
@@ -185,7 +186,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         />
         <ErrorIcon
           disabled={disabled}
-          renderErrorIcon={renderErrorIcon}
+          shouldRenderErrorIcon={shouldRenderErrorIcon}
           size={size}
           shouldErrorTransition={shouldErrorTransition}
         />

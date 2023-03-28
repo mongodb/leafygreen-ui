@@ -9,7 +9,7 @@ export interface ErrorIconProps {
   /**
    * Determines if the error icon should appear
    */
-  renderErrorIcon: boolean;
+  shouldRenderErrorIcon: boolean;
 
   /**
    * Determines the font size and padding.

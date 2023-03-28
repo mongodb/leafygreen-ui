@@ -107,7 +107,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
         active={open && !disabled}
         spacing={6}
         align={Align.Bottom}
-        justify={dropdownAutoWidth ? Justify.Start : Justify.Middle}
+        justify={Justify.Start}
         adjustOnMutation
         className={cx(popoverClassName, className, {
           [autoWidthStyles]: dropdownAutoWidth,

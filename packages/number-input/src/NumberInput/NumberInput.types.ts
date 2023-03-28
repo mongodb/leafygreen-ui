@@ -10,7 +10,7 @@ import {
 export const Direction = {
   Increment: 'increment',
   Decrement: 'decrement',
-};
+} as const;
 
 export type Direction = typeof Direction[keyof typeof Direction];
 

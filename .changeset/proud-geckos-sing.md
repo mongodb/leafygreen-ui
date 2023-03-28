@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/select': patch
+'@leafygreen-ui/select': minor
 ---
 
-Adds prop `dropdownAutoWidth`
+Adds prop `dropdownAutoWidth` determines if the dropdown menu should be as wide as the widest option.

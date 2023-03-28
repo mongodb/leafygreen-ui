@@ -21,7 +21,7 @@ function renderInput(props = {}) {
 
 describe('packages/number-input/input', () => {
   describe('Input', () => {
-    test('renders type as "number', async () => {
+    test('render input type as "number"', async () => {
       const { input } = renderInput();
       expect(input.getAttribute('type')).toBe('number');
     });

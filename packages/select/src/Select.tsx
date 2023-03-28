@@ -79,7 +79,7 @@ export default function Select({
   allowDeselect = true,
   usePortal = true,
   placeholder = 'Select',
-  errorMessage = 'error message right here',
+  errorMessage = '',
   state = State.None,
   dropdownAutoWidth = false,
   baseFontSize = BaseFontSize.Body1,
