@@ -98,7 +98,7 @@ export function UnitSelect({
         {...popoverProps}
         __INTERNAL__menuButtonSlot__={CustomMenuButton}
       >
-        {unitOptions?.map(option => (
+        {unitOptions.map(option => (
           <Option key={option.displayName} value={option.displayName}>
             {option.displayName}
           </Option>
