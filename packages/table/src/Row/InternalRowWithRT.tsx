@@ -43,8 +43,8 @@ const InternalRowWithRT = <T extends LGRowData>({
   const isRowVisible = isParentExpanded || !isNested;
   const isOddVSRow = !!virtualRow && virtualRow.index % 2 !== 0;
 
-  const isExpanded = row.getIsExpanded(); // Is this row currently expanded
-  const isSelected = row.getIsSelected(); // Is this row currently selected
+  const isExpanded = row.getIsExpanded();
+  const isSelected = row.getIsSelected();
 
   const CellChildren = React.Children.toArray(children).filter(child =>
     isComponentType(child, 'Cell'),

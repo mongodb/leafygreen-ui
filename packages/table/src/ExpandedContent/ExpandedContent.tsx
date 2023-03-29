@@ -7,6 +7,8 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { cellContentContainerStyles } from '../Cell/Cell.styles';
 import InternalRowBase from '../Row/InternalRowBase';
+import { useTableContext } from '../TableContext/TableContext';
+import { getAreAncestorsExpanded } from '../utils/areAncestorsExpanded';
 
 import {
   baseStyles,
@@ -19,15 +21,18 @@ const ExpandedContent = <T extends RowData>({
   row,
   ...rest
 }: ExpandedContentProps<T>) => {
+  const { getParentRow } = useTableContext();
   const contentRef = useRef<HTMLDivElement>(null);
-  const isExpanded = row.getIsExpanded();
+  const areAncestorsExpanded = getAreAncestorsExpanded(row.id, getParentRow);
+  const isNestedRow = !!getParentRow?.(row.id);
+  const isExpanded =
+    row.getIsExpanded() && (!isNestedRow || areAncestorsExpanded);
   const content =
-    row?.original?.renderExpandedContent &&
-    row?.original?.renderExpandedContent(row);
+    row.original.renderExpandedContent &&
+    row.original.renderExpandedContent(row);
 
   const { theme } = useDarkMode();
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const contentHeight = useMemo(
     () => (contentRef.current ? contentRef.current.clientHeight : 0),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -36,7 +41,7 @@ const ExpandedContent = <T extends RowData>({
 
   return (
     <InternalRowBase {...rest}>
-      <td colSpan={row?.getVisibleCells().length} className={cx(baseStyles)}>
+      <td colSpan={row.getVisibleCells().length} className={cx(baseStyles)}>
         <Transition in={isExpanded} timeout={0}>
           {state => (
             <div

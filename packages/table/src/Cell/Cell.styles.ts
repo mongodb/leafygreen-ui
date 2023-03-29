@@ -19,6 +19,7 @@ export const baseCellStyles = css`
   &:focus-visible {
     box-shadow: inset;
   }
+
   &:last-child {
     padding-right: ${baseTableSidePadding}px;
   }

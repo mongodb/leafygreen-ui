@@ -48,10 +48,10 @@ const newPerson = (): Person => {
 
 const ExpandedContentComponent = (row: LeafyGreenTableRow<unknown>) => {
   return (
-    <>
+    <div style={{ padding: '0 30px' }}>
       Test
       <pre>{JSON.stringify(row, null, 2)}</pre>
-    </>
+    </div>
   );
 };
 

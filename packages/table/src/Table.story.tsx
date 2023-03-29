@@ -635,21 +635,6 @@ export const WithPagination: ComponentStory<typeof Table> = ({
         <pre>{JSON.stringify(table.getState().pagination, null, 2)}</pre>
       </div>
 
-      <Pagination
-        itemsPerPage={table.getState().pagination.pageSize}
-        onItemsPerPageOptionChange={(value, _) => {
-          table.setPageSize(Number(value));
-        }}
-        numTotalItems={data.length}
-        currentPage={table.getState().pagination.pageIndex + 1}
-        onCurrentPageOptionChange={(value, _) => {
-          table.setPageIndex(Number(value) - 1);
-        }}
-        onBackArrowClick={() => table.previousPage()}
-        onForwardArrowClick={() => table.nextPage()}
-        darkMode={darkMode}
-      />
-
       <TableContainer ref={tableContainerRef}>
         <Table darkMode={darkMode} {...rest}>
           <TableHead>
@@ -688,6 +673,21 @@ export const WithPagination: ComponentStory<typeof Table> = ({
           </TableBody>
         </Table>
       </TableContainer>
+
+      <Pagination
+        itemsPerPage={table.getState().pagination.pageSize}
+        onItemsPerPageOptionChange={(value, _) => {
+          table.setPageSize(Number(value));
+        }}
+        numTotalItems={data.length}
+        currentPage={table.getState().pagination.pageIndex + 1}
+        onCurrentPageOptionChange={(value, _) => {
+          table.setPageIndex(Number(value) - 1);
+        }}
+        onBackArrowClick={() => table.previousPage()}
+        onForwardArrowClick={() => table.nextPage()}
+        darkMode={darkMode}
+      />
     </>
   );
 };
@@ -738,7 +738,7 @@ export const KitchenSink: ComponentStory<typeof Table> = args => {
       {
         id: 'actions',
         header: '',
-        size: 60,
+        size: 90,
         // eslint-disable-next-line react/display-name
         cell: _ => {
           return (

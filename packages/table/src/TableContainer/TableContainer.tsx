@@ -15,7 +15,7 @@ const TableContainer = forwardRef<HTMLDivElement, TableContainerProps>(
         className={cx(
           css`
             overflow: auto;
-            height: 500px;
+            max-height: 500px;
             width: 100%;
             position: relative;
           `,
