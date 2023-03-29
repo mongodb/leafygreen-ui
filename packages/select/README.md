@@ -119,7 +119,7 @@ import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
 | `state`              | `'none'`, `'error'`                           | Determines the state of the `<select>`                                                                                                                                                                                                          | `'none'`    |
 | `errorMessage`       | `string`                                      | Text that shows when the `state` is set to `error`.                                                                                                                                                                                             |             |
 | `baseFontSize`       | `'13'`, `'16'`                                | Determines the base font size if sizeVariant is set to `default`                                                                                                                                                                                | `'13'`      |
-| `dropdownWidthBasis` | `'option'` \| `'trigger'`                     | Determines the width of the dropdown. `trigger` will make the dropdown width the width of the menu button. `option` will make the dropwdown width as wide as the widest option.                                                                 | `trigger`   |
+| `dropdownWidthBasis` | `'option'` \| `'trigger'`                     | Determines the width of the dropdown. `trigger` will make the dropdown width the width of the menu trigger. `option` will make the dropdown width as wide as the widest option.                                                                 | `trigger`   |
 
 # Option
 
