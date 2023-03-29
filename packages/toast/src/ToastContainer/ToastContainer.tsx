@@ -13,6 +13,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
   createSyntheticEvent,
   createUniqueClassName,
+  keyMap,
 } from '@leafygreen-ui/lib';
 import Portal from '@leafygreen-ui/portal';
 import { transitionDuration } from '@leafygreen-ui/tokens';
@@ -26,6 +27,7 @@ import {
   notificationBarTransitionStyles,
 } from './NotificationBar';
 import {
+  containerCollapsingStyles,
   containerExpandedStyles,
   getContainerInteractedStyles,
   getContainerStatefulStyles,
@@ -34,6 +36,7 @@ import {
   getToastUnhoveredStyles,
   scrollContainerExpandedStyles,
   scrollContainerStyles,
+  scrollContainerTransitionOutStyles,
   toastContainerStyles,
   toastContainerVisibleStyles,
 } from './ToastContainer.styles';
@@ -130,19 +133,10 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
   const isInteracted = isHovered || shouldExpand;
 
   /**
-   * When a user clicks away from the expanded stack, collapse the stack
-   */
-  useBackdropClick(
-    collapseToasts,
-    toastContainerRef,
-    isExpanded && stackSize > 0,
-  );
-
-  /**
    * Callback passed into the InternalToast component as `onClose`
    * Also fired when timeout timers expires
    */
-  const handleClose = useCallback(
+  const handleCloseEventForToastId = useCallback(
     (id: ToastId, e?: CloseEvent) => {
       const toast = getToast(id);
       const toastRef = getToastRef(id);
@@ -163,8 +157,14 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
     [getToast, getToastRef, popToast],
   );
 
-  const getHandlerForId = (id: ToastId) => (e: CloseEvent) =>
-    handleClose(id, e);
+  /**
+   * When a user clicks away from the expanded stack, collapse the stack
+   */
+  useBackdropClick(
+    collapseToasts,
+    toastContainerRef,
+    isExpanded && stackSize > 0,
+  );
 
   /**
    * Set & keep track of timers for each toast in the stack
@@ -172,11 +172,38 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
   useToastTimers({
     stack,
     isHovered,
-    callback: handleClose,
+    callback: handleCloseEventForToastId,
   });
+
+  const getHandlerForId = (id: ToastId) => (e: CloseEvent) =>
+    handleCloseEventForToastId(id, e);
+
+  /**
+   * When expanded, check if the click is above the top toast
+   * (since the container expands to 100vh regardless of toast count)
+   */
+  const handleContainerClick: React.MouseEventHandler = e => {
+    if (isExpanded) {
+      const y = e.clientY;
+      const h = toastContainerRef.current?.clientHeight ?? 0;
+      const topToastY = h - totalStackHeight;
+
+      if (y < topToastY) {
+        collapseToasts();
+      }
+    }
+  };
+
+  /** When expanded, collapse the stack when the escape key is pressed */
+  const handleContainerKeydown: React.KeyboardEventHandler = e => {
+    if (isExpanded && e.keyCode === keyMap.Escape) {
+      collapseToasts();
+    }
+  };
 
   return (
     <Portal className={toastPortalClassName}>
+      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <div
         ref={toastContainerRef}
         id={regionId}
@@ -184,13 +211,12 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
         role="status"
         aria-live="polite"
         aria-relevant="all"
-        data-hovered={isHovered}
-        data-should-expand={shouldExpand}
-        data-expanded={isExpanded}
         onMouseEnter={setHovered}
         onMouseLeave={setUnhovered}
         onFocus={setHovered}
         onBlur={setUnhovered}
+        onClick={handleContainerClick}
+        onKeyDown={handleContainerKeydown}
         className={cx(toastContainerStyles, {
           [toastContainerVisibleStyles]: doesStackExist,
           [getContainerStatefulStyles({
@@ -203,6 +229,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
           })]: doesStackExist && isInteracted,
           // Wait to apply fully expanded styles until the toast transition is complete
           [containerExpandedStyles]: doesStackExist && isExpanded,
+          [containerCollapsingStyles]: isExpanded && !shouldExpand,
         })}
       >
         <div
@@ -210,8 +237,8 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
           className={cx(scrollContainerStyles, {
             // Wait to apply fully expanded styles until the toast transition is complete
             [scrollContainerExpandedStyles(totalStackHeight)]: isExpanded,
+            [scrollContainerTransitionOutStyles]: isExpanded && !shouldExpand,
           })}
-          data-height={totalStackHeight}
         >
           <TransitionGroup enter exit component={null}>
             {displayedToasts
@@ -234,7 +261,6 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
                         ref={toastRef}
                         onClose={onClose}
                         index={index}
-                        data-index={index}
                         isHovered={isInteracted}
                         className={cx(
                           getToastTransitionStyles({

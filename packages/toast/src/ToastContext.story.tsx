@@ -213,7 +213,7 @@ export const WithInitialToasts: ComponentStory<typeof InternalToast> = (
 WithInitialToasts.args = {
   // @ts-expect-error
   initialValue: makeToastStack(
-    range(20).map(_ =>
+    range(6).map(_ =>
       makeToast({
         title: 'Initial toast',
         description: faker.lorem.lines(2),

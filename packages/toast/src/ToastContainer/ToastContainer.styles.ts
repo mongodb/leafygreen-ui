@@ -12,9 +12,13 @@ import { toastBGColor } from '../InternalToast';
 import { calcTotalStackHeight } from './utils/useToastHeights';
 
 export const toastContainerStyles = css`
-  outline: 1px solid teal;
+  /* Debug */
+  /* outline: 1px solid teal; */
 
   position: fixed;
+  display: flex;
+  flex-direction: column-reverse;
+
   left: ${spacing[3] - TOAST_CONSTANTS.inset}px;
   bottom: ${spacing[3] - TOAST_CONSTANTS.inset}px;
   width: ${TOAST_CONSTANTS.width + 2 * TOAST_CONSTANTS.inset}px;
@@ -31,7 +35,7 @@ export const toastContainerStyles = css`
   perspective-origin: bottom;
   transform-style: preserve-3d;
   transition: ease-in-out ${transitionDuration.default}ms;
-  transition-property: transform, bottom, height, opacity;
+  transition-property: transform, bottom, opacity;
 
   /* Scrollbars */
   scroll-behavior: unset; // _not_ smooth. We need this to be instant
@@ -85,33 +89,49 @@ export const getContainerInteractedStyles = ({
 };
 
 export const containerExpandedStyles = css`
-  // When expanded,
-  // force the height to 100vh regardless of the total stack height
+  // When expanded, force the height to 100vh regardless of the total stack height
   height: 100vh;
   bottom: 0;
+  transform: translateY(0);
   overflow: auto;
+
+  /* background: rgba(0, 150, 255, 0.2); */
+`;
+
+/** Styles applied when `isExpanded` but `!shouldExpand` */
+export const containerCollapsingStyles = css`
+  bottom: ${spacing[3] - TOAST_CONSTANTS.inset}px;
 `;
 
 /**
  * Scroll Container
  */
 export const scrollContainerStyles = css`
+  /* Debug */
+  /* outline: 1px solid orangered; */
+
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: ${TOAST_CONSTANTS.minHeight + TOAST_CONSTANTS.yOffset}px;
+  margin: 0;
   transform-style: inherit;
 `;
 
 export function scrollContainerExpandedStyles(totalStackHeight: number) {
   /*
-   * Scroll container should be at least the height of the stack, (plus padding)
+   * Scroll container should be at least the height of the stack
    * This may overflow the container.
    */
   return css`
-    min-height: ${totalStackHeight + spacing[3]}px;
+    margin: ${spacing[3]}px 0;
+    height: ${totalStackHeight}px;
   `;
 }
+
+/** Styles applied when `isExpanded` but `!shouldExpand` */
+export const scrollContainerTransitionOutStyles = css`
+  margin: 0;
+`;
 
 /**
  * Stateful Toast styling

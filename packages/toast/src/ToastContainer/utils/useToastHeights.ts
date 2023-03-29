@@ -81,12 +81,12 @@ export function calcTotalStackHeight(
   stopIndex = -1,
 ) {
   return toastHeights.reduce(
-    (sum, x, j) =>
+    (sum, t, i) =>
       // if the comparing toast is below the current toast
       // but also less than the shortStackCount
       // add that toast's height to this toast's offset
-      j > stopIndex && (isExpanded || j < TOAST_CONSTANTS.shortStackCount)
-        ? sum + x + TOAST_CONSTANTS.gap
+      i > stopIndex && (isExpanded || i < TOAST_CONSTANTS.shortStackCount)
+        ? sum + t + TOAST_CONSTANTS.gap
         : sum,
     0,
   );
