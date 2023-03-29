@@ -19,6 +19,7 @@ const autofillShadowOverride = (color: string) => `0 0 0 100px ${color} inset`;
 
 export const wrapperClassName = createUniqueClassName('number-input-wrapper');
 
+// TODO: why is xs text not center aligned
 export const inputBaseStyles = css`
   all: unset;
   font-family: ${fontFamilies.default};
@@ -30,6 +31,7 @@ export const inputBaseStyles = css`
   box-sizing: border-box;
   transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: background-color;
+  padding: 0 0 0 ${spacing[1] * 3}px;
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -101,18 +103,6 @@ export const inputThemeStyles: Record<Theme, string> = {
         box-shadow: ${autofillShadowOverride(palette.gray.dark4)};
       }
     }
-  `,
-};
-
-export const sizeInputStyles: Record<Size, string> = {
-  [Size.XSmall]: css`
-    padding: 0 0 0 ${spacing[1] * 3}px;
-  `,
-  [Size.Small]: css`
-    padding: 0 0 0 ${spacing[1] * 3}px;
-  `,
-  [Size.Default]: css`
-    padding: 0 0 0 ${spacing[1] * 3}px;
   `,
 };
 

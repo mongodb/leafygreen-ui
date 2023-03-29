@@ -23,7 +23,6 @@ import {
   inputErrorPaddingTransitionStyles,
   inputThemeStyles,
   selectBaseStyles,
-  sizeInputStyles,
   wrapperBaseStyles,
   wrapperClassName,
   wrapperDisabledStyles,
@@ -177,19 +176,13 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       >
         <input
           ref={inputRef}
-          className={cx(
-            inputBaseStyles,
-            inputThemeStyles[theme],
-            sizeInputStyles[size],
-            {
-              // padding without error icon
-              [inputAnimateStyles]: !disabled,
-              // padding with error icon
-              [inputErrorAnimateStyles[size]]:
-                shouldRenderErrorIcon && !disabled,
-              [inputErrorPaddingTransitionStyles]: shouldErrorTransition,
-            },
-          )}
+          className={cx(inputBaseStyles, inputThemeStyles[theme], {
+            // padding without error icon
+            [inputAnimateStyles]: !disabled,
+            // padding with error icon
+            [inputErrorAnimateStyles[size]]: shouldRenderErrorIcon && !disabled,
+            [inputErrorPaddingTransitionStyles]: shouldErrorTransition,
+          })}
           type="number"
           value={value}
           onChange={handleChange}

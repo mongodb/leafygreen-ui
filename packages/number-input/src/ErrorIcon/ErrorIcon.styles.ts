@@ -6,17 +6,9 @@ import { transitionDuration } from '@leafygreen-ui/tokens';
 import { wrapperClassName } from '../Input/Input.styles';
 import { Size } from '../NumberInput/NumberInput.types';
 
-export const sizeStyles: Record<Size, string> = {
-  [Size.XSmall]: css`
-    translate: 4px 0;
-  `,
-  [Size.Small]: css`
-    translate: 4px 0;
-  `,
-  [Size.Default]: css`
-    translate: 4px 0;
-  `,
-};
+export const translateStyles = css`
+  translate: 4px 0;
+`;
 
 export const animateStyles: Record<Size, string> = {
   [Size.XSmall]: css`
@@ -55,7 +47,7 @@ export const wrapperBaseStyles = css`
   }
 `;
 
-export const translateStyle = css`
+export const transitionStyle = css`
   transition: translate ${transitionDuration.default}ms ease-in-out;
 `;
 

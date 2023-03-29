@@ -7,8 +7,8 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
   animateStyles,
   disabledStyles,
-  sizeStyles,
-  translateStyle,
+  transitionStyle,
+  translateStyles,
   wrapperBaseStyles,
   wrapperSizeStyles,
   wrapperThemeStyles,
@@ -34,9 +34,9 @@ export const ErrorIcon = ({
         wrapperThemeStyles[theme],
         wrapperSizeStyles[size],
         {
-          [sizeStyles[size]]: shouldRenderErrorIcon,
+          [translateStyles]: shouldRenderErrorIcon,
           [animateStyles[size]]: shouldRenderErrorIcon && !disabled,
-          [translateStyle]: shouldErrorTransition,
+          [transitionStyle]: shouldErrorTransition,
           [disabledStyles]: disabled,
         },
       )}
