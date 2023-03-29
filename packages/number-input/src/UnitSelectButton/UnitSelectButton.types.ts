@@ -1,6 +1,6 @@
 import { ButtonProps } from '@leafygreen-ui/button';
 
-import { PopoverProps, UnitSelectProps } from '../Select/UnitSelect.types';
+import { PopoverProps, UnitSelectProps } from '../UnitSelect/UnitSelect.types';
 
 export interface UnitSelectButtonProps extends ButtonProps, PopoverProps {
   /**
