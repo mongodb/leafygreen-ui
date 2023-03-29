@@ -49,6 +49,11 @@ export const inputBaseStyles = css`
       box-shadow: none;
     }
   }
+
+  .${wrapperClassName}:hover &,
+  .${wrapperClassName}:focus-within & {
+    transition-property: padding;
+  }
 `;
 
 export const inputErrorPaddingTransitionStyles = css`

@@ -1,4 +1,10 @@
-import React, { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
+import React, {
+  ChangeEvent,
+  KeyboardEvent,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useControlledValue, useForwardedRef } from '@leafygreen-ui/hooks';
@@ -47,19 +53,21 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     forwardRef,
   ) => {
     /**
-     * Timeout for error icon transitions
+     * Timeout for error icon transitions, using a ref so its not recreated after each render.
      */
-    let translateTimeout: NodeJS.Timeout;
+    const translateTimeout = useRef<NodeJS.Timeout>();
+    const containerRef = useRef<HTMLDivElement | null>(null);
     const [shouldErrorTransition, setShouldErrorTransition] =
       useState<boolean>(false);
     const inputRef = useForwardedRef<HTMLInputElement | null>(forwardRef, null);
     const { theme } = useDarkMode();
 
     useEffect(() => {
+      // On unmount, removes the timeout that is set `onMouseLeave` and `'onBlur` of the wrapper container.
       return () => {
-        clearTimeout(translateTimeout);
+        clearTimeout(translateTimeout.current as unknown as number);
       };
-    });
+    }, []);
 
     const shouldRenderErrorIcon = state === State.Error;
 
@@ -126,7 +134,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
      */
     const handleSetErrorTransition = () => {
       setShouldErrorTransition(true);
-      clearTimeout(translateTimeout);
+      clearTimeout(translateTimeout.current as unknown as number);
     };
 
     /**
@@ -135,17 +143,22 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
      * We can't do this with CSS only because if we only have a transition on hover/focus the ease out animation will not execute when the wrapper is no longer hovered or in focus.
      */
     const handleRemoveErrorTransition = () => {
-      translateTimeout = setTimeout(
-        () => setShouldErrorTransition(false),
-        transitionDuration.default,
-      );
+      if (containerRef.current) {
+        // if the container does not have `focus-within` styles then we can go ahead and remove the transition. An example of this is if we are focused in the container but the mouse has moved is outside of the container.
+        if (!containerRef.current.matches(':focus-within')) {
+          translateTimeout.current = setTimeout(
+            () => setShouldErrorTransition(false),
+            transitionDuration.default,
+          );
+        }
+      }
     };
 
     return (
       <div
+        ref={containerRef}
         onMouseEnter={() => handleSetErrorTransition()}
         onMouseLeave={() => handleRemoveErrorTransition()}
-        onMouseMove={() => handleSetErrorTransition()}
         onFocus={() => handleSetErrorTransition()}
         onBlur={() => handleRemoveErrorTransition()}
         aria-disabled={disabled}

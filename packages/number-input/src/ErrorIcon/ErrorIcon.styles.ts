@@ -48,6 +48,11 @@ export const wrapperBaseStyles = css`
   display: flex;
 
   translate: 30px 0;
+
+  .${wrapperClassName}:hover &,
+  .${wrapperClassName}:focus-within & {
+    transition: translate ${transitionDuration.default}ms ease-in-out;
+  }
 `;
 
 export const translateStyle = css`

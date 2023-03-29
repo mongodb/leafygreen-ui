@@ -55,7 +55,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
     }: NumberInputProps,
     forwardedRef,
   ) => {
-    const prefix = 'lg-numberinput';
+    const prefix = 'lg-number-input';
     const inputId = useIdAllocator({ prefix, id: idProp });
     const errorMessageId = useIdAllocator({ prefix, id: ariaDescribedbyProp });
     const descriptionId = useIdAllocator({ prefix });
