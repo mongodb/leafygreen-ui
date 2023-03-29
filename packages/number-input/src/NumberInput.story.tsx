@@ -53,7 +53,7 @@ export default StoryMeta({
     },
   },
   parameters: {
-    default: 'Demo',
+    default: 'Basic',
     controls: {
       exclude: [
         'as',
