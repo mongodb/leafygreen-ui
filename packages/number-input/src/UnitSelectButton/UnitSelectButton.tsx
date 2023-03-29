@@ -60,12 +60,14 @@ export const UnitSelectButton = React.forwardRef(
      */
     const textNode = buttonRef.current?.querySelector(
       `.${menuButtonTextClassName}`,
-    ) as HTMLElement;
+    );
 
     /**
      * Checks if the selected option has an ellipse.
      */
-    const hasEllipsis = textNode?.offsetWidth < textNode?.scrollWidth;
+    const hasEllipsis = textNode
+      ? (textNode as HTMLElement).offsetWidth < textNode.scrollWidth
+      : false;
 
     const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
       const popoverParent = (e.target as HTMLButtonElement).closest(
