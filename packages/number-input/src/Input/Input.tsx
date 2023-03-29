@@ -58,6 +58,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [shouldErrorTransition, setShouldErrorTransition] =
       useState<boolean>(false);
+    const isFocusedRef = useRef<boolean>(false);
     const inputRef = useForwardedRef<HTMLInputElement | null>(forwardRef, null);
     const { theme } = useDarkMode();
 
@@ -143,8 +144,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
      */
     const handleRemoveErrorTransition = () => {
       if (containerRef.current) {
-        // if the container does not have `focus-within` styles then we can go ahead and remove the transition. An example of this is if we are focused in the container but the mouse has moved is outside of the container.
-        if (!containerRef.current.matches(':focus-within')) {
+        // if the container is not focused then we can go ahead and remove the transition. An example of this is if we are focused in the container but the mouse has moved outside of the container.
+        if (!isFocusedRef.current) {
           translateTimeout.current = setTimeout(
             () => setShouldErrorTransition(false),
             transitionDuration.default,
@@ -153,13 +154,23 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       }
     };
 
+    const handleOnFocus = () => {
+      isFocusedRef.current = true;
+      handleSetErrorTransition();
+    };
+
+    const handleOnBlur = () => {
+      isFocusedRef.current = false;
+      handleRemoveErrorTransition();
+    };
+
     return (
       <div
         ref={containerRef}
         onMouseEnter={() => handleSetErrorTransition()}
         onMouseLeave={() => handleRemoveErrorTransition()}
-        onFocus={() => handleSetErrorTransition()}
-        onBlur={() => handleRemoveErrorTransition()}
+        onFocus={() => handleOnFocus()}
+        onBlur={() => handleOnBlur()}
         aria-disabled={disabled}
         className={cx(
           wrapperClassName,
