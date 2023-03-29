@@ -6,19 +6,19 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Option, Select as SelectComponent } from '@leafygreen-ui/select';
 
 import { UnitOption } from '../NumberInput/NumberInput.types';
-import { SelectButton } from '../SelectButton';
+import { UnitSelectButton } from '../UnitSelectButton';
 
 import {
   selectDisabledStyles,
   selectStyles,
   wrapperBaseStyles,
-} from './Select.styles';
-import { SelectProps } from './Select.types';
+} from './UnitSelect.styles';
+import { UnitSelectProps } from './UnitSelect.types';
 
 /**
  * @internal
  */
-export function Select({
+export function UnitSelect({
   'data-testid': dataTestId,
   unit,
   id,
@@ -32,7 +32,7 @@ export function Select({
   portalContainer,
   scrollContainer,
   popoverZIndex,
-}: SelectProps) {
+}: UnitSelectProps) {
   const { theme } = useDarkMode();
 
   const popoverProps = {
@@ -64,14 +64,14 @@ export function Select({
    */
   const CustomMenuButton = React.forwardRef(
     ({ className, children, ...props }: ButtonProps, forwardedRef) => (
-      <SelectButton
+      <UnitSelectButton
         ref={forwardedRef}
         disabled={disabled}
         displayName={currentUnitOption.displayName}
         {...props}
       >
         {children}
-      </SelectButton>
+      </UnitSelectButton>
     ),
   );
   CustomMenuButton.displayName = 'CustomMenuButton';
@@ -108,4 +108,4 @@ export function Select({
   );
 }
 
-Select.displayName = 'Select';
+UnitSelect.displayName = 'UnitSelect';

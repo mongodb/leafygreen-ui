@@ -9,7 +9,7 @@ import LeafyGreenProvider, {
 import { Description, Error, Label, Overline } from '@leafygreen-ui/typography';
 
 import { Input } from '../Input';
-import { Select } from '../Select';
+import { UnitSelect } from '../UnitSelect';
 
 import {
   errorMessageStyles,
@@ -130,7 +130,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
               </Overline>
             )}
             {renderSelectOnly && (
-              <Select
+              <UnitSelect
                 id={selectId}
                 disabled={disabled}
                 unit={unit}

@@ -15,8 +15,8 @@ import {
   themeDisabledStyles,
   themeStyles,
   wrapperStyles,
-} from './SelectButton.styles';
-import { SelectButtonProps } from './SelectButton.types';
+} from './UnitSelectButton.styles';
+import { UnitSelectButtonProps } from './UnitSelectButton.types';
 
 /**
  * Custom unit button with a tooltip.
@@ -24,7 +24,7 @@ import { SelectButtonProps } from './SelectButton.types';
  *
  * @internal
  */
-export const SelectButton = React.forwardRef(
+export const UnitSelectButton = React.forwardRef(
   (
     {
       className,
@@ -37,7 +37,7 @@ export const SelectButton = React.forwardRef(
       portalContainer,
       scrollContainer,
       ...props
-    }: SelectButtonProps,
+    }: UnitSelectButtonProps,
     forwardedRef,
   ) => {
     const [open, setOpen] = useState<boolean>(false);
@@ -114,4 +114,4 @@ export const SelectButton = React.forwardRef(
   },
 );
 
-SelectButton.displayName = 'SelectButton';
+UnitSelectButton.displayName = 'UnitSelectButton';

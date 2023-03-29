@@ -30,7 +30,7 @@ export interface PopoverProps {
   popoverZIndex?: number;
 }
 
-export interface SelectProps extends PopoverProps {
+export interface UnitSelectProps extends PopoverProps {
   /**
    * Id for the select component.
    */

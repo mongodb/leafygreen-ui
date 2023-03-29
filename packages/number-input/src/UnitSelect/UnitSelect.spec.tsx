@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 
-import { Select } from '.';
+import { UnitSelect } from '.';
 
 const selectProps = {
   onChange: jest.fn(),
@@ -24,7 +24,7 @@ const selectProps = {
 
 function renderSelect(props = {}) {
   // @ts-ignore - missing props
-  const utils = render(<Select data-testid="select-input" {...props} />);
+  const utils = render(<UnitSelect data-testid="select-input" {...props} />);
   const select = utils.getByTestId('select-input');
   return {
     ...utils,
