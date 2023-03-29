@@ -63,7 +63,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const { theme } = useDarkMode();
 
     useEffect(() => {
-      // On unmount, removes the timeout that is set `onMouseLeave` and `'onBlur` of the wrapper container.
+      // On unmount, removes the timeout that is set on `onMouseLeave` and `'onBlur` of the wrapper container.
       return () => {
         clearTimeout(translateTimeout.current as unknown as number);
       };
@@ -144,7 +144,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
      */
     const handleRemoveErrorTransition = () => {
       if (containerRef.current) {
-        // if the container is not focused then we can go ahead and remove the transition. An example of this is if we are focused in the container but the mouse has moved outside of the container.
+        // if the container is not focused then we can go ahead and remove the transition.
+        // An example of this is if we are focused in the container but the mouse has moved outside of the container.
         if (!isFocusedRef.current) {
           translateTimeout.current = setTimeout(
             () => setShouldErrorTransition(false),
