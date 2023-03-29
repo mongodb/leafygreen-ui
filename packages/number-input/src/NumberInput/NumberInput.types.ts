@@ -36,7 +36,7 @@ export interface UnitOption {
 
 type AriaLabelkeys = keyof AriaLabelPropsWithLabel;
 
-export interface WithSelectProps {
+export interface WithUnitSelectProps {
   /**
    * The string unit that appears to the right of the input if using a single unit.
    *
@@ -55,7 +55,7 @@ export interface WithSelectProps {
   onSelectChange: (unit: UnitOption) => void;
 }
 
-export interface WithoutSelectProps {
+export interface WithoutUnitSelectProps {
   /**
    * The string unit that appears to the right of the input if using a single unit.
    *
@@ -74,7 +74,9 @@ export interface WithoutSelectProps {
   onSelectChange?: never;
 }
 
-export type SelectProps = WithSelectProps | WithoutSelectProps;
+export type ConditionalUnitSelectProps =
+  | WithUnitSelectProps
+  | WithoutUnitSelectProps;
 
 export type PopoverProps = PortalControlProps & {
   /**
@@ -147,6 +149,6 @@ export interface BaseNumberInputProps
 }
 
 export type NumberInputProps = BaseNumberInputProps &
-  SelectProps &
+  ConditionalUnitSelectProps &
   PopoverProps &
   AriaLabelPropsWithLabel;
