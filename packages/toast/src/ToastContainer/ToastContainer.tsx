@@ -201,12 +201,14 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
             totalStackHeight,
             bottomOffset: notificationBarSpacing,
           })]: doesStackExist && isInteracted,
-          [containerExpandedStyles]: doesStackExist && shouldExpand,
+          // Wait to apply fully expanded styles until the toast transition is complete
+          [containerExpandedStyles]: doesStackExist && isExpanded,
         })}
       >
         <div
           ref={scrollContainerRef}
           className={cx(scrollContainerStyles, {
+            // Wait to apply fully expanded styles until the toast transition is complete
             [scrollContainerExpandedStyles(totalStackHeight)]: isExpanded,
           })}
           data-height={totalStackHeight}
@@ -251,7 +253,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
                               toastHeights,
                               theme,
                               bottomOffset: notificationBarSpacing,
-                              isExpanded, //: shouldExpand,
+                              isExpanded,
                             })]: isInteracted,
                           },
                           className,

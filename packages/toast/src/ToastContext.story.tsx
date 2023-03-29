@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { faker } from '@faker-js/faker';
 import { ComponentStory } from '@storybook/react';
-import { random, sample, startCase } from 'lodash';
+import { random, range, sample, startCase } from 'lodash';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
@@ -103,11 +103,11 @@ export const Variants: ComponentStory<typeof InternalToast> = (
   const progressToasts =
     stack && Array.from(stack).filter(([_, t]) => t.variant === 'progress');
 
-  const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState(0.1);
 
   useEffect(() => {
     if (!progressToasts || progressToasts.length === 0) {
-      setProgress(0);
+      setProgress(0.1);
     }
   }, [progressToasts]);
 
@@ -132,7 +132,7 @@ export const Variants: ComponentStory<typeof InternalToast> = (
                   title: `I'm a ${variant} toast`,
                   description: faker.lorem.lines(random(1, 2)),
                   variant,
-                  progress: 0,
+                  progress,
                   ...props,
                 });
               }}
@@ -212,10 +212,13 @@ export const WithInitialToasts: ComponentStory<typeof InternalToast> = (
 
 WithInitialToasts.args = {
   // @ts-expect-error
-  initialValue: makeToastStack([
-    makeToast({
-      title: 'Initial toast',
-      description: faker.lorem.lines(2),
-    }),
-  ]),
+  initialValue: makeToastStack(
+    range(20).map(_ =>
+      makeToast({
+        title: 'Initial toast',
+        description: faker.lorem.lines(2),
+        variant: sample(Variant),
+      }),
+    ),
+  ),
 };

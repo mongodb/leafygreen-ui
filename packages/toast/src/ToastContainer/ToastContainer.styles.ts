@@ -13,6 +13,7 @@ import { calcTotalStackHeight } from './utils/useToastHeights';
 
 export const toastContainerStyles = css`
   outline: 1px solid teal;
+
   position: fixed;
   left: ${spacing[3] - TOAST_CONSTANTS.inset}px;
   bottom: ${spacing[3] - TOAST_CONSTANTS.inset}px;
@@ -42,7 +43,6 @@ export const toastContainerStyles = css`
 `;
 
 export const toastContainerVisibleStyles = css`
-  min-height: ${TOAST_CONSTANTS.minHeight + TOAST_CONSTANTS.yOffset}px;
   opacity: 1;
   visibility: visible;
 `;
@@ -55,11 +55,12 @@ export function getContainerStatefulStyles({
   topToastHeight: number;
 }) {
   return css`
-    // The height of the first toast + inset
-    height: ${TOAST_CONSTANTS.inset * 2 + topToastHeight}px;
+    // In the default state, the container is the height of the first toast + inset
+    height: ${topToastHeight + TOAST_CONSTANTS.inset * 2}px;
 
-    // Move the entire container as toasts get added,
+    // Move the entire container up as toasts get added,
     // so the bottom toast is always 16px from the bottom
+    // (note, recentToastsLength should never exceed 3 )
     transform: translateY(
       -${TOAST_CONSTANTS.yOffset * (recentToastsLength - 1)}px
     );
@@ -73,19 +74,27 @@ export const getContainerInteractedStyles = ({
   totalStackHeight: number;
   bottomOffset: number;
 }) => {
+  // Set the height of the container to the total stack height
+  const height = bottomOffset + totalStackHeight + TOAST_CONSTANTS.inset * 2;
+
   return css`
+    height: ${height}px;
     // set the container back when hovered/expanded
     transform: translateY(0);
-    height: ${TOAST_CONSTANTS.inset * 2 + bottomOffset + totalStackHeight}px;
   `;
 };
 
 export const containerExpandedStyles = css`
-  // We want auto scroll bars when expanded
+  // When expanded,
+  // force the height to 100vh regardless of the total stack height
   height: 100vh;
+  bottom: 0;
   overflow: auto;
 `;
 
+/**
+ * Scroll Container
+ */
 export const scrollContainerStyles = css`
   position: relative;
   width: 100%;
@@ -95,8 +104,11 @@ export const scrollContainerStyles = css`
 `;
 
 export function scrollContainerExpandedStyles(totalStackHeight: number) {
+  /*
+   * Scroll container should be at least the height of the stack, (plus padding)
+   * This may overflow the container.
+   */
   return css`
-    position: relative;
     min-height: ${totalStackHeight + spacing[3]}px;
   `;
 }
