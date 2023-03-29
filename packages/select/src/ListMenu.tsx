@@ -9,7 +9,7 @@ import { fontFamilies } from '@leafygreen-ui/tokens';
 
 import SelectContext from './SelectContext';
 import { colorSets, mobileSizeSet, sizeSets } from './styleSets';
-import { Size } from './types';
+import { DropdownWidthBasis, Size } from './types';
 import { MobileMediaQuery, useForwardedRef } from './utils';
 
 export const popoverClassName = createUniqueClassName('select-popover');
@@ -56,7 +56,7 @@ type ListMenuProps = {
   referenceElement: React.MutableRefObject<HTMLElement | null>;
   className?: string;
   labelId?: string;
-  dropdownAutoWidth?: boolean;
+  dropdownWidthBasis: DropdownWidthBasis;
 } & Omit<PopoverProps, 'active' | 'refEl'>;
 
 const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
@@ -67,7 +67,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
       referenceElement,
       className,
       labelId,
-      dropdownAutoWidth,
+      dropdownWidthBasis,
       usePortal = true,
       portalContainer,
       scrollContainer,
@@ -110,7 +110,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
         justify={Justify.Start}
         adjustOnMutation
         className={cx(popoverClassName, className, {
-          [autoWidthStyles]: dropdownAutoWidth,
+          [autoWidthStyles]: dropdownWidthBasis === DropdownWidthBasis.Option,
         })}
         refEl={referenceElement}
         {...popoverProps}

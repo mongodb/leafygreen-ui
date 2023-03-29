@@ -3,7 +3,7 @@ import React from 'react';
 import { ButtonProps } from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { Option, Select as SelectComponent } from '@leafygreen-ui/select';
+import { DropdownWidthBasis, Option, Select } from '@leafygreen-ui/select';
 
 import { UnitOption } from '../NumberInput/NumberInput.types';
 import { UnitSelectButton } from '../UnitSelectButton';
@@ -78,7 +78,7 @@ export function UnitSelect({
 
   return (
     <div className={wrapperBaseStyles}>
-      <SelectComponent
+      <Select
         id={id}
         onChange={handleChange}
         aria-labelledby="Unit Picker"
@@ -91,7 +91,7 @@ export function UnitSelect({
           className,
         )}
         allowDeselect={false}
-        dropdownAutoWidth
+        dropdownWidthBasis={DropdownWidthBasis.Option}
         disabled={disabled}
         size={size}
         data-testid={dataTestId}
@@ -103,7 +103,7 @@ export function UnitSelect({
             {option.displayName}
           </Option>
         ))}
-      </SelectComponent>
+      </Select>
     </div>
   );
 }

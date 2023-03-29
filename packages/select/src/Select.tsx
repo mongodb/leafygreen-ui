@@ -23,7 +23,7 @@ import MenuButton from './MenuButton';
 import { InternalOption, OptionElement } from './Option';
 import SelectContext from './SelectContext';
 import { mobileSizeSet, SizeSet, sizeSets } from './styleSets';
-import { SelectProps, Size, State } from './types';
+import { DropdownWidthBasis, SelectProps, Size, State } from './types';
 import {
   convertToInternalElements,
   getOptionValue,
@@ -81,7 +81,7 @@ export default function Select({
   placeholder = 'Select',
   errorMessage = '',
   state = State.None,
-  dropdownAutoWidth = false,
+  dropdownWidthBasis = DropdownWidthBasis.Trigger,
   baseFontSize = BaseFontSize.Body1,
   id: idProp,
   'aria-labelledby': ariaLabelledby,
@@ -587,9 +587,9 @@ export default function Select({
             className={cx({
               [css`
                 width: ${menuButtonRef.current?.clientWidth}px;
-              `]: !dropdownAutoWidth,
+              `]: dropdownWidthBasis === DropdownWidthBasis.Trigger,
             })}
-            dropdownAutoWidth={dropdownAutoWidth}
+            dropdownWidthBasis={dropdownWidthBasis}
             {...popoverProps}
           >
             {allowDeselect && deselectionOption}
@@ -644,4 +644,5 @@ Select.propTypes = {
   state: PropTypes.oneOf(Object.values(State)),
   allowDeselect: PropTypes.bool,
   baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
+  dropdownWidthBasis: PropTypes.oneOf(Object.values(DropdownWidthBasis)),
 };

@@ -3,4 +3,4 @@ export { menuButtonTextClassName } from './MenuButton';
 export { Option } from './Option';
 export { OptionGroup } from './OptionGroup';
 export { default as Select } from './Select';
-export { type SelectProps, Size, State } from './types';
+export { DropdownWidthBasis, type SelectProps, Size, State } from './types';
