@@ -358,6 +358,7 @@ const disabledStyle: Record<Theme, string> = {
     }
 
     &:focus {
+      color: ${palette.gray.base};
       box-shadow: ${focusBoxShadow(palette.white)};
     }
   `,
@@ -372,6 +373,7 @@ const disabledStyle: Record<Theme, string> = {
     }
 
     &:focus {
+      color: ${palette.gray.dark1};
       box-shadow: ${focusBoxShadow(palette.black)};
     }
   `,
