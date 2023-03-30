@@ -179,12 +179,12 @@ export function getToastUnhoveredStyles({
   index: number;
   topToastHeight: number;
 }) {
+  /**
+   * When not hovered, set the max-height of each toast
+   * to the height of the top-most toast,
+   * so tall toasts below the top don't peek out
+   */
   return css`
-    /**
-    * When not hovered,
-    * Set the max-height of each toast to the height of the top-most toast
-    * so tall toasts below the top don't peek out
-    */
     max-height: ${index === 0 ? 'unset' : `${topToastHeight}px`};
     color: ${index > 0 ? toastBGColor[theme] : 'initial'} !important;
   `;
