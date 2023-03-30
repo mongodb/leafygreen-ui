@@ -3,14 +3,14 @@ import { getAllByRole } from '@testing-library/dom';
 import { fireEvent, render } from '@testing-library/react';
 
 import { Cell } from '../Cell';
-import ExpandedContent from '../ExpandedContent/ExpandedContent';
+import Row from '../Row';
 import TableBody from '../TableBody';
 import { LeafyGreenTableRow } from '../useLeafyGreenTable';
 import { Person } from '../utils/makeData';
 import { useTestHookCall } from '../utils/testHookCalls';
 import Table, { flexRender } from '..';
 
-import Row from '.';
+import ExpandedContent from './ExpandedContent';
 
 const RowWithExpandableContent = () => {
   const { containerRef, table } = useTestHookCall({

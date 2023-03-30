@@ -26,8 +26,3 @@ export type TableContextValues<T extends LGRowData> = PropsWithChildren<
      */
     table?: LeafyGreenTable<T>;
   };
-
-export const initialTableContext: TableContextValues<LGRowData> = {
-  getRowById: (_?: string) => undefined,
-  getParentRow: (_?: string) => undefined,
-};

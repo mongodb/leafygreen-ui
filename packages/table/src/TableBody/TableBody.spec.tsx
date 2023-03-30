@@ -68,5 +68,10 @@ describe('packages/table/TableBody', () => {
     });
   });
 
+  /**
+   * This is not effectively possible using just Jest and RTL since we'd have to simulate scrolling
+   * on a set viewport height. Any tests that use virtual scrolling also triggers warnings from RTL
+   * saying tests for server-side rendered markup won't be reliably tested.
+   */
   test.todo('Virtual scrolling features');
 });

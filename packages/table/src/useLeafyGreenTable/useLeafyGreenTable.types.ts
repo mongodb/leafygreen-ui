@@ -6,12 +6,10 @@ import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 import { ColumnDef } from '..';
 
-import { VirtualizerValues } from './reactVirtual.types';
+import { VirtualizerValues } from './ReactVirtual.types';
 
 /** LeafyGreen extension of `useReactTable` {@link RowData}*/
-export type LGRowData = RowData; //{
-// [key: string]: any;
-// };
+export type LGRowData = RowData;
 
 export type LGTableDataType<T extends LGRowData> = T & {
   renderExpandedContent?: (row: LeafyGreenTableRow<T>) => JSX.Element;

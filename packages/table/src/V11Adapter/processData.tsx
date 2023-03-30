@@ -34,7 +34,7 @@ const processData = (
       isComponentType(child, 'Row'),
     );
     if (subRowChildren.length > 0) newDatum.subRows = [];
-    subRowChildren.forEach(subRow => {
+    subRowChildren.map(subRow => {
       const subRowCells = React.Children.toArray(
         (subRow as ReactElement).props.children,
       );

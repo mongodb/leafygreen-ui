@@ -23,10 +23,15 @@ import processColumns from './processColumns';
 import processData from './processData';
 import { V11AdapterProps } from './V11Adapter.types';
 
-// assumes table is first element in children
-// reads columns from columns' keys
-// supports up to one layer of nested rows
-// assumes that the key of a column in the original data === column label header in lowercase; can be overridden by `headerLabels`
+/**
+ * Converts a v10 Table component to a v11 Table component.
+ *
+ * Given the two versions' significant differences in API, the adapter makes several assumptions about the v10 Table's usage:
+ * - It is assumed that the v10 Table component will be the first child.
+ * - The v11 columns are read from the v10 columns' labels. If the key of the cells' data does not correspond to the v10 column's label,
+ * the user is expected to pass in the labels through the `headerLabels` prop.
+ * - The currently only supports up to one layer of nested rows
+ */
 const V11Adapter = <T extends LGRowData>({
   children,
   shouldAlternateRowColor,

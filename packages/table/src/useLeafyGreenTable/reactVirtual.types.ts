@@ -1,6 +1,6 @@
 import { VirtualItem } from 'react-virtual';
 
-// Below is copied from react-virtual as their types are exported
+// Below is copied from `react-virtual` as their types are not exported
 
 type ScrollAlignment = 'start' | 'center' | 'end' | 'auto';
 
@@ -18,5 +18,3 @@ export interface VirtualizerValues {
   scrollToIndex: (index: number, options?: ScrollToIndexOptions) => void;
   measure: () => void;
 }
-
-// Above is copied from react-virtual as their types are not exported

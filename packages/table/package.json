@@ -20,7 +20,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@faker-js/faker": "^7.6.0",
     "@leafygreen-ui/checkbox": "^12.0.0",
     "@leafygreen-ui/emotion": "^4.0.3",
     "@leafygreen-ui/hooks": "^7.5.0",
