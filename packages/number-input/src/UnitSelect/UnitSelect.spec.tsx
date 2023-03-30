@@ -32,6 +32,7 @@ function renderSelect(props = {}) {
   };
 }
 
+// These are the same test from `NumberInput.spec.tsx`
 describe('packages/number-input/select', () => {
   test('a collapsed select is rendered, with an active state based on the language prop', () => {
     const { getByRole } = renderSelect({ ...selectProps });

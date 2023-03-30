@@ -19,6 +19,7 @@ function renderInput(props = {}) {
   };
 }
 
+// These are the same test from `NumberInput.spec.tsx`
 describe('packages/number-input/input', () => {
   describe('Input', () => {
     test('render input type as "number"', async () => {
