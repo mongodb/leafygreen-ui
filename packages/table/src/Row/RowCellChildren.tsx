@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, ReactElement, ReactNode } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 
 import { isComponentType } from '@leafygreen-ui/lib';
 
