@@ -175,3 +175,7 @@ Select.argTypes = {
     control: 'none',
   },
 };
+
+export const Uncontrolled = ({ ...props }: NumberInputProps) => {
+  return <NumberInput {...props} />;
+};

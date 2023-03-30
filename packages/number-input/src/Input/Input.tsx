@@ -1,10 +1,12 @@
 import React, {
   ChangeEvent,
+  ChangeEventHandler,
   KeyboardEvent,
   useEffect,
   useRef,
   useState,
 } from 'react';
+import isUndefined from 'lodash/isUndefined';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useControlledValue, useForwardedRef } from '@leafygreen-ui/hooks';
@@ -61,6 +63,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const isFocusedRef = useRef<boolean>(false);
     const inputRef = useForwardedRef<HTMLInputElement | null>(forwardRef, null);
     const { theme } = useDarkMode();
+    const isControlled = !isUndefined(valueProp);
 
     useEffect(() => {
       // On unmount, removes the timeout that is set on `onMouseLeave` and `'onBlur` of the wrapper container.
@@ -196,7 +199,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             [inputErrorPaddingTransitionStyles]: shouldErrorTransition,
           })}
           type="number"
-          value={value}
+          value={isControlled ? valueProp : value} // TODO: temp fix for useControlledValue hook. The hook was not returning the correct value when controlled. For example when typing 2e3 the hook would return 3 but it should return 2e3 like a native number input would.
           onChange={handleChange}
           aria-disabled={disabled}
           readOnly={disabled}
