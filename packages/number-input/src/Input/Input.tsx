@@ -68,7 +68,9 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     useEffect(() => {
       // On unmount, removes the timeout that is set on `onMouseLeave` and `'onBlur` of the wrapper container.
       return () => {
-        clearTimeout(translateTimeout.current as unknown as number);
+        if (translateTimeout.current) {
+          clearTimeout(translateTimeout.current);
+        }
       };
     }, []);
 
@@ -137,7 +139,9 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
      */
     const handleSetErrorTransition = () => {
       setShouldErrorTransition(true);
-      clearTimeout(translateTimeout.current as unknown as number);
+      if (translateTimeout.current) {
+        clearTimeout(translateTimeout.current);
+      }
     };
 
     /**

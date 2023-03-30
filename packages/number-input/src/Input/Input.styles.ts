@@ -30,7 +30,7 @@ export const inputBaseStyles = css`
   box-sizing: border-box;
   transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: background-color;
-  padding: 0 0 0 ${spacing[1] * 3}px;
+  padding: 0 0 0 12px;
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {

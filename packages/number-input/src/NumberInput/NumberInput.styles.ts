@@ -22,7 +22,7 @@ export const wrapperSizeStyles: Record<Size, string> = {
 };
 
 export const wrapperGapStyles = css`
-  gap: ${spacing[1] * 3}px;
+  gap: 12px;
 `;
 
 export const unitBaseStyles = css`
