@@ -23,7 +23,8 @@ export const baseToastStyle = css`
   position: fixed;
   left: ${TOAST_CONSTANTS.inset}px;
   bottom: ${TOAST_CONSTANTS.inset}px;
-  width: ${TOAST_CONSTANTS.width}px;
+  width: calc(100vw - ${TOAST_CONSTANTS.inset * 2}px);
+  max-width: ${TOAST_CONSTANTS.maxWidth}px;
   min-height: ${TOAST_CONSTANTS.minHeight - 2}px; // -2 for border: ;
 
   display: flex;

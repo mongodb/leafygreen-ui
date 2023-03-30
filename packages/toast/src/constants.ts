@@ -5,7 +5,7 @@ export const TOAST_CONSTANTS = {
   /**
    * The fixed width of a toast
    */
-  width: 400,
+  maxWidth: 400,
 
   /**
    * The min-height of a toast

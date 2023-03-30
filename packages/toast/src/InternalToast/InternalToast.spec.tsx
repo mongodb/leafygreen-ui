@@ -179,6 +179,7 @@ describe('packages/toast/internal-toast', () => {
       const actionButton = queryByTestId('action');
       expect(actionButton).toBeInTheDocument();
     });
+
     test('`actionElement` not rendered when `variant !== progress`', () => {
       const { queryByTestId } = render(
         <InternalToast
