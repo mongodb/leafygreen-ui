@@ -36,9 +36,9 @@ export const Arrow = ({
       disabled={disabled}
     >
       <Icon
-        className={
-          direction === Direction.Decrement ? downArrowRotateStyles : ''
-        }
+        className={cx({
+          [downArrowRotateStyles]: direction === Direction.Decrement,
+        })}
         aria-hidden
         glyph="CaretUp"
         size={16}
