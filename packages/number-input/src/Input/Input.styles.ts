@@ -19,7 +19,6 @@ const autofillShadowOverride = (color: string) => `0 0 0 100px ${color} inset`;
 
 export const wrapperClassName = createUniqueClassName('number-input-wrapper');
 
-// TODO: why is xs text not center aligned
 export const inputBaseStyles = css`
   all: unset;
   font-family: ${fontFamilies.default};
@@ -249,5 +248,17 @@ export const inputErrorAnimateStyles: Record<Size, string> = {
     .${wrapperClassName}:focus-within & {
       padding-right: ${spacing[1] * 11}px;
     }
+  `,
+};
+
+export const inputSizeStyles: Record<Size, string> = {
+  [Size.XSmall]: css`
+    height: 22px;
+  `,
+  [Size.Small]: css`
+    height: 28px;
+  `,
+  [Size.Default]: css`
+    height: 36px;
   `,
 };

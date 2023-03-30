@@ -22,6 +22,7 @@ import {
   inputBaseStyles,
   inputErrorAnimateStyles,
   inputErrorPaddingTransitionStyles,
+  inputSizeStyles,
   inputThemeStyles,
   selectBaseStyles,
   wrapperBaseStyles,
@@ -190,13 +191,19 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       >
         <input
           ref={inputRef}
-          className={cx(inputBaseStyles, inputThemeStyles[theme], {
-            // padding without error icon
-            [inputAnimateStyles]: !disabled,
-            // padding with error icon
-            [inputErrorAnimateStyles[size]]: shouldRenderErrorIcon && !disabled,
-            [inputErrorPaddingTransitionStyles]: shouldErrorTransition,
-          })}
+          className={cx(
+            inputBaseStyles,
+            inputThemeStyles[theme],
+            inputSizeStyles[size],
+            {
+              // padding without error icon
+              [inputAnimateStyles]: !disabled,
+              // padding with error icon
+              [inputErrorAnimateStyles[size]]:
+                shouldRenderErrorIcon && !disabled,
+              [inputErrorPaddingTransitionStyles]: shouldErrorTransition,
+            },
+          )}
           type="number"
           value={isControlled ? valueProp : value} // TODO: temp fix for useControlledValue hook. The hook was not returning the correct value when controlled. For example when typing 2e3 the hook would return 3 but it should return 2e3 like a native number input would.
           onChange={handleChange}
