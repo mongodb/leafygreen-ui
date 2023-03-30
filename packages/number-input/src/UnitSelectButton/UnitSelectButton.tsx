@@ -70,6 +70,7 @@ export const UnitSelectButton = React.forwardRef(
       : false;
 
     const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
+      // If there is no popover parent that means that we are not hovering over the popover menu. If that's the case then we should show the tooltip.
       const popoverParent = (e.target as HTMLButtonElement).closest(
         `.${popoverClassName}`,
       );
