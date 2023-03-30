@@ -12,6 +12,7 @@ const testItems = 16;
 
 export default StoryMeta({
   title: 'hooks/useAutoScroll',
+  component: undefined,
   argTypes: {
     selected: {
       type: 'number',
@@ -22,6 +23,7 @@ export default StoryMeta({
   parameters: {
     default: 'Basic',
     controls: { exclude: ['as', 'darkMode'] },
+    chromatic: { disableSnapshot: true },
   },
 });
 

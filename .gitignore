@@ -40,3 +40,6 @@ packages/**/tsdoc.json
 
 # Local yarn releases
 .yarn
+
+# Storybook/Chromatic logs
+build-storybook.log

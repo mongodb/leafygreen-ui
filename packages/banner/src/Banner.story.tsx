@@ -86,3 +86,6 @@ export const WithCustomImage: ComponentStory<typeof Banner> = ({ ...args }) => (
 WithCustomImage.args = {
   variant: Variant.Info,
 };
+WithCustomImage.parameters = {
+  chromatic: { disableSnapshot: true },
+};
