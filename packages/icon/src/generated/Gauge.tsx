@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 172a4774960354c946c1bbb124cb4927
+ * @checksum 04e94894ecd5b07eaefdad5ea0b3d150
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -10,9 +10,9 @@ import * as React from 'react';
 
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
-export interface DragProps extends LGGlyph.ComponentProps {}
+export interface GaugeProps extends LGGlyph.ComponentProps {}
 
-const Drag = ({
+const Gauge = ({
   className,
   size = 16,
   title,
@@ -21,14 +21,14 @@ const Drag = ({
   fill,
   role = 'img',
   ...props
-}: DragProps) => {
+}: GaugeProps) => {
   const fillStyle = css`
     color: ${fill};
   `;
   const noFlexShrink = css`
     flex-shrink: 0;
   `;
-  const accessibleProps = generateAccessibleProps(role, 'Drag', {
+  const accessibleProps = generateAccessibleProps(role, 'Gauge', {
     title,
     ['aria-label']: ariaLabel,
     ['aria-labelledby']: ariaLabelledby,
@@ -50,38 +50,22 @@ const Drag = ({
       viewBox="0 0 16 16"
     >
       <path
-        d="M7 4C7 4.55228 6.55228 5 6 5C5.44772 5 5 4.55228 5 4C5 3.44772 5.44772 3 6 3C6.55228 3 7 3.44772 7 4Z"
+        d="M1.041 10.2514C0.996713 10.6632 1.33666 11 1.75088 11H4.2449C4.65912 11 4.98569 10.6591 5.08798 10.2577C5.22027 9.73864 5.49013 9.25966 5.87533 8.87446C6.43906 8.31073 7.20364 7.99403 8.00088 7.99403C8.27011 7.99403 8.53562 8.03015 8.79093 8.0997L11.7818 5.10887C10.6623 4.39046 9.35172 4 8.00088 4C6.14436 4 4.36388 4.7375 3.05113 6.05025C1.91604 7.18534 1.21104 8.67012 1.041 10.2514Z"
         fill={'currentColor'}
       />
       <path
-        d="M11 4C11 4.55228 10.5523 5 10 5C9.44772 5 9 4.55228 9 4C9 3.44772 9.44772 3 10 3C10.5523 3 11 3.44772 11 4Z"
-        fill={'currentColor'}
-      />
-      <path
-        d="M7 8C7 8.55228 6.55228 9 6 9C5.44772 9 5 8.55228 5 8C5 7.44772 5.44772 7 6 7C6.55228 7 7 7.44772 7 8Z"
-        fill={'currentColor'}
-      />
-      <path
-        d="M7 12C7 12.5523 6.55228 13 6 13C5.44772 13 5 12.5523 5 12C5 11.4477 5.44772 11 6 11C6.55228 11 7 11.4477 7 12Z"
-        fill={'currentColor'}
-      />
-      <path
-        d="M11 8C11 8.55228 10.5523 9 10 9C9.44772 9 9 8.55228 9 8C9 7.44772 9.44772 7 10 7C10.5523 7 11 7.44772 11 8Z"
-        fill={'currentColor'}
-      />
-      <path
-        d="M11 12C11 12.5523 10.5523 13 10 13C9.44772 13 9 12.5523 9 12C9 11.4477 9.44772 11 10 11C10.5523 11 11 11.4477 11 12Z"
+        d="M13.2967 6.42237L10.455 9.26409C10.6678 9.56493 10.8231 9.90191 10.9138 10.2577C11.0161 10.6591 11.3426 11 11.7568 11L14.2509 11C14.6651 11 15.005 10.6632 14.9608 10.2514C14.8087 8.83759 14.229 7.50093 13.2967 6.42237Z"
         fill={'currentColor'}
       />
     </svg>
   );
 };
 
-Drag.displayName = 'Drag';
-Drag.isGlyph = true;
-Drag.propTypes = {
+Gauge.displayName = 'Gauge';
+Gauge.isGlyph = true;
+Gauge.propTypes = {
   fill: PropTypes.string,
   size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   className: PropTypes.string,
 };
-export default Drag;
+export default Gauge;

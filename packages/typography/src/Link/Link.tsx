@@ -21,6 +21,7 @@ import {
   linkModeStyles,
   linkStyles,
   openInNewTabStyles,
+  overwriteDefaultStyles,
   underlineModeStyles,
   underlineStyles,
 } from './Link.styles';
@@ -110,6 +111,7 @@ const Link = InferredPolymorphic<LinkProps, 'span'>(
       <Component
         className={cx(
           anchorClassName,
+          overwriteDefaultStyles,
           bodyTypeScaleStyles[baseFontSize],
           linkStyles,
           linkModeStyles[theme],
