@@ -3,7 +3,6 @@ import { Row } from '@tanstack/react-table';
 import camelCase from 'lodash/camelCase';
 
 import { TableProps } from '../TableV10/Table';
-import { TableHeaderProps } from '../TableV10/TableHeader';
 import { LGColumnDef, LGRowData } from '../useLeafyGreenTable';
 
 /**
@@ -30,29 +29,26 @@ const processColumns = <T extends LGRowData>(
       !!headerProps.handleSort ||
       !!headerProps.compareFn;
 
-    const convertedCompareFn = (
-      compareFn: TableHeaderProps<any>['compareFn'],
-    ) => {
-      return (rowA: Row<any>, rowB: Row<any>, _: any) => {
-        const indexA = rowA.index;
-        const indexB = rowB.index;
-        // @ts-expect-error this function is only invoked when compareFn exists
-        return compareFn(data[indexA], data[indexB], 'asc');
-      };
+    const convertedCompareFn = (rowA: Row<any>, rowB: Row<any>, _: any) => {
+      const indexA = rowA.index;
+      const indexB = rowB.index;
+      return headerProps.compareFn(data[indexA], data[indexB]);
     };
 
-    const defaultSortingFn = () => {
-      return (rowA: Row<any>, rowB: Row<any>, columnId: string) => {
-        const indexA = rowA.index;
-        const indexB = rowB.index;
-        // @ts-expect-error each datum is designed to be indexable by string
-        return data[indexA][columnId] > data[indexB][columnId]
-          ? -1
-          : // @ts-expect-error each datum is designed to be indexable by string
-          data[indexB][columnId] > data[indexA][columnId]
-          ? 1
-          : 0;
-      };
+    const defaultSortingFn = (
+      rowA: Row<any>,
+      rowB: Row<any>,
+      columnId: string,
+    ) => {
+      const indexA = rowA.index;
+      const indexB = rowB.index;
+      // @ts-expect-error each datum is designed to be indexable by string
+      return data[indexA][columnId] > data[indexB][columnId]
+        ? -1
+        : // @ts-expect-error each datum is designed to be indexable by string
+        data[indexB][columnId] > data[indexA][columnId]
+        ? 1
+        : 0;
     };
 
     processedColumns.push({
@@ -63,9 +59,9 @@ const processColumns = <T extends LGRowData>(
       align: headerProps.dataType === 'number' ? 'right' : 'left',
       enableSorting: hasSorting,
       sortingFn: headerProps.compareFn
-        ? convertedCompareFn(headerProps)
+        ? convertedCompareFn
         : hasSorting
-        ? defaultSortingFn()
+        ? defaultSortingFn
         : undefined,
     });
   });

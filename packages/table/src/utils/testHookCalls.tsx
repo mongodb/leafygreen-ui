@@ -98,6 +98,9 @@ export interface TestTableWithHookProps {
   stateProps?: any;
 }
 
+/**
+ * A hook call utilized across different test suites to simplify test `render`s' markup
+ */
 export const useTestHookCall = ({
   rowProps,
   columnProps,

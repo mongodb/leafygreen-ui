@@ -1,4 +1,5 @@
+import { default as HeaderRow, HeaderRowProps } from './HeaderRow';
 import Row from './Row';
-export { RowProps } from './Row.types';
+import { RowProps } from './Row.types';
 
-export default Row;
+export { HeaderRow, type HeaderRowProps, Row, type RowProps };

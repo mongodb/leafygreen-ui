@@ -5,7 +5,7 @@ import { ComponentStory, Meta } from '@storybook/react';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 import ExpandedContent from './ExpandedContent/ExpandedContent';
-import HeaderRow from './HeaderRow/HeaderRow';
+import HeaderRow from './Row/HeaderRow/HeaderRow';
 import Row from './Row/Row';
 import Table from './Table/Table';
 import TableBody from './TableBody/TableBody';

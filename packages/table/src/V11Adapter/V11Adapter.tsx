@@ -5,8 +5,8 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { Cell, HeaderCell } from '../Cell';
 import ExpandedContent from '../ExpandedContent/ExpandedContent';
-import HeaderRow from '../HeaderRow';
 import Row from '../Row';
+import HeaderRow from '../Row/HeaderRow';
 import TableBody from '../TableBody';
 import TableContainer from '../TableContainer';
 import TableHead from '../TableHead';

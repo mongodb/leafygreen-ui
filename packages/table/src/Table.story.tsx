@@ -14,7 +14,7 @@ import { storybookArgTypes } from '@leafygreen-ui/lib';
 import Pagination from '@leafygreen-ui/pagination';
 
 import ExpandedContent from './ExpandedContent/ExpandedContent';
-import HeaderRow from './HeaderRow/HeaderRow';
+import HeaderRow from './Row/HeaderRow/HeaderRow';
 import Row from './Row/Row';
 import TableBody from './TableBody/TableBody';
 import TableContainer from './TableContainer/TableContainer';

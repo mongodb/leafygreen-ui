@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, ReactElement, ReactNode } from 'react';
 
-import { HeaderCell } from '../Cell';
+import { HeaderCell } from '../../Cell';
 
 import { HeaderRowProps } from './HeaderRow.types';
 

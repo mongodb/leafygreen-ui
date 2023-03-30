@@ -55,6 +55,12 @@ const ExpandedContentComponent = (row: LeafyGreenTableRow<unknown>) => {
   );
 };
 
+/**
+ * Generates a series of sample data to be used in Storybook
+ * @param renderingExpandableRows indicates whether the `renderExpandedContent` prop should be defined in some rows
+ * @param lens number of rows in each level of nesting
+ * @returns Array<Person>
+ */
 export function makeData(
   renderingExpandableRows: boolean,
   ...lens: Array<number>

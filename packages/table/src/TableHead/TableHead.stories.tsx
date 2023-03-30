@@ -2,7 +2,7 @@ import React from 'react';
 import { ComponentStory, Meta } from '@storybook/react';
 
 import { Cell, HeaderCell } from '../Cell';
-import HeaderRow from '../HeaderRow/HeaderRow';
+import HeaderRow from '../Row/HeaderRow/HeaderRow';
 import Row from '../Row/Row';
 import Table from '../Table/Table';
 import TableBody from '../TableBody/TableBody';

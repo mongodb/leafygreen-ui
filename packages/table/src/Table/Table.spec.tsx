@@ -3,8 +3,8 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
 import { Cell, HeaderCell } from '../Cell';
-import HeaderRow from '../HeaderRow';
 import Row from '../Row';
+import HeaderRow from '../Row/HeaderRow';
 import TableBody from '../TableBody';
 import TableContainer from '../TableContainer';
 import TableHead from '../TableHead';
@@ -52,7 +52,7 @@ function TableWithHook(props: TestTableWithHookProps) {
                   .getVisibleCells()
                   .map((cell: LeafyGreenTableCell<Person>) => {
                     return (
-                      <Cell key={cell.id}>
+                      <Cell data-cellid={cell.id} key={cell.id}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),
@@ -152,7 +152,7 @@ describe('packages/table/Table', () => {
       fireEvent.click(sortIconButton);
       expect(getByLabelText('Sort Descending Icon')).toBeInTheDocument();
       const tableCells = screen.getAllByRole('cell');
-      const firstCell = tableCells[0]; // skipping header row
+      const firstCell = tableCells[0];
       expect(firstCell).toHaveTextContent('3');
     });
 
@@ -165,8 +165,25 @@ describe('packages/table/Table', () => {
       fireEvent.click(sortIconButton);
       expect(getByLabelText('Sort Ascending Icon')).toBeInTheDocument();
       const tableCells = screen.getAllByRole('cell');
-      const firstCell = tableCells[0]; // skipping header row
+      const firstCell = tableCells[0];
       expect(firstCell).toHaveTextContent('1');
+    });
+
+    test('clicking sort icon thrice renders the initial id at the top', async () => {
+      const { container, getByTestId, getByLabelText } = render(
+        <TableWithHook columnProps={{ enableSorting: true }} />,
+      );
+      const initialFirstId = container.querySelector(
+        '[data-cellid="0_id"] > div',
+      ).innerHTML;
+      const sortIconButton = getByTestId('lg-table-sort-icon-button');
+      fireEvent.click(sortIconButton);
+      fireEvent.click(sortIconButton);
+      fireEvent.click(sortIconButton);
+      expect(getByLabelText('Unsorted Icon')).toBeInTheDocument();
+      const tableCells = screen.getAllByRole('cell');
+      const firstCell = tableCells[0];
+      expect(firstCell).toHaveTextContent(initialFirstId);
     });
   });
 });
