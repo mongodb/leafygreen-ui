@@ -57,7 +57,9 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
-      - name: fix
+      - name: Install
+        run: yarn install --frozen-lockfile
+      - name: Fix
         run: yarn fix
       - name: Check for modified files
         id: git-check
