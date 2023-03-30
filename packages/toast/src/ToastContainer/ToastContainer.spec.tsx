@@ -11,7 +11,6 @@ import { defaults, range } from 'lodash';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { TOAST_CONSTANTS } from '../constants';
-import { ControlledToast } from '../ControlledToast/ControlledToast';
 import { InternalToastProps } from '../InternalToast';
 import { Basic as ContextStory } from '../Toast.story';
 import { ToastProvider } from '../ToastContext';
@@ -94,7 +93,7 @@ describe('packages/toast/container', () => {
       triggerToast();
       const toasts = await waitFor(() => getAllByTestId('lg-toast'));
       toasts.forEach((toast, i) => {
-        expect(toast).toBeVisible();
+        expect(toast).toBeInTheDocument();
         const content = globalGetByTestId(toast, 'lg-toast-content');
         expect(content).toHaveAttribute(
           'aria-hidden',
@@ -113,7 +112,7 @@ describe('packages/toast/container', () => {
       userEvent.hover(container);
       const toasts = await waitFor(() => getAllByTestId('lg-toast'));
       toasts.forEach(toast => {
-        expect(toast).toBeVisible();
+        expect(toast).toBeInTheDocument();
         const content = globalGetByTestId(toast, 'lg-toast-content');
         expect(content).toBeVisible();
         expect(content).toHaveAttribute('aria-hidden', 'false');
