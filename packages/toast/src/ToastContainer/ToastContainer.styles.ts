@@ -21,7 +21,7 @@ export const toastContainerStyles = css`
 
   left: ${spacing[3] - TOAST_CONSTANTS.inset}px;
   bottom: ${spacing[3] - TOAST_CONSTANTS.inset}px;
-  width: ${TOAST_CONSTANTS.width + 2 * TOAST_CONSTANTS.inset}px;
+  width: ${TOAST_CONSTANTS.maxWidth + 2 * TOAST_CONSTANTS.inset}px;
   max-height: calc(100vh - ${spacing[3]}px);
   z-index: 0;
   overflow: unset;
