@@ -153,8 +153,6 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
             )}
           </div>
         </div>
-
-        {/* <input type="number" value={value} onChange={onChange} /> */}
       </LeafyGreenProvider>
     );
   },
