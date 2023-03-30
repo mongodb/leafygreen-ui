@@ -30,7 +30,7 @@ import { V11AdapterProps } from './V11Adapter.types';
  * - It is assumed that the v10 Table component will be the first child.
  * - The v11 columns are read from the v10 columns' labels. If the key of the cells' data does not correspond to the v10 column's label,
  * the user is expected to pass in the labels through the `headerLabels` prop.
- * - The currently only supports up to one layer of nested rows
+ * - Currently only supports up to one layer of nested rows
  */
 const V11Adapter = <T extends LGRowData>({
   children,

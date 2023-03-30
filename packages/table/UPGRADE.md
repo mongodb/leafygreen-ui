@@ -14,7 +14,7 @@ For more complex functionalities, v11 exports the `useLeafygreenTable` hook whic
 - sortable rows
 - selectable rows
 
-Other functionalities offered by [react-table](https://tanstack.com/table/v8) could also leveraged by users of v11 (e.g. editable cells), but it is discouraged as there are no standardized designs for functionalities not mentioned in the [project brief](https://docs.google.com/document/u/1/d/1AaZfYAGi9MCxU-cutWovDwTl_4jViUP34QwMFiWMSxU/edit).
+MongoDB developers should not utilize other `react-table` that are not specified in LeafyGreen's Storybook, as the use cases specified in Storybook are the only ones that have been designed for according to guidelines.
 
 ### Other changes
 
@@ -23,3 +23,56 @@ Other functionalities offered by [react-table](https://tanstack.com/table/v8) co
 - **Disabled cells are no longer supported.** We found in our design audit that this prop was not being used. We recommend applying styles that match our disabled rows if you would like to disable specific cells.
 
 - **Multi-row headers are no longer supported.** We found in our design audit that this prop was not being used. Reach out to the Design Systems team if this prop is crucial to your team's needs.
+
+### `V11Adapter`
+
+The `V11Adapter` was created to allow v10 Table components to utilize v11 features with minimal effort.
+
+Given the two versions' significant differences in API, the adapter makes several assumptions about the v10 Table's usage:
+
+- It is assumed that the v10 Table component will be the first child.
+- The v11 columns are read from the v10 columns' labels. If the key of the cells' data does not correspond to the v10 column's label, the user is expected to pass in the labels through the `headerLabels` prop.
+- Currently only supports up to one layer of nested rows.
+
+#### Props
+
+| Name                      | Description                                                                                                                                                                                                                  | Type                     | Default |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ | ------- |
+| `shouldAlternateRowColor` | Determines whether alternating rows will have dark backgrounds. The V11Adapter will apply this behavior by default for Tables with >10 rows to replicate v10 styling behavior unless overridden by this prop.                | boolean                  | false   |
+| `useVirtualScrolling`     | Determines whether the table will utilize virtual scrolling                                                                                                                                                                  | boolean                  | false   |
+| `hasSelectableRows`       | Determines whether the table will render its rows with selection behavior                                                                                                                                                    | boolean                  | false   |
+| `headerLabels`            | `V11Adapter` will infer column's keys from the v10 columns' labels. If the key of the cells' data does not correspond to the v10 column's label, the user is expected to pass in the labels through the `headerLabels` prop. | { [key: string]: string} | -       |
+
+#### Sample Usage
+
+```js
+import {
+  Table,
+  TableHead,
+  HeaderRow,
+  TableBody,
+  Row,
+  Cell,
+} from '@leafygreen-ui/table';
+
+<Table {...args}>
+  <TableHead>
+    <HeaderRow>
+      {columns.map((columnName: string) => (
+        <HeaderCell key={columnName} columnName={columnName} />
+      ))}
+    </HeaderRow>
+  </TableHead>
+  <TableBody>
+    {data.map((row: LeafygreenTableRow<T>) => (
+      <Row>
+        {Object.keys(row).map((cellKey: string, index: number) => {
+          return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
+        })}
+      </Row>
+    ))}
+  </TableBody>
+</Table>;
+```
+
+Refer to the LeafyGreen Storybook deployment for more use cases.
