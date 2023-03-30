@@ -2,17 +2,11 @@ import React from 'react';
 import { useVirtual } from 'react-virtual';
 import { Table, useReactTable } from '@tanstack/react-table';
 import { Row } from '@tanstack/react-table';
-import PropTypes from 'prop-types';
 
 import Checkbox from '@leafygreen-ui/checkbox';
 
 import { LeafyGreenTableOptions, LGRowData } from './useLeafyGreenTable.types';
-import {
-  LeafyGreenTable,
-  LGColumnDef,
-  LGTableDataType,
-  VirtualizerValues,
-} from '.';
+import { LeafyGreenTable, LGColumnDef, LGTableDataType } from '.';
 
 const checkboxWidth = 14;
 
@@ -92,7 +86,10 @@ function useLeafyGreenTable<T extends LGRowData>({
 
   return {
     ...table,
-    ...(useVirtualScrolling && _rowVirtualizer),
+    ...(useVirtualScrolling && {
+      virtualRows: _rowVirtualizer.virtualItems,
+      totalSize: _rowVirtualizer.totalSize,
+    }),
     hasSelectableRows,
   } as LeafyGreenTable<T>;
 }

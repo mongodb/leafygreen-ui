@@ -3,10 +3,8 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
 import { Cell, HeaderCell } from '../Cell';
-import Row from '../Row';
-import HeaderRow from '../Row/HeaderRow';
+import { HeaderRow, Row } from '../Row';
 import TableBody from '../TableBody';
-import TableContainer from '../TableContainer';
 import TableHead from '../TableHead';
 import { LeafyGreenTableCell, LeafyGreenTableRow } from '../useLeafyGreenTable';
 import { Person } from '../utils/makeData';
@@ -23,11 +21,11 @@ function TableWithHook(props: TestTableWithHookProps) {
   const { containerRef, table, rowSelection } = useTestHookCall(props);
   const { rows } = table.getRowModel();
   return (
-    <TableContainer ref={containerRef}>
+    <>
       <div data-testid="row-selection-value">
         {JSON.stringify(rowSelection)}
       </div>
-      <Table table={table}>
+      <Table table={table} ref={containerRef}>
         <TableHead>
           {table.getHeaderGroups().map(headerGroup => (
             <HeaderRow key={headerGroup.id}>
@@ -65,7 +63,7 @@ function TableWithHook(props: TestTableWithHookProps) {
           })}
         </TableBody>
       </Table>
-    </TableContainer>
+    </>
   );
 }
 

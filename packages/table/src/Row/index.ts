@@ -1,4 +1,4 @@
-import { default as HeaderRow, HeaderRowProps } from './HeaderRow';
+import HeaderRow, { HeaderRowProps } from './HeaderRow';
 import Row from './Row';
 import { RowProps } from './Row.types';
 

@@ -8,7 +8,7 @@ import { palette } from '@leafygreen-ui/palette';
 
 import { Person } from '../utils/makeData';
 
-import Row, { RowProps } from '.';
+import { Row, RowProps } from '.';
 
 const defaultProps: RowProps<Person> = {};
 const onClick = jest.fn();

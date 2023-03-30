@@ -5,10 +5,8 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { Cell, HeaderCell } from '../Cell';
 import ExpandedContent from '../ExpandedContent/ExpandedContent';
-import Row from '../Row';
-import HeaderRow from '../Row/HeaderRow';
+import { HeaderRow, Row } from '../Row';
 import TableBody from '../TableBody';
-import TableContainer from '../TableContainer';
 import TableHead from '../TableHead';
 import useLeafyGreenTable, {
   LeafyGreenTableCell,
@@ -51,7 +49,7 @@ const V11Adapter = <T extends LGRowData>({
     () => processColumns(data, columns, headerLabels),
     [data, columns, headerLabels],
   );
-  const [processedData]: [Array<LGTableDataType<T>>, any] = useState(() =>
+  const [processedData, _] = useState<Array<LGTableDataType<T>>>(() =>
     processData(data, processedColumns, childrenFn),
   );
 
@@ -72,77 +70,76 @@ const V11Adapter = <T extends LGRowData>({
   const iterables = useVirtualScrolling ? table.virtualRows ?? [] : rows;
 
   return (
-    <TableContainer ref={containerRef}>
-      <Table
-        darkMode={darkMode}
-        table={table}
-        shouldAlternateRowColor={
-          shouldAlternateRowColor ?? processedData.length > 10
-        }
-      >
-        <TableHead>
-          <HeaderRow>
-            {table.getHeaderGroups()[0].headers.map(header => {
-              return (
-                <HeaderCell key={header.id} header={header}>
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext(),
-                  )}
-                </HeaderCell>
-              );
-            })}
-          </HeaderRow>
-        </TableHead>
-        <TableBody>
-          {iterables.map((iterable: LeafyGreenTableRow<T> | VirtualItem) => {
-            const row = (
-              useVirtualScrolling ? rows[iterable.index] : iterable
-            ) as LeafyGreenTableRow<T>;
+    <Table
+      darkMode={darkMode}
+      table={table}
+      shouldAlternateRowColor={
+        shouldAlternateRowColor ?? processedData.length > 10
+      }
+      ref={containerRef}
+    >
+      <TableHead>
+        <HeaderRow>
+          {table.getHeaderGroups()[0].headers.map(header => {
             return (
-              <Row
-                key={row.id}
-                row={row}
-                virtualRow={
-                  (useVirtualScrolling ? iterable : undefined) as VirtualItem
-                }
-              >
-                {row.getVisibleCells().map((cell: LeafyGreenTableCell<any>) => {
-                  return (
-                    <Cell key={cell.id}>
-                      {cell.column.id === 'select' ? (
-                        // @ts-expect-error `cell` is instantiated in `processColumns`
-                        <>{cell.column.columnDef?.cell({ row, table })}</>
-                      ) : (
-                        // index by row.index (not the index of the loop) to get the sorted order
-                        // @ts-expect-error `processedData` is structured to be indexable by `row.index`
-                        <>{processedData[row.index][cell.column.id]()}</>
-                      )}
-                    </Cell>
-                  );
-                })}
-                {row.original.renderExpandedContent && (
-                  <ExpandedContent row={row} />
+              <HeaderCell key={header.id} header={header}>
+                {flexRender(
+                  header.column.columnDef.header,
+                  header.getContext(),
                 )}
-                {row.subRows &&
-                  row.subRows.map(subRow => (
-                    <Row key={subRow.id} row={subRow}>
-                      {subRow.getVisibleCells().map(subRowCell => {
-                        return (
-                          <Cell key={subRowCell.id}>
-                            {/* @ts-expect-error */}
-                            {subRow.original[subRowCell.column.id]()}
-                          </Cell>
-                        );
-                      })}
-                    </Row>
-                  ))}
-              </Row>
+              </HeaderCell>
             );
           })}
-        </TableBody>
-      </Table>
-    </TableContainer>
+        </HeaderRow>
+      </TableHead>
+      <TableBody>
+        {iterables.map((iterable: LeafyGreenTableRow<T> | VirtualItem) => {
+          const row = (
+            useVirtualScrolling ? rows[iterable.index] : iterable
+          ) as LeafyGreenTableRow<T>;
+          return (
+            <Row
+              key={row.index}
+              row={row}
+              virtualRow={
+                useVirtualScrolling ? (iterable as VirtualItem) : undefined
+              }
+            >
+              {row.getVisibleCells().map((cell: LeafyGreenTableCell<any>) => {
+                return (
+                  <Cell key={cell.id}>
+                    {cell.column.id === 'select' ? (
+                      // @ts-expect-error `cell` is instantiated in `processColumns`
+                      <>{cell.column.columnDef?.cell({ row, table })}</>
+                    ) : (
+                      // index by row.index (not the index of the loop) to get the sorted order
+                      // @ts-expect-error `processedData` is structured to be indexable by `row.index`
+                      <>{processedData[row.index][cell.column.id]()}</>
+                    )}
+                  </Cell>
+                );
+              })}
+              {row.original.renderExpandedContent && (
+                <ExpandedContent row={row} />
+              )}
+              {row.subRows &&
+                row.subRows.map(subRow => (
+                  <Row key={subRow.id} row={subRow}>
+                    {subRow.getVisibleCells().map(subRowCell => {
+                      return (
+                        <Cell key={subRowCell.id}>
+                          {/* @ts-expect-error subRow.original returns the object in the user's defined shape, and should be string indexable */}
+                          {subRow.original[subRowCell.column.id]()}
+                        </Cell>
+                      );
+                    })}
+                  </Row>
+                ))}
+            </Row>
+          );
+        })}
+      </TableBody>
+    </Table>
   );
 };
 

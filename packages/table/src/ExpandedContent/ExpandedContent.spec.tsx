@@ -3,7 +3,7 @@ import { getAllByRole } from '@testing-library/dom';
 import { fireEvent, render } from '@testing-library/react';
 
 import { Cell } from '../Cell';
-import Row from '../Row';
+import { Row } from '../Row';
 import TableBody from '../TableBody';
 import { LeafyGreenTableRow } from '../useLeafyGreenTable';
 import { Person } from '../utils/makeData';

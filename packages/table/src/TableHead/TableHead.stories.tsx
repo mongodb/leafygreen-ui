@@ -2,11 +2,9 @@ import React from 'react';
 import { ComponentStory, Meta } from '@storybook/react';
 
 import { Cell, HeaderCell } from '../Cell';
-import HeaderRow from '../Row/HeaderRow/HeaderRow';
-import Row from '../Row/Row';
+import { HeaderRow, Row } from '../Row';
 import Table from '../Table/Table';
 import TableBody from '../TableBody/TableBody';
-import TableContainer from '../TableContainer/TableContainer';
 import { makeData } from '../utils/makeData';
 import { AnyDict } from '../utils/types';
 
@@ -34,26 +32,24 @@ const Template: ComponentStory<typeof TableHead> = args => {
   const data = makeData(false, 100);
   const columns = Object.keys(data[0]);
   return (
-    <TableContainer>
-      <Table>
-        <TableHead {...args}>
-          <HeaderRow>
-            {columns.map((columnName: string) => (
-              <HeaderCell key={columnName}>{columnName}</HeaderCell>
-            ))}
-          </HeaderRow>
-        </TableHead>
-        <TableBody>
-          {data.map((row: AnyDict) => (
-            <Row key={row.id}>
-              {Object.keys(row).map((cellKey: string, index: number) => {
-                return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
-              })}
-            </Row>
+    <Table>
+      <TableHead {...args}>
+        <HeaderRow>
+          {columns.map((columnName: string) => (
+            <HeaderCell key={columnName}>{columnName}</HeaderCell>
           ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+        </HeaderRow>
+      </TableHead>
+      <TableBody>
+        {data.map((row: AnyDict) => (
+          <Row key={row.id}>
+            {Object.keys(row).map((cellKey: string, index: number) => {
+              return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
+            })}
+          </Row>
+        ))}
+      </TableBody>
+    </Table>
   );
 };
 

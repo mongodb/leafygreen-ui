@@ -17,3 +17,10 @@ export const themeStyles: Record<Theme, string> = {
     color: ${palette.gray.dark3};
   `,
 };
+
+export const tableContainerStyles = css`
+  overflow: auto;
+  height: 500px;
+  width: 100%;
+  position: relative;
+`;

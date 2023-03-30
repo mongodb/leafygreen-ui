@@ -3,10 +3,9 @@ import React from 'react';
 import { ComponentStory, Meta } from '@storybook/react';
 
 import { Cell, HeaderCell } from '../Cell';
-import Row from '../Row/Row';
+import { Row, HeaderRow } from '../Row';
 import Table from '../Table/Table';
 import TableBody from '../TableBody/TableBody';
-import TableContainer from '../TableContainer/TableContainer';
 import TableHead from '../TableHead/TableHead';
 import useLeafyGreenTable, {
   LeafyGreenTableCell,
@@ -22,8 +21,6 @@ import {
   getExpandedRowModel,
   HeaderGroup,
 } from '..';
-
-import HeaderRow from './HeaderRow/HeaderRow';
 
 export default {
   title: 'Components/Table/Row',
@@ -50,7 +47,7 @@ const Template: ComponentStory<typeof Row> = args => {
   const data = makeData(false, 100);
   const columns = Object.keys(data[0]);
   return (
-    <TableContainer>
+    <>
       <p>The Storybook controls manipulate all rows.</p>
       <Table>
         <TableHead>
@@ -70,7 +67,7 @@ const Template: ComponentStory<typeof Row> = args => {
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
+    </>
   );
 };
 
@@ -149,46 +146,44 @@ export const DisabledNestedRows: ComponentStory<typeof Row> = ({
         <pre>Expanded rows: {JSON.stringify(expanded, null, 2)}</pre>
       </div>
 
-      <TableContainer ref={tableContainerRef}>
-        <Table table={table}>
-          <TableHead>
-            {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
-              <HeaderRow key={headerGroup.id}>
-                {headerGroup.headers.map(header => {
-                  return (
-                    <HeaderCell key={header.id} header={header}>
-                      {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
-                    </HeaderCell>
-                  );
-                })}
-              </HeaderRow>
-            ))}
-          </TableHead>
-          <TableBody>
-            {rows.map((row: LeafyGreenTableRow<Person>) => {
-              return (
-                <Row key={row.id} row={row} {...rest}>
-                  {row
-                    .getVisibleCells()
-                    .map((cell: LeafyGreenTableCell<Person>) => {
-                      return (
-                        <Cell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          )}
-                        </Cell>
-                      );
-                    })}
-                </Row>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Table table={table} ref={tableContainerRef}>
+        <TableHead>
+          {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+            <HeaderRow key={headerGroup.id}>
+              {headerGroup.headers.map(header => {
+                return (
+                  <HeaderCell key={header.id} header={header}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )}
+                  </HeaderCell>
+                );
+              })}
+            </HeaderRow>
+          ))}
+        </TableHead>
+        <TableBody>
+          {rows.map((row: LeafyGreenTableRow<Person>) => {
+            return (
+              <Row key={row.id} row={row} {...rest}>
+                {row
+                  .getVisibleCells()
+                  .map((cell: LeafyGreenTableCell<Person>) => {
+                    return (
+                      <Cell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Cell>
+                    );
+                  })}
+              </Row>
+            );
+          })}
+        </TableBody>
+      </Table>
     </>
   );
 };

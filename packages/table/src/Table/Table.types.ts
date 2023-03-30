@@ -21,4 +21,9 @@ export interface TableProps<T extends LGRowData>
    * The `useLeafyGreenTable` return value
    */
   table?: LeafyGreenTable<T>;
+
+  /**
+   * Classname passed to the `<div>` that wraps the Table component
+   */
+  tableContainerClassName?: string;
 }

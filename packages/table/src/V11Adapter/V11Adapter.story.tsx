@@ -118,7 +118,7 @@ export const NestedRows = () => {
             {datum.name !== 'Donna' && (
               <Row>
                 <Cell>
-                  {datum.rand < 0.5 && <Badge>Low Rand Value</Badge>}
+                  {datum.rand < 0.5 && <Badge>Low Rand</Badge>}
                   expanded name: {datum.name}
                 </Cell>
                 <Cell>expanded age: {datum.age}</Cell>

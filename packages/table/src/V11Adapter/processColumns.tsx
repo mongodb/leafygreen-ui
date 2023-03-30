@@ -3,7 +3,7 @@ import { Row } from '@tanstack/react-table';
 import camelCase from 'lodash/camelCase';
 
 import { TableProps } from '../TableV10/Table';
-import { LGColumnDef, LGRowData } from '../useLeafyGreenTable';
+import { LGRowData } from '../useLeafyGreenTable';
 
 /**
  * Converts V10's HeaderRow ReactElement to an Array<ColumnDef>
@@ -21,8 +21,7 @@ const processColumns = <T extends LGRowData>(
 ) => {
   const HeaderRow = React.Children.toArray(columns)[0] as ReactElement;
   const TableHeaders = React.Children.toArray(HeaderRow.props.children);
-  const processedColumns: Array<LGColumnDef<T>> = [];
-  TableHeaders.forEach(TableHeader => {
+  const processedColumns = TableHeaders.map(TableHeader => {
     const headerProps = (TableHeader as ReactElement).props;
     const hasSorting =
       !!headerProps.sortBy ||
@@ -51,7 +50,7 @@ const processColumns = <T extends LGRowData>(
         : 0;
     };
 
-    processedColumns.push({
+    return {
       accessorKey:
         (headerLabels && headerLabels[headerProps.label]) ??
         camelCase(headerProps.label),
@@ -63,7 +62,7 @@ const processColumns = <T extends LGRowData>(
         : hasSorting
         ? defaultSortingFn
         : undefined,
-    });
+    };
   });
   return processedColumns;
 };

@@ -5,14 +5,12 @@ import { ComponentStory, Meta } from '@storybook/react';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 import ExpandedContent from './ExpandedContent/ExpandedContent';
-import HeaderRow from './Row/HeaderRow/HeaderRow';
-import Row from './Row/Row';
-import Table from './Table/Table';
 import TableBody from './TableBody/TableBody';
-import TableContainer from './TableContainer/TableContainer';
 import TableHead from './TableHead/TableHead';
 import { makeData, Person } from './utils/makeData';
 import { Cell, HeaderCell } from './Cell';
+import { HeaderRow, Row } from './Row';
+import Table from './Table';
 import useLeafyGreenTable, {
   LeafyGreenTableCell,
   LeafyGreenTableRow,
@@ -103,50 +101,48 @@ export const Basic: ComponentStory<typeof Table> = args => {
     <>
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
-        {/* Not sure why this is showing an error. It's not checking the second type in the conditional type */}
+        <p>{table?.virtualRows?.length} virtual rows</p>
       </div>
 
-      <TableContainer ref={tableContainerRef}>
-        <Table {...args} table={table}>
-          <TableHead>
-            {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
-              <HeaderRow key={headerGroup.id}>
-                {headerGroup.headers.map(header => {
-                  return (
-                    <HeaderCell key={header.id} header={header}>
-                      {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
-                    </HeaderCell>
-                  );
-                })}
-              </HeaderRow>
-            ))}
-          </TableHead>
-          <TableBody>
-            {table.virtualRows &&
-              table.virtualRows.map((virtualRow: VirtualItem) => {
-                const row = rows[virtualRow.index];
-                const cells = row.getVisibleCells();
+      <Table {...args} table={table} ref={tableContainerRef}>
+        <TableHead>
+          {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+            <HeaderRow key={headerGroup.id}>
+              {headerGroup.headers.map(header => {
                 return (
-                  <Row key={row.id}>
-                    {cells.map((cell: LeafyGreenTableCell<Person>) => {
-                      return (
-                        <Cell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          )}
-                        </Cell>
-                      );
-                    })}
-                  </Row>
+                  <HeaderCell key={header.id} header={header}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )}
+                  </HeaderCell>
                 );
               })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </HeaderRow>
+          ))}
+        </TableHead>
+        <TableBody>
+          {table.virtualRows &&
+            table.virtualRows.map((virtualRow: VirtualItem) => {
+              const row = rows[virtualRow.index];
+              const cells = row.getVisibleCells();
+              return (
+                <Row key={row.id}>
+                  {cells.map((cell: LeafyGreenTableCell<Person>) => {
+                    return (
+                      <Cell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Cell>
+                    );
+                  })}
+                </Row>
+              );
+            })}
+        </TableBody>
+      </Table>
     </>
   );
 };
@@ -212,90 +208,84 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
         <p>{table.getRowModel().rows.length} total rows</p>
       </div>
 
-      <TableContainer ref={tableContainerRef}>
-        <Table {...args} table={table}>
-          <TableHead>
-            {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
-              <HeaderRow key={headerGroup.id}>
-                {headerGroup.headers.map(header => {
-                  return (
-                    <HeaderCell key={header.id} header={header}>
-                      {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
-                    </HeaderCell>
-                  );
-                })}
-              </HeaderRow>
-            ))}
-          </TableHead>
-          <TableBody>
-            {table.virtualRows &&
-              table.virtualRows.map((virtualRow: VirtualItem) => {
-                const row = rows[virtualRow.index];
-                const cells = row.getVisibleCells();
-
+      <Table {...args} table={table} ref={tableContainerRef}>
+        <TableHead>
+          {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+            <HeaderRow key={headerGroup.id}>
+              {headerGroup.headers.map(header => {
                 return (
-                  <Row key={row.id} row={row} virtualRow={virtualRow}>
-                    {cells.map((cell: LeafyGreenTableCell<Person>) => {
-                      return (
-                        <Cell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          )}
-                        </Cell>
-                      );
-                    })}
-                    {row.subRows &&
-                      row.subRows.map((subRow: LeafyGreenTableRow<Person>) => (
-                        <Row
-                          key={subRow.id}
-                          row={subRow}
-                          virtualRow={virtualRow}
-                        >
-                          {subRow
-                            .getVisibleCells()
-                            .map((cell: LeafyGreenTableCell<Person>) => {
-                              return (
-                                <Cell key={cell.id}>
-                                  {flexRender(
-                                    cell.column.columnDef.cell,
-                                    cell.getContext(),
-                                  )}
-                                </Cell>
-                              );
-                            })}
-                          {subRow.subRows &&
-                            subRow.subRows.map(subSubRow => (
-                              <Row
-                                key={subSubRow.id}
-                                row={subSubRow}
-                                virtualRow={virtualRow}
-                              >
-                                {subSubRow
-                                  .getVisibleCells()
-                                  .map((cell: LeafyGreenTableCell<Person>) => {
-                                    return (
-                                      <Cell key={cell.id}>
-                                        {flexRender(
-                                          cell.column.columnDef.cell,
-                                          cell.getContext(),
-                                        )}
-                                      </Cell>
-                                    );
-                                  })}
-                              </Row>
-                            ))}
-                        </Row>
-                      ))}
-                  </Row>
+                  <HeaderCell key={header.id} header={header}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )}
+                  </HeaderCell>
                 );
               })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </HeaderRow>
+          ))}
+        </TableHead>
+        <TableBody>
+          {table.virtualRows &&
+            table.virtualRows.map((virtualRow: VirtualItem) => {
+              const row = rows[virtualRow.index];
+              const cells = row.getVisibleCells();
+
+              return (
+                <Row key={row.id} row={row} virtualRow={virtualRow}>
+                  {cells.map((cell: LeafyGreenTableCell<Person>) => {
+                    return (
+                      <Cell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Cell>
+                    );
+                  })}
+                  {row.subRows &&
+                    row.subRows.map((subRow: LeafyGreenTableRow<Person>) => (
+                      <Row key={subRow.id} row={subRow} virtualRow={virtualRow}>
+                        {subRow
+                          .getVisibleCells()
+                          .map((cell: LeafyGreenTableCell<Person>) => {
+                            return (
+                              <Cell key={cell.id}>
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext(),
+                                )}
+                              </Cell>
+                            );
+                          })}
+                        {subRow.subRows &&
+                          subRow.subRows.map(subSubRow => (
+                            <Row
+                              key={subSubRow.id}
+                              row={subSubRow}
+                              virtualRow={virtualRow}
+                            >
+                              {subSubRow
+                                .getVisibleCells()
+                                .map((cell: LeafyGreenTableCell<Person>) => {
+                                  return (
+                                    <Cell key={cell.id}>
+                                      {flexRender(
+                                        cell.column.columnDef.cell,
+                                        cell.getContext(),
+                                      )}
+                                    </Cell>
+                                  );
+                                })}
+                            </Row>
+                          ))}
+                      </Row>
+                    ))}
+                </Row>
+              );
+            })}
+        </TableBody>
+      </Table>
     </>
   );
 };
@@ -369,48 +359,46 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
         <p>{table.getRowModel().rows.length} total rows</p>
       </div>
 
-      <TableContainer ref={tableContainerRef}>
-        <Table {...args} table={table}>
-          <TableHead>
-            {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
-              <HeaderRow key={headerGroup.id}>
-                {headerGroup.headers.map(header => {
-                  return (
-                    <HeaderCell key={header.id} header={header}>
-                      {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
-                    </HeaderCell>
-                  );
-                })}
-              </HeaderRow>
-            ))}
-          </TableHead>
-          <TableBody>
-            {table.virtualRows &&
-              table.virtualRows.map((virtualRow: VirtualItem) => {
-                const row = rows[virtualRow.index];
-                const cells = row.getVisibleCells();
-
+      <Table {...args} table={table} ref={tableContainerRef}>
+        <TableHead>
+          {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+            <HeaderRow key={headerGroup.id}>
+              {headerGroup.headers.map(header => {
                 return (
-                  <Row key={row.id} row={row} virtualRow={virtualRow}>
-                    {cells.map((cell: LeafyGreenTableCell<Person>) => {
-                      return (
-                        <Cell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          )}
-                        </Cell>
-                      );
-                    })}
-                  </Row>
+                  <HeaderCell key={header.id} header={header}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )}
+                  </HeaderCell>
                 );
               })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </HeaderRow>
+          ))}
+        </TableHead>
+        <TableBody>
+          {table.virtualRows &&
+            table.virtualRows.map((virtualRow: VirtualItem) => {
+              const row = rows[virtualRow.index];
+              const cells = row.getVisibleCells();
+
+              return (
+                <Row key={row.id} row={row} virtualRow={virtualRow}>
+                  {cells.map((cell: LeafyGreenTableCell<Person>) => {
+                    return (
+                      <Cell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Cell>
+                    );
+                  })}
+                </Row>
+              );
+            })}
+        </TableBody>
+      </Table>
     </>
   );
 };
@@ -500,48 +488,46 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
         </button> */}
       </div>
 
-      <TableContainer ref={tableContainerRef}>
-        <Table {...args} table={table}>
-          <TableHead>
-            {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
-              <HeaderRow key={headerGroup.id}>
-                {headerGroup.headers.map(header => {
-                  return (
-                    <HeaderCell key={header.id} header={header}>
-                      {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
-                    </HeaderCell>
-                  );
-                })}
-              </HeaderRow>
-            ))}
-          </TableHead>
-          <TableBody>
-            {table.virtualRows &&
-              table.virtualRows.map((virtualRow: VirtualItem) => {
-                const row = rows[virtualRow.index];
-                const cells = row.getVisibleCells();
-
+      <Table {...args} table={table} ref={tableContainerRef}>
+        <TableHead>
+          {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+            <HeaderRow key={headerGroup.id}>
+              {headerGroup.headers.map(header => {
                 return (
-                  <Row key={row.id} row={row} virtualRow={virtualRow}>
-                    {cells.map((cell: LeafyGreenTableCell<Person>) => {
-                      return (
-                        <Cell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          )}
-                        </Cell>
-                      );
-                    })}
-                  </Row>
+                  <HeaderCell key={header.id} header={header}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )}
+                  </HeaderCell>
                 );
               })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </HeaderRow>
+          ))}
+        </TableHead>
+        <TableBody>
+          {table.virtualRows &&
+            table.virtualRows.map((virtualRow: VirtualItem) => {
+              const row = rows[virtualRow.index];
+              const cells = row.getVisibleCells();
+
+              return (
+                <Row key={row.id} row={row} virtualRow={virtualRow}>
+                  {cells.map((cell: LeafyGreenTableCell<Person>) => {
+                    return (
+                      <Cell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Cell>
+                    );
+                  })}
+                </Row>
+              );
+            })}
+        </TableBody>
+      </Table>
     </>
   );
 };
@@ -613,51 +599,49 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
         <p>{table.getRowModel().rows.length} total rows</p>
       </div>
 
-      <TableContainer ref={tableContainerRef}>
-        <Table {...args} table={table}>
-          <TableHead>
-            {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
-              <HeaderRow key={headerGroup.id}>
-                {headerGroup.headers.map(header => {
-                  return (
-                    <HeaderCell key={header.id} header={header}>
-                      {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
-                    </HeaderCell>
-                  );
-                })}
-              </HeaderRow>
-            ))}
-          </TableHead>
-          <TableBody>
-            {table.virtualRows &&
-              table.virtualRows.map((virtualRow: VirtualItem) => {
-                const row = rows[virtualRow.index];
-                const cells = row.getVisibleCells();
-
+      <Table {...args} table={table} ref={tableContainerRef}>
+        <TableHead>
+          {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+            <HeaderRow key={headerGroup.id}>
+              {headerGroup.headers.map(header => {
                 return (
-                  <Row key={row.id} row={row} virtualRow={virtualRow}>
-                    {cells.map((cell: LeafyGreenTableCell<Person>) => {
-                      return (
-                        <Cell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          )}
-                        </Cell>
-                      );
-                    })}
-                    {row.original.renderExpandedContent && (
-                      <ExpandedContent row={row} />
+                  <HeaderCell key={header.id} header={header}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
                     )}
-                  </Row>
+                  </HeaderCell>
                 );
               })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </HeaderRow>
+          ))}
+        </TableHead>
+        <TableBody>
+          {table.virtualRows &&
+            table.virtualRows.map((virtualRow: VirtualItem) => {
+              const row = rows[virtualRow.index];
+              const cells = row.getVisibleCells();
+
+              return (
+                <Row key={row.id} row={row} virtualRow={virtualRow}>
+                  {cells.map((cell: LeafyGreenTableCell<Person>) => {
+                    return (
+                      <Cell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Cell>
+                    );
+                  })}
+                  {row.original.renderExpandedContent && (
+                    <ExpandedContent row={row} />
+                  )}
+                </Row>
+              );
+            })}
+        </TableBody>
+      </Table>
     </>
   );
 };

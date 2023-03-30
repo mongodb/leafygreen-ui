@@ -9,7 +9,7 @@ import { Person } from '../utils/makeData';
 import { useTestHookCall } from '../utils/testHookCalls';
 import Table, { flexRender } from '..';
 
-import Row from '.';
+import { Row } from '.';
 
 const RowWithNestedRows = () => {
   const { containerRef, table } = useTestHookCall({
