@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 
 type Override<T, U> = Omit<T, keyof U> & U;
 type Override2<T, U, V> = Override<Override<T, U>, V>;
