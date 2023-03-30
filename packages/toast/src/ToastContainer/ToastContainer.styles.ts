@@ -34,7 +34,7 @@ export const toastContainerStyles = css`
   perspective: 1600px;
   perspective-origin: bottom;
   transform-style: preserve-3d;
-  transition: ease-in-out ${transitionDuration.default}ms;
+  transition: ease-in-out ${transitionDuration.slower}ms;
   transition-property: transform, bottom, opacity;
 
   /* Scrollbars */
@@ -158,6 +158,12 @@ export function getToastTransitionStyles({
         background-color: ${bgColor};
         // Slow down any hover animations
         transition-duration: ${transitionDuration.slower}ms;
+      `;
+    }
+
+    case 'exiting': {
+      return css`
+        opacity: 0;
       `;
     }
 

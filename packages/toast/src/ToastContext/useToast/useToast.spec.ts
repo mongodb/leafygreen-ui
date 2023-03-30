@@ -22,7 +22,7 @@ describe('packages/toast/useToast', () => {
   });
 
   /**
-   * Not testing individual functions because
+   * We're not testing individual functions because:
    * 1. We're already testing their functionality in `useToastReducer.spec`
    * 2. Jest has issues using `createPortal` within `renderHook`
    *  - Optional TODO: Get `renderHook(userToast, {wrapper})` working properly,

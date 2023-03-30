@@ -7,7 +7,7 @@ import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { DarkModeProps, StoryMeta } from '@leafygreen-ui/lib';
-import { Body, InlineCode, Label, Link } from '@leafygreen-ui/typography';
+import { InlineCode, Label } from '@leafygreen-ui/typography';
 
 import { variantIcons } from './InternalToast/VariantIcon';
 import { makeToast, makeToastStack } from './ToastContext/utils/makeToast';
@@ -83,13 +83,6 @@ export const Basic: ComponentStory<typeof InternalToast> = (
         </Button>
         <Button onClick={() => clearStack()}>Clear all</Button>
       </div>
-      {/* TODO: Remove this */}
-      <Body>
-        Please provide any feedback in{' '}
-        <Link href="https://docs.google.com/document/d/1xgzfJhkWugpEeBlbomTpkrlbjedNxdwn7A0vg3jvDXo/edit#">
-          this doc
-        </Link>
-      </Body>
     </div>
   );
 };
@@ -168,13 +161,6 @@ export const Variants: ComponentStory<typeof InternalToast> = (
           />
         </>
       )}
-      {/* TODO: Remove this */}
-      <Body>
-        Please provide any feedback in{' '}
-        <Link href="https://docs.google.com/document/d/1xgzfJhkWugpEeBlbomTpkrlbjedNxdwn7A0vg3jvDXo/edit#">
-          this doc
-        </Link>
-      </Body>
     </div>
   );
 };

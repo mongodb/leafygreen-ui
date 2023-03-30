@@ -28,8 +28,6 @@ const toastReducer = (
       const { stack } = state;
       const { id, ...toast } = action.payload;
       return {
-        // TODO: export a `pushToast` utility that accepts stack & props
-        // pushToast => (props, map) => map.set(...)
         stack: stack.set(id, { ...defaultToastProps, ...toast }),
       };
     }

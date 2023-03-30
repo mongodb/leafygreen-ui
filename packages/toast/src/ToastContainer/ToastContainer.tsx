@@ -77,8 +77,6 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
     if (shouldExpand && stackSize <= TOAST_CONSTANTS.shortStackCount) {
       // We just went below the expanded threshold, so collapse the stack
       setShouldExpand(false);
-      // TODO: Check hovered state, and set appropriately
-      // JS mediaQuery for (':hover')
     }
   }, [setShouldExpand, shouldExpand, stackSize]);
 
