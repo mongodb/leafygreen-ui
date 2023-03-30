@@ -193,9 +193,6 @@ describe.skip('TS types', () => {
 
   render(
     <>
-      {/*TODO: @ts-expect-error - timeout cannot be null while dismissible is false */}
-      <InternalToast {...requiredProps} timeout={null} dismissible={false} />
-
       <InternalToast {...requiredProps} dismissible={true} />
 
       <InternalToast {...requiredProps} dismissible={false} />

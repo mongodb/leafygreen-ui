@@ -73,6 +73,14 @@ export const InternalToast = React.forwardRef<
       },
       defaultToastProps,
     );
+
+    /** Warn if toast won't close  */
+    if (!dismissible && !rest.timeout) {
+      console.warn(
+        `Toast ${rest.id} may never close. Toast must be \`dismissible\` or have a \`timeout\` value.`,
+      );
+    }
+
     const { theme, darkMode } = useDarkMode();
     const showContent = index === 0 || isHovered;
     const VariantIcon = variantIcons[variant];
