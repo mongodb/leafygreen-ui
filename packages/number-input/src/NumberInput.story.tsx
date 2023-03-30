@@ -12,12 +12,30 @@ import {
 } from './NumberInput/NumberInput.types';
 import { NumberInput } from '.';
 
+const unitOptions = [
+  {
+    displayName: 'One(s)',
+    value: 'one',
+  },
+  {
+    displayName: 'Two(s)',
+    value: 'two',
+  },
+  {
+    displayName: 'Three(s)',
+    value: 'three',
+  },
+  {
+    displayName: 'FourFiveSixSeven(s)',
+    value: 'four',
+  },
+];
+
 export default StoryMeta({
   title: 'Components/NumberInput',
   component: NumberInput,
   args: {
     label: 'label',
-    unitOptions: [],
     disabled: false,
   },
   argTypes: {
@@ -68,30 +86,11 @@ export default StoryMeta({
   },
 });
 
-const unitOptions = [
-  {
-    displayName: 'One(s)',
-    value: 'one',
-  },
-  {
-    displayName: 'Two(s)',
-    value: 'two',
-  },
-  {
-    displayName: 'Three(s)',
-    value: 'three',
-  },
-  {
-    displayName: 'FourFiveSixSeven(s)',
-    value: 'four',
-  },
-];
-
 type StoryProps = NumberInputProps & { view: string };
 
 const Template: Story<StoryProps> = args => {
-  const { view, unit: unitProp = 'one', ...rest } = args;
-  const [unit, setUnit] = useState<string>(unitOptions[0].displayName);
+  const { unit: unitProp = 'one', unitOptions = [], ...rest } = args;
+  const [unit, setUnit] = useState<string>(unitOptions[0]?.displayName);
   const [value, setValue] = useState<string>('');
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -114,8 +113,8 @@ const Template: Story<StoryProps> = args => {
       {...rest}
       ref={inputRef}
       value={value}
-      unit={view === 'unitless' ? '' : view === 'unit' ? unitProp : unit}
-      unitOptions={view === 'select' ? unitOptions : []}
+      unit={unitOptions.length ? unit : unitProp}
+      unitOptions={unitOptions}
       onSelectChange={handleSelectChange}
       onChange={handleChange}
       inputClassName={css`
@@ -128,51 +127,47 @@ const Template: Story<StoryProps> = args => {
   );
 };
 
+// TODO: temp story for .design. For now consumers won't be able to change unit/unitOptions props. We need to figure out a way to make the story friendly to both designers and engineers.
 export const Basic = Template.bind({});
+Basic.args = {
+  unitOptions: unitOptions,
+  unit: unitOptions[0].displayName,
+};
 Basic.argTypes = {
   unit: {
     control: 'none',
-  },
-  view: {
-    control: 'select',
-    options: ['unitless', 'unit', 'select'],
-    description: '[STORYBOOK ONLY]',
   },
 };
 
 export const Unitless = Template.bind({});
 Unitless.args = {
-  view: 'unitless',
+  unitOptions: [],
+  unit: '',
 };
 Unitless.argTypes = {
   unit: {
-    control: 'none',
-  },
-  view: {
     control: 'none',
   },
 };
 
 export const Unit = Template.bind({});
 Unit.args = {
-  view: 'unit',
+  unitOptions: [],
+  unit: 'day',
 };
-Unit.argTypes = {
-  view: {
-    control: 'none',
-  },
-};
+Unit.argTypes = {};
 
 export const Select = Template.bind({});
 Select.args = {
-  view: 'select',
+  unitOptions: unitOptions,
+  unit: unitOptions[0].displayName,
 };
 Select.argTypes = {
   unit: {
     control: 'none',
   },
-  view: {
-    control: 'none',
+  unitOptions: {
+    control: 'object',
   },
 };
 
