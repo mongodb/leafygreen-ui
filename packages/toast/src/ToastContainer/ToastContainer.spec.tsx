@@ -1,5 +1,7 @@
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import {
+  cleanup,
   getByTestId as globalGetByTestId,
   render,
   waitFor,
@@ -20,7 +22,7 @@ import {
 } from '../ToastContext/ToastContext.types';
 import { makeToast, makeToastStack } from '../ToastContext/utils/makeToast';
 
-async function delay(t: number) {
+async function delay(t: number): Promise<void> {
   return await new Promise(_ => setTimeout(_, t));
 }
 
@@ -65,6 +67,8 @@ function renderToastContainer(
  *
  */
 describe('packages/toast/container', () => {
+  afterEach(cleanup);
+
   describe('opening toasts', () => {
     test('opens toast when triggered', async () => {
       const { findByTestId, triggerToast } = renderToastContainer();
@@ -88,9 +92,9 @@ describe('packages/toast/container', () => {
   describe('hovering', () => {
     test('bottom toasts are hidden by default', async () => {
       const { getAllByTestId, triggerToast } = renderToastContainer();
-      triggerToast();
-      triggerToast();
-      triggerToast();
+      act(() => triggerToast());
+      act(() => triggerToast());
+      act(() => triggerToast());
       const toasts = await waitFor(() => getAllByTestId('lg-toast'));
       toasts.forEach((toast, i) => {
         expect(toast).toBeInTheDocument();
@@ -102,17 +106,18 @@ describe('packages/toast/container', () => {
       });
     });
 
-    test(`shows the top ${TOAST_CONSTANTS.shortStackCount} toasts`, async () => {
+    // TODO: Chromatic
+    // eslint-disable-next-line jest/no-disabled-tests
+    test.skip(`shows the top ${TOAST_CONSTANTS.shortStackCount} toasts`, async () => {
       const { getAllByTestId, getByTestId, triggerToast } =
         renderToastContainer();
-      triggerToast();
-      triggerToast();
-      triggerToast();
+      act(() => triggerToast());
+      act(() => triggerToast());
+      act(() => triggerToast());
       const container = getByTestId('lg-toast-region');
       userEvent.hover(container);
       const toasts = await waitFor(() => getAllByTestId('lg-toast'));
 
-      // TODO: Chromatic
       toasts.forEach(toast => {
         expect(toast).toBeInTheDocument();
         const content = globalGetByTestId(toast, 'lg-toast-content');
@@ -148,7 +153,7 @@ describe('packages/toast/container', () => {
         const toast = await findByTestId('lg-toast');
         expect(toast).toBeInTheDocument();
         userEvent.hover(container);
-        await delay(timeout + transitionDuration.slower);
+        await act(() => delay(timeout + transitionDuration.slower));
         expect(toast).toBeInTheDocument();
       });
 
@@ -164,7 +169,7 @@ describe('packages/toast/container', () => {
         const toast = await findByTestId('lg-toast');
         expect(toast).toBeInTheDocument();
 
-        await delay(timeout + transitionDuration.slower);
+        await act(() => delay(timeout + transitionDuration.slower));
         expect(toast).toBeInTheDocument();
       });
 

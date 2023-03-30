@@ -1,4 +1,5 @@
-import { act, cleanup } from '@testing-library/react';
+import { act } from 'react-test-renderer';
+import { cleanup } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 
 import { Variant } from '../../Toast.types';
@@ -30,7 +31,10 @@ describe('packages/toast/useToastReducer', () => {
   describe('pushToast', () => {
     test('pushes a toast to the stack', async () => {
       const { result, rerender } = renderHook(useToastReducer);
-      const toastId: ToastId = result.current.pushToast({ title: 'test' });
+      let toastId: ToastId = '';
+      act(() => {
+        toastId = result.current.pushToast({ title: 'test' });
+      });
       rerender();
       const { stack } = result.current;
       const toast = stack.get(toastId);
@@ -57,9 +61,14 @@ describe('packages/toast/useToastReducer', () => {
     test('removes toast from the stack', () => {
       const { result, rerender } = renderHook(useToastReducer);
       const { pushToast, popToast, getToast } = result.current;
-      const toastId: ToastId = pushToast({ title: 'test' });
+      let toastId: ToastId = '';
+      act(() => {
+        toastId = pushToast({ title: 'test' });
+      });
       rerender();
-      popToast(toastId);
+      act(() => {
+        popToast(toastId);
+      });
       rerender();
       const toast = getToast(toastId);
       expect(toast).not.toBeDefined();

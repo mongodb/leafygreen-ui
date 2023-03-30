@@ -52,6 +52,7 @@ export const InternalToast = React.forwardRef<
 >(
   (
     {
+      id,
       title,
       description,
       className,
@@ -79,7 +80,7 @@ export const InternalToast = React.forwardRef<
     /** Warn if toast won't close  */
     if (!dismissible && !rest.timeout) {
       console.warn(
-        `Toast ${rest.id} may never close. Toast must be \`dismissible\` or have a \`timeout\` value.`,
+        `Toast ${id} may never close. Toast must be \`dismissible\` or have a \`timeout\` value.`,
       );
     }
 
@@ -91,6 +92,7 @@ export const InternalToast = React.forwardRef<
     return (
       <LeafyGreenProvider darkMode={!darkMode}>
         <div
+          id={id}
           ref={forwardedRef}
           className={cx(baseToastStyle, toastThemeStyles[theme], className)}
           aria-atomic="true"

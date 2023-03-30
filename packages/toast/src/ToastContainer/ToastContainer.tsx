@@ -73,12 +73,11 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
     ? [...remainingToasts, ...recentToasts]
     : recentToasts;
 
-  useEffect(() => {
-    if (shouldExpand && stackSize <= TOAST_CONSTANTS.shortStackCount) {
-      // We just went below the expanded threshold, so collapse the stack
-      setShouldExpand(false);
-    }
-  }, [setShouldExpand, shouldExpand, stackSize]);
+  if (shouldExpand && stackSize <= TOAST_CONSTANTS.shortStackCount) {
+    // We just went below the expanded threshold, so collapse the stack
+    setShouldExpand(false);
+  }
+  useEffect(() => {}, [setShouldExpand, shouldExpand, stackSize]);
 
   /** is the "N more" bar visible? */
   const showNotificationBar =
@@ -98,7 +97,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
       shouldExpand,
     });
 
-  // Update on first render
+  // Update on first render _only_
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(updateToastHeights, []);
 
