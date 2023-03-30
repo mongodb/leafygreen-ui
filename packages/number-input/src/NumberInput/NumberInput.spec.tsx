@@ -148,6 +148,60 @@ describe('packages/number-input', () => {
       expect(defaultProps.onChange).toHaveBeenCalledTimes(1);
     });
 
+    test('correct value is returned when using "e"', () => {
+      const { numberInput } = renderNumberInput({
+        label,
+        ...defaultProps,
+      });
+
+      expect((numberInput as HTMLInputElement).value).toBe('');
+
+      fireEvent.change(numberInput, {
+        target: { value: '1' },
+      });
+
+      expect((numberInput as HTMLInputElement).value).toBe('1');
+
+      fireEvent.change(numberInput, {
+        target: { value: '1e' },
+      });
+
+      expect((numberInput as HTMLInputElement).value).toBe('');
+
+      fireEvent.change(numberInput, {
+        target: { value: '1e3' },
+      });
+
+      expect((numberInput as HTMLInputElement).value).toBe('1e3');
+    });
+
+    test('correct value is returned when using only numbers', () => {
+      const { numberInput } = renderNumberInput({
+        label,
+        ...defaultProps,
+      });
+
+      expect((numberInput as HTMLInputElement).value).toBe('');
+
+      fireEvent.change(numberInput, {
+        target: { value: '1' },
+      });
+
+      expect((numberInput as HTMLInputElement).value).toBe('1');
+
+      fireEvent.change(numberInput, {
+        target: { value: '11' },
+      });
+
+      expect((numberInput as HTMLInputElement).value).toBe('11');
+
+      fireEvent.change(numberInput, {
+        target: { value: '111' },
+      });
+
+      expect((numberInput as HTMLInputElement).value).toBe('111');
+    });
+
     test('blur triggers onBlur callback', () => {
       const { numberInput } = renderNumberInput({
         label,
