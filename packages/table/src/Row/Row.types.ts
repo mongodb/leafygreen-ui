@@ -1,4 +1,3 @@
-import { PropsWithChildren } from 'react';
 import { VirtualItem } from 'react-virtual';
 
 import { HTMLElementProps } from '@leafygreen-ui/lib';
@@ -26,6 +25,5 @@ export interface InternalRowWithRTProps<T extends LGRowData>
   virtualRow?: VirtualItem;
 }
 
-export type RowProps<T extends LGRowData> = PropsWithChildren<
-  InternalRowWithoutRTProps & Partial<InternalRowWithRTProps<T>>
->;
+export type RowProps<T extends LGRowData> = InternalRowWithoutRTProps &
+  Partial<InternalRowWithRTProps<T>>;

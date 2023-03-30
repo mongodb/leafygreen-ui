@@ -12,6 +12,6 @@ export type V11AdapterProps<T extends LGRowData> = PropsWithChildren<
       /**
        * Mapping of TableHeader label to the key of the field in the Table's data
        */
-      headerLabelMapping?: { [key: string]: string };
+      headerLabels?: { [key: string]: string };
     }
 >;

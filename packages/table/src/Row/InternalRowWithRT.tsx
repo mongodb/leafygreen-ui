@@ -50,6 +50,10 @@ const InternalRowWithRT = <T extends LGRowData>({
     isComponentType(child, 'Cell'),
   );
 
+  /**
+   * OtherChildren is looking for nested Row components or ExpandedContent components.
+   * This filter does not look explicitly for those two components since we may want to allow developers to use their own `td` elements.
+   */
   const OtherChildren = React.Children.toArray(children).filter(
     child => !isComponentType(child, 'Cell'),
   );

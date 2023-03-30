@@ -1,15 +1,9 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import {
-  focusRing,
-  hoverRing,
-  transitionDuration,
-} from '@leafygreen-ui/tokens';
+import { focusRing, hoverRing } from '@leafygreen-ui/tokens';
 
 export const rowBaseStyles = css`
-  transition: ${transitionDuration.default}ms ease-in-out;
-  transition-property: all;
   border: 0px solid rgba(255, 255, 255, 0); // transparent
 `;
 

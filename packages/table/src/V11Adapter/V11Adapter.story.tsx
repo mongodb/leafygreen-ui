@@ -339,7 +339,7 @@ export const SortableRowsVS = () => {
       First column has a custom sort function!
       <V11Adapter
         useVirtualScrolling
-        headerLabelMapping={{
+        headerLabels={{
           Relationship: 'status',
         }}
       >

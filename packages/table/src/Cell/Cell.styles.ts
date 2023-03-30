@@ -25,14 +25,8 @@ export const baseCellStyles = css`
   }
 `;
 
-const flexAlignment: Record<string, string> = {
-  left: 'start',
-  right: 'end',
-  center: 'center',
-};
-
 export const alignmentStyles = (align: Align = 'left') => css`
-  justify-content: ${flexAlignment[align]};
+  justify-content: ${align};
 `;
 
 export const getCellPadding = ({
@@ -47,18 +41,19 @@ export const getCellPadding = ({
   if (depth === 0) {
     if (isSelectable) {
       return css`
-        padding-left: 8px;
-        padding-right: 8px;
+        padding-left: ${spacing[2]}px;
+        padding-right: ${spacing[2]}px;
       `;
     } else {
       return css`
-        padding-left: ${baseTableSidePadding + (isExpandable ? 0 : 8)}px;
+        padding-left: ${baseTableSidePadding +
+        (isExpandable ? 0 : spacing[2])}px;
       `;
     }
   }
 
   const parentIconsPadding = 8 * (depth - 1); // how much space do parent icons take up
-  const thisIconPadding = isExpandable ? 8 : 0;
+  const thisIconPadding = isExpandable ? spacing[2] : 0;
   const depthPadding =
     iconSize * depth - (parentIconsPadding + thisIconPadding);
   return css`

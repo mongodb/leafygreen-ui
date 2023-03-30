@@ -1,3 +1,3 @@
-import V10Adapter from './V11Adapter';
+import V11Adapter from './V11Adapter';
 
-export default V10Adapter;
+export default V11Adapter;

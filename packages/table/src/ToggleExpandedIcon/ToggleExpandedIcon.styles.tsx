@@ -15,3 +15,7 @@ export const iconFills = (theme: Theme, disabled: boolean) => {
 
   return fills[theme];
 };
+
+export const rotatedStyles = css`
+  transform: rotate(90deg);
+`;

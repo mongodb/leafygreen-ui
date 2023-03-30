@@ -10,7 +10,7 @@ export const SortState: { [key: string]: string } = {
   Desc: 'desc',
   Off: 'off',
   None: 'none',
-};
+} as const;
 
 export type SortState = typeof SortState[keyof typeof SortState];
 

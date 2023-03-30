@@ -5,14 +5,15 @@ import { isComponentType } from '@leafygreen-ui/lib';
 import InternalCell from '../Cell/InternalCell';
 import { useTableContext } from '../TableContext/TableContext';
 import ToggleExpandedIcon from '../ToggleExpandedIcon';
-import { LeafyGreenTableRow, LGRowData } from '../useLeafyGreenTable';
+import { LGRowData } from '../useLeafyGreenTable';
 import { getAreAncestorsExpanded } from '../utils/areAncestorsExpanded';
 
-interface RowCellChildrenProps<T extends LGRowData>
-  extends PropsWithChildren<{
-    row: LeafyGreenTableRow<T>;
-    disabled?: boolean;
-  }> {}
+import { RowProps } from '.';
+
+type RowCellChildrenProps<T extends LGRowData> = Required<
+  Pick<RowProps<T>, 'row'>
+> &
+  Pick<RowProps<T>, 'disabled' | 'children'>;
 
 /**
  * Renders row cells provided by `useReactTable`

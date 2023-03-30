@@ -7,7 +7,7 @@ import { LGColumnDef, LGRowData } from '../useLeafyGreenTable';
 const processColumns = <T extends LGRowData>(
   data: Array<T>,
   columns: TableProps<any>['columns'],
-  headerLabelMapping?: { [key: string]: string },
+  headerLabels?: { [key: string]: string },
 ) => {
   const HeaderRow = React.Children.toArray(columns)[0] as ReactElement;
   const TableHeaders = React.Children.toArray(HeaderRow.props.children);
@@ -20,7 +20,7 @@ const processColumns = <T extends LGRowData>(
       !!headerProps.compareFn;
     processedColumns.push({
       accessorKey:
-        (headerLabelMapping && headerLabelMapping[headerProps.label]) ??
+        (headerLabels && headerLabels[headerProps.label]) ??
         camelCase(headerProps.label),
       header: headerProps.label,
       align: headerProps.dataType === 'number' ? 'right' : 'left',

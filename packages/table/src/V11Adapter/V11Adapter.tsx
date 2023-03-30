@@ -26,13 +26,13 @@ import { V11AdapterProps } from './V11Adapter.types';
 // assumes table is first element in children
 // reads columns from columns' keys
 // supports up to one layer of nested rows
-// assumes that the key of a column in the original data === column label header in lowercase; can be overridden by `headerLabelMapping`
+// assumes that the key of a column in the original data === column label header in lowercase; can be overridden by `headerLabels`
 const V11Adapter = <T extends LGRowData>({
   children,
   shouldAlternateRowColor,
   useVirtualScrolling = false,
   hasSelectableRows = false,
-  headerLabelMapping,
+  headerLabels,
 }: V11AdapterProps<T>) => {
   const { darkMode } = useDarkMode();
   const containerRef = useRef(null);
@@ -43,12 +43,12 @@ const V11Adapter = <T extends LGRowData>({
     children: childrenFn,
   } = (OldTable as ReactElement).props;
   const processedColumns: Array<LGColumnDef<T>> = useMemo(
-    () => processColumns(data, columns, headerLabelMapping),
-    [data, columns, headerLabelMapping],
+    () => processColumns(data, columns, headerLabels),
+    [data, columns, headerLabels],
   );
-  const processedData: Array<LGTableDataType<T>> = useState(() =>
+  const [processedData]: [Array<LGTableDataType<T>>, any] = useState(() =>
     processData(data, processedColumns, childrenFn),
-  )[0];
+  );
 
   const table = useLeafyGreenTable<T>({
     containerRef,
@@ -56,22 +56,16 @@ const V11Adapter = <T extends LGRowData>({
     columns: processedColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    // @ts-ignore
+    // @ts-expect-error `subRows` is a field added by `processData`
     getSubRows: row => row.subRows,
     useVirtualScrolling,
     hasSelectableRows,
   });
 
   const { rows } = table.getRowModel();
-  let loopedItems;
 
-  if (useVirtualScrolling) {
-    loopedItems = table.virtualRows ?? [];
-  } else {
-    loopedItems = rows;
-  }
+  const iterables = useVirtualScrolling ? table.virtualRows ?? [] : rows;
 
-  let row: LeafyGreenTableRow<T>;
   return (
     <TableContainer ref={containerRef}>
       <Table
@@ -96,74 +90,51 @@ const V11Adapter = <T extends LGRowData>({
           </HeaderRow>
         </TableHead>
         <TableBody>
-          {loopedItems.map(
-            (loopedItem: LeafyGreenTableRow<T> | VirtualItem) => {
-              row = (
-                useVirtualScrolling ? rows[loopedItem.index] : loopedItem
-              ) as LeafyGreenTableRow<T>;
-              return (
-                <Row
-                  key={row.id}
-                  row={row}
-                  virtualRow={
-                    (useVirtualScrolling
-                      ? loopedItem
-                      : undefined) as VirtualItem
-                  }
-                >
-                  {row
-                    .getVisibleCells()
-                    .map((cell: LeafyGreenTableCell<any>) => {
-                      return (
-                        <Cell key={cell.id}>
-                          {cell.column.id === 'select' ? (
-                            // @ts-ignore
-                            <>{cell.column.columnDef?.cell({ row, table })}</>
-                          ) : (
-                            // index by row.index (not the index of the loop) to get the sorted order
-                            // @ts-ignore
-                            <>{processedData[row.index][cell.column.id]()}</>
-                          )}
-                        </Cell>
-                      );
-                    })}
-                  {row.original.renderExpandedContent && (
-                    <ExpandedContent row={row} />
-                  )}
-                  {row.subRows &&
-                    row.subRows.map(subRow => (
-                      <Row key={subRow.id} row={subRow}>
-                        {subRow.getVisibleCells().map(subRowCell => {
-                          return (
-                            <Cell key={subRowCell.id}>
-                              {/* @ts-ignore */}
-                              {subRow.original[subRowCell.column.id]()}
-                            </Cell>
-                          );
-                        })}
-                        {subRow.subRows &&
-                          subRow.subRows.map(subSubRow => (
-                            <Row key={subSubRow.id} row={subSubRow}>
-                              {subSubRow
-                                .getVisibleCells()
-                                .map(subSubRowCell => {
-                                  return (
-                                    <Cell key={subSubRowCell.id}>
-                                      {/* @ts-ignore */}
-                                      {subSubRow.original[
-                                        subSubRowCell.column.id
-                                      ]()}
-                                    </Cell>
-                                  );
-                                })}
-                            </Row>
-                          ))}
-                      </Row>
-                    ))}
-                </Row>
-              );
-            },
-          )}
+          {iterables.map((iterable: LeafyGreenTableRow<T> | VirtualItem) => {
+            const row = (
+              useVirtualScrolling ? rows[iterable.index] : iterable
+            ) as LeafyGreenTableRow<T>;
+            return (
+              <Row
+                key={row.id}
+                row={row}
+                virtualRow={
+                  (useVirtualScrolling ? iterable : undefined) as VirtualItem
+                }
+              >
+                {row.getVisibleCells().map((cell: LeafyGreenTableCell<any>) => {
+                  return (
+                    <Cell key={cell.id}>
+                      {cell.column.id === 'select' ? (
+                        // @ts-expect-error `cell` is instantiated in `processColumns`
+                        <>{cell.column.columnDef?.cell({ row, table })}</>
+                      ) : (
+                        // index by row.index (not the index of the loop) to get the sorted order
+                        // @ts-expect-error `processedData` is structured to be indexable by `row.index`
+                        <>{processedData[row.index][cell.column.id]()}</>
+                      )}
+                    </Cell>
+                  );
+                })}
+                {row.original.renderExpandedContent && (
+                  <ExpandedContent row={row} />
+                )}
+                {row.subRows &&
+                  row.subRows.map(subRow => (
+                    <Row key={subRow.id} row={subRow}>
+                      {subRow.getVisibleCells().map(subRowCell => {
+                        return (
+                          <Cell key={subRowCell.id}>
+                            {/* @ts-expect-error */}
+                            {subRow.original[subRowCell.column.id]()}
+                          </Cell>
+                        );
+                      })}
+                    </Row>
+                  ))}
+              </Row>
+            );
+          })}
         </TableBody>
       </Table>
     </TableContainer>

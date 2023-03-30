@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { iconButtonStyles, iconFills } from './ToggleExpandedIcon.styles';
+import {
+  iconButtonStyles,
+  iconFills,
+  rotatedStyles,
+} from './ToggleExpandedIcon.styles';
 import { type ToggleExpandedIconProps } from './ToggleExpandedIcon.types';
 
 const ToggleExpandedIcon = ({
@@ -23,9 +27,7 @@ const ToggleExpandedIcon = ({
       disabled={disabled}
       onClick={toggleExpanded}
       className={cx(iconButtonStyles, {
-        [css`
-          transform: rotate(90deg);
-        `]: isExpanded,
+        [rotatedStyles]: isExpanded,
       })}
       {...rest}
     >
