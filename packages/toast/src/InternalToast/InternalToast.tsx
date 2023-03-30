@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 import { cx } from '@leafygreen-ui/emotion';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
 import { ToastProps, Variant } from '../Toast.types';
@@ -87,59 +89,63 @@ export const InternalToast = React.forwardRef<
     const iconThemeStyle = variantIconStyle[variant];
 
     return (
-      <div
-        ref={forwardedRef}
-        className={cx(baseToastStyle, toastThemeStyles[theme], className)}
-        aria-atomic="true"
-        data-testid="lg-toast"
-        {...rest}
-      >
+      <LeafyGreenProvider darkMode={!darkMode}>
         <div
-          data-testid="lg-toast-content"
-          aria-hidden={!showContent}
-          className={cx(contentWrapperStyle, {
-            [contentVisibleStyles]: showContent,
-          })}
+          ref={forwardedRef}
+          className={cx(baseToastStyle, toastThemeStyles[theme], className)}
+          aria-atomic="true"
+          data-testid="lg-toast"
+          {...rest}
         >
-          <VariantIcon
-            aria-hidden
-            className={cx(baseIconStyle, iconThemeStyle[theme])}
-            size={32}
-          />
-
-          <div className={textContentStyle}>
-            <Body
-              data-testid="toast-title"
-              className={cx(titleStyle, titleThemeStyle[theme])}
-            >
-              {title}
-            </Body>
-
-            {description && (
-              <Body
-                className={cx(descriptionStyle, descriptionThemeStyle[theme])}
-              >
-                {description}
-              </Body>
-            )}
-          </div>
-        </div>
-
-        {dismissible && (
-          <IconButton
-            className={cx(dismissButtonStyle, dismissButtonThemeStyle[theme])}
-            aria-label="Close Message"
-            onClick={onClose}
-            darkMode={!darkMode}
-            data-testid="lg-toast-dismiss-button"
+          <div
+            data-testid="lg-toast-content"
+            aria-hidden={!showContent}
+            className={cx(contentWrapperStyle, {
+              [contentVisibleStyles]: showContent,
+            })}
           >
-            <XIcon aria-hidden role="presentation" />
-          </IconButton>
-        )}
-        {variant === Variant.Progress && showContent && (
-          <ProgressBar theme={theme} progress={progress} />
-        )}
-      </div>
+            <VariantIcon
+              aria-hidden
+              className={cx(baseIconStyle, iconThemeStyle[theme])}
+              size={32}
+            />
+
+            <div className={textContentStyle}>
+              <Body
+                data-testid="toast-title"
+                className={cx(titleStyle, titleThemeStyle[theme])}
+              >
+                {title}
+              </Body>
+
+              {description && (
+                <Body
+                  className={cx(descriptionStyle, descriptionThemeStyle[theme])}
+                >
+                  {description}
+                </Body>
+              )}
+            </div>
+
+            {variant === Variant.Progress && actionElement}
+          </div>
+
+          {dismissible && (
+            <IconButton
+              className={cx(dismissButtonStyle, dismissButtonThemeStyle[theme])}
+              aria-label="Close Message"
+              onClick={onClose}
+              darkMode={!darkMode}
+              data-testid="lg-toast-dismiss-button"
+            >
+              <XIcon aria-hidden role="presentation" />
+            </IconButton>
+          )}
+          {variant === Variant.Progress && showContent && (
+            <ProgressBar theme={theme} progress={progress} />
+          )}
+        </div>
+      </LeafyGreenProvider>
     );
   },
 );

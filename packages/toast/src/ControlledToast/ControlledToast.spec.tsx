@@ -128,8 +128,6 @@ describe('packages/toast/controlled', () => {
         </ToastProvider>,
       );
       const toast = await findByTestId('toast4');
-
-      // TODO: make this test pass
       await expectElementToNotBeRemoved(toast);
     });
   });

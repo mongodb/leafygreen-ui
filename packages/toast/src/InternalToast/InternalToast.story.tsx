@@ -1,7 +1,9 @@
 import React from 'react';
 import { ComponentStory } from '@storybook/react';
 
+import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMeta } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
@@ -18,6 +20,13 @@ export default StoryMeta({
       exclude: ['open', 'onClose'],
     },
   },
+  decorators: [
+    (Story, meta) => (
+      <LeafyGreenProvider darkMode={!!meta.args.darkMode}>
+        <Story />
+      </LeafyGreenProvider>
+    ),
+  ],
   args: {
     title: 'Velit ea exercitation qui aute dolor proident.',
     description: 'Exercitation incididunt ea proident velit mollit',
@@ -55,6 +64,19 @@ WithLink.args = {
   description: (
     <>
       Exercitation incididunt ea proident. &nbsp;
+      <Link href="http://localhost:9001">Link style</Link>
+    </>
+  ),
+};
+
+export const WithAction = Basic.bind({});
+WithAction.args = {
+  variant: Variant.Progress,
+  actionElement: <Button size="small">Action</Button>,
+  title: 'Velit ea exercitation qui aute.',
+  description: (
+    <>
+      Exercitation incididunt &nbsp;
       <Link href="http://localhost:9001">Link style</Link>
     </>
   ),

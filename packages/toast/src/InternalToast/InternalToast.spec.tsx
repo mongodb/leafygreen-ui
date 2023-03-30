@@ -168,7 +168,28 @@ describe('packages/toast/internal-toast', () => {
   });
 
   describe('`actionElement` prop', () => {
-    test.todo('Renders actionElement');
+    test('Renders `actionElement` when `variant === progress`', () => {
+      const { queryByTestId } = render(
+        <InternalToast
+          title="hello world"
+          variant={Variant.Progress}
+          actionElement={<button data-testid="action">action</button>}
+        />,
+      );
+      const actionButton = queryByTestId('action');
+      expect(actionButton).toBeInTheDocument();
+    });
+    test('`actionElement` not rendered when `variant !== progress`', () => {
+      const { queryByTestId } = render(
+        <InternalToast
+          title="hello world"
+          variant={Variant.Success}
+          actionElement={<button data-testid="action">action</button>}
+        />,
+      );
+      const actionButton = queryByTestId('action');
+      expect(actionButton).not.toBeInTheDocument();
+    });
   });
 });
 

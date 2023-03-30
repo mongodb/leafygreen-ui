@@ -6,14 +6,15 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { defaults } from 'lodash';
+import { defaults, range } from 'lodash';
 
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { TOAST_CONSTANTS } from '../constants';
+import { ControlledToast } from '../ControlledToast/ControlledToast';
 import { InternalToastProps } from '../InternalToast';
+import { Basic as ContextStory } from '../Toast.story';
 import { ToastProvider } from '../ToastContext';
-import { Basic as ContextStory } from '../ToastContext.story';
 import {
   ToastProviderProps,
   ToastStack,
@@ -28,12 +29,19 @@ function renderToastContainer(
   _props?: Partial<InternalToastProps>,
   initialValue?: ToastProviderProps['initialValue'],
 ) {
-  const props = defaults(_props, { title: 'test' });
   const result = render(
     <ToastProvider initialValue={initialValue}>
-      <ContextStory {...props} />
+      <ContextStory {...defaults(_props, { title: 'test' })} />
     </ToastProvider>,
   );
+
+  const rerenderWithProps = (_newProps: Partial<InternalToastProps>) =>
+    result.rerender(
+      <ToastProvider initialValue={initialValue}>
+        <ContextStory {...defaults(_newProps, _props, { title: 'test' })} />
+      </ToastProvider>,
+    );
+
   const button = result.getByTestId('toast-trigger');
 
   function triggerToast() {
@@ -42,6 +50,7 @@ function renderToastContainer(
 
   return {
     triggerToast,
+    rerenderWithProps,
     ...result,
   };
 }
@@ -154,19 +163,30 @@ describe('packages/toast/container', () => {
         expect(toast).toBeInTheDocument();
       });
 
+      // Skipping since `rerender` is not working as expected
       // eslint-disable-next-line jest/no-disabled-tests
-      test.skip('toast does close after timeout once `progress` == 1', async () => {
+      test.skip('toast _does_ close after timeout once `progress === 1`', async () => {
         const timeout = 50;
-        const { findByTestId, triggerToast } = renderToastContainer({
-          timeout,
-          variant: 'progress',
-          progress: 0,
-        });
+
+        const { rerenderWithProps, triggerToast, findByTestId } =
+          renderToastContainer({
+            title: 'test',
+            progress: 0,
+            variant: 'progress',
+            timeout,
+          });
         triggerToast();
 
-        const toast = await findByTestId('lg-toast');
-        expect(toast).toBeInTheDocument();
+        rerenderWithProps({
+          title: 'test',
+          progress: 1,
+          variant: 'progress',
+          timeout,
+        });
 
+        const toast = await findByTestId('lg-toast');
+
+        // TODO: Chromatic
         await delay(timeout + transitionDuration.slower);
         await waitForElementToBeRemoved(toast);
       });
@@ -184,7 +204,62 @@ describe('packages/toast/container', () => {
         await waitForElementToBeRemoved(toast);
       });
 
-      test.todo('dismissing the top-most toast collapses the rest');
+      test('dismissing the top-most toast collapses the rest', async () => {
+        const timeout = null;
+        const { getAllByTestId, findAllByTestId, triggerToast } =
+          renderToastContainer(
+            { timeout },
+            makeToastStack(
+              range(3).map(i => makeToast({ title: `Toast ${i}` })),
+            ),
+          );
+        triggerToast();
+        const toasts = await findAllByTestId('lg-toast');
+        const dismissButtons = getAllByTestId('lg-toast-dismiss-button');
+        const topToastButton = dismissButtons[0];
+        userEvent.click(topToastButton);
+
+        const bottomToast = toasts[2];
+        const bottomToastContent = globalGetByTestId(
+          bottomToast,
+          'lg-toast-content',
+        );
+
+        // TODO: Chromatic
+        await waitFor(() => {
+          expect(bottomToastContent).toHaveAttribute('aria-hidden', 'true');
+        });
+      });
+
+      test('dismissing an inner toast does not collapse the stack', async () => {
+        const timeout = null;
+        const { getAllByTestId, findAllByTestId, triggerToast } =
+          renderToastContainer(
+            { timeout },
+            makeToastStack(
+              range(3).map(i => makeToast({ title: `Toast ${i}` })),
+            ),
+          );
+        triggerToast();
+        const toasts = await findAllByTestId('lg-toast');
+        const dismissButtons = getAllByTestId('lg-toast-dismiss-button');
+        const middleToastButton = dismissButtons[1];
+        userEvent.click(middleToastButton);
+
+        const topToast = toasts[2];
+        const topToastContent = globalGetByTestId(topToast, 'lg-toast-content');
+        const bottomToast = toasts[2];
+        const bottomToastContent = globalGetByTestId(
+          bottomToast,
+          'lg-toast-content',
+        );
+
+        // TODO: Chromatic
+        await waitFor(() => {
+          expect(topToastContent).toHaveAttribute('aria-hidden', 'false');
+          expect(bottomToastContent).toHaveAttribute('aria-hidden', 'false');
+        });
+      });
     });
   });
 
