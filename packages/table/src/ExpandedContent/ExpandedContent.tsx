@@ -35,6 +35,7 @@ const ExpandedContent = <T extends RowData>({
 
   const contentHeight = useMemo(
     () => (contentRef.current ? contentRef.current.clientHeight : 0),
+    // Lint flags `content` as an unnecessary dependency, but we want to update `contentHeight` when the value of `content` changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [content],
   );

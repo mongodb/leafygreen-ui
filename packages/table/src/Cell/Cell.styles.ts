@@ -27,6 +27,7 @@ export const baseCellStyles = css`
 
 export const alignmentStyles = (align: Align = 'left') => css`
   justify-content: ${align};
+  text-align: ${align};
 `;
 
 export const getCellPadding = ({

@@ -99,11 +99,12 @@ describe('packages/table/Row/NestedRows', () => {
   test.skip('clicking expand icon button renders collapse button and nested row content', async () => {
     const { getByLabelText, queryByText } = render(<RowWithNestedRows />);
     const expandIconButton = getByLabelText('Expand row');
+    // the line below is not reliable as the row is expanded - the height is just 0
     expect(queryByText('nested row name')).not.toBeVisible();
     fireEvent.click(expandIconButton);
     const collapseIconButton = getByLabelText('Collapse row');
     expect(collapseIconButton).toBeInTheDocument();
-    // todo: queryByText finding a phantom tr element between tbody's
+    // the line below is not reliable as the row is expanded - the height is just 0
     expect(queryByText('nested row name')).toBeVisible();
   });
 });

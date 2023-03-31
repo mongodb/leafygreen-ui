@@ -91,7 +91,6 @@ const InternalRowWithRT = <T extends LGRowData>({
         data-selected={isSelected}
         disabled={disabled}
         aria-hidden={!isRowVisible}
-        aria-expanded={isExpanded}
         {...rest}
       >
         <RowCellChildren row={row} disabled={disabled}>

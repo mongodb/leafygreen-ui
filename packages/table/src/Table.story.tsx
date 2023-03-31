@@ -32,7 +32,6 @@ export default {
   title: 'Components/Table',
   component: Table,
   argTypes: {
-    className: { control: 'none' },
     shouldAlternateRowColor: { control: 'boolean' },
     darkMode: storybookArgTypes.darkMode,
   },
@@ -40,6 +39,7 @@ export default {
     default: 'KitchenSink',
     controls: {
       exclude: [
+        'className',
         'children',
         'ref',
         'aria-describedby',

@@ -1,6 +1,9 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-export type Align = HTMLElementProps<'td'>['align'];
+export type Align = Extract<
+  HTMLElementProps<'td'>['align'],
+  'left' | 'right' | 'center'
+>;
 
 export type CellProps = HTMLElementProps<'td'>;
 
