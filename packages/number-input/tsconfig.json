@@ -1,0 +1,40 @@
+
+{
+  "extends": "../../package.tsconfig.json",
+  "compilerOptions": {
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": ["src/**/*"],
+  "references": [
+    {
+      "path": "../a11y"
+    },
+    {
+      "path": "../lib"
+    },
+    {
+      "path": "../emotion"
+    },
+    {
+      "path": "../hooks"
+    },
+    {
+      "path": "../typography"
+    },
+    {
+      "path": "../icon"
+    },
+    {
+      "path": "../icon-button"
+    },
+    {
+      "path": "../select"
+    },
+    {
+      "path": "../tooltip"
+    }
+  ]
+}
+ 
