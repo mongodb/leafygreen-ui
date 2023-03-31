@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import { Row } from '@tanstack/react-table';
 import camelCase from 'lodash/camelCase';
 
+import { Align } from '../Cell/Cell.types';
 import { TableProps } from '../TableV10/Table';
 import { LGRowData } from '../useLeafyGreenTable';
 
@@ -55,7 +56,7 @@ const processColumns = <T extends LGRowData>(
         (headerLabels && headerLabels[headerProps.label]) ??
         camelCase(headerProps.label),
       header: headerProps.label,
-      align: headerProps.dataType === 'number' ? 'right' : 'left',
+      align: (headerProps.dataType === 'number' ? 'right' : 'left') as Align,
       enableSorting: hasSorting,
       sortingFn: headerProps.compareFn
         ? convertedCompareFn

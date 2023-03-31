@@ -5,30 +5,40 @@ export type Align = Extract<
   'left' | 'right' | 'center'
 >;
 
-export type CellProps = HTMLElementProps<'td'>;
-
-export type InternalCellProps = CellProps & {
+interface AlignProp {
   /**
-   * Index of the cell in its parent row.
-   */
-  cellIndex: number;
-
-  /**
-   * Depth of nesting its parent row has.
-   */
-  depth: number;
-
-  /**
-   * Defines whether the cell's row is visible (i.e. expanded)
+   * Alignment of the cell's contents
    *
-   * @default true
+   * Overrides `<td>`'s deprecated `align` prop
    */
-  isVisible?: boolean;
+  align?: Align;
+}
 
-  /**
-   * Defines whether the cell's row is expandable
-   *
-   * @default false
-   */
-  isExpandable?: boolean;
-};
+export type CellProps = HTMLElementProps<'td'> & AlignProp;
+
+export type InternalCellProps = CellProps &
+  AlignProp & {
+    /**
+     * Index of the cell in its parent row.
+     */
+    cellIndex: number;
+
+    /**
+     * Depth of nesting its parent row has.
+     */
+    depth: number;
+
+    /**
+     * Defines whether the cell's row is visible (i.e. expanded)
+     *
+     * @default true
+     */
+    isVisible?: boolean;
+
+    /**
+     * Defines whether the cell's row is expandable
+     *
+     * @default false
+     */
+    isExpandable?: boolean;
+  };

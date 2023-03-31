@@ -171,6 +171,7 @@ describe('packages/table/Table', () => {
       const { container, getByTestId, getByLabelText } = render(
         <TableWithHook columnProps={{ enableSorting: true }} />,
       );
+      // @ts-ignore querySelector should not return null
       const initialFirstId = container.querySelector(
         '[data-cellid="0_id"] > div',
       ).innerHTML;

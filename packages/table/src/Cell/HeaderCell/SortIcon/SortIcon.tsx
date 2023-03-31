@@ -17,7 +17,10 @@ const glyphs: Record<SortState, string> = {
   [SortState.None]: '',
 };
 
-const themeGlyphColors: Record<Theme, Record<SortState, string>> = {
+const themeGlyphColors: Record<
+  Theme,
+  Record<Exclude<SortState, 'none'>, string>
+> = {
   [Theme.Dark]: {
     [SortState.Asc]: palette.blue.base,
     [SortState.Desc]: palette.blue.base,
@@ -37,14 +40,18 @@ const SortIcon = ({ sortState, onSortIconClick, ...rest }: SortIconProps) => {
     onSortIconClick?.(e);
   };
 
-  return (
-    <IconButton onClick={handleClick} {...rest}>
-      <Icon
-        glyph={glyphs[sortState]}
-        fill={themeGlyphColors[theme][sortState]}
-      />
-    </IconButton>
-  );
+  if (sortState === SortState.None) {
+    return <></>;
+  } else {
+    return (
+      <IconButton onClick={handleClick} {...rest}>
+        <Icon
+          glyph={glyphs[sortState]}
+          fill={themeGlyphColors[theme][sortState]}
+        />
+      </IconButton>
+    );
+  }
 };
 
 export default SortIcon;

@@ -15,7 +15,8 @@ import { LGRowData } from '../useLeafyGreenTable';
 import { baseStyles, tableContainerStyles, themeStyles } from './Table.styles';
 import { TableProps } from './Table.types';
 
-const Table = forwardRef<HTMLDivElement, TableProps<LGRowData>>(
+// Inferred generic type from component gets used in place of `any`
+const Table = forwardRef<HTMLDivElement, any>(
   <T extends LGRowData>(
     {
       children,

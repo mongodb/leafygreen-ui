@@ -39,7 +39,8 @@
     "react-transition-group": "^4.4.1"
   },
   "devDependencies": {
-    "@faker-js/faker": "^7.6.0"
+    "@faker-js/faker": "^7.6.0",
+    "@leafygreen-ui/code": "^14.2.1"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.1"
