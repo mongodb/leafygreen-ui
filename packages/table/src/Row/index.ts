@@ -1,5 +1,6 @@
-import HeaderRow, { HeaderRowProps } from './HeaderRow';
+import HeaderRow from './HeaderRow/HeaderRow';
+import { type HeaderRowProps } from './HeaderRow/HeaderRow.types';
 import Row from './Row';
-import { RowProps } from './Row.types';
+import { type RowProps } from './Row.types';
 
 export { HeaderRow, type HeaderRowProps, Row, type RowProps };

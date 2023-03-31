@@ -1,4 +1,4 @@
 import TableBody from './TableBody';
-export { TableBodyProps } from './TableBody.types';
+export { type TableBodyProps } from './TableBody.types';
 
 export default TableBody;

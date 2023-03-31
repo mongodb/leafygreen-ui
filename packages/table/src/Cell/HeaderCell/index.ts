@@ -1,4 +1,4 @@
 import HeaderCell from './HeaderCell';
-export { HeaderCellProps } from './HeaderCell.types';
+export { type HeaderCellProps } from './HeaderCell.types';
 
 export default HeaderCell;
