@@ -1,4 +1,4 @@
-import { BaseIconButtonProps } from '@leafygreen-ui/icon-button';
+import { type BaseIconButtonProps } from '@leafygreen-ui/icon-button';
 
 import { RowProps } from '../Row/Row.types';
 import { LGRowData } from '../useLeafyGreenTable';
