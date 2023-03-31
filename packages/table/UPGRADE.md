@@ -1,12 +1,14 @@
-# v10 to v11
+# Upgrading v10 to v11
 
-v11 introduces a large set of new features including virtualized scrolling and sticky header rows. For a functional overview, refer to the [project brief](https://docs.google.com/document/u/1/d/1AaZfYAGi9MCxU-cutWovDwTl_4jViUP34QwMFiWMSxU/edit).
+Table v11 introduces a large set of new features and API changes including virtualized scrolling, sticky header rows, and a composition-based API. For a functional overview, refer to the [project brief](https://docs.google.com/document/u/1/d/1AaZfYAGi9MCxU-cutWovDwTl_4jViUP34QwMFiWMSxU/edit).
 
 ## Overview
 
-The largest change is that the usage API has changed to a set of UI components that wrap HTML Table elements (e.g. `<thead>` equates to the `<TableHead>` component). This should improve the DX of creating basic tables.
+Most notably, we have updated the table API to make use of composition, exporting a set of UI components that wrap HTML Table elements (i.e. `<thead>` equates to the `<TableHead>` component). This should improve the DX of creating basic tables, as it feels more similar to the DX of building HTML tables.
 
-For more complex functionalities, v11 exports the `useLeafygreenTable` hook which leverages the [react-table](https://tanstack.com/table/v8) and [react-virtual]() libraries. As of v11.0.0, the hook supports:
+For more complex features, v11 exports the `useLeafygreenTable` hook which leverages the [react-table](https://tanstack.com/table/v8) and [react-virtual]() libraries.
+
+As of v11.0.0, the hook supports:
 
 - virtualized scrolling
 - nested rows
@@ -14,24 +16,24 @@ For more complex functionalities, v11 exports the `useLeafygreenTable` hook whic
 - sortable rows
 - selectable rows
 
-MongoDB developers should not utilize other `react-table` that are not specified in LeafyGreen's Storybook, as the use cases specified in Storybook are the only ones that have been designed for according to guidelines.
+MongoDB developers should not utilize other `react-table` features that are not specified in LeafyGreen's [Storybook](https://mongodb.github.io/leafygreen-ui), as other features may not follow our design guidelines.
 
 ### Other changes
 
-- **Zebra striping behavior is no longer applied by default for data sets over 10 rows.** Use the `shouldAlternateRowColor` prop on the `Table` component to achieve the same effect. Note that we discourage the usage of zebra stripes in conjunction with nested rows or expandable content.
+- **Alternating row colors (or "zebra striping") are no longer applied by default for data sets over 10 rows.** Use the `shouldAlternateRowColor` prop on the `Table` component to achieve the same effect. Note that we are not supporting usage of zebra stripes in conjunction with nested rows or expandable content as the new gray background of nested rows will make striped rows less legible.
 
-- **Disabled cells are no longer supported.** We found in our design audit that this prop was not being used. We recommend applying styles that match our disabled rows if you would like to disable specific cells.
+- **Disabled cells are no longer supported.** We recommend applying styles that match our disabled rows if you would like to disable specific cells.
 
-- **Multi-row headers are no longer supported.** We found in our design audit that this prop was not being used. Reach out to the Design Systems team if this prop is crucial to your team's needs.
+- **Multi-row headers are no longer supported.** Reach out to the Design Systems team if this prop is crucial to your team's needs.
 
 ### `V11Adapter`
 
-The `V11Adapter` was created to allow v10 Table components to utilize v11 features with minimal effort.
+The `V11Adapter` was created to allow developers to upgrade to v11 without needing to refactor all tables to the new API.
 
 Given the two versions' significant differences in API, the adapter makes several assumptions about the v10 Table's usage:
 
-- It is assumed that the v10 Table component will be the first child.
-- The v11 columns are read from the v10 columns' labels. If the key of the cells' data does not correspond to the v10 column's label, the user is expected to pass in the labels through the `headerLabels` prop.
+- The v10 Table component must be the first (and only?) child of the adapter
+- Column definitions will be read from the v10 Table `columns` prop's labels. If the key of the cells' data does not correspond to the v10 column's label, the user is expected to pass in the labels through the `headerLabels` prop.
 - Currently only supports up to one layer of nested rows.
 
 #### Props
@@ -77,4 +79,4 @@ import {
 </V11Adapter>;
 ```
 
-Refer to the LeafyGreen Storybook deployment for more use cases.
+Refer to the [Leafygreen Storybook deployment](https://mongodb.github.io/leafygreen-ui) for more use cases.

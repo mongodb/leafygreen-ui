@@ -3,7 +3,7 @@ import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { Header } from '../..';
 import { LGRowData } from '../../useLeafyGreenTable';
 
-export const SortState: { [key: string]: string } = {
+export const SortState = {
   Asc: 'asc',
   Desc: 'desc',
   Off: 'off',

@@ -1,7 +1,5 @@
 import React, { ReactElement, ReactNode } from 'react';
 
-import { isComponentType } from '@leafygreen-ui/lib';
-
 import InternalCell from '../Cell/InternalCell';
 import { useTableContext } from '../TableContext/TableContext';
 import ToggleExpandedIcon from '../ToggleExpandedIcon';
