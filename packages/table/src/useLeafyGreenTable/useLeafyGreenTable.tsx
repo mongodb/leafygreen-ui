@@ -40,6 +40,7 @@ const selectColumnConfig: LGColumnDef<LGRowData> = {
         indeterminate={row.getIsSomeSelected()}
         onChange={row.getToggleSelectedHandler()}
         aria-label={`Select row ${row.id}`}
+        aria-controls={`lg-table-row-${row.id}`}
         // Don't animate if _all_ rows have been checked (usually, if header row is clicked). Not the _best_ check, but it mostly works
         animate={!table.getIsAllRowsSelected()}
       />

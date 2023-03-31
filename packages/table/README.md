@@ -107,18 +107,6 @@ This option determines how the row's expanded content will be rendered. Refer to
 
 ---
 
-## `TableContainer`
-
-The `TableContainer` is a simple `<div>` element with CSS properties intended to enable sticky headers and other functionalities that depend on `useLeafygreenTable`.
-
-For virtual scrolling, ensure the `ref` that is passed to `useLeafygreenTable` as `containerRef` is passed to `TableContainer`.
-
-https://github.com/mongodb/leafygreen-ui/blob/734da7f621c96c6e0de5e431e28162757166fa79/packages/table/src/Table/TableWithVS.stories.tsx#L79-L100
-
-#### Props
-
-All HTML `div` element props.
-
 ## `Table`
 
 #### Props
@@ -189,6 +177,8 @@ All HTML `tr` element props
 | cell | Cell object passed from the `useLeafygreenTable` hook. | `LeafygreenCell<T>` | -       |
 
 \+ other HTML `td` element props
+
+> The `Cell` component does not automatically handle overflowing text content, as `text-overflow` depends on the element having `overflow: hidden` and an explicit pixel width value. Refer to the LeafyGreen [Storybook deployment](https://mongodb.github.io/leafygreen-ui/) for an example.
 
 ## Feature Examples
 
