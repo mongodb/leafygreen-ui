@@ -3,7 +3,7 @@ import React from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { clickableStyles, disabledStyles, rowBaseStyles } from './Row.styles';
+import { clickableStyles, disabledStyles } from './Row.styles';
 import { InternalRowBaseProps } from './Row.types';
 
 /**
@@ -22,7 +22,6 @@ const InternalRowBase = ({
       aria-disabled={disabled}
       tabIndex={onClick ? 0 : undefined}
       className={cx(
-        rowBaseStyles,
         {
           [disabledStyles[theme]]: disabled,
           [clickableStyles[theme]]: !!onClick,

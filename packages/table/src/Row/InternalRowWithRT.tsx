@@ -13,8 +13,6 @@ import InternalRowBase from './InternalRowBase';
 import {
   expandedContentParentStyles,
   grayZebraRowStyles,
-  rowTopLevelExpandedStyles,
-  rowTopLevelStyles,
   selectedRowStyles,
   zebraStyles,
 } from './Row.styles';
@@ -84,8 +82,6 @@ const InternalRowWithRT = <T extends LGRowData>({
       <InternalRowBase
         className={cx(
           {
-            [rowTopLevelStyles]: !isNested,
-            [rowTopLevelExpandedStyles[theme]]: isExpanded && !isNested,
             [grayZebraRowStyles[theme]]: isOddVSRow && shouldAlternateRowColor,
             [zebraStyles[theme]]: !virtualRow && shouldAlternateRowColor,
             [selectedRowStyles[theme]]: isSelected,

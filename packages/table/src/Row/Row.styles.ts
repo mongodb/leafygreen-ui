@@ -3,39 +3,12 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { focusRing, hoverRing } from '@leafygreen-ui/tokens';
 
-export const rowBaseStyles = css`
-  border: 0px solid rgba(255, 255, 255, 0); // transparent
-`;
-
 export const expandedContentParentStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     background-color: ${palette.gray.dark4};
-    tr:last-child {
-      border-bottom: 1px solid ${palette.gray.dark2};
-    }
   `,
   [Theme.Light]: css`
     background-color: ${palette.gray.light3};
-    tr:last-child {
-      border-bottom: 1px solid ${palette.gray.light2};
-    }
-  `,
-};
-
-/** Styles for top-level, un-nested rows */
-export const rowTopLevelStyles = css`
-  // We add an invisible border to the top of every row
-  border-top-width: 1px;
-  margin-top: -1px;
-`;
-
-/** Styles for expanded top-level, un-nested rows */
-export const rowTopLevelExpandedStyles: Record<Theme, string> = {
-  [Theme.Dark]: css`
-    border-color: ${palette.gray.dark2};
-  `,
-  [Theme.Light]: css`
-    border-color: ${palette.gray.light2};
   `,
 };
 
