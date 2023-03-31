@@ -90,7 +90,7 @@ ZebraStripes.args = {
   shouldAlternateRowColor: true,
 };
 
-export const OverflowingCell = args => {
+export const OverflowingCell: ComponentStory<typeof Table> = args => {
   const data = makeData(false, 100);
   const columns = Object.keys(data[0]).filter(
     x => x !== 'renderExpandedContent' && x !== 'subRows',

@@ -3,7 +3,7 @@ import React, { ReactElement } from 'react';
 import { isComponentType } from '@leafygreen-ui/lib';
 
 import { TableRowInterface } from '../TableV10/Table';
-import { LGTableDataType } from '../useLeafygreenTable';
+import { LGTableDataType } from '../useLeafyGreenTable';
 
 const processData = (
   data: Array<any>,
