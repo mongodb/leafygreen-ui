@@ -3,7 +3,6 @@ import ExpandedContent, { ExpandedContentProps } from './ExpandedContent';
 import { HeaderRow, HeaderRowProps, Row, RowProps } from './Row';
 import Table, { TableProps } from './Table';
 import TableBody, { TableBodyProps } from './TableBody';
-import TableContainer, { TableContainerProps } from './TableContainer';
 import useLeafyGreenTable, {
   LeafyGreenTable,
   LeafyGreenTableCell,
@@ -37,8 +36,6 @@ export {
   Table,
   TableBody,
   type TableBodyProps,
-  TableContainer,
-  type TableContainerProps,
   type TableProps,
   useLeafyGreenTable,
   V11Adapter,

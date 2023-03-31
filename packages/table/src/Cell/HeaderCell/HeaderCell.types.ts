@@ -3,8 +3,6 @@ import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { Header } from '../..';
 import { LGRowData } from '../../useLeafyGreenTable';
 
-export type Align = HTMLElementProps<'td'>['align'];
-
 export const SortState: { [key: string]: string } = {
   Asc: 'asc',
   Desc: 'desc',

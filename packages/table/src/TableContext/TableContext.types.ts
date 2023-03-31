@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 import { TableProps } from '../Table/Table.types';
 import {
@@ -8,8 +8,6 @@ import {
   LeafyGreenTableRow,
   LGRowData,
 } from '../useLeafyGreenTable';
-
-export type ColumnAlignment = HTMLElementProps<'th'>['align']; //'left' | 'right' | 'center';
 
 export type TableContextValues<T extends LGRowData> = PropsWithChildren<
   Pick<TableProps<T>, 'table' | 'shouldAlternateRowColor'>

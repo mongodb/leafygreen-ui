@@ -20,7 +20,7 @@ type RowCellChildrenProps<T extends LGRowData> = Required<
  */
 const RowCellChildren = <T extends LGRowData>({
   row,
-  children,
+  children: CellChildren,
   disabled,
 }: RowCellChildrenProps<T>) => {
   const { getParentRow } = useTableContext();
@@ -34,10 +34,6 @@ const RowCellChildren = <T extends LGRowData>({
   const isExpanded = row.getIsExpanded();
 
   const toggleExpanded = () => row.toggleExpanded();
-
-  const CellChildren = React.Children.toArray(children).filter(child =>
-    isComponentType(child, 'Cell'),
-  );
 
   return (
     <>

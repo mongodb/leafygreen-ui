@@ -55,24 +55,26 @@ import {
   Cell,
 } from '@leafygreen-ui/table';
 
-<Table {...args}>
-  <TableHead>
-    <HeaderRow>
-      {columns.map((columnName: string) => (
-        <HeaderCell key={columnName} columnName={columnName} />
+<V11Adapter hasSelectableRows useVirtualScrolling>
+  <Table {...args}>
+    <TableHead>
+      <HeaderRow>
+        {columns.map((columnName: string) => (
+          <HeaderCell key={columnName} columnName={columnName} />
+        ))}
+      </HeaderRow>
+    </TableHead>
+    <TableBody>
+      {data.map((row: LeafygreenTableRow<T>) => (
+        <Row>
+          {Object.keys(row).map((cellKey: string, index: number) => {
+            return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
+          })}
+        </Row>
       ))}
-    </HeaderRow>
-  </TableHead>
-  <TableBody>
-    {data.map((row: LeafygreenTableRow<T>) => (
-      <Row>
-        {Object.keys(row).map((cellKey: string, index: number) => {
-          return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
-        })}
-      </Row>
-    ))}
-  </TableBody>
-</Table>;
+    </TableBody>
+  </Table>
+</V11Adapter>;
 ```
 
 Refer to the LeafyGreen Storybook deployment for more use cases.

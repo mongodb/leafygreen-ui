@@ -1,5 +1,7 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
+export type Align = HTMLElementProps<'td'>['align'];
+
 export type CellProps = HTMLElementProps<'td'>;
 
 export type InternalCellProps = CellProps & {

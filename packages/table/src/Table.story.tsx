@@ -758,65 +758,62 @@ export const KitchenSink: ComponentStory<typeof Table> = args => {
   const { rows } = table.getRowModel();
 
   return (
-    <>
-      <div>
-        <p>{table.getRowModel().rows.length} total rows</p>
-      </div>
-
-      <Table {...args} table={table} ref={tableContainerRef}>
-        <TableHead>
-          {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
-            <HeaderRow key={headerGroup.id}>
-              {headerGroup.headers.map(header => {
+    <Table {...args} table={table} ref={tableContainerRef}>
+      <TableHead>
+        {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+          <HeaderRow key={headerGroup.id}>
+            {headerGroup.headers.map(header => {
+              return (
+                <HeaderCell key={header.id} header={header}>
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext(),
+                  )}
+                </HeaderCell>
+              );
+            })}
+          </HeaderRow>
+        ))}
+      </TableHead>
+      <TableBody>
+        {rows.map((row: LeafyGreenTableRow<Person>) => {
+          return (
+            <Row key={row.id} row={row}>
+              {row.getVisibleCells().map(cell => {
                 return (
-                  <HeaderCell key={header.id} header={header}>
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
-                  </HeaderCell>
+                  <Cell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </Cell>
                 );
               })}
-            </HeaderRow>
-          ))}
-        </TableHead>
-        <TableBody>
-          {rows.map((row: LeafyGreenTableRow<Person>) => {
-            return (
-              <Row key={row.id} row={row}>
-                {row.getVisibleCells().map(cell => {
-                  return (
-                    <Cell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </Cell>
-                  );
-                })}
-                {row.subRows &&
-                  row.subRows.map(subRow => (
-                    <Row key={subRow.id} row={subRow}>
-                      {subRow.getVisibleCells().map(cell => {
-                        return (
-                          <Cell key={cell.id}>
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext(),
-                            )}
-                          </Cell>
-                        );
-                      })}
-                      {subRow.original.renderExpandedContent && (
-                        <ExpandedContent row={subRow} />
-                      )}
-                    </Row>
-                  ))}
-              </Row>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </>
+              {row.subRows &&
+                row.subRows.map(subRow => (
+                  <Row key={subRow.id} row={subRow}>
+                    {subRow.getVisibleCells().map(cell => {
+                      return (
+                        <Cell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
+                    {subRow.original.renderExpandedContent && (
+                      <ExpandedContent row={subRow} />
+                    )}
+                  </Row>
+                ))}
+            </Row>
+          );
+        })}
+      </TableBody>
+    </Table>
   );
+};
+
+KitchenSink.argTypes = {
+  shouldAlternateRowColor: {
+    control: 'none',
+  },
 };

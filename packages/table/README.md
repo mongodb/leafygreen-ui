@@ -87,13 +87,13 @@ https://github.com/mongodb/leafygreen-ui/blob/734da7f621c96c6e0de5e431e281627571
 
 #### `hasSelectableRows?: boolean`
 
-Setting this prop will inject checkbox cells into all rows. Refer to \_\_ to find examples.
+Setting this prop will inject checkbox cells into all rows. Refer to our [Storybook deployment](https://mongodb.github.io/leafygreen-ui) to find examples.
 
 ---
 
 #### `useVirtualScrolling`
 
-`react-virtual`'s `useVirtual` hook will be called if this option is set. When this option is set, the object returned by `useLeafygreenTable` will include `virtualRows` and `totalSize`. Refer to \_\_ to find examples.
+`react-virtual`'s `useVirtual` hook will be called if this option is set. When this option is set, the object returned by `useLeafygreenTable` will include `virtualRows` and `totalSize`. Refer to our [Storybook deployment](https://mongodb.github.io/leafygreen-ui) to find examples.
 
 ---
 
@@ -103,7 +103,7 @@ Setting this prop will inject checkbox cells into all rows. Refer to \_\_ to fin
 
 https://github.com/mongodb/leafygreen-ui/blob/734da7f621c96c6e0de5e431e28162757166fa79/packages/table/src/useLeafygreenTable/useLeafygreenTable.types.ts#L27-L29
 
-This option determines how the row's expanded content will be rendered. Refer to \_\_ for an example.
+This option determines how the row's expanded content will be rendered. Refer to [Storybook deployment](https://mongodb.github.io/leafygreen-ui) for an example.
 
 ---
 

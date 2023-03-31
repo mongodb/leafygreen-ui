@@ -3,7 +3,7 @@ import { TransitionStatus } from 'react-transition-group';
 import { css } from '@leafygreen-ui/emotion';
 import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
-import { Align } from './HeaderCell/HeaderCell.types';
+import { Align } from './Cell.types';
 
 /** The base left & right padding in the table */
 export const baseTableSidePadding = spacing[4];

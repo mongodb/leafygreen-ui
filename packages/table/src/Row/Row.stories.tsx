@@ -3,7 +3,7 @@ import React from 'react';
 import { ComponentStory, Meta } from '@storybook/react';
 
 import { Cell, HeaderCell } from '../Cell';
-import { Row, HeaderRow } from '../Row';
+import { HeaderRow, Row } from '../Row';
 import Table from '../Table/Table';
 import TableBody from '../TableBody/TableBody';
 import TableHead from '../TableHead/TableHead';
