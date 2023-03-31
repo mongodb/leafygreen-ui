@@ -3,12 +3,12 @@
 import { Meta } from '@storybook/react';
 import React from 'react';
 import { Table, Row, Cell, TableHeader, HeaderRow, DataType } from '.';
-import { defaultData, multiRowData } from './fixtures';
+import { defaultData } from './fixtures';
 import { TableProps } from './Table';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 export default {
-  title: 'Components/Table',
+  title: 'Components/Table/V10',
   component: Table,
   args: {
     data: defaultData,
@@ -183,42 +183,6 @@ export const CustomLogic = ({ withHeaders, ...args }: TableArgs<any>) => (
     )}
   </Table>
 );
-
-export const MultiRowHeader = ({ withHeaders, ...args }: TableArgs<any>) => (
-  <Table
-    {...args}
-    data={multiRowData}
-    columns={[
-      <HeaderRow key="1">
-        <TableHeader
-          key="icecreamshoppe"
-          colSpan={3}
-          label="Ice Cream Shoppe"
-        />
-      </HeaderRow>,
-      <HeaderRow key="2">
-        <TableHeader key="flavor" label="Flavor" />
-        <TableHeader key="price" label="Price" />
-      </HeaderRow>,
-    ]}
-  >
-    {({ datum }: { datum: any }) => (
-      <Row>
-        <Cell
-          isHeader={withHeaders}
-          rowSpan={datum.flavor === 'Funfetti' ? 2 : 1}
-        >
-          {datum.flavor}
-        </Cell>
-        <Cell>{datum.price}</Cell>
-      </Row>
-    )}
-  </Table>
-);
-
-MultiRowHeader.args = {
-  withHeaders: true,
-};
 
 export const NoNestedRows = ({ withHeaders, ...args }: TableArgs<any>) => (
   <Table
