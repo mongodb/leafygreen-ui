@@ -16,6 +16,14 @@ export const State = {
 } as const;
 export type State = typeof State[keyof typeof State];
 
+export const DropdownWidthBasis = {
+  Trigger: 'trigger',
+  Option: 'option',
+} as const;
+
+export type DropdownWidthBasis =
+  typeof DropdownWidthBasis[keyof typeof DropdownWidthBasis];
+
 interface BaseSelectProps
   extends Omit<
       HTMLElementProps<'button', HTMLButtonElement>,
@@ -73,6 +81,12 @@ interface BaseSelectProps
    *  determines the base font size if sizeVariant is set to default.
    */
   baseFontSize?: BaseFontSize;
+  /**
+   *  Determines the width of the dropdown. `trigger` will make the dropdown width the width of the menu button. `option` will make the dropdown width as wide as the widest option.
+   *
+   * @default 'trigger'
+   */
+  dropdownWidthBasis?: DropdownWidthBasis;
 
   /**
    * @internal

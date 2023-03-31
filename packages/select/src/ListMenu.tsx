@@ -3,14 +3,16 @@ import isUndefined from 'lodash/isUndefined';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useAvailableSpace } from '@leafygreen-ui/hooks';
-import { Theme } from '@leafygreen-ui/lib';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
 import { fontFamilies } from '@leafygreen-ui/tokens';
 
 import SelectContext from './SelectContext';
 import { colorSets, mobileSizeSet, sizeSets } from './styleSets';
-import { Size } from './types';
+import { DropdownWidthBasis, Size } from './types';
 import { MobileMediaQuery, useForwardedRef } from './utils';
+
+export const popoverClassName = createUniqueClassName('select-popover');
 
 const maxMenuHeight = 274;
 const menuMargin = 8;
@@ -25,6 +27,10 @@ const baseMenuStyle = css`
   margin: 0;
   padding: 0;
   overflow: auto;
+`;
+
+const autoWidthStyles = css`
+  width: max-content;
 `;
 
 const getMenuStyles = (theme: Theme, size: Size) => {
@@ -50,6 +56,7 @@ type ListMenuProps = {
   referenceElement: React.MutableRefObject<HTMLElement | null>;
   className?: string;
   labelId?: string;
+  dropdownWidthBasis: DropdownWidthBasis;
 } & Omit<PopoverProps, 'active' | 'refEl'>;
 
 const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
@@ -60,6 +67,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
       referenceElement,
       className,
       labelId,
+      dropdownWidthBasis,
       usePortal = true,
       portalContainer,
       scrollContainer,
@@ -99,9 +107,11 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
         active={open && !disabled}
         spacing={6}
         align={Align.Bottom}
-        justify={Justify.Middle}
+        justify={Justify.Start}
         adjustOnMutation
-        className={className}
+        className={cx(popoverClassName, className, {
+          [autoWidthStyles]: dropdownWidthBasis === DropdownWidthBasis.Option,
+        })}
         refEl={referenceElement}
         {...popoverProps}
       >
