@@ -36,7 +36,7 @@
     "check:builds": "yarn ts-node ./scripts/check-builds.ts",
     "check:ts": "tsc --project tsconfig.json",
     "check:package-json": "npmPkgJsonLint ./packages",
-    "chromatic": "npx chromatic --project-token=11963e81db41 --build-script='build-storybook'",
+    "chromatic": "npx chromatic --project-token=1d372cd42552 --build-script='build-storybook'",
     "clean": "yarn clean:builds && yarn clean:modules",
     "clean:builds": "rm -rf packages/*/dist packages/*/tsconfig.tsbuildinfo ./tsconfig.tsbuildinfo",
     "clean:modules": "rm -rf node_modules packages/*/node_modules ",
