@@ -2,10 +2,10 @@ import { usePolymorphic } from '../Polymorphic/Polymorphic.hooks';
 import { PolymorphicAs } from '../Polymorphic/Polymorphic.types';
 
 /**
- * Internal function to compute the inferred polymorphic component based on the `as` prop, and any other props passed in
+ * Function to compute the inferred polymorphic component based on the `as` prop, and any other props passed in
  * @internal
  */
-function getInferredPolymorphComponent(
+export function useInferredPolymorphicComponent(
   as?: PolymorphicAs,
   rest?: { [key: string]: any },
   defaultAs?: PolymorphicAs,
@@ -27,6 +27,6 @@ export function useInferredPolymorphic(
   rest?: { [key: string]: any },
   defaultAs?: PolymorphicAs,
 ) {
-  as = getInferredPolymorphComponent(as, rest, defaultAs);
+  as = useInferredPolymorphicComponent(as, rest, defaultAs);
   return usePolymorphic(as);
 }

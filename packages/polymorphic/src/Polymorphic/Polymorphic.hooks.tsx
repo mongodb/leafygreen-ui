@@ -20,10 +20,10 @@ export const usePolymorphicRef = <E extends PolymorphicAs>(_?: E) => {
 };
 
 /**
- * Internal utility to convert the generic `PolymorphicAs` prop
+ * Utility to convert the generic `PolymorphicAs` prop
  * to a ReactElement
  */
-function getPolymorphicComponent<T extends PolymorphicAs>(
+export function usePolymorphicComponent<T extends PolymorphicAs>(
   as?: T,
 ): React.ElementType {
   return as || 'div';
@@ -39,7 +39,7 @@ export function usePolymorphic<T extends PolymorphicAs>(
   Component: PolymorphicAs;
   ref: PolymorphicRef<T>;
 } {
-  const Component = getPolymorphicComponent(as);
+  const Component = usePolymorphicComponent(as);
   const ref = usePolymorphicRef(as);
 
   return {
