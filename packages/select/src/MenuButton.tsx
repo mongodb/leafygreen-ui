@@ -40,24 +40,20 @@ const menuButtonStyleOverrides = css`
   }
 `;
 
-// We don't have 12px or 10px in our spacing vars
-const _12 = spacing[2] + spacing[1];
-const _10 = spacing[2] + spacing[1] / 2;
-
 const menuButtonSizeStyle: Record<Size, string> = {
   [Size.Default]: css`
     > *:last-child {
-      padding: 0 ${_12}px;
+      padding: 0 12px;
     }
   `,
   [Size.Large]: css`
     > *:last-child {
-      padding: 0 ${_12}px 0 ${spacing[3]}px;
+      padding: 0 12px 0 ${spacing[3]}px;
     }
   `,
   [Size.Small]: css`
     > *:last-child {
-      padding: 0 ${spacing[2]}px 0 ${_10}px;
+      padding: 0 ${spacing[2]}px 0 10px;
     }
   `,
   [Size.XSmall]: css`
@@ -65,7 +61,7 @@ const menuButtonSizeStyle: Record<Size, string> = {
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
     > *:last-child {
-      padding: 0 ${spacing[1]}px 0 ${_10}px;
+      padding: 0 ${spacing[1]}px 0 10px;
     }
   `,
 };
