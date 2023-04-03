@@ -33,6 +33,7 @@ Check out all of the components [in action](https://www.mongodb.design/)!
 - [Menu](https://github.com/mongodb/leafygreen-ui/tree/main/packages/menu)
 - [Modal](https://github.com/mongodb/leafygreen-ui/tree/main/packages/modal)
 - [MongoNav](https://github.com/10gen/leafygreen-ui-private/tree/main/packages/mongo-nav) (This package lives in a private repository)
+- [Number Input](https://github.com/mongodb/leafygreen-ui/tree/main/packages/number-input)
 - [Pagination](https://github.com/mongodb/leafygreen-ui/tree/main/packages/pagination)
 - [Palette](https://github.com/mongodb/leafygreen-ui/tree/main/packages/palette)
 - [Password Input](https://github.com/mongodb/leafygreen-ui/tree/main/packages/password-input)
