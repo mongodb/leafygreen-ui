@@ -22,5 +22,6 @@ export default {
 
 export const LiveExample = ThreeFeaturesWithActions;
 LiveExample.args = {
-  title: 'Triggers have no dependencies yet',
+  ...ThreeFeaturesWithActions.args,
+  title: 'Sample title of features empty state',
 };
