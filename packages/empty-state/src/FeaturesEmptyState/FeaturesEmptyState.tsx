@@ -22,6 +22,9 @@ import {
 } from './FeaturesEmptyState.styles';
 import { Feature, FeaturesEmptyStateProps } from './FeaturesEmptyState.types';
 
+const MIN_NUM_FEATURES = 2;
+const MAX_NUM_FEATURES = 3;
+
 export function FeaturesEmptyState({
   title,
   features,
@@ -32,21 +35,30 @@ export function FeaturesEmptyState({
 }: FeaturesEmptyStateProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
 
+  if (
+    MIN_NUM_FEATURES > features.length ||
+    features.length > MAX_NUM_FEATURES
+  ) {
+    console.warn(
+      'The `FeaturesEmptyState` component should only render 2-3 features.',
+    );
+  }
+
   if (!isComponentType(PrimaryButton, 'Button')) {
     console.warn(
-      'The `PrimaryButton` prop in FeaturesEmptyState should be of type LeafyGreen Button.',
+      'The `PrimaryButton` prop in `FeaturesEmptyState` should be of type LeafyGreen Button.',
     );
   }
 
   if (!isComponentType(SecondaryButton, 'Button')) {
     console.warn(
-      'The `SecondaryButton` prop in FeaturesEmptyState should be of type LeafyGreen Button.',
+      'The `SecondaryButton` prop in `FeaturesEmptyState` should be of type LeafyGreen Button.',
     );
   }
 
   if (!PrimaryButton && !!SecondaryButton) {
     console.warn(
-      'The `SecondaryButton` prop in FeaturesEmptyState should only be used when the `PrimaryButton` prop is also used.',
+      'The `SecondaryButton` prop in `FeaturesEmptyState` should only be used when the `PrimaryButton` prop is also used.',
     );
   }
 
