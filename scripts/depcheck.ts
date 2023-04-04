@@ -39,11 +39,10 @@ const testFilePatterns = [
   /.*.testutils.tsx?/,
 ];
 
+const ignoreMatches = ['@leafygreen-ui/mongo-nav', 'prop-types'];
+
 const depcheckOptions: depcheck.Options = {
-  ignoreMatches: [
-    // ignore dependencies that matches these globs
-    '@leafygreen-ui/mongo-nav',
-  ],
+  ignoreMatches,
 };
 
 checkDependencies();
@@ -74,9 +73,12 @@ async function checkDependencies() {
     // i.e. every listed devDep should _only_ be used in .story or .spec files
     // If it's used in other files, we remove it and re-install it as a regular dependency
     {
-      const usedAsDev = sortDependenciesByUsage(using, pkg).devDependencies;
-      const listed = pick(pkgJson, ['devDependencies']).devDependencies;
-      const listedDev = listed ? Object.keys(listed) : [];
+      const { devDependencies: usedAsDev } = sortDependenciesByUsage(
+        using,
+        pkg,
+      );
+      const { devDependencies: listedObj } = pick(pkgJson, ['devDependencies']);
+      const listedDev = listedObj ? Object.keys(listedObj) : [];
 
       if (
         listedDev.length &&
@@ -89,7 +91,7 @@ async function checkDependencies() {
       ) {
         // add the dependencies that are listed as dev but not used as dev to the unused array to uninstall them
         const listedButNotUsedAsDev = listedDev.filter(
-          dep => !usedAsDev.includes(dep),
+          dep => !usedAsDev.includes(dep) && !ignoreMatches.includes(dep),
         );
         unusedDev.push(...listedButNotUsedAsDev);
         missing.dependencies.push(...listedButNotUsedAsDev);
@@ -100,9 +102,12 @@ async function checkDependencies() {
     // Ensure dependencies listed as `dependencies` are used in files other than .story or .spec files
     // i.e. Every listed dependency should be used in at leas one file that is not .story or .spec
     {
-      const usedAsDependency = sortDependenciesByUsage(using, pkg).dependencies;
-      const listed = pick(pkgJson, ['dependencies']).dependencies;
-      const listedDeps = listed ? Object.keys(listed) : [];
+      const { dependencies: usedAsDependency } = sortDependenciesByUsage(
+        using,
+        pkg,
+      );
+      const { dependencies: listedObj } = pick(pkgJson, ['dependencies']);
+      const listedDeps = listedObj ? Object.keys(listedObj) : [];
 
       if (
         usedAsDependency &&
@@ -115,7 +120,8 @@ async function checkDependencies() {
         )
       ) {
         const listedButOnlyUsedAsDev = listedDeps.filter(
-          dep => !usedAsDependency.includes(dep),
+          dep =>
+            !usedAsDependency.includes(dep) && !ignoreMatches.includes(dep),
         );
         unusedDeps.push(...listedButOnlyUsedAsDev);
       }
