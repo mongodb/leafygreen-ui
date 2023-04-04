@@ -10,7 +10,7 @@ import LightModeGraphic from '../example-graphics/LightModeGraphic.svg';
 import { BasicEmptyState } from '.';
 
 export default {
-  title: 'Components/EmptyState/BasicEmptyState',
+  title: 'Components/EmptyState/Basic',
   component: BasicEmptyState,
   args: {
     title: 'Triggers have no dependencies yet',
@@ -19,12 +19,21 @@ export default {
   },
   argTypes: {
     thumbnail: { control: 'none' },
+    description: { control: 'text' },
+    InfoLink: { control: 'none' },
+    PrimaryButton: { control: 'none' },
+    SecondaryButton: { control: 'none' },
     darkMode: storybookArgTypes.darkMode,
+  },
+  parameters: {
+    controls: {
+      exclude: ['className'],
+    },
   },
 };
 
 const Template: ComponentStory<typeof BasicEmptyState> = props => {
-  let thumbnail: ReactElement;
+  let thumbnail: ReactElement | undefined;
 
   // replace thumbnail prop with appropriate graphic for theme
   // eslint-disable-next-line react/prop-types

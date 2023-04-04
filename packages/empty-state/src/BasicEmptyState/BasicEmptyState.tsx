@@ -22,7 +22,7 @@ export function BasicEmptyState({
   description,
   PrimaryButton,
   SecondaryButton,
-  infoLink,
+  InfoLink,
   darkMode: darkModeProp,
 }: BasicEmptyStateProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
@@ -68,7 +68,7 @@ export function BasicEmptyState({
 
 BasicEmptyState.propTypes = {
   darkMode: PropTypes.bool,
-  infoLink: PropTypes.element,
+  InfoLink: PropTypes.element,
   SecondaryButton: PropTypes.element,
   PrimaryButton: PropTypes.element,
   description: PropTypes.oneOf([PropTypes.element, PropTypes.string])
