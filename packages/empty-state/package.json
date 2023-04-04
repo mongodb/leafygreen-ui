@@ -1,0 +1,32 @@
+
+  {
+    "name": "@leafygreen-ui/empty-state",
+    "version": "0.9.0",
+    "description": "leafyGreen UI Kit Empty State",
+    "main": "./dist/index.js",
+    "module": "./dist/esm/index.js",
+    "types": "./dist/index.d.ts",
+    "typesVersions": {
+      "<3.9": { "*": ["ts3.4/*"] }
+    },
+    "scripts": {
+      "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
+    },
+    "license": "Apache-2.0",
+    "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/empty-state",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/mongodb/leafygreen-ui"
+    },
+    "bugs": {
+      "url": "https://jira.mongodb.org/projects/PD/summary"
+    },
+    "publishConfig": {
+      "access": "public"
+    },
+    "dependencies": {
+      "@leafygreen-ui/button": "^20.0.2",
+      "@leafygreen-ui/lib": "^10.0.0",
+      "@leafygreen-ui/typography": "^16.1.0"
+    }
+  }
