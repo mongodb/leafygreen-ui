@@ -9,25 +9,32 @@ import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 import { TOAST_CONSTANTS } from '../constants';
 import { toastBGColor } from '../InternalToast';
 
-import { calcTotalStackHeight } from './utils/useToastHeights';
-
+// Keeping this to ease future debugging
 const DEBUG = false;
+const debugData = (extraStyle?: string) => css`
+  &::before {
+    content: attr(data-debug);
+    color: white;
+    background-color: black;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    z-index: 10;
+    font-family: monospace;
+    pointer-events: none;
+    ${extraStyle};
+  }
+`;
 
 export const toastContainerStyles = css`
   /* Debug */
   ${DEBUG && `outline: 1px solid teal;`}
-  &::before {
-    ${DEBUG && `content: attr(data-debug);`}
-    /* content: attr(data-debug); */
-    color: white;
-    background-color: teal;
-    position: absolute;
-    top: 0%;
-    right: 0%;
-    z-index: 10;
-    font-family: monospace;
-    pointer-events: none;
-  }
+  ${DEBUG &&
+  debugData(
+    css`
+      background-color: teal;
+    `,
+  )}
 
   position: fixed;
   display: flex;
@@ -172,6 +179,16 @@ export function getToastTransitionStyles({
         background-color: ${bgColor};
         // Slow down any hover animations
         transition-duration: ${transitionDuration.slower}ms;
+
+        ${DEBUG &&
+        debugData(
+          css`
+            top: unset;
+            left: unset;
+            bottom: 0;
+            right: 0;
+          `,
+        )}
       `;
     }
 
@@ -211,37 +228,17 @@ export function getToastUnhoveredStyles({
 }
 
 export function getToastHoverStyles({
-  index,
+  positionY,
+  height,
   theme,
-  bottomOffset,
-  toastHeights,
-  isExpanded,
 }: {
-  index: number;
+  positionY: number;
+  height: number;
   theme: Theme;
-  toastHeights: Array<number>;
-  bottomOffset: number;
-  isExpanded: boolean;
 }) {
-  // The toast position when hovered
-  const hoveredYPosition =
-    calcTotalStackHeight(toastHeights, isExpanded, index) + bottomOffset;
-
   return css`
-    max-height: ${toastHeights[index] * 2}px;
+    max-height: ${height * 2}px;
     background-color: ${toastBGColor[theme]};
-    transform: translate3d(0, -${hoveredYPosition}px, 0);
-
-    &::before {
-      ${DEBUG && `content: "y: ${hoveredYPosition}";`}
-      color: white;
-      background-color: black;
-      position: absolute;
-      bottom: 0%;
-      right: 0%;
-      z-index: 10;
-      font-family: monospace;
-      pointer-events: none;
-    }
+    transform: translate3d(0, -${positionY}px, 0);
   `;
 }

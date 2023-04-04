@@ -1,7 +1,13 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { Transition, TransitionGroup } from 'react-transition-group';
 
-import { cx } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import {
   useBackdropClick,
   useDynamicRefs,
@@ -55,18 +61,21 @@ export const toastPortalClassName = createUniqueClassName('toast-portal');
 export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
   const { popToast, getToast } = useToast();
   const regionId = useIdAllocator({ id: 'lg-toast-region' });
-  const stackSize = stack.size;
-  const doesStackExist = stackSize > 0;
   const toastContainerRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const getToastRef = useDynamicRefs<HTMLDivElement>({ prefix: 'toast' });
   const { theme } = useDarkMode();
+  // Track hover state
   const [isHovered, setHoveredState] = useState(false);
   const setHovered = () => setHoveredState(true);
   const setUnhovered = () => setHoveredState(false);
+  // Track intended expand state
   const [shouldExpand, setShouldExpand, getShouldExpand] = useStateRef(false);
   const expandToasts = () => setShouldExpand(true);
   const collapseToasts = () => setShouldExpand(false);
+  // Track stack size
+  const stackSize = stack.size;
+  const doesStackExist = stackSize > 0;
 
   const { recentToasts, remainingToasts } = getDividedStack(stack);
   const displayedToasts = shouldExpand
@@ -77,7 +86,6 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
     // We just went below the expanded threshold, so collapse the stack
     setShouldExpand(false);
   }
-  // useEffect(() => {}, [setShouldExpand, shouldExpand, stackSize]);
 
   /** is the "N more" bar visible? */
   const showNotificationBar =
@@ -90,16 +98,22 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
   /**
    * Keep track of the DOM height of each toast element
    */
-  const { toastHeights, totalStackHeight, updateToastHeights } =
-    useToastHeights({
-      stack,
-      getToastRef,
-      shouldExpand,
-    });
+  const {
+    toastHeights,
+    totalStackHeight,
+    calcHeightForIndex,
+    updateToastHeights,
+  } = useToastHeights({
+    stack,
+    getToastRef,
+    shouldExpand,
+  });
 
   // Update on first render _only_
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(updateToastHeights, []);
+
+  const [topToastId] = Array.from(stack).reverse()[0]; // reverse since stack is bottom-up
 
   /**
    * We watch the toast container for mutations,
@@ -224,15 +238,6 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
     <Portal className={toastPortalClassName}>
       {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <div
-        data-debug={JSON.stringify(
-          {
-            isHovered,
-            isExpanded,
-            shouldExpand,
-          },
-          null,
-          2,
-        )}
         ref={toastContainerRef}
         id={regionId}
         data-testid="lg-toast-region"
@@ -245,7 +250,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
         className={cx(toastContainerStyles, {
           [toastContainerVisibleStyles]: doesStackExist,
           [getContainerStatefulStyles({
-            topToastHeight: toastHeights[0],
+            topToastHeight: toastHeights[topToastId],
             recentToastsLength: recentToasts.length,
           })]: doesStackExist,
           [getContainerInteractedStyles({
@@ -301,15 +306,15 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
                             [getToastUnhoveredStyles({
                               theme,
                               index,
-                              topToastHeight: toastHeights[0],
+                              topToastHeight: toastHeights[topToastId],
                             })]: !(isHovered || shouldExpand),
 
                             [getToastHoverStyles({
-                              index,
-                              toastHeights,
+                              positionY:
+                                calcHeightForIndex(index, isExpanded) +
+                                notificationBarSpacing,
+                              height: toastHeights[id],
                               theme,
-                              bottomOffset: notificationBarSpacing,
-                              isExpanded,
                             })]: isHovered || shouldExpand,
                           },
                           className,

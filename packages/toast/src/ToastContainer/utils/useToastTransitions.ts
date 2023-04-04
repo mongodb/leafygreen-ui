@@ -1,4 +1,4 @@
-import { Dispatch, RefObject, SetStateAction, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { debounce } from 'lodash';
 
 const transitionDebounceTime = 100;
@@ -11,11 +11,17 @@ interface UseToastTransitionsProps {
   exitCallback: () => void;
 }
 
+interface UseToastTransitionsReturnVal {
+  isExpanded: boolean;
+  handleTransitionExit: () => void;
+  handleTransitionEnter: () => void;
+}
+
 export function useToastTransitions({
   getShouldExpand,
   exitCallback,
   enterCallback,
-}: UseToastTransitionsProps) {
+}: UseToastTransitionsProps): UseToastTransitionsReturnVal {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleTransitionEnter = useMemo(

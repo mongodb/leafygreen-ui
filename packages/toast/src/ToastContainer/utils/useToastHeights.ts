@@ -4,7 +4,7 @@ import { debounce } from 'lodash';
 import { spacing } from '@leafygreen-ui/tokens';
 
 import { TOAST_CONSTANTS } from '../../constants';
-import { ToastStack } from '../../ToastContext';
+import { ToastId, ToastStack } from '../../ToastContext';
 
 interface UseToastHeightsProps {
   stack: ToastStack;
@@ -12,47 +12,89 @@ interface UseToastHeightsProps {
   shouldExpand: boolean;
 }
 
+export type ToastHeightRecord = Record<ToastId, number>;
+interface UseToastHeightsReturnVal {
+  toastHeights: ToastHeightRecord;
+  totalStackHeight: number;
+  calcHeightForIndex: (stopIndex: number, isExpanded?: boolean) => number;
+  updateToastHeights: () => void;
+}
+
 export function useToastHeights({
   stack,
   getToastRef,
   shouldExpand,
-}: UseToastHeightsProps) {
+}: UseToastHeightsProps): UseToastHeightsReturnVal {
   /**
    * Keep track of all the toasts' heights
    * so we know how to absolutely position the rest of them
    */
-  const calcToastHeights = useCallback(() => {
+  const calcToastHeights = useCallback((): ToastHeightRecord => {
     return Array.from(stack)
       .reverse() // reversing since the stack is oldest-first
-      .map(([id]) => {
+      .reduce((record, [id]) => {
         const ref = getToastRef(id);
+        let height = 0;
 
         // Height of the content + padding
-        if (ref?.current) {
-          return ref.current.firstElementChild
-            ? ref.current.firstElementChild?.clientHeight + spacing[2] * 2
-            : 0;
+        if (ref?.current && ref.current.firstElementChild) {
+          height = ref.current.firstElementChild?.clientHeight + spacing[2] * 2;
         }
 
-        return 0;
-      })
-      .filter(h => h >= 0);
+        record[id] = height;
+        return record;
+      }, {} as ToastHeightRecord);
   }, [getToastRef, stack]);
 
   /**
    * Keep track of the vertical height of each toast in the stack, so we know how to render them all
    */
-  const [toastHeights, setToastHeights] = useState<Array<number>>(
+  const [toastHeights, setToastHeights] = useState<ToastHeightRecord>(
     calcToastHeights(),
   );
 
+  /**
+   * Calculates the combined heights of all toasts up to `stopIndex`
+   *
+   * @param toastHeights The array of toast heights
+   * @param isExpanded Whether the stack is expanded (determines whether to count all toasts, or just the top 3)
+   * @param stopIndex Stop counting the height at this toast index
+   */
+  const calcHeightForIndex = useCallback(
+    (stopIndex: number, isExpanded?: boolean): number => {
+      let totalHeight = 0;
+
+      for (let index = 0; index < stack.size; index++) {
+        const [id] = Array.from(stack).reverse()[index]; // reverse since stack is bottom-up
+
+        if (index > stopIndex) {
+          if (isExpanded || index < TOAST_CONSTANTS.shortStackCount) {
+            totalHeight += toastHeights[id] + TOAST_CONSTANTS.gap;
+          }
+        }
+      }
+
+      // return Object.entries(toastHeights).reduce(
+      //   (sum, [id, t], i) =>
+      //     // if the comparing toast is below the current toast
+      //     // but also less than the shortStackCount
+      //     // add that toast's height to this toast's offset
+      //     id !== stopId && (isExpanded || i < TOAST_CONSTANTS.shortStackCount)
+      //       ? sum + t + TOAST_CONSTANTS.gap
+      //       : sum,
+      //   0,
+      // );
+      return totalHeight;
+    },
+    [stack, toastHeights],
+  );
+
   const totalStackHeight = useMemo(
-    () => calcTotalStackHeight(toastHeights, shouldExpand),
-    [shouldExpand, toastHeights],
+    () => calcHeightForIndex(-1, shouldExpand),
+    [calcHeightForIndex, shouldExpand],
   );
 
   const _updateToastHeights = useCallback(() => {
-    console.log('_updateToastHeights');
     setToastHeights(calcToastHeights());
   }, [calcToastHeights]);
 
@@ -64,31 +106,7 @@ export function useToastHeights({
   return {
     toastHeights,
     totalStackHeight,
+    calcHeightForIndex,
     updateToastHeights,
   };
-}
-
-/**
- * Calculates the combined heights of all toasts,
- * or all toasts up to `stopIndex`
- *
- * @param toastHeights The array of toast heights
- * @param isExpanded Whether the stack is expanded (determines whether to count all toasts, or just the top 3)
- * @param stopIndex Stop counting the height at this toast index
- */
-export function calcTotalStackHeight(
-  toastHeights: Array<number>,
-  isExpanded?: boolean,
-  stopIndex = -1,
-) {
-  return toastHeights.reduce(
-    (sum, t, i) =>
-      // if the comparing toast is below the current toast
-      // but also less than the shortStackCount
-      // add that toast's height to this toast's offset
-      i > stopIndex && (isExpanded || i < TOAST_CONSTANTS.shortStackCount)
-        ? sum + t + TOAST_CONSTANTS.gap
-        : sum,
-    0,
-  );
 }
