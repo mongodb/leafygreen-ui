@@ -68,8 +68,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
   const expandToasts = () => setShouldExpand(true);
   const collapseToasts = () => setShouldExpand(false);
   // Track stack size
-  const stackSize = stack.size;
-  const doesStackExist = stackSize > 0;
+  const doesStackExist = stack.size > 0;
 
   const { recentToasts, remainingToasts } = getDividedStack(stack);
   const displayedToasts = shouldExpand
@@ -116,7 +115,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
       subtree: true,
     },
     updateToastHeights,
-    stackSize > 0,
+    stack.size > 0,
   );
 
   /**
@@ -181,7 +180,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
   useBackdropClick(
     collapseToasts,
     scrollContainerRef,
-    isExpanded && stackSize > 0,
+    isExpanded && stack.size > 0,
   );
 
   /**

@@ -66,11 +66,19 @@ export const notificationBarTransitionStyles: Partial<
     opacity: 1;
   `,
   exited: css`
-    transform: translate3d(0, ${3 * TOAST_CONSTANTS.yOffset}px, -400px);
+    transform: translate3d(
+      0,
+      ${TOAST_CONSTANTS.shortStackCount * TOAST_CONSTANTS.yOffset}px,
+      -${(TOAST_CONSTANTS.shortStackCount + 1) * TOAST_CONSTANTS.zOffset}px
+    );
     opacity: 0;
   `,
   exiting: css`
-    transform: translate3d(0, ${3 * TOAST_CONSTANTS.yOffset}px, -400px);
+    transform: translate3d(
+      0,
+      ${TOAST_CONSTANTS.shortStackCount * TOAST_CONSTANTS.yOffset}px,
+      -${(TOAST_CONSTANTS.shortStackCount + 1) * TOAST_CONSTANTS.zOffset}px
+    );
     opacity: 0;
   `,
 };

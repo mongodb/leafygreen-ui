@@ -9,7 +9,11 @@ import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 import { TOAST_CONSTANTS } from '../constants';
 import { toastBGColor } from '../InternalToast';
 
-// Keeping this to ease future debugging
+/**
+ * Keeping this to ease future debugging.
+ * Set `DEBUG` to true,
+ * and set the attribute `data-debug` to any data you want to debug
+ */
 const DEBUG = false;
 const debugData = (extraStyle?: string) => css`
   &::before {
@@ -168,7 +172,7 @@ export function getToastTransitionStyles({
   switch (state) {
     case 'entered': {
       const y = index * TOAST_CONSTANTS.yOffset;
-      const z = -index * 100;
+      const z = -index * TOAST_CONSTANTS.zOffset;
       const bgColor = mix(1 - index * 0.2, toastBGColor[theme], palette.white);
 
       return css`
@@ -199,7 +203,11 @@ export function getToastTransitionStyles({
 
     default:
       return css`
-        transform: translate3d(0, ${TOAST_CONSTANTS.yOffset}px, -100px)
+        transform: translate3d(
+            0,
+            ${TOAST_CONSTANTS.yOffset}px,
+            -${TOAST_CONSTANTS.zOffset}px
+          )
           scale(0.9);
         opacity: 0;
       `;

@@ -34,6 +34,12 @@ export const TOAST_CONSTANTS = {
   yOffset: 8,
 
   /**
+   * The z distance each subsequent toast moves back (into the screen)
+   * when the stack is collapsed
+   */
+  zOffset: 100,
+
+  /**
    * The gap between toasts when the stack is expanded
    */
   gap: 4,
