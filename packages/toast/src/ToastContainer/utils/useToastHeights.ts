@@ -52,6 +52,7 @@ export function useToastHeights({
   );
 
   const _updateToastHeights = useCallback(() => {
+    console.log('_updateToastHeights');
     setToastHeights(calcToastHeights());
   }, [calcToastHeights]);
 

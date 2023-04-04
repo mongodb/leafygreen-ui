@@ -77,7 +77,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
     // We just went below the expanded threshold, so collapse the stack
     setShouldExpand(false);
   }
-  useEffect(() => {}, [setShouldExpand, shouldExpand, stackSize]);
+  // useEffect(() => {}, [setShouldExpand, shouldExpand, stackSize]);
 
   /** is the "N more" bar visible? */
   const showNotificationBar =
@@ -109,7 +109,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
     toastContainerRef.current,
     {
       childList: true,
-      attributes: true,
+      attributes: false,
       subtree: true,
     },
     updateToastHeights,
@@ -117,17 +117,63 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
   );
 
   /**
-   * Keep track of whether the toasts have transitioned in or out
+   * Keep track of whether the toasts have transitioned in or out,
+   * and generate event handlers
    */
   const { isExpanded, handleTransitionExit, handleTransitionEnter } =
     useToastTransitions({
-      containerRef: toastContainerRef,
       getShouldExpand,
-      setHoveredState,
-      totalStackHeight,
+      enterCallback: () => {
+        if (toastContainerRef.current) {
+          toastContainerRef.current.scrollTo({
+            top: totalStackHeight,
+          });
+        }
+
+        // Recalculate heights if we should be in the expanded state
+        if (getShouldExpand()) {
+          updateToastHeights();
+        }
+      },
+      exitCallback: () => {
+        if (scrollContainerRef.current) {
+          // check whether the toast container is still hovered
+          const _isHovered = scrollContainerRef.current.matches(':hover');
+
+          setHoveredState(_isHovered);
+        }
+
+        // Recalculate heights if we should be in the expanded state
+        if (getShouldExpand()) {
+          updateToastHeights();
+        }
+      },
     });
 
-  const isInteracted = isHovered || shouldExpand;
+  const handleTransitionEntering = () => {
+    if (isHovered || getShouldExpand()) {
+      updateToastHeights();
+    }
+  };
+
+  const handleTransitionExiting = () => {
+    if (isHovered || getShouldExpand()) {
+      updateToastHeights();
+    }
+  };
+
+  const handleBackdropClick = () => {
+    collapseToasts();
+  };
+
+  /**
+   * When a user clicks away from the expanded stack, collapse the stack
+   */
+  useBackdropClick(
+    handleBackdropClick,
+    scrollContainerRef,
+    isExpanded && stackSize > 0,
+  );
 
   /**
    * Callback passed into the InternalToast component as `onClose`
@@ -154,14 +200,9 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
     [getToast, getToastRef, popToast],
   );
 
-  /**
-   * When a user clicks away from the expanded stack, collapse the stack
-   */
-  useBackdropClick(
-    collapseToasts,
-    toastContainerRef,
-    isExpanded && stackSize > 0,
-  );
+  /** Returns the close event handler with toastID in the closure */
+  const getHandlerForId = (id: ToastId) => (e: CloseEvent) =>
+    handleCloseEventForToastId(id, e);
 
   /**
    * Set & keep track of timers for each toast in the stack
@@ -171,25 +212,6 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
     isHovered,
     callback: handleCloseEventForToastId,
   });
-
-  const getHandlerForId = (id: ToastId) => (e: CloseEvent) =>
-    handleCloseEventForToastId(id, e);
-
-  /**
-   * When expanded, check if the click is above the top toast
-   * (since the container expands to 100vh regardless of toast count)
-   */
-  const handleContainerClick: React.MouseEventHandler = e => {
-    if (isExpanded) {
-      const y = e.clientY;
-      const h = toastContainerRef.current?.clientHeight ?? 0;
-      const topToastY = h - totalStackHeight;
-
-      if (y < topToastY) {
-        collapseToasts();
-      }
-    }
-  };
 
   /** When expanded, collapse the stack when the escape key is pressed */
   const handleContainerKeydown: React.KeyboardEventHandler = e => {
@@ -202,17 +224,23 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
     <Portal className={toastPortalClassName}>
       {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <div
+        data-debug={JSON.stringify(
+          {
+            isHovered,
+            isExpanded,
+            shouldExpand,
+          },
+          null,
+          2,
+        )}
         ref={toastContainerRef}
         id={regionId}
         data-testid="lg-toast-region"
         role="status"
         aria-live="polite"
         aria-relevant="all"
-        onMouseEnter={setHovered}
-        onMouseLeave={setUnhovered}
         onFocus={setHovered}
         onBlur={setUnhovered}
-        onClick={handleContainerClick}
         onKeyDown={handleContainerKeydown}
         className={cx(toastContainerStyles, {
           [toastContainerVisibleStyles]: doesStackExist,
@@ -223,7 +251,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
           [getContainerInteractedStyles({
             totalStackHeight,
             bottomOffset: notificationBarSpacing,
-          })]: doesStackExist && isInteracted,
+          })]: doesStackExist && (isHovered || shouldExpand),
           // Wait to apply fully expanded styles until the toast transition is complete
           [containerExpandedStyles]: doesStackExist && isExpanded,
           [containerCollapsingStyles]: isExpanded && !shouldExpand,
@@ -231,6 +259,8 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
       >
         <div
           ref={scrollContainerRef}
+          onMouseEnter={setHovered}
+          onMouseLeave={setUnhovered}
           className={cx(scrollContainerStyles, {
             // Wait to apply fully expanded styles until the toast transition is complete
             [scrollContainerExpandedStyles(totalStackHeight)]: isExpanded,
@@ -242,11 +272,13 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
               .reverse() // reversing so they're in the DOM with most recent first
               .map(([id, { onClose, className, ...toastProps }], index) => {
                 const toastRef = getToastRef(id);
-                onClose = getHandlerForId(id);
+                onClose = getHandlerForId(id); // getHandler will call toast.onClose if it exists
 
                 return (
                   <Transition
+                    onEntering={handleTransitionEntering}
                     onEntered={handleTransitionEnter}
+                    onExiting={handleTransitionExiting}
                     onExited={handleTransitionExit}
                     key={id}
                     timeout={transitionDuration.default}
@@ -258,7 +290,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
                         ref={toastRef}
                         onClose={onClose}
                         index={index}
-                        isHovered={isInteracted}
+                        isHovered={isHovered || shouldExpand}
                         className={cx(
                           getToastTransitionStyles({
                             state,
@@ -270,14 +302,15 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
                               theme,
                               index,
                               topToastHeight: toastHeights[0],
-                            })]: !isInteracted,
+                            })]: !(isHovered || shouldExpand),
+
                             [getToastHoverStyles({
                               index,
                               toastHeights,
                               theme,
                               bottomOffset: notificationBarSpacing,
                               isExpanded,
-                            })]: isInteracted,
+                            })]: isHovered || shouldExpand,
                           },
                           className,
                         )}

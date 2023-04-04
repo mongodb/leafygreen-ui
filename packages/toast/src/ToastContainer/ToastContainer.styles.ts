@@ -11,9 +11,23 @@ import { toastBGColor } from '../InternalToast';
 
 import { calcTotalStackHeight } from './utils/useToastHeights';
 
+const DEBUG = false;
+
 export const toastContainerStyles = css`
   /* Debug */
-  /* outline: 1px solid teal; */
+  ${DEBUG && `outline: 1px solid teal;`}
+  &::before {
+    ${DEBUG && `content: attr(data-debug);`}
+    /* content: attr(data-debug); */
+    color: white;
+    background-color: teal;
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    z-index: 10;
+    font-family: monospace;
+    pointer-events: none;
+  }
 
   position: fixed;
   display: flex;
@@ -94,8 +108,6 @@ export const containerExpandedStyles = css`
   bottom: 0;
   transform: translateY(0);
   overflow: auto;
-
-  /* background: rgba(0, 150, 255, 0.2); */
 `;
 
 /** Styles applied when `isExpanded` but `!shouldExpand` */
@@ -108,13 +120,14 @@ export const containerCollapsingStyles = css`
  */
 export const scrollContainerStyles = css`
   /* Debug */
-  /* outline: 1px solid orangered; */
+  ${DEBUG && `outline: 1px solid orangered;`}
 
   position: relative;
   width: 100%;
   height: 100%;
   margin: 0;
   transform-style: inherit;
+  transition: margin ${transitionDuration.default}ms ease-in-out;
 `;
 
 export function scrollContainerExpandedStyles(totalStackHeight: number) {
@@ -125,6 +138,7 @@ export function scrollContainerExpandedStyles(totalStackHeight: number) {
   return css`
     margin: ${spacing[3]}px 0;
     height: ${totalStackHeight}px;
+    /* background: rgba(255, 150, 0, 0.2); */
   `;
 }
 
@@ -203,9 +217,9 @@ export function getToastHoverStyles({
   toastHeights,
   isExpanded,
 }: {
-  toastHeights: Array<number>;
-  theme: Theme;
   index: number;
+  theme: Theme;
+  toastHeights: Array<number>;
   bottomOffset: number;
   isExpanded: boolean;
 }) {
@@ -217,5 +231,17 @@ export function getToastHoverStyles({
     max-height: ${toastHeights[index] * 2}px;
     background-color: ${toastBGColor[theme]};
     transform: translate3d(0, -${hoveredYPosition}px, 0);
+
+    &::before {
+      ${DEBUG && `content: "y: ${hoveredYPosition}";`}
+      color: white;
+      background-color: black;
+      position: absolute;
+      bottom: 0%;
+      right: 0%;
+      z-index: 10;
+      font-family: monospace;
+      pointer-events: none;
+    }
   `;
 }
