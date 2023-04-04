@@ -259,6 +259,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
       >
         <div
           ref={scrollContainerRef}
+          data-testid="lg-toast-scroll-container"
           onMouseEnter={setHovered}
           onMouseLeave={setUnhovered}
           className={cx(scrollContainerStyles, {

@@ -149,7 +149,7 @@ describe('packages/toast/container', () => {
         const { getByTestId, findByTestId, triggerToast } =
           renderToastContainer({ timeout });
         triggerToast();
-        const container = getByTestId('lg-toast-region');
+        const container = getByTestId('lg-toast-scroll-container');
         const toast = await findByTestId('lg-toast');
         expect(toast).toBeInTheDocument();
         userEvent.hover(container);
