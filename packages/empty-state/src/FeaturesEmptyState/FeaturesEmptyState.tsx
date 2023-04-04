@@ -2,16 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Button from '@leafygreen-ui/button';
+import { cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
-import { Body, H2 } from '@leafygreen-ui/typography';
+import { Body, H2, Link } from '@leafygreen-ui/typography';
 
 import {
   buttonContainerStyles,
+  externalLinkStyles,
   featureContainerStyles,
-  featuresContainerStyles,
   featureDescriptionStyles,
+  featuresContainerStyles,
   featureTitleStyles,
   rootStyles,
   thumbnailWrapperStyles,
@@ -19,14 +21,13 @@ import {
   titleStyles,
 } from './FeaturesEmptyState.styles';
 import { Feature, FeaturesEmptyStateProps } from './FeaturesEmptyState.types';
-import { cx } from '@leafygreen-ui/emotion';
 
 export function FeaturesEmptyState({
   title,
   features,
   PrimaryButton,
   SecondaryButton,
-  InfoLink,
+  ExternalLink,
   darkMode: darkModeProp,
 }: FeaturesEmptyStateProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
@@ -74,6 +75,11 @@ export function FeaturesEmptyState({
             )}
           </div>
         )}
+        {!!ExternalLink && (
+          <div className={externalLinkStyles}>
+            <Link target="_blank" {...ExternalLink.props} />
+          </div>
+        )}
       </div>
     </LeafyGreenProvider>
   );
@@ -81,7 +87,7 @@ export function FeaturesEmptyState({
 
 FeaturesEmptyState.propTypes = {
   darkMode: PropTypes.bool,
-  InfoLink: PropTypes.element,
+  ExternalLink: PropTypes.element,
   SecondaryButton: PropTypes.element,
   PrimaryButton: PropTypes.element,
   description: PropTypes.oneOf([PropTypes.element, PropTypes.string])

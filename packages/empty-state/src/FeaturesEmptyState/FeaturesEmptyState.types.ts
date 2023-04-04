@@ -26,14 +26,14 @@ export interface FeaturesEmptyStateProps extends DarkModeProps {
   /**
    * Optional link to external page for additional information
    */
-  InfoLink?: ReactElement;
+  ExternalLink?: ReactElement;
 }
 
 export interface Feature {
   /**
    * Thumbnail image element
    */
-  thumbnail?: ReactElement;
+  thumbnail: ReactElement;
 
   /**
    * Heading text

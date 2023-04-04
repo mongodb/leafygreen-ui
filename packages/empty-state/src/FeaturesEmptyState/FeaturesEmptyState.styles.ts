@@ -58,3 +58,7 @@ export const buttonContainerStyles = css`
   gap: 12px;
   margin-top: 24px;
 `;
+
+export const externalLinkStyles = css`
+  margin-top: 24px;
+`;

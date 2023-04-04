@@ -3,6 +3,7 @@ import { ComponentStory } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { Link } from '@leafygreen-ui/typography';
 
 import DarkModeGraphic from '../example-graphics/DarkModeGraphic.svg';
 import LightModeGraphic from '../example-graphics/LightModeGraphic.svg';
@@ -20,7 +21,7 @@ export default {
   argTypes: {
     thumbnail: { control: 'none' },
     description: { control: 'text' },
-    InfoLink: { control: 'none' },
+    ExternalLink: { control: 'none' },
     PrimaryButton: { control: 'none' },
     SecondaryButton: { control: 'none' },
     darkMode: storybookArgTypes.darkMode,
@@ -56,9 +57,17 @@ WithThumbnail.args = {
   thumbnail: <LightModeGraphic viewBox="0 0 298 198" />,
 };
 
-export const WithActions = WithThumbnail.bind({});
+export const WithActions = Template.bind({});
 WithActions.args = {
   thumbnail: <LightModeGraphic viewBox="0 0 298 198" />,
   PrimaryButton: <Button>Add Dependency</Button>,
   SecondaryButton: <Button>Upload Module</Button>,
+};
+
+export const WithActionsAndLink = Template.bind({});
+WithActions.args = {
+  thumbnail: <LightModeGraphic viewBox="0 0 298 198" />,
+  PrimaryButton: <Button>Add Dependency</Button>,
+  SecondaryButton: <Button>Upload Module</Button>,
+  ExternalLink: <Link>Test external link</Link>,
 };

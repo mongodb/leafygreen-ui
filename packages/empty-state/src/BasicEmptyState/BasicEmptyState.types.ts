@@ -31,5 +31,5 @@ export interface BasicEmptyStateProps extends DarkModeProps {
   /**
    * Optional link to external page for additional information
    */
-  InfoLink?: ReactElement;
+  ExternalLink?: ReactElement;
 }

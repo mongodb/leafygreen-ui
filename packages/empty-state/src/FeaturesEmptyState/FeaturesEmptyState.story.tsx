@@ -3,6 +3,7 @@ import { ComponentStory } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { storybookArgTypes, Theme } from '@leafygreen-ui/lib';
+import { Link } from '@leafygreen-ui/typography';
 
 import DarkModeFeature1 from '../example-graphics/DarkModeFeature1.svg';
 import DarkModeFeature2 from '../example-graphics/DarkModeFeature2.svg';
@@ -21,7 +22,7 @@ export default {
   },
   argTypes: {
     features: { control: 'none' },
-    InfoLink: { control: 'none' },
+    ExternalLink: { control: 'none' },
     PrimaryButton: { control: 'none' },
     SecondaryButton: { control: 'none' },
     darkMode: storybookArgTypes.darkMode,
@@ -148,4 +149,31 @@ ThreeFeaturesWithActions.args = {
   ],
   PrimaryButton: <Button>Add Dependency</Button>,
   SecondaryButton: <Button>Upload Module</Button>,
+};
+
+export const ThreeFeaturesWithActionsAndLink = Template.bind({});
+ThreeFeaturesWithActionsAndLink.args = {
+  features: [
+    {
+      thumbnail: storyThumbnails[Theme.Light][0],
+      title: 'Multi-region, multi-cloud',
+      description:
+        'Run powerful and resilient apps that span multiple regions or clouds at once.',
+    },
+    {
+      thumbnail: storyThumbnails[Theme.Light][1],
+      title: 'Multi-region, multi-cloud',
+      description:
+        'Run powerful and resilient apps that span multiple regions or clouds at once.',
+    },
+    {
+      thumbnail: storyThumbnails[Theme.Light][2],
+      title: 'Multi-region, multi-cloud',
+      description:
+        'Run powerful and resilient apps that span multiple regions or clouds at once.',
+    },
+  ],
+  PrimaryButton: <Button>Add Dependency</Button>,
+  SecondaryButton: <Button>Upload Module</Button>,
+  ExternalLink: <Link>Test external link</Link>,
 };

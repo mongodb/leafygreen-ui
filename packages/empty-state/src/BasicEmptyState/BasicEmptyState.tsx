@@ -5,11 +5,12 @@ import Button from '@leafygreen-ui/button';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
-import { Body, H3 } from '@leafygreen-ui/typography';
+import { Body, H3, Link } from '@leafygreen-ui/typography';
 
 import {
   buttonContainerStyles,
   descriptionStyles,
+  externalLinkStyles,
   rootStyles,
   textContainerStyles,
   titleStyles,
@@ -22,7 +23,7 @@ export function BasicEmptyState({
   description,
   PrimaryButton,
   SecondaryButton,
-  InfoLink,
+  ExternalLink,
   darkMode: darkModeProp,
 }: BasicEmptyStateProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
@@ -60,6 +61,11 @@ export function BasicEmptyState({
               )}
             </div>
           )}
+          {!!ExternalLink && (
+            <div className={externalLinkStyles}>
+              <Link target="_blank" {...ExternalLink.props} />
+            </div>
+          )}
         </div>
       </div>
     </LeafyGreenProvider>
@@ -68,7 +74,7 @@ export function BasicEmptyState({
 
 BasicEmptyState.propTypes = {
   darkMode: PropTypes.bool,
-  InfoLink: PropTypes.element,
+  ExternalLink: PropTypes.element,
   SecondaryButton: PropTypes.element,
   PrimaryButton: PropTypes.element,
   description: PropTypes.oneOf([PropTypes.element, PropTypes.string])
