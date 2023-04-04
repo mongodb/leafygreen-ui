@@ -92,7 +92,7 @@ TwoFeaturesWithActions.args = {
     },
     {
       thumbnail: storyThumbnails[Theme.Light][1],
-      title: 'Multi-region, multi-cloud',
+      title: 'Serverless and elastic',
       description:
         'Run powerful and resilient apps that span multiple regions or clouds at once.',
     },
@@ -108,7 +108,7 @@ ThreeFeatures.args = {
       thumbnail: storyThumbnails[Theme.Light][0],
       title: 'Multi-region, multi-cloud',
       description:
-        'Deploy a serverless database and only pay for the resources you use.',
+        'Run powerful and resilient apps that span multiple regions or clouds at once.',
     },
     {
       thumbnail: storyThumbnails[Theme.Light][1],
@@ -136,15 +136,15 @@ ThreeFeaturesWithActions.args = {
     },
     {
       thumbnail: storyThumbnails[Theme.Light][1],
-      title: 'Multi-region, multi-cloud',
+      title: 'Serverless and elastic',
       description:
         'Run powerful and resilient apps that span multiple regions or clouds at once.',
     },
     {
       thumbnail: storyThumbnails[Theme.Light][2],
-      title: 'Multi-region, multi-cloud',
+      title: 'Always-on security',
       description:
-        'Run powerful and resilient apps that span multiple regions or clouds at once.',
+        'Secure data with built-in defaults for access and end-toend encryption.',
     },
   ],
   PrimaryButton: <Button>Add Dependency</Button>,
@@ -162,15 +162,15 @@ ThreeFeaturesWithActionsAndLink.args = {
     },
     {
       thumbnail: storyThumbnails[Theme.Light][1],
-      title: 'Multi-region, multi-cloud',
+      title: 'Serverless and elastic',
       description:
         'Run powerful and resilient apps that span multiple regions or clouds at once.',
     },
     {
       thumbnail: storyThumbnails[Theme.Light][2],
-      title: 'Multi-region, multi-cloud',
+      title: 'Always-on security',
       description:
-        'Run powerful and resilient apps that span multiple regions or clouds at once.',
+        'Secure data with built-in defaults for access and end-toend encryption.',
     },
   ],
   PrimaryButton: <Button>Add Dependency</Button>,
