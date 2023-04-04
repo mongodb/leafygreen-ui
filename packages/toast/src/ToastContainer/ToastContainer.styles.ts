@@ -27,15 +27,6 @@ const debugData = (extraStyle?: string) => css`
 `;
 
 export const toastContainerStyles = css`
-  /* Debug */
-  ${DEBUG && `outline: 1px solid teal;`}
-  ${DEBUG &&
-  debugData(
-    css`
-      background-color: teal;
-    `,
-  )}
-
   position: fixed;
   display: flex;
   flex-direction: column-reverse;
@@ -65,6 +56,15 @@ export const toastContainerStyles = css`
   &::-webkit-scrollbar {
     display: none; /* Chrome, Safari and Opera */
   }
+
+  /* Debug */
+  ${DEBUG && `outline: 1px solid teal;`}
+  ${DEBUG &&
+  debugData(
+    css`
+      background-color: teal;
+    `,
+  )}
 `;
 
 export const toastContainerVisibleStyles = css`
@@ -126,26 +126,25 @@ export const containerCollapsingStyles = css`
  * Scroll Container
  */
 export const scrollContainerStyles = css`
-  /* Debug */
-  ${DEBUG && `outline: 1px solid orangered;`}
-
   position: relative;
   width: 100%;
   height: 100%;
   margin: 0;
   transform-style: inherit;
   transition: margin ${transitionDuration.default}ms ease-in-out;
+
+  /* Debug */
+  ${DEBUG && `outline: 1px solid orangered;`}
 `;
 
 export function scrollContainerExpandedStyles(totalStackHeight: number) {
   /*
-   * Scroll container should be at least the height of the stack
+   * Scroll container should be the height of the whole stack.
    * This may overflow the container.
    */
   return css`
     margin: ${spacing[3]}px 0;
     height: ${totalStackHeight}px;
-    /* background: rgba(255, 150, 0, 0.2); */
   `;
 }
 

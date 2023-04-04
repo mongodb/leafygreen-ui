@@ -14,9 +14,24 @@ interface UseToastHeightsProps {
 
 export type ToastHeightRecord = Record<ToastId, number>;
 interface UseToastHeightsReturnVal {
+  /**
+   * The vertical height of each toast in the stack
+   */
   toastHeights: ToastHeightRecord;
+
+  /**
+   * The height of all toasts, including gaps
+   */
   totalStackHeight: number;
+
+  /**
+   * Calculates the height from the bottom of the stack to the top of the given index
+   */
   calcHeightForIndex: (stopIndex: number, isExpanded?: boolean) => number;
+
+  /**
+   * Re-calculates the heights of all toasts
+   */
   updateToastHeights: () => void;
 }
 
@@ -62,6 +77,8 @@ export function useToastHeights({
    */
   const calcHeightForIndex = useCallback(
     (stopIndex: number, isExpanded?: boolean): number => {
+      if (stack.size <= 0) return 0;
+
       let totalHeight = 0;
 
       for (let index = 0; index < stack.size; index++) {
@@ -74,16 +91,6 @@ export function useToastHeights({
         }
       }
 
-      // return Object.entries(toastHeights).reduce(
-      //   (sum, [id, t], i) =>
-      //     // if the comparing toast is below the current toast
-      //     // but also less than the shortStackCount
-      //     // add that toast's height to this toast's offset
-      //     id !== stopId && (isExpanded || i < TOAST_CONSTANTS.shortStackCount)
-      //       ? sum + t + TOAST_CONSTANTS.gap
-      //       : sum,
-      //   0,
-      // );
       return totalHeight;
     },
     [stack, toastHeights],

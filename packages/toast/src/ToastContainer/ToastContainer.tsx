@@ -76,11 +76,6 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
     ? [...remainingToasts, ...recentToasts]
     : recentToasts;
 
-  if (shouldExpand && stackSize <= TOAST_CONSTANTS.shortStackCount) {
-    // We just went below the expanded threshold, so collapse the stack
-    setShouldExpand(false);
-  }
-
   /** is the "N more" bar visible? */
   const showNotificationBar =
     isHovered && !shouldExpand && remainingToasts.length > 0;
@@ -103,21 +98,21 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
     shouldExpand,
   });
 
-  // Update on first render _only_
+  // Force update on first render _only_
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(updateToastHeights, []);
 
-  const [topToastId] = Array.from(stack).reverse()[0]; // reverse since stack is bottom-up
+  // The id of the top-most toast
+  const topToastId = Array.from(stack).reverse()[0]?.[0]; // reverse since stack is bottom-up
 
   /**
-   * We watch the toast container for mutations,
+   * We watch the toast container for child mutations,
    * and calculate the toast height variables once they are added to the DOM
    */
   useMutationObserver(
     toastContainerRef.current,
     {
       childList: true,
-      attributes: false,
       subtree: true,
     },
     updateToastHeights,
@@ -126,7 +121,11 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
 
   /**
    * Keep track of whether the toasts have transitioned in or out,
-   * and generate event handlers
+   * and generate event handlers.
+   *
+   * Note: The enter/exit callbacks are debounced, and called with setInterval,
+   * (since we need DOM manipulations to be complete)
+   *
    */
   const { isExpanded, handleTransitionExit, handleTransitionEnter } =
     useToastTransitions({
@@ -158,27 +157,29 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
       },
     });
 
+  /**
+   * Handler triggered when a toast starts to transition in
+   */
   const handleTransitionEntering = () => {
     if (isHovered || getShouldExpand()) {
       updateToastHeights();
     }
   };
 
+  /**
+   * Handler triggered when a toast starts to transition out
+   */
   const handleTransitionExiting = () => {
     if (isHovered || getShouldExpand()) {
       updateToastHeights();
     }
   };
 
-  const handleBackdropClick = () => {
-    collapseToasts();
-  };
-
   /**
    * When a user clicks away from the expanded stack, collapse the stack
    */
   useBackdropClick(
-    handleBackdropClick,
+    collapseToasts,
     scrollContainerRef,
     isExpanded && stackSize > 0,
   );
