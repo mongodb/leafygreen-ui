@@ -1,5 +1,30 @@
 # @leafygreen-ui/stepper
 
+## 3.1.9
+
+### Patch Changes
+
+- d823f17ce: Renders `Step` as `div` to prevent invalid nesting errors
+- Updated dependencies [cb083a826]
+- Updated dependencies [c727d8295]
+  - @leafygreen-ui/icon@11.12.6
+  - @leafygreen-ui/lib@10.3.0
+
+## 3.1.8
+
+### Patch Changes
+
+- Updated dependencies [5b036515e]
+- Updated dependencies [26e341a0b]
+- Updated dependencies [997121cc3]
+- Updated dependencies [eb0cc4498]
+  - @leafygreen-ui/palette@4.0.0
+  - @leafygreen-ui/lib@10.2.2
+  - @leafygreen-ui/icon@11.12.5
+  - @leafygreen-ui/typography@16.1.0
+  - @leafygreen-ui/tokens@2.0.1
+  - @leafygreen-ui/tooltip@9.1.6
+
 ## 3.1.7
 
 ### Patch Changes

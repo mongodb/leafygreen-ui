@@ -1,5 +1,17 @@
 # @leafygreen-ui/lib
 
+## 10.3.0
+
+### Minor Changes
+
+- c727d8295: Adds `prop-types` as an explicit dependency of package
+
+## 10.2.2
+
+### Patch Changes
+
+- 26e341a0b: Minor type fixes to `StoryMeta` function
+
 ## 10.2.1
 
 ### Patch Changes

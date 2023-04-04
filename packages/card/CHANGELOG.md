@@ -1,5 +1,16 @@
 # @leafygreen-ui/card
 
+## 9.0.6
+
+### Patch Changes
+
+- e30e21598: Fixes propTypes in Card component, such that contentStyle is accurate
+- Updated dependencies [5b036515e]
+- Updated dependencies [26e341a0b]
+  - @leafygreen-ui/palette@4.0.0
+  - @leafygreen-ui/lib@10.2.2
+  - @leafygreen-ui/tokens@2.0.1
+
 ## 9.0.5
 
 ### Patch Changes

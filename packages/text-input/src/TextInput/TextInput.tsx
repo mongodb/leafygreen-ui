@@ -145,6 +145,12 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       );
     }
 
+    if (type === 'number') {
+      consoleOnce.warn(
+        'We recommend using the Leafygreen NumberInput for `type="number"` inputs.',
+      );
+    }
+
     const RenderedCheckmarkIcon = darkMode
       ? CheckmarkWithCircleIcon
       : CheckmarkIcon;

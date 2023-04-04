@@ -1,5 +1,23 @@
 # @leafygreen-ui/typography
 
+## 16.1.0
+
+### Minor Changes
+
+- eb0cc4498: No longer filters out props that are passed to Link component
+
+### Patch Changes
+
+- Updated dependencies [5b036515e]
+- Updated dependencies [b9841decc]
+- Updated dependencies [26e341a0b]
+- Updated dependencies [997121cc3]
+  - @leafygreen-ui/palette@4.0.0
+  - @leafygreen-ui/polymorphic@1.2.0
+  - @leafygreen-ui/lib@10.2.2
+  - @leafygreen-ui/icon@11.12.5
+  - @leafygreen-ui/tokens@2.0.1
+
 ## 16.0.1
 
 ### Patch Changes

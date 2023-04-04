@@ -1,5 +1,12 @@
 # @leafygreen-ui/tokens
 
+## 2.0.1
+
+### Patch Changes
+
+- Updated dependencies [5b036515e]
+  - @leafygreen-ui/palette@4.0.0
+
 ## 2.0.0
 
 ### Major Changes

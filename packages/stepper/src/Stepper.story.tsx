@@ -57,7 +57,7 @@ Basic.args = {
   maxDisplayedSteps: 5,
   completedStepsShown: 3,
   children: [
-    <Step key="Overview">Overview</Step>,
+    <div key="Overview">Overview</div>,
     <Step key="Configuration">Configuration</Step>,
     <Step key="Update">Update</Step>,
     <Step key="Install">Install</Step>,
