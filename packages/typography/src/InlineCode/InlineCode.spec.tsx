@@ -24,6 +24,7 @@ describe('packages/typography', () => {
         const utils = render(<InlineCode as="div">{children}</InlineCode>);
         const component = utils.container.firstChild;
         expect((component as HTMLElement).tagName.toLowerCase()).toBe('div');
+        expect((component as HTMLElement).innerHTML).toContain('code');
       });
     });
   });

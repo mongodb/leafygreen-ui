@@ -24,7 +24,7 @@ import {
 } from './InlineCode.styles';
 import { InlineCodeProps } from './InlineCode.types';
 
-const InlineCode = InferredPolymorphic<InlineCodeProps>(
+const InlineCode = InferredPolymorphic<InlineCodeProps, 'code'>(
   (
     {
       children,
