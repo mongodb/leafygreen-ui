@@ -64,7 +64,7 @@ const MyComponent = Polymorphic<MyProps>(({ as, ...rest }, forwardedRef) => {
 
 ### React Server Components
 
-React Server Components do not support React Client Component APIs, such as `React.createRef`. To avoid React Client APIs, use the `usePolymorphicComponent` and `useInferredPolymorphicComponent` hooks instead.
+React Server Components do not support React Client Component APIs, such as `React.useRef`. To avoid React Client APIs, use the `usePolymorphicComponent` and `useInferredPolymorphicComponent` hooks instead.
 
 Note that `forwardedRef` is still allowed.
 
