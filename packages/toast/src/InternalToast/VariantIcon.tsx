@@ -7,7 +7,7 @@ import InfoWithCircle from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import RefreshIcon from '@leafygreen-ui/icon/dist/Refresh';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 
-import { Variant } from './Toast.types';
+import { Variant } from '../Toast.types';
 
 export const variantIcons: Record<Variant, React.ComponentType<any>> = {
   [Variant.Success]: CheckmarkWithCircleIcon,

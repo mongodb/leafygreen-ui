@@ -77,7 +77,10 @@ if (watch) {
   cmdArgs.push('--watch');
 }
 
-spawn('jest', [...cmdArgs, ...packageArgs], { stdio: 'inherit' }).on(
-  'exit',
-  code => exit(code || 0),
-);
+spawn('jest', [...cmdArgs, ...packageArgs], {
+  env: {
+    ...process.env,
+    JEST_ENV: ssr ? 'ssr' : 'client',
+  },
+  stdio: 'inherit',
+}).on('exit', code => exit(code || 0));

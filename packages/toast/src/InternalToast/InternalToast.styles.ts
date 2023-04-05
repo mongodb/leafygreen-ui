@@ -1,4 +1,3 @@
-import { Transition } from 'react-transition-group';
 import { transparentize } from 'polished';
 
 import { css } from '@leafygreen-ui/emotion';
@@ -12,22 +11,26 @@ import {
 } from '@leafygreen-ui/tokens';
 import { anchorClassName } from '@leafygreen-ui/typography';
 
-import { Variant } from './Toast.types';
+import { TOAST_CONSTANTS } from '../constants';
+import { Variant } from '../Toast.types';
 
-export const toastWidth = 400;
-export const toastHeight = 56;
+export const toastBGColor: Record<Theme, string> = {
+  [Theme.Light]: palette.black,
+  [Theme.Dark]: palette.gray.light2,
+};
 
 export const baseToastStyle = css`
   position: fixed;
-  bottom: ${spacing[6]}px;
-  left: ${spacing[4]}px;
-  width: ${toastWidth}px;
-  min-height: ${toastHeight}px;
+  left: ${TOAST_CONSTANTS.inset}px;
+  bottom: ${TOAST_CONSTANTS.inset}px;
+  width: calc(100vw - ${TOAST_CONSTANTS.inset * 2}px);
+  max-width: ${TOAST_CONSTANTS.maxWidth}px;
+  min-height: ${TOAST_CONSTANTS.minHeight - 2}px; // -2 for border: ;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: ${spacing[2]}px;
+  padding: ${spacing[2] - 1}px; // -1 for border
   padding-left: ${spacing[3]}px;
   gap: ${spacing[3]}px;
 
@@ -35,14 +38,12 @@ export const baseToastStyle = css`
   font-size: ${typeScales.body1.fontSize}px;
   line-height: ${typeScales.body1.lineHeight}px;
   border-radius: 12px;
+  border: 1px solid;
   box-shadow: 0px 18px 18px -15px ${transparentize(0.8, '#06161E')};
 
   overflow: hidden;
-  transform: translate3d(0, ${spacing[3]}px, 0) scale(0.95);
   transform-origin: bottom center;
-  opacity: 0;
   transition: all ${transitionDuration.default}ms ease-in-out;
-  border: 1px solid;
 
   .${anchorClassName}, a {
     font-size: inherit;
@@ -71,7 +72,7 @@ export const baseToastStyle = css`
 
 export const toastThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
-    background-color: ${palette.black};
+    background-color: ${toastBGColor[Theme.Light]};
     border-color: ${palette.gray.dark2};
 
     .${anchorClassName}, a {
@@ -84,7 +85,7 @@ export const toastThemeStyles: Record<Theme, string> = {
     }
   `,
   [Theme.Dark]: css`
-    background-color: ${palette.gray.light2};
+    background-color: ${toastBGColor[Theme.Dark]};
     border-color: ${palette.gray.light1};
 
     .${anchorClassName}, a {
@@ -103,6 +104,12 @@ export const contentWrapperStyle = css`
   align-items: center;
   gap: ${spacing[3]}px;
   width: 100%;
+  opacity: 0;
+  transition: opacity ease-out ${transitionDuration.default}ms;
+`;
+
+export const contentVisibleStyles = css`
+  opacity: 1;
 `;
 
 export const baseIconStyle = css`
@@ -192,18 +199,18 @@ export const variantIconStyle: Record<Variant, Record<Theme, string>> = {
   },
   [Variant.Warning]: {
     [Theme.Light]: css`
-      color: ${palette.yellow.base};
-    `,
-    [Theme.Dark]: css`
-      color: ${palette.yellow.dark2};
-    `,
-  },
-  [Variant.Important]: {
-    [Theme.Light]: css`
       color: ${palette.red.light1};
     `,
     [Theme.Dark]: css`
       color: ${palette.red.base};
+    `,
+  },
+  [Variant.Important]: {
+    [Theme.Light]: css`
+      color: ${palette.yellow.base};
+    `,
+    [Theme.Dark]: css`
+      color: ${palette.yellow.dark2};
     `,
   },
   [Variant.Progress]: {
@@ -214,17 +221,4 @@ export const variantIconStyle: Record<Variant, Record<Theme, string>> = {
       color: ${palette.gray.dark2};
     `,
   },
-};
-
-type TransitionStatus = Parameters<
-  Extract<React.ComponentProps<typeof Transition>['children'], Function>
->[0];
-
-export const toastTransitionStateStyles: Partial<
-  Record<TransitionStatus, string>
-> = {
-  entered: css`
-    transform: translate3d(0, 0, 0) scale(1);
-    opacity: 1;
-  `,
 };
