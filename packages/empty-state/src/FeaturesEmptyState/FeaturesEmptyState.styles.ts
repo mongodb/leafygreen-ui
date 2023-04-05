@@ -21,31 +21,13 @@ export const titleStyles = css`
   margin-bottom: 24px;
 `;
 
-export const titleColorStyles: Record<Theme, string> = {
-  [Theme.Dark]: css`
-    color: ${palette.green.base};
-  `,
-  [Theme.Light]: css`
-    color: ${palette.green.dark2};
-  `,
-};
-
 export const thumbnailWrapperStyles = css`
   margin-bottom: 16px;
 `;
 
-export const featureTitleStyles: Record<Theme, string> = {
-  [Theme.Dark]: css`
-    color: ${palette.white};
-  `,
-  [Theme.Light]: css`
-    color: ${palette.gray.dark2};
-  `,
-};
-
 export const featureDescriptionStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
-    color: ${palette.gray.light3};
+    color: ${palette.gray.light1};
   `,
   [Theme.Light]: css`
     color: ${palette.gray.dark1};

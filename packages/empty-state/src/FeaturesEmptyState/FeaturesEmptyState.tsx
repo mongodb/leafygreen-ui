@@ -6,7 +6,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
-import { Body, H2, Link } from '@leafygreen-ui/typography';
+import { Body, H3, Link } from '@leafygreen-ui/typography';
 
 import {
   buttonContainerStyles,
@@ -14,10 +14,8 @@ import {
   featureContainerStyles,
   featureDescriptionStyles,
   featuresContainerStyles,
-  featureTitleStyles,
   rootStyles,
   thumbnailWrapperStyles,
-  titleColorStyles,
   titleStyles,
 } from './FeaturesEmptyState.styles';
 import { Feature, FeaturesEmptyStateProps } from './FeaturesEmptyState.types';
@@ -65,13 +63,13 @@ export function FeaturesEmptyState({
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <div className={rootStyles}>
-        <H2 className={cx(titleStyles, titleColorStyles[theme])}>{title}</H2>
+        <H3 className={cx(titleStyles)}>{title}</H3>
         <div className={featuresContainerStyles}>
           {!!features &&
             features.map(({ thumbnail, title, description }: Feature) => (
               <div key={title} className={featureContainerStyles}>
                 <div className={thumbnailWrapperStyles}>{thumbnail}</div>
-                <Body className={featureTitleStyles[theme]}>
+                <Body>
                   <b>{title}</b>
                 </Body>
                 <Body className={featureDescriptionStyles[theme]}>

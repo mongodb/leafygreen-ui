@@ -19,7 +19,7 @@ export const titleStyles = css`
 
 export const descriptionStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
-    color: ${palette.gray.light3};
+    color: ${palette.gray.light1};
   `,
   [Theme.Light]: css`
     color: ${palette.gray.dark1};
