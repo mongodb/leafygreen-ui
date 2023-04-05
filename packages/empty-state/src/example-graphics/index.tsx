@@ -2,11 +2,17 @@ import React, { ReactElement } from 'react';
 
 import { Theme } from '@leafygreen-ui/lib';
 
+// @ts-ignore
 import DarkModeFeature1 from './DarkModeFeature1.svg';
+// @ts-ignore
 import DarkModeFeature2 from './DarkModeFeature2.svg';
+// @ts-ignore
 import DarkModeFeature3 from './DarkModeFeature3.svg';
+// @ts-ignore
 import LightModeFeature1 from './LightModeFeature1.svg';
+// @ts-ignore
 import LightModeFeature2 from './LightModeFeature2.svg';
+// @ts-ignore
 import LightModeFeature3 from './LightModeFeature3.svg';
 
 export const thumbnails: Record<Theme, Array<ReactElement>> = {
