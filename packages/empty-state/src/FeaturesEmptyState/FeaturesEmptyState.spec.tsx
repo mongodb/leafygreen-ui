@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { render } from '@testing-library/react';
 
 import Button from '@leafygreen-ui/button';
@@ -10,13 +10,16 @@ import { graphics } from '../example-graphics';
 import { MAX_NUM_FEATURES, MIN_NUM_FEATURES } from './FeaturesEmptyState';
 import { FeaturesEmptyState } from '.';
 
+type TestGraphics = Record<Theme, Array<ReactElement>>;
 const testGraphics = Object.keys(graphics).reduce((acc, theme) => {
-  acc[theme] = graphics[theme].map((graphic, index) => (
-    // jest will not process SVGs, so render them as <img /> elements
-    <img key={index} src={graphic} alt="" />
-  ));
+  acc[theme as Theme] = graphics[theme as Theme].map(
+    (graphic: any, index: number) => (
+      // jest will not process SVGs, so render them as <img /> elements
+      <img key={index} src={graphic} alt="" />
+    ),
+  );
   return acc;
-}, {});
+}, {} as TestGraphics);
 
 const testFeatures = [
   {
