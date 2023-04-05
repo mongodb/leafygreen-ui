@@ -1,11 +1,17 @@
 import React, { ReactElement, useMemo, useRef, useState } from 'react';
 import { VirtualItem } from 'react-virtual';
+import {
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+} from '@tanstack/react-table';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { Cell, HeaderCell } from '../Cell';
 import ExpandedContent from '../ExpandedContent/ExpandedContent';
 import { HeaderRow, Row } from '../Row';
+import Table from '../Table';
 import TableBody from '../TableBody';
 import TableHead from '../TableHead';
 import useLeafyGreenTable, {
@@ -15,7 +21,6 @@ import useLeafyGreenTable, {
   LGRowData,
   LGTableDataType,
 } from '../useLeafyGreenTable';
-import Table, { flexRender, getCoreRowModel, getSortedRowModel } from '..';
 
 import processColumns from './processColumns';
 import processData from './processData';

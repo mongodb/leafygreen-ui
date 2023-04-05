@@ -4,26 +4,27 @@ import { ComponentStory, Meta } from '@storybook/react';
 
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
-import ExpandedContent from './ExpandedContent/ExpandedContent';
-import TableBody from './TableBody/TableBody';
-import TableHead from './TableHead/TableHead';
 import { makeData, Person } from './utils/makeData';
-import { Cell, HeaderCell } from './Cell';
-import { HeaderRow, Row } from './Row';
-import Table from './Table';
-import useLeafyGreenTable, {
-  LeafyGreenTableCell,
-  LeafyGreenTableRow,
-} from './useLeafyGreenTable';
 import {
+  Cell,
   ColumnDef,
+  ExpandedContent,
   ExpandedState,
   flexRender,
   getCoreRowModel,
   getExpandedRowModel,
   getSortedRowModel,
+  HeaderCell,
   HeaderGroup,
+  HeaderRow,
+  type LeafyGreenTableCell,
+  type LeafyGreenTableRow,
+  Row,
   SortingState,
+  Table,
+  TableBody,
+  TableHead,
+  useLeafyGreenTable,
 } from '.';
 
 export default {
