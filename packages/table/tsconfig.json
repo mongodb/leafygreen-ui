@@ -13,9 +13,6 @@
       "path": "../checkbox"
     },
     {
-      "path": "../code"
-    },
-    {
       "path": "../emotion"
     },
     {
@@ -34,7 +31,7 @@
       "path": "../palette"
     },
     {
-      "path": "../pagination"
+      "path": "../polymorphic"
     },
     {
       "path": "../tokens"
