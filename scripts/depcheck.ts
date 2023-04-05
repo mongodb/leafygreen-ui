@@ -186,7 +186,7 @@ async function checkDependencies() {
       if (fix) {
         await fixDependencies(pkg, missing, [...unusedDeps, ...unusedDev]);
       } else {
-        issuesFound = true;
+        issuesFound = !isMissingProviderPeer; // missing peer deps is not auto-fixable
       }
 
       console.log('');
