@@ -44,20 +44,20 @@ export function FeaturesEmptyState({
     );
   }
 
-  if (!isComponentType(PrimaryButton, 'Button')) {
+  if (!!PrimaryButton && !isComponentType(PrimaryButton, 'Button')) {
     console.warn(
       'The `PrimaryButton` prop in `FeaturesEmptyState` should be of type LeafyGreen Button.',
     );
   }
 
-  if (!isComponentType(SecondaryButton, 'Button')) {
+  if (!!SecondaryButton && !isComponentType(SecondaryButton, 'Button')) {
     console.warn(
       'The `SecondaryButton` prop in `FeaturesEmptyState` should be of type LeafyGreen Button.',
     );
   }
 
   if (!PrimaryButton && !!SecondaryButton) {
-    console.warn(
+    console.error(
       'The `SecondaryButton` prop in `FeaturesEmptyState` should only be used when the `PrimaryButton` prop is also used.',
     );
   }
@@ -67,17 +67,18 @@ export function FeaturesEmptyState({
       <div className={rootStyles}>
         <H2 className={cx(titleStyles, titleColorStyles[theme])}>{title}</H2>
         <div className={featuresContainerStyles}>
-          {features.map(({ thumbnail, title, description }: Feature) => (
-            <div key={title} className={featureContainerStyles}>
-              <div className={thumbnailWrapperStyles}>{thumbnail}</div>
-              <Body className={featureTitleStyles[theme]}>
-                <b>{title}</b>
-              </Body>
-              <Body className={featureDescriptionStyles[theme]}>
-                {description}
-              </Body>
-            </div>
-          ))}
+          {!!features &&
+            features.map(({ thumbnail, title, description }: Feature) => (
+              <div key={title} className={featureContainerStyles}>
+                <div className={thumbnailWrapperStyles}>{thumbnail}</div>
+                <Body className={featureTitleStyles[theme]}>
+                  <b>{title}</b>
+                </Body>
+                <Body className={featureDescriptionStyles[theme]}>
+                  {description}
+                </Body>
+              </div>
+            ))}
         </div>
         {!!PrimaryButton && (
           <div className={buttonContainerStyles}>
@@ -102,8 +103,13 @@ FeaturesEmptyState.propTypes = {
   ExternalLink: PropTypes.element,
   SecondaryButton: PropTypes.element,
   PrimaryButton: PropTypes.element,
-  description: PropTypes.oneOf([PropTypes.element, PropTypes.string])
-    .isRequired,
+  features: PropTypes.arrayOf(
+    PropTypes.exact({
+      thumbnail: PropTypes.element,
+      title: PropTypes.string,
+      description: PropTypes.string,
+    }),
+  ),
   title: PropTypes.string.isRequired,
   thumbnail: PropTypes.element,
 };

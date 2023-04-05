@@ -1,12 +1,11 @@
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
-import { ThreeFeaturesWithActions } from './FeaturesEmptyState/FeaturesEmptyState.story';
+import { ThreeFeaturesWithActionsAndLink } from './FeaturesEmptyState/FeaturesEmptyState.story';
 
 export default {
   title: 'Components/EmptyState',
   argTypes: {
     thumbnail: { control: 'none' },
-    description: { control: 'text' },
     ExternalLink: { control: 'none' },
     PrimaryButton: { control: 'none' },
     SecondaryButton: { control: 'none' },
@@ -20,8 +19,8 @@ export default {
   },
 };
 
-export const LiveExample = ThreeFeaturesWithActions;
+export const LiveExample = ThreeFeaturesWithActionsAndLink;
 LiveExample.args = {
-  ...ThreeFeaturesWithActions.args,
+  ...ThreeFeaturesWithActionsAndLink.args,
   title: 'Sample title of features empty state',
 };

@@ -69,5 +69,9 @@ WithActionsAndLink.args = {
   thumbnail: <LightModeGraphic viewBox="0 0 298 198" />,
   PrimaryButton: <Button>Add Dependency</Button>,
   SecondaryButton: <Button>Upload Module</Button>,
-  ExternalLink: <Link>Test external link</Link>,
+  ExternalLink: (
+    <a>
+      <Link>Test external link</Link>
+    </a>
+  ),
 };
