@@ -57,6 +57,12 @@ WithThumbnail.args = {
   thumbnail: <LightModeGraphic viewBox="0 0 298 198" />,
 };
 
+export const WithThumbnailAndLink = Template.bind({});
+WithThumbnailAndLink.args = {
+  thumbnail: <LightModeGraphic viewBox="0 0 298 198" />,
+  ExternalLink: <Link>Test external link</Link>,
+};
+
 export const WithActions = Template.bind({});
 WithActions.args = {
   thumbnail: <LightModeGraphic viewBox="0 0 298 198" />,
