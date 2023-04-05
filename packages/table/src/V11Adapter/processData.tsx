@@ -3,27 +3,37 @@ import React, { ReactElement } from 'react';
 import { isComponentType } from '@leafygreen-ui/lib';
 
 import { TableRowInterface } from '../TableV10/Table';
-import { LGTableDataType } from '../useLeafyGreenTable';
+import { LGColumnDef, LGRowData, LGTableDataType } from '../useLeafyGreenTable';
 
-const processData = (
+const processData = <T extends LGRowData>(
   data: Array<any>,
-  processedColumns: Array<any>,
+  processedColumns: Array<LGColumnDef<T>>,
   childrenFn: (TableRowArgs: TableRowInterface<unknown>) => JSX.Element,
 ) => {
   const processedData = data.map((oldDatum, index) => {
     // for each row, evaluate childrenFn
     const evaluatedChildren = childrenFn({ datum: oldDatum, index });
     const childrenArray = React.Children.toArray(evaluatedChildren);
-    const evaluatedRow = childrenArray[0] as ReactElement;
+
+    // TODO: Deep check first child for Row component
+    const evaluatedRow = React.Children.toArray(
+      (childrenArray[0] as ReactElement).props.children,
+    )[0] as ReactElement;
     const rowChildren = React.Children.toArray(evaluatedRow.props.children);
+
+    console.log({ evaluatedRow, rowChildren });
+
+    // TODO: deep check each row child for Cell component
     const evaluatedCells = rowChildren.filter(child =>
       isComponentType(child, 'Cell'),
     );
+
     const newDatum: LGTableDataType<any> = evaluatedCells.reduce(
       (acc: object, currVal, index) => {
         return {
           ...acc,
-          [processedColumns[index].accessorKey]: () =>
+          // TODO: remove as any
+          [(processedColumns[index] as any)?.accessorKey]: () =>
             (currVal as ReactElement).props.children,
         };
       },
@@ -57,7 +67,8 @@ const processData = (
           (acc: object, currVal, index) => {
             return {
               ...acc,
-              [processedColumns[index].accessorKey]: () =>
+              // TODO: remove as any
+              [(processedColumns[index] as any)?.accessorKey]: () =>
                 (currVal as ReactElement).props.children,
             };
           },

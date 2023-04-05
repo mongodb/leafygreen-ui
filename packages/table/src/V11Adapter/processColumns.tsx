@@ -17,13 +17,17 @@ import { LGRowData } from '../useLeafyGreenTable';
  */
 const processColumns = <T extends LGRowData>(
   data: Array<T>,
-  columns: TableProps<any>['columns'],
+  columns: TableProps<T>['columns'],
   headerLabels?: { [key: string]: string },
 ) => {
+  // TODO: HeaderRow component may not exist - we support passing an array of TableHeaders
   const HeaderRow = React.Children.toArray(columns)[0] as ReactElement;
+
   const TableHeaders = React.Children.toArray(HeaderRow.props.children);
+
   const processedColumns = TableHeaders.map(TableHeader => {
     const headerProps = (TableHeader as ReactElement).props;
+
     const hasSorting =
       !!headerProps.sortBy ||
       !!headerProps.handleSort ||
@@ -51,7 +55,7 @@ const processColumns = <T extends LGRowData>(
         : 0;
     };
 
-    return {
+    const retVal = {
       accessorKey:
         (headerLabels && headerLabels[headerProps.label]) ??
         camelCase(headerProps.label),
@@ -64,6 +68,10 @@ const processColumns = <T extends LGRowData>(
         ? defaultSortingFn
         : undefined,
     };
+
+    // console.log({ retVal });
+
+    return retVal;
   });
   return processedColumns;
 };

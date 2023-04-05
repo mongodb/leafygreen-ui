@@ -7,6 +7,7 @@ import {
 } from '@tanstack/react-table';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { isComponentType } from '@leafygreen-ui/lib';
 
 import { Cell, HeaderCell } from '../Cell';
 import ExpandedContent from '../ExpandedContent/ExpandedContent';
@@ -14,10 +15,10 @@ import { HeaderRow, Row } from '../Row';
 import Table from '../Table';
 import TableBody from '../TableBody';
 import TableHead from '../TableHead';
+import { TableProps as V10TableProps } from '../TableV10/Table';
 import useLeafyGreenTable, {
   LeafyGreenTableCell,
   LeafyGreenTableRow,
-  LGColumnDef,
   LGRowData,
   LGTableDataType,
 } from '../useLeafyGreenTable';
@@ -45,18 +46,38 @@ const V11Adapter = <T extends LGRowData>({
   const { darkMode } = useDarkMode();
   const containerRef = useRef(null);
   const OldTable = React.Children.toArray(children)[0];
+
+  if (!isComponentType(OldTable, 'Table')) {
+    console.error(
+      'The first and only child of `Table.V11Adapter` must be a `V10Table` component',
+    );
+  }
+
+  const OldTableProps = (OldTable as ReactElement).props;
+  type TData = typeof OldTableProps.data extends Array<infer U> ? U : never;
+
   const {
     data,
     columns,
     children: childrenFn,
-  } = (OldTable as ReactElement).props;
-  const processedColumns: Array<LGColumnDef<T>> = useMemo(
+  } = OldTableProps as V10TableProps<TData>;
+
+  const processedColumns = useMemo(
     () => processColumns(data, columns, headerLabels),
     [data, columns, headerLabels],
   );
+
+  // console.log({
+  //   processedColumns,
+  // });
+
   const [processedData, _] = useState<Array<LGTableDataType<T>>>(() =>
     processData(data, processedColumns, childrenFn),
   );
+
+  // console.log({
+  //   processedData,
+  // });
 
   const table = useLeafyGreenTable<T>({
     containerRef,
