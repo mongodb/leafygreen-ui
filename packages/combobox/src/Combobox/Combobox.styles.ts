@@ -20,6 +20,8 @@ const inputHeight = chipHeight;
  * Width of the widest character (in px)
  */
 export const maxCharWidth: Record<Size, number> = {
+  [Size.XSmall]: typeScales.body1.fontSize,
+  [Size.Small]: typeScales.body1.fontSize,
   [Size.Default]: typeScales.body1.fontSize,
   [Size.Large]: typeScales.body2.fontSize,
 };
@@ -27,14 +29,38 @@ export const maxCharWidth: Record<Size, number> = {
 /**
  * Size of combobox x & y padding (in px)
  */
-export const comboboxPadding: Record<Size, { x: number; y: number }> = {
+export const comboboxPadding: Record<
+  Size,
+  {
+    y: number;
+    xLeftWithChip: number;
+    xLeftWithoutChip: number;
+    xRight: number;
+  }
+> = {
+  [Size.XSmall]: {
+    y: (22 - inputHeight[Size.XSmall]) / 4, // (22 - 18) / 2 = (4) / 4 = 1
+    xLeftWithChip: 1,
+    xLeftWithoutChip: 10,
+    xRight: 4,
+  },
+  [Size.Small]: {
+    y: (28 - inputHeight[Size.Small]) / 2, // (28 - 20) / 2 = (8) / 2 = 4
+    xLeftWithChip: 4,
+    xLeftWithoutChip: 10,
+    xRight: 8,
+  },
   [Size.Default]: {
-    y: (36 - inputHeight[Size.Default] - 2) / 2,
-    x: spacing[2] - 1,
+    y: (36 - inputHeight[Size.Default] - 2) / 2, // (36 - 24 - 2) / 2 = (10) / 2 = 5
+    xLeftWithChip: 6,
+    xLeftWithoutChip: 12,
+    xRight: 12,
   },
   [Size.Large]: {
     y: (48 - inputHeight[Size.Large] - 2) / 2,
-    x: spacing[2] - 1,
+    xLeftWithChip: spacing[2] - 1,
+    xLeftWithoutChip: spacing[2] - 1,
+    xRight: spacing[2] - 1,
   },
 };
 
@@ -45,14 +71,24 @@ export const clearButtonIconSize = 28;
 export const caretIconSize = spacing[3];
 
 const minWidth: Record<Size, number> = {
+  [Size.XSmall]:
+    maxCharWidth[Size.XSmall] +
+    2 * comboboxPadding[Size.XSmall].xLeftWithChip +
+    caretIconSize +
+    2, // + 2 for border: ;
+  [Size.Small]:
+    maxCharWidth[Size.Small] +
+    2 * comboboxPadding[Size.Small].xLeftWithChip +
+    caretIconSize +
+    2, // + 2 for border: ;
   [Size.Default]:
     maxCharWidth[Size.Default] +
-    2 * comboboxPadding[Size.Default].x +
+    2 * comboboxPadding[Size.Default].xLeftWithChip +
     caretIconSize +
     2, // + 2 for border: ;
   [Size.Large]:
     maxCharWidth[Size.Large] +
-    2 * comboboxPadding[Size.Large].x +
+    2 * comboboxPadding[Size.Large].xLeftWithChip +
     caretIconSize +
     2, // + 2 for border: ;
 };
@@ -102,8 +138,16 @@ export const comboboxThemeStyles: Record<Theme, string> = {
   `,
 };
 
-export const comboboxSizeStyles = (size: Size) => css`
-  padding: ${comboboxPadding[size].y}px ${comboboxPadding[size].x}px;
+export const comboboxSizeStyles = (
+  size: Size,
+  isMultiselectWithSelections: boolean,
+) => css`
+  padding-top: ${comboboxPadding[size].y}px;
+  padding-bottom: ${comboboxPadding[size].y}px;
+  padding-left: ${isMultiselectWithSelections
+    ? `${comboboxPadding[size].xLeftWithChip}px`
+    : `${comboboxPadding[size].xLeftWithoutChip}px`};
+  padding-right: ${comboboxPadding[size].xRight}px;
 `;
 
 export const comboboxDisabledStyles: Record<Theme, string> = {
@@ -240,6 +284,26 @@ export const inputElementThemeStyle: Record<Theme, string> = {
 };
 
 export const inputElementSizeStyle: Record<Size, string> = {
+  [Size.XSmall]: css`
+    height: ${inputHeight[Size.XSmall]}px;
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: 16px;
+    min-width: ${maxCharWidth[Size.XSmall]}px;
+    // Only add padding if there are chips
+    &:not(:first-child) {
+      padding-left: 4px;
+    }
+  `,
+  [Size.Small]: css`
+    height: ${inputHeight[Size.Small]}px;
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+    min-width: ${maxCharWidth[Size.Small]}px;
+    // Only add padding if there are chips
+    &:not(:first-child) {
+      padding-left: 4px;
+    }
+  `,
   [Size.Default]: css`
     height: ${inputHeight[Size.Default]}px;
     font-size: ${typeScales.body1.fontSize}px;
@@ -290,7 +354,7 @@ export const clearButtonStyle = css`
 export const endIconStyle = (size: Size) => css`
   height: ${caretIconSize}px;
   width: ${caretIconSize}px;
-  margin-inline-end: calc(${comboboxPadding[size].x}px / 2);
+  // margin-inline-end: calc(${comboboxPadding[size].x}px / 2);
 `;
 
 export const errorMessageThemeStyle: Record<Theme, string> = {
@@ -303,6 +367,16 @@ export const errorMessageThemeStyle: Record<Theme, string> = {
 };
 
 export const errorMessageSizeStyle: Record<Size, string> = {
+  [Size.XSmall]: css`
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: 16px;
+    padding-top: ${comboboxPadding[Size.XSmall].y}px;
+  `,
+  [Size.Small]: css`
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+    padding-top: ${comboboxPadding[Size.Small].y}px;
+  `,
   [Size.Default]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;

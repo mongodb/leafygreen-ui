@@ -102,7 +102,12 @@ export default StoryMeta({
 });
 
 const ComboboxOptions = [
-  <ComboboxOption key="apple" value="apple" displayName="Apple" />,
+  <ComboboxOption
+    key="apple"
+    value="apple"
+    displayName="Apple"
+    data-testid="hii"
+  />,
   <ComboboxOption key="banana" value="banana" displayName="Banana" />,
   <ComboboxOption key="carrot" value="carrot" displayName="Carrot" disabled />,
   <ComboboxOption

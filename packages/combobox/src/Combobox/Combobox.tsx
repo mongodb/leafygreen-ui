@@ -1100,6 +1100,14 @@ export function Combobox<M extends boolean>({
 
   useBackdropClick(closeMenu, [menuRef, comboboxRef], isOpen);
 
+  /**
+   *
+   * Checks if multi-select and if there are chips selected. The left padding of the wrapper changes when there are chips selected so we use this to conditionally change the padding.
+   *
+   */
+  const isMultiselectWithSelections =
+    isMultiselect(selection) && !!selection.length;
+
   const popoverProps = {
     popoverZIndex,
     ...(usePortal
@@ -1159,7 +1167,7 @@ export function Combobox<M extends boolean>({
             className={cx(
               baseComboboxStyles,
               comboboxThemeStyles[theme],
-              comboboxSizeStyles(size),
+              comboboxSizeStyles(size, isMultiselectWithSelections),
               {
                 [comboboxSelectionStyles]: clearable && doesSelectionExist,
                 [comboboxDisabledStyles[theme]]: disabled,
