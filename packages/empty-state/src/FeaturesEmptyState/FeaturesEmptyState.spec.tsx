@@ -7,14 +7,16 @@ import { Link } from '@leafygreen-ui/typography';
 
 import { thumbnails } from '../example-graphics';
 
+import { MAX_NUM_FEATURES, MIN_NUM_FEATURES } from './FeaturesEmptyState';
 import { FeaturesEmptyState } from '.';
 
-const testThumbnails = {};
-Object.keys(thumbnails).forEach(theme => {
-  testThumbnails[theme] = thumbnails[theme].map((thumbnail, index) => (
+const testThumbnails = Object.keys(thumbnails).reduce((acc, theme) => {
+  acc[theme] = thumbnails[theme].map((thumbnail, index) => (
+    // jest will not process SVGs, so render them as <img /> elements
     <img key={index} src={thumbnail} alt="" />
   ));
-});
+  return acc;
+}, {});
 
 const testFeatures = [
   {
@@ -37,6 +39,15 @@ const testFeatures = [
   },
 ];
 
+beforeEach(() => {
+  // silence all console errors
+  jest.spyOn(console, 'error').mockImplementation(() => {});
+});
+
+afterEach(() => {
+  jest.clearAllMocks();
+});
+
 describe('packages/empty-state/features', () => {
   test('renders title', () => {
     const { getByText } = render(
@@ -44,10 +55,55 @@ describe('packages/empty-state/features', () => {
     );
     expect(getByText('test title')).toBeInTheDocument();
   });
-  // todo: test error when there's one feature
-  // todo: renders both features when two features
-  // todo: renders all three features when three features
-  // todo: test error when there's four features
+
+  test("console errors when there's only one feature", () => {
+    expect(MIN_NUM_FEATURES === 2).toBe(true);
+    const consoleSpy = jest.spyOn(console, 'error');
+    render(
+      <FeaturesEmptyState
+        title="test title"
+        features={testFeatures.slice(0, 1)}
+      />,
+    );
+    expect(consoleSpy).toHaveBeenCalled();
+  });
+
+  test("doesn't console error when there's two features", () => {
+    const consoleSpy = jest.spyOn(console, 'error');
+    render(
+      <FeaturesEmptyState
+        title="test title"
+        features={testFeatures.slice(0, 2)}
+      />,
+    );
+    expect(consoleSpy).not.toHaveBeenCalled();
+  });
+
+  test("doesn't console error when there's three features", () => {
+    const consoleSpy = jest.spyOn(console, 'error');
+    render(<FeaturesEmptyState title="test title" features={testFeatures} />);
+    expect(consoleSpy).not.toHaveBeenCalled();
+  });
+
+  test("console error when there's four features", () => {
+    expect(MAX_NUM_FEATURES === 3).toBe(true);
+    const consoleSpy = jest.spyOn(console, 'error');
+    render(
+      <FeaturesEmptyState
+        title="test title"
+        features={[
+          ...testFeatures,
+          {
+            title: 'test',
+            description: 'test',
+            thumbnail: testThumbnails[Theme.Light][0],
+          },
+        ]}
+      />,
+    );
+    expect(consoleSpy).toHaveBeenCalled();
+  });
+
   test('renders primary button', () => {
     const { getByText } = render(
       <FeaturesEmptyState
@@ -94,7 +150,7 @@ describe('packages/empty-state/features', () => {
     expect(getByText('test external link')).toBeInTheDocument();
   });
   test('rendered link is external by default', () => {
-    const { getByText } = render(
+    const { getByTestId } = render(
       <FeaturesEmptyState
         title="test title"
         features={testFeatures}
@@ -103,11 +159,9 @@ describe('packages/empty-state/features', () => {
         ExternalLink={<Link>test external link</Link>}
       />,
     );
+    // test that the link renders the external icon
     expect(
-      getByText('test external link').getElementsByTagName('svg'),
+      getByTestId('features-empty-states-link').getElementsByTagName('svg')[0],
     ).toBeInTheDocument();
   });
-  // test('fails when required props are not passed', () => {
-
-  // });
 });

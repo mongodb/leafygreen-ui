@@ -22,8 +22,8 @@ import {
 } from './FeaturesEmptyState.styles';
 import { Feature, FeaturesEmptyStateProps } from './FeaturesEmptyState.types';
 
-const MIN_NUM_FEATURES = 2;
-const MAX_NUM_FEATURES = 3;
+export const MIN_NUM_FEATURES = 2;
+export const MAX_NUM_FEATURES = 3;
 
 export function FeaturesEmptyState({
   title,
@@ -36,22 +36,22 @@ export function FeaturesEmptyState({
   const { theme, darkMode } = useDarkMode(darkModeProp);
 
   if (
-    MIN_NUM_FEATURES > features.length ||
+    features.length < MIN_NUM_FEATURES ||
     features.length > MAX_NUM_FEATURES
   ) {
-    console.warn(
-      'The `FeaturesEmptyState` component should only render 2-3 features.',
+    console.error(
+      `The \`FeaturesEmptyState\` component should only render ${MIN_NUM_FEATURES}-${MAX_NUM_FEATURES} features.`,
     );
   }
 
   if (!!PrimaryButton && !isComponentType(PrimaryButton, 'Button')) {
-    console.warn(
+    console.error(
       'The `PrimaryButton` prop in `FeaturesEmptyState` should be of type LeafyGreen Button.',
     );
   }
 
   if (!!SecondaryButton && !isComponentType(SecondaryButton, 'Button')) {
-    console.warn(
+    console.error(
       'The `SecondaryButton` prop in `FeaturesEmptyState` should be of type LeafyGreen Button.',
     );
   }
@@ -90,7 +90,7 @@ export function FeaturesEmptyState({
         )}
         {!!ExternalLink && (
           <div className={externalLinkStyles}>
-            <Link target="_blank" {...ExternalLink.props} />
+            <Link data-testid="features-empty-states-link" target="_blank" {...ExternalLink.props} />
           </div>
         )}
       </div>

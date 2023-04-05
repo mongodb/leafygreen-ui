@@ -29,19 +29,19 @@ export function BasicEmptyState({
   const { theme, darkMode } = useDarkMode(darkModeProp);
 
   if (!isComponentType(PrimaryButton, 'Button')) {
-    console.warn(
+    console.error(
       'The `PrimaryButton` prop in BasicEmptyState should be of type LeafyGreen Button.',
     );
   }
 
   if (!isComponentType(SecondaryButton, 'Button')) {
-    console.warn(
+    console.error(
       'The `SecondaryButton` prop in BasicEmptyState should be of type LeafyGreen Button.',
     );
   }
 
   if (!PrimaryButton && !!SecondaryButton) {
-    console.warn(
+    console.error(
       'The `SecondaryButton` prop in BasicEmptyState should only be used when the `PrimaryButton` prop is also used.',
     );
   }
@@ -63,7 +63,11 @@ export function BasicEmptyState({
           )}
           {!!ExternalLink && (
             <div className={externalLinkStyles}>
-              <Link target="_blank" {...ExternalLink.props} />
+              <Link
+                data-testid="basic-empty-states-link"
+                target="_blank"
+                {...ExternalLink.props}
+              />
             </div>
           )}
         </div>
