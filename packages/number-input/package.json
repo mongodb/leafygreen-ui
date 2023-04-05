@@ -33,7 +33,6 @@
     "@leafygreen-ui/emotion": "^4.0.3",
     "@leafygreen-ui/hooks": "^7.6.0",
     "@leafygreen-ui/icon": "^11.12.4",
-    "@leafygreen-ui/leafygreen-provider": "^3.1.1",
     "@leafygreen-ui/lib": "^10.2.0",
     "@leafygreen-ui/palette": "^4.0.0",
     "@leafygreen-ui/popover": "^11.0.5",
@@ -42,5 +41,8 @@
     "@leafygreen-ui/tooltip": "^9.1.5",
     "@leafygreen-ui/typography": "^16.0.1",
     "lodash": "^4.17.21"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^3.1.1"
   }
 }
