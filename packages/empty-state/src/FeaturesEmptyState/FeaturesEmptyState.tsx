@@ -14,8 +14,8 @@ import {
   featureContainerStyles,
   featureDescriptionStyles,
   featuresContainerStyles,
-  rootStyles,
   graphicWrapperStyles,
+  rootStyles,
   titleStyles,
 } from './FeaturesEmptyState.styles';
 import { Feature, FeaturesEmptyStateProps } from './FeaturesEmptyState.types';
