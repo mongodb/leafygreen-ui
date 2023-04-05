@@ -1,29 +1,21 @@
-import { Cell, CellProps, HeaderCell, HeaderCellProps } from './Cell';
-import ExpandedContent, { ExpandedContentProps } from './ExpandedContent';
-import { HeaderRow, HeaderRowProps, Row, RowProps } from './Row';
-import Table, { TableProps } from './Table';
-import TableBody, { TableBodyProps } from './TableBody';
-import useLeafyGreenTable, {
-  LeafyGreenTable,
-  LeafyGreenTableCell,
-  LeafyGreenTableOptions,
-  LeafyGreenTableRow,
-  LGColumnDef,
-  LGRowData,
-  LGTableDataType,
-} from './useLeafyGreenTable';
-import V11Adapter, { V11AdapterProps } from './V11Adapter';
-
-export * from '@tanstack/react-table';
+export { Cell, type CellProps, HeaderCell, type HeaderCellProps } from './Cell';
 export {
-  Cell,
-  type CellProps,
-  ExpandedContent,
+  default as ExpandedContent,
   type ExpandedContentProps,
-  HeaderCell,
-  type HeaderCellProps,
-  HeaderRow,
-  type HeaderRowProps,
+} from './ExpandedContent';
+export { HeaderRow, type HeaderRowProps, Row, type RowProps } from './Row';
+export { default as Table, type TableProps } from './Table';
+export { default as TableBody, type TableBodyProps } from './TableBody';
+export { default as TableHead } from './TableHead/TableHead';
+export {
+  Cell as V10Cell,
+  DataType as V10DataType,
+  HeaderRow as V10HeaderRow,
+  Row as V10Row,
+  Table as V10Table,
+  TableHeader as V10TableHeader,
+} from './TableV10';
+export {
   type LeafyGreenTable,
   type LeafyGreenTableCell,
   type LeafyGreenTableOptions,
@@ -31,15 +23,7 @@ export {
   type LGColumnDef,
   type LGRowData,
   type LGTableDataType,
-  Row,
-  type RowProps,
-  Table,
-  TableBody,
-  type TableBodyProps,
-  type TableProps,
-  useLeafyGreenTable,
-  V11Adapter,
-  type V11AdapterProps,
-};
-
-export default Table;
+  default as useLeafyGreenTable,
+} from './useLeafyGreenTable';
+export { default as V11Adapter, type V11AdapterProps } from './V11Adapter';
+export * from '@tanstack/react-table';
