@@ -20,8 +20,9 @@ export const usePolymorphicRef = <E extends PolymorphicAs>(_?: E) => {
 };
 
 /**
- * Utility to convert the generic `PolymorphicAs` prop
- * to a ReactElement
+ * A hook that computes & returns the polymorphic ReactElement based on the `as` prop
+ *
+ * For client-side components, prefer using `usePolymorphic`, which returns a typed `ref` as well as the polymorphic component
  */
 export function usePolymorphicComponent<T extends PolymorphicAs>(
   as?: T,
