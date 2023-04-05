@@ -1,1 +1,3 @@
-export { default, type Variant } from './Toast';
+export * from './ControlledToast';
+export { type ToastProps, Variant } from './Toast.types';
+export * from './ToastContext';
