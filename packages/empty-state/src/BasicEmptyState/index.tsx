@@ -1,2 +1,2 @@
 export { BasicEmptyState } from './BasicEmptyState';
-export { type BasicEmptyStateProps } from './BasicEmptyState.types';
+export type { BasicEmptyStateProps } from './BasicEmptyState.types';

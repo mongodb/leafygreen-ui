@@ -28,5 +28,8 @@
       "@leafygreen-ui/button": "^20.0.2",
       "@leafygreen-ui/lib": "^10.0.0",
       "@leafygreen-ui/typography": "^16.1.0"
+    },
+    "peerDependencies": {
+      "@leafygreen-ui/leafygreen-provider": "^3.1.1"
     }
   }

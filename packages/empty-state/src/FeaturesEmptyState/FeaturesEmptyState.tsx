@@ -90,7 +90,11 @@ export function FeaturesEmptyState({
         )}
         {!!ExternalLink && (
           <div className={externalLinkStyles}>
-            <Link data-testid="features-empty-states-link" target="_blank" {...ExternalLink.props} />
+            <Link
+              data-testid="features-empty-states-link"
+              target="_blank"
+              {...ExternalLink.props}
+            />
           </div>
         )}
       </div>
