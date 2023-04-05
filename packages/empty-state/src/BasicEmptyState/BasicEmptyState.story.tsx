@@ -19,7 +19,7 @@ export default {
       'This example displays the maximum line width of body content. This is to prevent extremely long body content that is difficult to read.',
   },
   argTypes: {
-    thumbnail: { control: 'none' },
+    graphic: { control: 'none' },
     description: { control: 'text' },
     ExternalLink: { control: 'none' },
     PrimaryButton: { control: 'none' },
@@ -34,45 +34,45 @@ export default {
 };
 
 const Template: ComponentStory<typeof BasicEmptyState> = props => {
-  let thumbnail: ReactElement | undefined;
+  let graphic: ReactElement | undefined;
 
-  // replace thumbnail prop with appropriate graphic for theme
+  // replace graphic prop with appropriate graphic for theme
   // eslint-disable-next-line react/prop-types
-  if (props.thumbnail) {
+  if (props.graphic) {
     // eslint-disable-next-line react/prop-types
-    thumbnail = props.darkMode ? (
+    graphic = props.darkMode ? (
       <DarkModeGraphic viewBox="0 0 298 198" />
     ) : (
       <LightModeGraphic viewBox="0 0 298 198" />
     );
   }
 
-  return <BasicEmptyState {...props} thumbnail={thumbnail} />;
+  return <BasicEmptyState {...props} graphic={graphic} />;
 };
 
 export const Basic = Template.bind({});
 
-export const WithThumbnail = Template.bind({});
-WithThumbnail.args = {
-  thumbnail: <LightModeGraphic viewBox="0 0 298 198" />,
+export const WithGraphic = Template.bind({});
+WithGraphic.args = {
+  graphic: <LightModeGraphic viewBox="0 0 298 198" />,
 };
 
-export const WithThumbnailAndLink = Template.bind({});
-WithThumbnailAndLink.args = {
-  thumbnail: <LightModeGraphic viewBox="0 0 298 198" />,
+export const WithGraphicAndLink = Template.bind({});
+WithGraphicAndLink.args = {
+  graphic: <LightModeGraphic viewBox="0 0 298 198" />,
   ExternalLink: <Link>Test external link</Link>,
 };
 
 export const WithActions = Template.bind({});
 WithActions.args = {
-  thumbnail: <LightModeGraphic viewBox="0 0 298 198" />,
+  graphic: <LightModeGraphic viewBox="0 0 298 198" />,
   PrimaryButton: <Button>Add Dependency</Button>,
   SecondaryButton: <Button>Upload Module</Button>,
 };
 
 export const WithActionsAndLink = Template.bind({});
 WithActionsAndLink.args = {
-  thumbnail: <LightModeGraphic viewBox="0 0 298 198" />,
+  graphic: <LightModeGraphic viewBox="0 0 298 198" />,
   PrimaryButton: <Button>Add Dependency</Button>,
   SecondaryButton: <Button>Upload Module</Button>,
   ExternalLink: <Link>Test external link</Link>,

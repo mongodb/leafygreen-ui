@@ -31,9 +31,9 @@ export interface FeaturesEmptyStateProps extends DarkModeProps {
 
 export interface Feature {
   /**
-   * Thumbnail image element
+   * Image element for feature. This prop is designed to be used with MongoDB marketing-approved graphics.
    */
-  thumbnail: ReactElement;
+  graphic: ReactElement;
 
   /**
    * Heading text

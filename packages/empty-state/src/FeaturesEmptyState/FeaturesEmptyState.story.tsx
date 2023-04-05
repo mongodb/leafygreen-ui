@@ -5,7 +5,7 @@ import Button from '@leafygreen-ui/button';
 import { storybookArgTypes, Theme } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
-import { thumbnails } from '../example-graphics';
+import { graphics } from '../example-graphics';
 
 import { FeaturesEmptyState } from '.';
 
@@ -33,12 +33,12 @@ const Template: ComponentStory<typeof FeaturesEmptyState> = props => {
   // eslint-disable-next-line react/prop-types
   const theme = props.darkMode ? Theme.Dark : Theme.Light;
 
-  // replace thumbnail props with appropriate graphic for theme
+  // replace graphic props with appropriate graphic for theme
   // eslint-disable-next-line react/prop-types
   const features = props.features.map((feature, index) => {
     return {
       ...feature,
-      thumbnail: thumbnails[theme][index],
+      graphic: graphics[theme][index],
     };
   });
 
@@ -49,13 +49,13 @@ export const TwoFeatures = Template.bind({});
 TwoFeatures.args = {
   features: [
     {
-      thumbnail: thumbnails[Theme.Light][0],
+      graphic: graphics[Theme.Light][0],
       title: 'Multi-region, multi-cloud',
       description:
         'Run powerful and resilient apps that span multiple regions or clouds at once.',
     },
     {
-      thumbnail: thumbnails[Theme.Light][1],
+      graphic: graphics[Theme.Light][1],
       title: 'Serverless and elastic',
       description:
         'Run powerful and resilient apps that span multiple regions or clouds at once.',
@@ -67,13 +67,13 @@ export const TwoFeaturesWithActions = Template.bind({});
 TwoFeaturesWithActions.args = {
   features: [
     {
-      thumbnail: thumbnails[Theme.Light][0],
+      graphic: graphics[Theme.Light][0],
       title: 'Multi-region, multi-cloud',
       description:
         'Run powerful and resilient apps that span multiple regions or clouds at once.',
     },
     {
-      thumbnail: thumbnails[Theme.Light][1],
+      graphic: graphics[Theme.Light][1],
       title: 'Serverless and elastic',
       description:
         'Run powerful and resilient apps that span multiple regions or clouds at once.',
@@ -87,13 +87,13 @@ export const TwoFeaturesWithActionsAndLink = Template.bind({});
 TwoFeaturesWithActionsAndLink.args = {
   features: [
     {
-      thumbnail: thumbnails[Theme.Light][0],
+      graphic: graphics[Theme.Light][0],
       title: 'Multi-region, multi-cloud',
       description:
         'Run powerful and resilient apps that span multiple regions or clouds at once.',
     },
     {
-      thumbnail: thumbnails[Theme.Light][1],
+      graphic: graphics[Theme.Light][1],
       title: 'Serverless and elastic',
       description:
         'Run powerful and resilient apps that span multiple regions or clouds at once.',
@@ -108,19 +108,19 @@ export const ThreeFeatures = Template.bind({});
 ThreeFeatures.args = {
   features: [
     {
-      thumbnail: thumbnails[Theme.Light][0],
+      graphic: graphics[Theme.Light][0],
       title: 'Multi-region, multi-cloud',
       description:
         'Run powerful and resilient apps that span multiple regions or clouds at once.',
     },
     {
-      thumbnail: thumbnails[Theme.Light][1],
+      graphic: graphics[Theme.Light][1],
       title: 'Serverless and elastic',
       description:
         'Run powerful and resilient apps that span multiple regions or clouds at once.',
     },
     {
-      thumbnail: thumbnails[Theme.Light][2],
+      graphic: graphics[Theme.Light][2],
       title: 'Always-on security',
       description:
         'Secure data with built-in defaults for access and end-toend encryption.',
@@ -132,19 +132,19 @@ export const ThreeFeaturesWithActions = Template.bind({});
 ThreeFeaturesWithActions.args = {
   features: [
     {
-      thumbnail: thumbnails[Theme.Light][0],
+      graphic: graphics[Theme.Light][0],
       title: 'Multi-region, multi-cloud',
       description:
         'Run powerful and resilient apps that span multiple regions or clouds at once.',
     },
     {
-      thumbnail: thumbnails[Theme.Light][1],
+      graphic: graphics[Theme.Light][1],
       title: 'Serverless and elastic',
       description:
         'Run powerful and resilient apps that span multiple regions or clouds at once.',
     },
     {
-      thumbnail: thumbnails[Theme.Light][2],
+      graphic: graphics[Theme.Light][2],
       title: 'Always-on security',
       description:
         'Secure data with built-in defaults for access and end-toend encryption.',
@@ -158,19 +158,19 @@ export const ThreeFeaturesWithActionsAndLink = Template.bind({});
 ThreeFeaturesWithActionsAndLink.args = {
   features: [
     {
-      thumbnail: thumbnails[Theme.Light][0],
+      graphic: graphics[Theme.Light][0],
       title: 'Multi-region, multi-cloud',
       description:
         'Run powerful and resilient apps that span multiple regions or clouds at once.',
     },
     {
-      thumbnail: thumbnails[Theme.Light][1],
+      graphic: graphics[Theme.Light][1],
       title: 'Serverless and elastic',
       description:
         'Run powerful and resilient apps that span multiple regions or clouds at once.',
     },
     {
-      thumbnail: thumbnails[Theme.Light][2],
+      graphic: graphics[Theme.Light][2],
       title: 'Always-on security',
       description:
         'Secure data with built-in defaults for access and end-toend encryption.',

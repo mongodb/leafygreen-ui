@@ -5,7 +5,7 @@ import { ThreeFeaturesWithActionsAndLink } from './FeaturesEmptyState/FeaturesEm
 export default {
   title: 'Components/EmptyState',
   argTypes: {
-    thumbnail: { control: 'none' },
+    graphic: { control: 'none' },
     ExternalLink: { control: 'none' },
     PrimaryButton: { control: 'none' },
     SecondaryButton: { control: 'none' },

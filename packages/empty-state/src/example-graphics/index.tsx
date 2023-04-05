@@ -15,7 +15,7 @@ import LightModeFeature2 from './LightModeFeature2.svg';
 // @ts-ignore
 import LightModeFeature3 from './LightModeFeature3.svg';
 
-export const thumbnails: Record<Theme, Array<ReactElement>> = {
+export const graphics: Record<Theme, Array<ReactElement>> = {
   [Theme.Dark]: [
     <DarkModeFeature1 key="cloud-feature" viewBox="0 0 72 72" />,
     <DarkModeFeature2 key="serverless-feature" viewBox="0 0 72 72" />,

@@ -4,9 +4,9 @@ import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export interface BasicEmptyStateProps extends DarkModeProps {
   /**
-   * Thumbnail image element
+   * Graphic shown left of text content. The component is designed to be used with MongoDB marketing-approved graphics.
    */
-  thumbnail?: ReactElement;
+  graphic?: ReactElement;
 
   /**
    * Heading text

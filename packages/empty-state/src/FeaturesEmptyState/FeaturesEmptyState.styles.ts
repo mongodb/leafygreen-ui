@@ -21,7 +21,7 @@ export const titleStyles = css`
   margin-bottom: 24px;
 `;
 
-export const thumbnailWrapperStyles = css`
+export const graphicWrapperStyles = css`
   margin-bottom: 16px;
 `;
 

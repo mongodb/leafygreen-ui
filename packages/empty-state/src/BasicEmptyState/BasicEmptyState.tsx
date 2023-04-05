@@ -18,7 +18,7 @@ import {
 import { BasicEmptyStateProps } from '.';
 
 export function BasicEmptyState({
-  thumbnail,
+  graphic,
   title,
   description,
   PrimaryButton,
@@ -49,7 +49,7 @@ export function BasicEmptyState({
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <div className={rootStyles}>
-        {!!thumbnail && <div>{thumbnail}</div>}
+        {!!graphic && <div>{graphic}</div>}
         <div className={textContainerStyles}>
           <H3 className={titleStyles}>{title}</H3>
           <Body className={descriptionStyles[theme]}>{description}</Body>
@@ -84,7 +84,7 @@ BasicEmptyState.propTypes = {
   description: PropTypes.oneOf([PropTypes.element, PropTypes.string])
     .isRequired,
   title: PropTypes.string.isRequired,
-  thumbnail: PropTypes.element,
+  graphic: PropTypes.element,
 };
 
 BasicEmptyState.displayName = 'BasicEmptyState';

@@ -5,34 +5,34 @@ import Button from '@leafygreen-ui/button';
 import { Theme } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
-import { thumbnails } from '../example-graphics';
+import { graphics } from '../example-graphics';
 
 import { MAX_NUM_FEATURES, MIN_NUM_FEATURES } from './FeaturesEmptyState';
 import { FeaturesEmptyState } from '.';
 
-const testThumbnails = Object.keys(thumbnails).reduce((acc, theme) => {
-  acc[theme] = thumbnails[theme].map((thumbnail, index) => (
+const testGraphics = Object.keys(graphics).reduce((acc, theme) => {
+  acc[theme] = graphics[theme].map((graphic, index) => (
     // jest will not process SVGs, so render them as <img /> elements
-    <img key={index} src={thumbnail} alt="" />
+    <img key={index} src={graphic} alt="" />
   ));
   return acc;
 }, {});
 
 const testFeatures = [
   {
-    thumbnail: testThumbnails[Theme.Light][0],
+    graphic: testGraphics[Theme.Light][0],
     title: 'Multi-region, multi-cloud',
     description:
       'Run powerful and resilient apps that span multiple regions or clouds at once.',
   },
   {
-    thumbnail: testThumbnails[Theme.Light][1],
+    graphic: testGraphics[Theme.Light][1],
     title: 'Serverless and elastic',
     description:
       'Run powerful and resilient apps that span multiple regions or clouds at once.',
   },
   {
-    thumbnail: testThumbnails[Theme.Light][2],
+    graphic: testGraphics[Theme.Light][2],
     title: 'Always-on security',
     description:
       'Secure data with built-in defaults for access and end-toend encryption.',
@@ -96,7 +96,7 @@ describe('packages/empty-state/features', () => {
           {
             title: 'test',
             description: 'test',
-            thumbnail: testThumbnails[Theme.Light][0],
+            graphic: testGraphics[Theme.Light][0],
           },
         ]}
       />,

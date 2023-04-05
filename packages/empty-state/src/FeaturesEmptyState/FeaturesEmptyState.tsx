@@ -15,7 +15,7 @@ import {
   featureDescriptionStyles,
   featuresContainerStyles,
   rootStyles,
-  thumbnailWrapperStyles,
+  graphicWrapperStyles,
   titleStyles,
 } from './FeaturesEmptyState.styles';
 import { Feature, FeaturesEmptyStateProps } from './FeaturesEmptyState.types';
@@ -66,9 +66,9 @@ export function FeaturesEmptyState({
         <H3 className={cx(titleStyles)}>{title}</H3>
         <div className={featuresContainerStyles}>
           {!!features &&
-            features.map(({ thumbnail, title, description }: Feature) => (
+            features.map(({ graphic, title, description }: Feature) => (
               <div key={title} className={featureContainerStyles}>
-                <div className={thumbnailWrapperStyles}>{thumbnail}</div>
+                <div className={graphicWrapperStyles}>{graphic}</div>
                 <Body>
                   <b>{title}</b>
                 </Body>
@@ -107,13 +107,13 @@ FeaturesEmptyState.propTypes = {
   PrimaryButton: PropTypes.element,
   features: PropTypes.arrayOf(
     PropTypes.exact({
-      thumbnail: PropTypes.element,
+      graphic: PropTypes.element,
       title: PropTypes.string,
       description: PropTypes.string,
     }),
   ),
   title: PropTypes.string.isRequired,
-  thumbnail: PropTypes.element,
+  graphic: PropTypes.element,
 };
 
 FeaturesEmptyState.displayName = 'FeaturesEmptyState';
