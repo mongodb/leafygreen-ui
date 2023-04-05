@@ -15,6 +15,7 @@ import { getPackageLGDependencies } from './utils/getPackageDependencies';
 
 const lgPackages = readdirSync('packages/');
 const globalDevDependencies = Object.keys(globalPackageJson.devDependencies);
+const lgProvider = '@leafygreen-ui/leafygreen-provider';
 
 const cli = new Command('depcheck')
   .arguments('[...packages]')
@@ -127,6 +128,10 @@ async function checkDependencies() {
       }
     }
 
+    const usesProvider = Boolean(using[lgProvider]);
+    const isMissingProviderPeer =
+      usesProvider && !pkgJson.peerDependencies[lgProvider];
+
     const countMissing = Object.keys(missing.dependencies).length;
     const countMissingDev = Object.keys(missing.devDependencies).length;
 
@@ -134,7 +139,8 @@ async function checkDependencies() {
       countMissing > 0 ||
       countMissingDev > 0 ||
       unusedDeps.length > 0 ||
-      unusedDev.length > 0
+      unusedDev.length > 0 ||
+      isMissingProviderPeer
     ) {
       unusedDeps.length > 0 &&
         console.log(
@@ -165,6 +171,15 @@ async function checkDependencies() {
             `packages/${pkg}`,
           )} is missing devDependencies: ${chalk.yellowBright(
             missing.devDependencies.join(', '),
+          )}`,
+        );
+
+      isMissingProviderPeer &&
+        console.log(
+          `${chalk.green(`packages/${pkg}`)} does not list ${chalk.greenBright(
+            lgProvider,
+          )} as a peer dependency.\n  Please fix this manually in ${chalk.gray(
+            `packages/${pkg}/package.json`,
           )}`,
         );
 
