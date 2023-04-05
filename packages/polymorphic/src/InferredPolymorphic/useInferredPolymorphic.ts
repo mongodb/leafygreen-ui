@@ -2,8 +2,9 @@ import { usePolymorphic } from '../Polymorphic/Polymorphic.hooks';
 import { PolymorphicAs } from '../Polymorphic/Polymorphic.types';
 
 /**
- * Function to compute the inferred polymorphic component based on the `as` prop, and any other props passed in
- * @internal
+ * A hook that computes & returns the inferred polymorphic component based on the `as` prop, and any other props passed in.
+ *
+ * For client-side components, prefer using `useInferredPolymorphic`, which returns a typed `ref` as well as the polymorphic component
  */
 export function useInferredPolymorphicComponent(
   as?: PolymorphicAs,
