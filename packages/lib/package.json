@@ -24,6 +24,7 @@
     "react": "^17.0.0"
   },
   "dependencies": {
+    "@storybook/csf": "^0.0.2-next.10",
     "lodash": "^4.17.21",
     "prop-types": "^15.7.2"
   },

@@ -7,12 +7,12 @@ import { HeaderRow, Row } from '../Row';
 import TableBody from '../TableBody';
 import TableHead from '../TableHead';
 import { LeafyGreenTableCell, LeafyGreenTableRow } from '../useLeafyGreenTable';
-import { Person } from '../utils/makeData';
+import { Person } from '../utils/makeData.testutils';
 import {
   getDefaultTestData,
   TestTableWithHookProps,
   useTestHookCall,
-} from '../utils/testHookCalls';
+} from '../utils/testHookCalls.testutils';
 import { flexRender } from '..';
 
 import Table from '.';

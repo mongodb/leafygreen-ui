@@ -7,7 +7,7 @@ import { storybookArgTypes } from '@leafygreen-ui/lib';
 import ExpandedContent from './ExpandedContent/ExpandedContent';
 import TableBody from './TableBody/TableBody';
 import TableHead from './TableHead/TableHead';
-import { makeData, Person } from './utils/makeData';
+import { makeData, Person } from './utils/makeData.testutils';
 import { Cell, HeaderCell } from './Cell';
 import { HeaderRow, Row } from './Row';
 import Table from './Table';
