@@ -41,6 +41,12 @@ jobs:
     needs: install
     steps:
       - uses: actions/checkout@v2
+
+      # TODO: store this globally
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+
       - uses: actions/cache/restore@v3
         id: yarn-cache
         with:
@@ -54,6 +60,7 @@ jobs:
             **/dist
             !**/node_modules
           key: ${{ runner.os }}-build-cache-${{ hashFiles('**/rollup.config.js', '**/babel.config.js', '**/src/', '**/scripts/', '!**/node_modules', '!**/dist') }}
+
       - name: build
         if: ${{ steps.build-cache.outputs.cache-hit != true }}
         run: yarn build:packages
