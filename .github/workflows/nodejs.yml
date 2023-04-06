@@ -10,34 +10,43 @@ concurrency:
 
 jobs:
   install:
-    name: Checkout & Install
+    name: Install node modules
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
+
       - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
           node-version: '14.x'
+
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/cache@v2
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
         id: yarn-cache
         with:
-          path: |
-            ${{ steps.yarn-cache-dir-path.outputs.dir }}
-            **/node_modules
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-cache-
-      - run: yarn install --frozen-lockfile
+
+      - name: Install
+        if: ${{ steps.yarn-cache.outputs.cache-hit != true }}
+        run: yarn install --frozen-lockfile
 
   build:
     name: Build packages
     runs-on: ubuntu-latest
     needs: install
     steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache/restore@v3
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+
       - uses: actions/cache@v2
         id: build-cache
         with:
@@ -46,7 +55,7 @@ jobs:
             !**/node_modules
           key: ${{ runner.os }}-build-cache-${{ hashFiles('**/rollup.config.js', '**/babel.config.js', '**/src/', '**/scripts/', '!**/node_modules', '!**/dist') }}
       - name: build
-        if: steps.build-cache.outputs.cache-hit != 'true'
+        if: ${{ steps.build-cache.outputs.cache-hit != true }}
         run: yarn build:packages
 
   tests:
