@@ -27,6 +27,7 @@
     "dependencies": {
       "@leafygreen-ui/button": "^20.0.2",
       "@leafygreen-ui/lib": "^10.0.0",
+      "@leafygreen-ui/tokens": "^2.0.1",
       "@leafygreen-ui/typography": "^16.1.0"
     },
     "peerDependencies": {

@@ -42,13 +42,13 @@ import { BasicEmptyState } from '@leafygreen-ui/empty-state';
 
 A basic empty state component to be used with MongoDB marketing-approved graphics.
 
-| Prop              | Type           | Description                                                                                                        | Default      |
-| ----------------- | -------------- | ------------------------------------------------------------------------------------------------------------------ | ------------ |
-| `graphic`         | `ReactElement` | Graphic shown left of text content. The component is designed to be used with MongoDB marketing-approved graphics. | `undefined`  |
-| `title`           | `string`       | Heading text.                                                                                                      | **Required** |
-| `description`     | `ReactChild`   | Secondary text.                                                                                                    | **Required** |
-| `primaryButton`   | `ReactElement` | Optional primary call-to-action button.                                                                            | `undefined`  |
-| `secondaryButton` | `ReactElement` | Optional secondary call-to-action button. This should only exist when a `primaryButton` exists.                    | `undefined`  |
+| Prop              | Type           | Description                                                                                                        | Default     |
+| ----------------- | -------------- | ------------------------------------------------------------------------------------------------------------------ | ----------- |
+| `graphic`         | `ReactElement` | Graphic shown left of text content. The component is designed to be used with MongoDB marketing-approved graphics. | `undefined` |
+| `title`\*         | `string`       | Heading text.                                                                                                      |             |
+| `description`\*   | `ReactChild`   | Secondary text.                                                                                                    |             |
+| `primaryButton`   | `ReactElement` | Optional primary call-to-action button.                                                                            | `undefined` |
+| `secondaryButton` | `ReactElement` | Optional secondary call-to-action button. This should only exist when a `primaryButton` exists.                    | `undefined` |
 
 #### FeaturesEmptyState
 
@@ -71,13 +71,13 @@ import { FeaturesEmptyState } from '@leafygreen-ui/empty-state';
 
 ```
 
-| Prop              | Type             | Description                                                                                     | Default      |
-| ----------------- | ---------------- | ----------------------------------------------------------------------------------------------- | ------------ |
-| `title`           | `string`         | Heading text.                                                                                   | **Required** |
-| `features`        | `Array<Feature>` | Array of feature objects (length should be 2 or 3 elements).                                    | **Required** |
-| `primaryButton`   | `ReactElement`   | Optional primary call-to-action button.                                                         | `undefined`  |
-| `secondaryButton` | `ReactElement`   | Optional secondary call-to-action button. This should only exist when a `primaryButton` exists. | `undefined`  |
-| `externalLink`    | `ReactElement`   | Optional link to external page for additional information.                                      | `undefined`  |
+| Prop              | Type             | Description                                                                                     | Default     |
+| ----------------- | ---------------- | ----------------------------------------------------------------------------------------------- | ----------- |
+| `title`\*         | `string`         | Heading text.                                                                                   |             |
+| `features`\*      | `Array<Feature>` | Array of feature objects (length should be 2 or 3 elements).                                    |             |
+| `primaryButton`   | `ReactElement`   | Optional primary call-to-action button.                                                         | `undefined` |
+| `secondaryButton` | `ReactElement`   | Optional secondary call-to-action button. This should only exist when a `primaryButton` exists. | `undefined` |
+| `externalLink`    | `ReactElement`   | Optional link to external page for additional information.                                      | `undefined` |
 
 Note: The features prop must contain an array of feature objects, where each object should have the `icon`, `title`, and `description` properties.
 
