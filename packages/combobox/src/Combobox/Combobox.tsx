@@ -1256,10 +1256,10 @@ export function Combobox<M extends boolean>({
               <Icon
                 glyph="Warning"
                 color={darkMode ? palette.red.light1 : palette.red.base}
-                className={endIconStyle(size)}
+                className={endIconStyle}
               />
             ) : (
-              <Icon glyph="CaretDown" className={endIconStyle(size)} />
+              <Icon glyph="CaretDown" className={endIconStyle} />
             )}
           </div>
 

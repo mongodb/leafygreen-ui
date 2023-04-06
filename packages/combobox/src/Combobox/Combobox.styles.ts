@@ -120,6 +120,7 @@ export const baseComboboxStyles = css`
   position: relative;
   overflow: hidden;
 
+  // Overflow shadow
   ::after {
     content: '';
     position: absolute;
@@ -233,6 +234,7 @@ export const inputWrapperStyle = ({
         overflow-x: scroll;
         scroll-behavior: smooth;
         scrollbar-width: none;
+        line-height: 1;
 
         &::-webkit-scrollbar {
           display: none;
@@ -315,6 +317,7 @@ export const inputElementSizeStyle: Record<Size, string> = {
     height: ${inputHeight[Size.Small]}px;
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
+    // line-height: 13px;
     min-width: ${maxCharWidth[Size.Small]}px;
     // Only add padding if there are chips
     &:not(:first-child) {
@@ -368,10 +371,9 @@ export const clearButtonStyle = css`
   margin-block: calc(${caretIconSize / 2}px - 100%);
 `;
 
-export const endIconStyle = (size: Size) => css`
+export const endIconStyle = css`
   height: ${caretIconSize}px;
   width: ${caretIconSize}px;
-  // margin-inline-end: calc(${comboboxPadding[size].x}px / 2);
 `;
 
 export const errorMessageThemeStyle: Record<Theme, string> = {

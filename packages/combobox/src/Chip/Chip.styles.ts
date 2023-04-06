@@ -20,8 +20,7 @@ export const chipWrapperPaddingY = {
  */
 export const chipHeight: Record<ComboboxSize, number> = {
   [ComboboxSize.XSmall]: 16 + 2 * chipWrapperPaddingY[ComboboxSize.XSmall], // 16 + 2 * 1 = 18
-  [ComboboxSize.Small]:
-    typeScales.body1.lineHeight + 1 * chipWrapperPaddingY[ComboboxSize.Small], // 20 + 1 * 0 = 20
+  [ComboboxSize.Small]: typeScales.body1.lineHeight,
   [ComboboxSize.Default]:
     typeScales.body1.lineHeight + 2 * chipWrapperPaddingY[ComboboxSize.Default], // 20 + 2 * 2 = 24
   [ComboboxSize.Large]:
@@ -44,7 +43,7 @@ export const chipWrapperSizeStyle: Record<ComboboxSize, string> = {
   `,
   [ComboboxSize.Small]: css`
     font-size: ${typeScales.body1.fontSize}px;
-    line-height: 1;
+    line-height: ${typeScales.body1.lineHeight}px;
     border-radius: 4px;
   `,
   [ComboboxSize.Default]: css`
@@ -96,11 +95,11 @@ export const disabledChipWrapperStyle: Record<Theme, string> = {
 export const chipTextSizeStyle: Record<ComboboxSize, string> = {
   [ComboboxSize.XSmall]: css`
     padding-inline: 6px;
-    padding-block: ${chipWrapperPaddingY[ComboboxSize.Default]}px;
+    padding-block: ${chipWrapperPaddingY[ComboboxSize.XSmall]}px;
   `,
   [ComboboxSize.Small]: css`
     padding-inline: 6px;
-    padding-block: ${chipWrapperPaddingY[ComboboxSize.Default]}px;
+    padding-block: ${chipWrapperPaddingY[ComboboxSize.Small]}px;
   `,
   [ComboboxSize.Default]: css`
     padding-inline: 6px;

@@ -127,7 +127,6 @@ function Code({
   );
 
   function handleScroll(e: React.UIEvent) {
-    console.log('scroll');
     const { scrollWidth, clientWidth: elementWidth } = e.target as HTMLElement;
     const isScrollable = scrollWidth > elementWidth;
 
