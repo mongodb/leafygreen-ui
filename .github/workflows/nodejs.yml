@@ -32,7 +32,7 @@ jobs:
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install
-        if: ${{ steps.yarn-cache.outputs.cache-hit != true }}
+        if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
         run: yarn install --frozen-lockfile
 
   build:
@@ -48,12 +48,14 @@ jobs:
         run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
 
       - uses: actions/cache/restore@v3
+        name: Restore yarn cache
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
       - uses: actions/cache@v2
+        name: Check for build cache
         id: build-cache
         with:
           path: |
@@ -62,7 +64,7 @@ jobs:
           key: ${{ runner.os }}-build-cache-${{ hashFiles('**/rollup.config.js', '**/babel.config.js', '**/src/', '**/scripts/', '!**/node_modules', '!**/dist') }}
 
       - name: build
-        if: ${{ steps.build-cache.outputs.cache-hit != true }}
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         run: yarn build:packages
 
   tests:
