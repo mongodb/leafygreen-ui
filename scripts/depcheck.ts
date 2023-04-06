@@ -15,6 +15,7 @@ import { getPackageLGDependencies } from './utils/getPackageDependencies';
 
 const lgPackages = readdirSync('packages/');
 const globalDevDependencies = Object.keys(globalPackageJson.devDependencies);
+const lgProvider = '@leafygreen-ui/leafygreen-provider';
 
 const cli = new Command('depcheck')
   .arguments('[...packages]')
@@ -30,20 +31,21 @@ const fix: boolean = cli.opts()['fix'];
 const fixTS = cli.opts()['fixTsconfig'];
 const verbose = cli.opts()['verbose'];
 
-const testFilePatterns = [
-  // files matching these patterns will be ignored
+// files matching these patterns will be ignored
+const ignoreFilePatterns = [
   /.*.spec.tsx?/,
   /.*.story.tsx?/,
   /.*.stories.tsx?/,
   /.*.example.tsx?/,
   /.*.testutils.tsx?/,
+  /.*\/dist\/.*/,
 ];
 
+// these dependencies will be ignored when listed in a package.json
+const ignoreMatches = ['@leafygreen-ui/mongo-nav', 'prop-types'];
+
 const depcheckOptions: depcheck.Options = {
-  ignoreMatches: [
-    // ignore dependencies that matches these globs
-    '@leafygreen-ui/mongo-nav',
-  ],
+  ignoreMatches,
 };
 
 checkDependencies();
@@ -74,22 +76,25 @@ async function checkDependencies() {
     // i.e. every listed devDep should _only_ be used in .story or .spec files
     // If it's used in other files, we remove it and re-install it as a regular dependency
     {
-      const usedAsDev = sortDependenciesByUsage(using, pkg).devDependencies;
-      const listed = pick(pkgJson, ['devDependencies']).devDependencies;
-      const listedDev = listed ? Object.keys(listed) : [];
+      const { devDependencies: usedAsDev } = sortDependenciesByUsage(
+        using,
+        pkg,
+      );
+      const { devDependencies: listedObj } = pick(pkgJson, ['devDependencies']);
+      const listedDev = listedObj ? Object.keys(listedObj) : [];
 
       if (
         listedDev.length &&
         // Check if every usage of every listed devDep is in some test file
         !listedDev.every(depName =>
           using[depName].every(file =>
-            testFilePatterns.some(pattern => pattern.test(file)),
+            ignoreFilePatterns.some(pattern => pattern.test(file)),
           ),
         )
       ) {
         // add the dependencies that are listed as dev but not used as dev to the unused array to uninstall them
         const listedButNotUsedAsDev = listedDev.filter(
-          dep => !usedAsDev.includes(dep),
+          dep => !usedAsDev.includes(dep) && !ignoreMatches.includes(dep),
         );
         unusedDev.push(...listedButNotUsedAsDev);
         missing.dependencies.push(...listedButNotUsedAsDev);
@@ -100,26 +105,34 @@ async function checkDependencies() {
     // Ensure dependencies listed as `dependencies` are used in files other than .story or .spec files
     // i.e. Every listed dependency should be used in at leas one file that is not .story or .spec
     {
-      const usedAsDependency = sortDependenciesByUsage(using, pkg).dependencies;
-      const listed = pick(pkgJson, ['dependencies']).dependencies;
-      const listedDeps = listed ? Object.keys(listed) : [];
+      const { dependencies: usedAsDependency } = sortDependenciesByUsage(
+        using,
+        pkg,
+      );
+      const { dependencies: listedObj } = pick(pkgJson, ['dependencies']);
+      const listedDeps = listedObj ? Object.keys(listedObj) : [];
 
       if (
         usedAsDependency &&
         listedDeps &&
         // Check if at least one usage of every listed dep is not in any test file
         !listedDeps.every(depName =>
-          using[depName].some(
-            file => !testFilePatterns.some(pattern => pattern.test(file)),
+          using[depName]?.some(
+            file => !ignoreFilePatterns.some(pattern => pattern.test(file)),
           ),
         )
       ) {
         const listedButOnlyUsedAsDev = listedDeps.filter(
-          dep => !usedAsDependency.includes(dep),
+          dep =>
+            !usedAsDependency.includes(dep) && !ignoreMatches.includes(dep),
         );
         unusedDeps.push(...listedButOnlyUsedAsDev);
       }
     }
+
+    const usesProvider = Boolean(using[lgProvider]);
+    const isMissingProviderPeer =
+      usesProvider && !pkgJson.peerDependencies[lgProvider];
 
     const countMissing = Object.keys(missing.dependencies).length;
     const countMissingDev = Object.keys(missing.devDependencies).length;
@@ -128,7 +141,8 @@ async function checkDependencies() {
       countMissing > 0 ||
       countMissingDev > 0 ||
       unusedDeps.length > 0 ||
-      unusedDev.length > 0
+      unusedDev.length > 0 ||
+      isMissingProviderPeer
     ) {
       unusedDeps.length > 0 &&
         console.log(
@@ -162,10 +176,19 @@ async function checkDependencies() {
           )}`,
         );
 
+      isMissingProviderPeer &&
+        console.log(
+          `${chalk.green(`packages/${pkg}`)} does not list ${chalk.greenBright(
+            lgProvider,
+          )} as a peer dependency.\n  Please fix this manually in ${chalk.gray(
+            `packages/${pkg}/package.json`,
+          )}`,
+        );
+
       if (fix) {
         await fixDependencies(pkg, missing, [...unusedDeps, ...unusedDev]);
       } else {
-        issuesFound = true;
+        issuesFound = !isMissingProviderPeer; // missing peer deps is not auto-fixable
       }
 
       console.log('');
@@ -281,7 +304,7 @@ function sortDependenciesByUsage(
           if (
             // If every file used in is a test file...
             fileUsedIn.every(file =>
-              testFilePatterns.some(pattern => pattern.test(file)),
+              ignoreFilePatterns.some(pattern => pattern.test(file)),
             )
           ) {
             verbose && console.log(`${pkg} uses ${name} in a test file`);

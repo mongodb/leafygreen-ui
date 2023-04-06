@@ -6,7 +6,7 @@ import { axe } from 'jest-axe';
 import {
   getTestColumnsProps,
   useTestHookCall,
-} from '../../utils/testHookCalls';
+} from '../../utils/testHookCalls.testutils';
 
 import HeaderCell, { HeaderCellProps } from '.';
 

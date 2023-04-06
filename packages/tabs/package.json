@@ -44,6 +44,7 @@
     "@leafygreen-ui/card": "^9.0.6",
     "@leafygreen-ui/button": "^20.0.2",
     "@leafygreen-ui/icon-button": "^15.0.7",
-    "@leafygreen-ui/icon": "^11.12.5"
+    "@leafygreen-ui/icon": "^11.12.5",
+    "@leafygreen-ui/typography": "^16.1.0"
   }
 }

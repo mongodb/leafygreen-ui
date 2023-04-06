@@ -16,7 +16,11 @@ import Pagination from '@leafygreen-ui/pagination';
 import ExpandedContent from './ExpandedContent/ExpandedContent';
 import TableBody from './TableBody/TableBody';
 import TableHead from './TableHead/TableHead';
-import { createKitchenSinkData, makeData, Person } from './utils/makeData';
+import {
+  createKitchenSinkData,
+  makeData,
+  Person,
+} from './utils/makeData.testutils';
 import { AnyDict } from './utils/types';
 import { Cell, HeaderCell } from './Cell';
 import { HeaderRow, Row } from './Row';
