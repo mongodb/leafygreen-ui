@@ -14,12 +14,12 @@ export interface FeaturesEmptyStateProps extends DarkModeProps {
   features: Array<Feature>;
 
   /**
-   * Optional CTA button
+   * Primary CTA button.
    */
-  primaryButton?: ReactElement;
+  primaryButton: ReactElement;
 
   /**
-   * Optional CTA button. Secondary button should only exist when a primaryButton exists.
+   * Optional secondary CTA button.
    */
   secondaryButton?: ReactElement;
 

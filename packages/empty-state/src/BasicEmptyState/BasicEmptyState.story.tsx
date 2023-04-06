@@ -2,11 +2,13 @@ import React, { ReactElement } from 'react';
 import { ComponentStory } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { storybookArgTypes, Theme } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
 import DarkModeGraphic from '../example-graphics/DarkModeGraphic.svg';
+import DarkModeSmallGraphic from '../example-graphics/DarkModeSmallGraphic.svg';
 import LightModeGraphic from '../example-graphics/LightModeGraphic.svg';
+import LightModeSmallGraphic from '../example-graphics/LightModeSmallGraphic.svg';
 
 import { BasicEmptyState } from '.';
 
@@ -32,42 +34,46 @@ export default {
     },
   },
 };
+const graphics: Record<Theme, Record<string, ReactElement>> = {
+  [Theme.Dark]: {
+    small: <DarkModeSmallGraphic viewBox="0 0 198 131" />,
+    normal: <DarkModeGraphic viewBox="0 0 298 198" />,
+  },
+  [Theme.Light]: {
+    small: <LightModeSmallGraphic viewBox="0 0 198 131" />,
+    normal: <LightModeGraphic viewBox="0 0 298 198" />,
+  },
+};
 
-const Template: ComponentStory<typeof BasicEmptyState> = props => {
-  let graphic: ReactElement | undefined;
-
-  // replace graphic prop with appropriate graphic for theme
+const Template: ComponentStory<typeof BasicEmptyState> = ({
   // eslint-disable-next-line react/prop-types
-  if (props.graphic) {
-    // eslint-disable-next-line react/prop-types
-    graphic = props.darkMode ? (
-      <DarkModeGraphic viewBox="0 0 298 198" />
-    ) : (
-      <LightModeGraphic viewBox="0 0 298 198" />
-    );
-  }
-
-  return <BasicEmptyState {...props} graphic={graphic} />;
+  // @ts-expect-error graphicSize is a Storybook only prop
+  graphicSize = 'normal',
+  ...rest
+}) => {
+  // eslint-disable-next-line react/prop-types
+  const theme = rest.darkMode ? Theme.Dark : Theme.Light;
+  return (
+    <BasicEmptyState
+      {...rest}
+      // eslint-disable-next-line react/prop-types
+      graphic={rest.graphic ? graphics[theme][graphicSize] : undefined}
+    />
+  );
 };
 
 export const Basic = Template.bind({});
 
-export const WithGraphic = Template.bind({});
-WithGraphic.args = {
-  graphic: <LightModeGraphic viewBox="0 0 298 198" />,
-};
-
-export const WithGraphicAndLink = Template.bind({});
-WithGraphicAndLink.args = {
-  graphic: <LightModeGraphic viewBox="0 0 298 198" />,
-  externalLink: <Link>Test external link</Link>,
-};
-
-export const WithActions = Template.bind({});
-WithActions.args = {
-  graphic: <LightModeGraphic viewBox="0 0 298 198" />,
+export const WithSmallGraphic = Template.bind({});
+WithSmallGraphic.args = {
+  graphic: <LightModeSmallGraphic viewBox="0 0 198 131" />,
+  title: 'No results found',
+  description: 'Try adjusting your keywords to find what you’re looking for.',
   primaryButton: <Button>Add Dependency</Button>,
   secondaryButton: <Button>Upload Module</Button>,
+  externalLink: <Link>Test external link</Link>,
+  // @ts-expect-error graphicSize is a Storybook only prop
+  graphicSize: 'small',
 };
 
 export const WithActionsAndLink = Template.bind({});
@@ -76,4 +82,6 @@ WithActionsAndLink.args = {
   primaryButton: <Button>Add Dependency</Button>,
   secondaryButton: <Button>Upload Module</Button>,
   externalLink: <Link>Test external link</Link>,
+  // @ts-expect-error graphicSize is a Storybook only prop
+  graphicSize: 'normal',
 };

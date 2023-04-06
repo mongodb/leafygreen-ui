@@ -14,6 +14,7 @@ export default {
   component: FeaturesEmptyState,
   args: {
     title: 'Sample title of features empty state',
+    primaryButton: <Button>Add Dependency</Button>,
   },
   argTypes: {
     features: { control: 'none' },
@@ -63,8 +64,8 @@ TwoFeatures.args = {
   ],
 };
 
-export const TwoFeaturesWithActions = Template.bind({});
-TwoFeaturesWithActions.args = {
+export const TwoFeaturesWithSecondaryAction = Template.bind({});
+TwoFeaturesWithSecondaryAction.args = {
   features: [
     {
       graphic: graphics[Theme.Light][0],
@@ -79,12 +80,11 @@ TwoFeaturesWithActions.args = {
         'Run powerful and resilient apps that span multiple regions or clouds at once.',
     },
   ],
-  primaryButton: <Button>Add Dependency</Button>,
   secondaryButton: <Button>Upload Module</Button>,
 };
 
-export const TwoFeaturesWithActionsAndLink = Template.bind({});
-TwoFeaturesWithActionsAndLink.args = {
+export const TwoFeaturesWithSecondaryActionAndLink = Template.bind({});
+TwoFeaturesWithSecondaryActionAndLink.args = {
   features: [
     {
       graphic: graphics[Theme.Light][0],
@@ -99,7 +99,6 @@ TwoFeaturesWithActionsAndLink.args = {
         'Run powerful and resilient apps that span multiple regions or clouds at once.',
     },
   ],
-  primaryButton: <Button>Add Dependency</Button>,
   secondaryButton: <Button>Upload Module</Button>,
   externalLink: <Link>Test external link</Link>,
 };
@@ -128,8 +127,8 @@ ThreeFeatures.args = {
   ],
 };
 
-export const ThreeFeaturesWithActions = Template.bind({});
-ThreeFeaturesWithActions.args = {
+export const ThreeFeaturesWithSecondaryAction = Template.bind({});
+ThreeFeaturesWithSecondaryAction.args = {
   features: [
     {
       graphic: graphics[Theme.Light][0],
@@ -150,12 +149,11 @@ ThreeFeaturesWithActions.args = {
         'Secure data with built-in defaults for access and end-toend encryption.',
     },
   ],
-  primaryButton: <Button>Add Dependency</Button>,
   secondaryButton: <Button>Upload Module</Button>,
 };
 
-export const ThreeFeaturesWithActionsAndLink = Template.bind({});
-ThreeFeaturesWithActionsAndLink.args = {
+export const ThreeFeaturesWithSecondaryActionAndLink = Template.bind({});
+ThreeFeaturesWithSecondaryActionAndLink.args = {
   features: [
     {
       graphic: graphics[Theme.Light][0],
@@ -176,7 +174,6 @@ ThreeFeaturesWithActionsAndLink.args = {
         'Secure data with built-in defaults for access and end-toend encryption.',
     },
   ],
-  primaryButton: <Button>Add Dependency</Button>,
   secondaryButton: <Button>Upload Module</Button>,
   externalLink: <Link>Test external link</Link>,
 };

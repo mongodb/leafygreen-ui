@@ -53,12 +53,6 @@ export function FeaturesEmptyState({
     );
   }
 
-  if (!primaryButton && !!secondaryButton) {
-    console.error(
-      'The `secondaryButton` prop in `FeaturesEmptyState` should only be used when the `primaryButton` prop is also used.',
-    );
-  }
-
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <div className={rootStyles}>
@@ -77,14 +71,12 @@ export function FeaturesEmptyState({
               </div>
             ))}
         </div>
-        {!!primaryButton && (
-          <div className={buttonContainerStyles}>
-            <Button {...primaryButton.props} variant="primary" />
-            {!!secondaryButton && (
-              <Button {...secondaryButton.props} variant="default" />
-            )}
-          </div>
-        )}
+        <div className={buttonContainerStyles}>
+          <Button {...primaryButton.props} variant="primary" />
+          {!!secondaryButton && (
+            <Button {...secondaryButton.props} variant="default" />
+          )}
+        </div>
         {!!externalLink && (
           <div className={externalLinkStyles}>
             <Link
