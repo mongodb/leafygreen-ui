@@ -69,6 +69,8 @@ export const LiveExample: ComponentStory<EmptyStateStoryProps> = ({
         />
       )}
       {variant === StoryVariant.TwoFeatures && (
+        // The @ts-expect-error is marked as unused, but ignores error that only exists when the TS check is run
+        // @ts-expect-error Features are not undefined in the story's args
         <TwoFeaturesWithActionsAndLink
           {...FeaturesEmptyStateStory.args}
           {...TwoFeaturesWithActionsAndLink.args}
@@ -76,6 +78,8 @@ export const LiveExample: ComponentStory<EmptyStateStoryProps> = ({
         />
       )}
       {variant === StoryVariant.ThreeFeatures && (
+        // The @ts-expect-error is marked as unused, but ignores error that only exists when the TS check is run
+        // @ts-expect-error Features are not undefined in the story's args
         <ThreeFeaturesWithActionsAndLink
           {...FeaturesEmptyStateStory.args}
           {...ThreeFeaturesWithActionsAndLink.args}
