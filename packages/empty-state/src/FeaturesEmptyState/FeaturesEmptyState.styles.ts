@@ -1,6 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
+import { spacing } from '@leafygreen-ui/tokens';
 
 export const rootStyles = css`
   max-width: 648px;
@@ -9,7 +10,7 @@ export const rootStyles = css`
 
 export const featuresContainerStyles = css`
   display: flex;
-  gap: 24px;
+  gap: ${spacing[4]}px;
   justify-content: center;
 `;
 
@@ -18,11 +19,11 @@ export const featureContainerStyles = css`
 `;
 
 export const titleStyles = css`
-  margin-bottom: 24px;
+  margin-bottom: ${spacing[4]}px;
 `;
 
 export const graphicWrapperStyles = css`
-  margin-bottom: 16px;
+  margin-bottom: ${spacing[3]}px;
 `;
 
 export const featureDescriptionStyles: Record<Theme, string> = {
@@ -38,9 +39,9 @@ export const buttonContainerStyles = css`
   display: flex;
   justify-content: center;
   gap: 12px;
-  margin-top: 24px;
+  margin-top: ${spacing[4]}px;
 `;
 
 export const externalLinkStyles = css`
-  margin-top: 24px;
+  margin-top: ${spacing[4]}px;
 `;

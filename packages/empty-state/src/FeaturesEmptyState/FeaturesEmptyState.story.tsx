@@ -17,9 +17,9 @@ export default {
   },
   argTypes: {
     features: { control: 'none' },
-    ExternalLink: { control: 'none' },
-    PrimaryButton: { control: 'none' },
-    SecondaryButton: { control: 'none' },
+    externalLink: { control: 'none' },
+    primaryButton: { control: 'none' },
+    secondaryButton: { control: 'none' },
     darkMode: storybookArgTypes.darkMode,
   },
   parameters: {
@@ -79,8 +79,8 @@ TwoFeaturesWithActions.args = {
         'Run powerful and resilient apps that span multiple regions or clouds at once.',
     },
   ],
-  PrimaryButton: <Button>Add Dependency</Button>,
-  SecondaryButton: <Button>Upload Module</Button>,
+  primaryButton: <Button>Add Dependency</Button>,
+  secondaryButton: <Button>Upload Module</Button>,
 };
 
 export const TwoFeaturesWithActionsAndLink = Template.bind({});
@@ -99,9 +99,9 @@ TwoFeaturesWithActionsAndLink.args = {
         'Run powerful and resilient apps that span multiple regions or clouds at once.',
     },
   ],
-  PrimaryButton: <Button>Add Dependency</Button>,
-  SecondaryButton: <Button>Upload Module</Button>,
-  ExternalLink: <Link>Test external link</Link>,
+  primaryButton: <Button>Add Dependency</Button>,
+  secondaryButton: <Button>Upload Module</Button>,
+  externalLink: <Link>Test external link</Link>,
 };
 
 export const ThreeFeatures = Template.bind({});
@@ -150,8 +150,8 @@ ThreeFeaturesWithActions.args = {
         'Secure data with built-in defaults for access and end-toend encryption.',
     },
   ],
-  PrimaryButton: <Button>Add Dependency</Button>,
-  SecondaryButton: <Button>Upload Module</Button>,
+  primaryButton: <Button>Add Dependency</Button>,
+  secondaryButton: <Button>Upload Module</Button>,
 };
 
 export const ThreeFeaturesWithActionsAndLink = Template.bind({});
@@ -176,7 +176,7 @@ ThreeFeaturesWithActionsAndLink.args = {
         'Secure data with built-in defaults for access and end-toend encryption.',
     },
   ],
-  PrimaryButton: <Button>Add Dependency</Button>,
-  SecondaryButton: <Button>Upload Module</Button>,
-  ExternalLink: <Link>Test external link</Link>,
+  primaryButton: <Button>Add Dependency</Button>,
+  secondaryButton: <Button>Upload Module</Button>,
+  externalLink: <Link>Test external link</Link>,
 };

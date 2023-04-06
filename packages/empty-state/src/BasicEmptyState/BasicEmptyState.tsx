@@ -21,28 +21,28 @@ export function BasicEmptyState({
   graphic,
   title,
   description,
-  PrimaryButton,
-  SecondaryButton,
-  ExternalLink,
+  primaryButton,
+  secondaryButton,
+  externalLink,
   darkMode: darkModeProp,
 }: BasicEmptyStateProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
 
-  if (!isComponentType(PrimaryButton, 'Button')) {
+  if (!isComponentType(primaryButton, 'Button')) {
     console.error(
-      'The `PrimaryButton` prop in BasicEmptyState should be of type LeafyGreen Button.',
+      'The `primaryButton` prop in BasicEmptyState should be of type LeafyGreen Button.',
     );
   }
 
-  if (!isComponentType(SecondaryButton, 'Button')) {
+  if (!isComponentType(secondaryButton, 'Button')) {
     console.error(
-      'The `SecondaryButton` prop in BasicEmptyState should be of type LeafyGreen Button.',
+      'The `secondaryButton` prop in BasicEmptyState should be of type LeafyGreen Button.',
     );
   }
 
-  if (!PrimaryButton && !!SecondaryButton) {
+  if (!primaryButton && !!secondaryButton) {
     console.error(
-      'The `SecondaryButton` prop in BasicEmptyState should only be used when the `PrimaryButton` prop is also used.',
+      'The `secondaryButton` prop in BasicEmptyState should only be used when the `primaryButton` prop is also used.',
     );
   }
 
@@ -53,20 +53,20 @@ export function BasicEmptyState({
         <div className={textContainerStyles}>
           <H3 className={titleStyles}>{title}</H3>
           <Body className={descriptionStyles[theme]}>{description}</Body>
-          {!!PrimaryButton && (
+          {!!primaryButton && (
             <div className={buttonContainerStyles}>
-              <Button {...PrimaryButton.props} variant="primary" />
-              {!!SecondaryButton && (
-                <Button {...SecondaryButton.props} variant="default" />
+              <Button {...primaryButton.props} variant="primary" />
+              {!!secondaryButton && (
+                <Button {...secondaryButton.props} variant="default" />
               )}
             </div>
           )}
-          {!!ExternalLink && (
+          {!!externalLink && (
             <div className={externalLinkStyles}>
               <Link
                 data-testid="basic-empty-states-link"
                 target="_blank"
-                {...ExternalLink.props}
+                {...externalLink.props}
               />
             </div>
           )}
@@ -78,9 +78,9 @@ export function BasicEmptyState({
 
 BasicEmptyState.propTypes = {
   darkMode: PropTypes.bool,
-  ExternalLink: PropTypes.element,
-  SecondaryButton: PropTypes.element,
-  PrimaryButton: PropTypes.element,
+  externalLink: PropTypes.element,
+  secondaryButton: PropTypes.element,
+  primaryButton: PropTypes.element,
   description: PropTypes.oneOf([PropTypes.element, PropTypes.string])
     .isRequired,
   title: PropTypes.string.isRequired,

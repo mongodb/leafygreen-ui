@@ -42,11 +42,6 @@ const testFeatures = [
   },
 ];
 
-beforeEach(() => {
-  // silence all console errors
-  jest.spyOn(console, 'error').mockImplementation(() => {});
-});
-
 afterEach(() => {
   jest.clearAllMocks();
 });
@@ -61,7 +56,9 @@ describe('packages/empty-state/features', () => {
 
   test("console errors when there's only one feature", () => {
     expect(MIN_NUM_FEATURES === 2).toBe(true);
-    const consoleSpy = jest.spyOn(console, 'error');
+    const consoleSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
     render(
       <FeaturesEmptyState
         title="test title"
@@ -72,7 +69,9 @@ describe('packages/empty-state/features', () => {
   });
 
   test("doesn't console error when there's two features", () => {
-    const consoleSpy = jest.spyOn(console, 'error');
+    const consoleSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
     render(
       <FeaturesEmptyState
         title="test title"
@@ -83,14 +82,18 @@ describe('packages/empty-state/features', () => {
   });
 
   test("doesn't console error when there's three features", () => {
-    const consoleSpy = jest.spyOn(console, 'error');
+    const consoleSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
     render(<FeaturesEmptyState title="test title" features={testFeatures} />);
     expect(consoleSpy).not.toHaveBeenCalled();
   });
 
   test("console error when there's four features", () => {
     expect(MAX_NUM_FEATURES === 3).toBe(true);
-    const consoleSpy = jest.spyOn(console, 'error');
+    const consoleSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
     render(
       <FeaturesEmptyState
         title="test title"
@@ -112,7 +115,7 @@ describe('packages/empty-state/features', () => {
       <FeaturesEmptyState
         title="test title"
         features={testFeatures}
-        PrimaryButton={<Button>test button</Button>}
+        primaryButton={<Button>test button</Button>}
       />,
     );
     expect(getByText('test button')).toBeInTheDocument();
@@ -123,19 +126,21 @@ describe('packages/empty-state/features', () => {
       <FeaturesEmptyState
         title="test title"
         features={testFeatures}
-        PrimaryButton={<Button>test button</Button>}
-        SecondaryButton={<Button>test button 2</Button>}
+        primaryButton={<Button>test button</Button>}
+        secondaryButton={<Button>test button 2</Button>}
       />,
     );
     expect(getByText('test button 2')).toBeInTheDocument();
   });
   test('errors when secondary button is passed without primary', () => {
-    const consoleSpy = jest.spyOn(console, 'error');
+    const consoleSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
     render(
       <FeaturesEmptyState
         title="test title"
         features={testFeatures}
-        SecondaryButton={<Button>test button 2</Button>}
+        secondaryButton={<Button>test button 2</Button>}
       />,
     );
     expect(consoleSpy).toHaveBeenCalled();
@@ -145,9 +150,9 @@ describe('packages/empty-state/features', () => {
       <FeaturesEmptyState
         title="test title"
         features={testFeatures}
-        PrimaryButton={<Button>test button</Button>}
-        SecondaryButton={<Button>test button 2</Button>}
-        ExternalLink={<Link>test external link</Link>}
+        primaryButton={<Button>test button</Button>}
+        secondaryButton={<Button>test button 2</Button>}
+        externalLink={<Link>test external link</Link>}
       />,
     );
     expect(getByText('test external link')).toBeInTheDocument();
@@ -157,9 +162,9 @@ describe('packages/empty-state/features', () => {
       <FeaturesEmptyState
         title="test title"
         features={testFeatures}
-        PrimaryButton={<Button>test button</Button>}
-        SecondaryButton={<Button>test button 2</Button>}
-        ExternalLink={<Link>test external link</Link>}
+        primaryButton={<Button>test button</Button>}
+        secondaryButton={<Button>test button 2</Button>}
+        externalLink={<Link>test external link</Link>}
       />,
     );
     // test that the link renders the external icon

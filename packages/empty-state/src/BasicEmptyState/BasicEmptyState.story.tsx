@@ -21,9 +21,9 @@ export default {
   argTypes: {
     graphic: { control: 'none' },
     description: { control: 'text' },
-    ExternalLink: { control: 'none' },
-    PrimaryButton: { control: 'none' },
-    SecondaryButton: { control: 'none' },
+    externalLink: { control: 'none' },
+    primaryButton: { control: 'none' },
+    secondaryButton: { control: 'none' },
     darkMode: storybookArgTypes.darkMode,
   },
   parameters: {
@@ -60,20 +60,20 @@ WithGraphic.args = {
 export const WithGraphicAndLink = Template.bind({});
 WithGraphicAndLink.args = {
   graphic: <LightModeGraphic viewBox="0 0 298 198" />,
-  ExternalLink: <Link>Test external link</Link>,
+  externalLink: <Link>Test external link</Link>,
 };
 
 export const WithActions = Template.bind({});
 WithActions.args = {
   graphic: <LightModeGraphic viewBox="0 0 298 198" />,
-  PrimaryButton: <Button>Add Dependency</Button>,
-  SecondaryButton: <Button>Upload Module</Button>,
+  primaryButton: <Button>Add Dependency</Button>,
+  secondaryButton: <Button>Upload Module</Button>,
 };
 
 export const WithActionsAndLink = Template.bind({});
 WithActionsAndLink.args = {
   graphic: <LightModeGraphic viewBox="0 0 298 198" />,
-  PrimaryButton: <Button>Add Dependency</Button>,
-  SecondaryButton: <Button>Upload Module</Button>,
-  ExternalLink: <Link>Test external link</Link>,
+  primaryButton: <Button>Add Dependency</Button>,
+  secondaryButton: <Button>Upload Module</Button>,
+  externalLink: <Link>Test external link</Link>,
 };

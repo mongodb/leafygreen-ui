@@ -21,15 +21,15 @@ export interface BasicEmptyStateProps extends DarkModeProps {
   /**
    * Optional CTA button
    */
-  PrimaryButton?: ReactElement;
+  primaryButton?: ReactElement;
 
   /**
    * Optional CTA button. Secondary button should only exist when a primaryButton exists.
    */
-  SecondaryButton?: ReactElement;
+  secondaryButton?: ReactElement;
 
   /**
    * Optional link to external page for additional information
    */
-  ExternalLink?: ReactElement;
+  externalLink?: ReactElement;
 }

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Button from '@leafygreen-ui/button';
-import { cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
@@ -26,9 +25,9 @@ export const MAX_NUM_FEATURES = 3;
 export function FeaturesEmptyState({
   title,
   features,
-  PrimaryButton,
-  SecondaryButton,
-  ExternalLink,
+  primaryButton,
+  secondaryButton,
+  externalLink,
   darkMode: darkModeProp,
 }: FeaturesEmptyStateProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
@@ -42,28 +41,28 @@ export function FeaturesEmptyState({
     );
   }
 
-  if (!!PrimaryButton && !isComponentType(PrimaryButton, 'Button')) {
+  if (!!primaryButton && !isComponentType(primaryButton, 'Button')) {
     console.error(
-      'The `PrimaryButton` prop in `FeaturesEmptyState` should be of type LeafyGreen Button.',
+      'The `primaryButton` prop in `FeaturesEmptyState` should be of type LeafyGreen Button.',
     );
   }
 
-  if (!!SecondaryButton && !isComponentType(SecondaryButton, 'Button')) {
+  if (!!secondaryButton && !isComponentType(secondaryButton, 'Button')) {
     console.error(
-      'The `SecondaryButton` prop in `FeaturesEmptyState` should be of type LeafyGreen Button.',
+      'The `secondaryButton` prop in `FeaturesEmptyState` should be of type LeafyGreen Button.',
     );
   }
 
-  if (!PrimaryButton && !!SecondaryButton) {
+  if (!primaryButton && !!secondaryButton) {
     console.error(
-      'The `SecondaryButton` prop in `FeaturesEmptyState` should only be used when the `PrimaryButton` prop is also used.',
+      'The `secondaryButton` prop in `FeaturesEmptyState` should only be used when the `primaryButton` prop is also used.',
     );
   }
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <div className={rootStyles}>
-        <H3 className={cx(titleStyles)}>{title}</H3>
+        <H3 className={titleStyles}>{title}</H3>
         <div className={featuresContainerStyles}>
           {!!features &&
             features.map(({ graphic, title, description }: Feature) => (
@@ -78,20 +77,20 @@ export function FeaturesEmptyState({
               </div>
             ))}
         </div>
-        {!!PrimaryButton && (
+        {!!primaryButton && (
           <div className={buttonContainerStyles}>
-            <Button {...PrimaryButton.props} variant="primary" />
-            {!!SecondaryButton && (
-              <Button {...SecondaryButton.props} variant="default" />
+            <Button {...primaryButton.props} variant="primary" />
+            {!!secondaryButton && (
+              <Button {...secondaryButton.props} variant="default" />
             )}
           </div>
         )}
-        {!!ExternalLink && (
+        {!!externalLink && (
           <div className={externalLinkStyles}>
             <Link
               data-testid="features-empty-states-link"
               target="_blank"
-              {...ExternalLink.props}
+              {...externalLink.props}
             />
           </div>
         )}
@@ -102,9 +101,9 @@ export function FeaturesEmptyState({
 
 FeaturesEmptyState.propTypes = {
   darkMode: PropTypes.bool,
-  ExternalLink: PropTypes.element,
-  SecondaryButton: PropTypes.element,
-  PrimaryButton: PropTypes.element,
+  externalLink: PropTypes.element,
+  secondaryButton: PropTypes.element,
+  primaryButton: PropTypes.element,
   features: PropTypes.arrayOf(
     PropTypes.exact({
       graphic: PropTypes.element,

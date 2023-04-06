@@ -6,9 +6,9 @@ export default {
   title: 'Components/EmptyState',
   argTypes: {
     graphic: { control: 'none' },
-    ExternalLink: { control: 'none' },
-    PrimaryButton: { control: 'none' },
-    SecondaryButton: { control: 'none' },
+    externalLink: { control: 'none' },
+    primaryButton: { control: 'none' },
+    secondaryButton: { control: 'none' },
     darkMode: storybookArgTypes.darkMode,
   },
   parameters: {

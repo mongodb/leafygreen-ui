@@ -7,7 +7,7 @@ import { Link } from '@leafygreen-ui/typography';
 import { BasicEmptyState } from '.';
 
 beforeEach(() => {
-  // silence all console errors
+  // silence all expected console errors for cleaner test output
   jest.spyOn(console, 'error').mockImplementation(() => {});
 });
 
@@ -28,7 +28,7 @@ describe('packages/empty-state/basic', () => {
       <BasicEmptyState
         title="test title"
         description="test description"
-        PrimaryButton={<Button>test button</Button>}
+        primaryButton={<Button>test button</Button>}
       />,
     );
     expect(getByText('test button')).toBeInTheDocument();
@@ -39,8 +39,8 @@ describe('packages/empty-state/basic', () => {
       <BasicEmptyState
         title="test title"
         description="test description"
-        PrimaryButton={<Button>test button</Button>}
-        SecondaryButton={<Button>test button 2</Button>}
+        primaryButton={<Button>test button</Button>}
+        secondaryButton={<Button>test button 2</Button>}
       />,
     );
     expect(getByText('test button 2')).toBeInTheDocument();
@@ -51,7 +51,7 @@ describe('packages/empty-state/basic', () => {
       <BasicEmptyState
         title="test title"
         description="test description"
-        SecondaryButton={<Button>test button 2</Button>}
+        secondaryButton={<Button>test button 2</Button>}
       />,
     );
     expect(consoleSpy).toHaveBeenCalled();
@@ -61,9 +61,9 @@ describe('packages/empty-state/basic', () => {
       <BasicEmptyState
         title="test title"
         description="test description"
-        PrimaryButton={<Button>test button</Button>}
-        SecondaryButton={<Button>test button 2</Button>}
-        ExternalLink={<Link>test external link</Link>}
+        primaryButton={<Button>test button</Button>}
+        secondaryButton={<Button>test button 2</Button>}
+        externalLink={<Link>test external link</Link>}
       />,
     );
     expect(getByText('test external link')).toBeInTheDocument();
@@ -73,9 +73,9 @@ describe('packages/empty-state/basic', () => {
       <BasicEmptyState
         title="test title"
         description="test description"
-        PrimaryButton={<Button>test button</Button>}
-        SecondaryButton={<Button>test button 2</Button>}
-        ExternalLink={<Link>test external link</Link>}
+        primaryButton={<Button>test button</Button>}
+        secondaryButton={<Button>test button 2</Button>}
+        externalLink={<Link>test external link</Link>}
       />,
     );
     // test that the link renders the external icon

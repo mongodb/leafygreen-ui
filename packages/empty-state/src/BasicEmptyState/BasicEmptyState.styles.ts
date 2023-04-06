@@ -1,11 +1,12 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
+import { spacing } from '@leafygreen-ui/tokens';
 
 export const rootStyles = css`
   padding: 40px;
   display: flex;
-  gap: 16px;
+  gap: ${spacing[3]}px;
   align-items: center;
 `;
 
@@ -29,9 +30,9 @@ export const descriptionStyles: Record<Theme, string> = {
 export const buttonContainerStyles = css`
   display: flex;
   gap: 12px;
-  margin-top: 24px;
+  margin-top: ${spacing[4]}px;
 `;
 
 export const externalLinkStyles = css`
-  margin-top: 16px;
+  margin-top: ${spacing[3]}px;
 `;
