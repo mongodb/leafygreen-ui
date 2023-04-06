@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/tabs",
-  "version": "11.0.5",
+  "version": "11.0.6",
   "description": "leafyGreen UI Kit Tabs",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -23,9 +23,9 @@
     "@leafygreen-ui/a11y": "^1.4.0",
     "@leafygreen-ui/box": "^3.1.1",
     "@leafygreen-ui/emotion": "^4.0.3",
-    "@leafygreen-ui/hooks": "^7.5.0",
-    "@leafygreen-ui/lib": "^10.2.2",
-    "@leafygreen-ui/palette": "^4.0.0",
+    "@leafygreen-ui/hooks": "^7.7.0",
+    "@leafygreen-ui/lib": "^10.3.1",
+    "@leafygreen-ui/palette": "^4.0.1",
     "@leafygreen-ui/portal": "^4.1.0",
     "@leafygreen-ui/tokens": "^2.0.1"
   },
@@ -42,9 +42,9 @@
   },
   "devDependencies": {
     "@leafygreen-ui/card": "^9.0.6",
-    "@leafygreen-ui/button": "^20.0.2",
-    "@leafygreen-ui/icon-button": "^15.0.7",
-    "@leafygreen-ui/icon": "^11.12.5",
-    "@leafygreen-ui/typography": "^16.1.0"
+    "@leafygreen-ui/button": "^20.0.3",
+    "@leafygreen-ui/icon-button": "^15.0.8",
+    "@leafygreen-ui/icon": "^11.12.7",
+    "@leafygreen-ui/typography": "^16.2.0"
   }
 }

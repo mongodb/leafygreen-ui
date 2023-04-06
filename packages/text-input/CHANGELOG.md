@@ -1,5 +1,20 @@
 # @leafygreen-ui/text-input
 
+## 12.1.8
+
+### Patch Changes
+
+- fb47557dd: Adds warning to use `NumberInput` if `type='number'`.
+- Updated dependencies [ece595acd]
+- Updated dependencies [9858ab8c5]
+- Updated dependencies [d351c02bc]
+- Updated dependencies [c2c5601f4]
+  - @leafygreen-ui/typography@16.2.0
+  - @leafygreen-ui/hooks@7.7.0
+  - @leafygreen-ui/icon@11.12.7
+  - @leafygreen-ui/lib@10.3.1
+  - @leafygreen-ui/palette@4.0.1
+
 ## 12.1.7
 
 ### Patch Changes
