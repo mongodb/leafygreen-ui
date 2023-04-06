@@ -31,15 +31,17 @@ const fix: boolean = cli.opts()['fix'];
 const fixTS = cli.opts()['fixTsconfig'];
 const verbose = cli.opts()['verbose'];
 
-const testFilePatterns = [
-  // files matching these patterns will be ignored
+// files matching these patterns will be ignored
+const ignoreFilePatterns = [
   /.*.spec.tsx?/,
   /.*.story.tsx?/,
   /.*.stories.tsx?/,
   /.*.example.tsx?/,
   /.*.testutils.tsx?/,
+  /.*\/dist\/.*/,
 ];
 
+// these dependencies will be ignored when listed in a package.json
 const ignoreMatches = ['@leafygreen-ui/mongo-nav', 'prop-types'];
 
 const depcheckOptions: depcheck.Options = {
@@ -86,7 +88,7 @@ async function checkDependencies() {
         // Check if every usage of every listed devDep is in some test file
         !listedDev.every(depName =>
           using[depName].every(file =>
-            testFilePatterns.some(pattern => pattern.test(file)),
+            ignoreFilePatterns.some(pattern => pattern.test(file)),
           ),
         )
       ) {
@@ -116,7 +118,7 @@ async function checkDependencies() {
         // Check if at least one usage of every listed dep is not in any test file
         !listedDeps.every(depName =>
           using[depName]?.some(
-            file => !testFilePatterns.some(pattern => pattern.test(file)),
+            file => !ignoreFilePatterns.some(pattern => pattern.test(file)),
           ),
         )
       ) {
@@ -302,7 +304,7 @@ function sortDependenciesByUsage(
           if (
             // If every file used in is a test file...
             fileUsedIn.every(file =>
-              testFilePatterns.some(pattern => pattern.test(file)),
+              ignoreFilePatterns.some(pattern => pattern.test(file)),
             )
           ) {
             verbose && console.log(`${pkg} uses ${name} in a test file`);
