@@ -76,8 +76,6 @@ const processColumns = <T extends LGRowData>(
         : undefined,
     };
 
-    // console.log({ retVal });
-
     return retVal;
   });
   return processedColumns;

@@ -17,11 +17,9 @@ const processData = <T extends LGRowData>(
     const evaluatedChildren = childrenFn({ datum: oldDatum, index });
     const childrenArray = React.Children.toArray(evaluatedChildren);
 
-    // TODO: Deep check first child for Row component
     const evaluatedRow = deepSelectComponent('Row', childrenArray);
     const rowChildren = React.Children.toArray(evaluatedRow?.props.children);
 
-    // TODO: deep check each row child for Cell component
     const evaluatedCells = rowChildren.filter(
       child =>
         isComponentType(child, 'Cell') ||
