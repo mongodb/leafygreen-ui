@@ -1,6 +1,8 @@
 import React from 'react';
 import { ComponentStory, Meta } from '@storybook/react';
 
+import { css } from '@leafygreen-ui/emotion';
+
 import { Cell, HeaderCell } from '../Cell';
 import { HeaderRow, Row } from '../Row';
 import Table from '../Table/Table';
@@ -9,7 +11,6 @@ import { makeData } from '../utils/makeData.testutils';
 import { AnyDict } from '../utils/types';
 
 import TableHead from './TableHead';
-import { css } from '@leafygreen-ui/emotion';
 
 export default {
   title: 'Components/Table/TableHead',

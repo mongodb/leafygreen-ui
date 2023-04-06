@@ -8,7 +8,7 @@ import TableBody from '../TableBody';
 import { LeafyGreenTableRow } from '../useLeafyGreenTable';
 import { Person } from '../utils/makeData.testutils';
 import { useTestHookCall } from '../utils/testHookCalls.testutils';
-import Table, { flexRender } from '..';
+import { flexRender, Table } from '..';
 
 import ExpandedContent from './ExpandedContent';
 
