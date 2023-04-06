@@ -1,5 +1,21 @@
 # @leafygreen-ui/typography
 
+## 16.2.0
+
+### Minor Changes
+
+- ece595acd: InlineCode component now supports "as" prop
+- 9858ab8c5: Overwrites default text-decoration property on Link component
+
+### Patch Changes
+
+- Updated dependencies [3ef365fd3]
+- Updated dependencies [c2c5601f4]
+  - @leafygreen-ui/polymorphic@1.3.0
+  - @leafygreen-ui/icon@11.12.7
+  - @leafygreen-ui/lib@10.3.1
+  - @leafygreen-ui/palette@4.0.1
+
 ## 16.1.0
 
 ### Minor Changes

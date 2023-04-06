@@ -1,5 +1,14 @@
 # @leafygreen-ui/button
 
+## 20.0.3
+
+### Patch Changes
+
+- fb47557dd: Updates disabled focus styles
+- Updated dependencies [c2c5601f4]
+  - @leafygreen-ui/lib@10.3.1
+  - @leafygreen-ui/palette@4.0.1
+
 ## 20.0.2
 
 ### Patch Changes

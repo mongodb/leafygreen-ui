@@ -1,5 +1,15 @@
 # @leafygreen-ui/icon-button
 
+## 15.0.8
+
+### Patch Changes
+
+- 89ede28ec: Exports `BaseIconButtonProps` type
+- Updated dependencies [c2c5601f4]
+  - @leafygreen-ui/icon@11.12.7
+  - @leafygreen-ui/lib@10.3.1
+  - @leafygreen-ui/palette@4.0.1
+
 ## 15.0.7
 
 ### Patch Changes
