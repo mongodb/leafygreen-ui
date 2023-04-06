@@ -117,6 +117,22 @@ export const baseComboboxStyles = css`
   width: 100%;
   max-width: 100%;
   border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+
+  ::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    bottom: -21px;
+    left: 50%;
+    translate: -50% 0%;
+    border-radius: 20%;
+    box-shadow: 0 0 0 0 rgb(255 255 255 / 0%);
+    transition: ${transitionDuration.default}ms linear;
+    transition-property: box-shadow;
+  }
 `;
 
 export const comboboxThemeStyles: Record<Theme, string> = {
@@ -395,17 +411,14 @@ export const labelDescriptionContainerStyle = css`
 
 export const comboboxOverflowShadowStyles: Record<Theme, string> = {
   [Theme.Light]: css`
-    background: radial-gradient(
-      70% 10% at bottom,
-      rgb(0 30 43 / 20%),
-      rgb(255 255 255 / 100%)
-    );
+    ::after {
+      box-shadow: 0px 0px 7px 5px rgb(0 30 43 / 15%);
+    }
   `,
   [Theme.Dark]: css`
-    background: radial-gradient(
-      70% 10% at bottom,
-      rgb(0 30 43 / 20%),
-      rgb(0 30 43 / 100%)
-    );
+    ::after {
+      width: 95%;
+      box-shadow: 0px -7px 12px 5px rgb(0 0 0 / 50%);
+    }
   `,
 };

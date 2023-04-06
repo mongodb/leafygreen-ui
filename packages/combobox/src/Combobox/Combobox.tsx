@@ -1116,14 +1116,9 @@ export function Combobox<M extends boolean>({
     const { scrollHeight, scrollTop, clientHeight } = e.target as HTMLElement;
     const maxScrollPosition = scrollHeight - clientHeight;
 
+    // TODO: explain
     if (scrollTop < maxScrollPosition) {
       setShowOverflowShadow(true);
-      console.group();
-      console.log('show shadow');
-      console.log({ scrollHeight });
-      console.log({ scrollTop });
-      console.log({ clientHeight });
-      console.groupEnd();
     } else {
       setShowOverflowShadow(false);
     }
