@@ -1,5 +1,19 @@
 # @leafygreen-ui/modal
 
+## 14.0.4
+
+### Patch Changes
+
+- c2c5601f4: Adds missing dependencies. Removes unused dependencies
+- Updated dependencies [89ede28ec]
+- Updated dependencies [d351c02bc]
+- Updated dependencies [c2c5601f4]
+  - @leafygreen-ui/icon-button@15.0.8
+  - @leafygreen-ui/hooks@7.7.0
+  - @leafygreen-ui/icon@11.12.7
+  - @leafygreen-ui/lib@10.3.1
+  - @leafygreen-ui/palette@4.0.1
+
 ## 14.0.3
 
 ### Patch Changes
