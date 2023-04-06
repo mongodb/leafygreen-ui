@@ -4,4 +4,7 @@ export type {
   InferredPolymorphicProps,
   InferredPolymorphicPropsWithRef,
 } from './InferredPolymorphic.types';
-export { useInferredPolymorphic } from './useInferredPolymorphic';
+export {
+  useInferredPolymorphic,
+  useInferredPolymorphicComponent,
+} from './useInferredPolymorphic';
