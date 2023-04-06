@@ -4,7 +4,7 @@ import { Meta } from '@storybook/react';
 import Badge from '@leafygreen-ui/badge';
 
 import { defaultData } from '../TableV10/fixtures';
-import { makeData } from '../utils/makeData';
+import { makeData } from '../utils/makeData.testutils';
 import {
   V10Cell as Cell,
   V10HeaderRow as HeaderRow,

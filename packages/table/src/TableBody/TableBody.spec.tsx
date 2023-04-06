@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import { useTestHookCall } from '../utils/testHookCalls';
+import { useTestHookCall } from '../utils/testHookCalls.testutils';
 import Table from '..';
 
 import TableBody from '.';

@@ -6,8 +6,8 @@ import { Cell } from '../Cell';
 import { Row } from '../Row';
 import TableBody from '../TableBody';
 import { LeafyGreenTableRow } from '../useLeafyGreenTable';
-import { Person } from '../utils/makeData';
-import { useTestHookCall } from '../utils/testHookCalls';
+import { Person } from '../utils/makeData.testutils';
+import { useTestHookCall } from '../utils/testHookCalls.testutils';
 import Table, { flexRender } from '..';
 
 import ExpandedContent from './ExpandedContent';

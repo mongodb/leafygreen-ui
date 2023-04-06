@@ -5,7 +5,7 @@ import { Cell, HeaderCell } from '../Cell';
 import { HeaderRow, Row } from '../Row';
 import Table from '../Table/Table';
 import TableBody from '../TableBody/TableBody';
-import { makeData } from '../utils/makeData';
+import { makeData } from '../utils/makeData.testutils';
 import { AnyDict } from '../utils/types';
 
 import TableHead from './TableHead';

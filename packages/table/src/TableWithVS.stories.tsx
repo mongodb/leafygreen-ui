@@ -4,7 +4,7 @@ import { ComponentStory, Meta } from '@storybook/react';
 
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
-import { makeData, Person } from './utils/makeData';
+import { makeData, Person } from './utils/makeData.testutils';
 import {
   Cell,
   ColumnDef,

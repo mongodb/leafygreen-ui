@@ -13,7 +13,11 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 import Pagination from '@leafygreen-ui/pagination';
 
-import { createKitchenSinkData, makeData, Person } from './utils/makeData';
+import {
+  createKitchenSinkData,
+  makeData,
+  Person,
+} from './utils/makeData.testutils';
 import { AnyDict } from './utils/types';
 import {
   Cell,

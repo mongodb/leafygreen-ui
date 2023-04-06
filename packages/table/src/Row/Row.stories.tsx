@@ -11,7 +11,7 @@ import useLeafyGreenTable, {
   LeafyGreenTableCell,
   LeafyGreenTableRow,
 } from '../useLeafyGreenTable';
-import { makeData, Person } from '../utils/makeData';
+import { makeData, Person } from '../utils/makeData.testutils';
 import { AnyDict } from '../utils/types';
 import {
   ColumnDef,
