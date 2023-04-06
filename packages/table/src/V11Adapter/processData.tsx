@@ -5,6 +5,8 @@ import { isComponentType } from '@leafygreen-ui/lib';
 import { TableRowInterface } from '../TableV10/Table';
 import { LGColumnDef, LGRowData, LGTableDataType } from '../useLeafyGreenTable';
 
+import deepSelectComponent from './deepSelectComponent';
+
 const processData = <T extends LGRowData>(
   data: Array<any>,
   processedColumns: Array<LGColumnDef<T>>,
@@ -16,16 +18,14 @@ const processData = <T extends LGRowData>(
     const childrenArray = React.Children.toArray(evaluatedChildren);
 
     // TODO: Deep check first child for Row component
-    const evaluatedRow = React.Children.toArray(
-      (childrenArray[0] as ReactElement).props.children,
-    )[0] as ReactElement;
-    const rowChildren = React.Children.toArray(evaluatedRow.props.children);
-
-    console.log({ evaluatedRow, rowChildren });
+    const evaluatedRow = deepSelectComponent('Row', childrenArray);
+    const rowChildren = React.Children.toArray(evaluatedRow?.props.children);
 
     // TODO: deep check each row child for Cell component
-    const evaluatedCells = rowChildren.filter(child =>
-      isComponentType(child, 'Cell'),
+    const evaluatedCells = rowChildren.filter(
+      child =>
+        isComponentType(child, 'Cell') ||
+        deepSelectComponent('Cell', (child as ReactElement).props.children),
     );
 
     const newDatum: LGTableDataType<any> = evaluatedCells.reduce(

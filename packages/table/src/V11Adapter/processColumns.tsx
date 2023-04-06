@@ -20,10 +20,17 @@ const processColumns = <T extends LGRowData>(
   columns: TableProps<T>['columns'],
   headerLabels?: { [key: string]: string },
 ) => {
-  // TODO: HeaderRow component may not exist - we support passing an array of TableHeaders
-  const HeaderRow = React.Children.toArray(columns)[0] as ReactElement;
+  const columnsChildren = React.Children.toArray(columns);
 
-  const TableHeaders = React.Children.toArray(HeaderRow.props.children);
+  let TableHeaders;
+
+  // when columnsChildren.length > 1, columns was passed an array of TableHeaders instead of a HeaderRow.
+  if (columnsChildren.length > 1) {
+    TableHeaders = columnsChildren;
+  } else {
+    const HeaderRow = columnsChildren[0] as ReactElement;
+    TableHeaders = React.Children.toArray(HeaderRow.props.children);
+  }
 
   const processedColumns = TableHeaders.map(TableHeader => {
     const headerProps = (TableHeader as ReactElement).props;

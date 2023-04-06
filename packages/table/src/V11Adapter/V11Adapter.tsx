@@ -67,17 +67,9 @@ const V11Adapter = <T extends LGRowData>({
     [data, columns, headerLabels],
   );
 
-  // console.log({
-  //   processedColumns,
-  // });
-
   const [processedData, _] = useState<Array<LGTableDataType<T>>>(() =>
     processData(data, processedColumns, childrenFn),
   );
-
-  // console.log({
-  //   processedData,
-  // });
 
   const table = useLeafyGreenTable<T>({
     containerRef,
