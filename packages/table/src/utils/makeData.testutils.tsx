@@ -1,7 +1,6 @@
 import React from 'react';
 import { faker } from '@faker-js/faker';
 
-// @ts-ignore - Code is a dev dependency
 import Code from '@leafygreen-ui/code';
 
 import { LeafyGreenTableRow } from '../useLeafyGreenTable';

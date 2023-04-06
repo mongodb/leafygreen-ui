@@ -5,7 +5,7 @@ import Badge from '@leafygreen-ui/badge';
 
 import { Cell, HeaderRow, Row, Table, TableHeader } from '../TableV10';
 import { defaultData } from '../TableV10/fixtures';
-import { makeData } from '../utils/makeData';
+import { makeData } from '../utils/makeData.testutils';
 
 import V11Adapter from './V11Adapter';
 
