@@ -13,7 +13,7 @@ import {
   SortingState,
 } from '..';
 
-import { Person } from './makeData';
+import { Person } from './makeData.testutils';
 
 export const getDefaultTestData: (
   rowProps: object,
