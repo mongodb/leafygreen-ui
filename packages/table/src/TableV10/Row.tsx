@@ -137,6 +137,9 @@ function getIndentLevelStyle(indentLevel: number) {
   `;
 }
 
+/**
+ * @deprecated
+ */
 export interface RowProps extends HTMLElementProps<'tr', HTMLTableRowElement> {
   /**
    * Determines whether or not the row is expanded on first render
@@ -161,6 +164,9 @@ type RowElement = React.ReactComponentElement<
   React.ComponentPropsWithRef<typeof Row>
 >;
 
+/**
+ * @deprecated
+ */
 const Row = forwardRef(
   (
     {

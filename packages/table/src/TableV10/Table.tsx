@@ -101,7 +101,9 @@ export interface TableRowInterface<Shape = {}> {
   index: number;
 }
 
-// TODO: Tag all V10 Table Props (incl. Row, Cell etc.) with @deprecated
+/**
+ * @deprecated
+ */
 export interface TableProps<Shape> extends HTMLElementProps<'table'> {
   /**
    * The array of data displayed in rows. Each array element's type is determined by the `Shape` generic.
@@ -137,6 +139,9 @@ export interface TableProps<Shape> extends HTMLElementProps<'table'> {
   darkMode?: boolean;
 }
 
+/**
+ * @deprecated
+ */
 export default function Table<Shape>({
   columns = [],
   data: dataProp = [],
