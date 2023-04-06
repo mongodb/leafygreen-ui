@@ -34,7 +34,7 @@ const processData = <T extends LGRowData>(
           ...acc,
           // TODO: remove as any
           [(processedColumns[index] as any)?.accessorKey]: () =>
-            (currVal as ReactElement).props.children,
+            currVal as ReactElement,
         };
       },
       {},

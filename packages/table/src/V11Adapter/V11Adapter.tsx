@@ -124,17 +124,22 @@ const V11Adapter = <T extends LGRowData>({
               }
             >
               {row.getVisibleCells().map((cell: LeafyGreenTableCell<any>) => {
-                return (
-                  <Cell key={cell.id}>
+                const cellChild = cell?.column?.id
+                  ? // index by row.index (not the index of the loop) to get the sorted order
+                    // @ts-expect-error `processedData` is structured to be indexable by `row.index`
+                    processedData[row.index]?.[cell.column.id]?.()
+                  : undefined;
+                return cellChild ? (
+                  <Cell key={cell.id} {...cellChild?.props}>
                     {cell.column.id === 'select' ? (
                       // @ts-expect-error `cell` is instantiated in `processColumns`
                       <>{cell.column.columnDef?.cell({ row, table })}</>
                     ) : (
-                      // index by row.index (not the index of the loop) to get the sorted order
-                      // @ts-expect-error `processedData` is structured to be indexable by `row.index`
-                      <>{processedData[row.index][cell.column.id]()}</>
+                      <>{cellChild?.props.children}</>
                     )}
                   </Cell>
+                ) : (
+                  <></>
                 );
               })}
               {row.original.renderExpandedContent && (
