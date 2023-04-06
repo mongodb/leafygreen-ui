@@ -16,6 +16,8 @@ import { ComboboxSize as Size, Overflow } from '../Combobox.types';
 // Rename the variable defined in chip styles
 const inputHeight = chipHeight;
 
+const flexGap = 4;
+
 /**
  * Width of the widest character (in px)
  */
@@ -178,14 +180,12 @@ export const comboboxFocusStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     &:focus-within {
       border-color: transparent;
-      background-color: ${palette.white};
       box-shadow: ${focusRing[Theme.Light].input};
     }
   `,
   [Theme.Dark]: css`
     &:focus-within {
       border-color: transparent;
-      background-color: ${palette.gray.dark4};
       box-shadow: ${focusRing[Theme.Dark].input};
     }
   `,
@@ -242,9 +242,10 @@ export const inputWrapperStyle = ({
         ${baseWrapperStyle}
         display: flex;
         flex-wrap: wrap;
-        gap: 4px;
+        gap: ${flexGap}px;
         overflow-x: hidden;
         min-height: ${inputHeight[size]}px;
+        max-height: calc((${chipHeight[size] * 3}px) + (${flexGap}px * 2));
       `;
     }
   }
@@ -391,3 +392,20 @@ export const errorMessageSizeStyle: Record<Size, string> = {
 export const labelDescriptionContainerStyle = css`
   margin-bottom: 2px;
 `;
+
+export const comboboxOverflowShadowStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    background: radial-gradient(
+      70% 10% at bottom,
+      rgb(0 30 43 / 20%),
+      rgb(255 255 255 / 100%)
+    );
+  `,
+  [Theme.Dark]: css`
+    background: radial-gradient(
+      70% 10% at bottom,
+      rgb(0 30 43 / 20%),
+      rgb(0 30 43 / 100%)
+    );
+  `,
+};

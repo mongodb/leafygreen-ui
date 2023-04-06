@@ -44,7 +44,7 @@ export const chipWrapperSizeStyle: Record<ComboboxSize, string> = {
   `,
   [ComboboxSize.Small]: css`
     font-size: ${typeScales.body1.fontSize}px;
-    line-height: ${typeScales.body1.lineHeight}px;
+    line-height: 1;
     border-radius: 4px;
   `,
   [ComboboxSize.Default]: css`

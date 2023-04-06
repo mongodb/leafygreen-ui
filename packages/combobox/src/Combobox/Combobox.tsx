@@ -4,6 +4,7 @@ import React, {
   KeyboardEventHandler,
   MouseEventHandler,
   TransitionEventHandler,
+  UIEvent,
   useCallback,
   useEffect,
   useMemo,
@@ -11,6 +12,7 @@ import React, {
   useState,
 } from 'react';
 import clone from 'lodash/clone';
+import debounce from 'lodash/debounce';
 import isArray from 'lodash/isArray';
 import isEqual from 'lodash/isEqual';
 import isNull from 'lodash/isNull';
@@ -67,6 +69,7 @@ import {
   comboboxDisabledStyles,
   comboboxErrorStyles,
   comboboxFocusStyle,
+  comboboxOverflowShadowStyles,
   comboboxParentStyle,
   comboboxSelectionStyles,
   comboboxSizeStyles,
@@ -145,6 +148,7 @@ export function Combobox<M extends boolean>({
   const [inputValue, setInputValue] = useState<string>('');
   const prevValue = usePrevious(inputValue);
   const [focusedChip, setFocusedChip] = useState<string | null>(null);
+  const [showOverflowShadow, setShowOverflowShadow] = useState<boolean>(false);
 
   const doesSelectionExist =
     !isNull(selection) &&
@@ -805,8 +809,7 @@ export function Combobox<M extends boolean>({
   const onSelect = useCallback(() => {
     if (doesSelectionExist) {
       if (isMultiselect(selection)) {
-        // Scroll the wrapper to the end. No effect if not `overflow="scroll-x"`
-        scrollInputToEnd();
+        scrollInputToEnd(overflow);
       } else if (!isMultiselect(selection)) {
         // Update the text input
         const displayName =
@@ -820,7 +823,7 @@ export function Combobox<M extends boolean>({
     } else {
       setInputValue('');
     }
-  }, [doesSelectionExist, allOptions, isMultiselect, selection]);
+  }, [doesSelectionExist, allOptions, isMultiselect, selection, overflow]);
 
   // Set the initialValue
   useEffect(() => {
@@ -929,7 +932,7 @@ export function Combobox<M extends boolean>({
   // Fired whenever the wrapper gains focus,
   // and any time the focus within changes
   const handleComboboxFocus: FocusEventHandler<HTMLDivElement> = e => {
-    scrollInputToEnd();
+    scrollInputToEnd(overflow);
     trackFocusedElement(getNameFromElement(e.target));
   };
 
@@ -1101,12 +1104,40 @@ export function Combobox<M extends boolean>({
   useBackdropClick(closeMenu, [menuRef, comboboxRef], isOpen);
 
   /**
-   *
    * Checks if multi-select and if there are chips selected. The left padding of the wrapper changes when there are chips selected so we use this to conditionally change the padding.
-   *
    */
   const isMultiselectWithSelections =
     isMultiselect(selection) && !!selection.length;
+
+  /**
+   * Checks if an overflow shadow should be visible when overflow === expand-y
+   */
+  const handleInputWrapperScroll = (e: UIEvent<HTMLDivElement>) => {
+    const { scrollHeight, scrollTop, clientHeight } = e.target as HTMLElement;
+    const maxScrollPosition = scrollHeight - clientHeight;
+
+    if (scrollTop < maxScrollPosition) {
+      setShowOverflowShadow(true);
+      console.group();
+      console.log('show shadow');
+      console.log({ scrollHeight });
+      console.log({ scrollTop });
+      console.log({ clientHeight });
+      console.groupEnd();
+    } else {
+      setShowOverflowShadow(false);
+    }
+  };
+
+  const debounceScroll = debounce(handleInputWrapperScroll, 50, {
+    leading: true,
+  });
+
+  const handleOnScroll: React.UIEventHandler<HTMLDivElement> = e => {
+    if (overflow === Overflow.expandY) {
+      debounceScroll(e);
+    }
+  };
 
   const popoverProps = {
     popoverZIndex,
@@ -1175,10 +1206,12 @@ export function Combobox<M extends boolean>({
                 [comboboxFocusStyle[theme]]: isElementFocused(
                   ComboboxElement.Input,
                 ),
+                [comboboxOverflowShadowStyles[theme]]: showOverflowShadow,
               },
             )}
           >
             <div
+              onScroll={e => handleOnScroll(e)}
               ref={inputWrapperRef}
               className={inputWrapperStyle({
                 size,
@@ -1271,14 +1304,21 @@ export function Combobox<M extends boolean>({
   // Closure-dependant utils
 
   /**
-   * Scrolls the combobox to the far right.
-   * Used when `overflow == 'scroll-x'`.
-   * Has no effect otherwise
+   * Scrolls the combobox to the far right if overflow === scroll-x
+   * Scrolls the combobox to the bottom if overflow === expand-y
    */
-  function scrollInputToEnd() {
+  function scrollInputToEnd(overflow: Overflow) {
     if (inputWrapperRef && inputWrapperRef.current) {
       // TODO - consider converting to .scrollTo(). This is not yet supported in IE or jsdom
-      inputWrapperRef.current.scrollLeft = inputWrapperRef.current.scrollWidth;
+      if (overflow === Overflow.scrollX) {
+        inputWrapperRef.current.scrollLeft =
+          inputWrapperRef.current.scrollWidth;
+      }
+
+      if (overflow === Overflow.expandY) {
+        inputWrapperRef.current.scrollTop =
+          inputWrapperRef.current.scrollHeight;
+      }
     }
   }
 
