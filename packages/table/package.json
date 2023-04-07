@@ -33,6 +33,7 @@
     "@tanstack/react-table": "^8.7.3",
     "lodash": "^4.17.21",
     "polished": "^4.2.2",
+    "react-keyed-flatten-children": "^1.3.0",
     "react-transition-group": "^4.4.1",
     "react-virtual": "^2.10.4"
   },

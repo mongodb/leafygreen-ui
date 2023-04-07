@@ -1,11 +1,10 @@
 import React, { ReactElement } from 'react';
+import flattenChildren from 'react-keyed-flatten-children';
 
 import { isComponentType } from '@leafygreen-ui/lib';
 
 import { TableRowInterface } from '../TableV10/Table';
 import { LGColumnDef, LGRowData, LGTableDataType } from '../useLeafyGreenTable';
-
-import deepSelectComponent from './deepSelectComponent';
 
 const processData = <T extends LGRowData>(
   data: Array<any>,
@@ -15,15 +14,17 @@ const processData = <T extends LGRowData>(
   const processedData = data.map((oldDatum, index) => {
     // for each row, evaluate childrenFn
     const evaluatedChildren = childrenFn({ datum: oldDatum, index });
-    const childrenArray = React.Children.toArray(evaluatedChildren);
+    const childrenArray = flattenChildren(evaluatedChildren);
 
-    const evaluatedRow = deepSelectComponent('Row', childrenArray);
-    const rowChildren = React.Children.toArray(evaluatedRow?.props.children);
+    const evaluatedRow = childrenArray.filter(child =>
+      isComponentType(child, 'Row'),
+    )[0];
+    const rowChildren = flattenChildren(
+      (evaluatedRow as ReactElement).props.children,
+    );
 
-    const evaluatedCells = rowChildren.filter(
-      child =>
-        isComponentType(child, 'Cell') ||
-        deepSelectComponent('Cell', (child as ReactElement).props.children),
+    const evaluatedCells = rowChildren.filter(child =>
+      isComponentType(child, 'Cell'),
     );
 
     const newDatum: LGTableDataType<any> = evaluatedCells.reduce(
@@ -43,7 +44,7 @@ const processData = <T extends LGRowData>(
     );
     if (subRowChildren.length > 0) newDatum.subRows = [];
     subRowChildren.map(subRow => {
-      const subRowCells = React.Children.toArray(
+      const subRowCells = flattenChildren(
         (subRow as ReactElement).props.children,
       );
       const firstSubRowCell = subRowCells[0];

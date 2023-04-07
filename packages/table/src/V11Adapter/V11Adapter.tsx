@@ -1,4 +1,5 @@
 import React, { ReactElement, useMemo, useRef, useState } from 'react';
+import flattenChildren from 'react-keyed-flatten-children';
 import { VirtualItem } from 'react-virtual';
 import {
   flexRender,
@@ -45,7 +46,7 @@ const V11Adapter = <T extends LGRowData>({
 }: V11AdapterProps<T>) => {
   const { darkMode } = useDarkMode();
   const containerRef = useRef(null);
-  const OldTable = React.Children.toArray(children)[0];
+  const OldTable = flattenChildren(children)[0];
 
   if (!isComponentType(OldTable, 'Table')) {
     console.error(
@@ -124,23 +125,28 @@ const V11Adapter = <T extends LGRowData>({
               }
             >
               {row.getVisibleCells().map((cell: LeafyGreenTableCell<any>) => {
-                const cellChild = cell?.column?.id
-                  ? // index by row.index (not the index of the loop) to get the sorted order
-                    // @ts-expect-error `processedData` is structured to be indexable by `row.index`
-                    processedData[row.index]?.[cell.column.id]?.()
-                  : undefined;
-                return cellChild ? (
-                  <Cell key={cell.id} {...cellChild?.props}>
-                    {cell.column.id === 'select' ? (
-                      // @ts-expect-error `cell` is instantiated in `processColumns`
-                      <>{cell.column.columnDef?.cell({ row, table })}</>
-                    ) : (
-                      <>{cellChild?.props.children}</>
-                    )}
-                  </Cell>
-                ) : (
-                  <></>
-                );
+                if (cell?.column?.id) {
+                  if (cell?.column?.id === 'select') {
+                    return (
+                      <Cell>
+                        {/* @ts-expect-error `cell` is instantiated in `processColumns` */}
+                        {cell.column.columnDef?.cell({ row, table })}
+                      </Cell>
+                    );
+                  } else {
+                    const cellChild =
+                      // index by row.index (not the index of the loop) to get the sorted order
+                      // @ts-expect-error `processedData` is structured to be indexable by `row.index`
+                      processedData[row.index]?.[cell.column.id]?.();
+                    return (
+                      <Cell key={cell.id} {...cellChild?.props}>
+                        <>{cellChild?.props.children}</>
+                      </Cell>
+                    );
+                  }
+                } else {
+                  return <></>;
+                }
               })}
               {row.original.renderExpandedContent && (
                 <ExpandedContent row={row} />
