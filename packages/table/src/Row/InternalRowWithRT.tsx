@@ -1,4 +1,5 @@
 import React, { Fragment, useMemo } from 'react';
+import flattenChildren from 'react-keyed-flatten-children';
 import { VirtualItem } from 'react-virtual';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -44,7 +45,9 @@ const InternalRowWithRT = <T extends LGRowData>({
   const isExpanded = row.getIsExpanded();
   const isSelected = row.getIsSelected();
 
-  const CellChildren = React.Children.toArray(children).filter(child =>
+  const flattenedChildren = flattenChildren(children);
+
+  const CellChildren = flattenedChildren.filter(child =>
     isComponentType(child, 'Cell'),
   );
 
@@ -52,7 +55,7 @@ const InternalRowWithRT = <T extends LGRowData>({
    * OtherChildren is looking for nested Row components or ExpandedContent components.
    * This filter does not look explicitly for those two components since we may want to allow developers to use their own `td` elements.
    */
-  const OtherChildren = React.Children.toArray(children).filter(
+  const OtherChildren = flattenedChildren.filter(
     child => !isComponentType(child, 'Cell'),
   );
 

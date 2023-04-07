@@ -20,7 +20,6 @@ export const themeStyles: Record<Theme, string> = {
 
 export const tableContainerStyles = css`
   overflow: auto;
-  height: 500px;
   width: 100%;
   position: relative;
 `;

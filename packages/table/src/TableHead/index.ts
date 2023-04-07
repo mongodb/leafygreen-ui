@@ -1,5 +1,3 @@
 import TableHead from './TableHead';
-import { TableHeadProps } from './TableHead.types';
-
-export { TableHeadProps };
+export { type TableHeadProps } from './TableHead.types';
 export default TableHead;

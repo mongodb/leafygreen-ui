@@ -1,4 +1,5 @@
 import React from 'react';
+import { flexRender } from '@tanstack/react-table';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
@@ -13,7 +14,6 @@ import {
   TestTableWithHookProps,
   useTestHookCall,
 } from '../utils/testHookCalls.testutils';
-import { flexRender } from '..';
 
 import Table from '.';
 
