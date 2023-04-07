@@ -108,6 +108,17 @@ describe('packages/toast/useToast', () => {
   });
 
   describe('outside context', () => {
+    test('logs console warning', () => {
+      jest.spyOn(global.console, 'warn').mockImplementation(() => {});
+      renderHook(useToast);
+      expect(console.warn).toHaveBeenCalled();
+      expect(console.warn).toHaveBeenCalledWith(
+        expect.stringContaining(
+          '`useToast` hook must be used within a `ToastProvider` context',
+        ),
+      );
+    });
+
     test('returns defined functions', () => {
       const { result } = renderHook(useToast);
 
