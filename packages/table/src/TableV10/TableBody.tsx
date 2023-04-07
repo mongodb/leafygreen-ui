@@ -4,6 +4,9 @@ import { getDataComparisonFunction, useSortContext } from './SortContext';
 import { TableProps, TableRowInterface } from './Table';
 import { useTableContext } from './TableContext';
 
+/**
+ * @deprecated
+ */
 type TableBodyProps<Shape> = Pick<TableProps<Shape>, 'children'>;
 
 /**
@@ -37,6 +40,9 @@ function useRenderedChildren<Datum>(
   }, [data, resultMap, compareFn]);
 }
 
+/**
+ * @deprecated
+ */
 function TableBody<Shape>({ children }: TableBodyProps<Shape>) {
   const {
     state: { data },

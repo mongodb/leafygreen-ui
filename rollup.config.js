@@ -146,6 +146,7 @@ const config = ['esm', 'umd'].flatMap(format => {
         'polished',
         'prop-types',
         'react-is',
+        'react-keyed-flatten-children',
         'react-transition-group',
         '@testing-library/react',
         'lodash',
