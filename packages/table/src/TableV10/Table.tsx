@@ -253,4 +253,5 @@ export default function Table<Shape>({
     </div>
   );
 }
+Table.displayName = 'Table';
 //  TODO: missing proptypes
