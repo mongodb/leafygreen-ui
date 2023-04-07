@@ -67,6 +67,7 @@ const HeaderCell = <T extends LGRowData>({
         className={cx(
           cellContentContainerStyles,
           headerCellContentStyles,
+          // TS error is ignored (and not expected) as it doesn't show up locally but interrupts build
           // @ts-ignore Header types need to be extended or declared in the react-table namespace
           alignmentStyles(header?.column.columnDef?.align),
         )}
