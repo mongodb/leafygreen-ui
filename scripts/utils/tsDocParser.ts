@@ -80,7 +80,7 @@ interface ParseFunctionOptions {
 }
 const defaultParseFunctionOptions = {
   packagesRoot: path.resolve(__dirname, '../../packages'),
-  excludeTags: ['example', 'internal', 'privateRemarks'],
+  excludeTags: ['example', 'internal', 'deprecated', 'privateRemarks'],
 };
 
 /**

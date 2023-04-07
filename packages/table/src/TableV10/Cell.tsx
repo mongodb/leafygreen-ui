@@ -40,6 +40,9 @@ interface TableCellProps extends HTMLElementProps<'td', HTMLTableCellElement> {
   isHeader?: false;
 }
 
+/**
+ * @deprecated
+ */
 type CellProps = HeaderCellProps | TableCellProps;
 
 const baseStyles = css`
@@ -77,6 +80,9 @@ const darkModeDisabledHeaderStyles = css`
   cursor: auto;
 `;
 
+/**
+ * @deprecated
+ */
 export type CellElement = React.ReactComponentElement<typeof Cell>;
 
 /**

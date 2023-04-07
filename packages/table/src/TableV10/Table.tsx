@@ -96,6 +96,9 @@ const ScrollState = {
 
 type ScrollState = typeof ScrollState[keyof typeof ScrollState];
 
+/**
+ * @deprecated
+ */
 export interface TableRowInterface<Shape = {}> {
   datum: Shape;
   index: number;

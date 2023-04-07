@@ -138,10 +138,12 @@ const V11Adapter = <T extends LGRowData>({
                       // index by row.index (not the index of the loop) to get the sorted order
                       // @ts-expect-error `processedData` is structured to be indexable by `row.index`
                       processedData[row.index]?.[cell.column.id]?.();
-                    return (
+                    return cellChild ? (
                       <Cell key={cell.id} {...cellChild?.props}>
                         <>{cellChild?.props.children}</>
                       </Cell>
+                    ) : (
+                      <></>
                     );
                   }
                 } else {

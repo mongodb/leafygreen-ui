@@ -5,6 +5,7 @@ import {
   getCoreRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  HeaderGroup,
 } from '@tanstack/react-table';
 
 import Badge from '@leafygreen-ui/badge';
@@ -23,7 +24,6 @@ import {
   Cell,
   ExpandedContent,
   HeaderCell,
-  HeaderGroup,
   HeaderRow,
   type LeafyGreenTableCell,
   type LeafyGreenTableRow,

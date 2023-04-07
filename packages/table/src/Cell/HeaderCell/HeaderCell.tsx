@@ -67,7 +67,7 @@ const HeaderCell = <T extends LGRowData>({
         className={cx(
           cellContentContainerStyles,
           headerCellContentStyles,
-          // @ts-expect-error Header types need to be extended or declared in the react-table namespace
+          // @ts-ignore Header types need to be extended or declared in the react-table namespace
           alignmentStyles(header?.column.columnDef?.align),
         )}
       >

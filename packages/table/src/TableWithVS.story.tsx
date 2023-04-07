@@ -1,26 +1,28 @@
 import React from 'react';
 import { VirtualItem } from 'react-virtual';
 import { ComponentStory, Meta } from '@storybook/react';
+import {
+  ColumnDef,
+  ExpandedState,
+  flexRender,
+  getCoreRowModel,
+  getExpandedRowModel,
+  getSortedRowModel,
+  HeaderGroup,
+  SortingState,
+} from '@tanstack/react-table';
 
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 import { makeData, Person } from './utils/makeData.testutils';
 import {
   Cell,
-  ColumnDef,
   ExpandedContent,
-  ExpandedState,
-  flexRender,
-  getCoreRowModel,
-  getExpandedRowModel,
-  getSortedRowModel,
   HeaderCell,
-  HeaderGroup,
   HeaderRow,
   type LeafyGreenTableCell,
   type LeafyGreenTableRow,
   Row,
-  SortingState,
   Table,
   TableBody,
   TableHead,

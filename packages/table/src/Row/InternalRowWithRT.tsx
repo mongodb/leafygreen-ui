@@ -45,7 +45,9 @@ const InternalRowWithRT = <T extends LGRowData>({
   const isExpanded = row.getIsExpanded();
   const isSelected = row.getIsSelected();
 
-  const CellChildren = flattenChildren(children).filter(child =>
+  const flattenedChildren = flattenChildren(children);
+
+  const CellChildren = flattenedChildren.filter(child =>
     isComponentType(child, 'Cell'),
   );
 
@@ -53,7 +55,7 @@ const InternalRowWithRT = <T extends LGRowData>({
    * OtherChildren is looking for nested Row components or ExpandedContent components.
    * This filter does not look explicitly for those two components since we may want to allow developers to use their own `td` elements.
    */
-  const OtherChildren = flattenChildren(children).filter(
+  const OtherChildren = flattenedChildren.filter(
     child => !isComponentType(child, 'Cell'),
   );
 
