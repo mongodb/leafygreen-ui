@@ -1,5 +1,26 @@
 # @leafygreen-ui/toast
 
+## 6.0.0
+
+### Major Changes
+
+- d351c02bc: Adds multi-toast support for Toasts. The recommended pattern for creating toasts is using the methods exported by the `useToast` hook. Rendering Toasts in JSX is still supported, however these must be manually opened and controlled in the consuming application.
+
+### Patch Changes
+
+- c2c5601f4: Adds missing dependencies. Removes unused dependencies
+- Updated dependencies [ece595acd]
+- Updated dependencies [9858ab8c5]
+- Updated dependencies [89ede28ec]
+- Updated dependencies [d351c02bc]
+- Updated dependencies [c2c5601f4]
+  - @leafygreen-ui/typography@16.2.0
+  - @leafygreen-ui/icon-button@15.0.8
+  - @leafygreen-ui/hooks@7.7.0
+  - @leafygreen-ui/icon@11.12.7
+  - @leafygreen-ui/lib@10.3.1
+  - @leafygreen-ui/palette@4.0.1
+
 ## 5.0.1
 
 ### Patch Changes

@@ -1,5 +1,28 @@
 # @leafygreen-ui/table
 
+## 11.0.0
+
+### Major Changes
+
+- 89ede28ec: Rewrite of Table component, which includes support for new features: virtual scrolling, selectable rows, etc. See upgrade guide for details
+
+### Patch Changes
+
+- c2c5601f4: Adds missing dependencies. Removes unused dependencies
+- Updated dependencies [ece595acd]
+- Updated dependencies [9858ab8c5]
+- Updated dependencies [3ef365fd3]
+- Updated dependencies [89ede28ec]
+- Updated dependencies [d351c02bc]
+- Updated dependencies [c2c5601f4]
+  - @leafygreen-ui/typography@16.2.0
+  - @leafygreen-ui/polymorphic@1.3.0
+  - @leafygreen-ui/icon-button@15.0.8
+  - @leafygreen-ui/hooks@7.7.0
+  - @leafygreen-ui/icon@11.12.7
+  - @leafygreen-ui/lib@10.3.1
+  - @leafygreen-ui/palette@4.0.1
+
 ## 10.0.3
 
 ### Patch Changes

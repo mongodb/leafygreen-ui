@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/button",
-  "version": "20.0.2",
+  "version": "20.0.3",
   "description": "leafyGreen UI Kit Button",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,15 +22,15 @@
   "dependencies": {
     "@leafygreen-ui/box": "^3.1.1",
     "@leafygreen-ui/emotion": "^4.0.3",
-    "@leafygreen-ui/lib": "^10.2.2",
-    "@leafygreen-ui/palette": "^4.0.0",
+    "@leafygreen-ui/lib": "^10.3.1",
+    "@leafygreen-ui/palette": "^4.0.1",
     "@leafygreen-ui/ripple": "^1.1.8",
     "@leafygreen-ui/tokens": "^2.0.1",
     "polished": "^4.2.2"
   },
   "devDependencies": {
     "next": "^13.0.5",
-    "@leafygreen-ui/icon": "^11.12.5"
+    "@leafygreen-ui/icon": "^11.12.7"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.1"
