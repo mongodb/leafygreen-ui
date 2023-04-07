@@ -17,13 +17,24 @@ import { LGRowData } from '../useLeafyGreenTable';
  */
 const processColumns = <T extends LGRowData>(
   data: Array<T>,
-  columns: TableProps<any>['columns'],
+  columns: TableProps<T>['columns'],
   headerLabels?: { [key: string]: string },
 ) => {
-  const HeaderRow = React.Children.toArray(columns)[0] as ReactElement;
-  const TableHeaders = React.Children.toArray(HeaderRow.props.children);
+  const columnsChildren = React.Children.toArray(columns);
+
+  let TableHeaders;
+
+  // when columnsChildren.length > 1, columns was passed an array of TableHeaders instead of a HeaderRow.
+  if (columnsChildren.length > 1) {
+    TableHeaders = columnsChildren;
+  } else {
+    const HeaderRow = columnsChildren[0] as ReactElement;
+    TableHeaders = React.Children.toArray(HeaderRow.props.children);
+  }
+
   const processedColumns = TableHeaders.map(TableHeader => {
     const headerProps = (TableHeader as ReactElement).props;
+
     const hasSorting =
       !!headerProps.sortBy ||
       !!headerProps.handleSort ||
@@ -51,7 +62,7 @@ const processColumns = <T extends LGRowData>(
         : 0;
     };
 
-    return {
+    const retVal = {
       accessorKey:
         (headerLabels && headerLabels[headerProps.label]) ??
         camelCase(headerProps.label),
@@ -64,6 +75,8 @@ const processColumns = <T extends LGRowData>(
         ? defaultSortingFn
         : undefined,
     };
+
+    return retVal;
   });
   return processedColumns;
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import { flexRender } from '@tanstack/react-table';
 import { getAllByRole } from '@testing-library/dom';
 import { fireEvent, render } from '@testing-library/react';
 
@@ -8,7 +9,7 @@ import TableBody from '../TableBody';
 import { LeafyGreenTableRow } from '../useLeafyGreenTable';
 import { Person } from '../utils/makeData.testutils';
 import { useTestHookCall } from '../utils/testHookCalls.testutils';
-import Table, { flexRender } from '..';
+import { Table } from '..';
 
 import ExpandedContent from './ExpandedContent';
 

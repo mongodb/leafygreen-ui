@@ -1,6 +1,8 @@
 import React from 'react';
 import { ComponentStory, Meta } from '@storybook/react';
 
+import { css } from '@leafygreen-ui/emotion';
+
 import { Cell, HeaderCell } from '../Cell';
 import { HeaderRow, Row } from '../Row';
 import Table from '../Table/Table';
@@ -32,7 +34,11 @@ const Template: ComponentStory<typeof TableHead> = args => {
   const data = makeData(false, 100);
   const columns = Object.keys(data[0]);
   return (
-    <Table>
+    <Table
+      className={css`
+        height: 500px;
+      `}
+    >
       <TableHead {...args}>
         <HeaderRow>
           {columns.map((columnName: string) => (

@@ -6,8 +6,14 @@ import HeaderRow, { HeaderRowElement } from './HeaderRow';
 import { TableProps } from './Table';
 import { TableHeaderElement } from './TableHeader';
 
+/**
+ * @deprecated
+ */
 type TableHeaderProps<Shape> = Pick<TableProps<Shape>, 'columns'>;
 
+/**
+ * @deprecated
+ */
 function TableHead<Shape>({ columns = [] }: TableHeaderProps<Shape>) {
   const usingHeaderRow = React.useRef(false);
 
