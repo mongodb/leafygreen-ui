@@ -55,6 +55,7 @@ import { InternalComboboxGroup } from '../ComboboxGroup';
 import { ComboboxMenu } from '../ComboboxMenu';
 import { InternalComboboxOption } from '../ComboboxOption';
 import {
+  checkScrollPosition,
   flattenChildren,
   getDisplayNameForValue,
   getNameAndValue,
@@ -148,7 +149,8 @@ export function Combobox<M extends boolean>({
   const [inputValue, setInputValue] = useState<string>('');
   const prevValue = usePrevious(inputValue);
   const [focusedChip, setFocusedChip] = useState<string | null>(null);
-  const [showOverflowShadow, setShowOverflowShadow] = useState<boolean>(false);
+  const [shouldShowOverflowShadow, setShouldShowOverflowShadow] =
+    useState<boolean>(false);
 
   const doesSelectionExist =
     !isNull(selection) &&
@@ -1109,30 +1111,26 @@ export function Combobox<M extends boolean>({
   const isMultiselectWithSelections =
     isMultiselect(selection) && !!selection.length;
 
-  /**
-   * Checks if an overflow shadow should be visible when overflow === expand-y
-   */
   const handleInputWrapperScroll = (e: UIEvent<HTMLDivElement>) => {
-    const { scrollHeight, scrollTop, clientHeight } = e.target as HTMLElement;
-    const maxScrollPosition = scrollHeight - clientHeight;
-
-    // TODO: explain
-    if (scrollTop < maxScrollPosition) {
-      setShowOverflowShadow(true);
-    } else {
-      setShowOverflowShadow(false);
-    }
+    setShouldShowOverflowShadow(checkScrollPosition(e.target as HTMLElement));
   };
 
   const debounceScroll = debounce(handleInputWrapperScroll, 50, {
     leading: true,
   });
 
+  // TODO: useCallback?
   const handleOnScroll: React.UIEventHandler<HTMLDivElement> = e => {
     if (overflow === Overflow.expandY) {
       debounceScroll(e);
     }
   };
+
+  useEffect(() => {
+    if (inputWrapperRef.current) {
+      setShouldShowOverflowShadow(checkScrollPosition(inputWrapperRef.current));
+    }
+  }, []);
 
   const popoverProps = {
     popoverZIndex,
@@ -1201,7 +1199,7 @@ export function Combobox<M extends boolean>({
                 [comboboxFocusStyle[theme]]: isElementFocused(
                   ComboboxElement.Input,
                 ),
-                [comboboxOverflowShadowStyles[theme]]: showOverflowShadow,
+                [comboboxOverflowShadowStyles[theme]]: shouldShowOverflowShadow,
               },
             )}
           >
