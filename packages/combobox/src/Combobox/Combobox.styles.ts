@@ -280,6 +280,7 @@ export const baseInputElementStyle = css`
   padding: 0;
   margin: 0;
   text-overflow: ellipsis;
+  vertical-align: top;
 
   &:placeholder-shown {
     min-width: 100%;
