@@ -54,7 +54,9 @@ jobs:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
-      - uses: actions/cache@v2
+      - run: yarn install --frozen-lockfile
+
+      - uses: actions/cache@v3
         name: Check for build cache
         id: build-cache
         with:
