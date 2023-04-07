@@ -55,13 +55,13 @@ describe('packages/toast/useToast', () => {
         current = result.current;
       });
 
-      test('pushToast', () => {
+      test('pushToast => ToastId', () => {
         const { pushToast } = current;
         const toastId = pushToast({ title: 'test' });
         expect(toastId).toEqual(expect.stringContaining('toast-'));
       });
 
-      test('getToast', () => {
+      test('getToast => ToastProps', () => {
         const { pushToast, getToast } = current;
         const toastId = pushToast({ title: 'test' });
         expect(getToast(toastId)).toEqual(
@@ -69,7 +69,7 @@ describe('packages/toast/useToast', () => {
         );
       });
 
-      test('updateToast', () => {
+      test('updateToast => ToastProps', () => {
         const { pushToast, updateToast } = current;
         const toastId = pushToast({
           title: 'test',
@@ -82,7 +82,7 @@ describe('packages/toast/useToast', () => {
         );
       });
 
-      test('popToast', () => {
+      test('popToast => ToastProps', () => {
         const { pushToast, popToast } = current;
         const toastId = pushToast({ title: 'test' });
         expect(popToast(toastId)).toEqual(
@@ -90,7 +90,7 @@ describe('packages/toast/useToast', () => {
         );
       });
 
-      test('getStack', () => {
+      test('getStack => ToastStack (Map)', () => {
         const { pushToast, getStack } = current;
         pushToast({ title: 'test' });
 
@@ -98,10 +98,10 @@ describe('packages/toast/useToast', () => {
         expect(getStack()?.size).toEqual(1);
       });
 
-      test('clearStack', () => {
+      test('clearStack => void', () => {
         const { pushToast, clearStack, getStack } = current;
         pushToast({ title: 'test' });
-        clearStack();
+        expect(clearStack()).toBeUndefined();
         expect(getStack()?.size).toEqual(0);
       });
     });
