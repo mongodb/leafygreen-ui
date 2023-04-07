@@ -17,14 +17,16 @@ export const chipWrapperPaddingY = {
 
 /**
  * Height of the chip element (in px)
+ * lineHeight + (2 * paddingY)
  */
 export const chipHeight: Record<ComboboxSize, number> = {
-  [ComboboxSize.XSmall]: 16 + 2 * chipWrapperPaddingY[ComboboxSize.XSmall], // 16 + 2 * 1 = 18
-  [ComboboxSize.Small]: typeScales.body1.lineHeight,
+  [ComboboxSize.XSmall]: 16 + 2 * chipWrapperPaddingY[ComboboxSize.XSmall], // 16 + (2 * 1) = 18
+  [ComboboxSize.Small]:
+    typeScales.body1.lineHeight + 2 * chipWrapperPaddingY[ComboboxSize.Small], // 20 + (2 * 0) = 20
   [ComboboxSize.Default]:
-    typeScales.body1.lineHeight + 2 * chipWrapperPaddingY[ComboboxSize.Default], // 20 + 2 * 2 = 24
+    typeScales.body1.lineHeight + 2 * chipWrapperPaddingY[ComboboxSize.Default], // 20 + (2 * 2) = 24
   [ComboboxSize.Large]:
-    typeScales.body2.lineHeight + 2 * chipWrapperPaddingY[ComboboxSize.Large], // 28 + 2 * 4 = 36
+    typeScales.body2.lineHeight + 2 * chipWrapperPaddingY[ComboboxSize.Large], // 28 + (2 * 4) = 36
 };
 
 export const chipWrapperBaseStyle = css`

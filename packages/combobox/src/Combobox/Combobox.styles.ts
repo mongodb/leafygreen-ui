@@ -30,6 +30,7 @@ export const maxCharWidth: Record<Size, number> = {
 
 /**
  * Size of combobox x & y padding (in px)
+ * (wrapperHeight - inputHeight - (borderTop + borderBottom)) / 2
  */
 export const comboboxPadding: Record<
   Size,
@@ -41,13 +42,13 @@ export const comboboxPadding: Record<
   }
 > = {
   [Size.XSmall]: {
-    y: (22 - inputHeight[Size.XSmall]) / 4, // (22 - 18) / 2 = (4) / 4 = 1
+    y: (22 - inputHeight[Size.XSmall] - 2) / 2, // (22 - 18 - 2 ) / 2 = (2) / 2 = 1
     xLeftWithChip: 1,
     xLeftWithoutChip: 10,
     xRight: 4,
   },
   [Size.Small]: {
-    y: (28 - inputHeight[Size.Small]) / 2, // (28 - 20) / 2 = (8) / 2 = 4
+    y: (28 - inputHeight[Size.Small] - 2) / 2, // (28 - 20 - 2) / 2 = (6) / 2 = 3
     xLeftWithChip: 4,
     xLeftWithoutChip: 10,
     xRight: 8,
@@ -318,7 +319,6 @@ export const inputElementSizeStyle: Record<Size, string> = {
     height: ${inputHeight[Size.Small]}px;
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
-    // line-height: 13px;
     min-width: ${maxCharWidth[Size.Small]}px;
     // Only add padding if there are chips
     &:not(:first-child) {
