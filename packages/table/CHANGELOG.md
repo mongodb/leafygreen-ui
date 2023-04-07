@@ -1,5 +1,11 @@
 # @leafygreen-ui/table
 
+## 11.0.1
+
+### Patch Changes
+
+- a11f4f836: Support Fragments in Table DOM tree; move @tanstack dependencies to peerDependencies
+
 ## 11.0.0
 
 ### Major Changes
