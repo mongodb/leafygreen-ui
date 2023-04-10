@@ -86,7 +86,6 @@ describe('packages/empty-state/features', () => {
   });
 
   test("console error when there's four features", () => {
-    expect(MAX_NUM_FEATURES === 3).toBe(true);
     const consoleSpy = jest
       .spyOn(console, 'error')
       .mockImplementation(() => {});

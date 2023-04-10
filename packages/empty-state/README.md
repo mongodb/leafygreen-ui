@@ -85,6 +85,6 @@ Note: The features prop must contain an array of feature objects, where each obj
 
 | Property      | Type           | Description                              |
 | ------------- | -------------- | ---------------------------------------- |
-| `icon`        | `ReactElement` | Icon element to display for the feature. |
+| `graphic`     | `ReactElement` | Icon element to display for the feature. |
 | `title`       | `string`       | Title of the feature.                    |
 | `description` | `ReactChild`   | Description of the feature.              |

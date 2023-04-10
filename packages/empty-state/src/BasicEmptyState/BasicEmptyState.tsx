@@ -90,6 +90,6 @@ BasicEmptyState.propTypes = {
     .isRequired,
   title: PropTypes.string.isRequired,
   graphic: PropTypes.element,
-} as any;
+} as any; // avoid inferred types from interfering with complex unions
 
 BasicEmptyState.displayName = 'BasicEmptyState';
