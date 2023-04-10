@@ -2,4 +2,4 @@
 '@leafygreen-ui/icon': patch
 ---
 
-Adds 'Highlight`,`LogIn`,`LogOut`, and`Wrench` icons.
+Adds `Highlight`,`LogIn`,`LogOut`, and `Wrench` icons.
