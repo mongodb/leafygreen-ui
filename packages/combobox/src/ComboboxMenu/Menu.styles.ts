@@ -8,6 +8,8 @@ import { fontFamilies, spacing, typeScales } from '@leafygreen-ui/tokens';
 import { ComboboxSize as Size } from '../Combobox.types';
 
 export const menuItemPadding: Record<Size, { x: number; y: number }> = {
+  [Size.XSmall]: { x: 12, y: 8 },
+  [Size.Small]: { x: 12, y: 8 },
   [Size.Default]: { x: 12, y: 8 },
   [Size.Large]: { x: 12, y: 8 },
 };
@@ -64,6 +66,12 @@ export const menuThemeStyle: Record<Theme, string> = {
 };
 
 export const menuSizeStyle: Record<Size, string> = {
+  [Size.XSmall]: css`
+    min-height: ${menuItemHeight[Size.Default]}px;
+  `,
+  [Size.Small]: css`
+    min-height: ${menuItemHeight[Size.Default]}px;
+  `,
   [Size.Default]: css`
     min-height: ${menuItemHeight[Size.Default]}px;
   `,
@@ -95,6 +103,18 @@ export const menuMessageThemeStyle: Record<Theme, string> = {
 };
 
 export const menuMessageSizeStyle: Record<Size, string> = {
+  [Size.XSmall]: css`
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+    padding: ${menuItemPadding[Size.XSmall].y}px
+      ${menuItemPadding[Size.XSmall].x}px;
+  `,
+  [Size.Small]: css`
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+    padding: ${menuItemPadding[Size.Small].y}px
+      ${menuItemPadding[Size.Small].x}px;
+  `,
   [Size.Default]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
@@ -109,7 +129,16 @@ export const menuMessageSizeStyle: Record<Size, string> = {
   `,
 };
 
+// TODO: this is not used
 export const menuMessageIconSizeStyle: Record<Size, string> = {
+  [Size.XSmall]: css`
+    height: ${typeScales.body1.fontSize}px;
+    width: ${typeScales.body1.fontSize}px;
+  `,
+  [Size.Small]: css`
+    height: ${typeScales.body1.fontSize}px;
+    width: ${typeScales.body1.fontSize}px;
+  `,
   [Size.Default]: css`
     height: ${typeScales.body1.fontSize}px;
     width: ${typeScales.body1.fontSize}px;
