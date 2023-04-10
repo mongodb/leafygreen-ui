@@ -11,7 +11,7 @@ import {
 import Badge from '@leafygreen-ui/badge';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
 import Pagination from '@leafygreen-ui/pagination';
 
 import {
@@ -35,7 +35,7 @@ import {
   useLeafyGreenTable,
 } from '.';
 
-export default {
+export default StoryMeta({
   title: 'Components/Table',
   component: Table,
   argTypes: {
@@ -61,7 +61,7 @@ export default {
       source: { type: 'code' },
     },
   },
-} as Meta<typeof Table>;
+});
 
 const Template: ComponentStory<typeof Table> = args => {
   const data = makeData(false, 100);

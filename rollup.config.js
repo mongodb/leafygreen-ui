@@ -3,6 +3,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import urlPlugin from '@rollup/plugin-url';
 import svgr from '@svgr/rollup';
 import fs from 'fs';
+import glob from 'glob';
 import path from 'path';
 import { terser } from 'rollup-plugin-terser';
 
@@ -55,9 +56,6 @@ function getGeneratedFiles() {
     .map(file => path.resolve(directory, file));
 }
 
-const allPackages = getAllPackages(path.resolve(__dirname, 'packages'));
-const directGlyphImports = getDirectGlyphImports();
-
 // Mapping of packages to the `window` property they'd be
 // bound to if used in the browser without a module loader.
 // This is defined on a best effort basis since not all
@@ -80,6 +78,9 @@ const globals = {
    **/
 };
 
+const allPackages = getAllPackages(path.resolve(__dirname, 'packages'));
+const directGlyphImports = getDirectGlyphImports();
+
 allPackages.forEach(packageName => {
   globals[packageName] = packageName;
 });
@@ -94,13 +95,12 @@ const moduleFormatToDirectory = {
   umd: 'dist',
 };
 
-const config = ['esm', 'umd'].flatMap(format => {
-  const baseConfig = {
+const baseConfigForFormat = (format) => (
+  {
     input: 'src/index.ts',
     output: {
       dir: moduleFormatToDirectory[format],
       name,
-
       format,
       sourcemap: true,
       globals,
@@ -134,23 +134,24 @@ const config = ['esm', 'umd'].flatMap(format => {
     ],
     external: id =>
       [
-        'clipboard',
-        'highlight.js',
-        'highlightjs-graphql',
-        'react',
-        'react-dom',
         '@emotion/server',
         '@emotion/css',
         '@emotion/css/create-instance',
         '@emotion/server/create-instance',
+        '@faker-js/faker',
+        '@testing-library/react',
+        'clipboard',
+        'focus-trap-react',
+        'highlight.js',
+        'highlightjs-graphql',
+        'lodash',
         'polished',
         'prop-types',
+        'react',
+        'react-dom',
         'react-is',
         'react-keyed-flatten-children',
         'react-transition-group',
-        '@testing-library/react',
-        'lodash',
-        'focus-trap-react',
         ...getLodashExternals(),
         ...allPackages,
         ...directGlyphImports,
@@ -159,19 +160,35 @@ const config = ['esm', 'umd'].flatMap(format => {
       // to whitelist every nested lodash module individually
       /^lodash\//.test(id) ||
       /^highlight\.js\//.test(id),
-  };
+})
 
-  return [
+const config = ['esm', 'umd'].flatMap(format => {
+  const baseConfig = baseConfigForFormat(format)
+
+  const iconsConfig = getGeneratedFiles().map(input => ({
+    ...baseConfig,
+    input: `src/generated/${path.basename(input)}`,
+    output: {
+      ...baseConfig.output,
+      name: `${path.basename(input, path.extname(input))}.js`,
+    },
+  }))
+
+  const config = [
     baseConfig,
-    ...getGeneratedFiles().map(input => ({
-      ...baseConfig,
-      input: `src/generated/${path.basename(input)}`,
-      output: {
-        ...baseConfig.output,
-        name: `${path.basename(input, path.extname(input))}.js`,
-      },
-    })),
+    ...iconsConfig,
   ];
-});
 
-export default config;
+  // TODO: only build stories for either esm or umd
+  if (format === 'esm' && glob.sync('src/*.story.tsx').length > 0) {
+    // Story config
+    config.push({
+      ...baseConfig,
+      input: glob.sync('src/*.story.tsx')
+    })
+  }
+
+  return config
+})
+
+export default config
