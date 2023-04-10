@@ -3,11 +3,16 @@ import { Meta } from '@storybook/react';
 
 import Badge from '@leafygreen-ui/badge';
 
-import { Cell, HeaderRow, Row, Table, TableHeader } from '../TableV10';
 import { defaultData } from '../TableV10/fixtures';
-import { makeData } from '../utils/makeData';
-
-import V11Adapter from './V11Adapter';
+import { makeData } from '../utils/makeData.testutils';
+import {
+  V10Cell as Cell,
+  V10HeaderRow as HeaderRow,
+  V10Row as Row,
+  V10Table as Table,
+  V10TableHeader as TableHeader,
+  V11Adapter,
+} from '..';
 
 export default {
   title: 'Components/Table/V11 Adapter',

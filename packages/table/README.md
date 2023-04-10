@@ -129,6 +129,8 @@ This option determines how the row's expanded content will be rendered. Refer to
 
 \+ other HTML `thead` element props
 
+> If `isSticky` is set to `true`, the `Table` component will need to have a CSS `height` value set in pixels.
+
 ### `HeaderRow`
 
 #### Props

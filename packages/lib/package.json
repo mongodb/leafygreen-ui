@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/lib",
-  "version": "10.3.0",
+  "version": "10.3.1",
   "description": "leafyGreen UI Kit Internal Library",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -24,6 +24,7 @@
     "react": "^17.0.0"
   },
   "dependencies": {
+    "@storybook/csf": "^0.0.2-next.10",
     "lodash": "^4.17.21",
     "prop-types": "^15.7.2"
   },

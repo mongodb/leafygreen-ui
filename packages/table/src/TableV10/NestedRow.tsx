@@ -67,6 +67,9 @@ const nestedRowTransitionStyles = (
   }
 };
 
+/**
+ * @deprecated
+ */
 interface NestedRowProps extends RowProps {
   state: TransitionStatus;
 }

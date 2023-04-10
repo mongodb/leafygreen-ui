@@ -6,7 +6,7 @@ import { axe } from 'jest-axe';
 
 import { palette } from '@leafygreen-ui/palette';
 
-import { Person } from '../utils/makeData';
+import { Person } from '../utils/makeData.testutils';
 
 import { Row, RowProps } from '.';
 

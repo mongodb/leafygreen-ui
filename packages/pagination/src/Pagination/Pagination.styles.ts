@@ -21,9 +21,3 @@ export const flexSectionStyles = css`
   align-items: center;
   justify-content: center;
 `;
-
-export const selectPortalStyles = css`
-  [role='listbox'] {
-    min-width: 80px;
-  }
-`;

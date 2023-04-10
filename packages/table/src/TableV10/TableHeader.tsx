@@ -92,6 +92,9 @@ export function normalizeAccessor<T extends string | Function>(
   return accessorFn;
 }
 
+/**
+ * @deprecated
+ */
 interface TableHeaderInterface<Shape> {
   /**
    * The label of the column
@@ -149,6 +152,9 @@ export type TableHeaderElement = React.ReactComponentElement<
   typeof TableHeader
 >;
 
+/**
+ * @deprecated
+ */
 function TableHeader<Shape>({
   label,
   onClick,

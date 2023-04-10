@@ -1,6 +1,7 @@
+import { Header } from '@tanstack/react-table';
+
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-import { Header } from '../..';
 import { LGRowData } from '../../useLeafyGreenTable';
 
 export const SortState = {
