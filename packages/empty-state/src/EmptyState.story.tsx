@@ -1,14 +1,18 @@
 import React from 'react';
 import { ComponentStory } from '@storybook/react';
 
-import { DarkModeProps, storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  DarkModeProps,
+  storybookArgTypes,
+  StoryMeta,
+} from '@leafygreen-ui/lib';
 import { spacing } from '@leafygreen-ui/tokens';
 
-import BasicEmptyStateStory, {
+import BasicEmptyStateStoryMeta, {
   WithActionsAndLink,
   WithSmallGraphic,
 } from './BasicEmptyState/BasicEmptyState.story';
-import FeaturesEmptyStateStory, {
+import FeaturesEmptyStateStoryMeta, {
   ThreeFeaturesWithSecondaryActionAndLink,
   TwoFeaturesWithSecondaryActionAndLink,
 } from './FeaturesEmptyState/FeaturesEmptyState.story';
@@ -36,7 +40,7 @@ interface EmptyStateStoryProps extends DarkModeProps {
   buttonConfiguration: ButtonConfiguration;
 }
 
-export default {
+export default StoryMeta({
   title: 'Components/EmptyState',
   args: {
     variant: StoryVariant.Basic,
@@ -62,7 +66,7 @@ export default {
       exclude: ['className'],
     },
   },
-};
+});
 
 // @ts-expect-error Props for the LiveExample story do not correspond to documented component's props
 export const LiveExample: ComponentStory<EmptyStateStoryProps> = ({
@@ -80,25 +84,25 @@ export const LiveExample: ComponentStory<EmptyStateStoryProps> = ({
   if (variant === StoryVariant.Basic) {
     StoryComponent = WithActionsAndLink;
     storyComponentProps = {
-      ...BasicEmptyStateStory.args,
+      ...BasicEmptyStateStoryMeta.args,
       ...WithActionsAndLink.args,
     };
   } else if (variant === StoryVariant.BasicWithSmallAsset) {
     StoryComponent = WithSmallGraphic;
     storyComponentProps = {
-      ...BasicEmptyStateStory.args,
+      ...BasicEmptyStateStoryMeta.args,
       ...WithSmallGraphic.args,
     };
   } else if (variant === StoryVariant.TwoFeatures) {
     StoryComponent = TwoFeaturesWithSecondaryActionAndLink;
     storyComponentProps = {
-      ...FeaturesEmptyStateStory.args,
+      ...FeaturesEmptyStateStoryMeta.args,
       ...TwoFeaturesWithSecondaryActionAndLink.args,
     };
   } else if (variant === StoryVariant.ThreeFeatures) {
     StoryComponent = ThreeFeaturesWithSecondaryActionAndLink;
     storyComponentProps = {
-      ...FeaturesEmptyStateStory.args,
+      ...FeaturesEmptyStateStoryMeta.args,
       ...ThreeFeaturesWithSecondaryActionAndLink.args,
     };
   }

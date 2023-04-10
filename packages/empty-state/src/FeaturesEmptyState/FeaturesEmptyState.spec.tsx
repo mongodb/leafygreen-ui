@@ -42,15 +42,19 @@ const testFeatures = [
   },
 ];
 
+const defaultProps = {
+  title: 'test title',
+  primaryButton: <Button>test button</Button>,
+  features: testFeatures,
+};
+
 afterEach(() => {
   jest.clearAllMocks();
 });
 
 describe('packages/empty-state/features', () => {
   test('renders title', () => {
-    const { getByText } = render(
-      <FeaturesEmptyState title="test title" features={testFeatures} />,
-    );
+    const { getByText } = render(<FeaturesEmptyState {...defaultProps} />);
     expect(getByText('test title')).toBeInTheDocument();
   });
 
@@ -61,7 +65,7 @@ describe('packages/empty-state/features', () => {
       .mockImplementation(() => {});
     render(
       <FeaturesEmptyState
-        title="test title"
+        {...defaultProps}
         features={testFeatures.slice(0, 1)}
       />,
     );
@@ -74,7 +78,7 @@ describe('packages/empty-state/features', () => {
       .mockImplementation(() => {});
     render(
       <FeaturesEmptyState
-        title="test title"
+        {...defaultProps}
         features={testFeatures.slice(0, 2)}
       />,
     );
@@ -85,7 +89,7 @@ describe('packages/empty-state/features', () => {
     const consoleSpy = jest
       .spyOn(console, 'error')
       .mockImplementation(() => {});
-    render(<FeaturesEmptyState title="test title" features={testFeatures} />);
+    render(<FeaturesEmptyState {...defaultProps} />);
     expect(consoleSpy).not.toHaveBeenCalled();
   });
 
@@ -96,7 +100,7 @@ describe('packages/empty-state/features', () => {
       .mockImplementation(() => {});
     render(
       <FeaturesEmptyState
-        title="test title"
+        {...defaultProps}
         features={[
           ...testFeatures,
           {
@@ -111,13 +115,7 @@ describe('packages/empty-state/features', () => {
   });
 
   test('renders primary button', () => {
-    const { getByText } = render(
-      <FeaturesEmptyState
-        title="test title"
-        features={testFeatures}
-        primaryButton={<Button>test button</Button>}
-      />,
-    );
+    const { getByText } = render(<FeaturesEmptyState {...defaultProps} />);
     expect(getByText('test button')).toBeInTheDocument();
   });
 
@@ -132,25 +130,10 @@ describe('packages/empty-state/features', () => {
     );
     expect(getByText('test button 2')).toBeInTheDocument();
   });
-  test('errors when secondary button is passed without primary', () => {
-    const consoleSpy = jest
-      .spyOn(console, 'error')
-      .mockImplementation(() => {});
-    render(
-      <FeaturesEmptyState
-        title="test title"
-        features={testFeatures}
-        secondaryButton={<Button>test button 2</Button>}
-      />,
-    );
-    expect(consoleSpy).toHaveBeenCalled();
-  });
   test('renders external link', () => {
     const { getByText } = render(
       <FeaturesEmptyState
-        title="test title"
-        features={testFeatures}
-        primaryButton={<Button>test button</Button>}
+        {...defaultProps}
         secondaryButton={<Button>test button 2</Button>}
         externalLink={<Link>test external link</Link>}
       />,
@@ -160,9 +143,7 @@ describe('packages/empty-state/features', () => {
   test('rendered link is external by default', () => {
     const { getByTestId } = render(
       <FeaturesEmptyState
-        title="test title"
-        features={testFeatures}
-        primaryButton={<Button>test button</Button>}
+        {...defaultProps}
         secondaryButton={<Button>test button 2</Button>}
         externalLink={<Link>test external link</Link>}
       />,
@@ -171,5 +152,14 @@ describe('packages/empty-state/features', () => {
     expect(
       getByTestId('features-empty-states-link').getElementsByTagName('svg')[0],
     ).toBeInTheDocument();
+  });
+  // eslint-disable-next-line jest/no-disabled-tests
+  test.skip('errors when secondary button is passed without primary', () => {
+    const { primaryButton, ...propsWithoutPrimaryButton } = defaultProps;
+    // @ts-expect-error primaryButton is required when secondaryButton is passed
+    <FeaturesEmptyState
+      {...propsWithoutPrimaryButton}
+      secondaryButton={<Button>test button 2</Button>}
+    />;
   });
 });

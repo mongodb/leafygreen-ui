@@ -68,7 +68,7 @@ export const WithSmallGraphic = Template.bind({});
 WithSmallGraphic.args = {
   graphic: <LightModeSmallGraphic viewBox="0 0 198 131" />,
   title: 'No results found',
-  description: 'Try adjusting your keywords to find what you’re looking for.',
+  description: `Try adjusting your keywords to find what you're looking for.`,
   primaryButton: <Button>Add Dependency</Button>,
   secondaryButton: <Button>Upload Module</Button>,
   externalLink: <Link>Test external link</Link>,

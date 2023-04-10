@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 
 import { Theme } from '@leafygreen-ui/lib';
 
@@ -15,7 +15,8 @@ import LightModeFeature2 from './LightModeFeature2.svg';
 // @ts-ignore no type definition for SVG
 import LightModeFeature3 from './LightModeFeature3.svg';
 
-export const graphics: Record<Theme, Array<ReactElement>> = {
+// svg will be imported as an object in test suites, and ReactElement when used with svgr
+export const graphics: Record<Theme, Array<any>> = {
   [Theme.Dark]: [
     <DarkModeFeature1 key="cloud-feature" viewBox="0 0 72 72" />,
     <DarkModeFeature2 key="serverless-feature" viewBox="0 0 72 72" />,

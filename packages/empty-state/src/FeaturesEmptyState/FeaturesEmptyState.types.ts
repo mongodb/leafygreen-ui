@@ -2,11 +2,21 @@ import { ReactChild, ReactElement } from 'react';
 
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
-export interface FeaturesEmptyStateProps extends DarkModeProps {
+export type FeaturesEmptyStateProps = DarkModeProps & {
   /**
    * Heading text
    */
   title: string;
+
+  /**
+   * Optional CTA button
+   */
+  primaryButton: ReactElement;
+
+  /**
+   * Optional secondary button
+   */
+  secondaryButton?: ReactElement;
 
   /**
    * Array of Feature objects (length should be 2 or 3 elements)
@@ -14,20 +24,10 @@ export interface FeaturesEmptyStateProps extends DarkModeProps {
   features: Array<Feature>;
 
   /**
-   * Primary CTA button.
-   */
-  primaryButton: ReactElement;
-
-  /**
-   * Optional secondary CTA button.
-   */
-  secondaryButton?: ReactElement;
-
-  /**
    * Optional link to external page for additional information
    */
   externalLink?: ReactElement;
-}
+};
 
 export interface Feature {
   /**

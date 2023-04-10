@@ -2,7 +2,30 @@ import { ReactChild, ReactElement } from 'react';
 
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
-export interface BasicEmptyStateProps extends DarkModeProps {
+interface EmptyStateWithCTAProps {
+  /**
+   * Optional CTA button
+   */
+  primaryButton: ReactElement;
+
+  /**
+   * Optional button. Secondary button should only exist when a primaryButton exists.
+   */
+  secondaryButton?: ReactElement;
+}
+
+interface EmptyStateWithoutCTAProps {
+  /**
+   * Optional CTA button
+   */
+  primaryButton?: undefined;
+  /**
+   * Optional button. Secondary button should only exist when a primaryButton exists.
+   */
+  secondaryButton?: undefined;
+}
+
+type BasicEmptyStateBaseProps = DarkModeProps & {
   /**
    * Graphic shown left of text content. The component is designed to be used with MongoDB marketing-approved graphics.
    */
@@ -19,17 +42,11 @@ export interface BasicEmptyStateProps extends DarkModeProps {
   description: ReactChild;
 
   /**
-   * Optional CTA button
-   */
-  primaryButton?: ReactElement;
-
-  /**
-   * Optional CTA button. Secondary button should only exist when a primaryButton exists.
-   */
-  secondaryButton?: ReactElement;
-
-  /**
    * Optional link to external page for additional information
    */
   externalLink?: ReactElement;
-}
+};
+
+export type BasicEmptyStateProps =
+  | (BasicEmptyStateBaseProps & EmptyStateWithoutCTAProps)
+  | (BasicEmptyStateBaseProps & EmptyStateWithCTAProps);

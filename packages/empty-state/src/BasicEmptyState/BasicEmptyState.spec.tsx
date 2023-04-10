@@ -48,6 +48,7 @@ describe('packages/empty-state/basic', () => {
   test('errors when secondary button is passed without primary', () => {
     const consoleSpy = jest.spyOn(console, 'error');
     render(
+      // @ts-expect-error primaryButton is required when secondaryButton is passed
       <BasicEmptyState
         title="test title"
         description="test description"
