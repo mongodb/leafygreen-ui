@@ -47,7 +47,7 @@ export const getWrapperFontSize = (
     case SizeVariant.Large: {
       return css`
         font-size: 18px;
-        line-height: 32px;
+        line-height: 22px;
       `;
     }
 
@@ -71,10 +71,9 @@ export const inheritTypeScale = css`
 `;
 
 export const textContainerStyle = css`
-  > *:last-child {
-    display: block;
-    padding-bottom: 4px;
-  }
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 4px;
 `;
 
 export const inputContainerStyle = css`

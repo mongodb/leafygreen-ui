@@ -83,6 +83,7 @@ import {
   inputElementTransitionStyles,
   inputWrapperStyle,
   labelDescriptionContainerStyle,
+  labelDescriptionLargeStyles,
   multiselectInputElementStyle,
 } from './Combobox.styles';
 
@@ -1165,12 +1166,26 @@ export function Combobox<M extends boolean>({
           {(label || description) && (
             <div className={labelDescriptionContainerStyle}>
               {label && (
-                <Label id={labelId} htmlFor={inputId} darkMode={darkMode}>
+                <Label
+                  id={labelId}
+                  htmlFor={inputId}
+                  darkMode={darkMode}
+                  className={cx({
+                    [labelDescriptionLargeStyles]: size === ComboboxSize.Large,
+                  })}
+                >
                   {label}
                 </Label>
               )}
               {description && (
-                <Description darkMode={darkMode}>{description}</Description>
+                <Description
+                  darkMode={darkMode}
+                  className={cx({
+                    [labelDescriptionLargeStyles]: size === ComboboxSize.Large,
+                  })}
+                >
+                  {description}
+                </Description>
               )}
             </div>
           )}

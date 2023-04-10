@@ -5,6 +5,8 @@ import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import { StoryMeta } from '@leafygreen-ui/lib';
+import { Option, Select } from '@leafygreen-ui/select';
+import TextInput from '@leafygreen-ui/text-input';
 
 import {
   ComboboxSize,
@@ -18,6 +20,12 @@ import { Combobox, ComboboxGroup, ComboboxOption } from '..';
 const wrapperStyle = css`
   width: 256px;
   padding-block: 64px;
+  display: flex;
+
+  & > * {
+    flex-shrink: 0;
+    width: 100px;
+  }
 `;
 
 export default StoryMeta({
@@ -165,6 +173,17 @@ const ComboboxOptions = [
 const Template: ComponentStory<typeof Combobox> = args => (
   <div className={wrapperStyle}>
     <Combobox {...args} />
+    <TextInput label={'im the label'} description={'description'} />
+    <Select label={'im the label'} description={'description'}>
+      <Option key="long" value="long">
+        Cras mattis consectetur purus sit amet fermentum. Maecenas sed diam eget
+        risus varius blandit sit amet non magna.
+      </Option>
+      <Option key="longer" value="longer">
+        Cras mattis consectetur purus sit amet fermentum. Maecenas sed diam eget
+        risus varius blandit sit amet non magna.
+      </Option>
+    </Select>
   </div>
 );
 

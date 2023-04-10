@@ -409,7 +409,14 @@ export const errorMessageSizeStyle: Record<Size, string> = {
   `,
 };
 export const labelDescriptionContainerStyle = css`
-  margin-bottom: 2px;
+  margin-bottom: 4px;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const labelDescriptionLargeStyles = css`
+  font-size: 18px;
+  line-height: 22px;
 `;
 
 export const comboboxOverflowShadowStyles: Record<Theme, string> = {
