@@ -21,26 +21,12 @@ const testGraphics = Object.keys(graphics).reduce((acc, theme) => {
   return acc;
 }, {} as TestGraphics);
 
-const testFeatures = [
-  {
-    graphic: testGraphics[Theme.Light][0],
-    title: 'Multi-region, multi-cloud',
-    description:
-      'Run powerful and resilient apps that span multiple regions or clouds at once.',
-  },
-  {
-    graphic: testGraphics[Theme.Light][1],
-    title: 'Serverless and elastic',
-    description:
-      'Run powerful and resilient apps that span multiple regions or clouds at once.',
-  },
-  {
-    graphic: testGraphics[Theme.Light][2],
-    title: 'Always-on security',
-    description:
-      'Secure data with built-in defaults for access and end-toend encryption.',
-  },
-];
+const testFeatures = Array.from({ length: MAX_NUM_FEATURES }, (_, i) => ({
+  graphic: testGraphics[Theme.Light][0],
+  title: `feature-${i}`,
+  description:
+    'Run powerful and resilient apps that span multiple regions or clouds at once.',
+}));
 
 const defaultProps = {
   title: 'test title',
@@ -58,38 +44,44 @@ describe('packages/empty-state/features', () => {
     expect(getByText('test title')).toBeInTheDocument();
   });
 
-  test("console errors when there's only one feature", () => {
-    expect(MIN_NUM_FEATURES === 2).toBe(true);
+  test("console errors when there's less than the minimum number of features", () => {
     const consoleSpy = jest
       .spyOn(console, 'error')
       .mockImplementation(() => {});
     render(
       <FeaturesEmptyState
         {...defaultProps}
-        features={testFeatures.slice(0, 1)}
+        features={testFeatures.slice(0, MIN_NUM_FEATURES - 1)}
       />,
     );
-    expect(consoleSpy).toHaveBeenCalled();
+    expect(consoleSpy).toHaveBeenCalledWith(
+      `The \`FeaturesEmptyState\` component should only render ${MIN_NUM_FEATURES}-${MAX_NUM_FEATURES} features.`,
+    );
   });
 
-  test("doesn't console error when there's two features", () => {
+  test("doesn't console error when there's the minimum number of features", () => {
     const consoleSpy = jest
       .spyOn(console, 'error')
       .mockImplementation(() => {});
     render(
       <FeaturesEmptyState
         {...defaultProps}
-        features={testFeatures.slice(0, 2)}
+        features={testFeatures.slice(0, MIN_NUM_FEATURES)}
       />,
     );
     expect(consoleSpy).not.toHaveBeenCalled();
   });
 
-  test("doesn't console error when there's three features", () => {
+  test("doesn't console error when there's the maximum number of features", () => {
     const consoleSpy = jest
       .spyOn(console, 'error')
       .mockImplementation(() => {});
-    render(<FeaturesEmptyState {...defaultProps} />);
+    render(
+      <FeaturesEmptyState
+        {...defaultProps}
+        features={testFeatures.slice(0, MAX_NUM_FEATURES)}
+      />,
+    );
     expect(consoleSpy).not.toHaveBeenCalled();
   });
 
@@ -111,7 +103,9 @@ describe('packages/empty-state/features', () => {
         ]}
       />,
     );
-    expect(consoleSpy).toHaveBeenCalled();
+    expect(consoleSpy).toHaveBeenCalledWith(
+      `The \`FeaturesEmptyState\` component should only render ${MIN_NUM_FEATURES}-${MAX_NUM_FEATURES} features.`,
+    );
   });
 
   test('renders primary button', () => {

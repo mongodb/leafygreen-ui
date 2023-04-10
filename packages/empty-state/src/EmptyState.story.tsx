@@ -1,11 +1,7 @@
 import React from 'react';
 import { ComponentStory } from '@storybook/react';
 
-import {
-  DarkModeProps,
-  storybookArgTypes,
-  StoryMeta,
-} from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
 import { spacing } from '@leafygreen-ui/tokens';
 
 import BasicEmptyStateStoryMeta, {
@@ -26,20 +22,6 @@ const StoryVariant = {
 
 type StoryVariant = typeof StoryVariant[keyof typeof StoryVariant];
 
-const ButtonConfiguration = {
-  None: 'No Buttons',
-  PrimaryOnly: 'Primary Only',
-  BothButtons: 'Primary and Secondary',
-} as const;
-
-type ButtonConfiguration =
-  typeof ButtonConfiguration[keyof typeof ButtonConfiguration];
-
-interface EmptyStateStoryProps extends DarkModeProps {
-  variant: StoryVariant;
-  buttonConfiguration: ButtonConfiguration;
-}
-
 export default StoryMeta({
   title: 'Components/EmptyState',
   args: {
@@ -49,10 +31,6 @@ export default StoryMeta({
     variant: {
       control: 'radio',
       options: Object.values(StoryVariant),
-    },
-    buttonConfiguration: {
-      control: 'radio',
-      options: Object.values(ButtonConfiguration),
     },
     graphic: { control: 'none' },
     externalLink: { control: 'none' },
@@ -68,18 +46,14 @@ export default StoryMeta({
   },
 });
 
-// @ts-expect-error Props for the LiveExample story do not correspond to documented component's props
-export const LiveExample: ComponentStory<EmptyStateStoryProps> = ({
+export const LiveExample = ({
   // @ts-expect-error Props for the LiveExample story do not correspond to documented component's props
   // eslint-disable-next-line react/prop-types
   variant,
-  // @ts-expect-error Props for the LiveExample story do not correspond to documented component's props
-  // eslint-disable-next-line react/prop-types
-  buttonConfiguration,
   ...rest
 }) => {
   let StoryComponent: ComponentStory<any> = WithActionsAndLink;
-  let storyComponentProps: any = {};
+  let storyComponentProps: unknown = {};
 
   if (variant === StoryVariant.Basic) {
     StoryComponent = WithActionsAndLink;
@@ -105,14 +79,6 @@ export const LiveExample: ComponentStory<EmptyStateStoryProps> = ({
       ...FeaturesEmptyStateStoryMeta.args,
       ...ThreeFeaturesWithSecondaryActionAndLink.args,
     };
-  }
-
-  if (buttonConfiguration === ButtonConfiguration.None) {
-    if (variant === StoryVariant.Basic)
-      delete storyComponentProps['primaryButton'];
-    delete storyComponentProps['secondaryButton'];
-  } else if (buttonConfiguration === ButtonConfiguration.PrimaryOnly) {
-    delete storyComponentProps['secondaryButton'];
   }
 
   return (

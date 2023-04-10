@@ -30,7 +30,7 @@ export default {
   },
   parameters: {
     controls: {
-      exclude: ['className'],
+      exclude: ['className', 'graphicSize'],
     },
   },
 };
@@ -69,8 +69,6 @@ WithSmallGraphic.args = {
   graphic: <LightModeSmallGraphic viewBox="0 0 198 131" />,
   title: 'No results found',
   description: `Try adjusting your keywords to find what you're looking for.`,
-  primaryButton: <Button>Add Dependency</Button>,
-  secondaryButton: <Button>Upload Module</Button>,
   externalLink: <Link>Test external link</Link>,
   // @ts-expect-error graphicSize is a Storybook only prop
   graphicSize: 'small',
