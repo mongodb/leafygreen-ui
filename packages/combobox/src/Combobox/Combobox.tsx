@@ -1112,6 +1112,9 @@ export function Combobox<M extends boolean>({
   const isMultiselectWithSelections =
     isMultiselect(selection) && !!selection.length;
 
+  /**
+   * Function that calls the `checkScrollPosition` util to check the scroll position
+   */
   const handleInputWrapperScroll = (e: UIEvent<HTMLDivElement>) => {
     setShouldShowOverflowShadow(checkScrollPosition(e.target as HTMLElement));
   };
@@ -1120,13 +1123,21 @@ export function Combobox<M extends boolean>({
     leading: true,
   });
 
-  // TODO: useCallback?
-  const handleOnScroll: React.UIEventHandler<HTMLDivElement> = e => {
-    if (overflow === Overflow.expandY) {
-      debounceScroll(e);
-    }
-  };
+  /**
+   * On scroll this function is called to check the scroll position
+   */
+  const handleOnScroll = useCallback(
+    (e: React.UIEvent<HTMLDivElement>) => {
+      if (overflow === Overflow.expandY) {
+        debounceScroll(e);
+      }
+    },
+    [debounceScroll, overflow],
+  );
 
+  /**
+   * On load check if an overflow shadow should be visible
+   */
   useEffect(() => {
     if (inputWrapperRef.current) {
       setShouldShowOverflowShadow(checkScrollPosition(inputWrapperRef.current));
