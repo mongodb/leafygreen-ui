@@ -16,6 +16,30 @@ export const comboboxOptionBaseStyle = css`
 `;
 
 export const comboboxOptionSizeStyle: Record<ComboboxSize, string> = {
+  [ComboboxSize.XSmall]: css`
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+    min-height: ${menuItemHeight[ComboboxSize.XSmall]}px;
+    padding: ${menuItemPadding[ComboboxSize.XSmall].y}px
+      ${menuItemPadding[ComboboxSize.XSmall].x}px;
+    gap: ${spacing[1]}px;
+
+    &:before {
+      max-height: ${menuItemHeight[ComboboxSize.XSmall]}px;
+    }
+  `,
+  [ComboboxSize.Small]: css`
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+    min-height: ${menuItemHeight[ComboboxSize.Small]}px;
+    padding: ${menuItemPadding[ComboboxSize.Small].y}px
+      ${menuItemPadding[ComboboxSize.Small].x}px;
+    gap: ${spacing[1]}px;
+
+    &:before {
+      max-height: ${menuItemHeight[ComboboxSize.Small]}px;
+    }
+  `,
   [ComboboxSize.Default]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
@@ -43,6 +67,12 @@ export const comboboxOptionSizeStyle: Record<ComboboxSize, string> = {
 };
 
 export const checkIconStyle: Record<ComboboxSize, string> = {
+  [ComboboxSize.XSmall]: css`
+    min-width: ${spacing[3]}px;
+  `,
+  [ComboboxSize.Small]: css`
+    min-width: ${spacing[3]}px;
+  `,
   [ComboboxSize.Default]: css`
     min-width: ${spacing[3]}px;
   `,

@@ -15,7 +15,10 @@ export const menuItemPadding: Record<Size, { x: number; y: number }> = {
 };
 
 /** Height of a menu item (in px) */
-export const menuItemHeight = {
+export const menuItemHeight: Record<Size, number> = {
+  [Size.XSmall]:
+    typeScales.body1.lineHeight + 2 * menuItemPadding[Size.XSmall].y,
+  [Size.Small]: typeScales.body1.lineHeight + 2 * menuItemPadding[Size.Small].y,
   [Size.Default]:
     typeScales.body1.lineHeight + 2 * menuItemPadding[Size.Default].y,
   [Size.Large]: typeScales.body2.lineHeight + 2 * menuItemPadding[Size.Large].y,
