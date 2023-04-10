@@ -1,2 +1,2 @@
 export { FeaturesEmptyState } from './FeaturesEmptyState';
-export type { FeaturesEmptyStateProps } from './FeaturesEmptyState.types';
+export { type FeaturesEmptyStateProps } from './FeaturesEmptyState.types';
