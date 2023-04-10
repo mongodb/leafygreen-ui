@@ -1124,7 +1124,7 @@ export function Combobox<M extends boolean>({
   });
 
   /**
-   * On scroll this function is called to check the scroll position
+   * Function called on scroll of the inputWrapperRef container
    */
   const handleOnScroll = useCallback(
     (e: React.UIEvent<HTMLDivElement>) => {
