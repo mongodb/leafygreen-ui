@@ -4,7 +4,7 @@ import { isUndefined } from 'lodash';
 import { ToastContext } from '../ToastContext';
 import { ToastContextProps } from '../ToastContext.types';
 
-export const useToast = (): Omit<ToastContextProps, '_hasProvider'> => {
+export const useToast = (): ToastContextProps => {
   const context = useContext(ToastContext);
   const hasProvider = !isUndefined(context.getStack());
 
