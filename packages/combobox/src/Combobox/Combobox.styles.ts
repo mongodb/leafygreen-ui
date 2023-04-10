@@ -1,3 +1,5 @@
+import { transparentize } from 'polished';
+
 import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
@@ -422,7 +424,7 @@ export const labelDescriptionLargeStyles = css`
 export const comboboxOverflowShadowStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     ::after {
-      box-shadow: 0px 0px 7px 5px rgb(0 30 43 / 15%);
+      box-shadow: 0px 0px 7px 5px ${transparentize(0.85, palette.black)};
     }
   `,
   [Theme.Dark]: css`
