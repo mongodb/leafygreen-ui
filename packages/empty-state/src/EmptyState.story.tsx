@@ -12,6 +12,7 @@ import FeaturesEmptyStateStoryMeta, {
   ThreeFeaturesWithSecondaryActionAndLink,
   TwoFeaturesWithSecondaryActionAndLink,
 } from './FeaturesEmptyState/FeaturesEmptyState.story';
+import { css } from '@leafygreen-ui/emotion';
 
 const StoryVariant = {
   Basic: 'Basic',
@@ -78,12 +79,18 @@ export const LiveExample = ({
   }
 
   return (
-    <>
+    <div
+      className={css`
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      `}
+    >
       <StoryComponent {...storyComponentProps} {...rest} />
       <div style={{ marginTop: spacing[4] }}>
         * Note: Controls below are designed specifically for the Live Example
         and may not correspond to the React component&apos;s properties.
       </div>
-    </>
+    </div>
   );
 };

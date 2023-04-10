@@ -8,6 +8,7 @@ export const rootStyles = css`
   display: flex;
   gap: ${spacing[3]}px;
   align-items: center;
+  justify-content: center;
 `;
 
 export const textContainerStyles = css`

@@ -100,7 +100,7 @@ TwoFeaturesWithSecondaryActionAndLink.args = {
     },
   ],
   secondaryButton: <Button>Upload Module</Button>,
-  externalLink: <Link>Test external link</Link>,
+  externalLink: <Link href="http://www.google.com">Test external link</Link>,
 };
 
 export const ThreeFeatures = Template.bind({});
@@ -175,5 +175,5 @@ ThreeFeaturesWithSecondaryActionAndLink.args = {
     },
   ],
   secondaryButton: <Button>Upload Module</Button>,
-  externalLink: <Link>Test external link</Link>,
+  externalLink: <Link href="http://www.google.com">Test external link</Link>,
 };

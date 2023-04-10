@@ -15,6 +15,7 @@ export const featuresContainerStyles = css`
 `;
 
 export const featureContainerStyles = css`
+  width: 200px;
   max-width: 200px;
 `;
 

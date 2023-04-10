@@ -69,7 +69,7 @@ WithSmallGraphic.args = {
   graphic: <LightModeSmallGraphic viewBox="0 0 198 131" />,
   title: 'No results found',
   description: `Try adjusting your keywords to find what you're looking for.`,
-  externalLink: <Link>Test external link</Link>,
+  externalLink: <Link href="https://www.mongodb.com">Test external link</Link>,
   // @ts-expect-error graphicSize is a Storybook only prop
   graphicSize: 'small',
 };
@@ -79,7 +79,7 @@ WithActionsAndLink.args = {
   graphic: <LightModeGraphic viewBox="0 0 298 198" />,
   primaryButton: <Button>Add Dependency</Button>,
   secondaryButton: <Button>Upload Module</Button>,
-  externalLink: <Link>Test external link</Link>,
+  externalLink: <Link href="https://www.mongodb.com">Test external link</Link>,
   // @ts-expect-error graphicSize is a Storybook only prop
   graphicSize: 'normal',
 };
