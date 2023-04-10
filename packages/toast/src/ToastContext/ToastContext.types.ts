@@ -20,8 +20,6 @@ export interface ToastContextProps {
   getToast: (id: ToastId) => ToastProps | undefined;
   getStack: () => ToastStack | undefined;
   clearStack: () => void;
-  /** @private */
-  _hasProvider?: boolean;
 }
 
 /**

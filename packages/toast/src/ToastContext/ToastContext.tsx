@@ -12,7 +12,6 @@ const initialToastContextValue = {
   getToast: () => undefined,
   getStack: () => undefined,
   clearStack: () => {},
-  _hasProvider: false,
 };
 
 export const ToastContext = React.createContext<ToastContextProps>(
@@ -30,7 +29,6 @@ export const ToastProvider = ({
       value={{
         ...toastFns,
         getStack: () => stack,
-        _hasProvider: true,
       }}
     >
       {children}
