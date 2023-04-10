@@ -19,11 +19,6 @@ const wrapperStyle = css`
   width: 256px;
   padding-block: 64px;
   display: flex;
-
-  & > * {
-    flex-shrink: 0;
-    width: 100px;
-  }
 `;
 
 export default StoryMeta({
