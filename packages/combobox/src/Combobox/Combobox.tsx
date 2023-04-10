@@ -110,7 +110,7 @@ export function Combobox<M extends boolean>({
   onFilter,
   clearable = true,
   onClear,
-  overflow = 'expand-y',
+  overflow = Overflow.expandY,
   multiselect = false as M,
   initialValue,
   onChange,
@@ -1158,6 +1158,7 @@ export function Combobox<M extends boolean>({
           chipTruncationLocation,
           chipCharacterLimit,
           inputValue,
+          overflow,
         }}
       >
         <div className={cx(comboboxParentStyle(size), className)} {...rest}>
