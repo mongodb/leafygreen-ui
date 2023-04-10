@@ -5,8 +5,6 @@ import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import { StoryMeta } from '@leafygreen-ui/lib';
-import { Option, Select } from '@leafygreen-ui/select';
-import TextInput from '@leafygreen-ui/text-input';
 
 import {
   ComboboxSize,
@@ -173,17 +171,6 @@ const ComboboxOptions = [
 const Template: ComponentStory<typeof Combobox> = args => (
   <div className={wrapperStyle}>
     <Combobox {...args} />
-    <TextInput label={'im the label'} description={'description'} />
-    <Select label={'im the label'} description={'description'}>
-      <Option key="long" value="long">
-        Cras mattis consectetur purus sit amet fermentum. Maecenas sed diam eget
-        risus varius blandit sit amet non magna.
-      </Option>
-      <Option key="longer" value="longer">
-        Cras mattis consectetur purus sit amet fermentum. Maecenas sed diam eget
-        risus varius blandit sit amet non magna.
-      </Option>
-    </Select>
   </div>
 );
 
