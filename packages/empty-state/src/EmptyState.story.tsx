@@ -1,6 +1,7 @@
 import React from 'react';
 import { ComponentStory } from '@storybook/react';
 
+import { css } from '@leafygreen-ui/emotion';
 import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
 import { spacing } from '@leafygreen-ui/tokens';
 
@@ -12,7 +13,6 @@ import FeaturesEmptyStateStoryMeta, {
   ThreeFeaturesWithSecondaryActionAndLink,
   TwoFeaturesWithSecondaryActionAndLink,
 } from './FeaturesEmptyState/FeaturesEmptyState.story';
-import { css } from '@leafygreen-ui/emotion';
 
 const StoryVariant = {
   Basic: 'Basic',
