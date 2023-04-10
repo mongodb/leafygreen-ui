@@ -32,16 +32,12 @@ export default StoryMeta({
       control: 'radio',
       options: Object.values(StoryVariant),
     },
-    graphic: { control: 'none' },
-    externalLink: { control: 'none' },
-    primaryButton: { control: 'none' },
-    secondaryButton: { control: 'none' },
     darkMode: storybookArgTypes.darkMode,
   },
   parameters: {
     default: 'LiveExample',
     controls: {
-      exclude: ['className'],
+      exclude: ['className', 'as'],
     },
   },
 });
