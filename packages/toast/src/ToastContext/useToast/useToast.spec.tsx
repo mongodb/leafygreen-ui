@@ -11,9 +11,7 @@ import { useToast } from '.';
 const ToastProviderMock = ({ children }: PropsWithChildren<{}>) => {
   const { stack, ...toastFns } = useToastReducer();
   return (
-    <ToastContext.Provider
-      value={{ ...toastFns, getStack: () => stack, _hasProvider: true }}
-    >
+    <ToastContext.Provider value={{ ...toastFns, getStack: () => stack }}>
       {children}
     </ToastContext.Provider>
   );
