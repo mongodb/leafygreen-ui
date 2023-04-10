@@ -61,4 +61,5 @@ export interface ToastReducerState {
 
 export interface ToastProviderProps {
   initialValue?: ToastStack;
+  portalClassName?: string;
 }

@@ -21,6 +21,7 @@ export const ToastContext = React.createContext<ToastContextProps>(
 export const ToastProvider = ({
   children,
   initialValue,
+  portalClassName,
 }: React.PropsWithChildren<ToastProviderProps>) => {
   const { stack, ...toastFns } = useToastReducer(initialValue);
 
@@ -32,7 +33,7 @@ export const ToastProvider = ({
       }}
     >
       {children}
-      <ToastContainer stack={stack} />
+      <ToastContainer stack={stack} portalClassName={portalClassName} />
     </ToastContext.Provider>
   );
 };
