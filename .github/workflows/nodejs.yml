@@ -34,6 +34,7 @@ jobs:
       - name: Install
         if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
         run: yarn install --frozen-lockfile
+
     outputs:
       yarn-cache-dir: ${{ steps.get-yarn-cache-dir.outputs.dir }}
 
@@ -44,9 +45,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Print object
-        run: echo "Yarn cache dir ${{ needs.install.outputs.yarn-cache-dir }}"
-
       - uses: actions/cache/restore@v3
         name: Restore yarn cache
         id: yarn-cache
@@ -54,7 +52,9 @@ jobs:
           path: ${{ needs.install.outputs.yarn-cache-dir }}
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
-      - run: yarn install --frozen-lockfile
+      # - name: Install
+      #   if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
+      #   run: yarn install --frozen-lockfile
 
       - name: prettier
         run: yarn check:prettier
@@ -67,6 +67,19 @@ jobs:
     runs-on: ubuntu-latest
     needs: install
     steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/cache/restore@v3
+        name: Restore yarn cache
+        id: yarn-cache
+        with:
+          path: ${{ needs.install.outputs.yarn-cache-dir }}
+          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install
+        if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
+        run: yarn install --frozen-lockfile
+
       - name: types
         run: yarn check:ts
 
@@ -75,8 +88,22 @@ jobs:
     runs-on: ubuntu-latest
     needs: install
     steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/cache/restore@v3
+        name: Restore yarn cache
+        id: yarn-cache
+        with:
+          path: ${{ needs.install.outputs.yarn-cache-dir }}
+          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+
+      # - name: Install
+      #   if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
+      #   run: yarn install --frozen-lockfile
+
       - name: deps
         run: yarn check:deps
+
       - name: package.json versions
         run: yarn check:package-json
 
@@ -85,6 +112,19 @@ jobs:
     runs-on: ubuntu-latest
     needs: install
     steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/cache/restore@v3
+        name: Restore yarn cache
+        id: yarn-cache
+        with:
+          path: ${{ needs.install.outputs.yarn-cache-dir }}
+          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install
+        if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
+        run: yarn install --frozen-lockfile
+
       - uses: preactjs/compressed-size-action@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
@@ -102,10 +142,12 @@ jobs:
         name: Restore yarn cache
         id: yarn-cache
         with:
-          path: ${{ needs.install.outputs.dir }}
+          path: ${{ needs.install.outputs.yarn-cache-dir }}
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
-      - run: yarn install --frozen-lockfile
+      # - name: Install
+      #   if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
+      #   run: yarn install --frozen-lockfile
 
       - uses: actions/cache@v3
         name: Check for build cache
@@ -125,6 +167,28 @@ jobs:
     runs-on: ubuntu-latest
     needs: [install, build]
     steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/cache/restore@v3
+        name: Restore yarn cache
+        id: yarn-cache
+        with:
+          path: ${{ needs.install.outputs.yarn-cache-dir }}
+          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+
+      # - name: Install
+      #   if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
+      #   run: yarn install --frozen-lockfile
+
+      - uses: actions/cache/restore@v3
+        name: Restore build cache
+        id: build-cache
+        with:
+          path: |
+            **/dist
+            !**/node_modules
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/rollup.config.js', '**/babel.config.js', '**/src/', '**/scripts/', '!**/node_modules', '!**/dist') }}
+
       - name: tests
         run: yarn test --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
         env:
@@ -135,6 +199,19 @@ jobs:
     runs-on: ubuntu-latest
     needs: [install, build]
     steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/cache/restore@v3
+        name: Restore yarn cache
+        id: yarn-cache
+        with:
+          path: ${{ needs.install.outputs.yarn-cache-dir }}
+          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install
+        if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
+        run: yarn install --frozen-lockfile
+
       - name: tests
         run: yarn test --ssr --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
         env:
@@ -145,5 +222,18 @@ jobs:
     runs-on: ubuntu-latest
     needs: [install, build]
     steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/cache/restore@v3
+        name: Restore yarn cache
+        id: yarn-cache
+        with:
+          path: ${{ needs.install.outputs.yarn-cache-dir }}
+          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install
+        if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
+        run: yarn install --frozen-lockfile
+
       - name: check builds
         run: yarn check:builds
