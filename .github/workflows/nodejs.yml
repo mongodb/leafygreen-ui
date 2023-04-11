@@ -22,13 +22,13 @@ jobs:
           node-version: '14.x'
 
       - name: Get yarn cache directory path
-        id: yarn-cache-dir
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+        id: get-yarn-cache-dir
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
 
       - uses: actions/cache@v3
         id: yarn-cache
         with:
-          path: ${{ steps.yarn-cache-dir.outputs.dir }}
+          path: ${{ steps.get-yarn-cache-dir.outputs.dir }}
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install
@@ -42,7 +42,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - run: echo "yarn cache dir is ${{ needs.install.outputs.dir }}"
+      - run: echo "install outputs are ${{ needs.install.outputs }}"
 
       - uses: actions/cache/restore@v3
         name: Restore yarn cache
