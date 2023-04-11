@@ -26,13 +26,7 @@ const pascalCase = (str: string) =>
 const skipComponents = ['lib'];
 const skipProps = ['ref', 'key', '__INTERNAL__menuButtonSlot__'];
 
-// const resolveComponentName = (exp: any, source: any) => {
-//   console.log({ exp, source });
-//   return 'test';
-// };
-
 const TSDocOptions: ParserOptions = {
-  // componentNameResolver: resolveComponentName,
   shouldExtractLiteralValuesFromEnum: true,
   shouldExtractValuesFromUnion: true,
   shouldIncludePropTagMap: true,
