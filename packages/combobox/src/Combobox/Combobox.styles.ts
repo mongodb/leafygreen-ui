@@ -274,6 +274,11 @@ export const baseInputElementStyle = css`
   text-overflow: ellipsis;
   vertical-align: top;
 
+  // Only add padding if there are chips
+  &:not(:first-child) {
+    padding-left: 4px;
+  }
+
   &:placeholder-shown {
     min-width: 100%;
   }
@@ -301,39 +306,24 @@ export const inputElementSizeStyle: Record<Size, string> = {
     font-size: ${fontSize[Size.XSmall]}px;
     line-height: ${lineHeight[Size.XSmall]}px;
     min-width: ${fontSize[Size.XSmall]}px;
-    // Only add padding if there are chips
-    &:not(:first-child) {
-      padding-left: 4px;
-    }
   `,
   [Size.Small]: css`
     height: ${inputHeight[Size.Small]}px;
     font-size: ${fontSize[Size.Small]}px;
     line-height: ${lineHeight[Size.Small]}px;
     min-width: ${fontSize[Size.Small]}px;
-    // Only add padding if there are chips
-    &:not(:first-child) {
-      padding-left: 4px;
-    }
   `,
   [Size.Default]: css`
     height: ${inputHeight[Size.Default]}px;
     font-size: ${fontSize[Size.Default]}px;
     line-height: ${lineHeight[Size.Default]}px;
     min-width: ${fontSize[Size.Default]}px;
-    // Only add padding if there are chips
-    &:not(:first-child) {
-      padding-left: 4px;
-    }
   `,
   [Size.Large]: css`
     height: ${inputHeight[Size.Large]}px;
     font-size: ${fontSize[Size.Large]}px;
     line-height: ${lineHeight[Size.Large]}px;
     min-width: ${fontSize[Size.Large]}px;
-    &:not(:first-child) {
-      padding-left: 6px;
-    }
   `,
 };
 
@@ -380,17 +370,17 @@ export const errorMessageThemeStyle: Record<Theme, string> = {
 export const errorMessageSizeStyle: Record<Size, string> = {
   [Size.XSmall]: css`
     font-size: ${fontSize[Size.XSmall]}px;
-    line-height: 16px;
+    line-height: ${lineHeight[Size.XSmall]}px;
     padding-top: ${comboboxPadding[Size.XSmall].y}px;
   `,
   [Size.Small]: css`
     font-size: ${fontSize[Size.Small]}px;
-    line-height: ${typeScales.body1.lineHeight}px;
+    line-height: ${lineHeight[Size.Small]}px;
     padding-top: ${comboboxPadding[Size.Small].y}px;
   `,
   [Size.Default]: css`
     font-size: ${fontSize[Size.Default]}px;
-    line-height: ${typeScales.body1.lineHeight}px;
+    line-height: ${lineHeight[Size.Default]}px;
     padding-top: ${comboboxPadding[Size.Default].y}px;
   `,
   [Size.Large]: css`
