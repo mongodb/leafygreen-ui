@@ -42,7 +42,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - run: printf "install outputs are %s\n" "${{ needs.install.outputs }}"
+      - name: Print object
+        run: |
+          OUTPUT='${{ needs.install.outputs }}'
+          printf "install outputs are %s\n" "$OUTPUTS"
 
       - uses: actions/cache/restore@v3
         name: Restore yarn cache
