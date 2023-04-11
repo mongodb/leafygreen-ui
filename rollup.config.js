@@ -174,7 +174,7 @@ const config = ['esm', 'umd'].flatMap(format => {
   }));
 
   const config = [baseConfig, ...iconsConfig];
-  const storyGlob = 'src/*.stor{y,ies}.tsx'
+  const storyGlob = 'src/*.stor{y,ies}.tsx';
 
   if (format === 'esm' && glob.sync(storyGlob).length > 0) {
     // Story config
@@ -185,8 +185,8 @@ const config = ['esm', 'umd'].flatMap(format => {
         format,
         file: 'story.js',
         sourcemap: false,
-        globals: baseConfig.output.globals
-      }
+        globals: baseConfig.output.globals,
+      },
     });
   }
 
