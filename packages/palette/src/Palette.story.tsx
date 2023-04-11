@@ -3,64 +3,12 @@ import { isUndefined } from 'lodash';
 import { darken, lighten, readableColor, transparentize } from 'polished';
 
 import { css, cx } from '@leafygreen-ui/emotion';
-import {
-  focusRing,
-  hoverRing,
-  transitionDuration,
-  typeScales,
-} from '@leafygreen-ui/tokens';
-import Tooltip from '@leafygreen-ui/tooltip';
+
 
 import palette from './palette';
 
 const BLOCK_WIDTH = 88;
 
-const colorBlockWrapper = css`
-  display: inline-block;
-  position: relative;
-  width: ${BLOCK_WIDTH}px;
-`;
-
-const colorBlock = css`
-  outline: none;
-  border: none;
-  border-top-color: transparent;
-  width: 100%;
-  padding-bottom: 100%;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: box-shadow ease-in-out ${transitionDuration.default}ms;
-
-  &:hover {
-    box-shadow: ${hoverRing.light.gray};
-  }
-
-  &:focus {
-    box-shadow: ${focusRing.light.default};
-  }
-`;
-
-const hexLabelStyle = css`
-  width: calc(100% - 1em);
-  position: absolute;
-  left: 50%;
-  margin: auto;
-  font-size: ${typeScales.body1.fontSize}px;
-  line-height: ${typeScales.body1.lineHeight}px;
-  text-align: center;
-  padding: 3px 0.3rem;
-  border-radius: 4px;
-  transform: translate(-50%, -125%);
-`;
-
-const nameLabelStyle = css`
-  font-size: ${typeScales.body1.fontSize}px;
-  line-height: ${typeScales.body1.lineHeight}px;
-  text-align: center;
-  color: ${palette.gray.dark1};
-  margin: auto;
-  padding-block: 0.3em;
-`;
 
 type HueName = keyof typeof palette;
 
@@ -120,21 +68,23 @@ function ColorBlock({ hue, shade }: ColorBlockProps) {
     }, 1500);
   };
 
-  return (
-    <div className={cx(colorBlockWrapper, colorBlockWrapperDynamic)}>
-      <button className={cx(colorBlock, colorBlockColor)} onClick={copyHex} />
-      <div className={cx(hexLabelStyle, hexLabelColor)}>{color}</div>
-      <div className={nameLabelStyle}>{name}</div>
-      <Tooltip
-        open={copied}
-        refEl={colorBlockRef}
-        usePortal={false}
-        spacing={0}
-      >
-        Copied {color}
-      </Tooltip>
-    </div>
-  );
+  return ('hi')
+
+  // return (
+  //   <div className={cx(colorBlockWrapper, colorBlockWrapperDynamic)}>
+  //     <button className={cx(colorBlock, colorBlockColor)} onClick={copyHex} />
+  //     <div className={cx(hexLabelStyle, hexLabelColor)}>{color}</div>
+  //     <div className={nameLabelStyle}>{name}</div>
+  //     <Tooltip
+  //       open={copied}
+  //       refEl={colorBlockRef}
+  //       usePortal={false}
+  //       spacing={0}
+  //     >
+  //       Copied {color}
+  //     </Tooltip>
+  //   </div>
+  // );
 }
 
 export default {

@@ -15,8 +15,8 @@ if (args.length > 0) {
   cmdArgs.unshift(...packageArgs);
 }
 
-// Run lerna
-const cmd = spawn('npx', ['lerna', 'run', ...cmdArgs], { stdio: 'inherit' });
+// Run turbo
+const cmd = spawn('npx', ['turbo', 'run', ...cmdArgs], { stdio: 'inherit' });
 cmd.on('close', code => {
   // eslint-disable-next-line no-console
   console.log(code === 0 ? '🛠️ Finished pre-build \n' : `Exit code ${code}`);

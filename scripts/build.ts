@@ -75,10 +75,10 @@ if (dry) {
 
   spawnSync('yarn', ['pre-build', ...packages], { stdio: 'inherit' });
 
-  // Run lerna
+  // Run turbo
   cmdArgs.unshift(...packageArgs);
 
-  const cmd = spawn('npx', ['lerna', 'run', ...cmdArgs], { stdio: 'inherit' });
+  const cmd = spawn('npx', ['turbo', 'run', ...cmdArgs], { stdio: 'inherit' });
   cmd.on('close', code => {
     // eslint-disable-next-line no-console
     console.log(

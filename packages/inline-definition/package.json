@@ -35,8 +35,5 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
-  },
-  "devDependencies": {
-    "@leafygreen-ui/typography": "^16.1.0"
   }
 }

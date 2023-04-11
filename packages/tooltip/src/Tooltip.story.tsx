@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { ComponentStory } from '@storybook/react';
 
-import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
@@ -14,7 +13,7 @@ export default {
   component: Tooltip,
   args: {
     children: 'I am a tooltip!',
-    trigger: <Button>trigger</Button>,
+    trigger: <button>trigger</button>,
     enabled: true,
     usePortal: true,
   },

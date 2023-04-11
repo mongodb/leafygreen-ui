@@ -3,7 +3,6 @@ import { ComponentStory } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
-import { Body, H2, Link } from '@leafygreen-ui/typography';
 
 import InlineDefinition from '.';
 
@@ -33,9 +32,9 @@ const Template: ComponentStory<typeof InlineDefinition> = ({
   darkMode,
   ...args
 }) => (
-  <Body darkMode={darkMode}>
+  <div darkMode={darkMode}>
     <InlineDefinition darkMode={darkMode} {...args} />
-  </Body>
+  </div>
 );
 
 export const Basic = Template.bind({});
@@ -54,33 +53,33 @@ export const Demo: ComponentStory<typeof InlineDefinition> = ({
       flex-direction: column;
     `}
   >
-    <H2 darkMode={darkMode}>
+    <h2>
       <InlineDefinition darkMode={darkMode} {...args}>
         Shard
       </InlineDefinition>{' '}
       your cluster
-    </H2>
+    </h2>
 
-    <Body darkMode={darkMode}>
+    <div>
       Base hourly rate is for a MongoDB{' '}
       <InlineDefinition darkMode={darkMode} {...args}>
         replica set
       </InlineDefinition>{' '}
       with 3 data bearing servers.
-    </Body>
-    <Body darkMode={darkMode}>
+    </div>
+    <div>
       MongoDB shards data at the{' '}
       <InlineDefinition darkMode={darkMode} {...args}>
-        <Link
-          darkMode={darkMode}
+        <a
+          
           href={
             'https://docs.mongodb.com/manual/core/sharding-shard-a-collection'
           }
         >
           collections
-        </Link>
+        </a>
       </InlineDefinition>{' '}
       level, distributing the collection data across the shards in the cluster.
-    </Body>
+    </div>
   </div>
 );

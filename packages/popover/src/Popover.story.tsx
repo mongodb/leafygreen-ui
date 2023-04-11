@@ -1,14 +1,14 @@
 import React, { useRef, useState } from 'react';
 import { Meta } from '@storybook/react';
 
-import Button from '@leafygreen-ui/button';
+
 import { css, cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
+
 
 import Popover, { Align, Justify, PopoverProps } from '.';
 
 const popoverStyle = css`
-  border: 1px solid ${palette.gray.light1};
+  /* border: 1px solid ${palette.gray.light1}; */
   text-align: center;
   padding: 20px;
   max-height: 100%;
@@ -32,7 +32,7 @@ const regularStyles = css`
 const scrollableStyle = css`
   width: 500px;
   height: 90vh;
-  background-color: ${palette.gray.light2};
+  /* background-color: ${palette.gray.light2}; */
   overflow: scroll;
   position: relative;
 `;
@@ -132,7 +132,7 @@ export const Basic = ({
 
   return (
     <div className={regularStyles}>
-      <Button
+      <button
         className={cx(buttonStyles, position)}
         onClick={() => setActive(active => !active)}
       >
@@ -140,7 +140,7 @@ export const Basic = ({
         <Popover {...args} active={active}>
           <div className={popoverStyle}>Popover content</div>
         </Popover>
-      </Button>
+      </button>
     </div>
   );
 };
@@ -158,7 +158,7 @@ export const ScrollableContainer = ({
   return (
     <div className={scrollableStyle}>
       <div className={scrollableInnerStyle} ref={portalContainer}>
-        <Button
+        <button
           onClick={() => setActive(active => !active)}
           className={position}
         >
@@ -172,7 +172,7 @@ export const ScrollableContainer = ({
           >
             <div className={popoverStyle}>Popover content</div>
           </Popover>
-        </Button>
+        </button>
       </div>
     </div>
   );

@@ -19,9 +19,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "devDependencies": {
-    "@leafygreen-ui/button": "^20.0.2"
-  },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.3",
     "@leafygreen-ui/hooks": "^7.5.0",
