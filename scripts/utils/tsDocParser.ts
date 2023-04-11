@@ -106,20 +106,24 @@ export function parseTSDoc(
 
   if (fs.existsSync(componentDir)) {
     const componentFileNames = parseFileNames(componentDir);
+    console.log(componentFileNames)
 
     const docs: Array<CustomComponentDoc> = uniqBy(
       Parser.parse(componentFileNames)
         .filter((doc: ComponentDoc) => {
-          return (
-            // Remove any external components
-            !doc.filePath.includes('node_modules') &&
-            // Remove any components with no props
-            Object.keys(doc.props).length > 0 &&
-            // Remove any docs with excluded tags
-            excludeTags.every(tag => isUndefined(doc.tags?.[tag]))
-          );
+          excludeTags;
+          return true;
+          // return (
+          //   // Remove any external components
+          //   !doc.filePath.includes('node_modules') &&
+          //   // Remove any components with no props
+          //   Object.keys(doc.props).length > 0 &&
+          //   // Remove any docs with excluded tags
+          //   excludeTags.every(tag => isUndefined(doc.tags?.[tag]))
+          // );
         })
         .map(({ displayName, props, filePath, ...rest }) => {
+          console.log({ displayName, props, filePath, ...rest });
           return {
             ...rest,
             // For default exports, change the displayName

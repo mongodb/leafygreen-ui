@@ -142,6 +142,7 @@ function getIndentLevelStyle(indentLevel: number) {
 
 /**
  * @deprecated
+ * @privateRemarks This interface should be ignored in the component's code docs.
  */
 export interface RowProps extends HTMLElementProps<'tr', HTMLTableRowElement> {
   /**
