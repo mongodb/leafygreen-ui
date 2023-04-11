@@ -95,75 +95,74 @@ const moduleFormatToDirectory = {
   umd: 'dist',
 };
 
-const baseConfigForFormat = (format) => (
-  {
-    input: 'src/index.ts',
-    output: {
-      dir: moduleFormatToDirectory[format],
-      name,
-      format,
-      sourcemap: true,
-      globals,
-    },
-    plugins: [
-      resolve({ extensions }),
+const baseConfigForFormat = format => ({
+  input: 'src/index.ts',
+  output: {
+    dir: moduleFormatToDirectory[format],
+    name,
+    format,
+    sourcemap: true,
+    globals,
+  },
+  plugins: [
+    resolve({ extensions }),
 
-      babel({
-        babelrc: false,
-        babelHelpers: 'bundled',
-        extensions,
-        configFile: path.resolve(__dirname, 'babel.config.js'),
-        sourceMaps: 'inline',
-        envName: 'production',
-      }),
+    babel({
+      babelrc: false,
+      babelHelpers: 'bundled',
+      extensions,
+      configFile: path.resolve(__dirname, 'babel.config.js'),
+      sourceMaps: 'inline',
+      envName: 'production',
+    }),
 
-      urlPlugin({
-        limit: 50000,
-        include: ['**/*.png'],
-      }),
+    urlPlugin({
+      limit: 50000,
+      include: ['**/*.png'],
+    }),
 
-      urlPlugin({
-        limit: 0,
-        include: ['**/*.less'],
-        fileName: '[name][extname]',
-      }),
+    urlPlugin({
+      limit: 0,
+      include: ['**/*.less'],
+      fileName: '[name][extname]',
+    }),
 
-      svgr(),
+    svgr(),
 
-      terser(),
-    ],
-    external: id =>
-      [
-        '@emotion/server',
-        '@emotion/css',
-        '@emotion/css/create-instance',
-        '@emotion/server/create-instance',
-        '@faker-js/faker',
-        '@testing-library/react',
-        'clipboard',
-        'focus-trap-react',
-        'highlight.js',
-        'highlightjs-graphql',
-        'lodash',
-        'polished',
-        'prop-types',
-        'react',
-        'react-dom',
-        'react-is',
-        'react-keyed-flatten-children',
-        'react-transition-group',
-        ...getLodashExternals(),
-        ...allPackages,
-        ...directGlyphImports,
-      ].includes(id) ||
-      // We test if an import includes lodash to avoid having
-      // to whitelist every nested lodash module individually
-      /^lodash\//.test(id) ||
-      /^highlight\.js\//.test(id),
-})
+    terser(),
+  ],
+  external: id =>
+    [
+      '@emotion/server',
+      '@emotion/css',
+      '@emotion/css/create-instance',
+      '@emotion/server/create-instance',
+      '@faker-js/faker',
+      '@testing-library/react',
+      'clipboard',
+      'focus-trap-react',
+      'highlight.js',
+      'highlightjs-graphql',
+      'lodash',
+      'polished',
+      'prop-types',
+      'react',
+      'react-dom',
+      'react-is',
+      'react-keyed-flatten-children',
+      'react-transition-group',
+      ...getLodashExternals(),
+      ...allPackages,
+      ...directGlyphImports,
+    ].includes(id) ||
+    // We test if an import includes lodash to avoid having
+    // to whitelist every nested lodash module individually
+    /^lodash\//.test(id) ||
+    /^highlight\.js\//.test(id),
+});
 
 const config = ['esm', 'umd'].flatMap(format => {
-  const baseConfig = baseConfigForFormat(format)
+  const baseConfig = baseConfigForFormat(format);
 
   const iconsConfig = getGeneratedFiles().map(input => ({
     ...baseConfig,
@@ -172,23 +171,20 @@ const config = ['esm', 'umd'].flatMap(format => {
       ...baseConfig.output,
       name: `${path.basename(input, path.extname(input))}.js`,
     },
-  }))
+  }));
 
-  const config = [
-    baseConfig,
-    ...iconsConfig,
-  ];
+  const config = [baseConfig, ...iconsConfig];
 
   // TODO: only build stories for either esm or umd
   if (format === 'esm' && glob.sync('src/*.story.tsx').length > 0) {
     // Story config
     config.push({
       ...baseConfig,
-      input: glob.sync('src/*.story.tsx')
-    })
+      input: glob.sync('src/*.story.tsx'),
+    });
   }
 
-  return config
-})
+  return config;
+});
 
-export default config
+export default config;
