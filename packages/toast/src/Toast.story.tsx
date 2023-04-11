@@ -7,12 +7,12 @@ import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { DarkModeProps, StoryMeta } from '@leafygreen-ui/lib';
+import { ToastProvider, useToast, Variant } from '@leafygreen-ui/toast';
 import { InlineCode, Label } from '@leafygreen-ui/typography';
 
 import { variantIcons } from './InternalToast/VariantIcon';
 import { makeToast, makeToastStack } from './ToastContext/utils/makeToast';
 import { InternalToast, InternalToastProps } from './InternalToast';
-import { ToastProvider, useToast, Variant } from '.';
 
 export default StoryMeta<typeof InternalToast>({
   title: 'Components/Toast',
@@ -20,14 +20,20 @@ export default StoryMeta<typeof InternalToast>({
   decorators: [
     (Story, meta) => (
       <LeafyGreenProvider darkMode={!!meta.args.darkMode}>
-        <ToastProvider initialValue={meta.args.initialValue}>
+        <ToastProvider
+          initialValue={meta.args.initialValue}
+          portalClassName={css`
+            position: relative;
+            z-index: 1;
+          `}
+        >
           <Story />
         </ToastProvider>
       </LeafyGreenProvider>
     ),
   ],
   parameters: {
-    default: 'Basic',
+    default: 'Variants',
     controls: {
       exclude: [
         'as',
@@ -54,6 +60,7 @@ export default StoryMeta<typeof InternalToast>({
     initialValue: undefined,
   },
 });
+
 export const Basic: ComponentStory<typeof InternalToast> = (
   props: Partial<InternalToastProps> & DarkModeProps,
 ) => {
