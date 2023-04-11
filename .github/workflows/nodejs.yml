@@ -22,13 +22,13 @@ jobs:
           node-version: '14.x'
 
       - name: Get yarn cache directory path
-        id: yarn-cache
-        run: echo "::set-output name=yarn-cache-dir::$(yarn cache dir)"
+        id: yarn-cache-dir
+        run: echo "::set-output name=dir::$(yarn cache dir)"
 
       - uses: actions/cache@v3
         id: yarn-cache
         with:
-          path: ${{ steps.yarn-cache.outputs.yarn-cache-dir }}
+          path: ${{ steps.yarn-cache-dir.outputs.dir }}
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install
@@ -42,13 +42,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - run: echo "yarn cache dir is ${{ needs.install.outputs.yarn-cache-dir }}"
+      - run: echo "yarn cache dir is ${{ needs.install.outputs.dir }}"
 
       - uses: actions/cache/restore@v3
         name: Restore yarn cache
         id: yarn-cache
         with:
-          path: ${{ needs.install.outputs.yarn-cache-dir }}
+          path: ${{ needs.install.outputs.dir }}
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
       - run: yarn install --frozen-lockfile
@@ -99,7 +99,7 @@ jobs:
         name: Restore yarn cache
         id: yarn-cache
         with:
-          path: ${{ needs.install.yarn-cache-dir-path.outputs.dir }}
+          path: ${{ needs.install.dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
       - run: yarn install --frozen-lockfile
