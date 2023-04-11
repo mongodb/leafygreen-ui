@@ -88,13 +88,15 @@ export const useToastReducer = (initialValue?: ToastStack) => {
   const getToast: ToastContextProps['getToast'] = (id: ToastId) =>
     stack.get(id);
 
-  const popToast: ToastContextProps['popToast'] = (payload: ToastId) => {
+  const popToast: ToastContextProps['popToast'] = (id: ToastId) => {
+    const toastProps = getToast(id);
+
     dispatch({
       type: ToastReducerActionType.Pop,
-      payload,
+      payload: id,
     });
 
-    return getToast(payload);
+    return toastProps;
   };
 
   const updateToast: ToastContextProps['updateToast'] = (

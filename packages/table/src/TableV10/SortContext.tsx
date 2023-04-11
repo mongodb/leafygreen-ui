@@ -1,7 +1,13 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
 
+/**
+ * @deprecated
+ */
 export type SortDirection = 'asc' | 'desc';
 
+/**
+ * @deprecated
+ */
 interface Sort {
   columnId: number;
   direction: SortDirection;
@@ -10,6 +16,9 @@ interface Sort {
   handleSort?: (direction: SortDirection) => void;
 }
 
+/**
+ * @deprecated
+ */
 interface ContextInterface {
   sort?: Sort;
   setSort: React.Dispatch<React.SetStateAction<Sort | undefined>>;

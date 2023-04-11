@@ -1,10 +1,15 @@
 import { RefObject } from 'react';
 import { VirtualItem } from 'react-virtual';
-import { Cell, Row, RowData, Table, TableOptions } from '@tanstack/react-table';
+import {
+  Cell,
+  ColumnDef,
+  Row,
+  RowData,
+  Table,
+  TableOptions,
+} from '@tanstack/react-table';
 
 import { HTMLElementProps } from '@leafygreen-ui/lib';
-
-import { ColumnDef } from '..';
 
 import { VirtualizerValues } from './ReactVirtual.types';
 

@@ -5,6 +5,7 @@ import {
   getCoreRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  HeaderGroup,
 } from '@tanstack/react-table';
 
 import Badge from '@leafygreen-ui/badge';
@@ -13,24 +14,26 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 import Pagination from '@leafygreen-ui/pagination';
 
-import ExpandedContent from './ExpandedContent/ExpandedContent';
-import TableBody from './TableBody/TableBody';
-import TableHead from './TableHead/TableHead';
 import {
   createKitchenSinkData,
   makeData,
   Person,
 } from './utils/makeData.testutils';
 import { AnyDict } from './utils/types';
-import { Cell, HeaderCell } from './Cell';
-import { HeaderRow, Row } from './Row';
-import Table from './Table';
-import useLeafyGreenTable, {
-  LeafyGreenTableCell,
-  LeafyGreenTableRow,
-  LGColumnDef,
-} from './useLeafyGreenTable';
-import { HeaderGroup } from '.';
+import {
+  Cell,
+  ExpandedContent,
+  HeaderCell,
+  HeaderRow,
+  type LeafyGreenTableCell,
+  type LeafyGreenTableRow,
+  type LGColumnDef,
+  Row,
+  Table,
+  TableBody,
+  TableHead,
+  useLeafyGreenTable,
+} from '.';
 
 export default {
   title: 'Components/Table',

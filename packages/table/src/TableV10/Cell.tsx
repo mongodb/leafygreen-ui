@@ -10,6 +10,9 @@ import { getCommonCellStyles } from './styles';
 
 export const tdInnerDivClassName = createUniqueClassName('td-inner-div');
 
+/**
+ * @deprecated
+ */
 interface HeaderCellProps
   extends HTMLElementProps<'th', HTMLTableHeaderCellElement> {
   /**
@@ -23,6 +26,9 @@ interface HeaderCellProps
   isDisabled?: boolean;
 }
 
+/**
+ * @deprecated
+ */
 interface TableCellProps extends HTMLElementProps<'td', HTMLTableCellElement> {
   /**
    * Determines whether the cell renders as disabled
@@ -34,6 +40,9 @@ interface TableCellProps extends HTMLElementProps<'td', HTMLTableCellElement> {
   isHeader?: false;
 }
 
+/**
+ * @deprecated
+ */
 type CellProps = HeaderCellProps | TableCellProps;
 
 const baseStyles = css`
@@ -71,7 +80,14 @@ const darkModeDisabledHeaderStyles = css`
   cursor: auto;
 `;
 
+/**
+ * @deprecated
+ */
 export type CellElement = React.ReactComponentElement<typeof Cell>;
+
+/**
+ * @deprecated
+ */
 const Cell = forwardRef(
   (
     { children, className, isHeader = false, isDisabled, ...rest }: CellProps,

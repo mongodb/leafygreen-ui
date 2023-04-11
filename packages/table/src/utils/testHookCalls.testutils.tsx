@@ -1,9 +1,4 @@
 import React, { useRef, useState } from 'react';
-
-import useLeafyGreenTable, {
-  LeafyGreenTable,
-  LeafyGreenTableOptions,
-} from '../useLeafyGreenTable';
 import {
   ColumnDef,
   ExpandedState,
@@ -11,7 +6,12 @@ import {
   getExpandedRowModel,
   getSortedRowModel,
   SortingState,
-} from '..';
+} from '@tanstack/react-table';
+
+import useLeafyGreenTable, {
+  LeafyGreenTable,
+  LeafyGreenTableOptions,
+} from '../useLeafyGreenTable';
 
 import { Person } from './makeData.testutils';
 

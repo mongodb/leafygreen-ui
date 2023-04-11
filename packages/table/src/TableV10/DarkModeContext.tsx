@@ -1,5 +1,8 @@
 import React, { createContext, useContext } from 'react';
 
+/**
+ * @deprecated
+ */
 interface DarkModeProviderInterface {
   darkMode: boolean;
   children: React.ReactNode;
