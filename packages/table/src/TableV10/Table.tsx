@@ -106,7 +106,7 @@ export interface TableRowInterface<Shape = {}> {
 
 /**
  * @deprecated
- * @privateRemarks This interface should be ignored in the component's code docs.
+ * @noDocgen This interface should be ignored in the component's code docs.
  */
 export interface TableProps<Shape> extends HTMLElementProps<'table'> {
   /**
@@ -145,7 +145,7 @@ export interface TableProps<Shape> extends HTMLElementProps<'table'> {
 
 /**
  * @deprecated
- * @privateRemarks This interface should be ignored in the component's code docs.
+ * @noDocgen This interface should be ignored in the component's code docs.
  */
 export default function Table<Shape>({
   columns = [],

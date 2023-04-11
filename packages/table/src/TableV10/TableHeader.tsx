@@ -94,7 +94,7 @@ export function normalizeAccessor<T extends string | Function>(
 
 /**
  * @deprecated
- * @privateRemarks This interface should be ignored in the component's code docs.
+ * @noDocgen This interface should be ignored in the component's code docs.
  */
 interface TableHeaderInterface<Shape> {
   /**
@@ -155,7 +155,7 @@ export type TableHeaderElement = React.ReactComponentElement<
 
 /**
  * @deprecated
- * @privateRemarks This component should be ignored in the component's code docs.
+ * @noDocgen This component should be ignored in the component's code docs.
  */
 function TableHeader<Shape>({
   label,
