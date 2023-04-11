@@ -42,7 +42,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - run: echo "install outputs are ${{ needs.install.outputs }}"
+      - run: printf "install outputs are %s\n" "${{ needs.install.outputs }}"
 
       - uses: actions/cache/restore@v3
         name: Restore yarn cache
@@ -99,7 +99,7 @@ jobs:
         name: Restore yarn cache
         id: yarn-cache
         with:
-          path: ${{ needs.install.dir-path.outputs.dir }}
+          path: ${{ needs.install.outputs.dir }}
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
       - run: yarn install --frozen-lockfile
