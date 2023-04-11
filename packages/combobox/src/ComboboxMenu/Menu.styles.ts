@@ -3,8 +3,9 @@ import { transparentize } from 'polished';
 import { css, keyframes } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies, spacing, typeScales } from '@leafygreen-ui/tokens';
+import { fontFamilies, spacing } from '@leafygreen-ui/tokens';
 
+import { fontSize, lineHeight } from '../Chip/Chip.styles';
 import { ComboboxSize as Size } from '../Combobox.types';
 
 export const menuItemPadding: Record<Size, { x: number; y: number }> = {
@@ -14,14 +15,17 @@ export const menuItemPadding: Record<Size, { x: number; y: number }> = {
   [Size.Large]: { x: 12, y: 8 },
 };
 
+/** Util that returns the height of a menu item (in px) */
+const getMenuItemHeight = (size: Size) => {
+  return lineHeight[size] + 2 * menuItemPadding[size].y;
+};
+
 /** Height of a menu item (in px) */
 export const menuItemHeight: Record<Size, number> = {
-  [Size.XSmall]:
-    typeScales.body1.lineHeight + 2 * menuItemPadding[Size.XSmall].y,
-  [Size.Small]: typeScales.body1.lineHeight + 2 * menuItemPadding[Size.Small].y,
-  [Size.Default]:
-    typeScales.body1.lineHeight + 2 * menuItemPadding[Size.Default].y,
-  [Size.Large]: typeScales.body2.lineHeight + 2 * menuItemPadding[Size.Large].y,
+  [Size.XSmall]: getMenuItemHeight(Size.XSmall),
+  [Size.Small]: getMenuItemHeight(Size.Small),
+  [Size.Default]: getMenuItemHeight(Size.Default),
+  [Size.Large]: getMenuItemHeight(Size.Large),
 };
 
 /**
@@ -70,16 +74,16 @@ export const menuThemeStyle: Record<Theme, string> = {
 
 export const menuSizeStyle: Record<Size, string> = {
   [Size.XSmall]: css`
-    min-height: ${menuItemHeight[Size.Default]}px;
+    min-height: ${getMenuItemHeight(Size.Default)}px;
   `,
   [Size.Small]: css`
-    min-height: ${menuItemHeight[Size.Default]}px;
+    min-height: ${getMenuItemHeight(Size.Default)}px;
   `,
   [Size.Default]: css`
-    min-height: ${menuItemHeight[Size.Default]}px;
+    min-height: ${getMenuItemHeight(Size.Default)}px;
   `,
   [Size.Large]: css`
-    min-height: ${menuItemHeight[Size.Large]}px;
+    min-height: ${getMenuItemHeight(Size.Large)}x;
   `,
 };
 
@@ -107,48 +111,28 @@ export const menuMessageThemeStyle: Record<Theme, string> = {
 
 export const menuMessageSizeStyle: Record<Size, string> = {
   [Size.XSmall]: css`
-    font-size: ${typeScales.body1.fontSize}px;
-    line-height: ${typeScales.body1.lineHeight}px;
+    font-size: ${fontSize[Size.XSmall]}px;
+    line-height: ${lineHeight[Size.XSmall]}px;
     padding: ${menuItemPadding[Size.XSmall].y}px
       ${menuItemPadding[Size.XSmall].x}px;
   `,
   [Size.Small]: css`
-    font-size: ${typeScales.body1.fontSize}px;
-    line-height: ${typeScales.body1.lineHeight}px;
+    font-size: ${fontSize[Size.Small]}px;
+    line-height: ${lineHeight[Size.Small]}px;
     padding: ${menuItemPadding[Size.Small].y}px
       ${menuItemPadding[Size.Small].x}px;
   `,
   [Size.Default]: css`
-    font-size: ${typeScales.body1.fontSize}px;
-    line-height: ${typeScales.body1.lineHeight}px;
+    font-size: ${fontSize[Size.Default]}px;
+    line-height: ${lineHeight[Size.Default]}px;
     padding: ${menuItemPadding[Size.Default].y}px
       ${menuItemPadding[Size.Default].x}px;
   `,
   [Size.Large]: css`
-    font-size: ${typeScales.body2.fontSize}px;
-    line-height: ${typeScales.body2.lineHeight}px;
+    font-size: ${fontSize[Size.Large]}px;
+    line-height: ${lineHeight[Size.Large]}px;
     padding: ${menuItemPadding[Size.Large].y}px
       ${menuItemPadding[Size.Large].x}px;
-  `,
-};
-
-// TODO: this is not used
-export const menuMessageIconSizeStyle: Record<Size, string> = {
-  [Size.XSmall]: css`
-    height: ${typeScales.body1.fontSize}px;
-    width: ${typeScales.body1.fontSize}px;
-  `,
-  [Size.Small]: css`
-    height: ${typeScales.body1.fontSize}px;
-    width: ${typeScales.body1.fontSize}px;
-  `,
-  [Size.Default]: css`
-    height: ${typeScales.body1.fontSize}px;
-    width: ${typeScales.body1.fontSize}px;
-  `,
-  [Size.Large]: css`
-    height: ${typeScales.body2.fontSize}px;
-    width: ${typeScales.body2.fontSize}px;
   `,
 };
 

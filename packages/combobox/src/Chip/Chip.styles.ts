@@ -6,6 +6,26 @@ import { transitionDuration, typeScales } from '@leafygreen-ui/tokens';
 import { ComboboxSize } from '../Combobox.types';
 
 /**
+ * The line-height of the combobox.
+ */
+export const lineHeight: Record<ComboboxSize, number> = {
+  [ComboboxSize.XSmall]: 16,
+  [ComboboxSize.Small]: typeScales.body1.lineHeight,
+  [ComboboxSize.Default]: typeScales.body1.lineHeight,
+  [ComboboxSize.Large]: typeScales.body2.lineHeight,
+};
+
+/**
+ * The font-size of the combobox.
+ */
+export const fontSize: Record<ComboboxSize, number> = {
+  [ComboboxSize.XSmall]: typeScales.body1.fontSize,
+  [ComboboxSize.Small]: typeScales.body1.fontSize,
+  [ComboboxSize.Default]: typeScales.body1.fontSize,
+  [ComboboxSize.Large]: typeScales.body2.fontSize,
+};
+
+/**
  * Vertical padding on a chip (in px)
  */
 export const chipWrapperPaddingY = {
@@ -16,17 +36,21 @@ export const chipWrapperPaddingY = {
 } as const;
 
 /**
+ * Util to get the chip height
+ * `lineHeight + (2 * paddingY)`
+ */
+export const getChipHeight = (size: ComboboxSize) => {
+  return lineHeight[size] + 2 * chipWrapperPaddingY[size];
+};
+
+/**
  * Height of the chip element (in px)
- * lineHeight + (2 * paddingY)
  */
 export const chipHeight: Record<ComboboxSize, number> = {
-  [ComboboxSize.XSmall]: 16 + 2 * chipWrapperPaddingY[ComboboxSize.XSmall], // 16 + (2 * 1) = 18
-  [ComboboxSize.Small]:
-    typeScales.body1.lineHeight + 2 * chipWrapperPaddingY[ComboboxSize.Small], // 20 + (2 * 0) = 20
-  [ComboboxSize.Default]:
-    typeScales.body1.lineHeight + 2 * chipWrapperPaddingY[ComboboxSize.Default], // 20 + (2 * 2) = 24
-  [ComboboxSize.Large]:
-    typeScales.body2.lineHeight + 2 * chipWrapperPaddingY[ComboboxSize.Large], // 28 + (2 * 4) = 36
+  [ComboboxSize.XSmall]: getChipHeight(ComboboxSize.XSmall),
+  [ComboboxSize.Small]: getChipHeight(ComboboxSize.Small),
+  [ComboboxSize.Default]: getChipHeight(ComboboxSize.Default),
+  [ComboboxSize.Large]: getChipHeight(ComboboxSize.Large),
 };
 
 export const chipWrapperBaseStyle = css`
@@ -35,28 +59,25 @@ export const chipWrapperBaseStyle = css`
   overflow: hidden;
   white-space: nowrap;
   box-sizing: border-box;
+  border-radius: 4px;
 `;
 
 export const chipWrapperSizeStyle: Record<ComboboxSize, string> = {
   [ComboboxSize.XSmall]: css`
-    font-size: ${typeScales.body1.fontSize}px;
-    line-height: 16px;
-    border-radius: 4px;
+    font-size: ${fontSize[ComboboxSize.XSmall]}px;
+    line-height: ${lineHeight[ComboboxSize.XSmall]}px;
   `,
   [ComboboxSize.Small]: css`
-    font-size: ${typeScales.body1.fontSize}px;
-    line-height: ${typeScales.body1.lineHeight}px;
-    border-radius: 4px;
+    font-size: ${fontSize[ComboboxSize.Small]}px;
+    line-height: ${lineHeight[ComboboxSize.Small]}px;
   `,
   [ComboboxSize.Default]: css`
-    font-size: ${typeScales.body1.fontSize}px;
-    line-height: ${typeScales.body1.lineHeight}px;
-    border-radius: 4px;
+    font-size: ${fontSize[ComboboxSize.Default]}px;
+    line-height: ${lineHeight[ComboboxSize.Default]}px;
   `,
   [ComboboxSize.Large]: css`
-    font-size: ${typeScales.body2.fontSize}px;
-    line-height: ${typeScales.body2.lineHeight}px;
-    border-radius: 4px;
+    font-size: ${fontSize[ComboboxSize.Large]}px;
+    line-height: ${lineHeight[ComboboxSize.Large]}px;
   `,
 };
 

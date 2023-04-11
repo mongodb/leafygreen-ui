@@ -15,6 +15,7 @@ import {
   fontFamilies,
   spacing,
   transitionDuration,
+  typeScales,
 } from '@leafygreen-ui/tokens';
 import { Description, Label } from '@leafygreen-ui/typography';
 
@@ -38,7 +39,7 @@ import {
 const labelDescriptionContainerStyle = css`
   display: flex;
   flex-direction: column;
-  margin-bottom: 4px;
+  margin-bottom: ${spacing[1]}px;
 `;
 
 const wrapperStyle = css`
@@ -47,8 +48,8 @@ const wrapperStyle = css`
 `;
 
 const largeLabelStyles = css`
-  font-size: 18px;
-  line-height: 22px;
+  font-size: ${typeScales.large.fontSize}px;
+  line-height: ${typeScales.large.lineHeight}px;
 `;
 
 const errorTextStyle = ({

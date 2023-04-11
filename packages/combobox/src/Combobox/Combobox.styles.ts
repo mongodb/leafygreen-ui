@@ -12,22 +12,31 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { chipHeight } from '../Chip/Chip.styles';
+import { chipHeight, fontSize, lineHeight } from '../Chip/Chip.styles';
 import { ComboboxSize as Size, Overflow } from '../Combobox.types';
 
 // Rename the variable defined in chip styles
 const inputHeight = chipHeight;
 
+// Gap between each
 const flexGap = 4;
 
 /**
- * Width of the widest character (in px)
+ * The min-height of the combobox.
  */
-export const maxCharWidth: Record<Size, number> = {
-  [Size.XSmall]: typeScales.body1.fontSize,
-  [Size.Small]: typeScales.body1.fontSize,
-  [Size.Default]: typeScales.body1.fontSize,
-  [Size.Large]: typeScales.body2.fontSize,
+export const wrapperHeight: Record<Size, number> = {
+  [Size.XSmall]: 22,
+  [Size.Small]: 28,
+  [Size.Default]: 36,
+  [Size.Large]: 48,
+};
+
+/**
+ * Util that calculates the Y padding.
+ * `(wrapperHeight - inputHeight - (borderTop + borderBottom)) / 2`
+ */
+const getYPadding = (size: Size) => {
+  return (wrapperHeight[size] - inputHeight[size] - 2) / 2;
 };
 
 /**
@@ -44,25 +53,25 @@ export const comboboxPadding: Record<
   }
 > = {
   [Size.XSmall]: {
-    y: (22 - inputHeight[Size.XSmall] - 2) / 2, // (22 - 18 - 2 ) / 2 = (2) / 2 = 1
+    y: getYPadding(Size.XSmall),
     xLeftWithChip: 1,
     xLeftWithoutChip: 10,
     xRight: 4,
   },
   [Size.Small]: {
-    y: (28 - inputHeight[Size.Small] - 2) / 2, // (28 - 20 - 2) / 2 = (6) / 2 = 3
+    y: getYPadding(Size.Small),
     xLeftWithChip: 4,
     xLeftWithoutChip: 10,
     xRight: 8,
   },
   [Size.Default]: {
-    y: (36 - inputHeight[Size.Default] - 2) / 2, // (36 - 24 - 2) / 2 = (10) / 2 = 5
+    y: getYPadding(Size.Default),
     xLeftWithChip: 6,
     xLeftWithoutChip: 12,
     xRight: 12,
   },
   [Size.Large]: {
-    y: (48 - inputHeight[Size.Large] - 2) / 2,
+    y: getYPadding(Size.Large),
     xLeftWithChip: spacing[2] - 1,
     xLeftWithoutChip: spacing[2] - 1,
     xRight: spacing[2] - 1,
@@ -75,36 +84,16 @@ export const clearButtonIconSize = 28;
 /** Width of the dropdown caret icon (in px) */
 export const caretIconSize = spacing[3];
 
-const minWidth: Record<Size, number> = {
-  [Size.XSmall]:
-    maxCharWidth[Size.XSmall] +
-    2 * comboboxPadding[Size.XSmall].xLeftWithChip +
-    caretIconSize +
-    2, // + 2 for border: ;
-  [Size.Small]:
-    maxCharWidth[Size.Small] +
-    2 * comboboxPadding[Size.Small].xLeftWithChip +
-    caretIconSize +
-    2, // + 2 for border: ;
-  [Size.Default]:
-    maxCharWidth[Size.Default] +
-    2 * comboboxPadding[Size.Default].xLeftWithChip +
-    caretIconSize +
-    2, // + 2 for border: ;
-  [Size.Large]:
-    maxCharWidth[Size.Large] +
-    2 * comboboxPadding[Size.Large].xLeftWithChip +
-    caretIconSize +
-    2, // + 2 for border: ;
-};
-
 export const chipClassName = createUniqueClassName('combobox-chip');
 
 export const comboboxParentStyle = (size: Size): string => {
   return css`
     font-family: ${fontFamilies.default};
     width: 100%;
-    min-width: ${minWidth[size]}px;
+    min-width: ${fontSize[size] +
+    2 * comboboxPadding[size].xLeftWithChip +
+    caretIconSize +
+    2}px;
   `;
 };
 
@@ -309,9 +298,9 @@ export const inputElementThemeStyle: Record<Theme, string> = {
 export const inputElementSizeStyle: Record<Size, string> = {
   [Size.XSmall]: css`
     height: ${inputHeight[Size.XSmall]}px;
-    font-size: ${typeScales.body1.fontSize}px;
-    line-height: 16px;
-    min-width: ${maxCharWidth[Size.XSmall]}px;
+    font-size: ${fontSize[Size.XSmall]}px;
+    line-height: ${lineHeight[Size.XSmall]}px;
+    min-width: ${fontSize[Size.XSmall]}px;
     // Only add padding if there are chips
     &:not(:first-child) {
       padding-left: 4px;
@@ -319,9 +308,9 @@ export const inputElementSizeStyle: Record<Size, string> = {
   `,
   [Size.Small]: css`
     height: ${inputHeight[Size.Small]}px;
-    font-size: ${typeScales.body1.fontSize}px;
-    line-height: ${typeScales.body1.lineHeight}px;
-    min-width: ${maxCharWidth[Size.Small]}px;
+    font-size: ${fontSize[Size.Small]}px;
+    line-height: ${lineHeight[Size.Small]}px;
+    min-width: ${fontSize[Size.Small]}px;
     // Only add padding if there are chips
     &:not(:first-child) {
       padding-left: 4px;
@@ -329,9 +318,9 @@ export const inputElementSizeStyle: Record<Size, string> = {
   `,
   [Size.Default]: css`
     height: ${inputHeight[Size.Default]}px;
-    font-size: ${typeScales.body1.fontSize}px;
-    line-height: ${typeScales.body1.lineHeight}px;
-    min-width: ${maxCharWidth[Size.Default]}px;
+    font-size: ${fontSize[Size.Default]}px;
+    line-height: ${lineHeight[Size.Default]}px;
+    min-width: ${fontSize[Size.Default]}px;
     // Only add padding if there are chips
     &:not(:first-child) {
       padding-left: 4px;
@@ -339,9 +328,9 @@ export const inputElementSizeStyle: Record<Size, string> = {
   `,
   [Size.Large]: css`
     height: ${inputHeight[Size.Large]}px;
-    font-size: ${typeScales.body2.fontSize}px;
-    line-height: ${typeScales.body2.lineHeight}px;
-    min-width: ${maxCharWidth[Size.Large]}px;
+    font-size: ${fontSize[Size.Large]}px;
+    line-height: ${lineHeight[Size.Large]}px;
+    min-width: ${fontSize[Size.Large]}px;
     &:not(:first-child) {
       padding-left: 6px;
     }
@@ -364,7 +353,7 @@ export const multiselectInputElementStyle = (
 ) => {
   const inputLength = inputValue?.length ?? 0;
   return css`
-    width: ${inputLength * maxCharWidth[size]}px;
+    width: ${inputLength * fontSize[size]}px;
     max-width: 100%;
   `;
 };
@@ -390,35 +379,35 @@ export const errorMessageThemeStyle: Record<Theme, string> = {
 
 export const errorMessageSizeStyle: Record<Size, string> = {
   [Size.XSmall]: css`
-    font-size: ${typeScales.body1.fontSize}px;
+    font-size: ${fontSize[Size.XSmall]}px;
     line-height: 16px;
     padding-top: ${comboboxPadding[Size.XSmall].y}px;
   `,
   [Size.Small]: css`
-    font-size: ${typeScales.body1.fontSize}px;
+    font-size: ${fontSize[Size.Small]}px;
     line-height: ${typeScales.body1.lineHeight}px;
     padding-top: ${comboboxPadding[Size.Small].y}px;
   `,
   [Size.Default]: css`
-    font-size: ${typeScales.body1.fontSize}px;
+    font-size: ${fontSize[Size.Default]}px;
     line-height: ${typeScales.body1.lineHeight}px;
     padding-top: ${comboboxPadding[Size.Default].y}px;
   `,
   [Size.Large]: css`
-    font-size: ${typeScales.body2.fontSize}px;
-    line-height: ${typeScales.body2.lineHeight}px;
+    font-size: ${fontSize[Size.Large]}px;
+    line-height: ${lineHeight[Size.Large]}px;
     padding-top: ${comboboxPadding[Size.Large].y}px;
   `,
 };
 export const labelDescriptionContainerStyle = css`
-  margin-bottom: 4px;
+  margin-bottom: ${spacing[2]}px;
   display: flex;
   flex-direction: column;
 `;
 
 export const labelDescriptionLargeStyles = css`
-  font-size: 18px;
-  line-height: 22px;
+  font-size: ${typeScales.large.fontSize}px;
+  line-height: ${typeScales.large.lineHeight}px;
 `;
 
 export const comboboxOverflowShadowStyles: Record<Theme, string> = {
