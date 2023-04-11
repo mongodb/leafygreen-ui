@@ -117,15 +117,18 @@ export const disabledChipWrapperStyle: Record<Theme, string> = {
 
 export const chipTextSizeStyle: Record<ComboboxSize, string> = {
   [ComboboxSize.XSmall]: css`
-    padding-inline: 6px;
+    padding-inline-start: 6px;
+    padding-inline-end: 2px;
     padding-block: ${chipWrapperPaddingY[ComboboxSize.XSmall]}px;
   `,
   [ComboboxSize.Small]: css`
-    padding-inline: 6px;
+    padding-inline-start: 6px;
+    padding-inline-end: 2px;
     padding-block: ${chipWrapperPaddingY[ComboboxSize.Small]}px;
   `,
   [ComboboxSize.Default]: css`
-    padding-inline: 6px;
+    padding-inline-start: 6px;
+    padding-inline-end: 2px;
     padding-block: ${chipWrapperPaddingY[ComboboxSize.Default]}px;
   `,
   [ComboboxSize.Large]: css`
@@ -145,6 +148,7 @@ export const chipButtonStyle = css`
   background-color: transparent;
   cursor: pointer;
   transition: background-color ${transitionDuration.faster}ms ease-in-out;
+  padding: 0 2px;
 `;
 
 export const chipButtonSizeStyle: Record<ComboboxSize, string> = {
