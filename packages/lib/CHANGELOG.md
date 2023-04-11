@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 10.3.1
+
+### Patch Changes
+
+- c2c5601f4: Adds missing dependencies. Removes unused dependencies
+
 ## 10.3.0
 
 ### Minor Changes

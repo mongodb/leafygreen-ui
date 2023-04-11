@@ -30,7 +30,7 @@ export function useToastTransitions({
       // wait for an empty task queue, then set the expanded state
       // and scroll the container to the bottom
       debounce(() => {
-        setImmediate(() => {
+        setTimeout(() => {
           if (getShouldExpand()) {
             enterCallback();
             setIsExpanded(true);
@@ -48,7 +48,7 @@ export function useToastTransitions({
       debounce(() => {
         // When a toast is removed
         // wait for an empty task queue before checking the DOM
-        setImmediate(() => {
+        setTimeout(() => {
           exitCallback();
           if (!getShouldExpand()) {
             setIsExpanded(false);

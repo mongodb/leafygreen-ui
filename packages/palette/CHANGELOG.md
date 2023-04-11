@@ -1,5 +1,11 @@
 # @leafygreen-ui/palette
 
+## 4.0.1
+
+### Patch Changes
+
+- c2c5601f4: Adds missing dependencies. Removes unused dependencies
+
 ## 4.0.0
 
 ### Major Changes

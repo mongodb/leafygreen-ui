@@ -1,21 +1,28 @@
 import React, { ReactElement, useMemo, useRef, useState } from 'react';
+import flattenChildren from 'react-keyed-flatten-children';
 import { VirtualItem } from 'react-virtual';
+import {
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+} from '@tanstack/react-table';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { isComponentType } from '@leafygreen-ui/lib';
 
 import { Cell, HeaderCell } from '../Cell';
 import ExpandedContent from '../ExpandedContent/ExpandedContent';
 import { HeaderRow, Row } from '../Row';
+import Table from '../Table';
 import TableBody from '../TableBody';
 import TableHead from '../TableHead';
+import { TableProps as V10TableProps } from '../TableV10/Table';
 import useLeafyGreenTable, {
   LeafyGreenTableCell,
   LeafyGreenTableRow,
-  LGColumnDef,
   LGRowData,
   LGTableDataType,
 } from '../useLeafyGreenTable';
-import Table, { flexRender, getCoreRowModel, getSortedRowModel } from '..';
 
 import processColumns from './processColumns';
 import processData from './processData';
@@ -39,16 +46,28 @@ const V11Adapter = <T extends LGRowData>({
 }: V11AdapterProps<T>) => {
   const { darkMode } = useDarkMode();
   const containerRef = useRef(null);
-  const OldTable = React.Children.toArray(children)[0];
+  const OldTable = flattenChildren(children)[0];
+
+  if (!isComponentType(OldTable, 'Table')) {
+    console.error(
+      'The first and only child of `Table.V11Adapter` must be a `V10Table` component',
+    );
+  }
+
+  const OldTableProps = (OldTable as ReactElement).props;
+  type TData = typeof OldTableProps.data extends Array<infer U> ? U : never;
+
   const {
     data,
     columns,
     children: childrenFn,
-  } = (OldTable as ReactElement).props;
-  const processedColumns: Array<LGColumnDef<T>> = useMemo(
+  } = OldTableProps as V10TableProps<TData>;
+
+  const processedColumns = useMemo(
     () => processColumns(data, columns, headerLabels),
     [data, columns, headerLabels],
   );
+
   const [processedData, _] = useState<Array<LGTableDataType<T>>>(() =>
     processData(data, processedColumns, childrenFn),
   );
@@ -106,18 +125,30 @@ const V11Adapter = <T extends LGRowData>({
               }
             >
               {row.getVisibleCells().map((cell: LeafyGreenTableCell<any>) => {
-                return (
-                  <Cell key={cell.id}>
-                    {cell.column.id === 'select' ? (
-                      // @ts-expect-error `cell` is instantiated in `processColumns`
-                      <>{cell.column.columnDef?.cell({ row, table })}</>
-                    ) : (
+                if (cell?.column?.id) {
+                  if (cell?.column?.id === 'select') {
+                    return (
+                      <Cell>
+                        {/* @ts-expect-error `cell` is instantiated in `processColumns` */}
+                        {cell.column.columnDef?.cell({ row, table })}
+                      </Cell>
+                    );
+                  } else {
+                    const cellChild =
                       // index by row.index (not the index of the loop) to get the sorted order
                       // @ts-expect-error `processedData` is structured to be indexable by `row.index`
-                      <>{processedData[row.index][cell.column.id]()}</>
-                    )}
-                  </Cell>
-                );
+                      processedData[row.index]?.[cell.column.id]?.();
+                    return cellChild ? (
+                      <Cell key={cell.id} {...cellChild?.props}>
+                        <>{cellChild?.props.children}</>
+                      </Cell>
+                    ) : (
+                      <></>
+                    );
+                  }
+                } else {
+                  return <></>;
+                }
               })}
               {row.original.renderExpandedContent && (
                 <ExpandedContent row={row} />
