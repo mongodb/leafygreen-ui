@@ -44,8 +44,7 @@ jobs:
 
       - name: Print object
         run: |
-          OUTPUT='${{ needs.install.outputs }}'
-          printf "install outputs are %s\n" "$OUTPUTS"
+          printf "install outputs are %s\n" "${ needs.install.outputs }"
 
       - uses: actions/cache/restore@v3
         name: Restore yarn cache
