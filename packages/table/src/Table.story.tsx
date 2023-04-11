@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ComponentStory, Meta } from '@storybook/react';
+import { ComponentStory } from '@storybook/react';
 import {
   flexRender,
   getCoreRowModel,

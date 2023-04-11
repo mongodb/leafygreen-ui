@@ -1,6 +1,6 @@
 import React from 'react';
 import { VirtualItem } from 'react-virtual';
-import { ComponentStory, Meta } from '@storybook/react';
+import { ComponentStory } from '@storybook/react';
 import {
   ColumnDef,
   ExpandedState,
