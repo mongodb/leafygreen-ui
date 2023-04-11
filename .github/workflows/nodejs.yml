@@ -22,13 +22,13 @@ jobs:
           node-version: '14.x'
 
       - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
+        id: yarn-cache
         run: echo "::set-output name=yarn-cache-dir::$(yarn cache dir)"
 
       - uses: actions/cache@v3
         id: yarn-cache
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          path: ${{ steps.yarn-cache.outputs.yarn-cache-dir }}
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install
