@@ -26,7 +26,13 @@ const pascalCase = (str: string) =>
 const skipComponents = ['lib'];
 const skipProps = ['ref', 'key', '__INTERNAL__menuButtonSlot__'];
 
+// const resolveComponentName = (exp: any, source: any) => {
+//   console.log({ exp, source });
+//   return 'test';
+// };
+
 const TSDocOptions: ParserOptions = {
+  // componentNameResolver: resolveComponentName,
   shouldExtractLiteralValuesFromEnum: true,
   shouldExtractValuesFromUnion: true,
   shouldIncludePropTagMap: true,
@@ -106,36 +112,30 @@ export function parseTSDoc(
 
   if (fs.existsSync(componentDir)) {
     const componentFileNames = parseFileNames(componentDir);
-    console.log(componentFileNames)
 
-    const docs: Array<CustomComponentDoc> = uniqBy(
-      Parser.parse(componentFileNames)
-        .filter((doc: ComponentDoc) => {
-          excludeTags;
-          return true;
-          // return (
-          //   // Remove any external components
-          //   !doc.filePath.includes('node_modules') &&
-          //   // Remove any components with no props
-          //   Object.keys(doc.props).length > 0 &&
-          //   // Remove any docs with excluded tags
-          //   excludeTags.every(tag => isUndefined(doc.tags?.[tag]))
-          // );
-        })
-        .map(({ displayName, props, filePath, ...rest }) => {
-          console.log({ displayName, props, filePath, ...rest });
-          return {
-            ...rest,
-            // For default exports, change the displayName
-            displayName: ['src', 'index'].includes(displayName)
-              ? pascalCase(componentName)
-              : displayName,
-            // // Group Props by where they are inherited from
-            props: parseProps(props, displayName),
-          } as CustomComponentDoc;
-        }),
-      'displayName',
-    );
+    const parsedDocs = Parser.parse(componentFileNames)
+      .filter((doc: ComponentDoc) => {
+        return (
+          // Remove any external components
+          !doc.filePath.includes('node_modules') &&
+          // Remove any components with no props
+          Object.keys(doc.props).length > 0 &&
+          // Remove any docs with excluded tags
+          excludeTags.every(tag => isUndefined(doc.tags?.[tag]))
+        );
+      })
+      .map(({ displayName, props, filePath, ...rest }) => {
+        return {
+          ...rest,
+          // For default exports, change the displayName
+          displayName: ['src', 'index'].includes(displayName)
+            ? pascalCase(componentName)
+            : displayName,
+          // // Group Props by where they are inherited from
+          props: parseProps(props, displayName),
+        } as CustomComponentDoc;
+      });
+    const docs: Array<CustomComponentDoc> = uniqBy(parsedDocs, 'displayName');
 
     console.log(chalk.gray(`Parsed TSDoc for:`, chalk.bold(componentName)));
 
