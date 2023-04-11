@@ -71,7 +71,7 @@ export const Demo: ComponentStory<typeof InlineDefinition> = ({
       MongoDB shards data at the{' '}
       <InlineDefinition darkMode={darkMode} {...args}>
         <a
-          
+
           href={
             'https://docs.mongodb.com/manual/core/sharding-shard-a-collection'
           }

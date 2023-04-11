@@ -56,9 +56,9 @@
     "start": "yarn start:storybook",
     "start:all": "npm-run-all --parallel start:storybook",
     "start:storybook": "start-storybook -p 9001 --no-version-updates",
-    "test": "yarn ts-node ./scripts/test.ts",
-    "test:local": "yarn test",
-    "test:ssr": "yarn test --ssr",
+    "test": "turbo run ./scripts/test.ts",
+    "test:local": "turbo run test",
+    "test:ssr": "turbo run test --ssr",
     "ts-node": "ts-node -P './tsconfig.json' -O '{\"module\": \"commonjs\"}' --",
     "unlink": "./scripts/unlink.sh",
     "watch": "yarn build -- -- --watch"

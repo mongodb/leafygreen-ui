@@ -1,9 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Meta } from '@storybook/react';
 
-
 import { css, cx } from '@leafygreen-ui/emotion';
-
 
 import Popover, { Align, Justify, PopoverProps } from '.';
 

@@ -4,7 +4,6 @@ import { darken, lighten, readableColor, transparentize } from 'polished';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 
-
 import palette from './palette';
 
 const BLOCK_WIDTH = 88;
