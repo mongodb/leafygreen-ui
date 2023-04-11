@@ -34,6 +34,8 @@ jobs:
       - name: Install
         if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
         run: yarn install --frozen-lockfile
+    outputs:
+      yarn-cache-dir: ${{ steps.get-yarn-cache-dir.outputs.dir }}
 
   lints:
     name: Check lints
@@ -43,14 +45,13 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Print object
-        run: |
-          printf "install outputs are %s\n" "${ needs.install.outputs }"
+        run: echo "Yarn cache dir ${{ needs.install.outputs.yarn-cache-dir }}"
 
       - uses: actions/cache/restore@v3
         name: Restore yarn cache
         id: yarn-cache
         with:
-          path: ${{ needs.install.outputs.dir }}
+          path: ${{ needs.install.outputs.yarn-cache-dir }}
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
       - run: yarn install --frozen-lockfile
