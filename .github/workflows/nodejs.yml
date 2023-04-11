@@ -33,7 +33,7 @@ jobs:
 
       - name: Install
         if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
-      - run: yarn install --frozen-lockfile --prefer-offline
+        run: yarn install --frozen-lockfile --prefer-offline
 
     outputs:
       yarn-cache-dir: ${{ steps.get-yarn-cache-dir.outputs.dir }}
