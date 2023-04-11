@@ -59,6 +59,17 @@ export const Basic: ComponentStory<typeof InternalToast> = (
 ) => {
   const { pushToast, clearStack } = useToast();
 
+  const createRandomToast = () => {
+    const variant = props.variant || sample(Variant);
+
+    pushToast({
+      title: `I'm a ${variant} toast`,
+      description: faker.lorem.lines(random(1, 2)),
+      variant,
+      ...props,
+    });
+  };
+
   return (
     <div>
       <div
@@ -67,18 +78,7 @@ export const Basic: ComponentStory<typeof InternalToast> = (
           gap: 8px;
         `}
       >
-        <Button
-          data-testid="toast-trigger"
-          onClick={() => {
-            const variant = props.variant || sample(Variant);
-            pushToast({
-              title: `I'm a ${variant} toast`,
-              description: faker.lorem.lines(random(1, 2)),
-              variant,
-              ...props,
-            });
-          }}
-        >
+        <Button data-testid="toast-trigger" onClick={createRandomToast}>
           Push toast
         </Button>
         <Button onClick={() => clearStack()}>Clear all</Button>

@@ -49,10 +49,18 @@ import {
 
 export const toastPortalClassName = createUniqueClassName('toast-portal');
 
+interface ToastContainerProps {
+  stack: ToastStack;
+  portalClassName?: string;
+}
+
 /**
  * ToastContainer is responsible for rendering the stack of toasts provided
  */
-export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
+export const ToastContainer = ({
+  stack,
+  portalClassName,
+}: ToastContainerProps) => {
   const { popToast, getToast } = useToast();
   const regionId = useIdAllocator({ id: 'lg-toast-region' });
   const toastContainerRef = useRef<HTMLDivElement>(null);
@@ -229,7 +237,7 @@ export const ToastContainer = ({ stack }: { stack: ToastStack }) => {
   };
 
   return (
-    <Portal className={toastPortalClassName}>
+    <Portal className={cx(toastPortalClassName, portalClassName)}>
       {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <div
         ref={toastContainerRef}
