@@ -23,7 +23,7 @@ export default StoryMeta<typeof InternalToast>({
         <ToastProvider
           initialValue={meta.args.initialValue}
           portalClassName={css`
-            position: relative;
+            // Ensures a new stacking context is established
             z-index: 1;
           `}
         >
