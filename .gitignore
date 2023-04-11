@@ -38,5 +38,8 @@ coverage/
 parsed-docs.json
 packages/**/tsdoc.json
 
+# Compiled story files
+packages/**/story.js
+
 # Local yarn releases
 .yarn

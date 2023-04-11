@@ -174,13 +174,19 @@ const config = ['esm', 'umd'].flatMap(format => {
   }));
 
   const config = [baseConfig, ...iconsConfig];
+  const storyGlob = 'src/*.stor{y,ies}.tsx'
 
-  // TODO: only build stories for either esm or umd
-  if (format === 'esm' && glob.sync('src/*.story.tsx').length > 0) {
+  if (format === 'esm' && glob.sync(storyGlob).length > 0) {
     // Story config
     config.push({
       ...baseConfig,
-      input: glob.sync('src/*.story.tsx'),
+      input: glob.sync(storyGlob)[0],
+      output: {
+        format,
+        file: 'story.js',
+        sourcemap: false,
+        globals: baseConfig.output.globals
+      }
     });
   }
 
