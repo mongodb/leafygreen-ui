@@ -33,7 +33,7 @@ jobs:
 
       - name: Install
         if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
-        run: yarn install --frozen-lockfile --prefer-offline
+      - run: yarn install --frozen-lockfile --prefer-offline
 
     outputs:
       yarn-cache-dir: ${{ steps.get-yarn-cache-dir.outputs.dir }}
@@ -52,7 +52,7 @@ jobs:
           path: ${{ needs.install.outputs.yarn-cache-dir }}
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
-        run: yarn install --frozen-lockfile --prefer-offline
+      - run: yarn install --frozen-lockfile --prefer-offline
 
       - name: prettier
         run: yarn check:prettier
@@ -74,7 +74,7 @@ jobs:
           path: ${{ needs.install.outputs.yarn-cache-dir }}
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
-        run: yarn install --frozen-lockfile --prefer-offline
+      - run: yarn install --frozen-lockfile --prefer-offline
 
       - name: types
         run: yarn check:ts
@@ -93,7 +93,7 @@ jobs:
           path: ${{ needs.install.outputs.yarn-cache-dir }}
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
-        run: yarn install --frozen-lockfile --prefer-offline
+      - run: yarn install --frozen-lockfile --prefer-offline
 
       - name: deps
         run: yarn check:deps
@@ -115,7 +115,7 @@ jobs:
           path: ${{ needs.install.outputs.yarn-cache-dir }}
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
-        run: yarn install --frozen-lockfile --prefer-offline
+      - run: yarn install --frozen-lockfile --prefer-offline
 
       - uses: preactjs/compressed-size-action@v2
         with:
@@ -137,7 +137,7 @@ jobs:
           path: ${{ needs.install.outputs.yarn-cache-dir }}
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
-        run: yarn install --frozen-lockfile --prefer-offline
+      - run: yarn install --frozen-lockfile --prefer-offline
 
       - uses: actions/cache@v3
         name: Check for build cache
@@ -166,7 +166,7 @@ jobs:
           path: ${{ needs.install.outputs.yarn-cache-dir }}
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
-        run: yarn install --frozen-lockfile --prefer-offline
+      - run: yarn install --frozen-lockfile --prefer-offline
 
       - uses: actions/cache/restore@v3
         name: Restore build cache
@@ -196,7 +196,7 @@ jobs:
           path: ${{ needs.install.outputs.yarn-cache-dir }}
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
-        run: yarn install --frozen-lockfile --prefer-offline
+      - run: yarn install --frozen-lockfile --prefer-offline
 
       - name: tests
         run: yarn test --ssr --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
@@ -217,7 +217,7 @@ jobs:
           path: ${{ needs.install.outputs.yarn-cache-dir }}
           key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
-        run: yarn install --frozen-lockfile --prefer-offline
+      - run: yarn install --frozen-lockfile --prefer-offline
 
       - name: check builds
         run: yarn check:builds
