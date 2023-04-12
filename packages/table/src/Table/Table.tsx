@@ -16,7 +16,7 @@ import { baseStyles, tableContainerStyles, themeStyles } from './Table.styles';
 import { TableProps } from './Table.types';
 
 // Inferred generic type from component gets used in place of `any`
-const Table = forwardRef<HTMLDivElement, any>(
+const Table = forwardRef<HTMLDivElement, TableProps<any>>(
   <T extends LGRowData>(
     {
       children,

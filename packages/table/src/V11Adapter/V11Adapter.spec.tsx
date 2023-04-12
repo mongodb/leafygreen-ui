@@ -6,8 +6,8 @@ import { axe } from 'jest-axe';
 import { Cell } from '../Cell';
 import { HeaderRow, Row } from '../Row';
 import { TableHeader } from '../TableV10';
+import { Table } from '../TableV10';
 import { defaultData } from '../TableV10/fixtures';
-import { Table } from '..';
 
 import V11Adapter, { V11AdapterProps } from '.';
 
