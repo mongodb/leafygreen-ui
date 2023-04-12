@@ -16,23 +16,24 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v2
 
-      - name: Use Node.js 14.x
-        uses: actions/setup-node@v1
+      - name: Use Node.js 14
+        uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
+          node-version: '14'
+          cache: yarn
 
-      - name: Get yarn cache directory path
-        id: get-yarn-cache-dir
-        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+      # - name: Get yarn cache directory path
+      #   id: get-yarn-cache-dir
+      #   run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
 
-      - uses: actions/cache@v3
-        id: yarn-cache
-        with:
-          path: ${{ steps.get-yarn-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+      # - uses: actions/cache@v3
+      #   id: yarn-cache
+      #   with:
+      #     path: ${{ steps.get-yarn-cache-dir.outputs.dir }}
+      #     key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install
-        if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
+        # if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
         run: yarn install --frozen-lockfile --prefer-offline
 
     outputs:
@@ -45,12 +46,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/cache/restore@v3
-        name: Restore yarn cache
-        id: yarn-cache
+      - name: Use Node.js 14
+        uses: actions/setup-node@v3
         with:
-          path: ${{ needs.install.outputs.yarn-cache-dir }}
-          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+          node-version: '14'
+          cache: yarn
+
+      # - uses: actions/cache/restore@v3
+      #   name: Restore yarn cache
+      #   id: yarn-cache
+      #   with:
+      #     path: ${{ needs.install.outputs.yarn-cache-dir }}
+      #     key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
       - run: yarn install --frozen-lockfile --prefer-offline
 
@@ -67,12 +74,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/cache/restore@v3
-        name: Restore yarn cache
-        id: yarn-cache
+      - name: Use Node.js 14
+        uses: actions/setup-node@v3
         with:
-          path: ${{ needs.install.outputs.yarn-cache-dir }}
-          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+          node-version: '14'
+          cache: yarn
+
+      # - uses: actions/cache/restore@v3
+      #   name: Restore yarn cache
+      #   id: yarn-cache
+      #   with:
+      #     path: ${{ needs.install.outputs.yarn-cache-dir }}
+      #     key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
       - run: yarn install --frozen-lockfile --prefer-offline
 
@@ -86,12 +99,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/cache/restore@v3
-        name: Restore yarn cache
-        id: yarn-cache
+      - name: Use Node.js 14
+        uses: actions/setup-node@v3
         with:
-          path: ${{ needs.install.outputs.yarn-cache-dir }}
-          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+          node-version: '14'
+          cache: yarn
+
+      # - uses: actions/cache/restore@v3
+      #   name: Restore yarn cache
+      #   id: yarn-cache
+      #   with:
+      #     path: ${{ needs.install.outputs.yarn-cache-dir }}
+      #     key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
       - run: yarn install --frozen-lockfile --prefer-offline
 
@@ -101,27 +120,27 @@ jobs:
       - name: package.json versions
         run: yarn check:package-json
 
-  sizeDiff:
-    name: Check file size
-    runs-on: ubuntu-latest
-    needs: install
-    steps:
-      - uses: actions/checkout@v2
+  # sizeDiff:
+  #   name: Check file size
+  #   runs-on: ubuntu-latest
+  #   needs: install
+  #   steps:
+  #     - uses: actions/checkout@v2
 
-      - uses: actions/cache/restore@v3
-        name: Restore yarn cache
-        id: yarn-cache
-        with:
-          path: ${{ needs.install.outputs.yarn-cache-dir }}
-          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+  #     - uses: actions/cache/restore@v3
+  #       name: Restore yarn cache
+  #       id: yarn-cache
+  #       with:
+  #         path: ${{ needs.install.outputs.yarn-cache-dir }}
+  #         key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
-      - run: yarn install --frozen-lockfile --prefer-offline
+  #     - run: yarn install --frozen-lockfile --prefer-offline
 
-      - uses: preactjs/compressed-size-action@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          clean-script: 'clean:builds && clean:modules'
-          build-script: 'build:packages'
+  #     - uses: preactjs/compressed-size-action@v2
+  #       with:
+  #         repo-token: ${{ secrets.GITHUB_TOKEN }}
+  #         clean-script: 'clean:builds && clean:modules'
+  #         build-script: 'build:packages'
 
   build:
     name: Build packages
@@ -130,12 +149,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/cache/restore@v3
-        name: Restore yarn cache
-        id: yarn-cache
+      - name: Use Node.js 14
+        uses: actions/setup-node@v3
         with:
-          path: ${{ needs.install.outputs.yarn-cache-dir }}
-          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+          node-version: '14'
+          cache: yarn
+
+      # - uses: actions/cache/restore@v3
+      #   name: Restore yarn cache
+      #   id: yarn-cache
+      #   with:
+      #     path: ${{ needs.install.outputs.yarn-cache-dir }}
+      #     key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
       - run: yarn install --frozen-lockfile --prefer-offline
 
@@ -159,12 +184,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/cache/restore@v3
-        name: Restore yarn cache
-        id: yarn-cache
+      - name: Use Node.js 14
+        uses: actions/setup-node@v3
         with:
-          path: ${{ needs.install.outputs.yarn-cache-dir }}
-          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+          node-version: '14'
+          cache: yarn
+
+      # - uses: actions/cache/restore@v3
+      #   name: Restore yarn cache
+      #   id: yarn-cache
+      #   with:
+      #     path: ${{ needs.install.outputs.yarn-cache-dir }}
+      #     key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
       - run: yarn install --frozen-lockfile --prefer-offline
 
@@ -189,12 +220,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/cache/restore@v3
-        name: Restore yarn cache
-        id: yarn-cache
+      - name: Use Node.js 14
+        uses: actions/setup-node@v3
         with:
-          path: ${{ needs.install.outputs.yarn-cache-dir }}
-          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+          node-version: '14'
+          cache: yarn
+
+      # - uses: actions/cache/restore@v3
+      #   name: Restore yarn cache
+      #   id: yarn-cache
+      #   with:
+      #     path: ${{ needs.install.outputs.yarn-cache-dir }}
+      #     key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
       - run: yarn install --frozen-lockfile --prefer-offline
 
@@ -210,12 +247,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/cache/restore@v3
-        name: Restore yarn cache
-        id: yarn-cache
+      - name: Use Node.js 14
+        uses: actions/setup-node@v3
         with:
-          path: ${{ needs.install.outputs.yarn-cache-dir }}
-          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+          node-version: '14'
+          cache: yarn
+
+      # - uses: actions/cache/restore@v3
+      #   name: Restore yarn cache
+      #   id: yarn-cache
+      #   with:
+      #     path: ${{ needs.install.outputs.yarn-cache-dir }}
+      #     key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
 
       - run: yarn install --frozen-lockfile --prefer-offline
 
