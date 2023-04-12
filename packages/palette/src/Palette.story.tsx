@@ -8,7 +8,6 @@ import palette from './palette';
 
 const BLOCK_WIDTH = 88;
 
-
 type HueName = keyof typeof palette;
 
 const ShadeNames = [
@@ -67,7 +66,7 @@ function ColorBlock({ hue, shade }: ColorBlockProps) {
     }, 1500);
   };
 
-  return ('hi')
+  return 'hi';
 
   // return (
   //   <div className={cx(colorBlockWrapper, colorBlockWrapperDynamic)}>
