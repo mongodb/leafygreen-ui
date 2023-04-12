@@ -72,12 +72,13 @@ import {
   comboboxFocusStyle,
   comboboxOverflowShadowStyles,
   comboboxParentStyle,
-  comboboxSelectionStyles,
   comboboxSizeStyles,
   comboboxThemeStyles,
   endIconStyle,
   errorMessageSizeStyle,
   errorMessageThemeStyle,
+  iconsWrapperBaseStyles,
+  iconsWrapperSizeStyles,
   inputElementSizeStyle,
   inputElementThemeStyle,
   inputElementTransitionStyles,
@@ -1220,7 +1221,6 @@ export function Combobox<M extends boolean>({
               comboboxThemeStyles[theme],
               comboboxSizeStyles(size, isMultiselectWithSelections),
               {
-                [comboboxSelectionStyles]: clearable && doesSelectionExist,
                 [comboboxDisabledStyles[theme]]: disabled,
                 [comboboxErrorStyles[theme]]: state === State.error,
                 [comboboxFocusStyle[theme]]: isElementFocused(
@@ -1231,7 +1231,7 @@ export function Combobox<M extends boolean>({
             )}
           >
             <div
-              onScroll={e => handleOnScroll(e)}
+              onScroll={handleOnScroll}
               ref={inputWrapperRef}
               className={inputWrapperStyle({
                 size,
@@ -1263,29 +1263,39 @@ export function Combobox<M extends boolean>({
                 autoComplete="off"
               />
             </div>
-            {clearable && doesSelectionExist && (
-              <IconButton
-                aria-label="Clear selection"
-                aria-disabled={disabled}
-                disabled={disabled}
-                ref={clearButtonRef}
-                onClick={handleClearButtonClick}
-                onFocus={handleClearButtonFocus}
-                className={cx(clearButtonStyle)}
-                darkMode={darkMode}
-              >
-                <Icon glyph="XWithCircle" />
-              </IconButton>
-            )}
-            {state === 'error' ? (
+            <div
+              className={cx(
+                iconsWrapperBaseStyles,
+                iconsWrapperSizeStyles[size],
+              )}
+            >
+              {state === 'error' && (
+                <Icon
+                  glyph="Warning"
+                  color={darkMode ? palette.red.light1 : palette.red.base}
+                  className={endIconStyle}
+                />
+              )}
+              {clearable && doesSelectionExist && (
+                <IconButton
+                  aria-label="Clear selection"
+                  aria-disabled={disabled}
+                  disabled={disabled}
+                  ref={clearButtonRef}
+                  onClick={handleClearButtonClick}
+                  onFocus={handleClearButtonFocus}
+                  className={cx(clearButtonStyle)}
+                  darkMode={darkMode}
+                >
+                  <Icon glyph="XWithCircle" />
+                </IconButton>
+              )}
               <Icon
-                glyph="Warning"
-                color={darkMode ? palette.red.light1 : palette.red.base}
+                glyph="CaretDown"
                 className={endIconStyle}
+                fill={darkMode ? palette.gray.light1 : palette.gray.dark2}
               />
-            ) : (
-              <Icon glyph="CaretDown" className={endIconStyle} />
-            )}
+            </div>
           </div>
 
           {state === 'error' && errorMessage && (

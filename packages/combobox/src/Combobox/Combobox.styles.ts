@@ -98,9 +98,7 @@ export const comboboxParentStyle = (size: Size): string => {
 };
 
 export const baseComboboxStyles = css`
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: 1fr ${caretIconSize}px;
+  display: flex;
   align-items: center;
   cursor: text;
   transition: ${transitionDuration.default}ms ease-in-out;
@@ -200,9 +198,25 @@ export const comboboxFocusStyle: Record<Theme, string> = {
   `,
 };
 
-export const comboboxSelectionStyles = css`
-  grid-template-columns: 1fr ${clearButtonIconSize}px ${caretIconSize}px;
+export const iconsWrapperBaseStyles = css`
+  display: flex;
+  align-items: center;
 `;
+
+export const iconsWrapperSizeStyles: Record<Size, string> = {
+  [Size.XSmall]: css`
+    gap: 4px;
+  `,
+  [Size.Small]: css`
+    gap: 8px;
+  `,
+  [Size.Default]: css`
+    gap: 8px;
+  `,
+  [Size.Large]: css`
+    gap: 8px;
+  `,
+};
 
 export const inputWrapperStyle = ({
   overflow,
@@ -351,6 +365,7 @@ export const multiselectInputElementStyle = (
 export const clearButtonStyle = css`
   // Add a negative margin so the button takes up the same space as the regular icons
   margin-block: calc(${caretIconSize / 2}px - 100%);
+  margin-inline: -6px;
 `;
 
 export const endIconStyle = css`
