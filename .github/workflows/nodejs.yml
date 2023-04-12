@@ -8,27 +8,44 @@ on:
 
 jobs:
   build:
-    name: Build and Test
-    timeout-minutes: 15
+    name: 'Validate with Node v14'
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        node-version: ['14.17.0']
     steps:
-      - name: Check out code
+      - name: Checkout branch
         uses: actions/checkout@v3
         with:
           fetch-depth: 2
 
-      - name: Setup Node.js environment
+      - name: Setup Node with v14
         uses: actions/setup-node@v3
         with:
-          node-version: 16
-          cache: 'yarn'
+          node-version: '14.x'
+          cache: yarn
 
+      - name: Restore cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            **/.eslintcache
+            **/.turbo
+            node_modules/.cache/turbo
+          key: ${{ runner.os }}-test-v1-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-test-v1-
       - name: Install dependencies
-        run: yarn
+        run: yarn --frozen-lockfile
 
-      - name: Build
+      - name: Build packages
         run: yarn build
 
+      - name: Lint
+        run: yarn check:prettier && yarn check:eslint
+
+      - name: Type check
+        run: yarn check:ts
+
       - name: Test
-        run: yarn test
+        run: yarn test && yarn test --ssr
