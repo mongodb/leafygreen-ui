@@ -47,7 +47,7 @@ if (
   )
 ) {
   console.log('Builds not found. Building...');
-  spawnSync('yarn', ['build', ...packages], { stdio: 'inherit' });
+  spawnSync('turbo', ['run', 'build', ...packages], { stdio: 'inherit' });
 }
 
 // Check that every package's /dist folder has a valid UMD, ESM & TS files

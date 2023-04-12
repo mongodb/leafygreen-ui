@@ -6,11 +6,11 @@
     "build": {
       "dependsOn": ["^build"]
     },
+    "clean": {},
+    "fix": {},
     "test": {
-      "dependsOn": ["build"],
       "inputs": ["src/**/*.tsx", "src/**/*.ts"]
     },
-    "fix": {},
     "publish": {
       "dependsOn": ["build", "test", "lint"]
     }

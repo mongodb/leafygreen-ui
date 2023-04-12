@@ -77,7 +77,7 @@ if (watch) {
   cmdArgs.push('--watch');
 }
 
-spawn('jest', [...cmdArgs, ...packageArgs], {
+spawn('npx', ['turbo', 'run', 'jest', ...cmdArgs, ...packageArgs], {
   env: {
     ...process.env,
     JEST_ENV: ssr ? 'ssr' : 'client',
