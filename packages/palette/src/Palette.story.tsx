@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { isUndefined } from 'lodash';
 import { darken, lighten, readableColor, transparentize } from 'polished';
 
+// @ts-ignore
 import { css, cx } from '@leafygreen-ui/emotion';
 
 import palette from './palette';
@@ -29,8 +30,11 @@ interface ColorBlockProps {
 }
 
 function ColorBlock({ hue, shade }: ColorBlockProps) {
+  // @ts-ignore
   const [copied, setCopied] = useState(false);
+  // @ts-ignore
   const colorBlockRef = useRef<HTMLButtonElement>(null);
+  // @ts-ignore
   const name = `${hue} ${shade ?? ''}`;
 
   let color: string;
@@ -41,21 +45,25 @@ function ColorBlock({ hue, shade }: ColorBlockProps) {
     color = (palette[hue] as Record<ShadeName, string>)[shade];
   }
 
+  // @ts-ignore
   const colorBlockWrapperDynamic = css`
     grid-column: ${shade ? ShadeNames.indexOf(shade) + 1 : 'unset'};
   `;
 
+  // @ts-ignore
   const colorBlockColor = css`
     background-color: ${color};
     box-shadow: 0 8px 6px -8px ${transparentize(0.7, darken(0.2, color))},
       0 2px 3px ${transparentize(0.8, darken(0.5, color))};
   `;
 
+  // @ts-ignore
   const hexLabelColor = css`
     color: ${readableColor(lighten(0.2, color))};
     background-color: ${lighten(0.2, color)};
   `;
 
+  // @ts-ignore
   const copyHex = () => {
     navigator.clipboard.writeText(color);
 
@@ -103,6 +111,7 @@ export function AllColors() {
     const hueValues = palette[hue];
 
     if (typeof hueValues === 'string') {
+      // @ts-ignore
       return <ColorBlock key={hue} hue={hue} name={hue} />;
     }
 
@@ -117,6 +126,7 @@ export function AllColors() {
       >
         {(Object.keys(hueValues) as Array<keyof typeof hueValues>).map(
           shade => (
+            // @ts-ignore
             <ColorBlock
               key={hueValues[shade]}
               hue={hue}

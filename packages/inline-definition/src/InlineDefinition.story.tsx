@@ -32,7 +32,7 @@ const Template: ComponentStory<typeof InlineDefinition> = ({
   darkMode,
   ...args
 }) => (
-  <div darkMode={darkMode}>
+  <div>
     <InlineDefinition darkMode={darkMode} {...args} />
   </div>
 );

@@ -6,7 +6,6 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import Popover, { Align, Justify, PopoverProps } from '.';
 
 const popoverStyle = css`
-  /* border: 1px solid ${palette.gray.light1}; */
   text-align: center;
   padding: 20px;
   max-height: 100%;
@@ -30,7 +29,7 @@ const regularStyles = css`
 const scrollableStyle = css`
   width: 500px;
   height: 90vh;
-  /* background-color: ${palette.gray.light2}; */
+
   overflow: scroll;
   position: relative;
 `;
