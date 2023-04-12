@@ -405,7 +405,7 @@ export const errorMessageSizeStyle: Record<Size, string> = {
   `,
 };
 export const labelDescriptionContainerStyle = css`
-  margin-bottom: ${spacing[2]}px;
+  margin-bottom: ${spacing[1]}px;
   display: flex;
   flex-direction: column;
 `;
