@@ -39,7 +39,7 @@ parsed-docs.json
 packages/**/tsdoc.json
 
 # Compiled story files
-packages/**/story.js
+packages/**/stories.js
 
 # Local yarn releases
 .yarn

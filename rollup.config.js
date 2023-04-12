@@ -183,7 +183,7 @@ const config = ['esm', 'umd'].flatMap(format => {
       input: glob.sync(storyGlob)[0],
       output: {
         format,
-        file: 'story.js',
+        file: 'stories.js',
         sourcemap: false,
         globals: baseConfig.output.globals,
       },
