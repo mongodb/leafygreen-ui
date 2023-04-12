@@ -21,19 +21,9 @@ jobs:
         with:
           node-version: '14'
           cache: yarn
-
-      # - name: Get yarn cache directory path
-      #   id: get-yarn-cache-dir
-      #   run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-
-      # - uses: actions/cache@v3
-      #   id: yarn-cache
-      #   with:
-      #     path: ${{ steps.get-yarn-cache-dir.outputs.dir }}
-      #     key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+          cache-dependency-path: 'yarn.lock'
 
       - name: Install
-        # if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
         run: yarn install --frozen-lockfile --prefer-offline
 
     outputs:
@@ -51,13 +41,7 @@ jobs:
         with:
           node-version: '14'
           cache: yarn
-
-      # - uses: actions/cache/restore@v3
-      #   name: Restore yarn cache
-      #   id: yarn-cache
-      #   with:
-      #     path: ${{ needs.install.outputs.yarn-cache-dir }}
-      #     key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+          cache-dependency-path: 'yarn.lock'
 
       - run: yarn install --frozen-lockfile --prefer-offline
 
@@ -79,13 +63,7 @@ jobs:
         with:
           node-version: '14'
           cache: yarn
-
-      # - uses: actions/cache/restore@v3
-      #   name: Restore yarn cache
-      #   id: yarn-cache
-      #   with:
-      #     path: ${{ needs.install.outputs.yarn-cache-dir }}
-      #     key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+          cache-dependency-path: 'yarn.lock'
 
       - run: yarn install --frozen-lockfile --prefer-offline
 
@@ -104,13 +82,7 @@ jobs:
         with:
           node-version: '14'
           cache: yarn
-
-      # - uses: actions/cache/restore@v3
-      #   name: Restore yarn cache
-      #   id: yarn-cache
-      #   with:
-      #     path: ${{ needs.install.outputs.yarn-cache-dir }}
-      #     key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+          cache-dependency-path: 'yarn.lock'
 
       - run: yarn install --frozen-lockfile --prefer-offline
 
@@ -149,21 +121,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Use Node.js 14
-        uses: actions/setup-node@v3
-        with:
-          node-version: '14'
-          cache: yarn
-
-      # - uses: actions/cache/restore@v3
-      #   name: Restore yarn cache
-      #   id: yarn-cache
-      #   with:
-      #     path: ${{ needs.install.outputs.yarn-cache-dir }}
-      #     key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
-
-      - run: yarn install --frozen-lockfile --prefer-offline
-
       - uses: actions/cache@v3
         name: Check for build cache
         id: build-cache
@@ -172,6 +129,19 @@ jobs:
             **/dist
             !**/node_modules
           key: ${{ runner.os }}-build-cache-${{ hashFiles('**/rollup.config.js', '**/babel.config.js', '**/src/', '**/scripts/', '!**/node_modules', '!**/dist') }}
+
+      # Only setup & build if there was no build cache hit
+      - name: Use Node.js 14
+        uses: actions/setup-node@v3
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
+        with:
+          node-version: '14'
+          cache: yarn
+          cache-dependency-path: 'yarn.lock'
+
+      - name: Install
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
+        run: yarn install --frozen-lockfile --prefer-offline
 
       - name: build
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
@@ -189,13 +159,7 @@ jobs:
         with:
           node-version: '14'
           cache: yarn
-
-      # - uses: actions/cache/restore@v3
-      #   name: Restore yarn cache
-      #   id: yarn-cache
-      #   with:
-      #     path: ${{ needs.install.outputs.yarn-cache-dir }}
-      #     key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+          cache-dependency-path: 'yarn.lock'
 
       - run: yarn install --frozen-lockfile --prefer-offline
 
@@ -225,15 +189,18 @@ jobs:
         with:
           node-version: '14'
           cache: yarn
-
-      # - uses: actions/cache/restore@v3
-      #   name: Restore yarn cache
-      #   id: yarn-cache
-      #   with:
-      #     path: ${{ needs.install.outputs.yarn-cache-dir }}
-      #     key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+          cache-dependency-path: 'yarn.lock'
 
       - run: yarn install --frozen-lockfile --prefer-offline
+
+      - uses: actions/cache/restore@v3
+        name: Restore build cache
+        id: build-cache
+        with:
+          path: |
+            **/dist
+            !**/node_modules
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/rollup.config.js', '**/babel.config.js', '**/src/', '**/scripts/', '!**/node_modules', '!**/dist') }}
 
       - name: tests
         run: yarn test --ssr --no-cache --ci --runInBand --reporters=default --reporters=jest-junit
@@ -252,15 +219,18 @@ jobs:
         with:
           node-version: '14'
           cache: yarn
-
-      # - uses: actions/cache/restore@v3
-      #   name: Restore yarn cache
-      #   id: yarn-cache
-      #   with:
-      #     path: ${{ needs.install.outputs.yarn-cache-dir }}
-      #     key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock') }}
+          cache-dependency-path: 'yarn.lock'
 
       - run: yarn install --frozen-lockfile --prefer-offline
+
+      - uses: actions/cache/restore@v3
+        name: Restore build cache
+        id: build-cache
+        with:
+          path: |
+            **/dist
+            !**/node_modules
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/rollup.config.js', '**/babel.config.js', '**/src/', '**/scripts/', '!**/node_modules', '!**/dist') }}
 
       - name: check builds
         run: yarn check:builds

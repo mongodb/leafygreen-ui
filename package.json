@@ -31,7 +31,7 @@
     "check": "npm-run-all --parallel check:*",
     "check:prettier": "prettier --check \"**/*.{js,ts,tsx,json,md,yml}\"",
     "check:eslint": "eslint \"**/*.{js,ts,tsx}\"",
-    "check:deps": "yarn ts-node -O '{\"module\": \"commonjs\", \"resolveJsonModule\": true}' ./scripts/depcheck.ts",
+    "check:deps": "yarn ts-node ./scripts/depcheck.ts",
     "check:builds": "yarn ts-node ./scripts/check-builds.ts",
     "check:ts": "tsc --project tsconfig.json",
     "check:package-json": "npmPkgJsonLint ./packages",
@@ -59,7 +59,7 @@
     "test": "yarn ts-node ./scripts/test.ts",
     "test:local": "yarn test",
     "test:ssr": "yarn test --ssr",
-    "ts-node": "npx ts-node -P './tsconfig.json' -O '{\"module\": \"commonjs\"}' --",
+    "ts-node": "npx ts-node -P './tsconfig.json' -O '{\"module\": \"commonjs\", \"resolveJsonModule\": true}'",
     "unlink": "./scripts/unlink.sh",
     "watch": "yarn build -- -- --watch"
   },
