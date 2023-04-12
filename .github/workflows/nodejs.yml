@@ -92,7 +92,6 @@ jobs:
       - name: package.json versions
         run: yarn check:package-json
 
-  #       with:
   build:
     name: Build packages
     runs-on: ubuntu-latest
@@ -210,7 +209,7 @@ jobs:
             **/dist
             !**/node_modules
           key: ${{ runner.os }}-build-cache-${{ hashFiles('**/rollup.config.js', '**/babel.config.js', '**/src/', '**/scripts/', '!**/node_modules', '!**/dist') }}
-      
+
       - uses: actions/cache@v3
         name: Check for ts cache
         id: ts-cache
@@ -219,7 +218,7 @@ jobs:
             **/dist/**/*.ts?(x)
             !**/node_modules
           key: ${{ runner.os }}-ts-cache-${{ hashFiles('**/tsconfig.js', '**/package.tsconfig.js', '**/src/', '**/scripts/', '!**/node_modules', '!**/dist') }}
-      
+
       - name: build-ts
         if: ${{ steps.ts-cache.outputs.cache-hit != 'true' }}
         run: yarn build:ts
