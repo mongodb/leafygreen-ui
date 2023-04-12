@@ -6,8 +6,8 @@ import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
-import LanguageSwitcherExample from '../LanguageSwitcher/LanguageSwitcherExample';
-import LGCode, { CodeProps, Language } from '..';
+import LanguageSwitcherExample from './LanguageSwitcher/LanguageSwitcherExample';
+import LGCode, { CodeProps, Language } from '.';
 
 // TODO: Import below comment directly from component definition.
 /**
