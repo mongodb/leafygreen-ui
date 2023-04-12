@@ -10,7 +10,7 @@
 
 ### Major Changes
 
-- 89ede28ec: Rewrite of Table component, which includes support for new features: virtual scrolling, selectable rows, etc. See upgrade guide for details
+- 89ede28ec: Rewrite of Table component, which includes support for new features: virtual scrolling, selectable rows, etc. See [upgrade guide](https://github.com/mongodb/leafygreen-ui/blob/main/packages/table/UPGRADE.md) for details
 
 ### Patch Changes
 
