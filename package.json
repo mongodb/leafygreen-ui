@@ -176,6 +176,7 @@
     "storybook-addon-performance": "^0.16.1",
     "ts-node": "^8.8.2",
     "typescript": "^4.1.0",
+    "turbo": "1.2.5",
     "url-loader": "4.1.0",
     "webpack": "4.42.1",
     "webpack-cli": "3.3.11"
