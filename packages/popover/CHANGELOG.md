@@ -1,5 +1,11 @@
 # @leafygreen-ui/popover
 
+## 11.0.6
+
+### Patch Changes
+
+- 134f370a4: Renders a `span` instead of a `div` inside `Popover` to prevent `validateDOMNesting` warnings. Warnings will still show up if `usePortal` is `false`.
+
 ## 11.0.5
 
 ### Patch Changes

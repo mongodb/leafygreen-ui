@@ -1,5 +1,15 @@
 # @leafygreen-ui/table
 
+## 11.0.2
+
+### Patch Changes
+
+- ac1f22714: Types Table component and fixes issues in generated code docs documentation
+- Updated dependencies [dc8ceed9b]
+- Updated dependencies [09775f0ac]
+  - @leafygreen-ui/icon@11.13.0
+  - @leafygreen-ui/palette@4.0.2
+
 ## 11.0.1
 
 ### Patch Changes

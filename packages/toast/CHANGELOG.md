@@ -1,5 +1,21 @@
 # @leafygreen-ui/toast
 
+## 6.1.0
+
+### Minor Changes
+
+- 56930ad78: - Adds `portalClassName` prop to `ToastProvider`
+  - Adds a console warning if `useToast` is called outside of a `ToastProvider`
+  - Refactors a `setImmediate` to `setTimeout`
+  - Enhances `useToast` test suite
+
+### Patch Changes
+
+- Updated dependencies [dc8ceed9b]
+- Updated dependencies [09775f0ac]
+  - @leafygreen-ui/icon@11.13.0
+  - @leafygreen-ui/palette@4.0.2
+
 ## 6.0.0
 
 ### Major Changes
