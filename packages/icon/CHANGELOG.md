@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 11.13.0
+
+### Minor Changes
+
+- dc8ceed9b: Adds `Highlight`,`LogIn`,`LogOut`, and `Wrench` icons.
+
 ## 11.12.7
 
 ### Patch Changes

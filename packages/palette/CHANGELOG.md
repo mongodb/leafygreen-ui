@@ -1,5 +1,11 @@
 # @leafygreen-ui/palette
 
+## 4.0.2
+
+### Patch Changes
+
+- 09775f0ac: Fixes layout issue in live example
+
 ## 4.0.1
 
 ### Patch Changes
