@@ -96,3 +96,7 @@ export default StoryMeta({
 ```
 
 The `StoryMeta` utility from `@leafygreen-ui/lib` will extend default controls and exclude parameters by default to clean up the Meta object. While it is not required to make the import into mongodb.design work, it is recommended to make use of this utility.
+
+## Preventing an interface from being imported in mongodb.design's Code Docs
+
+The mongodb.design website's code docs page will automatically import all exported interfaces. Interfaces and components marked with `@internal` and `@example` in TSDocs will be removed by default. To force an interface to be removed, add a `@noDocgen` flag to the TSDocs.
