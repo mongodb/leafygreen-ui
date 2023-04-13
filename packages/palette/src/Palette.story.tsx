@@ -97,7 +97,7 @@ function ColorBlock({ hue, shade, ...rest }: ColorBlockProps) {
   }
 
   const colorBlockWrapperDynamic = css`
-    grid-column: ${ShadeNames.indexOf(shade) + 1};
+    grid-column: ${shade ? ShadeNames.indexOf(shade) + 1 : 'unset'};
   `;
 
   const colorBlockColor = css`
