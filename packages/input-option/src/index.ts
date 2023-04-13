@@ -3,3 +3,7 @@ export {
   InputOption,
   type InputOptionProps,
 } from './InputOption';
+export {
+  InputOptionContent,
+  type InputOptionContentProps,
+} from './InputOptionContent';

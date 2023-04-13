@@ -15,8 +15,12 @@ import {
   inputOptionStyles,
   inputOptionThemeStyles,
   inputOptionWedge,
+  titleSelectionStyles,
 } from './InputOption.style';
 import { InputOptionProps } from './InputOption.types';
+
+// Fix disabled styles
+// Add truncation logic
 
 export const InputOption = Polymorphic<InputOptionProps>(
   (
@@ -30,6 +34,9 @@ export const InputOption = Polymorphic<InputOptionProps>(
       showWedge = true,
       isInteractive = true,
       className,
+      // description,
+      // leftGlyph,
+      // rightGlyph,
       ...rest
     },
     ref,
@@ -51,12 +58,33 @@ export const InputOption = Polymorphic<InputOptionProps>(
             [inputOptionActiveStyles[theme]]:
               isInteractive && (selected || highlighted),
             [inputOptionDisabledStyles[theme]]: disabled,
+            [titleSelectionStyles]: selected,
           },
           className,
         )}
         {...rest}
       >
         {children}
+        {/* <div className={contentWrapper}>
+          <div className={leftContentWrapper}>
+            {leftGlyph && <div className={glyphContainer}>{leftGlyph}</div>}
+            <div>
+              <div
+                className={cx(titleClassName, {
+                  [css`
+                    font-weight: bold;
+                  `]: selected || !!description,
+                })}
+              >
+                {children}
+              </div>
+              {description && (
+                <div className={descriptionClassName}>{description}</div>
+              )}
+            </div>
+          </div>
+          {rightGlyph && <div className={glyphContainer}>{rightGlyph}</div>}
+        </div> */}
       </Component>
     );
   },
