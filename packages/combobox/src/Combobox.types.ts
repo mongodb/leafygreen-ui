@@ -307,7 +307,7 @@ interface BaseComboboxOptionProps extends ComponentPropsWithoutRef<'li'> {
   className?: string;
 
   /**
-   * Descriptive text under the displayName
+   * Optional descriptive text under the displayName
    */
   description?: string;
 }

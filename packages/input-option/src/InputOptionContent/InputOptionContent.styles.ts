@@ -23,31 +23,23 @@ export const descriptionThemeStyles: Record<Theme, string> = {
 };
 
 export const contentWrapper = css`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  gap: ${spacing[2]}px;
-`;
-
-export const leftContentWrapper = css`
   display: grid;
   grid-template-columns: 16px 1fr;
   gap: ${spacing[2]}px;
   align-items: center;
   width: 100%;
-
-  label {
-    align-items: center;
-  }
 `;
 
-export const leftTextWrapper = css`
+export const textWrapper = css`
   grid-column: 2;
 `;
 
 export const glyphContainer = css`
   display: flex;
-  // align-items: center;
-  // justify-content: center;
+`;
+
+export const glyphRightStyles = css`
+  width: 16px;
+  grid-column: 3;
+  grid-row: 1;
 `;

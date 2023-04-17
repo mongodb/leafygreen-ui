@@ -35,12 +35,6 @@ export const inputOptionStyles = css`
     outline: none;
     border: unset;
   }
-
-  // & .${descriptionClassName} {
-  //   max-height: ${spacing[3] * 3}px;
-  //   overflow: hidden;
-  //   text-overflow: ellipsis;
-  // }
 `;
 
 export const titleSelectionStyles = css`
@@ -152,23 +146,3 @@ export const inputOptionDisabledStyles: Record<Theme, string> = {
     }
   `,
 };
-
-export const contentWrapper = css`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-`;
-
-export const leftContentWrapper = css`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-`;
-
-export const glyphContainer = css`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;

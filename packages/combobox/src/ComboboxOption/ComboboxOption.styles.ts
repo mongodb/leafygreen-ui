@@ -41,7 +41,7 @@ export const checkIconStyle: Record<ComboboxSize, string> = {
 
 export const flexSpan = css`
   display: inline-flex;
-  gap: 8px;
+  gap: ${spacing[2]}px;
   justify-content: start;
   align-items: inherit;
   overflow-wrap: anywhere;
@@ -53,6 +53,7 @@ export const checkBoxBaseStyles = css`
 
   label {
     gap: 0;
+    align-items: center;
   }
 `;
 

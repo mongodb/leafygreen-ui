@@ -107,8 +107,8 @@ const ComboboxOptions = [
     key="apple"
     value="apple"
     displayName="Apple"
-    data-testid="hii"
-    description="im the description"
+    data-testid="test-id"
+    description="description text"
   />,
   <ComboboxOption key="banana" value="banana" displayName="Banana" />,
   <ComboboxOption key="carrot" value="carrot" displayName="Carrot" disabled />,
@@ -116,8 +116,8 @@ const ComboboxOptions = [
     key="pomegranate"
     value="pomegranate"
     displayName="Pomegranate"
-    // glyph={<Icon glyph="Warning" />}
-    description="im the description"
+    glyph={<Icon glyph="Warning" />}
+    description="description text"
   />,
   <ComboboxOption
     key="paragraph"

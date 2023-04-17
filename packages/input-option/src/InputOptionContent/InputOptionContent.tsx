@@ -12,8 +12,8 @@ import {
   descriptionBaseStyles,
   descriptionThemeStyles,
   glyphContainer,
-  leftContentWrapper,
-  leftTextWrapper,
+  glyphRightStyles,
+  textWrapper,
   titleBaseStyles,
 } from '../InputOptionContent/InputOptionContent.styles';
 
@@ -22,7 +22,7 @@ import { InputOptionContentProps } from './InputOptionContent.types';
 /**
  * @internal
  *
- * This is a temp workaround to add consistent option styles. TODO: finish
+ * This is a temp workaround to add consistent option styles. Once all input options in all components are consistent we can add this directly inside `InputOption`.
  */
 export const InputOptionContent = ({
   children,
@@ -33,24 +33,24 @@ export const InputOptionContent = ({
   const { theme } = useDarkMode();
   return (
     <div className={contentWrapper}>
-      <div className={leftContentWrapper}>
-        {leftGlyph && <div className={glyphContainer}>{leftGlyph}</div>}
-        <div className={leftTextWrapper}>
-          <div className={cx(titleClassName, titleBaseStyles)}>{children}</div>
-          {description && (
-            <div
-              className={cx(
-                descriptionClassName,
-                descriptionBaseStyles,
-                descriptionThemeStyles[theme],
-              )}
-            >
-              {description}
-            </div>
-          )}
-        </div>
+      {leftGlyph && <div className={glyphContainer}>{leftGlyph}</div>}
+      <div className={textWrapper}>
+        <div className={cx(titleClassName, titleBaseStyles)}>{children}</div>
+        {description && (
+          <div
+            className={cx(
+              descriptionClassName,
+              descriptionBaseStyles,
+              descriptionThemeStyles[theme],
+            )}
+          >
+            {description}
+          </div>
+        )}
       </div>
-      {rightGlyph && <div className={glyphContainer}>{rightGlyph}</div>}
+      {rightGlyph && (
+        <div className={cx(glyphContainer, glyphRightStyles)}>{rightGlyph}</div>
+      )}
     </div>
   );
 };
