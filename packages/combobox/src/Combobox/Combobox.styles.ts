@@ -100,6 +100,7 @@ export const comboboxParentStyle = (size: Size): string => {
 export const baseComboboxStyles = css`
   display: flex;
   align-items: center;
+  gap: ${spacing[2]}px;
   cursor: text;
   transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: background-color, box-shadow, border-color;
@@ -205,16 +206,16 @@ export const iconsWrapperBaseStyles = css`
 
 export const iconsWrapperSizeStyles: Record<Size, string> = {
   [Size.XSmall]: css`
-    gap: 4px;
+    gap: ${spacing[1]}px;
   `,
   [Size.Small]: css`
-    gap: 8px;
+    gap: ${spacing[2]}px;
   `,
   [Size.Default]: css`
-    gap: 8px;
+    gap: ${spacing[2]}px;
   `,
   [Size.Large]: css`
-    gap: 8px;
+    gap: ${spacing[2]}px;
   `,
 };
 
@@ -290,7 +291,7 @@ export const baseInputElementStyle = css`
 
   // Only add padding if there are chips
   &:not(:first-child) {
-    padding-left: 4px;
+    padding-left: ${spacing[1]}px;
   }
 
   &:placeholder-shown {

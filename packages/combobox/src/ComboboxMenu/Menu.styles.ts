@@ -16,16 +16,8 @@ export const menuItemPadding: Record<Size, { x: number; y: number }> = {
 };
 
 /** Util that returns the height of a menu item (in px) */
-const getMenuItemHeight = (size: Size) => {
+export const getMenuItemHeight = (size: Size) => {
   return lineHeight[size] + 2 * menuItemPadding[size].y;
-};
-
-/** Height of a menu item (in px) */
-export const menuItemHeight: Record<Size, number> = {
-  [Size.XSmall]: getMenuItemHeight(Size.XSmall),
-  [Size.Small]: getMenuItemHeight(Size.Small),
-  [Size.Default]: getMenuItemHeight(Size.Default),
-  [Size.Large]: getMenuItemHeight(Size.Large),
 };
 
 /**

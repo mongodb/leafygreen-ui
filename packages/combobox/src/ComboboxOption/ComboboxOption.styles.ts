@@ -2,7 +2,10 @@ import { css } from '@leafygreen-ui/emotion';
 import { spacing, typeScales } from '@leafygreen-ui/tokens';
 
 import { ComboboxSize } from '../Combobox.types';
-import { menuItemHeight, menuItemPadding } from '../ComboboxMenu/Menu.styles';
+import {
+  getMenuItemHeight,
+  menuItemPadding,
+} from '../ComboboxMenu/Menu.styles';
 
 /**
  * Styles
@@ -19,49 +22,49 @@ export const comboboxOptionSizeStyle: Record<ComboboxSize, string> = {
   [ComboboxSize.XSmall]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
-    min-height: ${menuItemHeight[ComboboxSize.XSmall]}px;
+    min-height: ${getMenuItemHeight(ComboboxSize.XSmall)}px;
     padding: ${menuItemPadding[ComboboxSize.XSmall].y}px
       ${menuItemPadding[ComboboxSize.XSmall].x}px;
     gap: ${spacing[1]}px;
 
     &:before {
-      max-height: ${menuItemHeight[ComboboxSize.XSmall]}px;
+      max-height: ${getMenuItemHeight(ComboboxSize.XSmall)}px;
     }
   `,
   [ComboboxSize.Small]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
-    min-height: ${menuItemHeight[ComboboxSize.Small]}px;
+    min-height: ${getMenuItemHeight(ComboboxSize.Small)}px;
     padding: ${menuItemPadding[ComboboxSize.Small].y}px
       ${menuItemPadding[ComboboxSize.Small].x}px;
     gap: ${spacing[1]}px;
 
     &:before {
-      max-height: ${menuItemHeight[ComboboxSize.Small]}px;
+      max-height: ${getMenuItemHeight(ComboboxSize.Small)}px;
     }
   `,
   [ComboboxSize.Default]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
-    min-height: ${menuItemHeight[ComboboxSize.Default]}px;
+    min-height: ${getMenuItemHeight(ComboboxSize.Default)}px;
     padding: ${menuItemPadding[ComboboxSize.Default].y}px
       ${menuItemPadding[ComboboxSize.Default].x}px;
     gap: ${spacing[1]}px;
 
     &:before {
-      max-height: ${menuItemHeight[ComboboxSize.Default]}px;
+      max-height: ${getMenuItemHeight(ComboboxSize.Default)}px;
     }
   `,
   [ComboboxSize.Large]: css`
     font-size: ${typeScales.body2.fontSize}px;
     line-height: ${typeScales.body2.lineHeight}px;
-    min-height: ${menuItemHeight[ComboboxSize.Large]}px;
+    min-height: ${getMenuItemHeight(ComboboxSize.Large)}px;
     padding: ${menuItemPadding[ComboboxSize.Large].y}px
       ${menuItemPadding[ComboboxSize.Large].x}px;
     gap: ${spacing[2]}px;
 
     &:before {
-      max-height: ${menuItemHeight[ComboboxSize.Large]}px;
+      max-height: ${getMenuItemHeight(ComboboxSize.Large)}px;
     }
   `,
 };
