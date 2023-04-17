@@ -37,6 +37,7 @@ export const defaultOptions: Array<OptionObject> = [
     value: 'apple',
     displayName: 'Apple',
     isDisabled: false,
+    description: 'Description text',
   },
   {
     value: 'banana',
@@ -102,8 +103,8 @@ export const getComboboxJSX = (props?: renderComboboxProps) => {
       const value = typeof option === 'string' ? option : option.value;
       const displayName =
         typeof option === 'string' ? undefined : option.displayName;
-
       const isDisabled = typeof option === 'string' ? false : option.isDisabled;
+      const description = typeof option === 'string' ? '' : option.description;
 
       return (
         <ComboboxOption
@@ -112,6 +113,7 @@ export const getComboboxJSX = (props?: renderComboboxProps) => {
           displayName={displayName}
           disabled={isDisabled}
           data-testid={value}
+          description={description}
         />
       );
     }

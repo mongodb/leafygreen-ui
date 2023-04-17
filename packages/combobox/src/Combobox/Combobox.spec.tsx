@@ -153,6 +153,14 @@ describe('packages/combobox', () => {
         );
       });
 
+      test('option accepts description', () => {
+        const { openMenu } = renderCombobox(select);
+        const { optionElements } = openMenu();
+        expect(optionElements?.[0]).toHaveTextContent(
+          defaultOptions[0].description as string,
+        );
+      });
+
       test('Options render with provided displayName', async () => {
         const { openMenu } = renderCombobox(select);
         const { optionElements } = openMenu();
