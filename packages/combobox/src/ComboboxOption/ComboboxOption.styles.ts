@@ -8,13 +8,6 @@ import { menuItemHeight, menuItemPadding } from '../ComboboxMenu/Menu.styles';
  * Styles
  */
 
-export const comboboxOptionBaseStyle = css`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  list-style: none;
-`;
-
 export const comboboxOptionSizeStyle: Record<ComboboxSize, string> = {
   [ComboboxSize.XSmall]: css`
     font-size: ${typeScales.body1.fontSize}px;

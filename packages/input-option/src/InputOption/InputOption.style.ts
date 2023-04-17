@@ -122,6 +122,7 @@ export const inputOptionDisabledStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     cursor: not-allowed;
 
+    &,
     & .${descriptionClassName} {
       color: ${palette.gray.light1};
     }
@@ -137,6 +138,7 @@ export const inputOptionDisabledStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     cursor: not-allowed;
 
+    &,
     & .${descriptionClassName} {
       color: ${palette.gray.dark1};
     }

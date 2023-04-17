@@ -13,13 +13,17 @@ import {
   descriptionThemeStyles,
   glyphContainer,
   leftContentWrapper,
+  leftTextWrapper,
+  titleBaseStyles,
 } from '../InputOptionContent/InputOptionContent.styles';
 
 import { InputOptionContentProps } from './InputOptionContent.types';
 
-// Fix disabled styles
-// Add truncation logic
-
+/**
+ * @internal
+ *
+ * This is a temp workaround to add consistent option styles. TODO: finish
+ */
 export const InputOptionContent = ({
   children,
   description,
@@ -31,8 +35,8 @@ export const InputOptionContent = ({
     <div className={contentWrapper}>
       <div className={leftContentWrapper}>
         {leftGlyph && <div className={glyphContainer}>{leftGlyph}</div>}
-        <div>
-          <div className={titleClassName}>{children}</div>
+        <div className={leftTextWrapper}>
+          <div className={cx(titleClassName, titleBaseStyles)}>{children}</div>
           {description && (
             <div
               className={cx(

@@ -112,6 +112,12 @@ const ComboboxOptions = [
   <ComboboxOption key="banana" value="banana" displayName="Banana" />,
   <ComboboxOption key="carrot" value="carrot" displayName="Carrot" disabled />,
   <ComboboxOption
+    key="pomegranate"
+    value="pomegranate"
+    displayName="Pomegranate"
+    glyph={<Icon glyph="Warning" />}
+  />,
+  <ComboboxOption
     key="paragraph"
     value="paragraph"
     displayName="Nullam quis risus eget urna mollis ornare vel eu leo. Vestibulum id ligula porta felis euismod semper."
@@ -134,12 +140,6 @@ const ComboboxOptions = [
     key="iceberg-lettuce"
     value="iceberg-lettuce"
     displayName="Iceberg lettuce"
-  />,
-  <ComboboxOption
-    key="pomegranate"
-    value="pomegranate"
-    displayName="Pomegranate"
-    glyph={<Icon glyph="Warning" />}
   />,
   <ComboboxGroup key="peppers" label="Peppers">
     <ComboboxOption key="cayenne" value="cayenne" displayName="Cayenne" />

@@ -18,7 +18,6 @@ import { wrapJSX } from '../utils';
 
 import {
   checkIconStyle,
-  comboboxOptionBaseStyle,
   comboboxOptionSizeStyle,
   disallowPointer,
   displayNameStyle,
@@ -56,11 +55,6 @@ export const InternalComboboxOption = React.forwardRef<
 
     const handleOptionClick = useCallback(
       (e: React.SyntheticEvent) => {
-        // console.group();
-        // console.log('optionRef', optionRef.current);
-        // console.log('e.target', e.target);
-        // console.log('e.currentTarget', e.currentTarget);
-        // console.groupEnd();
         // stopPropagation will not stop the keyDown event (only click)
         // since the option is never `focused`, only `aria-selected`
         // the keyDown event does not actually fire on the option element
@@ -98,17 +92,23 @@ export const InternalComboboxOption = React.forwardRef<
       />
     );
 
-    const multiSelectLeftGlyph = withIcons ? icon : checkbox;
-    const multiSelectRightGlyph = withIcons && checkbox;
-
-    const singleSelectLeftGlyph = icon; // TODO: add check for with icons
-    const singleSelectRightGlyph = isSelected && (
+    const checkMark = (
       <Icon
         glyph="Checkmark"
         className={checkIconStyle[size]}
         color={darkMode ? palette.blue.light1 : palette.blue.base}
       />
     );
+
+    const multiSelectLeftGlyph = withIcons ? icon : checkbox;
+    const multiSelectRightGlyph = withIcons && checkbox;
+
+    const singleSelectLeftGlyph = withIcons
+      ? icon
+      : isSelected
+      ? checkMark
+      : null;
+    const singleSelectRightGlyph = withIcons && isSelected && checkMark;
 
     return (
       <InputOption
@@ -119,29 +119,16 @@ export const InternalComboboxOption = React.forwardRef<
         disabled={disabled}
         aria-label={displayName}
         darkMode={darkMode}
-        className={cx(
-          comboboxOptionBaseStyle,
-          comboboxOptionSizeStyle[size],
-          className,
-        )}
+        className={cx(comboboxOptionSizeStyle[size], className)}
         onClick={handleOptionClick}
         onKeyDown={handleOptionClick}
-        // leftGlyph={multiselect ? multiSelectLeftGlyph : singleSelectLeftGlyph}
-        // rightGlyph={
-        //   multiselect ? multiSelectRightGlyph : singleSelectRightGlyph
-        // }
       >
-        {/* <OptionContent
-          disabled={disabled}
-          displayName={displayName}
-          glyph={glyph}
-          isSelected={isSelected}
-        /> */}
         <InputOptionContent
           leftGlyph={multiselect ? multiSelectLeftGlyph : singleSelectLeftGlyph}
           rightGlyph={
             multiselect ? multiSelectRightGlyph : singleSelectRightGlyph
           }
+          description={'hi'}
         >
           <span id={optionTextId} className={displayNameStyle(isSelected)}>
             {wrapJSX(displayName, inputValue, 'strong')}
