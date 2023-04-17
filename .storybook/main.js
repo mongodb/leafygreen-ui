@@ -16,6 +16,9 @@ module.exports = {
     '@storybook/addon-a11y',
   ],
   framework: '@storybook/react',
+  core: {
+    disableTelemetry: true,
+  },
   staticDirs: ['./static'],
   webpackFinal: config => {
     // Default rule for images /\.(svg|ico|jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\?.*)?$/
