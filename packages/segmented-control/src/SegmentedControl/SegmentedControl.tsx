@@ -307,7 +307,7 @@ export const SegmentedControl = forwardRef<
     [renderedChildren],
   );
 
-  // Deprecated size "small" no longer supported, but we want to gracefully degrade the prop value
+  // deprecated size "small" no longer supported, but we want to gracefully degrade the prop value
   const size = sizeProp === DeprecatedSize.Small ? Size.XSmall : sizeProp;
 
   /**
