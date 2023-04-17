@@ -92,33 +92,6 @@ export const menuMessageSizeStyle = (size: Size) => css`
   padding: ${menuItemPadding[size].y}px ${menuItemPadding[size].x}px;
 `;
 
-// export const menuMessageSizeStyle: Record<Size, string> = {
-//   [Size.XSmall]: css`
-//     font-size: ${fontSize[Size.XSmall]}px;
-//     line-height: ${lineHeight[Size.XSmall]}px;
-//     padding: ${menuItemPadding[Size.XSmall].y}px
-//       ${menuItemPadding[Size.XSmall].x}px;
-//   `,
-//   [Size.Small]: css`
-//     font-size: ${fontSize[Size.Small]}px;
-//     line-height: ${lineHeight[Size.Small]}px;
-//     padding: ${menuItemPadding[Size.Small].y}px
-//       ${menuItemPadding[Size.Small].x}px;
-//   `,
-//   [Size.Default]: css`
-//     font-size: ${fontSize[Size.Default]}px;
-//     line-height: ${lineHeight[Size.Default]}px;
-//     padding: ${menuItemPadding[Size.Default].y}px
-//       ${menuItemPadding[Size.Default].x}px;
-//   `,
-//   [Size.Large]: css`
-//     font-size: ${fontSize[Size.Large]}px;
-//     line-height: ${lineHeight[Size.Large]}px;
-//     padding: ${menuItemPadding[Size.Large].y}px
-//       ${menuItemPadding[Size.Large].x}px;
-//   `,
-// };
-
 const loadingIconAnimation = keyframes`
   0% {
     transform: rotate(0deg);
