@@ -1249,7 +1249,7 @@ export function Combobox<M extends boolean>({
                 id={inputId}
                 className={cx(
                   baseInputElementStyle,
-                  inputElementSizeStyle[size],
+                  inputElementSizeStyle(size),
                   inputElementThemeStyle[theme],
                   inputElementTransitionStyles(isOpen),
                   {
@@ -1303,7 +1303,7 @@ export function Combobox<M extends boolean>({
             <div
               className={cx(
                 errorMessageThemeStyle[theme],
-                errorMessageSizeStyle[size],
+                errorMessageSizeStyle(size),
               )}
             >
               {errorMessage}
