@@ -120,7 +120,7 @@ export const InternalComboboxOption = React.forwardRef<
         disabled={disabled}
         aria-label={displayName}
         darkMode={darkMode}
-        className={cx(comboboxOptionSizeStyle[size], className)}
+        className={cx(comboboxOptionSizeStyle(size), className)}
         onClick={handleOptionClick}
         onKeyDown={handleOptionClick}
       >

@@ -12,13 +12,13 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { chipHeight, fontSize, lineHeight } from '../Chip/Chip.styles';
+import { fontSize, getChipHeight, lineHeight } from '../Chip/Chip.styles';
 import { ComboboxSize as Size, Overflow } from '../Combobox.types';
 
 // Rename the variable defined in chip styles
-const inputHeight = chipHeight;
+const inputHeight = getChipHeight;
 
-// Gap between each
+// Gap between each chip
 const flexGap = 4;
 
 /**
@@ -33,15 +33,15 @@ export const wrapperHeight: Record<Size, number> = {
 
 /**
  * Util that calculates the Y padding.
- * `(wrapperHeight - inputHeight - (borderTop + borderBottom)) / 2`
+ * `(wrapperHeight - inputHeight(- (borderTop + borderBottom)) / 2`
  */
 const getYPadding = (size: Size) => {
-  return (wrapperHeight[size] - inputHeight[size] - 2) / 2;
+  return (wrapperHeight[size] - inputHeight(size) - 2) / 2;
 };
 
 /**
  * Size of combobox x & y padding (in px)
- * (wrapperHeight - inputHeight - (borderTop + borderBottom)) / 2
+ * (wrapperHeight - inputHeight(- (borderTop + borderBottom)) / 2
  */
 export const comboboxPadding: Record<
   Size,
@@ -100,6 +100,7 @@ export const comboboxParentStyle = (size: Size): string => {
 export const baseComboboxStyles = css`
   display: flex;
   align-items: center;
+  gap: ${spacing[2]}px;
   cursor: text;
   transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: background-color, box-shadow, border-color;
@@ -205,16 +206,16 @@ export const iconsWrapperBaseStyles = css`
 
 export const iconsWrapperSizeStyles: Record<Size, string> = {
   [Size.XSmall]: css`
-    gap: 4px;
+    gap: ${spacing[1]}px;
   `,
   [Size.Small]: css`
-    gap: 8px;
+    gap: ${spacing[2]}px;
   `,
   [Size.Default]: css`
-    gap: 8px;
+    gap: ${spacing[2]}px;
   `,
   [Size.Large]: css`
-    gap: 8px;
+    gap: ${spacing[2]}px;
   `,
 };
 
@@ -235,7 +236,7 @@ export const inputWrapperStyle = ({
       return css`
         ${baseWrapperStyle}
         display: block;
-        height: ${inputHeight[size]}px;
+        height: ${inputHeight(size)}px;
         white-space: nowrap;
         overflow-x: scroll;
         scroll-behavior: smooth;
@@ -268,8 +269,8 @@ export const inputWrapperStyle = ({
         flex-wrap: wrap;
         gap: ${flexGap}px;
         overflow-x: hidden;
-        min-height: ${inputHeight[size]}px;
-        max-height: calc((${chipHeight[size] * 3}px) + (${flexGap}px * 2));
+        min-height: ${inputHeight(size)}px;
+        max-height: calc((${getChipHeight(size) * 3}px) + (${flexGap}px * 2));
       `;
     }
   }
@@ -290,7 +291,7 @@ export const baseInputElementStyle = css`
 
   // Only add padding if there are chips
   &:not(:first-child) {
-    padding-left: 4px;
+    padding-left: ${spacing[1]}px;
   }
 
   &:placeholder-shown {
@@ -314,32 +315,12 @@ export const inputElementThemeStyle: Record<Theme, string> = {
   `,
 };
 
-export const inputElementSizeStyle: Record<Size, string> = {
-  [Size.XSmall]: css`
-    height: ${inputHeight[Size.XSmall]}px;
-    font-size: ${fontSize[Size.XSmall]}px;
-    line-height: ${lineHeight[Size.XSmall]}px;
-    min-width: ${fontSize[Size.XSmall]}px;
-  `,
-  [Size.Small]: css`
-    height: ${inputHeight[Size.Small]}px;
-    font-size: ${fontSize[Size.Small]}px;
-    line-height: ${lineHeight[Size.Small]}px;
-    min-width: ${fontSize[Size.Small]}px;
-  `,
-  [Size.Default]: css`
-    height: ${inputHeight[Size.Default]}px;
-    font-size: ${fontSize[Size.Default]}px;
-    line-height: ${lineHeight[Size.Default]}px;
-    min-width: ${fontSize[Size.Default]}px;
-  `,
-  [Size.Large]: css`
-    height: ${inputHeight[Size.Large]}px;
-    font-size: ${fontSize[Size.Large]}px;
-    line-height: ${lineHeight[Size.Large]}px;
-    min-width: ${fontSize[Size.Large]}px;
-  `,
-};
+export const inputElementSizeStyle = (size: Size) => css`
+  height: ${inputHeight(size)}px;
+  font-size: ${fontSize[size]}px;
+  line-height: ${lineHeight[size]}px;
+  min-width: ${fontSize[size]}px;
+`;
 
 export const inputElementTransitionStyles = (isOpen: boolean) => css`
   /*
@@ -382,28 +363,12 @@ export const errorMessageThemeStyle: Record<Theme, string> = {
   `,
 };
 
-export const errorMessageSizeStyle: Record<Size, string> = {
-  [Size.XSmall]: css`
-    font-size: ${fontSize[Size.XSmall]}px;
-    line-height: ${lineHeight[Size.XSmall]}px;
-    padding-top: ${comboboxPadding[Size.XSmall].y}px;
-  `,
-  [Size.Small]: css`
-    font-size: ${fontSize[Size.Small]}px;
-    line-height: ${lineHeight[Size.Small]}px;
-    padding-top: ${comboboxPadding[Size.Small].y}px;
-  `,
-  [Size.Default]: css`
-    font-size: ${fontSize[Size.Default]}px;
-    line-height: ${lineHeight[Size.Default]}px;
-    padding-top: ${comboboxPadding[Size.Default].y}px;
-  `,
-  [Size.Large]: css`
-    font-size: ${fontSize[Size.Large]}px;
-    line-height: ${lineHeight[Size.Large]}px;
-    padding-top: ${comboboxPadding[Size.Large].y}px;
-  `,
-};
+export const errorMessageSizeStyle = (size: Size) => css`
+  font-size: ${fontSize[size]}px;
+  line-height: ${lineHeight[size]}px;
+  padding-top: ${comboboxPadding[size].y}px;
+`;
+
 export const labelDescriptionContainerStyle = css`
   margin-bottom: ${spacing[1]}px;
   display: flex;
@@ -427,4 +392,14 @@ export const comboboxOverflowShadowStyles: Record<Theme, string> = {
       box-shadow: 0px -7px 12px 5px rgb(0 0 0 / 50%);
     }
   `,
+};
+
+export const errorIconThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: palette.red.base,
+  [Theme.Dark]: palette.red.light1,
+};
+
+export const caretIconThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: palette.gray.dark2,
+  [Theme.Dark]: palette.gray.light1,
 };

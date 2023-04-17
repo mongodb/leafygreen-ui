@@ -43,16 +43,6 @@ export const getChipHeight = (size: ComboboxSize) => {
   return lineHeight[size] + 2 * chipWrapperPaddingY[size];
 };
 
-/**
- * Height of the chip element (in px)
- */
-export const chipHeight: Record<ComboboxSize, number> = {
-  [ComboboxSize.XSmall]: getChipHeight(ComboboxSize.XSmall),
-  [ComboboxSize.Small]: getChipHeight(ComboboxSize.Small),
-  [ComboboxSize.Default]: getChipHeight(ComboboxSize.Default),
-  [ComboboxSize.Large]: getChipHeight(ComboboxSize.Large),
-};
-
 export const chipWrapperBaseStyle = css`
   display: inline-flex;
   align-items: center;
@@ -62,24 +52,10 @@ export const chipWrapperBaseStyle = css`
   border-radius: 4px;
 `;
 
-export const chipWrapperSizeStyle: Record<ComboboxSize, string> = {
-  [ComboboxSize.XSmall]: css`
-    font-size: ${fontSize[ComboboxSize.XSmall]}px;
-    line-height: ${lineHeight[ComboboxSize.XSmall]}px;
-  `,
-  [ComboboxSize.Small]: css`
-    font-size: ${fontSize[ComboboxSize.Small]}px;
-    line-height: ${lineHeight[ComboboxSize.Small]}px;
-  `,
-  [ComboboxSize.Default]: css`
-    font-size: ${fontSize[ComboboxSize.Default]}px;
-    line-height: ${lineHeight[ComboboxSize.Default]}px;
-  `,
-  [ComboboxSize.Large]: css`
-    font-size: ${fontSize[ComboboxSize.Large]}px;
-    line-height: ${lineHeight[ComboboxSize.Large]}px;
-  `,
-};
+export const chipWrapperSizeStyle = (size: ComboboxSize) => css`
+  font-size: ${fontSize[size]}px;
+  line-height: ${lineHeight[size]}px;
+`;
 
 export const chipWrapperThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
@@ -151,20 +127,9 @@ export const chipButtonStyle = css`
   padding: 0 2px;
 `;
 
-export const chipButtonSizeStyle: Record<ComboboxSize, string> = {
-  [ComboboxSize.XSmall]: css`
-    height: ${chipHeight[ComboboxSize.XSmall]}px;
-  `,
-  [ComboboxSize.Small]: css`
-    height: ${chipHeight[ComboboxSize.Small]}px;
-  `,
-  [ComboboxSize.Default]: css`
-    height: ${chipHeight[ComboboxSize.Default]}px;
-  `,
-  [ComboboxSize.Large]: css`
-    height: ${chipHeight[ComboboxSize.Large]}px;
-  `,
-};
+export const chipButtonSizeStyle = (size: ComboboxSize) => css`
+  height: ${getChipHeight(size)}px;
+`;
 
 export const chipButtonThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`

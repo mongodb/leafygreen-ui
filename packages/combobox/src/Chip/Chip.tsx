@@ -119,7 +119,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
           chipClassName,
           chipWrapperBaseStyle,
           chipWrapperThemeStyle[theme],
-          chipWrapperSizeStyle[size],
+          chipWrapperSizeStyle(size),
           {
             [disabledChipWrapperStyle[theme]]: disabled,
           },
@@ -149,7 +149,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
           className={cx(
             chipButtonStyle,
             chipButtonThemeStyle[theme],
-            chipButtonSizeStyle[size],
+            chipButtonSizeStyle(size),
             {
               [chipButtonDisabledStyle[theme]]: disabled,
             },
