@@ -4,8 +4,12 @@ import { Meta } from '@storybook/react';
 import Icon from '@leafygreen-ui/icon';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
-import { SegmentedControlProps, Size } from './SegmentedControl/types';
-import { SegmentedControl, SegmentedControlOption } from '.';
+import { Size } from './SegmentedControl/SegmentedControl.types';
+import {
+  SegmentedControl,
+  SegmentedControlOption,
+  SegmentedControlProps,
+} from '.';
 
 export default {
   title: 'Components/SegmentedControl',
@@ -21,7 +25,7 @@ export default {
     size: {
       control: {
         type: 'radio',
-        options: Object.values(Size),
+        options: [...Object.values(Size)],
       },
     },
     darkMode: storybookArgTypes.darkMode,
