@@ -47,21 +47,6 @@ export interface BaseInputOptionProps {
    * @default true
    */
   isInteractive?: boolean;
-
-  // /**
-  //  * Optional description text
-  //  */
-  // description?: React.ReactNode;
-
-  // /**
-  //  * Glyph to be displayed to the left of content
-  //  */
-  // leftGlyph: React.ReactNode;
-
-  // /**
-  //  * Glyph to be displayed to the right of content
-  //  */
-  // rightGlyph: React.ReactNode;
 }
 
 export type InputOptionProps = AriaLabelProps &

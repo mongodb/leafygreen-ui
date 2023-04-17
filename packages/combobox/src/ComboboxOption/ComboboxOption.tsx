@@ -21,9 +21,7 @@ import {
   checkIconStyle,
   comboboxOptionSizeStyle,
   displayNameStyle,
-  // flexSpan,
 } from './ComboboxOption.styles';
-// import { OptionContent } from './OptionContent';
 
 /**
  * Internal ComboboxOption Component for use within Combobox only.

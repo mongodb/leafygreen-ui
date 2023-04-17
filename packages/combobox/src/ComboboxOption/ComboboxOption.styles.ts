@@ -39,14 +39,6 @@ export const checkIconStyle: Record<ComboboxSize, string> = {
   `,
 };
 
-export const flexSpan = css`
-  display: inline-flex;
-  gap: ${spacing[2]}px;
-  justify-content: start;
-  align-items: inherit;
-  overflow-wrap: anywhere;
-`;
-
 export const checkBoxBaseStyles = css`
   pointer-events: none;
   gap: 0;
