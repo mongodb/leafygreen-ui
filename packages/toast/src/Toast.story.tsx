@@ -6,19 +6,14 @@ import { random, range, sample, startCase } from 'lodash';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import { DarkModeProps, StoryMeta } from '@leafygreen-ui/lib';
-import {
-  ToastProvider,
-  ToastProviderProps,
-  useToast,
-  Variant,
-} from '@leafygreen-ui/toast';
+import { ToastProvider, useToast, Variant } from '@leafygreen-ui/toast';
 import { InlineCode, Label } from '@leafygreen-ui/typography';
 
 import { variantIcons } from './InternalToast/VariantIcon';
 import { makeToast, makeToastStack } from './ToastContext/utils/makeToast';
 import { InternalToast, InternalToastProps } from './InternalToast';
 
-export default StoryMeta<typeof InternalToast, ToastProviderProps>({
+export default StoryMeta<typeof InternalToast>({
   title: 'Components/Toast',
   component: InternalToast,
   decorators: [
