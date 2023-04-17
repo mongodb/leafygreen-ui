@@ -2,7 +2,7 @@ export interface InputOptionContentProps {
   /**
    * Content to appear inside of option
    */
-  children?: React.ReactNode;
+  children: React.ReactNode;
 
   /**
    * Optional description text

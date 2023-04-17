@@ -24,7 +24,7 @@ export const descriptionThemeStyles: Record<Theme, string> = {
 
 export const contentWrapper = css`
   display: grid;
-  grid-template-columns: 16px 1fr;
+  grid-template-columns: ${spacing[3]}px 1fr;
   gap: ${spacing[2]}px;
   align-items: center;
   width: 100%;
@@ -39,7 +39,7 @@ export const glyphContainer = css`
 `;
 
 export const glyphRightStyles = css`
-  width: 16px;
+  width: ${spacing[3]}px;
   grid-column: 3;
   grid-row: 1;
 `;

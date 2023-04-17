@@ -150,4 +150,5 @@ ComboboxOption.propTypes = {
   glyph: PropTypes.node,
   disabled: PropTypes.bool,
   className: PropTypes.string,
+  description: PropTypes.string,
 };

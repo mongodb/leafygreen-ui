@@ -22,7 +22,7 @@ import { InputOptionContentProps } from './InputOptionContent.types';
 /**
  * @internal
  *
- * This is a temp workaround to add consistent option styles. Once all input options in all components are consistent we can add this directly inside `InputOption`.
+ * This is a temp workaround to add consistent option styles. Once all components that use an input option are consistent we can add this directly inside `InputOption`.
  */
 export const InputOptionContent = ({
   children,
