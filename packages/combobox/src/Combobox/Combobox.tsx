@@ -33,7 +33,6 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
 import { Description, Label } from '@leafygreen-ui/typography';
 
 import { Chip } from '../Chip';
@@ -66,6 +65,7 @@ import {
 import {
   baseComboboxStyles,
   baseInputElementStyle,
+  caretIconThemeStyles,
   clearButtonStyle,
   comboboxDisabledStyles,
   comboboxErrorStyles,
@@ -75,6 +75,7 @@ import {
   comboboxSizeStyles,
   comboboxThemeStyles,
   endIconStyle,
+  errorIconThemeStyles,
   errorMessageSizeStyle,
   errorMessageThemeStyle,
   iconsWrapperBaseStyles,
@@ -1272,7 +1273,7 @@ export function Combobox<M extends boolean>({
               {state === 'error' && (
                 <Icon
                   glyph="Warning"
-                  color={darkMode ? palette.red.light1 : palette.red.base}
+                  fill={errorIconThemeStyles[theme]}
                   className={endIconStyle}
                 />
               )}
@@ -1293,7 +1294,7 @@ export function Combobox<M extends boolean>({
               <Icon
                 glyph="CaretDown"
                 className={endIconStyle}
-                fill={darkMode ? palette.gray.light1 : palette.gray.dark2}
+                fill={caretIconThemeStyles[theme]}
               />
             </div>
           </div>

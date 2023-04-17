@@ -43,16 +43,6 @@ export const getChipHeight = (size: ComboboxSize) => {
   return lineHeight[size] + 2 * chipWrapperPaddingY[size];
 };
 
-/**
- * Height of the chip element (in px)
- */
-export const chipHeight: Record<ComboboxSize, number> = {
-  [ComboboxSize.XSmall]: getChipHeight(ComboboxSize.XSmall),
-  [ComboboxSize.Small]: getChipHeight(ComboboxSize.Small),
-  [ComboboxSize.Default]: getChipHeight(ComboboxSize.Default),
-  [ComboboxSize.Large]: getChipHeight(ComboboxSize.Large),
-};
-
 export const chipWrapperBaseStyle = css`
   display: inline-flex;
   align-items: center;
@@ -153,16 +143,16 @@ export const chipButtonStyle = css`
 
 export const chipButtonSizeStyle: Record<ComboboxSize, string> = {
   [ComboboxSize.XSmall]: css`
-    height: ${chipHeight[ComboboxSize.XSmall]}px;
+    height: ${getChipHeight(ComboboxSize.XSmall)}px;
   `,
   [ComboboxSize.Small]: css`
-    height: ${chipHeight[ComboboxSize.Small]}px;
+    height: ${getChipHeight(ComboboxSize.Small)}px;
   `,
   [ComboboxSize.Default]: css`
-    height: ${chipHeight[ComboboxSize.Default]}px;
+    height: ${getChipHeight(ComboboxSize.Default)}px;
   `,
   [ComboboxSize.Large]: css`
-    height: ${chipHeight[ComboboxSize.Large]}px;
+    height: ${getChipHeight(ComboboxSize.Large)}px;
   `,
 };
 
