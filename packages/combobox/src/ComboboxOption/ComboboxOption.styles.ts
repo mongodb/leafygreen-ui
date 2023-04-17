@@ -82,6 +82,15 @@ export const flexSpan = css`
   overflow-wrap: anywhere;
 `;
 
+export const checkBoxBaseStyles = css`
+  pointer-events: none;
+  gap: 0;
+
+  label {
+    gap: 0;
+  }
+`;
+
 export const disallowPointer = css`
   pointer-events: none;
 `;

@@ -17,9 +17,9 @@ import { ComboboxContext } from '../ComboboxContext';
 import { wrapJSX } from '../utils';
 
 import {
+  checkBoxBaseStyles,
   checkIconStyle,
   comboboxOptionSizeStyle,
-  disallowPointer,
   displayNameStyle,
   // flexSpan,
 } from './ComboboxOption.styles';
@@ -43,6 +43,7 @@ export const InternalComboboxOption = React.forwardRef<
       disabled,
       setSelected,
       className,
+      description = '',
       ...rest
     }: InternalComboboxOptionProps,
     forwardedRef,
@@ -88,7 +89,7 @@ export const InternalComboboxOption = React.forwardRef<
         tabIndex={-1}
         disabled={disabled}
         darkMode={darkMode}
-        className={disallowPointer}
+        className={checkBoxBaseStyles}
       />
     );
 
@@ -128,7 +129,7 @@ export const InternalComboboxOption = React.forwardRef<
           rightGlyph={
             multiselect ? multiSelectRightGlyph : singleSelectRightGlyph
           }
-          description={'hi'}
+          description={description}
         >
           <span id={optionTextId} className={displayNameStyle(isSelected)}>
             {wrapJSX(displayName, inputValue, 'strong')}

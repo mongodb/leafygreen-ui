@@ -305,6 +305,11 @@ interface BaseComboboxOptionProps extends ComponentPropsWithoutRef<'li'> {
    * Styling Prop
    */
   className?: string;
+
+  /**
+   * Descriptive text under the displayName
+   */
+  description?: string;
 }
 
 export type ComboboxOptionProps = Either<
@@ -330,6 +335,7 @@ export interface InternalComboboxOptionProps
   glyph?: ReactElement;
   className?: string;
   index: number;
+  description?: string;
 }
 
 /**
