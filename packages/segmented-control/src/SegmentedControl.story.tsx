@@ -25,7 +25,7 @@ export default {
     size: {
       control: {
         type: 'radio',
-        options: [...Object.values(Size), 'small'],
+        options: [...Object.values(Size)],
       },
     },
     darkMode: storybookArgTypes.darkMode,
