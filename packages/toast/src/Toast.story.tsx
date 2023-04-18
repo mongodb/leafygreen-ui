@@ -5,7 +5,6 @@ import { random, range, sample, startCase } from 'lodash';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { DarkModeProps, StoryMeta } from '@leafygreen-ui/lib';
 import { InlineCode, Label } from '@leafygreen-ui/typography';
 
@@ -19,11 +18,9 @@ export default StoryMeta<typeof InternalToast>({
   component: InternalToast,
   decorators: [
     (Story, meta) => (
-      <LeafyGreenProvider darkMode={!!meta.args.darkMode}>
-        <ToastProvider initialValue={meta.args.initialValue}>
-          <Story />
-        </ToastProvider>
-      </LeafyGreenProvider>
+      <ToastProvider initialValue={meta.args.initialValue}>
+        <Story />
+      </ToastProvider>
     ),
   ],
   parameters: {
