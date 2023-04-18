@@ -2,15 +2,15 @@ import React, { useCallback, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import Checkbox from '@leafygreen-ui/checkbox';
-import { cx } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
 import Icon, { isComponentGlyph } from '@leafygreen-ui/icon';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { palette } from '@leafygreen-ui/palette';
 
 import {
   ComboboxOptionProps,
+  ComboboxSize,
   InternalComboboxOptionProps,
 } from '../Combobox.types';
 import { ComboboxContext } from '../ComboboxContext';
@@ -18,9 +18,16 @@ import { wrapJSX } from '../utils';
 
 import {
   checkBoxBaseStyles,
-  checkIconStyle,
+  checkMarkDisabledStyles,
+  checkMarkSizeStyle,
+  checkMarkThemeStyles,
   comboboxOptionSizeStyle,
   displayNameStyle,
+  iconDisabledStyles,
+  iconHighlightedStyles,
+  iconThemeStyles,
+  multiselectIconLargePosition,
+  multiselectIconPosition,
 } from './ComboboxOption.styles';
 
 /**
@@ -41,14 +48,14 @@ export const InternalComboboxOption = React.forwardRef<
       disabled,
       setSelected,
       className,
-      description = '',
+      description,
       value,
       onClick,
       ...rest
     }: InternalComboboxOptionProps,
     forwardedRef,
   ) => {
-    const { darkMode } = useDarkMode();
+    const { darkMode, theme } = useDarkMode();
     const { multiselect, size, withIcons, inputValue } =
       useContext(ComboboxContext);
     const optionRef = useForwardedRef(forwardedRef, null);
@@ -72,7 +79,17 @@ export const InternalComboboxOption = React.forwardRef<
     const icon = useMemo((): JSX.Element => {
       if (glyph) {
         if (isComponentGlyph(glyph)) {
-          return glyph;
+          return React.cloneElement(glyph, {
+            ...glyph.props,
+            className: cx(
+              iconThemeStyles[theme],
+              {
+                [iconHighlightedStyles[theme]]: isFocused,
+                [iconDisabledStyles[theme]]: disabled,
+              },
+              glyph.props.className,
+            ),
+          });
         }
         console.error(
           '`ComboboxOption` instance did not render icon because it is not a known glyph element.',
@@ -81,7 +98,7 @@ export const InternalComboboxOption = React.forwardRef<
       }
 
       return <></>;
-    }, [glyph]);
+    }, [disabled, glyph, isFocused, theme]);
 
     const checkbox = (
       <Checkbox
@@ -97,8 +114,9 @@ export const InternalComboboxOption = React.forwardRef<
     const checkMark = (
       <Icon
         glyph="Checkmark"
-        className={checkIconStyle[size]}
-        color={darkMode ? palette.blue.light1 : palette.blue.base}
+        className={cx(checkMarkSizeStyle[size], checkMarkThemeStyles[theme], {
+          [checkMarkDisabledStyles[theme]]: disabled,
+        })}
       />
     );
 
@@ -121,7 +139,15 @@ export const InternalComboboxOption = React.forwardRef<
         disabled={disabled}
         aria-label={displayName}
         darkMode={darkMode}
-        className={cx(comboboxOptionSizeStyle(size), className)}
+        className={cx(
+          comboboxOptionSizeStyle(size),
+          {
+            [multiselectIconPosition]: multiselect && !withIcons,
+            [multiselectIconLargePosition]:
+              multiselect && !withIcons && size === ComboboxSize.Large,
+          },
+          className,
+        )}
         onClick={handleOptionClick}
         onKeyDown={handleOptionClick}
       >

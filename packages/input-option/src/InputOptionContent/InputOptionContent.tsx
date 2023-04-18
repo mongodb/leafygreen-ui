@@ -31,6 +31,7 @@ export const InputOptionContent = ({
   rightGlyph,
 }: InputOptionContentProps) => {
   const { theme } = useDarkMode();
+
   return (
     <div className={contentWrapper}>
       {leftGlyph && <div className={glyphContainer}>{leftGlyph}</div>}

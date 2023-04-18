@@ -108,7 +108,7 @@ const ComboboxOptions = [
     value="apple"
     displayName="Apple"
     data-testid="test-id"
-    description="description text"
+    description="Do I keep the doctor away?"
     // eslint-disable-next-line no-console
     onClick={(value: string) => console.log('value in story', value)}
   />,
@@ -119,9 +119,17 @@ const ComboboxOptions = [
     value="pomegranate"
     displayName="Pomegranate"
     glyph={<Icon glyph="Warning" />}
-    description="description text"
+    description="Watch out, I stain everything I touch LOL"
     // eslint-disable-next-line no-console
     onClick={() => console.log('I was clicked')}
+    disabled
+  />,
+  <ComboboxOption
+    key="plantain"
+    value="plantain"
+    displayName="Plantain"
+    glyph={<Icon glyph="Connect" />}
+    description="Don't confuse me with a banana"
   />,
   <ComboboxOption
     key="paragraph"
@@ -137,6 +145,7 @@ const ComboboxOptions = [
     key="dragonfruit"
     value="dragonfruit"
     displayName="Dragonfruit"
+    description="Rawr"
   />,
   <ComboboxOption key="eggplant" value="eggplant" displayName="Eggplant" />,
   <ComboboxOption key="fig" value="fig" displayName="Fig" />,
@@ -165,6 +174,7 @@ const ComboboxOptions = [
       key="scotch-bonnet"
       value="scotch-bonnet"
       displayName="Scotch bonnet"
+      description="Don't touch your eyes"
     />
   </ComboboxGroup>,
 ];

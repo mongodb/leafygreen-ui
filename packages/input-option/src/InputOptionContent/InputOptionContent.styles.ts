@@ -36,6 +36,8 @@ export const textWrapper = css`
 
 export const glyphContainer = css`
   display: flex;
+  height: 20px;
+  align-items: center;
 `;
 
 export const glyphRightStyles = css`

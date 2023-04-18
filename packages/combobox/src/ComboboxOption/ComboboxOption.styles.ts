@@ -1,4 +1,6 @@
 import { css } from '@leafygreen-ui/emotion';
+import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
 import { fontSize, lineHeight } from '../Chip/Chip.styles';
@@ -24,7 +26,7 @@ export const comboboxOptionSizeStyle = (size: ComboboxSize) => css`
   }
 `;
 
-export const checkIconStyle: Record<ComboboxSize, string> = {
+export const checkMarkSizeStyle: Record<ComboboxSize, string> = {
   [ComboboxSize.XSmall]: css`
     min-width: ${spacing[3]}px;
   `,
@@ -55,4 +57,64 @@ export const disallowPointer = css`
 
 export const displayNameStyle = (isSelected: boolean) => css`
   font-weight: ${isSelected ? 'bold' : 'normal'};
+`;
+
+export const iconThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.dark1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.base};
+  `,
+};
+
+export const iconHighlightedStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.blue.dark1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.blue.light3};
+  `,
+};
+
+export const iconDisabledStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.light1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.dark1};
+  `,
+};
+
+export const checkMarkThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.blue.base};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.blue.light1};
+  `,
+};
+
+export const checkMarkDisabledStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.light1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.dark1};
+  `,
+};
+
+export const multiselectIconPosition = css`
+  > div {
+    > div:first-of-type {
+      align-self: baseline;
+    }
+  }
+`;
+export const multiselectIconLargePosition = css`
+  > div {
+    > div:first-of-type {
+      height: 28px;
+    }
+  }
 `;
