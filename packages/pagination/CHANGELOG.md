@@ -1,5 +1,25 @@
 # @leafygreen-ui/pagination
 
+## 1.0.4
+
+### Patch Changes
+
+- ef6ed4e5c: Set width of select dropdown to the width of its widths using Select's dropdownWidthBasis prop
+- c2c5601f4: Adds missing dependencies. Removes unused dependencies
+- Updated dependencies [af2e2bb74]
+- Updated dependencies [ece595acd]
+- Updated dependencies [9858ab8c5]
+- Updated dependencies [89ede28ec]
+- Updated dependencies [fb47557dd]
+- Updated dependencies [d351c02bc]
+- Updated dependencies [c2c5601f4]
+  - @leafygreen-ui/select@10.3.0
+  - @leafygreen-ui/typography@16.2.0
+  - @leafygreen-ui/icon-button@15.0.8
+  - @leafygreen-ui/hooks@7.7.0
+  - @leafygreen-ui/icon@11.12.7
+  - @leafygreen-ui/lib@10.3.1
+
 ## 1.0.3
 
 ### Patch Changes

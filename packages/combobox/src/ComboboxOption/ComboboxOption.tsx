@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import Checkbox from '@leafygreen-ui/checkbox';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
 import Icon, { isComponentGlyph } from '@leafygreen-ui/icon';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';

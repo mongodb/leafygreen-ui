@@ -47,6 +47,9 @@ export const iconButtonThemeDisabledStyles: Record<Theme, string> = {
   `,
 };
 
+/**
+ * @deprecated
+ */
 type StyledElements = 'rowStyle' | 'altColor' | 'disabledStyle';
 
 const themeStyles: Record<Theme, Record<StyledElements, string>> = {
@@ -137,6 +140,9 @@ function getIndentLevelStyle(indentLevel: number) {
   `;
 }
 
+/**
+ * @deprecated
+ */
 export interface RowProps extends HTMLElementProps<'tr', HTMLTableRowElement> {
   /**
    * Determines whether or not the row is expanded on first render
@@ -156,11 +162,17 @@ export interface RowProps extends HTMLElementProps<'tr', HTMLTableRowElement> {
   isAnyAncestorCollapsed?: boolean;
 }
 
+/**
+ * @deprecated
+ */
 type RowElement = React.ReactComponentElement<
   typeof Row,
   React.ComponentPropsWithRef<typeof Row>
 >;
 
+/**
+ * @deprecated
+ */
 const Row = forwardRef(
   (
     {

@@ -13,6 +13,9 @@ import {
 } from './ToggleExpandedIcon.styles';
 import { type ToggleExpandedIconProps } from './ToggleExpandedIcon.types';
 
+/**
+ * @internal
+ */
 const ToggleExpandedIcon = ({
   isExpanded,
   toggleExpanded,

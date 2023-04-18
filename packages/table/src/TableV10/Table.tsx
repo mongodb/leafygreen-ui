@@ -96,11 +96,17 @@ const ScrollState = {
 
 type ScrollState = typeof ScrollState[keyof typeof ScrollState];
 
+/**
+ * @deprecated
+ */
 export interface TableRowInterface<Shape = {}> {
   datum: Shape;
   index: number;
 }
 
+/**
+ * @deprecated
+ */
 export interface TableProps<Shape> extends HTMLElementProps<'table'> {
   /**
    * The array of data displayed in rows. Each array element's type is determined by the `Shape` generic.
@@ -136,6 +142,9 @@ export interface TableProps<Shape> extends HTMLElementProps<'table'> {
   darkMode?: boolean;
 }
 
+/**
+ * @deprecated
+ */
 export default function Table<Shape>({
   columns = [],
   data: dataProp = [],
@@ -244,4 +253,5 @@ export default function Table<Shape>({
     </div>
   );
 }
+Table.displayName = 'Table';
 //  TODO: missing proptypes

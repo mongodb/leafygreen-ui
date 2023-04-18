@@ -13,10 +13,16 @@ const TableActionTypes = {
   SetData: 'SET_DATA',
 } as const;
 
+/**
+ * @deprecated
+ */
 type TableActionTypes = typeof TableActionTypes[keyof typeof TableActionTypes];
 
 export { TableActionTypes };
 
+/**
+ * @deprecated
+ */
 interface ActionPayload {
   [TableActionTypes.RegisterColumn]: {
     dataType?: DataType;
@@ -54,6 +60,9 @@ type DataType = typeof DataType[keyof typeof DataType];
 
 export { DataType };
 
+/**
+ * @deprecated
+ */
 export interface State {
   data: Array<any>;
   columnInfo?: Record<number, { dataType?: DataType }>;
@@ -61,16 +70,25 @@ export interface State {
   hasRowSpan?: boolean;
 }
 
+/**
+ * @deprecated
+ */
 interface TableProviderInterface {
   children: React.ReactNode;
   data: Array<any>;
 }
 
+/**
+ * @deprecated
+ */
 interface ContextInterface {
   state: State;
   dispatch: Dispatch;
 }
 
+/**
+ * @deprecated
+ */
 const TableContext = createContext<ContextInterface>({
   state: {
     data: [],
@@ -78,6 +96,9 @@ const TableContext = createContext<ContextInterface>({
   dispatch: () => {},
 });
 
+/**
+ * @deprecated
+ */
 export function reducer(state: State, action: Action): State {
   switch (action.type) {
     case TableActionTypes.SetHasRowSpan:

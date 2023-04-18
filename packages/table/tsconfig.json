@@ -34,7 +34,7 @@
       "path": "../palette"
     },
     {
-      "path": "../pagination"
+      "path": "../polymorphic"
     },
     {
       "path": "../tokens"
