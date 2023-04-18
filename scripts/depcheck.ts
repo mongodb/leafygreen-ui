@@ -288,7 +288,7 @@ function fixTSconfig(pkg: string) {
 
 function sortDependenciesByUsage(
   localDeps: Record<string, Array<string>>,
-  pkg: string,
+  pkgName: string,
 ): {
   dependencies: Array<string>;
   devDependencies: Array<string>;
@@ -307,10 +307,13 @@ function sortDependenciesByUsage(
               ignoreFilePatterns.some(pattern => pattern.test(file)),
             )
           ) {
-            verbose && console.log(`${pkg} uses ${name} in a test file`);
-            _missing.devDependencies.push(name);
+            // Ignore when we import the package itself in a test file
+            if (!name.includes(pkgName)) {
+              verbose && console.log(`${pkgName} uses ${name} in a test file`);
+              _missing.devDependencies.push(name);
+            }
           } else {
-            verbose && console.log(`${pkg} missing ${name}`);
+            verbose && console.log(`${pkgName} missing ${name}`);
             _missing.dependencies.push(name);
           }
 
