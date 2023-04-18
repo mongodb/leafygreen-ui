@@ -145,9 +145,7 @@ export const ToastContainer = ({
     getShouldExpand,
     enterCallback: () => {
       if (toastContainerRef.current) {
-        toastContainerRef.current.scrollTo({
-          top: totalStackHeight,
-        });
+        toastContainerRef.current.scrollTop = totalStackHeight;
       }
 
       // Recalculate heights if we should be in the expanded state
@@ -252,15 +250,6 @@ export const ToastContainer = ({
     <Portal className={cx(portalStyles, toastPortalClassName, portalClassName)}>
       {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <div
-        data-debug={JSON.stringify(
-          {
-            isHovered,
-            shouldExpand,
-            isExpanded,
-          },
-          null,
-          2,
-        )}
         ref={toastContainerRef}
         id={regionId}
         data-testid="lg-toast-region"
