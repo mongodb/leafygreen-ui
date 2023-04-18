@@ -1,15 +1,15 @@
 import { ComponentMeta } from '@storybook/react';
 import mergeWith from 'lodash/mergeWith';
 import { ComponentProps } from 'react';
+import DarkModeProps from '../DarkModeProps';
 
 import { StoryArgType, storybookArgTypes } from './storybookArgTypes';
 import { storybookExcludedControlParams } from './storybookExcludedControlParams';
 
 // Re-defining LG provider prop keys here since importing from the package
 // will cause circular dependencies
-interface LeafyGreenProviderProps {
+interface LeafyGreenProviderProps extends DarkModeProps {
   baseFontSize?: number;
-  darkMode?: boolean;
 }
 
 export interface StoryMeta<
