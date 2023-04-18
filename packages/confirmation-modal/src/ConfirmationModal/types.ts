@@ -7,7 +7,7 @@ export const Variant = {
 
 export type Variant = typeof Variant[keyof typeof Variant];
 
-export interface ConfirmationModalProps extends ModalProps {
+export interface ConfirmationModalProps extends Omit<ModalProps, 'size'> {
   /**
    * Text of header element
    */
