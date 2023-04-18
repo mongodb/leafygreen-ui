@@ -51,7 +51,7 @@ describe('packages/button', () => {
       const { button } = renderButton({
         children: child,
       });
-      expect(button.textContent).toBe(null);
+      expect(button.textContent).toBe(child);
     });
 
     test(`renders "${title}" as the button title`, () => {
