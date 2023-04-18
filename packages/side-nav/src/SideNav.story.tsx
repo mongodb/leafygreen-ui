@@ -24,6 +24,10 @@ export default {
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
+    baseFontSize: {
+      control: { type: 'radio' },
+      options: [14, 16],
+    },
   },
   args: {
     widthOverride: 200,
@@ -147,6 +151,7 @@ export const InLayout = ({
   navItemText,
   hasActiveItem,
   darkMode,
+  ...rest
 }: any) => {
   const [collapsed, setCollapsed] = useState(false);
   const textHeader = 'States';
@@ -161,6 +166,7 @@ export const InLayout = ({
           className={sideNavStyles}
           aria-label="General example"
           darkMode={darkMode}
+          {...rest}
         >
           <SideNavGroup glyph={<Icon glyph="Support" />} header={textHeader}>
             <SideNavItem active>Active State</SideNavItem>
@@ -208,7 +214,7 @@ InLayout.args = {
   hasActiveItem: false,
 };
 
-export const Realm = ({ darkMode }: SideNavProps) => {
+export const Realm = ({ darkMode, ...rest }: SideNavProps) => {
   return (
     <LeafyGreenProvider>
       <MongoNavPlaceholder darkMode={darkMode} />
@@ -217,6 +223,7 @@ export const Realm = ({ darkMode }: SideNavProps) => {
           className={sideNavStyles}
           aria-label="Realm app"
           darkMode={darkMode}
+          {...rest}
         >
           <SideNavItem
             href="https://realm.mongodb.com"
@@ -283,6 +290,7 @@ export const OrgSettings = ({
   baseFontSize,
   widthOverride,
   darkMode,
+  ...rest
 }: SideNavProps) => {
   return (
     <LeafyGreenProvider>
@@ -294,6 +302,7 @@ export const OrgSettings = ({
           baseFontSize={baseFontSize}
           widthOverride={widthOverride}
           darkMode={darkMode}
+          {...rest}
         >
           <SideNavGroup
             glyph={<Icon glyph="Cloud" />}
@@ -360,19 +369,13 @@ OrgSettings.args = {
   baseFontSize: 14,
   widthOverride: 200,
 };
-OrgSettings.argTypes = {
-  baseFontSize: {
-    options: [14, 16],
-    control: { type: 'select' },
-  },
-};
 
-export const Nested = ({ darkMode }: SideNavProps) => {
+export const Nested = ({ darkMode, ...rest }: SideNavProps) => {
   return (
     <LeafyGreenProvider>
       <div className={appContainer}>
         <MongoNavPlaceholder darkMode={darkMode} />
-        <SideNav widthOverride={300} darkMode={darkMode}>
+        <SideNav widthOverride={300} darkMode={darkMode} {...rest}>
           <SideNavItem>Overview</SideNavItem>
           <SideNavItem>Introduction</SideNavItem>
           <SideNavItem>

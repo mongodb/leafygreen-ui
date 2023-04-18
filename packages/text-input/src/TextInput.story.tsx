@@ -50,7 +50,7 @@ export default {
       options: Object.values(SizeVariant),
     },
     baseFontSize: {
-      control: 'select',
+      control: 'radio',
       options: Object.values(BaseFontSize),
     },
   },

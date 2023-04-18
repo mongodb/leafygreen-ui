@@ -24,6 +24,7 @@
     "react": "^17.0.0"
   },
   "dependencies": {
+    "@leafygreen-ui/tokens": "^2.0.1",
     "@storybook/csf": "^0.0.2-next.10",
     "lodash": "^4.17.21",
     "prop-types": "^15.7.2"

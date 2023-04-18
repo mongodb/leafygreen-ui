@@ -1,14 +1,22 @@
 import { InputType } from '@storybook/csf';
 import IntrinsicElements from './IntrinsicElements';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 export interface StoryArgType extends InputType {
   /**
    * Identify an arg to render a control on Storybook only,
    * and not on `mongodb.design`
    */
-  storybookOnly?: boolean;
+  displayedPlatforms?: 'storybookOnly' | 'websiteOnly';
 }
 
 export const storybookArgTypes: { [key: string]: StoryArgType } = {
+  websiteBaseFontSize: {
+    description:
+      'The base font size passed to the LeafyGreenProvider that wraps the component',
+    control: { type: 'radio' },
+    options: Object.values(BaseFontSize),
+    displayedPlatforms: 'websiteOnly',
+  },
   darkMode: {
     description: 'Render the component in dark mode.',
     control: 'boolean',
