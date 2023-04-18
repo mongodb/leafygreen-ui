@@ -1,6 +1,8 @@
 import { useCallback, useMemo, useState } from 'react';
 import { debounce } from 'lodash';
 
+import { spacing } from '@leafygreen-ui/tokens';
+
 import { TOAST_CONSTANTS } from '../../constants';
 import { ToastId, ToastStack } from '../../ToastContext';
 
@@ -49,8 +51,21 @@ export function useToastHeights({
         const toastRef = getToastRef(id);
         let height = 0;
 
-        if (toastRef?.current) {
-          height = toastRef.current.clientHeight + 2; // +2 for border
+        if (toastRef?.current && toastRef.current.firstElementChild) {
+          const contentHeight = toastRef.current.firstElementChild.clientHeight;
+          const paddingHeight = spacing[2] * 2;
+
+          const renderedHeight = toastRef.current.clientHeight;
+          const borderHeight = 2;
+
+          // Since we restrict toast heights when they're collapsed,
+          // but we also set a min-heigh for short toasts,
+          // the true expanded height of a toast is the larger of
+          // rendered height, or content + padding
+          height = Math.max(
+            contentHeight + paddingHeight,
+            renderedHeight + borderHeight,
+          );
         }
 
         record[id] = height;

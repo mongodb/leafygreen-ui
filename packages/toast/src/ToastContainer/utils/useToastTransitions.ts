@@ -13,6 +13,7 @@ interface UseToastTransitionsProps {
 
 interface UseToastTransitionsReturnVal {
   isExpanded: boolean;
+  setIsExpanded: React.Dispatch<boolean>;
   handleTransitionExit: () => void;
   handleTransitionEnter: () => void;
 }
@@ -25,18 +26,14 @@ export function useToastTransitions({
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleTransitionEnter = useMemo(
+    // When a new toast enters, if we should expand,
+    // wait for an empty task queue, then set the expanded state
+    // and scroll the container to the bottom
     () =>
-      // When a new toast enters, if we should expand,
-      // wait for an empty task queue, then set the expanded state
-      // and scroll the container to the bottom
-      debounce(() => {
-        setTimeout(() => {
-          if (getShouldExpand()) {
-            enterCallback();
-            setIsExpanded(true);
-          }
-        });
-      }, transitionDebounceTime),
+      debouncedTimeout(() => {
+        enterCallback();
+        setIsExpanded(getShouldExpand());
+      }),
     [enterCallback, getShouldExpand],
   );
 
@@ -44,23 +41,26 @@ export function useToastTransitions({
    * Callback fired when the <Transition> element exits
    */
   const handleTransitionExit = useMemo(
+    // When a toast is removed
+    // wait for an empty task queue before checking the DOM
     () =>
-      debounce(() => {
-        // When a toast is removed
-        // wait for an empty task queue before checking the DOM
-        setTimeout(() => {
-          exitCallback();
-          if (!getShouldExpand()) {
-            setIsExpanded(false);
-          }
-        });
-      }, transitionDebounceTime),
+      debouncedTimeout(() => {
+        exitCallback();
+        setIsExpanded(getShouldExpand());
+      }),
     [exitCallback, getShouldExpand],
   );
 
   return {
     isExpanded,
+    setIsExpanded,
     handleTransitionExit,
     handleTransitionEnter,
   };
+}
+
+function debouncedTimeout(cb: () => void) {
+  return debounce(() => {
+    setTimeout(cb);
+  }, transitionDebounceTime);
 }
