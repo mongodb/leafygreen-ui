@@ -229,7 +229,7 @@ jobs:
   sizeDiff:
     name: Check file size
     runs-on: ubuntu-latest
-    needs: [install, build]
+    needs: install
     steps:
       - uses: actions/checkout@v2
 
