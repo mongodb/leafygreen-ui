@@ -71,9 +71,8 @@ export function useToastHeights({
   /**
    * Calculates the combined heights of all toasts up to `stopIndex`
    *
-   * @param toastHeights The array of toast heights
-   * @param isExpanded Whether the stack is expanded (determines whether to count all toasts, or just the top 3)
    * @param stopIndex Stop counting the height at this toast index
+   * @param isExpanded Whether the stack is expanded (determines whether to count all toasts, or just the top 3)
    */
   const calcHeightForIndex = useCallback(
     (stopIndex: number, isExpanded?: boolean): number => {

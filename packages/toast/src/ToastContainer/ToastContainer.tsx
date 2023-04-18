@@ -120,6 +120,7 @@ export const ToastContainer = ({
     toastContainerRef.current,
     {
       childList: true,
+      attributes: true,
       subtree: true,
     },
     updateToastHeights,
