@@ -2,12 +2,13 @@
 import React from 'react';
 import { Story } from '@storybook/react';
 
+import LGCode, { CodeProps, Language } from '@leafygreen-ui/code';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
+import { StoryMeta } from '@leafygreen-ui/lib';
 
-import LanguageSwitcherExample from '../LanguageSwitcher/LanguageSwitcherExample';
-import LGCode, { CodeProps, Language } from '..';
+import LanguageSwitcherExample from './LanguageSwitcher/LanguageSwitcherExample';
 
 // TODO: Import below comment directly from component definition.
 /**
@@ -52,7 +53,7 @@ console.log(greeting('World'));
 
 `;
 
-export default {
+export default StoryMeta({
   title: 'Components/Code',
   component: Code,
   excludeStories: ['Code'],
@@ -83,6 +84,7 @@ export default {
     },
   },
   parameters: {
+    default: 'Basic',
     controls: {
       exclude: [
         'showCustomActionButtons',
@@ -101,7 +103,7 @@ export default {
       ],
     },
   },
-};
+});
 
 type BaseFontSize = 14 | 16;
 
