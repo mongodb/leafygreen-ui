@@ -23,7 +23,7 @@ export const labelBaseStyles = css`
 `;
 
 export const labelLargeOverrideStyles = css`
-  font-size: 18px;
+  font-size: ${typeScales.large.fontSize}px;
 `;
 
 export const inheritTypeScale = css`

@@ -74,7 +74,7 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
       const messageStyles = cx(
         menuMessageBaseStyle,
         menuMessageThemeStyle[theme],
-        menuMessageSizeStyle[size],
+        menuMessageSizeStyle(size),
       );
 
       switch (searchState) {
