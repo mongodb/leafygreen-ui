@@ -25,6 +25,9 @@ export function useToastTransitions({
 }: UseToastTransitionsProps): UseToastTransitionsReturnVal {
   const [isExpanded, setIsExpanded] = useState(false);
 
+  /**
+   * Callback fired when the <Transition> element enters
+   */
   const handleTransitionEnter = useMemo(
     // When a new toast enters, if we should expand,
     // wait for an empty task queue, then set the expanded state

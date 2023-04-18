@@ -187,15 +187,16 @@ export const ToastContainer = ({
     }
   };
 
+  /**
+   * When a user clicks away from the expanded stack,
+   * collapse the stack
+   * and set the expanded state
+   */
   const handleBackdropClick = () => {
     collapseToasts();
     setIsExpanded(getShouldExpand());
   };
 
-  /**
-   * When a user clicks away from the expanded stack, collapse the stack
-   * and set the expanded state
-   */
   useBackdropClick(
     handleBackdropClick,
     scrollContainerRef,
