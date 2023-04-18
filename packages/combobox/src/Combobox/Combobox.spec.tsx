@@ -153,12 +153,31 @@ describe('packages/combobox', () => {
         );
       });
 
-      test('option accepts description', () => {
+      test('option renders description', () => {
         const { openMenu } = renderCombobox(select);
         const { optionElements } = openMenu();
         expect(optionElements?.[0]).toHaveTextContent(
           defaultOptions[0].description as string,
         );
+      });
+
+      test('option fires onClick callback', () => {
+        const onClick = jest.fn();
+
+        const options: Array<OptionObject> = [
+          {
+            value: 'paragraph',
+            displayName: 'display name',
+            isDisabled: false,
+            onClick,
+          },
+        ];
+
+        const { openMenu } = renderCombobox(select, { options });
+        const { optionElements } = openMenu();
+        const [optionEl] = Array.from(optionElements!);
+        userEvent.click(optionEl);
+        expect(onClick).toHaveBeenCalledTimes(1);
       });
 
       test('Options render with provided displayName', async () => {

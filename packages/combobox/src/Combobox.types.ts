@@ -329,6 +329,7 @@ export interface OptionObject {
   isDisabled: boolean;
   hasGlyph?: boolean;
   description?: string;
+  onClick?: (value: string) => void;
 }
 
 export interface InternalComboboxOptionProps
