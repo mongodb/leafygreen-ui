@@ -10,6 +10,7 @@ import {
   SegmentedControlOption,
   SegmentedControlProps,
 } from '.';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export default {
   title: 'Components/SegmentedControl',
@@ -29,7 +30,7 @@ export default {
       },
     },
     darkMode: storybookArgTypes.darkMode,
-    // baseFontSize: storybookArgTypes.websiteBaseFontSize,
+    baseFontSize: storybookArgTypes.websiteBaseFontSize,
   },
   parameters: {
     controls: {
