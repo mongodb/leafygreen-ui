@@ -1,8 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import { debounce } from 'lodash';
 
-import { spacing } from '@leafygreen-ui/tokens';
-
 import { TOAST_CONSTANTS } from '../../constants';
 import { ToastId, ToastStack } from '../../ToastContext';
 
@@ -48,12 +46,11 @@ export function useToastHeights({
     return Array.from(stack)
       .reverse() // reversing since the stack is oldest-first
       .reduce((record, [id]) => {
-        const ref = getToastRef(id);
+        const toastRef = getToastRef(id);
         let height = 0;
 
-        // Height of the content + padding
-        if (ref?.current && ref.current.firstElementChild) {
-          height = ref.current.firstElementChild?.clientHeight + spacing[2] * 2;
+        if (toastRef?.current) {
+          height = toastRef.current.clientHeight + 2; // +2 for border
         }
 
         record[id] = height;

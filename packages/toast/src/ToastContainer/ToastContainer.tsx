@@ -295,6 +295,9 @@ export const ToastContainer = ({
                     {state => (
                       <InternalToast
                         {...toastProps}
+                        title={`height: ${
+                          toastHeights[id]
+                        }px; y: ${calcHeightForIndex(index, isExpanded)}`}
                         id={id}
                         ref={toastRef}
                         onClose={onClose}

@@ -119,11 +119,12 @@ export const Variants: ComponentStory<typeof InternalToast> = (
               key={variant}
               onClick={() => {
                 pushToast({
+                  ...props,
                   title: `I'm a ${variant} toast`,
                   description: faker.lorem.lines(random(1, 2)),
                   variant,
                   progress,
-                  ...props,
+                  timeout: null,
                 });
               }}
             >
