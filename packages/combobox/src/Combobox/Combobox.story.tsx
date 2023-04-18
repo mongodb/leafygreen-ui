@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ComponentStory } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
@@ -102,6 +102,18 @@ export default StoryMeta({
   },
 });
 
+const intervalMS = 2000;
+
+function createRandomItems(count: number): Array<string> {
+  const newItems: Array<string> = [];
+
+  for (let i = 0; i < count; i++) {
+    newItems.push(`Item - ${i}`);
+  }
+
+  return newItems;
+}
+
 const ComboboxOptions = [
   <ComboboxOption
     key="apple"
@@ -179,11 +191,33 @@ const ComboboxOptions = [
   </ComboboxGroup>,
 ];
 
-const Template: ComponentStory<typeof Combobox> = args => (
-  <div className={wrapperStyle}>
-    <Combobox {...args} />
-  </div>
-);
+const Template: ComponentStory<typeof Combobox> = args => {
+  const [changingItems, setChangingItems] = useState<Array<string>>(
+    createRandomItems(5),
+  );
+
+  useEffect(() => {
+    const updateItems = setInterval(() => {
+      const count = Math.floor(Math.random() * 20) + 1;
+      setChangingItems(createRandomItems(count));
+    }, intervalMS);
+
+    return () => {
+      clearInterval(updateItems);
+    };
+  }, []);
+  return (
+    <div className={wrapperStyle}>
+      <div style={{ height: 200, overflow: 'scroll' }}>
+        {changingItems.map(item => (
+          <div key={item}>{item}</div>
+        ))}
+      </div>
+
+      <Combobox {...args} />
+    </div>
+  );
+};
 
 export const SingleSelect = Template.bind({});
 SingleSelect.args = {

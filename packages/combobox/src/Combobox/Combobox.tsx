@@ -626,7 +626,9 @@ export function Combobox<M extends boolean>({
         }
       }
     }
-  }, [highlightedOption, getOptionRef]);
+    // getOptionRef should be in the dependency array but it triggered every time the component rerenders causing the menu to scroll all the way to the top when the menu is open.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [highlightedOption]);
 
   /**
    * Rendering
