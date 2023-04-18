@@ -77,7 +77,7 @@ export interface ButtonProps {
    *
    * @default false
    */
-  darkMode?: boolean;
+  // darkMode?: boolean;
 
   /**
    * Determines the base font-size of the component

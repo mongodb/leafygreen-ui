@@ -148,7 +148,7 @@ jobs:
           node-version: '14'
           cache: yarn
           cache-dependency-path: 'yarn.lock'
-      
+
       - name: Install
         if: ${{ steps.ts-cache.outputs.cache-hit != 'true' }}
         run: yarn install --frozen-lockfile --prefer-offline
