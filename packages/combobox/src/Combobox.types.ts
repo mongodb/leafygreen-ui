@@ -277,7 +277,8 @@ export type ComboboxProps<M extends boolean> = Either<
  * Combobox Option Props
  */
 
-interface BaseComboboxOptionProps extends ComponentPropsWithoutRef<'li'> {
+interface BaseComboboxOptionProps
+  extends Omit<ComponentPropsWithoutRef<'li'>, 'onClick'> {
   /**
    * The internal value of the option. Used as the identifier in Combobox `initialValue`, value and filteredOptions.
    * When undefined, this is set to `_.kebabCase(displayName)`
@@ -310,6 +311,11 @@ interface BaseComboboxOptionProps extends ComponentPropsWithoutRef<'li'> {
    * Optional descriptive text under the displayName
    */
   description?: string;
+
+  /**
+   * Callback fired when an option is clicked. Returns the option value.
+   */
+  onClick?: (value: string) => void;
 }
 
 export type ComboboxOptionProps = Either<
@@ -326,7 +332,7 @@ export interface OptionObject {
 }
 
 export interface InternalComboboxOptionProps
-  extends ComponentPropsWithoutRef<'li'> {
+  extends Omit<ComponentPropsWithoutRef<'li'>, 'onClick'> {
   value: string;
   displayName: string;
   isSelected: boolean;
@@ -337,6 +343,7 @@ export interface InternalComboboxOptionProps
   className?: string;
   index: number;
   description?: string;
+  onClick?: (value: string) => void;
 }
 
 /**

@@ -42,6 +42,8 @@ export const InternalComboboxOption = React.forwardRef<
       setSelected,
       className,
       description = '',
+      value,
+      onClick,
       ...rest
     }: InternalComboboxOptionProps,
     forwardedRef,
@@ -61,9 +63,10 @@ export const InternalComboboxOption = React.forwardRef<
 
         if (!disabled) {
           setSelected();
+          onClick?.(value);
         }
       },
-      [disabled, setSelected],
+      [disabled, onClick, setSelected, value],
     );
 
     const icon = useMemo((): JSX.Element => {
@@ -151,4 +154,5 @@ ComboboxOption.propTypes = {
   disabled: PropTypes.bool,
   className: PropTypes.string,
   description: PropTypes.string,
+  onClick: PropTypes.func,
 };

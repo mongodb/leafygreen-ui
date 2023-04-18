@@ -109,6 +109,8 @@ const ComboboxOptions = [
     displayName="Apple"
     data-testid="test-id"
     description="description text"
+    // eslint-disable-next-line no-console
+    onClick={(value: string) => console.log('value in story', value)}
   />,
   <ComboboxOption key="banana" value="banana" displayName="Banana" />,
   <ComboboxOption key="carrot" value="carrot" displayName="Carrot" disabled />,
@@ -118,6 +120,8 @@ const ComboboxOptions = [
     displayName="Pomegranate"
     glyph={<Icon glyph="Warning" />}
     description="description text"
+    // eslint-disable-next-line no-console
+    onClick={() => console.log('I was clicked')}
   />,
   <ComboboxOption
     key="paragraph"
