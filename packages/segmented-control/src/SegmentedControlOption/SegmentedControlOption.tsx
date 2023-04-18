@@ -19,8 +19,8 @@ import {
   labelStyle,
   labelTextStyles,
   optionStyle,
-} from './styles';
-import { SegmentedControlOptionProps } from './types';
+} from './SegmentedControlOption.styles';
+import { SegmentedControlOptionProps } from './SegmentedControlOption.types';
 
 /**
  * SegmentedControlOption
