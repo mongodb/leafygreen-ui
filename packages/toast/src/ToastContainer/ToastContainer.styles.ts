@@ -30,6 +30,10 @@ const debugData = (extraStyle?: string) => css`
   }
 `;
 
+export const portalStyles = css`
+  position: relative;
+`;
+
 export const toastContainerStyles = css`
   position: fixed;
   display: flex;

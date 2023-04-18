@@ -6,25 +6,31 @@ import { random, range, sample, startCase } from 'lodash';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import { DarkModeProps, StoryMeta } from '@leafygreen-ui/lib';
+import { ToastProvider, useToast, Variant } from '@leafygreen-ui/toast';
 import { InlineCode, Label } from '@leafygreen-ui/typography';
 
 import { variantIcons } from './InternalToast/VariantIcon';
 import { makeToast, makeToastStack } from './ToastContext/utils/makeToast';
 import { InternalToast, InternalToastProps } from './InternalToast';
-import { ToastProvider, useToast, Variant } from '.';
 
 export default StoryMeta<typeof InternalToast>({
   title: 'Components/Toast',
   component: InternalToast,
   decorators: [
     (Story, meta) => (
-      <ToastProvider initialValue={meta.args.initialValue}>
-        <Story />
+      <ToastProvider
+        initialValue={meta.args.initialValue}
+        portalClassName={css`
+          // Ensures a new stacking context is established
+          z-index: 1;
+        `}
+      >
+        <Story {...meta} />
       </ToastProvider>
     ),
   ],
   parameters: {
-    default: 'Basic',
+    default: 'Variants',
     controls: {
       exclude: [
         'as',
@@ -46,11 +52,11 @@ export default StoryMeta<typeof InternalToast>({
     },
   },
   args: {
-    /// @ts-expect-error
     darkMode: false,
     initialValue: undefined,
   },
 });
+
 export const Basic: ComponentStory<typeof InternalToast> = (
   props: Partial<InternalToastProps> & DarkModeProps,
 ) => {

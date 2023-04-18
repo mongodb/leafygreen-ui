@@ -34,6 +34,7 @@ import {
   getToastHoverStyles,
   getToastTransitionStyles,
   getToastUnhoveredStyles,
+  portalStyles,
   scrollContainerExpandedStyles,
   scrollContainerStyles,
   scrollContainerTransitionOutStyles,
@@ -238,7 +239,7 @@ export const ToastContainer = ({
   };
 
   return (
-    <Portal className={cx(toastPortalClassName, portalClassName)}>
+    <Portal className={cx(portalStyles, toastPortalClassName, portalClassName)}>
       {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <div
         ref={toastContainerRef}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { VirtualItem } from 'react-virtual';
-import { ComponentStory, Meta } from '@storybook/react';
+import { ComponentStory } from '@storybook/react';
 import {
   ColumnDef,
   ExpandedState,
@@ -12,7 +12,7 @@ import {
   SortingState,
 } from '@tanstack/react-table';
 
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
 
 import { makeData, Person } from './utils/makeData.testutils';
 import {
@@ -29,7 +29,7 @@ import {
   useLeafyGreenTable,
 } from '.';
 
-export default {
+export default StoryMeta({
   title: 'Components/Table/With Virtualized Scrolling',
   component: Table,
   argTypes: {
@@ -40,11 +40,12 @@ export default {
   // This is needed as a workaround to make arg spreading performant
   // https://github.com/storybookjs/storybook/issues/11657
   parameters: {
+    default: 'Basic',
     docs: {
       source: { type: 'code' },
     },
   },
-} as Meta<typeof Table>;
+});
 
 export const Basic: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);

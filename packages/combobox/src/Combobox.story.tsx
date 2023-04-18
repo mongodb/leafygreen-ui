@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { ComponentStory } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
+import {
+  Combobox,
+  ComboboxGroup,
+  ComboboxOption,
+} from '@leafygreen-ui/combobox';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import { StoryMeta } from '@leafygreen-ui/lib';
@@ -12,8 +17,7 @@ import {
   SearchState,
   State,
   TruncationLocation,
-} from '../Combobox.types';
-import { Combobox, ComboboxGroup, ComboboxOption } from '..';
+} from './Combobox.types';
 
 const wrapperStyle = css`
   width: 256px;
