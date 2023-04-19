@@ -133,12 +133,15 @@ export const Variants: ComponentStory<typeof InternalToast> = (
                   timeout: null,
                 });
               }}
+              leftGlyph={<VariantIcon />}
             >
-              <VariantIcon /> {startCase(variant)} toast
+              {startCase(variant)} toast
             </Button>
           );
         })}
-        <Button onClick={() => clearStack()}>Clear all</Button>
+        <Button onClick={() => clearStack()} variant="dangerOutline">
+          Clear all
+        </Button>
       </div>
       {progressToasts && progressToasts.length > 0 && (
         <>
