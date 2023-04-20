@@ -10,18 +10,13 @@ import {
 import userEvent from '@testing-library/user-event';
 import { defaults, range } from 'lodash';
 
-// Importing from @leafygreen-ui since that's also where the story imports from
-import {
-  ToastProvider,
-  ToastProviderProps,
-  ToastStack,
-} from '@leafygreen-ui/toast';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { TOAST_CONSTANTS } from '../constants';
 import { InternalToastProps } from '../InternalToast';
 import { Basic as ContextStory } from '../Toast.story';
 import { makeToast, makeToastStack } from '../ToastContext/utils/makeToast';
+import { ToastProvider, ToastProviderProps, ToastStack } from '..';
 
 async function delay(t: number): Promise<void> {
   return await new Promise(_ => setTimeout(_, t));

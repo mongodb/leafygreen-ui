@@ -6,12 +6,12 @@ import { random, range, sample, startCase } from 'lodash';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import { DarkModeProps, StoryMeta } from '@leafygreen-ui/lib';
-import { ToastProvider, useToast, Variant } from '@leafygreen-ui/toast';
 import { InlineCode, Label } from '@leafygreen-ui/typography';
 
 import { variantIcons } from './InternalToast/VariantIcon';
 import { makeToast, makeToastStack } from './ToastContext/utils/makeToast';
 import { InternalToast, InternalToastProps } from './InternalToast';
+import { ToastProvider, useToast, Variant } from '.';
 
 export default StoryMeta<typeof InternalToast>({
   title: 'Components/Toast',
@@ -125,19 +125,23 @@ export const Variants: ComponentStory<typeof InternalToast> = (
               key={variant}
               onClick={() => {
                 pushToast({
+                  ...props,
                   title: `I'm a ${variant} toast`,
-                  description: faker.lorem.lines(random(1, 2)),
+                  description: faker.lorem.lines(random(1)),
                   variant,
                   progress,
-                  ...props,
+                  timeout: null,
                 });
               }}
+              leftGlyph={<VariantIcon />}
             >
-              <VariantIcon /> {startCase(variant)} toast
+              {startCase(variant)} toast
             </Button>
           );
         })}
-        <Button onClick={() => clearStack()}>Clear all</Button>
+        <Button onClick={() => clearStack()} variant="dangerOutline">
+          Clear all
+        </Button>
       </div>
       {progressToasts && progressToasts.length > 0 && (
         <>
