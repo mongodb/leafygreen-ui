@@ -1,5 +1,19 @@
 # @leafygreen-ui/form-footer
 
+## 3.0.5
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/banner@7.0.5
+  - @leafygreen-ui/button@20.0.4
+  - @leafygreen-ui/emotion@4.0.4
+  - @leafygreen-ui/icon@11.13.1
+  - @leafygreen-ui/leafygreen-provider@3.1.2
+  - @leafygreen-ui/lib@10.3.2
+  - @leafygreen-ui/palette@4.0.3
+
 ## 3.0.4
 
 ### Patch Changes
