@@ -4,17 +4,17 @@
 
 ### Patch Changes
 
-- ac1f22714: Types Table component and fixes issues in generated code docs documentation
-- Updated dependencies [dc8ceed9b]
-- Updated dependencies [09775f0ac]
-  - @leafygreen-ui/icon@11.13.0
-  - @leafygreen-ui/palette@4.0.2
+- ac1f22714: \[DEPRECATED\] `@tanstack/react-table` was moved back to dependencies in v11.0.3 to prevent a breaking change. ~~Types Table component and fixes issues in generated code docs documentation~~
+- ~~Updated dependencies [dc8ceed9b]~~
+- ~~Updated dependencies [09775f0ac]~~
+  - ~~@leafygreen-ui/icon@11.13.0~~
+  - ~~@leafygreen-ui/palette@4.0.2~~
 
 ## 11.0.1
 
 ### Patch Changes
 
-- a11f4f836: Support Fragments in Table DOM tree; move @tanstack dependencies to peerDependencies
+- a11f4f836: \[DEPRECATED\] `@tanstack/react-table` was moved back to dependencies in v11.0.3 to prevent a breaking change. ~~Support Fragments in Table DOM tree; move @tanstack dependencies to peerDependencies~~
 
 ## 11.0.0
 
