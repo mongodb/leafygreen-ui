@@ -1,5 +1,26 @@
 # @leafygreen-ui/toast
 
+## 6.1.1
+
+### Patch Changes
+
+- 8c0c2bdf9: Adds `position: relative;` to toast portal container
+- 30ab9cfaf: - Fixes a bug where the toast stack would not expand on hover
+  - Fixes a bug where toasts with no description would be improperly placed when expanded
+  - Fixes a bug where collapsing a previously expanded stack could prevent interaction with the rest of the page
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/emotion@4.0.4
+  - @leafygreen-ui/hooks@7.7.1
+  - @leafygreen-ui/icon@11.13.1
+  - @leafygreen-ui/icon-button@15.0.9
+  - @leafygreen-ui/leafygreen-provider@3.1.2
+  - @leafygreen-ui/lib@10.3.2
+  - @leafygreen-ui/palette@4.0.3
+  - @leafygreen-ui/portal@4.1.1
+  - @leafygreen-ui/tokens@2.0.2
+  - @leafygreen-ui/typography@16.2.1
+
 ## 6.1.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 10.3.2
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+
 ## 10.3.1
 
 ### Patch Changes
