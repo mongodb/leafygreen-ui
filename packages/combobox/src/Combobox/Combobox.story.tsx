@@ -179,13 +179,11 @@ const ComboboxOptions = [
   </ComboboxGroup>,
 ];
 
-const Template: ComponentStory<typeof Combobox> = args => {
-  return (
-    <div className={wrapperStyle}>
-      <Combobox {...args} />
-    </div>
-  );
-};
+const Template: ComponentStory<typeof Combobox> = args => (
+  <div className={wrapperStyle}>
+    <Combobox {...args} />
+  </div>
+);
 
 export const SingleSelect = Template.bind({});
 SingleSelect.args = {
