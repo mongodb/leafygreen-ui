@@ -1,5 +1,11 @@
 # @leafygreen-ui/polymorphic
 
+## 1.3.1
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+
 ## 1.3.0
 
 ### Minor Changes

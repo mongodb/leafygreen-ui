@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/number-input",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "leafyGreen UI Kit Number Input",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -28,21 +28,21 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/a11y": "^1.4.1",
-    "@leafygreen-ui/button": "^20.0.3",
-    "@leafygreen-ui/emotion": "^4.0.3",
-    "@leafygreen-ui/hooks": "^7.7.0",
-    "@leafygreen-ui/icon": "^11.12.7",
-    "@leafygreen-ui/lib": "^10.3.1",
-    "@leafygreen-ui/palette": "^4.0.1",
-    "@leafygreen-ui/popover": "^11.0.5",
-    "@leafygreen-ui/select": "^10.3.0",
-    "@leafygreen-ui/tokens": "^2.0.1",
-    "@leafygreen-ui/tooltip": "^9.1.5",
-    "@leafygreen-ui/typography": "^16.2.0",
+    "@leafygreen-ui/a11y": "^1.4.2",
+    "@leafygreen-ui/button": "^20.0.4",
+    "@leafygreen-ui/emotion": "^4.0.4",
+    "@leafygreen-ui/hooks": "^7.7.1",
+    "@leafygreen-ui/icon": "^11.13.1",
+    "@leafygreen-ui/lib": "^10.3.2",
+    "@leafygreen-ui/palette": "^4.0.3",
+    "@leafygreen-ui/popover": "^11.0.7",
+    "@leafygreen-ui/select": "^10.3.1",
+    "@leafygreen-ui/tokens": "^2.0.2",
+    "@leafygreen-ui/tooltip": "^9.1.7",
+    "@leafygreen-ui/typography": "^16.2.1",
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.1"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.2"
   }
 }
