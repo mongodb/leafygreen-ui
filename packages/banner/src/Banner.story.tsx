@@ -12,7 +12,7 @@ export default {
   title: 'Components/Banner',
   component: Banner,
   parameters: {
-    default: 'Basic',
+    default: 'WithLink',
     controls: {
       exclude: ['ref', 'className', 'onClose', 'image'],
     },
