@@ -102,7 +102,7 @@ export default StoryMeta({
   },
 });
 
-const ComboboxOptions = [
+const ComboboxOptions = (withGlyphs = true) => [
   <ComboboxOption
     key="apple"
     value="apple"
@@ -118,7 +118,7 @@ const ComboboxOptions = [
     key="pomegranate"
     value="pomegranate"
     displayName="Pomegranate"
-    glyph={<Icon glyph="Warning" />}
+    glyph={withGlyphs ? <Icon glyph="Warning" /> : undefined}
     description="Watch out, I stain everything I touch LOL"
     // eslint-disable-next-line no-console
     onClick={() => console.log('I was clicked')}
@@ -128,82 +128,7 @@ const ComboboxOptions = [
     key="plantain"
     value="plantain"
     displayName="Plantain"
-    glyph={<Icon glyph="Connect" />}
-    description="Don't confuse me with a banana"
-  />,
-  <ComboboxOption
-    key="paragraph"
-    value="paragraph"
-    displayName="Nullam quis risus eget urna mollis ornare vel eu leo. Vestibulum id ligula porta felis euismod semper."
-  />,
-  <ComboboxOption
-    key="hash"
-    value="hash"
-    displayName="5f4dcc3b5aa765d61d8327deb882cf995f4dcc3b5aa765d61d8327deb882cf99"
-  />,
-  <ComboboxOption
-    key="dragonfruit"
-    value="dragonfruit"
-    displayName="Dragonfruit"
-    description="Rawr"
-  />,
-  <ComboboxOption key="eggplant" value="eggplant" displayName="Eggplant" />,
-  <ComboboxOption key="fig" value="fig" displayName="Fig" />,
-  <ComboboxOption key="grape" value="grape" displayName="Grape" />,
-  <ComboboxOption key="honeydew" value="honeydew" displayName="Honeydew" />,
-  <ComboboxOption
-    key="iceberg-lettuce"
-    value="iceberg-lettuce"
-    displayName="Iceberg lettuce"
-  />,
-  <ComboboxGroup key="peppers" label="Peppers">
-    <ComboboxOption key="cayenne" value="cayenne" displayName="Cayenne" />
-    <ComboboxOption
-      key="ghost-pepper"
-      value="ghost-pepper"
-      displayName="Ghost pepper"
-    />
-    <ComboboxOption key="habanero" value="habanero" displayName="Habanero" />
-    <ComboboxOption key="jalapeno" value="jalapeno" displayName="Jalapeño" />
-    <ComboboxOption
-      key="red-pepper"
-      value="red-pepper"
-      displayName="Red pepper"
-    />
-    <ComboboxOption
-      key="scotch-bonnet"
-      value="scotch-bonnet"
-      displayName="Scotch bonnet"
-      description="Don't touch your eyes"
-    />
-  </ComboboxGroup>,
-];
-
-const ComboboxOptionsWithoutGlyphs = [
-  <ComboboxOption
-    key="apple"
-    value="apple"
-    displayName="Apple"
-    data-testid="test-id"
-    description="Do I keep the doctor away?"
-    // eslint-disable-next-line no-console
-    onClick={(value: string) => console.log('value in story', value)}
-  />,
-  <ComboboxOption key="banana" value="banana" displayName="Banana" />,
-  <ComboboxOption key="carrot" value="carrot" displayName="Carrot" disabled />,
-  <ComboboxOption
-    key="pomegranate"
-    value="pomegranate"
-    displayName="Pomegranate"
-    description="Watch out, I stain everything I touch LOL"
-    // eslint-disable-next-line no-console
-    onClick={() => console.log('I was clicked')}
-    disabled
-  />,
-  <ComboboxOption
-    key="plantain"
-    value="plantain"
-    displayName="Plantain"
+    glyph={withGlyphs ? <Icon glyph="Connect" /> : undefined}
     description="Don't confuse me with a banana"
   />,
   <ComboboxOption
@@ -266,7 +191,7 @@ SingleSelect.args = {
   description: 'Please pick one',
   placeholder: 'Select fruit',
   multiselect: false,
-  children: ComboboxOptions,
+  children: ComboboxOptions(),
 };
 SingleSelect.argTypes = {
   multiselect: { control: 'none' },
@@ -278,7 +203,7 @@ SingleSelectWithoutGlyphs.args = {
   description: 'Please pick one',
   placeholder: 'Select fruit',
   multiselect: false,
-  children: ComboboxOptionsWithoutGlyphs,
+  children: ComboboxOptions(false),
 };
 SingleSelectWithoutGlyphs.argTypes = {
   multiselect: { control: 'none' },
@@ -300,7 +225,7 @@ Multiselect.args = {
   description: 'Please pick some',
   placeholder: 'Select fruit',
   multiselect: true,
-  children: ComboboxOptions,
+  children: ComboboxOptions(),
 };
 Multiselect.argTypes = {
   multiselect: {
@@ -314,7 +239,7 @@ MultiselectWithoutGlyphs.args = {
   description: 'Please pick some',
   placeholder: 'Select fruit',
   multiselect: true,
-  children: ComboboxOptionsWithoutGlyphs,
+  children: ComboboxOptions(false),
 };
 MultiselectWithoutGlyphs.argTypes = {
   multiselect: {
@@ -401,5 +326,5 @@ Demo.args = {
   label: 'Choose a fruit',
   description: 'Please pick fruit(s)',
   placeholder: 'Select fruit',
-  children: ComboboxOptions,
+  children: ComboboxOptions(),
 };
