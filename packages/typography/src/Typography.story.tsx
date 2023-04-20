@@ -42,9 +42,10 @@ const displayFlex = css`
   gap: 8px;
 `;
 
-export default {
+export default StoryMeta({
   title: 'Components/Typography',
   parameters: {
+    default: 'AllTypography',
     controls: {
       exclude: ['className'],
     },
@@ -58,7 +59,7 @@ export default {
     },
     darkMode: storybookArgTypes.darkMode,
   },
-};
+});
 
 // eslint-disable-next-line react/prop-types
 export const AllTypography = ({
