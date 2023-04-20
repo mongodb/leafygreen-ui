@@ -352,7 +352,6 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    // hasSortedRows: true,
     useVirtualScrolling: true,
   });
 
