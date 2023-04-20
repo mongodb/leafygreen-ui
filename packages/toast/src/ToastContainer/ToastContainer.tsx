@@ -34,6 +34,7 @@ import {
   getToastHoverStyles,
   getToastTransitionStyles,
   getToastUnhoveredStyles,
+  portalStyles,
   scrollContainerExpandedStyles,
   scrollContainerStyles,
   scrollContainerTransitionOutStyles,
@@ -120,6 +121,7 @@ export const ToastContainer = ({
     toastContainerRef.current,
     {
       childList: true,
+      attributes: true,
       subtree: true,
     },
     updateToastHeights,
@@ -134,35 +136,36 @@ export const ToastContainer = ({
    * (since we need DOM manipulations to be complete)
    *
    */
-  const { isExpanded, handleTransitionExit, handleTransitionEnter } =
-    useToastTransitions({
-      getShouldExpand,
-      enterCallback: () => {
-        if (toastContainerRef.current) {
-          toastContainerRef.current.scrollTo({
-            top: totalStackHeight,
-          });
-        }
+  const {
+    isExpanded,
+    setIsExpanded,
+    handleTransitionExit,
+    handleTransitionEnter,
+  } = useToastTransitions({
+    getShouldExpand,
+    enterCallback: () => {
+      if (toastContainerRef.current) {
+        toastContainerRef.current.scrollTop = totalStackHeight;
+      }
 
-        // Recalculate heights if we should be in the expanded state
-        if (getShouldExpand()) {
-          updateToastHeights();
-        }
-      },
-      exitCallback: () => {
-        if (scrollContainerRef.current) {
-          // check whether the toast container is still hovered
-          const _isHovered = scrollContainerRef.current.matches(':hover');
+      // Recalculate heights if we should be in the expanded state
+      if (getShouldExpand()) {
+        updateToastHeights();
+      }
+    },
+    exitCallback: () => {
+      if (scrollContainerRef.current) {
+        // check whether the toast container is still hovered
+        const _isHovered = scrollContainerRef.current.matches(':hover');
+        setHoveredState(_isHovered);
+      }
 
-          setHoveredState(_isHovered);
-        }
-
-        // Recalculate heights if we should be in the expanded state
-        if (getShouldExpand()) {
-          updateToastHeights();
-        }
-      },
-    });
+      // Recalculate heights if we should be in the expanded state
+      if (getShouldExpand()) {
+        updateToastHeights();
+      }
+    },
+  });
 
   /**
    * Handler triggered when a toast starts to transition in
@@ -183,10 +186,17 @@ export const ToastContainer = ({
   };
 
   /**
-   * When a user clicks away from the expanded stack, collapse the stack
+   * When a user clicks away from the expanded stack,
+   * collapse the stack
+   * and set the expanded state
    */
+  const handleBackdropClick = () => {
+    collapseToasts();
+    setIsExpanded(getShouldExpand());
+  };
+
   useBackdropClick(
-    collapseToasts,
+    handleBackdropClick,
     scrollContainerRef,
     isExpanded && stack.size > 0,
   );
@@ -237,7 +247,7 @@ export const ToastContainer = ({
   };
 
   return (
-    <Portal className={cx(toastPortalClassName, portalClassName)}>
+    <Portal className={cx(portalStyles, toastPortalClassName, portalClassName)}>
       {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <div
         ref={toastContainerRef}

@@ -48,12 +48,24 @@ export function useToastHeights({
     return Array.from(stack)
       .reverse() // reversing since the stack is oldest-first
       .reduce((record, [id]) => {
-        const ref = getToastRef(id);
+        const toastRef = getToastRef(id);
         let height = 0;
 
-        // Height of the content + padding
-        if (ref?.current && ref.current.firstElementChild) {
-          height = ref.current.firstElementChild?.clientHeight + spacing[2] * 2;
+        if (toastRef?.current && toastRef.current.firstElementChild) {
+          const contentHeight = toastRef.current.firstElementChild.clientHeight;
+          const paddingHeight = spacing[2] * 2;
+
+          const renderedHeight = toastRef.current.clientHeight;
+          const borderHeight = 2;
+
+          // Since we restrict toast heights when they're collapsed,
+          // but we also set a min-heigh for short toasts,
+          // the true expanded height of a toast is the larger of
+          // rendered height, or content + padding
+          height = Math.max(
+            contentHeight + paddingHeight,
+            renderedHeight + borderHeight,
+          );
         }
 
         record[id] = height;
@@ -71,9 +83,8 @@ export function useToastHeights({
   /**
    * Calculates the combined heights of all toasts up to `stopIndex`
    *
-   * @param toastHeights The array of toast heights
-   * @param isExpanded Whether the stack is expanded (determines whether to count all toasts, or just the top 3)
    * @param stopIndex Stop counting the height at this toast index
+   * @param isExpanded Whether the stack is expanded (determines whether to count all toasts, or just the top 3)
    */
   const calcHeightForIndex = useCallback(
     (stopIndex: number, isExpanded?: boolean): number => {

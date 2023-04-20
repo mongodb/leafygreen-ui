@@ -21,13 +21,17 @@ const debugData = (extraStyle?: string) => css`
     color: white;
     background-color: black;
     position: absolute;
-    top: 0%;
+    bottom: 0%;
     left: 0%;
     z-index: 10;
     font-family: monospace;
     pointer-events: none;
     ${extraStyle};
   }
+`;
+
+export const portalStyles = css`
+  position: relative;
 `;
 
 export const toastContainerStyles = css`

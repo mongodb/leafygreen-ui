@@ -5,7 +5,6 @@ import { random, range, sample, startCase } from 'lodash';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { DarkModeProps, StoryMeta } from '@leafygreen-ui/lib';
 import { InlineCode, Label } from '@leafygreen-ui/typography';
 
@@ -19,15 +18,19 @@ export default StoryMeta<typeof InternalToast>({
   component: InternalToast,
   decorators: [
     (Story, meta) => (
-      <LeafyGreenProvider darkMode={!!meta.args.darkMode}>
-        <ToastProvider initialValue={meta.args.initialValue}>
-          <Story />
-        </ToastProvider>
-      </LeafyGreenProvider>
+      <ToastProvider
+        initialValue={meta.args.initialValue}
+        portalClassName={css`
+          // Ensures a new stacking context is established
+          z-index: 1;
+        `}
+      >
+        <Story {...meta} />
+      </ToastProvider>
     ),
   ],
   parameters: {
-    default: 'Basic',
+    default: 'Variants',
     controls: {
       exclude: [
         'as',
@@ -49,11 +52,11 @@ export default StoryMeta<typeof InternalToast>({
     },
   },
   args: {
-    /// @ts-expect-error
     darkMode: false,
     initialValue: undefined,
   },
 });
+
 export const Basic: ComponentStory<typeof InternalToast> = (
   props: Partial<InternalToastProps> & DarkModeProps,
 ) => {
@@ -122,19 +125,23 @@ export const Variants: ComponentStory<typeof InternalToast> = (
               key={variant}
               onClick={() => {
                 pushToast({
+                  ...props,
                   title: `I'm a ${variant} toast`,
-                  description: faker.lorem.lines(random(1, 2)),
+                  description: faker.lorem.lines(random(1)),
                   variant,
                   progress,
-                  ...props,
+                  timeout: null,
                 });
               }}
+              leftGlyph={<VariantIcon />}
             >
-              <VariantIcon /> {startCase(variant)} toast
+              {startCase(variant)} toast
             </Button>
           );
         })}
-        <Button onClick={() => clearStack()}>Clear all</Button>
+        <Button onClick={() => clearStack()} variant="dangerOutline">
+          Clear all
+        </Button>
       </div>
       {progressToasts && progressToasts.length > 0 && (
         <>
