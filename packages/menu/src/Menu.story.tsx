@@ -5,19 +5,68 @@ import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { StoryMeta } from '@leafygreen-ui/lib';
 
 import { Size } from './types';
-import { Menu, MenuItem, MenuProps, MenuSeparator, SubMenu } from '.';
+import {
+  Menu,
+  MenuItem,
+  MenuItemProps,
+  MenuProps,
+  MenuSeparator,
+  SubMenu,
+  SubMenuProps,
+} from '.';
 
-export default {
+const MenuChildren = (
+  <>
+    <MenuItem
+      description="I am also an active description"
+      active
+      size={size}
+      glyph={<CloudIcon />}
+    >
+      Active Menu Item
+    </MenuItem>
+    <MenuItem
+      description="I am also a description"
+      size={size}
+      glyph={<CloudIcon />}
+    >
+      Menu Item With Description
+    </MenuItem>
+    <MenuItem disabled description="I am a description" size={size}>
+      Disabled Menu Item
+    </MenuItem>
+    <MenuItem size={size} href="http://mongodb.design">
+      I am a link!
+    </MenuItem>
+    <MenuItem size={size}>Lorem</MenuItem>
+    <MenuItem size={size}>Ipsum</MenuItem>
+    <MenuItem size={size}>Adipiscing</MenuItem>
+    <MenuItem size={size}>Cursus</MenuItem>
+    <MenuItem size={size}>Ullamcorper</MenuItem>
+    <MenuItem size={size}>Vulputate</MenuItem>
+    <MenuItem size={size}>Inceptos</MenuItem>
+    <MenuItem size={size}>Risus</MenuItem>
+  </>
+);
+
+export default StoryMeta<typeof Menu, MenuItemProps | SubMenuProps>({
   title: 'Components/Menu',
   component: Menu,
+  parameters: {
+    default: 'UncontrolledTemplate',
+    controls: {
+      exclude: ['trigger', 'setOpen', 'className'],
+    },
+  },
   args: {
     open: true,
     align: 'bottom',
     usePortal: true,
     darkMode: false,
+    children: MenuChildren,
   },
   argTypes: {
     open: {
@@ -26,22 +75,6 @@ export default {
     usePortal: {
       control: 'boolean',
     },
-    trigger: {
-      control: false,
-    },
-    children: {
-      control: false,
-    },
-    refEl: {
-      control: false,
-    },
-    setOpen: {
-      control: false,
-    },
-    className: {
-      type: 'string',
-    },
-    darkMode: storybookArgTypes.darkMode,
     size: {
       options: Object.values(Size),
       control: 'select',
@@ -49,14 +82,14 @@ export default {
         'Size of the `MenuItem` component, can be `default` or `large`',
     },
   },
-};
+});
 
 export const UncontrolledTemplate = ({
   size,
   open,
   darkMode,
   ...args
-}: MenuProps & { size: Size }) => {
+}: MenuProps) => {
   return (
     <LeafyGreenProvider>
       <Menu
@@ -67,37 +100,7 @@ export const UncontrolledTemplate = ({
         }
         darkMode={darkMode}
         {...args}
-      >
-        <MenuItem
-          description="I am also an active description"
-          active
-          size={size}
-          glyph={<CloudIcon />}
-        >
-          Active Menu Item
-        </MenuItem>
-        <MenuItem
-          description="I am also a description"
-          size={size}
-          glyph={<CloudIcon />}
-        >
-          Menu Item With Description
-        </MenuItem>
-        <MenuItem disabled description="I am a description" size={size}>
-          Disabled Menu Item
-        </MenuItem>
-        <MenuItem size={size} href="http://mongodb.design">
-          I am a link!
-        </MenuItem>
-        <MenuItem size={size}>Lorem</MenuItem>
-        <MenuItem size={size}>Ipsum</MenuItem>
-        <MenuItem size={size}>Adipiscing</MenuItem>
-        <MenuItem size={size}>Cursus</MenuItem>
-        <MenuItem size={size}>Ullamcorper</MenuItem>
-        <MenuItem size={size}>Vulputate</MenuItem>
-        <MenuItem size={size}>Inceptos</MenuItem>
-        <MenuItem size={size}>Risus</MenuItem>
-      </Menu>
+      />
     </LeafyGreenProvider>
   );
 };
