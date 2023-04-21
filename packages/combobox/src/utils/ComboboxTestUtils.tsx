@@ -104,7 +104,8 @@ export const getComboboxJSX = (props?: renderComboboxProps) => {
       const displayName =
         typeof option === 'string' ? undefined : option.displayName;
       const isDisabled = typeof option === 'string' ? false : option.isDisabled;
-      const description = typeof option === 'string' ? '' : option.description;
+      const description =
+        typeof option === 'string' ? undefined : option.description;
       const onClick = typeof option === 'string' ? undefined : option.onClick;
 
       return (

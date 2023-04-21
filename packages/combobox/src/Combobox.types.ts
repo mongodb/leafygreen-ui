@@ -277,6 +277,8 @@ export type ComboboxProps<M extends boolean> = Either<
  * Combobox Option Props
  */
 
+type OptionClickEvent = React.SyntheticEvent<HTMLLIElement, Event>;
+
 interface BaseComboboxOptionProps
   extends Omit<ComponentPropsWithoutRef<'li'>, 'onClick'> {
   /**
@@ -313,9 +315,9 @@ interface BaseComboboxOptionProps
   description?: string;
 
   /**
-   * Callback fired when an option is clicked. Returns the option value.
+   * Callback fired when an option is clicked.
    */
-  onClick?: (value: string) => void;
+  onClick?: React.EventHandler<OptionClickEvent>;
 }
 
 export type ComboboxOptionProps = Either<
@@ -329,7 +331,7 @@ export interface OptionObject {
   isDisabled: boolean;
   hasGlyph?: boolean;
   description?: string;
-  onClick?: (value: string) => void;
+  onClick?: React.EventHandler<OptionClickEvent>;
 }
 
 export interface InternalComboboxOptionProps
@@ -344,7 +346,7 @@ export interface InternalComboboxOptionProps
   className?: string;
   index: number;
   description?: string;
-  onClick?: (value: string) => void;
+  onClick?: React.EventHandler<OptionClickEvent>;
 }
 
 /**

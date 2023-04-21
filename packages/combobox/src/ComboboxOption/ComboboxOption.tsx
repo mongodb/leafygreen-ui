@@ -62,7 +62,7 @@ export const InternalComboboxOption = React.forwardRef<
     const optionTextId = useIdAllocator({ prefix: 'combobox-option-text' });
 
     const handleOptionClick = useCallback(
-      (e: React.SyntheticEvent) => {
+      (e: React.SyntheticEvent<HTMLLIElement, Event>) => {
         // stopPropagation will not stop the keyDown event (only click)
         // since the option is never `focused`, only `aria-selected`
         // the keyDown event does not actually fire on the option element
@@ -70,10 +70,10 @@ export const InternalComboboxOption = React.forwardRef<
 
         if (!disabled) {
           setSelected();
-          onClick?.(value);
+          onClick?.(e);
         }
       },
-      [disabled, onClick, setSelected, value],
+      [disabled, onClick, setSelected],
     );
 
     const icon = useMemo((): JSX.Element => {

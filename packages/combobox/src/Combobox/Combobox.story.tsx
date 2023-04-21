@@ -102,7 +102,7 @@ export default StoryMeta({
   },
 });
 
-const ComboboxOptions = (withGlyphs = true) => [
+const getComboboxOptions = (withGlyphs = true) => [
   <ComboboxOption
     key="apple"
     value="apple"
@@ -110,7 +110,7 @@ const ComboboxOptions = (withGlyphs = true) => [
     data-testid="test-id"
     description="Do I keep the doctor away?"
     // eslint-disable-next-line no-console
-    onClick={(value: string) => console.log('value in story', value)}
+    onClick={e => console.log(e.target)}
   />,
   <ComboboxOption key="banana" value="banana" displayName="Banana" />,
   <ComboboxOption key="carrot" value="carrot" displayName="Carrot" disabled />,
@@ -120,8 +120,6 @@ const ComboboxOptions = (withGlyphs = true) => [
     displayName="Pomegranate"
     glyph={withGlyphs ? <Icon glyph="Warning" /> : undefined}
     description="Watch out, I stain everything I touch LOL"
-    // eslint-disable-next-line no-console
-    onClick={() => console.log('I was clicked')}
     disabled
   />,
   <ComboboxOption
@@ -130,6 +128,8 @@ const ComboboxOptions = (withGlyphs = true) => [
     displayName="Plantain"
     glyph={withGlyphs ? <Icon glyph="Connect" /> : undefined}
     description="Don't confuse me with a banana"
+    // eslint-disable-next-line no-console
+    onClick={() => console.log('I was clicked')}
   />,
   <ComboboxOption
     key="paragraph"
@@ -191,7 +191,7 @@ SingleSelect.args = {
   description: 'Please pick one',
   placeholder: 'Select fruit',
   multiselect: false,
-  children: ComboboxOptions(),
+  children: getComboboxOptions(),
 };
 SingleSelect.argTypes = {
   multiselect: { control: 'none' },
@@ -203,7 +203,7 @@ SingleSelectWithoutGlyphs.args = {
   description: 'Please pick one',
   placeholder: 'Select fruit',
   multiselect: false,
-  children: ComboboxOptions(false),
+  children: getComboboxOptions(false),
 };
 SingleSelectWithoutGlyphs.argTypes = {
   multiselect: { control: 'none' },
@@ -225,7 +225,7 @@ Multiselect.args = {
   description: 'Please pick some',
   placeholder: 'Select fruit',
   multiselect: true,
-  children: ComboboxOptions(),
+  children: getComboboxOptions(),
 };
 Multiselect.argTypes = {
   multiselect: {
@@ -239,7 +239,7 @@ MultiselectWithoutGlyphs.args = {
   description: 'Please pick some',
   placeholder: 'Select fruit',
   multiselect: true,
-  children: ComboboxOptions(false),
+  children: getComboboxOptions(false),
 };
 MultiselectWithoutGlyphs.argTypes = {
   multiselect: {
@@ -326,5 +326,5 @@ Demo.args = {
   label: 'Choose a fruit',
   description: 'Please pick fruit(s)',
   placeholder: 'Select fruit',
-  children: ComboboxOptions(),
+  children: getComboboxOptions(),
 };
