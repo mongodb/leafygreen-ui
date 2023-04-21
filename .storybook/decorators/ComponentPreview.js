@@ -20,7 +20,7 @@ const darkModeStyle = css`
 export default (Story, options) => {
   const darkMode = options.args.darkMode;
   return (
-    <LeafyGreenProvider>
+    <LeafyGreenProvider darkMode={darkMode}>
       <div className={cx(rootStyle, { [darkModeStyle]: darkMode })}>
         <div>
           <Story darkMode={darkMode} {...options} />

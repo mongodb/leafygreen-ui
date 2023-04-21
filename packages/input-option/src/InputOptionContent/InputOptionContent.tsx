@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { Description } from '@leafygreen-ui/typography';
 
 import {
   descriptionClassName,
@@ -10,7 +10,6 @@ import {
 import {
   contentWrapper,
   descriptionBaseStyles,
-  descriptionThemeStyles,
   glyphContainer,
   glyphRightStyles,
   textWrapper,
@@ -30,23 +29,17 @@ export const InputOptionContent = ({
   leftGlyph,
   rightGlyph,
 }: InputOptionContentProps) => {
-  const { theme } = useDarkMode();
-
   return (
     <div className={contentWrapper}>
       {leftGlyph && <div className={glyphContainer}>{leftGlyph}</div>}
       <div className={textWrapper}>
         <div className={cx(titleClassName, titleBaseStyles)}>{children}</div>
         {description && (
-          <div
-            className={cx(
-              descriptionClassName,
-              descriptionBaseStyles,
-              descriptionThemeStyles[theme],
-            )}
+          <Description
+            className={cx(descriptionClassName, descriptionBaseStyles)}
           >
             {description}
-          </div>
+          </Description>
         )}
       </div>
       {rightGlyph && (

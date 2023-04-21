@@ -12,10 +12,10 @@ export interface InputOptionContentProps {
   /**
    * Glyph to be displayed to the left of content
    */
-  leftGlyph: React.ReactNode;
+  leftGlyph?: React.ReactNode;
 
   /**
    * Glyph to be displayed to the right of content
    */
-  rightGlyph: React.ReactNode;
+  rightGlyph?: React.ReactNode;
 }

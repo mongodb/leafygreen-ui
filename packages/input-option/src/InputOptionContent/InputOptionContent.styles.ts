@@ -1,6 +1,4 @@
 import { css } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
 export const titleBaseStyles = css`
@@ -12,15 +10,6 @@ export const descriptionBaseStyles = css`
   overflow: hidden;
   text-overflow: ellipsis;
 `;
-
-export const descriptionThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.gray.dark1};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.light1};
-  `,
-};
 
 export const contentWrapper = css`
   display: grid;
