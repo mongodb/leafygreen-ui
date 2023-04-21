@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
 
 import Badge from '@leafygreen-ui/badge';
 
 import { defaultData } from '../TableV10/fixtures';
-import { makeData } from '../utils/makeData.testutils';
+import { makeData, randomIntFromInterval } from '../utils/makeData.testutils';
 import {
   V10Cell as Cell,
   V10HeaderRow as HeaderRow,
@@ -43,6 +43,42 @@ export const Basic = () => {
         )}
       </Table>
     </V11Adapter>
+  );
+};
+
+export const DynamicData = () => {
+  const [data, setData] = useState(defaultData.slice(0, 8));
+
+  const handleClick = () => {
+    setData(defaultData.slice(2, randomIntFromInterval(0, defaultData.length)));
+  };
+
+  return (
+    <>
+      <button onClick={handleClick}>Randomize data length</button>
+      <V11Adapter>
+        <Table
+          data={data}
+          columns={
+            <HeaderRow>
+              <TableHeader key="name" label="Name" dataType="string" />
+              <TableHeader key="age" label="Age" dataType="number" />
+              <TableHeader key="color" label="Color" dataType="string" />
+              <TableHeader key="location" label="Location" />
+            </HeaderRow>
+          }
+        >
+          {({ datum }: any) => (
+            <Row>
+              <Cell>{datum.name}</Cell>
+              <Cell>{datum.age}</Cell>
+              <Cell>{datum.color}</Cell>
+              <Cell>{datum.location}</Cell>
+            </Row>
+          )}
+        </Table>
+      </V11Adapter>
+    </>
   );
 };
 

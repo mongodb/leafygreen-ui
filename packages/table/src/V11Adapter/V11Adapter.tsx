@@ -1,4 +1,10 @@
-import React, { ReactElement, useMemo, useRef, useState } from 'react';
+import React, {
+  ReactElement,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import flattenChildren from 'react-keyed-flatten-children';
 import { VirtualItem } from 'react-virtual';
 import {
@@ -68,9 +74,13 @@ const V11Adapter = <T extends LGRowData>({
     [data, columns, headerLabels],
   );
 
-  const [processedData, _] = useState<Array<LGTableDataType<T>>>(() =>
-    processData(data, processedColumns, childrenFn),
+  const [processedData, setProcessedData] = useState<Array<LGTableDataType<T>>>(
+    () => processData(data, processedColumns, childrenFn),
   );
+
+  useEffect(() => {
+    setProcessedData(processData(data, processedColumns, childrenFn));
+  }, [data, processedColumns, childrenFn]);
 
   const table = useLeafyGreenTable<T>({
     containerRef,
