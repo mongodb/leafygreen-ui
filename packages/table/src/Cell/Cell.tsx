@@ -8,6 +8,7 @@ import {
   baseTableSidePadding,
   cellContentContainerStyles,
   cellContentTransitionStyles,
+  getCellPadding,
 } from './Cell.styles';
 import { CellProps } from '.';
 
@@ -16,7 +17,16 @@ const Cell = ({ className, align, children, ...rest }: CellProps) => (
     className={cx(
       baseCellStyles,
       css`
-        padding-left: ${baseTableSidePadding}px;
+        &:first-child {
+          ${getCellPadding({
+            depth: 0,
+            isExpandable: false,
+            isSelectable: false,
+          })}
+        }
+        &:last-child {
+          padding-right: ${baseTableSidePadding}px;
+        }
       `,
       className,
     )}
