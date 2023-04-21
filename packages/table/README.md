@@ -95,6 +95,8 @@ Setting this prop will inject checkbox cells into all rows. Refer to our [Storyb
 
 `react-virtual`'s `useVirtual` hook will be called if this option is set. When this option is set, the object returned by `useLeafygreenTable` will include `virtualRows` and `totalSize`. Refer to our [Storybook deployment](https://mongodb.github.io/leafygreen-ui) to find examples.
 
+> Note that the number of virtual rows rendered depends on the height passed to the `Table` component. For a reasonably performant use of virtual scrolling, ensure that there is a height set on the component to reduce the number of virtual rows rendered.
+
 ---
 
 #### `data` / `renderExpandedContent`
@@ -189,6 +191,8 @@ All HTML `tr` element props
 [Demo](https://mongodb.github.io/leafygreen-ui/?path=/story/components-table-with-virtualized-scrolling--basic)
 
 https://github.com/mongodb/leafygreen-ui/blob/f61df48a196c731764864d594d7d043634a9bcdc/packages/table/src/Table/TableWithVS.stories.tsx#L101-L139
+
+> Note that the number of virtual rows rendered depends on the height passed to the `Table` component. For a reasonably performant use of virtual scrolling, ensure that there is a height set on the component to reduce the number of virtual rows rendered.
 
 ### Sortable Rows
 

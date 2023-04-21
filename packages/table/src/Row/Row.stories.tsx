@@ -5,8 +5,6 @@ import {
   ColumnDef,
   ExpandedState,
   flexRender,
-  getCoreRowModel,
-  getExpandedRowModel,
   HeaderGroup,
 } from '@tanstack/react-table';
 
@@ -132,9 +130,6 @@ export const DisabledNestedRows: ComponentStory<typeof Row> = ({
       expanded,
     },
     onExpandedChange: setExpanded,
-    getCoreRowModel: getCoreRowModel(),
-    getExpandedRowModel: getExpandedRowModel(),
-    getSubRows: row => row.subRows,
   });
 
   const { rows } = table.getRowModel();

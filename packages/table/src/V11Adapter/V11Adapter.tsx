@@ -7,11 +7,7 @@ import React, {
 } from 'react';
 import flattenChildren from 'react-keyed-flatten-children';
 import { VirtualItem } from 'react-virtual';
-import {
-  flexRender,
-  getCoreRowModel,
-  getSortedRowModel,
-} from '@tanstack/react-table';
+import { flexRender } from '@tanstack/react-table';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
@@ -86,10 +82,6 @@ const V11Adapter = <T extends LGRowData>({
     containerRef,
     data: processedData,
     columns: processedColumns,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    // @ts-expect-error `subRows` is a field added by `processData`
-    getSubRows: row => row.subRows,
     useVirtualScrolling,
     hasSelectableRows,
   });

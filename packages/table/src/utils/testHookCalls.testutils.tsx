@@ -1,12 +1,5 @@
 import React, { useRef, useState } from 'react';
-import {
-  ColumnDef,
-  ExpandedState,
-  getCoreRowModel,
-  getExpandedRowModel,
-  getSortedRowModel,
-  SortingState,
-} from '@tanstack/react-table';
+import { ColumnDef, ExpandedState, SortingState } from '@tanstack/react-table';
 
 import useLeafyGreenTable, {
   LeafyGreenTable,
@@ -125,11 +118,7 @@ export const useTestHookCall = ({
       rowSelection,
     },
     onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
-    getCoreRowModel: getCoreRowModel(),
-    getSubRows: row => row.subRows,
     onExpandedChange: setExpanded,
-    getExpandedRowModel: getExpandedRowModel(),
     onRowSelectionChange: setRowSelection,
     ...hookProps,
   });

@@ -1,28 +1,24 @@
 import React from 'react';
 import { VirtualItem } from 'react-virtual';
 import { ComponentStory } from '@storybook/react';
-import {
-  ColumnDef,
-  ExpandedState,
-  flexRender,
-  getCoreRowModel,
-  getExpandedRowModel,
-  getSortedRowModel,
-  HeaderGroup,
-  SortingState,
-} from '@tanstack/react-table';
 
+import { css } from '@leafygreen-ui/emotion';
 import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
 
 import { makeData, Person } from './utils/makeData.testutils';
 import {
   Cell,
+  type ColumnDef,
   ExpandedContent,
+  type ExpandedState,
+  flexRender,
   HeaderCell,
+  type HeaderGroup,
   HeaderRow,
   type LeafyGreenTableCell,
   type LeafyGreenTableRow,
   Row,
+  type SortingState,
   Table,
   TableBody,
   TableHead,
@@ -47,9 +43,13 @@ export default StoryMeta({
   },
 });
 
+const virtualScrollingContainerHeight = css`
+  height: 500px;
+`;
+
 export const Basic: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const data = React.useState(() => makeData(false, 5000))[0];
+  const data = React.useState(() => makeData(false, 10_000))[0];
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
     () => [
@@ -95,7 +95,6 @@ export const Basic: ComponentStory<typeof Table> = args => {
     containerRef: tableContainerRef,
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
     useVirtualScrolling: true,
   });
 
@@ -108,7 +107,12 @@ export const Basic: ComponentStory<typeof Table> = args => {
         <p>{table?.virtualRows?.length} virtual rows</p>
       </div>
 
-      <Table {...args} table={table} ref={tableContainerRef}>
+      <Table
+        {...args}
+        table={table}
+        ref={tableContainerRef}
+        className={virtualScrollingContainerHeight}
+      >
         <TableHead>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
             <HeaderRow key={headerGroup.id}>
@@ -199,8 +203,6 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
     containerRef: tableContainerRef,
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    getSubRows: row => row.subRows,
     useVirtualScrolling: true,
   });
 
@@ -212,7 +214,12 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
         <p>{table.getRowModel().rows.length} total rows</p>
       </div>
 
-      <Table {...args} table={table} ref={tableContainerRef}>
+      <Table
+        {...args}
+        table={table}
+        ref={tableContainerRef}
+        className={virtualScrollingContainerHeight}
+      >
         <TableHead>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
             <HeaderRow key={headerGroup.id}>
@@ -350,8 +357,6 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
       sorting,
     },
     onSortingChange: setSorting,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
     useVirtualScrolling: true,
   });
 
@@ -363,7 +368,12 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
         <p>{table.getRowModel().rows.length} total rows</p>
       </div>
 
-      <Table {...args} table={table} ref={tableContainerRef}>
+      <Table
+        {...args}
+        table={table}
+        ref={tableContainerRef}
+        className={virtualScrollingContainerHeight}
+      >
         <TableHead>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
             <HeaderRow key={headerGroup.id}>
@@ -461,7 +471,6 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
     },
     onRowSelectionChange: setRowSelection,
     hasSelectableRows: true,
-    getCoreRowModel: getCoreRowModel(),
     useVirtualScrolling: true,
   });
 
@@ -471,28 +480,14 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
     <>
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
-        {/* <button
-          onClick={
-            // eslint-disable-next-line no-console
-            () => console.info('rowSelection', rowSelection)
-          }
-        >
-          Log rowSelection state
-        </button> */}
-        {/* <button
-          onClick={() =>
-            // eslint-disable-next-line no-console
-            console.info(
-              'table.getSelectedFlatRows()',
-              table.getSelectedRowModel().flatRows,
-            )
-          }
-        >
-          Log table.getSelectedFlatRows()
-        </button> */}
       </div>
 
-      <Table {...args} table={table} ref={tableContainerRef}>
+      <Table
+        {...args}
+        table={table}
+        ref={tableContainerRef}
+        className={virtualScrollingContainerHeight}
+      >
         <TableHead>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
             <HeaderRow key={headerGroup.id}>
@@ -589,9 +584,6 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
       expanded,
     },
     onExpandedChange: setExpanded,
-    getCoreRowModel: getCoreRowModel(),
-    getExpandedRowModel: getExpandedRowModel(),
-    getSubRows: row => row.subRows,
     useVirtualScrolling: true,
   });
 
@@ -603,7 +595,12 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
         <p>{table.getRowModel().rows.length} total rows</p>
       </div>
 
-      <Table {...args} table={table} ref={tableContainerRef}>
+      <Table
+        {...args}
+        table={table}
+        ref={tableContainerRef}
+        className={virtualScrollingContainerHeight}
+      >
         <TableHead>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
             <HeaderRow key={headerGroup.id}>
