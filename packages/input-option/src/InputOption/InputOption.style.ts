@@ -95,6 +95,7 @@ export const inputOptionActiveStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     outline: none;
     background-color: ${palette.blue.light3};
+    color: ${palette.blue.dark2};
 
     &:before {
       transform: scaleY(1) translateY(-50%);
