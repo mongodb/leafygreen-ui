@@ -13,7 +13,7 @@ import { makeToast, makeToastStack } from './ToastContext/utils/makeToast';
 import { InternalToast, InternalToastProps } from './InternalToast';
 import { ToastProvider, useToast, Variant } from '.';
 
-export default StoryMeta<typeof InternalToast>({
+export default StoryMeta({
   title: 'Components/Toast',
   component: InternalToast,
   decorators: [
