@@ -17,10 +17,10 @@ type ModifiedStoryMeta<T extends React.ElementType> = Omit<
   'component' | 'argTypes' | 'args'
 >;
 
-export type StoryMeta<
+export interface StoryMeta<
   T extends React.ElementType,
   XP extends Record<string, any> = {},
-> = ModifiedStoryMeta<T> & {
+> extends ModifiedStoryMeta<T> {
   parameters: Meta<T>['parameters'] & {
     /**
      * The default story to be displayed on `mongodb.design`
@@ -40,7 +40,7 @@ export type StoryMeta<
   >;
   args?: Partial<ComponentProps<T> | LeafyGreenProviderProps | XP>;
   component?: T;
-};
+}
 
 const baseMeta: Partial<StoryMeta<any>> = {
   argTypes: {
