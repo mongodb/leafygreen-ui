@@ -26,3 +26,4 @@ export {
   default as useLeafyGreenTable,
 } from './useLeafyGreenTable';
 export { default as V11Adapter, type V11AdapterProps } from './V11Adapter';
+export * from '@tanstack/react-table';

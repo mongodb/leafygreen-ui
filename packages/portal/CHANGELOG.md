@@ -1,5 +1,14 @@
 # @leafygreen-ui/portal
 
+## 4.1.1
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/hooks@7.7.1
+  - @leafygreen-ui/lib@10.3.2
+
 ## 4.1.0
 
 ### Minor Changes

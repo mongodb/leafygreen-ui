@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/tabs",
-  "version": "11.0.6",
+  "version": "11.0.7",
   "description": "leafyGreen UI Kit Tabs",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -20,17 +20,17 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/a11y": "^1.4.0",
-    "@leafygreen-ui/box": "^3.1.1",
-    "@leafygreen-ui/emotion": "^4.0.3",
-    "@leafygreen-ui/hooks": "^7.7.0",
-    "@leafygreen-ui/lib": "^10.3.1",
-    "@leafygreen-ui/palette": "^4.0.1",
-    "@leafygreen-ui/portal": "^4.1.0",
-    "@leafygreen-ui/tokens": "^2.0.1"
+    "@leafygreen-ui/a11y": "^1.4.2",
+    "@leafygreen-ui/box": "^3.1.2",
+    "@leafygreen-ui/emotion": "^4.0.4",
+    "@leafygreen-ui/hooks": "^7.7.1",
+    "@leafygreen-ui/lib": "^10.3.2",
+    "@leafygreen-ui/palette": "^4.0.3",
+    "@leafygreen-ui/portal": "^4.1.1",
+    "@leafygreen-ui/tokens": "^2.0.2"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.1"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.2"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/tabs",
   "repository": {
@@ -41,10 +41,10 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@leafygreen-ui/card": "^9.0.6",
-    "@leafygreen-ui/button": "^20.0.3",
-    "@leafygreen-ui/icon-button": "^15.0.8",
-    "@leafygreen-ui/icon": "^11.12.7",
-    "@leafygreen-ui/typography": "^16.2.0"
+    "@leafygreen-ui/card": "^9.0.7",
+    "@leafygreen-ui/button": "^20.0.4",
+    "@leafygreen-ui/icon-button": "^15.0.9",
+    "@leafygreen-ui/icon": "^11.13.1",
+    "@leafygreen-ui/typography": "^16.2.1"
   }
 }
