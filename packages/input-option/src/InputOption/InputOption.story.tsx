@@ -36,7 +36,8 @@ export default {
     showWedge: {
       control: 'boolean',
     },
-    ...storybookArgTypes,
+    darkMode: storybookArgTypes.darkMode,
+    as: storybookArgTypes.as,
   },
 };
 

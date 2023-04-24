@@ -26,10 +26,7 @@ export default {
     bold: { control: 'boolean' },
     indeterminate: { control: 'boolean' },
     animate: { control: 'boolean', default: true },
-    baseFontSize: {
-      options: [14, 16],
-      control: { type: 'radio' },
-    },
+    baseFontSize: storybookArgTypes.baseFontSize,
   },
 } as ComponentMeta<typeof Checkbox>;
 
