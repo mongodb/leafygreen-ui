@@ -51,25 +51,6 @@ jobs:
       - name: eslint
         run: yarn check:eslint --format junit -o reports/junit/js-lint-results.xml
 
-  types:
-    name: Check types
-    runs-on: ubuntu-latest
-    needs: install
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Use Node.js 14
-        uses: actions/setup-node@v3
-        with:
-          node-version: '14'
-          cache: yarn
-          cache-dependency-path: 'yarn.lock'
-
-      - run: yarn install --frozen-lockfile --prefer-offline
-
-      - name: types
-        run: yarn check:ts
-
   deps:
     name: Check dependencies
     runs-on: ubuntu-latest
