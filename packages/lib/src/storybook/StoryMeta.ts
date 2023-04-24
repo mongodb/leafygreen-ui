@@ -37,7 +37,7 @@ export interface StoryMetaType<
   component?: T;
 }
 
-const baseMeta: Partial<StoryMetaType<any>> = {
+export const baseMeta: Partial<StoryMetaType<any>> = {
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
     baseFontSize: storybookArgTypes.updatedBaseFontSize,
