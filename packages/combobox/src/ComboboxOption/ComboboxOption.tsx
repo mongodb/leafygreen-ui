@@ -62,10 +62,10 @@ export const InternalComboboxOption = React.forwardRef<
 
         if (!disabled) {
           setSelected();
-          onClick?.(e);
+          onClick?.(e, value);
         }
       },
-      [disabled, onClick, setSelected],
+      [disabled, onClick, setSelected, value],
     );
 
     const { leftGlyph, rightGlyph } = useMemo(

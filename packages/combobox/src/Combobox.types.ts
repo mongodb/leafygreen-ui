@@ -277,22 +277,23 @@ export type ComboboxProps<M extends boolean> = Either<
  * Combobox Option Props
  */
 
-type OptionClickEvent = React.SyntheticEvent<HTMLLIElement, Event>;
+type LIProps = Omit<ComponentPropsWithoutRef<'li'>, 'onClick'>;
 
-interface BaseComboboxOptionProps
-  extends Omit<ComponentPropsWithoutRef<'li'>, 'onClick'> {
+interface BaseValueProps {
   /**
    * The internal value of the option. Used as the identifier in Combobox `initialValue`, value and filteredOptions.
    * When undefined, this is set to `_.kebabCase(displayName)`
    */
-  value?: string;
+  value: string;
 
   /**
    * The display value of the option. Used as the rendered string within the menu and chips.
    * When undefined, this is set to `value`
    */
-  displayName?: string;
+  displayName: string;
+}
 
+interface BaseOptionalProps {
   /**
    * The icon to display to the left of the option in the menu.
    */
@@ -315,38 +316,37 @@ interface BaseComboboxOptionProps
   description?: string;
 
   /**
-   * Callback fired when an option is clicked.
+   * Callback fired when an option is clicked. Returns the event and the option value.
    */
-  onClick?: React.EventHandler<OptionClickEvent>;
+  onClick?: (
+    event: React.SyntheticEvent<HTMLLIElement, Event>,
+    value: string,
+  ) => void;
 }
+
+type BaseComboboxOptionProps = LIProps &
+  BaseOptionalProps &
+  Partial<BaseValueProps>;
 
 export type ComboboxOptionProps = Either<
   BaseComboboxOptionProps,
   'value' | 'displayName'
 >;
 
-export interface OptionObject {
-  value: string;
-  displayName: string;
+export interface OptionObject
+  extends BaseValueProps,
+    Pick<BaseOptionalProps, 'description' | 'onClick'> {
   isDisabled: boolean;
   hasGlyph?: boolean;
-  description?: string;
-  onClick?: React.EventHandler<OptionClickEvent>;
 }
 
-export interface InternalComboboxOptionProps
-  extends Omit<ComponentPropsWithoutRef<'li'>, 'onClick'> {
-  value: string;
-  displayName: string;
+type LIPropsAndBaseValueProps = LIProps & BaseOptionalProps & BaseValueProps;
+
+export interface InternalComboboxOptionProps extends LIPropsAndBaseValueProps {
   isSelected: boolean;
   isFocused: boolean;
   setSelected: () => void;
-  disabled?: boolean;
-  glyph?: ReactElement;
-  className?: string;
   index: number;
-  description?: string;
-  onClick?: React.EventHandler<OptionClickEvent>;
 }
 
 /**

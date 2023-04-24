@@ -100,13 +100,12 @@ export const getComboboxJSX = (props?: renderComboboxProps) => {
         </ComboboxGroup>
       );
     } else {
-      const value = typeof option === 'string' ? option : option.value;
-      const displayName =
-        typeof option === 'string' ? undefined : option.displayName;
-      const isDisabled = typeof option === 'string' ? false : option.isDisabled;
-      const description =
-        typeof option === 'string' ? undefined : option.description;
-      const onClick = typeof option === 'string' ? undefined : option.onClick;
+      const isTypeofString = typeof option === 'string';
+      const value = isTypeofString ? option : option.value;
+      const displayName = isTypeofString ? undefined : option.displayName;
+      const isDisabled = isTypeofString ? false : option.isDisabled;
+      const description = isTypeofString ? undefined : option.description;
+      const onClick = isTypeofString ? undefined : option.onClick;
 
       return (
         <ComboboxOption
