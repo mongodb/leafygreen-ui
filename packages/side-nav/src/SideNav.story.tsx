@@ -24,10 +24,7 @@ export default {
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
-    baseFontSize: {
-      control: { type: 'radio' },
-      options: [14, 16],
-    },
+    baseFontSize: storybookArgTypes.baseFontSize,
   },
   args: {
     widthOverride: 200,

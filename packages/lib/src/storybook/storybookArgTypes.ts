@@ -10,12 +10,17 @@ export interface StoryArgType extends InputType {
 }
 
 export const storybookArgTypes: { [key: string]: StoryArgType } = {
-  websiteBaseFontSize: {
+  baseFontSize: {
     description:
       'The base font size passed to the LeafyGreenProvider that wraps the component',
     control: { type: 'radio' },
-    options: Object.values(BaseFontSize),
-    displayedPlatforms: 'websiteOnly',
+    options: [14, 16],
+  },
+  updatedBaseFontSize: {
+    description:
+      'The base font size passed to the LeafyGreenProvider that wraps the component',
+    control: { type: 'radio' },
+    options: [13, 16],
   },
   darkMode: {
     description: 'Render the component in dark mode.',

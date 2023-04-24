@@ -137,8 +137,7 @@ export const AllTypography = ({
 };
 AllTypography.argTypes = {
   baseFontSize: {
-    options: [14, 16],
-    control: { type: 'radio' },
+    ...storybookArgTypes.baseFontSize,
     description:
       'Storybook prop only. This font size is passed into the LeafygreenProvider.',
   },
