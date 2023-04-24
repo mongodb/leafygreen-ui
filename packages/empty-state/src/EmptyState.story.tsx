@@ -38,7 +38,7 @@ export default StoryMeta({
   parameters: {
     default: 'LiveExample',
     controls: {
-      exclude: ['className', 'as'],
+      exclude: ['className', 'as', 'baseFontSize'],
     },
   },
 });
