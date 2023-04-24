@@ -1,10 +1,8 @@
 import { InputType } from '@storybook/csf';
 import IntrinsicElements from './IntrinsicElements';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
 export interface StoryArgType extends InputType {
   /**
-   * Identify an arg to render a control on Storybook only,
-   * and not on `mongodb.design`
+   * Identify an arg to determine where the control is defined
    */
   displayedPlatforms?: 'storybookOnly' | 'websiteOnly';
 }
