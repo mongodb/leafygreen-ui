@@ -94,7 +94,7 @@ export const InternalComboboxOption = React.forwardRef<
 InternalComboboxOption.displayName = 'ComboboxOption';
 
 export function ComboboxOption(_: ComboboxOptionProps): JSX.Element {
-  throw Error('`ComboboxOption` must be a child of a `Combobox` instance');
+  throw Error('`ComboboxOption` must be a child of a `Combobox` instancee');
 }
 ComboboxOption.displayName = 'ComboboxOption';
 
