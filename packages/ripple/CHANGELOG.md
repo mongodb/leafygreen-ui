@@ -1,5 +1,13 @@
 # @leafygreen-ui/ripple
 
+## 1.1.9
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/tokens@2.0.2
+
 ## 1.1.8
 
 ### Patch Changes
