@@ -22,6 +22,7 @@ import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import {
+  useAutoScroll,
   useBackdropClick,
   useDynamicRefs,
   useIdAllocator,
@@ -610,23 +611,11 @@ export function Combobox<M extends boolean>({
     }
   }, [inputValue, isOpen, prevValue, updateHighlightedOption]);
 
-  // TODO: Replace this with hooks/useAutoScroll
   // When the focused option changes, update the menu scroll if necessary
-  useEffect(() => {
-    if (highlightedOption) {
-      const focusedElementRef = getOptionRef(highlightedOption);
-
-      if (focusedElementRef && focusedElementRef.current && menuRef.current) {
-        const { offsetTop: optionTop } = focusedElementRef.current;
-        const { scrollTop: menuScroll, offsetHeight: menuHeight } =
-          menuRef.current;
-
-        if (optionTop > menuHeight || optionTop < menuScroll) {
-          menuRef.current.scrollTop = optionTop;
-        }
-      }
-    }
-  }, [highlightedOption, getOptionRef]);
+  useAutoScroll(
+    highlightedOption ? getOptionRef(highlightedOption) : undefined,
+    menuRef,
+  );
 
   /**
    * Rendering
