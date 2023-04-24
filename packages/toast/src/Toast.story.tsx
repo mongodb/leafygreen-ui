@@ -53,7 +53,6 @@ export default StoryMeta({
   },
   args: {
     darkMode: false,
-    initialValue: undefined,
   },
 });
 
