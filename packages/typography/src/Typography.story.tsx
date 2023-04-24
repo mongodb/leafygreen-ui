@@ -50,15 +50,6 @@ export default StoryMeta({
       exclude: ['className'],
     },
   },
-  argTypes: {
-    baseFontSize: {
-      options: [14, 16],
-      control: { type: 'radio' },
-      description:
-        'Storybook prop only. This font size is passed into the LeafygreenProvider.',
-    },
-    darkMode: storybookArgTypes.darkMode,
-  },
 });
 
 // eslint-disable-next-line react/prop-types
@@ -144,6 +135,14 @@ export const AllTypography = ({
       </div>
     </LeafygreenProvider>
   );
+};
+AllTypography.argTypes = {
+  baseFontSize: {
+    ...storybookArgTypes.baseFontSize,
+    description:
+      'Storybook prop only. This font size is passed into the LeafygreenProvider.',
+  },
+  darkMode: storybookArgTypes.darkMode,
 };
 
 export const StaticWidthTextStory = () => {
