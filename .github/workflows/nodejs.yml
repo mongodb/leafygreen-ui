@@ -242,7 +242,7 @@ jobs:
             !**/node_modules
           key: ${{ runner.os }}-build-cache-${{ hashFiles('**/rollup.config.js', '**/babel.config.js', '**/src/', '**/scripts/', '!**/node_modules', '!**/dist') }}
 
-      - uses: actions/restore@v3
+      - uses: actions/cache/restore@v3
         name: Restore TS cache
         id: ts-cache
         with:
