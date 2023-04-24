@@ -39,7 +39,8 @@ export interface StoryMetaType<
 
 const baseMeta: Partial<StoryMetaType<any>> = {
   argTypes: {
-    ...storybookArgTypes,
+    darkMode: storybookArgTypes.darkMode,
+    baseFontSize: storybookArgTypes.updatedBaseFontSize,
   },
   parameters: {
     default: 'Basic',
