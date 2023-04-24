@@ -118,7 +118,7 @@ jobs:
         id: ts-cache
         with:
           path: |
-            **/dist/**/*.ts?(x)
+            **/dist/**/*.ts
             !**/node_modules
           key: ${{ runner.os }}-ts-cache-${{ hashFiles('**/tsconfig.js', '**/package.tsconfig.js', '**/src/', '**/scripts/', '!**/node_modules', '!**/dist') }}
 
@@ -228,7 +228,7 @@ jobs:
         id: ts-cache
         with:
           path: |
-            **/dist/**/*.ts?(x)
+            **/dist/**/*.ts
             !**/node_modules
           key: ${{ runner.os }}-ts-cache-${{ hashFiles('**/tsconfig.js', '**/package.tsconfig.js', '**/src/', '**/scripts/', '!**/node_modules', '!**/dist') }}
 
