@@ -1,10 +1,8 @@
 import React, { useCallback, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
-import Checkbox from '@leafygreen-ui/checkbox';
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
-import Icon, { isComponentGlyph } from '@leafygreen-ui/icon';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
@@ -17,18 +15,12 @@ import { ComboboxContext } from '../ComboboxContext';
 import { wrapJSX } from '../utils';
 
 import {
-  checkBoxBaseStyles,
-  checkMarkDisabledStyles,
-  checkMarkSizeStyle,
-  checkMarkThemeStyles,
   comboboxOptionSizeStyle,
   displayNameStyle,
-  iconDisabledStyles,
-  iconHighlightedStyles,
-  iconThemeStyles,
   multiselectIconLargePosition,
   multiselectIconPosition,
 } from './ComboboxOption.styles';
+import { getGlyphs } from './getGlyphs';
 
 /**
  * Internal ComboboxOption Component for use within Combobox only.
@@ -45,12 +37,12 @@ export const InternalComboboxOption = React.forwardRef<
       isSelected,
       displayName,
       isFocused,
-      disabled,
       setSelected,
       className,
       description,
       value,
       onClick,
+      disabled = false,
       ...rest
     }: InternalComboboxOptionProps,
     forwardedRef,
@@ -76,59 +68,36 @@ export const InternalComboboxOption = React.forwardRef<
       [disabled, onClick, setSelected],
     );
 
-    const icon = useMemo((): JSX.Element => {
-      if (glyph) {
-        if (isComponentGlyph(glyph)) {
-          return React.cloneElement(glyph, {
-            ...glyph.props,
-            className: cx(
-              iconThemeStyles[theme],
-              {
-                [iconHighlightedStyles[theme]]: isFocused,
-                [iconDisabledStyles[theme]]: disabled,
-              },
-              glyph.props.className,
-            ),
-          });
-        }
-        console.error(
-          '`ComboboxOption` instance did not render icon because it is not a known glyph element.',
+    const { leftGlyph, rightGlyph } = useMemo(
+      () =>
+        getGlyphs({
+          withIcons,
+          isSelected,
           glyph,
-        );
-      }
-
-      return <></>;
-    }, [disabled, glyph, isFocused, theme]);
-
-    const checkbox = (
-      <Checkbox
-        aria-labelledby={optionTextId}
-        checked={isSelected}
-        tabIndex={-1}
-        disabled={disabled}
-        darkMode={darkMode}
-        className={checkBoxBaseStyles}
-      />
+          theme,
+          darkMode,
+          size,
+          disabled,
+          multiselect,
+          optionTextId,
+          isFocused,
+        }),
+      [
+        darkMode,
+        disabled,
+        glyph,
+        isSelected,
+        multiselect,
+        optionTextId,
+        size,
+        theme,
+        withIcons,
+        isFocused,
+      ],
     );
 
-    const checkMark = (
-      <Icon
-        glyph="Checkmark"
-        className={cx(checkMarkSizeStyle[size], checkMarkThemeStyles[theme], {
-          [checkMarkDisabledStyles[theme]]: disabled,
-        })}
-      />
-    );
-
-    const multiSelectLeftGlyph = withIcons ? icon : checkbox;
-    const multiSelectRightGlyph = withIcons && checkbox;
-
-    const singleSelectLeftGlyph = withIcons
-      ? icon
-      : isSelected
-      ? checkMark
-      : null;
-    const singleSelectRightGlyph = withIcons && isSelected && checkMark;
+    // When multiselect and withoutIcons the Checkbox is aligned to the top instead of centered.
+    const multiSelectWithoutIcons = multiselect && !withIcons;
 
     return (
       <InputOption
@@ -142,9 +111,9 @@ export const InternalComboboxOption = React.forwardRef<
         className={cx(
           comboboxOptionSizeStyle(size),
           {
-            [multiselectIconPosition]: multiselect && !withIcons,
+            [multiselectIconPosition]: multiSelectWithoutIcons,
             [multiselectIconLargePosition]:
-              multiselect && !withIcons && size === ComboboxSize.Large,
+              multiSelectWithoutIcons && size === ComboboxSize.Large,
           },
           className,
         )}
@@ -152,10 +121,8 @@ export const InternalComboboxOption = React.forwardRef<
         onKeyDown={handleOptionClick}
       >
         <InputOptionContent
-          leftGlyph={multiselect ? multiSelectLeftGlyph : singleSelectLeftGlyph}
-          rightGlyph={
-            multiselect ? multiSelectRightGlyph : singleSelectRightGlyph
-          }
+          leftGlyph={leftGlyph}
+          rightGlyph={rightGlyph}
           description={description}
         >
           <span id={optionTextId} className={displayNameStyle(isSelected)}>
