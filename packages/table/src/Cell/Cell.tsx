@@ -6,37 +6,19 @@ import { spacing } from '@leafygreen-ui/tokens';
 import {
   alignmentStyles,
   baseCellStyles,
-  baseTableSidePadding,
+  basicCellStyles,
   cellContentContainerStyles,
-  getCellPadding,
+  standardCellHeight,
 } from './Cell.styles';
 import { CellProps } from '.';
 
 const Cell = ({ className, align, children, ...rest }: CellProps) => (
-  <td
-    className={cx(
-      baseCellStyles,
-      css`
-        &:first-child {
-          ${getCellPadding({
-            depth: 0,
-            isExpandable: false,
-            isSelectable: false,
-          })}
-        }
-        &:last-child {
-          padding-right: ${baseTableSidePadding}px;
-        }
-      `,
-      className,
-    )}
-    {...rest}
-  >
+  <td className={cx(baseCellStyles, basicCellStyles, className)} {...rest}>
     <div
       className={cx(
         cellContentContainerStyles,
         css`
-          min-height: ${spacing[5] + spacing[2]}px;
+          min-height: ${standardCellHeight}px;
         `,
         alignmentStyles(align),
       )}
