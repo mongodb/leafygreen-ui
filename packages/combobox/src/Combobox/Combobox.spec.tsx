@@ -180,6 +180,28 @@ describe('packages/combobox', () => {
         expect(onClick).toHaveBeenCalledTimes(1);
       });
 
+      test('option onClick callback is called with the click event and option value', () => {
+        const onClick = jest.fn();
+
+        const options: Array<OptionObject> = [
+          {
+            value: 'paragraph',
+            displayName: 'display name',
+            isDisabled: false,
+            onClick,
+          },
+        ];
+
+        const { openMenu } = renderCombobox(select, { options });
+        const { optionElements } = openMenu();
+        const [optionEl] = Array.from(optionElements!);
+        userEvent.click(optionEl);
+        expect(onClick).toHaveBeenCalledWith(
+          expect.objectContaining({ type: 'click' }),
+          options[0].value,
+        );
+      });
+
       test('Options render with provided displayName', async () => {
         const { openMenu } = renderCombobox(select);
         const { optionElements } = openMenu();
