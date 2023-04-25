@@ -1,25 +1,21 @@
 import React from 'react';
 
-import {
-  storybookArgTypes,
-  storybookExcludedControlParams,
-} from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
 
 import { InputOption, type InputOptionProps } from '.';
 
-export default {
+export default StoryMeta({
   title: 'Components/InputOption',
   component: InputOption,
   parameters: {
+    default: 'Basic',
     controls: {
       exclude: [
-        ...storybookExcludedControlParams,
-        'aria-label',
-        'aria-labelledby',
         'setError',
         'filteredOptions',
         'initialValue',
         'value',
+        'children',
       ],
     },
   },
@@ -36,10 +32,9 @@ export default {
     showWedge: {
       control: 'boolean',
     },
-    darkMode: storybookArgTypes.darkMode,
     as: storybookArgTypes.as,
   },
-};
+});
 
 const Template = (props: InputOptionProps) => (
   <InputOption {...props}>Some text</InputOption>
