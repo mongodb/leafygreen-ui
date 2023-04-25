@@ -45,6 +45,7 @@ const V11Adapter = <T extends LGRowData>({
   useVirtualScrolling = false,
   hasSelectableRows = false,
   headerLabels,
+  className,
 }: V11AdapterProps<T>) => {
   const { darkMode } = useDarkMode();
   const containerRef = useRef(null);
@@ -97,6 +98,7 @@ const V11Adapter = <T extends LGRowData>({
       shouldAlternateRowColor={
         shouldAlternateRowColor ?? processedData.length > 10
       }
+      className={className}
       ref={containerRef}
     >
       <TableHead>

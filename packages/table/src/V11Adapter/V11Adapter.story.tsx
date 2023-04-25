@@ -13,11 +13,16 @@ import {
   V10TableHeader as TableHeader,
   V11Adapter,
 } from '..';
+import { css } from '@leafygreen-ui/emotion';
 
 export default {
   title: 'Components/Table/V11 Adapter',
   component: V11Adapter,
 } as Meta<typeof V11Adapter>;
+
+const virtualScrollingContainerHeight = css`
+  height: 500px;
+`;
 
 export const Basic = () => {
   return (
@@ -84,7 +89,7 @@ export const DynamicData = () => {
 
 export const BasicVS = () => {
   return (
-    <V11Adapter useVirtualScrolling>
+    <V11Adapter useVirtualScrolling className={virtualScrollingContainerHeight}>
       <Table
         data={makeData(false, 1000)}
         columns={
@@ -176,7 +181,7 @@ export const NestedRows = () => {
 
 export const NestedRowsVS = () => {
   return (
-    <V11Adapter useVirtualScrolling>
+    <V11Adapter useVirtualScrolling className={virtualScrollingContainerHeight}>
       <Table
         data={makeData(false, 1000, 5, 3)}
         columns={
@@ -263,7 +268,7 @@ export const ExpandableContent = () => {
 
 export const ExpandableContentVS = () => {
   return (
-    <V11Adapter useVirtualScrolling>
+    <V11Adapter useVirtualScrolling className={virtualScrollingContainerHeight}>
       <Table
         data={makeData(true, 1000)}
         columns={
@@ -383,6 +388,7 @@ export const SortableRowsVS = () => {
         headerLabels={{
           Relationship: 'status',
         }}
+        className={virtualScrollingContainerHeight}
       >
         <Table
           data={makeData(true, 1000)}
@@ -469,7 +475,11 @@ export const SelectableRows = () => {
 
 export const SelectableRowsVS = () => {
   return (
-    <V11Adapter hasSelectableRows useVirtualScrolling>
+    <V11Adapter
+      hasSelectableRows
+      useVirtualScrolling
+      className={virtualScrollingContainerHeight}
+    >
       <Table
         data={makeData(true, 1000)}
         columns={

@@ -81,6 +81,7 @@ export const cellContentContainerStyles = css`
   text-overflow: ellipsis;
   transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: min-height, max-height, opacity, transform;
+  min-height: ${standardCellHeight}px;
 `;
 
 const _hiddenStyles = css`

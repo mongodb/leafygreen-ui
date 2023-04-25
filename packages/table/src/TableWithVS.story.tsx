@@ -1,5 +1,4 @@
 import React from 'react';
-import { VirtualItem } from 'react-virtual';
 import { ComponentStory } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
@@ -23,6 +22,7 @@ import {
   TableBody,
   TableHead,
   useLeafyGreenTable,
+  type VirtualItem
 } from '.';
 
 export default StoryMeta({

@@ -34,3 +34,4 @@ export {
   type HeaderGroup,
   type SortingState,
 } from '@tanstack/react-table';
+export { type VirtualItem } from 'react-virtual';
