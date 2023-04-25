@@ -110,6 +110,8 @@ const Stepper = ({
   );
 };
 
+Stepper.displayName = 'Stepper';
+
 Stepper.propTypes = {
   currentStep: PropTypes.number,
   maxDisplayedSteps: PropTypes.number,
