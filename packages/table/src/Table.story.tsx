@@ -11,7 +11,7 @@ import {
 import Badge from '@leafygreen-ui/badge';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
-import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
+import { StoryMeta } from '@leafygreen-ui/lib';
 import Pagination from '@leafygreen-ui/pagination';
 
 import {
@@ -40,12 +40,12 @@ export default StoryMeta({
   component: Table,
   argTypes: {
     shouldAlternateRowColor: { control: 'boolean' },
-    darkMode: storybookArgTypes.darkMode,
   },
   parameters: {
     default: 'KitchenSink',
     controls: {
       exclude: [
+        'table',
         'className',
         'children',
         'ref',
@@ -53,6 +53,8 @@ export default StoryMeta({
         'aria-label',
         'value',
         'onSelectChange',
+        'tableContainerClassName',
+        'baseFontSize',
       ],
     },
     // This is needed as a workaround to make arg spreading performant
