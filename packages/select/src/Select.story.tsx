@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Meta } from '@storybook/react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
-import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
+import { StoryMeta } from '@leafygreen-ui/lib';
 
 import { SelectProps } from './types';
 import { Option, OptionGroup, Select } from '.';
@@ -55,7 +54,7 @@ export default StoryMeta({
     errorMessage: { control: 'text' },
     allowDeselect: { control: 'boolean' },
   },
-}) as Meta<typeof Select>;
+});
 
 export const Uncontrolled = ({ className, ...args }: SelectProps) => (
   <Select
