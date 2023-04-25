@@ -134,7 +134,10 @@ export const Variants: ComponentStory<typeof InternalToast> = (
                       {randomText && (
                         <>
                           &nbsp;
-                          <Link href="http://localhost:9001">Link style</Link>
+                          <a href="http://localhost:9001">Anchor tag</a>
+                          <Link href="http://localhost:9001">
+                            Link component
+                          </Link>
                         </>
                       )}
                     </>

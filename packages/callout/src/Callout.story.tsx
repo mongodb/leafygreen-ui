@@ -92,7 +92,7 @@ export const WithLinks: ComponentStory<typeof Callout> = ({
       {children}
       <Link href="http://localhost:9001">Link component</Link>
       &nbsp;
-      <a href="http://localhost:9001">Regular link</a>
+      <a href="http://localhost:9001">Anchor tag</a>
     </Callout>
   );
 };
