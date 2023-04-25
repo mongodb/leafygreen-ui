@@ -23,7 +23,7 @@ describe('packages/menu/sub-menu', () => {
   test('renders a SubMenu open by default, when the SubMenu is active', () => {
     const { getByTestId } = render(
       <SubMenuTestWrapper>
-        <SubMenu data-testid="sub-menu-a" active={true} />
+        <SubMenu data-testid="sub-menu-item-a" active={true} />
       </SubMenuTestWrapper>,
     );
 
