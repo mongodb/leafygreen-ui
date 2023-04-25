@@ -39,14 +39,11 @@ export default StoryMeta({
     className: {
       type: 'string',
     },
-    children: {
-      control: false,
-    },
   },
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: ['className', 'container'],
+      exclude: ['children', 'container'],
     },
   },
 });

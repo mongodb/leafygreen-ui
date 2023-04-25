@@ -18,13 +18,13 @@ import {
   SubMenuProps,
 } from '.';
 
-export default StoryMeta<typeof Menu, MenuItemProps & SubMenuProps>({
+export default StoryMeta({
   title: 'Components/Menu',
   component: Menu,
   parameters: {
-    default: 'UncontrolledTemplate',
+    default: 'SubMenuExample',
     controls: {
-      exclude: ['trigger', 'setOpen', 'className', 'as'],
+      exclude: ['trigger', 'children', 'refEl', 'setOpen', 'as'],
     },
   },
   args: {
