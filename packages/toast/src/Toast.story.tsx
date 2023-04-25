@@ -5,9 +5,8 @@ import { random, range, sample, startCase } from 'lodash';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { DarkModeProps, StoryMeta } from '@leafygreen-ui/lib';
-import { InlineCode, Label } from '@leafygreen-ui/typography';
+import { InlineCode, Label, Link } from '@leafygreen-ui/typography';
 
 import { variantIcons } from './InternalToast/VariantIcon';
 import { makeToast, makeToastStack } from './ToastContext/utils/makeToast';
@@ -19,15 +18,19 @@ export default StoryMeta<typeof InternalToast>({
   component: InternalToast,
   decorators: [
     (Story, meta) => (
-      <LeafyGreenProvider darkMode={!!meta.args.darkMode}>
-        <ToastProvider initialValue={meta.args.initialValue}>
-          <Story />
-        </ToastProvider>
-      </LeafyGreenProvider>
+      <ToastProvider
+        initialValue={meta.args.initialValue}
+        portalClassName={css`
+          // Ensures a new stacking context is established
+          z-index: 1;
+        `}
+      >
+        <Story {...meta} />
+      </ToastProvider>
     ),
   ],
   parameters: {
-    default: 'Basic',
+    default: 'Variants',
     controls: {
       exclude: [
         'as',
@@ -49,15 +52,26 @@ export default StoryMeta<typeof InternalToast>({
     },
   },
   args: {
-    /// @ts-expect-error
     darkMode: false,
     initialValue: undefined,
   },
 });
+
 export const Basic: ComponentStory<typeof InternalToast> = (
   props: Partial<InternalToastProps> & DarkModeProps,
 ) => {
   const { pushToast, clearStack } = useToast();
+
+  const createRandomToast = () => {
+    const variant = props.variant || sample(Variant);
+
+    pushToast({
+      title: `I'm a ${variant} toast`,
+      description: faker.lorem.lines(random(1, 2)),
+      variant,
+      ...props,
+    });
+  };
 
   return (
     <div>
@@ -67,18 +81,7 @@ export const Basic: ComponentStory<typeof InternalToast> = (
           gap: 8px;
         `}
       >
-        <Button
-          data-testid="toast-trigger"
-          onClick={() => {
-            const variant = props.variant || sample(Variant);
-            pushToast({
-              title: `I'm a ${variant} toast`,
-              description: faker.lorem.lines(random(1, 2)),
-              variant,
-              ...props,
-            });
-          }}
-        >
+        <Button data-testid="toast-trigger" onClick={createRandomToast}>
           Push toast
         </Button>
         <Button onClick={() => clearStack()}>Clear all</Button>
@@ -116,25 +119,43 @@ export const Variants: ComponentStory<typeof InternalToast> = (
       >
         {Object.values(Variant).map(variant => {
           const VariantIcon = variantIcons[variant];
+          const randomText = faker.lorem.lines(random(1));
 
           return (
             <Button
               key={variant}
               onClick={() => {
                 pushToast({
+                  ...props,
                   title: `I'm a ${variant} toast`,
-                  description: faker.lorem.lines(random(1, 2)),
+                  description: (
+                    <>
+                      {randomText}
+                      {randomText && (
+                        <>
+                          &nbsp;
+                          <a href="http://localhost:9001">Anchor tag</a>
+                          <Link href="http://localhost:9001">
+                            Link component
+                          </Link>
+                        </>
+                      )}
+                    </>
+                  ),
                   variant,
                   progress,
-                  ...props,
+                  timeout: null,
                 });
               }}
+              leftGlyph={<VariantIcon />}
             >
-              <VariantIcon /> {startCase(variant)} toast
+              {startCase(variant)} toast
             </Button>
           );
         })}
-        <Button onClick={() => clearStack()}>Clear all</Button>
+        <Button onClick={() => clearStack()} variant="dangerOutline">
+          Clear all
+        </Button>
       </div>
       {progressToasts && progressToasts.length > 0 && (
         <>

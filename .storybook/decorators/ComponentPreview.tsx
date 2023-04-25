@@ -2,6 +2,7 @@ import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { palette } from '@leafygreen-ui/palette';
+import { DecoratorFn } from '@storybook/react';
 
 const rootStyle = css`
   display: flex;
@@ -16,11 +17,10 @@ const darkModeStyle = css`
   background-color: ${palette.black};
 `;
 
-// eslint-disable-next-line react/display-name
-export default (Story, options) => {
-  const darkMode = options.args.darkMode;
+const decorator: DecoratorFn = (Story, options) => {
+  const { darkMode, baseFontSize } = options.args;
   return (
-    <LeafyGreenProvider darkMode={darkMode}>
+    <LeafyGreenProvider darkMode={darkMode} baseFontSize={baseFontSize}>
       <div className={cx(rootStyle, { [darkModeStyle]: darkMode })}>
         <div>
           <Story darkMode={darkMode} {...options} />
@@ -29,3 +29,5 @@ export default (Story, options) => {
     </LeafyGreenProvider>
   );
 };
+
+export default decorator;

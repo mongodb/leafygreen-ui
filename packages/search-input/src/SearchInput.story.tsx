@@ -11,9 +11,8 @@ import {
 import { palette } from '@leafygreen-ui/palette';
 import { Body, H1 } from '@leafygreen-ui/typography';
 
-import { SearchInput, SearchResult, SearchResultGroup } from '..';
-
-import { State } from './SearchInput.types';
+import { State } from './SearchInput/SearchInput.types';
+import { SearchInput, SearchResult, SearchResultGroup } from '.';
 
 export default {
   title: 'Components/SearchInput',

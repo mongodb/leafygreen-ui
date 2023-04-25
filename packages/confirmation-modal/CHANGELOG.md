@@ -1,5 +1,22 @@
 # @leafygreen-ui/confirmation-modal
 
+## 4.0.6
+
+### Patch Changes
+
+- 25729b36a: Removes `size` prop from component, as width is fixed.
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/button@20.0.4
+  - @leafygreen-ui/emotion@4.0.4
+  - @leafygreen-ui/icon@11.13.1
+  - @leafygreen-ui/leafygreen-provider@3.1.2
+  - @leafygreen-ui/modal@14.0.5
+  - @leafygreen-ui/palette@4.0.3
+  - @leafygreen-ui/text-input@12.1.9
+  - @leafygreen-ui/tokens@2.0.2
+  - @leafygreen-ui/typography@16.2.1
+
 ## 4.0.5
 
 ### Patch Changes

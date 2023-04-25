@@ -15,12 +15,8 @@ import { transitionDuration } from '@leafygreen-ui/tokens';
 import { TOAST_CONSTANTS } from '../constants';
 import { InternalToastProps } from '../InternalToast';
 import { Basic as ContextStory } from '../Toast.story';
-import { ToastProvider } from '../ToastContext';
-import {
-  ToastProviderProps,
-  ToastStack,
-} from '../ToastContext/ToastContext.types';
 import { makeToast, makeToastStack } from '../ToastContext/utils/makeToast';
+import { ToastProvider, ToastProviderProps, ToastStack } from '..';
 
 async function delay(t: number): Promise<void> {
   return await new Promise(_ => setTimeout(_, t));

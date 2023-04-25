@@ -1,26 +1,46 @@
 import { ComponentMeta } from '@storybook/react';
 import mergeWith from 'lodash/mergeWith';
 import { ComponentProps } from 'react';
+import DarkModeProps from '../DarkModeProps';
+
 import { StoryArgType, storybookArgTypes } from './storybookArgTypes';
 import { storybookExcludedControlParams } from './storybookExcludedControlParams';
 
-export interface StoryMeta<T extends React.ElementType>
-  extends Omit<ComponentMeta<T>, 'component'> {
+// Re-defining LG provider prop keys here since importing from the package
+// will cause circular dependencies
+interface LeafyGreenProviderProps extends DarkModeProps {
+  baseFontSize?: number;
+}
+
+export interface StoryMetaType<
+  T extends React.ElementType,
+  XP extends Record<string, any> = {},
+> extends Omit<ComponentMeta<T>, 'component' | 'argTypes' | 'args'> {
   parameters: ComponentMeta<T>['parameters'] & {
     /**
      * The default story to be displayed on `mongodb.design`
      */
     default: string;
   };
-  argTypes?: Partial<{
-    [name in keyof ComponentProps<T>]: StoryArgType;
-  }>;
+  argTypes?: Partial<
+    | {
+        [key in keyof ComponentProps<T>]: StoryArgType;
+      }
+    | {
+        [key in keyof LeafyGreenProviderProps]: StoryArgType;
+      }
+    | {
+        [key in keyof XP]: StoryArgType;
+      }
+  >;
+  args?: Partial<ComponentProps<T> | LeafyGreenProviderProps | XP>;
   component?: T;
 }
 
-const baseMeta: Partial<StoryMeta<any>> = {
+export const baseMeta: Partial<StoryMetaType<any>> = {
   argTypes: {
-    ...storybookArgTypes,
+    darkMode: storybookArgTypes.darkMode,
+    baseFontSize: storybookArgTypes.updatedBaseFontSize,
   },
   parameters: {
     default: 'Basic',
@@ -31,8 +51,8 @@ const baseMeta: Partial<StoryMeta<any>> = {
 };
 
 export const StoryMeta = <T extends React.ElementType>(
-  meta: StoryMeta<T> = baseMeta as StoryMeta<T>,
-): StoryMeta<T> => {
+  meta: StoryMetaType<T> = baseMeta as StoryMetaType<T>,
+): StoryMetaType<T> => {
   return mergeWith(meta, baseMeta, (metaVal, baseVal) => {
     if (Array.isArray(metaVal)) return metaVal.concat(baseVal);
     if (typeof metaVal === 'string') return metaVal;

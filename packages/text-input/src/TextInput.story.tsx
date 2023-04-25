@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ComponentStory } from '@storybook/react';
 
-import { BaseFontSize } from '@leafygreen-ui/tokens';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 import TextInput, { SizeVariant, State, TextInputProps } from '.';
 
@@ -49,10 +49,7 @@ export default {
       control: 'select',
       options: Object.values(SizeVariant),
     },
-    baseFontSize: {
-      control: 'select',
-      options: Object.values(BaseFontSize),
-    },
+    baseFontSize: storybookArgTypes.updatedBaseFontSize,
   },
   parameters: {
     controls: {

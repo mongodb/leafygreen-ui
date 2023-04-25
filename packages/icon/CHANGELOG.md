@@ -1,5 +1,19 @@
 # @leafygreen-ui/icon
 
+## 11.13.1
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/emotion@4.0.4
+
+## 11.13.0
+
+### Minor Changes
+
+- dc8ceed9b: Adds `Highlight`,`LogIn`,`LogOut`, and `Wrench` icons.
+
 ## 11.12.7
 
 ### Patch Changes

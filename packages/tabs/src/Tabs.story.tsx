@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Meta } from '@storybook/react';
 import { Story } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
@@ -9,16 +8,22 @@ import Icon from '@leafygreen-ui/icon';
 import ExportIcon from '@leafygreen-ui/icon/dist/Export';
 import SaveIcon from '@leafygreen-ui/icon/dist/Save';
 import IconButton from '@leafygreen-ui/icon-button';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { StoryMeta } from '@leafygreen-ui/lib';
 import { Body, Subtitle } from '@leafygreen-ui/typography';
 
 import { Tab, Tabs } from './index';
 import { TabsProps } from './types';
 
 // TODO: Add subcomponent controls for Tab when supported by Storybook
-export default {
+export default StoryMeta({
   title: 'Components/Tabs',
   component: Tabs,
+  parameters: {
+    default: 'LongTabs',
+    controls: {
+      exclude: ['children', 'as', 'setSelected'],
+    },
+  },
   args: {
     darkMode: false,
     children: [
@@ -50,14 +55,10 @@ export default {
     ],
   },
   argTypes: {
-    children: { control: false },
-    as: { control: false },
-    setSelected: { control: false },
     selected: { control: 'number' },
-    darkMode: storybookArgTypes.darkMode,
   },
   subcomponents: { Tab },
-} as Meta<typeof Tabs>;
+});
 
 const Template: Story<TabsProps> = (props: TabsProps) => (
   <Tabs

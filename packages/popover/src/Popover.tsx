@@ -277,7 +277,8 @@ function Popover({
     >
       {state => (
         <>
-          <div
+          {/* Using <span> to prevent validateDOMNesting warnings. Warnings will still show up if `usePortal` is false */}
+          <span
             ref={setPlaceholderNode}
             className={css`
               display: none;

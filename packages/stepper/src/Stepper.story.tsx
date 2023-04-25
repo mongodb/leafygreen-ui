@@ -1,19 +1,20 @@
 import React from 'react';
-import { ComponentStory, Meta } from '@storybook/react';
+import { ComponentStory } from '@storybook/react';
+
+import { StoryMeta } from '@leafygreen-ui/lib';
 
 import Stepper, { Step, StepperProps } from '.';
 
-export default {
+export default StoryMeta({
   title: 'Components/Stepper',
   component: Stepper,
-  args: {},
+  parameters: {
+    default: 'Basic',
+    controls: {
+      exclude: ['children'],
+    },
+  },
   argTypes: {
-    className: {
-      type: 'string',
-    },
-    children: {
-      control: false,
-    },
     currentStep: {
       control: {
         type: 'range',
@@ -33,11 +34,8 @@ export default {
         max: 5, // numSteps' max - 2
       },
     },
-    darkMode: {
-      control: 'boolean',
-    },
   },
-} as Meta<typeof Stepper>;
+});
 
 const Template: ComponentStory<typeof Stepper> = (args: StepperProps) => (
   <>

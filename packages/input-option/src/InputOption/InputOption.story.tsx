@@ -1,10 +1,7 @@
 import React from 'react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import {
-  storybookArgTypes,
-  storybookExcludedControlParams,
-} from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
 
 import {
   InputOptionContent,
@@ -13,19 +10,18 @@ import {
 
 import { InputOption, type InputOptionProps } from '.';
 
-export default {
+export default StoryMeta({
   title: 'Components/InputOption',
   component: InputOption,
   parameters: {
+    default: 'Basic',
     controls: {
       exclude: [
-        ...storybookExcludedControlParams,
-        'aria-label',
-        'aria-labelledby',
         'setError',
         'filteredOptions',
         'initialValue',
         'value',
+        'children',
       ],
     },
   },
@@ -53,9 +49,9 @@ export default {
     description: {
       control: { type: 'text' },
     },
-    ...storybookArgTypes,
+    as: storybookArgTypes.as,
   },
-};
+});
 
 const Template = (props: InputOptionProps & InputOptionContentProps) => {
   const { leftGlyph, rightGlyph, description, ...rest } = props;

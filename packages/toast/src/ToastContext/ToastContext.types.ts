@@ -60,5 +60,13 @@ export interface ToastReducerState {
 }
 
 export interface ToastProviderProps {
+  /**
+   * The initial toasts in the stack.
+   */
   initialValue?: ToastStack;
+
+  /**
+   * Class name applied to the containing Portal component
+   */
+  portalClassName?: string;
 }

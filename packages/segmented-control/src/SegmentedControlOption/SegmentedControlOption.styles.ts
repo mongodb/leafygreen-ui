@@ -7,7 +7,7 @@ import {
   transitionDuration,
 } from '@leafygreen-ui/tokens';
 
-import { Size } from '../SegmentedControl/types';
+import { Size } from '../SegmentedControl/SegmentedControl.types';
 
 /**
  * Styles
@@ -42,7 +42,7 @@ export const optionThemeStyle: Record<Theme, string> = {
 };
 
 export const optionSizeStyle: Record<Size, string> = {
-  [Size.Small]: css`
+  [Size.XSmall]: css`
     --font-size: 12px;
     --line-height: 16px;
     --padding-inline: 12px;

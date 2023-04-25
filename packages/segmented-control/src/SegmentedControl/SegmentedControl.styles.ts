@@ -5,7 +5,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
 
-import { Size } from '../SegmentedControl/types';
+import { Size } from './SegmentedControl.types';
 
 export const wrapperStyle = css`
   display: flex;
@@ -29,7 +29,7 @@ export const labelThemeStyle: Record<Theme, string> = {
 };
 
 export const optionsWrapperStyleSize: Record<Size, string> = {
-  [Size.Small]: css`
+  [Size.XSmall]: css`
     --segment-gap: 1px; // space between segments
     --wrapper-padding: 0px;
     --indicator-height: 100%;
