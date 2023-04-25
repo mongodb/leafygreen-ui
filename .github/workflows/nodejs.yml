@@ -79,7 +79,6 @@ jobs:
       - name: types
         run: yarn check:ts
 
-
   deps:
     name: Check dependencies
     runs-on: ubuntu-latest
