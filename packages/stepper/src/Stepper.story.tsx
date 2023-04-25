@@ -27,6 +27,8 @@ export default StoryMeta({
         min: 3,
         max: 6, // numSteps' max - 1
       },
+      description:
+        'Note: Min and max values for ranges are not defined in the component. The range values are only defined specifically for the Storybook instance so it renders correctly with all values. Value checking within the component will be added at a later date.',
     },
     completedStepsShown: {
       control: {
@@ -38,15 +40,7 @@ export default StoryMeta({
 });
 
 const Template: ComponentStory<typeof Stepper> = (args: StepperProps) => (
-  <>
-    <p>
-      Note: Min and max values for ranges are not defined in the component. The
-      range values are only defined specifically for the Storybook instance so
-      it renders correctly with all values. Value checking within the component
-      will be added at a later date.
-    </p>
-    <Stepper {...args} />
-  </>
+  <Stepper {...args} />
 );
 
 export const Basic = Template.bind({});
