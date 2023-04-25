@@ -5,14 +5,20 @@ import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
 
 import { Size } from './types';
 import { Menu, MenuItem, MenuProps, MenuSeparator, SubMenu } from '.';
 
-export default {
+export default StoryMeta({
   title: 'Components/Menu',
   component: Menu,
+  parameters: {
+    default: 'SubMenuExample',
+    controls: {
+      exclude: ['trigger', 'children', 'refEl', 'setOpen'],
+    },
+  },
   args: {
     open: true,
     align: 'bottom',
@@ -26,21 +32,6 @@ export default {
     usePortal: {
       control: 'boolean',
     },
-    trigger: {
-      control: false,
-    },
-    children: {
-      control: false,
-    },
-    refEl: {
-      control: false,
-    },
-    setOpen: {
-      control: false,
-    },
-    className: {
-      type: 'string',
-    },
     darkMode: storybookArgTypes.darkMode,
     size: {
       options: Object.values(Size),
@@ -49,7 +40,7 @@ export default {
         'Size of the `MenuItem` component, can be `default` or `large`',
     },
   },
-};
+});
 
 export const UncontrolledTemplate = ({
   size,
