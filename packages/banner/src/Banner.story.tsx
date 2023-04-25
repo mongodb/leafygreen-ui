@@ -1,14 +1,14 @@
 import React from 'react';
-import { ComponentStory, Meta } from '@storybook/react';
+import { ComponentStory } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
 import Banner from './Banner/Banner';
 import { BannerProps, Variant } from './Banner/types';
 
-export default {
+export default StoryMeta({
   title: 'Components/Banner',
   component: Banner,
   parameters: {
@@ -33,10 +33,9 @@ export default {
       defaultValue: Variant.Info,
     },
     children: storybookArgTypes.children,
-    ref: storybookArgTypes.ref,
     darkMode: storybookArgTypes.darkMode,
   },
-} as Meta<typeof Banner>;
+});
 
 // eslint-disable-next-line react/prop-types
 export const Basic: ComponentStory<typeof Banner> = ({ ...args }) => (
