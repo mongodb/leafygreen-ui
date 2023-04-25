@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComponentStory, Meta } from '@storybook/react';
+import { ComponentStory } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
