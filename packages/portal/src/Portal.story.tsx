@@ -1,7 +1,7 @@
 import React from 'react';
-import { Meta } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
+import { StoryMeta } from '@leafygreen-ui/lib';
 
 import Portal from '.';
 
@@ -21,7 +21,7 @@ function getRoot() {
   return root;
 }
 
-export default {
+export default StoryMeta({
   title: 'Components/Portal',
   component: Portal,
   args: {
@@ -31,17 +31,14 @@ export default {
     className: {
       type: 'string',
     },
-    children: {
-      control: false,
-    },
   },
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: ['className', 'container'],
+      exclude: ['children', 'container'],
     },
   },
-} as Meta<typeof Portal>;
+});
 
 export const Basic = () => (
   <Portal container={getRoot()}>

@@ -12,7 +12,7 @@ interface LeafyGreenProviderProps extends DarkModeProps {
   baseFontSize?: number;
 }
 
-export interface StoryMeta<
+export interface StoryMetaType<
   T extends React.ElementType,
   XP extends Record<string, any> = {},
 > extends Omit<ComponentMeta<T>, 'component' | 'argTypes' | 'args'> {
@@ -37,9 +37,10 @@ export interface StoryMeta<
   component?: T;
 }
 
-const baseMeta: Partial<StoryMeta<any>> = {
+export const baseMeta: Partial<StoryMetaType<any>> = {
   argTypes: {
-    ...storybookArgTypes,
+    darkMode: storybookArgTypes.darkMode,
+    baseFontSize: storybookArgTypes.updatedBaseFontSize,
   },
   parameters: {
     default: 'Basic',
@@ -50,8 +51,8 @@ const baseMeta: Partial<StoryMeta<any>> = {
 };
 
 export const StoryMeta = <T extends React.ElementType>(
-  meta: StoryMeta<T> = baseMeta as StoryMeta<T>,
-): StoryMeta<T> => {
+  meta: StoryMetaType<T> = baseMeta as StoryMetaType<T>,
+): StoryMetaType<T> => {
   return mergeWith(meta, baseMeta, (metaVal, baseVal) => {
     if (Array.isArray(metaVal)) return metaVal.concat(baseVal);
     if (typeof metaVal === 'string') return metaVal;

@@ -1,18 +1,18 @@
 import React from 'react';
-import { ComponentStory, Meta } from '@storybook/react';
+import { ComponentStory } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
 import Banner from './Banner/Banner';
 import { BannerProps, Variant } from './Banner/types';
 
-export default {
+export default StoryMeta({
   title: 'Components/Banner',
   component: Banner,
   parameters: {
-    default: 'Basic',
+    default: 'WithLink',
     controls: {
       exclude: ['ref', 'className', 'onClose', 'image'],
     },
@@ -33,10 +33,8 @@ export default {
       defaultValue: Variant.Info,
     },
     children: storybookArgTypes.children,
-    ref: storybookArgTypes.ref,
-    darkMode: storybookArgTypes.darkMode,
   },
-} as Meta<typeof Banner>;
+});
 
 // eslint-disable-next-line react/prop-types
 export const Basic: ComponentStory<typeof Banner> = ({ ...args }) => (
@@ -72,9 +70,9 @@ export const WithLink: ComponentStory<typeof Banner> = ({
     >
       {children}
       &nbsp;
-      <Link href="http://localhost:9001">Link style</Link>
+      <Link href="http://localhost:9001">Link component</Link>
       &nbsp;
-      <a href="http://localhost:9001">Regular link</a>
+      <a href="http://localhost:9001">Anchor tag</a>
     </Banner>
   );
 };
