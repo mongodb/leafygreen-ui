@@ -7,7 +7,7 @@ export interface StoryArgType extends InputType {
   displayedPlatforms?: 'storybookOnly' | 'websiteOnly';
 }
 
-export const storybookArgTypes: { [key: string]: StoryArgType } = {
+export const storybookArgTypes = {
   baseFontSize: {
     description:
       'The base font size passed to the LeafyGreenProvider that wraps the component',
@@ -16,7 +16,7 @@ export const storybookArgTypes: { [key: string]: StoryArgType } = {
   },
   updatedBaseFontSize: {
     description:
-      'The base font size passed to the LeafyGreenProvider that wraps the component',
+      'The base font size passed to the LeafyGreenProvider that wraps the component. Uses the updated font size values for Euclid Circular A.',
     control: { type: 'radio' },
     options: [13, 16],
   },
@@ -36,4 +36,4 @@ export const storybookArgTypes: { [key: string]: StoryArgType } = {
     control: { type: 'select' },
     defaultValue: 'button',
   },
-};
+} as const;
