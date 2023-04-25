@@ -6,7 +6,7 @@ import { random, range, sample, startCase } from 'lodash';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import { DarkModeProps, StoryMeta } from '@leafygreen-ui/lib';
-import { InlineCode, Label } from '@leafygreen-ui/typography';
+import { InlineCode, Label, Link } from '@leafygreen-ui/typography';
 
 import { variantIcons } from './InternalToast/VariantIcon';
 import { makeToast, makeToastStack } from './ToastContext/utils/makeToast';
@@ -118,6 +118,7 @@ export const Variants: ComponentStory<typeof InternalToast> = (
       >
         {Object.values(Variant).map(variant => {
           const VariantIcon = variantIcons[variant];
+          const randomText = faker.lorem.lines(random(1));
 
           return (
             <Button
@@ -126,7 +127,20 @@ export const Variants: ComponentStory<typeof InternalToast> = (
                 pushToast({
                   ...props,
                   title: `I'm a ${variant} toast`,
-                  description: faker.lorem.lines(random(1)),
+                  description: (
+                    <>
+                      {randomText}
+                      {randomText && (
+                        <>
+                          &nbsp;
+                          <a href="http://localhost:9001">Anchor tag</a>
+                          <Link href="http://localhost:9001">
+                            Link component
+                          </Link>
+                        </>
+                      )}
+                    </>
+                  ),
                   variant,
                   progress,
                   timeout: null,

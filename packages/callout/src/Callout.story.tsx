@@ -11,6 +11,7 @@ export default {
   title: 'Components/Callout',
   component: Callout,
   parameters: {
+    default: 'WithLinks',
     controls: {
       exclude: ['className'],
     },
@@ -81,15 +82,17 @@ export const WithRichContent: ComponentStory<typeof Callout> = ({
   );
 };
 
-export const WithLinks = Template.bind({});
-WithLinks.args = {
-  title: 'Title',
-  children: (
-    <>
-      Lorem Ipsum is simply dummy text &nbsp;
+export const WithLinks: ComponentStory<typeof Callout> = ({
+  // eslint-disable-next-line react/prop-types
+  children,
+  ...args
+}) => {
+  return (
+    <Callout {...args}>
+      {children}
       <Link href="http://localhost:9001">Link component</Link>
       &nbsp;
-      <a href="http://localhost:9001">Regular link</a>
-    </>
-  ),
+      <a href="http://localhost:9001">Anchor tag</a>
+    </Callout>
+  );
 };
