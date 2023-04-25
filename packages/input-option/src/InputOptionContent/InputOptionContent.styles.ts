@@ -1,5 +1,10 @@
 import { css } from '@leafygreen-ui/emotion';
+import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { spacing } from '@leafygreen-ui/tokens';
+
+export const leftGlyphClassName = createUniqueClassName(
+  'input-option-left-glyph',
+);
 
 export const titleBaseStyles = css`
   overflow-wrap: anywhere;

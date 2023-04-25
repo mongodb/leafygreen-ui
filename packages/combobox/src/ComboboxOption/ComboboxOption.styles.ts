@@ -1,4 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
+import { leftGlyphClassName } from '@leafygreen-ui/input-option';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
@@ -105,16 +106,12 @@ export const checkMarkDisabledStyles: Record<Theme, string> = {
 };
 
 export const multiselectIconPosition = css`
-  > div {
-    > div:first-of-type {
-      align-self: baseline;
-    }
+  .${leftGlyphClassName} {
+    align-self: baseline;
   }
 `;
 export const multiselectIconLargePosition = css`
-  > div {
-    > div:first-of-type {
-      height: 28px;
-    }
+  .${leftGlyphClassName} {
+    height: 28px;
   }
 `;

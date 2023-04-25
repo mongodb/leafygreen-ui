@@ -6,4 +6,5 @@ export {
 export {
   InputOptionContent,
   type InputOptionContentProps,
+  leftGlyphClassName,
 } from './InputOptionContent';
