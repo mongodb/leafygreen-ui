@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
 
 import Badge from '@leafygreen-ui/badge';
+import { css } from '@leafygreen-ui/emotion';
 
 import { defaultData } from '../TableV10/fixtures';
 import { makeData, randomIntFromInterval } from '../utils/makeData.testutils';
@@ -13,7 +14,6 @@ import {
   V10TableHeader as TableHeader,
   V11Adapter,
 } from '..';
-import { css } from '@leafygreen-ui/emotion';
 
 export default {
   title: 'Components/Table/V11 Adapter',

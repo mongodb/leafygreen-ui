@@ -22,7 +22,7 @@ import {
   TableBody,
   TableHead,
   useLeafyGreenTable,
-  type VirtualItem
+  type VirtualItem,
 } from '.';
 
 export default StoryMeta({
