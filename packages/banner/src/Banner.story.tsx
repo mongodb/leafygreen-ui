@@ -12,7 +12,7 @@ export default {
   title: 'Components/Banner',
   component: Banner,
   parameters: {
-    default: 'Basic',
+    default: 'WithLink',
     controls: {
       exclude: ['ref', 'className', 'onClose', 'image'],
     },
@@ -72,9 +72,9 @@ export const WithLink: ComponentStory<typeof Banner> = ({
     >
       {children}
       &nbsp;
-      <Link href="http://localhost:9001">Link style</Link>
+      <Link href="http://localhost:9001">Link component</Link>
       &nbsp;
-      <a href="http://localhost:9001">Regular link</a>
+      <a href="http://localhost:9001">Anchor tag</a>
     </Banner>
   );
 };
