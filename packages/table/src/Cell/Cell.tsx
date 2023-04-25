@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
-import { spacing } from '@leafygreen-ui/tokens';
 
 import {
   alignmentStyles,
