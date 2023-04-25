@@ -91,6 +91,12 @@ Setting this prop will inject checkbox cells into all rows. Refer to our [Storyb
 
 ---
 
+#### `withPagination?: boolean`
+
+Setting this prop will indicate that the Table component is being used with the Pagination component. This will expose various pagination utilities from `table.getState().pagination`. Find an example of how this prop should be used on our [Storybook deployment](https://mongodb.github.io/leafygreen-ui).
+
+---
+
 #### `useVirtualScrolling`
 
 `react-virtual`'s `useVirtual` hook will be called if this option is set. When this option is set, the object returned by `useLeafygreenTable` will include `virtualRows` and `totalSize`. Refer to our [Storybook deployment](https://mongodb.github.io/leafygreen-ui) to find examples.

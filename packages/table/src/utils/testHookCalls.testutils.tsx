@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
-import { ColumnDef, ExpandedState, SortingState } from '@tanstack/react-table';
 
 import useLeafyGreenTable, {
   LeafyGreenTable,
   LeafyGreenTableOptions,
 } from '../useLeafyGreenTable';
+import { ColumnDef, ExpandedState, SortingState } from '..';
 
 import { Person } from './makeData.testutils';
 

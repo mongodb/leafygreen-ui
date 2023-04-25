@@ -1,13 +1,13 @@
 import React from 'react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
+import { spacing } from '@leafygreen-ui/tokens';
 
 import {
   alignmentStyles,
   baseCellStyles,
   baseTableSidePadding,
   cellContentContainerStyles,
-  cellContentTransitionStyles,
   getCellPadding,
 } from './Cell.styles';
 import { CellProps } from '.';
@@ -35,7 +35,9 @@ const Cell = ({ className, align, children, ...rest }: CellProps) => (
     <div
       className={cx(
         cellContentContainerStyles,
-        cellContentTransitionStyles['entered'],
+        css`
+          min-height: ${spacing[5] + spacing[2]}px;
+        `,
         alignmentStyles(align),
       )}
     >

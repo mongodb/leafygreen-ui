@@ -1,12 +1,6 @@
 /* eslint-disable react/prop-types*/
 import React from 'react';
 import { ComponentStory, Meta } from '@storybook/react';
-import {
-  ColumnDef,
-  ExpandedState,
-  flexRender,
-  HeaderGroup,
-} from '@tanstack/react-table';
 
 import { Cell, HeaderCell } from '../Cell';
 import { HeaderRow, Row } from '../Row';
@@ -19,6 +13,12 @@ import useLeafyGreenTable, {
 } from '../useLeafyGreenTable';
 import { makeData, Person } from '../utils/makeData.testutils';
 import { AnyDict } from '../utils/types';
+import {
+  ColumnDef,
+  ExpandedState,
+  flexRender,
+  HeaderGroup,
+} from '..';
 
 export default {
   title: 'Components/Table/Row',
