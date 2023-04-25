@@ -2,6 +2,7 @@ import { createContext } from 'react';
 
 import {
   ComboboxSize,
+  Overflow,
   SearchState,
   State,
   TruncationLocation,
@@ -15,6 +16,7 @@ interface ComboboxData {
   isOpen: boolean;
   state: State;
   searchState: SearchState;
+  overflow: Overflow;
   chipTruncationLocation?: TruncationLocation;
   chipCharacterLimit?: number;
   inputValue?: string;
@@ -28,4 +30,5 @@ export const ComboboxContext = createContext<ComboboxData>({
   isOpen: false,
   state: State.none,
   searchState: SearchState.unset,
+  overflow: Overflow.expandY,
 });

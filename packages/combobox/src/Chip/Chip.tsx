@@ -6,7 +6,7 @@ import InlineDefinition from '@leafygreen-ui/inline-definition';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 
-import { ChipProps } from '../Combobox.types';
+import { ChipProps, Overflow } from '../Combobox.types';
 import { chipClassName } from '../Combobox/Combobox.styles';
 import { ComboboxContext } from '../ComboboxContext';
 
@@ -28,11 +28,13 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
     const {
       size,
       disabled,
+      overflow,
       chipTruncationLocation = 'end',
       chipCharacterLimit = 12,
     } = useContext(ComboboxContext);
 
     const isTruncated =
+      overflow !== Overflow.scrollX &&
       !!chipCharacterLimit &&
       !!chipTruncationLocation &&
       chipTruncationLocation !== 'none' &&
@@ -117,7 +119,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
           chipClassName,
           chipWrapperBaseStyle,
           chipWrapperThemeStyle[theme],
-          chipWrapperSizeStyle[size],
+          chipWrapperSizeStyle(size),
           {
             [disabledChipWrapperStyle[theme]]: disabled,
           },
@@ -147,7 +149,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
           className={cx(
             chipButtonStyle,
             chipButtonThemeStyle[theme],
-            chipButtonSizeStyle[size],
+            chipButtonSizeStyle(size),
             {
               [chipButtonDisabledStyle[theme]]: disabled,
             },

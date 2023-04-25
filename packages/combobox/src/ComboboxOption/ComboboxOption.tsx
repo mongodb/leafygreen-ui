@@ -75,7 +75,7 @@ export const InternalComboboxOption = React.forwardRef<
         darkMode={darkMode}
         className={cx(
           comboboxOptionBaseStyle,
-          comboboxOptionSizeStyle[size],
+          comboboxOptionSizeStyle(size),
           className,
         )}
         onClick={handleOptionClick}

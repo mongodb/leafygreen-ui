@@ -15,6 +15,7 @@ import {
   fontFamilies,
   spacing,
   transitionDuration,
+  typeScales,
 } from '@leafygreen-ui/tokens';
 import { Description, Label } from '@leafygreen-ui/typography';
 
@@ -35,19 +36,20 @@ import {
   useStateRef,
 } from './utils';
 
+const labelDescriptionContainerStyle = css`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: ${spacing[1]}px;
+`;
+
 const wrapperStyle = css`
   display: flex;
   flex-direction: column;
-
-  > label + button,
-  > p + button {
-    margin-top: 3px;
-  }
 `;
 
 const largeLabelStyles = css`
-  font-size: 18px;
-  line-height: 22px;
+  font-size: ${typeScales.large.fontSize}px;
+  line-height: ${typeScales.large.lineHeight}px;
 `;
 
 const errorTextStyle = ({
@@ -496,59 +498,63 @@ export default function Select({
 
   return (
     <div className={cx(wrapperStyle, className)}>
-      {label && (
-        <Label
-          htmlFor={menuButtonId}
-          id={labelId}
-          darkMode={darkMode}
-          disabled={disabled}
-          className={cx(
-            {
-              [largeLabelStyles]: size === Size.Large,
-              [css`
-                font-size: ${baseFontSize}px;
-                line-height: 20px;
-              `]: size === Size.Default,
-            },
-            css`
-              // Prevent hover state from showing when hovering label
-              pointer-events: none;
-            `,
-            css`
-              ${MobileMediaQuery} {
-                font-size: ${mobileSizeSet.label.text}px;
-                line-height: ${mobileSizeSet.label.lineHeight}px;
-              }
-            `,
+      {(label || description) && (
+        <div className={labelDescriptionContainerStyle}>
+          {label && (
+            <Label
+              htmlFor={menuButtonId}
+              id={labelId}
+              darkMode={darkMode}
+              disabled={disabled}
+              className={cx(
+                {
+                  [largeLabelStyles]: size === Size.Large,
+                  [css`
+                    font-size: ${baseFontSize}px;
+                    line-height: 20px;
+                  `]: size === Size.Default,
+                },
+                css`
+                  // Prevent hover state from showing when hovering label
+                  pointer-events: none;
+                `,
+                css`
+                  ${MobileMediaQuery} {
+                    font-size: ${mobileSizeSet.label.text}px;
+                    line-height: ${mobileSizeSet.label.lineHeight}px;
+                  }
+                `,
+              )}
+            >
+              {label}
+            </Label>
           )}
-        >
-          {label}
-        </Label>
-      )}
 
-      {description && (
-        <Description
-          id={descriptionId}
-          darkMode={darkMode}
-          disabled={disabled}
-          className={cx(
-            {
-              [largeLabelStyles]: size === Size.Large,
-              [css`
-                font-size: ${baseFontSize}px;
-                line-height: 20px;
-              `]: size === Size.Default,
-            },
-            css`
-              ${MobileMediaQuery} {
-                font-size: ${mobileSizeSet.description.text}px;
-                line-height: ${mobileSizeSet.description.lineHeight}px;
-              }
-            `,
+          {description && (
+            <Description
+              id={descriptionId}
+              darkMode={darkMode}
+              disabled={disabled}
+              className={cx(
+                {
+                  [largeLabelStyles]: size === Size.Large,
+                  [css`
+                    font-size: ${baseFontSize}px;
+                    line-height: 20px;
+                  `]: size === Size.Default,
+                },
+                css`
+                  ${MobileMediaQuery} {
+                    font-size: ${mobileSizeSet.description.text}px;
+                    line-height: ${mobileSizeSet.description.lineHeight}px;
+                  }
+                `,
+              )}
+            >
+              {description}
+            </Description>
           )}
-        >
-          {description}
-        </Description>
+        </div>
       )}
 
       <SelectContext.Provider value={providerData}>
