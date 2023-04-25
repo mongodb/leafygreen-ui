@@ -1,4 +1,4 @@
-import React from 'react';
+import { PropsWithChildren } from 'react';
 
 import { AriaLabelProps } from '@leafygreen-ui/a11y';
 import { DarkModeProps } from '@leafygreen-ui/lib';
@@ -11,12 +11,7 @@ import { DarkModeProps } from '@leafygreen-ui/lib';
  *
  * `active`: The element is selected, or otherwise active (including `:active`)
  */
-export interface BaseInputOptionProps {
-  /**
-   * Content to appear inside of option
-   */
-  children?: React.ReactNode;
-
+export interface BaseInputOptionProps extends PropsWithChildren<{}> {
   /**
    * Prevents the option from being selectable.
    * @default false

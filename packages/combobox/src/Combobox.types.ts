@@ -277,7 +277,7 @@ export type ComboboxProps<M extends boolean> = Either<
  * Combobox Option Props
  */
 
-type LIProps = Omit<ComponentPropsWithoutRef<'li'>, 'onClick'>;
+type ListItemProps = Omit<ComponentPropsWithoutRef<'li'>, 'onClick'>;
 
 interface BaseValueProps {
   /**
@@ -324,7 +324,7 @@ interface BaseOptionalProps {
   ) => void;
 }
 
-type BaseComboboxOptionProps = LIProps &
+type BaseComboboxOptionProps = ListItemProps &
   BaseOptionalProps &
   Partial<BaseValueProps>;
 
@@ -340,9 +340,12 @@ export interface OptionObject
   hasGlyph?: boolean;
 }
 
-type LIPropsAndBaseValueProps = LIProps & BaseOptionalProps & BaseValueProps;
+type ListItemPropsAndBaseValueProps = ListItemProps &
+  BaseOptionalProps &
+  BaseValueProps;
 
-export interface InternalComboboxOptionProps extends LIPropsAndBaseValueProps {
+export interface InternalComboboxOptionProps
+  extends ListItemPropsAndBaseValueProps {
   isSelected: boolean;
   isFocused: boolean;
   setSelected: () => void;
