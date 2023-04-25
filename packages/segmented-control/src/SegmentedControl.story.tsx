@@ -29,7 +29,7 @@ export default {
       },
     },
     darkMode: storybookArgTypes.darkMode,
-    baseFontSize: storybookArgTypes.websiteBaseFontSize,
+    baseFontSize: storybookArgTypes.updatedBaseFontSize,
   },
   parameters: {
     controls: {
