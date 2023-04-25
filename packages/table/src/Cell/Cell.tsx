@@ -7,7 +7,6 @@ import {
   baseCellStyles,
   basicCellStyles,
   cellContentContainerStyles,
-  // standardCellHeight,
 } from './Cell.styles';
 import { CellProps } from '.';
 
