@@ -3,14 +3,20 @@ import { Meta } from '@storybook/react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
 
 import { SelectProps } from './types';
 import { Option, OptionGroup, Select } from '.';
 
-export default {
+export default StoryMeta({
   title: 'Components/Select',
   component: Select,
+  parameters: {
+    default: 'Uncontrolled',
+    controls: {
+      exclude: ['children'],
+    },
+  },
   args: {
     placeholder: 'Select',
     disabled: false,
@@ -39,22 +45,17 @@ export default {
     usePortal: true,
   },
   argTypes: {
-    children: { control: false },
     placeholder: { control: 'text' },
     disabled: { control: 'boolean' },
     label: { control: 'text' },
-    'aria-labelledby': { control: 'text' },
-    'aria-label': { control: 'text' },
     description: { control: 'text' },
-    darkMode: storybookArgTypes.darkMode,
-    id: { control: 'text' },
     value: { control: 'text' },
     defaultValue: { control: 'text' },
     readOnly: { control: 'boolean' },
     errorMessage: { control: 'text' },
     allowDeselect: { control: 'boolean' },
   },
-} as Meta<typeof Select>;
+}) as Meta<typeof Select>;
 
 export const Uncontrolled = ({ className, ...args }: SelectProps) => (
   <Select

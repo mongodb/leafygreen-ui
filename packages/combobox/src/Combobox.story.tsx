@@ -30,7 +30,14 @@ export default StoryMeta({
   parameters: {
     default: 'Demo',
     controls: {
-      exclude: ['as', 'filteredOptions', 'initialValue', 'setError', 'value'],
+      exclude: [
+        'as',
+        'filteredOptions',
+        'initialValue',
+        'setError',
+        'value',
+        'children',
+      ],
     },
   },
   argTypes: {

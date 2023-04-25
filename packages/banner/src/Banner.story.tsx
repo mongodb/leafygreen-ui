@@ -33,7 +33,6 @@ export default StoryMeta({
       defaultValue: Variant.Info,
     },
     children: storybookArgTypes.children,
-    darkMode: storybookArgTypes.darkMode,
   },
 });
 
