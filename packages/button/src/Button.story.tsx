@@ -1,33 +1,23 @@
-import React, { ElementType } from 'react';
-import { Meta, Story } from '@storybook/react';
+import React from 'react';
+import { Story } from '@storybook/react';
 
-import { BoxProps } from '@leafygreen-ui/box';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { StoryMeta } from '@leafygreen-ui/lib';
 
 import { Size } from './types';
 import Button, { ButtonProps, Variant } from '.';
 
-type ButtonStoryProps = BoxProps<ElementType<HTMLButtonElement>, ButtonProps>;
-
-// TODO: Ensure that TSDocs are being read from the Button component directly, not this StoryButton component
-/**
- * Buttons allow users to take actions, and make choices, with a single tap.
- */
-export const StoryButton: React.FC<ButtonStoryProps> = props => (
-  <Button {...props} />
-);
-
-export default {
+export default StoryMeta({
   title: 'Components/Button',
-  component: StoryButton,
+  component: Button,
   excludeStories: ['StoryButton'],
   args: {
     children: 'MongoDB',
     variant: Variant.Default,
   },
   parameters: {
+    default: 'Default',
     controls: {
       exclude: ['ref', 'onClick', 'className'],
     },
@@ -57,15 +47,14 @@ export default {
     href: {
       control: 'text',
     },
-    ...storybookArgTypes,
   },
-} as Meta<ButtonStoryProps>;
+});
 
-const Template: Story<ButtonStoryProps> = ({
+const Template: Story<ButtonProps> = ({
   leftGlyph,
   rightGlyph,
   ...args
-}: ButtonStoryProps) => (
+}: ButtonProps) => (
   <Button
     // @ts-expect-error
     leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
@@ -105,7 +94,7 @@ BaseGreen.args = {
   variant: Variant.BaseGreen,
 };
 
-export const WithGlobalDarkMode: Story<ButtonStoryProps> = args => (
+export const WithGlobalDarkMode: Story<ButtonProps> = args => (
   <LeafygreenProvider darkMode={true}>
     <Button {...args}>Test</Button>
   </LeafygreenProvider>
