@@ -25,10 +25,13 @@
       "path": "../polymorphic"
     },
     {
+      "path": "../leafygreen-provider"
+    },
+    {
       "path": "../tokens"
     },
     {
-      "path": "../leafygreen-provider"
-    }
+      "path": "../typography"
+    },
   ]
 }
