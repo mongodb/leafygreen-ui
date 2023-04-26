@@ -1,3 +1,38 @@
+# Upgrading v11 to v12
+
+Table v12 cleans up the API for features introduced in v11, allowing developers to use the Table component with no exports directly from `@tanstack/react-table`.
+
+For example, what used to be:
+
+```
+import {
+  getCoreRowModel,
+} from '@tanstack/react-table';
+
+const table = useLeafyGreenTable<Person>({
+  containerRef: tableContainerRef,
+  data,
+  columns,
+  getCoreRowModel: getCoreRowModel(),
+  getPaginationRowModel: getPaginationRowModel(),
+});
+```
+
+is now simply:
+
+```
+const table = useLeafyGreenTable<Person>({
+  containerRef: tableContainerRef,
+  data,
+  columns,
+  withPagination: true,
+});
+```
+
+Other props dependent on various row models (e.g. `getSortingRowModel`, `getExpandedRowModel`, etc. are now also baked into `useLeafyGreenTable`.)
+
+Given this change, the package no longer exports all exports from `@tanstack/react-table`. The only exports from v12 are types/interfaces and `flexRender` [(Source)](https://github.com/TanStack/table/blob/8c290319134a56a14b8204d309479d03a64edc72/packages/react-table/src/index.tsx#L15), which allows for rendering dynamic values by column and is used heavily throughout our examples.
+
 # Upgrading v10 to v11
 
 Table v11 introduces a large set of new features and API changes including virtualized scrolling, sticky header rows, and a composition-based API. For a functional overview, refer to the [project brief](https://docs.google.com/document/u/1/d/1AaZfYAGi9MCxU-cutWovDwTl_4jViUP34QwMFiWMSxU/edit).
