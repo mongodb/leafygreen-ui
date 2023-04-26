@@ -18,6 +18,7 @@ export type LGRowData = RowData;
 
 export type LGTableDataType<T extends LGRowData> = T & {
   renderExpandedContent?: (row: LeafyGreenTableRow<T>) => JSX.Element;
+  subRows?: Array<LGTableDataType<T>>;
 };
 
 /** LeafyGreen extension of `useReactTable` {@link Cell}*/
@@ -36,11 +37,12 @@ export type LGColumnDef<T extends LGRowData> = ColumnDef<LGTableDataType<T>> & {
 
 /** LeafyGreen extension of `useReactTable` {@link TableOptions}*/
 export interface LeafyGreenTableOptions<T extends LGRowData>
-  extends TableOptions<LGTableDataType<T>> {
+  extends Omit<TableOptions<LGTableDataType<T>>, 'getCoreRowModel'> {
   containerRef: RefObject<HTMLDivElement>;
   hasSelectableRows?: boolean;
   useVirtualScrolling?: boolean;
   columns: Array<LGColumnDef<T>>;
+  withPagination?: boolean;
 }
 
 /** LeafyGreen extension of `useReactTable` {@link Table}*/

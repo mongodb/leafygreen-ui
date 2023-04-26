@@ -27,7 +27,7 @@ const range = (len: number) => {
   return arr;
 };
 
-function randomIntFromInterval(min: number, max: number) {
+export function randomIntFromInterval(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
