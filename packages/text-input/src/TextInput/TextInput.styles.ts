@@ -279,6 +279,7 @@ export const inputSizeStyles: Record<SizeVariant, string> = {
   `,
 };
 
+// Below numbers are "magic" because they need to account for border, font's letter widths, etc
 export const inputPaddingForIndicator: Record<SizeVariant, string> = {
   [SizeVariant.XSmall]: css`
     padding-right: 31px;
@@ -294,6 +295,7 @@ export const inputPaddingForIndicator: Record<SizeVariant, string> = {
   `,
 };
 
+// Below numbers are "magic" because they need to account for border, font's letter widths, etc
 export const inputPaddingForOptionalText: Record<SizeVariant, string> = {
   [SizeVariant.XSmall]: css`
     padding-right: 64px;
@@ -381,6 +383,7 @@ export const inputIndicatorStyle = css`
   right: 2px; // account for border width
 `;
 
+// Below numbers are "magic" because they need to account for icon heights, margins, etc that would need larger refactoring to make DRY
 export const inputIndicatorHeight: Record<SizeVariant, string> = {
   [SizeVariant.XSmall]: css`
     height: 16px;
@@ -415,6 +418,7 @@ export const inputIndicatorBgColor = (theme: Theme, disabled: boolean) => {
   `;
 };
 
+// Below numbers are "magic" because they need to account for border width, etc that would need larger refactoring to make DRY
 export const inputIndicatorSizeStyle: Record<SizeVariant, string> = {
   [SizeVariant.XSmall]: css`
     padding-right: 6px;
@@ -464,6 +468,7 @@ export const optionalTextBaseStyle = css`
   }
 `;
 
+// Below numbers are "magic" because they need to account for border width, font line height, etc that would need larger refactoring to make DRY
 export const optionalTextHeight: Record<SizeVariant, string> = {
   [SizeVariant.XSmall]: css`
     height: 12px;
