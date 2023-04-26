@@ -11,6 +11,7 @@ import { chipClassName } from '../Combobox/Combobox.styles';
 import { ComboboxContext } from '../ComboboxContext';
 
 import {
+  chipButtonBaseDisabledStyles,
   chipButtonDisabledStyle,
   chipButtonSizeStyle,
   chipButtonStyle,
@@ -19,6 +20,7 @@ import {
   chipWrapperBaseStyle,
   chipWrapperSizeStyle,
   chipWrapperThemeStyle,
+  disabledBaseChipWrapperStyles,
   disabledChipWrapperStyle,
 } from './Chip.styles';
 
@@ -121,7 +123,10 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
           chipWrapperThemeStyle[theme],
           chipWrapperSizeStyle(size),
           {
-            [disabledChipWrapperStyle[theme]]: disabled,
+            [cx(
+              disabledChipWrapperStyle[theme],
+              disabledBaseChipWrapperStyles,
+            )]: disabled,
           },
         )}
         onClick={handleChipClick}
@@ -151,7 +156,10 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
             chipButtonThemeStyle[theme],
             chipButtonSizeStyle(size),
             {
-              [chipButtonDisabledStyle[theme]]: disabled,
+              [cx(
+                chipButtonDisabledStyle[theme],
+                chipButtonBaseDisabledStyles,
+              )]: disabled,
             },
           )}
           onClick={handleButtonClick}
