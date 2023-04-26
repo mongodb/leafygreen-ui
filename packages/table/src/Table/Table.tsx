@@ -21,7 +21,6 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
     {
       children,
       className,
-      tableContainerClassName,
       shouldAlternateRowColor = false,
       baseFontSize: baseFontSizeProp,
       darkMode: darkModeProp,

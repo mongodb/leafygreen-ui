@@ -115,6 +115,24 @@ This option determines how the row's expanded content will be rendered. Refer to
 
 ---
 
+#### `data` / `subRows`
+
+`useLeafygreenTable` extends `react-table`'s `data` [option](https://tanstack.com/table/v8/docs/api/core/table#data) to allow a `subRows` prop to be passed to the table's data type.
+
+https://github.com/mongodb/leafygreen-ui/blob/734da7f621c96c6e0de5e431e28162757166fa79/packages/table/src/useLeafygreenTable/useLeafygreenTable.types.ts#L27-L29
+
+This option defines the data displayed in nested rows and expects an array of objects with the same shape as other rows. Rows can be nested multiple times. Refer to [Storybook deployment](https://mongodb.github.io/leafygreen-ui) for an example.
+
+---
+
+#### `columns` / `align`
+
+`useLeafygreenTable` extends `react-table`'s `columns` [option](https://tanstack.com/table/v8/docs/api/core/table#columns) to allow a `align` prop to be passed to the column's data.
+
+This option determines the alignment of the column. Refer to [Storybook deployment](https://mongodb.github.io/leafygreen-ui) for an example.
+
+---
+
 ## `Table`
 
 #### Props
@@ -149,24 +167,18 @@ All HTML `tr` element props
 
 #### Props
 
-| Name      | Description                                                                                                                           | Type                | Default                     |
-| --------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | --------------------------- |
-| align     | The `align` prop set on a HeaderCell will serve as the default `align` prop on the TableCell corresponding to the HeaderCell's index. | `td` `align` values |                             |
-| sortState | Determines the current sorting direction.                                                                                             | `SortState`         | `'asc' 'desc' 'off' 'none'` |
-| header    | `Header` object returned from the `useLeafygreenTable` hook.                                                                          | Header<T, any>      | -                           |
+| Name      | Description                                                  | Type           | Default                     |
+| --------- | ------------------------------------------------------------ | -------------- | --------------------------- |
+| sortState | Determines the current sorting direction.                    | `SortState`    | `'asc' 'desc' 'off' 'none'` |
+| header    | `Header` object returned from the `useLeafygreenTable` hook. | Header<T, any> | -                           |
 
 \+ other HTML `th` element props
 
 ### TableBody
 
-| Name                    | Description                                                          | Type              | Default |
-| ----------------------- | -------------------------------------------------------------------- | ----------------- | ------- |
-| renderingExpandableRows | Indicate whether the Table is rendering expandable rows in its body. | `boolean`         | `false` |
-| table                   | Return value from the `useLeafygreenTable` hook.                     | `LeafygreenTable` | -       |
+`TableBody` accepts HTML `tbody` element props.
 
-\+ other HTML `tbody` element props
-
-> The `TableBody` will render as a `React.Fragment` when `renderingExpandableRows` is `true` to support virtualized scrolling on rows with unknown heights.
+> The `TableBody` will render as a `React.Fragment` when Tables have expandable or nested rows to support virtualized scrolling on rows with unknown heights.
 >
 > This is done to ensure that dynamic heights of rows with expandable content can be measured using a `ref` using a `tbody` element. In lieu of a `rowgroup` HTML element, expandable content relies on `tbody` to track groups of rows. This means the `TableBody` needs to render as a `React.Fragment` to ensure there aren't `tbody` elements inside `tbody` elements.
 
@@ -182,11 +194,7 @@ All HTML `tr` element props
 
 ### Cell
 
-| Name | Description                                            | Type                | Default |
-| ---- | ------------------------------------------------------ | ------------------- | ------- |
-| cell | Cell object passed from the `useLeafygreenTable` hook. | `LeafygreenCell<T>` | -       |
-
-\+ other HTML `td` element props
+`Cell` accepts HTML `td` element props.
 
 > The `Cell` component does not automatically handle overflowing text content, as `text-overflow` depends on the element having `overflow: hidden` and an explicit pixel width value. Refer to the LeafyGreen [Storybook deployment](https://mongodb.github.io/leafygreen-ui/) for an example.
 
