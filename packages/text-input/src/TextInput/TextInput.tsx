@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
