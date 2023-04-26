@@ -287,7 +287,7 @@ export const inputPaddingForIndicator: Record<SizeVariant, string> = {
     padding-right: 34px;
   `,
   [SizeVariant.Default]: css`
-    padding-right: 35px;
+    padding-right: 37px;
   `,
   [SizeVariant.Large]: css`
     padding-right: 39px;
