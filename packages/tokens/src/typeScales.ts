@@ -30,6 +30,10 @@ const typeScales = {
     fontSize: 12,
     lineHeight: 20,
   } as const,
+  large: {
+    fontSize: 18,
+    lineHeight: 22,
+  } as const,
 } as const;
 
 export default typeScales;

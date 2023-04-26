@@ -15,6 +15,7 @@ import {
   inputOptionStyles,
   inputOptionThemeStyles,
   inputOptionWedge,
+  titleSelectionStyles,
 } from './InputOption.style';
 import { InputOptionProps } from './InputOption.types';
 
@@ -51,6 +52,7 @@ export const InputOption = Polymorphic<InputOptionProps>(
             [inputOptionActiveStyles[theme]]:
               isInteractive && (selected || highlighted),
             [inputOptionDisabledStyles[theme]]: disabled,
+            [titleSelectionStyles]: selected,
           },
           className,
         )}
