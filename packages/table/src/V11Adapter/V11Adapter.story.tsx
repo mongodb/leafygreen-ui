@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Meta } from '@storybook/react';
 
 import Badge from '@leafygreen-ui/badge';
+import { css } from '@leafygreen-ui/emotion';
 
 import { defaultData } from '../TableV10/fixtures';
-import { makeData } from '../utils/makeData.testutils';
+import { makeData, randomIntFromInterval } from '../utils/makeData.testutils';
 import {
   V10Cell as Cell,
   V10HeaderRow as HeaderRow,
@@ -18,6 +19,10 @@ export default {
   title: 'Components/Table/V11 Adapter',
   component: V11Adapter,
 } as Meta<typeof V11Adapter>;
+
+const virtualScrollingContainerHeight = css`
+  height: 500px;
+`;
 
 export const Basic = () => {
   return (
@@ -46,9 +51,45 @@ export const Basic = () => {
   );
 };
 
+export const DynamicData = () => {
+  const [data, setData] = useState(defaultData.slice(0, 8));
+
+  const handleClick = () => {
+    setData(defaultData.slice(2, randomIntFromInterval(0, defaultData.length)));
+  };
+
+  return (
+    <>
+      <button onClick={handleClick}>Randomize data length</button>
+      <V11Adapter>
+        <Table
+          data={data}
+          columns={
+            <HeaderRow>
+              <TableHeader key="name" label="Name" dataType="string" />
+              <TableHeader key="age" label="Age" dataType="number" />
+              <TableHeader key="color" label="Color" dataType="string" />
+              <TableHeader key="location" label="Location" />
+            </HeaderRow>
+          }
+        >
+          {({ datum }: any) => (
+            <Row>
+              <Cell>{datum.name}</Cell>
+              <Cell>{datum.age}</Cell>
+              <Cell>{datum.color}</Cell>
+              <Cell>{datum.location}</Cell>
+            </Row>
+          )}
+        </Table>
+      </V11Adapter>
+    </>
+  );
+};
+
 export const BasicVS = () => {
   return (
-    <V11Adapter useVirtualScrolling>
+    <V11Adapter useVirtualScrolling className={virtualScrollingContainerHeight}>
       <Table
         data={makeData(false, 1000)}
         columns={
@@ -140,7 +181,7 @@ export const NestedRows = () => {
 
 export const NestedRowsVS = () => {
   return (
-    <V11Adapter useVirtualScrolling>
+    <V11Adapter useVirtualScrolling className={virtualScrollingContainerHeight}>
       <Table
         data={makeData(false, 1000, 5, 3)}
         columns={
@@ -227,7 +268,7 @@ export const ExpandableContent = () => {
 
 export const ExpandableContentVS = () => {
   return (
-    <V11Adapter useVirtualScrolling>
+    <V11Adapter useVirtualScrolling className={virtualScrollingContainerHeight}>
       <Table
         data={makeData(true, 1000)}
         columns={
@@ -347,6 +388,7 @@ export const SortableRowsVS = () => {
         headerLabels={{
           Relationship: 'status',
         }}
+        className={virtualScrollingContainerHeight}
       >
         <Table
           data={makeData(true, 1000)}
@@ -433,7 +475,11 @@ export const SelectableRows = () => {
 
 export const SelectableRowsVS = () => {
   return (
-    <V11Adapter hasSelectableRows useVirtualScrolling>
+    <V11Adapter
+      hasSelectableRows
+      useVirtualScrolling
+      className={virtualScrollingContainerHeight}
+    >
       <Table
         data={makeData(true, 1000)}
         columns={
