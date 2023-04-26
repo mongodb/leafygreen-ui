@@ -1,3 +1,4 @@
+export { checkScrollPosition } from './checkScrollPosition';
 export { flattenChildren } from './flattenChildren';
 export { getNameAndValue } from './getNameAndValue';
 export {

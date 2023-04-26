@@ -53,9 +53,11 @@ export const errorMessageWrapperStyles = css`
 `;
 
 export const errorMessageStyles = css`
-  margin-top: 4px;
+  margin-top: ${spacing[1]}px;
 `;
 
 export const labelDescriptionStyles = css`
   margin-bottom: ${spacing[1]}px;
+  display: flex;
+  flex-direction: column;
 `;

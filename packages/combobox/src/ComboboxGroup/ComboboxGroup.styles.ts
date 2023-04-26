@@ -1,13 +1,14 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
+import { spacing } from '@leafygreen-ui/tokens';
 
 export const comboboxGroupStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    padding-top: 8px;
+    padding-top: ${spacing[2]}px;
   `,
   [Theme.Dark]: css`
-    padding-top: 8px;
+    padding-top: ${spacing[2]}px;
   `,
 };
 

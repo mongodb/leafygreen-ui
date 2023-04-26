@@ -115,12 +115,14 @@ import { Combobox, ComboboxOption } from '@leafygreen-ui/combobox';
 
 ## Props
 
-| Prop          | Type      | Description                                                                                                                                                                   | Default |
-| ------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `value`       | `string`  | The internal value of the option. Used as the identifier in Combobox `initialValue`, `value` and `filteredOptions`. When undefined, this is set to `_.kebabCase(displayName)` |         |
-| `displayName` | `string`  | The display value of the option. Used as the rendered string within the menu and chips. When undefined, this is set to `value`                                                |         |
-| `glyph`       | `<Icon/>` | The icon to display to the left of the option in the menu.                                                                                                                    |         |
-| `className`   | `string`  | The className passed to the root element of the component.                                                                                                                    |         |
+| Prop          | Type                                                                         | Description                                                                                                                                                                   | Default |
+| ------------- | ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `value`       | `string`                                                                     | The internal value of the option. Used as the identifier in Combobox `initialValue`, `value` and `filteredOptions`. When undefined, this is set to `_.kebabCase(displayName)` |         |
+| `displayName` | `string`                                                                     | The display value of the option. Used as the rendered string within the menu and chips. When undefined, this is set to `value`                                                |         |
+| `glyph`       | `<Icon/>`                                                                    | The icon to display to the left of the option in the menu.                                                                                                                    |         |
+| `className`   | `string`                                                                     | The className passed to the root element of the component.                                                                                                                    |         |
+| `description` | `string`                                                                     | Optional descriptive text under the displayName.                                                                                                                              |         |
+| `onClick`     | `(event: React.SyntheticEvent<HTMLLIElement, Event>, value: string) => void` | Callback fired when an option is clicked. Returns the event and the option value.                                                                                             |         |
 
 # ComboboxGroup
 
