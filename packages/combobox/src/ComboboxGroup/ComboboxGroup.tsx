@@ -13,6 +13,9 @@ import {
   comboboxGroupStyle,
 } from './ComboboxGroup.styles';
 
+/**
+ * @internal
+ */
 export function InternalComboboxGroup({
   label,
   className,

@@ -26,6 +26,7 @@ import { getGlyphs } from './getGlyphs';
  * Internal ComboboxOption Component for use within Combobox only.
  *
  * Prefer using {@link ComboboxOption}
+ * @internal
  */
 export const InternalComboboxOption = React.forwardRef<
   HTMLLIElement,

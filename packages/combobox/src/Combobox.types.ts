@@ -277,9 +277,9 @@ export type ComboboxProps<M extends boolean> = Either<
  * Combobox Option Props
  */
 
-type ListItemProps = Omit<ComponentPropsWithoutRef<'li'>, 'onClick'>;
+type ListItemProps = Omit<ComponentPropsWithoutRef<'li'>, 'onClick' | 'value'>;
 
-interface BaseValueProps {
+interface SharedComboboxOptionProps {
   /**
    * The internal value of the option. Used as the identifier in Combobox `initialValue`, value and filteredOptions.
    * When undefined, this is set to `_.kebabCase(displayName)`
@@ -291,9 +291,7 @@ interface BaseValueProps {
    * When undefined, this is set to `value`
    */
   displayName?: string;
-}
 
-interface BaseOptionalProps {
   /**
    * The icon to display to the left of the option in the menu.
    */
@@ -311,12 +309,12 @@ interface BaseOptionalProps {
   className?: string;
 
   /**
-   * Optional descriptive text under the displayName
+   * Optional descriptive text under the displayName.
    */
   description?: string;
 
   /**
-   * Callback fired when an option is clicked. Returns the event and the option value.
+   * Callback fired when an option is clicked.
    */
   onClick?: (
     event: React.SyntheticEvent<HTMLLIElement, Event>,
@@ -324,9 +322,11 @@ interface BaseOptionalProps {
   ) => void;
 }
 
-type BaseComboboxOptionProps = ListItemProps &
-  BaseOptionalProps &
-  BaseValueProps;
+type RequiredComboboxOptionProps = Required<
+  Pick<SharedComboboxOptionProps, 'value' | 'displayName'>
+>;
+
+type BaseComboboxOptionProps = ListItemProps & SharedComboboxOptionProps;
 
 export type ComboboxOptionProps = Either<
   BaseComboboxOptionProps,
@@ -334,18 +334,16 @@ export type ComboboxOptionProps = Either<
 >;
 
 export interface OptionObject
-  extends Required<BaseValueProps>,
-    Pick<BaseOptionalProps, 'description' | 'onClick'> {
+  extends Pick<SharedComboboxOptionProps, 'description' | 'onClick'>,
+    RequiredComboboxOptionProps {
   isDisabled: boolean;
   hasGlyph?: boolean;
 }
 
-type ListItemPropsAndBaseValueProps = ListItemProps &
-  BaseOptionalProps &
-  Required<BaseValueProps>;
-
 export interface InternalComboboxOptionProps
-  extends ListItemPropsAndBaseValueProps {
+  extends ListItemProps,
+    Omit<SharedComboboxOptionProps, 'value' | 'displayName'>,
+    RequiredComboboxOptionProps {
   isSelected: boolean;
   isFocused: boolean;
   setSelected: () => void;
