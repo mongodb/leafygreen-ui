@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
 import { ComponentStory } from '@storybook/react';
-import {
-  flexRender,
-  getCoreRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  HeaderGroup,
-} from '@tanstack/react-table';
 
 import Badge from '@leafygreen-ui/badge';
+import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { StoryMeta } from '@leafygreen-ui/lib';
@@ -23,7 +17,9 @@ import { AnyDict } from './utils/types';
 import {
   Cell,
   ExpandedContent,
+  flexRender,
   HeaderCell,
+  type HeaderGroup,
   HeaderRow,
   type LeafyGreenTableCell,
   type LeafyGreenTableRow,
@@ -189,8 +185,6 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
     containerRef: tableContainerRef,
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    getSubRows: row => row.subRows,
   });
 
   const { rows } = table.getRowModel();
@@ -321,7 +315,6 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
     containerRef: tableContainerRef,
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
   });
 
   const { rows } = table.getRowModel();
@@ -429,8 +422,6 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
     containerRef: tableContainerRef,
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
   });
 
   const { rows } = table.getRowModel();
@@ -534,7 +525,6 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
       rowSelection,
     },
     onRowSelectionChange: setRowSelection,
-    getCoreRowModel: getCoreRowModel(),
     hasSelectableRows: true,
   });
 
@@ -657,9 +647,7 @@ export const WithPagination: ComponentStory<typeof Table> = ({
     containerRef: tableContainerRef,
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    withPagination: true,
   });
 
   const { rows } = table.getRowModel();
@@ -798,15 +786,19 @@ export const KitchenSink: ComponentStory<typeof Table> = args => {
     containerRef: tableContainerRef,
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getSubRows: row => row.subRows,
   });
 
   const { rows } = table.getRowModel();
 
   return (
-    <Table {...args} table={table} ref={tableContainerRef}>
+    <Table
+      {...args}
+      table={table}
+      ref={tableContainerRef}
+      className={css`
+        width: 1100px;
+      `}
+    >
       <TableHead>
         {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
           <HeaderRow key={headerGroup.id}>

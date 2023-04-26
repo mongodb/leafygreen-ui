@@ -7,7 +7,7 @@ import { TableProps } from '..';
 
 export type V11AdapterProps<T extends LGRowData> = PropsWithChildren<
   Pick<LeafyGreenTableOptions<T>, 'useVirtualScrolling' | 'hasSelectableRows'> &
-    Pick<TableProps<T>, 'shouldAlternateRowColor'> &
+    Pick<TableProps<T>, 'shouldAlternateRowColor' | 'className'> &
     DarkModeProps & {
       /**
        * Mapping of TableHeader label to the key of the field in the Table's data
