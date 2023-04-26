@@ -1,4 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
+import { leftGlyphClassName } from '@leafygreen-ui/input-option';
+import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
 import { fontSize, lineHeight } from '../Chip/Chip.styles';
@@ -12,13 +15,6 @@ import {
  * Styles
  */
 
-export const comboboxOptionBaseStyle = css`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  list-style: none;
-`;
-
 export const comboboxOptionSizeStyle = (size: ComboboxSize) => css`
   font-size: ${fontSize[size]}px;
   line-height: ${lineHeight[size]}px;
@@ -31,7 +27,7 @@ export const comboboxOptionSizeStyle = (size: ComboboxSize) => css`
   }
 `;
 
-export const checkIconStyle: Record<ComboboxSize, string> = {
+export const checkMarkSizeStyle: Record<ComboboxSize, string> = {
   [ComboboxSize.XSmall]: css`
     min-width: ${spacing[3]}px;
   `,
@@ -46,12 +42,14 @@ export const checkIconStyle: Record<ComboboxSize, string> = {
   `,
 };
 
-export const flexSpan = css`
-  display: inline-flex;
-  gap: 8px;
-  justify-content: start;
-  align-items: inherit;
-  overflow-wrap: anywhere;
+export const checkBoxBaseStyles = css`
+  pointer-events: none;
+  gap: 0;
+
+  label {
+    gap: 0;
+    align-items: center;
+  }
 `;
 
 export const disallowPointer = css`
@@ -60,4 +58,60 @@ export const disallowPointer = css`
 
 export const displayNameStyle = (isSelected: boolean) => css`
   font-weight: ${isSelected ? 'bold' : 'normal'};
+`;
+
+export const iconThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.dark1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.base};
+  `,
+};
+
+export const iconHighlightedStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.blue.dark1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.blue.light3};
+  `,
+};
+
+export const iconDisabledStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.light1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.dark1};
+  `,
+};
+
+export const checkMarkThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.blue.base};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.blue.light1};
+  `,
+};
+
+export const checkMarkDisabledStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.light1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.dark1};
+  `,
+};
+
+export const multiselectIconPosition = css`
+  .${leftGlyphClassName} {
+    align-self: baseline;
+  }
+`;
+export const multiselectIconLargePosition = css`
+  .${leftGlyphClassName} {
+    height: 28px;
+  }
 `;

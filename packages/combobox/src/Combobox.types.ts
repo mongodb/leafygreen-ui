@@ -277,7 +277,9 @@ export type ComboboxProps<M extends boolean> = Either<
  * Combobox Option Props
  */
 
-interface BaseComboboxOptionProps extends ComponentPropsWithoutRef<'li'> {
+type ListItemProps = Omit<ComponentPropsWithoutRef<'li'>, 'onClick' | 'value'>;
+
+interface SharedComboboxOptionProps {
   /**
    * The internal value of the option. Used as the identifier in Combobox `initialValue`, value and filteredOptions.
    * When undefined, this is set to `_.kebabCase(displayName)`
@@ -305,30 +307,46 @@ interface BaseComboboxOptionProps extends ComponentPropsWithoutRef<'li'> {
    * Styling Prop
    */
   className?: string;
+
+  /**
+   * Optional descriptive text under the displayName.
+   */
+  description?: string;
+
+  /**
+   * Callback fired when an option is clicked.
+   */
+  onClick?: (
+    event: React.SyntheticEvent<HTMLLIElement, Event>,
+    value: string,
+  ) => void;
 }
+
+type RequiredComboboxOptionProps = Required<
+  Pick<SharedComboboxOptionProps, 'value' | 'displayName'>
+>;
+
+type BaseComboboxOptionProps = ListItemProps & SharedComboboxOptionProps;
 
 export type ComboboxOptionProps = Either<
   BaseComboboxOptionProps,
   'value' | 'displayName'
 >;
 
-export interface OptionObject {
-  value: string;
-  displayName: string;
+export interface OptionObject
+  extends Pick<SharedComboboxOptionProps, 'description' | 'onClick'>,
+    RequiredComboboxOptionProps {
   isDisabled: boolean;
   hasGlyph?: boolean;
 }
 
 export interface InternalComboboxOptionProps
-  extends ComponentPropsWithoutRef<'li'> {
-  value: string;
-  displayName: string;
+  extends ListItemProps,
+    Omit<SharedComboboxOptionProps, 'value' | 'displayName'>,
+    RequiredComboboxOptionProps {
   isSelected: boolean;
   isFocused: boolean;
   setSelected: () => void;
-  disabled?: boolean;
-  glyph?: ReactElement;
-  className?: string;
   index: number;
 }
 

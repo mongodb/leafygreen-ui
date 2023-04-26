@@ -1,5 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   fontFamilies,
@@ -7,6 +7,11 @@ import {
   transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
+
+export const titleClassName = createUniqueClassName('input-option-title');
+export const descriptionClassName = createUniqueClassName(
+  'input-option-description',
+);
 
 export const inputOptionStyles = css`
   position: relative;
@@ -32,14 +37,18 @@ export const inputOptionStyles = css`
   }
 `;
 
+export const titleSelectionStyles = css`
+  .${titleClassName} {
+    font-weight: bold;
+  }
+`;
+
 export const inputOptionThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.black};
-    background-color: ${palette.white};
   `,
   [Theme.Dark]: css`
-    color: ${palette.white};
-    background-color: ${palette.gray.dark3};
+    color: ${palette.gray.light2};
   `,
 };
 
@@ -86,6 +95,7 @@ export const inputOptionActiveStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     outline: none;
     background-color: ${palette.blue.light3};
+    color: ${palette.blue.dark2};
 
     &:before {
       transform: scaleY(1) translateY(-50%);
@@ -95,6 +105,7 @@ export const inputOptionActiveStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     outline: none;
     background-color: ${palette.blue.dark3};
+    color: ${palette.blue.light3};
 
     &:before {
       transform: scaleY(1) translateY(-50%);
@@ -106,7 +117,11 @@ export const inputOptionActiveStyles: Record<Theme, string> = {
 export const inputOptionDisabledStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     cursor: not-allowed;
-    color: ${palette.gray.light1};
+
+    &,
+    & .${descriptionClassName} {
+      color: ${palette.gray.light1};
+    }
 
     &:hover {
       background-color: inherit;
@@ -118,7 +133,11 @@ export const inputOptionDisabledStyles: Record<Theme, string> = {
   `,
   [Theme.Dark]: css`
     cursor: not-allowed;
-    color: ${palette.gray.dark1};
+
+    &,
+    & .${descriptionClassName} {
+      color: ${palette.gray.dark1};
+    }
 
     &:hover {
       background-color: inherit;
