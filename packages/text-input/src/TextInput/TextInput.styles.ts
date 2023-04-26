@@ -6,6 +6,7 @@ import {
   focusRing,
   fontFamilies,
   hoverRing,
+  spacing,
   transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
@@ -278,6 +279,36 @@ export const inputSizeStyles: Record<SizeVariant, string> = {
   `,
 };
 
+export const inputPaddingForIndicator: Record<SizeVariant, string> = {
+  [SizeVariant.XSmall]: css`
+    padding-right: 31px;
+  `,
+  [SizeVariant.Small]: css`
+    padding-right: 34px;
+  `,
+  [SizeVariant.Default]: css`
+    padding-right: 35px;
+  `,
+  [SizeVariant.Large]: css`
+    padding-right: 39px;
+  `,
+};
+
+export const inputPaddingForOptionalText: Record<SizeVariant, string> = {
+  [SizeVariant.XSmall]: css`
+    padding-right: 64px;
+  `,
+  [SizeVariant.Small]: css`
+    padding-right: 69px;
+  `,
+  [SizeVariant.Default]: css`
+    padding-right: 71px;
+  `,
+  [SizeVariant.Large]: css`
+    padding-right: 74px;
+  `,
+};
+
 export const inputStateStyles: Record<State, Record<Theme, string>> = {
   [State.Valid]: {
     [Theme.Light]: css`
@@ -346,20 +377,56 @@ export const inputIndicatorStyle = css`
   display: flex;
   align-items: center;
   z-index: 1;
+  padding-left: ${spacing[2]}px;
+  right: 2px; // account for border width
 `;
+
+export const inputIndicatorHeight: Record<SizeVariant, string> = {
+  [SizeVariant.XSmall]: css`
+    height: 16px;
+  `,
+  [SizeVariant.Small]: css`
+    height: 28px;
+  `,
+  [SizeVariant.Default]: css`
+    height: 32px;
+  `,
+  [SizeVariant.Large]: css`
+    height: 36px;
+  `,
+};
+
+const inputIndicatorThemeColor = {
+  [Theme.Dark]: {
+    default: palette.gray.dark4,
+    disabled: palette.gray.dark3,
+  },
+  [Theme.Light]: {
+    default: palette.white,
+    disabled: palette.gray.light2,
+  },
+};
+
+export const inputIndicatorBgColor = (theme: Theme, disabled: boolean) => {
+  return css`
+    background-color: ${inputIndicatorThemeColor[theme][
+      disabled ? 'disabled' : 'default'
+    ]};
+  `;
+};
 
 export const inputIndicatorSizeStyle: Record<SizeVariant, string> = {
   [SizeVariant.XSmall]: css`
-    right: 10px;
+    padding-right: 6px;
   `,
   [SizeVariant.Small]: css`
-    right: 10px;
+    padding-right: 10px;
   `,
   [SizeVariant.Default]: css`
-    right: 12px;
+    padding-right: 12px;
   `,
   [SizeVariant.Large]: css`
-    right: 16px;
+    padding-right: 14px;
   `,
 };
 
@@ -387,9 +454,30 @@ export const stateIndicatorStyles: Record<
 
 export const optionalTextBaseStyle = css`
   font-size: 12px;
+  line-height: 12px;
   font-style: italic;
   font-weight: normal;
+  display: flex;
+  align-items: center;
+  > p {
+    margin: 0;
+  }
 `;
+
+export const optionalTextHeight: Record<SizeVariant, string> = {
+  [SizeVariant.XSmall]: css`
+    height: 12px;
+  `,
+  [SizeVariant.Small]: css`
+    height: 16px;
+  `,
+  [SizeVariant.Default]: css`
+    height: 20px;
+  `,
+  [SizeVariant.Large]: css`
+    height: 24px;
+  `,
+};
 
 export const optionalTextThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`

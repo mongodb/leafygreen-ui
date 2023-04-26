@@ -24,12 +24,16 @@ import {
   inheritTypeScale,
   inputContainerStyle,
   inputFocusStyles,
+  inputIndicatorBgColor,
   inputIndicatorSizeStyle,
   inputIndicatorStyle,
   inputModeStyles,
+  inputPaddingForIndicator,
+  inputPaddingForOptionalText,
   inputSizeStyles,
   inputStateStyles,
   optionalTextBaseStyle,
+  optionalTextHeight,
   optionalTextThemeStyle,
   stateIndicatorStyles,
   textContainerStyle,
@@ -198,9 +202,9 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               inputStateStyles[state][theme],
               inputFocusStyles[theme], // Always show focus styles
               {
-                [css`
-                  padding-right: 60px;
-                `]: optional && !disabled,
+                [inputPaddingForIndicator[sizeVariant]]: state !== State.None,
+                [inputPaddingForOptionalText[sizeVariant]]:
+                  state === State.None && optional,
               },
             )}
             value={value}
@@ -220,6 +224,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               iconClassName,
               inputIndicatorStyle,
               inputIndicatorSizeStyle[sizeVariant],
+              inputIndicatorBgColor(theme, disabled),
             )}
           >
             {/* Render State Icon or Optional text*/}
@@ -242,6 +247,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
                 className={cx(
                   optionalTextBaseStyle,
                   optionalTextThemeStyle[theme],
+                  optionalTextHeight[sizeVariant],
                 )}
               >
                 <p>Optional</p>
