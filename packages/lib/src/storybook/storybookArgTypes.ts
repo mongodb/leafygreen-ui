@@ -24,14 +24,6 @@ export const storybookArgTypes = {
     description: 'Render the component in dark mode.',
     control: 'boolean',
   },
-  ref: {
-    description: '`ref` passed to the component',
-    control: 'none',
-  },
-  onClick: {
-    description: 'Function to handle a click event.',
-    control: 'none',
-  },
   children: {
     description: 'Element rendered inside the component',
     control: 'text',
@@ -42,5 +34,6 @@ export const storybookArgTypes = {
     options: IntrinsicElements,
     type: { name: 'string' },
     control: { type: 'select' },
+    defaultValue: 'button',
   },
 } as const;

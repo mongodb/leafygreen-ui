@@ -4,7 +4,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 import {
@@ -42,14 +42,15 @@ const displayFlex = css`
   gap: 8px;
 `;
 
-export default {
+export default StoryMeta({
   title: 'Components/Typography',
   parameters: {
+    default: 'AllTypography',
     controls: {
       exclude: ['className'],
     },
   },
-};
+});
 
 // eslint-disable-next-line react/prop-types
 export const AllTypography = ({

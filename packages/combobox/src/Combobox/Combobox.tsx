@@ -66,7 +66,10 @@ import {
 import {
   baseComboboxStyles,
   baseInputElementStyle,
+<<<<<<< HEAD
   caretIconDisabledStyles,
+=======
+>>>>>>> 77320a6b805bb2bcf78fb641aeb48930583737ad
   caretIconThemeStyles,
   clearButtonStyle,
   comboboxDisabledStyles,
@@ -82,7 +85,10 @@ import {
   errorMessageThemeStyle,
   iconsWrapperBaseStyles,
   iconsWrapperSizeStyles,
+<<<<<<< HEAD
   inputElementDisabledThemeStyle,
+=======
+>>>>>>> 77320a6b805bb2bcf78fb641aeb48930583737ad
   inputElementSizeStyle,
   inputElementThemeStyle,
   inputElementTransitionStyles,
