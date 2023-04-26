@@ -284,13 +284,13 @@ interface BaseValueProps {
    * The internal value of the option. Used as the identifier in Combobox `initialValue`, value and filteredOptions.
    * When undefined, this is set to `_.kebabCase(displayName)`
    */
-  value: string;
+  value?: string;
 
   /**
    * The display value of the option. Used as the rendered string within the menu and chips.
    * When undefined, this is set to `value`
    */
-  displayName: string;
+  displayName?: string;
 }
 
 interface BaseOptionalProps {
@@ -326,7 +326,7 @@ interface BaseOptionalProps {
 
 type BaseComboboxOptionProps = ListItemProps &
   BaseOptionalProps &
-  Partial<BaseValueProps>;
+  BaseValueProps;
 
 export type ComboboxOptionProps = Either<
   BaseComboboxOptionProps,
@@ -334,7 +334,7 @@ export type ComboboxOptionProps = Either<
 >;
 
 export interface OptionObject
-  extends BaseValueProps,
+  extends Required<BaseValueProps>,
     Pick<BaseOptionalProps, 'description' | 'onClick'> {
   isDisabled: boolean;
   hasGlyph?: boolean;
@@ -342,7 +342,7 @@ export interface OptionObject
 
 type ListItemPropsAndBaseValueProps = ListItemProps &
   BaseOptionalProps &
-  BaseValueProps;
+  Required<BaseValueProps>;
 
 export interface InternalComboboxOptionProps
   extends ListItemPropsAndBaseValueProps {

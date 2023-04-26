@@ -121,7 +121,7 @@ const getComboboxOptions = (withGlyphs = true) => [
     data-testid="test-id"
     description="Do I keep the doctor away?"
     // eslint-disable-next-line no-console
-    onClick={(event, value) => console.log(event.currentTarget, value)}
+    onClick={(event, value) => console.log(event, value)}
   />,
   <ComboboxOption key="banana" value="banana" displayName="Banana" />,
   <ComboboxOption key="carrot" value="carrot" displayName="Carrot" disabled />,
