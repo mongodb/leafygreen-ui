@@ -11,6 +11,9 @@ export const baseTableSidePadding = spacing[4];
 /** the default width of the expand icon */
 const iconSize = 28;
 
+/** the default height of a cell */
+export const standardCellHeight = spacing[5] + spacing[2];
+
 export const baseCellStyles = css`
   padding: 0 8px;
   overflow: hidden;
@@ -62,12 +65,23 @@ export const getCellPadding = ({
   `;
 };
 
+export const basicCellStyles = css`
+  &:first-child {
+    ${getCellPadding({
+      depth: 0,
+      isExpandable: false,
+      isSelectable: false,
+    })}
+  }
+`;
+
 export const cellContentContainerStyles = css`
   display: flex;
   align-items: center;
   text-overflow: ellipsis;
   transition: ${transitionDuration.default}ms ease-in-out;
-  transition-property: min-height, max-height, opacity;
+  transition-property: min-height, max-height, opacity, transform;
+  min-height: ${standardCellHeight}px;
 `;
 
 const _hiddenStyles = css`
@@ -79,8 +93,8 @@ const _hiddenStyles = css`
 export const cellContentTransitionStyles: Record<TransitionStatus, string> = {
   entered: css`
     opacity: 1;
-    min-height: ${spacing[5] + spacing[2]}px;
-    max-height: ${spacing[5] + spacing[2]}px;
+    min-height: ${standardCellHeight}px;
+    max-height: ${standardCellHeight}px;
   `,
   entering: _hiddenStyles,
   exiting: _hiddenStyles,

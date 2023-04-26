@@ -1,11 +1,13 @@
-import React, { ReactElement, useMemo, useRef, useState } from 'react';
+import React, {
+  ReactElement,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import flattenChildren from 'react-keyed-flatten-children';
 import { VirtualItem } from 'react-virtual';
-import {
-  flexRender,
-  getCoreRowModel,
-  getSortedRowModel,
-} from '@tanstack/react-table';
+import { flexRender } from '@tanstack/react-table';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
@@ -43,6 +45,7 @@ const V11Adapter = <T extends LGRowData>({
   useVirtualScrolling = false,
   hasSelectableRows = false,
   headerLabels,
+  className,
 }: V11AdapterProps<T>) => {
   const { darkMode } = useDarkMode();
   const containerRef = useRef(null);
@@ -68,18 +71,18 @@ const V11Adapter = <T extends LGRowData>({
     [data, columns, headerLabels],
   );
 
-  const [processedData, _] = useState<Array<LGTableDataType<T>>>(() =>
-    processData(data, processedColumns, childrenFn),
+  const [processedData, setProcessedData] = useState<Array<LGTableDataType<T>>>(
+    () => processData(data, processedColumns, childrenFn),
   );
+
+  useEffect(() => {
+    setProcessedData(processData(data, processedColumns, childrenFn));
+  }, [data, processedColumns, childrenFn]);
 
   const table = useLeafyGreenTable<T>({
     containerRef,
     data: processedData,
     columns: processedColumns,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    // @ts-expect-error `subRows` is a field added by `processData`
-    getSubRows: row => row.subRows,
     useVirtualScrolling,
     hasSelectableRows,
   });
@@ -95,6 +98,7 @@ const V11Adapter = <T extends LGRowData>({
       shouldAlternateRowColor={
         shouldAlternateRowColor ?? processedData.length > 10
       }
+      className={className}
       ref={containerRef}
     >
       <TableHead>
