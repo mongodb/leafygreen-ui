@@ -50,12 +50,16 @@ export const baseMeta: Partial<StoryMetaType<any>> = {
   },
 };
 
-export const StoryMeta = <T extends React.ElementType>(
-  meta: StoryMetaType<T> = baseMeta as StoryMetaType<T>,
-): StoryMetaType<T> => {
+export const StoryMeta = <
+  T extends React.ElementType,
+  XP extends Record<string, any>,
+>(
+  meta: StoryMetaType<T, XP> = baseMeta as StoryMetaType<T, XP>,
+): StoryMetaType<T, XP> => {
   return mergeWith(meta, baseMeta, (metaVal, baseVal) => {
     if (Array.isArray(metaVal)) return metaVal.concat(baseVal);
     if (typeof metaVal === 'string') return metaVal;
     // default to _.merge behavior
+    return;
   });
 };
