@@ -1,5 +1,12 @@
 # @leafygreen-ui/palette
 
+## 4.0.4
+
+### Patch Changes
+
+- 55d33e435: Update to BaseFontSize prop control for .design live example
+- 55d33e435: Fixes layout issue in live example
+
 ## 4.0.3
 
 ### Patch Changes

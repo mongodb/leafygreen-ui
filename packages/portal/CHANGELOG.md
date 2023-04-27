@@ -1,5 +1,16 @@
 # @leafygreen-ui/portal
 
+## 4.1.2
+
+### Patch Changes
+
+- cf00160ec: Updates TSDocs
+- ce0fcb3f6: Excludes `children` from story controls
+- Updated dependencies [55d33e435]
+- Updated dependencies [cf00160ec]
+- Updated dependencies [111b680c5]
+  - @leafygreen-ui/lib@10.3.3
+
 ## 4.1.1
 
 ### Patch Changes
