@@ -278,6 +278,38 @@ export const inputSizeStyles: Record<SizeVariant, string> = {
   `,
 };
 
+// Below numbers are "magic" because they need to account for border, font's letter widths, etc
+export const inputPaddingForIndicator: Record<SizeVariant, string> = {
+  [SizeVariant.XSmall]: css`
+    padding-right: 31px;
+  `,
+  [SizeVariant.Small]: css`
+    padding-right: 34px;
+  `,
+  [SizeVariant.Default]: css`
+    padding-right: 37px;
+  `,
+  [SizeVariant.Large]: css`
+    padding-right: 39px;
+  `,
+};
+
+// Below numbers are "magic" because they need to account for border, font's letter widths, etc
+export const inputPaddingForOptionalText: Record<SizeVariant, string> = {
+  [SizeVariant.XSmall]: css`
+    padding-right: 64px;
+  `,
+  [SizeVariant.Small]: css`
+    padding-right: 69px;
+  `,
+  [SizeVariant.Default]: css`
+    padding-right: 71px;
+  `,
+  [SizeVariant.Large]: css`
+    padding-right: 74px;
+  `,
+};
+
 export const inputStateStyles: Record<State, Record<Theme, string>> = {
   [State.Valid]: {
     [Theme.Light]: css`
@@ -346,20 +378,23 @@ export const inputIndicatorStyle = css`
   display: flex;
   align-items: center;
   z-index: 1;
+  padding-left: ${spacing[2]}px;
+  right: 2px; // account for border width
 `;
 
+// Below numbers are "magic" because they need to account for border width, etc that would need larger refactoring to make DRY
 export const inputIndicatorSizeStyle: Record<SizeVariant, string> = {
   [SizeVariant.XSmall]: css`
-    right: 10px;
+    padding-right: 6px;
   `,
   [SizeVariant.Small]: css`
-    right: 10px;
+    padding-right: 10px;
   `,
   [SizeVariant.Default]: css`
-    right: 12px;
+    padding-right: 12px;
   `,
   [SizeVariant.Large]: css`
-    right: 16px;
+    padding-right: 14px;
   `,
 };
 
@@ -387,8 +422,14 @@ export const stateIndicatorStyles: Record<
 
 export const optionalTextBaseStyle = css`
   font-size: 12px;
+  line-height: 12px;
   font-style: italic;
   font-weight: normal;
+  display: flex;
+  align-items: center;
+  > p {
+    margin: 0;
+  }
 `;
 
 export const optionalTextThemeStyle: Record<Theme, string> = {
