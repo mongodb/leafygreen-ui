@@ -8,7 +8,6 @@ import { Body } from '@leafygreen-ui/typography';
 import { stepLabelClassName } from './constants';
 import { useStepperContext } from './StepperContext';
 import { StepLabelProps, StepStates } from './types';
-import { fontWeights } from '@leafygreen-ui/tokens';
 
 const StepLabel = ({ children, state }: PropsWithChildren<StepLabelProps>) => {
   const isCurrent = state === StepStates.Current;
@@ -51,7 +50,7 @@ const StepLabel = ({ children, state }: PropsWithChildren<StepLabelProps>) => {
   return (
     <Body
       className={cx(styles[state], stepLabelClassName)}
-      weight={isCurrent ? fontWeights.medium : fontWeights.regular}
+      weight={isCurrent ? 'medium' : 'regular'}
       as="div"
     >
       {children}
