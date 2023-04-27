@@ -13,7 +13,6 @@ import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 import flatten from 'lodash/flatten';
 import isUndefined from 'lodash/isUndefined';
-import startCase from 'lodash/startCase';
 
 import Button from '@leafygreen-ui/button';
 import { keyMap } from '@leafygreen-ui/lib';
