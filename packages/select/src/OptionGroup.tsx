@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { fontWeights } from '@leafygreen-ui/tokens';
 
 import { Option } from './Option';
 import SelectContext from './SelectContext';
 import { colorSets } from './styleSets';
-import { fontWeights } from '@leafygreen-ui/tokens';
 
 const optionGroupStyle = css`
   padding: 8px 0;

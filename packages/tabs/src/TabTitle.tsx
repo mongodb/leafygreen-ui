@@ -5,8 +5,8 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { getNodeTextContent, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
-  fontWeights,
   fontFamilies,
+  fontWeights,
   transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
