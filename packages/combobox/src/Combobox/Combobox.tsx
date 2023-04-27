@@ -66,6 +66,7 @@ import {
 import {
   baseComboboxStyles,
   baseInputElementStyle,
+  caretIconDisabledStyles,
   caretIconThemeStyles,
   clearButtonStyle,
   comboboxDisabledStyles,
@@ -81,6 +82,7 @@ import {
   errorMessageThemeStyle,
   iconsWrapperBaseStyles,
   iconsWrapperSizeStyles,
+  inputElementDisabledThemeStyle,
   inputElementSizeStyle,
   inputElementThemeStyle,
   inputElementTransitionStyles,
@@ -1172,6 +1174,7 @@ export function Combobox<M extends boolean>({
                   id={labelId}
                   htmlFor={inputId}
                   darkMode={darkMode}
+                  disabled={disabled}
                   className={cx({
                     [labelDescriptionLargeStyles]: size === ComboboxSize.Large,
                   })}
@@ -1182,6 +1185,7 @@ export function Combobox<M extends boolean>({
               {description && (
                 <Description
                   darkMode={darkMode}
+                  disabled={disabled}
                   className={cx({
                     [labelDescriptionLargeStyles]: size === ComboboxSize.Large,
                   })}
@@ -1244,6 +1248,7 @@ export function Combobox<M extends boolean>({
                   {
                     [multiselectInputElementStyle(size, inputValue)]:
                       isMultiselect(selection),
+                    [inputElementDisabledThemeStyle[theme]]: disabled,
                   },
                 )}
                 placeholder={placeholderValue}
@@ -1266,7 +1271,7 @@ export function Combobox<M extends boolean>({
                   className={endIconStyle}
                 />
               )}
-              {clearable && doesSelectionExist && (
+              {clearable && doesSelectionExist && !disabled && (
                 <IconButton
                   aria-label="Clear selection"
                   aria-disabled={disabled}
@@ -1283,7 +1288,10 @@ export function Combobox<M extends boolean>({
               <Icon
                 glyph="CaretDown"
                 className={endIconStyle}
-                fill={caretIconThemeStyles[theme]}
+                fill={cx({
+                  [caretIconThemeStyles[theme]]: !disabled,
+                  [caretIconDisabledStyles[theme]]: disabled,
+                })}
               />
             </div>
           </div>

@@ -315,6 +315,19 @@ export const inputElementThemeStyle: Record<Theme, string> = {
   `,
 };
 
+export const inputElementDisabledThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    &::placeholder {
+      color: ${palette.gray.dark1};
+    }
+  `,
+  [Theme.Dark]: css`
+    &::placeholder {
+      color: ${palette.gray.dark1};
+    }
+  `,
+};
+
 export const inputElementSizeStyle = (size: Size) => css`
   height: ${inputHeight(size)}px;
   font-size: ${fontSize[size]}px;
@@ -402,4 +415,9 @@ export const errorIconThemeStyles: Record<Theme, string> = {
 export const caretIconThemeStyles: Record<Theme, string> = {
   [Theme.Light]: palette.gray.dark2,
   [Theme.Dark]: palette.gray.light1,
+};
+
+export const caretIconDisabledStyles: Record<Theme, string> = {
+  [Theme.Light]: palette.gray.base,
+  [Theme.Dark]: palette.gray.dark2,
 };
