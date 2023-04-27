@@ -1,27 +1,32 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { useForwardedRef } from '@leafygreen-ui/hooks';
-import { InputOption } from '@leafygreen-ui/input-option';
+import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
+import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import {
   ComboboxOptionProps,
+  ComboboxSize,
   InternalComboboxOptionProps,
 } from '../Combobox.types';
 import { ComboboxContext } from '../ComboboxContext';
+import { wrapJSX } from '../utils';
 
 import {
-  comboboxOptionBaseStyle,
   comboboxOptionSizeStyle,
+  displayNameStyle,
+  multiselectIconLargePosition,
+  multiselectIconPosition,
 } from './ComboboxOption.styles';
-import { OptionContent } from './OptionContent';
+import { getGlyphs } from './getGlyphs';
 
 /**
  * Internal ComboboxOption Component for use within Combobox only.
  *
  * Prefer using {@link ComboboxOption}
+ * @internal
  */
 export const InternalComboboxOption = React.forwardRef<
   HTMLLIElement,
@@ -33,36 +38,67 @@ export const InternalComboboxOption = React.forwardRef<
       isSelected,
       displayName,
       isFocused,
-      disabled,
       setSelected,
       className,
+      description,
+      value,
+      onClick,
+      disabled = false,
       ...rest
     }: InternalComboboxOptionProps,
     forwardedRef,
   ) => {
-    const { darkMode } = useDarkMode();
-    const { size } = useContext(ComboboxContext);
+    const { darkMode, theme } = useDarkMode();
+    const { multiselect, size, withIcons, inputValue } =
+      useContext(ComboboxContext);
     const optionRef = useForwardedRef(forwardedRef, null);
+    const optionTextId = useIdAllocator({ prefix: 'combobox-option-text' });
 
     const handleOptionClick = useCallback(
-      (e: React.SyntheticEvent) => {
+      (e: React.SyntheticEvent<HTMLLIElement, Event>) => {
         // stopPropagation will not stop the keyDown event (only click)
         // since the option is never `focused`, only `aria-selected`
         // the keyDown event does not actually fire on the option element
         e.stopPropagation();
 
-        // If user clicked on the option, or the checkbox
-        // Ignore extra click events on the checkbox wrapper
-        if (
-          !disabled &&
-          (e.target === optionRef.current ||
-            (e.target as Element).tagName === 'INPUT')
-        ) {
+        if (!disabled) {
           setSelected();
+          onClick?.(e, value);
         }
       },
-      [disabled, optionRef, setSelected],
+      [disabled, onClick, setSelected, value],
     );
+
+    const { leftGlyph, rightGlyph } = useMemo(
+      () =>
+        getGlyphs({
+          withIcons,
+          isSelected,
+          glyph,
+          theme,
+          darkMode,
+          size,
+          disabled,
+          multiselect,
+          optionTextId,
+          isFocused,
+        }),
+      [
+        darkMode,
+        disabled,
+        glyph,
+        isSelected,
+        multiselect,
+        optionTextId,
+        size,
+        theme,
+        withIcons,
+        isFocused,
+      ],
+    );
+
+    // When multiselect and withoutIcons the Checkbox is aligned to the top instead of centered.
+    const multiSelectWithoutIcons = multiselect && !withIcons;
 
     return (
       <InputOption
@@ -74,19 +110,26 @@ export const InternalComboboxOption = React.forwardRef<
         aria-label={displayName}
         darkMode={darkMode}
         className={cx(
-          comboboxOptionBaseStyle,
-          comboboxOptionSizeStyle[size],
+          comboboxOptionSizeStyle(size),
+          {
+            [multiselectIconPosition]: multiSelectWithoutIcons,
+            [multiselectIconLargePosition]:
+              multiSelectWithoutIcons && size === ComboboxSize.Large,
+          },
           className,
         )}
         onClick={handleOptionClick}
         onKeyDown={handleOptionClick}
       >
-        <OptionContent
-          disabled={disabled}
-          displayName={displayName}
-          glyph={glyph}
-          isSelected={isSelected}
-        />
+        <InputOptionContent
+          leftGlyph={leftGlyph}
+          rightGlyph={rightGlyph}
+          description={description}
+        >
+          <span id={optionTextId} className={displayNameStyle(isSelected)}>
+            {wrapJSX(displayName, inputValue, 'strong')}
+          </span>
+        </InputOptionContent>
       </InputOption>
     );
   },
@@ -104,4 +147,6 @@ ComboboxOption.propTypes = {
   glyph: PropTypes.node,
   disabled: PropTypes.bool,
   className: PropTypes.string,
+  description: PropTypes.string,
+  onClick: PropTypes.func,
 };
