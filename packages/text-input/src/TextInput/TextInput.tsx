@@ -157,6 +157,9 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       ? CheckmarkWithCircleIcon
       : CheckmarkIcon;
 
+    const shouldRenderOptionalText =
+      state === State.None && !disabled && optional;
+
     return (
       <div
         className={cx(
@@ -202,7 +205,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               {
                 [inputPaddingForIndicator[sizeVariant]]: state !== State.None,
                 [inputPaddingForOptionalText[sizeVariant]]:
-                  state === State.None && optional,
+                  shouldRenderOptionalText,
               },
             )}
             value={value}
@@ -239,7 +242,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               />
             )}
 
-            {state === State.None && !disabled && optional && (
+            {shouldRenderOptionalText && (
               <div
                 className={cx(
                   optionalTextBaseStyle,
