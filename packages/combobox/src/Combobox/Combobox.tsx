@@ -1271,7 +1271,7 @@ export function Combobox<M extends boolean>({
                   className={endIconStyle}
                 />
               )}
-              {clearable && doesSelectionExist && (
+              {clearable && doesSelectionExist && !disabled && (
                 <IconButton
                   aria-label="Clear selection"
                   aria-disabled={disabled}
