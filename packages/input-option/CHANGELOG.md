@@ -1,5 +1,23 @@
 # @leafygreen-ui/input-option
 
+## 1.0.3
+
+### Patch Changes
+
+- 55d33e435: Update to BaseFontSize prop control for .design live example
+- 77320a6b8: Adds optional component `InputOptionContent` which adds predefined content styles
+- ce0fcb3f6: Excludes `children` from story controls
+- Updated dependencies [55d33e435]
+- Updated dependencies [07db42330]
+- Updated dependencies [55d33e435]
+- Updated dependencies [cf00160ec]
+- Updated dependencies [111b680c5]
+- Updated dependencies [77320a6b8]
+  - @leafygreen-ui/lib@10.3.3
+  - @leafygreen-ui/palette@4.0.4
+  - @leafygreen-ui/typography@16.3.0
+  - @leafygreen-ui/tokens@2.0.3
+
 ## 1.0.2
 
 ### Patch Changes

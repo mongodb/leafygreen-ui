@@ -1,5 +1,27 @@
 # @leafygreen-ui/number-input
 
+## 1.0.2
+
+### Patch Changes
+
+- 77320a6b8: Fix padding discrepancy between Combobox, Select, Text Input, and Number Input
+- Updated dependencies [55d33e435]
+- Updated dependencies [07db42330]
+- Updated dependencies [55d33e435]
+- Updated dependencies [cf00160ec]
+- Updated dependencies [ce0fcb3f6]
+- Updated dependencies [111b680c5]
+- Updated dependencies [77320a6b8]
+- Updated dependencies [77320a6b8]
+  - @leafygreen-ui/lib@10.3.3
+  - @leafygreen-ui/palette@4.0.4
+  - @leafygreen-ui/tooltip@9.1.8
+  - @leafygreen-ui/typography@16.3.0
+  - @leafygreen-ui/button@20.0.5
+  - @leafygreen-ui/popover@11.0.8
+  - @leafygreen-ui/select@10.3.2
+  - @leafygreen-ui/tokens@2.0.3
+
 ## 1.0.1
 
 ### Patch Changes

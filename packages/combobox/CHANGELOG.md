@@ -1,5 +1,40 @@
 # @leafygreen-ui/combobox
 
+## 6.0.0
+
+### Major Changes
+
+- 77320a6b8: - Adds new size variants, `small` and `xsmall`.
+  - Removes truncation from chips when overflow is set to `scroll-x`. Chips do not need truncation since consumers can scroll horizontally to read the text.
+  - Sets a max height of 3 rows to the input when overflow is `expand-y`. An overflow shadow is added to indicate there is a scroll.
+  - Warning icon that appears when `state='error'` is now positioned to the left of the caret or clear icon. Previously it replaced the caret icon.
+
+### Minor Changes
+
+- 77320a6b8: - Adds `onClick` and `description` prop to `ComboboxOption`
+
+### Patch Changes
+
+- 77320a6b8: Switch to `useAutoScroll` hook to auto scroll the focused option
+- d9d8f770d: Updates disabled styles
+- ce0fcb3f6: Excludes `children` from story controls
+- 77320a6b8: Fix padding discrepancy between Combobox, Select, Text Input, and Number Input
+- Updated dependencies [55d33e435]
+- Updated dependencies [77320a6b8]
+- Updated dependencies [07db42330]
+- Updated dependencies [55d33e435]
+- Updated dependencies [cf00160ec]
+- Updated dependencies [ce0fcb3f6]
+- Updated dependencies [111b680c5]
+- Updated dependencies [77320a6b8]
+  - @leafygreen-ui/input-option@1.0.3
+  - @leafygreen-ui/lib@10.3.3
+  - @leafygreen-ui/palette@4.0.4
+  - @leafygreen-ui/typography@16.3.0
+  - @leafygreen-ui/icon-button@15.0.10
+  - @leafygreen-ui/popover@11.0.8
+  - @leafygreen-ui/tokens@2.0.3
+
 ## 5.0.11
 
 ### Patch Changes
