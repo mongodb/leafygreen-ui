@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/palette",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "description": "LeafyGreen UI Palettes",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -21,8 +21,8 @@
   },
   "devDependencies": {
     "@leafygreen-ui/emotion": "^4.0.4",
-    "@leafygreen-ui/tokens": "^2.0.2",
-    "@leafygreen-ui/tooltip": "^9.1.7",
+    "@leafygreen-ui/tokens": "^2.0.3",
+    "@leafygreen-ui/tooltip": "^9.1.8",
     "lodash": "^4.17.21",
     "polished": "^4.2.2"
   },
