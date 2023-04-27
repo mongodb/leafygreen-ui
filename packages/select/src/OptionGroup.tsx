@@ -8,6 +8,7 @@ import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { Option } from './Option';
 import SelectContext from './SelectContext';
 import { colorSets } from './styleSets';
+import { fontWeights } from '@leafygreen-ui/tokens';
 
 const optionGroupStyle = css`
   padding: 8px 0;
@@ -21,7 +22,7 @@ const optionGroupLabelStyle = css`
   overflow-wrap: anywhere;
   font-size: 12px;
   line-height: 16px;
-  font-weight: bold;
+  font-weight: ${fontWeights.bold};
   text-transform: uppercase;
   letter-spacing: 0.4px;
 `;

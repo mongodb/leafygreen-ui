@@ -1,5 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
-import { spacing, typeScales } from '@leafygreen-ui/tokens';
+import { fontWeights, spacing, typeScales } from '@leafygreen-ui/tokens';
 
 import { ComboboxSize } from '../Combobox.types';
 import { menuItemHeight, menuItemPadding } from '../ComboboxMenu/Menu.styles';
@@ -64,5 +64,5 @@ export const disallowPointer = css`
 `;
 
 export const displayNameStyle = (isSelected: boolean) => css`
-  font-weight: ${isSelected ? 'bold' : 'normal'};
+  font-weight: ${isSelected ? fontWeights.bold : fontWeights.regular};
 `;

@@ -4,6 +4,7 @@ import { palette } from '@leafygreen-ui/palette';
 import {
   focusRing,
   fontFamilies,
+  fontWeights,
   hoverRing,
   spacing,
   transitionDuration,
@@ -39,7 +40,7 @@ export const inputBaseStyles = css`
   font-family: ${fontFamilies.default};
   width: 100%;
   height: 36px;
-  font-weight: normal;
+  font-weight: ${fontWeights.regular};
   border: 1px solid;
   z-index: 1;
   outline: none;

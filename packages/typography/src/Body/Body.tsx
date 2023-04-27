@@ -7,6 +7,7 @@ import {
   PolymorphicAs,
   usePolymorphic,
 } from '@leafygreen-ui/polymorphic';
+import { fontWeights as fontWeightTokens } from '@leafygreen-ui/tokens';
 
 import {
   baseTypographyStyles,
@@ -22,12 +23,12 @@ const fontWeights: Record<
   Record<BodyFontWeight, number>
 > = {
   default: {
-    regular: 400,
-    medium: 500,
+    regular: fontWeightTokens.regular,
+    medium: fontWeightTokens.medium,
   },
   strong: {
-    regular: 700,
-    medium: 700,
+    regular: fontWeightTokens.bold,
+    medium: fontWeightTokens.bold,
   },
 } as const;
 

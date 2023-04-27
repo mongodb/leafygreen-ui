@@ -4,7 +4,11 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
 import { palette } from '@leafygreen-ui/palette';
-import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
+import {
+  fontWeights,
+  spacing,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
 import { Overline } from '@leafygreen-ui/typography';
 
 import { stepIconClassName } from './constants';
@@ -21,11 +25,10 @@ const StepIconGlyph = ({ state, content }: StepIconProps) => {
     return <EllipsisIcon />;
   } else {
     // if Current (single) or Upcoming (single)
-    // TODO: Use centralized, reusable font-weight value
     return (
       <Overline
         className={css`
-          font-weight: 500;
+          font-weight: ${fontWeights.medium};
           color: inherit;
         `}
       >

@@ -1,7 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies, fontWeights } from '@leafygreen-ui/tokens';
 
 export const anchorClassName = createUniqueClassName();
 
@@ -29,11 +29,11 @@ export const linkStyles = css`
 export const linkModeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.blue.base};
-    font-weight: 400;
+    font-weight: ${fontWeights.regular};
   `,
   [Theme.Dark]: css`
     color: ${palette.blue.light1};
-    font-weight: 700;
+    font-weight: ${fontWeights.bold};
   `,
 };
 

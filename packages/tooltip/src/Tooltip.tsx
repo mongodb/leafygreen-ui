@@ -21,7 +21,7 @@ import Popover, {
   Justify,
   PopoverProps,
 } from '@leafygreen-ui/popover';
-import { BaseFontSize, fontFamilies } from '@leafygreen-ui/tokens';
+import { BaseFontSize, fontFamilies, fontWeights } from '@leafygreen-ui/tokens';
 import {
   bodyTypeScaleStyles,
   useUpdatedBaseFontSize,
@@ -36,7 +36,7 @@ export const TriggerEvent = {
   Click: 'click',
 } as const;
 
-type TriggerEvent = typeof TriggerEvent[keyof typeof TriggerEvent];
+type TriggerEvent = (typeof TriggerEvent)[keyof typeof TriggerEvent];
 
 export const Align = {
   Top: PopoverAlign.Top,
@@ -45,7 +45,7 @@ export const Align = {
   Right: PopoverAlign.Right,
 } as const;
 
-export type Align = typeof Align[keyof typeof Align];
+export type Align = (typeof Align)[keyof typeof Align];
 
 export { Justify };
 
@@ -56,7 +56,7 @@ const baseTypeStyle = css`
   margin: unset;
   font-family: ${fontFamilies.default};
   color: ${palette.gray.light1};
-  font-weight: 400;
+  font-weight: ${fontWeights.regular};
   width: 100%;
   overflow-wrap: anywhere;
 `;

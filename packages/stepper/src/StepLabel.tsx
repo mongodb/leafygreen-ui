@@ -8,6 +8,7 @@ import { Body } from '@leafygreen-ui/typography';
 import { stepLabelClassName } from './constants';
 import { useStepperContext } from './StepperContext';
 import { StepLabelProps, StepStates } from './types';
+import { fontWeights } from '@leafygreen-ui/tokens';
 
 const StepLabel = ({ children, state }: PropsWithChildren<StepLabelProps>) => {
   const isCurrent = state === StepStates.Current;
@@ -50,13 +51,9 @@ const StepLabel = ({ children, state }: PropsWithChildren<StepLabelProps>) => {
   return (
     <Body
       className={cx(styles[state], stepLabelClassName)}
-      weight={isCurrent ? 'medium' : 'regular'}
+      weight={isCurrent ? fontWeights.medium : fontWeights.regular}
       as="div"
     >
-      {/*
-        TODO: Would prefer to use a centralized font-weight value directly in css so it's not dependent on a ternary operator.
-        Currently using the <Body> component with the `weight` prop since this is currently the only way to use a reusable variable.
-      */}
       {children}
     </Body>
   );
