@@ -24,7 +24,6 @@ import {
   inheritTypeScale,
   inputContainerStyle,
   inputFocusStyles,
-  inputIndicatorBgColor,
   inputIndicatorSizeStyle,
   inputIndicatorStyle,
   inputModeStyles,
@@ -33,7 +32,6 @@ import {
   inputSizeStyles,
   inputStateStyles,
   optionalTextBaseStyle,
-  optionalTextHeight,
   optionalTextThemeStyle,
   stateIndicatorStyles,
   textContainerStyle,
@@ -224,7 +222,6 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               iconClassName,
               inputIndicatorStyle,
               inputIndicatorSizeStyle[sizeVariant],
-              inputIndicatorBgColor(theme, disabled),
             )}
           >
             {/* Render State Icon or Optional text*/}
@@ -247,7 +244,6 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
                 className={cx(
                   optionalTextBaseStyle,
                   optionalTextThemeStyle[theme],
-                  optionalTextHeight[sizeVariant],
                 )}
               >
                 <p>Optional</p>

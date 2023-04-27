@@ -383,41 +383,6 @@ export const inputIndicatorStyle = css`
   right: 2px; // account for border width
 `;
 
-// Below numbers are "magic" because they need to account for icon heights, margins, etc that would need larger refactoring to make DRY
-export const inputIndicatorHeight: Record<SizeVariant, string> = {
-  [SizeVariant.XSmall]: css`
-    height: 16px;
-  `,
-  [SizeVariant.Small]: css`
-    height: 28px;
-  `,
-  [SizeVariant.Default]: css`
-    height: 32px;
-  `,
-  [SizeVariant.Large]: css`
-    height: 36px;
-  `,
-};
-
-const inputIndicatorThemeColor = {
-  [Theme.Dark]: {
-    default: palette.gray.dark4,
-    disabled: palette.gray.dark3,
-  },
-  [Theme.Light]: {
-    default: palette.white,
-    disabled: palette.gray.light2,
-  },
-};
-
-export const inputIndicatorBgColor = (theme: Theme, disabled: boolean) => {
-  return css`
-    background-color: ${inputIndicatorThemeColor[theme][
-      disabled ? 'disabled' : 'default'
-    ]};
-  `;
-};
-
 // Below numbers are "magic" because they need to account for border width, etc that would need larger refactoring to make DRY
 export const inputIndicatorSizeStyle: Record<SizeVariant, string> = {
   [SizeVariant.XSmall]: css`
@@ -467,22 +432,6 @@ export const optionalTextBaseStyle = css`
     margin: 0;
   }
 `;
-
-// Below numbers are "magic" because they need to account for border width, font line height, etc that would need larger refactoring to make DRY
-export const optionalTextHeight: Record<SizeVariant, string> = {
-  [SizeVariant.XSmall]: css`
-    height: 12px;
-  `,
-  [SizeVariant.Small]: css`
-    height: 16px;
-  `,
-  [SizeVariant.Default]: css`
-    height: 20px;
-  `,
-  [SizeVariant.Large]: css`
-    height: 24px;
-  `,
-};
 
 export const optionalTextThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
