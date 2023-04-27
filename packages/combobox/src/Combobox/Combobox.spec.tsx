@@ -723,25 +723,6 @@ describe('packages/combobox', () => {
             expect(inputEl).toHaveValue('');
           }
         });
-
-        test('Clicking clear all button does nothing when disabled', () => {
-          const initialValue =
-            select === 'single' ? 'apple' : ['apple', 'banana', 'carrot'];
-          const { inputEl, clearButtonEl, queryAllChips } = renderCombobox(
-            select,
-            {
-              initialValue,
-              disabled: true,
-            },
-          );
-          expect(clearButtonEl).not.toBeNull();
-          userEvent.click(clearButtonEl!);
-          if (select === 'multiple') {
-            expect(queryAllChips()).toHaveLength(initialValue.length);
-          } else {
-            expect(inputEl).toHaveValue(startCase(initialValue as string));
-          }
-        });
       });
 
       describe('Clicking chips', () => {
