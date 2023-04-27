@@ -1,5 +1,21 @@
 # @leafygreen-ui/button
 
+## 20.0.5
+
+### Patch Changes
+
+- cf00160ec: Updates TSDocs
+- Updated dependencies [55d33e435]
+- Updated dependencies [111b680c5]
+- Updated dependencies [55d33e435]
+- Updated dependencies [cf00160ec]
+- Updated dependencies [111b680c5]
+- Updated dependencies [77320a6b8]
+  - @leafygreen-ui/lib@10.3.3
+  - @leafygreen-ui/palette@4.0.4
+  - @leafygreen-ui/box@3.1.3
+  - @leafygreen-ui/tokens@2.0.3
+
 ## 20.0.4
 
 ### Patch Changes

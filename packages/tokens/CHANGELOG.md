@@ -1,5 +1,14 @@
 # @leafygreen-ui/tokens
 
+## 2.0.3
+
+### Patch Changes
+
+- 77320a6b8: Adds token for large font size
+- Updated dependencies [55d33e435]
+- Updated dependencies [55d33e435]
+  - @leafygreen-ui/palette@4.0.4
+
 ## 2.0.2
 
 ### Patch Changes
