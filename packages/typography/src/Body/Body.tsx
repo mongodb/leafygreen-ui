@@ -16,21 +16,7 @@ import {
 } from '../styles';
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
 
-import { BodyFontWeight, BodyProps } from './Body.types';
-
-const fontWeights: Record<
-  'default' | 'strong',
-  Record<BodyFontWeight, number>
-> = {
-  default: {
-    regular: fontWeightTokens.regular,
-    medium: fontWeightTokens.medium,
-  },
-  strong: {
-    regular: fontWeightTokens.bold,
-    medium: fontWeightTokens.bold,
-  },
-} as const;
+import { BodyProps } from './Body.types';
 
 const Body = Polymorphic<BodyProps>(
   ({
@@ -47,10 +33,10 @@ const Body = Polymorphic<BodyProps>(
 
     // Currently hardcoding selectors to keys; could consider a dynamic solution that runs once
     const fontWeight = css`
-      font-weight: ${fontWeights['default'][weight]};
+      font-weight: ${fontWeightTokens[weight]};
       strong,
       b {
-        font-weight: ${fontWeights['strong'][weight]};
+        font-weight: ${fontWeightTokens.bold};
       }
     `;
 
