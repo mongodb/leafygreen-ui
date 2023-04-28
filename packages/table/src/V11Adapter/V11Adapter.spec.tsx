@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { getAllByRole } from '@testing-library/dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
@@ -185,6 +185,53 @@ const ExpandableContent = () => {
   );
 };
 
+function StatefulDataTest(props: V11AdapterProps<unknown>) {
+  const [data, setData] = useState(defaultData.slice(0, 3));
+  return (
+    <>
+      <button
+        data-testid="refresh-data"
+        onClick={() =>
+          setData([
+            ...defaultData.slice(0, 3),
+            {
+              name: 'test name',
+              age: 0,
+              color: 'test color',
+              location: 'test location',
+              rand: 0,
+            },
+          ])
+        }
+      >
+        refresh data
+      </button>
+      <V11Adapter {...props}>
+        <Table
+          data={data}
+          columns={
+            <HeaderRow>
+              <TableHeader key="name" label="Name" dataType="string" />
+              <TableHeader key="age" label="Age" dataType="number" />
+              <TableHeader key="color" label="Color" dataType="string" />
+              <TableHeader key="location" label="Location" />
+            </HeaderRow>
+          }
+        >
+          {({ datum }: any) => (
+            <Row>
+              <Cell>{datum.name}</Cell>
+              <Cell>{datum.age}</Cell>
+              <Cell>{datum.color}</Cell>
+              <Cell>{datum.location}</Cell>
+            </Row>
+          )}
+        </Table>
+      </V11Adapter>
+    </>
+  );
+}
+
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
   useLayoutEffect: jest.requireActual('react').useEffect,
@@ -196,6 +243,18 @@ describe('packages/table/Table', () => {
       const { container } = render(<BasicWithAdapter />);
       const results = await axe(container);
       expect(results).toHaveNoViolations();
+    });
+  });
+
+  describe('stateful data change', () => {
+    test('v11 adapter responds to stateful data change on v10 table', async () => {
+      const { getByTestId, queryByText } = render(<StatefulDataTest />);
+      expect(queryByText('test')).not.toBeInTheDocument();
+      const refreshButton = getByTestId('refresh-data');
+      fireEvent.click(refreshButton);
+      expect(queryByText('test name')).toBeInTheDocument();
+      expect(queryByText('test color')).toBeInTheDocument();
+      expect(queryByText('test location')).toBeInTheDocument();
     });
   });
 

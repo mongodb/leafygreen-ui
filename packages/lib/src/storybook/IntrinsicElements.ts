@@ -1,6 +1,6 @@
 const IntrinsicElements: Array<keyof JSX.IntrinsicElements> = [
-  'symbol',
-  // 'object',
+  // 'symbol', - SVG only element
+  // 'object', - irrelevant for `as` prop
   'small',
   'button',
   'a',
@@ -9,31 +9,31 @@ const IntrinsicElements: Array<keyof JSX.IntrinsicElements> = [
   // 'area', - Void element - cannot accept Children
   'article',
   'aside',
-  'audio',
+  // 'audio', irrelevant for `as` prop
   'b',
   // 'base', - Void element - cannot accept Children
-  'bdi',
-  'bdo',
+  // 'bdi', irrelevant for `as` prop
+  // 'bdo', irrelevant for `as` prop
   'big',
   'blockquote',
-  'body',
+  // 'body', irrelevant for `as` prop
   // 'br', - Void element - cannot accept Children
-  'canvas',
+  // 'canvas', irrelevant for `as` prop
   'caption',
   'cite',
   'code',
   // 'col', - Void element - cannot accept Children
-  'colgroup',
-  'data',
-  'datalist',
+  // 'colgroup', irrelevant for `as` prop
+  // 'data', irrelevant for `as` prop
+  // 'datalist', irrelevant for `as` prop
   'dd',
   'del',
   'details',
   'dfn',
   'dialog',
   'div',
-  'dl',
-  'dt',
+  // 'dl', irrelevant for `as` prop
+  // 'dt', irrelevant for `as` prop
   'em',
   // 'embed', - Void element - cannot accept Children
   'fieldset',
@@ -51,9 +51,9 @@ const IntrinsicElements: Array<keyof JSX.IntrinsicElements> = [
   'header',
   'hgroup',
   // 'hr', - Void element - cannot accept Children
-  'html',
+  // 'html', irrelevant for `as` prop
   'i',
-  'iframe',
+  // 'iframe', irrelevant for `as` prop
   // 'img', - Void element - cannot accept Children
   // 'input', - Void element - cannot accept Children
   'ins',
@@ -71,14 +71,14 @@ const IntrinsicElements: Array<keyof JSX.IntrinsicElements> = [
   // 'meta', - Void element - cannot accept Children
   'meter',
   'nav',
-  'noindex',
+  // 'noindex', irrelevant for `as` prop
   'noscript',
   'ol',
-  'optgroup',
-  'option',
-  'output',
+  // 'optgroup', irrelevant for `as` prop
+  // 'option', irrelevant for `as` prop
+  // 'output', irrelevant for `as` prop
   'p',
-  'param',
+  // 'param', irrelevant for `as` prop
   'picture',
   'pre',
   'progress',
@@ -99,11 +99,11 @@ const IntrinsicElements: Array<keyof JSX.IntrinsicElements> = [
   'sub',
   'summary',
   'sup',
-  'table',
+  // 'table', irrelevant for `as` prop
   'template',
   'tbody',
   'td',
-  'textarea',
+  // 'textarea', irrelevant for `as` prop
   'tfoot',
   'th',
   'thead',
@@ -113,11 +113,11 @@ const IntrinsicElements: Array<keyof JSX.IntrinsicElements> = [
   // 'track', - Void element - cannot accept Children
   'u',
   'ul',
-  'var',
-  'video',
+  // 'var', irrelevant for `as` prop
+  // 'video', irrelevant for `as` prop
   // 'wbr', - Void element - cannot accept Children
-  'webview',
-  'svg',
+  // 'webview', irrelevant for `as` prop
+  // 'svg', - SVG only element
 ];
 
 export default IntrinsicElements;

@@ -22,6 +22,7 @@ import {
 const wrapperStyle = css`
   width: 256px;
   padding-block: 64px;
+  display: flex;
 `;
 
 export default StoryMeta({
@@ -112,10 +113,36 @@ export default StoryMeta({
   },
 });
 
-const ComboboxOptions = [
-  <ComboboxOption key="apple" value="apple" displayName="Apple" />,
+const getComboboxOptions = (withGlyphs = true) => [
+  <ComboboxOption
+    key="apple"
+    value="apple"
+    displayName="Apple"
+    data-testid="test-id"
+    description="Do I keep the doctor away?"
+    // eslint-disable-next-line no-console
+    onClick={(event, value) => console.log(event, value)}
+    className="className"
+  />,
   <ComboboxOption key="banana" value="banana" displayName="Banana" />,
   <ComboboxOption key="carrot" value="carrot" displayName="Carrot" disabled />,
+  <ComboboxOption
+    key="pomegranate"
+    value="pomegranate"
+    displayName="Pomegranate"
+    glyph={withGlyphs ? <Icon glyph="Warning" /> : undefined}
+    description="Watch out, I stain everything I touch LOL"
+    disabled
+  />,
+  <ComboboxOption
+    key="plantain"
+    value="plantain"
+    displayName="Plantain"
+    glyph={withGlyphs ? <Icon glyph="Connect" /> : undefined}
+    description="Don't confuse me with a banana"
+    // eslint-disable-next-line no-console
+    onClick={() => console.log('I was clicked')}
+  />,
   <ComboboxOption
     key="paragraph"
     value="paragraph"
@@ -130,6 +157,7 @@ const ComboboxOptions = [
     key="dragonfruit"
     value="dragonfruit"
     displayName="Dragonfruit"
+    description="Rawr"
   />,
   <ComboboxOption key="eggplant" value="eggplant" displayName="Eggplant" />,
   <ComboboxOption key="fig" value="fig" displayName="Fig" />,
@@ -139,12 +167,6 @@ const ComboboxOptions = [
     key="iceberg-lettuce"
     value="iceberg-lettuce"
     displayName="Iceberg lettuce"
-  />,
-  <ComboboxOption
-    key="pomegranate"
-    value="pomegranate"
-    displayName="Pomegranate"
-    glyph={<Icon glyph="Warning" />}
   />,
   <ComboboxGroup key="peppers" label="Peppers">
     <ComboboxOption key="cayenne" value="cayenne" displayName="Cayenne" />
@@ -164,6 +186,7 @@ const ComboboxOptions = [
       key="scotch-bonnet"
       value="scotch-bonnet"
       displayName="Scotch bonnet"
+      description="Don't touch your eyes"
     />
   </ComboboxGroup>,
 ];
@@ -180,9 +203,21 @@ SingleSelect.args = {
   description: 'Please pick one',
   placeholder: 'Select fruit',
   multiselect: false,
-  children: ComboboxOptions,
+  children: getComboboxOptions(),
 };
 SingleSelect.argTypes = {
+  multiselect: { control: 'none' },
+};
+
+export const SingleSelectWithoutGlyphs = Template.bind({});
+SingleSelectWithoutGlyphs.args = {
+  label: 'Choose a fruit',
+  description: 'Please pick one',
+  placeholder: 'Select fruit',
+  multiselect: false,
+  children: getComboboxOptions(false),
+};
+SingleSelectWithoutGlyphs.argTypes = {
   multiselect: { control: 'none' },
 };
 
@@ -202,9 +237,23 @@ Multiselect.args = {
   description: 'Please pick some',
   placeholder: 'Select fruit',
   multiselect: true,
-  children: ComboboxOptions,
+  children: getComboboxOptions(),
 };
 Multiselect.argTypes = {
+  multiselect: {
+    control: 'none',
+  },
+};
+
+export const MultiselectWithoutGlyphs = Template.bind({});
+MultiselectWithoutGlyphs.args = {
+  label: 'Choose a fruit',
+  description: 'Please pick some',
+  placeholder: 'Select fruit',
+  multiselect: true,
+  children: getComboboxOptions(false),
+};
+MultiselectWithoutGlyphs.argTypes = {
   multiselect: {
     control: 'none',
   },
@@ -289,5 +338,5 @@ Demo.args = {
   label: 'Choose a fruit',
   description: 'Please pick fruit(s)',
   placeholder: 'Select fruit',
-  children: ComboboxOptions,
+  children: getComboboxOptions(),
 };

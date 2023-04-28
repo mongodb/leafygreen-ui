@@ -56,7 +56,7 @@ export interface ButtonProps {
   /**
    * Specifies the `type` property of the HTML button element
    *
-   * @default 'button'
+   * @default button
    */
   type?: HTMLProps<HTMLButtonElement>['type'];
 
@@ -68,7 +68,7 @@ export interface ButtonProps {
   /**
    * Sets the variant for the Button
    *
-   * @default 'default'
+   * @default default
    */
   variant?: Variant;
 
@@ -89,7 +89,7 @@ export interface ButtonProps {
   /**
    * Sets the size for the Button
    *
-   * @default 'default'
+   * @default default
    */
   size?: Size;
 
@@ -127,6 +127,7 @@ export interface ButtonProps {
    * <Button as={Linker} />
    * ```
    * @type HTMLElement | React.Component
+   * @default button
    */
   as?: React.ElementType<any>;
 }

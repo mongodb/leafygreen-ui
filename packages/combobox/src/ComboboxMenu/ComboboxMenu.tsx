@@ -7,6 +7,7 @@ import Icon from '@leafygreen-ui/icon';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { palette } from '@leafygreen-ui/palette';
 import Popover from '@leafygreen-ui/popover';
+import { Error } from '@leafygreen-ui/typography';
 
 import { ComboboxProps } from '../Combobox.types';
 import { ComboboxContext } from '../ComboboxContext';
@@ -74,7 +75,12 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
       const messageStyles = cx(
         menuMessageBaseStyle,
         menuMessageThemeStyle[theme],
-        menuMessageSizeStyle[size],
+        menuMessageSizeStyle(size),
+      );
+
+      const errorMessageStyles = cx(
+        menuMessageBaseStyle,
+        menuMessageSizeStyle(size),
       );
 
       switch (searchState) {
@@ -93,13 +99,13 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
 
         case 'error': {
           return (
-            <span className={messageStyles}>
+            <Error className={errorMessageStyles}>
               <Icon
                 glyph="Warning"
                 color={darkMode ? palette.red.light1 : palette.red.base}
               />
-              {searchErrorMessage}
-            </span>
+              <span>{searchErrorMessage}</span>
+            </Error>
           );
         }
 

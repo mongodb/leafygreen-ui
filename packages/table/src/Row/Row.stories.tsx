@@ -1,14 +1,6 @@
 /* eslint-disable react/prop-types*/
 import React from 'react';
 import { ComponentStory, Meta } from '@storybook/react';
-import {
-  ColumnDef,
-  ExpandedState,
-  flexRender,
-  getCoreRowModel,
-  getExpandedRowModel,
-  HeaderGroup,
-} from '@tanstack/react-table';
 
 import { Cell, HeaderCell } from '../Cell';
 import { HeaderRow, Row } from '../Row';
@@ -21,6 +13,7 @@ import useLeafyGreenTable, {
 } from '../useLeafyGreenTable';
 import { makeData, Person } from '../utils/makeData.testutils';
 import { AnyDict } from '../utils/types';
+import { ColumnDef, ExpandedState, flexRender, HeaderGroup } from '..';
 
 export default {
   title: 'Components/Table/Row',
@@ -132,9 +125,6 @@ export const DisabledNestedRows: ComponentStory<typeof Row> = ({
       expanded,
     },
     onExpandedChange: setExpanded,
-    getCoreRowModel: getCoreRowModel(),
-    getExpandedRowModel: getExpandedRowModel(),
-    getSubRows: row => row.subRows,
   });
 
   const { rows } = table.getRowModel();

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
@@ -27,6 +27,8 @@ import {
   inputIndicatorSizeStyle,
   inputIndicatorStyle,
   inputModeStyles,
+  inputPaddingForIndicator,
+  inputPaddingForOptionalText,
   inputSizeStyles,
   inputStateStyles,
   optionalTextBaseStyle,
@@ -155,6 +157,9 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       ? CheckmarkWithCircleIcon
       : CheckmarkIcon;
 
+    const shouldRenderOptionalText =
+      state === State.None && !disabled && optional;
+
     return (
       <div
         className={cx(
@@ -198,9 +203,9 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               inputStateStyles[state][theme],
               inputFocusStyles[theme], // Always show focus styles
               {
-                [css`
-                  padding-right: 60px;
-                `]: optional && !disabled,
+                [inputPaddingForIndicator[sizeVariant]]: state !== State.None,
+                [inputPaddingForOptionalText[sizeVariant]]:
+                  shouldRenderOptionalText,
               },
             )}
             value={value}
@@ -237,7 +242,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
               />
             )}
 
-            {state === State.None && !disabled && optional && (
+            {shouldRenderOptionalText && (
               <div
                 className={cx(
                   optionalTextBaseStyle,
