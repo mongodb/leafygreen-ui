@@ -1,5 +1,11 @@
 # @leafygreen-ui/box
 
+## 3.1.3
+
+### Patch Changes
+
+- 111b680c5: Fixes incorrect prop types in Storybook
+
 ## 3.1.2
 
 ### Patch Changes

@@ -1,5 +1,25 @@
 # @leafygreen-ui/toast
 
+## 6.1.2
+
+### Patch Changes
+
+- cf00160ec: Updates TSDocs
+- 3bd3e0c45: Update Storybook for Live Example on .design
+- Updated dependencies [55d33e435]
+- Updated dependencies [07db42330]
+- Updated dependencies [55d33e435]
+- Updated dependencies [cf00160ec]
+- Updated dependencies [ce0fcb3f6]
+- Updated dependencies [111b680c5]
+- Updated dependencies [77320a6b8]
+  - @leafygreen-ui/lib@10.3.3
+  - @leafygreen-ui/palette@4.0.4
+  - @leafygreen-ui/typography@16.3.0
+  - @leafygreen-ui/portal@4.1.2
+  - @leafygreen-ui/icon-button@15.0.10
+  - @leafygreen-ui/tokens@2.0.3
+
 ## 6.1.1
 
 ### Patch Changes

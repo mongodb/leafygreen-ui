@@ -77,17 +77,20 @@ export const chipWrapperThemeStyle: Record<Theme, string> = {
   `,
 };
 
+export const disabledBaseChipWrapperStyles = css`
+  cursor: not-allowed;
+  pointer-events: none;
+`;
+
 export const disabledChipWrapperStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    cursor: not-allowed;
     color: ${palette.gray.base};
     background-color: ${palette.gray.light3};
   `,
   [Theme.Dark]: css`
-    cursor: not-allowed;
     color: ${palette.gray.dark2};
     background-color: ${palette.gray.dark4};
-    box-shadow: inset 0 0 1px 1px ${palette.gray.dark2}; ;
+    box-shadow: inset 0 0 1px 1px ${palette.gray.dark2};
   `,
 };
 
@@ -150,21 +153,19 @@ export const chipButtonThemeStyle: Record<Theme, string> = {
   `,
 };
 
+export const chipButtonBaseDisabledStyles = css`
+  cursor: not-allowed;
+  &:hover {
+    color: inherit;
+    background-color: unset;
+  }
+`;
+
 export const chipButtonDisabledStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    cursor: not-allowed;
-    color: ${palette.gray.dark2};
-    &:hover {
-      color: inherit;
-      background-color: unset;
-    }
+    color: ${palette.gray.light1};
   `,
   [Theme.Dark]: css`
-    cursor: not-allowed;
     color: ${palette.gray.dark2};
-    &:hover {
-      color: inherit;
-      background-color: unset;
-    }
   `,
 };
