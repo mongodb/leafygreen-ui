@@ -6,7 +6,6 @@ import InlineDefinition from '@leafygreen-ui/inline-definition';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontWeights } from '@leafygreen-ui/tokens';
 
 import {
   Body,
@@ -148,13 +147,13 @@ AllTypography.argTypes = {
 
 export const StaticWidthTextStory = () => {
   const hoverBold = css`
-    font-weight: ${fontWeights.regular};
+    font-weight: 400;
     cursor: pointer;
     outline: 1px solid ${palette.red.light2};
     outline-offset: -1px;
 
     &:hover {
-      font-weight: ${fontWeights.bold};
+      font-weight: 700;
     }
   `;
 
