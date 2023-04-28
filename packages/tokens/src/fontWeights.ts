@@ -6,4 +6,4 @@ export const fontWeights = {
 
 export default fontWeights;
 
-export type FontWeight = (typeof fontWeights)[keyof typeof fontWeights];
+export type FontWeight = typeof fontWeights[keyof typeof fontWeights];
