@@ -78,7 +78,7 @@ export const modalThemeStyles: Record<Theme, string> = {
     background-color: ${palette.white};
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.light1};
+    color: ${palette.gray.light2};
     background-color: ${palette.black};
 
     .${bodyClassName} {
