@@ -4,6 +4,7 @@ import { palette } from '@leafygreen-ui/palette';
 import {
   focusRing,
   fontFamilies,
+  fontWeights,
   hoverRing,
   spacing,
   transitionDuration,
@@ -22,7 +23,7 @@ export const wrapperClassName = createUniqueClassName('number-input-wrapper');
 export const inputBaseStyles = css`
   all: unset;
   font-family: ${fontFamilies.default};
-  font-weight: normal;
+  font-weight: ${fontWeights.regular};
   width: 100%;
   font-size: ${typeScales.body1.fontSize}px;
   line-height: ${typeScales.body1.lineHeight}px;

@@ -31,11 +31,9 @@ const colorBlock = css`
   border-radius: 8px;
   cursor: pointer;
   transition: box-shadow ease-in-out ${transitionDuration.default}ms;
-
   &:hover {
     box-shadow: ${hoverRing.light.gray};
   }
-
   &:focus {
     box-shadow: ${focusRing.light.default};
   }

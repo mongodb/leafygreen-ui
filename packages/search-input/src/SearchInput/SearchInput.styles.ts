@@ -4,6 +4,7 @@ import { palette } from '@leafygreen-ui/palette';
 import {
   focusRing,
   fontFamilies,
+  fontWeights,
   hoverRing,
   transitionDuration,
   typeScales,
@@ -127,7 +128,7 @@ export const baseInputStyle = css`
   font-family: ${fontFamilies.default};
   width: 100%;
   height: 1.5em;
-  font-weight: normal;
+  font-weight: ${fontWeights.regular};
   z-index: 1;
   outline: none;
   border: none;
@@ -185,7 +186,7 @@ export const inputThemeStyle: Record<Theme, string> = {
 
     &::placeholder {
       color: ${palette.gray.base};
-      font-weight: normal;
+      font-weight: ${fontWeights.regular};
     }
 
     &:disabled {
@@ -229,7 +230,7 @@ export const inputThemeStyle: Record<Theme, string> = {
 
     &::placeholder {
       color: ${palette.gray.base};
-      font-weight: normal;
+      font-weight: ${fontWeights.regular};
     }
 
     &:disabled {

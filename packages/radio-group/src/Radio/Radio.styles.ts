@@ -3,6 +3,7 @@ import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   focusRing,
+  fontWeights,
   hoverRing,
   spacing,
   transitionDuration,
@@ -37,7 +38,7 @@ export const labelBaseStyle = css`
   line-height: 20px;
   cursor: pointer;
   align-items: flex-start;
-  font-weight: 700;
+  font-weight: ${fontWeights.bold};
 `;
 
 export const inputThemeStyles: Record<Theme, string> = {

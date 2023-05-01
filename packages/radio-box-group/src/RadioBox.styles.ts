@@ -3,6 +3,7 @@ import { palette } from '@leafygreen-ui/palette';
 import {
   focusRing,
   fontFamilies,
+  fontWeights,
   hoverRing,
   transitionDuration,
 } from '@leafygreen-ui/tokens';
@@ -52,7 +53,7 @@ export const getRadioDisplayStyles = ({
       padding: 16px 24px;
 
       font-size: 13px;
-      font-weight: 700;
+      font-weight: ${fontWeights.bold};
       text-align: center;
       overflow-wrap: break-word;
       background-color: ${darkMode ? palette.gray.dark4 : palette.white};
@@ -89,7 +90,7 @@ export const getRadioDisplayStyles = ({
       [css`
         color: ${darkMode ? palette.gray.dark1 : palette.gray.light1};
         background: ${darkMode ? palette.gray.dark3 : palette.gray.light3};
-        font-weight: 400;
+        font-weight: ${fontWeights.regular};
         border-color: ${darkMode ? palette.gray.dark2 : palette.gray.light2};
         cursor: not-allowed;
         &:hover,
