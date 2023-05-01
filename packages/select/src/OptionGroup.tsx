@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { fontWeights } from '@leafygreen-ui/tokens';
 
 import { Option } from './Option';
 import SelectContext from './SelectContext';
@@ -21,7 +22,7 @@ const optionGroupLabelStyle = css`
   overflow-wrap: anywhere;
   font-size: 12px;
   line-height: 16px;
-  font-weight: bold;
+  font-weight: ${fontWeights.bold};
   text-transform: uppercase;
   letter-spacing: 0.4px;
 `;

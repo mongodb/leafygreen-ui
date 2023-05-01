@@ -6,6 +6,7 @@ import { palette } from '@leafygreen-ui/palette';
 import {
   BaseFontSize,
   fontFamilies,
+  fontWeights,
   transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
@@ -385,7 +386,7 @@ const sizeStyle: Record<Size, string> = {
     text-transform: uppercase;
     font-size: 12px;
     line-height: 1em;
-    font-weight: bold;
+    font-weight: ${fontWeights.bold};
     letter-spacing: 0.4px;
   `,
 
@@ -408,14 +409,14 @@ const fontStyles: Record<BaseFontSize, string> = {
   [BaseFontSize.Body1]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
-    font-weight: 500; // Medium
+    font-weight: ${fontWeights.medium};
   `,
   [BaseFontSize.Body2]: css`
     font-size: ${typeScales.body2.fontSize}px;
     line-height: ${typeScales.body2.lineHeight}px;
     // Pixel pushing for optical alignment purposes
     transform: translateY(1px);
-    font-weight: 500; // Medium
+    font-weight: ${fontWeights.medium};
   `,
 };
 

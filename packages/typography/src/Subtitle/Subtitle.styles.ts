@@ -1,7 +1,8 @@
 import { css } from '@leafygreen-ui/emotion';
+import { fontWeights } from '@leafygreen-ui/tokens';
 
 export const subtitleStyles = css`
   font-size: 18px;
   line-height: 24px;
-  font-weight: 700;
+  font-weight: ${fontWeights.bold};
 `;

@@ -7,6 +7,7 @@ import {
   PolymorphicAs,
   usePolymorphic,
 } from '@leafygreen-ui/polymorphic';
+import { fontWeights as fontWeightTokens } from '@leafygreen-ui/tokens';
 
 import {
   baseTypographyStyles,
@@ -15,21 +16,7 @@ import {
 } from '../styles';
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
 
-import { BodyFontWeight, BodyProps } from './Body.types';
-
-const fontWeights: Record<
-  'default' | 'strong',
-  Record<BodyFontWeight, number>
-> = {
-  default: {
-    regular: 400,
-    medium: 500,
-  },
-  strong: {
-    regular: 700,
-    medium: 700,
-  },
-} as const;
+import { BodyProps } from './Body.types';
 
 const Body = Polymorphic<BodyProps>(
   ({
@@ -46,10 +33,10 @@ const Body = Polymorphic<BodyProps>(
 
     // Currently hardcoding selectors to keys; could consider a dynamic solution that runs once
     const fontWeight = css`
-      font-weight: ${fontWeights['default'][weight]};
+      font-weight: ${fontWeightTokens[weight]};
       strong,
       b {
-        font-weight: ${fontWeights['strong'][weight]};
+        font-weight: ${fontWeightTokens.bold};
       }
     `;
 
