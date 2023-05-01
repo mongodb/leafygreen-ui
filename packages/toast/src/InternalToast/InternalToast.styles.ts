@@ -5,6 +5,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   fontFamilies,
+  fontWeights,
   spacing,
   transitionDuration,
   typeScales,
@@ -48,7 +49,7 @@ export const baseToastStyle = css`
   .${anchorClassName}, a {
     font-size: inherit;
     line-height: inherit;
-    font-weight: 700;
+    font-weight: ${fontWeights.bold};
     text-decoration: underline;
     text-underline-offset: 3px;
     text-decoration-thickness: 2px;
@@ -125,7 +126,7 @@ export const textContentStyle = css`
 `;
 
 export const titleStyle = css`
-  font-weight: bold;
+  font-weight: ${fontWeights.bold};
   overflow: hidden;
 `;
 

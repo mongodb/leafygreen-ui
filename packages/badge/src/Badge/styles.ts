@@ -1,7 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies, fontWeights } from '@leafygreen-ui/tokens';
 
 import { Variant } from './types';
 
@@ -9,7 +9,7 @@ export const baseStyle = css`
   font-family: ${fontFamilies.default};
   display: inline-flex;
   align-items: center;
-  font-weight: 700;
+  font-weight: ${fontWeights.bold};
   font-size: 12px;
   line-height: 16px;
   border-radius: 5px;

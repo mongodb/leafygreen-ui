@@ -13,6 +13,7 @@ import { palette } from '@leafygreen-ui/palette';
 import {
   BaseFontSize,
   focusRing,
+  fontWeights,
   hoverRing,
   spacing,
   typeScales,
@@ -27,7 +28,7 @@ export const menuButtonTextClassName = createUniqueClassName('select-menu');
 
 const menuButtonStyleOverrides = css`
   // Override button defaults
-  font-weight: 400;
+  font-weight: ${fontWeights.regular};
   > *:last-child {
     grid-template-columns: 1fr 16px;
     justify-content: flex-start;

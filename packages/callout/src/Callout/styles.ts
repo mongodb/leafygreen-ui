@@ -6,7 +6,7 @@ import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies, fontWeights } from '@leafygreen-ui/tokens';
 import { anchorClassName } from '@leafygreen-ui/typography';
 
 import { Variant } from './types';
@@ -62,7 +62,7 @@ export const bodyStyle = css`
   display: flex;
   flex-direction: column;
   padding: 16px 24px 16px 52px;
-  font-weight: 400;
+  font-weight: ${fontWeights.regular};
 `;
 
 export const headerLabels: Record<Variant, string> = {
@@ -247,7 +247,7 @@ export const contentStyles = css`
   .${anchorClassName}, a {
     font-size: inherit;
     line-height: inherit;
-    font-weight: 700;
+    font-weight: ${fontWeights.bold};
     text-decoration: underline;
     text-underline-offset: 3px;
     text-decoration-thickness: 2px;

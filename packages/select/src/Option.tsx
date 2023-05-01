@@ -7,7 +7,11 @@ import { isComponentGlyph } from '@leafygreen-ui/icon';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import { LGGlyph } from '@leafygreen-ui/icon/src/types';
 import { createUniqueClassName, HTMLElementProps } from '@leafygreen-ui/lib';
-import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
+import {
+  fontFamilies,
+  fontWeights,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
 
 import SelectContext from './SelectContext';
 import { colorSets } from './styleSets';
@@ -145,7 +149,7 @@ export function InternalOption({
     <span
       className={cx(optionTextStyle, {
         [css`
-          font-weight: bold;
+          font-weight: ${fontWeights.bold};
         `]: selected,
       })}
     >

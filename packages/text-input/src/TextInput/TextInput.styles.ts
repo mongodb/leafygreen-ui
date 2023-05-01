@@ -5,6 +5,7 @@ import {
   BaseFontSize,
   focusRing,
   fontFamilies,
+  fontWeights,
   hoverRing,
   spacing,
   transitionDuration,
@@ -89,7 +90,7 @@ export const baseInputStyle = css`
   font-family: ${fontFamilies.default};
   width: 100%;
   height: 36px;
-  font-weight: normal;
+  font-weight: ${fontWeights.regular};
   border: 1px solid;
   z-index: 1;
   outline: none;
@@ -154,7 +155,7 @@ export const inputModeStyles: Record<Theme, string> = {
 
     &::placeholder {
       color: ${palette.gray.light1};
-      font-weight: normal;
+      font-weight: ${fontWeights.regular};
     }
 
     &:hover,
@@ -218,7 +219,7 @@ export const inputModeStyles: Record<Theme, string> = {
 
     &::placeholder {
       color: ${palette.gray.dark1};
-      font-weight: normal;
+      font-weight: ${fontWeights.regular};
     }
 
     &:disabled {
@@ -424,7 +425,7 @@ export const optionalTextBaseStyle = css`
   font-size: 12px;
   line-height: 12px;
   font-style: italic;
-  font-weight: normal;
+  font-weight: ${fontWeights.regular};
   display: flex;
   align-items: center;
   > p {
@@ -445,5 +446,5 @@ export const errorMessageStyle = css`
   ${inheritTypeScale};
   min-height: 20px;
   padding-top: 4px;
-  font-weight: normal;
+  font-weight: ${fontWeights.regular};
 `;

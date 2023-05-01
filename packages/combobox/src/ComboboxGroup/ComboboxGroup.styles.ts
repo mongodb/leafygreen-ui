@@ -1,7 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { spacing } from '@leafygreen-ui/tokens';
+import { fontWeights, spacing } from '@leafygreen-ui/tokens';
 
 export const comboboxGroupStyle: Record<Theme, string> = {
   [Theme.Light]: css`
@@ -20,7 +20,7 @@ export const comboboxGroupLabel = css`
   overflow-wrap: anywhere;
   font-size: 12px;
   line-height: 16px;
-  font-weight: bold;
+  font-weight: ${fontWeights.bold};
   text-transform: uppercase;
   letter-spacing: 0.4px;
 `;
