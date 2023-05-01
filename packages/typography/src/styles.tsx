@@ -1,7 +1,9 @@
 import { css } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+
+export const bodyClassName = createUniqueClassName('body');
 
 export const baseTypographyStyles = css`
   margin: unset;
