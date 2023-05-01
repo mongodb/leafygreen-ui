@@ -224,7 +224,12 @@ Tabs.propTypes = {
   setSelected: PropTypes.func,
   selected: PropTypes.number,
   className: PropTypes.string,
-  as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  as: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+    PropTypes.elementType,
+    PropTypes.element,
+  ]),
 };
 
 export default Tabs;
