@@ -20,6 +20,7 @@ import CaretDown from './CaretDown.svg';
 import CaretLeft from './CaretLeft.svg';
 import CaretRight from './CaretRight.svg';
 import CaretUp from './CaretUp.svg';
+import ChartFilled from './ChartFilled.svg';
 import Charts from './Charts.svg';
 import Checkmark from './Checkmark.svg';
 import CheckmarkWithCircle from './CheckmarkWithCircle.svg';
@@ -141,6 +142,7 @@ const _glyphs = {
   CaretLeft,
   CaretRight,
   CaretUp,
+  ChartFilled,
   Charts,
   Checkmark,
   CheckmarkWithCircle,
