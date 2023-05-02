@@ -4,6 +4,7 @@ import { palette } from '@leafygreen-ui/palette';
 import {
   focusRing,
   fontFamilies,
+  fontWeights,
   transitionDuration,
 } from '@leafygreen-ui/tokens';
 
@@ -47,7 +48,7 @@ export const optionSizeStyle: Record<Size, string> = {
     --line-height: 16px;
     --padding-inline: 12px;
     --text-transform: uppercase;
-    --font-weight: 700;
+    --font-weight: ${fontWeights.bold};
     --divider-height: 12px;
     --padding-block: 3px;
   `,
@@ -56,7 +57,7 @@ export const optionSizeStyle: Record<Size, string> = {
     --line-height: 24px;
     --padding-inline: 12px; // left/right
     --text-transform: none;
-    --font-weight: 500;
+    --font-weight: ${fontWeights.medium};
     --divider-height: 18px;
     --padding-block: 3px;
   `,
@@ -65,7 +66,7 @@ export const optionSizeStyle: Record<Size, string> = {
     --line-height: 28px;
     --padding-inline: 12px;
     --text-transform: none;
-    --font-weight: 500;
+    --font-weight: ${fontWeights.medium};
     --divider-height: 20px;
     --padding-block: 4px;
   `,

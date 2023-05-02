@@ -1,7 +1,12 @@
 import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies, spacing, typeScales } from '@leafygreen-ui/tokens';
+import {
+  fontFamilies,
+  fontWeights,
+  spacing,
+  typeScales,
+} from '@leafygreen-ui/tokens';
 
 export const titleClassName = createUniqueClassName('search-result-title');
 export const descriptionClassName = createUniqueClassName(
@@ -16,7 +21,7 @@ export const searchResultStyles = css`
   padding: ${spacing[1]}px ${spacing[3]}px;
 
   & .${titleClassName} {
-    font-weight: 700;
+    font-weight: ${fontWeights.bold};
   }
 `;
 

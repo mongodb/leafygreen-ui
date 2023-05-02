@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { fontWeights } from '@leafygreen-ui/tokens';
 import { Description, Label } from '@leafygreen-ui/typography';
 
 import { Check } from './Check';
@@ -134,7 +135,7 @@ function Checkbox({
           <span
             className={cx(labelTextStyle, {
               [css`
-                font-weight: 400;
+                font-weight: ${fontWeights.regular};
               `]: !bold,
             })}
           >

@@ -2,7 +2,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { leftGlyphClassName } from '@leafygreen-ui/input-option';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { spacing } from '@leafygreen-ui/tokens';
+import { fontWeights, spacing } from '@leafygreen-ui/tokens';
 
 import { fontSize, lineHeight } from '../Chip/Chip.styles';
 import { ComboboxSize } from '../Combobox.types';
@@ -57,7 +57,7 @@ export const disallowPointer = css`
 `;
 
 export const displayNameStyle = (isSelected: boolean) => css`
-  font-weight: ${isSelected ? 'bold' : 'normal'};
+  font-weight: ${isSelected ? fontWeights.bold : fontWeights.regular};
 `;
 
 export const iconThemeStyles: Record<Theme, string> = {

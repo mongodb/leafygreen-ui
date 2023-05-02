@@ -53,10 +53,6 @@ const StepLabel = ({ children, state }: PropsWithChildren<StepLabelProps>) => {
       weight={isCurrent ? 'medium' : 'regular'}
       as="div"
     >
-      {/*
-        TODO: Would prefer to use a centralized font-weight value directly in css so it's not dependent on a ternary operator.
-        Currently using the <Body> component with the `weight` prop since this is currently the only way to use a reusable variable.
-      */}
       {children}
     </Body>
   );

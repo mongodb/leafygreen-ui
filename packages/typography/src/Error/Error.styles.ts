@@ -1,11 +1,11 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies, fontWeights } from '@leafygreen-ui/tokens';
 
 export const errorMessageStyle = css`
   font-family: ${fontFamilies.default};
-  font-weight: normal;
+  font-weight: ${fontWeights.regular};
   font-size: inherit;
   line-height: inherit;
 
