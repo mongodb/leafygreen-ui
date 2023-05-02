@@ -103,6 +103,11 @@ const minSize = notchWidth + 2 * borderRadius;
 const minHeightStyle = css`
   min-height: ${minSize}px;
 `;
+
+const transitionDelay = css`
+  transition-delay: 500ms;
+`;
+
 interface PopoverFunctionParameters {
   align: Align;
   justify: Justify;
@@ -338,7 +343,7 @@ function Tooltip({
       justify={justify}
       adjustOnMutation={true}
       onClick={stopClickPropagation}
-      className={cx({
+      className={cx(transitionDelay, {
         [css`
           // Try to fit all the content on one line (until it hits max-width)
           // Overrides default behavior, which is to set width to size of the trigger.
