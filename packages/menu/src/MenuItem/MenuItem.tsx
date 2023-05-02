@@ -78,7 +78,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
     const baseProps = {
       ref,
       role: 'menuitem',
-      tabIndex: disabled ? -1 : undefined,
+      tabIndex: -1,
       'aria-disabled': disabled,
       'aria-current': active ?? undefined,
       // only add a disabled prop if not an anchor
