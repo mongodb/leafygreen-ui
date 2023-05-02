@@ -80,7 +80,7 @@ Scroll.args = {
         margin,
       )}
     >
-      <div>Modal Content goes here.</div>
+      <Body>Modal Content goes here.</Body>
     </div>
   ),
 };
@@ -98,13 +98,10 @@ export const DefaultSelect = (args: ModalProps) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('cat');
   const [valueB, setValueB] = useState('smallCat');
-  const { darkMode } = args;
 
   return (
     <>
-      <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
-        Open Modal
-      </Button>
+      <Button onClick={() => setOpen(!open)}>Open Modal</Button>
       <Modal {...args} open={open} setOpen={setOpen}>
         <div className={margin}>
           <Subtitle>Modal Content goes here.</Subtitle>
