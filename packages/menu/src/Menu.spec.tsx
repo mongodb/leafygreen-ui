@@ -102,18 +102,28 @@ describe('packages/menu', () => {
     });
   });
 
+  type Keys = 'esc' | 'tab';
+  const tests = [['esc'], ['tab']] as Array<Array<Keys>>;
+
   describe('Keyboard Interaction', () => {
-    describe('Escape key', () => {
+    const userEventInteraction = (menu: HTMLElement, key: Keys) => {
+      if (key === 'esc') {
+        userEvent.type(menu, '{esc}');
+      } else {
+        userEvent.tab();
+      }
+    };
+
+    describe.each(tests)('%s key', key => {
       test('Closes menu', async () => {
         const { getByRole, getByTestId } = renderMenu({
           trigger,
         });
         const button = getByRole('button');
-
         userEvent.click(button);
         const menu = getByTestId(menuTestId);
-        userEvent.type(menu, '{esc}');
 
+        userEventInteraction(menu, key);
         await waitForElementToBeRemoved(menu);
         expect(menu).not.toBeInTheDocument();
       });
@@ -125,7 +135,8 @@ describe('packages/menu', () => {
         const button = getByRole('button');
         userEvent.click(button);
         const menu = getByTestId(menuTestId);
-        userEvent.type(menu, '{esc}');
+
+        userEventInteraction(menu, key);
         await waitForElementToBeRemoved(menu);
         expect(button).toHaveFocus();
       });
@@ -138,7 +149,8 @@ describe('packages/menu', () => {
         const button = getByRole('button');
         userEvent.click(button);
         const menu = getByTestId(menuTestId);
-        userEvent.type(menu, '{esc}');
+
+        userEventInteraction(menu, key);
         await waitForElementToBeRemoved(menu);
         expect(button).toHaveFocus();
       });
