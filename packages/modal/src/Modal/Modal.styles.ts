@@ -8,7 +8,6 @@ import {
   fontFamilies,
   transitionDuration,
 } from '@leafygreen-ui/tokens';
-import { bodyClassName } from '@leafygreen-ui/typography';
 
 import { CloseIconColor, ModalSize } from './Modal.types';
 
@@ -80,10 +79,6 @@ export const modalThemeStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     color: ${palette.gray.light2};
     background-color: ${palette.black};
-
-    .${bodyClassName} {
-      color: ${palette.gray.light1};
-    }
   `,
 };
 

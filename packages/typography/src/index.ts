@@ -23,7 +23,7 @@ export { default as Link } from './Link/Link';
 export { anchorClassName } from './Link/Link.styles';
 export type { LinkProps } from './Link/Link.types';
 export { default as Overline } from './Overline/Overline';
-export { bodyClassName, bodyTypeScaleStyles } from './styles';
+export { bodyTypeScaleStyles } from './styles';
 export { default as Subtitle } from './Subtitle/Subtitle';
 export { StaticWidthText } from './utils/StaticWidthText';
 export { useUpdatedBaseFontSize } from './utils/useUpdatedBaseFontSize';

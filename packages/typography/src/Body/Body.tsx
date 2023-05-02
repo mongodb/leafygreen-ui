@@ -10,7 +10,6 @@ import {
 
 import {
   baseTypographyStyles,
-  bodyClassName,
   bodyTypeScaleStyles,
   defaultTextColor,
 } from '../styles';
@@ -61,7 +60,6 @@ const Body = Polymorphic<BodyProps>(
           bodyTypeScaleStyles[baseFontSize],
           defaultTextColor[theme],
           fontWeight,
-          bodyClassName,
           className,
         )}
         {...rest}
