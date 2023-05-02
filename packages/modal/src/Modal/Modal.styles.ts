@@ -9,7 +9,7 @@ import {
   transitionDuration,
 } from '@leafygreen-ui/tokens';
 
-import { CloseIconColor, ModalSize } from './types';
+import { CloseIconColor, ModalSize } from './Modal.types';
 
 // breakpoints for different screen sizes
 export const large = `${breakpoints.Desktop + 1}px`; // laptops/desktop screens, from 1025px and above
@@ -79,10 +79,6 @@ export const modalThemeStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     color: ${palette.gray.light2};
     background-color: ${palette.black};
-
-    p {
-      color: ${palette.gray.light1};
-    }
   `,
 };
 
