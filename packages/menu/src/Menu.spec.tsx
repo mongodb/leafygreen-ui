@@ -103,7 +103,7 @@ describe('packages/menu', () => {
   });
 
   type Keys = 'esc' | 'tab';
-  const tests = [['esc'], ['tab']] as Array<Array<Keys>>;
+  const tests: Array<Array<Keys>> = [['esc'], ['tab']];
 
   describe('Keyboard Interaction', () => {
     const userEventInteraction = (menu: HTMLElement, key: Keys) => {
