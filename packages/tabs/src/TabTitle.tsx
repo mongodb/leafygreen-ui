@@ -6,6 +6,7 @@ import { getNodeTextContent, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   fontFamilies,
+  fontWeights,
   transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
@@ -43,7 +44,7 @@ const listTitleModeStyles: Record<Theme, ListTitleMode> = {
     `,
     selected: css`
       color: ${palette.green.dark2};
-      font-weight: 700;
+      font-weight: ${fontWeights.bold};
 
       &:after {
         transform: scaleX(1);
@@ -90,7 +91,7 @@ const listTitleModeStyles: Record<Theme, ListTitleMode> = {
     `,
     selected: css`
       color: ${palette.green.base};
-      font-weight: 700;
+      font-weight: ${fontWeights.bold};
 
       &:after {
         transform: scaleX(1);
@@ -116,7 +117,7 @@ const listTitleModeStyles: Record<Theme, ListTitleMode> = {
 const listTitleStyles = css`
   font-family: ${fontFamilies.default};
   font-size: ${typeScales.body1.fontSize}px;
-  font-weight: 500;
+  font-weight: ${fontWeights.medium};
   position: relative;
   display: inline-flex;
   flex-direction: column;
@@ -132,7 +133,7 @@ const listTitleStyles = css`
 
   &:focus:not(:disabled) {
     outline: none;
-    font-weight: 700;
+    font-weight: ${fontWeights.bold};
   }
 
   // We create a pseudo element that's the width of the bolded text
@@ -140,7 +141,7 @@ const listTitleStyles = css`
   &:before {
     content: attr(data-text);
     height: 0;
-    font-weight: 700;
+    font-weight: ${fontWeights.bold};
     visibility: hidden;
     overflow: hidden;
     user-select: none;

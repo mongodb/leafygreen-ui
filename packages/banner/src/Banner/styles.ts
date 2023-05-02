@@ -1,7 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies, fontWeights } from '@leafygreen-ui/tokens';
 import { anchorClassName } from '@leafygreen-ui/typography';
 
 import { Variant } from './types';
@@ -274,7 +274,7 @@ export const textStyles = (image: boolean, dismissible: boolean) => css`
   .${anchorClassName}, a {
     font-size: inherit;
     line-height: inherit;
-    font-weight: 700;
+    font-weight: ${fontWeights.bold};
     text-decoration: underline;
     text-underline-offset: 3px;
     text-decoration-thickness: 2px;

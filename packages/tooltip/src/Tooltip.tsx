@@ -21,7 +21,7 @@ import Popover, {
   Justify,
   PopoverProps,
 } from '@leafygreen-ui/popover';
-import { BaseFontSize, fontFamilies } from '@leafygreen-ui/tokens';
+import { BaseFontSize, fontFamilies, fontWeights } from '@leafygreen-ui/tokens';
 import {
   bodyTypeScaleStyles,
   useUpdatedBaseFontSize,
@@ -56,7 +56,7 @@ const baseTypeStyle = css`
   margin: unset;
   font-family: ${fontFamilies.default};
   color: ${palette.gray.light1};
-  font-weight: 400;
+  font-weight: ${fontWeights.regular};
   width: 100%;
   overflow-wrap: anywhere;
 `;
