@@ -4,8 +4,6 @@ import { fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
-
 import Pagination, { PaginationProps } from '.';
 
 function renderPagination(props: PaginationProps) {
