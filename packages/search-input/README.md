@@ -84,11 +84,17 @@ import {
 
 ## Props
 
-| Prop          | Type                      | Description                                | Default |
-| ------------- | ------------------------- | ------------------------------------------ | ------- |
-| `children`    | `React.ReactNode`         | The value of the result.                   |         |
-| `description` | `React.ReactNode`         | Optional description text.                 |         |
-| `onClick`     | `React.MouseEventHandler` | Callback fired when the option is clicked. |         |
+| Prop          | Type                      | Description                                                                                                                                                | Default |
+| ------------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `children`    | `React.ReactNode`         | The value of the result.                                                                                                                                   |         |
+| `description` | `React.ReactNode`         | Optional description text.                                                                                                                                 |         |
+| `onClick`     | `React.MouseEventHandler` | Callback fired when the option is clicked.                                                                                                                 |         |
+| `as`          | `React.ElementType`       | The component or element to render as.                                                                                                                     | `li`    |
+| `disabled`    | `boolean`                 | Prevents the option from being selectable.                                                                                                                 | `false` |
+| `highlighted` | `boolean`                 | Defines the currently highlighted option element for keyboard navigation. Not to be confused with selected, which identifies the currently selected option | `false` |
+| `selected`    | `boolean`                 | Whether the component is selected, regardless of keyboard navigation                                                                                       | `false` |
+| `href`        | `string`                  | `href` is required for Anchor tags                                                                                                                         |         |
+| `...`         | native `as` attributes    | Any other properties will be spread on the root `as` element.                                                                                              |
 
 # SearchResultGroup
 
