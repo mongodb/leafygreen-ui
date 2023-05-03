@@ -13,7 +13,6 @@ function useGlobalId({ id: idOverride, prefix }: Params): string {
   const [defaultId, setDefaultId] = React.useState<string | number | undefined>(
     idOverride,
   );
-  // const id = idOverride || defaultId;
 
   React.useEffect(() => {
     if (defaultId == null) {
