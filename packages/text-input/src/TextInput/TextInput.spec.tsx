@@ -8,6 +8,8 @@ import {
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
+import { consoleOnce } from '@leafygreen-ui/lib';
+
 import TextInput from './TextInput';
 import { SizeVariant, State } from './TextInput.types';
 
@@ -76,8 +78,10 @@ describe('packages/text-input', () => {
   });
 
   test('renders type as "password" when the prop is set', () => {
+    const spy = jest.spyOn(consoleOnce, 'warn').mockImplementation(() => {});
     const { textInput } = renderTextInput({ type: 'password' });
     expect(textInput.getAttribute('type')).toBe('password');
+    spy.mockClear();
   });
 
   test('does not render "optional" text when the prop is set to false', () => {
