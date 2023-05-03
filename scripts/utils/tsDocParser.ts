@@ -33,7 +33,10 @@ const TSDocOptions: ParserOptions = {
   shouldRemoveUndefinedFromOptional: false,
   skipChildrenPropWithoutDoc: false,
   /** Ensures the Polymorphic component gets documented */
-  customComponentTypes: ['PolymorphicComponentType'],
+  customComponentTypes: [
+    'PolymorphicComponentType',
+    'InferredPolymorphicComponentType',
+  ],
   propFilter: (prop, component) => {
     return (
       !skipComponents.includes(component.name) &&
@@ -129,6 +132,7 @@ export function parseTSDoc(
           props: parseProps(props, displayName),
         } as CustomComponentDoc;
       });
+
     const docs: Array<CustomComponentDoc> = uniqBy(parsedDocs, 'displayName');
 
     console.log(chalk.gray(`Parsed TSDoc for:`, chalk.bold(componentName)));
