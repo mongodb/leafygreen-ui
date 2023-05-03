@@ -109,10 +109,10 @@ describe('packages/button', () => {
 
     test(`renders a button as another HTML element if the "as" prop is set`, () => {
       const { container, button } = renderButton({
-        as: 'p',
+        as: 'div',
       });
       expect(container.querySelector('button')).not.toBeInTheDocument();
-      expect(button.tagName.toLowerCase()).toBe('p');
+      expect(button.tagName.toLowerCase()).toBe('div');
     });
 
     test(`renders a when passing in a NextJS Link wrapper`, () => {
@@ -213,7 +213,7 @@ describe('packages/button', () => {
     });
 
     test('accepts a string as `as`', () => {
-      <Button as="p" />;
+      <Button as="div" />;
     });
 
     test('accepts a component as `as`', () => {
