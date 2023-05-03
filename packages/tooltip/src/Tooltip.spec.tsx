@@ -540,7 +540,7 @@ describe('packages/tooltip', () => {
       ' To use, please wrap your trigger element in another HTML tag.';
     let warn: jest.SpyInstance;
     beforeEach(() => {
-      warn = jest.spyOn(global.console, 'warn').mockImplementation(() => {});
+      warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
     });
 
     afterEach(() => {
