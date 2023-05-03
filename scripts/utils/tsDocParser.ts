@@ -132,7 +132,6 @@ export function parseTSDoc(
           props: parseProps(props, displayName),
         } as CustomComponentDoc;
       });
-
     const docs: Array<CustomComponentDoc> = uniqBy(parsedDocs, 'displayName');
 
     console.log(chalk.gray(`Parsed TSDoc for:`, chalk.bold(componentName)));
