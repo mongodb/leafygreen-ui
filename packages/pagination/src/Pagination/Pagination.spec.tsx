@@ -59,8 +59,6 @@ describe('packages/pagination', () => {
     afterEach(() => jest.clearAllMocks());
 
     test('console errors when itemsPerPage is not a valid option', async () => {
-      // Context.within(Jest.spyContext(console, 'error'), spy => {
-      //   spy.mockImplementation();
       render(
         <Pagination
           {...defaultProps}
@@ -70,22 +68,15 @@ describe('packages/pagination', () => {
         />,
       );
       expect(consoleSpy).toHaveBeenCalled();
-      // });
     });
     test('console errors when currentPage is less than 1', async () => {
-      // Context.within(Jest.spyContext(console, 'error'), spy => {
-      //   spy.mockImplementation();
       renderPagination({ ...defaultProps, currentPage: 0 });
       expect(consoleSpy).toHaveBeenCalled();
-      // });
     });
 
     test('console errors when currentPage is greater than the total number of pages', async () => {
-      // Context.within(Jest.spyContext(console, 'error'), spy => {
-      //   spy.mockImplementation();
       renderPagination({ ...defaultProps, currentPage: 150 });
       expect(consoleSpy).toHaveBeenCalled();
-      // });
     });
   });
 
