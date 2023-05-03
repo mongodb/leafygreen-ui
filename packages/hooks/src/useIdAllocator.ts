@@ -9,9 +9,11 @@ interface Params {
 
 let globalId = 0;
 
-function useGlobalId({ id: idOverride, prefix }: Params): string | undefined {
-  const [defaultId, setDefaultId] = React.useState(idOverride);
-  const id = idOverride || defaultId;
+function useGlobalId({ id: idOverride, prefix }: Params): string {
+  const [defaultId, setDefaultId] = React.useState<string | number | undefined>(
+    idOverride,
+  );
+  // const id = idOverride || defaultId;
 
   React.useEffect(() => {
     if (defaultId == null) {
@@ -20,11 +22,11 @@ function useGlobalId({ id: idOverride, prefix }: Params): string | undefined {
       // We can't use it server-side.
       // If you want to use random values please consider the Birthday Problem: https://en.wikipedia.org/wiki/Birthday_problem
       globalId += 1;
-      setDefaultId(`${prefix ?? 'lg'}-${globalId}`);
+      setDefaultId(globalId);
     }
   }, [defaultId, prefix]);
 
-  return id;
+  return idOverride ? idOverride : `${prefix ?? 'lg'}-${defaultId}`;
 }
 
 // eslint-disable-next-line no-useless-concat -- Workaround for https://github.com/webpack/webpack/issues/14814
@@ -32,10 +34,7 @@ const maybeReactUseId: undefined | (() => string) = (React as any)[
   'useId' + ''
 ];
 
-export default function useId({
-  prefix,
-  id: idOverride,
-}: Params): string | undefined {
+export default function useId({ prefix, id: idOverride }: Params): string {
   if (maybeReactUseId !== undefined) {
     const reactId = maybeReactUseId();
     return idOverride ?? reactId;
