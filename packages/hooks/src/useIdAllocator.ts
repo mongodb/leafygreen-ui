@@ -1,6 +1,6 @@
 // Currently using Material UI useId hook until we can upgrade to React 18's useId
 // https://github.com/mui/material-ui/blob/master/packages/mui-utils/src/useId.ts
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface Params {
   prefix?: string;
@@ -10,11 +10,11 @@ interface Params {
 let globalId = 0;
 
 function useGlobalId({ id: idOverride, prefix }: Params): string {
-  const [defaultId, setDefaultId] = React.useState<string | number | undefined>(
+  const [defaultId, setDefaultId] = useState<string | number | undefined>(
     idOverride,
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (defaultId == null) {
       // Fallback to this default id when possible.
       // Use the incrementing value for client-side rendering only.

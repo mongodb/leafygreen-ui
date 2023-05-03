@@ -316,39 +316,29 @@ describe('packages/hooks', () => {
     });
   });
 
-  // describe('useIdAllocator', () => {
-  //   test('it returns an id with the correct prefix when rendered', () => {
-  //     const { result } = renderHook(() =>
-  //       useIdAllocator({ prefix: 'checkbox' }),
-  //     );
-  //     expect(result.current).toEqual('checkbox-1');
-  //   });
+  describe('useIdAllocator', () => {
+    test('it returns an id with the correct prefix when rendered', () => {
+      const { result } = renderHook(() =>
+        useIdAllocator({ prefix: 'checkbox' }),
+      );
+      expect(result.current).toEqual('checkbox-1');
+    });
 
-  //   test('it does not increment on a component rerender', () => {
-  //     const { rerender, result } = renderHook(() =>
-  //       useIdAllocator({ prefix: 'button' }),
-  //     );
-  //     expect(result.current).toEqual('button-1');
+    test('when two hooks are rendered with the same prefix, they are still uniquely identified', () => {
+      const { result: hook1 } = renderHook(() =>
+        useIdAllocator({ prefix: 'tester' }),
+      );
+      const { result: hook2 } = renderHook(() =>
+        useIdAllocator({ prefix: 'tester' }),
+      );
+      expect(hook1).not.toEqual(hook2);
+    });
 
-  //     rerender();
-  //     expect(result.current).toEqual('button-1');
-  //   });
-
-  //   test('when two hooks are rendered with the same prefix, they are still uniquely identified', () => {
-  //     const { result: hook1 } = renderHook(() =>
-  //       useIdAllocator({ prefix: 'tester' }),
-  //     );
-  //     const { result: hook2 } = renderHook(() =>
-  //       useIdAllocator({ prefix: 'tester' }),
-  //     );
-  //     expect(hook1).not.toEqual(hook2);
-  //   });
-
-  //   test('when a fallback id is provided, hook returns that id', () => {
-  //     const { result } = renderHook(() => useIdAllocator({ id: 'id' }));
-  //     expect(result.current).toBe('id');
-  //   });
-  // });
+    test('when a fallback id is provided, hook returns that id', () => {
+      const { result } = renderHook(() => useIdAllocator({ id: 'id' }));
+      expect(result.current).toBe('id');
+    });
+  });
 
   describe('useValidation', () => {
     it('Returns validation functions when callback is defined', () => {
