@@ -34,7 +34,7 @@ import {
   onChange={() => {
     console.log('SB: Change');
   }}
-  {...props}
+  aria-label="some label"
 >
   <SearchResult
     onClick={() => {
@@ -98,4 +98,4 @@ import {
 | ---------- | ----------------------- | -------------------------------------------------------------- | ------- |
 | `children` | `React.ReactNode`       | Must be `<SearchResult/>` or `<SearchResultGroup/>`.           |         |
 | `label`    | `string`                | Title for the group of options.                                |         |
-| `...`      | native `div` attributes | Any other properties will be spread on the root `div` element. |
+| `...`      | native `div` attributes | Any other properties will be spread on the root `div` element. |         |
