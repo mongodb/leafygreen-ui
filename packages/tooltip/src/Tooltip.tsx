@@ -21,7 +21,12 @@ import Popover, {
   Justify,
   PopoverProps,
 } from '@leafygreen-ui/popover';
-import { BaseFontSize, fontFamilies, fontWeights } from '@leafygreen-ui/tokens';
+import {
+  BaseFontSize,
+  fontFamilies,
+  fontWeights,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
 import {
   bodyTypeScaleStyles,
   useUpdatedBaseFontSize,
@@ -105,7 +110,7 @@ const minHeightStyle = css`
 `;
 
 const transitionDelay = css`
-  transition-delay: 500ms;
+  transition-delay: ${transitionDuration.slowest}ms;
 `;
 
 interface PopoverFunctionParameters {
