@@ -20,6 +20,9 @@ import { SearchResultsMenuProps } from './SearchResultsMenu.types';
 
 const MAX_MENU_HEIGHT = 256;
 
+/**
+ * @internal
+ */
 export const SearchResultsMenu = React.forwardRef<
   HTMLUListElement,
   SearchResultsMenuProps
