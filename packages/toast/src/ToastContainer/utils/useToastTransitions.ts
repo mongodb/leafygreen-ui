@@ -18,6 +18,9 @@ interface UseToastTransitionsReturnVal {
   handleTransitionEnter: () => void;
 }
 
+/**
+ * @internal
+ */
 export function useToastTransitions({
   getShouldExpand,
   exitCallback,

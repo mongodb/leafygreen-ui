@@ -43,7 +43,7 @@ export const defaultToastProps: Required<
 
 /**
  * The internal toast component
- *
+ * @internal
  * Only responsible for rendering itself
  */
 export const InternalToast = React.forwardRef<

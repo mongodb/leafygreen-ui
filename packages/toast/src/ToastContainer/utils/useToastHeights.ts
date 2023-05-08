@@ -35,6 +35,9 @@ interface UseToastHeightsReturnVal {
   updateToastHeights: () => void;
 }
 
+/**
+ * @internal
+ */
 export function useToastHeights({
   stack,
   getToastRef,

@@ -20,6 +20,9 @@ type ModifiedTooltipProps = Omit<
   | 'className'
   | 'children'
   | 'onClose'
+  | 'setOpen'
+  | 'open'
+  | 'refEl'
 >;
 
 interface StandaloneProps {
