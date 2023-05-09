@@ -9,6 +9,11 @@ import {
   notificationBarThemeStyles,
 } from './NotificationBar.styles';
 
+/**
+ * The button below a stack of >3 toasts
+ * that allows users to expand the stack
+ * @internal
+ */
 export const NotificationBar = ({
   count,
   onClick,
