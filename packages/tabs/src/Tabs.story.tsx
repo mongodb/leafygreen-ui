@@ -8,6 +8,7 @@ import Icon from '@leafygreen-ui/icon';
 import ExportIcon from '@leafygreen-ui/icon/dist/Export';
 import SaveIcon from '@leafygreen-ui/icon/dist/Save';
 import IconButton from '@leafygreen-ui/icon-button';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMeta } from '@leafygreen-ui/lib';
 import { Body, Subtitle } from '@leafygreen-ui/typography';
 
@@ -60,14 +61,16 @@ export default StoryMeta({
   subcomponents: { Tab },
 });
 
-const Template: Story<TabsProps> = (props: TabsProps) => (
-  <Tabs
-    className={css`
-      max-width: 66vw;
-    `}
-    aria-label="Tabs to demonstrate usage of Leafygreen UI Tab Components"
-    {...props}
-  />
+const Template: Story<TabsProps> = ({ baseFontSize, ...props }: TabsProps) => (
+  <LeafyGreenProvider baseFontSize={baseFontSize === 16 ? 16 : 14}>
+    <Tabs
+      className={css`
+        max-width: 66vw;
+      `}
+      aria-label="Tabs to demonstrate usage of Leafygreen UI Tab Components"
+      {...props}
+    />
+  </LeafyGreenProvider>
 );
 
 export const LongTabs = Template.bind({});

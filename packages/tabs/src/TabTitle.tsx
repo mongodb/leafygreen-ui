@@ -5,11 +5,13 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { getNodeTextContent, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
+  BaseFontSize,
   fontFamilies,
   fontWeights,
   transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
+import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 interface ListTitleMode {
   base: string;
@@ -114,9 +116,19 @@ const listTitleModeStyles: Record<Theme, ListTitleMode> = {
   },
 };
 
+const listTitleFontSize: Record<BaseFontSize, string> = {
+  [BaseFontSize.Body1]: css`
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+  `,
+  [BaseFontSize.Body2]: css`
+    font-size: ${typeScales.body2.fontSize}px;
+    line-height: ${typeScales.body2.lineHeight}px;
+  `,
+};
+
 const listTitleStyles = css`
   font-family: ${fontFamilies.default};
-  font-size: ${typeScales.body1.fontSize}px;
   font-weight: ${fontWeights.medium};
   position: relative;
   display: inline-flex;
@@ -208,6 +220,7 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
   ...rest
 }: BaseTabTitleProps) => {
   const titleRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
+  const baseFontSize: BaseFontSize = useUpdatedBaseFontSize();
 
   const theme = darkMode ? Theme.Dark : Theme.Light;
 
@@ -234,6 +247,7 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
   const sharedTabProps = {
     ...rest,
     className: cx(
+      listTitleFontSize[baseFontSize],
       listTitleStyles,
       listTitleModeStyles[theme].base,
       {

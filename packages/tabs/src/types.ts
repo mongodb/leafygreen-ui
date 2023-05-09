@@ -1,4 +1,5 @@
 import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export interface TabsProps extends HTMLElementProps<'div'> {
   /**
@@ -46,6 +47,11 @@ export interface TabsProps extends HTMLElementProps<'div'> {
    * References id of label external to the component that describes the set of tabs
    */
   ['aria-labelledby']?: string;
+
+  /**
+   * The base font size of the title and text rendered in children.
+   */
+  baseFontSize?: BaseFontSize;
 }
 
 type AriaLabels = 'aria-label' | 'aria-labelledby';
