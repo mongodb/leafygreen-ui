@@ -18,6 +18,9 @@ export const ToastContext = React.createContext<ToastContextProps>(
   initialToastContextValue,
 );
 
+/**
+ * Toast Provider
+ */
 export const ToastProvider = ({
   children,
   initialValue,

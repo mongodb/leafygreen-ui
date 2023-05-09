@@ -6,6 +6,8 @@ import { ToastId, ToastStack } from '../../ToastContext';
  * Sets a timeout when an element is added to the stack.
  * Clears the timeout when the container is hovered.
  * Restores the timers when un-hovered.
+ *
+ * @internal
  */
 export const useToastTimers = ({
   stack,
