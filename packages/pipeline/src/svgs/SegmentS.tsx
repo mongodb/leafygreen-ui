@@ -6,6 +6,9 @@ import {
   svgOuterOutlineClassName,
 } from '../styles';
 
+/**
+ * @internal
+ */
 export const SegmentS = ({ className }: { className: string }) => {
   return (
     <svg
