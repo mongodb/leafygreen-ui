@@ -35,6 +35,12 @@ interface UseToastHeightsReturnVal {
   updateToastHeights: () => void;
 }
 
+/**
+ * Computes the height of each individual toast in the DOM
+ * Returns {@link UseToastHeightsReturnVal} given {@link UseToastHeightsProps}
+ *
+ * @internal
+ */
 export function useToastHeights({
   stack,
   getToastRef,

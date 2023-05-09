@@ -18,6 +18,12 @@ interface UseToastTransitionsReturnVal {
   handleTransitionEnter: () => void;
 }
 
+/**
+ * Hook to handle enter and exit transitions.
+ * Returns {@link UseToastTransitionsReturnVal}
+ *
+ * @internal
+ */
 export function useToastTransitions({
   getShouldExpand,
   exitCallback,
