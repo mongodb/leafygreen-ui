@@ -7,7 +7,7 @@ import { DarkModeProps } from '@leafygreen-ui/lib';
  * TERMINOLOGY
  *
  * `focused`: The element is "focused" via keyboard navigation
- * (Does not mean `:focus`, since input options are not focused in this sense)
+ * (Does not mean `:focus`, since menu options are not focused in this sense)
  *
  * `active`: The element is selected, or otherwise active (including `:active`)
  */
