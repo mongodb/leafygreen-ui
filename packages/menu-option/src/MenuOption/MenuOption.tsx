@@ -9,17 +9,17 @@ import {
 } from '@leafygreen-ui/polymorphic';
 
 import {
-  inputOptionActiveStyles,
-  inputOptionDisabledStyles,
-  inputOptionHoverStyles,
-  inputOptionStyles,
-  inputOptionThemeStyles,
-  inputOptionWedge,
+  menuOptionActiveStyles,
+  menuOptionDisabledStyles,
+  menuOptionHoverStyles,
+  menuOptionStyles,
+  menuOptionThemeStyles,
+  menuOptionWedge,
   titleSelectionStyles,
-} from './InputOption.style';
-import { InputOptionProps } from './InputOption.types';
+} from './MenuOption.style';
+import { MenuOptionProps } from './MenuOption.types';
 
-export const InputOption = Polymorphic<InputOptionProps>(
+export const MenuOption = Polymorphic<MenuOptionProps>(
   (
     {
       as = 'li' as PolymorphicAs,
@@ -44,14 +44,14 @@ export const InputOption = Polymorphic<InputOptionProps>(
         aria-selected={highlighted}
         tabIndex={-1}
         className={cx(
-          inputOptionStyles,
-          inputOptionThemeStyles[theme],
+          menuOptionStyles,
+          menuOptionThemeStyles[theme],
           {
-            [inputOptionWedge]: showWedge,
-            [inputOptionHoverStyles[theme]]: isInteractive,
-            [inputOptionActiveStyles[theme]]:
+            [menuOptionWedge]: showWedge,
+            [menuOptionHoverStyles[theme]]: isInteractive,
+            [menuOptionActiveStyles[theme]]:
               isInteractive && (selected || highlighted),
-            [inputOptionDisabledStyles[theme]]: disabled,
+            [menuOptionDisabledStyles[theme]]: disabled,
             [titleSelectionStyles]: selected,
           },
           className,
@@ -64,4 +64,4 @@ export const InputOption = Polymorphic<InputOptionProps>(
   },
 );
 
-InputOption.displayName = 'InputOption';
+MenuOption.displayName = 'MenuOption';

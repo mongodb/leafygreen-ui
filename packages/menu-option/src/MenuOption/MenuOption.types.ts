@@ -11,7 +11,7 @@ import { DarkModeProps } from '@leafygreen-ui/lib';
  *
  * `active`: The element is selected, or otherwise active (including `:active`)
  */
-export interface BaseInputOptionProps {
+export interface BaseMenuOptionProps {
   /**
    * Prevents the option from being selectable.
    * @default false
@@ -44,6 +44,6 @@ export interface BaseInputOptionProps {
   isInteractive?: boolean;
 }
 
-export type InputOptionProps = AriaLabelProps &
+export type MenuOptionProps = AriaLabelProps &
   DarkModeProps &
-  PropsWithChildren<BaseInputOptionProps>;
+  PropsWithChildren<BaseMenuOptionProps>;

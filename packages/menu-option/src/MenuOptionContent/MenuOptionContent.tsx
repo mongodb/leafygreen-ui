@@ -6,7 +6,7 @@ import { Description } from '@leafygreen-ui/typography';
 import {
   descriptionClassName,
   titleClassName,
-} from '../InputOption/InputOption.style';
+} from '../MenuOption/MenuOption.style';
 import {
   contentWrapper,
   descriptionBaseStyles,
@@ -15,21 +15,22 @@ import {
   leftGlyphClassName,
   textWrapper,
   titleBaseStyles,
-} from '../InputOptionContent/InputOptionContent.styles';
+} from '../MenuOptionContent/MenuOptionContent.styles';
 
-import { InputOptionContentProps } from './InputOptionContent.types';
+import { MenuOptionContentProps } from './MenuOptionContent.types';
 
 /**
  * @internal
  *
- * This is a temp workaround to add consistent option styles. Once all components that use an input option are consistent we can add this directly inside `InputOption`.
+ * This is a temp workaround to add consistent option styles.
+ * Once all components that use an menu option are consistent we can add this directly inside `MenuOption`.
  */
-export const InputOptionContent = ({
+export const MenuOptionContent = ({
   children,
   description,
   leftGlyph,
   rightGlyph,
-}: InputOptionContentProps) => {
+}: MenuOptionContentProps) => {
   return (
     <div className={contentWrapper}>
       {leftGlyph && (
@@ -54,4 +55,4 @@ export const InputOptionContent = ({
   );
 };
 
-InputOptionContent.displayName = 'InputOptionContent';
+MenuOptionContent.displayName = 'MenuOptionContent';

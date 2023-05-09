@@ -1,10 +1,10 @@
 export {
-  type BaseInputOptionProps,
-  InputOption,
-  type InputOptionProps,
-} from './InputOption';
+  type BaseMenuOptionProps,
+  MenuOption,
+  type MenuOptionProps,
+} from './MenuOption';
 export {
-  InputOptionContent,
-  type InputOptionContentProps,
   leftGlyphClassName,
-} from './InputOptionContent';
+  MenuOptionContent,
+  type MenuOptionContentProps,
+} from './MenuOptionContent';

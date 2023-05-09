@@ -4,15 +4,15 @@ import Icon, { glyphs } from '@leafygreen-ui/icon';
 import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
 
 import {
-  InputOptionContent,
-  InputOptionContentProps,
-} from '../InputOptionContent';
+  MenuOptionContent,
+  MenuOptionContentProps,
+} from '../MenuOptionContent';
 
-import { InputOption, type InputOptionProps } from '.';
+import { MenuOption, type MenuOptionProps } from '.';
 
 export default StoryMeta({
-  title: 'Components/InputOption',
-  component: InputOption,
+  title: 'Components/MenuOption',
+  component: MenuOption,
   parameters: {
     default: 'Basic',
     controls: {
@@ -53,11 +53,11 @@ export default StoryMeta({
   },
 });
 
-const Template = (props: InputOptionProps & InputOptionContentProps) => {
+const Template = (props: MenuOptionProps & MenuOptionContentProps) => {
   const { leftGlyph, rightGlyph, description, ...rest } = props;
   return (
-    <InputOption {...rest}>
-      <InputOptionContent
+    <MenuOption {...rest}>
+      <MenuOptionContent
         leftGlyph={leftGlyph ? <Icon glyph={leftGlyph as string} /> : undefined}
         rightGlyph={
           rightGlyph ? <Icon glyph={rightGlyph as string} /> : undefined
@@ -65,8 +65,8 @@ const Template = (props: InputOptionProps & InputOptionContentProps) => {
         description={description}
       >
         Some text
-      </InputOptionContent>
-    </InputOption>
+      </MenuOptionContent>
+    </MenuOption>
   );
 };
 

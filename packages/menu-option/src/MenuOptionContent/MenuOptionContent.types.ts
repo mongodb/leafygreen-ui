@@ -1,4 +1,4 @@
-export interface InputOptionContentProps {
+export interface MenuOptionContentProps {
   /**
    * Content to appear inside of option
    */

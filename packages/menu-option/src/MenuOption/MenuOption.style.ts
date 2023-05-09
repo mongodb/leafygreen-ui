@@ -8,12 +8,12 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-export const titleClassName = createUniqueClassName('input-option-title');
+export const titleClassName = createUniqueClassName('menu-option-title');
 export const descriptionClassName = createUniqueClassName(
-  'input-option-description',
+  'menu-option-description',
 );
 
-export const inputOptionStyles = css`
+export const menuOptionStyles = css`
   position: relative;
   list-style: none;
   outline: none;
@@ -43,7 +43,7 @@ export const titleSelectionStyles = css`
   }
 `;
 
-export const inputOptionThemeStyles: Record<Theme, string> = {
+export const menuOptionThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.black};
   `,
@@ -52,7 +52,7 @@ export const inputOptionThemeStyles: Record<Theme, string> = {
   `,
 };
 
-export const inputOptionHoverStyles: Record<Theme, string> = {
+export const menuOptionHoverStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     &:hover {
       outline: none;
@@ -72,7 +72,7 @@ const wedgeWidth = spacing[1];
 /** in px */
 const wedgePaddingY = spacing[2];
 
-export const inputOptionWedge = css`
+export const menuOptionWedge = css`
   // Left wedge
   &:before {
     content: '';
@@ -91,7 +91,7 @@ export const inputOptionWedge = css`
   }
 `;
 
-export const inputOptionActiveStyles: Record<Theme, string> = {
+export const menuOptionActiveStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     outline: none;
     background-color: ${palette.blue.light3};
@@ -114,7 +114,7 @@ export const inputOptionActiveStyles: Record<Theme, string> = {
   `,
 };
 
-export const inputOptionDisabledStyles: Record<Theme, string> = {
+export const menuOptionDisabledStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     cursor: not-allowed;
 
