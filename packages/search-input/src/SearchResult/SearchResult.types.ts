@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { BaseMenuOptionProps } from '@leafygreen-ui/menu-option';
 import { DarkModeProps } from '@leafygreen-ui/lib';
+import { BaseMenuOptionProps } from '@leafygreen-ui/menu-option';
 
 export type SearchResultProps = DarkModeProps &
   Omit<BaseMenuOptionProps, 'showWedge' | 'active' | 'isInteractive'> & {

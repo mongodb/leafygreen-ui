@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { MenuOption } from '@leafygreen-ui/menu-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { MenuOption } from '@leafygreen-ui/menu-option';
 
 import {
   emptyOptionStyles,

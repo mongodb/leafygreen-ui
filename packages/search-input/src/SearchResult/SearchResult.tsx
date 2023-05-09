@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { MenuOption } from '@leafygreen-ui/menu-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
+import { MenuOption } from '@leafygreen-ui/menu-option';
 import { InferredPolymorphic, PolymorphicAs } from '@leafygreen-ui/polymorphic';
 
 import {

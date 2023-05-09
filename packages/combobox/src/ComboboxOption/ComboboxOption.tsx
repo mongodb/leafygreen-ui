@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
-import { MenuOption, MenuOptionContent } from '@leafygreen-ui/menu-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { MenuOption, MenuOptionContent } from '@leafygreen-ui/menu-option';
 
 import {
   ComboboxOptionProps,

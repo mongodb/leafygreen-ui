@@ -1,8 +1,8 @@
 import React from 'react';
 
 import RefreshIcon from '@leafygreen-ui/icon/dist/Refresh';
-import { MenuOption } from '@leafygreen-ui/menu-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { MenuOption } from '@leafygreen-ui/menu-option';
 import { palette } from '@leafygreen-ui/palette';
 
 import { loadingOptionIcon, loadingOptionStyles } from './LoadingOption.styles';

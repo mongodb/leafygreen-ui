@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { MenuOption } from '@leafygreen-ui/menu-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { validateChildren } from '@leafygreen-ui/lib';
+import { MenuOption } from '@leafygreen-ui/menu-option';
 import { Overline } from '@leafygreen-ui/typography';
 
 import {
