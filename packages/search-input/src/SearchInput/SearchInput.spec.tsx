@@ -253,10 +253,12 @@ describe('packages/search-input', () => {
         test('Basic: click-away un-focuses the input', async () => {
           const { containerEl, inputEl } = renderSearchInput({
             ...defaultProps,
+            children: undefined,
           });
 
-          userEvent.type(inputEl, '');
+          userEvent.click(inputEl);
           userEvent.click(containerEl.parentElement!);
+
           await waitFor(() => {
             expect(inputEl).not.toHaveFocus();
           });
@@ -266,7 +268,7 @@ describe('packages/search-input', () => {
           const { containerEl, inputEl } = renderSearchInput({
             ...defaultProps,
           });
-          userEvent.type(inputEl, '');
+          userEvent.click(inputEl);
           userEvent.click(containerEl.parentElement!);
           expect(inputEl).toHaveFocus();
         });
