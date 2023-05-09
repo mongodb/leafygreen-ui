@@ -1,4 +1,6 @@
-# @leafygreen-ui/input-option
+# @leafygreen-ui/menu-option
+
+## Renamed from `@leafygreen-ui/input-option`
 
 ## 1.0.3
 
