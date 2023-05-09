@@ -9,9 +9,6 @@ import {
   notificationBarThemeStyles,
 } from './NotificationBar.styles';
 
-/**
- * @internal
- */
 export const NotificationBar = ({
   count,
   onClick,

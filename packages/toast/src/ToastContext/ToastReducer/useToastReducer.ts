@@ -66,7 +66,6 @@ const toastReducer = (
 
 /**
  * An abstraction of `useReducer` for the toast context
- * @internal
  */
 export const useToastReducer = (initialValue?: ToastStack) => {
   const [{ stack }, dispatch] = useReducer<

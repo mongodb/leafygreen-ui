@@ -17,7 +17,6 @@ export function makeToast(props: ToastProps): ToastWithId {
 
 /**
  * Converts an array of toasts into a toast stack
- * @internal
  */
 export function makeToastStack(toasts: Array<ToastWithId>): ToastStack {
   const stack: ToastStack = new Map();
