@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from 'react';
 import { cleanup, HookResult, renderHook } from '@testing-library/react-hooks';
 
 import { ToastProps, Variant } from '../../Toast.types';
-import { ToastContext } from '../../ToastContext';
+import { ToastContext } from '../ToastContext';
 import { ToastContextProps } from '../ToastContext.types';
 import { useToastReducer } from '../ToastReducer';
 
