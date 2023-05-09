@@ -63,9 +63,6 @@
       "path": "./packages/inline-definition"
     },
     {
-      "path": "./packages/input-option"
-    },
-    {
       "path": "./packages/leafygreen-provider"
     },
     {
@@ -79,6 +76,9 @@
     },
     {
       "path": "./packages/menu"
+    },
+    {
+      "path": "./packages/menu-option"
     },
     {
       "path": "./packages/modal"

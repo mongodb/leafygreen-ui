@@ -1,5 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
-import { leftGlyphClassName } from '@leafygreen-ui/input-option';
+import { leftGlyphClassName } from '@leafygreen-ui/menu-option';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { fontWeights, spacing } from '@leafygreen-ui/tokens';

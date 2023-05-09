@@ -25,10 +25,10 @@
       "path": "../icon-button"
     },
     {
-      "path": "../input-option"
+      "path": "../lib"
     },
     {
-      "path": "../lib"
+      "path": "../menu-option"
     },
     {
       "path": "../palette"

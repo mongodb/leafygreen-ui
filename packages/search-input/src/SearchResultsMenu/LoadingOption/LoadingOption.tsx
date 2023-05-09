@@ -1,7 +1,7 @@
 import React from 'react';
 
 import RefreshIcon from '@leafygreen-ui/icon/dist/Refresh';
-import { InputOption } from '@leafygreen-ui/input-option';
+import { MenuOption } from '@leafygreen-ui/menu-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { palette } from '@leafygreen-ui/palette';
 
@@ -11,7 +11,7 @@ export const LoadingOption = () => {
   const { darkMode } = useDarkMode();
 
   return (
-    <InputOption
+    <MenuOption
       data-testid="lg-search-input-loading-option"
       aria-label="Loading results"
       isInteractive={false}
@@ -22,6 +22,6 @@ export const LoadingOption = () => {
         className={loadingOptionIcon}
       />
       <span>Loading results</span>
-    </InputOption>
+    </MenuOption>
   );
 };

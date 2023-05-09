@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
-import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
+import { MenuOption, MenuOptionContent } from '@leafygreen-ui/menu-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import {
@@ -101,7 +101,7 @@ export const InternalComboboxOption = React.forwardRef<
     const multiSelectWithoutIcons = multiselect && !withIcons;
 
     return (
-      <InputOption
+      <MenuOption
         {...rest}
         as="li"
         ref={optionRef}
@@ -121,7 +121,7 @@ export const InternalComboboxOption = React.forwardRef<
         onClick={handleOptionClick}
         onKeyDown={handleOptionClick}
       >
-        <InputOptionContent
+        <MenuOptionContent
           leftGlyph={leftGlyph}
           rightGlyph={rightGlyph}
           description={description}
@@ -129,8 +129,8 @@ export const InternalComboboxOption = React.forwardRef<
           <span id={optionTextId} className={displayNameStyle(isSelected)}>
             {wrapJSX(displayName, inputValue, 'strong')}
           </span>
-        </InputOptionContent>
-      </InputOption>
+        </MenuOptionContent>
+      </MenuOption>
     );
   },
 );

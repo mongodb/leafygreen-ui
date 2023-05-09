@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { InputOption } from '@leafygreen-ui/input-option';
+import { MenuOption } from '@leafygreen-ui/menu-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { validateChildren } from '@leafygreen-ui/lib';
 import { Overline } from '@leafygreen-ui/typography';
@@ -25,14 +25,14 @@ export const SearchResultGroup = ({
 
   return (
     <div>
-      <InputOption
+      <MenuOption
         aria-label={label}
         isInteractive={false}
         className={searchResultLabelWrapperStyle}
         {...rest}
       >
         <Overline className={searchResultLabelStyle[theme]}>{label}</Overline>
-      </InputOption>
+      </MenuOption>
       {validatedChildren}
     </div>
   );
