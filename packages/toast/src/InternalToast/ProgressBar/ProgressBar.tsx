@@ -17,6 +17,11 @@ interface ProgressBarProps {
   theme: Theme;
 }
 
+/**
+ * The progress bar for `variant = 'progress'` toasts
+ *
+ * @internal
+ */
 function ToastProgressBar({ progress, theme }: ProgressBarProps) {
   const normalizedProgress = clamp(progress, 0, 1) * 100;
 

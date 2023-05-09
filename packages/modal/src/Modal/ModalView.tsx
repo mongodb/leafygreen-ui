@@ -24,8 +24,13 @@ import {
   scrollContainer,
   visibleBackdrop,
   visibleModalContentStyle,
-} from './styles';
-import { CloseIconColor, ForwardedRef, ModalProps, ModalSize } from './types';
+} from './Modal.styles';
+import {
+  CloseIconColor,
+  ForwardedRef,
+  ModalProps,
+  ModalSize,
+} from './Modal.types';
 
 /**
  * @internal

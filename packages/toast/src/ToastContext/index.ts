@@ -1,5 +1,4 @@
 export { toastPortalClassName } from '../ToastContainer';
-export { ToastProvider } from './ToastContext';
 export type {
   ToastContextProps,
   ToastId,
@@ -7,5 +6,6 @@ export type {
   ToastStack,
   ToastWithId,
 } from './ToastContext.types';
+export { ToastProvider } from './ToastProvider';
 export { useToast } from './useToast';
 export { makeToast, makeToastStack } from './utils/makeToast';

@@ -122,7 +122,7 @@ export const buttonSizeStyles: Record<Size, string> = {
 
   [Size.XSmall]: css`
     height: 14px;
-    width: 26px;
+    width: 24px;
   `,
 };
 
