@@ -45,6 +45,8 @@ export const defaultToastProps: Required<
  * The internal toast component
  *
  * Only responsible for rendering itself
+ *
+ * @internal
  */
 export const InternalToast = React.forwardRef<
   HTMLDivElement,
