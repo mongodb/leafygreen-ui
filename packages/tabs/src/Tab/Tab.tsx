@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { TabProps } from './types';
+import { TabProps } from './Tab.types';
 
 /**
  * # Tab

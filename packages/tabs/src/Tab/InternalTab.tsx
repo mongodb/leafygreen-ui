@@ -3,18 +3,9 @@ import React, { useMemo } from 'react';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import Portal from '@leafygreen-ui/portal';
 
-import TabTitle from './TabTitle';
-import { TabsProps } from './types';
+import TabTitle from '../TabTitle';
 
-type InternalTabProps = Pick<TabsProps, 'as' | 'darkMode' | 'className'> & {
-  child: React.ReactElement;
-  onKeyDown: (e: KeyboardEvent) => void;
-  onClick?: (e: React.MouseEvent) => void;
-  isAnyTabFocused?: boolean;
-  selected: boolean;
-  tabRef: HTMLDivElement | null;
-  panelRef: HTMLDivElement | null;
-};
+import { InternalTabProps } from './Tab.types';
 
 const InternalTab = React.memo(
   ({ child, selected, tabRef, panelRef, ...tabProps }: InternalTabProps) => {

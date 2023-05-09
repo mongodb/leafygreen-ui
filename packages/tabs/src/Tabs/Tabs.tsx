@@ -2,69 +2,23 @@ import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { isComponentType, keyMap, Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
+import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import InternalTab from './InternalTab';
-import { AccessibleTabsProps } from './types';
+import { InternalTab } from '../Tab';
 
-// Using a background allows the "border" to appear underneath the individual tab color
-const modeColors = {
-  [Theme.Light]: {
-    underlineColor: css`
-      background: linear-gradient(
-        0deg,
-        ${palette.gray.light2} 1px,
-        rgb(255 255 255 / 0%) 1px
-      );
-    `,
-  },
-
-  [Theme.Dark]: {
-    underlineColor: css`
-      background: linear-gradient(
-        0deg,
-        ${palette.gray.dark2} 1px,
-        rgb(255 255 255 / 0%) 1px
-      );
-    `,
-  },
-};
-
-const tabContainerStyle = css`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const inlineChildrenWrapperStyle = css`
-  display: flex;
-  align-items: center;
-`;
-
-const listStyle = css`
-  list-style: none;
-  padding: 0;
-  display: flex;
-  width: 100%;
-  overflow-x: auto;
-
-  /* Remove scrollbar */
-
-  /* Chrome, Edge, Safari and Opera */
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  -ms-overflow-style: none; /* IE */
-  scrollbar-width: none; /* Firefox */
-`;
+import {
+  inlineChildrenWrapperStyle,
+  listStyle,
+  modeColors,
+  tabContainerStyle,
+} from './Tabs.styles';
+import { AccessibleTabsProps } from './Tabs.types';
 
 /**
  * # Tabs

@@ -1,8 +1,5 @@
-import React, { RefObject, useEffect, useRef } from 'react';
-
-import Box, { ExtendableBox } from '@leafygreen-ui/box';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { getNodeTextContent, Theme } from '@leafygreen-ui/lib';
+import { css } from '@leafygreen-ui/emotion';
+import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   BaseFontSize,
@@ -11,7 +8,6 @@ import {
   transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
-import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 interface ListTitleMode {
   base: string;
@@ -21,7 +17,7 @@ interface ListTitleMode {
   disabled: string;
 }
 
-const listTitleModeStyles: Record<Theme, ListTitleMode> = {
+export const listTitleModeStyles: Record<Theme, ListTitleMode> = {
   light: {
     base: css`
       color: ${palette.gray.dark1};
@@ -116,7 +112,7 @@ const listTitleModeStyles: Record<Theme, ListTitleMode> = {
   },
 };
 
-const listTitleFontSize: Record<BaseFontSize, string> = {
+export const listTitleFontSize: Record<BaseFontSize, string> = {
   [BaseFontSize.Body1]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
@@ -127,7 +123,7 @@ const listTitleFontSize: Record<BaseFontSize, string> = {
   `,
 };
 
-const listTitleStyles = css`
+export const listTitleStyles = css`
   font-family: ${fontFamilies.default};
   font-weight: ${fontWeights.medium};
   position: relative;
@@ -184,111 +180,15 @@ const listTitleStyles = css`
   }
 `;
 
-const listTitleChildrenStyles = css`
+export const listTitleChildrenStyles = css`
   width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 
   // Cannot use flexbox here to center children because it breaks text-overflow: ellipsis
-
   > svg {
     vertical-align: text-bottom;
     margin-right: 4px;
   }
 `;
-
-interface BaseTabTitleProps {
-  darkMode?: boolean;
-  selected?: boolean;
-  href?: string;
-  children?: React.ReactNode;
-  className?: string;
-  disabled?: boolean;
-  isAnyTabFocused?: boolean;
-  parentRef?: HTMLDivElement;
-  [key: string]: any;
-}
-
-const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
-  selected = false,
-  disabled = false,
-  children,
-  className,
-  darkMode,
-  parentRef,
-  ...rest
-}: BaseTabTitleProps) => {
-  const titleRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
-  const baseFontSize: BaseFontSize = useUpdatedBaseFontSize();
-
-  const theme = darkMode ? Theme.Dark : Theme.Light;
-
-  // Checks to see if the current activeElement is a part of the same tab set
-  // as the current TabTitle. If so, and the current TabTitle is not disabled
-  // and is selected, we manually move focus to that TabTitle.
-  useEffect(() => {
-    const tabsList = Array.from(parentRef?.children ?? []);
-    const activeEl = document.activeElement;
-
-    if (
-      activeEl &&
-      tabsList.indexOf(activeEl) !== -1 &&
-      !disabled &&
-      selected &&
-      titleRef.current
-    ) {
-      titleRef.current.focus();
-    }
-  }, [parentRef, disabled, selected, titleRef]);
-
-  const nodeText = getNodeTextContent(rest.name);
-
-  const sharedTabProps = {
-    ...rest,
-    className: cx(
-      listTitleFontSize[baseFontSize],
-      listTitleStyles,
-      listTitleModeStyles[theme].base,
-      {
-        [listTitleModeStyles[theme].selected]: selected,
-        [listTitleModeStyles[theme].hover]: !disabled && !selected,
-        [listTitleModeStyles[theme].disabled]: disabled,
-      },
-      listTitleModeStyles[theme].focus,
-      className,
-    ),
-    role: 'tab',
-    tabIndex: selected ? 0 : -1,
-    ['aria-selected']: selected,
-    name: nodeText,
-    ['data-text']: nodeText,
-    disabled,
-  } as const;
-
-  if (typeof rest.href === 'string') {
-    return (
-      <Box
-        as="a"
-        ref={titleRef as RefObject<HTMLAnchorElement>}
-        {...sharedTabProps}
-      >
-        <div className={listTitleChildrenStyles}>{children}</div>
-      </Box>
-    );
-  }
-
-  return (
-    <Box
-      as="button"
-      ref={titleRef as RefObject<HTMLButtonElement>}
-      {...sharedTabProps}
-    >
-      <div className={listTitleChildrenStyles}>{children}</div>
-    </Box>
-  );
-};
-
-TabTitle.displayName = 'TabTitle';
-
-export default TabTitle;

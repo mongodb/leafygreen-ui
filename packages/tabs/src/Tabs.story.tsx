@@ -12,8 +12,7 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMeta } from '@leafygreen-ui/lib';
 import { Body, Subtitle } from '@leafygreen-ui/typography';
 
-import { Tab, Tabs } from './index';
-import { TabsProps } from './types';
+import { Tab, Tabs, TabsProps } from './index';
 
 // TODO: Add subcomponent controls for Tab when supported by Storybook
 export default StoryMeta({
