@@ -6,6 +6,8 @@ import { ToastId, ToastStack } from '../../ToastContext';
  * Returns 2 arrays from the original toast stack.
  * `recentToasts`: The 3 most recent toasts, and
  * `remainingToasts`: the remaining N toasts
+ *
+ * @internal
  */
 export function getDividedStack(stack: ToastStack): {
   recentToasts: Array<[string, ToastProps]>;
