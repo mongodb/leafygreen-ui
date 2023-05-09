@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import debounce from 'lodash/debounce';
-import { transparentize } from 'polished';
 import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -13,27 +12,29 @@ import { isComponentGlyph } from '@leafygreen-ui/icon';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 import Popover, {
   Align as PopoverAlign,
   ElementPosition,
   Justify,
   PopoverProps,
 } from '@leafygreen-ui/popover';
-import {
-  BaseFontSize,
-  fontFamilies,
-  fontWeights,
-  transitionDuration,
-} from '@leafygreen-ui/tokens';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 import {
   bodyTypeScaleStyles,
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 
-import SvgNotch from './Notch';
-import { borderRadius, notchWidth } from './tooltipConstants';
+import SvgNotch from '../Notch';
+
+import {
+  baseStyles,
+  baseTypeStyle,
+  colorSet,
+  minHeightStyle,
+  positionRelative,
+  transitionDelay,
+} from './Tooltip.styles';
 import { notchPositionStyles } from './tooltipUtils';
 
 export const TriggerEvent = {
@@ -53,65 +54,6 @@ export const Align = {
 export type Align = typeof Align[keyof typeof Align];
 
 export { Justify };
-
-// The typographic styles below are largely copied from the Body component.
-// We can't use the Body component here due to it rendering a paragraph tag,
-// Which would conflict with any children passed to it containing a div.
-const baseTypeStyle = css`
-  margin: unset;
-  font-family: ${fontFamilies.default};
-  color: ${palette.gray.light1};
-  font-weight: ${fontWeights.regular};
-  width: 100%;
-  overflow-wrap: anywhere;
-`;
-
-const baseStyles = css`
-  display: flex;
-  align-items: center;
-  border-radius: ${borderRadius}px;
-  padding: 12px ${borderRadius}px;
-  box-shadow: 0px 2px 4px -1px ${transparentize(0.85, palette.black)};
-  cursor: default;
-  width: fit-content;
-  max-width: 256px;
-`;
-
-const positionRelative = css`
-  position: relative;
-`;
-
-const colorSet = {
-  [Theme.Light]: {
-    tooltip: css`
-      background-color: ${palette.black};
-      color: ${palette.gray.light1};
-    `,
-    children: css`
-      color: inherit;
-    `,
-    notchFill: palette.black,
-  },
-  [Theme.Dark]: {
-    tooltip: css`
-      background-color: ${palette.gray.light2};
-      color: ${palette.black};
-    `,
-    children: css`
-      color: inherit;
-    `,
-    notchFill: palette.gray.light2,
-  },
-};
-
-const minSize = notchWidth + 2 * borderRadius;
-const minHeightStyle = css`
-  min-height: ${minSize}px;
-`;
-
-const transitionDelay = css`
-  transition-delay: ${transitionDuration.slowest}ms;
-`;
 
 interface PopoverFunctionParameters {
   align: Align;
