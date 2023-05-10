@@ -19,7 +19,7 @@ const menuItemTestId = [
 
 const onClick = jest.fn();
 
-type RenderProps = Omit<MenuProps, 'children'> & { initialActiveMenu: number };
+type RenderProps = Omit<MenuProps, 'children'> & { initialActiveMenu?: number };
 
 const renderSubMenu = ({
   initialActiveMenu = 0,
