@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { MouseEventHandler, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -82,15 +82,8 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
       'aria-disabled': disabled,
       'aria-current': active ?? undefined,
       // only add a disabled prop if not an anchor
-      ...(!isAnchor && { disabled }),
+      ...(isAnchor ? { target: '_self', rel: '' } : { disabled }),
     };
-
-    const anchorProps = isAnchor
-      ? {
-          target: '_self',
-          rel: '',
-        }
-      : {};
 
     const content = (
       <>
@@ -135,7 +128,6 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
       <li role="none">
         <Component
           {...baseProps}
-          {...anchorProps}
           {...rest}
           className={cx(
             menuItemContainerClassName,
