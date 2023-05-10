@@ -1,9 +1,7 @@
 import React from 'react';
 import {
-  findByTestId as globalFindByTestId,
   getAllByRole as globalGetAllByRole,
   render,
-  waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -37,7 +35,7 @@ const renderSubMenu = (props: Omit<MenuProps, 'children'> = { trigger }) => {
       <SubMenu data-testid={subMenu2Id} href="mongodb.design" title="SubMenu 2">
         <MenuItem data-testid={menuItem2Id}> Text Content B</MenuItem>
       </SubMenu>
-      <SubMenu data-testid={subMenu3Id} as="div"></SubMenu>
+      <SubMenu data-testid={subMenu3Id} as="div" title="SubMenu 3"></SubMenu>
     </Menu>,
   );
 
@@ -83,9 +81,19 @@ describe('packages/sub-menu', () => {
       const subMenu = getByTestId(subMenu3Id);
       expect(subMenu.tagName.toLowerCase()).toBe('div');
     });
+
+    test;
   });
 
   describe('Mouse interaction', () => {
+    test('first option has focus when menu opens', () => {
+      const { getByTestId } = renderSubMenu();
+      const triggerButton = getByTestId('menu-trigger');
+      userEvent.click(triggerButton);
+
+      expect(getByTestId(subMenu1Id)).toHaveFocus();
+    });
+
     test('Clicking a SubMenu opens it', async () => {
       const { findByTestId, getByTestId } = renderSubMenu();
       const triggerButton = getByTestId('menu-trigger');
@@ -131,22 +139,23 @@ describe('packages/sub-menu', () => {
         userEvent.click(triggerButton);
 
         const menu = getByTestId(menuTestId);
-        const options = globalGetAllByRole(menu, 'menuitem');
 
         userEvent.type(menu, '{arrowdown}');
-        expect(options[1]).toHaveFocus();
+        expect(getByTestId(menuItem1Id)).toHaveFocus();
       });
+
       test('does not highlight closed sub-menu items', () => {
         const { getByTestId } = renderSubMenu();
         const triggerButton = getByTestId('menu-trigger');
         userEvent.click(triggerButton);
 
         const menu = getByTestId(menuTestId);
-        const options = globalGetAllByRole(menu, 'menuitem');
-        options[2].focus();
-        expect(options[2]).toHaveFocus();
+
+        getByTestId(subMenu2Id).focus();
+        expect(getByTestId(subMenu2Id)).toHaveFocus();
         userEvent.type(menu, '{arrowdown}');
-        expect(options[3]).not.toHaveFocus();
+        expect(getByTestId(menuItem2Id)).not.toHaveFocus();
+        expect(getByTestId(subMenu3Id)).toHaveFocus();
       });
     });
   });
