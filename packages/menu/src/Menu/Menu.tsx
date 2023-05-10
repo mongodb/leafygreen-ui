@@ -149,6 +149,12 @@ export function Menu({
           setFocused(target);
         };
 
+        const onChildClick: MouseEventHandler = e => {
+          setOpen(false);
+          setFocus(triggerRef?.current); // Focus the trigger on close
+          child.props.onClick?.(e);
+        };
+
         if (
           isComponentType<ElementOf<typeof SubMenu>>(child, 'SubMenu') &&
           title
@@ -198,6 +204,7 @@ export function Menu({
           return React.cloneElement(child, {
             ref: setRef,
             onFocus,
+            onClick: onChildClick,
           });
         }
 
@@ -225,7 +232,7 @@ export function Menu({
     }
 
     return { updatedChildren: updateChildren(children), refs };
-  }, [children, currentSubMenu, open]);
+  }, [children, currentSubMenu, open, setOpen]);
 
   const [focused, setFocused] = useState<HTMLElement>(refs[0] || null);
 
