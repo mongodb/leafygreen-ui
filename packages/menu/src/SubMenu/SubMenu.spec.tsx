@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  getAllByRole as globalGetAllByRole,
-  render,
-  waitForElementToBeRemoved,
-} from '@testing-library/react';
+import { render, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { Menu, MenuItem, type MenuProps, SubMenu } from '..';
