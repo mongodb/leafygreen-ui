@@ -13,18 +13,19 @@ const menuItemTestId = [
   'menu-item-d',
 ];
 
-const trigger = <button data-testid="menu-trigger">trigger</button>;
 const onClick = jest.fn();
 
-const renderSubMenu = (props: Omit<MenuProps, 'children'> = { trigger }) => {
+type RenderProps = Omit<MenuProps, 'children'> & { initialActiveMenu: number };
+
+const renderSubMenu = ({
+  initialActiveMenu = 0,
+  trigger = <button data-testid="menu-trigger">trigger</button>,
+  ...props
+}: RenderProps = {}) => {
   const utils = render(
-    <Menu
-      {...props}
-      trigger={props.trigger ?? trigger}
-      data-testid={menuTestId}
-    >
+    <Menu {...props} trigger={trigger} data-testid={menuTestId}>
       <SubMenu
-        active
+        active={initialActiveMenu === 0}
         onClick={onClick}
         data-testid={subMenuTestId[0]}
         title="SubMenu A"
@@ -32,6 +33,7 @@ const renderSubMenu = (props: Omit<MenuProps, 'children'> = { trigger }) => {
         <MenuItem data-testid={menuItemTestId[0]}>Text Content A</MenuItem>
       </SubMenu>
       <SubMenu
+        active={initialActiveMenu === 1}
         data-testid={subMenuTestId[1]}
         href="mongodb.design"
         title="SubMenu B"
@@ -39,12 +41,12 @@ const renderSubMenu = (props: Omit<MenuProps, 'children'> = { trigger }) => {
         <MenuItem data-testid={menuItemTestId[1]}> Text Content B</MenuItem>
       </SubMenu>
       <SubMenu
+        active={initialActiveMenu === 1}
         data-testid={subMenuTestId[2]}
         as="div"
         title="SubMenu C"
-      ></SubMenu>
-      <SubMenu data-testid={subMenuTestId[3]} title="SubMenu D">
-        <MenuItem data-testid={menuItemTestId[3]}> Text Content D</MenuItem>
+      >
+        <MenuItem data-testid={menuItemTestId[2]}> Text Content C</MenuItem>
       </SubMenu>
     </Menu>,
   );
@@ -113,7 +115,7 @@ describe('packages/sub-menu', () => {
       expect(getByTestId(subMenuTestId[0])).toHaveFocus();
     });
 
-    test('Clicking a SubMenu fires #onClick', async () => {
+    test('Clicking SubMenu fires #onClick', async () => {
       const { getByTestId, openMenu } = renderSubMenu();
       openMenu();
 
@@ -122,15 +124,27 @@ describe('packages/sub-menu', () => {
       expect(onClick).toHaveBeenCalled();
     });
 
-    test.todo(
-      'Clicking a SubMenu with #onClick does _not_ open the submenu',
-      () => {},
-    );
+    test('Clicking SubMenu with #onClick does _not_ open submenu', () => {
+      const { getByTestId, queryByTestId, openMenu } = renderSubMenu({
+        initialActiveMenu: 1,
+      });
+      openMenu();
 
-    test.todo(
-      'Clicking a SubMenu with href does _not_ open the submenu',
-      () => {},
-    );
+      const subMenuA = getByTestId(subMenuTestId[0]);
+      userEvent.click(subMenuA);
+      const maybeSubMenuItem = queryByTestId(menuItemTestId[0]);
+      expect(maybeSubMenuItem).not.toBeInTheDocument();
+    });
+
+    test('Clicking SubMenu with href does _not_ open submenu', () => {
+      const { getByTestId, queryByTestId, openMenu } = renderSubMenu();
+      openMenu();
+
+      const subMenuB = getByTestId(subMenuTestId[1]);
+      userEvent.click(subMenuB);
+      const maybeSubMenuItem = queryByTestId(menuItemTestId[1]);
+      expect(maybeSubMenuItem).not.toBeInTheDocument();
+    });
 
     test('Clicking a basic SubMenu opens it', async () => {
       const { findByTestId, getByTestId, openMenu } = renderSubMenu();
@@ -139,7 +153,7 @@ describe('packages/sub-menu', () => {
       const subMenuC = getByTestId(subMenuTestId[2]);
       userEvent.click(subMenuC);
 
-      const subMenuItem = await findByTestId(menuItemTestId[2]);
+      const subMenuItem = await findByTestId(menuItemTestId[3]);
       expect(subMenuItem).not.toBeNull();
       expect(subMenuItem).toBeInTheDocument();
     });
@@ -160,29 +174,29 @@ describe('packages/sub-menu', () => {
   describe('Keyboard interaction', () => {
     describe('Arrow keys', () => {
       test('highlights open sub-menu items', () => {
-        const { getByTestId, openMenu } = renderSubMenu();
+        const { getByTestId, queryByTestId, openMenu } = renderSubMenu();
         openMenu();
 
         const menu = getByTestId(menuTestId);
+        const menuItemA = queryByTestId(menuItemTestId[0]);
 
         userEvent.type(menu, '{arrowdown}');
-        expect(getByTestId(menuItemTestId[0])).toHaveFocus();
+        expect(menuItemA).toHaveFocus();
       });
 
       test('does not highlight closed sub-menu items', () => {
-        const { getByTestId, openMenu } = renderSubMenu();
+        const { getByTestId, queryByTestId, openMenu } = renderSubMenu({
+          initialActiveMenu: 1,
+        });
         openMenu();
 
         const menu = getByTestId(menuTestId);
-        const subMenuB = subMenuTestId[1];
-        const menuItemB = getByTestId(menuItemTestId[1]);
-        const subMenuC = getByTestId(subMenuTestId[2]);
+        const menuItemA = queryByTestId(menuItemTestId[0]);
+        const subMenuB = queryByTestId(subMenuTestId[1]);
 
-        getByTestId(subMenuB).focus();
-        expect(subMenuB).toHaveFocus();
         userEvent.type(menu, '{arrowdown}');
-        expect(menuItemB).not.toHaveFocus();
-        expect(subMenuC).toHaveFocus();
+        expect(menuItemA).toBeNull();
+        expect(subMenuB).toHaveFocus();
       });
     });
   });
