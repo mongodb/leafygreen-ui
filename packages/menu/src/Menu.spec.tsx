@@ -195,7 +195,7 @@ describe('packages/menu', () => {
         const options = globalGetAllByRole(menu, 'menuitem');
         expect(options[0]).toHaveFocus();
 
-        userEvent.type(menu, `{enter}`);
+        userEvent.type(options[0], `{enter}`);
         expect(onClick).toHaveBeenCalled();
       });
 
@@ -203,8 +203,9 @@ describe('packages/menu', () => {
         const { getByTestId, openMenu, triggerButton } = renderMenu();
         openMenu();
         const menu = getByTestId(menuTestId);
+        const options = globalGetAllByRole(menu, 'menuitem');
 
-        userEvent.type(menu, `{enter}`);
+        userEvent.type(options[0], `{enter}`);
         await waitForElementToBeRemoved(menu);
         expect(triggerButton).toHaveFocus();
       });
@@ -218,7 +219,7 @@ describe('packages/menu', () => {
         const options = globalGetAllByRole(menu, 'menuitem');
         expect(options[0]).toHaveFocus();
 
-        userEvent.type(menu, `{space}`);
+        userEvent.type(options[0], `{space}`);
         expect(onClick).toHaveBeenCalled();
       });
 
@@ -226,8 +227,9 @@ describe('packages/menu', () => {
         const { getByTestId, openMenu, triggerButton } = renderMenu();
         openMenu();
         const menu = getByTestId(menuTestId);
+        const options = globalGetAllByRole(menu, 'menuitem');
 
-        userEvent.type(menu, `{space}`);
+        userEvent.type(options[0], `{space}`);
         await waitForElementToBeRemoved(menu);
         expect(triggerButton).toHaveFocus();
       });
