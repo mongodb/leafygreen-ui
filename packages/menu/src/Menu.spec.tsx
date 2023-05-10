@@ -84,6 +84,14 @@ describe('packages/menu', () => {
     });
   });
 
+  test('first option has focus when menu opens', () => {
+    const { getByTestId, openMenu } = renderMenu();
+    openMenu();
+    const menu = getByTestId(menuTestId);
+    const options = globalGetAllByRole(menu, 'menuitem');
+    expect(options[0]).toHaveFocus();
+  });
+
   describe('Mouse interaction', () => {
     test('Clicking trigger opens menu', () => {
       const { getByTestId } = renderMenu();
@@ -92,9 +100,7 @@ describe('packages/menu', () => {
 
       const menu = getByTestId(menuTestId);
 
-      waitFor(() => {
-        expect(menu).toBeInTheDocument();
-      });
+      expect(menu).toBeInTheDocument();
     });
 
     test('Click handlers on parent elements fire', () => {
@@ -115,13 +121,11 @@ describe('packages/menu', () => {
       userEvent.click(triggerButton);
 
       const menu = getByTestId(menuTestId);
-      waitFor(() => {
-        expect(menu).toBeInTheDocument();
-        expect(parentHandler).toHaveBeenCalled();
-      });
+      expect(menu).toBeInTheDocument();
+      expect(parentHandler).toHaveBeenCalled();
     });
 
-    test('Clicking item fires click handler', () => {
+    test('Clicking item fires its click handler', () => {
       const { getByTestId, openMenu } = renderMenu();
       openMenu();
       const menu = getByTestId(menuTestId);
@@ -130,12 +134,14 @@ describe('packages/menu', () => {
       expect(onClick).toHaveBeenCalled();
     });
 
-    test('first option has focus when menu opens', () => {
-      const { getByTestId, openMenu } = renderMenu();
+    test('Clicking item closes menu', async () => {
+      const { getByTestId, openMenu, triggerButton } = renderMenu();
       openMenu();
       const menu = getByTestId(menuTestId);
       const options = globalGetAllByRole(menu, 'menuitem');
-      expect(options[0]).toHaveFocus();
+      userEvent.click(options[0]);
+      await waitForElementToBeRemoved(menu);
+      expect(triggerButton).toHaveFocus();
     });
   });
 
@@ -206,8 +212,8 @@ describe('packages/menu', () => {
         const options = globalGetAllByRole(menu, 'menuitem');
 
         userEvent.type(options[0], `{enter}`);
-        await waitForElementToBeRemoved(menu);
         expect(triggerButton).toHaveFocus();
+        await waitForElementToBeRemoved(menu);
       });
     });
 
@@ -230,8 +236,8 @@ describe('packages/menu', () => {
         const options = globalGetAllByRole(menu, 'menuitem');
 
         userEvent.type(options[0], `{space}`);
-        await waitForElementToBeRemoved(menu);
         expect(triggerButton).toHaveFocus();
+        await waitForElementToBeRemoved(menu);
       });
     });
 
