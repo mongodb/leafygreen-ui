@@ -13,25 +13,38 @@ import { MenuProps } from './Menu';
 import { Menu, MenuItem, MenuSeparator } from '.';
 
 const menuTestId = 'menu-test-id';
-const trigger = <button data-testid="menu-trigger">trigger</button>;
+const onClick = jest.fn();
 
-function renderMenu(props: Omit<MenuProps, 'children'> = {}) {
+type RenderProps = Omit<MenuProps, 'children'>;
+
+function renderMenu({
+  trigger = <button data-testid="menu-trigger">trigger</button>,
+  ...props
+}: RenderProps = {}) {
   const utils = render(
-    <Menu
-      {...props}
-      trigger={props.trigger ?? trigger}
-      data-testid={menuTestId}
-    >
-      <MenuItem>Item A</MenuItem>
+    <Menu {...props} trigger={trigger} data-testid={menuTestId}>
+      <MenuItem onClick={onClick}>Item A</MenuItem>
       <MenuSeparator />
       <MenuItem href="http://mongodb.design">Item B</MenuItem>
       <MenuItem>Item C</MenuItem>
     </Menu>,
   );
-  return utils;
+  const triggerButton = utils.queryByTestId('menu-trigger');
+
+  const openMenu = () => {
+    if (triggerButton) {
+      userEvent.click(triggerButton);
+    }
+  };
+
+  return { ...utils, openMenu, triggerButton };
 }
 
 describe('packages/menu', () => {
+  afterEach(() => {
+    onClick.mockReset();
+  });
+
   test.todo('trigger renders as a function');
   test.todo('trigger renders as a JSX element');
   test.todo('menu appears when trigger is a function');
@@ -76,6 +89,7 @@ describe('packages/menu', () => {
       const { getByTestId } = renderMenu();
       const triggerButton = getByTestId('menu-trigger');
       userEvent.click(triggerButton);
+
       const menu = getByTestId(menuTestId);
 
       waitFor(() => {
@@ -88,7 +102,10 @@ describe('packages/menu', () => {
       const { getByTestId } = render(
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div data-testid="parent" onClick={parentHandler}>
-          <Menu trigger={trigger} data-testid={menuTestId}>
+          <Menu
+            trigger={<button data-testid="menu-trigger">trigger</button>}
+            data-testid={menuTestId}
+          >
             <MenuItem>Item A</MenuItem>
             <MenuItem>Item B</MenuItem>
           </Menu>
@@ -104,47 +121,52 @@ describe('packages/menu', () => {
       });
     });
 
-    test('first option has focus when menu opens', () => {
-      const { getByTestId } = renderMenu({
-        trigger,
-      });
-      const triggerButton = getByTestId('menu-trigger');
+    test('Clicking item fires click handler', () => {
+      const { getByTestId, openMenu } = renderMenu();
+      openMenu();
+      const menu = getByTestId(menuTestId);
+      const options = globalGetAllByRole(menu, 'menuitem');
+      userEvent.click(options[0]);
+      expect(onClick).toHaveBeenCalled();
+    });
 
-      userEvent.click(triggerButton);
+    test('first option has focus when menu opens', () => {
+      const { getByTestId, openMenu } = renderMenu();
+      openMenu();
       const menu = getByTestId(menuTestId);
       const options = globalGetAllByRole(menu, 'menuitem');
       expect(options[0]).toHaveFocus();
     });
   });
 
-  type Keys = 'esc' | 'tab' | 'enter' | 'space';
+  type Keys = 'esc' | 'tab';
   const closeKeys: Array<Array<Keys>> = [['esc'], ['tab']];
-  const selectKeys: Array<Array<Keys>> = [['enter'], ['space']];
 
   describe('Keyboard Interaction', () => {
-    const userEventInteraction = (menu: HTMLElement, key: Keys) => {
+    const userEventInteraction = (el: HTMLElement, key: Keys) => {
       if (key === 'tab') {
         userEvent.tab();
       } else {
-        userEvent.type(menu, `{${key}}`);
+        userEvent.type(el, `{${key}}`);
       }
     };
 
     describe.each(closeKeys)('%s key', key => {
       test('Closes menu', async () => {
-        const { getByTestId } = renderMenu();
-        const triggerButton = getByTestId('menu-trigger');
-        userEvent.click(triggerButton);
+        const { getByTestId, openMenu } = renderMenu();
+        openMenu();
         const menu = getByTestId(menuTestId);
 
         userEventInteraction(menu, key);
         await waitForElementToBeRemoved(menu);
         expect(menu).not.toBeInTheDocument();
       });
+
       test('Returns focus to trigger {usePortal: true}', async () => {
-        const { getByTestId } = renderMenu({ usePortal: true });
-        const triggerButton = getByTestId('menu-trigger');
-        userEvent.click(triggerButton);
+        const { getByTestId, openMenu, triggerButton } = renderMenu({
+          usePortal: true,
+        });
+        openMenu();
         const menu = getByTestId(menuTestId);
 
         userEventInteraction(menu, key);
@@ -153,9 +175,10 @@ describe('packages/menu', () => {
       });
 
       test('Returns focus to trigger {usePortal: false}', async () => {
-        const { getByTestId } = renderMenu({ usePortal: false });
-        const triggerButton = getByTestId('menu-trigger');
-        userEvent.click(triggerButton);
+        const { getByTestId, openMenu, triggerButton } = renderMenu({
+          usePortal: false,
+        });
+        openMenu();
         const menu = getByTestId(menuTestId);
 
         userEventInteraction(menu, key);
@@ -164,10 +187,50 @@ describe('packages/menu', () => {
       });
     });
 
-    describe.each(selectKeys)('%s key', key => {
-      test.todo('Fires the #onClick handler of the highlighted item');
-      test.todo('Navigates to the href of the highlighted item');
-      test.todo('Closes the menu');
+    describe('Enter key', () => {
+      test('Fires the click handler of the highlighted item', () => {
+        const { getByTestId, openMenu } = renderMenu();
+        openMenu();
+        const menu = getByTestId(menuTestId);
+        const options = globalGetAllByRole(menu, 'menuitem');
+        expect(options[0]).toHaveFocus();
+
+        userEvent.type(menu, `{enter}`);
+        expect(onClick).toHaveBeenCalled();
+      });
+
+      test('Closes the menu', async () => {
+        const { getByTestId, openMenu, triggerButton } = renderMenu();
+        openMenu();
+        const menu = getByTestId(menuTestId);
+
+        userEvent.type(menu, `{enter}`);
+        await waitForElementToBeRemoved(menu);
+        expect(triggerButton).toHaveFocus();
+      });
+    });
+
+    describe('Space key', () => {
+      test('Fires the click handler of the highlighted item', () => {
+        const { getByTestId, openMenu } = renderMenu();
+        openMenu();
+        const menu = getByTestId(menuTestId);
+        const options = globalGetAllByRole(menu, 'menuitem');
+        expect(options[0]).toHaveFocus();
+
+        userEvent.type(menu, `{space}`);
+        expect(onClick).toHaveBeenCalled();
+      });
+
+      test('Closes the menu', async () => {
+        const { getByTestId, openMenu, triggerButton } = renderMenu();
+        openMenu();
+        const menu = getByTestId(menuTestId);
+
+        userEvent.type(menu, `{space}`);
+        await waitForElementToBeRemoved(menu);
+        expect(triggerButton).toHaveFocus();
+      });
     });
 
     describe('Arrow keys', () => {

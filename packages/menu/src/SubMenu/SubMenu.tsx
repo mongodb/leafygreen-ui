@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 

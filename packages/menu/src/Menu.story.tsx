@@ -71,6 +71,10 @@ export const UncontrolledTemplate = ({
           active
           size={size}
           glyph={<CloudIcon />}
+          onClick={() => {
+            // eslint-disable-next-line no-console
+            console.log('onClick');
+          }}
         >
           Active Menu Item
         </MenuItem>
