@@ -89,22 +89,20 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
     const focusStyles = getFocusedStyles(subMenuContainerClassName, theme);
 
     const nodeRef = React.useRef(null);
-
-    const [iconButtonElement, setIconButtonElement] =
-      useState<HTMLElement | null>(null);
+    const isAnchor = Component === 'a';
 
     const onRootClick = useCallback(
       (
         e: React.MouseEvent<HTMLAnchorElement, MouseEvent> &
           React.MouseEvent<HTMLButtonElement, MouseEvent>,
       ) => {
-        if (iconButtonElement?.contains(e.target as HTMLElement)) {
-          e.preventDefault();
-        } else if (onClick) {
+        if (onClick) {
           onClick(e);
+        } else if (!isAnchor) {
+          setOpen(open => !open);
         }
       },
-      [iconButtonElement, onClick],
+      [isAnchor, onClick, setOpen],
     );
 
     const numberOfMenuItems = React.Children.toArray(children).length;
@@ -127,7 +125,6 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
     // TODO: This code is duplicated in `MenuItem`
     // We should consider combining these.
     // See: https://github.com/mongodb/leafygreen-ui/pull/1176
-    const isAnchor = Component === 'a';
 
     const updatedGlyph =
       glyph &&
@@ -153,14 +150,11 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
       'aria-disabled': disabled,
       // only add a disabled prop if not an anchor
       ...(typeof rest.href !== 'string' && { disabled }),
+      ...(isAnchor && {
+        target: '_self',
+        rel: '',
+      }),
     };
-
-    const anchorProps = isAnchor
-      ? {
-          target: '_self',
-          rel: '',
-        }
-      : {};
 
     const content = (
       <>
@@ -204,7 +198,6 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
       <li role="none">
         <Component
           {...baseProps}
-          {...anchorProps}
           {...rest}
           className={cx(
             subMenuContainerClassName,
@@ -226,7 +219,6 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
           <IconButton
             data-testid="lg-sub-menu-icon-button"
             darkMode={!darkMode}
-            ref={setIconButtonElement}
             aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
             className={cx(
               iconButtonClassName,
