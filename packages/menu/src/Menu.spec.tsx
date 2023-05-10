@@ -2,6 +2,7 @@ import React from 'react';
 import {
   act,
   fireEvent,
+  getAllByRole as globalGetAllByRole,
   render,
   waitFor,
   waitForElementToBeRemoved,
@@ -20,6 +21,7 @@ function renderMenu(props: Omit<MenuProps, 'children'> = {}) {
       <MenuItem>Item A</MenuItem>
       <MenuSeparator />
       <MenuItem href="http://mongodb.design">Item B</MenuItem>
+      <MenuItem>Item C</MenuItem>
     </Menu>,
   );
   return utils;
@@ -67,12 +69,12 @@ describe('packages/menu', () => {
 
   describe('Mouse interaction', () => {
     test('Clicking trigger opens menu', () => {
-      const { getByRole, getByTestId } = renderMenu({
+      const { getByTestId } = renderMenu({
         trigger,
       });
-      const button = getByRole('button');
+      const triggerButton = getByTestId('menu-trigger');
 
-      userEvent.click(button);
+      userEvent.click(triggerButton);
       const menu = getByTestId(menuTestId);
 
       waitFor(() => {
@@ -91,14 +93,26 @@ describe('packages/menu', () => {
           </Menu>
         </div>,
       );
-      const button = getByTestId('menu-trigger');
+      const triggerButton = getByTestId('menu-trigger');
 
-      userEvent.click(button);
+      userEvent.click(triggerButton);
       const menu = getByTestId(menuTestId);
       waitFor(() => {
         expect(menu).toBeInTheDocument();
         expect(parentHandler).toHaveBeenCalled();
       });
+    });
+
+    test('first option has focus when menu opens', () => {
+      const { getByTestId } = renderMenu({
+        trigger,
+      });
+      const triggerButton = getByTestId('menu-trigger');
+
+      userEvent.click(triggerButton);
+      const menu = getByTestId(menuTestId);
+      const options = globalGetAllByRole(menu, 'menuitem');
+      expect(options[0]).toHaveFocus();
     });
   });
 
@@ -116,10 +130,11 @@ describe('packages/menu', () => {
 
     describe.each(testKeys)('%s key', key => {
       test('Closes menu', async () => {
-        const { getByRole, getByTestId } = renderMenu({
+        const { getByTestId } = renderMenu({
           trigger,
         });
-        const triggerButton = getByRole('button');
+        const triggerButton = getByTestId('menu-trigger');
+
         userEvent.click(triggerButton);
         const menu = getByTestId(menuTestId);
 
@@ -128,11 +143,12 @@ describe('packages/menu', () => {
         expect(menu).not.toBeInTheDocument();
       });
       test('Returns focus to trigger {usePortal: true}', async () => {
-        const { getByRole, getByTestId } = renderMenu({
+        const { getByTestId } = renderMenu({
           trigger,
           usePortal: true,
         });
-        const triggerButton = getByRole('button');
+        const triggerButton = getByTestId('menu-trigger');
+
         userEvent.click(triggerButton);
         const menu = getByTestId(menuTestId);
 
@@ -142,11 +158,12 @@ describe('packages/menu', () => {
       });
 
       test('Returns focus to trigger {usePortal: false}', async () => {
-        const { getByRole, getByTestId } = renderMenu({
+        const { getByTestId } = renderMenu({
           trigger,
           usePortal: false,
         });
-        const triggerButton = getByRole('button');
+        const triggerButton = getByTestId('menu-trigger');
+
         userEvent.click(triggerButton);
         const menu = getByTestId(menuTestId);
 
@@ -158,26 +175,45 @@ describe('packages/menu', () => {
 
     describe('Arrow keys', () => {
       let menu: HTMLElement;
+      let options: Array<HTMLElement>;
 
       beforeEach(() => {
-        const { getByRole, getByTestId } = renderMenu({
+        const { getByTestId } = renderMenu({
           trigger,
         });
-        const triggerButton = getByRole('button');
+        const triggerButton = getByTestId('menu-trigger');
+
         userEvent.click(triggerButton);
         menu = getByTestId(menuTestId);
+        options = globalGetAllByRole(menu, 'menuitem');
       });
 
       describe('Down arrow', () => {
-        test.todo('highlights the next option in the menu');
-        test.todo('cycles highlight to the top');
+        test('highlights the next option in the menu', () => {
+          userEvent.type(menu, '{arrowdown}');
+          expect(options[1]).toHaveFocus();
+        });
+        test('cycles highlight to the top', () => {
+          // programmatically set focus on last option
+          options[options.length - 1].focus();
+          userEvent.type(menu, '{arrowdown}');
+          expect(options[0]).toHaveFocus();
+        });
         test.todo('highlights open sub-menu items');
         test.todo('does not highlight closed sub-menu items');
       });
 
       describe('Up arrow', () => {
-        test.todo('highlights the previous option in the menu');
-        test.todo('cycles highlight to the bottom');
+        test('highlights the previous option in the menu', () => {
+          // programmatically set focus on second option
+          options[1].focus();
+          userEvent.type(menu, '{arrowup}');
+          expect(options[0]).toHaveFocus();
+        });
+        test('cycles highlight to the bottom', () => {
+          userEvent.type(menu, '{arrowup}');
+          expect(options[options.length - 1]).toHaveFocus();
+        });
         test.todo('highlights open sub-menu items');
         test.todo('does not highlight closed sub-menu items');
       });
