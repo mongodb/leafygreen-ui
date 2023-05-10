@@ -117,19 +117,20 @@ describe('packages/menu', () => {
     });
   });
 
-  type Keys = 'esc' | 'tab';
-  const testKeys: Array<Array<Keys>> = [['esc'], ['tab']];
+  type Keys = 'esc' | 'tab' | 'enter' | 'space';
+  const closeKeys: Array<Array<Keys>> = [['esc'], ['tab']];
+  const selectKeys: Array<Array<Keys>> = [['enter'], ['space']];
 
   describe('Keyboard Interaction', () => {
     const userEventInteraction = (menu: HTMLElement, key: Keys) => {
-      if (key === 'esc') {
-        userEvent.type(menu, '{esc}');
-      } else {
+      if (key === 'tab') {
         userEvent.tab();
+      } else {
+        userEvent.type(menu, `{${key}}`);
       }
     };
 
-    describe.each(testKeys)('%s key', key => {
+    describe.each(closeKeys)('%s key', key => {
       test('Closes menu', async () => {
         const { getByTestId } = renderMenu();
         const triggerButton = getByTestId('menu-trigger');
@@ -161,6 +162,12 @@ describe('packages/menu', () => {
         await waitForElementToBeRemoved(menu);
         expect(triggerButton).toHaveFocus();
       });
+    });
+
+    describe.each(selectKeys)('%s key', key => {
+      test.todo('Fires the #onClick handler of the highlighted item');
+      test.todo('Navigates to the href of the highlighted item');
+      test.todo('Closes the menu');
     });
 
     describe('Arrow keys', () => {
