@@ -16,7 +16,11 @@ const trigger = <button data-testid="menu-trigger">trigger</button>;
 
 function renderMenu(props: Omit<MenuProps, 'children'> = {}) {
   const utils = render(
-    <Menu {...props} data-testid={menuTestId}>
+    <Menu
+      {...props}
+      trigger={props.trigger ?? trigger}
+      data-testid={menuTestId}
+    >
       <MenuItem>Item A</MenuItem>
       <MenuSeparator />
       <MenuItem href="http://mongodb.design">Item B</MenuItem>
@@ -67,12 +71,9 @@ describe('packages/menu', () => {
 
   describe('Mouse interaction', () => {
     test('Clicking trigger opens menu', () => {
-      const { getByRole, getByTestId } = renderMenu({
-        trigger,
-      });
-      const button = getByRole('button');
-
-      userEvent.click(button);
+      const { getByTestId } = renderMenu();
+      const triggerButton = getByTestId('menu-trigger');
+      userEvent.click(triggerButton);
       const menu = getByTestId(menuTestId);
 
       waitFor(() => {
@@ -91,9 +92,9 @@ describe('packages/menu', () => {
           </Menu>
         </div>,
       );
-      const button = getByTestId('menu-trigger');
+      const triggerButton = getByTestId('menu-trigger');
+      userEvent.click(triggerButton);
 
-      userEvent.click(button);
       const menu = getByTestId(menuTestId);
       waitFor(() => {
         expect(menu).toBeInTheDocument();
@@ -116,11 +117,9 @@ describe('packages/menu', () => {
 
     describe.each(tests)('%s key', key => {
       test('Closes menu', async () => {
-        const { getByRole, getByTestId } = renderMenu({
-          trigger,
-        });
-        const button = getByRole('button');
-        userEvent.click(button);
+        const { getByTestId } = renderMenu();
+        const triggerButton = getByTestId('menu-trigger');
+        userEvent.click(triggerButton);
         const menu = getByTestId(menuTestId);
 
         userEventInteraction(menu, key);
@@ -128,31 +127,25 @@ describe('packages/menu', () => {
         expect(menu).not.toBeInTheDocument();
       });
       test('Returns focus to trigger {usePortal: true}', async () => {
-        const { getByRole, getByTestId } = renderMenu({
-          trigger,
-          usePortal: true,
-        });
-        const button = getByRole('button');
-        userEvent.click(button);
+        const { getByTestId } = renderMenu({ usePortal: true });
+        const triggerButton = getByTestId('menu-trigger');
+        userEvent.click(triggerButton);
         const menu = getByTestId(menuTestId);
 
         userEventInteraction(menu, key);
         await waitForElementToBeRemoved(menu);
-        expect(button).toHaveFocus();
+        expect(triggerButton).toHaveFocus();
       });
 
       test('Returns focus to trigger {usePortal: false}', async () => {
-        const { getByRole, getByTestId } = renderMenu({
-          trigger,
-          usePortal: false,
-        });
-        const button = getByRole('button');
-        userEvent.click(button);
+        const { getByTestId } = renderMenu({ usePortal: false });
+        const triggerButton = getByTestId('menu-trigger');
+        userEvent.click(triggerButton);
         const menu = getByTestId(menuTestId);
 
         userEventInteraction(menu, key);
         await waitForElementToBeRemoved(menu);
-        expect(button).toHaveFocus();
+        expect(triggerButton).toHaveFocus();
       });
     });
   });
