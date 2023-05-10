@@ -199,8 +199,6 @@ describe('packages/menu', () => {
           userEvent.type(menu, '{arrowdown}');
           expect(options[0]).toHaveFocus();
         });
-        test.todo('highlights open sub-menu items');
-        test.todo('does not highlight closed sub-menu items');
       });
 
       describe('Up arrow', () => {
@@ -214,8 +212,6 @@ describe('packages/menu', () => {
           userEvent.type(menu, '{arrowup}');
           expect(options[options.length - 1]).toHaveFocus();
         });
-        test.todo('highlights open sub-menu items');
-        test.todo('does not highlight closed sub-menu items');
       });
     });
   });

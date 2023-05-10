@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  getAllByRole as globalGetAllByRole,
   render,
   waitFor,
   waitForElementToBeRemoved,
@@ -8,20 +9,27 @@ import userEvent from '@testing-library/user-event';
 
 import { Menu, MenuItem, SubMenu } from '..';
 
+const menuTestId = 'menu-test-id';
 const subMenu1Id = 'sub-menu-1-id';
 const subMenu2Id = 'sub-menu-2-id';
 const subMenu3Id = 'sub-menu-3-id';
 const menuItem1Id = 'menu-item-1-id';
 const menuItem2Id = 'menu-item-2-id';
+const trigger = <button data-testid="menu-trigger">trigger</button>;
 const onClick = jest.fn();
 
 const renderSubMenu = () => {
   const utils = render(
-    <Menu>
-      <SubMenu active onClick={onClick} data-testid={subMenu1Id}>
+    <Menu trigger={trigger} data-testid={menuTestId}>
+      <SubMenu
+        active
+        onClick={onClick}
+        data-testid={subMenu1Id}
+        title="SubMenu 1"
+      >
         <MenuItem data-testid={menuItem1Id}>Text Content A</MenuItem>
       </SubMenu>
-      <SubMenu data-testid={subMenu2Id} href="mongodb.design">
+      <SubMenu data-testid={subMenu2Id} href="mongodb.design" title="SubMenu 2">
         <MenuItem data-testid={menuItem2Id}> Text Content B</MenuItem>
       </SubMenu>
       <SubMenu data-testid={subMenu3Id} as="div"></SubMenu>
@@ -33,7 +41,7 @@ const renderSubMenu = () => {
 
 describe('packages/sub-menu', () => {
   describe('rendering', () => {
-    test('renders a SubMenu open by default, when the SubMenu is active', () => {
+    test('renders a SubMenu open by default, when the SubMenu is active', async () => {
       const { getByTestId } = renderSubMenu();
 
       // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
@@ -45,6 +53,7 @@ describe('packages/sub-menu', () => {
         expect(menuItem).toBeInTheDocument();
       });
     });
+
     test('renders as a button by default', async () => {
       const { getByTestId } = renderSubMenu();
 
@@ -75,6 +84,19 @@ describe('packages/sub-menu', () => {
       waitFor(() => {
         const subMenu = getByTestId(subMenu3Id);
         expect(subMenu.tagName.toLowerCase()).toBe('div');
+      });
+    });
+
+    test('First option is selected by default', () => {
+      const { getByTestId } = renderSubMenu();
+
+      // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
+      // https://jira.mongodb.org/browse/LG-2904
+      waitFor(() => {
+        const menu = getByTestId(menuTestId);
+        const options = globalGetAllByRole(menu, 'menuitem');
+        expect(menu).toBeInTheDocument();
+        expect(options[0]).toHaveFocus();
       });
     });
   });
@@ -110,6 +132,42 @@ describe('packages/sub-menu', () => {
         const subMenu = getByTestId(subMenu1Id);
         userEvent.click(subMenu);
         expect(onClick).toHaveBeenCalled();
+      });
+    });
+  });
+
+  // TODO: THESE TESTS ARE BROKEN!
+  describe('Keyboard interaction', () => {
+    describe('Arrow keys', () => {
+      test('highlights open sub-menu items', () => {
+        const { getByTestId } = renderSubMenu();
+
+        // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
+        // https://jira.mongodb.org/browse/LG-2904
+        waitFor(() => {
+          const menu = getByTestId(menuTestId);
+          const options = globalGetAllByRole(menu, 'menuitem');
+
+          userEvent.type(menu, '{arrowdown}');
+          expect(options[1]).toHaveFocus();
+        });
+      });
+      test('does not highlight closed sub-menu items', () => {
+        const { getByTestId } = renderSubMenu();
+
+        // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
+        // https://jira.mongodb.org/browse/LG-2904
+        waitFor(() => {
+          const menu = getByTestId(menuTestId);
+          const options = globalGetAllByRole(menu, 'menuitem');
+          options[2].focus();
+          expect(options[1]).toHaveFocus();
+          userEvent.type(menu, '{arrowdown}');
+          expect(options[3]).not.toHaveFocus();
+          expect(options[1]).toHaveFocus();
+          expect(options[2]).toHaveFocus();
+          expect(options[3]).toHaveFocus();
+        });
       });
     });
   });
