@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  findByTestId as globalFindByTestId,
   getAllByRole as globalGetAllByRole,
   render,
   waitFor,
@@ -85,27 +86,36 @@ describe('packages/sub-menu', () => {
   });
 
   describe('Mouse interaction', () => {
-    test('when a SubMenu is clicked, it opens and closes the previously opened SubMenu', async () => {
-      const { queryByTestId, getByTestId } = renderSubMenu();
+    test('Clicking a SubMenu opens it', async () => {
+      const { findByTestId, getByTestId } = renderSubMenu();
       const triggerButton = getByTestId('menu-trigger');
       userEvent.click(triggerButton);
 
-      const subMenuItem = queryByTestId(menuItem1Id);
-      expect(subMenuItem).not.toBeNull();
-      expect(subMenuItem).toBeInTheDocument();
+      const subMenu2 = getByTestId(subMenu2Id);
+      userEvent.click(subMenu2);
 
-      const subMenu2 = queryByTestId(subMenu2Id);
-      userEvent.click(subMenu2 as HTMLElement);
-
-      await waitForElementToBeRemoved(subMenuItem);
-
-      const subMenuItem2 = queryByTestId(menuItem2Id);
+      const subMenuItem2 = await findByTestId(menuItem2Id);
       expect(subMenuItem2).not.toBeNull();
       expect(subMenuItem2).toBeInTheDocument();
     });
 
+    test('Clicking a Submenu closes the previous one', async () => {
+      const { getByTestId, queryByTestId } = renderSubMenu();
+      const triggerButton = getByTestId('menu-trigger');
+      userEvent.click(triggerButton);
+
+      const subMenuItem1 = queryByTestId(menuItem1Id);
+      const subMenu2 = getByTestId(subMenu2Id);
+
+      userEvent.click(subMenu2);
+
+      await waitForElementToBeRemoved(subMenuItem1);
+    });
+
     test('onClick is fired when SubMenu is clicked', async () => {
       const { getByTestId } = renderSubMenu();
+      const triggerButton = getByTestId('menu-trigger');
+      userEvent.click(triggerButton);
 
       const subMenu = getByTestId(subMenu1Id);
       userEvent.click(subMenu);
@@ -113,38 +123,30 @@ describe('packages/sub-menu', () => {
     });
   });
 
-  // TODO: THESE TESTS ARE BROKEN!
-  describe.skip('Keyboard interaction', () => {
+  describe('Keyboard interaction', () => {
     describe('Arrow keys', () => {
       test('highlights open sub-menu items', () => {
         const { getByTestId } = renderSubMenu();
+        const triggerButton = getByTestId('menu-trigger');
+        userEvent.click(triggerButton);
 
-        // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
-        // https://jira.mongodb.org/browse/LG-2904
-        waitFor(() => {
-          const menu = getByTestId(menuTestId);
-          const options = globalGetAllByRole(menu, 'menuitem');
+        const menu = getByTestId(menuTestId);
+        const options = globalGetAllByRole(menu, 'menuitem');
 
-          userEvent.type(menu, '{arrowdown}');
-          expect(options[1]).toHaveFocus();
-        });
+        userEvent.type(menu, '{arrowdown}');
+        expect(options[1]).toHaveFocus();
       });
       test('does not highlight closed sub-menu items', () => {
         const { getByTestId } = renderSubMenu();
+        const triggerButton = getByTestId('menu-trigger');
+        userEvent.click(triggerButton);
 
-        // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
-        // https://jira.mongodb.org/browse/LG-2904
-        waitFor(() => {
-          const menu = getByTestId(menuTestId);
-          const options = globalGetAllByRole(menu, 'menuitem');
-          options[2].focus();
-          expect(options[1]).toHaveFocus();
-          userEvent.type(menu, '{arrowdown}');
-          expect(options[3]).not.toHaveFocus();
-          expect(options[1]).toHaveFocus();
-          expect(options[2]).toHaveFocus();
-          expect(options[3]).toHaveFocus();
-        });
+        const menu = getByTestId(menuTestId);
+        const options = globalGetAllByRole(menu, 'menuitem');
+        options[2].focus();
+        expect(options[2]).toHaveFocus();
+        userEvent.type(menu, '{arrowdown}');
+        expect(options[3]).not.toHaveFocus();
       });
     });
   });
