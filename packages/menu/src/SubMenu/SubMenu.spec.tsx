@@ -1,5 +1,9 @@
 import React from 'react';
-import { render, waitForElementToBeRemoved } from '@testing-library/react';
+import {
+  getByTestId as globalGetByTestId,
+  render,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { Menu, MenuItem, type MenuProps, SubMenu } from '..';
@@ -146,26 +150,40 @@ describe('packages/sub-menu', () => {
       expect(maybeSubMenuItem).not.toBeInTheDocument();
     });
 
+    test('Clicking the chevron opens the submenu', async () => {
+      const { getByTestId, openMenu } = renderSubMenu();
+      openMenu();
+      const subMenuB = getByTestId(subMenuTestId[1]);
+      const chevronB = globalGetByTestId(subMenuB, 'lg-sub-menu-icon-button');
+
+      userEvent.click(chevronB);
+
+      const subMenuItemA = getByTestId(menuItemTestId[0]);
+      const subMenuItemB = getByTestId(menuItemTestId[1]);
+
+      await waitForElementToBeRemoved(subMenuItemA);
+      expect(subMenuItemB).toBeInTheDocument();
+    });
+
     test('Clicking a basic SubMenu opens it', async () => {
-      const { findByTestId, getByTestId, openMenu } = renderSubMenu();
+      const { getByTestId, queryByTestId, openMenu } = renderSubMenu();
       openMenu();
 
       const subMenuC = getByTestId(subMenuTestId[2]);
       userEvent.click(subMenuC);
 
-      const subMenuItem = await findByTestId(menuItemTestId[3]);
-      expect(subMenuItem).not.toBeNull();
+      const subMenuItem = queryByTestId(menuItemTestId[2]);
       expect(subMenuItem).toBeInTheDocument();
     });
 
     test('Opening a Submenu closes the previous one', async () => {
       const { getByTestId, queryByTestId, openMenu } = renderSubMenu();
       openMenu();
+      const subMenuB = getByTestId(subMenuTestId[1]);
+      const chevronB = globalGetByTestId(subMenuB, 'lg-sub-menu-icon-button');
+      userEvent.click(chevronB);
 
       const subMenuItem1 = queryByTestId(menuItemTestId[0]);
-      const subMenuC = getByTestId(subMenuTestId[2]);
-
-      userEvent.click(subMenuC);
 
       await waitForElementToBeRemoved(subMenuItem1);
     });
