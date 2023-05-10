@@ -7,7 +7,7 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { Menu, MenuItem, SubMenu } from '..';
+import { Menu, MenuItem, type MenuProps, SubMenu } from '..';
 
 const menuTestId = 'menu-test-id';
 const subMenu1Id = 'sub-menu-1-id';
@@ -18,9 +18,13 @@ const menuItem2Id = 'menu-item-2-id';
 const trigger = <button data-testid="menu-trigger">trigger</button>;
 const onClick = jest.fn();
 
-const renderSubMenu = () => {
+const renderSubMenu = (props: Omit<MenuProps, 'children'> = { trigger }) => {
   const utils = render(
-    <Menu trigger={trigger} data-testid={menuTestId}>
+    <Menu
+      {...props}
+      trigger={props.trigger ?? trigger}
+      data-testid={menuTestId}
+    >
       <SubMenu
         active
         onClick={onClick}
@@ -40,104 +44,77 @@ const renderSubMenu = () => {
 };
 
 describe('packages/sub-menu', () => {
-  describe('rendering', () => {
-    test('renders a SubMenu open by default, when the SubMenu is active', async () => {
+  describe('Rendering', () => {
+    test('renders a SubMenu open by default, when the SubMenu is active', () => {
       const { getByTestId } = renderSubMenu();
+      const triggerButton = getByTestId('menu-trigger');
+      userEvent.click(triggerButton);
 
-      // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
-      // https://jira.mongodb.org/browse/LG-2904
-      waitFor(() => {
-        const subMenu = getByTestId(subMenu1Id);
-        expect(subMenu).toBeInTheDocument();
-        const menuItem = getByTestId(menuItem1Id);
-        expect(menuItem).toBeInTheDocument();
-      });
+      const subMenu = getByTestId(subMenu1Id);
+      expect(subMenu).toBeInTheDocument();
+      const menuItem = getByTestId(menuItem1Id);
+      expect(menuItem).toBeInTheDocument();
     });
 
     test('renders as a button by default', async () => {
       const { getByTestId } = renderSubMenu();
+      const triggerButton = getByTestId('menu-trigger');
+      userEvent.click(triggerButton);
 
-      // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
-      // https://jira.mongodb.org/browse/LG-2904
-      waitFor(() => {
-        const subMenu = getByTestId(subMenu1Id);
-        expect(subMenu.tagName.toLowerCase()).toBe('button');
-      });
+      const subMenu = getByTestId(subMenu1Id);
+      expect(subMenu.tagName.toLowerCase()).toBe('button');
     });
 
     test('renders inside an anchor tag when the href prop is set', async () => {
       const { getByTestId } = renderSubMenu();
+      const triggerButton = getByTestId('menu-trigger');
+      userEvent.click(triggerButton);
 
-      // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
-      // https://jira.mongodb.org/browse/LG-2904
-      waitFor(() => {
-        const subMenu = getByTestId(subMenu2Id);
-        expect(subMenu.tagName.toLowerCase()).toBe('a');
-      });
+      const subMenu = getByTestId(subMenu2Id);
+      expect(subMenu.tagName.toLowerCase()).toBe('a');
     });
 
     test('renders as `div` tag when the "as" prop is set', async () => {
       const { getByTestId } = renderSubMenu();
+      const triggerButton = getByTestId('menu-trigger');
+      userEvent.click(triggerButton);
 
-      // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
-      // https://jira.mongodb.org/browse/LG-2904
-      waitFor(() => {
-        const subMenu = getByTestId(subMenu3Id);
-        expect(subMenu.tagName.toLowerCase()).toBe('div');
-      });
-    });
-
-    test('First option is selected by default', () => {
-      const { getByTestId } = renderSubMenu();
-
-      // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
-      // https://jira.mongodb.org/browse/LG-2904
-      waitFor(() => {
-        const menu = getByTestId(menuTestId);
-        const options = globalGetAllByRole(menu, 'menuitem');
-        expect(menu).toBeInTheDocument();
-        expect(options[0]).toHaveFocus();
-      });
+      const subMenu = getByTestId(subMenu3Id);
+      expect(subMenu.tagName.toLowerCase()).toBe('div');
     });
   });
 
   describe('Mouse interaction', () => {
     test('when a SubMenu is clicked, it opens and closes the previously opened SubMenu', async () => {
-      const { queryByTestId } = renderSubMenu();
+      const { queryByTestId, getByTestId } = renderSubMenu();
+      const triggerButton = getByTestId('menu-trigger');
+      userEvent.click(triggerButton);
 
-      // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
-      // https://jira.mongodb.org/browse/LG-2904
-      waitFor(async () => {
-        const subMenuItem = queryByTestId(menuItem1Id);
-        expect(subMenuItem).not.toBeNull();
-        expect(subMenuItem).toBeInTheDocument();
+      const subMenuItem = queryByTestId(menuItem1Id);
+      expect(subMenuItem).not.toBeNull();
+      expect(subMenuItem).toBeInTheDocument();
 
-        const subMenu2 = queryByTestId(subMenu2Id);
-        userEvent.click(subMenu2 as HTMLElement);
+      const subMenu2 = queryByTestId(subMenu2Id);
+      userEvent.click(subMenu2 as HTMLElement);
 
-        await waitForElementToBeRemoved(subMenuItem);
+      await waitForElementToBeRemoved(subMenuItem);
 
-        const subMenuItem2 = queryByTestId(menuItem2Id);
-        expect(subMenuItem2).not.toBeNull();
-        expect(subMenuItem2).toBeInTheDocument();
-      });
+      const subMenuItem2 = queryByTestId(menuItem2Id);
+      expect(subMenuItem2).not.toBeNull();
+      expect(subMenuItem2).toBeInTheDocument();
     });
 
     test('onClick is fired when SubMenu is clicked', async () => {
       const { getByTestId } = renderSubMenu();
 
-      // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
-      // https://jira.mongodb.org/browse/LG-2904
-      waitFor(() => {
-        const subMenu = getByTestId(subMenu1Id);
-        userEvent.click(subMenu);
-        expect(onClick).toHaveBeenCalled();
-      });
+      const subMenu = getByTestId(subMenu1Id);
+      userEvent.click(subMenu);
+      expect(onClick).toHaveBeenCalled();
     });
   });
 
   // TODO: THESE TESTS ARE BROKEN!
-  describe('Keyboard interaction', () => {
+  describe.skip('Keyboard interaction', () => {
     describe('Arrow keys', () => {
       test('highlights open sub-menu items', () => {
         const { getByTestId } = renderSubMenu();

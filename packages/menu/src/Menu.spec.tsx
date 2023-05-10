@@ -17,7 +17,11 @@ const trigger = <button data-testid="menu-trigger">trigger</button>;
 
 function renderMenu(props: Omit<MenuProps, 'children'> = {}) {
   const utils = render(
-    <Menu {...props} data-testid={menuTestId}>
+    <Menu
+      {...props}
+      trigger={props.trigger ?? trigger}
+      data-testid={menuTestId}
+    >
       <MenuItem>Item A</MenuItem>
       <MenuSeparator />
       <MenuItem href="http://mongodb.design">Item B</MenuItem>
@@ -69,11 +73,8 @@ describe('packages/menu', () => {
 
   describe('Mouse interaction', () => {
     test('Clicking trigger opens menu', () => {
-      const { getByTestId } = renderMenu({
-        trigger,
-      });
+      const { getByTestId } = renderMenu();
       const triggerButton = getByTestId('menu-trigger');
-
       userEvent.click(triggerButton);
       const menu = getByTestId(menuTestId);
 
@@ -94,8 +95,8 @@ describe('packages/menu', () => {
         </div>,
       );
       const triggerButton = getByTestId('menu-trigger');
-
       userEvent.click(triggerButton);
+
       const menu = getByTestId(menuTestId);
       waitFor(() => {
         expect(menu).toBeInTheDocument();
@@ -130,11 +131,8 @@ describe('packages/menu', () => {
 
     describe.each(testKeys)('%s key', key => {
       test('Closes menu', async () => {
-        const { getByTestId } = renderMenu({
-          trigger,
-        });
+        const { getByTestId } = renderMenu();
         const triggerButton = getByTestId('menu-trigger');
-
         userEvent.click(triggerButton);
         const menu = getByTestId(menuTestId);
 
@@ -143,12 +141,8 @@ describe('packages/menu', () => {
         expect(menu).not.toBeInTheDocument();
       });
       test('Returns focus to trigger {usePortal: true}', async () => {
-        const { getByTestId } = renderMenu({
-          trigger,
-          usePortal: true,
-        });
+        const { getByTestId } = renderMenu({ usePortal: true });
         const triggerButton = getByTestId('menu-trigger');
-
         userEvent.click(triggerButton);
         const menu = getByTestId(menuTestId);
 
@@ -158,12 +152,8 @@ describe('packages/menu', () => {
       });
 
       test('Returns focus to trigger {usePortal: false}', async () => {
-        const { getByTestId } = renderMenu({
-          trigger,
-          usePortal: false,
-        });
+        const { getByTestId } = renderMenu({ usePortal: false });
         const triggerButton = getByTestId('menu-trigger');
-
         userEvent.click(triggerButton);
         const menu = getByTestId(menuTestId);
 
@@ -178,9 +168,7 @@ describe('packages/menu', () => {
       let options: Array<HTMLElement>;
 
       beforeEach(() => {
-        const { getByTestId } = renderMenu({
-          trigger,
-        });
+        const { getByTestId } = renderMenu();
         const triggerButton = getByTestId('menu-trigger');
 
         userEvent.click(triggerButton);
