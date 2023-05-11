@@ -99,7 +99,7 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
         if (onClick) {
           onClick(e);
         } else if (!isAnchor) {
-          setOpen(open => !open);
+          setOpen?.(open => !open);
         }
       },
       [isAnchor, onClick, setOpen],
