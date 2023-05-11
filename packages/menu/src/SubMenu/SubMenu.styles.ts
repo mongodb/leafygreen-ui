@@ -1,7 +1,13 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontWeights, transitionDuration } from '@leafygreen-ui/tokens';
+import {
+  fontWeights,
+  spacing,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
+
+import { Size } from '../types';
 
 export const subMenuContainerClassName =
   createUniqueClassName('sub-menu-container');
@@ -10,11 +16,7 @@ export const chevronClassName = createUniqueClassName('icon-button-chevron');
 
 export const iconButtonContainerSize = 28;
 
-export const subMenuStyle = css`
-  padding-right: ${iconButtonContainerSize + 16}px;
-  align-items: center;
-  justify-content: flex-start;
-`;
+export const subMenuStyle = css``;
 
 export const subMenuThemeStyle: Record<Theme, string> = {
   [Theme.Light]: cx(
@@ -71,12 +73,19 @@ export const openIconStyle: Record<Theme, string> = {
 export const iconButtonStyle = css`
   position: absolute;
   z-index: 1;
-  right: 8px;
-  top: 0;
-  bottom: 0;
+  right: ${spacing[3]}px;
   margin: auto;
   transition: background-color ${transitionDuration.default}ms ease-in-out;
 `;
+
+export const iconButtonPosition: Record<Size, string> = {
+  [Size.Default]: css`
+    top: ${spacing[1]}px;
+  `,
+  [Size.Large]: css`
+    top: ${spacing[2]}px;
+  `,
+};
 
 export const iconButtonThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
