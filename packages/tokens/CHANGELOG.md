@@ -1,5 +1,15 @@
 # @leafygreen-ui/tokens
 
+## 2.1.0
+
+### Minor Changes
+
+- 73cbbd02c: Adds `fontWeights` token
+
+### Patch Changes
+
+- 8ece56980: Adds `slowest` to `transitionDuration`
+
 ## 2.0.3
 
 ### Patch Changes
