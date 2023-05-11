@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  cleanup,
   getByTestId as globalGetByTestId,
   render,
   waitFor,
@@ -70,6 +71,7 @@ const renderSubMenu = ({
 describe('packages/sub-menu', () => {
   afterEach(() => {
     onClick.mockReset();
+    cleanup();
   });
 
   describe('Rendering', () => {
@@ -162,6 +164,7 @@ describe('packages/sub-menu', () => {
               'Error: Not implemented: navigation (except hash changes)',
             ),
           );
+          errorSpy.mockReset();
         });
       });
 
@@ -193,7 +196,10 @@ describe('packages/sub-menu', () => {
         const { getByTestId, openMenu } = renderSubMenu();
         openMenu();
         const subMenuB = getByTestId(subMenuTestId[1]);
-        const chevronB = globalGetByTestId(subMenuB, 'lg-sub-menu-icon-button');
+        const chevronB = globalGetByTestId(
+          subMenuB.parentElement!,
+          'lg-sub-menu-icon-button',
+        );
 
         userEvent.click(chevronB);
 
@@ -208,11 +214,14 @@ describe('packages/sub-menu', () => {
         const { getByTestId, openMenu } = renderSubMenu();
         openMenu();
         const subMenuA = getByTestId(subMenuTestId[0]);
-        const chevronA = globalGetByTestId(subMenuA, 'lg-sub-menu-icon-button');
+        const chevronA = globalGetByTestId(
+          subMenuA.parentElement!,
+          'lg-sub-menu-icon-button',
+        );
 
         userEvent.click(chevronA);
 
-        expect(onClick).toHaveBeenCalled();
+        expect(onClick).not.toHaveBeenCalled();
       });
 
       test('does _not_ navigate the window', async () => {
@@ -223,7 +232,10 @@ describe('packages/sub-menu', () => {
         const { getByTestId, openMenu } = renderSubMenu();
         openMenu();
         const subMenuB = getByTestId(subMenuTestId[1]);
-        const chevronB = globalGetByTestId(subMenuB, 'lg-sub-menu-icon-button');
+        const chevronB = globalGetByTestId(
+          subMenuB.parentElement!,
+          'lg-sub-menu-icon-button',
+        );
 
         userEvent.click(chevronB);
 
@@ -231,6 +243,7 @@ describe('packages/sub-menu', () => {
         // So here we just check that the specific error was logged by jest
         await waitFor(() => {
           expect(errorSpy).not.toHaveBeenCalled();
+          errorSpy.mockReset();
         });
       });
     });
@@ -239,7 +252,10 @@ describe('packages/sub-menu', () => {
       const { getByTestId, queryByTestId, openMenu } = renderSubMenu();
       openMenu();
       const subMenuB = getByTestId(subMenuTestId[1]);
-      const chevronB = globalGetByTestId(subMenuB, 'lg-sub-menu-icon-button');
+      const chevronB = globalGetByTestId(
+        subMenuB.parentElement!,
+        'lg-sub-menu-icon-button',
+      );
       userEvent.click(chevronB);
 
       const subMenuItem1 = queryByTestId(menuItemTestId[0]);

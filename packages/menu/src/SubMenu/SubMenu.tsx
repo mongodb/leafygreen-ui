@@ -44,6 +44,7 @@ import {
   closedIconStyle,
   iconButtonClassName,
   iconButtonFocusedThemeStyle,
+  iconButtonPosition,
   iconButtonStyle,
   iconButtonThemeStyle,
   menuItemBorder,
@@ -55,6 +56,7 @@ import {
   subItemThemeStyle,
   subMenuContainerClassName,
   subMenuOpenStyle,
+  subMenuStyle,
   subMenuThemeStyle,
   ulStyle,
   ulThemeStyles,
@@ -195,7 +197,12 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
     );
 
     return (
-      <li role="none">
+      <li
+        role="none"
+        className={css`
+          position: relative;
+        `}
+      >
         <Component
           {...baseProps}
           {...rest}
@@ -205,6 +212,7 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
             menuItemContainerThemeStyle[theme],
             menuItemHeight(size),
             linkStyle,
+            subMenuStyle,
             subMenuThemeStyle[theme],
             {
               [activeMenuItemContainerStyle[theme]]: active,
@@ -216,28 +224,29 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
           )}
         >
           {content}
-          <IconButton
-            data-testid="lg-sub-menu-icon-button"
-            darkMode={!darkMode}
-            aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
-            className={cx(
-              iconButtonClassName,
-              iconButtonStyle,
-              iconButtonThemeStyle[theme],
-              iconButtonFocusedThemeStyle[theme],
-              {
-                [openIconButtonStyle[theme]]: open,
-              },
-            )}
-            onClick={handleChevronClick}
-          >
-            <ChevronIcon
-              role="presentation"
-              className={cx(chevronClassName, chevronIconStyles)}
-              size={14}
-            />
-          </IconButton>
         </Component>
+        <IconButton
+          data-testid="lg-sub-menu-icon-button"
+          darkMode={!darkMode}
+          aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
+          className={cx(
+            iconButtonClassName,
+            iconButtonStyle,
+            iconButtonThemeStyle[theme],
+            iconButtonFocusedThemeStyle[theme],
+            iconButtonPosition[size],
+            {
+              [openIconButtonStyle[theme]]: open,
+            },
+          )}
+          onClick={handleChevronClick}
+        >
+          <ChevronIcon
+            role="presentation"
+            className={cx(chevronClassName, chevronIconStyles)}
+            size={14}
+          />
+        </IconButton>
 
         <Transition
           in={open}
