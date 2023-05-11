@@ -1,4 +1,3 @@
-
 {
   "extends": "../../package.tsconfig.json",
   "compilerOptions": {
@@ -6,13 +5,15 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "references": [
     {
       "path": "../a11y"
     },
     {
-      "path": "../lib"
+      "path": "../button"
     },
     {
       "path": "../emotion"
@@ -21,20 +22,31 @@
       "path": "../hooks"
     },
     {
-      "path": "../typography"
-    },
-    {
       "path": "../icon"
     },
     {
-      "path": "../icon-button"
+      "path": "../leafygreen-provider"
+    },
+    {
+      "path": "../lib"
+    },
+    {
+      "path": "../palette"
+    },
+    {
+      "path": "../popover"
     },
     {
       "path": "../select"
     },
     {
+      "path": "../tokens"
+    },
+    {
       "path": "../tooltip"
+    },
+    {
+      "path": "../typography"
     }
   ]
 }
- 

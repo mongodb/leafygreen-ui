@@ -15,7 +15,7 @@ export const GraphicStyle = {
 
 export type GraphicStyle = typeof GraphicStyle[keyof typeof GraphicStyle];
 
-export interface MarketingModalProps extends ModalProps {
+export interface MarketingModalProps extends Omit<ModalProps, 'size'> {
   /**
    * Text of header element
    */

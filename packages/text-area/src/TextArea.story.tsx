@@ -45,21 +45,17 @@ export default {
 } as ComponentMeta<typeof TextArea>;
 
 export const Basic: ComponentStory<typeof TextArea> = ({
-  baseFontSize,
   darkMode,
   ...args
-}: TextAreaProps) => (
-  <TextArea darkMode={darkMode} baseFontSize={baseFontSize} {...args} />
-);
+}: TextAreaProps) => <TextArea darkMode={darkMode} {...args} />;
 
 export const WithProvider: ComponentStory<typeof StoryTextArea> = ({
-  baseFontSize,
   darkMode,
   lgProviderBaseFontSize,
   ...args
 }: TextAreaProps & { lgProviderBaseFontSize: LGProviderBaseFontSize }) => (
   <LeafygreenProvider baseFontSize={lgProviderBaseFontSize}>
-    <TextArea darkMode={darkMode} baseFontSize={baseFontSize} {...args} />
+    <TextArea darkMode={darkMode} {...args} />
   </LeafygreenProvider>
 );
 WithProvider.argTypes = {

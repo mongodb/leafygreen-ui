@@ -1,5 +1,30 @@
 # @leafygreen-ui/palette
 
+## 4.0.4
+
+### Patch Changes
+
+- 55d33e435: Update to BaseFontSize prop control for .design live example
+- 55d33e435: Fixes layout issue in live example
+
+## 4.0.3
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+
+## 4.0.2
+
+### Patch Changes
+
+- 09775f0ac: Fixes layout issue in live example
+
+## 4.0.1
+
+### Patch Changes
+
+- c2c5601f4: Adds missing dependencies. Removes unused dependencies
+
 ## 4.0.0
 
 ### Major Changes

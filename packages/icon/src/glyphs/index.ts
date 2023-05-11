@@ -20,6 +20,7 @@ import CaretDown from './CaretDown.svg';
 import CaretLeft from './CaretLeft.svg';
 import CaretRight from './CaretRight.svg';
 import CaretUp from './CaretUp.svg';
+import ChartFilled from './ChartFilled.svg';
 import Charts from './Charts.svg';
 import Checkmark from './Checkmark.svg';
 import CheckmarkWithCircle from './CheckmarkWithCircle.svg';
@@ -57,6 +58,7 @@ import FullScreenExit from './FullScreenExit.svg';
 import Gauge from './Gauge.svg';
 import GlobeAmericas from './GlobeAmericas.svg';
 import GovernmentBuilding from './GovernmentBuilding.svg';
+import Highlight from './Highlight.svg';
 import Home from './Home.svg';
 import Import from './Import.svg';
 import ImportantWithCircle from './ImportantWithCircle.svg';
@@ -66,6 +68,8 @@ import Key from './Key.svg';
 import Laptop from './Laptop.svg';
 import Link from './Link.svg';
 import Lock from './Lock.svg';
+import LogIn from './LogIn.svg';
+import LogOut from './LogOut.svg';
 import MagnifyingGlass from './MagnifyingGlass.svg';
 import Megaphone from './Megaphone.svg';
 import Menu from './Menu.svg';
@@ -114,6 +118,7 @@ import VerticalEllipsis from './VerticalEllipsis.svg';
 import Visibility from './Visibility.svg';
 import VisibilityOff from './VisibilityOff.svg';
 import Warning from './Warning.svg';
+import Wrench from './Wrench.svg';
 import Write from './Write.svg';
 import X from './X.svg';
 import XWithCircle from './XWithCircle.svg';
@@ -137,6 +142,7 @@ const _glyphs = {
   CaretLeft,
   CaretRight,
   CaretUp,
+  ChartFilled,
   Charts,
   Checkmark,
   CheckmarkWithCircle,
@@ -174,6 +180,7 @@ const _glyphs = {
   Gauge,
   GlobeAmericas,
   GovernmentBuilding,
+  Highlight,
   Home,
   Import,
   ImportantWithCircle,
@@ -183,6 +190,8 @@ const _glyphs = {
   Laptop,
   Link,
   Lock,
+  LogIn,
+  LogOut,
   MagnifyingGlass,
   Megaphone,
   Menu,
@@ -231,6 +240,7 @@ const _glyphs = {
   Visibility,
   VisibilityOff,
   Warning,
+  Wrench,
   Write,
   X,
   XWithCircle,

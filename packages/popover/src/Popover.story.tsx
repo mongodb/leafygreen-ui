@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
-import { Meta } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
+import { StoryMeta } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 import Popover, { Align, Justify, PopoverProps } from '.';
@@ -71,7 +71,7 @@ const referenceElPositions: { [key: string]: string } = {
   `,
 };
 
-export default {
+export default StoryMeta({
   title: 'Components/Popover',
   component: Popover,
   args: {
@@ -82,12 +82,6 @@ export default {
     adjustOnMutation: false,
   },
   argTypes: {
-    className: {
-      type: 'string',
-    },
-    children: {
-      control: false,
-    },
     buttonText: {
       type: 'string',
       description:
@@ -106,6 +100,7 @@ export default {
     default: 'Basic',
     controls: {
       exclude: [
+        'children',
         'active',
         'refEl',
         'portalClassName',
@@ -114,7 +109,7 @@ export default {
       ],
     },
   },
-} as Meta<typeof Popover>;
+});
 
 type PopoverStoryProps = PopoverProps & {
   buttonText: string;

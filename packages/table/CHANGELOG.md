@@ -1,5 +1,87 @@
 # @leafygreen-ui/table
 
+## 12.0.0
+
+### Major Changes
+
+- 632f0a461: - API changes to ensure react-table exports are not required in usage
+  - See [upgrade guide](https://github.com/mongodb/leafygreen-ui/blob/main/packages/table/UPGRADE.md) for details
+
+### Patch Changes
+
+- Updated dependencies [55d33e435]
+- Updated dependencies [07db42330]
+- Updated dependencies [55d33e435]
+- Updated dependencies [cf00160ec]
+- Updated dependencies [ce0fcb3f6]
+- Updated dependencies [111b680c5]
+- Updated dependencies [77320a6b8]
+  - @leafygreen-ui/lib@10.3.3
+  - @leafygreen-ui/palette@4.0.4
+  - @leafygreen-ui/typography@16.3.0
+  - @leafygreen-ui/icon-button@15.0.10
+  - @leafygreen-ui/tokens@2.0.3
+
+## 11.0.3
+
+### Patch Changes
+
+- 31d768e36: - Move `@tanstack/react-table` back to dependencies
+  - Types Table component and fixes issues in generated code docs documentation
+  - Removes `table-layout: fixed`
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/checkbox@12.0.8
+  - @leafygreen-ui/emotion@4.0.4
+  - @leafygreen-ui/hooks@7.7.1
+  - @leafygreen-ui/icon@11.13.1
+  - @leafygreen-ui/icon-button@15.0.9
+  - @leafygreen-ui/leafygreen-provider@3.1.2
+  - @leafygreen-ui/lib@10.3.2
+  - @leafygreen-ui/palette@4.0.3
+  - @leafygreen-ui/polymorphic@1.3.1
+  - @leafygreen-ui/tokens@2.0.2
+  - @leafygreen-ui/typography@16.2.1
+
+## 11.0.2
+
+### Patch Changes
+
+- ac1f22714: \[DEPRECATED\] `@tanstack/react-table` was moved back to dependencies in v11.0.3 to prevent a breaking change. ~~Types Table component and fixes issues in generated code docs documentation~~
+- ~~Updated dependencies [dc8ceed9b]~~
+- ~~Updated dependencies [09775f0ac]~~
+  - ~~@leafygreen-ui/icon@11.13.0~~
+  - ~~@leafygreen-ui/palette@4.0.2~~
+
+## 11.0.1
+
+### Patch Changes
+
+- a11f4f836: \[DEPRECATED\] `@tanstack/react-table` was moved back to dependencies in v11.0.3 to prevent a breaking change. ~~Support Fragments in Table DOM tree; move @tanstack dependencies to peerDependencies~~
+
+## 11.0.0
+
+### Major Changes
+
+- 89ede28ec: Rewrite of Table component, which includes support for new features: virtual scrolling, selectable rows, etc. See [upgrade guide](https://github.com/mongodb/leafygreen-ui/blob/main/packages/table/UPGRADE.md) for details
+
+### Patch Changes
+
+- c2c5601f4: Adds missing dependencies. Removes unused dependencies
+- Updated dependencies [ece595acd]
+- Updated dependencies [9858ab8c5]
+- Updated dependencies [3ef365fd3]
+- Updated dependencies [89ede28ec]
+- Updated dependencies [d351c02bc]
+- Updated dependencies [c2c5601f4]
+  - @leafygreen-ui/typography@16.2.0
+  - @leafygreen-ui/polymorphic@1.3.0
+  - @leafygreen-ui/icon-button@15.0.8
+  - @leafygreen-ui/hooks@7.7.0
+  - @leafygreen-ui/icon@11.12.7
+  - @leafygreen-ui/lib@10.3.1
+  - @leafygreen-ui/palette@4.0.1
+
 ## 10.0.3
 
 ### Patch Changes

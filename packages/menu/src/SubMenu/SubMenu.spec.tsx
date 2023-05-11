@@ -8,104 +8,107 @@ import userEvent from '@testing-library/user-event';
 
 import { Menu, MenuItem, SubMenu } from '..';
 
-const SubMenuTestWrapper = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <Menu open={true} setOpen={jest.fn()}>
-      {children}
-      <SubMenu title="Second SubMenu" data-testid="sub-menu-b">
-        <MenuItem data-testid="sub-menu-item-b">SubMenu Item Two</MenuItem>
+const subMenu1Id = 'sub-menu-1-id';
+const subMenu2Id = 'sub-menu-2-id';
+const subMenu3Id = 'sub-menu-3-id';
+const menuItem1Id = 'menu-item-1-id';
+const menuItem2Id = 'menu-item-2-id';
+const onClick = jest.fn();
+
+const renderSubMenu = () => {
+  const utils = render(
+    <Menu>
+      <SubMenu active onClick={onClick} data-testid={subMenu1Id}>
+        <MenuItem data-testid={menuItem1Id}>Text Content A</MenuItem>
       </SubMenu>
-    </Menu>
+      <SubMenu data-testid={subMenu2Id} href="mongodb.design">
+        <MenuItem data-testid={menuItem2Id}> Text Content B</MenuItem>
+      </SubMenu>
+      <SubMenu data-testid={subMenu3Id} as="div"></SubMenu>
+    </Menu>,
   );
+
+  return utils;
 };
 
-describe('packages/menu/sub-menu', () => {
+describe('packages/sub-menu', () => {
   test('renders a SubMenu open by default, when the SubMenu is active', () => {
-    const { getByTestId } = render(
-      <SubMenuTestWrapper>
-        <SubMenu data-testid="sub-menu-a" active={true} />
-      </SubMenuTestWrapper>,
-    );
+    const { getByTestId } = renderSubMenu();
 
     // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
     // https://jira.mongodb.org/browse/LG-2904
     waitFor(() => {
-      const subMenuItem = getByTestId('sub-menu-item-a');
-      expect(subMenuItem).toBeInTheDocument();
+      const subMenu = getByTestId(subMenu1Id);
+      expect(subMenu).toBeInTheDocument();
+      const menuItem = getByTestId(menuItem1Id);
+      expect(menuItem).toBeInTheDocument();
     });
   });
 
   test('when a SubMenu is clicked, it opens and closes the previously opened SubMenu', async () => {
-    const { queryByTestId, getAllByTestId } = render(
-      <SubMenuTestWrapper>
-        <SubMenu data-testid="sub-menu-a" active={true}>
-          <MenuItem data-testid="sub-menu-item-a">SubMenu Item One</MenuItem>
-        </SubMenu>
-      </SubMenuTestWrapper>,
-    );
-    const [subMenuButtonA, subMenuButtonB] = getAllByTestId(
-      'lg-sub-menu-icon-button',
-    );
-
-    userEvent.click(subMenuButtonA as HTMLElement);
+    const { queryByTestId } = renderSubMenu();
 
     // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
     // https://jira.mongodb.org/browse/LG-2904
     waitFor(async () => {
-      const subMenuItem = queryByTestId('sub-menu-item-a');
+      const subMenuItem = queryByTestId(menuItem1Id);
       expect(subMenuItem).not.toBeNull();
       expect(subMenuItem).toBeInTheDocument();
 
-      userEvent.click(subMenuButtonB as HTMLElement);
+      const subMenu2 = queryByTestId(subMenu2Id);
+      userEvent.click(subMenu2 as HTMLElement);
 
       await waitForElementToBeRemoved(subMenuItem);
 
-      const subMenuItemB = queryByTestId('sub-menu-item-b');
-      expect(subMenuItemB).not.toBeNull();
-      expect(subMenuItemB).toBeInTheDocument();
+      const subMenuItem2 = queryByTestId(menuItem2Id);
+      expect(subMenuItem2).not.toBeNull();
+      expect(subMenuItem2).toBeInTheDocument();
     });
   });
 
-  test('onClick is fired when SubMenu is clicked', () => {
-    const onClick = jest.fn();
-    const { getByTestId } = render(
-      <SubMenuTestWrapper>
-        <SubMenu data-testid="sub-menu-a" onClick={onClick} />
-      </SubMenuTestWrapper>,
-    );
-    const subMenu = getByTestId('sub-menu-a');
-    userEvent.click(subMenu);
-    expect(onClick).toHaveBeenCalled();
+  test('onClick is fired when SubMenu is clicked', async () => {
+    const { getByTestId } = renderSubMenu();
+
+    // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
+    // https://jira.mongodb.org/browse/LG-2904
+    waitFor(() => {
+      const subMenu = getByTestId(subMenu1Id);
+      userEvent.click(subMenu);
+      expect(onClick).toHaveBeenCalled();
+    });
   });
 
-  test('renders as a button by default', () => {
-    const { getByTestId } = render(
-      <SubMenuTestWrapper>
-        <SubMenu data-testid="sub-menu-a" />
-      </SubMenuTestWrapper>,
-    );
-    const subMenu = getByTestId('sub-menu-a');
-    expect(subMenu.tagName.toLowerCase()).toBe('button');
+  test('renders as a button by default', async () => {
+    const { getByTestId } = renderSubMenu();
+
+    // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
+    // https://jira.mongodb.org/browse/LG-2904
+    waitFor(() => {
+      const subMenu = getByTestId(subMenu1Id);
+      expect(subMenu.tagName.toLowerCase()).toBe('button');
+    });
   });
 
-  test('renders inside an anchor tag when the href prop is set', () => {
-    const { getByTestId } = render(
-      <SubMenuTestWrapper>
-        <SubMenu data-testid="sub-menu-a" href="string" />
-      </SubMenuTestWrapper>,
-    );
-    const subMenu = getByTestId('sub-menu-a');
-    expect(subMenu.tagName.toLowerCase()).toBe('a');
+  test('renders inside an anchor tag when the href prop is set', async () => {
+    const { getByTestId } = renderSubMenu();
+
+    // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
+    // https://jira.mongodb.org/browse/LG-2904
+    waitFor(() => {
+      const subMenu = getByTestId(subMenu2Id);
+      expect(subMenu.tagName.toLowerCase()).toBe('a');
+    });
   });
 
-  test('renders as `div` tag when the "as" prop is set', () => {
-    const { getByTestId } = render(
-      <SubMenuTestWrapper>
-        <SubMenu data-testid="sub-menu-a" as="div" />
-      </SubMenuTestWrapper>,
-    );
-    const subMenu = getByTestId('sub-menu-a');
-    expect(subMenu.tagName.toLowerCase()).toBe('div');
+  test('renders as `div` tag when the "as" prop is set', async () => {
+    const { getByTestId } = renderSubMenu();
+
+    // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
+    // https://jira.mongodb.org/browse/LG-2904
+    waitFor(() => {
+      const subMenu = getByTestId(subMenu3Id);
+      expect(subMenu.tagName.toLowerCase()).toBe('div');
+    });
   });
 
   /* eslint-disable jest/no-disabled-tests, jest/expect-expect */
@@ -118,10 +121,11 @@ describe('packages/menu/sub-menu', () => {
       const As = ({ children }: { children: React.ReactNode }) => (
         <>{children}</>
       );
+
       render(
-        <SubMenuTestWrapper>
-          <SubMenu data-testid="sub-menu-a" as={As} />
-        </SubMenuTestWrapper>,
+        <Menu>
+          <SubMenu as={As}>Test</SubMenu>
+        </Menu>,
       );
     });
 

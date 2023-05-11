@@ -248,7 +248,9 @@ describe('packages/Icon/createIconComponent', () => {
   });
 
   test('returned Icon function logs an error when glyph does not exist', () => {
-    const consoleSpy = jest.spyOn(console, 'error');
+    const consoleSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
     render(<IconComponent glyph="error" />);
     expect(consoleSpy).toHaveBeenCalled();
   });

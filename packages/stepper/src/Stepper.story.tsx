@@ -1,19 +1,20 @@
 import React from 'react';
-import { ComponentStory, Meta } from '@storybook/react';
+import { ComponentStory } from '@storybook/react';
+
+import { StoryMeta } from '@leafygreen-ui/lib';
 
 import Stepper, { Step, StepperProps } from '.';
 
-export default {
+export default StoryMeta({
   title: 'Components/Stepper',
   component: Stepper,
-  args: {},
+  parameters: {
+    default: 'Basic',
+    controls: {
+      exclude: ['children'],
+    },
+  },
   argTypes: {
-    className: {
-      type: 'string',
-    },
-    children: {
-      control: false,
-    },
     currentStep: {
       control: {
         type: 'range',
@@ -26,6 +27,8 @@ export default {
         min: 3,
         max: 6, // numSteps' max - 1
       },
+      description:
+        'Note: Min and max values for ranges are not defined in the component. The range values are only defined specifically for the Storybook instance so it renders correctly with all values. Value checking within the component will be added at a later date.',
     },
     completedStepsShown: {
       control: {
@@ -33,22 +36,11 @@ export default {
         max: 5, // numSteps' max - 2
       },
     },
-    darkMode: {
-      control: 'boolean',
-    },
   },
-} as Meta<typeof Stepper>;
+});
 
 const Template: ComponentStory<typeof Stepper> = (args: StepperProps) => (
-  <>
-    <p>
-      Note: Min and max values for ranges are not defined in the component. The
-      range values are only defined specifically for the Storybook instance so
-      it renders correctly with all values. Value checking within the component
-      will be added at a later date.
-    </p>
-    <Stepper {...args} />
-  </>
+  <Stepper {...args} />
 );
 
 export const Basic = Template.bind({});

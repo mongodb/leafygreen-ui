@@ -1,5 +1,17 @@
 # @leafygreen-ui/polymorphic
 
+## 1.3.1
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+
+## 1.3.0
+
+### Minor Changes
+
+- 3ef365fd3: Expose two internal hooks `usePolymorphicComponent` and `useInferredPolymorphicComponent` to support React Server Components
+
 ## 1.2.0
 
 ### Minor Changes

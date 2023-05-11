@@ -1,5 +1,54 @@
 # @leafygreen-ui/typography
 
+## 16.3.0
+
+### Minor Changes
+
+- 07db42330: Exports typography component types
+
+### Patch Changes
+
+- 55d33e435: Update to BaseFontSize prop control for .design live example
+- cf00160ec: Updates TSDocs
+- Updated dependencies [55d33e435]
+- Updated dependencies [55d33e435]
+- Updated dependencies [cf00160ec]
+- Updated dependencies [111b680c5]
+- Updated dependencies [77320a6b8]
+  - @leafygreen-ui/lib@10.3.3
+  - @leafygreen-ui/palette@4.0.4
+  - @leafygreen-ui/tokens@2.0.3
+
+## 16.2.1
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/emotion@4.0.4
+  - @leafygreen-ui/icon@11.13.1
+  - @leafygreen-ui/leafygreen-provider@3.1.2
+  - @leafygreen-ui/lib@10.3.2
+  - @leafygreen-ui/palette@4.0.3
+  - @leafygreen-ui/polymorphic@1.3.1
+  - @leafygreen-ui/tokens@2.0.2
+
+## 16.2.0
+
+### Minor Changes
+
+- ece595acd: InlineCode component now supports "as" prop
+- 9858ab8c5: Overwrites default text-decoration property on Link component
+
+### Patch Changes
+
+- Updated dependencies [3ef365fd3]
+- Updated dependencies [c2c5601f4]
+  - @leafygreen-ui/polymorphic@1.3.0
+  - @leafygreen-ui/icon@11.12.7
+  - @leafygreen-ui/lib@10.3.1
+  - @leafygreen-ui/palette@4.0.1
+
 ## 16.1.0
 
 ### Minor Changes

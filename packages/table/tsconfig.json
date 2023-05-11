@@ -10,6 +10,12 @@
   ],
   "references": [
     {
+      "path": "../checkbox"
+    },
+    {
+      "path": "../code"
+    },
+    {
       "path": "../emotion"
     },
     {
@@ -26,6 +32,9 @@
     },
     {
       "path": "../palette"
+    },
+    {
+      "path": "../polymorphic"
     },
     {
       "path": "../tokens"

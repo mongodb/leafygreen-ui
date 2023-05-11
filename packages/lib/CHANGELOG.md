@@ -1,5 +1,27 @@
 # @leafygreen-ui/lib
 
+## 10.3.3
+
+### Patch Changes
+
+- 55d33e435: Update to BaseFontSize prop control for .design live example
+- cf00160ec: Updates TSDocs
+- 111b680c5: Marks type of `storybookArgTypes` as `const`.
+  Removes some default props from `StoryMeta`.
+  `StoryMeta` no longer excludes `children` controls by default.
+
+## 10.3.2
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+
+## 10.3.1
+
+### Patch Changes
+
+- c2c5601f4: Adds missing dependencies. Removes unused dependencies
+
 ## 10.3.0
 
 ### Minor Changes

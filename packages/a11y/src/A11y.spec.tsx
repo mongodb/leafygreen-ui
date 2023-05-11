@@ -77,8 +77,15 @@ describe('packages/a11y', () => {
   let consoleSpy: jest.SpyInstance;
 
   describe('validateAriaLabelProps', () => {
-    beforeEach(() => (consoleSpy = jest.spyOn(console, 'error')));
+    beforeEach(
+      () =>
+        (consoleSpy = jest
+          .spyOn(console, 'error')
+          .mockImplementation(() => {})),
+    );
+
     afterEach(() => jest.clearAllMocks());
+
     test('when prop object does not contain valid _', () => {
       validateAriaLabelProps({}, 'TestComponent');
       expect(consoleSpy).toHaveBeenCalledWith(

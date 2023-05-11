@@ -28,6 +28,7 @@ for d in *; do
     fi
 done
 
+set +e
 cd $APPLICATION_HOME
 for f in "${INSTALLED_PACKAGES_ARRAY[@]}"; do
     yarn unlink @leafygreen-ui/$f

@@ -1,5 +1,21 @@
 # @leafygreen-ui/hooks
 
+## 7.7.1
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+
+## 7.7.0
+
+### Minor Changes
+
+- d351c02bc: Creates `useStateRef` - a combination of useState and useRef, that returns the current state, a `setState` function, and a `getState` function that will return the current walue of the state. This is useful to avoid referencing stale state inside callbacks
+
+### Patch Changes
+
+- c2c5601f4: Adds missing dependencies. Removes unused dependencies
+
 ## 7.6.0
 
 ### Minor Changes

@@ -8,3 +8,4 @@ storybook-static
 **/package.json
 **/tsconfig.json
 **/tsdoc.json
+packages/**/stories.js*

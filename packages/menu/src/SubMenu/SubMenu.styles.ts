@@ -1,7 +1,7 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { transitionDuration } from '@leafygreen-ui/tokens';
+import { fontWeights, transitionDuration } from '@leafygreen-ui/tokens';
 
 export const subMenuContainerClassName =
   createUniqueClassName('sub-menu-container');
@@ -165,7 +165,7 @@ export const ulThemeStyles: Record<Theme, string> = {
 
 export const menuItemText = css`
   width: 100%;
-  font-weight: 400;
+  font-weight: ${fontWeights.regular};
   font-size: 13px;
   line-height: 16px;
   padding-left: 16px;

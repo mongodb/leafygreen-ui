@@ -1,12 +1,12 @@
 import React from 'react';
 import { ComponentMeta, Story } from '@storybook/react';
 
+import Checkbox from '@leafygreen-ui/checkbox';
 import { css } from '@leafygreen-ui/emotion';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 import { CheckboxProps } from './types';
-import Checkbox from '.';
 
 export default {
   title: 'Components/Checkbox',
@@ -26,10 +26,7 @@ export default {
     bold: { control: 'boolean' },
     indeterminate: { control: 'boolean' },
     animate: { control: 'boolean', default: true },
-    baseFontSize: {
-      options: [14, 16],
-      control: { type: 'radio' },
-    },
+    baseFontSize: storybookArgTypes.baseFontSize,
   },
 } as ComponentMeta<typeof Checkbox>;
 

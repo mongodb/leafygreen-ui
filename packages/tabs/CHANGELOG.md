@@ -1,5 +1,50 @@
 # @leafygreen-ui/tabs
 
+## 11.0.8
+
+### Patch Changes
+
+- ce0fcb3f6: Excludes `children` from story controls
+- Updated dependencies [55d33e435]
+- Updated dependencies [111b680c5]
+- Updated dependencies [55d33e435]
+- Updated dependencies [cf00160ec]
+- Updated dependencies [ce0fcb3f6]
+- Updated dependencies [111b680c5]
+- Updated dependencies [77320a6b8]
+  - @leafygreen-ui/lib@10.3.3
+  - @leafygreen-ui/palette@4.0.4
+  - @leafygreen-ui/box@3.1.3
+  - @leafygreen-ui/portal@4.1.2
+  - @leafygreen-ui/tokens@2.0.3
+
+## 11.0.7
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/a11y@1.4.2
+  - @leafygreen-ui/box@3.1.2
+  - @leafygreen-ui/emotion@4.0.4
+  - @leafygreen-ui/hooks@7.7.1
+  - @leafygreen-ui/leafygreen-provider@3.1.2
+  - @leafygreen-ui/lib@10.3.2
+  - @leafygreen-ui/palette@4.0.3
+  - @leafygreen-ui/portal@4.1.1
+  - @leafygreen-ui/tokens@2.0.2
+
+## 11.0.6
+
+### Patch Changes
+
+- c2c5601f4: Adds missing dependencies. Removes unused dependencies
+- Updated dependencies [d351c02bc]
+- Updated dependencies [c2c5601f4]
+  - @leafygreen-ui/hooks@7.7.0
+  - @leafygreen-ui/lib@10.3.1
+  - @leafygreen-ui/palette@4.0.1
+
 ## 11.0.5
 
 ### Patch Changes

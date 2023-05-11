@@ -13,8 +13,10 @@ import { palette } from '@leafygreen-ui/palette';
 import {
   BaseFontSize,
   focusRing,
+  fontWeights,
   hoverRing,
   spacing,
+  typeScales,
 } from '@leafygreen-ui/tokens';
 
 import SelectContext from './SelectContext';
@@ -26,7 +28,7 @@ export const menuButtonTextClassName = createUniqueClassName('select-menu');
 
 const menuButtonStyleOverrides = css`
   // Override button defaults
-  font-weight: 400;
+  font-weight: ${fontWeights.regular};
   > *:last-child {
     grid-template-columns: 1fr 16px;
     justify-content: flex-start;
@@ -42,25 +44,25 @@ const menuButtonStyleOverrides = css`
 const menuButtonSizeStyle: Record<Size, string> = {
   [Size.Default]: css`
     > *:last-child {
-      padding: 0 4px 0 12px;
+      padding: 0 12px;
     }
   `,
   [Size.Large]: css`
     > *:last-child {
-      padding: 0 8px 0 16px;
+      padding: 0 12px 0 ${spacing[3]}px;
     }
   `,
   [Size.Small]: css`
     > *:last-child {
-      padding: 0 4px 0 10px;
+      padding: 0 ${spacing[2]}px 0 10px;
     }
   `,
   [Size.XSmall]: css`
     text-transform: none;
-    font-size: 13px;
-    line-height: 20px;
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
     > *:last-child {
-      padding: 0 4px 0 10px;
+      padding: 0 ${spacing[1]}px 0 10px;
     }
   `,
 };

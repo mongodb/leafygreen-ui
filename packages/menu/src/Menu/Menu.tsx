@@ -266,26 +266,7 @@ export function Menu({
     enabled: open,
   });
 
-  function trapLastMenuItem(refs: Array<HTMLElement>) {
-    if (document.activeElement === refs[refs.length - 1]) {
-      return true;
-    }
-
-    return false;
-  }
-
-  function trapFirstMenuItem() {
-    const filteredRefs = refs.filter(ref => ref !== null);
-
-    if (document.activeElement === filteredRefs[0]) {
-      return true;
-    }
-
-    return false;
-  }
-
   function handleKeyDown(e: KeyboardEvent) {
-    const filteredRefs = refs.filter(ref => ref !== null);
     let refToFocus: HTMLElement;
 
     switch (e.keyCode) {
@@ -303,16 +284,9 @@ export function Menu({
         break;
 
       case keyMap.Tab:
-        if (!e.shiftKey && trapLastMenuItem(filteredRefs)) {
-          e.preventDefault();
-          setFocus(refs[0]);
-        }
-
-        if (e.shiftKey && trapFirstMenuItem()) {
-          e.preventDefault();
-          setFocus(filteredRefs[filteredRefs.length - 1]);
-        }
-
+        e.preventDefault(); // Prevent tabbing outside of portal and outside of the DOM when `usePortal={true}`
+        handleClose();
+        setFocus((refEl || triggerRef)?.current); // Focus the trigger on close
         break;
 
       case keyMap.Escape:

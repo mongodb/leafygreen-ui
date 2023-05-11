@@ -5,7 +5,9 @@ import {
   BaseFontSize,
   focusRing,
   fontFamilies,
+  fontWeights,
   hoverRing,
+  spacing,
   transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
@@ -46,8 +48,8 @@ export const getWrapperFontSize = (
 
     case SizeVariant.Large: {
       return css`
-        font-size: 18px;
-        line-height: 32px;
+        font-size: ${typeScales.large.fontSize}px;
+        line-height: ${typeScales.large.lineHeight}px;
       `;
     }
 
@@ -71,10 +73,9 @@ export const inheritTypeScale = css`
 `;
 
 export const textContainerStyle = css`
-  > *:last-child {
-    display: block;
-    padding-bottom: 4px;
-  }
+  display: flex;
+  flex-direction: column;
+  margin-bottom: ${spacing[1]}px;
 `;
 
 export const inputContainerStyle = css`
@@ -89,7 +90,7 @@ export const baseInputStyle = css`
   font-family: ${fontFamilies.default};
   width: 100%;
   height: 36px;
-  font-weight: normal;
+  font-weight: ${fontWeights.regular};
   border: 1px solid;
   z-index: 1;
   outline: none;
@@ -154,7 +155,7 @@ export const inputModeStyles: Record<Theme, string> = {
 
     &::placeholder {
       color: ${palette.gray.light1};
-      font-weight: normal;
+      font-weight: ${fontWeights.regular};
     }
 
     &:hover,
@@ -218,7 +219,7 @@ export const inputModeStyles: Record<Theme, string> = {
 
     &::placeholder {
       color: ${palette.gray.dark1};
-      font-weight: normal;
+      font-weight: ${fontWeights.regular};
     }
 
     &:disabled {
@@ -275,6 +276,38 @@ export const inputSizeStyles: Record<SizeVariant, string> = {
   [SizeVariant.Large]: css`
     height: 48px;
     padding-left: 16px;
+  `,
+};
+
+// Below numbers are "magic" because they need to account for border, font's letter widths, etc
+export const inputPaddingForIndicator: Record<SizeVariant, string> = {
+  [SizeVariant.XSmall]: css`
+    padding-right: 31px;
+  `,
+  [SizeVariant.Small]: css`
+    padding-right: 34px;
+  `,
+  [SizeVariant.Default]: css`
+    padding-right: 37px;
+  `,
+  [SizeVariant.Large]: css`
+    padding-right: 39px;
+  `,
+};
+
+// Below numbers are "magic" because they need to account for border, font's letter widths, etc
+export const inputPaddingForOptionalText: Record<SizeVariant, string> = {
+  [SizeVariant.XSmall]: css`
+    padding-right: 64px;
+  `,
+  [SizeVariant.Small]: css`
+    padding-right: 69px;
+  `,
+  [SizeVariant.Default]: css`
+    padding-right: 71px;
+  `,
+  [SizeVariant.Large]: css`
+    padding-right: 74px;
   `,
 };
 
@@ -346,20 +379,23 @@ export const inputIndicatorStyle = css`
   display: flex;
   align-items: center;
   z-index: 1;
+  padding-left: ${spacing[2]}px;
+  right: 2px; // account for border width
 `;
 
+// Below numbers are "magic" because they need to account for border width, etc that would need larger refactoring to make DRY
 export const inputIndicatorSizeStyle: Record<SizeVariant, string> = {
   [SizeVariant.XSmall]: css`
-    right: 10px;
+    padding-right: 6px;
   `,
   [SizeVariant.Small]: css`
-    right: 10px;
+    padding-right: 10px;
   `,
   [SizeVariant.Default]: css`
-    right: 12px;
+    padding-right: 12px;
   `,
   [SizeVariant.Large]: css`
-    right: 16px;
+    padding-right: 14px;
   `,
 };
 
@@ -387,8 +423,14 @@ export const stateIndicatorStyles: Record<
 
 export const optionalTextBaseStyle = css`
   font-size: 12px;
+  line-height: 12px;
   font-style: italic;
-  font-weight: normal;
+  font-weight: ${fontWeights.regular};
+  display: flex;
+  align-items: center;
+  > p {
+    margin: 0;
+  }
 `;
 
 export const optionalTextThemeStyle: Record<Theme, string> = {
@@ -404,5 +446,5 @@ export const errorMessageStyle = css`
   ${inheritTypeScale};
   min-height: 20px;
   padding-top: 4px;
-  font-weight: normal;
+  font-weight: ${fontWeights.regular};
 `;

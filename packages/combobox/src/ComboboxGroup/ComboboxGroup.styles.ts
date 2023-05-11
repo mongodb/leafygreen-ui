@@ -1,13 +1,14 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
+import { fontWeights, spacing } from '@leafygreen-ui/tokens';
 
 export const comboboxGroupStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    padding-top: 8px;
+    padding-top: ${spacing[2]}px;
   `,
   [Theme.Dark]: css`
-    padding-top: 8px;
+    padding-top: ${spacing[2]}px;
   `,
 };
 
@@ -19,7 +20,7 @@ export const comboboxGroupLabel = css`
   overflow-wrap: anywhere;
   font-size: 12px;
   line-height: 16px;
-  font-weight: bold;
+  font-weight: ${fontWeights.bold};
   text-transform: uppercase;
   letter-spacing: 0.4px;
 `;

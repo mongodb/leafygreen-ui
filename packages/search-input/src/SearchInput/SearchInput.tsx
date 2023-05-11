@@ -64,7 +64,6 @@ import { SearchInputProps, Size, State } from './SearchInput.types';
  * @param props.state The current state of the SearchInput. This can be none, or loading.
  * @param props.darkMode determines whether or not the component appears in dark theme.
  * @param props.size determines the size of the text and the height of the input.
- * @param props.baseFontSize determines the base font size if size is set to default.
  */
 
 export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(

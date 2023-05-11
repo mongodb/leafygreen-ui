@@ -2,9 +2,8 @@ import React from 'react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
-import InlineDefinition from '@leafygreen-ui/inline-definition';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 import {
@@ -42,23 +41,15 @@ const displayFlex = css`
   gap: 8px;
 `;
 
-export default {
+export default StoryMeta({
   title: 'Components/Typography',
   parameters: {
+    default: 'AllTypography',
     controls: {
       exclude: ['className'],
     },
   },
-  argTypes: {
-    baseFontSize: {
-      options: [14, 16],
-      control: { type: 'radio' },
-      description:
-        'Storybook prop only. This font size is passed into the LeafygreenProvider.',
-    },
-    darkMode: storybookArgTypes.darkMode,
-  },
-};
+});
 
 // eslint-disable-next-line react/prop-types
 export const AllTypography = ({
@@ -124,16 +115,6 @@ export const AllTypography = ({
         <Overline className={displayBlock}>Overline</Overline>
         <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
 
-        <div
-          className={css`
-            color: ${darkMode ? palette.gray.light2 : palette.black};
-          `}
-        >
-          <InlineDefinition definition="Tooltip Definition">
-            Inline definition
-          </InlineDefinition>
-        </div>
-
         <Error>Hello I am an Error!</Error>
 
         <div className={cx(displayBlock)}>
@@ -143,6 +124,14 @@ export const AllTypography = ({
       </div>
     </LeafygreenProvider>
   );
+};
+AllTypography.argTypes = {
+  baseFontSize: {
+    ...storybookArgTypes.baseFontSize,
+    description:
+      'Storybook prop only. This font size is passed into the LeafygreenProvider.',
+  },
+  darkMode: storybookArgTypes.darkMode,
 };
 
 export const StaticWidthTextStory = () => {

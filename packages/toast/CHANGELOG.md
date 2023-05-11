@@ -1,5 +1,83 @@
 # @leafygreen-ui/toast
 
+## 6.1.2
+
+### Patch Changes
+
+- cf00160ec: Updates TSDocs
+- 3bd3e0c45: Update Storybook for Live Example on .design
+- Updated dependencies [55d33e435]
+- Updated dependencies [07db42330]
+- Updated dependencies [55d33e435]
+- Updated dependencies [cf00160ec]
+- Updated dependencies [ce0fcb3f6]
+- Updated dependencies [111b680c5]
+- Updated dependencies [77320a6b8]
+  - @leafygreen-ui/lib@10.3.3
+  - @leafygreen-ui/palette@4.0.4
+  - @leafygreen-ui/typography@16.3.0
+  - @leafygreen-ui/portal@4.1.2
+  - @leafygreen-ui/icon-button@15.0.10
+  - @leafygreen-ui/tokens@2.0.3
+
+## 6.1.1
+
+### Patch Changes
+
+- 8c0c2bdf9: Adds `position: relative;` to toast portal container
+- 30ab9cfaf: - Fixes a bug where the toast stack would not expand on hover
+  - Fixes a bug where toasts with no description would be improperly placed when expanded
+  - Fixes a bug where collapsing a previously expanded stack could prevent interaction with the rest of the page
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/emotion@4.0.4
+  - @leafygreen-ui/hooks@7.7.1
+  - @leafygreen-ui/icon@11.13.1
+  - @leafygreen-ui/icon-button@15.0.9
+  - @leafygreen-ui/leafygreen-provider@3.1.2
+  - @leafygreen-ui/lib@10.3.2
+  - @leafygreen-ui/palette@4.0.3
+  - @leafygreen-ui/portal@4.1.1
+  - @leafygreen-ui/tokens@2.0.2
+  - @leafygreen-ui/typography@16.2.1
+
+## 6.1.0
+
+### Minor Changes
+
+- 56930ad78: - Adds `portalClassName` prop to `ToastProvider`
+  - Adds a console warning if `useToast` is called outside of a `ToastProvider`
+  - Refactors a `setImmediate` to `setTimeout`
+  - Enhances `useToast` test suite
+
+### Patch Changes
+
+- Updated dependencies [dc8ceed9b]
+- Updated dependencies [09775f0ac]
+  - @leafygreen-ui/icon@11.13.0
+  - @leafygreen-ui/palette@4.0.2
+
+## 6.0.0
+
+### Major Changes
+
+- d351c02bc: Adds multi-toast support for Toasts. The recommended pattern for creating toasts is using the methods exported by the `useToast` hook. Rendering Toasts in JSX is still supported, however these must be manually opened and controlled in the consuming application.
+
+### Patch Changes
+
+- c2c5601f4: Adds missing dependencies. Removes unused dependencies
+- Updated dependencies [ece595acd]
+- Updated dependencies [9858ab8c5]
+- Updated dependencies [89ede28ec]
+- Updated dependencies [d351c02bc]
+- Updated dependencies [c2c5601f4]
+  - @leafygreen-ui/typography@16.2.0
+  - @leafygreen-ui/icon-button@15.0.8
+  - @leafygreen-ui/hooks@7.7.0
+  - @leafygreen-ui/icon@11.12.7
+  - @leafygreen-ui/lib@10.3.1
+  - @leafygreen-ui/palette@4.0.1
+
 ## 5.0.1
 
 ### Patch Changes

@@ -1,25 +1,27 @@
 import React from 'react';
 
+import Icon, { glyphs } from '@leafygreen-ui/icon';
+import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
+
 import {
-  storybookArgTypes,
-  storybookExcludedControlParams,
-} from '@leafygreen-ui/lib';
+  InputOptionContent,
+  InputOptionContentProps,
+} from '../InputOptionContent';
 
 import { InputOption, type InputOptionProps } from '.';
 
-export default {
+export default StoryMeta({
   title: 'Components/InputOption',
   component: InputOption,
   parameters: {
+    default: 'Basic',
     controls: {
       exclude: [
-        ...storybookExcludedControlParams,
-        'aria-label',
-        'aria-labelledby',
         'setError',
         'filteredOptions',
         'initialValue',
         'value',
+        'children',
       ],
     },
   },
@@ -36,12 +38,36 @@ export default {
     showWedge: {
       control: 'boolean',
     },
-    ...storybookArgTypes,
+    leftGlyph: {
+      options: Object.keys(glyphs),
+      control: { type: 'select' },
+    },
+    rightGlyph: {
+      options: Object.keys(glyphs),
+      control: { type: 'select' },
+    },
+    description: {
+      control: { type: 'text' },
+    },
+    as: storybookArgTypes.as,
   },
-};
+});
 
-const Template = (props: InputOptionProps) => (
-  <InputOption {...props}>Some text</InputOption>
-);
+const Template = (props: InputOptionProps & InputOptionContentProps) => {
+  const { leftGlyph, rightGlyph, description, ...rest } = props;
+  return (
+    <InputOption {...rest}>
+      <InputOptionContent
+        leftGlyph={leftGlyph ? <Icon glyph={leftGlyph as string} /> : undefined}
+        rightGlyph={
+          rightGlyph ? <Icon glyph={rightGlyph as string} /> : undefined
+        }
+        description={description}
+      >
+        Some text
+      </InputOptionContent>
+    </InputOption>
+  );
+};
 
 export const Basic = Template.bind({});

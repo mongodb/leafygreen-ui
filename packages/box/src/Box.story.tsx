@@ -19,14 +19,15 @@ export const StoryBox: React.FC<BoxProps> = props => (
   <Box {...props} />
 );
 
+// Intentionally not using `StoryMeta` since Box is different (and will soon be deprecated)
 export default {
   title: 'Components/Box',
   component: StoryBox,
   excludeStories: ['StoryBox'],
   argTypes: {
     as: {
-      defaultValue: 'div',
       ...storybookArgTypes.as,
+      defaultValue: 'div',
     },
     href: {
       control: 'text',
