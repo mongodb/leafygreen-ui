@@ -55,7 +55,7 @@ function GuideCue({
   useEffect(() => {
     let openTimeout: NodeJS.Timeout, closeTimeout: NodeJS.Timeout;
 
-    if (open) {
+    if (open && !isStandalone) {
       // Adding a timeout to the tooltip so the tooltip is positioned correctly. Without the delay the tooltip can sometime shift when it is first visible. Only applies to multi-step tooltip.
       setPopoverOpen(true); // beacon opens first
       openTimeout = setTimeout(() => setTooltipOpen(true), timeout1); // tooltip opens a little after
@@ -69,7 +69,7 @@ function GuideCue({
       clearTimeout(openTimeout);
       clearTimeout(closeTimeout);
     };
-  }, [open]);
+  }, [open, isStandalone]);
 
   /**
    * Callback fired when the X icon is clicked . It closes the tooltip and fires the callback that was passed to `onDismiss`.
@@ -131,39 +131,40 @@ function GuideCue({
   return (
     <>
       {isStandalone ? (
-        //Standalone tooltip
+        // Standalone tooltip
         // this is using the reference from the `refEl` prop to position itself against
         <TooltipContent {...tooltipContentProps}>{children}</TooltipContent>
       ) : (
         // Multistep tooltip
-        <Popover
-          active={popoverOpen}
-          refEl={refEl}
-          align={beaconAlign}
-          justify={Justify.Middle}
-          spacing={-12} // width of beacon is 24px, 24/2 = 12
-          adjustOnMutation={true}
-          popoverZIndex={popoverZIndex}
-          {...sharedProps}
-        >
-          {/* The beacon is using the popover component to position itself */}
-          <div
-            ref={beaconRef}
-            className={beaconStyles(prefersReducedMotion, darkMode)}
+        <>
+          <Popover
+            active={popoverOpen}
+            refEl={refEl}
+            align={beaconAlign}
+            justify={Justify.Middle}
+            spacing={-12} // width of beacon is 24px, 24/2 = 12
+            adjustOnMutation={true}
+            popoverZIndex={popoverZIndex}
+            {...sharedProps}
           >
-            <div />
-          </div>
+            {/* The beacon is using the popover component to position itself */}
+            <div
+              ref={beaconRef}
+              className={beaconStyles(prefersReducedMotion, darkMode)}
+            >
+              <div />
+            </div>
+          </Popover>
           {/* The tooltip is using the ref of the beacon as the trigger to position itself against */}
           {/* Instead of passing the beacon as the tooltip trigger prop we pass a reference to the beacon to the `refEl` prop. By passing only the reference we avoid default tooltip behaviors such as closing the tooltip on background click or showing and hiding the tooltip on hover. */}
           <TooltipContent
             {...tooltipContentProps}
             refEl={beaconRef}
             open={tooltipOpen}
-            usePortal={false}
           >
             {children}
           </TooltipContent>
-        </Popover>
+        </>
       )}
     </>
   );
