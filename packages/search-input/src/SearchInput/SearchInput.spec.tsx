@@ -250,7 +250,7 @@ describe('packages/search-input', () => {
       });
 
       describe('Click-away', () => {
-        test('Basic: click-away un-focuses the input', async () => {
+        test('Basic (without menu): click-away un-focuses the input', async () => {
           const { containerEl, inputEl } = renderSearchInput({
             ...defaultProps,
             children: undefined,
