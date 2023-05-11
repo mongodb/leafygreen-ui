@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { MenuItem } from '.';
@@ -44,6 +44,32 @@ describe('packages/menu/menu-item', () => {
       const menuItem = getByTestId('menu-item');
       userEvent.click(menuItem);
       expect(clickHandler).toHaveBeenCalledTimes(1);
+    });
+
+    test('Navigates window when element with href is clicked', async () => {
+      const errorSpy = jest
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
+
+      const { getByTestId } = render(
+        <MenuItem data-testid="menu-item" href={'https://mongodb.design'} />,
+      );
+
+      const menuItem = getByTestId('menu-item');
+      userEvent.click(menuItem);
+
+      // Navigation is not implemented in jsdom
+      // So here we just check that the specific error was logged by jest
+      await waitFor(() => {
+        expect(errorSpy).toHaveBeenCalled();
+
+        const errorMessage = errorSpy.mock.calls[0][0];
+        expect(errorMessage).toEqual(
+          expect.stringContaining(
+            'Error: Not implemented: navigation (except hash changes)',
+          ),
+        );
+      });
     });
 
     test(`renders className in the MenuItem container's classList`, () => {
