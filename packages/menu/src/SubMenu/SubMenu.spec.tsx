@@ -2,6 +2,7 @@ import React from 'react';
 import {
   getByTestId as globalGetByTestId,
   render,
+  waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -39,7 +40,7 @@ const renderSubMenu = ({
       <SubMenu
         active={initialActiveMenu === 1}
         data-testid={subMenuTestId[1]}
-        href="mongodb.design"
+        href="https://mongodb.design"
         title="SubMenu B"
       >
         <MenuItem data-testid={menuItemTestId[1]}> Text Content B</MenuItem>
@@ -119,61 +120,119 @@ describe('packages/sub-menu', () => {
       expect(getByTestId(subMenuTestId[0])).toHaveFocus();
     });
 
-    test('Clicking SubMenu fires #onClick', async () => {
-      const { getByTestId, openMenu } = renderSubMenu();
-      openMenu();
+    describe('Clicking SubMenu', () => {
+      test('opens the submenu', async () => {
+        const { getByTestId, queryByTestId, openMenu } = renderSubMenu();
+        openMenu();
 
-      const subMenu = getByTestId(subMenuTestId[0]);
-      userEvent.click(subMenu);
-      expect(onClick).toHaveBeenCalled();
-    });
+        const subMenuC = getByTestId(subMenuTestId[2]);
+        userEvent.click(subMenuC);
 
-    test('Clicking SubMenu with #onClick does _not_ open submenu', () => {
-      const { getByTestId, queryByTestId, openMenu } = renderSubMenu({
-        initialActiveMenu: 1,
+        const subMenuItem = queryByTestId(menuItemTestId[2]);
+        expect(subMenuItem).toBeInTheDocument();
       });
-      openMenu();
 
-      const subMenuA = getByTestId(subMenuTestId[0]);
-      userEvent.click(subMenuA);
-      const maybeSubMenuItem = queryByTestId(menuItemTestId[0]);
-      expect(maybeSubMenuItem).not.toBeInTheDocument();
+      test('fires #onClick', async () => {
+        const { getByTestId, openMenu } = renderSubMenu();
+        openMenu();
+
+        const subMenu = getByTestId(subMenuTestId[0]);
+        userEvent.click(subMenu);
+        expect(onClick).toHaveBeenCalled();
+      });
+
+      test('navigates window', async () => {
+        const errorSpy = jest
+          .spyOn(console, 'error')
+          .mockImplementation(() => {});
+
+        const { getByTestId, openMenu } = renderSubMenu();
+        openMenu();
+
+        const subMenuB = getByTestId(subMenuTestId[1]);
+        userEvent.click(subMenuB);
+
+        // Navigation is not implemented in jsdom
+        // So here we just check that the specific error was logged by jest
+        await waitFor(() => {
+          expect(errorSpy).toHaveBeenCalled();
+          const errorMessage = errorSpy.mock.calls[0][0];
+          expect(errorMessage).toEqual(
+            expect.stringContaining(
+              'Error: Not implemented: navigation (except hash changes)',
+            ),
+          );
+        });
+      });
+
+      test('with #onClick does _not_ open submenu', () => {
+        const { getByTestId, queryByTestId, openMenu } = renderSubMenu({
+          initialActiveMenu: 1,
+        });
+        openMenu();
+
+        const subMenuA = getByTestId(subMenuTestId[0]);
+        userEvent.click(subMenuA);
+        const maybeSubMenuItem = queryByTestId(menuItemTestId[0]);
+        expect(maybeSubMenuItem).not.toBeInTheDocument();
+      });
+
+      test('with href does _not_ open submenu', () => {
+        const { getByTestId, queryByTestId, openMenu } = renderSubMenu();
+        openMenu();
+
+        const subMenuB = getByTestId(subMenuTestId[1]);
+        userEvent.click(subMenuB);
+        const maybeSubMenuItem = queryByTestId(menuItemTestId[1]);
+        expect(maybeSubMenuItem).not.toBeInTheDocument();
+      });
     });
 
-    test('Clicking SubMenu with href does _not_ open submenu', () => {
-      const { getByTestId, queryByTestId, openMenu } = renderSubMenu();
-      openMenu();
+    describe('clicking the chevron button', () => {
+      test('opens the submenu', async () => {
+        const { getByTestId, openMenu } = renderSubMenu();
+        openMenu();
+        const subMenuB = getByTestId(subMenuTestId[1]);
+        const chevronB = globalGetByTestId(subMenuB, 'lg-sub-menu-icon-button');
 
-      const subMenuB = getByTestId(subMenuTestId[1]);
-      userEvent.click(subMenuB);
-      const maybeSubMenuItem = queryByTestId(menuItemTestId[1]);
-      expect(maybeSubMenuItem).not.toBeInTheDocument();
-    });
+        userEvent.click(chevronB);
 
-    test('Clicking the chevron opens the submenu', async () => {
-      const { getByTestId, openMenu } = renderSubMenu();
-      openMenu();
-      const subMenuB = getByTestId(subMenuTestId[1]);
-      const chevronB = globalGetByTestId(subMenuB, 'lg-sub-menu-icon-button');
+        const subMenuItemA = getByTestId(menuItemTestId[0]);
+        const subMenuItemB = getByTestId(menuItemTestId[1]);
 
-      userEvent.click(chevronB);
+        await waitForElementToBeRemoved(subMenuItemA);
+        expect(subMenuItemB).toBeInTheDocument();
+      });
 
-      const subMenuItemA = getByTestId(menuItemTestId[0]);
-      const subMenuItemB = getByTestId(menuItemTestId[1]);
+      test('does _not_ fire a click handler', async () => {
+        const { getByTestId, openMenu } = renderSubMenu();
+        openMenu();
+        const subMenuA = getByTestId(subMenuTestId[0]);
+        const chevronA = globalGetByTestId(subMenuA, 'lg-sub-menu-icon-button');
 
-      await waitForElementToBeRemoved(subMenuItemA);
-      expect(subMenuItemB).toBeInTheDocument();
-    });
+        userEvent.click(chevronA);
 
-    test('Clicking a basic SubMenu opens it', async () => {
-      const { getByTestId, queryByTestId, openMenu } = renderSubMenu();
-      openMenu();
+        expect(onClick).toHaveBeenCalled();
+      });
 
-      const subMenuC = getByTestId(subMenuTestId[2]);
-      userEvent.click(subMenuC);
+      test('does _not_ navigate the window', async () => {
+        const errorSpy = jest
+          .spyOn(console, 'error')
+          .mockImplementation(() => {});
 
-      const subMenuItem = queryByTestId(menuItemTestId[2]);
-      expect(subMenuItem).toBeInTheDocument();
+        const { getByTestId, openMenu } = renderSubMenu();
+        openMenu();
+        const subMenuB = getByTestId(subMenuTestId[1]);
+        const chevronB = globalGetByTestId(subMenuB, 'lg-sub-menu-icon-button');
+
+        userEvent.click(chevronB);
+
+        // Navigation is not implemented in jsdom
+        // So here we just check that the specific error was logged by jest
+        await waitFor(() => {
+          expect(errorSpy).not.toHaveBeenCalled();
+        });
+      });
     });
 
     test('Opening a Submenu closes the previous one', async () => {
