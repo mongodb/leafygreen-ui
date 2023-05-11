@@ -20,6 +20,7 @@ const menuItemTestId = [
 ];
 
 const onClick = jest.fn();
+const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
 type RenderProps = Omit<MenuProps, 'children'> & { initialActiveMenu?: number };
 
@@ -71,6 +72,7 @@ const renderSubMenu = ({
 describe('packages/sub-menu', () => {
   afterEach(() => {
     onClick.mockReset();
+    errorSpy.mockReset();
     cleanup();
   });
 
@@ -144,10 +146,6 @@ describe('packages/sub-menu', () => {
       });
 
       test('navigates window', async () => {
-        const errorSpy = jest
-          .spyOn(console, 'error')
-          .mockImplementation(() => {});
-
         const { getByTestId, openMenu } = renderSubMenu();
         openMenu();
 
@@ -164,7 +162,6 @@ describe('packages/sub-menu', () => {
               'Error: Not implemented: navigation (except hash changes)',
             ),
           );
-          errorSpy.mockReset();
         });
       });
 
@@ -225,25 +222,20 @@ describe('packages/sub-menu', () => {
       });
 
       test('does _not_ navigate the window', async () => {
-        const errorSpy = jest
-          .spyOn(console, 'error')
-          .mockImplementation(() => {});
-
         const { getByTestId, openMenu } = renderSubMenu();
         openMenu();
-        const subMenuB = getByTestId(subMenuTestId[1]);
-        const chevronB = globalGetByTestId(
-          subMenuB.parentElement!,
+        const subMenuA = getByTestId(subMenuTestId[0]);
+        const chevronA = globalGetByTestId(
+          subMenuA.parentElement!,
           'lg-sub-menu-icon-button',
         );
 
-        userEvent.click(chevronB);
+        userEvent.click(chevronA);
 
         // Navigation is not implemented in jsdom
         // So here we just check that the specific error was logged by jest
         await waitFor(() => {
           expect(errorSpy).not.toHaveBeenCalled();
-          errorSpy.mockReset();
         });
       });
     });
