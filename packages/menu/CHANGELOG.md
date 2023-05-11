@@ -1,5 +1,25 @@
 # @leafygreen-ui/menu
 
+## 21.0.0
+
+### Major Changes
+
+- bdc11b5be: When you press the `tab` key within a menu that is open, it will no longer cycle through the available options. Rather, the menu will close and the focus will shift to the trigger of the menu.
+
+### Patch Changes
+
+- f2ae45924: Fixes flakey menu tests
+- 73cbbd02c: Uses fontWeight token from `@leafygreen-ui/tokens`
+- Updated dependencies [73cbbd02c]
+- Updated dependencies [8ece56980]
+- Updated dependencies [83fc5b31b]
+- Updated dependencies [8ece56980]
+- Updated dependencies [32b3d3146]
+  - @leafygreen-ui/tokens@2.1.0
+  - @leafygreen-ui/popover@11.0.9
+  - @leafygreen-ui/icon@11.14.0
+  - @leafygreen-ui/hooks@7.7.2
+
 ## 20.0.3
 
 ### Patch Changes
