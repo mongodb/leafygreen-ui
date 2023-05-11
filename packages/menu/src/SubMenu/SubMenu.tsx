@@ -99,10 +99,10 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
         if (onClick) {
           onClick(e);
         } else if (!isAnchor && setOpen) {
-          setOpen((_open: boolean) => !_open);
+          setOpen(!open);
         }
       },
-      [isAnchor, onClick, setOpen],
+      [isAnchor, onClick, setOpen, open],
     );
 
     const numberOfMenuItems = React.Children.toArray(children).length;
