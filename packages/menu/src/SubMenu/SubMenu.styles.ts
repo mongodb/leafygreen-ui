@@ -16,8 +16,6 @@ export const chevronClassName = createUniqueClassName('icon-button-chevron');
 
 export const iconButtonContainerSize = 28;
 
-export const subMenuStyle = css``;
-
 export const subMenuThemeStyle: Record<Theme, string> = {
   [Theme.Light]: cx(
     subMenuStyle,

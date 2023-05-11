@@ -56,7 +56,6 @@ import {
   subItemThemeStyle,
   subMenuContainerClassName,
   subMenuOpenStyle,
-  subMenuStyle,
   subMenuThemeStyle,
   ulStyle,
   ulThemeStyles,
