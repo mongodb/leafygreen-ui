@@ -299,6 +299,11 @@ function Popover({
                   `]: typeof popoverZIndex === 'number',
                 },
                 className,
+                {
+                  [css`
+                    transition-delay: 0ms;
+                  `]: state === 'exiting',
+                },
               )}
             >
               {/*
