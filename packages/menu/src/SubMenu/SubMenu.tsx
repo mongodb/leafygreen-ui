@@ -211,7 +211,6 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
             menuItemContainerThemeStyle[theme],
             menuItemHeight(size),
             linkStyle,
-            subMenuStyle,
             subMenuThemeStyle[theme],
             {
               [activeMenuItemContainerStyle[theme]]: active,

@@ -18,13 +18,11 @@ export const iconButtonContainerSize = 28;
 
 export const subMenuThemeStyle: Record<Theme, string> = {
   [Theme.Light]: cx(
-    subMenuStyle,
     css`
       background-color: ${palette.black};
     `,
   ),
   [Theme.Dark]: cx(
-    subMenuStyle,
     css`
       background-color: ${palette.gray.light2};
     `,
