@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useContext } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';

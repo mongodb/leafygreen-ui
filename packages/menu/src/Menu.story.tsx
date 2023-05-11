@@ -28,7 +28,7 @@ export default StoryMeta({
     },
   },
   args: {
-    open: true,
+    open: undefined,
     align: 'bottom',
     usePortal: true,
     darkMode: false,
