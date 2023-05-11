@@ -1,5 +1,18 @@
 # @leafygreen-ui/toggle
 
+## 10.0.8
+
+### Patch Changes
+
+- 4be31ce3c: Changes component from `26px` to `24px` width to be in line with Figma spec
+- Updated dependencies [73cbbd02c]
+- Updated dependencies [32b3d3146]
+- Updated dependencies [83fc5b31b]
+- Updated dependencies [8ece56980]
+  - @leafygreen-ui/tokens@2.1.0
+  - @leafygreen-ui/a11y@1.4.3
+  - @leafygreen-ui/icon@11.14.0
+
 ## 10.0.7
 
 ### Patch Changes
