@@ -103,10 +103,6 @@ export function Menu({
     uncontrolledSetOpen;
   const open = controlledOpen ?? uncontrolledOpen;
 
-  const closeMenu = useCallback(() => {
-    setOpen(false);
-  }, [setOpen]);
-
   const triggerRef = useRef<HTMLElement>(null);
   const availableSpace = useAvailableSpace(refEl || triggerRef, spacing);
   const maxMenuHeightValue = !isUndefined(availableSpace)
@@ -155,7 +151,7 @@ export function Menu({
         };
 
         const onChildClick: MouseEventHandler = e => {
-          closeMenu();
+          setOpen(false);
           setFocus(triggerRef?.current); // Focus the trigger on close
           child.props.onClick?.(e);
         };
@@ -237,7 +233,7 @@ export function Menu({
     }
 
     return { updatedChildren: updateChildren(children), refs };
-  }, [children, currentSubMenu, open, closeMenu]);
+  }, [children, currentSubMenu, open, setOpen]);
 
   const [focused, setFocused] = useState<HTMLElement>(refs[0] || null);
 
@@ -261,9 +257,9 @@ export function Menu({
 
   const handleClose = useCallback(() => {
     if (shouldClose()) {
-      closeMenu();
+      setOpen(false);
     }
-  }, [closeMenu, shouldClose]);
+  }, [setOpen, shouldClose]);
 
   const handleBackdropClick = useCallback(
     (e: MouseEvent) => {
