@@ -10,18 +10,6 @@ import {
   Link,
 } from '@leafygreen-ui/typography';
 
-const H4 = ({ children, ...rest }) => (
-  <Subtitle as="h4" {...rest}>
-    <strong>{children}</strong>
-  </Subtitle>
-);
-
-const H5 = ({ children, ...rest }) => (
-  <Body {...rest}>
-    <strong>{children}</strong>
-  </Body>
-);
-
 export const argTypes = {
   className: {
     description: '`className` prop passed to the component',
@@ -57,8 +45,8 @@ export const parameters = {
       h1: H1,
       h2: H2,
       h3: H3,
-      h4: H4,
-      h5: H5,
+      h4: Subtitle,
+      h5: Body,
       p: Body,
       a: Link,
       code: InlineCode,
