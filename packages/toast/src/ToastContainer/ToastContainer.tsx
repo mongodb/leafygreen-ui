@@ -56,7 +56,10 @@ interface ToastContainerProps {
 }
 
 /**
- * ToastContainer is responsible for rendering the stack of toasts provided
+ * ToastContainer is responsible for rendering the stack of toasts provided.
+ * Rendered by the `ToastProvider`
+ *
+ * @internal
  */
 export const ToastContainer = ({
   stack,

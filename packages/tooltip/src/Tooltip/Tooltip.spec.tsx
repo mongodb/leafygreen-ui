@@ -14,7 +14,8 @@ import Icon from '@leafygreen-ui/icon';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import { HTMLElementProps, OneOf } from '@leafygreen-ui/lib';
 
-import Tooltip, { TooltipProps } from './Tooltip';
+import Tooltip from './Tooltip';
+import { TooltipProps } from './Tooltip.types';
 
 const buttonText = 'trigger button';
 const tooltipTestId = 'tooltip-test-id';

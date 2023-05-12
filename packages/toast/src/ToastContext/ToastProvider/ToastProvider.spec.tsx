@@ -1,8 +1,9 @@
 import React from 'react';
 import { render, waitFor } from '@testing-library/react';
 
-import { makeToast, makeToastStack } from './utils/makeToast';
-import { ToastStack } from './ToastContext.types';
+import { ToastStack } from '../ToastContext.types';
+import { makeToast, makeToastStack } from '../utils/makeToast';
+
 import { ToastProvider } from '.';
 
 /**
