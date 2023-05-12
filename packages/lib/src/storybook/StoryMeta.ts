@@ -1,4 +1,4 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 import mergeWith from 'lodash/mergeWith';
 import { ComponentProps } from 'react';
 import DarkModeProps from '../DarkModeProps';
@@ -12,11 +12,11 @@ interface LeafyGreenProviderProps extends DarkModeProps {
   baseFontSize?: number;
 }
 
-export interface StoryMetaType<
+export type StoryMetaType<
   T extends React.ElementType,
   XP extends Record<string, any> = {},
-> extends Omit<ComponentMeta<T>, 'component' | 'argTypes' | 'args'> {
-  parameters: ComponentMeta<T>['parameters'] & {
+> = Omit<Meta<T>, 'component' | 'argTypes' | 'args'> & {
+  parameters: Meta<T>['parameters'] & {
     /**
      * The default story to be displayed on `mongodb.design`
      */
@@ -35,7 +35,8 @@ export interface StoryMetaType<
   >;
   args?: Partial<ComponentProps<T> | LeafyGreenProviderProps | XP>;
   component?: T;
-}
+  title?: string;
+};
 
 export const baseMeta: Partial<StoryMetaType<any>> = {
   argTypes: {
