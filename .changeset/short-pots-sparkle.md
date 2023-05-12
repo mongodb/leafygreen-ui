@@ -2,4 +2,4 @@
 '@leafygreen-ui/icon': minor
 ---
 
-Adds Wizard glyph to component
+Adds wizard icon to glyph set
