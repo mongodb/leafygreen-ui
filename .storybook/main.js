@@ -5,7 +5,7 @@ const nodeModulesThatNeedToBeParsedBecauseTheyExposeES6 = [
 
 const config = {
   stories: [
-    // FIXME: temporarily disabling other stories
+    // FIXME: temporarily disabling other stories for clean logs
     '../packages/**/Button.story.tsx',
     // '../**/*.story.@(mdx|js|jsx|ts|tsx)',
     // '../**/*.stories.@(mdx|js|jsx|ts|tsx)',
@@ -23,7 +23,6 @@ const config = {
     options: {
       fastRefresh: true,
       strictMode: true,
-      legacyRootApi: false,
     },
   },
   core: {

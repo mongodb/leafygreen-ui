@@ -4,6 +4,7 @@ module.exports = function (api) {
   const presets = [
     '@babel/preset-typescript',
     '@babel/preset-react',
+    // FIXME: Storybook doesn't seem to like this preset
     // [
     //   '@babel/preset-env',
     //   {

@@ -2,7 +2,8 @@ import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { palette } from '@leafygreen-ui/palette';
-import { DecoratorFn } from '@storybook/react';
+import { Decorator } from '@storybook/react';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 const rootStyle = css`
   display: flex;
@@ -17,17 +18,25 @@ const darkModeStyle = css`
   background-color: ${palette.black};
 `;
 
-const decorator: DecoratorFn = (Story, options) => {
-  const { darkMode, baseFontSize } = options.args;
-  return (
-    <LeafyGreenProvider darkMode={darkMode} baseFontSize={baseFontSize}>
-      <div className={cx(rootStyle, { [darkModeStyle]: darkMode })}>
-        <div>
-          <Story darkMode={darkMode} {...options} />
-        </div>
-      </div>
-    </LeafyGreenProvider>
-  );
-};
+// FIXME: Restore Decorator
+// const decorator: Decorator = (Story, options) => {
+//   const { darkMode, baseFontSize } = options.args as {
+//     darkMode?: boolean;
+//     // TODO: Use token
+//     baseFontSize?: 14 | 16;
+//   };
+//   return (
+//     <LeafyGreenProvider
+//       darkMode={darkMode as boolean}
+//       baseFontSize={baseFontSize}
+//     >
+//       <div className={cx(rootStyle, { [darkModeStyle]: darkMode as boolean })}>
+//         <div>
+//           <Story darkMode={darkMode} {...options} />
+//         </div>
+//       </div>
+//     </LeafyGreenProvider>
+//   );
+// };
 
-export default decorator;
+// export default decorator;
