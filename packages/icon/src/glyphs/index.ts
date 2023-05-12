@@ -119,6 +119,7 @@ import VerticalEllipsis from './VerticalEllipsis.svg';
 import Visibility from './Visibility.svg';
 import VisibilityOff from './VisibilityOff.svg';
 import Warning from './Warning.svg';
+import Wizard from './Wizard.svg';
 import Wrench from './Wrench.svg';
 import Write from './Write.svg';
 import X from './X.svg';
@@ -242,6 +243,7 @@ const _glyphs = {
   Visibility,
   VisibilityOff,
   Warning,
+  Wizard,
   Wrench,
   Write,
   X,
