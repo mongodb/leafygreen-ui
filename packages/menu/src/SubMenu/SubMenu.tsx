@@ -97,9 +97,8 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
         e: React.MouseEvent<HTMLAnchorElement, MouseEvent> &
           React.MouseEvent<HTMLButtonElement, MouseEvent>,
       ) => {
-        if (onClick) {
-          onClick(e);
-        } else if (!isAnchor && setOpen) {
+        onClick?.(e);
+        if (!isAnchor && !onClick && setOpen) {
           setOpen(!open);
         }
       },
@@ -150,11 +149,12 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
       tabIndex: disabled ? -1 : undefined,
       'aria-disabled': disabled,
       // only add a disabled prop if not an anchor
-      ...(typeof rest.href !== 'string' && { disabled }),
-      ...(isAnchor && {
-        target: '_self',
-        rel: '',
-      }),
+      ...(isAnchor
+        ? {
+            target: '_self',
+            rel: '',
+          }
+        : { disabled }),
     };
 
     const content = (
