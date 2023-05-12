@@ -1,5 +1,27 @@
 # @leafygreen-ui/guide-cue
 
+## 4.0.4
+
+### Patch Changes
+
+- 32b3d3146: Bumps to use new `useIdAllocator` hook
+- 1e5dc3e33: Updates required props.
+- 8ece56980: Removes the multi-step tooltip as a child of `Popover` and place it outside of `Popover` as a sibling.
+- Updated dependencies [32b3d3146]
+- Updated dependencies [8ece56980]
+- Updated dependencies [83fc5b31b]
+- Updated dependencies [9bcf8b925]
+- Updated dependencies [8ece56980]
+- Updated dependencies [32b3d3146]
+- Updated dependencies [73cbbd02c]
+  - @leafygreen-ui/a11y@1.4.3
+  - @leafygreen-ui/tooltip@10.0.0
+  - @leafygreen-ui/popover@11.0.9
+  - @leafygreen-ui/icon@11.14.0
+  - @leafygreen-ui/typography@16.4.0
+  - @leafygreen-ui/hooks@7.7.2
+  - @leafygreen-ui/button@20.0.6
+
 ## 4.0.3
 
 ### Patch Changes

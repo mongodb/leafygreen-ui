@@ -1,5 +1,19 @@
 # @leafygreen-ui/callout
 
+## 9.0.8
+
+### Patch Changes
+
+- 73cbbd02c: Uses fontWeight token from `@leafygreen-ui/tokens`
+- Updated dependencies [73cbbd02c]
+- Updated dependencies [83fc5b31b]
+- Updated dependencies [9bcf8b925]
+- Updated dependencies [8ece56980]
+- Updated dependencies [73cbbd02c]
+  - @leafygreen-ui/tokens@2.1.0
+  - @leafygreen-ui/icon@11.14.0
+  - @leafygreen-ui/typography@16.4.0
+
 ## 9.0.7
 
 ### Patch Changes
