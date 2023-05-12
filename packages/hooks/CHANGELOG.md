@@ -1,5 +1,11 @@
 # @leafygreen-ui/hooks
 
+## 7.7.2
+
+### Patch Changes
+
+- 32b3d3146: Rewrites `useIdAllocator` hook so that it performs properly across client-side and server-side renders
+
 ## 7.7.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 11.14.0
+
+### Minor Changes
+
+- 83fc5b31b: Adds `ChartFilled` icon
+
 ## 11.13.1
 
 ### Patch Changes
