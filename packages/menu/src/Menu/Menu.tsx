@@ -286,12 +286,12 @@ export function Menu({
       case keyMap.Tab:
         e.preventDefault(); // Prevent tabbing outside of portal and outside of the DOM when `usePortal={true}`
         handleClose();
-        setFocus((refEl || triggerRef)?.current); // Focus the trigger on close
+        setFocus((triggerRef || refEl)?.current); // Focus the trigger on close
         break;
 
       case keyMap.Escape:
         handleClose();
-        setFocus((refEl || triggerRef)?.current); // Focus the trigger on close
+        setFocus((triggerRef || refEl)?.current); // Focus the trigger on close
         break;
 
       case keyMap.Space:

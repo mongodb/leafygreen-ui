@@ -9,7 +9,19 @@
   "include": ["src/**/*"],
   "references": [
     {
+      "path": "../button"
+    },
+    {
+      "path": "../icon"
+    },
+    {
+      "path": "../leafygreen-provider"
+    },
+    {
       "path": "../lib"
+    },
+    {
+      "path": "../menu"
     }
   ]
 }
