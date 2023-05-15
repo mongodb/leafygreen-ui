@@ -1,5 +1,11 @@
 # @leafygreen-ui/hooks
 
+## 7.7.3
+
+### Patch Changes
+
+- a3a52e131: Removes call to use React 18's useId hook if found
+
 ## 7.7.2
 
 ### Patch Changes
