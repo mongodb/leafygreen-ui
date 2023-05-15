@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/select",
-  "version": "10.3.3",
+  "version": "10.3.4",
   "description": "leafyGreen UI Kit Select",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,8 +22,8 @@
   "dependencies": {
     "@leafygreen-ui/button": "^20.0.6",
     "@leafygreen-ui/emotion": "^4.0.4",
-    "@leafygreen-ui/hooks": "^7.7.2",
-    "@leafygreen-ui/icon": "^11.14.0",
+    "@leafygreen-ui/hooks": "^7.7.3",
+    "@leafygreen-ui/icon": "^11.15.0",
     "@leafygreen-ui/lib": "^10.3.3",
     "@leafygreen-ui/palette": "^4.0.4",
     "@leafygreen-ui/popover": "^11.0.9",
