@@ -1,5 +1,16 @@
 # @leafygreen-ui/tooltip
 
+## 10.0.1
+
+### Patch Changes
+
+- a3a52e131: Bumps to use new `useIdAllocator` hook
+- Updated dependencies [614f7617d]
+- Updated dependencies [a3a52e131]
+- Updated dependencies [614f7617d]
+  - @leafygreen-ui/icon@11.15.0
+  - @leafygreen-ui/hooks@7.7.3
+
 ## 10.0.0
 
 ### Major Changes
