@@ -1,5 +1,13 @@
 # @leafygreen-ui/radio-group
 
+## 10.1.3
+
+### Patch Changes
+
+- a3a52e131: Bumps to use new `useIdAllocator` hook
+- Updated dependencies [a3a52e131]
+  - @leafygreen-ui/hooks@7.7.3
+
 ## 10.1.2
 
 ### Patch Changes
