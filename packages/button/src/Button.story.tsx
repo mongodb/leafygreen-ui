@@ -17,12 +17,13 @@ export default StoryMeta({
   },
   parameters: {
     default: 'Default',
-    snapshot: {
-      variables: {
+    chromatic: {
+      generate: {
         variant: Object.values(Variant),
         size: Object.values(Size),
         leftGlyph: [undefined, <Icon glyph={'Cloud'} />],
         rightGlyph: [undefined, <Icon glyph={'ArrowRight'} />],
+        darkMode: [false, true],
       },
     },
   },

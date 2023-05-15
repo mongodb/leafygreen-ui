@@ -22,8 +22,11 @@ export interface StoryMetaType<
      */
     default: string;
 
-    snapshot?: {
-      variables: Partial<
+    chromatic?: {
+      /**
+       * Defines arrays of variables we want to use to generate stories
+       */
+      generate?: Partial<
         | {
             [key in keyof ComponentProps<T>]: Array<any>;
           }
@@ -31,6 +34,11 @@ export interface StoryMetaType<
             [key in keyof LeafyGreenProviderProps]: Array<any>;
           }
       >;
+      disableSnapshot?: boolean;
+      pauseAnimationAtEnd?: boolean;
+      delay?: number;
+      diffThreshold?: number;
+      [key: string]: any;
     };
   };
   argTypes?: Partial<

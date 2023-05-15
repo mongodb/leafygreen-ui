@@ -18,12 +18,18 @@ const cli = new Command('generate-stories')
     'Generates stories based on variants defined in the root story/ies file',
   )
   .arguments('[packages...]')
+  .option(
+    '-e, --exclude <packages...>',
+    `Optionally "exclude" packages from being generated.`,
+  )
   .option('-v, --verbose', 'Log errors to console', false)
   .parse(process.argv);
 
-const packages = getRelevantPackages(cli.args, {});
-
-const { verbose } = cli.opts() as { verbose: boolean };
+const { exclude, verbose } = cli.opts() as {
+  verbose: boolean;
+  exclude?: Array<string>;
+};
+const packages = getRelevantPackages(cli.args, { exclude });
 
 generateStories();
 
@@ -47,6 +53,7 @@ async function generateStories() {
 
       // Clear any generated file so we don't get any TS errors
       writeFileSync(generatedStoryFilePath, '');
+      console.log(chalk.blueBright('Generating stories for ' + pkg));
 
       try {
         // Load the main story file
@@ -59,17 +66,15 @@ async function generateStories() {
         // Store the story source code
         const storySource = readFileSync(storyFilePath, { encoding: 'utf-8' });
 
-        if (meta?.parameters?.snapshot?.variables) {
-          console.log(chalk.blueBright('Generating stories for ' + pkg));
-
+        if (meta?.parameters?.chromatic?.generate) {
           // Generate a story for each combination of variables defined in meta.snapshot.variables
-          const permutations = generateStoryPermutations(meta);
+          const combinations = generateStoryPermutations(meta);
 
-          // Write all the generated permutations to a new story file
+          // Write all the generated combinations to a new story file
           writeGeneratedStoriesFile(
             generatedStoryFilePath,
             storySource,
-            permutations,
+            combinations,
           );
         } else {
           console.log(chalk.gray('No snapshot config found for', pkg));
@@ -83,29 +88,29 @@ async function generateStories() {
 }
 
 /**
- * Generates all permutations of each variable
+ * Generates all combinations of each variable
  */
 function generateStoryPermutations(
   meta: StoryMetaType<ComponentType<any>>,
 ): Record<string, any> {
   const {
     component,
-    parameters: { snapshot },
+    parameters: { chromatic },
     args,
   } = meta;
 
   // For each var in snapshot
   // generate a new Story
-  const permutations = {} as Record<string, any>;
+  const combinations = {} as Record<string, any>;
 
-  if (snapshot && snapshot.variables) {
-    recursivePermutations({}, Object.entries(snapshot?.variables));
+  if (chromatic && chromatic.generate) {
+    recursivePermutations({}, Object.entries(chromatic?.generate));
   }
 
-  return permutations;
+  return combinations;
 
   /**
-   * Recursively add permutations for each variable
+   * Recursively add combinations for each variable
    */
   function recursivePermutations(
     props: Record<string, any>,
@@ -114,13 +119,14 @@ function generateStoryPermutations(
     if (component && vars.length === 0) {
       const permutationName = getPermutationName(props);
 
-      permutations[permutationName] = getPermutationExportCode(
+      combinations[permutationName] = getPermutationExportCode(
         permutationName,
         component,
         { ...props, ...args },
       );
     } else {
       const [propName, propValues] = vars.pop()!;
+      if (verbose) console.log(chalk.gray('\tAdding prop', propName));
 
       if (propValues) {
         for (const val of propValues) {
@@ -176,12 +182,12 @@ function generateStoryPermutations(
 }
 
 /**
- * Write the generated permutations to a story file
+ * Write the generated combinations to a story file
  */
 function writeGeneratedStoriesFile(
   generatedStoryFilePath: string,
   storySource: string,
-  permutations: Record<string, any>,
+  combinations: Record<string, any>,
 ): void {
   const [storyFrontmatter] = storySource.split(/(export const)/g);
 
@@ -189,10 +195,10 @@ function writeGeneratedStoriesFile(
     '/* eslint-disable @typescript-eslint/no-unused-vars */\n' +
     '/* eslint-disable storybook/prefer-pascal-case */\n' +
     storyFrontmatter +
-    Object.values(permutations).join('\n');
+    Object.values(combinations).join('\n');
 
   writeFileSync(
     generatedStoryFilePath,
-    format(fileString, { parser: 'babel-ts' }),
+    format(fileString, { parser: 'babel-ts', printWidth: 1000 }),
   );
 }

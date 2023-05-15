@@ -1,15 +1,15 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import { ComponentStory, Meta } from '@storybook/react';
+import { ComponentStory } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
 import { CloseIconColor } from '@leafygreen-ui/modal';
 
 import MarketingModal, { BlobPosition, GraphicStyle } from '.';
 
-export default {
+export default StoryMeta({
   title: 'Components/Modals/Marketing Modal',
   component: MarketingModal,
   args: {
@@ -42,11 +42,12 @@ export default {
     darkMode: storybookArgTypes.darkMode,
   },
   parameters: {
+    default: 'Basic',
     controls: {
       exclude: ['open', 'onClose', 'graphic', 'onButtonClick', 'onLinkClick'],
     },
   },
-} as Meta<typeof MarketingModal>;
+});
 
 const ControlledTemplate: ComponentStory<typeof MarketingModal> = ({
   graphicStyle,

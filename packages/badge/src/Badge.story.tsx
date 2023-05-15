@@ -11,8 +11,8 @@ export default StoryMeta({
   component: Badge,
   parameters: {
     default: 'Basic',
-    snapshot: {
-      variables: {
+    chromatic: {
+      generate: {
         darkMode: [false, true],
         variant: Object.values(Variant),
       },
