@@ -10,7 +10,7 @@ import { ToastContextProps } from '../ToastContext.types';
  */
 export const useToast = (): ToastContextProps => {
   const context = useContext(ToastContext);
-  const hasProvider = true;
+  const hasProvider = !isUndefined(context.getStack());
 
   if (!hasProvider) {
     console.warn(
