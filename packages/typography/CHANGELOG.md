@@ -1,5 +1,20 @@
 # @leafygreen-ui/typography
 
+## 16.4.0
+
+### Minor Changes
+
+- 9bcf8b925: Exports `OverlineProps` and `SubtitleProps`
+
+### Patch Changes
+
+- 73cbbd02c: Uses fontWeight token from `@leafygreen-ui/tokens`
+- Updated dependencies [73cbbd02c]
+- Updated dependencies [83fc5b31b]
+- Updated dependencies [8ece56980]
+  - @leafygreen-ui/tokens@2.1.0
+  - @leafygreen-ui/icon@11.14.0
+
 ## 16.3.0
 
 ### Minor Changes

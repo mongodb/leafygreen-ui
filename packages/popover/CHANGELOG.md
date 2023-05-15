@@ -1,5 +1,16 @@
 # @leafygreen-ui/popover
 
+## 11.0.9
+
+### Patch Changes
+
+- 8ece56980: Minor CSS updates to `react-transition-group` `exiting` styles.
+- Updated dependencies [73cbbd02c]
+- Updated dependencies [8ece56980]
+- Updated dependencies [32b3d3146]
+  - @leafygreen-ui/tokens@2.1.0
+  - @leafygreen-ui/hooks@7.7.2
+
 ## 11.0.8
 
 ### Patch Changes

@@ -1,5 +1,18 @@
 # @leafygreen-ui/icon
 
+## 11.15.0
+
+### Minor Changes
+
+- 614f7617d: Adds tag icon to glyph set
+- 614f7617d: Adds wizard icon to glyph set
+
+## 11.14.0
+
+### Minor Changes
+
+- 83fc5b31b: Adds `ChartFilled` icon
+
 ## 11.13.1
 
 ### Patch Changes
