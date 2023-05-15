@@ -106,6 +106,7 @@ import Stitch from './Stitch.svg';
 import Support from './Support.svg';
 import Sweep from './Sweep.svg';
 import Table from './Table.svg';
+import Tag from './Tag.svg';
 import TimeSeries from './TimeSeries.svg';
 import Trash from './Trash.svg';
 import Undo from './Undo.svg';
@@ -118,6 +119,7 @@ import VerticalEllipsis from './VerticalEllipsis.svg';
 import Visibility from './Visibility.svg';
 import VisibilityOff from './VisibilityOff.svg';
 import Warning from './Warning.svg';
+import Wizard from './Wizard.svg';
 import Wrench from './Wrench.svg';
 import Write from './Write.svg';
 import X from './X.svg';
@@ -228,6 +230,7 @@ const _glyphs = {
   Support,
   Sweep,
   Table,
+  Tag,
   TimeSeries,
   Trash,
   Undo,
@@ -240,6 +243,7 @@ const _glyphs = {
   Visibility,
   VisibilityOff,
   Warning,
+  Wizard,
   Wrench,
   Write,
   X,
