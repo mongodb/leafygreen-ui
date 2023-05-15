@@ -38,6 +38,7 @@ import Copy from './Copy.svg';
 import CreditCard from './CreditCard.svg';
 import CurlyBraces from './CurlyBraces.svg';
 import Cursor from './Cursor.svg';
+import Dashboard from './Dashboard.svg';
 import Database from './Database.svg';
 import Diagram from './Diagram.svg';
 import Diagram2 from './Diagram2.svg';
@@ -162,7 +163,7 @@ const _glyphs = {
   CreditCard,
   CurlyBraces,
   Cursor,
-  Dashboard: Stitch,
+  Dashboard,
   Database,
   Diagram,
   Diagram2,
