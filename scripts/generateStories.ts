@@ -147,6 +147,8 @@ function writeGeneratedStoriesFile(
   const [storyFrontmatter] = storySource.split(/(export const)/g);
 
   const fileString =
+    '/* eslint-disable @typescript-eslint/no-unused-vars */\n' +
+    '/* eslint-disable storybook/prefer-pascal-case */\n' +
     storyFrontmatter +
     Object.entries(permutations)
       .map(([name, jsx]) => `export const ${name} = () => ${jsx};`)
