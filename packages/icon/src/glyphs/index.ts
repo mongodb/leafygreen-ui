@@ -162,6 +162,7 @@ const _glyphs = {
   CreditCard,
   CurlyBraces,
   Cursor,
+  Dashboard: Stitch,
   Database,
   Diagram,
   Diagram2,
