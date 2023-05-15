@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { ToastContainer } from '../../ToastContainer';
 import { ToastContext } from '../ToastContext';
@@ -15,13 +15,12 @@ export const ToastProvider = ({
 }: React.PropsWithChildren<ToastProviderProps>) => {
   const { stack, ...toastFns } = useToastReducer(initialValue);
 
+  const value = useMemo(() => {
+    return { ...toastFns };
+  }, [toastFns]);
+
   return (
-    <ToastContext.Provider
-      value={{
-        ...toastFns,
-        getStack: () => stack,
-      }}
-    >
+    <ToastContext.Provider value={value}>
       {children}
       <ToastContainer stack={stack} portalClassName={portalClassName} />
     </ToastContext.Provider>

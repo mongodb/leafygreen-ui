@@ -30,6 +30,7 @@ export enum ToastReducerActionType {
   Pop = 'pop',
   Update = 'update',
   Clear = 'clear',
+  Get = 'get',
 }
 
 /**
@@ -53,7 +54,8 @@ export type ToastReducerAction =
     }
   | {
       type: ToastReducerActionType.Clear;
-    };
+    }
+  | { type: ToastReducerActionType.Get };
 
 export interface ToastReducerState {
   stack: ToastStack;
