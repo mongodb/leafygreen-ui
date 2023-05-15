@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import { ToastContainer } from '../../ToastContainer';
 import { ToastContext } from '../ToastContext';
@@ -15,9 +15,11 @@ export const ToastProvider = ({
 }: React.PropsWithChildren<ToastProviderProps>) => {
   const { stack, ...toastFns } = useToastReducer(initialValue);
 
+  const cachedGetStack = useCallback(() => stack, [stack]);
+
   const value = useMemo(() => {
-    return { ...toastFns };
-  }, [toastFns]);
+    return { ...toastFns, getStack: cachedGetStack };
+  }, [toastFns, cachedGetStack]);
 
   return (
     <ToastContext.Provider value={value}>

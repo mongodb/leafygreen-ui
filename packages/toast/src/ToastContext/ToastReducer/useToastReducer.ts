@@ -63,11 +63,6 @@ const toastReducer = (
       stack.clear();
       return { stack };
     }
-
-    case ToastReducerActionType.Get: {
-      const { stack } = state;
-      return { stack };
-    }
   }
 };
 
@@ -136,12 +131,6 @@ export const useToastReducer = (initialValue?: ToastStack) => {
     });
   }, []);
 
-  const getStack = useCallback(() => {
-    dispatch({ type: ToastReducerActionType.Get });
-
-    return stack;
-  }, [stack]);
-
   return useMemo(() => {
     return {
       pushToast,
@@ -149,8 +138,7 @@ export const useToastReducer = (initialValue?: ToastStack) => {
       updateToast,
       getToast,
       clearStack,
-      getStack,
       stack,
     };
-  }, [pushToast, popToast, updateToast, stack, getToast, clearStack, getStack]);
+  }, [pushToast, popToast, updateToast, stack, getToast, clearStack]);
 };
