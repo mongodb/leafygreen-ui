@@ -40,7 +40,7 @@ packages/**/tsdoc.json
 
 # Compiled story files
 packages/**/stories.js*
-packages/**/generated.stories.jsx
+packages/**/generated.stories.tsx
 
 
 # Local yarn releases

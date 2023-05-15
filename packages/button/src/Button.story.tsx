@@ -24,7 +24,6 @@ export default StoryMeta({
         leftGlyph: [undefined, <Icon glyph={'Cloud'} />],
         rightGlyph: [undefined, <Icon glyph={'ArrowRight'} />],
       },
-      useTemplate: false,
     },
   },
   argTypes: {
