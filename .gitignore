@@ -40,6 +40,8 @@ packages/**/tsdoc.json
 
 # Compiled story files
 packages/**/stories.js*
+packages/**/generated.stories.jsx
+
 
 # Local yarn releases
 .yarn

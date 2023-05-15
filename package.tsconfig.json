@@ -8,5 +8,5 @@
     "importHelpers": false,
     "composite": true
   },
-  "exclude": ["**/*/*.spec.*", "**/*/*.story.*"]
+  "exclude": ["**/*/*.spec.*", "**/*/*.stor?(y|ies).*"]
 }

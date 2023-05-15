@@ -9,3 +9,4 @@ storybook-static
 **/tsconfig.json
 **/tsdoc.json
 packages/**/stories.js*
+packages/**/generated.stories.jsx
