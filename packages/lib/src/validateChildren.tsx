@@ -1,6 +1,7 @@
 import isUndefined from 'lodash/isUndefined';
 import React, { ReactElement } from 'react';
-import { consoleOnce, isComponentType } from '.';
+import { consoleOnce } from './consoleOnce';
+import { isComponentType } from './isComponentType';
 
 /**
  * Filters children down to a restricted set of component types.
