@@ -21,6 +21,17 @@ export interface StoryMetaType<
      * The default story to be displayed on `mongodb.design`
      */
     default: string;
+
+    snapshot?: {
+      variables: Partial<
+        | {
+            [key in keyof ComponentProps<T>]: Array<any>;
+          }
+        | {
+            [key in keyof LeafyGreenProviderProps]: Array<any>;
+          }
+      >;
+    };
   };
   argTypes?: Partial<
     | {
