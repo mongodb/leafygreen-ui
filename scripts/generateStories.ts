@@ -1,5 +1,7 @@
+/* eslint-disable no-console */
 import React, { ComponentType } from 'react';
 import reactElementToJSXString from 'react-element-to-jsx-string';
+import chalk from 'chalk';
 import { Command } from 'commander';
 import { readFileSync, writeFileSync } from 'fs';
 import { glob } from 'glob';
@@ -16,9 +18,12 @@ const cli = new Command('generate-stories')
     'Generates stories based on variants defined in the root story/ies file',
   )
   .arguments('[packages...]')
+  .option('-v, --verbose', 'Log errors to console', false)
   .parse(process.argv);
 
 const packages = getRelevantPackages(cli.args, {});
+
+const { verbose } = cli.opts() as { verbose: boolean };
 
 generateStories();
 
@@ -54,7 +59,9 @@ async function generateStories() {
         // Store the story source code
         const storySource = readFileSync(storyFilePath, { encoding: 'utf-8' });
 
-        if (meta.parameters.snapshot?.variables) {
+        if (meta?.parameters?.snapshot?.variables) {
+          console.log(chalk.blueBright('Generating stories for ' + pkg));
+
           // Generate a story for each combination of variables defined in meta.snapshot.variables
           const permutations = generateStoryPermutations(meta);
 
@@ -64,11 +71,14 @@ async function generateStories() {
             storySource,
             permutations,
           );
+        } else {
+          console.log(chalk.gray('No snapshot config found for', pkg));
         }
       } catch (error) {
-        console.warn(error);
+        console.log(chalk.red('Error loading story file for', pkg));
+        if (verbose) console.error(error);
       }
-    }
+    } else console.log(chalk.gray('No story file not found for', pkg));
   }
 }
 
