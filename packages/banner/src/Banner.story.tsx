@@ -44,7 +44,7 @@ export const Basic: ComponentStory<typeof Banner> = ({ ...args }) => (
 export const WithIcon: ComponentStory<any> = ({
   glyph,
   ...args
-}: BannerProps & { glyph: keyof typeof glyphs }) => (
+}: BannerProps & { glyph: string }) => (
   <Banner image={glyph ? <Icon glyph={glyph} /> : undefined} {...args} />
 );
 WithIcon.argTypes = {

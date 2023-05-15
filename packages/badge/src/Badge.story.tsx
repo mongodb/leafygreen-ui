@@ -1,25 +1,27 @@
 import React from 'react';
-import { ComponentStory, Meta } from '@storybook/react';
+import { ComponentStory } from '@storybook/react';
 
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { StoryMeta } from '@leafygreen-ui/lib';
 
 import Badge from './Badge/Badge';
+import { Variant } from './Badge/types';
 
-export default {
+export default StoryMeta({
   title: 'Components/Badge',
   component: Badge,
   parameters: {
-    controls: {
-      exclude: ['className'],
+    default: 'Basic',
+    snapshot: {
+      variables: {
+        darkMode: [false, true],
+        variant: Object.values(Variant),
+      },
     },
   },
   args: {
-    darkMode: false,
+    children: 'Badge',
   },
-  argTypes: {
-    darkMode: storybookArgTypes.darkMode,
-  },
-} as Meta<typeof Badge>;
+});
 
 const Template: ComponentStory<typeof Badge> = args => <Badge {...args} />;
 

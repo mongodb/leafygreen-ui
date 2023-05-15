@@ -5,6 +5,7 @@ import { readFileSync, writeFileSync } from 'fs';
 import { glob } from 'glob';
 import { camelCase } from 'lodash';
 import path from 'path';
+import { format } from 'prettier';
 
 import { StoryMetaType } from '@leafygreen-ui/lib';
 
@@ -14,19 +15,23 @@ const cli = new Command('generate-stories')
   .description(
     'Generates stories based on variants defined in the root story/ies file',
   )
-  .arguments('[packages...]');
+  .arguments('[packages...]')
+  .parse(process.argv);
 
-const packages = ['button'] ?? getRelevantPackages(cli.args, {});
+const packages = getRelevantPackages(cli.args, {});
+
+generateStories();
 
 async function generateStories() {
   // For each package
   for (const pkg of packages) {
-    // Find and load the main story file
+    // Find and main story file
     const storyFiles = await glob(
       `packages/${pkg}/**/!(generated).stor?(y|ies).tsx`,
       {},
     );
 
+    // Check if a story file exists
     if (storyFiles[0]) {
       const storyFilePath = path.join(__dirname, '../', storyFiles[0]);
       const generatedStoryFilePath = path.join(
@@ -39,31 +44,33 @@ async function generateStories() {
       writeFileSync(generatedStoryFilePath, '');
 
       try {
+        // Load the main story file
         const {
           default: meta,
         }: { default: StoryMetaType<ComponentType<any>> } = await import(
           storyFilePath
         );
 
+        // Store the story source code
         const storySource = readFileSync(storyFilePath, { encoding: 'utf-8' });
 
-        // Generate a story for each combination of variables defined in meta.snapshot.variables
-        const permutations = generateStoryPermutations(meta);
+        if (meta.parameters.snapshot?.variables) {
+          // Generate a story for each combination of variables defined in meta.snapshot.variables
+          const permutations = generateStoryPermutations(meta);
 
-        writeGeneratedStoriesFile(
-          generatedStoryFilePath,
-          meta,
-          storySource,
-          permutations,
-        );
+          // Write all the generated permutations to a new story file
+          writeGeneratedStoriesFile(
+            generatedStoryFilePath,
+            storySource,
+            permutations,
+          );
+        }
       } catch (error) {
         console.warn(error);
       }
     }
   }
 }
-
-generateStories();
 
 /**
  * Generates all permutations of each variable
@@ -81,7 +88,9 @@ function generateStoryPermutations(
   // generate a new Story
   const permutations = {} as Record<string, any>;
 
-  recursivePermutations({}, Object.entries(snapshot.variables));
+  if (snapshot && snapshot.variables) {
+    recursivePermutations({}, Object.entries(snapshot?.variables));
+  }
 
   return permutations;
 
@@ -90,20 +99,23 @@ function generateStoryPermutations(
    */
   function recursivePermutations(
     props: Record<string, any>,
-    vars: Array<[string, Array<any>]>,
+    vars: Array<[string, Array<any> | undefined]>,
   ) {
     if (component && vars.length === 0) {
       const permutationName = getPermutationName(props);
 
-      permutations[permutationName] = generatePermutationJSX(component, {
-        ...props,
-        ...args,
-      });
+      permutations[permutationName] = getPermutationExportCode(
+        permutationName,
+        component,
+        { ...props, ...args },
+      );
     } else {
       const [propName, propValues] = vars.pop()!;
 
-      for (const val of propValues) {
-        recursivePermutations({ [propName]: val, ...props }, [...vars]);
+      if (propValues) {
+        for (const val of propValues) {
+          recursivePermutations({ [propName]: val, ...props }, [...vars]);
+        }
       }
     }
   }
@@ -122,7 +134,7 @@ function generateStoryPermutations(
   /**
    * @returns the JSX code for a given permutation
    */
-  function generatePermutationJSX(
+  function getPermutationJSX(
     component: React.ComponentType<any>,
     props: Record<string, any>,
   ) {
@@ -136,11 +148,28 @@ function generateStoryPermutations(
 
     return permutationJSX;
   }
+
+  /**
+   * @returns The full export line, including any Storybook args
+   */
+  function getPermutationExportCode(
+    name: string,
+    component: React.ComponentType<any>,
+    props: Record<string, any>,
+  ) {
+    const jsx = getPermutationJSX(component, { ...props });
+    const exportCode = `export const ${name} = () => ${jsx};\n${name}.args = ${JSON.stringify(
+      props,
+    )};`;
+    return exportCode;
+  }
 }
 
+/**
+ * Write the generated permutations to a story file
+ */
 function writeGeneratedStoriesFile(
   generatedStoryFilePath: string,
-  meta: StoryMetaType<ComponentType<any>>,
   storySource: string,
   permutations: Record<string, any>,
 ): void {
@@ -150,9 +179,10 @@ function writeGeneratedStoriesFile(
     '/* eslint-disable @typescript-eslint/no-unused-vars */\n' +
     '/* eslint-disable storybook/prefer-pascal-case */\n' +
     storyFrontmatter +
-    Object.entries(permutations)
-      .map(([name, jsx]) => `export const ${name} = () => ${jsx};`)
-      .join('\n');
+    Object.values(permutations).join('\n');
 
-  writeFileSync(generatedStoryFilePath, fileString.trim());
+  writeFileSync(
+    generatedStoryFilePath,
+    format(fileString, { parser: 'babel-ts' }),
+  );
 }
