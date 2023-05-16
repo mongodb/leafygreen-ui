@@ -1,3 +1,11 @@
+/**
+ * ~~~~~~~~~~ CAUTION ~~~~~~~~~~
+ *
+ * Updating this file will likely flag a change in _every_
+ * component that leverages generated stories.
+ *
+ */
+
 import React, { ReactElement } from 'react';
 import {
   DecoratorFn,
@@ -6,10 +14,53 @@ import {
   StoryFn,
 } from '@storybook/react';
 import { Args } from '@storybook/csf';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
+import { createUniqueClassName } from '@leafygreen-ui/lib';
+import { typeScales } from '@leafygreen-ui/tokens';
 
-const GENERATED_STORY_NAME = 'Generated';
+export const GENERATED_STORY_NAME = 'Generated';
+
+const generatedStoryWrapper = css`
+  padding: 12px;
+`;
+
+const propSectionStyles = css`
+  &#darkMode {
+    display: flex;
+  }
+`;
+
+const combinationClassName = createUniqueClassName('combo');
+const combinationStyles = css`
+  position: relative;
+  padding: ${typeScales.body1.lineHeight}px 12px 0px;
+  overflow: visible;
+  border-left: 1px solid;
+  color: inherit;
+
+  &:before {
+    position: absolute;
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+    width: max-content;
+    transform: translateY(-${typeScales.body1.lineHeight}px);
+  }
+
+  &#darkMode-true,
+  &#darkMode-true .${combinationClassName} {
+    background-color: ${palette.gray.dark4};
+    color: ${palette.gray.light2};
+    border-color: ${palette.gray.dark2};
+  }
+  &#darkMode-false,
+  &#darkMode-false .${combinationClassName} {
+    color: ${palette.gray.dark1};
+    border-color: ${palette.gray.light1};
+  }
+`;
+
+combinationStyles;
 
 const decorator: DecoratorFn = (
   StoryFn: StoryFn,
@@ -26,29 +77,7 @@ const decorator: DecoratorFn = (
     const variables: Array<[string, Array<any>]> = Object.entries(generate);
 
     return (
-      <div
-        className={css`
-          & #darkMode-true {
-            background-color: ${palette.gray.dark4};
-            color: ${palette.gray.light2};
-            padding-bottom: 16px;
-            &,
-            * {
-              outline-color: ${palette.gray.dark2};
-              border-color: ${palette.gray.dark2};
-            }
-          }
-          & #darkMode-false {
-            color: ${palette.gray.dark1};
-            padding-bottom: 16px;
-            &,
-            * {
-              outline-color: ${palette.gray.light1};
-              border-color: ${palette.gray.light1};
-            }
-          }
-        `}
-      >
+      <div className={generatedStoryWrapper}>
         <PropCombinations
           component={component}
           variables={variables}
@@ -86,7 +115,7 @@ function PropCombinations({
       return (
         <div
           className={css`
-            padding: 2px;
+            padding: 4px 0;
           `}
         >
           {React.createElement(component, { ...args, ...props })}
@@ -97,27 +126,20 @@ function PropCombinations({
 
       if (propValues) {
         return (
-          <div id={`${propName}`}>
+          <div id={`${propName}`} className={propSectionStyles}>
             {propValues.map(val => {
               return (
                 <div
                   id={`${propName}-${val}`}
-                  className={css`
-                    position: relative;
-                    padding: 16px 8px 0px;
-                    overflow: visible;
-                    border-left: 1px solid;
-                    color: inherit;
-
-                    &:before {
-                      content: '${propName}-${`${val}`}';
-                      position: absolute;
-                      font-size: 10px;
-                      line-height: 12px;
-                      width: max-content;
-                      transform: translateY(-16px);
-                    }
-                  `}
+                  className={cx(
+                    combinationClassName,
+                    combinationStyles,
+                    css`
+                      &:before {
+                        content: '${propName} = ${`${val}`}';
+                      }
+                    `,
+                  )}
                 >
                   {RecursiveCombinations({ [propName]: val, ...props }, [
                     ...vars,

@@ -8,6 +8,7 @@ import {
   StoryContext,
   StoryFn,
 } from '@storybook/react';
+import { GENERATED_STORY_NAME } from './GeneratedStory';
 
 const rootStyle = css`
   display: flex;
@@ -29,7 +30,12 @@ const decorator: DecoratorFn = (
   const { darkMode, baseFontSize } = context.args;
   return (
     <LeafyGreenProvider darkMode={darkMode} baseFontSize={baseFontSize}>
-      <div className={cx(rootStyle, { [darkModeStyle]: darkMode })}>
+      <div
+        className={cx({
+          [rootStyle]: context.story !== GENERATED_STORY_NAME,
+          [darkModeStyle]: darkMode,
+        })}
+      >
         <div>
           <StoryFn darkMode={darkMode} {...context} />
         </div>

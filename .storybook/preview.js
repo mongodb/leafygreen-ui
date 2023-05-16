@@ -1,6 +1,6 @@
 import ComponentPreview from './decorators/ComponentPreview';
 import ReactStrictMode from './decorators/ReactStrictMode';
-import PropCombinations from './decorators/PropCombinations';
+import GeneratedStory from './decorators/GeneratedStory';
 
 import {
   H1,
@@ -68,4 +68,4 @@ export const parameters = {
   },
 };
 
-export const decorators = [PropCombinations, ReactStrictMode, ComponentPreview];
+export const decorators = [GeneratedStory, ReactStrictMode, ComponentPreview];
