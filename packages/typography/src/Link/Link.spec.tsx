@@ -1,15 +1,15 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import { PolymorphicProps } from '@leafygreen-ui/polymorphic';
+import { InferredPolymorphicProps } from '@leafygreen-ui/polymorphic';
 
 import { Link } from '..';
 
-import { LinkProps } from './Link.types';
+import { BaseLinkProps } from './Link.types';
 
-type SpanLikeProps = PolymorphicProps<'span', LinkProps>;
+type SpanLikeProps = InferredPolymorphicProps<'span', BaseLinkProps>;
 
-type AnchorLikeProps = PolymorphicProps<'a', LinkProps>;
+type AnchorLikeProps = InferredPolymorphicProps<'a', BaseLinkProps>;
 
 type LinkRenderProps = SpanLikeProps | AnchorLikeProps;
 
