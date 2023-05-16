@@ -19,9 +19,9 @@ export default StoryMeta({
     default: 'Default',
     generate: {
       variant: Object.values(Variant),
+      size: Object.values(Size),
       rightGlyph: [undefined, <Icon glyph={'ArrowRight'} />],
       leftGlyph: [undefined, <Icon glyph={'Cloud'} />],
-      size: Object.values(Size),
       darkMode: [false, true],
     },
   },

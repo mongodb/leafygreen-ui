@@ -1,9 +1,12 @@
 /**
- * ~~~~~~~~~~ CAUTION ~~~~~~~~~~
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ CAUTION ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  *
- * Updating this file will likely flag a change in _every_
- * component that leverages generated stories.
+ * Updating this file will flag a change
+ * in _every_ component that leverages generated stories.
  *
+ * Modify with caution
+ *
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  */
 
 import React, { ReactElement } from 'react';
@@ -21,8 +24,10 @@ import { typeScales } from '@leafygreen-ui/tokens';
 
 export const GENERATED_STORY_NAME = 'Generated';
 
+const indent = 16;
+
 const generatedStoryWrapper = css`
-  padding: 12px;
+  padding: ${indent}px;
 `;
 
 const propSectionStyles = css`
@@ -34,7 +39,7 @@ const propSectionStyles = css`
 const combinationClassName = createUniqueClassName('combo');
 const combinationStyles = css`
   position: relative;
-  padding: 8px 12px 0;
+  padding: 4px ${indent}px;
   overflow: visible;
   border-left: 1px solid;
   color: inherit;
@@ -55,7 +60,9 @@ const combinationStyles = css`
   }
 `;
 
-combinationStyles;
+const instanceStyles = css`
+  padding: 8px ${indent}px 0;
+`;
 
 const decorator: DecoratorFn = (
   StoryFn: StoryFn,
@@ -108,11 +115,7 @@ function PropCombinations({
   ): ReactElement<any> {
     if (vars.length === 0) {
       return (
-        <div
-          className={css`
-            padding: 12px;
-          `}
-        >
+        <div className={instanceStyles}>
           {React.createElement(component, { ...args, ...props })}
         </div>
       );
