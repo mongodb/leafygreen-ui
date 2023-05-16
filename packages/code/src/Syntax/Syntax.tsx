@@ -67,6 +67,9 @@ const codeStyles = css`
   font-family: ${fontFamilies.code};
 `;
 
+/**
+ * @internal
+ */
 function Syntax({
   children,
   language,
