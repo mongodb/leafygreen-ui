@@ -1,4 +1,3 @@
-
 import ComponentPreview from './decorators/ComponentPreview';
 import ReactStrictMode from './decorators/ReactStrictMode';
 import PropCombinations from './decorators/PropCombinations';
@@ -69,8 +68,4 @@ export const parameters = {
   },
 };
 
-export const decorators = [
-  PropCombinations,
-  ReactStrictMode,
-  ComponentPreview,
-]
+export const decorators = [PropCombinations, ReactStrictMode, ComponentPreview];
