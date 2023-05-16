@@ -34,18 +34,13 @@ const propSectionStyles = css`
 const combinationClassName = createUniqueClassName('combo');
 const combinationStyles = css`
   position: relative;
-  padding: ${typeScales.body1.lineHeight}px 12px 0px;
+  padding: 8px 12px 0;
   overflow: visible;
   border-left: 1px solid;
   color: inherit;
-
-  &:before {
-    position: absolute;
-    font-size: ${typeScales.body1.fontSize}px;
-    line-height: ${typeScales.body1.lineHeight}px;
-    width: max-content;
-    transform: translateY(-${typeScales.body1.lineHeight}px);
-  }
+  font-size: ${typeScales.body1.fontSize}px;
+  line-height: ${typeScales.body1.lineHeight}px;
+  width: max-content;
 
   &#darkMode-true,
   &#darkMode-true .${combinationClassName} {
@@ -115,7 +110,7 @@ function PropCombinations({
       return (
         <div
           className={css`
-            padding: 4px 0;
+            padding: 12px;
           `}
         >
           {React.createElement(component, { ...args, ...props })}
@@ -129,22 +124,18 @@ function PropCombinations({
           <div id={`${propName}`} className={propSectionStyles}>
             {propValues.map(val => {
               return (
-                <div
+                <details
+                  open
                   id={`${propName}-${val}`}
-                  className={cx(
-                    combinationClassName,
-                    combinationStyles,
-                    css`
-                      &:before {
-                        content: '${propName} = ${`${val}`}';
-                      }
-                    `,
-                  )}
+                  className={cx(combinationClassName, combinationStyles)}
                 >
+                  <summary>
+                    {propName} = {`${val}`}
+                  </summary>
                   {RecursiveCombinations({ [propName]: val, ...props }, [
                     ...vars,
                   ])}
-                </div>
+                </details>
               );
             })}
           </div>
