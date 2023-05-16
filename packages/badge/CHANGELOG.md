@@ -1,5 +1,14 @@
 # @leafygreen-ui/badge
 
+## 8.0.6
+
+### Patch Changes
+
+- 73cbbd02c: Uses fontWeight token from `@leafygreen-ui/tokens`
+- Updated dependencies [73cbbd02c]
+- Updated dependencies [8ece56980]
+  - @leafygreen-ui/tokens@2.1.0
+
 ## 8.0.5
 
 ### Patch Changes

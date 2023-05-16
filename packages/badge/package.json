@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/badge",
-  "version": "8.0.5",
+  "version": "8.0.6",
   "description": "leafyGreen UI Kit Badge",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -23,7 +23,7 @@
     "@leafygreen-ui/emotion": "^4.0.4",
     "@leafygreen-ui/lib": "^10.3.2",
     "@leafygreen-ui/palette": "^4.0.3",
-    "@leafygreen-ui/tokens": "^2.0.2"
+    "@leafygreen-ui/tokens": "^2.1.0"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.2"
