@@ -84,14 +84,13 @@ function PropCombinations({
   ): ReactElement<any> {
     if (vars.length === 0) {
       return (
-        <span
+        <div
           className={css`
-            display: inline-block;
             padding: 2px;
           `}
         >
           {React.createElement(component, { ...args, ...props })}
-        </span>
+        </div>
       );
     } else {
       const [propName, propValues] = vars.pop()!;
@@ -101,14 +100,12 @@ function PropCombinations({
           <div id={`${propName}`}>
             {propValues.map(val => {
               return (
-                <span
+                <div
                   id={`${propName}-${val}`}
                   className={css`
                     position: relative;
-                    display: inline-block;
                     padding: 16px 8px 0px;
                     overflow: visible;
-                    /* outline: 1px solid; */
                     border-left: 1px solid;
                     color: inherit;
 
@@ -125,7 +122,7 @@ function PropCombinations({
                   {RecursiveCombinations({ [propName]: val, ...props }, [
                     ...vars,
                   ])}
-                </span>
+                </div>
               );
             })}
           </div>
