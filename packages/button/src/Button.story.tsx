@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React from 'react';
 import { Story } from '@storybook/react';
 
@@ -18,6 +19,8 @@ export default StoryMeta({
     default: 'Default',
     generate: {
       variant: Object.values(Variant),
+      rightGlyph: [undefined, <Icon glyph={'ArrowRight'} />],
+      leftGlyph: [undefined, <Icon glyph={'Cloud'} />],
       size: Object.values(Size),
       darkMode: [false, true],
     },
