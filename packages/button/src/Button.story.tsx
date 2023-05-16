@@ -2,7 +2,6 @@ import React from 'react';
 import { Story } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMeta } from '@leafygreen-ui/lib';
 
 import { Size } from './types';
@@ -14,12 +13,13 @@ export default StoryMeta({
   excludeStories: ['StoryButton'],
   args: {
     children: 'MongoDB',
-    variant: Variant.Default,
   },
   parameters: {
     default: 'Default',
-    controls: {
-      exclude: ['ref', 'onClick', 'className'],
+    generate: {
+      variant: Object.values(Variant),
+      size: Object.values(Size),
+      darkMode: [false, true],
     },
   },
   argTypes: {
@@ -69,33 +69,4 @@ Default.args = {
   variant: Variant.Default,
 };
 
-export const Primary = Template.bind({});
-Primary.args = {
-  variant: Variant.Primary,
-};
-
-export const PrimaryOutline = Template.bind({});
-PrimaryOutline.args = {
-  variant: Variant.PrimaryOutline,
-};
-
-export const Danger = Template.bind({});
-Danger.args = {
-  variant: Variant.Danger,
-};
-
-export const DangerOutline = Template.bind({});
-DangerOutline.args = {
-  variant: Variant.DangerOutline,
-};
-
-export const BaseGreen = Template.bind({});
-BaseGreen.args = {
-  variant: Variant.BaseGreen,
-};
-
-export const WithGlobalDarkMode: Story<ButtonProps> = args => (
-  <LeafygreenProvider darkMode={true}>
-    <Button {...args}>Test</Button>
-  </LeafygreenProvider>
-);
+export const Generated = () => {};

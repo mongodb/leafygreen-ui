@@ -1,6 +1,8 @@
-import { addDecorator, addParameters } from '@storybook/react';
+
 import ComponentPreview from './decorators/ComponentPreview';
 import ReactStrictMode from './decorators/ReactStrictMode';
+import PropCombinations from './decorators/PropCombinations';
+
 import {
   H1,
   H2,
@@ -67,5 +69,8 @@ export const parameters = {
   },
 };
 
-addDecorator(ReactStrictMode);
-addDecorator(ComponentPreview);
+export const decorators = [
+  PropCombinations,
+  ReactStrictMode,
+  ComponentPreview,
+]
