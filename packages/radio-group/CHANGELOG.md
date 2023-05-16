@@ -1,5 +1,28 @@
 # @leafygreen-ui/radio-group
 
+## 10.1.3
+
+### Patch Changes
+
+- a3a52e131: Bumps to use new `useIdAllocator` hook
+- Updated dependencies [a3a52e131]
+  - @leafygreen-ui/hooks@7.7.3
+
+## 10.1.2
+
+### Patch Changes
+
+- 32b3d3146: Bumps to use new `useIdAllocator` hook
+- 73cbbd02c: Uses fontWeight token from `@leafygreen-ui/tokens`
+- Updated dependencies [73cbbd02c]
+- Updated dependencies [9bcf8b925]
+- Updated dependencies [8ece56980]
+- Updated dependencies [32b3d3146]
+- Updated dependencies [73cbbd02c]
+  - @leafygreen-ui/tokens@2.1.0
+  - @leafygreen-ui/typography@16.4.0
+  - @leafygreen-ui/hooks@7.7.2
+
 ## 10.1.1
 
 ### Patch Changes

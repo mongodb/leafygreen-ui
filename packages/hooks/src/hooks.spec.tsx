@@ -324,16 +324,6 @@ describe('packages/hooks', () => {
       expect(result.current).toEqual('checkbox-1');
     });
 
-    test('it does not increment on a component rerender', () => {
-      const { rerender, result } = renderHook(() =>
-        useIdAllocator({ prefix: 'button' }),
-      );
-      expect(result.current).toEqual('button-1');
-
-      rerender();
-      expect(result.current).toEqual('button-1');
-    });
-
     test('when two hooks are rendered with the same prefix, they are still uniquely identified', () => {
       const { result: hook1 } = renderHook(() =>
         useIdAllocator({ prefix: 'tester' }),

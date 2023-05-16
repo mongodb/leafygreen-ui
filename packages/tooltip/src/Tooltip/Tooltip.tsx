@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import debounce from 'lodash/debounce';
-import { transparentize } from 'polished';
 import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -13,166 +12,28 @@ import { isComponentGlyph } from '@leafygreen-ui/icon';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { HTMLElementProps, Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
-import Popover, {
-  Align as PopoverAlign,
-  ElementPosition,
-  Justify,
-  PopoverProps,
-} from '@leafygreen-ui/popover';
-import { BaseFontSize, fontFamilies, fontWeights } from '@leafygreen-ui/tokens';
+import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 import {
   bodyTypeScaleStyles,
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 
-import SvgNotch from './Notch';
-import { borderRadius, notchWidth } from './tooltipConstants';
+import SvgNotch from '../Notch';
+
+import {
+  baseStyles,
+  baseTypeStyle,
+  colorSet,
+  minHeightStyle,
+  positionRelative,
+  transitionDelay,
+} from './Tooltip.styles';
+import {
+  PopoverFunctionParameters,
+  TooltipProps,
+  TriggerEvent,
+} from './Tooltip.types';
 import { notchPositionStyles } from './tooltipUtils';
-
-export const TriggerEvent = {
-  Hover: 'hover',
-  Click: 'click',
-} as const;
-
-type TriggerEvent = typeof TriggerEvent[keyof typeof TriggerEvent];
-
-export const Align = {
-  Top: PopoverAlign.Top,
-  Bottom: PopoverAlign.Bottom,
-  Left: PopoverAlign.Left,
-  Right: PopoverAlign.Right,
-} as const;
-
-export type Align = typeof Align[keyof typeof Align];
-
-export { Justify };
-
-// The typographic styles below are largely copied from the Body component.
-// We can't use the Body component here due to it rendering a paragraph tag,
-// Which would conflict with any children passed to it containing a div.
-const baseTypeStyle = css`
-  margin: unset;
-  font-family: ${fontFamilies.default};
-  color: ${palette.gray.light1};
-  font-weight: ${fontWeights.regular};
-  width: 100%;
-  overflow-wrap: anywhere;
-`;
-
-const baseStyles = css`
-  display: flex;
-  align-items: center;
-  border-radius: ${borderRadius}px;
-  padding: 12px ${borderRadius}px;
-  box-shadow: 0px 2px 4px -1px ${transparentize(0.85, palette.black)};
-  cursor: default;
-  width: fit-content;
-  max-width: 256px;
-`;
-
-const positionRelative = css`
-  position: relative;
-`;
-
-const colorSet = {
-  [Theme.Light]: {
-    tooltip: css`
-      background-color: ${palette.black};
-      color: ${palette.gray.light1};
-    `,
-    children: css`
-      color: inherit;
-    `,
-    notchFill: palette.black,
-  },
-  [Theme.Dark]: {
-    tooltip: css`
-      background-color: ${palette.gray.light2};
-      color: ${palette.black};
-    `,
-    children: css`
-      color: inherit;
-    `,
-    notchFill: palette.gray.light2,
-  },
-};
-
-const minSize = notchWidth + 2 * borderRadius;
-const minHeightStyle = css`
-  min-height: ${minSize}px;
-`;
-interface PopoverFunctionParameters {
-  align: Align;
-  justify: Justify;
-  referenceElPos: ElementPosition;
-}
-
-type ModifiedPopoverProps = Omit<PopoverProps, 'active' | 'adjustOnMutation'>;
-
-export type TooltipProps = Omit<
-  HTMLElementProps<'div'>,
-  keyof ModifiedPopoverProps
-> &
-  ModifiedPopoverProps & {
-    /**
-     * A slot for the element used to trigger the `Tooltip`.
-     */
-    trigger?: React.ReactElement | Function;
-
-    /**
-     * Determines if a `hover` or `click` event will trigger the opening of a `Tooltip`.
-     * @default 'hover'
-     */
-    triggerEvent?: TriggerEvent;
-
-    /**
-     * Controls component and determines the open state of the `Tooltip`
-     * @default `false`
-     */
-    open?: boolean;
-
-    /**
-     * Callback to change the open state of the `Tooltip`.
-     */
-    setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
-
-    /**
-     * Whether the `Tooltip` will appear in dark mode.
-     * @default false
-     */
-    darkMode?: boolean;
-
-    /**
-     * id given to `Tooltip` content.
-     */
-    id?: string;
-
-    /**
-     * Callback to determine whether or not `Tooltip` should close when user tries to close it.
-     *
-     */
-    shouldClose?: () => boolean;
-
-    /**
-     * Enables Tooltip to trigger based on the event specified by `triggerEvent`.
-     * @default true
-     */
-    enabled?: boolean;
-
-    /**
-     * Callback that is called when the tooltip is closed internally. E.g. on ESC press, on backdrop click, on blur.
-     *
-     */
-    onClose?: () => void;
-
-    /**
-     * Allows consuming applications to override font-size as set by the LeafyGreen Provider.
-     *
-     */
-    baseFontSize?: BaseFontSize;
-  };
 
 const stopClickPropagation = (evt: React.MouseEvent) => {
   evt.stopPropagation();
@@ -338,7 +199,7 @@ function Tooltip({
       justify={justify}
       adjustOnMutation={true}
       onClick={stopClickPropagation}
-      className={cx({
+      className={cx(transitionDelay, {
         [css`
           // Try to fit all the content on one line (until it hits max-width)
           // Overrides default behavior, which is to set width to size of the trigger.
