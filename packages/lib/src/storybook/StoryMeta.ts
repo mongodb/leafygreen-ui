@@ -21,6 +21,12 @@ export interface StoryMetaType<
      * The default story to be displayed on `mongodb.design`
      */
     default: string;
+
+    generate?: Partial<
+      | {
+          [key in keyof ComponentProps<T>]: Array<any>;
+        }
+    >;
   };
   argTypes?: Partial<
     | {
