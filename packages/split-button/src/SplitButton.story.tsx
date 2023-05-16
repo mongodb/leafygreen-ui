@@ -1,11 +1,12 @@
 import React from 'react';
 import { ComponentStory } from '@storybook/react';
 
+import { Size } from '@leafygreen-ui/button';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
 import { MenuItem } from '@leafygreen-ui/menu';
 
-import { SplitButton } from '.';
+import { SplitButton, Variant } from '.';
 
 export default StoryMeta({
   title: 'Components/SplitButton',
@@ -25,9 +26,21 @@ export default StoryMeta({
       options: Object.keys(glyphs),
       control: { type: 'select' },
     },
-    // size: {
+    size: {
+      control: 'select',
+      options: Object.values(Size),
+    },
+    variant: {
+      control: 'select',
+      options: Object.values(Variant),
+    },
+    // align: {
     //   control: 'select',
-    //   options: Object.values(Size),
+    //   options: Object.values(Align),
+    // },
+    // justify: {
+    //   control: 'select',
+    //   options: Object.values(Justify),
     // },
   },
   parameters: {
@@ -53,10 +66,18 @@ const Template: ComponentStory<typeof SplitButton> = ({
   <SplitButton // @ts-expect-error
     leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
     {...args}
+    // menuItems={
+    //   <>
+    //     <MenuItem onClick={e => console.log(e.target.innerText)}>
+    //       Menu Item
+    //     </MenuItem>
+    //   </>
+    // }
     menuItems={
       <>
+        {/* eslint-disable-next-line no-console */}
         <MenuItem onClick={e => console.log(e.target.innerText)}>
-          Active Menu Item
+          Menu Item
         </MenuItem>
         <MenuItem description="I am a description">Disabled Menu Item</MenuItem>
         <MenuItem description="I am also a description">

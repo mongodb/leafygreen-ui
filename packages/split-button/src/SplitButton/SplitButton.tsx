@@ -1,15 +1,19 @@
-import React, { ReactElement, useRef } from 'react';
-import isEmpty from 'lodash/isEmpty';
+import React from 'react';
 
 import Button from '@leafygreen-ui/button';
-import Icon from '@leafygreen-ui/icon';
+import { cx } from '@leafygreen-ui/emotion';
+import { useForwardedRef } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { isComponentType } from '@leafygreen-ui/lib';
-import { Menu, MenuItem } from '@leafygreen-ui/menu';
 
-import { buttonContainerStyles } from './SplitButton.styles';
+import { Menu } from '../Menu';
+
+import {
+  buttonBaseStyles,
+  buttonContainerStyles,
+  buttonThemeStyles,
+} from './SplitButton.styles';
 import { SplitButtonProps } from './SplitButton.types';
 
 export const SplitButton = React.forwardRef<HTMLInputElement, SplitButtonProps>(
@@ -20,59 +24,40 @@ export const SplitButton = React.forwardRef<HTMLInputElement, SplitButtonProps>(
       type = 'button',
       align = 'bottom',
       justify = 'end',
+      size = 'default',
+      baseFontSize,
       label,
       menuItems,
       ...rest
     }: SplitButtonProps,
     forwardedRef,
   ) => {
-    const { darkMode } = useDarkMode(darkModeProp);
-    const containerRef = useRef<HTMLDivElement | null>(null);
+    const { darkMode, theme } = useDarkMode(darkModeProp);
+    const containerRef = useForwardedRef(forwardedRef, null);
 
-    // console.log(menuItems.props.children);
+    const sharedProps = { variant, size, baseFontSize };
 
-    const renderMenuItems = () => {
-      if (menuItems) {
-        if ('props' in menuItems) {
-          if (!isEmpty(menuItems.props)) {
-            return menuItems.props.children.map((item: ReactElement) => {
-              if (isComponentType(item, 'MenuItem')) {
-                // TODO: clone and remove active prop
-                return item;
-              }
-            });
-          } else {
-            console.log('no items');
-          }
-        }
-      } else {
-        console.log('no prop');
-        // console.error('errorrrrrrr');
-      }
-    };
+    // eslint-disable-next-line no-console
+    console.log(menuItems.props);
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <div ref={forwardedRef}>
-          <div className={buttonContainerStyles} ref={containerRef}>
-            <Button type={type} variant={variant} {...rest}>
-              {label}
-            </Button>
-            <Menu
-              align={align}
-              justify={justify}
-              refEl={containerRef}
-              trigger={
-                <Button
-                  type="button"
-                  variant={variant}
-                  leftGlyph={<Icon glyph="CaretDown" />}
-                />
-              }
-            >
-              {renderMenuItems()}
-            </Menu>
-          </div>
+        <div className={buttonContainerStyles} ref={containerRef}>
+          <Button
+            type={type}
+            {...sharedProps}
+            className={cx(buttonBaseStyles, buttonThemeStyles(theme, variant))}
+            {...rest}
+          >
+            {label}
+          </Button>
+          <Menu
+            {...sharedProps}
+            align={align}
+            justify={justify}
+            containerRef={containerRef}
+            menuItems={menuItems}
+          />
         </div>
       </LeafyGreenProvider>
     );

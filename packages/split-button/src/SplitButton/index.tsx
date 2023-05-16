@@ -1,2 +1,7 @@
 export { SplitButton } from './SplitButton';
-export { type SplitButtonProps } from './SplitButton.types';
+export {
+  type Align,
+  type Justify,
+  type SplitButtonProps,
+  Variant,
+} from './SplitButton.types';

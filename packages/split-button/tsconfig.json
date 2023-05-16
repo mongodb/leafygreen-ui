@@ -12,6 +12,12 @@
       "path": "../button"
     },
     {
+      "path": "../emotion"
+    },
+    {
+      "path": "../hooks"
+    },
+    {
       "path": "../icon"
     },
     {
