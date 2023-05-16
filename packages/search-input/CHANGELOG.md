@@ -1,5 +1,13 @@
 # @leafygreen-ui/search-input
 
+## 2.0.5
+
+### Patch Changes
+
+- 5a9a67a35: Fixes a bug where SearchInputs without a menu would require two clicks outside the element to be un-focused
+- Updated dependencies [dff6c306e]
+  - @leafygreen-ui/icon@11.16.0
+
 ## 2.0.4
 
 ### Patch Changes
