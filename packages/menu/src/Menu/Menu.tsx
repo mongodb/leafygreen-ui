@@ -84,6 +84,7 @@ export function Menu({
   popoverZIndex,
   maxHeight = 344,
   darkMode: darkModeProp,
+  id,
   ...rest
 }: MenuProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
@@ -334,6 +335,7 @@ export function Menu({
         {...popoverProps}
       >
         <div
+          id={id}
           className={cx(
             rootMenuStyle,
             rootMenuThemeStyles[theme],
@@ -378,6 +380,7 @@ export function Menu({
         onClick: triggerClickHandler,
         ref: triggerRef,
         children: popoverContent,
+        ['aria-expanded']: open,
       });
     }
 
@@ -390,6 +393,7 @@ export function Menu({
           {popoverContent}
         </>
       ),
+      ['aria-expanded']: open,
     });
 
     return renderedTrigger;

@@ -79,7 +79,9 @@ const Template: ComponentStory<typeof SplitButton> = ({
         <MenuItem onClick={e => console.log(e.target.innerText)}>
           Menu Item
         </MenuItem>
-        <MenuItem description="I am a description">Disabled Menu Item</MenuItem>
+        <MenuItem description="I am a description" disabled>
+          Disabled Menu Item
+        </MenuItem>
         <MenuItem description="I am also a description">
           Menu Item With Description
         </MenuItem>

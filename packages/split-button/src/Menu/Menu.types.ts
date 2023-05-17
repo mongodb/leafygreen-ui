@@ -5,7 +5,7 @@ import {
 
 export type MenuProps = Pick<
   SplitButtonProps,
-  'variant' | 'size' | 'baseFontSize'
+  'variant' | 'size' | 'baseFontSize' | 'disabled'
 > &
   SBMenuProps & {
     containerRef: React.RefObject<HTMLElement>;

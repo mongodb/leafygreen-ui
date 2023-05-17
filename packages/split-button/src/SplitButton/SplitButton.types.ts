@@ -65,7 +65,7 @@ export interface MenuProps extends OmittedMenuProps {
    * ```js
    * <>
    *  <MenuItem onClick={()=>{}}> Menu Item</MenuItem>
-   *  <MenuItem description="I am a description">Disabled Menu Item</MenuItem>
+   *  <MenuItem description="I am a description" disabled>Disabled Menu Item</MenuItem>
    *  <MenuItem description="I am also a description">
    *    Menu Item With Description
    *  </MenuItem>

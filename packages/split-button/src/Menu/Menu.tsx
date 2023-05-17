@@ -20,12 +20,14 @@ import { MenuProps } from './Menu.types';
  */
 export const Menu = ({
   variant,
+  disabled,
   align,
   justify,
   size,
   baseFontSize,
   menuItems,
   containerRef,
+  id,
   ...rest
 }: MenuProps) => {
   const { theme } = useDarkMode();
@@ -79,6 +81,7 @@ export const Menu = ({
       trigger={
         <Button
           type="button"
+          disabled={disabled}
           leftGlyph={<Icon glyph="CaretDown" />}
           variant={variant}
           size={size}
@@ -88,8 +91,12 @@ export const Menu = ({
             triggerThemeStyles(theme, variant!),
             triggerSizeStyles[size!],
           )}
+          aria-label="More options"
+          aria-haspopup={true}
+          aria-owns={id}
         />
       }
+      id={id}
       {...rest}
     >
       {renderMenuItems()}

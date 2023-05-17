@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
-import { useForwardedRef } from '@leafygreen-ui/hooks';
+import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
@@ -25,6 +25,7 @@ export const SplitButton = React.forwardRef<HTMLInputElement, SplitButtonProps>(
       align = 'bottom',
       justify = 'end',
       size = 'default',
+      disabled = false,
       baseFontSize,
       label,
       menuItems,
@@ -43,8 +44,9 @@ export const SplitButton = React.forwardRef<HTMLInputElement, SplitButtonProps>(
   ) => {
     const { darkMode, theme } = useDarkMode(darkModeProp);
     const containerRef = useForwardedRef(forwardedRef, null);
+    const menuId = useIdAllocator({ prefix: 'lg-split-button-menu' });
 
-    const sharedButtonProps = { variant, size, baseFontSize };
+    const sharedButtonProps = { variant, size, baseFontSize, disabled };
 
     const menuProps = {
       spacing,
@@ -71,6 +73,7 @@ export const SplitButton = React.forwardRef<HTMLInputElement, SplitButtonProps>(
             {...sharedButtonProps}
             className={cx(buttonBaseStyles, buttonThemeStyles(theme, variant))}
             {...rest}
+            aria-owns={menuId}
           >
             {label}
           </Button>
@@ -81,6 +84,7 @@ export const SplitButton = React.forwardRef<HTMLInputElement, SplitButtonProps>(
             justify={justify}
             containerRef={containerRef}
             menuItems={menuItems}
+            id={menuId}
           />
         </div>
       </LeafyGreenProvider>
@@ -94,3 +98,5 @@ SplitButton.displayName = 'SplitButton';
 // TODO: readme
 // TODO: link to .design
 // TODO: a11y
+// TODO: tests
+// TODO: disabled states
