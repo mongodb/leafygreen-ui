@@ -48,7 +48,7 @@ const renderSubMenu = ({
         <MenuItem data-testid={menuItemTestId[1]}> Text Content B</MenuItem>
       </SubMenu>
       <SubMenu
-        active={initialActiveMenu === 1}
+        active={initialActiveMenu === 2}
         data-testid={subMenuTestId[2]}
         as="div"
         title="SubMenu C"
