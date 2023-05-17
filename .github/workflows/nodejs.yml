@@ -16,10 +16,10 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v2
 
-      - name: Use Node.js 14
+      - name: Use Node.js 16
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '16'
           cache: yarn
           cache-dependency-path: 'yarn.lock'
 
@@ -36,10 +36,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Use Node.js 14
+      - name: Use Node.js 16
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '16'
           cache: yarn
           cache-dependency-path: 'yarn.lock'
 
@@ -58,10 +58,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Use Node.js 14
+      - name: Use Node.js 16
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '16'
           cache: yarn
           cache-dependency-path: 'yarn.lock'
 
@@ -86,10 +86,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Use Node.js 14
+      - name: Use Node.js 16
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '16'
           cache: yarn
           cache-dependency-path: 'yarn.lock'
 
@@ -118,11 +118,11 @@ jobs:
           key: ${{ runner.os }}-build-cache-${{ hashFiles('**/rollup.config.js', '**/babel.config.js', '**/src/', '**/scripts/', '!**/node_modules', '!**/dist') }}
 
       # Only setup & build if there was no build cache hit
-      - name: Use Node.js 14
+      - name: Use Node.js 16
         uses: actions/setup-node@v3
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         with:
-          node-version: '14'
+          node-version: '16'
           cache: yarn
           cache-dependency-path: 'yarn.lock'
 
@@ -150,11 +150,11 @@ jobs:
             !**/node_modules
           key: ${{ runner.os }}-ts-cache-${{ hashFiles('**/tsconfig.js', '**/package.tsconfig.js', '**/src/', '**/scripts/', '!**/node_modules', '!**/dist') }}
 
-      - name: Use Node.js 14
+      - name: Use Node.js 16
         if: ${{ steps.ts-cache.outputs.cache-hit != 'true' }}
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '16'
           cache: yarn
           cache-dependency-path: 'yarn.lock'
 
@@ -173,10 +173,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Use Node.js 14
+      - name: Use Node.js 16
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '16'
           cache: yarn
           cache-dependency-path: 'yarn.lock'
 
@@ -203,10 +203,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Use Node.js 14
+      - name: Use Node.js 16
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '16'
           cache: yarn
           cache-dependency-path: 'yarn.lock'
 
@@ -233,10 +233,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Use Node.js 14
+      - name: Use Node.js 16
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '16'
           cache: yarn
           cache-dependency-path: 'yarn.lock'
 
@@ -270,10 +270,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Use Node.js 14
+      - name: Use Node.js 16
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '16'
           cache: yarn
           cache-dependency-path: 'yarn.lock'
 
