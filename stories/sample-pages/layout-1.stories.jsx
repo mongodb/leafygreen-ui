@@ -3,6 +3,9 @@ import Button from '@leafygreen-ui/button';
 
 export default {
   title: 'Sample Pages (WIP)/Layout 1',
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
 };
 
 const Template = ({ children }) => {
