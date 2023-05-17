@@ -99,13 +99,13 @@ export interface ButtonProps {
   children?: React.ReactNode;
   /**
    * An icon glyph rendered before the button text.
-   * To use a custom icon, see {@link Icon}: `createIconComponent` docs
+   * To use a custom icon, see {@link Icon} {@link https://github.com/mongodb/leafygreen-ui/blob/main/packages/icon/README.md#usage-registering-custom-icon-sets | createIconComponent} docs
    * @type Leafygreen <Icon /> Component
    */
   leftGlyph?: React.ReactElement;
   /**
    * An icon glyph rendered after the button text.
-   * To use a custom icon, see {@link Icon}: `createIconComponent` docs
+   * To use a custom icon, see {@link Icon} {@link https://github.com/mongodb/leafygreen-ui/blob/main/packages/icon/README.md#usage-registering-custom-icon-sets | createIconComponent} docs
    * @type Leafygreen <Icon /> Component
    */
   rightGlyph?: React.ReactElement;
