@@ -5,21 +5,21 @@ module.exports = function (api) {
     '@babel/preset-typescript',
     '@babel/preset-react',
     // FIXME: Storybook doesn't seem to like this preset
-    // [
-    //   '@babel/preset-env',
-    //   {
-    //     targets: {
-    //       browsers: ['last 2 versions', 'safari >= 7', 'ie >= 10'],
-    //     },
-    //     // modules: api.env('production') ? false : 'commonjs',
-    //   },
-    // ],
+    [
+      '@babel/preset-env',
+      {
+        targets: {
+          browsers: ['last 2 versions', 'safari >= 7', 'ie >= 10'],
+        },
+        // modules: api.env('production') ? false : 'commonjs',
+      },
+    ],
   ];
 
   // For an explanation of `{loose: true}` see:
   // https://github.com/babel/babel/issues/11622#issuecomment-644141879
   const plugins = [
-    // '@babel/plugin-proposal-object-rest-spread',
+    '@babel/plugin-proposal-object-rest-spread',
     '@babel/plugin-proposal-export-default-from',
     '@babel/plugin-proposal-optional-chaining',
     '@babel/plugin-proposal-nullish-coalescing-operator',
