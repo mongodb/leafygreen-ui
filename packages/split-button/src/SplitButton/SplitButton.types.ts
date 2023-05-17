@@ -60,7 +60,17 @@ export interface MenuProps extends OmittedMenuProps {
   justify?: Justify;
 
   /**
-   * The menu items to be rendered in the menu dropdown.
+   * The menu items to be rendered in the menu dropdown. Must be `<MenuItem />`.
+   *
+   * ```js
+   * <>
+   *  <MenuItem onClick={()=>{}}> Menu Item</MenuItem>
+   *  <MenuItem description="I am a description">Disabled Menu Item</MenuItem>
+   *  <MenuItem description="I am also a description">
+   *    Menu Item With Description
+   *  </MenuItem>
+   * </>
+   * ```
    */
   menuItems: MenuItemsType;
 }
