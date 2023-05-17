@@ -2,19 +2,23 @@ import React from 'react';
 import { ComponentStory } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams as defaultExclude,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
 import Banner from './Banner/Banner';
 import { BannerProps, Variant } from './Banner/types';
 
-export default StoryMeta({
+const meta: StoryMetaType<typeof Banner> = {
   title: 'Components/Banner',
   component: Banner,
   parameters: {
     default: 'WithLink',
     controls: {
-      exclude: ['ref', 'className', 'onClose', 'image'],
+      exclude: [...defaultExclude, 'onClose', 'image'],
     },
   },
   args: {
@@ -34,7 +38,8 @@ export default StoryMeta({
     },
     children: storybookArgTypes.children,
   },
-});
+};
+export default meta;
 
 // eslint-disable-next-line react/prop-types
 export const Basic: ComponentStory<typeof Banner> = ({ ...args }) => (
@@ -78,8 +83,7 @@ export const WithLink: ComponentStory<typeof Banner> = ({
 };
 
 export const WithCustomImage: ComponentStory<typeof Banner> = ({ ...args }) => (
-  /// @ts-ignore
-  <Banner image="copy" {...args} />
+  <Banner image={<img src="favicon.ico" alt="logo" />} {...args} />
 );
 WithCustomImage.args = {
   variant: Variant.Info,

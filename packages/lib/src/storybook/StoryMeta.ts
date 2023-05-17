@@ -52,8 +52,6 @@ export const baseStoryMeta: Partial<StoryMetaType<any>> = {
 };
 
 /**
- * @internal
- * @deprecated
  *
  * Storybook 7.x requires a statically defined object as the default export.
  *
@@ -68,6 +66,8 @@ export const baseStoryMeta: Partial<StoryMetaType<any>> = {
  * }
  * export default meta
  * ```
+ *
+ * @deprecated
  */
 export const StoryMeta = <
   T extends React.ElementType,
