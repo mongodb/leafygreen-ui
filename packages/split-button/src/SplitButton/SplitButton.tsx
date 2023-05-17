@@ -28,6 +28,15 @@ export const SplitButton = React.forwardRef<HTMLInputElement, SplitButtonProps>(
       baseFontSize,
       label,
       menuItems,
+      className,
+      spacing,
+      maxHeight,
+      adjustOnMutation,
+      popoverZIndex,
+      usePortal,
+      portalClassName,
+      portalContainer,
+      scrollContainer,
       ...rest
     }: SplitButtonProps,
     forwardedRef,
@@ -35,24 +44,39 @@ export const SplitButton = React.forwardRef<HTMLInputElement, SplitButtonProps>(
     const { darkMode, theme } = useDarkMode(darkModeProp);
     const containerRef = useForwardedRef(forwardedRef, null);
 
-    const sharedProps = { variant, size, baseFontSize };
+    const sharedButtonProps = { variant, size, baseFontSize };
+
+    const menuProps = {
+      spacing,
+      maxHeight,
+      adjustOnMutation,
+      popoverZIndex,
+      usePortal,
+      portalClassName,
+      portalContainer,
+      scrollContainer,
+    };
 
     // eslint-disable-next-line no-console
     console.log(menuItems.props);
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <div className={buttonContainerStyles} ref={containerRef}>
+        <div
+          className={cx(buttonContainerStyles, className)}
+          ref={containerRef}
+        >
           <Button
             type={type}
-            {...sharedProps}
+            {...sharedButtonProps}
             className={cx(buttonBaseStyles, buttonThemeStyles(theme, variant))}
             {...rest}
           >
             {label}
           </Button>
           <Menu
-            {...sharedProps}
+            {...sharedButtonProps}
+            {...menuProps}
             align={align}
             justify={justify}
             containerRef={containerRef}
@@ -65,3 +89,8 @@ export const SplitButton = React.forwardRef<HTMLInputElement, SplitButtonProps>(
 );
 
 SplitButton.displayName = 'SplitButton';
+
+// TODO: PropTypes
+// TODO: readme
+// TODO: link to .design
+// TODO: a11y

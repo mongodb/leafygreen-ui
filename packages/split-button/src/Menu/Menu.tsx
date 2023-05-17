@@ -15,6 +15,9 @@ import {
 } from './Menu.styles';
 import { MenuProps } from './Menu.types';
 
+/**
+ * @internal
+ */
 export const Menu = ({
   variant,
   align,
@@ -23,6 +26,7 @@ export const Menu = ({
   baseFontSize,
   menuItems,
   containerRef,
+  ...rest
 }: MenuProps) => {
   const { theme } = useDarkMode();
 
@@ -86,6 +90,7 @@ export const Menu = ({
           )}
         />
       }
+      {...rest}
     >
       {renderMenuItems()}
     </LGMenu>
