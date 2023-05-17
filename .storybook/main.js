@@ -1,3 +1,5 @@
+import { ProvidePlugin } from "webpack";
+
 const nodeModulesThatNeedToBeParsedBecauseTheyExposeES6 = [
   '@tanstack[\\\\/]react-table',
   '@tanstack[\\\\/]table-core',
@@ -62,6 +64,15 @@ const config = {
       enforce: 'pre',
       loader: require.resolve('@svgr/webpack'),
     });
+
+    config.resolve.fallback = {
+      "stream": require.resolve("stream-browserify"),
+      "buffer": require.resolve('buffer')
+    }
+    config.plugins.push(new ProvidePlugin({
+      process: 'process/browser',
+      Buffer: ['buffer', 'Buffer']
+    }))
     return config;
   },
   typescript: {
