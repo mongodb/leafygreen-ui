@@ -86,11 +86,9 @@ export const Menu = ({
           variant={variant}
           size={size}
           baseFontSize={baseFontSize}
-          className={cx(
-            triggerBaseStyles,
-            triggerThemeStyles(theme, variant!),
-            triggerSizeStyles[size!],
-          )}
+          className={cx(triggerBaseStyles, triggerSizeStyles[size!], {
+            [triggerThemeStyles(theme, variant!)]: !disabled,
+          })}
           aria-label="More options"
           aria-haspopup={true}
           aria-owns={id}

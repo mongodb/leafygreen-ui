@@ -71,7 +71,9 @@ export const SplitButton = React.forwardRef<HTMLInputElement, SplitButtonProps>(
           <Button
             type={type}
             {...sharedButtonProps}
-            className={cx(buttonBaseStyles, buttonThemeStyles(theme, variant))}
+            className={cx(buttonBaseStyles, {
+              [buttonThemeStyles(theme, variant)]: !disabled,
+            })}
             {...rest}
             aria-owns={menuId}
           >
@@ -97,6 +99,4 @@ SplitButton.displayName = 'SplitButton';
 // TODO: PropTypes
 // TODO: readme
 // TODO: link to .design
-// TODO: a11y
 // TODO: tests
-// TODO: disabled states
