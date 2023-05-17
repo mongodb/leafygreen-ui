@@ -7,10 +7,8 @@ const nodeModulesThatNeedToBeParsedBecauseTheyExposeES6 = [
 
 const config = {
   stories: [
-    // FIXME: temporarily disabling other stories for clean logs
-    '../packages/**/Button.story.tsx',
-    // '../**/*.story.@(mdx|js|jsx|ts|tsx)',
-    // '../**/*.stories.@(mdx|js|jsx|ts|tsx)',
+    '../**/*.story.@(mdx|js|jsx|ts|tsx)',
+    '../**/*.stories.@(mdx|js|jsx|ts|tsx)',
   ],
   addons: [
     '@storybook/addon-links',
@@ -65,6 +63,7 @@ const config = {
       loader: require.resolve('@svgr/webpack'),
     });
 
+    // Required for Webpack 5
     config.resolve.fallback = {
       "stream": require.resolve("stream-browserify"),
       "buffer": require.resolve('buffer')
@@ -73,6 +72,8 @@ const config = {
       process: 'process/browser',
       Buffer: ['buffer', 'Buffer']
     }))
+    // 
+    
     return config;
   },
   typescript: {
