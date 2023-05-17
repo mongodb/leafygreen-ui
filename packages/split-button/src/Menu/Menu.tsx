@@ -8,7 +8,11 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { Menu as LGMenu, MenuItemProps } from '@leafygreen-ui/menu';
 
-import { triggerBaseStyles, triggerThemeStyles } from './Menu.styles';
+import {
+  triggerBaseStyles,
+  triggerSizeStyles,
+  triggerThemeStyles,
+} from './Menu.styles';
 import { MenuProps } from './Menu.types';
 
 export const Menu = ({
@@ -33,6 +37,10 @@ export const Menu = ({
                 menuItem: ComponentType<MenuItemProps>,
                 index: number,
               ): ReactElement | undefined => {
+                if (menuItem == null) {
+                  return menuItem;
+                }
+
                 if (isComponentType(menuItem, 'MenuItem')) {
                   return React.cloneElement(menuItem, {
                     active: false,
@@ -71,7 +79,11 @@ export const Menu = ({
           variant={variant}
           size={size}
           baseFontSize={baseFontSize}
-          className={cx(triggerBaseStyles, triggerThemeStyles(theme, variant!))}
+          className={cx(
+            triggerBaseStyles,
+            triggerThemeStyles(theme, variant!),
+            triggerSizeStyles[size!],
+          )}
         />
       }
     >

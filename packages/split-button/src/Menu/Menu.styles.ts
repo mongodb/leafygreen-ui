@@ -1,3 +1,4 @@
+import { Size } from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
@@ -29,6 +30,19 @@ export const triggerBorderColor: Record<Theme, Record<Variant, string>> = {
   },
 };
 
+export const triggerCaretColor: Record<Theme, Record<Variant, string>> = {
+  [Theme.Light]: {
+    [Variant.Default]: palette.gray.dark2,
+    [Variant.Primary]: palette.green.light2,
+    [Variant.Danger]: palette.red.light3,
+  },
+  [Theme.Dark]: {
+    [Variant.Default]: palette.gray.light2,
+    [Variant.Primary]: palette.green.light2,
+    [Variant.Danger]: palette.red.light2,
+  },
+};
+
 export const triggerThemeStyles = (theme: Theme, variant: Variant) => css`
   &,
   &:hover,
@@ -37,4 +51,23 @@ export const triggerThemeStyles = (theme: Theme, variant: Variant) => css`
   &:active {
     border-left-color: ${triggerBorderColor[theme][variant]};
   }
+
+  svg {
+    color: ${triggerCaretColor[theme][variant]};
+  }
 `;
+
+export const triggerSizeStyles: Record<Size, string> = {
+  [Size.XSmall]: css`
+    width: 24px;
+  `,
+  [Size.Small]: css`
+    width: 32px;
+  `,
+  [Size.Default]: css`
+    width: 32px;
+  `,
+  [Size.Large]: css`
+    width: 44px;
+  `,
+};
