@@ -49,13 +49,14 @@ const combinationStyles = css`
 
   &#darkMode-true,
   &#darkMode-true .${combinationClassName} {
-    background-color: ${palette.gray.dark4};
-    color: ${palette.gray.light2};
+    background-color: ${palette.black};
+    color: ${palette.gray.base};
     border-color: ${palette.gray.dark2};
   }
   &#darkMode-false,
   &#darkMode-false .${combinationClassName} {
-    color: ${palette.gray.dark1};
+    background-color: ${palette.white};
+    color: ${palette.gray.base};
     border-color: ${palette.gray.light1};
   }
 `;
@@ -106,14 +107,19 @@ function PropCombinations({
   variables: Array<[string, Array<any> | undefined]>;
   args: Args;
 }): ReactElement<any> {
-  console.log([...variables]);
-  return RecursiveCombinations({}, [...variables]);
+  let comboCount = 0;
+  const AllCombinations = RecursiveCombinations({}, [...variables]);
+  console.info(
+    `Rendering ${comboCount} prop combinations for ${component.displayName}`,
+  );
+  return AllCombinations;
 
   function RecursiveCombinations(
     props: Record<string, any>,
     vars: Array<[string, Array<any> | undefined]>,
   ): ReactElement<any> {
     if (vars.length === 0) {
+      comboCount += 1;
       return (
         <div className={instanceStyles}>
           {React.createElement(component, { ...args, ...props })}
@@ -124,7 +130,11 @@ function PropCombinations({
 
       if (propValues) {
         return (
-          <div id={`${propName}`} className={propSectionStyles}>
+          <div
+            id={`${propName}`}
+            data-value-count={propValues.length}
+            className={propSectionStyles}
+          >
             {propValues.map(val => {
               return (
                 <details
