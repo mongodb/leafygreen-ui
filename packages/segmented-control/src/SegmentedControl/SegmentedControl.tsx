@@ -145,6 +145,10 @@ export const SegmentedControl = forwardRef<
   const renderedChildren: React.ReactNode = useMemo(
     () =>
       React.Children.map(children, (child, index) => {
+        if (child == null) {
+          return child;
+        }
+
         if (!isComponentType(child, 'SegmentedControlOption')) {
           errorOnce(
             `Error in Segmented Control: ${child} is not a SegmentedControlOption`,
