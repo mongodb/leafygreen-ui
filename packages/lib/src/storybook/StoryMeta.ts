@@ -38,7 +38,7 @@ export type StoryMetaType<
   title?: string;
 };
 
-export const baseMeta: Partial<StoryMetaType<any>> = {
+export const baseStoryMeta: Partial<StoryMetaType<any>> = {
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
     baseFontSize: storybookArgTypes.updatedBaseFontSize,
@@ -51,13 +51,31 @@ export const baseMeta: Partial<StoryMetaType<any>> = {
   },
 };
 
+/**
+ * @internal
+ * @deprecated
+ *
+ * Storybook 7.x requires a statically defined object as the default export.
+ *
+ * Use {@link StoryMetaType} (and {@link baseStoryMeta} as necessary)
+ *
+ * Example:
+ *
+ * ```ts
+ * const meta: StoryMetaType<typeof Component> = {
+ *  component: Component,
+ *  ...baseStoryMeta
+ * }
+ * export default meta
+ * ```
+ */
 export const StoryMeta = <
   T extends React.ElementType,
   XP extends Record<string, any>,
 >(
-  meta: StoryMetaType<T, XP> = baseMeta as StoryMetaType<T, XP>,
+  meta: StoryMetaType<T, XP> = baseStoryMeta as StoryMetaType<T, XP>,
 ): StoryMetaType<T, XP> => {
-  return mergeWith(meta, baseMeta, (metaVal, baseVal) => {
+  return mergeWith(meta, baseStoryMeta, (metaVal, baseVal) => {
     if (Array.isArray(metaVal)) return metaVal.concat(baseVal);
     if (typeof metaVal === 'string') return metaVal;
     // default to _.merge behavior
