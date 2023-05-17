@@ -1,5 +1,33 @@
 # @leafygreen-ui/modal
 
+## 15.0.1
+
+### Patch Changes
+
+- a3a52e131: Bumps to use new `useIdAllocator` hook
+- Updated dependencies [614f7617d]
+- Updated dependencies [a3a52e131]
+- Updated dependencies [614f7617d]
+  - @leafygreen-ui/icon@11.15.0
+  - @leafygreen-ui/hooks@7.7.3
+
+## 15.0.0
+
+### Major Changes
+
+- 67a0ea5fe: Removes the default `p` styles applied in darkMode that used to override the color of all `p` tags with `#C1C7C6`. Child element colors are now respected and if no colors are explicitly defined for them, they will inherit the color of their parent container. Also reorganizes internal file structure.
+
+### Patch Changes
+
+- 32b3d3146: Bumps to use new `useIdAllocator` hook
+- Updated dependencies [73cbbd02c]
+- Updated dependencies [83fc5b31b]
+- Updated dependencies [8ece56980]
+- Updated dependencies [32b3d3146]
+  - @leafygreen-ui/tokens@2.1.0
+  - @leafygreen-ui/icon@11.14.0
+  - @leafygreen-ui/hooks@7.7.2
+
 ## 14.0.5
 
 ### Patch Changes

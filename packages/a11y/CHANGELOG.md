@@ -1,5 +1,21 @@
 # @leafygreen-ui/a11y
 
+## 1.4.4
+
+### Patch Changes
+
+- a3a52e131: Bumps to use new `useIdAllocator` hook
+- Updated dependencies [a3a52e131]
+  - @leafygreen-ui/hooks@7.7.3
+
+## 1.4.3
+
+### Patch Changes
+
+- 32b3d3146: Bumps to use new `useIdAllocator` hook
+- Updated dependencies [32b3d3146]
+  - @leafygreen-ui/hooks@7.7.2
+
 ## 1.4.2
 
 ### Patch Changes

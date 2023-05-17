@@ -1,5 +1,23 @@
 # @leafygreen-ui/code
 
+## 14.2.3
+
+### Patch Changes
+
+- 73cbbd02c: Uses fontWeight token from `@leafygreen-ui/tokens`
+- Updated dependencies [73cbbd02c]
+- Updated dependencies [32b3d3146]
+- Updated dependencies [83fc5b31b]
+- Updated dependencies [8ece56980]
+- Updated dependencies [32b3d3146]
+- Updated dependencies [73cbbd02c]
+  - @leafygreen-ui/tokens@2.1.0
+  - @leafygreen-ui/a11y@1.4.3
+  - @leafygreen-ui/select@10.3.3
+  - @leafygreen-ui/icon@11.14.0
+  - @leafygreen-ui/hooks@7.7.2
+  - @leafygreen-ui/button@20.0.6
+
 ## 14.2.2
 
 ### Patch Changes
