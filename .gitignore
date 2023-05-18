@@ -43,3 +43,6 @@ packages/**/stories.js*
 
 # Local yarn releases
 .yarn
+
+# Storybook/Chromatic logs
+build-storybook.log
