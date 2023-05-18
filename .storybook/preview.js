@@ -53,6 +53,7 @@ export const parameters = {
       a: Link,
       code: InlineCode,
     },
+    source: { type: 'code' },
   },
 };
 
