@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import React from 'react';
-import { StoryObj } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import { type StoryMetaType } from '@leafygreen-ui/lib';
@@ -17,9 +17,6 @@ const meta: StoryMetaType<typeof Button> = {
   },
   parameters: {
     default: 'Playground',
-    controls: {
-      exclude: ['ref', 'onClick', 'className'],
-    },
   },
   argTypes: {
     disabled: {
@@ -51,21 +48,21 @@ const meta: StoryMetaType<typeof Button> = {
 
 export default meta;
 
-export const Playground: StoryObj<typeof Button> = {
-  render: ({ leftGlyph, rightGlyph, ...args }: ButtonProps) => (
-    <Button
-      // @ts-expect-error
-      leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
-      // @ts-expect-error
-      rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
-      {...args}
-    />
-  ),
-};
+export const Playground: StoryFn<typeof Button> = ({
+  leftGlyph,
+  rightGlyph,
+  ...args
+}: ButtonProps) => (
+  <Button
+    // @ts-expect-error
+    leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
+    // @ts-expect-error
+    rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
+    {...args}
+  />
+);
 
-export const BaseGreen = {
-  ...Playground,
-  args: {
-    variant: Variant.BaseGreen,
-  },
+export const BaseGreen = Playground.bind({});
+BaseGreen.args = {
+  variant: Variant.BaseGreen,
 };
