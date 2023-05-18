@@ -32,13 +32,13 @@ export const BasicEmptyState = forwardRef(
   ) => {
     const { theme, darkMode } = useDarkMode(darkModeProp);
 
-    if (!isComponentType(primaryButton, 'Button')) {
+    if (!!primaryButton && !isComponentType(primaryButton, 'Button')) {
       console.error(
         'The `primaryButton` prop in BasicEmptyState should be of type LeafyGreen Button.',
       );
     }
 
-    if (!isComponentType(secondaryButton, 'Button')) {
+    if (!!secondaryButton && !isComponentType(secondaryButton, 'Button')) {
       console.error(
         'The `secondaryButton` prop in BasicEmptyState should be of type LeafyGreen Button.',
       );
@@ -86,7 +86,7 @@ BasicEmptyState.propTypes = {
   externalLink: PropTypes.element,
   secondaryButton: PropTypes.element,
   primaryButton: PropTypes.element,
-  description: PropTypes.oneOf([PropTypes.element, PropTypes.string])
+  description: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
     .isRequired,
   title: PropTypes.string.isRequired,
   graphic: PropTypes.element,
