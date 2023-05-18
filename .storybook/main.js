@@ -29,11 +29,6 @@ const config = {
   },
   staticDirs: ['./static'],
 
-  babel: async options => ({
-    // Update your babel configuration here
-    ...options,
-  }),
-
   webpackFinal: config => {
     // Default rule for images /\.(svg|ico|jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\?.*)?$/
     const fileLoaderRule = config?.module?.rules.find(
