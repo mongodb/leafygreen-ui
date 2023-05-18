@@ -44,7 +44,7 @@ const meta: StoryMetaType<typeof SearchInput> = {
 };
 export default meta;
 
-export const Basic: StoryFn<SearchInputProps> = props => (
+export const Basic: StoryFn<SearchInputProps> = (props: SearchInputProps) => (
   <SearchInput
     className={css`
       width: 200px;
@@ -53,7 +53,9 @@ export const Basic: StoryFn<SearchInputProps> = props => (
   />
 );
 
-export const WithResults: StoryFn<SearchInputProps> = props => (
+export const WithResults: StoryFn<SearchInputProps> = (
+  props: SearchInputProps,
+) => (
   <SearchInput
     className={css`
       width: 200px;
@@ -218,7 +220,9 @@ const data = [
   },
 ];
 
-export const LiveSearch: StoryFn<SearchInputProps> = args => {
+export const LiveSearch: StoryFn<SearchInputProps> = (
+  args: SearchInputProps,
+) => {
   const [currentPage, setPage] = useState<(typeof data)[0]>();
   const [searchResults, setSearchResults] = useState(data);
 
