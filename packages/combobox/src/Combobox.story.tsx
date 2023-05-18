@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Meta, StoryFn } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import {
@@ -9,7 +9,11 @@ import {
 } from '@leafygreen-ui/combobox';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
-import { StoryMeta } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams as defaultExclude,
+  type StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import {
   ComboboxSize,
@@ -25,7 +29,7 @@ const wrapperStyle = css`
   display: flex;
 `;
 
-const meta = StoryMeta({
+const meta: StoryMetaType<typeof Combobox> = {
   title: 'Components/Combobox',
   component: Combobox,
   decorators: [
@@ -39,6 +43,7 @@ const meta = StoryMeta({
     default: 'SingleSelect',
     controls: {
       exclude: [
+        ...defaultExclude,
         'as',
         'filteredOptions',
         'initialValue',
@@ -49,13 +54,11 @@ const meta = StoryMeta({
     },
   },
   argTypes: {
+    darkMode: storybookArgTypes.darkMode,
     multiselect: {
       control: 'boolean',
     },
     disabled: {
-      control: 'boolean',
-    },
-    darkMode: {
       control: 'boolean',
     },
     clearable: {
@@ -118,7 +121,7 @@ const meta = StoryMeta({
     disabled: false,
     clearable: true,
   },
-});
+};
 
 export default meta;
 
