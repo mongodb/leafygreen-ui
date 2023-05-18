@@ -1,13 +1,17 @@
 import React from 'react';
-import { ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams as defaultExclude,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 import { Body, H2, Link } from '@leafygreen-ui/typography';
 
-import InlineDefinition from '.';
+import InlineDefinition, { InlineDefinitionProps } from '.';
 
-export default {
+const meta: StoryMetaType<typeof InlineDefinition> = {
   title: 'Components/InlineDefinition',
   component: InlineDefinition,
   args: {
@@ -22,13 +26,16 @@ export default {
     darkMode: storybookArgTypes.darkMode,
   },
   parameters: {
+    default: 'Demo',
     controls: {
-      exclude: ['trigger', 'open'],
+      exclude: [...defaultExclude, 'trigger', 'open'],
     },
   },
 };
 
-const Template: ComponentStory<typeof InlineDefinition> = ({
+export default meta;
+
+const Template: StoryFn<InlineDefinitionProps> = ({
   // eslint-disable-next-line react/prop-types
   darkMode,
   ...args
@@ -43,7 +50,7 @@ Basic.args = {
   children: 'Shard',
 };
 
-export const Demo: ComponentStory<typeof InlineDefinition> = ({
+export const Demo: StoryFn<InlineDefinitionProps> = ({
   // eslint-disable-next-line react/prop-types
   darkMode,
   ...args
