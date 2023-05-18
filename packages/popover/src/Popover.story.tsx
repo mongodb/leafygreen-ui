@@ -83,13 +83,13 @@ const meta: StoryMetaType<typeof Popover> = {
     justify: Justify.Start,
     spacing: 10,
     adjustOnMutation: false,
+    buttonText: 'Button Text',
   },
   argTypes: {
     buttonText: {
       type: 'string',
       description:
         'Storybook only prop. Used to change the reference button text',
-      defaultValue: 'Button Text',
     },
     refButtonPosition: {
       options: ['centered', 'top', 'right', 'bottom', 'left'],

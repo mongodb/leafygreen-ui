@@ -16,7 +16,7 @@ const portalChildrenStyle = css`
 function getRoot() {
   const root =
     document.getElementById('root') ||
-    document.getElementById('story-container');
+    document.getElementById('storybook-root');
 
   if (root == null) {
     throw new Error('Could not find root element');

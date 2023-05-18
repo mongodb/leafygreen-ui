@@ -6,8 +6,8 @@ import { StoryMetaType } from '@leafygreen-ui/lib';
 
 import { useAutoScroll, useDynamicRefs } from '..';
 
-// eslint-disable-next-line storybook/prefer-pascal-case
-export const itemHeight = 25;
+import { testItemHeight } from './constants.test';
+
 const testItems = 16;
 
 const meta: StoryMetaType<any> = {
@@ -48,7 +48,7 @@ export const Basic = ({ selected }: { selected?: number }) => {
         data-testid={'menu'}
         className={css`
           position: relative;
-          max-height: ${itemHeight * 4}px;
+          max-height: ${testItemHeight * 4}px;
           overflow: auto;
         `}
       >
@@ -59,7 +59,7 @@ export const Basic = ({ selected }: { selected?: number }) => {
             data-testid={`item-${x}`}
             className={css`
               position: relative;
-              height: ${itemHeight}px;
+              height: ${testItemHeight}px;
               color: ${x === selected ? 'red' : 'inherit'};
             `}
           >
