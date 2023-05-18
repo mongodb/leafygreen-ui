@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import { Meta } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams as defaultExclude,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import { Radio, RadioGroup, RadioGroupProps, Size } from '.';
 
-export default {
+const meta: StoryMetaType<typeof RadioGroup> = {
   title: 'Components/RadioGroup',
   component: RadioGroup,
   argTypes: {
@@ -18,13 +22,17 @@ export default {
   },
   parameters: {
     controls: {
-      exclude: ['children', 'className', 'onChange', 'name', 'value'],
+      exclude: [...defaultExclude, 'children', 'name', 'value'],
     },
     default: 'Uncontrolled',
   },
-} as Meta<typeof RadioGroup>;
+};
+export default meta;
 
-export const Uncontrolled = ({ darkMode, ...args }: RadioGroupProps) => (
+export const Uncontrolled: StoryFn<RadioGroupProps> = ({
+  darkMode,
+  ...args
+}: RadioGroupProps) => (
   <RadioGroup name="radio-group-default" darkMode={darkMode} {...args}>
     <Radio value="1">Radio Input Copy</Radio>
     <Radio value="2">Radio Input Copy</Radio>
@@ -37,7 +45,7 @@ export const Uncontrolled = ({ darkMode, ...args }: RadioGroupProps) => (
   </RadioGroup>
 );
 
-export const Controlled = (args: RadioGroupProps) => {
+export const Controlled: StoryFn<RadioGroupProps> = (args: RadioGroupProps) => {
   const [activeRadio, setActiveRadio] = useState<string>('test1');
 
   const handleChange = (e: React.ChangeEvent) => {
