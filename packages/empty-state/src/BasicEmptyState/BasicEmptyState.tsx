@@ -32,24 +32,22 @@ export const BasicEmptyState = forwardRef(
   ) => {
     const { theme, darkMode } = useDarkMode(darkModeProp);
 
-    if (primaryButton || secondaryButton) {
-      if (!isComponentType(primaryButton, 'Button')) {
-        console.error(
-          'The `primaryButton` prop in BasicEmptyState should be of type LeafyGreen Button.',
-        );
-      }
+    if (!!primaryButton && !isComponentType(primaryButton, 'Button')) {
+      console.error(
+        'The `primaryButton` prop in BasicEmptyState should be of type LeafyGreen Button.',
+      );
+    }
 
-      if (!isComponentType(secondaryButton, 'Button')) {
-        console.error(
-          'The `secondaryButton` prop in BasicEmptyState should be of type LeafyGreen Button.',
-        );
-      }
+    if (!!secondaryButton && !isComponentType(secondaryButton, 'Button')) {
+      console.error(
+        'The `secondaryButton` prop in BasicEmptyState should be of type LeafyGreen Button.',
+      );
+    }
 
-      if (!primaryButton && !!secondaryButton) {
-        console.error(
-          'The `secondaryButton` prop in BasicEmptyState should only be used when the `primaryButton` prop is also used.',
-        );
-      }
+    if (!primaryButton && !!secondaryButton) {
+      console.error(
+        'The `secondaryButton` prop in BasicEmptyState should only be used when the `primaryButton` prop is also used.',
+      );
     }
 
     return (
