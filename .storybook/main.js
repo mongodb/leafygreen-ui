@@ -7,8 +7,8 @@ const nodeModulesThatNeedToBeParsedBecauseTheyExposeES6 = [
 
 const config = {
   stories: [
-    '../**/*.story.@(mdx|js|jsx|ts|tsx)',
-    '../**/*.stories.@(mdx|js|jsx|ts|tsx)',
+    '../!(node_modules)/**/*.story.@(mdx|js|jsx|ts|tsx)',
+    '../!(node_modules)/**/*.stories.@(mdx|js|jsx|ts|tsx)',
   ],
   addons: [
     '@storybook/addon-links',
