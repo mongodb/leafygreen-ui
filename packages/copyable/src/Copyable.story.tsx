@@ -1,7 +1,9 @@
 import React from 'react';
 import { StoryFn } from '@storybook/react';
 
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import { storybookArgTypes, type StoryMetaType } from '@leafygreen-ui/lib';
+
+import { CopyableProps } from '../src/Copyable/Copyable.types';
 
 import Copyable from '.';
 
@@ -28,7 +30,7 @@ const meta: StoryMetaType<typeof Copyable> = {
 
 export default meta;
 
-const Template: StoryFn<typeof Copyable> = args => (
+const Template: StoryFn<CopyableProps> = args => (
   <div>
     <Copyable {...args} />
   </div>
