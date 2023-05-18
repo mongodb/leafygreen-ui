@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import {
@@ -42,11 +42,11 @@ const meta: StoryMetaType<typeof Banner> = {
 export default meta;
 
 // eslint-disable-next-line react/prop-types
-export const Basic: ComponentStory<typeof Banner> = ({ ...args }) => (
+export const Basic: StoryFn<typeof Banner> = ({ ...args }) => (
   <Banner {...args} />
 );
 
-export const WithIcon: ComponentStory<any> = ({
+export const WithIcon: StoryFn<any> = ({
   glyph,
   ...args
 }: BannerProps & { glyph: keyof typeof glyphs }) => (
@@ -60,7 +60,7 @@ WithIcon.argTypes = {
   },
 };
 
-export const WithLink: ComponentStory<typeof Banner> = ({
+export const WithLink: StoryFn<typeof Banner> = ({
   // eslint-disable-next-line react/prop-types
   image,
   // eslint-disable-next-line react/prop-types
@@ -82,7 +82,7 @@ export const WithLink: ComponentStory<typeof Banner> = ({
   );
 };
 
-export const WithCustomImage: ComponentStory<typeof Banner> = ({ ...args }) => (
+export const WithCustomImage: StoryFn<typeof Banner> = ({ ...args }) => (
   <Banner image={<img src="favicon.ico" alt="logo" />} {...args} />
 );
 WithCustomImage.args = {

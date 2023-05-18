@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 
@@ -20,7 +20,7 @@ const meta: StoryMetaType<typeof Badge> = {
 };
 export default meta;
 
-const Template: ComponentStory<typeof Badge> = args => <Badge {...args} />;
+const Template: StoryFn<typeof Badge> = args => <Badge {...args} />;
 
 export const Basic = Template.bind({});
 Basic.args = {
