@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import Card from '@leafygreen-ui/card';
@@ -9,19 +9,21 @@ import ExportIcon from '@leafygreen-ui/icon/dist/Export';
 import SaveIcon from '@leafygreen-ui/icon/dist/Save';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { StoryMeta } from '@leafygreen-ui/lib';
+import {
+  storybookExcludedControlParams as defaultExclude,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 import { Body, Subtitle } from '@leafygreen-ui/typography';
 
 import { Tab, Tabs, TabsProps } from './index';
 
-// TODO: Add subcomponent controls for Tab when supported by Storybook
-export default StoryMeta({
+const meta: StoryMetaType<typeof Tabs> = {
   title: 'Components/Tabs',
   component: Tabs,
   parameters: {
     default: 'LongTabs',
     controls: {
-      exclude: ['children', 'as', 'setSelected'],
+      exclude: [...defaultExclude, 'children', 'as', 'setSelected'],
     },
   },
   args: {
@@ -57,10 +59,16 @@ export default StoryMeta({
   argTypes: {
     selected: { control: 'number' },
   },
-  subcomponents: { Tab },
-});
+  // TODO: Add subcomponent controls for Tab when supported by Storybook
+  // @ts-expect-error
+  subcomponents: { tab: Tab },
+};
+export default meta;
 
-const Template: Story<TabsProps> = ({ baseFontSize, ...props }: TabsProps) => (
+const Template: StoryFn<TabsProps> = ({
+  baseFontSize,
+  ...props
+}: TabsProps) => (
   <LeafyGreenProvider baseFontSize={baseFontSize === 16 ? 16 : 14}>
     <Tabs
       className={css`
@@ -103,15 +111,22 @@ export const ControlledByStorybook = Template.bind({});
 export const ControlledByState = ({
   selected,
   setSelected,
+  baseFontSize,
   ...args
 }: TabsProps) => {
   const [selectedControl, setSelectedControl] = useState(0);
   return (
-    <Template
-      selected={selectedControl}
-      setSelected={setSelectedControl}
-      {...args}
-    />
+    <LeafyGreenProvider baseFontSize={baseFontSize === 16 ? 16 : 14}>
+      <Tabs
+        selected={selectedControl}
+        setSelected={setSelectedControl}
+        className={css`
+          max-width: 66vw;
+        `}
+        aria-label="Tabs to demonstrate usage of Leafygreen UI Tab Components"
+        {...args}
+      />
+    </LeafyGreenProvider>
   );
 };
 ControlledByState.argTypes = {
