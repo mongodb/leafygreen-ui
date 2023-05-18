@@ -9,8 +9,7 @@ import {
 } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
-import Banner from './Banner/Banner';
-import { BannerProps, Variant } from './Banner/types';
+import { Banner, BannerProps, Variant } from '.';
 
 const meta: StoryMetaType<typeof Banner> = {
   title: 'Components/Banner',

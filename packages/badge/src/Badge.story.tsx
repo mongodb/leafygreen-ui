@@ -3,7 +3,7 @@ import { StoryFn } from '@storybook/react';
 
 import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 
-import Badge from './Badge/Badge';
+import Badge, { BadgeProps } from '.';
 
 const meta: StoryMetaType<typeof Badge> = {
   title: 'Components/Badge',
@@ -20,7 +20,7 @@ const meta: StoryMetaType<typeof Badge> = {
 };
 export default meta;
 
-const Template: StoryFn<typeof Badge> = args => <Badge {...args} />;
+const Template: StoryFn<BadgeProps> = args => <Badge {...args} />;
 
 export const Basic = Template.bind({});
 Basic.args = {

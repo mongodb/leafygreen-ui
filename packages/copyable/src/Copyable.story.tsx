@@ -3,9 +3,7 @@ import { StoryFn } from '@storybook/react';
 
 import { storybookArgTypes, type StoryMetaType } from '@leafygreen-ui/lib';
 
-import { CopyableProps } from '../src/Copyable/Copyable.types';
-
-import Copyable from '.';
+import Copyable, { CopyableProps } from '.';
 
 const meta: StoryMetaType<typeof Copyable> = {
   title: 'Components/Copyable',

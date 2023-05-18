@@ -1,7 +1,6 @@
 import React from 'react';
 import { StoryFn } from '@storybook/react';
 
-import Checkbox from '@leafygreen-ui/checkbox';
 import { css } from '@leafygreen-ui/emotion';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import {
@@ -10,7 +9,7 @@ import {
   StoryMetaType,
 } from '@leafygreen-ui/lib';
 
-import { CheckboxProps } from './types';
+import Checkbox, { CheckboxProps } from '.';
 
 const meta: StoryMetaType<typeof Checkbox> = {
   title: 'Components/Checkbox',

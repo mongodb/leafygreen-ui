@@ -5,7 +5,7 @@ import { StoryFn } from '@storybook/react';
 import { BoxProps } from '@leafygreen-ui/box';
 import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 
-import { Card, CardProps } from './Card';
+import { Card, CardProps } from '.';
 
 const meta: StoryMetaType<typeof Card, BoxProps> = {
   title: 'Components/Card',

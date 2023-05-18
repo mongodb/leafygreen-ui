@@ -10,8 +10,7 @@ import {
 } from '@leafygreen-ui/lib';
 import { CloseIconColor } from '@leafygreen-ui/modal';
 
-import { ConfirmationModal } from './ConfirmationModal/ConfirmationModal';
-import { Variant } from './ConfirmationModal/types';
+import ConfirmationModal, { ConfirmationModalProps, Variant } from '.';
 
 const meta: StoryMetaType<typeof ConfirmationModal> = {
   title: 'Components/Modals/ConfirmationModal',
@@ -53,7 +52,7 @@ const meta: StoryMetaType<typeof ConfirmationModal> = {
 
 export default meta;
 
-const ControlledTemplate: StoryFn<typeof ConfirmationModal> = ({
+const ControlledTemplate: StoryFn<ConfirmationModalProps> = ({
   // eslint-disable-next-line react/prop-types
   darkMode,
   ...args

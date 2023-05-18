@@ -2,7 +2,6 @@
 import React from 'react';
 import { StoryFn } from '@storybook/react';
 
-import Code, { CodeProps, Language } from '@leafygreen-ui/code';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
@@ -13,6 +12,7 @@ import {
 } from '@leafygreen-ui/lib';
 
 import LanguageSwitcherExample from './LanguageSwitcher/LanguageSwitcherExample';
+import Code, { CodeProps, Language } from '.';
 
 const jsSnippet = `
 

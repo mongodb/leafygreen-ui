@@ -2,11 +2,6 @@ import React, { useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
-import {
-  Combobox,
-  ComboboxGroup,
-  ComboboxOption,
-} from '@leafygreen-ui/combobox';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import {
@@ -22,6 +17,7 @@ import {
   State,
   TruncationLocation,
 } from './Combobox.types';
+import { Combobox, ComboboxGroup, ComboboxOption, ComboboxProps } from '.';
 
 const wrapperStyle = css`
   width: 256px;
@@ -203,13 +199,13 @@ const getComboboxOptions = (withGlyphs = true) => [
   </ComboboxGroup>,
 ];
 
-const Template: StoryFn<typeof Combobox> = args => (
+const SingleTemplate: StoryFn<ComboboxProps<false>> = args => (
   <div className={wrapperStyle}>
     <Combobox {...args} />
   </div>
 );
 
-export const SingleSelect: StoryFn<typeof Combobox> = args => (
+export const SingleSelect: StoryFn<ComboboxProps<false>> = args => (
   <Combobox {...args} />
 );
 SingleSelect.args = {
@@ -223,7 +219,7 @@ SingleSelect.argTypes = {
   multiselect: { control: 'none' },
 };
 
-export const SingleSelectWithoutGlyphs = Template.bind({});
+export const SingleSelectWithoutGlyphs = SingleTemplate.bind({});
 SingleSelectWithoutGlyphs.args = {
   label: 'Choose a fruit',
   description: 'Please pick one',
@@ -235,7 +231,7 @@ SingleSelectWithoutGlyphs.argTypes = {
   multiselect: { control: 'none' },
 };
 
-export const WithError = Template.bind({});
+export const WithError = SingleTemplate.bind({});
 WithError.args = {
   label: 'Choose a fruit',
   description: 'Please pick one',
@@ -245,7 +241,13 @@ WithError.args = {
   state: 'error',
 };
 
-export const Multiselect = Template.bind({});
+const MultiTemplate: StoryFn<ComboboxProps<true>> = args => (
+  <div className={wrapperStyle}>
+    <Combobox {...args} />
+  </div>
+);
+
+export const Multiselect = MultiTemplate.bind({});
 Multiselect.args = {
   label: 'Choose a fruit',
   description: 'Please pick some',
@@ -259,7 +261,7 @@ Multiselect.argTypes = {
   },
 };
 
-export const MultiselectWithoutGlyphs = Template.bind({});
+export const MultiselectWithoutGlyphs = MultiTemplate.bind({});
 MultiselectWithoutGlyphs.args = {
   label: 'Choose a fruit',
   description: 'Please pick some',
@@ -336,7 +338,7 @@ export const ExternalFilter = () => {
   );
 };
 
-export const Demo: StoryFn<typeof Combobox> = args => {
+export const Demo: StoryFn<ComboboxProps<boolean>> = args => {
   return (
     <div className={wrapperStyle}>
       {/* Since Combobox doesn't fully refresh when `multiselect` changes, we need to explicitly render a different instance */}

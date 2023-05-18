@@ -1,3 +1,3 @@
 import Badge from './Badge/Badge';
-export { Variant } from './Badge/types';
+export { default as BadgeProps, Variant } from './Badge/types';
 export default Badge;

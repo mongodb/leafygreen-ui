@@ -9,7 +9,7 @@ import {
 } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
-import Callout, { Variant } from '.';
+import Callout, { CalloutProps, Variant } from '.';
 
 const meta: StoryMetaType<typeof Callout> = {
   title: 'Components/Callout',
@@ -38,7 +38,7 @@ const meta: StoryMetaType<typeof Callout> = {
 };
 export default meta;
 
-const Template: StoryFn<typeof Callout> = args => <Callout {...args} />;
+const Template: StoryFn<CalloutProps> = args => <Callout {...args} />;
 
 export const Note = Template.bind({});
 Note.args = {
