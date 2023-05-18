@@ -78,9 +78,11 @@ const meta: StoryMetaType<typeof NumberInput> = {
 };
 export default meta;
 
-type StoryProps = NumberInputProps & { view: string };
+type StoryNumberInputProps = NumberInputProps & { view: string };
 
-const Template: StoryFn<StoryProps> = args => {
+const Template: StoryFn<StoryNumberInputProps> = (
+  args: StoryNumberInputProps,
+) => {
   const { unit: unitProp = 'one', unitOptions = [], ...rest } = args;
   const [unit, setUnit] = useState<string>(unitOptions[0]?.displayName);
   const [value, setValue] = useState<string>('');

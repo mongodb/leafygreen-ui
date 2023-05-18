@@ -30,13 +30,12 @@ const meta: StoryMetaType<typeof IconButton> = {
 
 export default meta;
 
-/// @ts-expect-error
 const Template: StoryFn<AccessibleIconButtonProps & DarkModeProps> = ({
   // eslint-disable-next-line react/prop-types
   darkMode,
   ...args
-}) => (
-  <IconButton darkMode={darkMode} {...(args as AccessibleIconButtonProps)}>
+}: AccessibleIconButtonProps & DarkModeProps) => (
+  <IconButton darkMode={darkMode} {...args}>
     <CloudIcon />
   </IconButton>
 );

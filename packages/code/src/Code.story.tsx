@@ -81,12 +81,12 @@ const meta: StoryMetaType<typeof Code> = {
 export default meta;
 
 type BaseFontSize = 14 | 16;
+type StoryCodeProps = CodeProps & { baseFontSize: BaseFontSize };
 
-const Template: StoryFn<CodeProps & { baseFontSize: BaseFontSize }> = ({
-  // eslint-disable-next-line react/prop-types
+const Template: StoryFn<StoryCodeProps> = ({
   baseFontSize,
   ...args
-}) => (
+}: StoryCodeProps) => (
   <LeafygreenProvider baseFontSize={baseFontSize}>
     <Code {...(args as CodeProps)}>{jsSnippet}</Code>
   </LeafygreenProvider>
@@ -127,10 +127,10 @@ WithCustomActions.args = {
   customActionButtons,
 };
 
-export const WithLanguageSwitcher: StoryFn<
-  CodeProps & { baseFontSize: BaseFontSize }
-  // eslint-disable-next-line react/prop-types
-> = ({ baseFontSize, ...args }) => (
+export const WithLanguageSwitcher: StoryFn<StoryCodeProps> = ({
+  baseFontSize,
+  ...args
+}: StoryCodeProps) => (
   <LeafygreenProvider baseFontSize={baseFontSize}>
     <LanguageSwitcherExample
       showCustomActionButtons={true}

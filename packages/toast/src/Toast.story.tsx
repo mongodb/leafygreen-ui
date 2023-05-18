@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { faker } from '@faker-js/faker';
-import { StoryFn } from '@storybook/react';
+import { StoryContext, StoryFn } from '@storybook/react';
 import { random, range, sample, startCase } from 'lodash';
 
 import Button from '@leafygreen-ui/button';
@@ -14,14 +14,14 @@ import { InlineCode, Label, Link } from '@leafygreen-ui/typography';
 
 import { variantIcons } from './InternalToast/VariantIcon';
 import { makeToast, makeToastStack } from './ToastContext/utils/makeToast';
-import { InternalToast, InternalToastProps } from './InternalToast';
-import { ToastProvider, useToast, Variant } from '.';
+import { InternalToast, type InternalToastProps } from './InternalToast';
+import { ToastProvider, type ToastProviderProps, useToast, Variant } from '.';
 
-const meta: StoryMetaType<typeof InternalToast> = {
+const meta: StoryMetaType<typeof InternalToast, ToastProviderProps> = {
   title: 'Components/Toast',
   component: InternalToast,
   decorators: [
-    (Story, meta) => (
+    (Story, meta: StoryContext<InternalToastProps & ToastProviderProps>) => (
       <ToastProvider
         initialValue={meta.args.initialValue}
         portalClassName={css`
@@ -61,7 +61,7 @@ const meta: StoryMetaType<typeof InternalToast> = {
 };
 export default meta;
 
-export const Basic: StoryFn<typeof InternalToastProps> = (
+export const Basic: StoryFn<InternalToastProps> = (
   props: Partial<InternalToastProps> & DarkModeProps,
 ) => {
   const { pushToast, clearStack } = useToast();
@@ -94,7 +94,7 @@ export const Basic: StoryFn<typeof InternalToastProps> = (
   );
 };
 
-export const Variants: StoryFn<typeof InternalToastProps> = (
+export const Variants: StoryFn<InternalToastProps> = (
   props: Partial<InternalToastProps>,
 ) => {
   const { pushToast, clearStack, getStack, updateToast } = useToast();
@@ -190,9 +190,9 @@ export const Variants: StoryFn<typeof InternalToastProps> = (
   );
 };
 
-export const WithInitialToasts: StoryFn<typeof InternalToastProps> = (
-  props: Partial<InternalToastProps>,
-) => {
+export const WithInitialToasts: StoryFn<
+  InternalToastProps & ToastProviderProps
+> = (props: Partial<InternalToastProps>) => {
   const { pushToast, clearStack } = useToast();
 
   return (
@@ -222,7 +222,6 @@ export const WithInitialToasts: StoryFn<typeof InternalToastProps> = (
 };
 
 WithInitialToasts.args = {
-  // @ts-expect-error
   initialValue: makeToastStack(
     range(6).map(_ =>
       makeToast({

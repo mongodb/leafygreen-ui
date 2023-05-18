@@ -84,6 +84,7 @@ const config = {
   },
   docs: {
     autodocs: false,
+    source: { type: 'code' },
   },
 };
 

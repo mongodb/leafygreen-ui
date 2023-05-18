@@ -1,9 +1,11 @@
 import React from 'react';
-import { StoryFn } from '@storybook/react';
+import { StoryContext, StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider, {
+  LeafyGreenProviderProps,
+} from '@leafygreen-ui/leafygreen-provider';
 import {
   storybookExcludedControlParams as defaultExclude,
   StoryMetaType,
@@ -24,7 +26,10 @@ const meta: StoryMetaType<typeof InternalToast> = {
     },
   },
   decorators: [
-    (Story, meta) => (
+    (
+      Story,
+      meta: StoryContext<LeafyGreenProviderProps & InternalToastProps>,
+    ) => (
       <LeafyGreenProvider darkMode={!!meta.args.darkMode}>
         <Story />
       </LeafyGreenProvider>

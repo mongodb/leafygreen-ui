@@ -41,8 +41,6 @@ export const HigherOrder = Polymorphic<{
 }>(({ as, title = 'Title', ...rest }) => {
   const { Component } = usePolymorphic(as);
   return (
-    // FIXME: should not be using TS 5.0
-    // @ts-expect-error - using TS 5.0
     <Component as={as} {...rest}>
       {title}
     </Component>
@@ -55,8 +53,6 @@ export const HigherOrderWithRef = Polymorphic<{
 }>(({ as, title = 'Title', ...rest }, ref) => {
   const { Component } = usePolymorphic(as);
   return (
-    // FIXME: should not be using TS 5.0
-    // @ts-expect-error - using TS 5.0
     <Component as={as} ref={ref} {...rest}>
       {title}
     </Component>

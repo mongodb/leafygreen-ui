@@ -29,7 +29,7 @@ const meta: StoryMetaType<typeof Toggle> = {
   },
 };
 export default meta;
-const Template: StoryFn<ToggleProps> = args => (
+const Template: StoryFn<ToggleProps> = (args: ToggleProps) => (
   <Toggle aria-labelledby="toggle" {...args} />
 );
 

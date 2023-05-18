@@ -52,4 +52,6 @@ const meta: StoryMetaType<typeof Portal> = {
 };
 export default meta;
 
-export const Basic: StoryFn<PortalProps> = args => <Portal {...args} />;
+export const Basic: StoryFn<PortalProps> = (args: PortalProps) => (
+  <Portal {...args} />
+);

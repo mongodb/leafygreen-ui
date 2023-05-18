@@ -41,7 +41,7 @@ const displayFlex = css`
   gap: 8px;
 `;
 
-const meta: StoryMetaType<null> = {
+const meta: StoryMetaType<any> = {
   title: 'Components/Typography',
   component: null,
   parameters: {

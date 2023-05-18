@@ -138,7 +138,7 @@ const UserFriendlyTemplate: StoryFn<UserFriendlyProps> = ({
   );
 };
 
-const Template: StoryFn<PasswordInputProps> = props => {
+const Template: StoryFn<PasswordInputProps> = (props: PasswordInputProps) => {
   return <PasswordInput data-testid="test-id" {...props} />;
 };
 

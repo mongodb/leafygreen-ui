@@ -34,14 +34,15 @@ const meta: StoryMetaType<typeof Checkbox> = {
 export default meta;
 
 type BaseFontSize = 14 | 16;
+type StoryCheckboxProps = CheckboxProps & { baseFontSize: BaseFontSize };
 
-const Template: StoryFn<CheckboxProps & { baseFontSize: BaseFontSize }> = ({
+const Template: StoryFn<StoryCheckboxProps> = ({
   // eslint-disable-next-line react/prop-types
   baseFontSize,
   ...args
-}) => (
+}: StoryCheckboxProps) => (
   <LeafygreenProvider baseFontSize={baseFontSize}>
-    <Checkbox {...(args as CheckboxProps)} />
+    <Checkbox {...args} />
   </LeafygreenProvider>
 );
 

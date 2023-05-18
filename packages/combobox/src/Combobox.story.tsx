@@ -199,15 +199,17 @@ const getComboboxOptions = (withGlyphs = true) => [
   </ComboboxGroup>,
 ];
 
-const SingleTemplate: StoryFn<ComboboxProps<false>> = args => (
+const SingleTemplate: StoryFn<ComboboxProps<false>> = (
+  args: ComboboxProps<false>,
+) => (
   <div className={wrapperStyle}>
     <Combobox {...args} />
   </div>
 );
 
-export const SingleSelect: StoryFn<ComboboxProps<false>> = args => (
-  <Combobox {...args} />
-);
+export const SingleSelect: StoryFn<ComboboxProps<false>> = (
+  args: ComboboxProps<false>,
+) => <Combobox {...args} />;
 SingleSelect.args = {
   label: 'Choose a fruit',
   description: 'Please pick one',
@@ -241,7 +243,9 @@ WithError.args = {
   state: 'error',
 };
 
-const MultiTemplate: StoryFn<ComboboxProps<true>> = args => (
+const MultiTemplate: StoryFn<ComboboxProps<true>> = (
+  args: ComboboxProps<true>,
+) => (
   <div className={wrapperStyle}>
     <Combobox {...args} />
   </div>
@@ -338,7 +342,9 @@ export const ExternalFilter = () => {
   );
 };
 
-export const Demo: StoryFn<ComboboxProps<boolean>> = args => {
+export const Demo: StoryFn<ComboboxProps<boolean>> = (
+  args: ComboboxProps<boolean>,
+) => {
   return (
     <div className={wrapperStyle}>
       {/* Since Combobox doesn't fully refresh when `multiselect` changes, we need to explicitly render a different instance */}

@@ -10,7 +10,7 @@ import {
 
 import { ToastProvider, Variant } from '..';
 
-import { ControlledToast as Toast, type ControlledToastProps } from '.';
+import { type ControlledToastProps, Toast } from '.';
 
 const meta: StoryMetaType<typeof Toast> = {
   title: 'Components/Toast/Controlled',

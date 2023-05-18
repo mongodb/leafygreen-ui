@@ -26,7 +26,10 @@ const meta: StoryMetaType<typeof Card, BoxProps> = {
 };
 export default meta;
 
-const Template: StoryFn<CardProps & BoxProps> = ({ as, ...args }) => (
+const Template: StoryFn<CardProps & BoxProps> = ({
+  as,
+  ...args
+}: CardProps & BoxProps) => (
   <Card as={(as ? as : 'div') as keyof JSX.IntrinsicElements} {...args} />
 );
 

@@ -1,12 +1,12 @@
 import { storybookExcludedControlParams } from './storybookExcludedControlParams';
-import { baseMeta, StoryMeta } from './StoryMeta';
+import { baseStoryMeta, StoryMeta } from './StoryMeta';
 
 describe('lib/StoryMeta', () => {
   test('defaults to the base', () => {
     const meta = StoryMeta();
     expect(meta.parameters.default).toEqual('Basic');
     expect(meta.argTypes).toStrictEqual(
-      expect.objectContaining(baseMeta.argTypes),
+      expect.objectContaining(baseStoryMeta.argTypes),
     );
     expect(meta.parameters.controls.exclude).toStrictEqual(
       expect.arrayContaining(storybookExcludedControlParams),
@@ -21,7 +21,7 @@ describe('lib/StoryMeta', () => {
     });
     expect(meta.parameters.default).toEqual('Demo');
     expect(meta.argTypes).toStrictEqual(
-      expect.objectContaining(baseMeta.argTypes),
+      expect.objectContaining(baseStoryMeta.argTypes),
     );
     expect(meta.parameters.controls.exclude).toStrictEqual(
       expect.arrayContaining(storybookExcludedControlParams),
@@ -49,7 +49,7 @@ describe('lib/StoryMeta', () => {
         myProp: {
           control: 'boolean',
         },
-        ...baseMeta.argTypes,
+        ...baseStoryMeta.argTypes,
       }),
     );
     expect(meta.parameters.controls.exclude).toStrictEqual(
