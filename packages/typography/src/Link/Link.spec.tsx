@@ -231,7 +231,8 @@ describe('packages/typography', () => {
           href: 'string',
         };
 
-        // @ts-expect-error href is not allowed on a Wrapper component that does not accept anchor props
+        // should expect error, but this does not
+        // href should not be allowed on a Wrapper component that does not accept anchor props
         // eslint-disable-next-line
         const wrapperAndHref: LinkProps = {
           as: WrapperComponent,
