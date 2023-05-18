@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 63e53e330422955b6f6edbf209053d84
+ * @checksum 5af39f1558e17e8544faaed3e4ba9581
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface FolderProps extends LGGlyph.ComponentProps {}
-
 const Folder = ({
   className,
   size = 16,
@@ -56,7 +55,6 @@ const Folder = ({
     </svg>
   );
 };
-
 Folder.displayName = 'Folder';
 Folder.isGlyph = true;
 Folder.propTypes = {

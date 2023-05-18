@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum ea6418640ab457ee03f9238a3321e013
+ * @checksum 893c3136891c43b283b94d6bdd16398c
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface CheckmarkWithCircleProps extends LGGlyph.ComponentProps {}
-
 const CheckmarkWithCircle = ({
   className,
   size = 16,
@@ -58,7 +57,6 @@ const CheckmarkWithCircle = ({
     </svg>
   );
 };
-
 CheckmarkWithCircle.displayName = 'CheckmarkWithCircle';
 CheckmarkWithCircle.isGlyph = true;
 CheckmarkWithCircle.propTypes = {

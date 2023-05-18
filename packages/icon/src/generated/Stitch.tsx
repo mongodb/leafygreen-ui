@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 96ce86f8e420efba56f5e76fda9d62e3
+ * @checksum 300dbc5cdb25988d80dddf4936785de1
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface StitchProps extends LGGlyph.ComponentProps {}
-
 const Stitch = ({
   className,
   size = 16,
@@ -65,7 +64,6 @@ const Stitch = ({
     </svg>
   );
 };
-
 Stitch.displayName = 'Stitch';
 Stitch.isGlyph = true;
 Stitch.propTypes = {

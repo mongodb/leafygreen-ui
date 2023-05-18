@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 64fa23f98f5e56533ca49cd1e65063a7
+ * @checksum f3df2051e759f04c35710c8a163d458a
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface LogOutProps extends LGGlyph.ComponentProps {}
-
 const LogOut = ({
   className,
   size = 16,
@@ -64,7 +63,6 @@ const LogOut = ({
     </svg>
   );
 };
-
 LogOut.displayName = 'LogOut';
 LogOut.isGlyph = true;
 LogOut.propTypes = {
