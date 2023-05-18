@@ -3,7 +3,7 @@ import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 import {
@@ -41,15 +41,14 @@ const displayFlex = css`
   gap: 8px;
 `;
 
-export default StoryMeta({
+const meta: StoryMetaType<null> = {
   title: 'Components/Typography',
+  component: null,
   parameters: {
     default: 'AllTypography',
-    controls: {
-      exclude: ['className'],
-    },
   },
-});
+};
+export default meta;
 
 // eslint-disable-next-line react/prop-types
 export const AllTypography = ({
