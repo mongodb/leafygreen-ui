@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { Meta } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import Icon from '@leafygreen-ui/icon';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams as defaultExclude,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 import {
   SegmentedControl,
   SegmentedControlOption,
@@ -11,7 +15,7 @@ import {
 
 import { Size } from './SegmentedControl/SegmentedControl.types';
 
-export default {
+const meta: StoryMetaType<typeof SegmentedControl> = {
   title: 'Components/SegmentedControl',
   component: SegmentedControl,
   argTypes: {
@@ -32,10 +36,10 @@ export default {
     baseFontSize: storybookArgTypes.updatedBaseFontSize,
   },
   parameters: {
+    default: 'Uncontrolled',
     controls: {
       exclude: [
-        'aria-controls',
-        'className',
+        ...defaultExclude,
         'children',
         'onChange',
         'value',
@@ -43,11 +47,12 @@ export default {
       ],
     },
   },
-} as Meta<typeof SegmentedControl>;
+};
+export default meta;
 
-export const Uncontrolled = (args: SegmentedControlProps) => (
-  <SegmentedControl {...args} />
-);
+export const Uncontrolled: StoryFn<SegmentedControlProps> = (
+  args: SegmentedControlProps,
+) => <SegmentedControl {...args} />;
 Uncontrolled.args = {
   label: 'Fruit',
   name: 'fruit',
@@ -67,7 +72,9 @@ Uncontrolled.args = {
   ],
 };
 
-export const Controlled = (args: SegmentedControlProps) => {
+export const Controlled: StoryFn<SegmentedControlProps> = (
+  args: SegmentedControlProps,
+) => {
   const [selectedFruit, setSelectedFruit] = useState('eggplant');
   return (
     <Uncontrolled

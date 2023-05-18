@@ -1,7 +1,8 @@
 export const storybookExcludedControlParams = [
+  'aria-controls',
+  'aria-describedby',
   'aria-label',
   'aria-labelledby',
-  'aria-describedby',
   'onCancel',
   'onChange',
   'onClear',
