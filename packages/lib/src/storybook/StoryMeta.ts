@@ -18,9 +18,10 @@ export type StoryMetaType<
 > = Omit<Meta<T>, 'component' | 'argTypes' | 'args'> & {
   parameters: Meta<T>['parameters'] & {
     /**
-     * The default story to be displayed on `mongodb.design`
+     * The default story to be displayed on `mongodb.design`.
+     * Explicitly exclude a default story by setting this to `null`
      */
-    default: string;
+    default: string | null;
   };
   argTypes?: Partial<
     | {
