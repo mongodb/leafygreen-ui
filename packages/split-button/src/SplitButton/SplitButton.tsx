@@ -66,7 +66,6 @@ export const SplitButton = React.forwardRef<HTMLInputElement, SplitButtonProps>(
               [buttonThemeStyles(theme, variant)]: !disabled,
             })}
             {...rest}
-            aria-owns={menuId}
           >
             {label}
           </Button>
