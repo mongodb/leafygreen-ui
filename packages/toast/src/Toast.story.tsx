@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { faker } from '@faker-js/faker';
-import { ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 import { random, range, sample, startCase } from 'lodash';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import { DarkModeProps, StoryMeta } from '@leafygreen-ui/lib';
+import {
+  DarkModeProps,
+  storybookExcludedControlParams as defaultExclude,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 import { InlineCode, Label, Link } from '@leafygreen-ui/typography';
 
 import { variantIcons } from './InternalToast/VariantIcon';
@@ -13,7 +17,7 @@ import { makeToast, makeToastStack } from './ToastContext/utils/makeToast';
 import { InternalToast, InternalToastProps } from './InternalToast';
 import { ToastProvider, useToast, Variant } from '.';
 
-export default StoryMeta({
+const meta: StoryMetaType<typeof InternalToast> = {
   title: 'Components/Toast',
   component: InternalToast,
   decorators: [
@@ -33,11 +37,11 @@ export default StoryMeta({
     default: 'Variants',
     controls: {
       exclude: [
+        ...defaultExclude,
         'as',
         'title',
         'description',
         'dismissible',
-        'onClose',
         'progress',
         'variant',
       ],
@@ -54,9 +58,10 @@ export default StoryMeta({
   args: {
     darkMode: false,
   },
-});
+};
+export default meta;
 
-export const Basic: ComponentStory<typeof InternalToast> = (
+export const Basic: StoryFn<typeof InternalToastProps> = (
   props: Partial<InternalToastProps> & DarkModeProps,
 ) => {
   const { pushToast, clearStack } = useToast();
@@ -89,7 +94,7 @@ export const Basic: ComponentStory<typeof InternalToast> = (
   );
 };
 
-export const Variants: ComponentStory<typeof InternalToast> = (
+export const Variants: StoryFn<typeof InternalToastProps> = (
   props: Partial<InternalToastProps>,
 ) => {
   const { pushToast, clearStack, getStack, updateToast } = useToast();
@@ -185,7 +190,7 @@ export const Variants: ComponentStory<typeof InternalToast> = (
   );
 };
 
-export const WithInitialToasts: ComponentStory<typeof InternalToast> = (
+export const WithInitialToasts: StoryFn<typeof InternalToastProps> = (
   props: Partial<InternalToastProps>,
 ) => {
   const { pushToast, clearStack } = useToast();

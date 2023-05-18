@@ -1,23 +1,26 @@
 import React from 'react';
-import { ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { StoryMeta } from '@leafygreen-ui/lib';
+import {
+  storybookExcludedControlParams as defaultExclude,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
 import { Variant } from '../Toast.types';
 
-import { InternalToast } from '.';
+import { InternalToast, InternalToastProps } from '.';
 
-export default StoryMeta({
+const meta: StoryMetaType<typeof InternalToast> = {
   title: 'Components/Toast/Internal',
   component: InternalToast,
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: ['open', 'onClose'],
+      exclude: [...defaultExclude, 'open', 'onClose'],
     },
   },
   decorators: [
@@ -53,9 +56,9 @@ export default StoryMeta({
       control: 'text',
     },
   },
-});
-
-export const Basic: ComponentStory<typeof InternalToast> = args => (
+};
+export default meta;
+export const Basic: StoryFn<InternalToastProps> = args => (
   <InternalToast {...args} />
 );
 
