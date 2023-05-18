@@ -1,13 +1,16 @@
 import React from 'react';
-import { ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 
 import Copyable from '.';
 
-export default {
+const meta: StoryMetaType<typeof Copyable> = {
   title: 'Components/Copyable',
   component: Copyable,
+  parameters: {
+    default: 'Basic',
+  },
   args: {
     copyable: true,
     shouldTooltipUsePortal: true,
@@ -23,7 +26,9 @@ export default {
   },
 };
 
-const Template: ComponentStory<typeof Copyable> = args => (
+export default meta;
+
+const Template: StoryFn<typeof Copyable> = args => (
   <div>
     <Copyable {...args} />
   </div>
