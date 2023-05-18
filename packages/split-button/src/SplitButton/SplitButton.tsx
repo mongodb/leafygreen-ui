@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Button from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
@@ -6,6 +7,7 @@ import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { Menu } from '../Menu';
 
@@ -14,7 +16,7 @@ import {
   buttonContainerStyles,
   buttonThemeStyles,
 } from './SplitButton.styles';
-import { SplitButtonProps } from './SplitButton.types';
+import { Align, Justify, SplitButtonProps, Variant } from './SplitButton.types';
 
 export const SplitButton = React.forwardRef<HTMLInputElement, SplitButtonProps>(
   (
@@ -48,17 +50,6 @@ export const SplitButton = React.forwardRef<HTMLInputElement, SplitButtonProps>(
 
     const sharedButtonProps = { variant, size, baseFontSize, disabled };
 
-    const menuProps = {
-      spacing,
-      maxHeight,
-      adjustOnMutation,
-      popoverZIndex,
-      usePortal,
-      portalClassName,
-      portalContainer,
-      scrollContainer,
-    };
-
     // eslint-disable-next-line no-console
     console.log(menuItems.props);
 
@@ -81,7 +72,14 @@ export const SplitButton = React.forwardRef<HTMLInputElement, SplitButtonProps>(
           </Button>
           <Menu
             {...sharedButtonProps}
-            {...menuProps}
+            spacing={spacing}
+            maxHeight={maxHeight}
+            adjustOnMutation={adjustOnMutation}
+            popoverZIndex={popoverZIndex}
+            usePortal={usePortal}
+            portalClassName={portalClassName}
+            portalContainer={portalContainer}
+            scrollContainer={scrollContainer}
             align={align}
             justify={justify}
             containerRef={containerRef}
@@ -96,7 +94,18 @@ export const SplitButton = React.forwardRef<HTMLInputElement, SplitButtonProps>(
 
 SplitButton.displayName = 'SplitButton';
 
-// TODO: PropTypes
+SplitButton.propTypes = {
+  darkMode: PropTypes.bool,
+  className: PropTypes.string,
+  align: PropTypes.oneOf(Object.values(Align)),
+  justify: PropTypes.oneOf(Object.values(Justify)),
+  variant: PropTypes.oneOf(Object.values(Variant)),
+  label: PropTypes.string.isRequired,
+  menuItems: PropTypes.element.isRequired,
+  baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
+  disabled: PropTypes.bool,
+};
+
 // TODO: readme
 // TODO: link to .design
 // TODO: tests

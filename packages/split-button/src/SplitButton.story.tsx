@@ -6,7 +6,7 @@ import Icon, { glyphs } from '@leafygreen-ui/icon';
 import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
 import { MenuItem } from '@leafygreen-ui/menu';
 
-import { SplitButton, Variant } from '.';
+import { Align, Justify, SplitButton, Variant } from '.';
 
 export default StoryMeta({
   title: 'Components/SplitButton',
@@ -34,14 +34,14 @@ export default StoryMeta({
       control: 'select',
       options: Object.values(Variant),
     },
-    // align: {
-    //   control: 'select',
-    //   options: Object.values(Align),
-    // },
-    // justify: {
-    //   control: 'select',
-    //   options: Object.values(Justify),
-    // },
+    align: {
+      control: 'select',
+      options: Object.values(Align),
+    },
+    justify: {
+      control: 'select',
+      options: Object.values(Justify),
+    },
   },
   parameters: {
     default: 'Basic',

@@ -69,7 +69,7 @@ export const Menu = ({
         }
       }
     } else {
-      console.warn('MenuItems are required');
+      console.error('MenuItems are required.');
     }
   };
 

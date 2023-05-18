@@ -1,6 +1,6 @@
 export {
-  type Align,
-  type Justify,
+  Align,
+  Justify,
   SplitButton,
   type SplitButtonProps,
   Variant,
