@@ -7,6 +7,7 @@ export const storybookExcludedControlParams = [
   'onClear',
   'onClick',
   'onConfirm',
+  'onDismiss',
   'onFilter',
   'ref',
   'className',
