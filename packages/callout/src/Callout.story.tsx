@@ -1,19 +1,23 @@
 import React from 'react';
-import { ComponentStory, Meta } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import Code from '@leafygreen-ui/code';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams as defaultExclude,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
 import Callout, { Variant } from '.';
 
-export default {
+const meta: StoryMetaType<typeof Callout> = {
   title: 'Components/Callout',
   component: Callout,
   parameters: {
     default: 'WithLinks',
     controls: {
-      exclude: ['className'],
+      exclude: [...defaultExclude],
     },
   },
   args: {
@@ -31,9 +35,10 @@ export default {
     children: storybookArgTypes.children,
     darkMode: storybookArgTypes.darkMode,
   },
-} as Meta<typeof Callout>;
+};
+export default meta;
 
-const Template: ComponentStory<typeof Callout> = args => <Callout {...args} />;
+const Template: StoryFn<typeof Callout> = args => <Callout {...args} />;
 
 export const Note = Template.bind({});
 Note.args = {
@@ -60,7 +65,7 @@ Example.args = {
   variant: Variant.Example,
 };
 
-export const WithRichContent: ComponentStory<typeof Callout> = ({
+export const WithRichContent: StoryFn<typeof Callout> = ({
   // eslint-disable-next-line react/prop-types
   darkMode,
   ...args
@@ -82,7 +87,7 @@ export const WithRichContent: ComponentStory<typeof Callout> = ({
   );
 };
 
-export const WithLinks: ComponentStory<typeof Callout> = ({
+export const WithLinks: StoryFn<typeof Callout> = ({
   // eslint-disable-next-line react/prop-types
   children,
   ...args
