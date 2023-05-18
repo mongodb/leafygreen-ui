@@ -1,16 +1,15 @@
 // TODO: Generate Icon props with controls
 import React from 'react';
-import { ComponentStory, Meta } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
+import { StoryMetaType } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
-import { IconProps } from './createIconComponent';
-import { Size } from './glyphCommon';
 import { GlyphName } from './glyphs';
-import Icon, { glyphs } from '.';
+import Icon, { glyphs, IconProps, Size } from '.';
 
-export default {
+const meta: StoryMetaType<typeof Icon> = {
   title: 'Components/Icon',
   component: Icon,
   parameters: {
@@ -27,7 +26,9 @@ export default {
     },
     glyph: { control: 'none' },
   },
-} as Meta<typeof Icon>;
+};
+
+export default meta;
 
 const containerStyle = css`
   width: 150px;
@@ -49,7 +50,7 @@ const textStyle = css`
   margin-top: 0.5rem;
 `;
 
-export const Single: ComponentStory<typeof Icon> = (args: IconProps) => {
+export const Single: StoryFn<IconProps> = (args: IconProps) => {
   if (!args.glyph) {
     args = {
       ...args,
@@ -67,7 +68,7 @@ Single.argTypes = {
   },
 };
 
-export const AllIcons: ComponentStory<typeof Icon> = (
+export const AllIcons: StoryFn<IconProps> = (
   args: Omit<IconProps, 'glyph'>,
 ) => (
   <div
