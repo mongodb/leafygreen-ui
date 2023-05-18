@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { range } from 'lodash';
 
 import { css } from '@leafygreen-ui/emotion';
-import { StoryMeta } from '@leafygreen-ui/lib';
+import { StoryMetaType } from '@leafygreen-ui/lib';
 
 import { useAutoScroll, useDynamicRefs } from '..';
 
@@ -10,7 +10,7 @@ import { useAutoScroll, useDynamicRefs } from '..';
 export const itemHeight = 25;
 const testItems = 16;
 
-export default StoryMeta({
+const meta: StoryMetaType<any> = {
   title: 'hooks/useAutoScroll',
   component: undefined,
   argTypes: {
@@ -25,7 +25,9 @@ export default StoryMeta({
     controls: { exclude: ['as', 'darkMode'] },
     chromatic: { disableSnapshot: true },
   },
-});
+};
+
+export default meta;
 
 export const Basic = ({ selected }: { selected?: number }) => {
   const data = range(testItems);
