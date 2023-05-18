@@ -1,5 +1,11 @@
 # @leafygreen-ui/segmented-control
 
+## 8.1.0
+
+### Minor Changes
+
+- 71b9f59ae: Allows `null` to be passed as children to SegmentedControl component, per React standard
+
 ## 8.0.3
 
 ### Patch Changes
