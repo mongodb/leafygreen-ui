@@ -1,12 +1,11 @@
 import React from 'react';
-import { ComponentStory } from '@storybook/react';
 
 import { Size } from '@leafygreen-ui/button';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
 import { MenuItem } from '@leafygreen-ui/menu';
 
-import { Align, Justify, SplitButton, Variant } from '.';
+import { Align, Justify, SplitButton, SplitButtonProps, Variant } from '.';
 
 export default StoryMeta({
   title: 'Components/SplitButton',
@@ -58,37 +57,39 @@ export default StoryMeta({
   },
 });
 
-const Template: ComponentStory<typeof SplitButton> = ({
-  // eslint-disable-next-line react/prop-types
-  leftGlyph,
-  ...args
-}) => (
-  <SplitButton // @ts-expect-error
-    leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
-    {...args}
-    // menuItems={
-    //   <>
-    //     <MenuItem onClick={e => console.log(e.target.innerText)}>
-    //       Menu Item
-    //     </MenuItem>
-    //   </>
-    // }
-    menuItems={
-      <>
-        {/* eslint-disable-next-line no-console */}
-        <MenuItem onClick={e => console.log(e.target.innerText)}>
-          Menu Item
-        </MenuItem>
-        <MenuItem description="I am a description" disabled>
-          Disabled Menu Item
-        </MenuItem>
-        <MenuItem description="I am also a description">
-          Menu Item With Description
-        </MenuItem>
-        <MenuItem>I am not a link!</MenuItem>
-      </>
-    }
-  />
-);
+const Template = (props: SplitButtonProps) => {
+  const { leftGlyph, ...rest } = props;
+
+  return (
+    <SplitButton // @ts-expect-error
+      leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
+      {...rest}
+      // menuItems={
+      //   <>
+      //     <MenuItem onClick={e => console.log(e.target.innerText)}>
+      //       Menu Item
+      //     </MenuItem>
+      //   </>
+      // }
+      // eslint-disable-next-line no-console
+      onClick={() => console.log('primary button clicked')}
+      menuItems={
+        <>
+          {/* eslint-disable-next-line no-console */}
+          <MenuItem onClick={e => console.log(e.target.innerText)}>
+            Menu Item
+          </MenuItem>
+          <MenuItem description="I am a description" disabled>
+            Disabled Menu Item
+          </MenuItem>
+          <MenuItem description="I am also a description">
+            Menu Item With Description
+          </MenuItem>
+          <MenuItem>I am not a link!</MenuItem>
+        </>
+      }
+    />
+  );
+};
 
 export const Basic = Template.bind({});

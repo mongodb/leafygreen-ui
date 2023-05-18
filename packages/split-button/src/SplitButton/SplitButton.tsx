@@ -7,6 +7,10 @@ import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import {
+  InferredPolymorphic,
+  useInferredPolymorphic,
+} from '@leafygreen-ui/polymorphic';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { Menu } from '../Menu';
@@ -18,7 +22,7 @@ import {
 } from './SplitButton.styles';
 import { Align, Justify, SplitButtonProps, Variant } from './SplitButton.types';
 
-export const SplitButton = React.forwardRef<HTMLInputElement, SplitButtonProps>(
+export const SplitButton = InferredPolymorphic<SplitButtonProps, 'button'>(
   (
     {
       darkMode: darkModeProp,
@@ -28,6 +32,7 @@ export const SplitButton = React.forwardRef<HTMLInputElement, SplitButtonProps>(
       justify = 'end',
       size = 'default',
       disabled = false,
+      as,
       baseFontSize,
       label,
       menuItems,
@@ -41,27 +46,37 @@ export const SplitButton = React.forwardRef<HTMLInputElement, SplitButtonProps>(
       portalContainer,
       scrollContainer,
       ...rest
-    }: SplitButtonProps,
-    forwardedRef,
+    },
+    ref: React.Ref<any>,
   ) => {
+    const { Component } = useInferredPolymorphic(as, rest, 'button');
     const { darkMode, theme } = useDarkMode(darkModeProp);
-    const containerRef = useForwardedRef(forwardedRef, null);
+    const containerRef = useForwardedRef(ref, null);
     const menuId = useIdAllocator({ prefix: 'lg-split-button-menu' });
 
-    const sharedButtonProps = { variant, size, baseFontSize, disabled };
+    const isAnchor = Component === 'a';
 
-    // eslint-disable-next-line no-console
-    console.log(menuItems.props);
+    const buttonProps = {
+      // only add these props if not an anchor
+      ...(!isAnchor && { disabled }),
+      ...(!isAnchor && { type }),
+    };
+
+    const sharedButtonProps = { variant, size, baseFontSize };
 
     return (
-      <LeafyGreenProvider darkMode={darkMode}>
-        <div
-          className={cx(buttonContainerStyles, className)}
-          ref={containerRef}
-        >
+      <div
+        id="testetst"
+        className={cx(buttonContainerStyles, className)}
+        ref={containerRef}
+      >
+        <LeafyGreenProvider darkMode={darkMode}>
+          {/* TODO: remove when Button is updated to use `InferredPolymorphic` */}
+          {/* @ts-expect-error - Types of property `href` are incompatible. Button types href as string, but InferredPolymorphicProps types it as NodeUrlLike | ((string | NodeUrlLike) & string). This should not be an issue once Button is also using InferredPolymorphic. */}
           <Button
-            type={type}
+            as={Component}
             {...sharedButtonProps}
+            {...buttonProps}
             className={cx(buttonBaseStyles, {
               [buttonThemeStyles(theme, variant)]: !disabled,
             })}
@@ -84,9 +99,10 @@ export const SplitButton = React.forwardRef<HTMLInputElement, SplitButtonProps>(
             containerRef={containerRef}
             menuItems={menuItems}
             id={menuId}
+            disabled={disabled}
           />
-        </div>
-      </LeafyGreenProvider>
+        </LeafyGreenProvider>
+      </div>
     );
   },
 );
@@ -107,4 +123,3 @@ SplitButton.propTypes = {
 
 // TODO: readme
 // TODO: link to .design
-// TODO: tests

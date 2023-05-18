@@ -68,13 +68,12 @@ export const Menu = ({
           }
         }
       }
-    } else {
-      console.error('MenuItems are required.');
     }
   };
 
   return (
     <LGMenu
+      data-testid="lg-split-button-menu"
       align={align}
       justify={justify}
       refEl={containerRef}
