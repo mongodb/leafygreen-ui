@@ -1,5 +1,6 @@
 import ComponentPreview from './decorators/ComponentPreview';
 import ReactStrictMode from './decorators/ReactStrictMode';
+import {storybookExcludedControlParams} from '@leafygreen-ui/lib'
 import {
   H1,
   H2,
@@ -20,6 +21,7 @@ export const argTypes = {
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
+    exclude: [...storybookExcludedControlParams],
     expanded: true,
     matchers: {
       color: /.*(c|C)olor$/,
