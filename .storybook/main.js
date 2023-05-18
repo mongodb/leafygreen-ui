@@ -1,4 +1,4 @@
-import { ProvidePlugin } from "webpack";
+import { ProvidePlugin } from 'webpack';
 
 const nodeModulesThatNeedToBeParsedBecauseTheyExposeES6 = [
   '@tanstack[\\\\/]react-table',
@@ -59,15 +59,17 @@ const config = {
 
     // Required for Webpack 5
     config.resolve.fallback = {
-      "stream": require.resolve("stream-browserify"),
-      "buffer": require.resolve('buffer')
-    }
-    config.plugins.push(new ProvidePlugin({
-      process: 'process/browser',
-      Buffer: ['buffer', 'Buffer']
-    }))
-    // 
-    
+      stream: require.resolve('stream-browserify'),
+      buffer: require.resolve('buffer'),
+    };
+    config.plugins.push(
+      new ProvidePlugin({
+        process: 'process/browser',
+        Buffer: ['buffer', 'Buffer'],
+      }),
+    );
+    //
+
     return config;
   },
   typescript: {
