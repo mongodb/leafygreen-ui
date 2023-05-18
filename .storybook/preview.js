@@ -1,6 +1,6 @@
 import ComponentPreview from './decorators/ComponentPreview';
 import ReactStrictMode from './decorators/ReactStrictMode';
-import {storybookExcludedControlParams} from '@leafygreen-ui/lib'
+import { storybookExcludedControlParams } from '@leafygreen-ui/lib';
 import {
   H1,
   H2,
