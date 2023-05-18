@@ -1,5 +1,13 @@
 # @leafygreen-ui/code
 
+## 14.2.4
+
+### Patch Changes
+
+- d3dd7aad5: Updates to TSDocs
+- Updated dependencies [d3dd7aad5]
+  - @leafygreen-ui/button@20.0.7
+
 ## 14.2.3
 
 ### Patch Changes
