@@ -104,7 +104,7 @@ jobs:
   build:
     name: Build packages
     runs-on: ubuntu-latest
-    needs: install
+    needs: [install, lints]
     steps:
       - uses: actions/checkout@v2
 
@@ -137,7 +137,7 @@ jobs:
   build-ts:
     name: Build TypeScript
     runs-on: ubuntu-latest
-    needs: install
+    needs: [install, lints]
     steps:
       - uses: actions/checkout@v2
 
@@ -169,7 +169,7 @@ jobs:
   chromatic:
     name: Chromatic
     runs-on: ubuntu-latest
-    needs: [install, lints, build]
+    needs: [install, build]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -204,7 +204,7 @@ jobs:
   tests:
     name: Run tests
     runs-on: ubuntu-latest
-    needs: [install, lints, build]
+    needs: [install, build]
     steps:
       - uses: actions/checkout@v2
 
@@ -234,7 +234,7 @@ jobs:
   tests-ssr:
     name: Run tests with artificial server rendering
     runs-on: ubuntu-latest
-    needs: [install, lints, build]
+    needs: [install, build]
     steps:
       - uses: actions/checkout@v2
 
