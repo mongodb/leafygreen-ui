@@ -20,6 +20,7 @@ interface ComboboxData {
   chipTruncationLocation?: TruncationLocation;
   chipCharacterLimit?: number;
   inputValue?: string;
+  popoverZIndex?: number;
 }
 
 export const ComboboxContext = createContext<ComboboxData>({
