@@ -63,13 +63,13 @@ Check out all of the components [in action](https://www.mongodb.design/)!
 
 ## Developer Setup
 
-1. Node >= 14.0.0 and Node < 17.0.0 required.
+1. Node >= 16.20.0 required.
 
    via [homebrew](https://brew.sh/) with `brew install node`
 
    via [nodejs installer](https://nodejs.org/en/)
 
-2. Install Yarn >= 1.16.0.
+2. Install Yarn >= 1.20.0.
 
    [Yarn Installation documentation](https://classic.yarnpkg.com/en/docs/install/#mac-stable)
 
