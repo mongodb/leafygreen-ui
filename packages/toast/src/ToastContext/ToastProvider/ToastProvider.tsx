@@ -15,11 +15,11 @@ export const ToastProvider = ({
 }: React.PropsWithChildren<ToastProviderProps>) => {
   const { stack, ...toastFns } = useToastReducer(initialValue);
 
-  const cachedGetStack = useCallback(() => stack, [stack]);
+  const getStack = useCallback(() => stack, [stack]);
 
   const value = useMemo(() => {
-    return { ...toastFns, getStack: cachedGetStack };
-  }, [toastFns, cachedGetStack]);
+    return { ...toastFns, getStack };
+  }, [toastFns, getStack]);
 
   return (
     <ToastContext.Provider value={value}>
