@@ -1,5 +1,13 @@
 # @leafygreen-ui/empty-state
 
+## 1.0.3
+
+### Patch Changes
+
+- 71cac0375: Fixes EmptyState PropTypes to be aligned with interface, and only calls warning from inside component when necessary.
+- Updated dependencies [d3dd7aad5]
+  - @leafygreen-ui/button@20.0.7
+
 ## 1.0.2
 
 ### Patch Changes
