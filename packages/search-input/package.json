@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/search-input",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "leafyGreen UI Kit Search Input",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -31,7 +31,7 @@
     "@leafygreen-ui/a11y": "^1.4.3",
     "@leafygreen-ui/emotion": "^4.0.4",
     "@leafygreen-ui/hooks": "^7.7.2",
-    "@leafygreen-ui/icon": "^11.14.0",
+    "@leafygreen-ui/icon": "^11.16.0",
     "@leafygreen-ui/icon-button": "^15.0.10",
     "@leafygreen-ui/input-option": "^1.0.3",
     "@leafygreen-ui/lib": "^10.3.3",

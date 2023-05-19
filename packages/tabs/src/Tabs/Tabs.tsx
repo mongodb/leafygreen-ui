@@ -2,65 +2,23 @@ import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { isComponentType, keyMap, Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
+import { cx } from '@leafygreen-ui/emotion';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
+import { isComponentType, keyMap } from '@leafygreen-ui/lib';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
+import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import InternalTab from './InternalTab';
-import { AccessibleTabsProps } from './types';
+import { InternalTab } from '../Tab';
 
-// Using a background allows the "border" to appear underneath the individual tab color
-const modeColors = {
-  [Theme.Light]: {
-    underlineColor: css`
-      background: linear-gradient(
-        0deg,
-        ${palette.gray.light2} 1px,
-        rgb(255 255 255 / 0%) 1px
-      );
-    `,
-  },
-
-  [Theme.Dark]: {
-    underlineColor: css`
-      background: linear-gradient(
-        0deg,
-        ${palette.gray.dark2} 1px,
-        rgb(255 255 255 / 0%) 1px
-      );
-    `,
-  },
-};
-
-const tabContainerStyle = css`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const inlineChildrenWrapperStyle = css`
-  display: flex;
-  align-items: center;
-`;
-
-const listStyle = css`
-  list-style: none;
-  padding: 0;
-  display: flex;
-  width: 100%;
-  overflow-x: auto;
-
-  /* Remove scrollbar */
-
-  /* Chrome, Edge, Safari and Opera */
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  -ms-overflow-style: none; /* IE */
-  scrollbar-width: none; /* Firefox */
-`;
+import {
+  inlineChildrenWrapperStyle,
+  listStyle,
+  modeColors,
+  tabContainerStyle,
+} from './Tabs.styles';
+import { AccessibleTabsProps } from './Tabs.types';
 
 /**
  * # Tabs
@@ -85,16 +43,17 @@ function Tabs(props: AccessibleTabsProps) {
   const {
     children,
     inlineChildren,
+    className,
+    as = 'button',
+    baseFontSize: baseFontSizeProp,
     setSelected: setControlledSelected,
     selected: controlledSelected,
-    className,
     darkMode: darkModeProp,
-    as = 'button',
     'aria-labelledby': ariaLabelledby,
     'aria-label': ariaLabel,
     ...rest
   } = props;
-
+  const baseFontSize: BaseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
   const { theme, darkMode } = useDarkMode(darkModeProp);
 
   const [tabNode, setTabNode] = useState<HTMLDivElement | null>(null);
@@ -195,25 +154,27 @@ function Tabs(props: AccessibleTabsProps) {
   });
 
   return (
-    <div {...rest} className={className}>
-      {/* render the portaled contents */}
-      {renderedTabs}
+    <LeafyGreenProvider baseFontSize={baseFontSize === 16 ? 16 : 14}>
+      <div {...rest} className={className}>
+        {/* render the portaled contents */}
+        {renderedTabs}
 
-      <div className={tabContainerStyle}>
-        {/* renderedTabs portals the tab title into this element */}
-        <div
-          className={cx(listStyle, modeColors[theme].underlineColor)}
-          role="tablist"
-          ref={setTabNode}
-          aria-orientation="horizontal"
-          {...accessibilityProps}
-        />
-        <div className={inlineChildrenWrapperStyle}>{inlineChildren}</div>
+        <div className={tabContainerStyle}>
+          {/* renderedTabs portals the tab title into this element */}
+          <div
+            className={cx(listStyle, modeColors[theme].underlineColor)}
+            role="tablist"
+            ref={setTabNode}
+            aria-orientation="horizontal"
+            {...accessibilityProps}
+          />
+          <div className={inlineChildrenWrapperStyle}>{inlineChildren}</div>
+        </div>
+
+        {/* renderedTabs portals the contents into this element */}
+        <div ref={setPanelNode} />
       </div>
-
-      {/* renderedTabs portals the contents into this element */}
-      <div ref={setPanelNode} />
-    </div>
+    </LeafyGreenProvider>
   );
 }
 
