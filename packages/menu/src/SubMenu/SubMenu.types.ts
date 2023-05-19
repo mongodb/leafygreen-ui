@@ -56,6 +56,9 @@ export interface SubMenuProps extends HTMLElementProps<'button'> {
 
   onClick?: React.MouseEventHandler;
 
+  /**
+   * Callback fired when the submenu finishes transitioning
+   */
   onExited?: ExitHandler<HTMLElement>;
 
   href?: string;

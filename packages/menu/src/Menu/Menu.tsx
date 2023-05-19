@@ -174,30 +174,51 @@ export function Menu({
           const isCurrentSubMenu =
             (currentSubMenu?.props as SubMenuProps)?.title === title;
 
+          /** State dispatch method for the submenu */
+          const setOpen = (state: boolean) => {
+            setCurrentSubMenu(state ? child : null);
+
+            // Focus on this element
+            if (currentChildRef) {
+              setFocused(currentChildRef);
+            }
+          };
+
+          /** Keydown handler for the submenu */
+          const onKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+            if (e.keyCode === keyMap.ArrowLeft && isCurrentSubMenu) {
+              setCurrentSubMenu(null);
+            }
+
+            if (e.keyCode === keyMap.ArrowRight) {
+              setCurrentSubMenu(child);
+            }
+          };
+
+          /** Transition exited handler for the submenu children */
+          const onExited = () => {
+            setClosed(curr => !curr);
+
+            // Wait for animation to complete
+            setTimeout(() => {
+              // Loop through refs & remove ones that no longer exist in the DOM
+              refs.forEach(ref => {
+                if (!document.contains(ref)) {
+                  const index = refs.indexOf(ref);
+                  refs.splice(index, 1);
+                }
+              });
+            }, 0);
+          };
+
           return React.cloneElement(child, {
             ref: setRef,
             open: isCurrentSubMenu,
-            setOpen: (state: boolean) => {
-              if (currentChildRef) {
-                setFocused(currentChildRef);
-              }
-
-              setCurrentSubMenu(state ? child : null);
-            },
-            onKeyDown: (e: React.KeyboardEvent<HTMLButtonElement>) => {
-              if (e.keyCode === keyMap.ArrowLeft && isCurrentSubMenu) {
-                setCurrentSubMenu(null);
-              }
-
-              if (e.keyCode === keyMap.ArrowRight) {
-                setCurrentSubMenu(child);
-              }
-            },
+            setOpen,
+            onKeyDown,
             onFocus,
             children: updateChildren(props.children),
-            onExited: () => {
-              setClosed(curr => !curr);
-            },
+            onExited,
           });
         }
 
@@ -248,6 +269,46 @@ export function Menu({
     el.focus();
   };
 
+  type Direction = 'next' | 'prev' | 'first' | 'last';
+  /**
+   * Updates the highlighted menu option based on the provided direction
+   * @param direction the direction to move the focus. `'next' | 'prev' | 'first' | 'last'`
+   */
+  const updateFocusedOption = (direction: Direction) => {
+    const optionsCount = refs.length;
+    const lastIndex = optionsCount - 1 > 0 ? optionsCount - 1 : 0;
+    const indexOfCurrent = refs.indexOf(focused);
+
+    let newFocusEl: HTMLElement;
+
+    switch (direction) {
+      case 'next': {
+        newFocusEl =
+          indexOfCurrent + 1 < optionsCount
+            ? refs[indexOfCurrent + 1]
+            : refs[0];
+        break;
+      }
+
+      case 'prev': {
+        newFocusEl =
+          indexOfCurrent - 1 >= 0 ? refs[indexOfCurrent - 1] : refs[lastIndex];
+        break;
+      }
+
+      case 'first': {
+        newFocusEl = refs[0];
+        break;
+      }
+
+      case 'last': {
+        newFocusEl = refs[lastIndex];
+        break;
+      }
+    }
+    setFocus(newFocusEl);
+  };
+
   useEffect(() => {
     if (open) {
       hasSetInitialFocus.current = false;
@@ -275,20 +336,16 @@ export function Menu({
   });
 
   function handleKeyDown(e: KeyboardEvent) {
-    let refToFocus: HTMLElement;
-
     switch (e.keyCode) {
       case keyMap.ArrowDown:
         e.preventDefault(); // Prevents page scrolling
-        refToFocus = refs[(refs.indexOf(focused!) + 1) % refs.length];
-        setFocus(refToFocus);
+        updateFocusedOption('next');
         break;
 
       case keyMap.ArrowUp:
         e.preventDefault(); // Prevents page scrolling
-        refToFocus =
-          refs[(refs.indexOf(focused!) - 1 + refs.length) % refs.length];
-        setFocus(refToFocus);
+        updateFocusedOption('prev');
+
         break;
 
       case keyMap.Tab:

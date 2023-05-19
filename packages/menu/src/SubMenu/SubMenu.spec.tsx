@@ -310,8 +310,10 @@ describe('packages/sub-menu', () => {
           '{arrowdown}{arrowdown}{arrowdown}{arrowdown}',
         );
 
-        expect(subMenuB).not.toHaveFocus();
-        expect(subMenuC).toHaveFocus();
+        await waitFor(() => {
+          expect(subMenuB).not.toHaveFocus();
+          expect(subMenuC).toHaveFocus();
+        });
       });
     });
   });
