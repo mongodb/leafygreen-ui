@@ -1,5 +1,6 @@
 import React from 'react';
 import { faker } from '@faker-js/faker';
+import { range } from 'lodash';
 
 import Code from '@leafygreen-ui/code';
 
@@ -16,22 +17,6 @@ export interface Person {
   visits: number;
   status: 'relationship' | 'complicated' | 'single';
   subRows?: Array<Person>;
-}
-
-/** HELPERS */
-
-const range = (len: number) => {
-  const arr = [];
-
-  for (let i = 0; i < len; i++) {
-    arr.push(i);
-  }
-
-  return arr;
-};
-
-export function randomIntFromInterval(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 const newPerson = (): Person => {
@@ -79,11 +64,11 @@ export function makeData(
         ...newPerson(),
         ...(hasSubRows &&
           lens[depth + 1] &&
-          randomIntFromInterval(1, 2) == 1 && {
+          faker.number.int({ min: 1, max: 2 }) == 1 && {
             subRows: makeDataLevel(depth + 1),
           }),
         ...(renderingExpandableRows &&
-          randomIntFromInterval(1, 3) == 1 && {
+          faker.number.int({ min: 1, max: 3 }) == 1 && {
             renderExpandedContent: ExpandedContentComponent,
           }),
       };
@@ -119,14 +104,14 @@ const createKitchenSinkData: (depth?: number) => object = (depth = 0) => {
     mdbVersion: faker.system.semver(),
     subRows:
       depth === 0
-        ? [...Array(3)].map(_ => createKitchenSinkData(depth + 1))
+        ? range(3).map(_ => createKitchenSinkData(depth + 1))
         : undefined,
     renderExpandedContent: depth > 0 ? SampleExpandedContent : undefined,
   };
 };
 
-export const makeKitchenSinkData = (rows: number) => {
+export const makeKitchenSinkData = (count: number) => {
   faker.seed(SEED);
 
-  return [...Array(rows)].map(_ => createKitchenSinkData());
+  return range(count).map(_ => createKitchenSinkData());
 };
