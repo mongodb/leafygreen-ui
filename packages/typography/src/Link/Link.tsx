@@ -25,11 +25,11 @@ import {
   underlineModeStyles,
   underlineStyles,
 } from './Link.styles';
-import { ArrowAppearance, LinkProps } from './Link.types';
+import { ArrowAppearance, BaseLinkProps } from './Link.types';
 
-type LinkRenderProps = PolymorphicPropsWithRef<'span', LinkProps>;
+type LinkRenderProps = PolymorphicPropsWithRef<'span', BaseLinkProps>;
 
-type AnchorLikeProps = PolymorphicProps<'a', LinkProps>;
+type AnchorLikeProps = PolymorphicProps<'a', BaseLinkProps>;
 
 const hasAnchorLikeProps = (
   props: LinkRenderProps | AnchorLikeProps,
@@ -37,7 +37,7 @@ const hasAnchorLikeProps = (
   return (props as AnchorLikeProps).href !== undefined;
 };
 
-const Link = InferredPolymorphic<LinkProps, 'span'>(
+const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
   ({
     children,
     className,
