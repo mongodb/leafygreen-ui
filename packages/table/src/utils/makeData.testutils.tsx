@@ -5,10 +5,11 @@ import Code from '@leafygreen-ui/code';
 
 import { LeafyGreenTableRow } from '../useLeafyGreenTable';
 
-faker.seed(0);
+const SEED = 0;
+faker.seed(SEED);
 
 export interface Person {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
   age: number;
@@ -16,6 +17,8 @@ export interface Person {
   status: 'relationship' | 'complicated' | 'single';
   subRows?: Array<Person>;
 }
+
+/** HELPERS */
 
 const range = (len: number) => {
   const arr = [];
@@ -33,16 +36,16 @@ export function randomIntFromInterval(min: number, max: number) {
 
 const newPerson = (): Person => {
   return {
-    id: faker.seed(),
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
-    age: faker.datatype.number({ min: 20, max: 100 }),
-    visits: faker.datatype.number(1000),
-    status: faker.helpers.shuffle<Person['status']>([
+    id: faker.string.alphanumeric(8),
+    firstName: faker.person.firstName(),
+    lastName: faker.person.lastName(),
+    age: faker.number.int({ min: 20, max: 100 }),
+    visits: faker.number.int(1000),
+    status: faker.helpers.arrayElement<Person['status']>([
       'relationship',
       'complicated',
       'single',
-    ])[0]!,
+    ]),
   };
 };
 
@@ -65,6 +68,8 @@ export function makeData(
   renderingExpandableRows: boolean,
   ...lens: Array<number>
 ) {
+  faker.seed(SEED);
+
   const hasSubRows = !renderingExpandableRows && lens.length > 1;
 
   const makeDataLevel = (depth = 0): Array<Person> => {
@@ -89,16 +94,6 @@ export function makeData(
   return data;
 }
 
-const randomChoice = (arr: Array<any>) => {
-  return arr[Math.floor(arr.length * Math.random())];
-};
-
-const createDate = () => {
-  const d = new Date();
-  d.setDate(d.getDate() - randomIntFromInterval(0, 10));
-  return d;
-};
-
 const SampleExpandedContent = (row: LeafyGreenTableRow<object>) => {
   return (
     <div style={{ padding: '12px 70px 24px 70px' }}>
@@ -115,19 +110,23 @@ const SampleExpandedContent = (row: LeafyGreenTableRow<object>) => {
   );
 };
 
-export const createKitchenSinkData: (depth?: number) => object = (
-  depth = 0,
-) => {
+const createKitchenSinkData: (depth?: number) => object = (depth = 0) => {
   return {
-    dateCreated: createDate(),
-    frequency: randomChoice(['Daily', 'Weekly', 'Monthly']),
-    clusterType: randomChoice(['Replica set', 'Sharded cluster']),
-    encryptorEnabled: randomChoice([true, false]),
-    mdbVersion: randomChoice(['4.4.10', '4.5.1', '4.6.11']),
+    dateCreated: faker.date.past(),
+    frequency: faker.helpers.arrayElement(['Daily', 'Weekly', 'Monthly']),
+    clusterType: faker.helpers.arrayElement(['Replica set', 'Sharded cluster']),
+    encryptorEnabled: faker.datatype.boolean(0.75),
+    mdbVersion: faker.system.semver(),
     subRows:
       depth === 0
         ? [...Array(3)].map(_ => createKitchenSinkData(depth + 1))
         : undefined,
     renderExpandedContent: depth > 0 ? SampleExpandedContent : undefined,
   };
+};
+
+export const makeKitchenSinkData = (rows: number) => {
+  faker.seed(SEED);
+
+  return [...Array(rows)].map(_ => createKitchenSinkData());
 };

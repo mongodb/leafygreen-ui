@@ -12,8 +12,8 @@ import {
 import Pagination, { PaginationProps } from '@leafygreen-ui/pagination';
 
 import {
-  createKitchenSinkData,
   makeData,
+  makeKitchenSinkData,
   Person,
 } from './utils/makeData.testutils';
 import { AnyDict } from './utils/types';
@@ -724,9 +724,7 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
 
 export const KitchenSink: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const data = useState(() =>
-    [...Array(10)].map(_ => createKitchenSinkData()),
-  )[0];
+  const [data] = useState(() => makeKitchenSinkData(10));
 
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [

@@ -38,7 +38,7 @@
     "react-virtual": "^2.10.4"
   },
   "devDependencies": {
-    "@faker-js/faker": "^7.6.0",
+    "@faker-js/faker": "^8.0.0",
     "@leafygreen-ui/code": "^14.2.3",
     "@leafygreen-ui/badge": "^8.0.6",
     "@leafygreen-ui/pagination": "^1.0.7"

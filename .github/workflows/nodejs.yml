@@ -200,7 +200,6 @@ jobs:
           projectToken: 1d372cd42552
           buildScriptName: 'build-storybook'
           exitZeroOnChanges: true
-          exitOnceUploaded: true
 
   tests:
     name: Run tests
