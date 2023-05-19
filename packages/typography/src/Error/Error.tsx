@@ -9,9 +9,9 @@ import {
 } from '@leafygreen-ui/polymorphic';
 
 import { errorMessageModeStyle, errorMessageStyle } from './Error.styles';
-import { ErrorProps } from './Error.types';
+import { BaseErrorProps } from './Error.types';
 
-const Error = Polymorphic<ErrorProps>(
+const Error = Polymorphic<BaseErrorProps>(
   ({
     as = 'p' as PolymorphicAs,
     darkMode: darkModeProp,

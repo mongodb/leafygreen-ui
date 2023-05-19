@@ -1,3 +1,8 @@
+import {
+  InferredPolymorphicProps,
+  PolymorphicAs,
+} from '@leafygreen-ui/polymorphic';
+
 import { ResponsiveTypographyProps } from '../types';
 
 const ArrowAppearance = {
@@ -10,7 +15,10 @@ type ArrowAppearance = typeof ArrowAppearance[keyof typeof ArrowAppearance];
 
 export { ArrowAppearance };
 
-export interface LinkProps extends ResponsiveTypographyProps {
+export interface BaseLinkProps extends ResponsiveTypographyProps {
   arrowAppearance?: ArrowAppearance;
   hideExternalIcon?: boolean;
 }
+
+// For external consumption only
+export type LinkProps = InferredPolymorphicProps<PolymorphicAs, BaseLinkProps>;
