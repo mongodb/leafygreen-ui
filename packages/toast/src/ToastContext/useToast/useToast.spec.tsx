@@ -1,12 +1,18 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useEffect } from 'react';
+import { render } from '@testing-library/react';
 import { cleanup, HookResult, renderHook } from '@testing-library/react-hooks';
 
 import { ToastProps, Variant } from '../../Toast.types';
 import { ToastContext } from '../ToastContext';
 import { ToastContextProps } from '../ToastContext.types';
 import { useToastReducer } from '../ToastReducer';
-
-import { useToast } from '.';
+import {
+  makeToast,
+  makeToastStack,
+  ToastProvider,
+  ToastStack,
+  useToast,
+} from '..';
 
 const ToastProviderMock = ({ children }: PropsWithChildren<{}>) => {
   const { stack, ...toastFns } = useToastReducer();
@@ -102,6 +108,32 @@ describe('packages/toast/useToast', () => {
         expect(clearStack()).toBeUndefined();
         expect(getStack()?.size).toEqual(0);
       });
+    });
+
+    test('returned functions are the same reference each render', () => {
+      const effectCall = jest.fn();
+      const initialValue: ToastStack = makeToastStack([
+        makeToast({ title: 'test' }),
+      ]);
+
+      const Example = () => {
+        const { pushToast } = useToast();
+
+        useEffect(() => {
+          effectCall();
+          pushToast({ title: 'toast', id: 'lg-toast' });
+        }, [pushToast]);
+
+        return (
+          <ToastProvider initialValue={initialValue}>
+            <div data-testid="div" />
+          </ToastProvider>
+        );
+      };
+
+      render(<Example />);
+
+      expect(effectCall).toHaveBeenCalledTimes(1);
     });
   });
 
