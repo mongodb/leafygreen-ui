@@ -139,6 +139,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
               darkMode={darkMode}
               definition={displayName}
               align="bottom"
+              popoverZIndex={3}
             >
               {truncatedName}
             </InlineDefinition>
