@@ -1,5 +1,6 @@
 import React from 'react';
 import { faker } from '@faker-js/faker';
+import { range } from 'lodash';
 
 import Code from '@leafygreen-ui/code';
 
@@ -9,7 +10,7 @@ const SEED = 0;
 faker.seed(SEED);
 
 export interface Person {
-  id: string;
+  id: number;
   firstName: string;
   lastName: string;
   age: number;
@@ -18,25 +19,9 @@ export interface Person {
   subRows?: Array<Person>;
 }
 
-/** HELPERS */
-
-const range = (len: number) => {
-  const arr = [];
-
-  for (let i = 0; i < len; i++) {
-    arr.push(i);
-  }
-
-  return arr;
-};
-
-export function randomIntFromInterval(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
 const newPerson = (): Person => {
   return {
-    id: faker.string.alphanumeric(8),
+    id: faker.number.int(4),
     firstName: faker.person.firstName(),
     lastName: faker.person.lastName(),
     age: faker.number.int({ min: 20, max: 100 }),
@@ -79,11 +64,11 @@ export function makeData(
         ...newPerson(),
         ...(hasSubRows &&
           lens[depth + 1] &&
-          randomIntFromInterval(1, 2) == 1 && {
+          faker.number.int({ min: 1, max: 2 }) == 1 && {
             subRows: makeDataLevel(depth + 1),
           }),
         ...(renderingExpandableRows &&
-          randomIntFromInterval(1, 3) == 1 && {
+          faker.number.int({ min: 1, max: 3 }) == 1 && {
             renderExpandedContent: ExpandedContentComponent,
           }),
       };
@@ -119,14 +104,14 @@ const createKitchenSinkData: (depth?: number) => object = (depth = 0) => {
     mdbVersion: faker.system.semver(),
     subRows:
       depth === 0
-        ? [...Array(3)].map(_ => createKitchenSinkData(depth + 1))
+        ? range(3).map(_ => createKitchenSinkData(depth + 1))
         : undefined,
     renderExpandedContent: depth > 0 ? SampleExpandedContent : undefined,
   };
 };
 
-export const makeKitchenSinkData = (rows: number) => {
+export const makeKitchenSinkData = (count: number) => {
   faker.seed(SEED);
 
-  return [...Array(rows)].map(_ => createKitchenSinkData());
+  return range(count).map(_ => createKitchenSinkData());
 };

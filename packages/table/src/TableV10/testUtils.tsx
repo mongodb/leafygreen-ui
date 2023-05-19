@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import { defaultData, testTableDataShape } from './fixtures';
+import { defaultData, testTableDataShape } from './fixtures.testutils';
 import { Cell, Row, Table, TableHeader } from '.';
 
 interface Props {

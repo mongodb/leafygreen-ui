@@ -28,6 +28,9 @@ export default {
     controls: {
       exclude: ['ref', 'children'],
     },
+    chromatic: {
+      disableSnapshot: true,
+    },
     // This is needed as a workaround to make arg spreading performant
     // https://github.com/storybookjs/storybook/issues/11657
     docs: {
