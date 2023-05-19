@@ -11,9 +11,9 @@ import {
 import { baseTypographyStyles, defaultTextColor } from '../styles';
 
 import { overlineStyles } from './Overline.styles';
-import { OverlineProps } from './Overline.types';
+import { BaseOverlineProps } from './Overline.types';
 
-export const Overline = Polymorphic<OverlineProps>(
+export const Overline = Polymorphic<BaseOverlineProps>(
   ({
     darkMode: darkModeProp,
     className,

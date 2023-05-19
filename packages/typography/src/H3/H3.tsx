@@ -11,9 +11,9 @@ import {
 import { baseTypographyStyles, defaultTextColor } from '../styles';
 
 import { h3Styles } from './H3.styles';
-import { H3Props } from './H3.types';
+import { BaseH3Props } from './H3.types';
 
-const H3 = Polymorphic<H3Props>(
+const H3 = Polymorphic<BaseH3Props>(
   ({
     darkMode: darkModeProp,
     className,
