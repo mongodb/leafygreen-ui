@@ -38,6 +38,9 @@ const renderSubMenu = ({
         title="SubMenu A"
       >
         <MenuItem data-testid={menuItemTestId[0]}>Text Content A</MenuItem>
+        <MenuItem data-testid={menuItemTestId[0] + '2'}>
+          Text Content A2
+        </MenuItem>
       </SubMenu>
       <SubMenu
         active={initialActiveMenu === 1}
@@ -46,6 +49,9 @@ const renderSubMenu = ({
         title="SubMenu B"
       >
         <MenuItem data-testid={menuItemTestId[1]}> Text Content B</MenuItem>
+        <MenuItem data-testid={menuItemTestId[1] + '2'}>
+          Text Content B2
+        </MenuItem>
       </SubMenu>
       <SubMenu
         active={initialActiveMenu === 2}
@@ -54,6 +60,9 @@ const renderSubMenu = ({
         title="SubMenu C"
       >
         <MenuItem data-testid={menuItemTestId[2]}> Text Content C</MenuItem>
+        <MenuItem data-testid={menuItemTestId[2] + '2'}>
+          Text Content C2
+        </MenuItem>
       </SubMenu>
     </Menu>,
   );
@@ -117,11 +126,13 @@ describe('packages/sub-menu', () => {
   });
 
   describe('Mouse interaction', () => {
-    test('first option has focus when menu opens', () => {
-      const { getByTestId, openMenu } = renderSubMenu();
-      openMenu();
-
-      expect(getByTestId(subMenuTestId[0])).toHaveFocus();
+    describe('first option has focus when menu opens', () => {
+      test('default', () => {
+        const { getByTestId, openMenu } = renderSubMenu();
+        openMenu();
+        const subMenuA = getByTestId(subMenuTestId[0]);
+        expect(subMenuA).toHaveFocus();
+      });
     });
 
     describe('Clicking SubMenu', () => {
@@ -132,8 +143,8 @@ describe('packages/sub-menu', () => {
         const subMenuC = getByTestId(subMenuTestId[2]);
         userEvent.click(subMenuC);
 
-        const subMenuItem = queryByTestId(menuItemTestId[2]);
-        expect(subMenuItem).toBeInTheDocument();
+        const subMenuItemC = queryByTestId(menuItemTestId[2]);
+        expect(subMenuItemC).toBeInTheDocument();
       });
 
       test('fires #onClick', async () => {
@@ -269,19 +280,38 @@ describe('packages/sub-menu', () => {
         expect(menuItemA).toHaveFocus();
       });
 
-      test('does not highlight closed sub-menu items', () => {
-        const { getByTestId, queryByTestId, openMenu } = renderSubMenu({
-          initialActiveMenu: 1,
-        });
+      test('highlights following subMenus', () => {
+        const { getByTestId, queryByTestId, openMenu } = renderSubMenu();
+        openMenu();
+
+        const menu = getByTestId(menuTestId);
+        const subMenuB = queryByTestId(subMenuTestId[1]);
+        userEvent.type(menu, '{arrowdown}{arrowdown}{arrowdown}');
+
+        expect(subMenuB).toHaveFocus();
+      });
+
+      test('skips over closed sub-menu items', async () => {
+        const { getByTestId, queryByTestId, openMenu } = renderSubMenu();
         openMenu();
 
         const menu = getByTestId(menuTestId);
         const menuItemA = queryByTestId(menuItemTestId[0]);
         const subMenuB = queryByTestId(subMenuTestId[1]);
+        const subMenuC = queryByTestId(subMenuTestId[2]);
 
-        userEvent.type(menu, '{arrowdown}');
-        expect(menuItemA).toBeNull();
-        expect(subMenuB).toHaveFocus();
+        // Expect Menu A to be open
+        expect(menuItemA).toBeInTheDocument();
+
+        // Arrow down to submenuB
+        userEvent.type(
+          menu,
+          //    A1         A2        SB          SC
+          '{arrowdown}{arrowdown}{arrowdown}{arrowdown}',
+        );
+
+        expect(subMenuB).not.toHaveFocus();
+        expect(subMenuC).toHaveFocus();
       });
     });
   });
