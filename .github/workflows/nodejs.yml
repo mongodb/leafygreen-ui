@@ -80,7 +80,7 @@ jobs:
         run: yarn check:ts
 
   deps:
-    name: Check dependencies
+    name: Check dependency list
     runs-on: ubuntu-latest
     needs: install
     steps:
@@ -169,7 +169,7 @@ jobs:
   chromatic:
     name: Chromatic
     runs-on: ubuntu-latest
-    needs: [install, build]
+    needs: [install, lints, build]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -204,7 +204,7 @@ jobs:
   tests:
     name: Run tests
     runs-on: ubuntu-latest
-    needs: [install, build]
+    needs: [install, lints, build]
     steps:
       - uses: actions/checkout@v2
 
@@ -234,7 +234,7 @@ jobs:
   tests-ssr:
     name: Run tests with artificial server rendering
     runs-on: ubuntu-latest
-    needs: [install, build]
+    needs: [install, lints, build]
     steps:
       - uses: actions/checkout@v2
 
