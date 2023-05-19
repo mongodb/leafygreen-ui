@@ -265,6 +265,7 @@ export function Menu({
       return;
     }
 
+    console.log('Setting focus on', el.dataset['testid']);
     setFocused(el);
     el.focus();
   };
@@ -274,40 +275,50 @@ export function Menu({
    * Updates the highlighted menu option based on the provided direction
    * @param direction the direction to move the focus. `'next' | 'prev' | 'first' | 'last'`
    */
-  const updateFocusedOption = (direction: Direction) => {
-    const optionsCount = refs.length;
-    const lastIndex = optionsCount - 1 > 0 ? optionsCount - 1 : 0;
-    const indexOfCurrent = refs.indexOf(focused);
+  const updateFocusedOption = useCallback(
+    (direction: Direction) => {
+      const optionsCount = refs.length;
+      const lastIndex = optionsCount - 1 > 0 ? optionsCount - 1 : 0;
+      const indexOfCurrent = refs.indexOf(focused);
 
-    let newFocusEl: HTMLElement;
+      switch (direction) {
+        case 'next': {
+          const newFocusEl =
+            indexOfCurrent + 1 < optionsCount
+              ? refs[indexOfCurrent + 1]
+              : refs[0];
+          setFocus(newFocusEl);
 
-    switch (direction) {
-      case 'next': {
-        newFocusEl =
-          indexOfCurrent + 1 < optionsCount
-            ? refs[indexOfCurrent + 1]
-            : refs[0];
-        break;
+          break;
+        }
+
+        case 'prev': {
+          const newFocusEl =
+            indexOfCurrent - 1 >= 0
+              ? refs[indexOfCurrent - 1]
+              : refs[lastIndex];
+          setFocus(newFocusEl);
+
+          break;
+        }
+
+        case 'first': {
+          const newFocusEl = refs[0];
+          setFocus(newFocusEl);
+
+          break;
+        }
+
+        case 'last': {
+          const newFocusEl = refs[lastIndex];
+          setFocus(newFocusEl);
+
+          break;
+        }
       }
-
-      case 'prev': {
-        newFocusEl =
-          indexOfCurrent - 1 >= 0 ? refs[indexOfCurrent - 1] : refs[lastIndex];
-        break;
-      }
-
-      case 'first': {
-        newFocusEl = refs[0];
-        break;
-      }
-
-      case 'last': {
-        newFocusEl = refs[lastIndex];
-        break;
-      }
-    }
-    setFocus(newFocusEl);
-  };
+    },
+    [refs, focused],
+  );
 
   useEffect(() => {
     if (open) {
