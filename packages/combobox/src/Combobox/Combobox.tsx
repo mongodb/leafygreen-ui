@@ -1164,6 +1164,7 @@ export function Combobox<M extends boolean>({
           chipCharacterLimit,
           inputValue,
           overflow,
+          popoverZIndex,
         }}
       >
         <div className={cx(comboboxParentStyle(size), className)} {...rest}>
