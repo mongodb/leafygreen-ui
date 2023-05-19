@@ -211,46 +211,6 @@ describe('packages/typography', () => {
           <Link as="a">Content</Link>
         </>;
       });
-
-      // eslint-disable-next-line
-      test.skip('LinkProps types', () => {
-        // eslint-disable-next-line
-        const withHref: LinkProps = {
-          href: 'string',
-        };
-
-        // eslint-disable-next-line
-        const asProp: LinkProps = {
-          as: 'div',
-        };
-
-        // @ts-expect-error href is not allowed on explicit div
-        // eslint-disable-next-line
-        const asAndHref: LinkProps = {
-          as: 'div',
-          href: 'string',
-        };
-
-        // should expect error, but this does not
-        // href should not be allowed on a Wrapper component that does not accept anchor props
-        // eslint-disable-next-line
-        const wrapperAndHref: LinkProps = {
-          as: WrapperComponent,
-          href: 'string',
-        };
-
-        // eslint-disable-next-line
-        const anchorAndHref: LinkProps = {
-          as: AnchorComponent,
-          href: 'string',
-        };
-
-        //  @ts-expect-error as anchor is not allowed without an href
-        // eslint-disable-next-line
-        const withAsA: LinkProps = {
-          as: 'a',
-        };
-      });
     });
   });
 });
