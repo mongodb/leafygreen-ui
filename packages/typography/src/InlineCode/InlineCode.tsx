@@ -22,9 +22,9 @@ import {
   normal,
   nowrap,
 } from './InlineCode.styles';
-import { InlineCodeProps } from './InlineCode.types';
+import { BaseInlineCodeProps } from './InlineCode.types';
 
-const InlineCode = InferredPolymorphic<InlineCodeProps, 'code'>(
+const InlineCode = InferredPolymorphic<BaseInlineCodeProps, 'code'>(
   (
     {
       children,
