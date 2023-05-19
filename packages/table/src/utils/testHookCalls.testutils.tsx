@@ -13,7 +13,7 @@ export const getDefaultTestData: (
 ) => Array<Person> = rowProps => {
   return [
     {
-      id: 'A',
+      id: 1,
       firstName: 'tanner',
       lastName: 'linsley',
       age: 29,
@@ -22,7 +22,7 @@ export const getDefaultTestData: (
       ...rowProps,
     },
     {
-      id: 'B',
+      id: 2,
       firstName: 'derek',
       lastName: 'perkins',
       age: 40,
@@ -30,7 +30,7 @@ export const getDefaultTestData: (
       status: 'single',
     },
     {
-      id: 'C',
+      id: 3,
       firstName: 'joe',
       lastName: 'bergevin',
       age: 45,

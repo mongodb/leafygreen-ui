@@ -10,7 +10,7 @@ const SEED = 0;
 faker.seed(SEED);
 
 export interface Person {
-  id: string;
+  id: number;
   firstName: string;
   lastName: string;
   age: number;
@@ -21,7 +21,7 @@ export interface Person {
 
 const newPerson = (): Person => {
   return {
-    id: faker.string.alphanumeric(8),
+    id: faker.number.int(4),
     firstName: faker.person.firstName(),
     lastName: faker.person.lastName(),
     age: faker.number.int({ min: 20, max: 100 }),
