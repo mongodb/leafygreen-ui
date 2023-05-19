@@ -33,6 +33,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       overflow,
       chipTruncationLocation = 'end',
       chipCharacterLimit = 12,
+      popoverZIndex,
     } = useContext(ComboboxContext);
 
     const isTruncated =
@@ -139,7 +140,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
               darkMode={darkMode}
               definition={displayName}
               align="bottom"
-              popoverZIndex={3}
+              popoverZIndex={popoverZIndex}
             >
               {truncatedName}
             </InlineDefinition>
