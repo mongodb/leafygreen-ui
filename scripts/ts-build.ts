@@ -32,4 +32,5 @@ const tsc = spawnSync(
   },
 );
 
+// If the tsc build fails, this script should too
 process.exit(tsc.status ?? 1);

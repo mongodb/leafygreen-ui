@@ -262,7 +262,7 @@ jobs:
           JEST_JUNIT_OUTPUT: 'reports/junit/js-test-ssr-results.xml'
 
   checkBuilds:
-    name: Check builds
+    name: Verify builds
     runs-on: ubuntu-latest
     needs: [install, build, build-ts]
     steps:
