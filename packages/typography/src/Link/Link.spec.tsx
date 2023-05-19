@@ -5,7 +5,7 @@ import { InferredPolymorphicProps } from '@leafygreen-ui/polymorphic';
 
 import { Link } from '..';
 
-import { BaseLinkProps, LinkProps } from './Link.types';
+import { BaseLinkProps } from './Link.types';
 
 type SpanLikeProps = InferredPolymorphicProps<'span', BaseLinkProps>;
 
