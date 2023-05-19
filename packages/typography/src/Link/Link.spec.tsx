@@ -1,15 +1,15 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import { PolymorphicProps } from '@leafygreen-ui/polymorphic';
+import { InferredPolymorphicProps } from '@leafygreen-ui/polymorphic';
 
 import { Link } from '..';
 
-import { LinkProps } from './Link.types';
+import { BaseLinkProps } from './Link.types';
 
-type SpanLikeProps = PolymorphicProps<'span', LinkProps>;
+type SpanLikeProps = InferredPolymorphicProps<'span', BaseLinkProps>;
 
-type AnchorLikeProps = PolymorphicProps<'a', LinkProps>;
+type AnchorLikeProps = InferredPolymorphicProps<'a', BaseLinkProps>;
 
 type LinkRenderProps = SpanLikeProps | AnchorLikeProps;
 
@@ -183,16 +183,16 @@ describe('packages/typography', () => {
     });
 
     describe('TypeScript types are correct', () => {
+      const WrapperComponent = (props: JSX.IntrinsicElements['button']) => {
+        return <button {...props} />;
+      };
+
+      const AnchorComponent = (props: JSX.IntrinsicElements['a']) => {
+        return <a {...props}>test</a>;
+      };
+
       // eslint-disable-next-line
-      test.skip('Types', () => {
-        const WrapperComponent = (props: JSX.IntrinsicElements['button']) => {
-          return <button {...props} />;
-        };
-
-        const AnchorComponent = (props: JSX.IntrinsicElements['a']) => {
-          return <a {...props}>test</a>;
-        };
-
+      test.skip('Link Component types', () => {
         <>
           <Link />
           <Link>some content</Link>

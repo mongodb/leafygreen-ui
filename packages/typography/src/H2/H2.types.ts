@@ -1,5 +1,8 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { PolymorphicAs, PolymorphicProps } from '@leafygreen-ui/polymorphic';
 
 import { CommonTypographyProps } from '../types';
 
-export type H2Props = HTMLElementProps<'h2'> & CommonTypographyProps;
+export type BaseH2Props = CommonTypographyProps;
+
+// For external consumption only
+export type H2Props = PolymorphicProps<PolymorphicAs, BaseH2Props>;
