@@ -16,9 +16,9 @@ import {
   labelStyle,
   labelTypeScaleStyles,
 } from './Label.styles';
-import { LabelProps } from './Label.types';
+import { BaseLabelProps } from './Label.types';
 
-export const Label = Polymorphic<LabelProps>(
+export const Label = Polymorphic<BaseLabelProps>(
   ({
     baseFontSize: baseFontSizeOverride,
     darkMode: darkModeProp,
