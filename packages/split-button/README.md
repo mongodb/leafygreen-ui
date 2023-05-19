@@ -24,6 +24,6 @@ npm install @leafygreen-ui/split-button
 
 ## Properties
 
-| Prop      | Type                                                     | Description                           | Default     |
-| --------- | -------------------------------------------------------- | ------------------------------------- | ----------- |
-| `variant` | `'default'`, `'primary'`, `'info'`, `'danger'`, `'dark'` | Sets the style variant of the button. | `'default'` |
+| Prop      | Type                                 | Description                           | Default     |
+| --------- | ------------------------------------ | ------------------------------------- | ----------- |
+| `variant` | `'default'`, `'primary'`, `'danger'` | Sets the style variant of the button. | `'default'` |
