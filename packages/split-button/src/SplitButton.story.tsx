@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import { Size } from '@leafygreen-ui/button';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
@@ -52,6 +52,7 @@ export default StoryMeta({
         'aria-describedby',
         'aria-label',
         'value',
+        'menuItems',
       ],
     },
   },
@@ -59,6 +60,7 @@ export default StoryMeta({
 
 const Template = (props: SplitButtonProps) => {
   const { leftGlyph, ...rest } = props;
+  const splitButtonRef = useRef<HTMLButtonElement | null>(null);
 
   return (
     <SplitButton
@@ -82,6 +84,7 @@ const Template = (props: SplitButtonProps) => {
           <MenuItem>I am not a link!</MenuItem>
         </>
       }
+      ref={splitButtonRef}
     />
   );
 };

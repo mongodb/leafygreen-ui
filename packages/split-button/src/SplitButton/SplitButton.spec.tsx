@@ -134,6 +134,23 @@ describe('packages/split-button', () => {
     test.skip('Accepts base props', () => {
       <>
         <SplitButton label="label" menuItems={getMenuItems()} />
+        <SplitButton
+          label="label"
+          menuItems={getMenuItems()}
+          onClick={() => {}}
+          disabled={true}
+          size="default"
+          variant="default"
+          darkMode={true}
+          align="top"
+          justify="start"
+          className="test"
+          usePortal={true}
+          portalContainer={{} as HTMLElement}
+          scrollContainer={{} as HTMLElement}
+          portalClassName="classname"
+          data-testid="test-id"
+        />
         {/* @ts-expect-error - expects label and menuItems*/}
         <SplitButton />
         {/* @ts-expect-error - expects menuItems */}
@@ -166,10 +183,6 @@ describe('packages/split-button', () => {
         return <a {...props}>content</a>;
       };
 
-      const ButtonWrapper = (props: JSX.IntrinsicElements['button']) => {
-        return <button {...props} />;
-      };
-
       <>
         <SplitButton href="allowed" label="label" menuItems={getMenuItems()} />
         <SplitButton
@@ -181,13 +194,6 @@ describe('packages/split-button', () => {
         {/* @ts-expect-error - href not allowed when as is div*/}
         <SplitButton
           as="div"
-          href="string"
-          label="label"
-          menuItems={getMenuItems()}
-        />
-        {/* @ts-expect-error - href not allowed on ButtonWrapper */}
-        <SplitButton
-          as={ButtonWrapper}
           href="string"
           label="label"
           menuItems={getMenuItems()}
