@@ -1,5 +1,11 @@
 # @leafygreen-ui/button
 
+## 20.0.7
+
+### Patch Changes
+
+- d3dd7aad5: Updates to TSDocs
+
 ## 20.0.6
 
 ### Patch Changes
