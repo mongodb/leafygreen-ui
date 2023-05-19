@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { faker } from '@faker-js/faker';
 import { ComponentStory } from '@storybook/react';
-import { random, range, sample, startCase } from 'lodash';
+import { range, startCase } from 'lodash';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
@@ -65,11 +65,11 @@ export const Basic: ComponentStory<typeof InternalToast> = (
   const { pushToast, clearStack } = useToast();
 
   const createRandomToast = () => {
-    const variant = props.variant || sample(Variant);
+    const variant = props.variant || faker.helpers.objectValue(Variant);
 
     pushToast({
       title: `I'm a ${variant} toast`,
-      description: faker.lorem.lines(random(1, 2)),
+      description: faker.lorem.lines(faker.number.int({ min: 1, max: 2 })),
       variant,
       ...props,
     });
@@ -121,7 +121,7 @@ export const Variants: ComponentStory<typeof InternalToast> = (
       >
         {Object.values(Variant).map(variant => {
           const VariantIcon = variantIcons[variant];
-          const randomText = faker.lorem.lines(random(1));
+          const randomText = faker.lorem.lines(1);
 
           return (
             <Button
@@ -203,10 +203,12 @@ export const WithInitialToasts: ComponentStory<typeof InternalToast> = (
       <Button
         data-testid="toast-trigger"
         onClick={() => {
-          const variant = props.variant || sample(Variant);
+          const variant = props.variant || faker.helpers.objectValue(Variant);
           pushToast({
             title: `I'm a ${variant} toast`,
-            description: faker.lorem.lines(random(1, 2)),
+            description: faker.lorem.lines(
+              faker.number.int({ min: 1, max: 2 }),
+            ),
             variant,
             ...props,
           });
@@ -226,7 +228,7 @@ WithInitialToasts.args = {
       makeToast({
         title: 'Initial toast',
         description: faker.lorem.lines(2),
-        variant: sample(Variant),
+        variant: faker.helpers.objectValue(Variant),
       }),
     ),
   ),
