@@ -25,7 +25,7 @@ type ButtonProps = Omit<
   'rightGlyph' | 'href' | 'as' | 'variant'
 >;
 
-type MenuItemsType = ReactFragment & {
+export type MenuItemsType = ReactFragment & {
   props: {
     children: Array<ComponentType<MenuItemProps>>;
   };

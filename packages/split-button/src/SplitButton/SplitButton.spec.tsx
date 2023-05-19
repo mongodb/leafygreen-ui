@@ -4,11 +4,12 @@ import { axe } from 'jest-axe';
 
 import { MenuItem } from '@leafygreen-ui/menu';
 
+import { MenuItemsType } from './SplitButton.types';
 import { SplitButton } from '.';
 
 const menuTestId = 'lg-split-button-menu';
 
-const getMenuItems = () => {
+const getMenuItems = (): MenuItemsType => {
   return (
     <>
       <MenuItem description="I am a description" disabled>

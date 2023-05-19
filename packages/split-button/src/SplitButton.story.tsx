@@ -61,16 +61,10 @@ const Template = (props: SplitButtonProps) => {
   const { leftGlyph, ...rest } = props;
 
   return (
-    <SplitButton // @ts-expect-error
+    <SplitButton
+      // @ts-expect-error
       leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
       {...rest}
-      // menuItems={
-      //   <>
-      //     <MenuItem onClick={e => console.log(e.target.innerText)}>
-      //       Menu Item
-      //     </MenuItem>
-      //   </>
-      // }
       // eslint-disable-next-line no-console
       onClick={() => console.log('primary button clicked')}
       menuItems={
