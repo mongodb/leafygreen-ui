@@ -11,9 +11,9 @@ import {
 import { baseTypographyStyles } from '../styles';
 
 import { h2Color, h2Styles } from './H2.styles';
-import { H2Props } from './H2.types';
+import { BaseH2Props } from './H2.types';
 
-const H2 = Polymorphic<H2Props>(
+const H2 = Polymorphic<BaseH2Props>(
   ({
     darkMode: darkModeProp,
     className,
