@@ -1,7 +1,11 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { PolymorphicAs, PolymorphicProps } from '@leafygreen-ui/polymorphic';
 
 import { ResponsiveTypographyProps } from '../types';
 
 export type BodyFontWeight = 'regular' | 'medium';
-export type BodyProps = HTMLElementProps<'p'> &
-  ResponsiveTypographyProps & { weight?: BodyFontWeight };
+export type BaseBodyProps = ResponsiveTypographyProps & {
+  weight?: BodyFontWeight;
+};
+
+// For external consumption only
+export type BodyProps = PolymorphicProps<PolymorphicAs, BaseBodyProps>;

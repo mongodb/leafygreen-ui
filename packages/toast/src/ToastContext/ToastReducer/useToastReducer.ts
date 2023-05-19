@@ -1,4 +1,4 @@
-import { Reducer, useReducer } from 'react';
+import { Reducer, useCallback, useMemo, useReducer } from 'react';
 
 import { defaultToastProps } from '../../InternalToast/defaultProps';
 import { ToastProps } from '../../Toast.types';
@@ -78,57 +78,67 @@ export const useToastReducer = (initialValue?: ToastStack) => {
     stack: initialValue ?? (new Map<ToastId, ToastProps>() as ToastStack),
   });
 
-  const pushToast: ToastContextProps['pushToast'] = (props: ToastProps) => {
-    const toast = makeToast(props);
+  const pushToast: ToastContextProps['pushToast'] = useCallback(
+    (props: ToastProps) => {
+      const toast = makeToast(props);
 
-    dispatch({
-      type: ToastReducerActionType.Push,
-      payload: toast,
-    });
+      dispatch({
+        type: ToastReducerActionType.Push,
+        payload: toast,
+      });
 
-    return toast.id;
-  };
+      return toast.id;
+    },
+    [],
+  );
 
-  const getToast: ToastContextProps['getToast'] = (id: ToastId) =>
-    stack.get(id);
+  const getToast: ToastContextProps['getToast'] = useCallback(
+    (id: ToastId) => stack.get(id),
+    [stack],
+  );
 
-  const popToast: ToastContextProps['popToast'] = (id: ToastId) => {
-    const toastProps = getToast(id);
+  const popToast: ToastContextProps['popToast'] = useCallback(
+    (id: ToastId) => {
+      const toastProps = getToast(id);
 
-    dispatch({
-      type: ToastReducerActionType.Pop,
-      payload: id,
-    });
+      dispatch({
+        type: ToastReducerActionType.Pop,
+        payload: id,
+      });
 
-    return toastProps;
-  };
+      return toastProps;
+    },
+    [getToast],
+  );
 
-  const updateToast: ToastContextProps['updateToast'] = (
-    id: ToastId,
-    props: Partial<ToastProps>,
-  ) => {
-    dispatch({
-      type: ToastReducerActionType.Update,
-      payload: {
-        id,
-        props,
-      },
-    });
-    return getToast(id);
-  };
+  const updateToast: ToastContextProps['updateToast'] = useCallback(
+    (id: ToastId, props: Partial<ToastProps>) => {
+      dispatch({
+        type: ToastReducerActionType.Update,
+        payload: {
+          id,
+          props,
+        },
+      });
+      return getToast(id);
+    },
+    [getToast],
+  );
 
-  const clearStack: ToastContextProps['clearStack'] = () => {
+  const clearStack: ToastContextProps['clearStack'] = useCallback(() => {
     dispatch({
       type: ToastReducerActionType.Clear,
     });
-  };
+  }, []);
 
-  return {
-    stack,
-    pushToast,
-    popToast,
-    updateToast,
-    getToast,
-    clearStack,
-  };
+  return useMemo(() => {
+    return {
+      pushToast,
+      popToast,
+      updateToast,
+      getToast,
+      clearStack,
+      stack,
+    };
+  }, [pushToast, popToast, updateToast, stack, getToast, clearStack]);
 };
