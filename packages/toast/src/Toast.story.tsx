@@ -56,6 +56,9 @@ export default StoryMeta({
   },
 });
 
+const SEED = 0;
+faker.seed(SEED);
+
 export const Basic: ComponentStory<typeof InternalToast> = (
   props: Partial<InternalToastProps> & DarkModeProps,
 ) => {
