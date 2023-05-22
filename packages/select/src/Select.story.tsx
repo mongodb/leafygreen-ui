@@ -3,10 +3,7 @@ import { StoryFn } from '@storybook/react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
-import {
-  storybookExcludedControlParams as defaultExclude,
-  StoryMetaType,
-} from '@leafygreen-ui/lib';
+import { StoryMetaType } from '@leafygreen-ui/lib';
 
 import { Option, OptionGroup, Select, type SelectProps } from '.';
 
@@ -16,7 +13,7 @@ const meta: StoryMetaType<typeof Select> = {
   parameters: {
     default: 'Uncontrolled',
     controls: {
-      exclude: [...defaultExclude, 'children'],
+      exclude: ['children'],
     },
   },
   args: {

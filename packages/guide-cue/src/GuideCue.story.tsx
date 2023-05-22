@@ -3,11 +3,7 @@ import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import {
-  storybookArgTypes,
-  storybookExcludedControlParams as defaultExclude,
-  StoryMetaType,
-} from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 import { Body } from '@leafygreen-ui/typography';
 
 import { GuideCue, GuideCueProps } from '.';
@@ -21,7 +17,6 @@ const meta: StoryMetaType<React.ElementType<GuideCueProps>> = {
     default: 'Default',
     controls: {
       exclude: [
-        ...defaultExclude,
         'refEl',
         'setOpen',
         'tooltipClassName',

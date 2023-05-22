@@ -4,11 +4,7 @@ import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import {
-  storybookArgTypes,
-  storybookExcludedControlParams as defaultExclude,
-  StoryMetaType,
-} from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 import { CloseIconColor } from '@leafygreen-ui/modal';
 
 import MarketingModal, {
@@ -52,14 +48,7 @@ const meta: StoryMetaType<typeof MarketingModal> = {
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: [
-        ...defaultExclude,
-        'open',
-        'onClose',
-        'graphic',
-        'onButtonClick',
-        'onLinkClick',
-      ],
+      exclude: ['open', 'graphic', 'onButtonClick', 'onLinkClick'],
     },
   },
 };

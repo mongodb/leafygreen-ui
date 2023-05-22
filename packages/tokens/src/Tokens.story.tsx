@@ -3,7 +3,6 @@ import React from 'react';
 import { startCase } from 'lodash';
 
 import { css } from '@leafygreen-ui/emotion';
-import { storybookExcludedControlParams } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 import { Mode } from './mode';
@@ -18,11 +17,7 @@ import {
 
 export default {
   title: 'Components/Tokens',
-  parameters: {
-    controls: {
-      exclude: [...storybookExcludedControlParams],
-    },
-  },
+  parameters: {},
 };
 
 type HoverRingColor = keyof typeof hoverRing.dark;

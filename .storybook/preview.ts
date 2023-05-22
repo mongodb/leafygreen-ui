@@ -1,8 +1,8 @@
 import ComponentPreview from './decorators/ComponentPreview';
 import ReactStrictMode from './decorators/ReactStrictMode';
 import GeneratedStory from './decorators/GeneratedStory';
+import { storybookExcludedArgTypes } from '@leafygreen-ui/lib';
 
-import { storybookExcludedControlParams } from '@leafygreen-ui/lib';
 import {
   H1,
   H2,
@@ -13,17 +13,14 @@ import {
   Link,
 } from '@leafygreen-ui/typography';
 
-export const argTypes = {
-  className: {
-    description: '`className` prop passed to the component',
-    control: 'text',
-  },
-};
-
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
+  argTypes: {
+    // By default we set specific argTypes to `control: none`
+    // Storybook merges objects better than arrays
+    ...storybookExcludedArgTypes,
+  },
   controls: {
-    exclude: [...storybookExcludedControlParams],
     expanded: true,
     matchers: {
       color: /.*(c|C)olor$/,

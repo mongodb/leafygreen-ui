@@ -1,3 +1,4 @@
+/** @deprecated */
 export const storybookExcludedControlParams = [
   'aria-controls',
   'aria-describedby',
@@ -19,4 +20,4 @@ export const storybookExcludedControlParams = [
   'scrollContainer',
   'popoverZIndex',
   'id',
-];
+] as const;

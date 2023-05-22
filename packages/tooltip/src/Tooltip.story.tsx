@@ -4,11 +4,7 @@ import { StoryFn } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
-import {
-  storybookArgTypes,
-  storybookExcludedControlParams as defaultExclude,
-  StoryMetaType,
-} from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body, InlineCode, Subtitle } from '@leafygreen-ui/typography';
 
@@ -35,7 +31,7 @@ const meta: StoryMetaType<typeof Tooltip> = {
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: [...defaultExclude, 'trigger'],
+      exclude: ['trigger'],
     },
   },
 };
