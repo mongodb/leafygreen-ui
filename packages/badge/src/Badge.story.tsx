@@ -3,16 +3,20 @@ import { StoryFn } from '@storybook/react';
 
 import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 
-import Badge, { BadgeProps } from '.';
+import Badge, { BadgeProps, Variant } from '.';
 
 const meta: StoryMetaType<typeof Badge> = {
   title: 'Components/Badge',
   component: Badge,
   parameters: {
-    default: 'Basic',
+    default: 'LiveExample',
+    generate: {
+      variant: Object.values(Variant),
+      darkMode: [false, true],
+    },
   },
   args: {
-    darkMode: false,
+    children: 'Badge',
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -20,9 +24,6 @@ const meta: StoryMetaType<typeof Badge> = {
 };
 export default meta;
 
-const Template: StoryFn<BadgeProps> = args => <Badge {...args} />;
+export const LiveExample: StoryFn<BadgeProps> = args => <Badge {...args} />;
 
-export const Basic = Template.bind({});
-Basic.args = {
-  children: 'Badge',
-};
+export const Generated = () => {};
