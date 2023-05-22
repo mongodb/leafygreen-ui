@@ -10,7 +10,7 @@ module.exports = function (api) {
         targets: {
           browsers: ['last 2 versions', 'safari >= 7', 'ie >= 10'],
         },
-        modules: api.env('production') ? false : 'commonjs',
+        modules: false
       },
     ],
   ];
