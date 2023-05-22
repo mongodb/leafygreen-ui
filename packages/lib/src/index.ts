@@ -12,6 +12,7 @@ export {
   StoryMeta,
   type StoryMetaType,
   storybookArgTypes,
+  storybookExcludedArgTypes,
   storybookExcludedControlParams,
   IntrinsicElements,
 } from './storybook';
@@ -152,7 +153,7 @@ export const AriaCurrentValue = {
 } as const;
 
 export type AriaCurrentValue =
-  typeof AriaCurrentValue[keyof typeof AriaCurrentValue];
+  (typeof AriaCurrentValue)[keyof typeof AriaCurrentValue];
 
 /**
  * Accepts a type as an argument and makes all of the keys of the type optional

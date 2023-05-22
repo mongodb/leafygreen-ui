@@ -1,5 +1,6 @@
 import { InputType } from '@storybook/csf';
 import IntrinsicElements from './IntrinsicElements';
+
 export interface StoryArgType extends InputType {
   /**
    * Identify an arg to determine where the control is defined
@@ -49,4 +50,29 @@ export const storybookArgTypes: Record<string, StoryArgType> = {
     control: { type: 'select' },
     defaultValue: 'button',
   },
+} as const;
+
+/** By default we set argType to control:none */
+export const storybookExcludedArgTypes: Record<string, StoryArgType> = {
+  'aria-controls': { control: 'none' },
+  'aria-describedby': { control: 'none' },
+  'aria-label': { control: 'none' },
+  'aria-labelledby': { control: 'none' },
+  className: { control: 'none' },
+  id: { control: 'none' },
+  onBlur: { control: 'none' },
+  onCancel: { control: 'none' },
+  onChange: { control: 'none' },
+  onClear: { control: 'none' },
+  onClick: { control: 'none' },
+  onClose: { control: 'none' },
+  onConfirm: { control: 'none' },
+  onDismiss: { control: 'none' },
+  onFilter: { control: 'none' },
+  portalClassName: { control: 'none' },
+  portalContainer: { control: 'none' },
+  popoverZIndex: { control: 'none' },
+  ref: { control: 'none' },
+  scrollContainer: { control: 'none' },
+  usePortal: { control: 'none' },
 } as const;
