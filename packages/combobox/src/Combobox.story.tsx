@@ -36,7 +36,7 @@ const meta: StoryMetaType<typeof Combobox> = {
     ),
   ],
   parameters: {
-    default: 'SingleSelect',
+    default: 'Demo',
     controls: {
       exclude: [
         ...defaultExclude,
@@ -201,11 +201,7 @@ const getComboboxOptions = (withGlyphs = true) => [
 
 const SingleTemplate: StoryFn<ComboboxProps<false>> = (
   args: ComboboxProps<false>,
-) => (
-  <div className={wrapperStyle}>
-    <Combobox {...args} />
-  </div>
-);
+) => <Combobox {...args} />;
 
 export const SingleSelect: StoryFn<ComboboxProps<false>> = (
   args: ComboboxProps<false>,
@@ -245,11 +241,7 @@ WithError.args = {
 
 const MultiTemplate: StoryFn<ComboboxProps<true>> = (
   args: ComboboxProps<true>,
-) => (
-  <div className={wrapperStyle}>
-    <Combobox {...args} />
-  </div>
-);
+) => <Combobox {...args} />;
 
 export const Multiselect = MultiTemplate.bind({});
 Multiselect.args = {
@@ -287,7 +279,7 @@ export const ControlledSingleSelect = () => {
   };
 
   return (
-    <>
+    <div>
       <Combobox
         multiselect={false}
         label="Choose a fruit"
@@ -301,7 +293,7 @@ export const ControlledSingleSelect = () => {
         <ComboboxOption value="carrot" />
       </Combobox>
       <Button onClick={() => setSelection('carrot')}>Select Carrot</Button>
-    </>
+    </div>
   );
 };
 
@@ -346,14 +338,14 @@ export const Demo: StoryFn<ComboboxProps<boolean>> = (
   args: ComboboxProps<boolean>,
 ) => {
   return (
-    <div className={wrapperStyle}>
+    <>
       {/* Since Combobox doesn't fully refresh when `multiselect` changes, we need to explicitly render a different instance */}
       {args.multiselect ? (
         <Combobox key="multi" {...args} multiselect={true} />
       ) : (
         <Combobox key="single" {...args} multiselect={false} />
       )}
-    </div>
+    </>
   );
 };
 Demo.args = {
