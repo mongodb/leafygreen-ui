@@ -7,6 +7,7 @@ import getTheme from './getTheme';
 import { allEqual } from './allEqual';
 export { validateChildren } from './validateChildren';
 export { createSyntheticEvent } from './createSyntheticEvent';
+import isObject from 'lodash/isObject';
 
 export {
   StoryMeta,
@@ -87,10 +88,12 @@ export function isComponentType<T = React.ReactElement>(
     element != null &&
     typeof element === 'object' &&
     'type' in element &&
+    // (element.type as any).displayName === displayName
     ((element.type as any).displayName === displayName ||
       // TODO: temp solution; Components using InferredPolymorphic have a displayName inside render.
       // https://jira.mongodb.org/browse/LG-3232
-      ('render' in (element.type as any) &&
+      (isObject(element.type as any) &&
+        'render' in (element.type as any) &&
         (element.type as any).render?.displayName === displayName))
   );
 }
