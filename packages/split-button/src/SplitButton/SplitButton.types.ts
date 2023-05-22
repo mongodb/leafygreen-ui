@@ -47,7 +47,7 @@ export type Justify = typeof Justify[keyof typeof Justify];
 
 export type Test = typeof Justify;
 
-export type OmittedMenuProps = Omit<
+export type SelectedMenuProps = Omit<
   ImportedMenuProps,
   | 'children'
   | 'trigger'
@@ -62,7 +62,7 @@ export type OmittedMenuProps = Omit<
   | 'refEl'
 >;
 
-export interface MenuProps extends OmittedMenuProps {
+export interface MenuProps extends SelectedMenuProps {
   /**
    * Determines the alignment of the menu relative to the component wrapper.
    *
