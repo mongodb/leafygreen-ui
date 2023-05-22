@@ -1,11 +1,7 @@
 import React, { useRef } from 'react';
 import { StoryFn } from '@storybook/react';
 
-import {
-  storybookArgTypes,
-  storybookExcludedControlParams as defaultExclude,
-  StoryMetaType,
-} from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 
 import {
   NotificationProps,
@@ -40,7 +36,7 @@ const meta: StoryMetaType<typeof PasswordInput> = {
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: [...defaultExclude, 'as', 'children', 'value'],
+      exclude: ['as', 'children', 'value'],
     },
   },
 };

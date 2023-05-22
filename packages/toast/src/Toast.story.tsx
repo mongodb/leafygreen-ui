@@ -5,11 +5,7 @@ import { range, startCase } from 'lodash';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import {
-  DarkModeProps,
-  storybookExcludedControlParams as defaultExclude,
-  StoryMetaType,
-} from '@leafygreen-ui/lib';
+import { DarkModeProps, StoryMetaType } from '@leafygreen-ui/lib';
 import { InlineCode, Label, Link } from '@leafygreen-ui/typography';
 
 import { variantIcons } from './InternalToast/VariantIcon';
@@ -37,7 +33,6 @@ const meta: StoryMetaType<typeof InternalToast, ToastProviderProps> = {
     default: 'Variants',
     controls: {
       exclude: [
-        ...defaultExclude,
         'as',
         'title',
         'description',

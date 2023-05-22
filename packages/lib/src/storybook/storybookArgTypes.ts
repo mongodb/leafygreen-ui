@@ -52,7 +52,9 @@ export const storybookArgTypes: Record<string, StoryArgType> = {
   },
 } as const;
 
-/** By default we set argType to control:none */
+/** By default we set argType to `control:none`
+ * for props we don't want to control in Storybook
+ */
 export const storybookExcludedArgTypes: Record<string, StoryArgType> = {
   'aria-controls': { control: 'none' },
   'aria-describedby': { control: 'none' },
@@ -69,6 +71,7 @@ export const storybookExcludedArgTypes: Record<string, StoryArgType> = {
   onConfirm: { control: 'none' },
   onDismiss: { control: 'none' },
   onFilter: { control: 'none' },
+  onSubmit: { control: 'none' },
   portalClassName: { control: 'none' },
   portalContainer: { control: 'none' },
   popoverZIndex: { control: 'none' },
