@@ -55,8 +55,10 @@ WithIcon.argTypes = {
   glyph: {
     options: Object.keys(glyphs),
     control: { type: 'select' },
-    defaultValue: 'ActivityFeed',
   },
+};
+WithIcon.args = {
+  glyph: 'ActivityFeed',
 };
 
 export const WithLink: StoryFn<typeof Banner> = ({
