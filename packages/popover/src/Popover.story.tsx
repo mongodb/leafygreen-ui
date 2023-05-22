@@ -3,10 +3,7 @@ import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
-import {
-  storybookExcludedControlParams as defaultExclude,
-  StoryMetaType,
-} from '@leafygreen-ui/lib';
+import { StoryMetaType } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 import Popover, { Align, Justify, PopoverProps } from '.';
@@ -103,7 +100,6 @@ const meta: StoryMetaType<typeof Popover> = {
     default: 'Basic',
     controls: {
       exclude: [
-        ...defaultExclude,
         'children',
         'active',
         'refEl',

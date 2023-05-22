@@ -9,10 +9,7 @@ import ExportIcon from '@leafygreen-ui/icon/dist/Export';
 import SaveIcon from '@leafygreen-ui/icon/dist/Save';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import {
-  storybookExcludedControlParams as defaultExclude,
-  StoryMetaType,
-} from '@leafygreen-ui/lib';
+import { StoryMetaType } from '@leafygreen-ui/lib';
 import { Body, Subtitle } from '@leafygreen-ui/typography';
 
 import { Tab, Tabs, TabsProps } from './index';
@@ -23,7 +20,7 @@ const meta: StoryMetaType<typeof Tabs> = {
   parameters: {
     default: 'LongTabs',
     controls: {
-      exclude: [...defaultExclude, 'children', 'as', 'setSelected'],
+      exclude: ['children', 'as', 'setSelected'],
     },
   },
   args: {

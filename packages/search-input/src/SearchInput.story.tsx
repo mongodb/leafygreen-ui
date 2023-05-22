@@ -4,11 +4,7 @@ import { StoryFn } from '@storybook/react';
 import { kebabCase, startCase } from 'lodash';
 
 import { css } from '@leafygreen-ui/emotion';
-import {
-  storybookArgTypes,
-  storybookExcludedControlParams,
-  StoryMetaType,
-} from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { Body, H1 } from '@leafygreen-ui/typography';
 
@@ -32,13 +28,7 @@ const meta: StoryMetaType<typeof SearchInput> = {
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: [
-        ...storybookExcludedControlParams,
-        'value',
-        'id',
-        'showWedge',
-        'onSubmit',
-      ],
+      exclude: ['value', 'id', 'showWedge'],
     },
   },
 };

@@ -2,11 +2,7 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
-import {
-  storybookArgTypes,
-  storybookExcludedControlParams as defaultExclude,
-  StoryMetaType,
-} from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 import { Body, H2, Link } from '@leafygreen-ui/typography';
 
 import InlineDefinition, { InlineDefinitionProps } from '.';
@@ -28,7 +24,7 @@ const meta: StoryMetaType<typeof InlineDefinition> = {
   parameters: {
     default: 'Demo',
     controls: {
-      exclude: [...defaultExclude, 'trigger', 'open'],
+      exclude: ['trigger', 'open'],
     },
   },
 };

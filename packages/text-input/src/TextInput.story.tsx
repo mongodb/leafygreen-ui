@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
-import {
-  storybookArgTypes,
-  storybookExcludedControlParams as defaultExclude,
-  StoryMetaType,
-} from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 
 import TextInput, { SizeVariant, State, TextInputProps } from '.';
 
@@ -54,7 +50,7 @@ const meta: StoryMetaType<typeof TextInput> = {
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: [...defaultExclude, 'value', 'handleValidation'],
+      exclude: ['value', 'handleValidation'],
     },
   },
 };

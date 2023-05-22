@@ -2,11 +2,7 @@ import React from 'react';
 import { ComponentMeta } from '@storybook/react';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import {
-  storybookArgTypes,
-  // @ts-ignore
-  storybookExcludedControlParams,
-} from '@leafygreen-ui/lib';
+import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 import { SearchResult, type SearchResultProps } from '.';
 
@@ -18,10 +14,8 @@ export default {
     description: 'This is a description',
   },
   argTypes: {
-    ...storybookArgTypes,
-    children: {
-      control: 'text',
-    },
+    children: storybookArgTypes.children,
+    darkMode: storybookArgTypes.darkMode,
     description: {
       control: 'text',
     },

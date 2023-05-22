@@ -2,11 +2,7 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import Code from '@leafygreen-ui/code';
-import {
-  storybookArgTypes,
-  storybookExcludedControlParams as defaultExclude,
-  StoryMetaType,
-} from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
 import Callout, { CalloutProps, Variant } from '.';
@@ -16,9 +12,6 @@ const meta: StoryMetaType<typeof Callout> = {
   component: Callout,
   parameters: {
     default: 'WithLinks',
-    controls: {
-      exclude: [...defaultExclude],
-    },
   },
   args: {
     variant: Variant.Note,

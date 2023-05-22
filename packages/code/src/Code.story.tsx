@@ -5,11 +5,7 @@ import { StoryFn } from '@storybook/react';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import {
-  storybookArgTypes,
-  storybookExcludedControlParams as defaultExclude,
-  type StoryMetaType,
-} from '@leafygreen-ui/lib';
+import { storybookArgTypes, type StoryMetaType } from '@leafygreen-ui/lib';
 
 import LanguageSwitcherExample from './LanguageSwitcher/LanguageSwitcherExample';
 import Code, { CodeProps, Language } from '.';
@@ -68,7 +64,6 @@ const meta: StoryMetaType<typeof Code> = {
     default: 'Basic',
     controls: {
       exclude: [
-        ...defaultExclude,
         'showCustomActionButtons',
         'showCustomButtons',
         'customActionButtons',

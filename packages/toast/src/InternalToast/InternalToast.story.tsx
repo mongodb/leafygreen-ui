@@ -6,10 +6,7 @@ import { css } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider, {
   LeafyGreenProviderProps,
 } from '@leafygreen-ui/leafygreen-provider';
-import {
-  storybookExcludedControlParams as defaultExclude,
-  StoryMetaType,
-} from '@leafygreen-ui/lib';
+import { StoryMetaType } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
 import { Variant } from '../Toast.types';
@@ -22,7 +19,7 @@ const meta: StoryMetaType<typeof InternalToast> = {
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: [...defaultExclude, 'open', 'onClose'],
+      exclude: ['open'],
     },
   },
   decorators: [

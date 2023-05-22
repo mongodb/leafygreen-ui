@@ -2,11 +2,7 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import {
-  storybookArgTypes,
-  storybookExcludedControlParams as defaultExclude,
-  StoryMetaType,
-} from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 
 import {
   InputOptionContent,
@@ -22,7 +18,6 @@ const meta: StoryMetaType<typeof InputOption> = {
     default: 'Basic',
     controls: {
       exclude: [
-        ...defaultExclude,
         'setError',
         'filteredOptions',
         'initialValue',

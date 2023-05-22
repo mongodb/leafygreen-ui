@@ -5,10 +5,7 @@ import Badge from '@leafygreen-ui/badge';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
-import {
-  storybookExcludedControlParams as defaultExclude,
-  StoryMetaType,
-} from '@leafygreen-ui/lib';
+import { StoryMetaType } from '@leafygreen-ui/lib';
 import Pagination, { PaginationProps } from '@leafygreen-ui/pagination';
 
 import {
@@ -47,7 +44,6 @@ const meta: StoryMetaType<typeof Table> = {
     default: 'KitchenSink',
     controls: {
       exclude: [
-        ...defaultExclude,
         'table',
         'children',
         'value',

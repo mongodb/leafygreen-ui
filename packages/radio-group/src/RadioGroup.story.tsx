@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
-import {
-  storybookArgTypes,
-  storybookExcludedControlParams as defaultExclude,
-  StoryMetaType,
-} from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 
 import { Radio, RadioGroup, RadioGroupProps, Size } from '.';
 
@@ -22,7 +18,7 @@ const meta: StoryMetaType<typeof RadioGroup> = {
   },
   parameters: {
     controls: {
-      exclude: [...defaultExclude, 'children', 'name', 'value'],
+      exclude: ['children', 'name', 'value'],
     },
     default: 'Uncontrolled',
   },
