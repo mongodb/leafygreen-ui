@@ -6,7 +6,7 @@ import depcheck from 'depcheck';
 import { readdirSync, readFileSync, writeFileSync } from 'fs';
 import { isEqual, pick } from 'lodash';
 import fetch from 'node-fetch';
-import { resolve } from 'path';
+import { join, resolve } from 'path';
 import { exit } from 'process';
 
 import globalPackageJson from '../package.json';
@@ -32,9 +32,9 @@ const fixTS = cli.opts()['fixTsconfig'];
 const verbose = cli.opts()['verbose'];
 
 // files matching these patterns will be ignored
-const ignoreFilePatterns = [
+const ignoreFilePatterns: Array<RegExp> = [
   /.*.spec.tsx?/,
-  /.*.story.tsx?/,
+  /.*.?stor(y|ies).(t|j)sx?/,
   /.*.stories.tsx?/,
   /.*.example.tsx?/,
   /.*.testutils.tsx?/,
@@ -80,22 +80,42 @@ async function checkDependencies() {
         using,
         pkg,
       );
-      const { devDependencies: listedObj } = pick(pkgJson, ['devDependencies']);
-      const listedDev = listedObj ? Object.keys(listedObj) : [];
+      const { devDependencies: _listedDevObj } = pick(pkgJson, [
+        'devDependencies',
+      ]);
+      const listedDev = _listedDevObj ? Object.keys(_listedDevObj) : [];
 
-      if (
-        listedDev.length &&
-        // Check if every usage of every listed devDep is in some test file
-        !listedDev.every(depName =>
-          using[depName].every(file =>
-            ignoreFilePatterns.some(pattern => pattern.test(file)),
-          ),
-        )
-      ) {
+      // Check if every usage of every listed devDep is in some test file
+      const everyListedDevDepUsedInTestFileOnly = listedDev.every(depName =>
+        using[depName].every(file =>
+          ignoreFilePatterns.some(pattern => pattern.test(file)),
+        ),
+      );
+
+      if (listedDev.length && !everyListedDevDepUsedInTestFileOnly) {
         // add the dependencies that are listed as dev but not used as dev to the unused array to uninstall them
         const listedButNotUsedAsDev = listedDev.filter(
           dep => !usedAsDev.includes(dep) && !ignoreMatches.includes(dep),
         );
+
+        verbose &&
+          console.log(
+            `${chalk.blue(
+              pkg,
+            )}: lists packages as devDependencies, but uses them in package files`,
+          );
+        verbose &&
+          console.log(
+            listedButNotUsedAsDev
+              .map(
+                depName =>
+                  `\t${chalk.bold(depName)} used in: \n\t\t${using[depName]
+                    .map(file => file.replace(join(__dirname, '..'), ''))
+                    .join('\n\t\t')}`,
+              )
+              .join('\n'),
+          );
+
         unusedDev.push(...listedButNotUsedAsDev);
         missing.dependencies.push(...listedButNotUsedAsDev);
       }
@@ -109,23 +129,45 @@ async function checkDependencies() {
         using,
         pkg,
       );
-      const { dependencies: listedObj } = pick(pkgJson, ['dependencies']);
-      const listedDeps = listedObj ? Object.keys(listedObj) : [];
+      const { dependencies: listedDepObj } = pick(pkgJson, ['dependencies']);
+      const listedDeps = listedDepObj ? Object.keys(listedDepObj) : [];
+
+      // Check if at least one usage of every listed dep is not in any test file
+
+      const everyListedDependencyUsedInPackageFile = listedDeps.every(depName =>
+        using[depName]?.some(
+          file => !ignoreFilePatterns.some(pattern => pattern.test(file)),
+        ),
+      );
 
       if (
         usedAsDependency &&
         listedDeps &&
-        // Check if at least one usage of every listed dep is not in any test file
-        !listedDeps.every(depName =>
-          using[depName]?.some(
-            file => !ignoreFilePatterns.some(pattern => pattern.test(file)),
-          ),
-        )
+        !everyListedDependencyUsedInPackageFile
       ) {
         const listedButOnlyUsedAsDev = listedDeps.filter(
           dep =>
             !usedAsDependency.includes(dep) && !ignoreMatches.includes(dep),
         );
+
+        verbose &&
+          console.log(
+            `${chalk.blue(
+              pkg,
+            )}: lists packages as dependency, but ony uses them in test files`,
+          );
+        verbose &&
+          console.log(
+            listedButOnlyUsedAsDev
+              .map(
+                depName =>
+                  `\t${depName}: \n\t\t${using[depName]
+                    .map(file => file.replace(join(__dirname, '..'), ''))
+                    .join('\n\t\t')}`,
+              )
+              .join('\n'),
+          );
+
         unusedDeps.push(...listedButOnlyUsedAsDev);
       }
     }
@@ -286,15 +328,18 @@ function fixTSconfig(pkg: string) {
   }
 }
 
+/**
+ * Sorts DepsRecord into dependencies & devDependencies
+ */
 function sortDependenciesByUsage(
-  localDeps: Record<string, Array<string>>,
+  depsRecord: Record<string, Array<string>>,
   pkgName: string,
 ): {
   dependencies: Array<string>;
   devDependencies: Array<string>;
 } {
   return (
-    Object.entries(localDeps)
+    Object.entries(depsRecord)
       // If the package in provided globally, ignore it
       .filter(([dep]) => !globalDevDependencies.includes(dep))
       // If a dependency is only used in tests or storybook,
@@ -309,11 +354,9 @@ function sortDependenciesByUsage(
           ) {
             // Ignore when we import the package itself in a test file
             if (!name.includes(pkgName)) {
-              verbose && console.log(`${pkgName} uses ${name} in a test file`);
               _missing.devDependencies.push(name);
             }
           } else {
-            verbose && console.log(`${pkgName} missing ${name}`);
             _missing.dependencies.push(name);
           }
 
@@ -327,6 +370,9 @@ function sortDependenciesByUsage(
   );
 }
 
+/**
+ * @returns a parsed package.json
+ */
 function readPackageJson(pkg: string): { [key: string]: any } {
   const pkgJsonPath = resolve(__dirname, `../packages/${pkg}/package.json`);
   const pkgJson = JSON.parse(readFileSync(pkgJsonPath, 'utf-8'));

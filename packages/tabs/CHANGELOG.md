@@ -1,5 +1,11 @@
 # @leafygreen-ui/tabs
 
+## 11.1.0
+
+### Minor Changes
+
+- 2077235fe: Component now supports `baseFontSize` prop
+
 ## 11.0.10
 
 ### Patch Changes

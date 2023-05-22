@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-import { ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams as defaultExclude,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 import { CloseIconColor } from '@leafygreen-ui/modal';
 
-import { ConfirmationModal } from './ConfirmationModal/ConfirmationModal';
-import { Variant } from './ConfirmationModal/types';
+import ConfirmationModal, { ConfirmationModalProps, Variant } from '.';
 
-export default {
+const meta: StoryMetaType<typeof ConfirmationModal> = {
   title: 'Components/Modals/ConfirmationModal',
   component: ConfirmationModal,
   args: {
@@ -40,13 +43,16 @@ export default {
     },
   },
   parameters: {
+    default: 'Basic',
     controls: {
-      exclude: ['className', 'onConfirm', 'onCancel', 'open', 'initialFocus'],
+      exclude: [...defaultExclude, 'open', 'initialFocus'],
     },
   },
 };
 
-const ControlledTemplate: ComponentStory<typeof ConfirmationModal> = ({
+export default meta;
+
+const ControlledTemplate: StoryFn<ConfirmationModalProps> = ({
   // eslint-disable-next-line react/prop-types
   darkMode,
   ...args

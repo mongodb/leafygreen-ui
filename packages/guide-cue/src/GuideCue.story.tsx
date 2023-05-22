@@ -1,26 +1,31 @@
 import React, { useRef, useState } from 'react';
-import { ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams as defaultExclude,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 import { Body } from '@leafygreen-ui/typography';
 
-import { GuideCueProps } from './types';
-import { GuideCue } from '.';
+import { GuideCue, GuideCueProps } from '.';
 
-export default {
+const meta: StoryMetaType<React.ElementType<GuideCueProps>> = {
   title: 'Components/GuideCue',
+  // FIXME: React propTypes don't match TS
+  // @ts-expect-error
   component: GuideCue,
   parameters: {
+    default: 'Default',
     controls: {
       exclude: [
-        'className',
+        ...defaultExclude,
         'refEl',
         'setOpen',
         'tooltipClassName',
         'open',
-        'onDismiss',
         'onPrimaryButtonClick',
       ],
     },
@@ -49,7 +54,9 @@ export default {
   },
 };
 
-const Template: ComponentStory<typeof GuideCue> = args => {
+export default meta;
+
+const Template: StoryFn<GuideCueProps> = (args: GuideCueProps) => {
   const [open, setOpen] = useState<boolean>(false);
   const triggerRef = useRef<null | HTMLDivElement>(null);
   const { children, darkMode } = args;
@@ -108,7 +115,9 @@ const scrollableInnerStyle = css`
   justify-content: center;
 `;
 
-export const ScrollableContainer = (args: GuideCueProps) => {
+export const ScrollableContainer: StoryFn<GuideCueProps> = (
+  args: GuideCueProps,
+) => {
   const [open, setOpen] = useState<boolean>(false);
   const triggerRef = useRef<null | HTMLDivElement>(null);
   const portalContainer = useRef<HTMLDivElement | null>(null);
@@ -151,7 +160,7 @@ const spacing = css`
   margin-bottom: 30px;
 `;
 
-export const MultistepDemo = (args: GuideCueProps) => {
+export const MultistepDemo: StoryFn<GuideCueProps> = (args: GuideCueProps) => {
   const { darkMode } = args;
   const [open, setOpen] = useState<boolean>(false);
   const [currentStep, setCurrentStep] = useState<number>(1);

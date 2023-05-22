@@ -1,22 +1,22 @@
 /* eslint-disable react/jsx-key */
+/* eslint-disable react/display-name */
 import React from 'react';
-import { Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import { StoryMeta } from '@leafygreen-ui/lib';
+import { type StoryMetaType } from '@leafygreen-ui/lib';
 
 import { Size } from './types';
 import Button, { ButtonProps, Variant } from '.';
 
-export default StoryMeta({
+const meta: StoryMetaType<typeof Button> = {
   title: 'Components/Button',
   component: Button,
-  excludeStories: ['StoryButton'],
   args: {
     children: 'MongoDB',
   },
   parameters: {
-    default: 'Default',
+    default: 'LiveExample',
     generate: {
       variant: Object.values(Variant),
       size: Object.values(Size),
@@ -51,9 +51,11 @@ export default StoryMeta({
       control: 'text',
     },
   },
-});
+};
 
-const Template: Story<ButtonProps> = ({
+export default meta;
+
+export const LiveExample: StoryFn<typeof Button> = ({
   leftGlyph,
   rightGlyph,
   ...args
@@ -66,10 +68,5 @@ const Template: Story<ButtonProps> = ({
     {...args}
   />
 );
-
-export const Default = Template.bind({});
-Default.args = {
-  variant: Variant.Default,
-};
 
 export const Generated = () => {};

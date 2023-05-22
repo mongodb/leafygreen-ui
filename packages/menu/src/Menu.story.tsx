@@ -5,7 +5,10 @@ import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { StoryMeta } from '@leafygreen-ui/lib';
+import {
+  storybookExcludedControlParams as defaultExclude,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import { Size } from './types';
 import {
@@ -18,13 +21,20 @@ import {
   SubMenuProps,
 } from '.';
 
-export default StoryMeta({
+const meta: StoryMetaType<typeof Menu> = {
   title: 'Components/Menu',
   component: Menu,
   parameters: {
     default: 'SubMenuExample',
     controls: {
-      exclude: ['trigger', 'children', 'refEl', 'setOpen', 'as'],
+      exclude: [
+        ...defaultExclude,
+        'trigger',
+        'children',
+        'refEl',
+        'setOpen',
+        'as',
+      ],
     },
   },
   args: {
@@ -47,7 +57,8 @@ export default StoryMeta({
         'Size of the `MenuItem` component, can be `default` or `large`',
     },
   },
-});
+};
+export default meta;
 
 export const UncontrolledTemplate = ({
   size,

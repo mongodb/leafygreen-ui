@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
-import { ComponentStory, Meta } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import Code from '@leafygreen-ui/code';
 import Copyable from '@leafygreen-ui/copyable';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams as defaultExclude,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 import { Option, OptionGroup, Select } from '@leafygreen-ui/select';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Body, H3, Subtitle } from '@leafygreen-ui/typography';
 
 import Modal, { CloseIconColor, ModalProps, ModalSize } from '.';
 
-type StoryModal = React.FC<ModalProps>;
-
-export default {
+const meta: StoryMetaType<typeof Modal> = {
   title: 'Components/Modals/Modal',
   component: Modal,
   argTypes: {
@@ -34,11 +36,19 @@ export default {
     `,
   },
   parameters: {
+    default: 'Controlled',
     controls: {
-      exclude: ['className', 'setOpen', 'shouldClose', 'children', 'open'],
+      exclude: [
+        ...defaultExclude,
+        'setOpen',
+        'shouldClose',
+        'children',
+        'open',
+      ],
     },
   },
-} as Meta<typeof Modal>;
+};
+export default meta;
 
 const margin = css`
   & > * + * {
@@ -46,7 +56,7 @@ const margin = css`
   }
 `;
 
-const ControlledTemplate: ComponentStory<StoryModal> = (args: ModalProps) => {
+const ControlledTemplate: StoryFn<ModalProps> = (args: ModalProps) => {
   const [open, setOpen] = useState(false);
   const { darkMode } = args;
   return (

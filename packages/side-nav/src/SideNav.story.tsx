@@ -1,25 +1,36 @@
 import React, { useState } from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { storybookArgTypes, Theme } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams as defaultExclude,
+  StoryMetaType,
+  Theme,
+} from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { Option, Select, Size } from '@leafygreen-ui/select';
 import { Body, H1 } from '@leafygreen-ui/typography';
 
-import { SideNavProps } from './SideNav/SideNav.types';
-import { CollapsedSideNavItem, SideNav, SideNavGroup, SideNavItem } from '.';
+import {
+  CollapsedSideNavItem,
+  SideNav,
+  SideNavGroup,
+  SideNavItem,
+  type SideNavProps,
+} from '.';
 
-export default {
+const meta: StoryMetaType<typeof SideNav> = {
   title: 'Components/SideNav',
   component: SideNav,
   parameters: {
+    default: 'Basic',
     controls: {
-      exclude: ['children', 'className', 'setCollapsed', 'id', 'collapsed'],
+      exclude: [...defaultExclude, 'children', 'setCollapsed', 'collapsed'],
     },
   },
   argTypes: {
@@ -29,13 +40,14 @@ export default {
   args: {
     widthOverride: 200,
   },
-} as ComponentMeta<typeof SideNav>;
+};
+export default meta;
 
 const basicStyles = css`
   height: 50vh;
 `;
 
-export const Basic: ComponentStory<typeof SideNav> = ({
+export const Basic: StoryFn<SideNavProps> = ({
   className,
   ...args
 }: SideNavProps) => {

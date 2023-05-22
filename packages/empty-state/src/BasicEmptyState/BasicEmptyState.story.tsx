@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react';
-import { ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
-import { storybookArgTypes, Theme } from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMetaType, Theme } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
 import DarkModeGraphic from '../example-graphics/DarkModeGraphic.svg';
@@ -10,9 +10,9 @@ import DarkModeSmallGraphic from '../example-graphics/DarkModeSmallGraphic.svg';
 import LightModeGraphic from '../example-graphics/LightModeGraphic.svg';
 import LightModeSmallGraphic from '../example-graphics/LightModeSmallGraphic.svg';
 
-import { BasicEmptyState } from '.';
+import { BasicEmptyState, BasicEmptyStateProps } from '.';
 
-export default {
+const meta: StoryMetaType<typeof BasicEmptyState> = {
   title: 'Components/EmptyState/Basic',
   component: BasicEmptyState,
   args: {
@@ -29,11 +29,14 @@ export default {
     darkMode: storybookArgTypes.darkMode,
   },
   parameters: {
+    default: null,
     controls: {
       exclude: ['className', 'graphicSize'],
     },
   },
 };
+export default meta;
+
 const graphics: Record<Theme, Record<string, ReactElement>> = {
   [Theme.Dark]: {
     small: <DarkModeSmallGraphic viewBox="0 0 198 131" />,
@@ -45,9 +48,8 @@ const graphics: Record<Theme, Record<string, ReactElement>> = {
   },
 };
 
-const Template: ComponentStory<typeof BasicEmptyState> = ({
+const Template: StoryFn<BasicEmptyStateProps> = ({
   // eslint-disable-next-line react/prop-types
-  // @ts-expect-error graphicSize is a Storybook only prop
   graphicSize = 'normal',
   ...rest
 }) => {
@@ -55,7 +57,7 @@ const Template: ComponentStory<typeof BasicEmptyState> = ({
   const theme = rest.darkMode ? Theme.Dark : Theme.Light;
   return (
     <BasicEmptyState
-      {...rest}
+      {...(rest as BasicEmptyStateProps)}
       // eslint-disable-next-line react/prop-types
       graphic={rest.graphic ? graphics[theme][graphicSize] : undefined}
     />

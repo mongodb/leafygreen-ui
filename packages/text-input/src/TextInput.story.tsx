@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import { ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams as defaultExclude,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import TextInput, { SizeVariant, State, TextInputProps } from '.';
 
-export const StoryTextInput: React.FC<TextInputProps> = props => (
-  <TextInput {...props} />
-);
-
-export default {
+const meta: StoryMetaType<typeof TextInput> = {
   title: 'Components/TextInput',
-  component: StoryTextInput,
+  component: TextInput,
   args: {
     label: 'Label',
     description: 'This is a description for the input',
@@ -52,24 +52,17 @@ export default {
     baseFontSize: storybookArgTypes.updatedBaseFontSize,
   },
   parameters: {
+    default: 'Basic',
     controls: {
-      exclude: [
-        'ref',
-        'value',
-        'className',
-        'onBlur',
-        'onChange',
-        'handleValidation',
-        'aria-labelledby',
-      ],
+      exclude: [...defaultExclude, 'value', 'handleValidation'],
     },
   },
-  excludeStories: ['StoryTextInput'],
 };
+export default meta;
 
-const Template: ComponentStory<typeof StoryTextInput> = ({
-  ...args
-}: TextInputProps) => <TextInput {...args} />;
+const Template: StoryFn<TextInputProps> = ({ ...args }: TextInputProps) => (
+  <TextInput {...args} />
+);
 
 export const Basic = Template.bind({});
 
@@ -89,7 +82,7 @@ export const WithValidation = (args: TextInputProps) => {
   };
 
   return (
-    <Template
+    <TextInput
       placeholder="lauren@ipsum.com"
       state={state}
       type="email"

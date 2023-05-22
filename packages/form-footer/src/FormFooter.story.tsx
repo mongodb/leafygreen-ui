@@ -1,21 +1,24 @@
 import React from 'react';
-import { ComponentStory, Meta } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams as defaultExclude,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
-import { FormFooterProps } from './FormFooter';
-import FormFooter from '.';
+import FormFooter, { FormFooterProps } from '.';
 
-export default {
+const meta: StoryMetaType<typeof FormFooter> = {
   title: 'Components/FormFooter',
   component: FormFooter,
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: ['onCancel', 'contentClassName', 'className', 'onBackClick'],
+      exclude: [...defaultExclude, 'contentClassName', 'onBackClick'],
     },
     wrapperStyle: css`
       width: 90%;
@@ -28,9 +31,7 @@ export default {
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
     cancelButtonText: { control: 'text' },
-    onCancel: { control: 'none' },
     backButtonText: { control: 'text' },
-    onBackClick: { control: 'none' },
     errorMessage: { control: 'text' },
     contentClassName: { control: 'text' },
     primaryButtonText: {
@@ -39,11 +40,12 @@ export default {
         '*Storybook only prop* The primary (right-most) button text.',
     },
   },
-} as Meta<typeof FormFooter>;
+};
+export default meta;
 
 type FormFooterStoryProps = FormFooterProps & { primaryButtonText?: string };
 
-const Template: ComponentStory<typeof FormFooter> = ({
+const Template: StoryFn<FormFooterProps> = ({
   primaryButtonText,
   ...args
 }: FormFooterStoryProps) => (
@@ -97,7 +99,7 @@ WithCustomPrimaryButton.parameters = {
   },
 };
 
-export const InLargerContainer: ComponentStory<typeof FormFooter> = args => (
+export const InLargerContainer: StoryFn<FormFooterProps> = args => (
   <div
     className={css`
       width: 1500px;

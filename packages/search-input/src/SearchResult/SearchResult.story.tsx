@@ -37,13 +37,8 @@ export default {
     },
   },
   parameters: {
-    controls: {
-      exclude: [
-        ...storybookExcludedControlParams,
-        'aria-label',
-        'aria-labelledby',
-      ],
-    },
+    default: null,
+    chromatic: { disableSnapshot: true },
   },
 } as ComponentMeta<any>;
 

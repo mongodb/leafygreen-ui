@@ -1,18 +1,20 @@
 import React, { useRef } from 'react';
-import { Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
-import { storybookArgTypes } from '@leafygreen-ui/lib';
-import { StoryMeta } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams as defaultExclude,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import {
   NotificationProps,
-  PasswordInputProps,
   Size,
   State,
 } from './PasswordInput/PasswordInput.types';
-import { PasswordInput } from '.';
+import { PasswordInput, PasswordInputProps } from '.';
 
-export default StoryMeta({
+const meta: StoryMetaType<typeof PasswordInput> = {
   title: 'Components/PasswordInput',
   component: PasswordInput,
   args: {
@@ -38,17 +40,11 @@ export default StoryMeta({
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: [
-        'as',
-        'children',
-        'aria-labelledby',
-        'aria-describedby',
-        'aria-label',
-        'value',
-      ],
+      exclude: [...defaultExclude, 'as', 'children', 'value'],
     },
   },
-});
+};
+export default meta;
 
 const userFriendlyObj: { [key: string]: Array<NotificationProps> } = {
   'No State Notifications': [],
@@ -125,7 +121,7 @@ type UserFriendlyProps = PasswordInputProps & {
   stateNotificationsSelect: UserFriendlyObj;
 };
 
-const UserFriendlyTemplate: Story<UserFriendlyProps> = ({
+const UserFriendlyTemplate: StoryFn<UserFriendlyProps> = ({
   stateNotificationsSelect,
   label,
   ...rest
@@ -142,7 +138,7 @@ const UserFriendlyTemplate: Story<UserFriendlyProps> = ({
   );
 };
 
-const Template: Story<PasswordInputProps> = props => {
+const Template: StoryFn<PasswordInputProps> = (props: PasswordInputProps) => {
   return <PasswordInput data-testid="test-id" {...props} />;
 };
 

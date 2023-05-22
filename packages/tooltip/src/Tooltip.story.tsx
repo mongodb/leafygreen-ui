@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
-import { ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams as defaultExclude,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body, InlineCode, Subtitle } from '@leafygreen-ui/typography';
 
 import Tooltip, { Align, Justify, TooltipProps } from '.';
 
-export default {
+const meta: StoryMetaType<typeof Tooltip> = {
   title: 'Components/Tooltip',
   component: Tooltip,
   args: {
@@ -31,12 +35,13 @@ export default {
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: ['trigger', 'className'],
+      exclude: [...defaultExclude, 'trigger'],
     },
   },
 };
+export default meta;
 
-export const Basic: ComponentStory<typeof Tooltip> = ({
+export const Basic: StoryFn<TooltipProps> = ({
   darkMode,
   ...args
 }: TooltipProps) => (

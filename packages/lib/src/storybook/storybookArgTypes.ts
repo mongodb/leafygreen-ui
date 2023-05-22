@@ -5,13 +5,26 @@ export interface StoryArgType extends InputType {
    * Identify an arg to determine where the control is defined
    */
   displayedPlatforms?: 'storybookOnly' | 'websiteOnly';
+
+  /**
+   * Define the control type
+   *
+   * Avoid using this property to exclude a control.
+   * Use `parameters.controls.exclude` for this.
+   */
+  control?:
+    | string
+    | {
+        type: string;
+        [key: string]: any;
+      };
 }
 
-export const storybookArgTypes = {
+export const storybookArgTypes: Record<string, StoryArgType> = {
   baseFontSize: {
     description:
       'The base font size passed to the LeafyGreenProvider that wraps the component',
-    control: { type: 'radio' },
+    control: { type: 'none' },
     options: [14, 16],
   },
   updatedBaseFontSize: {

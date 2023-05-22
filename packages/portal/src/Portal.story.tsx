@@ -1,10 +1,13 @@
 import React from 'react';
-import { ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
-import { StoryMeta } from '@leafygreen-ui/lib';
+import {
+  storybookExcludedControlParams as defaultExclude,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
-import Portal from '.';
+import Portal, { PortalProps } from '.';
 
 const portalChildrenStyle = css`
   text-align: center;
@@ -13,6 +16,7 @@ const portalChildrenStyle = css`
 function getRoot() {
   const root =
     document.getElementById('root') ||
+    document.getElementById('storybook-root') ||
     document.getElementById('story-container');
 
   if (root == null) {
@@ -22,7 +26,7 @@ function getRoot() {
   return root;
 }
 
-export default StoryMeta({
+const meta: StoryMetaType<typeof Portal> = {
   title: 'Components/Portal',
   component: Portal,
   args: {
@@ -43,11 +47,12 @@ export default StoryMeta({
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: ['children', 'container'],
+      exclude: [...defaultExclude, 'children', 'container'],
     },
   },
-});
+};
+export default meta;
 
-export const Basic: ComponentStory<typeof Portal> = args => (
+export const Basic: StoryFn<PortalProps> = (args: PortalProps) => (
   <Portal {...args} />
 );

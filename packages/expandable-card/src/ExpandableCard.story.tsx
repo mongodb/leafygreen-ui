@@ -1,25 +1,21 @@
 import React, { SyntheticEvent, useState } from 'react';
-import { ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams as defaultExclude,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
-import ExpandableCard from '.';
+import ExpandableCard, { type ExpandableCardProps } from '.';
 
-export default {
+const meta: StoryMetaType<typeof ExpandableCard> = {
   title: 'Components/ExpandableCard',
   component: ExpandableCard,
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: [
-        'className',
-        'contentClassName',
-        'id',
-        'onClick',
-        'isOpen',
-        'defaultOpen',
-        'ref',
-      ],
+      exclude: [...defaultExclude, 'isOpen', 'defaultOpen'],
     },
   },
   args: {
@@ -41,11 +37,13 @@ export default {
   },
 };
 
-export const Basic: ComponentStory<typeof ExpandableCard> = args => (
+export default meta;
+
+export const Basic: StoryFn<ExpandableCardProps> = args => (
   <ExpandableCard {...args} />
 );
 
-export const Controlled: ComponentStory<typeof ExpandableCard> = args => {
+export const Controlled: StoryFn<ExpandableCardProps> = args => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = (

@@ -4,13 +4,14 @@ module.exports = function (api) {
   const presets = [
     '@babel/preset-typescript',
     '@babel/preset-react',
+    // FIXME: Storybook doesn't seem to like this preset
     [
       '@babel/preset-env',
       {
         targets: {
           browsers: ['last 2 versions', 'safari >= 7', 'ie >= 10'],
         },
-        modules: api.env('production') ? false : 'commonjs',
+        // modules: api.env('production') ? false : 'commonjs',
       },
     ],
   ];

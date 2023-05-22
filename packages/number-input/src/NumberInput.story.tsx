@@ -1,16 +1,15 @@
 import React, { useRef, useState } from 'react';
-import { Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
-import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
-
 import {
-  NumberInputProps,
-  Size,
-  State,
-  UnitOption,
-} from './NumberInput/NumberInput.types';
-import { NumberInput } from '.';
+  storybookArgTypes,
+  storybookExcludedControlParams as defaultExclude,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
+
+import { Size, State, UnitOption } from './NumberInput/NumberInput.types';
+import { NumberInput, NumberInputProps } from '.';
 
 const unitOptions = [
   {
@@ -31,7 +30,7 @@ const unitOptions = [
   },
 ];
 
-export default StoryMeta({
+const meta: StoryMetaType<typeof NumberInput> = {
   title: 'Components/NumberInput',
   component: NumberInput,
   args: {
@@ -73,22 +72,17 @@ export default StoryMeta({
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: [
-        'as',
-        'children',
-        'aria-labelledby',
-        'aria-describedby',
-        'aria-label',
-        'value',
-        'onSelectChange',
-      ],
+      exclude: [...defaultExclude, 'as', 'children', 'value', 'onSelectChange'],
     },
   },
-});
+};
+export default meta;
 
-type StoryProps = NumberInputProps & { view: string };
+type StoryNumberInputProps = NumberInputProps & { view: string };
 
-const Template: Story<StoryProps> = args => {
+const Template: StoryFn<StoryNumberInputProps> = (
+  args: StoryNumberInputProps,
+) => {
   const { unit: unitProp = 'one', unitOptions = [], ...rest } = args;
   const [unit, setUnit] = useState<string>(unitOptions[0]?.displayName);
   const [value, setValue] = useState<string>('');

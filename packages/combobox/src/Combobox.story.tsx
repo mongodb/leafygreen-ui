@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
-import {
-  Combobox,
-  ComboboxGroup,
-  ComboboxOption,
-} from '@leafygreen-ui/combobox';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
-import { StoryMeta } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams as defaultExclude,
+  type StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import {
   ComboboxSize,
@@ -18,6 +17,7 @@ import {
   State,
   TruncationLocation,
 } from './Combobox.types';
+import { Combobox, ComboboxGroup, ComboboxOption, ComboboxProps } from '.';
 
 const wrapperStyle = css`
   width: 256px;
@@ -25,13 +25,21 @@ const wrapperStyle = css`
   display: flex;
 `;
 
-export default StoryMeta({
+const meta: StoryMetaType<typeof Combobox> = {
   title: 'Components/Combobox',
   component: Combobox,
+  decorators: [
+    StoryFn => (
+      <div className={wrapperStyle}>
+        <StoryFn />
+      </div>
+    ),
+  ],
   parameters: {
     default: 'Demo',
     controls: {
       exclude: [
+        ...defaultExclude,
         'as',
         'filteredOptions',
         'initialValue',
@@ -42,13 +50,11 @@ export default StoryMeta({
     },
   },
   argTypes: {
+    darkMode: storybookArgTypes.darkMode,
     multiselect: {
       control: 'boolean',
     },
     disabled: {
-      control: 'boolean',
-    },
-    darkMode: {
       control: 'boolean',
     },
     clearable: {
@@ -111,7 +117,9 @@ export default StoryMeta({
     disabled: false,
     clearable: true,
   },
-});
+};
+
+export default meta;
 
 const getComboboxOptions = (withGlyphs = true) => [
   <ComboboxOption
@@ -191,25 +199,25 @@ const getComboboxOptions = (withGlyphs = true) => [
   </ComboboxGroup>,
 ];
 
-const Template: ComponentStory<typeof Combobox> = args => (
-  <div className={wrapperStyle}>
-    <Combobox {...args} />
-  </div>
-);
+const SingleTemplate: StoryFn<ComboboxProps<false>> = (
+  args: ComboboxProps<false>,
+) => <Combobox {...args} />;
 
-export const SingleSelect = Template.bind({});
+export const SingleSelect: StoryFn<ComboboxProps<false>> = (
+  args: ComboboxProps<false>,
+) => <Combobox {...args} />;
 SingleSelect.args = {
   label: 'Choose a fruit',
   description: 'Please pick one',
   placeholder: 'Select fruit',
   multiselect: false,
-  children: getComboboxOptions(),
+  // children: getComboboxOptions(),
 };
 SingleSelect.argTypes = {
   multiselect: { control: 'none' },
 };
 
-export const SingleSelectWithoutGlyphs = Template.bind({});
+export const SingleSelectWithoutGlyphs = SingleTemplate.bind({});
 SingleSelectWithoutGlyphs.args = {
   label: 'Choose a fruit',
   description: 'Please pick one',
@@ -221,7 +229,7 @@ SingleSelectWithoutGlyphs.argTypes = {
   multiselect: { control: 'none' },
 };
 
-export const WithError = Template.bind({});
+export const WithError = SingleTemplate.bind({});
 WithError.args = {
   label: 'Choose a fruit',
   description: 'Please pick one',
@@ -231,7 +239,11 @@ WithError.args = {
   state: 'error',
 };
 
-export const Multiselect = Template.bind({});
+const MultiTemplate: StoryFn<ComboboxProps<true>> = (
+  args: ComboboxProps<true>,
+) => <Combobox {...args} />;
+
+export const Multiselect = MultiTemplate.bind({});
 Multiselect.args = {
   label: 'Choose a fruit',
   description: 'Please pick some',
@@ -245,7 +257,7 @@ Multiselect.argTypes = {
   },
 };
 
-export const MultiselectWithoutGlyphs = Template.bind({});
+export const MultiselectWithoutGlyphs = MultiTemplate.bind({});
 MultiselectWithoutGlyphs.args = {
   label: 'Choose a fruit',
   description: 'Please pick some',
@@ -267,7 +279,7 @@ export const ControlledSingleSelect = () => {
   };
 
   return (
-    <>
+    <div>
       <Combobox
         multiselect={false}
         label="Choose a fruit"
@@ -281,7 +293,7 @@ export const ControlledSingleSelect = () => {
         <ComboboxOption value="carrot" />
       </Combobox>
       <Button onClick={() => setSelection('carrot')}>Select Carrot</Button>
-    </>
+    </div>
   );
 };
 
@@ -322,16 +334,18 @@ export const ExternalFilter = () => {
   );
 };
 
-export const Demo: ComponentStory<typeof Combobox> = args => {
+export const Demo: StoryFn<ComboboxProps<boolean>> = (
+  args: ComboboxProps<boolean>,
+) => {
   return (
-    <div className={wrapperStyle}>
+    <>
       {/* Since Combobox doesn't fully refresh when `multiselect` changes, we need to explicitly render a different instance */}
       {args.multiselect ? (
         <Combobox key="multi" {...args} multiselect={true} />
       ) : (
         <Combobox key="single" {...args} multiselect={false} />
       )}
-    </div>
+    </>
   );
 };
 Demo.args = {

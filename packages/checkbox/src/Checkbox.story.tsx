@@ -1,19 +1,22 @@
 import React from 'react';
-import { ComponentMeta, Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
-import Checkbox from '@leafygreen-ui/checkbox';
 import { css } from '@leafygreen-ui/emotion';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams as defaultExclude,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
-import { CheckboxProps } from './types';
+import Checkbox, { CheckboxProps } from '.';
 
-export default {
+const meta: StoryMetaType<typeof Checkbox> = {
   title: 'Components/Checkbox',
   component: Checkbox,
   parameters: {
     controls: {
-      exclude: ['children', 'className', 'aria-label', 'onChange'],
+      exclude: [...defaultExclude, 'checked'],
     },
     default: 'Uncontrolled',
   },
@@ -21,22 +24,23 @@ export default {
     label: { control: 'text' },
     description: { control: 'text' },
     darkMode: storybookArgTypes.darkMode,
-    checked: { control: 'none' },
     disabled: { control: 'boolean' },
     bold: { control: 'boolean' },
     indeterminate: { control: 'boolean' },
     animate: { control: 'boolean', default: true },
     baseFontSize: storybookArgTypes.baseFontSize,
   },
-} as ComponentMeta<typeof Checkbox>;
+};
+export default meta;
 
 type BaseFontSize = 14 | 16;
+type StoryCheckboxProps = CheckboxProps & { baseFontSize: BaseFontSize };
 
-const Template: Story<CheckboxProps & { baseFontSize: BaseFontSize }> = ({
+const Template: StoryFn<StoryCheckboxProps> = ({
   // eslint-disable-next-line react/prop-types
   baseFontSize,
   ...args
-}) => (
+}: StoryCheckboxProps) => (
   <LeafygreenProvider baseFontSize={baseFontSize}>
     <Checkbox {...args} />
   </LeafygreenProvider>

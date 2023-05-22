@@ -3,7 +3,7 @@
 import { Meta } from '@storybook/react';
 import React from 'react';
 import { Table, Row, Cell, TableHeader, HeaderRow, DataType } from '.';
-import { defaultData } from './fixtures';
+import { defaultData } from './fixtures.testutils';
 import { TableProps } from './Table';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 

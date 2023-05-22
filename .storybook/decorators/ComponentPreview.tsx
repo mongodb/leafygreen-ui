@@ -3,7 +3,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { palette } from '@leafygreen-ui/palette';
 import {
-  DecoratorFn,
+  Decorator,
   ReactFramework,
   StoryContext,
   StoryFn,
@@ -23,7 +23,7 @@ const darkModeStyle = css`
   background-color: ${palette.black};
 `;
 
-const decorator: DecoratorFn = (
+const decorator: Decorator = (
   StoryFn: StoryFn,
   context: StoryContext<ReactFramework>,
 ) => {
