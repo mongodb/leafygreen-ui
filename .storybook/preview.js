@@ -16,7 +16,7 @@ export const parameters = {
   argTypes: {
     // By default we set specific argTypes to `control: none`
     // Storybook merges objects better than arrays
-    ...storybookExcludedArgTypes
+    ...storybookExcludedArgTypes,
   },
   controls: {
     expanded: true,
