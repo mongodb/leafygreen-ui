@@ -6,11 +6,11 @@ This custom decorator reads metadata from the storybook default export, and gene
 
 ## Storybook Config
 
-Add a `generated` parameter in the story meta object.
+Add a `generate` parameter in the story meta object.
 
-```ts
+```tsx
 // Button.stories.tsx
-export default StoryMeta({
+const meta: StoryMeta<typeof Button> = {
   component: Button,
   parameters: {
     default: 'Basic',
@@ -22,12 +22,13 @@ export default StoryMeta({
       darkMode: [false, true],
     },
   },
-});
+};
+export default meta;
 ```
 
 Export an empty story titled `Generated` from the story file
 
-```ts
+```tsx
 // Button.stories.tsx
 
 export const Generated = () => {};
