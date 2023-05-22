@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { MouseEvent, useRef } from 'react';
 
 import { Size } from '@leafygreen-ui/button';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
@@ -19,7 +19,9 @@ export default StoryMeta({
     menuItems: (
       <>
         {/* eslint-disable-next-line no-console */}
-        <MenuItem onClick={event => console.log(event)}>Menu Item</MenuItem>
+        <MenuItem onClick={(event: MouseEvent) => console.log(event)}>
+          Menu Item
+        </MenuItem>
         <MenuItem description="I am a description" disabled>
           Disabled Menu Item
         </MenuItem>
