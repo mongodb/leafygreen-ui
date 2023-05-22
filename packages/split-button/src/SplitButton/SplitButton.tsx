@@ -132,5 +132,3 @@ SplitButton.propTypes = {
       : PropTypes.any,
   portalClassName: PropTypes.string,
 } as any;
-
-// TODO: link to .design

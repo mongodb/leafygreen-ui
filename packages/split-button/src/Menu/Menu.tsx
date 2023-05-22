@@ -67,6 +67,8 @@ export const Menu = ({
             return React.cloneElement(menuItem, {
               active: false,
             });
+          } else {
+            console.warn('Please use a LeafyGreen <MenuItem> component.');
           }
         }
       }
