@@ -105,6 +105,7 @@ export const SplitButton = InferredPolymorphic<SplitButtonProps, 'button'>(
       </div>
     );
   },
+  'SplitButton',
 );
 
 SplitButton.displayName = 'SplitButton';

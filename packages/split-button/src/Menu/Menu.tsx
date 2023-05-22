@@ -52,6 +52,8 @@ export const Menu = ({
                     active: false,
                     key: `menuItem-${index}`,
                   });
+                } else {
+                  console.warn('Please use a LeafyGreen <MenuItem> component.');
                 }
               },
             );

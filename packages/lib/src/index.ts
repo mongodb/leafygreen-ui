@@ -87,7 +87,10 @@ export function isComponentType<T = React.ReactElement>(
     element != null &&
     typeof element === 'object' &&
     'type' in element &&
-    (element.type as any).displayName === displayName
+    ((element.type as any).displayName === displayName ||
+      // TODO: temp solution; Components using InferredPolymorphic have a displayName inside render.
+      ('render' in (element.type as any) &&
+        (element.type as any).render.displayName === displayName))
   );
 }
 

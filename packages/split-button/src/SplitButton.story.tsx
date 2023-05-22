@@ -12,6 +12,23 @@ export default StoryMeta({
   component: SplitButton,
   args: {
     label: 'label',
+    variant: Variant.Default,
+    align: Align.Bottom,
+    justify: Justify.End,
+    spacing: 6,
+    menuItems: (
+      <>
+        {/* eslint-disable-next-line no-console */}
+        <MenuItem onClick={event => console.log(event)}>Menu Item</MenuItem>
+        <MenuItem description="I am a description" disabled>
+          Disabled Menu Item
+        </MenuItem>
+        <MenuItem description="I am also a description">
+          Menu Item With Description
+        </MenuItem>
+        <MenuItem>I am not a link!</MenuItem>
+      </>
+    ),
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -53,6 +70,9 @@ export default StoryMeta({
         'aria-label',
         'value',
         'menuItems',
+        'href',
+        'type',
+        'maxHeight',
       ],
     },
   },
@@ -69,19 +89,6 @@ const Template = (props: SplitButtonProps) => {
       {...rest}
       // eslint-disable-next-line no-console
       onClick={event => console.log(event)}
-      menuItems={
-        <>
-          {/* eslint-disable-next-line no-console */}
-          <MenuItem onClick={event => console.log(event)}>Menu Item</MenuItem>
-          <MenuItem description="I am a description" disabled>
-            Disabled Menu Item
-          </MenuItem>
-          <MenuItem description="I am also a description">
-            Menu Item With Description
-          </MenuItem>
-          <MenuItem>I am not a link!</MenuItem>
-        </>
-      }
       ref={splitButtonRef}
     />
   );
