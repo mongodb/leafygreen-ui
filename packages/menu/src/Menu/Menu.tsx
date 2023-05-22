@@ -381,6 +381,7 @@ export function Menu({
         ref: triggerRef,
         children: popoverContent,
         ['aria-expanded']: open,
+        ['aria-haspopup']: true,
       });
     }
 
@@ -394,6 +395,7 @@ export function Menu({
         </>
       ),
       ['aria-expanded']: open,
+      ['aria-haspopup']: true,
     });
 
     return renderedTrigger;

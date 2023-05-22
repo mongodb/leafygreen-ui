@@ -93,7 +93,6 @@ export const Menu = ({
             [triggerThemeStyles(theme, variant!)]: !disabled,
           })}
           aria-label="More options" // TODO: should this be a prop for consumers?
-          aria-haspopup={true}
           aria-owns={id}
         />
       }

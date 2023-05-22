@@ -58,18 +58,13 @@ export const SplitButton = InferredPolymorphic<SplitButtonProps, 'button'>(
 
     const buttonProps = {
       // only add these props if not an anchor
-      ...(!isAnchor && { disabled }),
-      ...(!isAnchor && { type }),
+      ...(!isAnchor && { disabled, type }),
     };
 
     const sharedButtonProps = { variant, size, baseFontSize };
 
     return (
-      <div
-        id="testetst"
-        className={cx(buttonContainerStyles, className)}
-        ref={containerRef}
-      >
+      <div className={cx(buttonContainerStyles, className)} ref={containerRef}>
         <LeafyGreenProvider darkMode={darkMode}>
           {/* TODO: remove when Button is updated to use `InferredPolymorphic` */}
           {/* @ts-expect-error - Types of property `href` are incompatible. Button types href as string, but InferredPolymorphicProps types it as NodeUrlLike | ((string | NodeUrlLike) & string). This should not be an issue once Button is also using InferredPolymorphic. */}
