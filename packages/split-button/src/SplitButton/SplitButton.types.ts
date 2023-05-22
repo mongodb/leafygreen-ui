@@ -59,6 +59,7 @@ export type OmittedMenuProps = Omit<
   | 'align'
   | 'justify'
   | 'className'
+  | 'refEl'
 >;
 
 export interface MenuProps extends OmittedMenuProps {
