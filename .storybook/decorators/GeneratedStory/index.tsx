@@ -10,12 +10,7 @@
  */
 
 import React, { ReactElement } from 'react';
-import {
-  DecoratorFn,
-  ReactFramework,
-  StoryContext,
-  StoryFn,
-} from '@storybook/react';
+import { Decorator, StoryContext, StoryFn } from '@storybook/react';
 import { Args } from '@storybook/csf';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
@@ -65,10 +60,7 @@ const instanceStyles = css`
   padding: 8px ${indent}px 0;
 `;
 
-const decorator: DecoratorFn = (
-  StoryFn: StoryFn,
-  context: StoryContext<ReactFramework>,
-) => {
+const decorator: Decorator = (StoryFn: StoryFn, context: StoryContext) => {
   const {
     story: storyName,
     parameters: { generate },
