@@ -3,8 +3,7 @@ import mergeWith from 'lodash/mergeWith';
 import { ComponentProps } from 'react';
 import DarkModeProps from '../DarkModeProps';
 
-import { StoryArgType, storybookArgTypes } from './storybookArgTypes';
-import { storybookExcludedControlParams } from './storybookExcludedControlParams';
+import { StoryArgType } from './storybookArgTypes';
 
 // Re-defining LG provider prop keys here since importing from the package
 // will cause circular dependencies
@@ -39,18 +38,9 @@ export type StoryMetaType<
   title?: string;
 };
 
-export const baseStoryMeta: Partial<StoryMetaType<any>> = {
-  argTypes: {
-    darkMode: storybookArgTypes.darkMode,
-    baseFontSize: storybookArgTypes.updatedBaseFontSize,
-  },
-  parameters: {
-    default: 'Basic',
-    controls: {
-      exclude: [...storybookExcludedControlParams],
-    },
-  },
-};
+/**
+ * Base Meta definition declared in ./.storybook/preview.js
+ */
 
 /**
  *
@@ -68,15 +58,16 @@ export const baseStoryMeta: Partial<StoryMetaType<any>> = {
  * export default meta
  * ```
  *
+ *
  * @deprecated
  */
 export const StoryMeta = <
   T extends React.ElementType,
   XP extends Record<string, any>,
 >(
-  meta: StoryMetaType<T, XP> = baseStoryMeta as StoryMetaType<T, XP>,
+  meta: StoryMetaType<T, XP> = {} as StoryMetaType<T, XP>,
 ): StoryMetaType<T, XP> => {
-  return mergeWith(meta, baseStoryMeta, (metaVal, baseVal) => {
+  return mergeWith(meta, {}, (metaVal, baseVal) => {
     if (Array.isArray(metaVal)) return metaVal.concat(baseVal);
     if (typeof metaVal === 'string') return metaVal;
     // default to _.merge behavior
