@@ -20,10 +20,37 @@ npm install @leafygreen-ui/split-button
 
 ## Example
 
-**Output HTML**
+```js
+
+import { SplitButton } from `@leafygreen-ui/split-button`;
+import { MenuItem } from '@leafygreen-ui/menu';
+
+<SplitButton
+  label="label"
+  menuItems={
+    <>
+      <MenuItem>Menu Item</MenuItem>
+      <MenuItem disabled>Disabled Menu Item</MenuItem>
+      <MenuItem description="I am also a description">
+        Menu Item With Description
+      </MenuItem>
+    </>
+  }
+/>
+```
 
 ## Properties
 
-| Prop      | Type                                 | Description                           | Default     |
-| --------- | ------------------------------------ | ------------------------------------- | ----------- |
-| `variant` | `'default'`, `'primary'`, `'danger'` | Sets the style variant of the button. | `'default'` |
+| Prop              | Type                                                | Description                                                                                                                                                                                                                                      | Default     |
+| ----------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- |
+| `label`           | `string`                                            | The text that will appear inside of the primary button.                                                                                                                                                                                          |             |
+| `darkMode`        | `boolean`                                           | Renders the component with dark mode styles.                                                                                                                                                                                                     | `false`     |
+| `variant`         | `'default'` \| `'primary'` \| `'danger'`            | Sets the variant for both Buttons.                                                                                                                                                                                                               | `'default'` |
+| `size`            | `'xsmall'` \| `'small'` \| `'default'` \| `'large'` | Sets the size for both buttons.                                                                                                                                                                                                                  | `'default'` |
+| `align`           | `'top'` \| `'bottom'`                               | Determines the alignment of the menu relative to the component wrapper.                                                                                                                                                                          | `'bottom'`  |
+| `justify`         | `'start'` \| `'end'`                                | Determines the justification of the menu relative to the component wrapper.                                                                                                                                                                      | `'end'`     |
+| `menuItems`       | `ReactFragment`                                     | The menu items to appear in the menu dropdown. Must be `<MenuItem />`.                                                                                                                                                                           |             |
+| `portalContainer` | `HTMLElement` \| `null`                             | Sets the container used for the popover's portal. NOTE: If using a `scrollContainer` make sure that the `portalContainer` is contained within the `scrollContainer`. E.g, passing the same reference to `scrollContainer` and `portalContainer`. |             |
+| `scrollContainer` | `HTMLElement` \| `null`                             | If the popover portal has a scrollable ancestor other than the window, this prop allows passing a reference to that element to allow the portal to position properly.                                                                            |             |
+| `portalClassName` | `string`                                            | Passes the given className to the popover's portal container if the default portal container is being used.                                                                                                                                      |             |
+| `popoverZIndex`   | `number`                                            | Sets the z-index CSS property for the popover.                                                                                                                                                                                                   |             |

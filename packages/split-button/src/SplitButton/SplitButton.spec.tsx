@@ -12,9 +12,7 @@ const menuTestId = 'lg-split-button-menu';
 const getMenuItems = (): MenuItemsType => {
   return (
     <>
-      <MenuItem description="I am a description" disabled>
-        Disabled Menu Item
-      </MenuItem>
+      <MenuItem disabled>Disabled Menu Item</MenuItem>
       <MenuItem description="I am also a description">
         Menu Item With Description
       </MenuItem>
@@ -134,6 +132,18 @@ describe('packages/split-button', () => {
     test.skip('Accepts base props', () => {
       <>
         <SplitButton label="label" menuItems={getMenuItems()} />
+        <SplitButton
+          label="label"
+          menuItems={
+            <>
+              <MenuItem>Menu Item</MenuItem>
+              <MenuItem disabled>Disabled Menu Item</MenuItem>
+              <MenuItem description="I am also a description">
+                Menu Item With Description
+              </MenuItem>
+            </>
+          }
+        />
         <SplitButton
           label="label"
           menuItems={getMenuItems()}

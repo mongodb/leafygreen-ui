@@ -119,7 +119,17 @@ SplitButton.propTypes = {
   menuItems: PropTypes.element.isRequired,
   baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
   disabled: PropTypes.bool,
-};
+  // Popover Props
+  popoverZIndex: PropTypes.number,
+  scrollContainer:
+    typeof window !== 'undefined'
+      ? PropTypes.instanceOf(Element)
+      : PropTypes.any,
+  portalContainer:
+    typeof window !== 'undefined'
+      ? PropTypes.instanceOf(Element)
+      : PropTypes.any,
+  portalClassName: PropTypes.string,
+} as any;
 
-// TODO: readme
 // TODO: link to .design

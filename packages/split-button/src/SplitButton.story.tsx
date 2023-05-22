@@ -68,13 +68,11 @@ const Template = (props: SplitButtonProps) => {
       leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
       {...rest}
       // eslint-disable-next-line no-console
-      onClick={() => console.log('primary button clicked')}
+      onClick={event => console.log(event)}
       menuItems={
         <>
           {/* eslint-disable-next-line no-console */}
-          <MenuItem onClick={e => console.log(e.target.innerText)}>
-            Menu Item
-          </MenuItem>
+          <MenuItem onClick={event => console.log(event)}>Menu Item</MenuItem>
           <MenuItem description="I am a description" disabled>
             Disabled Menu Item
           </MenuItem>
