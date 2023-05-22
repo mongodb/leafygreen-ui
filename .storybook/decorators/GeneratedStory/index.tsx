@@ -41,6 +41,12 @@ const combinationStyles = css`
   font-size: ${typeScales.body1.fontSize}px;
   line-height: ${typeScales.body1.lineHeight}px;
   width: max-content;
+  max-width: 100%;
+
+  &#darkMode-true,
+  &#darkMode-false {
+    max-width: 50%;
+  }
 
   &#darkMode-true,
   &#darkMode-true .${combinationClassName} {
@@ -131,11 +137,11 @@ function PropCombinations({
               return (
                 <details
                   open
-                  id={`${propName}-${val}`}
+                  id={`${propName}-${valStr(val)}`}
                   className={cx(combinationClassName, combinationStyles)}
                 >
                   <summary>
-                    {propName} = {`${val}`}
+                    {propName} = {`${valStr(val)}`}
                   </summary>
                   {RecursiveCombinations({ [propName]: val, ...props }, [
                     ...vars,
@@ -150,4 +156,17 @@ function PropCombinations({
       }
     }
   }
+}
+
+function valStr(val: any) {
+  if (typeof val === 'object') {
+    console.log(val);
+    if (val.type) {
+      if (typeof val.type === 'string') return `<${val.type} />`;
+      return `<${val.type.displayName} />` ?? 'JSX Element';
+    }
+    if (Array.isArray(val)) return 'Array';
+    else return 'Object';
+  }
+  return `${val}`;
 }
