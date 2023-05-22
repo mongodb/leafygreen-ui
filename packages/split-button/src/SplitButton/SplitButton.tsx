@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Button from '@leafygreen-ui/button';
+import Button, { Size } from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
@@ -26,11 +26,11 @@ export const SplitButton = InferredPolymorphic<SplitButtonProps, 'button'>(
   (
     {
       darkMode: darkModeProp,
-      variant = 'default',
+      variant = Variant.Default,
       type = 'button',
-      align = 'bottom',
-      justify = 'end',
-      size = 'default',
+      align = Align.Bottom,
+      justify = Justify.End,
+      size = Size.Default,
       disabled = false,
       as,
       baseFontSize,
