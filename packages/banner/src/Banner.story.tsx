@@ -1,6 +1,9 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable react/jsx-key */
 import React from 'react';
 import { StoryFn } from '@storybook/react';
 
+import { css } from '@leafygreen-ui/emotion';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
@@ -10,10 +13,31 @@ import Banner, { BannerProps, Variant } from '.';
 const meta: StoryMetaType<typeof Banner> = {
   title: 'Components/Banner',
   component: Banner,
+  decorators: [
+    StoryFn => (
+      <div
+        className={css`
+          max-width: 256px;
+        `}
+      >
+        <StoryFn />
+      </div>
+    ),
+  ],
   parameters: {
     default: 'WithLink',
     controls: {
       exclude: ['image'],
+    },
+    generate: {
+      variant: Object.values(Variant),
+      image: [
+        undefined,
+        <Icon glyph={'Visibility'} />,
+        <img src="favicon.ico" />,
+      ],
+      dismissible: [false, true],
+      darkMode: [false, true],
     },
   },
   args: {
@@ -88,3 +112,5 @@ WithCustomImage.args = {
 WithCustomImage.parameters = {
   chromatic: { disableSnapshot: true },
 };
+
+export const Generated = () => {};
