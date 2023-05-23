@@ -7,14 +7,24 @@ import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 
 import Checkbox, { CheckboxProps } from '.';
 
+const loremIpsum = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy children ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`;
+
 const meta: StoryMetaType<typeof Checkbox> = {
   title: 'Components/Checkbox',
   component: Checkbox,
   parameters: {
+    default: 'Uncontrolled',
     controls: {
       exclude: ['checked'],
     },
-    default: 'Uncontrolled',
+    generate: {
+      darkMode: [false, true],
+      checked: [true, false],
+      indeterminate: [false, true],
+      disabled: [false, true],
+      description: [undefined, loremIpsum],
+      label: ['I agree to this thing', undefined],
+    },
   },
   argTypes: {
     label: { control: 'text' },
@@ -76,3 +86,5 @@ export const CheckOnly = Template.bind({});
 CheckOnly.args = {
   'aria-label': 'Label',
 };
+
+export const Generated = () => {};
