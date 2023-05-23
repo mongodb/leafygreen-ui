@@ -25,12 +25,11 @@ const meta: StoryMetaType<typeof Callout> = {
     generate: {
       darkMode: [false, true],
       variant: Object.values(Variant),
-      children: [loremIpsum, loremWithLinks],
     },
   },
   args: {
     variant: Variant.Note,
-    children: loremIpsum,
+    children: loremWithLinks,
     darkMode: false,
   },
   argTypes: {
@@ -46,6 +45,9 @@ const meta: StoryMetaType<typeof Callout> = {
 export default meta;
 
 export const LiveExample: StoryFn<CalloutProps> = args => <Callout {...args} />;
+LiveExample.args = {
+  children: loremIpsum,
+};
 
 export const WithRichContent: StoryFn<CalloutProps> = ({
   // eslint-disable-next-line react/prop-types
