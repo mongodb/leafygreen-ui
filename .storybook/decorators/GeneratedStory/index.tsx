@@ -77,14 +77,10 @@ const instanceStyles = css`
 const decorator: Decorator = (StoryFn: StoryFn, context: StoryContext) => {
   const { story: storyName, parameters, component, args } = context;
 
-  if (!component) {
-    return Err('Storybook error: `component` must be defined in meta');
-  }
+  if (component && storyName === GENERATED_STORY_NAME) {
+    type GenerateConfigType = GeneratedStoryConfig<typeof component>;
+    const generate: GenerateConfigType = parameters[PARAM_NAME];
 
-  type GenerateConfigType = GeneratedStoryConfig<typeof component>;
-  const generate: GenerateConfigType = parameters[PARAM_NAME];
-
-  if (storyName === GENERATED_STORY_NAME) {
     if (!generate) {
       return Err(
         `Story generation parameters not found for story "${GENERATED_STORY_NAME}". Be sure to add \`parameters.${PARAM_NAME}\` to the default export.`,
