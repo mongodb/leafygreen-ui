@@ -15,14 +15,14 @@ const meta: StoryMetaType<typeof Banner> = {
   parameters: {
     default: 'LiveExample',
     generate: {
-      variant: Object.values(Variant),
+      darkMode: [false, true],
       image: [
         undefined,
         <Icon glyph={'Visibility'} />,
         <img src="favicon.ico" />,
       ],
+      variant: Object.values(Variant),
       dismissible: [false, true],
-      darkMode: [false, true],
     },
   },
   args: {

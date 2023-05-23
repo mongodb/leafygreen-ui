@@ -11,8 +11,8 @@ const meta: StoryMetaType<typeof Badge> = {
   parameters: {
     default: 'LiveExample',
     generate: {
-      variant: Object.values(Variant),
       darkMode: [false, true],
+      variant: Object.values(Variant),
     },
   },
   args: {
