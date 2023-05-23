@@ -1,7 +1,7 @@
 import { entries, has, isEqual, isUndefined, keys } from 'lodash';
 import { GeneratedStoryConfig } from 'packages/lib/src/storybook/GeneratedStoryDecorator.types';
 
-export function shouldExcludePropCombo({
+export function shouldExcludePropCombo<T extends React.ComponentType<any>>({
   propName,
   val,
   props,
@@ -10,7 +10,7 @@ export function shouldExcludePropCombo({
   propName: string;
   val: any;
   props: Record<string, any>;
-  exclude: GeneratedStoryConfig<any>['excludeCombinations'];
+  exclude: GeneratedStoryConfig<T>['excludeCombinations'];
 }): boolean {
   if (isUndefined(exclude) || exclude.length === 0) return false;
 
@@ -21,13 +21,14 @@ export function shouldExcludePropCombo({
         /**
          * Case 1: mutually exclusive
          */
-        rule = rule as [string, string];
         if (rule.includes(propName) && !isUndefined(val)) {
           // Return whether any item in this rule
           // is included in the currently defined props
           // (and if that prop value is defined)
           return rule.some(
-            (p: string) => keys(props).includes(p) && !isUndefined(props[p]),
+            p =>
+              keys(props).includes(p as string) &&
+              !isUndefined(props[p as string]),
           );
         } else {
           return false;

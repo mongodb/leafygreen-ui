@@ -128,16 +128,16 @@ export default decorator;
 /**
  * Generates all combinations of each variable
  */
-function PropCombinations({
+function PropCombinations<T extends React.ComponentType<any>>({
   component,
   variables,
   args,
   exclude,
 }: {
-  component: React.ComponentType<any>;
+  component: T;
   variables: Array<[string, Array<any> | undefined]>;
   args: Args;
-  exclude: GeneratedStoryConfig<typeof component>['excludeCombinations'];
+  exclude: GeneratedStoryConfig<T>['excludeCombinations'];
 }): ReactElement<any> {
   let comboCount = 0;
   const AllCombinations = RecursiveCombinations({}, [...variables]);
@@ -168,7 +168,7 @@ function PropCombinations({
             className={propSectionStyles}
           >
             {propValues.map(val =>
-              shouldExcludePropCombo({
+              shouldExcludePropCombo<T>({
                 propName,
                 val,
                 props,
