@@ -75,7 +75,7 @@ const instanceStyles = css`
 `;
 
 const decorator: Decorator = (StoryFn: StoryFn, context: StoryContext) => {
-  const { story: storyName, parameters, component, args } = context;
+  const { name: storyName, parameters, component, args } = context;
 
   if (component && storyName === GENERATED_STORY_NAME) {
     type GenerateConfigType = GeneratedStoryConfig<typeof component>;
