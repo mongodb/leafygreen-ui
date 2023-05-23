@@ -33,10 +33,11 @@ export default StoryMeta({
     darkMode: storybookArgTypes.darkMode,
     ref: { control: 'none' },
   },
-  // This is needed as a workaround to make arg spreading performant
-  // https://github.com/storybookjs/storybook/issues/11657
   parameters: {
     default: 'Basic',
+    chromatic: {
+      disableSnapshot: true,
+    },
     docs: {
       source: { type: 'code' },
     },

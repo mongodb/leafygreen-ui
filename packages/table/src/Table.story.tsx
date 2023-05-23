@@ -9,8 +9,8 @@ import { StoryMeta } from '@leafygreen-ui/lib';
 import Pagination from '@leafygreen-ui/pagination';
 
 import {
-  createKitchenSinkData,
   makeData,
+  makeKitchenSinkData,
   Person,
 } from './utils/makeData.testutils';
 import { AnyDict } from './utils/types';
@@ -136,7 +136,7 @@ export const OverflowingCell: ComponentStory<typeof Table> = args => {
 
 export const NestedRows: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const data = React.useState(() => makeData(false, 50, 5, 3))[0];
+  const [data] = React.useState(() => makeData(false, 50, 5, 3));
 
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
@@ -716,9 +716,7 @@ export const WithPagination: ComponentStory<typeof Table> = ({
 
 export const KitchenSink: ComponentStory<typeof Table> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const data = useState(() =>
-    [...Array(10)].map(_ => createKitchenSinkData()),
-  )[0];
+  const [data] = useState(() => makeKitchenSinkData(10));
 
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [

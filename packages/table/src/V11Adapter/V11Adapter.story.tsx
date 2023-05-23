@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { faker } from '@faker-js/faker';
 import { Meta } from '@storybook/react';
 
 import Badge from '@leafygreen-ui/badge';
 import { css } from '@leafygreen-ui/emotion';
 
-import { defaultData } from '../TableV10/fixtures';
-import { makeData, randomIntFromInterval } from '../utils/makeData.testutils';
+import { defaultData } from '../TableV10/fixtures.testutils';
+import { makeData } from '../utils/makeData.testutils';
 import {
   V10Cell as Cell,
   V10HeaderRow as HeaderRow,
@@ -55,7 +56,12 @@ export const DynamicData = () => {
   const [data, setData] = useState(defaultData.slice(0, 8));
 
   const handleClick = () => {
-    setData(defaultData.slice(2, randomIntFromInterval(0, defaultData.length)));
+    setData(
+      defaultData.slice(
+        2,
+        faker.number.int({ min: 0, max: defaultData.length }),
+      ),
+    );
   };
 
   return (
