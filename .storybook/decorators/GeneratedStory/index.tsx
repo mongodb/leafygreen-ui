@@ -17,12 +17,13 @@ import { palette } from '@leafygreen-ui/palette';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { typeScales } from '@leafygreen-ui/tokens';
 
+export const PARAM_NAME = 'generate';
 export const GENERATED_STORY_NAME = 'Generated';
 
 const indent = 16;
 
 const generatedStoryWrapper = css`
-  padding: ${indent}px;
+  /* padding: ${indent}px; */
 `;
 
 const propSectionStyles = css`
@@ -37,7 +38,8 @@ const combinationStyles = css`
   padding: 4px ${indent}px;
   overflow: visible;
   border-left: 1px solid;
-  color: inherit;
+  color: ${palette.gray.base};
+  border-color: ${palette.gray.light1};
   font-size: ${typeScales.body1.fontSize}px;
   line-height: ${typeScales.body1.lineHeight}px;
   width: max-content;
@@ -46,6 +48,7 @@ const combinationStyles = css`
   &#darkMode-true,
   &#darkMode-false {
     max-width: 50%;
+    padding: ${indent}px;
   }
 
   &#darkMode-true,
@@ -67,16 +70,27 @@ const instanceStyles = css`
 `;
 
 const decorator: Decorator = (StoryFn: StoryFn, context: StoryContext) => {
-  const {
-    story: storyName,
-    parameters: { generate },
-    component,
-    args,
-  } = context;
+  const { story: storyName, parameters, component, args } = context;
 
-  if (storyName === GENERATED_STORY_NAME && component && generate) {
+  if (component && storyName === GENERATED_STORY_NAME) {
+    if (!parameters[PARAM_NAME]) {
+      const errMsg = `Story generation parameters not found for story "${GENERATED_STORY_NAME}". Be sure to add \`parameters.${PARAM_NAME}\` to the default export.`;
+
+      console.error(errMsg);
+      return <>{errMsg}</>;
+    }
+
+    const generate = parameters[PARAM_NAME];
     const variables: Array<[string, Array<any>]> = Object.entries(generate);
+    // Dark mode should be the first
+    if (generate['darkMode'] && variables[0][0] !== 'darkMode') {
+      console.warn(
+        `${component.displayName} generated story: \`darkMode\` should be the first variable defined in \`parameters.${PARAM_NAME}\`.`,
+      );
+    }
 
+    // reversing since the PropCombos is depth-first
+    variables.reverse();
     return (
       <div className={generatedStoryWrapper}>
         <PropCombinations
@@ -159,14 +173,17 @@ function PropCombinations({
 }
 
 function valStr(val: any) {
+  const MAX_STR_LEN = 24;
   if (typeof val === 'object') {
-    console.log(val);
     if (val.type) {
       if (typeof val.type === 'string') return `<${val.type} />`;
       return `<${val.type.displayName} />` ?? 'JSX Element';
     }
     if (Array.isArray(val)) return 'Array';
     else return 'Object';
+  }
+  if (typeof val === 'string' && val.length > MAX_STR_LEN) {
+    return val.slice(0, MAX_STR_LEN) + '…';
   }
   return `${val}`;
 }
