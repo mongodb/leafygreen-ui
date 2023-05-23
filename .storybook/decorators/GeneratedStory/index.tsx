@@ -14,9 +14,12 @@ import { Decorator, StoryContext, StoryFn } from '@storybook/react';
 import { Args } from '@storybook/csf';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { createUniqueClassName, StoryMetaType } from '@leafygreen-ui/lib';
+import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { typeScales } from '@leafygreen-ui/tokens';
 import { Error } from '@leafygreen-ui/typography';
+import { GeneratedStoryConfig } from 'packages/lib/src/storybook/GeneratedStoryDecorator.types';
+import { entries } from 'lodash';
+import { shouldExcludePropCombo } from './utils/shouldExcludePropCombo';
 
 export const PARAM_NAME = 'generate';
 export const GENERATED_STORY_NAME = 'Generated';
@@ -78,10 +81,8 @@ const decorator: Decorator = (StoryFn: StoryFn, context: StoryContext) => {
     return Err('Storybook error: `component` must be defined in meta');
   }
 
-  type GenerateConfig = StoryMetaType<
-    typeof component
-  >['parameters']['generate'];
-  const generate: GenerateConfig = parameters[PARAM_NAME];
+  type GenerateConfigType = GeneratedStoryConfig<typeof component>;
+  const generate: GenerateConfigType = parameters[PARAM_NAME];
 
   if (storyName === GENERATED_STORY_NAME) {
     if (!generate) {
@@ -90,22 +91,22 @@ const decorator: Decorator = (StoryFn: StoryFn, context: StoryContext) => {
       );
     }
 
-    const props = generate?.props;
+    const { props, excludeCombinations } = generate;
 
     if (!props) {
       return Err('`props` not found in story generation parameters');
     }
 
-    const variables: Array<[string, Array<any> | undefined]> =
-      Object.entries(props);
-    // Dark mode should be the first
+    const variables = entries(props);
+
+    // Dark mode should be the first prop
     if (props['darkMode'] && variables[0][0] !== 'darkMode') {
       console.warn(
         `${component.displayName} generated story: \`darkMode\` should be the first variable defined in \`parameters.${PARAM_NAME}\`.`,
       );
     }
 
-    // reversing since the PropCombos is depth-first
+    // reversing since the PropCombos recursion is depth-first
     variables.reverse();
     return (
       <div className={generatedStoryWrapper}>
@@ -113,6 +114,7 @@ const decorator: Decorator = (StoryFn: StoryFn, context: StoryContext) => {
           component={component}
           variables={variables}
           args={args}
+          exclude={excludeCombinations}
         />
       </div>
     );
@@ -130,15 +132,17 @@ function PropCombinations({
   component,
   variables,
   args,
+  exclude,
 }: {
   component: React.ComponentType<any>;
   variables: Array<[string, Array<any> | undefined]>;
   args: Args;
+  exclude: GeneratedStoryConfig<typeof component>['excludeCombinations'];
 }): ReactElement<any> {
   let comboCount = 0;
   const AllCombinations = RecursiveCombinations({}, [...variables]);
-  console.info(
-    `Rendering ${comboCount} prop combinations for ${component.displayName}`,
+  console.log(
+    `Rendering ${comboCount} prop combinations for component: ${component.displayName}`,
   );
   return AllCombinations;
 
@@ -163,22 +167,24 @@ function PropCombinations({
             data-value-count={propValues.length}
             className={propSectionStyles}
           >
-            {propValues.map(val => {
-              return (
-                <details
-                  open
-                  id={`${propName}-${valStr(val)}`}
-                  className={cx(combinationClassName, combinationStyles)}
-                >
-                  <summary>
-                    {propName} = {`${valStr(val)}`}
-                  </summary>
-                  {RecursiveCombinations({ [propName]: val, ...props }, [
-                    ...vars,
-                  ])}
-                </details>
-              );
-            })}
+            {propValues.map(val =>
+              shouldExcludePropCombo({
+                propName,
+                val,
+                props,
+                exclude,
+              }) ? (
+                <></>
+              ) : (
+                <PropDetailsComponent
+                  key={propName + val}
+                  propName={propName}
+                  val={val}
+                  props={props}
+                  vars={vars}
+                />
+              ),
+            )}
           </div>
         );
       } else {
@@ -186,9 +192,37 @@ function PropCombinations({
       }
     }
   }
+
+  function PropDetailsComponent({
+    propName,
+    val,
+    props,
+    vars,
+  }: {
+    propName: string;
+    val: any;
+    props: Record<string, any>;
+    vars: Array<[string, Array<any> | undefined]>;
+  }) {
+    return (
+      <details
+        open
+        id={`${propName}-${valStr(val)}`}
+        className={cx(combinationClassName, combinationStyles)}
+      >
+        <summary>
+          {propName} = {`${valStr(val)}`}
+        </summary>
+        {RecursiveCombinations({ [propName]: val, ...props }, [...vars])}
+      </details>
+    );
+  }
 }
 
-function valStr(val: any) {
+/**
+ * @returns the provided value as a string
+ */
+function valStr(val: any): string {
   const MAX_STR_LEN = 24;
   if (typeof val === 'object') {
     if (val.type) {
@@ -204,6 +238,9 @@ function valStr(val: any) {
   return `${val}`;
 }
 
+/**
+ * Renders an error message, and logs an error
+ */
 function Err(msg: string): JSX.Element {
   console.error(msg);
   return <Error>{msg}</Error>;

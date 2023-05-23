@@ -22,9 +22,22 @@ const meta: StoryMetaType<typeof Button> = {
         darkMode: [false, true],
         rightGlyph: [undefined, <Icon glyph={'ArrowRight'} />],
         leftGlyph: [undefined, <Icon glyph={'Cloud'} />],
+        children: ['MongoDB', undefined],
         size: Object.values(Size),
         variant: Object.values(Variant),
       },
+      excludeCombinations: [
+        {
+          children: undefined,
+          rightGlyph: undefined,
+          leftGlyph: undefined,
+        },
+        {
+          rightGlyph: <Icon glyph={'ArrowRight'} />,
+          leftGlyph: <Icon glyph={'Cloud'} />,
+          children: undefined,
+        },
+      ],
     },
   },
   argTypes: {
