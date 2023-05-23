@@ -32,6 +32,19 @@ describe('storybook/shouldExcludePropCombo', () => {
         }),
       ).toBeTruthy();
     });
+
+    test('undefined is OK', () => {
+      expect(
+        shouldExcludePropCombo<any>({
+          exclude,
+          propName: 'children',
+          val: 'Lorem',
+          props: {
+            title: undefined,
+          },
+        }),
+      ).toBeFalsy();
+    });
   });
 
   describe('Conditional props', () => {
@@ -58,7 +71,7 @@ describe('storybook/shouldExcludePropCombo', () => {
       ).toBeTruthy();
     });
 
-    test('condition is current', () => {
+    test('condition is current prop', () => {
       expect(
         shouldExcludePropCombo({
           exclude,
@@ -82,6 +95,60 @@ describe('storybook/shouldExcludePropCombo', () => {
           },
         }),
       ).toBeFalsy();
+    });
+
+    describe('multiple conditions', () => {
+      const exclude = [
+        [
+          'foo',
+          {
+            propA: 'lorem',
+            propB: 'ipsum',
+          },
+        ],
+      ];
+
+      test('All conditions match', () => {
+        expect(
+          shouldExcludePropCombo({
+            exclude,
+            propName: 'foo',
+            val: 'someVal',
+            props: {
+              propA: 'lorem',
+              propB: 'ipsum',
+            },
+          }),
+        ).toBeTruthy();
+      });
+
+      test('A condition is current', () => {
+        expect(
+          shouldExcludePropCombo({
+            exclude,
+            propName: 'propA',
+            val: 'lorem',
+            props: {
+              foo: 'foobar',
+              propB: 'ipsum',
+            },
+          }),
+        ).toBeTruthy();
+      });
+
+      test('Not all conditions match', () => {
+        expect(
+          shouldExcludePropCombo({
+            exclude,
+            propName: 'foo',
+            val: 'someVal',
+            props: {
+              propA: 'lorem',
+              propB: 'dolor',
+            },
+          }),
+        ).toBeFalsy();
+      });
     });
   });
 

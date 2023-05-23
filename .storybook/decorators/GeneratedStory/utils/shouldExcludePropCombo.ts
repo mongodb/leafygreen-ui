@@ -67,7 +67,9 @@ export function shouldExcludePropCombo<T extends React.ComponentType<any>>({
           !isUndefined(props[checkProp])
         ) {
           return entries(conditions).every(
-            ([name, value]) => name === propName && areValuesEqual(val, value), // the condition is matched in the current prop
+            ([name, value]) =>
+              (name === propName && areValuesEqual(val, value)) ||
+              (has(props, name) && areValuesEqual(props[name], value)), // the condition is matched in the current prop or previous props
           );
         }
       } else {
