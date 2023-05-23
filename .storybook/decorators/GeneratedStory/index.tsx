@@ -14,8 +14,9 @@ import { Decorator, StoryContext, StoryFn } from '@storybook/react';
 import { Args } from '@storybook/csf';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { createUniqueClassName } from '@leafygreen-ui/lib';
+import { createUniqueClassName, StoryMetaType } from '@leafygreen-ui/lib';
 import { typeScales } from '@leafygreen-ui/tokens';
+import { Error } from '@leafygreen-ui/typography';
 
 export const PARAM_NAME = 'generate';
 export const GENERATED_STORY_NAME = 'Generated';
@@ -47,6 +48,7 @@ const combinationStyles = css`
 
   &#darkMode-true,
   &#darkMode-false {
+    flex: 1;
     max-width: 50%;
     padding: ${indent}px;
   }
@@ -72,18 +74,32 @@ const instanceStyles = css`
 const decorator: Decorator = (StoryFn: StoryFn, context: StoryContext) => {
   const { story: storyName, parameters, component, args } = context;
 
-  if (component && storyName === GENERATED_STORY_NAME) {
-    if (!parameters[PARAM_NAME]) {
-      const errMsg = `Story generation parameters not found for story "${GENERATED_STORY_NAME}". Be sure to add \`parameters.${PARAM_NAME}\` to the default export.`;
+  if (!component) {
+    return Err('Storybook error: `component` must be defined in meta');
+  }
 
-      console.error(errMsg);
-      return <>{errMsg}</>;
+  type GenerateConfig = StoryMetaType<
+    typeof component
+  >['parameters']['generate'];
+  const generate: GenerateConfig = parameters[PARAM_NAME];
+
+  if (storyName === GENERATED_STORY_NAME) {
+    if (!generate) {
+      return Err(
+        `Story generation parameters not found for story "${GENERATED_STORY_NAME}". Be sure to add \`parameters.${PARAM_NAME}\` to the default export.`,
+      );
     }
 
-    const generate = parameters[PARAM_NAME];
-    const variables: Array<[string, Array<any>]> = Object.entries(generate);
+    const props = generate?.props;
+
+    if (!props) {
+      return Err('`props` not found in story generation parameters');
+    }
+
+    const variables: Array<[string, Array<any> | undefined]> =
+      Object.entries(props);
     // Dark mode should be the first
-    if (generate['darkMode'] && variables[0][0] !== 'darkMode') {
+    if (props['darkMode'] && variables[0][0] !== 'darkMode') {
       console.warn(
         `${component.displayName} generated story: \`darkMode\` should be the first variable defined in \`parameters.${PARAM_NAME}\`.`,
       );
@@ -186,4 +202,9 @@ function valStr(val: any) {
     return val.slice(0, MAX_STR_LEN) + '…';
   }
   return `${val}`;
+}
+
+function Err(msg: string): JSX.Element {
+  console.error(msg);
+  return <Error>{msg}</Error>;
 }

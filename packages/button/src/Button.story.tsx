@@ -18,11 +18,13 @@ const meta: StoryMetaType<typeof Button> = {
   parameters: {
     default: 'LiveExample',
     generate: {
-      variant: Object.values(Variant),
-      size: Object.values(Size),
-      rightGlyph: [undefined, <Icon glyph={'ArrowRight'} />],
-      leftGlyph: [undefined, <Icon glyph={'Cloud'} />],
-      darkMode: [false, true],
+      props: {
+        darkMode: [false, true],
+        rightGlyph: [undefined, <Icon glyph={'ArrowRight'} />],
+        leftGlyph: [undefined, <Icon glyph={'Cloud'} />],
+        size: Object.values(Size),
+        variant: Object.values(Variant),
+      },
     },
   },
   argTypes: {

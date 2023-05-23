@@ -22,11 +22,16 @@ export type StoryMetaType<
      */
     default: string | null;
 
-    generate?: Partial<
-      | {
-          [key in keyof ComponentProps<T>]: Array<any>;
-        }
-    >;
+    /**
+     * The configuration for the generated stories
+     */
+    generate?: {
+      props: Partial<
+        | {
+            [key in keyof ComponentProps<T>]: Array<ComponentProps<T>[key]>;
+          }
+      >;
+    };
   };
   argTypes?: Partial<
     | {
