@@ -5,11 +5,13 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
-import animationJson from './animation.json';
+import { descriptionThemeColor } from '../LoadingIndicators.styles';
+
+import animationJson from './animation';
 import {
   darkModeSpinnerStyles,
-  descriptionThemeColor,
   horizontalVariantStyles,
+  rootStyles,
   SpinnerBottomMargins,
   SpinnerSizes,
 } from './Spinner.styles';
@@ -26,7 +28,7 @@ const Spinner = ({
   const { darkMode, theme } = useDarkMode(darkModeProp);
   return (
     <div
-      className={cx({
+      className={cx(rootStyles, {
         [horizontalVariantStyles]: variant === 'horizontal',
       })}
     >

@@ -11,4 +11,4 @@ const Template: ComponentStory<typeof Spinner> = props => (
   <Spinner {...props} />
 );
 
-export const Default = Template.bind({});
+export const LiveExample = Template.bind({});
