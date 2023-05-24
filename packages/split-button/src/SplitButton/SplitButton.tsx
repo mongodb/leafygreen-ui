@@ -128,6 +128,5 @@ SplitButton.propTypes = {
   portalClassName: PropTypes.string,
 } as any;
 
-// TODO: removed trigger prop, use only refEl
 // TODO: allow open and setOpen
-// TODO: see if its better to use an array or menuItems, chat with Adam
+// TODO: see if its better to use an array or menuItems
