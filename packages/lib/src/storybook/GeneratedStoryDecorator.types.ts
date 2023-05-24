@@ -6,6 +6,17 @@ export interface GeneratedStoryConfig<T extends React.ElementType> {
         [key in keyof ComponentProps<T>]: Array<ComponentProps<T>[key]>;
       }
   >;
+
+  /**
+   * Specify any prop values that should be different than those defined in `meta`
+   */
+  args?: Partial<
+    | {
+        [key in keyof ComponentProps<T>]: ComponentProps<T>[key];
+      }
+  >;
+
+  /** Exclude certain combinations of props */
   excludeCombinations?: Array<
     /**
      * Exclude every combination of these props
