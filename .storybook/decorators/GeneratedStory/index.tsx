@@ -75,7 +75,7 @@ const instanceStyles = css`
 `;
 
 const decorator: Decorator = (StoryFn: StoryFn, context: StoryContext) => {
-  const { name: storyName, parameters, component, args } = context;
+  const { name: storyName, parameters, component, args: metaArgs } = context;
 
   if (component && storyName === GENERATED_STORY_NAME) {
     type GenerateConfigType = GeneratedStoryConfig<typeof component>;
@@ -87,7 +87,7 @@ const decorator: Decorator = (StoryFn: StoryFn, context: StoryContext) => {
       );
     }
 
-    const { props, excludeCombinations } = generate;
+    const { props, excludeCombinations, args: generatedArgs } = generate;
 
     if (!props) {
       return Err('`props` not found in story generation parameters');
@@ -109,7 +109,7 @@ const decorator: Decorator = (StoryFn: StoryFn, context: StoryContext) => {
         <PropCombinations
           component={component}
           variables={variables}
-          args={args}
+          args={{ ...metaArgs, ...generatedArgs }}
           exclude={excludeCombinations}
         />
       </div>
