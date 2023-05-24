@@ -27,6 +27,20 @@ export type StoryMetaType<
      * The configuration for the generated stories
      */
     generate?: GeneratedStoryConfig<T>;
+
+    controls?: {
+      /**
+       * Props excluded from controls
+       */
+      exclude: Array<string>;
+    };
+
+    /**
+     * Parameters for Chromatic
+     */
+    chromatic?: {
+      disableSnapshot?: boolean;
+    };
   };
   argTypes?: Partial<
     | {

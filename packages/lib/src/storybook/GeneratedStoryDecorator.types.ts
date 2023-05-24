@@ -1,3 +1,4 @@
+import { Decorator, StoryFn } from '@storybook/react';
 import { ComponentProps } from 'react';
 
 export interface GeneratedStoryConfig<T extends React.ElementType> {
@@ -15,6 +16,14 @@ export interface GeneratedStoryConfig<T extends React.ElementType> {
         [key in keyof ComponentProps<T>]: ComponentProps<T>[key];
       }
   >;
+
+  /**
+   * Add a decorator to each instance.
+   *
+   * Decorators defined in `meta.decorators`
+   * are not applied to generated story instances
+   */
+  decorator?: (Story: StoryFn) => ReturnType<Decorator>;
 
   /** Exclude certain combinations of props */
   excludeCombinations?: Array<
