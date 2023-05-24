@@ -18,11 +18,26 @@ const meta: StoryMetaType<typeof Button> = {
   parameters: {
     default: 'LiveExample',
     generate: {
-      darkMode: [false, true],
-      leftGlyph: [undefined, <Icon glyph={'Cloud'} />],
-      rightGlyph: [undefined, <Icon glyph={'ArrowRight'} />],
-      size: Object.values(Size),
-      variant: Object.values(Variant),
+      props: {
+        darkMode: [false, true],
+        rightGlyph: [undefined, <Icon glyph={'ArrowRight'} />],
+        leftGlyph: [undefined, <Icon glyph={'Cloud'} />],
+        children: ['MongoDB', undefined],
+        size: Object.values(Size),
+        variant: Object.values(Variant),
+      },
+      excludeCombinations: [
+        {
+          children: undefined,
+          rightGlyph: undefined,
+          leftGlyph: undefined,
+        },
+        {
+          rightGlyph: <Icon glyph={'ArrowRight'} />,
+          leftGlyph: <Icon glyph={'Cloud'} />,
+          children: undefined,
+        },
+      ],
     },
   },
   argTypes: {

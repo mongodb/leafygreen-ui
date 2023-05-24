@@ -2,6 +2,7 @@ import { Meta } from '@storybook/react';
 import mergeWith from 'lodash/mergeWith';
 import { ComponentProps } from 'react';
 import DarkModeProps from '../DarkModeProps';
+import { GeneratedStoryConfig } from './GeneratedStoryDecorator.types';
 
 import { StoryArgType } from './storybookArgTypes';
 
@@ -22,11 +23,10 @@ export type StoryMetaType<
      */
     default: string | null;
 
-    generate?: Partial<
-      | {
-          [key in keyof ComponentProps<T>]: Array<any>;
-        }
-    >;
+    /**
+     * The configuration for the generated stories
+     */
+    generate?: GeneratedStoryConfig<T>;
   };
   argTypes?: Partial<
     | {
