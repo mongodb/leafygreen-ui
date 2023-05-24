@@ -5,13 +5,16 @@ import { StoryFn } from '@storybook/react';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { storybookArgTypes, type StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  type StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import LanguageSwitcherExample from './LanguageSwitcher/LanguageSwitcherExample';
 import Code, { CodeProps, Language } from '.';
 
 const jsSnippet = `
-
 import datetime from './';
 
 const myVar = 42;
@@ -33,33 +36,16 @@ function greeting(entity) {
 }
  
 console.log(greeting('World'));
+`;
 
+const shortJsSnippet = `
+import {greeting} from './utils/greeting'
+console.log(greeting('World'));
 `;
 
 const meta: StoryMetaType<typeof Code> = {
   title: 'Components/Code',
   component: Code,
-  args: {
-    language: 'js',
-    highlightLines: [],
-    baseFontSize: 14,
-  },
-  argTypes: {
-    language: {
-      control: {
-        type: 'select',
-        options: Object.keys(Language),
-      },
-    },
-    usePortal: { control: 'boolean' },
-    copyable: { control: 'boolean' },
-    showWindowChrome: { control: 'boolean' },
-    showLineNumbers: { control: 'boolean' },
-    darkMode: storybookArgTypes.darkMode,
-    chromeTitle: { control: 'text' },
-    lineNumberStart: { control: 'number' },
-    baseFontSize: storybookArgTypes.baseFontSize,
-  },
   parameters: {
     default: 'Basic',
     controls: {
@@ -70,36 +56,61 @@ const meta: StoryMetaType<typeof Code> = {
         'languageOptions',
       ],
     },
+    generate: {
+      props: {
+        darkMode: [false, true],
+        // baseFontSize: [14, 16],
+        copyable: [true, false],
+        showWindowChrome: [false, true],
+        showLineNumbers: [false, true],
+      },
+    },
+  },
+  args: {
+    language: 'js',
+    baseFontSize: 14,
+    children: shortJsSnippet,
+    chromeTitle: 'example.ts',
+  },
+  argTypes: {
+    language: {
+      control: {
+        type: 'select',
+        options: Object.keys(Language),
+      },
+    },
+    copyable: { control: 'boolean' },
+    showWindowChrome: { control: 'boolean' },
+    showLineNumbers: { control: 'boolean' },
+    highlightLines: { control: 'boolean' },
+    darkMode: storybookArgTypes.darkMode,
+    chromeTitle: { control: 'text' },
+    lineNumberStart: { control: 'number' },
+    baseFontSize: storybookArgTypes.baseFontSize,
   },
 };
 
 export default meta;
 
 type BaseFontSize = 14 | 16;
-type StoryCodeProps = CodeProps & { baseFontSize: BaseFontSize };
+type StoryCodeProps = CodeProps & {
+  baseFontSize: BaseFontSize;
+};
 
-const Template: StoryFn<StoryCodeProps> = ({
+export const LiveExample: StoryFn<StoryCodeProps> = ({
   baseFontSize,
+  highlightLines,
   ...args
 }: StoryCodeProps) => (
   <LeafygreenProvider baseFontSize={baseFontSize}>
-    <Code {...(args as CodeProps)}>{jsSnippet}</Code>
+    <Code
+      {...(args as CodeProps)}
+      highlightLines={highlightLines ? [6, [10, 15]] : undefined}
+    >
+      {jsSnippet}
+    </Code>
   </LeafygreenProvider>
 );
-
-export const Basic = Template.bind({});
-Basic.args = {};
-
-export const HighlightOptions = Template.bind({});
-HighlightOptions.args = {
-  highlightLines: [6, [10, 15]],
-};
-
-export const WithChrome = Template.bind({});
-WithChrome.args = {
-  showWindowChrome: true,
-  chromeTitle: 'directory/fileName.js',
-};
 
 const customActionButtons = [
   <IconButton onClick={() => {}} aria-label="label" key="1">
@@ -116,7 +127,7 @@ const customActionButtons = [
   </IconButton>,
 ];
 
-export const WithCustomActions = Template.bind({});
+export const WithCustomActions = LiveExample.bind({});
 WithCustomActions.args = {
   showCustomActionButtons: true,
   customActionButtons,
@@ -134,3 +145,5 @@ export const WithLanguageSwitcher: StoryFn<StoryCodeProps> = ({
     />
   </LeafygreenProvider>
 );
+
+export const Generated = () => {};
