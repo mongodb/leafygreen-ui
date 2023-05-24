@@ -123,9 +123,9 @@ function PropCombinations<T extends React.ComponentType<any>>({
   ): ReactElement<any> {
     if (vars.length === 0) {
       comboCount += 1;
-      return decorator(() => (
+      return decorator((xArgs: typeof args) => (
         <div className={instanceStyles}>
-          {React.createElement(component, { ...args, ...props })}
+          {React.createElement(component, { ...args, ...xArgs, ...props })}
         </div>
       ));
     } else {
