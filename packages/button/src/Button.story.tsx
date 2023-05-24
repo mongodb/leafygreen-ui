@@ -48,7 +48,7 @@ const meta: StoryMetaType<typeof Button> = {
 
 export default meta;
 
-export const Playground: StoryFn<typeof Button> = ({
+export const Playground: StoryFn<ButtonProps> = ({
   leftGlyph,
   rightGlyph,
   ...args

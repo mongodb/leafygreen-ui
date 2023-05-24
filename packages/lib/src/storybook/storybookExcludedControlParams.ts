@@ -1,4 +1,3 @@
-/** @deprecated */
 export const storybookExcludedControlParams = [
   'aria-controls',
   'aria-describedby',
