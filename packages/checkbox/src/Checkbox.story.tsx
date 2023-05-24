@@ -5,7 +5,7 @@ import { css } from '@leafygreen-ui/emotion';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import {
   storybookArgTypes,
-  storybookExcludedArgTypes,
+  storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
 
@@ -19,7 +19,7 @@ const meta: StoryMetaType<typeof Checkbox> = {
   parameters: {
     default: 'Uncontrolled',
     controls: {
-      exclude: ['checked'],
+      exclude: [...storybookExcludedControlParams, 'checked'],
     },
     generate: {
       props: {
@@ -87,7 +87,7 @@ export const LiveExample: StoryFn<StoryCheckboxProps> = ({
 export const Controlled = LiveExample.bind({});
 Controlled.parameters = {
   controls: {
-    exclude: [],
+    exclude: [...storybookExcludedControlParams],
   },
 };
 Controlled.args = {
