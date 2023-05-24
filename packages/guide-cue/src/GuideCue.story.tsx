@@ -1,28 +1,87 @@
+/* eslint-disable react/display-name */
 import React, { useRef, useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import { Align } from '@leafygreen-ui/popover';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
 import { GuideCue, GuideCueProps } from '.';
 
-const meta: StoryMetaType<React.ElementType<GuideCueProps>> = {
+// @ts-expect-error - propType mismatch
+const meta: StoryMetaType<typeof GuideCue> = {
   title: 'Components/GuideCue',
-  // FIXME: React propTypes don't match TS
-  // @ts-expect-error
   component: GuideCue,
+  decorators: [
+    StoryFn => (
+      <div>
+        <StoryFn />
+      </div>
+    ),
+  ],
   parameters: {
-    default: 'Default',
+    default: 'LiveExample',
     controls: {
       exclude: [
+        ...storybookExcludedControlParams,
         'refEl',
         'setOpen',
         'tooltipClassName',
         'open',
         'onPrimaryButtonClick',
       ],
+    },
+    generate: {
+      props: {
+        darkMode: [false, true],
+        beaconAlign: Object.values(Align),
+        tooltipAlign: ['top', 'bottom', 'left', 'right'],
+        tooltipJustify: ['middle', 'start', 'end'],
+      },
+      args: {
+        open: true,
+        refEl: undefined,
+      },
+      decorator: (Instance: StoryFn) => {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const refEl = useRef(null);
+        return (
+          <div
+            className={css`
+              height: 350px;
+              width: 500px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            `}
+          >
+            <div
+              className={css`
+                height: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                outline: 1px solid ${palette.gray.base};
+              `}
+              ref={refEl}
+            >
+              element ref
+            </div>
+            <Instance refEl={refEl} />
+          </div>
+        );
+      },
+    },
+    chromatic: {
+      delay: transitionDuration.slowest,
     },
   },
   argTypes: {
@@ -92,7 +151,7 @@ const Template: StoryFn<GuideCueProps> = (args: GuideCueProps) => {
   );
 };
 
-export const Default = Template.bind({});
+export const LiveExample = Template.bind({});
 
 const scrollableStyle = css`
   width: 800px;
@@ -149,6 +208,9 @@ export const ScrollableContainer: StoryFn<GuideCueProps> = (
       </div>
     </div>
   );
+};
+ScrollableContainer.parameters = {
+  chromatic: { disableSnapshot: true },
 };
 
 const spacing = css`
@@ -223,6 +285,7 @@ export const MultistepDemo: StoryFn<GuideCueProps> = (args: GuideCueProps) => {
 };
 
 MultistepDemo.parameters = {
+  chromatic: { disableSnapshot: true },
   controls: {
     exclude: [
       'title',
@@ -243,3 +306,5 @@ MultistepDemo.parameters = {
     ],
   },
 };
+
+export const Generated = () => {};
