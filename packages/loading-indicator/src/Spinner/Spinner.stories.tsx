@@ -39,6 +39,7 @@ WithDescription.args = {
 export const Horizontal = Template.bind({});
 Horizontal.args = {
   variant: 'horizontal',
+  description: 'Loading...',
 };
 
 export const SizeOverride = Template.bind({});
