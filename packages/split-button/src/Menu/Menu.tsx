@@ -1,10 +1,4 @@
-import React, {
-  MouseEvent,
-  MouseEventHandler,
-  ReactElement,
-  useRef,
-  useState,
-} from 'react';
+import React, { MouseEvent, MouseEventHandler, useRef, useState } from 'react';
 import isEmpty from 'lodash/isEmpty';
 
 import Button from '@leafygreen-ui/button';
@@ -13,7 +7,9 @@ import { useBackdropClick, useEventListener } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType, keyMap } from '@leafygreen-ui/lib';
-import { Menu as LGMenu, MenuItemProps } from '@leafygreen-ui/menu';
+import { Menu as LGMenu } from '@leafygreen-ui/menu';
+
+import { MenuItemType } from '../SplitButton';
 
 import {
   triggerBaseStyles,
@@ -76,28 +72,20 @@ export const Menu = ({
   useBackdropClick(handleClose, [buttonRef, menuRef], open);
 
   const renderMenuItems = () => {
-    const onMenuItemClick = (
-      e: MouseEvent,
-      menuItem: ReactElement<MenuItemProps>,
-    ) => {
+    const onMenuItemClick = (e: MouseEvent, menuItem: MenuItemType) => {
       handleClose();
-      // @ts-expect-error - onClick is inferred from inferredPolymorphic
       menuItem.props.onClick?.(e);
     };
 
-    const renderMenuItem = (
-      menuItem: ReactElement<MenuItemProps>,
-      index = 0,
-    ) => {
+    const renderMenuItem = (menuItem: MenuItemType, index = 0) => {
       if (isComponentType(menuItem, 'MenuItem')) {
         return React.cloneElement(menuItem, {
           active: false,
           key: `menuItem-${index}`,
-          // @ts-expect-error - onClick is inferred from inferredPolymorphic
           onClick: (e: MouseEvent) => onMenuItemClick(e, menuItem),
         });
       } else {
-        console.warn('Please use a LeafyGreen <MenuItem> component.');
+        console.warn('Please use a LeafyGreen <MenuItem /> component.');
       }
     };
 
@@ -108,9 +96,9 @@ export const Menu = ({
           if (Array.isArray(menuItems.props.children)) {
             return menuItems.props.children.map(
               (
-                menuItem: ReactElement<MenuItemProps>,
+                menuItem: MenuItemType,
                 index: number,
-              ): ReactElement<MenuItemProps> | undefined => {
+              ): MenuItemType | undefined => {
                 if (menuItem == null) {
                   return menuItem;
                 }

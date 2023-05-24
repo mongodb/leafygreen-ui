@@ -5,12 +5,22 @@ import {
   Variant as ButtonVariants,
 } from '@leafygreen-ui/button';
 import { DarkModeProps } from '@leafygreen-ui/lib';
-import { MenuItemProps } from '@leafygreen-ui/menu';
-import { type MenuProps as ImportedMenuProps } from '@leafygreen-ui/menu';
+import {
+  MenuItemProps,
+  type MenuProps as ImportedMenuProps,
+} from '@leafygreen-ui/menu';
+import {
+  InferredPolymorphicProps,
+  PolymorphicAs,
+} from '@leafygreen-ui/polymorphic';
 import {
   Align as ImportedAlign,
   Justify as ImportedJustify,
 } from '@leafygreen-ui/popover';
+
+export type MenuItemType = ReactElement<
+  InferredPolymorphicProps<PolymorphicAs, MenuItemProps>
+>;
 
 export const Variant = {
   Default: ButtonVariants.Default,
@@ -27,25 +37,23 @@ type ButtonProps = Omit<
 
 export type MenuItemsType = ReactFragment & {
   props: {
-    children: Array<ReactElement<MenuItemProps>>;
+    children: Array<MenuItemType>;
   };
 };
 
 export const Align = {
   Top: ImportedAlign.Top,
   Bottom: ImportedAlign.Bottom,
-};
+} as const;
 
 export type Align = typeof Align[keyof typeof Align];
 
 export const Justify = {
   Start: ImportedJustify.Start,
   End: ImportedJustify.End,
-};
+} as const;
 
 export type Justify = typeof Justify[keyof typeof Justify];
-
-export type Test = typeof Justify;
 
 export type SelectedMenuProps = Omit<
   ImportedMenuProps,
