@@ -27,15 +27,20 @@ export default StoryMeta({
   },
 });
 
+const storyRootStyles = css`
+  display: flex;
+  gap: 48px;
+  align-items: end;
+`;
+
 const variantContainerStyles = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
 `;
 
 const labelStyles = css`
-  margin-bottom: ${spacing[4]}px;
+  margin-top: ${spacing[5]}px;
 `;
 
 const Template: ComponentStory<typeof Spinner> = (
@@ -43,36 +48,36 @@ const Template: ComponentStory<typeof Spinner> = (
     description?: string;
   } & DarkModeProps,
 ) => (
-  <div style={{ display: 'flex', gap: '48px', alignItems: 'top' }}>
+  <div className={storyRootStyles}>
     <div className={variantContainerStyles}>
+      <Spinner variant="horizontal" {...props} />
       <Body className={labelStyles} weight="medium">
         <InlineCode>horizontal</InlineCode> Spinner
       </Body>
-      <Spinner variant="horizontal" {...props} />
     </div>
     <div className={variantContainerStyles}>
+      <Spinner variant="default" {...props} />
       <Body className={labelStyles} weight="medium">
         <InlineCode>default</InlineCode> Spinner
       </Body>
-      <Spinner variant="default" {...props} />
     </div>
     <div className={variantContainerStyles}>
+      <Spinner variant="large" {...props} />
       <Body className={labelStyles} weight="medium">
         <InlineCode>large</InlineCode> Spinner
-      </Body>
-      <Spinner variant="large" {...props} />
+      </Body>{' '}
     </div>
     <div className={variantContainerStyles}>
+      <Spinner variant="xlarge" {...props} />
       <Body className={labelStyles} weight="medium">
         <InlineCode>xlarge</InlineCode> Spinner
       </Body>
-      <Spinner variant="xlarge" {...props} />
     </div>
     <div className={variantContainerStyles}>
+      <BlobLoader {...props} />
       <Body className={labelStyles} weight="medium">
         Blob Loader
-      </Body>
-      <BlobLoader {...props} />
+      </Body>{' '}
     </div>
   </div>
 );
