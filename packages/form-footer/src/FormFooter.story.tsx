@@ -1,28 +1,61 @@
+/* eslint-disable react/display-name */
 import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import FormFooter, { FormFooterProps } from '.';
+
+const wrapperStyle = css`
+  min-width: 40vw;
+  width: 100%;
+`;
 
 const meta: StoryMetaType<typeof FormFooter> = {
   title: 'Components/FormFooter',
   component: FormFooter,
+  decorators: [
+    StoryFn => (
+      <div className={wrapperStyle}>
+        <StoryFn />
+      </div>
+    ),
+  ],
   parameters: {
-    default: 'Basic',
+    default: 'LiveExample',
     controls: {
-      exclude: ['contentClassName', 'onBackClick'],
+      exclude: [
+        ...storybookExcludedControlParams,
+        'contentClassName',
+        'onBackClick',
+        'primaryButton',
+      ],
     },
-    wrapperStyle: css`
-      width: 90%;
-    `,
+    generate: {
+      props: {
+        darkMode: [false, true],
+        errorMessage: [undefined, 'This is an error message'],
+        backButtonText: [undefined, 'Back'],
+        cancelButtonText: ['', 'Cancel'],
+      },
+      decorator: StoryFn => (
+        <div className={wrapperStyle}>
+          <StoryFn />
+        </div>
+      ),
+    },
   },
   args: {
     darkMode: false,
     primaryButtonText: 'Button',
+    primaryButton: { text: 'Button' },
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -43,34 +76,22 @@ type FormFooterStoryProps = FormFooterProps & { primaryButtonText?: string };
 
 const Template: StoryFn<FormFooterProps> = ({
   primaryButtonText,
+  primaryButton,
   ...args
 }: FormFooterStoryProps) => (
   <FormFooter
-    className={css`
-      width: 100%;
-    `}
     {...args}
-    primaryButton={{ text: primaryButtonText as string }}
+    primaryButton={
+      primaryButton ? primaryButton : { text: primaryButtonText as string }
+    }
   />
 );
 
-export const Basic = Template.bind({});
-Basic.parameters = {
-  controls: {
-    exclude: ['primaryButton'],
-  },
-};
-
-export const AllButtons = Template.bind({});
-AllButtons.args = {
+export const LiveExample = Template.bind({});
+LiveExample.args = {
   cancelButtonText: 'Cancel button text',
   backButtonText: 'Back button text',
   errorMessage: 'Error message',
-};
-AllButtons.parameters = {
-  controls: {
-    exclude: ['primaryButton'],
-  },
 };
 
 export const WithCustomPrimaryButton = Template.bind({});
@@ -91,21 +112,11 @@ WithCustomPrimaryButton.args = {
 };
 WithCustomPrimaryButton.parameters = {
   controls: {
-    exclude: ['primaryButtonText'],
+    exclude: [
+      ...(meta.parameters.controls?.exclude ?? []),
+      'primaryButtonText',
+    ],
   },
 };
 
-export const InLargerContainer: StoryFn<FormFooterProps> = args => (
-  <div
-    className={css`
-      width: 1500px;
-    `}
-  >
-    <FormFooter {...args} />
-  </div>
-);
-InLargerContainer.parameters = {
-  controls: {
-    exclude: ['primaryButton'],
-  },
-};
+export const Generated = () => {};
