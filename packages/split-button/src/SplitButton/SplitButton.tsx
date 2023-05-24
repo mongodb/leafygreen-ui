@@ -45,6 +45,9 @@ export const SplitButton = InferredPolymorphic<SplitButtonProps, 'button'>(
       portalClassName,
       portalContainer,
       scrollContainer,
+      open,
+      setOpen,
+      onTriggerClick,
       ...rest
     },
     ref: React.Ref<any>,
@@ -95,6 +98,9 @@ export const SplitButton = InferredPolymorphic<SplitButtonProps, 'button'>(
             menuItems={menuItems}
             id={menuId}
             disabled={disabled}
+            open={open}
+            setOpen={setOpen}
+            onTriggerClick={onTriggerClick}
           />
         </LeafyGreenProvider>
       </div>
@@ -130,3 +136,4 @@ SplitButton.propTypes = {
 
 // TODO: allow open and setOpen
 // TODO: see if its better to use an array or menuItems
+// TODO: add test for menu closing

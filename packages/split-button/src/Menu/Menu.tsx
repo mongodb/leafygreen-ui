@@ -1,4 +1,10 @@
-import React, { ReactElement, useRef, useState } from 'react';
+import React, {
+  MouseEvent,
+  MouseEventHandler,
+  ReactElement,
+  useRef,
+  useState,
+} from 'react';
 import isEmpty from 'lodash/isEmpty';
 
 import Button from '@leafygreen-ui/button';
@@ -7,7 +13,7 @@ import { useBackdropClick, useEventListener } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType, keyMap } from '@leafygreen-ui/lib';
-import { Menu as LGMenu } from '@leafygreen-ui/menu';
+import { Menu as LGMenu, MenuItemProps } from '@leafygreen-ui/menu';
 
 import {
   triggerBaseStyles,
@@ -29,14 +35,27 @@ export const Menu = ({
   menuItems,
   containerRef,
   id,
+  onTriggerClick,
+  open: controlledOpen,
+  setOpen: controlledSetOpen,
   ...rest
 }: MenuProps) => {
   const { theme } = useDarkMode();
-  const [open, setOpen] = useState<boolean>(false);
+  const [uncontrolledOpen, uncontrolledSetOpen] = useState<boolean>(false);
   const buttonRef = useRef<null | HTMLButtonElement>(null);
   const menuRef = useRef<null | HTMLDivElement>(null);
 
-  const handleTriggerClick = () => setOpen(o => !o);
+  const setOpen =
+    (typeof controlledOpen === 'boolean' && controlledSetOpen) ||
+    uncontrolledSetOpen;
+  const open = controlledOpen ?? uncontrolledOpen;
+
+  const handleTriggerClick: MouseEventHandler = e => {
+    onTriggerClick?.(e);
+    if (typeof controlledOpen !== 'boolean') {
+      setOpen(o => !o);
+    }
+  };
 
   const handleClose = () => {
     buttonRef.current?.focus();
@@ -56,16 +75,24 @@ export const Menu = ({
   useBackdropClick(handleClose, [buttonRef, menuRef], open);
 
   const renderMenuItems = () => {
-    const onChildClick = (e: MouseEvent, menuItem: ReactElement) => {
+    const onChildClick = (
+      e: MouseEvent,
+      menuItem: ReactElement<MenuItemProps>,
+    ) => {
       handleClose();
+      // @ts-expect-error - onClick is inferred from inferredPolymorphic
       menuItem.props.onClick?.(e);
     };
 
-    const renderMenuItem = (menuItem: ReactElement, index = 0) => {
+    const renderMenuItem = (
+      menuItem: ReactElement<MenuItemProps>,
+      index = 0,
+    ) => {
       if (isComponentType(menuItem, 'MenuItem')) {
         return React.cloneElement(menuItem, {
           active: false,
           key: `menuItem-${index}`,
+          // @ts-expect-error - onClick is inferred from inferredPolymorphic
           onClick: (e: MouseEvent) => onChildClick(e, menuItem),
         });
       } else {
@@ -80,9 +107,9 @@ export const Menu = ({
           if (Array.isArray(menuItems.props.children)) {
             return menuItems.props.children.map(
               (
-                menuItem: ReactElement,
+                menuItem: ReactElement<MenuItemProps>,
                 index: number,
-              ): ReactElement | undefined => {
+              ): ReactElement<MenuItemProps> | undefined => {
                 if (menuItem == null) {
                   return menuItem;
                 }
@@ -113,7 +140,7 @@ export const Menu = ({
           [triggerThemeStyles(theme, variant!)]: !disabled,
         })}
         aria-label="More options" // TODO: should this be a prop for consumers?
-        aria-owns={id}
+        aria-controls={open ? id : ''}
         onClick={handleTriggerClick}
         ref={buttonRef}
       />

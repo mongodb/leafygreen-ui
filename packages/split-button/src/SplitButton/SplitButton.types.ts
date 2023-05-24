@@ -1,4 +1,4 @@
-import { ComponentType, ReactFragment } from 'react';
+import { MouseEventHandler, ReactElement, ReactFragment } from 'react';
 
 import {
   type ButtonProps as ImportedButtonProps,
@@ -27,7 +27,7 @@ type ButtonProps = Omit<
 
 export type MenuItemsType = ReactFragment & {
   props: {
-    children: Array<ComponentType<MenuItemProps>>;
+    children: Array<ReactElement<MenuItemProps>>;
   };
 };
 
@@ -51,8 +51,6 @@ export type SelectedMenuProps = Omit<
   ImportedMenuProps,
   | 'children'
   | 'trigger'
-  | 'open'
-  | 'setOpen'
   | 'shouldClose'
   | 'darkMode'
   | 'onClick'
@@ -91,6 +89,11 @@ export interface MenuProps extends SelectedMenuProps {
    * ```
    */
   menuItems: MenuItemsType;
+
+  /**
+   * Callback fired when the trigger is clicked
+   */
+  onTriggerClick?: MouseEventHandler;
 }
 
 export interface SplitButtonProps

@@ -160,6 +160,7 @@ describe('packages/split-button', () => {
           scrollContainer={{} as HTMLElement}
           portalClassName="classname"
           data-testid="test-id"
+          open={false}
         />
         {/* @ts-expect-error - expects label and menuItems*/}
         <SplitButton />
