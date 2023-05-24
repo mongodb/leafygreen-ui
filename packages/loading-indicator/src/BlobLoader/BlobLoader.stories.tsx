@@ -6,7 +6,7 @@ import { StoryMeta } from '@leafygreen-ui/lib';
 import BlobLoader from './BlobLoader';
 
 export default StoryMeta({
-  title: 'Components/LoadingIndicators/BlobLoader',
+  title: 'Components/LoadingIndicator/BlobLoader',
   component: BlobLoader,
   argTypes: {
     description: { control: 'text' },

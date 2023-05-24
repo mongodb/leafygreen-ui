@@ -1,5 +1,6 @@
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
+import { spacing } from '@leafygreen-ui/tokens';
 
 import { Variant } from './Spinner.types';
 
@@ -13,9 +14,9 @@ export const SpinnerSizes: Record<Variant, number> = {
 };
 
 export const SpinnerBottomMargins: Record<Variant, number> = {
-  default: 8,
-  large: 8,
-  xlarge: 16,
+  default: spacing[2],
+  large: spacing[2],
+  xlarge: spacing[3],
   horizontal: 0,
 };
 

@@ -4,7 +4,7 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
-import { descriptionThemeColor } from '../LoadingIndicators.styles';
+import { descriptionThemeColor } from '../LoadingIndicator.styles';
 
 import animationJson from './animation';
 import { blobStyles, rootStyles } from './BlobLoader.styles';

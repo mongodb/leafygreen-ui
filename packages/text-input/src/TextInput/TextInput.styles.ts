@@ -374,7 +374,7 @@ export const inputStateStyles: Record<State, Record<Theme, string>> = {
  * Input indicator
  */
 
-export const inputIndicatorStyle = css`
+export const inputIndicatortyle = css`
   position: absolute;
   display: flex;
   align-items: center;
@@ -384,7 +384,7 @@ export const inputIndicatorStyle = css`
 `;
 
 // Below numbers are "magic" because they need to account for border width, etc that would need larger refactoring to make DRY
-export const inputIndicatorSizeStyle: Record<SizeVariant, string> = {
+export const inputIndicatorizeStyle: Record<SizeVariant, string> = {
   [SizeVariant.XSmall]: css`
     padding-right: 6px;
   `,
@@ -399,7 +399,7 @@ export const inputIndicatorSizeStyle: Record<SizeVariant, string> = {
   `,
 };
 
-export const stateIndicatorStyles: Record<
+export const stateIndicatortyles: Record<
   'valid' | 'error',
   Record<Theme, string>
 > = {

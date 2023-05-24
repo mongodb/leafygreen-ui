@@ -114,7 +114,7 @@ export const optionsWrapperStyle = ({
     `,
   );
 
-export const selectionIndicatorStyle = css`
+export const selectionIndicatortyle = css`
   position: absolute;
   width: 100%;
   height: var(--indicator-height);
@@ -124,7 +124,7 @@ export const selectionIndicatorStyle = css`
   transition: transform ${transitionDuration.default}ms ease-in-out;
 `;
 
-export const hoverIndicatorStyle = css`
+export const hoverIndicatortyle = css`
   position: absolute;
   height: var(--indicator-height);
   width: 100%;

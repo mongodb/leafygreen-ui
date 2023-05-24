@@ -7,7 +7,7 @@ import Spinner from './Spinner';
 import { Variant } from './Spinner.types';
 
 export default StoryMeta({
-  title: 'Components/LoadingIndicators/Spinner',
+  title: 'Components/LoadingIndicator/Spinner',
   component: Spinner,
   args: {
     variant: 'default',

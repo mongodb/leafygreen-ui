@@ -1,8 +1,8 @@
 
   {
-    "name": "@leafygreen-ui/loading-indicators",
+    "name": "@leafygreen-ui/loading-indicator",
     "version": "0.9.0",
-    "description": "leafyGreen UI Kit Loading Indicators",
+    "description": "leafyGreen UI Kit Loading Indicator",
     "main": "./dist/index.js",
     "module": "./dist/esm/index.js",
     "types": "./dist/index.d.ts",
@@ -13,7 +13,7 @@
       "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
     },
     "license": "Apache-2.0",
-    "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/loading-indicators",
+    "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/loading-indicator",
     "repository": {
       "type": "git",
       "url": "https://github.com/mongodb/leafygreen-ui"
@@ -28,6 +28,7 @@
       "@leafygreen-ui/emotion": "^4.0.4",
       "@leafygreen-ui/lib": "^10.0.0",
       "@leafygreen-ui/palette": "^4.0.4",
+      "@leafygreen-ui/tokens": "^2.1.0",
       "@leafygreen-ui/typography": "^16.4.0",
       "@lottiefiles/react-lottie-player": "^3.5.3"
     },

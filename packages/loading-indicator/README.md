@@ -1,21 +1,21 @@
-# Loading Indicators
+# Loading Indicator
 
-![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/loading-indicators.svg)
+![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/loading-indicator.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/loading-indicators/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/loading-indicator/example/)
 
 ## Installation
 
 ### Yarn
 
 ```shell
-yarn add @leafygreen-ui/loading-indicators
+yarn add @leafygreen-ui/loading-indicator
 ```
 
 ### NPM
 
 ```shell
-npm install @leafygreen-ui/loading-indicators
+npm install @leafygreen-ui/loading-indicator
 ```
 
 ## Spinner

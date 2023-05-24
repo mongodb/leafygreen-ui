@@ -5,7 +5,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
-import { descriptionThemeColor } from '../LoadingIndicators.styles';
+import { descriptionThemeColor } from '../LoadingIndicator.styles';
 
 import animationJson from './animation';
 import {

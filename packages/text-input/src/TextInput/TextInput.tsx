@@ -24,8 +24,8 @@ import {
   inheritTypeScale,
   inputContainerStyle,
   inputFocusStyles,
-  inputIndicatorSizeStyle,
-  inputIndicatorStyle,
+  inputIndicatorizeStyle,
+  inputIndicatortyle,
   inputModeStyles,
   inputPaddingForIndicator,
   inputPaddingForOptionalText,
@@ -33,7 +33,7 @@ import {
   inputStateStyles,
   optionalTextBaseStyle,
   optionalTextThemeStyle,
-  stateIndicatorStyles,
+  stateIndicatortyles,
   textContainerStyle,
   wrapperStyle,
 } from './TextInput.styles';
@@ -223,22 +223,22 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
           <div
             className={cx(
               iconClassName,
-              inputIndicatorStyle,
-              inputIndicatorSizeStyle[sizeVariant],
+              inputIndicatortyle,
+              inputIndicatorizeStyle[sizeVariant],
             )}
           >
             {/* Render State Icon or Optional text*/}
             {state === State.Valid && (
               <RenderedCheckmarkIcon
                 role="presentation"
-                className={stateIndicatorStyles.valid[theme]}
+                className={stateIndicatortyles.valid[theme]}
               />
             )}
 
             {state === State.Error && (
               <WarningIcon
                 role="presentation"
-                className={stateIndicatorStyles.error[theme]}
+                className={stateIndicatortyles.error[theme]}
               />
             )}
 

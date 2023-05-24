@@ -23,11 +23,11 @@ import { SegmentedControlContext } from '../SegmentedControlContext';
 import { useEffectOnceOnMount } from '../useEffectOnceOnMount';
 
 import {
-  hoverIndicatorStyle,
+  hoverIndicatortyle,
   labelBaseStyles,
   labelThemeStyle,
   optionsWrapperStyle,
-  selectionIndicatorStyle,
+  selectionIndicatortyle,
   wrapperStyle,
 } from './SegmentedControl.styles';
 import {
@@ -342,18 +342,18 @@ export const SegmentedControl = forwardRef<
         >
           {renderedChildren}
           {/**
-           * The selection and hover indicators are absolutely positioned elements that move underneath the text.
+           * The selection and hover Indicator are absolutely positioned elements that move underneath the text.
            * This allows us to achieve the sliding effect.
            */}
           <div
             className={cx(
-              selectionIndicatorStyle,
+              selectionIndicatortyle,
               getIndicatorDynamicStyles(selectedIndex),
             )}
           />
           <div
             className={cx(
-              hoverIndicatorStyle,
+              hoverIndicatortyle,
               getIndicatorDynamicStyles(hoveredIndex),
             )}
           />

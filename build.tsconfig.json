@@ -72,7 +72,7 @@
       "path": "./packages/lib"
     },
     {
-      "path": "./packages/loading-indicators"
+      "path": "./packages/loading-indicator"
     },
     {
       "path": "./packages/logo"
