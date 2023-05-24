@@ -94,6 +94,11 @@ export interface MenuProps extends SelectedMenuProps {
    * Callback fired when the trigger is clicked
    */
   onTriggerClick?: MouseEventHandler;
+
+  /**
+   * aria-label for the menu trigger button
+   */
+  triggerAriaLabel?: string;
 }
 
 export interface SplitButtonProps

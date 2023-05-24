@@ -48,6 +48,7 @@ export const SplitButton = InferredPolymorphic<SplitButtonProps, 'button'>(
       open,
       setOpen,
       onTriggerClick,
+      triggerAriaLabel,
       ...rest
     },
     ref: React.Ref<any>,
@@ -101,6 +102,7 @@ export const SplitButton = InferredPolymorphic<SplitButtonProps, 'button'>(
             open={open}
             setOpen={setOpen}
             onTriggerClick={onTriggerClick}
+            triggerAriaLabel={triggerAriaLabel}
           />
         </LeafyGreenProvider>
       </div>

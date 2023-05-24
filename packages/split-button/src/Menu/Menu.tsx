@@ -36,6 +36,7 @@ export const Menu = ({
   containerRef,
   id,
   onTriggerClick,
+  triggerAriaLabel,
   open: controlledOpen,
   setOpen: controlledSetOpen,
   ...rest
@@ -75,7 +76,7 @@ export const Menu = ({
   useBackdropClick(handleClose, [buttonRef, menuRef], open);
 
   const renderMenuItems = () => {
-    const onChildClick = (
+    const onMenuItemClick = (
       e: MouseEvent,
       menuItem: ReactElement<MenuItemProps>,
     ) => {
@@ -93,7 +94,7 @@ export const Menu = ({
           active: false,
           key: `menuItem-${index}`,
           // @ts-expect-error - onClick is inferred from inferredPolymorphic
-          onClick: (e: MouseEvent) => onChildClick(e, menuItem),
+          onClick: (e: MouseEvent) => onMenuItemClick(e, menuItem),
         });
       } else {
         console.warn('Please use a LeafyGreen <MenuItem> component.');
@@ -139,10 +140,12 @@ export const Menu = ({
         className={cx(triggerBaseStyles, triggerSizeStyles[size!], {
           [triggerThemeStyles(theme, variant!)]: !disabled,
         })}
-        aria-label="More options" // TODO: should this be a prop for consumers?
+        aria-label={triggerAriaLabel || 'More options'}
         aria-controls={open ? id : ''}
         onClick={handleTriggerClick}
         ref={buttonRef}
+        aria-expanded={open}
+        aria-haspopup={true}
       />
       <LGMenu
         data-testid="lg-split-button-menu"

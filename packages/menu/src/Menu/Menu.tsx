@@ -85,7 +85,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     popoverZIndex,
     maxHeight = 344,
     darkMode: darkModeProp,
-    id,
     ...rest
   }: MenuProps,
   forwardRef,
@@ -338,7 +337,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
         {...popoverProps}
       >
         <div
-          id={id}
           className={cx(
             rootMenuStyle,
             rootMenuThemeStyles[theme],
