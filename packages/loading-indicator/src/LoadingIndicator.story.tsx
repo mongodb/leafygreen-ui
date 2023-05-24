@@ -36,7 +36,7 @@ const storyRootStyles = css`
 const variantContainerStyles = css`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
 `;
 
 const labelStyles = css`
