@@ -136,10 +136,14 @@ function PropCombinations<T extends React.ComponentType<any>>({
   exclude: GeneratedStoryConfig<T>['excludeCombinations'];
 }): ReactElement<any> {
   let comboCount = 0;
+
   const AllCombinations = RecursiveCombinations({}, [...variables]);
-  console.log(
-    `Rendering ${comboCount} prop combinations for component: ${component.displayName}`,
-  );
+  setTimeout(() => {
+    comboCount &&
+      console.log(
+        `Rendering ${comboCount} prop combinations for component: ${component.displayName}`,
+      );
+  }, 0);
   return AllCombinations;
 
   function RecursiveCombinations(
