@@ -18,12 +18,14 @@ const meta: StoryMetaType<typeof Checkbox> = {
       exclude: ['checked'],
     },
     generate: {
-      darkMode: [false, true],
-      checked: [true, false],
-      indeterminate: [false, true],
-      disabled: [false, true],
-      description: [undefined, loremIpsum],
-      label: ['I agree to this thing', undefined],
+      props: {
+        darkMode: [false, true],
+        checked: [true, false],
+        indeterminate: [false, true],
+        disabled: [false, true],
+        description: [undefined, loremIpsum],
+        label: ['I agree to this thing', undefined],
+      },
     },
   },
   argTypes: {
