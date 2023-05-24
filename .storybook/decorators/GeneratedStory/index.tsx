@@ -12,74 +12,37 @@
 import React, { ReactElement } from 'react';
 import { Decorator, StoryContext, StoryFn } from '@storybook/react';
 import { Args } from '@storybook/csf';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
-import { createUniqueClassName } from '@leafygreen-ui/lib';
-import { typeScales } from '@leafygreen-ui/tokens';
+import { cx } from '@leafygreen-ui/emotion';
 import { Error } from '@leafygreen-ui/typography';
 import { GeneratedStoryConfig } from 'packages/lib/src/storybook/GeneratedStoryDecorator.types';
 import { entries } from 'lodash';
 import { shouldExcludePropCombo } from './utils/shouldExcludePropCombo';
+import {
+  combinationClassName,
+  combinationStyles,
+  generatedStoryWrapper,
+  instanceStyles,
+  propSectionStyles,
+} from './GeneratedStory.styles';
+import { StoryMetaType } from '@leafygreen-ui/lib';
 
 export const PARAM_NAME = 'generate';
 export const GENERATED_STORY_NAME = 'Generated';
 
-const indent = 16;
-
-const generatedStoryWrapper = css`
-  /* padding: ${indent}px; */
-`;
-
-const propSectionStyles = css`
-  &#darkMode {
-    display: flex;
-  }
-`;
-
-const combinationClassName = createUniqueClassName('combo');
-const combinationStyles = css`
-  position: relative;
-  padding: 4px ${indent}px;
-  overflow: visible;
-  border-left: 1px solid;
-  color: ${palette.gray.base};
-  border-color: ${palette.gray.light1};
-  font-size: ${typeScales.body1.fontSize}px;
-  line-height: ${typeScales.body1.lineHeight}px;
-  width: max-content;
-  max-width: 100%;
-
-  &#darkMode-true,
-  &#darkMode-false {
-    flex: 1;
-    max-width: 50%;
-    padding: ${indent}px;
-  }
-
-  &#darkMode-true,
-  &#darkMode-true .${combinationClassName} {
-    background-color: ${palette.black};
-    color: ${palette.gray.base};
-    border-color: ${palette.gray.dark2};
-  }
-  &#darkMode-false,
-  &#darkMode-false .${combinationClassName} {
-    background-color: ${palette.white};
-    color: ${palette.gray.base};
-    border-color: ${palette.gray.light1};
-  }
-`;
-
-const instanceStyles = css`
-  padding: 8px ${indent}px 0;
-`;
-
-const decorator: Decorator = (StoryFn: StoryFn, context: StoryContext) => {
-  const { name: storyName, parameters, component, args: metaArgs } = context;
+const GeneratedStoryDecorator: Decorator = (
+  StoryFn: StoryFn,
+  context: StoryContext<unknown>,
+) => {
+  const { name: storyName, component } = context;
 
   if (component && storyName === GENERATED_STORY_NAME) {
-    type GenerateConfigType = GeneratedStoryConfig<typeof component>;
-    const generate: GenerateConfigType = parameters[PARAM_NAME];
+    const { parameters, args: metaArgs } = context as StoryContext<
+      typeof component
+    > &
+      StoryMetaType<typeof component>;
+
+    const generate: GeneratedStoryConfig<typeof component> | undefined =
+      parameters[PARAM_NAME];
 
     if (!generate) {
       return Err(
@@ -87,7 +50,12 @@ const decorator: Decorator = (StoryFn: StoryFn, context: StoryContext) => {
       );
     }
 
-    const { props, excludeCombinations, args: generatedArgs } = generate;
+    const {
+      props,
+      excludeCombinations,
+      args: generatedArgs,
+      decorator,
+    } = generate;
 
     if (!props) {
       return Err('`props` not found in story generation parameters');
@@ -111,6 +79,7 @@ const decorator: Decorator = (StoryFn: StoryFn, context: StoryContext) => {
           variables={variables}
           args={{ ...metaArgs, ...generatedArgs }}
           exclude={excludeCombinations}
+          decorator={decorator}
         />
       </div>
     );
@@ -119,7 +88,7 @@ const decorator: Decorator = (StoryFn: StoryFn, context: StoryContext) => {
   }
 };
 
-export default decorator;
+export default GeneratedStoryDecorator;
 
 /**
  * Generates all combinations of each variable
@@ -129,11 +98,13 @@ function PropCombinations<T extends React.ComponentType<any>>({
   variables,
   args,
   exclude,
+  decorator = (SFn: StoryFn) => <SFn />,
 }: {
   component: T;
   variables: Array<[string, Array<any> | undefined]>;
   args: Args;
   exclude: GeneratedStoryConfig<T>['excludeCombinations'];
+  decorator: GeneratedStoryConfig<T>['decorator'];
 }): ReactElement<any> {
   let comboCount = 0;
 
@@ -152,11 +123,11 @@ function PropCombinations<T extends React.ComponentType<any>>({
   ): ReactElement<any> {
     if (vars.length === 0) {
       comboCount += 1;
-      return (
+      return decorator(() => (
         <div className={instanceStyles}>
           {React.createElement(component, { ...args, ...props })}
         </div>
-      );
+      ));
     } else {
       const [propName, propValues] = vars.pop()!;
 
@@ -211,7 +182,7 @@ function PropCombinations<T extends React.ComponentType<any>>({
         className={cx(combinationClassName, combinationStyles)}
       >
         <summary>
-          {propName} = {`${valStr(val)}`}
+          {propName} = "{`${valStr(val)}`}"
         </summary>
         {RecursiveCombinations({ [propName]: val, ...props }, [...vars])}
       </details>
