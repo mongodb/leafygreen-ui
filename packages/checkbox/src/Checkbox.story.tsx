@@ -3,7 +3,11 @@ import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedArgTypes,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import Checkbox, { CheckboxProps } from '.';
 
@@ -20,13 +24,40 @@ const meta: StoryMetaType<typeof Checkbox> = {
     generate: {
       props: {
         darkMode: [false, true],
-        checked: [true, false],
         indeterminate: [false, true],
         disabled: [false, true],
         description: [undefined, loremIpsum],
         label: ['I agree to this thing', undefined],
+        bold: [true, false],
+        checked: [true, false],
       },
+      excludeCombinations: [
+        [
+          // Skip description when label is undefined
+          'description',
+          {
+            label: undefined,
+          },
+        ],
+        {
+          // Skip bold when label is undefined
+          bold: true,
+          label: undefined,
+        },
+        {
+          checked: true,
+          indeterminate: true,
+        },
+      ],
     },
+  },
+  args: {
+    animate: true,
+    label: 'I agree to this thing.',
+    description: loremIpsum,
+    className: css`
+      max-width: 700px;
+    `,
   },
   argTypes: {
     label: { control: 'text' },
@@ -44,8 +75,7 @@ export default meta;
 type BaseFontSize = 14 | 16;
 type StoryCheckboxProps = CheckboxProps & { baseFontSize: BaseFontSize };
 
-const Template: StoryFn<StoryCheckboxProps> = ({
-  // eslint-disable-next-line react/prop-types
+export const LiveExample: StoryFn<StoryCheckboxProps> = ({
   baseFontSize,
   ...args
 }: StoryCheckboxProps) => (
@@ -54,39 +84,17 @@ const Template: StoryFn<StoryCheckboxProps> = ({
   </LeafygreenProvider>
 );
 
-export const Uncontrolled = Template.bind({});
-Uncontrolled.args = {
-  animate: true,
-  label: 'I agree to this thing.',
-  description:
-    'Donec id elit non mi porta gravida at eget metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum id ligula porta felis euismod semper. Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.',
-  className: css`
-    max-width: 700px;
-  `,
+export const Controlled = LiveExample.bind({});
+Controlled.parameters = {
+  controls: {
+    exclude: [],
+  },
 };
-
-export const Controlled = Template.bind({});
+Controlled.args = {
+  checked: false,
+};
 Controlled.argTypes = {
   checked: { control: 'boolean' },
-};
-
-export const NoDescription = Template.bind({});
-NoDescription.args = {
-  label:
-    'Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.',
-};
-
-export const WrappedLabel = Template.bind({});
-WrappedLabel.args = {
-  label:
-    'Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.',
-  className: css`
-    max-width: 256px;
-  `,
-};
-export const CheckOnly = Template.bind({});
-CheckOnly.args = {
-  'aria-label': 'Label',
 };
 
 export const Generated = () => {};
