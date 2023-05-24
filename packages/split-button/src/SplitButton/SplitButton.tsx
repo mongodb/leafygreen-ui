@@ -134,6 +134,5 @@ SplitButton.propTypes = {
   portalClassName: PropTypes.string,
 } as any;
 
-// TODO: allow open and setOpen
 // TODO: see if its better to use an array or menuItems
 // TODO: add test for menu closing

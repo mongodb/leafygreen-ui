@@ -65,7 +65,7 @@ const scrollContainerStyle = css`
  * @param props.trigger Trigger element can be ReactNode or function, and, if present, internally manages active state of Menu.
  * @param props.darkMode Determines whether or not the component will be rendered in dark theme.
  */
-export const Menu = React.forwardRef(function Menu(
+export const Menu = React.forwardRef<HTMLDivvElement, MenuProps>(function Menu(
   {
     align = Align.Bottom,
     justify = Justify.End,
@@ -426,6 +426,6 @@ Menu.propTypes = {
   open: PropTypes.bool,
   setOpen: PropTypes.func,
   darkMode: PropTypes.bool,
-};
+} as any;
 
 export default Menu;
