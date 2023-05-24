@@ -16,9 +16,9 @@ import {
 } from '../styles';
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
 
-import { BodyProps } from './Body.types';
+import { BaseBodyProps } from './Body.types';
 
-const Body = Polymorphic<BodyProps>(
+const Body = Polymorphic<BaseBodyProps>(
   ({
     baseFontSize: baseFontSizeOverride,
     darkMode: darkModeProp,

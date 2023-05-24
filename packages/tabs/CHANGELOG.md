@@ -1,5 +1,21 @@
 # @leafygreen-ui/tabs
 
+## 11.1.0
+
+### Minor Changes
+
+- 2077235fe: Component now supports `baseFontSize` prop
+
+## 11.0.10
+
+### Patch Changes
+
+- a3a52e131: Bumps to use new `useIdAllocator` hook
+- Updated dependencies [a3a52e131]
+- Updated dependencies [a3a52e131]
+  - @leafygreen-ui/hooks@7.7.3
+  - @leafygreen-ui/a11y@1.4.4
+
 ## 11.0.9
 
 ### Patch Changes

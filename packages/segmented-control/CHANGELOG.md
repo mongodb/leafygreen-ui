@@ -1,5 +1,22 @@
 # @leafygreen-ui/segmented-control
 
+## 8.1.0
+
+### Minor Changes
+
+- 71b9f59ae: Allows `null` to be passed as children to SegmentedControl component, per React standard
+
+## 8.0.3
+
+### Patch Changes
+
+- a3a52e131: Bumps to use new `useIdAllocator` hook
+- Updated dependencies [614f7617d]
+- Updated dependencies [a3a52e131]
+- Updated dependencies [614f7617d]
+  - @leafygreen-ui/icon@11.15.0
+  - @leafygreen-ui/hooks@7.7.3
+
 ## 8.0.2
 
 ### Patch Changes

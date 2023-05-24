@@ -1,5 +1,8 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { PolymorphicAs, PolymorphicProps } from '@leafygreen-ui/polymorphic';
 
 import { CommonTypographyProps } from '../types';
 
-export type OverlineProps = HTMLElementProps<'div'> & CommonTypographyProps;
+export type BaseOverlineProps = CommonTypographyProps;
+
+// For external consumption only
+export type OverlineProps = PolymorphicProps<PolymorphicAs, BaseOverlineProps>;

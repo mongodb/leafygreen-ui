@@ -152,7 +152,7 @@ export const sliderSizeStyles: Record<Size, string> = {
     width: 12px;
 
     ${sliderSelector.checked} {
-      transform: translate3d(12px, 0, 0);
+      transform: translate3d(10px, 0, 0);
     }
   `,
 };

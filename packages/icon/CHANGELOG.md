@@ -1,5 +1,18 @@
 # @leafygreen-ui/icon
 
+## 11.16.0
+
+### Minor Changes
+
+- dff6c306e: Adds support for `Dashboard` in the glyph set. This is an alias of `Stitch` and will be the preferred reference name moving forward.
+
+## 11.15.0
+
+### Minor Changes
+
+- 614f7617d: Adds tag icon to glyph set
+- 614f7617d: Adds wizard icon to glyph set
+
 ## 11.14.0
 
 ### Minor Changes

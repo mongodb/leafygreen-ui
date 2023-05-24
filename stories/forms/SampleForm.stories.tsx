@@ -5,6 +5,9 @@ import TextInput from '@leafygreen-ui/text-input';
 
 export default {
   title: 'Form/Sample Forms',
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
 };
 
 export const Vertical = () => {

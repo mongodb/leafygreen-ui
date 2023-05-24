@@ -15,6 +15,7 @@ export function Disclaimer({
   ...rest
 }: DisclaimerProps) {
   const { theme } = useDarkMode(darkModeProp);
+
   return (
     <small
       {...rest}

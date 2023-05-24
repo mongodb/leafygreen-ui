@@ -1,9 +1,14 @@
-import { HTMLElementProps, OneOf } from '@leafygreen-ui/lib';
+import {
+  InferredPolymorphicProps,
+  PolymorphicAs,
+} from '@leafygreen-ui/polymorphic';
 
 import { ResponsiveTypographyProps } from '../types';
 
-export type InlineCodeProps = OneOf<
-  HTMLElementProps<'code'>,
-  HTMLElementProps<'a'>
-> &
-  ResponsiveTypographyProps;
+export type BaseInlineCodeProps = ResponsiveTypographyProps;
+
+// For external consumption only
+export type InlineCodeProps = InferredPolymorphicProps<
+  PolymorphicAs,
+  BaseInlineCodeProps
+>;
