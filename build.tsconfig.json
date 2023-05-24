@@ -72,6 +72,9 @@
       "path": "./packages/lib"
     },
     {
+      "path": "./packages/loading-indicators"
+    },
+    {
       "path": "./packages/logo"
     },
     {

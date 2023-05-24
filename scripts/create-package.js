@@ -104,6 +104,7 @@ const packageJSON = `
       "access": "public"
     },
     "dependencies": {
+      "@leafygreen-ui/emotion": "^4.0.4",
       "@leafygreen-ui/lib": "^10.0.0"
     }
   }
@@ -119,6 +120,9 @@ const tsConfig = `
   },
   "include": ["src/**/*"],
   "references": [
+    {
+      "path": "../emotion"
+    },
     {
       "path": "../lib"
     }
@@ -178,7 +182,7 @@ const storybook = `
 import React from 'react';
 import { ComponentStory } from '@storybook/react';
 
-import {${packageNamePascal}} from '.';
+import { ${packageNamePascal} } from '.';
 
 export default {
   title: 'Components/${packageNamePascal}',
@@ -208,4 +212,8 @@ describe('packages/${packageNameKebab}', () => {
 
 const types = `export interface ${packageNamePascal}Props {}`;
 
-const styles = `import { css } from '@leafygreen-ui/emotion';`;
+const styles = `
+import { css } from '@leafygreen-ui/emotion';
+
+export const baseStyles = css``;
+`;
