@@ -65,28 +65,31 @@ const scrollContainerStyle = css`
  * @param props.trigger Trigger element can be ReactNode or function, and, if present, internally manages active state of Menu.
  * @param props.darkMode Determines whether or not the component will be rendered in dark theme.
  */
-export function Menu({
-  align = Align.Bottom,
-  justify = Justify.End,
-  adjustOnMutation = false,
-  shouldClose = () => true,
-  spacing = 6,
-  open: controlledOpen,
-  setOpen: controlledSetOpen,
-  children,
-  className,
-  refEl,
-  trigger,
-  usePortal = true,
-  portalClassName,
-  portalContainer,
-  scrollContainer,
-  popoverZIndex,
-  maxHeight = 344,
-  darkMode: darkModeProp,
-  id,
-  ...rest
-}: MenuProps) {
+export const Menu = React.forwardRef(function Menu(
+  {
+    align = Align.Bottom,
+    justify = Justify.End,
+    adjustOnMutation = false,
+    shouldClose = () => true,
+    spacing = 6,
+    open: controlledOpen,
+    setOpen: controlledSetOpen,
+    children,
+    className,
+    refEl,
+    trigger,
+    usePortal = true,
+    portalClassName,
+    portalContainer,
+    scrollContainer,
+    popoverZIndex,
+    maxHeight = 344,
+    darkMode: darkModeProp,
+    id,
+    ...rest
+  }: MenuProps,
+  forwardRef,
+) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
 
   const hasSetInitialFocus = useRef(false);
@@ -287,12 +290,12 @@ export function Menu({
       case keyMap.Tab:
         e.preventDefault(); // Prevent tabbing outside of portal and outside of the DOM when `usePortal={true}`
         handleClose();
-        setFocus((triggerRef || refEl)?.current); // Focus the trigger on close
+        setFocus((refEl || triggerRef)?.current); // Focus the trigger on close
         break;
 
       case keyMap.Escape:
         handleClose();
-        setFocus((triggerRef || refEl)?.current); // Focus the trigger on close
+        setFocus((refEl || triggerRef)?.current); // Focus the trigger on close
         break;
 
       case keyMap.Space:
@@ -344,6 +347,7 @@ export function Menu({
             `,
             className,
           )}
+          ref={forwardRef}
         >
           {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
@@ -402,7 +406,7 @@ export function Menu({
   }
 
   return popoverContent;
-}
+});
 
 Menu.displayName = 'Menu';
 
