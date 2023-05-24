@@ -25,7 +25,7 @@ export const storybookArgTypes: Record<string, StoryArgType> = {
   baseFontSize: {
     description:
       'The base font size passed to the LeafyGreenProvider that wraps the component',
-    control: { type: 'none' },
+    control: { type: 'radio' },
     options: [14, 16],
   },
   updatedBaseFontSize: {
