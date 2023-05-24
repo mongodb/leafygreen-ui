@@ -16,6 +16,37 @@ import { Body } from '@leafygreen-ui/typography';
 
 import { GuideCue, GuideCueProps } from '.';
 
+/** A decorator for each generated story instance */
+const instanceDecorator = (Instance: StoryFn) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const refEl = useRef(null);
+  return (
+    <div
+      className={css`
+        height: 350px;
+        width: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      `}
+    >
+      <div
+        className={css`
+          height: 50px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          outline: 1px solid ${palette.gray.base};
+        `}
+        ref={refEl}
+      >
+        element ref
+      </div>
+      <Instance refEl={refEl} />
+    </div>
+  );
+};
+
 // @ts-expect-error - propType mismatch
 const meta: StoryMetaType<typeof GuideCue> = {
   title: 'Components/GuideCue',
@@ -50,35 +81,7 @@ const meta: StoryMetaType<typeof GuideCue> = {
         open: true,
         refEl: undefined,
       },
-      decorator: (Instance: StoryFn) => {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const refEl = useRef(null);
-        return (
-          <div
-            className={css`
-              height: 350px;
-              width: 500px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-            `}
-          >
-            <div
-              className={css`
-                height: 50px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                outline: 1px solid ${palette.gray.base};
-              `}
-              ref={refEl}
-            >
-              element ref
-            </div>
-            <Instance refEl={refEl} />
-          </div>
-        );
-      },
+      decorator: instanceDecorator,
     },
     chromatic: {
       delay: transitionDuration.slowest,
