@@ -18,11 +18,29 @@ yarn add @leafygreen-ui/loading-indicators
 npm install @leafygreen-ui/loading-indicators
 ```
 
-## Example
+## Spinner
 
-**Output HTML**
+```
+<Spinner
+  variant="large"
+  description=”Loading…”
+/>
+```
 
-## Properties
+| Prop           | Type      | Description                                                                        | Default   |
+| -------------- | --------- | ---------------------------------------------------------------------------------- | --------- |
+| `variant`      | `Variant` | Determines the size or orientation of the spinner and description text             | `default` |
+| `description`  | `string`  | Description text                                                                   | `-`       |
+| `sizeOverride` | `number`  | An override for the spinner animation’s size in pixels. Intended for internal use. | `-`       |
 
-| Prop | Type | Description | Default |
-| ---- | ---- | ----------- | ------- |
+## BlobLoader
+
+```
+<BlobLoader
+  description=”Loading…”
+/>
+```
+
+| Prop          | Type     | Description      | Default |
+| ------------- | -------- | ---------------- | ------- |
+| `description` | `string` | Description text | `-`     |

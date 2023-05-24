@@ -29,6 +29,7 @@ Check out all of the components [in action](https://www.mongodb.design/)!
 - [Inline Definition](https://github.com/mongodb/leafygreen-ui/tree/main/packages/inline-definition)
 - [LeafyGreen Provider](https://github.com/mongodb/leafygreen-ui/tree/main/packages/leafygreen-provider)
 - [Lib](https://github.com/mongodb/leafygreen-ui/tree/main/packages/lib)
+- [Loading Indicators](https://github.com/mongodb/leafygreen-ui/tree/main/packages/loading-indicators)
 - [Logo](https://github.com/mongodb/leafygreen-ui/tree/main/packages/logo)
 - [Marketing Modal](https://github.com/mongodb/leafygreen-ui/tree/main/packages/marketing-modal)
 - [Menu](https://github.com/mongodb/leafygreen-ui/tree/main/packages/menu)
