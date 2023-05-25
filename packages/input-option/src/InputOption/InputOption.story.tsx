@@ -2,7 +2,11 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import {
   InputOptionContent,
@@ -18,6 +22,7 @@ const meta: StoryMetaType<typeof InputOption> = {
     default: 'Basic',
     controls: {
       exclude: [
+        ...storybookExcludedControlParams,
         'setError',
         'filteredOptions',
         'initialValue',
@@ -25,6 +30,18 @@ const meta: StoryMetaType<typeof InputOption> = {
         'children',
       ],
     },
+    generate: {
+      props: {
+        darkMode: [false, true],
+        selected: [false, true],
+        isInteractive: [false, true],
+        showWedge: [false, true],
+        disabled: [false, true],
+      },
+    },
+  },
+  args: {
+    children: 'Some text',
   },
   argTypes: {
     disabled: {
@@ -56,9 +73,9 @@ const meta: StoryMetaType<typeof InputOption> = {
 
 export default meta;
 
-const Template: StoryFn<InputOptionProps & InputOptionContentProps> = (
-  props: InputOptionProps & InputOptionContentProps,
-) => {
+export const LiveExample: StoryFn<
+  InputOptionProps & InputOptionContentProps
+> = (props: InputOptionProps & InputOptionContentProps) => {
   const { leftGlyph, rightGlyph, description, ...rest } = props;
   return (
     <InputOption {...rest}>
@@ -75,4 +92,4 @@ const Template: StoryFn<InputOptionProps & InputOptionContentProps> = (
   );
 };
 
-export const Basic = Template.bind({});
+export const Generated = () => {};
