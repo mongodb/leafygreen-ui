@@ -3,7 +3,6 @@ import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
 import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
-import { spacing } from '@leafygreen-ui/tokens';
 
 import BasicEmptyStateStoryMeta, {
   WithActionsAndLink,
