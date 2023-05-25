@@ -38,6 +38,7 @@ export const Menu = ({
   containerRef,
   id,
   onTriggerClick,
+  onChange,
   triggerAriaLabel,
   open: controlledOpen,
   setOpen: controlledSetOpen,
@@ -82,6 +83,7 @@ export const Menu = ({
     const onMenuItemClick = (e: MouseEvent, menuItem: MenuItemType) => {
       handleClose();
       menuItem.props.onClick?.(e);
+      onChange?.(e);
     };
 
     const renderMenuItem = (menuItem: MenuItemType) => {
@@ -110,7 +112,7 @@ export const Menu = ({
         },
       );
     }
-  }, [handleClose, menuItems]);
+  }, [handleClose, menuItems, onChange]);
 
   return (
     <>

@@ -135,6 +135,20 @@ describe('packages/split-button', () => {
     });
   });
 
+  describe('MenuItem', () => {
+    test('click triggers onChange callback', () => {
+      const onChange = jest.fn();
+      const { menuTrigger, getByTestId } = renderSplitButton({ onChange });
+
+      userEvent.click(menuTrigger as HTMLElement);
+
+      const menu = getByTestId(menuTestId);
+      const options = globalGetAllByRole(menu, 'menuitem');
+      userEvent.click(options[0]);
+      expect(onChange).toHaveBeenCalledTimes(1);
+    });
+  });
+
   describe('Keyboard Interaction', () => {
     type CloseKeys = 'esc' | 'tab';
     const closeKeys: Array<Array<CloseKeys>> = [['esc'], ['tab']];

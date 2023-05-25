@@ -77,6 +77,7 @@ export default StoryMeta({
         'open',
         'onTriggerClick',
         'triggerAriaLabel',
+        'onChange',
       ],
     },
   },
@@ -88,12 +89,14 @@ const Template = (props: SplitButtonProps) => {
 
   return (
     <SplitButton
+      {...rest}
+      ref={splitButtonRef}
       // @ts-expect-error
       leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
-      {...rest}
       // eslint-disable-next-line no-console
-      onClick={event => console.log(event)}
-      ref={splitButtonRef}
+      onClick={event => console.log('onClick', event)}
+      // eslint-disable-next-line no-console
+      onChange={event => console.log('onChange', event)}
     />
   );
 };

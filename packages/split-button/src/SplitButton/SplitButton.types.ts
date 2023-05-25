@@ -22,6 +22,8 @@ export type MenuItemType = ReactElement<
   InferredPolymorphicProps<PolymorphicAs, MenuItemProps>
 >;
 
+export type MenuItemsType = Array<MenuItemType>;
+
 export const Variant = {
   Default: ButtonVariants.Default,
   Primary: ButtonVariants.Primary,
@@ -29,13 +31,6 @@ export const Variant = {
 } as const;
 
 export type Variant = typeof Variant[keyof typeof Variant];
-
-type ButtonProps = Omit<
-  ImportedButtonProps,
-  'rightGlyph' | 'href' | 'as' | 'variant'
->;
-
-export type MenuItemsType = Array<MenuItemType>;
 
 export const Align = {
   Top: ImportedAlign.Top,
@@ -50,6 +45,11 @@ export const Justify = {
 } as const;
 
 export type Justify = typeof Justify[keyof typeof Justify];
+
+type ButtonProps = Omit<
+  ImportedButtonProps,
+  'rightGlyph' | 'href' | 'as' | 'variant'
+>;
 
 export type SelectedMenuProps = Omit<
   ImportedMenuProps,
@@ -97,14 +97,19 @@ export interface MenuProps extends SelectedMenuProps {
   menuItems: MenuItemsType;
 
   /**
-   * Callback fired when the trigger is clicked
+   * Callback fired when the trigger is clicked.
    */
   onTriggerClick?: MouseEventHandler;
 
   /**
-   * aria-label for the menu trigger button
+   * aria-label for the menu trigger button.
    */
   triggerAriaLabel?: string;
+
+  /**
+   * Callback fired when a menuItem is clicked.
+   */
+  onChange?: MouseEventHandler;
 }
 
 export interface SplitButtonProps
