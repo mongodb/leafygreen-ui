@@ -8,7 +8,7 @@ import { StoryArgType } from './storybookArgTypes';
 
 // Re-defining LG provider prop keys here since importing from the package
 // will cause circular dependencies
-interface LeafyGreenProviderProps extends DarkModeProps {
+export interface LeafyGreenProviderProps extends DarkModeProps {
   baseFontSize?: number;
 }
 
