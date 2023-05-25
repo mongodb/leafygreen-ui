@@ -298,7 +298,17 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       if (isFocusInComponent) {
         switch (e.keyCode) {
           case keyMap.Enter: {
+            e.stopPropagation();
             highlightedElementRef?.current?.click();
+
+            if (onKeyDown) {
+              formRef.current?.dispatchEvent(
+                new KeyboardEvent('keydown', {
+                  key: 'Enter',
+                }),
+              );
+            }
+
             break;
           }
 

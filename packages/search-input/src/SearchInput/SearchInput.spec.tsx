@@ -183,6 +183,17 @@ describe('packages/search-input', () => {
       });
     });
 
+    describe('Enter key', () => {
+      test('keydown event is called', () => {
+        const keyDownHandler = jest.fn();
+        const { inputEl } = renderSearchInput({
+          onKeyDown: keyDownHandler,
+        });
+        userEvent.type(inputEl, '{enter}');
+        expect(keyDownHandler).toHaveBeenCalledTimes(1);
+      });
+    });
+
     describe('Clear button', () => {
       test('clears any input', () => {
         const { queryByRole, inputEl } = renderSearchInput({
