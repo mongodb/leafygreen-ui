@@ -59,7 +59,7 @@ export default meta;
 const SEED = 0;
 faker.seed(SEED);
 
-export const Basic: StoryFn<InternalToastProps> = (
+export const Basic: StoryFn<typeof InternalToast> = (
   props: Partial<InternalToastProps> & DarkModeProps,
 ) => {
   const { pushToast, clearStack } = useToast();
