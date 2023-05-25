@@ -3,7 +3,7 @@ import { isUndefined } from 'lodash';
 import { darken, lighten, readableColor, transparentize } from 'polished';
 
 import { css, cx } from '@leafygreen-ui/emotion';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { HTMLElementProps, StoryMetaType } from '@leafygreen-ui/lib';
 import {
   focusRing,
   hoverRing,
@@ -73,7 +73,7 @@ const ShadeNames = [
   'light2',
   'light3',
 ] as const;
-type ShadeName = typeof ShadeNames[number];
+type ShadeName = (typeof ShadeNames)[number];
 
 interface ColorBlockProps extends HTMLElementProps<'div'> {
   hue: HueName;
@@ -136,8 +136,12 @@ function ColorBlock({ hue, shade, ...rest }: ColorBlockProps) {
   );
 }
 
-export default {
+const meta: StoryMetaType<any> = {
   title: 'Components/Palette',
+  component: null,
+  parameters: {
+    default: 'AllColors',
+  },
   argTypes: {
     className: {
       table: {
@@ -146,6 +150,8 @@ export default {
     },
   },
 };
+
+export default meta;
 
 export function AllColors() {
   const allColors = Object.keys(palette);
