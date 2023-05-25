@@ -14,7 +14,7 @@ import { Decorator, StoryContext, StoryFn } from '@storybook/react';
 import { Args } from '@storybook/csf';
 import { cx } from '@leafygreen-ui/emotion';
 import { Error } from '@leafygreen-ui/typography';
-import { GeneratedStoryConfig } from 'packages/lib/src/storybook/GeneratedStoryDecorator.types';
+import { GeneratedStoryConfig } from './GeneratedStoryDecorator.types';
 import { entries } from 'lodash';
 import { shouldExcludePropCombo } from './utils/shouldExcludePropCombo';
 import {

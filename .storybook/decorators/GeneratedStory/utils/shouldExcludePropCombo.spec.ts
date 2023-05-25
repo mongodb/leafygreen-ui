@@ -1,4 +1,4 @@
-import { GeneratedStoryConfig } from 'packages/lib/src/storybook/GeneratedStoryDecorator.types';
+import { GeneratedStoryConfig } from '../GeneratedStoryDecorator.types';
 import { shouldExcludePropCombo } from './shouldExcludePropCombo';
 
 describe('storybook/shouldExcludePropCombo', () => {

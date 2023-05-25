@@ -10,7 +10,6 @@ export { createSyntheticEvent } from './createSyntheticEvent';
 
 export {
   type GeneratedStoryFn,
-  StoryMeta,
   type StoryMetaType,
   storybookArgTypes,
   storybookExcludedArgTypes,

@@ -3,6 +3,9 @@
   "include": [],
   "references": [
     {
+      "path": "./.storybook"
+    },
+    {
       "path": "./packages/badge"
     },
     {

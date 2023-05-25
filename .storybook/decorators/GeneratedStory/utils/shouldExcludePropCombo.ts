@@ -1,5 +1,5 @@
 import { entries, has, isEqual, isUndefined, keys } from 'lodash';
-import { GeneratedStoryConfig } from 'packages/lib/src/storybook/GeneratedStoryDecorator.types';
+import { GeneratedStoryConfig } from '../GeneratedStoryDecorator.types';
 
 export function shouldExcludePropCombo<T extends React.ComponentType<any>>({
   propName,

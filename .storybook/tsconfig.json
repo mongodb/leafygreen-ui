@@ -1,0 +1,16 @@
+{
+  "extends": "../package.tsconfig.json",
+  "compilerOptions": {
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "rootDir": ".",
+
+  },
+  "references": [
+    {"path": "../packages/emotion"},
+    {"path": "../packages/leafygreen-provider"},
+    {"path": "../packages/palette"},
+    {"path": "../packages/typography"},
+  ],
+  "exclude": ["main.ts", "manager.ts", "preview.ts", "theme.ts"]
+}
