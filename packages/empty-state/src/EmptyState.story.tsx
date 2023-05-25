@@ -26,7 +26,9 @@ const StoryVariant = {
   ThreeFeatures: 'Three Features',
 } as const;
 
-type StoryVariant = typeof StoryVariant[keyof typeof StoryVariant];
+type StoryVariant = (typeof StoryVariant)[keyof typeof StoryVariant];
+type StoryProps = BasicEmptyStateProps &
+  FeaturesEmptyStateProps & { variant: StoryVariant };
 
 const meta: StoryMetaType<typeof BasicEmptyState | typeof FeaturesEmptyState> =
   {
@@ -48,7 +50,7 @@ const meta: StoryMetaType<typeof BasicEmptyState | typeof FeaturesEmptyState> =
 
 export default meta;
 
-export const LiveExample = ({
+export const LiveExample: StoryFn<StoryProps> = ({
   // eslint-disable-next-line react/prop-types
   variant,
   ...rest
