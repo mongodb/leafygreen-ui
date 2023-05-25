@@ -20,21 +20,19 @@ export default StoryMeta({
     align: Align.Bottom,
     justify: Justify.End,
     spacing: 6,
-    menuItems: (
-      <>
-        {/* eslint-disable-next-line no-console */}
-        <MenuItem onClick={(event: MouseEvent) => console.log(event)}>
-          Menu Item
-        </MenuItem>
-        <MenuItem description="I am a description" disabled>
-          Disabled Menu Item
-        </MenuItem>
-        <MenuItem description="I am also a description">
-          Menu Item With Description
-        </MenuItem>
-        <MenuItem>I am not a link!</MenuItem>
-      </>
-    ),
+    menuItems: [
+      // eslint-disable-next-line no-console
+      <MenuItem key="0" onClick={(event: MouseEvent) => console.log(event)}>
+        Menu Item
+      </MenuItem>,
+      <MenuItem key="1" description="I am a description" disabled>
+        Disabled Menu Item
+      </MenuItem>,
+      <MenuItem key="2" description="I am also a description">
+        Menu Item With Description
+      </MenuItem>,
+      <MenuItem key="3">I am not a link!</MenuItem>,
+    ],
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -78,6 +76,7 @@ export default StoryMeta({
         'maxHeight',
         'open',
         'onTriggerClick',
+        'triggerAriaLabel',
       ],
     },
   },

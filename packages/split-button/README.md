@@ -28,13 +28,13 @@ import { MenuItem } from '@leafygreen-ui/menu';
 <SplitButton
   label="label"
   menuItems={
-    <>
-      <MenuItem>Menu Item</MenuItem>
-      <MenuItem disabled>Disabled Menu Item</MenuItem>
-      <MenuItem description="I am also a description">
+    [
+      <MenuItem key='0'>Menu Item</MenuItem>,
+      <MenuItem key='1' disabled>Disabled Menu Item</MenuItem>,
+      <MenuItem key='2' description="I am also a description">
         Menu Item With Description
       </MenuItem>
-    </>
+    ]
   }
 />
 ```

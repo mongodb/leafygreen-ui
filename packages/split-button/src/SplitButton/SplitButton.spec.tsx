@@ -16,16 +16,16 @@ import { SplitButton } from '.';
 const menuTestId = 'lg-split-button-menu';
 
 const getMenuItems = (): MenuItemsType => {
-  return (
-    <>
-      <MenuItem description="I am also a description">
-        Menu Item With Description
-      </MenuItem>
-      <MenuItem disabled>Disabled Menu Item</MenuItem>
-      <MenuItem>Menu Item</MenuItem>
-      <MenuItem>Another Menu Item</MenuItem>
-    </>
-  );
+  return [
+    <MenuItem key="0" description="I am also a description">
+      Menu Item With Description
+    </MenuItem>,
+    <MenuItem key="1" disabled>
+      Disabled Menu Item
+    </MenuItem>,
+    <MenuItem key="2">Menu Item</MenuItem>,
+    <MenuItem key="3">Another Menu Item</MenuItem>,
+  ];
 };
 
 const defaultProps = {
@@ -192,18 +192,22 @@ describe('packages/split-button', () => {
       let menuTrigger: HTMLElement;
 
       beforeEach(() => {
-        const menuItems = (
-          <>
-            <MenuItem onClick={onClick} description="I am also a description">
-              Menu Item With Description
-            </MenuItem>
-            <MenuItem disabled>Disabled Menu Item</MenuItem>
-          </>
-        );
+        const menuItems = [
+          <MenuItem
+            key="0"
+            onClick={onClick}
+            description="I am also a description"
+          >
+            Menu Item With Description
+          </MenuItem>,
+          <MenuItem key="1" disabled>
+            Disabled Menu Item
+          </MenuItem>,
+        ];
         const { getByTestId, menuTrigger: menuTriggerEl } = renderSplitButton({
           menuItems,
         });
-        userEvent.click(menuTrigger);
+        userEvent.click(menuTriggerEl);
         menu = getByTestId(menuTestId);
         options = globalGetAllByRole(menu, 'menuitem');
         menuTrigger = menuTriggerEl;
@@ -276,15 +280,15 @@ describe('packages/split-button', () => {
         <SplitButton label="label" menuItems={getMenuItems()} />
         <SplitButton
           label="label"
-          menuItems={
-            <>
-              <MenuItem>Menu Item</MenuItem>
-              <MenuItem disabled>Disabled Menu Item</MenuItem>
-              <MenuItem description="I am also a description">
-                Menu Item With Description
-              </MenuItem>
-            </>
-          }
+          menuItems={[
+            <MenuItem key="0">Menu Item</MenuItem>,
+            <MenuItem key="1" disabled>
+              Disabled Menu Item
+            </MenuItem>,
+            <MenuItem key="2" description="I am also a description">
+              , Menu Item With Description
+            </MenuItem>,
+          ]}
         />
         <SplitButton
           label="label"

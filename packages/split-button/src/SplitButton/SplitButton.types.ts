@@ -1,4 +1,4 @@
-import { MouseEventHandler, ReactElement, ReactFragment } from 'react';
+import { MouseEventHandler, ReactElement } from 'react';
 
 import {
   type ButtonProps as ImportedButtonProps,
@@ -35,11 +35,7 @@ type ButtonProps = Omit<
   'rightGlyph' | 'href' | 'as' | 'variant'
 >;
 
-export type MenuItemsType = ReactFragment & {
-  props: {
-    children: Array<MenuItemType>;
-  };
-};
+export type MenuItemsType = Array<MenuItemType>;
 
 export const Align = {
   Top: ImportedAlign.Top,
@@ -84,17 +80,19 @@ export interface MenuProps extends SelectedMenuProps {
   justify?: Justify;
 
   /**
-   * The menu items to appear in the menu dropdown. Must be `<MenuItem />`.
+   * The menu items to appear in the menu dropdown. Must be an array of `<MenuItem />`.
    *
    * ```js
-   * <>
-   *  <MenuItem onClick={()=>{}}> Menu Item</MenuItem>
-   *  <MenuItem description="I am a description" disabled>Disabled Menu Item</MenuItem>
-   *  <MenuItem description="I am also a description">
-   *    Menu Item With Description
-   *  </MenuItem>
-   * </>
+   * [
+   *   <MenuItem key='0' onClick={()=>{}}> Menu Item</MenuItem>,
+   *   <MenuItem key='1' description="I am a description" disabled>Disabled Menu Item</MenuItem>,
+   *   <MenuItem key='2' description="I am also a description">,
+   *     Menu Item With Description
+   *   </MenuItem>
+   * ]
    * ```
+   *
+   * @type Array<MenuItem>
    */
   menuItems: MenuItemsType;
 

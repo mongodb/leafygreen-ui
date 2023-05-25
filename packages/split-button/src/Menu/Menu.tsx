@@ -6,7 +6,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import isEmpty from 'lodash/isEmpty';
 
 import Button from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
@@ -49,6 +48,7 @@ export const Menu = ({
   const buttonRef = useRef<null | HTMLButtonElement>(null);
   const menuRef = useRef<null | HTMLDivElement>(null);
 
+  // TODO: make hook
   const setOpen =
     (typeof controlledOpen === 'boolean' && controlledSetOpen) ||
     uncontrolledSetOpen;
@@ -84,42 +84,31 @@ export const Menu = ({
       menuItem.props.onClick?.(e);
     };
 
-    const renderMenuItem = (menuItem: MenuItemType, index = 0) => {
+    const renderMenuItem = (menuItem: MenuItemType) => {
       if (isComponentType(menuItem, 'MenuItem')) {
         return React.cloneElement(menuItem, {
           active: false,
-          key: `menuItem-${index}`,
+          key: `menuItem-${menuItem.key}`,
           onClick: (e: MouseEvent) => onMenuItemClick(e, menuItem),
         });
       } else {
-        console.warn('Please use a LeafyGreen <MenuItem /> component.');
+        console.warn(
+          'Please use a LeafyGreen <MenuItem /> component. Received: ',
+          menuItem,
+        );
       }
     };
 
-    if (menuItems) {
-      if ('props' in menuItems) {
-        if (!isEmpty(menuItems.props)) {
-          // Array of menuItems
-          if (Array.isArray(menuItems.props.children)) {
-            return menuItems.props.children.map(
-              (
-                menuItem: MenuItemType,
-                index: number,
-              ): MenuItemType | undefined => {
-                if (menuItem == null) {
-                  return menuItem;
-                }
-
-                return renderMenuItem(menuItem, index);
-              },
-            );
+    if (Array.isArray(menuItems) && menuItems.length) {
+      return menuItems.map(
+        (menuItem: MenuItemType): MenuItemType | undefined => {
+          if (menuItem == null) {
+            return menuItem;
           }
 
-          // Object with one menuItem
-          // React returns an object instead of an array if there is one item
-          return renderMenuItem(menuItems.props.children);
-        }
-      }
+          return renderMenuItem(menuItem);
+        },
+      );
     }
   }, [handleClose, menuItems]);
 
