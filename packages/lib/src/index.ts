@@ -9,6 +9,7 @@ export { validateChildren } from './validateChildren';
 export { createSyntheticEvent } from './createSyntheticEvent';
 
 export {
+  type GeneratedStoryFn,
   StoryMeta,
   type StoryMetaType,
   storybookArgTypes,
@@ -153,7 +154,7 @@ export const AriaCurrentValue = {
 } as const;
 
 export type AriaCurrentValue =
-  typeof AriaCurrentValue[keyof typeof AriaCurrentValue];
+  (typeof AriaCurrentValue)[keyof typeof AriaCurrentValue];
 
 /**
  * Accepts a type as an argument and makes all of the keys of the type optional
