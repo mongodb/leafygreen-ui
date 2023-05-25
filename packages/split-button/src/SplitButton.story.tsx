@@ -2,7 +2,11 @@ import React, { MouseEvent, useRef } from 'react';
 
 import { Size } from '@leafygreen-ui/button';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import { storybookArgTypes, StoryMeta } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMeta,
+} from '@leafygreen-ui/lib';
 import { MenuItem } from '@leafygreen-ui/menu';
 
 import { Align, Justify, SplitButton, SplitButtonProps, Variant } from '.';
@@ -65,18 +69,14 @@ export default StoryMeta({
     default: 'Basic',
     controls: {
       exclude: [
+        ...storybookExcludedControlParams,
         'as',
         'children',
-        'aria-labelledby',
-        'aria-describedby',
-        'aria-label',
-        'value',
         'menuItems',
         'href',
         'type',
         'maxHeight',
         'open',
-        'setOpen',
         'onTriggerClick',
       ],
     },

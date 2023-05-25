@@ -1,4 +1,11 @@
-import React, { MouseEvent, MouseEventHandler, useRef, useState } from 'react';
+import React, {
+  MouseEvent,
+  MouseEventHandler,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import isEmpty from 'lodash/isEmpty';
 
 import Button from '@leafygreen-ui/button';
@@ -54,10 +61,10 @@ export const Menu = ({
     }
   };
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     buttonRef.current?.focus();
     setOpen(false);
-  };
+  }, [setOpen]);
 
   const handleKeyDown = (e: KeyboardEvent) => {
     switch (e.keyCode) {
@@ -71,7 +78,7 @@ export const Menu = ({
   useEventListener('keydown', handleKeyDown, { enabled: open });
   useBackdropClick(handleClose, [buttonRef, menuRef], open);
 
-  const renderMenuItems = () => {
+  const renderMenuItems = useMemo(() => {
     const onMenuItemClick = (e: MouseEvent, menuItem: MenuItemType) => {
       handleClose();
       menuItem.props.onClick?.(e);
@@ -114,7 +121,7 @@ export const Menu = ({
         }
       }
     }
-  };
+  }, [handleClose, menuItems]);
 
   return (
     <>
@@ -125,8 +132,8 @@ export const Menu = ({
         variant={variant}
         size={size}
         baseFontSize={baseFontSize}
-        className={cx(triggerBaseStyles, triggerSizeStyles[size!], {
-          [triggerThemeStyles(theme, variant!)]: !disabled,
+        className={cx(triggerBaseStyles, triggerSizeStyles[size], {
+          [triggerThemeStyles(theme, variant)]: !disabled,
         })}
         aria-label={triggerAriaLabel || 'More options'}
         aria-controls={open ? id : ''}
@@ -144,7 +151,7 @@ export const Menu = ({
         ref={menuRef}
         {...rest}
       >
-        {renderMenuItems()}
+        {renderMenuItems}
       </LGMenu>
     </>
   );

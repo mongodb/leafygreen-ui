@@ -3,10 +3,10 @@ import {
   SplitButtonProps,
 } from '../SplitButton/SplitButton.types';
 
-export type MenuProps = Pick<
-  SplitButtonProps,
-  'variant' | 'size' | 'baseFontSize' | 'disabled'
+export type MenuProps = Required<
+  Pick<SplitButtonProps, 'variant' | 'size' | 'disabled'>
 > &
+  Pick<SplitButtonProps, 'baseFontSize'> &
   SBMenuProps & {
     containerRef: React.RefObject<HTMLElement>;
   };
