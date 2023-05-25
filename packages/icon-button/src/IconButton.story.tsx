@@ -8,16 +8,26 @@ import {
   StoryMetaType,
 } from '@leafygreen-ui/lib';
 
+import { Size } from './types';
 import IconButton, { AccessibleIconButtonProps } from '.';
 
 const meta: StoryMetaType<typeof IconButton> = {
   title: 'Components/IconButton',
   component: IconButton,
   parameters: {
-    default: 'Basic',
-    controls: {
-      exclude: ['children'],
+    default: 'LiveExample',
+    generate: {
+      props: {
+        darkMode: [false, true],
+        disabled: [false, true],
+        active: [false, true],
+        size: Object.values(Size),
+      },
     },
+  },
+  args: {
+    href: undefined,
+    children: <CloudIcon />,
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -29,19 +39,14 @@ const meta: StoryMetaType<typeof IconButton> = {
 
 export default meta;
 
-const Template: StoryFn<AccessibleIconButtonProps & DarkModeProps> = ({
+export const LiveExample: StoryFn<
+  AccessibleIconButtonProps & DarkModeProps
+> = ({
   // eslint-disable-next-line react/prop-types
   darkMode,
   ...args
 }: AccessibleIconButtonProps & DarkModeProps) => (
-  <IconButton darkMode={darkMode} {...args}>
-    <CloudIcon />
-  </IconButton>
+  <IconButton darkMode={darkMode} {...args} />
 );
 
-export const Basic = Template.bind({});
-
-export const Link = Template.bind({});
-Link.args = {
-  href: 'https://mongodb.design',
-};
+export const Generated = () => {};
