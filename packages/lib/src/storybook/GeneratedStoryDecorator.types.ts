@@ -1,10 +1,17 @@
 import { Decorator, StoryFn } from '@storybook/react';
-import { ComponentProps } from 'react';
+import { type ComponentProps } from 'react';
+
+import { type LeafyGreenProviderProps } from './StoryMeta';
+
+type ExtendedComponentProps<T extends React.ElementType> = ComponentProps<T> &
+  LeafyGreenProviderProps;
 
 export interface GeneratedStoryConfig<T extends React.ElementType> {
   props: Partial<
     | {
-        [key in keyof ComponentProps<T>]: Array<ComponentProps<T>[key]>;
+        [key in keyof ExtendedComponentProps<T>]: Array<
+          ExtendedComponentProps<T>[key]
+        >;
       }
   >;
 
@@ -13,7 +20,7 @@ export interface GeneratedStoryConfig<T extends React.ElementType> {
    */
   args?: Partial<
     | {
-        [key in keyof ComponentProps<T>]: ComponentProps<T>[key];
+        [key in keyof ExtendedComponentProps<T>]: ExtendedComponentProps<T>[key];
       }
   >;
 
@@ -35,7 +42,7 @@ export interface GeneratedStoryConfig<T extends React.ElementType> {
      * excludeCombinations: [['checked', 'indeterminate']]
      * ```
      */
-    | [keyof ComponentProps<T>, keyof ComponentProps<T>]
+    | [keyof ExtendedComponentProps<T>, keyof ExtendedComponentProps<T>]
 
     /**
      * Exclude a prop given a condition
@@ -56,10 +63,10 @@ export interface GeneratedStoryConfig<T extends React.ElementType> {
      * ```
      */
     | [
-        keyof ComponentProps<T>,
-        {
-          [key in keyof ComponentProps<T>]: ComponentProps<T>[key];
-        },
+        keyof ExtendedComponentProps<T>,
+        Partial<{
+          [key in keyof ExtendedComponentProps<T>]: ExtendedComponentProps<T>[key];
+        }>,
       ]
 
     /**
@@ -74,8 +81,8 @@ export interface GeneratedStoryConfig<T extends React.ElementType> {
      * ]
      * ```
      */
-    | {
-        [key in keyof ComponentProps<T>]: ComponentProps<T>[key];
-      }
+    | Partial<{
+        [key in keyof ExtendedComponentProps<T>]: ExtendedComponentProps<T>[key];
+      }>
   >;
 }
