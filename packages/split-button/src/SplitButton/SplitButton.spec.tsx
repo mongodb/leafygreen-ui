@@ -1,5 +1,11 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import {
+  fireEvent,
+  getAllByRole as globalGetAllByRole,
+  render,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
 import { MenuItem } from '@leafygreen-ui/menu';
@@ -12,10 +18,12 @@ const menuTestId = 'lg-split-button-menu';
 const getMenuItems = (): MenuItemsType => {
   return (
     <>
-      <MenuItem disabled>Disabled Menu Item</MenuItem>
       <MenuItem description="I am also a description">
         Menu Item With Description
       </MenuItem>
+      <MenuItem disabled>Disabled Menu Item</MenuItem>
+      <MenuItem>Menu Item</MenuItem>
+      <MenuItem>Another Menu Item</MenuItem>
     </>
   );
 };
@@ -49,7 +57,7 @@ describe('packages/split-button', () => {
     });
   });
 
-  describe('wrapper container', () => {
+  describe('Wrapper container', () => {
     test('renders correct className', () => {
       const { wrapper } = renderSplitButton({
         className: 'split-button-class',
@@ -59,7 +67,7 @@ describe('packages/split-button', () => {
     });
   });
 
-  describe('primary button', () => {
+  describe('Primary button', () => {
     test('renders the correct label', () => {
       const { primaryButton } = renderSplitButton({});
 
@@ -96,7 +104,7 @@ describe('packages/split-button', () => {
     });
   });
 
-  describe('menu', () => {
+  describe('Menu', () => {
     test('trigger opens the menu when clicked', () => {
       const { menuTrigger, getByTestId } = renderSplitButton({});
 
@@ -123,12 +131,146 @@ describe('packages/split-button', () => {
       fireEvent.click(menuTrigger as HTMLElement);
 
       const menu = getByTestId(menuTestId);
-      expect(menu.childElementCount).toEqual(2);
+      expect(menu.childElementCount).toEqual(4);
+    });
+  });
+
+  describe('Keyboard Interaction', () => {
+    type CloseKeys = 'esc' | 'tab';
+    const closeKeys: Array<Array<CloseKeys>> = [['esc'], ['tab']];
+
+    const userEventInteraction = (el: HTMLElement, key: CloseKeys) => {
+      if (key === 'tab') {
+        userEvent.tab();
+      } else {
+        userEvent.type(el, `{${key}}`);
+      }
+    };
+
+    describe.each(closeKeys)('%s key', key => {
+      test('Closes menu', async () => {
+        const { getByTestId, menuTrigger } = renderSplitButton({});
+        userEvent.click(menuTrigger);
+        const menu = getByTestId(menuTestId);
+
+        userEventInteraction(menu, key);
+        await waitForElementToBeRemoved(menu);
+        expect(menu).not.toBeInTheDocument();
+      });
+      test('Returns focus to trigger {usePortal: true}', async () => {
+        const { getByTestId, menuTrigger } = renderSplitButton({
+          usePortal: true,
+        });
+        userEvent.click(menuTrigger);
+        const menu = getByTestId(menuTestId);
+
+        userEventInteraction(menu, key);
+        await waitForElementToBeRemoved(menu);
+        expect(menuTrigger).toHaveFocus();
+      });
+
+      test('Returns focus to trigger {usePortal: false}', async () => {
+        const { getByTestId, menuTrigger } = renderSplitButton({
+          usePortal: false,
+        });
+        userEvent.click(menuTrigger);
+        const menu = getByTestId(menuTestId);
+
+        userEventInteraction(menu, key);
+        await waitForElementToBeRemoved(menu);
+        expect(menuTrigger).toHaveFocus();
+      });
+    });
+
+    type SelectionKeys = 'enter' | 'space';
+    const selectionKeys: Array<Array<SelectionKeys>> = [['enter'], ['space']];
+
+    describe.each(selectionKeys)('%s key', key => {
+      const onClick = jest.fn();
+      let menu: HTMLElement;
+      let options: Array<HTMLElement>;
+      let menuTrigger: HTMLElement;
+
+      beforeEach(() => {
+        const menuItems = (
+          <>
+            <MenuItem onClick={onClick} description="I am also a description">
+              Menu Item With Description
+            </MenuItem>
+            <MenuItem disabled>Disabled Menu Item</MenuItem>
+          </>
+        );
+        const { getByTestId, menuTrigger: menuTriggerEl } = renderSplitButton({
+          menuItems,
+        });
+        userEvent.click(menuTrigger);
+        menu = getByTestId(menuTestId);
+        options = globalGetAllByRole(menu, 'menuitem');
+        menuTrigger = menuTriggerEl;
+      });
+
+      test('Fires the click handler of the highlighted item', () => {
+        expect(options[0]).toHaveFocus();
+
+        userEvent.type(options[0], `{${key}}`);
+        expect(onClick).toHaveBeenCalled();
+      });
+
+      /* eslint-disable jest/no-disabled-tests */
+      test.skip('Closes the menu', async () => {
+        // Works correctly in the browser
+        // https://github.com/testing-library/react-testing-library/issues/269#issuecomment-1453666401 - this needs v13 of testing-library
+        // TODO: This is not triggered so the test fails
+        userEvent.type(options[0], `{${key}}`);
+        expect(menuTrigger).toHaveFocus();
+
+        await waitForElementToBeRemoved(menu);
+      });
+    });
+
+    describe('Arrow keys', () => {
+      let menu: HTMLElement;
+      let options: Array<HTMLElement>;
+
+      beforeEach(() => {
+        const { getByTestId, menuTrigger } = renderSplitButton();
+        userEvent.click(menuTrigger);
+        menu = getByTestId(menuTestId);
+        options = globalGetAllByRole(menu, 'menuitem');
+      });
+
+      describe('Down arrow', () => {
+        test('highlights the next option in the menu', () => {
+          userEvent.type(menu, '{arrowdown}');
+          // options[1] is disabled
+          expect(options[2]).toHaveFocus();
+        });
+        test('cycles highlight to the top', () => {
+          // programmatically set focus on last option
+          options[options.length - 1].focus();
+          userEvent.type(menu, '{arrowdown}');
+          expect(options[0]).toHaveFocus();
+        });
+      });
+
+      describe('Up arrow', () => {
+        test('highlights the previous option in the menu', () => {
+          // programmatically set focus on second option
+          // options[1] is disabled
+          options[2].focus();
+          userEvent.type(menu, '{arrowup}');
+          expect(options[0]).toHaveFocus();
+        });
+        test('cycles highlight to the bottom', () => {
+          userEvent.type(menu, '{arrowup}');
+          expect(options[options.length - 1]).toHaveFocus();
+        });
+      });
     });
   });
 
   /* eslint-disable jest/no-disabled-tests */
-  describe('types behave as expected', () => {
+  describe('Types behave as expected', () => {
     test.skip('Accepts base props', () => {
       <>
         <SplitButton label="label" menuItems={getMenuItems()} />
@@ -161,6 +303,7 @@ describe('packages/split-button', () => {
           portalClassName="classname"
           data-testid="test-id"
           open={false}
+          triggerAriaLabel="im the trigger silly"
         />
         {/* @ts-expect-error - expects label and menuItems*/}
         <SplitButton />
