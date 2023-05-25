@@ -2,12 +2,13 @@ import { Args } from '@storybook/csf';
 import { Decorator, StoryFn } from '@storybook/react';
 import { type ComponentProps } from 'react';
 
-import { type LeafyGreenProviderProps } from './StoryMeta';
+import { StoryMetaType, type LeafyGreenProviderProps } from './StoryMeta.types';
 
 type ExtendedComponentProps<T extends React.ElementType> = ComponentProps<T> &
   LeafyGreenProviderProps;
 
 type InstanceFn = StoryFn;
+
 interface InstanceContext {
   args: Args;
 }
@@ -96,6 +97,10 @@ export interface GeneratedStoryConfig<T extends React.ElementType> {
   >;
 }
 
-export type GeneratedStoryFn<
-  T extends React.ElementType | React.ComponentProps<any>,
-> = StoryFn<T>;
+export interface GeneratedStoryFn<T extends React.ElementType> {
+  (): void;
+  parameters?: Omit<StoryMetaType<T>['parameters'], 'default' | 'generate'>;
+  argTypes?: StoryMetaType<T>['argTypes'];
+  args?: StoryMetaType<T>['args'];
+  title?: string;
+}

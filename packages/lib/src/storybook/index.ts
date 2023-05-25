@@ -4,5 +4,6 @@ export {
 } from './storybookArgTypes';
 export { storybookExcludedControlParams } from './storybookExcludedControlParams';
 export { default as IntrinsicElements } from './IntrinsicElements';
-export { StoryMeta, type StoryMetaType } from './StoryMeta';
+export { StoryMeta } from './StoryMeta';
+export { type StoryMetaType } from './StoryMeta.types';
 export { type GeneratedStoryFn } from './GeneratedStoryDecorator.types';
