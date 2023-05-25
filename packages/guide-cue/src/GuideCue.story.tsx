@@ -74,8 +74,6 @@ const meta: StoryMetaType<typeof GuideCue> = {
       props: {
         darkMode: [false, true],
         beaconAlign: Object.values(Align),
-        tooltipAlign: ['top', 'bottom', 'left', 'right'],
-        tooltipJustify: ['middle', 'start', 'end'],
       },
       args: {
         open: true,
