@@ -126,6 +126,7 @@ SplitButton.propTypes = {
   menuItems: PropTypes.arrayOf(PropTypes.element).isRequired,
   baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
   disabled: PropTypes.bool,
+  leftGlyph: PropTypes.element,
   onChange: PropTypes.func,
   onTriggerClick: PropTypes.func,
   triggerAriaLabel: PropTypes.string,
