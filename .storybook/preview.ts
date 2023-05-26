@@ -7,6 +7,10 @@ import {
   storybookExcludedControlParams,
 } from '@leafygreen-ui/lib';
 import {
+  storybookExcludedArgTypes,
+  storybookExcludedControlParams,
+} from '@leafygreen-ui/lib';
+import {
   H1,
   H2,
   H3,
