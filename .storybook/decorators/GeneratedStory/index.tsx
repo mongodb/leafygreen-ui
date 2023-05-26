@@ -123,11 +123,14 @@ function PropCombinations<T extends React.ComponentType<any>>({
   ): ReactElement<any> {
     if (vars.length === 0) {
       comboCount += 1;
-      return decorator((xArgs: typeof args) => (
-        <div className={instanceStyles}>
-          {React.createElement(component, { ...args, ...xArgs, ...props })}
-        </div>
-      ));
+      return decorator(
+        (xArgs: typeof args) => (
+          <div className={instanceStyles}>
+            {React.createElement(component, { ...args, ...xArgs, ...props })}
+          </div>
+        ),
+        { args: { ...props, ...args } },
+      );
     } else {
       const [propName, propValues] = vars.pop()!;
 

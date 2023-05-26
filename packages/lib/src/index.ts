@@ -9,6 +9,7 @@ export { validateChildren } from './validateChildren';
 export { createSyntheticEvent } from './createSyntheticEvent';
 
 export {
+  type GeneratedStoryFn,
   StoryMeta,
   type StoryMetaType,
   storybookArgTypes,
