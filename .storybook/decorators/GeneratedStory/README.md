@@ -15,7 +15,7 @@ Add a `generate` parameter in the story meta object.
 const meta: StoryMeta<typeof Button> = {
   component: Button,
   parameters: {
-    default: 'Basic',
+    default: 'LiveExample',
     // Define combinations of props to generate
     generate: {
       props: {
@@ -42,7 +42,68 @@ export const Generated = () => {};
 
 This will create a story called "Generated", that renders all defined prop combinations.
 
-## Excluding prop combinations
+![Decorator Demo](./docs/decorator-demo.png)
+
+# Options
+
+## `args`
+
+`Record<key in keyof ComponentProps, ComponentProps[key]>`
+
+By default the decorator pulls args from the main `meta.args` value. However, you may need to set args that are different for the generated instances. In this case,
+use `generate.args` to pass static props that are different from the main story args.
+
+```tsx
+const meta: StoryMeta<typeof Tooltip> = {
+  component: Tooltip,
+  parameters: {
+    default: 'LiveExample',
+    generate: {
+      props: { ... },
+      args: {open: true}
+    },
+  },
+};
+export default meta;
+```
+
+## `decorator`
+
+`(InstanceFn: StoryFn, context?: {args: Args}) => JSX.Element`
+
+The GeneratedStory decorator will _not_ read the decorators value defined in `meta.decorators`. To add a wrapper around each instance, define a decorator within `generate`.
+
+```tsx
+const meta: StoryMeta<typeof Body> = {
+  component: Body,
+  parameters: {
+    default: 'LiveExample',
+    generate: {
+      props: { ... },
+      decorator: (InstanceFn, context) => {
+        return (
+          <LeafyGreenProvider baseFontSize={context?.args.baseFontSize}>
+            <InstanceFn />
+          </LeafyGreenProvider>
+        );
+      },
+    },
+  },
+};
+```
+
+## `excludeCombinations`
+
+```ts
+Array<
+  // Mutually exclusive props
+  [keyof ComponentProps, keyof ComponentProps] |
+  // Conditional props
+  [keyof ComponentProps, Record<key in keyof ComponentProps, ComponentProps[key]>]
+  // Specific combinations
+  Record<key in keyof ComponentProps, ComponentProps[key]> |
+>
+```
 
 You may not always want to test _every_ combination of props. For example, in Button we shouldn't be testing the case when `children`, `leftGlyph` and `rightGlyph` are _all_ undefined.
 

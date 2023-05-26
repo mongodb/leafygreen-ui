@@ -3,7 +3,11 @@ import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 import { CloseIconColor } from '@leafygreen-ui/modal';
 
 import ConfirmationModal, { ConfirmationModalProps, Variant } from '.';
@@ -14,7 +18,7 @@ const meta: StoryMetaType<typeof ConfirmationModal> = {
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: ['open', 'initialFocus'],
+      exclude: [...storybookExcludedControlParams, 'open', 'initialFocus'],
     },
   },
   args: {

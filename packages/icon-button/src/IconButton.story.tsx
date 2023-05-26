@@ -5,6 +5,7 @@ import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import {
   DarkModeProps,
   storybookArgTypes,
+  storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
 
@@ -16,6 +17,9 @@ const meta: StoryMetaType<typeof IconButton> = {
   component: IconButton,
   parameters: {
     default: 'LiveExample',
+    controls: {
+      exclude: [...storybookExcludedControlParams, 'children'],
+    },
     generate: {
       props: {
         darkMode: [false, true],

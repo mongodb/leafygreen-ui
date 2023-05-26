@@ -5,7 +5,11 @@ import { StoryFn } from '@storybook/react';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { storybookArgTypes, type StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  type StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import LanguageSwitcherExample from './LanguageSwitcher/LanguageSwitcherExample';
 import Code, { CodeProps, Language } from '.';
@@ -46,6 +50,7 @@ const meta: StoryMetaType<typeof Code> = {
     default: 'LiveExample',
     controls: {
       exclude: [
+        ...storybookExcludedControlParams,
         'showCustomActionButtons',
         'showCustomButtons',
         'customActionButtons',

@@ -2,7 +2,11 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 import { Body, H2, Link } from '@leafygreen-ui/typography';
 
 import InlineDefinition, { InlineDefinitionProps } from '.';
@@ -13,7 +17,7 @@ const meta: StoryMetaType<typeof InlineDefinition> = {
   parameters: {
     default: 'LiveExample',
     controls: {
-      exclude: ['trigger', 'open'],
+      exclude: [...storybookExcludedControlParams, 'trigger', 'open'],
     },
     generate: {
       props: {

@@ -25,6 +25,23 @@ import Logo, { LogoName } from '.';
 const meta: StoryMetaType<typeof Logo> = {
   title: 'Components/Logo',
   component: Logo,
+  decorators: [
+    (Story, context) => (
+      <div
+        className={css`
+          display: inline;
+          width: 100%;
+          padding: 200% 200% 100%;
+          background-color: ${
+            /* @ts-expect-error */
+            Story?.args?.background ?? context?.args?.background ?? 'white'
+          };
+        `}
+      >
+        <Story />
+      </div>
+    ),
+  ],
   parameters: {
     default: 'LiveExample',
     generate: {

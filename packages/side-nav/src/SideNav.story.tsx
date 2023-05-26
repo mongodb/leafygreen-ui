@@ -6,7 +6,12 @@ import Icon from '@leafygreen-ui/icon';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { storybookArgTypes, StoryMetaType, Theme } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+  Theme,
+} from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { Option, Select, Size } from '@leafygreen-ui/select';
 import { Body, H1 } from '@leafygreen-ui/typography';
@@ -25,7 +30,12 @@ const meta: StoryMetaType<typeof SideNav> = {
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: ['children', 'setCollapsed', 'collapsed'],
+      exclude: [
+        ...storybookExcludedControlParams,
+        'children',
+        'setCollapsed',
+        'collapsed',
+      ],
     },
   },
   argTypes: {

@@ -5,7 +5,11 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import Banner, { BannerProps, Variant } from '.';
 
@@ -25,6 +29,9 @@ const meta: StoryMetaType<typeof Banner> = {
         variant: Object.values(Variant),
         dismissible: [false, true],
       },
+    },
+    controls: {
+      exclude: [...storybookExcludedControlParams, 'image'],
     },
   },
   args: {
