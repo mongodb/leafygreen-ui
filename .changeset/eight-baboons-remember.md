@@ -2,4 +2,4 @@
 '@leafygreen-ui/search-input': patch
 ---
 
-Adds onKeyDown prop
+Allow onKeyDown prop to propagate to the user
