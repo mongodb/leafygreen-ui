@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import Icon from '@leafygreen-ui/icon';
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 import {
   SegmentedControl,
   SegmentedControlOption,
@@ -34,7 +38,12 @@ const meta: StoryMetaType<typeof SegmentedControl> = {
   parameters: {
     default: 'Uncontrolled',
     controls: {
-      exclude: ['children', 'value', 'defaultValue'],
+      exclude: [
+        ...storybookExcludedControlParams,
+        'children',
+        'value',
+        'defaultValue',
+      ],
     },
   },
 };
