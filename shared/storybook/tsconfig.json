@@ -12,5 +12,4 @@
     {"path": "../packages/palette"},
     {"path": "../packages/typography"},
   ],
-  "exclude": ["main.ts", "manager.ts", "preview.ts", "theme.ts"]
 }

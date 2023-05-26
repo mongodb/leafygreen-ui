@@ -4,7 +4,7 @@ import React, { useRef } from 'react';
 import { Variant } from '@leafygreen-ui/badge';
 import { badgeVariants as variantStyle } from '@leafygreen-ui/badge/src/Badge/styles';
 import { css, cx } from '@leafygreen-ui/emotion';
-import Icon, { glyphs } from '@leafygreen-ui/icon';
+import Icon from '@leafygreen-ui/icon';
 import LeafyGreenProvider, {
   useBaseFontSize,
 } from '@leafygreen-ui/leafygreen-provider';
@@ -21,7 +21,7 @@ import { BaseFontSize } from '@leafygreen-ui/tokens';
 interface DemoProps extends HTMLElementProps<'button'>, DarkModeProps {
   checked: boolean;
   variant: Variant;
-  glyph?: keyof typeof glyphs;
+  glyph?: string;
 }
 
 const DemoComponent = ({
@@ -98,7 +98,7 @@ const meta: StoryMetaType<
 };
 export default meta;
 
-export const Generated: GeneratedStoryFn<DemoProps> = () => {};
+export const Generated: GeneratedStoryFn<typeof DemoComponent> = () => {};
 Generated.parameters = {
   chromatic: { disableSnapshot: true },
 };
