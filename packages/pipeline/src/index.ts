@@ -1,5 +1,3 @@
-import Pipeline from './Pipeline';
-import Stage from './Stage';
-import { Size } from './types';
-
-export { Pipeline, Size, Stage };
+export { default as Pipeline } from './Pipeline';
+export { default as Stage } from './Stage';
+export { type PipelineProps, Size } from './types';

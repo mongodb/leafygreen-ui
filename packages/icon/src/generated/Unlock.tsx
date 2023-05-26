@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum be43b981e692959c2382aac10cf978ec
+ * @checksum 96ab2ddd6527cedbd47e1b4883f1e4fb
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface UnlockProps extends LGGlyph.ComponentProps {}
-
 const Unlock = ({
   className,
   size = 16,
@@ -58,7 +57,6 @@ const Unlock = ({
     </svg>
   );
 };
-
 Unlock.displayName = 'Unlock';
 Unlock.isGlyph = true;
 Unlock.propTypes = {

@@ -7,6 +7,10 @@ import { SearchResultsMenu } from '.';
 export default {
   title: 'Components/SearchInput/Menu',
   component: SearchResultsMenu,
+  parameters: {
+    default: null,
+    chromatic: { disableSnapshot: true },
+  },
 };
 
 const Template = () => {

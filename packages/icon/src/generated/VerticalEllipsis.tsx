@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 14a687dc51194cb7a0e4e1e86c9e2d9f
+ * @checksum 6c9466bfa1251b2d6d9158a2be42b0d2
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface VerticalEllipsisProps extends LGGlyph.ComponentProps {}
-
 const VerticalEllipsis = ({
   className,
   size = 16,
@@ -58,7 +57,6 @@ const VerticalEllipsis = ({
     </svg>
   );
 };
-
 VerticalEllipsis.displayName = 'VerticalEllipsis';
 VerticalEllipsis.isGlyph = true;
 VerticalEllipsis.propTypes = {

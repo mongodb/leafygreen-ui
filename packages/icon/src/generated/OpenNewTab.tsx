@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 65c983041c618eeb116cae80159455dc
+ * @checksum 24ae318d29b2d75a19a4f993f031536c
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface OpenNewTabProps extends LGGlyph.ComponentProps {}
-
 const OpenNewTab = ({
   className,
   size = 16,
@@ -60,7 +59,6 @@ const OpenNewTab = ({
     </svg>
   );
 };
-
 OpenNewTab.displayName = 'OpenNewTab';
 OpenNewTab.isGlyph = true;
 OpenNewTab.propTypes = {

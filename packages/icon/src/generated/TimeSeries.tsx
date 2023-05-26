@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum f4e2adddd3d16cc981367ddef65fdddd
+ * @checksum 58c8d798a97aaf5bfbc65ccdb39b5b08
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface TimeSeriesProps extends LGGlyph.ComponentProps {}
-
 const TimeSeries = ({
   className,
   size = 16,
@@ -60,7 +59,6 @@ const TimeSeries = ({
     </svg>
   );
 };
-
 TimeSeries.displayName = 'TimeSeries';
 TimeSeries.isGlyph = true;
 TimeSeries.propTypes = {

@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum bf5bbd1ea9eef1b967d051c5829f31d7
+ * @checksum c74d15b88b507d312134d74c9b1b67a3
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface SplitHorizontalProps extends LGGlyph.ComponentProps {}
-
 const SplitHorizontal = ({
   className,
   size = 16,
@@ -58,7 +57,6 @@ const SplitHorizontal = ({
     </svg>
   );
 };
-
 SplitHorizontal.displayName = 'SplitHorizontal';
 SplitHorizontal.isGlyph = true;
 SplitHorizontal.propTypes = {

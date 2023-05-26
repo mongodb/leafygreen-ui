@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 203cdbaf2cf218212fdd1280423acbbf
+ * @checksum 502547e66fbebed1670cc297118a4168
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface BiometricProps extends LGGlyph.ComponentProps {}
-
 const Biometric = ({
   className,
   size = 16,
@@ -58,7 +57,6 @@ const Biometric = ({
     </svg>
   );
 };
-
 Biometric.displayName = 'Biometric';
 Biometric.isGlyph = true;
 Biometric.propTypes = {

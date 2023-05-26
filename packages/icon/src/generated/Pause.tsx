@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 1f7b0944d652328811ea083b8f8cdc06
+ * @checksum 613e1119f0a27b425dbe689aff070cc2
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface PauseProps extends LGGlyph.ComponentProps {}
-
 const Pause = ({
   className,
   size = 16,
@@ -60,7 +59,6 @@ const Pause = ({
     </svg>
   );
 };
-
 Pause.displayName = 'Pause';
 Pause.isGlyph = true;
 Pause.propTypes = {

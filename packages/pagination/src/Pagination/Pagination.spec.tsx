@@ -63,7 +63,6 @@ describe('packages/pagination', () => {
         <Pagination
           {...defaultProps}
           itemsPerPageOptions={[1, 2, 3]}
-          // @ts-expect-error
           itemsPerPage={22}
         />,
       );

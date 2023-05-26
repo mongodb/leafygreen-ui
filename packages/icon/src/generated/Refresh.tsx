@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 171308cc38dc46bfe0464f5b758e066a
+ * @checksum e3bc72a7e62cbd1bfd5ad5295b069287
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface RefreshProps extends LGGlyph.ComponentProps {}
-
 const Refresh = ({
   className,
   size = 16,
@@ -60,7 +59,6 @@ const Refresh = ({
     </svg>
   );
 };
-
 Refresh.displayName = 'Refresh';
 Refresh.isGlyph = true;
 Refresh.propTypes = {
