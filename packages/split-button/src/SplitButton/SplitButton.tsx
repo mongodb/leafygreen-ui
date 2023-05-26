@@ -123,7 +123,7 @@ SplitButton.propTypes = {
   justify: PropTypes.oneOf(Object.values(Justify)),
   variant: PropTypes.oneOf(Object.values(Variant)),
   label: PropTypes.string.isRequired,
-  menuItems: PropTypes.element.isRequired,
+  menuItems: PropTypes.arrayOf(PropTypes.element).isRequired,
   baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
   disabled: PropTypes.bool,
   // Popover Props
