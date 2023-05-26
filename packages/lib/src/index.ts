@@ -9,11 +9,17 @@ export { validateChildren } from './validateChildren';
 export { createSyntheticEvent } from './createSyntheticEvent';
 
 export {
+  /** @deprecated */
   type GeneratedStoryFn,
+  /** @deprecated */
   type StoryMetaType,
+  /** @deprecated */
   storybookArgTypes,
+  /** @deprecated */
   storybookExcludedArgTypes,
+  /** @deprecated */
   storybookExcludedControlParams,
+  /** @deprecated */
   IntrinsicElements,
 } from './storybook';
 
