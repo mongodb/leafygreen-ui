@@ -1,16 +1,34 @@
-import { DarkModeProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
-export const Variant = {
-  default: 'default',
-  large: 'large',
-  xlarge: 'xlarge',
-  horizontal: 'horizontal',
+export const DisplayOption = {
+  DefaultHorizontal: 'default-horizontal',
+  DefaultVertical: 'default-vertical',
+  LargeVertical: 'large-vertical',
+  XlargeVertical: 'xlarge-vertical',
 };
 
-export type Variant = typeof Variant[keyof typeof Variant];
+export type DisplayOption = typeof DisplayOption[keyof typeof DisplayOption];
 
-export default interface SpinnerProps extends DarkModeProps {
-  variant?: Variant;
+export interface SpinnerProps extends DarkModeProps, HTMLElementProps<'div'> {
+  /**
+   * Determines the size or orientation of the spinner and description text
+   * @example 'defaultHorizontal'
+   */
+  displayOption?: DisplayOption;
+
+  /**
+   * Description text
+   */
   description?: string;
+
+  /**
+   * An override for the spinner animation’s size in pixels. Intended for internal use.
+   */
   sizeOverride?: number;
+
+  /**
+   * The base font size of the description text.
+   */
+  baseFontSize?: BaseFontSize;
 }

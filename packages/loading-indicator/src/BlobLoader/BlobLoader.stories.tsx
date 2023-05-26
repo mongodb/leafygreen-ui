@@ -13,9 +13,6 @@ export default StoryMeta({
   },
   parameters: {
     default: 'Default',
-    controls: {
-      exclude: ['baseFontSize'],
-    },
   },
 });
 

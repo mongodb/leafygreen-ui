@@ -2,26 +2,26 @@ import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
-import { Variant } from './Spinner.types';
+import { DisplayOption } from './Spinner.types';
 
 // Constants
-
-export const SpinnerSizes: Record<Variant, number> = {
-  default: 24,
-  large: 48,
-  xlarge: 64,
-  horizontal: 24,
+// --
+export const SpinnerSizes: Record<DisplayOption, number> = {
+  [DisplayOption.DefaultHorizontal]: 24,
+  [DisplayOption.DefaultVertical]: 24,
+  [DisplayOption.LargeVertical]: 48,
+  [DisplayOption.XlargeVertical]: 64,
 };
 
-export const SpinnerBottomMargins: Record<Variant, number> = {
-  default: spacing[2],
-  large: spacing[2],
-  xlarge: spacing[3],
-  horizontal: 0,
+export const SpinnerBottomMargins: Record<DisplayOption, number> = {
+  [DisplayOption.DefaultHorizontal]: 0,
+  [DisplayOption.DefaultVertical]: spacing[2],
+  [DisplayOption.LargeVertical]: spacing[2],
+  [DisplayOption.XlargeVertical]: spacing[3],
 };
 
 // Styles
-
+// --
 export const rootStyles = css`
   text-align: center;
 `;
@@ -32,7 +32,7 @@ export const darkModeSpinnerStyles = css`
   }
 `;
 
-export const horizontalVariantStyles = css`
+export const horizontalDisplayOptionStyles = css`
   display: flex;
   align-items: center;
   gap: 6px;

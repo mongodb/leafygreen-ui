@@ -1,36 +1,47 @@
 import React from 'react';
 import { Player } from '@lottiefiles/react-lottie-player';
+import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { Body } from '@leafygreen-ui/typography';
+import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { descriptionThemeColor } from '../LoadingIndicator.styles';
 
 import animationJson from './animation';
 import {
   darkModeSpinnerStyles,
-  horizontalVariantStyles,
+  horizontalDisplayOptionStyles,
   rootStyles,
   SpinnerBottomMargins,
   SpinnerSizes,
 } from './Spinner.styles';
-import SpinnerProps from './Spinner.types';
+import { DisplayOption, SpinnerProps } from './Spinner.types';
 
 const Spinner = ({
-  variant = 'default',
+  baseFontSize: baseFontSizeProp,
+  displayOption = 'default',
   description,
   sizeOverride,
   darkMode: darkModeProp,
+  className,
+  ...rest
 }: SpinnerProps) => {
-  const size = sizeOverride ?? SpinnerSizes[variant];
-  const spinnerMarginBottom = SpinnerBottomMargins[variant];
+  const size = sizeOverride ?? SpinnerSizes[displayOption];
+  const spinnerMarginBottom = SpinnerBottomMargins[displayOption];
   const { darkMode, theme } = useDarkMode(darkModeProp);
+  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
   return (
     <div
-      className={cx(rootStyles, {
-        [horizontalVariantStyles]: variant === 'horizontal',
-      })}
+      className={cx(
+        rootStyles,
+        {
+          [horizontalDisplayOptionStyles]:
+            displayOption === DisplayOption.DefaultHorizontal,
+        },
+        className,
+      )}
+      {...rest}
     >
       <Player
         autoplay
@@ -43,9 +54,18 @@ const Spinner = ({
           marginBottom: description ? spinnerMarginBottom : undefined,
         }}
       />
-      <Body color={descriptionThemeColor[theme]}>{description}</Body>
+      {description && (
+        <Body color={descriptionThemeColor[theme]} baseFontSize={baseFontSize}>
+          {description}
+        </Body>
+      )}
     </div>
   );
+};
+
+Spinner.propTypes = {
+  darkMode: PropTypes.bool,
+  description: PropTypes.string,
 };
 
 export default Spinner;

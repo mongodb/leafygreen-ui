@@ -5,13 +5,14 @@ import { css } from '@leafygreen-ui/emotion';
 import {
   DarkModeProps,
   storybookArgTypes,
+  storybookExcludedControlParams,
   StoryMeta,
 } from '@leafygreen-ui/lib';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Body, InlineCode } from '@leafygreen-ui/typography';
 
-import BlobLoader from './BlobLoader';
-import { Spinner } from '.';
+import { DisplayOption } from './Spinner/Spinner.types';
+import { BlobLoader, Spinner } from '.';
 
 export default StoryMeta({
   title: 'Components/LoadingIndicator',
@@ -22,7 +23,7 @@ export default StoryMeta({
   parameters: {
     default: 'LiveExample',
     controls: {
-      exclude: ['className', 'baseFontSize'],
+      exclude: storybookExcludedControlParams,
     },
   },
 });
@@ -33,7 +34,7 @@ const storyRootStyles = css`
   align-items: end;
 `;
 
-const variantContainerStyles = css`
+const displayOptionContainerStyles = css`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -49,31 +50,15 @@ const Template: ComponentStory<typeof Spinner> = (
   } & DarkModeProps,
 ) => (
   <div className={storyRootStyles}>
-    <div className={variantContainerStyles}>
-      <Spinner variant="horizontal" {...props} />
-      <Body className={labelStyles} weight="medium">
-        <InlineCode>horizontal</InlineCode> Spinner
-      </Body>
-    </div>
-    <div className={variantContainerStyles}>
-      <Spinner variant="default" {...props} />
-      <Body className={labelStyles} weight="medium">
-        <InlineCode>default</InlineCode> Spinner
-      </Body>
-    </div>
-    <div className={variantContainerStyles}>
-      <Spinner variant="large" {...props} />
-      <Body className={labelStyles} weight="medium">
-        <InlineCode>large</InlineCode> Spinner
-      </Body>{' '}
-    </div>
-    <div className={variantContainerStyles}>
-      <Spinner variant="xlarge" {...props} />
-      <Body className={labelStyles} weight="medium">
-        <InlineCode>xlarge</InlineCode> Spinner
-      </Body>
-    </div>
-    <div className={variantContainerStyles}>
+    {Object.values(DisplayOption).map(displayOption => (
+      <div key={displayOption} className={displayOptionContainerStyles}>
+        <Spinner displayOption={displayOption} {...props} />
+        <Body className={labelStyles} weight="medium">
+          <InlineCode>{displayOption}</InlineCode> Spinner
+        </Body>
+      </div>
+    ))}
+    <div className={displayOptionContainerStyles}>
       <BlobLoader {...props} />
       <Body className={labelStyles} weight="medium">
         Blob Loader

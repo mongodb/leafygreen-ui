@@ -4,24 +4,21 @@ import { ComponentStory } from '@storybook/react';
 import { StoryMeta } from '@leafygreen-ui/lib';
 
 import Spinner from './Spinner';
-import { Variant } from './Spinner.types';
+import { DisplayOption } from './Spinner.types';
 
 export default StoryMeta({
   title: 'Components/LoadingIndicator/Spinner',
   component: Spinner,
   args: {
-    variant: 'default',
+    displayOption: 'default',
   },
   argTypes: {
     description: { control: 'text' },
     sizeOverride: { control: 'number' },
-    variant: { control: 'select', options: Object.values(Variant) },
+    displayOption: { control: 'select', options: Object.values(DisplayOption) },
   },
   parameters: {
     default: 'Default',
-    controls: {
-      exclude: ['baseFontSize'],
-    },
   },
 });
 
@@ -38,7 +35,7 @@ WithDescription.args = {
 
 export const Horizontal = Template.bind({});
 Horizontal.args = {
-  variant: 'horizontal',
+  displayOption: 'default-horizontal',
   description: 'Loading...',
 };
 
