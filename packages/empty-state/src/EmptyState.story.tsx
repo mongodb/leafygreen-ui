@@ -54,7 +54,7 @@ export const LiveExample: StoryFn<StoryProps> = ({
   // eslint-disable-next-line react/prop-types
   variant,
   ...rest
-}) => {
+}: StoryProps) => {
   let StoryComponent: StoryFn<BasicEmptyStateProps | FeaturesEmptyStateProps> =
     WithActionsAndLink;
   let storyComponentProps: BasicEmptyStateProps | FeaturesEmptyStateProps =

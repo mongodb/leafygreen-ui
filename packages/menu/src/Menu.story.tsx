@@ -142,7 +142,7 @@ export default meta;
 // };
 // UncontrolledTemplate.storyName = 'Uncontrolled';
 
-export const LiveExample: StoryFn<MenuProps> = ({
+export const LiveExample: StoryFn<MenuProps & { size: Size }> = ({
   open: _,
   size,
   darkMode,
