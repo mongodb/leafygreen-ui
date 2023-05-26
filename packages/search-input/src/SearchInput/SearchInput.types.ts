@@ -63,11 +63,6 @@ interface BaseSearchInputProps
    * The placeholder text shown in the input field before the user begins typing.
    */
   placeholder?: string;
-
-  /**
-   * Callback fired on keydown event.
-   */
-  onKeyDown?: KeyboardEventHandler<HTMLDivElement>;
 }
 
 export type SearchInputProps = BaseSearchInputProps & AriaLabelProps;
