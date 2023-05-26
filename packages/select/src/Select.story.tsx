@@ -16,7 +16,7 @@ const meta: StoryMetaType<typeof Select> = {
   parameters: {
     default: 'Uncontrolled',
     controls: {
-      exclude: [...storybookExcludedControlParams, 'children'],
+      exclude: [...storybookExcludedControlParams, 'children', 'value'],
     },
   },
   args: {
@@ -51,7 +51,6 @@ const meta: StoryMetaType<typeof Select> = {
     disabled: { control: 'boolean' },
     label: { control: 'text' },
     description: { control: 'text' },
-    value: { control: 'text' },
     defaultValue: { control: 'text' },
     readOnly: { control: 'boolean' },
     errorMessage: { control: 'text' },
