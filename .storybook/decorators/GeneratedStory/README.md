@@ -42,6 +42,8 @@ export const Generated = () => {};
 
 This will create a story called "Generated", that renders all defined prop combinations.
 
+![Decorator Demo](./docs/decorator-demo.png)
+
 ## Excluding prop combinations
 
 You may not always want to test _every_ combination of props. For example, in Button we shouldn't be testing the case when `children`, `leftGlyph` and `rightGlyph` are _all_ undefined.
