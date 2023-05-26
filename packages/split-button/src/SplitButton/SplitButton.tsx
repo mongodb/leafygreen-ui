@@ -126,6 +126,9 @@ SplitButton.propTypes = {
   menuItems: PropTypes.arrayOf(PropTypes.element).isRequired,
   baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
   disabled: PropTypes.bool,
+  onChange: PropTypes.func,
+  onTriggerClick: PropTypes.func,
+  triggerAriaLabel: PropTypes.string,
   // Popover Props
   popoverZIndex: PropTypes.number,
   scrollContainer:
