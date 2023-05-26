@@ -1,4 +1,5 @@
 import { GeneratedStoryConfig } from '../GeneratedStoryDecorator.types';
+
 import { shouldExcludePropCombo } from './shouldExcludePropCombo';
 
 describe('storybook/shouldExcludePropCombo', () => {

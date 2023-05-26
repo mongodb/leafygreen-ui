@@ -1,8 +1,10 @@
 import React from 'react';
+import { Decorator, StoryContext, StoryFn } from '@storybook/react';
+
 import { css, cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { palette } from '@leafygreen-ui/palette';
-import { Decorator, StoryContext, StoryFn } from '@storybook/react';
+
 import { GENERATED_STORY_NAME } from './GeneratedStory';
 
 const rootStyle = css`

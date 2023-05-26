@@ -1,10 +1,10 @@
+import { type ComponentProps } from 'react';
 import { Args } from '@storybook/csf';
 import { Decorator, StoryFn } from '@storybook/react';
-import { type ComponentProps } from 'react';
 
 import {
-  StoryMetaType,
   type LeafyGreenProviderProps,
+  StoryMetaType,
 } from '../../types/StoryMeta.types';
 
 type ExtendedComponentProps<T extends React.ElementType> = ComponentProps<T> &

@@ -10,12 +10,14 @@
  */
 
 import React, { ReactElement } from 'react';
-import { Decorator, StoryContext, StoryFn } from '@storybook/react';
 import { Args } from '@storybook/csf';
-import { cx } from '@leafygreen-ui/emotion';
-import { Error } from '@leafygreen-ui/typography';
-import { GeneratedStoryConfig } from './GeneratedStoryDecorator.types';
+import { Decorator, StoryContext, StoryFn } from '@storybook/react';
 import { entries } from 'lodash';
+
+import { cx } from '@leafygreen-ui/emotion';
+import { StoryMetaType } from '@leafygreen-ui/lib';
+import { Error } from '@leafygreen-ui/typography';
+
 import { shouldExcludePropCombo } from './utils/shouldExcludePropCombo';
 import {
   combinationClassName,
@@ -24,7 +26,7 @@ import {
   instanceStyles,
   propSectionStyles,
 } from './GeneratedStory.styles';
-import { StoryMetaType } from '@leafygreen-ui/lib';
+import { GeneratedStoryConfig } from './GeneratedStoryDecorator.types';
 
 export const PARAM_NAME = 'generate';
 export const GENERATED_STORY_NAME = 'Generated';

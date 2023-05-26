@@ -1,8 +1,8 @@
-import { Meta } from '@storybook/react';
 import { ComponentProps } from 'react';
-import { GeneratedStoryConfig } from '../decorators/GeneratedStory/GeneratedStoryDecorator.types';
+import { Meta } from '@storybook/react';
 
 import { StoryArgType } from '../constants/storybookArgTypes';
+import { GeneratedStoryConfig } from '../decorators/GeneratedStory/GeneratedStoryDecorator.types';
 
 // Re-defining LG provider prop keys here since importing from the package
 // will cause circular dependencies

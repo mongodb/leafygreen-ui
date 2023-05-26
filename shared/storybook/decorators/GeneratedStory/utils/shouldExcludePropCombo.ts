@@ -1,4 +1,5 @@
 import { entries, has, isEqual, isUndefined, keys } from 'lodash';
+
 import { GeneratedStoryConfig } from '../GeneratedStoryDecorator.types';
 
 export function shouldExcludePropCombo<T extends React.ComponentType<any>>({
@@ -95,8 +96,6 @@ export function shouldExcludePropCombo<T extends React.ComponentType<any>>({
       }
     }
   });
-
-  return false;
 }
 
 /**

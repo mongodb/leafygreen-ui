@@ -1,4 +1,5 @@
 import { InputType } from '@storybook/csf';
+
 import IntrinsicElements from './IntrinsicElements';
 
 export interface StoryArgType extends InputType {
