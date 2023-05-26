@@ -46,6 +46,8 @@ export const Justify = {
 
 export type Justify = typeof Justify[keyof typeof Justify];
 
+// TODO: remove `href` and `as` when Button is updated to use `InferredPolymorphic`
+// https://jira.mongodb.org/browse/LG-3260
 type ButtonProps = Omit<
   ImportedButtonProps,
   'rightGlyph' | 'href' | 'as' | 'variant'

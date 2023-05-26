@@ -72,6 +72,7 @@ export const SplitButton = InferredPolymorphic<SplitButtonProps, 'button'>(
       <div className={cx(buttonContainerStyles, className)} ref={containerRef}>
         <LeafyGreenProvider darkMode={darkMode}>
           {/* TODO: remove when Button is updated to use `InferredPolymorphic` */}
+          {/* https://jira.mongodb.org/browse/LG-3260 */}
           {/* @ts-expect-error - Types of property `href` are incompatible. Button types href as string, but InferredPolymorphicProps types it as NodeUrlLike | ((string | NodeUrlLike) & string). This should not be an issue once Button is also using InferredPolymorphic. */}
           <Button
             as={Component}
