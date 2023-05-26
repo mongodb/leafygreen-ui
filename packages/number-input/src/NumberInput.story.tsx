@@ -33,8 +33,49 @@ const unitOptions = [
 const meta: StoryMetaType<typeof NumberInput> = {
   title: 'Components/NumberInput',
   component: NumberInput,
+  parameters: {
+    default: 'Basic',
+    controls: {
+      exclude: [
+        ...storybookExcludedControlParams,
+        'as',
+        'children',
+        'value',
+        'onSelectChange',
+      ],
+    },
+    generate: {
+      props: {
+        darkMode: [false, true],
+        unit: [undefined, 'days'],
+        unitOptions: [
+          undefined,
+          [
+            { displayName: 'days', value: 'days' },
+            { displayName: 'years', value: 'years' },
+          ],
+        ],
+        size: Object.values(Size),
+        label: ['Label', undefined],
+        description: ['Description', undefined],
+        state: Object.values(State).reverse(),
+        errorMessage: [undefined, 'Error message'],
+        disabled: [false, true],
+      },
+      excludeCombinations: [
+        {
+          label: undefined,
+          description: 'Description',
+        },
+        {
+          state: State.None,
+          errorMessage: 'Error message',
+        },
+      ],
+    },
+  },
   args: {
-    label: 'label',
+    label: 'Label',
     disabled: false,
   },
   argTypes: {
@@ -67,18 +108,6 @@ const meta: StoryMetaType<typeof NumberInput> = {
     },
     placeholder: {
       control: 'text',
-    },
-  },
-  parameters: {
-    default: 'Basic',
-    controls: {
-      exclude: [
-        ...storybookExcludedControlParams,
-        'as',
-        'children',
-        'value',
-        'onSelectChange',
-      ],
     },
   },
 };
@@ -127,7 +156,8 @@ const Template: StoryFn<StoryNumberInputProps> = (
   );
 };
 
-// TODO: temp story for .design. For now consumers won't be able to change unit/unitOptions props. We need to figure out a way to make the story friendly to both designers and engineers.
+// TODO: temp story for .design. For now consumers won't be able to change unit/unitOptions props.
+// We need to figure out a way to make the story friendly to both designers and engineers.
 export const Basic = Template.bind({});
 Basic.args = {
   unitOptions: unitOptions,
@@ -174,3 +204,5 @@ Select.argTypes = {
 export const Uncontrolled = ({ ...props }: NumberInputProps) => {
   return <NumberInput {...props} />;
 };
+
+export const Generated = () => {};
