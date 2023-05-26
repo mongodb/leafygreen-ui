@@ -45,6 +45,15 @@ export const Basic: ComponentStory<typeof SearchInput> = props => (
   />
 );
 
+export const Test: ComponentStory<typeof SearchInput> = props => (
+  <SearchInput {...props} />
+);
+Test.args = {
+  onKeyDown: e => {
+    console.log(e);
+  },
+};
+
 export const WithResults: ComponentStory<typeof SearchInput> = props => (
   <SearchInput
     className={css`

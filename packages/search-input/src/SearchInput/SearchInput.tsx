@@ -81,7 +81,6 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       onSubmit: onSubmitProp,
       'aria-label': ariaLabel,
       'aria-labelledby': ariaLabelledBy,
-      onKeyDown,
       ...rest
     }: SearchInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
@@ -298,7 +297,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       if (isFocusInComponent) {
         switch (e.keyCode) {
           case keyMap.Enter: {
-            e.stopPropagation();
+            // e.stopPropagation();
             highlightedElementRef?.current?.click();
             break;
           }
@@ -342,8 +341,6 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
             }
           }
         }
-
-        if (onKeyDown) onKeyDown(e);
       }
     };
 
