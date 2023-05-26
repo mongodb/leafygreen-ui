@@ -2,7 +2,6 @@ import {
   ChangeEventHandler,
   ComponentPropsWithoutRef,
   FormEventHandler,
-  KeyboardEventHandler,
 } from 'react';
 
 import { AriaLabelProps } from '@leafygreen-ui/a11y';
