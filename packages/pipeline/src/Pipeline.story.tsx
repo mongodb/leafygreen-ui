@@ -1,7 +1,11 @@
 import React from 'react';
 import { StoryFn } from '@storybook/react';
 
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import Stage from './Stage';
 import { Size } from './types';
@@ -23,7 +27,7 @@ const meta: StoryMetaType<typeof Pipeline> = {
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: ['children'],
+      exclude: [...storybookExcludedControlParams, 'children'],
     },
   },
 };

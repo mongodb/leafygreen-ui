@@ -1,7 +1,10 @@
 import React from 'react';
 import { StoryFn } from '@storybook/react';
 
-import { StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import Stepper, { Step, StepperProps } from '.';
 
@@ -11,7 +14,7 @@ const meta: StoryMetaType<typeof Stepper> = {
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: ['children'],
+      exclude: [...storybookExcludedControlParams, 'children'],
     },
   },
   argTypes: {

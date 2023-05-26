@@ -4,7 +4,11 @@ import { StoryFn } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
-import { storybookArgTypes, type StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  type StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import {
   ComboboxSize,
@@ -35,6 +39,7 @@ const meta: StoryMetaType<typeof Combobox> = {
     default: 'Demo',
     controls: {
       exclude: [
+        ...storybookExcludedControlParams,
         'as',
         'filteredOptions',
         'initialValue',

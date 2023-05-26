@@ -2,7 +2,10 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
-import { StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import Portal, { PortalProps } from '.';
 
@@ -44,7 +47,7 @@ const meta: StoryMetaType<typeof Portal> = {
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: ['children', 'container'],
+      exclude: [...storybookExcludedControlParams, 'children', 'container'],
     },
   },
 };

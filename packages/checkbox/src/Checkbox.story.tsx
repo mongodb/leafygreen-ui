@@ -3,7 +3,11 @@ import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import Checkbox, { CheckboxProps } from '.';
 
@@ -12,7 +16,7 @@ const meta: StoryMetaType<typeof Checkbox> = {
   component: Checkbox,
   parameters: {
     controls: {
-      exclude: ['checked'],
+      exclude: [...storybookExcludedControlParams, 'checked'],
     },
     default: 'Uncontrolled',
   },

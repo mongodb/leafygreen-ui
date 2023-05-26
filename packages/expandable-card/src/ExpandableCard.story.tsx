@@ -1,7 +1,11 @@
 import React, { SyntheticEvent, useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import ExpandableCard, { type ExpandableCardProps } from '.';
 
@@ -11,7 +15,7 @@ const meta: StoryMetaType<typeof ExpandableCard> = {
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: ['isOpen', 'defaultOpen'],
+      exclude: [...storybookExcludedControlParams, 'isOpen', 'defaultOpen'],
     },
   },
   args: {

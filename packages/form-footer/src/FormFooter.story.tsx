@@ -4,7 +4,11 @@ import { StoryFn } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import FormFooter, { FormFooterProps } from '.';
 
@@ -14,7 +18,11 @@ const meta: StoryMetaType<typeof FormFooter> = {
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: ['contentClassName', 'onBackClick'],
+      exclude: [
+        ...storybookExcludedControlParams,
+        'contentClassName',
+        'onBackClick',
+      ],
     },
     wrapperStyle: css`
       width: 90%;

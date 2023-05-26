@@ -3,7 +3,10 @@ import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import { StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import { ToastProvider, Variant } from '..';
 
@@ -15,7 +18,7 @@ const meta: StoryMetaType<typeof Toast> = {
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: ['open'],
+      exclude: [...storybookExcludedControlParams, 'open'],
     },
   },
   args: {
