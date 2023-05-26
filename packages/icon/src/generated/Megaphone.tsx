@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 97c8cf87b448e0be8c05a900432fc695
+ * @checksum 8322a8e8ae659df948f56399690a8ec7
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface MegaphoneProps extends LGGlyph.ComponentProps {}
-
 const Megaphone = ({
   className,
   size = 16,
@@ -58,7 +57,6 @@ const Megaphone = ({
     </svg>
   );
 };
-
 Megaphone.displayName = 'Megaphone';
 Megaphone.isGlyph = true;
 Megaphone.propTypes = {

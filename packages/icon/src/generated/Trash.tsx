@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 2069434fa11dc71fa2f40ba8c3bbd451
+ * @checksum ed3df28a2066e0fd8fd64e428e1144fb
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface TrashProps extends LGGlyph.ComponentProps {}
-
 const Trash = ({
   className,
   size = 16,
@@ -58,7 +57,6 @@ const Trash = ({
     </svg>
   );
 };
-
 Trash.displayName = 'Trash';
 Trash.isGlyph = true;
 Trash.propTypes = {

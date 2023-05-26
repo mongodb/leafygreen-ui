@@ -1,13 +1,16 @@
-import React, { ComponentType, useState } from 'react';
-import { ComponentStory } from '@storybook/react';
+import React, { useState } from 'react';
+import { StoryFn } from '@storybook/react';
 
-import { StoryMeta } from '@leafygreen-ui/lib';
+import {
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import Pagination, { PaginationProps } from '.';
 
-export default StoryMeta({
+const meta: StoryMetaType<typeof Pagination> = {
   title: 'Components/Pagination',
-  component: Pagination as ComponentType,
+  component: Pagination,
   args: {
     onCurrentPageOptionChange: undefined,
   },
@@ -18,6 +21,7 @@ export default StoryMeta({
     default: 'Basic',
     controls: {
       exclude: [
+        ...storybookExcludedControlParams,
         'currentPage',
         'itemsPerPage',
         'onBackArrowClick',
@@ -27,19 +31,20 @@ export default StoryMeta({
       ],
     },
   },
-});
+};
+export default meta;
 
-const Template: ComponentStory<typeof Pagination> = props => (
+const Template: StoryFn<PaginationProps> = props => (
   <div style={{ width: '700px' }}>
     <Pagination {...props} />
   </div>
 );
 
-export const Default: ComponentStory<typeof Pagination> = args => {
+export const Default: StoryFn<PaginationProps> = args => {
   return <Template {...args} />;
 };
 
-export const Basic: ComponentStory<typeof Pagination> = args => {
+export const Basic: StoryFn<PaginationProps> = args => {
   const [currentPage, setCurrentPage] = useState<number>(args.currentPage ?? 1);
   const [itemsPerPage, setItemsPerPage] = useState<number>(
     args.itemsPerPageOptions ? args.itemsPerPageOptions[0] : 10,
@@ -74,9 +79,7 @@ Basic.args = {
   itemsPerPageOptions: [10, 50, 100],
 };
 
-export const WithCurrentPageOptions: ComponentStory<
-  typeof Pagination
-> = args => {
+export const WithCurrentPageOptions: StoryFn<PaginationProps> = args => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage, setItemsPerPage] = useState<number>(
     args.itemsPerPageOptions ? args.itemsPerPageOptions[0] : 10,

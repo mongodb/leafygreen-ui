@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import Badge from '@leafygreen-ui/badge';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
-import { StoryMeta } from '@leafygreen-ui/lib';
-import Pagination from '@leafygreen-ui/pagination';
+import {
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
+import Pagination, { PaginationProps } from '@leafygreen-ui/pagination';
 
 import {
   makeData,
@@ -28,10 +31,13 @@ import {
   Table,
   TableBody,
   TableHead,
+  type TableProps,
   useLeafyGreenTable,
 } from '.';
 
-export default StoryMeta({
+type StoryTableProps = TableProps<any>;
+
+const meta: StoryMetaType<typeof Table> = {
   title: 'Components/Table',
   component: Table,
   argTypes: {
@@ -41,12 +47,9 @@ export default StoryMeta({
     default: 'KitchenSink',
     controls: {
       exclude: [
+        ...storybookExcludedControlParams,
         'table',
-        'className',
         'children',
-        'ref',
-        'aria-describedby',
-        'aria-label',
         'value',
         'onSelectChange',
         'tableContainerClassName',
@@ -59,9 +62,10 @@ export default StoryMeta({
       source: { type: 'code' },
     },
   },
-});
+};
+export default meta;
 
-const Template: ComponentStory<typeof Table> = args => {
+const Template: StoryFn<StoryTableProps> = args => {
   const data = makeData(false, 100);
   const columns = Object.keys(data[0]).filter(
     x => x !== 'renderExpandedContent' && x !== 'subRows',
@@ -95,7 +99,7 @@ ZebraStripes.args = {
   shouldAlternateRowColor: true,
 };
 
-export const OverflowingCell: ComponentStory<typeof Table> = args => {
+export const OverflowingCell: StoryFn<StoryTableProps> = args => {
   const data = makeData(false, 100);
   const columns = Object.keys(data[0]).filter(
     x => x !== 'renderExpandedContent' && x !== 'subRows',
@@ -134,7 +138,7 @@ export const OverflowingCell: ComponentStory<typeof Table> = args => {
   );
 };
 
-export const NestedRows: ComponentStory<typeof Table> = args => {
+export const NestedRows: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data] = React.useState(() => makeData(false, 50, 5, 3));
 
@@ -267,7 +271,7 @@ export const NestedRows: ComponentStory<typeof Table> = args => {
   );
 };
 
-export const ExpandableContent: ComponentStory<typeof Table> = args => {
+export const ExpandableContent: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(true, 100))[0];
 
@@ -370,7 +374,7 @@ export const ExpandableContent: ComponentStory<typeof Table> = args => {
   );
 };
 
-export const SortableRows: ComponentStory<typeof Table> = args => {
+export const SortableRows: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 100))[0];
 
@@ -472,7 +476,7 @@ export const SortableRows: ComponentStory<typeof Table> = args => {
   );
 };
 
-export const SelectableRows: ComponentStory<typeof Table> = args => {
+export const SelectableRows: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 100))[0];
   const [rowSelection, setRowSelection] = React.useState({});
@@ -595,7 +599,7 @@ export const SelectableRows: ComponentStory<typeof Table> = args => {
   );
 };
 
-export const WithPagination: ComponentStory<typeof Table> = ({
+export const WithPagination: StoryFn<StoryTableProps> = ({
   // eslint-disable-next-line react/prop-types
   darkMode,
   ...rest
@@ -698,14 +702,18 @@ export const WithPagination: ComponentStory<typeof Table> = ({
 
       <Pagination
         itemsPerPage={table.getState().pagination.pageSize}
-        onItemsPerPageOptionChange={(value, _) => {
-          table.setPageSize(Number(value));
-        }}
+        onItemsPerPageOptionChange={
+          ((value, _) => {
+            table.setPageSize(Number(value));
+          }) as PaginationProps['onItemsPerPageOptionChange']
+        }
         numTotalItems={data.length}
         currentPage={table.getState().pagination.pageIndex + 1}
-        onCurrentPageOptionChange={(value, _) => {
-          table.setPageIndex(Number(value) - 1);
-        }}
+        onCurrentPageOptionChange={
+          ((value, _) => {
+            table.setPageIndex(Number(value) - 1);
+          }) as PaginationProps['onCurrentPageOptionChange']
+        }
         onBackArrowClick={() => table.previousPage()}
         onForwardArrowClick={() => table.nextPage()}
         darkMode={darkMode}
@@ -714,7 +722,7 @@ export const WithPagination: ComponentStory<typeof Table> = ({
   );
 };
 
-export const KitchenSink: ComponentStory<typeof Table> = args => {
+export const KitchenSink: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data] = useState(() => makeKitchenSinkData(10));
 

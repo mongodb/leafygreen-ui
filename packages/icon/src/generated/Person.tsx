@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 6828949cc7304b6e631a467e4dc6a707
+ * @checksum f7be248e7f078ff23eab08583c661657
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface PersonProps extends LGGlyph.ComponentProps {}
-
 const Person = ({
   className,
   size = 16,
@@ -64,7 +63,6 @@ const Person = ({
     </svg>
   );
 };
-
 Person.displayName = 'Person';
 Person.isGlyph = true;
 Person.propTypes = {

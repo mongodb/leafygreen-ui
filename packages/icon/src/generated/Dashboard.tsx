@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum a70b128a2c6c86d580f40fb50525e9ac
+ * @checksum 18c4796cb65c7e8fc535e7a47e76a173
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface DashboardProps extends LGGlyph.ComponentProps {}
-
 const Dashboard = ({
   className,
   size = 16,
@@ -65,7 +64,6 @@ const Dashboard = ({
     </svg>
   );
 };
-
 Dashboard.displayName = 'Dashboard';
 Dashboard.isGlyph = true;
 Dashboard.propTypes = {

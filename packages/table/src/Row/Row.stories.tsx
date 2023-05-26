@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types*/
 import React from 'react';
-import { ComponentStory, Meta } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
+
+import { storybookExcludedControlParams } from '@leafygreen-ui/lib';
 
 import { Cell, HeaderCell } from '../Cell';
 import { HeaderRow, Row } from '../Row';
@@ -26,7 +28,7 @@ export default {
   },
   parameters: {
     controls: {
-      exclude: ['ref', 'children'],
+      exclude: [...storybookExcludedControlParams, 'ref', 'children'],
     },
     chromatic: {
       disableSnapshot: true,
@@ -39,7 +41,7 @@ export default {
   },
 } as Meta<typeof Table>;
 
-const Template: ComponentStory<typeof Row> = args => {
+const Template: StoryFn<typeof Row> = args => {
   const data = makeData(false, 100);
   const columns = Object.keys(data[0]);
   return (
@@ -72,10 +74,7 @@ DisabledRows.args = {
   disabled: true,
 };
 
-export const DisabledNestedRows: ComponentStory<typeof Row> = ({
-  row,
-  ...rest
-}) => {
+export const DisabledNestedRows: StoryFn<typeof Row> = ({ row, ...rest }) => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 100, 5, 3))[0];
   const [expanded, setExpanded] = React.useState<ExpandedState>({});

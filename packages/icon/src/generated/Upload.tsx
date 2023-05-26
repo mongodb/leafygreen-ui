@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 2c311ed1f36e0aa7637b21974fb3a9cf
+ * @checksum 3e5eef4875ed4fe8b5c9c1d3b531e589
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface UploadProps extends LGGlyph.ComponentProps {}
-
 const Upload = ({
   className,
   size = 16,
@@ -58,7 +57,6 @@ const Upload = ({
     </svg>
   );
 };
-
 Upload.displayName = 'Upload';
 Upload.isGlyph = true;
 Upload.propTypes = {

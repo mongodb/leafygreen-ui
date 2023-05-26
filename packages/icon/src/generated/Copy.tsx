@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum b89218a68bf3ca4c25c407df390d4dc6
+ * @checksum 746bc882194585d49aa7c02bc34c5b80
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface CopyProps extends LGGlyph.ComponentProps {}
-
 const Copy = ({
   className,
   size = 16,
@@ -58,7 +57,6 @@ const Copy = ({
     </svg>
   );
 };
-
 Copy.displayName = 'Copy';
 Copy.isGlyph = true;
 Copy.propTypes = {

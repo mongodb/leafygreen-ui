@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 96e8e8c28bba669e2541dc88278211a5
+ * @checksum c5e45f6f8567f0e17758f579fae4b760
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface DownloadProps extends LGGlyph.ComponentProps {}
-
 const Download = ({
   className,
   size = 16,
@@ -58,7 +57,6 @@ const Download = ({
     </svg>
   );
 };
-
 Download.displayName = 'Download';
 Download.isGlyph = true;
 Download.propTypes = {

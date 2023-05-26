@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum fb3177992ec53ed28eb06b4b4b7c0eb2
+ * @checksum 77ae77d69ea448b9b7a93be70b1c81cb
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface HighlightProps extends LGGlyph.ComponentProps {}
-
 const Highlight = ({
   className,
   size = 16,
@@ -68,7 +67,6 @@ const Highlight = ({
     </svg>
   );
 };
-
 Highlight.displayName = 'Highlight';
 Highlight.isGlyph = true;
 Highlight.propTypes = {
