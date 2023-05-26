@@ -300,15 +300,6 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
           case keyMap.Enter: {
             e.stopPropagation();
             highlightedElementRef?.current?.click();
-
-            if (onKeyDown) {
-              formRef.current?.dispatchEvent(
-                new KeyboardEvent('keydown', {
-                  key: 'Enter',
-                }),
-              );
-            }
-
             break;
           }
 
@@ -351,6 +342,8 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
             }
           }
         }
+
+        if (onKeyDown) onKeyDown(e);
       }
     };
 
