@@ -2,7 +2,11 @@ import React, { useRef, useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import { Size, State, UnitOption } from './NumberInput/NumberInput.types';
 import { NumberInput, NumberInputProps } from '.';
@@ -68,7 +72,13 @@ const meta: StoryMetaType<typeof NumberInput> = {
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: ['as', 'children', 'value', 'onSelectChange'],
+      exclude: [
+        ...storybookExcludedControlParams,
+        'as',
+        'children',
+        'value',
+        'onSelectChange',
+      ],
     },
   },
 };

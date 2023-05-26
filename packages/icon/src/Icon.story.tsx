@@ -3,7 +3,10 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
-import { StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 import { GlyphName } from './glyphs';
@@ -15,7 +18,7 @@ const meta: StoryMetaType<typeof Icon> = {
   parameters: {
     default: 'AllIcons',
     controls: {
-      exclude: ['className', 'title', 'data-testid'],
+      exclude: [...storybookExcludedControlParams, 'title', 'data-testid'],
     },
   },
   argTypes: {

@@ -2,7 +2,11 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
 import Banner, { BannerProps, Variant } from '.';
@@ -13,7 +17,7 @@ const meta: StoryMetaType<typeof Banner> = {
   parameters: {
     default: 'WithLink',
     controls: {
-      exclude: ['image'],
+      exclude: [...storybookExcludedControlParams, 'image'],
     },
   },
   args: {

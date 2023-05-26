@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
-import { StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import Pagination, { PaginationProps } from '.';
 
@@ -18,6 +21,7 @@ const meta: StoryMetaType<typeof Pagination> = {
     default: 'Basic',
     controls: {
       exclude: [
+        ...storybookExcludedControlParams,
         'currentPage',
         'itemsPerPage',
         'onBackArrowClick',

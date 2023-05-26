@@ -2,7 +2,12 @@ import React, { ReactElement } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
-import { storybookArgTypes, StoryMetaType, Theme } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+  Theme,
+} from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
 import DarkModeGraphic from '../example-graphics/DarkModeGraphic.svg';
@@ -31,7 +36,7 @@ const meta: StoryMetaType<typeof BasicEmptyState> = {
   parameters: {
     default: null,
     controls: {
-      exclude: ['className', 'graphicSize'],
+      exclude: [...storybookExcludedControlParams, 'graphicSize'],
     },
   },
 };

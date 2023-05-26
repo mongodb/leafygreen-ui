@@ -5,7 +5,10 @@ import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import { Size } from './types';
 import {
@@ -24,7 +27,14 @@ const meta: StoryMetaType<typeof Menu> = {
   parameters: {
     default: 'SubMenuExample',
     controls: {
-      exclude: ['trigger', 'children', 'refEl', 'setOpen', 'as'],
+      exclude: [
+        ...storybookExcludedControlParams,
+        'trigger',
+        'children',
+        'refEl',
+        'setOpen',
+        'as',
+      ],
     },
   },
   args: {

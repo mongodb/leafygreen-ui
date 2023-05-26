@@ -5,7 +5,11 @@ import Button from '@leafygreen-ui/button';
 import Code from '@leafygreen-ui/code';
 import Copyable from '@leafygreen-ui/copyable';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 import { Option, OptionGroup, Select } from '@leafygreen-ui/select';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Body, H3, Subtitle } from '@leafygreen-ui/typography';
@@ -34,7 +38,13 @@ const meta: StoryMetaType<typeof Modal> = {
   parameters: {
     default: 'Controlled',
     controls: {
-      exclude: ['setOpen', 'shouldClose', 'children', 'open'],
+      exclude: [
+        ...storybookExcludedControlParams,
+        'setOpen',
+        'shouldClose',
+        'children',
+        'open',
+      ],
     },
   },
 };
