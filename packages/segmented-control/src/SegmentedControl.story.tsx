@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StoryFn } from '@storybook/react';
 
-import Icon from '@leafygreen-ui/icon';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
@@ -12,14 +11,41 @@ import {
   SegmentedControlOption,
   SegmentedControlProps,
 } from '@leafygreen-ui/segmented-control';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { Size } from './SegmentedControl/SegmentedControl.types';
+import { TestChildren } from './SegmentedControl.testutils';
 
 const meta: StoryMetaType<typeof SegmentedControl> = {
   title: 'Components/SegmentedControl',
   component: SegmentedControl,
+  parameters: {
+    default: 'LiveExample',
+    controls: {
+      exclude: [
+        ...storybookExcludedControlParams,
+        'children',
+        'value',
+        'defaultValue',
+      ],
+    },
+    chromatic: {
+      delay: transitionDuration.default,
+    },
+    generate: {
+      props: {
+        darkMode: [false, true],
+        size: Object.values(Size),
+        children: [
+          TestChildren.Basic,
+          TestChildren.WithIcons,
+          TestChildren.IconsOnly,
+        ],
+        label: [undefined, 'Select'],
+      },
+    },
+  },
   argTypes: {
-    children: { control: false },
     label: { control: 'text' },
     name: { control: 'text' },
     defaultValue: { control: 'text' },
@@ -35,24 +61,13 @@ const meta: StoryMetaType<typeof SegmentedControl> = {
     darkMode: storybookArgTypes.darkMode,
     baseFontSize: storybookArgTypes.updatedBaseFontSize,
   },
-  parameters: {
-    default: 'Uncontrolled',
-    controls: {
-      exclude: [
-        ...storybookExcludedControlParams,
-        'children',
-        'value',
-        'defaultValue',
-      ],
-    },
-  },
 };
 export default meta;
 
-export const Uncontrolled: StoryFn<SegmentedControlProps> = (
+export const LiveExample: StoryFn<SegmentedControlProps> = (
   args: SegmentedControlProps,
 ) => <SegmentedControl {...args} />;
-Uncontrolled.args = {
+LiveExample.args = {
   label: 'Fruit',
   name: 'fruit',
   children: [
@@ -71,12 +86,13 @@ Uncontrolled.args = {
   ],
 };
 
+/*
 export const Controlled: StoryFn<SegmentedControlProps> = (
   args: SegmentedControlProps,
 ) => {
   const [selectedFruit, setSelectedFruit] = useState('eggplant');
   return (
-    <Uncontrolled
+    <LiveExample
       {...args}
       key="selectedFruit"
       value={selectedFruit}
@@ -101,54 +117,56 @@ Controlled.args = {
       Grape
     </SegmentedControlOption>,
   ],
-};
+};*/
 
-export const WithIcons = Uncontrolled.bind({});
-WithIcons.args = {
-  label: 'View as',
-  name: 'language',
-  children: [
-    <SegmentedControlOption
-      key="json"
-      value="json"
-      glyph={<Icon glyph="CurlyBraces" />}
-    >
-      JSONNNNN and more
-    </SegmentedControlOption>,
-    <SegmentedControlOption key="xml" value="xml" glyph={<Icon glyph="Code" />}>
-      XML
-    </SegmentedControlOption>,
-    <SegmentedControlOption
-      disabled
-      key="shell"
-      value="shell"
-      glyph={<Icon glyph="Shell" />}
-    >
-      Shell
-    </SegmentedControlOption>,
-  ],
-};
+// export const WithIcons = LiveExample.bind({});
+// WithIcons.args = {
+//   label: 'View as',
+//   name: 'language',
+//   children: [
+//     <SegmentedControlOption
+//       key="json"
+//       value="json"
+//       glyph={<Icon glyph="CurlyBraces" />}
+//     >
+//       JSON and more
+//     </SegmentedControlOption>,
+//     <SegmentedControlOption key="xml" value="xml" glyph={<Icon glyph="Code" />}>
+//       XML
+//     </SegmentedControlOption>,
+//     <SegmentedControlOption
+//       disabled
+//       key="shell"
+//       value="shell"
+//       glyph={<Icon glyph="Shell" />}
+//     >
+//       Shell
+//     </SegmentedControlOption>,
+//   ],
+// };
 
-export const IconsOnly = Uncontrolled.bind({});
-IconsOnly.args = {
-  label: 'Location',
-  name: 'location',
-  children: [
-    <SegmentedControlOption
-      key="cloud"
-      value="cloud"
-      glyph={<Icon glyph="Cloud" />}
-    />,
-    <SegmentedControlOption
-      key="globe"
-      value="globe"
-      glyph={<Icon glyph="GlobeAmericas" />}
-    />,
-    <SegmentedControlOption
-      disabled
-      key="government"
-      value="government"
-      glyph={<Icon glyph="GovernmentBuilding" />}
-    />,
-  ],
-};
+// export const IconsOnly = LiveExample.bind({});
+// IconsOnly.args = {
+//   label: 'Location',
+//   name: 'location',
+//   children: [
+//     <SegmentedControlOption
+//       key="cloud"
+//       value="cloud"
+//       glyph={<Icon glyph="Cloud" />}
+//     />,
+//     <SegmentedControlOption
+//       key="globe"
+//       value="globe"
+//       glyph={<Icon glyph="GlobeAmericas" />}
+//     />,
+//     <SegmentedControlOption
+//       disabled
+//       key="government"
+//       value="government"
+//       glyph={<Icon glyph="GovernmentBuilding" />}
+//     />,
+//   ],
+// };
+
+export const Generated = () => {};
