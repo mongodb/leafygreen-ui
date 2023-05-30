@@ -129,6 +129,9 @@
       "path": "./packages/side-nav"
     },
     {
+      "path": "./packages/split-button"
+    },
+    {
       "path": "./packages/stepper"
     },
     {
