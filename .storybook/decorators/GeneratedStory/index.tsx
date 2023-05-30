@@ -11,7 +11,7 @@
 
 import React, { ReactElement } from 'react';
 import { Decorator, StoryContext, StoryFn } from '@storybook/react';
-// import isChromatic from 'chromatic/isChromatic';
+import isChromatic from 'chromatic/isChromatic';
 import { Args } from '@storybook/csf';
 import { cx } from '@leafygreen-ui/emotion';
 import { Error } from '@leafygreen-ui/typography';
