@@ -1,18 +1,19 @@
 /* eslint-disable no-console */
 import React, { MouseEvent, useRef } from 'react';
+import { StoryFn } from '@storybook/react';
 
 import { Size } from '@leafygreen-ui/button';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
-  StoryMeta,
+  StoryMetaType,
 } from '@leafygreen-ui/lib';
 import { MenuItem } from '@leafygreen-ui/menu';
 
 import { Align, Justify, SplitButton, SplitButtonProps, Variant } from '.';
 
-export default StoryMeta({
+const meta: StoryMetaType<typeof SplitButton> = {
   title: 'Components/SplitButton',
   component: SplitButton,
   args: {
@@ -80,9 +81,11 @@ export default StoryMeta({
       ],
     },
   },
-});
+};
 
-const Template = (props: SplitButtonProps) => {
+export default meta;
+
+const Template: StoryFn<SplitButtonProps> = (props: SplitButtonProps) => {
   const { leftGlyph, ...rest } = props;
   const splitButtonRef = useRef<HTMLButtonElement | null>(null);
 

@@ -2919,13 +2919,6 @@
   resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-3.4.0.tgz#08d6c5e20cf7e4cc02fd181c4b0c225cd31dbb60"
   integrity sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==
 
-"@leafygreen-ui/hooks@^7.7.3":
-  version "7.7.3"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/hooks/-/hooks-7.7.3.tgz#090625a3f93ede1e96c2b59004a5931abfd321b7"
-  integrity sha512-giAHwLE9ZelQemNHZCZRf5ccBG95Fvehs0Pf6EHLP1Xhpofkqbws4HIKD8OylnHxP6otP1Ciq/rHc2XJ8I0dYQ==
-  dependencies:
-    lodash "^4.17.21"
-
 "@lerna/add@3.20.0":
   version "3.20.0"
   resolved "https://registry.yarnpkg.com/@lerna/add/-/add-3.20.0.tgz#bea7edf36fc93fb72ec34cb9ba854c48d4abf309"
