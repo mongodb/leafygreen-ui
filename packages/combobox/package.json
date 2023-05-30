@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/combobox",
-  "version": "6.0.2",
+  "version": "6.0.3",
   "description": "leafyGreen UI Kit Combobox",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -31,7 +31,7 @@
     "@leafygreen-ui/palette": "^4.0.4",
     "@leafygreen-ui/popover": "^11.0.9",
     "@leafygreen-ui/tokens": "^2.1.0",
-    "@leafygreen-ui/typography": "^16.4.0",
+    "@leafygreen-ui/typography": "^16.4.1",
     "chalk": "^4.1.2",
     "lodash": "^4.17.21",
     "polished": "^4.2.2"
