@@ -5,7 +5,6 @@ import { spacing } from '@leafygreen-ui/tokens';
 import { DisplayOption } from './Spinner.types';
 
 // Constants
-// --
 export const SpinnerSizes: Record<DisplayOption, number> = {
   [DisplayOption.DefaultHorizontal]: 24,
   [DisplayOption.DefaultVertical]: 24,
@@ -21,7 +20,6 @@ export const SpinnerBottomMargins: Record<DisplayOption, number> = {
 };
 
 // Styles
-// --
 export const rootStyles = css`
   text-align: center;
 `;
