@@ -77,3 +77,16 @@ export const buttonSpinnerSize: Record<Size, number> = {
   [Size.Default]: 16,
   [Size.Large]: 20,
 };
+
+export const spinnerStyles: Record<Theme, string> = {
+  [Theme.Dark]: css`
+    path {
+      stroke: ${palette.gray.light1};
+    }
+  `,
+  [Theme.Light]: css`
+    path {
+      stroke: ${palette.gray.dark1};
+    }
+  `,
+};

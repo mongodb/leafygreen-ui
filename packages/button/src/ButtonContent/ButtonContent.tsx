@@ -14,6 +14,7 @@ import {
   buttonSpinnerSize,
   rippleColors,
   rippleStyle,
+  spinnerStyles,
 } from './ButtonContent.styles';
 
 type ButtonContentProps = Omit<ButtonProps, 'as'>;
@@ -26,7 +27,7 @@ export const ButtonContent = ({
   variant = Variant.Default,
   size = Size.Default,
   isLoading,
-  loadingStateText,
+  loadingText,
   children,
 }: ButtonContentProps) => {
   const { darkMode, theme } = useDarkMode(darkModeProp);
@@ -81,10 +82,7 @@ export const ButtonContent = ({
       <div className={rippleStyle} ref={rippleRef} />
 
       <div
-        className={cx(buttonContentStyle, buttonContentSizeStyle[size], {
-          [css`
-            justify-content: space-between;
-          `]: !!rightGlyph && darkMode,
+        className={cx({
           [css`
             width: ${loadingContentRef.current?.style.width};
             position: relative;
@@ -92,30 +90,39 @@ export const ButtonContent = ({
         })}
       >
         {isLoading && (
-          <>
+          <div className={cx(buttonContentStyle, buttonContentSizeStyle[size])}>
             <Spinner
               sizeOverride={buttonSpinnerSize[size]}
-              className={cx({
-                [css`
-                  position: absolute;
-                  top: 50%;
-                  left: 50%;
-                  transform: translate(-50%, -50%);
-                `]: !loadingStateText,
-              })}
+              className={cx(
+                {
+                  [css`
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                  `]: !loadingText,
+                },
+                spinnerStyles[theme],
+              )}
             />
-          </>
+            {loadingText}
+          </div>
         )}
-        <div
-          ref={loadingContentRef}
-          className={cx({
-            [css`
-              visibility: hidden;
-            `]: isLoading,
-          })}
-        >
-          <DefaultContent />
-        </div>
+        {!loadingText && (
+          <div
+            ref={loadingContentRef}
+            className={cx(buttonContentStyle, buttonContentSizeStyle[size], {
+              [css`
+                justify-content: space-between;
+              `]: !!rightGlyph && darkMode,
+              [css`
+                visibility: hidden;
+              `]: isLoading,
+            })}
+          >
+            <DefaultContent />
+          </div>
+        )}
       </div>
     </>
   );

@@ -30,7 +30,7 @@ export const Button = React.forwardRef(function Button(
     className,
     as,
     type,
-    loadingStateText,
+    loadingText,
     ...rest
   }: BoxProps<'button', ButtonProps>,
   forwardRef,
@@ -66,7 +66,7 @@ export const Button = React.forwardRef(function Button(
     darkMode,
     disabled,
     isLoading,
-    loadingStateText,
+    loadingText,
     variant,
     size,
   } as const;

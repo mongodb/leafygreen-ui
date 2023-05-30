@@ -125,7 +125,7 @@ export interface ButtonProps {
   /**
    * String displaying in loading state
    */
-  loadingStateText?: string;
+  loadingText?: string;
 
   /**
    * The component or HTML Element that the button is rendered as.

@@ -50,7 +50,7 @@ export default StoryMeta({
     isLoading: {
       control: 'boolean',
     },
-    loadingStateText: {
+    loadingText: {
       control: 'text',
     },
   },
@@ -103,7 +103,12 @@ BaseGreen.args = {
 export const LoadingState = Template.bind({});
 LoadingState.args = {
   isLoading: true,
-  loadingStateText: 'Saving',
+};
+
+export const LoadingStateWithText = Template.bind({});
+LoadingStateWithText.args = {
+  isLoading: true,
+  loadingText: 'Saving',
 };
 
 export const WithGlobalDarkMode: Story<ButtonProps> = args => (
