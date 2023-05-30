@@ -1,7 +1,8 @@
 import React from 'react';
-import { Meta } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
+import { StoryMetaType } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 import { LogoNames } from './Logo';
@@ -21,17 +22,30 @@ import {
 } from '.';
 import Logo, { LogoName } from '.';
 
-export default {
+const meta: StoryMetaType<typeof Logo> = {
   title: 'Components/Logo',
+  component: Logo,
+  decorators: [
+    (Story, context) => (
+      <div
+        className={css`
+          display: inline;
+          width: 100%;
+          padding: 200% 200% 100%;
+          background-color: ${
+            /* @ts-expect-error */
+            Story?.args?.background ?? context?.args?.background ?? 'white'
+          };
+        `}
+      >
+        <Story />
+      </div>
+    ),
+  ],
   parameters: {
     default: 'Default',
   },
   argTypes: {
-    className: {
-      table: {
-        disable: true,
-      },
-    },
     color: {
       default: SupportedColors.White,
       control: 'radio',
@@ -43,8 +57,8 @@ export default {
       options: [palette.white, palette.gray.dark3],
     },
   },
-} as Meta<typeof Logo>;
-
+};
+export default meta;
 const divStyle = css`
   min-width: 150px;
   min-height: 70px;
@@ -74,9 +88,9 @@ const Template = (
   );
 };
 
-export const Default = (
-  args: LogoProps & { name: LogoName } & { background?: string },
-) => {
+export const Default: StoryFn<
+  LogoProps & { name: LogoName; background?: string }
+> = (args: LogoProps & { name: LogoName } & { background?: string }) => {
   if (!args.name) {
     args = { ...args, name: 'MongoDBLogo' };
   }

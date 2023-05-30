@@ -2,15 +2,15 @@ import React, { useRef } from 'react';
 import { range } from 'lodash';
 
 import { css } from '@leafygreen-ui/emotion';
-import { StoryMeta } from '@leafygreen-ui/lib';
+import { StoryMetaType } from '@leafygreen-ui/lib';
 
 import { useAutoScroll, useDynamicRefs } from '..';
 
-// eslint-disable-next-line storybook/prefer-pascal-case
-export const itemHeight = 25;
+import { testItemHeight } from './constants.test';
+
 const testItems = 16;
 
-export default StoryMeta({
+const meta: StoryMetaType<any> = {
   title: 'hooks/useAutoScroll',
   component: undefined,
   argTypes: {
@@ -25,7 +25,9 @@ export default StoryMeta({
     controls: { exclude: ['as', 'darkMode'] },
     chromatic: { disableSnapshot: true },
   },
-});
+};
+
+export default meta;
 
 export const Basic = ({ selected }: { selected?: number }) => {
   const data = range(testItems);
@@ -46,7 +48,7 @@ export const Basic = ({ selected }: { selected?: number }) => {
         data-testid={'menu'}
         className={css`
           position: relative;
-          max-height: ${itemHeight * 4}px;
+          max-height: ${testItemHeight * 4}px;
           overflow: auto;
         `}
       >
@@ -57,7 +59,7 @@ export const Basic = ({ selected }: { selected?: number }) => {
             data-testid={`item-${x}`}
             className={css`
               position: relative;
-              height: ${itemHeight}px;
+              height: ${testItemHeight}px;
               color: ${x === selected ? 'red' : 'inherit'};
             `}
           >

@@ -1,6 +1,9 @@
-import { addDecorator, addParameters } from '@storybook/react';
 import ComponentPreview from './decorators/ComponentPreview';
 import ReactStrictMode from './decorators/ReactStrictMode';
+import {
+  storybookExcludedArgTypes,
+  storybookExcludedControlParams,
+} from '@leafygreen-ui/lib';
 import {
   H1,
   H2,
@@ -10,29 +13,16 @@ import {
   InlineCode,
   Link,
 } from '@leafygreen-ui/typography';
+import { Preview } from '@storybook/react';
 
-const H4 = ({ children, ...rest }) => (
-  <Subtitle as="h4" {...rest}>
-    <strong>{children}</strong>
-  </Subtitle>
-);
-
-const H5 = ({ children, ...rest }) => (
-  <Body {...rest}>
-    <strong>{children}</strong>
-  </Body>
-);
-
-export const argTypes = {
-  className: {
-    description: '`className` prop passed to the component',
-    control: 'text',
-  },
-};
-
-export const parameters = {
+const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
+  argTypes: {
+    // By default we set specific argTypes to `control: none`
+    ...storybookExcludedArgTypes,
+  },
   controls: {
+    exclude: [...storybookExcludedControlParams],
     expanded: true,
     matchers: {
       color: /.*(c|C)olor$/,
@@ -58,14 +48,21 @@ export const parameters = {
       h1: H1,
       h2: H2,
       h3: H3,
-      h4: H4,
-      h5: H5,
+      h4: Subtitle,
+      h5: Body,
       p: Body,
       a: Link,
       code: InlineCode,
     },
+    source: { type: 'code' },
   },
 };
 
-addDecorator(ReactStrictMode);
-addDecorator(ComponentPreview);
+const decorators = [ReactStrictMode, ComponentPreview];
+
+const preview: Preview = {
+  parameters,
+  decorators,
+};
+
+export default preview;

@@ -1,1 +1,1 @@
-export { default } from './FormFooter';
+export { default, type FormFooterProps } from './FormFooter';

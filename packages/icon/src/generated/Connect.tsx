@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 47daefd99b44454c0a4851b3554efa94
+ * @checksum f9a07751313b09bb4e39b8aebde002ac
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface ConnectProps extends LGGlyph.ComponentProps {}
-
 const Connect = ({
   className,
   size = 16,
@@ -58,7 +57,6 @@ const Connect = ({
     </svg>
   );
 };
-
 Connect.displayName = 'Connect';
 Connect.isGlyph = true;
 Connect.propTypes = {

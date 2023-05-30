@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 0ca87ef739979190a5931cc517b56fe3
+ * @checksum 8f9e4e43be96b5ad2bdc0f5638d812ea
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface FullScreenEnterProps extends LGGlyph.ComponentProps {}
-
 const FullScreenEnter = ({
   className,
   size = 16,
@@ -68,7 +67,6 @@ const FullScreenEnter = ({
     </svg>
   );
 };
-
 FullScreenEnter.displayName = 'FullScreenEnter';
 FullScreenEnter.isGlyph = true;
 FullScreenEnter.propTypes = {

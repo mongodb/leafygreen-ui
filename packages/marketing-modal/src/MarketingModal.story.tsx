@@ -1,15 +1,23 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import { ComponentStory, Meta } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 import { CloseIconColor } from '@leafygreen-ui/modal';
 
-import MarketingModal, { BlobPosition, GraphicStyle } from '.';
+import MarketingModal, {
+  BlobPosition,
+  GraphicStyle,
+  MarketingModalProps,
+} from '.';
 
-export default {
+const meta: StoryMetaType<typeof MarketingModal> = {
   title: 'Components/Modals/Marketing Modal',
   component: MarketingModal,
   args: {
@@ -42,13 +50,21 @@ export default {
     darkMode: storybookArgTypes.darkMode,
   },
   parameters: {
+    default: 'Basic',
     controls: {
-      exclude: ['open', 'onClose', 'graphic', 'onButtonClick', 'onLinkClick'],
+      exclude: [
+        ...storybookExcludedControlParams,
+        'open',
+        'graphic',
+        'onButtonClick',
+        'onLinkClick',
+      ],
     },
   },
-} as Meta<typeof MarketingModal>;
+};
+export default meta;
 
-const ControlledTemplate: ComponentStory<typeof MarketingModal> = ({
+const ControlledTemplate: StoryFn<MarketingModalProps> = ({
   graphicStyle,
   darkMode,
   ...args

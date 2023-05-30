@@ -1,15 +1,15 @@
 import React from 'react';
-import { ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
-import { storybookArgTypes, Theme } from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMetaType, Theme } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
 import { graphics } from '../example-graphics';
 
-import { FeaturesEmptyState } from '.';
+import { FeaturesEmptyState, FeaturesEmptyStateProps } from '.';
 
-export default {
+const meta: StoryMetaType<typeof FeaturesEmptyState> = {
   title: 'Components/EmptyState/Features',
   component: FeaturesEmptyState,
   args: {
@@ -24,13 +24,12 @@ export default {
     darkMode: storybookArgTypes.darkMode,
   },
   parameters: {
-    controls: {
-      exclude: ['className'],
-    },
+    default: null,
   },
 };
+export default meta;
 
-const Template: ComponentStory<typeof FeaturesEmptyState> = props => {
+const Template: StoryFn<FeaturesEmptyStateProps> = props => {
   // eslint-disable-next-line react/prop-types
   const theme = props.darkMode ? Theme.Dark : Theme.Light;
 

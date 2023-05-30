@@ -21,7 +21,6 @@ export default StoryMeta({
     align: Align.Bottom,
     justify: Justify.End,
     menuItems: [
-      // eslint-disable-next-line no-console
       <MenuItem key="0" onClick={(event: MouseEvent) => console.log(event)}>
         Menu Item
       </MenuItem>,
