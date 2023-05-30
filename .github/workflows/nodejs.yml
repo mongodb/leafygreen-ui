@@ -170,7 +170,6 @@ jobs:
     name: Chromatic
     runs-on: ubuntu-latest
     needs: [install, build]
-    if: ${{ false }} # TODO: re-enable when we're ready for Chromatic
     steps:
       - name: Checkout
         uses: actions/checkout@v2
