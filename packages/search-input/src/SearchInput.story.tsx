@@ -23,17 +23,23 @@ import {
 const meta: StoryMetaType<typeof SearchInput> = {
   title: 'Components/SearchInput',
   component: SearchInput,
+  parameters: {
+    default: 'LiveSearch',
+    controls: {
+      exclude: [...storybookExcludedControlParams, 'value', 'id', 'showWedge'],
+    },
+    generate: {
+      props: {
+        darkMode: [false, true],
+        disabled: [false, true],
+      },
+    },
+  },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
     state: { control: 'select', options: Object.values(State) },
     placeholder: { control: 'text' },
     disabled: { control: 'boolean' },
-  },
-  parameters: {
-    default: 'Basic',
-    controls: {
-      exclude: [...storybookExcludedControlParams, 'value', 'id', 'showWedge'],
-    },
   },
 };
 export default meta;
@@ -281,8 +287,13 @@ export const LiveSearch: StoryFn<SearchInputProps> = (
     </div>
   );
 };
+LiveSearch.parameters = {
+  chromatic: { disableSnapshot: true },
+};
 LiveSearch.argTypes = {
   onChange: { action: 'Change' },
   onSubmit: { action: 'Submit' },
   onClick: { action: 'Click' },
 };
+
+export const Generated = () => {};

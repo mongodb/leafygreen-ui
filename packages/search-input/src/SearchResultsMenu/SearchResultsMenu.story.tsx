@@ -1,19 +1,40 @@
+/* eslint-disable react/display-name */
 import React, { useEffect, useState } from 'react';
+
+import { StoryMetaType } from '@leafygreen-ui/lib';
 
 import { SearchResult } from '../SearchResult';
 
 import { SearchResultsMenu } from '.';
 
-export default {
+const meta: StoryMetaType<typeof SearchResultsMenu> = {
   title: 'Components/SearchInput/Menu',
   component: SearchResultsMenu,
   parameters: {
     default: null,
-    chromatic: { disableSnapshot: true },
+    generate: {
+      props: {
+        darkMode: [false, true],
+      },
+      args: {
+        open: true,
+      },
+      decorator: Instance => {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const divRef = React.useRef<HTMLDivElement>(null);
+        return (
+          <>
+            <div ref={divRef}>SearchInput Placeholder</div>
+            <Instance refEl={divRef} />
+          </>
+        );
+      },
+    },
   },
 };
+export default meta;
 
-const Template = () => {
+export const Demo = () => {
   const [open, setOpen] = useState(false);
   useEffect(() => {
     setOpen(true);
@@ -34,5 +55,6 @@ const Template = () => {
     </>
   );
 };
-
-export const Basic = Template.bind({});
+Demo.parameters = {
+  chromatic: { disableSnapshot: true },
+};
