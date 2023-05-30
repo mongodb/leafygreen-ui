@@ -136,7 +136,7 @@ export const WithCurrentPageOptions: StoryFn<PaginationProps> = args => {
     };
 
   return (
-    <Template
+    <Pagination
       {...args}
       currentPage={currentPage}
       onCurrentPageOptionChange={handleCurrentPageChange}
