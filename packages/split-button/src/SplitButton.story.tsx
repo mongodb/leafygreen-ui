@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { MouseEvent, useRef } from 'react';
 
 import { Size } from '@leafygreen-ui/button';
@@ -93,9 +94,7 @@ const Template = (props: SplitButtonProps) => {
       ref={splitButtonRef}
       // @ts-expect-error
       leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
-      // eslint-disable-next-line no-console
       onClick={event => console.log('onClick', event)}
-      // eslint-disable-next-line no-console
       onChange={event => console.log('onChange', event)}
     />
   );
