@@ -189,6 +189,27 @@ generate: {
 }
 ```
 
+### Defining multiple exclude cases
+
+You can define multiple exclude cases in one rule by setting the value to an array
+
+```tsx
+generate: {
+  component: Toast,
+  props: {
+    progress: [0, 0.5, 1],
+    variant: ['progress', 'success', 'note', 'info']
+  },
+  excludeCombinations: [
+    // This rule excludes all combinations of progress & variant defined
+    {
+      progress: [0.5, 1],
+      variant: ['success', 'note', 'info']
+    },
+  ],
+}
+```
+
 ### Defining multiple combinations
 
 You can exclude multiple combinations of props from being tested by adding them to the array:
@@ -201,7 +222,7 @@ generate: {
     [
       'description',
       {
-        label: undefined,
+        label: [undefined, null, ''],
       },
     ],
     {

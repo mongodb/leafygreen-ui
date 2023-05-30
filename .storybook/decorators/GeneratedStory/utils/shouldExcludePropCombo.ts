@@ -1,5 +1,8 @@
 import { entries, has, isEqual, isUndefined, keys } from 'lodash';
-import { GeneratedStoryConfig } from 'packages/lib/src/storybook/GeneratedStoryDecorator.types';
+import {
+  type ExtendedComponentProps,
+  type GeneratedStoryConfig,
+} from '@leafygreen-ui/lib';
 
 export function shouldExcludePropCombo<T extends React.ComponentType<any>>({
   propName,
@@ -59,17 +62,19 @@ export function shouldExcludePropCombo<T extends React.ComponentType<any>>({
         // matches the prop:value defined in `props`
         // (or the current prop & val)
         if (checkProp === propName) {
-          return entries(conditions).every(([name, value]) => {
-            return has(props, name) && areValuesEqual(props[name], value); // The condition is in previously defined props
+          return entries(conditions).every(([name, conditionValue]) => {
+            // The condition is in previously defined props
+            return isConditionInProps(props, name, conditionValue);
           });
         } else if (
           keys(props).includes(checkProp as string) &&
           !isUndefined(props[checkProp])
         ) {
           return entries(conditions).every(
-            ([name, value]) =>
-              (name === propName && areValuesEqual(val, value)) ||
-              (has(props, name) && areValuesEqual(props[name], value)), // the condition is matched in the current prop or previous props
+            ([name, conditionValue]) =>
+              (name === propName && areValuesEqual(val, conditionValue)) ||
+              // the condition is matched in the current prop or previous props
+              isConditionInProps(props, name, conditionValue),
           );
         }
       } else {
@@ -83,13 +88,12 @@ export function shouldExcludePropCombo<T extends React.ComponentType<any>>({
 
       // If the exclude rule has the current prop defined,
       // and the current value matches the excluded value
-      if (has(rule, propName) && areValuesEqual(rule[propName], val)) {
+      if (has(rule, propName) && doValuesMatch(val, rule[propName])) {
         // Check that every other rule is satisfied by previous props
 
-        return entries(rule).every(([name, value]) => {
+        return entries(rule).every(([name, conditionValue]) => {
           return (
-            name === propName ||
-            (has(props, name) && areValuesEqual(props[name], value))
+            name === propName || isConditionInProps(props, name, conditionValue)
           );
         });
       }
@@ -103,7 +107,11 @@ export function shouldExcludePropCombo<T extends React.ComponentType<any>>({
  * @returns true if both elements are JSX objects with the same display name.
  * Otherwise returns _.isEqual
  */
-function areValuesEqual(v1: any, v2: any): boolean {
+function areValuesEqual<T extends React.ElementType<any>>(
+  v1: ExtendedComponentProps<T>,
+  v2: ExtendedComponentProps<T>,
+): boolean {
+  // Are both values react components?
   if (
     typeof v1 === 'object' &&
     typeof v2 === 'object' &&
@@ -114,4 +122,23 @@ function areValuesEqual(v1: any, v2: any): boolean {
   }
 
   return isEqual(v1, v2);
+}
+
+function doValuesMatch<T extends React.ElementType<any>>(
+  val1: ExtendedComponentProps<T>,
+  val2: ExtendedComponentProps<T> | Array<ExtendedComponentProps<T>>,
+): boolean {
+  if (Array.isArray(val2)) {
+    return val2.some(valX => areValuesEqual(val1, valX));
+  } else {
+    return areValuesEqual(val1, val2);
+  }
+}
+
+function isConditionInProps<T extends React.ElementType<any>>(
+  props: Record<string, any>,
+  key: string,
+  value: ExtendedComponentProps<T> | Array<ExtendedComponentProps<T>>,
+): boolean {
+  return has(props, key) && doValuesMatch(props[key], value);
 }

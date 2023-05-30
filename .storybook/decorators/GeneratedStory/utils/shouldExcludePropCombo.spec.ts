@@ -150,6 +150,56 @@ describe('storybook/shouldExcludePropCombo', () => {
         ).toBeFalsy();
       });
     });
+
+    describe('array of excluded values', () => {
+      const exclude = [
+        [
+          'foo',
+          {
+            propA: ['lorem', 'ipsum'],
+          },
+        ],
+      ];
+
+      test('A condition matches', () => {
+        expect(
+          shouldExcludePropCombo({
+            exclude,
+            propName: 'foo',
+            val: 'someVal',
+            props: {
+              propA: 'lorem',
+            },
+          }),
+        ).toBeTruthy();
+      });
+
+      test('Another condition matches', () => {
+        expect(
+          shouldExcludePropCombo({
+            exclude,
+            propName: 'foo',
+            val: 'someVal',
+            props: {
+              propA: 'ipsum',
+            },
+          }),
+        ).toBeTruthy();
+      });
+
+      test('Neither condition matches', () => {
+        expect(
+          shouldExcludePropCombo({
+            exclude,
+            propName: 'foo',
+            val: 'someVal',
+            props: {
+              propA: 'foobar',
+            },
+          }),
+        ).toBeFalsy();
+      });
+    });
   });
 
   describe('Specific combinations', () => {
@@ -215,6 +265,58 @@ describe('storybook/shouldExcludePropCombo', () => {
           },
         }),
       ).toBeFalsy();
+    });
+
+    describe('Array of excluded values', () => {
+      const exclude: GeneratedStoryConfig<any>['excludeCombinations'] = [
+        {
+          propA: ['foo', 'bar'],
+          propB: 'ipsum',
+          propC: 'dolor',
+        },
+      ];
+
+      test('Case A', () => {
+        expect(
+          shouldExcludePropCombo<any>({
+            exclude,
+            propName: 'propA',
+            val: 'foo',
+            props: {
+              propB: 'ipsum',
+              propC: 'dolor',
+            },
+          }),
+        ).toBeTruthy();
+      });
+
+      test('Case B', () => {
+        expect(
+          shouldExcludePropCombo<any>({
+            exclude,
+            propName: 'propA',
+            val: 'bar',
+            props: {
+              propB: 'ipsum',
+              propC: 'dolor',
+            },
+          }),
+        ).toBeTruthy();
+      });
+
+      test('not satisfied', () => {
+        expect(
+          shouldExcludePropCombo<any>({
+            exclude,
+            propName: 'propC',
+            val: 'something else',
+            props: {
+              propA: 'lorem',
+              propB: 'ipsum',
+            },
+          }),
+        ).toBeFalsy();
+      });
     });
   });
 });

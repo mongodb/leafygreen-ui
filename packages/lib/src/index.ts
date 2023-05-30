@@ -9,6 +9,8 @@ export { validateChildren } from './validateChildren';
 export { createSyntheticEvent } from './createSyntheticEvent';
 
 export {
+  type ExtendedComponentProps,
+  type GeneratedStoryConfig,
   type GeneratedStoryFn,
   StoryMeta,
   type StoryMetaType,
