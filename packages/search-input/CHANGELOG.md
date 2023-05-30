@@ -1,5 +1,13 @@
 # @leafygreen-ui/search-input
 
+## 2.0.6
+
+### Patch Changes
+
+- f3b3b2fa5: Allow onKeyDown prop to propagate to the user
+- Updated dependencies [6a3f03fd2]
+  - @leafygreen-ui/typography@16.4.1
+
 ## 2.0.5
 
 ### Patch Changes
