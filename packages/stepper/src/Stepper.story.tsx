@@ -1,6 +1,8 @@
+/* eslint-disable react/display-name */
 import React from 'react';
 import { StoryFn } from '@storybook/react';
 
+import { css } from '@leafygreen-ui/emotion';
 import {
   storybookExcludedControlParams,
   StoryMetaType,
@@ -8,14 +10,42 @@ import {
 
 import Stepper, { Step, StepperProps } from '.';
 
+const wrapperStyles = css`
+  width: 40vw;
+`;
+
 const meta: StoryMetaType<typeof Stepper> = {
   title: 'Components/Stepper',
   component: Stepper,
   parameters: {
-    default: 'Basic',
+    default: 'LiveExample',
     controls: {
       exclude: [...storybookExcludedControlParams, 'children'],
     },
+    generate: {
+      props: {
+        darkMode: [false, true],
+        currentStep: [1, 4, 7],
+        maxDisplayedSteps: [3, 7],
+        completedStepsShown: [3, 5],
+      },
+      decorator: Instance => (
+        <div className={wrapperStyles}>
+          <Instance />
+        </div>
+      ),
+    },
+  },
+  args: {
+    children: [
+      <div key="Overview">Overview</div>,
+      <Step key="Configuration">Configuration</Step>,
+      <Step key="Update">Update</Step>,
+      <Step key="Install">Install</Step>,
+      <Step key="Billing">Billing</Step>,
+      <Step key="Address">Address</Step>,
+      <Step key="Confirmation">Confirmation</Step>,
+    ],
   },
   argTypes: {
     currentStep: {
@@ -43,22 +73,14 @@ const meta: StoryMetaType<typeof Stepper> = {
 };
 export default meta;
 
-const Template: StoryFn<StepperProps> = (args: StepperProps) => (
+export const LiveExample: StoryFn<StepperProps> = (args: StepperProps) => (
   <Stepper {...args} />
 );
 
-export const Basic = Template.bind({});
-Basic.args = {
+LiveExample.args = {
   currentStep: 1,
   maxDisplayedSteps: 5,
   completedStepsShown: 3,
-  children: [
-    <div key="Overview">Overview</div>,
-    <Step key="Configuration">Configuration</Step>,
-    <Step key="Update">Update</Step>,
-    <Step key="Install">Install</Step>,
-    <Step key="Billing">Billing</Step>,
-    <Step key="Address">Address</Step>,
-    <Step key="Confirmation">Confirmation</Step>,
-  ],
 };
+
+export const Generated = () => {};
