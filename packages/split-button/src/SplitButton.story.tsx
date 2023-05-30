@@ -77,7 +77,6 @@ const meta: StoryMetaType<typeof SplitButton> = {
         'open',
         'onTriggerClick',
         'triggerAriaLabel',
-        'onChange',
       ],
     },
   },
