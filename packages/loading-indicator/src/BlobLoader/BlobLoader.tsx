@@ -28,7 +28,10 @@ const BlobLoader = ({
     <div className={cx(rootStyles, className)} {...rest}>
       <Player autoplay loop src={animationJson} style={blobStyles} />
       {description && (
-        <Body color={descriptionThemeColor[theme]} baseFontSize={baseFontSize}>
+        <Body
+          className={descriptionThemeColor[theme]}
+          baseFontSize={baseFontSize}
+        >
           {description}
         </Body>
       )}

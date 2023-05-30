@@ -58,7 +58,10 @@ const Spinner = ({
         }}
       />
       {description && (
-        <Body color={descriptionThemeColor[theme]} baseFontSize={baseFontSize}>
+        <Body
+          className={descriptionThemeColor[theme]}
+          baseFontSize={baseFontSize}
+        >
           {description}
         </Body>
       )}
