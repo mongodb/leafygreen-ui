@@ -11,6 +11,7 @@
 
 import React, { ReactElement } from 'react';
 import { Decorator, StoryContext, StoryFn } from '@storybook/react';
+// import isChromatic from 'chromatic/isChromatic';
 import { Args } from '@storybook/csf';
 import { cx } from '@leafygreen-ui/emotion';
 import { Error } from '@leafygreen-ui/typography';
@@ -19,8 +20,11 @@ import { entries } from 'lodash';
 import { shouldExcludePropCombo } from './utils/shouldExcludePropCombo';
 import {
   combinationClassName,
+  combinationNameStylesCI,
   combinationStyles,
+  combinationStylesCI,
   generatedStoryWrapper,
+  instanceClassName,
   instanceStyles,
   propSectionStyles,
 } from './GeneratedStory.styles';
@@ -109,6 +113,8 @@ function PropCombinations<T extends React.ComponentType<any>>({
   let comboCount = 0;
 
   const AllCombinations = RecursiveCombinations({}, [...variables]);
+
+  // Not sure what's going on here, but we need this timeout
   setTimeout(() => {
     comboCount &&
       console.log(
@@ -125,7 +131,10 @@ function PropCombinations<T extends React.ComponentType<any>>({
       comboCount += 1;
       return decorator(
         (xArgs: typeof args) => (
-          <div className={instanceStyles}>
+          <div
+            className={cx(instanceClassName, instanceStyles)}
+            data-props={JSON.stringify(props)}
+          >
             {React.createElement(component, { ...args, ...xArgs, ...props })}
           </div>
         ),
@@ -138,7 +147,7 @@ function PropCombinations<T extends React.ComponentType<any>>({
         return (
           <div
             id={`${propName}`}
-            data-value-count={propValues.length}
+            data-options-count={propValues.length}
             className={propSectionStyles}
           >
             {propValues.map(val =>
@@ -182,9 +191,15 @@ function PropCombinations<T extends React.ComponentType<any>>({
       <details
         open
         id={`${propName}-${valStr(val)}`}
-        className={cx(combinationClassName, combinationStyles)}
+        className={cx(combinationClassName, combinationStyles, {
+          [combinationStylesCI]: isChromatic(),
+        })}
       >
-        <summary>
+        <summary
+          className={cx({
+            [combinationNameStylesCI]: isChromatic(),
+          })}
+        >
           {propName} = "{`${valStr(val)}`}"
         </summary>
         {RecursiveCombinations({ [propName]: val, ...props }, [...vars])}

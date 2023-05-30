@@ -49,6 +49,15 @@ export const combinationStyles = css`
   }
 `;
 
+export const combinationStylesCI = css`
+  padding-inline: 0;
+  border: none;
+`;
+
+export const combinationNameStylesCI = css`
+  display: none;
+`;
+
 export const instanceStyles = css`
   padding: 8px ${indent}px 0;
 `;
