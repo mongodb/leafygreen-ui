@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 56f2e2a9e17484d58ae3ae09ae8de94f
+ * @checksum 47367ae51f6bdc96fce8283d00f93331
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface UpDownCaretsProps extends LGGlyph.ComponentProps {}
-
 const UpDownCarets = ({
   className,
   size = 16,
@@ -65,7 +64,6 @@ const UpDownCarets = ({
     </svg>
   );
 };
-
 UpDownCarets.displayName = 'UpDownCarets';
 UpDownCarets.isGlyph = true;
 UpDownCarets.propTypes = {

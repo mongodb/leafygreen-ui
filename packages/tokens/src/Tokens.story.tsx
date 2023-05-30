@@ -3,6 +3,7 @@ import React from 'react';
 import { startCase } from 'lodash';
 
 import { css } from '@leafygreen-ui/emotion';
+import { StoryMetaType } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 import { Mode } from './mode';
@@ -15,16 +16,12 @@ import {
   typeScales,
 } from '.';
 
-export default {
+const meta: StoryMetaType<any> = {
   title: 'Components/Tokens',
-  argTypes: {
-    className: {
-      table: {
-        disable: true,
-      },
-    },
-  },
+  component: null,
+  parameters: { default: 'Spacing' },
 };
+export default meta;
 
 type HoverRingColor = keyof typeof hoverRing.dark;
 type TypeScale = keyof typeof typeScales;

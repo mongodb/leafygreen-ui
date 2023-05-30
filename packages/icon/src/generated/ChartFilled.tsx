@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 9050d283e6e08bd8e0cd0c6827b2d0f4
+ * @checksum 30f7ecf47636b174dced98ae9e591612
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface ChartFilledProps extends LGGlyph.ComponentProps {}
-
 const ChartFilled = ({
   className,
   size = 16,
@@ -58,7 +57,6 @@ const ChartFilled = ({
     </svg>
   );
 };
-
 ChartFilled.displayName = 'ChartFilled';
 ChartFilled.isGlyph = true;
 ChartFilled.propTypes = {

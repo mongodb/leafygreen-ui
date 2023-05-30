@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 0694ed7e24701b2b3421b8f13640deca
+ * @checksum 084c8d5b738cc0a80c840ab307865877
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface UnsortedProps extends LGGlyph.ComponentProps {}
-
 const Unsorted = ({
   className,
   size = 16,
@@ -68,7 +67,6 @@ const Unsorted = ({
     </svg>
   );
 };
-
 Unsorted.displayName = 'Unsorted';
 Unsorted.isGlyph = true;
 Unsorted.propTypes = {

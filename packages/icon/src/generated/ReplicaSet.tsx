@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 2e9e74c62a0933420cae48f7674356d9
+ * @checksum 83784fe4d41bd5ebb69844fb9c9ff55c
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface ReplicaSetProps extends LGGlyph.ComponentProps {}
-
 const ReplicaSet = ({
   className,
   size = 16,
@@ -58,7 +57,6 @@ const ReplicaSet = ({
     </svg>
   );
 };
-
 ReplicaSet.displayName = 'ReplicaSet';
 ReplicaSet.isGlyph = true;
 ReplicaSet.propTypes = {

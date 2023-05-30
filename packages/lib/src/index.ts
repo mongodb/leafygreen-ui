@@ -10,7 +10,9 @@ export { createSyntheticEvent } from './createSyntheticEvent';
 
 export {
   StoryMeta,
+  type StoryMetaType,
   storybookArgTypes,
+  storybookExcludedArgTypes,
   storybookExcludedControlParams,
   IntrinsicElements,
 } from './storybook';

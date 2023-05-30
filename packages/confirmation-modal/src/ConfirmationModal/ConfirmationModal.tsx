@@ -10,6 +10,7 @@ import { palette } from '@leafygreen-ui/palette';
 import TextInput from '@leafygreen-ui/text-input';
 import { H3 } from '@leafygreen-ui/typography';
 
+import { ConfirmationModalProps, Variant } from './ConfirmationModal.types';
 import {
   baseModalStyle,
   buttonStyle,
@@ -21,7 +22,6 @@ import {
   warningIconStyle,
   warningIconThemeStyle,
 } from './styles';
-import { ConfirmationModalProps, Variant } from './types';
 
 export const ConfirmationModal = ({
   children,

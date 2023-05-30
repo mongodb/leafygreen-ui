@@ -1,5 +1,8 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import {
+  queryByRole as globalQueryByRole,
+  render,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
@@ -76,40 +79,38 @@ describe('packages/table/HeaderCell', () => {
       const sortIconButton = getByTestId('lg-table-sort-icon-button');
       expect(sortIconButton).toBeInTheDocument();
     });
+
     test('initial state of sort icon is unsorted', async () => {
       const { queryByLabelText } = render(<HeaderCellWithHook enableSorting />);
       const sortIcon = queryByLabelText('Unsorted Icon');
       expect(sortIcon).toBeInTheDocument();
     });
+
     test('clicking sort icon switches to sort descending', async () => {
-      const { getByTestId, queryByLabelText } = render(
-        <HeaderCellWithHook enableSorting />,
-      );
+      const { getByTestId } = render(<HeaderCellWithHook enableSorting />);
       const sortIconButton = getByTestId('lg-table-sort-icon-button');
       userEvent.click(sortIconButton);
-      const sortIcon = queryByLabelText('Sort Descending Icon');
-      expect(sortIcon).toBeInTheDocument();
+      const sortIcon = globalQueryByRole(sortIconButton, 'img');
+      expect(sortIcon).toHaveAttribute('aria-label', 'Sort Descending Icon');
     });
+
     test('clicking sort icon twice switches to sort ascending', async () => {
-      const { getByTestId, queryByLabelText } = render(
-        <HeaderCellWithHook enableSorting />,
-      );
+      const { getByTestId } = render(<HeaderCellWithHook enableSorting />);
       const sortIconButton = getByTestId('lg-table-sort-icon-button');
       userEvent.click(sortIconButton);
       userEvent.click(sortIconButton);
-      const sortIcon = queryByLabelText('Sort Ascending Icon');
-      expect(sortIcon).toBeInTheDocument();
+      const sortIcon = globalQueryByRole(sortIconButton, 'img');
+      expect(sortIcon).toHaveAttribute('aria-label', 'Sort Ascending Icon');
     });
+
     test('clicking sort icon three times reverts to unsorted icon', async () => {
-      const { getByTestId, queryByLabelText } = render(
-        <HeaderCellWithHook enableSorting />,
-      );
+      const { getByTestId } = render(<HeaderCellWithHook enableSorting />);
       const sortIconButton = getByTestId('lg-table-sort-icon-button');
       userEvent.click(sortIconButton);
       userEvent.click(sortIconButton);
       userEvent.click(sortIconButton);
-      const sortIcon = queryByLabelText('Unsorted Icon');
-      expect(sortIcon).toBeInTheDocument();
+      const sortIcon = globalQueryByRole(sortIconButton, 'img');
+      expect(sortIcon).toHaveAttribute('aria-label', 'Unsorted Icon');
     });
   });
   describe('width prop', () => {

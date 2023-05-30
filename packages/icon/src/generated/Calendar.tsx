@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 9ba718ebb47ad4723a245706d2b6f28f
+ * @checksum e0c613973089c242392aabb761dfd1c9
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface CalendarProps extends LGGlyph.ComponentProps {}
-
 const Calendar = ({
   className,
   size = 16,
@@ -58,7 +57,6 @@ const Calendar = ({
     </svg>
   );
 };
-
 Calendar.displayName = 'Calendar';
 Calendar.isGlyph = true;
 Calendar.propTypes = {

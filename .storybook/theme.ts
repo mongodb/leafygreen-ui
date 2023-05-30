@@ -3,8 +3,6 @@ import { fontFamilies } from '../packages/tokens';
 import { palette } from '../packages/palette';
 
 export default create({
-  name: 'leafygreen',
-
   base: 'light',
 
   brandTitle: 'LeafyGreen UI',
