@@ -13,7 +13,7 @@ export type DisplayOption = typeof DisplayOption[keyof typeof DisplayOption];
 export interface SpinnerProps extends DarkModeProps, HTMLElementProps<'div'> {
   /**
    * Determines the size or orientation of the spinner and description text
-   * @example 'defaultHorizontal'
+   * @default 'default-vertical'
    */
   displayOption?: DisplayOption;
 

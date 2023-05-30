@@ -23,7 +23,7 @@ import { DisplayOption, SpinnerProps } from './Spinner.types';
  */
 const Spinner = ({
   baseFontSize: baseFontSizeProp,
-  displayOption = 'default',
+  displayOption = DisplayOption.DefaultVertical,
   description,
   sizeOverride,
   darkMode: darkModeProp,
