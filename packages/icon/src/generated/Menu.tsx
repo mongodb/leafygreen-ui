@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum f975e0ff6fa98b9fbcc20b17bb002f7d
+ * @checksum dfd1515c31bd60395a705c63a27f6a0a
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface MenuProps extends LGGlyph.ComponentProps {}
-
 const Menu = ({
   className,
   size = 16,
@@ -64,7 +63,6 @@ const Menu = ({
     </svg>
   );
 };
-
 Menu.displayName = 'Menu';
 Menu.isGlyph = true;
 Menu.propTypes = {

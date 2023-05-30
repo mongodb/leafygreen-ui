@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum f2ad1fae7ac7d3c587d1b7386392267c
+ * @checksum 0b2e3de27e149d7941e576d89b0ad7a3
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface CaretLeftProps extends LGGlyph.ComponentProps {}
-
 const CaretLeft = ({
   className,
   size = 16,
@@ -56,7 +55,6 @@ const CaretLeft = ({
     </svg>
   );
 };
-
 CaretLeft.displayName = 'CaretLeft';
 CaretLeft.isGlyph = true;
 CaretLeft.propTypes = {

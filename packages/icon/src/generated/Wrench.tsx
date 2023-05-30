@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 62bc6903cfa98cb6cc6ca845c3672566
+ * @checksum 79c85f521e5247d21da47929231b97a6
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface WrenchProps extends LGGlyph.ComponentProps {}
-
 const Wrench = ({
   className,
   size = 16,
@@ -58,7 +57,6 @@ const Wrench = ({
     </svg>
   );
 };
-
 Wrench.displayName = 'Wrench';
 Wrench.isGlyph = true;
 Wrench.propTypes = {

@@ -1,5 +1,5 @@
 export { useDarkMode, useDarkModeContext } from './DarkModeContext';
-export { default } from './LeafyGreenContext';
+export { default, type LeafyGreenProviderProps } from './LeafyGreenContext';
 export {
   PopoverContext,
   default as PopoverProvider,

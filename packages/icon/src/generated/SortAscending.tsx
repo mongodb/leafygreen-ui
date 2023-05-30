@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum fac8d9e38360c15509a608fc22a1ec92
+ * @checksum f8aa4f74401fc96c074d7cdb93b4c94c
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface SortAscendingProps extends LGGlyph.ComponentProps {}
-
 const SortAscending = ({
   className,
   size = 16,
@@ -68,7 +67,6 @@ const SortAscending = ({
     </svg>
   );
 };
-
 SortAscending.displayName = 'SortAscending';
 SortAscending.isGlyph = true;
 SortAscending.propTypes = {

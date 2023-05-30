@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 30ec545869092aa4f9d9b3c7fda45aa7
+ * @checksum 3af4a0b3992c7dde4c156efa6a4d2919
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface ClockProps extends LGGlyph.ComponentProps {}
-
 const Clock = ({
   className,
   size = 16,
@@ -58,7 +57,6 @@ const Clock = ({
     </svg>
   );
 };
-
 Clock.displayName = 'Clock';
 Clock.isGlyph = true;
 Clock.propTypes = {

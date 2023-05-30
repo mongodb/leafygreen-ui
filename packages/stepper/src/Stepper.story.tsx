@@ -1,17 +1,20 @@
 import React from 'react';
-import { ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
-import { StoryMeta } from '@leafygreen-ui/lib';
+import {
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import Stepper, { Step, StepperProps } from '.';
 
-export default StoryMeta({
+const meta: StoryMetaType<typeof Stepper> = {
   title: 'Components/Stepper',
   component: Stepper,
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: ['children'],
+      exclude: [...storybookExcludedControlParams, 'children'],
     },
   },
   argTypes: {
@@ -37,9 +40,10 @@ export default StoryMeta({
       },
     },
   },
-});
+};
+export default meta;
 
-const Template: ComponentStory<typeof Stepper> = (args: StepperProps) => (
+const Template: StoryFn<StepperProps> = (args: StepperProps) => (
   <Stepper {...args} />
 );
 

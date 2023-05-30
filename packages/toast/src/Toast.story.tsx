@@ -1,23 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { faker } from '@faker-js/faker';
-import { ComponentStory } from '@storybook/react';
-import { random, range, sample, startCase } from 'lodash';
+import { StoryContext, StoryFn } from '@storybook/react';
+import { range, startCase } from 'lodash';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import { DarkModeProps, StoryMeta } from '@leafygreen-ui/lib';
+import {
+  DarkModeProps,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 import { InlineCode, Label, Link } from '@leafygreen-ui/typography';
 
 import { variantIcons } from './InternalToast/VariantIcon';
 import { makeToast, makeToastStack } from './ToastContext/utils/makeToast';
-import { InternalToast, InternalToastProps } from './InternalToast';
-import { ToastProvider, useToast, Variant } from '.';
+import { InternalToast, type InternalToastProps } from './InternalToast';
+import { ToastProvider, type ToastProviderProps, useToast, Variant } from '.';
 
-export default StoryMeta({
+const meta: StoryMetaType<typeof InternalToast, ToastProviderProps> = {
   title: 'Components/Toast',
   component: InternalToast,
   decorators: [
-    (Story, meta) => (
+    (Story, meta: StoryContext<InternalToastProps & ToastProviderProps>) => (
       <ToastProvider
         initialValue={meta.args.initialValue}
         portalClassName={css`
@@ -33,11 +37,11 @@ export default StoryMeta({
     default: 'Variants',
     controls: {
       exclude: [
+        ...storybookExcludedControlParams,
         'as',
         'title',
         'description',
         'dismissible',
-        'onClose',
         'progress',
         'variant',
       ],
@@ -54,19 +58,23 @@ export default StoryMeta({
   args: {
     darkMode: false,
   },
-});
+};
+export default meta;
 
-export const Basic: ComponentStory<typeof InternalToast> = (
+const SEED = 0;
+faker.seed(SEED);
+
+export const Basic: StoryFn<typeof InternalToast> = (
   props: Partial<InternalToastProps> & DarkModeProps,
 ) => {
   const { pushToast, clearStack } = useToast();
 
   const createRandomToast = () => {
-    const variant = props.variant || sample(Variant);
+    const variant = props.variant || faker.helpers.objectValue(Variant);
 
     pushToast({
       title: `I'm a ${variant} toast`,
-      description: faker.lorem.lines(random(1, 2)),
+      description: faker.lorem.lines(faker.number.int({ min: 1, max: 2 })),
       variant,
       ...props,
     });
@@ -89,7 +97,7 @@ export const Basic: ComponentStory<typeof InternalToast> = (
   );
 };
 
-export const Variants: ComponentStory<typeof InternalToast> = (
+export const Variants: StoryFn<InternalToastProps> = (
   props: Partial<InternalToastProps>,
 ) => {
   const { pushToast, clearStack, getStack, updateToast } = useToast();
@@ -118,7 +126,7 @@ export const Variants: ComponentStory<typeof InternalToast> = (
       >
         {Object.values(Variant).map(variant => {
           const VariantIcon = variantIcons[variant];
-          const randomText = faker.lorem.lines(random(1));
+          const randomText = faker.lorem.lines(1);
 
           return (
             <Button
@@ -185,9 +193,9 @@ export const Variants: ComponentStory<typeof InternalToast> = (
   );
 };
 
-export const WithInitialToasts: ComponentStory<typeof InternalToast> = (
-  props: Partial<InternalToastProps>,
-) => {
+export const WithInitialToasts: StoryFn<
+  InternalToastProps & ToastProviderProps
+> = (props: Partial<InternalToastProps>) => {
   const { pushToast, clearStack } = useToast();
 
   return (
@@ -200,10 +208,12 @@ export const WithInitialToasts: ComponentStory<typeof InternalToast> = (
       <Button
         data-testid="toast-trigger"
         onClick={() => {
-          const variant = props.variant || sample(Variant);
+          const variant = props.variant || faker.helpers.objectValue(Variant);
           pushToast({
             title: `I'm a ${variant} toast`,
-            description: faker.lorem.lines(random(1, 2)),
+            description: faker.lorem.lines(
+              faker.number.int({ min: 1, max: 2 }),
+            ),
             variant,
             ...props,
           });
@@ -217,13 +227,12 @@ export const WithInitialToasts: ComponentStory<typeof InternalToast> = (
 };
 
 WithInitialToasts.args = {
-  // @ts-expect-error
   initialValue: makeToastStack(
     range(6).map(_ =>
       makeToast({
         title: 'Initial toast',
         description: faker.lorem.lines(2),
-        variant: sample(Variant),
+        variant: faker.helpers.objectValue(Variant),
       }),
     ),
   ),

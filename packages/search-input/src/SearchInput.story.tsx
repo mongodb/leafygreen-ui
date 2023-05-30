@@ -1,20 +1,26 @@
 /* eslint-disable no-console */
 import React, { ChangeEventHandler, FormEventHandler, useState } from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 import { kebabCase, startCase } from 'lodash';
 
 import { css } from '@leafygreen-ui/emotion';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
+  StoryMetaType,
 } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { Body, H1 } from '@leafygreen-ui/typography';
 
 import { State } from './SearchInput/SearchInput.types';
-import { SearchInput, SearchResult, SearchResultGroup } from '.';
+import {
+  SearchInput,
+  type SearchInputProps,
+  SearchResult,
+  SearchResultGroup,
+} from '.';
 
-export default {
+const meta: StoryMetaType<typeof SearchInput> = {
   title: 'Components/SearchInput',
   component: SearchInput,
   argTypes: {
@@ -24,19 +30,15 @@ export default {
     disabled: { control: 'boolean' },
   },
   parameters: {
+    default: 'Basic',
     controls: {
-      exclude: [
-        ...storybookExcludedControlParams,
-        'value',
-        'id',
-        'showWedge',
-        'onSubmit',
-      ],
+      exclude: [...storybookExcludedControlParams, 'value', 'id', 'showWedge'],
     },
   },
-} as ComponentMeta<typeof SearchInput>;
+};
+export default meta;
 
-export const Basic: ComponentStory<typeof SearchInput> = props => (
+export const Basic: StoryFn<SearchInputProps> = (props: SearchInputProps) => (
   <SearchInput
     className={css`
       width: 200px;
@@ -45,7 +47,9 @@ export const Basic: ComponentStory<typeof SearchInput> = props => (
   />
 );
 
-export const WithResults: ComponentStory<typeof SearchInput> = props => (
+export const WithResults: StoryFn<SearchInputProps> = (
+  props: SearchInputProps,
+) => (
   <SearchInput
     className={css`
       width: 200px;
@@ -210,7 +214,9 @@ const data = [
   },
 ];
 
-export const LiveSearch: ComponentStory<typeof SearchInput> = args => {
+export const LiveSearch: StoryFn<SearchInputProps> = (
+  args: SearchInputProps,
+) => {
   const [currentPage, setPage] = useState<typeof data[0]>();
   const [searchResults, setSearchResults] = useState(data);
 

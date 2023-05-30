@@ -174,7 +174,7 @@ Pagination.propTypes = {
   itemsPerPageOptions: PropTypes.arrayOf(PropTypes.number),
   itemsPerPage: PropTypes.number,
   // casting to unknown ensures TS does not infer types from these prop-types
-} as unknown;
+};
 
 Pagination.displayName = 'Pagination';
 
