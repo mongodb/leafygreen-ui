@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React, { useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
@@ -9,17 +10,71 @@ import {
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
+import { BaseFontSize, transitionDuration } from '@leafygreen-ui/tokens';
 import { Body, InlineCode, Subtitle } from '@leafygreen-ui/typography';
 
 import Tooltip, { Align, Justify, TooltipProps } from '.';
 
+const longText =
+  '5hhs8d83jj2992h88d9s49ns94jsjsj9456j9djdf95hhs8d83jj2992h88d9s49ns94jsjsj9456j9djdf9';
+
+const instanceWrapperStyle = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40vw;
+  height: 150px;
+`;
+
 const meta: StoryMetaType<typeof Tooltip> = {
   title: 'Components/Tooltip',
   component: Tooltip,
+  parameters: {
+    default: 'LiveExample',
+    controls: {
+      exclude: [...storybookExcludedControlParams, 'trigger'],
+    },
+    chromatic: {
+      delay: transitionDuration.slowest,
+    },
+    generate: {
+      props: {
+        darkMode: [false, true],
+        baseFontSize: Object.values(BaseFontSize),
+        align: Object.values(Align),
+        justify: Object.values(Justify),
+        children: [
+          'I am a tooltip!',
+          longText,
+          // eslint-disable-next-line react/jsx-key
+          <InlineCode>@leafygreen-ui/tooltip</InlineCode>,
+        ],
+      },
+      excludeCombinations: [
+        {
+          justify: Justify.Fit,
+          children: longText,
+        },
+        [
+          'justify',
+          {
+            align: [Align.Left, Align.Right],
+          },
+        ],
+      ],
+      args: {
+        open: true,
+      },
+      decorator: Instance => (
+        <div className={instanceWrapperStyle}>
+          <Instance />
+        </div>
+      ),
+    },
+  },
   args: {
     children: 'I am a tooltip!',
-    trigger: <Button>trigger</Button>,
+    trigger: <Button size="xsmall">trigger</Button>,
     enabled: true,
     usePortal: true,
   },
@@ -32,16 +87,10 @@ const meta: StoryMetaType<typeof Tooltip> = {
       options: Object.values(BaseFontSize),
     },
   },
-  parameters: {
-    default: 'Basic',
-    controls: {
-      exclude: [...storybookExcludedControlParams, 'trigger'],
-    },
-  },
 };
 export default meta;
 
-export const Basic: StoryFn<TooltipProps> = ({
+export const LiveExample: StoryFn<TooltipProps> = ({
   darkMode,
   ...args
 }: TooltipProps) => (
@@ -53,7 +102,7 @@ export const Basic: StoryFn<TooltipProps> = ({
     <Tooltip darkMode={darkMode} {...args} />
   </div>
 );
-Basic.argTypes = {
+LiveExample.argTypes = {
   open: {
     control: 'none',
   },
@@ -64,7 +113,7 @@ export const ControlledWithState = (args: TooltipProps) => {
   return <Tooltip {...args} open={open} setOpen={setOpen} />;
 };
 
-export const WithLeafyGreenChildren = Basic.bind({});
+export const WithLeafyGreenChildren = LiveExample.bind({});
 WithLeafyGreenChildren.args = {
   children: (
     <>
@@ -106,12 +155,6 @@ export const AlignmentTest = ({ darkMode, ...args }: TooltipProps) => {
       )}
     </div>
   );
-};
-
-export const LongText = Basic.bind({});
-LongText.args = {
-  children:
-    '5hhs8d83jj2992h88d9s49ns94jsjsj9456j9djdf95hhs8d83jj2992h88d9s49ns94jsjsj9456j9djdf9',
 };
 
 const scrollableStyle = css`
@@ -220,3 +263,5 @@ ScrollableContainer.argTypes = {
   children: { control: 'none' },
   darkMode: { control: 'none' },
 };
+
+export const Generated = () => {};
