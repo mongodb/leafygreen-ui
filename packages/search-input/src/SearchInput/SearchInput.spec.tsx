@@ -183,6 +183,22 @@ describe('packages/search-input', () => {
       });
     });
 
+    describe('Enter key', () => {
+      test('keydown event is called', () => {
+        const keyDownHandler = jest.fn();
+        const { inputEl } = renderSearchInput({
+          onKeyDown: keyDownHandler,
+        });
+        userEvent.type(inputEl, '{enter}');
+        expect(keyDownHandler).toHaveBeenCalledTimes(1);
+      });
+
+      // https://jira.mongodb.org/browse/LG-3195
+      // https://github.com/silx-kit/h5web/pull/814
+      // This can be done after testing-library's version is bumped to at least 13.5.0
+      test.todo('test multiple keys being pressed at once');
+    });
+
     describe('Clear button', () => {
       test('clears any input', () => {
         const { queryByRole, inputEl } = renderSearchInput({
