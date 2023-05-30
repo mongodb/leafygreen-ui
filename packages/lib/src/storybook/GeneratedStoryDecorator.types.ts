@@ -4,8 +4,8 @@ import { type ComponentProps } from 'react';
 
 import { StoryMetaType, type LeafyGreenProviderProps } from './StoryMeta.types';
 
-type ExtendedComponentProps<T extends React.ElementType> = ComponentProps<T> &
-  LeafyGreenProviderProps;
+export type ExtendedComponentProps<T extends React.ElementType> =
+  ComponentProps<T> & LeafyGreenProviderProps;
 
 type InstanceFn = StoryFn;
 
@@ -75,7 +75,9 @@ export interface GeneratedStoryConfig<T extends React.ElementType> {
     | [
         keyof ExtendedComponentProps<T>,
         Partial<{
-          [key in keyof ExtendedComponentProps<T>]: ExtendedComponentProps<T>[key];
+          [key in keyof ExtendedComponentProps<T>]:
+            | ExtendedComponentProps<T>[key]
+            | Array<ExtendedComponentProps<T>[key]>;
         }>,
       ]
 
@@ -92,7 +94,9 @@ export interface GeneratedStoryConfig<T extends React.ElementType> {
      * ```
      */
     | Partial<{
-        [key in keyof ExtendedComponentProps<T>]: ExtendedComponentProps<T>[key];
+        [key in keyof ExtendedComponentProps<T>]:
+          | ExtendedComponentProps<T>[key]
+          | Array<ExtendedComponentProps<T>[key]>;
       }>
   >;
 }
