@@ -20,7 +20,6 @@ export default StoryMeta({
     variant: Variant.Default,
     align: Align.Bottom,
     justify: Justify.End,
-    spacing: 6,
     menuItems: [
       // eslint-disable-next-line no-console
       <MenuItem key="0" onClick={(event: MouseEvent) => console.log(event)}>

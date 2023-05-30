@@ -64,6 +64,7 @@ export type SelectedMenuProps = Omit<
   | 'justify'
   | 'className'
   | 'refEl'
+  | 'spacing'
 >;
 
 export interface MenuProps extends SelectedMenuProps {

@@ -37,7 +37,6 @@ export const SplitButton = InferredPolymorphic<SplitButtonProps, 'button'>(
       baseFontSize,
       label,
       className,
-      spacing,
       maxHeight,
       adjustOnMutation,
       popoverZIndex,
@@ -87,7 +86,6 @@ export const SplitButton = InferredPolymorphic<SplitButtonProps, 'button'>(
           </Button>
           <Menu
             {...sharedButtonProps}
-            spacing={spacing}
             maxHeight={maxHeight}
             adjustOnMutation={adjustOnMutation}
             popoverZIndex={popoverZIndex}
