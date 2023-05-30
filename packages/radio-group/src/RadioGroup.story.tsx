@@ -24,6 +24,7 @@ const meta: StoryMetaType<typeof RadioGroup> = {
       },
     },
   },
+  args: {
     children: (
       <>
         <Radio checked value="1">
