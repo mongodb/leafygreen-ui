@@ -51,7 +51,7 @@ const triggerElementModeStyles: Record<Theme, string> = {
   `,
 };
 
-interface InlineDefinitionProps extends Partial<TooltipProps> {
+export interface InlineDefinitionProps extends Partial<TooltipProps> {
   /**
    * Trigger element for the definition tooltip
    * @required

@@ -1,8 +1,12 @@
 import React, { useRef, useState } from 'react';
+import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { StoryMeta } from '@leafygreen-ui/lib';
+import {
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 import Popover, { Align, Justify, PopoverProps } from '.';
@@ -71,22 +75,21 @@ const referenceElPositions: { [key: string]: string } = {
   `,
 };
 
-export default StoryMeta({
+const meta: StoryMetaType<typeof Popover> = {
   title: 'Components/Popover',
   component: Popover,
   args: {
     align: Align.Top,
     justify: Justify.Start,
-    usePortal: true,
     spacing: 10,
     adjustOnMutation: false,
+    buttonText: 'Button Text',
   },
   argTypes: {
     buttonText: {
       type: 'string',
       description:
         'Storybook only prop. Used to change the reference button text',
-      defaultValue: 'Button Text',
     },
     refButtonPosition: {
       options: ['centered', 'top', 'right', 'bottom', 'left'],
@@ -100,6 +103,7 @@ export default StoryMeta({
     default: 'Basic',
     controls: {
       exclude: [
+        ...storybookExcludedControlParams,
         'children',
         'active',
         'refEl',
@@ -109,14 +113,15 @@ export default StoryMeta({
       ],
     },
   },
-});
+};
+export default meta;
 
 type PopoverStoryProps = PopoverProps & {
   buttonText: string;
   refButtonPosition: string;
 };
 
-export const Basic = ({
+export const Basic: StoryFn<PopoverStoryProps> = ({
   refButtonPosition,
   buttonText,
   ...args
@@ -140,7 +145,8 @@ export const Basic = ({
   );
 };
 
-export const ScrollableContainer = ({
+// @ts-expect-error - Portal props (usePortal)
+export const ScrollableContainer: StoryFn<PopoverStoryProps> = ({
   refButtonPosition,
   buttonText,
   ...args

@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
+import { StoryFn } from '@storybook/react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
-import { StoryMeta } from '@leafygreen-ui/lib';
+import {
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
-import { SelectProps } from './types';
-import { Option, OptionGroup, Select } from '.';
+import { Option, OptionGroup, Select, type SelectProps } from '.';
 
-export default StoryMeta({
+const meta: StoryMetaType<typeof Select> = {
   title: 'Components/Select',
   component: Select,
   parameters: {
     default: 'Uncontrolled',
     controls: {
-      exclude: ['children'],
+      exclude: [...storybookExcludedControlParams, 'children', 'value'],
     },
   },
   args: {
@@ -48,16 +51,20 @@ export default StoryMeta({
     disabled: { control: 'boolean' },
     label: { control: 'text' },
     description: { control: 'text' },
-    value: { control: 'text' },
     defaultValue: { control: 'text' },
     readOnly: { control: 'boolean' },
     errorMessage: { control: 'text' },
     allowDeselect: { control: 'boolean' },
   },
-});
+};
+export default meta;
 
-export const Uncontrolled = ({ className, ...args }: SelectProps) => (
+export const Uncontrolled: StoryFn<SelectProps> = ({
+  className,
+  ...args
+}: SelectProps) => (
   <Select
+    {...args}
     data-test="hello-world"
     className={cx(
       css`
@@ -66,18 +73,27 @@ export const Uncontrolled = ({ className, ...args }: SelectProps) => (
       `,
       className,
     )}
-    {...args}
   />
 );
-export const Controlled = ({
+
+export const Controlled: StoryFn<SelectProps> = ({
+  className,
   defaultValue,
   readOnly,
   ...args
 }: SelectProps) => {
   const [value, setValue] = useState('cat');
   return (
-    <Uncontrolled
+    <Select
       {...args}
+      data-test="hello-world"
+      className={cx(
+        css`
+          min-width: 200px;
+          max-width: 400px;
+        `,
+        className,
+      )}
       readOnly={false}
       value={value}
       onChange={setValue}
@@ -85,7 +101,7 @@ export const Controlled = ({
   );
 };
 
-export const WithIcons = (args: SelectProps) => <Uncontrolled {...args} />;
+export const WithIcons = Uncontrolled.bind({});
 WithIcons.args = {
   children: [
     <OptionGroup key="Common" label="Common">

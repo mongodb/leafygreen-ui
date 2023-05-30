@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum dd84368562a08504c2736938adecfa19
+ * @checksum 77795a0f8d424d88a3d30ed35afd3eef
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface NotAllowedProps extends LGGlyph.ComponentProps {}
-
 const NotAllowed = ({
   className,
   size = 16,
@@ -58,7 +57,6 @@ const NotAllowed = ({
     </svg>
   );
 };
-
 NotAllowed.displayName = 'NotAllowed';
 NotAllowed.isGlyph = true;
 NotAllowed.propTypes = {

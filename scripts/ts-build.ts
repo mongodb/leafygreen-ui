@@ -24,6 +24,13 @@ const packages = getRelevantPackages(cli.args, { diff, deps });
 
 const packageArgs = packages.map(pkg => `packages/${pkg}`);
 
-spawnSync('tsc', ['--build', 'build.tsconfig.json', ...packageArgs], {
-  stdio: 'inherit',
-});
+const tsc = spawnSync(
+  'tsc',
+  ['--build', 'build.tsconfig.json', ...packageArgs],
+  {
+    stdio: 'inherit',
+  },
+);
+
+// If the tsc build fails, this script should too
+process.exit(tsc.status ?? 1);
