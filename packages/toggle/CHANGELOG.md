@@ -1,5 +1,11 @@
 # @leafygreen-ui/toggle
 
+## 10.0.9
+
+### Patch Changes
+
+- 601faca8b: Fixes bug such that xsmall toggle buttons now render properly in their active state
+
 ## 10.0.8
 
 ### Patch Changes
