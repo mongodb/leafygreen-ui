@@ -6,7 +6,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import { descriptionThemeColor } from '../LoadingIndicators.styles';
+import { descriptionThemeColor } from '../LoadingIndicator.styles';
 
 import animationJson from './animation';
 import { blobStyles, rootStyles } from './BlobLoader.styles';
@@ -28,7 +28,10 @@ const BlobLoader = ({
     <div className={cx(rootStyles, className)} {...rest}>
       <Player autoplay loop src={animationJson} style={blobStyles} />
       {description && (
-        <Body color={descriptionThemeColor[theme]} baseFontSize={baseFontSize}>
+        <Body
+          className={descriptionThemeColor[theme]}
+          baseFontSize={baseFontSize}
+        >
           {description}
         </Body>
       )}

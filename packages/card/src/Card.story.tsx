@@ -1,30 +1,18 @@
 /* eslint react/prop-types: 0 */
 import React from 'react';
-import { Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import { BoxProps } from '@leafygreen-ui/box';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 
-import { Card as LGCard, CardProps } from './Card';
+import Card, { CardProps } from '.';
 
-// This is a workaround to make sure props are correctly imported despite Button using forwardRef
-// https://github.com/storybookjs/storybook/issues/15334
-// eslint-disable-next-line react/jsx-props-no-spreading
-type CardStoryProps = BoxProps<'div', CardProps>;
-
-// TODO: Import below comment directly from component definition.
-/**
- * Cards are used to organize information into consumable chunks.
- */
-export const Card: React.FC<CardStoryProps> = props => (
-  // @ts-ignore-next-line
-  <LGCard {...props} />
-);
-
-export default {
+const meta: StoryMetaType<typeof Card, BoxProps> = {
   title: 'Components/Card',
   component: Card,
-  excludeStories: ['Card'],
+  parameters: {
+    default: 'Basic',
+  },
   args: {
     children: 'This is a card component.',
     darkMode: false,
@@ -36,8 +24,12 @@ export default {
     children: storybookArgTypes.children,
   },
 };
+export default meta;
 
-const Template: Story<CardStoryProps> = ({ as, ...args }) => (
+const Template: StoryFn<CardProps & BoxProps> = ({
+  as,
+  ...args
+}: CardProps & BoxProps) => (
   <Card as={(as ? as : 'div') as keyof JSX.IntrinsicElements} {...args} />
 );
 

@@ -50,6 +50,7 @@ Check out all of the components [in action](https://www.mongodb.design/)!
 - [Segmented Control](https://github.com/mongodb/leafygreen-ui/tree/main/packages/segmented-control)
 - [Select](https://github.com/mongodb/leafygreen-ui/tree/main/packages/select)
 - [Side Nav](https://github.com/mongodb/leafygreen-ui/tree/main/packages/side-nav)
+- [Split Button](https://github.com/mongodb/leafygreen-ui/tree/main/packages/split-button)
 - [Stepper](https://github.com/mongodb/leafygreen-ui/tree/main/packages/stepper)
 - [Table](https://github.com/mongodb/leafygreen-ui/tree/main/packages/table)
 - [Tabs](https://github.com/mongodb/leafygreen-ui/tree/main/packages/tabs)

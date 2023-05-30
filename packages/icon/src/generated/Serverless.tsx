@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 6e6b434cac7df845eeb2f3660d846528
+ * @checksum 5bf2bdea58bdbca3824446a4a52c1b5d
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface ServerlessProps extends LGGlyph.ComponentProps {}
-
 const Serverless = ({
   className,
   size = 16,
@@ -56,7 +55,6 @@ const Serverless = ({
     </svg>
   );
 };
-
 Serverless.displayName = 'Serverless';
 Serverless.isGlyph = true;
 Serverless.propTypes = {

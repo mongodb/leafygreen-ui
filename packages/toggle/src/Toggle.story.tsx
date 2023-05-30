@@ -1,13 +1,14 @@
 import React from 'react';
-import { ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
+import { StoryMetaType } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 import { Size } from './Toggle/types';
-import Toggle from '.';
+import Toggle, { ToggleProps } from '.';
 
-export default {
+const meta: StoryMetaType<typeof Toggle> = {
   title: 'Components/Toggle',
   component: Toggle,
   argTypes: {
@@ -24,14 +25,11 @@ export default {
     },
   },
   parameters: {
-    controls: {
-      exclude: ['className', 'onChange'],
-    },
     default: 'Uncontrolled',
   },
 };
-
-const Template: ComponentStory<typeof Toggle> = args => (
+export default meta;
+const Template: StoryFn<ToggleProps> = (args: ToggleProps) => (
   <Toggle aria-labelledby="toggle" {...args} />
 );
 
@@ -41,9 +39,8 @@ Controlled.argTypes = {
   checked: { control: 'boolean' },
 };
 
-export const WithLabel: ComponentStory<typeof Toggle> = ({
+export const WithLabel: StoryFn<ToggleProps> = ({
   // eslint-disable-next-line react/prop-types
-  darkMode,
   ...args
 }) => (
   <>
@@ -53,17 +50,12 @@ export const WithLabel: ComponentStory<typeof Toggle> = ({
       className={css`
         display: block;
         margin-bottom: 16px;
-        color: ${darkMode ? palette.white : palette.gray.dark2};
+        color: ${args.darkMode ? palette.white : palette.gray.dark2};
       `}
     >
       This is a label for my toggle.
     </label>
 
-    <Toggle
-      id="toggle"
-      aria-labelledby="toggle"
-      darkMode={darkMode}
-      {...args}
-    />
+    <Toggle id="toggle" aria-labelledby="toggle" {...args} />
   </>
 );

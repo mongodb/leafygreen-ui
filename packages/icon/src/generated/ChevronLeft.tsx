@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum d03bdeb552e4dc259ceb02eca26ead55
+ * @checksum d79e7d96aa98907406ae7e0de5b83dc9
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface ChevronLeftProps extends LGGlyph.ComponentProps {}
-
 const ChevronLeft = ({
   className,
   size = 16,
@@ -58,7 +57,6 @@ const ChevronLeft = ({
     </svg>
   );
 };
-
 ChevronLeft.displayName = 'ChevronLeft';
 ChevronLeft.isGlyph = true;
 ChevronLeft.propTypes = {

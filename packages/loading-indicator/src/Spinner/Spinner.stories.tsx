@@ -9,9 +9,6 @@ import { DisplayOption } from './Spinner.types';
 export default StoryMeta({
   title: 'Components/LoadingIndicator/Spinner',
   component: Spinner,
-  args: {
-    displayOption: 'default',
-  },
   argTypes: {
     description: { control: 'text' },
     sizeOverride: { control: 'number' },

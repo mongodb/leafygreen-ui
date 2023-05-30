@@ -1,10 +1,9 @@
-import { ComponentMeta } from '@storybook/react';
+import { Meta } from '@storybook/react';
 import mergeWith from 'lodash/mergeWith';
 import { ComponentProps } from 'react';
 import DarkModeProps from '../DarkModeProps';
 
-import { StoryArgType, storybookArgTypes } from './storybookArgTypes';
-import { storybookExcludedControlParams } from './storybookExcludedControlParams';
+import { StoryArgType } from './storybookArgTypes';
 
 // Re-defining LG provider prop keys here since importing from the package
 // will cause circular dependencies
@@ -12,15 +11,16 @@ interface LeafyGreenProviderProps extends DarkModeProps {
   baseFontSize?: number;
 }
 
-export interface StoryMetaType<
+export type StoryMetaType<
   T extends React.ElementType,
   XP extends Record<string, any> = {},
-> extends Omit<ComponentMeta<T>, 'component' | 'argTypes' | 'args'> {
-  parameters: ComponentMeta<T>['parameters'] & {
+> = Omit<Meta<T>, 'component' | 'argTypes' | 'args'> & {
+  parameters: Meta<T>['parameters'] & {
     /**
-     * The default story to be displayed on `mongodb.design`
+     * The default story to be displayed on `mongodb.design`.
+     * Explicitly exclude a default story by setting this to `null`
      */
-    default: string;
+    default: string | null;
   };
   argTypes?: Partial<
     | {
@@ -35,28 +35,39 @@ export interface StoryMetaType<
   >;
   args?: Partial<ComponentProps<T> | LeafyGreenProviderProps | XP>;
   component?: T;
-}
-
-export const baseMeta: Partial<StoryMetaType<any>> = {
-  argTypes: {
-    darkMode: storybookArgTypes.darkMode,
-    baseFontSize: storybookArgTypes.updatedBaseFontSize,
-  },
-  parameters: {
-    default: 'Basic',
-    controls: {
-      exclude: [...storybookExcludedControlParams],
-    },
-  },
+  title?: string;
 };
 
+/**
+ * Base Meta definition declared in ./.storybook/preview.js
+ */
+
+/**
+ *
+ * Storybook 7.x requires a statically defined object as the default export.
+ *
+ * Use {@link StoryMetaType} (and {@link baseStoryMeta} as necessary)
+ *
+ * Example:
+ *
+ * ```ts
+ * const meta: StoryMetaType<typeof Component> = {
+ *  component: Component,
+ *  ...baseStoryMeta
+ * }
+ * export default meta
+ * ```
+ *
+ *
+ * @deprecated
+ */
 export const StoryMeta = <
   T extends React.ElementType,
   XP extends Record<string, any>,
 >(
-  meta: StoryMetaType<T, XP> = baseMeta as StoryMetaType<T, XP>,
+  meta: StoryMetaType<T, XP> = {} as StoryMetaType<T, XP>,
 ): StoryMetaType<T, XP> => {
-  return mergeWith(meta, baseMeta, (metaVal, baseVal) => {
+  return mergeWith(meta, {}, (metaVal, baseVal) => {
     if (Array.isArray(metaVal)) return metaVal.concat(baseVal);
     if (typeof metaVal === 'string') return metaVal;
     // default to _.merge behavior

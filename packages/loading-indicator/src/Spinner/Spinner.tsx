@@ -6,7 +6,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import { descriptionThemeColor } from '../LoadingIndicators.styles';
+import { descriptionThemeColor } from '../LoadingIndicator.styles';
 
 import animationJson from './animation';
 import {
@@ -23,7 +23,7 @@ import { DisplayOption, SpinnerProps } from './Spinner.types';
  */
 const Spinner = ({
   baseFontSize: baseFontSizeProp,
-  displayOption = 'default',
+  displayOption = DisplayOption.DefaultVertical,
   description,
   sizeOverride,
   darkMode: darkModeProp,
@@ -58,7 +58,10 @@ const Spinner = ({
         }}
       />
       {description && (
-        <Body color={descriptionThemeColor[theme]} baseFontSize={baseFontSize}>
+        <Body
+          className={descriptionThemeColor[theme]}
+          baseFontSize={baseFontSize}
+        >
           {description}
         </Body>
       )}

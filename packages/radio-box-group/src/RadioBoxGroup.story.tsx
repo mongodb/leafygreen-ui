@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { Meta } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 import Tooltip from '@leafygreen-ui/tooltip';
 
-import { RadioBoxGroupProps } from './types';
-import { RadioBox, RadioBoxGroup } from '.';
+import { RadioBox, RadioBoxGroup, type RadioBoxGroupProps } from '.';
 
-export default {
+const meta: StoryMetaType<typeof RadioBoxGroup> = {
   title: 'Components/RadioBoxGroup',
   component: RadioBoxGroup,
   argTypes: {
@@ -19,13 +22,15 @@ export default {
   },
   parameters: {
     controls: {
-      exclude: ['className', 'children', 'onChange', 'name', 'value'],
+      exclude: [...storybookExcludedControlParams, 'children', 'name', 'value'],
     },
     default: 'Uncontrolled',
   },
-} as Meta<typeof RadioBoxGroup>;
-
-export const Uncontrolled = (args: RadioBoxGroupProps) => (
+};
+export default meta;
+export const Uncontrolled: StoryFn<RadioBoxGroupProps> = (
+  args: RadioBoxGroupProps,
+) => (
   <RadioBoxGroup name="radio-box-group-default" {...args}>
     <RadioBox value="1">Option One</RadioBox>
     <RadioBox value="2">Option Two</RadioBox>
@@ -38,7 +43,9 @@ export const Uncontrolled = (args: RadioBoxGroupProps) => (
   </RadioBoxGroup>
 );
 
-export const Controlled = (args: RadioBoxGroupProps) => {
+export const Controlled: StoryFn<RadioBoxGroupProps> = (
+  args: RadioBoxGroupProps,
+) => {
   const [activeRadioBox, setActiveRadioBox] = useState<string>('test1');
 
   const handleChange = (e: React.FormEvent) => {

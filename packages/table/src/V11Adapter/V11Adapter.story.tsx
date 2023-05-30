@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Meta } from '@storybook/react';
+import { faker } from '@faker-js/faker';
+import { StoryFn } from '@storybook/react';
 
 import Badge from '@leafygreen-ui/badge';
 import { css } from '@leafygreen-ui/emotion';
+import { StoryMetaType } from '@leafygreen-ui/lib';
 
-import { defaultData } from '../TableV10/fixtures';
-import { makeData, randomIntFromInterval } from '../utils/makeData.testutils';
+import { defaultData } from '../TableV10/fixtures.testutils';
+import { makeData } from '../utils/makeData.testutils';
 import {
   V10Cell as Cell,
   V10HeaderRow as HeaderRow,
@@ -15,16 +17,24 @@ import {
   V11Adapter,
 } from '..';
 
-export default {
+import { V11AdapterProps } from './V11Adapter.types';
+
+type StoryAdapterProps = V11AdapterProps<unknown>;
+
+const meta: StoryMetaType<typeof V11Adapter> = {
   title: 'Components/Table/V11 Adapter',
   component: V11Adapter,
-} as Meta<typeof V11Adapter>;
+  parameters: {
+    default: null,
+  },
+};
+export default meta;
 
 const virtualScrollingContainerHeight = css`
   height: 500px;
 `;
 
-export const Basic = () => {
+export const Basic: StoryFn<StoryAdapterProps> = () => {
   return (
     <V11Adapter>
       <Table
@@ -51,11 +61,16 @@ export const Basic = () => {
   );
 };
 
-export const DynamicData = () => {
+export const DynamicData: StoryFn<StoryAdapterProps> = () => {
   const [data, setData] = useState(defaultData.slice(0, 8));
 
   const handleClick = () => {
-    setData(defaultData.slice(2, randomIntFromInterval(0, defaultData.length)));
+    setData(
+      defaultData.slice(
+        2,
+        faker.number.int({ min: 0, max: defaultData.length }),
+      ),
+    );
   };
 
   return (
@@ -87,7 +102,7 @@ export const DynamicData = () => {
   );
 };
 
-export const BasicVS = () => {
+export const BasicVS: StoryFn<StoryAdapterProps> = () => {
   return (
     <V11Adapter useVirtualScrolling className={virtualScrollingContainerHeight}>
       <Table
@@ -114,7 +129,7 @@ export const BasicVS = () => {
   );
 };
 
-export const DefaultZebraStripes = () => {
+export const DefaultZebraStripes: StoryFn<StoryAdapterProps> = () => {
   return (
     <V11Adapter>
       <Table
@@ -141,7 +156,7 @@ export const DefaultZebraStripes = () => {
   );
 };
 
-export const NestedRows = () => {
+export const NestedRows: StoryFn<StoryAdapterProps> = () => {
   return (
     <V11Adapter>
       <Table
@@ -179,7 +194,7 @@ export const NestedRows = () => {
   );
 };
 
-export const NestedRowsVS = () => {
+export const NestedRowsVS: StoryFn<StoryAdapterProps> = () => {
   return (
     <V11Adapter useVirtualScrolling className={virtualScrollingContainerHeight}>
       <Table
@@ -219,7 +234,7 @@ export const NestedRowsVS = () => {
   );
 };
 
-export const ExpandableContent = () => {
+export const ExpandableContent: StoryFn<StoryAdapterProps> = () => {
   return (
     <V11Adapter>
       <Table
@@ -266,7 +281,7 @@ export const ExpandableContent = () => {
   );
 };
 
-export const ExpandableContentVS = () => {
+export const ExpandableContentVS: StoryFn<StoryAdapterProps> = () => {
   return (
     <V11Adapter useVirtualScrolling className={virtualScrollingContainerHeight}>
       <Table
@@ -313,7 +328,7 @@ export const ExpandableContentVS = () => {
   );
 };
 
-export const SortableRows = () => {
+export const SortableRows: StoryFn<StoryAdapterProps> = () => {
   return (
     <>
       First column has a custom sort function!
@@ -379,7 +394,7 @@ export const SortableRows = () => {
   );
 };
 
-export const SortableRowsVS = () => {
+export const SortableRowsVS: StoryFn<StoryAdapterProps> = () => {
   return (
     <>
       First column has a custom sort function!
@@ -446,7 +461,7 @@ export const SortableRowsVS = () => {
   );
 };
 
-export const SelectableRows = () => {
+export const SelectableRows: StoryFn<StoryAdapterProps> = () => {
   return (
     <V11Adapter hasSelectableRows>
       <Table
@@ -473,7 +488,7 @@ export const SelectableRows = () => {
   );
 };
 
-export const SelectableRowsVS = () => {
+export const SelectableRowsVS: StoryFn<StoryAdapterProps> = () => {
   return (
     <V11Adapter
       hasSelectableRows

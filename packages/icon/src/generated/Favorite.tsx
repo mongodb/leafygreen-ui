@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum febf03563aa6259d99510db28b298b61
+ * @checksum e12348c805a4064ccfae225b3c235193
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface FavoriteProps extends LGGlyph.ComponentProps {}
-
 const Favorite = ({
   className,
   size = 16,
@@ -56,7 +55,6 @@ const Favorite = ({
     </svg>
   );
 };
-
 Favorite.displayName = 'Favorite';
 Favorite.isGlyph = true;
 Favorite.propTypes = {

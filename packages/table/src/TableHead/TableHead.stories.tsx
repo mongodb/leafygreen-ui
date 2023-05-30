@@ -24,6 +24,9 @@ export default {
   // This is needed as a workaround to make arg spreading performant
   // https://github.com/storybookjs/storybook/issues/11657
   parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
     docs: {
       source: { type: 'code' },
     },

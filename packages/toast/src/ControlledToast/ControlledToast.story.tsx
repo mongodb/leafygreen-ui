@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
-import { ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import { StoryMeta } from '@leafygreen-ui/lib';
+import {
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import { ToastProvider, Variant } from '..';
 
-import { ControlledToast as Toast } from './ControlledToast';
+import { type ControlledToastProps, Toast } from '.';
 
-export default StoryMeta({
+const meta: StoryMetaType<typeof Toast> = {
   title: 'Components/Toast/Controlled',
   component: Toast,
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: ['open', 'onClose'],
+      exclude: [...storybookExcludedControlParams, 'open'],
     },
   },
   args: {
@@ -45,9 +48,10 @@ export default StoryMeta({
       control: 'text',
     },
   },
-});
+};
+export default meta;
 
-export const Basic: ComponentStory<typeof Toast> = args => {
+export const Basic: StoryFn<ControlledToastProps> = args => {
   const [open, setOpen] = useState(false);
 
   return (

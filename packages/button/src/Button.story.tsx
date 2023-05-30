@@ -1,26 +1,22 @@
+/* eslint-disable react/display-name */
 import React from 'react';
-import { Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { StoryMeta } from '@leafygreen-ui/lib';
+import { type StoryMetaType } from '@leafygreen-ui/lib';
 
 import { Size } from './types';
 import Button, { ButtonProps, Variant } from '.';
 
-export default StoryMeta({
+const meta: StoryMetaType<typeof Button> = {
   title: 'Components/Button',
   component: Button,
-  excludeStories: ['StoryButton'],
   args: {
     children: 'MongoDB',
     variant: Variant.Default,
   },
   parameters: {
-    default: 'Default',
-    controls: {
-      exclude: ['ref', 'onClick', 'className'],
-    },
+    default: 'Playground',
   },
   argTypes: {
     disabled: {
@@ -54,9 +50,11 @@ export default StoryMeta({
       control: 'text',
     },
   },
-});
+};
 
-const Template: Story<ButtonProps> = ({
+export default meta;
+
+export const Playground: StoryFn<ButtonProps> = ({
   leftGlyph,
   rightGlyph,
   ...args
@@ -70,32 +68,7 @@ const Template: Story<ButtonProps> = ({
   />
 );
 
-export const Default = Template.bind({});
-Default.args = {
-  variant: Variant.Default,
-};
-
-export const Primary = Template.bind({});
-Primary.args = {
-  variant: Variant.Primary,
-};
-
-export const PrimaryOutline = Template.bind({});
-PrimaryOutline.args = {
-  variant: Variant.PrimaryOutline,
-};
-
-export const Danger = Template.bind({});
-Danger.args = {
-  variant: Variant.Danger,
-};
-
-export const DangerOutline = Template.bind({});
-DangerOutline.args = {
-  variant: Variant.DangerOutline,
-};
-
-export const BaseGreen = Template.bind({});
+export const BaseGreen = Playground.bind({});
 BaseGreen.args = {
   variant: Variant.BaseGreen,
 };

@@ -156,9 +156,8 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
       </li>
     );
   },
+  'MenuItem',
 );
-
-MenuItem.displayName = 'MenuItem';
 
 MenuItem.propTypes = {
   onClick: PropTypes.func,

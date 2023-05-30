@@ -3,7 +3,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { typeScales } from '@leafygreen-ui/tokens';
 
-import { Variant } from './types';
+import { Variant } from './ConfirmationModal.types';
 
 export const titleStyle = css`
   line-height: 32px;
