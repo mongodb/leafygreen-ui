@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-key */
+/* eslint-disable react/display-name */
 import React from 'react';
 import { StoryContext, StoryFn } from '@storybook/react';
 
@@ -24,6 +26,47 @@ const meta: StoryMetaType<typeof InternalToast> = {
     controls: {
       exclude: [...storybookExcludedControlParams, 'open'],
     },
+    generate: {
+      props: {
+        darkMode: [false, true],
+        dismissible: [true, false],
+        description: [
+          undefined,
+          'Lorem ipsum dolor sit amet',
+          <span>
+            This is a <Link>Link</Link>
+          </span>,
+        ],
+        variant: Object.values(Variant),
+        progress: [0, 0.5, 1],
+        actionElement: [undefined, <Button size="small">Action</Button>],
+      },
+      args: {
+        className: css`
+          position: relative;
+        `,
+      },
+      excludeCombinations: [
+        {
+          progress: [0.5, 1],
+          variant: [
+            Variant.Success,
+            Variant.Note,
+            Variant.Warning,
+            Variant.Important,
+          ],
+        },
+        {
+          actionElement: <Button />,
+          variant: [
+            Variant.Success,
+            Variant.Note,
+            Variant.Warning,
+            Variant.Important,
+          ],
+        },
+      ],
+    },
   },
   decorators: [
     (
@@ -36,7 +79,7 @@ const meta: StoryMetaType<typeof InternalToast> = {
     ),
   ],
   args: {
-    title: 'Velit ea exercitation qui aute dolor proident.',
+    title: 'This is a toast',
     description: 'Exercitation incididunt ea proident velit mollit',
     variant: Variant.Note,
     progress: 0,
@@ -89,3 +132,5 @@ WithAction.args = {
     </>
   ),
 };
+
+export const Generated = () => {};

@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React, { useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
@@ -20,6 +21,7 @@ const meta: StoryMetaType<typeof Toast> = {
     controls: {
       exclude: [...storybookExcludedControlParams, 'open'],
     },
+    chromatic: { disableSnapshot: true },
   },
   args: {
     title: 'Velit ea exercitation qui aute dolor proident.',
@@ -68,4 +70,7 @@ export const Basic: StoryFn<ControlledToastProps> = args => {
       />
     </ToastProvider>
   );
+};
+Basic.parameters = {
+  chromatic: { disableSnapshot: true },
 };
