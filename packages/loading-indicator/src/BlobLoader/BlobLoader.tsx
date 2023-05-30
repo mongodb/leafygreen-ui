@@ -12,6 +12,9 @@ import animationJson from './animation';
 import { blobStyles, rootStyles } from './BlobLoader.styles';
 import { BlobLoaderProps } from './BlobLoader.types';
 
+/**
+ * Displays an animation of various brand shapes morphing from one to another paired with description text
+ */
 const BlobLoader = ({
   baseFontSize: baseFontSizeProp,
   description,

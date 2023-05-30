@@ -1,3 +1,4 @@
+// Generated Lottie file
 const lottieJson = {
   v: '4.8.0',
   meta: { g: 'LottieFiles AE 3.2.2', a: '', k: '', d: '', tc: '' },

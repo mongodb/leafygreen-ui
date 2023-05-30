@@ -18,6 +18,9 @@ import {
 } from './Spinner.styles';
 import { DisplayOption, SpinnerProps } from './Spinner.types';
 
+/**
+ * Displays an spinner animation paired with description text
+ */
 const Spinner = ({
   baseFontSize: baseFontSizeProp,
   displayOption = 'default',
