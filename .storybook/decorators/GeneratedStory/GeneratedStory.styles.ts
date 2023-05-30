@@ -58,6 +58,7 @@ export const combinationNameStylesCI = css`
   display: none;
 `;
 
+export const instanceClassName = createUniqueClassName('instance');
 export const instanceStyles = css`
   padding: 8px ${indent}px 0;
 `;

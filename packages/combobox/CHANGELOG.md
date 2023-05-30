@@ -1,5 +1,13 @@
 # @leafygreen-ui/combobox
 
+## 6.0.3
+
+### Patch Changes
+
+- 78d36936d: Combobox tooltips receive same zindex as Combobox menu
+- Updated dependencies [6a3f03fd2]
+  - @leafygreen-ui/typography@16.4.1
+
 ## 6.0.2
 
 ### Patch Changes
