@@ -22,6 +22,7 @@ export const Button = React.forwardRef(function Button(
     darkMode: darkModeProp,
     baseFontSize = BaseFontSize.Body1,
     disabled = false,
+    isLoading = false,
     onClick,
     leftGlyph,
     rightGlyph,
@@ -29,6 +30,7 @@ export const Button = React.forwardRef(function Button(
     className,
     as,
     type,
+    loadingStateText,
     ...rest
   }: BoxProps<'button', ButtonProps>,
   forwardRef,
@@ -40,7 +42,7 @@ export const Button = React.forwardRef(function Button(
     size,
     darkMode,
     baseFontSize,
-    disabled,
+    disabled: isLoading || disabled,
   });
 
   const isAnchor: boolean = (!!rest.href || as === 'a') && !disabled;
@@ -52,9 +54,9 @@ export const Button = React.forwardRef(function Button(
     // Provide a default value for the as prop
     // If consuming application passes a value for as, it will override the default set here
     as: as ? as : ((isAnchor ? 'a' : 'button') as keyof JSX.IntrinsicElements),
-    'aria-disabled': disabled,
-    onClick: !disabled ? onClick : undefined,
-    href: disabled ? undefined : rest.href,
+    'aria-disabled': disabled || isLoading,
+    onClick: !(disabled || isLoading) ? onClick : undefined,
+    href: disabled || isLoading ? undefined : rest.href,
     ...rest,
   } as const;
 
@@ -63,6 +65,8 @@ export const Button = React.forwardRef(function Button(
     leftGlyph,
     darkMode,
     disabled,
+    isLoading,
+    loadingStateText,
     variant,
     size,
   } as const;

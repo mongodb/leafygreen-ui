@@ -70,3 +70,10 @@ export const buttonContentSizeStyle: Record<Size, string> = {
     gap: 8px;
   `,
 };
+
+export const buttonSpinnerSize: Record<Size, number> = {
+  [Size.XSmall]: 16,
+  [Size.Small]: 16,
+  [Size.Default]: 16,
+  [Size.Large]: 20,
+};

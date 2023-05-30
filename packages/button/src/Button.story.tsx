@@ -47,6 +47,12 @@ export default StoryMeta({
     href: {
       control: 'text',
     },
+    isLoading: {
+      control: 'boolean',
+    },
+    loadingStateText: {
+      control: 'text',
+    },
   },
 });
 
@@ -92,6 +98,12 @@ DangerOutline.args = {
 export const BaseGreen = Template.bind({});
 BaseGreen.args = {
   variant: Variant.BaseGreen,
+};
+
+export const LoadingState = Template.bind({});
+LoadingState.args = {
+  isLoading: true,
+  loadingStateText: 'Saving',
 };
 
 export const WithGlobalDarkMode: Story<ButtonProps> = args => (
