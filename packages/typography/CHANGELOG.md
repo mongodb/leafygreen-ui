@@ -1,5 +1,11 @@
 # @leafygreen-ui/typography
 
+## 16.4.1
+
+### Patch Changes
+
+- 6a3f03fd2: Exported typography interfaces now extend PolymorphicProps
+
 ## 16.4.0
 
 ### Minor Changes
