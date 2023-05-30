@@ -56,7 +56,7 @@ const meta: StoryMetaType<typeof Pagination> = {
       ],
       // eslint-disable-next-line react/display-name
       decorator: Instance => (
-        <div style={{ width: '700px' }}>
+        <div style={{ width: '500px' }}>
           <Instance />
         </div>
       ),
