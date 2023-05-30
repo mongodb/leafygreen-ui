@@ -1,3 +1,7 @@
+import { faker } from '@faker-js/faker';
+const SEED = 0;
+faker.seed(SEED);
+
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export interface testTableDataShape {
   name: string;
@@ -15,21 +19,21 @@ export const defaultData: Array<testTableDataShape> = [
     age: 19,
     color: 'blue',
     location: 'bedford',
-    rand: Math.random(),
+    rand: faker.number.float({ precision: 0.001 }),
   },
   {
     name: 'Brooke',
     age: 20,
     color: 'green',
     location: 'bedford',
-    rand: Math.random(),
+    rand: faker.number.float({ precision: 0.001 }),
   },
   {
     name: 'Charlotte',
     age: 21,
     color: 'white',
     location: 'bedford',
-    rand: Math.random(),
+    rand: faker.number.float({ precision: 0.001 }),
     disabled: true,
   },
   {
@@ -37,14 +41,14 @@ export const defaultData: Array<testTableDataShape> = [
     age: 22,
     color: 'green',
     location: 'bedford',
-    rand: Math.random(),
+    rand: faker.number.float({ precision: 0.001 }),
   },
   {
     name: 'Emma',
     age: 23,
     color: 'white',
     location: 'bedford',
-    rand: Math.random(),
+    rand: faker.number.float({ precision: 0.001 }),
     expandable: true,
   },
   {
@@ -52,7 +56,7 @@ export const defaultData: Array<testTableDataShape> = [
     age: 24,
     color: 'white',
     location: 'bedford',
-    rand: Math.random(),
+    rand: faker.number.float({ precision: 0.001 }),
     expandable: true,
   },
   {
@@ -60,7 +64,7 @@ export const defaultData: Array<testTableDataShape> = [
     age: 29,
     color: 'green',
     location: 'bedford',
-    rand: Math.random(),
+    rand: faker.number.float({ precision: 0.001 }),
     expandable: true,
   },
   {
@@ -68,7 +72,7 @@ export const defaultData: Array<testTableDataShape> = [
     age: 26,
     color: 'white',
     location: 'bedford',
-    rand: Math.random(),
+    rand: faker.number.float({ precision: 0.001 }),
     expandable: true,
   },
   {
@@ -76,7 +80,7 @@ export const defaultData: Array<testTableDataShape> = [
     age: 27,
     color: 'green',
     location: 'bedford',
-    rand: Math.random(),
+    rand: faker.number.float({ precision: 0.001 }),
     expandable: true,
   },
   {
@@ -84,7 +88,7 @@ export const defaultData: Array<testTableDataShape> = [
     age: 28,
     color: 'green',
     location: 'bedford',
-    rand: Math.random(),
+    rand: faker.number.float({ precision: 0.001 }),
     expandable: true,
   },
   {
@@ -92,7 +96,7 @@ export const defaultData: Array<testTableDataShape> = [
     age: 31,
     color: 'orange',
     location: 'bedford',
-    rand: Math.random(),
+    rand: faker.number.float({ precision: 0.001 }),
     expandable: true,
   },
   {
@@ -100,7 +104,7 @@ export const defaultData: Array<testTableDataShape> = [
     age: 32,
     color: 'pink',
     location: 'bedford',
-    rand: Math.random(),
+    rand: faker.number.float({ precision: 0.001 }),
     expandable: true,
   },
   {
@@ -108,7 +112,7 @@ export const defaultData: Array<testTableDataShape> = [
     age: 33,
     color: 'green',
     location: 'bedford',
-    rand: Math.random(),
+    rand: faker.number.float({ precision: 0.001 }),
     expandable: true,
   },
   {
@@ -116,7 +120,7 @@ export const defaultData: Array<testTableDataShape> = [
     age: 35,
     color: 'green',
     location: 'bedford',
-    rand: Math.random(),
+    rand: faker.number.float({ precision: 0.001 }),
     expandable: true,
   },
   {
@@ -124,7 +128,7 @@ export const defaultData: Array<testTableDataShape> = [
     age: 34,
     color: 'lavender',
     location: 'bedford',
-    rand: Math.random(),
+    rand: faker.number.float({ precision: 0.001 }),
     expandable: true,
   },
   {
@@ -132,7 +136,7 @@ export const defaultData: Array<testTableDataShape> = [
     age: 30,
     color: 'perrywinkle',
     location: 'bedford',
-    rand: Math.random(),
+    rand: faker.number.float({ precision: 0.001 }),
     expandable: true,
   },
   {
@@ -140,7 +144,7 @@ export const defaultData: Array<testTableDataShape> = [
     age: 36,
     color: 'gold',
     location: 'bedford',
-    rand: Math.random(),
+    rand: faker.number.float({ precision: 0.001 }),
     expandable: true,
   },
   {
@@ -148,7 +152,7 @@ export const defaultData: Array<testTableDataShape> = [
     age: 39,
     color: 'orange',
     location: 'bedford',
-    rand: Math.random(),
+    rand: faker.number.float({ precision: 0.001 }),
     expandable: true,
   },
   {
@@ -156,7 +160,7 @@ export const defaultData: Array<testTableDataShape> = [
     age: 40,
     color: 'navy',
     location: 'bedford',
-    rand: Math.random(),
+    rand: faker.number.float({ precision: 0.001 }),
     expandable: true,
   },
   {
@@ -164,7 +168,7 @@ export const defaultData: Array<testTableDataShape> = [
     age: 44,
     color: 'cyan',
     location: 'bedford',
-    rand: Math.random(),
+    rand: faker.number.float({ precision: 0.001 }),
     expandable: true,
   },
   {
@@ -172,7 +176,7 @@ export const defaultData: Array<testTableDataShape> = [
     age: 45,
     color: 'purple',
     location: 'bedford',
-    rand: Math.random(),
+    rand: faker.number.float({ precision: 0.001 }),
     expandable: true,
   },
   {
@@ -180,7 +184,7 @@ export const defaultData: Array<testTableDataShape> = [
     age: 49,
     color: 'violet',
     location: 'bedford',
-    rand: Math.random(),
+    rand: faker.number.float({ precision: 0.001 }),
     expandable: true,
   },
   {
@@ -188,7 +192,7 @@ export const defaultData: Array<testTableDataShape> = [
     age: 54,
     color: 'blue',
     location: 'bedford',
-    rand: Math.random(),
+    rand: faker.number.float({ precision: 0.001 }),
     expandable: true,
   },
   {
@@ -196,7 +200,7 @@ export const defaultData: Array<testTableDataShape> = [
     age: 48,
     color: 'green',
     location: 'bedford',
-    rand: Math.random(),
+    rand: faker.number.float({ precision: 0.001 }),
     expandable: true,
   },
   {
@@ -204,7 +208,7 @@ export const defaultData: Array<testTableDataShape> = [
     age: 51,
     color: 'pink',
     location: 'bedford',
-    rand: Math.random(),
+    rand: faker.number.float({ precision: 0.001 }),
     expandable: true,
   },
   {
@@ -212,7 +216,7 @@ export const defaultData: Array<testTableDataShape> = [
     age: 48,
     color: 'green',
     location: 'bedford',
-    rand: Math.random(),
+    rand: faker.number.float({ precision: 0.001 }),
     expandable: true,
   },
 ];

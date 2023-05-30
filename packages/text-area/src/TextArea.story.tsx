@@ -1,28 +1,18 @@
 import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import {
-  storybookArgTypes,
-  storybookExcludedControlParams,
-} from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 
-import { TextAreaProps } from './TextArea/TextArea.types';
-import TextArea from '.';
+import TextArea, { TextAreaProps } from '.';
 
 type LGProviderBaseFontSize = 14 | 16;
 
-const StoryTextArea: React.FC<
-  TextAreaProps & { lgProviderBaseFontSize: LGProviderBaseFontSize }
-> = props => <TextArea {...props} />;
-
-export default {
+const meta: StoryMetaType<typeof TextArea> = {
   title: 'Components/TextArea',
-  component: StoryTextArea,
+  component: TextArea,
   parameters: {
-    controls: {
-      exclude: [...storybookExcludedControlParams],
-    },
+    default: 'Basic',
   },
   argTypes: {
     baseFontSize: {
@@ -42,24 +32,27 @@ export default {
     disabled: false,
     placeholder: 'Placeholder',
   },
-} as ComponentMeta<typeof TextArea>;
+};
+export default meta;
 
-export const Basic: ComponentStory<typeof TextArea> = ({
+export const Basic: StoryFn<typeof TextArea> = ({
   darkMode,
   ...args
 }: TextAreaProps) => <TextArea darkMode={darkMode} {...args} />;
 
-export const WithProvider: ComponentStory<typeof StoryTextArea> = ({
+export const WithProvider: StoryFn<
+  TextAreaProps & { baseFontSize: LGProviderBaseFontSize }
+> = ({
   darkMode,
-  lgProviderBaseFontSize,
+  baseFontSize,
   ...args
-}: TextAreaProps & { lgProviderBaseFontSize: LGProviderBaseFontSize }) => (
-  <LeafygreenProvider baseFontSize={lgProviderBaseFontSize}>
+}: TextAreaProps & { baseFontSize: LGProviderBaseFontSize }) => (
+  <LeafygreenProvider baseFontSize={baseFontSize}>
     <TextArea darkMode={darkMode} {...args} />
   </LeafygreenProvider>
 );
 WithProvider.argTypes = {
-  lgProviderBaseFontSize: {
+  baseFontSize: {
     options: [14, 16],
     control: { type: 'radio' },
     description:
@@ -67,5 +60,6 @@ WithProvider.argTypes = {
   },
 };
 WithProvider.args = {
-  lgProviderBaseFontSize: 14,
+  // @ts-expect-error
+  baseFontSize: 14,
 };

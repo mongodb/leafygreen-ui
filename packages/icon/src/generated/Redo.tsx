@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum ce9a0cb9f598cc723526c49f564461e3
+ * @checksum af574a1c25a263cca48cb43b6ca51a83
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface RedoProps extends LGGlyph.ComponentProps {}
-
 const Redo = ({
   className,
   size = 16,
@@ -56,7 +55,6 @@ const Redo = ({
     </svg>
   );
 };
-
 Redo.displayName = 'Redo';
 Redo.isGlyph = true;
 Redo.propTypes = {

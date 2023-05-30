@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 20fafbaaa73259215aac2c5b948e9ca0
+ * @checksum 9a9c49499e0d74589b27973fedacc2e5
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface VisibilityOffProps extends LGGlyph.ComponentProps {}
-
 const VisibilityOff = ({
   className,
   size = 16,
@@ -58,7 +57,6 @@ const VisibilityOff = ({
     </svg>
   );
 };
-
 VisibilityOff.displayName = 'VisibilityOff';
 VisibilityOff.isGlyph = true;
 VisibilityOff.propTypes = {

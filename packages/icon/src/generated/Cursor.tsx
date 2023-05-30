@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 513bee70d004112d3e0c7c71a68946e1
+ * @checksum 91699a20dbdca51897162621de25cf7d
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface CursorProps extends LGGlyph.ComponentProps {}
-
 const Cursor = ({
   className,
   size = 16,
@@ -58,7 +57,6 @@ const Cursor = ({
     </svg>
   );
 };
-
 Cursor.displayName = 'Cursor';
 Cursor.isGlyph = true;
 Cursor.propTypes = {
