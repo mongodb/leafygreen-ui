@@ -52,7 +52,7 @@ const DemoComponent = ({
         variantStyle[theme][variant],
       )}
     >
-      {checked && <Icon glyph="Checkmark" />}
+      {checked && <Icon size="xlarge" glyph="Checkmark" />}
       {glyph && !checked && <Icon glyph={glyph} />}
       {children}
     </div>
