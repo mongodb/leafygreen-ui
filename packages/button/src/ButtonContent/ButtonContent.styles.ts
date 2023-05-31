@@ -104,8 +104,8 @@ export const removeContentWhileLoading = css`
 
 export const leftGlyphStyles = css`
   justify-self: right;
-`
+`;
 
 export const rightGlyphStyles = css`
   justify-self: left;
-`
+`;
