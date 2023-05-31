@@ -10,6 +10,7 @@ import { descriptionThemeColor } from '../LoadingIndicator.styles';
 
 import animationJson from './animation';
 import {
+  colorOverrideStyles,
   darkModeSpinnerStyles,
   horizontalDisplayOptionStyles,
   rootStyles,
@@ -26,6 +27,7 @@ const Spinner = ({
   displayOption = DisplayOption.DefaultVertical,
   description,
   sizeOverride,
+  colorOverride,
   darkMode: darkModeProp,
   className,
   ...rest
@@ -50,7 +52,10 @@ const Spinner = ({
         autoplay
         loop
         src={animationJson}
-        className={cx({ [darkModeSpinnerStyles]: darkMode })}
+        className={cx({
+          [darkModeSpinnerStyles]: darkMode,
+          [colorOverrideStyles(colorOverride as string)]: !!colorOverride,
+        })}
         style={{
           width: size,
           height: size,

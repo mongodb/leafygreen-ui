@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Spinner } from '@leafygreen-ui/loading-indicator';
 import { registerRipple } from '@leafygreen-ui/ripple';
@@ -13,10 +13,14 @@ import {
   buttonContentStyle,
   buttonSpinnerSize,
   centeredSpinnerStyles,
+  darkModeRightGlyphStyles,
+  hideContentWhileLoading,
+  leftGlyphStyles,
+  removeContentWhileLoading,
+  rightGlyphStyles,
   rippleColors,
   rippleStyle,
-  spinnerStyles,
-  textlessLoadingStyles,
+  spinnerColor,
 } from './ButtonContent.styles';
 
 type ButtonContentProps = Omit<ButtonProps, 'as'>;
@@ -34,7 +38,6 @@ export const ButtonContent = ({
 }: ButtonContentProps) => {
   const { darkMode, theme } = useDarkMode(darkModeProp);
   const rippleRef = useRef<HTMLDivElement | null>(null);
-  const loadingContentRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     let unregisterRipple: (() => void) | undefined;
@@ -57,46 +60,31 @@ export const ButtonContent = ({
       {/* Ripple cannot wrap children, otherwise components that rely on children to render dropdowns will not be rendered due to the overflow:hidden rule. */}
       <div className={rippleStyle} ref={rippleRef} />
 
-      <div
-        className={cx({
-          [textlessLoadingStyles(loadingContentRef)]: isLoading && !loadingText,
-        })}
-      >
+      <div>
         {isLoading && (
           <div className={cx(buttonContentStyle, buttonContentSizeStyle[size])}>
             <Spinner
+              className={cx({
+                [centeredSpinnerStyles]: !loadingText,
+              })}
               sizeOverride={buttonSpinnerSize[size]}
-              className={cx(
-                {
-                  [centeredSpinnerStyles]: !loadingText,
-                },
-                spinnerStyles[theme],
-              )}
+              colorOverride={spinnerColor[theme]}
               data-testid="lg-button-spinner"
             />
             {loadingText}
           </div>
         )}
         <div
-          ref={loadingContentRef}
           className={cx(buttonContentStyle, buttonContentSizeStyle[size], {
-            [css`
-              justify-content: space-between;
-            `]: !!rightGlyph && darkMode,
-            [css`
-              visibility: hidden;
-            `]: isLoading,
-            [css`
-              display: none;
-            `]: isLoading && !!loadingText,
+            [darkModeRightGlyphStyles]: !!rightGlyph && darkMode,
+            [hideContentWhileLoading]: isLoading,
+            [removeContentWhileLoading]: isLoading && !!loadingText,
           })}
         >
           {leftGlyph && (
             <ButtonIcon
               glyph={leftGlyph}
-              className={css`
-                justify-self: right;
-              `}
+              className={leftGlyphStyles}
               {...iconProps}
             />
           )}
@@ -106,9 +94,7 @@ export const ButtonContent = ({
           {rightGlyph && (
             <ButtonIcon
               glyph={rightGlyph}
-              className={css`
-                justify-self: left;
-              `}
+              className={rightGlyphStyles}
               {...iconProps}
             />
           )}

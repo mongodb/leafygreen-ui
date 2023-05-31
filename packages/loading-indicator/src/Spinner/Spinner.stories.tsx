@@ -40,3 +40,8 @@ export const SizeOverride = Template.bind({});
 SizeOverride.args = {
   sizeOverride: 100,
 };
+
+export const ColorOverride = Template.bind({});
+ColorOverride.args = {
+  colorOverride: 'purple',
+};
