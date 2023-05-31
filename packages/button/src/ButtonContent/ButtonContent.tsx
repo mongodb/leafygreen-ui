@@ -14,9 +14,8 @@ import {
   buttonSpinnerSize,
   centeredSpinnerStyles,
   darkModeRightGlyphStyles,
-  hideContentWhileLoading,
+  hiddenContentStyles,
   leftGlyphStyles,
-  removeContentWhileLoading,
   rightGlyphStyles,
   rippleColors,
   rippleStyle,
@@ -74,31 +73,32 @@ export const ButtonContent = ({
             {loadingText}
           </div>
         )}
-        <div
-          className={cx(buttonContentStyle, buttonContentSizeStyle[size], {
-            [darkModeRightGlyphStyles]: !!rightGlyph && darkMode,
-            [hideContentWhileLoading]: isLoading,
-            [removeContentWhileLoading]: isLoading && !!loadingText,
-          })}
-        >
-          {leftGlyph && (
-            <ButtonIcon
-              glyph={leftGlyph}
-              className={leftGlyphStyles}
-              {...iconProps}
-            />
-          )}
+        {(!isLoading || !loadingText) && (
+          <div
+            className={cx(buttonContentStyle, buttonContentSizeStyle[size], {
+              [darkModeRightGlyphStyles]: !!rightGlyph && darkMode,
+              [hiddenContentStyles]: isLoading,
+            })}
+          >
+            {leftGlyph && (
+              <ButtonIcon
+                glyph={leftGlyph}
+                className={leftGlyphStyles}
+                {...iconProps}
+              />
+            )}
 
-          {children}
+            {children}
 
-          {rightGlyph && (
-            <ButtonIcon
-              glyph={rightGlyph}
-              className={rightGlyphStyles}
-              {...iconProps}
-            />
-          )}
-        </div>
+            {rightGlyph && (
+              <ButtonIcon
+                glyph={rightGlyph}
+                className={rightGlyphStyles}
+                {...iconProps}
+              />
+            )}
+          </div>
+        )}
       </div>
     </>
   );

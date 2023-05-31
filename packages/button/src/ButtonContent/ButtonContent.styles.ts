@@ -94,12 +94,8 @@ export const spinnerColor: Record<Theme, string> = {
   [Theme.Light]: palette.gray.dark1,
 };
 
-export const hideContentWhileLoading = css`
+export const hiddenContentStyles = css`
   visibility: hidden;
-`;
-
-export const removeContentWhileLoading = css`
-  display: none;
 `;
 
 export const leftGlyphStyles = css`
