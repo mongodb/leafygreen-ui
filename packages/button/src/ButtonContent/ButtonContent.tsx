@@ -72,6 +72,7 @@ export const ButtonContent = ({
                 },
                 spinnerStyles[theme],
               )}
+              data-testid="lg-button-spinner"
             />
             {loadingText}
           </div>
