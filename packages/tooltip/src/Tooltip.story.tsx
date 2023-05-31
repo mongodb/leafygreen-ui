@@ -9,7 +9,7 @@ import {
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
+import { BaseFontSize, transitionDuration } from '@leafygreen-ui/tokens';
 import { Body, InlineCode, Subtitle } from '@leafygreen-ui/typography';
 
 import Tooltip, { Align, Justify, TooltipProps } from '.';
@@ -36,6 +36,9 @@ const meta: StoryMetaType<typeof Tooltip> = {
     default: 'Basic',
     controls: {
       exclude: [...storybookExcludedControlParams, 'trigger'],
+    },
+    chromatic: {
+      delay: transitionDuration.slower,
     },
   },
 };
