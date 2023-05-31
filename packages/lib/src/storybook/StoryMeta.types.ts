@@ -3,7 +3,7 @@ import { ComponentProps } from 'react';
 import DarkModeProps from '../DarkModeProps';
 import { GeneratedStoryConfig } from './GeneratedStoryDecorator.types';
 
-import { StoryArgType } from './storybookArgTypes';
+import { StoryArgType } from './defaultStorybookArgTypes';
 
 // Re-defining LG provider prop keys here since importing from the package
 // will cause circular dependencies

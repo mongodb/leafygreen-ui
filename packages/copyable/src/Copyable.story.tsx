@@ -1,7 +1,10 @@
 import React from 'react';
 import { StoryFn } from '@storybook/react';
 
-import { storybookArgTypes, type StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  defaultStorybookArgTypes,
+  type StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import Copyable, { CopyableProps } from '.';
 
@@ -21,8 +24,8 @@ const meta: StoryMetaType<typeof Copyable> = {
     label: { control: 'text' },
     description: { control: 'text' },
     shouldTooltipUsePortal: { control: 'boolean' },
-    children: storybookArgTypes.children,
-    darkMode: storybookArgTypes.darkMode,
+    children: defaultStorybookArgTypes.children,
+    darkMode: defaultStorybookArgTypes.darkMode,
   },
 };
 
