@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/react';
+import { Meta, StoryFn, StoryObj } from '@storybook/react';
 import { ComponentProps } from 'react';
 import DarkModeProps from '../DarkModeProps';
 import { GeneratedStoryConfig } from './GeneratedStoryDecorator.types';
@@ -85,6 +85,15 @@ export type StoryMetaType<
   title?: string;
   component?: T;
   parameters: StoryParameters<T>;
+  argTypes?: ArgTypes<T, XP>;
+  args?: Partial<ComponentProps<T> | LeafyGreenProviderProps | XP>;
+};
+
+export type StoryType<
+  T extends React.ElementType,
+  XP extends Record<string, any> = {},
+> = (StoryFn<T> | StoryObj<T>) & {
+  parameters?: Omit<StoryParameters<T>, 'default' | 'generate'>;
   argTypes?: ArgTypes<T, XP>;
   args?: Partial<ComponentProps<T> | LeafyGreenProviderProps | XP>;
 };

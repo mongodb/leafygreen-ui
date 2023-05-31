@@ -14,6 +14,7 @@ export {
   type GeneratedStoryFn,
   StoryMeta,
   type StoryMetaType,
+  type StoryType,
   storybookArgTypes,
   storybookExcludedArgTypes,
   storybookExcludedControlParams,
