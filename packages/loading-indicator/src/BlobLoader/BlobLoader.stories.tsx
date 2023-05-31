@@ -1,11 +1,12 @@
 import React from 'react';
-import { ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
-import { StoryMeta } from '@leafygreen-ui/lib';
+import { StoryMetaType } from '@leafygreen-ui/lib';
 
 import BlobLoader from './BlobLoader';
+import { BlobLoaderProps } from '.';
 
-export default StoryMeta({
+const meta: StoryMetaType<typeof BlobLoader> = {
   title: 'Components/LoadingIndicator/BlobLoader',
   component: BlobLoader,
   argTypes: {
@@ -14,11 +15,11 @@ export default StoryMeta({
   parameters: {
     default: 'Default',
   },
-});
+};
 
-const Template: ComponentStory<typeof BlobLoader> = props => (
-  <BlobLoader {...props} />
-);
+export default meta;
+
+const Template: StoryFn<BlobLoaderProps> = props => <BlobLoader {...props} />;
 
 export const Default = Template.bind({});
 

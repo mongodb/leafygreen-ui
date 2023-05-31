@@ -118,12 +118,12 @@ export interface ButtonProps {
   href?: string;
 
   /**
-   * Loading state
+   * Indicates whether the Button is in a loading state
    */
   isLoading?: boolean;
 
   /**
-   * String displaying in loading state
+   * String displayed in place of `children` while the button is in a loading state
    */
   loadingText?: string;
 

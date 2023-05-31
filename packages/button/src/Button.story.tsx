@@ -73,19 +73,13 @@ BaseGreen.args = {
   variant: Variant.BaseGreen,
 };
 
-export const LoadingState = Template.bind({});
+export const LoadingState = Playground.bind({});
 LoadingState.args = {
   isLoading: true,
 };
 
-export const LoadingStateWithText = Template.bind({});
+export const LoadingStateWithText = Playground.bind({});
 LoadingStateWithText.args = {
   isLoading: true,
   loadingText: 'Saving',
 };
-
-export const WithGlobalDarkMode: Story<ButtonProps> = args => (
-  <LeafygreenProvider darkMode={true}>
-    <Button {...args}>Test</Button>
-  </LeafygreenProvider>
-);

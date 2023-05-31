@@ -50,32 +50,6 @@ export const ButtonContent = ({
   const isIconOnlyButton = ((leftGlyph || rightGlyph) && !children) ?? false;
   const iconProps = { variant, size, darkMode, disabled, isIconOnlyButton };
 
-  const DefaultContent = () => (
-    <>
-      {leftGlyph && (
-        <ButtonIcon
-          glyph={leftGlyph}
-          className={css`
-            justify-self: right;
-          `}
-          {...iconProps}
-        />
-      )}
-
-      {children}
-
-      {rightGlyph && (
-        <ButtonIcon
-          glyph={rightGlyph}
-          className={css`
-            justify-self: left;
-          `}
-          {...iconProps}
-        />
-      )}
-    </>
-  );
-
   return (
     <>
       {/* Ripple cannot wrap children, otherwise components that rely on children to render dropdowns will not be rendered due to the overflow:hidden rule. */}
@@ -120,7 +94,27 @@ export const ButtonContent = ({
               `]: isLoading,
             })}
           >
-            <DefaultContent />
+            {leftGlyph && (
+              <ButtonIcon
+                glyph={leftGlyph}
+                className={css`
+                  justify-self: right;
+                `}
+                {...iconProps}
+              />
+            )}
+
+            {children}
+
+            {rightGlyph && (
+              <ButtonIcon
+                glyph={rightGlyph}
+                className={css`
+                  justify-self: left;
+                `}
+                {...iconProps}
+              />
+            )}
           </div>
         )}
       </div>
