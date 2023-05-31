@@ -30,19 +30,20 @@ export function PropCombinations<T extends React.ComponentType<any>>({
 
   const AllCombinations = RecursiveCombinations({}, [...variables]);
 
-  // Not sure what's going on here, but we need this timeout
-  setTimeout(() => {
-    comboCount &&
-      console.log(
-        `Rendering ${comboCount} prop combinations for component: ${component.displayName}`,
-      );
-  }, 0);
+  console.log(
+    `Rendering ${comboCount} prop combinations for component: ${component.displayName}`,
+  );
+
   return AllCombinations;
 
+  /**
+   * Recursively loop through all prop combinations defined in `variables` and render them
+   */
   function RecursiveCombinations(
     props: Record<string, any>,
     vars: Array<[string, Array<any> | undefined]>,
   ): ReactElement<any> {
+    // If this is the last variable, this is our base case
     if (vars.length === 0) {
       comboCount += 1;
       return decorator(
