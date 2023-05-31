@@ -37,16 +37,16 @@ export const Button = React.forwardRef(function Button(
 ) {
   const { darkMode } = useDarkMode(darkModeProp);
 
+  const isAnchor: boolean = (!!rest.href || as === 'a') && !disabled;
+  const isNotInteractive = disabled || isLoading;
+
   const buttonStyles = getClassName({
     variant,
     size,
     darkMode,
     baseFontSize,
-    disabled: isLoading || disabled,
+    disabled: isNotInteractive,
   });
-
-  const isAnchor: boolean = (!!rest.href || as === 'a') && !disabled;
-  const isNotInteractive = disabled || isLoading;
 
   const buttonProps = {
     type: isAnchor ? undefined : type || 'button',
