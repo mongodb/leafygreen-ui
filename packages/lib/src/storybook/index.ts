@@ -1,7 +1,7 @@
 export {
   defaultStorybookArgTypes,
   storybookExcludedArgTypes,
-} from './defaultStorybookArgTypes';
+} from './storybookArgTypes';
 export { storybookExcludedControlParams } from './storybookExcludedControlParams';
 export { default as IntrinsicElements } from './IntrinsicElements';
 export { StoryMeta } from './StoryMeta';
