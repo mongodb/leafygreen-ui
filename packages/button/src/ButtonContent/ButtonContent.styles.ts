@@ -71,6 +71,20 @@ export const buttonContentSizeStyle: Record<Size, string> = {
   `,
 };
 
+export const textlessLoadingStyles = (
+  loadingContentRef: React.MutableRefObject<HTMLDivElement | null>,
+) => css`
+  width: ${loadingContentRef.current?.style.width};
+  position: relative;
+`;
+
+export const centeredSpinnerStyles = css`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
 export const buttonSpinnerSize: Record<Size, number> = {
   [Size.XSmall]: 16,
   [Size.Small]: 16,

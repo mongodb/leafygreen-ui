@@ -12,9 +12,11 @@ import {
   buttonContentSizeStyle,
   buttonContentStyle,
   buttonSpinnerSize,
+  centeredSpinnerStyles,
   rippleColors,
   rippleStyle,
   spinnerStyles,
+  textlessLoadingStyles,
 } from './ButtonContent.styles';
 
 type ButtonContentProps = Omit<ButtonProps, 'as'>;
@@ -57,10 +59,7 @@ export const ButtonContent = ({
 
       <div
         className={cx({
-          [css`
-            width: ${loadingContentRef.current?.style.width};
-            position: relative;
-          `]: isLoading,
+          [textlessLoadingStyles(loadingContentRef)]: isLoading && !loadingText,
         })}
       >
         {isLoading && (
@@ -69,12 +68,7 @@ export const ButtonContent = ({
               sizeOverride={buttonSpinnerSize[size]}
               className={cx(
                 {
-                  [css`
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                  `]: !loadingText,
+                  [centeredSpinnerStyles]: !loadingText,
                 },
                 spinnerStyles[theme],
               )}
@@ -82,41 +76,42 @@ export const ButtonContent = ({
             {loadingText}
           </div>
         )}
-        {!loadingText && (
-          <div
-            ref={loadingContentRef}
-            className={cx(buttonContentStyle, buttonContentSizeStyle[size], {
-              [css`
-                justify-content: space-between;
-              `]: !!rightGlyph && darkMode,
-              [css`
-                visibility: hidden;
-              `]: isLoading,
-            })}
-          >
-            {leftGlyph && (
-              <ButtonIcon
-                glyph={leftGlyph}
-                className={css`
-                  justify-self: right;
-                `}
-                {...iconProps}
-              />
-            )}
+        <div
+          ref={loadingContentRef}
+          className={cx(buttonContentStyle, buttonContentSizeStyle[size], {
+            [css`
+              justify-content: space-between;
+            `]: !!rightGlyph && darkMode,
+            [css`
+              visibility: hidden;
+            `]: isLoading,
+            [css`
+              display: none;
+            `]: isLoading && !!loadingText,
+          })}
+        >
+          {leftGlyph && (
+            <ButtonIcon
+              glyph={leftGlyph}
+              className={css`
+                justify-self: right;
+              `}
+              {...iconProps}
+            />
+          )}
 
-            {children}
+          {children}
 
-            {rightGlyph && (
-              <ButtonIcon
-                glyph={rightGlyph}
-                className={css`
-                  justify-self: left;
-                `}
-                {...iconProps}
-              />
-            )}
-          </div>
-        )}
+          {rightGlyph && (
+            <ButtonIcon
+              glyph={rightGlyph}
+              className={css`
+                justify-self: left;
+              `}
+              {...iconProps}
+            />
+          )}
+        </div>
       </div>
     </>
   );
