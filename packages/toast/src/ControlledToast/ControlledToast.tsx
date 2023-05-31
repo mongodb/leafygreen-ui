@@ -26,6 +26,12 @@ export const ControlledToast = ({ open, ...props }: ControlledToastProps) => {
       popToast(toastId);
       setToastId(null);
     }
+
+    return () => {
+      // Remove toast on unmount
+      if (toastId) popToast(toastId);
+      // TODO: test?
+    };
   }, [open, popToast, props, pushToast, toastId]);
 
   return <></>;

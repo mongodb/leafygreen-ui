@@ -70,6 +70,24 @@ describe('packages/toast/controlled', () => {
       expect(toast).toBeInTheDocument();
     });
 
+    test('does not render when `open` is true and component is unmounted', async () => {
+      const { queryByTestId } = render(
+        <ToastProvider>
+          {false && (
+            <Toast
+              open={true}
+              title="Test 1"
+              onClose={() => {}}
+              data-testid="test-toast1b"
+            />
+          )}
+        </ToastProvider>,
+      );
+
+      const toast = await waitFor(() => queryByTestId('test-toast1b'));
+      expect(toast).not.toBeInTheDocument();
+    });
+
     test('does not render when `open` is false', async () => {
       const { queryByTestId } = render(
         <ToastProvider>
