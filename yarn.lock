@@ -4693,13 +4693,6 @@
   dependencies:
     lodash "^4.17.15"
 
-"@storybook/csf@^0.0.2-next.10":
-  version "0.0.2-next.10"
-  resolved "https://registry.yarnpkg.com/@storybook/csf/-/csf-0.0.2-next.10.tgz#be71280e08bafae97134770ed9d0e5c75bc02f6c"
-  integrity sha512-m2PFgBP/xRIF85VrDhvesn9ktaD2pN3VUjvMqkAL/cINp/3qXsCyI81uw7N5VEOkQAbWrY2FcydnvEPDEdE8fA==
-  dependencies:
-    type-fest "^2.19.0"
-
 "@storybook/csf@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@storybook/csf/-/csf-0.1.0.tgz#62315bf9704f3aa4e0d4d909b9033833774ddfbe"

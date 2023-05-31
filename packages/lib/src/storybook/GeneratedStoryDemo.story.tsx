@@ -98,7 +98,9 @@ const meta: StoryMetaType<
 };
 export default meta;
 
-export const Generated: GeneratedStoryFn<DemoProps> = () => {};
+export const Generated: GeneratedStoryFn<
+  React.ElementType<DemoProps>
+> = () => {};
 Generated.parameters = {
   chromatic: { disableSnapshot: true },
 };

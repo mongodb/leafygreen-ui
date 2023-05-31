@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import Badge from '@leafygreen-ui/badge';
+import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -336,80 +337,79 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
   const { rows } = table.getRowModel();
 
   return (
-    <>
-      <div>
-        <p>{table.getRowModel().rows.length} total rows</p>
-      </div>
-
-      <Table {...args} table={table} ref={tableContainerRef}>
-        <TableHead>
-          {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
-            <HeaderRow key={headerGroup.id}>
-              {headerGroup.headers.map(header => {
-                return (
-                  <HeaderCell key={header.id} header={header}>
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
-                  </HeaderCell>
-                );
-              })}
-            </HeaderRow>
-          ))}
-        </TableHead>
-        <TableBody>
-          {rows.map((row: LeafyGreenTableRow<Person>) => {
-            return (
-              <Row key={row.id} row={row}>
-                {row
-                  .getVisibleCells()
-                  .map((cell: LeafyGreenTableCell<Person>) => {
-                    return (
-                      <Cell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
-                {row.subRows &&
-                  row.subRows.map(subRow => (
-                    <Row key={subRow.id} row={subRow}>
-                      {subRow.getVisibleCells().map(cell => {
-                        return (
-                          <Cell key={cell.id}>
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext(),
-                            )}
-                          </Cell>
-                        );
-                      })}
-                      {subRow.subRows &&
-                        subRow.subRows.map(subSubRow => (
-                          <Row key={subSubRow.id} row={subSubRow}>
-                            {subSubRow.getVisibleCells().map(cell => {
-                              return (
-                                <Cell key={cell.id}>
-                                  {flexRender(
-                                    cell.column.columnDef.cell,
-                                    cell.getContext(),
-                                  )}
-                                </Cell>
-                              );
-                            })}
-                          </Row>
-                        ))}
-                    </Row>
-                  ))}
-              </Row>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </>
+    <Table
+      {...args}
+      table={table}
+      ref={tableContainerRef}
+      data-total-rows={table.getRowModel().rows.length}
+    >
+      <TableHead>
+        {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+          <HeaderRow key={headerGroup.id}>
+            {headerGroup.headers.map(header => {
+              return (
+                <HeaderCell key={header.id} header={header}>
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext(),
+                  )}
+                </HeaderCell>
+              );
+            })}
+          </HeaderRow>
+        ))}
+      </TableHead>
+      <TableBody>
+        {rows.map((row: LeafyGreenTableRow<Person>) => {
+          return (
+            <Row key={row.id} row={row}>
+              {row
+                .getVisibleCells()
+                .map((cell: LeafyGreenTableCell<Person>) => {
+                  return (
+                    <Cell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </Cell>
+                  );
+                })}
+              {row.subRows &&
+                row.subRows.map(subRow => (
+                  <Row key={subRow.id} row={subRow}>
+                    {subRow.getVisibleCells().map(cell => {
+                      return (
+                        <Cell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
+                    {subRow.subRows &&
+                      subRow.subRows.map(subSubRow => (
+                        <Row key={subSubRow.id} row={subSubRow}>
+                          {subSubRow.getVisibleCells().map(cell => {
+                            return (
+                              <Cell key={cell.id}>
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext(),
+                                )}
+                              </Cell>
+                            );
+                          })}
+                        </Row>
+                      ))}
+                  </Row>
+                ))}
+            </Row>
+          );
+        })}
+      </TableBody>
+    </Table>
   );
 };
 
@@ -466,53 +466,52 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
   const { rows } = table.getRowModel();
 
   return (
-    <>
-      <div>
-        <p>{table.getRowModel().rows.length} total rows</p>
-      </div>
-
-      <Table {...args} table={table} ref={tableContainerRef}>
-        <TableHead>
-          {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
-            <HeaderRow key={headerGroup.id}>
-              {headerGroup.headers.map(header => {
-                return (
-                  <HeaderCell key={header.id} header={header}>
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
-                  </HeaderCell>
-                );
-              })}
-            </HeaderRow>
-          ))}
-        </TableHead>
-        <TableBody>
-          {rows.map((row: LeafyGreenTableRow<Person>) => {
-            return (
-              <Row key={row.id} row={row}>
-                {row
-                  .getVisibleCells()
-                  .map((cell: LeafyGreenTableCell<Person>) => {
-                    return (
-                      <Cell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
-                {row.original.renderExpandedContent && (
-                  <ExpandedContent row={row} />
-                )}
-              </Row>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </>
+    <Table
+      {...args}
+      table={table}
+      ref={tableContainerRef}
+      data-total-rows={table.getRowModel().rows.length}
+    >
+      <TableHead>
+        {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+          <HeaderRow key={headerGroup.id}>
+            {headerGroup.headers.map(header => {
+              return (
+                <HeaderCell key={header.id} header={header}>
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext(),
+                  )}
+                </HeaderCell>
+              );
+            })}
+          </HeaderRow>
+        ))}
+      </TableHead>
+      <TableBody>
+        {rows.map((row: LeafyGreenTableRow<Person>) => {
+          return (
+            <Row key={row.id} row={row}>
+              {row
+                .getVisibleCells()
+                .map((cell: LeafyGreenTableCell<Person>) => {
+                  return (
+                    <Cell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </Cell>
+                  );
+                })}
+              {row.original.renderExpandedContent && (
+                <ExpandedContent row={row} />
+              )}
+            </Row>
+          );
+        })}
+      </TableBody>
+    </Table>
   );
 };
 
@@ -573,48 +572,43 @@ export const SortableRows: StoryFn<StoryTableProps> = args => {
   const { rows } = table.getRowModel();
 
   return (
-    <>
-      <div>
-        <p>{table.getRowModel().rows.length} total rows</p>
-      </div>
-
-      <Table {...args} ref={tableContainerRef}>
-        <TableHead>
-          {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
-            <HeaderRow key={headerGroup.id}>
-              {headerGroup.headers.map(header => {
+    <Table
+      {...args}
+      ref={tableContainerRef}
+      data-total-rows={table.getRowModel().rows.length}
+    >
+      <TableHead>
+        {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+          <HeaderRow key={headerGroup.id}>
+            {headerGroup.headers.map(header => {
+              return (
+                <HeaderCell key={header.id} header={header}>
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext(),
+                  )}
+                </HeaderCell>
+              );
+            })}
+          </HeaderRow>
+        ))}
+      </TableHead>
+      <TableBody>
+        {rows.map((row: LeafyGreenTableRow<Person>) => {
+          return (
+            <Row key={row.id} row={row}>
+              {row.getVisibleCells().map(cell => {
                 return (
-                  <HeaderCell key={header.id} header={header}>
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
-                  </HeaderCell>
+                  <Cell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </Cell>
                 );
               })}
-            </HeaderRow>
-          ))}
-        </TableHead>
-        <TableBody>
-          {rows.map((row: LeafyGreenTableRow<Person>) => {
-            return (
-              <Row key={row.id} row={row}>
-                {row.getVisibleCells().map(cell => {
-                  return (
-                    <Cell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </Cell>
-                  );
-                })}
-              </Row>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </>
+            </Row>
+          );
+        })}
+      </TableBody>
+    </Table>
   );
 };
 
@@ -677,18 +671,17 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
   const { rows } = table.getRowModel();
 
   return (
-    <>
+    <div>
       <div>
-        <p>{table.getRowModel().rows.length} total rows</p>
-        <button
+        <Button
           onClick={
             // eslint-disable-next-line no-console
             () => console.info('rowSelection', rowSelection)
           }
         >
           Log rowSelection state
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={() =>
             // eslint-disable-next-line no-console
             console.info(
@@ -698,10 +691,15 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
           }
         >
           Log table.getSelectedFlatRows()
-        </button>
+        </Button>
       </div>
 
-      <Table {...args} table={table} ref={tableContainerRef}>
+      <Table
+        {...args}
+        table={table}
+        ref={tableContainerRef}
+        data-total-rows={table.getRowModel().rows.length}
+      >
         <TableHead>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
             <HeaderRow key={headerGroup.id}>
@@ -737,7 +735,7 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
           })}
         </TableBody>
       </Table>
-    </>
+    </div>
   );
 };
 
@@ -799,13 +797,20 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
   const { rows } = table.getRowModel();
 
   return (
-    <>
-      <div>
-        <p>{data.length} total rows</p>
-        <pre>{JSON.stringify(table.getState().pagination, null, 2)}</pre>
-      </div>
-
-      <Table darkMode={darkMode} {...rest} ref={tableContainerRef}>
+    <div>
+      <Table
+        darkMode={darkMode}
+        {...rest}
+        ref={tableContainerRef}
+        data-debug={JSON.stringify(
+          {
+            totalRows: data.length,
+            ...table.getState().pagination,
+          },
+          null,
+          2,
+        )}
+      >
         <TableHead>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
             <HeaderRow key={headerGroup.id}>
@@ -860,6 +865,6 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
         onForwardArrowClick={() => table.nextPage()}
         darkMode={darkMode}
       />
-    </>
+    </div>
   );
 };

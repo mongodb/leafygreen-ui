@@ -26,6 +26,9 @@ const meta: StoryMetaType<typeof V11Adapter> = {
   component: V11Adapter,
   parameters: {
     default: null,
+    chromatic: {
+      disableSnapshot: true,
+    },
   },
 };
 export default meta;

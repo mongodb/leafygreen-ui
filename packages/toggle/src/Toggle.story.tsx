@@ -47,7 +47,7 @@ export const WithLabel: StoryFn<ToggleProps> = ({
   // eslint-disable-next-line react/prop-types
   ...args
 }) => (
-  <>
+  <div>
     <label
       htmlFor="toggle"
       id="label"
@@ -61,7 +61,7 @@ export const WithLabel: StoryFn<ToggleProps> = ({
     </label>
 
     <Toggle id="toggle" aria-labelledby="toggle" {...args} />
-  </>
+  </div>
 );
 WithLabel.parameters = {
   chromatic: {
