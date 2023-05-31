@@ -3,7 +3,11 @@
 import React from 'react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import { type StoryMetaType, type StoryType } from '@leafygreen-ui/lib';
+import {
+  StorybookArgTypes,
+  type StoryMetaType,
+  type StoryType,
+} from '@leafygreen-ui/lib';
 
 import { Size } from './types';
 import Button, { ButtonProps, Variant } from '.';
@@ -40,44 +44,29 @@ const meta: StoryMetaType<typeof Button> = {
     },
   },
   argTypes: {
-    disabled: {
-      control: { type: 'boolean' },
-    },
-    leftGlyph: {
-      options: Object.keys(glyphs),
-      control: { type: 'select' },
-    },
-    rightGlyph: {
-      options: Object.keys(glyphs),
-      control: { type: 'select' },
-    },
-    type: {
-      control: 'select',
-      options: ['button', 'submit'],
-      defaultValue: 'button',
-    },
-    size: {
-      control: 'select',
-      options: Object.values(Size),
-      defaultValue: Size.Default,
-    },
-    href: {
-      control: 'text',
-    },
+    disabled: StorybookArgTypes.Boolean(),
+    leftGlyph: StorybookArgTypes.Select(Object.keys(glyphs)),
+    rightGlyph: StorybookArgTypes.Select(Object.keys(glyphs)),
+    type: StorybookArgTypes.Select(['button', 'submit']),
+    size: StorybookArgTypes.Select(Object.values(Size)),
+    href: StorybookArgTypes.Text(),
   },
 };
 
 export default meta;
 
-export const LiveExample: StoryType<typeof Button> = ({
+interface StoryProps {
+  leftGlyph: string;
+  rightGlyph: string;
+}
+
+export const LiveExample: StoryType<typeof Button, StoryProps> = ({
   leftGlyph,
   rightGlyph,
   ...args
-}: ButtonProps) => (
+}: ButtonProps & StoryProps) => (
   <Button
-    // @ts-expect-error
     leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
-    // @ts-expect-error
     rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
     {...args}
   />

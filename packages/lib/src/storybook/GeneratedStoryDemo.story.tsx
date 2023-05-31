@@ -104,6 +104,3 @@ export default meta;
 export const Generated: GeneratedStoryFn<
   React.ElementType<DemoProps>
 > = () => {};
-Generated.parameters = {
-  chromatic: { disableSnapshot: true },
-};
