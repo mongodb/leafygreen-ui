@@ -94,6 +94,9 @@ const meta: StoryMetaType<
         );
       },
     },
+    chromatic: {
+      disableSnapshot: false,
+    },
   },
 };
 export default meta;
