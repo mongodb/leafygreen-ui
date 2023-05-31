@@ -3,7 +3,7 @@ import { StoryFn } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import {
-  storybookArgTypes,
+  defaultStorybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -55,7 +55,7 @@ const meta: StoryMetaType<typeof InputOption> = {
     description: {
       control: { type: 'text' },
     },
-    as: storybookArgTypes.as,
+    as: defaultStorybookArgTypes.as,
   },
 };
 

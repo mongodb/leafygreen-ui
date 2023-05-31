@@ -5,7 +5,7 @@ import React from 'react';
 import { Table, Row, Cell, TableHeader, HeaderRow, DataType } from '.';
 import { defaultData } from './fixtures.testutils';
 import { TableProps } from './Table';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { defaultStorybookArgTypes } from '@leafygreen-ui/lib';
 
 export default {
   title: 'Components/Table/V10',
@@ -23,7 +23,7 @@ export default {
     children: { control: 'none' },
     data: { control: 'none' },
     columns: { control: 'none' },
-    darkMode: storybookArgTypes.darkMode,
+    darkMode: defaultStorybookArgTypes.darkMode,
     ref: { control: 'none' },
   },
 } as Meta<typeof Table>;

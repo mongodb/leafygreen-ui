@@ -3,7 +3,7 @@ import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import { defaultStorybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 import {
@@ -126,11 +126,11 @@ export const AllTypography = ({
 };
 AllTypography.argTypes = {
   baseFontSize: {
-    ...storybookArgTypes.baseFontSize,
+    ...defaultStorybookArgTypes.baseFontSize,
     description:
       'Storybook prop only. This font size is passed into the LeafygreenProvider.',
   },
-  darkMode: storybookArgTypes.darkMode,
+  darkMode: defaultStorybookArgTypes.darkMode,
 };
 
 export const StaticWidthTextStory = () => {

@@ -2,7 +2,7 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import Code from '@leafygreen-ui/code';
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import { defaultStorybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
 import Callout, { CalloutProps, Variant } from '.';
@@ -25,8 +25,8 @@ const meta: StoryMetaType<typeof Callout> = {
         type: 'text',
       },
     },
-    children: storybookArgTypes.children,
-    darkMode: storybookArgTypes.darkMode,
+    children: defaultStorybookArgTypes.children,
+    darkMode: defaultStorybookArgTypes.darkMode,
   },
 };
 export default meta;
