@@ -3,7 +3,7 @@ import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
 import {
-  storybookArgTypes,
+  defaultStorybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -51,7 +51,7 @@ const meta: StoryMetaType<typeof RadioBoxGroup> = {
   argTypes: {
     name: { control: 'text' },
     value: { control: 'text' },
-    darkMode: storybookArgTypes.darkMode,
+    darkMode: defaultStorybookArgTypes.darkMode,
   },
 };
 export default meta;

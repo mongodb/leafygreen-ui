@@ -6,7 +6,7 @@ import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import {
-  storybookArgTypes,
+  defaultStorybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -80,8 +80,8 @@ const meta: StoryMetaType<typeof Tooltip> = {
   },
   argTypes: {
     open: { control: 'boolean' },
-    darkMode: storybookArgTypes.darkMode,
-    children: storybookArgTypes.children,
+    darkMode: defaultStorybookArgTypes.darkMode,
+    children: defaultStorybookArgTypes.children,
     baseFontSize: {
       control: 'radio',
       options: Object.values(BaseFontSize),

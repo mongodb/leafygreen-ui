@@ -3,7 +3,7 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import { BoxProps } from '@leafygreen-ui/box';
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import { defaultStorybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 
 import Card, { CardProps } from '.';
 
@@ -27,9 +27,9 @@ const meta: StoryMetaType<typeof Card, BoxProps> = {
   },
   argTypes: {
     href: { control: 'text' },
-    as: storybookArgTypes.as,
-    darkMode: storybookArgTypes.darkMode,
-    children: storybookArgTypes.children,
+    as: defaultStorybookArgTypes.as,
+    darkMode: defaultStorybookArgTypes.darkMode,
+    children: defaultStorybookArgTypes.children,
   },
 };
 export default meta;

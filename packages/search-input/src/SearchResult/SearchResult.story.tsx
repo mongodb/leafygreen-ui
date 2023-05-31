@@ -2,7 +2,7 @@
 import React from 'react';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import { defaultStorybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 
 import { SearchResult, type SearchResultProps } from '.';
 
@@ -32,8 +32,8 @@ const meta: StoryMetaType<typeof SearchResult> = {
     description: 'This is a description',
   },
   argTypes: {
-    children: storybookArgTypes.children,
-    darkMode: storybookArgTypes.darkMode,
+    children: defaultStorybookArgTypes.children,
+    darkMode: defaultStorybookArgTypes.darkMode,
     description: {
       control: 'text',
     },

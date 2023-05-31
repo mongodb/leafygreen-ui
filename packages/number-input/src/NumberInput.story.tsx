@@ -3,7 +3,7 @@ import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
 import {
-  storybookArgTypes,
+  defaultStorybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -77,7 +77,7 @@ const meta: StoryMetaType<typeof NumberInput> = {
     disabled: false,
   },
   argTypes: {
-    darkMode: storybookArgTypes.darkMode,
+    darkMode: defaultStorybookArgTypes.darkMode,
     size: {
       control: 'select',
       options: Object.values(Size),

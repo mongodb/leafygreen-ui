@@ -2,7 +2,8 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import { defaultStorybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import { spacing } from '@leafygreen-ui/tokens';
 
 import BasicEmptyStateStoryMeta, {
   WithActionsAndLink,
@@ -41,7 +42,7 @@ const meta: StoryMetaType<typeof BasicEmptyState | typeof FeaturesEmptyState> =
         control: 'radio',
         options: Object.values(StoryVariant),
       },
-      darkMode: storybookArgTypes.darkMode,
+      darkMode: defaultStorybookArgTypes.darkMode,
     },
     parameters: {
       default: 'LiveExample',

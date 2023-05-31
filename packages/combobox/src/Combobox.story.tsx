@@ -4,7 +4,7 @@ import { StoryFn } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import {
-  storybookArgTypes,
+  defaultStorybookArgTypes,
   storybookExcludedControlParams,
   type StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -87,7 +87,7 @@ const meta: StoryMetaType<typeof Combobox> = {
   },
 
   argTypes: {
-    darkMode: storybookArgTypes.darkMode,
+    darkMode: defaultStorybookArgTypes.darkMode,
     multiselect: { control: 'boolean' },
     disabled: { control: 'boolean' },
     clearable: { control: 'boolean' },

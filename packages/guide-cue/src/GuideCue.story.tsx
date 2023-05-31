@@ -5,7 +5,7 @@ import { StoryFn } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import {
-  storybookArgTypes,
+  defaultStorybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -86,7 +86,7 @@ const meta: StoryMetaType<typeof GuideCue> = {
     },
   },
   argTypes: {
-    darkMode: storybookArgTypes.darkMode,
+    darkMode: defaultStorybookArgTypes.darkMode,
     numberOfSteps: {
       control: 'number',
     },

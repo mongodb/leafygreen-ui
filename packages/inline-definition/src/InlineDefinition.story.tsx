@@ -3,7 +3,7 @@ import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
 import {
-  storybookArgTypes,
+  defaultStorybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -35,7 +35,7 @@ const meta: StoryMetaType<typeof InlineDefinition> = {
   argTypes: {
     definition: { control: 'text' },
     children: { control: 'text' },
-    darkMode: storybookArgTypes.darkMode,
+    darkMode: defaultStorybookArgTypes.darkMode,
   },
 };
 

@@ -2,7 +2,7 @@ import React, { SyntheticEvent, useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import {
-  storybookArgTypes,
+  defaultStorybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -40,8 +40,8 @@ const meta: StoryMetaType<typeof ExpandableCard> = {
   argTypes: {
     description: { control: 'text' },
     flagText: { control: 'text' },
-    children: storybookArgTypes.children,
-    darkMode: storybookArgTypes.darkMode,
+    children: defaultStorybookArgTypes.children,
+    darkMode: defaultStorybookArgTypes.darkMode,
     defaultOpen: { control: 'boolean' },
     isOpen: { control: 'boolean' },
     id: { control: 'text' },
