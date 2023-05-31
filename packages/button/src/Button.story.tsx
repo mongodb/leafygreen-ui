@@ -1,9 +1,8 @@
 /* eslint-disable react/display-name */
 import React from 'react';
-import { StoryFn } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import { type StoryMetaType } from '@leafygreen-ui/lib';
+import { type StoryMetaType, type StoryType } from '@leafygreen-ui/lib';
 
 import { Size } from './types';
 import Button, { ButtonProps, Variant } from '.';
