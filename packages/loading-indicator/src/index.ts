@@ -1,3 +1,3 @@
-import BlobLoader, { type BlobLoaderProps } from './BlobLoader';
+import PageLoader, { type PageLoaderProps } from './PageLoader';
 import Spinner, { type SpinnerProps } from './Spinner';
-export { BlobLoader, type BlobLoaderProps, Spinner, type SpinnerProps };
+export { PageLoader, type PageLoaderProps, Spinner, type SpinnerProps };
