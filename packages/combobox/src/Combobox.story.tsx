@@ -87,7 +87,7 @@ const meta: StoryMetaType<typeof Combobox> = {
   },
 
   argTypes: {
-    darkMode: defaultStorybookArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
     multiselect: { control: 'boolean' },
     disabled: { control: 'boolean' },
     clearable: { control: 'boolean' },

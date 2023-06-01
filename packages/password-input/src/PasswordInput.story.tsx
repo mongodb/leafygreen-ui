@@ -115,7 +115,7 @@ const meta: StoryMetaType<typeof PasswordInput> = {
     stateNotifications: [],
   },
   argTypes: {
-    darkMode: defaultStorybookArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
     disabled: {
       control: 'boolean',
     },

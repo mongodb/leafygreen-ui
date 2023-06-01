@@ -49,7 +49,7 @@ const meta: StoryMetaType<typeof Banner> = {
       control: { type: 'select' },
       defaultValue: Variant.Info,
     },
-    children: defaultStorybookArgTypes.children,
+    children: storybookArgTypes.children,
     glyph: {
       options: [undefined, ...Object.keys(glyphs)],
       control: { type: 'select' },

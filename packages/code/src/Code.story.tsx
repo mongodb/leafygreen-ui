@@ -84,7 +84,7 @@ const meta: StoryMetaType<typeof Code> = {
     showWindowChrome: { control: 'boolean' },
     showLineNumbers: { control: 'boolean' },
     highlightLines: { control: 'boolean' },
-    darkMode: defaultStorybookArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
     chromeTitle: { control: 'text' },
     lineNumberStart: { control: 'number' },
     baseFontSize: storybookArgTypes.baseFontSize,
