@@ -4,6 +4,7 @@ import { StoryFn } from '@storybook/react';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 import { Size } from './Skeleton/Skeleton.types';
+import { CardSkeleton } from './CardSkeleton';
 import { ParagraphSkeleton } from './ParagraphSkeleton';
 import { Skeleton } from '.';
 
@@ -19,7 +20,7 @@ export default {
     },
   },
   decorators: [
-    Story => (
+    (Story: StoryFn) => (
       <div style={{ width: 700 }}>
         <Story />
       </div>
@@ -37,3 +38,7 @@ export const Paragraph: StoryFn<typeof ParagraphSkeleton> = props => (
 Paragraph.argTypes = {
   withHeader: { control: 'boolean' },
 };
+
+export const Card: StoryFn<typeof CardSkeleton> = props => (
+  <CardSkeleton {...props} />
+);

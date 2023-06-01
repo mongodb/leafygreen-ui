@@ -9,6 +9,9 @@
   "include": ["src/**/*"],
   "references": [
     {
+      "path": "../card"
+    },
+    {
       "path": "../emotion"
     },
     {
@@ -16,6 +19,9 @@
     },
     {
       "path": "../palette"
+    },
+    {
+      "path": "../tokens"
     }
   ]
 }
