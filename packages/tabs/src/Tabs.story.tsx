@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from '@emotion/styled';
 import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
@@ -18,9 +17,14 @@ import { Body, Subtitle } from '@leafygreen-ui/typography';
 
 import { Tab, Tabs, TabsProps } from './index';
 
-const CardWithMargin = styled(Card)`
-  margin: 1em;
-`;
+const CardWithMargin = (props: any) => (
+  <Card
+    {...props}
+    className={css`
+      margin: 1em;
+    `}
+  />
+);
 
 const Lipsum = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ullamcorper nulla non metus auctor fringilla.`;
 
