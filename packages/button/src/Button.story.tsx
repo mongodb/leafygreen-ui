@@ -2,6 +2,7 @@
 /* eslint-disable react/display-name */
 import React from 'react';
 import { StoryFn } from '@storybook/react';
+import { userEvent, within } from '@storybook/testing-library';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import { storybookArgTypes, type StoryMetaType } from '@leafygreen-ui/lib';
@@ -94,6 +95,12 @@ export const LiveExample: StoryFn<typeof Button> = ({
     {...args}
   />
 );
+LiveExample.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const button = canvas.getByRole('button');
+
+  await userEvent.click(button);
+};
 
 export const LoadingState = LiveExample.bind({});
 LoadingState.args = {
