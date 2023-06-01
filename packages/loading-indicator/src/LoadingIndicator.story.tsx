@@ -1,12 +1,12 @@
 import React from 'react';
-import { ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
 import {
   DarkModeProps,
   storybookArgTypes,
   storybookExcludedControlParams,
-  StoryMeta,
+  StoryMetaType,
 } from '@leafygreen-ui/lib';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Body, InlineCode } from '@leafygreen-ui/typography';
@@ -14,7 +14,7 @@ import { Body, InlineCode } from '@leafygreen-ui/typography';
 import { DisplayOption } from './Spinner/Spinner.types';
 import { BlobLoader, Spinner } from '.';
 
-export default StoryMeta({
+const meta: StoryMetaType<any> = {
   title: 'Components/LoadingIndicator',
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -26,7 +26,9 @@ export default StoryMeta({
       exclude: storybookExcludedControlParams,
     },
   },
-});
+};
+
+export default meta;
 
 const storyRootStyles = css`
   display: flex;
@@ -44,7 +46,7 @@ const labelStyles = css`
   margin-top: ${spacing[5]}px;
 `;
 
-const Template: ComponentStory<typeof Spinner> = (
+const Template: StoryFn<typeof Spinner> = (
   props: {
     description?: string;
   } & DarkModeProps,
