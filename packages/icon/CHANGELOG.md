@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 11.16.1
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+
 ## 11.16.0
 
 ### Minor Changes

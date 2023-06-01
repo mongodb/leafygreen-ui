@@ -1,5 +1,21 @@
 # @leafygreen-ui/text-area
 
+## 8.0.11
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- d2ce54e2f: Exports primary component props
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [75099c60b]
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [0cd471676]
+  - @leafygreen-ui/hooks@7.7.4
+  - @leafygreen-ui/icon@11.16.1
+  - @leafygreen-ui/leafygreen-provider@3.1.3
+  - @leafygreen-ui/lib@10.3.4
+  - @leafygreen-ui/typography@16.5.0
+
 ## 8.0.10
 
 ### Patch Changes

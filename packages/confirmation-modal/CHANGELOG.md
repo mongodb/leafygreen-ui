@@ -1,5 +1,23 @@
 # @leafygreen-ui/confirmation-modal
 
+## 4.0.8
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- d2ce54e2f: Exports primary component props
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [75099c60b]
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [0cd471676]
+- Updated dependencies [2dfc4d0ea]
+  - @leafygreen-ui/button@20.1.0
+  - @leafygreen-ui/icon@11.16.1
+  - @leafygreen-ui/leafygreen-provider@3.1.3
+  - @leafygreen-ui/modal@15.0.2
+  - @leafygreen-ui/text-input@12.1.13
+  - @leafygreen-ui/typography@16.5.0
+
 ## 4.0.7
 
 ### Patch Changes
