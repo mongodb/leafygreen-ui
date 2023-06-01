@@ -17,7 +17,7 @@ const trigger = <button data-testid="menu-trigger">trigger</button>;
 function renderMenu(props: Omit<MenuProps, 'children'> = {}) {
   const utils = render(
     <Menu {...props} data-testid={menuTestId}>
-      <MenuItem>Item A</MenuItem>
+      <MenuItem data-testid="menu-item-a">Item A</MenuItem>
       <MenuSeparator />
       <MenuItem href="http://mongodb.design">Item B</MenuItem>
     </Menu>,
@@ -62,6 +62,54 @@ describe('packages/menu', () => {
       fireEvent.click(button);
 
       await waitForElementToBeRemoved(menuItem);
+    });
+
+    test('clicking a menuitem closes the menu', () => {
+      const { getByRole, getByTestId } = renderMenu({
+        trigger,
+      });
+      const button = getByRole('button');
+
+      userEvent.click(button);
+      const menu = getByTestId(menuTestId);
+
+      waitFor(() => {
+        expect(menu).toBeInTheDocument();
+      });
+
+      const menuItem = getByTestId('menu-item-a');
+      userEvent.click(menuItem);
+
+      waitFor(() => {
+        expect(menu).not.toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('when controlled', () => {
+    const ControlledExample = () => {
+      const [open, setOpen] = React.useState(true);
+
+      return (
+        <Menu open={open} setOpen={setOpen} data-testid="controlled-menu">
+          <MenuItem data-testid="controlled-menu-item">Text</MenuItem>
+        </Menu>
+      );
+    };
+
+    test('clicking a menuitem closes the menu', () => {
+      const { getByTestId } = render(<ControlledExample />);
+
+      const menu = getByTestId('controlled-menu');
+      const menuItem = getByTestId('controlled-menu-item');
+
+      expect(menu).toBeInTheDocument();
+
+      userEvent.click(menuItem);
+
+      waitFor(() => {
+        expect(menu).not.toBeInTheDocument();
+      });
     });
   });
 
