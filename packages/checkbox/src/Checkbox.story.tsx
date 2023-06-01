@@ -4,7 +4,7 @@ import { StoryFn } from '@storybook/react';
 import { css } from '@leafygreen-ui/emotion';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import {
-  defaultStorybookArgTypes,
+  storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -23,12 +23,12 @@ const meta: StoryMetaType<typeof Checkbox> = {
   argTypes: {
     label: { control: 'text' },
     description: { control: 'text' },
-    darkMode: defaultStorybookArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
     disabled: { control: 'boolean' },
     bold: { control: 'boolean' },
     indeterminate: { control: 'boolean' },
     animate: { control: 'boolean', default: true },
-    baseFontSize: defaultStorybookArgTypes.baseFontSize,
+    baseFontSize: storybookArgTypes.baseFontSize,
   },
 };
 export default meta;

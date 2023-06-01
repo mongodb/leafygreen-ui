@@ -3,7 +3,7 @@ import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import {
-  defaultStorybookArgTypes,
+  storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
   Theme,
@@ -31,7 +31,7 @@ const meta: StoryMetaType<typeof BasicEmptyState> = {
     externalLink: { control: 'none' },
     primaryButton: { control: 'none' },
     secondaryButton: { control: 'none' },
-    darkMode: defaultStorybookArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
   },
   parameters: {
     default: null,

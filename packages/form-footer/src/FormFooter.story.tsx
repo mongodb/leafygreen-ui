@@ -5,7 +5,7 @@ import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import {
-  defaultStorybookArgTypes,
+  storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -33,7 +33,7 @@ const meta: StoryMetaType<typeof FormFooter> = {
     primaryButtonText: 'Button',
   },
   argTypes: {
-    darkMode: defaultStorybookArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
     cancelButtonText: { control: 'text' },
     backButtonText: { control: 'text' },
     errorMessage: { control: 'text' },

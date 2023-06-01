@@ -16,7 +16,7 @@ export {
   StoryMeta,
   type StoryMetaType,
   type StoryType,
-  defaultStorybookArgTypes,
+  storybookArgTypes,
   storybookExcludedArgTypes,
   storybookExcludedControlParams,
   IntrinsicElements,

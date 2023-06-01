@@ -21,7 +21,7 @@ export interface StoryArgType extends InputType {
       };
 }
 
-export const defaultStorybookArgTypes: Record<string, StoryArgType> = {
+export const storybookArgTypes: Record<string, StoryArgType> = {
   baseFontSize: {
     description:
       'The base font size passed to the LeafyGreenProvider that wraps the component',
@@ -52,8 +52,7 @@ export const defaultStorybookArgTypes: Record<string, StoryArgType> = {
   },
 } as const;
 
-/**
- * By default we set argType to `control:none`
+/** By default we set argType to `control:none`
  * for props we don't want to control in Storybook
  */
 export const storybookExcludedArgTypes: Record<string, StoryArgType> = {

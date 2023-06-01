@@ -2,7 +2,7 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
-import { defaultStorybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 
 import { makeData, Person } from './utils/makeData.testutils';
 import {
@@ -33,7 +33,7 @@ const meta: StoryMetaType<typeof Table> = {
   component: Table,
   argTypes: {
     children: { control: 'none' },
-    darkMode: defaultStorybookArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
     ref: { control: 'none' },
   },
   parameters: {

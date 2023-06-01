@@ -5,7 +5,7 @@ import { kebabCase, startCase } from 'lodash';
 
 import { css } from '@leafygreen-ui/emotion';
 import {
-  defaultStorybookArgTypes,
+  storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -24,7 +24,7 @@ const meta: StoryMetaType<typeof SearchInput> = {
   title: 'Components/SearchInput',
   component: SearchInput,
   argTypes: {
-    darkMode: defaultStorybookArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
     state: { control: 'select', options: Object.values(State) },
     placeholder: { control: 'text' },
     disabled: { control: 'boolean' },

@@ -2,7 +2,7 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { defaultStorybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 
 import TextArea, { TextAreaProps } from '.';
 
@@ -22,7 +22,7 @@ const meta: StoryMetaType<typeof TextArea> = {
     label: { control: 'text' },
     description: { control: 'text' },
     errorMessage: { control: 'text' },
-    darkMode: defaultStorybookArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
     ref: { control: 'none' },
   },
   args: {

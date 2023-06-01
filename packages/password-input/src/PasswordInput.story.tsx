@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import {
-  defaultStorybookArgTypes,
+  storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -22,7 +22,7 @@ const meta: StoryMetaType<typeof PasswordInput> = {
     stateNotifications: [],
   },
   argTypes: {
-    darkMode: defaultStorybookArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
     disabled: {
       control: 'boolean',
     },

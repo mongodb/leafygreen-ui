@@ -7,7 +7,7 @@ import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import {
-  defaultStorybookArgTypes,
+  storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
   Theme,
@@ -39,8 +39,8 @@ const meta: StoryMetaType<typeof SideNav> = {
     },
   },
   argTypes: {
-    darkMode: defaultStorybookArgTypes.darkMode,
-    baseFontSize: defaultStorybookArgTypes.baseFontSize,
+    darkMode: storybookArgTypes.darkMode,
+    baseFontSize: storybookArgTypes.baseFontSize,
   },
   args: {
     widthOverride: 200,
@@ -422,5 +422,5 @@ export const Nested = ({ darkMode, ...rest }: SideNavProps) => {
 };
 
 Nested.argTypes = {
-  darkMode: defaultStorybookArgTypes.darkMode,
+  darkMode: storybookArgTypes.darkMode,
 };

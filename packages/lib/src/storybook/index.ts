@@ -1,5 +1,5 @@
 export {
-  defaultStorybookArgTypes,
+  storybookArgTypes,
   storybookExcludedArgTypes,
 } from './storybookArgTypes';
 export { storybookExcludedControlParams } from './storybookExcludedControlParams';
