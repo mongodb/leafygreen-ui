@@ -13,15 +13,15 @@
 /packages/card/
 /packages/checkbox/
 /packages/code/
-/packages/combobox/
+/packages/combobox/ @thesonofthomp
 /packages/confirmation-modal/
 /packages/copyable/
 /packages/emotion/
 /packages/empty-state/
-/packages/expandable-card/
-/packages/form-footer/
+/packages/expandable-card/ @thesonofthomp
+/packages/form-footer/ @thesonofthomp
 /packages/guide-cue/
-/packages/hooks/
+/packages/hooks/ @thesonofthomp
 /packages/icon/
 /packages/icon-button/
 /packages/inline-definition/
@@ -32,31 +32,35 @@
 /packages/marketing-modal/
 /packages/menu/
 /packages/modal/
-/packages/mongo-nav/
 /packages/number-input/
 /packages/pagination/
 /packages/palette/
 /packages/password-input/
 /packages/pipeline/
 /packages/popover/
-/packages/polymorphic/
+/packages/polymorphic/ @thesonofthomp
 /packages/portal/
 /packages/radio-box-group/
 /packages/radio-group/
 /packages/ripple/
-/packages/search-input/
-/packages/segmented-control/
+/packages/search-input/ @thesonofthomp
+/packages/segmented-control/ @thesonofthomp
 /packages/select/
 /packages/side-nav/
 /packages/split-button/
 /packages/stepper/
-/packages/table/
+/packages/table/ @thesonofthomp
 /packages/tabs/
 /packages/testing-lib/
 /packages/text-area/
 /packages/text-input/
-/packages/toast/
+/packages/toast/ @thesonofthomp
 /packages/toggle/
 /packages/tokens/
 /packages/tooltip/
-/packages/typography/
+/packages/typography/ 
+
+/scripts @thesonofthomp
+/scripts/slackbot @thesonofthomp
+
+./storybook/ @thesonofthomp
