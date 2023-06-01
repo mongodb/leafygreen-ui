@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/menu': minor
+'@leafygreen-ui/menu': major
 ---
 
 Clicking on a MenuItem closes the Menu component
