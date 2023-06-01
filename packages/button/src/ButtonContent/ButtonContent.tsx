@@ -37,7 +37,6 @@ export const ButtonContent = ({
 }: ButtonContentProps) => {
   const { darkMode, theme } = useDarkMode(darkModeProp);
   const rippleRef = useRef<HTMLDivElement | null>(null);
-  const loadingContentRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     let unregisterRipple: (() => void) | undefined;
