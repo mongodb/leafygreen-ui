@@ -1,5 +1,22 @@
 # @leafygreen-ui/typography
 
+## 16.5.0
+
+### Minor Changes
+
+- 75099c60b: types `LinkProps` and `InlineCodeProps` accept a generic
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [0cd471676]
+  - @leafygreen-ui/icon@11.16.1
+  - @leafygreen-ui/leafygreen-provider@3.1.3
+  - @leafygreen-ui/lib@10.3.4
+  - @leafygreen-ui/polymorphic@1.3.2
+
 ## 16.4.1
 
 ### Patch Changes
