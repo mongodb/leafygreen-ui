@@ -1,12 +1,12 @@
 import React from 'react';
-import { ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
-import { StoryMeta } from '@leafygreen-ui/lib';
+import { StoryMetaType } from '@leafygreen-ui/lib';
 
 import Spinner from './Spinner';
 import { DisplayOption } from './Spinner.types';
 
-export default StoryMeta({
+const meta: StoryMetaType<typeof Spinner> = {
   title: 'Components/LoadingIndicator/Spinner',
   component: Spinner,
   argTypes: {
@@ -17,11 +17,11 @@ export default StoryMeta({
   parameters: {
     default: 'Default',
   },
-});
+};
 
-const Template: ComponentStory<typeof Spinner> = props => (
-  <Spinner {...props} />
-);
+export default meta;
+
+const Template: StoryFn<typeof Spinner> = props => <Spinner {...props} />;
 
 export const Default = Template.bind({});
 
