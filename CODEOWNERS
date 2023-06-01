@@ -4,15 +4,15 @@
 
 # Example: /packages/example/ @bruugey
 
-/packages/a11y/
-/packages/badge/
-/packages/banner/
+/packages/a11y/ @bruugey @thesonofthomp
+/packages/badge/ @shaneeza @spark33
+/packages/banner/ @shaneeza
 /packages/box/
 /packages/button/ @spark33
-/packages/callout/
-/packages/card/
-/packages/checkbox/
-/packages/code/
+/packages/callout/ @shaneeza
+/packages/card/ @spark33
+/packages/checkbox/ @thesonofthomp
+/packages/code/ @designerdave
 /packages/combobox/ @thesonofthomp @shaneeza
 /packages/confirmation-modal/ @shaneeza
 /packages/copyable/
@@ -46,7 +46,7 @@
 /packages/search-input/ @thesonofthomp
 /packages/segmented-control/ @thesonofthomp
 /packages/select/ @thesonofthomp
-/packages/side-nav/
+/packages/side-nav/ @designerdave
 /packages/split-button/ @shaneeza
 /packages/stepper/ @spark33
 /packages/table/ @spark33 @thesonofthomp
