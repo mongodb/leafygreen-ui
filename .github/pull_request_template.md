@@ -16,6 +16,7 @@
 
 - [ ] I have added my new package to the global tsconfig
 - [ ] I have added my new package to the Table of Contents on the global README
+- [ ] I have verified the Live Example looks as intended on the design website.
 
 ## 🧪 How to test changes
 
