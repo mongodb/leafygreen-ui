@@ -287,7 +287,11 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
               {React.Children.map(
                 children as React.ReactElement,
                 (child, index) => {
-                  const { className, ...rest } = child.props;
+                  const {
+                    className,
+                    onClick: childOnClick,
+                    ...rest
+                  } = child.props;
                   return React.cloneElement(child, {
                     size: Size.Default,
                     children: (
@@ -326,7 +330,7 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
                       e: React.MouseEvent<HTMLAnchorElement, MouseEvent> &
                         React.MouseEvent<HTMLButtonElement, MouseEvent>,
                     ) => {
-                      child.props?.onClick?.(e);
+                      childOnClick?.(e);
                       if (onClick) {
                         onClick(e);
                       }

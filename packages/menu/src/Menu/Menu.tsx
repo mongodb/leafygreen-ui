@@ -207,7 +207,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
             ref: setRef,
             onFocus,
             onClick: (e: React.MouseEvent) => {
-              child.props?.omClick?.(e);
+              child.props?.onClick?.(e);
               handleClose();
             },
           });

@@ -122,7 +122,6 @@ export const SubMenuExample = ({
       <Menu
         darkMode={darkMode}
         trigger={<Button darkMode={darkMode} rightGlyph={<EllipsisIcon />} />}
-        {...args}
       >
         <MenuItem size={size} glyph={<CloudIcon />}>
           Menu Item
