@@ -21,4 +21,5 @@ export interface BaseLinkProps extends ResponsiveTypographyProps {
 }
 
 // For external consumption only
-export type LinkProps = InferredPolymorphicProps<PolymorphicAs, BaseLinkProps>;
+export type LinkProps<T extends PolymorphicAs = PolymorphicAs> =
+  InferredPolymorphicProps<T, BaseLinkProps>;
