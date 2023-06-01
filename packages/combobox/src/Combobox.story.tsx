@@ -5,7 +5,7 @@ import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import {
-  storybookArgTypes,
+  defaultStorybookArgTypes,
   storybookExcludedControlParams,
   type StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -50,7 +50,7 @@ const meta: StoryMetaType<typeof Combobox> = {
     },
   },
   argTypes: {
-    darkMode: storybookArgTypes.darkMode,
+    darkMode: defaultStorybookArgTypes.darkMode,
     multiselect: {
       control: 'boolean',
     },

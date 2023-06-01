@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import {
-  storybookArgTypes,
+  defaultStorybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -49,7 +49,7 @@ const meta: StoryMetaType<typeof TextInput> = {
       control: 'select',
       options: Object.values(SizeVariant),
     },
-    baseFontSize: storybookArgTypes.updatedBaseFontSize,
+    baseFontSize: defaultStorybookArgTypes.updatedBaseFontSize,
   },
   parameters: {
     default: 'Basic',

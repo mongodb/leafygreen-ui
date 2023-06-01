@@ -3,7 +3,7 @@ import { StoryFn } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import {
-  storybookArgTypes,
+  defaultStorybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -35,7 +35,7 @@ const meta: StoryMetaType<typeof Banner> = {
       control: { type: 'select' },
       defaultValue: Variant.Info,
     },
-    children: storybookArgTypes.children,
+    children: defaultStorybookArgTypes.children,
   },
 };
 export default meta;

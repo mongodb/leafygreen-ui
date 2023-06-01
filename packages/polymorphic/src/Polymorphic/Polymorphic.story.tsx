@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import { defaultStorybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 
 import {
   Polymorph,
@@ -18,8 +18,8 @@ const meta: StoryMetaType<typeof Polymorph> = {
     href: 'mongodb.design',
   },
   argTypes: {
-    as: storybookArgTypes.as,
-    children: storybookArgTypes.children,
+    as: defaultStorybookArgTypes.as,
+    children: defaultStorybookArgTypes.children,
     href: {
       control: 'text',
       if: { arg: 'as', eq: 'a' },

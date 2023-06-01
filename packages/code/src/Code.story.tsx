@@ -6,7 +6,7 @@ import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import {
-  storybookArgTypes,
+  defaultStorybookArgTypes,
   storybookExcludedControlParams,
   type StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -59,10 +59,10 @@ const meta: StoryMetaType<typeof Code> = {
     copyable: { control: 'boolean' },
     showWindowChrome: { control: 'boolean' },
     showLineNumbers: { control: 'boolean' },
-    darkMode: storybookArgTypes.darkMode,
+    darkMode: defaultStorybookArgTypes.darkMode,
     chromeTitle: { control: 'text' },
     lineNumberStart: { control: 'number' },
-    baseFontSize: storybookArgTypes.baseFontSize,
+    baseFontSize: defaultStorybookArgTypes.baseFontSize,
   },
   parameters: {
     default: 'Basic',

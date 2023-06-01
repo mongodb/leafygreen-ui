@@ -1,7 +1,10 @@
 import React from 'react';
 import { StoryFn } from '@storybook/react';
 
-import { storybookArgTypes, type StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  defaultStorybookArgTypes,
+  type StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import Box, { BoxProps } from '.';
 
@@ -14,7 +17,7 @@ const meta: StoryMetaType<typeof Box, BoxProps> = {
   },
   argTypes: {
     as: {
-      ...storybookArgTypes.as,
+      ...defaultStorybookArgTypes.as,
       defaultValue: 'div',
     },
     href: {
