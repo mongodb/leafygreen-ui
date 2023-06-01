@@ -9,19 +9,19 @@ import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 import { descriptionThemeColor } from '../LoadingIndicator.styles';
 
 import animationJson from './animation';
-import { blobStyles, rootStyles } from './BlobLoader.styles';
-import { BlobLoaderProps } from './BlobLoader.types';
+import { blobStyles, rootStyles } from './PageLoader.styles';
+import { PageLoaderProps } from './PageLoader.types';
 
 /**
  * Displays an animation of various brand shapes morphing from one to another paired with description text
  */
-const BlobLoader = ({
+const PageLoader = ({
   baseFontSize: baseFontSizeProp,
   description,
   darkMode: darkModeProp,
   className,
   ...rest
-}: BlobLoaderProps) => {
+}: PageLoaderProps) => {
   const { theme } = useDarkMode(darkModeProp);
   const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
   return (
@@ -39,9 +39,9 @@ const BlobLoader = ({
   );
 };
 
-BlobLoader.propTypes = {
+PageLoader.propTypes = {
   darkMode: PropTypes.bool,
   description: PropTypes.string,
 };
 
-export default BlobLoader;
+export default PageLoader;
