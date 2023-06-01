@@ -2,6 +2,8 @@
 
 # Please note, this is a WIP team convention, and a stanp from a codeowner is not required to merge a new change into the repo
 
+# Example: /packages/example/ @bruugey
+
 /packages/a11y/
 /packages/badge/
 /packages/banner/
