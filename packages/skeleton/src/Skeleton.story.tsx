@@ -5,6 +5,7 @@ import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 import { Size } from './Skeleton/Skeleton.types';
 import { CardSkeleton } from './CardSkeleton';
+import { FormSkeleton } from './FormSkeleton';
 import { ParagraphSkeleton } from './ParagraphSkeleton';
 import { Skeleton } from '.';
 
@@ -41,4 +42,8 @@ Paragraph.argTypes = {
 
 export const Card: StoryFn<typeof CardSkeleton> = props => (
   <CardSkeleton {...props} />
+);
+
+export const Form: StoryFn<typeof FormSkeleton> = props => (
+  <FormSkeleton {...props} />
 );
