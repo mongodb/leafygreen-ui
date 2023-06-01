@@ -1,7 +1,6 @@
 import { Meta, StoryFn, StoryObj } from '@storybook/react';
 import { ComponentProps } from 'react';
 import DarkModeProps from '../DarkModeProps';
-import { GeneratedStoryConfig } from './GeneratedStoryDecorator.types';
 
 import { StoryArgType } from './storybookArgTypes';
 
@@ -46,11 +45,6 @@ type StoryParameters<T extends React.ElementType> = Meta<T>['parameters'] & {
    * Explicitly exclude a default story by setting this to `null`
    */
   default: string | null;
-
-  /**
-   * The configuration for the generated stories
-   */
-  generate?: GeneratedStoryConfig<T>;
 
   controls?: ControlsConfig;
 

@@ -1,5 +1,6 @@
 /* eslint-disable react/display-name */
 import React from 'react';
+import { StoryFn } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import {
@@ -33,13 +34,15 @@ const meta: StoryMetaType<typeof Button> = {
 
 export default meta;
 
-export const Playground: StoryFn<ButtonProps> = ({
+export const Playground: StoryType<typeof Button> = ({
   leftGlyph,
   rightGlyph,
   ...args
-}: ButtonProps & StoryProps) => (
+}: ButtonProps) => (
   <Button
+    // @ts-expect-error
     leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
+    // @ts-expect-error
     rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
     {...args}
   />
