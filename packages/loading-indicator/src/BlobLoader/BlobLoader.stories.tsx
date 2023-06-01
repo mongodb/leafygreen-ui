@@ -4,7 +4,6 @@ import { StoryFn } from '@storybook/react';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 
 import BlobLoader from './BlobLoader';
-import { BlobLoaderProps } from '.';
 
 const meta: StoryMetaType<typeof BlobLoader> = {
   title: 'Components/LoadingIndicator/BlobLoader',
@@ -19,7 +18,7 @@ const meta: StoryMetaType<typeof BlobLoader> = {
 
 export default meta;
 
-const Template: StoryFn<BlobLoaderProps> = props => <BlobLoader {...props} />;
+const Template: StoryFn<typeof BlobLoader> = props => <BlobLoader {...props} />;
 
 export const Default = Template.bind({});
 
