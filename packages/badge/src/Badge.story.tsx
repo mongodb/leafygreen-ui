@@ -1,7 +1,7 @@
 import React from 'react';
 import { StoryFn } from '@storybook/react';
 
-import { defaultStorybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 
 import Badge, { BadgeProps, Variant } from '.';
 
@@ -21,7 +21,7 @@ const meta: StoryMetaType<typeof Badge> = {
     children: 'Badge',
   },
   argTypes: {
-    darkMode: defaultStorybookArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
   },
 };
 export default meta;

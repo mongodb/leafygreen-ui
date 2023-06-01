@@ -2,11 +2,7 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
-import {
-  defaultStorybookArgTypes,
-  StoryMetaType,
-  Theme,
-} from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMetaType, Theme } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
 import { graphics } from '../example-graphics';
@@ -25,7 +21,7 @@ const meta: StoryMetaType<typeof FeaturesEmptyState> = {
     externalLink: { control: 'none' },
     primaryButton: { control: 'none' },
     secondaryButton: { control: 'none' },
-    darkMode: defaultStorybookArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
   },
   parameters: {
     default: null,

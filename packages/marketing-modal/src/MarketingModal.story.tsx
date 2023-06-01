@@ -5,7 +5,7 @@ import { StoryFn } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import {
-  defaultStorybookArgTypes,
+  storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -46,8 +46,8 @@ const meta: StoryMetaType<typeof MarketingModal> = {
       control: 'radio',
       options: Object.values(BlobPosition),
     },
-    children: defaultStorybookArgTypes.children,
-    darkMode: defaultStorybookArgTypes.darkMode,
+    children: storybookArgTypes.children,
+    darkMode: storybookArgTypes.darkMode,
   },
   parameters: {
     default: 'Basic',

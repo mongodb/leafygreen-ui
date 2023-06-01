@@ -68,7 +68,7 @@ const GeneratedStoryDecorator: Decorator = (
 
     // reversing since the PropCombos recursion is depth-first
     variables.reverse();
-    return (
+    const GeneratedStory: StoryFn<unknown> = () => (
       <div className={generatedStoryWrapper}>
         <PropCombinations
           component={component}
@@ -79,6 +79,8 @@ const GeneratedStoryDecorator: Decorator = (
         />
       </div>
     );
+
+    return <GeneratedStory />;
   } else {
     return <StoryFn />;
   }

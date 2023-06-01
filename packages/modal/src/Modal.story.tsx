@@ -6,7 +6,7 @@ import Code from '@leafygreen-ui/code';
 import Copyable from '@leafygreen-ui/copyable';
 import { css, cx } from '@leafygreen-ui/emotion';
 import {
-  defaultStorybookArgTypes,
+  storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -20,7 +20,7 @@ const meta: StoryMetaType<typeof Modal> = {
   title: 'Components/Modals/Modal',
   component: Modal,
   argTypes: {
-    darkMode: defaultStorybookArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
     size: {
       options: Object.values(ModalSize),
       control: 'radio',

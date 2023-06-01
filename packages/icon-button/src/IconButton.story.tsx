@@ -4,7 +4,7 @@ import { StoryFn } from '@storybook/react';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import {
   DarkModeProps,
-  defaultStorybookArgTypes,
+  storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -34,7 +34,7 @@ const meta: StoryMetaType<typeof IconButton> = {
     children: <CloudIcon />,
   },
   argTypes: {
-    darkMode: defaultStorybookArgTypes.darkMode,
+    darkMode: storybookArgTypes.darkMode,
     href: { control: 'string' },
     active: { control: 'boolean' },
     disabled: { control: 'boolean' },

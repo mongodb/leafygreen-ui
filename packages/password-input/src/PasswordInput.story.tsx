@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import {
-  defaultStorybookArgTypes,
+  storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';

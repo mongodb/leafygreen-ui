@@ -4,7 +4,7 @@ import { StoryFn } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import {
-  defaultStorybookArgTypes,
+  storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -38,8 +38,8 @@ const meta: StoryMetaType<typeof ConfirmationModal> = {
     open: { control: 'boolean' },
     title: { control: 'text' },
     buttonText: { control: 'text' },
-    children: defaultStorybookArgTypes.children,
-    darkMode: defaultStorybookArgTypes.darkMode,
+    children: storybookArgTypes.children,
+    darkMode: storybookArgTypes.darkMode,
     variant: {
       control: 'select',
       options: Object.values(Variant),

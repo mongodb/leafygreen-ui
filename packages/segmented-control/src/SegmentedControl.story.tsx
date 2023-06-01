@@ -2,7 +2,7 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import {
-  defaultStorybookArgTypes,
+  storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -71,8 +71,8 @@ const meta: StoryMetaType<typeof SegmentedControl> = {
         options: [...Object.values(Size)],
       },
     },
-    darkMode: defaultStorybookArgTypes.darkMode,
-    baseFontSize: defaultStorybookArgTypes.updatedBaseFontSize,
+    darkMode: storybookArgTypes.darkMode,
+    baseFontSize: storybookArgTypes.updatedBaseFontSize,
   },
 };
 export default meta;
