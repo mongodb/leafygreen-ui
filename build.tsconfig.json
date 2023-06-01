@@ -72,6 +72,9 @@
       "path": "./packages/lib"
     },
     {
+      "path": "./packages/loading-indicator"
+    },
+    {
       "path": "./packages/logo"
     },
     {
@@ -127,6 +130,9 @@
     },
     {
       "path": "./packages/side-nav"
+    },
+    {
+      "path": "./packages/split-button"
     },
     {
       "path": "./packages/stepper"
