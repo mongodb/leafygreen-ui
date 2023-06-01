@@ -87,7 +87,7 @@ async function checkDependencies() {
 
       // Check if every usage of every listed devDep is in some test file
       const everyListedDevDepUsedInTestFileOnly = listedDev.every(depName =>
-        using[depName].every(file =>
+        using[depName]?.every(file =>
           ignoreFilePatterns.some(pattern => pattern.test(file)),
         ),
       );
