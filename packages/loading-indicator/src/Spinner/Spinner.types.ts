@@ -28,6 +28,11 @@ export interface SpinnerProps extends DarkModeProps, HTMLElementProps<'div'> {
   sizeOverride?: number;
 
   /**
+   * An override for the spinner animation’s color. Intended for internal use.
+   */
+  colorOverride?: string;
+
+  /**
    * The base font size of the description text.
    */
   baseFontSize?: BaseFontSize;
