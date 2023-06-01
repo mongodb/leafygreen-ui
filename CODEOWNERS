@@ -13,31 +13,31 @@
 /packages/card/
 /packages/checkbox/
 /packages/code/
-/packages/combobox/ @thesonofthomp
-/packages/confirmation-modal/
+/packages/combobox/ @thesonofthomp @shaneeza
+/packages/confirmation-modal/ @shaneeza
 /packages/copyable/
 /packages/emotion/
 /packages/empty-state/ @spark33
 /packages/expandable-card/ @thesonofthomp @spark33
 /packages/form-footer/ @thesonofthomp
-/packages/guide-cue/
+/packages/guide-cue/ @shaneeza
 /packages/hooks/ @thesonofthomp
 /packages/icon/
 /packages/icon-button/
-/packages/inline-definition/
+/packages/inline-definition/ @shaneeza
 /packages/leafygreen-provider/
 /packages/lib/
 /packages/loading-indicator/ @spark33
 /packages/logo/
-/packages/marketing-modal/
+/packages/marketing-modal/ @shaneeza
 /packages/menu/
-/packages/modal/
-/packages/number-input/
+/packages/modal/ @shaneeza
+/packages/number-input/ @shaneeza
 /packages/pagination/ @spark33
 /packages/palette/
-/packages/password-input/
-/packages/pipeline/
-/packages/popover/
+/packages/password-input/ @shaneeza
+/packages/pipeline/ @shaneeza
+/packages/popover/ @shaneeza
 /packages/polymorphic/ @thesonofthomp
 /packages/portal/
 /packages/radio-box-group/
@@ -47,7 +47,7 @@
 /packages/segmented-control/ @thesonofthomp
 /packages/select/
 /packages/side-nav/
-/packages/split-button/
+/packages/split-button/ @shaneeza
 /packages/stepper/ @spark33
 /packages/table/ @spark33 @thesonofthomp
 /packages/tabs/
@@ -57,7 +57,7 @@
 /packages/toast/ @thesonofthomp
 /packages/toggle/
 /packages/tokens/
-/packages/tooltip/
+/packages/tooltip/ @shaneeza
 /packages/typography/ 
 
 /scripts @thesonofthomp
