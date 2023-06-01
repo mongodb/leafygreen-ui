@@ -1,7 +1,7 @@
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
-export interface BlobLoaderProps
+export interface PageLoaderProps
   extends DarkModeProps,
     HTMLElementProps<'div'> {
   /**
