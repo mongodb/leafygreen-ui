@@ -23,7 +23,7 @@ const meta: StoryMetaType<any> = {
   parameters: {
     default: 'LiveExample',
     controls: {
-      exclude: storybookExcludedControlParams,
+      exclude: [...storybookExcludedControlParams],
     },
   },
 };
