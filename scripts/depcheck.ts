@@ -86,16 +86,18 @@ async function checkDependencies() {
       const listedDev = _listedDevObj ? Object.keys(_listedDevObj) : [];
 
       // Check if every usage of every listed devDep is in some test file
-      const everyListedDevDepUsedInTestFileOnly = listedDev.every(depName =>
-        using[depName]?.every(file =>
+      const isDependencyUsedInTestFileOnly = (depName: string) =>
+        using?.[depName]?.every(file =>
           ignoreFilePatterns.some(pattern => pattern.test(file)),
-        ),
+        );
+      const everyListedDevDepUsedInTestFileOnly = listedDev.every(
+        isDependencyUsedInTestFileOnly,
       );
 
       if (listedDev.length && !everyListedDevDepUsedInTestFileOnly) {
         // add the dependencies that are listed as dev but not used as dev to the unused array to uninstall them
         const listedButNotUsedAsDev = listedDev.filter(
-          dep => !usedAsDev.includes(dep) && !ignoreMatches.includes(dep),
+          dep => !usedAsDev.includes(dep),
         );
 
         verbose &&
@@ -108,9 +110,11 @@ async function checkDependencies() {
           console.log(
             listedButNotUsedAsDev
               .map(
-                depName =>
-                  `\t${chalk.bold(depName)} used in: \n\t\t${using[depName]
-                    .map(file => file.replace(join(__dirname, '..'), ''))
+                devDepName =>
+                  `\t${chalk.bold(devDepName)} used in: \n\t\t${using?.[
+                    devDepName
+                  ]
+                    ?.map(file => file.replace(join(__dirname, '..'), ''))
                     .join('\n\t\t')}`,
               )
               .join('\n'),
@@ -134,10 +138,21 @@ async function checkDependencies() {
 
       // Check if at least one usage of every listed dep is not in any test file
 
-      const everyListedDependencyUsedInPackageFile = listedDeps.every(depName =>
-        using[depName]?.some(
+      const isDependencyUsedInPackageFile = (depName: string) => {
+        // consider a dependency used in a package file if
+        // its in `ignoreMatches`
+        const isIgnored = ignoreMatches.includes(depName);
+        const usedInPackageFile = using?.[depName]?.some(
+          // is used in at least one...
+          // file that is not ignored
           file => !ignoreFilePatterns.some(pattern => pattern.test(file)),
-        ),
+        );
+
+        return isIgnored || usedInPackageFile;
+      };
+
+      const everyListedDependencyUsedInPackageFile = listedDeps.every(
+        isDependencyUsedInPackageFile,
       );
 
       if (
@@ -146,23 +161,24 @@ async function checkDependencies() {
         !everyListedDependencyUsedInPackageFile
       ) {
         const listedButOnlyUsedAsDev = listedDeps.filter(
-          dep =>
-            !usedAsDependency.includes(dep) && !ignoreMatches.includes(dep),
+          listedDepName =>
+            !usedAsDependency.includes(listedDepName) &&
+            !ignoreMatches.includes(listedDepName),
         );
 
         verbose &&
           console.log(
             `${chalk.blue(
               pkg,
-            )}: lists packages as dependency, but ony uses them in test files`,
+            )}: lists packages as dependency, but only uses them in test files`,
           );
         verbose &&
           console.log(
             listedButOnlyUsedAsDev
               .map(
                 depName =>
-                  `\t${depName}: \n\t\t${using[depName]
-                    .map(file => file.replace(join(__dirname, '..'), ''))
+                  `\t${depName}: \n\t\t${using?.[depName]
+                    ?.map(file => file.replace(join(__dirname, '..'), ''))
                     .join('\n\t\t')}`,
               )
               .join('\n'),
@@ -174,7 +190,7 @@ async function checkDependencies() {
 
     const usesProvider = Boolean(using[lgProvider]);
     const isMissingProviderPeer =
-      usesProvider && !pkgJson.peerDependencies[lgProvider];
+      usesProvider && !pkgJson?.peerDependencies?.[lgProvider];
 
     const countMissing = Object.keys(missing.dependencies).length;
     const countMissingDev = Object.keys(missing.devDependencies).length;
