@@ -8,7 +8,7 @@
 /packages/badge/
 /packages/banner/
 /packages/box/
-/packages/button/
+/packages/button/ @spark33
 /packages/callout/
 /packages/card/
 /packages/checkbox/
@@ -17,8 +17,8 @@
 /packages/confirmation-modal/
 /packages/copyable/
 /packages/emotion/
-/packages/empty-state/
-/packages/expandable-card/ @thesonofthomp
+/packages/empty-state/ @spark33
+/packages/expandable-card/ @thesonofthomp @spark33
 /packages/form-footer/ @thesonofthomp
 /packages/guide-cue/
 /packages/hooks/ @thesonofthomp
@@ -27,13 +27,13 @@
 /packages/inline-definition/
 /packages/leafygreen-provider/
 /packages/lib/
-/packages/loading-indicator/
+/packages/loading-indicator/ @spark33
 /packages/logo/
 /packages/marketing-modal/
 /packages/menu/
 /packages/modal/
 /packages/number-input/
-/packages/pagination/
+/packages/pagination/ @spark33
 /packages/palette/
 /packages/password-input/
 /packages/pipeline/
@@ -48,8 +48,8 @@
 /packages/select/
 /packages/side-nav/
 /packages/split-button/
-/packages/stepper/
-/packages/table/ @thesonofthomp
+/packages/stepper/ @spark33
+/packages/table/ @spark33 @thesonofthomp
 /packages/tabs/
 /packages/testing-lib/
 /packages/text-area/
@@ -63,4 +63,5 @@
 /scripts @thesonofthomp
 /scripts/slackbot @thesonofthomp
 
-./storybook/ @thesonofthomp
+./storybook/ @thesonofthomp @spark33
+./.github/ @thesonofthomp @spark33
