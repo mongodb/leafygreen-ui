@@ -104,6 +104,11 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     (typeof controlledOpen === 'boolean' && controlledSetOpen) ||
     uncontrolledSetOpen;
   const open = controlledOpen ?? uncontrolledOpen;
+  const handleClose = useCallback(() => {
+    if (shouldClose()) {
+      setOpen(false);
+    }
+  }, [setOpen, shouldClose]);
 
   const triggerRef = useRef<HTMLElement>(null);
   const availableSpace = useAvailableSpace(refEl || triggerRef, spacing);
@@ -201,6 +206,10 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           return React.cloneElement(child, {
             ref: setRef,
             onFocus,
+            onClick: (e: React.MouseEvent) => {
+              child.props?.onClick?.(e);
+              handleClose();
+            },
           });
         }
 
@@ -228,7 +237,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     }
 
     return { updatedChildren: updateChildren(children), refs };
-  }, [children, currentSubMenu, open]);
+  }, [children, currentSubMenu, open, handleClose]);
 
   const [focused, setFocused] = useState<HTMLElement>(refs[0] || null);
 
@@ -249,12 +258,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
       hasSetInitialOpen.current = false;
     }
   }, [open]);
-
-  const handleClose = useCallback(() => {
-    if (shouldClose()) {
-      setOpen(false);
-    }
-  }, [setOpen, shouldClose]);
 
   const handleBackdropClick = useCallback(
     (e: MouseEvent) => {
