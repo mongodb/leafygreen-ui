@@ -39,7 +39,6 @@ const meta: StoryMetaType<typeof TextArea> = {
     description: { control: 'text' },
     errorMessage: { control: 'text' },
     darkMode: storybookArgTypes.darkMode,
-    darkMode: storybookArgTypes.darkMode,
   },
   args: {
     label: 'Label',
