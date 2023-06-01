@@ -1,5 +1,15 @@
 # @leafygreen-ui/radio-box-group
 
+## 12.0.8
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [d2ce54e2f]
+  - @leafygreen-ui/hooks@7.7.4
+  - @leafygreen-ui/leafygreen-provider@3.1.3
+
 ## 12.0.7
 
 ### Patch Changes
