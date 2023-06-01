@@ -2,4 +2,4 @@
 '@leafygreen-ui/typography': minor
 ---
 
-type LinkProps accepts a generic
+types `LinkProps` and `InlineCodeProps` accept a generic
