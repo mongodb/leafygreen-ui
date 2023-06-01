@@ -8,7 +8,5 @@ import { ResponsiveTypographyProps } from '../types';
 export type BaseInlineCodeProps = ResponsiveTypographyProps;
 
 // For external consumption only
-export type InlineCodeProps = InferredPolymorphicProps<
-  PolymorphicAs,
-  BaseInlineCodeProps
->;
+export type InlineCodeProps<T extends PolymorphicAs = PolymorphicAs> =
+  InferredPolymorphicProps<T, BaseInlineCodeProps>;

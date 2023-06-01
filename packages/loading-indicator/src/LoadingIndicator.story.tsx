@@ -6,8 +6,8 @@ import {
   DarkModeProps,
   storybookArgTypes,
   storybookExcludedControlParams,
+  StoryMetaType,
 } from '@leafygreen-ui/lib';
-import { type StoryMetaType } from '@leafygreen-ui/lib';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Body, InlineCode } from '@leafygreen-ui/typography';
 
