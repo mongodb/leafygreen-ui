@@ -95,11 +95,12 @@ export const LiveExample: StoryFn<typeof Button> = ({
     {...args}
   />
 );
-LiveExample.play = async ({ canvasElement }) => {
+
+export const Focused = LiveExample.bind({});
+Focused.play = ({ canvasElement }) => {
   const canvas = within(canvasElement);
   const button = canvas.getByRole('button');
-
-  await userEvent.click(button);
+  userEvent.click(button);
 };
 
 export const LoadingState = LiveExample.bind({});
