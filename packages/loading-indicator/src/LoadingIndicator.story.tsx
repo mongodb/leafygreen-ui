@@ -12,7 +12,7 @@ import { spacing } from '@leafygreen-ui/tokens';
 import { Body, InlineCode } from '@leafygreen-ui/typography';
 
 import { DisplayOption } from './Spinner/Spinner.types';
-import { BlobLoader, Spinner } from '.';
+import { PageLoader, Spinner } from '.';
 
 const meta: StoryMetaType<any> = {
   title: 'Components/LoadingIndicator',
@@ -61,7 +61,7 @@ const Template: StoryFn<typeof Spinner> = (
       </div>
     ))}
     <div className={displayOptionContainerStyles}>
-      <BlobLoader {...props} />
+      <PageLoader {...props} />
       <Body className={labelStyles} weight="medium">
         Blob Loader
       </Body>{' '}

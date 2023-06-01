@@ -48,6 +48,7 @@ const meta: StoryMetaType<typeof Button> = {
     disabled: {
       control: { type: 'boolean' },
     },
+    darkMode: storybookArgTypes.darkMode,
     leftGlyph: {
       options: Object.keys(glyphs),
       control: { type: 'select' },
@@ -69,6 +70,12 @@ const meta: StoryMetaType<typeof Button> = {
     href: {
       control: 'text',
     },
+    isLoading: {
+      control: 'boolean',
+    },
+    loadingText: {
+      control: 'text',
+    },
   },
 };
 
@@ -87,5 +94,16 @@ export const LiveExample: StoryFn<typeof Button> = ({
     {...args}
   />
 );
+
+export const LoadingState = LiveExample.bind({});
+LoadingState.args = {
+  isLoading: true,
+};
+
+export const LoadingStateWithText = LiveExample.bind({});
+LoadingStateWithText.args = {
+  isLoading: true,
+  loadingText: 'Saving',
+};
 
 export const Generated = () => {};
