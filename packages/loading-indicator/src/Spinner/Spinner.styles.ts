@@ -24,13 +24,6 @@ export const rootStyles = css`
   text-align: center;
 `;
 
-export const spinnerTransformStyles = (translateBy: number) => css`
-  > svg {
-    // use important flag to override default svg style; only for edge cases
-    transform: translate3d(0px, -${translateBy}px, 0px) !important;
-  }
-`;
-
 export const darkModeSpinnerStyles = css`
   path {
     stroke: ${palette.green.base};

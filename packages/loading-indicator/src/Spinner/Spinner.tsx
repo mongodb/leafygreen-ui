@@ -16,7 +16,6 @@ import {
   rootStyles,
   SpinnerBottomMargins,
   SpinnerSizes,
-  spinnerTransformStyles,
 } from './Spinner.styles';
 import { DisplayOption, SpinnerProps } from './Spinner.types';
 
@@ -33,8 +32,6 @@ const Spinner = ({
   className,
   ...rest
 }: SpinnerProps) => {
-  // base size for the lottie animation's svg
-  const BASE_SIZE = 16;
   const size = sizeOverride ?? SpinnerSizes[displayOption];
   const spinnerMarginBottom = SpinnerBottomMargins[displayOption];
   const { darkMode, theme } = useDarkMode(darkModeProp);
@@ -56,12 +53,11 @@ const Spinner = ({
         loop
         src={animationJson}
         className={cx({
-          // if the size is smaller than the base size of the lottie animation svg, there needs to be a transform to reposition the viewbox
-          [spinnerTransformStyles(BASE_SIZE - size)]: size < BASE_SIZE,
           [darkModeSpinnerStyles]: darkMode,
           [colorOverrideStyles(colorOverride as string)]: !!colorOverride,
         })}
         style={{
+          display: 'flex',
           width: size,
           height: size,
           marginBottom: description ? spinnerMarginBottom : undefined,
