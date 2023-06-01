@@ -4,7 +4,7 @@ import { StoryFn } from '@storybook/react';
 import { css } from '@leafygreen-ui/emotion';
 import {
   DarkModeProps,
-  storybookArgTypes,
+  defaultStorybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -17,13 +17,13 @@ import { BlobLoader, Spinner } from '.';
 const meta: StoryMetaType<any> = {
   title: 'Components/LoadingIndicator',
   argTypes: {
-    darkMode: storybookArgTypes.darkMode,
+    darkMode: defaultStorybookArgTypes.darkMode,
     description: { control: 'text' },
   },
   parameters: {
     default: 'LiveExample',
     controls: {
-      exclude: storybookExcludedControlParams,
+      exclude: [...storybookExcludedControlParams],
     },
   },
 };

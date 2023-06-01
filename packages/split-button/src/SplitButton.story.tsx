@@ -5,7 +5,7 @@ import { StoryFn } from '@storybook/react';
 import { Size } from '@leafygreen-ui/button';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import {
-  storybookArgTypes,
+  defaultStorybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -35,7 +35,7 @@ const meta: StoryMetaType<typeof SplitButton> = {
     ],
   },
   argTypes: {
-    darkMode: storybookArgTypes.darkMode,
+    darkMode: defaultStorybookArgTypes.darkMode,
     disabled: {
       control: 'boolean',
     },

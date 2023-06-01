@@ -1,6 +1,5 @@
 /* eslint-disable react/display-name */
 import React from 'react';
-import { StoryFn } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import {
