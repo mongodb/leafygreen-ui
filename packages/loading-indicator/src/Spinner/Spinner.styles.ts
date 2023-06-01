@@ -30,6 +30,12 @@ export const darkModeSpinnerStyles = css`
   }
 `;
 
+export const colorOverrideStyles = (color: string) => css`
+  path {
+    stroke: ${color};
+  }
+`;
+
 export const horizontalDisplayOptionStyles = css`
   display: flex;
   align-items: center;

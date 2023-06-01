@@ -38,5 +38,10 @@ Horizontal.args = {
 
 export const SizeOverride = Template.bind({});
 SizeOverride.args = {
-  sizeOverride: 100,
+  sizeOverride: 10,
+};
+
+export const ColorOverride = Template.bind({});
+ColorOverride.args = {
+  colorOverride: 'purple',
 };
