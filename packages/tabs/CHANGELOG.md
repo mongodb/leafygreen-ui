@@ -1,5 +1,11 @@
 # @leafygreen-ui/tabs
 
+## 11.1.2
+
+### Patch Changes
+
+- 63b2deb0b: Upgrade button to v20.1.1
+
 ## 11.1.1
 
 ### Patch Changes

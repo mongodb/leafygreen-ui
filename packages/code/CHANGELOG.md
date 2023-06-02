@@ -1,5 +1,13 @@
 # @leafygreen-ui/code
 
+## 14.2.6
+
+### Patch Changes
+
+- 63b2deb0b: Upgrade button to v20.1.1
+- Updated dependencies [63b2deb0b]
+  - @leafygreen-ui/select@10.3.6
+
 ## 14.2.5
 
 ### Patch Changes

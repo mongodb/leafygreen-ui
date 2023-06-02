@@ -1,5 +1,11 @@
 # @leafygreen-ui/form-footer
 
+## 3.0.7
+
+### Patch Changes
+
+- 63b2deb0b: Upgrade button to v20.1.1
+
 ## 3.0.6
 
 ### Patch Changes
