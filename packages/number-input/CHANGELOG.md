@@ -1,5 +1,15 @@
 # @leafygreen-ui/number-input
 
+## 1.0.6
+
+### Patch Changes
+
+- 63b2deb0b: Upgrade button to v20.1.1
+- Updated dependencies [63b2deb0b]
+  - @leafygreen-ui/popover@11.0.11
+  - @leafygreen-ui/select@10.3.6
+  - @leafygreen-ui/tooltip@10.0.3
+
 ## 1.0.5
 
 ### Patch Changes

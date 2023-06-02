@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/select",
-  "version": "10.3.5",
+  "version": "10.3.6",
   "description": "leafyGreen UI Kit Select",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -26,7 +26,7 @@
     "@leafygreen-ui/icon": "^11.16.1",
     "@leafygreen-ui/lib": "^10.3.4",
     "@leafygreen-ui/palette": "^4.0.4",
-    "@leafygreen-ui/popover": "^11.0.10",
+    "@leafygreen-ui/popover": "^11.0.11",
     "@leafygreen-ui/tokens": "^2.1.0",
     "@leafygreen-ui/typography": "^16.5.0",
     "@types/react-is": "^17.0.0",
