@@ -1,5 +1,14 @@
 # @leafygreen-ui/split-button
 
+## 1.0.1
+
+### Patch Changes
+
+- 63b2deb0b: Upgrade button to v20.1.1
+- Updated dependencies [63b2deb0b]
+  - @leafygreen-ui/menu@22.0.1
+  - @leafygreen-ui/popover@11.0.11
+
 ## 1.0.0
 
 ### Major Changes

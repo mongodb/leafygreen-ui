@@ -14,7 +14,17 @@ interface InstanceContext {
 }
 
 export interface GeneratedStoryConfig<T extends React.ElementType> {
-  props: Partial<
+  /**
+   * An array of story names to convert into a Generated stories
+   *
+   * Stories named `Generated` will be included by default
+   */
+  storyNames?: Array<string>;
+
+  /**
+   * The props to iterate over and create combinations
+   */
+  props?: Partial<
     | {
         [key in keyof ExtendedComponentProps<T>]: Array<
           ExtendedComponentProps<T>[key]
@@ -23,7 +33,9 @@ export interface GeneratedStoryConfig<T extends React.ElementType> {
   >;
 
   /**
-   * Specify any prop values that should be different than those defined in `meta`
+   * Specify any prop values that should be different than those defined in `meta`.
+   *
+   * Keys listed in `args` will be omitted from `props`
    */
   args?: Partial<
     | {

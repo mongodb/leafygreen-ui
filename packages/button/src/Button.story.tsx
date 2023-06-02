@@ -1,10 +1,13 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/display-name */
 import React from 'react';
-import { StoryFn } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import { storybookArgTypes, type StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  type StoryMetaType,
+  type StoryType,
+} from '@leafygreen-ui/lib';
 
 import { Size } from './types';
 import Button, { ButtonProps, Variant } from '.';
@@ -16,12 +19,12 @@ const meta: StoryMetaType<typeof Button> = {
   parameters: {
     default: 'LiveExample',
     generate: {
+      storyNames: ['LargeSize', 'DefaultSize', 'SmallSize', 'XSmallSize'],
       props: {
         darkMode: [false, true],
         rightGlyph: [undefined, <Icon glyph={'ArrowRight'} />],
         leftGlyph: [undefined, <Icon glyph={'Cloud'} />],
         children: ['MongoDB', undefined],
-        size: Object.values(Size),
         variant: Object.values(Variant),
       },
       excludeCombinations: [
@@ -70,18 +73,12 @@ const meta: StoryMetaType<typeof Button> = {
     href: {
       control: 'text',
     },
-    isLoading: {
-      control: 'boolean',
-    },
-    loadingText: {
-      control: 'text',
-    },
   },
 };
 
 export default meta;
 
-export const LiveExample: StoryFn<typeof Button> = ({
+export const LiveExample: StoryType<typeof Button> = ({
   leftGlyph,
   rightGlyph,
   ...args
@@ -95,15 +92,38 @@ export const LiveExample: StoryFn<typeof Button> = ({
   />
 );
 
-export const LoadingState = LiveExample.bind({});
-LoadingState.args = {
-  isLoading: true,
+export const LargeSize: StoryType<typeof Button> = () => <></>;
+LargeSize.parameters = {
+  generate: {
+    args: {
+      size: Size.Large,
+    },
+  },
 };
 
-export const LoadingStateWithText = LiveExample.bind({});
-LoadingStateWithText.args = {
-  isLoading: true,
-  loadingText: 'Saving',
+export const DefaultSize: StoryType<typeof Button> = () => <></>;
+DefaultSize.parameters = {
+  generate: {
+    args: {
+      size: Size.Default,
+    },
+  },
 };
 
-export const Generated = () => {};
+export const SmallSize: StoryType<typeof Button> = () => <></>;
+SmallSize.parameters = {
+  generate: {
+    args: {
+      size: Size.Small,
+    },
+  },
+};
+
+export const XSmallSize: StoryType<typeof Button> = () => <></>;
+XSmallSize.parameters = {
+  generate: {
+    args: {
+      size: Size.XSmall,
+    },
+  },
+};
