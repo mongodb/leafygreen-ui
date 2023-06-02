@@ -1,10 +1,13 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/display-name */
 import React from 'react';
-import { StoryFn } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import { storybookArgTypes, type StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  type StoryMetaType,
+  type StoryType,
+} from '@leafygreen-ui/lib';
 
 import { Size } from './types';
 import Button, { ButtonProps, Variant } from '.';
@@ -81,7 +84,7 @@ const meta: StoryMetaType<typeof Button> = {
 
 export default meta;
 
-export const LiveExample: StoryFn<typeof Button> = ({
+export const LiveExample: StoryType<typeof Button> = ({
   leftGlyph,
   rightGlyph,
   ...args
@@ -106,4 +109,20 @@ LoadingStateWithText.args = {
   loadingText: 'Saving',
 };
 
-export const Generated = () => {};
+export const Generated: StoryType<typeof Button> = () => <></>;
+// Generated.parameters = {
+//   generate: {
+//     ...meta.parameters.generate,
+//     args: {
+//       variant: Variant.Danger,
+//       size: Size.Large,
+//     },
+//   },
+// };
+
+// export const Small: StoryType<typeof Button> = () => <></>;
+// Small.parameters = {
+//   generate: {
+//     ...meta.parameters.generate,
+//   },
+// };
