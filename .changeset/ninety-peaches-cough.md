@@ -2,4 +2,4 @@
 '@leafygreen-ui/button': patch
 ---
 
-updates story file and implements GeneratedStory
+Updates story file and implements GeneratedStory
