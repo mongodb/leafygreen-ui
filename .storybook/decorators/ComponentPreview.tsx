@@ -3,7 +3,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { palette } from '@leafygreen-ui/palette';
 import { Decorator, StoryContext, StoryFn } from '@storybook/react';
-import { GENERATED_STORY_NAME } from './GeneratedStory';
+import { isGeneratedStory } from './GeneratedStory';
 
 const rootStyle = css`
   display: flex;
@@ -20,12 +20,13 @@ const darkModeStyle = css`
 
 const decorator: Decorator = (StoryFn: StoryFn, context: StoryContext<any>) => {
   const { darkMode, baseFontSize } = context.args;
-  const isGeneratedStory = context.name === GENERATED_STORY_NAME;
+  console.log(isGeneratedStory(context));
+
   return (
     <LeafyGreenProvider darkMode={darkMode} baseFontSize={baseFontSize}>
       <div
         className={cx({
-          [rootStyle]: !isGeneratedStory,
+          [rootStyle]: !isGeneratedStory(context),
           [darkModeStyle]: darkMode,
         })}
       >

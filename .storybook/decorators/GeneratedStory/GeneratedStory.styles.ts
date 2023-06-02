@@ -5,42 +5,31 @@ import { typeScales } from '@leafygreen-ui/tokens';
 
 const indent = 16;
 
-export const generatedStoryWrapper = css``;
-
-export const propSectionStyles = css`
-  &#darkMode {
-    display: flex;
-  }
+export const generatedStoryWrapper = css`
+  display: flex;
 `;
 
-export const combinationClassName = createUniqueClassName('combo');
 export const combinationStyles = css`
   position: relative;
-  padding: 4px ${indent}px;
   overflow: visible;
-  border-left: 1px solid;
   color: ${palette.gray.base};
-  border-color: ${palette.gray.light1};
   font-size: ${typeScales.body1.fontSize}px;
   line-height: ${typeScales.body1.lineHeight}px;
   width: max-content;
   max-width: 100%;
+`;
 
-  &#darkMode-true,
-  &#darkMode-false {
-    flex: 1;
-    max-width: 50%;
-    padding: ${indent}px;
-  }
+export const combinationStylesDarkModeProp = css`
+  flex: 1;
+  max-width: 50%;
+  padding: ${indent}px;
 
-  &#darkMode-true,
-  &#darkMode-true .${combinationClassName} {
+  &#darkMode-true {
     background-color: ${palette.black};
     color: ${palette.gray.base};
     border-color: ${palette.gray.dark2};
   }
-  &#darkMode-false,
-  &#darkMode-false .${combinationClassName} {
+  &#darkMode-false {
     background-color: ${palette.white};
     color: ${palette.gray.base};
     border-color: ${palette.gray.light1};
@@ -58,5 +47,5 @@ export const combinationNameStylesCI = css`
 
 export const instanceClassName = createUniqueClassName('instance');
 export const instanceStyles = css`
-  padding: 8px ${indent}px 0;
+  margin: ${indent / 2}px;
 `;

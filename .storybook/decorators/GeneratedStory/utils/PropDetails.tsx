@@ -1,14 +1,10 @@
 import React from 'react';
 import { cx } from '@leafygreen-ui/emotion';
-import isChromatic from 'chromatic';
 import { PropsWithChildren } from 'react';
 import {
-  combinationClassName,
-  combinationNameStylesCI,
   combinationStyles,
-  combinationStylesCI,
+  combinationStylesDarkModeProp,
 } from '../GeneratedStory.styles';
-import { valStr } from './valStr';
 
 export function PropDetailsComponent({
   children,
@@ -18,22 +14,12 @@ export function PropDetailsComponent({
   propName: string;
   val: any;
 }>) {
-  return (
-    <details
-      open
-      id={`${propName}-${valStr(val)}`}
-      className={cx(combinationClassName, combinationStyles, {
-        [combinationStylesCI]: isChromatic(),
-      })}
-    >
-      <summary
-        className={cx({
-          [combinationNameStylesCI]: isChromatic(),
-        })}
-      >
-        {propName} = "{`${valStr(val)}`}"
-      </summary>
-      {children}
-    </details>
-  );
+  const isDarkModeProp = propName === 'darkMode';
+  const Wrapper = isDarkModeProp ? 'div' : React.Fragment;
+  const wrapperProps = isDarkModeProp && {
+    id: `${propName}-${val}`,
+    className: cx(combinationStyles, combinationStylesDarkModeProp),
+  };
+
+  return <Wrapper {...wrapperProps}>{children}</Wrapper>;
 }
