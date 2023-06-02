@@ -59,6 +59,7 @@
     "test": "yarn ts-node ./scripts/test.ts",
     "test:local": "yarn test",
     "test:ssr": "yarn test --ssr",
+    "test:storybook": "test-storybook --url http://localhost:9001",
     "ts-node": "npx ts-node -P './tsconfig.json' -O '{\"module\": \"commonjs\", \"resolveJsonModule\": true}'",
     "unlink": "./scripts/unlink.sh",
     "watch": "yarn build -- -- --watch"
@@ -106,6 +107,7 @@
     "@storybook/core-events": "^7.0.11",
     "@storybook/react": "^7.0.11",
     "@storybook/react-webpack5": "^7.0.11",
+    "@storybook/test-runner": "^0.10.0",
     "@storybook/testing-library": "^0.1.0",
     "@storybook/theming": "^7.0.11",
     "@svgr/babel-plugin-replace-jsx-attribute-value": "^5.0.1",

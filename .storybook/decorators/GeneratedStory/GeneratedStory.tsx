@@ -58,7 +58,6 @@ const GeneratedStoryDecorator: Decorator = (
     }
 
     const variables = entries(props);
-
     // Dark mode should be the first prop
     if (props['darkMode'] && variables[0][0] !== 'darkMode') {
       console.warn(
