@@ -14,6 +14,7 @@ import { Decorator, StoryContext, StoryFn } from '@storybook/react';
 import { entries, isUndefined } from 'lodash';
 
 import {
+  StoryType,
   type GeneratedStoryConfig,
   type StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -77,7 +78,7 @@ const GeneratedStoryDecorator: Decorator = (
 
         // reversing since the PropCombos recursion is depth-first
         variables.reverse();
-        const GeneratedStory: StoryFn<unknown> = () => (
+        const GeneratedStory: StoryType<typeof component> = () => (
           <div className={generatedStoryWrapper}>
             <PropCombinations
               component={component}

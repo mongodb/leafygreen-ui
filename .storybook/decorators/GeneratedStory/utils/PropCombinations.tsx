@@ -2,11 +2,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import { GeneratedStoryConfig } from '@leafygreen-ui/lib';
 import { Args, StoryFn } from '@storybook/react';
 import React, { ReactElement } from 'react';
-import {
-  instanceClassName,
-  instanceStyles,
-  propSectionStyles,
-} from '../GeneratedStory.styles';
+import { instanceClassName, instanceStyles } from '../GeneratedStory.styles';
 import { PropDetailsComponent } from './PropDetails';
 import { shouldExcludePropCombo } from './shouldExcludePropCombo';
 
@@ -66,32 +62,23 @@ export function PropCombinations<T extends React.ComponentType<any>>({
 
       if (propValues) {
         return (
-          <div
-            id={`${propName}`}
-            data-options-count={propValues.length}
-            className={propSectionStyles}
-          >
-            {propValues.map(val =>
-              shouldExcludePropCombo<T>({
-                propName,
-                val,
-                props,
-                exclude,
-              }) ? (
-                <></>
-              ) : (
-                <PropDetailsComponent
-                  key={propName + val}
-                  propName={propName}
-                  val={val}
-                >
-                  {RecursiveCombinations({ [propName]: val, ...props }, [
-                    ...vars,
-                  ])}
-                </PropDetailsComponent>
-              ),
+          <>
+            {propValues.map(
+              val =>
+                !shouldExcludePropCombo<T>({
+                  propName,
+                  val,
+                  props,
+                  exclude,
+                }) && (
+                  <PropDetailsComponent propName={propName} val={val}>
+                    {RecursiveCombinations({ [propName]: val, ...props }, [
+                      ...vars,
+                    ])}
+                  </PropDetailsComponent>
+                ),
             )}
-          </div>
+          </>
         );
       } else {
         return <div>No Prop Values</div>;

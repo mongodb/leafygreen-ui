@@ -25,7 +25,6 @@ const meta: StoryMetaType<typeof Button> = {
         rightGlyph: [undefined, <Icon glyph={'ArrowRight'} />],
         leftGlyph: [undefined, <Icon glyph={'Cloud'} />],
         children: ['MongoDB', undefined],
-        size: Object.values(Size),
         variant: Object.values(Variant),
       },
       excludeCombinations: [
