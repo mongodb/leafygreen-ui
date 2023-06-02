@@ -1,5 +1,13 @@
 # @leafygreen-ui/combobox
 
+## 6.0.5
+
+### Patch Changes
+
+- 63b2deb0b: Upgrade button to v20.1.1
+- Updated dependencies [63b2deb0b]
+  - @leafygreen-ui/popover@11.0.11
+
 ## 6.0.4
 
 ### Patch Changes

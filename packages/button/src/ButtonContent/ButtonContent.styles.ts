@@ -49,10 +49,6 @@ export const buttonContentStyle = css`
   z-index: 0;
 `;
 
-export const darkModeRightGlyphStyles = css`
-  justify-content: space-between;
-`;
-
 export const buttonContentSizeStyle: Record<Size, string> = {
   [Size.XSmall]: css`
     padding: 0 7px; // 8px - 1px border
@@ -74,34 +70,3 @@ export const buttonContentSizeStyle: Record<Size, string> = {
     gap: 8px;
   `,
 };
-
-export const centeredSpinnerStyles = css`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
-
-export const buttonSpinnerSize: Record<Size, number> = {
-  [Size.XSmall]: 16,
-  [Size.Small]: 16,
-  [Size.Default]: 16,
-  [Size.Large]: 20,
-};
-
-export const spinnerColor: Record<Theme, string> = {
-  [Theme.Dark]: palette.gray.light1,
-  [Theme.Light]: palette.gray.dark1,
-};
-
-export const hiddenContentStyles = css`
-  visibility: hidden;
-`;
-
-export const leftGlyphStyles = css`
-  justify-self: right;
-`;
-
-export const rightGlyphStyles = css`
-  justify-self: left;
-`;

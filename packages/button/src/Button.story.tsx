@@ -73,12 +73,6 @@ const meta: StoryMetaType<typeof Button> = {
     href: {
       control: 'text',
     },
-    isLoading: {
-      control: 'boolean',
-    },
-    loadingText: {
-      control: 'text',
-    },
   },
 };
 
