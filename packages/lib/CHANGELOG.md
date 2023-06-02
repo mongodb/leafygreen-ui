@@ -1,5 +1,13 @@
 # @leafygreen-ui/lib
 
+## 10.3.4
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- d2ce54e2f: Exports primary component props
+- 0cd471676: Updates `isComponentType` to also check for a displayName inside render
+
 ## 10.3.3
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/hooks
 
+## 7.7.4
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+
 ## 7.7.3
 
 ### Patch Changes

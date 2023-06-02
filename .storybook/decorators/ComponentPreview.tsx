@@ -20,11 +20,12 @@ const darkModeStyle = css`
 
 const decorator: Decorator = (StoryFn: StoryFn, context: StoryContext<any>) => {
   const { darkMode, baseFontSize } = context.args;
+  const isGeneratedStory = context.name === GENERATED_STORY_NAME;
   return (
     <LeafyGreenProvider darkMode={darkMode} baseFontSize={baseFontSize}>
       <div
         className={cx({
-          [rootStyle]: context.name !== GENERATED_STORY_NAME,
+          [rootStyle]: !isGeneratedStory,
           [darkModeStyle]: darkMode,
         })}
       >
