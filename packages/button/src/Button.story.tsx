@@ -92,17 +92,6 @@ export const LiveExample: StoryType<typeof Button> = ({
   />
 );
 
-export const LoadingState = LiveExample.bind({});
-LoadingState.args = {
-  isLoading: true,
-};
-
-export const LoadingStateWithText = LiveExample.bind({});
-LoadingStateWithText.args = {
-  isLoading: true,
-  loadingText: 'Saving',
-};
-
 export const LargeSize: StoryType<typeof Button> = () => <></>;
 LargeSize.parameters = {
   generate: {
