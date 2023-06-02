@@ -5,9 +5,7 @@ import { typeScales } from '@leafygreen-ui/tokens';
 
 const indent = 16;
 
-export const generatedStoryWrapper = css`
-  /* padding: ${indent}px; */
-`;
+export const generatedStoryWrapper = css``;
 
 export const propSectionStyles = css`
   &#darkMode {
