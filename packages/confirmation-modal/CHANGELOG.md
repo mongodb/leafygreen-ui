@@ -1,5 +1,13 @@
 # @leafygreen-ui/confirmation-modal
 
+## 4.0.9
+
+### Patch Changes
+
+- 63b2deb0b: Upgrade button to v20.1.1
+- Updated dependencies [63b2deb0b]
+  - @leafygreen-ui/modal@15.0.3
+
 ## 4.0.8
 
 ### Patch Changes

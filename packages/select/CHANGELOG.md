@@ -1,5 +1,13 @@
 # @leafygreen-ui/select
 
+## 10.3.6
+
+### Patch Changes
+
+- 63b2deb0b: Upgrade button to v20.1.1
+- Updated dependencies [63b2deb0b]
+  - @leafygreen-ui/popover@11.0.11
+
 ## 10.3.5
 
 ### Patch Changes
