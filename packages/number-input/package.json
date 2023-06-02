@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/number-input",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "leafyGreen UI Kit Number Input",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -35,10 +35,10 @@
     "@leafygreen-ui/icon": "^11.16.1",
     "@leafygreen-ui/lib": "^10.3.4",
     "@leafygreen-ui/palette": "^4.0.4",
-    "@leafygreen-ui/popover": "^11.0.10",
-    "@leafygreen-ui/select": "^10.3.5",
+    "@leafygreen-ui/popover": "^11.0.11",
+    "@leafygreen-ui/select": "^10.3.6",
     "@leafygreen-ui/tokens": "^2.1.0",
-    "@leafygreen-ui/tooltip": "^10.0.2",
+    "@leafygreen-ui/tooltip": "^10.0.3",
     "@leafygreen-ui/typography": "^16.5.0",
     "lodash": "^4.17.21"
   },

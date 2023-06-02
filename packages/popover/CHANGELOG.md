@@ -1,5 +1,11 @@
 # @leafygreen-ui/popover
 
+## 11.0.11
+
+### Patch Changes
+
+- 63b2deb0b: Upgrade button to v20.1.1
+
 ## 11.0.10
 
 ### Patch Changes
