@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/empty-state",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "leafyGreen UI Kit Empty State",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

@@ -1,5 +1,13 @@
 # @leafygreen-ui/copyable
 
+## 8.0.11
+
+### Patch Changes
+
+- 63b2deb0b: Upgrade button to v20.1.1
+- Updated dependencies [63b2deb0b]
+  - @leafygreen-ui/tooltip@10.0.3
+
 ## 8.0.10
 
 ### Patch Changes
