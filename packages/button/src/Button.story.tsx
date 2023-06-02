@@ -19,6 +19,7 @@ const meta: StoryMetaType<typeof Button> = {
   parameters: {
     default: 'LiveExample',
     generate: {
+      storyNames: ['LargeSize', 'DefaultSize', 'SmallSize', 'XSmallSize'],
       props: {
         darkMode: [false, true],
         rightGlyph: [undefined, <Icon glyph={'ArrowRight'} />],
@@ -109,20 +110,38 @@ LoadingStateWithText.args = {
   loadingText: 'Saving',
 };
 
-export const Generated: StoryType<typeof Button> = () => <></>;
-// Generated.parameters = {
-//   generate: {
-//     ...meta.parameters.generate,
-//     args: {
-//       variant: Variant.Danger,
-//       size: Size.Large,
-//     },
-//   },
-// };
+export const LargeSize: StoryType<typeof Button> = () => <></>;
+LargeSize.parameters = {
+  generate: {
+    args: {
+      size: Size.Large,
+    },
+  },
+};
 
-// export const Small: StoryType<typeof Button> = () => <></>;
-// Small.parameters = {
-//   generate: {
-//     ...meta.parameters.generate,
-//   },
-// };
+export const DefaultSize: StoryType<typeof Button> = () => <></>;
+DefaultSize.parameters = {
+  generate: {
+    args: {
+      size: Size.Default,
+    },
+  },
+};
+
+export const SmallSize: StoryType<typeof Button> = () => <></>;
+SmallSize.parameters = {
+  generate: {
+    args: {
+      size: Size.Small,
+    },
+  },
+};
+
+export const XSmallSize: StoryType<typeof Button> = () => <></>;
+XSmallSize.parameters = {
+  generate: {
+    args: {
+      size: Size.XSmall,
+    },
+  },
+};
