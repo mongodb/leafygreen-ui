@@ -8,6 +8,7 @@ import { CardSkeleton } from './CardSkeleton';
 import { FormSkeleton } from './FormSkeleton';
 import { ParagraphSkeleton } from './ParagraphSkeleton';
 import { Skeleton } from '.';
+import { TableSkeleton } from './TableSkeleton';
 
 export default {
   title: 'Components/Skeleton',
@@ -47,3 +48,11 @@ export const Card: StoryFn<typeof CardSkeleton> = props => (
 export const Form: StoryFn<typeof FormSkeleton> = props => (
   <FormSkeleton {...props} />
 );
+
+export const Table: StoryFn<typeof TableSkeleton> = props => (
+  <TableSkeleton {...props} />
+);
+Table.args = {
+  numCols: 4,
+  columnLabels: ['Column 1', 'Column 2', 'Column 3', 'Column 4'],
+};
