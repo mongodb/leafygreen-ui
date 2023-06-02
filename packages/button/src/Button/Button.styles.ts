@@ -399,7 +399,7 @@ const sizeStyle: Record<Size, string> = {
   `,
 
   [Size.Large]: css`
-    height: 50px;
+    height: 48px;
     font-size: 18px;
     line-height: 24px;
   `,
