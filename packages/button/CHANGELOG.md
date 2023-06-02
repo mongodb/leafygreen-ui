@@ -1,5 +1,11 @@
 # @leafygreen-ui/button
 
+## 20.1.1
+
+### Patch Changes
+
+- d611bea87: Revert changes made in 20.1.0
+
 ## 20.1.0
 
 ### Minor Changes
