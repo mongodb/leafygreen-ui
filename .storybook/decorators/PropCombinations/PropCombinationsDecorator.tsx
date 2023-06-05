@@ -19,7 +19,7 @@ import {
   type StoryMetaType,
 } from '@leafygreen-ui/lib';
 
-import { generatedStoryWrapper } from './GeneratedStory.styles';
+import { generatedStoryWrapper } from './PropCombinations.styles';
 import { Err } from './utils/Err';
 import { PropCombinations } from './utils/PropCombinations';
 import { isGeneratedStory } from './isGeneratedStory';
@@ -30,7 +30,7 @@ export const GENERATED_STORY_NAME = 'Generated';
 type ContextType<T extends React.ComponentType<any>> = StoryContext<T> &
   StoryMetaType<T>;
 
-const GeneratedStoryDecorator: Decorator = (
+const PropCombinationsDecorator: Decorator = (
   StoryFn: StoryFn,
   context: StoryContext<unknown>,
 ) => {
@@ -95,4 +95,4 @@ const GeneratedStoryDecorator: Decorator = (
   return <StoryFn />;
 };
 
-export default GeneratedStoryDecorator;
+export default PropCombinationsDecorator;

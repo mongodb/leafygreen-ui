@@ -4,7 +4,7 @@ import { PropsWithChildren } from 'react';
 import {
   combinationStyles,
   combinationStylesDarkModeProp,
-} from '../GeneratedStory.styles';
+} from '../PropCombinations.styles';
 
 export function PropDetailsComponent({
   children,

@@ -2,7 +2,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import { GeneratedStoryConfig } from '@leafygreen-ui/lib';
 import { Args, StoryFn } from '@storybook/react';
 import React, { ReactElement } from 'react';
-import { instanceClassName, instanceStyles } from '../GeneratedStory.styles';
+import { instanceClassName, instanceStyles } from '../PropCombinations.styles';
 import { PropDetailsComponent } from './PropDetails';
 import { shouldExcludePropCombo } from './shouldExcludePropCombo';
 
