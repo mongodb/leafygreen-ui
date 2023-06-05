@@ -20,9 +20,43 @@ npm install @leafygreen-ui/skeleton
 
 ## Example
 
-**Output HTML**
+```jsx
+<ParagraphSkeleton />
+<ParagraphSkeleton withHeader />
+<FormSkeleton />
+<CardSkeleton />
+<TableSkeleton columnLabels={['Column 1', 'Column 2']} />
+```
 
 ## Properties
 
-| Prop | Type | Description | Default |
-| ---- | ---- | ----------- | ------- |
+#### Skeleton
+
+| Name             | Type      | Default | Description                                              |
+| ---------------- | --------- | ------- | -------------------------------------------------------- |
+| `size`           | `boolean` | `false` | Indicates whether the header skeleton should be rendered |
+| HTML `div` props |           |         | Additional HTML div properties                           |
+
+#### Paragraph Skeleton
+
+| Name             | Type      | Default | Description                                              |
+| ---------------- | --------- | ------- | -------------------------------------------------------- |
+| `withHeader`     | `boolean` | `false` | Indicates whether the header skeleton should be rendered |
+| HTML `div` props |           |         | Additional HTML div properties                           |
+
+#### Table Skeleton
+
+| Name             | Type            | Default | Description                                                                           |
+| ---------------- | --------------- | ------- | ------------------------------------------------------------------------------------- |
+| `columnLabels`   | `Array<string>` |         | Column labels. Empty strings will be treated as unknown and render a simple skeleton. |
+| `numRows`        | `number`        | `5`     | Number of rows                                                                        |
+| `numCols`        | `number`        | `4`     | Number of columns                                                                     |
+| HTML `div` props |                 |         | Additional HTML div properties                                                        |
+
+#### Form Skeleton
+
+`<FormSkeleton />` only extends HTML `div` props.
+
+#### Card Skeleton
+
+`<CardSkeleton />` only extends HTML `div` props.

@@ -101,4 +101,49 @@ describe('packages/skeleton/TableSkeleton', () => {
       expect(within(tbody).getAllByRole('row').length).toEqual(6);
     });
   });
+
+  describe('columnLabels prop', () => {
+    test('renders when all text is provided', async () => {
+      const { getByText } = render(
+        <TableSkeleton columnLabels={['col1', 'col2', 'col3', 'col4']} />,
+      );
+      expect(getByText('col1')).toBeInTheDocument();
+      expect(getByText('col2')).toBeInTheDocument();
+      expect(getByText('col3')).toBeInTheDocument();
+      expect(getByText('col4')).toBeInTheDocument();
+    });
+
+    test('renders as many headers as numCols specifies', async () => {
+      const { getByText, queryByText } = render(
+        <TableSkeleton
+          columnLabels={['col1', 'col2', 'col3', 'col4']}
+          numCols={3}
+        />,
+      );
+      expect(getByText('col1')).toBeInTheDocument();
+      expect(getByText('col2')).toBeInTheDocument();
+      expect(getByText('col3')).toBeInTheDocument();
+      expect(queryByText('col4')).not.toBeInTheDocument();
+    });
+
+    test('empty strings render skeletons', async () => {
+      const { getAllByRole } = render(
+        <TableSkeleton columnLabels={['col1', '', 'col3', 'col4']} />,
+      );
+      const thead = getAllByRole('rowgroup')[0];
+      const secondTh = within(thead).getAllByRole('columnheader')[1];
+      expect(secondTh.firstChild).toHaveClass('lg-ui-skeleton');
+      expect(secondTh).toHaveTextContent('');
+    });
+
+    test('undefined renders skeletons', async () => {
+      const { getAllByRole } = render(
+        <TableSkeleton columnLabels={['col1', undefined, 'col3', 'col4']} />,
+      );
+      const thead = getAllByRole('rowgroup')[0];
+      const secondTh = within(thead).getAllByRole('columnheader')[1];
+      expect(secondTh.firstChild).toHaveClass('lg-ui-skeleton');
+      expect(secondTh).toHaveTextContent('');
+    });
+  });
 });
