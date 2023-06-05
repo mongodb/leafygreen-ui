@@ -36,8 +36,6 @@ const GeneratedStoryDecorator: Decorator = (
 ) => {
   const { component } = context;
 
-  console.log(context);
-
   if (component) {
     const { parameters, args: metaArgs } = context as ContextType<
       typeof component

@@ -1,4 +1,4 @@
-# Generated Story Decorator
+# Prop Combinations Decorator
 
 ## Motivation
 

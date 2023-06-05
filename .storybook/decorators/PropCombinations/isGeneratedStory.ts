@@ -1,6 +1,6 @@
 import { StoryContext } from '@storybook/react';
 import { isUndefined, startCase } from 'lodash';
-import { GENERATED_STORY_NAME, PARAM_NAME } from './GeneratedStory';
+import { GENERATED_STORY_NAME, PARAM_NAME } from './PropCombinations';
 
 export const isGeneratedStory = (context: StoryContext<unknown>) => {
   return (

@@ -1,6 +1,6 @@
 import ComponentPreview from './decorators/ComponentPreview';
 import ReactStrictMode from './decorators/ReactStrictMode';
-import GeneratedStory from './decorators/GeneratedStory';
+import GeneratedStory from './decorators/PropCombinations';
 
 import {
   storybookExcludedArgTypes,
