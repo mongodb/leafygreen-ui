@@ -1,15 +1,18 @@
-import React, { ReactElement } from 'react';
-import { cx } from '@leafygreen-ui/emotion';
-import { GeneratedStoryConfig } from '@leafygreen-ui/lib';
+import React, { PropsWithChildren, ReactElement } from 'react';
 import { Args, StoryFn } from '@storybook/react';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { GeneratedStoryConfig } from '@leafygreen-ui/lib';
+import { Polymorph } from '@leafygreen-ui/polymorphic';
+
 import {
+  combinationStyles,
+  combinationStylesDarkMode,
+  combinationStylesDarkModeProp,
   instanceStyles,
   propWrapperStyles,
   propWrapperStylesDarkModeProp,
-  propWrapperStylesFirstProp,
 } from '../PropCombinations.styles';
-import { shouldExcludePropCombo } from '../utils';
-import { PropDetailsComponent } from './PropDetails';
+import { shouldExcludePropCombo, valStr } from '../utils';
 
 /**
  * Generates all combinations of each variable
@@ -29,10 +32,12 @@ export function PropCombinations<T extends React.ComponentType<any>>({
 }): ReactElement<any> {
   let comboCount = 0;
 
-  const [firstPropName] =
-    variables.length > 1
-      ? variables.find(([propName]) => propName !== 'darkMode')!
-      : [undefined];
+  // const [firstPropName] =
+  //   variables.length > 1
+  //     ? variables.find(([propName]) => propName !== 'darkMode')!
+  //     : [undefined];
+
+  const [lastPropName, lastPropVals] = variables[variables.length - 1];
 
   const AllCombinations = RecursiveCombinations({}, [...variables]);
 
@@ -52,59 +57,117 @@ export function PropCombinations<T extends React.ComponentType<any>>({
     // If this is the last variable, this is our base case
     if (vars.length === 0) {
       comboCount += 1;
-      return decorator(
-        (extraArgs: typeof args) => (
-          <td className={cx(instanceStyles)} data-props={JSON.stringify(props)}>
-            {React.createElement(component, {
-              ...args,
-              ...extraArgs,
-              ...props,
-            })}
-          </td>
-        ),
-        { args: { ...props, ...args } },
-      );
+      return <Instance instanceProps={props} />;
     } else {
       const [propName, propValues] = vars.shift()!;
       const isDarkModeProp = propName === 'darkMode';
-      const isFirstProp = propName === firstPropName;
-      const isLastProp = vars.length === 0;
+      const isLastProp = propName === lastPropName;
 
-      const Wrapper = isDarkModeProp
-        ? 'div'
-        : isLastProp
-        ? 'tr'
-        : React.Fragment;
+      const polyProps = (isDarkModeProp || isLastProp) && {
+        className: cx(propWrapperStyles, {
+          [propWrapperStylesDarkModeProp]: isDarkModeProp,
+        }),
+        id: propName,
+      };
 
       if (propValues) {
         return (
-          <Wrapper
-            className={cx(propWrapperStyles, {
-              [propWrapperStylesDarkModeProp]: isDarkModeProp,
-              // [propWrapperStylesFirstProp]: propName === firstPropName,
-            })}
-            id={propName}
+          <Polymorph
+            as={isDarkModeProp ? 'div' : isLastProp ? 'tr' : React.Fragment}
+            {...polyProps}
           >
-            {propValues.map(
-              val =>
-                !shouldExcludePropCombo<T>({
-                  propName,
-                  val,
-                  props,
-                  exclude,
-                }) && (
-                  <PropDetailsComponent propName={propName} val={val}>
-                    {RecursiveCombinations({ [propName]: val, ...props }, [
-                      ...vars,
-                    ])}
-                  </PropDetailsComponent>
-                ),
-            )}
-          </Wrapper>
+            {isLastProp && <td>{}</td>}
+            {propValues.map(val => (
+              <PropDetailsComponent propName={propName} val={val}>
+                {isDarkModeProp && <TableHeader />}
+                {RecursiveCombinations({ [propName]: val, ...props }, [
+                  ...vars,
+                ])}
+              </PropDetailsComponent>
+            ))}
+          </Polymorph>
         );
       } else {
         return <div>No Prop Values</div>;
       }
     }
+
+    /** Scoped to `RecursiveCombinations` closure */
+    function PropDetailsComponent({
+      children,
+      propName,
+      val,
+    }: PropsWithChildren<{
+      propName: string;
+      val: any;
+    }>) {
+      const shouldRender = !shouldExcludePropCombo<T>({
+        propName,
+        val,
+        props,
+        exclude,
+      });
+
+      const isDarkModeProp = propName === 'darkMode';
+
+      const polyProps = isDarkModeProp && {
+        id: `${propName}-${val}`,
+        className: cx(combinationStyles, {
+          [combinationStylesDarkModeProp]: isDarkModeProp,
+          [combinationStylesDarkMode]: isDarkModeProp && val,
+        }),
+        darkMode: isDarkModeProp && val,
+      };
+
+      return shouldRender ? (
+        <Polymorph
+          as={isDarkModeProp ? 'table' : React.Fragment}
+          {...polyProps}
+        >
+          {children}
+        </Polymorph>
+      ) : (
+        <></>
+      );
+    }
+  }
+
+  /** Scoped to PropCombinations */
+  function Instance({ instanceProps }: { instanceProps: Record<string, any> }) {
+    return decorator(
+      (extraArgs: typeof args) => (
+        <td
+          className={cx(instanceStyles)}
+          data-props={JSON.stringify(instanceProps)}
+        >
+          {React.createElement(component, {
+            ...extraArgs,
+            ...args,
+            ...instanceProps,
+          })}
+        </td>
+      ),
+      { args: { ...instanceProps, ...args } },
+    );
+  }
+
+  /** Scoped to PropCombinations */
+  function TableHeader() {
+    const headerCellStyles = css`
+      text-align: left;
+    `;
+
+    return (
+      <thead>
+        <tr>
+          <th colSpan={lastPropVals.length}>{lastPropName}</th>
+        </tr>
+        <tr>
+          {lastPropVals?.map(val => (
+            <th className={headerCellStyles}>{valStr(val)}</th>
+          ))}
+        </tr>
+      </thead>
+    );
   }
 }

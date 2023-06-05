@@ -5,13 +5,11 @@ import { typeScales } from '@leafygreen-ui/tokens';
 const indent = 16;
 
 export const generatedStoryWrapper = css`
-as  width: max-content;
+  min-width: max-content;
 `;
 
 export const propWrapperStyles = css`
   width: 100%;
-  /* display: flex; */
-  /* flex-direction: column; */
 `;
 
 export const propWrapperStylesDarkModeProp = css`
@@ -31,25 +29,22 @@ export const combinationStyles = css`
   line-height: ${typeScales.body1.lineHeight}px;
   width: max-content;
   max-width: 100%;
+  width: 100%;
 `;
 
 export const combinationStylesDarkModeProp = css`
-  flex: 1;
-  max-width: 50%;
   padding: ${indent}px;
+  background-color: ${palette.white};
+  color: ${palette.gray.base};
+  border-color: ${palette.gray.light1};
+`;
 
-  &#darkMode-true {
-    background-color: ${palette.black};
-    color: ${palette.gray.base};
-    border-color: ${palette.gray.dark2};
-  }
-  &#darkMode-false {
-    background-color: ${palette.white};
-    color: ${palette.gray.base};
-    border-color: ${palette.gray.light1};
-  }
+export const combinationStylesDarkMode = css`
+  background-color: ${palette.black};
+  color: ${palette.gray.light1};
+  border-color: ${palette.gray.dark2};
 `;
 
 export const instanceStyles = css`
-  margin: ${indent / 2}px;
+  margin: 0 ${indent}px;
 `;
