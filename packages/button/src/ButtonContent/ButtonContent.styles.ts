@@ -5,6 +5,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 import { Size, Variant } from '../types';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 const rippleOpacity = 0.76;
 
@@ -51,6 +52,7 @@ export const buttonContentStyle = css`
   pointer-events: none;
   position: relative;
   z-index: 0;
+  transition: all ${transitionDuration.default} ease-in-out;
 `;
 
 export const buttonContentSizeStyle: Record<Size, string> = {
