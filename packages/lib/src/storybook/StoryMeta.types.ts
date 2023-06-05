@@ -20,9 +20,11 @@ export interface ControlsConfig {
 }
 
 /**
- * Parameters for Chromatic
+ * Parameters for Chromatic.
  *
  * Compiled from https://mongodb.chromatic.com/docs/
+ *
+ * (types not defined in `chromatic` package)
  */
 export interface ChromaticConfig {
   /** https://mongodb.chromatic.com/docs/ignoring-elements#ignore-stories */

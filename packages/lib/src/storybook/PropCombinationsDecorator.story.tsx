@@ -10,10 +10,10 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 import {
   DarkModeProps,
-  GeneratedStoryFn,
   getTheme,
   HTMLElementProps,
   StoryMetaType,
+  StoryType,
 } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
@@ -63,7 +63,7 @@ const meta: StoryMetaType<
   typeof DemoComponent,
   { baseFontSize: BaseFontSize }
 > = {
-  title: 'Demo/GeneratedStoryDecorator',
+  title: 'Demo/PropCombinationsDecorator',
   component: DemoComponent,
   parameters: {
     default: null,
@@ -74,9 +74,6 @@ const meta: StoryMetaType<
         glyph: [undefined, 'Cloud'],
         checked: [false, true],
         variant: Object.values(Variant),
-      },
-      args: {
-        children: 'Demo Content',
       },
       excludeCombinations: [
         {
@@ -98,12 +95,13 @@ const meta: StoryMetaType<
       disableSnapshot: false,
     },
   },
+  args: {
+    children: 'Demo Content',
+  },
 };
 export default meta;
 
-export const Generated: GeneratedStoryFn<
-  React.ElementType<DemoProps>
-> = () => {};
+export const Generated: StoryType<typeof DemoComponent> = () => <></>;
 Generated.parameters = {
   chromatic: { disableSnapshot: true },
 };

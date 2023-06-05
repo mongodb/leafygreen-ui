@@ -2,6 +2,7 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import { StoryMetaType } from '@leafygreen-ui/lib';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import Spinner from './Spinner';
 import { DisplayOption } from './Spinner.types';
@@ -16,6 +17,10 @@ const meta: StoryMetaType<typeof Spinner> = {
   },
   parameters: {
     default: 'Default',
+    chromatic: {
+      delay: transitionDuration.slower,
+      pauseAnimationAtEnd: true,
+    },
   },
 };
 

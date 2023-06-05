@@ -1,4 +1,4 @@
-# Generated Story Decorator
+# Prop Combinations Decorator
 
 ## Motivation
 
@@ -45,6 +45,44 @@ export const Generated = () => {};
 This will create a story called "Generated", that renders all defined prop combinations.
 
 ![Decorator Demo](./docs/decorator-demo.png)
+
+## Multiple generated stories
+
+You can also break up the generated prop combinations into multiple stories.
+
+To do this, list the generated story names in the `generate` parameter, and set the args you want to remain static on the individual story.
+
+```tsx
+const meta: StoryMeta<typeof Button> = {
+  ...
+  parameters: {
+    generate: {
+      stories: ['LargeSize', 'DefaultSize'],
+      props: { ... },
+    },
+  }
+}
+
+...
+
+export const DefaultSize: StoryType<typeof Button> = () => <></>;
+DefaultSize.parameters = {
+  generate: {
+    args: {
+      size: Size.Default,
+    },
+  },
+};
+
+export const LargeSize: StoryType<typeof Button> = () => <></>;
+LargeSize.parameters = {
+  generate: {
+    args: {
+      size: Size.Large,
+    },
+  },
+};
+```
 
 # Options
 

@@ -19,24 +19,19 @@ import {
   type StoryMetaType,
 } from '@leafygreen-ui/lib';
 
-import { generatedStoryWrapper } from './GeneratedStory.styles';
-import { Err } from './utils/Err';
-import { PropCombinations } from './utils/PropCombinations';
-import { isGeneratedStory } from './isGeneratedStory';
-
-export const PARAM_NAME = 'generate';
-export const GENERATED_STORY_NAME = 'Generated';
+import { generatedStoryWrapper } from './PropCombinations.styles';
+import { Err, PropCombinations } from './components';
+import { isGeneratedStory } from './utils';
+import { PARAM_NAME } from './constants';
 
 type ContextType<T extends React.ComponentType<any>> = StoryContext<T> &
   StoryMetaType<T>;
 
-const GeneratedStoryDecorator: Decorator = (
+const PropCombinationsDecorator: Decorator = (
   StoryFn: StoryFn,
   context: StoryContext<unknown>,
 ) => {
   const { component } = context;
-
-  console.log(context);
 
   if (component) {
     const { parameters, args: metaArgs } = context as ContextType<
@@ -56,25 +51,18 @@ const GeneratedStoryDecorator: Decorator = (
       if (isGeneratedStory(context)) {
         // Check for props
         if (!props || entries(props).length === 0) {
-          return Err('`props` not found in story generation parameters');
+          return Err('`props` not found in story generation parameters.');
         }
 
         // Remove any args that are explicitly defined
-        for (let key in { ...generatedArgs }) {
-          if (props[key]) {
-            delete props[key];
+        for (let propName in { ...generatedArgs }) {
+          if (props[propName]) {
+            delete props[propName];
           }
         }
 
-        // Convert the object to an array
-        const variables = entries(props);
-
-        // Dark mode should be the first prop
-        if (props['darkMode'] && variables[0][0] !== 'darkMode') {
-          console.warn(
-            `${component.displayName} generated story: \`darkMode\` should be the first variable defined in \`parameters.${PARAM_NAME}\`.`,
-          );
-        }
+        // Convert the object to an array & ensure darkMode is the first prop
+        const variables = entries(props).sort(sortDarkMode);
 
         // reversing since the PropCombos recursion is depth-first
         variables.reverse();
@@ -97,4 +85,13 @@ const GeneratedStoryDecorator: Decorator = (
   return <StoryFn />;
 };
 
-export default GeneratedStoryDecorator;
+export default PropCombinationsDecorator;
+
+/**
+ * Sorts the darkMode prop to the top
+ */
+function sortDarkMode([propA]: [string, any], [propB]: [string, any]): number {
+  if (propA === 'darkMode') return -1;
+  if (propB === 'darkMode') return 1;
+  return 0;
+}
