@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { Spinner } from '@leafygreen-ui/loading-indicator';
 import { registerRipple } from '@leafygreen-ui/ripple';
 
 import ButtonIcon from '../ButtonIcon/ButtonIcon';
@@ -10,8 +11,16 @@ import { ButtonProps, Size, Variant } from '../types';
 import {
   buttonContentSizeStyle,
   buttonContentStyle,
+  buttonSpinnerSize,
+  centeredSpinnerContainerStyles,
+  centeredSpinnerStyles,
+  darkModeRightGlyphStyles,
+  hiddenContentStyles,
+  leftGlyphStyles,
+  rightGlyphStyles,
   rippleColors,
   rippleStyle,
+  spinnerColor,
 } from './ButtonContent.styles';
 
 type ButtonContentProps = Omit<ButtonProps, 'as'>;
@@ -23,6 +32,8 @@ export const ButtonContent = ({
   disabled = false,
   variant = Variant.Default,
   size = Size.Default,
+  isLoading,
+  loadingText,
   children,
 }: ButtonContentProps) => {
   const { darkMode, theme } = useDarkMode(darkModeProp);
@@ -44,40 +55,68 @@ export const ButtonContent = ({
   const isIconOnlyButton = ((leftGlyph || rightGlyph) && !children) ?? false;
   const iconProps = { variant, size, darkMode, disabled, isIconOnlyButton };
 
+  const DefaultContent = ({
+    className,
+  }: Pick<ButtonContentProps, 'className'>) => (
+    <div
+      className={cx(
+        buttonContentStyle,
+        buttonContentSizeStyle[size],
+        {
+          [darkModeRightGlyphStyles]: !!rightGlyph && darkMode,
+        },
+        className,
+      )}
+    >
+      {leftGlyph && (
+        <ButtonIcon
+          glyph={leftGlyph}
+          className={leftGlyphStyles}
+          {...iconProps}
+        />
+      )}
+
+      {children}
+
+      {rightGlyph && (
+        <ButtonIcon
+          glyph={rightGlyph}
+          className={rightGlyphStyles}
+          {...iconProps}
+        />
+      )}
+    </div>
+  );
+
+  if (isLoading) {
+    return (
+      <>
+        <div className={rippleStyle} ref={rippleRef} />
+        <div
+          className={cx(buttonContentStyle, buttonContentSizeStyle[size], {
+            [centeredSpinnerContainerStyles]: !loadingText,
+          })}
+        >
+          <Spinner
+            className={cx({
+              [centeredSpinnerStyles]: !loadingText,
+            })}
+            sizeOverride={buttonSpinnerSize[size]}
+            colorOverride={spinnerColor[theme]}
+            data-testid="lg-button-spinner"
+          />
+          {loadingText}
+        </div>
+        {!loadingText && <DefaultContent className={hiddenContentStyles} />}
+      </>
+    );
+  }
+
   return (
     <>
       {/* Ripple cannot wrap children, otherwise components that rely on children to render dropdowns will not be rendered due to the overflow:hidden rule. */}
-      <div className={cx(rippleStyle)} ref={rippleRef} />
-
-      <div
-        className={cx(buttonContentStyle, buttonContentSizeStyle[size], {
-          [css`
-            justify-content: space-between;
-          `]: !!rightGlyph && darkMode,
-        })}
-      >
-        {leftGlyph && (
-          <ButtonIcon
-            glyph={leftGlyph}
-            className={css`
-              justify-self: right;
-            `}
-            {...iconProps}
-          />
-        )}
-
-        {children}
-
-        {rightGlyph && (
-          <ButtonIcon
-            glyph={rightGlyph}
-            className={css`
-              justify-self: left;
-            `}
-            {...iconProps}
-          />
-        )}
-      </div>
+      <div className={rippleStyle} ref={rippleRef} />
+      <DefaultContent />
     </>
   );
 };
