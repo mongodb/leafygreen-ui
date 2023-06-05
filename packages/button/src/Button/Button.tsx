@@ -57,7 +57,7 @@ export const Button = React.forwardRef(function Button(
     as: as ? as : ((isAnchor ? 'a' : 'button') as keyof JSX.IntrinsicElements),
     'aria-disabled': disabled,
     onClick: isInteractive ? onClick : undefined,
-    href: !isInteractive ? undefined : rest.href,
+    href: isInteractive ? rest.href : undefined,
     ...rest,
   } as const;
 
