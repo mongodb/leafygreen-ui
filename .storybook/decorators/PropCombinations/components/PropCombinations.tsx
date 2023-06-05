@@ -33,8 +33,6 @@ export function PropCombinations<T extends React.ComponentType<any>>({
 }): ReactElement<any> {
   let comboCount = 0;
 
-  const [lastPropName, lastPropVals] = variables[variables.length - 1];
-
   const AllCombinations = RecursiveCombinations({}, [...variables]);
 
   console.log(
@@ -57,9 +55,8 @@ export function PropCombinations<T extends React.ComponentType<any>>({
     } else {
       const [propName, propValues] = vars.shift()!;
       const isDarkModeProp = propName === 'darkMode';
-      const isLastProp = propName === lastPropName;
 
-      const polyProps = (isDarkModeProp || isLastProp) && {
+      const polyProps = isDarkModeProp && {
         className: cx(propWrapperStyles, {
           [propWrapperStylesDarkModeProp]: isDarkModeProp,
         }),
@@ -69,10 +66,9 @@ export function PropCombinations<T extends React.ComponentType<any>>({
       if (propValues) {
         return (
           <Polymorph
-            as={isDarkModeProp ? 'table' : isLastProp ? 'tr' : React.Fragment}
+            as={isDarkModeProp ? 'div' : React.Fragment}
             {...polyProps}
           >
-            {isLastProp && <PropLabels instanceProps={props} />}
             {propValues.map(val => (
               <PropDetailsComponent propName={propName} val={val}>
                 {isDarkModeProp && <TableHeader vars={vars} />}
@@ -131,20 +127,23 @@ export function PropCombinations<T extends React.ComponentType<any>>({
   /** Scoped to PropCombinations */
   function Instance({ instanceProps }: { instanceProps: Record<string, any> }) {
     return (
-      <td
-        className={cx(instanceStyles)}
-        data-props={JSON.stringify(instanceProps)}
-      >
-        {decorator(
-          (extraArgs: typeof args) =>
-            React.createElement(component, {
-              ...extraArgs,
-              ...args,
-              ...instanceProps,
-            }),
-          { args: { ...instanceProps, ...args } },
-        )}
-      </td>
+      <tr>
+        <PropLabels instanceProps={instanceProps} />
+        <td
+          className={cx(instanceStyles)}
+          data-props={JSON.stringify(instanceProps)}
+        >
+          {decorator(
+            (extraArgs: typeof args) =>
+              React.createElement(component, {
+                ...extraArgs,
+                ...args,
+                ...instanceProps,
+              }),
+            { args: { ...instanceProps, ...args } },
+          )}
+        </td>
+      </tr>
     );
   }
 
@@ -174,22 +173,13 @@ export function PropCombinations<T extends React.ComponentType<any>>({
       text-align: left;
     `;
 
-    const varNames = vars.filter(([v]) => v !== lastPropName).map(([v]) => v);
+    const varNames = vars.map(([v]) => v);
 
     return (
       <thead>
         <tr>
-          <th colSpan={varNames.length} />
-          <th className={headerCellStyles} colSpan={lastPropVals.length}>
-            <b>{lastPropName}</b>
-          </th>
-        </tr>
-        <tr>
           {varNames.map(name => (
             <th className={headerCellStyles}>{name}</th>
-          ))}
-          {lastPropVals?.map(val => (
-            <th className={headerCellStyles}>{valStr(val)}</th>
           ))}
         </tr>
       </thead>

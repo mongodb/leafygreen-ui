@@ -5,21 +5,20 @@ import { typeScales } from '@leafygreen-ui/tokens';
 const indent = 16;
 
 export const generatedStoryWrapper = css`
+  display: flex;
   min-width: max-content;
 `;
 
 export const propWrapperStyles = css`
+  display: flex;
   width: 100%;
 `;
 
 export const propWrapperStylesDarkModeProp = css`
   flex: 1;
-  flex-direction: row;
 `;
 
-export const propWrapperStylesFirstProp = css`
-  flex-direction: row;
-`;
+export const propWrapperStylesFirstProp = css``;
 
 export const combinationStyles = css`
   position: relative;
