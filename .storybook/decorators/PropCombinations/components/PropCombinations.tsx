@@ -33,11 +33,6 @@ export function PropCombinations<T extends React.ComponentType<any>>({
 }): ReactElement<any> {
   let comboCount = 0;
 
-  // const [firstPropName] =
-  //   variables.length > 1
-  //     ? variables.find(([propName]) => propName !== 'darkMode')!
-  //     : [undefined];
-
   const [lastPropName, lastPropVals] = variables[variables.length - 1];
 
   const AllCombinations = RecursiveCombinations({}, [...variables]);
@@ -74,7 +69,7 @@ export function PropCombinations<T extends React.ComponentType<any>>({
       if (propValues) {
         return (
           <Polymorph
-            as={isDarkModeProp ? 'div' : isLastProp ? 'tr' : React.Fragment}
+            as={isDarkModeProp ? 'table' : isLastProp ? 'tr' : React.Fragment}
             {...polyProps}
           >
             {isLastProp && <PropLabels instanceProps={props} />}
@@ -135,20 +130,21 @@ export function PropCombinations<T extends React.ComponentType<any>>({
 
   /** Scoped to PropCombinations */
   function Instance({ instanceProps }: { instanceProps: Record<string, any> }) {
-    return decorator(
-      (extraArgs: typeof args) => (
-        <td
-          className={cx(instanceStyles)}
-          data-props={JSON.stringify(instanceProps)}
-        >
-          {React.createElement(component, {
-            ...extraArgs,
-            ...args,
-            ...instanceProps,
-          })}
-        </td>
-      ),
-      { args: { ...instanceProps, ...args } },
+    return (
+      <td
+        className={cx(instanceStyles)}
+        data-props={JSON.stringify(instanceProps)}
+      >
+        {decorator(
+          (extraArgs: typeof args) =>
+            React.createElement(component, {
+              ...extraArgs,
+              ...args,
+              ...instanceProps,
+            }),
+          { args: { ...instanceProps, ...args } },
+        )}
+      </td>
     );
   }
 
