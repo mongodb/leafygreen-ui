@@ -45,6 +45,19 @@ describe('storybook/shouldExcludePropCombo', () => {
         }),
       ).toBeFalsy();
     });
+
+    test('Reverse undefined is OK', () => {
+      expect(
+        shouldExcludePropCombo<any>({
+          exclude,
+          propName: 'title',
+          val: 'Ipsum',
+          props: {
+            children: undefined,
+          },
+        }),
+      ).toBeFalsy();
+    });
   });
 
   describe('Conditional props', () => {

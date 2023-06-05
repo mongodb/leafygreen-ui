@@ -1,10 +1,15 @@
+import React, { ReactElement } from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 import { GeneratedStoryConfig } from '@leafygreen-ui/lib';
 import { Args, StoryFn } from '@storybook/react';
-import React, { ReactElement } from 'react';
-import { instanceClassName, instanceStyles } from '../PropCombinations.styles';
-import { PropDetailsComponent } from './PropDetails';
+import {
+  instanceStyles,
+  propWrapperStyles,
+  propWrapperStylesDarkModeProp,
+  propWrapperStylesFirstProp,
+} from '../PropCombinations.styles';
 import { shouldExcludePropCombo } from '../utils';
+import { PropDetailsComponent } from './PropDetails';
 
 /**
  * Generates all combinations of each variable
@@ -17,12 +22,17 @@ export function PropCombinations<T extends React.ComponentType<any>>({
   decorator = (SFn: StoryFn) => <SFn />,
 }: {
   component: T;
-  variables: Array<[string, Array<any> | undefined]>;
+  variables: Array<[string, Array<any>]>;
   args: Args;
   exclude: GeneratedStoryConfig<T>['excludeCombinations'];
   decorator: GeneratedStoryConfig<T>['decorator'];
 }): ReactElement<any> {
   let comboCount = 0;
+
+  const [firstPropName] =
+    variables.length > 1
+      ? variables.find(([propName]) => propName !== 'darkMode')!
+      : [undefined];
 
   const AllCombinations = RecursiveCombinations({}, [...variables]);
 
@@ -37,32 +47,44 @@ export function PropCombinations<T extends React.ComponentType<any>>({
    */
   function RecursiveCombinations(
     props: Record<string, any>,
-    vars: Array<[string, Array<any> | undefined]>,
+    vars: Array<[string, Array<any>]>,
   ): ReactElement<any> {
     // If this is the last variable, this is our base case
     if (vars.length === 0) {
       comboCount += 1;
       return decorator(
         (extraArgs: typeof args) => (
-          <div
-            className={cx(instanceClassName, instanceStyles)}
-            data-props={JSON.stringify(props)}
-          >
+          <td className={cx(instanceStyles)} data-props={JSON.stringify(props)}>
             {React.createElement(component, {
               ...args,
               ...extraArgs,
               ...props,
             })}
-          </div>
+          </td>
         ),
         { args: { ...props, ...args } },
       );
     } else {
-      const [propName, propValues] = vars.pop()!;
+      const [propName, propValues] = vars.shift()!;
+      const isDarkModeProp = propName === 'darkMode';
+      const isFirstProp = propName === firstPropName;
+      const isLastProp = vars.length === 0;
+
+      const Wrapper = isDarkModeProp
+        ? 'div'
+        : isLastProp
+        ? 'tr'
+        : React.Fragment;
 
       if (propValues) {
         return (
-          <>
+          <Wrapper
+            className={cx(propWrapperStyles, {
+              [propWrapperStylesDarkModeProp]: isDarkModeProp,
+              // [propWrapperStylesFirstProp]: propName === firstPropName,
+            })}
+            id={propName}
+          >
             {propValues.map(
               val =>
                 !shouldExcludePropCombo<T>({
@@ -78,7 +100,7 @@ export function PropCombinations<T extends React.ComponentType<any>>({
                   </PropDetailsComponent>
                 ),
             )}
-          </>
+          </Wrapper>
         );
       } else {
         return <div>No Prop Values</div>;

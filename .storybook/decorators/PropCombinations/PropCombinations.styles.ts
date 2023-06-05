@@ -1,12 +1,26 @@
 import { css } from '@leafygreen-ui/emotion';
-import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { typeScales } from '@leafygreen-ui/tokens';
 
 const indent = 16;
 
 export const generatedStoryWrapper = css`
-  display: flex;
+as  width: max-content;
+`;
+
+export const propWrapperStyles = css`
+  width: 100%;
+  /* display: flex; */
+  /* flex-direction: column; */
+`;
+
+export const propWrapperStylesDarkModeProp = css`
+  flex: 1;
+  flex-direction: row;
+`;
+
+export const propWrapperStylesFirstProp = css`
+  flex-direction: row;
 `;
 
 export const combinationStyles = css`
@@ -36,16 +50,6 @@ export const combinationStylesDarkModeProp = css`
   }
 `;
 
-export const combinationStylesCI = css`
-  padding-inline: 0;
-  border: none;
-`;
-
-export const combinationNameStylesCI = css`
-  display: none;
-`;
-
-export const instanceClassName = createUniqueClassName('instance');
 export const instanceStyles = css`
   margin: ${indent / 2}px;
 `;

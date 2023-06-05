@@ -15,10 +15,13 @@ export function PropDetailsComponent({
   val: any;
 }>) {
   const isDarkModeProp = propName === 'darkMode';
-  const Wrapper = isDarkModeProp ? 'div' : React.Fragment;
-  const wrapperProps = isDarkModeProp && {
+  const Wrapper = isDarkModeProp ? 'table' : React.Fragment;
+
+  const wrapperProps = {
     id: `${propName}-${val}`,
-    className: cx(combinationStyles, combinationStylesDarkModeProp),
+    className: cx(combinationStyles, {
+      [combinationStylesDarkModeProp]: isDarkModeProp,
+    }),
   };
 
   return <Wrapper {...wrapperProps}>{children}</Wrapper>;

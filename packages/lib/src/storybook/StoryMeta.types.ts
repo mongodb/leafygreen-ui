@@ -96,6 +96,7 @@ export type StoryType<
   T extends React.ElementType,
   XP extends Record<string, any> = {},
 > = (StoryFn<T> | StoryObj<T>) & {
+  title?: string;
   parameters?: Omit<StoryParameters<T>, 'default'>;
   argTypes?: ArgTypes<T, XP>;
   args?: Partial<ComponentProps<T> | LeafyGreenProviderProps | XP>;

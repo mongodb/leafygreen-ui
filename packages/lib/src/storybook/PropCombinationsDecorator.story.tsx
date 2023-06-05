@@ -40,6 +40,7 @@ const DemoComponent = ({
       className={cx(
         css`
           display: flex;
+          width: max-content;
           align-items: center;
           gap: 0.5em;
           padding: 0.25em 1em;
@@ -71,8 +72,8 @@ const meta: StoryMetaType<
       props: {
         darkMode: [false, true],
         baseFontSize: [14, 16],
-        glyph: [undefined, 'Cloud'],
         checked: [false, true],
+        glyph: [undefined, 'Cloud'],
         variant: Object.values(Variant),
       },
       excludeCombinations: [
