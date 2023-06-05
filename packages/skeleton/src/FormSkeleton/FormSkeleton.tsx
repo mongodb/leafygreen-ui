@@ -18,7 +18,7 @@ export function FormSkeleton({
   const { darkMode } = useDarkMode(darkModeProp);
   return (
     <LeafyGreenProvider darkMode={darkMode}>
-      <div className={cx(baseStyles, className)} {...rest}>
+      <div aria-busy className={cx(baseStyles, className)} {...rest}>
         <Skeleton className={fullWidthStyles} />
         <Skeleton />
         <Skeleton />

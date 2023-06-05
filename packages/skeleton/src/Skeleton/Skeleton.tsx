@@ -23,6 +23,7 @@ export function Skeleton({
         'lg-ui-skeleton',
         className,
       )}
+      aria-busy
       {...rest}
     />
   );

@@ -21,8 +21,14 @@ export function ParagraphSkeleton({
   const { darkMode } = useDarkMode(darkModeProp);
   return (
     <LeafyGreenProvider darkMode={darkMode}>
-      <div {...rest}>
-        {withHeader && <Skeleton size="large" className={headerStyles} />}
+      <div aria-busy {...rest}>
+        {withHeader && (
+          <Skeleton
+            size="large"
+            className={headerStyles}
+            data-testid="lg-paragraph-skeleton-header"
+          />
+        )}
         <Skeleton size="small" className={lineStyles} />
         <Skeleton size="small" className={lineStyles} />
         <Skeleton size="small" className={lastLineStyles} />

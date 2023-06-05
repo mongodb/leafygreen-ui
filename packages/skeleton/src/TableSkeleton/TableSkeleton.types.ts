@@ -5,8 +5,9 @@ export interface TableSkeletonProps
     HTMLElementProps<'table'> {
   /**
    * Number of columns
+   * @default 4
    */
-  numCols: number;
+  numCols?: number;
 
   /**
    * Column labels. Empty strings or undefined values will be treated as unknown and render a simple skeleton.

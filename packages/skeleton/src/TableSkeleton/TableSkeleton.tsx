@@ -19,7 +19,7 @@ import { TableSkeletonProps } from '.';
 export function TableSkeleton({
   darkMode: darkModeProp,
   numRows = 5,
-  numCols,
+  numCols = 4,
   columnLabels,
   className,
   ...rest
@@ -27,7 +27,7 @@ export function TableSkeleton({
   const { darkMode, theme } = useDarkMode(darkModeProp);
   return (
     <LeafyGreenProvider darkMode={darkMode}>
-      <table {...rest} className={cx(baseStyles, className)}>
+      <table aria-busy {...rest} className={cx(baseStyles, className)}>
         <thead className={tableHeadStyles[theme]}>
           <tr>
             {[...Array(numCols)].map((_, i) => (

@@ -13,7 +13,7 @@ export function CardSkeleton({
 }: CardSkeletonProps) {
   const { darkMode } = useDarkMode(darkModeProp);
   return (
-    <Card {...rest} darkMode={darkMode}>
+    <Card aria-busy {...rest} darkMode={darkMode}>
       <ParagraphSkeleton withHeader />
     </Card>
   );
