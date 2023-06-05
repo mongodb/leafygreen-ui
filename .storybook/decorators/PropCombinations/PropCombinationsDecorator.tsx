@@ -23,9 +23,7 @@ import { generatedStoryWrapper } from './PropCombinations.styles';
 import { Err } from './utils/Err';
 import { PropCombinations } from './utils/PropCombinations';
 import { isGeneratedStory } from './isGeneratedStory';
-
-export const PARAM_NAME = 'generate';
-export const GENERATED_STORY_NAME = 'Generated';
+import { PARAM_NAME } from './constants';
 
 type ContextType<T extends React.ComponentType<any>> = StoryContext<T> &
   StoryMetaType<T>;

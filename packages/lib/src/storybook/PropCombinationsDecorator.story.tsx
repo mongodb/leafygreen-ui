@@ -10,7 +10,6 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 import {
   DarkModeProps,
-  GeneratedStoryFn,
   getTheme,
   HTMLElementProps,
   StoryMetaType,
@@ -76,9 +75,6 @@ const meta: StoryMetaType<
         checked: [false, true],
         variant: Object.values(Variant),
       },
-      args: {
-        children: 'Demo Content',
-      },
       excludeCombinations: [
         {
           checked: true,
@@ -94,6 +90,9 @@ const meta: StoryMetaType<
           </LeafyGreenProvider>
         );
       },
+    },
+    args: {
+      children: 'Demo Content',
     },
     chromatic: {
       disableSnapshot: false,
