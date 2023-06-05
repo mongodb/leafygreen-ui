@@ -13,6 +13,7 @@ import {
   propWrapperStylesDarkModeProp,
 } from '../PropCombinations.styles';
 import { shouldExcludePropCombo, valStr } from '../utils';
+import { entries } from 'lodash';
 
 /**
  * Generates all combinations of each variable
@@ -76,10 +77,10 @@ export function PropCombinations<T extends React.ComponentType<any>>({
             as={isDarkModeProp ? 'div' : isLastProp ? 'tr' : React.Fragment}
             {...polyProps}
           >
-            {isLastProp && <td>{}</td>}
+            {isLastProp && <PropLabels instanceProps={props} />}
             {propValues.map(val => (
               <PropDetailsComponent propName={propName} val={val}>
-                {isDarkModeProp && <TableHeader />}
+                {isDarkModeProp && <TableHeader vars={vars} />}
                 {RecursiveCombinations({ [propName]: val, ...props }, [
                   ...vars,
                 ])}
@@ -152,17 +153,45 @@ export function PropCombinations<T extends React.ComponentType<any>>({
   }
 
   /** Scoped to PropCombinations */
-  function TableHeader() {
+  function PropLabels({
+    instanceProps,
+  }: {
+    instanceProps: Record<string, any>;
+  }) {
+    const propsToLabel = entries(instanceProps).filter(
+      ([p]) => p !== 'darkMode',
+    );
+    propsToLabel.reverse();
+
+    return (
+      <>
+        {propsToLabel.map(([_, v]) => (
+          <td>{valStr(v)}</td>
+        ))}
+      </>
+    );
+  }
+
+  /** Scoped to PropCombinations */
+  function TableHeader({ vars }: { vars: Array<[string, any]> }) {
     const headerCellStyles = css`
       text-align: left;
     `;
 
+    const varNames = vars.filter(([v]) => v !== lastPropName).map(([v]) => v);
+
     return (
       <thead>
         <tr>
-          <th colSpan={lastPropVals.length}>{lastPropName}</th>
+          <th colSpan={varNames.length} />
+          <th className={headerCellStyles} colSpan={lastPropVals.length}>
+            <b>{lastPropName}</b>
+          </th>
         </tr>
         <tr>
+          {varNames.map(name => (
+            <th className={headerCellStyles}>{name}</th>
+          ))}
           {lastPropVals?.map(val => (
             <th className={headerCellStyles}>{valStr(val)}</th>
           ))}

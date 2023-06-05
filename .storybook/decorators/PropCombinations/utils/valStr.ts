@@ -11,8 +11,10 @@ export function valStr(val: any): string {
     if (Array.isArray(val)) return 'Array';
     else return 'Object';
   }
-  if (typeof val === 'string' && val.length > MAX_STR_LEN) {
-    return val.slice(0, MAX_STR_LEN) + '…';
+  if (typeof val === 'string') {
+    return `"${
+      val.length > MAX_STR_LEN ? val.slice(0, MAX_STR_LEN) + '…' : val
+    }"`;
   }
   return `${val}`;
 }
