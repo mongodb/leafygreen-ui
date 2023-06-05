@@ -45,10 +45,9 @@ const meta: StoryMetaType<typeof NumberInput> = {
       ],
     },
     generate: {
+      storyNames: ['Unitless', 'WithUnits', 'WithUnitSelect'],
       props: {
         darkMode: [false, true],
-        unit: [undefined, unitOptions[0].displayName],
-        unitOptions: [undefined, unitOptions],
         size: Object.values(Size),
         label: ['Label', undefined],
         description: ['Description', undefined],
@@ -64,10 +63,6 @@ const meta: StoryMetaType<typeof NumberInput> = {
         {
           state: State.None,
           errorMessage: 'Error message',
-        },
-        {
-          unit: undefined,
-          unitOptions: unitOptions,
         },
       ],
     },
@@ -163,40 +158,19 @@ LiveExample.args = {
   unit: unitOptions[0].displayName,
 };
 
-// export const Unitless = Template.bind({});
-// Unitless.args = {
-//   unitOptions: [],
-//   unit: '',
-// };
-// Unitless.argTypes = {
-//   unit: {
-//     control: 'none',
-//   },
-// };
+export const Unitless = () => <></>;
+Unitless.args = {
+  unit: undefined,
+};
 
-// export const Unit = Template.bind({});
-// Unit.args = {
-//   unitOptions: [],
-//   unit: 'day',
-// };
-// Unit.argTypes = {};
+export const WithUnits = () => <></>;
+WithUnits.args = {
+  unit: unitOptions[0].displayName,
+  unitOptions: undefined,
+};
 
-// export const Select = Template.bind({});
-// Select.args = {
-//   unitOptions: unitOptions,
-//   unit: unitOptions[0].displayName,
-// };
-// Select.argTypes = {
-//   unit: {
-//     control: 'none',
-//   },
-//   unitOptions: {
-//     control: 'object',
-//   },
-// };
-
-// export const Uncontrolled = ({ ...props }: NumberInputProps) => {
-//   return <NumberInput {...props} />;
-// };
-
-export const Generated = () => {};
+export const WithUnitSelect = () => <></>;
+WithUnitSelect.args = {
+  unit: unitOptions[0].displayName,
+  unitOptions: unitOptions,
+};
