@@ -8,7 +8,7 @@ import {
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
-import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
+import { spacing } from '@leafygreen-ui/tokens';
 import { Body, InlineCode } from '@leafygreen-ui/typography';
 
 import { DisplayOption } from './Spinner/Spinner.types';
@@ -26,7 +26,7 @@ const meta: StoryMetaType<any> = {
       exclude: [...storybookExcludedControlParams],
     },
     chromatic: {
-      disableSnapshot: true;
+      disableSnapshot: true,
     },
   },
 };
