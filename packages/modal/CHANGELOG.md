@@ -1,5 +1,11 @@
 # @leafygreen-ui/modal
 
+## 15.0.3
+
+### Patch Changes
+
+- 63b2deb0b: Upgrade button to v20.1.1
+
 ## 15.0.2
 
 ### Patch Changes
