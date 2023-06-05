@@ -1,5 +1,28 @@
 # @leafygreen-ui/form-footer
 
+## 3.0.7
+
+### Patch Changes
+
+- 63b2deb0b: Upgrade button to v20.1.1
+
+## 3.0.6
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- d2ce54e2f: Exports primary component props
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [0cd471676]
+- Updated dependencies [0cd471676]
+- Updated dependencies [2dfc4d0ea]
+  - @leafygreen-ui/banner@7.0.8
+  - @leafygreen-ui/button@20.1.0
+  - @leafygreen-ui/icon@11.16.1
+  - @leafygreen-ui/leafygreen-provider@3.1.3
+  - @leafygreen-ui/lib@10.3.4
+
 ## 3.0.5
 
 ### Patch Changes

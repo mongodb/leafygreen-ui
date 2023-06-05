@@ -44,12 +44,6 @@ const meta: StoryMetaType<typeof Button> = {
     href: {
       control: 'text',
     },
-    isLoading: {
-      control: 'boolean',
-    },
-    loadingText: {
-      control: 'text',
-    },
   },
 };
 
@@ -72,15 +66,4 @@ export const Playground: StoryFn<ButtonProps> = ({
 export const BaseGreen = Playground.bind({});
 BaseGreen.args = {
   variant: Variant.BaseGreen,
-};
-
-export const LoadingState = Playground.bind({});
-LoadingState.args = {
-  isLoading: true,
-};
-
-export const LoadingStateWithText = Playground.bind({});
-LoadingStateWithText.args = {
-  isLoading: true,
-  loadingText: 'Saving',
 };

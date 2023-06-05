@@ -1,5 +1,15 @@
 # @leafygreen-ui/logo
 
+## 8.0.3
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [0cd471676]
+  - @leafygreen-ui/lib@10.3.4
+
 ## 8.0.2
 
 ### Patch Changes

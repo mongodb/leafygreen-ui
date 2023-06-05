@@ -1,5 +1,11 @@
 # @leafygreen-ui/polymorphic
 
+## 1.3.2
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+
 ## 1.3.1
 
 ### Patch Changes

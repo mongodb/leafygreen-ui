@@ -1,0 +1,67 @@
+# This file defines codeowners in the leafygreen-ui repo, such that reviewers can be automatically assigned to open PRs
+
+# Please note, this is a WIP team convention, and a stanp from a codeowner is not required to merge a new change into the repo
+
+# Example: /packages/example/ @bruugey
+
+/packages/a11y/ @bruugey @thesonofthomp
+/packages/badge/ @shaneeza @spark33
+/packages/banner/ @shaneeza
+/packages/box/
+/packages/button/ @spark33
+/packages/callout/ @shaneeza
+/packages/card/ @spark33
+/packages/checkbox/ @thesonofthomp
+/packages/code/ @designerdave
+/packages/combobox/ @thesonofthomp @shaneeza
+/packages/confirmation-modal/ @shaneeza
+/packages/copyable/
+/packages/emotion/
+/packages/empty-state/ @spark33
+/packages/expandable-card/ @thesonofthomp @spark33
+/packages/form-footer/ @thesonofthomp
+/packages/guide-cue/ @shaneeza
+/packages/hooks/ @thesonofthomp
+/packages/icon/
+/packages/icon-button/
+/packages/inline-definition/ @shaneeza
+/packages/leafygreen-provider/
+/packages/lib/
+/packages/loading-indicator/ @spark33
+/packages/logo/ @thesonofthomp @spark33
+/packages/marketing-modal/ @shaneeza
+/packages/menu/ @shaneeza
+/packages/modal/ @shaneeza
+/packages/number-input/ @shaneeza
+/packages/pagination/ @spark33
+/packages/palette/
+/packages/password-input/ @shaneeza
+/packages/pipeline/ @shaneeza
+/packages/popover/ @shaneeza
+/packages/polymorphic/ @thesonofthomp
+/packages/portal/
+/packages/radio-box-group/
+/packages/radio-group/
+/packages/ripple/ @bruugey
+/packages/search-input/ @thesonofthomp
+/packages/segmented-control/ @thesonofthomp
+/packages/select/ @thesonofthomp
+/packages/side-nav/ @designerdave
+/packages/split-button/ @shaneeza
+/packages/stepper/ @spark33
+/packages/table/ @spark33 @thesonofthomp
+/packages/tabs/ @spark33
+/packages/testing-lib/
+/packages/text-area/ @thesonofthomp
+/packages/text-input/ @thesonofthomp
+/packages/toast/ @thesonofthomp
+/packages/toggle/
+/packages/tokens/ @thesonofthomp
+/packages/tooltip/ @shaneeza
+/packages/typography/ @thesonofthomp
+
+/scripts @thesonofthomp
+/scripts/slackbot @thesonofthomp
+
+./storybook/ @thesonofthomp @spark33
+./.github/ @thesonofthomp @spark33
