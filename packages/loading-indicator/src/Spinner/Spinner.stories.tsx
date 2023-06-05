@@ -2,10 +2,10 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import { StoryMetaType } from '@leafygreen-ui/lib';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import Spinner from './Spinner';
 import { DisplayOption } from './Spinner.types';
-import { transitionDuration } from '@leafygreen-ui/tokens';
 
 const meta: StoryMetaType<typeof Spinner> = {
   title: 'Components/LoadingIndicator/Spinner',
