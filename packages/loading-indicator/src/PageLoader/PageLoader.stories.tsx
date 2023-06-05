@@ -2,6 +2,7 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import { StoryMetaType } from '@leafygreen-ui/lib';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import PageLoader from './PageLoader';
 
@@ -13,6 +14,10 @@ const meta: StoryMetaType<typeof PageLoader> = {
   },
   parameters: {
     default: 'Default',
+    chromatic: {
+      delay: transitionDuration.slower,
+      pauseAnimationAtEnd: true,
+    },
   },
 };
 

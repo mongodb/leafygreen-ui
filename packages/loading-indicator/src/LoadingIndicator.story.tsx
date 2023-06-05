@@ -26,8 +26,7 @@ const meta: StoryMetaType<any> = {
       exclude: [...storybookExcludedControlParams],
     },
     chromatic: {
-      delay: transitionDuration.slower,
-      pauseAnimationAtEnd: true,
+      disableSnapshot: true;
     },
   },
 };

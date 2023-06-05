@@ -5,6 +5,7 @@ import { StoryMetaType } from '@leafygreen-ui/lib';
 
 import Spinner from './Spinner';
 import { DisplayOption } from './Spinner.types';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 const meta: StoryMetaType<typeof Spinner> = {
   title: 'Components/LoadingIndicator/Spinner',
@@ -16,6 +17,10 @@ const meta: StoryMetaType<typeof Spinner> = {
   },
   parameters: {
     default: 'Default',
+    chromatic: {
+      delay: transitionDuration.slower,
+      pauseAnimationAtEnd: true,
+    },
   },
 };
 
