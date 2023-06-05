@@ -1,5 +1,28 @@
 # @leafygreen-ui/marketing-modal
 
+## 4.0.9
+
+### Patch Changes
+
+- 63b2deb0b: Upgrade button to v20.1.1
+- Updated dependencies [63b2deb0b]
+  - @leafygreen-ui/modal@15.0.3
+
+## 4.0.8
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [75099c60b]
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [0cd471676]
+- Updated dependencies [2dfc4d0ea]
+  - @leafygreen-ui/button@20.1.0
+  - @leafygreen-ui/leafygreen-provider@3.1.3
+  - @leafygreen-ui/modal@15.0.2
+  - @leafygreen-ui/typography@16.5.0
+
 ## 4.0.7
 
 ### Patch Changes

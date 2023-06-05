@@ -1,5 +1,35 @@
 # @leafygreen-ui/menu
 
+## 22.0.1
+
+### Patch Changes
+
+- 63b2deb0b: Upgrade button to v20.1.1
+- Updated dependencies [63b2deb0b]
+  - @leafygreen-ui/popover@11.0.11
+
+## 22.0.0
+
+### Major Changes
+
+- c0699a0df: Clicking on a MenuItem closes the Menu component
+- 0cd471676: Refactor `Menu` to use `forwardRef`.
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- 0cd471676: Adds `id` prop and adds `aria-expanded` and `aria-haspopup` internally. Removes `MenuItem.displayName` and passes the displayName as an argument to `InferredPolymorphic` instead.
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [0cd471676]
+  - @leafygreen-ui/hooks@7.7.4
+  - @leafygreen-ui/icon@11.16.1
+  - @leafygreen-ui/icon-button@15.0.11
+  - @leafygreen-ui/leafygreen-provider@3.1.3
+  - @leafygreen-ui/lib@10.3.4
+  - @leafygreen-ui/polymorphic@1.3.2
+  - @leafygreen-ui/popover@11.0.10
+
 ## 21.0.0
 
 ### Major Changes
