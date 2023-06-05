@@ -1,6 +1,6 @@
 import React from 'react';
-import Card from '@leafygreen-ui/card';
-import { Error } from '@leafygreen-ui/typography';
+import Banner from '@leafygreen-ui/banner';
+import { css } from '@leafygreen-ui/emotion';
 
 /**
  * Renders an error message, and logs an error
@@ -8,8 +8,13 @@ import { Error } from '@leafygreen-ui/typography';
 export function Err(msg: string): JSX.Element {
   console.error(msg);
   return (
-    <Card>
-      <Error>{msg}</Error>;
-    </Card>
+    <Banner
+      variant="danger"
+      className={css`
+        margin: 24px;
+      `}
+    >
+      {msg}
+    </Banner>
   );
 }

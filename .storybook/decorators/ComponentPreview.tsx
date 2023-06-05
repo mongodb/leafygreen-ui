@@ -20,7 +20,6 @@ const darkModeStyle = css`
 
 const decorator: Decorator = (StoryFn: StoryFn, context: StoryContext<any>) => {
   const { darkMode, baseFontSize } = context.args;
-  console.log(isGeneratedStory(context));
 
   return (
     <LeafyGreenProvider darkMode={darkMode} baseFontSize={baseFontSize}>

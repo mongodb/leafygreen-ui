@@ -91,12 +91,12 @@ const meta: StoryMetaType<
         );
       },
     },
-    args: {
-      children: 'Demo Content',
-    },
     chromatic: {
       disableSnapshot: false,
     },
+  },
+  args: {
+    children: 'Demo Content',
   },
 };
 export default meta;
