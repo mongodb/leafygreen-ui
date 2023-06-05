@@ -9,9 +9,9 @@ export interface TableSkeletonProps
   numCols: number;
 
   /**
-   * Column labels. Empty strings will be treated as unknown and render a simple skeleton.
+   * Column labels. Empty strings or undefined values will be treated as unknown and render a simple skeleton.
    */
-  columnLabels?: Array<string>;
+  columnLabels?: Array<string | undefined>;
 
   /**
    * Number of rows

@@ -7,7 +7,13 @@ import LeafyGreenProvider, {
 
 import { Skeleton } from '..';
 
-import { baseStyles, cellStyles } from './TableSkeleton.styles';
+import {
+  baseStyles,
+  cellStyles,
+  firstRowStyles,
+  headerCellStyles,
+  tableHeadStyles,
+} from './TableSkeleton.styles';
 import { TableSkeletonProps } from '.';
 
 export function TableSkeleton({
@@ -18,16 +24,16 @@ export function TableSkeleton({
   className,
   ...rest
 }: TableSkeletonProps) {
-  const { darkMode } = useDarkMode(darkModeProp);
+  const { darkMode, theme } = useDarkMode(darkModeProp);
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <table {...rest} className={cx(baseStyles, className)}>
-        <thead>
+        <thead className={tableHeadStyles[theme]}>
           <tr>
             {[...Array(numCols)].map((_, i) => (
-              <th key={i} className={cellStyles}>
+              <th key={i} className={cx(cellStyles, headerCellStyles)}>
                 {columnLabels && columnLabels[i] ? (
-                  <Body>{columnLabels[i]}</Body>
+                  <>{columnLabels[i]}</>
                 ) : (
                   <Skeleton size="small" />
                 )}
@@ -40,7 +46,10 @@ export function TableSkeleton({
             <tr key={i}>
               {[...Array(numCols)].map((_, j) => (
                 <td key={j} className={cellStyles}>
-                  <Skeleton size="small" />
+                  <Skeleton
+                    size="small"
+                    className={cx({ [firstRowStyles]: i === 0 })}
+                  />
                 </td>
               ))}
             </tr>

@@ -7,8 +7,8 @@ import { Size } from './Skeleton/Skeleton.types';
 import { CardSkeleton } from './CardSkeleton';
 import { FormSkeleton } from './FormSkeleton';
 import { ParagraphSkeleton } from './ParagraphSkeleton';
-import { Skeleton } from '.';
 import { TableSkeleton } from './TableSkeleton';
+import { Skeleton } from '.';
 
 export default {
   title: 'Components/Skeleton',
@@ -49,10 +49,17 @@ export const Form: StoryFn<typeof FormSkeleton> = props => (
   <FormSkeleton {...props} />
 );
 
-export const Table: StoryFn<typeof TableSkeleton> = props => (
+export const TableWithoutLabels: StoryFn<typeof TableSkeleton> = props => (
   <TableSkeleton {...props} />
 );
-Table.args = {
+TableWithoutLabels.args = {
   numCols: 4,
-  columnLabels: ['Column 1', 'Column 2', 'Column 3', 'Column 4'],
+};
+
+export const TableWithLabels: StoryFn<typeof TableSkeleton> = props => (
+  <TableSkeleton {...props} />
+);
+TableWithLabels.args = {
+  numCols: 4,
+  columnLabels: ['Column 1', 'Column 2', 'Column 3', ''],
 };
