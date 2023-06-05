@@ -115,6 +115,7 @@ UncontrolledTemplate.storyName = 'Uncontrolled';
 export const SubMenuExample = ({
   size,
   darkMode,
+  open,
   ...args
 }: MenuProps & { size: Size }) => {
   return (
