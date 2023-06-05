@@ -4,7 +4,7 @@ import { Args, StoryFn } from '@storybook/react';
 import React, { ReactElement } from 'react';
 import { instanceClassName, instanceStyles } from '../PropCombinations.styles';
 import { PropDetailsComponent } from './PropDetails';
-import { shouldExcludePropCombo } from '../utils/shouldExcludePropCombo';
+import { shouldExcludePropCombo } from '../utils';
 
 /**
  * Generates all combinations of each variable
