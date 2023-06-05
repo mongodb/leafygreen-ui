@@ -1,6 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
+import { spacing } from '@leafygreen-ui/tokens';
 
 import { Size } from './Skeleton.types';
 
@@ -19,13 +20,13 @@ export const rootStyles = css`
 
 export const sizeStyles: Record<Size, string> = {
   [Size.Small]: css`
-    height: 16px;
+    height: ${spacing[3]}px;
   `,
   [Size.Default]: css`
-    height: 32px;
+    height: ${spacing[5]}px;
   `,
   [Size.Large]: css`
-    height: 48px;
+    height: ${spacing[5] + spacing[3]}px;
   `,
 };
 

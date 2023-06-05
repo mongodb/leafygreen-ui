@@ -52,14 +52,10 @@ export const Form: StoryFn<typeof FormSkeleton> = props => (
 export const TableWithoutLabels: StoryFn<typeof TableSkeleton> = props => (
   <TableSkeleton {...props} />
 );
-TableWithoutLabels.args = {
-  numCols: 4,
-};
 
 export const TableWithLabels: StoryFn<typeof TableSkeleton> = props => (
   <TableSkeleton {...props} />
 );
 TableWithLabels.args = {
-  numCols: 4,
   columnLabels: ['Column 1', 'Column 2', 'Column 3', ''],
 };
