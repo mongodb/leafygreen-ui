@@ -20,9 +20,8 @@ import {
 } from '@leafygreen-ui/lib';
 
 import { generatedStoryWrapper } from './PropCombinations.styles';
-import { Err } from './utils/Err';
-import { PropCombinations } from './utils/PropCombinations';
-import { isGeneratedStory } from './isGeneratedStory';
+import { Err, PropCombinations } from './components';
+import { isGeneratedStory } from './utils/isGeneratedStory';
 import { PARAM_NAME } from './constants';
 
 type ContextType<T extends React.ComponentType<any>> = StoryContext<T> &
