@@ -71,7 +71,7 @@ const PropCombinationsDecorator: Decorator = (
         const variables = entries(combineArgs).sort(sortDarkMode);
 
         // reversing since the PropCombos recursion is depth-first
-        variables.reverse();
+        // variables.reverse();
         const GeneratedStory: StoryType<typeof component> = () => (
           <div className={generatedStoryWrapper}>
             <PropCombinations
