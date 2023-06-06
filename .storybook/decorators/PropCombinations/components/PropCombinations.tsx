@@ -1,10 +1,20 @@
+import React, { ReactElement } from 'react';
+import { entries } from 'lodash';
+import { Args, StoryFn } from '@storybook/react';
+
 import { cx } from '@leafygreen-ui/emotion';
 import { GeneratedStoryConfig } from '@leafygreen-ui/lib';
-import { Args, StoryFn } from '@storybook/react';
-import React, { ReactElement } from 'react';
+
 import { PropCombination, PropName } from './types';
 import { generateCombinations } from './generateCombinations';
-import { instanceClassName, instanceStyles } from '../PropCombinations.styles';
+import { valStr } from '../utils';
+import {
+  cellStyles,
+  combinationDarkModeStyles,
+  combinationRowStyles,
+  instanceCellStyles,
+  tableStyles,
+} from '../PropCombinations.styles';
 
 /**
  * Generates all combinations of each variable
@@ -28,20 +38,28 @@ export function PropCombinations<T extends React.ComponentType<any>>({
   });
 
   const comboCount = allCombinations.length;
-  console.log(
+  console.info(
     `Rendering ${comboCount} prop combinations for component: ${component.displayName}`,
   );
 
-  console.log(allCombinations);
-
   return (
-    <table>
+    <table className={tableStyles}>
       {allCombinations.map(combo => (
-        <tr>
-          <td>
-            <pre>{JSON.stringify(combo, null, 2)}</pre>
+        <tr
+          className={cx(combinationRowStyles, {
+            [combinationDarkModeStyles]: combo.darkMode === true,
+          })}
+        >
+          <td className={cellStyles}>
+            <pre>
+              {entries(combo).map(([n, v]) => (
+                <div>
+                  <b>{n}:</b> {valStr(v)}
+                </div>
+              ))}
+            </pre>
           </td>
-          <td>
+          <td className={cx(cellStyles, instanceCellStyles)}>
             <Instance
               component={component}
               instanceProps={{ ...args, ...combo }}
@@ -64,14 +82,11 @@ function Instance<T extends React.ComponentType<any>>({
   decorator: Required<GeneratedStoryConfig<T>>['decorator'];
 }): ReactElement<any> {
   return decorator(
-    (extraArgs: Args) => (
-      <div className={cx(instanceClassName, instanceStyles)}>
-        {React.createElement(component, {
-          ...instanceProps,
-          ...extraArgs,
-        })}
-      </div>
-    ),
+    (extraArgs: Args) =>
+      React.createElement(component, {
+        ...instanceProps,
+        ...extraArgs,
+      }),
     { args: { ...instanceProps } },
   );
 }

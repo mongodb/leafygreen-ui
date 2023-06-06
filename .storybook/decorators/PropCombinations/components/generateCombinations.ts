@@ -13,6 +13,7 @@ export function generateCombinations<T extends React.ComponentType<any>>({
   const AllCombinations: Array<PropCombination<T>> = [];
   RecursiveCombinations({}, [...variables]);
   return AllCombinations;
+
   /**
    * Recursively loop through all prop combinations defined in `variables`
    */
