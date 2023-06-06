@@ -5,8 +5,6 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Spinner } from '@leafygreen-ui/loading-indicator';
 import { registerRipple } from '@leafygreen-ui/ripple';
 
-import { ButtonProps, Size, Variant } from '../types';
-
 import {
   buttonContentSizeStyle,
   buttonContentStyle,
@@ -18,16 +16,19 @@ import {
   rippleStyle,
   spinnerColor,
 } from './ButtonContent.styles';
+import { ButtonContentProps } from './ButtonContent.types';
 import DefaultContent from './DefaultContent';
 
-type ButtonContentProps = Omit<ButtonProps, 'as'>;
-
+/**
+ * Internal contents of a Button
+ * @internal
+ */
 export const ButtonContent = (props: ButtonContentProps) => {
   const {
     darkMode: darkModeProp,
-    disabled = false,
-    variant = Variant.Default,
-    size = Size.Default,
+    disabled,
+    variant,
+    size,
     isLoading,
     loadingText,
     className,

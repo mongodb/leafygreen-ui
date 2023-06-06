@@ -3,7 +3,6 @@ import React from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 
 import ButtonIcon from '../ButtonIcon/ButtonIcon';
-import { ButtonProps, Size, Variant } from '../types';
 
 import {
   buttonContentSizeStyle,
@@ -12,18 +11,17 @@ import {
   leftGlyphStyles,
   rightGlyphStyles,
 } from './ButtonContent.styles';
-
-type ButtonContentProps = Omit<ButtonProps, 'as'>;
+import { ButtonContentProps } from './ButtonContent.types';
 
 const DefaultContent = ({
   leftGlyph,
   rightGlyph,
   className,
   children,
-  variant = Variant.Default,
-  size = Size.Default,
-  darkMode = false,
-  disabled = false,
+  variant,
+  size,
+  darkMode,
+  disabled,
 }: ButtonContentProps) => {
   const isIconOnlyButton = ((leftGlyph || rightGlyph) && !children) ?? false;
   const iconProps = { variant, size, darkMode, disabled, isIconOnlyButton };
