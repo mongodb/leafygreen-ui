@@ -3,13 +3,18 @@ import { StoryFn } from '@storybook/react';
 
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
-import { CardSkeleton, FormSkeleton, Size, Skeleton } from '.';
+import { Size, Skeleton } from '.';
 
 export default {
-  title: 'Components/SkeletonLoader',
+  title: 'Components/SkeletonLoader/Skeleton',
   component: Skeleton,
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
+    size: {
+      control: 'select',
+      options: Object.values(Size),
+      defaultValue: Size.Default,
+    },
   },
   decorators: [
     (Story: StoryFn) => (
@@ -24,18 +29,3 @@ export default {
 };
 
 export const Basic: StoryFn<typeof Skeleton> = props => <Skeleton {...props} />;
-Basic.argTypes = {
-  size: {
-    control: 'select',
-    options: Object.values(Size),
-    defaultValue: Size.Default,
-  },
-};
-
-export const Card: StoryFn<typeof CardSkeleton> = props => (
-  <CardSkeleton {...props} />
-);
-
-export const Form: StoryFn<typeof FormSkeleton> = props => (
-  <FormSkeleton {...props} />
-);

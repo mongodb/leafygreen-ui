@@ -3,18 +3,14 @@ import { StoryFn } from '@storybook/react';
 
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
-import { Size, Skeleton } from '.';
+import { ParagraphSkeleton } from '.';
 
 export default {
-  title: 'Components/SkeletonLoader',
-  component: Skeleton,
+  title: 'Components/SkeletonLoader/Paragraph',
+  component: ParagraphSkeleton,
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
-    size: {
-      control: 'select',
-      options: Object.values(Size),
-      defaultValue: Size.Default,
-    },
+    withHeader: { control: 'boolean' },
   },
   decorators: [
     (Story: StoryFn) => (
@@ -28,4 +24,6 @@ export default {
   },
 };
 
-export const Basic: StoryFn<typeof Skeleton> = props => <Skeleton {...props} />;
+export const Paragraph: StoryFn<typeof ParagraphSkeleton> = props => (
+  <ParagraphSkeleton {...props} />
+);
