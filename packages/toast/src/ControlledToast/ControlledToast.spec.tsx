@@ -90,7 +90,7 @@ describe('packages/toast/controlled', () => {
 
     test('unmounts when `open` is true and component render is toggled to false', async () => {
       let isOpen = true;
-      const { findByTestId, queryByTestId, rerender } = render(
+      const { findByTestId, rerender } = render(
         <ToastProvider>
           {isOpen && (
             <Toast
@@ -113,13 +113,14 @@ describe('packages/toast/controlled', () => {
               open={true}
               title="Test 1"
               onClose={() => {}}
-              data-testid="test-toast2"
+              data-testid="test-toast1"
             />
           )}
         </ToastProvider>,
       );
-      const updatedToast = await waitFor(() => queryByTestId('test-toast2'));
-      expect(updatedToast).not.toBeInTheDocument();
+
+      await waitForElementToBeRemoved(toast);
+      expect(toast).not.toBeInTheDocument();
     });
 
     test('does not render when `open` is false', async () => {
