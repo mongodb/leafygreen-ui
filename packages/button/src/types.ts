@@ -118,6 +118,16 @@ export interface ButtonProps {
   href?: string;
 
   /**
+   * Indicates whether the Button is in a loading state
+   */
+  isLoading?: boolean;
+
+  /**
+   * String displayed in place of `children` while the button is in a loading state
+   */
+  loadingText?: string;
+
+  /**
    * The component or HTML Element that the button is rendered as.
    *
    * To use with NextJS Links, pass in a component that wraps the Link:
