@@ -95,6 +95,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   const hasSetInitialOpen = useRef(false);
 
   const [, setClosed] = useState(false);
+  // TODO: try converting to a ref
   const [currentSubMenu, setCurrentSubMenu] = useState<ElementOf<
     typeof SubMenu
   > | null>(null);
@@ -174,6 +175,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           titleArr.push(title);
 
           if (!currentSubMenu && props.active && !hasSetInitialOpen.current) {
+            // This causes a re-render on intial load
             setCurrentSubMenu(child);
             hasSetInitialOpen.current = true;
           }
@@ -186,7 +188,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
             open: isCurrentSubMenu,
             setOpen: (state: boolean) => {
               if (currentChildRef) {
-                // setFocused(currentChildRef);
                 focusedRef.current = currentChildRef;
               }
 
