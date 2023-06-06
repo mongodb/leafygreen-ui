@@ -57,32 +57,30 @@ export function PropCombinations<T extends React.ComponentType<any>>({
         ),
         { args: { ...props, ...args } },
       );
-    } else {
-      const [propName, propValues] = vars.pop()!;
-
-      if (propValues) {
-        return (
-          <>
-            {propValues.map(
-              val =>
-                !shouldExcludePropCombo<T>({
-                  propName,
-                  val,
-                  props,
-                  exclude,
-                }) && (
-                  <PropDetailsComponent propName={propName} val={val}>
-                    {RecursiveCombinations({ [propName]: val, ...props }, [
-                      ...vars,
-                    ])}
-                  </PropDetailsComponent>
-                ),
-            )}
-          </>
-        );
-      } else {
-        return <div>No Prop Values</div>;
-      }
     }
+    const [propName, propValues] = vars.pop()!;
+
+    if (propValues) {
+      return (
+        <>
+          {propValues.map(
+            val =>
+              !shouldExcludePropCombo<T>({
+                propName,
+                val,
+                props,
+                exclude,
+              }) && (
+                <PropDetailsComponent propName={propName} val={val}>
+                  {RecursiveCombinations({ [propName]: val, ...props }, [
+                    ...vars,
+                  ])}
+                </PropDetailsComponent>
+              ),
+          )}
+        </>
+      );
+    }
+    return <div>No Prop Values</div>;
   }
 }
