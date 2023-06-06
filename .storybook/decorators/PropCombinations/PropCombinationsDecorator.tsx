@@ -27,6 +27,12 @@ import { PARAM_NAME } from './constants';
 type ContextType<T extends React.ComponentType<any>> = StoryContext<T> &
   StoryMetaType<T>;
 
+/**
+ * A [Storybook decorator](https://storybook.js.org/docs/react/writing-stories/decorators) function to render
+ * all combinations of given props.
+ *
+ * See [README.md](./README.md) for more.
+ */
 const PropCombinationsDecorator: Decorator = (
   StoryFn: StoryFn,
   context: StoryContext<unknown>,
