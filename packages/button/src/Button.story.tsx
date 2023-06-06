@@ -20,7 +20,7 @@ const meta: StoryMetaType<typeof Button> = {
     default: 'LiveExample',
     generate: {
       storyNames: ['LargeSize', 'DefaultSize', 'SmallSize', 'XSmallSize'],
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         rightGlyph: [undefined, <Icon glyph={'ArrowRight'} />],
         leftGlyph: [undefined, <Icon glyph={'Cloud'} />],
