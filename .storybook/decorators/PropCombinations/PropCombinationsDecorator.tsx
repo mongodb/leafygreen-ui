@@ -88,7 +88,9 @@ const PropCombinationsDecorator: Decorator = (
 export default PropCombinationsDecorator;
 
 /**
- * Sorts the darkMode prop to the top
+ * Sorts the darkMode prop to the top.
+ *
+ * We want darkMode to be first so we can easily divide the tables into two clear sections.
  */
 function sortDarkMode([propA]: [string, any], [propB]: [string, any]): number {
   if (propA === 'darkMode') return -1;
