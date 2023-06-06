@@ -2,8 +2,9 @@ import { cx } from '@leafygreen-ui/emotion';
 import { GeneratedStoryConfig } from '@leafygreen-ui/lib';
 import { Args, StoryFn } from '@storybook/react';
 import React, { ReactElement } from 'react';
-import { PropName } from './types';
+import { PropCombination, PropName } from './types';
 import { generateCombinations } from './generateCombinations';
+import { instanceClassName, instanceStyles } from '../PropCombinations.styles';
 
 /**
  * Generates all combinations of each variable
@@ -34,26 +35,43 @@ export function PropCombinations<T extends React.ComponentType<any>>({
   console.log(allCombinations);
 
   return (
-    <>
+    <table>
       {allCombinations.map(combo => (
-        <>{JSON.stringify(combo)}</>
+        <tr>
+          <td>
+            <pre>{JSON.stringify(combo, null, 2)}</pre>
+          </td>
+          <td>
+            <Instance
+              component={component}
+              instanceProps={{ ...args, ...combo }}
+              decorator={decorator}
+            />
+          </td>
+        </tr>
       ))}
-    </>
+    </table>
   );
 }
 
-// decorator(
-//   (extraArgs: typeof args) => (
-//     <div
-//       className={cx(instanceClassName, instanceStyles)}
-//       data-props={JSON.stringify(props)}
-//     >
-//       {React.createElement(component, {
-//         ...args,
-//         ...extraArgs,
-//         ...props,
-//       })}
-//     </div>
-//   ),
-//   { args: { ...props, ...args } },
-// );
+function Instance<T extends React.ComponentType<any>>({
+  component,
+  instanceProps,
+  decorator,
+}: {
+  component: T;
+  instanceProps: PropCombination<T>;
+  decorator: Required<GeneratedStoryConfig<T>>['decorator'];
+}): ReactElement<any> {
+  return decorator(
+    (extraArgs: Args) => (
+      <div className={cx(instanceClassName, instanceStyles)}>
+        {React.createElement(component, {
+          ...instanceProps,
+          ...extraArgs,
+        })}
+      </div>
+    ),
+    { args: { ...instanceProps } },
+  );
+}
