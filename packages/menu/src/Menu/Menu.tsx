@@ -99,7 +99,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     typeof SubMenu
   > | null>(null);
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
-  const popoverRef = useRef(null);
+  const popoverRef = useRef<HTMLUListElement | null>(null);
 
   const setOpen =
     (typeof controlledOpen === 'boolean' && controlledSetOpen) ||
@@ -112,6 +112,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   }, [setOpen, shouldClose]);
 
   const triggerRef = useRef<HTMLElement>(null);
+  // This hook causes a second re-render on intial load. `useAvailableSpace` uses `useViewportSize` which has internal state.
   const availableSpace = useAvailableSpace(refEl || triggerRef, spacing);
   const maxMenuHeightValue = !isUndefined(availableSpace)
     ? `${Math.min(availableSpace, maxHeight)}px`
@@ -245,18 +246,13 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     return { updatedChildren: updateChildren(children), refs };
   }, [children, currentSubMenu, open, handleClose]);
 
-  // const [focused, setFocused] = useState<HTMLElement>(refs[0] || null);
-
-  const focusedRef = useRef(refs[0] || null);
-
-  // const [popoverNode, setPopoverNode] = useState<HTMLUListElement | null>(null);
+  const focusedRef = useRef<HTMLElement | null>(refs[0] || null);
 
   const setFocus = (el: HTMLElement | null) => {
     if (el == null) {
       return;
     }
 
-    // setFocused(el);
     focusedRef.current = el;
     el.focus();
   };
@@ -290,7 +286,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     switch (e.keyCode) {
       case keyMap.ArrowDown:
         e.preventDefault(); // Prevents page scrolling
-        // refToFocus = refs[(refs.indexOf(focused!) + 1) % refs.length];
         refToFocus =
           refs[(refs.indexOf(focusedRef.current!) + 1) % refs.length];
 
@@ -299,8 +294,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 
       case keyMap.ArrowUp:
         e.preventDefault(); // Prevents page scrolling
-        // refToFocus =
-        //   refs[(refs.indexOf(focused!) - 1 + refs.length) % refs.length];
         refToFocus =
           refs[
             (refs.indexOf(focusedRef.current!) - 1 + refs.length) % refs.length
@@ -375,7 +368,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
             {...rest}
             className={scrollContainerStyle}
             role="menu"
-            // ref={setPopoverNode}
             onClick={e => e.stopPropagation()}
             ref={popoverRef}
           >
