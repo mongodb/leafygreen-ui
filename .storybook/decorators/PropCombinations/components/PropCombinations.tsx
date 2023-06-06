@@ -1,7 +1,10 @@
 import React, { PropsWithChildren, ReactElement } from 'react';
+import { entries } from 'lodash';
 import { Args, StoryFn } from '@storybook/react';
+
 import { css, cx } from '@leafygreen-ui/emotion';
 import { GeneratedStoryConfig } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import { Polymorph } from '@leafygreen-ui/polymorphic';
 
 import {
@@ -13,7 +16,6 @@ import {
   propWrapperStylesDarkModeProp,
 } from '../PropCombinations.styles';
 import { shouldExcludePropCombo, valStr } from '../utils';
-import { entries } from 'lodash';
 
 /**
  * Generates all combinations of each variable
@@ -71,7 +73,6 @@ export function PropCombinations<T extends React.ComponentType<any>>({
           >
             {propValues.map(val => (
               <PropDetailsComponent propName={propName} val={val}>
-                {isDarkModeProp && <TableHeader vars={vars} />}
                 {RecursiveCombinations({ [propName]: val, ...props }, [
                   ...vars,
                 ])}
@@ -127,7 +128,12 @@ export function PropCombinations<T extends React.ComponentType<any>>({
   /** Scoped to PropCombinations */
   function Instance({ instanceProps }: { instanceProps: Record<string, any> }) {
     return (
-      <tr>
+      <tr
+        className={css`
+          border-top: 1px solid ${palette.gray.base};
+          border-bottom: 1px solid ${palette.gray.base};
+        `}
+      >
         <PropLabels instanceProps={instanceProps} />
         <td
           className={cx(instanceStyles)}
@@ -159,30 +165,16 @@ export function PropCombinations<T extends React.ComponentType<any>>({
     propsToLabel.reverse();
 
     return (
-      <>
-        {propsToLabel.map(([_, v]) => (
-          <td>{valStr(v)}</td>
-        ))}
-      </>
-    );
-  }
-
-  /** Scoped to PropCombinations */
-  function TableHeader({ vars }: { vars: Array<[string, any]> }) {
-    const headerCellStyles = css`
-      text-align: left;
-    `;
-
-    const varNames = vars.map(([v]) => v);
-
-    return (
-      <thead>
-        <tr>
-          {varNames.map(name => (
-            <th className={headerCellStyles}>{name}</th>
+      <td>
+        <pre>
+          {propsToLabel.map(([name, val]) => (
+            <div>
+              <b>{name}: </b>
+              {valStr(val)}
+            </div>
           ))}
-        </tr>
-      </thead>
+        </pre>
+      </td>
     );
   }
 }
