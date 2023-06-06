@@ -5,8 +5,8 @@ import { Args, StoryFn } from '@storybook/react';
 import { cx } from '@leafygreen-ui/emotion';
 import { GeneratedStoryConfig } from '@leafygreen-ui/lib';
 
-import { PropCombination, PropName } from './types';
-import { RecursiveCombinations } from './generateCombinations';
+import { PropCombination, PropName } from '../utils/types';
+import { RecursiveCombinations } from '../utils/RecursiveCombinations';
 import { valStr } from '../utils';
 import {
   cellStyles,

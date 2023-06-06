@@ -1,6 +1,6 @@
 import { GeneratedStoryConfig } from '@leafygreen-ui/lib';
 import { keys } from 'lodash';
-import { shouldExcludePropCombo } from '../utils';
+import { shouldExcludePropCombo } from '.';
 import { PropCombination, PropName } from './types';
 
 /**
