@@ -95,7 +95,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   const hasSetInitialOpen = useRef(false);
 
   const [, setClosed] = useState(false);
-  // TODO: try converting to a ref
+  //FIXME: This causes a re-render on intial load since this state is updated inside `updatedChildren` on inital load.
   const [currentSubMenu, setCurrentSubMenu] = useState<ElementOf<
     typeof SubMenu
   > | null>(null);
@@ -113,7 +113,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   }, [setOpen, shouldClose]);
 
   const triggerRef = useRef<HTMLElement>(null);
-  // This hook causes a second re-render on intial load. `useAvailableSpace` uses `useViewportSize` which has internal state.
+  //FIXME: This hook causes a re-render on intial load. `useAvailableSpace` uses `useViewportSize` internally, which has internal state that causes re-renders.
   const availableSpace = useAvailableSpace(refEl || triggerRef, spacing);
   const maxMenuHeightValue = !isUndefined(availableSpace)
     ? `${Math.min(availableSpace, maxHeight)}px`
@@ -160,7 +160,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
         const title = props?.title ?? false;
 
         const onFocus = ({ target }: React.FocusEvent<HTMLElement>) => {
-          // setFocused(target);
           focusedRef.current = target;
         };
 
@@ -175,7 +174,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           titleArr.push(title);
 
           if (!currentSubMenu && props.active && !hasSetInitialOpen.current) {
-            // This causes a re-render on intial load
+            //FIXME: This causes a re-render on intial load. Switching to a ref to store this value will not trigger `updatedChildren`, specifically this line, which is needed to update the current submenu when a caret is clicked.
             setCurrentSubMenu(child);
             hasSetInitialOpen.current = true;
           }
