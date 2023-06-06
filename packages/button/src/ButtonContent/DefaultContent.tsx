@@ -11,8 +11,12 @@ import {
   leftGlyphStyles,
   rightGlyphStyles,
 } from './ButtonContent.styles';
-import { ButtonContentProps } from './ButtonContent.types';
+import { DefaultContentProps } from './ButtonContent.types';
 
+/**
+ * Default internal contents of a Button
+ * @internal
+ */
 const DefaultContent = ({
   leftGlyph,
   rightGlyph,
@@ -22,7 +26,7 @@ const DefaultContent = ({
   size,
   darkMode,
   disabled,
-}: ButtonContentProps) => {
+}: DefaultContentProps) => {
   const isIconOnlyButton = ((leftGlyph || rightGlyph) && !children) ?? false;
   const iconProps = { variant, size, darkMode, disabled, isIconOnlyButton };
   return (

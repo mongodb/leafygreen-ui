@@ -7,3 +7,5 @@ export type ButtonContentProps = ButtonProps &
       'darkMode' | 'disabled' | 'variant' | 'size' | 'isLoading'
     >
   >;
+
+export type DefaultContentProps = ButtonContentProps;
