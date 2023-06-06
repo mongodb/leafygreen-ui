@@ -43,26 +43,26 @@ const PropCombinationsDecorator: Decorator = (
 
     if (!isUndefined(decoratorConfig)) {
       const {
-        props,
+        combineArgs,
         excludeCombinations,
         args: generatedArgs,
         decorator,
       } = decoratorConfig;
       if (isGeneratedStory(context)) {
         // Check for props
-        if (!props || entries(props).length === 0) {
-          return Err('`props` not found in story generation parameters.');
+        if (!combineArgs || entries(combineArgs).length === 0) {
+          return Err('`combineArgs` not found in story generation parameters.');
         }
 
         // Remove from props any explicitly defined args
         for (let propName in { ...generatedArgs }) {
-          if (props[propName]) {
-            delete props[propName];
+          if (combineArgs[propName]) {
+            delete combineArgs[propName];
           }
         }
 
         // Convert the object to an array & ensure darkMode is the first prop
-        const variables = entries(props).sort(sortDarkMode);
+        const variables = entries(combineArgs).sort(sortDarkMode);
 
         // reversing since the PropCombos recursion is depth-first
         variables.reverse();
