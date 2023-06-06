@@ -65,27 +65,30 @@ const scrollContainerStyle = css`
  * @param props.trigger Trigger element can be ReactNode or function, and, if present, internally manages active state of Menu.
  * @param props.darkMode Determines whether or not the component will be rendered in dark theme.
  */
-export function Menu({
-  align = Align.Bottom,
-  justify = Justify.End,
-  adjustOnMutation = false,
-  shouldClose = () => true,
-  spacing = 6,
-  open: controlledOpen,
-  setOpen: controlledSetOpen,
-  children,
-  className,
-  refEl,
-  trigger,
-  usePortal = true,
-  portalClassName,
-  portalContainer,
-  scrollContainer,
-  popoverZIndex,
-  maxHeight = 344,
-  darkMode: darkModeProp,
-  ...rest
-}: MenuProps) {
+export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
+  {
+    align = Align.Bottom,
+    justify = Justify.End,
+    adjustOnMutation = false,
+    shouldClose = () => true,
+    spacing = 6,
+    maxHeight = 344,
+    usePortal = true,
+    open: controlledOpen,
+    setOpen: controlledSetOpen,
+    darkMode: darkModeProp,
+    children,
+    className,
+    refEl,
+    trigger,
+    portalClassName,
+    portalContainer,
+    scrollContainer,
+    popoverZIndex,
+    ...rest
+  }: MenuProps,
+  forwardRef,
+) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
 
   const hasSetInitialFocus = useRef(false);
@@ -101,6 +104,11 @@ export function Menu({
     (typeof controlledOpen === 'boolean' && controlledSetOpen) ||
     uncontrolledSetOpen;
   const open = controlledOpen ?? uncontrolledOpen;
+  const handleClose = useCallback(() => {
+    if (shouldClose()) {
+      setOpen(false);
+    }
+  }, [setOpen, shouldClose]);
 
   const triggerRef = useRef<HTMLElement>(null);
   const availableSpace = useAvailableSpace(refEl || triggerRef, spacing);
@@ -198,6 +206,10 @@ export function Menu({
           return React.cloneElement(child, {
             ref: setRef,
             onFocus,
+            onClick: (e: React.MouseEvent) => {
+              child.props?.onClick?.(e);
+              handleClose();
+            },
           });
         }
 
@@ -225,7 +237,7 @@ export function Menu({
     }
 
     return { updatedChildren: updateChildren(children), refs };
-  }, [children, currentSubMenu, open]);
+  }, [children, currentSubMenu, open, handleClose]);
 
   const [focused, setFocused] = useState<HTMLElement>(refs[0] || null);
 
@@ -246,12 +258,6 @@ export function Menu({
       hasSetInitialOpen.current = false;
     }
   }, [open]);
-
-  const handleClose = useCallback(() => {
-    if (shouldClose()) {
-      setOpen(false);
-    }
-  }, [setOpen, shouldClose]);
 
   const handleBackdropClick = useCallback(
     (e: MouseEvent) => {
@@ -342,6 +348,7 @@ export function Menu({
             `,
             className,
           )}
+          ref={forwardRef}
         >
           {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
@@ -378,6 +385,8 @@ export function Menu({
         onClick: triggerClickHandler,
         ref: triggerRef,
         children: popoverContent,
+        ['aria-expanded']: open,
+        ['aria-haspopup']: true,
       });
     }
 
@@ -390,13 +399,15 @@ export function Menu({
           {popoverContent}
         </>
       ),
+      ['aria-expanded']: open,
+      ['aria-haspopup']: true,
     });
 
     return renderedTrigger;
   }
 
   return popoverContent;
-}
+});
 
 Menu.displayName = 'Menu';
 
@@ -416,6 +427,6 @@ Menu.propTypes = {
   open: PropTypes.bool,
   setOpen: PropTypes.func,
   darkMode: PropTypes.bool,
-};
+} as any;
 
 export default Menu;

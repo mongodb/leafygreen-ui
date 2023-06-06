@@ -1,5 +1,27 @@
 # @leafygreen-ui/empty-state
 
+## 1.0.5
+
+### Patch Changes
+
+- 63b2deb0b: Upgrade button to v20.1.1
+
+## 1.0.4
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [75099c60b]
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [0cd471676]
+- Updated dependencies [0cd471676]
+- Updated dependencies [2dfc4d0ea]
+  - @leafygreen-ui/button@20.1.0
+  - @leafygreen-ui/leafygreen-provider@3.1.3
+  - @leafygreen-ui/lib@10.3.4
+  - @leafygreen-ui/typography@16.5.0
+
 ## 1.0.3
 
 ### Patch Changes

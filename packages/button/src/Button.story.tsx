@@ -3,7 +3,7 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import { type StoryMetaType } from '@leafygreen-ui/lib';
+import { storybookArgTypes, type StoryMetaType } from '@leafygreen-ui/lib';
 
 import { Size } from './types';
 import Button, { ButtonProps, Variant } from '.';
@@ -22,6 +22,7 @@ const meta: StoryMetaType<typeof Button> = {
     disabled: {
       control: { type: 'boolean' },
     },
+    darkMode: storybookArgTypes.darkMode,
     leftGlyph: {
       options: Object.keys(glyphs),
       control: { type: 'select' },

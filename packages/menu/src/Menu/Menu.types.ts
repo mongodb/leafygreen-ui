@@ -45,4 +45,9 @@ export interface MenuProps extends Omit<PopoverProps, 'active'> {
    * default: `false`
    */
   darkMode?: boolean;
+
+  /**
+   * id passed to the menu dropdown.
+   */
+  id?: string;
 }

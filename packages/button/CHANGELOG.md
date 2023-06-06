@@ -1,5 +1,30 @@
 # @leafygreen-ui/button
 
+## 20.1.1
+
+### Patch Changes
+
+- d611bea87: Revert changes made in 20.1.0
+
+## 20.1.0
+
+### Minor Changes
+
+- 2dfc4d0ea: Adds a loading state using the new Spinner component
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- 0cd471676: Updates README to reflect the correct button variants
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [5546f7cb9]
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [0cd471676]
+  - @leafygreen-ui/box@3.1.4
+  - @leafygreen-ui/leafygreen-provider@3.1.3
+  - @leafygreen-ui/lib@10.3.4
+  - @leafygreen-ui/loading-indicator@1.0.0
+
 ## 20.0.7
 
 ### Patch Changes
