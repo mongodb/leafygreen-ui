@@ -1,10 +1,20 @@
+import React, { ReactElement } from 'react';
+import { entries } from 'lodash';
+import { Args, StoryFn } from '@storybook/react';
+
 import { cx } from '@leafygreen-ui/emotion';
 import { GeneratedStoryConfig } from '@leafygreen-ui/lib';
-import { Args, StoryFn } from '@storybook/react';
-import React, { ReactElement } from 'react';
-import { instanceClassName, instanceStyles } from '../PropCombinations.styles';
-import { PropDetailsComponent } from './PropDetails';
-import { shouldExcludePropCombo } from '../utils';
+
+import { PropCombination, PropName } from '../utils/types';
+import { RecursiveCombinations } from '../utils/RecursiveCombinations';
+import { valStr } from '../utils';
+import {
+  cellStyles,
+  combinationDarkModeStyles,
+  combinationRowStyles,
+  instanceCellStyles,
+  tableStyles,
+} from '../PropCombinations.styles';
 
 /**
  * Generates all combinations of each variable
@@ -17,70 +27,63 @@ export function PropCombinations<T extends React.ComponentType<any>>({
   decorator = (SFn: StoryFn) => <SFn />,
 }: {
   component: T;
-  variables: Array<[string, Array<any> | undefined]>;
+  variables: Array<[PropName<T>, Array<any> | undefined]>;
   args: Args;
   exclude: GeneratedStoryConfig<T>['excludeCombinations'];
   decorator: GeneratedStoryConfig<T>['decorator'];
 }): ReactElement<any> {
-  let comboCount = 0;
+  const allCombinations = RecursiveCombinations({}, [...variables], exclude);
 
-  const AllCombinations = RecursiveCombinations({}, [...variables]);
-
-  console.log(
+  const comboCount = allCombinations.length;
+  console.info(
     `Rendering ${comboCount} prop combinations for component: ${component.displayName}`,
   );
 
-  return AllCombinations;
+  return (
+    <table className={tableStyles}>
+      {allCombinations.map(combo => (
+        <tr
+          className={cx(combinationRowStyles, {
+            [combinationDarkModeStyles]: combo.darkMode === true,
+          })}
+        >
+          <td className={cellStyles}>
+            <pre>
+              {entries(combo).map(([n, v]) => (
+                <div>
+                  <b>{n}:</b> {valStr(v)}
+                </div>
+              ))}
+            </pre>
+          </td>
+          <td className={cx(cellStyles, instanceCellStyles)}>
+            <Instance
+              component={component}
+              instanceProps={{ ...args, ...combo }}
+              decorator={decorator}
+            />
+          </td>
+        </tr>
+      ))}
+    </table>
+  );
+}
 
-  /**
-   * Recursively loop through all prop combinations defined in `variables` and render them
-   */
-  function RecursiveCombinations(
-    props: Record<string, any>,
-    vars: Array<[string, Array<any> | undefined]>,
-  ): ReactElement<any> {
-    // If this is the last variable, this is our base case
-    if (vars.length === 0) {
-      comboCount += 1;
-      return decorator(
-        (extraArgs: typeof args) => (
-          <div
-            className={cx(instanceClassName, instanceStyles)}
-            data-props={JSON.stringify(props)}
-          >
-            {React.createElement(component, {
-              ...args,
-              ...extraArgs,
-              ...props,
-            })}
-          </div>
-        ),
-        { args: { ...props, ...args } },
-      );
-    }
-    const [propName, propValues] = vars.pop()!;
-
-    if (propValues) {
-      return (
-        <>
-          {propValues.map(
-            val =>
-              !shouldExcludePropCombo<T>({
-                propName,
-                val,
-                props,
-                exclude,
-              }) && (
-                <PropDetailsComponent propName={propName} val={val}>
-                  {RecursiveCombinations({ [propName]: val, ...props }, [
-                    ...vars,
-                  ])}
-                </PropDetailsComponent>
-              ),
-          )}
-        </>
-      );
-    }
-    return <div>No Prop Values</div>;
-  }
+function Instance<T extends React.ComponentType<any>>({
+  component,
+  instanceProps,
+  decorator,
+}: {
+  component: T;
+  instanceProps: PropCombination<T>;
+  decorator: Required<GeneratedStoryConfig<T>>['decorator'];
+}): ReactElement<any> {
+  return decorator(
+    (extraArgs: Args) =>
+      React.createElement(component, {
+        ...instanceProps,
+        ...extraArgs,
+      }),
+    { args: { ...instanceProps } },
+  );
 }
