@@ -4,7 +4,7 @@ import { shouldExcludePropCombo } from '.';
 import { PropCombination, PropName } from './types';
 
 /**
- * Recursively loop through all prop combinations defined in `variables`
+ * Recursively loop through all prop combinations defined in `vars`
  */
 export function RecursiveCombinations<T extends React.ComponentType<any>>(
   props: Record<PropName<T>, any> | {},

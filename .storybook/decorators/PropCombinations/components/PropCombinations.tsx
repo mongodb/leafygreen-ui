@@ -7,11 +7,12 @@ import { GeneratedStoryConfig } from '@leafygreen-ui/lib';
 
 import { PropName } from '../utils/types';
 import { RecursiveCombinations } from '../utils/RecursiveCombinations';
-import { valStr } from '../utils';
+import { valStr, type PropCombination } from '../utils';
 import {
   cellStyles,
   combinationDarkModeStyles,
   combinationRowStyles,
+  generatedStoryWrapper,
   instanceCellStyles,
   tableStyles,
 } from '../PropCombinations.styles';
@@ -40,32 +41,48 @@ export function PropCombinations<T extends React.ComponentType<any>>({
     `Rendering ${comboCount} prop combinations for component: ${component.displayName}`,
   );
 
+  const tables = allCombinations.reduce(
+    (t, combo) => {
+      const mode = combo.darkMode ? 'dark' : 'light';
+      t[mode].push(combo);
+      return t;
+    },
+    { light: [], dark: [] } as Record<
+      'light' | 'dark',
+      Array<PropCombination<T>>
+    >,
+  );
+
   return (
-    <table className={tableStyles}>
-      {allCombinations.map(combo => (
-        <tr
-          className={cx(combinationRowStyles, {
-            [combinationDarkModeStyles]: combo.darkMode === true,
-          })}
-        >
-          <td className={cellStyles}>
-            <pre>
-              {entries(combo).map(([n, v]) => (
-                <div>
-                  <b>{n}:</b> {valStr(v)}
-                </div>
-              ))}
-            </pre>
-          </td>
-          <td className={cx(cellStyles, instanceCellStyles)}>
-            <Instance
-              component={component}
-              instanceProps={{ ...args, ...combo }}
-              decorator={decorator}
-            />
-          </td>
-        </tr>
+    <div className={generatedStoryWrapper}>
+      {entries(tables).map(([mode, combos]) => (
+        <table className={tableStyles}>
+          {combos.map(combo => (
+            <tr
+              className={cx(combinationRowStyles, {
+                [combinationDarkModeStyles]: combo.darkMode === true,
+              })}
+            >
+              <td className={cellStyles}>
+                <pre>
+                  {entries(combo).map(([n, v]) => (
+                    <div>
+                      <b>{n}:</b> {valStr(v)}
+                    </div>
+                  ))}
+                </pre>
+              </td>
+              <td className={cx(cellStyles, instanceCellStyles)}>
+                <Instance
+                  component={component}
+                  instanceProps={{ ...args, ...combo }}
+                  decorator={decorator}
+                />
+              </td>
+            </tr>
+          ))}
+        </table>
       ))}
-    </table>
+    </div>
   );
 }

@@ -7,6 +7,7 @@ export const generatedStoryWrapper = css`
 `;
 
 export const tableStyles = css`
+  flex: 1;
   width: max-content;
   max-width: 100%;
   border-collapse: collapse;
@@ -30,7 +31,7 @@ export const combinationDarkModeStyles = css`
 `;
 
 export const cellStyles = css`
-  padding: 8px;
+  padding: 16px;
 `;
 
 export const instanceCellStyles = css`

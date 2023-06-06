@@ -5,6 +5,9 @@ import { GeneratedStoryConfig } from '@leafygreen-ui/lib';
 
 import { PropCombination } from '../utils';
 
+/**
+ * Renders a component instance
+ */
 export function Instance<T extends React.ComponentType<any>>({
   component,
   instanceProps,
