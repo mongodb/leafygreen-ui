@@ -30,3 +30,7 @@ export const firstRowStyles = css`
 export const headerCellStyles = css`
   text-align: left;
 `;
+
+export const columnHeaderStyles = css`
+  font-weight: 600;
+`;

@@ -3,14 +3,13 @@ import { StoryFn } from '@storybook/react';
 
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
-import { ParagraphSkeleton } from '.';
+import { FormSkeleton } from '.';
 
 export default {
   title: 'Components/SkeletonLoader',
-  component: ParagraphSkeleton,
+  component: FormSkeleton,
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
-    withHeader: { control: 'boolean' },
   },
   decorators: [
     (Story: StoryFn) => (
@@ -21,6 +20,6 @@ export default {
   ],
 };
 
-export const Paragraph: StoryFn<typeof ParagraphSkeleton> = props => (
-  <ParagraphSkeleton {...props} />
+export const Form: StoryFn<typeof FormSkeleton> = props => (
+  <FormSkeleton {...props} />
 );

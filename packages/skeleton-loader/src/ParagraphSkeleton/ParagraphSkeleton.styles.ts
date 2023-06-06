@@ -1,6 +1,10 @@
 import { css } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 
+export const rootStyles = css`
+  width: 100%;
+`;
+
 export const headerStyles = css`
   width: 250px;
   margin-bottom: 20px;

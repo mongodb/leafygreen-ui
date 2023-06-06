@@ -6,7 +6,7 @@ import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { Size, Skeleton } from '.';
 
 export default {
-  title: 'Components/SkeletonLoader/Skeleton',
+  title: 'Components/SkeletonLoader',
   component: Skeleton,
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -23,9 +23,6 @@ export default {
       </div>
     ),
   ],
-  parameters: {
-    default: 'Paragraph',
-  },
 };
 
 export const Basic: StoryFn<typeof Skeleton> = props => <Skeleton {...props} />;

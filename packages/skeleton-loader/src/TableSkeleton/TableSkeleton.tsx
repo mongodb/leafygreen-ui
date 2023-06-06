@@ -5,13 +5,14 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
-import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
+import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { Skeleton } from '..';
 
 import {
   baseStyles,
   cellStyles,
+  columnHeaderStyles,
   firstRowStyles,
   headerCellStyles,
   tableHeadStyles,
@@ -20,7 +21,7 @@ import { TableSkeletonProps } from '.';
 
 export function TableSkeleton({
   darkMode: darkModeProp,
-  baseFontSize: baseFontSizeProp,
+  baseFontSize: baseFontSizeProp = BaseFontSize.Body1,
   numRows = 5,
   numCols = 4,
   columnLabels,
@@ -28,7 +29,7 @@ export function TableSkeleton({
   ...rest
 }: TableSkeletonProps) {
   const { darkMode, theme } = useDarkMode(darkModeProp);
-  const baseFontSize: BaseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
+  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <table aria-busy {...rest} className={cx(baseStyles, className)}>
@@ -37,7 +38,12 @@ export function TableSkeleton({
             {[...Array(numCols)].map((_, i) => (
               <th key={i} className={cx(cellStyles, headerCellStyles)}>
                 {columnLabels && columnLabels[i] ? (
-                  <>{columnLabels[i]}</>
+                  <Body
+                    baseFontSize={baseFontSize}
+                    className={columnHeaderStyles}
+                  >
+                    {columnLabels[i]}
+                  </Body>
                 ) : (
                   <Skeleton size="small" />
                 )}

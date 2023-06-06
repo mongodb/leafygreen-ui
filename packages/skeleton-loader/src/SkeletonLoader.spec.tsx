@@ -8,7 +8,7 @@ import { ParagraphSkeleton } from './ParagraphSkeleton';
 import { Skeleton } from './Skeleton';
 import { TableSkeleton } from './TableSkeleton';
 
-describe('packages/skeleton/Skeleton', () => {
+describe('packages/skeleton-loader/Skeleton', () => {
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
       const { container } = render(<Skeleton />);
@@ -18,7 +18,7 @@ describe('packages/skeleton/Skeleton', () => {
   });
 });
 
-describe('packages/skeleton/CardSkeleton', () => {
+describe('packages/skeleton-loader/CardSkeleton', () => {
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
       const { container } = render(<CardSkeleton />);
@@ -28,7 +28,7 @@ describe('packages/skeleton/CardSkeleton', () => {
   });
 });
 
-describe('packages/skeleton/FormSkeleton', () => {
+describe('packages/skeleton-loader/FormSkeleton', () => {
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
       const { container } = render(<FormSkeleton />);
@@ -38,7 +38,7 @@ describe('packages/skeleton/FormSkeleton', () => {
   });
 });
 
-describe('packages/skeleton/ParagraphSkeleton', () => {
+describe('packages/skeleton-loader/ParagraphSkeleton', () => {
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
       const { container } = render(<ParagraphSkeleton />);
@@ -67,7 +67,7 @@ describe('packages/skeleton/ParagraphSkeleton', () => {
   });
 });
 
-describe('packages/skeleton/TableSkeleton', () => {
+describe('packages/skeleton-loader/TableSkeleton', () => {
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
       const { container } = render(<TableSkeleton />);

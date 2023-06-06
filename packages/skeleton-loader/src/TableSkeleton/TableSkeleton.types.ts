@@ -7,7 +7,7 @@ export interface TableSkeletonProps
   /**
    * Base font size
    */
-  baseFontSize: BaseFontSize;
+  baseFontSize?: BaseFontSize;
 
   /**
    * Number of columns

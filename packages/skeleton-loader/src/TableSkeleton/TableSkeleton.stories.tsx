@@ -3,15 +3,17 @@ import { StoryFn } from '@storybook/react';
 
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
-import { TableSkeleton } from '.';
+import { TableSkeleton } from '..';
 
 export default {
   title: 'Components/SkeletonLoader',
   component: TableSkeleton,
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
+    baseFontSize: storybookArgTypes.updatedBaseFontSize,
     columnLabels: { control: 'none' },
-    baseFontSize: storybookArgTypes.baseFontSize,
+    numCols: { control: 'number' },
+    numRows: { control: 'number' },
   },
   decorators: [
     (Story: StoryFn) => (
@@ -20,9 +22,6 @@ export default {
       </div>
     ),
   ],
-  parameters: {
-    default: 'Paragraph',
-  },
 };
 
 const TableTemplate: StoryFn<typeof TableSkeleton> = props => (

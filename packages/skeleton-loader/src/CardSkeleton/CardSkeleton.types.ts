@@ -1,3 +1,5 @@
-import { CardProps } from '@leafygreen-ui/card';
+import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 
-export interface CardSkeletonProps extends CardProps {}
+export interface CardSkeletonProps
+  extends HTMLElementProps<'div'>,
+    DarkModeProps {}

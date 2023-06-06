@@ -1,41 +1,80 @@
 import React from 'react';
 import { StoryFn } from '@storybook/react';
 
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { css } from '@leafygreen-ui/emotion';
+import { DarkModeProps, storybookArgTypes } from '@leafygreen-ui/lib';
+import { spacing } from '@leafygreen-ui/tokens';
+import { Body, InlineCode } from '@leafygreen-ui/typography';
 
-import { CardSkeleton, FormSkeleton, Size, Skeleton } from '.';
+import {
+  CardSkeleton,
+  FormSkeleton,
+  ParagraphSkeleton,
+  Skeleton,
+  TableSkeleton,
+} from '.';
 
 export default {
   title: 'Components/SkeletonLoader',
-  component: Skeleton,
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
   },
-  decorators: [
-    (Story: StoryFn) => (
-      <div style={{ width: 700 }}>
-        <Story />
-      </div>
-    ),
-  ],
   parameters: {
-    default: 'Paragraph',
+    default: 'LiveExample',
   },
 };
 
-export const Basic: StoryFn<typeof Skeleton> = props => <Skeleton {...props} />;
-Basic.argTypes = {
-  size: {
-    control: 'select',
-    options: Object.values(Size),
-    defaultValue: Size.Default,
-  },
-};
+const storyRootStyles = css`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: ${spacing[7]}px;
+  row-gap: ${spacing[7]}px;
+  padding: ${spacing[7]}px;
+`;
 
-export const Card: StoryFn<typeof CardSkeleton> = props => (
-  <CardSkeleton {...props} />
-);
+const displayOptionContainerStyles = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  max-width: 700px;
+`;
 
-export const Form: StoryFn<typeof FormSkeleton> = props => (
-  <FormSkeleton {...props} />
+const labelStyles = css`
+  margin-top: ${spacing[5]}px;
+`;
+
+export const LiveExample: StoryFn<any> = (props: DarkModeProps) => (
+  <div className={storyRootStyles}>
+    <div className={displayOptionContainerStyles}>
+      <Skeleton />
+      <Body className={labelStyles} weight="medium">
+        <InlineCode>Skeleton</InlineCode>
+      </Body>
+    </div>
+    <div className={displayOptionContainerStyles}>
+      <ParagraphSkeleton withHeader />
+      <Body className={labelStyles} weight="medium">
+        <InlineCode>ParagraphSkeleton</InlineCode>
+      </Body>
+    </div>
+    <div className={displayOptionContainerStyles}>
+      <CardSkeleton />
+      <Body className={labelStyles} weight="medium">
+        <InlineCode>CardSkeleton</InlineCode>
+      </Body>
+    </div>
+    <div className={displayOptionContainerStyles}>
+      <FormSkeleton {...props} />
+      <Body className={labelStyles} weight="medium">
+        <InlineCode>FormSkeleton</InlineCode>
+      </Body>
+    </div>
+    <div className={displayOptionContainerStyles}>
+      <TableSkeleton />
+      <Body className={labelStyles} weight="medium">
+        <InlineCode>TableSkeleton</InlineCode>
+      </Body>
+    </div>
+  </div>
 );

@@ -8,8 +8,7 @@ import { Size } from './Skeleton.types';
 export const rootStyles = css`
   width: 100%;
   border-radius: 6px;
-  background: linear-gradient(90deg, #f0f0f0, #e0e0e0, #f0f0f0) 0 0/ 100vw 100% fixed;
-  animation: bgslide 2s infinite linear;
+  animation: bgslide 1.5s infinite linear;
 
   @keyframes bgslide {
     to {
@@ -32,9 +31,21 @@ export const sizeStyles: Record<Size, string> = {
 
 export const themeStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
-    background-color: ${palette.gray.dark2};
+    background: linear-gradient(
+        110deg,
+        ${palette.gray.dark2} 35%,
+        ${palette.gray.dark1},
+        ${palette.gray.dark2} 65%
+      )
+      0 0/ 100vw 100% fixed;
   `,
   [Theme.Light]: css`
-    background-color: ${palette.gray.light2};
+    background: linear-gradient(
+        110deg,
+        ${palette.gray.light2} 35%,
+        ${palette.gray.light3},
+        ${palette.gray.light2} 65%
+      )
+      0 0/ 100vw 100% fixed;
   `,
 };
