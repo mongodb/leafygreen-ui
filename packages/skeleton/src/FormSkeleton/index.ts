@@ -1,2 +1,2 @@
 export { FormSkeleton } from './FormSkeleton';
-export { FormSkeletonProps } from './FormSkeleton.types';
+export { type FormSkeletonProps } from './FormSkeleton.types';

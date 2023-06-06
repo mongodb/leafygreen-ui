@@ -4,6 +4,8 @@ import { cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
+import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { Skeleton } from '..';
 
@@ -18,6 +20,7 @@ import { TableSkeletonProps } from '.';
 
 export function TableSkeleton({
   darkMode: darkModeProp,
+  baseFontSize: baseFontSizeProp,
   numRows = 5,
   numCols = 4,
   columnLabels,
@@ -25,8 +28,9 @@ export function TableSkeleton({
   ...rest
 }: TableSkeletonProps) {
   const { darkMode, theme } = useDarkMode(darkModeProp);
+  const baseFontSize: BaseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
   return (
-    <LeafyGreenProvider darkMode={darkMode}>
+    <LeafyGreenProvider darkMode={darkMode} baseFontSize={baseFontSize}>
       <table aria-busy {...rest} className={cx(baseStyles, className)}>
         <thead className={tableHeadStyles[theme]}>
           <tr>

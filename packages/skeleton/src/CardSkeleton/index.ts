@@ -1,2 +1,2 @@
 export { CardSkeleton } from './CardSkeleton';
-export { CardSkeletonProps } from './CardSkeleton.types';
+export { type CardSkeletonProps } from './CardSkeleton.types';

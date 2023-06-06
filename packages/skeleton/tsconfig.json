@@ -22,6 +22,9 @@
     },
     {
       "path": "../tokens"
+    },
+    {
+      "path": "../typography"
     }
   ]
 }

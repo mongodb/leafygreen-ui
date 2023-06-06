@@ -3,23 +3,20 @@ import { StoryFn } from '@storybook/react';
 
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
-import { Size } from './Skeleton/Skeleton.types';
-import { CardSkeleton } from './CardSkeleton';
-import { FormSkeleton } from './FormSkeleton';
-import { ParagraphSkeleton } from './ParagraphSkeleton';
-import { TableSkeleton } from './TableSkeleton';
-import { Skeleton } from '.';
+import {
+  CardSkeleton,
+  FormSkeleton,
+  ParagraphSkeleton,
+  Size,
+  Skeleton,
+  TableSkeleton,
+} from '.';
 
 export default {
   title: 'Components/Skeleton',
   component: Skeleton,
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
-    size: {
-      control: 'select',
-      options: Object.values(Size),
-      defaultValue: Size.Default,
-    },
   },
   decorators: [
     (Story: StoryFn) => (
@@ -28,11 +25,19 @@ export default {
       </div>
     ),
   ],
+  parameters: {
+    default: 'Paragraph',
+  },
 };
 
-const Template: StoryFn<typeof Skeleton> = props => <Skeleton {...props} />;
-
-export const Basic = Template.bind({});
+export const Basic: StoryFn<typeof Skeleton> = props => <Skeleton {...props} />;
+Basic.argTypes = {
+  size: {
+    control: 'select',
+    options: Object.values(Size),
+    defaultValue: Size.Default,
+  },
+};
 
 export const Paragraph: StoryFn<typeof ParagraphSkeleton> = props => (
   <ParagraphSkeleton {...props} />
@@ -49,13 +54,18 @@ export const Form: StoryFn<typeof FormSkeleton> = props => (
   <FormSkeleton {...props} />
 );
 
-export const TableWithoutLabels: StoryFn<typeof TableSkeleton> = props => (
+const TableTemplate: StoryFn<typeof TableSkeleton> = props => (
   <TableSkeleton {...props} />
 );
+TableTemplate.argTypes = {
+  columnLabels: { control: 'none' },
+};
 
-export const TableWithLabels: StoryFn<typeof TableSkeleton> = props => (
-  <TableSkeleton {...props} />
-);
+export const TableWithoutLabels: StoryFn<typeof TableSkeleton> =
+  TableTemplate.bind({});
+
+export const TableWithLabels: StoryFn<typeof TableSkeleton> =
+  TableTemplate.bind({});
 TableWithLabels.args = {
   columnLabels: ['Column 1', 'Column 2', 'Column 3', ''],
 };
