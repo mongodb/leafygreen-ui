@@ -70,8 +70,6 @@ const PropCombinationsDecorator: Decorator = (
         // Convert the object to an array & ensure darkMode is the first prop
         const variables = entries(combineArgs).sort(sortDarkMode);
 
-        // reversing since the PropCombos recursion is depth-first
-        // variables.reverse();
         const GeneratedStory: StoryType<typeof component> = () => (
           <div className={generatedStoryWrapper}>
             <PropCombinations

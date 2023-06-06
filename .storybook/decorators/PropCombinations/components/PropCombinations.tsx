@@ -5,7 +5,7 @@ import { Args, StoryFn } from '@storybook/react';
 import { cx } from '@leafygreen-ui/emotion';
 import { GeneratedStoryConfig } from '@leafygreen-ui/lib';
 
-import { PropCombination, PropName } from '../utils/types';
+import { PropName } from '../utils/types';
 import { RecursiveCombinations } from '../utils/RecursiveCombinations';
 import { valStr } from '../utils';
 import {
@@ -15,6 +15,7 @@ import {
   instanceCellStyles,
   tableStyles,
 } from '../PropCombinations.styles';
+import { Instance } from './Instance';
 
 /**
  * Generates all combinations of each variable
@@ -66,24 +67,5 @@ export function PropCombinations<T extends React.ComponentType<any>>({
         </tr>
       ))}
     </table>
-  );
-}
-
-function Instance<T extends React.ComponentType<any>>({
-  component,
-  instanceProps,
-  decorator,
-}: {
-  component: T;
-  instanceProps: PropCombination<T>;
-  decorator: Required<GeneratedStoryConfig<T>>['decorator'];
-}): ReactElement<any> {
-  return decorator(
-    (extraArgs: Args) =>
-      React.createElement(component, {
-        ...instanceProps,
-        ...extraArgs,
-      }),
-    { args: { ...instanceProps } },
   );
 }
