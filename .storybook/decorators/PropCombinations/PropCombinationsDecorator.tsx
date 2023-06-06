@@ -54,7 +54,7 @@ const PropCombinationsDecorator: Decorator = (
           return Err('`props` not found in story generation parameters.');
         }
 
-        // Remove any args that are explicitly defined
+        // Remove from props any explicitly defined args
         for (let propName in { ...generatedArgs }) {
           if (props[propName]) {
             delete props[propName];
