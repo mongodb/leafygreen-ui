@@ -1,4 +1,4 @@
-# Skeleton
+# Skeleton Loader
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/skeleton.svg)
 
@@ -9,13 +9,13 @@
 ### Yarn
 
 ```shell
-yarn add @leafygreen-ui/skeleton
+yarn add @leafygreen-ui/skeleton-loader
 ```
 
 ### NPM
 
 ```shell
-npm install @leafygreen-ui/skeleton
+npm install @leafygreen-ui/skeleton-loader
 ```
 
 ## Example

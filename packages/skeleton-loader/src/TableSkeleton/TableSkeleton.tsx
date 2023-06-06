@@ -30,7 +30,7 @@ export function TableSkeleton({
   const { darkMode, theme } = useDarkMode(darkModeProp);
   const baseFontSize: BaseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
   return (
-    <LeafyGreenProvider darkMode={darkMode} baseFontSize={baseFontSize}>
+    <LeafyGreenProvider darkMode={darkMode}>
       <table aria-busy {...rest} className={cx(baseStyles, className)}>
         <thead className={tableHeadStyles[theme]}>
           <tr>

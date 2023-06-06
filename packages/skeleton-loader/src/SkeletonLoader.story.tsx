@@ -9,11 +9,10 @@ import {
   ParagraphSkeleton,
   Size,
   Skeleton,
-  TableSkeleton,
 } from '.';
 
 export default {
-  title: 'Components/Skeleton',
+  title: 'Components/SkeletonLoader',
   component: Skeleton,
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -53,19 +52,3 @@ export const Card: StoryFn<typeof CardSkeleton> = props => (
 export const Form: StoryFn<typeof FormSkeleton> = props => (
   <FormSkeleton {...props} />
 );
-
-const TableTemplate: StoryFn<typeof TableSkeleton> = props => (
-  <TableSkeleton {...props} />
-);
-TableTemplate.argTypes = {
-  columnLabels: { control: 'none' },
-};
-
-export const TableWithoutLabels: StoryFn<typeof TableSkeleton> =
-  TableTemplate.bind({});
-
-export const TableWithLabels: StoryFn<typeof TableSkeleton> =
-  TableTemplate.bind({});
-TableWithLabels.args = {
-  columnLabels: ['Column 1', 'Column 2', 'Column 3', ''],
-};
