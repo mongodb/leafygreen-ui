@@ -6,7 +6,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import { GeneratedStoryConfig } from '@leafygreen-ui/lib';
 
 import { PropCombination, PropName } from './types';
-import { generateCombinations } from './generateCombinations';
+import { RecursiveCombinations } from './generateCombinations';
 import { valStr } from '../utils';
 import {
   cellStyles,
@@ -32,10 +32,7 @@ export function PropCombinations<T extends React.ComponentType<any>>({
   exclude: GeneratedStoryConfig<T>['excludeCombinations'];
   decorator: GeneratedStoryConfig<T>['decorator'];
 }): ReactElement<any> {
-  const allCombinations = generateCombinations({
-    variables,
-    exclude,
-  });
+  const allCombinations = RecursiveCombinations({}, [...variables], exclude);
 
   const comboCount = allCombinations.length;
   console.info(
