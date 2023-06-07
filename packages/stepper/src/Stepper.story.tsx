@@ -23,7 +23,7 @@ const meta: StoryMetaType<typeof Stepper> = {
       exclude: [...storybookExcludedControlParams, 'children'],
     },
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         currentStep: [1, 4, 7],
         maxDisplayedSteps: [3, 7],
