@@ -92,7 +92,7 @@ const meta: StoryMetaType<typeof Popover> = {
       ],
     },
     generate: {
-      props: {
+      combineArgs: {
         align: Object.values(Align),
         justify: Object.values(Justify),
       },
