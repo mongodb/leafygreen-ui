@@ -4,8 +4,10 @@ import { type ComponentProps } from 'react';
 
 import { StoryMetaType, type LeafyGreenProviderProps } from './StoryMeta.types';
 
-export type ExtendedComponentProps<T extends React.ElementType> =
-  ComponentProps<T> & LeafyGreenProviderProps;
+export type ExtendedComponentProps<
+  T extends React.ElementType,
+  XP extends Record<string, any> = {},
+> = ComponentProps<T> & LeafyGreenProviderProps;
 
 type InstanceFn = StoryFn;
 
@@ -13,7 +15,10 @@ interface InstanceContext {
   args: Args;
 }
 
-export interface GeneratedStoryConfig<T extends React.ElementType> {
+export interface GeneratedStoryConfig<
+  T extends React.ElementType,
+  XP extends Record<string, any> = {},
+> {
   /**
    * An array of story names to convert into a Generated stories
    *
@@ -26,8 +31,8 @@ export interface GeneratedStoryConfig<T extends React.ElementType> {
    */
   combineArgs?: Partial<
     | {
-        [key in keyof ExtendedComponentProps<T>]: Array<
-          ExtendedComponentProps<T>[key]
+        [key in keyof ExtendedComponentProps<T, XP>]: Array<
+          ExtendedComponentProps<T, XP>[key]
         >;
       }
   >;
@@ -39,7 +44,10 @@ export interface GeneratedStoryConfig<T extends React.ElementType> {
    */
   args?: Partial<
     | {
-        [key in keyof ExtendedComponentProps<T>]: ExtendedComponentProps<T>[key];
+        [key in keyof ExtendedComponentProps<T, XP>]: ExtendedComponentProps<
+          T,
+          XP
+        >[key];
       }
   >;
 
@@ -64,7 +72,7 @@ export interface GeneratedStoryConfig<T extends React.ElementType> {
      * excludeCombinations: [['checked', 'indeterminate']]
      * ```
      */
-    | [keyof ExtendedComponentProps<T>, keyof ExtendedComponentProps<T>]
+    | [keyof ExtendedComponentProps<T, XP>, keyof ExtendedComponentProps<T, XP>]
 
     /**
      * Exclude a prop given a condition
@@ -85,11 +93,11 @@ export interface GeneratedStoryConfig<T extends React.ElementType> {
      * ```
      */
     | [
-        keyof ExtendedComponentProps<T>,
+        keyof ExtendedComponentProps<T, XP>,
         Partial<{
-          [key in keyof ExtendedComponentProps<T>]:
-            | ExtendedComponentProps<T>[key]
-            | Array<ExtendedComponentProps<T>[key]>;
+          [key in keyof ExtendedComponentProps<T, XP>]:
+            | ExtendedComponentProps<T, XP>[key]
+            | Array<ExtendedComponentProps<T, XP>[key]>;
         }>,
       ]
 
@@ -106,9 +114,9 @@ export interface GeneratedStoryConfig<T extends React.ElementType> {
      * ```
      */
     | Partial<{
-        [key in keyof ExtendedComponentProps<T>]:
-          | ExtendedComponentProps<T>[key]
-          | Array<ExtendedComponentProps<T>[key]>;
+        [key in keyof ExtendedComponentProps<T, XP>]:
+          | ExtendedComponentProps<T, XP>[key]
+          | Array<ExtendedComponentProps<T, XP>[key]>;
       }>
   >;
 }
