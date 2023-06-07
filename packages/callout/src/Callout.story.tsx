@@ -23,7 +23,7 @@ const meta: StoryMetaType<typeof Callout> = {
   parameters: {
     default: 'LiveExample',
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         variant: Object.values(Variant),
       },
