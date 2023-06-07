@@ -1,6 +1,5 @@
 /* eslint-disable react/display-name */
 import React, { useState } from 'react';
-import { StoryFn } from '@storybook/react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
@@ -9,6 +8,7 @@ import {
   storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
+  StoryType,
   Theme,
 } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
@@ -41,7 +41,7 @@ const meta: StoryMetaType<typeof SideNav> = {
       ],
     },
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         baseFontSize: [14, 16],
         collapsed: [false, true],
@@ -78,11 +78,14 @@ const meta: StoryMetaType<typeof SideNav> = {
 };
 export default meta;
 
-export const LiveExample: StoryFn<SideNavProps> = ({
+export const LiveExample: StoryType<typeof SideNav> = ({
   className,
   ...args
 }: SideNavProps) => {
   return <SideNav className={cx(basicStyles, className)} {...args} />;
+};
+LiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
 };
 
 const appContainer = css`
@@ -225,6 +228,9 @@ InLayout.args = {
   navItemText: 'Modify Me!',
   hasActiveItem: false,
 };
+InLayout.parameters = {
+  chromatic: { disableSnapshot: true },
+};
 
 export const OrgSettings = ({
   baseFontSize,
@@ -309,6 +315,9 @@ OrgSettings.args = {
   baseFontSize: 14,
   widthOverride: 200,
 };
+OrgSettings.parameters = {
+  chromatic: { disableSnapshot: true },
+};
 
 export const Nested = ({ darkMode, ...rest }: SideNavProps) => {
   return (
@@ -342,6 +351,9 @@ export const Nested = ({ darkMode, ...rest }: SideNavProps) => {
       </div>
     </LeafyGreenProvider>
   );
+};
+Nested.parameters = {
+  chromatic: { disableSnapshot: true },
 };
 
 Nested.argTypes = {
