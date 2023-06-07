@@ -38,6 +38,39 @@ const meta: StoryMetaType<typeof BasicEmptyState> = {
     controls: {
       exclude: [...storybookExcludedControlParams, 'graphicSize'],
     },
+    generate: {
+      storyNames: ['Generated'],
+      combineArgs: {
+        darkMode: [false, true],
+        graphic: [
+          undefined,
+          <LightModeSmallGraphic
+            key="generated-graphic"
+            viewBox="0 0 198 131"
+          />,
+        ],
+        primaryButton: [
+          undefined,
+          <Button key="generated-button">Add Dependency</Button>,
+        ],
+        secondaryButton: [
+          undefined,
+          <Button key="generated-button-2">Upload Modules</Button>,
+        ],
+        externalLink: [
+          undefined,
+          <Link key="generated-link" href="https://www.mongodb.com">
+            Test external link
+          </Link>,
+        ],
+      },
+      excludeCombinations: [
+        {
+          primaryButton: undefined,
+          secondaryButton: <Button>Upload Modules</Button>,
+        },
+      ],
+    },
   },
 };
 export default meta;
@@ -70,6 +103,7 @@ const Template: StoryFn<BasicEmptyStateProps> = ({
 };
 
 export const Basic = Template.bind({});
+export const Generated = Template.bind({});
 
 export const WithSmallGraphic = Template.bind({});
 WithSmallGraphic.args = {

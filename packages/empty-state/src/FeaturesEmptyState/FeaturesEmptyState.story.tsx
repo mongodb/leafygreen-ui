@@ -2,12 +2,59 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
-import { storybookArgTypes, StoryMetaType, Theme } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  StoryMetaType,
+  StoryType,
+  Theme,
+} from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
 import { graphics } from '../example-graphics';
 
 import { FeaturesEmptyState, FeaturesEmptyStateProps } from '.';
+
+const lightModeFeatures = [
+  {
+    graphic: graphics[Theme.Light][0],
+    title: 'Multi-region, multi-cloud',
+    description:
+      'Run powerful and resilient apps that span multiple regions or clouds at once.',
+  },
+  {
+    graphic: graphics[Theme.Light][1],
+    title: 'Serverless and elastic',
+    description:
+      'Run powerful and resilient apps that span multiple regions or clouds at once.',
+  },
+  {
+    graphic: graphics[Theme.Light][2],
+    title: 'Always-on security',
+    description:
+      'Secure data with built-in defaults for access and end-toend encryption.',
+  },
+];
+
+const darkModeFeatures = [
+  {
+    graphic: graphics[Theme.Dark][0],
+    title: 'Multi-region, multi-cloud',
+    description:
+      'Run powerful and resilient apps that span multiple regions or clouds at once.',
+  },
+  {
+    graphic: graphics[Theme.Dark][1],
+    title: 'Serverless and elastic',
+    description:
+      'Run powerful and resilient apps that span multiple regions or clouds at once.',
+  },
+  {
+    graphic: graphics[Theme.Dark][2],
+    title: 'Always-on security',
+    description:
+      'Secure data with built-in defaults for access and end-toend encryption.',
+  },
+];
 
 const meta: StoryMetaType<typeof FeaturesEmptyState> = {
   title: 'Components/EmptyState/Features',
@@ -25,6 +72,34 @@ const meta: StoryMetaType<typeof FeaturesEmptyState> = {
   },
   parameters: {
     default: null,
+    generate: {
+      storyNames: ['Generated'],
+      combineArgs: {
+        darkMode: [false, true],
+        features: [
+          lightModeFeatures.slice(0, 3),
+          lightModeFeatures,
+          darkModeFeatures.slice(0, 3),
+          darkModeFeatures,
+        ],
+        externalLink: [
+          undefined,
+          <Link key="generated-link" href="https://www.mongodb.com">
+            Test external link
+          </Link>,
+        ],
+      },
+      excludeCombinations: [
+        {
+          darkMode: true,
+          features: [lightModeFeatures.slice(0, 3), lightModeFeatures],
+        },
+        {
+          darkMode: false,
+          features: [darkModeFeatures.slice(0, 3), darkModeFeatures],
+        },
+      ],
+    },
   },
 };
 export default meta;
@@ -62,117 +137,78 @@ TwoFeatures.args = {
     },
   ],
 };
+TwoFeatures.parameters = {
+  generate: {
+    chromatic: {
+      disableSnapshots: true,
+    },
+  },
+};
 
 export const TwoFeaturesWithSecondaryAction = Template.bind({});
 TwoFeaturesWithSecondaryAction.args = {
-  features: [
-    {
-      graphic: graphics[Theme.Light][0],
-      title: 'Multi-region, multi-cloud',
-      description:
-        'Run powerful and resilient apps that span multiple regions or clouds at once.',
-    },
-    {
-      graphic: graphics[Theme.Light][1],
-      title: 'Serverless and elastic',
-      description:
-        'Run powerful and resilient apps that span multiple regions or clouds at once.',
-    },
-  ],
+  features: lightModeFeatures.slice(0, 3),
   secondaryButton: <Button>Upload Module</Button>,
+};
+TwoFeaturesWithSecondaryAction.parameters = {
+  generate: {
+    chromatic: {
+      disableSnapshots: true,
+    },
+  },
 };
 
 export const TwoFeaturesWithSecondaryActionAndLink = Template.bind({});
 TwoFeaturesWithSecondaryActionAndLink.args = {
-  features: [
-    {
-      graphic: graphics[Theme.Light][0],
-      title: 'Multi-region, multi-cloud',
-      description:
-        'Run powerful and resilient apps that span multiple regions or clouds at once.',
-    },
-    {
-      graphic: graphics[Theme.Light][1],
-      title: 'Serverless and elastic',
-      description:
-        'Run powerful and resilient apps that span multiple regions or clouds at once.',
-    },
-  ],
+  features: lightModeFeatures.slice(0, 3),
   secondaryButton: <Button>Upload Module</Button>,
   externalLink: <Link href="http://www.google.com">Test external link</Link>,
+};
+TwoFeaturesWithSecondaryActionAndLink.parameters = {
+  generate: {
+    chromatic: {
+      disableSnapshots: true,
+    },
+  },
 };
 
 export const ThreeFeatures = Template.bind({});
 ThreeFeatures.args = {
-  features: [
-    {
-      graphic: graphics[Theme.Light][0],
-      title: 'Multi-region, multi-cloud',
-      description:
-        'Run powerful and resilient apps that span multiple regions or clouds at once.',
+  features: lightModeFeatures,
+};
+ThreeFeatures.parameters = {
+  generate: {
+    chromatic: {
+      disableSnapshots: true,
     },
-    {
-      graphic: graphics[Theme.Light][1],
-      title: 'Serverless and elastic',
-      description:
-        'Run powerful and resilient apps that span multiple regions or clouds at once.',
-    },
-    {
-      graphic: graphics[Theme.Light][2],
-      title: 'Always-on security',
-      description:
-        'Secure data with built-in defaults for access and end-toend encryption.',
-    },
-  ],
+  },
 };
 
 export const ThreeFeaturesWithSecondaryAction = Template.bind({});
 ThreeFeaturesWithSecondaryAction.args = {
-  features: [
-    {
-      graphic: graphics[Theme.Light][0],
-      title: 'Multi-region, multi-cloud',
-      description:
-        'Run powerful and resilient apps that span multiple regions or clouds at once.',
-    },
-    {
-      graphic: graphics[Theme.Light][1],
-      title: 'Serverless and elastic',
-      description:
-        'Run powerful and resilient apps that span multiple regions or clouds at once.',
-    },
-    {
-      graphic: graphics[Theme.Light][2],
-      title: 'Always-on security',
-      description:
-        'Secure data with built-in defaults for access and end-toend encryption.',
-    },
-  ],
+  features: lightModeFeatures,
   secondaryButton: <Button>Upload Module</Button>,
+};
+ThreeFeaturesWithSecondaryAction.parameters = {
+  generate: {
+    chromatic: {
+      disableSnapshots: true,
+    },
+  },
 };
 
 export const ThreeFeaturesWithSecondaryActionAndLink = Template.bind({});
 ThreeFeaturesWithSecondaryActionAndLink.args = {
-  features: [
-    {
-      graphic: graphics[Theme.Light][0],
-      title: 'Multi-region, multi-cloud',
-      description:
-        'Run powerful and resilient apps that span multiple regions or clouds at once.',
-    },
-    {
-      graphic: graphics[Theme.Light][1],
-      title: 'Serverless and elastic',
-      description:
-        'Run powerful and resilient apps that span multiple regions or clouds at once.',
-    },
-    {
-      graphic: graphics[Theme.Light][2],
-      title: 'Always-on security',
-      description:
-        'Secure data with built-in defaults for access and end-toend encryption.',
-    },
-  ],
+  features: lightModeFeatures,
   secondaryButton: <Button>Upload Module</Button>,
   externalLink: <Link href="http://www.google.com">Test external link</Link>,
 };
+ThreeFeaturesWithSecondaryActionAndLink.parameters = {
+  generate: {
+    chromatic: {
+      disableSnapshots: true,
+    },
+  },
+};
+
+export const Generated: StoryType<typeof Button> = () => <></>;

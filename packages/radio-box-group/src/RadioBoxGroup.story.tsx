@@ -10,9 +10,6 @@ import {
 import Tooltip from '@leafygreen-ui/tooltip';
 
 import { RadioBox, RadioBoxGroup, type RadioBoxGroupProps, Size } from '.';
-const wrapperStyle = css`
-  width: 45vw;
-`;
 
 const meta: StoryMetaType<typeof RadioBoxGroup> = {
   title: 'Components/RadioBoxGroup',
@@ -23,16 +20,10 @@ const meta: StoryMetaType<typeof RadioBoxGroup> = {
       exclude: [...storybookExcludedControlParams, 'children', 'name', 'value'],
     },
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         size: Object.values(Size),
       },
-      // eslint-disable-next-line react/display-name
-      decorator: Instance => (
-        <div className={wrapperStyle}>
-          <Instance />
-        </div>
-      ),
     },
   },
   args: {

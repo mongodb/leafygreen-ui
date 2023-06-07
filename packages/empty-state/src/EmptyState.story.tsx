@@ -99,3 +99,8 @@ export const LiveExample: StoryFn<StoryProps> = ({
     </div>
   );
 };
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
