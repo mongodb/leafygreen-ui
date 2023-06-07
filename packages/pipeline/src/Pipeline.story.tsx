@@ -20,7 +20,7 @@ const meta: StoryMetaType<typeof Pipeline> = {
       exclude: [...storybookExcludedControlParams, 'children'],
     },
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         size: Object.values(Size),
         children: [
