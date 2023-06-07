@@ -19,11 +19,16 @@ const meta: StoryMetaType<typeof Select> = {
       exclude: [...storybookExcludedControlParams, 'children', 'value'],
     },
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
-        disabled: [false, true],
-        size: Object.values(Size),
         state: Object.values(State),
+        size: Object.values(Size),
+        disabled: [false, true],
+      },
+      args: {
+        className: css`
+          width: 256px;
+        `,
       },
     },
   },
