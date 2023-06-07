@@ -41,17 +41,8 @@ const displayFlex = css`
   gap: 8px;
 `;
 
-const meta: StoryMetaType<any> = {
-  title: 'Components/Typography',
-  component: null,
-  parameters: {
-    default: 'AllTypography',
-  },
-};
-export default meta;
-
 // eslint-disable-next-line react/prop-types
-export const AllTypography = ({
+const TypographyDemo = ({
   baseFontSize,
   darkMode,
 }: {
@@ -66,22 +57,18 @@ export const AllTypography = ({
         <H3>Heading 3</H3>
         <Subtitle>Subtitle</Subtitle>
 
-        <div className={cx(displayFlex)}>
-          <Body>Body</Body>
-          <Body>
-            <strong>Body (Semibold)</strong>
-          </Body>
-        </div>
-        <div className={cx(displayFlex)}>
-          <Body>
-            <em>Body (Italic)</em>
-          </Body>
-          <Body>
-            <strong>
-              <em>Body (Semibold Italic)</em>
-            </strong>
-          </Body>
-        </div>
+        <Body>Body</Body>
+        <Body>
+          <strong>Body (Semibold)</strong>
+        </Body>
+        <Body>
+          <em>Body (Italic)</em>
+        </Body>
+        <Body>
+          <strong>
+            <em>Body (Semibold Italic)</em>
+          </strong>
+        </Body>
 
         <div className={cx(displayFlex)}>
           <InlineCode>&quot;Inline Code&quot;</InlineCode>
@@ -90,16 +77,19 @@ export const AllTypography = ({
           </InlineCode>
         </div>
 
-        <div className={cx(displayFlex)}>
+        <div>
           <Link href="http://localhost:9001" arrowAppearance="hover">
             Local (Arrow on Hover)
           </Link>
+          <br />
           <Link href="http://localhost:9001" arrowAppearance="none">
             Local (No Arrow)
           </Link>
+          <br />
           <Link href="?path=/story/button--icon-only" arrowAppearance="persist">
             Internal (Persist Arrow)
           </Link>
+          <br />
           <Link href="https://mongodb.github.io/leafygreen-ui/?path=/story/*">
             External
           </Link>
@@ -124,6 +114,23 @@ export const AllTypography = ({
     </LeafygreenProvider>
   );
 };
+
+const meta: StoryMetaType<typeof TypographyDemo> = {
+  title: 'Components/Typography',
+  component: TypographyDemo,
+  parameters: {
+    default: 'TypographyDemo',
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        baseFontSize: [14, 16],
+      },
+    },
+  },
+};
+export default meta;
+
+export const AllTypography = TypographyDemo.bind({});
 AllTypography.argTypes = {
   baseFontSize: {
     ...storybookArgTypes.baseFontSize,
@@ -131,6 +138,11 @@ AllTypography.argTypes = {
       'Storybook prop only. This font size is passed into the LeafygreenProvider.',
   },
   darkMode: storybookArgTypes.darkMode,
+};
+AllTypography.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
 export const StaticWidthTextStory = () => {
@@ -217,3 +229,10 @@ export const StaticWidthTextStory = () => {
     </div>
   );
 };
+StaticWidthTextStory.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+
+export const Generated = () => <></>;
