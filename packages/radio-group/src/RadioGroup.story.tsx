@@ -18,7 +18,7 @@ const meta: StoryMetaType<typeof RadioGroup> = {
     },
     default: 'LiveExample',
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         size: Object.values(Size),
       },
