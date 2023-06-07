@@ -70,6 +70,59 @@ describe('packages/toast/controlled', () => {
       expect(toast).toBeInTheDocument();
     });
 
+    test('does not render when `open` is true and component is unmounted', async () => {
+      const { queryByTestId } = render(
+        <ToastProvider>
+          {false && (
+            <Toast
+              open={true}
+              title="Test 1"
+              onClose={() => {}}
+              data-testid="test-toast1b"
+            />
+          )}
+        </ToastProvider>,
+      );
+
+      const toast = await waitFor(() => queryByTestId('test-toast1b'));
+      expect(toast).not.toBeInTheDocument();
+    });
+
+    test('unmounts when `open` is true and component render is toggled to false', async () => {
+      let shouldRender = true;
+      const { findByTestId, rerender } = render(
+        <ToastProvider>
+          {shouldRender && (
+            <Toast
+              open={true}
+              title="Test 1"
+              onClose={() => {}}
+              data-testid="test-toast1"
+            />
+          )}
+        </ToastProvider>,
+      );
+      const toast = await findByTestId('test-toast1');
+      expect(toast).toBeInTheDocument();
+
+      shouldRender = false;
+      rerender(
+        <ToastProvider>
+          {shouldRender && (
+            <Toast
+              open={true}
+              title="Test 1"
+              onClose={() => {}}
+              data-testid="test-toast1"
+            />
+          )}
+        </ToastProvider>,
+      );
+
+      await waitForElementToBeRemoved(toast);
+      expect(toast).not.toBeInTheDocument();
+    });
+
     test('does not render when `open` is false', async () => {
       const { queryByTestId } = render(
         <ToastProvider>
