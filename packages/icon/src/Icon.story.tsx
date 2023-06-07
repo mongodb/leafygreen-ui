@@ -6,6 +6,7 @@ import { css } from '@leafygreen-ui/emotion';
 import {
   storybookExcludedControlParams,
   StoryMetaType,
+  StoryType,
 } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
@@ -53,7 +54,7 @@ const textStyle = css`
   margin-top: 0.5rem;
 `;
 
-export const Single: StoryFn<IconProps> = (args: IconProps) => {
+export const Single: StoryType<typeof Icon> = (args: IconProps) => {
   if (!args.glyph) {
     args = {
       ...args,
@@ -70,6 +71,7 @@ Single.argTypes = {
     options: Object.keys(glyphs),
   },
 };
+Single.parameters = { chromatic: { disableSnapshot: true } };
 
 export const AllIcons: StoryFn<IconProps> = (
   args: Omit<IconProps, 'glyph'>,
@@ -93,3 +95,4 @@ export const AllIcons: StoryFn<IconProps> = (
 );
 
 export const Error = () => <Icon glyph="glyph-does-not-exist" />;
+Error.parameters = { chromatic: { disableSnapshot: true } };
