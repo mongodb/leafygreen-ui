@@ -97,7 +97,7 @@ const meta: StoryMetaType<typeof PasswordInput> = {
       exclude: [...storybookExcludedControlParams, 'as', 'children', 'value'],
     },
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         size: Object.values(Size),
         label: [undefined, 'Label'],
