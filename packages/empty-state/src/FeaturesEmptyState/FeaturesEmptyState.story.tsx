@@ -77,9 +77,9 @@ const meta: StoryMetaType<typeof FeaturesEmptyState> = {
       combineArgs: {
         darkMode: [false, true],
         features: [
-          lightModeFeatures.slice(0, 3),
+          lightModeFeatures.slice(0, 2),
           lightModeFeatures,
-          darkModeFeatures.slice(0, 3),
+          darkModeFeatures.slice(0, 2),
           darkModeFeatures,
         ],
         externalLink: [
@@ -92,11 +92,11 @@ const meta: StoryMetaType<typeof FeaturesEmptyState> = {
       excludeCombinations: [
         {
           darkMode: true,
-          features: [lightModeFeatures.slice(0, 3), lightModeFeatures],
+          features: [lightModeFeatures.slice(0, 2), lightModeFeatures],
         },
         {
           darkMode: false,
-          features: [darkModeFeatures.slice(0, 3), darkModeFeatures],
+          features: [darkModeFeatures.slice(0, 2), darkModeFeatures],
         },
       ],
     },
