@@ -157,6 +157,11 @@ LiveExample.args = {
   unitOptions: unitOptions,
   unit: unitOptions[0].displayName,
 };
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const Unitless = () => <></>;
 Unitless.args = {

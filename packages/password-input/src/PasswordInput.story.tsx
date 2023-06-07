@@ -162,6 +162,11 @@ LiveExample.argTypes = {
       'STORYBOOK ONLY. This determines what gets passed to `stateNotifications`',
   },
 };
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const CustomContainer = ({
   stateNotifications,

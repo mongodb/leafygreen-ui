@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable no-console */
 import React, { MouseEvent, useRef } from 'react';
 import { StoryFn } from '@storybook/react';
@@ -16,6 +17,35 @@ import { Align, Justify, SplitButton, SplitButtonProps, Variant } from '.';
 const meta: StoryMetaType<typeof SplitButton> = {
   title: 'Components/SplitButton',
   component: SplitButton,
+
+  parameters: {
+    default: 'LiveExample',
+    controls: {
+      exclude: [
+        ...storybookExcludedControlParams,
+        'as',
+        'children',
+        'menuItems',
+        'href',
+        'type',
+        'maxHeight',
+        'open',
+        'onTriggerClick',
+        'triggerAriaLabel',
+      ],
+    },
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        leftGlyph: [undefined, <Icon glyph={'ArrowRight'} />],
+        variant: Object.values(Variant),
+        size: Object.values(Size),
+      },
+      args: {
+        label: 'MongoDB',
+      },
+    },
+  },
   args: {
     label: 'label',
     variant: Variant.Default,
@@ -63,23 +93,6 @@ const meta: StoryMetaType<typeof SplitButton> = {
       options: Object.values(Justify),
     },
   },
-  parameters: {
-    default: 'Basic',
-    controls: {
-      exclude: [
-        ...storybookExcludedControlParams,
-        'as',
-        'children',
-        'menuItems',
-        'href',
-        'type',
-        'maxHeight',
-        'open',
-        'onTriggerClick',
-        'triggerAriaLabel',
-      ],
-    },
-  },
 };
 
 export default meta;
@@ -100,4 +113,11 @@ const Template: StoryFn<SplitButtonProps> = (props: SplitButtonProps) => {
   );
 };
 
-export const Basic = Template.bind({});
+export const LiveExample = Template.bind({});
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+
+export const Generated = () => {};

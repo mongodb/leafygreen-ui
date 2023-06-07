@@ -95,5 +95,10 @@ export const LiveExample: StoryFn<InlineDefinitionProps> = ({
     </Body>
   </div>
 );
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const Generated = () => {};

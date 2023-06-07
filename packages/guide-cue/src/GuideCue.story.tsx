@@ -164,6 +164,11 @@ const Template: StoryFn<GuideCueProps> = (args: GuideCueProps) => {
 };
 
 export const LiveExample = Template.bind({});
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 const scrollableStyle = css`
   width: 800px;

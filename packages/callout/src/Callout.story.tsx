@@ -50,6 +50,11 @@ export const LiveExample: StoryFn<CalloutProps> = args => <Callout {...args} />;
 LiveExample.args = {
   children: loremIpsum,
 };
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const WithRichContent: StoryFn<CalloutProps> = ({
   // eslint-disable-next-line react/prop-types
