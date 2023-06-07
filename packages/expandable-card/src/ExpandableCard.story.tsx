@@ -20,13 +20,11 @@ const meta: StoryMetaType<typeof ExpandableCard> = {
       exclude: [...storybookExcludedControlParams, 'isOpen', 'defaultOpen'],
     },
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         description: [undefined, loremIpsum],
         flagText: [undefined, 'optional'],
-      },
-      args: {
-        isOpen: true,
+        isOpen: [false, true],
       },
     },
   },
