@@ -134,12 +134,12 @@ XSmallSize.parameters = {
   },
 };
 
-export const LoadingState = Playground.bind({});
+export const LoadingState = LiveExample.bind({});
 LoadingState.args = {
   isLoading: true,
 };
 
-export const LoadingStateWithText = Playground.bind({});
+export const LoadingStateWithText = LiveExample.bind({});
 LoadingStateWithText.args = {
   isLoading: true,
   loadingText: 'Saving',
