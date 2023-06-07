@@ -32,7 +32,7 @@ const meta: StoryMetaType<typeof Menu> = {
       ],
     },
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
       },
       args: {
@@ -89,58 +89,6 @@ const meta: StoryMetaType<typeof Menu> = {
   },
 };
 export default meta;
-
-// export const UncontrolledTemplate = ({
-//   size,
-//   open,
-//   darkMode,
-//   ...args
-// }: MenuProps & MenuItemProps & SubMenuProps) => {
-//   return (
-//     <LeafyGreenProvider>
-//       <Menu
-//         trigger={
-//           <IconButton darkMode={darkMode} aria-label="label">
-//             <CaretDown />
-//           </IconButton>
-//         }
-//         darkMode={darkMode}
-//         {...args}
-//       >
-//         <MenuItem
-//           description="I am also an active description"
-//           active
-//           size={size}
-//           glyph={<CloudIcon />}
-//         >
-//           Active Menu Item
-//         </MenuItem>
-//         <MenuItem
-//           description="I am also a description"
-//           size={size}
-//           glyph={<CloudIcon />}
-//         >
-//           Menu Item With Description
-//         </MenuItem>
-//         <MenuItem disabled description="I am a description" size={size}>
-//           Disabled Menu Item
-//         </MenuItem>
-//         <MenuItem size={size} href="http://mongodb.design">
-//           I am a link!
-//         </MenuItem>
-//         <MenuItem size={size}>Lorem</MenuItem>
-//         <MenuItem size={size}>Ipsum</MenuItem>
-//         <MenuItem size={size}>Adipiscing</MenuItem>
-//         <MenuItem size={size}>Cursus</MenuItem>
-//         <MenuItem size={size}>Ullamcorper</MenuItem>
-//         <MenuItem size={size}>Vulputate</MenuItem>
-//         <MenuItem size={size}>Inceptos</MenuItem>
-//         <MenuItem size={size}>Risus</MenuItem>
-//       </Menu>
-//     </LeafyGreenProvider>
-//   );
-// };
-// UncontrolledTemplate.storyName = 'Uncontrolled';
 
 export const LiveExample: StoryFn<MenuProps & { size: Size }> = ({
   open: _,
