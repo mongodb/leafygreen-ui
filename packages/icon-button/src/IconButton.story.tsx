@@ -1,12 +1,12 @@
 import React from 'react';
-import { StoryFn } from '@storybook/react';
 
-import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
+import Icon from '@leafygreen-ui/icon/';
 import {
   DarkModeProps,
   storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
+  StoryType,
 } from '@leafygreen-ui/lib';
 
 import { Size } from './types';
@@ -21,17 +21,17 @@ const meta: StoryMetaType<typeof IconButton> = {
       exclude: [...storybookExcludedControlParams, 'children'],
     },
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
-        disabled: [false, true],
         active: [false, true],
         size: Object.values(Size),
+        disabled: [false, true],
       },
     },
   },
   args: {
     href: undefined,
-    children: <CloudIcon />,
+    children: <Icon glyph="Cloud" />,
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -43,13 +43,10 @@ const meta: StoryMetaType<typeof IconButton> = {
 
 export default meta;
 
-export const LiveExample: StoryFn<
+export const LiveExample: StoryType<
+  typeof IconButton,
   AccessibleIconButtonProps & DarkModeProps
-> = ({
-  // eslint-disable-next-line react/prop-types
-  darkMode,
-  ...args
-}: AccessibleIconButtonProps & DarkModeProps) => (
+> = ({ darkMode, ...args }: AccessibleIconButtonProps & DarkModeProps) => (
   <IconButton darkMode={darkMode} {...args} />
 );
 

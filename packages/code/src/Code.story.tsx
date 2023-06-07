@@ -1,6 +1,5 @@
 /* eslint-disable no-useless-escape */
 import React from 'react';
-import { StoryFn } from '@storybook/react';
 
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -9,6 +8,7 @@ import {
   storybookArgTypes,
   storybookExcludedControlParams,
   type StoryMetaType,
+  type StoryType,
 } from '@leafygreen-ui/lib';
 
 import LanguageSwitcherExample from './LanguageSwitcher/LanguageSwitcherExample';
@@ -58,9 +58,8 @@ const meta: StoryMetaType<typeof Code> = {
       ],
     },
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
-        // baseFontSize: [14, 16],
         copyable: [true, false],
         showWindowChrome: [false, true],
         showLineNumbers: [false, true],
@@ -98,7 +97,7 @@ type StoryCodeProps = CodeProps & {
   baseFontSize: BaseFontSize;
 };
 
-export const LiveExample: StoryFn<StoryCodeProps> = ({
+export const LiveExample: StoryType<typeof Code> = ({
   baseFontSize,
   highlightLines,
   ...args
@@ -112,6 +111,11 @@ export const LiveExample: StoryFn<StoryCodeProps> = ({
     </Code>
   </LeafygreenProvider>
 );
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 const customActionButtons = [
   <IconButton onClick={() => {}} aria-label="label" key="1">
@@ -134,7 +138,7 @@ WithCustomActions.args = {
   customActionButtons,
 };
 
-export const WithLanguageSwitcher: StoryFn<StoryCodeProps> = ({
+export const WithLanguageSwitcher: StoryType<typeof Code, StoryCodeProps> = ({
   baseFontSize,
   ...args
 }: StoryCodeProps) => (
