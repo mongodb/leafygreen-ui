@@ -8,7 +8,7 @@ import {
   storybookArgTypes,
   storybookExcludedControlParams,
   type StoryMetaType,
-  StoryType,
+  type StoryType,
 } from '@leafygreen-ui/lib';
 
 import LanguageSwitcherExample from './LanguageSwitcher/LanguageSwitcherExample';
@@ -138,7 +138,7 @@ WithCustomActions.args = {
   customActionButtons,
 };
 
-export const WithLanguageSwitcher: StoryType<typeof Code> = ({
+export const WithLanguageSwitcher: StoryType<typeof Code, StoryCodeProps> = ({
   baseFontSize,
   ...args
 }: StoryCodeProps) => (
