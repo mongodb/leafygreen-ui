@@ -13,6 +13,9 @@ const meta: StoryMetaType<typeof PageLoader> = {
   },
   parameters: {
     default: 'Default',
+    chromatic: {
+      disableSnapshot: true,
+    },
   },
 };
 

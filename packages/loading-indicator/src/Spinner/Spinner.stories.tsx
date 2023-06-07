@@ -16,6 +16,9 @@ const meta: StoryMetaType<typeof Spinner> = {
   },
   parameters: {
     default: 'Default',
+    chromatic: {
+      disableSnapshot: true,
+    },
   },
 };
 

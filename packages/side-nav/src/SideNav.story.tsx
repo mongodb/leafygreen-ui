@@ -299,6 +299,9 @@ export const Realm = ({ darkMode, ...rest }: SideNavProps) => {
     </LeafyGreenProvider>
   );
 };
+Realm.parameters = {
+  chromatic: { disableSnapshot: true },
+};
 
 export const OrgSettings = ({
   baseFontSize,

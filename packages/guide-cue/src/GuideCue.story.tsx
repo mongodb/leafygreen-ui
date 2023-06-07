@@ -68,7 +68,7 @@ const Template: StoryFn<GuideCueProps> = (args: GuideCueProps) => {
   const handleClose = () => console.log('close');
 
   return (
-    <>
+    <div>
       <Button
         onClick={() => setOpen(o => !o)}
         className={css`
@@ -93,7 +93,7 @@ const Template: StoryFn<GuideCueProps> = (args: GuideCueProps) => {
       >
         {children}
       </GuideCue>
-    </>
+    </div>
   );
 };
 
@@ -190,7 +190,7 @@ export const MultistepDemo: StoryFn<GuideCueProps> = (args: GuideCueProps) => {
   };
 
   return (
-    <>
+    <div>
       <Button className={spacing} onClick={handleReset}>
         Begin tour
       </Button>
@@ -223,7 +223,7 @@ export const MultistepDemo: StoryFn<GuideCueProps> = (args: GuideCueProps) => {
       >
         This is a new feature. You should try it out
       </GuideCue>
-    </>
+    </div>
   );
 };
 

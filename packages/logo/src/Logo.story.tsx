@@ -29,9 +29,11 @@ const meta: StoryMetaType<typeof Logo> = {
     (Story, context) => (
       <div
         className={css`
-          display: inline;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
           width: 100%;
-          padding: 200% 200% 100%;
+          padding: 40px 0;
           background-color: ${
             /* @ts-expect-error */
             Story?.args?.background ?? context?.args?.background ?? 'white'
