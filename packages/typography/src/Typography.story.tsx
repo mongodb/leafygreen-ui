@@ -3,7 +3,11 @@ import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  type StoryMetaType,
+  type StoryType,
+} from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 import {
@@ -130,7 +134,8 @@ const meta: StoryMetaType<typeof TypographyDemo> = {
 };
 export default meta;
 
-export const AllTypography = TypographyDemo.bind({});
+export const AllTypography: StoryType<typeof TypographyDemo> =
+  TypographyDemo.bind({});
 AllTypography.argTypes = {
   baseFontSize: {
     ...storybookArgTypes.baseFontSize,

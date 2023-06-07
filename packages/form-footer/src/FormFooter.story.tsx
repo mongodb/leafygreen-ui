@@ -1,6 +1,5 @@
 /* eslint-disable react/display-name */
 import React from 'react';
-import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
@@ -78,7 +77,7 @@ export default meta;
 
 type FormFooterStoryProps = FormFooterProps & { primaryButtonText?: string };
 
-const Template: StoryFn<FormFooterProps> = ({
+const Template: StoryType<typeof FormFooter> = ({
   primaryButtonText,
   primaryButton,
   ...args
