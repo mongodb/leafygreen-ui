@@ -17,7 +17,7 @@ export const TooltipJustify = {
   End: Justify.End,
 } as const;
 
-export type TooltipJustify = typeof TooltipAlign[keyof typeof TooltipAlign];
+export type TooltipJustify = typeof TooltipJustify[keyof typeof TooltipJustify];
 
 // Exclude these from tooltip (tooltip already extends popover props)
 type ModifiedTooltipProps = Omit<
