@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
-import { css } from '@leafygreen-ui/emotion';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
