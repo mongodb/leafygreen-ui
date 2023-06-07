@@ -1,5 +1,4 @@
 import React from 'react';
-import { StoryFn } from '@storybook/react';
 
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import {
