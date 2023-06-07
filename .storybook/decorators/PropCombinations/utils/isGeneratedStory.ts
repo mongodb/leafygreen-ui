@@ -1,13 +1,19 @@
+import { GeneratedStoryConfig } from '@leafygreen-ui/lib';
 import { StoryContext } from '@storybook/react';
 import { isUndefined, startCase } from 'lodash';
 import { GENERATED_STORY_NAME, PARAM_NAME } from '../constants';
 
 export const isGeneratedStory = (context: StoryContext<unknown>) => {
+  const currentStoryName = context.name;
+  const params = context.parameters[PARAM_NAME] as
+    | GeneratedStoryConfig<any>
+    | undefined;
+
+  console.log(params);
+
   return (
-    !isUndefined(context.parameters[PARAM_NAME]) &&
-    (context.parameters[PARAM_NAME]?.storyNames
-      ?.map(startCase)
-      .includes(context.name) ||
-      context.name === GENERATED_STORY_NAME)
+    !isUndefined(params) &&
+    (params?.storyNames?.map(startCase)?.includes(currentStoryName) ||
+      currentStoryName === GENERATED_STORY_NAME)
   );
 };
