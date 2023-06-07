@@ -195,8 +195,9 @@ describe('packages/toast/internal-toast', () => {
 });
 
 // eslint-disable-next-line jest/no-disabled-tests
-describe.skip('TS types', () => {
-  render(
+describe.skip('TS types behave as expected', () => {
+  // eslint-disable-next-line jest/no-disabled-tests
+  test.skip('Requires props', () => {
     <>
       {/* @ts-expect-error - title, open & onClose={are required */}
       <InternalToast />
@@ -206,14 +207,15 @@ describe.skip('TS types', () => {
       <InternalToast title="string" open={false} />
 
       <InternalToast title="string" onClose={() => {}} />
-    </>,
-  );
+    </>;
+  });
 
   const requiredProps = {
     title: 'string',
   } as InternalToastProps;
 
-  render(
+  // eslint-disable-next-line jest/no-disabled-tests
+  test.skip('has correct props', () => {
     <>
       <InternalToast {...requiredProps} dismissible={true} />
 
@@ -224,6 +226,6 @@ describe.skip('TS types', () => {
       <InternalToast {...requiredProps} timeout={5000} dismissible={true} />
       <InternalToast {...requiredProps} timeout={5000} dismissible={false} />
       <InternalToast {...requiredProps} timeout={null} dismissible={true} />
-    </>,
-  );
+    </>;
+  });
 });

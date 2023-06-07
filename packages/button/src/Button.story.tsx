@@ -73,6 +73,12 @@ const meta: StoryMetaType<typeof Button> = {
     href: {
       control: 'text',
     },
+    isLoading: {
+      control: 'boolean',
+    },
+    loadingText: {
+      control: 'text',
+    },
   },
 };
 
@@ -126,4 +132,15 @@ XSmallSize.parameters = {
       size: Size.XSmall,
     },
   },
+};
+
+export const LoadingState = LiveExample.bind({});
+LoadingState.args = {
+  isLoading: true,
+};
+
+export const LoadingStateWithText = LiveExample.bind({});
+LoadingStateWithText.args = {
+  isLoading: true,
+  loadingText: 'Saving',
 };
