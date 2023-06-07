@@ -9,8 +9,6 @@ export const isGeneratedStory = (context: StoryContext<unknown>) => {
     | GeneratedStoryConfig<any>
     | undefined;
 
-  console.log(params);
-
   return (
     !isUndefined(params) &&
     (params?.storyNames?.map(startCase)?.includes(currentStoryName) ||

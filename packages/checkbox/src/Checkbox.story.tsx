@@ -11,7 +11,7 @@ import {
 
 import Checkbox, { CheckboxProps } from '.';
 
-const loremIpsum = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy children ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`;
+const descriptionText = `This is a description for the checkbox`;
 
 const meta: StoryMetaType<typeof Checkbox> = {
   title: 'Components/Checkbox',
@@ -22,14 +22,14 @@ const meta: StoryMetaType<typeof Checkbox> = {
       exclude: [...storybookExcludedControlParams, 'checked'],
     },
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
-        indeterminate: [false, true],
-        disabled: [false, true],
-        description: [undefined, loremIpsum],
-        label: ['I agree to this thing', undefined],
-        bold: [true, false],
         checked: [true, false],
+        indeterminate: [false, true],
+        bold: [true, false],
+        disabled: [false, true],
+        description: [undefined, descriptionText],
+        label: ['I agree to this thing', undefined],
       },
       excludeCombinations: [
         [
@@ -49,12 +49,18 @@ const meta: StoryMetaType<typeof Checkbox> = {
           indeterminate: true,
         },
       ],
+      args: {
+        className: css`
+          text-align: initial;
+          max-width: 300px;
+        `,
+      },
     },
   },
   args: {
     animate: true,
     label: 'I agree to this thing.',
-    description: loremIpsum,
+    description: descriptionText,
     className: css`
       max-width: 700px;
     `,
