@@ -47,7 +47,7 @@ const meta: StoryMetaType<typeof Logo> = {
   parameters: {
     default: 'LiveExample',
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         name: Object.values(LogoNames),
         color: Object.values(SupportedColors),
@@ -90,6 +90,7 @@ const meta: StoryMetaType<typeof Logo> = {
   },
 };
 export default meta;
+
 const divStyle = css`
   min-width: 150px;
   min-height: 70px;
@@ -121,6 +122,11 @@ LiveExample.argTypes = {
 };
 LiveExample.args = {
   name: 'MongoDBLogoMark',
+};
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
 const Template = (
