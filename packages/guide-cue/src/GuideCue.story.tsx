@@ -10,11 +10,10 @@ import {
   StoryMetaType,
 } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { Align } from '@leafygreen-ui/popover';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
-import { GuideCue, GuideCueProps } from '.';
+import { GuideCue, GuideCueProps, TooltipAlign } from '.';
 
 /** A decorator for each generated story instance */
 const instanceDecorator = (Instance: StoryFn) => {
@@ -71,9 +70,9 @@ const meta: StoryMetaType<typeof GuideCue> = {
       ],
     },
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
-        beaconAlign: Object.values(Align),
+        beaconAlign: Object.values(TooltipAlign),
       },
       args: {
         open: true,
