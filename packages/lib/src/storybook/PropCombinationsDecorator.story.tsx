@@ -68,7 +68,7 @@ const meta: StoryMetaType<
   parameters: {
     default: null,
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         baseFontSize: [14, 16],
         glyph: [undefined, 'Cloud'],

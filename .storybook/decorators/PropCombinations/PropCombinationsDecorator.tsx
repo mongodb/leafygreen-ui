@@ -27,6 +27,12 @@ import { PARAM_NAME } from './constants';
 type ContextType<T extends React.ComponentType<any>> = StoryContext<T> &
   StoryMetaType<T>;
 
+/**
+ * A [Storybook decorator](https://storybook.js.org/docs/react/writing-stories/decorators) function to render
+ * all combinations of given props.
+ *
+ * See [README.md](./README.md) for more.
+ */
 const PropCombinationsDecorator: Decorator = (
   StoryFn: StoryFn,
   context: StoryContext<unknown>,
@@ -43,29 +49,27 @@ const PropCombinationsDecorator: Decorator = (
 
     if (!isUndefined(decoratorConfig)) {
       const {
-        props,
+        combineArgs,
         excludeCombinations,
         args: generatedArgs,
         decorator,
       } = decoratorConfig;
       if (isGeneratedStory(context)) {
         // Check for props
-        if (!props || entries(props).length === 0) {
-          return Err('`props` not found in story generation parameters.');
+        if (!combineArgs || entries(combineArgs).length === 0) {
+          return Err('`combineArgs` not found in story generation parameters.');
         }
 
-        // Remove any args that are explicitly defined
+        // Remove from props any explicitly defined args
         for (let propName in { ...generatedArgs }) {
-          if (props[propName]) {
-            delete props[propName];
+          if (combineArgs[propName]) {
+            delete combineArgs[propName];
           }
         }
 
         // Convert the object to an array & ensure darkMode is the first prop
-        const variables = entries(props).sort(sortDarkMode);
+        const variables = entries(combineArgs).sort(sortDarkMode);
 
-        // reversing since the PropCombos recursion is depth-first
-        variables.reverse();
         const GeneratedStory: StoryType<typeof component> = () => (
           <div className={generatedStoryWrapper}>
             <PropCombinations
@@ -88,7 +92,9 @@ const PropCombinationsDecorator: Decorator = (
 export default PropCombinationsDecorator;
 
 /**
- * Sorts the darkMode prop to the top
+ * Sorts the darkMode prop to the top.
+ *
+ * We want darkMode to be first so we can easily divide the tables into two clear sections.
  */
 function sortDarkMode([propA]: [string, any], [propB]: [string, any]): number {
   if (propA === 'darkMode') return -1;

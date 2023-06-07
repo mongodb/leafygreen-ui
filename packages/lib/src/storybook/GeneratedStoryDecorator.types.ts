@@ -22,9 +22,9 @@ export interface GeneratedStoryConfig<T extends React.ElementType> {
   storyNames?: Array<string>;
 
   /**
-   * The props to iterate over and create combinations
+   * The args to iterate over and create combinations
    */
-  props?: Partial<
+  combineArgs?: Partial<
     | {
         [key in keyof ExtendedComponentProps<T>]: Array<
           ExtendedComponentProps<T>[key]

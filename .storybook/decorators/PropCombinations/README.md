@@ -1,10 +1,6 @@
 # Prop Combinations Decorator
 
-## Motivation
-
-Storybook & Chromatic provide no way to programmatically define stories for multiple variants. For example, to test the `Button` component with every combination of variant, size, darkMode, icon position etc., we would have to explicitly write each of these stories in the `*.stories.tsx file`, resulting in a lot of manual overhead work. In addition, testing each of these individually would result in hundreds, or even thousands, of stories which would dramatically increase the cost of Chromatic, and generates noise on the sidebar.
-
-As an alternative, this custom decorator reads metadata from the storybook default export, and generates a single story that renders all combinations of props defined in the story metadata.
+This custom decorator reads metadata from the storybook default export, and generates a single story that renders all combinations of props defined in the story metadata.
 
 # Getting started
 
@@ -58,7 +54,7 @@ const meta: StoryMeta<typeof Button> = {
   parameters: {
     generate: {
       stories: ['LargeSize', 'DefaultSize'],
-      props: { ... },
+      combineArgs: { ... },
     },
   }
 }
@@ -88,7 +84,7 @@ LargeSize.parameters = {
 
 ## `args`
 
-`Record<key in keyof ComponentProps, ComponentProps[key]>`
+`ObjectOf(string, value)`
 
 By default the decorator pulls args from the main `meta.args` value. However, you may need to set args that are different for the generated instances. In this case,
 use `generate.args` to pass static props that are different from the main story args.
@@ -99,8 +95,8 @@ const meta: StoryMeta<typeof Tooltip> = {
   parameters: {
     default: 'LiveExample',
     generate: {
-      props: { ... },
-      args: {open: true}
+      combineArgs: { ... },
+      args: { open: true }
     },
   },
 };
@@ -119,7 +115,7 @@ const meta: StoryMeta<typeof Body> = {
   parameters: {
     default: 'LiveExample',
     generate: {
-      props: { ... },
+      combineArgs: { ... },
       decorator: (InstanceFn, context) => {
         return (
           <LeafyGreenProvider baseFontSize={context?.args.baseFontSize}>
@@ -135,14 +131,16 @@ const meta: StoryMeta<typeof Body> = {
 ## `excludeCombinations`
 
 ```ts
-Array<
-  // Mutually exclusive props
-  [keyof ComponentProps, keyof ComponentProps] |
-  // Conditional props
-  [keyof ComponentProps, Record<key in keyof ComponentProps, ComponentProps[key]>]
-  // Specific combinations
-  Record<key in keyof ComponentProps, ComponentProps[key]> |
->
+ArrayOf(
+  oneOf(
+    // Mutually exclusive props
+    [propName, propName],
+    // Conditional props
+    [propName, ObjectOf(string, value)]
+    // Specific combinations
+    ObjectOf(string, value)
+  )
+)
 ```
 
 You may not always want to test _every_ combination of props. For example, in Button we shouldn't be testing the case when `children`, `leftGlyph` and `rightGlyph` are _all_ undefined.
@@ -151,7 +149,7 @@ To exclude prop combinations, add `excludeCombinations` to the `generate` object
 
 ```tsx
 generate: {
-  props: { ... }
+  combineArgs: { ... }
   excludeCombinations: [
     {
       children: undefined,
@@ -170,11 +168,11 @@ Mutually exclusive combinations check that only one of the defined props exist o
 
 For example, a component might accept a `children` prop, or a `title` prop, but never both.
 
-Define mutually exclusive combinations as a tuple of prop keys
+Define mutually exclusive combinations as an array of prop keys
 
 ```tsx
 generate: {
-  props: {...},
+  combineArgs: {...},
   excludeCombinations: [
     // Will skip 'children' if 'title' is defined,
     // and vice-versa
@@ -195,7 +193,7 @@ If multiple conditions are defined, they must _all_ be satisfied to exclude the 
 
 ```tsx
 generate: {
-  props: {...},
+  combineArgs: {...},
   excludeCombinations: [
     /// Will skip the 'description' prop if 'label' is undefined
     [
@@ -218,7 +216,7 @@ If multiple conditions are defined, they must _all_ be satisfied to exclude the 
 
 ```tsx
 generate: {
-  props: {...},
+  combineArgs: {...},
   excludeCombinations: [
     {
       children: undefined,
@@ -236,7 +234,7 @@ You can define multiple exclude cases in one rule by setting the value to an arr
 ```tsx
 generate: {
   component: Toast,
-  props: {
+  combineArgs: {
     progress: [0, 0.5, 1],
     variant: ['progress', 'success', 'note', 'info']
   },
@@ -256,7 +254,7 @@ You can exclude multiple combinations of props from being tested by adding them 
 
 ```tsx
 generate: {
-  props: {...},
+  combineArgs: {...},
   excludeCombinations: [
     ['children', 'title'],
     [
