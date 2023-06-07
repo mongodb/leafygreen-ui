@@ -58,9 +58,8 @@ const meta: StoryMetaType<typeof Code> = {
       ],
     },
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
-        // baseFontSize: [14, 16],
         copyable: [true, false],
         showWindowChrome: [false, true],
         showLineNumbers: [false, true],
