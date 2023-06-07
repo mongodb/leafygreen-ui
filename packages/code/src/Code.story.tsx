@@ -132,12 +132,14 @@ const customActionButtons = [
   </IconButton>,
 ];
 
+// @ts-expect-error
 export const WithCustomActions = LiveExample.bind({});
 WithCustomActions.args = {
   showCustomActionButtons: true,
   customActionButtons,
 };
 
+// @ts-expect-error
 export const WithLanguageSwitcher: StoryType<typeof Code, StoryCodeProps> = ({
   baseFontSize,
   ...args
