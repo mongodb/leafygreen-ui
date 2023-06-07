@@ -56,31 +56,34 @@ export function PropCombinations<T extends React.ComponentType<any>>({
   return (
     <div className={generatedStoryWrapper}>
       {entries(tables).map(([mode, combos]) => (
-        <table className={tableStyles}>
-          {combos.map(combo => (
-            <tr
-              className={cx(combinationRowStyles, {
-                [combinationDarkModeStyles]: combo.darkMode === true,
-              })}
-            >
-              <td className={cellStyles}>
-                <pre>
-                  {entries(combo).map(([n, v]) => (
-                    <div>
-                      <b>{n}:</b> {valStr(v)}
-                    </div>
-                  ))}
-                </pre>
-              </td>
-              <td className={cx(cellStyles, instanceCellStyles)}>
-                <Instance
-                  component={component}
-                  instanceProps={{ ...args, ...combo }}
-                  decorator={decorator}
-                />
-              </td>
-            </tr>
-          ))}
+        <table key={mode} className={tableStyles}>
+          <tbody>
+            {combos.map(combo => (
+              <tr
+                key={JSON.stringify(combo)}
+                className={cx(combinationRowStyles, {
+                  [combinationDarkModeStyles]: combo.darkMode === true,
+                })}
+              >
+                <td className={cellStyles}>
+                  <pre>
+                    {entries(combo).map(([n, v]) => (
+                      <div key={n + v}>
+                        <b>{n}:</b> {valStr(v)}
+                      </div>
+                    ))}
+                  </pre>
+                </td>
+                <td className={cx(cellStyles, instanceCellStyles)}>
+                  <Instance
+                    component={component}
+                    instanceProps={{ ...args, ...combo }}
+                    decorator={decorator}
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       ))}
     </div>
