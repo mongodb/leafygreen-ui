@@ -20,9 +20,10 @@ const meta: StoryMetaType<typeof InlineDefinition> = {
       exclude: [...storybookExcludedControlParams, 'trigger', 'open'],
     },
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
       },
+      args: { open: true },
     },
   },
   args: {
