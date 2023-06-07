@@ -46,7 +46,7 @@ const meta: StoryMetaType<typeof NumberInput> = {
     },
     generate: {
       storyNames: ['Unitless', 'WithUnits', 'WithUnitSelect'],
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         size: Object.values(Size),
         label: ['Label', undefined],
