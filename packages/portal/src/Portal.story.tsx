@@ -49,6 +49,9 @@ const meta: StoryMetaType<typeof Portal> = {
     controls: {
       exclude: [...storybookExcludedControlParams, 'children', 'container'],
     },
+    chromatic: {
+      disableSnapshot: true,
+    },
   },
 };
 export default meta;
