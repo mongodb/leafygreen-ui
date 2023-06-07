@@ -9,6 +9,7 @@ import {
   storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
+  StoryType,
 } from '@leafygreen-ui/lib';
 
 import FormFooter, { FormFooterProps } from '.';
@@ -39,11 +40,11 @@ const meta: StoryMetaType<typeof FormFooter> = {
       ],
     },
     generate: {
-      props: {
-        darkMode: [false, true],
-        errorMessage: [undefined, 'This is an error message'],
+      storyNames: ['LightMode', 'DarkMode'],
+      combineArgs: {
         backButtonText: [undefined, 'Back'],
         cancelButtonText: ['', 'Cancel'],
+        errorMessage: [undefined, 'This is an error message'],
       },
       decorator: StoryFn => (
         <div className={wrapperStyle}>
@@ -56,6 +57,9 @@ const meta: StoryMetaType<typeof FormFooter> = {
     darkMode: false,
     primaryButtonText: 'Button',
     primaryButton: { text: 'Button' },
+    cancelButtonText: 'Cancel button text',
+    backButtonText: 'Back button text',
+    errorMessage: 'Error message',
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -87,18 +91,16 @@ const Template: StoryFn<FormFooterProps> = ({
   />
 );
 
-export const LiveExample = Template.bind({});
-LiveExample.args = {
-  cancelButtonText: 'Cancel button text',
-  backButtonText: 'Back button text',
-  errorMessage: 'Error message',
+export const LiveExample: StoryType<typeof FormFooter> = Template.bind({});
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
-export const WithCustomPrimaryButton = Template.bind({});
+export const WithCustomPrimaryButton: StoryType<typeof FormFooter> =
+  Template.bind({});
 WithCustomPrimaryButton.args = {
-  cancelButtonText: 'Cancel button text',
-  backButtonText: 'Back button text',
-  errorMessage: 'Error message',
   primaryButton: (
     <Button
       leftGlyph={<Icon glyph={'Cloud'} />}
@@ -111,6 +113,9 @@ WithCustomPrimaryButton.args = {
   ),
 };
 WithCustomPrimaryButton.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
   controls: {
     exclude: [
       ...(meta.parameters.controls?.exclude ?? []),
@@ -119,4 +124,11 @@ WithCustomPrimaryButton.parameters = {
   },
 };
 
-export const Generated = () => {};
+export const LightMode: StoryType<typeof FormFooter> = () => <></>;
+LightMode.args = {
+  darkMode: false,
+};
+export const DarkMode: StoryType<typeof FormFooter> = () => <></>;
+DarkMode.args = {
+  darkMode: true,
+};
