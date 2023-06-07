@@ -26,6 +26,8 @@ const meta: StoryMetaType<typeof Button> = {
         leftGlyph: [undefined, <Icon glyph={'Cloud'} />],
         children: ['MongoDB', undefined],
         variant: Object.values(Variant),
+        isLoading: [false, true],
+        loadingState: [undefined, 'Saving'],
       },
       excludeCombinations: [
         {
@@ -39,6 +41,9 @@ const meta: StoryMetaType<typeof Button> = {
           children: undefined,
         },
       ],
+      chromatic: {
+        disableSnapshots: true,
+      },
     },
   },
   args: {
@@ -132,15 +137,4 @@ XSmallSize.parameters = {
       size: Size.XSmall,
     },
   },
-};
-
-export const LoadingState = LiveExample.bind({});
-LoadingState.args = {
-  isLoading: true,
-};
-
-export const LoadingStateWithText = LiveExample.bind({});
-LoadingStateWithText.args = {
-  isLoading: true,
-  loadingText: 'Saving',
 };

@@ -15,7 +15,7 @@ const meta: StoryMetaType<typeof Card, BoxProps> = {
   parameters: {
     default: 'LiveExample',
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         contentStyle: ['none', 'clickable'],
       },
