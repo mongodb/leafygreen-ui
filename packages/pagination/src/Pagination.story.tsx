@@ -35,10 +35,11 @@ const meta: StoryMetaType<typeof Pagination> = {
       ],
     },
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
-        numTotalItems: [undefined, 1000],
-        currentPage: [undefined, 5],
+        itemsPerPage: [undefined, 15], // defaults to 10
+        numTotalItems: [undefined, 5, 150], // include case when numTotalItems < itemsPerPage
+        currentPage: [undefined, 1, 5, 10],
         shouldDisableBackArrow: [false, true],
         shouldDisableForwardArrow: [false, true],
         onCurrentPageOptionChange: [undefined, fn],
@@ -52,6 +53,11 @@ const meta: StoryMetaType<typeof Pagination> = {
         {
           currentPage: undefined,
           onCurrentPageOptionChange: fn,
+        },
+        {
+          currentPage: [5, 10],
+          numTotalItems: 5,
+          itemsPerPage: 15,
         },
       ],
       // eslint-disable-next-line react/display-name
