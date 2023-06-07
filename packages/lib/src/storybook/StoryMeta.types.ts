@@ -98,10 +98,9 @@ export type StoryMetaType<
 export type StoryType<
   T extends React.ElementType,
   XP extends Record<string, any> = {},
-> = Function &
-  (StoryFn<T> | StoryObj<T>) & {
-    parameters?: Omit<StoryParameters<T, XP>, 'default'>;
-    argTypes?: ArgTypes<T, XP>;
-    args?: Partial<ComponentProps<T> | LeafyGreenProviderProps | XP>;
-    play?: PlayFunction<ReactRenderer, T>;
-  };
+> = (StoryFn<T> | StoryObj<T>) & {
+  parameters?: Omit<StoryParameters<T, XP>, 'default'>;
+  argTypes?: ArgTypes<T, XP>;
+  args?: Partial<ComponentProps<T> | LeafyGreenProviderProps | XP>;
+  play?: PlayFunction<ReactRenderer, T>;
+};
