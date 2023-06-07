@@ -24,6 +24,11 @@ export const NotificationBar = ({
   className?: string;
 }) => {
   const { theme } = useDarkMode();
+
+  // Don't render button if the count is 0.
+  // Returning null instead of using mountOnEnter and unmountOnExit on <Transition /> because when using mountOnEnter and unmountOnExit the transitions don't work correctly.
+  if (!count) return null;
+
   return (
     <button
       onClick={onClick}
