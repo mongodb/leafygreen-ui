@@ -2,4 +2,5 @@
 '@leafygreen-ui/skeleton-loader': patch
 ---
 
-Update Typography dependency version
+- Adjust header skeleton height in ParagraphSkeleton
+- Update Typography dependency version
