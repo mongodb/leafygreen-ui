@@ -4,7 +4,8 @@ import { StoryFn } from '@storybook/react';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
-  StoryMetaType,
+  type StoryMetaType,
+  type StoryType,
 } from '@leafygreen-ui/lib';
 
 import Pagination, { PaginationProps } from '.';
@@ -35,15 +36,14 @@ const meta: StoryMetaType<typeof Pagination> = {
       ],
     },
     generate: {
+      storyNames: ['FixedItemsPerPage', 'VariableItemsPerPage'],
       combineArgs: {
         darkMode: [false, true],
-        itemsPerPage: [undefined, 15], // defaults to 10
         numTotalItems: [undefined, 5, 150], // include case when numTotalItems < itemsPerPage
         currentPage: [undefined, 1, 5, 10],
         shouldDisableBackArrow: [false, true],
         shouldDisableForwardArrow: [false, true],
         onCurrentPageOptionChange: [undefined, fn],
-        onItemsPerPageOptionChange: [undefined, fn],
       },
       excludeCombinations: [
         {
@@ -78,11 +78,7 @@ const meta: StoryMetaType<typeof Pagination> = {
 };
 export default meta;
 
-export const Default: StoryFn<PaginationProps> = props => (
-  <Pagination {...props} />
-);
-
-export const LiveExample: StoryFn<PaginationProps> = args => {
+export const LiveExample: StoryType<typeof Pagination> = args => {
   const [currentPage, setCurrentPage] = useState<number>(args.currentPage ?? 1);
   const [itemsPerPage, setItemsPerPage] = useState<number>(
     args.itemsPerPageOptions ? args.itemsPerPageOptions[0] : 10,
@@ -111,6 +107,9 @@ export const LiveExample: StoryFn<PaginationProps> = args => {
       onBackArrowClick={handleBackArrowClick}
     />
   );
+};
+LiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
 };
 LiveExample.args = {
   numTotalItems: 1021,
@@ -153,10 +152,28 @@ export const WithCurrentPageOptions: StoryFn<PaginationProps> = args => {
     />
   );
 };
-
+WithCurrentPageOptions.parameters = {
+  chromatic: { disableSnapshot: true },
+};
 WithCurrentPageOptions.args = {
   numTotalItems: 1021,
   itemsPerPageOptions: [10, 50, 100],
 };
 
-export const Generated = () => {};
+export const FixedItemsPerPage: StoryType<typeof Pagination> = () => <></>;
+FixedItemsPerPage.parameters = {
+  generate: {
+    args: {
+      onItemsPerPageOptionChange: undefined,
+    },
+  },
+};
+
+export const VariableItemsPerPage: StoryType<typeof Pagination> = () => <></>;
+VariableItemsPerPage.parameters = {
+  generate: {
+    args: {
+      onItemsPerPageOptionChange: fn,
+    },
+  },
+};
