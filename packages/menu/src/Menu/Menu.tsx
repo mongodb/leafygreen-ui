@@ -110,15 +110,18 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   }, [setOpen, shouldClose]);
 
   const [, updateState] = React.useState();
-  const forceUpdate = React.useCallback(() => updateState({}), []);
+  // Used to trigger a state update when the current subMenu changes since the current subMenu is stored in a ref to avoid extra rerenders on initial load.
+  const updateCurrentSubMenu = React.useCallback(() => updateState({}), []);
 
   const triggerRef = useRef<HTMLElement>(null);
-  //FIXME: This hook causes a second re-render on state change. `useAvailableSpace` uses `useViewportSize` internally, which has internal state that causes re-renders.
-  // const availableSpace = useAvailableSpace(refEl || triggerRef, spacing);
-  const availableSpace = undefined;
-
-  const maxMenuHeightValue = !isUndefined(availableSpace)
-    ? `${Math.min(availableSpace, maxHeight)}px`
+  //FIXME: This hook causes a second re-render on initial load. `useAvailableSpace` uses `useViewportSize` internally, which has internal state that causes re-renders.
+  const availableSpace = useAvailableSpace(refEl || triggerRef, spacing);
+  const memoizedAvailableSpace = useMemo(
+    () => availableSpace,
+    [availableSpace],
+  );
+  const maxMenuHeightValue = !isUndefined(memoizedAvailableSpace)
+    ? `${Math.min(memoizedAvailableSpace, maxHeight)}px`
     : 'unset';
 
   console.log('render', {
@@ -183,6 +186,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
             props.active &&
             !hasSetInitialOpen.current
           ) {
+            // Using a ref here prevents an extra rerender on initial load.
             currentSubMenuRef.current = child;
             hasSetInitialOpen.current = true;
           }
@@ -209,19 +213,19 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
               currentSubMenuRef.current = state ? child : null;
               hasSetInitialOpen.current = true;
               // Force update since the updated currentSubMenu is set in a ref.
-              forceUpdate();
+              updateCurrentSubMenu();
             },
             onKeyDown: (e: React.KeyboardEvent<HTMLButtonElement>) => {
               if (e.keyCode === keyMap.ArrowLeft && isCurrentSubMenu) {
                 currentSubMenuRef.current = null;
                 hasSetInitialOpen.current = true;
-                forceUpdate();
+                updateCurrentSubMenu();
               }
 
               if (e.keyCode === keyMap.ArrowRight) {
                 currentSubMenuRef.current = child;
                 hasSetInitialOpen.current = true;
-                forceUpdate();
+                updateCurrentSubMenu();
               }
             },
             onFocus,
@@ -267,7 +271,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     }
 
     return { updatedChildren: updateChildren(children), refs };
-  }, [children, open, forceUpdate, handleClose]);
+  }, [children, open, updateCurrentSubMenu, handleClose]);
 
   const focusedRef = useRef<HTMLElement | null>(refs[0] || null);
 
