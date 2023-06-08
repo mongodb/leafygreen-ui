@@ -147,7 +147,7 @@ TwoFeatures.parameters = {
 
 export const TwoFeaturesWithSecondaryAction = Template.bind({});
 TwoFeaturesWithSecondaryAction.args = {
-  features: lightModeFeatures.slice(0, 3),
+  features: lightModeFeatures.slice(0, 2),
   secondaryButton: <Button>Upload Module</Button>,
 };
 TwoFeaturesWithSecondaryAction.parameters = {
@@ -160,7 +160,7 @@ TwoFeaturesWithSecondaryAction.parameters = {
 
 export const TwoFeaturesWithSecondaryActionAndLink = Template.bind({});
 TwoFeaturesWithSecondaryActionAndLink.args = {
-  features: lightModeFeatures.slice(0, 3),
+  features: lightModeFeatures.slice(0, 2),
   secondaryButton: <Button>Upload Module</Button>,
   externalLink: <Link href="http://www.google.com">Test external link</Link>,
 };
