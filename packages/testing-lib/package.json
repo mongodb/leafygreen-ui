@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/testing-lib",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "leafyGreen UI Kit Internal Testing Library",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -15,10 +15,9 @@
   "scripts": {
     "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
   },
-  "keywords": [],
   "license": "Apache-2.0",
   "publishConfig": {
-    "access": "restricted"
+    "access": "public"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/testing-lib",
   "repository": {
