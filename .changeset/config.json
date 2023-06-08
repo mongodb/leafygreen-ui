@@ -2,7 +2,6 @@
   "$schema": "https://unpkg.com/@changesets/config@2.3.0/schema.json",
   "changelog": "@changesets/cli/changelog",
   "commit": false,
-  "ignore": ["@leafygreen-ui/testing-lib"],
   "access": "restricted",
   "baseBranch": "main"
 }
