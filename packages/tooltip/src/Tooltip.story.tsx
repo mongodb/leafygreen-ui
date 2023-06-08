@@ -10,6 +10,10 @@ import {
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
+import {
+  getAlign,
+  getJustify,
+} from '@leafygreen-ui/popover/src/PopoverInstanceDecorator.testutils';
 import { BaseFontSize, transitionDuration } from '@leafygreen-ui/tokens';
 import { Body, InlineCode, Subtitle } from '@leafygreen-ui/typography';
 
@@ -17,14 +21,6 @@ import Tooltip, { Align, Justify, TooltipProps } from '.';
 
 const longText =
   '5hhs8d83jj2992h88d9s49ns94jsjsj9456j9djdf95hhs8d83jj2992h88d9s49ns94jsjsj9456j9djdf9';
-
-const instanceWrapperStyle = css`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40vw;
-  height: 150px;
-`;
 
 const meta: StoryMetaType<typeof Tooltip> = {
   title: 'Components/Tooltip',
@@ -65,16 +61,28 @@ const meta: StoryMetaType<typeof Tooltip> = {
       args: {
         open: true,
       },
-      decorator: Instance => (
-        <div className={instanceWrapperStyle}>
-          <Instance />
+      decorator: (Instance, ctx) => (
+        <div
+          className={css`
+            width: 256px;
+            height: 200px;
+            display: flex;
+            align-items: ${getAlign(ctx?.args.align)};
+            justify-content: ${getJustify(ctx?.args.align, ctx?.args.justify)};
+          `}
+        >
+          <Instance
+            trigger={
+              <Button darkMode={ctx?.args.darkMode} size="xsmall">
+                trigger
+              </Button>
+            }
+          />
         </div>
       ),
     },
   },
   args: {
-    children: 'I am a tooltip!',
-    trigger: <Button size="xsmall">trigger</Button>,
     enabled: true,
     usePortal: true,
   },
