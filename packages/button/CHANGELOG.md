@@ -1,5 +1,11 @@
 # @leafygreen-ui/button
 
+## 20.2.0
+
+### Minor Changes
+
+- 8eb2b7dc0: Add `isLoading` and `loadingText` props
+
 ## 20.1.1
 
 ### Patch Changes
