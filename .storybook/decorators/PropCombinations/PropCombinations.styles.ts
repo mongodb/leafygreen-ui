@@ -1,9 +1,10 @@
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { typeScales } from '@leafygreen-ui/tokens';
+import { breakpoints, typeScales } from '@leafygreen-ui/tokens';
 
 export const generatedStoryWrapper = css`
-  min-width: 100vw;
+  width: 100vw;
+  min-width: ${breakpoints.XLDesktop}px;
   display: flex;
 `;
 
