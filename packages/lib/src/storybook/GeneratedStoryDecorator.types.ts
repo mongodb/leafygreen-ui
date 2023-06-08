@@ -1,6 +1,6 @@
 import { Args } from '@storybook/csf';
-import { Decorator, StoryFn } from '@storybook/react';
-import { type ComponentProps } from 'react';
+import { StoryFn } from '@storybook/react';
+import React, { type ComponentProps } from 'react';
 
 import { StoryMetaType, type LeafyGreenProviderProps } from './StoryMeta.types';
 
@@ -9,11 +9,15 @@ export type ExtendedComponentProps<
   XP extends Record<string, any> = {},
 > = ComponentProps<T> & LeafyGreenProviderProps;
 
-type InstanceFn = StoryFn;
+type InstanceFn<T extends React.ElementType> = StoryFn<T>;
 
 interface InstanceContext {
   args: Args;
 }
+
+export type InstanceDecorator<
+  T extends React.ElementType = React.ElementType<any>,
+> = (Story: InstanceFn<T>, context?: InstanceContext) => JSX.Element;
 
 export interface GeneratedStoryConfig<
   T extends React.ElementType,
@@ -57,10 +61,7 @@ export interface GeneratedStoryConfig<
    * Decorators defined in `meta.decorators`
    * are not applied to generated story instances
    */
-  decorator?: (
-    Story: InstanceFn,
-    context?: InstanceContext,
-  ) => ReturnType<Decorator>;
+  decorator?: InstanceDecorator;
 
   /** Exclude certain combinations of props */
   excludeCombinations?: Array<
