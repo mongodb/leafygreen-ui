@@ -105,7 +105,7 @@ const packageJSON = `
     },
     "dependencies": {
       "@leafygreen-ui/emotion": "^4.0.4",
-      "@leafygreen-ui/lib": "^10.0.0"
+      "@leafygreen-ui/lib": "^10.3.3"
     }
   }
 `;
@@ -180,7 +180,7 @@ export { ${packageNamePascal}Props } from './${packageNamePascal}.types';
 
 const storybook = `
 import React from 'react';
-import { ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import { ${packageNamePascal} } from '.';
 
@@ -189,7 +189,7 @@ export default {
   component: ${packageNamePascal},
 }
 
-const Template: ComponentStory<typeof ${packageNamePascal}> = (props) => (
+const Template: StoryFn<typeof ${packageNamePascal}> = (props) => (
   <${packageNamePascal} {...props} />
 );
 
@@ -201,7 +201,7 @@ const spec = `
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import {${packageNamePascal}} from '.';
+import { ${packageNamePascal} } from '.';
 
 describe('packages/${packageNameKebab}', () => {
   test('condition', () => {
@@ -215,5 +215,5 @@ const types = `export interface ${packageNamePascal}Props {}`;
 const styles = `
 import { css } from '@leafygreen-ui/emotion';
 
-export const baseStyles = css``;
+export const baseStyles = css\`\`;
 `;
