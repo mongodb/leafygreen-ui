@@ -247,5 +247,3 @@ export const Basic: StoryType<typeof InternalToast> = (
 Basic.parameters = {
   chromatic: { disableSnapshot: true },
 };
-
-export const Generated = () => {};
