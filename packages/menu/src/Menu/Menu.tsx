@@ -111,10 +111,11 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 
   const [, updateState] = React.useState();
   // Used to trigger a state update when the current subMenu changes since the current subMenu is stored in a ref to avoid extra rerenders on initial load.
+  // @ts-expect-error - updateState should have a value
   const updateCurrentSubMenu = React.useCallback(() => updateState({}), []);
 
   const triggerRef = useRef<HTMLElement>(null);
-  //FIXME: This hook causes a second re-render on initial load. `useAvailableSpace` uses `useViewportSize` internally, which has internal state that causes re-renders.
+  // This hook causes a second re-render on initial load. `useAvailableSpace` uses `useViewportSize` internally, which has internal state that causes re-renders.
   const availableSpace = useAvailableSpace(refEl || triggerRef, spacing);
   const memoizedAvailableSpace = useMemo(
     () => availableSpace,
@@ -124,9 +125,9 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     ? `${Math.min(memoizedAvailableSpace, maxHeight)}px`
     : 'unset';
 
-  console.log('render', {
-    'currentSubMenuRef.current': currentSubMenuRef.current,
-  });
+  // console.log('render', {
+  //   'currentSubMenuRef.current': currentSubMenuRef.current,
+  // });
 
   const { updatedChildren, refs } = React.useMemo(() => {
     if (
@@ -140,7 +141,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     const refs: Array<HTMLElement> = [];
 
     function updateChildren(children: React.ReactNode): React.ReactNode {
-      console.log('CHILDREN');
+      // console.log('CHILDREN');
       return React.Children.map(children, child => {
         if (!React.isValidElement(child) || child.props?.disabled) {
           return child;
@@ -194,13 +195,13 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           const isCurrentSubMenu =
             (currentSubMenuRef.current?.props as SubMenuProps)?.title === title;
 
-          console.group();
-          console.log({ title });
-          console.log({
-            'currentSubMenuRef.current': currentSubMenuRef.current,
-          });
-          console.log({ isCurrentSubMenu });
-          console.groupEnd();
+          // console.group();
+          // console.log({ title });
+          // console.log({
+          //   'currentSubMenuRef.current': currentSubMenuRef.current,
+          // });
+          // console.log({ isCurrentSubMenu });
+          // console.groupEnd();
 
           return React.cloneElement(child, {
             ref: setRef,

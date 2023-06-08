@@ -2,6 +2,7 @@ import React from 'react';
 import {
   act,
   fireEvent,
+  getAllByRole as globalGetAllByRole,
   render,
   waitFor,
   waitForElementToBeRemoved,
@@ -201,6 +202,46 @@ describe('packages/menu', () => {
         userEventInteraction(menu, key);
         await waitForElementToBeRemoved(menu);
         expect(button).toHaveFocus();
+      });
+    });
+
+    describe('Arrow keys', () => {
+      let menu: HTMLElement;
+      let options: Array<HTMLElement>;
+
+      beforeEach(() => {
+        const { getByTestId } = renderMenu({ trigger });
+        const triggerButton = getByTestId('menu-trigger');
+
+        userEvent.click(triggerButton);
+        menu = getByTestId(menuTestId);
+        options = globalGetAllByRole(menu, 'menuitem');
+      });
+
+      describe('Down arrow', () => {
+        test('highlights the next option in the menu', () => {
+          userEvent.type(menu, '{arrowdown}');
+          expect(options[1]).toHaveFocus();
+        });
+        test('cycles highlight to the top', () => {
+          // programmatically set focus on last option
+          options[options.length - 1].focus();
+          userEvent.type(menu, '{arrowdown}');
+          expect(options[0]).toHaveFocus();
+        });
+      });
+
+      describe('Up arrow', () => {
+        test('highlights the previous option in the menu', () => {
+          // programmatically set focus on second option
+          options[1].focus();
+          userEvent.type(menu, '{arrowup}');
+          expect(options[0]).toHaveFocus();
+        });
+        test('cycles highlight to the bottom', () => {
+          userEvent.type(menu, '{arrowup}');
+          expect(options[options.length - 1]).toHaveFocus();
+        });
       });
     });
   });
