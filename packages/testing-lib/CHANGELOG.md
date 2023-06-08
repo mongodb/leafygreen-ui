@@ -1,5 +1,11 @@
 # @leafygreen-ui/testing-lib
 
+## 0.3.0
+
+### Minor Changes
+
+- e6fd9ecfc: First publish of @leafygreen-ui/testing-lib
+
 ## 0.2.2
 
 ### Patch Changes
