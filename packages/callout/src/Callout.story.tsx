@@ -23,7 +23,7 @@ const meta: StoryMetaType<typeof Callout> = {
   parameters: {
     default: 'LiveExample',
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         variant: Object.values(Variant),
       },
@@ -49,6 +49,11 @@ export default meta;
 export const LiveExample: StoryFn<CalloutProps> = args => <Callout {...args} />;
 LiveExample.args = {
   children: loremIpsum,
+};
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
 export const WithRichContent: StoryFn<CalloutProps> = ({

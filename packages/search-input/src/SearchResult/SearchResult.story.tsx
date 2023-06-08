@@ -12,14 +12,12 @@ const meta: StoryMetaType<typeof SearchResult> = {
   parameters: {
     default: null,
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         description: [undefined, 'This is a description'],
         disabled: [false, true],
         highlighted: [false, true],
       },
-      // We'll wrap this component in a new provider,
-      // since the SearchInput component will establish a new context
       decorator: (Instance, ctx) => (
         <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
           <Instance />

@@ -15,7 +15,7 @@ const meta: StoryMetaType<typeof Card, BoxProps> = {
   parameters: {
     default: 'LiveExample',
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         contentStyle: ['none', 'clickable'],
       },
@@ -40,5 +40,10 @@ export const LiveExample: StoryFn<CardProps & BoxProps> = ({
 }: CardProps & BoxProps) => (
   <Card as={(as ? as : 'div') as keyof JSX.IntrinsicElements} {...args} />
 );
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const Generated = () => {};

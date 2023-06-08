@@ -46,7 +46,7 @@ const meta: StoryMetaType<typeof NumberInput> = {
     },
     generate: {
       storyNames: ['Unitless', 'WithUnits', 'WithUnitSelect'],
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         size: Object.values(Size),
         label: ['Label', undefined],
@@ -156,6 +156,11 @@ export const LiveExample = Template.bind({});
 LiveExample.args = {
   unitOptions: unitOptions,
   unit: unitOptions[0].displayName,
+};
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
 export const Unitless = () => <></>;

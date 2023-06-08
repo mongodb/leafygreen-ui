@@ -19,7 +19,7 @@ const meta: StoryMetaType<typeof Banner> = {
   parameters: {
     default: 'LiveExample',
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         image: [
           undefined,

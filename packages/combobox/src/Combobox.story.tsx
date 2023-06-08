@@ -7,6 +7,7 @@ import {
   storybookArgTypes,
   storybookExcludedControlParams,
   type StoryMetaType,
+  StoryType,
 } from '@leafygreen-ui/lib';
 
 import { getComboboxOptions } from './test-utils/getTestOptions.testutils';
@@ -24,6 +25,8 @@ const wrapperStyle = css`
   padding-block: 64px;
   display: flex;
 `;
+
+const multiValue = ['apple', 'banana'];
 
 const meta: StoryMetaType<typeof Combobox> = {
   title: 'Components/Combobox',
@@ -49,15 +52,14 @@ const meta: StoryMetaType<typeof Combobox> = {
       ],
     },
     generate: {
-      props: {
+      storyNames: ['SingleSelect', 'MultiSelect'],
+      combineArgs: {
         darkMode: [false, true],
-        state: Object.values(State),
-        size: Object.values(ComboboxSize),
+        clearable: [true, false],
         description: [undefined, 'Please pick fruit(s)'],
         label: [undefined, 'Choose a fruit'],
-        clearable: [true, false],
-        multiselect: [false, true],
-        value: [undefined, 'apple', ['apple', 'banana']],
+        state: Object.values(State),
+        size: Object.values(ComboboxSize),
       },
       excludeCombinations: [
         ['description', { label: undefined }],
@@ -71,13 +73,16 @@ const meta: StoryMetaType<typeof Combobox> = {
         },
         {
           multiselect: false,
-          value: ['apple', 'banana'],
+          value: multiValue,
         },
       ],
     },
   },
 
   args: {
+    label: 'Choose a fruit',
+    description: 'Please pick fruit(s)',
+    placeholder: 'Select fruit',
     multiselect: false,
     darkMode: false,
     disabled: false,
@@ -151,84 +156,9 @@ export const LiveExample: StoryFn<ComboboxProps<boolean>> = (
     </>
   );
 };
-LiveExample.args = {
-  label: 'Choose a fruit',
-  description: 'Please pick fruit(s)',
-  placeholder: 'Select fruit',
-  children: getComboboxOptions(),
+LiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
 };
-
-// const SingleTemplate: StoryFn<ComboboxProps<false>> = (
-//   args: ComboboxProps<false>,
-// ) => <Combobox {...args} />;
-
-// export const SingleSelect: StoryFn<ComboboxProps<false>> = (
-//   args: ComboboxProps<false>,
-// ) => <Combobox {...args} />;
-// SingleSelect.args = {
-//   label: 'Choose a fruit',
-//   description: 'Please pick one',
-//   placeholder: 'Select fruit',
-//   multiselect: false,
-//   // children: getComboboxOptions(),
-// };
-// SingleSelect.argTypes = {
-//   multiselect: { control: 'none' },
-// };
-
-// export const SingleSelectWithoutGlyphs = SingleTemplate.bind({});
-// SingleSelectWithoutGlyphs.args = {
-//   label: 'Choose a fruit',
-//   description: 'Please pick one',
-//   placeholder: 'Select fruit',
-//   multiselect: false,
-//   children: getComboboxOptions(false),
-// };
-// SingleSelectWithoutGlyphs.argTypes = {
-//   multiselect: { control: 'none' },
-// };
-
-// export const WithError = SingleTemplate.bind({});
-// WithError.args = {
-//   label: 'Choose a fruit',
-//   description: 'Please pick one',
-//   placeholder: 'Select fruit',
-//   value: 'pomegranates',
-//   errorMessage: 'No Pomegranates!',
-//   state: 'error',
-// };
-
-// const MultiTemplate: StoryFn<ComboboxProps<true>> = (
-//   args: ComboboxProps<true>,
-// ) => <Combobox {...args} />;
-
-// export const Multiselect = MultiTemplate.bind({});
-// Multiselect.args = {
-//   label: 'Choose a fruit',
-//   description: 'Please pick some',
-//   placeholder: 'Select fruit',
-//   multiselect: true,
-//   children: getComboboxOptions(),
-// };
-// Multiselect.argTypes = {
-//   multiselect: {
-//     control: 'none',
-//   },
-// };
-
-// export const MultiselectWithoutGlyphs = MultiTemplate.bind({});
-// MultiselectWithoutGlyphs.args = {
-//   label: 'Choose a fruit',
-//   description: 'Please pick some',
-//   placeholder: 'Select fruit',
-//   multiselect: true,
-//   children: getComboboxOptions(false),
-// };
-// MultiselectWithoutGlyphs.argTypes = {
-//   multiselect: {
-//     control: 'none',
-//   },
-// };
 
 export const ControlledSingleSelect = () => {
   const [selection, setSelection] = useState<string | null>(null);
@@ -299,4 +229,26 @@ ExternalFilter.parameters = {
   chromatic: { disableSnapshot: true },
 };
 
-export const Generated = () => {};
+export const SingleSelect: StoryType<typeof Combobox> = () => <></>;
+SingleSelect.args = {
+  multiselect: false,
+};
+SingleSelect.parameters = {
+  generate: {
+    combineArgs: {
+      value: [undefined, 'apple'],
+    },
+  },
+};
+
+export const MultiSelect = () => <></>;
+MultiSelect.args = {
+  multiselect: true,
+};
+MultiSelect.parameters = {
+  generate: {
+    combineArgs: {
+      value: [undefined, multiValue],
+    },
+  },
+};

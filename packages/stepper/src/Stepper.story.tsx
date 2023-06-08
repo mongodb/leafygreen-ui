@@ -23,7 +23,7 @@ const meta: StoryMetaType<typeof Stepper> = {
       exclude: [...storybookExcludedControlParams, 'children'],
     },
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         currentStep: [1, 4, 7],
         maxDisplayedSteps: [3, 7],
@@ -76,7 +76,11 @@ export default meta;
 export const LiveExample: StoryFn<StepperProps> = (args: StepperProps) => (
   <Stepper {...args} />
 );
-
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 LiveExample.args = {
   currentStep: 1,
   maxDisplayedSteps: 5,

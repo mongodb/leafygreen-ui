@@ -14,7 +14,7 @@ const meta: StoryMetaType<typeof Toggle> = {
   parameters: {
     default: 'LiveExample',
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         checked: [false, true],
         size: Object.values(Size),
@@ -42,6 +42,11 @@ const Template: StoryFn<ToggleProps> = (args: ToggleProps) => (
 );
 
 export const LiveExample = Template.bind({});
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const WithLabel: StoryFn<ToggleProps> = ({
   // eslint-disable-next-line react/prop-types

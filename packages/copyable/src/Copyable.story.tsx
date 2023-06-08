@@ -1,9 +1,12 @@
 import React from 'react';
-import { StoryFn } from '@storybook/react';
 
-import { storybookArgTypes, type StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  type StoryMetaType,
+  StoryType,
+} from '@leafygreen-ui/lib';
 
-import Copyable, { CopyableProps } from '.';
+import Copyable from '.';
 
 const meta: StoryMetaType<typeof Copyable> = {
   title: 'Components/Copyable',
@@ -11,7 +14,7 @@ const meta: StoryMetaType<typeof Copyable> = {
   parameters: {
     default: 'LiveExample',
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         copyable: [true, false],
         children: [
@@ -45,8 +48,14 @@ const meta: StoryMetaType<typeof Copyable> = {
 
 export default meta;
 
-export const LiveExample: StoryFn<CopyableProps> = args => (
-  <Copyable {...args} />
+export const LiveExample: StoryType<typeof Copyable> = args => (
+  <div>
+    <Copyable {...args} />
+  </div>
 );
+
+LiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
+};
 
 export const Generated = () => {};

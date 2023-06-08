@@ -19,7 +19,13 @@ const meta: StoryMetaType<typeof Button> = {
   parameters: {
     default: 'LiveExample',
     generate: {
-      storyNames: ['LargeSize', 'DefaultSize', 'SmallSize', 'XSmallSize'],
+      storyNames: [
+        'LargeSize',
+        'DefaultSize',
+        'SmallSize',
+        'XSmallSize',
+        'Loading',
+      ],
       combineArgs: {
         darkMode: [false, true],
         rightGlyph: [undefined, <Icon glyph={'ArrowRight'} />],
@@ -39,6 +45,9 @@ const meta: StoryMetaType<typeof Button> = {
           children: undefined,
         },
       ],
+      chromatic: {
+        disableSnapshots: true,
+      },
     },
   },
   args: {
@@ -134,13 +143,18 @@ XSmallSize.parameters = {
   },
 };
 
-export const LoadingState = LiveExample.bind({});
-LoadingState.args = {
-  isLoading: true,
-};
-
-export const LoadingStateWithText = LiveExample.bind({});
-LoadingStateWithText.args = {
-  isLoading: true,
-  loadingText: 'Saving',
+export const Loading: StoryType<typeof Button> = () => <></>;
+Loading.parameters = {
+  generate: {
+    combineArgs: {
+      size: Object.values(Size),
+      loadingText: [undefined, 'Saving'],
+    },
+    args: {
+      isLoading: true,
+      variant: Variant.Default,
+      rightGlyph: undefined,
+      leftGlyph: undefined,
+    },
+  },
 };

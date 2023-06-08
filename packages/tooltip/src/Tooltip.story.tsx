@@ -38,7 +38,7 @@ const meta: StoryMetaType<typeof Tooltip> = {
       delay: transitionDuration.slowest,
     },
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         baseFontSize: Object.values(BaseFontSize),
         align: Object.values(Align),
@@ -105,6 +105,11 @@ export const LiveExample: StoryFn<TooltipProps> = ({
 LiveExample.argTypes = {
   open: {
     control: 'none',
+  },
+};
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
   },
 };
 

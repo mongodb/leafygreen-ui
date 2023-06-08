@@ -6,8 +6,10 @@ import { range, startCase } from 'lodash';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import {
+  DarkModeProps,
   storybookExcludedControlParams,
   StoryMetaType,
+  StoryType,
 } from '@leafygreen-ui/lib';
 import { InlineCode, Label, Link } from '@leafygreen-ui/typography';
 
@@ -96,6 +98,7 @@ export const LiveExample: StoryFn<InternalToastProps> = (
 
           return (
             <Button
+              data-testid={`trigger-${variant}`}
               key={variant}
               onClick={() => {
                 pushToast({
@@ -209,4 +212,38 @@ WithInitialToasts.args = {
   ),
 };
 
-export const Generated = () => {};
+export const Basic: StoryType<typeof InternalToast> = (
+  props: Partial<InternalToastProps> & DarkModeProps,
+) => {
+  const { pushToast, clearStack } = useToast();
+
+  const createRandomToast = () => {
+    const variant = props.variant || faker.helpers.objectValue(Variant);
+
+    pushToast({
+      title: `I'm a ${variant} toast`,
+      description: faker.lorem.lines(faker.number.int({ min: 1, max: 2 })),
+      variant,
+      ...props,
+    });
+  };
+
+  return (
+    <div>
+      <div
+        className={css`
+          display: flex;
+          gap: 8px;
+        `}
+      >
+        <Button data-testid="toast-trigger" onClick={createRandomToast}>
+          Push toast
+        </Button>
+        <Button onClick={() => clearStack()}>Clear all</Button>
+      </div>
+    </div>
+  );
+};
+Basic.parameters = {
+  chromatic: { disableSnapshot: true },
+};

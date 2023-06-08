@@ -8,7 +8,7 @@ import {
   TruncationLocation,
 } from '../Combobox.types';
 
-interface ComboboxData {
+export interface ComboboxData {
   multiselect: boolean;
   size: ComboboxSize;
   withIcons: boolean;
@@ -23,7 +23,7 @@ interface ComboboxData {
   popoverZIndex?: number;
 }
 
-export const ComboboxContext = createContext<ComboboxData>({
+export const defaultContext = {
   multiselect: false,
   size: ComboboxSize.Default,
   withIcons: false,
@@ -32,4 +32,6 @@ export const ComboboxContext = createContext<ComboboxData>({
   state: State.none,
   searchState: SearchState.unset,
   overflow: Overflow.expandY,
-});
+};
+
+export const ComboboxContext = createContext<ComboboxData>(defaultContext);

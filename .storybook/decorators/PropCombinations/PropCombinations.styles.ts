@@ -3,6 +3,7 @@ import { palette } from '@leafygreen-ui/palette';
 import { typeScales } from '@leafygreen-ui/tokens';
 
 export const generatedStoryWrapper = css`
+  min-width: 100vw;
   display: flex;
 `;
 
@@ -35,6 +36,6 @@ export const cellStyles = css`
 `;
 
 export const instanceCellStyles = css`
-  text-align: center;
   vertical-align: middle;
+  max-width: 40vw;
 `;

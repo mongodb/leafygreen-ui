@@ -20,7 +20,7 @@ const meta: StoryMetaType<typeof Pipeline> = {
       exclude: [...storybookExcludedControlParams, 'children'],
     },
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         size: Object.values(Size),
         children: [
@@ -48,6 +48,11 @@ export const LiveExample: StoryFn<PipelineProps & { stages: string }> = ({
   ...args
 }: PipelineProps & { stages: string }) => {
   return <Pipeline {...args} />;
+};
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
 export const Generated = () => {};
