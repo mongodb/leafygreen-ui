@@ -72,7 +72,6 @@ const meta: StoryMetaType<any> = {
               height: 200px;
               width: 500px;
               display: flex;
-              outline: 1px solid ${palette.gray.base}33;
               align-items: ${getAlign(ctx?.args.tooltipAlign)};
               justify-content: ${getJustify(
                 ctx?.args.tooltipAlign,
@@ -86,7 +85,7 @@ const meta: StoryMetaType<any> = {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                outline: 1px solid ${palette.gray.base};
+                outline: 1px solid ${palette.gray.base}80;
               `}
               ref={refEl}
             >
