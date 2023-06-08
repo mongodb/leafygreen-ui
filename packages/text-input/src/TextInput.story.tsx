@@ -22,12 +22,12 @@ const meta: StoryMetaType<typeof TextInput> = {
       exclude: [...storybookExcludedControlParams, 'value', 'handleValidation'],
     },
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
-        disabled: [false, true],
-        state: Object.values(State),
         label: [undefined, 'Label'],
         description: [undefined, 'This is a description'],
+        state: Object.values(State),
+        disabled: [false, true],
       },
       excludeCombinations: [
         {

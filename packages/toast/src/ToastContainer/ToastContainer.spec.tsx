@@ -1,5 +1,7 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
+import { composeStory, ReactRenderer } from '@storybook/react';
+import { ComponentAnnotations } from '@storybook/types';
 import {
   cleanup,
   getByTestId as globalGetByTestId,
@@ -14,9 +16,14 @@ import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { TOAST_CONSTANTS } from '../constants';
 import { InternalToastProps } from '../InternalToast';
-import { LiveExample as ContextStory } from '../Toast.story';
+import Meta, { Basic } from '../Toast.story';
 import { makeToast, makeToastStack } from '../ToastContext/utils/makeToast';
 import { ToastProvider, ToastProviderProps, ToastStack } from '..';
+
+const ContextStory = composeStory(
+  Basic,
+  Meta as ComponentAnnotations<ReactRenderer>,
+);
 
 async function delay(t: number): Promise<void> {
   return await new Promise(_ => setTimeout(_, t));
@@ -142,10 +149,10 @@ describe('packages/toast/container', () => {
 
       test('toast does _NOT_ close after timeout when container is hovered', async () => {
         const timeout = 50;
-        const { getByTestId, findByTestId, triggerToast } =
+        const { getAllByTestId, findByTestId, triggerToast } =
           renderToastContainer({ timeout });
         triggerToast();
-        const container = getByTestId('lg-toast-scroll-container');
+        const container = getAllByTestId('lg-toast-scroll-container')[0];
         const toast = await findByTestId('lg-toast');
         expect(toast).toBeInTheDocument();
         userEvent.hover(container);

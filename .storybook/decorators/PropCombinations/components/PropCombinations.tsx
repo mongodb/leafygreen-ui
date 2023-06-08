@@ -62,7 +62,7 @@ export function PropCombinations<T extends React.ComponentType<any>>({
               <tr
                 key={JSON.stringify(combo)}
                 className={cx(combinationRowStyles, {
-                  [combinationDarkModeStyles]: combo.darkMode === true,
+                  [combinationDarkModeStyles]: combo.darkMode || args.darkMode,
                 })}
               >
                 <td className={cellStyles}>

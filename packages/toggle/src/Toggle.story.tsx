@@ -14,7 +14,7 @@ const meta: StoryMetaType<typeof Toggle> = {
   parameters: {
     default: 'LiveExample',
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         checked: [false, true],
         size: Object.values(Size),

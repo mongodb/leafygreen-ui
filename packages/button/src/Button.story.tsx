@@ -19,15 +19,19 @@ const meta: StoryMetaType<typeof Button> = {
   parameters: {
     default: 'LiveExample',
     generate: {
-      storyNames: ['LargeSize', 'DefaultSize', 'SmallSize', 'XSmallSize'],
+      storyNames: [
+        'LargeSize',
+        'DefaultSize',
+        'SmallSize',
+        'XSmallSize',
+        'Loading',
+      ],
       combineArgs: {
         darkMode: [false, true],
         rightGlyph: [undefined, <Icon glyph={'ArrowRight'} />],
         leftGlyph: [undefined, <Icon glyph={'Cloud'} />],
         children: ['MongoDB', undefined],
         variant: Object.values(Variant),
-        isLoading: [false, true],
-        loadingState: [undefined, 'Saving'],
       },
       excludeCombinations: [
         {
@@ -135,6 +139,22 @@ XSmallSize.parameters = {
   generate: {
     args: {
       size: Size.XSmall,
+    },
+  },
+};
+
+export const Loading: StoryType<typeof Button> = () => <></>;
+Loading.parameters = {
+  generate: {
+    combineArgs: {
+      size: Object.values(Size),
+      loadingText: [undefined, 'Saving'],
+    },
+    args: {
+      isLoading: true,
+      variant: Variant.Default,
+      rightGlyph: undefined,
+      leftGlyph: undefined,
     },
   },
 };

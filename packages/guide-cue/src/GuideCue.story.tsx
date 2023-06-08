@@ -8,13 +8,14 @@ import {
   storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
+  type StoryType,
 } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { Align } from '@leafygreen-ui/popover';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
-import { GuideCue, GuideCueProps } from '.';
+import { GuideCue, GuideCueProps, TooltipAlign, TooltipJustify } from '.';
 
 /** A decorator for each generated story instance */
 const instanceDecorator = (Instance: StoryFn) => {
@@ -71,9 +72,19 @@ const meta: StoryMetaType<typeof GuideCue> = {
       ],
     },
     generate: {
-      props: {
+      storyNames: [
+        'Standalone',
+        'MultiStepBeaconTop',
+        'MultiStepBeaconBottom',
+        'MultiStepBeaconLeft',
+        'MultiStepBeaconRight',
+        'MultiStepBeaconCenterVertical',
+        'MultiStepBeaconCenterHorizontal',
+      ],
+      combineArgs: {
         darkMode: [false, true],
-        beaconAlign: Object.values(Align),
+        tooltipJustify: Object.values(TooltipJustify),
+        tooltipAlign: Object.values(TooltipAlign),
       },
       args: {
         open: true,
@@ -153,6 +164,11 @@ const Template: StoryFn<GuideCueProps> = (args: GuideCueProps) => {
 };
 
 export const LiveExample = Template.bind({});
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 const scrollableStyle = css`
   width: 800px;
@@ -308,4 +324,77 @@ MultistepDemo.parameters = {
   },
 };
 
-export const Generated = () => {};
+// @ts-expect-error
+export const Standalone: StoryType<typeof GuideCue> = () => <></>;
+Standalone.parameters = {
+  generate: {
+    args: {
+      numberOfSteps: 1,
+      currentStep: 1,
+    },
+  },
+};
+
+// @ts-expect-error
+export const MultiStepBeaconTop: StoryType<typeof GuideCue> = () => <></>;
+MultiStepBeaconTop.parameters = {
+  generate: {
+    args: {
+      beaconAlign: Align.Top,
+    },
+  },
+};
+
+// @ts-expect-error
+export const MultiStepBeaconBottom: StoryType<typeof GuideCue> = () => <></>;
+MultiStepBeaconBottom.parameters = {
+  generate: {
+    args: {
+      beaconAlign: Align.Bottom,
+    },
+  },
+};
+
+// @ts-expect-error
+export const MultiStepBeaconLeft: StoryType<typeof GuideCue> = () => <></>;
+MultiStepBeaconLeft.parameters = {
+  generate: {
+    args: {
+      beaconAlign: Align.Left,
+    },
+  },
+};
+
+// @ts-expect-error
+export const MultiStepBeaconRight: StoryType<typeof GuideCue> = () => <></>;
+MultiStepBeaconRight.parameters = {
+  generate: {
+    args: {
+      beaconAlign: Align.Right,
+    },
+  },
+};
+
+// @ts-expect-error
+export const MultiStepBeaconCenterVertical: StoryType<typeof GuideCue> = () => (
+  <></>
+);
+MultiStepBeaconCenterVertical.parameters = {
+  generate: {
+    args: {
+      beaconAlign: Align.CenterVertical,
+    },
+  },
+};
+
+export const MultiStepBeaconCenterHorizontal: StoryType<
+  // @ts-expect-error
+  typeof GuideCue
+> = () => <></>;
+MultiStepBeaconCenterHorizontal.parameters = {
+  generate: {
+    args: {
+      beaconAlign: Align.CenterHorizontal,
+    },
+  },
+};

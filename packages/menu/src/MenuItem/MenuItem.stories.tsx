@@ -11,7 +11,7 @@ const meta: StoryMetaType<typeof MenuItem> = {
   parameters: {
     default: null,
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
       },
       args: {

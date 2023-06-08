@@ -97,7 +97,7 @@ const meta: StoryMetaType<typeof PasswordInput> = {
       exclude: [...storybookExcludedControlParams, 'as', 'children', 'value'],
     },
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         size: Object.values(Size),
         label: [undefined, 'Label'],
@@ -160,6 +160,11 @@ LiveExample.argTypes = {
     options: Object.keys(userFriendlyObj),
     description:
       'STORYBOOK ONLY. This determines what gets passed to `stateNotifications`',
+  },
+};
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
   },
 };
 

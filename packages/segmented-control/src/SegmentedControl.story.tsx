@@ -36,14 +36,14 @@ const meta: StoryMetaType<typeof SegmentedControl> = {
       delay: transitionDuration.default,
     },
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
-        size: Object.values(Size),
         children: [
           TestChildren.Basic,
           TestChildren.WithIcons,
           TestChildren.IconsOnly,
         ],
+        size: Object.values(Size),
         label: [undefined, 'Select'],
       },
     },
@@ -84,3 +84,5 @@ export const LiveExample: StoryFn<SegmentedControlProps & LiveExampleProps> = (
     {TestChildren[args.childrenOptions]}
   </SegmentedControl>
 );
+
+export const Generated = () => <></>;

@@ -1,21 +1,67 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable no-console */
+/* eslint-disable react/display-name */
 import React, { MouseEvent, useRef } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import { Size } from '@leafygreen-ui/button';
+import { css } from '@leafygreen-ui/emotion';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
+  StoryType,
 } from '@leafygreen-ui/lib';
 import { MenuItem } from '@leafygreen-ui/menu';
 
 import { Align, Justify, SplitButton, SplitButtonProps, Variant } from '.';
 
+const instanceWrapperStyle = css`
+  height: 300px;
+  position: relative;
+`;
+
 const meta: StoryMetaType<typeof SplitButton> = {
   title: 'Components/SplitButton',
   component: SplitButton,
+
+  parameters: {
+    default: 'LiveExample',
+    controls: {
+      exclude: [
+        ...storybookExcludedControlParams,
+        'as',
+        'children',
+        'menuItems',
+        'href',
+        'type',
+        'maxHeight',
+        'open',
+        'onTriggerClick',
+        'triggerAriaLabel',
+      ],
+    },
+    generate: {
+      storyNames: ['LargeSize', 'DefaultSize', 'SmallSize', 'XSmallSize'],
+      combineArgs: {
+        darkMode: [false, true],
+        leftGlyph: [undefined, <Icon glyph={'ArrowRight'} />],
+        variant: Object.values(Variant),
+        align: Object.values(Align),
+        justify: Object.values(Justify),
+      },
+      args: {
+        label: 'MongoDB',
+        open: true,
+      },
+      decorator: Instance => (
+        <div className={instanceWrapperStyle}>
+          <Instance />
+        </div>
+      ),
+    },
+  },
   args: {
     label: 'label',
     variant: Variant.Default,
@@ -63,23 +109,6 @@ const meta: StoryMetaType<typeof SplitButton> = {
       options: Object.values(Justify),
     },
   },
-  parameters: {
-    default: 'Basic',
-    controls: {
-      exclude: [
-        ...storybookExcludedControlParams,
-        'as',
-        'children',
-        'menuItems',
-        'href',
-        'type',
-        'maxHeight',
-        'open',
-        'onTriggerClick',
-        'triggerAriaLabel',
-      ],
-    },
-  },
 };
 
 export default meta;
@@ -100,4 +129,44 @@ const Template: StoryFn<SplitButtonProps> = (props: SplitButtonProps) => {
   );
 };
 
-export const Basic = Template.bind({});
+export const LiveExample = Template.bind({});
+
+export const LargeSize: StoryType<typeof SplitButton> = () => <></>;
+LargeSize.parameters = {
+  generate: {
+    args: {
+      // @ts-expect-error - types are incorrect
+      size: Size.Large,
+    },
+  },
+};
+
+export const DefaultSize: StoryType<typeof SplitButton> = () => <></>;
+DefaultSize.parameters = {
+  generate: {
+    args: {
+      // @ts-expect-error - types are incorrect
+      size: Size.Default,
+    },
+  },
+};
+
+export const SmallSize: StoryType<typeof SplitButton> = () => <></>;
+SmallSize.parameters = {
+  generate: {
+    args: {
+      // @ts-expect-error - types are incorrect
+      size: Size.Small,
+    },
+  },
+};
+
+export const XSmallSize: StoryType<typeof SplitButton> = () => <></>;
+XSmallSize.parameters = {
+  generate: {
+    args: {
+      // @ts-expect-error - types are incorrect
+      size: Size.XSmall,
+    },
+  },
+};
