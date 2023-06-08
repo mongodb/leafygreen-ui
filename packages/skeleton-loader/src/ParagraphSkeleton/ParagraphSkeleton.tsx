@@ -27,7 +27,6 @@ export function ParagraphSkeleton({
       <div {...rest} className={cx(rootStyles, className)} aria-busy>
         {withHeader && (
           <Skeleton
-            size="large"
             className={headerStyles}
             data-testid="lg-paragraph-skeleton-header"
           />
