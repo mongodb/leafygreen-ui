@@ -12,7 +12,6 @@ export { createSyntheticEvent } from './createSyntheticEvent';
 export {
   type ExtendedComponentProps,
   type GeneratedStoryConfig,
-  type GeneratedStoryFn,
   type InstanceDecorator,
   StoryMeta,
   type StoryMetaType,
