@@ -32,10 +32,10 @@ npm install @leafygreen-ui/skeleton-loader
 
 #### Skeleton
 
-| Name             | Type      | Default | Description                           |
-| ---------------- | --------- | ------- | ------------------------------------- |
-| `size`           | `boolean` | `false` | Determines the height of the skeleton |
-| HTML `div` props |           |         | Additional HTML div properties        |
+| Name             | Type     | Default   | Description                           |
+| ---------------- | -------- | --------- | ------------------------------------- |
+| `size`           | `string` | `default` | Determines the height of the skeleton |
+| HTML `div` props |          |           | Additional HTML div properties        |
 
 #### Paragraph Skeleton
 
