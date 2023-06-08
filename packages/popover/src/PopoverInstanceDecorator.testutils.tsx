@@ -6,24 +6,24 @@ import { palette } from '@leafygreen-ui/palette';
 
 import { Align, Justify } from './types';
 
+export const getJustify = (a: Align, j: Justify): string => {
+  if (a === 'left' || a === 'right') {
+    return a === 'right' ? 'start' : 'end';
+  }
+
+  return j === 'middle' || j === 'fit' ? 'center' : (j as string);
+};
+
+export const getAlign = (a: Align) => {
+  return a === 'top' ? 'end' : a === 'bottom' ? 'start' : 'center';
+};
+
 /**
  * A convenience Storybook decorator
  * to appropriately align reference elements
  * for components using Popover
  */
 export const PopoverInstanceDecorator: InstanceDecorator = (Instance, ctx) => {
-  const getJustify = (a: Align, j: Justify): string => {
-    if (a === 'left' || a === 'right') {
-      return a === 'right' ? 'start' : 'end';
-    }
-
-    return j === 'middle' || j === 'fit' ? 'center' : (j as string);
-  };
-
-  const getAlign = (a: Align) => {
-    return a === 'top' ? 'end' : a === 'bottom' ? 'start' : 'center';
-  };
-
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const refEl = React.useRef(null);
   return (

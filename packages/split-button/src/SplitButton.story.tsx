@@ -14,13 +14,12 @@ import {
   StoryType,
 } from '@leafygreen-ui/lib';
 import { MenuItem } from '@leafygreen-ui/menu';
+import {
+  getAlign,
+  getJustify,
+} from '@leafygreen-ui/popover/src/PopoverInstanceDecorator.testutils';
 
 import { Align, Justify, SplitButton, SplitButtonProps, Variant } from '.';
-
-const instanceWrapperStyle = css`
-  height: 300px;
-  position: relative;
-`;
 
 const meta: StoryMetaType<typeof SplitButton> = {
   title: 'Components/SplitButton',
@@ -55,8 +54,15 @@ const meta: StoryMetaType<typeof SplitButton> = {
         label: 'MongoDB',
         open: true,
       },
-      decorator: Instance => (
-        <div className={instanceWrapperStyle}>
+      decorator: (Instance, ctx) => (
+        <div
+          className={css`
+            height: 300px;
+            display: flex;
+            align-items: ${getAlign(ctx?.args.align)};
+            justify-content: ${getJustify(ctx?.args.align, ctx?.args.justify)};
+          `}
+        >
           <Instance />
         </div>
       ),
