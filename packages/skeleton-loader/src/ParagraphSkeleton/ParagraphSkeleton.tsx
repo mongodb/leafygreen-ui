@@ -24,7 +24,7 @@ export function ParagraphSkeleton({
   const { darkMode } = useDarkMode(darkModeProp);
   return (
     <LeafyGreenProvider darkMode={darkMode}>
-      <div aria-busy {...rest} className={cx(rootStyles, className)}>
+      <div {...rest} className={cx(rootStyles, className)} aria-busy>
         {withHeader && (
           <Skeleton
             size="large"

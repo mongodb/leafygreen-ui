@@ -20,10 +20,9 @@ export function Skeleton({
         rootStyles,
         sizeStyles[size],
         themeStyles[theme],
-        'lg-ui-skeleton',
         className,
       )}
-      aria-busy
+      aria-hidden
       {...rest}
     />
   );

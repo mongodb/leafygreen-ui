@@ -14,17 +14,17 @@ export const cellStyles = css`
 export const tableHeadStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     background-color: ${palette.black};
-    box-shadow: 0 4px ${palette.gray.dark2};
+    box-shadow: 0 3px ${palette.gray.dark2};
   `,
   [Theme.Light]: css`
     background-color: ${palette.white};
-    box-shadow: 0 4px ${palette.gray.light2};
+    box-shadow: 0 3px ${palette.gray.light2};
   `,
 };
 
 // offsets box-shadow on thead
 export const firstRowStyles = css`
-  margin-top: 4px;
+  margin-top: 2px; // the td doesn't start exactly at the bottom of the box-shadow
 `;
 
 export const headerCellStyles = css`

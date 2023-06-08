@@ -17,10 +17,10 @@ export function CardSkeleton({
   const { darkMode } = useDarkMode(darkModeProp);
   return (
     <Card
-      aria-busy
       {...rest}
       darkMode={darkMode}
       className={cx(rootStyles, className)}
+      aria-busy
     >
       <ParagraphSkeleton withHeader />
     </Card>

@@ -32,7 +32,7 @@ export function TableSkeleton({
   const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
   return (
     <LeafyGreenProvider darkMode={darkMode}>
-      <table aria-busy {...rest} className={cx(baseStyles, className)}>
+      <table {...rest} className={cx(baseStyles, className)} aria-busy>
         <thead className={tableHeadStyles[theme]}>
           <tr>
             {[...Array(numCols)].map((_, i) => (
