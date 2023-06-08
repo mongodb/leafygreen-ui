@@ -1,5 +1,12 @@
 # @leafygreen-ui/toast
 
+## 6.1.8
+
+### Patch Changes
+
+- bd2668895: - Removes controlled toast when it is unmounted.
+  - Removed notification bar when there are 0 notifications.
+
 ## 6.1.7
 
 ### Patch Changes
