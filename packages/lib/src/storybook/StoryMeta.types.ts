@@ -44,7 +44,7 @@ export interface ChromaticConfig {
  * Story Parameters
  */
 type StoryParameters<
-  T extends React.ComponentType,
+  T extends React.ElementType,
   XP extends Record<string, any> = {},
 > = Meta<T>['parameters'] & {
   /**
@@ -67,7 +67,7 @@ type StoryParameters<
  * Story control arg types
  */
 type ArgTypes<
-  T extends React.ComponentType,
+  T extends React.ElementType,
   XP extends Record<string, any> = {},
 > = Partial<
   | {
@@ -85,7 +85,7 @@ type ArgTypes<
  * Type of the Story default export
  */
 export type StoryMetaType<
-  T extends React.ComponentType,
+  T extends React.ElementType,
   XP extends Record<string, any> = {},
 > = Omit<Meta<T>, 'component' | 'argTypes' | 'args'> & {
   title?: string;
@@ -96,7 +96,7 @@ export type StoryMetaType<
 };
 
 export type StoryType<
-  T extends React.ComponentType,
+  T extends React.ElementType,
   XP extends Record<string, any> = {},
 > = (StoryFn<T> | StoryObj<T>) & {
   parameters?: Omit<StoryParameters<T, XP>, 'default'>;

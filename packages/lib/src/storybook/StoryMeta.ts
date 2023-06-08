@@ -22,7 +22,7 @@ import { StoryMetaType } from './StoryMeta.types';
  * @deprecated
  */
 export const StoryMeta = <
-  T extends React.ComponentType,
+  T extends React.ElementType,
   XP extends Record<string, any>,
 >(
   meta: StoryMetaType<T, XP> = {} as StoryMetaType<T, XP>,

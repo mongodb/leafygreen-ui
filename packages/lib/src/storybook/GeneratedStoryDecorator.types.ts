@@ -2,23 +2,25 @@ import { Args } from '@storybook/csf';
 import { StoryFn } from '@storybook/react';
 import React, { type ComponentProps } from 'react';
 
-import { type LeafyGreenProviderProps } from './StoryMeta.types';
+import { StoryMetaType, type LeafyGreenProviderProps } from './StoryMeta.types';
 
 export type ExtendedComponentProps<
   T extends React.ElementType,
   XP extends Record<string, any> = {},
 > = ComponentProps<T> & LeafyGreenProviderProps;
 
+type InstanceFn<T extends React.ElementType> = StoryFn<T>;
+
 interface InstanceContext {
   args: Args;
 }
 
 export type InstanceDecorator<
-  T extends React.ComponentType = React.ComponentType<any>,
-> = (Story: StoryFn<T>, context?: InstanceContext) => JSX.Element;
+  T extends React.ElementType = React.ElementType<any>,
+> = (Story: InstanceFn<T>, context?: InstanceContext) => JSX.Element;
 
 export interface GeneratedStoryConfig<
-  T extends React.ComponentType,
+  T extends React.ElementType,
   XP extends Record<string, any> = {},
 > {
   /**
@@ -59,7 +61,7 @@ export interface GeneratedStoryConfig<
    * Decorators defined in `meta.decorators`
    * are not applied to generated story instances
    */
-  decorator?: InstanceDecorator<T>;
+  decorator?: InstanceDecorator;
 
   /** Exclude certain combinations of props */
   excludeCombinations?: Array<
@@ -118,4 +120,12 @@ export interface GeneratedStoryConfig<
           | Array<ExtendedComponentProps<T, XP>[key]>;
       }>
   >;
+}
+
+export interface GeneratedStoryFn<T extends React.ElementType> {
+  (): void;
+  parameters?: Omit<StoryMetaType<T>['parameters'], 'default' | 'generate'>;
+  argTypes?: StoryMetaType<T>['argTypes'];
+  args?: StoryMetaType<T>['args'];
+  title?: string;
 }
