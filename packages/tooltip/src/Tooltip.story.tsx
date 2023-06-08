@@ -13,7 +13,7 @@ import {
 import {
   getAlign,
   getJustify,
-} from '@leafygreen-ui/popover/src/PopoverInstanceDecorator.testutils';
+} from '@leafygreen-ui/popover/src/Popover.testutils';
 import { BaseFontSize, transitionDuration } from '@leafygreen-ui/tokens';
 import { Body, InlineCode, Subtitle } from '@leafygreen-ui/typography';
 

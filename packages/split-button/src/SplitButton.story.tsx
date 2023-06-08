@@ -17,7 +17,7 @@ import { MenuItem } from '@leafygreen-ui/menu';
 import {
   getAlign,
   getJustify,
-} from '@leafygreen-ui/popover/src/PopoverInstanceDecorator.testutils';
+} from '@leafygreen-ui/popover/src/Popover.testutils';
 
 import { Align, Justify, SplitButton, SplitButtonProps, Variant } from '.';
 

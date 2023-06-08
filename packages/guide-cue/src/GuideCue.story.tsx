@@ -10,8 +10,12 @@ import {
   type StoryMetaType,
   type StoryType,
 } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import { Align } from '@leafygreen-ui/popover';
-import { PopoverInstanceDecorator } from '@leafygreen-ui/popover/src/PopoverInstanceDecorator.testutils';
+import {
+  getAlign,
+  getJustify,
+} from '@leafygreen-ui/popover/src/Popover.testutils';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
@@ -59,7 +63,39 @@ const meta: StoryMetaType<any> = {
         open: true,
         refEl: undefined,
       },
-      decorator: PopoverInstanceDecorator,
+      decorator: (Instance, ctx) => {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const refEl = React.useRef(null);
+        return (
+          <div
+            className={css`
+              height: 200px;
+              width: 500px;
+              display: flex;
+              outline: 1px solid ${palette.gray.base}33;
+              align-items: ${getAlign(ctx?.args.tooltipAlign)};
+              justify-content: ${getJustify(
+                ctx?.args.tooltipAlign,
+                ctx?.args.tooltipJustify,
+              )};
+            `}
+          >
+            <div
+              className={css`
+                height: 25px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                outline: 1px solid ${palette.gray.base};
+              `}
+              ref={refEl}
+            >
+              refEl
+            </div>
+            <Instance refEl={refEl} />
+          </div>
+        );
+      },
     },
     chromatic: {
       delay: transitionDuration.slowest,
