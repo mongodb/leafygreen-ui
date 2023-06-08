@@ -5,72 +5,17 @@ import { StoryFn } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import {
-  type InstanceDecorator,
   storybookArgTypes,
   storybookExcludedControlParams,
   type StoryMetaType,
   type StoryType,
 } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
 import { Align } from '@leafygreen-ui/popover';
+import { PopoverInstanceDecorator } from '@leafygreen-ui/popover/src/PopoverInstanceDecorator.testutils';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
 import { GuideCue, GuideCueProps, TooltipAlign, TooltipJustify } from '.';
-
-/** A decorator for each generated story instance */
-const instanceDecorator: InstanceDecorator = (Instance, ctx) => {
-  const getJustify = (
-    a: GuideCueProps['tooltipAlign'],
-    j: GuideCueProps['tooltipJustify'],
-  ): string => {
-    if (a === 'left' || a === 'right') {
-      return a === 'right' ? 'start' : 'end';
-    }
-
-    return j === 'middle' ? 'center' : (j as string);
-  };
-
-  const getAlign = (a: GuideCueProps['tooltipAlign']) => {
-    if (a === 'left' || a === 'right') {
-      return 'center';
-    }
-
-    return a === 'top' ? 'end' : 'start';
-  };
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const refEl = useRef(null);
-  return (
-    <div
-      className={css`
-        height: 200px;
-        width: 500px;
-        display: flex;
-        outline: 1px solid ${palette.gray.base}33;
-        align-items: ${getAlign(ctx?.args.tooltipAlign)};
-        justify-content: ${getJustify(
-          ctx?.args.tooltipAlign,
-          ctx?.args.tooltipJustify,
-        )};
-      `}
-    >
-      <div
-        className={css`
-          height: 25px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          outline: 1px solid ${palette.gray.base};
-        `}
-        ref={refEl}
-      >
-        element ref
-      </div>
-      <Instance refEl={refEl} />
-    </div>
-  );
-};
 
 // TODO: Fix component type
 const meta: StoryMetaType<any> = {
@@ -114,7 +59,7 @@ const meta: StoryMetaType<any> = {
         open: true,
         refEl: undefined,
       },
-      decorator: instanceDecorator,
+      decorator: PopoverInstanceDecorator,
     },
     chromatic: {
       delay: transitionDuration.slowest,
