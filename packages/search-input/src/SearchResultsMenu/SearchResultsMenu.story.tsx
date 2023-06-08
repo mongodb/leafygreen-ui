@@ -92,6 +92,6 @@ Demo.parameters = {
 export const Generated: StoryType<typeof SearchResultsMenu> = () => <></>;
 Generated.parameters = {
   chromatic: {
-    delay: transitionDuration.slower,
+    delay: transitionDuration.slowest,
   },
 };
