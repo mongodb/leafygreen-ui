@@ -6,8 +6,10 @@ import { range, startCase } from 'lodash';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import {
+  DarkModeProps,
   storybookExcludedControlParams,
   StoryMetaType,
+  StoryType,
 } from '@leafygreen-ui/lib';
 import { InlineCode, Label, Link } from '@leafygreen-ui/typography';
 
@@ -210,7 +212,7 @@ WithInitialToasts.args = {
   ),
 };
 
-export const Basic: StoryFn<typeof InternalToast> = (
+export const Basic: StoryType<typeof InternalToast> = (
   props: Partial<InternalToastProps> & DarkModeProps,
 ) => {
   const { pushToast, clearStack } = useToast();
