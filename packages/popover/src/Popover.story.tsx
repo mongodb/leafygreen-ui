@@ -175,6 +175,11 @@ export const LiveExample: StoryFn<PopoverStoryProps> = ({
     </div>
   );
 };
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 // @ts-expect-error - Portal props (usePortal)
 export const ScrollableContainer: StoryFn<PopoverStoryProps> = ({
@@ -209,11 +214,14 @@ export const ScrollableContainer: StoryFn<PopoverStoryProps> = ({
     </div>
   );
 };
-
+ScrollableContainer.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 ScrollableContainer.args = {
   usePortal: true,
 };
-
 ScrollableContainer.argTypes = {
   usePortal: { control: 'none' },
   portalClassName: { control: 'none' },

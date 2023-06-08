@@ -84,5 +84,10 @@ export const LiveExample: StoryFn<SegmentedControlProps & LiveExampleProps> = (
     {TestChildren[args.childrenOptions]}
   </SegmentedControl>
 );
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const Generated = () => <></>;

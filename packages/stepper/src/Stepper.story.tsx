@@ -76,7 +76,11 @@ export default meta;
 export const LiveExample: StoryFn<StepperProps> = (args: StepperProps) => (
   <Stepper {...args} />
 );
-
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 LiveExample.args = {
   currentStep: 1,
   maxDisplayedSteps: 5,

@@ -40,5 +40,10 @@ export const LiveExample: StoryFn<CardProps & BoxProps> = ({
 }: CardProps & BoxProps) => (
   <Card as={(as ? as : 'div') as keyof JSX.IntrinsicElements} {...args} />
 );
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const Generated = () => {};

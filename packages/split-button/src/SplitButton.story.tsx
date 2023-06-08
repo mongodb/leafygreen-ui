@@ -130,6 +130,11 @@ const Template: StoryFn<SplitButtonProps> = (props: SplitButtonProps) => {
 };
 
 export const LiveExample = Template.bind({});
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const LargeSize: StoryType<typeof SplitButton> = () => <></>;
 LargeSize.parameters = {

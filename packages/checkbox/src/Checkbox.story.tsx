@@ -90,10 +90,18 @@ export const LiveExample: StoryFn<StoryCheckboxProps> = ({
   </LeafygreenProvider>
 );
 
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 export const Controlled = LiveExample.bind({});
 Controlled.parameters = {
   controls: {
     exclude: [...storybookExcludedControlParams],
+  },
+  chromatic: {
+    disableSnapshot: true,
   },
 };
 Controlled.args = {

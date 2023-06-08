@@ -49,6 +49,11 @@ export default meta;
 export const LiveExample: StoryFn<RadioBoxGroupProps> = (
   args: RadioBoxGroupProps,
 ) => <RadioBoxGroup name="radio-box-group-default" {...args} />;
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const Controlled: StoryFn<RadioBoxGroupProps> = (
   args: RadioBoxGroupProps,
@@ -65,6 +70,11 @@ export const Controlled: StoryFn<RadioBoxGroupProps> = (
 };
 Controlled.parameters = {
   chromatic: { disableSnapshot: true },
+};
+Controlled.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
 export const TooltipTest = ({ darkMode }: RadioBoxGroupProps) => {

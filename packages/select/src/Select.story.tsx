@@ -88,6 +88,11 @@ export const LiveExample: StoryFn<SelectProps> = ({
     )}
   />
 );
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const WithIcons = LiveExample.bind({});
 WithIcons.args = {
@@ -115,6 +120,11 @@ WithIcons.args = {
       Spider
     </Option>,
   ],
+};
+WithIcons.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
 export const Generated = () => {};

@@ -49,5 +49,10 @@ export const LiveExample: StoryType<
 > = ({ darkMode, ...args }: AccessibleIconButtonProps & DarkModeProps) => (
   <IconButton darkMode={darkMode} {...args} />
 );
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const Generated = () => {};

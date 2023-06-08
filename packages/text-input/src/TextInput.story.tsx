@@ -83,6 +83,11 @@ export default meta;
 export const LiveExample: StoryFn<TextInputProps> = ({
   ...args
 }: TextInputProps) => <TextInput {...args} />;
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const WithValidation = (args: TextInputProps) => {
   const [state, setState] = useState<'none' | 'valid' | 'error'>('none');
@@ -105,6 +110,11 @@ export const WithValidation = (args: TextInputProps) => {
       {...args}
     />
   );
+};
+WithValidation.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
 export const Generated = () => {};

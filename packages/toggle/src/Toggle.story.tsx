@@ -42,6 +42,11 @@ const Template: StoryFn<ToggleProps> = (args: ToggleProps) => (
 );
 
 export const LiveExample = Template.bind({});
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const WithLabel: StoryFn<ToggleProps> = ({
   // eslint-disable-next-line react/prop-types

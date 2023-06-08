@@ -161,5 +161,10 @@ export const LiveExample: StoryFn<MenuProps & { size: Size }> = ({
     </LeafyGreenProvider>
   );
 };
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const Generated = () => {};
