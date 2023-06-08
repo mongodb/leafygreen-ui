@@ -15,10 +15,9 @@
   "scripts": {
     "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
   },
-  "keywords": [],
   "license": "Apache-2.0",
   "publishConfig": {
-    "access": "restricted"
+    "access": "public"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/testing-lib",
   "repository": {
