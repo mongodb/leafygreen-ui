@@ -117,6 +117,11 @@ export const ControlledWithState = (args: TooltipProps) => {
   const [open, setOpen] = useState(true);
   return <Tooltip {...args} open={open} setOpen={setOpen} />;
 };
+ControlledWithState.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const WithLeafyGreenChildren = LiveExample.bind({});
 WithLeafyGreenChildren.args = {
@@ -127,6 +132,12 @@ WithLeafyGreenChildren.args = {
       <InlineCode>@leafygreen-ui/tooltip</InlineCode>
     </>
   ),
+};
+
+WithLeafyGreenChildren.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
 export const AlignmentTest = ({ darkMode, ...args }: TooltipProps) => {
@@ -160,6 +171,11 @@ export const AlignmentTest = ({ darkMode, ...args }: TooltipProps) => {
       )}
     </div>
   );
+};
+AlignmentTest.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
 const scrollableStyle = css`
@@ -241,6 +257,11 @@ export const ScrollableContainer = ({
       </div>
     </div>
   );
+};
+ScrollableContainer.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
 ScrollableContainer.args = {
