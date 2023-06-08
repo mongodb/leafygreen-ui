@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/display-name */
 import React from 'react';
 import { StoryFn } from '@storybook/react';
@@ -53,15 +54,20 @@ const meta: StoryMetaType<typeof Menu> = {
           </>
         ),
       },
-      decorator: StoryFn => (
-        <div
-          className={css`
-            height: 256px;
-          `}
-        >
-          <StoryFn />
-        </div>
-      ),
+      decorator: Instance => {
+        const ref = React.useRef(null);
+        return (
+          <div
+            className={css`
+              height: 256px;
+              width: 256px;
+            `}
+          >
+            <div ref={ref} />
+            <Instance refEl={ref} />
+          </div>
+        );
+      },
     },
     chromatic: {
       delay: transitionDuration.default,
@@ -167,4 +173,4 @@ LiveExample.parameters = {
   },
 };
 
-export const Generated = () => {};
+export const Generated = () => <></>;

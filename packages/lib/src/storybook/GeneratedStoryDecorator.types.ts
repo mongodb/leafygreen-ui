@@ -9,15 +9,13 @@ export type ExtendedComponentProps<
   XP extends Record<string, any> = {},
 > = ComponentProps<T> & LeafyGreenProviderProps;
 
-type InstanceFn<T extends React.ElementType> = StoryFn<T>;
-
 interface InstanceContext {
   args: Args;
 }
 
 export type InstanceDecorator<
   T extends React.ElementType = React.ElementType<any>,
-> = (Story: InstanceFn<T>, context?: InstanceContext) => JSX.Element;
+> = (Instance: StoryFn, context?: InstanceContext) => JSX.Element;
 
 export interface GeneratedStoryConfig<
   T extends React.ElementType,
