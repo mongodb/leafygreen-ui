@@ -15,7 +15,6 @@ import Button, { ButtonProps, Variant } from '.';
 const meta: StoryMetaType<typeof Button> = {
   title: 'Components/Button',
   component: Button,
-
   parameters: {
     default: 'LiveExample',
     generate: {
@@ -45,9 +44,6 @@ const meta: StoryMetaType<typeof Button> = {
           children: undefined,
         },
       ],
-      chromatic: {
-        disableSnapshots: true,
-      },
     },
   },
   args: {
@@ -106,6 +102,11 @@ export const LiveExample: StoryType<typeof Button> = ({
     {...args}
   />
 );
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshots: true,
+  },
+};
 
 export const LargeSize: StoryType<typeof Button> = () => <></>;
 LargeSize.parameters = {
@@ -156,5 +157,11 @@ Loading.parameters = {
       rightGlyph: undefined,
       leftGlyph: undefined,
     },
+  },
+};
+// Avoid flaky visual diff tests with Spinner
+Loading.parameters = {
+  chromatic: {
+    disableSnapshots: true,
   },
 };
