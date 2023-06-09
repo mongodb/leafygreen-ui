@@ -40,36 +40,50 @@ const meta: StoryMetaType<typeof Menu> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        maxHeight: [undefined, 200],
         // Popover props
         align: Object.values(Align),
         justify: Object.values(Justify),
       },
       args: {
         open: true,
+        maxHeight: 200,
         children: (
           <>
             <MenuItem>Lorem</MenuItem>
             <SubMenu
-              title="Ipsum"
-              description="mongodb.design"
+              title="Fruit"
+              description="A selection of fruit"
               glyph={<CloudIcon size="large" />}
               active={true}
             >
               <MenuItem active>Apple</MenuItem>
               <MenuItem>Banana</MenuItem>
               <MenuItem>Carrot</MenuItem>
+              <MenuItem>Dragonfruit</MenuItem>
+              <MenuItem>Eggplant</MenuItem>
+              <MenuItem>Fig</MenuItem>
             </SubMenu>
           </>
         ),
       },
+      excludeCombinations: [
+        {
+          align: [Align.CenterHorizontal, Align.CenterVertical],
+        },
+        {
+          justify: Justify.Fit,
+          align: [Align.Left, Align.Right],
+        },
+      ],
       decorator: (Instance, ctx) => (
         <div
           className={css`
             width: 256px;
-            height: 200px;
+            height: 250px;
             display: flex;
-            align-items: ${getAlign(ctx?.args.align)};
+            align-items: ${['left', 'right'].includes(ctx?.args.align)
+              ? 'end'
+              : getAlign(ctx?.args.align)};
             justify-content: ${getJustify(ctx?.args.align, ctx?.args.justify)};
           `}
         >

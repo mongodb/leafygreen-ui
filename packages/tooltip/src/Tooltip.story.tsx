@@ -36,9 +36,9 @@ const meta: StoryMetaType<typeof Tooltip> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        baseFontSize: Object.values(BaseFontSize),
         align: Object.values(Align),
         justify: Object.values(Justify),
+        baseFontSize: Object.values(BaseFontSize),
         children: [
           'I am a tooltip!',
           longText,
@@ -51,12 +51,10 @@ const meta: StoryMetaType<typeof Tooltip> = {
           justify: Justify.Fit,
           children: longText,
         },
-        [
-          'justify',
-          {
-            align: [Align.Left, Align.Right],
-          },
-        ],
+        {
+          justify: Justify.Fit,
+          align: [Align.Left, Align.Right],
+        },
       ],
       args: {
         open: true,
