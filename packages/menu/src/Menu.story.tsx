@@ -12,6 +12,11 @@ import {
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
+import { Align, Justify } from '@leafygreen-ui/popover';
+import {
+  getAlign,
+  getJustify,
+} from '@leafygreen-ui/popover/src/Popover.testutils';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { Size } from './types';
@@ -35,6 +40,10 @@ const meta: StoryMetaType<typeof Menu> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
+        maxHeight: [undefined, 200],
+        // Popover props
+        align: Object.values(Align),
+        justify: Object.values(Justify),
       },
       args: {
         open: true,
@@ -54,20 +63,25 @@ const meta: StoryMetaType<typeof Menu> = {
           </>
         ),
       },
-      decorator: Instance => {
-        const ref = React.useRef(null);
-        return (
-          <div
-            className={css`
-              height: 256px;
-              width: 256px;
-            `}
-          >
-            <div ref={ref} />
-            <Instance refEl={ref} />
-          </div>
-        );
-      },
+      decorator: (Instance, ctx) => (
+        <div
+          className={css`
+            width: 256px;
+            height: 200px;
+            display: flex;
+            align-items: ${getAlign(ctx?.args.align)};
+            justify-content: ${getJustify(ctx?.args.align, ctx?.args.justify)};
+          `}
+        >
+          <Instance
+            trigger={
+              <Button darkMode={ctx?.args.darkMode} size="xsmall">
+                trigger
+              </Button>
+            }
+          />
+        </div>
+      ),
     },
     chromatic: {
       delay: transitionDuration.default,
