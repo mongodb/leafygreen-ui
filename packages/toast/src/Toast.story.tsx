@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React, { useEffect, useState } from 'react';
 import { faker } from '@faker-js/faker';
 import { StoryContext, StoryFn } from '@storybook/react';
@@ -45,6 +46,47 @@ const meta: StoryMetaType<typeof InternalToast, ToastProviderProps> = {
         'dismissible',
         'progress',
         'variant',
+      ],
+    },
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        description: [
+          undefined,
+          'Lorem ipsum dolor sit amet',
+          <span>
+            This is a <Link>Link</Link>
+          </span>,
+        ],
+        dismissible: [true, false],
+        variant: Object.values(Variant),
+        progress: [0, 1],
+        actionElement: [undefined, <Button size="small">Action</Button>],
+      },
+      args: {
+        className: css`
+          position: relative;
+        `,
+      },
+      excludeCombinations: [
+        {
+          progress: 1,
+          variant: [
+            Variant.Success,
+            Variant.Note,
+            Variant.Warning,
+            Variant.Important,
+          ],
+        },
+        {
+          actionElement: <Button />,
+          variant: [
+            Variant.Success,
+            Variant.Note,
+            Variant.Warning,
+            Variant.Important,
+          ],
+        },
       ],
     },
   },
@@ -247,3 +289,5 @@ export const Basic: StoryType<typeof InternalToast> = (
 Basic.parameters = {
   chromatic: { disableSnapshot: true },
 };
+
+export const Generated = () => {};

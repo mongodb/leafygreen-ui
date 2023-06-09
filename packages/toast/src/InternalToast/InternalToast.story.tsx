@@ -109,6 +109,9 @@ export default meta;
 export const Basic: StoryFn<InternalToastProps> = args => (
   <InternalToast {...args} />
 );
+Basic.parameters = {
+  chromatic: { disableSnapshot: true },
+};
 
 export const WithLink = Basic.bind({});
 WithLink.args = {
@@ -118,6 +121,9 @@ WithLink.args = {
       <Link href="http://localhost:9001">Link style</Link>
     </>
   ),
+};
+WithLink.parameters = {
+  chromatic: { disableSnapshot: true },
 };
 
 export const WithAction = Basic.bind({});
@@ -132,5 +138,6 @@ WithAction.args = {
     </>
   ),
 };
-
-export const Generated = () => {};
+WithAction.parameters = {
+  chromatic: { disableSnapshot: true },
+};
