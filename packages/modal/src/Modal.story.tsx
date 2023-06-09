@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { faker } from '@faker-js/faker';
 import { StoryFn } from '@storybook/react';
 
-import Button from '@leafygreen-ui/button';
 import Code from '@leafygreen-ui/code';
 import Copyable from '@leafygreen-ui/copyable';
 import { css, cx } from '@leafygreen-ui/emotion';

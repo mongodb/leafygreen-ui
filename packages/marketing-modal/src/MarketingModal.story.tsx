@@ -21,6 +21,8 @@ const meta: StoryMetaType<typeof MarketingModal> = {
   title: 'Components/Modals/Marketing Modal',
   component: MarketingModal,
   args: {
+    showBlob: true,
+    blobPosition: BlobPosition.TopLeft,
     buttonText: 'Button Text',
     linkText: 'Link Text',
     title: 'Title Text',
@@ -50,7 +52,7 @@ const meta: StoryMetaType<typeof MarketingModal> = {
     darkMode: storybookArgTypes.darkMode,
   },
   parameters: {
-    default: 'Basic',
+    default: 'LiveExample',
     controls: {
       exclude: [
         ...storybookExcludedControlParams,
@@ -64,7 +66,7 @@ const meta: StoryMetaType<typeof MarketingModal> = {
 };
 export default meta;
 
-const ControlledTemplate: StoryFn<MarketingModalProps> = ({
+export const LiveExample: StoryFn<MarketingModalProps> = ({
   graphicStyle,
   darkMode,
   ...args
@@ -73,7 +75,7 @@ const ControlledTemplate: StoryFn<MarketingModalProps> = ({
   const graphicFillImage = darkMode
     ? 'marketing-fill-dark.jpg'
     : 'marketing-fill-light.jpg';
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const handleClose = () => setOpen(false);
   return (
     <>
@@ -103,7 +105,17 @@ const ControlledTemplate: StoryFn<MarketingModalProps> = ({
   );
 };
 
-export const Basic = ControlledTemplate.bind({});
-Basic.args = {
-  open: true,
+export const GraphicStyleFill = LiveExample.bind({});
+GraphicStyleFill.args = {
+  graphicStyle: GraphicStyle.Fill,
+};
+
+export const BlobTopRight = LiveExample.bind({});
+BlobTopRight.args = {
+  blobPosition: BlobPosition.TopRight,
+};
+
+export const BlobBottomRight = LiveExample.bind({});
+BlobBottomRight.args = {
+  blobPosition: BlobPosition.BottomRight,
 };

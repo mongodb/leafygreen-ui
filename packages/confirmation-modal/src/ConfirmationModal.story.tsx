@@ -75,7 +75,3 @@ export const LiveExample: StoryFn<ConfirmationModalProps> = ({
     </>
   );
 };
-
-// TODO: Need to update the decorator to handle singletons
-// (or update modal to handle custom positioning)
-// export const Generated = () => {};
