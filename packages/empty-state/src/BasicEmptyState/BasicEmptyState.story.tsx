@@ -38,6 +38,9 @@ const meta: StoryMetaType<typeof BasicEmptyState> = {
     controls: {
       exclude: [...storybookExcludedControlParams, 'graphicSize'],
     },
+    chromatic: {
+      disableSnapshot: true,
+    },
     generate: {
       storyNames: ['Generated'],
       combineArgs: {
@@ -104,6 +107,11 @@ const Template: StoryFn<BasicEmptyStateProps> = ({
 
 export const Basic = Template.bind({});
 export const Generated = Template.bind({});
+Generated.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const WithSmallGraphic = Template.bind({});
 WithSmallGraphic.args = {

@@ -100,6 +100,9 @@ const meta: StoryMetaType<typeof FeaturesEmptyState> = {
         },
       ],
     },
+    chromatic: {
+      disableSnapshots: true,
+    },
   },
 };
 export default meta;
@@ -137,25 +140,11 @@ TwoFeatures.args = {
     },
   ],
 };
-TwoFeatures.parameters = {
-  generate: {
-    chromatic: {
-      disableSnapshots: true,
-    },
-  },
-};
 
 export const TwoFeaturesWithSecondaryAction = Template.bind({});
 TwoFeaturesWithSecondaryAction.args = {
   features: lightModeFeatures.slice(0, 2),
   secondaryButton: <Button>Upload Module</Button>,
-};
-TwoFeaturesWithSecondaryAction.parameters = {
-  generate: {
-    chromatic: {
-      disableSnapshots: true,
-    },
-  },
 };
 
 export const TwoFeaturesWithSecondaryActionAndLink = Template.bind({});
@@ -164,37 +153,16 @@ TwoFeaturesWithSecondaryActionAndLink.args = {
   secondaryButton: <Button>Upload Module</Button>,
   externalLink: <Link href="http://www.google.com">Test external link</Link>,
 };
-TwoFeaturesWithSecondaryActionAndLink.parameters = {
-  generate: {
-    chromatic: {
-      disableSnapshots: true,
-    },
-  },
-};
 
 export const ThreeFeatures = Template.bind({});
 ThreeFeatures.args = {
   features: lightModeFeatures,
-};
-ThreeFeatures.parameters = {
-  generate: {
-    chromatic: {
-      disableSnapshots: true,
-    },
-  },
 };
 
 export const ThreeFeaturesWithSecondaryAction = Template.bind({});
 ThreeFeaturesWithSecondaryAction.args = {
   features: lightModeFeatures,
   secondaryButton: <Button>Upload Module</Button>,
-};
-ThreeFeaturesWithSecondaryAction.parameters = {
-  generate: {
-    chromatic: {
-      disableSnapshots: true,
-    },
-  },
 };
 
 export const ThreeFeaturesWithSecondaryActionAndLink = Template.bind({});
@@ -203,12 +171,10 @@ ThreeFeaturesWithSecondaryActionAndLink.args = {
   secondaryButton: <Button>Upload Module</Button>,
   externalLink: <Link href="http://www.google.com">Test external link</Link>,
 };
-ThreeFeaturesWithSecondaryActionAndLink.parameters = {
-  generate: {
-    chromatic: {
-      disableSnapshots: true,
-    },
-  },
-};
 
 export const Generated: StoryType<typeof Button> = () => <></>;
+Generated.parameters = {
+  chromatic: {
+    disableSnapshots: true,
+  },
+};
