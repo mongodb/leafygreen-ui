@@ -18,13 +18,7 @@ const meta: StoryMetaType<typeof Button> = {
   parameters: {
     default: 'LiveExample',
     generate: {
-      storyNames: [
-        'LargeSize',
-        'DefaultSize',
-        'SmallSize',
-        'XSmallSize',
-        'Loading',
-      ],
+      storyNames: ['LargeSize', 'DefaultSize', 'SmallSize', 'XSmallSize'],
       combineArgs: {
         darkMode: [false, true],
         rightGlyph: [undefined, <Icon glyph={'ArrowRight'} />],
