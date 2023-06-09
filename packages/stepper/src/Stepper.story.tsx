@@ -2,17 +2,12 @@
 import React from 'react';
 import { StoryFn } from '@storybook/react';
 
-import { css } from '@leafygreen-ui/emotion';
 import {
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
 
 import Stepper, { Step, StepperProps } from '.';
-
-const wrapperStyles = css`
-  width: 40vw;
-`;
 
 const meta: StoryMetaType<typeof Stepper> = {
   title: 'Components/Stepper',
@@ -29,11 +24,6 @@ const meta: StoryMetaType<typeof Stepper> = {
         maxDisplayedSteps: [3, 7],
         completedStepsShown: [3, 5],
       },
-      decorator: Instance => (
-        <div className={wrapperStyles}>
-          <Instance />
-        </div>
-      ),
     },
   },
   args: {
