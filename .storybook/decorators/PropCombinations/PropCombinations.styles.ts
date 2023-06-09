@@ -38,5 +38,4 @@ export const cellStyles = css`
 
 export const instanceCellStyles = css`
   vertical-align: middle;
-  max-width: 40vw;
 `;
