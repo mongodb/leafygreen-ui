@@ -96,7 +96,6 @@ describe('packages/menu', () => {
         trigger,
       });
       const button = getByRole('button');
-
       userEvent.click(button);
       const menu = getByTestId(menuTestId);
 
@@ -180,7 +179,6 @@ describe('packages/menu', () => {
         trigger,
       });
       const button = getByRole('button');
-
       userEvent.click(button);
       const menu = getByTestId(menuTestId);
 
