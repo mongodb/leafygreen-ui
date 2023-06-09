@@ -3,6 +3,7 @@ import { StoryFn } from '@storybook/react';
 
 import Code from '@leafygreen-ui/code';
 import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Link } from '@leafygreen-ui/typography';
 
 import Callout, { CalloutProps, Variant } from '.';
@@ -24,8 +25,10 @@ const meta: StoryMetaType<typeof Callout> = {
     default: 'LiveExample',
     generate: {
       combineArgs: {
+        title: [undefined, 'Test Title'],
         darkMode: [false, true],
         variant: Object.values(Variant),
+        baseFontSize: Object.values(BaseFontSize),
       },
     },
   },
