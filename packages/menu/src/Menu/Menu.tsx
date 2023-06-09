@@ -9,7 +9,11 @@ import isUndefined from 'lodash/isUndefined';
 import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
-import { useAvailableSpace, useEventListener } from '@leafygreen-ui/hooks';
+import {
+  useAvailableSpace,
+  useBackdropClick,
+  useEventListener,
+} from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType, keyMap, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
@@ -279,21 +283,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     }
   }, [open]);
 
-  const handleBackdropClick = useCallback(
-    (e: MouseEvent) => {
-      if (
-        popoverRef.current &&
-        !popoverRef.current.contains(e.target as HTMLElement)
-      ) {
-        handleClose();
-      }
-    },
-    [handleClose, popoverRef],
-  );
-
-  useEventListener('click', handleBackdropClick, {
-    enabled: open,
-  });
+  useBackdropClick(handleClose, [popoverRef], open);
 
   function handleKeyDown(e: KeyboardEvent) {
     let refToFocus: HTMLElement;

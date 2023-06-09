@@ -17,13 +17,18 @@ const trigger = <button data-testid="menu-trigger">trigger</button>;
 
 function renderMenu(props: Omit<MenuProps, 'children'> = {}) {
   const utils = render(
-    <Menu {...props} data-testid={menuTestId}>
-      <MenuItem data-testid="menu-item-a">Item A</MenuItem>
-      <MenuSeparator />
-      <MenuItem href="http://mongodb.design">Item B</MenuItem>
-    </Menu>,
+    <>
+      <div data-testid="backdrop" />
+      <Menu {...props} data-testid={menuTestId}>
+        <MenuItem data-testid="menu-item-a">Item A</MenuItem>
+        <MenuSeparator />
+        <MenuItem href="http://mongodb.design">Item B</MenuItem>
+      </Menu>
+    </>,
   );
-  return utils;
+
+  const backdrop = utils.getByTestId('backdrop');
+  return { ...utils, backdrop };
 }
 
 describe('packages/menu', () => {
@@ -80,6 +85,26 @@ describe('packages/menu', () => {
 
       const menuItem = getByTestId('menu-item-a');
       userEvent.click(menuItem);
+
+      waitFor(() => {
+        expect(menu).not.toBeInTheDocument();
+      });
+    });
+
+    test('clicking outside the menu closes the menu', () => {
+      const { getByRole, getByTestId, backdrop } = renderMenu({
+        trigger,
+      });
+      const button = getByRole('button');
+
+      userEvent.click(button);
+      const menu = getByTestId(menuTestId);
+
+      waitFor(() => {
+        expect(menu).toBeInTheDocument();
+      });
+
+      userEvent.click(backdrop);
 
       waitFor(() => {
         expect(menu).not.toBeInTheDocument();
@@ -147,6 +172,26 @@ describe('packages/menu', () => {
       waitFor(() => {
         expect(menu).toBeInTheDocument();
         expect(parentHandler).toHaveBeenCalled();
+      });
+    });
+
+    test('clicking outside the menu closes the menu', () => {
+      const { getByRole, getByTestId, backdrop } = renderMenu({
+        trigger,
+      });
+      const button = getByRole('button');
+
+      userEvent.click(button);
+      const menu = getByTestId(menuTestId);
+
+      waitFor(() => {
+        expect(menu).toBeInTheDocument();
+      });
+
+      userEvent.click(backdrop);
+
+      waitFor(() => {
+        expect(menu).not.toBeInTheDocument();
       });
     });
   });
