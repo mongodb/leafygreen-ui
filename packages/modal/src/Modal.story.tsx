@@ -12,7 +12,7 @@ import {
   StoryMetaType,
 } from '@leafygreen-ui/lib';
 import { Option, OptionGroup, Select } from '@leafygreen-ui/select';
-import { spacing } from '@leafygreen-ui/tokens';
+import { breakpoints, spacing } from '@leafygreen-ui/tokens';
 import { Body, H3, Subtitle } from '@leafygreen-ui/typography';
 
 import Modal, { CloseIconColor, ModalProps, ModalSize } from '.';
@@ -62,7 +62,16 @@ const margin = css`
 `;
 
 const Template: StoryFn<ModalProps> = (args: ModalProps) => {
-  return <Modal {...args} />;
+  return (
+    <div
+      className={css`
+        height: 100vh;
+        min-height: ${breakpoints.Desktop};
+      `}
+    >
+      <Modal {...args} />
+    </div>
+  );
 };
 
 export const Basic = Template.bind({});
@@ -101,35 +110,42 @@ export const DefaultSelect = (args: ModalProps) => {
   const [value, setValue] = useState('cat');
 
   return (
-    <Modal {...args}>
-      <div className={margin}>
-        <Subtitle>Modal Content goes here.</Subtitle>
-        {faker.lorem
-          .paragraphs(2, '\n')
-          .split('\n')
-          .map(p => (
-            <Body>{p}</Body>
-          ))}
+    <div
+      className={css`
+        height: 100vh;
+        min-height: ${breakpoints.Desktop};
+      `}
+    >
+      <Modal {...args}>
+        <div className={margin}>
+          <Subtitle>Modal Content goes here.</Subtitle>
+          {faker.lorem
+            .paragraphs(2, '\n')
+            .split('\n')
+            .map(p => (
+              <Body>{p}</Body>
+            ))}
 
-        <div>
-          <Select
-            label="label"
-            size="small"
-            placeholder="animals"
-            name="pets"
-            value={value}
-            onChange={setValue}
-            usePortal={true}
-          >
-            <OptionGroup label="Common">
-              <Option value="dog">Dog</Option>
-              <Option value="cat">Cat</Option>
-              <Option value="axolotl">Axolotl</Option>
-            </OptionGroup>
-          </Select>
+          <div>
+            <Select
+              label="label"
+              size="small"
+              placeholder="animals"
+              name="pets"
+              value={value}
+              onChange={setValue}
+              usePortal={true}
+            >
+              <OptionGroup label="Common">
+                <Option value="dog">Dog</Option>
+                <Option value="cat">Cat</Option>
+                <Option value="axolotl">Axolotl</Option>
+              </OptionGroup>
+            </Select>
+          </div>
         </div>
-      </div>
-    </Modal>
+      </Modal>
+    </div>
   );
 };
 
@@ -159,15 +175,22 @@ console.log(greeting('World'));
 `;
 
   return (
-    <Modal {...args}>
-      <div className={margin}>
-        <div>Modal Content goes here.</div>
-        <Copyable>Hello world in a modal</Copyable>
+    <div
+      className={css`
+        height: 100vh;
+        min-height: ${breakpoints.Desktop};
+      `}
+    >
+      <Modal {...args}>
+        <div className={margin}>
+          <div>Modal Content goes here.</div>
+          <Copyable>Hello world in a modal</Copyable>
 
-        <Code copyable={true} language="javascript">
-          {jsSnippet}
-        </Code>
-      </div>
-    </Modal>
+          <Code copyable={true} language="javascript">
+            {jsSnippet}
+          </Code>
+        </div>
+      </Modal>
+    </div>
   );
 }
