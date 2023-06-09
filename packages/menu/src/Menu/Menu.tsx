@@ -125,10 +125,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     ? `${Math.min(memoizedAvailableSpace, maxHeight)}px`
     : 'unset';
 
-  // console.log('render', {
-  //   'currentSubMenuRef.current': currentSubMenuRef.current,
-  // });
-
   const { updatedChildren, refs } = React.useMemo(() => {
     if (
       children == null ||
@@ -141,7 +137,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     const refs: Array<HTMLElement> = [];
 
     function updateChildren(children: React.ReactNode): React.ReactNode {
-      // console.log('CHILDREN');
       return React.Children.map(children, child => {
         if (!React.isValidElement(child) || child.props?.disabled) {
           return child;
@@ -194,14 +189,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 
           const isCurrentSubMenu =
             (currentSubMenuRef.current?.props as SubMenuProps)?.title === title;
-
-          // console.group();
-          // console.log({ title });
-          // console.log({
-          //   'currentSubMenuRef.current': currentSubMenuRef.current,
-          // });
-          // console.log({ isCurrentSubMenu });
-          // console.groupEnd();
 
           return React.cloneElement(child, {
             ref: setRef,
