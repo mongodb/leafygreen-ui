@@ -99,7 +99,7 @@ const meta: StoryMetaType<typeof PasswordInput> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        size: Object.values(Size),
+        value: [undefined, 'password'],
         label: [undefined, 'Label'],
         stateNotifications: [
           undefined,
@@ -108,7 +108,7 @@ const meta: StoryMetaType<typeof PasswordInput> = {
           userFriendlyObj['All Valid'],
           userFriendlyObj['All None'],
         ],
-        value: [undefined, 'password'],
+        size: Object.values(Size),
       },
     },
   },
