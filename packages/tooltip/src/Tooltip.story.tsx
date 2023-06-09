@@ -63,7 +63,7 @@ const meta: StoryMetaType<typeof Tooltip> = {
         <div
           className={css`
             width: 256px;
-            height: 200px;
+            height: 100px;
             display: flex;
             align-items: ${getAlign(ctx?.args.align)};
             justify-content: ${getJustify(ctx?.args.align, ctx?.args.justify)};
