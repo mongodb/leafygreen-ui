@@ -105,6 +105,8 @@ const meta: StoryMetaType<typeof PasswordInput> = {
           undefined,
           ...Object.values(State),
           userFriendlyObj.Combination,
+          userFriendlyObj['All Valid'],
+          userFriendlyObj['All None'],
         ],
         value: [undefined, 'password'],
       },
