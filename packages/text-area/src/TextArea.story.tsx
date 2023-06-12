@@ -1,8 +1,11 @@
 import React from 'react';
-import { StoryFn } from '@storybook/react';
 
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  StoryMetaType,
+  StoryType,
+} from '@leafygreen-ui/lib';
 
 import TextArea, { State, TextAreaProps } from '.';
 
@@ -14,13 +17,13 @@ const meta: StoryMetaType<typeof TextArea> = {
   parameters: {
     default: 'LiveExample',
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         baseFontSize: [13, 16],
-        disabled: [false, true],
-        state: Object.values(State),
         label: [undefined, 'Label'],
         description: [undefined, 'This is a description for the text area'],
+        state: Object.values(State),
+        disabled: [false, true],
       },
       excludeCombinations: [
         {
@@ -50,8 +53,9 @@ const meta: StoryMetaType<typeof TextArea> = {
 };
 export default meta;
 
-export const LiveExample: StoryFn<
-  TextAreaProps & { baseFontSize: LGProviderBaseFontSize }
+export const LiveExample: StoryType<
+  typeof TextArea,
+  { baseFontSize: LGProviderBaseFontSize }
 > = ({
   darkMode,
   baseFontSize,
@@ -61,6 +65,9 @@ export const LiveExample: StoryFn<
     <TextArea darkMode={darkMode} {...args} />
   </LeafygreenProvider>
 );
+LiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
+};
 LiveExample.argTypes = {
   baseFontSize: {
     options: [14, 16],

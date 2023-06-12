@@ -1,7 +1,12 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable react/display-name */
 import React from 'react';
 
-import { StoryMetaType } from '@leafygreen-ui/lib';
+import Icon from '@leafygreen-ui/icon';
+import { StoryMetaType, Theme } from '@leafygreen-ui/lib';
+
+import { MenuContext } from '../MenuContext';
+import { Size } from '../types';
 
 import MenuItem from './MenuItem';
 
@@ -11,17 +16,27 @@ const meta: StoryMetaType<typeof MenuItem> = {
   parameters: {
     default: null,
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
+        description: [undefined, 'This is a description'],
+        glyph: [undefined, <Icon glyph="Cloud" size="large" />],
+        active: [false, true],
+        size: Object.values(Size),
+        disabled: [false, true],
       },
       args: {
         children: 'Menu Item',
       },
-      decorator: StoryFn => {
+      decorator: (Instance, ctx) => {
         return (
-          <div>
-            <StoryFn />
-          </div>
+          <MenuContext.Provider
+            value={{
+              darkMode: ctx?.args.darkMode,
+              theme: ctx?.args.darkMode ? Theme.Dark : Theme.Light,
+            }}
+          >
+            <Instance />
+          </MenuContext.Provider>
         );
       },
     },
@@ -29,4 +44,4 @@ const meta: StoryMetaType<typeof MenuItem> = {
 };
 export default meta;
 
-export const Generated = () => {};
+export const Generated = () => <></>;

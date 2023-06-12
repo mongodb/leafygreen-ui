@@ -16,12 +16,11 @@ import Button, { ButtonProps, Variant } from '.';
 const meta: StoryMetaType<typeof Button> = {
   title: 'Components/Button',
   component: Button,
-
   parameters: {
     default: 'LiveExample',
     generate: {
       storyNames: ['LargeSize', 'DefaultSize', 'SmallSize', 'XSmallSize'],
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         rightGlyph: [undefined, <Icon glyph={'ArrowRight'} />],
         leftGlyph: [undefined, <Icon glyph={'Cloud'} />],
@@ -74,6 +73,12 @@ const meta: StoryMetaType<typeof Button> = {
     href: {
       control: 'text',
     },
+    isLoading: {
+      control: 'boolean',
+    },
+    loadingText: {
+      control: 'text',
+    },
   },
 };
 
@@ -92,6 +97,11 @@ export const LiveExample: StoryType<typeof Button> = ({
     {...args}
   />
 );
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshots: true,
+  },
+};
 
 export const Focused = LiveExample.bind({});
 Focused.play = ({ canvasElement }) => {
@@ -133,5 +143,27 @@ XSmallSize.parameters = {
     args: {
       size: Size.XSmall,
     },
+  },
+};
+
+export const Loading: StoryType<typeof Button> = () => <></>;
+Loading.parameters = {
+  generate: {
+    combineArgs: {
+      size: Object.values(Size),
+      loadingText: [undefined, 'Saving'],
+    },
+    args: {
+      isLoading: true,
+      variant: Variant.Default,
+      rightGlyph: undefined,
+      leftGlyph: undefined,
+    },
+  },
+};
+// Avoid flaky visual diff tests with Spinner
+Loading.parameters = {
+  chromatic: {
+    disableSnapshots: true,
   },
 };

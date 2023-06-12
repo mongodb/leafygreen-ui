@@ -11,7 +11,7 @@ const meta: StoryMetaType<typeof Badge> = {
   parameters: {
     default: 'LiveExample',
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         variant: Object.values(Variant),
       },
@@ -27,5 +27,10 @@ const meta: StoryMetaType<typeof Badge> = {
 export default meta;
 
 export const LiveExample: StoryFn<BadgeProps> = args => <Badge {...args} />;
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const Generated = () => {};

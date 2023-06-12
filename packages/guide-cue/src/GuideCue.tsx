@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import { usePrefersReducedMotion } from '@leafygreen-ui/a11y';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import Popover, { Align, Justify } from '@leafygreen-ui/popover';
+import Popover, { Align } from '@leafygreen-ui/popover';
 
 import { beaconStyles, timeout1, timeout2 } from './styles';
 import TooltipContent from './TooltipContent';
-import { GuideCueProps } from './types';
+import { GuideCueProps, TooltipAlign, TooltipJustify } from './types';
 
 function GuideCue({
   open,
@@ -24,8 +24,8 @@ function GuideCue({
   tooltipClassName,
   portalClassName,
   buttonText: buttonTextProp,
-  tooltipAlign = Align.Top,
-  tooltipJustify = Justify.Middle,
+  tooltipAlign = TooltipAlign.Top,
+  tooltipJustify = TooltipJustify.Middle,
   beaconAlign = Align.CenterHorizontal,
   portalContainer,
   scrollContainer,
@@ -141,7 +141,7 @@ function GuideCue({
             active={popoverOpen}
             refEl={refEl}
             align={beaconAlign}
-            justify={Justify.Middle}
+            justify={TooltipJustify.Middle}
             spacing={-12} // width of beacon is 24px, 24/2 = 12
             adjustOnMutation={true}
             popoverZIndex={popoverZIndex}
@@ -209,8 +209,8 @@ GuideCue.propTypes = {
   buttonText: PropTypes.string,
   onDismiss: PropTypes.func,
   onPrimaryButtonClick: PropTypes.func,
-  tooltipAlign: PropTypes.oneOf(Object.values(Align)),
-  tooltipJustify: PropTypes.oneOf(Object.values(Justify)),
+  tooltipAlign: PropTypes.oneOf(Object.values(TooltipAlign)),
+  tooltipJustify: PropTypes.oneOf(Object.values(TooltipJustify)),
   beaconAlign: PropTypes.oneOf(Object.values(Align)),
   // Popover Props
   popoverZIndex: PropTypes.number,

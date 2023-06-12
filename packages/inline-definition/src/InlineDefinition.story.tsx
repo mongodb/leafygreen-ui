@@ -20,9 +20,10 @@ const meta: StoryMetaType<typeof InlineDefinition> = {
       exclude: [...storybookExcludedControlParams, 'trigger', 'open'],
     },
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
       },
+      args: { open: true },
     },
   },
   args: {
@@ -94,5 +95,10 @@ export const LiveExample: StoryFn<InlineDefinitionProps> = ({
     </Body>
   </div>
 );
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const Generated = () => {};

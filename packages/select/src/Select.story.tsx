@@ -19,11 +19,16 @@ const meta: StoryMetaType<typeof Select> = {
       exclude: [...storybookExcludedControlParams, 'children', 'value'],
     },
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
-        disabled: [false, true],
-        size: Object.values(Size),
         state: Object.values(State),
+        size: Object.values(Size),
+        disabled: [false, true],
+      },
+      args: {
+        className: css`
+          width: 256px;
+        `,
       },
     },
   },
@@ -83,6 +88,11 @@ export const LiveExample: StoryFn<SelectProps> = ({
     )}
   />
 );
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const WithIcons = LiveExample.bind({});
 WithIcons.args = {
@@ -110,6 +120,11 @@ WithIcons.args = {
       Spider
     </Option>,
   ],
+};
+WithIcons.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
 export const Generated = () => {};

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/display-name */
 import React from 'react';
 import { StoryFn } from '@storybook/react';
@@ -11,6 +12,11 @@ import {
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
+import { Align, Justify } from '@leafygreen-ui/popover';
+import {
+  getAlign,
+  getJustify,
+} from '@leafygreen-ui/popover/src/Popover.testutils';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { Size } from './types';
@@ -32,34 +38,62 @@ const meta: StoryMetaType<typeof Menu> = {
       ],
     },
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
+        // Popover props
+        align: Object.values(Align),
+        justify: Object.values(Justify),
       },
       args: {
         open: true,
+        maxHeight: 200,
         children: (
           <>
             <MenuItem>Lorem</MenuItem>
             <SubMenu
-              title="Ipsum"
-              description="mongodb.design"
+              title="Fruit"
+              description="A selection of fruit"
               glyph={<CloudIcon size="large" />}
               active={true}
             >
               <MenuItem active>Apple</MenuItem>
               <MenuItem>Banana</MenuItem>
               <MenuItem>Carrot</MenuItem>
+              <MenuItem>Dragonfruit</MenuItem>
+              <MenuItem>Eggplant</MenuItem>
+              <MenuItem>Fig</MenuItem>
             </SubMenu>
           </>
         ),
       },
-      decorator: StoryFn => (
+      excludeCombinations: [
+        {
+          align: [Align.CenterHorizontal, Align.CenterVertical],
+        },
+        {
+          justify: Justify.Fit,
+          align: [Align.Left, Align.Right],
+        },
+      ],
+      decorator: (Instance, ctx) => (
         <div
           className={css`
-            height: 256px;
+            width: 256px;
+            height: 250px;
+            display: flex;
+            align-items: ${['left', 'right'].includes(ctx?.args.align)
+              ? 'end'
+              : getAlign(ctx?.args.align)};
+            justify-content: ${getJustify(ctx?.args.align, ctx?.args.justify)};
           `}
         >
-          <StoryFn />
+          <Instance
+            trigger={
+              <Button darkMode={ctx?.args.darkMode} size="xsmall">
+                trigger
+              </Button>
+            }
+          />
         </div>
       ),
     },
@@ -89,58 +123,6 @@ const meta: StoryMetaType<typeof Menu> = {
   },
 };
 export default meta;
-
-// export const UncontrolledTemplate = ({
-//   size,
-//   open,
-//   darkMode,
-//   ...args
-// }: MenuProps & MenuItemProps & SubMenuProps) => {
-//   return (
-//     <LeafyGreenProvider>
-//       <Menu
-//         trigger={
-//           <IconButton darkMode={darkMode} aria-label="label">
-//             <CaretDown />
-//           </IconButton>
-//         }
-//         darkMode={darkMode}
-//         {...args}
-//       >
-//         <MenuItem
-//           description="I am also an active description"
-//           active
-//           size={size}
-//           glyph={<CloudIcon />}
-//         >
-//           Active Menu Item
-//         </MenuItem>
-//         <MenuItem
-//           description="I am also a description"
-//           size={size}
-//           glyph={<CloudIcon />}
-//         >
-//           Menu Item With Description
-//         </MenuItem>
-//         <MenuItem disabled description="I am a description" size={size}>
-//           Disabled Menu Item
-//         </MenuItem>
-//         <MenuItem size={size} href="http://mongodb.design">
-//           I am a link!
-//         </MenuItem>
-//         <MenuItem size={size}>Lorem</MenuItem>
-//         <MenuItem size={size}>Ipsum</MenuItem>
-//         <MenuItem size={size}>Adipiscing</MenuItem>
-//         <MenuItem size={size}>Cursus</MenuItem>
-//         <MenuItem size={size}>Ullamcorper</MenuItem>
-//         <MenuItem size={size}>Vulputate</MenuItem>
-//         <MenuItem size={size}>Inceptos</MenuItem>
-//         <MenuItem size={size}>Risus</MenuItem>
-//       </Menu>
-//     </LeafyGreenProvider>
-//   );
-// };
-// UncontrolledTemplate.storyName = 'Uncontrolled';
 
 export const LiveExample: StoryFn<MenuProps & { size: Size }> = ({
   open: _,
@@ -213,5 +195,10 @@ export const LiveExample: StoryFn<MenuProps & { size: Size }> = ({
     </LeafyGreenProvider>
   );
 };
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
-export const Generated = () => {};
+export const Generated = () => <></>;

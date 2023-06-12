@@ -25,6 +25,9 @@ const meta: StoryMetaType<any> = {
     controls: {
       exclude: [...storybookExcludedControlParams],
     },
+    chromatic: {
+      disableSnapshot: true,
+    },
   },
 };
 

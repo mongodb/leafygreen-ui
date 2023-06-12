@@ -31,7 +31,7 @@ const meta: StoryMetaType<typeof InputOption> = {
       ],
     },
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         selected: [false, true],
         isInteractive: [false, true],
@@ -90,6 +90,9 @@ export const LiveExample: StoryFn<
       </InputOptionContent>
     </InputOption>
   );
+};
+LiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
 };
 
 export const Generated = () => {};

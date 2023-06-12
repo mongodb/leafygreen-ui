@@ -9,6 +9,7 @@ import {
   StoryMetaType,
 } from '@leafygreen-ui/lib';
 import { CloseIconColor } from '@leafygreen-ui/modal';
+import { breakpoints } from '@leafygreen-ui/tokens';
 
 import ConfirmationModal, { ConfirmationModalProps, Variant } from '.';
 
@@ -61,7 +62,12 @@ export const LiveExample: StoryFn<ConfirmationModalProps> = ({
   const [open, setOpen] = useState(true);
   const handleClose = () => setOpen(false);
   return (
-    <>
+    <div
+      className={css`
+        height: 100vh;
+        min-height: ${breakpoints.Desktop};
+      `}
+    >
       <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
         Open Modal
       </Button>
@@ -72,10 +78,6 @@ export const LiveExample: StoryFn<ConfirmationModalProps> = ({
         onConfirm={handleClose}
         darkMode={darkMode}
       />
-    </>
+    </div>
   );
 };
-
-// TODO: Need to update the decorator to handle singletons
-// (or update modal to handle custom positioning)
-// export const Generated = () => {};

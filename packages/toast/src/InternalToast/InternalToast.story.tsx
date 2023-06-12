@@ -27,9 +27,8 @@ const meta: StoryMetaType<typeof InternalToast> = {
       exclude: [...storybookExcludedControlParams, 'open'],
     },
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
-        dismissible: [true, false],
         description: [
           undefined,
           'Lorem ipsum dolor sit amet',
@@ -37,8 +36,9 @@ const meta: StoryMetaType<typeof InternalToast> = {
             This is a <Link>Link</Link>
           </span>,
         ],
+        dismissible: [true, false],
         variant: Object.values(Variant),
-        progress: [0, 0.5, 1],
+        progress: [0, 1],
         actionElement: [undefined, <Button size="small">Action</Button>],
       },
       args: {
@@ -48,7 +48,7 @@ const meta: StoryMetaType<typeof InternalToast> = {
       },
       excludeCombinations: [
         {
-          progress: [0.5, 1],
+          progress: 1,
           variant: [
             Variant.Success,
             Variant.Note,
@@ -109,6 +109,9 @@ export default meta;
 export const Basic: StoryFn<InternalToastProps> = args => (
   <InternalToast {...args} />
 );
+Basic.parameters = {
+  chromatic: { disableSnapshot: true },
+};
 
 export const WithLink = Basic.bind({});
 WithLink.args = {
@@ -118,6 +121,9 @@ WithLink.args = {
       <Link href="http://localhost:9001">Link style</Link>
     </>
   ),
+};
+WithLink.parameters = {
+  chromatic: { disableSnapshot: true },
 };
 
 export const WithAction = Basic.bind({});
@@ -132,5 +138,6 @@ WithAction.args = {
     </>
   ),
 };
-
-export const Generated = () => {};
+WithAction.parameters = {
+  chromatic: { disableSnapshot: true },
+};

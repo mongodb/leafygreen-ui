@@ -18,7 +18,7 @@ const meta: StoryMetaType<typeof RadioGroup> = {
     },
     default: 'LiveExample',
     generate: {
-      props: {
+      combineArgs: {
         darkMode: [false, true],
         size: Object.values(Size),
       },
@@ -53,6 +53,11 @@ export default meta;
 export const LiveExample: StoryFn<RadioGroupProps> = (
   args: RadioGroupProps,
 ) => <RadioGroup name="radio-group-default" {...args} />;
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const Controlled: StoryFn<RadioGroupProps> = (args: RadioGroupProps) => {
   const [activeRadio, setActiveRadio] = useState<string>('test1');
@@ -62,6 +67,11 @@ export const Controlled: StoryFn<RadioGroupProps> = (args: RadioGroupProps) => {
   };
 
   return <RadioGroup {...args} onChange={handleChange} value={activeRadio} />;
+};
+Controlled.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
 export const Generated = () => {};
