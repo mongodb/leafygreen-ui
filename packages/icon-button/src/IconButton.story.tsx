@@ -56,7 +56,9 @@ LiveExample.parameters = {
   },
 };
 
-export const Focused: StoryType<typeof IconButton> = LiveExample.bind({});
+export const Focused: StoryType<typeof IconButton> = args => (
+  <IconButton {...args} />
+);
 Focused.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   const button = canvas.getByRole('button');

@@ -113,7 +113,9 @@ Controlled.argTypes = {
   checked: { control: 'boolean' },
 };
 
-export const Focused: StoryType<typeof Checkbox> = LiveExample.bind({});
+export const Focused: StoryType<typeof Checkbox> = args => (
+  <Checkbox {...args} />
+);
 Focused.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   const checkbox = canvas.getByRole('checkbox');
