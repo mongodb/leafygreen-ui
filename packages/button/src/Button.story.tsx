@@ -103,19 +103,7 @@ LiveExample.parameters = {
   },
 };
 
-export const Focused: StoryType<typeof Button> = ({
-  leftGlyph,
-  rightGlyph,
-  ...args
-}: ButtonProps) => (
-  <Button
-    // @ts-expect-error
-    leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
-    // @ts-expect-error
-    rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
-    {...args}
-  />
-);
+export const Focused: StoryType<typeof Button> = LiveExample.bind({});
 Focused.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   const button = canvas.getByRole('button');
