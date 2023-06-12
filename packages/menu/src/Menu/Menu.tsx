@@ -284,7 +284,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     }
   }, [open]);
 
-  useBackdropClick(handleClose, [popoverRef], open);
+  useBackdropClick(handleClose, [popoverRef, triggerRef], open);
 
   function handleKeyDown(e: KeyboardEvent) {
     let refToFocus: HTMLElement;
