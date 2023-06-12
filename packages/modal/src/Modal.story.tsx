@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { faker } from '@faker-js/faker';
 import { StoryFn } from '@storybook/react';
 
+import Button from '@leafygreen-ui/button';
 import Code from '@leafygreen-ui/code';
 import Copyable from '@leafygreen-ui/copyable';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -10,6 +11,7 @@ import {
   storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
+  StoryType,
 } from '@leafygreen-ui/lib';
 import { Option, OptionGroup, Select } from '@leafygreen-ui/select';
 import { breakpoints, spacing } from '@leafygreen-ui/tokens';
@@ -19,6 +21,12 @@ import Modal, { CloseIconColor, ModalProps, ModalSize } from '.';
 
 const SEED = 0;
 faker.seed(SEED);
+
+const margin = css`
+  & > * + * {
+    margin-top: ${spacing[3]}px;
+  }
+`;
 
 const meta: StoryMetaType<typeof Modal> = {
   title: 'Components/Modals/Modal',
@@ -39,9 +47,15 @@ const meta: StoryMetaType<typeof Modal> = {
     className: css`
       z-index: 1;
     `,
+    children: (
+      <div className={margin}>
+        <H3>Base modal</H3>
+        <Body>Modal Content goes here.</Body>
+      </div>
+    ),
   },
   parameters: {
-    default: 'Basic',
+    default: 'LiveExample',
     controls: {
       exclude: [
         ...storybookExcludedControlParams,
@@ -55,11 +69,18 @@ const meta: StoryMetaType<typeof Modal> = {
 };
 export default meta;
 
-const margin = css`
-  & > * + * {
-    margin-top: ${spacing[3]}px;
-  }
-`;
+export const LiveExample: StoryType<typeof Modal> = args => {
+  const [open, setOpen] = useState(false);
+  return (
+    <div>
+      <Button onClick={() => setOpen(o => !o)}>Open Modal</Button>
+      <Modal {...args} open={open} setOpen={setOpen} />
+    </div>
+  );
+};
+LiveExample.args = {
+  open: undefined,
+};
 
 const Template: StoryFn<ModalProps> = (args: ModalProps) => {
   return (
@@ -75,14 +96,6 @@ const Template: StoryFn<ModalProps> = (args: ModalProps) => {
 };
 
 export const Basic = Template.bind({});
-Basic.args = {
-  children: (
-    <div className={margin}>
-      <H3>Base modal</H3>
-      <Body>Modal Content goes here.</Body>
-    </div>
-  ),
-};
 
 export const Scroll = Template.bind({});
 Scroll.args = {

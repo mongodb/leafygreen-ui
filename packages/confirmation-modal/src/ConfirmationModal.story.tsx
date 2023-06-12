@@ -59,7 +59,7 @@ export const LiveExample: StoryFn<ConfirmationModalProps> = ({
   darkMode,
   ...args
 }) => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   return (
     <div
@@ -80,4 +80,15 @@ export const LiveExample: StoryFn<ConfirmationModalProps> = ({
       />
     </div>
   );
+};
+LiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+
+export const Basic: StoryFn<ConfirmationModalProps> = ({
+  // eslint-disable-next-line react/prop-types
+  darkMode,
+  ...args
+}) => {
+  return <ConfirmationModal {...args} open={true} darkMode={darkMode} />;
 };

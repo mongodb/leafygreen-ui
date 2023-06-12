@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
-import Button from '@leafygreen-ui/button';
+import Button, { Size } from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import {
@@ -83,6 +83,7 @@ const meta: StoryMetaType<typeof Tooltip> = {
   args: {
     enabled: true,
     usePortal: true,
+    trigger: <Button size={Size.XSmall}>Trigger</Button>,
   },
   argTypes: {
     open: { control: 'boolean' },
@@ -108,6 +109,9 @@ export const LiveExample: StoryFn<TooltipProps> = ({
     <Tooltip darkMode={darkMode} {...args} />
   </div>
 );
+LiveExample.args = {
+  children: 'I am a tooltip!',
+};
 LiveExample.argTypes = {
   open: {
     control: 'none',
