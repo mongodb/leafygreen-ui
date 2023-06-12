@@ -1,5 +1,5 @@
 import { PlayFunction } from '@storybook/csf';
-import { Meta, ReactRenderer, StoryFn, StoryObj } from '@storybook/react';
+import { Meta, ReactRenderer, StoryFn } from '@storybook/react';
 import { ComponentProps } from 'react';
 import DarkModeProps from '../DarkModeProps';
 import { GeneratedStoryConfig } from './GeneratedStoryDecorator.types';
@@ -98,7 +98,7 @@ export type StoryMetaType<
 export type StoryType<
   T extends React.ElementType,
   XP extends Record<string, any> = {},
-> = (StoryFn<T> | StoryObj<T>) & {
+> = StoryFn<T> & {
   parameters?: Omit<StoryParameters<T, XP>, 'default'>;
   argTypes?: ArgTypes<T, XP>;
   args?: Partial<ComponentProps<T> | LeafyGreenProviderProps | XP>;
