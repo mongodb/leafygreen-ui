@@ -32,7 +32,7 @@ const meta: StoryMetaType<typeof Tabs> = {
   title: 'Components/Tabs',
   component: Tabs,
   parameters: {
-    default: 'LongTabs',
+    default: 'LiveExample',
     controls: {
       exclude: [
         ...storybookExcludedControlParams,

@@ -8,7 +8,7 @@ import {
   transitionDuration,
 } from '@leafygreen-ui/tokens';
 
-import { Size } from './types';
+import { Size } from '../types';
 
 export const radioBoxSizes: { [K in Size]: string } = {
   [Size.Default]: css`

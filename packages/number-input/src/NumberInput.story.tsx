@@ -34,7 +34,7 @@ const meta: StoryMetaType<typeof NumberInput> = {
   title: 'Components/NumberInput',
   component: NumberInput,
   parameters: {
-    default: 'Basic',
+    default: 'LiveExample',
     controls: {
       exclude: [
         ...storybookExcludedControlParams,

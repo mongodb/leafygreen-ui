@@ -17,7 +17,7 @@ const meta: StoryMetaType<typeof TextInput> = {
   title: 'Components/TextInput',
   component: TextInput,
   parameters: {
-    default: 'Basic',
+    default: 'LiveExample',
     controls: {
       exclude: [...storybookExcludedControlParams, 'value', 'handleValidation'],
     },

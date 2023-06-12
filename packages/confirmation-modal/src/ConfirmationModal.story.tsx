@@ -9,7 +9,6 @@ import {
   StoryMetaType,
 } from '@leafygreen-ui/lib';
 import { CloseIconColor } from '@leafygreen-ui/modal';
-import { breakpoints } from '@leafygreen-ui/tokens';
 
 import ConfirmationModal, { ConfirmationModalProps, Variant } from '.';
 
@@ -17,7 +16,7 @@ const meta: StoryMetaType<typeof ConfirmationModal> = {
   title: 'Components/Modals/ConfirmationModal',
   component: ConfirmationModal,
   parameters: {
-    default: 'Basic',
+    default: 'LiveExample',
     controls: {
       exclude: [...storybookExcludedControlParams, 'open', 'initialFocus'],
     },
@@ -59,15 +58,10 @@ export const LiveExample: StoryFn<ConfirmationModalProps> = ({
   darkMode,
   ...args
 }) => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   return (
-    <div
-      className={css`
-        height: 100vh;
-        min-height: ${breakpoints.Desktop};
-      `}
-    >
+    <div>
       <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
         Open Modal
       </Button>
@@ -80,4 +74,15 @@ export const LiveExample: StoryFn<ConfirmationModalProps> = ({
       />
     </div>
   );
+};
+LiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+
+export const Basic: StoryFn<ConfirmationModalProps> = ({
+  // eslint-disable-next-line react/prop-types
+  darkMode,
+  ...args
+}) => {
+  return <ConfirmationModal {...args} open={true} darkMode={darkMode} />;
 };

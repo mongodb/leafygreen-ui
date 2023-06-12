@@ -10,7 +10,6 @@ import {
   StoryMetaType,
 } from '@leafygreen-ui/lib';
 import { CloseIconColor } from '@leafygreen-ui/modal';
-import { breakpoints } from '@leafygreen-ui/tokens';
 
 import MarketingModal, {
   BlobPosition,
@@ -76,15 +75,10 @@ export const LiveExample: StoryFn<MarketingModalProps> = ({
   const graphicFillImage = darkMode
     ? 'marketing-fill-dark.jpg'
     : 'marketing-fill-light.jpg';
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   return (
-    <div
-      className={css`
-        height: 100vh;
-        min-height: ${breakpoints.Desktop};
-      `}
-    >
+    <div>
       <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
         Open Modal
       </Button>
@@ -111,17 +105,56 @@ export const LiveExample: StoryFn<MarketingModalProps> = ({
   );
 };
 
-export const GraphicStyleFill = LiveExample.bind({});
+const Template: StoryFn<MarketingModalProps> = ({
+  graphicStyle,
+  darkMode,
+  ...args
+}) => {
+  const graphicCenterImage = 'marketing-center-light.svg';
+  const graphicFillImage = darkMode
+    ? 'marketing-fill-dark.jpg'
+    : 'marketing-fill-light.jpg';
+  const [open, setOpen] = useState(true);
+  const handleClose = () => setOpen(false);
+  return (
+    <MarketingModal
+      {...args}
+      graphicStyle={graphicStyle}
+      darkMode={darkMode}
+      graphic={
+        graphicStyle === GraphicStyle.Center ? (
+          <img
+            alt=""
+            src={`/examples/${graphicCenterImage}`}
+            width={275}
+            height={220}
+          />
+        ) : (
+          <img alt="Marketing Modal" src={`/examples/${graphicFillImage}`} />
+        )
+      }
+      open={open}
+      onClose={handleClose}
+    />
+  );
+};
+
+export const GraphicStyleCenter = Template.bind({});
+GraphicStyleCenter.args = {
+  graphicStyle: GraphicStyle.Center,
+};
+
+export const GraphicStyleFill = Template.bind({});
 GraphicStyleFill.args = {
   graphicStyle: GraphicStyle.Fill,
 };
 
-export const BlobTopRight = LiveExample.bind({});
+export const BlobTopRight = Template.bind({});
 BlobTopRight.args = {
   blobPosition: BlobPosition.TopRight,
 };
 
-export const BlobBottomRight = LiveExample.bind({});
+export const BlobBottomRight = Template.bind({});
 BlobBottomRight.args = {
   blobPosition: BlobPosition.BottomRight,
 };
