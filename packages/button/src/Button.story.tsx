@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/display-name */
 import React from 'react';
+import { userEvent, within } from '@storybook/testing-library';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import {
@@ -100,6 +101,13 @@ LiveExample.parameters = {
   chromatic: {
     disableSnapshots: true,
   },
+};
+
+export const Focused = LiveExample.bind({});
+Focused.play = ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const button = canvas.getByRole('button');
+  userEvent.click(button);
 };
 
 export const LargeSize: StoryType<typeof Button> = () => <></>;
