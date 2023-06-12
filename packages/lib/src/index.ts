@@ -14,6 +14,7 @@ export {
   type GeneratedStoryConfig,
   type GeneratedStoryFn,
   type InstanceDecorator,
+  type PlayFn,
   StoryMeta,
   type StoryMetaType,
   type StoryType,

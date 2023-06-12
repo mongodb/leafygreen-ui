@@ -53,14 +53,15 @@ const meta: StoryMetaType<typeof TextArea> = {
 };
 export default meta;
 
-export const LiveExample: StoryType<
-  typeof TextArea,
-  { baseFontSize: LGProviderBaseFontSize }
-> = ({
+interface FontSizeProps {
+  baseFontSize: LGProviderBaseFontSize;
+}
+
+export const LiveExample: StoryType<typeof TextArea, FontSizeProps> = ({
   darkMode,
   baseFontSize,
   ...args
-}: TextAreaProps & { baseFontSize: LGProviderBaseFontSize }) => (
+}: TextAreaProps & FontSizeProps) => (
   <LeafygreenProvider baseFontSize={baseFontSize}>
     <TextArea darkMode={darkMode} {...args} />
   </LeafygreenProvider>
