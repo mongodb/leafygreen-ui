@@ -1,4 +1,5 @@
 import React from 'react';
+import { userEvent, within } from '@storybook/testing-library';
 
 import Icon from '@leafygreen-ui/icon/';
 import {
@@ -53,6 +54,13 @@ LiveExample.parameters = {
   chromatic: {
     disableSnapshot: true,
   },
+};
+
+export const Focused = LiveExample.bind({});
+Focused.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const button = canvas.getByRole('button');
+  await userEvent.click(button);
 };
 
 export const Generated = () => {};
