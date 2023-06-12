@@ -93,15 +93,15 @@ const meta: StoryMetaType<typeof Code> = {
 export default meta;
 
 type BaseFontSize = 14 | 16;
-type StoryCodeProps = CodeProps & {
+interface FontSizeProps {
   baseFontSize: BaseFontSize;
-};
+}
 
-export const LiveExample: StoryType<typeof Code, StoryCodeProps> = ({
+export const LiveExample: StoryType<typeof Code, FontSizeProps> = ({
   baseFontSize,
   highlightLines,
   ...args
-}: StoryCodeProps) => (
+}: CodeProps & FontSizeProps) => (
   <LeafygreenProvider baseFontSize={baseFontSize}>
     <Code
       {...(args as CodeProps)}
@@ -138,10 +138,10 @@ WithCustomActions.args = {
   customActionButtons,
 };
 
-export const WithLanguageSwitcher: StoryType<typeof Code, StoryCodeProps> = ({
+export const WithLanguageSwitcher: StoryType<typeof Code, FontSizeProps> = ({
   baseFontSize,
   ...args
-}: StoryCodeProps) => (
+}: CodeProps & FontSizeProps) => (
   <LeafygreenProvider baseFontSize={baseFontSize}>
     <LanguageSwitcherExample
       showCustomActionButtons={true}
