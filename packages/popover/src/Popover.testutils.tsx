@@ -1,13 +1,42 @@
 import { Align, Justify } from './types';
 
 export const getJustify = (a: Align, j: Justify): string => {
-  if (a === 'left' || a === 'right') {
-    return a === 'right' ? 'start' : 'end';
-  }
+  switch (a) {
+    case 'left':
+      return 'end';
+    case 'right':
+      return 'start';
 
-  return j === 'middle' || j === 'fit' ? 'center' : (j as string);
+    case 'top':
+    case 'bottom':
+    case 'center-vertical':
+    case 'center-horizontal':
+    default:
+      switch (j) {
+        case 'middle':
+        case 'fit':
+          return 'center';
+
+        default:
+          return j;
+      }
+  }
 };
 
-export const getAlign = (a: Align) => {
-  return a === 'top' ? 'end' : a === 'bottom' ? 'start' : 'center';
+export const getAlign = (a: Align, j: Justify) => {
+  switch (a) {
+    case 'top':
+      return 'end';
+    case 'bottom':
+      return 'start';
+    default:
+      switch (j) {
+        case 'middle':
+        case 'fit':
+          return 'center';
+
+        default:
+          return j;
+      }
+  }
 };
