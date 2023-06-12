@@ -1,4 +1,5 @@
 import React from 'react';
+import { StoryFn } from '@storybook/react';
 import { userEvent, within } from '@storybook/testing-library';
 
 import Icon from '@leafygreen-ui/icon/';
@@ -44,9 +45,8 @@ const meta: StoryMetaType<typeof IconButton> = {
 
 export default meta;
 
-export const LiveExample: StoryType<
-  typeof IconButton,
-  AccessibleIconButtonProps & DarkModeProps
+export const LiveExample: StoryFn<
+  typeof IconButton & AccessibleIconButtonProps & DarkModeProps
 > = ({ darkMode, ...args }: AccessibleIconButtonProps & DarkModeProps) => (
   <IconButton darkMode={darkMode} {...args} />
 );
