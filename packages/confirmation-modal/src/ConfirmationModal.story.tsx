@@ -17,7 +17,7 @@ const meta: StoryMetaType<typeof ConfirmationModal> = {
   title: 'Components/Modals/ConfirmationModal',
   component: ConfirmationModal,
   parameters: {
-    default: 'Basic',
+    default: 'LiveExample',
     controls: {
       exclude: [...storybookExcludedControlParams, 'open', 'initialFocus'],
     },

@@ -41,7 +41,7 @@ const meta: StoryMetaType<typeof Modal> = {
     `,
   },
   parameters: {
-    default: 'Controlled',
+    default: 'Basic',
     controls: {
       exclude: [
         ...storybookExcludedControlParams,

@@ -17,7 +17,7 @@ const meta: StoryMetaType<typeof Checkbox> = {
   title: 'Components/Checkbox',
   component: Checkbox,
   parameters: {
-    default: 'Uncontrolled',
+    default: 'LiveExample',
     controls: {
       exclude: [...storybookExcludedControlParams, 'checked'],
     },
