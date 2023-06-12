@@ -72,7 +72,10 @@ const meta: StoryMetaType<any> = {
               height: 200px;
               width: 500px;
               display: flex;
-              align-items: ${getAlign(ctx?.args.tooltipAlign)};
+              align-items: ${getAlign(
+                ctx?.args.tooltipAlign,
+                ctx?.args.tooltipJustify,
+              )};
               justify-content: ${getJustify(
                 ctx?.args.tooltipAlign,
                 ctx?.args.tooltipJustify,
