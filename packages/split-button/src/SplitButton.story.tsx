@@ -59,7 +59,7 @@ const meta: StoryMetaType<typeof SplitButton> = {
           className={css`
             height: 300px;
             display: flex;
-            align-items: ${getAlign(ctx?.args.align)};
+            align-items: ${getAlign(ctx?.args.align, ctx?.args.justify)};
             justify-content: ${getJustify(ctx?.args.align, ctx?.args.justify)};
           `}
         >
