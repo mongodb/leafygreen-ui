@@ -45,7 +45,7 @@ const meta: StoryMetaType<typeof Table> = {
     shouldAlternateRowColor: { control: 'boolean' },
   },
   parameters: {
-    default: 'KitchenSink',
+    default: 'LiveExample',
     controls: {
       exclude: [
         ...storybookExcludedControlParams,
@@ -91,6 +91,148 @@ const Template: StoryFn<StoryTableProps> = args => {
       </TableBody>
     </Table>
   );
+};
+
+export const LiveExample: StoryFn<StoryTableProps> = args => {
+  const tableContainerRef = React.useRef<HTMLDivElement>(null);
+  const [data] = useState(() => makeKitchenSinkData(10));
+
+  const columns = React.useMemo<Array<LGColumnDef<Person>>>(
+    () => [
+      {
+        accessorKey: 'dateCreated',
+        header: 'Date Created',
+        enableSorting: true,
+        cell: info =>
+          (info.getValue() as Date).toLocaleDateString('en-us', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          }),
+      },
+      {
+        accessorKey: 'frequency',
+        header: 'Frequency',
+      },
+      {
+        accessorKey: 'clusterType',
+        header: 'Cluster Type',
+      },
+      {
+        accessorKey: 'encryptorEnabled',
+        header: 'Encryptor',
+        // eslint-disable-next-line react/display-name
+        cell: info => (
+          <Badge variant={info.getValue() ? 'green' : 'red'}>
+            {info.getValue() ? 'Enabled' : 'Not enabled'}
+          </Badge>
+        ),
+      },
+      {
+        accessorKey: 'mdbVersion',
+        header: 'MongoDB Version',
+        enableSorting: true,
+        size: 90,
+      },
+      {
+        id: 'actions',
+        header: '',
+        size: 90,
+        // eslint-disable-next-line react/display-name
+        cell: _ => {
+          return (
+            <>
+              <IconButton aria-label="Download">
+                <Icon glyph="Download" />
+              </IconButton>
+              <IconButton aria-label="Export">
+                <Icon glyph="Export" />
+              </IconButton>
+              <IconButton aria-label="More Options">
+                <Icon glyph="Ellipsis" />
+              </IconButton>
+            </>
+          );
+        },
+      },
+    ],
+    [],
+  );
+
+  const table = useLeafyGreenTable<any>({
+    containerRef: tableContainerRef,
+    data,
+    columns,
+  });
+
+  const { rows } = table.getRowModel();
+
+  return (
+    <Table
+      {...args}
+      table={table}
+      ref={tableContainerRef}
+      className={css`
+        width: 1100px;
+      `}
+    >
+      <TableHead>
+        {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+          <HeaderRow key={headerGroup.id}>
+            {headerGroup.headers.map(header => {
+              return (
+                <HeaderCell key={header.id} header={header}>
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext(),
+                  )}
+                </HeaderCell>
+              );
+            })}
+          </HeaderRow>
+        ))}
+      </TableHead>
+      <TableBody>
+        {rows.map((row: LeafyGreenTableRow<Person>) => {
+          return (
+            <Row key={row.id} row={row}>
+              {row.getVisibleCells().map(cell => {
+                return (
+                  <Cell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </Cell>
+                );
+              })}
+              {row.subRows &&
+                row.subRows.map(subRow => (
+                  <Row key={subRow.id} row={subRow}>
+                    {subRow.getVisibleCells().map(cell => {
+                      return (
+                        <Cell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
+                    {subRow.original.renderExpandedContent && (
+                      <ExpandedContent row={subRow} />
+                    )}
+                  </Row>
+                ))}
+            </Row>
+          );
+        })}
+      </TableBody>
+    </Table>
+  );
+};
+
+LiveExample.argTypes = {
+  shouldAlternateRowColor: {
+    control: 'none',
+  },
 };
 
 export const Basic = Template.bind({});
@@ -725,146 +867,4 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
       />
     </div>
   );
-};
-
-export const KitchenSink: StoryFn<StoryTableProps> = args => {
-  const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data] = useState(() => makeKitchenSinkData(10));
-
-  const columns = React.useMemo<Array<LGColumnDef<Person>>>(
-    () => [
-      {
-        accessorKey: 'dateCreated',
-        header: 'Date Created',
-        enableSorting: true,
-        cell: info =>
-          (info.getValue() as Date).toLocaleDateString('en-us', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-          }),
-      },
-      {
-        accessorKey: 'frequency',
-        header: 'Frequency',
-      },
-      {
-        accessorKey: 'clusterType',
-        header: 'Cluster Type',
-      },
-      {
-        accessorKey: 'encryptorEnabled',
-        header: 'Encryptor',
-        // eslint-disable-next-line react/display-name
-        cell: info => (
-          <Badge variant={info.getValue() ? 'green' : 'red'}>
-            {info.getValue() ? 'Enabled' : 'Not enabled'}
-          </Badge>
-        ),
-      },
-      {
-        accessorKey: 'mdbVersion',
-        header: 'MongoDB Version',
-        enableSorting: true,
-        size: 90,
-      },
-      {
-        id: 'actions',
-        header: '',
-        size: 90,
-        // eslint-disable-next-line react/display-name
-        cell: _ => {
-          return (
-            <>
-              <IconButton aria-label="Download">
-                <Icon glyph="Download" />
-              </IconButton>
-              <IconButton aria-label="Export">
-                <Icon glyph="Export" />
-              </IconButton>
-              <IconButton aria-label="More Options">
-                <Icon glyph="Ellipsis" />
-              </IconButton>
-            </>
-          );
-        },
-      },
-    ],
-    [],
-  );
-
-  const table = useLeafyGreenTable<any>({
-    containerRef: tableContainerRef,
-    data,
-    columns,
-  });
-
-  const { rows } = table.getRowModel();
-
-  return (
-    <Table
-      {...args}
-      table={table}
-      ref={tableContainerRef}
-      className={css`
-        width: 1100px;
-      `}
-    >
-      <TableHead>
-        {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
-          <HeaderRow key={headerGroup.id}>
-            {headerGroup.headers.map(header => {
-              return (
-                <HeaderCell key={header.id} header={header}>
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext(),
-                  )}
-                </HeaderCell>
-              );
-            })}
-          </HeaderRow>
-        ))}
-      </TableHead>
-      <TableBody>
-        {rows.map((row: LeafyGreenTableRow<Person>) => {
-          return (
-            <Row key={row.id} row={row}>
-              {row.getVisibleCells().map(cell => {
-                return (
-                  <Cell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </Cell>
-                );
-              })}
-              {row.subRows &&
-                row.subRows.map(subRow => (
-                  <Row key={subRow.id} row={subRow}>
-                    {subRow.getVisibleCells().map(cell => {
-                      return (
-                        <Cell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          )}
-                        </Cell>
-                      );
-                    })}
-                    {subRow.original.renderExpandedContent && (
-                      <ExpandedContent row={subRow} />
-                    )}
-                  </Row>
-                ))}
-            </Row>
-          );
-        })}
-      </TableBody>
-    </Table>
-  );
-};
-
-KitchenSink.argTypes = {
-  shouldAlternateRowColor: {
-    control: 'none',
-  },
 };

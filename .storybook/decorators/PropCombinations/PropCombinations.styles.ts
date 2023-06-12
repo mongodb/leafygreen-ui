@@ -1,8 +1,10 @@
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { typeScales } from '@leafygreen-ui/tokens';
+import { breakpoints, typeScales } from '@leafygreen-ui/tokens';
 
 export const generatedStoryWrapper = css`
+  width: 100vw;
+  min-width: ${breakpoints.XLDesktop}px;
   display: flex;
 `;
 
@@ -35,6 +37,5 @@ export const cellStyles = css`
 `;
 
 export const instanceCellStyles = css`
-  text-align: center;
   vertical-align: middle;
 `;

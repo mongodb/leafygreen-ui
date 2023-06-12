@@ -1,20 +1,40 @@
 import React from 'react';
-import { StoryFn } from '@storybook/react';
 
-import { storybookArgTypes, type StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  type StoryMetaType,
+  StoryType,
+} from '@leafygreen-ui/lib';
 
-import Copyable, { CopyableProps } from '.';
+import Copyable from '.';
 
 const meta: StoryMetaType<typeof Copyable> = {
   title: 'Components/Copyable',
   component: Copyable,
   parameters: {
-    default: 'Basic',
+    default: 'LiveExample',
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        copyable: [true, false],
+        children: [
+          'npm install @leafygreen-ui/copyable',
+          'npm install --dev --global @leafygreen-ui/leafygreen-provider',
+        ],
+        label: [undefined, 'Label'],
+        description: [undefined, 'Description'],
+      },
+      // @ts-ignore
+      excludeCombinations: [['description', { label: undefined }]],
+    },
   },
   args: {
     copyable: true,
     shouldTooltipUsePortal: true,
     darkMode: false,
+    label: 'Label',
+    description: 'Description',
+    children: 'npm install @leafygreen-ui/copyable',
   },
   argTypes: {
     copyable: { control: 'boolean' },
@@ -28,22 +48,14 @@ const meta: StoryMetaType<typeof Copyable> = {
 
 export default meta;
 
-const Template: StoryFn<CopyableProps> = args => (
+export const LiveExample: StoryType<typeof Copyable> = args => (
   <div>
     <Copyable {...args} />
   </div>
 );
 
-export const Basic = Template.bind({});
-Basic.args = {
-  label: 'Label',
-  description: 'Description',
-  children: 'npm install @leafygreen-ui/copyable',
+LiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
 };
 
-export const LongText = Template.bind({});
-LongText.args = {
-  label: 'Label',
-  description: 'Description',
-  children: 'npm install @leafygreen-ui/leafygreen-provider',
-};
+export const Generated = () => {};

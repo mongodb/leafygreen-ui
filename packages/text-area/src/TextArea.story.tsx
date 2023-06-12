@@ -1,10 +1,13 @@
 import React from 'react';
-import { StoryFn } from '@storybook/react';
 
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  StoryMetaType,
+  StoryType,
+} from '@leafygreen-ui/lib';
 
-import TextArea, { TextAreaProps } from '.';
+import TextArea, { State, TextAreaProps } from '.';
 
 type LGProviderBaseFontSize = 14 | 16;
 
@@ -12,7 +15,23 @@ const meta: StoryMetaType<typeof TextArea> = {
   title: 'Components/TextArea',
   component: TextArea,
   parameters: {
-    default: 'Basic',
+    default: 'LiveExample',
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        baseFontSize: [13, 16],
+        label: [undefined, 'Label'],
+        description: [undefined, 'This is a description for the text area'],
+        state: Object.values(State),
+        disabled: [false, true],
+      },
+      excludeCombinations: [
+        {
+          label: undefined,
+          description: 'This is a description for the text area',
+        },
+      ],
+    },
   },
   argTypes: {
     baseFontSize: {
@@ -23,7 +42,6 @@ const meta: StoryMetaType<typeof TextArea> = {
     description: { control: 'text' },
     errorMessage: { control: 'text' },
     darkMode: storybookArgTypes.darkMode,
-    ref: { control: 'none' },
   },
   args: {
     label: 'Label',
@@ -35,13 +53,9 @@ const meta: StoryMetaType<typeof TextArea> = {
 };
 export default meta;
 
-export const Basic: StoryFn<typeof TextArea> = ({
-  darkMode,
-  ...args
-}: TextAreaProps) => <TextArea darkMode={darkMode} {...args} />;
-
-export const WithProvider: StoryFn<
-  TextAreaProps & { baseFontSize: LGProviderBaseFontSize }
+export const LiveExample: StoryType<
+  typeof TextArea,
+  { baseFontSize: LGProviderBaseFontSize }
 > = ({
   darkMode,
   baseFontSize,
@@ -51,7 +65,10 @@ export const WithProvider: StoryFn<
     <TextArea darkMode={darkMode} {...args} />
   </LeafygreenProvider>
 );
-WithProvider.argTypes = {
+LiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+LiveExample.argTypes = {
   baseFontSize: {
     options: [14, 16],
     control: { type: 'radio' },
@@ -59,7 +76,9 @@ WithProvider.argTypes = {
       'Storybook prop only. This font size is passed into the LeafygreenProvider. ',
   },
 };
-WithProvider.args = {
+LiveExample.args = {
   // @ts-expect-error
   baseFontSize: 14,
 };
+
+export const Generated = () => {};

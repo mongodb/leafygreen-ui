@@ -15,7 +15,6 @@ import Button, { ButtonProps, Variant } from '.';
 const meta: StoryMetaType<typeof Button> = {
   title: 'Components/Button',
   component: Button,
-
   parameters: {
     default: 'LiveExample',
     generate: {
@@ -97,6 +96,11 @@ export const LiveExample: StoryType<typeof Button> = ({
     {...args}
   />
 );
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshots: true,
+  },
+};
 
 export const LargeSize: StoryType<typeof Button> = () => <></>;
 LargeSize.parameters = {
@@ -134,13 +138,24 @@ XSmallSize.parameters = {
   },
 };
 
-export const LoadingState = LiveExample.bind({});
-LoadingState.args = {
-  isLoading: true,
+export const Loading: StoryType<typeof Button> = () => <></>;
+Loading.parameters = {
+  generate: {
+    combineArgs: {
+      size: Object.values(Size),
+      loadingText: [undefined, 'Saving'],
+    },
+    args: {
+      isLoading: true,
+      variant: Variant.Default,
+      rightGlyph: undefined,
+      leftGlyph: undefined,
+    },
+  },
 };
-
-export const LoadingStateWithText = LiveExample.bind({});
-LoadingStateWithText.args = {
-  isLoading: true,
-  loadingText: 'Saving',
+// Avoid flaky visual diff tests with Spinner
+Loading.parameters = {
+  chromatic: {
+    disableSnapshots: true,
+  },
 };

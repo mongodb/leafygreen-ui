@@ -9,12 +9,38 @@ import {
 
 import TextInput, { SizeVariant, State, TextInputProps } from '.';
 
+const emailRegex =
+  // eslint-disable-next-line no-control-regex
+  /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+
 const meta: StoryMetaType<typeof TextInput> = {
   title: 'Components/TextInput',
   component: TextInput,
+  parameters: {
+    default: 'Basic',
+    controls: {
+      exclude: [...storybookExcludedControlParams, 'value', 'handleValidation'],
+    },
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        label: [undefined, 'Label'],
+        description: [undefined, 'This is a description'],
+        state: Object.values(State),
+        disabled: [false, true],
+      },
+      excludeCombinations: [
+        {
+          label: undefined,
+          description: 'This is a description',
+        },
+      ],
+    },
+  },
   args: {
     label: 'Label',
-    description: 'This is a description for the input',
+    description: 'This is a description',
+    errorMessage: 'Invalid email',
   },
   argTypes: {
     darkMode: {
@@ -51,24 +77,17 @@ const meta: StoryMetaType<typeof TextInput> = {
     },
     baseFontSize: storybookArgTypes.updatedBaseFontSize,
   },
-  parameters: {
-    default: 'Basic',
-    controls: {
-      exclude: [...storybookExcludedControlParams, 'value', 'handleValidation'],
-    },
-  },
 };
 export default meta;
 
-const Template: StoryFn<TextInputProps> = ({ ...args }: TextInputProps) => (
-  <TextInput {...args} />
-);
-
-export const Basic = Template.bind({});
-
-const emailRegex =
-  // eslint-disable-next-line no-control-regex
-  /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+export const LiveExample: StoryFn<TextInputProps> = ({
+  ...args
+}: TextInputProps) => <TextInput {...args} />;
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const WithValidation = (args: TextInputProps) => {
   const [state, setState] = useState<'none' | 'valid' | 'error'>('none');
@@ -92,3 +111,10 @@ export const WithValidation = (args: TextInputProps) => {
     />
   );
 };
+WithValidation.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+
+export const Generated = () => {};

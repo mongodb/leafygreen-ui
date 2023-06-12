@@ -12,6 +12,33 @@ import { Radio, RadioGroup, RadioGroupProps, Size } from '.';
 const meta: StoryMetaType<typeof RadioGroup> = {
   title: 'Components/RadioGroup',
   component: RadioGroup,
+  parameters: {
+    controls: {
+      exclude: [...storybookExcludedControlParams, 'children', 'name', 'value'],
+    },
+    default: 'LiveExample',
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        size: Object.values(Size),
+      },
+    },
+  },
+  args: {
+    children: (
+      <>
+        <Radio checked value="1">
+          Radio Input 1
+        </Radio>
+        <Radio default value="2" description="This is a description">
+          Radio Input 2
+        </Radio>
+        <Radio disabled value="Selection-4">
+          Disabled Option
+        </Radio>
+      </>
+    ),
+  },
   argTypes: {
     children: { control: false },
     darkMode: storybookArgTypes.darkMode,
@@ -20,30 +47,17 @@ const meta: StoryMetaType<typeof RadioGroup> = {
       options: Object.values(Size),
     },
   },
-  parameters: {
-    controls: {
-      exclude: [...storybookExcludedControlParams, 'children', 'name', 'value'],
-    },
-    default: 'Uncontrolled',
-  },
 };
 export default meta;
 
-export const Uncontrolled: StoryFn<RadioGroupProps> = ({
-  darkMode,
-  ...args
-}: RadioGroupProps) => (
-  <RadioGroup name="radio-group-default" darkMode={darkMode} {...args}>
-    <Radio value="1">Radio Input Copy</Radio>
-    <Radio value="2">Radio Input Copy</Radio>
-    <Radio default value="3" description="This is a description">
-      Radio Input Copy
-    </Radio>
-    <Radio disabled value="Selection-4">
-      Disabled Option
-    </Radio>
-  </RadioGroup>
-);
+export const LiveExample: StoryFn<RadioGroupProps> = (
+  args: RadioGroupProps,
+) => <RadioGroup name="radio-group-default" {...args} />;
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const Controlled: StoryFn<RadioGroupProps> = (args: RadioGroupProps) => {
   const [activeRadio, setActiveRadio] = useState<string>('test1');
@@ -52,5 +66,12 @@ export const Controlled: StoryFn<RadioGroupProps> = (args: RadioGroupProps) => {
     setActiveRadio((e.target as HTMLInputElement).value);
   };
 
-  return <Uncontrolled {...args} onChange={handleChange} value={activeRadio} />;
+  return <RadioGroup {...args} onChange={handleChange} value={activeRadio} />;
 };
+Controlled.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+
+export const Generated = () => {};

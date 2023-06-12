@@ -9,18 +9,28 @@ import {
 
 import ExpandableCard, { type ExpandableCardProps } from '.';
 
+const loremIpsum = 'Donec id elit non mi porta gravida at eget metus.';
+
 const meta: StoryMetaType<typeof ExpandableCard> = {
   title: 'Components/ExpandableCard',
   component: ExpandableCard,
   parameters: {
-    default: 'Basic',
+    default: 'LiveExample',
     controls: {
       exclude: [...storybookExcludedControlParams, 'isOpen', 'defaultOpen'],
+    },
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        description: [undefined, loremIpsum],
+        flagText: [undefined, 'optional'],
+        isOpen: [false, true],
+      },
     },
   },
   args: {
     title: 'Title',
-    description: 'Donec id elit non mi porta gravida at eget metus.',
+    description: loremIpsum,
     flagText: 'optional',
     children:
       'Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.',
@@ -39,9 +49,12 @@ const meta: StoryMetaType<typeof ExpandableCard> = {
 
 export default meta;
 
-export const Basic: StoryFn<ExpandableCardProps> = args => (
+export const LiveExample: StoryFn<ExpandableCardProps> = args => (
   <ExpandableCard {...args} />
 );
+LiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
+};
 
 export const Controlled: StoryFn<ExpandableCardProps> = args => {
   const [isOpen, setIsOpen] = useState(false);
@@ -64,3 +77,8 @@ export const Controlled: StoryFn<ExpandableCardProps> = args => {
     </div>
   );
 };
+Controlled.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+
+export const Generated = () => {};

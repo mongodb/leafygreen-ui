@@ -34,8 +34,8 @@
     "react-transition-group": "^4.4.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "8.0.2",
     "@leafygreen-ui/select": "^10.3.6",
-    "@leafygreen-ui/button": "^20.1.1",
     "@leafygreen-ui/typography": "^16.5.0",
     "@leafygreen-ui/copyable": "^8.0.11",
     "@leafygreen-ui/code": "^14.2.6"

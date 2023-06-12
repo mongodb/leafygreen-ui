@@ -43,7 +43,10 @@ export interface ChromaticConfig {
 /**
  * Story Parameters
  */
-type StoryParameters<T extends React.ElementType> = Meta<T>['parameters'] & {
+type StoryParameters<
+  T extends React.ElementType,
+  XP extends Record<string, any> = {},
+> = Meta<T>['parameters'] & {
   /**
    * The default story to be displayed on `mongodb.design`.
    * Explicitly exclude a default story by setting this to `null`
@@ -53,7 +56,7 @@ type StoryParameters<T extends React.ElementType> = Meta<T>['parameters'] & {
   /**
    * The configuration for the generated stories
    */
-  generate?: GeneratedStoryConfig<T>;
+  generate?: GeneratedStoryConfig<T, XP>;
 
   controls?: ControlsConfig;
 
@@ -87,7 +90,7 @@ export type StoryMetaType<
 > = Omit<Meta<T>, 'component' | 'argTypes' | 'args'> & {
   title?: string;
   component?: T;
-  parameters: StoryParameters<T>;
+  parameters: StoryParameters<T, XP>;
   argTypes?: ArgTypes<T, XP>;
   args?: Partial<ComponentProps<T> | LeafyGreenProviderProps | XP>;
 };
@@ -96,7 +99,7 @@ export type StoryType<
   T extends React.ElementType,
   XP extends Record<string, any> = {},
 > = (StoryFn<T> | StoryObj<T>) & {
-  parameters?: Omit<StoryParameters<T>, 'default'>;
+  parameters?: Omit<StoryParameters<T, XP>, 'default'>;
   argTypes?: ArgTypes<T, XP>;
   args?: Partial<ComponentProps<T> | LeafyGreenProviderProps | XP>;
   play?: PlayFunction<ReactRenderer, T>;

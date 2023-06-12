@@ -24,10 +24,13 @@ const decorator: Decorator = (StoryFn: StoryFn, context: StoryContext<any>) => {
   return (
     <LeafyGreenProvider darkMode={darkMode} baseFontSize={baseFontSize}>
       <div
-        className={cx({
-          [rootStyle]: !isGeneratedStory(context),
-          [darkModeStyle]: darkMode,
-        })}
+        className={cx(
+          {
+            [rootStyle]: !isGeneratedStory(context),
+            [darkModeStyle]: darkMode,
+          },
+          'component-preview',
+        )}
       >
         <StoryFn darkMode={darkMode} {...context} />
       </div>

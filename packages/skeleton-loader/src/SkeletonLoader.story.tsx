@@ -78,3 +78,6 @@ export const LiveExample: StoryFn<any> = (props: DarkModeProps) => (
     </div>
   </div>
 );
+LiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
+};

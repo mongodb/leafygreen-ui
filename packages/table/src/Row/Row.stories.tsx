@@ -1,8 +1,14 @@
+/* eslint-disable react/jsx-key */
+/* eslint-disable react/display-name */
 /* eslint-disable react/prop-types*/
 import React from 'react';
-import { Meta, StoryFn } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
-import { storybookExcludedControlParams } from '@leafygreen-ui/lib';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import {
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import { Cell, HeaderCell } from '../Cell';
 import { HeaderRow, Row } from '../Row';
@@ -17,7 +23,7 @@ import { makeData, Person } from '../utils/makeData.testutils';
 import { AnyDict } from '../utils/types';
 import { ColumnDef, ExpandedState, flexRender, HeaderGroup } from '..';
 
-export default {
+const meta: StoryMetaType<typeof Row> = {
   title: 'Components/Table/Row',
   component: Row,
   argTypes: {
@@ -27,6 +33,7 @@ export default {
     disabled: { control: 'boolean' },
   },
   parameters: {
+    default: null,
     controls: {
       exclude: [...storybookExcludedControlParams, 'ref', 'children'],
     },
@@ -38,34 +45,55 @@ export default {
     docs: {
       source: { type: 'code' },
     },
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        disabled: [false, true],
+      },
+      args: {
+        children: makeData(false, 1).map(rowData =>
+          Object.values(rowData).map(c => <Cell>{c}</Cell>),
+        ),
+      },
+      decorator: (Instance, ctx) => {
+        return (
+          <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
+            <Table>
+              <TableBody>
+                <Instance />
+              </TableBody>
+            </Table>
+          </LeafyGreenProvider>
+        );
+      },
+    },
   },
-} as Meta<typeof Table>;
+};
+
+export default meta;
 
 const Template: StoryFn<typeof Row> = args => {
   const data = makeData(false, 100);
   const columns = Object.keys(data[0]);
   return (
-    <>
-      <p>The Storybook controls manipulate all rows.</p>
-      <Table>
-        <TableHead>
-          <HeaderRow>
-            {columns.map((columnName: string) => (
-              <HeaderCell key={columnName}>{columnName}</HeaderCell>
-            ))}
-          </HeaderRow>
-        </TableHead>
-        <TableBody>
-          {data.map((row: AnyDict) => (
-            <Row {...args} key={row.id}>
-              {Object.keys(row).map((cellKey: string, index: number) => {
-                return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
-              })}
-            </Row>
+    <Table>
+      <TableHead>
+        <HeaderRow>
+          {columns.map((columnName: string) => (
+            <HeaderCell key={columnName}>{columnName}</HeaderCell>
           ))}
-        </TableBody>
-      </Table>
-    </>
+        </HeaderRow>
+      </TableHead>
+      <TableBody>
+        {data.map((row: AnyDict) => (
+          <Row {...args} key={row.id}>
+            {Object.keys(row).map((cellKey: string, index: number) => {
+              return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
+            })}
+          </Row>
+        ))}
+      </TableBody>
+    </Table>
   );
 };
 
@@ -199,3 +227,5 @@ DisabledClickableRows.args = {
   },
   disabled: true,
 };
+
+export const Generated = () => <></>;
