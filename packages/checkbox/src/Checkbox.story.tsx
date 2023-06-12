@@ -8,6 +8,7 @@ import {
   storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
+  StoryType,
 } from '@leafygreen-ui/lib';
 
 import Checkbox, { CheckboxProps } from '.';
@@ -112,7 +113,7 @@ Controlled.argTypes = {
   checked: { control: 'boolean' },
 };
 
-export const Focused = LiveExample.bind({});
+export const Focused: StoryType<typeof Checkbox> = LiveExample.bind({});
 Focused.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   const checkbox = canvas.getByRole('checkbox');

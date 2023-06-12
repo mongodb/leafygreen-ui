@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/display-name */
 import React from 'react';
+import { StoryFn } from '@storybook/react';
 import { userEvent, within } from '@storybook/testing-library';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
@@ -84,7 +85,7 @@ const meta: StoryMetaType<typeof Button> = {
 
 export default meta;
 
-export const LiveExample: StoryType<typeof Button> = ({
+export const LiveExample: StoryFn<typeof Button> = ({
   leftGlyph,
   rightGlyph,
   ...args
@@ -103,7 +104,7 @@ LiveExample.parameters = {
   },
 };
 
-export const Focused = LiveExample.bind({});
+export const Focused: StoryType<typeof Button> = LiveExample.bind({});
 Focused.play = ({ canvasElement }) => {
   const canvas = within(canvasElement);
   const button = canvas.getByRole('button');

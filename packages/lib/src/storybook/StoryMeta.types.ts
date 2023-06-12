@@ -1,4 +1,4 @@
-import { PlayFunction } from '@storybook/csf';
+import { PlayFunctionContext } from '@storybook/csf';
 import { Meta, ReactRenderer, StoryFn, StoryObj } from '@storybook/react';
 import { ComponentProps } from 'react';
 import DarkModeProps from '../DarkModeProps';
@@ -102,5 +102,7 @@ export type StoryType<
   parameters?: Omit<StoryParameters<T, XP>, 'default'>;
   argTypes?: ArgTypes<T, XP>;
   args?: Partial<ComponentProps<T> | LeafyGreenProviderProps | XP>;
-  play?: PlayFunction<ReactRenderer, T>;
+  play?: (
+    context: PlayFunctionContext<ReactRenderer, ComponentProps<T> | XP>,
+  ) => Promise<void> | void;
 };
