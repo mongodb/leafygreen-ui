@@ -98,10 +98,11 @@ type StoryCodeProps = CodeProps & {
 };
 
 export const LiveExample: StoryType<typeof Code, StoryCodeProps> = ({
+  baseFontSize,
   highlightLines,
   ...args
 }: StoryCodeProps) => (
-  <LeafygreenProvider baseFontSize={args.baseFontSize}>
+  <LeafygreenProvider baseFontSize={baseFontSize}>
     <Code
       {...(args as CodeProps)}
       highlightLines={highlightLines ? [6, [10, 15]] : undefined}
