@@ -1,5 +1,6 @@
 import React from 'react';
 import { StoryFn } from '@storybook/react';
+import { userEvent, within } from '@storybook/testing-library';
 
 import { css } from '@leafygreen-ui/emotion';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
@@ -89,12 +90,12 @@ export const LiveExample: StoryFn<StoryCheckboxProps> = ({
     <Checkbox {...args} />
   </LeafygreenProvider>
 );
-
 LiveExample.parameters = {
   chromatic: {
     disableSnapshot: true,
   },
 };
+
 export const Controlled = LiveExample.bind({});
 Controlled.parameters = {
   controls: {
@@ -109,6 +110,13 @@ Controlled.args = {
 };
 Controlled.argTypes = {
   checked: { control: 'boolean' },
+};
+
+export const Focused = LiveExample.bind({});
+Focused.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const checkbox = canvas.getByRole('checkbox');
+  await userEvent.click(checkbox);
 };
 
 export const Generated = () => {};
