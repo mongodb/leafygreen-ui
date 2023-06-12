@@ -5,8 +5,9 @@ import React from 'react';
 import Icon from '@leafygreen-ui/icon/';
 import { StoryMetaType, StoryType, Theme } from '@leafygreen-ui/lib';
 
+import SelectContext from '../SelectContext';
+
 import { InternalOption } from './Option';
-import SelectContext from './SelectContext';
 
 const meta: StoryMetaType<typeof InternalOption> = {
   title: 'Components/Select/Option',
