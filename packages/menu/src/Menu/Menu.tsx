@@ -13,6 +13,7 @@ import {
   useAvailableSpace,
   useBackdropClick,
   useEventListener,
+  useForceRerender,
 } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType, keyMap, Theme } from '@leafygreen-ui/lib';
@@ -113,10 +114,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     }
   }, [setOpen, shouldClose]);
 
-  const [, updateState] = React.useState();
   // Used to trigger a state update when the current subMenu changes since the current subMenu is stored in a ref to avoid extra rerenders on initial load.
-  // @ts-expect-error - updateState should have a value
-  const updateCurrentSubMenu = React.useCallback(() => updateState({}), []);
+  const updateCurrentSubMenu = useForceRerender();
 
   const triggerRef = useRef<HTMLElement>(null);
   // This hook causes a second re-render on initial load. `useAvailableSpace` uses `useViewportSize` internally, which has internal state that causes re-renders.
