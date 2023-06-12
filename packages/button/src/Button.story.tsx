@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/display-name */
 import React from 'react';
+import { userEvent, within } from '@storybook/testing-library';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import {
@@ -100,6 +101,25 @@ LiveExample.parameters = {
   chromatic: {
     disableSnapshots: true,
   },
+};
+
+export const Focused: StoryType<typeof Button> = ({
+  leftGlyph,
+  rightGlyph,
+  ...args
+}: ButtonProps) => (
+  <Button
+    // @ts-expect-error
+    leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
+    // @ts-expect-error
+    rightGlyph={rightGlyph ? <Icon glyph={rightGlyph} /> : undefined}
+    {...args}
+  />
+);
+Focused.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const button = canvas.getByRole('button');
+  await userEvent.click(button);
 };
 
 export const LargeSize: StoryType<typeof Button> = () => <></>;
