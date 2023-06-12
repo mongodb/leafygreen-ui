@@ -180,12 +180,13 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 
           titleArr.push(title);
 
-          // This opens the active submenu on inital load
-          if (
+          const shouldOpenActiveSubMenu =
             !currentSubMenuRef.current &&
             props.active &&
-            !hasSetInitialOpen.current
-          ) {
+            !hasSetInitialOpen.current;
+
+          // This opens the active submenu on inital load
+          if (shouldOpenActiveSubMenu) {
             // Using a ref here prevents an extra rerender on initial load.
             currentSubMenuRef.current = child;
             hasSetInitialOpen.current = true;
