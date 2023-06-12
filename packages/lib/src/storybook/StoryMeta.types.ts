@@ -44,7 +44,9 @@ export interface ChromaticConfig {
  * Story Parameters
  */
 type StoryParameters<
+  /** The component type */
   T extends React.ElementType,
+  /** Any eXtra Props the story should support */
   XP extends Record<string, any> = {},
 > = Meta<T>['parameters'] & {
   /**
@@ -58,8 +60,14 @@ type StoryParameters<
    */
   generate?: GeneratedStoryConfig<T, XP>;
 
+  /**
+   * Configuration for the controls (knobs) in Storybook
+   */
   controls?: ControlsConfig;
 
+  /**
+   * Configuration for Chromatic-specific behavior
+   */
   chromatic?: ChromaticConfig;
 };
 
@@ -67,7 +75,9 @@ type StoryParameters<
  * Story control arg types
  */
 type ArgTypes<
+  /** The component type */
   T extends React.ElementType,
+  /** Any eXtra Props the story should support */
   XP extends Record<string, any> = {},
 > = Partial<
   | {
@@ -85,7 +95,9 @@ type ArgTypes<
  * Type of the Story default export
  */
 export type StoryMetaType<
+  /** The component type */
   T extends React.ElementType,
+  /** Any eXtra Props the story should support */
   XP extends Record<string, any> = {},
 > = Omit<Meta<T>, 'component' | 'argTypes' | 'args'> & {
   title?: string;
@@ -96,11 +108,13 @@ export type StoryMetaType<
 };
 
 export type StoryType<
+  /** The component type */
   T extends React.ElementType,
+  /** Any eXtra Props the story should support */
   XP extends Record<string, any> = {},
-> = StoryFn<T> & {
+> = StoryFn<ComponentProps<T> & XP> & {
   parameters?: Omit<StoryParameters<T, XP>, 'default'>;
   argTypes?: ArgTypes<T, XP>;
   args?: Partial<ComponentProps<T> | LeafyGreenProviderProps | XP>;
-  play?: PlayFunction<ReactRenderer, T>;
+  play?: PlayFunction<ReactRenderer, T & XP>;
 };

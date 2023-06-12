@@ -97,12 +97,11 @@ type StoryCodeProps = CodeProps & {
   baseFontSize: BaseFontSize;
 };
 
-export const LiveExample: StoryType<typeof Code> = ({
-  baseFontSize,
+export const LiveExample: StoryType<typeof Code, StoryCodeProps> = ({
   highlightLines,
   ...args
 }: StoryCodeProps) => (
-  <LeafygreenProvider baseFontSize={baseFontSize}>
+  <LeafygreenProvider baseFontSize={args.baseFontSize}>
     <Code
       {...(args as CodeProps)}
       highlightLines={highlightLines ? [6, [10, 15]] : undefined}
@@ -132,14 +131,12 @@ const customActionButtons = [
   </IconButton>,
 ];
 
-// @ts-expect-error
 export const WithCustomActions = LiveExample.bind({});
 WithCustomActions.args = {
   showCustomActionButtons: true,
   customActionButtons,
 };
 
-// @ts-expect-error
 export const WithLanguageSwitcher: StoryType<typeof Code, StoryCodeProps> = ({
   baseFontSize,
   ...args
