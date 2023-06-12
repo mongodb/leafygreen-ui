@@ -9,7 +9,6 @@ import {
   StoryMetaType,
 } from '@leafygreen-ui/lib';
 import { CloseIconColor } from '@leafygreen-ui/modal';
-import { breakpoints } from '@leafygreen-ui/tokens';
 
 import ConfirmationModal, { ConfirmationModalProps, Variant } from '.';
 
@@ -62,12 +61,7 @@ export const LiveExample: StoryFn<ConfirmationModalProps> = ({
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   return (
-    <div
-      className={css`
-        height: 100vh;
-        min-height: ${breakpoints.Desktop};
-      `}
-    >
+    <div>
       <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
         Open Modal
       </Button>
