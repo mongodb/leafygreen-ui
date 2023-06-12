@@ -5,6 +5,7 @@ import { userEvent, within } from '@storybook/testing-library';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import {
+  type PlayFn,
   storybookArgTypes,
   type StoryMetaType,
   type StoryType,
@@ -104,11 +105,11 @@ LiveExample.parameters = {
 };
 
 export const Focused: StoryType<typeof Button> = LiveExample.bind({});
-Focused.play = async ({ canvasElement }) => {
+Focused.play = (async ({ canvasElement }) => {
   const canvas = within(canvasElement);
   const button = canvas.getByRole('button');
   await userEvent.click(button);
-};
+}) as PlayFn<typeof Button>;
 
 export const LargeSize: StoryType<typeof Button> = () => <></>;
 LargeSize.parameters = {
