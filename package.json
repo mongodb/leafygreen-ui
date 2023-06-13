@@ -1,34 +1,22 @@
 {
-  "description": "leafyGreen UI Kit",
+  "description": "LeafyGreen UI Kit",
   "license": "Apache-2.0",
   "private": true,
   "engines": {
     "node": ">= 16.20.0",
     "npm": ">= 8.19.4"
   },
-  "keywords": [
-    "mongodb",
-    "ui",
-    "kit",
-    "components",
-    "react",
-    "uikit",
-    "leafygreen"
+  "workspaces": [
+    "packages/*"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mongodb/leafygreen-ui.git"
-  },
-  "bugs": {
-    "url": "https://github.com/mongodb/leafygreen-ui/issues"
-  },
   "scripts": {
     "init": "yarn && yarn build",
     "create-package": "node ./scripts/create-package.js",
     "pre-build": "node ./scripts/pre-build.js",
-    "build": "npm-run-all --serial \"build:* {@}\" --",
-    "build:packages": "yarn ts-node ./scripts/build.ts",
-    "build:ts": "yarn ts-node ./scripts/ts-build.ts",
+    "build": "lerna run build",
+    "build-legacy": "npm-run-all --serial \"build:* {@}\" --",
+    "build-legacy:packages": "yarn ts-node ./scripts/build.ts",
+    "build-legacy:ts": "yarn ts-node ./scripts/ts-build.ts",
     "build-storybook": "storybook build",
     "check": "npm-run-all --parallel check:*",
     "check:prettier": "prettier --check \"**/*.{js,ts,tsx,json,md,yml}\"",
@@ -88,6 +76,7 @@
     "@emotion/styled": "^11.3.0",
     "@leafygreen-ui/lib": "^10.1.0",
     "@leafygreen-ui/testing-lib": "*",
+    "@mdx-js/react": "1.6.22",
     "@rollup/plugin-babel": "^5.2.0",
     "@rollup/plugin-commonjs": "^15.0.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
@@ -159,7 +148,7 @@
     "jest-axe": "^4.1.0",
     "jest-canvas-mock": "^2.5.1",
     "jest-junit": "^10.0.0",
-    "lerna": "3.20.2",
+    "lerna": "^7.0.1",
     "meow": "^6.1.0",
     "node-fetch": "2",
     "npm-package-json-lint": "^6.3.0",
@@ -191,11 +180,20 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "workspaces": [
-    "packages/*"
+  "keywords": [
+    "mongodb",
+    "ui",
+    "kit",
+    "components",
+    "react",
+    "uikit",
+    "leafygreen"
   ],
-  "version": "0.0.0",
-  "dependencies": {
-    "@mdx-js/react": "1.6.22"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mongodb/leafygreen-ui/issues"
   }
 }

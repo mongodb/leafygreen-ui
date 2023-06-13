@@ -1,13 +1,4 @@
 {
-  "lerna": "3.4.3",
-  "packages": ["packages/*"],
-  "version": "independent",
-  "command": {
-    "bootstrap": {
-      "hoist": true
-    },
-    "run": {
-      "npmClient": "yarn"
-    }
-  }
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
+  "version": "0.0.0"
 }
