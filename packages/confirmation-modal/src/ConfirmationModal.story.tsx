@@ -94,3 +94,8 @@ export const Basic: StoryFn<ConfirmationModalProps> = ({
     </div>
   );
 };
+
+export const DarkMode = Basic.bind({});
+DarkMode.args = {
+  darkMode: true,
+};

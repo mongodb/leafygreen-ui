@@ -21,6 +21,7 @@ const meta: StoryMetaType<typeof MarketingModal> = {
   title: 'Components/Modals/Marketing Modal',
   component: MarketingModal,
   args: {
+    darkMode: false,
     showBlob: true,
     blobPosition: BlobPosition.TopLeft,
     buttonText: 'Button Text',
@@ -148,14 +149,14 @@ const Template: StoryFn<MarketingModalProps> = ({
   );
 };
 
-export const GraphicStyleCenter = Template.bind({});
-GraphicStyleCenter.args = {
-  graphicStyle: GraphicStyle.Center,
-};
-
 export const GraphicStyleFill = Template.bind({});
 GraphicStyleFill.args = {
   graphicStyle: GraphicStyle.Fill,
+};
+
+export const GraphicStyleCenter = Template.bind({});
+GraphicStyleCenter.args = {
+  graphicStyle: GraphicStyle.Center,
 };
 
 export const BlobTopRight = Template.bind({});
@@ -166,4 +167,28 @@ BlobTopRight.args = {
 export const BlobBottomRight = Template.bind({});
 BlobBottomRight.args = {
   blobPosition: BlobPosition.BottomRight,
+};
+
+export const GraphicStyleFillDarkMode = Template.bind({});
+GraphicStyleFillDarkMode.args = {
+  graphicStyle: GraphicStyle.Fill,
+  darkMode: true,
+};
+
+export const GraphicStyleCenterDarkMode = Template.bind({});
+GraphicStyleCenterDarkMode.args = {
+  graphicStyle: GraphicStyle.Center,
+  darkMode: true,
+};
+
+export const BlobTopRightDarkMode = Template.bind({});
+BlobTopRightDarkMode.args = {
+  blobPosition: BlobPosition.TopRight,
+  darkMode: true,
+};
+
+export const BlobBottomRightDarkMode = Template.bind({});
+BlobBottomRightDarkMode.args = {
+  blobPosition: BlobPosition.BottomRight,
+  darkMode: true,
 };
