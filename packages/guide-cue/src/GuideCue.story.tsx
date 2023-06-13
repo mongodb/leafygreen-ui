@@ -66,25 +66,24 @@ const meta: StoryMetaType<any> = {
       decorator: (Instance, ctx) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const refEl = React.useRef(null);
+        const refElHeight = 25;
+        const refElWidth = 30;
+        const gcHeight = 175; // approx
+        const gcWidth = 275; // approx
         return (
           <div
             className={css`
-              height: 200px;
-              width: 500px;
+              height: ${2 * gcHeight + refElHeight}px;
+              width: ${2 * gcWidth + refElWidth}px;
               display: flex;
-              align-items: ${getAlign(
-                ctx?.args.tooltipAlign,
-                ctx?.args.tooltipJustify,
-              )};
-              justify-content: ${getJustify(
-                ctx?.args.tooltipAlign,
-                ctx?.args.tooltipJustify,
-              )};
+              align-items: center;
+              justify-content: center;
             `}
           >
             <div
               className={css`
-                height: 25px;
+                height: ${refElHeight}px;
+                width: ${refElWidth}px
                 display: flex;
                 align-items: center;
                 justify-content: center;
