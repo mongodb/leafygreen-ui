@@ -84,5 +84,13 @@ export const Basic: StoryFn<ConfirmationModalProps> = ({
   darkMode,
   ...args
 }) => {
-  return <ConfirmationModal {...args} open={true} darkMode={darkMode} />;
+  return (
+    <div
+      className={css`
+        height: 100vh;
+      `}
+    >
+      <ConfirmationModal {...args} open={true} darkMode={darkMode} />;
+    </div>
+  );
 };

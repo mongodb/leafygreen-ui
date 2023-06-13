@@ -78,6 +78,11 @@ export const LiveExample: StoryType<typeof Modal> = args => {
     </div>
   );
 };
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 LiveExample.args = {
   open: undefined,
 };

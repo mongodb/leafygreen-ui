@@ -104,6 +104,9 @@ export const LiveExample: StoryFn<MarketingModalProps> = ({
     </div>
   );
 };
+LiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
+};
 
 const Template: StoryFn<MarketingModalProps> = ({
   graphicStyle,
@@ -117,25 +120,31 @@ const Template: StoryFn<MarketingModalProps> = ({
   const [open, setOpen] = useState(true);
   const handleClose = () => setOpen(false);
   return (
-    <MarketingModal
-      {...args}
-      graphicStyle={graphicStyle}
-      darkMode={darkMode}
-      graphic={
-        graphicStyle === GraphicStyle.Center ? (
-          <img
-            alt=""
-            src={`/examples/${graphicCenterImage}`}
-            width={275}
-            height={220}
-          />
-        ) : (
-          <img alt="Marketing Modal" src={`/examples/${graphicFillImage}`} />
-        )
-      }
-      open={open}
-      onClose={handleClose}
-    />
+    <div
+      className={css`
+        height: 100vh;
+      `}
+    >
+      <MarketingModal
+        {...args}
+        graphicStyle={graphicStyle}
+        darkMode={darkMode}
+        graphic={
+          graphicStyle === GraphicStyle.Center ? (
+            <img
+              alt=""
+              src={`/examples/${graphicCenterImage}`}
+              width={275}
+              height={220}
+            />
+          ) : (
+            <img alt="Marketing Modal" src={`/examples/${graphicFillImage}`} />
+          )
+        }
+        open={open}
+        onClose={handleClose}
+      />
+    </div>
   );
 };
 
