@@ -21,6 +21,7 @@ const meta: StoryMetaType<typeof MarketingModal> = {
   title: 'Components/Modals/Marketing Modal',
   component: MarketingModal,
   args: {
+    darkMode: false,
     showBlob: true,
     blobPosition: BlobPosition.TopLeft,
     buttonText: 'Button Text',
@@ -169,25 +170,25 @@ BlobBottomRight.args = {
 };
 
 export const GraphicStyleFillDarkMode = Template.bind({});
-GraphicStyleFill.args = {
+GraphicStyleFillDarkMode.args = {
   graphicStyle: GraphicStyle.Fill,
   darkMode: true,
 };
 
 export const GraphicStyleCenterDarkMode = Template.bind({});
-GraphicStyleCenter.args = {
+GraphicStyleCenterDarkMode.args = {
   graphicStyle: GraphicStyle.Center,
   darkMode: true,
 };
 
 export const BlobTopRightDarkMode = Template.bind({});
-BlobTopRight.args = {
+BlobTopRightDarkMode.args = {
   blobPosition: BlobPosition.TopRight,
   darkMode: true,
 };
 
 export const BlobBottomRightDarkMode = Template.bind({});
-BlobBottomRight.args = {
+BlobBottomRightDarkMode.args = {
   blobPosition: BlobPosition.BottomRight,
   darkMode: true,
 };
