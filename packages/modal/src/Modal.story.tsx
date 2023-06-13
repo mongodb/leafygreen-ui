@@ -101,6 +101,10 @@ const Template: StoryFn<ModalProps> = (args: ModalProps) => {
 };
 
 export const Basic = Template.bind({});
+export const DarkMode = Template.bind({});
+DarkMode.args = {
+  darkMode: true,
+};
 
 export const Scroll = Template.bind({});
 Scroll.args = {

@@ -148,14 +148,14 @@ const Template: StoryFn<MarketingModalProps> = ({
   );
 };
 
-export const GraphicStyleCenter = Template.bind({});
-GraphicStyleCenter.args = {
-  graphicStyle: GraphicStyle.Center,
-};
-
 export const GraphicStyleFill = Template.bind({});
 GraphicStyleFill.args = {
   graphicStyle: GraphicStyle.Fill,
+};
+
+export const GraphicStyleCenter = Template.bind({});
+GraphicStyleCenter.args = {
+  graphicStyle: GraphicStyle.Center,
 };
 
 export const BlobTopRight = Template.bind({});
@@ -166,4 +166,28 @@ BlobTopRight.args = {
 export const BlobBottomRight = Template.bind({});
 BlobBottomRight.args = {
   blobPosition: BlobPosition.BottomRight,
+};
+
+export const GraphicStyleFillDarkMode = Template.bind({});
+GraphicStyleFill.args = {
+  graphicStyle: GraphicStyle.Fill,
+  darkMode: true,
+};
+
+export const GraphicStyleCenterDarkMode = Template.bind({});
+GraphicStyleCenter.args = {
+  graphicStyle: GraphicStyle.Center,
+  darkMode: true,
+};
+
+export const BlobTopRightDarkMode = Template.bind({});
+BlobTopRight.args = {
+  blobPosition: BlobPosition.TopRight,
+  darkMode: true,
+};
+
+export const BlobBottomRightDarkMode = Template.bind({});
+BlobBottomRight.args = {
+  blobPosition: BlobPosition.BottomRight,
+  darkMode: true,
 };
