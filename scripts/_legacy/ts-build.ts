@@ -2,7 +2,7 @@
 import { spawnSync } from 'child_process';
 import { Command } from 'commander';
 
-import { getRelevantPackages } from './utils/getRelevantPackages';
+import { getRelevantPackages } from '../utils/getRelevantPackages';
 
 const cli = new Command('build-TS')
   .arguments('[packages...]')
