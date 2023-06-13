@@ -11819,7 +11819,7 @@ lazy-universal-dotenv@^4.0.0:
     dotenv "^16.0.0"
     dotenv-expand "^10.0.0"
 
-lerna@^7.0.0:
+lerna@^7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/lerna/-/lerna-7.0.1.tgz#056fc44f0e4852a06e943197d3d0d05d59d84559"
   integrity sha512-kX279o8N/L2URwoR3Pf4TdIl5P8G443qAFy095ZD+Vu1tOMo8U6xOc221EgHoMuYhdqlT3f0vgn5bMMr/xNYhQ==
