@@ -46,7 +46,7 @@ const displayFlex = css`
 `;
 
 // eslint-disable-next-line react/prop-types
-const TypographyDemo = ({
+const TypographyDemoComponent = ({
   baseFontSize,
   darkMode,
 }: {
@@ -119,11 +119,11 @@ const TypographyDemo = ({
   );
 };
 
-const meta: StoryMetaType<typeof TypographyDemo> = {
+const meta: StoryMetaType<typeof TypographyDemoComponent> = {
   title: 'Components/Typography',
-  component: TypographyDemo,
+  component: TypographyDemoComponent,
   parameters: {
-    default: 'TypographyDemo',
+    default: 'AllTypography',
     generate: {
       combineArgs: {
         darkMode: [false, true],
@@ -134,8 +134,8 @@ const meta: StoryMetaType<typeof TypographyDemo> = {
 };
 export default meta;
 
-export const AllTypography: StoryType<typeof TypographyDemo> =
-  TypographyDemo.bind({});
+export const AllTypography: StoryType<typeof TypographyDemoComponent> =
+  TypographyDemoComponent.bind({});
 AllTypography.argTypes = {
   baseFontSize: {
     ...storybookArgTypes.baseFontSize,

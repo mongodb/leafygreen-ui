@@ -4,7 +4,9 @@ import {
   StoryMetaType,
 } from '@leafygreen-ui/lib';
 
-import { RadioBox, Size } from '.';
+import { Size } from '..';
+
+import { RadioBox } from '.';
 
 const meta: StoryMetaType<typeof RadioBox> = {
   title: 'Components/RadioBoxGroup/RadioBox',
