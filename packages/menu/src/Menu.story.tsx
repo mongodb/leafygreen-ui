@@ -83,7 +83,7 @@ const meta: StoryMetaType<typeof Menu> = {
             display: flex;
             align-items: ${['left', 'right'].includes(ctx?.args.align)
               ? 'end'
-              : getAlign(ctx?.args.align)};
+              : getAlign(ctx?.args.align, ctx?.args.justify)};
             justify-content: ${getJustify(ctx?.args.align, ctx?.args.justify)};
           `}
         >
