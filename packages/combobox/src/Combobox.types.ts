@@ -56,8 +56,8 @@ export const Overflow = {
 export type Overflow = typeof Overflow[keyof typeof Overflow];
 
 export const State = {
-  error: 'error',
   none: 'none',
+  error: 'error',
 } as const;
 export type State = typeof State[keyof typeof State];
 

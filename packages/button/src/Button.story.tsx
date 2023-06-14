@@ -1,9 +1,15 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable react/display-name */
 import React from 'react';
-import { StoryFn } from '@storybook/react';
+import { userEvent, within } from '@storybook/testing-library';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import { storybookArgTypes, type StoryMetaType } from '@leafygreen-ui/lib';
+import {
+  type PlayFn,
+  storybookArgTypes,
+  type StoryMetaType,
+  type StoryType,
+} from '@leafygreen-ui/lib';
 
 import { Size } from './types';
 import Button, { ButtonProps, Variant } from '.';
@@ -11,14 +17,38 @@ import Button, { ButtonProps, Variant } from '.';
 const meta: StoryMetaType<typeof Button> = {
   title: 'Components/Button',
   component: Button,
+  parameters: {
+    default: 'LiveExample',
+    generate: {
+      storyNames: ['LargeSize', 'DefaultSize', 'SmallSize', 'XSmallSize'],
+      combineArgs: {
+        darkMode: [false, true],
+        rightGlyph: [undefined, <Icon glyph={'ArrowRight'} />],
+        leftGlyph: [undefined, <Icon glyph={'Cloud'} />],
+        children: ['MongoDB', undefined],
+        variant: Object.values(Variant),
+      },
+      excludeCombinations: [
+        {
+          children: undefined,
+          rightGlyph: undefined,
+          leftGlyph: undefined,
+        },
+        {
+          rightGlyph: <Icon glyph={'ArrowRight'} />,
+          leftGlyph: <Icon glyph={'Cloud'} />,
+          children: undefined,
+        },
+      ],
+    },
+  },
   args: {
     children: 'MongoDB',
-    variant: Variant.Default,
-  },
-  parameters: {
-    default: 'Playground',
+    leftGlyph: undefined,
+    rightGlyph: undefined,
   },
   argTypes: {
+    ...storybookArgTypes,
     disabled: {
       control: { type: 'boolean' },
     },
@@ -55,7 +85,7 @@ const meta: StoryMetaType<typeof Button> = {
 
 export default meta;
 
-export const Playground: StoryFn<ButtonProps> = ({
+export const LiveExample: StoryType<typeof Button> = ({
   leftGlyph,
   rightGlyph,
   ...args
@@ -68,19 +98,73 @@ export const Playground: StoryFn<ButtonProps> = ({
     {...args}
   />
 );
-
-export const BaseGreen = Playground.bind({});
-BaseGreen.args = {
-  variant: Variant.BaseGreen,
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshots: true,
+  },
 };
 
-export const LoadingState = Playground.bind({});
-LoadingState.args = {
-  isLoading: true,
+export const Focused: StoryType<typeof Button> = LiveExample.bind({});
+Focused.play = (async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const button = canvas.getByRole('button');
+  await userEvent.click(button);
+}) as PlayFn<typeof Button>;
+
+export const LargeSize: StoryType<typeof Button> = () => <></>;
+LargeSize.parameters = {
+  generate: {
+    args: {
+      size: Size.Large,
+    },
+  },
 };
 
-export const LoadingStateWithText = Playground.bind({});
-LoadingStateWithText.args = {
-  isLoading: true,
-  loadingText: 'Saving',
+export const DefaultSize: StoryType<typeof Button> = () => <></>;
+DefaultSize.parameters = {
+  generate: {
+    args: {
+      size: Size.Default,
+    },
+  },
+};
+
+export const SmallSize: StoryType<typeof Button> = () => <></>;
+SmallSize.parameters = {
+  generate: {
+    args: {
+      size: Size.Small,
+    },
+  },
+};
+
+export const XSmallSize: StoryType<typeof Button> = () => <></>;
+XSmallSize.parameters = {
+  generate: {
+    args: {
+      size: Size.XSmall,
+    },
+  },
+};
+
+export const Loading: StoryType<typeof Button> = () => <></>;
+Loading.parameters = {
+  generate: {
+    combineArgs: {
+      size: Object.values(Size),
+      loadingText: [undefined, 'Saving'],
+    },
+    args: {
+      isLoading: true,
+      variant: Variant.Default,
+      rightGlyph: undefined,
+      leftGlyph: undefined,
+    },
+  },
+};
+// Avoid flaky visual diff tests with Spinner
+Loading.parameters = {
+  chromatic: {
+    disableSnapshots: true,
+  },
 };

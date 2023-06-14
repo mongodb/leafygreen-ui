@@ -5,14 +5,15 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { RadioBoxGroupContext, useRadioBoxGroupContext } from './context';
+import { RadioBoxGroupContext, useRadioBoxGroupContext } from '../context';
+import { RadioBoxProps, Size } from '../types';
+
 import {
   getRadioDisplayStyles,
   inputStyles,
   radioBoxSizes,
   radioWrapper,
 } from './RadioBox.styles';
-import { RadioBoxProps, Size } from './types';
 
 function isChecked({
   checkedProp,

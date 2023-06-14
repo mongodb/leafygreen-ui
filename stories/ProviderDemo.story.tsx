@@ -46,3 +46,6 @@ export const DarkModeDemo = () => {
     </>
   );
 };
+DarkModeDemo.parameters = {
+  chromatic: { disableSnapshot: true },
+};

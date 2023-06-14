@@ -3,13 +3,14 @@ import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
   type StoryMetaType,
+  StoryType,
 } from '@leafygreen-ui/lib';
 
+import { getComboboxOptions } from './test-utils/getTestOptions.testutils';
 import {
   ComboboxSize,
   Overflow,
@@ -17,13 +18,15 @@ import {
   State,
   TruncationLocation,
 } from './Combobox.types';
-import { Combobox, ComboboxGroup, ComboboxOption, ComboboxProps } from '.';
+import { Combobox, ComboboxOption, ComboboxProps } from '.';
 
 const wrapperStyle = css`
   width: 256px;
   padding-block: 64px;
   display: flex;
 `;
+
+const multiValue = ['apple', 'banana'];
 
 const meta: StoryMetaType<typeof Combobox> = {
   title: 'Components/Combobox',
@@ -36,7 +39,7 @@ const meta: StoryMetaType<typeof Combobox> = {
     ),
   ],
   parameters: {
-    default: 'Demo',
+    default: 'LiveExample',
     controls: {
       exclude: [
         ...storybookExcludedControlParams,
@@ -48,27 +51,54 @@ const meta: StoryMetaType<typeof Combobox> = {
         'children',
       ],
     },
+    generate: {
+      storyNames: ['SingleSelect', 'MultiSelect'],
+      combineArgs: {
+        darkMode: [false, true],
+        clearable: [true, false],
+        description: [undefined, 'Please pick fruit(s)'],
+        label: [undefined, 'Choose a fruit'],
+        state: Object.values(State),
+        size: Object.values(ComboboxSize),
+      },
+      excludeCombinations: [
+        ['description', { label: undefined }],
+        {
+          clearable: false,
+          value: undefined,
+        },
+        {
+          multiselect: true,
+          value: 'apple',
+        },
+        {
+          multiselect: false,
+          value: multiValue,
+        },
+      ],
+    },
   },
+
+  args: {
+    label: 'Choose a fruit',
+    description: 'Please pick fruit(s)',
+    placeholder: 'Select fruit',
+    multiselect: false,
+    darkMode: false,
+    disabled: false,
+    clearable: true,
+    errorMessage: 'No Pomegranates!',
+    children: getComboboxOptions(),
+  },
+
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
-    multiselect: {
-      control: 'boolean',
-    },
-    disabled: {
-      control: 'boolean',
-    },
-    clearable: {
-      control: 'boolean',
-    },
-    label: {
-      control: 'text',
-    },
-    description: {
-      control: 'text',
-    },
-    placeholder: {
-      control: 'text',
-    },
+    multiselect: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    clearable: { control: 'boolean' },
+    label: { control: 'text' },
+    description: { control: 'text' },
+    placeholder: { control: 'text' },
     size: {
       options: Object.values(ComboboxSize),
       control: 'select',
@@ -79,11 +109,8 @@ const meta: StoryMetaType<typeof Combobox> = {
     },
     errorMessage: {
       control: 'text',
-      if: { arg: 'state', eq: State.error },
     },
-    searchEmptyMessage: {
-      control: 'text',
-    },
+    searchEmptyMessage: { control: 'text' },
     searchState: {
       options: Object.values(SearchState),
       control: 'select',
@@ -111,164 +138,26 @@ const meta: StoryMetaType<typeof Combobox> = {
       if: { arg: 'multiselect' },
     },
   },
-  args: {
-    multiselect: false,
-    darkMode: false,
-    disabled: false,
-    clearable: true,
-  },
 };
 
 export default meta;
 
-const getComboboxOptions = (withGlyphs = true) => [
-  <ComboboxOption
-    key="apple"
-    value="apple"
-    displayName="Apple"
-    data-testid="test-id"
-    description="Do I keep the doctor away?"
-    // eslint-disable-next-line no-console
-    onClick={(event, value) => console.log(event, value)}
-    className="className"
-  />,
-  <ComboboxOption key="banana" value="banana" displayName="Banana" />,
-  <ComboboxOption key="carrot" value="carrot" displayName="Carrot" disabled />,
-  <ComboboxOption
-    key="pomegranate"
-    value="pomegranate"
-    displayName="Pomegranate"
-    glyph={withGlyphs ? <Icon glyph="Warning" /> : undefined}
-    description="Watch out, I stain everything I touch LOL"
-    disabled
-  />,
-  <ComboboxOption
-    key="plantain"
-    value="plantain"
-    displayName="Plantain"
-    glyph={withGlyphs ? <Icon glyph="Connect" /> : undefined}
-    description="Don't confuse me with a banana"
-    // eslint-disable-next-line no-console
-    onClick={() => console.log('I was clicked')}
-  />,
-  <ComboboxOption
-    key="paragraph"
-    value="paragraph"
-    displayName="Nullam quis risus eget urna mollis ornare vel eu leo. Vestibulum id ligula porta felis euismod semper."
-  />,
-  <ComboboxOption
-    key="hash"
-    value="hash"
-    displayName="5f4dcc3b5aa765d61d8327deb882cf995f4dcc3b5aa765d61d8327deb882cf99"
-  />,
-  <ComboboxOption
-    key="dragonfruit"
-    value="dragonfruit"
-    displayName="Dragonfruit"
-    description="Rawr"
-  />,
-  <ComboboxOption key="eggplant" value="eggplant" displayName="Eggplant" />,
-  <ComboboxOption key="fig" value="fig" displayName="Fig" />,
-  <ComboboxOption key="grape" value="grape" displayName="Grape" />,
-  <ComboboxOption key="honeydew" value="honeydew" displayName="Honeydew" />,
-  <ComboboxOption
-    key="iceberg-lettuce"
-    value="iceberg-lettuce"
-    displayName="Iceberg lettuce"
-  />,
-  <ComboboxGroup key="peppers" label="Peppers">
-    <ComboboxOption key="cayenne" value="cayenne" displayName="Cayenne" />
-    <ComboboxOption
-      key="ghost-pepper"
-      value="ghost-pepper"
-      displayName="Ghost pepper"
-    />
-    <ComboboxOption key="habanero" value="habanero" displayName="Habanero" />
-    <ComboboxOption key="jalapeno" value="jalapeno" displayName="Jalapeño" />
-    <ComboboxOption
-      key="red-pepper"
-      value="red-pepper"
-      displayName="Red pepper"
-    />
-    <ComboboxOption
-      key="scotch-bonnet"
-      value="scotch-bonnet"
-      displayName="Scotch bonnet"
-      description="Don't touch your eyes"
-    />
-  </ComboboxGroup>,
-];
-
-const SingleTemplate: StoryFn<ComboboxProps<false>> = (
-  args: ComboboxProps<false>,
-) => <Combobox {...args} />;
-
-export const SingleSelect: StoryFn<ComboboxProps<false>> = (
-  args: ComboboxProps<false>,
-) => <Combobox {...args} />;
-SingleSelect.args = {
-  label: 'Choose a fruit',
-  description: 'Please pick one',
-  placeholder: 'Select fruit',
-  multiselect: false,
-  // children: getComboboxOptions(),
+export const LiveExample: StoryFn<ComboboxProps<boolean>> = (
+  args: ComboboxProps<boolean>,
+) => {
+  return (
+    <>
+      {/* Since Combobox doesn't fully refresh when `multiselect` changes, we need to explicitly render a different instance */}
+      {args.multiselect ? (
+        <Combobox key="multi" {...args} multiselect={true} />
+      ) : (
+        <Combobox key="single" {...args} multiselect={false} />
+      )}
+    </>
+  );
 };
-SingleSelect.argTypes = {
-  multiselect: { control: 'none' },
-};
-
-export const SingleSelectWithoutGlyphs = SingleTemplate.bind({});
-SingleSelectWithoutGlyphs.args = {
-  label: 'Choose a fruit',
-  description: 'Please pick one',
-  placeholder: 'Select fruit',
-  multiselect: false,
-  children: getComboboxOptions(false),
-};
-SingleSelectWithoutGlyphs.argTypes = {
-  multiselect: { control: 'none' },
-};
-
-export const WithError = SingleTemplate.bind({});
-WithError.args = {
-  label: 'Choose a fruit',
-  description: 'Please pick one',
-  placeholder: 'Select fruit',
-  value: 'pomegranates',
-  errorMessage: 'No Pomegranates!',
-  state: 'error',
-};
-
-const MultiTemplate: StoryFn<ComboboxProps<true>> = (
-  args: ComboboxProps<true>,
-) => <Combobox {...args} />;
-
-export const Multiselect = MultiTemplate.bind({});
-Multiselect.args = {
-  label: 'Choose a fruit',
-  description: 'Please pick some',
-  placeholder: 'Select fruit',
-  multiselect: true,
-  children: getComboboxOptions(),
-};
-Multiselect.argTypes = {
-  multiselect: {
-    control: 'none',
-  },
-};
-
-export const MultiselectWithoutGlyphs = MultiTemplate.bind({});
-MultiselectWithoutGlyphs.args = {
-  label: 'Choose a fruit',
-  description: 'Please pick some',
-  placeholder: 'Select fruit',
-  multiselect: true,
-  children: getComboboxOptions(false),
-};
-MultiselectWithoutGlyphs.argTypes = {
-  multiselect: {
-    control: 'none',
-  },
+LiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
 };
 
 export const ControlledSingleSelect = () => {
@@ -295,6 +184,9 @@ export const ControlledSingleSelect = () => {
       <Button onClick={() => setSelection('carrot')}>Select Carrot</Button>
     </div>
   );
+};
+ControlledSingleSelect.parameters = {
+  chromatic: { disableSnapshot: true },
 };
 
 export const ExternalFilter = () => {
@@ -333,24 +225,30 @@ export const ExternalFilter = () => {
     </Combobox>
   );
 };
-
-export const Demo: StoryFn<ComboboxProps<boolean>> = (
-  args: ComboboxProps<boolean>,
-) => {
-  return (
-    <>
-      {/* Since Combobox doesn't fully refresh when `multiselect` changes, we need to explicitly render a different instance */}
-      {args.multiselect ? (
-        <Combobox key="multi" {...args} multiselect={true} />
-      ) : (
-        <Combobox key="single" {...args} multiselect={false} />
-      )}
-    </>
-  );
+ExternalFilter.parameters = {
+  chromatic: { disableSnapshot: true },
 };
-Demo.args = {
-  label: 'Choose a fruit',
-  description: 'Please pick fruit(s)',
-  placeholder: 'Select fruit',
-  children: getComboboxOptions(),
+
+export const SingleSelect: StoryType<typeof Combobox> = () => <></>;
+SingleSelect.args = {
+  multiselect: false,
+};
+SingleSelect.parameters = {
+  generate: {
+    combineArgs: {
+      value: [undefined, 'apple'],
+    },
+  },
+};
+
+export const MultiSelect = () => <></>;
+MultiSelect.args = {
+  multiselect: true,
+};
+MultiSelect.parameters = {
+  generate: {
+    combineArgs: {
+      value: [undefined, multiValue],
+    },
+  },
 };

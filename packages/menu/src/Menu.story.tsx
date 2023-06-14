@@ -1,31 +1,32 @@
-import React, { useState } from 'react';
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable react/display-name */
+import React from 'react';
+import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
+import { css } from '@leafygreen-ui/emotion';
+import CaretDown from '@leafygreen-ui/icon/dist/CaretDown';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
-import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
-import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import {
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
+import { Align, Justify } from '@leafygreen-ui/popover';
+import {
+  getAlign,
+  getJustify,
+} from '@leafygreen-ui/popover/src/Popover.testutils';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { Size } from './types';
-import {
-  Menu,
-  MenuItem,
-  MenuItemProps,
-  MenuProps,
-  MenuSeparator,
-  SubMenu,
-  SubMenuProps,
-} from '.';
+import { Menu, MenuItem, MenuProps, MenuSeparator, SubMenu } from '.';
 
 const meta: StoryMetaType<typeof Menu> = {
   title: 'Components/Menu',
   component: Menu,
   parameters: {
-    default: 'SubMenuExample',
+    default: 'LiveExample',
     controls: {
       exclude: [
         ...storybookExcludedControlParams,
@@ -35,6 +36,69 @@ const meta: StoryMetaType<typeof Menu> = {
         'setOpen',
         'as',
       ],
+    },
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        // Popover props
+        align: Object.values(Align),
+        justify: Object.values(Justify),
+      },
+      args: {
+        open: true,
+        maxHeight: 200,
+        children: (
+          <>
+            <MenuItem>Lorem</MenuItem>
+            <SubMenu
+              title="Fruit"
+              description="A selection of fruit"
+              glyph={<CloudIcon size="large" />}
+              active={true}
+            >
+              <MenuItem active>Apple</MenuItem>
+              <MenuItem>Banana</MenuItem>
+              <MenuItem>Carrot</MenuItem>
+              <MenuItem>Dragonfruit</MenuItem>
+              <MenuItem>Eggplant</MenuItem>
+              <MenuItem>Fig</MenuItem>
+            </SubMenu>
+          </>
+        ),
+      },
+      excludeCombinations: [
+        {
+          align: [Align.CenterHorizontal, Align.CenterVertical],
+        },
+        {
+          justify: Justify.Fit,
+          align: [Align.Left, Align.Right],
+        },
+      ],
+      decorator: (Instance, ctx) => (
+        <div
+          className={css`
+            width: 256px;
+            height: 250px;
+            display: flex;
+            align-items: ${['left', 'right'].includes(ctx?.args.align)
+              ? 'end'
+              : getAlign(ctx?.args.align, ctx?.args.justify)};
+            justify-content: ${getJustify(ctx?.args.align, ctx?.args.justify)};
+          `}
+        >
+          <Instance
+            trigger={
+              <Button darkMode={ctx?.args.darkMode} size="xsmall">
+                trigger
+              </Button>
+            }
+          />
+        </div>
+      ),
+    },
+    chromatic: {
+      delay: transitionDuration.default,
     },
   },
   args: {
@@ -60,59 +124,8 @@ const meta: StoryMetaType<typeof Menu> = {
 };
 export default meta;
 
-export const UncontrolledTemplate = ({
-  size,
-  open,
-  darkMode,
-  ...args
-}: MenuProps & MenuItemProps & SubMenuProps) => {
-  return (
-    <LeafyGreenProvider>
-      <Menu
-        trigger={
-          <IconButton darkMode={darkMode} aria-label="label">
-            <EllipsisIcon />
-          </IconButton>
-        }
-        darkMode={darkMode}
-        {...args}
-      >
-        <MenuItem
-          description="I am also an active description"
-          active
-          size={size}
-          glyph={<CloudIcon />}
-        >
-          Active Menu Item
-        </MenuItem>
-        <MenuItem
-          description="I am also a description"
-          size={size}
-          glyph={<CloudIcon />}
-        >
-          Menu Item With Description
-        </MenuItem>
-        <MenuItem disabled description="I am a description" size={size}>
-          Disabled Menu Item
-        </MenuItem>
-        <MenuItem size={size} href="http://mongodb.design">
-          I am a link!
-        </MenuItem>
-        <MenuItem size={size}>Lorem</MenuItem>
-        <MenuItem size={size}>Ipsum</MenuItem>
-        <MenuItem size={size}>Adipiscing</MenuItem>
-        <MenuItem size={size}>Cursus</MenuItem>
-        <MenuItem size={size}>Ullamcorper</MenuItem>
-        <MenuItem size={size}>Vulputate</MenuItem>
-        <MenuItem size={size}>Inceptos</MenuItem>
-        <MenuItem size={size}>Risus</MenuItem>
-      </Menu>
-    </LeafyGreenProvider>
-  );
-};
-UncontrolledTemplate.storyName = 'Uncontrolled';
-
-export const SubMenuExample = ({
+export const LiveExample: StoryFn<MenuProps & { size: Size }> = ({
+  open: _,
   size,
   darkMode,
   open,
@@ -122,7 +135,11 @@ export const SubMenuExample = ({
     <LeafyGreenProvider>
       <Menu
         darkMode={darkMode}
-        trigger={<Button darkMode={darkMode} rightGlyph={<EllipsisIcon />} />}
+        trigger={
+          <Button darkMode={darkMode} rightGlyph={<CaretDown />}>
+            Menu
+          </Button>
+        }
         {...args}
       >
         <MenuItem size={size} glyph={<CloudIcon />}>
@@ -164,32 +181,25 @@ export const SubMenuExample = ({
         </SubMenu>
         <SubMenu title="Menu Item 2" description="Sed posuere" size={size}>
           <MenuItem>Support 1</MenuItem>
+          <MenuItem>Support 2</MenuItem>
         </SubMenu>
+        <MenuSeparator />
+        <MenuItem size={size}>Lorem</MenuItem>
+        <MenuItem size={size}>Ipsum</MenuItem>
+        <MenuItem size={size}>Adipiscing</MenuItem>
+        <MenuItem size={size}>Cursus</MenuItem>
+        <MenuItem size={size}>Ullamcorper</MenuItem>
+        <MenuItem size={size}>Vulputate</MenuItem>
+        <MenuItem size={size}>Inceptos</MenuItem>
+        <MenuItem size={size}>Risus</MenuItem>
       </Menu>
     </LeafyGreenProvider>
   );
 };
-UncontrolledTemplate.storyName = 'Uncontrolled';
-
-export const Controlled = ({
-  size,
-  open,
-  trigger,
-  darkMode,
-  ...args
-}: MenuProps & MenuItemProps & SubMenuProps) => {
-  const [isOpen, setIsOpen] = useState(open);
-  return UncontrolledTemplate({
-    size,
-    open: isOpen,
-    trigger: (
-      <Button
-        onClick={() => setIsOpen(o => !o)}
-        rightGlyph={<EllipsisIcon />}
-        darkMode={darkMode}
-      />
-    ),
-    darkMode,
-    ...args,
-  });
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
+
+export const Generated = () => <></>;
