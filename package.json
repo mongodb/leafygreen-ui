@@ -12,8 +12,7 @@
   "scripts": {
     "init": "yarn && yarn build",
     "create-package": "node ./scripts/create-package.js",
-    "build": "nx run-many -t build --parallel=\"10\"",
-    "tsc": "lerna run tsc",
+    "build": "nx run-many -t build,tsc --parallel=10",
     "TODO:postbuild": "yarn run docs:tsdoc",
     "build-storybook": "storybook build",
     "lint": "npm-run-all --parallel lint:*",

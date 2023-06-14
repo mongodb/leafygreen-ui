@@ -28,17 +28,12 @@
     },
     "tsc": {
       "dependsOn": [
+        "build",
         "^tsc"
       ],
       "outputs": [
         "{projectRoot}/dist/**/*.d.ts?(.map)}",
         "{projectRoot}/tsconfig.tsbuildinfo"
-      ]
-    },
-    "test": {
-      "dependsOn": [
-        "^test",
-        "^build"
       ]
     }
   }
