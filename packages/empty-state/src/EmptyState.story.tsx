@@ -3,7 +3,6 @@ import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
 import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
-import { spacing } from '@leafygreen-ui/tokens';
 
 import BasicEmptyStateStoryMeta, {
   WithActionsAndLink,
@@ -28,6 +27,8 @@ const StoryVariant = {
 } as const;
 
 type StoryVariant = typeof StoryVariant[keyof typeof StoryVariant];
+type StoryProps = BasicEmptyStateProps &
+  FeaturesEmptyStateProps & { variant: StoryVariant };
 
 const meta: StoryMetaType<typeof BasicEmptyState | typeof FeaturesEmptyState> =
   {
@@ -49,12 +50,11 @@ const meta: StoryMetaType<typeof BasicEmptyState | typeof FeaturesEmptyState> =
 
 export default meta;
 
-export const LiveExample = ({
-  // @ts-expect-error Props for the LiveExample story do not correspond to documented component's props
+export const LiveExample: StoryFn<StoryProps> = ({
   // eslint-disable-next-line react/prop-types
   variant,
   ...rest
-}) => {
+}: StoryProps) => {
   let StoryComponent: StoryFn<BasicEmptyStateProps | FeaturesEmptyStateProps> =
     WithActionsAndLink;
   let storyComponentProps: BasicEmptyStateProps | FeaturesEmptyStateProps =
@@ -96,10 +96,11 @@ export const LiveExample = ({
     >
       {/* @ts-expect-error - props are not specific enough */}
       <StoryComponent {...storyComponentProps} {...rest} />
-      <div style={{ marginTop: spacing[4] }}>
-        * Note: Controls below are designed specifically for the Live Example
-        and may not correspond to the React component&apos;s properties.
-      </div>
     </div>
   );
+};
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };

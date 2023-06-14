@@ -28,3 +28,6 @@ const Template: StoryFn<typeof LeafyGreenProvider> = props => (
 );
 
 export const Basic = Template.bind({});
+Basic.parameters = {
+  chromatic: { disableSnapshot: true },
+};

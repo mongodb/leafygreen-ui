@@ -10,6 +10,9 @@ import { storybookArgTypes } from '@leafygreen-ui/lib';
 export default {
   title: 'Components/Table/V10',
   component: Table,
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   args: {
     data: defaultData,
     withHeaders: false,

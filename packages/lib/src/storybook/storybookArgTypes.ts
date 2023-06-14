@@ -19,6 +19,15 @@ export interface StoryArgType extends InputType {
         type: string;
         [key: string]: any;
       };
+
+  /**
+   * `defaultValue` is deprecated in Storybook 7.
+   *
+   * Use `args` instead
+   *
+   * @deprecated
+   */
+  defaultValue?: any;
 }
 
 export const storybookArgTypes: Record<string, StoryArgType> = {

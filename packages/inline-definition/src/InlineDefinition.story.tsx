@@ -14,22 +14,29 @@ import InlineDefinition, { InlineDefinitionProps } from '.';
 const meta: StoryMetaType<typeof InlineDefinition> = {
   title: 'Components/InlineDefinition',
   component: InlineDefinition,
+  parameters: {
+    default: 'LiveExample',
+    controls: {
+      exclude: [...storybookExcludedControlParams, 'trigger', 'open'],
+    },
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+      },
+      args: { open: true },
+    },
+  },
   args: {
     darkMode: false,
     definition:
       'Sharding is a method for horizontally scaling across multiple replica sets by breaking up large datasets (e.g. partitioning) into smaller parts. Sharding is native to MongoDB.',
     spacing: 9,
+    children: 'Shard',
   },
   argTypes: {
     definition: { control: 'text' },
     children: { control: 'text' },
     darkMode: storybookArgTypes.darkMode,
-  },
-  parameters: {
-    default: 'Demo',
-    controls: {
-      exclude: [...storybookExcludedControlParams, 'trigger', 'open'],
-    },
   },
 };
 
@@ -46,11 +53,8 @@ const Template: StoryFn<InlineDefinitionProps> = ({
 );
 
 export const Basic = Template.bind({});
-Basic.args = {
-  children: 'Shard',
-};
 
-export const Demo: StoryFn<InlineDefinitionProps> = ({
+export const LiveExample: StoryFn<InlineDefinitionProps> = ({
   // eslint-disable-next-line react/prop-types
   darkMode,
   ...args
@@ -91,3 +95,10 @@ export const Demo: StoryFn<InlineDefinitionProps> = ({
     </Body>
   </div>
 );
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+
+export const Generated = () => {};

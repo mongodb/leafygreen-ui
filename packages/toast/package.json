@@ -39,7 +39,8 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.0",
-    "@leafygreen-ui/button": "^20.2.0"
+    "@leafygreen-ui/button": "^20.1.1",
+    "@storybook/types": "^7.0.20"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/toast",
   "repository": {
