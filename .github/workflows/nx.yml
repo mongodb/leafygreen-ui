@@ -22,4 +22,4 @@ jobs:
       - run: yarn install --frozen-lockfile --prefer-offline
 
       - run: yarn lint
-      - run: npx nx -t build --parallel=3
+      - run: npx nx run-many -t build --parallel=3
