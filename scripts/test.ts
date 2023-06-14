@@ -4,12 +4,12 @@ import { Command } from 'commander';
 import { uniq } from 'lodash';
 import { exit } from 'process';
 
-import { getAllPackageNames } from '../utils/getAllPackageNames';
-import { getGitDiff } from '../utils/getGitDiff';
+import { getAllPackageNames } from './utils/getAllPackageNames';
+import { getGitDiff } from './utils/getGitDiff';
 import {
   getPackageDependents,
   getPackageLGDependencies,
-} from '../utils/getPackageDependencies';
+} from './utils/getPackageDependencies';
 
 interface Opts {
   diff: boolean;

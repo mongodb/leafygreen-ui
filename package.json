@@ -50,9 +50,9 @@
     
     "slackbot": "yarn ts-node ./scripts/slackbot",
     "start": "storybook dev -p 9001 --no-version-updates",
-    "test": "lerna exec -- jest --config jest.config.js",
-    "test:ssr": "lerna exec -- jest --config ssr.jest.config.js",
-    
+    "test": "npm-run-all --parallel test:*",
+    "test:local":"yarn ts-node ./scripts/test.ts",
+    "test:ssr":"yarn ts-node ./scripts/test.ts --ssr",
     "ts-node": "npx ts-node -P './tsconfig.json' -O '{\"module\": \"commonjs\", \"resolveJsonModule\": true, \"noUnusedLocals\": false}'",
     "unlink": "./scripts/unlink.sh"
   },
