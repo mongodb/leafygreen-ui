@@ -12,7 +12,7 @@
   "scripts": {
     "init": "yarn && yarn build",
     "create-package": "node ./scripts/create-package.js",
-    "build": "lerna run build",
+    "build": "nx run-many -t build --parallel=\"10\"",
     "tsc": "lerna run tsc",
     "TODO:postbuild": "yarn run docs:tsdoc",
     "build-storybook": "storybook build",

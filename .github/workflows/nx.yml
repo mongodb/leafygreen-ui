@@ -1,0 +1,25 @@
+name: Nx CI
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: nrwl/nx-set-shas@v3
+
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: yarn
+          cache-dependency-path: 'yarn.lock'
+
+      - run: yarn install --frozen-lockfile --prefer-offline
+
+      - run: yarn lint
+      - run: npx nx -t build --parallel=3
