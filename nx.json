@@ -1,0 +1,32 @@
+{
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "cacheableOperations": [
+          "prebuild",
+          "build",
+          "tsc"
+        ]
+      }
+    }
+  },
+  "targetDefaults": {
+    "prebuild": {
+      "dependsOn": [
+        "^prebuild"
+      ]
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["{projectRoot}/dist/**/*.js?(.map)}", "{projectRoot}/stories.js"]
+    },
+    "tsc": {
+      "dependsOn": [
+        "^tsc"
+      ],
+      "outputs": ["{projectRoot}/dist/**/*.d.ts?(.map)}", "{projectRoot}/tsconfig.tsbuildinfo"]
+    }
+
+  }
+}

@@ -19,9 +19,9 @@
 
     "build-storybook": "storybook build",
     
-    "check": "npm-run-all --parallel check:*",
-    "check:prettier": "prettier --check \"**/*.{js,ts,tsx,json,md,yml}\"",
-    "check:eslint": "eslint \"**/*.{js,ts,tsx}\"",
+    "lint": "npm-run-all --parallel lint:*",
+    "lint:prettier": "prettier --check \"**/*.{js,ts,tsx,json,md,yml}\"",
+    "lint:eslint": "eslint \"**/*.{js,ts,tsx}\"",
     "depcheck": "yarn ts-node ./scripts/depcheck.ts",
     "validate:builds": "yarn ts-node ./scripts/check-builds.ts",
 
