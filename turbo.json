@@ -10,7 +10,10 @@
     },
     "tsc": {
       "dependsOn": ["^tsc", "^build"],
-      "outputs": ["dist/**/*.ts?(.map)"]
+      "outputs": [
+        "dist/**/*.d.ts?(.map)",
+        "tsconfig.tsbuildinfo"
+      ]
     }
   }
 }
