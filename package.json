@@ -9,7 +9,6 @@
   "scripts": {
     "init": "yarn && yarn build",
     "create-package": "node ./scripts/create-package.js",
-    "pre-build": "node ./scripts/pre-build.js",
     "build": "turbo run build",
     "build:ts": "yarn ts-node ./scripts/ts-build.ts",
     "build-storybook": "storybook build",
