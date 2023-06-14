@@ -5,6 +5,7 @@ export { useControlledValue } from './useControlledValue';
 export { default as useDynamicRefs } from './useDynamicRefs';
 export { default as useEscapeKey } from './useEscapeKey';
 export { default as useEventListener } from './useEventListener';
+export { useForceRerender } from './useForceRerender';
 export { useForwardedRef, useObservedRef } from './useForwardedRef';
 export { default as useIdAllocator } from './useIdAllocator';
 export { default as useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
