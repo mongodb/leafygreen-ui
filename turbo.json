@@ -1,0 +1,16 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "prebuild": {
+      "dependsOn": ["^prebuild"]
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
+    },
+    "tsc": {
+      "dependsOn": ["^tsc", "^build"],
+      "outputs": ["dist/**/*.ts?(.map)"]
+    }
+  }
+}
