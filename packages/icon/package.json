@@ -13,8 +13,8 @@
     }
   },
   "scripts": {
-    "prebuild": "ts-node ./scripts/build.ts --files",
-    "build": "rollup --config rollup.config.mjs",
+    "pre-build": "ts-node ./scripts/build.ts --files",
+    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js",
     "tsc": "tsc --build tsconfig.json"
   },
   "license": "Apache-2.0",
