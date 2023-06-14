@@ -12,7 +12,6 @@
   "scripts": {
     "init": "yarn && yarn build",
     "create-package": "node ./scripts/create-package.js",
-    "prebuild": "lerna run pre-build",
     "build": "lerna run build",
     "tsc": "lerna run tsc",
     
