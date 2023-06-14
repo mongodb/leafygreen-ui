@@ -14,46 +14,36 @@
     "create-package": "node ./scripts/create-package.js",
     "build": "lerna run build",
     "tsc": "lerna run tsc",
-    
     "TODO:postbuild": "yarn run docs:tsdoc",
-
     "build-storybook": "storybook build",
-    
     "lint": "npm-run-all --parallel lint:*",
     "lint:prettier": "prettier --check \"**/*.{js,ts,tsx,json,md,yml}\"",
     "lint:eslint": "eslint \"**/*.{js,ts,tsx}\"",
     "depcheck": "yarn ts-node ./scripts/depcheck.ts",
     "validate:builds": "yarn ts-node ./scripts/check-builds.ts",
-
     "chromatic": "npx chromatic",
-
     "clean": "npm-run-all --parallel clean:*",
     "clean:builds": "rm -rf packages/*/dist packages/*/tsconfig.tsbuildinfo ./tsconfig.tsbuildinfo packages/**/stories.js",
     "clean:modules": "rm -rf node_modules packages/*/node_modules ",
-    
     "docs:tsdoc": "yarn ts-node ./scripts/parse-tsdocs.ts",
-    
     "fix": "npm-run-all --parallel fix:*",
     "fix:prettier": "prettier --write \"**/*.{js,ts,tsx,json,md,yml}\"",
     "fix:eslint": "eslint \"**/*.{js,ts,tsx}\" --fix",
-
     "link": "./scripts/link.sh",
     "link:all": "lerna exec -- yarn link",
-
     "prepublishOnly": "yarn fix && yarn test && yarn build && yarn prepublish:ts-downlevel",
     "prepublish:ts-downlevel": "rm -rf packages/*/dist/ts3.4 && echo packages/*/dist | NODE_NO_WARNINGS=1 xargs -I{} -n1 -P8 downlevel-dts {} {}/ts3.4",
-    
     "publish": "npm-run-all --serial publish:*",
     "publish:packages": "yarn changeset publish --public",
     "publish:storybook": "storybook build && gh-pages --dist ./storybook-static",
-    
     "slackbot": "yarn ts-node ./scripts/slackbot",
     "start": "storybook dev -p 9001 --no-version-updates",
     "test": "npm-run-all --parallel test:*",
-    "test:local":"yarn ts-node ./scripts/test.ts",
-    "test:ssr":"yarn ts-node ./scripts/test.ts --ssr",
+    "test:local": "yarn ts-node ./scripts/test.ts",
+    "test:ssr": "yarn ts-node ./scripts/test.ts --ssr",
     "ts-node": "npx ts-node -P './tsconfig.json' -O '{\"module\": \"commonjs\", \"resolveJsonModule\": true, \"noUnusedLocals\": false}'",
-    "unlink": "./scripts/unlink.sh"
+    "unlink": "./scripts/unlink.sh",
+    "watch": "lerna watch -- lerna run build --since --include-dependents"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -81,6 +71,7 @@
     "@leafygreen-ui/lib": "^10.1.0",
     "@leafygreen-ui/testing-lib": "*",
     "@mdx-js/react": "1.6.22",
+    "@nx/jest": "^16.3.2",
     "@rollup/plugin-babel": "^5.2.0",
     "@rollup/plugin-commonjs": "^15.0.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
