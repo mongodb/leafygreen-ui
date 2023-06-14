@@ -128,7 +128,6 @@ export const LiveExample: StoryFn<MenuProps & { size: Size }> = ({
   open: _,
   size,
   darkMode,
-  open,
   ...args
 }: MenuProps & { size: Size }) => {
   return (
