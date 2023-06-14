@@ -97,7 +97,7 @@ const SampleExpandedContent = (row: LeafyGreenTableRow<object>) => {
 
 const createKitchenSinkData: (depth?: number) => object = (depth = 0) => {
   return {
-    dateCreated: faker.date.past(),
+    dateCreated: faker.date.past({ refDate: new Date('2023-12-26') }),
     frequency: faker.helpers.arrayElement(['Daily', 'Weekly', 'Monthly']),
     clusterType: faker.helpers.arrayElement(['Replica set', 'Sharded cluster']),
     encryptorEnabled: faker.datatype.boolean(0.75),

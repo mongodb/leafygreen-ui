@@ -11,6 +11,17 @@ import Toggle, { ToggleProps } from '.';
 const meta: StoryMetaType<typeof Toggle> = {
   title: 'Components/Toggle',
   component: Toggle,
+  parameters: {
+    default: 'LiveExample',
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        checked: [false, true],
+        size: Object.values(Size),
+        disabled: [false, true],
+      },
+    },
+  },
   argTypes: {
     darkMode: {
       control: 'boolean',
@@ -24,26 +35,24 @@ const meta: StoryMetaType<typeof Toggle> = {
       options: Object.values(Size),
     },
   },
-  parameters: {
-    default: 'Uncontrolled',
-  },
 };
 export default meta;
 const Template: StoryFn<ToggleProps> = (args: ToggleProps) => (
   <Toggle aria-labelledby="toggle" {...args} />
 );
 
-export const Uncontrolled = Template.bind({});
-export const Controlled = Template.bind({});
-Controlled.argTypes = {
-  checked: { control: 'boolean' },
+export const LiveExample = Template.bind({});
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
 export const WithLabel: StoryFn<ToggleProps> = ({
   // eslint-disable-next-line react/prop-types
   ...args
 }) => (
-  <>
+  <div>
     <label
       htmlFor="toggle"
       id="label"
@@ -57,5 +66,12 @@ export const WithLabel: StoryFn<ToggleProps> = ({
     </label>
 
     <Toggle id="toggle" aria-labelledby="toggle" {...args} />
-  </>
+  </div>
 );
+WithLabel.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+
+export const Generated = () => {};

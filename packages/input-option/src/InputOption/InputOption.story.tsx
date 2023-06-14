@@ -30,6 +30,18 @@ const meta: StoryMetaType<typeof InputOption> = {
         'children',
       ],
     },
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        selected: [false, true],
+        isInteractive: [false, true],
+        showWedge: [false, true],
+        disabled: [false, true],
+      },
+    },
+  },
+  args: {
+    children: 'Some text',
   },
   argTypes: {
     disabled: {
@@ -61,9 +73,9 @@ const meta: StoryMetaType<typeof InputOption> = {
 
 export default meta;
 
-const Template: StoryFn<InputOptionProps & InputOptionContentProps> = (
-  props: InputOptionProps & InputOptionContentProps,
-) => {
+export const LiveExample: StoryFn<
+  InputOptionProps & InputOptionContentProps
+> = (props: InputOptionProps & InputOptionContentProps) => {
   const { leftGlyph, rightGlyph, description, ...rest } = props;
   return (
     <InputOption {...rest}>
@@ -79,5 +91,8 @@ const Template: StoryFn<InputOptionProps & InputOptionContentProps> = (
     </InputOption>
   );
 };
+LiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
+};
 
-export const Basic = Template.bind({});
+export const Generated = () => {};
