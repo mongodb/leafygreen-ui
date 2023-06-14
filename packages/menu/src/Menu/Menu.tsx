@@ -9,7 +9,12 @@ import isUndefined from 'lodash/isUndefined';
 import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
-import { useAvailableSpace, useEventListener } from '@leafygreen-ui/hooks';
+import {
+  useAvailableSpace,
+  useBackdropClick,
+  useEventListener,
+  useForceRerender,
+} from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType, keyMap, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
@@ -95,10 +100,9 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   const hasSetInitialOpen = useRef(false);
 
   const [, setClosed] = useState(false);
-  const [currentSubMenu, setCurrentSubMenu] = useState<ElementOf<
-    typeof SubMenu
-  > | null>(null);
+  const currentSubMenuRef = useRef<ElementOf<typeof SubMenu> | null>(null);
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
+  const popoverRef = useRef<HTMLUListElement | null>(null);
 
   const setOpen =
     (typeof controlledOpen === 'boolean' && controlledSetOpen) ||
@@ -110,10 +114,18 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     }
   }, [setOpen, shouldClose]);
 
+  // Used to trigger a state update when the current subMenu changes since the current subMenu is stored in a ref to avoid extra rerenders on initial load.
+  const updateCurrentSubMenu = useForceRerender();
+
   const triggerRef = useRef<HTMLElement>(null);
+  // This hook causes a second re-render on initial load. `useAvailableSpace` uses `useViewportSize` internally, which has internal state that causes re-renders.
   const availableSpace = useAvailableSpace(refEl || triggerRef, spacing);
-  const maxMenuHeightValue = !isUndefined(availableSpace)
-    ? `${Math.min(availableSpace, maxHeight)}px`
+  const memoizedAvailableSpace = useMemo(
+    () => availableSpace,
+    [availableSpace],
+  );
+  const maxMenuHeightValue = !isUndefined(memoizedAvailableSpace)
+    ? `${Math.min(memoizedAvailableSpace, maxHeight)}px`
     : 'unset';
 
   const { updatedChildren, refs } = React.useMemo(() => {
@@ -154,7 +166,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
         const title = props?.title ?? false;
 
         const onFocus = ({ target }: React.FocusEvent<HTMLElement>) => {
-          setFocused(target);
+          focusedRef.current = target;
         };
 
         if (
@@ -167,31 +179,45 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 
           titleArr.push(title);
 
-          if (!currentSubMenu && props.active && !hasSetInitialOpen.current) {
-            setCurrentSubMenu(child);
+          const shouldOpenActiveSubMenu =
+            !currentSubMenuRef.current &&
+            props.active &&
+            !hasSetInitialOpen.current;
+
+          // This opens the active submenu on inital load
+          if (shouldOpenActiveSubMenu) {
+            // Using a ref here prevents an extra rerender on initial load.
+            currentSubMenuRef.current = child;
             hasSetInitialOpen.current = true;
           }
 
           const isCurrentSubMenu =
-            (currentSubMenu?.props as SubMenuProps)?.title === title;
+            (currentSubMenuRef.current?.props as SubMenuProps)?.title === title;
 
           return React.cloneElement(child, {
             ref: setRef,
             open: isCurrentSubMenu,
             setOpen: (state: boolean) => {
               if (currentChildRef) {
-                setFocused(currentChildRef);
+                focusedRef.current = currentChildRef;
               }
 
-              setCurrentSubMenu(state ? child : null);
+              currentSubMenuRef.current = state ? child : null;
+              hasSetInitialOpen.current = true;
+              // Force update since the updated currentSubMenu is set in a ref.
+              updateCurrentSubMenu();
             },
             onKeyDown: (e: React.KeyboardEvent<HTMLButtonElement>) => {
               if (e.keyCode === keyMap.ArrowLeft && isCurrentSubMenu) {
-                setCurrentSubMenu(null);
+                currentSubMenuRef.current = null;
+                hasSetInitialOpen.current = true;
+                updateCurrentSubMenu();
               }
 
               if (e.keyCode === keyMap.ArrowRight) {
-                setCurrentSubMenu(child);
+                currentSubMenuRef.current = child;
+                hasSetInitialOpen.current = true;
+                updateCurrentSubMenu();
               }
             },
             onFocus,
@@ -237,18 +263,16 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     }
 
     return { updatedChildren: updateChildren(children), refs };
-  }, [children, currentSubMenu, open, handleClose]);
+  }, [children, open, updateCurrentSubMenu, handleClose]);
 
-  const [focused, setFocused] = useState<HTMLElement>(refs[0] || null);
-
-  const [popoverNode, setPopoverNode] = useState<HTMLUListElement | null>(null);
+  const focusedRef = useRef<HTMLElement | null>(refs[0] || null);
 
   const setFocus = (el: HTMLElement | null) => {
     if (el == null) {
       return;
     }
 
-    setFocused(el);
+    focusedRef.current = el;
     el.focus();
   };
 
@@ -259,18 +283,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     }
   }, [open]);
 
-  const handleBackdropClick = useCallback(
-    (e: MouseEvent) => {
-      if (popoverNode && !popoverNode.contains(e.target as HTMLElement)) {
-        handleClose();
-      }
-    },
-    [handleClose, popoverNode],
-  );
-
-  useEventListener('click', handleBackdropClick, {
-    enabled: open,
-  });
+  useBackdropClick(handleClose, [popoverRef, triggerRef], open);
 
   function handleKeyDown(e: KeyboardEvent) {
     let refToFocus: HTMLElement;
@@ -278,14 +291,18 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     switch (e.keyCode) {
       case keyMap.ArrowDown:
         e.preventDefault(); // Prevents page scrolling
-        refToFocus = refs[(refs.indexOf(focused!) + 1) % refs.length];
+        refToFocus =
+          refs[(refs.indexOf(focusedRef.current!) + 1) % refs.length];
+
         setFocus(refToFocus);
         break;
 
       case keyMap.ArrowUp:
         e.preventDefault(); // Prevents page scrolling
         refToFocus =
-          refs[(refs.indexOf(focused!) - 1 + refs.length) % refs.length];
+          refs[
+            (refs.indexOf(focusedRef.current!) - 1 + refs.length) % refs.length
+          ];
         setFocus(refToFocus);
         break;
 
@@ -356,8 +373,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
             {...rest}
             className={scrollContainerStyle}
             role="menu"
-            ref={setPopoverNode}
             onClick={e => e.stopPropagation()}
+            ref={popoverRef}
           >
             {updatedChildren}
           </ul>
