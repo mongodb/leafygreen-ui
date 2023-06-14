@@ -48,4 +48,3 @@ packages/**/stories.js*
 build-storybook.log
 
 .turbo
-scripts/tmp.*.ts
