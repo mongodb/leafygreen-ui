@@ -13,28 +13,62 @@ import { NumberInput, NumberInputProps } from '.';
 
 const unitOptions = [
   {
-    displayName: 'One(s)',
-    value: 'one',
+    displayName: 'Hours',
+    value: 'hours',
   },
   {
-    displayName: 'Two(s)',
-    value: 'two',
+    displayName: 'Days',
+    value: 'days',
   },
   {
-    displayName: 'Three(s)',
-    value: 'three',
+    displayName: 'Months',
+    value: 'months',
   },
   {
-    displayName: 'FourFiveSixSeven(s)',
-    value: 'four',
+    displayName: 'Astronomical units',
+    value: 'au',
   },
 ];
 
 const meta: StoryMetaType<typeof NumberInput> = {
   title: 'Components/NumberInput',
   component: NumberInput,
+  parameters: {
+    default: 'LiveExample',
+    controls: {
+      exclude: [
+        ...storybookExcludedControlParams,
+        'as',
+        'children',
+        'value',
+        'onSelectChange',
+      ],
+    },
+    generate: {
+      storyNames: ['Unitless', 'WithUnits', 'WithUnitSelect'],
+      combineArgs: {
+        darkMode: [false, true],
+        size: Object.values(Size),
+        label: ['Label', undefined],
+        description: ['Description', undefined],
+        state: Object.values(State).reverse(),
+        errorMessage: [undefined, 'Error message'],
+        disabled: [false, true],
+      },
+      excludeCombinations: [
+        {
+          label: undefined,
+          description: 'Description',
+        },
+        {
+          state: State.None,
+          errorMessage: 'Error message',
+        },
+      ],
+    },
+  },
   args: {
-    label: 'label',
+    label: 'Label',
     disabled: false,
   },
   argTypes: {
@@ -59,32 +93,23 @@ const meta: StoryMetaType<typeof NumberInput> = {
     unit: {
       control: 'text',
     },
-    unitOptions: {
-      control: 'none',
-    },
+    // unitOptions: {
+    //   control: 'none',
+    // },
     errorMessage: {
       control: 'text',
     },
     placeholder: {
       control: 'text',
     },
-  },
-  parameters: {
-    default: 'Basic',
-    controls: {
-      exclude: [
-        ...storybookExcludedControlParams,
-        'as',
-        'children',
-        'value',
-        'onSelectChange',
-      ],
+    withOptions: {
+      control: 'boolean',
     },
   },
 };
 export default meta;
 
-type StoryNumberInputProps = NumberInputProps & { view: string };
+type StoryNumberInputProps = NumberInputProps;
 
 const Template: StoryFn<StoryNumberInputProps> = (
   args: StoryNumberInputProps,
@@ -127,50 +152,30 @@ const Template: StoryFn<StoryNumberInputProps> = (
   );
 };
 
-// TODO: temp story for .design. For now consumers won't be able to change unit/unitOptions props. We need to figure out a way to make the story friendly to both designers and engineers.
-export const Basic = Template.bind({});
-Basic.args = {
+export const LiveExample = Template.bind({});
+LiveExample.args = {
   unitOptions: unitOptions,
   unit: unitOptions[0].displayName,
 };
-Basic.argTypes = {
-  unit: {
-    control: 'none',
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
   },
 };
 
-export const Unitless = Template.bind({});
+export const Unitless = () => <></>;
 Unitless.args = {
-  unitOptions: [],
-  unit: '',
-};
-Unitless.argTypes = {
-  unit: {
-    control: 'none',
-  },
+  unit: undefined,
 };
 
-export const Unit = Template.bind({});
-Unit.args = {
-  unitOptions: [],
-  unit: 'day',
-};
-Unit.argTypes = {};
-
-export const Select = Template.bind({});
-Select.args = {
-  unitOptions: unitOptions,
+export const WithUnits = () => <></>;
+WithUnits.args = {
   unit: unitOptions[0].displayName,
-};
-Select.argTypes = {
-  unit: {
-    control: 'none',
-  },
-  unitOptions: {
-    control: 'object',
-  },
+  unitOptions: undefined,
 };
 
-export const Uncontrolled = ({ ...props }: NumberInputProps) => {
-  return <NumberInput {...props} />;
+export const WithUnitSelect = () => <></>;
+WithUnitSelect.args = {
+  unit: unitOptions[0].displayName,
+  unitOptions: unitOptions,
 };

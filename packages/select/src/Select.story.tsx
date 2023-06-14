@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -8,15 +8,28 @@ import {
   StoryMetaType,
 } from '@leafygreen-ui/lib';
 
-import { Option, OptionGroup, Select, type SelectProps } from '.';
+import { Option, OptionGroup, Select, type SelectProps, Size, State } from '.';
 
 const meta: StoryMetaType<typeof Select> = {
   title: 'Components/Select',
   component: Select,
   parameters: {
-    default: 'Uncontrolled',
+    default: 'LiveExample',
     controls: {
       exclude: [...storybookExcludedControlParams, 'children', 'value'],
+    },
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        state: Object.values(State),
+        size: Object.values(Size),
+        disabled: [false, true],
+      },
+      args: {
+        className: css`
+          width: 256px;
+        `,
+      },
     },
   },
   args: {
@@ -59,7 +72,7 @@ const meta: StoryMetaType<typeof Select> = {
 };
 export default meta;
 
-export const Uncontrolled: StoryFn<SelectProps> = ({
+export const LiveExample: StoryFn<SelectProps> = ({
   className,
   ...args
 }: SelectProps) => (
@@ -75,33 +88,13 @@ export const Uncontrolled: StoryFn<SelectProps> = ({
     )}
   />
 );
-
-export const Controlled: StoryFn<SelectProps> = ({
-  className,
-  defaultValue,
-  readOnly,
-  ...args
-}: SelectProps) => {
-  const [value, setValue] = useState('cat');
-  return (
-    <Select
-      {...args}
-      data-test="hello-world"
-      className={cx(
-        css`
-          min-width: 200px;
-          max-width: 400px;
-        `,
-        className,
-      )}
-      readOnly={false}
-      value={value}
-      onChange={setValue}
-    />
-  );
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
-export const WithIcons = Uncontrolled.bind({});
+export const WithIcons = LiveExample.bind({});
 WithIcons.args = {
   children: [
     <OptionGroup key="Common" label="Common">
@@ -128,3 +121,10 @@ WithIcons.args = {
     </Option>,
   ],
 };
+WithIcons.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+
+export const Generated = () => {};

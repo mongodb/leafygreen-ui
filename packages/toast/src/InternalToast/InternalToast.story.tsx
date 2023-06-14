@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-key */
+/* eslint-disable react/display-name */
 import React from 'react';
 import { StoryContext, StoryFn } from '@storybook/react';
 
@@ -24,6 +26,47 @@ const meta: StoryMetaType<typeof InternalToast> = {
     controls: {
       exclude: [...storybookExcludedControlParams, 'open'],
     },
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        description: [
+          undefined,
+          'Lorem ipsum dolor sit amet',
+          <span>
+            This is a <Link>Link</Link>
+          </span>,
+        ],
+        dismissible: [true, false],
+        variant: Object.values(Variant),
+        progress: [0, 1],
+        actionElement: [undefined, <Button size="small">Action</Button>],
+      },
+      args: {
+        className: css`
+          position: relative;
+        `,
+      },
+      excludeCombinations: [
+        {
+          progress: 1,
+          variant: [
+            Variant.Success,
+            Variant.Note,
+            Variant.Warning,
+            Variant.Important,
+          ],
+        },
+        {
+          actionElement: <Button />,
+          variant: [
+            Variant.Success,
+            Variant.Note,
+            Variant.Warning,
+            Variant.Important,
+          ],
+        },
+      ],
+    },
   },
   decorators: [
     (
@@ -36,7 +79,7 @@ const meta: StoryMetaType<typeof InternalToast> = {
     ),
   ],
   args: {
-    title: 'Velit ea exercitation qui aute dolor proident.',
+    title: 'This is a toast',
     description: 'Exercitation incididunt ea proident velit mollit',
     variant: Variant.Note,
     progress: 0,
@@ -66,6 +109,9 @@ export default meta;
 export const Basic: StoryFn<InternalToastProps> = args => (
   <InternalToast {...args} />
 );
+Basic.parameters = {
+  chromatic: { disableSnapshot: true },
+};
 
 export const WithLink = Basic.bind({});
 WithLink.args = {
@@ -75,6 +121,9 @@ WithLink.args = {
       <Link href="http://localhost:9001">Link style</Link>
     </>
   ),
+};
+WithLink.parameters = {
+  chromatic: { disableSnapshot: true },
 };
 
 export const WithAction = Basic.bind({});
@@ -88,4 +137,7 @@ WithAction.args = {
       <Link href="http://localhost:9001">Link style</Link>
     </>
   ),
+};
+WithAction.parameters = {
+  chromatic: { disableSnapshot: true },
 };
