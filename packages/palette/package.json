@@ -13,7 +13,8 @@
     }
   },
   "scripts": {
-    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
+    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js",
+    "tsc": "tsc --build tsconfig.json"
   },
   "license": "Apache-2.0",
   "publishConfig": {
@@ -21,8 +22,6 @@
   },
   "devDependencies": {
     "@leafygreen-ui/emotion": "^4.0.4",
-    "@leafygreen-ui/tokens": "^2.1.0",
-    "@leafygreen-ui/tooltip": "^10.0.0",
     "lodash": "^4.17.21",
     "polished": "^4.2.2"
   },
