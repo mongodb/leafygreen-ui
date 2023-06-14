@@ -12,10 +12,6 @@ import {
 } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { Align } from '@leafygreen-ui/popover';
-import {
-  getAlign,
-  getJustify,
-} from '@leafygreen-ui/popover/src/Popover.testutils';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
