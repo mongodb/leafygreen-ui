@@ -14,7 +14,7 @@ import Popover, { Align, Justify, PopoverProps } from '.';
 const popoverStyle = css`
   border: 1px solid ${palette.gray.light1};
   text-align: center;
-  padding: 20px;
+  padding: 12px;
   max-height: 100%;
   overflow: hidden;
   // Reset these properties since they'll be inherited
@@ -78,6 +78,51 @@ const referenceElPositions: { [key: string]: string } = {
 const meta: StoryMetaType<typeof Popover> = {
   title: 'Components/Popover',
   component: Popover,
+  parameters: {
+    default: 'LiveExample',
+    controls: {
+      exclude: [
+        ...storybookExcludedControlParams,
+        'children',
+        'active',
+        'refEl',
+        'portalClassName',
+        'refButtonPosition',
+        'usePortal',
+      ],
+    },
+    generate: {
+      combineArgs: {
+        align: Object.values(Align),
+        justify: Object.values(Justify),
+      },
+      args: {
+        active: true,
+        children: <div className={popoverStyle}>Popover content</div>,
+      },
+      // eslint-disable-next-line react/display-name
+      decorator: Instance => {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const ref = useRef(null);
+
+        return (
+          <div
+            className={css`
+              position: relative;
+              width: 50vw;
+              height: 150px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            `}
+          >
+            <Button ref={ref}>refEl</Button>
+            <Instance refEl={ref} />
+          </div>
+        );
+      },
+    },
+  },
   args: {
     align: Align.Top,
     justify: Justify.Start,
@@ -99,20 +144,6 @@ const meta: StoryMetaType<typeof Popover> = {
       defaultValue: 'centered',
     },
   },
-  parameters: {
-    default: 'Basic',
-    controls: {
-      exclude: [
-        ...storybookExcludedControlParams,
-        'children',
-        'active',
-        'refEl',
-        'portalClassName',
-        'refButtonPosition',
-        'usePortal',
-      ],
-    },
-  },
 };
 export default meta;
 
@@ -121,7 +152,7 @@ type PopoverStoryProps = PopoverProps & {
   refButtonPosition: string;
 };
 
-export const Basic: StoryFn<PopoverStoryProps> = ({
+export const LiveExample: StoryFn<PopoverStoryProps> = ({
   refButtonPosition,
   buttonText,
   ...args
@@ -143,6 +174,11 @@ export const Basic: StoryFn<PopoverStoryProps> = ({
       </Button>
     </div>
   );
+};
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
 // @ts-expect-error - Portal props (usePortal)
@@ -178,11 +214,14 @@ export const ScrollableContainer: StoryFn<PopoverStoryProps> = ({
     </div>
   );
 };
-
+ScrollableContainer.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 ScrollableContainer.args = {
   usePortal: true,
 };
-
 ScrollableContainer.argTypes = {
   usePortal: { control: 'none' },
   portalClassName: { control: 'none' },
@@ -190,3 +229,5 @@ ScrollableContainer.argTypes = {
   className: { control: 'none' },
   active: { control: 'none' },
 };
+
+export const Generated = () => {};

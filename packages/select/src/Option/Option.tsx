@@ -13,8 +13,8 @@ import {
   transitionDuration,
 } from '@leafygreen-ui/tokens';
 
-import SelectContext from './SelectContext';
-import { colorSets } from './styleSets';
+import SelectContext from '../SelectContext';
+import { colorSets } from '../styleSets';
 
 const OptionClassName = createUniqueClassName('option');
 

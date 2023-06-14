@@ -23,69 +23,26 @@ import {
 const meta: StoryMetaType<typeof SearchInput> = {
   title: 'Components/SearchInput',
   component: SearchInput,
+  parameters: {
+    default: 'LiveExample',
+    controls: {
+      exclude: [...storybookExcludedControlParams, 'value', 'id', 'showWedge'],
+    },
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        disabled: [false, true],
+      },
+    },
+  },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
     state: { control: 'select', options: Object.values(State) },
     placeholder: { control: 'text' },
     disabled: { control: 'boolean' },
   },
-  parameters: {
-    default: 'Basic',
-    controls: {
-      exclude: [...storybookExcludedControlParams, 'value', 'id', 'showWedge'],
-    },
-  },
 };
 export default meta;
-
-export const Basic: StoryFn<SearchInputProps> = (props: SearchInputProps) => (
-  <SearchInput
-    className={css`
-      width: 200px;
-    `}
-    {...props}
-  />
-);
-
-export const WithResults: StoryFn<SearchInputProps> = (
-  props: SearchInputProps,
-) => (
-  <SearchInput
-    className={css`
-      width: 200px;
-    `}
-    onChange={() => {
-      console.log('SB: Change');
-    }}
-    {...props}
-  >
-    <SearchResult
-      onClick={() => {
-        console.log('SB: Click Apple');
-      }}
-      description="This is a description"
-    >
-      Apple
-    </SearchResult>
-    <SearchResult>Banana</SearchResult>
-    <SearchResult as="a" href="#" description="This is a link">
-      Carrot
-    </SearchResult>
-    <SearchResult description="This is a very very long description. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.">
-      Dragonfruit
-    </SearchResult>
-    <SearchResultGroup label="Peppers">
-      <SearchResult description="A moderately hot chili pepper used to flavor dishes">
-        Cayenne
-      </SearchResult>
-      <SearchResult>Ghost pepper</SearchResult>
-      <SearchResult>Habanero</SearchResult>
-      <SearchResult>Jalapeño</SearchResult>
-      <SearchResult>Red pepper</SearchResult>
-      <SearchResult>Scotch bonnet</SearchResult>
-    </SearchResultGroup>
-  </SearchInput>
-);
 
 const data = [
   {
@@ -214,7 +171,7 @@ const data = [
   },
 ];
 
-export const LiveSearch: StoryFn<SearchInputProps> = (
+export const LiveExample: StoryFn<SearchInputProps> = (
   args: SearchInputProps,
 ) => {
   const [currentPage, setPage] = useState<typeof data[0]>();
@@ -281,8 +238,68 @@ export const LiveSearch: StoryFn<SearchInputProps> = (
     </div>
   );
 };
-LiveSearch.argTypes = {
+LiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+LiveExample.argTypes = {
   onChange: { action: 'Change' },
   onSubmit: { action: 'Submit' },
   onClick: { action: 'Click' },
 };
+
+export const Basic: StoryFn<SearchInputProps> = (props: SearchInputProps) => (
+  <SearchInput
+    className={css`
+      width: 200px;
+    `}
+    {...props}
+  />
+);
+Basic.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+
+export const WithResults: StoryFn<SearchInputProps> = (
+  props: SearchInputProps,
+) => (
+  <SearchInput
+    className={css`
+      width: 200px;
+    `}
+    onChange={() => {
+      console.log('SB: Change');
+    }}
+    {...props}
+  >
+    <SearchResult
+      onClick={() => {
+        console.log('SB: Click Apple');
+      }}
+      description="This is a description"
+    >
+      Apple
+    </SearchResult>
+    <SearchResult>Banana</SearchResult>
+    <SearchResult as="a" href="#" description="This is a link">
+      Carrot
+    </SearchResult>
+    <SearchResult description="This is a very very long description. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.">
+      Dragonfruit
+    </SearchResult>
+    <SearchResultGroup label="Peppers">
+      <SearchResult description="A moderately hot chili pepper used to flavor dishes">
+        Cayenne
+      </SearchResult>
+      <SearchResult>Ghost pepper</SearchResult>
+      <SearchResult>Habanero</SearchResult>
+      <SearchResult>Jalapeño</SearchResult>
+      <SearchResult>Red pepper</SearchResult>
+      <SearchResult>Scotch bonnet</SearchResult>
+    </SearchResultGroup>
+  </SearchInput>
+);
+WithResults.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+
+export const Generated = () => {};

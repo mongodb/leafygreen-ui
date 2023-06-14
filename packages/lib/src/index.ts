@@ -10,8 +10,14 @@ export { validateChildren } from './validateChildren';
 export { createSyntheticEvent } from './createSyntheticEvent';
 
 export {
+  type ExtendedComponentProps,
+  type GeneratedStoryConfig,
+  type GeneratedStoryFn,
+  type InstanceDecorator,
+  type PlayFn,
   StoryMeta,
   type StoryMetaType,
+  type StoryType,
   storybookArgTypes,
   storybookExcludedArgTypes,
   storybookExcludedControlParams,

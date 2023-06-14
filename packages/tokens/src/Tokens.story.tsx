@@ -101,9 +101,6 @@ export const TypeScales = () => {
               margin: ${spacing[3]}px 0;
             `}
           >
-            <code>
-              typeScales.{scale}: {JSON.stringify(typeScales[scale])}
-            </code>{' '}
             <div>{scale}</div>
           </div>
         );
@@ -125,9 +122,6 @@ export const FontFamilies = () => (
             margin: ${spacing[3]}px 0;
           `}
         >
-          <code>
-            fontFamilies.{family}: {fontFamilies[family]}
-          </code>
           <div>{family}</div>
         </div>
       );
@@ -208,4 +202,9 @@ export const InteractionRings = () => {
       </div>
     </div>
   );
+};
+InteractionRings.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };

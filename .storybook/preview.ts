@@ -1,5 +1,7 @@
 import ComponentPreview from './decorators/ComponentPreview';
 import ReactStrictMode from './decorators/ReactStrictMode';
+import PropCombinationsDecorator from './decorators/PropCombinations';
+
 import {
   storybookExcludedArgTypes,
   storybookExcludedControlParams,
@@ -58,7 +60,11 @@ const parameters = {
   },
 };
 
-const decorators = [ReactStrictMode, ComponentPreview];
+export const decorators = [
+  PropCombinationsDecorator,
+  ReactStrictMode,
+  ComponentPreview,
+];
 
 const preview: Preview = {
   parameters,

@@ -15,7 +15,14 @@ import ConfirmationModal, { ConfirmationModalProps, Variant } from '.';
 const meta: StoryMetaType<typeof ConfirmationModal> = {
   title: 'Components/Modals/ConfirmationModal',
   component: ConfirmationModal,
+  parameters: {
+    default: 'LiveExample',
+    controls: {
+      exclude: [...storybookExcludedControlParams, 'open', 'initialFocus'],
+    },
+  },
   args: {
+    open: true,
     title: 'Confirm Title Here',
     buttonText: 'Confirm',
     children:
@@ -42,17 +49,11 @@ const meta: StoryMetaType<typeof ConfirmationModal> = {
       options: Object.values(CloseIconColor),
     },
   },
-  parameters: {
-    default: 'Basic',
-    controls: {
-      exclude: [...storybookExcludedControlParams, 'open', 'initialFocus'],
-    },
-  },
 };
 
 export default meta;
 
-const ControlledTemplate: StoryFn<ConfirmationModalProps> = ({
+export const LiveExample: StoryFn<ConfirmationModalProps> = ({
   // eslint-disable-next-line react/prop-types
   darkMode,
   ...args
@@ -60,7 +61,7 @@ const ControlledTemplate: StoryFn<ConfirmationModalProps> = ({
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   return (
-    <>
+    <div>
       <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
         Open Modal
       </Button>
@@ -71,17 +72,30 @@ const ControlledTemplate: StoryFn<ConfirmationModalProps> = ({
         onConfirm={handleClose}
         darkMode={darkMode}
       />
-    </>
+    </div>
+  );
+};
+LiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+
+export const Basic: StoryFn<ConfirmationModalProps> = ({
+  // eslint-disable-next-line react/prop-types
+  darkMode,
+  ...args
+}) => {
+  return (
+    <div
+      className={css`
+        height: 100vh;
+      `}
+    >
+      <ConfirmationModal {...args} open={true} darkMode={darkMode} />;
+    </div>
   );
 };
 
-export const Basic = ControlledTemplate.bind({});
-Basic.args = {
-  open: true,
-};
-
-export const Delete = ControlledTemplate.bind({});
-Delete.args = {
-  open: true,
-  variant: Variant.Danger,
+export const DarkMode = Basic.bind({});
+DarkMode.args = {
+  darkMode: true,
 };

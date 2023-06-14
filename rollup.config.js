@@ -139,6 +139,7 @@ const baseConfigForFormat = format => ({
       '@emotion/server/create-instance',
       '@faker-js/faker',
       '@testing-library/react',
+      '@storybook/testing-library',
       'clipboard',
       'focus-trap-react',
       'highlight.js',

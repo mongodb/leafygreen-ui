@@ -8,40 +8,52 @@ import {
 } from '@leafygreen-ui/lib';
 import Tooltip from '@leafygreen-ui/tooltip';
 
-import { RadioBox, RadioBoxGroup, type RadioBoxGroupProps } from '.';
+import { RadioBox, RadioBoxGroup, type RadioBoxGroupProps, Size } from '.';
 
 const meta: StoryMetaType<typeof RadioBoxGroup> = {
   title: 'Components/RadioBoxGroup',
   component: RadioBoxGroup,
+  parameters: {
+    default: 'LiveExample',
+    controls: {
+      exclude: [...storybookExcludedControlParams, 'children', 'name', 'value'],
+    },
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        size: Object.values(Size),
+      },
+    },
+  },
+  args: {
+    children: (
+      <>
+        <RadioBox checked value="1">
+          Option One
+        </RadioBox>
+        <RadioBox value="2">Option Two</RadioBox>
+        <RadioBox disabled={true} value="option-3">
+          Disabled Option
+        </RadioBox>
+      </>
+    ),
+  },
   argTypes: {
-    children: { control: false },
-    onChange: { control: false },
     name: { control: 'text' },
     value: { control: 'text' },
     darkMode: storybookArgTypes.darkMode,
   },
-  parameters: {
-    controls: {
-      exclude: [...storybookExcludedControlParams, 'children', 'name', 'value'],
-    },
-    default: 'Uncontrolled',
-  },
 };
 export default meta;
-export const Uncontrolled: StoryFn<RadioBoxGroupProps> = (
+
+export const LiveExample: StoryFn<RadioBoxGroupProps> = (
   args: RadioBoxGroupProps,
-) => (
-  <RadioBoxGroup name="radio-box-group-default" {...args}>
-    <RadioBox value="1">Option One</RadioBox>
-    <RadioBox value="2">Option Two</RadioBox>
-    <RadioBox default value="3">
-      Option Three
-    </RadioBox>
-    <RadioBox disabled={true} value="option-4">
-      Disabled Option
-    </RadioBox>
-  </RadioBoxGroup>
-);
+) => <RadioBoxGroup name="radio-box-group-default" {...args} />;
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const Controlled: StoryFn<RadioBoxGroupProps> = (
   args: RadioBoxGroupProps,
@@ -53,8 +65,16 @@ export const Controlled: StoryFn<RadioBoxGroupProps> = (
   };
 
   return (
-    <Uncontrolled {...args} onChange={handleChange} value={activeRadioBox} />
+    <LiveExample {...args} onChange={handleChange} value={activeRadioBox} />
   );
+};
+Controlled.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+Controlled.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
 export const TooltipTest = ({ darkMode }: RadioBoxGroupProps) => {
@@ -89,3 +109,8 @@ export const TooltipTest = ({ darkMode }: RadioBoxGroupProps) => {
     </RadioBoxGroup>
   );
 };
+TooltipTest.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+
+export const Generated = () => {};

@@ -2,23 +2,28 @@ import React, { useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import {
+  storybookArgTypes,
   storybookExcludedControlParams,
-  StoryMetaType,
+  type StoryMetaType,
+  type StoryType,
 } from '@leafygreen-ui/lib';
 
 import Pagination, { PaginationProps } from '.';
 
+const fn = () => {};
+
 const meta: StoryMetaType<typeof Pagination> = {
   title: 'Components/Pagination',
   component: Pagination,
-  args: {
-    onCurrentPageOptionChange: undefined,
-  },
-  argTypes: {
-    numTotalItems: { control: 'number' },
-  },
+  decorators: [
+    Story => (
+      <div style={{ width: '700px' }}>
+        <Story />
+      </div>
+    ),
+  ],
   parameters: {
-    default: 'Basic',
+    default: 'LiveExample',
     controls: {
       exclude: [
         ...storybookExcludedControlParams,
@@ -30,21 +35,50 @@ const meta: StoryMetaType<typeof Pagination> = {
         'onItemsPerPageOptionChange',
       ],
     },
+    generate: {
+      storyNames: ['FixedItemsPerPage', 'VariableItemsPerPage'],
+      combineArgs: {
+        darkMode: [false, true],
+        numTotalItems: [undefined, 5, 150], // include case when numTotalItems < itemsPerPage
+        currentPage: [undefined, 1, 5, 10],
+        shouldDisableBackArrow: [false, true],
+        shouldDisableForwardArrow: [false, true],
+        onCurrentPageOptionChange: [undefined, fn],
+      },
+      excludeCombinations: [
+        {
+          numTotalItems: undefined,
+          onCurrentPageOptionChange: fn,
+        },
+        {
+          currentPage: undefined,
+          onCurrentPageOptionChange: fn,
+        },
+        {
+          currentPage: [5, 10],
+          numTotalItems: 5,
+          itemsPerPage: 15,
+        },
+      ],
+      // eslint-disable-next-line react/display-name
+      decorator: Instance => (
+        <div style={{ width: '500px' }}>
+          <Instance />
+        </div>
+      ),
+    },
+  },
+  args: {
+    onCurrentPageOptionChange: undefined,
+  },
+  argTypes: {
+    darkMode: storybookArgTypes.darkMode,
+    numTotalItems: { control: 'number' },
   },
 };
 export default meta;
 
-const Template: StoryFn<PaginationProps> = props => (
-  <div style={{ width: '700px' }}>
-    <Pagination {...props} />
-  </div>
-);
-
-export const Default: StoryFn<PaginationProps> = args => {
-  return <Template {...args} />;
-};
-
-export const Basic: StoryFn<PaginationProps> = args => {
+export const LiveExample: StoryType<typeof Pagination> = args => {
   const [currentPage, setCurrentPage] = useState<number>(args.currentPage ?? 1);
   const [itemsPerPage, setItemsPerPage] = useState<number>(
     args.itemsPerPageOptions ? args.itemsPerPageOptions[0] : 10,
@@ -64,7 +98,7 @@ export const Basic: StoryFn<PaginationProps> = args => {
   };
 
   return (
-    <Template
+    <Pagination
       {...args}
       currentPage={currentPage}
       itemsPerPage={itemsPerPage}
@@ -74,7 +108,10 @@ export const Basic: StoryFn<PaginationProps> = args => {
     />
   );
 };
-Basic.args = {
+LiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+LiveExample.args = {
   numTotalItems: 1021,
   itemsPerPageOptions: [10, 50, 100],
 };
@@ -104,7 +141,7 @@ export const WithCurrentPageOptions: StoryFn<PaginationProps> = args => {
     };
 
   return (
-    <Template
+    <Pagination
       {...args}
       currentPage={currentPage}
       onCurrentPageOptionChange={handleCurrentPageChange}
@@ -115,8 +152,28 @@ export const WithCurrentPageOptions: StoryFn<PaginationProps> = args => {
     />
   );
 };
-
+WithCurrentPageOptions.parameters = {
+  chromatic: { disableSnapshot: true },
+};
 WithCurrentPageOptions.args = {
   numTotalItems: 1021,
   itemsPerPageOptions: [10, 50, 100],
+};
+
+export const FixedItemsPerPage: StoryType<typeof Pagination> = () => <></>;
+FixedItemsPerPage.parameters = {
+  generate: {
+    args: {
+      onItemsPerPageOptionChange: undefined,
+    },
+  },
+};
+
+export const VariableItemsPerPage: StoryType<typeof Pagination> = () => <></>;
+VariableItemsPerPage.parameters = {
+  generate: {
+    args: {
+      onItemsPerPageOptionChange: fn,
+    },
+  },
 };

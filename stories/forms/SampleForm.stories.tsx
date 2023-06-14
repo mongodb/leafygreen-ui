@@ -13,6 +13,9 @@ export default {
 export const Vertical = () => {
   return <div></div>;
 };
+Vertical.parameters = {
+  chromatic: { disableSnapshot: true },
+};
 
 export const Horizontal = () => {
   return (
@@ -28,4 +31,7 @@ export const Horizontal = () => {
       </Select>
     </div>
   );
+};
+Horizontal.parameters = {
+  chromatic: { disableSnapshot: true },
 };

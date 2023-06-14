@@ -42,6 +42,9 @@
     "@leafygreen-ui/tooltip": "^10.0.3",
     "@leafygreen-ui/typography": "^16.5.0"
   },
+  "devDependencies": {
+    "@leafygreen-ui/tokens": "^2.1.0"
+  },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.3"
   }
