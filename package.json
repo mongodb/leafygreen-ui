@@ -6,29 +6,14 @@
     "node": ">= 16.20.0",
     "npm": ">= 8.19.4"
   },
-  "keywords": [
-    "mongodb",
-    "ui",
-    "kit",
-    "components",
-    "react",
-    "uikit",
-    "leafygreen"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mongodb/leafygreen-ui.git"
-  },
-  "bugs": {
-    "url": "https://github.com/mongodb/leafygreen-ui/issues"
-  },
   "scripts": {
     "init": "yarn && yarn build",
     "create-package": "node ./scripts/create-package.js",
     "pre-build": "node ./scripts/pre-build.js",
     "build": "npm-run-all --serial \"build:* {@}\" --",
     "build:packages": "yarn ts-node ./scripts/build.ts",
-    "build:ts": "lerna exec -- tsc --build",
+    "build:ts:lerna": "lerna exec -- tsc --build",
+    "build:ts:legacy": "npx ts-node ./scripts/ts-build.ts",
     "build-storybook": "storybook build",
     "check": "npm-run-all --parallel check:*",
     "check:prettier": "prettier --check \"**/*.{js,ts,tsx,json,md,yml}\"",
@@ -59,7 +44,6 @@
     "test": "yarn ts-node ./scripts/test.ts",
     "test:local": "yarn test",
     "test:ssr": "yarn test --ssr",
-    "ts-node": "npx ts-node -P './tsconfig.json' -O '{\"module\": \"commonjs\", \"resolveJsonModule\": true}'",
     "unlink": "./scripts/unlink.sh",
     "watch": "yarn build -- -- --watch"
   },
@@ -193,8 +177,25 @@
     }
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "tools/*"
   ],
+  "keywords": [
+    "mongodb",
+    "ui",
+    "kit",
+    "components",
+    "react",
+    "uikit",
+    "leafygreen"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mongodb/leafygreen-ui/issues"
+  },
   "version": "0.0.0",
   "dependencies": {
     "@mdx-js/react": "1.6.22"
