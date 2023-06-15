@@ -9,30 +9,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  install:
-    name: Install node modules
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2
-
-      - name: Use Node.js 16
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-          cache: yarn
-          cache-dependency-path: 'yarn.lock'
-
-      - name: Install
-        run: yarn install --frozen-lockfile --prefer-offline
-
-    outputs:
-      yarn-cache-dir: ${{ steps.get-yarn-cache-dir.outputs.dir }}
-
-  lints:
+  lint:
     name: Check lints
     runs-on: ubuntu-latest
-    needs: install
     steps:
       - uses: actions/checkout@v2
 
@@ -48,10 +27,12 @@ jobs:
       - name: lint
         run: yarn check
 
+    outputs:
+      yarn-cache-dir: ${{ steps.get-yarn-cache-dir.outputs.dir }}
+
   build:
     name: Build packages
     runs-on: ubuntu-latest
-    needs: [install, lints]
     steps:
       - uses: actions/checkout@v2
 
@@ -84,7 +65,7 @@ jobs:
   chromatic:
     name: Chromatic
     runs-on: ubuntu-latest
-    needs: [install, build]
+    needs: [build]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -120,7 +101,7 @@ jobs:
   tests:
     name: Run tests
     runs-on: ubuntu-latest
-    needs: [install, build]
+    needs: [build]
     steps:
       - uses: actions/checkout@v2
 
@@ -150,7 +131,7 @@ jobs:
   tests-ssr:
     name: Run tests with artificial server rendering
     runs-on: ubuntu-latest
-    needs: [install, build]
+    needs: [build]
     steps:
       - uses: actions/checkout@v2
 
@@ -178,9 +159,9 @@ jobs:
           JEST_JUNIT_OUTPUT: 'reports/junit/js-test-ssr-results.xml'
 
   validate-builds:
-    name: Validate builds
+    name: Validate builds & dependencies
     runs-on: ubuntu-latest
-    needs: [install, build]
+    needs: [build]
     steps:
       - uses: actions/checkout@v2
 
@@ -211,27 +192,5 @@ jobs:
             !**/node_modules
           key: ${{ runner.os }}-ts-cache-${{ hashFiles('**/tsconfig.js', '**/package.tsconfig.js', '**/src/', '**/scripts/', '!**/node_modules', '!**/dist') }}
 
-      - name: check builds
-        run: yarn check:builds
-
-  validate-dependencies:
-    name: Check dependency list
-    runs-on: ubuntu-latest
-    needs: install
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Use Node.js 16
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-          cache: yarn
-          cache-dependency-path: 'yarn.lock'
-
-      - run: yarn install --frozen-lockfile --prefer-offline
-
-      - name: dependencies
-        run: yarn validate:dependencies
-
-      - name: package.json versions
-        run: yarn validate:package-json
+      - name: validate
+        run: yarn validate
