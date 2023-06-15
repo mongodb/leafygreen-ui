@@ -108,6 +108,8 @@ import Support from './Support.svg';
 import Sweep from './Sweep.svg';
 import Table from './Table.svg';
 import Tag from './Tag.svg';
+import ThumbsDown from './ThumbsDown.svg';
+import ThumbsUp from './ThumbsUp.svg';
 import TimeSeries from './TimeSeries.svg';
 import Trash from './Trash.svg';
 import Undo from './Undo.svg';
@@ -233,6 +235,8 @@ const _glyphs = {
   Sweep,
   Table,
   Tag,
+  ThumbsDown,
+  ThumbsUp,
   TimeSeries,
   Trash,
   Undo,
