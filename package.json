@@ -19,7 +19,7 @@
     "check:eslint": "eslint \"**/*.{js,ts,tsx}\"",
     "check:deps": "npx ts-node ./scripts/depcheck.ts",
     "check:builds": "npx ts-node ./scripts/check-builds.ts",
-    "check:ts": "tsc --project tsconfig.json",
+    "check:ts": "lerna exec -- tsc",
     "check:package-json": "npmPkgJsonLint ./packages",
     "chromatic": "npx chromatic --build-script='build-storybook'",
     "clean": "yarn clean:builds && yarn clean:modules",
