@@ -1,0 +1,172 @@
+{
+  "extends": "./package.tsconfig.json",
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "./packages/badge"
+    },
+    {
+      "path": "./packages/banner"
+    },
+    {
+      "path": "./packages/box"
+    },
+    {
+      "path": "./packages/button"
+    },
+    {
+      "path": "./packages/callout"
+    },
+    {
+      "path": "./packages/card"
+    },
+    {
+      "path": "./packages/checkbox"
+    },
+    {
+      "path": "./packages/code"
+    },
+    {
+      "path": "./packages/confirmation-modal"
+    },
+    {
+      "path": "./packages/combobox"
+    },
+    {
+      "path": "./packages/copyable"
+    },
+    {
+      "path": "./packages/emotion"
+    },
+    {
+      "path": "./packages/empty-state"
+    },
+    {
+      "path": "./packages/expandable-card"
+    },
+    {
+      "path": "./packages/form-footer"
+    },
+    {
+      "path": "./packages/guide-cue"
+    },
+    {
+      "path": "./packages/hooks"
+    },
+    {
+      "path": "./packages/icon"
+    },
+    {
+      "path": "./packages/icon-button"
+    },
+    {
+      "path": "./packages/inline-definition"
+    },
+    {
+      "path": "./packages/input-option"
+    },
+    {
+      "path": "./packages/leafygreen-provider"
+    },
+    {
+      "path": "./packages/lib"
+    },
+    {
+      "path": "./packages/loading-indicator"
+    },
+    {
+      "path": "./packages/logo"
+    },
+    {
+      "path": "./packages/marketing-modal"
+    },
+    {
+      "path": "./packages/menu"
+    },
+    {
+      "path": "./packages/modal"
+    },
+    {
+      "path": "./packages/number-input"
+    },
+    {
+      "path": "./packages/pagination"
+    },
+    {
+      "path": "./packages/palette"
+    },
+    {
+      "path": "./packages/pipeline"
+    },
+    {
+      "path": "./packages/password-input"
+    },
+    {
+      "path": "./packages/popover"
+    },
+    {
+      "path": "./packages/polymorphic"
+    },
+    {
+      "path": "./packages/portal"
+    },
+    {
+      "path": "./packages/radio-box-group"
+    },
+    {
+      "path": "./packages/radio-group"
+    },
+    {
+      "path": "./packages/ripple"
+    },
+    {
+      "path": "./packages/search-input"
+    },
+    {
+      "path": "./packages/segmented-control"
+    },
+    {
+      "path": "./packages/select"
+    },
+    {
+      "path": "./packages/side-nav"
+    },
+    {
+      "path": "./packages/skeleton-loader"
+    },
+    {
+      "path": "./packages/split-button"
+    },
+    {
+      "path": "./packages/stepper"
+    },
+    {
+      "path": "./packages/table"
+    },
+    {
+      "path": "./packages/tabs"
+    },
+    {
+      "path": "./packages/testing-lib"
+    },
+    {
+      "path": "./packages/text-area"
+    },
+    {
+      "path": "./packages/text-input"
+    },
+    {
+      "path": "./packages/toast"
+    },
+    {
+      "path": "./packages/toggle"
+    },
+    {
+      "path": "./packages/tooltip"
+    },
+    {
+      "path": "./packages/typography"
+    }
+  ]
+}
