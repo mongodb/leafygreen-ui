@@ -1,5 +1,17 @@
 # @leafygreen-ui/lib
 
+## 10.4.0
+
+### Minor Changes
+
+- 76161cf0: Adds types for GeneratedStory decorator
+- 76161cf0: Exports ExtendedComponentProps & InstanceDecorator types. Adds `XP` (extra props) to StoryMetaType generic signature
+
+### Patch Changes
+
+- 76161cf0: Ensures `XP` is passed to the `StoryFn` props in `StoryType`.
+  Exports `PlayFn` type
+
 ## 10.3.4
 
 ### Patch Changes

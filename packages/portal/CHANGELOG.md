@@ -1,5 +1,17 @@
 # @leafygreen-ui/portal
 
+## 4.1.4
+
+### Patch Changes
+
+- 76161cf0: Updates stories for Chromatic testing
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [735342e9]
+- Updated dependencies [76161cf0]
+  - @leafygreen-ui/lib@10.4.0
+  - @leafygreen-ui/hooks@7.7.5
+
 ## 4.1.3
 
 ### Patch Changes
