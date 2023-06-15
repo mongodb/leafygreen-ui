@@ -1,5 +1,5 @@
 {
-  "extends": "../../build.tsconfig.json",
+  "extends": "../../tools/config/package.tsconfig.json",
   "compilerOptions": {
     "declarationDir": "dist",
     "outDir": "dist",
@@ -8,6 +8,7 @@
   "include": [
     "src/**/*"
   ],
+  "exclude": ["**/*.spec.*", "**/*.story.*"],
   "references": [
     {
       "path": "../card"
