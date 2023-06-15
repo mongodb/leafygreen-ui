@@ -1,5 +1,29 @@
 # @leafygreen-ui/number-input
 
+## 1.0.7
+
+### Patch Changes
+
+- 76161cf0: Updates stories for Chromatic testing
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [735342e9]
+- Updated dependencies [76161cf0]
+- Updated dependencies [95f5107a]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+  - @leafygreen-ui/lib@10.4.0
+  - @leafygreen-ui/hooks@7.7.5
+  - @leafygreen-ui/tooltip@10.0.4
+  - @leafygreen-ui/icon@11.17.0
+  - @leafygreen-ui/button@20.2.1
+  - @leafygreen-ui/popover@11.0.12
+  - @leafygreen-ui/select@10.3.7
+  - @leafygreen-ui/tokens@2.1.1
+  - @leafygreen-ui/typography@16.5.1
+
 ## 1.0.6
 
 ### Patch Changes

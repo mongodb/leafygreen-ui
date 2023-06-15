@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/banner",
-  "version": "7.0.8",
+  "version": "7.0.9",
   "description": "leafyGreen UI Kit Banner",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -21,13 +21,13 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^10.3.4",
+    "@leafygreen-ui/lib": "^10.4.0",
     "@leafygreen-ui/emotion": "^4.0.4",
     "@leafygreen-ui/palette": "^4.0.4",
-    "@leafygreen-ui/icon": "^11.16.1",
-    "@leafygreen-ui/icon-button": "^15.0.11",
-    "@leafygreen-ui/tokens": "^2.1.0",
-    "@leafygreen-ui/typography": "^16.5.0"
+    "@leafygreen-ui/icon": "^11.17.0",
+    "@leafygreen-ui/icon-button": "^15.0.12",
+    "@leafygreen-ui/tokens": "^2.1.1",
+    "@leafygreen-ui/typography": "^16.5.1"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.3"

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/radio-group",
-  "version": "10.1.4",
+  "version": "10.1.5",
   "description": "leafyGreen UI Kit RadioGroup",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,11 +22,11 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.4",
-    "@leafygreen-ui/hooks": "^7.7.4",
-    "@leafygreen-ui/lib": "^10.3.4",
+    "@leafygreen-ui/hooks": "^7.7.5",
+    "@leafygreen-ui/lib": "^10.4.0",
     "@leafygreen-ui/palette": "^4.0.3",
-    "@leafygreen-ui/tokens": "^2.1.0",
-    "@leafygreen-ui/typography": "^16.5.0"
+    "@leafygreen-ui/tokens": "^2.1.1",
+    "@leafygreen-ui/typography": "^16.5.1"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.3"

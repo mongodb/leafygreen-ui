@@ -1,5 +1,15 @@
 # @leafygreen-ui/radio-box-group
 
+## 12.0.9
+
+### Patch Changes
+
+- 76161cf0: Updates stories for Chromatic testing
+- Updated dependencies [735342e9]
+- Updated dependencies [76161cf0]
+  - @leafygreen-ui/hooks@7.7.5
+  - @leafygreen-ui/tokens@2.1.1
+
 ## 12.0.8
 
 ### Patch Changes
