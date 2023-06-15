@@ -1,20 +1,21 @@
 {
   "compilerOptions": {
+    "module": "CommonJS",
+    "noEmit": true,
+    "tsBuildInfoFile": "./tsconfig.tsbuildinfo",
+    "incremental": true,
     "target": "ES5",
     "jsx": "react",
-    "allowJs": false,
+    "allowJs": true,
     "pretty": true,
     "strictNullChecks": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "esModuleInterop": true,
     "strict": true,
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "baseUrl": ".",
     "skipLibCheck": true,
-    "paths": {
-      "@leafygreen-ui/icon/dist/*": ["packages/icon/src/generated/*"],
-      "@leafygreen-ui/*": ["packages/*/src"]
-    }
+    "resolveJsonModule": true,
   }
 }
