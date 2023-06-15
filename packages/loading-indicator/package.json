@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/loading-indicator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "leafyGreen UI Kit Loading Indicator",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -29,10 +29,10 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.4",
-    "@leafygreen-ui/lib": "^10.3.4",
+    "@leafygreen-ui/lib": "^10.4.0",
     "@leafygreen-ui/palette": "^4.0.4",
-    "@leafygreen-ui/tokens": "^2.1.0",
-    "@leafygreen-ui/typography": "^16.5.0",
+    "@leafygreen-ui/tokens": "^2.1.1",
+    "@leafygreen-ui/typography": "^16.5.1",
     "@lottiefiles/react-lottie-player": "^3.5.3"
   },
   "peerDependencies": {

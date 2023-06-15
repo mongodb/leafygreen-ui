@@ -1,5 +1,15 @@
 # @leafygreen-ui/icon
 
+## 11.17.0
+
+### Minor Changes
+
+- 95f5107a: Add ThumbsUp and ThumbsDown icons
+
+### Patch Changes
+
+- 76161cf0: Updates stories for Chromatic testing
+
 ## 11.16.1
 
 ### Patch Changes

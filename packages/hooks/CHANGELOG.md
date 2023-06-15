@@ -1,5 +1,11 @@
 # @leafygreen-ui/hooks
 
+## 7.7.5
+
+### Patch Changes
+
+- 735342e9: Adds `useForceRerender` hook.
+
 ## 7.7.4
 
 ### Patch Changes
