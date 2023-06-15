@@ -44,5 +44,5 @@ jobs:
       - name: Install
         run: yarn install --frozen-lockfile --prefer-offline
 
-      - name: Turbo
+      - name: Nx
         run: yarn build:nx
