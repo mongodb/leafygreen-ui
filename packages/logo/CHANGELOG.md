@@ -1,5 +1,16 @@
 # @leafygreen-ui/logo
 
+## 8.0.4
+
+### Patch Changes
+
+- 76161cf0: Minor fixes to stories
+- 76161cf0: Updates stories for Chromatic testing
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+  - @leafygreen-ui/lib@10.4.0
+
 ## 8.0.3
 
 ### Patch Changes

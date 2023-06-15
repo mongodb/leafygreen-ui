@@ -1,5 +1,11 @@
 # @leafygreen-ui/tokens
 
+## 2.1.1
+
+### Patch Changes
+
+- 76161cf0: Updates stories for Chromatic testing
+
 ## 2.1.0
 
 ### Minor Changes

@@ -1,5 +1,24 @@
 # @leafygreen-ui/pagination
 
+## 1.0.9
+
+### Patch Changes
+
+- 76161cf0: Updates stories for Chromatic testing
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [735342e9]
+- Updated dependencies [95f5107a]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+  - @leafygreen-ui/lib@10.4.0
+  - @leafygreen-ui/hooks@7.7.5
+  - @leafygreen-ui/icon@11.17.0
+  - @leafygreen-ui/icon-button@15.0.12
+  - @leafygreen-ui/select@10.3.7
+  - @leafygreen-ui/tokens@2.1.1
+  - @leafygreen-ui/typography@16.5.1
+
 ## 1.0.8
 
 ### Patch Changes
