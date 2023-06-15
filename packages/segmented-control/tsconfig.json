@@ -1,19 +1,13 @@
 {
-  "extends": "@lg-tools/config/package.tsconfig.json",
-   "compilerOptions": {
+  "extends": "../../build.tsconfig.json",
+  "compilerOptions": {
     "declarationDir": "dist",
     "outDir": "dist",
-    "rootDir": "src",
-    "baseUrl": ".",
-    "paths": {
-      "@leafygreen-ui/icon/dist/*": ["../icon/src/generated/*"],
-      "@leafygreen-ui/*": ["../*/src"]
-    }
+    "rootDir": "src"
   },
   "include": [
     "src/**/*"
   ],
-  "exclude": ["**/*.spec.*", "**/*.story.*"],
   "references": [
     {
       "path": "../box"
