@@ -1,5 +1,5 @@
 {
-  "extends": "../../build.tsconfig.json",
+  "extends": "../../tools/config/package.tsconfig.json",
   "compilerOptions": {
     "declarationDir": "dist",
     "outDir": "dist",
@@ -9,6 +9,7 @@
     "src/**/*",
     "../../typings"
   ],
+  "exclude": ["**/*.spec.*", "**/*.story.*"],
   "references": [
     {
       "path": "../a11y"
