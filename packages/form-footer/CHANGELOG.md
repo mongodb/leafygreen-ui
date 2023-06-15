@@ -1,5 +1,21 @@
 # @leafygreen-ui/form-footer
 
+## 3.0.8
+
+### Patch Changes
+
+- 76161cf0: Updates stories for Chromatic testing
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [95f5107a]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+  - @leafygreen-ui/lib@10.4.0
+  - @leafygreen-ui/icon@11.17.0
+  - @leafygreen-ui/button@20.2.1
+  - @leafygreen-ui/banner@7.0.9
+
 ## 3.0.7
 
 ### Patch Changes

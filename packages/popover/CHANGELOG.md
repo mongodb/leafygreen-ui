@@ -1,5 +1,21 @@
 # @leafygreen-ui/popover
 
+## 11.0.12
+
+### Patch Changes
+
+- 76161cf0: Creates `getJustify` and `getAlign` test utils
+- 76161cf0: Updates stories for Chromatic testing
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [735342e9]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+  - @leafygreen-ui/lib@10.4.0
+  - @leafygreen-ui/hooks@7.7.5
+  - @leafygreen-ui/portal@4.1.4
+  - @leafygreen-ui/tokens@2.1.1
+
 ## 11.0.11
 
 ### Patch Changes

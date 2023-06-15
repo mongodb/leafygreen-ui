@@ -1,5 +1,17 @@
 # @leafygreen-ui/badge
 
+## 8.0.8
+
+### Patch Changes
+
+- 76161cf0: Updates stories for Chromatic testing
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+  - @leafygreen-ui/lib@10.4.0
+  - @leafygreen-ui/tokens@2.1.1
+
 ## 8.0.7
 
 ### Patch Changes
