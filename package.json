@@ -6,22 +6,6 @@
     "node": ">= 16.20.0",
     "npm": ">= 8.19.4"
   },
-  "keywords": [
-    "mongodb",
-    "ui",
-    "kit",
-    "components",
-    "react",
-    "uikit",
-    "leafygreen"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mongodb/leafygreen-ui.git"
-  },
-  "bugs": {
-    "url": "https://github.com/mongodb/leafygreen-ui/issues"
-  },
   "scripts": {
     "init": "yarn && yarn build",
     "create-package": "node ./scripts/create-package.js",
@@ -51,10 +35,9 @@
     "publish:packages": "yarn changeset publish --public",
     "slackbot": "yarn ts-node ./scripts/slackbot",
     "start": "storybook dev -p 9001 --no-version-updates",
-    "test": "yarn ts-node ./scripts/test.ts",
+    "test": "npx ts-node ./scripts/test.ts",
     "test:local": "yarn test",
     "test:ssr": "yarn test --ssr",
-    "ts-node": "npx ts-node -P './tsconfig.json' -O '{\"module\": \"commonjs\", \"resolveJsonModule\": true}'",
     "unlink": "./scripts/unlink.sh",
     "watch": "yarn build -- -- --watch"
   },
@@ -83,6 +66,7 @@
     "@emotion/styled": "^11.3.0",
     "@leafygreen-ui/lib": "^10.1.0",
     "@leafygreen-ui/testing-lib": "*",
+    "@lg-tools/config": "*",
     "@rollup/plugin-babel": "^5.2.0",
     "@rollup/plugin-commonjs": "^15.0.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
@@ -189,8 +173,25 @@
     }
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "tools/*"
   ],
+  "keywords": [
+    "mongodb",
+    "ui",
+    "kit",
+    "components",
+    "react",
+    "uikit",
+    "leafygreen"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mongodb/leafygreen-ui/issues"
+  },
   "version": "0.0.0",
   "dependencies": {
     "@mdx-js/react": "1.6.22"

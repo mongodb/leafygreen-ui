@@ -112,13 +112,14 @@ const packageJSON = `
 
 const tsConfig = `
 {
-  "extends": "../../package.tsconfig.json",
+  "extends": "../../tools/config/package.tsconfig.json",
   "compilerOptions": {
     "declarationDir": "dist",
     "outDir": "dist",
     "rootDir": "src"
   },
   "include": ["src/**/*"],
+  "exclude": ["**/*.spec.*", "**/*.story.*"],
   "references": [
     {
       "path": "../emotion"
