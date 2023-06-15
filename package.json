@@ -71,6 +71,7 @@
     "@emotion/styled": "^11.3.0",
     "@leafygreen-ui/lib": "^10.1.0",
     "@leafygreen-ui/testing-lib": "*",
+    "@lg-tools/config": "*",
     "@rollup/plugin-babel": "^5.2.0",
     "@rollup/plugin-commonjs": "^15.0.0",
     "@rollup/plugin-node-resolve": "^9.0.0",

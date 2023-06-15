@@ -1,7 +1,10 @@
 {
-  "name": "@lg-dev/config",
+  "name": "@lg-tools/config",
   "version": "0.0.1",
   "description": "Shared config files for Leafygreen repos",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
 }
