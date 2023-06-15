@@ -1,5 +1,20 @@
 # @leafygreen-ui/button
 
+## 20.2.1
+
+### Patch Changes
+
+- 76161cf0: Updates story file and implements GeneratedStory
+- 76161cf0: Updates stories for Chromatic testing
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+  - @leafygreen-ui/lib@10.4.0
+  - @leafygreen-ui/loading-indicator@1.0.1
+  - @leafygreen-ui/tokens@2.1.1
+
 ## 20.2.0
 
 ### Minor Changes
