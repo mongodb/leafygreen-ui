@@ -3,9 +3,6 @@ name: Benchmark
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-    # TODO: Remove
-    branches:
-      - adam/*
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
