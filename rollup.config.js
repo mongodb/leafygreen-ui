@@ -11,37 +11,37 @@ const extensions = ['.ts', '.tsx'];
 
 const { name } = require(path.resolve(process.cwd(), 'package.json'));
 
-function getAllPackages(dir) {
-  const dirList = fs.readdirSync(dir);
+// function getAllPackages(dir) {
+//   const dirList = fs.readdirSync(dir);
 
-  return dirList
-    .map(subDir => `${path.resolve(dir, subDir)}/package.json`)
-    .filter(packageJsonPath => fs.existsSync(packageJsonPath))
-    .map(packageJsonPath => require(packageJsonPath).name);
-}
+//   return dirList
+//     .map(subDir => `${path.resolve(dir, subDir)}/package.json`)
+//     .filter(packageJsonPath => fs.existsSync(packageJsonPath))
+//     .map(packageJsonPath => require(packageJsonPath).name);
+// }
 
-function getLodashExternals() {
-  return fs
-    .readdirSync(path.resolve(__dirname, 'node_modules', 'lodash'))
-    .filter(fileName => {
-      const splitName = fileName.split('.');
-      const extension = splitName[splitName.length - 1];
+// function getLodashExternals() {
+//   return fs
+//     .readdirSync(path.resolve(__dirname, 'node_modules', 'lodash'))
+//     .filter(fileName => {
+//       const splitName = fileName.split('.');
+//       const extension = splitName[splitName.length - 1];
 
-      return extension === 'js';
-    })
-    .map(fileName => 'lodash/' + fileName.split('.')[0]);
-}
+//       return extension === 'js';
+//     })
+//     .map(fileName => 'lodash/' + fileName.split('.')[0]);
+// }
 
-function getDirectGlyphImports() {
-  const glyphsDir = path.resolve(__dirname, './packages/icon/src/glyphs');
+// function getDirectGlyphImports() {
+//   const glyphsDir = path.resolve(__dirname, './packages/icon/src/glyphs');
 
-  return fs
-    .readdirSync(glyphsDir)
-    .filter(path => /.svg/.test(path))
-    .map(
-      fileName => `@leafygreen-ui/icon/dist/${path.basename(fileName, '.svg')}`,
-    );
-}
+//   return fs
+//     .readdirSync(glyphsDir)
+//     .filter(path => /.svg/.test(path))
+//     .map(
+//       fileName => `@leafygreen-ui/icon/dist/${path.basename(fileName, '.svg')}`,
+//     );
+// }
 
 function getGeneratedFiles() {
   const directory = path.resolve(process.cwd(), 'src/generated');
@@ -78,17 +78,52 @@ const globals = {
    **/
 };
 
-const allPackages = getAllPackages(path.resolve(__dirname, 'packages'));
-const directGlyphImports = getDirectGlyphImports();
+// const allPackages = getAllPackages(path.resolve(__dirname, 'packages'));
+// const directGlyphImports = getDirectGlyphImports();
 
-allPackages.forEach(packageName => {
-  globals[packageName] = packageName;
-});
+// allPackages.forEach(packageName => {
+//   globals[packageName] = packageName;
+// });
 
-directGlyphImports.forEach(glyphImport => {
-  // e.g. "@leafygreen-ui/icon/dist/Checkmark" -> "Checkmark"
-  globals[glyphImport] = /[^/]+$/.exec(glyphImport)[0];
-});
+// directGlyphImports.forEach(glyphImport => {
+//   // e.g. "@leafygreen-ui/icon/dist/Checkmark" -> "Checkmark"
+//   globals[glyphImport] = /[^/]+$/.exec(glyphImport)[0];
+// });
+
+const externals = [
+  '@emotion/server',
+  '@emotion/css',
+  '@emotion/css/create-instance',
+  '@emotion/server/create-instance',
+  '@faker-js/faker',
+  '@testing-library/react',
+  '@storybook/testing-library',
+  'clipboard',
+  'focus-trap-react',
+  'highlight.js',
+  'highlightjs-graphql',
+  'lodash',
+  'polished',
+  'prop-types',
+  'react',
+  'react-dom',
+  'react-is',
+  'react-keyed-flatten-children',
+  'react-transition-group',
+  // ...getLodashExternals(),
+  // ...allPackages,
+  // ...directGlyphImports,
+  /^lodash\//,
+  /^highlight\.js\//,
+  /^@leafygreen-ui\//
+]
+
+// const isExternal = id =>
+//     externals.includes(id) ||
+//     // We test if an import includes lodash to avoid having
+//     // to whitelist every nested lodash module individually
+//     /^lodash\//.test(id) ||
+//     /^highlight\.js\//.test(id)
 
 const moduleFormatToDirectory = {
   esm: 'dist/esm/',
@@ -131,35 +166,7 @@ const baseConfigForFormat = format => ({
 
     terser(),
   ],
-  external: id =>
-    [
-      '@emotion/server',
-      '@emotion/css',
-      '@emotion/css/create-instance',
-      '@emotion/server/create-instance',
-      '@faker-js/faker',
-      '@testing-library/react',
-      '@storybook/testing-library',
-      'clipboard',
-      'focus-trap-react',
-      'highlight.js',
-      'highlightjs-graphql',
-      'lodash',
-      'polished',
-      'prop-types',
-      'react',
-      'react-dom',
-      'react-is',
-      'react-keyed-flatten-children',
-      'react-transition-group',
-      ...getLodashExternals(),
-      ...allPackages,
-      ...directGlyphImports,
-    ].includes(id) ||
-    // We test if an import includes lodash to avoid having
-    // to whitelist every nested lodash module individually
-    /^lodash\//.test(id) ||
-    /^highlight\.js\//.test(id),
+  external: externals
 });
 
 const config = ['esm', 'umd'].flatMap(format => {
