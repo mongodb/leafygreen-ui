@@ -9,7 +9,7 @@
       "outputs": ["dist/**"]
     },
     "tsc": {
-      "dependsOn": ["^tsc"],
+      "dependsOn": ["^tsc", "^build"],
       "outputs": ["dist/**/*.d.ts", "tsconfig.tsbuildinfo"]
     }
   }
