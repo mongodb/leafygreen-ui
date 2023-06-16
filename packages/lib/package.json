@@ -13,7 +13,7 @@
     }
   },
   "scripts": {
-    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.mjs",
+    "build": "rollup --config ../../rollup.config.mjs",
     "tsc": "tsc --build tsconfig.json"
   },
   "keywords": [],
