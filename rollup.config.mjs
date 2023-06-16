@@ -8,6 +8,7 @@ import svgr from '@svgr/rollup';
 import fs from 'fs';
 import glob from 'glob';
 import path from 'path';
+import { nodeExternals } from 'rollup-plugin-node-externals'
 import { terser } from 'rollup-plugin-terser';
 const require = createRequire(import.meta.url);
 
@@ -95,7 +96,7 @@ const globals = {
 //   globals[glyphImport] = /[^/]+$/.exec(glyphImport)[0];
 // });
 
-const externals = [
+const external = [
   '@emotion/server',
   '@emotion/css',
   '@emotion/css/create-instance',
@@ -145,6 +146,7 @@ const baseConfigForFormat = format => ({
     globals,
   },
   plugins: [
+    nodeExternals({ deps: true }),
     resolve({ extensions }),
 
     babel({
@@ -171,7 +173,7 @@ const baseConfigForFormat = format => ({
 
     terser(),
   ],
-  external: externals,
+  external,
   strictDeprecations: true
 });
 
