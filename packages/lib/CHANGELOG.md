@@ -1,5 +1,59 @@
 # @leafygreen-ui/lib
 
+## 10.4.0
+
+### Minor Changes
+
+- 76161cf0: Adds types for GeneratedStory decorator
+- 76161cf0: Exports ExtendedComponentProps & InstanceDecorator types. Adds `XP` (extra props) to StoryMetaType generic signature
+
+### Patch Changes
+
+- 76161cf0: Ensures `XP` is passed to the `StoryFn` props in `StoryType`.
+  Exports `PlayFn` type
+
+## 10.3.4
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- d2ce54e2f: Exports primary component props
+- 0cd471676: Updates `isComponentType` to also check for a displayName inside render
+
+## 10.3.3
+
+### Patch Changes
+
+- 55d33e435: Update to BaseFontSize prop control for .design live example
+- cf00160ec: Updates TSDocs
+- 111b680c5: Marks type of `storybookArgTypes` as `const`.
+  Removes some default props from `StoryMeta`.
+  `StoryMeta` no longer excludes `children` controls by default.
+
+## 10.3.2
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+
+## 10.3.1
+
+### Patch Changes
+
+- c2c5601f4: Adds missing dependencies. Removes unused dependencies
+
+## 10.3.0
+
+### Minor Changes
+
+- c727d8295: Adds `prop-types` as an explicit dependency of package
+
+## 10.2.2
+
+### Patch Changes
+
+- 26e341a0b: Minor type fixes to `StoryMeta` function
+
 ## 10.2.1
 
 ### Patch Changes

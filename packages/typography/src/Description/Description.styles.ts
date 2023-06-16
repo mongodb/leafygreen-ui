@@ -1,11 +1,16 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+import {
+  BaseFontSize,
+  fontFamilies,
+  fontWeights,
+  typeScales,
+} from '@leafygreen-ui/tokens';
 
 export const descriptionStyle = css`
   font-family: ${fontFamilies.default};
-  font-weight: normal;
+  font-weight: ${fontWeights.regular};
   margin-top: 0;
   margin-bottom: 0;
 `;

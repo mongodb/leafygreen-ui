@@ -1,31 +1,58 @@
 import React from 'react';
-import { ComponentStory } from '@storybook/react';
 
-import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import Icon from '@leafygreen-ui/icon/';
+import {
+  DarkModeProps,
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+  StoryType,
+} from '@leafygreen-ui/lib';
 
-import IconButton from '.';
+import { Size } from './types';
+import IconButton, { AccessibleIconButtonProps } from '.';
 
-export default {
+const meta: StoryMetaType<typeof IconButton> = {
   title: 'Components/IconButton',
   component: IconButton,
+  parameters: {
+    default: 'LiveExample',
+    controls: {
+      exclude: [...storybookExcludedControlParams, 'children'],
+    },
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        active: [false, true],
+        size: Object.values(Size),
+        disabled: [false, true],
+      },
+    },
+  },
+  args: {
+    href: undefined,
+    children: <Icon glyph="Cloud" />,
+  },
   argTypes: {
+    darkMode: storybookArgTypes.darkMode,
     href: { control: 'string' },
     active: { control: 'boolean' },
     disabled: { control: 'boolean' },
-    darkMode: storybookArgTypes.darkMode,
   },
 };
-// eslint-disable-next-line react/prop-types
-const Template: ComponentStory<typeof IconButton> = ({ darkMode, ...args }) => (
-  <IconButton darkMode={darkMode} {...args}>
-    <CloudIcon />
-  </IconButton>
+
+export default meta;
+
+export const LiveExample: StoryType<
+  typeof IconButton,
+  AccessibleIconButtonProps & DarkModeProps
+> = ({ darkMode, ...args }: AccessibleIconButtonProps & DarkModeProps) => (
+  <IconButton darkMode={darkMode} {...args} />
 );
-
-export const Basic = Template.bind({});
-
-export const Link = Template.bind({});
-Link.args = {
-  href: 'https://mongodb.design',
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
+
+export const Generated = () => {};

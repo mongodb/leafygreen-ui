@@ -19,6 +19,7 @@ Check out all of the components [in action](https://www.mongodb.design/)!
 - [Confirmation Modal](https://github.com/mongodb/leafygreen-ui/tree/main/packages/confirmation-modal)
 - [Copyable](https://github.com/mongodb/leafygreen-ui/tree/main/packages/copyable)
 - [Emotion](https://github.com/mongodb/leafygreen-ui/tree/main/packages/emotion)
+- [Empty State](https://github.com/mongodb/leafygreen-ui/tree/main/packages/empty-state)
 - [Expandable Card](https://github.com/mongodb/leafygreen-ui/tree/main/packages/expandable-card)
 - [Form Footer](https://github.com/mongodb/leafygreen-ui/tree/main/packages/form-footer)
 - [GuideCue](https://github.com/mongodb/leafygreen-ui/tree/main/packages/guide-cue)
@@ -28,11 +29,13 @@ Check out all of the components [in action](https://www.mongodb.design/)!
 - [Inline Definition](https://github.com/mongodb/leafygreen-ui/tree/main/packages/inline-definition)
 - [LeafyGreen Provider](https://github.com/mongodb/leafygreen-ui/tree/main/packages/leafygreen-provider)
 - [Lib](https://github.com/mongodb/leafygreen-ui/tree/main/packages/lib)
+- [Loading Indicator](https://github.com/mongodb/leafygreen-ui/tree/main/packages/loading-indicator)
 - [Logo](https://github.com/mongodb/leafygreen-ui/tree/main/packages/logo)
 - [Marketing Modal](https://github.com/mongodb/leafygreen-ui/tree/main/packages/marketing-modal)
 - [Menu](https://github.com/mongodb/leafygreen-ui/tree/main/packages/menu)
 - [Modal](https://github.com/mongodb/leafygreen-ui/tree/main/packages/modal)
 - [MongoNav](https://github.com/10gen/leafygreen-ui-private/tree/main/packages/mongo-nav) (This package lives in a private repository)
+- [Number Input](https://github.com/mongodb/leafygreen-ui/tree/main/packages/number-input)
 - [Pagination](https://github.com/mongodb/leafygreen-ui/tree/main/packages/pagination)
 - [Palette](https://github.com/mongodb/leafygreen-ui/tree/main/packages/palette)
 - [Password Input](https://github.com/mongodb/leafygreen-ui/tree/main/packages/password-input)
@@ -47,6 +50,7 @@ Check out all of the components [in action](https://www.mongodb.design/)!
 - [Segmented Control](https://github.com/mongodb/leafygreen-ui/tree/main/packages/segmented-control)
 - [Select](https://github.com/mongodb/leafygreen-ui/tree/main/packages/select)
 - [Side Nav](https://github.com/mongodb/leafygreen-ui/tree/main/packages/side-nav)
+- [Split Button](https://github.com/mongodb/leafygreen-ui/tree/main/packages/split-button)
 - [Stepper](https://github.com/mongodb/leafygreen-ui/tree/main/packages/stepper)
 - [Table](https://github.com/mongodb/leafygreen-ui/tree/main/packages/table)
 - [Tabs](https://github.com/mongodb/leafygreen-ui/tree/main/packages/tabs)
@@ -61,13 +65,13 @@ Check out all of the components [in action](https://www.mongodb.design/)!
 
 ## Developer Setup
 
-1. Node >= 14.0.0 and Node < 17.0.0 required.
+1. Node >= 16.20.0 required.
 
    via [homebrew](https://brew.sh/) with `brew install node`
 
    via [nodejs installer](https://nodejs.org/en/)
 
-2. Install Yarn >= 1.16.0.
+2. Install Yarn >= 1.20.0.
 
    [Yarn Installation documentation](https://classic.yarnpkg.com/en/docs/install/#mac-stable)
 

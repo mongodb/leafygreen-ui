@@ -1,16 +1,37 @@
-import React, { useState } from 'react';
-import { Meta } from '@storybook/react';
+import React from 'react';
+import { StoryFn } from '@storybook/react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
-import { SelectProps } from './types';
-import { Option, OptionGroup, Select } from '.';
+import { Option, OptionGroup, Select, type SelectProps, Size, State } from '.';
 
-export default {
+const meta: StoryMetaType<typeof Select> = {
   title: 'Components/Select',
   component: Select,
+  parameters: {
+    default: 'LiveExample',
+    controls: {
+      exclude: [...storybookExcludedControlParams, 'children', 'value'],
+    },
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        state: Object.values(State),
+        size: Object.values(Size),
+        disabled: [false, true],
+      },
+      args: {
+        className: css`
+          width: 256px;
+        `,
+      },
+    },
+  },
   args: {
     placeholder: 'Select',
     disabled: false,
@@ -39,25 +60,24 @@ export default {
     usePortal: true,
   },
   argTypes: {
-    children: { control: false },
     placeholder: { control: 'text' },
     disabled: { control: 'boolean' },
     label: { control: 'text' },
-    'aria-labelledby': { control: 'text' },
-    'aria-label': { control: 'text' },
     description: { control: 'text' },
-    darkMode: storybookArgTypes.darkMode,
-    id: { control: 'text' },
-    value: { control: 'text' },
     defaultValue: { control: 'text' },
     readOnly: { control: 'boolean' },
     errorMessage: { control: 'text' },
     allowDeselect: { control: 'boolean' },
   },
-} as Meta<typeof Select>;
+};
+export default meta;
 
-export const Uncontrolled = ({ className, ...args }: SelectProps) => (
+export const LiveExample: StoryFn<SelectProps> = ({
+  className,
+  ...args
+}: SelectProps) => (
   <Select
+    {...args}
     data-test="hello-world"
     className={cx(
       css`
@@ -66,26 +86,15 @@ export const Uncontrolled = ({ className, ...args }: SelectProps) => (
       `,
       className,
     )}
-    {...args}
   />
 );
-export const Controlled = ({
-  defaultValue,
-  readOnly,
-  ...args
-}: SelectProps) => {
-  const [value, setValue] = useState('cat');
-  return (
-    <Uncontrolled
-      {...args}
-      readOnly={false}
-      value={value}
-      onChange={setValue}
-    />
-  );
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
-export const WithIcons = (args: SelectProps) => <Uncontrolled {...args} />;
+export const WithIcons = LiveExample.bind({});
 WithIcons.args = {
   children: [
     <OptionGroup key="Common" label="Common">
@@ -112,3 +121,10 @@ WithIcons.args = {
     </Option>,
   ],
 };
+WithIcons.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+
+export const Generated = () => {};

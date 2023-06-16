@@ -1,19 +1,10 @@
-import { CollapsedSideNavItem } from './CollapsedSideNavItem';
-import {
+export { CollapsedSideNavItem } from './CollapsedSideNavItem';
+export {
   SideNav,
   sideNavItemSidePadding,
   sideNavSelector,
   sideNavWidth,
 } from './SideNav';
-import { SideNavGroup } from './SideNavGroup';
-import { SideNavItem } from './SideNavItem';
-
-export {
-  CollapsedSideNavItem,
-  SideNav,
-  SideNavGroup,
-  SideNavItem,
-  sideNavItemSidePadding,
-  sideNavSelector,
-  sideNavWidth,
-};
+export { type SideNavProps } from './SideNav/SideNav.types';
+export { SideNavGroup } from './SideNavGroup';
+export { SideNavItem } from './SideNavItem';

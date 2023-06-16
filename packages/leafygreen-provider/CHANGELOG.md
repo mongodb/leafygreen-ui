@@ -1,5 +1,26 @@
 # @leafygreen-ui/leafygreen-provider
 
+## 3.1.3
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- d2ce54e2f: Exports primary component props
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [0cd471676]
+  - @leafygreen-ui/hooks@7.7.4
+  - @leafygreen-ui/lib@10.3.4
+
+## 3.1.2
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/hooks@7.7.1
+  - @leafygreen-ui/lib@10.3.2
+
 ## 3.1.1
 
 ### Patch Changes

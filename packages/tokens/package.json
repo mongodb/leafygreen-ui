@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/tokens",
-  "version": "2.0.0",
+  "version": "2.1.1",
   "description": "leafyGreen UI Kit Tokens",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -20,11 +20,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/palette": "^3.4.7"
+    "@leafygreen-ui/palette": "^4.0.4"
   },
   "devDependencies": {
-    "@leafygreen-ui/emotion": "^4.0.3",
-    "@leafygreen-ui/typography": "^16.0.0",
+    "@leafygreen-ui/emotion": "^4.0.4",
     "lodash": "^4.17.21"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/tokens",

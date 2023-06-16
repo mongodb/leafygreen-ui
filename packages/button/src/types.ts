@@ -56,7 +56,7 @@ export interface ButtonProps {
   /**
    * Specifies the `type` property of the HTML button element
    *
-   * @default 'button'
+   * @default button
    */
   type?: HTMLProps<HTMLButtonElement>['type'];
 
@@ -68,7 +68,7 @@ export interface ButtonProps {
   /**
    * Sets the variant for the Button
    *
-   * @default 'default'
+   * @default default
    */
   variant?: Variant;
 
@@ -89,7 +89,7 @@ export interface ButtonProps {
   /**
    * Sets the size for the Button
    *
-   * @default 'default'
+   * @default default
    */
   size?: Size;
 
@@ -97,22 +97,35 @@ export interface ButtonProps {
    * The content that will appear inside of the `<Button />` component.
    */
   children?: React.ReactNode;
+
   /**
    * An icon glyph rendered before the button text.
-   * To use a custom icon, see {@link Icon}: `createIconComponent` docs
+   * To use a custom icon, see {@link Icon} {@link https://github.com/mongodb/leafygreen-ui/blob/main/packages/icon/README.md#usage-registering-custom-icon-sets | createIconComponent} docs
    * @type Leafygreen <Icon /> Component
    */
   leftGlyph?: React.ReactElement;
+
   /**
    * An icon glyph rendered after the button text.
-   * To use a custom icon, see {@link Icon}: `createIconComponent` docs
+   * To use a custom icon, see {@link Icon} {@link https://github.com/mongodb/leafygreen-ui/blob/main/packages/icon/README.md#usage-registering-custom-icon-sets | createIconComponent} docs
    * @type Leafygreen <Icon /> Component
    */
   rightGlyph?: React.ReactElement;
+
   /**
    * A `href` prop that will make the Button render as an anchor tag.
    */
   href?: string;
+
+  /**
+   * Indicates whether the Button is in a loading state
+   */
+  isLoading?: boolean;
+
+  /**
+   * String displayed in place of `children` while the button is in a loading state
+   */
+  loadingText?: string;
 
   /**
    * The component or HTML Element that the button is rendered as.
@@ -127,6 +140,7 @@ export interface ButtonProps {
    * <Button as={Linker} />
    * ```
    * @type HTMLElement | React.Component
+   * @default button
    */
   as?: React.ElementType<any>;
 }

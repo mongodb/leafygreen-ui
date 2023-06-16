@@ -12,11 +12,13 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
-      - name: Setup Node.js 14.x
+      - name: Setup Node.js 16.x
         uses: actions/setup-node@v1
         with:
-          node-version: 14.x
+          node-version: 16.x
 
       - name: Install Dependencies
         run: yarn
@@ -29,6 +31,15 @@ jobs:
 
       - name: Build TSDoc
         run: yarn docs:tsdoc
+
+      - name: Establish Chromatic baseline
+        uses: chromaui/action@v1
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          buildScriptName: 'build-storybook'
+          exitOnceUploaded: true
+          exitZeroOnChanges: true
+          autoAcceptChanges: true
 
       - name: Create Release Pull Request
         id: changesets

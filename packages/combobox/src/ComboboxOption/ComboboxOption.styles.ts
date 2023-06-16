@@ -1,48 +1,39 @@
 import { css } from '@leafygreen-ui/emotion';
-import { spacing, typeScales } from '@leafygreen-ui/tokens';
+import { leftGlyphClassName } from '@leafygreen-ui/input-option';
+import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import { fontWeights, spacing } from '@leafygreen-ui/tokens';
 
+import { fontSize, lineHeight } from '../Chip/Chip.styles';
 import { ComboboxSize } from '../Combobox.types';
-import { menuItemHeight, menuItemPadding } from '../ComboboxMenu/Menu.styles';
+import {
+  getMenuItemHeight,
+  menuItemPadding,
+} from '../ComboboxMenu/Menu.styles';
 
 /**
  * Styles
  */
 
-export const comboboxOptionBaseStyle = css`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  list-style: none;
+export const comboboxOptionSizeStyle = (size: ComboboxSize) => css`
+  font-size: ${fontSize[size]}px;
+  line-height: ${lineHeight[size]}px;
+  min-height: ${getMenuItemHeight(size)}px;
+  padding: ${menuItemPadding[size].y}px ${menuItemPadding[size].x}px;
+  gap: ${spacing[1]}px;
+
+  &:before {
+    max-height: ${getMenuItemHeight(size)}px;
+  }
 `;
 
-export const comboboxOptionSizeStyle: Record<ComboboxSize, string> = {
-  [ComboboxSize.Default]: css`
-    font-size: ${typeScales.body1.fontSize}px;
-    line-height: ${typeScales.body1.lineHeight}px;
-    min-height: ${menuItemHeight[ComboboxSize.Default]}px;
-    padding: ${menuItemPadding[ComboboxSize.Default].y}px
-      ${menuItemPadding[ComboboxSize.Default].x}px;
-    gap: ${spacing[1]}px;
-
-    &:before {
-      max-height: ${menuItemHeight[ComboboxSize.Default]}px;
-    }
+export const checkMarkSizeStyle: Record<ComboboxSize, string> = {
+  [ComboboxSize.XSmall]: css`
+    min-width: ${spacing[3]}px;
   `,
-  [ComboboxSize.Large]: css`
-    font-size: ${typeScales.body2.fontSize}px;
-    line-height: ${typeScales.body2.lineHeight}px;
-    min-height: ${menuItemHeight[ComboboxSize.Large]}px;
-    padding: ${menuItemPadding[ComboboxSize.Large].y}px
-      ${menuItemPadding[ComboboxSize.Large].x}px;
-    gap: ${spacing[2]}px;
-
-    &:before {
-      max-height: ${menuItemHeight[ComboboxSize.Large]}px;
-    }
+  [ComboboxSize.Small]: css`
+    min-width: ${spacing[3]}px;
   `,
-};
-
-export const checkIconStyle: Record<ComboboxSize, string> = {
   [ComboboxSize.Default]: css`
     min-width: ${spacing[3]}px;
   `,
@@ -51,12 +42,14 @@ export const checkIconStyle: Record<ComboboxSize, string> = {
   `,
 };
 
-export const flexSpan = css`
-  display: inline-flex;
-  gap: 8px;
-  justify-content: start;
-  align-items: inherit;
-  overflow-wrap: anywhere;
+export const checkBoxBaseStyles = css`
+  pointer-events: none;
+  gap: 0;
+
+  label {
+    gap: 0;
+    align-items: center;
+  }
 `;
 
 export const disallowPointer = css`
@@ -64,5 +57,61 @@ export const disallowPointer = css`
 `;
 
 export const displayNameStyle = (isSelected: boolean) => css`
-  font-weight: ${isSelected ? 'bold' : 'normal'};
+  font-weight: ${isSelected ? fontWeights.bold : fontWeights.regular};
+`;
+
+export const iconThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.dark1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.base};
+  `,
+};
+
+export const iconHighlightedStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.blue.dark1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.blue.light3};
+  `,
+};
+
+export const iconDisabledStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.light1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.dark1};
+  `,
+};
+
+export const checkMarkThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.blue.base};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.blue.light1};
+  `,
+};
+
+export const checkMarkDisabledStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.light1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.dark1};
+  `,
+};
+
+export const multiselectIconPosition = css`
+  .${leftGlyphClassName} {
+    align-self: baseline;
+  }
+`;
+export const multiselectIconLargePosition = css`
+  .${leftGlyphClassName} {
+    height: 28px;
+  }
 `;

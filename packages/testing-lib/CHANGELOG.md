@@ -1,5 +1,17 @@
 # @leafygreen-ui/testing-lib
 
+## 0.3.0
+
+### Minor Changes
+
+- e6fd9ecfc: First publish of @leafygreen-ui/testing-lib
+
+## 0.2.2
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+
 ## 0.2.1
 
 ### Patch Changes

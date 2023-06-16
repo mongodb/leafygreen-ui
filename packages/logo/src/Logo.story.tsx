@@ -1,7 +1,8 @@
 import React from 'react';
-import { Meta } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
+import { StoryMetaType } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 import { LogoNames } from './Logo';
@@ -21,17 +22,57 @@ import {
 } from '.';
 import Logo, { LogoName } from '.';
 
-export default {
+const meta: StoryMetaType<typeof Logo> = {
   title: 'Components/Logo',
+  component: Logo,
+  decorators: [
+    (Story, context) => (
+      <div
+        className={css`
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          padding: 40px 0;
+          background-color: ${
+            /* @ts-expect-error */
+            Story?.args?.background ?? context?.args?.background ?? 'white'
+          };
+        `}
+      >
+        <Story />
+      </div>
+    ),
+  ],
   parameters: {
-    default: 'Default',
+    default: 'LiveExample',
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        name: Object.values(LogoNames),
+        color: Object.values(SupportedColors),
+      },
+      excludeCombinations: [
+        {
+          darkMode: false,
+          color: SupportedColors.White,
+        },
+        {
+          darkMode: false,
+          color: SupportedColors.GreenBase,
+        },
+        {
+          darkMode: true,
+          color: SupportedColors.Black,
+        },
+        {
+          darkMode: true,
+          color: SupportedColors.GreenDark2,
+        },
+      ],
+    },
   },
   argTypes: {
-    className: {
-      table: {
-        disable: true,
-      },
-    },
     color: {
       default: SupportedColors.White,
       control: 'radio',
@@ -42,8 +83,13 @@ export default {
       control: 'radio',
       options: [palette.white, palette.gray.dark3],
     },
+    name: {
+      control: 'select',
+      options: LogoNames,
+    },
   },
-} as Meta<typeof Logo>;
+};
+export default meta;
 
 const divStyle = css`
   min-width: 150px;
@@ -58,6 +104,30 @@ const divStyle = css`
   flex-direction: column;
   margin: 0.5rem;
 `;
+
+export const LiveExample: StoryFn<
+  LogoProps & { name: LogoName; background?: string }
+> = (args: LogoProps & { name: LogoName } & { background?: string }) => {
+  if (!args.name) {
+    args = { ...args, name: 'MongoDBLogo' };
+  }
+
+  return <Logo {...args} />;
+};
+LiveExample.argTypes = {
+  name: {
+    control: 'select',
+    options: LogoNames,
+  },
+};
+LiveExample.args = {
+  name: 'MongoDBLogoMark',
+};
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 const Template = (
   LogoComponent: React.FunctionComponent<LogoProps>,
@@ -74,25 +144,7 @@ const Template = (
   );
 };
 
-export const Default = (
-  args: LogoProps & { name: LogoName } & { background?: string },
-) => {
-  if (!args.name) {
-    args = { ...args, name: 'MongoDBLogo' };
-  }
-
-  return <Logo {...args} />;
-};
-Default.argTypes = {
-  name: {
-    control: 'select',
-    options: LogoNames,
-  },
-};
-Default.args = {
-  name: 'MongoDBLogoMark',
-};
-
+// Individual Components
 export const MongoDB = (args: LogoProps) => Template(MongoDBLogo, args);
 export const Atlas = (args: LogoProps) => Template(AtlasNavGraphic, args);
 export const MongoDBMark = (args: LogoProps) => Template(MongoDBLogoMark, args);
@@ -113,3 +165,5 @@ export const RealmMark = (args: LogoProps) => Template(RealmLogoMark, args);
 RealmMark.storyName = '[DEPRECATED] Realm Mark';
 export const ChartsMark = (args: LogoProps) => Template(ChartsLogoMark, args);
 ChartsMark.storyName = '[DEPRECATED] Charts Mark';
+
+export const Generated = () => {};

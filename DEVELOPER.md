@@ -84,15 +84,21 @@ We also have a link script, such that you can test components that are in develo
 The mongodb.design website will automatically import the `*.story.tsx` file from its installed package directory to render its live example. By default, the first exported story from the `*.story.tsx` file will be rendered. To specify a different story to be rendered, define the following in the Storybook file's Meta object:
 
 ```
-import { StoryMeta } from '@leafygreen-ui/lib';
+import { StoryMetaType } from '@leafygreen-ui/lib';
 
-export default StoryMeta({
+const meta: StoryMetaType<typeof Component> = {
   title: 'Components/name',
   component: Component,
   parameters: {
     default: 'StoryName',
   }
-})
+}
+
+export default meta
 ```
 
-The `StoryMeta` utility from `@leafygreen-ui/lib` will extend default controls and exclude parameters by default to clean up the Meta object. While it is not required to make the import into mongodb.design work, it is recommended to make use of this utility.
+The `StoryMetaType` utility type from `@leafygreen-ui/lib` will enforce parameters required for use with Chromatic and on `mongodb.design`
+
+## Preventing an interface from being imported in mongodb.design's Code Docs
+
+The mongodb.design website's code docs page will automatically import all exported interfaces. Interfaces and components marked with `@internal` and `@example` in TSDocs will be removed by default. To force an interface to be removed, add a `@noDocgen` flag to the TSDocs.

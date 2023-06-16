@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum 688fa27c50677ff2c4d3f2e11eda5b41
+ * @checksum 7f7ee814b340d629a841732323c536bb
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface BeakerProps extends LGGlyph.ComponentProps {}
-
 const Beaker = ({
   className,
   size = 16,
@@ -58,7 +57,6 @@ const Beaker = ({
     </svg>
   );
 };
-
 Beaker.displayName = 'Beaker';
 Beaker.isGlyph = true;
 Beaker.propTypes = {

@@ -153,29 +153,43 @@ describe('packages/password-input', () => {
       expect(defaultProps.onBlur).toHaveBeenCalledTimes(1);
     });
 
-    test('toggles password type on click of toggle icon ', () => {
-      const { passwordInput, toggleButton } = renderPasswordInput({
-        label: defaultProps.label,
+    describe('toggle', () => {
+      test('toggles password type on click of toggle icon ', () => {
+        const { passwordInput, toggleButton } = renderPasswordInput({
+          label: defaultProps.label,
+        });
+
+        expect(passwordInput.getAttribute('type')).toBe('password');
+        fireEvent.click(toggleButton as HTMLButtonElement);
+        expect(passwordInput.getAttribute('type')).toBe('text');
+        fireEvent.click(toggleButton as HTMLButtonElement);
+        expect(passwordInput.getAttribute('type')).toBe('password');
       });
 
-      expect(passwordInput.getAttribute('type')).toBe('password');
-      fireEvent.click(toggleButton as HTMLButtonElement);
-      expect(passwordInput.getAttribute('type')).toBe('text');
-      fireEvent.click(toggleButton as HTMLButtonElement);
-      expect(passwordInput.getAttribute('type')).toBe('password');
-    });
+      test('toggles password type on click of toggle icon when input is disabled', () => {
+        const { passwordInput, toggleButton } = renderPasswordInput({
+          label: defaultProps.label,
+          disabled: true,
+        });
 
-    test('toggles password type on click of toggle icon when input is disabled', () => {
-      const { passwordInput, toggleButton } = renderPasswordInput({
-        label: defaultProps.label,
-        disabled: true,
+        expect(passwordInput.getAttribute('type')).toBe('password');
+        fireEvent.click(toggleButton as HTMLButtonElement);
+        expect(passwordInput.getAttribute('type')).toBe('text');
+        fireEvent.click(toggleButton as HTMLButtonElement);
+        expect(passwordInput.getAttribute('type')).toBe('password');
       });
 
-      expect(passwordInput.getAttribute('type')).toBe('password');
-      fireEvent.click(toggleButton as HTMLButtonElement);
-      expect(passwordInput.getAttribute('type')).toBe('text');
-      fireEvent.click(toggleButton as HTMLButtonElement);
-      expect(passwordInput.getAttribute('type')).toBe('password');
+      test('does not submit a form when clicked', () => {
+        const submitHandler = jest.fn();
+        const { getByRole } = render(
+          <form onSubmit={submitHandler}>
+            <PasswordInput label="label" />
+          </form>,
+        );
+        const toggleButton = getByRole('switch');
+        userEvent.click(toggleButton);
+        expect(submitHandler).not.toHaveBeenCalled();
+      });
     });
   });
 

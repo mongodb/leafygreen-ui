@@ -40,9 +40,9 @@ describe('packages/stepper', () => {
         <Stepper {...defaultProps}>{StepContents(3)}</Stepper>,
       );
       const currentStep = container.querySelector('[aria-current="step"]');
-      expect(currentStep).toContainHTML('Step 1');
-      expect(currentStep).not.toContainHTML('Step 2');
-      expect(currentStep).not.toContainHTML('Step 3');
+      expect((currentStep as HTMLElement).textContent).toContain('Step 1');
+      expect((currentStep as HTMLElement).textContent).not.toContain('Step 2');
+      expect((currentStep as HTMLElement).textContent).not.toContain('Step 3');
     });
   });
 
@@ -54,9 +54,9 @@ describe('packages/stepper', () => {
         </Stepper>,
       );
       const currentStep = container.querySelector('[aria-current="step"]');
-      expect(currentStep).not.toContainHTML('Step 1');
-      expect(currentStep).toContainHTML('Step 2');
-      expect(currentStep).not.toContainHTML('Step 3');
+      expect((currentStep as HTMLElement).textContent).not.toContain('Step 1');
+      expect((currentStep as HTMLElement).textContent).toContain('Step 2');
+      expect((currentStep as HTMLElement).textContent).not.toContain('Step 3');
     });
 
     test('controls number of visible steps', () => {

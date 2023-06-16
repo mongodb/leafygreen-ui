@@ -1,5 +1,127 @@
 # @leafygreen-ui/menu
 
+## 22.0.2
+
+### Patch Changes
+
+- 735342e9: Reduce the number of re-renders and fixes a bug that prevented a previously opened menu from closing on the opening of another menu.
+- 76161cf0: Updates stories for Chromatic testing
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [735342e9]
+- Updated dependencies [95f5107a]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+  - @leafygreen-ui/lib@10.4.0
+  - @leafygreen-ui/hooks@7.7.5
+  - @leafygreen-ui/icon@11.17.0
+  - @leafygreen-ui/popover@11.0.12
+  - @leafygreen-ui/icon-button@15.0.12
+  - @leafygreen-ui/tokens@2.1.1
+
+## 22.0.1
+
+### Patch Changes
+
+- 63b2deb0b: Upgrade button to v20.1.1
+- Updated dependencies [63b2deb0b]
+  - @leafygreen-ui/popover@11.0.11
+
+## 22.0.0
+
+### Major Changes
+
+- c0699a0df: Clicking on a MenuItem closes the Menu component
+- 0cd471676: Refactor `Menu` to use `forwardRef`.
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- 0cd471676: Adds `id` prop and adds `aria-expanded` and `aria-haspopup` internally. Removes `MenuItem.displayName` and passes the displayName as an argument to `InferredPolymorphic` instead.
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [0cd471676]
+  - @leafygreen-ui/hooks@7.7.4
+  - @leafygreen-ui/icon@11.16.1
+  - @leafygreen-ui/icon-button@15.0.11
+  - @leafygreen-ui/leafygreen-provider@3.1.3
+  - @leafygreen-ui/lib@10.3.4
+  - @leafygreen-ui/polymorphic@1.3.2
+  - @leafygreen-ui/popover@11.0.10
+
+## 21.0.0
+
+### Major Changes
+
+- bdc11b5be: When you press the `tab` key within a menu that is open, it will no longer cycle through the available options. Rather, the menu will close and the focus will shift to the trigger of the menu.
+
+### Patch Changes
+
+- f2ae45924: Fixes flakey menu tests
+- 73cbbd02c: Uses fontWeight token from `@leafygreen-ui/tokens`
+- Updated dependencies [73cbbd02c]
+- Updated dependencies [8ece56980]
+- Updated dependencies [83fc5b31b]
+- Updated dependencies [8ece56980]
+- Updated dependencies [32b3d3146]
+  - @leafygreen-ui/tokens@2.1.0
+  - @leafygreen-ui/popover@11.0.9
+  - @leafygreen-ui/icon@11.14.0
+  - @leafygreen-ui/hooks@7.7.2
+
+## 20.0.3
+
+### Patch Changes
+
+- cf00160ec: Updates TSDocs
+- ce0fcb3f6: Excludes `children` from story controls
+- Updated dependencies [55d33e435]
+- Updated dependencies [55d33e435]
+- Updated dependencies [cf00160ec]
+- Updated dependencies [ce0fcb3f6]
+- Updated dependencies [111b680c5]
+- Updated dependencies [77320a6b8]
+  - @leafygreen-ui/lib@10.3.3
+  - @leafygreen-ui/palette@4.0.4
+  - @leafygreen-ui/icon-button@15.0.10
+  - @leafygreen-ui/popover@11.0.8
+  - @leafygreen-ui/tokens@2.0.3
+
+## 20.0.2
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/emotion@4.0.4
+  - @leafygreen-ui/hooks@7.7.1
+  - @leafygreen-ui/icon@11.13.1
+  - @leafygreen-ui/icon-button@15.0.9
+  - @leafygreen-ui/leafygreen-provider@3.1.2
+  - @leafygreen-ui/lib@10.3.2
+  - @leafygreen-ui/palette@4.0.3
+  - @leafygreen-ui/polymorphic@1.3.1
+  - @leafygreen-ui/popover@11.0.7
+  - @leafygreen-ui/tokens@2.0.2
+
+## 20.0.1
+
+### Patch Changes
+
+- b9841decc: Ensures MenuItem and SubMenu components are rendered with proper HTML elements
+- b9841decc: Improves prop types and polymorphic support
+- Updated dependencies [5b036515e]
+- Updated dependencies [b9841decc]
+- Updated dependencies [26e341a0b]
+- Updated dependencies [997121cc3]
+  - @leafygreen-ui/palette@4.0.0
+  - @leafygreen-ui/polymorphic@1.2.0
+  - @leafygreen-ui/lib@10.2.2
+  - @leafygreen-ui/icon@11.12.5
+  - @leafygreen-ui/icon-button@15.0.7
+  - @leafygreen-ui/tokens@2.0.1
+
 ## 20.0.0
 
 ### Major Changes

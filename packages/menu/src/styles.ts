@@ -1,7 +1,11 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
+import {
+  fontFamilies,
+  fontWeights,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
 
 import { Size } from './types';
 
@@ -111,14 +115,14 @@ export const titleTextStyle = css`
   justify-content: center;
   width: 100%;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: ${fontWeights.medium};
 
   // We create a pseudo element that's the width of the bolded text
   // This way there's no layout shift on hover when the text is bolded.
   &:after {
     content: attr(data-text);
     height: 0;
-    font-weight: 700;
+    font-weight: ${fontWeights.bold};
     visibility: hidden;
     overflow: hidden;
     user-select: none;
@@ -128,7 +132,7 @@ export const titleTextStyle = css`
 
 const descriptionTextStyle = css`
   font-size: 13px;
-  font-weight: normal;
+  font-weight: ${fontWeights.regular};
   line-height: 16px;
   color: ${palette.gray.light1};
 `;
@@ -162,7 +166,7 @@ export const getHoverStyles = (containerClass: string, theme: Theme) => ({
   text: css`
     .${containerClass} {
       &:not(:disabled):hover & {
-        font-weight: 700;
+        font-weight: ${fontWeights.bold};
       }
     }
   `,
@@ -215,11 +219,11 @@ export const activeMenuItemContainerStyle: Record<Theme, string> = {
 
 export const activeTitleTextStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    font-weight: bold;
+    font-weight: ${fontWeights.bold};
     color: ${palette.green.base};
   `,
   [Theme.Dark]: css`
-    font-weight: bold;
+    font-weight: ${fontWeights.bold};
     color: ${palette.green.dark2};
   `,
 };
@@ -280,11 +284,11 @@ export const disabledMenuItemContainerThemeStyle: Record<Theme, string> = {
 export const disabledTextStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.gray.dark1};
-    font-weight: 400;
+    font-weight: ${fontWeights.regular};
   `,
   [Theme.Dark]: css`
     color: ${palette.gray.base};
-    font-weight: 400;
+    font-weight: ${fontWeights.regular};
   `,
 };
 

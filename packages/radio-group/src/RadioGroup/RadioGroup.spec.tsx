@@ -56,11 +56,11 @@ const renderUncontrolledRadioGroup = (
 };
 
 const renderRadio = (props: Omit<RadioProps, 'value'>) => {
-  const { getByTestId } = render(
+  const { getByTestId, ...rest } = render(
     <Radio {...props} data-testid="lg-radio" value="input-only" />,
   );
   const radio = getByTestId('lg-radio');
-  return { radio };
+  return { radio, ...rest };
 };
 
 describe('packages/radio-group', () => {
@@ -188,6 +188,16 @@ describe('packages/radio-group', () => {
     test(`radio is checked when value is set`, () => {
       const { radio } = renderRadio({ checked: true });
       expect(radio.getAttribute('aria-checked')).toBe('true');
+    });
+
+    test(`radio renders a description`, () => {
+      const { getByText } = renderRadio({
+        checked: true,
+        description: 'a description',
+      });
+
+      const description = getByText('a description');
+      expect(description).toBeInTheDocument();
     });
   });
 });

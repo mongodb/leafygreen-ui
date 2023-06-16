@@ -1,5 +1,131 @@
 # @leafygreen-ui/tooltip
 
+## 10.0.4
+
+### Patch Changes
+
+- 76161cf0: Minor fixes to stories
+- 76161cf0: Updates stories for Chromatic testing
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [735342e9]
+- Updated dependencies [95f5107a]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+  - @leafygreen-ui/lib@10.4.0
+  - @leafygreen-ui/hooks@7.7.5
+  - @leafygreen-ui/icon@11.17.0
+  - @leafygreen-ui/popover@11.0.12
+  - @leafygreen-ui/tokens@2.1.1
+  - @leafygreen-ui/typography@16.5.1
+
+## 10.0.3
+
+### Patch Changes
+
+- 63b2deb0b: Upgrade button to v20.1.1
+- Updated dependencies [63b2deb0b]
+  - @leafygreen-ui/popover@11.0.11
+
+## 10.0.2
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [75099c60b]
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [0cd471676]
+  - @leafygreen-ui/hooks@7.7.4
+  - @leafygreen-ui/icon@11.16.1
+  - @leafygreen-ui/leafygreen-provider@3.1.3
+  - @leafygreen-ui/lib@10.3.4
+  - @leafygreen-ui/popover@11.0.10
+  - @leafygreen-ui/typography@16.5.0
+
+## 10.0.1
+
+### Patch Changes
+
+- a3a52e131: Bumps to use new `useIdAllocator` hook
+- Updated dependencies [614f7617d]
+- Updated dependencies [a3a52e131]
+- Updated dependencies [614f7617d]
+  - @leafygreen-ui/icon@11.15.0
+  - @leafygreen-ui/hooks@7.7.3
+
+## 10.0.0
+
+### Major Changes
+
+- 8ece56980: Adds a 500ms delay to `Tooltip` when opened. Also applies new file structure internally.
+
+### Patch Changes
+
+- 32b3d3146: Bumps to use new `useIdAllocator` hook
+- 73cbbd02c: Uses fontWeight token from `@leafygreen-ui/tokens`
+- Updated dependencies [73cbbd02c]
+- Updated dependencies [8ece56980]
+- Updated dependencies [83fc5b31b]
+- Updated dependencies [9bcf8b925]
+- Updated dependencies [8ece56980]
+- Updated dependencies [32b3d3146]
+- Updated dependencies [73cbbd02c]
+  - @leafygreen-ui/tokens@2.1.0
+  - @leafygreen-ui/popover@11.0.9
+  - @leafygreen-ui/icon@11.14.0
+  - @leafygreen-ui/typography@16.4.0
+  - @leafygreen-ui/hooks@7.7.2
+
+## 9.1.8
+
+### Patch Changes
+
+- 55d33e435: Update to BaseFontSize prop control for .design live example
+- Updated dependencies [55d33e435]
+- Updated dependencies [07db42330]
+- Updated dependencies [55d33e435]
+- Updated dependencies [cf00160ec]
+- Updated dependencies [ce0fcb3f6]
+- Updated dependencies [111b680c5]
+- Updated dependencies [77320a6b8]
+  - @leafygreen-ui/lib@10.3.3
+  - @leafygreen-ui/palette@4.0.4
+  - @leafygreen-ui/typography@16.3.0
+  - @leafygreen-ui/popover@11.0.8
+  - @leafygreen-ui/tokens@2.0.3
+
+## 9.1.7
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/emotion@4.0.4
+  - @leafygreen-ui/hooks@7.7.1
+  - @leafygreen-ui/icon@11.13.1
+  - @leafygreen-ui/leafygreen-provider@3.1.2
+  - @leafygreen-ui/lib@10.3.2
+  - @leafygreen-ui/palette@4.0.3
+  - @leafygreen-ui/popover@11.0.7
+  - @leafygreen-ui/tokens@2.0.2
+  - @leafygreen-ui/typography@16.2.1
+
+## 9.1.6
+
+### Patch Changes
+
+- Updated dependencies [5b036515e]
+- Updated dependencies [26e341a0b]
+- Updated dependencies [997121cc3]
+- Updated dependencies [eb0cc4498]
+  - @leafygreen-ui/palette@4.0.0
+  - @leafygreen-ui/lib@10.2.2
+  - @leafygreen-ui/icon@11.12.5
+  - @leafygreen-ui/typography@16.1.0
+  - @leafygreen-ui/tokens@2.0.1
+
 ## 9.1.5
 
 ### Patch Changes

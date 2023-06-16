@@ -5,6 +5,7 @@ import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   fontFamilies,
+  fontWeights,
   spacing,
   transitionDuration,
 } from '@leafygreen-ui/tokens';
@@ -35,7 +36,7 @@ export const baseStyle = css`
 
   // Typography
   font-family: ${fontFamilies.default};
-  font-weight: normal;
+  font-weight: ${fontWeights.regular};
   text-align: left;
   text-decoration: none;
   text-transform: capitalize;
@@ -95,7 +96,7 @@ export const themeStyle: Record<Theme, string> = {
 
 export const activeBaseStyle = css`
   cursor: default;
-  font-weight: bold;
+  font-weight: ${fontWeights.bold};
   text-decoration: none;
 
   // The active wedge
@@ -133,7 +134,7 @@ export const activeThemeStyle: Record<Theme, string> = {
 
 export const disabledStyle = css`
   background-color: transparent;
-  font-weight: normal;
+  font-weight: ${fontWeights.regular};
   cursor: not-allowed;
 
   &,

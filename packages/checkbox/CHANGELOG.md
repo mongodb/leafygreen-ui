@@ -1,5 +1,89 @@
 # @leafygreen-ui/checkbox
 
+## 12.0.12
+
+### Patch Changes
+
+- 76161cf0: Updates stories for Chromatic testing
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [735342e9]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+  - @leafygreen-ui/lib@10.4.0
+  - @leafygreen-ui/hooks@7.7.5
+  - @leafygreen-ui/tokens@2.1.1
+  - @leafygreen-ui/typography@16.5.1
+
+## 12.0.11
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- d2ce54e2f: Exports primary component props
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [75099c60b]
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [0cd471676]
+  - @leafygreen-ui/hooks@7.7.4
+  - @leafygreen-ui/leafygreen-provider@3.1.3
+  - @leafygreen-ui/lib@10.3.4
+  - @leafygreen-ui/typography@16.5.0
+
+## 12.0.10
+
+### Patch Changes
+
+- a3a52e131: Bumps to use new `useIdAllocator` hook
+- Updated dependencies [a3a52e131]
+- Updated dependencies [a3a52e131]
+  - @leafygreen-ui/hooks@7.7.3
+  - @leafygreen-ui/a11y@1.4.4
+
+## 12.0.9
+
+### Patch Changes
+
+- 32b3d3146: Bumps to use new `useIdAllocator` hook
+- 73cbbd02c: Uses fontWeight token from `@leafygreen-ui/tokens`
+- Updated dependencies [73cbbd02c]
+- Updated dependencies [32b3d3146]
+- Updated dependencies [9bcf8b925]
+- Updated dependencies [8ece56980]
+- Updated dependencies [32b3d3146]
+- Updated dependencies [73cbbd02c]
+  - @leafygreen-ui/tokens@2.1.0
+  - @leafygreen-ui/a11y@1.4.3
+  - @leafygreen-ui/typography@16.4.0
+  - @leafygreen-ui/hooks@7.7.2
+
+## 12.0.8
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/a11y@1.4.2
+  - @leafygreen-ui/emotion@4.0.4
+  - @leafygreen-ui/hooks@7.7.1
+  - @leafygreen-ui/leafygreen-provider@3.1.2
+  - @leafygreen-ui/lib@10.3.2
+  - @leafygreen-ui/palette@4.0.3
+  - @leafygreen-ui/tokens@2.0.2
+  - @leafygreen-ui/typography@16.2.1
+
+## 12.0.7
+
+### Patch Changes
+
+- Updated dependencies [5b036515e]
+- Updated dependencies [26e341a0b]
+- Updated dependencies [eb0cc4498]
+  - @leafygreen-ui/palette@4.0.0
+  - @leafygreen-ui/lib@10.2.2
+  - @leafygreen-ui/typography@16.1.0
+  - @leafygreen-ui/tokens@2.0.1
+
 ## 12.0.6
 
 ### Patch Changes

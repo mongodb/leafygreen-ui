@@ -1,5 +1,45 @@
 # @leafygreen-ui/logo
 
+## 8.0.4
+
+### Patch Changes
+
+- 76161cf0: Minor fixes to stories
+- 76161cf0: Updates stories for Chromatic testing
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+  - @leafygreen-ui/lib@10.4.0
+
+## 8.0.3
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [0cd471676]
+  - @leafygreen-ui/lib@10.3.4
+
+## 8.0.2
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/emotion@4.0.4
+  - @leafygreen-ui/lib@10.3.2
+  - @leafygreen-ui/palette@4.0.3
+
+## 8.0.1
+
+### Patch Changes
+
+- Updated dependencies [5b036515e]
+- Updated dependencies [26e341a0b]
+  - @leafygreen-ui/palette@4.0.0
+  - @leafygreen-ui/lib@10.2.2
+
 ## 8.0.0
 
 ### Major Changes

@@ -4,6 +4,7 @@ import { palette } from '@leafygreen-ui/palette';
 import {
   focusRing,
   fontFamilies,
+  fontWeights,
   hoverRing,
   spacing,
   transitionDuration,
@@ -22,7 +23,7 @@ export const textAreaStyle = css`
   margin: 0;
   padding: 8px 12px 1px 12px;
   font-size: 14px;
-  font-weight: normal;
+  font-weight: ${fontWeights.regular};
   line-height: 16px;
   border: 1px solid;
   border-radius: 6px;
@@ -46,7 +47,7 @@ export const errorContainerStyle = css`
   height: 20px;
   margin-top: 5px;
   align-items: center;
-  font-weight: normal;
+  font-weight: ${fontWeights.regular};
 `;
 
 export const errorMessageLabelStyles = css`

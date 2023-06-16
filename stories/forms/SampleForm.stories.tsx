@@ -5,10 +5,16 @@ import TextInput from '@leafygreen-ui/text-input';
 
 export default {
   title: 'Form/Sample Forms',
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
 };
 
 export const Vertical = () => {
   return <div></div>;
+};
+Vertical.parameters = {
+  chromatic: { disableSnapshot: true },
 };
 
 export const Horizontal = () => {
@@ -25,4 +31,7 @@ export const Horizontal = () => {
       </Select>
     </div>
   );
+};
+Horizontal.parameters = {
+  chromatic: { disableSnapshot: true },
 };

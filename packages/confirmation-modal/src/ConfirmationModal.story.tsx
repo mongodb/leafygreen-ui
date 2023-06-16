@@ -1,18 +1,28 @@
 import React, { useState } from 'react';
-import { ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 import { CloseIconColor } from '@leafygreen-ui/modal';
 
-import { ConfirmationModal } from './ConfirmationModal/ConfirmationModal';
-import { Variant } from './ConfirmationModal/types';
+import ConfirmationModal, { ConfirmationModalProps, Variant } from '.';
 
-export default {
+const meta: StoryMetaType<typeof ConfirmationModal> = {
   title: 'Components/Modals/ConfirmationModal',
   component: ConfirmationModal,
+  parameters: {
+    default: 'LiveExample',
+    controls: {
+      exclude: [...storybookExcludedControlParams, 'open', 'initialFocus'],
+    },
+  },
   args: {
+    open: true,
     title: 'Confirm Title Here',
     buttonText: 'Confirm',
     children:
@@ -39,14 +49,11 @@ export default {
       options: Object.values(CloseIconColor),
     },
   },
-  parameters: {
-    controls: {
-      exclude: ['className', 'onConfirm', 'onCancel', 'open', 'initialFocus'],
-    },
-  },
 };
 
-const ControlledTemplate: ComponentStory<typeof ConfirmationModal> = ({
+export default meta;
+
+export const LiveExample: StoryFn<ConfirmationModalProps> = ({
   // eslint-disable-next-line react/prop-types
   darkMode,
   ...args
@@ -54,7 +61,7 @@ const ControlledTemplate: ComponentStory<typeof ConfirmationModal> = ({
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   return (
-    <>
+    <div>
       <Button darkMode={darkMode} onClick={() => setOpen(!open)}>
         Open Modal
       </Button>
@@ -65,17 +72,30 @@ const ControlledTemplate: ComponentStory<typeof ConfirmationModal> = ({
         onConfirm={handleClose}
         darkMode={darkMode}
       />
-    </>
+    </div>
+  );
+};
+LiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+
+export const Basic: StoryFn<ConfirmationModalProps> = ({
+  // eslint-disable-next-line react/prop-types
+  darkMode,
+  ...args
+}) => {
+  return (
+    <div
+      className={css`
+        height: 100vh;
+      `}
+    >
+      <ConfirmationModal {...args} open={true} darkMode={darkMode} />;
+    </div>
   );
 };
 
-export const Basic = ControlledTemplate.bind({});
-Basic.args = {
-  open: true,
-};
-
-export const Delete = ControlledTemplate.bind({});
-Delete.args = {
-  open: true,
-  variant: Variant.Danger,
+export const DarkMode = Basic.bind({});
+DarkMode.args = {
+  darkMode: true,
 };

@@ -1,5 +1,31 @@
 # @leafygreen-ui/a11y
 
+## 1.4.4
+
+### Patch Changes
+
+- a3a52e131: Bumps to use new `useIdAllocator` hook
+- Updated dependencies [a3a52e131]
+  - @leafygreen-ui/hooks@7.7.3
+
+## 1.4.3
+
+### Patch Changes
+
+- 32b3d3146: Bumps to use new `useIdAllocator` hook
+- Updated dependencies [32b3d3146]
+  - @leafygreen-ui/hooks@7.7.2
+
+## 1.4.2
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/emotion@4.0.4
+  - @leafygreen-ui/hooks@7.7.1
+  - @leafygreen-ui/lib@10.3.2
+
 ## 1.4.1
 
 ### Patch Changes

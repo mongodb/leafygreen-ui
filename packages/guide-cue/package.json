@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/guide-cue",
-  "version": "4.0.1",
+  "version": "4.0.8",
   "description": "leafyGreen UI Kit GuideCue",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -30,19 +30,22 @@
   "dependencies": {
     "focus-trap-react": "^10.0.0",
     "polished": "^4.2.2",
-    "@leafygreen-ui/a11y": "^1.4.0",
-    "@leafygreen-ui/button": "^20.0.0",
-    "@leafygreen-ui/emotion": "^4.0.3",
-    "@leafygreen-ui/hooks": "^7.5.0",
-    "@leafygreen-ui/icon": "^11.12.4",
-    "@leafygreen-ui/icon-button": "^15.0.6",
-    "@leafygreen-ui/lib": "^10.1.0",
-    "@leafygreen-ui/palette": "^3.4.7",
-    "@leafygreen-ui/popover": "^11.0.4",
-    "@leafygreen-ui/tooltip": "^9.1.4",
-    "@leafygreen-ui/typography": "^16.0.1"
+    "@leafygreen-ui/a11y": "^1.4.4",
+    "@leafygreen-ui/button": "^20.2.1",
+    "@leafygreen-ui/emotion": "^4.0.4",
+    "@leafygreen-ui/hooks": "^7.7.5",
+    "@leafygreen-ui/icon": "^11.17.0",
+    "@leafygreen-ui/icon-button": "^15.0.12",
+    "@leafygreen-ui/lib": "^10.4.0",
+    "@leafygreen-ui/palette": "^4.0.3",
+    "@leafygreen-ui/popover": "^11.0.12",
+    "@leafygreen-ui/tooltip": "^10.0.4",
+    "@leafygreen-ui/typography": "^16.5.1"
+  },
+  "devDependencies": {
+    "@leafygreen-ui/tokens": "^2.1.1"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.1"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.3"
   }
 }

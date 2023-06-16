@@ -62,6 +62,22 @@ const MyComponent = Polymorphic<MyProps>(({ as, ...rest }, forwardedRef) => {
 });
 ```
 
+### React Server Components
+
+React Server Components do not support React Client Component APIs, such as `React.useRef`. To avoid React Client APIs, use the `usePolymorphicComponent` and `useInferredPolymorphicComponent` hooks instead.
+
+Note that `forwardedRef` is still allowed.
+
+```tsx
+interface MyProps {
+  someProp: string;
+}
+const MyComponent = Polymorphic<MyProps>(({ as, ...rest }, forwardedRef) => {
+  const Component = usePolymorphicComponent(as);
+  return <Component ref={forwardedRef} {...rest} />;
+});
+```
+
 ### Inferred `as` prop
 
 Components extended using the `Polymorphic` factory function can be made to infer the `as` prop value based on the `href` passed in.
@@ -92,7 +108,7 @@ For example, when creating a Button component, you may want to have the `as` pro
 To set a default value for the inferred as value, you'll need to provide the default value both to TypeScript and React:
 
 ```tsx
-export const MyInferredComponentWitDefault = InferredPolymorphic<
+export const MyInferredComponentWithDefault = InferredPolymorphic<
   ExampleProps,
   'button'
 >(({ as = 'button' as PolymorphicAs, title, ...rest }) => {

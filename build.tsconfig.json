@@ -39,6 +39,9 @@
       "path": "./packages/emotion"
     },
     {
+      "path": "./packages/empty-state"
+    },
+    {
       "path": "./packages/expandable-card"
     },
     {
@@ -69,6 +72,9 @@
       "path": "./packages/lib"
     },
     {
+      "path": "./packages/loading-indicator"
+    },
+    {
       "path": "./packages/logo"
     },
     {
@@ -79,6 +85,9 @@
     },
     {
       "path": "./packages/modal"
+    },
+    {
+      "path": "./packages/number-input"
     },
     {
       "path": "./packages/pagination"
@@ -121,6 +130,12 @@
     },
     {
       "path": "./packages/side-nav"
+    },
+    {
+      "path": "./packages/skeleton-loader"
+    },
+    {
+      "path": "./packages/split-button"
     },
     {
       "path": "./packages/stepper"

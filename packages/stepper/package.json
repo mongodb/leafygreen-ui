@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/stepper",
-  "version": "3.1.7",
+  "version": "3.1.14",
   "description": "leafyGreen UI Kit Stepper",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -20,13 +20,13 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/emotion": "^4.0.3",
-    "@leafygreen-ui/icon": "^11.12.4",
-    "@leafygreen-ui/lib": "^10.1.0",
-    "@leafygreen-ui/palette": "^3.4.7",
-    "@leafygreen-ui/tokens": "^2.0.0",
-    "@leafygreen-ui/tooltip": "^9.1.4",
-    "@leafygreen-ui/typography": "^16.0.1"
+    "@leafygreen-ui/emotion": "^4.0.4",
+    "@leafygreen-ui/icon": "^11.17.0",
+    "@leafygreen-ui/lib": "^10.4.0",
+    "@leafygreen-ui/palette": "^4.0.4",
+    "@leafygreen-ui/tokens": "^2.1.1",
+    "@leafygreen-ui/tooltip": "^10.0.4",
+    "@leafygreen-ui/typography": "^16.5.1"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/stepper",
   "repository": {

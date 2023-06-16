@@ -180,7 +180,7 @@ describe('packages/segmented-control', () => {
     });
 
     test('warning if LeafyGreen UI Glyph is not passed as Glyph', () => {
-      const spy = jest.spyOn(console, 'warn');
+      const spy = jest.spyOn(console, 'warn').mockImplementation(() => {});
 
       render(
         <SegmentedControl

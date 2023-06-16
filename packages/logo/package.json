@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/logo",
-  "version": "8.0.0",
+  "version": "8.0.4",
   "description": "LeafyGreen UI Kit Logos",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -20,9 +20,9 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/emotion": "^4.0.3",
-    "@leafygreen-ui/lib": "^10.2.1",
-    "@leafygreen-ui/palette": "^3.4.5"
+    "@leafygreen-ui/emotion": "^4.0.4",
+    "@leafygreen-ui/lib": "^10.4.0",
+    "@leafygreen-ui/palette": "^4.0.3"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/logo",
   "repository": {

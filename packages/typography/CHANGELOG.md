@@ -1,5 +1,124 @@
 # @leafygreen-ui/typography
 
+## 16.5.1
+
+### Patch Changes
+
+- 76161cf0: Updates stories for Chromatic testing
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [95f5107a]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+  - @leafygreen-ui/lib@10.4.0
+  - @leafygreen-ui/icon@11.17.0
+  - @leafygreen-ui/tokens@2.1.1
+
+## 16.5.0
+
+### Minor Changes
+
+- 75099c60b: types `LinkProps` and `InlineCodeProps` accept a generic
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [0cd471676]
+  - @leafygreen-ui/icon@11.16.1
+  - @leafygreen-ui/leafygreen-provider@3.1.3
+  - @leafygreen-ui/lib@10.3.4
+  - @leafygreen-ui/polymorphic@1.3.2
+
+## 16.4.1
+
+### Patch Changes
+
+- 6a3f03fd2: Exported typography interfaces now extend PolymorphicProps
+
+## 16.4.0
+
+### Minor Changes
+
+- 9bcf8b925: Exports `OverlineProps` and `SubtitleProps`
+
+### Patch Changes
+
+- 73cbbd02c: Uses fontWeight token from `@leafygreen-ui/tokens`
+- Updated dependencies [73cbbd02c]
+- Updated dependencies [83fc5b31b]
+- Updated dependencies [8ece56980]
+  - @leafygreen-ui/tokens@2.1.0
+  - @leafygreen-ui/icon@11.14.0
+
+## 16.3.0
+
+### Minor Changes
+
+- 07db42330: Exports typography component types
+
+### Patch Changes
+
+- 55d33e435: Update to BaseFontSize prop control for .design live example
+- cf00160ec: Updates TSDocs
+- Updated dependencies [55d33e435]
+- Updated dependencies [55d33e435]
+- Updated dependencies [cf00160ec]
+- Updated dependencies [111b680c5]
+- Updated dependencies [77320a6b8]
+  - @leafygreen-ui/lib@10.3.3
+  - @leafygreen-ui/palette@4.0.4
+  - @leafygreen-ui/tokens@2.0.3
+
+## 16.2.1
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/emotion@4.0.4
+  - @leafygreen-ui/icon@11.13.1
+  - @leafygreen-ui/leafygreen-provider@3.1.2
+  - @leafygreen-ui/lib@10.3.2
+  - @leafygreen-ui/palette@4.0.3
+  - @leafygreen-ui/polymorphic@1.3.1
+  - @leafygreen-ui/tokens@2.0.2
+
+## 16.2.0
+
+### Minor Changes
+
+- ece595acd: InlineCode component now supports "as" prop
+- 9858ab8c5: Overwrites default text-decoration property on Link component
+
+### Patch Changes
+
+- Updated dependencies [3ef365fd3]
+- Updated dependencies [c2c5601f4]
+  - @leafygreen-ui/polymorphic@1.3.0
+  - @leafygreen-ui/icon@11.12.7
+  - @leafygreen-ui/lib@10.3.1
+  - @leafygreen-ui/palette@4.0.1
+
+## 16.1.0
+
+### Minor Changes
+
+- eb0cc4498: No longer filters out props that are passed to Link component
+
+### Patch Changes
+
+- Updated dependencies [5b036515e]
+- Updated dependencies [b9841decc]
+- Updated dependencies [26e341a0b]
+- Updated dependencies [997121cc3]
+  - @leafygreen-ui/palette@4.0.0
+  - @leafygreen-ui/polymorphic@1.2.0
+  - @leafygreen-ui/lib@10.2.2
+  - @leafygreen-ui/icon@11.12.5
+  - @leafygreen-ui/tokens@2.0.1
+
 ## 16.0.1
 
 ### Patch Changes

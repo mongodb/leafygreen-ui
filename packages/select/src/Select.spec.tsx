@@ -98,16 +98,16 @@ describe('packages/select', () => {
   test('renders placeholder', async () => {
     const { getByRole, rerender } = render(<Select {...defaultProps} />);
 
-    let combobox = getByRole('button');
-    expect(combobox).toBeVisible();
-    expect(getByTextFor(combobox, 'Select')).toBeVisible();
+    let button = getByRole('button');
+    expect(button).toBeVisible();
+    expect(getByTextFor(button, 'Select')).toBeVisible();
 
     rerender(<Select {...defaultProps} placeholder="Explicit placeholder" />);
 
-    combobox = getByRole('button');
-    expect(getByTextFor(combobox, 'Explicit placeholder')).toBeVisible();
+    button = getByRole('button');
+    expect(getByTextFor(button, 'Explicit placeholder')).toBeVisible();
 
-    userEvent.click(combobox);
+    userEvent.click(button);
 
     const listbox = await waitFor(() => {
       const listbox = getByRole('listbox');
@@ -118,21 +118,21 @@ describe('packages/select', () => {
     expect(getByTextFor(listbox, 'Explicit placeholder')).toBeVisible();
   });
 
-  test('combobox button has selected value', () => {
+  test('button has selected value', () => {
     const { getByRole, rerender } = render(<Select {...defaultProps} />);
 
-    const combobox = getByRole('button') as HTMLButtonElement;
-    expect(combobox).toBeInstanceOf(HTMLButtonElement);
+    const button = getByRole('button') as HTMLButtonElement;
+    expect(button).toBeInstanceOf(HTMLButtonElement);
 
-    expect(combobox.name).toEqual(defaultProps.name);
-    expect(combobox.disabled).toEqual(false);
-    expect(combobox).toHaveValue('');
+    expect(button.name).toEqual(defaultProps.name);
+    expect(button.disabled).toEqual(false);
+    expect(button).toHaveValue('');
 
     rerender(<Select {...defaultProps} name="explicit_name" />);
-    expect(combobox.name).toEqual('explicit_name');
+    expect(button.name).toEqual('explicit_name');
 
     rerender(<Select {...defaultProps} disabled />);
-    expect(combobox.disabled).toEqual(true);
+    expect(button).toHaveAttribute('aria-disabled', 'true');
   });
 
   test('must render options in <Select>', () => {
@@ -231,17 +231,22 @@ describe('packages/select', () => {
       expect(document.body).toHaveFocus();
 
       userEvent.tab();
-      const combobox = getByRole('button');
-      expect(combobox).toHaveFocus();
+      const button = getByRole('button');
+      expect(button).toHaveFocus();
 
       userEvent.tab();
       expect(document.body).toHaveFocus();
     });
 
-    test('does not contain component when disabled', () => {
-      render(<Select {...defaultProps} disabled />);
+    // Select should still be focusable when disabled
+    test('and contains component when disabled', () => {
+      const { getByRole } = render(<Select {...defaultProps} />);
 
       expect(document.body).toHaveFocus();
+
+      userEvent.tab();
+      const button = getByRole('button');
+      expect(button).toHaveFocus();
 
       userEvent.tab();
       expect(document.body).toHaveFocus();
@@ -252,18 +257,20 @@ describe('packages/select', () => {
     ['enabled', true],
     ['disabled', false],
   ])('has initially selected option when %p', (_, enabled) => {
+    const isDisabled = !enabled;
+
     test('when uncontrolled', () => {
       const { getByRole } = render(
         <Select
           {...defaultProps}
-          disabled={!enabled}
+          disabled={isDisabled}
           defaultValue={Color.Blue}
         />,
       );
 
-      const combobox = getByRole('button') as HTMLButtonElement;
-      expect(getByTextFor(combobox, 'Blue')).toBeVisible();
-      expect(combobox).toHaveValue('Blue');
+      const button = getByRole('button') as HTMLButtonElement;
+      expect(getByTextFor(button, 'Blue')).toBeVisible();
+      expect(button).toHaveValue('Blue');
     });
 
     test('when controlled', () => {
@@ -273,13 +280,14 @@ describe('packages/select', () => {
           {...defaultProps}
           value={Color.Blue}
           onChange={onChangeSpy}
-          disabled={!enabled}
+          disabled={isDisabled}
         />,
       );
 
-      const combobox = getByRole('button') as HTMLButtonElement;
-      expect(getByTextFor(combobox, 'Blue')).toBeVisible();
-      expect(combobox).toHaveValue('Blue');
+      const button = getByRole('button') as HTMLButtonElement;
+      expect(getByTextFor(button, 'Blue')).toBeVisible();
+      expect(button).toHaveValue('Blue');
+      expect(button).toHaveAttribute('aria-disabled', `${isDisabled}`);
 
       expect(onChangeSpy).not.toHaveBeenCalled();
     });
@@ -435,17 +443,17 @@ describe('packages/select', () => {
       test('by clicking', async () => {
         const { getByRole, queryByRole } = render(<Select {...defaultProps} />);
 
-        const combobox = getByRole('button');
+        const button = getByRole('button');
 
         expect(queryByRole('listbox')).not.toBeInTheDocument();
 
-        userEvent.click(combobox);
+        userEvent.click(button);
 
         await waitFor(() => {
           expect(getByRole('listbox')).toBeVisible();
         });
 
-        expect(combobox).toHaveFocus();
+        expect(button).toHaveFocus();
       });
 
       test('by arrow down key', async () => {
@@ -497,10 +505,11 @@ describe('packages/select', () => {
             <Select {...defaultProps} disabled />,
           );
 
-          const combobox = getByRole('button');
-          userEvent.click(combobox);
+          const button = getByRole('button');
+          userEvent.click(button);
 
-          expect(combobox).not.toHaveFocus();
+          // Focus is allowed, but the menu does not open
+          expect(button).toHaveFocus();
 
           expect(queryByRole('listbox')).not.toBeInTheDocument();
         });
@@ -510,8 +519,8 @@ describe('packages/select', () => {
             <Select {...defaultProps} disabled />,
           );
 
-          const combobox = getByRole('button');
-          userEvent.type(combobox, '{arrowdown}');
+          const button = getByRole('button');
+          userEvent.type(button, '{arrowdown}');
 
           expect(queryByRole('listbox')).not.toBeInTheDocument();
         });
@@ -521,8 +530,8 @@ describe('packages/select', () => {
             <Select {...defaultProps} disabled />,
           );
 
-          const combobox = getByRole('button');
-          userEvent.type(combobox, '{arrowup}');
+          const button = getByRole('button');
+          userEvent.type(button, '{arrowup}');
 
           expect(queryByRole('listbox')).not.toBeInTheDocument();
         });
@@ -562,10 +571,10 @@ describe('packages/select', () => {
       });
 
       test('by clicking menu button', async () => {
-        const combobox = getByRole('button');
-        userEvent.click(combobox);
+        const button = getByRole('button');
+        userEvent.click(button);
 
-        expect(combobox).toHaveFocus();
+        expect(button).toHaveFocus();
 
         await waitForElementToBeRemoved(getByRole('listbox'));
       });
@@ -573,8 +582,8 @@ describe('packages/select', () => {
       test('by escape key', async () => {
         userEvent.type(getByRole(focusedElementRole), '{esc}');
 
-        const combobox = getByTestId('leafygreen-ui-select-menubutton');
-        expect(combobox).toHaveFocus();
+        const button = getByTestId('leafygreen-ui-select-menubutton');
+        expect(button).toHaveFocus();
 
         await waitForElementToBeRemoved(getByRole('listbox'));
       });
@@ -598,7 +607,7 @@ describe('packages/select', () => {
     ])('when %p selecting', (_, controlled) => {
       let getByRole: RenderResult['getByRole'];
 
-      let combobox: HTMLElement;
+      let button: HTMLElement;
       let onChangeSpy: jest.MockedFunction<
         (
           value: string,
@@ -628,7 +637,7 @@ describe('packages/select', () => {
           ),
         ));
 
-        combobox = getByRole('button');
+        button = getByRole('button');
       });
 
       describe.each([
@@ -636,7 +645,7 @@ describe('packages/select', () => {
         ['option in group', 'Green', Color.Green],
       ])('%p', (_, optionText, optionValue) => {
         test('by Enter key', async () => {
-          userEvent.click(combobox);
+          userEvent.click(button);
 
           const listbox = await waitFor(() => {
             const listbox = getByRole('listbox');
@@ -662,13 +671,13 @@ describe('packages/select', () => {
 
           await waitForElementToBeRemoved(listbox);
 
-          expect(getByTextFor(combobox, optionText)).toBeVisible();
-          expect(combobox).toHaveFocus();
-          expect(combobox).toHaveValue(optionValue);
+          expect(getByTextFor(button, optionText)).toBeVisible();
+          expect(button).toHaveFocus();
+          expect(button).toHaveValue(optionValue);
         });
 
         test('by clicking', async () => {
-          userEvent.click(combobox);
+          userEvent.click(button);
 
           const listbox = await waitFor(() => {
             const listbox = getByRole('listbox');
@@ -686,9 +695,9 @@ describe('packages/select', () => {
 
           await waitForElementToBeRemoved(listbox);
 
-          expect(getByTextFor(combobox, optionText)).toBeVisible();
-          expect(combobox).toHaveFocus();
-          expect(combobox).toHaveValue(optionValue);
+          expect(getByTextFor(button, optionText)).toBeVisible();
+          expect(button).toHaveFocus();
+          expect(button).toHaveValue(optionValue);
         });
       });
 
@@ -698,7 +707,7 @@ describe('packages/select', () => {
       ])('does not occur for %p', (_, optionText) => {
         // eslint-disable-next-line jest/no-identical-title
         test('by Enter key', async () => {
-          userEvent.click(combobox);
+          userEvent.click(button);
 
           const listbox = await waitFor(() => {
             const listbox = getByRole('listbox');
@@ -718,15 +727,15 @@ describe('packages/select', () => {
           expect(onChangeSpy).not.toHaveBeenCalled();
           expect(listbox).toBeVisible();
 
-          expect(getByTextFor(combobox, 'Select')).toBeVisible();
+          expect(getByTextFor(button, 'Select')).toBeVisible();
           expect(targetOption).toHaveFocus();
 
-          expect(combobox).toHaveValue('');
+          expect(button).toHaveValue('');
         });
 
         // eslint-disable-next-line jest/no-identical-title
         test('by clicking', async () => {
-          userEvent.click(combobox);
+          userEvent.click(button);
 
           const listbox = await waitFor(() => {
             const listbox = getByRole('listbox');
@@ -739,8 +748,8 @@ describe('packages/select', () => {
           expect(onChangeSpy).not.toHaveBeenCalled();
           expect(listbox).toBeVisible();
 
-          expect(getByTextFor(combobox, 'Select')).toBeVisible();
-          expect(combobox).toHaveValue('');
+          expect(getByTextFor(button, 'Select')).toBeVisible();
+          expect(button).toHaveValue('');
         });
       });
     });
@@ -808,7 +817,7 @@ describe('packages/select', () => {
 
     let getByRole: RenderResult['getByRole'];
     let rerender: RenderResult['rerender'];
-    let combobox: HTMLElement;
+    let button: HTMLElement;
 
     beforeEach(async () => {
       ({ getByRole, rerender } = render(
@@ -818,8 +827,8 @@ describe('packages/select', () => {
         </Select>,
       ));
 
-      combobox = getByRole('button');
-      userEvent.click(combobox);
+      button = getByRole('button');
+      userEvent.click(button);
 
       const listbox = await waitFor(() => {
         const listbox = getByRole('listbox');
@@ -838,7 +847,7 @@ describe('packages/select', () => {
         </Select>,
       );
 
-      expect(getByTextFor(combobox, 'Select')).toBeVisible();
+      expect(getByTextFor(button, 'Select')).toBeVisible();
     });
 
     test('when options are re-ordered', () => {
@@ -849,7 +858,7 @@ describe('packages/select', () => {
         </Select>,
       );
 
-      expect(getByTextFor(combobox, 'Selected Option')).toBeVisible();
+      expect(getByTextFor(button, 'Selected Option')).toBeVisible();
     });
 
     describe('when selected option is replaced', () => {
@@ -861,7 +870,7 @@ describe('packages/select', () => {
           </Select>,
         );
 
-        expect(getByTextFor(combobox, 'Selected Option')).toBeVisible();
+        expect(getByTextFor(button, 'Selected Option')).toBeVisible();
       });
 
       test('with same explicit value and different text', () => {
@@ -873,7 +882,7 @@ describe('packages/select', () => {
           </Select>,
         );
 
-        expect(getByTextFor(combobox, 'Different text')).toBeVisible();
+        expect(getByTextFor(button, 'Different text')).toBeVisible();
       });
 
       test('with same computed value', () => {
@@ -884,7 +893,7 @@ describe('packages/select', () => {
           </Select>,
         );
 
-        expect(getByTextFor(combobox, 'selected')).toBeVisible();
+        expect(getByTextFor(button, 'selected')).toBeVisible();
       });
     });
 

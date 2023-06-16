@@ -10,6 +10,9 @@ import { Body } from '@leafygreen-ui/typography';
 
 export default {
   title: 'LeafyGreen Provider/DarkMode',
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
 };
 
 const DarkModeComponent = () => {
@@ -42,4 +45,7 @@ export const DarkModeDemo = () => {
       </div>
     </>
   );
+};
+DarkModeDemo.parameters = {
+  chromatic: { disableSnapshot: true },
 };

@@ -1,19 +1,43 @@
+/* eslint-disable react/display-name */
 import React from 'react';
-import { ComponentStory, Meta } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
+
+import {
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import Stepper, { Step, StepperProps } from '.';
 
-export default {
+const meta: StoryMetaType<typeof Stepper> = {
   title: 'Components/Stepper',
   component: Stepper,
-  args: {},
+  parameters: {
+    default: 'LiveExample',
+    controls: {
+      exclude: [...storybookExcludedControlParams, 'children'],
+    },
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        currentStep: [1, 4, 7],
+        maxDisplayedSteps: [3, 7],
+        completedStepsShown: [3, 5],
+      },
+    },
+  },
+  args: {
+    children: [
+      <div key="Overview">Overview</div>,
+      <Step key="Configuration">Configuration</Step>,
+      <Step key="Update">Update</Step>,
+      <Step key="Install">Install</Step>,
+      <Step key="Billing">Billing</Step>,
+      <Step key="Address">Address</Step>,
+      <Step key="Confirmation">Confirmation</Step>,
+    ],
+  },
   argTypes: {
-    className: {
-      type: 'string',
-    },
-    children: {
-      control: false,
-    },
     currentStep: {
       control: {
         type: 'range',
@@ -26,6 +50,8 @@ export default {
         min: 3,
         max: 6, // numSteps' max - 1
       },
+      description:
+        'Note: Min and max values for ranges are not defined in the component. The range values are only defined specifically for the Storybook instance so it renders correctly with all values. Value checking within the component will be added at a later date.',
     },
     completedStepsShown: {
       control: {
@@ -33,36 +59,22 @@ export default {
         max: 5, // numSteps' max - 2
       },
     },
-    darkMode: {
-      control: 'boolean',
-    },
   },
-} as Meta<typeof Stepper>;
+};
+export default meta;
 
-const Template: ComponentStory<typeof Stepper> = (args: StepperProps) => (
-  <>
-    <p>
-      Note: Min and max values for ranges are not defined in the component. The
-      range values are only defined specifically for the Storybook instance so
-      it renders correctly with all values. Value checking within the component
-      will be added at a later date.
-    </p>
-    <Stepper {...args} />
-  </>
+export const LiveExample: StoryFn<StepperProps> = (args: StepperProps) => (
+  <Stepper {...args} />
 );
-
-export const Basic = Template.bind({});
-Basic.args = {
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+LiveExample.args = {
   currentStep: 1,
   maxDisplayedSteps: 5,
   completedStepsShown: 3,
-  children: [
-    <Step key="Overview">Overview</Step>,
-    <Step key="Configuration">Configuration</Step>,
-    <Step key="Update">Update</Step>,
-    <Step key="Install">Install</Step>,
-    <Step key="Billing">Billing</Step>,
-    <Step key="Address">Address</Step>,
-    <Step key="Confirmation">Confirmation</Step>,
-  ],
 };
+
+export const Generated = () => {};

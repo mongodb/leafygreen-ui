@@ -1,5 +1,115 @@
 # @leafygreen-ui/button
 
+## 20.2.1
+
+### Patch Changes
+
+- 76161cf0: Updates story file and implements GeneratedStory
+- 76161cf0: Updates stories for Chromatic testing
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+  - @leafygreen-ui/lib@10.4.0
+  - @leafygreen-ui/loading-indicator@1.0.1
+  - @leafygreen-ui/tokens@2.1.1
+
+## 20.2.0
+
+### Minor Changes
+
+- 8eb2b7dc0: Add `isLoading` and `loadingText` props
+
+## 20.1.1
+
+### Patch Changes
+
+- d611bea87: Revert changes made in 20.1.0
+
+## 20.1.0
+
+### Minor Changes
+
+- 2dfc4d0ea: Adds a loading state using the new Spinner component
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- 0cd471676: Updates README to reflect the correct button variants
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [5546f7cb9]
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [0cd471676]
+  - @leafygreen-ui/box@3.1.4
+  - @leafygreen-ui/leafygreen-provider@3.1.3
+  - @leafygreen-ui/lib@10.3.4
+  - @leafygreen-ui/loading-indicator@1.0.0
+
+## 20.0.7
+
+### Patch Changes
+
+- d3dd7aad5: Updates to TSDocs
+
+## 20.0.6
+
+### Patch Changes
+
+- 73cbbd02c: Uses fontWeight token from `@leafygreen-ui/tokens`
+- Updated dependencies [73cbbd02c]
+- Updated dependencies [8ece56980]
+  - @leafygreen-ui/tokens@2.1.0
+
+## 20.0.5
+
+### Patch Changes
+
+- cf00160ec: Updates TSDocs
+- Updated dependencies [55d33e435]
+- Updated dependencies [111b680c5]
+- Updated dependencies [55d33e435]
+- Updated dependencies [cf00160ec]
+- Updated dependencies [111b680c5]
+- Updated dependencies [77320a6b8]
+  - @leafygreen-ui/lib@10.3.3
+  - @leafygreen-ui/palette@4.0.4
+  - @leafygreen-ui/box@3.1.3
+  - @leafygreen-ui/tokens@2.0.3
+
+## 20.0.4
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/box@3.1.2
+  - @leafygreen-ui/emotion@4.0.4
+  - @leafygreen-ui/leafygreen-provider@3.1.2
+  - @leafygreen-ui/lib@10.3.2
+  - @leafygreen-ui/palette@4.0.3
+  - @leafygreen-ui/ripple@1.1.9
+  - @leafygreen-ui/tokens@2.0.2
+
+## 20.0.3
+
+### Patch Changes
+
+- fb47557dd: Updates disabled focus styles
+- Updated dependencies [c2c5601f4]
+  - @leafygreen-ui/lib@10.3.1
+  - @leafygreen-ui/palette@4.0.1
+
+## 20.0.2
+
+### Patch Changes
+
+- Updated dependencies [5b036515e]
+- Updated dependencies [26e341a0b]
+  - @leafygreen-ui/palette@4.0.0
+  - @leafygreen-ui/lib@10.2.2
+  - @leafygreen-ui/tokens@2.0.1
+
 ## 20.0.1
 
 ### Patch Changes

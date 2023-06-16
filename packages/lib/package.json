@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/lib",
-  "version": "10.2.1",
+  "version": "10.4.0",
   "description": "leafyGreen UI Kit Internal Library",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -24,7 +24,17 @@
     "react": "^18.0.0"
   },
   "dependencies": {
-    "lodash": "^4.17.21"
+    "@storybook/csf": "^0.1.0",
+    "lodash": "^4.17.21",
+    "prop-types": "^15.7.2"
+  },
+  "devDependencies": {
+    "@leafygreen-ui/badge": "^8.0.8",
+    "@leafygreen-ui/emotion": "^4.0.4",
+    "@leafygreen-ui/icon": "^11.17.0",
+    "@leafygreen-ui/leafygreen-provider": "^3.1.2",
+    "@leafygreen-ui/palette": "^4.0.4",
+    "@leafygreen-ui/tokens": "^2.1.1"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/lib",

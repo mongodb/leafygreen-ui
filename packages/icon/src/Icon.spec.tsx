@@ -246,6 +246,14 @@ describe('packages/Icon/createIconComponent', () => {
       expect(glyph).toHaveAttribute('role', 'presentation');
     });
   });
+
+  test('returned Icon function logs an error when glyph does not exist', () => {
+    const consoleSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+    render(<IconComponent glyph="error" />);
+    expect(consoleSpy).toHaveBeenCalled();
+  });
 });
 
 describe('Generated glyphs', () => {

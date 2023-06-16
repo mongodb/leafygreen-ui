@@ -122,7 +122,7 @@ export const buttonSizeStyles: Record<Size, string> = {
 
   [Size.XSmall]: css`
     height: 14px;
-    width: 26px;
+    width: 24px;
   `,
 };
 
@@ -152,7 +152,7 @@ export const sliderSizeStyles: Record<Size, string> = {
     width: 12px;
 
     ${sliderSelector.checked} {
-      transform: translate3d(12px, 0, 0);
+      transform: translate3d(10px, 0, 0);
     }
   `,
 };

@@ -4,6 +4,7 @@ import { palette } from '@leafygreen-ui/palette';
 import {
   focusRing,
   fontFamilies,
+  fontWeights,
   hoverRing,
   spacing,
   transitionDuration,
@@ -23,7 +24,7 @@ export const labelBaseStyles = css`
 `;
 
 export const labelLargeOverrideStyles = css`
-  font-size: 18px;
+  font-size: ${typeScales.large.fontSize}px;
 `;
 
 export const inheritTypeScale = css`
@@ -39,7 +40,7 @@ export const inputBaseStyles = css`
   font-family: ${fontFamilies.default};
   width: 100%;
   height: 36px;
-  font-weight: normal;
+  font-weight: ${fontWeights.regular};
   border: 1px solid;
   z-index: 1;
   outline: none;
@@ -125,7 +126,7 @@ export const inputSizeStyles: Record<Size, string> = {
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
     height: 36px;
-    padding: 0 ${spacing[2] * 5}px 0 ${spacing[1] * 3}px;
+    padding: 0 ${spacing[2] * 5}px 0 12px;
   `,
   [Size.Large]: css`
     font-size: 18px;

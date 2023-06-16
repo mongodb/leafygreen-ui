@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/password-input",
-  "version": "1.0.0",
+  "version": "1.0.8",
   "description": "leafyGreen UI Kit Password Input",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -28,16 +28,17 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/a11y": "^1.4.1",
-    "@leafygreen-ui/emotion": "^4.0.3",
-    "@leafygreen-ui/hooks": "^7.4.0",
-    "@leafygreen-ui/lib": "^10.2.1",
-    "@leafygreen-ui/tokens": "^1.4.1",
-    "@leafygreen-ui/typography": "^15.3.0",
-    "@leafygreen-ui/icon": "^11.12.3",
-    "@leafygreen-ui/icon-button": "^15.0.3"
+    "@leafygreen-ui/a11y": "^1.4.4",
+    "@leafygreen-ui/emotion": "^4.0.4",
+    "@leafygreen-ui/hooks": "^7.7.5",
+    "@leafygreen-ui/icon": "^11.17.0",
+    "@leafygreen-ui/icon-button": "^15.0.12",
+    "@leafygreen-ui/lib": "^10.4.0",
+    "@leafygreen-ui/palette": "^4.0.4",
+    "@leafygreen-ui/tokens": "^2.1.1",
+    "@leafygreen-ui/typography": "^16.5.1"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.0"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.3"
   }
 }

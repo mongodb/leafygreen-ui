@@ -1,2 +1,2 @@
 export { default } from './Banner/Banner';
-export { Variant } from './Banner/types';
+export { type BannerProps, Variant } from './Banner/types';

@@ -1,5 +1,70 @@
 # @leafygreen-ui/marketing-modal
 
+## 4.0.9
+
+### Patch Changes
+
+- 63b2deb0b: Upgrade button to v20.1.1
+- Updated dependencies [63b2deb0b]
+  - @leafygreen-ui/modal@15.0.3
+
+## 4.0.8
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [75099c60b]
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [0cd471676]
+- Updated dependencies [2dfc4d0ea]
+  - @leafygreen-ui/button@20.1.0
+  - @leafygreen-ui/leafygreen-provider@3.1.3
+  - @leafygreen-ui/modal@15.0.2
+  - @leafygreen-ui/typography@16.5.0
+
+## 4.0.7
+
+### Patch Changes
+
+- Updated dependencies [67a0ea5fe]
+- Updated dependencies [73cbbd02c]
+- Updated dependencies [32b3d3146]
+- Updated dependencies [9bcf8b925]
+- Updated dependencies [8ece56980]
+- Updated dependencies [73cbbd02c]
+  - @leafygreen-ui/modal@15.0.0
+  - @leafygreen-ui/tokens@2.1.0
+  - @leafygreen-ui/typography@16.4.0
+  - @leafygreen-ui/button@20.0.6
+
+## 4.0.6
+
+### Patch Changes
+
+- 25729b36a: Removes `size` prop from component, as width is fixed.
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/button@20.0.4
+  - @leafygreen-ui/emotion@4.0.4
+  - @leafygreen-ui/leafygreen-provider@3.1.2
+  - @leafygreen-ui/modal@14.0.5
+  - @leafygreen-ui/palette@4.0.3
+  - @leafygreen-ui/tokens@2.0.2
+  - @leafygreen-ui/typography@16.2.1
+
+## 4.0.5
+
+### Patch Changes
+
+- Updated dependencies [5b036515e]
+- Updated dependencies [eb0cc4498]
+  - @leafygreen-ui/palette@4.0.0
+  - @leafygreen-ui/typography@16.1.0
+  - @leafygreen-ui/button@20.0.2
+  - @leafygreen-ui/modal@14.0.3
+  - @leafygreen-ui/tokens@2.0.1
+
 ## 4.0.4
 
 ### Patch Changes

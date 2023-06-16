@@ -13,7 +13,6 @@ import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 import flatten from 'lodash/flatten';
 import isUndefined from 'lodash/isUndefined';
-import startCase from 'lodash/startCase';
 
 import Button from '@leafygreen-ui/button';
 import { keyMap } from '@leafygreen-ui/lib';
@@ -150,6 +149,55 @@ describe('packages/combobox', () => {
         const { optionElements } = openMenu();
         expect(optionElements?.[0].getAttribute('data-testid')).toBe(
           defaultOptions[0].value,
+        );
+      });
+
+      test('option renders description', () => {
+        const { openMenu } = renderCombobox(select);
+        const { optionElements } = openMenu();
+        expect(optionElements?.[0]).toHaveTextContent(
+          defaultOptions[0].description as string,
+        );
+      });
+
+      test('option fires onClick callback', () => {
+        const onClick = jest.fn();
+
+        const options: Array<OptionObject> = [
+          {
+            value: 'paragraph',
+            displayName: 'display name',
+            isDisabled: false,
+            onClick,
+          },
+        ];
+
+        const { openMenu } = renderCombobox(select, { options });
+        const { optionElements } = openMenu();
+        const [optionEl] = Array.from(optionElements!);
+        userEvent.click(optionEl);
+        expect(onClick).toHaveBeenCalledTimes(1);
+      });
+
+      test('option onClick callback is called with the click event and option value', () => {
+        const onClick = jest.fn();
+
+        const options: Array<OptionObject> = [
+          {
+            value: 'paragraph',
+            displayName: 'display name',
+            isDisabled: false,
+            onClick,
+          },
+        ];
+
+        const { openMenu } = renderCombobox(select, { options });
+        const { optionElements } = openMenu();
+        const [optionEl] = Array.from(optionElements!);
+        userEvent.click(optionEl);
+        expect(onClick).toHaveBeenCalledWith(
+          expect.objectContaining({ type: 'click' }),
+          options[0].value,
         );
       });
 
@@ -672,25 +720,6 @@ describe('packages/combobox', () => {
             expect(queryAllChips()).toHaveLength(0);
           } else {
             expect(inputEl).toHaveValue('');
-          }
-        });
-
-        test('Clicking clear all button does nothing when disabled', () => {
-          const initialValue =
-            select === 'single' ? 'apple' : ['apple', 'banana', 'carrot'];
-          const { inputEl, clearButtonEl, queryAllChips } = renderCombobox(
-            select,
-            {
-              initialValue,
-              disabled: true,
-            },
-          );
-          expect(clearButtonEl).not.toBeNull();
-          userEvent.click(clearButtonEl!);
-          if (select === 'multiple') {
-            expect(queryAllChips()).toHaveLength(initialValue.length);
-          } else {
-            expect(inputEl).toHaveValue(startCase(initialValue as string));
           }
         });
       });

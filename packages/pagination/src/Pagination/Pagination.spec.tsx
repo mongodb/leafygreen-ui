@@ -4,8 +4,6 @@ import { fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
-
 import Pagination, { PaginationProps } from '.';
 
 function renderPagination(props: PaginationProps) {
@@ -49,34 +47,35 @@ describe('packages/pagination', () => {
   });
 
   describe('only accepts correct prop values', () => {
+    let consoleSpy: jest.SpyInstance;
+
+    beforeEach(
+      () =>
+        (consoleSpy = jest
+          .spyOn(console, 'error')
+          .mockImplementation(() => {})),
+    );
+
+    afterEach(() => jest.clearAllMocks());
+
     test('console errors when itemsPerPage is not a valid option', async () => {
-      Context.within(Jest.spyContext(console, 'error'), spy => {
-        spy.mockImplementation();
-        render(
-          <Pagination
-            {...defaultProps}
-            itemsPerPageOptions={[1, 2, 3]}
-            // @ts-expect-error
-            itemsPerPage={22}
-          />,
-        );
-        expect(console.error).toHaveBeenCalled();
-      });
+      render(
+        <Pagination
+          {...defaultProps}
+          itemsPerPageOptions={[1, 2, 3]}
+          itemsPerPage={22}
+        />,
+      );
+      expect(consoleSpy).toHaveBeenCalled();
     });
     test('console errors when currentPage is less than 1', async () => {
-      Context.within(Jest.spyContext(console, 'error'), spy => {
-        spy.mockImplementation();
-        renderPagination({ ...defaultProps, currentPage: 0 });
-        expect(console.error).toHaveBeenCalled();
-      });
+      renderPagination({ ...defaultProps, currentPage: 0 });
+      expect(consoleSpy).toHaveBeenCalled();
     });
 
     test('console errors when currentPage is greater than the total number of pages', async () => {
-      Context.within(Jest.spyContext(console, 'error'), spy => {
-        spy.mockImplementation();
-        renderPagination({ ...defaultProps, currentPage: 150 });
-        expect(console.error).toHaveBeenCalled();
-      });
+      renderPagination({ ...defaultProps, currentPage: 150 });
+      expect(consoleSpy).toHaveBeenCalled();
     });
   });
 

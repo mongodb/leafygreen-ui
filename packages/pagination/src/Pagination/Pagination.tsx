@@ -9,14 +9,10 @@ import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { Option, Select } from '@leafygreen-ui/select';
+import { DropdownWidthBasis, Option, Select } from '@leafygreen-ui/select';
 import { Body } from '@leafygreen-ui/typography';
 
-import {
-  baseStyles,
-  flexSectionStyles,
-  selectPortalStyles,
-} from './Pagination.styles';
+import { baseStyles, flexSectionStyles } from './Pagination.styles';
 import { PaginationProps } from './Pagination.types';
 import {
   getCurrentRangeString,
@@ -95,7 +91,7 @@ function Pagination<T extends number>({
                 id={itemsPerPageSelectId}
                 allowDeselect={false}
                 size="xsmall"
-                portalClassName={selectPortalStyles}
+                dropdownWidthBasis={DropdownWidthBasis.Option}
               >
                 {itemsPerPageOptions.map((option: number) => (
                   <Option key={option} value={String(option)}>
@@ -122,7 +118,7 @@ function Pagination<T extends number>({
                 allowDeselect={false}
                 size="xsmall"
                 data-testid="lg-pagination-page-select"
-                portalClassName={selectPortalStyles}
+                dropdownWidthBasis={DropdownWidthBasis.Option}
               >
                 {range(
                   1,
@@ -178,7 +174,7 @@ Pagination.propTypes = {
   itemsPerPageOptions: PropTypes.arrayOf(PropTypes.number),
   itemsPerPage: PropTypes.number,
   // casting to unknown ensures TS does not infer types from these prop-types
-} as unknown;
+};
 
 Pagination.displayName = 'Pagination';
 

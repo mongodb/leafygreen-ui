@@ -13,19 +13,28 @@
       "path": "../emotion"
     },
     {
+      "path": "../hooks"
+    },
+    {
       "path": "../icon"
     },
     {
       "path": "../icon-button"
     },
     {
-      "path": "../leafygreen-provider"
-    },
-    {
       "path": "../lib"
     },
     {
       "path": "../select"
+    },
+    {
+      "path": "../tokens"
+    },
+    {
+      "path": "../typography"
+    },
+    {
+      "path": "../leafygreen-provider"
     }
   ]
 }

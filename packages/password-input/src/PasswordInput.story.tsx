@@ -1,54 +1,18 @@
 import React, { useRef } from 'react';
-import { Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
-import { storybookArgTypes } from '@leafygreen-ui/lib';
-import { StoryMeta } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
 import {
   NotificationProps,
-  PasswordInputProps,
   Size,
   State,
 } from './PasswordInput/PasswordInput.types';
-import { PasswordInput } from '.';
-
-export default StoryMeta({
-  title: 'Components/PasswordInput',
-  component: PasswordInput,
-  args: {
-    label: 'label',
-    stateNotifications: [],
-  },
-  argTypes: {
-    darkMode: storybookArgTypes.darkMode,
-    disabled: {
-      control: 'boolean',
-    },
-    label: {
-      control: 'text',
-    },
-    placeholder: {
-      control: 'text',
-    },
-    size: {
-      control: 'select',
-      options: Object.values(Size),
-    },
-  },
-  parameters: {
-    default: 'Demo',
-    controls: {
-      exclude: [
-        'as',
-        'children',
-        'aria-labelledby',
-        'aria-describedby',
-        'aria-label',
-        'value',
-      ],
-    },
-  },
-});
+import { PasswordInput, PasswordInputProps } from '.';
 
 const userFriendlyObj: { [key: string]: Array<NotificationProps> } = {
   'No State Notifications': [],
@@ -119,13 +83,59 @@ const userFriendlyObj: { [key: string]: Array<NotificationProps> } = {
     },
   ],
 };
-
 type UserFriendlyObj = keyof typeof userFriendlyObj;
 type UserFriendlyProps = PasswordInputProps & {
   stateNotificationsSelect: UserFriendlyObj;
 };
 
-const UserFriendlyTemplate: Story<UserFriendlyProps> = ({
+const meta: StoryMetaType<typeof PasswordInput> = {
+  title: 'Components/PasswordInput',
+  component: PasswordInput,
+  parameters: {
+    default: 'LiveExample',
+    controls: {
+      exclude: [...storybookExcludedControlParams, 'as', 'children', 'value'],
+    },
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        value: [undefined, 'password'],
+        label: [undefined, 'Label'],
+        stateNotifications: [
+          undefined,
+          ...Object.values(State),
+          userFriendlyObj.Combination,
+          userFriendlyObj['All Valid'],
+          userFriendlyObj['All None'],
+        ],
+        size: Object.values(Size),
+      },
+    },
+  },
+  args: {
+    label: 'label',
+    stateNotifications: [],
+  },
+  argTypes: {
+    darkMode: storybookArgTypes.darkMode,
+    disabled: {
+      control: 'boolean',
+    },
+    label: {
+      control: 'text',
+    },
+    placeholder: {
+      control: 'text',
+    },
+    size: {
+      control: 'select',
+      options: Object.values(Size),
+    },
+  },
+};
+export default meta;
+
+const UserFriendlyTemplate: StoryFn<UserFriendlyProps> = ({
   stateNotificationsSelect,
   label,
   ...rest
@@ -142,12 +152,8 @@ const UserFriendlyTemplate: Story<UserFriendlyProps> = ({
   );
 };
 
-const Template: Story<PasswordInputProps> = props => {
-  return <PasswordInput data-testid="test-id" {...props} />;
-};
-
-export const Basic = UserFriendlyTemplate.bind({});
-Basic.argTypes = {
+export const LiveExample = UserFriendlyTemplate.bind({});
+LiveExample.argTypes = {
   stateNotifications: {
     control: 'none',
   },
@@ -158,69 +164,10 @@ Basic.argTypes = {
       'STORYBOOK ONLY. This determines what gets passed to `stateNotifications`',
   },
 };
-
-export const NoStateNotifications = Template.bind({});
-
-export const Error = Template.bind({});
-Error.args = {
-  stateNotifications: [
-    {
-      notification: "i'm an error",
-      state: 'error',
-    },
-  ],
-};
-
-export const Warning = Template.bind({});
-Warning.args = {
-  stateNotifications: [
-    {
-      notification: "i'm a warning",
-      state: 'warning',
-    },
-  ],
-};
-
-export const Valid = Template.bind({});
-Valid.args = {
-  stateNotifications: [
-    {
-      notification: "i'm valid",
-      state: 'valid',
-    },
-  ],
-};
-
-export const None = Template.bind({});
-None.args = {
-  stateNotifications: [
-    {
-      notification: "i'm waiting",
-      state: 'none',
-    },
-  ],
-};
-
-export const Mixed = Template.bind({});
-Mixed.args = {
-  stateNotifications: [
-    {
-      notification: "i'm an error",
-      state: 'error',
-    },
-    {
-      notification: "i'm a warning",
-      state: 'warning',
-    },
-    {
-      notification: "i'm valid",
-      state: 'valid',
-    },
-    {
-      notification: "i'm waiting",
-      state: 'none',
-    },
-  ],
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
 export const CustomContainer = ({
@@ -237,14 +184,14 @@ export const CustomContainer = ({
     />
   );
 };
-
 CustomContainer.argTypes = {
   stateNotifications: {
     control: 'select',
     options: Object.values(State),
   },
 };
-
 CustomContainer.args = {
   stateNotifications: State.Warning,
 };
+
+export const Generated = () => {};

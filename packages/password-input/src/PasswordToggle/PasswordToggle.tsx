@@ -23,6 +23,7 @@ export const PasswordToggle = ({
         className={cx(baseStyles, sizeStyles[size])}
         role="switch"
         aria-checked={showPassword ? true : false}
+        type="button"
       >
         <Icon aria-hidden={true} glyph={showPasswordIcon} />
       </IconButton>

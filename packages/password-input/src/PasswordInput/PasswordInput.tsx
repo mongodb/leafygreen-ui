@@ -155,12 +155,11 @@ export const PasswordInput = React.forwardRef<
 
 PasswordInput.displayName = 'PasswordInput';
 
-/// @ts-ignore
 PasswordInput.propTypes = {
   id: PropTypes.string,
+  label: PropTypes.string,
   'aria-label': PropTypes.string,
   'aria-labelledby': PropTypes.string,
-  label: PropTypes.string,
   'aria-describedby': PropTypes.string,
   className: PropTypes.string,
   darkMode: PropTypes.bool,
@@ -171,4 +170,4 @@ PasswordInput.propTypes = {
   size: PropTypes.oneOf(Object.values(Size)),
   value: PropTypes.string,
   stateNotifications: stateNotificationCheck,
-} as unknown;
+} as any;

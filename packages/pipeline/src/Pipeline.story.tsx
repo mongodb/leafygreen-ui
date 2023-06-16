@@ -1,15 +1,36 @@
 import React from 'react';
-import { Meta } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
-import Pipeline from './Pipeline';
 import Stage from './Stage';
-import { PipelineProps, Size } from './types';
+import { Size } from './types';
+import { Pipeline, PipelineProps } from '.';
 
-export default {
+const meta: StoryMetaType<typeof Pipeline> = {
   title: 'Components/Pipeline',
   component: Pipeline,
+  parameters: {
+    default: 'LiveExample',
+    controls: {
+      exclude: [...storybookExcludedControlParams, 'children'],
+    },
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        size: Object.values(Size),
+        children: [
+          ['$match', '$group', '$project', '$addFields'],
+          // prettier-ignore
+          ['$match', '$group', '$project', '$addFields', '$limit', '$foobar', '$barbaz', '$loremipsum', '$doloramet'],
+        ],
+      },
+    },
+  },
   args: {
     darkMode: false,
     size: Size.Normal,
@@ -20,9 +41,18 @@ export default {
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
   },
-  parameters: { controls: { exclude: ['children', 'className'] } },
-} as Meta<typeof Pipeline>;
+};
+export default meta;
 
-export const Basic = ({ ...args }: PipelineProps & { stages: string }) => {
+export const LiveExample: StoryFn<PipelineProps & { stages: string }> = ({
+  ...args
+}: PipelineProps & { stages: string }) => {
   return <Pipeline {...args} />;
 };
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+
+export const Generated = () => {};

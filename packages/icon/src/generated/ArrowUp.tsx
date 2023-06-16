@@ -2,7 +2,7 @@
  * This is a generated file. Do not modify it manually.
  *
  * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
- * @checksum f08599d33cf776d1d752e9af280eb09a
+ * @checksum 2301ac07c6017300f174a4daf7c37602
  */
 import { css, cx } from '@leafygreen-ui/emotion';
 import PropTypes from 'prop-types';
@@ -11,7 +11,6 @@ import * as React from 'react';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
 export interface ArrowUpProps extends LGGlyph.ComponentProps {}
-
 const ArrowUp = ({
   className,
   size = 16,
@@ -56,7 +55,6 @@ const ArrowUp = ({
     </svg>
   );
 };
-
 ArrowUp.displayName = 'ArrowUp';
 ArrowUp.isGlyph = true;
 ArrowUp.propTypes = {

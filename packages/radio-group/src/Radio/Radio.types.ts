@@ -22,4 +22,9 @@ export interface RadioProps
    * Content that will appear inside of Radio.
    */
   children?: React.ReactNode;
+
+  /**
+   * Description text rendered under the label.
+   */
+  description?: string;
 }

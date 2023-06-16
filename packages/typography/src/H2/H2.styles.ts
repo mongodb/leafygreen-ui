@@ -1,12 +1,12 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies, fontWeights } from '@leafygreen-ui/tokens';
 
 export const h2Styles = css`
   font-size: 32px;
   line-height: 40px;
-  font-weight: 400;
+  font-weight: ${fontWeights.regular};
   font-family: ${fontFamilies.serif};
 `;
 

@@ -3,6 +3,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import urlPlugin from '@rollup/plugin-url';
 import svgr from '@svgr/rollup';
 import fs from 'fs';
+import glob from 'glob';
 import path from 'path';
 import { terser } from 'rollup-plugin-terser';
 
@@ -55,9 +56,6 @@ function getGeneratedFiles() {
     .map(file => path.resolve(directory, file));
 }
 
-const allPackages = getAllPackages(path.resolve(__dirname, 'packages'));
-const directGlyphImports = getDirectGlyphImports();
-
 // Mapping of packages to the `window` property they'd be
 // bound to if used in the browser without a module loader.
 // This is defined on a best effort basis since not all
@@ -80,6 +78,9 @@ const globals = {
    **/
 };
 
+const allPackages = getAllPackages(path.resolve(__dirname, 'packages'));
+const directGlyphImports = getDirectGlyphImports();
+
 allPackages.forEach(packageName => {
   globals[packageName] = packageName;
 });
@@ -94,83 +95,103 @@ const moduleFormatToDirectory = {
   umd: 'dist',
 };
 
+const baseConfigForFormat = format => ({
+  input: 'src/index.ts',
+  output: {
+    dir: moduleFormatToDirectory[format],
+    name,
+    format,
+    sourcemap: true,
+    globals,
+  },
+  plugins: [
+    resolve({ extensions }),
+
+    babel({
+      babelrc: false,
+      babelHelpers: 'bundled',
+      extensions,
+      configFile: path.resolve(__dirname, 'babel.config.js'),
+      sourceMaps: 'inline',
+      envName: 'production',
+    }),
+
+    urlPlugin({
+      limit: 50000,
+      include: ['**/*.png'],
+    }),
+
+    urlPlugin({
+      limit: 0,
+      include: ['**/*.less'],
+      fileName: '[name][extname]',
+    }),
+
+    svgr(),
+
+    terser(),
+  ],
+  external: id =>
+    [
+      '@emotion/server',
+      '@emotion/css',
+      '@emotion/css/create-instance',
+      '@emotion/server/create-instance',
+      '@faker-js/faker',
+      '@testing-library/react',
+      '@storybook/testing-library',
+      'clipboard',
+      'focus-trap-react',
+      'highlight.js',
+      'highlightjs-graphql',
+      'lodash',
+      'polished',
+      'prop-types',
+      'react',
+      'react-dom',
+      'react-is',
+      'react-keyed-flatten-children',
+      'react-transition-group',
+      ...getLodashExternals(),
+      ...allPackages,
+      ...directGlyphImports,
+    ].includes(id) ||
+    // We test if an import includes lodash to avoid having
+    // to whitelist every nested lodash module individually
+    /^lodash\//.test(id) ||
+    /^highlight\.js\//.test(id),
+});
+
 const config = ['esm', 'umd'].flatMap(format => {
-  const baseConfig = {
-    input: 'src/index.ts',
+  const baseConfig = baseConfigForFormat(format);
+
+  const iconsConfig = getGeneratedFiles().map(input => ({
+    ...baseConfig,
+    input: `src/generated/${path.basename(input)}`,
     output: {
-      dir: moduleFormatToDirectory[format],
-      name,
-
-      format,
-      sourcemap: true,
-      globals,
+      ...baseConfig.output,
+      name: `${path.basename(input, path.extname(input))}.js`,
     },
-    plugins: [
-      resolve({ extensions }),
+  }));
 
-      babel({
-        babelrc: false,
-        babelHelpers: 'bundled',
-        extensions,
-        configFile: path.resolve(__dirname, 'babel.config.js'),
-        sourceMaps: 'inline',
-        envName: 'production',
-      }),
+  const config = [baseConfig, ...iconsConfig];
+  const storyGlob = 'src/*.stor{y,ies}.tsx';
 
-      urlPlugin({
-        limit: 50000,
-        include: ['**/*.png'],
-      }),
-
-      urlPlugin({
-        limit: 0,
-        include: ['**/*.less'],
-        fileName: '[name][extname]',
-      }),
-
-      svgr(),
-
-      terser(),
-    ],
-    external: id =>
-      [
-        'clipboard',
-        'highlight.js',
-        'highlightjs-graphql',
-        'react',
-        'react-dom',
-        '@emotion/server',
-        '@emotion/css',
-        '@emotion/css/create-instance',
-        '@emotion/server/create-instance',
-        'polished',
-        'prop-types',
-        'react-is',
-        'react-transition-group',
-        '@testing-library/react',
-        'lodash',
-        'focus-trap-react',
-        ...getLodashExternals(),
-        ...allPackages,
-        ...directGlyphImports,
-      ].includes(id) ||
-      // We test if an import includes lodash to avoid having
-      // to whitelist every nested lodash module individually
-      /^lodash\//.test(id) ||
-      /^highlight\.js\//.test(id),
-  };
-
-  return [
-    baseConfig,
-    ...getGeneratedFiles().map(input => ({
+  if (format === 'esm' && glob.sync(storyGlob).length > 0) {
+    // Story config
+    config.push({
       ...baseConfig,
-      input: `src/generated/${path.basename(input)}`,
+      input: glob.sync(storyGlob)[0],
       output: {
-        ...baseConfig.output,
-        name: `${path.basename(input, path.extname(input))}.js`,
+        format,
+        file: 'stories.js',
+        sourcemap: false,
+        globals: baseConfig.output.globals,
       },
-    })),
-  ];
+    });
+  }
+
+  return config;
 });
 
 export default config;

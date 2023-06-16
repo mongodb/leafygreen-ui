@@ -2,8 +2,8 @@ import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 
-import { footerStyle } from './styles';
-import { FooterProps } from './types';
+import { footerStyle } from './Footer.styles';
+import { FooterProps } from './Footer.types';
 
 /**
  * @internal

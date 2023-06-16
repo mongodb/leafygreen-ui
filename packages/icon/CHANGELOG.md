@@ -1,5 +1,72 @@
 # @leafygreen-ui/icon
 
+## 11.17.0
+
+### Minor Changes
+
+- 95f5107a: Add ThumbsUp and ThumbsDown icons
+
+### Patch Changes
+
+- 76161cf0: Updates stories for Chromatic testing
+
+## 11.16.1
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+
+## 11.16.0
+
+### Minor Changes
+
+- dff6c306e: Adds support for `Dashboard` in the glyph set. This is an alias of `Stitch` and will be the preferred reference name moving forward.
+
+## 11.15.0
+
+### Minor Changes
+
+- 614f7617d: Adds tag icon to glyph set
+- 614f7617d: Adds wizard icon to glyph set
+
+## 11.14.0
+
+### Minor Changes
+
+- 83fc5b31b: Adds `ChartFilled` icon
+
+## 11.13.1
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/emotion@4.0.4
+
+## 11.13.0
+
+### Minor Changes
+
+- dc8ceed9b: Adds `Highlight`,`LogIn`,`LogOut`, and `Wrench` icons.
+
+## 11.12.7
+
+### Patch Changes
+
+- c2c5601f4: Adds missing dependencies. Removes unused dependencies
+
+## 11.12.6
+
+### Patch Changes
+
+- cb083a826: Adds `Gauge` icon and updates `Drag` icon.
+
+## 11.12.5
+
+### Patch Changes
+
+- 997121cc3: Improves error message when entering a glyph name that does not exist. Now, if you make a typo in the glyph name, you'll receive a more helpful console error, instead of a runtime TypeError
+
 ## 11.12.4
 
 ### Patch Changes

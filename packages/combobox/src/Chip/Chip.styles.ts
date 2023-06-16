@@ -6,21 +6,41 @@ import { transitionDuration, typeScales } from '@leafygreen-ui/tokens';
 import { ComboboxSize } from '../Combobox.types';
 
 /**
+ * The line-height of the combobox.
+ */
+export const lineHeight: Record<ComboboxSize, number> = {
+  [ComboboxSize.XSmall]: 16,
+  [ComboboxSize.Small]: typeScales.body1.lineHeight,
+  [ComboboxSize.Default]: typeScales.body1.lineHeight,
+  [ComboboxSize.Large]: typeScales.body2.lineHeight,
+};
+
+/**
+ * The font-size of the combobox.
+ */
+export const fontSize: Record<ComboboxSize, number> = {
+  [ComboboxSize.XSmall]: typeScales.body1.fontSize,
+  [ComboboxSize.Small]: typeScales.body1.fontSize,
+  [ComboboxSize.Default]: typeScales.body1.fontSize,
+  [ComboboxSize.Large]: typeScales.body2.fontSize,
+};
+
+/**
  * Vertical padding on a chip (in px)
  */
 export const chipWrapperPaddingY = {
+  [ComboboxSize.XSmall]: 1,
+  [ComboboxSize.Small]: 0,
   [ComboboxSize.Default]: 2,
   [ComboboxSize.Large]: 4,
 } as const;
 
 /**
- * Height of the chip element (in px)
+ * Util to get the chip height
+ * `lineHeight + (2 * paddingY)`
  */
-export const chipHeight: Record<ComboboxSize, number> = {
-  [ComboboxSize.Default]:
-    typeScales.body1.lineHeight + 2 * chipWrapperPaddingY[ComboboxSize.Default], // 20
-  [ComboboxSize.Large]:
-    typeScales.body2.lineHeight + 2 * chipWrapperPaddingY[ComboboxSize.Large], // 28
+export const getChipHeight = (size: ComboboxSize) => {
+  return lineHeight[size] + 2 * chipWrapperPaddingY[size];
 };
 
 export const chipWrapperBaseStyle = css`
@@ -29,20 +49,13 @@ export const chipWrapperBaseStyle = css`
   overflow: hidden;
   white-space: nowrap;
   box-sizing: border-box;
+  border-radius: 4px;
 `;
 
-export const chipWrapperSizeStyle: Record<ComboboxSize, string> = {
-  [ComboboxSize.Default]: css`
-    font-size: ${typeScales.body1.fontSize}px;
-    line-height: ${typeScales.body1.lineHeight}px;
-    border-radius: 4px;
-  `,
-  [ComboboxSize.Large]: css`
-    font-size: ${typeScales.body2.fontSize}px;
-    line-height: ${typeScales.body2.lineHeight}px;
-    border-radius: 4px;
-  `,
-};
+export const chipWrapperSizeStyle = (size: ComboboxSize) => css`
+  font-size: ${fontSize[size]}px;
+  line-height: ${lineHeight[size]}px;
+`;
 
 export const chipWrapperThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
@@ -64,23 +77,37 @@ export const chipWrapperThemeStyle: Record<Theme, string> = {
   `,
 };
 
+export const disabledBaseChipWrapperStyles = css`
+  cursor: not-allowed;
+  pointer-events: none;
+`;
+
 export const disabledChipWrapperStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    cursor: not-allowed;
     color: ${palette.gray.base};
     background-color: ${palette.gray.light3};
   `,
   [Theme.Dark]: css`
-    cursor: not-allowed;
     color: ${palette.gray.dark2};
     background-color: ${palette.gray.dark4};
-    box-shadow: inset 0 0 1px 1px ${palette.gray.dark2}; ;
+    box-shadow: inset 0 0 1px 1px ${palette.gray.dark2};
   `,
 };
 
 export const chipTextSizeStyle: Record<ComboboxSize, string> = {
+  [ComboboxSize.XSmall]: css`
+    padding-inline-start: 6px;
+    padding-inline-end: 2px;
+    padding-block: ${chipWrapperPaddingY[ComboboxSize.XSmall]}px;
+  `,
+  [ComboboxSize.Small]: css`
+    padding-inline-start: 6px;
+    padding-inline-end: 2px;
+    padding-block: ${chipWrapperPaddingY[ComboboxSize.Small]}px;
+  `,
   [ComboboxSize.Default]: css`
-    padding-inline: 6px;
+    padding-inline-start: 6px;
+    padding-inline-end: 2px;
     padding-block: ${chipWrapperPaddingY[ComboboxSize.Default]}px;
   `,
   [ComboboxSize.Large]: css`
@@ -100,16 +127,12 @@ export const chipButtonStyle = css`
   background-color: transparent;
   cursor: pointer;
   transition: background-color ${transitionDuration.faster}ms ease-in-out;
+  padding: 0 2px;
 `;
 
-export const chipButtonSizeStyle: Record<ComboboxSize, string> = {
-  [ComboboxSize.Default]: css`
-    height: ${chipHeight[ComboboxSize.Default]}px;
-  `,
-  [ComboboxSize.Large]: css`
-    height: ${chipHeight[ComboboxSize.Large]}px;
-  `,
-};
+export const chipButtonSizeStyle = (size: ComboboxSize) => css`
+  height: ${getChipHeight(size)}px;
+`;
 
 export const chipButtonThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
@@ -130,21 +153,19 @@ export const chipButtonThemeStyle: Record<Theme, string> = {
   `,
 };
 
+export const chipButtonBaseDisabledStyles = css`
+  cursor: not-allowed;
+  &:hover {
+    color: inherit;
+    background-color: unset;
+  }
+`;
+
 export const chipButtonDisabledStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    cursor: not-allowed;
-    color: ${palette.gray.dark2};
-    &:hover {
-      color: inherit;
-      background-color: unset;
-    }
+    color: ${palette.gray.light1};
   `,
   [Theme.Dark]: css`
-    cursor: not-allowed;
     color: ${palette.gray.dark2};
-    &:hover {
-      color: inherit;
-      background-color: unset;
-    }
   `,
 };

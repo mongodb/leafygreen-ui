@@ -4,12 +4,10 @@
     "declarationDir": "dist",
     "outDir": "dist",
     "rootDir": "src",
-    "noErrorTruncation": false,
+    "noErrorTruncation": false
   },
-  "include": ["src/**/*"],
-  "references": [
-    {
-      "path": "../lib"
-    }
-  ]
+  "include": [
+    "src/**/*"
+  ],
+  "references": []
 }

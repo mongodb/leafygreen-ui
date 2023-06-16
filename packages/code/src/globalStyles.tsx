@@ -1,6 +1,7 @@
 import { injectGlobal } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
+import { fontWeights } from '@leafygreen-ui/tokens';
 
 interface Base16Palette {
   0: string; // Background
@@ -123,7 +124,7 @@ const getStyles = (theme: Theme): string => `
     }
   
     .lg-highlight-strong {
-      font-weight: bold;
+      font-weight: ${fontWeights.bold};
     }
   }
 `;

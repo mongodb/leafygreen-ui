@@ -1,11 +1,16 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+import {
+  BaseFontSize,
+  fontFamilies,
+  fontWeights,
+  typeScales,
+} from '@leafygreen-ui/tokens';
 
 export const labelStyle = css`
   font-family: ${fontFamilies.default};
-  font-weight: bold;
+  font-weight: ${fontWeights.bold};
 `;
 
 export const labelColorStyle: Record<Theme, string> = {

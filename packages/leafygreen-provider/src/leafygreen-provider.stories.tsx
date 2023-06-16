@@ -1,30 +1,33 @@
 import React from 'react';
-import { ComponentStory, Meta } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
+
+import { StoryMetaType } from '@leafygreen-ui/lib';
 
 import LeafyGreenProvider from '.';
 
 const TestComponent = () => <div>This is a test component.</div>;
 
-export default {
+const meta: StoryMetaType<typeof LeafyGreenProvider> = {
   title: 'Contexts/LeafyGreenProvider',
   component: LeafyGreenProvider,
-  excludeStories: ['TestComponent'],
   parameters: {
-    controls: {
-      exclude: ['className'],
-    },
+    default: null,
   },
   argTypes: {
     darkMode: { control: 'boolean' },
     popoverPortalContainer: { control: 'none' },
   },
-} as Meta<typeof LeafyGreenProvider>;
+};
+export default meta;
 
 // eslint-disable-next-line react/prop-types
-const Template: ComponentStory<typeof LeafyGreenProvider> = props => (
+const Template: StoryFn<typeof LeafyGreenProvider> = props => (
   <LeafyGreenProvider {...props}>
     <TestComponent />
   </LeafyGreenProvider>
 );
 
 export const Basic = Template.bind({});
+Basic.parameters = {
+  chromatic: { disableSnapshot: true },
+};

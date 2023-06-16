@@ -1,0 +1,46 @@
+{
+  "extends": "../../package.tsconfig.json",
+  "compilerOptions": {
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "references": [
+    {
+      "path": "../button"
+    },
+    {
+      "path": "../emotion"
+    },
+    {
+      "path": "../hooks"
+    },
+    {
+      "path": "../icon"
+    },
+    {
+      "path": "../lib"
+    },
+    {
+      "path": "../menu"
+    },
+    {
+      "path": "../palette"
+    },
+    {
+      "path": "../polymorphic"
+    },
+    {
+      "path": "../popover"
+    },
+    {
+      "path": "../tokens"
+    },
+    {
+      "path": "../leafygreen-provider"
+    }
+  ]
+}

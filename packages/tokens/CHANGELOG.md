@@ -1,5 +1,45 @@
 # @leafygreen-ui/tokens
 
+## 2.1.1
+
+### Patch Changes
+
+- 76161cf0: Updates stories for Chromatic testing
+
+## 2.1.0
+
+### Minor Changes
+
+- 73cbbd02c: Adds `fontWeights` token
+
+### Patch Changes
+
+- 8ece56980: Adds `slowest` to `transitionDuration`
+
+## 2.0.3
+
+### Patch Changes
+
+- 77320a6b8: Adds token for large font size
+- Updated dependencies [55d33e435]
+- Updated dependencies [55d33e435]
+  - @leafygreen-ui/palette@4.0.4
+
+## 2.0.2
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/palette@4.0.3
+
+## 2.0.1
+
+### Patch Changes
+
+- Updated dependencies [5b036515e]
+  - @leafygreen-ui/palette@4.0.0
+
 ## 2.0.0
 
 ### Major Changes

@@ -1,2 +1,2 @@
 export { default } from './Copyable';
-export { Size } from './Copyable.types';
+export { type CopyableProps, Size } from './Copyable.types';

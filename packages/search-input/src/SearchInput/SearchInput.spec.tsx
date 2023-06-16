@@ -2,6 +2,7 @@ import React from 'react';
 import {
   createEvent,
   fireEvent,
+  waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
@@ -182,6 +183,22 @@ describe('packages/search-input', () => {
       });
     });
 
+    describe('Enter key', () => {
+      test('keydown event is called', () => {
+        const keyDownHandler = jest.fn();
+        const { inputEl } = renderSearchInput({
+          onKeyDown: keyDownHandler,
+        });
+        userEvent.type(inputEl, '{enter}');
+        expect(keyDownHandler).toHaveBeenCalledTimes(1);
+      });
+
+      // https://jira.mongodb.org/browse/LG-3195
+      // https://github.com/silx-kit/h5web/pull/814
+      // This can be done after testing-library's version is bumped to at least 13.5.0
+      test.todo('test multiple keys being pressed at once');
+    });
+
     describe('Clear button', () => {
       test('clears any input', () => {
         const { queryByRole, inputEl } = renderSearchInput({
@@ -248,27 +265,51 @@ describe('packages/search-input', () => {
         expect(inputEl).toHaveFocus();
       });
 
-      test('menu closes on click-away', async () => {
-        const { openMenu, containerEl, inputEl } = renderSearchInput({
-          ...defaultProps,
-        });
-        const { menuContainerEl } = openMenu();
-        userEvent.click(containerEl.parentElement!);
-        await waitForElementToBeRemoved(menuContainerEl);
-        expect(menuContainerEl).not.toBeInTheDocument();
-        expect(inputEl).toHaveFocus();
-      });
+      describe('Click-away', () => {
+        test('Basic (without menu): click-away un-focuses the input', async () => {
+          const { containerEl, inputEl } = renderSearchInput({
+            ...defaultProps,
+            children: undefined,
+          });
 
-      test('text remains when the menu closes', async () => {
-        const { openMenu, containerEl, inputEl } = renderSearchInput({
-          ...defaultProps,
+          userEvent.click(inputEl);
+          userEvent.click(containerEl.parentElement!);
+
+          await waitFor(() => {
+            expect(inputEl).not.toHaveFocus();
+          });
         });
 
-        userEvent.type(inputEl, 'abc');
-        const { menuContainerEl } = openMenu();
-        userEvent.click(containerEl.parentElement!);
-        await waitForElementToBeRemoved(menuContainerEl);
-        expect(inputEl).toHaveValue('abc');
+        test('With menu: click-away keeps focus on the input', () => {
+          const { containerEl, inputEl } = renderSearchInput({
+            ...defaultProps,
+          });
+          userEvent.click(inputEl);
+          userEvent.click(containerEl.parentElement!);
+          expect(inputEl).toHaveFocus();
+        });
+
+        test('menu closes on click-away', async () => {
+          const { openMenu, containerEl } = renderSearchInput({
+            ...defaultProps,
+          });
+          const { menuContainerEl } = openMenu();
+          userEvent.click(containerEl.parentElement!);
+          await waitForElementToBeRemoved(menuContainerEl);
+          expect(menuContainerEl).not.toBeInTheDocument();
+        });
+
+        test('text remains when the menu closes', async () => {
+          const { openMenu, containerEl, inputEl } = renderSearchInput({
+            ...defaultProps,
+          });
+
+          userEvent.type(inputEl, 'abc');
+          const { menuContainerEl } = openMenu();
+          userEvent.click(containerEl.parentElement!);
+          await waitForElementToBeRemoved(menuContainerEl);
+          expect(inputEl).toHaveValue('abc');
+        });
       });
 
       describe('clicking a result', () => {

@@ -3,6 +3,7 @@ import { isUndefined } from 'lodash';
 import { darken, lighten, readableColor, transparentize } from 'polished';
 
 import { css, cx } from '@leafygreen-ui/emotion';
+import { HTMLElementProps, StoryMetaType } from '@leafygreen-ui/lib';
 import {
   focusRing,
   hoverRing,
@@ -30,11 +31,9 @@ const colorBlock = css`
   border-radius: 8px;
   cursor: pointer;
   transition: box-shadow ease-in-out ${transitionDuration.default}ms;
-
   &:hover {
     box-shadow: ${hoverRing.light.gray};
   }
-
   &:focus {
     box-shadow: ${focusRing.light.default};
   }
@@ -76,13 +75,13 @@ const ShadeNames = [
 ] as const;
 type ShadeName = typeof ShadeNames[number];
 
-interface ColorBlockProps {
+interface ColorBlockProps extends HTMLElementProps<'div'> {
   hue: HueName;
   name: string;
   shade?: ShadeName;
 }
 
-function ColorBlock({ hue, shade }: ColorBlockProps) {
+function ColorBlock({ hue, shade, ...rest }: ColorBlockProps) {
   const [copied, setCopied] = useState(false);
   const colorBlockRef = useRef<HTMLButtonElement>(null);
   const name = `${hue} ${shade ?? ''}`;
@@ -121,7 +120,7 @@ function ColorBlock({ hue, shade }: ColorBlockProps) {
   };
 
   return (
-    <div className={cx(colorBlockWrapper, colorBlockWrapperDynamic)}>
+    <div className={cx(colorBlockWrapper, colorBlockWrapperDynamic)} {...rest}>
       <button className={cx(colorBlock, colorBlockColor)} onClick={copyHex} />
       <div className={cx(hexLabelStyle, hexLabelColor)}>{color}</div>
       <div className={nameLabelStyle}>{name}</div>
@@ -137,8 +136,12 @@ function ColorBlock({ hue, shade }: ColorBlockProps) {
   );
 }
 
-export default {
+const meta: StoryMetaType<any> = {
   title: 'Components/Palette',
+  component: null,
+  parameters: {
+    default: 'AllColors',
+  },
   argTypes: {
     className: {
       table: {
@@ -148,38 +151,47 @@ export default {
   },
 };
 
+export default meta;
+
 export function AllColors() {
-  const hues = Object.keys(palette) as Array<keyof typeof palette>;
+  const allColors = Object.keys(palette);
+  const hues = (allColors as Array<keyof typeof palette>).slice(
+    2,
+    allColors.length,
+  ); // remove black and white
 
-  const renderedRanges = hues.map(hue => {
-    const hueValues = palette[hue];
+  return (
+    <div>
+      <ColorBlock hue="white" name="white" style={{ marginRight: '24px' }} />
+      <ColorBlock hue="black" name="black" />
+      {hues.map(hue => {
+        const hueValues = palette[hue];
 
-    if (typeof hueValues === 'string') {
-      return <ColorBlock key={hue} hue={hue} name={hue} />;
-    }
-
-    return (
-      <div
-        key={hue}
-        className={css`
-          grid-template-columns: repeat(${ShadeNames.length}, ${BLOCK_WIDTH}px);
-          display: grid;
-          gap: 24px;
-        `}
-      >
-        {(Object.keys(hueValues) as Array<keyof typeof hueValues>).map(
-          shade => (
-            <ColorBlock
-              key={hueValues[shade]}
-              hue={hue}
-              shade={shade}
-              name={`${hue} ${shade}`}
-            />
-          ),
-        )}
-      </div>
-    );
-  });
-
-  return <div>{renderedRanges}</div>;
+        return (
+          <div
+            key={hue}
+            className={css`
+              grid-template-columns: repeat(
+                ${ShadeNames.length},
+                ${BLOCK_WIDTH}px
+              );
+              display: grid;
+              gap: 24px;
+            `}
+          >
+            {(Object.keys(hueValues) as Array<keyof typeof hueValues>).map(
+              shade => (
+                <ColorBlock
+                  key={hueValues[shade]}
+                  hue={hue}
+                  shade={shade}
+                  name={`${hue} ${shade}`}
+                />
+              ),
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
 }

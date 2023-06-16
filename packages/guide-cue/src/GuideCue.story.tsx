@@ -1,28 +1,101 @@
+/* eslint-disable react/display-name */
 import React, { useRef, useState } from 'react';
-import { ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  type StoryMetaType,
+  type StoryType,
+} from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
+import { Align } from '@leafygreen-ui/popover';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
-import { GuideCueProps } from './types';
-import { GuideCue } from '.';
+import { GuideCue, GuideCueProps, TooltipAlign, TooltipJustify } from '.';
 
-export default {
+// TODO: Fix component type
+const meta: StoryMetaType<any> = {
   title: 'Components/GuideCue',
   component: GuideCue,
+  decorators: [
+    StoryFn => (
+      <div>
+        <StoryFn />
+      </div>
+    ),
+  ],
   parameters: {
+    default: 'LiveExample',
     controls: {
       exclude: [
-        'className',
+        ...storybookExcludedControlParams,
         'refEl',
         'setOpen',
         'tooltipClassName',
         'open',
-        'onDismiss',
         'onPrimaryButtonClick',
       ],
+    },
+    generate: {
+      storyNames: [
+        'Standalone',
+        'MultiStepBeaconTop',
+        'MultiStepBeaconBottom',
+        'MultiStepBeaconLeft',
+        'MultiStepBeaconRight',
+        'MultiStepBeaconCenterVertical',
+        'MultiStepBeaconCenterHorizontal',
+      ],
+      combineArgs: {
+        darkMode: [false, true],
+        tooltipJustify: Object.values(TooltipJustify),
+        tooltipAlign: Object.values(TooltipAlign),
+      },
+      args: {
+        open: true,
+        refEl: undefined,
+      },
+      decorator: (Instance, ctx) => {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const refEl = React.useRef(null);
+        const refElHeight = 25;
+        const refElWidth = 30;
+        const gcHeight = 175; // approx
+        const gcWidth = 275; // approx
+        return (
+          <div
+            className={css`
+              height: ${2 * gcHeight + refElHeight}px;
+              width: ${2 * gcWidth + refElWidth}px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            `}
+          >
+            <div
+              className={css`
+                height: ${refElHeight}px;
+                width: ${refElWidth}px
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                outline: 1px solid ${palette.gray.base}80;
+              `}
+              ref={refEl}
+            >
+              refEl
+            </div>
+            <Instance refEl={refEl} />
+          </div>
+        );
+      },
+    },
+    chromatic: {
+      delay: transitionDuration.slowest,
     },
   },
   argTypes: {
@@ -49,7 +122,9 @@ export default {
   },
 };
 
-const Template: ComponentStory<typeof GuideCue> = args => {
+export default meta;
+
+const Template: StoryFn<GuideCueProps> = (args: GuideCueProps) => {
   const [open, setOpen] = useState<boolean>(false);
   const triggerRef = useRef<null | HTMLDivElement>(null);
   const { children, darkMode } = args;
@@ -61,7 +136,7 @@ const Template: ComponentStory<typeof GuideCue> = args => {
   const handleClose = () => console.log('close');
 
   return (
-    <>
+    <div>
       <Button
         onClick={() => setOpen(o => !o)}
         className={css`
@@ -86,11 +161,16 @@ const Template: ComponentStory<typeof GuideCue> = args => {
       >
         {children}
       </GuideCue>
-    </>
+    </div>
   );
 };
 
-export const Default = Template.bind({});
+export const LiveExample = Template.bind({});
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 const scrollableStyle = css`
   width: 800px;
@@ -108,7 +188,9 @@ const scrollableInnerStyle = css`
   justify-content: center;
 `;
 
-export const ScrollableContainer = (args: GuideCueProps) => {
+export const ScrollableContainer: StoryFn<GuideCueProps> = (
+  args: GuideCueProps,
+) => {
   const [open, setOpen] = useState<boolean>(false);
   const triggerRef = useRef<null | HTMLDivElement>(null);
   const portalContainer = useRef<HTMLDivElement | null>(null);
@@ -146,12 +228,15 @@ export const ScrollableContainer = (args: GuideCueProps) => {
     </div>
   );
 };
+ScrollableContainer.parameters = {
+  chromatic: { disableSnapshot: true },
+};
 
 const spacing = css`
   margin-bottom: 30px;
 `;
 
-export const MultistepDemo = (args: GuideCueProps) => {
+export const MultistepDemo: StoryFn<GuideCueProps> = (args: GuideCueProps) => {
   const { darkMode } = args;
   const [open, setOpen] = useState<boolean>(false);
   const [currentStep, setCurrentStep] = useState<number>(1);
@@ -181,7 +266,7 @@ export const MultistepDemo = (args: GuideCueProps) => {
   };
 
   return (
-    <>
+    <div>
       <Button className={spacing} onClick={handleReset}>
         Begin tour
       </Button>
@@ -214,11 +299,12 @@ export const MultistepDemo = (args: GuideCueProps) => {
       >
         This is a new feature. You should try it out
       </GuideCue>
-    </>
+    </div>
   );
 };
 
 MultistepDemo.parameters = {
+  chromatic: { disableSnapshot: true },
   controls: {
     exclude: [
       'title',
@@ -237,5 +323,80 @@ MultistepDemo.parameters = {
       'onDismiss',
       'onPrimaryButtonClick',
     ],
+  },
+};
+
+// @ts-expect-error
+export const Standalone: StoryType<typeof GuideCue> = () => <></>;
+Standalone.parameters = {
+  generate: {
+    args: {
+      numberOfSteps: 1,
+      currentStep: 1,
+    },
+  },
+};
+
+// @ts-expect-error
+export const MultiStepBeaconTop: StoryType<typeof GuideCue> = () => <></>;
+MultiStepBeaconTop.parameters = {
+  generate: {
+    args: {
+      beaconAlign: Align.Top,
+    },
+  },
+};
+
+// @ts-expect-error
+export const MultiStepBeaconBottom: StoryType<typeof GuideCue> = () => <></>;
+MultiStepBeaconBottom.parameters = {
+  generate: {
+    args: {
+      beaconAlign: Align.Bottom,
+    },
+  },
+};
+
+// @ts-expect-error
+export const MultiStepBeaconLeft: StoryType<typeof GuideCue> = () => <></>;
+MultiStepBeaconLeft.parameters = {
+  generate: {
+    args: {
+      beaconAlign: Align.Left,
+    },
+  },
+};
+
+// @ts-expect-error
+export const MultiStepBeaconRight: StoryType<typeof GuideCue> = () => <></>;
+MultiStepBeaconRight.parameters = {
+  generate: {
+    args: {
+      beaconAlign: Align.Right,
+    },
+  },
+};
+
+// @ts-expect-error
+export const MultiStepBeaconCenterVertical: StoryType<typeof GuideCue> = () => (
+  <></>
+);
+MultiStepBeaconCenterVertical.parameters = {
+  generate: {
+    args: {
+      beaconAlign: Align.CenterVertical,
+    },
+  },
+};
+
+export const MultiStepBeaconCenterHorizontal: StoryType<
+  // @ts-expect-error
+  typeof GuideCue
+> = () => <></>;
+MultiStepBeaconCenterHorizontal.parameters = {
+  generate: {
+    args: {
+      beaconAlign: Align.CenterHorizontal,
+    },
   },
 };

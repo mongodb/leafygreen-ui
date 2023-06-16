@@ -3,6 +3,7 @@ import { transparentize } from 'polished';
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { Size, Variant } from '../types';
 
@@ -37,6 +38,10 @@ export const rippleStyle = css`
   border-radius: 5px;
 `;
 
+export const darkModeRightGlyphStyles = css`
+  justify-content: space-between;
+`;
+
 export const buttonContentStyle = css`
   display: grid;
   grid-auto-flow: column;
@@ -47,6 +52,7 @@ export const buttonContentStyle = css`
   pointer-events: none;
   position: relative;
   z-index: 0;
+  transition: all ${transitionDuration.default} ease-in-out;
 `;
 
 export const buttonContentSizeStyle: Record<Size, string> = {
@@ -70,3 +76,38 @@ export const buttonContentSizeStyle: Record<Size, string> = {
     gap: 8px;
   `,
 };
+
+export const centeredSpinnerContainerStyles = css`
+  position: absolute;
+`;
+
+export const centeredSpinnerStyles = css`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
+export const buttonSpinnerSize: Record<Size, number> = {
+  [Size.XSmall]: 16,
+  [Size.Small]: 16,
+  [Size.Default]: 16,
+  [Size.Large]: 20,
+};
+
+export const spinnerColor: Record<Theme, string> = {
+  [Theme.Dark]: palette.gray.light1,
+  [Theme.Light]: palette.gray.dark1,
+};
+
+export const hiddenContentStyles = css`
+  visibility: hidden;
+`;
+
+export const leftGlyphStyles = css`
+  justify-self: right;
+`;
+
+export const rightGlyphStyles = css`
+  justify-self: left;
+`;

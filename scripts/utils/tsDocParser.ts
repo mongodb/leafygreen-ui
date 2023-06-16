@@ -33,7 +33,10 @@ const TSDocOptions: ParserOptions = {
   shouldRemoveUndefinedFromOptional: false,
   skipChildrenPropWithoutDoc: false,
   /** Ensures the Polymorphic component gets documented */
-  customComponentTypes: ['PolymorphicComponentType'],
+  customComponentTypes: [
+    'PolymorphicComponentType',
+    'InferredPolymorphicComponentType',
+  ],
   propFilter: (prop, component) => {
     return (
       !skipComponents.includes(component.name) &&
@@ -80,7 +83,7 @@ interface ParseFunctionOptions {
 }
 const defaultParseFunctionOptions = {
   packagesRoot: path.resolve(__dirname, '../../packages'),
-  excludeTags: ['example', 'internal'],
+  excludeTags: ['example', 'internal', 'noDocgen'],
 };
 
 /**
@@ -107,31 +110,29 @@ export function parseTSDoc(
   if (fs.existsSync(componentDir)) {
     const componentFileNames = parseFileNames(componentDir);
 
-    const docs: Array<CustomComponentDoc> = uniqBy(
-      Parser.parse(componentFileNames)
-        .filter((doc: ComponentDoc) => {
-          return (
-            // Remove any external components
-            !doc.filePath.includes('node_modules') &&
-            // Remove any components with no props
-            Object.keys(doc.props).length > 0 &&
-            // Remove any docs with excluded tags
-            excludeTags.every(tag => isUndefined(doc.tags?.[tag]))
-          );
-        })
-        .map(({ displayName, props, filePath, ...rest }) => {
-          return {
-            ...rest,
-            // For default exports, change the displayName
-            displayName: ['src', 'index'].includes(displayName)
-              ? pascalCase(componentName)
-              : displayName,
-            // // Group Props by where they are inherited from
-            props: parseProps(props, displayName),
-          } as CustomComponentDoc;
-        }),
-      'displayName',
-    );
+    const parsedDocs = Parser.parse(componentFileNames)
+      .filter((doc: ComponentDoc) => {
+        return (
+          // Remove any external components
+          !doc.filePath.includes('node_modules') &&
+          // Remove any components with no props
+          Object.keys(doc.props).length > 0 &&
+          // Remove any docs with excluded tags
+          excludeTags.every(tag => isUndefined(doc.tags?.[tag]))
+        );
+      })
+      .map(({ displayName, props, filePath, ...rest }) => {
+        return {
+          ...rest,
+          // For default exports, change the displayName
+          displayName: ['src', 'index'].includes(displayName)
+            ? pascalCase(componentName)
+            : displayName,
+          // // Group Props by where they are inherited from
+          props: parseProps(props, displayName),
+        } as CustomComponentDoc;
+      });
+    const docs: Array<CustomComponentDoc> = uniqBy(parsedDocs, 'displayName');
 
     console.log(chalk.gray(`Parsed TSDoc for:`, chalk.bold(componentName)));
 

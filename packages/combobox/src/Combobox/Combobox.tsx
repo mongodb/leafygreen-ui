@@ -4,6 +4,7 @@ import React, {
   KeyboardEventHandler,
   MouseEventHandler,
   TransitionEventHandler,
+  UIEvent,
   useCallback,
   useEffect,
   useMemo,
@@ -11,6 +12,7 @@ import React, {
   useState,
 } from 'react';
 import clone from 'lodash/clone';
+import debounce from 'lodash/debounce';
 import isArray from 'lodash/isArray';
 import isEqual from 'lodash/isEqual';
 import isNull from 'lodash/isNull';
@@ -20,6 +22,7 @@ import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import {
+  useAutoScroll,
   useBackdropClick,
   useDynamicRefs,
   useIdAllocator,
@@ -31,7 +34,6 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
 import { Description, Label } from '@leafygreen-ui/typography';
 
 import { Chip } from '../Chip';
@@ -53,6 +55,7 @@ import { InternalComboboxGroup } from '../ComboboxGroup';
 import { ComboboxMenu } from '../ComboboxMenu';
 import { InternalComboboxOption } from '../ComboboxOption';
 import {
+  checkScrollPosition,
   flattenChildren,
   getDisplayNameForValue,
   getNameAndValue,
@@ -63,22 +66,29 @@ import {
 import {
   baseComboboxStyles,
   baseInputElementStyle,
+  caretIconDisabledStyles,
+  caretIconThemeStyles,
   clearButtonStyle,
   comboboxDisabledStyles,
   comboboxErrorStyles,
   comboboxFocusStyle,
+  comboboxOverflowShadowStyles,
   comboboxParentStyle,
-  comboboxSelectionStyles,
   comboboxSizeStyles,
   comboboxThemeStyles,
   endIconStyle,
+  errorIconThemeStyles,
   errorMessageSizeStyle,
   errorMessageThemeStyle,
+  iconsWrapperBaseStyles,
+  iconsWrapperSizeStyles,
+  inputElementDisabledThemeStyle,
   inputElementSizeStyle,
   inputElementThemeStyle,
   inputElementTransitionStyles,
   inputWrapperStyle,
   labelDescriptionContainerStyle,
+  labelDescriptionLargeStyles,
   multiselectInputElementStyle,
 } from './Combobox.styles';
 
@@ -106,7 +116,7 @@ export function Combobox<M extends boolean>({
   onFilter,
   clearable = true,
   onClear,
-  overflow = 'expand-y',
+  overflow = Overflow.expandY,
   multiselect = false as M,
   initialValue,
   onChange,
@@ -145,6 +155,8 @@ export function Combobox<M extends boolean>({
   const [inputValue, setInputValue] = useState<string>('');
   const prevValue = usePrevious(inputValue);
   const [focusedChip, setFocusedChip] = useState<string | null>(null);
+  const [shouldShowOverflowShadow, setShouldShowOverflowShadow] =
+    useState<boolean>(false);
 
   const doesSelectionExist =
     !isNull(selection) &&
@@ -601,23 +613,11 @@ export function Combobox<M extends boolean>({
     }
   }, [inputValue, isOpen, prevValue, updateHighlightedOption]);
 
-  // TODO: Replace this with hooks/useAutoScroll
   // When the focused option changes, update the menu scroll if necessary
-  useEffect(() => {
-    if (highlightedOption) {
-      const focusedElementRef = getOptionRef(highlightedOption);
-
-      if (focusedElementRef && focusedElementRef.current && menuRef.current) {
-        const { offsetTop: optionTop } = focusedElementRef.current;
-        const { scrollTop: menuScroll, offsetHeight: menuHeight } =
-          menuRef.current;
-
-        if (optionTop > menuHeight || optionTop < menuScroll) {
-          menuRef.current.scrollTop = optionTop;
-        }
-      }
-    }
-  }, [highlightedOption, getOptionRef]);
+  useAutoScroll(
+    highlightedOption ? getOptionRef(highlightedOption) : undefined,
+    menuRef,
+  );
 
   /**
    * Rendering
@@ -805,8 +805,7 @@ export function Combobox<M extends boolean>({
   const onSelect = useCallback(() => {
     if (doesSelectionExist) {
       if (isMultiselect(selection)) {
-        // Scroll the wrapper to the end. No effect if not `overflow="scroll-x"`
-        scrollInputToEnd();
+        scrollInputToEnd(overflow);
       } else if (!isMultiselect(selection)) {
         // Update the text input
         const displayName =
@@ -820,7 +819,7 @@ export function Combobox<M extends boolean>({
     } else {
       setInputValue('');
     }
-  }, [doesSelectionExist, allOptions, isMultiselect, selection]);
+  }, [doesSelectionExist, allOptions, isMultiselect, selection, overflow]);
 
   // Set the initialValue
   useEffect(() => {
@@ -929,7 +928,7 @@ export function Combobox<M extends boolean>({
   // Fired whenever the wrapper gains focus,
   // and any time the focus within changes
   const handleComboboxFocus: FocusEventHandler<HTMLDivElement> = e => {
-    scrollInputToEnd();
+    scrollInputToEnd(overflow);
     trackFocusedElement(getNameFromElement(e.target));
   };
 
@@ -1100,6 +1099,44 @@ export function Combobox<M extends boolean>({
 
   useBackdropClick(closeMenu, [menuRef, comboboxRef], isOpen);
 
+  /**
+   * Checks if multi-select and if there are chips selected. The left padding of the wrapper changes when there are chips selected so we use this to conditionally change the padding.
+   */
+  const isMultiselectWithSelections =
+    isMultiselect(selection) && !!selection.length;
+
+  /**
+   * Function that calls the `checkScrollPosition` util to check the scroll position
+   */
+  const handleInputWrapperScroll = (e: UIEvent<HTMLDivElement>) => {
+    setShouldShowOverflowShadow(checkScrollPosition(e.target as HTMLElement));
+  };
+
+  const debounceScroll = debounce(handleInputWrapperScroll, 50, {
+    leading: true,
+  });
+
+  /**
+   * Function called on scroll of the inputWrapperRef container
+   */
+  const handleOnScroll = useCallback(
+    (e: React.UIEvent<HTMLDivElement>) => {
+      if (overflow === Overflow.expandY) {
+        debounceScroll(e);
+      }
+    },
+    [debounceScroll, overflow],
+  );
+
+  /**
+   * On load check if an overflow shadow should be visible
+   */
+  useEffect(() => {
+    if (inputWrapperRef.current) {
+      setShouldShowOverflowShadow(checkScrollPosition(inputWrapperRef.current));
+    }
+  }, []);
+
   const popoverProps = {
     popoverZIndex,
     ...(usePortal
@@ -1126,18 +1163,36 @@ export function Combobox<M extends boolean>({
           chipTruncationLocation,
           chipCharacterLimit,
           inputValue,
+          overflow,
+          popoverZIndex,
         }}
       >
         <div className={cx(comboboxParentStyle(size), className)} {...rest}>
           {(label || description) && (
             <div className={labelDescriptionContainerStyle}>
               {label && (
-                <Label id={labelId} htmlFor={inputId} darkMode={darkMode}>
+                <Label
+                  id={labelId}
+                  htmlFor={inputId}
+                  darkMode={darkMode}
+                  disabled={disabled}
+                  className={cx({
+                    [labelDescriptionLargeStyles]: size === ComboboxSize.Large,
+                  })}
+                >
                   {label}
                 </Label>
               )}
               {description && (
-                <Description darkMode={darkMode}>{description}</Description>
+                <Description
+                  darkMode={darkMode}
+                  disabled={disabled}
+                  className={cx({
+                    [labelDescriptionLargeStyles]: size === ComboboxSize.Large,
+                  })}
+                >
+                  {description}
+                </Description>
               )}
             </div>
           )}
@@ -1159,18 +1214,19 @@ export function Combobox<M extends boolean>({
             className={cx(
               baseComboboxStyles,
               comboboxThemeStyles[theme],
-              comboboxSizeStyles(size),
+              comboboxSizeStyles(size, isMultiselectWithSelections),
               {
-                [comboboxSelectionStyles]: clearable && doesSelectionExist,
                 [comboboxDisabledStyles[theme]]: disabled,
                 [comboboxErrorStyles[theme]]: state === State.error,
                 [comboboxFocusStyle[theme]]: isElementFocused(
                   ComboboxElement.Input,
                 ),
+                [comboboxOverflowShadowStyles[theme]]: shouldShowOverflowShadow,
               },
             )}
           >
             <div
+              onScroll={handleOnScroll}
               ref={inputWrapperRef}
               className={inputWrapperStyle({
                 size,
@@ -1187,12 +1243,13 @@ export function Combobox<M extends boolean>({
                 id={inputId}
                 className={cx(
                   baseInputElementStyle,
-                  inputElementSizeStyle[size],
+                  inputElementSizeStyle(size),
                   inputElementThemeStyle[theme],
                   inputElementTransitionStyles(isOpen),
                   {
                     [multiselectInputElementStyle(size, inputValue)]:
                       isMultiselect(selection),
+                    [inputElementDisabledThemeStyle[theme]]: disabled,
                   },
                 )}
                 placeholder={placeholderValue}
@@ -1202,36 +1259,49 @@ export function Combobox<M extends boolean>({
                 autoComplete="off"
               />
             </div>
-            {clearable && doesSelectionExist && (
-              <IconButton
-                aria-label="Clear selection"
-                aria-disabled={disabled}
-                disabled={disabled}
-                ref={clearButtonRef}
-                onClick={handleClearButtonClick}
-                onFocus={handleClearButtonFocus}
-                className={cx(clearButtonStyle)}
-                darkMode={darkMode}
-              >
-                <Icon glyph="XWithCircle" />
-              </IconButton>
-            )}
-            {state === 'error' ? (
+            <div
+              className={cx(
+                iconsWrapperBaseStyles,
+                iconsWrapperSizeStyles[size],
+              )}
+            >
+              {state === 'error' && (
+                <Icon
+                  glyph="Warning"
+                  fill={errorIconThemeStyles[theme]}
+                  className={endIconStyle}
+                />
+              )}
+              {clearable && doesSelectionExist && !disabled && (
+                <IconButton
+                  aria-label="Clear selection"
+                  aria-disabled={disabled}
+                  disabled={disabled}
+                  ref={clearButtonRef}
+                  onClick={handleClearButtonClick}
+                  onFocus={handleClearButtonFocus}
+                  className={cx(clearButtonStyle)}
+                  darkMode={darkMode}
+                >
+                  <Icon glyph="XWithCircle" />
+                </IconButton>
+              )}
               <Icon
-                glyph="Warning"
-                color={darkMode ? palette.red.light1 : palette.red.base}
-                className={endIconStyle(size)}
+                glyph="CaretDown"
+                className={endIconStyle}
+                fill={cx({
+                  [caretIconThemeStyles[theme]]: !disabled,
+                  [caretIconDisabledStyles[theme]]: disabled,
+                })}
               />
-            ) : (
-              <Icon glyph="CaretDown" className={endIconStyle(size)} />
-            )}
+            </div>
           </div>
 
           {state === 'error' && errorMessage && (
             <div
               className={cx(
                 errorMessageThemeStyle[theme],
-                errorMessageSizeStyle[size],
+                errorMessageSizeStyle(size),
               )}
             >
               {errorMessage}
@@ -1263,14 +1333,21 @@ export function Combobox<M extends boolean>({
   // Closure-dependant utils
 
   /**
-   * Scrolls the combobox to the far right.
-   * Used when `overflow == 'scroll-x'`.
-   * Has no effect otherwise
+   * Scrolls the combobox to the far right if overflow === scroll-x
+   * Scrolls the combobox to the bottom if overflow === expand-y
    */
-  function scrollInputToEnd() {
+  function scrollInputToEnd(overflow: Overflow) {
     if (inputWrapperRef && inputWrapperRef.current) {
       // TODO - consider converting to .scrollTo(). This is not yet supported in IE or jsdom
-      inputWrapperRef.current.scrollLeft = inputWrapperRef.current.scrollWidth;
+      if (overflow === Overflow.scrollX) {
+        inputWrapperRef.current.scrollLeft =
+          inputWrapperRef.current.scrollWidth;
+      }
+
+      if (overflow === Overflow.expandY) {
+        inputWrapperRef.current.scrollTop =
+          inputWrapperRef.current.scrollHeight;
+      }
     }
   }
 
