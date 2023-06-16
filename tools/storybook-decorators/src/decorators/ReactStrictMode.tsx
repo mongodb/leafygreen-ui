@@ -1,4 +1,8 @@
 import React, { StrictMode } from 'react';
+import { Decorator } from '@storybook/react';
 
 // eslint-disable-next-line react/display-name
-export default storyFn => <StrictMode>{storyFn()}</StrictMode>;
+const ReactStrictMode: Decorator = storyFn => (
+  <StrictMode>{storyFn()}</StrictMode>
+);
+export default ReactStrictMode;

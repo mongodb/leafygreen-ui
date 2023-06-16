@@ -14,15 +14,15 @@ import { Decorator, StoryContext, StoryFn } from '@storybook/react';
 import { entries, isUndefined } from 'lodash';
 
 import {
-  StoryType,
   type GeneratedStoryConfig,
   type StoryMetaType,
+  StoryType,
 } from '@leafygreen-ui/lib';
 
-import { generatedStoryWrapper } from './PropCombinations.styles';
 import { Err, PropCombinations } from './components';
-import { isGeneratedStory } from './utils';
 import { PARAM_NAME } from './constants';
+import { generatedStoryWrapper } from './PropCombinations.styles';
+import { isGeneratedStory } from './utils';
 
 type ContextType<T extends React.ComponentType<any>> = StoryContext<T> &
   StoryMetaType<T>;
@@ -54,6 +54,7 @@ const PropCombinationsDecorator: Decorator = (
         args: generatedArgs,
         decorator,
       } = decoratorConfig;
+
       if (isGeneratedStory(context)) {
         // Check for props
         if (!combineArgs || entries(combineArgs).length === 0) {
@@ -61,7 +62,7 @@ const PropCombinationsDecorator: Decorator = (
         }
 
         // Remove from props any explicitly defined args
-        for (let propName in { ...generatedArgs }) {
+        for (const propName in { ...generatedArgs }) {
           if (combineArgs[propName]) {
             delete combineArgs[propName];
           }

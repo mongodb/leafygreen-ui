@@ -1,6 +1,8 @@
-import { GeneratedStoryConfig } from '@leafygreen-ui/lib';
 import { StoryContext } from '@storybook/react';
 import { isUndefined, startCase } from 'lodash';
+
+import { GeneratedStoryConfig } from '@leafygreen-ui/lib';
+
 import { GENERATED_STORY_NAME, PARAM_NAME } from '../constants';
 
 export const isGeneratedStory = (context: StoryContext<unknown>) => {
