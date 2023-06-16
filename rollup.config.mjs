@@ -166,7 +166,8 @@ const baseConfigForFormat = format => ({
 
     terser(),
   ],
-  external: externals
+  external: externals,
+  strictDeprecations: true
 });
 
 const config = ['esm', 'umd'].flatMap(format => {
