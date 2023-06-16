@@ -18,7 +18,7 @@
     },
     "tsc": {
       "dependsOn": ["^tsc", "^build"],
-      "outputs": ["{projectRoot}/dist/*.d.ts"]
+      "outputs": ["{projectRoot}/dist/"]
     }
   }
 }
