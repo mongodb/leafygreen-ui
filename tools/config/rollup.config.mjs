@@ -169,13 +169,8 @@ const baseConfigForFormat = format => ({
 
     terser(),
   ],
-<<<<<<<< HEAD:tools/config/rollup.config.mjs
   external,
   strictDeprecations: true,
-========
-  external: externals,
-  strictDeprecations: true
->>>>>>>> c86f1812c (mv rollup.js => mjs):rollup.config.mjs
 });
 
 const config = ['esm', 'umd'].flatMap(format => {
