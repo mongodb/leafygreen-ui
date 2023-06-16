@@ -1,0 +1,7 @@
+{
+  "name": "@lg-tools/storybook-decorators",
+  "version": "0.0.1",
+  "description": "Storybook decorators used in LeafyGreen repos",
+  "main": "dist/index.js",
+  "license": "MIT"
+}
