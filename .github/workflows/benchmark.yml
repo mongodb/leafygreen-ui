@@ -9,6 +9,24 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  baseline:
+    name: Baseline Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # Only setup & build if there was no build cache hit
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install
+        run: yarn install --frozen-lockfile --prefer-offline
+
+      - name: build
+        run: yarn build
+
   turbo:
     name: Build with Turbo
     runs-on: ubuntu-latest
