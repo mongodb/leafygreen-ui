@@ -15,7 +15,7 @@
     "build-storybook": "storybook build",
     "build:docs": "npx ts-node ./scripts/parse-tsdocs.ts",
     "lint": "npm-run-all --parallel lint:*",
-    "lint:prettier": "prettier --check \"**/*.{js,ts,tsx,json,md,yml}\"",
+    "lint:prettier": "prettier --check \"**/*.{js,ts,tsx,mjs,json,md,yml}\"",
     "lint:eslint": "eslint \"**/*.{js,ts,tsx}\"",
     "chromatic": "npx chromatic",
     "clean": "yarn clean:builds && yarn clean:modules",
