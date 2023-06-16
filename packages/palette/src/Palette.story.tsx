@@ -5,6 +5,13 @@ import { darken, lighten, readableColor, transparentize } from 'polished';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps, StoryMetaType } from '@leafygreen-ui/lib';
 
+// import {
+//   focusRing,
+//   hoverRing,
+//   transitionDuration,
+//   typeScales,
+// } from '@leafygreen-ui/tokens';
+// import Tooltip from '@leafygreen-ui/tooltip';
 import palette from './palette';
 
 type HueName = keyof typeof palette;
