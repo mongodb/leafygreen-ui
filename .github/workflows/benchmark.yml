@@ -13,13 +13,12 @@ jobs:
     name: Baseline Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
-      # Only setup & build if there was no build cache hit
       - name: Use Node.js 16
         uses: actions/setup-node@v3
         with:
           node-version: '16'
+
+      - uses: actions/checkout@v2
 
       - name: Install
         run: yarn install --frozen-lockfile --prefer-offline
@@ -31,12 +30,14 @@ jobs:
     name: Build with Turbo
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
       - name: Use Node.js 16
         uses: actions/setup-node@v3
         with:
           node-version: '16'
+
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Install
         run: yarn install --frozen-lockfile --prefer-offline
@@ -48,12 +49,14 @@ jobs:
     name: Build with Nx
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
       - name: Use Node.js 16
         uses: actions/setup-node@v3
         with:
           node-version: '16'
+
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Install
         run: yarn install --frozen-lockfile --prefer-offline
