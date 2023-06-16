@@ -1,3 +1,6 @@
+import { createRequire } from 'node:module';
+import { fileURLToPath } from 'node:url'
+
 import babel from '@rollup/plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
 import urlPlugin from '@rollup/plugin-url';
@@ -6,10 +9,12 @@ import fs from 'fs';
 import glob from 'glob';
 import path from 'path';
 import { terser } from 'rollup-plugin-terser';
+const require = createRequire(import.meta.url);
 
 const extensions = ['.ts', '.tsx'];
 
 const { name } = require(path.resolve(process.cwd(), 'package.json'));
+const babelConfigPath = fileURLToPath(new URL('babel.config.js', import.meta.url))
 
 // function getAllPackages(dir) {
 //   const dirList = fs.readdirSync(dir);
@@ -146,7 +151,7 @@ const baseConfigForFormat = format => ({
       babelrc: false,
       babelHelpers: 'bundled',
       extensions,
-      configFile: path.resolve(__dirname, 'babel.config.js'),
+      configFile: babelConfigPath,
       sourceMaps: 'inline',
       envName: 'production',
     }),
