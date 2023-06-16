@@ -13,11 +13,7 @@
       "outputs": ["{projectRoot}/dist"]
     },
     "tsc": {
-      "dependsOn": ["^tsc"],
-      "outputs": ["{projectRoot}/dist"]
-    },
-    "prebuild": {
-      "dependsOn": ["^prebuild"],
+      "dependsOn": ["^tsc", "^build"],
       "outputs": ["{projectRoot}/dist"]
     }
   }
