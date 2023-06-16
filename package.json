@@ -12,7 +12,7 @@
     "build": "turbo run build tsc",
     "build:turbo": "turbo run build tsc",
     "build:nx": "nx run-many -t build,tsc",
-    "build:storybook": "storybook build",
+    "build-storybook": "storybook build",
     "build:docs": "npx ts-node ./scripts/parse-tsdocs.ts",
     "lint": "npm-run-all --parallel lint:*",
     "lint:prettier": "prettier --check \"**/*.{js,ts,tsx,json,md,yml}\"",

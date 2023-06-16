@@ -14,6 +14,42 @@ import { HTMLElementProps, StoryMetaType } from '@leafygreen-ui/lib';
 // import Tooltip from '@leafygreen-ui/tooltip';
 import palette from './palette';
 
+const BLOCK_WIDTH = 88;
+
+const colorBlockWrapper = css`
+  display: inline-block;
+  position: relative;
+  width: ${BLOCK_WIDTH}px;
+`;
+
+const colorBlock = css`
+  outline: none;
+  border: none;
+  border-top-color: transparent;
+  width: 100%;
+  padding-bottom: 100%;
+  border-radius: 8px;
+  cursor: pointer;
+`;
+
+const hexLabelStyle = css`
+  width: calc(100% - 1em);
+  position: absolute;
+  left: 50%;
+  margin: auto;
+  text-align: center;
+  padding: 3px 0.3rem;
+  border-radius: 4px;
+  transform: translate(-50%, -125%);
+`;
+
+const nameLabelStyle = css`
+  text-align: center;
+  color: ${palette.gray.dark1};
+  margin: auto;
+  padding-block: 0.3em;
+`;
+
 type HueName = keyof typeof palette;
 
 const ShadeNames = [
@@ -138,10 +174,14 @@ export function AllColors() {
 
   return (
     <div>
-      <div className={colorRowStyle}>
-        <ColorBlock hue="white" name="white" />
-        <ColorBlock hue="black" name="black" />
-      </div>
+      <ColorBlock
+        hue="white"
+        name="white"
+        className={css`
+          marginright: '24px';
+        `}
+      />
+      <ColorBlock hue="black" name="black" />
       {hues.map(hue => {
         const hueValues = palette[hue];
 
