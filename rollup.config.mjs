@@ -1,5 +1,5 @@
 import { createRequire } from 'node:module';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath } from 'node:url'
 
 import babel from '@rollup/plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
@@ -8,33 +8,46 @@ import svgr from '@svgr/rollup';
 import fs from 'fs';
 import glob from 'glob';
 import path from 'path';
-import { nodeExternals } from 'rollup-plugin-node-externals';
 import { terser } from 'rollup-plugin-terser';
-
 const require = createRequire(import.meta.url);
 
 const extensions = ['.ts', '.tsx'];
 
-const {
-  name,
-  dependencies,
-  devDependencies,
-  peerDependencies,
-} = require(path.resolve(process.cwd(), 'package.json'));
-const babelConfigPath = fileURLToPath(
-  new URL('babel.config.js', import.meta.url),
-);
+const { name } = require(path.resolve(process.cwd(), 'package.json'));
+const babelConfigPath = fileURLToPath(new URL('babel.config.js', import.meta.url))
 
-const allDependencies = {
-  ...dependencies,
-  ...devDependencies,
-  ...peerDependencies,
-}
+// function getAllPackages(dir) {
+//   const dirList = fs.readdirSync(dir);
 
-/**
- *
- * @returns An array of all generated glyphs
- */
+//   return dirList
+//     .map(subDir => `${path.resolve(dir, subDir)}/package.json`)
+//     .filter(packageJsonPath => fs.existsSync(packageJsonPath))
+//     .map(packageJsonPath => require(packageJsonPath).name);
+// }
+
+// function getLodashExternals() {
+//   return fs
+//     .readdirSync(path.resolve(__dirname, 'node_modules', 'lodash'))
+//     .filter(fileName => {
+//       const splitName = fileName.split('.');
+//       const extension = splitName[splitName.length - 1];
+
+//       return extension === 'js';
+//     })
+//     .map(fileName => 'lodash/' + fileName.split('.')[0]);
+// }
+
+// function getDirectGlyphImports() {
+//   const glyphsDir = path.resolve(__dirname, './packages/icon/src/glyphs');
+
+//   return fs
+//     .readdirSync(glyphsDir)
+//     .filter(path => /.svg/.test(path))
+//     .map(
+//       fileName => `@leafygreen-ui/icon/dist/${path.basename(fileName, '.svg')}`,
+//     );
+// }
+
 function getGeneratedFiles() {
   const directory = path.resolve(process.cwd(), 'src/generated');
 
@@ -48,36 +61,6 @@ function getGeneratedFiles() {
     .map(file => path.resolve(directory, file));
 }
 
-/**
- *
- * @returns An array of all glyph import paths
- */
-function getDirectGlyphImports() {
-
-  if (allDependencies['@leafygreen-ui/icon']) {
-    const glyphsDir = path.resolve(process.cwd(), '../icon/src/glyphs');
-
-    return fs
-      .readdirSync(glyphsDir)
-      .filter(path => /.svg/.test(path))
-      .map(
-        fileName => `@leafygreen-ui/icon/dist/${path.basename(fileName, '.svg')}`,
-      );
-  }
-
-  return []
-}
-
-const lgGlobals = Object.keys(allDependencies).reduce((acc, pkg) => {
-  acc[pkg] = pkg;
-  return acc;
-}, {});
-
-const iconGlobals = getDirectGlyphImports().reduce((acc, glyph) => {
-  acc[glyph] = /[^/]+$/.exec(glyph)[0];
-  return acc
-}, {})
-
 // Mapping of packages to the `window` property they'd be
 // bound to if used in the browser without a module loader.
 // This is defined on a best effort basis since not all
@@ -90,8 +73,6 @@ const globals = {
   'react-dom': 'ReactDOM',
   'prop-types': 'PropTypes',
   lodash: '_',
-  ...lgGlobals,
-  ...iconGlobals
   /**
    * External dependencies that must be loaded by a module loader
    *   - lodash/*
@@ -102,7 +83,19 @@ const globals = {
    **/
 };
 
-const external = [
+// const allPackages = getAllPackages(path.resolve(__dirname, 'packages'));
+// const directGlyphImports = getDirectGlyphImports();
+
+// allPackages.forEach(packageName => {
+//   globals[packageName] = packageName;
+// });
+
+// directGlyphImports.forEach(glyphImport => {
+//   // e.g. "@leafygreen-ui/icon/dist/Checkmark" -> "Checkmark"
+//   globals[glyphImport] = /[^/]+$/.exec(glyphImport)[0];
+// });
+
+const externals = [
   '@emotion/server',
   '@emotion/css',
   '@emotion/css/create-instance',
@@ -122,10 +115,20 @@ const external = [
   'react-is',
   'react-keyed-flatten-children',
   'react-transition-group',
+  // ...getLodashExternals(),
+  // ...allPackages,
+  // ...directGlyphImports,
   /^lodash\//,
   /^highlight\.js\//,
-  /^@leafygreen-ui\//,
-];
+  /^@leafygreen-ui\//
+]
+
+// const isExternal = id =>
+//     externals.includes(id) ||
+//     // We test if an import includes lodash to avoid having
+//     // to whitelist every nested lodash module individually
+//     /^lodash\//.test(id) ||
+//     /^highlight\.js\//.test(id)
 
 const moduleFormatToDirectory = {
   esm: 'dist/esm/',
@@ -142,7 +145,6 @@ const baseConfigForFormat = format => ({
     globals,
   },
   plugins: [
-    nodeExternals({ deps: true }),
     resolve({ extensions }),
 
     babel({
@@ -169,13 +171,8 @@ const baseConfigForFormat = format => ({
 
     terser(),
   ],
-<<<<<<<< HEAD:tools/config/rollup.config.mjs
-  external,
-  strictDeprecations: true,
-========
   external: externals,
   strictDeprecations: true
->>>>>>>> c86f1812c (mv rollup.js => mjs):rollup.config.mjs
 });
 
 const config = ['esm', 'umd'].flatMap(format => {
