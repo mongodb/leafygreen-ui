@@ -1,13 +1,11 @@
+/* eslint-disable no-console */
 import React, { ReactElement } from 'react';
-import { entries } from 'lodash';
 import { Args, StoryFn } from '@storybook/react';
+import { entries } from 'lodash';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { GeneratedStoryConfig } from '@leafygreen-ui/lib';
 
-import { PropName } from '../utils/types';
-import { RecursiveCombinations } from '../utils/RecursiveCombinations';
-import { valStr, type PropCombination } from '../utils';
 import {
   cellStyles,
   combinationDarkModeStyles,
@@ -16,6 +14,10 @@ import {
   instanceCellStyles,
   tableStyles,
 } from '../PropCombinations.styles';
+import { type PropCombination, valStr } from '../utils';
+import { RecursiveCombinations } from '../utils/RecursiveCombinations';
+import { PropName } from '../utils/types';
+
 import { Instance } from './Instance';
 
 /**

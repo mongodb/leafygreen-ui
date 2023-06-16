@@ -1,4 +1,5 @@
 import { entries, has, isEqual, isUndefined, keys } from 'lodash';
+
 import {
   type ExtendedComponentProps,
   type GeneratedStoryConfig,
@@ -99,8 +100,6 @@ export function shouldExcludePropCombo<T extends React.ComponentType<any>>({
       }
     }
   });
-
-  return false;
 }
 
 /**
