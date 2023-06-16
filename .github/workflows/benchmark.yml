@@ -15,7 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # Only setup & build if there was no build cache hit
       - name: Use Node.js 16
         uses: actions/setup-node@v3
         with:
@@ -32,6 +31,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Use Node.js 16
         uses: actions/setup-node@v3
@@ -49,6 +50,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Use Node.js 16
         uses: actions/setup-node@v3
