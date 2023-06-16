@@ -1,0 +1,12 @@
+{
+  "extends": "@lg-tools/config/package.tsconfig.json",
+  "compilerOptions": {
+   "declarationDir": "dist",
+   "outDir": "dist",
+   "rootDir": "src",
+   "baseUrl": ".",
+ },
+ "include": [
+   "src/**/*"
+ ],
+}
