@@ -8,17 +8,17 @@
     }
   },
   "targetDefaults": {
+    "prebuild": {
+      "dependsOn": ["^prebuild"],
+      "outputs": ["{projectRoot}/dist"]
+    },
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["{projectRoot}/dist"]
     },
     "tsc": {
-      "dependsOn": ["^tsc"],
-      "outputs": ["{projectRoot}/dist"]
-    },
-    "prebuild": {
-      "dependsOn": ["^prebuild"],
-      "outputs": ["{projectRoot}/dist"]
+      "dependsOn": ["^tsc", "^build"],
+      "outputs": ["{projectRoot}/dist/*.d.ts"]
     }
   }
 }
