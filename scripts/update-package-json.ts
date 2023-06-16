@@ -22,9 +22,8 @@ for (const pkg of packages) {
   // Add a ts build script
   pkgJson.scripts = {
     ...pkgJson.scripts,
-    build: '../../node_modules/.bin/rollup --config ../../rollup.config.js',
+    build: 'rollup --config rollup.config.mjs',
     tsc: 'tsc --build tsconfig.json',
-    test: 'jest --config ../../jest.config.js',
   };
 
   // Write the file
