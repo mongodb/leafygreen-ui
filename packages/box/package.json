@@ -13,7 +13,7 @@
     }
   },
   "scripts": {
-    "build": "rollup --config ../../rollup.config.mjs",
+    "build": "rollup --config ../../tools/config/rollup.config.js",
     "tsc": "tsc --build tsconfig.json"
   },
   "license": "Apache-2.0",
