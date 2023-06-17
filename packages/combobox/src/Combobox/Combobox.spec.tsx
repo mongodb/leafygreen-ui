@@ -846,7 +846,6 @@ describe('packages/combobox', () => {
           expect(onClear).not.toHaveBeenCalled();
         });
 
-
         testSingleSelect('Re-opens menu after making a selection', async () => {
           const { inputEl, openMenu, getMenuElements } =
             renderCombobox('single');
