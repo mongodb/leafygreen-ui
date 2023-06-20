@@ -830,15 +830,17 @@ describe('packages/combobox', () => {
           }
         });
 
-        test('fires onChamge handler with payload', () => {
+        test('fires onChange handler with payload', () => {
           const onChange = jest.fn();
           const { inputEl, openMenu } = renderCombobox(select, { onChange });
           openMenu();
           userEvent.type(inputEl!, '{arrowdown}{enter}');
-          expect(onChange).toHaveBeenCalled();
+          expect(onChange).toHaveBeenCalledWith(
+            select === 'single' ? 'banana' : ['banana'],
+          );
         });
 
-        test('does not fire onClear hanlder', () => {
+        test('does not fire onClear handler', () => {
           const onClear = jest.fn();
           const { inputEl, openMenu } = renderCombobox(select, { onClear });
           openMenu();
