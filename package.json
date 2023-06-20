@@ -6,44 +6,28 @@
     "node": ">= 16.20.0",
     "npm": ">= 8.19.4"
   },
-  "keywords": [
-    "mongodb",
-    "ui",
-    "kit",
-    "components",
-    "react",
-    "uikit",
-    "leafygreen"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mongodb/leafygreen-ui.git"
-  },
-  "bugs": {
-    "url": "https://github.com/mongodb/leafygreen-ui/issues"
-  },
   "scripts": {
     "init": "yarn && yarn build",
     "create-package": "node ./scripts/create-package.js",
     "pre-build": "node ./scripts/pre-build.js",
     "build": "npm-run-all --serial \"build:* {@}\" --",
-    "build:packages": "yarn ts-node ./scripts/build.ts",
-    "build:ts": "yarn ts-node ./scripts/ts-build.ts",
+    "build:packages": "npx ts-node ./scripts/build.ts",
+    "build:ts": "lerna exec -- tsc --build",
     "build-storybook": "storybook build",
     "check": "npm-run-all --parallel check:*",
     "check:prettier": "prettier --check \"**/*.{js,ts,tsx,json,md,yml}\"",
     "check:eslint": "eslint \"**/*.{js,ts,tsx}\"",
-    "check:deps": "yarn ts-node ./scripts/depcheck.ts",
-    "check:builds": "yarn ts-node ./scripts/check-builds.ts",
-    "check:ts": "tsc --project tsconfig.json",
+    "check:deps": "npx ts-node ./scripts/depcheck.ts",
+    "check:builds": "npx ts-node ./scripts/check-builds.ts",
+    "check:ts": "lerna exec -- tsc --build",
     "check:package-json": "npmPkgJsonLint ./packages",
     "chromatic": "npx chromatic --build-script='build-storybook'",
     "clean": "yarn clean:builds && yarn clean:modules",
     "clean:builds": "rm -rf packages/*/dist packages/*/tsconfig.tsbuildinfo ./tsconfig.tsbuildinfo packages/**/stories.js",
     "clean:modules": "rm -rf node_modules packages/*/node_modules ",
     "demo:storybook": "storybook build && ./scripts/demo-storybook.sh",
-    "docs:tsdoc": "yarn ts-node ./scripts/parse-tsdocs.ts",
-    "docs:proptypes": "yarn ts-node ./scripts/proptypes.ts",
+    "docs:tsdoc": "npx ts-node ./scripts/parse-tsdocs.ts",
+    "docs:proptypes": "npx ts-node ./scripts/proptypes.ts",
     "fix": "npm-run-all --parallel fix:*",
     "fix:prettier": "prettier --write \"**/*.{js,ts,tsx,json,md,yml}\"",
     "fix:eslint": "eslint \"**/*.{js,ts,tsx}\" --fix",
@@ -54,12 +38,11 @@
     "publish": "npm-run-all --serial publish:*",
     "publish:packages": "yarn changeset publish --public",
     "publish:storybook": "storybook build && gh-pages --dist ./storybook-static",
-    "slackbot": "yarn ts-node ./scripts/slackbot",
+    "slackbot": "npx ts-node ./scripts/slackbot",
     "start": "storybook dev -p 9001 --no-version-updates",
-    "test": "yarn ts-node ./scripts/test.ts",
+    "test": "npx ts-node ./scripts/test.ts",
     "test:local": "yarn test",
     "test:ssr": "yarn test --ssr",
-    "ts-node": "npx ts-node -P './tsconfig.json' -O '{\"module\": \"commonjs\", \"resolveJsonModule\": true}'",
     "unlink": "./scripts/unlink.sh",
     "watch": "yarn build -- -- --watch"
   },
@@ -88,6 +71,7 @@
     "@emotion/styled": "^11.3.0",
     "@leafygreen-ui/lib": "^10.1.0",
     "@leafygreen-ui/testing-lib": "*",
+    "@lg-tools/config": "*",
     "@rollup/plugin-babel": "^5.2.0",
     "@rollup/plugin-commonjs": "^15.0.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
@@ -193,8 +177,25 @@
     }
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "tools/*"
   ],
+  "keywords": [
+    "mongodb",
+    "ui",
+    "kit",
+    "components",
+    "react",
+    "uikit",
+    "leafygreen"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mongodb/leafygreen-ui/issues"
+  },
   "version": "0.0.0",
   "dependencies": {
     "@mdx-js/react": "1.6.22"

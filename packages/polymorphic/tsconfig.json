@@ -1,5 +1,5 @@
 {
-  "extends": "../../package.tsconfig.json",
+  "extends": "@lg-tools/config/package.tsconfig.json",
   "compilerOptions": {
     "declarationDir": "dist",
     "outDir": "dist",
@@ -9,5 +9,6 @@
   "include": [
     "src/**/*"
   ],
+  "exclude": ["**/*.spec.*", "**/*.story.*"],
   "references": []
 }
