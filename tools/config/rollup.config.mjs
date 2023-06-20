@@ -29,7 +29,7 @@ const allDependencies = {
   ...dependencies,
   ...devDependencies,
   ...peerDependencies,
-}
+};
 
 /**
  *
@@ -53,7 +53,6 @@ function getGeneratedFiles() {
  * @returns An array of all glyph import paths
  */
 function getDirectGlyphImports() {
-
   if (allDependencies['@leafygreen-ui/icon']) {
     const glyphsDir = path.resolve(process.cwd(), '../icon/src/glyphs');
 
@@ -61,11 +60,12 @@ function getDirectGlyphImports() {
       .readdirSync(glyphsDir)
       .filter(path => /.svg/.test(path))
       .map(
-        fileName => `@leafygreen-ui/icon/dist/${path.basename(fileName, '.svg')}`,
+        fileName =>
+          `@leafygreen-ui/icon/dist/${path.basename(fileName, '.svg')}`,
       );
   }
 
-  return []
+  return [];
 }
 
 const lgGlobals = Object.keys(allDependencies).reduce((acc, pkg) => {
@@ -75,8 +75,8 @@ const lgGlobals = Object.keys(allDependencies).reduce((acc, pkg) => {
 
 const iconGlobals = getDirectGlyphImports().reduce((acc, glyph) => {
   acc[glyph] = /[^/]+$/.exec(glyph)[0];
-  return acc
-}, {})
+  return acc;
+}, {});
 
 // Mapping of packages to the `window` property they'd be
 // bound to if used in the browser without a module loader.
@@ -91,7 +91,7 @@ const globals = {
   'prop-types': 'PropTypes',
   lodash: '_',
   ...lgGlobals,
-  ...iconGlobals
+  ...iconGlobals,
   /**
    * External dependencies that must be loaded by a module loader
    *   - lodash/*
