@@ -7,6 +7,26 @@ import { HTMLElementProps, StoryMetaType } from '@leafygreen-ui/lib';
 
 import palette from './palette';
 
+type HueName = keyof typeof palette;
+
+const ShadeNames = [
+  'dark4',
+  'dark3',
+  'dark2',
+  'dark1',
+  'base',
+  'light1',
+  'light2',
+  'light3',
+] as const;
+type ShadeName = typeof ShadeNames[number];
+
+interface ColorBlockProps extends HTMLElementProps<'div'> {
+  hue: HueName;
+  name: string;
+  shade?: ShadeName;
+}
+
 const BLOCK_WIDTH = 88;
 
 const colorBlockWrapper = css`
@@ -43,25 +63,11 @@ const nameLabelStyle = css`
   padding-block: 0.3em;
 `;
 
-type HueName = keyof typeof palette;
-
-const ShadeNames = [
-  'dark4',
-  'dark3',
-  'dark2',
-  'dark1',
-  'base',
-  'light1',
-  'light2',
-  'light3',
-] as const;
-type ShadeName = typeof ShadeNames[number];
-
-interface ColorBlockProps extends HTMLElementProps<'div'> {
-  hue: HueName;
-  name: string;
-  shade?: ShadeName;
-}
+const colorRowStyle = css`
+  grid-template-columns: repeat(${ShadeNames.length}, ${BLOCK_WIDTH}px);
+  display: grid;
+  gap: 24px;
+`;
 
 function ColorBlock({ hue, shade, ...rest }: ColorBlockProps) {
   const name = `${hue} ${shade ?? ''}`;
@@ -75,7 +81,7 @@ function ColorBlock({ hue, shade, ...rest }: ColorBlockProps) {
   }
 
   const colorBlockWrapperDynamic = css`
-    grid-column: ${shade ? ShadeNames.indexOf(shade) + 1 : 'unset'};
+    grid-column: ${shade ? ShadeNames.indexOf(shade) + 1 : '0'};
   `;
 
   const colorBlockColor = css`
@@ -124,29 +130,15 @@ export function AllColors() {
 
   return (
     <div>
-      <ColorBlock
-        hue="white"
-        name="white"
-        className={css`
-          marginright: '24px';
-        `}
-      />
-      <ColorBlock hue="black" name="black" />
+      <div className={colorRowStyle}>
+        <ColorBlock hue="white" name="white" />
+        <ColorBlock hue="black" name="black" />
+      </div>
       {hues.map(hue => {
         const hueValues = palette[hue];
 
         return (
-          <div
-            key={hue}
-            className={css`
-              grid-template-columns: repeat(
-                ${ShadeNames.length},
-                ${BLOCK_WIDTH}px
-              );
-              display: grid;
-              gap: 24px;
-            `}
-          >
+          <div key={hue} className={colorRowStyle}>
             {(Object.keys(hueValues) as Array<keyof typeof hueValues>).map(
               shade => (
                 <ColorBlock
