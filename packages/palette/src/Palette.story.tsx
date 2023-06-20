@@ -50,6 +50,7 @@ const hexLabelStyle = css`
   position: absolute;
   left: 50%;
   margin: auto;
+  font-size: 13px;
   text-align: center;
   padding: 3px 0.3rem;
   border-radius: 4px;
