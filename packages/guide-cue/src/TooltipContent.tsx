@@ -3,7 +3,6 @@ import FocusTrap from 'focus-trap-react';
 
 import Button from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
-import { useIdAllocator } from '@leafygreen-ui/hooks';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
 import { Theme } from '@leafygreen-ui/lib';
@@ -63,12 +62,10 @@ function TooltipContent({
   usePortal = true,
   ...tooltipProps
 }: TooltipContentProps) {
-  const focusId = useIdAllocator({ prefix: 'guide-cue' });
-  // Test are failing because of `focus-trap-react`. Even though there is a focusable element it does not find it in time and throws an error. A fix is to point to the primary button and set that as the fallback focus. (https://github.com/focus-trap/focus-trap-react/issues/91)
   const focusTrapOptions = {
-    fallbackFocus: `#${focusId}`,
     clickOutsideDeactivates: true,
   };
+
   return (
     <>
       <Tooltip
@@ -93,7 +90,7 @@ function TooltipContent({
         usePortal={usePortal}
         {...tooltipProps}
       >
-        <FocusTrap focusTrapOptions={focusTrapOptions}>
+        <FocusTrap focusTrapOptions={focusTrapOptions} active={open}>
           <div>
             {!isStandalone && (
               <IconButton
@@ -132,7 +129,6 @@ function TooltipContent({
                 variant="primary"
                 onClick={() => handleButtonClick()}
                 darkMode={!darkMode}
-                id={focusId}
                 className={buttonStyles}
               >
                 {buttonText}
