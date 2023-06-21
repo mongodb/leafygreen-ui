@@ -1,2 +1,2 @@
-const babel = require('@lg-tools/config/babel.config');
+const babel = require('@lg-tools/babel/babel.config');
 module.exports = babel;

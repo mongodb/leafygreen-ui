@@ -5,6 +5,6 @@
   "main": "rollup.config.mjs",
   "license": "MIT",
   "dependencies": {
-    "@lg-tools/config": "^0.0.1"
+    "@lg-tools/babel": "^0.0.1"
   }
 }
