@@ -2,7 +2,7 @@
   "name": "@lg-tools/tsconfig",
   "version": "0.0.1",
   "description": "Shared tsconfig files for Leafygreen repos",
-  "main": "index.js",
+  "main": "package.tsconfig.json",
   "license": "MIT",
   "publishConfig": {
     "access": "public"
