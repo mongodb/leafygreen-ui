@@ -1,0 +1,10 @@
+{
+  "name": "@lg-tools/rollup",
+  "version": "0.0.1",
+  "description": "Rollup config for LeafyGreen repositories",
+  "main": "rollup.config.mjs",
+  "license": "MIT",
+  "dependencies": {
+    "@lg-tools/config": "^0.0.1"
+  }
+}

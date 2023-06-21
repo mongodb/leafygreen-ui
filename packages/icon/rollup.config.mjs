@@ -1,4 +1,4 @@
-import {esmConfig, umdConfig} from '@lg-tools/config/rollup.config.mjs';
+import {esmConfig, umdConfig} from '@lg-tools/rollup';
 import fs from 'fs'
 import path from 'path';
 
