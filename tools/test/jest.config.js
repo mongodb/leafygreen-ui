@@ -29,7 +29,7 @@ module.exports = {
   // A map from regular expressions to module names that allow to stub out resources with a single module
   moduleNameMapper: {
     '.(png|jpg|jpeg|gif|woff|woff2|ttf|less|eot)$':
-      '@lg-tools/jest/mocks/fileMock.js',
+      '@lg-tools/test/mocks/fileMock.js',
   },
 
   modulePathIgnorePatterns: ['npm-cache', '.npm'],
@@ -46,17 +46,17 @@ module.exports = {
   // A map from regular expressions to paths to transformers
   transform: {
     '^.+\\.[jt]sx?$': 'babel-jest',
-    '.svg': '@lg-tools/jest/mocks/svgTransformer.js',
+    '.svg': '@lg-tools/test/mocks/svgTransformer.js',
   },
 
   // Ignore transforming node_modules except for:
   // 1. `react-children-utilities`
   transformIgnorePatterns: ['/node_modules/(?!(react-children-utilities)/)'],
 
-  setupFiles: ['@lg-tools/jest/setup.js', 'jest-canvas-mock'],
+  setupFiles: ['@lg-tools/test/setup.js', 'jest-canvas-mock'],
 
   setupFilesAfterEnv: [
     '@testing-library/jest-dom/extend-expect',
-    '@lg-tools/jest/common.setup.ts',
+    '@lg-tools/test/common.setup.ts',
   ],
 };
