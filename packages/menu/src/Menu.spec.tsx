@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   act,
-  fireEvent,
   getAllByRole as globalGetAllByRole,
   render,
   waitFor,
@@ -54,18 +53,20 @@ describe('packages/menu', () => {
     const trigger = <button>trigger</button>;
 
     test('and "setOpen" is provided, but "open" prop is not set', async () => {
-      const { getByText } = renderMenu({
+      const { getByRole, getByText } = renderMenu({
         setOpen: uncontrolledSetOpen,
         trigger,
       });
 
-      const button = getByText('trigger');
-      fireEvent.click(button);
+      const button = getByRole('button');
+      userEvent.click(button);
 
       const menuItem = getByText('Item B');
-      await act(() => waitFor(() => expect(menuItem).toBeVisible()));
+      await waitFor(() => {
+        expect(menuItem).toBeVisible();
+      });
 
-      fireEvent.click(button);
+      userEvent.click(button);
 
       await waitForElementToBeRemoved(menuItem);
     });

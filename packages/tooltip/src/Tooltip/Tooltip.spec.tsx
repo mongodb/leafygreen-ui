@@ -122,6 +122,7 @@ describe('packages/tooltip', () => {
 
       // checking that in the Document, because in the document before opacity hits 1
       await waitFor(() => tooltip);
+      // Wait for tooltip delay
       await act(async () => {
         await waitForTimeout(transitionDuration.slowest);
       });
