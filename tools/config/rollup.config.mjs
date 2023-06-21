@@ -140,6 +140,7 @@ const baseConfigForFormat = format => ({
     format,
     sourcemap: true,
     globals,
+    interop: 'compat', // https://rollupjs.org/configuration-options/#output-interop
   },
   plugins: [
     nodeExternals({ deps: true }),
