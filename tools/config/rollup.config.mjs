@@ -5,13 +5,15 @@ import babel from '@rollup/plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
 import urlPlugin from '@rollup/plugin-url';
 import svgr from '@svgr/rollup';
-import fs from 'fs';
+import fs from 'fs'
 import glob from 'glob';
 import path from 'path';
 import { nodeExternals } from 'rollup-plugin-node-externals';
 import { terser } from 'rollup-plugin-terser';
 
 const require = createRequire(import.meta.url);
+
+const storyGlob = 'src/*.stor{y,ies}.tsx';
 
 const extensions = ['.ts', '.tsx'];
 
@@ -30,23 +32,6 @@ const allDependencies = {
   ...devDependencies,
   ...peerDependencies,
 };
-
-/**
- *
- * @returns An array of all generated glyphs
- */
-function getGeneratedFiles() {
-  const directory = path.resolve(process.cwd(), 'src/generated');
-
-  if (!fs.existsSync(directory)) {
-    return [];
-  }
-
-  return fs
-    .readdirSync(directory)
-    .filter(file => /\.tsx?$/.test(file))
-    .map(file => path.resolve(directory, file));
-}
 
 /**
  *
@@ -132,7 +117,7 @@ const moduleFormatToDirectory = {
   umd: 'dist',
 };
 
-const baseConfigForFormat = format => ({
+const configForFormat = format => ({
   input: 'src/index.ts',
   output: {
     dir: moduleFormatToDirectory[format],
@@ -174,36 +159,21 @@ const baseConfigForFormat = format => ({
   strictDeprecations: true,
 });
 
-const config = ['esm', 'umd'].flatMap(format => {
-  const baseConfig = baseConfigForFormat(format);
+export const esmConfig = configForFormat('esm')
+export const umdConfig = configForFormat('umd')
 
-  const iconsConfig = getGeneratedFiles().map(input => ({
-    ...baseConfig,
-    input: `src/generated/${path.basename(input)}`,
-    output: {
-      ...baseConfig.output,
-      name: `${path.basename(input, path.extname(input))}.js`,
-    },
-  }));
+const configs = [esmConfig, umdConfig]
 
-  const config = [baseConfig, ...iconsConfig];
-  const storyGlob = 'src/*.stor{y,ies}.tsx';
+const storiesExist = glob.sync(storyGlob).length > 0
+storiesExist && configs.push({
+  ...esmConfig,
+  input: glob.sync(storyGlob)[0],
+  output: {
+    format: 'esm',
+    file: 'stories.js',
+    sourcemap: false,
+    globals: esmConfig.output.globals,
+  },
+})
 
-  if (format === 'esm' && glob.sync(storyGlob).length > 0) {
-    // Story config
-    config.push({
-      ...baseConfig,
-      input: glob.sync(storyGlob)[0],
-      output: {
-        format,
-        file: 'stories.js',
-        sourcemap: false,
-        globals: baseConfig.output.globals,
-      },
-    });
-  }
-
-  return config;
-});
-
-export default config;
+export default configs;
