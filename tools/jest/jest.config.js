@@ -53,10 +53,10 @@ module.exports = {
   // 1. `react-children-utilities`
   transformIgnorePatterns: ['/node_modules/(?!(react-children-utilities)/)'],
 
-  setupFiles: ['@lg-tools/jest/jest.setup.js', 'jest-canvas-mock'],
+  setupFiles: ['@lg-tools/jest/setup.js', 'jest-canvas-mock'],
 
   setupFilesAfterEnv: [
     '@testing-library/jest-dom/extend-expect',
-    '@lg-tools/jest/jest.common.setup.ts',
+    '@lg-tools/jest/common.setup.ts',
   ],
 };
