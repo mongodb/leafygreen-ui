@@ -23,6 +23,7 @@ const {
   devDependencies,
   peerDependencies,
 } = require(path.resolve(process.cwd(), 'package.json'));
+
 const babelConfigPath = fileURLToPath(
   new URL('babel.config.js', import.meta.url),
 );
