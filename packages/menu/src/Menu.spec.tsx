@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  act,
   getAllByRole as globalGetAllByRole,
   render,
   waitFor,
