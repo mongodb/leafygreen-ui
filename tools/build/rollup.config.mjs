@@ -5,7 +5,7 @@ import babel from '@rollup/plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
 import urlPlugin from '@rollup/plugin-url';
 import svgr from '@svgr/rollup';
-import fs from 'fs'
+import fs from 'fs';
 import glob from 'glob';
 import path from 'path';
 import { nodeExternals } from 'rollup-plugin-node-externals';
@@ -160,21 +160,22 @@ const configForFormat = format => ({
   strictDeprecations: true,
 });
 
-export const esmConfig = configForFormat('esm')
-export const umdConfig = configForFormat('umd')
+export const esmConfig = configForFormat('esm');
+export const umdConfig = configForFormat('umd');
 
-const configs = [esmConfig, umdConfig]
+const configs = [esmConfig, umdConfig];
 
-const storiesExist = glob.sync(storyGlob).length > 0
-storiesExist && configs.push({
-  ...esmConfig,
-  input: glob.sync(storyGlob)[0],
-  output: {
-    format: 'esm',
-    file: 'stories.js',
-    sourcemap: false,
-    globals: esmConfig.output.globals,
-  },
-})
+const storiesExist = glob.sync(storyGlob).length > 0;
+storiesExist &&
+  configs.push({
+    ...esmConfig,
+    input: glob.sync(storyGlob)[0],
+    output: {
+      format: 'esm',
+      file: 'stories.js',
+      sourcemap: false,
+      globals: esmConfig.output.globals,
+    },
+  });
 
 export default configs;

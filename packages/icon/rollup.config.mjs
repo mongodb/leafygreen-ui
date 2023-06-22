@@ -1,5 +1,5 @@
-import {esmConfig, umdConfig} from '@lg-tools/build/rollup.config.mjs';
-import fs from 'fs'
+import { esmConfig, umdConfig } from '@lg-tools/build/rollup.config.mjs';
+import fs from 'fs';
 import path from 'path';
 
 /**
@@ -19,18 +19,15 @@ function getGeneratedFiles() {
     .map(file => path.resolve(directory, file));
 }
 
-const iconConfigs = [esmConfig, umdConfig].flatMap(config => getGeneratedFiles().map(file => ({
+const iconConfigs = [esmConfig, umdConfig].flatMap(config =>
+  getGeneratedFiles().map(file => ({
     ...config,
     input: `src/generated/${path.basename(file)}`,
     output: {
       ...config.output,
       name: `${path.basename(file, path.extname(file))}.js`,
     },
-  }))
-)
+  })),
+);
 
-export default [
-  esmConfig,
-  umdConfig,
-  ...iconConfigs
-];
+export default [esmConfig, umdConfig, ...iconConfigs];
