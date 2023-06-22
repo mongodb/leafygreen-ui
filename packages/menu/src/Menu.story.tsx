@@ -13,11 +13,10 @@ import {
   StoryMetaType,
 } from '@leafygreen-ui/lib';
 import { Align, Justify } from '@leafygreen-ui/popover';
-import {
-  getAlign,
-  getJustify,
-} from '@leafygreen-ui/popover/src/Popover.testutils';
+import { TestUtils } from '@leafygreen-ui/popover';
 import { transitionDuration } from '@leafygreen-ui/tokens';
+
+const { getAlign, getJustify } = TestUtils;
 
 import { Size } from './types';
 import { Menu, MenuItem, MenuProps, MenuSeparator, SubMenu } from '.';
