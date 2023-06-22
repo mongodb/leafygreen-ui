@@ -1,6 +1,9 @@
 // For a detailed explanation regarding each configuration property, visit:
 // https://jestjs.io/docs/en/configuration.html
 
+// When referencing files in this package,
+// note we still need to declare the path relative to `<rootDir>`
+
 module.exports = {
   // The directory where Jest should output its coverage files
   coverageDirectory: 'coverage',
@@ -29,7 +32,7 @@ module.exports = {
   // A map from regular expressions to module names that allow to stub out resources with a single module
   moduleNameMapper: {
     '.(png|jpg|jpeg|gif|woff|woff2|ttf|less|eot)$':
-      '@lg-tools/test/mocks/fileMock.js',
+      '<rootDir>/node_modules/@lg-tools/test/mocks/fileMock.js',
   },
 
   modulePathIgnorePatterns: ['npm-cache', '.npm'],
@@ -46,17 +49,16 @@ module.exports = {
   // A map from regular expressions to paths to transformers
   transform: {
     '^.+\\.[jt]sx?$': 'babel-jest',
-    '.svg': '@lg-tools/test/mocks/svgTransformer.js',
+    '.svg': '<rootDir>/node_modules/@lg-tools/test/mocks/svgTransformer.js',
   },
 
   // Ignore transforming node_modules except for:
   // 1. `react-children-utilities`
   transformIgnorePatterns: ['/node_modules/(?!(react-children-utilities)/)'],
 
-  setupFiles: ['@lg-tools/test/setup.js', 'jest-canvas-mock'],
+  setupFiles: ['<rootDir>/node_modules/@lg-tools/test/setup.js', 'jest-canvas-mock'],
 
   setupFilesAfterEnv: [
-    '@testing-library/jest-dom/extend-expect',
-    '@lg-tools/test/common.setup.ts',
+    '<rootDir>/node_modules/@lg-tools/test/common.setup.js',
   ],
 };
