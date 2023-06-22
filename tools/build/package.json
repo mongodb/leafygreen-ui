@@ -1,8 +1,7 @@
 {
-  "name": "@lg-tools/babel",
+  "name": "@lg-tools/build",
   "version": "0.0.1",
   "description": "Babel config for LeafyGreen repositories",
-  "main": "babel.config.js",
   "license": "MIT",
   "dependencies": {
     "@babel/core": "^7.9.0",
@@ -21,6 +20,14 @@
     "@babel/register": "^7.9.0",
     "@babel/runtime": "^7.9.2",
     "@emotion/babel-plugin": "^11.3.0",
-    "@svgr/babel-plugin-replace-jsx-attribute-value": "^5.0.1"
+    "@rollup/plugin-babel": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-url": "^8.0.0",
+    "@svgr/babel-plugin-replace-jsx-attribute-value": "^5.0.1",
+    "@svgr/cli": "^8.0.0",
+    "@svgr/rollup": "^8.0.0",
+    "rollup": "^3.25.0",
+    "rollup-plugin-node-externals": "^6.1.1",
+    "rollup-plugin-terser": "^7.0.1"
   }
 }
