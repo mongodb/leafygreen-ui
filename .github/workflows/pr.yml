@@ -30,9 +30,6 @@ jobs:
     outputs:
       yarn-cache-dir: ${{ steps.get-yarn-cache-dir.outputs.dir }}
 
-    outputs:
-      yarn-cache-dir: ${{ steps.get-yarn-cache-dir.outputs.dir }}
-
   build:
     name: Build packages
     runs-on: ubuntu-latest
