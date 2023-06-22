@@ -1,2 +1,2 @@
-import config from '@lg-tools/config/rollup.config.mjs';
+import config from '@lg-tools/build/rollup.config.mjs';
 export default config;
