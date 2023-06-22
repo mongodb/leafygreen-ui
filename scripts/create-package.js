@@ -112,7 +112,7 @@ const packageJSON = `
 
 const tsConfig = `
 {
-  "extends": "@lg-tools/tsconfig/package.tsconfig.json",
+  "extends": "@lg-tools/build/package.tsconfig.json",
   "compilerOptions": {
     "declarationDir": "dist",
     "outDir": "dist",
