@@ -16,6 +16,6 @@
     "moduleResolution": "node",
     "baseUrl": ".",
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
   }
 }

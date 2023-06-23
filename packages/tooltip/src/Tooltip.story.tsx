@@ -10,14 +10,13 @@ import {
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
-import {
-  getAlign,
-  getJustify,
-} from '@leafygreen-ui/popover/src/Popover.testutils';
+import { TestUtils } from '@leafygreen-ui/popover';
 import { BaseFontSize, transitionDuration } from '@leafygreen-ui/tokens';
 import { Body, InlineCode, Subtitle } from '@leafygreen-ui/typography';
 
 import Tooltip, { Align, Justify, TooltipProps } from '.';
+
+const { getAlign, getJustify } = TestUtils;
 
 const longText =
   '5hhs8d83jj2992h88d9s49ns94jsjsj9456j9djdf95hhs8d83jj2992h88d9s49ns94jsjsj9456j9djdf9';
