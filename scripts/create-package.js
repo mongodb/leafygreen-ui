@@ -112,13 +112,19 @@ const packageJSON = `
 
 const tsConfig = `
 {
-  "extends": "../../package.tsconfig.json",
+  "extends": "@lg-tools/config/package.tsconfig.json",
   "compilerOptions": {
     "declarationDir": "dist",
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "baseUrl": ".",
+    "paths": {
+      "@leafygreen-ui/icon/dist/*": ["../icon/src/generated/*"],
+      "@leafygreen-ui/*": ["../*/src"]
+    }
   },
   "include": ["src/**/*"],
+  "exclude": ["**/*.spec.*", "**/*.story.*"],
   "references": [
     {
       "path": "../emotion"
