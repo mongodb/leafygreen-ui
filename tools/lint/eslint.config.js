@@ -1,5 +1,5 @@
 module.exports = {
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
   plugins: ['@emotion', 'simple-import-sort'],
   extends: [
     'eslint:recommended',
@@ -7,7 +7,6 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'plugin:jest/recommended',
     'prettier',
-    'prettier/react',
     'plugin:jsx-a11y/recommended',
     'plugin:storybook/recommended',
   ],
@@ -159,6 +158,7 @@ module.exports = {
         jest: true,
       },
       rules: {
+        'jest/no-alias-methods': 'warn',
         'jest/no-disabled-tests': 'error',
         'jest/no-identical-title': 'error',
         'jest/valid-expect': 'error',
