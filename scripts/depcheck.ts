@@ -41,8 +41,17 @@ const ignoreFilePatterns: Array<RegExp> = [
   /.*\/dist\/.*/,
 ];
 
-// these dependencies will be ignored when listed in a package.json
-const ignoreMatches = ['@leafygreen-ui/mongo-nav', 'prop-types'];
+// these dependencies will be ignored when imported or listed in a `package.json`
+const ignoreMatches = [
+  '@leafygreen-ui/mongo-nav',
+  'prop-types',
+  "@testing-library/dom",
+  "@testing-library/jest-dom",
+  "@testing-library/react",
+  "@testing-library/react-hooks",
+  "@testing-library/user-event",
+  "jest-axe"
+];
 
 const depcheckOptions: depcheck.Options = {
   ignoreMatches,
@@ -87,7 +96,7 @@ async function checkDependencies() {
 
       // Check if every usage of every listed devDep is in some test file
       const isDependencyUsedInTestFileOnly = (depName: string) =>
-        using?.[depName]?.every(file =>
+        using?.[depName]?.every((file: string) =>
           ignoreFilePatterns.some(pattern => pattern.test(file)),
         );
       const everyListedDevDepUsedInTestFileOnly = listedDev.every(
@@ -114,7 +123,7 @@ async function checkDependencies() {
                   `\t${chalk.bold(devDepName)} used in: \n\t\t${using?.[
                     devDepName
                   ]
-                    ?.map(file => file.replace(join(__dirname, '..'), ''))
+                    ?.map((file: string) => file.replace(join(__dirname, '..'), ''))
                     .join('\n\t\t')}`,
               )
               .join('\n'),
@@ -145,7 +154,7 @@ async function checkDependencies() {
         const usedInPackageFile = using?.[depName]?.some(
           // is used in at least one...
           // file that is not ignored
-          file => !ignoreFilePatterns.some(pattern => pattern.test(file)),
+          (file: string) => !ignoreFilePatterns.some(pattern => pattern.test(file)),
         );
 
         return isIgnored || usedInPackageFile;
@@ -178,7 +187,7 @@ async function checkDependencies() {
               .map(
                 depName =>
                   `\t${depName}: \n\t\t${using?.[depName]
-                    ?.map(file => file.replace(join(__dirname, '..'), ''))
+                    ?.map((file: string) => file.replace(join(__dirname, '..'), ''))
                     .join('\n\t\t')}`,
               )
               .join('\n'),
