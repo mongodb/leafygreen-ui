@@ -21,12 +21,12 @@ const prettierConfig = path.resolve(__dirname, '../prettier.config.js');
 spawnSync(
   'prettier',
   [
-    "--check",
-    "--config",
+    '--check',
+    '--config',
     prettierConfig,
-    `${rootDir}/**/*.{js,ts,tsx,mjs,json,md,yml}`
+    `${rootDir}/**/*.{js,ts,tsx,mjs,json,md,yml}`,
   ],
   {
     stdio: 'inherit',
-  }
+  },
 );
