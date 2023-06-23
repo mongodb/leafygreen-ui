@@ -15,8 +15,8 @@ const cli = new Command('test')
 const { ssr, watch } = cli.opts();
 
 const configFile = ssr
-  ? path.resolve(__dirname, '../ssr/jest.config.js')
-  : path.resolve(__dirname, '../jest.config.js');
+  ? path.resolve(__dirname, '../config/ssr/jest.config.js')
+  : path.resolve(__dirname, '../config/jest.config.js');
 
 spawn(
   'jest',

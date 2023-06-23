@@ -4,6 +4,6 @@ module.exports = {
   ...defaultConfig,
   setupFiles: [
     ...defaultConfig.setupFiles,
-    '<rootDir>/node_modules/@lg-tools/jest/ssr/setup.js',
+    '<rootDir>/node_modules/@lg-tools/jest/config/ssr/setup.js',
   ],
 };
