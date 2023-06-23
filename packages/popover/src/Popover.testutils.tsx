@@ -1,5 +1,8 @@
 import { Align, Justify } from './types';
 
+/**
+ * @internal
+ */
 export const getJustify = (a: Align, j: Justify): string => {
   switch (a) {
     case 'left':
@@ -23,6 +26,9 @@ export const getJustify = (a: Align, j: Justify): string => {
   }
 };
 
+/**
+ * @internal
+ */
 export const getAlign = (a: Align, j: Justify) => {
   switch (a) {
     case 'top':

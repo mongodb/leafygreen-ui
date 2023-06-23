@@ -14,10 +14,8 @@ import {
   StoryType,
 } from '@leafygreen-ui/lib';
 import { MenuItem } from '@leafygreen-ui/menu';
-import {
-  getAlign,
-  getJustify,
-} from '@leafygreen-ui/popover/src/Popover.testutils';
+import { TestUtils } from '@leafygreen-ui/popover';
+const { getAlign, getJustify } = TestUtils;
 
 import { Align, Justify, SplitButton, SplitButtonProps, Variant } from '.';
 

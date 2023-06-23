@@ -46,3 +46,6 @@ packages/**/stories.js*
 
 # Storybook/Chromatic logs
 build-storybook.log
+
+.turbo
+scripts/tmp.*.ts
