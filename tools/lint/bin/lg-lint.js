@@ -44,3 +44,12 @@ const { fix, prettier: prettierOnly, eslint: eslintOnly } = cli.opts();
       stdio: 'inherit',
     },
   );
+
+const npmPkgLintConfig = path.resolve(
+  __dirname,
+  '../npmpackagejsonlintrc.config.js',
+);
+
+spawn('npmPkgJsonLint', ['--configFile', npmPkgLintConfig, rootDir], {
+  stdio: 'inherit',
+});
