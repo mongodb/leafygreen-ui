@@ -3,13 +3,13 @@ import { fileURLToPath } from 'node:url';
 
 import babel from '@rollup/plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
+import terser from '@rollup/plugin-terser';
 import urlPlugin from '@rollup/plugin-url';
 import svgr from '@svgr/rollup';
 import fs from 'fs';
 import glob from 'glob';
 import path from 'path';
 import { nodeExternals } from 'rollup-plugin-node-externals';
-import { terser } from 'rollup-plugin-terser';
 
 const require = createRequire(import.meta.url);
 
