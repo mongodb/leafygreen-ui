@@ -111,6 +111,8 @@
     "node-fetch": "2",
     "npm-package-json-lint": "^6.3.0",
     "npm-run-all": "^4.1.5",
+    "prettier": "^2.5.0",
+
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-docgen-typescript": "^2.2.2",

@@ -24,7 +24,7 @@ spawnSync(
     "--check",
     "--config",
     prettierConfig,
-    // `${rootDir}/**/*.{js,ts,tsx,mjs,json,md,yml}`,
+    `${rootDir}/**/*.{js,ts,tsx,mjs,json,md,yml}`
   ],
   {
     stdio: 'inherit',
