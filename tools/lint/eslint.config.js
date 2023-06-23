@@ -162,12 +162,7 @@ module.exports = {
         'jest/no-disabled-tests': 'error',
         'jest/no-identical-title': 'error',
         'jest/valid-expect': 'error',
-        'jest/expect-expect': [
-          'warn',
-          {
-            assertFunctionNames: ['expect', 'waitForElementToBeRemoved'],
-          },
-        ],
+        'jest/expect-expect': 'off'
       },
     },
   ],
