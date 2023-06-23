@@ -1,21 +1,32 @@
 #! /usr/bin/env node
-const { spawn } = require('child_process');
+const { spawnSync } = require('child_process');
 const path = require('path');
 // const { Command } = require('commander');
-// const rootDir = process.cwd();
-const config = path.resolve(__dirname, '../eslint.config.js');
+const rootDir = process.cwd();
+const eslintConfig = path.resolve(__dirname, '../eslint.config.js');
+const prettierConfig = path.resolve(__dirname, '../prettier.config.js');
 
-spawn(
-  'eslint',
+// spawnSync(
+//   'eslint',
+//   [
+//     "--config",
+//     eslintConfig,
+//     `${rootDir}/**/*.{js,ts,tsx}`
+//   ],
+//   {
+//     stdio: 'inherit',
+//   }
+// );
+
+spawnSync(
+  'prettier',
   [
-    "**/*.{js,ts,tsx}",
+    "--check",
     "--config",
-    config
+    prettierConfig,
+    // `${rootDir}/**/*.{js,ts,tsx,mjs,json,md,yml}`,
   ],
   {
     stdio: 'inherit',
   }
-)
-
-
-
+);
