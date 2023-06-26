@@ -55,7 +55,6 @@
     "@lg-tools/storybook": "^0.0.1",
     "@lg-tools/storybook-decorators": "^0.0.1",
     "@slack/web-api": "^6.4.0",
-    
     "@tanstack/react-table": "^8.7.3",
     "@testing-library/dom": "^7.2.1",
     "@testing-library/jest-dom": "^5.4.0",
@@ -93,7 +92,6 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-simple-import-sort": "^8.0.0",
     "eslint-plugin-storybook": "^0.6.12",
-    "file-loader": "^6.0.0",
     "gh-pages": "^3.1.0",
     "highlight.js": "^11.0.0",
     "highlightjs-graphql": "^1.0.1",
@@ -117,12 +115,10 @@
     "regenerator-runtime": "^0.13.5",
     "source-map-loader": "^0.2.4",
     "storybook": "^7.0.11",
-
     "stream-browserify": "^3.0.0",
     "ts-node": "^8.8.2",
     "turbo": "^1.10.3",
-    "typescript": "^4.1.0",
-    "url-loader": "4.1.0"
+    "typescript": "^4.1.0"
   },
   "resolutions": {
     "caniuse-lite": "^1.0.30001135",
