@@ -160,22 +160,28 @@ const configForFormat = format => ({
   strictDeprecations: true,
 });
 
-export const esmConfig = configForFormat('esm');
-export const umdConfig = configForFormat('umd');
-
-const configs = [esmConfig, umdConfig];
+const esmConfig = configForFormat('esm');
+const umdConfig = configForFormat('umd');
 
 const storiesExist = glob.sync(storyGlob).length > 0;
-storiesExist &&
-  configs.push({
-    ...esmConfig,
-    input: glob.sync(storyGlob)[0],
-    output: {
-      format: 'esm',
-      file: 'stories.js',
-      sourcemap: false,
-      globals: esmConfig.output.globals,
-    },
-  });
+const storiesConfig = {
+  ...esmConfig,
+  input: glob.sync(storyGlob)[0],
+  output: {
+    format: 'esm',
+    file: 'stories.js',
+    sourcemap: false,
+    globals: esmConfig.output.globals,
+  },
+}
+
+const configs = [esmConfig, umdConfig];
+storiesExist && configs.push(storiesConfig);
+
+export {
+  esmConfig,
+  storiesConfig,
+  umdConfig
+}
 
 export default configs;

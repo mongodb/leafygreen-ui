@@ -1,4 +1,4 @@
-import { esmConfig, umdConfig } from '@lg-tools/build/rollup.config.mjs';
+import config, { esmConfig, umdConfig,} from '@lg-tools/build/rollup.config.mjs';
 import fs from 'fs';
 import path from 'path';
 
@@ -30,4 +30,4 @@ const iconConfigs = [esmConfig, umdConfig].flatMap(config =>
   })),
 );
 
-export default [esmConfig, umdConfig, ...iconConfigs];
+export default [...config, ...iconConfigs];
