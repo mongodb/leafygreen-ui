@@ -49,7 +49,8 @@ module.exports = {
   // A map from regular expressions to paths to transformers
   transform: {
     '^.+\\.[jt]sx?$': 'babel-jest',
-    '.svg': '<rootDir>/node_modules/@lg-tools/test/config/mocks/svgTransformer.js',
+    '.svg':
+      '<rootDir>/node_modules/@lg-tools/test/config/mocks/svgTransformer.js',
   },
 
   // Ignore transforming node_modules except for:
@@ -61,5 +62,7 @@ module.exports = {
     'jest-canvas-mock',
   ],
 
-  setupFilesAfterEnv: ['<rootDir>/node_modules/@lg-tools/test/config/common.setup.js'],
+  setupFilesAfterEnv: [
+    '<rootDir>/node_modules/@lg-tools/test/config/common.setup.js',
+  ],
 };
