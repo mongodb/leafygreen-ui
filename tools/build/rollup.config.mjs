@@ -173,15 +173,11 @@ const storiesConfig = {
     sourcemap: false,
     globals: esmConfig.output.globals,
   },
-}
+};
 
 const defaultConfig = [esmConfig, umdConfig];
 storiesExist && defaultConfig.push(storiesConfig);
 
-export {
-  esmConfig,
-  storiesConfig,
-  umdConfig
-}
+export { esmConfig, storiesConfig, umdConfig };
 
 export default defaultConfig;
