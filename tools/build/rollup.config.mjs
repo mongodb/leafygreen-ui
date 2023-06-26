@@ -175,8 +175,8 @@ const storiesConfig = {
   },
 }
 
-const configs = [esmConfig, umdConfig];
-storiesExist && configs.push(storiesConfig);
+const defaultConfig = [esmConfig, umdConfig];
+storiesExist && defaultConfig.push(storiesConfig);
 
 export {
   esmConfig,
@@ -184,4 +184,4 @@ export {
   umdConfig
 }
 
-export default configs;
+export default defaultConfig;
