@@ -148,7 +148,7 @@ function processFile(outputDir: string) {
     );
 
     const script = './node_modules/.bin/ts-node packages/icon/scripts/build.ts';
-    ``
+    ``;
     const checksum = createHash('md5')
       .update(script)
       .update(fileContent)
