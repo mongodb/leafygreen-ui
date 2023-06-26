@@ -50,6 +50,7 @@ const npmPkgLintConfig = path.resolve(
   '../npmpackagejsonlintrc.config.js',
 );
 
-spawn('npmPkgJsonLint', ['--configFile', npmPkgLintConfig, rootDir], {
-  stdio: 'inherit',
-});
+!(prettierOnly && eslintOnly) &&
+  spawn('npmPkgJsonLint', ['--configFile', npmPkgLintConfig, rootDir], {
+    stdio: 'inherit',
+  });
