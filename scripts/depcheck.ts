@@ -42,7 +42,7 @@ const ignoreFilePatterns: Array<RegExp> = [
 ];
 
 // these dependencies will be ignored when listed in a package.json
-const ignoreMatches = ['@leafygreen-ui/mongo-nav', 'prop-types'];
+const ignoreMatches = ['@leafygreen-ui/mongo-nav', 'prop-types', '@storybook/react', '@storybook/testing-library'];
 
 const depcheckOptions: depcheck.Options = {
   ignoreMatches,
