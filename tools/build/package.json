@@ -1,7 +1,7 @@
 {
   "name": "@lg-tools/build",
   "version": "0.0.1",
-  "description": "Babel config for LeafyGreen repositories",
+  "description": "Build config for LeafyGreen repositories",
   "license": "MIT",
   "dependencies": {
     "@babel/core": "^7.9.0",
