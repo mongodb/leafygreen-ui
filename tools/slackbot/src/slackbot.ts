@@ -87,7 +87,7 @@ async function slackbot(
   channel: string,
   updates: Array<ComponentUpdateObject>,
 ) {
-  verbose && console.log({ updates , channel });
+  verbose && console.log({ updates, channel });
   const sortedUpdates = await getSortedUpdates(updates);
   verbose && console.log({ sortedUpdates });
 
