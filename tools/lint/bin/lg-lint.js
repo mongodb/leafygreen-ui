@@ -3,8 +3,8 @@ const { spawn } = require('child_process');
 const path = require('path');
 const { Command } = require('commander');
 const rootDir = process.cwd();
-const eslintConfig = path.resolve(__dirname, '../eslint.config.js');
-const prettierConfig = path.resolve(__dirname, '../prettier.config.js');
+const eslintConfig = path.resolve(__dirname, '../config/eslint.config.js');
+const prettierConfig = path.resolve(__dirname, '../config/prettier.config.js');
 
 const esLintExtensions = ['js', 'ts', 'tsx'];
 const prettierExtensions = [...esLintExtensions, 'mjs', 'json', 'md', 'yml'];
@@ -47,7 +47,7 @@ const { fix, prettier: prettierOnly, eslint: eslintOnly } = cli.opts();
 
 const npmPkgLintConfig = path.resolve(
   __dirname,
-  '../npmpackagejsonlintrc.config.js',
+  '../config/npmpackagejsonlintrc.config.js',
 );
 
 !(prettierOnly && eslintOnly) &&
