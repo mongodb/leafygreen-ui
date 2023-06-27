@@ -1,7 +1,7 @@
 import config, {
   esmConfig,
   umdConfig,
-} from '@lg-tools/build/rollup.config.mjs';
+} from '@lg-tools/build/config/rollup.config.mjs';
 import fs from 'fs';
 import path from 'path';
 
