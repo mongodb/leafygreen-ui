@@ -20,8 +20,6 @@ global.IntersectionObserver = class {
   disconnect() {}
 };
 
-globalThis.IS_REACT_ACT_ENVIRONMENT = true;
-
 global.TextEncoder = TextEncoder;
 
 const domNode = document.createElement('div');

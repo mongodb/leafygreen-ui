@@ -84,7 +84,10 @@ describe('packages/guide-cue', () => {
   describe('A11y', () => {
     test('does not have basic accessibility violations', async () => {
       const { container } = renderGuideCue({ open: true });
-      const results = await axe(container);
+      let results = null as any;
+      await act(async () => {
+        results = await axe(container);
+      });
       expect(results).toHaveNoViolations();
     });
   });
@@ -207,6 +210,14 @@ describe('packages/guide-cue', () => {
   });
 
   describe('Multi-step tooltip', () => {
+    // beforeEach(() => {
+    //   jest.useFakeTimers();
+    //   jest.spyOn(global, 'setTimeout');
+    // });
+
+    // afterEach(() => {
+    //   jest.useRealTimers();
+    // });
     test('is visible when open is "true"', async () => {
       const { getByRole } = renderGuideCue({
         open: true,
@@ -251,9 +262,7 @@ describe('packages/guide-cue', () => {
       });
       const button = getByLabelText('Close Tooltip', { selector: 'button' });
       userEvent.click(button);
-      await act(async () => {
-        await waitFor(() => expect(onClose).toHaveBeenCalledTimes(1));
-      });
+      await waitFor(() => expect(onClose).toHaveBeenCalledTimes(1));
     });
 
     test('closes when the primary button is clicked', async () => {
@@ -287,11 +296,9 @@ describe('packages/guide-cue', () => {
       });
       const button = getAllByRole('button')[1];
       userEvent.click(button);
-      await act(async () => {
-        await waitFor(() =>
-          expect(onPrimaryButtonClick).toHaveBeenCalledTimes(1),
-        );
-      });
+      await waitFor(() =>
+        expect(onPrimaryButtonClick).toHaveBeenCalledTimes(1),
+      );
     });
 
     test('a click outside the tooltip should do nothing', async () => {
