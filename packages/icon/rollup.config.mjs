@@ -1,12 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 
-import {
-  esmConfig,
-  storiesConfig,
-  umdConfig,
-} from '@lg-tools/build/config/rollup.config.mjs';
-
 /**
  *
  * @returns An array of all generated glyphs
