@@ -8,6 +8,7 @@ export interface Opts {
   channel: keyof typeof Channels;
   test: boolean;
   dry: boolean;
+  verbose: boolean;
 }
 
 export interface ComponentUpdateObject {
