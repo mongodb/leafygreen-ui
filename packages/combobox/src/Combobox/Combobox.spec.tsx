@@ -768,7 +768,6 @@ describe('packages/combobox', () => {
             const carrotChip = queryChipsByName('Carrot');
             const carrotChipButton = carrotChip!.querySelector('button');
             expect(() => userEvent.click(carrotChipButton!)).toThrow();
-            // userEvent.click(carrotChipButton!);
             await waitFor(() => {
               expect(queryAllChips()).toHaveLength(3);
             });

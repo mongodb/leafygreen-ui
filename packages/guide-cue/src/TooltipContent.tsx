@@ -3,12 +3,12 @@ import FocusTrap from 'focus-trap-react';
 
 import Button from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
 import { Theme } from '@leafygreen-ui/lib';
 import Tooltip from '@leafygreen-ui/tooltip';
 import { Body, Disclaimer } from '@leafygreen-ui/typography';
-import { useIdAllocator } from '@leafygreen-ui/hooks';
 
 import {
   bodyThemeStyles,
