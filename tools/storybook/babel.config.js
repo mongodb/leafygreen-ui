@@ -1,2 +1,2 @@
-import babel from '@lg-tools/build/babel.config';
+import babel from '@lg-tools/build/config/babel.config';
 export default babel;
