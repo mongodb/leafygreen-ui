@@ -5,6 +5,7 @@ const { promisify } = require('util');
 const { default: svgr } = require('@svgr/core');
 const meow = require('meow');
 const template = require('./template');
+const svgrrc = require('../.svgrrc');
 
 interface Flags {
   outDir?: string;
@@ -33,31 +34,6 @@ const cliConfig = {
 };
 
 const cli = meow(usageString, cliConfig);
-
-const replaceJSXAttributeValuePlugin = [
-  // This plugin lets us transform the JSX output to change instances of
-  // #000000 and #000 (the fill for our SVG glyphs) to use `this.props.fill` instead.
-  '@svgr/babel-plugin-replace-jsx-attribute-value',
-  {
-    values: [
-      {
-        value: '#000',
-        newValue: "'currentColor'",
-        literal: true,
-      },
-      {
-        value: '#000000',
-        newValue: "'currentColor'",
-        literal: true,
-      },
-      {
-        value: 'black',
-        newValue: "'currentColor'",
-        literal: true,
-      },
-    ],
-  },
-] as const;
 
 async function buildSvgFiles(
   input: Array<string>,
@@ -131,15 +107,7 @@ function processFile(outputDir: string) {
     const moduleCode = await svgr(
       fileContent,
       {
-        expandProps: 'end',
-        svgProps: {
-          viewBox: '0 0 16 16',
-        },
-        jsx: {
-          babelConfig: {
-            plugins: [replaceJSXAttributeValuePlugin],
-          },
-        },
+        ...svgrrc,
         template,
       },
       {
@@ -148,7 +116,7 @@ function processFile(outputDir: string) {
     );
 
     const script = './node_modules/.bin/ts-node packages/icon/scripts/build.ts';
-    ``;
+
     const checksum = createHash('md5')
       .update(script)
       .update(fileContent)

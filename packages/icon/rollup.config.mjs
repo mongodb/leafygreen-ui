@@ -1,9 +1,11 @@
-import config, {
-  esmConfig,
-  umdConfig,
-} from '@lg-tools/build/config/rollup.config.mjs';
 import fs from 'fs';
 import path from 'path';
+
+import {
+  esmConfig,
+  storiesConfig,
+  umdConfig,
+} from '@lg-tools/build/config/rollup.config.mjs';
 
 /**
  *
@@ -22,6 +24,7 @@ function getGeneratedFiles() {
     .map(file => path.resolve(directory, file));
 }
 
+// Create both ESM and UMD builds for each icon
 const iconConfigs = [esmConfig, umdConfig].flatMap(config =>
   getGeneratedFiles().map(file => ({
     ...config,
@@ -33,4 +36,4 @@ const iconConfigs = [esmConfig, umdConfig].flatMap(config =>
   })),
 );
 
-export default [...config, ...iconConfigs];
+export default [esmConfig, umdConfig, storiesConfig, ...iconConfigs];

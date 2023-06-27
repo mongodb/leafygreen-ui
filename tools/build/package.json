@@ -24,7 +24,7 @@
     "@rollup/plugin-node-resolve": "^15.0.0",
     "@rollup/plugin-terser": "^0.4.3",
     "@rollup/plugin-url": "^8.0.0",
-    "@svgr/babel-plugin-replace-jsx-attribute-value": "^5.0.1",
+    "@svgr/babel-plugin-replace-jsx-attribute-value": "^8.0.0",
     "@svgr/cli": "^8.0.0",
     "@svgr/rollup": "^8.0.0",
     "rollup": "^3.25.0",
