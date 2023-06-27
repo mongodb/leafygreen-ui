@@ -5,7 +5,10 @@
   "main": "index.js",
   "license": "MIT",
   "bin": {
-    "lg-lint": "./bin/lg-lint.js"
+    "lg-lint": "./bin/lint.js"
+  },
+  "scripts": {
+    "build": "rollup -c rollup.config.mjs"
   },
   "dependencies": {
     "@babel/core": "^7.22.5",
