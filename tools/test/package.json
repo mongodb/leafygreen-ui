@@ -5,7 +5,10 @@
   "license": "MIT",
   "main": "jest.config.js",
   "bin": {
-    "lg-test": "./bin/lg-test.js"
+    "lg-test": "./bin/test.js"
+  },
+  "scripts": {
+    "build": "rollup -c rollup.config.mjs"
   },
   "files": [
     "bin/**",

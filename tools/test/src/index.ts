@@ -1,7 +1,7 @@
 #! /usr/bin/env node
-const { spawn } = require('child_process');
-const path = require('path');
-const { Command } = require('commander');
+import { spawn } from 'child_process';
+import path from 'path';
+import { Command } from 'commander';
 
 const rootDir = process.cwd();
 
