@@ -29,6 +29,9 @@ const meta: StoryMetaType<typeof Icon> = {
       defaultValue: Size.Default,
     },
     glyph: { control: 'none' },
+    fill: {
+      control: 'color',
+    },
   },
 };
 
