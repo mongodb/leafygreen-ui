@@ -84,11 +84,10 @@ describe('packages/guide-cue', () => {
   describe('A11y', () => {
     test('does not have basic accessibility violations', async () => {
       const { container } = renderGuideCue({ open: true });
-      let results = null as any;
-      await act(async () => {
-        results = await axe(container);
+      await waitFor(async () => {
+        const results = await axe(container);
+        expect(results).toHaveNoViolations();
       });
-      expect(results).toHaveNoViolations();
     });
   });
 
@@ -210,14 +209,6 @@ describe('packages/guide-cue', () => {
   });
 
   describe('Multi-step tooltip', () => {
-    // beforeEach(() => {
-    //   jest.useFakeTimers();
-    //   jest.spyOn(global, 'setTimeout');
-    // });
-
-    // afterEach(() => {
-    //   jest.useRealTimers();
-    // });
     test('is visible when open is "true"', async () => {
       const { getByRole } = renderGuideCue({
         open: true,
