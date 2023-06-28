@@ -1,7 +1,9 @@
-import { GeneratedStoryConfig } from '@leafygreen-ui/lib';
 import { keys } from 'lodash';
-import { shouldExcludePropCombo } from '.';
+
+import { GeneratedStoryConfig } from '@leafygreen-ui/lib';
+
 import { PropCombination, PropName } from './types';
+import { shouldExcludePropCombo } from '.';
 
 /**
  * Recursively loop through all prop combinations defined in `vars`
@@ -15,6 +17,7 @@ export function RecursiveCombinations<T extends React.ComponentType<any>>(
   if (vars.length === 0 && keys(props).length > 0) {
     return [{ ...(props as PropCombination<T>) }];
   }
+
   const [propName, propValues] = vars.pop()!;
 
   if (propValues?.length) {
@@ -33,6 +36,7 @@ export function RecursiveCombinations<T extends React.ComponentType<any>>(
           exclude,
         );
       }
+
       return [];
     });
   }

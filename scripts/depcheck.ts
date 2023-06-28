@@ -41,10 +41,12 @@ const ignoreFilePatterns: Array<RegExp> = [
   /.*\/dist\/.*/,
 ];
 
-// these dependencies will be ignored when imported or listed in a `package.json`
+// these dependencies will be ignored when listed in a package.json
 const ignoreMatches = [
   '@leafygreen-ui/mongo-nav',
   'prop-types',
+  '@storybook/react',
+  '@storybook/testing-library',
   '@testing-library/dom',
   '@testing-library/jest-dom',
   '@testing-library/react',

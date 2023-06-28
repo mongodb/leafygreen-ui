@@ -1,6 +1,7 @@
 import { create } from '@storybook/theming';
-import { fontFamilies } from '../packages/tokens';
-import { palette } from '../packages/palette';
+
+import { palette } from '@leafygreen-ui/palette';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 
 export default create({
   base: 'light',
