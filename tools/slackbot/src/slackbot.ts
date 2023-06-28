@@ -9,7 +9,7 @@ import {
   constructBasicUpdateText,
   constructShortUpdateText,
   constructUpdateTextWithChangelog,
-} from './utils/construcUpdateText';
+} from './utils/constructUpdateText';
 import { generateGreeting } from './utils/generateGreeting';
 import { getSortedUpdates } from './utils/getSortedUpdates';
 import {
@@ -20,7 +20,7 @@ import {
 } from './slackbot.types';
 
 const cli = new Command('slackbot')
-  .arguments('<updates>')
+  .arguments('[updates]')
   .option(
     '-c, --channel <channel>',
     'Channel to post to.',
@@ -28,6 +28,7 @@ const cli = new Command('slackbot')
   )
   .option('--test', 'Post to `design-system-testing`', false)
   .option('--dry', 'Dry run. Does not post', false)
+  .option('--verbose', 'Verbose mode', false)
   .parse(process.argv);
 
 cli.addHelpText(
@@ -47,7 +48,7 @@ cli.addHelpText(
 `,
 );
 
-const { channel, test, dry }: Opts = cli.opts();
+const { channel, test, dry, verbose }: Opts = cli.opts();
 
 try {
   /**
@@ -86,7 +87,9 @@ async function slackbot(
   channel: string,
   updates: Array<ComponentUpdateObject>,
 ) {
+  verbose && console.log({ updates, channel });
   const sortedUpdates = await getSortedUpdates(updates);
+  verbose && console.log({ sortedUpdates });
 
   const updateStrings = {
     major:
@@ -114,6 +117,8 @@ async function slackbot(
             .join(', ')}`
         : '',
   };
+
+  verbose && console.log({ updateStrings });
 
   const web = new WebClient(botToken);
 
@@ -146,7 +151,7 @@ async function slackbot(
       });
     }
   } else {
-    console.warn('Missing message text. Did not send message.');
+    console.warn('No updates to post.');
   }
 }
 
