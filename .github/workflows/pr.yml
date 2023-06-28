@@ -9,27 +9,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint:
-    name: Check lints
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Use Node.js 16
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-          cache: yarn
-          cache-dependency-path: 'yarn.lock'
-
-      - run: yarn install --frozen-lockfile --prefer-offline
-
-      - name: lint
-        run: yarn lint
-
-    outputs:
-      yarn-cache-dir: ${{ steps.get-yarn-cache-dir.outputs.dir }}
-
   build:
     name: Build packages
     runs-on: ubuntu-latest
@@ -61,6 +40,37 @@ jobs:
       - name: build
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         run: yarn build
+
+  lint:
+    name: Check lints
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: yarn
+          cache-dependency-path: 'yarn.lock'
+
+      - uses: actions/cache/restore@v3
+        name: Restore build cache
+        id: build-cache
+        with:
+          path: |
+            **/dist
+            !**/node_modules
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/rollup.config.js', '**/babel.config.js', '**/src/', '**/scripts/', '!**/node_modules', '!**/dist') }}
+
+      - run: yarn install --frozen-lockfile --prefer-offline
+
+      - name: lint
+        run: yarn lint
+
+    outputs:
+      yarn-cache-dir: ${{ steps.get-yarn-cache-dir.outputs.dir }}
 
   chromatic:
     name: Chromatic

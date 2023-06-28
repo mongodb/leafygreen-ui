@@ -27,6 +27,8 @@ function TableHead<Shape>({ columns = [] }: TableHeaderProps<Shape>) {
       if (isComponentType<HeaderRowElement>(child, 'HeaderRow')) {
         usingHeaderRow.current = true;
 
+        // FIXME:
+        // eslint-disable-next-line no-unsafe-optional-chaining
         const { children } = child?.props;
 
         return React.cloneElement(child, {
