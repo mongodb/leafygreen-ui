@@ -4,8 +4,8 @@
   "description": "Tools for linking LeafyGreen packages",
   "license": "MIT",
   "bin": {
-    "lg-link": "./bin/link.sh",
-    "lg-unlink": "./bin/unlink.sh"
+    "lg-link": "./bin/link.js",
+    "lg-unlink": "./bin/unlink.js"
   },
   "scripts": {
     "build": "rollup -c rollup.config.mjs"

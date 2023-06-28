@@ -9,15 +9,20 @@ import { Scope } from './scopes';
 const program = new Command();
 
 program
+  .name('link')
   .description(
     "Link local LeafyGreen packages to a destination app. This is useful for testing changes to a package's source code in another project.",
   )
   .arguments('destination')
   .option('-v --verbose', 'Prints additional information to the console', false)
+  // TODO: Add `scope` option using `.addOption` method
   .action(linkPackages)
   .parse(process.argv);
 
-async function linkPackages(destination: string, opts: { verbose: boolean }) {
+async function linkPackages(
+  destination: string,
+  opts: { scope: string; verbose: boolean },
+) {
   const { verbose } = opts;
   const relativeDestination = path.relative(process.cwd(), destination);
 
@@ -26,6 +31,7 @@ async function linkPackages(destination: string, opts: { verbose: boolean }) {
     console.log(chalk.green(`Linking packages to ${relativeDestination} ...`));
     await linkPackageForScope('@leafygreen-ui');
     await linkPackageForScope('@lg-tools');
+    console.log(chalk.green('Finished linking packages.'));
   } else {
     throw new Error(`Can't find the directory ${relativeDestination}.`);
   }
@@ -51,11 +57,15 @@ async function linkPackages(destination: string, opts: { verbose: boolean }) {
           linkPackageToDestination(scope, pkg),
         ),
       );
-
-      console.log(chalk.green('Finished linking packages.'));
     } else {
       console.error(
-        `Can't find any ${scope} packages installed at ${relativeDestination}.`,
+        chalk.gray(
+          ` Couldn't find any ${chalk.blue(
+            scope,
+          )} packages installed at ${chalk.blue(
+            relativeDestination,
+          )}. Skipping.`,
+        ),
       );
     }
   }
@@ -111,7 +121,7 @@ async function linkPackages(destination: string, opts: { verbose: boolean }) {
       })
         .on('close', resolve)
         .on('error', () => {
-          throw new Error(`Couldn't link package: ${packageName}`);
+          throw new Error(`Couldn't link package: ${fullPackageName}`);
         });
     });
   }
