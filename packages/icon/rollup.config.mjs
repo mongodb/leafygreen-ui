@@ -1,5 +1,6 @@
 import {
   esmConfig,
+  storiesConfig,
   umdConfig,
 } from '@lg-tools/build/config/rollup.config.mjs';
 import fs from 'fs';
