@@ -41,7 +41,6 @@ const ignoreFilePatterns: Array<RegExp> = [
   /.*\/dist\/.*/,
 ];
 
-
 // these dependencies will be ignored when listed in a package.json
 const ignoreMatches = [
   '@leafygreen-ui/mongo-nav',
