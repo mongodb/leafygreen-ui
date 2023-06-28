@@ -62,7 +62,13 @@ async function unlinkPackages(destination: string, opts: Opts) {
       );
     } else {
       console.error(
-        `Can't find any ${scope} packages installed at ${relativeDestination}.`,
+        chalk.gray(
+          ` Couldn't find any ${chalk.blue(
+            scope,
+          )} packages installed at ${chalk.blue(
+            relativeDestination,
+          )}. Skipping.`,
+        ),
       );
     }
   }
