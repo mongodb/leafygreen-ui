@@ -69,7 +69,7 @@ const cmdArgs = [
   '--env',
   'jsdom',
   '--config',
-  ssr ? 'jest.config.js' : 'ssr.jest.config.js',
+  ssr ? 'ssr.jest.config.js' : 'jest.config.js',
   ...args,
 ];
 
