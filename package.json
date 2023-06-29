@@ -187,8 +187,7 @@
     "url-loader": "4.1.0"
   },
   "resolutions": {
-    "caniuse-lite": "^1.0.30001135",
-    "@types/react": "^16.9.56"
+    "caniuse-lite": "^1.0.30001135"
   },
   "config": {
     "commitizen": {
