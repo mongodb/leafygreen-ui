@@ -113,12 +113,12 @@
     "@svgr/cli": "^5.3.1",
     "@svgr/core": "^5.3.1",
     "@svgr/rollup": "^5.4.0",
-    "@testing-library/dom": "^9.0.0",
-    "@testing-library/react": "^14.0.0",
-    "@testing-library/react-hooks": "^8.0.0",
     "@svgr/webpack": "^8.0.1",
     "@tanstack/react-table": "^8.7.3",
+    "@testing-library/dom": "^9.0.0",
     "@testing-library/jest-dom": "^5.4.0",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/react-hooks": "^8.0.0",
     "@testing-library/user-event": "^13.0.0",
     "@types/facepaint": "^1.2.1",
     "@types/highlight.js": "^10.1.0",
@@ -126,8 +126,9 @@
     "@types/jest-axe": "^3.5.1",
     "@types/lodash": "^4.14.170",
     "@types/meow": "^5.0.0",
-    "@types/react": "^18.0.0",
+    "@types/react": "18.0.15",
     "@types/react-dom": "^18.0.0",
+    "@types/react-test-renderer": "^18.0.0",
     "@types/react-transition-group": "4.4.1",
     "@types/xml2json": "^0.11.0",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
@@ -160,9 +161,9 @@
     "highlightjs-line-numbers.js": "^2.7.0",
     "jest": "^29.0.1",
     "jest-axe": "^7.0.0",
+    "jest-canvas-mock": "^2.5.1",
     "jest-environment-jsdom": "^29.4.3",
     "jest-junit": "^15.0.0",
-    "jest-canvas-mock": "^2.5.1",
     "lerna": "3.20.2",
     "meow": "^6.1.0",
     "node-fetch": "2",
@@ -187,7 +188,8 @@
     "url-loader": "4.1.0"
   },
   "resolutions": {
-    "caniuse-lite": "^1.0.30001135"
+    "caniuse-lite": "^1.0.30001135",
+    "@types/react": "17.0.38"
   },
   "config": {
     "commitizen": {
