@@ -4,6 +4,7 @@ import React, { type ComponentProps } from 'react';
 
 import { StoryMetaType, type LeafyGreenProviderProps } from './StoryMeta.types';
 
+// TODO: XP is unused?
 export type ExtendedComponentProps<
   T extends React.ElementType,
   XP extends Record<string, any> = {},

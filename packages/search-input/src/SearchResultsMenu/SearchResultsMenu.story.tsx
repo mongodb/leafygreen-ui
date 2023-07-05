@@ -24,10 +24,12 @@ const meta: StoryMetaType<typeof SearchResultsMenu> = {
       combineArgs: {
         darkMode: [false, true],
         children: [undefined, demoChild],
+        // @ts-expect-error state is not a prop on SearchResultsMenu but it is passed to `SearchInputContextProvider`
         state: Object.values(State),
       },
       excludeCombinations: [
         {
+          // @ts-expect-error state is not a prop on SearchResultsMenu but it is passed to `SearchInputContextProvider`
           state: State.Loading,
           children: demoChild,
         },
