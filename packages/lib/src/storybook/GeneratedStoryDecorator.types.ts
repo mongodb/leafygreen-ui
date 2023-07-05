@@ -8,7 +8,7 @@ import { StoryMetaType, type LeafyGreenProviderProps } from './StoryMeta.types';
 export type ExtendedComponentProps<
   T extends React.ElementType,
   XP extends Record<string, any> = {},
-> = ComponentProps<T> & LeafyGreenProviderProps;
+> = ComponentProps<T> & LeafyGreenProviderProps & XP;
 
 interface InstanceContext {
   args: Args;

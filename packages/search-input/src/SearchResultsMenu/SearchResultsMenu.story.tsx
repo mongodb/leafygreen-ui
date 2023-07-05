@@ -15,7 +15,7 @@ import { SearchResultsMenu } from '.';
 
 const demoChild = <SearchResult>Search Result</SearchResult>;
 
-const meta: StoryMetaType<typeof SearchResultsMenu> = {
+const meta: StoryMetaType<typeof SearchResultsMenu, { state: State }> = {
   title: 'Components/SearchInput/SearchResultsMenu',
   component: SearchResultsMenu,
   parameters: {
@@ -24,12 +24,10 @@ const meta: StoryMetaType<typeof SearchResultsMenu> = {
       combineArgs: {
         darkMode: [false, true],
         children: [undefined, demoChild],
-        // @ts-expect-error state is not a prop on SearchResultsMenu but it is passed to `SearchInputContextProvider`
         state: Object.values(State),
       },
       excludeCombinations: [
         {
-          // @ts-expect-error state is not a prop on SearchResultsMenu but it is passed to `SearchInputContextProvider`
           state: State.Loading,
           children: demoChild,
         },
