@@ -51,6 +51,7 @@ import Ellipsis from './Ellipsis.svg';
 import Email from './Email.svg';
 import Export from './Export.svg';
 import Favorite from './Favorite.svg';
+import Federation from './Federation.svg';
 import File from './File.svg';
 import Filter from './Filter.svg';
 import Folder from './Folder.svg';
@@ -178,6 +179,7 @@ const _glyphs = {
   Email,
   Export,
   Favorite,
+  Federation,
   File,
   Filter,
   FullScreenEnter,
