@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 import PropTypes from 'prop-types';
 
 import { usePrefersReducedMotion } from '@leafygreen-ui/a11y';
@@ -58,7 +59,14 @@ function GuideCue({
     if (open && !isStandalone) {
       // Adding a timeout to the tooltip so the tooltip is positioned correctly. Without the delay the tooltip can sometime shift when it is first visible. Only applies to multi-step tooltip.
       setPopoverOpen(true); // beacon opens first
-      openTimeout = setTimeout(() => setTooltipOpen(true), timeout1); // tooltip opens a little after
+      openTimeout = setTimeout(
+        () =>
+          // React 18 automatically batches all updates which appears to break the opening transition. flushSync prevents this state update from automically batching. Instead updates are made synchronously.
+          flushSync(() => {
+            setTooltipOpen(true);
+          }),
+        timeout1,
+      ); // tooltip opens a little after
     } else {
       // Adding a timeout to the popover because if we close both the tooltip and the popover at the same time the transition is not visible. Only applies to multi-step tooltip.
       setTooltipOpen(false); // tooltip closes first

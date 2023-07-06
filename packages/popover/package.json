@@ -25,7 +25,7 @@
     "@leafygreen-ui/lib": "^10.4.0",
     "@leafygreen-ui/portal": "^4.1.4",
     "@leafygreen-ui/tokens": "^2.1.1",
-    "react-transition-group": "^4.4.1"
+    "react-transition-group": "^4.4.5"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.3"
