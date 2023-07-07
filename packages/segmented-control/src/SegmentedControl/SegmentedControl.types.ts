@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 export const DeprecatedSize = {
@@ -49,7 +51,7 @@ export interface SegmentedControlProps
   /**
    * A text label to the left of the segmented control. Sets the `name` prop if none is provided.
    */
-  label?: string;
+  label?: React.ReactNode;
 
   /**
    * Identifies the segmented control group to screen readers. Auto-generated if no `name` or `label` is provided.
