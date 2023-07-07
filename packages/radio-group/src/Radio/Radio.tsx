@@ -64,8 +64,6 @@ function Radio({
   const { theme } = useDarkMode(darkModeProp);
   const descriptionId = useIdAllocator({});
 
-  console.log({ disabled });
-
   return (
     <div className={cx(containerStyle, containerSizeStyle[normalizedSize])}>
       <Label
