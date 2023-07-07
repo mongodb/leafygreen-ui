@@ -129,7 +129,7 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@types/react-test-renderer": "^18.0.0",
-    "@types/react-transition-group": "4.4.1",
+    "@types/react-transition-group": "^4.4.1",
     "@types/xml2json": "^0.11.0",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
@@ -188,7 +188,8 @@
     "url-loader": "4.1.0"
   },
   "resolutions": {
-    "caniuse-lite": "^1.0.30001135"
+    "caniuse-lite": "^1.0.30001135",
+    "@types/react-transition-group/@types/react": "^17.0.2"
   },
   "config": {
     "commitizen": {
