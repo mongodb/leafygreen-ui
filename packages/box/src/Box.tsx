@@ -115,7 +115,9 @@ export interface ExtendableBox<
   ExtraProps,
   Default extends React.ElementType = 'div',
 > extends Pick<
-    React.FunctionComponent<React.PropsWithChildren<BoxProps<Default, ExtraProps>>>,
+    React.FunctionComponent<
+      React.PropsWithChildren<BoxProps<Default, ExtraProps>>
+    >,
     'displayName' | 'propTypes'
   > {
   <TElement extends keyof JSX.IntrinsicElements>(

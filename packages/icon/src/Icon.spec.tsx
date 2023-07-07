@@ -44,26 +44,26 @@ const customTestGlyphs = {
 
 describe('packages/Icon/isComponentGlyph', () => {
   test('returns `true` for a rendered component', () => {
-    const TestNode: React.ComponentType<React.PropsWithChildren<any>> & { isGlyph?: boolean } = () => (
-      <div />
-    );
+    const TestNode: React.ComponentType<React.PropsWithChildren<any>> & {
+      isGlyph?: boolean;
+    } = () => <div />;
     TestNode.isGlyph = true;
     const renderedTestNode = <TestNode />;
     expect(isComponentGlyph(renderedTestNode)).toBeTruthy();
   });
 
   test('returns `true` for a component function', () => {
-    const TestNode: React.ComponentType<React.PropsWithChildren<any>> & { isGlyph?: boolean } = () => (
-      <div />
-    );
+    const TestNode: React.ComponentType<React.PropsWithChildren<any>> & {
+      isGlyph?: boolean;
+    } = () => <div />;
     TestNode.isGlyph = true;
     expect(isComponentGlyph(TestNode)).toBeTruthy();
   });
 
   test('returns `false` if isGlyph is false', () => {
-    const TestNode: React.ComponentType<React.PropsWithChildren<any>> & { isGlyph?: boolean } = () => (
-      <div />
-    );
+    const TestNode: React.ComponentType<React.PropsWithChildren<any>> & {
+      isGlyph?: boolean;
+    } = () => <div />;
     TestNode.isGlyph = false;
     const renderedTestNode = <TestNode />;
     expect(isComponentGlyph(TestNode)).toBeFalsy();
@@ -71,7 +71,9 @@ describe('packages/Icon/isComponentGlyph', () => {
   });
 
   test('returns `false` if isGlyph is not set', () => {
-    const TestNode: React.ComponentType<React.PropsWithChildren<any>> = () => <div />;
+    const TestNode: React.ComponentType<React.PropsWithChildren<any>> = () => (
+      <div />
+    );
     const renderedTestNode = <TestNode />;
     expect(isComponentGlyph(TestNode)).toBeFalsy();
     expect(isComponentGlyph(renderedTestNode)).toBeFalsy();

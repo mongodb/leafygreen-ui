@@ -138,7 +138,10 @@ AdvancedPolymorphicWithRef.displayName = 'AdvancedPolymorphicWithRef';
  * Ensure `as` types can be restricted
  * @example
  */
-type RestrictedType = 'a' | 'button' | React.ComponentType<React.PropsWithChildren<unknown>>;
+type RestrictedType =
+  | 'a'
+  | 'button'
+  | React.ComponentType<React.PropsWithChildren<unknown>>;
 type RestrictedProps<T extends RestrictedType> = PolymorphicPropsWithRef<
   T,
   {

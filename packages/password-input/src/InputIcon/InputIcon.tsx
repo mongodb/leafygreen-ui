@@ -16,7 +16,10 @@ import {
 } from './InputIcon.styles';
 import { InputIconProps, StateProps } from './InputIcon.types';
 
-const validationIcons: Record<StateProps, React.ComponentType<React.PropsWithChildren<any>>> = {
+const validationIcons: Record<
+  StateProps,
+  React.ComponentType<React.PropsWithChildren<any>>
+> = {
   [State.Error]: ErrorIcon,
   [State.Warning]: WarningIcon,
   [State.Valid]: CheckmarkIcon,
