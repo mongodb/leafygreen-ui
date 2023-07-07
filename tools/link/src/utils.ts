@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+
 import { Scope } from './scopes';
 
 export const formatLog = {
