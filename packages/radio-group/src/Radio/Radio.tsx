@@ -22,6 +22,7 @@ import {
   inputDisplayWrapperClassName,
   inputThemeStyles,
   labelBaseStyle,
+  labelDisabledStyle,
   radioBoxBaseStyle,
   radioBoxSizeStyles,
 } from './Radio.styles';
@@ -63,6 +64,8 @@ function Radio({
   const { theme } = useDarkMode(darkModeProp);
   const descriptionId = useIdAllocator({});
 
+  console.log({ disabled });
+
   return (
     <div className={cx(containerStyle, containerSizeStyle[normalizedSize])}>
       <Label
@@ -71,6 +74,7 @@ function Radio({
         className={cx(
           labelBaseStyle,
           {
+            [labelDisabledStyle[theme]]: disabled,
             [css`
               font-size: 12px;
             `]: size === Size.XSmall, // TODO: keeping this style until XS is deprecated
