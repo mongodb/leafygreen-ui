@@ -26,7 +26,7 @@
     "@testing-library/react-hooks": "^3.2.1",
     "@testing-library/user-event": "^12.1.8",
     "commander": "^9.4.0",
-    "babel-jest": "26.0.0",
+    "babel-jest": "^26.0.0",
     "jest": "^26.0.1",
     "jest-axe": "^4.1.0",
     "jest-canvas-mock": "^2.5.1",
