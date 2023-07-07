@@ -4,5 +4,6 @@ module.exports = {
       'warning',
       { exceptions: ['highlight.js', 'prettier'] },
     ],
+    'valid-values-license': ['error', ['Apache-2.0']],
   },
 };
