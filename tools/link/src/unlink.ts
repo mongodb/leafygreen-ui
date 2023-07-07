@@ -6,6 +6,7 @@ import fs from 'fs';
 import path from 'path';
 
 import { Scope } from './scopes';
+import { formatLog } from './utils';
 
 const program = new Command();
 
@@ -32,23 +33,27 @@ async function unlinkPackages(destination: string, opts: Opts) {
   // Check if the destination exists
   if (fs.existsSync(destination) && fs.lstatSync(destination).isDirectory()) {
     console.log(
-      chalk.yellow(`Unlinking packages from ${relativeDestination} ...`),
+      chalk.yellow(
+        `Unlinking packages from ${formatLog.path(relativeDestination)} ...`,
+      ),
     );
 
     await unlinkPackageForScope('@leafygreen-ui');
     await unlinkPackageForScope('@lg-tools');
     if (noInstall) {
       console.log(
-        ` Skipping yarn install. \nYou will need to run ${chalk.bgGray.black(
+        ` Skipping yarn install. \nYou will need to run ${formatLog.cmd(
           'yarn install --force',
-        )} in ${destination} to restore dependencies.`,
+        )} in ${formatLog.path(destination)} to restore dependencies.`,
       );
     } else {
       await forceInstall();
     }
     console.log(chalk.yellow('Finished unlinking packages.'));
   } else {
-    throw new Error(`Can't find the directory ${relativeDestination}.`);
+    throw new Error(
+      `Can't find the directory ${formatLog.path(relativeDestination)}.`,
+    );
   }
 
   async function unlinkPackageForScope(scope: keyof typeof Scope) {
@@ -56,18 +61,20 @@ async function unlinkPackages(destination: string, opts: Opts) {
 
     if (fs.existsSync(installedModulesDir)) {
       const installedLGPackages = fs.readdirSync(installedModulesDir);
-      console.log(chalk.gray(` Unlinking packages...`));
-      await Promise.all(
-        installedLGPackages.map(pkg =>
-          unlinkPackageFromDestination(scope, pkg),
-        ),
-      );
+      chalk.gray(
+        ` Removing links to ${formatLog.scope(scope)} scoped packages...`,
+      ),
+        await Promise.all(
+          installedLGPackages.map(pkg =>
+            unlinkPackageFromDestination(scope, pkg),
+          ),
+        );
     } else {
       console.error(
         chalk.gray(
-          ` Couldn't find any ${chalk.blue(
+          ` Couldn't find any ${formatLog.scope(
             scope,
-          )} packages installed at ${chalk.blue(
+          )} packages installed at ${formatLog.path(
             relativeDestination,
           )}. Skipping.`,
         ),
@@ -97,7 +104,11 @@ async function unlinkPackages(destination: string, opts: Opts) {
 
   function forceInstall() {
     return new Promise(resolve => {
-      console.log(chalk.gray(` Reinstalling packages in ${destination}...`));
+      console.log(
+        chalk.gray(
+          ` Reinstalling packages in ${formatLog.path(destination)}...`,
+        ),
+      );
       spawn('yarn', ['install', '--force'], {
         cwd: destination,
         stdio: 'inherit',

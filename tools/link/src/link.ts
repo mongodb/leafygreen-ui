@@ -7,6 +7,7 @@ import { homedir } from 'os';
 import path from 'path';
 
 import { Scope } from './scopes';
+import { formatLog } from './utils';
 
 const program = new Command();
 
@@ -30,12 +31,18 @@ async function linkPackages(
 
   // Check if the destination exists
   if (fs.existsSync(destination) && fs.lstatSync(destination).isDirectory()) {
-    console.log(chalk.green(`Linking packages to ${relativeDestination} ...`));
+    console.log(
+      chalk.green(
+        `Linking packages to ${formatLog.path(relativeDestination)} ...`,
+      ),
+    );
     await linkPackageForScope('@leafygreen-ui');
     await linkPackageForScope('@lg-tools');
     console.log(chalk.green('Finished linking packages.'));
   } else {
-    throw new Error(`Can't find the directory ${relativeDestination}.`);
+    throw new Error(
+      `Can't find the directory ${formatLog.path(relativeDestination)}.`,
+    );
   }
 
   async function linkPackageForScope(scope: keyof typeof Scope) {
@@ -48,13 +55,21 @@ async function linkPackages(
       // Run yarn link on each package
       // Run yarn link <packageName> on the destination
       const installedLGPackages = fs.readdirSync(installedModulesDir);
-      console.log(chalk.gray(` Creating links...`));
+      console.log(
+        chalk.gray(` Creating links to ${formatLog.scope(scope)} packages...`),
+      );
       await Promise.all(
         installedLGPackages.map(pkg => {
           createYarnLinkForPackage(scope, pkg);
         }),
       );
-      console.log(chalk.gray(` Connecting links...`));
+      console.log(
+        chalk.gray(
+          ` Connecting links for ${formatLog.scope(
+            scope,
+          )} packages to ${chalk.blue(formatLog.path(relativeDestination))}...`,
+        ),
+      );
       await Promise.all(
         installedLGPackages.map((pkg: string) =>
           linkPackageToDestination(scope, pkg),
@@ -63,10 +78,10 @@ async function linkPackages(
     } else {
       console.error(
         chalk.gray(
-          ` Couldn't find any ${chalk.blue(
+          ` Couldn't find ${formatLog.scope(
             scope,
-          )} packages installed at ${chalk.blue(
-            relativeDestination,
+          )} scoped packages installed at ${chalk.blue(
+            formatLog.path(relativeDestination),
           )}. Skipping.`,
         ),
       );
