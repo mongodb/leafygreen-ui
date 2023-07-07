@@ -41,15 +41,6 @@ export const labelBaseStyle = css`
   font-weight: ${fontWeights.bold};
 `;
 
-export const labelDisabledStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.gray.dark1};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.base};
-  `,
-};
-
 export const inputThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     &:checked {
