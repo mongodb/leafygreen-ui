@@ -1,9 +1,11 @@
+/* eslint-disable no-console */
 import chalk from 'chalk';
 import { spawn } from 'child_process';
 import { Command } from 'commander';
-import path from 'path';
 import fs from 'fs';
 import { homedir } from 'os';
+import path from 'path';
+
 import { Scope } from './scopes';
 
 const program = new Command();
@@ -39,6 +41,7 @@ async function linkPackages(
   async function linkPackageForScope(scope: keyof typeof Scope) {
     // The directory where the leafygreen-ui packages are installed
     const installedModulesDir = path.join(destination, 'node_modules', scope);
+
     // Check that the destination has leafygreen-ui packages installed
     if (fs.existsSync(installedModulesDir)) {
       // Get a list of all the packages in the destination
@@ -132,10 +135,12 @@ function findDirectory(
   targetDir: string,
 ): string | undefined {
   const testDir = path.join(startDir, targetDir);
+
   if (fs.existsSync(testDir) && fs.lstatSync(testDir).isDirectory()) {
     return testDir;
   } else {
     const parentDir = path.join(startDir, '..');
+
     // If we haven't reached the users home directory, recursively look for the packages directory
     if (parentDir !== homedir()) {
       return findDirectory(path.join(startDir, '..'), targetDir);

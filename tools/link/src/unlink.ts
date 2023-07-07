@@ -1,9 +1,10 @@
+/* eslint-disable no-console */
 import chalk from 'chalk';
 import { spawn } from 'child_process';
 import { Command } from 'commander';
-import path from 'path';
 import fs from 'fs';
-import { homedir } from 'os';
+import path from 'path';
+
 import { Scope } from './scopes';
 
 const program = new Command();
@@ -52,6 +53,7 @@ async function unlinkPackages(destination: string, opts: Opts) {
 
   async function unlinkPackageForScope(scope: keyof typeof Scope) {
     const installedModulesDir = path.join(destination, 'node_modules', scope);
+
     if (fs.existsSync(installedModulesDir)) {
       const installedLGPackages = fs.readdirSync(installedModulesDir);
       console.log(chalk.gray(` Unlinking packages...`));
@@ -79,7 +81,7 @@ async function unlinkPackages(destination: string, opts: Opts) {
   ): Promise<void> {
     const fullPackageName = `${scope}/${packageName}`;
 
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       verbose && console.log('Linking package:', chalk.blue(fullPackageName));
 
       spawn('yarn', ['unlink', fullPackageName], {
@@ -94,7 +96,7 @@ async function unlinkPackages(destination: string, opts: Opts) {
   }
 
   function forceInstall() {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       console.log(chalk.gray(` Reinstalling packages in ${destination}...`));
       spawn('yarn', ['install', '--force'], {
         cwd: destination,
