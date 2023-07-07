@@ -9,7 +9,7 @@ import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 
 import { Variant } from '../Toast.types';
 
-export const variantIcons: Record<Variant, React.ComponentType<any>> = {
+export const variantIcons: Record<Variant, React.ComponentType<React.PropsWithChildren<any>>> = {
   [Variant.Success]: CheckmarkWithCircleIcon,
   [Variant.Note]: InfoWithCircle,
   [Variant.Warning]: WarningIcon,

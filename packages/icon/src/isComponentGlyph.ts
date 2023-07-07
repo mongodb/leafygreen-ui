@@ -2,7 +2,7 @@ import { ComponentType, isValidElement, ReactNode } from 'react';
 
 import { LGGlyph } from './types';
 
-type ExtendedComponentType = ComponentType<any> & {
+type ExtendedComponentType = ComponentType<React.PropsWithChildren<any>> & {
   [key: string]: any;
 };
 /**

@@ -18,7 +18,7 @@ import {
 } from './StateNotifications.styles';
 import { StateNotificationsProps } from './StateNotifications.types';
 
-const icons: Record<State, React.ComponentType<any>> = {
+const icons: Record<State, React.ComponentType<React.PropsWithChildren<any>>> = {
   [State.Error]: ErrorIcon,
   [State.Warning]: WarningIcon,
   [State.Valid]: CheckmarkIcon,
@@ -34,7 +34,7 @@ export const StateNotifications = ({
 
   return (
     // We're using aria-polite to announce when a message has changed. In order for aria-polite to work correctly the message wrapper needs to remain on the page even if there are no messages. If a custom message container is specified with aria-describedby then this wrapper will not render.
-    <ul
+    (<ul
       aria-live="polite"
       aria-relevant="all"
       className={wrapperStyles}
@@ -59,7 +59,7 @@ export const StateNotifications = ({
           </li>
         );
       })}
-    </ul>
+    </ul>)
   );
 };
 
