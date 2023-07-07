@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
-import CheckmarkWithCircleIcon from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce } from '@leafygreen-ui/lib';
@@ -153,10 +152,6 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       );
     }
 
-    const RenderedCheckmarkIcon = darkMode
-      ? CheckmarkWithCircleIcon
-      : CheckmarkIcon;
-
     const shouldRenderOptionalText =
       state === State.None && !disabled && optional;
 
@@ -229,7 +224,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
           >
             {/* Render State Icon or Optional text*/}
             {state === State.Valid && (
-              <RenderedCheckmarkIcon
+              <CheckmarkIcon
                 role="presentation"
                 className={stateIndicatorStyles.valid[theme]}
               />
