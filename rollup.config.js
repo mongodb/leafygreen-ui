@@ -151,6 +151,7 @@ const baseConfigForFormat = format => ({
       'react-dom',
       'react-is',
       'react-keyed-flatten-children',
+      'react-lottie-player',
       'react-transition-group',
       ...getLodashExternals(),
       ...allPackages,
