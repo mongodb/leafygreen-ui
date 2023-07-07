@@ -2,7 +2,7 @@
   "name": "@lg-tools/test",
   "version": "0.0.1",
   "description": "Jest setup & config for LeafyGreen repositories",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "main": "jest.config.js",
   "bin": {
     "lg-test": "./bin/test.js"
@@ -15,6 +15,9 @@
     "dist/**",
     "src/*.jest.*.js"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@emotion/css": "^11.11.0",
     "@emotion/server": "^11.11.0",
@@ -31,8 +34,5 @@
     "jest-axe": "^4.1.0",
     "jest-canvas-mock": "^2.5.1",
     "jest-junit": "^10.0.0"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }

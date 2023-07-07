@@ -2,13 +2,16 @@
   "name": "@lg-tools/link",
   "version": "0.0.1",
   "description": "Tools for linking LeafyGreen packages",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bin": {
     "lg-link": "./bin/link.js",
     "lg-unlink": "./bin/unlink.js"
   },
   "scripts": {
     "build": "rollup -c rollup.config.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "chalk": "^4.1.2",

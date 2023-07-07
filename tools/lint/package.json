@@ -3,12 +3,15 @@
   "version": "0.0.1",
   "description": "Lint rules & config for LeafyGreen repositories",
   "main": "index.js",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bin": {
     "lg-lint": "./bin/lint.js"
   },
   "scripts": {
     "build": "rollup -c rollup.config.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "@babel/core": "^7.22.5",
