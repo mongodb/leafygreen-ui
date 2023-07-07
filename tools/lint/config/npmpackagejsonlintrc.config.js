@@ -1,13 +1,8 @@
 module.exports = {
   rules: {
-    'prefer-caret-version-dependencies': 'warning',
+    'prefer-caret-version-dependencies': [
+      'warning',
+      { exceptions: ['highlight.js', 'prettier'] },
+    ],
   },
-  overrides: [
-    {
-      patterns: ['./packages/code/package.json'],
-      rules: {
-        'prefer-caret-version-dependencies': 'off',
-      },
-    },
-  ],
 };
