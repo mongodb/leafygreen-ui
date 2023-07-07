@@ -4,19 +4,38 @@ const { Command } = require('commander');
 const rootDir = process.cwd();
 const eslintConfig = path.resolve(__dirname, '../config/eslint.config.js');
 const prettierConfig = path.resolve(__dirname, '../config/prettier.config.js');
+const npmPkgLintConfig = path.resolve(
+  __dirname,
+  '../config/npmpackagejsonlintrc.config.js',
+);
 
 const esLintExtensions = ['js', 'ts', 'tsx'];
 const prettierExtensions = [...esLintExtensions, 'mjs', 'json', 'md', 'yml'];
 
 const cli = new Command()
   .option('-f, --fix', 'fix linting errors', false)
-  .option('-p, --prettier', 'run prettier only', false)
-  .option('-e, --eslint', 'run eslint only', false)
+  .option('-p, --prettierOnly', 'run prettier only', false)
+  .option('-e, --eslintOnly', 'run eslint only', false)
   .parse(process.argv);
 
-const { fix, prettier: prettierOnly, eslint: eslintOnly } = cli.opts();
+const { fix, prettierOnly, eslintOnly } = cli.opts();
 
-!prettierOnly &&
+// If prettierOnly or eslintOnly is true, run only that linter
+if (prettierOnly || eslintOnly) {
+  if (prettierOnly) {
+    prettier();
+  } else {
+    eslint();
+  }
+  process.exit(0);
+}
+
+// Otherwise, run all linters
+eslint();
+prettier();
+npmPkgJsonLint();
+
+function eslint() {
   spawn(
     'eslint',
     [
@@ -29,8 +48,9 @@ const { fix, prettier: prettierOnly, eslint: eslintOnly } = cli.opts();
       stdio: 'inherit',
     },
   );
+}
 
-!eslintOnly &&
+function prettier() {
   spawn(
     'prettier',
     [
@@ -43,13 +63,10 @@ const { fix, prettier: prettierOnly, eslint: eslintOnly } = cli.opts();
       stdio: 'inherit',
     },
   );
+}
 
-const npmPkgLintConfig = path.resolve(
-  __dirname,
-  '../config/npmpackagejsonlintrc.config.js',
-);
-
-!(prettierOnly && eslintOnly) &&
+function npmPkgJsonLint() {
   spawn('npmPkgJsonLint', ['--configFile', npmPkgLintConfig, rootDir], {
     stdio: 'inherit',
   });
+}

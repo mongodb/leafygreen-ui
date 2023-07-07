@@ -5,6 +5,7 @@
   "main": "main.ts",
   "license": "MIT",
   "dependencies": {
+    "@mdx-js/react": "^1.6.22",
     "@storybook/addon-a11y": "^7.0.11",
     "@storybook/addon-actions": "^7.0.11",
     "@storybook/addon-docs": "^7.0.11",
@@ -27,7 +28,7 @@
     "@svgr/webpack": "^8.0.1",
     "file-loader": "^6.0.0",
     "storybook-addon-performance": "^0.17.1",
-    "url-loader": "4.1.0",
+    "url-loader": "^4.1.0",
     "webpack": "^5.0.0"
   }
 }
