@@ -1,5 +1,5 @@
 import React from 'react';
-import { Player } from '@lottiefiles/react-lottie-player';
+import Lottie from 'react-lottie-player';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -36,6 +36,7 @@ const Spinner = ({
   const spinnerMarginBottom = SpinnerBottomMargins[displayOption];
   const { darkMode, theme } = useDarkMode(darkModeProp);
   const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
+
   return (
     <div
       className={cx(
@@ -48,10 +49,10 @@ const Spinner = ({
       )}
       {...rest}
     >
-      <Player
-        autoplay
+      <Lottie
+        play
         loop
-        src={animationJson}
+        animationData={animationJson}
         className={cx({
           [darkModeSpinnerStyles]: darkMode,
           [colorOverrideStyles(colorOverride as string)]: !!colorOverride,
