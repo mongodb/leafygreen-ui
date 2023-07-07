@@ -107,6 +107,7 @@ const external = [
   'react-dom',
   'react-is',
   'react-keyed-flatten-children',
+  'react-lottie-player',
   'react-transition-group',
   /^lodash\//,
   /^highlight\.js\//,
