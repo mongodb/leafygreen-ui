@@ -88,10 +88,9 @@ export type OneOf<T1, T2> =
   | (T2 & Partial<Record<Exclude<keyof T1, keyof T2>, never>>);
 
 /** Helper type to check if element is a specific React Component  */
-export function isComponentType<T = React.ReactElement>(
-  element: React.ReactNode,
-  displayName: string,
-): element is T {
+export function isComponentType<
+  T extends React.ReactElement = React.ReactElement,
+>(element: React.ReactNode, displayName: string): element is T {
   return (
     element != null &&
     typeof element === 'object' &&
@@ -165,7 +164,7 @@ export const AriaCurrentValue = {
 } as const;
 
 export type AriaCurrentValue =
-  typeof AriaCurrentValue[keyof typeof AriaCurrentValue];
+  (typeof AriaCurrentValue)[keyof typeof AriaCurrentValue];
 
 /**
  * Accepts a type as an argument and makes all of the keys of the type optional
