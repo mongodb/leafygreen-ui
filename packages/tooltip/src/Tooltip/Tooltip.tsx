@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  isValidElement,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { flushSync } from 'react-dom';
 import debounce from 'lodash/debounce';
 import PropTypes from 'prop-types';
@@ -109,7 +115,7 @@ function Tooltip({
 
   useEffect(() => {
     // If consumer is using Icon or Glyph component as trigger, the tooltip will not be visible as these components do not render their children
-    if (trigger && isComponentGlyph(trigger)) {
+    if (trigger && isValidElement(trigger) && isComponentGlyph(trigger)) {
       console.warn(
         'Using a LeafyGreenUI Icon or Glyph component as a trigger will not render a Tooltip, as these components do not render their children. To use, please wrap your trigger element in another HTML tag.',
       );
