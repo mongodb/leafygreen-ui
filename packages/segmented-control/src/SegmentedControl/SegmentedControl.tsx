@@ -70,7 +70,7 @@ export const SegmentedControl = forwardRef<
 
   const name = useIdAllocator({
     prefix: 'segmented-control',
-    id: nameProp ?? label,
+    id: nameProp,
   });
 
   // If a value is given, then it's controlled
@@ -374,7 +374,7 @@ SegmentedControl.propTypes = {
   onChange: PropTypes.func,
   defaultValue: PropTypes.string,
   value: PropTypes.string,
-  label: PropTypes.string,
+  label: PropTypes.node,
   name: PropTypes.string,
   followFocus: PropTypes.bool,
   className: PropTypes.string,
