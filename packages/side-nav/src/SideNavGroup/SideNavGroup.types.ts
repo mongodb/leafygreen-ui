@@ -19,7 +19,7 @@ interface SideNavGroupBaseProps extends HTMLElementProps<'li'> {
    *
    * @type `<Icon />`
    */
-  glyph?: React.ReactElement;
+  glyph?: React.ReactNode;
 
   /**
    * Manually overrides automatic detection of whether a group contains an active item.
