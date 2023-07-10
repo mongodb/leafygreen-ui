@@ -94,7 +94,7 @@ const ScrollState = {
   Both: 'both',
 } as const;
 
-type ScrollState = (typeof ScrollState)[keyof typeof ScrollState];
+type ScrollState = typeof ScrollState[keyof typeof ScrollState];
 
 /**
  * @deprecated
