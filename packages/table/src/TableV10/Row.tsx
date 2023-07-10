@@ -144,7 +144,8 @@ function getIndentLevelStyle(indentLevel: number) {
  * @deprecated
  * @noDocgen
  */
-export interface RowProps extends HTMLElementProps<'tr', HTMLTableRowElement> {
+export interface RowProps
+  extends React.PropsWithChildren<HTMLElementProps<'tr', HTMLTableRowElement>> {
   /**
    * Determines whether or not the row is expanded on first render
    */
