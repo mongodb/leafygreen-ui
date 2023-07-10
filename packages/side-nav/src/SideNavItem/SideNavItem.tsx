@@ -84,7 +84,7 @@ const SideNavItem: ExtendableBox<
       };
 
   const accessibleGlyph =
-    glyph && isComponentGlyph(glyph)
+    glyph && isComponentGlyph(glyph as React.ReactElement)
       ? React.cloneElement(glyph, { 'aria-hidden': true })
       : null;
 
