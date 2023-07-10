@@ -66,6 +66,7 @@ function Radio({
   return (
     <div className={cx(containerStyle, containerSizeStyle[normalizedSize])}>
       <Label
+        disabled={disabled}
         darkMode={darkMode}
         htmlFor={id!}
         className={cx(
