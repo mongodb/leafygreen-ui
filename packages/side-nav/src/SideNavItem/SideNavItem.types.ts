@@ -47,7 +47,7 @@ export interface SideNavItemProps {
    *
    * @type `<Icon />`
    */
-  glyph?: React.ReactElement;
+  glyph?: React.ReactNode;
 
   /**
    * Changes the indentation. Will not work if `<SideNavItem>` is a child of `<SideNavGroup>`.
