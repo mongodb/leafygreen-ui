@@ -255,7 +255,9 @@ describe('Polymorphic/Example Higher-order Components', () => {
 
       describe('With Emotion `styled` API', () => {
         test('Basic styled component', () => {
-          const StyledExample = styled(ExampleComponent)`
+          const StyledExample = styled(
+            ExampleComponent as PolymorphicComponentType,
+          )`
             color: #ff69b4;
           ` as typeof ExampleComponent;
 
@@ -270,7 +272,9 @@ describe('Polymorphic/Example Higher-order Components', () => {
         });
 
         test('as an HTML element', () => {
-          const StyledExample = styled(ExampleComponent)`
+          const StyledExample = styled(
+            ExampleComponent as PolymorphicComponentType,
+          )`
             color: #ff69b4;
           ` as PolymorphicComponentType;
 
@@ -295,7 +299,9 @@ describe('Polymorphic/Example Higher-order Components', () => {
 
         test('as a custom component', () => {
           const { Wrapper } = makeWrapperComponent();
-          const StyledExample = styled(ExampleComponent)`
+          const StyledExample = styled(
+            ExampleComponent as PolymorphicComponentType,
+          )`
             color: #ff69b4;
           ` as PolymorphicComponentType;
           const { getByTestId } = render(
@@ -316,7 +322,9 @@ describe('Polymorphic/Example Higher-order Components', () => {
             size: string;
           }
 
-          const StyledExample = styled(ExampleComponent)<StyledProps>`
+          const StyledExample = styled(
+            ExampleComponent as PolymorphicComponentType,
+          )<StyledProps>`
             color: ${props => props.color};
             font-size: ${props => props.size}px;
           ` as StyledComponent<
