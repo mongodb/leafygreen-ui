@@ -18,7 +18,7 @@ import {
   isInheritableGroup,
   PropItem,
   Props,
-} from './tsDoc.utils';
+} from './tsdoc.utils';
 
 const pascalCase = (str: string) =>
   camelCase(str).slice(0, 1).toUpperCase() + camelCase(str).slice(1);
