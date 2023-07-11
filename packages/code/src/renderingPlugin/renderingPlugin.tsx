@@ -118,7 +118,7 @@ function getHighlightedRowStyle(darkMode: boolean) {
   } else {
     backgroundColor = palette.yellow.light3;
     backgroundImage = 'none';
-    borderColor = palette.yellow.light2; //TODO: not updating to palette yet, currently sticking with uiColor for accessibility reasons
+    borderColor = palette.yellow.light2;
   }
 
   return css`
