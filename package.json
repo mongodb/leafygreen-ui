@@ -31,8 +31,8 @@
     "unlink": "lg-unlink",
     "update:proptypes": "npx ts-node ./scripts/proptypes.ts",
     "validate": "npm-run-all --parallel validate:*",
-    "validate:dependencies": "npx ts-node ./scripts/depcheck.ts",
-    "validate:builds": "npx ts-node ./scripts/check-builds.ts",
+    "validate:dependencies": "lg-validate-deps",
+    "validate:builds": "lg-validate-builds",
     "watch": "yarn build -- -- --watch"
   },
   "devDependencies": {

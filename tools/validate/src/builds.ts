@@ -9,8 +9,9 @@ import { Command } from 'commander';
 import fs from 'fs';
 import path from 'path';
 import vm from 'vm';
+import { getAllPackageNames } from './utils/getAllPackageNames';
 
-import { getRelevantPackages } from './utils/getRelevantPackages';
+const rootDir = process.cwd();
 
 const ModuleType = {
   esm: 'esm',
@@ -24,40 +25,16 @@ type ModuleType = typeof ModuleType[keyof typeof ModuleType];
 
 const cli = new Command('test')
   .description('Tests leafygreen-ui build integrity')
-  .option(
-    '--diff',
-    'Builds packages that you have been working on, based on the current git diff',
-    false,
-  )
-  .option(
-    '--deps',
-    'Builds packages that you have been working on, and their leafygreen-ui dependencies.',
-    false,
-  )
   .argument('[packages...]')
   .parse(process.argv);
 
-const { diff, deps } = cli.opts();
-const packages = getRelevantPackages(cli.args, { diff, deps });
-
-// Check if each package is built. If not, build them
-if (
-  !packages.every(pkg =>
-    fs.existsSync(path.resolve(__dirname, `../packages/${pkg}/dist`)),
-  )
-) {
-  console.log('Builds not found. Building...');
-  spawnSync('yarn', ['build', ...packages], { stdio: 'inherit' });
-}
+const packages = getAllPackageNames();
 
 // Check that every package's /dist folder has a valid UMD, ESM & TS files
 for (const pkg of packages) {
-  const rootPath = path.resolve(__dirname, `../packages/${pkg}/dist/index.js`);
-  const esmPath = path.resolve(
-    __dirname,
-    `../packages/${pkg}/dist/esm/index.js`,
-  );
-  const tsPath = path.resolve(__dirname, `../packages/${pkg}/dist/index.d.ts`);
+  const rootPath = path.resolve(rootDir, `packages`, pkg, `dist/index.js`);
+  const esmPath = path.resolve(rootDir, `packages`, pkg, `dist/esm/index.js`);
+  const tsPath = path.resolve(rootDir, `packages`, pkg, `dist/index.d.ts`);
 
   const rootExists = fs.existsSync(rootPath);
   const esmExists = fs.existsSync(esmPath);
