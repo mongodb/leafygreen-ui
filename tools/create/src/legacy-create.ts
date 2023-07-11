@@ -1,4 +1,4 @@
-const fs = require('fs');
+import fs from 'fs';
 
 if (process.argv.length <= 2) {
   throw new Error('No package name found. Please provide a package name');
@@ -21,7 +21,7 @@ const newDir = `${srcDir}/${packageNameKebab}`;
 const newSrcDir = `${newDir}/src`;
 const newSubDir = `${newSrcDir}/${packageNamePascal}`;
 
-const handleErr = err => {
+const handleErr = (err: NodeJS.ErrnoException | null) => {
   if (err) throw err;
 };
 

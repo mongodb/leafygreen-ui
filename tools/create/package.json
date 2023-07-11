@@ -1,0 +1,20 @@
+{
+  "name": "@lg-tools/create",
+  "version": "0.0.1",
+  "description": "Creates a new LeafyGreen packages",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "bin": {
+    "lg-create": "./bin/legacy-create.js"
+  },
+  "scripts": {
+    "build": "rollup -c rollup.config.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^11.0.0"
+  }
+}

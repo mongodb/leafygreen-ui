@@ -8,8 +8,7 @@
   },
   "scripts": {
     "init": "yarn && yarn build",
-    "TODO:": "REPLACE BELOW",
-    "create-package": "node ./scripts/create-package.js",
+    "create-package": "lg-create",
     "build": "turbo run build tsc",
     "build-storybook": "storybook build",
     "build:docs": "lg-tsdoc",
@@ -45,6 +44,7 @@
     "@leafygreen-ui/lib": "^10.1.0",
     "@leafygreen-ui/testing-lib": "*",
     "@lg-tools/build": "^0.0.1",
+    "@lg-tools/create": "^0.0.1",
     "@lg-tools/link": "^0.0.1",
     "@lg-tools/lint": "^0.0.1",
     "@lg-tools/slackbot": "^0.0.1",
