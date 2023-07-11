@@ -6,6 +6,12 @@
   "publishConfig": {
     "access": "public"
   },
+  "bin": {
+    "lg-tsdoc": "./bin/tsdoc.js"
+  },
+  "scripts": {
+    "build": "rollup -c rollup.config.mjs"
+  },
   "dependencies": {
     "@babel/core": "^7.9.0",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
@@ -30,7 +36,13 @@
     "@svgr/babel-plugin-replace-jsx-attribute-value": "^8.0.0",
     "@svgr/cli": "^8.0.0",
     "@svgr/rollup": "^8.0.0",
+    "chalk": "^4.0.0",
+    "commander": "^11.0.0",
+    "react-docgen-typescript": "^2.2.2",
     "rollup": "^3.25.0",
     "rollup-plugin-node-externals": "^6.1.1"
+  },
+  "peerDependencies": {
+    "typescript": "^4.6.3"
   }
 }
