@@ -46,45 +46,60 @@ async function linkPackages(
   }
 
   async function linkPackageForScope(scope: keyof typeof Scope) {
-    // The directory where the leafygreen-ui packages are installed
+    const node_modulesDir = path.join(destination, 'node_modules');
+
+    // The directory where the scope's packages are installed
     const installedModulesDir = path.join(destination, 'node_modules', scope);
 
-    // Check that the destination has leafygreen-ui packages installed
-    if (fs.existsSync(installedModulesDir)) {
-      // Get a list of all the packages in the destination
-      // Run yarn link on each package
-      // Run yarn link <packageName> on the destination
-      const installedLGPackages = fs.readdirSync(installedModulesDir);
-      console.log(
-        chalk.gray(` Creating links to ${formatLog.scope(scope)} packages...`),
-      );
-      await Promise.all(
-        installedLGPackages.map(pkg => {
-          createYarnLinkForPackage(scope, pkg);
-        }),
-      );
-      console.log(
-        chalk.gray(
-          ` Connecting links for ${formatLog.scope(
-            scope,
-          )} packages to ${chalk.blue(formatLog.path(relativeDestination))}...`,
-        ),
-      );
-      await Promise.all(
-        installedLGPackages.map((pkg: string) =>
-          linkPackageToDestination(scope, pkg),
-        ),
-      );
+    if (fs.existsSync(node_modulesDir)) {
+      // Check that the destination has scope's packages installed
+      if (fs.existsSync(installedModulesDir)) {
+        // Get a list of all the packages in the destination
+        // Run yarn link on each package
+        // Run yarn link <packageName> on the destination
+        const installedLGPackages = fs.readdirSync(installedModulesDir);
+        console.log(
+          chalk.gray(
+            ` Creating links to ${formatLog.scope(scope)} packages...`,
+          ),
+        );
+        await Promise.all(
+          installedLGPackages.map(pkg => {
+            createYarnLinkForPackage(scope, pkg);
+          }),
+        );
+        console.log(
+          chalk.gray(
+            ` Connecting links for ${formatLog.scope(
+              scope,
+            )} packages to ${chalk.blue(
+              formatLog.path(relativeDestination),
+            )}...`,
+          ),
+        );
+        await Promise.all(
+          installedLGPackages.map((pkg: string) =>
+            linkPackageToDestination(scope, pkg),
+          ),
+        );
+      } else {
+        console.error(
+          chalk.gray(
+            ` Couldn't find ${formatLog.scope(
+              scope,
+            )} scoped packages installed at ${chalk.blue(
+              formatLog.path(relativeDestination),
+            )}. Skipping.`,
+          ),
+        );
+      }
     } else {
       console.error(
-        chalk.gray(
-          ` Couldn't find ${formatLog.scope(
-            scope,
-          )} scoped packages installed at ${chalk.blue(
-            formatLog.path(relativeDestination),
-          )}. Skipping.`,
-        ),
+        chalk.yellow(`${formatLog.path('node_modules')} not found.`),
       );
+      // TODO: Prompt user to install instead of just running it
+      await yarnInstall(destination);
+      await linkPackageForScope(scope);
     }
   }
 
@@ -161,4 +176,17 @@ function findDirectory(
       return findDirectory(path.join(startDir, '..'), targetDir);
     }
   }
+}
+
+function yarnInstall(path: string) {
+  return new Promise((resolve, reject) => {
+    spawn('yarn', ['install'], {
+      cwd: path,
+      stdio: 'ignore',
+    })
+      .on('close', resolve)
+      .on('error', () => {
+        throw new Error(`Error installing packages`);
+      });
+  });
 }
