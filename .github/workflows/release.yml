@@ -24,13 +24,13 @@ jobs:
         run: yarn
 
       - name: Build packages
-        run: yarn build:packages
+        run: yarn build
 
       - name: Build typescript
-        run: yarn build:ts
+        run: yarn tsc
 
       - name: Build TSDoc
-        run: yarn docs:tsdoc
+        run: yarn build:docs
 
       - name: Establish Chromatic baseline
         uses: chromaui/action@v1

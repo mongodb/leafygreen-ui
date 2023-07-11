@@ -1,5 +1,5 @@
 import React from 'react';
-import { Player } from '@lottiefiles/react-lottie-player';
+import Lottie from 'react-lottie-player';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -24,9 +24,10 @@ const PageLoader = ({
 }: PageLoaderProps) => {
   const { theme } = useDarkMode(darkModeProp);
   const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
+
   return (
     <div className={cx(rootStyles, className)} {...rest}>
-      <Player autoplay loop src={animationJson} style={blobStyles} />
+      <Lottie play loop animationData={animationJson} style={blobStyles} />
       {description && (
         <Body
           className={descriptionThemeColor[theme]}
