@@ -4,11 +4,11 @@
 
 /* eslint-disable no-console */
 import chalk from 'chalk';
-import { spawnSync } from 'child_process';
 import { Command } from 'commander';
 import fs from 'fs';
 import path from 'path';
 import vm from 'vm';
+
 import { getAllPackageNames } from './utils/getAllPackageNames';
 
 const rootDir = process.cwd();

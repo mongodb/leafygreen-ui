@@ -8,6 +8,7 @@ import { isEqual, pick } from 'lodash';
 import fetch from 'node-fetch';
 import { join, resolve } from 'path';
 import { exit } from 'process';
+
 import { getAllPackageNames } from './utils/getAllPackageNames';
 import { getPackageLGDependencies } from './utils/getPackageDependencies';
 
