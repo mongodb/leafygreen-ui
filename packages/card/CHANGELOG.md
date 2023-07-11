@@ -1,5 +1,11 @@
 # @leafygreen-ui/card
 
+## 10.0.0
+
+### Major Changes
+
+- 84c700b9: Wraps component in `React.forwardRef`
+
 ## 9.0.9
 
 ### Patch Changes

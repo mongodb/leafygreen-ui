@@ -1,5 +1,14 @@
 # @leafygreen-ui/expandable-card
 
+## 3.0.13
+
+### Patch Changes
+
+- Updated dependencies [84c700b9]
+- Updated dependencies [bf5672bb]
+  - @leafygreen-ui/card@10.0.0
+  - @leafygreen-ui/icon@11.18.0
+
 ## 3.0.12
 
 ### Patch Changes
