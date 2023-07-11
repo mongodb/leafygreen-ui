@@ -29,7 +29,6 @@
     "test": "lg-test",
     "test:ssr": "lg-test --ssr",
     "unlink": "lg-unlink",
-    "TODO:": "REPLACE BELOW",
     "update:proptypes": "npx ts-node ./scripts/proptypes.ts",
     "validate": "npm-run-all --parallel validate:*",
     "validate:dependencies": "npx ts-node ./scripts/depcheck.ts",
@@ -89,7 +88,7 @@
     "storybook": "^7.0.11",
     "stream-browserify": "^3.0.0",
     "ts-node": "^8.8.2",
-    "turbo": "^1.10.3",
+    "turbo": "^1.10.7",
     "typescript": "^4.1.0"
   },
   "resolutions": {
