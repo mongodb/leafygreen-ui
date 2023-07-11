@@ -174,7 +174,7 @@ const data = [
 export const LiveExample: StoryFn<SearchInputProps> = (
   args: SearchInputProps,
 ) => {
-  const [currentPage, setPage] = useState<typeof data[0]>();
+  const [currentPage, setPage] = useState<(typeof data)[0]>();
   const [searchResults, setSearchResults] = useState(data);
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {

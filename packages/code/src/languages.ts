@@ -92,4 +92,4 @@ export const SupportedLanguages = {
 } as const;
 
 export type SupportedLanguages =
-  typeof SupportedLanguages[keyof typeof SupportedLanguages];
+  (typeof SupportedLanguages)[keyof typeof SupportedLanguages];
