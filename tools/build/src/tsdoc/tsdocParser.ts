@@ -82,7 +82,7 @@ interface ParseFunctionOptions {
   excludeTags?: Array<string>;
 }
 const defaultParseFunctionOptions = {
-  packagesRoot: path.resolve(__dirname, '../../packages'),
+  packagesRoot: path.resolve(process.cwd(), 'packages'),
   excludeTags: ['example', 'internal', 'noDocgen'],
 };
 
@@ -103,7 +103,7 @@ export function parseTSDoc(
   );
 
   const componentDir = path.resolve(
-    __dirname,
+    process.cwd(),
     `${packagesRoot}/${componentName}`,
   );
 
@@ -185,8 +185,8 @@ export function parseTSDoc(
  */
 export function writeDocs(
   componentName: string,
-  packagesRoot = path.resolve(__dirname, '../../packages'),
-  outDir = path.resolve(__dirname, '../../packages'),
+  packagesRoot: string,
+  outDir: string,
 ): void {
   const docs = parseTSDoc(componentName);
   const docString = JSON.stringify(docs, null, 2);
@@ -200,7 +200,7 @@ export function writeDocs(
   );
 
   const outFilePath = path.resolve(
-    __dirname,
+    process.cwd(),
     `${outDir}/${componentName}/tsdoc.json`,
   );
 

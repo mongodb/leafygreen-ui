@@ -3,15 +3,22 @@ import { Command } from 'commander';
 import fs from 'fs';
 import path from 'path';
 
-import { writeDocs } from './utils/tsDocParser';
+import { writeDocs } from './tsDocParser';
+
+const rootDir = process.cwd();
+
+// TODO:
+// This script should run on a single package,
+// and be a part of the turbo build process
+// to take advantage of caching
 
 const cli = new Command('parse-tsdoc')
   .arguments('[packages]')
-  .option('-r, --root <path>', 'Source packages directory', '../packages')
+  .option('-r, --root <path>', 'Source packages directory', './packages')
   .option(
     '-o, --out <path>',
     'Directory to write the doc files (must have the same component folder(s) as source)',
-    '../packages',
+    './packages',
   )
   .parse(process.argv);
 
@@ -24,7 +31,7 @@ const outDir = cli.opts()['out'];
 if (cli.args.length) {
   cli.args.forEach(generateDocFiles);
 } else {
-  const packagesDir = path.resolve(__dirname, packagesRoot);
+  const packagesDir = path.resolve(rootDir, packagesRoot);
   const packages = fs.readdirSync(packagesDir);
   packages.forEach(generateDocFiles);
 }
@@ -36,7 +43,7 @@ if (cli.args.length) {
 function generateDocFiles(componentName: string): void {
   writeDocs(
     componentName,
-    path.resolve(__dirname, packagesRoot),
-    path.resolve(__dirname, outDir),
+    path.resolve(rootDir, packagesRoot),
+    path.resolve(rootDir, outDir),
   );
 }
