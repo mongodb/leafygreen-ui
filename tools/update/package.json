@@ -1,0 +1,13 @@
+{
+  "name": "@lg-tools/update",
+  "version": "0.0.1",
+  "description": "Updates all LeafyGreen UI packages to the latest version",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "bin": {
+    "lg-update": "./bin/index.js"
+  },
+  "scripts": {
+    "build": "rollup -c rollup.config.mjs"
+  }
+}

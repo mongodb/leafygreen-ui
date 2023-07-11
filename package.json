@@ -28,7 +28,6 @@
     "test": "lg-test",
     "test:ssr": "lg-test --ssr",
     "unlink": "lg-unlink",
-    "update:proptypes": "npx ts-node ./scripts/proptypes.ts",
     "validate": "npm-run-all --parallel validate:*",
     "validate:dependencies": "lg-validate-deps",
     "validate:builds": "lg-validate-builds",
