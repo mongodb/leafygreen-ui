@@ -1,5 +1,11 @@
 # @leafygreen-ui/loading-indicator
 
+## 2.0.0
+
+### Major Changes
+
+- 61c60ab9: Changing Lottie dependency from @lottie-files/react-lottie-player to react-lottie-player
+
 ## 1.0.1
 
 ### Patch Changes
