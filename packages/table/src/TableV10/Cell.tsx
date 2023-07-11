@@ -14,7 +14,9 @@ export const tdInnerDivClassName = createUniqueClassName('td-inner-div');
  * @deprecated
  */
 interface HeaderCellProps
-  extends HTMLElementProps<'th', HTMLTableHeaderCellElement> {
+  extends React.PropsWithChildren<
+    HTMLElementProps<'th', HTMLTableHeaderCellElement>
+  > {
   /**
    * Renders the cell as a th element
    */
@@ -29,7 +31,10 @@ interface HeaderCellProps
 /**
  * @deprecated
  */
-interface TableCellProps extends HTMLElementProps<'td', HTMLTableCellElement> {
+interface TableCellProps
+  extends React.PropsWithChildren<
+    HTMLElementProps<'td', HTMLTableCellElement>
+  > {
   /**
    * Determines whether the cell renders as disabled
    */

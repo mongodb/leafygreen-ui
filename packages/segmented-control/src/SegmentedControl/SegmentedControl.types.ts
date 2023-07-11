@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 export const DeprecatedSize = {
@@ -5,7 +7,8 @@ export const DeprecatedSize = {
   Small: 'small',
 } as const;
 
-export type DeprecatedSize = typeof DeprecatedSize[keyof typeof DeprecatedSize];
+export type DeprecatedSize =
+  (typeof DeprecatedSize)[keyof typeof DeprecatedSize];
 
 export const Size = {
   XSmall: 'xsmall',
@@ -13,7 +16,7 @@ export const Size = {
   Large: 'large',
 } as const;
 
-export type Size = typeof Size[keyof typeof Size];
+export type Size = (typeof Size)[keyof typeof Size];
 
 export interface SegmentedControlProps
   extends Omit<HTMLElementProps<'div'>, 'onChange'> {
@@ -49,7 +52,7 @@ export interface SegmentedControlProps
   /**
    * A text label to the left of the segmented control. Sets the `name` prop if none is provided.
    */
-  label?: string;
+  label?: React.ReactNode;
 
   /**
    * Identifies the segmented control group to screen readers. Auto-generated if no `name` or `label` is provided.

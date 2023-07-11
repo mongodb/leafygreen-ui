@@ -14,10 +14,8 @@ import {
   StoryType,
 } from '@leafygreen-ui/lib';
 import { MenuItem } from '@leafygreen-ui/menu';
-import {
-  getAlign,
-  getJustify,
-} from '@leafygreen-ui/popover/src/Popover.testutils';
+import { TestUtils } from '@leafygreen-ui/popover';
+const { getAlign, getJustify } = TestUtils;
 
 import { Align, Justify, SplitButton, SplitButtonProps, Variant } from '.';
 
@@ -146,7 +144,6 @@ export const LargeSize: StoryType<typeof SplitButton> = () => <></>;
 LargeSize.parameters = {
   generate: {
     args: {
-      // @ts-expect-error - types are incorrect
       size: Size.Large,
     },
   },
@@ -156,7 +153,6 @@ export const DefaultSize: StoryType<typeof SplitButton> = () => <></>;
 DefaultSize.parameters = {
   generate: {
     args: {
-      // @ts-expect-error - types are incorrect
       size: Size.Default,
     },
   },
@@ -166,7 +162,6 @@ export const SmallSize: StoryType<typeof SplitButton> = () => <></>;
 SmallSize.parameters = {
   generate: {
     args: {
-      // @ts-expect-error - types are incorrect
       size: Size.Small,
     },
   },
@@ -176,7 +171,6 @@ export const XSmallSize: StoryType<typeof SplitButton> = () => <></>;
 XSmallSize.parameters = {
   generate: {
     args: {
-      // @ts-expect-error - types are incorrect
       size: Size.XSmall,
     },
   },

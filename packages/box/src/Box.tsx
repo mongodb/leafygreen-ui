@@ -47,7 +47,7 @@ type BoxComponent<TProps = {}, ExtraProps = {}> = Override2<
     /**
      * The component or HTML Element that the button is rendered as.
      */
-    as: React.ComponentType<TProps>;
+    as: React.ComponentType<React.PropsWithChildren<TProps>>;
   },
   ExtraProps
 >;
@@ -115,7 +115,9 @@ export interface ExtendableBox<
   ExtraProps,
   Default extends React.ElementType = 'div',
 > extends Pick<
-    React.FunctionComponent<BoxProps<Default, ExtraProps>>,
+    React.FunctionComponent<
+      React.PropsWithChildren<BoxProps<Default, ExtraProps>>
+    >,
     'displayName' | 'propTypes'
   > {
   <TElement extends keyof JSX.IntrinsicElements>(
