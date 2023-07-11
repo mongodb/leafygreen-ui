@@ -3,7 +3,7 @@ import { Command } from 'commander';
 import fs from 'fs';
 import path from 'path';
 
-import { writeDocs } from './tsDocParser';
+import { writeDocs } from './tsdocParser';
 
 const rootDir = process.cwd();
 
