@@ -3,17 +3,21 @@ import chalk from 'chalk';
 import { SpawnOptions, spawnSync } from 'child_process';
 import { Command } from 'commander';
 import depcheck from 'depcheck';
-import { readdirSync, readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 import { isEqual, pick } from 'lodash';
 import fetch from 'node-fetch';
 import { join, resolve } from 'path';
 import { exit } from 'process';
 
-import globalPackageJson from '../package.json';
-
+import { getAllPackageNames } from './utils/getAllPackageNames';
 import { getPackageLGDependencies } from './utils/getPackageDependencies';
 
-const lgPackages = readdirSync('packages/');
+const rootDir = process.cwd();
+
+const globalPackageJson = JSON.parse(
+  readFileSync(join(rootDir, 'package.json'), 'utf-8'),
+);
+const lgPackages = getAllPackageNames();
 const globalDevDependencies = Object.keys(globalPackageJson.devDependencies);
 const lgProvider = '@leafygreen-ui/leafygreen-provider';
 
@@ -68,7 +72,7 @@ async function checkDependencies() {
 
   for (const pkg of packages) {
     const check = await depcheck(
-      resolve(__dirname, `../packages/${pkg}`),
+      resolve(rootDir, 'packages', pkg),
       depcheckOptions,
     );
     const {
@@ -328,7 +332,7 @@ async function fixDependencies(
       delete pkgJson.devDependencies;
     }
 
-    const pkgJsonPath = resolve(__dirname, `../packages/${pkg}/package.json`);
+    const pkgJsonPath = resolve(rootDir, `packages`, pkg, `package.json`);
     writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2) + '\n');
     spawnSync(`yarn`, ['install'], cmdOpts);
   }
@@ -406,7 +410,7 @@ function sortDependenciesByUsage(
  * @returns a parsed package.json
  */
 function readPackageJson(pkg: string): { [key: string]: any } {
-  const pkgJsonPath = resolve(__dirname, `../packages/${pkg}/package.json`);
+  const pkgJsonPath = resolve(rootDir, `packages`, pkg, `package.json`);
   const pkgJson = JSON.parse(readFileSync(pkgJsonPath, 'utf-8'));
   return pkgJson;
 }
