@@ -39,9 +39,10 @@ const allDependencies = {
  * @returns An array of all glyph import paths
  */
 function getDirectGlyphImports() {
-  if (allDependencies['@leafygreen-ui/icon']) {
-    const glyphsDir = path.resolve(process.cwd(), '../icon/src/glyphs');
+  const pkgHasIconDependency = allDependencies['@leafygreen-ui/icon'];
+  const glyphsDir = path.resolve(process.cwd(), '../icon/src/glyphs');
 
+  if (pkgHasIconDependency && fs.existsSync(glyphsDir)) {
     return fs
       .readdirSync(glyphsDir)
       .filter(path => /.svg/.test(path))
