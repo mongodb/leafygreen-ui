@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
 import { spawn } from 'child_process';
-import { Command } from 'commander';
+import { Command, Option } from 'commander';
 import fs from 'fs';
 import path from 'path';
 
@@ -18,16 +18,22 @@ program
   .arguments('destination')
   .option('-v --verbose', 'Prints additional information to the console', false)
   .option('--noInstall', 'Skip the yarn install step', false)
+  .addOption(
+    new Option('--scope <name>', 'The NPM organization').choices(
+      Object.keys(Scope),
+    ),
+  )
   .action(unlinkPackages)
   .parse(process.argv);
 
 interface Opts {
   verbose: boolean;
   noInstall: boolean;
+  scope: keyof typeof Scope;
 }
 
 async function unlinkPackages(destination: string, opts: Opts) {
-  const { verbose, noInstall } = opts;
+  const { verbose, noInstall, scope } = opts;
   const relativeDestination = path.relative(process.cwd(), destination);
 
   // Check if the destination exists
@@ -38,8 +44,17 @@ async function unlinkPackages(destination: string, opts: Opts) {
       ),
     );
 
-    await unlinkPackageForScope('@leafygreen-ui');
-    await unlinkPackageForScope('@lg-tools');
+    if (scope === '@leafygreen-ui') {
+      await unlinkPackageForScope('@leafygreen-ui');
+    } else if (scope === '@lg-tools') {
+      await unlinkPackageForScope('@lg-tools');
+    } else {
+      await Promise.all([
+        unlinkPackageForScope('@leafygreen-ui'),
+        unlinkPackageForScope('@lg-tools'),
+      ]);
+    }
+
     if (noInstall) {
       console.log(
         ` Skipping yarn install. \nYou will need to run ${formatLog.cmd(

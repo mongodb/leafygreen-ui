@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
 import { spawn } from 'child_process';
-import { Command } from 'commander';
+import { Command, Option } from 'commander';
 import fs from 'fs';
 import { homedir } from 'os';
 import path from 'path';
@@ -18,15 +18,29 @@ program
   )
   .arguments('destination')
   .option('-v --verbose', 'Prints additional information to the console', false)
-  // TODO: Add `scope` option using `.addOption` method
+  .addOption(
+    new Option('--scope <name>', 'The NPM organization').choices(
+      Object.keys(Scope),
+    ),
+  )
+  .addOption(
+    new Option(
+      '--packages <names...>',
+      'Specific package names (requires `scope` option, or full package name)',
+    ),
+  )
   .action(linkPackages)
   .parse(process.argv);
 
 async function linkPackages(
   destination: string,
-  opts: { scope: string; verbose: boolean },
+  opts: {
+    packages: Array<string>;
+    scope: keyof typeof Scope;
+    verbose: boolean;
+  },
 ) {
-  const { verbose } = opts;
+  const { verbose, scope, packages } = opts;
   const relativeDestination = path.relative(process.cwd(), destination);
 
   // Check if the destination exists
@@ -36,8 +50,18 @@ async function linkPackages(
         `Linking packages to ${formatLog.path(relativeDestination)} ...`,
       ),
     );
-    await linkPackageForScope('@leafygreen-ui');
-    await linkPackageForScope('@lg-tools');
+
+    if (scope === '@leafygreen-ui') {
+      await linkPackagesForScope('@leafygreen-ui', packages);
+    } else if (scope === '@lg-tools') {
+      await linkPackagesForScope('@lg-tools', packages);
+    } else {
+      await Promise.all([
+        linkPackagesForScope('@leafygreen-ui', packages),
+        linkPackagesForScope('@lg-tools', packages),
+      ]);
+    }
+
     console.log(chalk.green('Finished linking packages.'));
   } else {
     throw new Error(
@@ -45,7 +69,10 @@ async function linkPackages(
     );
   }
 
-  async function linkPackageForScope(scope: keyof typeof Scope) {
+  async function linkPackagesForScope(
+    scope: keyof typeof Scope,
+    packages?: Array<string>,
+  ) {
     const node_modulesDir = path.join(destination, 'node_modules');
 
     // The directory where the scope's packages are installed
@@ -58,13 +85,20 @@ async function linkPackages(
         // Run yarn link on each package
         // Run yarn link <packageName> on the destination
         const installedLGPackages = fs.readdirSync(installedModulesDir);
+
+        const packagesToLink = packages
+          ? installedLGPackages.filter(installedPkg =>
+              packages.some(pkgFlag => pkgFlag.includes(installedPkg)),
+            )
+          : installedLGPackages;
+
         console.log(
           chalk.gray(
             ` Creating links to ${formatLog.scope(scope)} packages...`,
           ),
         );
         await Promise.all(
-          installedLGPackages.map(pkg => {
+          packagesToLink.map(pkg => {
             createYarnLinkForPackage(scope, pkg);
           }),
         );
@@ -78,7 +112,7 @@ async function linkPackages(
           ),
         );
         await Promise.all(
-          installedLGPackages.map((pkg: string) =>
+          packagesToLink.map((pkg: string) =>
             linkPackageToDestination(scope, pkg),
           ),
         );
@@ -99,7 +133,7 @@ async function linkPackages(
       );
       // TODO: Prompt user to install instead of just running it
       await yarnInstall(destination);
-      await linkPackageForScope(scope);
+      await linkPackagesForScope(scope);
     }
   }
 
