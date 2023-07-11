@@ -1,4 +1,4 @@
-import { umdConfig } from '@lg-tools/build/config/rollup.config.mjs';
+import { umdConfig } from './config/rollup.config.mjs';
 
 const config = {
   ...umdConfig,
