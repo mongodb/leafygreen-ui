@@ -16,9 +16,17 @@ const cli = new Command()
   .option('-f, --fix', 'fix linting errors', false)
   .option('-p, --prettierOnly', 'run prettier only', false)
   .option('-e, --eslintOnly', 'run eslint only', false)
+  .option('--verbose', 'verbose mode', false)
   .parse(process.argv);
 
-const { fix, prettierOnly, eslintOnly } = cli.opts();
+const { fix, prettierOnly, eslintOnly, verbose } = cli.opts();
+
+verbose &&
+  console.log('Using config files:', {
+    eslintConfig,
+    prettierConfig,
+    npmPkgLintConfig,
+  });
 
 // If prettierOnly or eslintOnly is true, run only that linter
 if (prettierOnly || eslintOnly) {
@@ -35,6 +43,7 @@ eslint();
 prettier();
 npmPkgJsonLint();
 
+/** Spawns an eslint job */
 function eslint() {
   spawn(
     'eslint',
@@ -43,6 +52,7 @@ function eslint() {
       eslintConfig,
       `${rootDir}/**/*.{${esLintExtensions.join(',')}}`,
       fix ? '--fix' : '--no-fix',
+      verbose ? '' : '--quiet',
     ],
     {
       stdio: 'inherit',
@@ -50,6 +60,7 @@ function eslint() {
   );
 }
 
+/** Spawns a prettier job */
 function prettier() {
   spawn(
     'prettier',
@@ -65,6 +76,7 @@ function prettier() {
   );
 }
 
+/** Spawns a npmPkgJsonLint job */
 function npmPkgJsonLint() {
   spawn('npmPkgJsonLint', ['--configFile', npmPkgLintConfig, rootDir], {
     stdio: 'inherit',

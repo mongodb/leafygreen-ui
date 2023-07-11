@@ -8,6 +8,7 @@
   },
   "scripts": {
     "init": "yarn && yarn build",
+    "TODO:": "REPLACE BELOW",
     "create-package": "node ./scripts/create-package.js",
     "build": "turbo run build tsc",
     "build-storybook": "storybook build",
@@ -28,6 +29,7 @@
     "test": "lg-test",
     "test:ssr": "lg-test --ssr",
     "unlink": "lg-unlink",
+    "TODO:": "REPLACE BELOW",
     "update:proptypes": "npx ts-node ./scripts/proptypes.ts",
     "validate": "npm-run-all --parallel validate:*",
     "validate:dependencies": "npx ts-node ./scripts/depcheck.ts",
