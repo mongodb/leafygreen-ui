@@ -1,5 +1,12 @@
 # @leafygreen-ui/button
 
+## 20.2.2
+
+### Patch Changes
+
+- Updated dependencies [61c60ab9]
+  - @leafygreen-ui/loading-indicator@2.0.0
+
 ## 20.2.1
 
 ### Patch Changes

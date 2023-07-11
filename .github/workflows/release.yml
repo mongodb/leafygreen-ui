@@ -65,7 +65,3 @@ jobs:
         run: yarn slackbot '${{steps.changesets.outputs.publishedPackages}}'
         env:
           SLACK_BOT_TOKEN: '${{secrets.SLACK_BOT_TOKEN}}'
-
-      - name: Publish storybook with package updates
-        if: steps.changesets.outputs.published == 'true'
-        run: yarn publish:storybook

@@ -1,5 +1,16 @@
 # @leafygreen-ui/segmented-control
 
+## 8.2.0
+
+### Minor Changes
+
+- b0b70b7a: Label prop now accepts type `React.ReactNode` instead of `string`
+
+### Patch Changes
+
+- Updated dependencies [bf5672bb]
+  - @leafygreen-ui/icon@11.18.0
+
 ## 8.1.3
 
 ### Patch Changes

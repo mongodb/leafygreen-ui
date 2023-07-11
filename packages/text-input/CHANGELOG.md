@@ -1,5 +1,13 @@
 # @leafygreen-ui/text-input
 
+## 12.1.15
+
+### Patch Changes
+
+- 0efcd4e7: Updates valid state icon in dark mode to match Figma spec
+- Updated dependencies [bf5672bb]
+  - @leafygreen-ui/icon@11.18.0
+
 ## 12.1.14
 
 ### Patch Changes
