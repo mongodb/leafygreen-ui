@@ -18,6 +18,7 @@
     "@babel/eslint-parser": "^7.22.5",
     "@emotion/eslint-plugin": "^11.11.0",
     "@lg-tools/build": "^0.0.1",
+    "@nicolo-ribaudo/semver-v6": "^6.3.3",
     "@typescript-eslint/eslint-plugin": "^5.60.0",
     "@typescript-eslint/parser": "^5.60.0",
     "eslint": "^8.43.0",

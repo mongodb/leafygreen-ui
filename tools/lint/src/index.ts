@@ -1,5 +1,6 @@
 const { spawn } = require('child_process');
 const path = require('path');
+const chalk = require('chalk');
 const { Command } = require('commander');
 const rootDir = process.cwd();
 const eslintConfig = path.resolve(__dirname, '../config/eslint.config.js');
@@ -39,46 +40,58 @@ if (prettierOnly || eslintOnly) {
 }
 
 // Otherwise, run all linters
-eslint();
-prettier();
-npmPkgJsonLint();
+
+(async () => {
+  await eslint();
+  await prettier();
+  await npmPkgJsonLint();
+})();
 
 /** Spawns an eslint job */
 function eslint() {
-  spawn(
-    'eslint',
-    [
-      '--config',
-      eslintConfig,
-      `${rootDir}/**/*.{${esLintExtensions.join(',')}}`,
-      fix ? '--fix' : '--no-fix',
-      verbose ? '' : '--quiet',
-    ],
-    {
-      stdio: 'inherit',
-    },
-  );
+  return new Promise(resolve => {
+    console.log(chalk.blue('Running ESLint...'));
+    spawn(
+      'eslint',
+      [
+        '--config',
+        eslintConfig,
+        `${rootDir}/**/*.{${esLintExtensions.join(',')}}`,
+        fix ? '--fix' : '--no-fix',
+        verbose ? '' : '--quiet',
+      ],
+      {
+        stdio: 'inherit',
+      },
+    ).on('close', resolve);
+  });
 }
 
 /** Spawns a prettier job */
 function prettier() {
-  spawn(
-    'prettier',
-    [
-      fix ? '--write' : '--check',
-      '--config',
-      prettierConfig,
-      `${rootDir}/**/*.{${prettierExtensions.join(',')}}`,
-    ],
-    {
-      stdio: 'inherit',
-    },
-  );
+  return new Promise(resolve => {
+    console.log(chalk.magenta('Running Prettier...'));
+    spawn(
+      'prettier',
+      [
+        fix ? '--write' : '--check',
+        '--config',
+        prettierConfig,
+        `${rootDir}/**/*.{${prettierExtensions.join(',')}}`,
+      ],
+      {
+        stdio: 'inherit',
+      },
+    ).on('close', resolve);
+  });
 }
 
 /** Spawns a npmPkgJsonLint job */
 function npmPkgJsonLint() {
-  spawn('npmPkgJsonLint', ['--configFile', npmPkgLintConfig, rootDir], {
-    stdio: 'inherit',
+  return new Promise(resolve => {
+    console.log(chalk.yellow('Running npmPkgJsonLint...'));
+    spawn('npmPkgJsonLint', ['--configFile', npmPkgLintConfig, rootDir], {
+      stdio: 'inherit',
+    }).on('close', resolve);
   });
 }
