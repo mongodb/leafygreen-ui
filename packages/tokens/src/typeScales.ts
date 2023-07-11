@@ -3,7 +3,7 @@ export const BaseFontSize = {
   Body2: 16,
 } as const;
 
-export type BaseFontSize = (typeof BaseFontSize)[keyof typeof BaseFontSize];
+export type BaseFontSize = typeof BaseFontSize[keyof typeof BaseFontSize];
 
 /**
  * Defines font sizes and line heights of common typographic elements.

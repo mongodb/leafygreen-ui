@@ -17,7 +17,7 @@ const Align = {
   CenterHorizontal: 'center-horizontal',
 } as const;
 
-type Align = (typeof Align)[keyof typeof Align];
+type Align = typeof Align[keyof typeof Align];
 
 export { Align };
 
@@ -36,7 +36,7 @@ const Justify = {
   Fit: 'fit',
 } as const;
 
-type Justify = (typeof Justify)[keyof typeof Justify];
+type Justify = typeof Justify[keyof typeof Justify];
 
 export { Justify };
 

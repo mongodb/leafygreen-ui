@@ -8,8 +8,7 @@ export const CloseIconColor = {
   Light: 'light',
 };
 
-export type CloseIconColor =
-  (typeof CloseIconColor)[keyof typeof CloseIconColor];
+export type CloseIconColor = typeof CloseIconColor[keyof typeof CloseIconColor];
 
 export const ModalSize = {
   Small: 'small',
@@ -17,7 +16,7 @@ export const ModalSize = {
   Large: 'large',
 } as const;
 
-export type ModalSize = (typeof ModalSize)[keyof typeof ModalSize];
+export type ModalSize = typeof ModalSize[keyof typeof ModalSize];
 
 export type ForwardedRef =
   | React.ForwardedRef<HTMLDivElement | null>

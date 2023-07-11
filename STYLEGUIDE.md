@@ -55,7 +55,7 @@ export const someConstant = {
   optionTwo = 'option 2',
 } as const;
 
-export type someConstant = (typeof someConstant)[keyof typeof someConstant];
+export type someConstant = typeof someConstant[keyof typeof someConstant];
 ```
 
 #### Avoid

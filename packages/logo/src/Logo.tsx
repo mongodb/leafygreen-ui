@@ -22,7 +22,7 @@ export const LogoNames = [
   'UniversityLogoLockup',
 ] as const;
 
-export type LogoName = (typeof LogoNames)[number];
+export type LogoName = typeof LogoNames[number];
 
 interface GenericLogoProps extends LogoProps {
   /**

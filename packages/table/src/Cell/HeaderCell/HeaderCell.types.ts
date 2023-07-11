@@ -11,7 +11,7 @@ export const SortState = {
   None: 'none',
 } as const;
 
-export type SortState = (typeof SortState)[keyof typeof SortState];
+export type SortState = typeof SortState[keyof typeof SortState];
 
 export interface SortStates {
   [key: string]: SortState;

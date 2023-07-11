@@ -7,7 +7,7 @@ export const Size = {
   XLarge: 'xlarge',
 } as const;
 
-export type Size = (typeof Size)[keyof typeof Size];
+export type Size = typeof Size[keyof typeof Size];
 
 // Since applications can't yet tree-shake, we're duplicating this interface from the types in the namespaces within the Icon package rather than importing the Icon package.
 // TODO: Import {IconProps} from '.../icon`

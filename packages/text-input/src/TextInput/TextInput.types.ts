@@ -7,7 +7,7 @@ export const State = {
   Error: 'error',
 } as const;
 
-export type State = (typeof State)[keyof typeof State];
+export type State = typeof State[keyof typeof State];
 
 export const TextInputType = {
   Email: 'email',
@@ -19,7 +19,7 @@ export const TextInputType = {
   Number: 'number',
 } as const;
 
-export type TextInputType = (typeof TextInputType)[keyof typeof TextInputType];
+export type TextInputType = typeof TextInputType[keyof typeof TextInputType];
 
 export const SizeVariant = {
   XSmall: 'xsmall',
@@ -28,7 +28,7 @@ export const SizeVariant = {
   Large: 'large',
 } as const;
 
-export type SizeVariant = (typeof SizeVariant)[keyof typeof SizeVariant];
+export type SizeVariant = typeof SizeVariant[keyof typeof SizeVariant];
 
 export const TextInputFontSize = {
   ...BaseFontSize,
@@ -36,7 +36,7 @@ export const TextInputFontSize = {
 } as const;
 
 export type TextInputFontSize =
-  (typeof TextInputFontSize)[keyof typeof TextInputFontSize];
+  typeof TextInputFontSize[keyof typeof TextInputFontSize];
 
 interface AriaLabelProps {
   /**

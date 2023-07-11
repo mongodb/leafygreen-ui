@@ -5,7 +5,7 @@ export const ContentStyle = {
   Clickable: 'clickable',
 } as const;
 
-export type ContentStyle = (typeof ContentStyle)[keyof typeof ContentStyle];
+export type ContentStyle = typeof ContentStyle[keyof typeof ContentStyle];
 
 export interface CardProps extends DarkModeProps, HTMLElementProps<'div'> {
   /**

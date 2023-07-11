@@ -16,8 +16,7 @@ const TableActionTypes = {
 /**
  * @deprecated
  */
-type TableActionTypes =
-  (typeof TableActionTypes)[keyof typeof TableActionTypes];
+type TableActionTypes = typeof TableActionTypes[keyof typeof TableActionTypes];
 
 export { TableActionTypes };
 
@@ -57,7 +56,7 @@ const DataType = {
   Date: 'date',
 } as const;
 
-type DataType = (typeof DataType)[keyof typeof DataType];
+type DataType = typeof DataType[keyof typeof DataType];
 
 export { DataType };
 

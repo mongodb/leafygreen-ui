@@ -11,7 +11,7 @@ export const Variant = {
   BaseGreen: 'baseGreen',
 } as const;
 
-export type Variant = (typeof Variant)[keyof typeof Variant];
+export type Variant = typeof Variant[keyof typeof Variant];
 
 /**
  * Size variants
@@ -25,7 +25,7 @@ export const Size = {
   Large: 'large',
 };
 
-export type Size = (typeof Size)[keyof typeof Size];
+export type Size = typeof Size[keyof typeof Size];
 
 // TODO: Remove in next major release
 export const FontSize = {
@@ -33,7 +33,7 @@ export const FontSize = {
   Body2: 16,
 } as const;
 
-export type FontSize = (typeof FontSize)[keyof typeof FontSize];
+export type FontSize = typeof FontSize[keyof typeof FontSize];
 
 export interface ButtonProps {
   // Would prefer to use Pick<> to extract these properties, but they would not be correctly imported into Storybook otherwise.

@@ -30,21 +30,21 @@ export const Variant = {
   Danger: ButtonVariants.Danger,
 } as const;
 
-export type Variant = (typeof Variant)[keyof typeof Variant];
+export type Variant = typeof Variant[keyof typeof Variant];
 
 export const Align = {
   Top: ImportedAlign.Top,
   Bottom: ImportedAlign.Bottom,
 } as const;
 
-export type Align = (typeof Align)[keyof typeof Align];
+export type Align = typeof Align[keyof typeof Align];
 
 export const Justify = {
   Start: ImportedJustify.Start,
   End: ImportedJustify.End,
 } as const;
 
-export type Justify = (typeof Justify)[keyof typeof Justify];
+export type Justify = typeof Justify[keyof typeof Justify];
 
 // TODO: remove `href` and `as` when Button is updated to use `InferredPolymorphic`
 // https://jira.mongodb.org/browse/LG-3260

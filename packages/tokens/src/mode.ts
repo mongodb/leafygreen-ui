@@ -3,6 +3,6 @@ const Mode = {
   Light: 'light',
 } as const;
 
-type Mode = (typeof Mode)[keyof typeof Mode];
+type Mode = typeof Mode[keyof typeof Mode];
 
 export { Mode };

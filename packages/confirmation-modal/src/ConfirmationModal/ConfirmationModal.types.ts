@@ -5,7 +5,7 @@ export const Variant = {
   Danger: 'danger',
 } as const;
 
-export type Variant = (typeof Variant)[keyof typeof Variant];
+export type Variant = typeof Variant[keyof typeof Variant];
 
 export interface ConfirmationModalProps extends Omit<ModalProps, 'size'> {
   /**

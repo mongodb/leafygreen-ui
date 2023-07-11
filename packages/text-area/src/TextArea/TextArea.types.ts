@@ -6,7 +6,7 @@ export const State = {
   Error: 'error',
 } as const;
 
-export type State = (typeof State)[keyof typeof State];
+export type State = typeof State[keyof typeof State];
 
 export interface BaseTextAreaProps
   extends HTMLElementProps<'textarea', HTMLTextAreaElement> {
