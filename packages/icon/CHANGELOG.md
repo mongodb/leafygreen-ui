@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 11.18.0
+
+### Minor Changes
+
+- bf5672bb: Adds 'Federation' icon to glyph set
+
 ## 11.17.0
 
 ### Minor Changes

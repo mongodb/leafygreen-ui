@@ -1,5 +1,11 @@
 # @leafygreen-ui/radio-group
 
+## 10.1.6
+
+### Patch Changes
+
+- 6c1b992e: Updates label color when disabled to match Figma spec
+
 ## 10.1.5
 
 ### Patch Changes

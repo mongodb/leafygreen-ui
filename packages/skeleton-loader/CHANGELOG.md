@@ -1,5 +1,12 @@
 # @leafygreen-ui/skeleton-loader
 
+## 1.0.2
+
+### Patch Changes
+
+- Updated dependencies [84c700b9]
+  - @leafygreen-ui/card@10.0.0
+
 ## 1.0.1
 
 ### Patch Changes
