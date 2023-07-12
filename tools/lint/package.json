@@ -4,9 +4,6 @@
   "description": "Lint rules & config for LeafyGreen repositories",
   "main": "dist/index.js",
   "license": "Apache-2.0",
-  "bin": {
-    "lg-lint": "./bin/lint.js"
-  },
   "publishConfig": {
     "access": "public"
   },
