@@ -17,8 +17,7 @@ function renderBadge() {
   );
 
   const badge = getByTestId('badge-test');
-  const testText = getByTestId('text-test');
-  return { badge, container, testText };
+  return { badge, container };
 }
 
 describe('packages/Badge', () => {
@@ -31,18 +30,13 @@ describe('packages/Badge', () => {
     });
   });
 
-  // test(`renders "${className}" in the badge's classList`, () => {
-  //   const { badge } = renderBadge();
-  //   expect(badge.classList.contains(className)).toBe(true);
-  // });
+  test(`renders "${className}" in the badge's classList`, () => {
+    const { badge } = renderBadge();
+    expect(badge.classList.contains(className)).toBe(true);
+  });
 
-  // test(`renders "${child}" as the badge's textContent`, () => {
-  //   const { badge } = renderBadge();
-  //   expect(badge.textContent).toBe(child);
-  // });
-
-  test('renders test text', () => {
-    const { testText } = renderBadge();
-    expect(testText.textContent).toBe('bye');
+  test(`renders "${child}" as the badge's textContent`, () => {
+    const { badge } = renderBadge();
+    expect(badge.textContent).toBe(child);
   });
 });

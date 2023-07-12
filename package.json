@@ -32,7 +32,6 @@
     "start": "storybook dev -p 9001 --no-version-updates",
     "test": "npx ts-node ./scripts/test.ts",
     "test:local": "yarn test",
-    "test:ssr": "yarn test --ssr",
     "tsc": "turbo run tsc",
     "unlink": "./scripts/unlink.sh",
     "update:proptypes": "npx ts-node ./scripts/proptypes.ts",

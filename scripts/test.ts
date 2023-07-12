@@ -23,7 +23,6 @@ interface Opts {
 const cli = new Command('test')
   .description('Tests leafygreen-ui packages.')
   .argument('[packages...]')
-  .option('--ssr', 'Runs tests on a simulated server', false)
   .option(
     '--diff',
     'Tests packages that you have been working on, based on the current git diff',
@@ -39,7 +38,7 @@ const cli = new Command('test')
   .allowUnknownOption()
   .parse(process.argv);
 
-const { diff, deps, ssr, watch, t } = cli.opts() as Opts;
+const { diff, deps, watch, t } = cli.opts() as Opts;
 
 // The packages
 let packages: Array<string> = cli.args.filter((arg: string) =>
@@ -65,13 +64,7 @@ if (deps) {
 
 const packageArgs = [...packages.map(pkg => `packages/${pkg}`), ...t];
 console.log(`Testing ${packageArgs.length || 'all'} packages`);
-const cmdArgs = [
-  '--env',
-  'jsdom',
-  '--config',
-  ssr ? 'ssr.jest.config.js' : 'jest.config.js',
-  ...args,
-];
+const cmdArgs = ['--env', 'jsdom', '--config', 'jest.config.js', ...args];
 
 if (watch) {
   cmdArgs.push('--watch');
@@ -80,7 +73,7 @@ if (watch) {
 spawn('jest', [...cmdArgs, ...packageArgs], {
   env: {
     ...process.env,
-    JEST_ENV: ssr ? 'ssr' : 'client',
+    JEST_ENV: 'client',
   },
   stdio: 'inherit',
 }).on('exit', code => exit(code || 0));

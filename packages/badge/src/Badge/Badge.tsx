@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -18,11 +18,6 @@ function Badge({
   ...rest
 }: BadgeProps) {
   const { theme } = useDarkMode(darkModeProp);
-  const [testText, updateTestText] = useState<string>('hi');
-
-  useEffect(() => {
-    updateTestText('bye');
-  }, [testText]);
 
   return (
     <div
@@ -30,7 +25,6 @@ function Badge({
       className={cx(baseStyle, badgeVariants[theme][variant], className)}
     >
       {children}
-      <div data-testid="text-test">{testText}</div>
     </div>
   );
 }
