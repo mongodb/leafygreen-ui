@@ -21,7 +21,7 @@
     "clean:modules": "rm -rf node_modules {packages,tools}/*/node_modules",
     "fix": "lg-lint --fix",
     "link": "lg-link",
-    "lint": "lg-lint",
+    "lint": "lg lint",
     "prepublishOnly": "yarn fix && yarn test && yarn build && yarn prepublish:ts-downlevel",
     "prepublish:ts-downlevel": "rm -rf packages/*/dist/ts3.4 && echo packages/*/dist | NODE_NO_WARNINGS=1 xargs -I{} -n1 -P8 downlevel-dts {} {}/ts3.4",
     "publish": "yarn changeset publish --public",

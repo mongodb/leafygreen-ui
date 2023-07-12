@@ -2,7 +2,7 @@
   "name": "@lg-tools/lint",
   "version": "0.0.1",
   "description": "Lint rules & config for LeafyGreen repositories",
-  "main": "index.js",
+  "main": "dist/index.js",
   "license": "Apache-2.0",
   "bin": {
     "lg-lint": "./bin/lint.js"
@@ -11,7 +11,8 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rollup -c rollup.config.mjs"
+    "build": "rollup -c rollup.config.mjs",
+    "tsc": "tsc --build tsconfig.json"
   },
   "dependencies": {
     "@babel/core": "^7.22.5",
