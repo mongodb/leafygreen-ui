@@ -1,6 +1,6 @@
-import { Command } from 'commander';
-import { test } from '@lg-tools/test';
 import { lint } from '@lg-tools/lint';
+import { test } from '@lg-tools/test';
+import { Command } from 'commander';
 
 const cli = new Command('lg');
 
