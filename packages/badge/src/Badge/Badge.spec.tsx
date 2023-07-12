@@ -1,4 +1,3 @@
-/* eslint-disable jest/no-commented-out-tests */
 import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';

@@ -18,7 +18,6 @@ function Badge({
   ...rest
 }: BadgeProps) {
   const { theme } = useDarkMode(darkModeProp);
-
   return (
     <div
       {...rest}
