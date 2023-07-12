@@ -1,4 +1,6 @@
 {
+  "name": "leafygreen-ui",
+  "version": "0.0.0",
   "description": "leafyGreen UI Kit",
   "license": "Apache-2.0",
   "private": true,
@@ -118,6 +120,5 @@
   },
   "bugs": {
     "url": "https://github.com/mongodb/leafygreen-ui/issues"
-  },
-  "version": "0.0.0"
+  }
 }

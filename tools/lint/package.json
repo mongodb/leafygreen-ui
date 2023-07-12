@@ -7,11 +7,11 @@
   "bin": {
     "lg-lint": "./bin/lint.js"
   },
-  "scripts": {
-    "build": "rollup -c rollup.config.mjs"
-  },
   "publishConfig": {
     "access": "public"
+  },
+  "scripts": {
+    "build": "rollup -c rollup.config.mjs"
   },
   "dependencies": {
     "@babel/core": "^7.22.5",
@@ -21,6 +21,8 @@
     "@nicolo-ribaudo/semver-v6": "^6.3.3",
     "@typescript-eslint/eslint-plugin": "^5.60.0",
     "@typescript-eslint/parser": "^5.60.0",
+    "chalk": "^4.1.7",
+    "commander": "^11.0.0",
     "eslint": "^8.43.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.0",
@@ -31,6 +33,7 @@
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-storybook": "^0.6.12",
     "npm-package-json-lint": "^7.0.0",
+    "npm-package-json-lint-config-default": "^6.0.0",
     "prettier": "2.8.1"
   },
   "peerDependencies": {

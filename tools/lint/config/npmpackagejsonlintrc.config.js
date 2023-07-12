@@ -1,5 +1,20 @@
 module.exports = {
+  extends: 'npm-package-json-lint-config-default',
   rules: {
+    'prefer-property-order': [
+      'off',
+      [
+        'name',
+        'version',
+        'description',
+        'workspaces',
+        'publishConfig',
+        'scripts',
+        'dependencies',
+        'devDependencies',
+        'peerDependencies',
+      ],
+    ],
     'prefer-caret-version-dependencies': [
       'warning',
       { exceptions: ['highlight.js', 'prettier'] },

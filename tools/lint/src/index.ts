@@ -1,62 +1,68 @@
 /* eslint-disable no-console */
-const { spawn } = require('child_process');
-const path = require('path');
-const chalk = require('chalk');
-const { Command } = require('commander');
+import { npmPkgJsonLint } from './npmPkgJsonLint';
+import { spawn } from 'child_process';
+import path from 'path';
+import chalk from 'chalk';
+import { Command } from 'commander';
+
 const rootDir = process.cwd();
-const eslintConfig = path.resolve(__dirname, '../config/eslint.config.js');
-const prettierConfig = path.resolve(__dirname, '../config/prettier.config.js');
-const npmPkgLintConfig = path.resolve(
+const eslintConfigPath = path.resolve(__dirname, '../config/eslint.config.js');
+const prettierConfigPath = path.resolve(
   __dirname,
-  '../config/npmpackagejsonlintrc.config.js',
+  '../config/prettier.config.js',
 );
 
 const esLintExtensions = ['js', 'ts', 'tsx'];
 const prettierExtensions = [...esLintExtensions, 'mjs', 'json', 'md', 'yml'];
 
+interface LintFlags {
+  fix: boolean;
+  eslintOnly: boolean;
+  prettierOnly: boolean;
+  pkgJsonOnly: boolean;
+  verbose: boolean;
+}
+
 const cli = new Command()
   .option('-f, --fix', 'fix linting errors', false)
-  .option('-p, --prettierOnly', 'run prettier only', false)
   .option('-e, --eslintOnly', 'run eslint only', false)
+  .option('-p, --prettierOnly', 'run prettier only', false)
+  .option('--pkgJsonOnly', 'run npmPackageJsonLint only', false)
   .option('--verbose', 'verbose mode', false)
   .parse(process.argv);
 
-const { fix, prettierOnly, eslintOnly, verbose } = cli.opts();
-
-verbose &&
-  console.log('Using config files:', {
-    eslintConfig,
-    prettierConfig,
-    npmPkgLintConfig,
-  });
+const { fix, prettierOnly, eslintOnly, pkgJsonOnly, verbose } =
+  cli.opts() as LintFlags;
 
 // If prettierOnly or eslintOnly is true, run only that linter
-if (prettierOnly || eslintOnly) {
-  if (prettierOnly) {
-    prettier();
+if (prettierOnly || eslintOnly || pkgJsonOnly) {
+  let lintPromise: Promise<unknown>;
+  if (eslintOnly) {
+    lintPromise = eslint();
+  } else if (prettierOnly) {
+    lintPromise = prettier();
   } else {
-    eslint();
+    lintPromise = npmPkgJsonLint(fix);
   }
-  process.exit(0);
+  lintPromise.then(() => process.exit(0));
+} else {
+  // Otherwise, run all linters
+  (async () => {
+    await eslint();
+    await prettier();
+    await npmPkgJsonLint(fix);
+  })();
 }
-
-// Otherwise, run all linters
-
-(async () => {
-  await eslint();
-  await prettier();
-  await npmPkgJsonLint();
-})();
 
 /** Spawns an eslint job */
 function eslint() {
-  return new Promise(resolve => {
+  return new Promise<void>(resolve => {
     console.log(chalk.blue('Running ESLint...'));
     spawn(
       'eslint',
       [
         '--config',
-        eslintConfig,
+        eslintConfigPath,
         `${rootDir}/**/*.{${esLintExtensions.join(',')}}`,
         fix ? '--fix' : '--no-fix',
         verbose ? '' : '--quiet',
@@ -70,29 +76,19 @@ function eslint() {
 
 /** Spawns a prettier job */
 function prettier() {
-  return new Promise(resolve => {
+  return new Promise<void>(resolve => {
     console.log(chalk.magenta('Running Prettier...'));
     spawn(
       'prettier',
       [
         fix ? '--write' : '--check',
         '--config',
-        prettierConfig,
+        prettierConfigPath,
         `${rootDir}/**/*.{${prettierExtensions.join(',')}}`,
       ],
       {
         stdio: 'inherit',
       },
     ).on('close', resolve);
-  });
-}
-
-/** Spawns a npmPkgJsonLint job */
-function npmPkgJsonLint() {
-  return new Promise(resolve => {
-    console.log(chalk.yellow('Running npmPkgJsonLint...'));
-    spawn('npmPkgJsonLint', ['--configFile', npmPkgLintConfig, rootDir], {
-      stdio: 'inherit',
-    }).on('close', resolve);
   });
 }
