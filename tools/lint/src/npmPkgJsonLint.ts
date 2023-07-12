@@ -1,6 +1,8 @@
-import { spawn } from 'child_process';
+/* eslint-disable no-console */
 import chalk from 'chalk';
+import { spawn } from 'child_process';
 import path from 'path';
+
 import { LintCommandOptions } from './lint.types';
 // import { NpmPackageJsonLint } from 'npm-package-json-lint';
 const rootDir = process.cwd();

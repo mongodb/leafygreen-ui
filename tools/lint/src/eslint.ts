@@ -1,6 +1,8 @@
+/* eslint-disable no-console */
+import chalk from 'chalk';
 import { spawn } from 'child_process';
 import path from 'path';
-import chalk from 'chalk';
+
 import { LintCommandOptions } from './lint.types';
 
 const rootDir = process.cwd();
