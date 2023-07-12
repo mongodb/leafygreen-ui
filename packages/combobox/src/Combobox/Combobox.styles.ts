@@ -6,7 +6,6 @@ import { palette } from '@leafygreen-ui/palette';
 import {
   focusRing,
   fontFamilies,
-  hoverRing,
   spacing,
   transitionDuration,
   typeScales,
