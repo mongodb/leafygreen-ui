@@ -1,0 +1,20 @@
+{
+  "name": "@lg-tools/cli",
+  "version": "0.0.1",
+  "description": "Command Line tools for LeafyGreen",
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "lg": "./bin/index.js"
+  },
+  "scripts": {
+    "build": "rollup -c rollup.config.mjs"
+  },
+  "dependencies": {
+    "chalk": "^4.0.0",
+    "commander": "^11.0.0",
+    "inquirer": "^9.2.7"
+  }
+}
