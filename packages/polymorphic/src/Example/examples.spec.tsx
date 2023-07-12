@@ -2,8 +2,8 @@ import React from 'react';
 import styled, { StyledComponent } from '@emotion/styled';
 import { render } from '@testing-library/react';
 import NextLink from 'next/link';
+import { parseTSDoc } from '@lg-tools/build/src/tsdoc/tsdocParser';
 
-import { parseTSDoc } from '../../../../scripts/utils/tsDocParser';
 import {
   InferredPolymorphic,
   useInferredPolymorphic,
