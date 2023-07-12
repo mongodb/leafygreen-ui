@@ -3,12 +3,13 @@
   "version": "0.1.0-beta.6",
   "description": "Jest setup & config for LeafyGreen repositories",
   "license": "Apache-2.0",
-  "main": "jest.config.js",
+  "main": "dist/index.js",
   "bin": {
     "lg-test": "./bin/test.js"
   },
   "scripts": {
-    "build": "rollup -c rollup.config.mjs"
+    "build": "rollup -c rollup.config.mjs",
+    "tsc": "tsc --build tsconfig.json"
   },
   "publishConfig": {
     "access": "public",

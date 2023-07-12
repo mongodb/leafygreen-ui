@@ -5,9 +5,17 @@
     "declarationDir": "dist",
     "outDir": "dist",
     "rootDir": "src",
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@lg-tools/*": ["../*/src"]
+    }
   },
-  "include": [
-    "src/**/*"
+  "references": [
+    {
+      "path": "../build"
+    },
+    {
+      "path": "../test"
+    }
   ]
 }
