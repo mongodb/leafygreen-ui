@@ -1,8 +1,7 @@
 /* eslint-disable no-console */
-import { npmPkgJsonLint } from './npmPkgJsonLint';
-
 import { eslint } from './eslint';
 import { LintCommandOptions } from './lint.types';
+import { npmPkgJsonLint } from './npmPkgJsonLint';
 import { prettier } from './prettier';
 
 export const lint = (options: LintCommandOptions) => {
@@ -13,9 +12,11 @@ export const lint = (options: LintCommandOptions) => {
   if (!prettierOnly && !pkgJsonOnly) {
     linters.push(eslint({ fix, verbose }));
   }
+
   if (!eslintOnly && !pkgJsonOnly) {
     linters.push(prettier({ fix, verbose }));
   }
+
   if (!prettierOnly && !eslintOnly) {
     linters.push(npmPkgJsonLint({ fix, verbose }));
   }
