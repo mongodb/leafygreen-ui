@@ -1,5 +1,13 @@
 # @leafygreen-ui/code
 
+## 14.2.8
+
+### Patch Changes
+
+- 4f03c6c5: Line highlight colors updated to use new palette, and consistent with design spec.
+- Updated dependencies [547d828e]
+  - @leafygreen-ui/icon-button@15.0.13
+
 ## 14.2.7
 
 ### Patch Changes
