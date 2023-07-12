@@ -13,6 +13,7 @@
     "build": "rollup -c rollup.config.mjs"
   },
   "dependencies": {
+    "@lg-tools/lint": "^0.0.1",
     "@lg-tools/test": "^0.0.1",
     "chalk": "^4.0.0",
     "commander": "^11.0.0",
