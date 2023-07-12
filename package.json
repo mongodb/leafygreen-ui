@@ -9,6 +9,7 @@
     "npm": ">= 8.19.4"
   },
   "scripts": {
+    "lg": "lg",
     "init": "yarn && yarn build",
     "create-package": "lg-create",
     "build": "turbo run build tsc",
@@ -26,7 +27,7 @@
     "publish": "yarn changeset publish --public",
     "slackbot": "lg-slackbot",
     "start": "storybook dev -p 9001 --no-version-updates",
-    "test": "lg-test",
+    "test": "lg test",
     "unlink": "lg-unlink",
     "validate": "npm-run-all --parallel validate:*",
     "validate:dependencies": "lg-validate-deps",
