@@ -48,6 +48,6 @@ packages/**/stories.js*
 build-storybook.log
 
 .turbo
-scripts/tmp.*.ts\\
+scripts/tmp.*.ts
 
 .npmrc
