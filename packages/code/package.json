@@ -36,8 +36,13 @@
     "facepaint": "^1.2.1",
     "highlight.js": "~11.5.0",
     "highlightjs-graphql": "^1.0.1",
+    "highlightjs-line-numbers.js": "^2.7.0",
     "lodash": "^4.17.21",
     "polished": "^4.2.2"
+  },
+  "devDependencies": {
+    "@types/facepaint": "^1.2.1",
+    "@types/highlight.js": "^10.1.0"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.3"

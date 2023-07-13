@@ -13,7 +13,7 @@
     }
   },
   "scripts": {
-    "prebuild": "ts-node ./scripts/build.ts --files",
+    "prebuild": "npx ts-node ./scripts/build.ts --files",
     "build": "rollup --config rollup.config.mjs",
     "tsc": "tsc --build tsconfig.json"
   },
@@ -23,6 +23,9 @@
   },
   "devDependencies": {
     "@leafygreen-ui/palette": "^4.0.3",
+    "@types/meow": "^6.0.0",
+    "@types/xml2json": "^0.11.0",
+    "meow": "^6.1.0",
     "xml2json": "^0.12.0"
   },
   "dependencies": {
