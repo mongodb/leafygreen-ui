@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
 import { spawn } from 'child_process';
-import { Command, Option } from 'commander';
 import fs from 'fs';
 import { homedir } from 'os';
 import path from 'path';
@@ -9,37 +8,13 @@ import path from 'path';
 import { Scope } from './scopes';
 import { formatLog } from './utils';
 
-const program = new Command();
+interface LinkOptions {
+  packages: Array<string>;
+  scope: keyof typeof Scope;
+  verbose: boolean;
+}
 
-program
-  .name('link')
-  .description(
-    "Link local LeafyGreen packages to a destination app. This is useful for testing changes to a package's source code in another project.",
-  )
-  .arguments('destination')
-  .option('-v --verbose', 'Prints additional information to the console', false)
-  .addOption(
-    new Option('--scope <name>', 'The NPM organization').choices(
-      Object.keys(Scope),
-    ),
-  )
-  .addOption(
-    new Option(
-      '--packages <names...>',
-      'Specific package names (requires `scope` option, or full package name)',
-    ),
-  )
-  .action(linkPackages)
-  .parse(process.argv);
-
-async function linkPackages(
-  destination: string,
-  opts: {
-    packages: Array<string>;
-    scope: keyof typeof Scope;
-    verbose: boolean;
-  },
-) {
+export async function linkPackages(destination: string, opts: LinkOptions) {
   const { verbose, scope, packages } = opts;
   const relativeDestination = path.relative(process.cwd(), destination);
 
