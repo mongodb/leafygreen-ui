@@ -1,11 +1,11 @@
+/** eslint-disable no-console */
 import chalk from 'chalk';
 import fs from 'fs';
-import path from 'path';
-
 import {
   NpmPackageJsonLint,
   PackageJsonFileLintingResult,
 } from 'npm-package-json-lint';
+import path from 'path';
 
 const rootDir = process.cwd();
 const npmPkgLintConfigPath = path.resolve(

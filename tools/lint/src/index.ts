@@ -1,9 +1,10 @@
 /* eslint-disable no-console */
-import { npmPkgJsonLint } from './npmPkgJsonLint';
-import { spawn } from 'child_process';
-import path from 'path';
 import chalk from 'chalk';
+import { spawn } from 'child_process';
 import { Command } from 'commander';
+import path from 'path';
+
+import { npmPkgJsonLint } from './npmPkgJsonLint';
 
 const rootDir = process.cwd();
 const eslintConfigPath = path.resolve(__dirname, '../config/eslint.config.js');
@@ -37,6 +38,7 @@ const { fix, prettierOnly, eslintOnly, pkgJsonOnly, verbose } =
 // If prettierOnly or eslintOnly is true, run only that linter
 if (prettierOnly || eslintOnly || pkgJsonOnly) {
   let lintPromise: Promise<unknown>;
+
   if (eslintOnly) {
     lintPromise = eslint();
   } else if (prettierOnly) {
