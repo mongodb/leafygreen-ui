@@ -1,39 +1,29 @@
 /* eslint-disable no-console */
+import chalk from 'chalk';
 import fs from 'fs';
 import path from 'path';
+import { parseTSDoc } from './tsdocParser';
 
-import { writeDocs } from './tsdocParser';
-
+// In this case, rootDir will be the root of a package itself
 const rootDir = process.cwd();
-
-// TODO:
-// This script should run on a single package,
-// and be a part of the turbo build processs
-// to take advantage of caching
-
-const packagesRoot = './packages';
-const outDir = './packages';
+const outDir = rootDir; // TODO: allow different outDirs
 
 export function tsdoc() {
-  /**
-   * Main logic
-   */
-  console.log('TSDoc', { rootDir });
-  if (false) {
-    const packagesDir = path.resolve(rootDir, packagesRoot);
-    const packages = fs.readdirSync(packagesDir);
-    packages.forEach(generateDocFiles);
-  }
-}
+  const docs = parseTSDoc(rootDir);
+  const docString = JSON.stringify(docs, null, 2);
+  const outFilePath = path.resolve(process.cwd(), outDir, 'tsdoc.json');
 
-/**
- * Parses TSDocs and writes to file
- * @param componentName string
- */
-function generateDocFiles(componentName: string): void {
-  writeDocs(
-    componentName,
-    path.resolve(rootDir, packagesRoot),
-    path.resolve(rootDir, outDir),
-  );
+  try {
+    console.log(
+      chalk.blueBright(
+        `Writing tsdoc.json `,
+        chalk.gray(`(${(Buffer.byteLength(docString) / 1024).toFixed(2)}kb)`),
+      ),
+    );
+    outDir !== rootDir &&
+      console.log(`\tWriting to ${chalk.gray(outFilePath)}`);
+    fs.writeFileSync(outFilePath, docString);
+  } catch (err) {
+    console.error(chalk.red(`Could not write file to ${outFilePath}`), err);
+  }
 }

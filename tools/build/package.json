@@ -6,11 +6,10 @@
   "publishConfig": {
     "access": "public"
   },
-  "bin": {
-    "lg-tsdoc": "./bin/tsdoc.js"
-  },
+  "main": "dist/index.js",
   "scripts": {
-    "build": "rollup -c rollup.config.mjs"
+    "build": "rollup -c rollup.config.mjs",
+    "tsc": "tsc --build tsconfig.json"
   },
   "dependencies": {
     "@babel/core": "^7.9.0",
@@ -37,7 +36,6 @@
     "@svgr/cli": "^8.0.0",
     "@svgr/rollup": "^8.0.0",
     "chalk": "^4.0.0",
-    "commander": "^11.0.0",
     "react-docgen-typescript": "^2.2.2",
     "rollup": "^3.25.0",
     "rollup-plugin-node-externals": "^6.1.1"
