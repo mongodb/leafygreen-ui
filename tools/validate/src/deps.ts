@@ -43,7 +43,6 @@ const ignoreFilePatterns: Array<RegExp> = [
   /.*.example.tsx?/,
   /.*.testutils.tsx?/,
   /.*\/dist\/.*/,
-  /.*prebuild.ts?/,
 ];
 
 // these dependencies will be ignored when listed in a package.json
