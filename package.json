@@ -30,8 +30,7 @@
     "unlink": "lg-unlink",
     "validate": "npm-run-all --parallel validate:*",
     "validate:dependencies": "lg-validate-deps",
-    "validate:builds": "lg-validate-builds",
-    "watch": "yarn build -- -- --watch"
+    "validate:builds": "lg-validate-builds"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -48,7 +47,6 @@
     "@types/react-dom": "^16.9.9",
     "@types/react-transition-group": "4.4.1",
     "babel-jest": "26.0.0",
-    "buffer": "^6.0.3",
     "chromatic": "^6.17.2",
     "dotenv": "^10.0.0",
     "downlevel-dts": "^0.7.0",
