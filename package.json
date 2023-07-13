@@ -25,7 +25,7 @@
     "prepublish:ts-downlevel": "rm -rf packages/*/dist/ts3.4 && echo packages/*/dist | NODE_NO_WARNINGS=1 xargs -I{} -n1 -P8 downlevel-dts {} {}/ts3.4",
     "publish": "npm-run-all --serial publish:*",
     "publish:packages": "yarn changeset publish --public",
-    "slackbot": "slackbot",
+    "slackbot": "lg-slackbot",
     "start": "storybook dev -p 9001 --no-version-updates",
     "test": "lg-test",
     "test:ssr": "lg-test --ssr",

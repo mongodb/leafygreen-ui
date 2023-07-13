@@ -4,7 +4,7 @@
   "description": "Slackbot for LeafyGreen",
   "license": "Apache-2.0",
   "bin": {
-    "slackbot": "./bin/slackbot.js"
+    "lg-slackbot": "./bin/slackbot.js"
   },
   "scripts": {
     "build": "rollup -c rollup.config.mjs",
