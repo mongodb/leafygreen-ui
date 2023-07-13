@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon-button
 
+## 15.0.13
+
+### Patch Changes
+
+- 547d828e: Change darkMode fill color from gray dark1 to gray dark2
+
 ## 15.0.12
 
 ### Patch Changes
