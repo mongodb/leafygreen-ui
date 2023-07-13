@@ -2,17 +2,13 @@
   "name": "@lg-tools/validate",
   "version": "0.0.1",
   "description": "Validation tools for LeafyGreen repositories",
-  "main": "index.js",
+  "main": "dist/index.js",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "rollup -c rollup.config.mjs"
-  },
-  "bin": {
-    "lg-validate-builds": "./bin/builds.js",
-    "lg-validate-deps": "./bin/deps.js"
+    "build": "rollup -c rollup.config.mjs",
+    "tsc": "tsc --build tsconfig.json"
   },
   "dependencies": {
-    "commander": "^11.0.0",
     "depcheck": "^1.4.3",
     "node-fetch": "^2.0.0"
   }
