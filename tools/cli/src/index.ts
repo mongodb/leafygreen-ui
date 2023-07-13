@@ -1,4 +1,4 @@
-import { tsdoc } from '@lg-tools/build';
+import { buildPackage, buildTSDoc, buildTypescript } from '@lg-tools/build';
 import { linkPackages, unlinkPackages, Scope } from '@lg-tools/link';
 import { lint } from '@lg-tools/lint';
 import { test } from '@lg-tools/test';
@@ -9,17 +9,25 @@ const cli = new Command('lg');
 cli.description('Command line tools for the LeafyGreen UI library by MongoDB');
 
 /** Build */
-// TODO:
 cli
   .command('build')
   .description('Uses the local `turbo.json` to build packages in the repo')
   .argument('[packages...]', 'A list of packages to build')
-  // .option('--packagesOnly', 'Only build packages (no TS)', false)
-  // .option('--tsOnly', 'Only build TypeScript (no packages)', false)
-  // Subcommand
-  .command('tsdoc')
+  .option('--only=[steps...]', 'A list of build steps to run');
+
+/** Build steps */
+cli
+  .command('build-package')
+  .description('Builds a package')
+  .action(buildPackage);
+cli
+  .command('build-ts')
+  .description("Builds a package's TypeScript definitions")
+  .action(buildTypescript);
+cli
+  .command('build-tsdoc')
   .description("Builds a package's TSDoc file")
-  .action(tsdoc);
+  .action(buildTSDoc);
 
 /** Create */
 // TODO:
