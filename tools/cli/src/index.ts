@@ -1,3 +1,4 @@
+import { tsdoc } from '@lg-tools/build';
 import { linkPackages, unlinkPackages, Scope } from '@lg-tools/link';
 import { lint } from '@lg-tools/lint';
 import { test } from '@lg-tools/test';
@@ -13,8 +14,12 @@ cli
   .command('build')
   .description('Uses the local `turbo.json` to build packages in the repo')
   .argument('[packages...]', 'A list of packages to build')
-  .option('--packagesOnly', 'Only build packages (no TS)', false)
-  .option('--tsOnly', 'Only build TypeScript (no packages)', false);
+  // .option('--packagesOnly', 'Only build packages (no TS)', false)
+  // .option('--tsOnly', 'Only build TypeScript (no packages)', false)
+  // Subcommand
+  .command('tsdoc')
+  .description("Builds a package's TSDoc file")
+  .action(tsdoc);
 
 /** Create */
 // TODO:
