@@ -23,6 +23,7 @@
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.4",
     "@leafygreen-ui/hooks": "^7.7.5",
+    "@leafygreen-ui/lib": "^10.4.0",
     "@leafygreen-ui/palette": "^4.0.3",
     "@leafygreen-ui/tokens": "^2.1.1"
   },

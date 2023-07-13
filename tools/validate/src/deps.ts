@@ -35,7 +35,7 @@ const fix: boolean = cli.opts()['fix'];
 const fixTS = cli.opts()['fixTsconfig'];
 const verbose = cli.opts()['verbose'];
 
-// files matching these patterns will be ignored
+// We won't check dependencies imported by files matching these patterns
 const ignoreFilePatterns: Array<RegExp> = [
   /.*.spec.tsx?/,
   /.*.?stor(y|ies).(t|j)sx?/,
@@ -43,6 +43,7 @@ const ignoreFilePatterns: Array<RegExp> = [
   /.*.example.tsx?/,
   /.*.testutils.tsx?/,
   /.*\/dist\/.*/,
+  /.*prebuild.ts?/,
 ];
 
 // these dependencies will be ignored when listed in a package.json

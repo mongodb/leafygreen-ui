@@ -45,5 +45,8 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
+  },
+  "devDependencies": {
+    "@leafygreen-ui/testing-lib": "^0.3.0"
   }
 }

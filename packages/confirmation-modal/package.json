@@ -24,6 +24,7 @@
     "@leafygreen-ui/button": "^20.2.1",
     "@leafygreen-ui/emotion": "^4.0.4",
     "@leafygreen-ui/icon": "^11.17.0",
+    "@leafygreen-ui/lib": "^10.4.0",
     "@leafygreen-ui/modal": "^15.0.3",
     "@leafygreen-ui/palette": "^4.0.3",
     "@leafygreen-ui/text-input": "^12.1.14",
