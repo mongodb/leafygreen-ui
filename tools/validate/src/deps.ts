@@ -12,12 +12,6 @@ import { getPackageLGDependencies } from './utils/getPackageDependencies';
 import { ValidateCommandOptions } from './validate.types';
 
 const rootDir = process.cwd();
-
-const globalPackageJson = JSON.parse(
-  readFileSync(path.join(rootDir, 'package.json'), 'utf-8'),
-);
-const lgPackages = getAllPackageNames();
-const globalDevDependencies = Object.keys(globalPackageJson.devDependencies);
 const lgProvider = '@leafygreen-ui/leafygreen-provider';
 
 // We won't check dependencies imported by files matching these patterns
@@ -53,6 +47,8 @@ export function validateDependencies({
   fixTsconfig,
   verbose,
 }: Partial<ValidateCommandOptions>) {
+  const lgPackages = getAllPackageNames();
+
   return new Promise<void>(async (resolve, reject) => {
     console.log('Validating dependencies...');
 
@@ -367,6 +363,10 @@ function sortDependenciesByUsage(
   dependencies: Array<string>;
   devDependencies: Array<string>;
 } {
+  const globalPackageJson = JSON.parse(
+    readFileSync(path.join(rootDir, 'package.json'), 'utf-8'),
+  );
+  const globalDevDependencies = Object.keys(globalPackageJson.devDependencies);
   return (
     Object.entries(depsRecord)
       // If the package in provided globally, ignore it

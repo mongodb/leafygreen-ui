@@ -21,10 +21,10 @@ const ModuleType = {
 type ModuleType = (typeof ModuleType)[keyof typeof ModuleType];
 
 const rootDir = process.cwd();
-// TODO: Also check validity of `tools`
-const packages = getAllPackageNames();
 
 export const validateBuilds = () => {
+  // TODO: Also check validity of `tools`
+  const packages = getAllPackageNames();
   return new Promise<void>((resolve, reject) => {
     console.log('Validating builds...');
 
