@@ -1,38 +1,19 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
 import { spawn } from 'child_process';
-import { Command, Option } from 'commander';
 import fs from 'fs';
 import path from 'path';
 
 import { Scope } from './scopes';
 import { formatLog } from './utils';
 
-const program = new Command();
-
-program
-  .name('unlink')
-  .description(
-    "Link local LeafyGreen packages to a destination app. This is useful for testing changes to a package's source code in another project.",
-  )
-  .arguments('destination')
-  .option('-v --verbose', 'Prints additional information to the console', false)
-  .option('--noInstall', 'Skip the yarn install step', false)
-  .addOption(
-    new Option('--scope <name>', 'The NPM organization').choices(
-      Object.keys(Scope),
-    ),
-  )
-  .action(unlinkPackages)
-  .parse(process.argv);
-
-interface Opts {
+interface UnlinkOpts {
   verbose: boolean;
   noInstall: boolean;
   scope: keyof typeof Scope;
 }
 
-async function unlinkPackages(destination: string, opts: Opts) {
+export async function unlinkPackages(destination: string, opts: UnlinkOpts) {
   const { verbose, noInstall, scope } = opts;
   const relativeDestination = path.relative(process.cwd(), destination);
 
