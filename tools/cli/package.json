@@ -16,6 +16,7 @@
     "@lg-tools/link": "^0.0.1",
     "@lg-tools/lint": "^0.0.1",
     "@lg-tools/test": "^0.0.1",
+    "@lg-tools/validate": "^0.0.1",
     "chalk": "^4.0.0",
     "commander": "^11.0.0",
     "inquirer": "^9.2.7"
