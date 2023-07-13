@@ -5,6 +5,38 @@ import { validate } from '@lg-tools/validate';
 import { Command, Option } from 'commander';
 
 const cli = new Command('lg');
+cli.description('Command line tools for the LeafyGreen UI library by MongoDB');
+
+/** Build */
+// TODO:
+cli
+  .command('build')
+  .description('Uses the local `turbo.json` to build packages in the repo')
+  .argument('[packages...]', 'A list of packages to build')
+  .option('--packagesOnly', 'Only build packages (no TS)', false)
+  .option('--tsOnly', 'Only build TypeScript (no packages)', false);
+
+/** Create */
+// TODO:
+cli
+  .command('create')
+  .description('Creates a new package with the provided name')
+  .argument('<name>', 'The name of the package')
+  .option('-s, --scope', 'The npm scope of the new package', '@leafygreen-ui');
+
+/** Install */
+// TODO:
+cli
+  .command('install')
+  .description('Installs LeafyGreen packages to the current app')
+  .argument('[packages...]', 'A list of packages to install');
+
+/** Update */
+// TODO:
+cli
+  .command('update')
+  .description('Updates LeafyGreen packages to the latest version')
+  .argument('[packages...]', 'A list of packages to update');
 
 /** Test */
 cli
