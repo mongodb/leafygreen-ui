@@ -10896,7 +10896,7 @@ memorystream@^0.3.1:
   resolved "https://registry.yarnpkg.com/memorystream/-/memorystream-0.3.1.tgz#86d7090b30ce455d63fbae12dda51a47ddcaf9b2"
   integrity sha1-htcJCzDORV1j+64S3aUaR93K+bI=
 
-meow@*, meow@^12.0.1:
+meow@*:
   version "12.0.1"
   resolved "https://registry.yarnpkg.com/meow/-/meow-12.0.1.tgz#b158fee6e319da4c54835f4c6c98f193978199fd"
   integrity sha512-/QOqMALNoKQcJAOOdIXjNLtfcCdLXbMFyB1fOOPdm6RzfBTlsuodOCTBDjVbeUSmgDQb8UI2oONqYGtq1PKKKA==
@@ -10914,7 +10914,7 @@ meow@*, meow@^12.0.1:
     type-fest "^3.9.0"
     yargs-parser "^21.1.1"
 
-meow@^6.0.0:
+meow@^6.0.0, meow@^6.1.0:
   version "6.1.1"
   resolved "https://registry.yarnpkg.com/meow/-/meow-6.1.1.tgz#1ad64c4b76b2a24dfb2f635fddcadf320d251467"
   integrity sha512-3YffViIt2QWgTy6Pale5QpopX/IvU3LPL03jOTqp6pGj3VjesdO/U8CuHMKpnQr4shCNCM5fd5XFFvIIl6JBHg==
