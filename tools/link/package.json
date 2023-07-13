@@ -3,12 +3,10 @@
   "version": "0.0.1",
   "description": "Tools for linking LeafyGreen packages",
   "license": "Apache-2.0",
-  "bin": {
-    "lg-link": "./bin/link.js",
-    "lg-unlink": "./bin/unlink.js"
-  },
+  "main": "dist/index.js",
   "scripts": {
-    "build": "rollup -c rollup.config.mjs"
+    "build": "rollup -c rollup.config.mjs",
+    "tsc": "tsc --build tsconfig.json"
   },
   "publishConfig": {
     "access": "public"
