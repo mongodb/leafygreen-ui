@@ -1,6 +1,7 @@
+import { linkPackages, unlinkPackages, Scope } from '@lg-tools/link';
 import { lint } from '@lg-tools/lint';
 import { test } from '@lg-tools/test';
-import { linkPackages, unlinkPackages, Scope } from '@lg-tools/link';
+import { validate } from '@lg-tools/validate';
 import { Command, Option } from 'commander';
 
 const cli = new Command('lg');
@@ -21,6 +22,20 @@ cli
   .option('--pkgJsonOnly', 'run npmPackageJsonLint only', false)
   .option('--verbose', 'verbose mode', false)
   .action(lint);
+
+/** Validate */
+cli
+  .command('validate')
+  .description('Validates build integrity, and package.json dependencies')
+  .option('--buildsOnly', 'Validates build integrity only', false)
+  .option('--depsOnly', 'Validates package dependencies only', false)
+  .option('-f, --fix', 'Fixes issues found in dependency tree', false)
+  .option(
+    '--fix-tsconfig',
+    "Fixes issues found in a package's tsconfig based on it's package.json",
+    false,
+  )
+  .action(validate);
 
 /** Link & Unlink */
 cli

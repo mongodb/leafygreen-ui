@@ -22,6 +22,9 @@
     },
     {
       "path": "../test"
+    },
+    {
+      "path": "../validate"
     }
   ]
 }

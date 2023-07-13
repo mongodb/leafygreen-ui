@@ -4,14 +4,11 @@
 
 /* eslint-disable no-console */
 import chalk from 'chalk';
-import { Command } from 'commander';
 import fs from 'fs';
 import path from 'path';
 import vm from 'vm';
 
 import { getAllPackageNames } from './utils/getAllPackageNames';
-
-const rootDir = process.cwd();
 
 const ModuleType = {
   esm: 'esm',
@@ -21,55 +18,63 @@ const ModuleType = {
   amd: 'amd',
   steal: 'steal',
 } as const;
-type ModuleType = typeof ModuleType[keyof typeof ModuleType];
+type ModuleType = (typeof ModuleType)[keyof typeof ModuleType];
 
-const cli = new Command('test')
-  .description('Tests leafygreen-ui build integrity')
-  .argument('[packages...]')
-  .parse(process.argv);
-
+const rootDir = process.cwd();
+// TODO: Also check validity of `tools`
 const packages = getAllPackageNames();
 
-// Check that every package's /dist folder has a valid UMD, ESM & TS files
-for (const pkg of packages) {
-  const rootPath = path.resolve(rootDir, `packages`, pkg, `dist/index.js`);
-  const esmPath = path.resolve(rootDir, `packages`, pkg, `dist/esm/index.js`);
-  const tsPath = path.resolve(rootDir, `packages`, pkg, `dist/index.d.ts`);
+export const validateBuilds = () => {
+  return new Promise<void>((resolve, reject) => {
+    console.log('Validating builds...');
 
-  const rootExists = fs.existsSync(rootPath);
-  const esmExists = fs.existsSync(esmPath);
-  const tsExists = fs.existsSync(tsPath);
-  const isCJSValid = getModuleTypes(rootPath).includes('cjs');
-  const isESMValid = getModuleTypes(esmPath).includes('esm');
-
-  if (
-    ![rootExists, esmExists, tsExists, isCJSValid, isESMValid].every(
-      x => x == true,
-    )
-  ) {
-    const errorMsg: Array<string> = [
-      chalk.red.bold(`Error in \`${pkg}\` build:`),
-    ];
-    if (!rootExists) errorMsg.push(chalk.red('`dist/index.js` not found'));
-    if (!esmExists) errorMsg.push(chalk.red('`dist/esm/index.js` not found'));
-    if (!tsExists) errorMsg.push(chalk.red('Typescript build not found'));
-    if (!isCJSValid)
-      errorMsg.push(
-        chalk.red(`UMD module not valid`),
-        chalk.gray(`(${rootPath})`),
+    // Check that every package's /dist folder has a valid UMD, ESM & TS files
+    for (const pkg of packages) {
+      const rootPath = path.resolve(rootDir, `packages`, pkg, `dist/index.js`);
+      const esmPath = path.resolve(
+        rootDir,
+        `packages`,
+        pkg,
+        `dist/esm/index.js`,
       );
-    if (!isESMValid)
-      errorMsg.push(
-        chalk.red(`ESM module not valid`),
-        chalk.gray(`(${esmPath})`),
-      );
+      const tsPath = path.resolve(rootDir, `packages`, pkg, `dist/index.d.ts`);
 
-    console.log(errorMsg.join(' '));
-    process.exit(1);
-  }
-}
+      const rootExists = fs.existsSync(rootPath);
+      const esmExists = fs.existsSync(esmPath);
+      const tsExists = fs.existsSync(tsPath);
+      const isCJSValid = getModuleTypes(rootPath).includes('cjs');
+      const isESMValid = getModuleTypes(esmPath).includes('esm');
 
-process.exit(0);
+      if (
+        ![rootExists, esmExists, tsExists, isCJSValid, isESMValid].every(
+          x => x == true,
+        )
+      ) {
+        const errorMsg: Array<string> = [
+          chalk.red.bold(`Error in \`${pkg}\` build:`),
+        ];
+        if (!rootExists) errorMsg.push(chalk.red('`dist/index.js` not found'));
+        if (!esmExists)
+          errorMsg.push(chalk.red('`dist/esm/index.js` not found'));
+        if (!tsExists) errorMsg.push(chalk.red('Typescript build not found'));
+        if (!isCJSValid)
+          errorMsg.push(
+            chalk.red(`UMD module not valid`),
+            chalk.gray(`(${rootPath})`),
+          );
+        if (!isESMValid)
+          errorMsg.push(
+            chalk.red(`ESM module not valid`),
+            chalk.gray(`(${esmPath})`),
+          );
+
+        console.log(errorMsg.join(' '));
+        reject(errorMsg.join(' '));
+      }
+    }
+    resolve();
+  });
+};
 
 /**
  * Adapted from https://github.com/formatjs/js-module-formats
