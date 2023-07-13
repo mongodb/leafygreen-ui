@@ -1,4 +1,9 @@
-import { buildPackage, buildTSDoc, buildTypescript } from '@lg-tools/build';
+import {
+  build,
+  buildPackage,
+  buildTSDoc,
+  buildTypescript,
+} from '@lg-tools/build';
 import { linkPackages, unlinkPackages, Scope } from '@lg-tools/link';
 import { lint } from '@lg-tools/lint';
 import { test } from '@lg-tools/test';
@@ -13,7 +18,9 @@ cli
   .command('build')
   .description('Uses the local `turbo.json` to build packages in the repo')
   .argument('[packages...]', 'A list of packages to build')
-  .option('--only=[steps...]', 'A list of build steps to run');
+  .option('--only=[steps...]', 'A list of build steps to run')
+  .option('-v, --verbose', 'Verbose mode', false)
+  .action(build);
 
 /** Build steps */
 cli
