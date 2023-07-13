@@ -113,6 +113,7 @@ const external = [
   /^lodash\//,
   /^highlight\.js\//,
   /^@leafygreen-ui\//,
+  /^@lg-tools\//,
 ];
 
 const moduleFormatToDirectory = {
