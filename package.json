@@ -27,10 +27,8 @@
     "slackbot": "lg-slackbot",
     "start": "storybook dev -p 9001 --no-version-updates",
     "test": "lg test",
-    "unlink": "lg-unlink",
-    "validate": "npm-run-all --parallel validate:*",
-    "validate:dependencies": "lg-validate-deps",
-    "validate:builds": "lg-validate-builds"
+    "unlink": "lg unlink",
+    "validate": "lg validate"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
