@@ -2,7 +2,8 @@
   "name": "@lg-tools/validate",
   "version": "0.0.1",
   "description": "Validation tools for LeafyGreen repositories",
-  "main": "dist/index.js",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
   "license": "Apache-2.0",
   "scripts": {
     "build": "rollup -c rollup.config.mjs",
@@ -10,6 +11,7 @@
   },
   "dependencies": {
     "depcheck": "^1.4.3",
+    "lodash": "^4.17.21",
     "node-fetch": "^2.0.0"
   }
 }
