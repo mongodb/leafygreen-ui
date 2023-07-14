@@ -2,13 +2,15 @@
   "name": "@lg-tools/create",
   "version": "0.0.1",
   "description": "Creates a new LeafyGreen packages",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "module": "dist/esm/index.js",
   "license": "Apache-2.0",
   "bin": {
-    "lg-create": "./bin/legacy-create.js"
+    "lg-create": "./dist/legacy-create.js"
   },
   "scripts": {
-    "build": "rollup -c rollup.config.mjs"
+    "build": "rollup -c rollup.config.mjs",
+    "tsc": "tsc --build tsconfig.json"
   },
   "publishConfig": {
     "access": "public"
