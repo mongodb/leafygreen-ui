@@ -7,3 +7,4 @@ export { component } from './src/Component/component.template';
 export { spec } from './src/Component/component.spec.template';
 export { types } from './src/Component/component.types.template';
 export { styles } from './src/Component/component.styles.template';
+export { story } from './src/story.template';

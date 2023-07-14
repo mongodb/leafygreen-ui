@@ -14,6 +14,7 @@ import {
   spec,
   types,
   styles,
+  story,
 } from './templates';
 
 export function createPackage(
@@ -21,8 +22,6 @@ export function createPackage(
   { directory, scope }: CreatePackageOptions,
 ) {
   const rootDir = process.cwd();
-
-  console.log({ name, directory });
 
   // Construct all required parameters
   const packageNameKebab = kebabCase(name);
@@ -33,14 +32,8 @@ export function createPackage(
 
   // Create the appropriate directory
   const packageDir = path.resolve(rootDir, directory, packageNameKebab);
-  const makeFile = (fileName: string, contents: string) => {
-    return fs.writeFile(
-      path.resolve(packageDir, fileName),
-      contents,
-      handleErr,
-    );
-  };
 
+  // Create the package directories
   fs.mkdir(packageDir, { recursive: true }, err => {
     if (err) {
       console.log(`Package ${packageNameKebab} already exists`);
@@ -48,53 +41,82 @@ export function createPackage(
     }
 
     // Write the appropriate files for each template
-    makeFile(
-      'package.json',
-      pkgJson({ scope, packageNameKebab, packageNameTitle }),
-    );
-
-    makeFile('tsconfig.json', tsConfig);
-    makeFile('readme.md', readMe({ packageNameKebab, packageNameTitle }));
-
-    /** src directory */
-    fs.mkdir(path.resolve(packageDir, 'src'), { recursive: true }, err => {
-      makeFile('src/index.ts', index({ packageNamePascal }));
-      makeFile(
-        `src/${packageNamePascal}.story.tsx`,
-        index({ packageNamePascal }),
-      );
-
-      /** src/ComponentName directory */
-      fs.mkdir(
-        path.resolve(packageDir, `src/${packageNamePascal}`),
-        { recursive: true },
-        err => {
-          const subDir = `src/${packageNamePascal}`;
-
-          makeFile(`${subDir}/index.ts`, componentIndex({ packageNamePascal }));
-
-          makeFile(
-            `${subDir}/${packageNamePascal}.tsx`,
-            component({ packageNamePascal }),
-          );
-
-          makeFile(
-            `${subDir}/${packageNamePascal}.spec.tsx`,
-            spec({ packageNamePascal, packageNameKebab }),
-          );
-
-          makeFile(
-            `${subDir}/${packageNamePascal}.types.ts`,
-            types({ packageNamePascal, packageNameKebab }),
-          );
-
-          makeFile(`${subDir}/${packageNamePascal}.styles.ts`, styles);
+    writeFiles(
+      [
+        {
+          name: 'package.json',
+          contents: pkgJson({
+            scope,
+            packageNameKebab,
+            packageNameTitle,
+          }),
         },
-      );
-    });
+        {
+          name: 'tsconfig.json',
+          contents: tsConfig,
+        },
+        {
+          name: 'readme.md',
+          contents: readMe({ packageNameKebab, packageNameTitle }),
+        },
+        {
+          name: 'src/index.ts',
+          contents: index({ packageNamePascal }),
+        },
+        {
+          name: `src/${packageNamePascal}.stories.tsx`,
+          contents: story({ packageNamePascal }),
+        },
+        {
+          name: `src/${packageNamePascal}/index.ts`,
+          contents: componentIndex({ packageNamePascal }),
+        },
+        {
+          name: `src/${packageNamePascal}/${packageNamePascal}.tsx`,
+          contents: component({ packageNamePascal }),
+        },
+        {
+          name: `src/${packageNamePascal}/${packageNamePascal}.spec.tsx`,
+          contents: spec({ packageNamePascal, packageNameKebab }),
+        },
+        {
+          name: `src/${packageNamePascal}/${packageNamePascal}.types.ts`,
+          contents: types({ packageNamePascal, packageNameKebab }),
+        },
+        {
+          name: `src/${packageNamePascal}/${packageNamePascal}.styles.ts`,
+          contents: styles,
+        },
+      ],
+      {
+        dir: packageDir,
+        packageNamePascal,
+      },
+    );
   });
 }
 
 function handleErr(err: NodeJS.ErrnoException | null) {
   if (err) throw err;
+}
+
+function writeFiles(
+  files: Array<{
+    name: string;
+    contents: string;
+  }>,
+  config: {
+    dir: string;
+    packageNamePascal: string;
+  },
+) {
+  // Make the directory src and src/Component
+  fs.mkdirSync(path.resolve(config.dir, 'src', config.packageNamePascal), {
+    recursive: true,
+  });
+
+  // Write all component files
+  for (const { name, contents } of files) {
+    fs.writeFile(path.resolve(config.dir, name), contents, handleErr);
+  }
 }
