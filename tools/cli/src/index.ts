@@ -22,20 +22,6 @@ cli
   .option('-v --verbose', 'Prints additional information to the console', false)
   .action(build);
 
-/** Build steps */
-cli
-  .command('build-package')
-  .description('Builds a package')
-  .action(buildPackage);
-cli
-  .command('build-ts')
-  .description("Builds a package's TypeScript definitions")
-  .action(buildTypescript);
-cli
-  .command('build-tsdoc')
-  .description("Builds a package's TSDoc file")
-  .action(buildTSDoc);
-
 /** Create */
 // TODO:
 cli
@@ -121,5 +107,19 @@ cli
     ),
   )
   .action(unlinkPackages);
+
+/** Build steps */
+cli
+  .command('build-package')
+  .description('Builds a package')
+  .action(buildPackage);
+cli
+  .command('build-ts')
+  .description("Builds a package's TypeScript definitions")
+  .action(buildTypescript);
+cli
+  .command('build-tsdoc')
+  .description("Builds a package's TSDoc file")
+  .action(buildTSDoc);
 
 cli.parse(process.argv);
