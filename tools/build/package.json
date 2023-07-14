@@ -7,6 +7,7 @@
     "access": "public"
   },
   "main": "dist/index.js",
+  "module": "dist/esm/index.js",
   "scripts": {
     "build": "rollup -c rollup.config.mjs",
     "tsc": "tsc --build tsconfig.json"
@@ -36,6 +37,7 @@
     "@svgr/cli": "^8.0.0",
     "@svgr/rollup": "^8.0.0",
     "chalk": "^4.0.0",
+    "lodash": "^4.17.21",
     "react-docgen-typescript": "^2.2.2",
     "rollup": "^3.25.0",
     "rollup-plugin-node-externals": "^6.1.1"
