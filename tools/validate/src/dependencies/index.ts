@@ -7,9 +7,9 @@ import { isEqual, pick } from 'lodash';
 import fetch from 'node-fetch';
 import path from 'path';
 
-import { getAllPackageNames } from './utils/getAllPackageNames';
-import { getPackageLGDependencies } from './utils/getPackageDependencies';
-import { ValidateCommandOptions } from './validate.types';
+import { getAllPackageNames } from '../utils/getAllPackageNames';
+import { getPackageLGDependencies } from '../utils/getPackageDependencies';
+import { ValidateCommandOptions } from '../validate.types';
 
 const rootDir = process.cwd();
 const lgProvider = '@leafygreen-ui/leafygreen-provider';
@@ -26,16 +26,11 @@ const ignoreFilePatterns: Array<RegExp> = [
 
 // these dependencies will be ignored when listed in a package.json
 const ignoreMatches = [
-  '@lg-tools/cli',
+  '@lg-tools/*',
   '@leafygreen-ui/mongo-nav',
   'prop-types',
-  '@storybook/react',
-  '@storybook/testing-library',
-  '@testing-library/dom',
-  '@testing-library/jest-dom',
-  '@testing-library/react',
-  '@testing-library/react-hooks',
-  '@testing-library/user-event',
+  '@storybook/*',
+  '@testing-library/*',
   'jest-axe',
 ];
 
@@ -61,6 +56,7 @@ export function validateDependencies({
         path.resolve(rootDir, 'packages', pkg),
         depcheckOptions,
       );
+
       const {
         dependencies: unusedDeps,
         devDependencies: unusedDev,

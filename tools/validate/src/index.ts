@@ -1,5 +1,5 @@
 import { validateBuilds } from './builds';
-import { validateDependencies } from './deps';
+import { validateDependencies } from './dependencies';
 import { ValidateCommandOptions } from './validate.types';
 
 export const validate = async (options: ValidateCommandOptions) => {
