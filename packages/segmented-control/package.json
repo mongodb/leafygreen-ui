@@ -34,7 +34,8 @@
     "polished": "^4.2.2"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "^20.2.2"
+    "@leafygreen-ui/button": "^20.2.2",
+    "@lg-tools/cli": "^0.0.1"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.3"

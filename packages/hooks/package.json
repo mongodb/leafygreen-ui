@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "@leafygreen-ui/emotion": "^4.0.4",
-    "@leafygreen-ui/lib": "^10.4.0"
+    "@leafygreen-ui/lib": "^10.4.0",
+    "@lg-tools/cli": "^0.0.1"
   }
 }
