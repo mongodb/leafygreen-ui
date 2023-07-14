@@ -1,3 +1,4 @@
+import { createPackage } from '@lg-tools/create';
 import {
   build,
   buildPackage,
@@ -28,7 +29,8 @@ cli
   .command('create')
   .description('Creates a new package with the provided name')
   .argument('<name>', 'The name of the package')
-  .option('-s, --scope', 'The npm scope of the new package', '@leafygreen-ui');
+  .option('-s, --scope', 'The npm scope of the new package', '@leafygreen-ui')
+  .action(createPackage);
 
 /** Install */
 // TODO:
