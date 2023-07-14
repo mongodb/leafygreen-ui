@@ -3,3 +3,7 @@
 // Package scope (default @leafygreen-ui)
 // Package directory (default `/packages`)
 // Package name
+
+export function createPackage() {
+
+}
