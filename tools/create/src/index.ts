@@ -1,16 +1,18 @@
 // import { spawn } from 'child_process';
+import chalk from 'chalk';
 import fs from 'fs';
 import { camelCase, kebabCase, startCase } from 'lodash';
 import path from 'path';
 
 import { CreatePackageOptions } from './create.types';
 import {
+  pkgJson,
+  tsConfig,
+  rollupConfig,
+  readMe,
   component,
   componentIndex,
   index,
-  pkgJson,
-  readMe,
-  tsConfig,
   spec,
   types,
   styles,
@@ -28,6 +30,12 @@ export function createPackage(
   const packageNameTitle = startCase(name);
   const packageNamePascal = camelCase(name).replace(/^\w/, c =>
     c.toUpperCase(),
+  );
+
+  console.log(
+    chalk.green(
+      `Creating package ${chalk.bold(scope + '/' + packageNameKebab)}`,
+    ),
   );
 
   // Create the appropriate directory
@@ -54,6 +62,10 @@ export function createPackage(
         {
           name: 'tsconfig.json',
           contents: tsConfig,
+        },
+        {
+          name: 'rollup.config.mjs',
+          contents: rollupConfig,
         },
         {
           name: 'readme.md',
