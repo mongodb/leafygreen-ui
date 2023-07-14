@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Lint rules & config for LeafyGreen repositories",
   "main": "dist/index.js",
+  "module": "dist/esm/index.js",
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"
