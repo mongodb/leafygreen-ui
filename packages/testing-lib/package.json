@@ -28,5 +28,8 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
+  },
+  "devDependencies": {
+    "@lg-tools/cli": "^0.0.1"
   }
 }

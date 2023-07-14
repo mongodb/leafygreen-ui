@@ -26,6 +26,7 @@ const ignoreFilePatterns: Array<RegExp> = [
 
 // these dependencies will be ignored when listed in a package.json
 const ignoreMatches = [
+  '@lg-tools/cli',
   '@leafygreen-ui/mongo-nav',
   'prop-types',
   '@storybook/react',
