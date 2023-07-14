@@ -21,7 +21,7 @@
     "fix": "lg-lint --fix",
     "link": "lg-link",
     "lint": "lg-lint",
-    "prepublish": "yarn build",
+    "prepublishOnly": "yarn build",
     "publish": "yarn changeset publish --public",
     "slackbot": "lg-slackbot",
     "start": "storybook dev -p 9001 --no-version-updates",
