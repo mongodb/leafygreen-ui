@@ -72,6 +72,7 @@ export const validateBuilds = () => {
         reject(errorMsg.join(' '));
       }
     }
+    console.log('Builds OK ✅');
     resolve();
   });
 };
