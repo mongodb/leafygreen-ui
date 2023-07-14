@@ -19,7 +19,7 @@ cli
   .description('Uses the local `turbo.json` to build packages in the repo')
   .argument('[packages...]', 'A list of packages to build')
   .option('--only=[steps...]', 'A list of build steps to run')
-  .option('-v, --verbose', 'Verbose mode', false)
+  .option('-v --verbose', 'Prints additional information to the console', false)
   .action(build);
 
 /** Build steps */
@@ -72,7 +72,7 @@ cli
   .option('-e, --eslintOnly', 'run eslint only', false)
   .option('-p, --prettierOnly', 'run prettier only', false)
   .option('--pkgJsonOnly', 'run npmPackageJsonLint only', false)
-  .option('--verbose', 'verbose mode', false)
+  .option('-v --verbose', 'Prints additional information to the console', false)
   .action(lint);
 
 /** Validate */
@@ -81,6 +81,7 @@ cli
   .description('Validates build integrity, and package.json dependencies')
   .option('--buildsOnly', 'Validates build integrity only', false)
   .option('--depsOnly', 'Validates package dependencies only', false)
+  .option('-v --verbose', 'Prints additional information to the console', false)
   .option('-f, --fix', 'Fixes issues found in dependency tree', false)
   .option(
     '--fix-tsconfig',
