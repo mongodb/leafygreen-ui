@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+
 import { DependencyIssues } from './config';
 import { lgProvider } from './validatePeerDependencies';
 

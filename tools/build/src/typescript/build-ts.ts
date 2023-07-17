@@ -1,7 +1,7 @@
-import { spawn } from 'child_process';
-import path from 'path';
-import fs from 'fs';
 import chalk from 'chalk';
+import { spawn } from 'child_process';
+import fs from 'fs';
+import path from 'path';
 
 /**
  * Builds Typescript definitions for the current directory

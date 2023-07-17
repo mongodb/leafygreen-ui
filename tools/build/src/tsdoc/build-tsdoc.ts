@@ -2,6 +2,7 @@
 import chalk from 'chalk';
 import fs from 'fs';
 import path from 'path';
+
 import { parseTSDoc } from './tsdocParser';
 
 // In this case, packageDir will be the root of a package itself
