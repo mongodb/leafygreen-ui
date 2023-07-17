@@ -10,11 +10,6 @@
   "scripts": {
     "build": "rollup -c rollup.config.mjs"
   },
-  "files": [
-    "bin/**",
-    "dist/**",
-    "src/*.jest.*.js"
-  ],
   "publishConfig": {
     "access": "public"
   },
