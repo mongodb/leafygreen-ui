@@ -33,6 +33,7 @@ import ClockWithArrow from './ClockWithArrow.svg';
 import Clone from './Clone.svg';
 import Cloud from './Cloud.svg';
 import Code from './Code.svg';
+import CodeBlock from './CodeBlock.svg';
 import Connect from './Connect.svg';
 import Copy from './Copy.svg';
 import CreditCard from './CreditCard.svg';
@@ -76,6 +77,8 @@ import MagnifyingGlass from './MagnifyingGlass.svg';
 import Megaphone from './Megaphone.svg';
 import Menu from './Menu.svg';
 import Minus from './Minus.svg';
+import MultiDirectionArrow from './MultiDirectionArrow.svg';
+import MultiLayers from './MultiLayers.svg';
 import NoFilter from './NoFilter.svg';
 import NotAllowed from './NotAllowed.svg';
 import Note from './Note.svg';
@@ -161,6 +164,7 @@ const _glyphs = {
   Clone,
   Cloud,
   Code,
+  CodeBlock,
   Connect,
   Copy,
   CreditCard,
@@ -204,6 +208,8 @@ const _glyphs = {
   Megaphone,
   Menu,
   Minus,
+  MultiDirectionArrow,
+  MultiLayers,
   NoFilter,
   NotAllowed,
   Note,
