@@ -6,15 +6,23 @@ const rootDir = process.cwd();
 
 interface TestCommandOptions {
   watch: boolean;
+  testNamePattern?: string;
 }
 
 export const test = (options: TestCommandOptions) => {
-  const { watch } = options;
+  const { watch, testNamePattern } = options;
   const configFile = path.resolve(__dirname, '../config/jest.config.js');
 
   spawn(
     'jest',
-    [`--config`, configFile, `--rootDir`, rootDir, watch ? '--watch' : ''],
+    [
+      `--config`,
+      configFile,
+      `--rootDir`,
+      rootDir,
+      watch ? '--watch' : '',
+      testNamePattern ? `--testNamePattern=${testNamePattern}` : '',
+    ],
     {
       env: {
         ...process.env,
