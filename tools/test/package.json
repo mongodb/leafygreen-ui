@@ -39,6 +39,5 @@
     "jest-junit": "^10.0.0",
     "react-test-renderer": "^17.0.2",
     "regenerator-runtime": "^0.13.5"
-
   }
 }
