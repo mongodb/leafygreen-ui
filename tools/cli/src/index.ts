@@ -51,6 +51,11 @@ cli
   .command('test')
   .description('Tests leafygreen-ui packages with unified config.')
   .option('--watch', 'Watch all files you intend to test', false)
+  .option(
+    '-t, --testNamePattern <regex>',
+    'Alias of jest --testNamePattern. Run only tests with a name that matches the regex.',
+    undefined,
+  )
   .action(test);
 
 /** Lint */
