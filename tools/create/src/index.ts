@@ -6,17 +6,17 @@ import path from 'path';
 
 import { CreatePackageOptions } from './create.types';
 import {
-  pkgJson,
-  tsConfig,
-  rollupConfig,
-  readMe,
   component,
   componentIndex,
   index,
+  pkgJson,
+  readMe,
+  rollupConfig,
   spec,
-  types,
-  styles,
   story,
+  styles,
+  tsConfig,
+  types,
 } from './templates';
 
 export function createPackage(
