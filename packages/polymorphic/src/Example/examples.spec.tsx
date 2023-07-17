@@ -450,7 +450,7 @@ describe('Polymorphic/Example Higher-order Components', () => {
    * also generate TSDoc
    */
   describe('TSDoc output', () => {
-    const docs = parseTSDoc('polymorphic/src/Example', {
+    const docs = parseTSDoc(__dirname, {
       excludeTags: [], // Include all tags
     });
 
