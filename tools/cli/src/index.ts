@@ -1,11 +1,11 @@
-import { createPackage } from '@lg-tools/create';
 import {
   build,
   buildPackage,
   buildTSDoc,
   buildTypescript,
 } from '@lg-tools/build';
-import { linkPackages, unlinkPackages, Scope } from '@lg-tools/link';
+import { createPackage } from '@lg-tools/create';
+import { linkPackages, Scope, unlinkPackages } from '@lg-tools/link';
 import { lint } from '@lg-tools/lint';
 import { test } from '@lg-tools/test';
 import { validate } from '@lg-tools/validate';
@@ -51,6 +51,7 @@ cli
   .command('test')
   .description('Tests leafygreen-ui packages with unified config.')
   .option('--watch', 'Watch all files you intend to test', false)
+  .option('--ci', 'Runs tests with CI configuration', false)
   .option(
     '-t, --testNamePattern <regex>',
     'Alias of jest --testNamePattern. Run only tests with a name that matches the regex.',

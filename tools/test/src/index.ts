@@ -6,11 +6,19 @@ const rootDir = process.cwd();
 
 interface TestCommandOptions {
   watch: boolean;
+  ci: boolean;
   testNamePattern?: string;
 }
 
 export const test = (options: TestCommandOptions) => {
-  const { watch, testNamePattern } = options;
+  const { watch, testNamePattern, ci } = options;
+  const ciFlags = [
+    '--no-cache',
+    '--ci',
+    '--runInBand',
+    '--reporters=default',
+    '--reporters=jest-junit',
+  ];
   const configFile = path.resolve(__dirname, '../config/jest.config.js');
 
   spawn(
@@ -22,6 +30,7 @@ export const test = (options: TestCommandOptions) => {
       rootDir,
       watch ? '--watch' : '',
       testNamePattern ? `--testNamePattern=${testNamePattern}` : '',
+      ...(ci ? ciFlags : []),
     ],
     {
       env: {
