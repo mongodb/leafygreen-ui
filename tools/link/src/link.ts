@@ -14,6 +14,8 @@ interface LinkOptions {
   verbose: boolean;
 }
 
+const ignorePackages = ['mongo-nav'];
+
 export async function linkPackages(destination: string, opts: LinkOptions) {
   const { verbose, scope, packages } = opts;
   const relativeDestination = path.relative(process.cwd(), destination);
@@ -61,11 +63,12 @@ export async function linkPackages(destination: string, opts: LinkOptions) {
         // Run yarn link <packageName> on the destination
         const installedLGPackages = fs.readdirSync(installedModulesDir);
 
-        const packagesToLink = packages
-          ? installedLGPackages.filter(installedPkg =>
-              packages.some(pkgFlag => pkgFlag.includes(installedPkg)),
-            )
-          : installedLGPackages;
+        const packagesToLink = installedLGPackages.filter(
+          installedPkg =>
+            !ignorePackages.includes(installedPkg) &&
+            (!packages ||
+              packages.some(pkgFlag => pkgFlag.includes(installedPkg))),
+        );
 
         console.log(
           chalk.gray(

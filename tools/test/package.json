@@ -9,11 +9,6 @@
     "build": "rollup -c rollup.config.mjs",
     "tsc": "tsc --build tsconfig.json"
   },
-  "files": [
-    "bin/**",
-    "dist/**",
-    "src/*.jest.*.js"
-  ],
   "publishConfig": {
     "access": "public"
   },
