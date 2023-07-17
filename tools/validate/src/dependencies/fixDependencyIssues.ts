@@ -1,11 +1,11 @@
-import { SpawnOptions, spawnSync } from 'child_process';
-import fetch from 'node-fetch';
 import chalk from 'chalk';
-import path from 'path';
+import { SpawnOptions, spawnSync } from 'child_process';
 import { writeFileSync } from 'fs';
+import fetch from 'node-fetch';
+import path from 'path';
 
-import { readPackageJson } from './utils';
 import { DependencyIssues } from './config';
+import { readPackageJson } from './utils';
 
 export async function fixDependencies(
   pkg: string,

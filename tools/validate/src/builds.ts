@@ -18,7 +18,7 @@ const ModuleType = {
   amd: 'amd',
   steal: 'steal',
 } as const;
-type ModuleType = (typeof ModuleType)[keyof typeof ModuleType];
+type ModuleType = typeof ModuleType[keyof typeof ModuleType];
 
 const rootDir = process.cwd();
 

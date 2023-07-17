@@ -1,6 +1,5 @@
 import chalk from 'chalk';
 import depcheck from 'depcheck';
-
 import { readFileSync, writeFileSync } from 'fs';
 import { isEqual } from 'lodash';
 import path from 'path';

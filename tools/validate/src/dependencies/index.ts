@@ -2,6 +2,7 @@
 
 import { getAllPackageNames } from '../utils/getAllPackageNames';
 import { ValidateCommandOptions } from '../validate.types';
+
 import { checkPackage } from './checkPackage';
 
 export function validateDependencies(

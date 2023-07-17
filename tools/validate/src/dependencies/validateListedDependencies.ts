@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import { pick } from 'lodash';
 import path from 'path';
+
 import { ValidateCommandOptions } from '../validate.types';
 
 import { DepCheckFunctionProps, ignoreMatches } from './config';
@@ -20,7 +21,7 @@ import {
 export function validateListedDependencies(
   { pkg, importedPackages }: DepCheckFunctionProps,
   { verbose }: Partial<ValidateCommandOptions>,
-): string[] {
+): Array<string> {
   const pkgJson = readPackageJson(pkg);
 
   const { dependencies: importedPackagesInSourceFile } =
