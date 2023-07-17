@@ -1,4 +1,4 @@
-import '@testing-library/jest-dom';
+require('@testing-library/jest-dom');
 
-import { toHaveNoViolations } from 'jest-axe';
+const { toHaveNoViolations } = require('jest-axe');
 expect.extend(toHaveNoViolations);
