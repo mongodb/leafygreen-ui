@@ -36,5 +36,8 @@
     "stream-browserify": "^3.0.0",
     "url-loader": "^4.1.0",
     "webpack": "^5.0.0"
+  },
+  "peerDependencies": {
+    "storybook": "^7.0.11"
   }
 }
