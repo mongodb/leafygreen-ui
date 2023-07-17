@@ -1,4 +1,4 @@
-import { TemplateParameters } from '../../../create.types';
+import { TemplateParameters } from '../../../../create.types';
 
 export const component = ({ packageNamePascal }: TemplateParameters) => `
 import React from 'react';
