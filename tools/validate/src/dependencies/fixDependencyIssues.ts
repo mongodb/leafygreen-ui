@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import chalk from 'chalk';
 import { SpawnOptions, spawnSync } from 'child_process';
 import { writeFileSync } from 'fs';

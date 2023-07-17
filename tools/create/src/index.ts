@@ -1,4 +1,4 @@
-// import { spawn } from 'child_process';
+/* eslint-disable no-console */
 import chalk from 'chalk';
 import fs from 'fs';
 import { camelCase, kebabCase, startCase } from 'lodash';
