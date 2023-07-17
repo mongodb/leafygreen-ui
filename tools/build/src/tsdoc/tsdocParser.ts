@@ -101,12 +101,14 @@ export function parseTSDoc(
   const { excludeTags } = defaults(options, defaultParseFunctionOptions);
 
   const packageDir = path.resolve(process.cwd(), packageRoot);
-  const packageName = JSON.parse(
-    fs.readFileSync(path.join(packageDir, 'package.json'), 'utf-8'),
-  )?.name;
 
   if (fs.existsSync(packageDir)) {
     const componentFileNames = parseFileNames(packageDir);
+
+    const pkgJsonPath = path.join(packageDir, 'package.json');
+    const packageName = fs.existsSync(pkgJsonPath)
+      ? JSON.parse(fs.readFileSync(pkgJsonPath, 'utf-8'))?.name
+      : undefined;
 
     const parsedDocs = Parser.parse(componentFileNames)
       .filter((doc: ComponentDoc) => {
@@ -130,18 +132,16 @@ export function parseTSDoc(
           props: parseProps(props, displayName),
         } as CustomComponentDoc;
       });
-    const docs: Array<CustomComponentDoc> = uniqBy(parsedDocs, 'displayName');
 
+    const docs: Array<CustomComponentDoc> = uniqBy(parsedDocs, 'displayName');
     console.log(chalk.gray(`Parsed TSDoc for:`, chalk.bold(packageName)));
 
     return docs;
   } else {
     console.warn(
       chalk.yellow(
-        'Could not find component:',
-        chalk.bold(`\`${packageName}\``),
-        'at',
-        chalk.bold(`${packageDir}`),
+        'Could not find directory:',
+        chalk.bold(`\`${packageDir}\``),
       ),
     );
   }

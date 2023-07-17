@@ -1,5 +1,6 @@
 import { spawn } from 'child_process';
 export { buildTSDoc } from './tsdoc/build-tsdoc';
+export { parseTSDoc } from './tsdoc/tsdocParser';
 export { buildPackage } from './rollup/build-package';
 export { buildTypescript } from './typescript/build-ts';
 
