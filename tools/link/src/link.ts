@@ -11,6 +11,8 @@ import { formatLog } from './utils';
 
 const program = new Command();
 
+const ignorePackages = ['mongo-nav'];
+
 program
   .name('link')
   .description(
@@ -86,11 +88,12 @@ async function linkPackages(
         // Run yarn link <packageName> on the destination
         const installedLGPackages = fs.readdirSync(installedModulesDir);
 
-        const packagesToLink = packages
-          ? installedLGPackages.filter(installedPkg =>
-              packages.some(pkgFlag => pkgFlag.includes(installedPkg)),
-            )
-          : installedLGPackages;
+        const packagesToLink = installedLGPackages.filter(
+          installedPkg =>
+            !ignorePackages.includes(installedPkg) &&
+            (!packages ||
+              packages.some(pkgFlag => pkgFlag.includes(installedPkg))),
+        );
 
         console.log(
           chalk.gray(
