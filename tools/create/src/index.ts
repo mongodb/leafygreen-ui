@@ -4,6 +4,4 @@
 // Package directory (default `/packages`)
 // Package name
 
-export function createPackage() {
-
-}
+export function createPackage() {}
