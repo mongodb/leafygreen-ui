@@ -8,12 +8,20 @@ import path from 'path';
  */
 export function buildPackage() {
   const packageDir = process.cwd();
-  const rollupConfigPath = path.join(packageDir, 'rollup.config.mjs');
+  const localRollupConfigPath = path.join(packageDir, 'rollup.config.mjs');
+  const defaultRollupConfigPath = path.join(
+    __dirname, // __dirname is `dist`
+    '../config/rollup.config.mjs',
+  );
 
-  if (!fs.existsSync(rollupConfigPath)) {
-    console.error(chalk.red(`Could not find rollup config in ${packageDir}`));
-    process.exit(1);
-  }
+  // If there is a local rollup config defined, use that
+  // Otherwise use the default one
+  const rollupConfigPath = fs.existsSync(localRollupConfigPath)
+    ? localRollupConfigPath
+    : defaultRollupConfigPath;
+
+  console.log({ __dirname });
+  console.log(chalk.bgGray('Using Rollup config ', rollupConfigPath));
 
   spawn('rollup', ['--config', rollupConfigPath], {
     cwd: packageDir,
