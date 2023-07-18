@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 11.19.0
+
+### Minor Changes
+
+- 5dcea09d: Adds `CodeBlock`, `MultiDirectionArrow`, and `MultiLayers` icons.
+
 ## 11.18.0
 
 ### Minor Changes
