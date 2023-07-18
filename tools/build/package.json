@@ -6,10 +6,13 @@
   "publishConfig": {
     "access": "public"
   },
+  "bin": {
+    "lg-internal-build-package": "./bin/build-package.js"
+  },
   "main": "dist/index.js",
   "module": "dist/esm/index.js",
   "scripts": {
-    "build": "rollup -c rollup.config.mjs",
+    "build": "rollup -c ./config/rollup.config.mjs",
     "tsc": "tsc --build tsconfig.json"
   },
   "dependencies": {
