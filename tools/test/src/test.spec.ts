@@ -37,7 +37,7 @@ describe('tools/test', () => {
     });
     expect(spawnSpy).toHaveBeenCalledWith(
       'jest',
-      expect.arrayContaining([...baseArgs, '-watch']),
+      expect.arrayContaining([...baseArgs, '--watch']),
       expect.objectContaining(baseEnv),
     );
   });
