@@ -1,33 +1,41 @@
 /* eslint-disable no-console */
-import { readFileSync, writeFile } from 'fs';
-import { join } from 'path';
+import chalk from 'chalk';
+import fs from 'fs';
+import path from 'path';
+import { spawn } from 'child_process';
+import { Scope } from './scopes';
 
-import { getAllPackageNames } from './utils/getAllPackageNames';
-
-// Get the list of all packages
-const packages = getAllPackageNames();
-
-// Loop through all packages
-for (const pkg of packages) {
-  console.log(pkg);
-
-  const pkgJsonFilePath = join(__dirname, '../packages', pkg, 'package.json');
-
-  // Open each package's package.json
-  const jsonStr = readFileSync(pkgJsonFilePath, {
-    encoding: 'utf-8',
-  });
-  const pkgJson = JSON.parse(jsonStr);
-
-  // Add a ts build script
-  pkgJson.scripts = {
-    ...pkgJson.scripts,
-    build: 'rollup --config rollup.config.mjs',
-    tsc: 'tsc --build tsconfig.json',
-  };
-
-  // Write the file
-  writeFile(pkgJsonFilePath, JSON.stringify(pkgJson, null, 2), () => {
-    // noop
-  });
+export interface UpdateCommandOptions {
+  /**
+   * Upgrades to the latest version, ignoring the specified range in `package.json`
+   */
+  latest: boolean;
 }
+
+export const update = (
+  packages?: Array<string>,
+  options?: UpdateCommandOptions,
+) => {
+  const rootDir = process.cwd();
+  const node_modulesDir = path.join(rootDir, 'node_modules');
+
+  if (!fs.existsSync(node_modulesDir)) {
+    console.error(
+      chalk.red('Could not find `node_modules` directory at', node_modulesDir),
+    );
+  }
+
+  spawn(
+    'yarn',
+    [
+      'upgrade',
+      ...(packages ?? []),
+      '--scope',
+      ...Object.keys(Scope),
+      options?.latest ? '--latest' : '',
+    ],
+    {
+      stdio: 'inherit',
+    },
+  );
+};

@@ -8,6 +8,7 @@ import { createPackage } from '@lg-tools/create';
 import { linkPackages, Scope, unlinkPackages } from '@lg-tools/link';
 import { lint } from '@lg-tools/lint';
 import { test } from '@lg-tools/test';
+import { update } from '@lg-tools/update';
 import { validate } from '@lg-tools/validate';
 import { Command, Option } from 'commander';
 
@@ -24,7 +25,6 @@ cli
   .action(build);
 
 /** Create */
-// TODO:
 cli
   .command('create')
   .description('Creates a new package with the provided name')
@@ -49,11 +49,19 @@ cli
   .argument('[packages...]', 'A list of packages to install');
 
 /** Update */
-// TODO:
 cli
   .command('update')
-  .description('Updates LeafyGreen packages to the latest version')
-  .argument('[packages...]', 'A list of packages to update');
+  .alias('upgrade')
+  .description(
+    'Updates installed LeafyGreen packages based on the specified range',
+  )
+  .argument('[packages...]', 'A list of packages to update')
+  .option(
+    '--latest',
+    'Ignores the version range specified in `package.json`',
+    false,
+  )
+  .action(update);
 
 /** Test */
 cli
