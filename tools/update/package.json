@@ -9,5 +9,8 @@
   },
   "scripts": {
     "build": "lg-internal-build-package"
+  },
+  "devDependencies": {
+    "@lg-tools/build": "^0.0.1"
   }
 }
