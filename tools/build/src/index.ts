@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { spawn } from 'child_process';
 export { buildPackage } from './rollup/build-package';
 export { buildTSDoc } from './tsdoc/build-tsdoc';
