@@ -29,7 +29,16 @@ cli
   .command('create')
   .description('Creates a new package with the provided name')
   .argument('<name>', 'The name of the package')
-  .option('-s, --scope', 'The npm scope of the new package', '@leafygreen-ui')
+  .option(
+    '-s, --scope [scope]',
+    'The npm scope of the new package',
+    '@leafygreen-ui',
+  )
+  .option(
+    '-d, --directory [directory]',
+    'The directory to write the new package',
+    './packages',
+  )
   .action(createPackage);
 
 /** Install */

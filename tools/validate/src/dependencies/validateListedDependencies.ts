@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import chalk from 'chalk';
 import { pick } from 'lodash';
 import path from 'path';
