@@ -2,6 +2,7 @@ import { validateBuilds } from './builds';
 import { validateDependencies } from './dependencies';
 import { ValidateCommandOptions } from './validate.types';
 
+// TODO: Check more than just `packages`
 export const validate = async (options: ValidateCommandOptions) => {
   const validators: Array<Promise<void>> = [];
 
