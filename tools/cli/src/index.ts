@@ -5,6 +5,7 @@ import {
   buildTypescript,
 } from '@lg-tools/build';
 import { createPackage } from '@lg-tools/create';
+import { installLeafyGreen } from '@lg-tools/install';
 import { linkPackages, Scope, unlinkPackages } from '@lg-tools/link';
 import { lint } from '@lg-tools/lint';
 import { test } from '@lg-tools/test';
@@ -13,7 +14,9 @@ import { validate } from '@lg-tools/validate';
 import { Command, Option } from 'commander';
 
 const cli = new Command('lg');
-cli.description('Command line tools for the LeafyGreen UI library by MongoDB');
+cli
+  .description('Command line tools for the LeafyGreen UI library by MongoDB')
+  .enablePositionalOptions();
 
 /** Build */
 cli
@@ -42,11 +45,17 @@ cli
   .action(createPackage);
 
 /** Install */
-// TODO:
 cli
   .command('install')
   .description('Installs LeafyGreen packages to the current app')
-  .argument('[packages...]', 'A list of packages to install');
+  .argument('[packages...]', 'A list of packages to install')
+  .option('-v --verbose', 'Prints additional information to the console', false)
+  .option(
+    '-W, --ignore-workspace-root-check',
+    'Pass through flag for yarn',
+    false,
+  )
+  .action(installLeafyGreen);
 
 /** Update */
 cli

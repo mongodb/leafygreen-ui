@@ -1,0 +1,32 @@
+{
+  "name": "@lg-tools/install",
+  "version": "0.0.1",
+  "description": "LeafyGreen UI Kit Install",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "lg-internal-build-package",
+    "tsc": "tsc --build tsconfig.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "ora": "^6.3.1",
+    "node-fetch": "^2.6.6"
+  },
+  "devDependencies": {
+    "@lg-tools/build": "^0.0.1"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/install",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
+  }
+}
