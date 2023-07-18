@@ -7,7 +7,7 @@
     "lg-slackbot": "./bin/slackbot.js"
   },
   "scripts": {
-    "build": "rollup -c rollup.config.mjs",
+    "build": "lg-internal-build-package",
     "tsc": "tsc --build tsconfig.json"
   },
   "publishConfig": {
