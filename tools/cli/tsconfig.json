@@ -18,6 +18,9 @@
       "path": "../create"
     },
     {
+      "path": "../install"
+    },
+    {
       "path": "../link"
     },
     {
