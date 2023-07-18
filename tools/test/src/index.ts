@@ -4,7 +4,7 @@ import path from 'path';
 
 const rootDir = process.cwd();
 
-interface TestCommandOptions {
+export interface TestCommandOptions {
   watch: boolean;
   ci: boolean;
   testNamePattern?: string;

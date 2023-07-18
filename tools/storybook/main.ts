@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { ProvidePlugin } from 'webpack';
 
+// FIXME: Remove this
 const nodeModulesThatNeedToBeParsedBecauseTheyExposeES6 = [
   '@tanstack[\\\\/]react-table',
   '@tanstack[\\\\/]table-core',
