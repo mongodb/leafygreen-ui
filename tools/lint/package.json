@@ -10,7 +10,7 @@
     "registry": "https://artifactory.corp.mongodb.com/artifactory/api/npm/leafygreen-ui/"
   },
   "scripts": {
-    "build": "rollup -c rollup.config.mjs",
+    "build": "lg-internal-build-package",
     "tsc": "tsc --build tsconfig.json"
   },
   "dependencies": {

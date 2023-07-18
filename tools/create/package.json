@@ -9,7 +9,7 @@
     "lg-create": "./dist/legacy-create.js"
   },
   "scripts": {
-    "build": "rollup -c rollup.config.mjs",
+    "build": "lg-internal-build-package",
     "tsc": "tsc --build tsconfig.json"
   },
   "publishConfig": {
@@ -18,5 +18,8 @@
   },
   "dependencies": {
     "chalk": "^4.1.2"
+  },
+  "devDependencies": {
+    "@lg-tools/build": "^0.0.1"
   }
 }

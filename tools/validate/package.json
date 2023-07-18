@@ -10,12 +10,15 @@
     "registry": "https://artifactory.corp.mongodb.com/artifactory/api/npm/leafygreen-ui/"
   },
   "scripts": {
-    "build": "rollup -c rollup.config.mjs",
+    "build": "lg-internal-build-package",
     "tsc": "tsc --build tsconfig.json"
   },
   "dependencies": {
     "depcheck": "^1.4.3",
     "lodash": "^4.17.21",
     "node-fetch": "^2.0.0"
+  },
+  "devDependencies": {
+    "@lg-tools/build": "^0.0.1"
   }
 }
