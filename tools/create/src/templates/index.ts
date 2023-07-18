@@ -1,6 +1,5 @@
 export { pkgJson } from './component/package.json';
 export { readMe } from './component/readme.md';
-export { rollupConfig } from './component/rollup.config.template';
 export { componentIndex } from './component/src/Component/component.index.template';
 export { spec } from './component/src/Component/component.spec.template';
 export { styles } from './component/src/Component/component.styles.template';

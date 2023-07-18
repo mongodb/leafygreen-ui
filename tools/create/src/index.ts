@@ -11,7 +11,6 @@ import {
   index,
   pkgJson,
   readMe,
-  rollupConfig,
   spec,
   story,
   styles,
@@ -64,11 +63,7 @@ export function createPackage(
           contents: tsConfig,
         },
         {
-          name: 'rollup.config.mjs',
-          contents: rollupConfig,
-        },
-        {
-          name: 'readme.md',
+          name: 'README.md',
           contents: readMe({ packageNameKebab, packageNameTitle }),
         },
         {
