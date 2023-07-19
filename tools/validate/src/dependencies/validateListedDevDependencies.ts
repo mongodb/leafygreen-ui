@@ -6,11 +6,7 @@ import path from 'path';
 import { ValidateCommandOptions } from '../validate.types';
 
 import { DepCheckFunctionProps } from './config';
-import {
-  isDependencyUsedInSourceFile,
-  readPackageJson,
-  sortDependenciesByUsage,
-} from './utils';
+import { isDependencyUsedInSourceFile, sortDependenciesByUsage } from './utils';
 
 /**
  * Ensure every package listed as a `devDependency`
@@ -21,13 +17,12 @@ import {
  * @returns An array of packages that are listed as `devDependencies`, but are used in non-test files
  */
 export function validateListedDevDependencies(
-  { pkg, importedPackages }: DepCheckFunctionProps,
-  { verbose }: Partial<ValidateCommandOptions>,
+  { pkgName, pkgJson, importedPackages }: DepCheckFunctionProps,
+  options?: Partial<ValidateCommandOptions>,
 ): Array<string> {
-  const pkgJson = readPackageJson(pkg);
-
+  const { verbose } = options ?? { verbose: false };
   const { devDependencies: importedPackagesInTestFile } =
-    sortDependenciesByUsage(importedPackages, pkg);
+    sortDependenciesByUsage(importedPackages, pkgName);
 
   const { devDependencies: _listedDevObj } = pick(pkgJson, ['devDependencies']);
   const listedDevDependencies = _listedDevObj ? Object.keys(_listedDevObj) : [];
@@ -50,7 +45,7 @@ export function validateListedDevDependencies(
     verbose &&
       console.log(
         `${chalk.blue(
-          pkg,
+          pkgName,
         )}: lists packages as devDependencies, but uses them in source files`,
       );
     verbose &&

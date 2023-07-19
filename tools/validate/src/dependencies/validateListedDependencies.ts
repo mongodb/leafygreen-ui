@@ -8,7 +8,6 @@ import { ValidateCommandOptions } from '../validate.types';
 import { DepCheckFunctionProps, ignoreMatches } from './config';
 import {
   isDependencyOnlyUsedInTestFile,
-  readPackageJson,
   sortDependenciesByUsage,
 } from './utils';
 
@@ -20,13 +19,13 @@ import {
  * but are only used in test files
  */
 export function validateListedDependencies(
-  { pkg, importedPackages }: DepCheckFunctionProps,
-  { verbose }: Partial<ValidateCommandOptions>,
+  { pkgName, pkgJson, importedPackages }: DepCheckFunctionProps,
+  options?: Partial<ValidateCommandOptions>,
 ): Array<string> {
-  const pkgJson = readPackageJson(pkg);
+  const { verbose } = options ?? { verbose: false };
 
   const { dependencies: importedPackagesInSourceFile } =
-    sortDependenciesByUsage(importedPackages, pkg);
+    sortDependenciesByUsage(importedPackages, pkgName);
 
   const { dependencies: _listedDepObj } = pick(pkgJson, ['dependencies']);
   const listedDependencies = _listedDepObj ? Object.keys(_listedDepObj) : [];
@@ -49,7 +48,7 @@ export function validateListedDependencies(
     verbose &&
       console.log(
         `${chalk.blue(
-          pkg,
+          pkgName,
         )}: lists packages as dependency, but only uses them in test files`,
       );
     verbose &&

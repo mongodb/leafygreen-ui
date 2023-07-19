@@ -40,7 +40,7 @@ export function fixTSconfig(pkg: string) {
  * Sorts DepsRecord into dependencies & devDependencies based on what files it's used in
  */
 export function sortDependenciesByUsage(
-  depsRecord: Record<string, Array<string>>,
+  depsRecord: { [dependencyName: string]: Array<string> },
   pkgName: string,
 ): {
   dependencies: Array<string>;
