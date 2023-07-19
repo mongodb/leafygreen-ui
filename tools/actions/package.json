@@ -1,0 +1,17 @@
+{
+  "name": "@lg-tools/actions",
+  "version": "0.0.1",
+  "description": "Shared GitHub actions for LeafyGreen",
+  "main": "dist/index.js",
+  "module": "dist/esm/index.js",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "lg-internal-build-package",
+    "tsc": "tsc --build tsconfig.json"
+  },
+  "dependencies": {
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^5.1.1",
+    "@lg-tools/build": "^0.0.1"
+  }
+}

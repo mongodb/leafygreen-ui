@@ -9,6 +9,30 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: A job to say hello
+    steps:
+      # To use this repository's private action,
+      # you must check out the repository
+      - uses: actions/checkout@v3
+      # Only setup & build if there was no build cache hit
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: yarn
+          cache-dependency-path: 'yarn.lock'
+
+      - name: Hello world action step
+        uses: node_modules/@lg-tools/actions/dist
+        id: hello
+        with:
+          who-to-greet: 'Mona the Octocat'
+      # Use the output from the `hello` step
+      - name: Get the output time
+        run: echo "The time was ${{ steps.hello.outputs.time }}"
+
   build:
     name: Build packages
     runs-on: ubuntu-latest
