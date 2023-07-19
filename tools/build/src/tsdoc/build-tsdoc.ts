@@ -5,14 +5,13 @@ import path from 'path';
 
 import { parseTSDoc } from './tsdocParser';
 
-// In this case, packageDir will be the root of a package itself
-const packageDir = process.cwd();
-const outDir = packageDir; // TODO: allow different outDirs
-
 /**
  * Builds TSDoc file(s) for the current directory
  */
 export function buildTSDoc() {
+  const packageDir = process.cwd();
+  const outDir = packageDir; // TODO: Consider allowing different outDirs
+
   const docs = parseTSDoc(packageDir);
   const docString = JSON.stringify(docs, null, 2);
   const outFilePath = path.resolve(process.cwd(), outDir, 'tsdoc.json');

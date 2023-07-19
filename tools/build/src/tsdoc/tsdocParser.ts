@@ -63,15 +63,6 @@ const Parser = withCompilerOptions(compilerOptions, TSDocOptions);
 
 interface ParseFunctionOptions {
   /**
-   * The path to the `packages` directory.
-   * Defaults to this repository's `packages/` folder.
-   *
-   * Set this to a remote repository's `node_modules/@leafygreen-ui` path
-   * to generate fresh docs in that repo.
-   */
-  packagesRoot?: string;
-
-  /**
    * Any components with these excluded TSDoc `@tags`
    * will be excluded from docs generation.
    *
@@ -81,8 +72,8 @@ interface ParseFunctionOptions {
    */
   excludeTags?: Array<string>;
 }
+
 const defaultParseFunctionOptions = {
-  packagesRoot: path.resolve(process.cwd(), 'packages'),
   excludeTags: ['example', 'internal', 'noDocgen'],
 };
 

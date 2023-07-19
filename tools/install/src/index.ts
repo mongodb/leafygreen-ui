@@ -87,7 +87,7 @@ export const installLeafyGreen = (
 };
 
 /** Reads the lock file to determine which package manager to use */
-function getPackageManager(appPath: string): `npm` | `yarn` {
+export function getPackageManager(appPath: string): `npm` | `yarn` {
   if (fs.existsSync(`${appPath}/yarn.lock`)) {
     return 'yarn';
   } else if (fs.existsSync(`${appPath}/package-lock.json`)) {
