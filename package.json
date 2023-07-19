@@ -33,6 +33,7 @@
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@changesets/cli": "^2.26.0",
+    "@lg-tools/actions": "^0.0.1",
     "@lg-tools/cli": "^0.0.1",
     "@lg-tools/meta": "^0.0.1",
     "@lg-tools/slackbot": "^0.0.1",
