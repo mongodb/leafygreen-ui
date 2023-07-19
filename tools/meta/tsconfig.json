@@ -8,8 +8,5 @@
     "paths": {
       "@lg-tools/*": ["../*/src"]
     }
-  },
-  "references": [
-    {"path": "../meta"}
-  ]
+  }
 }

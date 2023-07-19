@@ -4,8 +4,9 @@ import { spawn } from 'child_process';
 import fs from 'fs';
 import { homedir } from 'os';
 import path from 'path';
+import { getLGConfig } from '@lg-tools/meta';
 
-import { formatLog, getLGConfig } from './utils';
+import { formatLog } from './utils';
 
 interface LinkOptions {
   packages: Array<string>;
