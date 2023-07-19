@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { spawn } from 'child_process';
 import fs from 'fs';
 import fetch from 'node-fetch';
@@ -89,7 +90,7 @@ export const installLeafyGreen = (
 function getPackageManager(appPath: string): `npm` | `yarn` {
   if (fs.existsSync(`${appPath}/yarn.lock`)) {
     return 'yarn';
-  } else if (fs.existsSync(`${appPath}/yarn.lock`)) {
+  } else if (fs.existsSync(`${appPath}/package-lock.json`)) {
     return 'npm';
   }
 
