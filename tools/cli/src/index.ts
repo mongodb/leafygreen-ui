@@ -65,6 +65,7 @@ cli
     'Updates installed LeafyGreen packages based on the specified range',
   )
   .argument('[packages...]', 'A list of packages to update')
+  .option('--scope', 'The npm scope of the packages', '@leafygreen-ui')
   .option(
     '--latest',
     'Ignores the version range specified in `package.json`',

@@ -5,6 +5,10 @@ const spawnSpy = jest.spyOn(child_process, 'spawn');
 spawnSpy.mockImplementation((...args) => ({} as ChildProcess));
 
 describe('tools/update', () => {
+  const defaultOptions = {
+    scope: '@leafygreen-ui',
+    latest: false,
+  };
   const baseEnv = expect.objectContaining({ stdio: 'inherit' });
 
   afterEach(() => {
@@ -12,7 +16,7 @@ describe('tools/update', () => {
   });
 
   test('Runs with no args', () => {
-    update();
+    update([], defaultOptions);
     expect(spawnSpy).toHaveBeenCalledWith(
       'yarn',
       expect.arrayContaining(['upgrade', '--scope', '@leafygreen-ui']),
@@ -21,7 +25,7 @@ describe('tools/update', () => {
   });
 
   test('Runs with `--latest` flag', () => {
-    update([], { latest: true });
+    update([], { ...defaultOptions, latest: true });
     expect(spawnSpy).toHaveBeenCalledWith(
       'yarn',
       expect.arrayContaining([
@@ -35,7 +39,7 @@ describe('tools/update', () => {
   });
 
   test('Runs with packages list', () => {
-    update(['lib', 'tokens']);
+    update(['lib', 'tokens'], defaultOptions);
     expect(spawnSpy).toHaveBeenCalledWith(
       'yarn',
       expect.arrayContaining([
