@@ -6,12 +6,12 @@ import {
 } from '@lg-tools/build';
 import { createPackage } from '@lg-tools/create';
 import { installLeafyGreen } from '@lg-tools/install';
-import { linkPackages, Scope, unlinkPackages } from '@lg-tools/link';
+import { linkPackages, unlinkPackages } from '@lg-tools/link';
 import { lint } from '@lg-tools/lint';
 import { test } from '@lg-tools/test';
 import { update } from '@lg-tools/update';
 import { validate } from '@lg-tools/validate';
-import { Command, Option } from 'commander';
+import { Command } from 'commander';
 
 const cli = new Command('lg');
 cli
@@ -117,16 +117,10 @@ cli
   .description('Link local LeafyGreen packages to a destination app.')
   .argument('destination', 'The destination app path')
   .option('-v --verbose', 'Prints additional information to the console', false)
-  .addOption(
-    new Option('--scope <name>', 'The NPM organization').choices(
-      Object.keys(Scope),
-    ),
-  )
-  .addOption(
-    new Option(
-      '--packages <names...>',
-      'Specific package names (requires `scope` option, or full package name)',
-    ),
+  .option('--scope <name>', 'The NPM organization')
+  .option(
+    '--packages <names...>',
+    'Specific package names (requires `scope` option, or full package name)',
   )
   .action(linkPackages);
 
@@ -136,11 +130,7 @@ cli
   .arguments('destination')
   .option('-v --verbose', 'Prints additional information to the console', false)
   .option('--noInstall', 'Skip the yarn install step', false)
-  .addOption(
-    new Option('--scope <name>', 'The NPM organization').choices(
-      Object.keys(Scope),
-    ),
-  )
+  .option('--scope <name>', 'The NPM organization')
   .action(unlinkPackages);
 
 /** Build steps */
