@@ -1,6 +1,7 @@
-import { test as lgTest } from '.';
-import path from 'path';
 import child_process, { ChildProcess } from 'child_process';
+import path from 'path';
+
+import { test as lgTest } from '.';
 
 const spawnSpy = jest.spyOn(child_process, 'spawn');
 spawnSpy.mockImplementation((...args) => ({} as ChildProcess));

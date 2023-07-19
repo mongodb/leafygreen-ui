@@ -1,6 +1,6 @@
-import fetch from 'node-fetch';
-import fs from 'fs';
 import { spawn } from 'child_process';
+import fs from 'fs';
+import fetch from 'node-fetch';
 export interface InstallCommandOptions {
   ignoreWorkspaceRootCheck: boolean;
   verbose: boolean;
@@ -92,5 +92,6 @@ function getPackageManager(appPath: string): `npm` | `yarn` {
   } else if (fs.existsSync(`${appPath}/yarn.lock`)) {
     return 'npm';
   }
+
   return 'npm';
 }
