@@ -1,6 +1,11 @@
 name: Pull Request CI
 
 on:
+  workflow_call:
+    secrets:
+      CHROMATIC_PROJECT_TOKEN:
+        required: true
+
   pull_request:
     types: [opened, synchronize, reopened]
 
