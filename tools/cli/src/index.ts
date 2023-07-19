@@ -76,6 +76,7 @@ cli
 cli
   .command('test')
   .description('Tests leafygreen-ui packages with unified config.')
+  // TODO: Files argument
   .option('--watch', 'Watch all files you intend to test', false)
   .option('--ci', 'Runs tests with CI configuration', false)
   .option(
