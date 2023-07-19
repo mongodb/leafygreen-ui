@@ -24,6 +24,8 @@ jobs:
           cache: yarn
           cache-dependency-path: 'yarn.lock'
 
+      - run: yarn install --frozen-lockfile --prefer-offline
+
       - name: Hello world action step
         uses: ./node_modules/@lg-tools/actions
         id: hello
