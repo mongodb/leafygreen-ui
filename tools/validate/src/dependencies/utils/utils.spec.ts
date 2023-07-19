@@ -1,4 +1,8 @@
-import { isDependencyUsedInSourceFile, sortDependenciesByUsage } from '.';
+import {
+  isDependencyOnlyUsedInTestFile,
+  isDependencyUsedInSourceFile,
+  sortDependenciesByUsage,
+} from '.';
 
 /** */
 describe('tools/validate/utils', () => {
@@ -25,7 +29,7 @@ describe('tools/validate/utils', () => {
   describe('isDependencyOnlyUsedInTestFile', () => {
     test('is used in source file', () => {
       expect(
-        isDependencyUsedInSourceFile('@leafygreen-ui/lib', {
+        isDependencyOnlyUsedInTestFile('@leafygreen-ui/lib', {
           '@leafygreen-ui/lib': ['sourceFile.tsx', 'test.spec.tsx'],
         }),
       ).toBeFalsy();
@@ -33,7 +37,7 @@ describe('tools/validate/utils', () => {
 
     test('is not used in source file', () => {
       expect(
-        isDependencyUsedInSourceFile('@leafygreen-ui/button', {
+        isDependencyOnlyUsedInTestFile('@leafygreen-ui/button', {
           '@leafygreen-ui/button': ['tests.spec.tsx'],
         }),
       ).toBeTruthy();

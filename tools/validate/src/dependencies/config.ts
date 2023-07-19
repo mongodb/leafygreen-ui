@@ -1,4 +1,5 @@
 import depcheck from 'depcheck';
+
 import { readPackageJson } from './utils';
 
 export interface DepCheckFunctionProps {

@@ -1,14 +1,22 @@
 import child_process, { ChildProcess } from 'child_process';
+
 import { update } from '.';
 const spawnSpy = jest.spyOn(child_process, 'spawn');
 spawnSpy.mockImplementation((...args) => ({} as ChildProcess));
 
 describe('tools/update', () => {
+  const baseEnv = expect.objectContaining({ stdio: 'inherit' });
+
+  afterEach(() => {
+    spawnSpy.mockClear();
+  });
+
   test('Runs with no args', () => {
     update();
     expect(spawnSpy).toHaveBeenCalledWith(
       'yarn',
       expect.arrayContaining(['upgrade', '--scope', '@leafygreen-ui']),
+      baseEnv,
     );
   });
 
@@ -22,6 +30,7 @@ describe('tools/update', () => {
         '@leafygreen-ui',
         '--latest',
       ]),
+      baseEnv,
     );
   });
 
@@ -36,6 +45,7 @@ describe('tools/update', () => {
         '--scope',
         '@leafygreen-ui',
       ]),
+      baseEnv,
     );
   });
 });
