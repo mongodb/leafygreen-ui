@@ -25,7 +25,7 @@ jobs:
           cache-dependency-path: 'yarn.lock'
 
       - name: Hello world action step
-        uses: node_modules/@lg-tools/actions/dist
+        uses: ./node_modules/@lg-tools/actions/dist
         id: hello
         with:
           who-to-greet: 'Mona the Octocat'
