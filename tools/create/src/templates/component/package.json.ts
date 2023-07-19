@@ -4,8 +4,10 @@ export const pkgJson = ({
   scope,
   packageNameKebab,
   packageNameTitle,
-}: TemplateParameters) => `{
-  "name": "${scope}/${packageNameKebab}",
+}: Pick<
+  TemplateParameters,
+  'scope' | 'packageNameKebab' | 'packageNameTitle'
+>) => `  "name": "${scope}/${packageNameKebab}",
   "version": "0.1.0",
   "description": "LeafyGreen UI Kit ${packageNameTitle}",
   "main": "./dist/index.js",

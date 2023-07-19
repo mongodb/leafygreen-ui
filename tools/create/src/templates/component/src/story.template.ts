@@ -1,6 +1,8 @@
 import { TemplateParameters } from '../../../create.types';
 
-export const story = ({ packageNamePascal }: TemplateParameters) => `
+export const story = ({
+  packageNamePascal,
+}: Pick<TemplateParameters, 'packageNamePascal'>) => `
 import React from 'react';
 import { StoryFn } from '@storybook/react';
 

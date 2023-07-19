@@ -3,7 +3,7 @@ import { TemplateParameters } from '../../../../create.types';
 export const spec = ({
   packageNamePascal,
   packageNameKebab,
-}: TemplateParameters) => `
+}: Pick<TemplateParameters, 'packageNamePascal' | 'packageNameKebab'>) => `
 import React from 'react';
 import { render } from '@testing-library/react';
 
