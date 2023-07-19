@@ -4,18 +4,18 @@ import { spawn } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 
-import { Scope } from './scopes';
-
 export interface UpdateCommandOptions {
   /**
    * Upgrades to the latest version, ignoring the specified range in `package.json`
    */
   latest: boolean;
+
+  scope: string;
 }
 
 export const update = (
-  packages?: Array<string>,
-  options?: UpdateCommandOptions,
+  packages: Array<string>,
+  options: UpdateCommandOptions,
 ) => {
   const rootDir = process.cwd();
   const node_modulesDir = path.join(rootDir, 'node_modules');
@@ -32,8 +32,8 @@ export const update = (
       'upgrade',
       ...(packages ?? []),
       '--scope',
-      ...Object.keys(Scope),
-      options?.latest ? '--latest' : '',
+      options.scope,
+      options.latest ? '--latest' : '',
     ],
     {
       stdio: 'inherit',
