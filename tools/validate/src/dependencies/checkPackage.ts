@@ -6,7 +6,7 @@ import { ValidateCommandOptions } from 'src/validate.types';
 import { depcheckOptions, DependencyIssues } from './config';
 import { fixDependencies } from './fixDependencyIssues';
 import { logDependencyIssues } from './logDependencyIssues';
-import { fixTSconfig, sortDependenciesByUsage } from './utils';
+import { fixTSconfig, readPackageJson, sortDependenciesByUsage } from './utils';
 import { validateListedDependencies } from './validateListedDependencies';
 import { validateListedDevDependencies } from './validateListedDevDependencies';
 import { isMissingProviderPeer } from './validatePeerDependencies';
@@ -14,11 +14,11 @@ import { isMissingProviderPeer } from './validatePeerDependencies';
 const rootDir = process.cwd();
 
 export async function checkPackage(
-  pkg: string,
+  pkgName: string,
   { fix, fixTsconfig, verbose }: Partial<ValidateCommandOptions>,
 ): Promise<boolean> {
   const check = await depcheck(
-    path.resolve(rootDir, 'packages', pkg),
+    path.resolve(rootDir, 'packages', pkgName),
     depcheckOptions,
   );
 
@@ -45,24 +45,33 @@ export async function checkPackage(
   const allMissingPackages = check.missing;
 
   // Sort these based on the file it's used in
-  const sortedMissingDeps = sortDependenciesByUsage(allMissingPackages, pkg);
+  const sortedMissingDeps = sortDependenciesByUsage(
+    allMissingPackages,
+    pkgName,
+  );
   const missingDependencies = Object.keys(sortedMissingDeps.dependencies);
   const missingDevDependencies = Object.keys(sortedMissingDeps.devDependencies);
 
+  const pkgJson = readPackageJson(pkgName);
+
   // Every listed devDependency must _only_ be used in test files
   const listedDevButUsedAsDependency = validateListedDevDependencies(
-    { pkg, importedPackages },
+    { pkgName, pkgJson, importedPackages },
     { verbose },
   );
 
   // Every listed dependency must be used in _at least one_ non-test file
   const listedButOnlyUsedAsDev = validateListedDependencies(
-    { pkg, importedPackages },
+    { pkgName, pkgJson, importedPackages },
     { verbose },
   );
 
   // Whether the package is missing required peer dependencies
-  const isMissingPeers = isMissingProviderPeer({ pkg, importedPackages });
+  const isMissingPeers = isMissingProviderPeer({
+    pkgName,
+    pkgJson,
+    importedPackages,
+  });
 
   const allDependencyIssues: DependencyIssues = {
     missingDependencies,
@@ -74,21 +83,21 @@ export async function checkPackage(
     isMissingPeers,
   };
 
-  logDependencyIssues(pkg, allDependencyIssues);
+  logDependencyIssues(pkgName, allDependencyIssues);
 
   if (fix) {
-    fixDependencies(pkg, allDependencyIssues);
+    fixDependencies(pkgName, allDependencyIssues);
   }
 
   if (fixTsconfig) {
-    fixTSconfig(pkg);
+    fixTSconfig(pkgName);
   }
 
   const issuesExist = Object.values(allDependencyIssues).every(
     prob => prob.length > 0,
   );
 
-  issuesExist && console.log({ pkg, issuesExist, allDependencyIssues });
+  issuesExist && console.log({ pkgName, issuesExist, allDependencyIssues });
 
   return issuesExist && !fix;
 }

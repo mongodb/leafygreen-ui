@@ -14,10 +14,10 @@ export function validateDependencies(
 
   const packages = lgPackages;
 
-  const checks = packages.map(pkg => checkPackage(pkg, options));
+  const checkPromises = packages.map(pkg => checkPackage(pkg, options));
 
   return new Promise<void>((resolve, reject) => {
-    Promise.all(checks).then(results => {
+    Promise.all(checkPromises).then(results => {
       if (results.every(r => !r)) {
         console.log('Dependencies OK ✅');
         resolve();

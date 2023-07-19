@@ -1,7 +1,9 @@
 import depcheck from 'depcheck';
+import { readPackageJson } from './utils';
 
 export interface DepCheckFunctionProps {
-  pkg: string;
+  pkgName: string;
+  pkgJson: ReturnType<typeof readPackageJson>;
   importedPackages: depcheck.Results['using'];
 }
 
