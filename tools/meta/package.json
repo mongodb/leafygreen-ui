@@ -1,0 +1,17 @@
+{
+  "name": "@lg-tools/meta",
+  "version": "0.0.1",
+  "description": "LeafyGreen UI Kit Meta",
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/tools/meta",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
+  }
+}
