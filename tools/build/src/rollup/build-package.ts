@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import chalk from 'chalk';
 import { spawn } from 'child_process';
 import fs from 'fs';
