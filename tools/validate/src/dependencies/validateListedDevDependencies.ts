@@ -32,11 +32,7 @@ export function validateListedDevDependencies(
     listedDev => isDependencyUsedInSourceFile(listedDev, importedPackages),
   );
 
-  if (
-    importedPackagesInTestFile.length &&
-    listedDevDependencies.length &&
-    isAnyListedDevDepUsedInSourceFile
-  ) {
+  if (listedDevDependencies.length && isAnyListedDevDepUsedInSourceFile) {
     // add the dependencies that are listed as dev but not used as dev to the unused array to uninstall them
     const listedDevButUsedAsDependency = listedDevDependencies.filter(
       dep => !importedPackagesInTestFile.includes(dep),

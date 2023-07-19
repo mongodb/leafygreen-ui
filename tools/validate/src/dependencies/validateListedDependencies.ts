@@ -34,11 +34,7 @@ export function validateListedDependencies(
     isDependencyOnlyUsedInTestFile(listedDep, importedPackages),
   );
 
-  if (
-    importedPackagesInSourceFile.length &&
-    listedDependencies.length &&
-    anyListedDependencyUsedInTestFile
-  ) {
+  if (listedDependencies.length && anyListedDependencyUsedInTestFile) {
     const listedButOnlyUsedAsDev = listedDependencies.filter(
       listedDepName =>
         !importedPackagesInSourceFile.includes(listedDepName) &&

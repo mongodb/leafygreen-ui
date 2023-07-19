@@ -1,8 +1,9 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
+import { spawn } from 'child_process';
 import fs from 'fs';
 import path from 'path';
-import { spawn } from 'child_process';
+
 import { Scope } from './scopes';
 
 export interface UpdateCommandOptions {
