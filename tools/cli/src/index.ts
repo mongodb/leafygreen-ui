@@ -34,13 +34,11 @@ cli
   .argument('<name>', 'The name of the package')
   .option(
     '-s, --scope [scope]',
-    'The npm scope of the new package',
-    '@leafygreen-ui',
+    'The npm scope of the new package. Defaults to the first entry in lg.config.json scopes',
   )
   .option(
     '-d, --directory [directory]',
-    'The directory to write the new package',
-    './packages',
+    'The directory to write the new package. Defaults to the first entry in lg.config.json scopes',
   )
   .action(createPackage);
 

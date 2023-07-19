@@ -7,7 +7,7 @@ export interface LGConfig {
 
 export const getLGConfig = (): LGConfig => {
   const rootDir = process.cwd();
-  const lgConfigPath = path.resolve(rootDir, 'lg.json');
+  const lgConfigPath = path.resolve(rootDir, 'lg.config.json');
 
   // Check if an lg.json exists
   if (!fs.existsSync(lgConfigPath)) {

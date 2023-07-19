@@ -4,6 +4,8 @@ import fs from 'fs';
 import { camelCase, kebabCase, startCase } from 'lodash';
 import path from 'path';
 
+import { getLGConfig } from '@lg-tools/meta';
+
 import { CreatePackageOptions } from './create.types';
 import {
   component,
@@ -18,11 +20,12 @@ import {
   types,
 } from './templates';
 
-export function createPackage(
-  name: string,
-  { directory, scope }: CreatePackageOptions,
-) {
+export function createPackage(name: string, options: CreatePackageOptions) {
   const rootDir = process.cwd();
+
+  const { scopes } = getLGConfig();
+  const scope = options.scope ?? Object.keys(scopes)[0];
+  const directory = options.directory ?? Object.values(scopes)[0];
 
   // Construct all required parameters
   const packageNameKebab = kebabCase(name);
@@ -88,7 +91,7 @@ export function createPackage(
         },
         {
           name: `src/${packageNamePascal}/${packageNamePascal}.types.ts`,
-          contents: types({ packageNamePascal, packageNameKebab }),
+          contents: types({ packageNamePascal }),
         },
         {
           name: `src/${packageNamePascal}/${packageNamePascal}.styles.ts`,
