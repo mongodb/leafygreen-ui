@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/update",
-  "version": "0.0.1",
+  "version": "0.1.0-beta.0",
   "description": "Updates all LeafyGreen UI packages to the latest version",
   "main": "dist/index.js",
   "license": "Apache-2.0",

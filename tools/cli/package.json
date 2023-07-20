@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/cli",
-  "version": "0.1.0-beta.1",
+  "version": "0.1.0-beta.2",
   "description": "Command Line tools for LeafyGreen",
   "license": "Apache-2.0",
   "main": "./dist/index.js",
@@ -16,13 +16,13 @@
     "build": "lg-internal-build-package"
   },
   "dependencies": {
-    "@lg-tools/create": "^0.0.1",
+    "@lg-tools/create": "^0.1.0-beta.0",
     "@lg-tools/build": "^0.1.0-beta.6",
     "@lg-tools/install": "^0.1.0-beta.1",
     "@lg-tools/link": "^0.1.0-beta.7",
-    "@lg-tools/lint": "^0.0.1",
-    "@lg-tools/test": "^0.0.1",
-    "@lg-tools/update": "^0.0.1",
+    "@lg-tools/lint": "^0.1.0-beta.6",
+    "@lg-tools/test": "^0.1.0-beta.6",
+    "@lg-tools/update": "^0.1.0-beta.0",
     "@lg-tools/validate": "^0.1.0-beta.7",
     "chalk": "^4.0.0",
     "commander": "^11.0.0",

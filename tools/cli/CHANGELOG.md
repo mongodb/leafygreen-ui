@@ -1,5 +1,13 @@
 # @lg-tools/cli
 
+## 0.1.0-beta.2
+
+### Patch Changes
+
+- Updated dependencies
+  - @lg-tools/create@0.1.0-beta.0
+  - @lg-tools/update@0.1.0-beta.0
+
 ## 0.1.0-beta.1
 
 ### Patch Changes
