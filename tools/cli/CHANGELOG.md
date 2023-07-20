@@ -1,5 +1,11 @@
 # @lg-tools/cli
 
+## 0.1.0-beta.3
+
+### Patch Changes
+
+- Fix package versions
+
 ## 0.1.0-beta.2
 
 ### Patch Changes
