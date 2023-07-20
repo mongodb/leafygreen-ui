@@ -32,6 +32,6 @@
   },
   "devDependencies": {
     "@leafygreen-ui/lib": "^10.4.0",
-    "@lg-tools/cli": "^0.1.0-beta.0"
+    "@lg-tools/cli": "^0.1.0-beta.3"
   }
 }

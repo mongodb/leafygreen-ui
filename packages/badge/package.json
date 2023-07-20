@@ -40,6 +40,6 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@lg-tools/cli": "^0.1.0-beta.0"
+    "@lg-tools/cli": "^0.1.0-beta.3"
   }
 }

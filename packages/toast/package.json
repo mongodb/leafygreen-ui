@@ -43,7 +43,7 @@
     "@leafygreen-ui/button": "^20.2.1",
     "@storybook/types": "^7.0.20",
     "react-test-renderer": "^18.2.0",
-    "@lg-tools/cli": "^0.1.0-beta.0"
+    "@lg-tools/cli": "^0.1.0-beta.3"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/toast",
   "repository": {
