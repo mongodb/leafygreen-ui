@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/meta",
-  "version": "0.1.0-beta.2",
+  "version": "0.1.0-beta.3",
   "description": "Utilities for managing LeafyGreen repositories",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -15,6 +15,6 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@lg-tools/build": "^0.1.0-beta.7"
+    "@lg-tools/build": "^0.1.0-beta.8"
   }
 }

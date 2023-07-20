@@ -1,5 +1,11 @@
 # @lg-tools/meta
 
+## 0.1.0-beta.3
+
+### Patch Changes
+
+- Adds README.md. Minor bug fixes
+
 ## 0.1.0-beta.2
 
 ### Patch Changes

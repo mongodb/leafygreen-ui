@@ -1,5 +1,20 @@
 # @lg-tools/cli
 
+## 0.1.0-beta.5
+
+### Patch Changes
+
+- Adds README.md. Minor bug fixes
+- Updated dependencies
+  - @lg-tools/validate@0.1.0-beta.9
+  - @lg-tools/install@0.1.0-beta.3
+  - @lg-tools/create@0.1.0-beta.2
+  - @lg-tools/update@0.1.0-beta.2
+  - @lg-tools/build@0.1.0-beta.8
+  - @lg-tools/link@0.1.0-beta.9
+  - @lg-tools/lint@0.1.0-beta.8
+  - @lg-tools/test@0.1.0-beta.8
+
 ## 0.1.0-beta.4
 
 ### Patch Changes

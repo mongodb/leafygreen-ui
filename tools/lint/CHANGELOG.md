@@ -1,5 +1,13 @@
 # @lg-tools/lint
 
+## 0.1.0-beta.8
+
+### Patch Changes
+
+- Adds README.md. Minor bug fixes
+- Updated dependencies
+  - @lg-tools/build@0.1.0-beta.8
+
 ## 0.1.0-beta.7
 
 ### Patch Changes
