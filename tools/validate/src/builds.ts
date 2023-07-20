@@ -18,7 +18,7 @@ const ModuleType = {
   amd: 'amd',
   steal: 'steal',
 } as const;
-type ModuleType = typeof ModuleType[keyof typeof ModuleType];
+type ModuleType = (typeof ModuleType)[keyof typeof ModuleType];
 
 const rootDir = process.cwd();
 
@@ -69,11 +69,17 @@ export const validateBuilds = () => {
           );
 
         console.log(errorMsg.join(' '));
-        reject(errorMsg.join(' '));
+
+        if (errorMsg.length > 0) {
+          reject(errorMsg.join(' '));
+          return;
+        }
       }
     }
+
     console.log('Builds OK ✅');
     resolve();
+    return;
   });
 };
 
