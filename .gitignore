@@ -50,4 +50,8 @@ build-storybook.log
 .turbo
 scripts/tmp.*.ts
 
+# 
 .npmrc
+.changeset/pre.json
+
+TODO.md
