@@ -1,5 +1,11 @@
 # @lg-tools/storybook
 
+## 0.1.0-beta.7
+
+### Patch Changes
+
+- Updates dependencies
+
 ## 0.1.0-beta.0-6
 
 ### Minor Changes
