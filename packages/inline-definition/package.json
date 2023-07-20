@@ -40,6 +40,5 @@
   },
   "devDependencies": {
     "@leafygreen-ui/typography": "^16.5.1",
-    "@lg-tools/cli": "^0.1.0-beta.3"
-  }
+   }
 }

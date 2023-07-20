@@ -40,8 +40,7 @@
   },
   "devDependencies": {
     "@leafygreen-ui/icon": "^11.17.0",
-    "@lg-tools/cli": "^0.1.0-beta.3"
-  },
+   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.3"
   }

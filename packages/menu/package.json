@@ -48,6 +48,5 @@
   },
   "devDependencies": {
     "@leafygreen-ui/button": "^20.2.1",
-    "@lg-tools/cli": "^0.1.0-beta.3"
-  }
+   }
 }

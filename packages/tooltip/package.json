@@ -23,8 +23,7 @@
   },
   "devDependencies": {
     "@leafygreen-ui/button": "^20.2.1",
-    "@lg-tools/cli": "^0.1.0-beta.3"
-  },
+   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.4",
     "@leafygreen-ui/hooks": "^7.7.5",

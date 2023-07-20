@@ -41,8 +41,7 @@
   },
   "devDependencies": {
     "@leafygreen-ui/select": "^10.3.7",
-    "@lg-tools/cli": "^0.1.0-beta.3"
-  },
+   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/side-nav",
   "repository": {
     "type": "git",
