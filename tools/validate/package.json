@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/validate",
-  "version": "0.0.1",
+  "version": "0.1.0-beta.6",
   "description": "Validation tools for LeafyGreen repositories",
   "main": "index.js",
   "license": "Apache-2.0",

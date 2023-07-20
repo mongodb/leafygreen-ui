@@ -1,0 +1,7 @@
+# @lg-tools/link
+
+## 0.1.0-beta.0-6
+
+### Minor Changes
+
+- 2cdff54f: First pre-release of LeafyGreen link tools
