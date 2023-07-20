@@ -1,5 +1,11 @@
 # @lg-tools/link
 
+## 0.1.0-beta.7
+
+### Patch Changes
+
+- Version fixes
+
 ## 0.1.0-beta.0-6
 
 ### Minor Changes

@@ -1,5 +1,15 @@
 # @lg-tools/cli
 
+## 0.1.0-beta.1
+
+### Patch Changes
+
+- Version fixes
+- Updated dependencies
+  - @lg-tools/validate@0.1.0-beta.7
+  - @lg-tools/install@0.1.0-beta.1
+  - @lg-tools/link@0.1.0-beta.7
+
 ## 0.1.0-beta.0
 
 ### Minor Changes
