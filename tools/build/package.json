@@ -4,7 +4,8 @@
   "description": "Build config for LeafyGreen repositories",
   "license": "Apache-2.0",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://artifactory.corp.mongodb.com/artifactory/api/npm/leafygreen-ui/"
   },
   "bin": {
     "lg-tsdoc": "./bin/tsdoc.js"

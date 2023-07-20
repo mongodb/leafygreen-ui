@@ -11,7 +11,8 @@
     "build": "rollup -c rollup.config.mjs"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://artifactory.corp.mongodb.com/artifactory/api/npm/leafygreen-ui/"
   },
   "dependencies": {
     "@emotion/css": "^11.11.0",

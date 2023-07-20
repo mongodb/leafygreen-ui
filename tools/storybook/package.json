@@ -5,7 +5,8 @@
   "main": "main.ts",
   "license": "Apache-2.0",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://artifactory.corp.mongodb.com/artifactory/api/npm/leafygreen-ui/"
   },
   "dependencies": {
     "@mdx-js/react": "^1.6.22",

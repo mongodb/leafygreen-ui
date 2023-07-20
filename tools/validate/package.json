@@ -4,6 +4,10 @@
   "description": "Validation tools for LeafyGreen repositories",
   "main": "index.js",
   "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://artifactory.corp.mongodb.com/artifactory/api/npm/leafygreen-ui/"
+  },
   "scripts": {
     "build": "rollup -c rollup.config.mjs"
   },
