@@ -34,6 +34,6 @@
     "@lg-tools/build": "^0.0.1",
     "next": "^13.1.6",
     "@leafygreen-ui/lib": "^10.4.0",
-    "@lg-tools/cli": "^0.0.1"
+    "@lg-tools/cli": "^0.1.0-beta.0"
   }
 }

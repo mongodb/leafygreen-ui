@@ -21,6 +21,6 @@
   },
   "devDependencies": {
     "@lg-tools/build": "^0.0.1",
-    "@lg-tools/meta": "^0.0.1"
+    "@lg-tools/meta": "^0.1.0-beta.0"
   }
 }
