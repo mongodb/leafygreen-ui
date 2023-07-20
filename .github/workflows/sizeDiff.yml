@@ -27,7 +27,7 @@ jobs:
           path: |
             **/dist
             !**/node_modules
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/rollup.config.js', '**/babel.config.js', '**/src/', '**/scripts/', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
 
       - uses: preactjs/compressed-size-action@v2
         with:
