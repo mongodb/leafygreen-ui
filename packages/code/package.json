@@ -43,7 +43,7 @@
     "polished": "^4.2.2"
   },
   "devDependencies": {
-    "@leafygreen-ui/testing-lib": "^0.3.0",
+    "@leafygreen-ui/testing-lib": "^0.3.0"
    },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.3"

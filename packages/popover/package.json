@@ -43,6 +43,6 @@
   },
   "devDependencies": {
     "@leafygreen-ui/palette": "^4.0.4",
-    "@leafygreen-ui/button": "^20.2.1",
+    "@leafygreen-ui/button": "^20.2.1"
    }
 }

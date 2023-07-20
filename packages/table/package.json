@@ -44,7 +44,7 @@
     "@leafygreen-ui/code": "^14.2.7",
     "@leafygreen-ui/button": "^20.2.1",
     "@leafygreen-ui/badge": "^8.0.8",
-    "@leafygreen-ui/pagination": "^1.0.9",
+    "@leafygreen-ui/pagination": "^1.0.9"
    },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.3"

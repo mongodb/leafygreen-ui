@@ -33,6 +33,6 @@
     "@emotion/styled": "^11.10.5",
     "@lg-tools/build": "^0.1.0-beta.6",
     "next": "^13.1.6",
-    "@leafygreen-ui/lib": "^10.4.0",
+    "@leafygreen-ui/lib": "^10.4.0"
    }
 }
