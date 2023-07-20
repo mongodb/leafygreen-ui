@@ -5,6 +5,10 @@
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://artifactory.corp.mongodb.com/artifactory/api/npm/leafygreen-ui/"
+  },
   "scripts": {
     "build": "lg-internal-build-package",
     "tsc": "tsc --build tsconfig.json"
