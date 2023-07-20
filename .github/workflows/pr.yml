@@ -9,7 +9,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  on_pr:
+  on_pull_request:
     uses: 10gen/leafygreen-ui-private/.github/workflows/shared.yml@shared-workflows
     secrets:
       CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
