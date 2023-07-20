@@ -1,9 +1,4 @@
-import {
-  build,
-  buildPackage,
-  buildTSDoc,
-  buildTypescript,
-} from '@lg-tools/build';
+import { buildPackage, buildTSDoc, buildTypescript } from '@lg-tools/build';
 import { createPackage } from '@lg-tools/create';
 import { installLeafyGreen } from '@lg-tools/install';
 import { linkPackages, unlinkPackages } from '@lg-tools/link';
@@ -19,13 +14,13 @@ cli
   .enablePositionalOptions();
 
 /** Build */
-cli
-  .command('build')
-  .description('Uses the local `turbo.json` to build packages in the repo')
-  .argument('[packages...]', 'A list of packages to build')
-  .option('--only=[steps...]', 'A list of build steps to run')
-  .option('-v --verbose', 'Prints additional information to the console', false)
-  .action(build);
+// cli
+//   .command('build')
+//   .description('Uses the local `turbo.json` to build packages in the repo')
+//   .argument('[packages...]', 'A list of packages to build')
+//   .option('--only=[steps...]', 'A list of build steps to run')
+//   .option('-v --verbose', 'Prints additional information to the console', false)
+//   .action(build);
 
 /** Create */
 cli
