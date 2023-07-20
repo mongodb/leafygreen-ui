@@ -1,5 +1,11 @@
 # @lg-tools/link
 
+## 0.1.0-beta.8
+
+### Patch Changes
+
+- 78acda539: Fix broken builds
+
 ## 0.1.0-beta.7
 
 ### Patch Changes

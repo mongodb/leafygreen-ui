@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/validate",
-  "version": "0.1.0-beta.7",
+  "version": "0.1.0-beta.8",
   "description": "Validation tools for LeafyGreen repositories",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -19,6 +19,6 @@
     "node-fetch": "^2.0.0"
   },
   "devDependencies": {
-    "@lg-tools/build": "^0.1.0-beta.6"
+    "@lg-tools/build": "^0.1.0-beta.7"
   }
 }

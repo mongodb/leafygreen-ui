@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/update",
-  "version": "0.1.0-beta.0",
+  "version": "0.1.0-beta.1",
   "description": "Updates all LeafyGreen UI packages to the latest version",
   "main": "dist/index.js",
   "license": "Apache-2.0",
@@ -16,6 +16,6 @@
     "tsc": "tsc --build tsconfig.json"
   },
   "devDependencies": {
-    "@lg-tools/build": "^0.1.0-beta.6"
+    "@lg-tools/build": "^0.1.0-beta.7"
   }
 }

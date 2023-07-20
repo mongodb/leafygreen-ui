@@ -1,5 +1,11 @@
 # @lg-tools/meta
 
+## 0.1.0-beta.2
+
+### Patch Changes
+
+- 78acda539: Fix broken builds
+
 ## 0.1.0-beta.1
 
 ### Patch Changes

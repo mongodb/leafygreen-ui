@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/lint",
-  "version": "0.1.0-beta.6",
+  "version": "0.1.0-beta.7",
   "description": "Lint rules & config for LeafyGreen repositories",
   "main": "dist/index.js",
   "module": "dist/esm/index.js",
@@ -17,7 +17,7 @@
     "@babel/core": "^7.22.5",
     "@babel/eslint-parser": "^7.22.5",
     "@emotion/eslint-plugin": "^11.11.0",
-    "@lg-tools/build": "^0.1.0-beta.6",
+    "@lg-tools/build": "^0.1.0-beta.7",
     "@nicolo-ribaudo/semver-v6": "^6.3.3",
     "@typescript-eslint/eslint-plugin": "^5.60.0",
     "@typescript-eslint/parser": "^5.60.0",

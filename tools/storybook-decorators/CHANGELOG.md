@@ -1,5 +1,13 @@
 # @lg-tools/storybook-decorators
 
+## 0.1.0-beta.8
+
+### Patch Changes
+
+- 78acda539: Fix broken builds
+- Updated dependencies [78acda539]
+  - @lg-tools/build@0.1.0-beta.7
+
 ## 0.1.0-beta.7
 
 ### Patch Changes
