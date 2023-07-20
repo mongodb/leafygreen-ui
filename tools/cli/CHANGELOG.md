@@ -1,5 +1,11 @@
 # @lg-tools/cli
 
+## 0.1.0-beta.6
+
+### Patch Changes
+
+- Add meta as dependency
+
 ## 0.1.0-beta.5
 
 ### Patch Changes
