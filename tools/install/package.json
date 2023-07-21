@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/install",
-  "version": "0.1.0-beta.3",
+  "version": "0.1.0-beta.4",
   "description": "LeafyGreen UI Kit Install",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -19,8 +19,8 @@
     "node-fetch": "^2.6.6"
   },
   "devDependencies": {
-    "@lg-tools/build": "^0.1.0-beta.8",
-    "@lg-tools/meta": "^0.1.0-beta.3"
+    "@lg-tools/build": "^0.1.0-beta.9",
+    "@lg-tools/meta": "^0.1.0-beta.4"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/install",
   "repository": {

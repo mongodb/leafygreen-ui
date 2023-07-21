@@ -1,5 +1,20 @@
 # @lg-tools/test
 
+## 0.1.0-beta.9
+
+### Minor Changes
+
+- d8c10d39c: First pre-release of shared test tooling. Includes shared jest config & custom test runner script. Use `lg-test` to run jest tests with shared config
+
+### Patch Changes
+
+- 8d8a433d1: Adds README.md. Minor bug fixes
+- 9476719bd: Fix broken builds
+- Updated dependencies [8d8a433d1]
+- Updated dependencies [d84e7eba1]
+- Updated dependencies [9476719bd]
+  - @lg-tools/build@0.1.0-beta.9
+
 ## 0.1.0-beta.8
 
 ### Patch Changes

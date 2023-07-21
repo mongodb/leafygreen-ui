@@ -1,5 +1,19 @@
 # @lg-tools/slackbot
 
+## 0.1.0-beta.8
+
+### Minor Changes
+
+- 34b44010d: First pre-release of LeafyGreen slackbot
+
+### Patch Changes
+
+- 9476719bd: Fix broken builds
+- Updated dependencies [8d8a433d1]
+- Updated dependencies [d84e7eba1]
+- Updated dependencies [9476719bd]
+  - @lg-tools/build@0.1.0-beta.9
+
 ## 0.1.0-beta.7
 
 ### Patch Changes
