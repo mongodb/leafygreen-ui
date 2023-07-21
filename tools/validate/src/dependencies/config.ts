@@ -30,12 +30,12 @@ export const ignoreFilePatterns: Array<RegExp> = [
 
 // these dependencies will be ignored when listed in a package.json
 export const ignoreMatches = [
-  '@lg-tools/*',
   '@leafygreen-ui/mongo-nav',
   'prop-types',
-  '@storybook/*',
-  '@testing-library/*',
-  'jest-axe',
+  '@storybook/*', // Included globally with @lg-tools/storybook
+  '@testing-library/*', // Included globally with @lg-tools/test
+  '@emotion/*', // Included globally with @leafygreen-ui/emotion
+  'jest-axe', // Included globally with @lg-tools/test
 ];
 
 export const depcheckOptions: depcheck.Options = {

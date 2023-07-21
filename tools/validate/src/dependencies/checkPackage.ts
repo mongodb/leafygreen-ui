@@ -49,8 +49,11 @@ export async function checkPackage(
     allMissingPackages,
     pkgName,
   );
-  const missingDependencies = Object.keys(sortedMissingDeps.dependencies);
-  const missingDevDependencies = Object.keys(sortedMissingDeps.devDependencies);
+
+  const missingDependencies = Object.values(sortedMissingDeps.dependencies);
+  const missingDevDependencies = Object.values(
+    sortedMissingDeps.devDependencies,
+  );
 
   const pkgJson = readPackageJson(pkgName);
 
@@ -83,21 +86,23 @@ export async function checkPackage(
     isMissingPeers,
   };
 
-  logDependencyIssues(pkgName, allDependencyIssues);
+  logDependencyIssues(pkgName, allDependencyIssues, verbose);
 
-  if (fix) {
-    fixDependencies(pkgName, allDependencyIssues);
+  const issuesExist = Object.values(allDependencyIssues).some(
+    prob => prob.length > 0,
+  );
+
+  if (issuesExist && fix) {
+    fixDependencies(pkgName, allDependencyIssues, verbose);
   }
 
   if (fixTsconfig) {
     fixTSconfig(pkgName);
   }
 
-  const issuesExist = Object.values(allDependencyIssues).every(
-    prob => prob.length > 0,
-  );
-
-  issuesExist && console.log({ pkgName, issuesExist, allDependencyIssues });
+  issuesExist &&
+    verbose &&
+    console.log({ pkgName, issuesExist, allDependencyIssues });
 
   return issuesExist && !fix;
 }

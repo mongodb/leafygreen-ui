@@ -1,12 +1,8 @@
 /* eslint-disable no-console */
-import chalk from 'chalk';
 import { SpawnOptions, spawnSync } from 'child_process';
-import { writeFileSync } from 'fs';
-import fetch from 'node-fetch';
-import path from 'path';
 
 import { DependencyIssues } from './config';
-import { readPackageJson } from './utils';
+// import { readPackageJson } from './utils';
 
 export async function fixDependencies(
   pkg: string,
@@ -19,57 +15,49 @@ export async function fixDependencies(
     listedButOnlyUsedAsDev,
     isMissingPeers,
   }: DependencyIssues,
+  verbose?: boolean,
 ) {
-  const rootDir = process.cwd();
-
-  const cmdOpts: SpawnOptions = { stdio: 'inherit', cwd: `packages/${pkg}` };
+  verbose && console.log(`Fixing issues with ${pkg}`);
+  const spawnContext: SpawnOptions = {
+    stdio: 'inherit',
+    cwd: `packages/${pkg}`,
+  };
   // Using yarn 1.19.0 https://stackoverflow.com/questions/62254089/expected-workspace-package-to-exist-for-sane
 
   // Install any missing dependencies
-  missingDependencies.length > 0 &&
-    spawnSync('npx', ['yarn@1.19.0', 'add', ...missingDependencies], cmdOpts);
+  if (missingDependencies.length > 0) {
+    verbose &&
+      console.log('Installing missing dependencies...', missingDependencies);
+    spawnSync(
+      'npx',
+      ['yarn@1.19.0', 'add', ...missingDependencies],
+      spawnContext,
+    );
+  }
 
-  // There's a bug in yarn@1.19.0 where some packages don't install as devDependencies
-  // even if the `-D` flag is provided.
-  // So we have to install devDependencies manually
+  // Install any missing devDependencies
   if (missingDevDependencies.length > 0) {
-    const pkgJson = readPackageJson(pkg);
+    // const pkgJson = readPackageJson(pkg);
 
-    const missingDevDepsObject = {} as { [key: string]: string };
+    verbose &&
+      console.log(
+        `Fixing devDependency issues with ${pkg}.`,
+        missingDevDependencies,
+      );
 
-    for (const depName of missingDevDependencies) {
-      const searchUrl = `https://registry.npmjs.com/-/v1/search?text=${depName}`;
-      const { objects }: any = await fetch(searchUrl).then(data => data.json());
-      const pkgRef = objects
-        ? objects.find((obj: any) => obj.package.name === depName)
-        : null;
-
-      if (!pkgRef) {
-        console.error(chalk.red(`Could not find ${depName} on npm`));
-        break;
-      }
-
-      const { version } = pkgRef.package;
-      missingDevDepsObject[depName] = `^${version}`;
-    }
-    pkgJson.devDependencies = {
-      ...pkgJson?.devDependencies,
-      ...missingDevDepsObject,
-    };
-
-    if (pkgJson.devDependencies.length <= 0) {
-      delete pkgJson.devDependencies;
-    }
-
-    const pkgJsonPath = path.resolve(rootDir, `packages`, pkg, `package.json`);
-    writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2) + '\n');
-    spawnSync(`yarn`, ['install'], cmdOpts);
+    spawnSync(
+      'npx',
+      ['yarn@1.19.0', 'add', '--dev', ...missingDevDependencies],
+      spawnContext,
+    );
   }
 
   // Remove all unused dependencies
   const unused = [...unusedDependencies, ...unusedDevDependencies];
-  unused.length > 0 &&
-    spawnSync('npx', ['yarn@1.19.0', 'remove', ...unused], cmdOpts);
+  if (unused.length > 0) {
+    verbose && console.log('Removing unused dependencies...', unused);
+    spawnSync('npx', ['yarn@1.19.0', 'remove', ...unused], spawnContext);
+  }
 
   // TODO: Autofix these
   if (

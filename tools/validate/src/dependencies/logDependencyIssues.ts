@@ -15,6 +15,7 @@ export function logDependencyIssues(
     listedButOnlyUsedAsDev,
     isMissingPeers,
   }: DependencyIssues,
+  verbose?: boolean,
 ) {
   unusedDependencies.length > 0 &&
     console.log(
