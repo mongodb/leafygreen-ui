@@ -3,6 +3,7 @@ import chalk from 'chalk';
 import { spawn } from 'child_process';
 import fs from 'fs';
 import path from 'path';
+import { getPackageManager } from '@lg-tools/meta';
 
 export interface UpdateCommandOptions {
   /**
@@ -26,10 +27,13 @@ export const update = (
     );
   }
 
+  const pkgMgr = getPackageManager(rootDir);
+  const cmd = pkgMgr === 'npm' ? 'update' : 'upgrade';
+
   spawn(
-    'yarn',
+    pkgMgr,
     [
-      'upgrade',
+      cmd,
       ...(packages ?? []),
       '--scope',
       options.scope,

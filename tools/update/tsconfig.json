@@ -12,6 +12,9 @@
   "references": [
     {
       "path": "../build"
+    },
+    {
+      "path": "../meta"
     }
   ]
 }

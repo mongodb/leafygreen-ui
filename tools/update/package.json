@@ -16,6 +16,7 @@
     "tsc": "tsc --build tsconfig.json"
   },
   "devDependencies": {
-    "@lg-tools/build": "^0.1.0-beta.8"
+    "@lg-tools/build": "^0.1.0-beta.8",
+    "@lg-tools/meta": "^0.1.0-beta.3"
   }
 }

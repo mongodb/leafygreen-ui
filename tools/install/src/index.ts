@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
 import { spawn } from 'child_process';
-import fs from 'fs';
 import fetch from 'node-fetch';
+
+import { getPackageManager } from '@lg-tools/meta';
 export interface InstallCommandOptions {
   ignoreWorkspaceRootCheck: boolean;
   verbose: boolean;
@@ -85,14 +86,3 @@ export const installLeafyGreen = (
       );
     });
 };
-
-/** Reads the lock file to determine which package manager to use */
-export function getPackageManager(appPath: string): `npm` | `yarn` {
-  if (fs.existsSync(`${appPath}/yarn.lock`)) {
-    return 'yarn';
-  } else if (fs.existsSync(`${appPath}/package-lock.json`)) {
-    return 'npm';
-  }
-
-  return 'npm';
-}

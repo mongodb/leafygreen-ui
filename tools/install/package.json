@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "chalk": "^4.1.2",
-    "ora": "^6.3.1",
     "node-fetch": "^2.6.6"
   },
   "devDependencies": {
