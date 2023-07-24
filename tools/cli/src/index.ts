@@ -13,15 +13,6 @@ cli
   .description('Command line tools for the LeafyGreen UI library by MongoDB')
   .enablePositionalOptions();
 
-/** Build */
-// cli
-//   .command('build')
-//   .description('Uses the local `turbo.json` to build packages in the repo')
-//   .argument('[packages...]', 'A list of packages to build')
-//   .option('--only=[steps...]', 'A list of build steps to run')
-//   .option('-v --verbose', 'Prints additional information to the console', false)
-//   .action(build);
-
 /** Create */
 cli
   .command('create')
@@ -50,65 +41,6 @@ cli
   )
   .action(installLeafyGreen);
 
-/** Update */
-cli
-  .command('update')
-  .alias('upgrade')
-  .description(
-    'Updates installed LeafyGreen packages based on the specified range',
-  )
-  .argument('[packages...]', 'A list of packages to update')
-  .option('--scope', 'The npm scope of the packages', '@leafygreen-ui')
-  .option(
-    '--latest',
-    'Ignores the version range specified in `package.json`',
-    false,
-  )
-  .action(update);
-
-/** Test */
-cli
-  .command('test')
-  .description('Tests leafygreen-ui packages with unified config.')
-  // TODO: Files argument
-  .option('--watch', 'Watch all files you intend to test', false)
-  .option('--ci', 'Runs tests with CI configuration', false)
-  .option(
-    '--config',
-    'Specify a jest config file. By default will look for `jest.config.js` at the root, or use `@lg-tools/test/config`',
-  )
-  .option(
-    '-t, --testNamePattern <regex>',
-    'Alias of jest --testNamePattern. Run only tests with a name that matches the regex.',
-    undefined,
-  )
-  .action(test);
-
-/** Lint */
-cli
-  .command('lint')
-  .option('-f, --fix', 'fix linting errors', false)
-  .option('-e, --eslintOnly', 'run eslint only', false)
-  .option('-p, --prettierOnly', 'run prettier only', false)
-  .option('--pkgJsonOnly', 'run npmPackageJsonLint only', false)
-  .option('-v --verbose', 'Prints additional information to the console', false)
-  .action(lint);
-
-/** Validate */
-cli
-  .command('validate')
-  .description('Validates build integrity, and package.json dependencies')
-  .option('--buildsOnly', 'Validates build integrity only', false)
-  .option('--depsOnly', 'Validates package dependencies only', false)
-  .option('-v --verbose', 'Prints additional information to the console', false)
-  .option('-f, --fix', 'Fixes issues found in dependency tree', false)
-  .option(
-    '--fix-tsconfig',
-    "Fixes issues found in a package's tsconfig based on it's package.json",
-    false,
-  )
-  .action(validate);
-
 /** Link & Unlink */
 cli
   .command('link')
@@ -130,6 +62,66 @@ cli
   .option('--noInstall', 'Skip the yarn install step', false)
   .option('--scope <name>', 'The NPM organization')
   .action(unlinkPackages);
+
+/** Lint */
+cli
+  .command('lint')
+  .description('Checks code and package.json formatting')
+  .option('-f, --fix', 'fix linting errors', false)
+  .option('-e, --eslintOnly', 'run eslint only', false)
+  .option('-p, --prettierOnly', 'run prettier only', false)
+  .option('--pkgJsonOnly', 'run npmPackageJsonLint only', false)
+  .option('-v --verbose', 'Prints additional information to the console', false)
+  .action(lint);
+
+/** Test */
+cli
+  .command('test')
+  .description('Tests leafygreen-ui packages with unified config.')
+  // TODO: Files argument
+  .option('--watch', 'Watch all files you intend to test', false)
+  .option('--ci', 'Runs tests with CI configuration', false)
+  .option(
+    '--config',
+    'Specify a jest config file. By default will look for `jest.config.js` at the root, or use `@lg-tools/test/config`',
+  )
+  .option(
+    '-t, --testNamePattern <regex>',
+    'Alias of jest --testNamePattern. Run only tests with a name that matches the regex.',
+    undefined,
+  )
+  .action(test);
+
+/** Update */
+cli
+  .command('update')
+  .alias('upgrade')
+  .description(
+    'Updates installed LeafyGreen packages based on the specified range',
+  )
+  .argument('[packages...]', 'A list of packages to update')
+  .option('--scope', 'The npm scope of the packages', '@leafygreen-ui')
+  .option(
+    '--latest',
+    'Ignores the version range specified in `package.json`',
+    false,
+  )
+  .action(update);
+
+/** Validate */
+cli
+  .command('validate')
+  .description('Validates build integrity, and package.json dependencies')
+  .option('--buildsOnly', 'Validates build integrity only', false)
+  .option('--depsOnly', 'Validates package dependencies only', false)
+  .option('-v --verbose', 'Prints additional information to the console', false)
+  .option('-f, --fix', 'Fixes issues found in dependency tree', false)
+  .option(
+    '--fix-tsconfig',
+    "Fixes issues found in a package's tsconfig based on it's package.json",
+    false,
+  )
+  .action(validate);
 
 /** Build steps */
 cli
