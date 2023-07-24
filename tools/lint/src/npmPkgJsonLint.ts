@@ -11,12 +11,6 @@ const npmPkgLintConfigPath = path.resolve(
   '../config/npmpackagejsonlintrc.config.js',
 );
 
-// const npmPackageJsonLinter = new NpmPackageJsonLint({
-//   cwd: rootDir,
-//   patterns: ['**/package.json'],
-//   configFile: npmPkgLintConfigPath,
-// });
-
 /** Spawns a npmPkgJsonLint job */
 export function npmPkgJsonLint({
   fix,
@@ -32,25 +26,6 @@ export function npmPkgJsonLint({
       .on('close', resolve)
       .on('error', reject);
 
-    /*
-    TODO: use the JS API
-    const { results, errorCount } = npmPackageJsonLinter.lint();
-
-    results.forEach(result => {
-      if (result.issues.length > 0) {
-        console.log(chalk.bold(`\nFound issues in ${result.filePath}`));
-        result.issues.forEach(issue => {
-          const color = issue.severity === 'error' ? chalk.red : chalk.yellow;
-          console.log(color(issue.severity + ': ' + issue.lintMessage));
-        });
-      }
-    });
-
-    if (errorCount > 0) {
-      reject('Errors found in package.json');
-    } else {
-      resolve();
-    }
-    */
+    /* TODO: use the JS API */
   });
 }
