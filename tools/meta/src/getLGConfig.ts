@@ -7,6 +7,10 @@ export interface LGConfig {
 
 export const LGConfigFileName = 'lg.config';
 
+/**
+ *
+ * @returns The LG config object for the current repository
+ */
 export const getLGConfig = (): LGConfig => {
   const rootDir = process.cwd();
   const lgConfigPath = path.resolve(rootDir, LGConfigFileName);
