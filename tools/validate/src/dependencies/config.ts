@@ -31,11 +31,25 @@ export const ignoreFilePatterns: Array<RegExp> = [
 // these dependencies will be ignored when listed in a package.json
 export const ignoreMatches = [
   '@leafygreen-ui/mongo-nav',
+  '@babel/*',
+  '@emotion/*',
+  '@rollup/*',
+  '@storybook/*',
+  '@svgr/*',
+  '@testing-library/*',
+  '@types/*',
+  '@typescript-*',
+  'buffer',
+  'eslint*',
+  'jest*',
+  'jest-axe',
+  'prettier*',
   'prop-types',
-  '@storybook/*', // Included globally with @lg-tools/storybook
-  '@testing-library/*', // Included globally with @lg-tools/test
-  '@emotion/*', // Included globally with @leafygreen-ui/emotion
-  'jest-axe', // Included globally with @lg-tools/test
+  'react-*',
+  'rollup*',
+  'storybook-*',
+  '*-loader',
+  '*-lint*',
 ];
 
 export const depcheckOptions: depcheck.Options = {

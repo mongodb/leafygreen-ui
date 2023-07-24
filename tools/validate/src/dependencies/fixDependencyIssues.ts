@@ -2,7 +2,6 @@
 import { SpawnOptions, spawnSync } from 'child_process';
 
 import { DependencyIssues } from './config';
-// import { readPackageJson } from './utils';
 
 export async function fixDependencies(
   pkg: string,

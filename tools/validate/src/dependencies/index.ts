@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
+import { getAllPackages } from '@lg-tools/meta';
 
-import { getAllPackageNames } from '../utils/getAllPackageNames';
 import { ValidateCommandOptions } from '../validate.types';
 
 import { checkPackage } from './checkPackage';
@@ -8,13 +8,13 @@ import { checkPackage } from './checkPackage';
 export function validateDependencies(
   options: Partial<ValidateCommandOptions>,
 ): Promise<void> {
-  const lgPackages = getAllPackageNames();
-
   console.log('Validating dependencies...');
 
-  const packages = lgPackages;
+  const allPackages = getAllPackages();
 
-  const checkPromises = packages.map(pkg => checkPackage(pkg, options));
+  const checkPromises = allPackages.map(pkgPath =>
+    checkPackage(pkgPath, options),
+  );
 
   return new Promise<void>((resolve, reject) => {
     Promise.all(checkPromises).then(results => {

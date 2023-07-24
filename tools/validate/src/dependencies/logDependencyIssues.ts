@@ -19,32 +19,28 @@ export function logDependencyIssues(
 ) {
   unusedDependencies.length > 0 &&
     console.log(
-      `${chalk.green(`packages/${pkg}`)} does not use ${chalk.blueBright(
+      `${chalk.green(pkg)} does not use ${chalk.blueBright(
         unusedDependencies.join(', '),
       )}`,
     );
 
   unusedDevDependencies.length > 0 &&
     console.log(
-      `${chalk.green(`packages/${pkg}`)} does not use ${chalk.blueBright(
+      `${chalk.green(pkg)} does not use ${chalk.blueBright(
         unusedDevDependencies.join(', '),
       )} as devDependencies`,
     );
 
   missingDependencies.length > 0 &&
     console.log(
-      `${chalk.green(
-        `packages/${pkg}`,
-      )} is missing dependencies: ${chalk.redBright(
+      `${chalk.green(pkg)} is missing dependencies: ${chalk.redBright(
         missingDependencies.join(', '),
       )}`,
     );
 
   missingDevDependencies.length > 0 &&
     console.log(
-      `${chalk.green(
-        `packages/${pkg}`,
-      )} is missing devDependencies: ${chalk.yellowBright(
+      `${chalk.green(pkg)} is missing devDependencies: ${chalk.yellowBright(
         missingDevDependencies.join(', '),
       )}`,
     );
@@ -52,7 +48,7 @@ export function logDependencyIssues(
   listedDevButUsedAsDependency.length > 0 &&
     console.log(
       `${chalk.green(
-        `packages/${pkg}`,
+        pkg,
       )} lists these as devDependencies, but are used in source files: ${chalk.yellowBright(
         listedDevButUsedAsDependency.join(', '),
       )}`,
@@ -61,7 +57,7 @@ export function logDependencyIssues(
   listedButOnlyUsedAsDev.length > 0 &&
     console.log(
       `${chalk.green(
-        `packages/${pkg}`,
+        pkg,
       )} lists these as dependencies, but are only used in test files: ${chalk.yellowBright(
         listedButOnlyUsedAsDev.join(', '),
       )}`,
@@ -69,10 +65,10 @@ export function logDependencyIssues(
 
   isMissingPeers &&
     console.log(
-      `${chalk.green(`packages/${pkg}`)} does not list ${chalk.greenBright(
+      `${chalk.green(pkg)} does not list ${chalk.greenBright(
         lgProvider,
       )} as a peer dependency.\n  Please fix this manually in ${chalk.gray(
-        `packages/${pkg}/package.json`,
+        `${pkg}/package.json`,
       )}`,
     );
 }

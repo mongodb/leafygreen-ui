@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
+import { getPackageName } from '@lg-tools/meta';
 import depcheck from 'depcheck';
-import path from 'path';
-import { ValidateCommandOptions } from 'src/validate.types';
+import { ValidateCommandOptions } from '../validate.types';
 
 import { depcheckOptions, DependencyIssues } from './config';
 import { fixDependencies } from './fixDependencyIssues';
@@ -11,16 +11,17 @@ import { validateListedDependencies } from './validateListedDependencies';
 import { validateListedDevDependencies } from './validateListedDevDependencies';
 import { isMissingProviderPeer } from './validatePeerDependencies';
 
-const rootDir = process.cwd();
-
 export async function checkPackage(
-  pkgName: string,
+  pkgPath: string,
   { fix, fixTsconfig, verbose }: Partial<ValidateCommandOptions>,
 ): Promise<boolean> {
-  const check = await depcheck(
-    path.resolve(rootDir, 'packages', pkgName),
-    depcheckOptions,
-  );
+  const check = await depcheck(pkgPath, depcheckOptions);
+  const pkgName = getPackageName(pkgPath);
+
+  if (!pkgName) {
+    console.error('Could not get package name for ', pkgPath);
+    return false;
+  }
 
   /**
    * Packages listed in package.json as a devDependency,
@@ -55,7 +56,7 @@ export async function checkPackage(
     sortedMissingDeps.devDependencies,
   );
 
-  const pkgJson = readPackageJson(pkgName);
+  const pkgJson = readPackageJson(pkgPath);
 
   // Every listed devDependency must _only_ be used in test files
   const listedDevButUsedAsDependency = validateListedDevDependencies(
@@ -88,9 +89,12 @@ export async function checkPackage(
 
   logDependencyIssues(pkgName, allDependencyIssues, verbose);
 
-  const issuesExist = Object.values(allDependencyIssues).some(
-    prob => prob.length > 0,
-  );
+  // Only certain issues are blocking
+  const issuesExist = [
+    missingDependencies,
+    missingDevDependencies,
+    listedDevButUsedAsDependency,
+  ].some(prob => prob.length > 0);
 
   if (issuesExist && fix) {
     fixDependencies(pkgName, allDependencyIssues, verbose);

@@ -5,7 +5,7 @@ import { readFileSync, writeFileSync } from 'fs';
 import { isEqual } from 'lodash';
 import path from 'path';
 
-import { getPackageLGDependencies } from '../../utils/getPackageDependencies';
+import { getPackageLGDependencies } from './getPackageDependencies';
 import { ignoreFilePatterns, ignoreMatches } from '../config';
 
 const rootDir = process.cwd();
@@ -85,8 +85,8 @@ export function sortDependenciesByUsage(
 /**
  * @returns a parsed package.json
  */
-export function readPackageJson(pkg: string): { [key: string]: any } {
-  const pkgJsonPath = path.resolve(rootDir, `packages`, pkg, `package.json`);
+export function readPackageJson(pkgPath: string): { [key: string]: any } {
+  const pkgJsonPath = path.resolve(pkgPath, `package.json`);
   const pkgJson = JSON.parse(readFileSync(pkgJsonPath, 'utf-8'));
   return pkgJson;
 }
