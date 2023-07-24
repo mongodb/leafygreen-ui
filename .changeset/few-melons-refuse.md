@@ -2,4 +2,4 @@
 '@leafygreen-ui/button': minor
 ---
 
-Prevents `onSubmit` handler from firing when `disabled="true"` or `isLoading="true"`
+Passes `preventDefault` to a disabled button's click event handler, to prevent submit buttons from firing their form's submit handler when they should not.
