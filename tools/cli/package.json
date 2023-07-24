@@ -22,12 +22,9 @@
     "@lg-tools/install": "^0.1.0-beta.4",
     "@lg-tools/link": "^0.1.0-beta.10",
     "@lg-tools/lint": "^0.1.0-beta.9",
-    "@lg-tools/meta": "^0.1.0-beta.4",
     "@lg-tools/test": "^0.1.0-beta.9",
     "@lg-tools/update": "^0.1.0-beta.3",
     "@lg-tools/validate": "^0.1.0-beta.10",
-    "chalk": "^4.0.0",
-    "commander": "^11.0.0",
-    "inquirer": "^9.2.7"
+    "commander": "^11.0.0"
   }
 }

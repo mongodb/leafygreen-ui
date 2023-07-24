@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { getLGConfig } from './getLGConfig';
+import { getPackageName } from './getPackageName';
 
 /** @returns the absolute paths of all packages in the current repository */
 export const getAllPackages = () => {
@@ -19,4 +20,14 @@ export const getAllPackages = () => {
   }
 
   return paths;
+};
+
+/**
+ * @returns the full names of all packages in the current repository
+ */
+export const getAllPackageNames = (): Array<string> => {
+  const allPackages = getAllPackages();
+  return allPackages
+    .map(getPackageName)
+    .filter(pkg => typeof pkg === 'string') as Array<string>;
 };

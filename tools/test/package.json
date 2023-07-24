@@ -26,7 +26,6 @@
     "@testing-library/user-event": "^12.1.8",
     "@types/jest": "^26.0.0",
     "@types/jest-axe": "^3.5.1",
-    "commander": "^9.4.0",
     "babel-jest": "^26.0.0",
     "jest": "^26.0.1",
     "jest-axe": "^4.1.0",
