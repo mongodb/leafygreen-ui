@@ -24,7 +24,6 @@ export const Button = React.forwardRef(function Button(
     disabled = false,
     isLoading = false,
     onClick,
-    onSubmit,
     leftGlyph,
     rightGlyph,
     children,
@@ -57,8 +56,9 @@ export const Button = React.forwardRef(function Button(
     // If consuming application passes a value for as, it will override the default set here
     as: as ? as : ((isAnchor ? 'a' : 'button') as keyof JSX.IntrinsicElements),
     'aria-disabled': disabled,
-    onClick: isInteractive ? onClick : undefined,
-    onSubmit: isInteractive ? onSubmit : undefined,
+    onClick: isInteractive
+      ? onClick
+      : (e: React.MouseEvent) => e.preventDefault(),
     href: isInteractive ? rest.href : undefined,
     ...rest,
   } as const;

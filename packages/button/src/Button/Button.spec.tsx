@@ -236,95 +236,19 @@ describe('packages/button', () => {
       expect(button).toHaveAttribute('href', href);
     });
 
-    test('fires the onSubmit handler once when clicked', () => {
-      const onSubmit = jest.fn(e => e.preventDefault());
+    test('does not invoke a forms submit handler when disabled', () => {
+      const onSubmit = jest.fn();
+
       render(
-        <form>
-          <Button onSubmit={onSubmit} type="submit">
+        <form onSubmit={onSubmit}>
+          <Button disabled type="submit">
             Submit
           </Button>
         </form>,
       );
 
       const button = screen.getByRole('button');
-
-      fireEvent.submit(button);
-      expect(onSubmit).toHaveBeenCalledTimes(1);
-    });
-
-    test('does not fire onSubmit handler when disabled', () => {
-      const onSubmit = jest.fn(e => e.preventDefault());
-      render(
-        <form>
-          <Button onSubmit={onSubmit} type="submit" disabled>
-            Submit
-          </Button>
-        </form>,
-      );
-
-      const button = screen.getByRole('button');
-
-      fireEvent.submit(button);
-      expect(onSubmit).not.toHaveBeenCalled();
-    });
-
-    test('does not fire onSubmit handler when loading', () => {
-      const onSubmit = jest.fn(e => e.preventDefault());
-      render(
-        <form>
-          <Button onSubmit={onSubmit} type="submit" isLoading>
-            Submit
-          </Button>
-        </form>,
-      );
-
-      const button = screen.getByRole('button');
-
-      fireEvent.submit(button);
-      expect(onSubmit).not.toHaveBeenCalled();
-    });
-
-    test('does not fire onSubmit handler on disabled anchor', () => {
-      const onSubmit = jest.fn(e => e.preventDefault());
-      render(
-        <form>
-          <Button
-            onSubmit={onSubmit}
-            type="submit"
-            disabled
-            as="a"
-            data-testid="anchor"
-          >
-            Submit
-          </Button>
-        </form>,
-      );
-
-      const button = screen.getByTestId('anchor');
-
-      fireEvent.submit(button);
-      expect(onSubmit).not.toHaveBeenCalled();
-    });
-
-    test('does not fire onSubmit handler on disabled anchor set by "href"', () => {
-      const onSubmit = jest.fn(e => e.preventDefault());
-      render(
-        <form>
-          <Button
-            onSubmit={onSubmit}
-            type="submit"
-            disabled
-            href="string"
-            data-testid="anchor"
-          >
-            Submit
-          </Button>
-        </form>,
-      );
-
-      const button = screen.getByTestId('anchor');
-
-      fireEvent.submit(button);
+      fireEvent.click(button);
       expect(onSubmit).not.toHaveBeenCalled();
     });
   });
