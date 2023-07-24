@@ -47,13 +47,6 @@ export interface ButtonProps {
   disabled?: HTMLProps<HTMLButtonElement>['disabled'];
 
   /**
-   * Callback fired when the button is submitted
-   *
-   * @default `() => {}`
-   */
-  onSubmit?: HTMLProps<HTMLButtonElement>['onSubmit'];
-
-  /**
    * Callback fired when the button is clicked
    *
    * @default `() => {}`
