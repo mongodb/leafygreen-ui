@@ -1,6 +1,7 @@
 import { ComponentPropsWithoutRef, ReactElement, ReactNode } from 'react';
 
 import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
+import { PopoverProps } from '@leafygreen-ui/popover';
 
 /**
  * Prop Enums & Types
@@ -250,22 +251,22 @@ export interface BaseComboboxProps
   /**
    * When usePortal is `true`, specifies a class name to apply to the root element of the portal.
    */
-  portalClassName?: undefined;
+  portalClassName?: PopoverProps['portalClassName'];
 
   /**
    * When usePortal is `true`, specifies an element to portal within. The default behavior is to generate a div at the end of the document to render within.
    */
-  portalContainer?: null;
+  portalContainer?: PopoverProps['portalContainer'];
 
   /**
    * When usePortal is `true`, specifies the scrollable element to position relative to.
    */
-  scrollContainer?: null;
+  scrollContainer?: PopoverProps['scrollContainer'];
 
   /**
    * Number that controls the z-index of the popover element directly.
    */
-  popoverZIndex?: number;
+  popoverZIndex?: PopoverProps['popoverZIndex'];
 }
 
 export type ComboboxProps<M extends boolean> = Either<
