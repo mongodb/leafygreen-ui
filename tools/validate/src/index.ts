@@ -7,7 +7,7 @@ export const validate = async (options: ValidateCommandOptions) => {
   const validators: Array<Promise<void>> = [];
 
   if (!options.buildsOnly) validators.push(validateDependencies(options));
-  if (!options.depsOnly) validators.push(validateBuilds());
+  if (!options.depsOnly) validators.push(validateBuilds(options));
 
   Promise.all(validators)
     .then(() => {

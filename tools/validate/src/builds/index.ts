@@ -8,59 +8,82 @@ import fs from 'fs';
 import path from 'path';
 import vm from 'vm';
 
-import { getAllPackageNames } from './utils/getAllPackageNames';
+import { getAllPackages, getPackageName } from '@lg-tools/meta';
+import { ValidateCommandOptions } from '../validate.types';
+import { ModuleType } from './modules.types';
 
-const ModuleType = {
-  esm: 'esm',
-  umd: 'umd',
-  cjs: 'cjs',
-  yui: 'yui',
-  amd: 'amd',
-  steal: 'steal',
-} as const;
-type ModuleType = typeof ModuleType[keyof typeof ModuleType];
+// A list of
+const ignorePackages = ['@lg-tools/storybook'];
 
-const rootDir = process.cwd();
+/**
+ * Validates `umd`, `esm` and TS build integrity for all packages in the repository.
+ */
+export const validateBuilds = ({
+  verbose,
+}: Partial<ValidateCommandOptions>) => {
+  const packagePaths = getAllPackages();
 
-export const validateBuilds = () => {
-  // TODO: Also check validity of `tools`
-  const packages = getAllPackageNames();
   return new Promise<void>((resolve, reject) => {
-    console.log('Validating builds...');
+    console.log(`Validating builds for ${packagePaths.length} packages...`);
 
     // Check that every package's /dist folder has a valid UMD, ESM & TS files
-    for (const pkg of packages) {
-      const rootPath = path.resolve(rootDir, `packages`, pkg, `dist/index.js`);
-      const esmPath = path.resolve(
-        rootDir,
-        `packages`,
-        pkg,
-        `dist/esm/index.js`,
-      );
-      const tsPath = path.resolve(rootDir, `packages`, pkg, `dist/index.d.ts`);
+    for (const pkgPath of packagePaths) {
+      const pkgName = getPackageName(pkgPath);
 
-      const rootExists = fs.existsSync(rootPath);
+      if (!pkgName) {
+        exit1('Invalid package path: ' + pkgPath);
+        return;
+      }
+
+      // Skip packages
+      if (ignorePackages.includes(pkgName)) {
+        continue;
+      }
+
+      const distDir = path.resolve(pkgPath, 'dist');
+      const buildExists = fs.existsSync(distDir);
+
+      if (!buildExists) {
+        exit1(`No build found for package ${chalk.bold(pkgName)}`);
+        return;
+      }
+
+      const umdPath = path.resolve(distDir, `index.js`);
+      const esmPath = path.resolve(distDir, `esm/index.js`);
+      const tsPath = path.resolve(distDir, `index.d.ts`);
+
+      const umdExists = fs.existsSync(umdPath);
       const esmExists = fs.existsSync(esmPath);
       const tsExists = fs.existsSync(tsPath);
-      const isCJSValid = getModuleTypes(rootPath).includes('cjs');
+      const isCJSValid = getModuleTypes(umdPath).includes('cjs');
       const isESMValid = getModuleTypes(esmPath).includes('esm');
 
+      verbose &&
+        console.log({
+          pkgName,
+          umdExists,
+          esmExists,
+          tsExists,
+          isCJSValid,
+          isESMValid,
+        });
+
       if (
-        ![rootExists, esmExists, tsExists, isCJSValid, isESMValid].every(
+        ![umdExists, esmExists, tsExists, isCJSValid, isESMValid].every(
           x => x == true,
         )
       ) {
         const errorMsg: Array<string> = [
-          chalk.red.bold(`Error in \`${pkg}\` build:`),
+          chalk.red.bold(`Error in \`${pkgName}\` build:`),
         ];
-        if (!rootExists) errorMsg.push(chalk.red('`dist/index.js` not found'));
+        if (!umdExists) errorMsg.push(chalk.red('`dist/index.js` not found'));
         if (!esmExists)
           errorMsg.push(chalk.red('`dist/esm/index.js` not found'));
         if (!tsExists) errorMsg.push(chalk.red('Typescript build not found'));
         if (!isCJSValid)
           errorMsg.push(
             chalk.red(`UMD module not valid`),
-            chalk.gray(`(${rootPath})`),
+            chalk.gray(`(${umdPath})`),
           );
         if (!isESMValid)
           errorMsg.push(
@@ -68,10 +91,8 @@ export const validateBuilds = () => {
             chalk.gray(`(${esmPath})`),
           );
 
-        console.log(errorMsg.join(' '));
-
         if (errorMsg.length > 0) {
-          reject(errorMsg.join(' '));
+          exit1('Error in builds' + errorMsg.join(' '));
           return;
         }
       }
@@ -80,6 +101,11 @@ export const validateBuilds = () => {
     console.log('Builds OK ✅');
     resolve();
     return;
+
+    function exit1(msg: string) {
+      console.log(chalk.red(msg));
+      reject(msg);
+    }
   });
 };
 

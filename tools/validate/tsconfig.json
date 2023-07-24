@@ -9,5 +9,13 @@
   },
   "include": [
     "src/**/*"
+  ],
+  "references": [
+    {
+      "path": "../build"
+    },
+    {
+      "path": "../meta"
+    }
   ]
 }
