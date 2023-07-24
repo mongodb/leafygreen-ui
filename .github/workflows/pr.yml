@@ -25,11 +25,11 @@ jobs:
           key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
 
       # Only setup & build if there was no build cache hit
-      - name: Use Node.js 16
+      - name: Use Node.js 18
         uses: actions/setup-node@v3
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         with:
-          node-version: '16'
+          node-version: '18'
           cache: yarn
           cache-dependency-path: 'yarn.lock'
 
@@ -48,10 +48,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Use Node.js 16
+      - name: Use Node.js 18
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
           cache: yarn
           cache-dependency-path: 'yarn.lock'
 
@@ -82,10 +82,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Use Node.js 16
+      - name: Use Node.js 18
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
           cache: yarn
           cache-dependency-path: 'yarn.lock'
 
@@ -115,10 +115,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Use Node.js 16
+      - name: Use Node.js 18
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
           cache: yarn
           cache-dependency-path: 'yarn.lock'
 
@@ -145,10 +145,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Use Node.js 16
+      - name: Use Node.js 18
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
           cache: yarn
           cache-dependency-path: 'yarn.lock'
 
