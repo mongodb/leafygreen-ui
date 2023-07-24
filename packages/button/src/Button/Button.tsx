@@ -24,6 +24,7 @@ export const Button = React.forwardRef(function Button(
     disabled = false,
     isLoading = false,
     onClick,
+    onSubmit,
     leftGlyph,
     rightGlyph,
     children,
@@ -57,6 +58,7 @@ export const Button = React.forwardRef(function Button(
     as: as ? as : ((isAnchor ? 'a' : 'button') as keyof JSX.IntrinsicElements),
     'aria-disabled': disabled,
     onClick: isInteractive ? onClick : undefined,
+    onSubmit: isInteractive ? onSubmit : undefined,
     href: isInteractive ? rest.href : undefined,
     ...rest,
   } as const;
