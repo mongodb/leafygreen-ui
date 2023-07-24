@@ -70,6 +70,7 @@ import InviteUser from './InviteUser.svg';
 import Key from './Key.svg';
 import Laptop from './Laptop.svg';
 import Link from './Link.svg';
+import List from './List.svg';
 import Lock from './Lock.svg';
 import LogIn from './LogIn.svg';
 import LogOut from './LogOut.svg';
@@ -201,6 +202,7 @@ const _glyphs = {
   Key,
   Laptop,
   Link,
+  List,
   Lock,
   LogIn,
   LogOut,
