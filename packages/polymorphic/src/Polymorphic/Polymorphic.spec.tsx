@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { parseTSDoc } from '@lg-tools/build/src/tsdoc/tsdocParser';
 import { render } from '@testing-library/react';
 
-import { parseTSDoc } from '../../../../scripts/utils/tsDocParser';
 import { makeWrapperComponent } from '../utils/Polymorphic.testutils';
 
 import { Polymorph, type PolymorphicComponentType, usePolymorphicRef } from '.';
@@ -248,7 +248,7 @@ describe('packages/polymorphic', () => {
 
   describe('TSDoc output', () => {
     describe('Polymorphic', () => {
-      const docs = parseTSDoc('polymorphic/src');
+      const docs = parseTSDoc(__dirname);
 
       test('Docs for Polymorphic are generated', () => {
         const doc = docs?.find(doc => doc.displayName === 'Polymorph');

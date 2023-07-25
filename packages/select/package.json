@@ -13,8 +13,9 @@
     }
   },
   "scripts": {
-    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js",
-    "tsc": "tsc --build tsconfig.json"
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
   },
   "license": "Apache-2.0",
   "publishConfig": {
@@ -45,5 +46,8 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
-  }
+  },
+  "devDependencies": {
+    "@leafygreen-ui/testing-lib": "^0.3.0"
+   }
 }

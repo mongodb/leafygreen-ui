@@ -13,8 +13,9 @@
     }
   },
   "scripts": {
-    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js",
-    "tsc": "tsc --build tsconfig.json"
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
   },
   "license": "Apache-2.0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/guide-cue",
@@ -45,7 +46,7 @@
   },
   "devDependencies": {
     "@leafygreen-ui/tokens": "^2.1.1"
-  },
+   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.3"
   }

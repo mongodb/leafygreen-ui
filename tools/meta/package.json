@@ -1,0 +1,20 @@
+{
+  "name": "@lg-tools/meta",
+  "version": "0.1.0-beta.4",
+  "description": "Utilities for managing LeafyGreen repositories",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://artifactory.corp.mongodb.com/artifactory/api/npm/leafygreen-ui/"
+  },
+  "scripts": {
+    "build": "lg-internal-build-package",
+    "tsc": "tsc --build tsconfig.json"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "@lg-tools/build": "^0.1.0-beta.9"
+  }
+}
