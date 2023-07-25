@@ -1,0 +1,25 @@
+{
+  "name": "@lg-tools/create",
+  "version": "0.1.0-beta.3",
+  "description": "Creates a new LeafyGreen packages",
+  "main": "dist/index.js",
+  "module": "dist/esm/index.js",
+  "license": "Apache-2.0",
+  "bin": {
+    "lg-create": "./dist/legacy-create.js"
+  },
+  "scripts": {
+    "build": "lg-internal-build-package",
+    "tsc": "tsc --build tsconfig.json"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://artifactory.corp.mongodb.com/artifactory/api/npm/leafygreen-ui/"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "lodash": "^4.17.21",
+    "@lg-tools/build": "^0.1.0-beta.9",
+    "@lg-tools/meta": "^0.1.0-beta.4"
+  }
+}
