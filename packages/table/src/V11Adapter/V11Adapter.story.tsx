@@ -52,7 +52,7 @@ export const Basic: StoryFn<StoryAdapterProps> = () => {
         }
       >
         {({ datum }: any) => (
-          <Row>
+          <Row data-test="test">
             <Cell>{datum.name}</Cell>
             <Cell>{datum.age}</Cell>
             <Cell>{datum.color}</Cell>

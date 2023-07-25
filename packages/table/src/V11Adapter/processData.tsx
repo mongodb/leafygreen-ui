@@ -73,11 +73,14 @@ const processData = <T extends LGRowData>(
           },
           {},
         );
-        newDatum.subRows.push(processedSubRow);
+        newDatum.subRows.push({
+          ...processedSubRow,
+          rowProps: (subRow as ReactElement).props,
+        });
       }
     });
 
-    return newDatum;
+    return { ...newDatum, rowProps: (evaluatedRow as ReactElement).props };
   });
   return processedData;
 };

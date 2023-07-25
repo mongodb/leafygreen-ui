@@ -51,6 +51,10 @@ const V11Adapter = <T extends LGRowData>({
   const containerRef = useRef(null);
   const OldTable = flattenChildren(children)[0];
 
+  console.warn(
+    'V11Adapter passes all V10 Row props to the V11 Row, which may result in unwanted props being passed.',
+  );
+
   if (!isComponentType(OldTable, 'Table')) {
     console.error(
       'The first and only child of `Table.V11Adapter` must be a `V10Table` component',
@@ -120,6 +124,8 @@ const V11Adapter = <T extends LGRowData>({
           const row = (
             useVirtualScrolling ? rows[iterable.index] : iterable
           ) as LeafyGreenTableRow<T>;
+          // @ts-expect-error rowProps is an additional prop passed by the `processData` function
+          const { children, ...originalRowProps } = row.original.rowProps;
           return (
             <Row
               key={row.index}
@@ -127,6 +133,7 @@ const V11Adapter = <T extends LGRowData>({
               virtualRow={
                 useVirtualScrolling ? (iterable as VirtualItem) : undefined
               }
+              {...originalRowProps}
             >
               {row.getVisibleCells().map((cell: LeafyGreenTableCell<any>) => {
                 if (cell?.column?.id) {
@@ -158,18 +165,22 @@ const V11Adapter = <T extends LGRowData>({
                 <ExpandedContent row={row} />
               )}
               {row.subRows &&
-                row.subRows.map(subRow => (
-                  <Row key={subRow.id} row={subRow}>
-                    {subRow.getVisibleCells().map(subRowCell => {
-                      return (
-                        <Cell key={subRowCell.id}>
-                          {/* @ts-expect-error subRow.original returns the object in the user's defined shape, and should be string indexable */}
-                          {subRow.original[subRowCell.column.id]()}
-                        </Cell>
-                      );
-                    })}
-                  </Row>
-                ))}
+                row.subRows.map(subRow => {
+                  // @ts-expect-error rowProps is an additional prop passed by the `processData` function
+                  const { children, ...subRowProps } = subRow.original.rowProps;
+                  return (
+                    <Row key={subRow.id} row={subRow} {...subRowProps}>
+                      {subRow.getVisibleCells().map(subRowCell => {
+                        return (
+                          <Cell key={subRowCell.id}>
+                            {/* @ts-expect-error subRow.original returns the object in the user's defined shape, and should be string indexable */}
+                            {subRow.original[subRowCell.column.id]()}
+                          </Cell>
+                        );
+                      })}
+                    </Row>
+                  );
+                })}
             </Row>
           );
         })}
