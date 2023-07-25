@@ -141,7 +141,7 @@ describe('packages/select', () => {
 
       expect(() => {
         render(<Option>bad</Option>);
-      }).toThrowError('`Option` must be a child of a `Select` instance');
+      }).toThrow('`Option` must be a child of a `Select` instance');
 
       expect(() => {
         render(
@@ -149,7 +149,7 @@ describe('packages/select', () => {
             <Option>bad</Option>
           </OptionGroup>,
         );
-      }).toThrowError('`OptionGroup` must be a child of a `Select` instance');
+      }).toThrow('`OptionGroup` must be a child of a `Select` instance');
     });
   });
 

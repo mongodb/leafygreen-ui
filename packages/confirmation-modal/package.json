@@ -13,8 +13,9 @@
     }
   },
   "scripts": {
-    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js",
-    "tsc": "tsc --build tsconfig.json"
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
   },
   "license": "Apache-2.0",
   "publishConfig": {
@@ -24,6 +25,7 @@
     "@leafygreen-ui/button": "^20.3.0",
     "@leafygreen-ui/emotion": "^4.0.4",
     "@leafygreen-ui/icon": "^11.20.0",
+    "@leafygreen-ui/lib": "^10.4.0",
     "@leafygreen-ui/modal": "^15.0.3",
     "@leafygreen-ui/palette": "^4.0.3",
     "@leafygreen-ui/text-input": "^12.1.14",
@@ -40,5 +42,7 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
-  }
+  },
+  "devDependencies": {
+   }
 }

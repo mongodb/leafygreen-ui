@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "LeafyGreen config",
+  "description": "Configuration for a LeafyGreen repository",
+  "type": "object",
+  "required": ["scopes"],
+  "properties": {
+    "scopes": {
+      "description": "Key-value pair that matches npm scopes with a workspace directory in this repository",
+      "type": "object",
+      "uniqueItems": true
+    }
+  }
+}
