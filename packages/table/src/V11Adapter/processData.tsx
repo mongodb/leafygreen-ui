@@ -73,9 +73,16 @@ const processData = <T extends LGRowData>(
           },
           {},
         );
+        const {
+          children,
+          expanded,
+          indentLevel,
+          isAnyAncestorCollapsed,
+          ...rowProps
+        } = (subRow as ReactElement).props;
         newDatum.subRows.push({
           ...processedSubRow,
-          rowProps: (subRow as ReactElement).props,
+          rowProps,
         });
       }
     });
