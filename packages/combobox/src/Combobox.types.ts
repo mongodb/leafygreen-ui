@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, ReactElement, ReactNode } from 'react';
 
 import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
-import { PopoverProps } from '@leafygreen-ui/popover';
+import { PopoverProps, PortalControlProps } from '@leafygreen-ui/popover';
 
 /**
  * Prop Enums & Types
@@ -133,141 +133,115 @@ export interface ComboboxMultiselectProps<M extends boolean> {
   overflow?: M extends true ? Overflow : undefined;
 }
 
-export interface BaseComboboxProps
-  extends Omit<HTMLElementProps<'div'>, 'onChange'> {
-  /**
-   * Defines the Combobox Options by passing children. Must be `ComboboxOption` or `ComboboxGroup`
-   */
-  children?: ReactNode;
+export type BaseComboboxProps = Omit<HTMLElementProps<'div'>, 'onChange'> &
+  PortalControlProps & {
+    /**
+     * Defines the Combobox Options by passing children. Must be `ComboboxOption` or `ComboboxGroup`
+     */
+    children?: ReactNode;
 
-  /**
-   * An accessible label for the input, rendered in a <label> to the DOM
-   */
-  label?: string;
+    /**
+     * An accessible label for the input, rendered in a <label> to the DOM
+     */
+    label?: string;
 
-  /**
-   * An accessible label for the input, used only for screen-readers
-   */
-  'aria-label'?: string;
+    /**
+     * An accessible label for the input, used only for screen-readers
+     */
+    'aria-label'?: string;
 
-  /**
-   * A description for the input
-   */
-  description?: string;
+    /**
+     * A description for the input
+     */
+    description?: string;
 
-  /**
-   * A placeholder for the input element. Uses the native `placeholder` attribute.
-   */
-  placeholder?: string;
+    /**
+     * A placeholder for the input element. Uses the native `placeholder` attribute.
+     */
+    placeholder?: string;
 
-  /**
-   * Disables all interaction with the component
-   */
-  disabled?: boolean;
+    /**
+     * Disables all interaction with the component
+     */
+    disabled?: boolean;
 
-  /**
-   * Defines the visual size of the component
-   */
-  size?: ComboboxSize;
+    /**
+     * Defines the visual size of the component
+     */
+    size?: ComboboxSize;
 
-  /**
-   * Toggles Dark Mode
-   */
-  darkMode?: boolean;
+    /**
+     * Toggles Dark Mode
+     */
+    darkMode?: boolean;
 
-  /**
-   * The error state of the component. Defines whether the error message is displayed.
-   */
-  state?: State;
+    /**
+     * The error state of the component. Defines whether the error message is displayed.
+     */
+    state?: State;
 
-  /**
-   * The message shown below the input when state is `error`
-   */
-  errorMessage?: string;
+    /**
+     * The message shown below the input when state is `error`
+     */
+    errorMessage?: string;
 
-  /**
-   * The state of search results. Toggles search messages within the menu.
-   */
-  searchState?: SearchState;
+    /**
+     * The state of search results. Toggles search messages within the menu.
+     */
+    searchState?: SearchState;
 
-  /**
-   * A message shown within the menu when there are no options passed in as children, or `filteredOptions` is an empty array
-   */
-  searchEmptyMessage?: string;
+    /**
+     * A message shown within the menu when there are no options passed in as children, or `filteredOptions` is an empty array
+     */
+    searchEmptyMessage?: string;
 
-  /**
-   * A message shown within the menu when searchState is `error`
-   */
-  searchErrorMessage?: string;
+    /**
+     * A message shown within the menu when searchState is `error`
+     */
+    searchErrorMessage?: string;
 
-  /**
-   * A message shown within the menu when searchState is `loading`
-   */
-  searchLoadingMessage?: string;
+    /**
+     * A message shown within the menu when searchState is `loading`
+     */
+    searchLoadingMessage?: string;
 
-  /**
-   * A callback called when the search input changes.
-   * Receives a single argument that is the current input value.
-   * Use this callback to set `searchState` and/or `filteredOptions` appropriately
-   */
-  onFilter?: (value: string) => void;
+    /**
+     * A callback called when the search input changes.
+     * Receives a single argument that is the current input value.
+     * Use this callback to set `searchState` and/or `filteredOptions` appropriately
+     */
+    onFilter?: (value: string) => void;
 
-  /**
-   * Defines whether the Clear button appears to the right of the input.
-   */
-  clearable?: boolean;
+    /**
+     * Defines whether the Clear button appears to the right of the input.
+     */
+    clearable?: boolean;
 
-  /**
-   * A callback fired when the Clear button is pressed.
-   * Fired _after_ `onChange`, and _before_ `onFilter`
-   */
-  onClear?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+    /**
+     * A callback fired when the Clear button is pressed.
+     * Fired _after_ `onChange`, and _before_ `onFilter`
+     */
+    onClear?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 
-  /**
-   * An array used to define which options are displayed.
-   * Do not remove options from the JSX children, as this will affect the selected options
-   */
-  filteredOptions?: Array<string>;
+    /**
+     * An array used to define which options are displayed.
+     * Do not remove options from the JSX children, as this will affect the selected options
+     */
+    filteredOptions?: Array<string>;
 
-  /**
-   * Defines where the ellipses appear in a Chip when the length exceeds the `chipCharacterLimit`
-   */
-  chipTruncationLocation?: TruncationLocation;
+    /**
+     * Defines where the ellipses appear in a Chip when the length exceeds the `chipCharacterLimit`
+     */
+    chipTruncationLocation?: TruncationLocation;
 
-  /**
-   * Defined the character limit of a multiselect Chip before they start truncating.
-   * Note: the three ellipses dots are included in the character limit.
-   */
-  chipCharacterLimit?: number;
+    /**
+     * Defined the character limit of a multiselect Chip before they start truncating.
+     * Note: the three ellipses dots are included in the character limit.
+     */
+    chipCharacterLimit?: number;
 
-  /**
-   * Specifies that the popover content should be rendered at the end of the DOM,
-   * rather than in the DOM tree.
-   *
-   * default: `true`
-   */
-  usePortal?: boolean;
-
-  /**
-   * When usePortal is `true`, specifies a class name to apply to the root element of the portal.
-   */
-  portalClassName?: PopoverProps['portalClassName'];
-
-  /**
-   * When usePortal is `true`, specifies an element to portal within. The default behavior is to generate a div at the end of the document to render within.
-   */
-  portalContainer?: PopoverProps['portalContainer'];
-
-  /**
-   * When usePortal is `true`, specifies the scrollable element to position relative to.
-   */
-  scrollContainer?: PopoverProps['scrollContainer'];
-
-  /**
-   * Number that controls the z-index of the popover element directly.
-   */
-  popoverZIndex?: PopoverProps['popoverZIndex'];
-}
+    popoverZIndex?: number;
+  };
 
 export type ComboboxProps<M extends boolean> = Either<
   BaseComboboxProps & ComboboxMultiselectProps<M>,
