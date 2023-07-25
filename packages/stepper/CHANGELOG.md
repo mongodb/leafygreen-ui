@@ -1,5 +1,18 @@
 # @leafygreen-ui/stepper
 
+## 3.2.0
+
+### Minor Changes
+
+- e16202fc: Stepper component reads `darkMode` value from LeafyGreenProvider
+
+### Patch Changes
+
+- 305f05e7: Adds darkMode to storybook
+- Updated dependencies [348e56cb]
+- Updated dependencies [5c3b9a85]
+  - @leafygreen-ui/icon@11.20.0
+
 ## 3.1.14
 
 ### Patch Changes
