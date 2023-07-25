@@ -1,8 +1,48 @@
 # LeafyGreen UI Kit
 
-A set of CSS styles and React components built with design in mind.
+LeafyGreen UI is a library of React components, CSS patterns, and CLI tools for MongoDB's LeafyGreen Design System.
 
-Check out all of the components [in action](https://www.mongodb.design/)!
+[![mongodb.design](https://img.shields.io/badge/mongodb.design-112733?style=for-the-badge&logo=mongodb&logoColor=00ED64)](https://mongodb.design)
+
+[![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@main/badge/badge-storybook.svg)](https://storybook.mongodb.design)
+
+## Getting Started
+
+### With LeafyGreen CLI
+
+1. Create or open a React project
+2. Install the LeafyGreen CLI
+
+```bash
+> npm install -g @lg-tools/cli
+```
+
+3. Install all, or some LeafyGreen components
+
+```bash
+> lg install <list of packages>
+```
+
+3. Import LeafyGreen components into your project
+
+```tsx
+import Button from '@leafygreen-ui/button';
+```
+
+### Without CLI
+
+1. Create or open a React project
+2. Install individual LeafyGreen components using `npm` or `yarn`
+
+```bash
+> yarn add @leafygreen-ui/button
+```
+
+3. Import LeafyGreen components into your project
+
+```tsx
+import Button from '@leafygreen-ui/button';
+```
 
 ## Package Table of Contents
 
