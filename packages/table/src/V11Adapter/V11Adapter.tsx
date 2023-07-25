@@ -8,6 +8,7 @@ import React, {
 import flattenChildren from 'react-keyed-flatten-children';
 import { VirtualItem } from 'react-virtual';
 import { flexRender } from '@tanstack/react-table';
+import { TableHeaderProps } from 'src/TableV10/TableHeader';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce, isComponentType } from '@leafygreen-ui/lib';
@@ -98,11 +99,22 @@ const V11Adapter = <T extends LGRowData>({
   const columnsChildren = React.Children.toArray(columns);
 
   let HeaderRowProps = {};
+  const HeaderCellProps: Array<TableHeaderProps<any>> = [];
 
   if (columnsChildren.length < 2) {
     const HeaderRow = columnsChildren[0] as ReactElement;
     HeaderRowProps = HeaderRow.props;
+    React.Children.toArray(HeaderRow.props.children).map(child => {
+      const { label, dataType, ...props } = (child as ReactElement).props;
+      HeaderCellProps.push(props);
+    });
   }
+
+  const {
+    data: oldData,
+    columns: oldColumns,
+    ...oldTableProps
+  } = (OldTable as ReactElement).props;
 
   return (
     <Table
@@ -113,13 +125,17 @@ const V11Adapter = <T extends LGRowData>({
       }
       className={className}
       ref={containerRef}
-      {...(OldTable as ReactElement).props}
+      {...oldTableProps}
     >
       <TableHead>
         <HeaderRow {...HeaderRowProps}>
-          {table.getHeaderGroups()[0].headers.map(header => {
+          {table.getHeaderGroups()[0].headers.map((header, i) => {
             return (
-              <HeaderCell key={header.id} header={header}>
+              <HeaderCell
+                key={header.id}
+                header={header}
+                {...HeaderCellProps[i]}
+              >
                 {flexRender(
                   header.column.columnDef.header,
                   header.getContext(),

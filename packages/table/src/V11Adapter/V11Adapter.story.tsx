@@ -165,13 +165,19 @@ export const NestedRows: StoryFn<StoryAdapterProps> = () => {
       <Table
         data={defaultData.slice(0, 8)}
         columns={
-          <HeaderRow>
-            <TableHeader key="name" label="Name" dataType="string" />
+          <HeaderRow data-test="test-header-row">
+            <TableHeader
+              key="name"
+              label="Name"
+              dataType="string"
+              data-test="test-header-cell"
+            />
             <TableHeader key="age" label="Age" dataType="number" />
             <TableHeader key="color" label="Color" dataType="string" />
             <TableHeader key="location" label="Location" />
           </HeaderRow>
         }
+        data-test="test-table"
       >
         {({ datum }: any) => (
           <Row data-test="test-parent-row">
