@@ -10,7 +10,7 @@ import { VirtualItem } from 'react-virtual';
 import { flexRender } from '@tanstack/react-table';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { isComponentType } from '@leafygreen-ui/lib';
+import { consoleOnce, isComponentType } from '@leafygreen-ui/lib';
 
 import { Cell, HeaderCell } from '../Cell';
 import ExpandedContent from '../ExpandedContent/ExpandedContent';
@@ -51,12 +51,12 @@ const V11Adapter = <T extends LGRowData>({
   const containerRef = useRef(null);
   const OldTable = flattenChildren(children)[0];
 
-  console.warn(
+  consoleOnce.warn(
     'V11Adapter passes all V10 Row props to the V11 Row, which may result in unwanted props being passed.',
   );
 
   if (!isComponentType(OldTable, 'Table')) {
-    console.error(
+    consoleOnce.error(
       'The first and only child of `Table.V11Adapter` must be a `V10Table` component',
     );
   }
@@ -149,9 +149,10 @@ const V11Adapter = <T extends LGRowData>({
                       // index by row.index (not the index of the loop) to get the sorted order
                       // @ts-expect-error `processedData` is structured to be indexable by `row.index`
                       processedData[row.index]?.[cell.column.id]?.();
+                    const { children, ...cellChildProps } = cellChild.props;
                     return cellChild ? (
-                      <Cell key={cell.id} {...cellChild?.props}>
-                        <>{cellChild?.props.children}</>
+                      <Cell key={cell.id} {...cellChildProps}>
+                        <>{children}</>
                       </Cell>
                     ) : (
                       <></>
@@ -170,11 +171,14 @@ const V11Adapter = <T extends LGRowData>({
                   const { children, ...subRowProps } = subRow.original.rowProps;
                   return (
                     <Row key={subRow.id} row={subRow} {...subRowProps}>
-                      {subRow.getVisibleCells().map(subRowCell => {
+                      {subRow.getVisibleCells().map(srCell => {
+                        /* @ts-expect-error subRow.original returns the object in the user's defined shape, and should be string indexable */
+                        const subRowCell = subRow.original[srCell.column.id]();
+                        const { children, ...subRowCellProps } =
+                          subRowCell.props;
                         return (
-                          <Cell key={subRowCell.id}>
-                            {/* @ts-expect-error subRow.original returns the object in the user's defined shape, and should be string indexable */}
-                            {subRow.original[subRowCell.column.id]()}
+                          <Cell key={subRowCell.id} {...subRowCellProps}>
+                            {children}
                           </Cell>
                         );
                       })}
