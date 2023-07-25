@@ -48,13 +48,8 @@ const V11Adapter = <T extends LGRowData>({
   headerLabels,
   className,
 }: V11AdapterProps<T>) => {
-  const { darkMode } = useDarkMode();
   const containerRef = useRef(null);
   const OldTable = flattenChildren(children)[0];
-
-  consoleOnce.warn(
-    'V11Adapter passes all V10 Row props to the V11 Row, which may result in unwanted props being passed.',
-  );
 
   if (!isComponentType(OldTable, 'Table')) {
     consoleOnce.error(
@@ -63,6 +58,7 @@ const V11Adapter = <T extends LGRowData>({
   }
 
   const OldTableProps = (OldTable as ReactElement).props;
+  const { darkMode } = useDarkMode(OldTableProps.darkMode);
   type TData = typeof OldTableProps.data extends Array<infer U> ? U : never;
 
   const {
@@ -97,16 +93,14 @@ const V11Adapter = <T extends LGRowData>({
   const iterables = useVirtualScrolling ? table.virtualRows ?? [] : rows;
 
   const columnsChildren = React.Children.toArray(columns);
+  const oldHeaderRow = columnsChildren[0] as ReactElement;
 
-  let HeaderRowProps = {};
-  const HeaderCellProps: Array<TableHeaderProps<any>> = [];
+  const oldHeaderCellProps: Array<TableHeaderProps<any>> = [];
 
   if (columnsChildren.length < 2) {
-    const HeaderRow = columnsChildren[0] as ReactElement;
-    HeaderRowProps = HeaderRow.props;
-    React.Children.toArray(HeaderRow.props.children).map(child => {
+    React.Children.toArray(oldHeaderRow.props.children).map(child => {
       const { label, dataType, ...props } = (child as ReactElement).props;
-      HeaderCellProps.push(props);
+      oldHeaderCellProps.push(props);
     });
   }
 
@@ -128,13 +122,14 @@ const V11Adapter = <T extends LGRowData>({
       {...oldTableProps}
     >
       <TableHead>
-        <HeaderRow {...HeaderRowProps}>
+        <HeaderRow {...oldHeaderRow.props}>
           {table.getHeaderGroups()[0].headers.map((header, i) => {
             return (
+              // @ts-expect-error
               <HeaderCell
                 key={header.id}
                 header={header}
-                {...HeaderCellProps[i]}
+                {...oldHeaderCellProps[i]}
               >
                 {flexRender(
                   header.column.columnDef.header,
@@ -150,8 +145,6 @@ const V11Adapter = <T extends LGRowData>({
           const row = (
             useVirtualScrolling ? rows[iterable.index] : iterable
           ) as LeafyGreenTableRow<T>;
-          // @ts-expect-error rowProps is an additional prop passed by the `processData` function
-          const { children, ...originalRowProps } = row.original.rowProps;
           return (
             <Row
               key={row.index}
@@ -159,7 +152,8 @@ const V11Adapter = <T extends LGRowData>({
               virtualRow={
                 useVirtualScrolling ? (iterable as VirtualItem) : undefined
               }
-              {...originalRowProps}
+              // @ts-expect-error rowProps is an additional prop passed by the `processData` function
+              {...row.original.rowProps}
             >
               {row.getVisibleCells().map((cell: LeafyGreenTableCell<any>) => {
                 if (cell?.column?.id) {
@@ -175,7 +169,12 @@ const V11Adapter = <T extends LGRowData>({
                       // index by row.index (not the index of the loop) to get the sorted order
                       // @ts-expect-error `processedData` is structured to be indexable by `row.index`
                       processedData[row.index]?.[cell.column.id]?.();
-                    const { children, ...cellChildProps } = cellChild.props;
+                    const {
+                      children,
+                      isHeader,
+                      isDisabled,
+                      ...cellChildProps
+                    } = cellChild.props;
                     return cellChild ? (
                       <Cell key={cell.id} {...cellChildProps}>
                         <>{children}</>
@@ -200,8 +199,12 @@ const V11Adapter = <T extends LGRowData>({
                       {subRow.getVisibleCells().map(srCell => {
                         /* @ts-expect-error subRow.original returns the object in the user's defined shape, and should be string indexable */
                         const subRowCell = subRow.original[srCell.column.id]();
-                        const { children, ...subRowCellProps } =
-                          subRowCell.props;
+                        const {
+                          children,
+                          isHeader,
+                          isDisabled,
+                          ...subRowCellProps
+                        } = subRowCell.props;
                         return (
                           <Cell key={subRowCell.id} {...subRowCellProps}>
                             {children}
