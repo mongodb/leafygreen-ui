@@ -1,5 +1,11 @@
 # @leafygreen-ui/button
 
+## 20.3.0
+
+### Minor Changes
+
+- 1e6ddb60: Passes `preventDefault` to a disabled button's click event handler, to prevent submit buttons from firing their form's submit handler when they should not.
+
 ## 20.2.2
 
 ### Patch Changes
