@@ -1,31 +1,52 @@
 #! /usr/bin/env node
 import { spawn } from 'child_process';
-import { Command } from 'commander';
 import path from 'path';
+import fs from 'fs';
 
-const rootDir = process.cwd();
+export interface TestCommandOptions {
+  watch: boolean;
+  ci: boolean;
+  testNamePattern?: string;
+  config?: string;
+}
 
-const cli = new Command('test')
-  .description('Tests leafygreen-ui packages with unified config.')
-  .option('--ssr', 'Runs tests on a simulated server', false)
-  .option('--watch', 'Watch all files you intend to test', false)
-  .allowUnknownOption()
-  .parse(process.argv);
+export const test = (options: TestCommandOptions) => {
+  const rootDir = process.cwd();
+  const { watch, testNamePattern, ci, config: configParam } = options;
+  const ciFlags = [
+    '--no-cache',
+    '--ci',
+    '--runInBand',
+    '--reporters=default',
+    '--reporters=jest-junit',
+  ];
 
-const { ssr, watch } = cli.opts();
+  const localConfigFile = path.resolve(rootDir, 'jest.config.js');
+  const defaultConfigFile = path.resolve(__dirname, '../config/jest.config.js');
+  const configFile =
+    configParam && fs.existsSync(configParam)
+      ? configParam // Use the parameter if it exists
+      : fs.existsSync(localConfigFile)
+      ? localConfigFile // otherwise look for a config at the root
+      : defaultConfigFile; // fallback to the default config
 
-const configFile = ssr
-  ? path.resolve(__dirname, '../config/ssr/jest.config.js')
-  : path.resolve(__dirname, '../config/jest.config.js');
-
-spawn(
-  'jest',
-  [`--config`, configFile, `--rootDir`, rootDir, watch ? '--watch' : ''],
-  {
-    env: {
-      ...process.env,
-      JEST_ENV: ssr ? 'ssr' : 'client',
+  spawn(
+    'jest',
+    [
+      `--config`,
+      configFile,
+      `--rootDir`,
+      rootDir,
+      watch ? '--watch' : '',
+      testNamePattern ? `--testNamePattern=${testNamePattern}` : '',
+      ...(ci ? ciFlags : []),
+    ],
+    {
+      env: {
+        ...process.env,
+        JEST_ENV: 'client',
+      },
+      stdio: 'inherit',
     },
-    stdio: 'inherit',
-  },
-);
+  );
+};

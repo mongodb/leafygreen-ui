@@ -63,15 +63,6 @@ const Parser = withCompilerOptions(compilerOptions, TSDocOptions);
 
 interface ParseFunctionOptions {
   /**
-   * The path to the `packages` directory.
-   * Defaults to this repository's `packages/` folder.
-   *
-   * Set this to a remote repository's `node_modules/@leafygreen-ui` path
-   * to generate fresh docs in that repo.
-   */
-  packagesRoot?: string;
-
-  /**
    * Any components with these excluded TSDoc `@tags`
    * will be excluded from docs generation.
    *
@@ -81,34 +72,34 @@ interface ParseFunctionOptions {
    */
   excludeTags?: Array<string>;
 }
+
 const defaultParseFunctionOptions = {
-  packagesRoot: path.resolve(process.cwd(), 'packages'),
   excludeTags: ['example', 'internal', 'noDocgen'],
 };
 
 /**
  * Parses the TSDocs for the provided component
- * @param componentName string
+ * @param packageRoot string
  * @returns CustomComponentDoc[]
  * @param options ParseFunctionOptions
  *
  */
 export function parseTSDoc(
-  componentName: string,
+  /** The root directory of the package */
+  packageRoot: string,
   options: ParseFunctionOptions = defaultParseFunctionOptions,
 ): Array<CustomComponentDoc> | undefined {
-  const { packagesRoot, excludeTags } = defaults(
-    options,
-    defaultParseFunctionOptions,
-  );
+  const { excludeTags } = defaults(options, defaultParseFunctionOptions);
 
-  const componentDir = path.resolve(
-    process.cwd(),
-    `${packagesRoot}/${componentName}`,
-  );
+  const packageDir = path.resolve(process.cwd(), packageRoot);
 
-  if (fs.existsSync(componentDir)) {
-    const componentFileNames = parseFileNames(componentDir);
+  if (fs.existsSync(packageDir)) {
+    const componentFileNames = parseFileNames(packageDir);
+
+    const pkgJsonPath = path.join(packageDir, 'package.json');
+    const packageName = fs.existsSync(pkgJsonPath)
+      ? JSON.parse(fs.readFileSync(pkgJsonPath, 'utf-8'))?.name
+      : undefined;
 
     const parsedDocs = Parser.parse(componentFileNames)
       .filter((doc: ComponentDoc) => {
@@ -126,24 +117,22 @@ export function parseTSDoc(
           ...rest,
           // For default exports, change the displayName
           displayName: ['src', 'index'].includes(displayName)
-            ? pascalCase(componentName)
+            ? pascalCase(packageName)
             : displayName,
           // // Group Props by where they are inherited from
           props: parseProps(props, displayName),
         } as CustomComponentDoc;
       });
-    const docs: Array<CustomComponentDoc> = uniqBy(parsedDocs, 'displayName');
 
-    console.log(chalk.gray(`Parsed TSDoc for:`, chalk.bold(componentName)));
+    const docs: Array<CustomComponentDoc> = uniqBy(parsedDocs, 'displayName');
+    console.log(chalk.gray(`Parsed TSDoc for:`, chalk.bold(packageName)));
 
     return docs;
   } else {
     console.warn(
       chalk.yellow(
-        'Could not find component:',
-        chalk.bold(`\`${componentName}\``),
-        'at',
-        chalk.bold(`${componentDir}`),
+        'Could not find directory:',
+        chalk.bold(`\`${packageDir}\``),
       ),
     );
   }
@@ -174,42 +163,6 @@ export function parseTSDoc(
       };
       return propList;
     }
-  }
-}
-
-/**
- * Writes the provided docs to file
- * @param componentName string
- * @param packagesRoot string = '../packages'
- * @param outDir string = '../packages'
- */
-export function writeDocs(
-  componentName: string,
-  packagesRoot: string,
-  outDir: string,
-): void {
-  const docs = parseTSDoc(componentName);
-  const docString = JSON.stringify(docs, null, 2);
-
-  console.log(
-    chalk.blueBright(
-      `Writing tsdoc.json for`,
-      chalk.blue.bold(`${componentName}`),
-      chalk.gray(`(${(Buffer.byteLength(docString) / 1024).toFixed(2)}kb)`),
-    ),
-  );
-
-  const outFilePath = path.resolve(
-    process.cwd(),
-    `${outDir}/${componentName}/tsdoc.json`,
-  );
-
-  try {
-    fs.writeFileSync(outFilePath, docString);
-    outDir !== packagesRoot &&
-      console.log(`\tWriting to ${chalk.gray(outFilePath)}`);
-  } catch (err) {
-    console.error(chalk.red(`Could not write file to ${outFilePath}`), err);
   }
 }
 

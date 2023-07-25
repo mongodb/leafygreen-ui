@@ -13,8 +13,9 @@
     }
   },
   "scripts": {
-    "build": "rollup --config rollup.config.mjs",
-    "tsc": "tsc --build tsconfig.json"
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
   },
   "license": "Apache-2.0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/polymorphic",
@@ -30,8 +31,8 @@
   },
   "devDependencies": {
     "@emotion/styled": "^11.10.5",
-    "@lg-tools/build": "^0.0.1",
+    "@lg-tools/build": "^0.1.0-beta.6",
     "next": "^13.1.6",
     "@leafygreen-ui/lib": "^10.4.0"
-  }
+   }
 }

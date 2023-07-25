@@ -13,8 +13,9 @@
     }
   },
   "scripts": {
-    "build": "rollup --config rollup.config.mjs",
-    "tsc": "tsc --build tsconfig.json"
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
   },
   "license": "Apache-2.0",
   "publishConfig": {
@@ -31,5 +32,5 @@
   },
   "devDependencies": {
     "@leafygreen-ui/lib": "^10.4.0"
-  }
+   }
 }

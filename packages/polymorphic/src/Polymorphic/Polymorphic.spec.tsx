@@ -248,7 +248,7 @@ describe('packages/polymorphic', () => {
 
   describe('TSDoc output', () => {
     describe('Polymorphic', () => {
-      const docs = parseTSDoc('polymorphic/src');
+      const docs = parseTSDoc(__dirname);
 
       test('Docs for Polymorphic are generated', () => {
         const doc = docs?.find(doc => doc.displayName === 'Polymorph');

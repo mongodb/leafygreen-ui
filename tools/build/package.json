@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/build",
-  "version": "0.1.0-beta.6",
+  "version": "0.1.0-beta.9",
   "description": "Build config for LeafyGreen repositories",
   "license": "Apache-2.0",
   "publishConfig": {
@@ -8,10 +8,13 @@
     "registry": "https://artifactory.corp.mongodb.com/artifactory/api/npm/leafygreen-ui/"
   },
   "bin": {
-    "lg-tsdoc": "./bin/tsdoc.js"
+    "lg-internal-build-package": "./bin/build-package.js"
   },
+  "main": "dist/index.js",
+  "module": "dist/esm/index.js",
   "scripts": {
-    "build": "rollup -c rollup.config.mjs"
+    "build": "rollup -c ./config/rollup.config.mjs",
+    "tsc": "tsc --build tsconfig.json"
   },
   "dependencies": {
     "@babel/core": "^7.9.0",
@@ -38,12 +41,13 @@
     "@svgr/cli": "^8.0.0",
     "@svgr/rollup": "^8.0.0",
     "chalk": "^4.0.0",
-    "commander": "^11.0.0",
+    "lodash": "^4.17.21",
     "react-docgen-typescript": "^2.2.2",
     "rollup": "^3.25.0",
     "rollup-plugin-node-externals": "^6.1.1"
   },
   "peerDependencies": {
+    "turbo": "^1.10.7",
     "typescript": "^4.6.3"
   }
 }

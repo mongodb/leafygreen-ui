@@ -1,23 +1,23 @@
 {
   "name": "@lg-tools/validate",
-  "version": "0.1.0-beta.6",
+  "version": "0.1.0-beta.10",
   "description": "Validation tools for LeafyGreen repositories",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "public",
     "registry": "https://artifactory.corp.mongodb.com/artifactory/api/npm/leafygreen-ui/"
   },
   "scripts": {
-    "build": "rollup -c rollup.config.mjs"
-  },
-  "bin": {
-    "lg-validate-builds": "./bin/builds.js",
-    "lg-validate-deps": "./bin/deps.js"
+    "build": "lg-internal-build-package",
+    "tsc": "tsc --build tsconfig.json"
   },
   "dependencies": {
-    "commander": "^11.0.0",
+    "chalk": "^4.1.2",
     "depcheck": "^1.4.3",
-    "node-fetch": "^2.0.0"
+    "lodash": "^4.17.21",
+    "@lg-tools/build": "^0.1.0-beta.9",
+    "@lg-tools/meta": "^0.1.0-beta.4"
   }
 }

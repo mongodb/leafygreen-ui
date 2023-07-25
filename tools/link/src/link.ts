@@ -1,200 +1,194 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
 import { spawn } from 'child_process';
-import { Command, Option } from 'commander';
 import fs from 'fs';
 import { homedir } from 'os';
 import path from 'path';
+import { getLGConfig } from '@lg-tools/meta';
 
-import { Scope } from './scopes';
 import { formatLog } from './utils';
 
-const program = new Command();
+interface LinkOptions {
+  packages: Array<string>;
+  scope: string;
+  verbose: boolean;
+}
 
 const ignorePackages = ['mongo-nav'];
 
-program
-  .name('link')
-  .description(
-    "Link local LeafyGreen packages to a destination app. This is useful for testing changes to a package's source code in another project.",
-  )
-  .arguments('destination')
-  .option('-v --verbose', 'Prints additional information to the console', false)
-  .addOption(
-    new Option('--scope <name>', 'The NPM organization').choices(
-      Object.keys(Scope),
-    ),
-  )
-  .addOption(
-    new Option(
-      '--packages <names...>',
-      'Specific package names (requires `scope` option, or full package name)',
-    ),
-  )
-  .action(linkPackages)
-  .parse(process.argv);
-
-async function linkPackages(
-  destination: string,
-  opts: {
-    packages: Array<string>;
-    scope: keyof typeof Scope;
-    verbose: boolean;
-  },
-) {
-  const { verbose, scope, packages } = opts;
-  const relativeDestination = path.relative(process.cwd(), destination);
+export async function linkPackages(destination: string, opts: LinkOptions) {
+  const { verbose, scope: scopeFlag, packages } = opts;
+  const rootDir = process.cwd();
+  const relativeDestination = path.relative(rootDir, destination);
 
   // Check if the destination exists
-  if (fs.existsSync(destination) && fs.lstatSync(destination).isDirectory()) {
-    console.log(
-      chalk.green(
-        `Linking packages to ${formatLog.path(relativeDestination)} ...`,
-      ),
-    );
-
-    if (scope === '@leafygreen-ui') {
-      await linkPackagesForScope('@leafygreen-ui', packages);
-    } else if (scope === '@lg-tools') {
-      await linkPackagesForScope('@lg-tools', packages);
-    } else {
-      await Promise.all([
-        linkPackagesForScope('@leafygreen-ui', packages),
-        linkPackagesForScope('@lg-tools', packages),
-      ]);
-    }
-
-    console.log(chalk.green('Finished linking packages.'));
-  } else {
+  if (
+    !(fs.existsSync(destination) && fs.lstatSync(destination).isDirectory())
+  ) {
     throw new Error(
       `Can't find the directory ${formatLog.path(relativeDestination)}.`,
     );
   }
 
-  async function linkPackagesForScope(
-    scope: keyof typeof Scope,
-    packages?: Array<string>,
-  ) {
-    const node_modulesDir = path.join(destination, 'node_modules');
+  console.log(
+    chalk.green(
+      `Linking packages to ${formatLog.path(relativeDestination)} ...`,
+    ),
+  );
 
-    // The directory where the scope's packages are installed
-    const installedModulesDir = path.join(destination, 'node_modules', scope);
+  const { scopes: availableScopes } = getLGConfig();
 
-    if (fs.existsSync(node_modulesDir)) {
-      // Check that the destination has scope's packages installed
-      if (fs.existsSync(installedModulesDir)) {
-        // Get a list of all the packages in the destination
-        // Run yarn link on each package
-        // Run yarn link <packageName> on the destination
-        const installedLGPackages = fs.readdirSync(installedModulesDir);
-
-        const packagesToLink = installedLGPackages.filter(
-          installedPkg =>
-            !ignorePackages.includes(installedPkg) &&
-            (!packages ||
-              packages.some(pkgFlag => pkgFlag.includes(installedPkg))),
-        );
-
-        console.log(
-          chalk.gray(
-            ` Creating links to ${formatLog.scope(scope)} packages...`,
-          ),
-        );
-        await Promise.all(
-          packagesToLink.map(pkg => {
-            createYarnLinkForPackage(scope, pkg);
-          }),
-        );
-        console.log(
-          chalk.gray(
-            ` Connecting links for ${formatLog.scope(
-              scope,
-            )} packages to ${chalk.blue(
-              formatLog.path(relativeDestination),
-            )}...`,
-          ),
-        );
-        await Promise.all(
-          packagesToLink.map((pkg: string) =>
-            linkPackageToDestination(scope, pkg),
-          ),
-        );
-      } else {
-        console.error(
-          chalk.gray(
-            ` Couldn't find ${formatLog.scope(
-              scope,
-            )} scoped packages installed at ${chalk.blue(
-              formatLog.path(relativeDestination),
-            )}. Skipping.`,
-          ),
-        );
-      }
-    } else {
-      console.error(
-        chalk.yellow(`${formatLog.path('node_modules')} not found.`),
+  const linkPromises: Array<Promise<void>> = [];
+  for (const [scopeName, scopePath] of Object.entries(availableScopes)) {
+    if (!scopeFlag || scopeFlag.includes(scopeName)) {
+      linkPromises.push(
+        linkPackagesForScope(
+          scopeName,
+          scopePath as string,
+          destination,
+          packages,
+          verbose,
+        ),
       );
-      // TODO: Prompt user to install instead of just running it
-      await yarnInstall(destination);
-      await linkPackagesForScope(scope);
     }
   }
 
-  /**
-   * Runs the yarn link command in a leafygreen-ui package directory
-   * @returns Promise that resolves when the yarn link command has finished
-   */
-  function createYarnLinkForPackage(
-    scope: keyof typeof Scope,
-    packageName: string,
-  ): Promise<void> {
-    const scopeSrc = Scope[scope];
-    return new Promise<void>(resolve => {
-      const packagesDirectory = findDirectory(process.cwd(), scopeSrc);
+  await Promise.all(linkPromises);
 
-      if (packagesDirectory) {
-        verbose &&
-          console.log(
-            'Creating link for:',
-            chalk.green(`${scope}/${packageName}`),
-          );
-        spawn('yarn', ['link'], {
-          cwd: path.join(packagesDirectory, packageName),
-          stdio: verbose ? 'inherit' : 'ignore',
-        })
-          .on('close', resolve)
-          .on('error', () => {
-            throw new Error(`Couldn't create link for package: ${packageName}`);
-          });
-      } else {
-        throw new Error(
-          `Can't find a ${scopeSrc} directory in ${process.cwd()} or any of its parent directories.`,
-        );
-      }
-    });
+  console.log(chalk.green('Finished linking packages.'));
+}
+async function linkPackagesForScope(
+  scopeName: string,
+  scopePath: string,
+  destination: string,
+  packages?: Array<string>,
+  verbose?: boolean,
+) {
+  const node_modulesDir = path.join(destination, 'node_modules');
+
+  // The directory where the scope's packages are installed
+  const installedModulesDir = path.join(destination, 'node_modules', scopeName);
+
+  if (fs.existsSync(node_modulesDir)) {
+    // Check that the destination has scope's packages installed
+    if (fs.existsSync(installedModulesDir)) {
+      // Get a list of all the packages in the destination
+      // Run yarn link on each package
+      // Run yarn link <packageName> on the destination
+      const installedLGPackages = fs.readdirSync(installedModulesDir);
+
+      const packagesToLink = installedLGPackages.filter(
+        installedPkg =>
+          !ignorePackages.includes(installedPkg) &&
+          (!packages ||
+            packages.some(pkgFlag => pkgFlag.includes(installedPkg))),
+      );
+
+      console.log(
+        chalk.gray(
+          ` Creating links to ${formatLog.scope(scopeName)} packages...`,
+        ),
+      );
+      await Promise.all(
+        packagesToLink.map(pkg => {
+          createYarnLinkForPackage(scopeName, scopePath, pkg, verbose);
+        }),
+      );
+      console.log(
+        chalk.gray(
+          ` Connecting links for ${formatLog.scope(
+            scopeName,
+          )} packages to ${chalk.blue(formatLog.path(destination))}...`,
+        ),
+      );
+      await Promise.all(
+        packagesToLink.map((pkg: string) =>
+          linkPackageToDestination(scopeName, pkg, destination, verbose),
+        ),
+      );
+    } else {
+      console.error(
+        chalk.gray(
+          ` Couldn't find ${formatLog.scope(
+            scopeName,
+          )} scoped packages installed at ${chalk.blue(
+            formatLog.path(destination),
+          )}. Skipping.`,
+        ),
+      );
+    }
+  } else {
+    console.error(chalk.yellow(`${formatLog.path('node_modules')} not found.`));
+    // TODO: Prompt user to install instead of just running it
+    await yarnInstall(destination);
+    await linkPackagesForScope(
+      scopeName,
+      scopePath,
+      destination,
+      packages,
+      verbose,
+    );
   }
+}
 
-  /**
-   * Runs the yarn link <packageName> command in the destination directory
-   * @returns Promise that resolves when the yarn link <packageName> command has finished
-   */
-  function linkPackageToDestination(
-    scope: keyof typeof Scope,
-    packageName: string,
-  ): Promise<void> {
-    const fullPackageName = `${scope}/${packageName}`;
-    return new Promise<void>(resolve => {
-      verbose && console.log('Linking package:', chalk.blue(fullPackageName));
-      spawn('yarn', ['link', fullPackageName], {
-        cwd: destination,
+/**
+ * Runs the yarn link command in a leafygreen-ui package directory
+ * @returns Promise that resolves when the yarn link command has finished
+ */
+function createYarnLinkForPackage(
+  scopeName: string,
+  scopePath: string,
+  packageName: string,
+  verbose?: boolean,
+): Promise<void> {
+  const scopeSrc = scopePath;
+  return new Promise<void>(resolve => {
+    const packagesDirectory = findDirectory(process.cwd(), scopeSrc);
+
+    if (packagesDirectory) {
+      verbose &&
+        console.log(
+          'Creating link for:',
+          chalk.green(`${scopeName}/${packageName}`),
+        );
+      spawn('yarn', ['link'], {
+        cwd: path.join(packagesDirectory, packageName),
         stdio: verbose ? 'inherit' : 'ignore',
       })
         .on('close', resolve)
         .on('error', () => {
-          throw new Error(`Couldn't link package: ${fullPackageName}`);
+          throw new Error(`Couldn't create link for package: ${packageName}`);
         });
-    });
-  }
+    } else {
+      throw new Error(
+        `Can't find a ${scopeSrc} directory in ${process.cwd()} or any of its parent directories.`,
+      );
+    }
+  });
+}
+
+/**
+ * Runs the yarn link <packageName> command in the destination directory
+ * @returns Promise that resolves when the yarn link <packageName> command has finished
+ */
+function linkPackageToDestination(
+  scopeName: string,
+  packageName: string,
+  destination: string,
+  verbose?: boolean,
+): Promise<void> {
+  const fullPackageName = `${scopeName}/${packageName}`;
+  return new Promise<void>(resolve => {
+    verbose && console.log('Linking package:', chalk.blue(fullPackageName));
+    spawn('yarn', ['link', fullPackageName], {
+      cwd: destination,
+      stdio: verbose ? 'inherit' : 'ignore',
+    })
+      .on('close', resolve)
+      .on('error', () => {
+        throw new Error(`Couldn't link package: ${fullPackageName}`);
+      });
+  });
 }
 
 function findDirectory(
