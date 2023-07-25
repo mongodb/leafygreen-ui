@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, ReactElement, ReactNode } from 'react';
 
 import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
-import { PopoverProps, PortalControlProps } from '@leafygreen-ui/popover';
+import { PortalControlProps } from '@leafygreen-ui/popover';
 
 /**
  * Prop Enums & Types
@@ -240,6 +240,9 @@ export type BaseComboboxProps = Omit<HTMLElementProps<'div'>, 'onChange'> &
      */
     chipCharacterLimit?: number;
 
+    /**
+     * Number that controls the z-index of the popover element directly.
+     */
     popoverZIndex?: number;
   };
 
