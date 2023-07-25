@@ -70,6 +70,7 @@ import InviteUser from './InviteUser.svg';
 import Key from './Key.svg';
 import Laptop from './Laptop.svg';
 import Link from './Link.svg';
+import List from './List.svg';
 import Lock from './Lock.svg';
 import LogIn from './LogIn.svg';
 import LogOut from './LogOut.svg';
@@ -97,6 +98,7 @@ import Refresh from './Refresh.svg';
 import Relationship from './Relationship.svg';
 import ReplicaSet from './ReplicaSet.svg';
 import Resize from './Resize.svg';
+import Return from './Return.svg';
 import Save from './Save.svg';
 import Serverless from './Serverless.svg';
 import Settings from './Settings.svg';
@@ -105,6 +107,7 @@ import Shell from './Shell.svg';
 import SMS from './SMS.svg';
 import SortAscending from './SortAscending.svg';
 import SortDescending from './SortDescending.svg';
+import Sparkle from './Sparkle.svg';
 import SplitHorizontal from './SplitHorizontal.svg';
 import SplitVertical from './SplitVertical.svg';
 import Stitch from './Stitch.svg';
@@ -201,6 +204,7 @@ const _glyphs = {
   Key,
   Laptop,
   Link,
+  List,
   Lock,
   LogIn,
   LogOut,
@@ -228,6 +232,7 @@ const _glyphs = {
   Relationship,
   ReplicaSet,
   Resize,
+  Return,
   Save,
   Serverless,
   ShardedCluster,
@@ -236,6 +241,7 @@ const _glyphs = {
   SMS,
   SortAscending,
   SortDescending,
+  Sparkle,
   SplitHorizontal,
   SplitVertical,
   Stitch,
