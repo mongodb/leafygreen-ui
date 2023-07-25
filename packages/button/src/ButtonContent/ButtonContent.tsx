@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { Spinner } from '@leafygreen-ui/loading-indicator';
 import { registerRipple } from '@leafygreen-ui/ripple';
 
 import {
@@ -31,6 +30,7 @@ export const ButtonContent = (props: ButtonContentProps) => {
     size,
     isLoading,
     loadingText,
+    loadingIndicator,
     className,
   } = props;
 
@@ -50,6 +50,17 @@ export const ButtonContent = (props: ButtonContentProps) => {
     return unregisterRipple;
   }, [rippleRef, variant, darkMode, disabled, theme]);
 
+  const spinner =
+    loadingIndicator &&
+    React.cloneElement(loadingIndicator, {
+      className: cx({
+        [centeredSpinnerStyles]: !loadingText,
+      }),
+      sizeOverride: buttonSpinnerSize[size],
+      colorOverride: spinnerColor[theme],
+      ['data-testid']: 'lg-button-spinner',
+    });
+
   if (isLoading) {
     return (
       <>
@@ -58,14 +69,8 @@ export const ButtonContent = (props: ButtonContentProps) => {
             [centeredSpinnerContainerStyles]: !loadingText,
           })}
         >
-          <Spinner
-            className={cx({
-              [centeredSpinnerStyles]: !loadingText,
-            })}
-            sizeOverride={buttonSpinnerSize[size]}
-            colorOverride={spinnerColor[theme]}
-            data-testid="lg-button-spinner"
-          />
+          {spinner}
+
           {loadingText}
         </div>
         {!loadingText && (
