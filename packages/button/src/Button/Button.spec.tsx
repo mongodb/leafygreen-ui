@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import NextLink from 'next/link';
 
@@ -234,6 +234,22 @@ describe('packages/button', () => {
         href,
       });
       expect(button).toHaveAttribute('href', href);
+    });
+
+    test('does not invoke a forms submit handler when disabled', () => {
+      const onSubmit = jest.fn();
+
+      render(
+        <form onSubmit={onSubmit}>
+          <Button disabled type="submit">
+            Submit
+          </Button>
+        </form>,
+      );
+
+      const button = screen.getByRole('button');
+      fireEvent.click(button);
+      expect(onSubmit).not.toHaveBeenCalled();
     });
   });
 
