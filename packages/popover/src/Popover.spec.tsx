@@ -2,8 +2,7 @@ import React from 'react';
 import { act, fireEvent, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import Popover from './Popover';
-import { PopoverProps } from './types';
+import Popover, { PopoverProps } from './Popover';
 
 function renderPopover(props: Partial<PopoverProps> = {}) {
   const utils = render(

@@ -22,8 +22,9 @@ import {
   calculatePosition,
   getElementDocumentPosition,
   getElementViewportPosition,
-} from './positionUtils';
-import { Align, Justify, PopoverProps } from './types';
+} from '../utils';
+
+import { Align, Justify, PopoverProps } from './Popover.types';
 
 const rootPopoverStyle = css`
   position: absolute;
