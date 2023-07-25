@@ -101,7 +101,7 @@ describe('packages/Code', () => {
 
       const copyIcon = screen.getByRole('button');
       fireEvent.click(copyIcon);
-      expect(onCopy).toBeCalledTimes(1);
+      expect(onCopy).toHaveBeenCalledTimes(1);
     });
   });
 

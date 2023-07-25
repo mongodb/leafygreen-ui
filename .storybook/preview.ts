@@ -1,6 +1,8 @@
-import ComponentPreview from './decorators/ComponentPreview';
-import ReactStrictMode from './decorators/ReactStrictMode';
-import PropCombinationsDecorator from './decorators/PropCombinations';
+import {
+  ComponentPreview,
+  ReactStrictMode,
+  PropCombinations,
+} from '@lg-tools/storybook-decorators';
 
 import {
   storybookExcludedArgTypes,
@@ -60,11 +62,7 @@ const parameters = {
   },
 };
 
-export const decorators = [
-  PropCombinationsDecorator,
-  ReactStrictMode,
-  ComponentPreview,
-];
+export const decorators = [PropCombinations, ReactStrictMode, ComponentPreview];
 
 const preview: Preview = {
   parameters,

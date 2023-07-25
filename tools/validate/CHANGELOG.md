@@ -1,0 +1,38 @@
+# @lg-tools/validate
+
+## 0.1.0-beta.10
+
+### Minor Changes
+
+- 8460cef9b: First pre-release of LeafyGreen validation tools
+
+### Patch Changes
+
+- 8d8a433d1: Adds README.md. Minor bug fixes
+- c6d2ea11a: Version fixes
+- Updates depcheck fix script
+- 9476719bd: Fix broken builds
+
+## 0.1.0-beta.9
+
+### Patch Changes
+
+- Adds README.md. Minor bug fixes
+
+## 0.1.0-beta.8
+
+### Patch Changes
+
+- 78acda539: Fix broken builds
+
+## 0.1.0-beta.7
+
+### Patch Changes
+
+- Version fixes
+
+## 0.1.0-beta.0-6
+
+### Minor Changes
+
+- 8460cef9: First pre-release of LeafyGreen validation tools
