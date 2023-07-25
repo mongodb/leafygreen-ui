@@ -95,6 +95,15 @@ const V11Adapter = <T extends LGRowData>({
 
   const iterables = useVirtualScrolling ? table.virtualRows ?? [] : rows;
 
+  const columnsChildren = React.Children.toArray(columns);
+
+  let HeaderRowProps = {};
+
+  if (columnsChildren.length < 2) {
+    const HeaderRow = columnsChildren[0] as ReactElement;
+    HeaderRowProps = HeaderRow.props;
+  }
+
   return (
     <Table
       darkMode={darkMode}
@@ -104,9 +113,10 @@ const V11Adapter = <T extends LGRowData>({
       }
       className={className}
       ref={containerRef}
+      {...(OldTable as ReactElement).props}
     >
       <TableHead>
-        <HeaderRow>
+        <HeaderRow {...HeaderRowProps}>
           {table.getHeaderGroups()[0].headers.map(header => {
             return (
               <HeaderCell key={header.id} header={header}>
