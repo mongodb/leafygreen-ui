@@ -52,8 +52,8 @@ export const Basic: StoryFn<StoryAdapterProps> = () => {
         }
       >
         {({ datum }: any) => (
-          <Row data-test="test">
-            <Cell>{datum.name}</Cell>
+          <Row data-test="test-row">
+            <Cell data-test="test-cell">{datum.name}</Cell>
             <Cell>{datum.age}</Cell>
             <Cell>{datum.color}</Cell>
             <Cell>{datum.location}</Cell>
@@ -174,14 +174,14 @@ export const NestedRows: StoryFn<StoryAdapterProps> = () => {
         }
       >
         {({ datum }: any) => (
-          <Row>
-            <Cell>{datum.name}</Cell>
+          <Row data-test="test-parent-row">
+            <Cell data-test="test-parent-cell">{datum.name}</Cell>
             <Cell>{datum.age}</Cell>
             <Cell>{datum.color}</Cell>
             <Cell>{datum.location}</Cell>
             {datum.name !== 'Donna' && (
-              <Row>
-                <Cell>
+              <Row data-test="test-nested-row">
+                <Cell data-test="test-nested-cell">
                   {datum.rand < 0.5 && <Badge>Low Rand</Badge>}
                   expanded name: {datum.name}
                 </Cell>
