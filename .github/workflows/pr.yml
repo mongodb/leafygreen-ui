@@ -69,9 +69,6 @@ jobs:
       - name: lint
         run: yarn lint
 
-    outputs:
-      yarn-cache-dir: ${{ steps.get-yarn-cache-dir.outputs.dir }}
-
   chromatic:
     name: Chromatic
     runs-on: ubuntu-latest
