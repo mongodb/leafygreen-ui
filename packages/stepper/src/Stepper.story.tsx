@@ -3,6 +3,7 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import {
+  storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -44,6 +45,7 @@ const meta: StoryMetaType<typeof Stepper> = {
         max: 7, // numSteps' max
       },
     },
+    darkMode: storybookArgTypes.darkMode,
     maxDisplayedSteps: {
       control: {
         type: 'range',

@@ -5,7 +5,7 @@ export interface LGConfig {
   scopes: Record<string, string>;
 }
 
-export const LGConfigFileName = 'lg.config';
+export const LGConfigFileName = 'lg.json';
 
 /**
  *

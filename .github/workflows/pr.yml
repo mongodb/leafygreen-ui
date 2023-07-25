@@ -25,7 +25,7 @@ jobs:
           key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
 
       # Only setup & build if there was no build cache hit
-      - name: Use Node.js 18
+      - name: Use Node 18
         uses: actions/setup-node@v3
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         with:
@@ -48,7 +48,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Use Node.js 18
+      - name: Use Node 18
         uses: actions/setup-node@v3
         with:
           node-version: '18'
@@ -64,13 +64,11 @@ jobs:
             !**/node_modules
           key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
 
-      - run: yarn install --frozen-lockfile --prefer-offline
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
 
       - name: lint
         run: yarn lint
-
-    outputs:
-      yarn-cache-dir: ${{ steps.get-yarn-cache-dir.outputs.dir }}
 
   chromatic:
     name: Chromatic
@@ -82,14 +80,15 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Use Node.js 18
+      - name: Use Node 18
         uses: actions/setup-node@v3
         with:
           node-version: '18'
           cache: yarn
           cache-dependency-path: 'yarn.lock'
 
-      - run: yarn install --frozen-lockfile --prefer-offline
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
 
       - uses: actions/cache/restore@v3
         name: Restore build cache
@@ -115,14 +114,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Use Node.js 18
+      - name: Use Node 18
         uses: actions/setup-node@v3
         with:
           node-version: '18'
           cache: yarn
           cache-dependency-path: 'yarn.lock'
 
-      - run: yarn install --frozen-lockfile --prefer-offline
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
 
       - uses: actions/cache/restore@v3
         name: Restore build cache
@@ -145,14 +145,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Use Node.js 18
+      - name: Use Node 18
         uses: actions/setup-node@v3
         with:
           node-version: '18'
           cache: yarn
           cache-dependency-path: 'yarn.lock'
 
-      - run: yarn install --frozen-lockfile --prefer-offline
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
 
       - uses: actions/cache/restore@v3
         name: Restore build cache
