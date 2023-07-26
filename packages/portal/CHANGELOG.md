@@ -1,5 +1,14 @@
 # @leafygreen-ui/portal
 
+## 4.1.5
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+- Updated dependencies [215268ff]
+  - @leafygreen-ui/hooks@7.7.6
+  - @leafygreen-ui/lib@10.4.1
+
 ## 4.1.4
 
 ### Patch Changes

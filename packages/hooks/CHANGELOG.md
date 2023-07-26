@@ -1,5 +1,11 @@
 # @leafygreen-ui/hooks
 
+## 7.7.6
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+
 ## 7.7.5
 
 ### Patch Changes

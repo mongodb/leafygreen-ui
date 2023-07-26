@@ -1,5 +1,19 @@
 # @leafygreen-ui/form-footer
 
+## 3.0.9
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+- Updated dependencies [215268ff]
+  - @leafygreen-ui/leafygreen-provider@3.1.4
+  - @leafygreen-ui/emotion@4.0.5
+  - @leafygreen-ui/palette@4.0.5
+  - @leafygreen-ui/banner@7.0.10
+  - @leafygreen-ui/button@20.3.1
+  - @leafygreen-ui/icon@11.20.1
+  - @leafygreen-ui/lib@10.4.1
+
 ## 3.0.8
 
 ### Patch Changes

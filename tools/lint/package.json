@@ -1,0 +1,39 @@
+{
+  "name": "@lg-tools/lint",
+  "version": "0.1.0",
+  "description": "Lint rules & config for LeafyGreen repositories",
+  "main": "dist/index.js",
+  "module": "dist/esm/index.js",
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "lg-internal-build-package",
+    "tsc": "tsc --build tsconfig.json"
+  },
+  "dependencies": {
+    "@babel/core": "^7.22.5",
+    "@babel/eslint-parser": "^7.22.5",
+    "@emotion/eslint-plugin": "^11.11.0",
+    "@lg-tools/build": "^0.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.60.0",
+    "@typescript-eslint/parser": "^5.60.0",
+    "chalk": "^4.1.2",
+    "eslint": "^8.43.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "^2.27.0",
+    "eslint-plugin-jest": "^27.2.0",
+    "eslint-plugin-jsx-a11y": "^6.7.0",
+    "eslint-plugin-react": "^7.32.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "eslint-plugin-storybook": "^0.6.12",
+    "npm-package-json-lint": "^7.0.0",
+    "npm-package-json-lint-config-default": "^6.0.0",
+    "prettier": "2.8.1"
+  },
+  "peerDependencies": {
+    "typescript": "^4.6.3"
+  }
+}

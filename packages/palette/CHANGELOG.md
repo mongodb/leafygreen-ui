@@ -1,5 +1,11 @@
 # @leafygreen-ui/palette
 
+## 4.0.5
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+
 ## 4.0.4
 
 ### Patch Changes

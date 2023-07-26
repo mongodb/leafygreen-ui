@@ -132,7 +132,7 @@ const V11Adapter = <T extends LGRowData>({
                 if (cell?.column?.id) {
                   if (cell?.column?.id === 'select') {
                     return (
-                      <Cell>
+                      <Cell key={cell.column.id}>
                         {/* @ts-expect-error `cell` is instantiated in `processColumns` */}
                         {cell.column.columnDef?.cell({ row, table })}
                       </Cell>

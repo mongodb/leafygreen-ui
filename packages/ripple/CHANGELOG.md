@@ -1,5 +1,13 @@
 # @leafygreen-ui/ripple
 
+## 1.1.10
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+- Updated dependencies [215268ff]
+  - @leafygreen-ui/tokens@2.1.2
+
 ## 1.1.9
 
 ### Patch Changes
