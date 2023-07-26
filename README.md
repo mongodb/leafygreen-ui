@@ -1,12 +1,16 @@
-# LeafyGreen UI Kit
+<div style="text-align: center;">
 
-<img src="./.storybook/static/design-systems-color-lockup.svg" width="256"/>
+<img src="./.storybook/static/leafygreen-ui-banner.png" width="100%"/>
 
-LeafyGreen UI is a library of React components, CSS patterns, and CLI tools for MongoDB's LeafyGreen Design System.
+# LeafyGreen UI
+
+A library of React components, CSS patterns, and CLI tools for MongoDB's LeafyGreen Design System.
 
 [![mongodb.design](https://img.shields.io/badge/mongodb.design-112733?style=for-the-badge&logo=mongodb&logoColor=00ED64)](https://mongodb.design)
 
 [![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@main/badge/badge-storybook.svg)](https://storybook.mongodb.design)
+
+</div>
 
 ## Getting Started
 
