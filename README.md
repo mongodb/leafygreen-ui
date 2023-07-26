@@ -9,12 +9,17 @@
       <img src="https://img.shields.io/badge/mongodb.design-112733?style=for-the-badge&logo=mongodb&logoColor=00ED64.svg" alt="mongodb.design">
    </a>
 </p>
+
 <p align="center">
    <a href="https://storybook.mongodb.design">
       <img src="https://cdn.jsdelivr.net/gh/storybookjs/brand@main/badge/badge-storybook.svg" alt="Storybook"/>
    </a>
 </p>
-<p align="center"></p>
+
+<p align="center">
+   <img alt="Release" src="https://github.com/mongodb/leafygreen-ui/actions/workflows/release.yml/badge.svg"/>
+   <img alt="License" src="https://img.shields.io/github/license/mongodb/leafygreen-ui">
+</p>
 
 ## Getting Started
 
