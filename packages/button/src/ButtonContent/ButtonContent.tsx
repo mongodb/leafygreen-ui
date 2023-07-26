@@ -53,9 +53,13 @@ export const ButtonContent = (props: ButtonContentProps) => {
   const spinner =
     loadingIndicator &&
     React.cloneElement(loadingIndicator, {
-      className: cx({
-        [centeredSpinnerStyles]: !loadingText,
-      }),
+      ...loadingIndicator.props,
+      className: cx(
+        {
+          [centeredSpinnerStyles]: !loadingText,
+        },
+        loadingIndicator.props?.className,
+      ),
       sizeOverride: buttonSpinnerSize[size],
       colorOverride: spinnerColor[theme],
       ['data-testid']: 'lg-button-spinner',
