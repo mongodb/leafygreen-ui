@@ -10,6 +10,7 @@ import {
   type StoryMetaType,
   type StoryType,
 } from '@leafygreen-ui/lib';
+import { Spinner } from '@leafygreen-ui/loading-indicator';
 
 import { Size } from './types';
 import Button, { ButtonProps, Variant } from '.';
@@ -44,6 +45,7 @@ const meta: StoryMetaType<typeof Button> = {
   },
   args: {
     children: 'MongoDB',
+    loadingIndicator: <Spinner />,
     leftGlyph: undefined,
     rightGlyph: undefined,
   },
@@ -159,11 +161,10 @@ Loading.parameters = {
       variant: Variant.Default,
       rightGlyph: undefined,
       leftGlyph: undefined,
+      loadingIndicator: <Spinner />,
     },
   },
-};
-// Avoid flaky visual diff tests with Spinner
-Loading.parameters = {
+  // Avoids flakey Chromatic tests
   chromatic: {
     disableSnapshots: true,
   },

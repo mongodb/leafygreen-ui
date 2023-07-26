@@ -22,18 +22,18 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/box": "^3.1.5",
-    "@leafygreen-ui/emotion": "^4.0.5",
-    "@leafygreen-ui/lib": "^10.4.1",
-    "@leafygreen-ui/loading-indicator": "^2.0.1",
-    "@leafygreen-ui/palette": "^4.0.5",
-    "@leafygreen-ui/ripple": "^1.1.10",
-    "@leafygreen-ui/tokens": "^2.1.2",
+    "@leafygreen-ui/box": "^3.1.4",
+    "@leafygreen-ui/emotion": "^4.0.4",
+    "@leafygreen-ui/lib": "^10.4.0",
+    "@leafygreen-ui/palette": "^4.0.4",
+    "@leafygreen-ui/ripple": "^1.1.9",
+    "@leafygreen-ui/tokens": "^2.1.1",
     "polished": "^4.2.2"
   },
   "devDependencies": {
     "next": "^13.0.5",
-    "@leafygreen-ui/icon": "^11.20.1"
+    "@leafygreen-ui/icon": "^11.20.0",
+    "@leafygreen-ui/loading-indicator": "^2.0.0"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.4"
