@@ -30,11 +30,7 @@ export const prettier: LintFn = ({ fix, verbose }) => {
       },
     )
       .on('exit', code => {
-        if (code === 0) {
-          resolve(true);
-        } else {
-          resolve(false);
-        }
+        resolve(!code);
       })
       .on('error', reject);
   });

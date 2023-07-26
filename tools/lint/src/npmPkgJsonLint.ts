@@ -21,11 +21,7 @@ export const npmPkgJsonLint: LintFn = ({ fix, verbose }) => {
       stdio: 'inherit',
     })
       .on('exit', code => {
-        if (code === 0) {
-          resolve(true);
-        } else {
-          resolve(false);
-        }
+        resolve(!code);
       })
       .on('error', reject);
 
