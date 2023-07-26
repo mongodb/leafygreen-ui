@@ -1,5 +1,19 @@
 # @leafygreen-ui/toggle
 
+## 10.0.12
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+- Updated dependencies [215268ff]
+  - @leafygreen-ui/leafygreen-provider@3.1.4
+  - @leafygreen-ui/emotion@4.0.5
+  - @leafygreen-ui/palette@4.0.5
+  - @leafygreen-ui/tokens@2.1.2
+  - @leafygreen-ui/a11y@1.4.5
+  - @leafygreen-ui/icon@11.20.1
+  - @leafygreen-ui/lib@10.4.1
+
 ## 10.0.11
 
 ### Patch Changes

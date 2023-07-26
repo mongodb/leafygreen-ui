@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/emotion",
-  "version": "4.0.4",
+  "version": "4.0.5",
   "description": "leafyGreen UI Kit's Custom Instance of Emotion",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -35,6 +35,5 @@
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
-  "devDependencies": {
-   }
+  "devDependencies": {}
 }

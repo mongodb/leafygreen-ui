@@ -1,5 +1,11 @@
 # @leafygreen-ui/polymorphic
 
+## 1.3.3
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+
 ## 1.3.2
 
 ### Patch Changes
