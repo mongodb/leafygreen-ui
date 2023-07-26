@@ -13,7 +13,7 @@ describe('Context', () => {
         within(context, () => {
           throw Error('expected error');
         });
-      }).toThrowError('expected error');
+      }).toThrow('expected error');
 
       expect(context[Context.enter]).toHaveBeenCalledTimes(1);
       expect(context[Context.exit]).toHaveBeenCalledTimes(1);
@@ -30,7 +30,7 @@ describe('Context', () => {
       });
 
       expect(context[Context.enter]).toHaveBeenCalledTimes(1);
-      await expect(result).rejects.toThrowError('expected error');
+      await expect(result).rejects.toThrow('expected error');
       expect(context[Context.exit]).toHaveBeenCalledTimes(1);
     });
 
@@ -45,7 +45,7 @@ describe('Context', () => {
       });
 
       expect(context[Context.enter]).toHaveBeenCalledTimes(1);
-      await expect(promise).rejects.toThrowError('expected error');
+      await expect(promise).rejects.toThrow('expected error');
       expect(context[Context.exit]).toHaveBeenCalledTimes(1);
     });
 
@@ -60,12 +60,11 @@ describe('Context', () => {
       });
 
       expect(context[Context.enter]).toHaveBeenCalledTimes(1);
-      await expect(promise).rejects.toThrowError('expected error');
+      await expect(promise).rejects.toThrow('expected error');
       expect(context[Context.exit]).toHaveBeenCalledTimes(1);
     });
   });
 
-  /* eslint-disable jest/no-try-expect */
   describe('operation and `exit` not called if `enter` throws exception', () => {
     test('with sync `enter` and `exit`', () => {
       const context = {
@@ -388,7 +387,6 @@ describe('Context', () => {
       expect(result).toEqual({ exception: Error('operation error') });
     });
   });
-  /* eslint-enable jest/no-try-expect */
 
   describe('types', () => {
     let isNumber: number;

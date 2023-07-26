@@ -1,11 +1,10 @@
 /* eslint-disable no-console */
 import { PropItem } from 'react-docgen-typescript';
+import { CustomComponentDoc } from '@lg-tools/build/src/tsdoc.utils';
 import { Command } from 'commander';
 import { readFileSync } from 'fs';
 import { pickBy } from 'lodash';
 import path from 'path';
-
-import { CustomComponentDoc } from './utils/tsDoc.utils';
 
 /**
  * A simple script to get a quick & dirty first pass of React `propTypes` from the generated `tsdoc.json`

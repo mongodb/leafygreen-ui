@@ -1,5 +1,20 @@
 # @leafygreen-ui/button
 
+## 20.3.1
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+- Updated dependencies [215268ff]
+  - @leafygreen-ui/leafygreen-provider@3.1.4
+  - @leafygreen-ui/loading-indicator@2.0.1
+  - @leafygreen-ui/emotion@4.0.5
+  - @leafygreen-ui/palette@4.0.5
+  - @leafygreen-ui/ripple@1.1.10
+  - @leafygreen-ui/tokens@2.1.2
+  - @leafygreen-ui/box@3.1.5
+  - @leafygreen-ui/lib@10.4.1
+
 ## 20.3.0
 
 ### Minor Changes

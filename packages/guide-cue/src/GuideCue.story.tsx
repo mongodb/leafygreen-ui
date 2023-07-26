@@ -59,7 +59,7 @@ const meta: StoryMetaType<any> = {
         open: true,
         refEl: undefined,
       },
-      decorator: (Instance, ctx) => {
+      decorator: Instance => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const refEl = React.useRef(null);
         const refElHeight = 25;

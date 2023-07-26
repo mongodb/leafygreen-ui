@@ -1,5 +1,19 @@
 # @leafygreen-ui/empty-state
 
+## 1.0.7
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+- Updated dependencies [215268ff]
+  - @leafygreen-ui/leafygreen-provider@3.1.4
+  - @leafygreen-ui/typography@16.5.2
+  - @leafygreen-ui/emotion@4.0.5
+  - @leafygreen-ui/palette@4.0.5
+  - @leafygreen-ui/button@20.3.1
+  - @leafygreen-ui/tokens@2.1.2
+  - @leafygreen-ui/lib@10.4.1
+
 ## 1.0.6
 
 ### Patch Changes
