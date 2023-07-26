@@ -11,8 +11,7 @@
     "tsc": "tsc --build tsconfig.json"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "https://artifactory.corp.mongodb.com/artifactory/api/npm/leafygreen-ui/"
+    "access": "public"
   },
   "dependencies": {
     "@leafygreen-ui/banner": "^7.0.9",
