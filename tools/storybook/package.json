@@ -1,12 +1,11 @@
 {
   "name": "@lg-tools/storybook",
-  "version": "0.1.0-beta.10",
+  "version": "0.1.0",
   "description": "Storybook config for LeafyGreen",
   "main": "main.ts",
   "license": "Apache-2.0",
   "publishConfig": {
-    "access": "public",
-    "registry": "https://artifactory.corp.mongodb.com/artifactory/api/npm/leafygreen-ui/"
+    "access": "public"
   },
   "dependencies": {
     "@mdx-js/react": "^1.6.22",
@@ -26,9 +25,9 @@
     "@storybook/react-webpack5": "^7.0.11",
     "@storybook/testing-library": "^0.1.0",
     "@storybook/theming": "^7.0.11",
-    "@leafygreen-ui/palette": "^4.0.4",
-    "@leafygreen-ui/tokens": "^2.1.1",
-    "@lg-tools/build": "^0.1.0-beta.9",
+    "@leafygreen-ui/palette": "^4.0.5",
+    "@leafygreen-ui/tokens": "^2.1.2",
+    "@lg-tools/build": "^0.1.0",
     "@svgr/webpack": "^8.0.1",
     "buffer": "^6.0.3",
     "file-loader": "^6.0.0",

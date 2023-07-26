@@ -1,5 +1,25 @@
 # @lg-tools/validate
 
+## 0.1.0
+
+### Minor Changes
+
+- 215268ff: First pre-release of LeafyGreen validation tools
+
+### Patch Changes
+
+- 215268ff: Adds README.md. Minor bug fixes
+- 215268ff: Version fixes
+- 215268ff: Updates depcheck fix script
+- 215268ff: Fix broken builds
+- Updated dependencies [215268ff]
+- Updated dependencies [215268ff]
+- Updated dependencies [215268ff]
+- Updated dependencies [215268ff]
+- Updated dependencies [215268ff]
+  - @lg-tools/build@0.1.0
+  - @lg-tools/meta@0.1.0
+
 ## 0.1.0-beta.10
 
 ### Minor Changes

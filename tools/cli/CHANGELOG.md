@@ -1,5 +1,38 @@
 # @lg-tools/cli
 
+## 0.1.0
+
+### Minor Changes
+
+- 215268ff: First prerelease of unified LeafyGreen CLI
+
+### Patch Changes
+
+- 215268ff: Fix package versions
+- 215268ff: Adds README.md. Minor bug fixes
+- 215268ff: Version fixes
+- 215268ff: Fix broken builds
+- 215268ff: Add meta as dependency
+- Updated dependencies [215268ff]
+- Updated dependencies [215268ff]
+- Updated dependencies [215268ff]
+- Updated dependencies [215268ff]
+- Updated dependencies [215268ff]
+- Updated dependencies [215268ff]
+- Updated dependencies [215268ff]
+- Updated dependencies [215268ff]
+- Updated dependencies [215268ff]
+- Updated dependencies [215268ff]
+- Updated dependencies [215268ff]
+  - @lg-tools/test@0.1.0
+  - @lg-tools/lint@0.1.0
+  - @lg-tools/link@0.1.0
+  - @lg-tools/validate@0.1.0
+  - @lg-tools/install@0.1.0
+  - @lg-tools/create@0.1.0
+  - @lg-tools/update@0.1.0
+  - @lg-tools/build@0.1.0
+
 ## 0.1.0-beta.7
 
 ### Minor Changes
