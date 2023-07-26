@@ -5,8 +5,7 @@
   "main": "dist/index.js",
   "license": "Apache-2.0",
   "publishConfig": {
-    "access": "public",
-    "registry": "https://artifactory.corp.mongodb.com/artifactory/api/npm/leafygreen-ui/"
+    "access": "public"
   },
   "bin": {
     "lg-update": "./bin/index.js"

@@ -6,8 +6,7 @@
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "publishConfig": {
-    "access": "public",
-    "registry": "https://artifactory.corp.mongodb.com/artifactory/api/npm/leafygreen-ui/"
+    "access": "public"
   },
   "bin": {
     "lg": "./bin/index.js"

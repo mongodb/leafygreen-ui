@@ -10,8 +10,7 @@
     "tsc": "tsc --build tsconfig.json"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "https://artifactory.corp.mongodb.com/artifactory/api/npm/leafygreen-ui/"
+    "access": "public"
   },
   "dependencies": {
     "@emotion/css": "^11.11.0",
