@@ -1,5 +1,7 @@
 # LeafyGreen UI Kit
 
+<img src="./.storybook/static/design-systems-color-lockup.svg" width="256"/>
+
 LeafyGreen UI is a library of React components, CSS patterns, and CLI tools for MongoDB's LeafyGreen Design System.
 
 [![mongodb.design](https://img.shields.io/badge/mongodb.design-112733?style=for-the-badge&logo=mongodb&logoColor=00ED64)](https://mongodb.design)
@@ -14,19 +16,24 @@ LeafyGreen UI is a library of React components, CSS patterns, and CLI tools for 
 2. Install the LeafyGreen CLI
 
 ```bash
-> npm install -g @lg-tools/cli
+npm install -g @lg-tools/cli
 ```
 
 3. Install all, or some LeafyGreen components
 
 ```bash
-> lg install <list of packages>
+lg install
+```
+
+```bash
+lg install button combobox
 ```
 
 3. Import LeafyGreen components into your project
 
 ```tsx
 import Button from '@leafygreen-ui/button';
+import { Combobox, ComboboxOptions } from '@leafygreen-ui/combobox';
 ```
 
 ### Without CLI
@@ -35,7 +42,7 @@ import Button from '@leafygreen-ui/button';
 2. Install individual LeafyGreen components using `npm` or `yarn`
 
 ```bash
-> yarn add @leafygreen-ui/button
+yarn add @leafygreen-ui/button
 ```
 
 3. Import LeafyGreen components into your project
@@ -118,6 +125,7 @@ import Button from '@leafygreen-ui/button';
 | [@lg-tools/test](http://mongodb.design/component/test/example)                                    | [![version](https://img.shields.io/npm/v/@lg-tools/test)](https://www.npmjs.com/package/@lg-tools/test)                                         | ![downloads](https://img.shields.io/npm/dm/@lg-tools/test?color=white)                     |
 | [@lg-tools/update](http://mongodb.design/component/update/example)                                | [![version](https://img.shields.io/npm/v/@lg-tools/update)](https://www.npmjs.com/package/@lg-tools/update)                                     | ![downloads](https://img.shields.io/npm/dm/@lg-tools/update?color=white)                   |
 | [@lg-tools/validate](http://mongodb.design/component/validate/example)                            | [![version](https://img.shields.io/npm/v/@lg-tools/validate)](https://www.npmjs.com/package/@lg-tools/validate)                                 | ![downloads](https://img.shields.io/npm/dm/@lg-tools/validate?color=white)                 |
+
 ## Developer Setup
 
 1. Node >= 16.20.0 required.
