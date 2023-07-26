@@ -1,5 +1,15 @@
 # @leafygreen-ui/a11y
 
+## 1.4.5
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+- Updated dependencies [215268ff]
+  - @leafygreen-ui/emotion@4.0.5
+  - @leafygreen-ui/hooks@7.7.6
+  - @leafygreen-ui/lib@10.4.1
+
 ## 1.4.4
 
 ### Patch Changes

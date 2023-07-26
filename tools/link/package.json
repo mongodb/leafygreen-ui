@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/link",
-  "version": "0.1.0-beta.10",
+  "version": "0.1.0",
   "description": "Tools for linking LeafyGreen packages",
   "license": "Apache-2.0",
   "main": "dist/index.js",
@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "chalk": "^4.1.2",
-    "@lg-tools/build": "^0.1.0-beta.9",
-    "@lg-tools/meta": "^0.1.0-beta.4"
+    "@lg-tools/build": "^0.1.0",
+    "@lg-tools/meta": "^0.1.0"
   }
 }
