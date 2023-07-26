@@ -1,5 +1,13 @@
 # @leafygreen-ui/icon
 
+## 11.20.1
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+- Updated dependencies [215268ff]
+  - @leafygreen-ui/emotion@4.0.5
+
 ## 11.20.0
 
 ### Minor Changes

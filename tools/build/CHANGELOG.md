@@ -1,5 +1,16 @@
 # @lg-tools/build
 
+## 0.1.0
+
+### Minor Changes
+
+- 215268ff: First pre-release of build tools. This package includes shared ts, rollup & babel config
+
+### Patch Changes
+
+- 215268ff: Adds README.md. Minor bug fixes
+- 215268ff: Fix broken builds
+
 ## 0.1.0-beta.9
 
 ### Minor Changes
