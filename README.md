@@ -1,16 +1,20 @@
-<div style="text-align: center;">
-
 <img src="./.storybook/static/leafygreen-ui-banner.png" width="100%"/>
 
-# LeafyGreen UI
+<h1 align="center">LeafyGreen UI</h1>
 
-A library of React components, CSS patterns, and CLI tools for MongoDB's LeafyGreen Design System.
+<p align="center">A library of React components, CSS patterns, and CLI tools for MongoDB's LeafyGreen Design System.</p>
 
-[![mongodb.design](https://img.shields.io/badge/mongodb.design-112733?style=for-the-badge&logo=mongodb&logoColor=00ED64)](https://mongodb.design)
-
-[![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@main/badge/badge-storybook.svg)](https://storybook.mongodb.design)
-
-</div>
+<p align="center">
+   <a align="center" href="https://mongodb.design">
+      <img src="https://img.shields.io/badge/mongodb.design-112733?style=for-the-badge&logo=mongodb&logoColor=00ED64.svg" alt="mongodb.design">
+   </a>
+</p>
+<p align="center">
+   <a href="https://storybook.mongodb.design">
+      <img src="https://cdn.jsdelivr.net/gh/storybookjs/brand@main/badge/badge-storybook.svg" alt="Storybook"/>
+   </a>
+</p>
+<p align="center"></p>
 
 ## Getting Started
 
