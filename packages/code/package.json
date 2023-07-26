@@ -13,8 +13,9 @@
     }
   },
   "scripts": {
-    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js",
-    "tsc": "tsc --build tsconfig.json"
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
   },
   "keywords": [],
   "license": "Apache-2.0",
@@ -32,6 +33,8 @@
     "@leafygreen-ui/palette": "^4.0.3",
     "@leafygreen-ui/select": "^10.3.7",
     "@leafygreen-ui/tokens": "^2.1.1",
+    "@types/facepaint": "^1.2.1",
+    "@types/highlight.js": "^10.1.0",
     "clipboard": "^2.0.6",
     "facepaint": "^1.2.1",
     "highlight.js": "~11.5.0",
@@ -39,6 +42,9 @@
     "lodash": "^4.17.21",
     "polished": "^4.2.2"
   },
+  "devDependencies": {
+    "@leafygreen-ui/testing-lib": "^0.3.0"
+   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.3"
   },

@@ -6,11 +6,15 @@
     },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**"]
+      "outputs": ["dist/**", "stories.js"]
     },
     "tsc": {
       "dependsOn": ["^tsc", "^build"],
       "outputs": ["dist/**", "tsconfig.tsbuildinfo"]
+    },
+    "docs": {
+      "dependsOn": ["^tsc"],
+      "outputs": ["tsdoc.json"]
     }
   }
 }

@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "module": "CommonJS",
     "noEmit": true,
@@ -17,5 +18,6 @@
     "baseUrl": ".",
     "skipLibCheck": true,
     "resolveJsonModule": true
-  }
+  },
+  "exclude": ["node_modules", "**/dist"]
 }
