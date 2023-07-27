@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { getPackageManager } from '@lg-tools/meta';
-import { spawn } from 'child_process';
+import { spawn } from 'cross-spawn';
 import fetch from 'node-fetch';
 export interface InstallCommandOptions {
   ignoreWorkspaceRootCheck: boolean;

@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-import { spawn } from 'child_process';
+import { spawn } from 'cross-spawn';
 import fse from 'fs-extra';
 import path from 'path';
 

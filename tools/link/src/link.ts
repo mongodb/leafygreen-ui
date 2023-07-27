@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { getLGConfig } from '@lg-tools/meta';
 import chalk from 'chalk';
-import { spawn } from 'child_process';
+import { spawn } from 'cross-spawn';
 import fse from 'fs-extra';
 import { homedir } from 'os';
 import path from 'path';

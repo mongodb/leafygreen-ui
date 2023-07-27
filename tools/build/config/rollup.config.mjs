@@ -99,8 +99,11 @@ const external = [
   '@faker-js/faker',
   '@testing-library/react',
   '@storybook/testing-library',
+  'chalk',
   'clipboard',
+  'cross-spawn',
   'focus-trap-react',
+  'fs-extra',
   'highlight.js',
   'highlightjs-graphql',
   'lodash',
@@ -112,6 +115,8 @@ const external = [
   'react-keyed-flatten-children',
   'react-lottie-player',
   'react-transition-group',
+  'react-docgen-typescript',
+  'typescript',
   /^lodash\//,
   /^highlight\.js\//,
   /^@leafygreen-ui\//,
@@ -145,9 +150,9 @@ const configForFormat = format => ({
       envName: 'production',
     }),
 
-    nodeExternals({ deps: true }),
     nodeBuiltins(),
-    nodePolyfills(),
+    nodeExternals({ deps: true }),
+    // nodePolyfills(),
 
     urlPlugin({
       limit: 50000,

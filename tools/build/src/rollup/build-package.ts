@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
-import { spawn } from 'child_process';
+import { spawn } from 'cross-spawn';
 import fse from 'fs-extra';
 import path from 'path';
 

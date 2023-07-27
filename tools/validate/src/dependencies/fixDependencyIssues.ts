@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
-import { SpawnOptions, spawnSync } from 'child_process';
+import type { SpawnOptions } from 'child_process';
+import { sync as spawnSync } from 'cross-spawn';
 
 import { DependencyIssues } from './config';
 
