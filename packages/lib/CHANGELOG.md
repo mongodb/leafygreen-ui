@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 10.4.1
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+
 ## 10.4.0
 
 ### Minor Changes

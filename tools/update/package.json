@@ -1,12 +1,11 @@
 {
   "name": "@lg-tools/update",
-  "version": "0.1.0-beta.3",
+  "version": "0.1.0",
   "description": "Updates all LeafyGreen UI packages to the latest version",
   "main": "dist/index.js",
   "license": "Apache-2.0",
   "publishConfig": {
-    "access": "public",
-    "registry": "https://artifactory.corp.mongodb.com/artifactory/api/npm/leafygreen-ui/"
+    "access": "public"
   },
   "bin": {
     "lg-update": "./bin/index.js"
@@ -17,7 +16,7 @@
   },
   "dependencies": {
     "chalk": "^4.1.2",
-    "@lg-tools/build": "^0.1.0-beta.9",
-    "@lg-tools/meta": "^0.1.0-beta.4"
+    "@lg-tools/build": "^0.1.0",
+    "@lg-tools/meta": "^0.1.0"
   }
 }

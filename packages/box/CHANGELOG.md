@@ -1,5 +1,11 @@
 # @leafygreen-ui/box
 
+## 3.1.5
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+
 ## 3.1.4
 
 ### Patch Changes

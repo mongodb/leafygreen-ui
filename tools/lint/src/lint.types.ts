@@ -5,3 +5,7 @@ export interface LintCommandOptions {
   pkgJsonOnly: boolean;
   verbose: boolean;
 }
+
+export type LintFn = (
+  options: Pick<LintCommandOptions, 'fix' | 'verbose'>,
+) => Promise<boolean>;

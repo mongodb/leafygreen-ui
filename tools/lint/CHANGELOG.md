@@ -1,5 +1,26 @@
 # @lg-tools/lint
 
+## 0.1.1
+
+### Patch Changes
+
+- 496c3125: Lint task now exits with code `1` if lint errors are found
+
+## 0.1.0
+
+### Minor Changes
+
+- 215268ff: First pre-release of shared lint tooling. Includes shared config for eslint, prettier & packagejsonlint. Use `lg-lint` to run linters with shared config.
+
+### Patch Changes
+
+- 215268ff: Adds README.md. Minor bug fixes
+- 215268ff: Fix broken builds
+- Updated dependencies [215268ff]
+- Updated dependencies [215268ff]
+- Updated dependencies [215268ff]
+  - @lg-tools/build@0.1.0
+
 ## 0.1.0-beta.9
 
 ### Minor Changes
