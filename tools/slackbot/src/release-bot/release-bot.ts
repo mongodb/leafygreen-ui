@@ -64,7 +64,7 @@ export function releaseBot(
   }
 
   // Finally, once everything is checked, we run the slackbot
-  runSlackbot(botToken, channel, updatesArray, options);
+  runSlackbot(botToken, channelName, updatesArray, options);
 }
 
 /** The main slackbot logic */
