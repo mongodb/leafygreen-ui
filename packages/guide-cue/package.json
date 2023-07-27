@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/guide-cue",
-  "version": "4.0.9",
+  "version": "4.0.10",
   "description": "leafyGreen UI Kit GuideCue",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -33,7 +33,7 @@
     "focus-trap-react": "^10.0.0",
     "polished": "^4.2.2",
     "@leafygreen-ui/a11y": "^1.4.5",
-    "@leafygreen-ui/button": "^20.3.1",
+    "@leafygreen-ui/button": "^21.0.0",
     "@leafygreen-ui/emotion": "^4.0.5",
     "@leafygreen-ui/hooks": "^7.7.6",
     "@leafygreen-ui/icon": "^11.20.1",

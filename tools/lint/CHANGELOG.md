@@ -1,5 +1,11 @@
 # @lg-tools/lint
 
+## 0.1.1
+
+### Patch Changes
+
+- 496c3125: Lint task now exits with code `1` if lint errors are found
+
 ## 0.1.0
 
 ### Minor Changes

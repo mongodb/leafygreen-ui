@@ -1,5 +1,12 @@
 # @leafygreen-ui/copyable
 
+## 8.0.14
+
+### Patch Changes
+
+- Updated dependencies [cfba537d]
+  - @leafygreen-ui/button@21.0.0
+
 ## 8.0.13
 
 ### Patch Changes
