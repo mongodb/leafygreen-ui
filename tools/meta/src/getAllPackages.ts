@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+
 import { getLGConfig } from './getLGConfig';
 import { getPackageName } from './getPackageName';
 
@@ -12,6 +13,7 @@ export const getAllPackages = () => {
 
   for (let scopePath of Object.values(scopes)) {
     const scopeDir = path.resolve(rootDir, scopePath);
+
     if (fs.existsSync(scopeDir)) {
       const pkgNames = fs.readdirSync(scopeDir);
       const pkgPaths = pkgNames.map(name => path.resolve(scopeDir, name));

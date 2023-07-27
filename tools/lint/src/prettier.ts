@@ -4,7 +4,7 @@ import { spawn } from 'child_process';
 import path from 'path';
 
 import { esLintExtensions } from './eslint';
-import { LintCommandOptions } from './lint.types';
+import { LintFn } from './lint.types';
 
 const rootDir = process.cwd();
 const prettierConfigPath = path.resolve(
@@ -14,11 +14,8 @@ const prettierConfigPath = path.resolve(
 const prettierExtensions = [...esLintExtensions, 'mjs', 'json', 'md', 'yml'];
 
 /** Spawns a prettier job */
-export function prettier({
-  fix,
-  verbose,
-}: Pick<LintCommandOptions, 'fix' | 'verbose'>) {
-  return new Promise<void>(resolve => {
+export const prettier: LintFn = ({ fix, verbose }) => {
+  return new Promise<boolean>((resolve, reject) => {
     console.log(chalk.magenta('Running Prettier...'));
     spawn(
       'prettier',
@@ -31,6 +28,10 @@ export function prettier({
       {
         stdio: 'inherit',
       },
-    ).on('close', resolve);
+    )
+      .on('exit', code => {
+        resolve(!code);
+      })
+      .on('error', reject);
   });
-}
+};
