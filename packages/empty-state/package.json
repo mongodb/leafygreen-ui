@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/empty-state",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "leafyGreen UI Kit Empty State",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -30,7 +30,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/button": "^20.3.1",
+    "@leafygreen-ui/button": "^21.0.0",
     "@leafygreen-ui/emotion": "^4.0.5",
     "@leafygreen-ui/lib": "^10.4.1",
     "@leafygreen-ui/palette": "^4.0.5",

@@ -1,5 +1,13 @@
 # @leafygreen-ui/code
 
+## 14.2.10
+
+### Patch Changes
+
+- Updated dependencies [cfba537d]
+  - @leafygreen-ui/button@21.0.0
+  - @leafygreen-ui/select@10.3.9
+
 ## 14.2.9
 
 ### Patch Changes
