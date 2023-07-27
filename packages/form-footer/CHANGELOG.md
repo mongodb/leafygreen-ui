@@ -1,5 +1,12 @@
 # @leafygreen-ui/form-footer
 
+## 3.0.10
+
+### Patch Changes
+
+- Updated dependencies [cfba537d]
+  - @leafygreen-ui/button@21.0.0
+
 ## 3.0.9
 
 ### Patch Changes

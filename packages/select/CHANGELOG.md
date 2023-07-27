@@ -1,5 +1,12 @@
 # @leafygreen-ui/select
 
+## 10.3.9
+
+### Patch Changes
+
+- Updated dependencies [cfba537d]
+  - @leafygreen-ui/button@21.0.0
+
 ## 10.3.8
 
 ### Patch Changes
