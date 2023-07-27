@@ -1,8 +1,8 @@
 import type { StorybookConfig } from '@storybook/react-webpack5';
-import { isRegExp, isUndefined } from 'lodash';
-import { ProvidePlugin, RuleSetRule, WebpackPluginInstance } from 'webpack';
-import path from 'path';
 import { globSync } from 'glob';
+import { isRegExp, isUndefined } from 'lodash';
+import path from 'path';
+import { ProvidePlugin, RuleSetRule, WebpackPluginInstance } from 'webpack';
 
 export function findStories(
   includePattern: string,
