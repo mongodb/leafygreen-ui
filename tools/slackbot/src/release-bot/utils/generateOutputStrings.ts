@@ -1,4 +1,5 @@
 import { getLGConfig, getRootPackageJson } from '@lg-tools/meta';
+
 import { ComponentUpdateObject } from '../release-bot.types';
 
 interface OutputStrings {

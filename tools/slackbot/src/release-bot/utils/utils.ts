@@ -10,6 +10,7 @@ export function exists<T extends string | Array<any>>(
 
 export function isValidJSON(str?: string): boolean {
   if (!str) return false;
+
   try {
     JSON.parse(str);
     return true;

@@ -6,8 +6,6 @@ export function getRootPackageJson(): Record<string, any> | undefined {
   const pkgJsonPath = path.resolve(rootDir, 'package.json');
   const pkgJsonStr = fs.readFileSync(pkgJsonPath, 'utf-8');
 
-  console.log(pkgJsonStr);
-
   if (isValidJSON(pkgJsonStr)) {
     return JSON.parse(pkgJsonStr);
   }
@@ -15,6 +13,7 @@ export function getRootPackageJson(): Record<string, any> | undefined {
 
 function isValidJSON(str?: string): boolean {
   if (!str) return false;
+
   try {
     JSON.parse(str);
     return true;

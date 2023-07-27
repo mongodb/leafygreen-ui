@@ -10,14 +10,14 @@ import {
 } from './utils/constructUpdateText';
 import { generateGreeting } from './utils/generateGreeting';
 import { getSortedUpdates } from './utils/getSortedUpdates';
+import { TEST_DATA } from './utils/test.data';
+import { exists, isValidJSON } from './utils/utils';
 import {
   Channels,
   ComponentUpdateObject,
   isValidUpdatesArray,
   ReleaseBotOptions,
 } from './release-bot.types';
-import { exists, isValidJSON } from './utils/utils';
-import { TEST_DATA } from './utils/test.data';
 
 export function releaseBot(
   updates: string | undefined,
@@ -35,6 +35,7 @@ export function releaseBot(
 
   // Exit if there's no bot token
   const isValidBotToken = exists(botToken) && typeof botToken === 'string';
+
   if (!isValidBotToken) {
     console.warn(chalk.yellow('Bot Token not found'));
     process.exit(1);
@@ -43,6 +44,7 @@ export function releaseBot(
   // Exit if the channel name is invalid
   const isValidChannel =
     exists(channelName) && Object.keys(Channels).includes(channelName);
+
   if (!isValidChannel) {
     console.warn(
       chalk.yellow(`Channel name incorrect. Received ${channelName}`),
