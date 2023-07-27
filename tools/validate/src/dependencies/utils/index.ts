@@ -5,8 +5,9 @@ import { readFileSync, writeFileSync } from 'fs';
 import { isEqual } from 'lodash';
 import path from 'path';
 
-import { getPackageLGDependencies } from './getPackageDependencies';
 import { ignoreFilePatterns, ignoreMatches } from '../config';
+
+import { getPackageLGDependencies } from './getPackageDependencies';
 
 const rootDir = process.cwd();
 

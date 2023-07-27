@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
+import { getPackageManager } from '@lg-tools/meta';
 import chalk from 'chalk';
 import { spawn } from 'child_process';
 import fs from 'fs';
 import path from 'path';
-import { getPackageManager } from '@lg-tools/meta';
 
 export interface UpdateCommandOptions {
   /**

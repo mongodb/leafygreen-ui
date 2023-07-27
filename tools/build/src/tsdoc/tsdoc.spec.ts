@@ -1,5 +1,6 @@
 import child_process, { ChildProcess } from 'child_process';
 import path from 'path';
+
 import { parseTSDoc } from './tsdocParser';
 
 const spawnSpy = jest.spyOn(child_process, 'spawn');

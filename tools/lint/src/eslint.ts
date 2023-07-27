@@ -3,18 +3,15 @@ import chalk from 'chalk';
 import { spawn } from 'child_process';
 import path from 'path';
 
-import { LintCommandOptions } from './lint.types';
+import { LintFn } from './lint.types';
 
 const rootDir = process.cwd();
 const eslintConfigPath = path.resolve(__dirname, '../config/eslint.config.js');
 export const esLintExtensions = ['js', 'ts', 'tsx'];
 
 /** Spawns an eslint job */
-export function eslint({
-  fix,
-  verbose,
-}: Pick<LintCommandOptions, 'fix' | 'verbose'>) {
-  return new Promise<void>(resolve => {
+export const eslint: LintFn = ({ fix, verbose }) => {
+  return new Promise<boolean>((resolve, reject) => {
     console.log(chalk.blue('Running ESLint...'));
     spawn(
       'eslint',
@@ -28,6 +25,10 @@ export function eslint({
       {
         stdio: 'inherit',
       },
-    ).on('close', resolve);
+    )
+      .on('exit', code => {
+        resolve(!code);
+      })
+      .on('error', reject);
   });
-}
+};

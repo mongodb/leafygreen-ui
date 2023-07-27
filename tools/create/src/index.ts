@@ -1,10 +1,9 @@
 /* eslint-disable no-console */
+import { getLGConfig } from '@lg-tools/meta';
 import chalk from 'chalk';
 import fs from 'fs';
 import { camelCase, kebabCase, startCase } from 'lodash';
 import path from 'path';
-
-import { getLGConfig } from '@lg-tools/meta';
 
 import { CreatePackageOptions } from './create.types';
 import {

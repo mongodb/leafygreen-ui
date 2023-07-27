@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
+import { getLGConfig } from '@lg-tools/meta';
 import chalk from 'chalk';
 import { spawn } from 'child_process';
 import fs from 'fs';
 import { homedir } from 'os';
 import path from 'path';
-import { getLGConfig } from '@lg-tools/meta';
 
 import { formatLog } from './utils';
 
@@ -39,6 +39,7 @@ export async function linkPackages(destination: string, opts: LinkOptions) {
   const { scopes: availableScopes } = getLGConfig();
 
   const linkPromises: Array<Promise<void>> = [];
+
   for (const [scopeName, scopePath] of Object.entries(availableScopes)) {
     if (!scopeFlag || scopeFlag.includes(scopeName)) {
       linkPromises.push(
@@ -57,6 +58,7 @@ export async function linkPackages(destination: string, opts: LinkOptions) {
 
   console.log(chalk.green('Finished linking packages.'));
 }
+
 async function linkPackagesForScope(
   scopeName: string,
   scopePath: string,
