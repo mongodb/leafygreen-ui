@@ -119,6 +119,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: [release]
     steps:
+      - uses: actions/checkout@v2
+
       - name: Dispatch to Website repo
         if: ${{ needs.release.outputs.published == 'true' }}
         uses: peter-evans/repository-dispatch@v2
