@@ -2,7 +2,7 @@ import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 
 import babel from '@rollup/plugin-babel';
-import resolve from '@rollup/plugin-node-resolve';
+import nodeResolve from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
 import urlPlugin from '@rollup/plugin-url';
 import svgr from '@svgr/rollup';
@@ -11,7 +11,6 @@ import glob from 'glob';
 import path from 'path';
 import { nodeExternals } from 'rollup-plugin-node-externals';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
-import nodeBuiltins from 'rollup-plugin-node-builtins';
 
 const require = createRequire(import.meta.url);
 
@@ -73,7 +72,9 @@ const iconGlobals = getDirectGlyphImports().reduce((acc, glyph) => {
 // modules are compatible with being loaded directly.
 const globals = {
   clipboard: 'ClipboardJS',
+  'cross-spawn': 'crossSpawn',
   'highlightjs-graphql': 'hljsDefineGraphQL',
+  'fs-extra': 'fse',
   polished: 'polished',
   react: 'React',
   'react-dom': 'ReactDOM',
@@ -139,7 +140,9 @@ const configForFormat = format => ({
     interop: 'compat', // https://rollupjs.org/configuration-options/#output-interop
   },
   plugins: [
-    resolve({ extensions }),
+    nodePolyfills(),
+    nodeExternals({ deps: true }),
+    nodeResolve({ extensions }),
 
     babel({
       babelrc: false,
@@ -149,10 +152,6 @@ const configForFormat = format => ({
       sourceMaps: 'inline',
       envName: 'production',
     }),
-
-    nodeBuiltins(),
-    nodeExternals({ deps: true }),
-    // nodePolyfills(),
 
     urlPlugin({
       limit: 50000,

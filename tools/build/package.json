@@ -47,7 +47,6 @@
     "lodash": "^4.17.21",
     "react-docgen-typescript": "^2.2.2",
     "rollup": "^3.25.0",
-    "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-externals": "^6.1.1",
     "rollup-plugin-polyfill-node": "^0.12.0"
   },
