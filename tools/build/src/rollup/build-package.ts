@@ -42,12 +42,14 @@ export function buildPackage({ direct }: BuildPackageOptions) {
     ? localRollupConfigPath
     : defaultRollupConfigPath;
 
-  console.log(
-    chalk.bgGray(
-      `Building \`${packageName}\` using rollup config: `,
-      rollupConfigPath,
-    ),
-  );
+  if (fse.existsSync(localRollupConfigPath)) {
+    console.log(
+      chalk.bgGray(
+        `Building ${chalk.bold(packageName)} using local rollup config:`,
+        localRollupConfigPath,
+      ),
+    );
+  }
 
   spawn('rollup', ['--config', rollupConfigPath], {
     cwd: packageDir,
