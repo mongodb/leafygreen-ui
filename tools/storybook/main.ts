@@ -1,19 +1,35 @@
-// @ts-nocheck
-import { ProvidePlugin } from 'webpack';
+import type { StorybookConfig } from '@storybook/react-webpack5';
+import { globSync } from 'glob';
+import { isRegExp, isUndefined } from 'lodash';
+import path from 'path';
+import { ProvidePlugin, RuleSetRule, WebpackPluginInstance } from 'webpack';
 
-// FIXME: Remove this
-const nodeModulesThatNeedToBeParsedBecauseTheyExposeES6 = [
-  '@tanstack[\\\\/]react-table',
-  '@tanstack[\\\\/]table-core',
-];
+export function findStories(
+  includePattern: string,
+  excludePattern: string,
+): () => Promise<Array<string>> {
+  return async () => {
+    const storybookFolderRelativePaths = globSync(
+      [includePattern, `!${excludePattern}`],
+      {
+        cwd: path.join(process.cwd(), '.storybook'),
+      },
+    );
 
-const config = {
-  stories: ['../!(node_modules)/**/*.stor@(y|ies).@(md|js|ts)?(x)'],
+    return storybookFolderRelativePaths;
+  };
+}
+
+const config: StorybookConfig = {
+  // @ts-expect-error https://github.com/storybookjs/storybook/issues/23624
+  stories: findStories(
+    '../{packages,tools}/**/*.stor@(y|ies).@(js|jsx|ts|tsx)',
+    '../{packages,tools}/*/node_modules',
+  ),
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
-    '@storybook/addon-docs',
     '@storybook/addon-a11y',
   ],
   framework: {
@@ -45,28 +61,20 @@ const config = {
   },
 
   webpackFinal: config => {
+    config.module = config.module ?? {};
+    config.module.rules = config.module.rules ?? [];
+    config.plugins = config.plugins ?? [];
+    config.resolve = config.resolve ?? {};
+
     // Default rule for images /\.(svg|ico|jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\?.*)?$/
-    const fileLoaderRule = config?.module?.rules.find(
-      rule => rule?.test && rule?.test.test('.svg'),
-    );
-    fileLoaderRule.exclude = /\.svg$/;
+    // We want to override this for svg
+    const fileLoaderRule = config.module.rules.find(
+      rule => isRule(rule) && isRegExp(rule.test) && rule?.test.test('.svg'),
+    ) as RuleSetRule | undefined;
 
-    config.module.rules.map(rule => {
-      if (rule.test?.toString() !== String(/\.js$/)) return rule;
-      const include = new RegExp(
-        `[\\\\/]node_modules[\\\\/](${nodeModulesThatNeedToBeParsedBecauseTheyExposeES6.join(
-          '|',
-        )})`,
-      );
-
-      if (Array.isArray(rule.include)) {
-        rule.include.push(include);
-      } else {
-        rule.include = [rule.include, include].filter(Boolean);
-      }
-
-      return rule;
-    });
+    if (fileLoaderRule) {
+      fileLoaderRule.exclude = /\.svg$/;
+    }
 
     config.module.rules.push({
       test: /\.svg$/,
@@ -79,30 +87,28 @@ const config = {
       stream: require.resolve('stream-browserify'),
       buffer: require.resolve('buffer'),
     };
+
     config.plugins.push(
+      // @ts-expect-error - webpack TS can of worms
       new ProvidePlugin({
         process: 'process/browser',
         Buffer: ['buffer', 'Buffer'],
       }),
     );
-    //
 
     return config;
   },
+
   typescript: {
     check: false,
-    checkOptions: {},
-    reactDocgen: 'react-docgen-typescript',
-    reactDocgenTypescriptOptions: {
-      shouldExtractLiteralValuesFromEnum: true,
-      propFilter: prop =>
-        prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
-    },
   },
   docs: {
     autodocs: false,
-    source: { type: 'code' },
   },
 };
 
 export default config;
+
+function isRule(rule: any): rule is RuleSetRule {
+  return rule !== '...' && typeof rule === 'object' && !isUndefined(rule);
+}
