@@ -10,6 +10,8 @@ import fs from 'fs';
 import glob from 'glob';
 import path from 'path';
 import { nodeExternals } from 'rollup-plugin-node-externals';
+import nodePolyfills from 'rollup-plugin-polyfill-node';
+import nodeBuiltins from 'rollup-plugin-node-builtins';
 
 const require = createRequire(import.meta.url);
 
@@ -132,7 +134,6 @@ const configForFormat = format => ({
     interop: 'compat', // https://rollupjs.org/configuration-options/#output-interop
   },
   plugins: [
-    nodeExternals({ deps: true }),
     resolve({ extensions }),
 
     babel({
@@ -143,6 +144,10 @@ const configForFormat = format => ({
       sourceMaps: 'inline',
       envName: 'production',
     }),
+
+    nodeExternals({ deps: true }),
+    nodeBuiltins(),
+    nodePolyfills(),
 
     urlPlugin({
       limit: 50000,
