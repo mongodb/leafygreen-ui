@@ -70,9 +70,12 @@ const iconGlobals = getDirectGlyphImports().reduce((acc, glyph) => {
 // bound to if used in the browser without a module loader.
 // This is defined on a best effort basis since not all
 // modules are compatible with being loaded directly.
-const globals = {
+const globalsMap = {
   clipboard: 'ClipboardJS',
   'cross-spawn': 'crossSpawn',
+  '@emotion/server/create-instance': 'createEmotionServer',
+  '@emotion/css/create-instance': 'createEmotion',
+  'highlight.js/lib/core': 'hljs',
   'highlightjs-graphql': 'hljsDefineGraphQL',
   'fs-extra': 'fse',
   polished: 'polished',
@@ -82,46 +85,35 @@ const globals = {
   lodash: '_',
   ...lgGlobals,
   ...iconGlobals,
-  /**
-   * External dependencies that must be loaded by a module loader
-   *   - lodash/*
-   *   - highlight.js
-   *   - create-emotion
-   *   - create-emotion-server
-   *   - react-transition-group
-   **/
+};
+
+const globals = id => {
+  if (globalsMap[id]) return globalsMap[id];
+  if (/lodash/.test(id)) return id.replace(/lodash/, '');
+  if (/highlight\.js\/lib\/languages/.test(id)) {
+    return id.replace(/highlight\.js\/lib\/languages/, '');
+  }
 };
 
 const external = [
-  '@emotion/server',
-  '@emotion/css',
-  '@emotion/css/create-instance',
-  '@emotion/server/create-instance',
   '@faker-js/faker',
   '@testing-library/react',
-  '@storybook/testing-library',
   'chalk',
   'clipboard',
   'cross-spawn',
   'focus-trap-react',
   'fs-extra',
-  'highlight.js',
   'highlightjs-graphql',
-  'lodash',
   'polished',
   'prop-types',
-  'react',
-  'react-dom',
-  'react-is',
-  'react-keyed-flatten-children',
-  'react-lottie-player',
-  'react-transition-group',
-  'react-docgen-typescript',
   'typescript',
-  /^lodash\//,
-  /^highlight\.js\//,
+  /^@emotion\//,
   /^@leafygreen-ui\//,
   /^@lg-tools\//,
+  /^@storybook\//,
+  /^highlight/,
+  /^lodash\//,
+  /^react/,
 ];
 
 const moduleFormatToDirectory = {
