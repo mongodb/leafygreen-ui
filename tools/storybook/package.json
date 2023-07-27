@@ -36,6 +36,7 @@
     "file-loader": "^6.0.0",
     "glob": "^10.3.3",
     "lodash": "^4.17.21",
+    "path-browserify": "^1.0.1",
     "react-docgen-typescript": "^2.2.2",
     "storybook-addon-performance": "^0.17.1",
     "stream-browserify": "^3.0.0",

@@ -82,10 +82,15 @@ const config: StorybookConfig = {
       loader: require.resolve('@svgr/webpack'),
     });
 
-    // Required for Webpack 5
+    // Required for Webpack 5:
+    // BREAKING CHANGE: webpack < 5 used to include polyfills for node.js core modules by default.
+    // This is no longer the case. Verify if you need this module and configure a polyfill for it.
     config.resolve.fallback = {
-      stream: require.resolve('stream-browserify'),
       buffer: require.resolve('buffer'),
+      constants: false,
+      fs: false,
+      path: require.resolve('path-browserify'),
+      stream: require.resolve('stream-browserify'),
     };
 
     config.plugins.push(
