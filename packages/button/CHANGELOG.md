@@ -1,5 +1,11 @@
 # @leafygreen-ui/button
 
+## 21.0.0
+
+### Major Changes
+
+- cfba537d: Changes API that supports `isLoading` in Button components. Consuming applications now must pass their own Spinner components through the `loadingIndicator` slot prop
+
 ## 20.3.1
 
 ### Patch Changes

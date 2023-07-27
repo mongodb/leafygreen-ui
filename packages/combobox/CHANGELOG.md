@@ -1,5 +1,11 @@
 # @leafygreen-ui/combobox
 
+## 6.0.8
+
+### Patch Changes
+
+- 2603d7ac: Component props now properly inherit from `PopoverProps` interface
+
 ## 6.0.7
 
 ### Patch Changes

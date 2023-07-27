@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/storybook",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Storybook config for LeafyGreen",
   "main": "main.ts",
   "license": "Apache-2.0",
@@ -31,6 +31,8 @@
     "@svgr/webpack": "^8.0.1",
     "buffer": "^6.0.3",
     "file-loader": "^6.0.0",
+    "glob": "^10.3.3",
+    "lodash": "^4.17.21",
     "react-docgen-typescript": "^2.2.2",
     "storybook-addon-performance": "^0.17.1",
     "stream-browserify": "^3.0.0",
