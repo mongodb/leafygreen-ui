@@ -1,5 +1,5 @@
 import { getAllPackageNames } from '@lg-tools/meta';
-import { readFileSync } from 'fs';
+import { readFileSync } from 'fs-extra';
 import { defaults } from 'lodash';
 
 interface DependenciesOptions {
