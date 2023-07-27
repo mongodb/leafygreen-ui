@@ -1,8 +1,7 @@
+import { getAllPackageNames } from '@lg-tools/meta';
 import fs from 'fs';
 import path from 'path';
 import * as prettier from 'prettier';
-
-import { getAllPackageNames } from '@lg-tools/meta';
 
 updateReadme();
 
