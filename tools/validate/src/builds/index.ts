@@ -3,13 +3,14 @@
  */
 
 /* eslint-disable no-console */
+import { getAllPackages, getPackageName } from '@lg-tools/meta';
 import chalk from 'chalk';
 import fs from 'fs';
 import path from 'path';
 import vm from 'vm';
 
-import { getAllPackages, getPackageName } from '@lg-tools/meta';
 import { ValidateCommandOptions } from '../validate.types';
+
 import { ModuleType } from './modules.types';
 
 // A list of
