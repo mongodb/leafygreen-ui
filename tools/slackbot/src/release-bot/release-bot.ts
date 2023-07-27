@@ -2,7 +2,6 @@
 require('dotenv').config();
 import { WebClient } from '@slack/web-api';
 import chalk from 'chalk';
-import { isUndefined } from 'lodash';
 
 import {
   constructBasicUpdateText,
@@ -17,41 +16,55 @@ import {
   isValidUpdatesArray,
   ReleaseBotOptions,
 } from './release-bot.types';
+import { exists, isValidJSON } from './utils/utils';
+import { TEST_DATA } from './utils/test.data';
 
-export function releaseBot(updates: string, options: ReleaseBotOptions) {
+export function releaseBot(
+  updates: string | undefined,
+  options: ReleaseBotOptions,
+) {
   const { channel, test } = options;
-  try {
-    /**
-     * Obtain a bot token by logging into the slack API docs here: https://api.slack.com/apps/A02H2UGAMDM
-     * Click "OAuth & Permissions", and copy the "Bot User OAuth Token"
-     */
-    const botToken = process.env.SLACK_BOT_TOKEN;
-    const channelName: keyof typeof Channels = test
-      ? 'design-system-testing'
-      : channel;
-    const updatesArray: any = JSON.parse(updates);
-    let errMsg = '';
+  /**
+   * Obtain a bot token by logging into the slack API docs here: https://api.slack.com/apps/A02H2UGAMDM
+   * Click "OAuth & Permissions", and copy the "Bot User OAuth Token"
+   */
+  const botToken = process.env.SLACK_BOT_TOKEN;
+  const channelName: keyof typeof Channels = test
+    ? 'design-system-testing'
+    : channel;
 
-    if (exists(botToken) && typeof botToken === 'string') {
-      if (exists(channelName) && Object.keys(Channels).includes(channelName)) {
-        if (exists(updatesArray) && isValidUpdatesArray(updatesArray)) {
-          const channel: string =
-            Channels[channelName as keyof typeof Channels];
-          runSlackbot(botToken, channel, updatesArray, options);
-        } else {
-          errMsg =
-            'Updates array not found/incorrect format. Expected array of `{name: "@xx/yy", version: "a.b.c"}`';
-        }
-      } else {
-        errMsg = `Channel name incorrect. Received ${channelName}`;
-      }
-    } else {
-      errMsg = 'Bot Token not found';
-    }
-    console.warn(chalk.yellow(errMsg));
-  } catch (error: any) {
-    console.error(`Error:`, error.message);
+  // Exit if there's no bot token
+  const isValidBotToken = exists(botToken) && typeof botToken === 'string';
+  if (!isValidBotToken) {
+    console.warn(chalk.yellow('Bot Token not found'));
+    process.exit(1);
   }
+
+  // Exit if the channel name is invalid
+  const isValidChannel =
+    exists(channelName) && Object.keys(Channels).includes(channelName);
+  if (!isValidChannel) {
+    console.warn(
+      chalk.yellow(`Channel name incorrect. Received ${channelName}`),
+    );
+    process.exit(1);
+  }
+
+  const updatesArray = getUpdatesArray(updates, options);
+
+  // Exit if the updates array is not valid
+  if (!isValidUpdatesArray(updatesArray)) {
+    const errMsg =
+      updatesArray +
+      `\nExpected array of objects with interface \`${chalk.black.yellowBright(
+        `{name: "@xx/yy", version: "a.b.c"}`,
+      )}\``;
+    console.warn(chalk.yellow(errMsg));
+    process.exit(1);
+  }
+
+  // Finally, once everything is checked, we run the slackbot
+  runSlackbot(botToken, channel, updatesArray, options);
 }
 
 /** The main slackbot logic */
@@ -129,8 +142,19 @@ async function runSlackbot(
   }
 }
 
-/* UTILS */
+function getUpdatesArray(
+  updatesStr: string | undefined,
+  { test }: ReleaseBotOptions,
+): Array<ComponentUpdateObject> | string {
+  if (!exists(updatesStr)) {
+    if (test) return TEST_DATA;
+    else return 'Updates argument is required.';
+  }
 
-function exists(arg?: string | Array<any>) {
-  return !isUndefined(arg) && arg.length > 0;
+  const isUpdatesValidJson: boolean = isValidJSON(updatesStr);
+  const parsedUpdates = isUpdatesValidJson ? JSON.parse(updatesStr) : undefined;
+
+  return isValidUpdatesArray(parsedUpdates)
+    ? parsedUpdates
+    : 'Updates argument is in an incorrect format.';
 }
