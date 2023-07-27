@@ -4,6 +4,8 @@ import { LintCommandOptions } from './lint.types';
 import { npmPkgJsonLint } from './npmPkgJsonLint';
 import { prettier } from './prettier';
 
+const isTrue = (test: any) => !!test;
+
 export const lint = (options: LintCommandOptions) => {
   const { fix, prettierOnly, eslintOnly, pkgJsonOnly, verbose } = options;
 
@@ -22,8 +24,11 @@ export const lint = (options: LintCommandOptions) => {
   }
 
   Promise.all(linters)
-    .then(() => {
-      process.exit(0);
+    .then(results => {
+      if (results.every(isTrue)) {
+        process.exit(0);
+      }
+      process.exit(1);
     })
     .catch(() => {
       process.exit(1);

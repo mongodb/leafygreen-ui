@@ -1,5 +1,7 @@
+/* eslint-disable no-console */
 import chalk from 'chalk';
 import fs from 'fs';
+
 import { getLGConfig } from './getLGConfig';
 
 /**
