@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { getPackageName } from '@lg-tools/meta';
 import depcheck from 'depcheck';
+
 import { ValidateCommandOptions } from '../validate.types';
 
 import { depcheckOptions, DependencyIssues } from './config';

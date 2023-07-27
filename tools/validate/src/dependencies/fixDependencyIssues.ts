@@ -53,6 +53,7 @@ export async function fixDependencies(
 
   // Remove all unused dependencies
   const unused = [...unusedDependencies, ...unusedDevDependencies];
+
   if (unused.length > 0) {
     verbose && console.log('Removing unused dependencies...', unused);
     spawnSync('npx', ['yarn@1.19.0', 'remove', ...unused], spawnContext);
