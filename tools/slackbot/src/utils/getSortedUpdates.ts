@@ -1,4 +1,4 @@
-import { ComponentUpdateObject, SortedUpdates } from '../slackbot.types';
+import { ComponentUpdateObject, SortedUpdates } from '../release-bot.types';
 
 import { parseChangeLog } from './parseChangeLog';
 

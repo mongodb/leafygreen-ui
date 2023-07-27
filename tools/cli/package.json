@@ -21,6 +21,7 @@
     "@lg-tools/install": "^0.1.0",
     "@lg-tools/link": "^0.1.0",
     "@lg-tools/lint": "^0.1.0",
+    "@lg-tools/slackbot": "^0.1.0",
     "@lg-tools/test": "^0.1.0",
     "@lg-tools/update": "^0.1.0",
     "@lg-tools/validate": "^0.1.0",

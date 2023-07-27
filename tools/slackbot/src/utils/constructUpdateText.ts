@@ -1,4 +1,4 @@
-import { ComponentUpdateObject } from '../slackbot.types';
+import { ComponentUpdateObject } from '../release-bot.types';
 
 import { generateOutputStrings } from './generateOutputStrings';
 

@@ -4,7 +4,7 @@ export const Channels = {
   'leafygreen-ui-releases': 'C01CBLPFD35',
 } as const;
 
-export interface Opts {
+export interface ReleaseBotOptions {
   channel: keyof typeof Channels;
   test: boolean;
   dry: boolean;

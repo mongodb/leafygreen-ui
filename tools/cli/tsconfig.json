@@ -27,6 +27,9 @@
       "path": "../lint"
     },
     {
+      "path": "../slackbot"
+    },
+    {
       "path": "../test"
     },
     {

@@ -4,6 +4,7 @@ import { installLeafyGreen } from '@lg-tools/install';
 import { linkPackages, unlinkPackages } from '@lg-tools/link';
 import { lint } from '@lg-tools/lint';
 import { test } from '@lg-tools/test';
+import { releaseBot, Channels } from '@lg-tools/slackbot';
 import { update } from '@lg-tools/update';
 import { validate } from '@lg-tools/validate';
 import { Command } from 'commander';
@@ -62,6 +63,41 @@ cli
   .option('--noInstall', 'Skip the yarn install step', false)
   .option('--scope <name>', 'The NPM organization')
   .action(unlinkPackages);
+
+/** Slackbot */
+const slackbotCmd = cli.command('slackbot');
+
+slackbotCmd
+  .command('release')
+  .arguments('[updates]')
+  .description(
+    'Notifies the MongoDB leafygreen-ui releases channel of any new packages.',
+  )
+  .option('-t, --test', 'Post to `design-system-testing`', false)
+  .option('-d, --dry', 'Dry run. Does not post', false)
+  .option('-v --verbose', 'Prints additional information to the console', false)
+  .option(
+    '-c, --channel <channel>',
+    'Channel to post to.',
+    'leafygreen-ui-releases',
+  )
+  .addHelpText(
+    'after',
+    `
+    Runs the update announcement Slackbot.
+    This command is run by GitHub Actions immediately after \`changeset\`.
+  
+    Must have the \`.env\` variable "SLACK_BOT_TOKEN" set.
+    This is the "Bot User OAuth Token" found at https://api.slack.com/apps/A02H2UGAMDM/oauth, and should start with "xoxb-"
+  
+    To run this automatically, pass in an array of updates (in the format output by \`changeset\`) as the first argument.
+    i.e. \`yarn slackbot '[{"name": "@leafygreen-ui/sample", "version": "0.1.0"}]' \`
+  
+    Optionally pass in a channel name (defaults to 'leafygreen-ui-releases').
+    Valid channels are: ${Object.keys(Channels).join(', ')}.
+  `,
+  )
+  .action(releaseBot);
 
 /** Lint */
 cli

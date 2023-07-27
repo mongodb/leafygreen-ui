@@ -6,6 +6,8 @@
   "bin": {
     "lg-slackbot": "./bin/slackbot.js"
   },
+  "main": "dist/index.js",
+  "module": "dist/esm/index.js",
   "scripts": {
     "build": "lg-internal-build-package",
     "tsc": "tsc --build tsconfig.json"
