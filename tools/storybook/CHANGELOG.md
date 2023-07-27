@@ -1,5 +1,11 @@
 # @lg-tools/storybook
 
+## 0.1.1
+
+### Patch Changes
+
+- 72dc68ad: Updates storybook main config. Prevents Storybook from building nested `*.story` files inside a package's `node_modules`.
+
 ## 0.1.0
 
 ### Minor Changes

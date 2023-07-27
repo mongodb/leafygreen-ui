@@ -1,5 +1,12 @@
 # @leafygreen-ui/split-button
 
+## 1.0.4
+
+### Patch Changes
+
+- Updated dependencies [cfba537d]
+  - @leafygreen-ui/button@21.0.0
+
 ## 1.0.3
 
 ### Patch Changes

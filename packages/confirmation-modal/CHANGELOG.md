@@ -1,5 +1,12 @@
 # @leafygreen-ui/confirmation-modal
 
+## 5.0.2
+
+### Patch Changes
+
+- Updated dependencies [cfba537d]
+  - @leafygreen-ui/button@21.0.0
+
 ## 5.0.1
 
 ### Patch Changes
