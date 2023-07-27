@@ -2,7 +2,7 @@
 import { getLGConfig } from '@lg-tools/meta';
 import chalk from 'chalk';
 import { spawn } from 'child_process';
-import fs from 'fs';
+import fse from 'fs-extra';
 import path from 'path';
 
 import { formatLog } from './utils';
@@ -19,7 +19,7 @@ export async function unlinkPackages(destination: string, opts: UnlinkOpts) {
 
   // Check if the destination exists
   if (
-    !(fs.existsSync(destination) && fs.lstatSync(destination).isDirectory())
+    !(fse.existsSync(destination) && fse.lstatSync(destination).isDirectory())
   ) {
     throw new Error(
       `Can't find the directory ${formatLog.path(relativeDestination)}.`,
@@ -64,8 +64,8 @@ async function unlinkPackageForScope(
 ) {
   const installedModulesDir = path.join(destination, 'node_modules', scopeName);
 
-  if (fs.existsSync(installedModulesDir)) {
-    const installedLGPackages = fs.readdirSync(installedModulesDir);
+  if (fse.existsSync(installedModulesDir)) {
+    const installedLGPackages = fse.readdirSync(installedModulesDir);
     chalk.gray(
       ` Removing links to ${formatLog.scope(scopeName)} scoped packages...`,
     ),

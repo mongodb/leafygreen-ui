@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
 import { spawn } from 'child_process';
-import fs from 'fs';
+import fse from 'fs-extra';
 import path from 'path';
 
 interface BuildPackageOptions {
@@ -38,7 +38,7 @@ export function buildPackage({ direct }: BuildPackageOptions) {
 
   // If there is a local rollup config defined, use that
   // Otherwise use the default one
-  const rollupConfigPath = fs.existsSync(localRollupConfigPath)
+  const rollupConfigPath = fse.existsSync(localRollupConfigPath)
     ? localRollupConfigPath
     : defaultRollupConfigPath;
 

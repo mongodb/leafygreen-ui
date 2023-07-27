@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
-import fs from 'fs';
+import fse from 'fs-extra';
 import path from 'path';
 
 import { parseTSDoc } from './tsdocParser';
@@ -25,7 +25,7 @@ export function buildTSDoc() {
     );
     outDir !== packageDir &&
       console.log(`\tWriting to ${chalk.gray(outFilePath)}`);
-    fs.writeFileSync(outFilePath, docString);
+    fse.writeFileSync(outFilePath, docString);
   } catch (err) {
     console.error(chalk.red(`Could not write file to ${outFilePath}`), err);
   }
