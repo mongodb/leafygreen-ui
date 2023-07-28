@@ -6,7 +6,7 @@ import {
   withCompilerOptions,
 } from 'react-docgen-typescript';
 import chalk from 'chalk';
-import fs from 'fs';
+import fse from 'fs-extra';
 import { camelCase, defaults, isUndefined, uniqBy } from 'lodash';
 import path from 'path';
 import { CompilerOptions, JsxEmit } from 'typescript';
@@ -93,12 +93,12 @@ export function parseTSDoc(
 
   const packageDir = path.resolve(process.cwd(), packageRoot);
 
-  if (fs.existsSync(packageDir)) {
+  if (fse.existsSync(packageDir)) {
     const componentFileNames = parseFileNames(packageDir);
 
     const pkgJsonPath = path.join(packageDir, 'package.json');
-    const packageName = fs.existsSync(pkgJsonPath)
-      ? JSON.parse(fs.readFileSync(pkgJsonPath, 'utf-8'))?.name
+    const packageName = fse.existsSync(pkgJsonPath)
+      ? JSON.parse(fse.readFileSync(pkgJsonPath, 'utf-8'))?.name
       : undefined;
 
     const parsedDocs = Parser.parse(componentFileNames)
@@ -179,12 +179,12 @@ function parseFileNames(root: string): Array<string> {
   return parsedFileNames;
 
   function getFilesRecursively(directory: string) {
-    const filesInDirectory = fs.readdirSync(directory);
+    const filesInDirectory = fse.readdirSync(directory);
 
     for (const file of filesInDirectory) {
       const absolute = path.join(directory, file);
 
-      if (fs.statSync(absolute).isDirectory()) {
+      if (fse.statSync(absolute).isDirectory()) {
         getFilesRecursively(absolute);
       } else {
         // const regex = /^(?!.*\.(spec|d|story|stories)\.tsx?$).*\.tsx?$/;

@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { getLGConfig } from '@lg-tools/meta';
 import chalk from 'chalk';
-import fs from 'fs';
+import fse from 'fs-extra';
 import { camelCase, kebabCase, startCase } from 'lodash';
 import path from 'path';
 
@@ -43,7 +43,7 @@ export function createPackage(name: string, options: CreatePackageOptions) {
   const packageDir = path.resolve(rootDir, directory, packageNameKebab);
 
   // Create the package directories
-  fs.mkdir(packageDir, { recursive: true }, err => {
+  fse.mkdir(packageDir, { recursive: true }, err => {
     if (err) {
       console.log(`Package ${packageNameKebab} already exists`);
       return;
@@ -120,12 +120,12 @@ function writeFiles(
   },
 ) {
   // Make the directory src and src/Component
-  fs.mkdirSync(path.resolve(config.dir, 'src', config.packageNamePascal), {
+  fse.mkdirSync(path.resolve(config.dir, 'src', config.packageNamePascal), {
     recursive: true,
   });
 
   // Write all component files
   for (const { name, contents } of files) {
-    fs.writeFile(path.resolve(config.dir, name), contents, handleErr);
+    fse.writeFile(path.resolve(config.dir, name), contents, handleErr);
   }
 }
