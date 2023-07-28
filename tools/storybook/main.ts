@@ -14,7 +14,7 @@ export function findStories(
       {
         cwd: path.join(process.cwd(), '.storybook'),
       },
-    );
+    ).filter(path => !/node_modules/.test(path));
 
     return storybookFolderRelativePaths;
   };
@@ -23,7 +23,7 @@ export function findStories(
 const config: StorybookConfig = {
   // @ts-expect-error https://github.com/storybookjs/storybook/issues/23624
   stories: findStories(
-    '../{packages,tools}/**/*.stor@(y|ies).@(js|jsx|ts|tsx)',
+    '../{packages,tools,stories}/**/*.stor@(y|ies).@(js|ts|md)?(x)',
     '../{packages,tools}/*/node_modules',
   ),
   addons: [
@@ -82,10 +82,15 @@ const config: StorybookConfig = {
       loader: require.resolve('@svgr/webpack'),
     });
 
-    // Required for Webpack 5
+    // Required for Webpack 5:
+    // BREAKING CHANGE: webpack < 5 used to include polyfills for node.js core modules by default.
+    // This is no longer the case. Verify if you need this module and configure a polyfill for it.
     config.resolve.fallback = {
-      stream: require.resolve('stream-browserify'),
       buffer: require.resolve('buffer'),
+      constants: false,
+      fs: false,
+      path: require.resolve('path-browserify'),
+      stream: require.resolve('stream-browserify'),
     };
 
     config.plugins.push(
