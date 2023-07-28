@@ -1,6 +1,6 @@
 #! /usr/bin/env node
-import { spawn } from 'child_process';
-import fs from 'fs';
+import { spawn } from 'cross-spawn';
+import fse from 'fs-extra';
 import path from 'path';
 
 export interface TestCommandOptions {
@@ -28,9 +28,9 @@ export const test = (
   const localConfigFile = path.resolve(rootDir, 'jest.config.js');
   const defaultConfigFile = path.resolve(__dirname, '../config/jest.config.js');
   const configFile =
-    configParam && fs.existsSync(configParam)
+    configParam && fse.existsSync(configParam)
       ? configParam // Use the parameter if it exists
-      : fs.existsSync(localConfigFile)
+      : fse.existsSync(localConfigFile)
       ? localConfigFile // otherwise look for a config at the root
       : defaultConfigFile; // fallback to the default config
 

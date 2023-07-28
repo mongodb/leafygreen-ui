@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 import { getLGConfig } from '@lg-tools/meta';
 import chalk from 'chalk';
-import { spawn } from 'child_process';
-import fs from 'fs';
+import { spawn } from 'cross-spawn';
+import fse from 'fs-extra';
 import { homedir } from 'os';
 import path from 'path';
 
@@ -23,7 +23,7 @@ export async function linkPackages(destination: string, opts: LinkOptions) {
 
   // Check if the destination exists
   if (
-    !(fs.existsSync(destination) && fs.lstatSync(destination).isDirectory())
+    !(fse.existsSync(destination) && fse.lstatSync(destination).isDirectory())
   ) {
     throw new Error(
       `Can't find the directory ${formatLog.path(relativeDestination)}.`,
@@ -71,13 +71,13 @@ async function linkPackagesForScope(
   // The directory where the scope's packages are installed
   const installedModulesDir = path.join(destination, 'node_modules', scopeName);
 
-  if (fs.existsSync(node_modulesDir)) {
+  if (fse.existsSync(node_modulesDir)) {
     // Check that the destination has scope's packages installed
-    if (fs.existsSync(installedModulesDir)) {
+    if (fse.existsSync(installedModulesDir)) {
       // Get a list of all the packages in the destination
       // Run yarn link on each package
       // Run yarn link <packageName> on the destination
-      const installedLGPackages = fs.readdirSync(installedModulesDir);
+      const installedLGPackages = fse.readdirSync(installedModulesDir);
 
       const packagesToLink = installedLGPackages.filter(
         installedPkg =>
@@ -199,7 +199,7 @@ function findDirectory(
 ): string | undefined {
   const testDir = path.join(startDir, targetDir);
 
-  if (fs.existsSync(testDir) && fs.lstatSync(testDir).isDirectory()) {
+  if (fse.existsSync(testDir) && fse.lstatSync(testDir).isDirectory()) {
     return testDir;
   } else {
     const parentDir = path.join(startDir, '..');

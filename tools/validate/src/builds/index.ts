@@ -5,7 +5,7 @@
 /* eslint-disable no-console */
 import { getAllPackages, getPackageName } from '@lg-tools/meta';
 import chalk from 'chalk';
-import fs from 'fs';
+import fse from 'fs-extra';
 import path from 'path';
 import vm from 'vm';
 
@@ -42,7 +42,7 @@ export const validateBuilds = ({
       }
 
       const distDir = path.resolve(pkgPath, 'dist');
-      const buildExists = fs.existsSync(distDir);
+      const buildExists = fse.existsSync(distDir);
 
       if (!buildExists) {
         exit1(`No build found for package ${chalk.bold(pkgName)}`);
@@ -53,9 +53,9 @@ export const validateBuilds = ({
       const esmPath = path.resolve(distDir, `esm/index.js`);
       const tsPath = path.resolve(distDir, `index.d.ts`);
 
-      const umdExists = fs.existsSync(umdPath);
-      const esmExists = fs.existsSync(esmPath);
-      const tsExists = fs.existsSync(tsPath);
+      const umdExists = fse.existsSync(umdPath);
+      const esmExists = fse.existsSync(esmPath);
+      const tsExists = fse.existsSync(tsPath);
       const isCJSValid = getModuleTypes(umdPath).includes('cjs');
       const isESMValid = getModuleTypes(esmPath).includes('esm');
 
@@ -170,7 +170,7 @@ function getModuleTypes(path: string): Array<ModuleType> {
   context.exports = Object.create(null);
   context.module = context;
 
-  const src = fs.readFileSync(path, 'utf-8');
+  const src = fse.readFileSync(path, 'utf-8');
 
   // executing the JavaScript source into a new context to avoid leaking
   // globals during the detection process.

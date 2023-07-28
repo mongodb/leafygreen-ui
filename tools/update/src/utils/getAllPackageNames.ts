@@ -1,6 +1,6 @@
-import fs from 'fs';
+import fse from 'fs-extra';
 import path from 'path';
 const rootDir = process.cwd();
 
 export const getAllPackageNames = () =>
-  fs.readdirSync(path.join(rootDir, 'packages/'));
+  fse.readdirSync(path.join(rootDir, 'packages/'));

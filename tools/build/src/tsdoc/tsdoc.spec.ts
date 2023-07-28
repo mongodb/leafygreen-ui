@@ -1,10 +1,12 @@
-import child_process, { ChildProcess } from 'child_process';
+import xSpawn from 'cross-spawn';
 import path from 'path';
 
 import { parseTSDoc } from './tsdocParser';
 
-const spawnSpy = jest.spyOn(child_process, 'spawn');
-spawnSpy.mockImplementation((...args) => ({} as ChildProcess));
+type SpawnType = ReturnType<typeof xSpawn.spawn>;
+
+const spawnSpy = jest.spyOn(xSpawn, 'spawn');
+spawnSpy.mockImplementation((...args) => ({} as SpawnType));
 
 describe('tools/build/tsdoc', () => {
   describe('parser', () => {
