@@ -4,7 +4,6 @@ import path from 'path';
 import { test as lgTest } from '.';
 
 const spawnSpy = jest.spyOn(child_process, 'spawn');
-spawnSpy.mockImplementation((...args) => ({} as ChildProcess));
 
 describe('tools/test', () => {
   const baseArgs = [
@@ -15,6 +14,15 @@ describe('tools/test', () => {
   ];
 
   const baseEnv = { env: expect.objectContaining({ JEST_ENV: 'client' }) };
+
+  beforeEach(() => {
+    spawnSpy.mockImplementation(
+      (...args) =>
+        ({
+          on: (e: string, cb: (...args: any[]) => void) => {},
+        } as ChildProcess),
+    );
+  });
 
   afterEach(() => {
     spawnSpy.mockReset();
@@ -63,7 +71,7 @@ describe('tools/test', () => {
     );
   });
 
-  test('runs for only specific tests', () => {
+  test('runs for only specific tests (-t)', () => {
     lgTest({
       watch: false,
       ci: true,

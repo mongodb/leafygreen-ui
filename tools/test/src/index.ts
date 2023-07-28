@@ -48,5 +48,5 @@ export const test = (options: TestCommandOptions) => {
       },
       stdio: 'inherit',
     },
-  );
+  ).on('exit', process.exit);
 };
