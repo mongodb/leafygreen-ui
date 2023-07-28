@@ -14,7 +14,7 @@ export function findStories(
       {
         cwd: path.join(process.cwd(), '.storybook'),
       },
-    );
+    ).filter(path => !/node_modules/.test(path));
 
     return storybookFolderRelativePaths;
   };
@@ -23,7 +23,7 @@ export function findStories(
 const config: StorybookConfig = {
   // @ts-expect-error https://github.com/storybookjs/storybook/issues/23624
   stories: findStories(
-    '../{packages,tools}/**/*.stor@(y|ies).@(js|jsx|ts|tsx)',
+    '../{packages,tools,stories}/**/*.stor@(y|ies).@(js|ts|md)?(x)',
     '../{packages,tools}/*/node_modules',
   ),
   addons: [
