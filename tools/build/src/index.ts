@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { spawn } from 'child_process';
+import { spawn } from 'cross-spawn';
 export { buildPackage } from './rollup/build-package';
 export { buildTSDoc } from './tsdoc/build-tsdoc';
 export { parseTSDoc } from './tsdoc/tsdocParser';

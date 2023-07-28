@@ -2,7 +2,7 @@ import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 
 import babel from '@rollup/plugin-babel';
-import resolve from '@rollup/plugin-node-resolve';
+import nodeResolve from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
 import urlPlugin from '@rollup/plugin-url';
 import svgr from '@svgr/rollup';
@@ -10,6 +10,7 @@ import fs from 'fs';
 import glob from 'glob';
 import path from 'path';
 import { nodeExternals } from 'rollup-plugin-node-externals';
+import nodePolyfills from 'rollup-plugin-polyfill-node';
 
 const require = createRequire(import.meta.url);
 
@@ -69,9 +70,14 @@ const iconGlobals = getDirectGlyphImports().reduce((acc, glyph) => {
 // bound to if used in the browser without a module loader.
 // This is defined on a best effort basis since not all
 // modules are compatible with being loaded directly.
-const globals = {
+const globalsMap = {
   clipboard: 'ClipboardJS',
+  'cross-spawn': 'crossSpawn',
+  '@emotion/server/create-instance': 'createEmotionServer',
+  '@emotion/css/create-instance': 'createEmotion',
+  'highlight.js/lib/core': 'hljs',
   'highlightjs-graphql': 'hljsDefineGraphQL',
+  'fs-extra': 'fse',
   polished: 'polished',
   react: 'React',
   'react-dom': 'ReactDOM',
@@ -79,41 +85,35 @@ const globals = {
   lodash: '_',
   ...lgGlobals,
   ...iconGlobals,
-  /**
-   * External dependencies that must be loaded by a module loader
-   *   - lodash/*
-   *   - highlight.js
-   *   - create-emotion
-   *   - create-emotion-server
-   *   - react-transition-group
-   **/
+};
+
+const globals = id => {
+  if (globalsMap[id]) return globalsMap[id];
+  if (/lodash/.test(id)) return id.replace(/lodash/, '');
+  if (/highlight\.js\/lib\/languages/.test(id)) {
+    return id.replace(/highlight\.js\/lib\/languages/, '');
+  }
 };
 
 const external = [
-  '@emotion/server',
-  '@emotion/css',
-  '@emotion/css/create-instance',
-  '@emotion/server/create-instance',
   '@faker-js/faker',
   '@testing-library/react',
-  '@storybook/testing-library',
+  'chalk',
   'clipboard',
+  'cross-spawn',
   'focus-trap-react',
-  'highlight.js',
+  'fs-extra',
   'highlightjs-graphql',
-  'lodash',
   'polished',
   'prop-types',
-  'react',
-  'react-dom',
-  'react-is',
-  'react-keyed-flatten-children',
-  'react-lottie-player',
-  'react-transition-group',
-  /^lodash\//,
-  /^highlight\.js\//,
+  'typescript',
+  /^@emotion\//,
   /^@leafygreen-ui\//,
   /^@lg-tools\//,
+  /^@storybook\//,
+  /^highlight/,
+  /^lodash\//,
+  /^react/,
 ];
 
 const moduleFormatToDirectory = {
@@ -132,8 +132,9 @@ const configForFormat = format => ({
     interop: 'compat', // https://rollupjs.org/configuration-options/#output-interop
   },
   plugins: [
+    nodePolyfills(),
     nodeExternals({ deps: true }),
-    resolve({ extensions }),
+    nodeResolve({ extensions }),
 
     babel({
       babelrc: false,

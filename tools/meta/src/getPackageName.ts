@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
-import fs from 'fs';
+import fse from 'fs-extra';
 
 import { getLGConfig } from './getLGConfig';
 
@@ -8,7 +8,7 @@ import { getLGConfig } from './getLGConfig';
  * Returns the full name of a package at a given directory
  */
 export function getPackageName(dir: string) {
-  if (!fs.existsSync(dir)) {
+  if (!fse.existsSync(dir)) {
     console.log(chalk.red(`Could not get package name. ${dir} does not exist`));
     return;
   }
