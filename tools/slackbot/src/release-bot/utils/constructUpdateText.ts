@@ -11,9 +11,9 @@ export const constructUpdateTextWithChangelog = (
   component: ComponentUpdateObject,
 ) => {
   const { updates } = component;
-  return (
-    constructBasicUpdateText(component) + '\n' + updates?.map(u => `\t• ${u}\n`)
-  );
+  const updatesStr = updates ? '\n' + updates?.map(u => `\t• ${u}\n`) : '';
+
+  return constructBasicUpdateText(component) + updatesStr;
 };
 
 export const constructShortUpdateText = (component: ComponentUpdateObject) => {
