@@ -19,7 +19,7 @@ describe('tools/test', () => {
     spawnSpy.mockImplementation(
       (...args) =>
         ({
-          on: (e: string, cb: (...args: any[]) => void) => {},
+          on: (e: string, cb: (...args: Array<any>) => void) => {},
         } as ChildProcess),
     );
   });
