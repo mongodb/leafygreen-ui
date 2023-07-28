@@ -1,6 +1,6 @@
 import { ComponentUpdateObject, SortedUpdates } from '../release-bot.types';
-import { getChangeType } from './getChangeType';
 
+import { getChangeType } from './getChangeType';
 import { parseChangeLog } from './parseChangeLog';
 
 export const getSortedUpdates = async (
@@ -25,10 +25,12 @@ export const getSortedUpdates = async (
         sortedUpdates.major.push({ ...componentUpdate, updates: majorUpdates });
         break;
       }
+
       case 'minor': {
         sortedUpdates.minor.push({ ...componentUpdate, updates: minorUpdates });
         break;
       }
+
       case 'patch':
       default: {
         if (!patchUpdates?.[0].includes('Updated dependencies')) {
