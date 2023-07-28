@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 import { getPackageManager } from '@lg-tools/meta';
 import chalk from 'chalk';
-import { spawn } from 'child_process';
-import fs from 'fs';
+import { spawn } from 'cross-spawn';
+import fse from 'fs-extra';
 import path from 'path';
 
 export interface UpdateCommandOptions {
@@ -21,7 +21,7 @@ export const update = (
   const rootDir = process.cwd();
   const node_modulesDir = path.join(rootDir, 'node_modules');
 
-  if (!fs.existsSync(node_modulesDir)) {
+  if (!fse.existsSync(node_modulesDir)) {
     console.error(
       chalk.red('Could not find `node_modules` directory at', node_modulesDir),
     );

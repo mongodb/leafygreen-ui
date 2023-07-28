@@ -1,9 +1,10 @@
-import child_process, { ChildProcess } from 'child_process';
+import xSpawn from 'cross-spawn';
 
 import { buildTypescript } from './build-ts';
+type SpawnType = ReturnType<typeof xSpawn.spawn>;
 
-const spawnSpy = jest.spyOn(child_process, 'spawn');
-spawnSpy.mockImplementation((...args) => ({} as ChildProcess));
+const spawnSpy = jest.spyOn(xSpawn, 'spawn');
+spawnSpy.mockImplementation((...args) => ({} as SpawnType));
 
 describe('tools/build/build-ts', () => {
   test('runs with no options', () => {

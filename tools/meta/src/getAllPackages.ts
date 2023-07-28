@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fse from 'fs-extra';
 import path from 'path';
 
 import { getLGConfig } from './getLGConfig';
@@ -14,8 +14,8 @@ export const getAllPackages = () => {
   for (let scopePath of Object.values(scopes)) {
     const scopeDir = path.resolve(rootDir, scopePath);
 
-    if (fs.existsSync(scopeDir)) {
-      const pkgNames = fs.readdirSync(scopeDir);
+    if (fse.existsSync(scopeDir)) {
+      const pkgNames = fse.readdirSync(scopeDir);
       const pkgPaths = pkgNames.map(name => path.resolve(scopeDir, name));
       paths.push(...pkgPaths);
     }
