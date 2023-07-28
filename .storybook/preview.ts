@@ -36,13 +36,17 @@ const parameters = {
   },
   options: {
     storySort: {
-      method: '',
+      method: 'alphabetical',
       order: [
         'Overview',
         'Developer Guide',
-        'Sample Pages (WIP)',
+        'Components',
         'Contexts',
-        'Packages',
+        'Hooks',
+        'LeafyGreen Provider',
+        'Form',
+        'Lib Utilities',
+        'Sample Pages (WIP)',
       ],
       locales: '',
     },
