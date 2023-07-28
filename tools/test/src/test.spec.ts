@@ -83,4 +83,20 @@ describe('tools/test', () => {
       expect.objectContaining(baseEnv),
     );
   });
+
+  test('runs for specific files', () => {
+    lgTest('./packages/button/src/Button/Button.spec.tsx', {
+      watch: false,
+      ci: true,
+    });
+
+    expect(spawnSpy).toHaveBeenCalledWith(
+      'jest',
+      expect.arrayContaining([
+        './packages/button/src/Button/Button.spec.tsx',
+        ...baseArgs,
+      ]),
+      expect.objectContaining(baseEnv),
+    );
+  });
 });
