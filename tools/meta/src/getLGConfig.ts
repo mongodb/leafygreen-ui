@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fse from 'fs-extra';
 import path from 'path';
 
 export interface LGConfig {
@@ -16,10 +16,10 @@ export const getLGConfig = (): LGConfig => {
   const lgConfigPath = path.resolve(rootDir, LGConfigFileName);
 
   // Check if an lg.json exists
-  if (!fs.existsSync(lgConfigPath)) {
+  if (!fse.existsSync(lgConfigPath)) {
     throw new Error(`${LGConfigFileName} file not found`);
   }
 
-  const lgConfig = JSON.parse(fs.readFileSync(lgConfigPath, 'utf-8'));
+  const lgConfig = JSON.parse(fse.readFileSync(lgConfigPath, 'utf-8'));
   return lgConfig as LGConfig;
 };

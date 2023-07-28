@@ -14,9 +14,11 @@
     "access": "public"
   },
   "dependencies": {
-    "node-fetch": "^2.6.6",
     "@lg-tools/build": "^0.1.0",
-    "@lg-tools/meta": "^0.1.0"
+    "@lg-tools/meta": "^0.1.0",
+    "@types/cross-spawn": "^6.0.2",
+    "cross-spawn": "^7.0.3",
+    "node-fetch": "^2.6.6"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/install",
   "repository": {
