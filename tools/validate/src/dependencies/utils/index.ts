@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
 import depcheck from 'depcheck';
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs-extra';
 import { isEqual } from 'lodash';
 import path from 'path';
 
