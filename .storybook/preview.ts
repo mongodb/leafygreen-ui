@@ -44,7 +44,6 @@ const parameters = {
         'Contexts',
         'Hooks',
         'LeafyGreen Provider',
-        'Demo',
         'Form',
         'Lib Utilities',
         'Sample Pages (WIP)',
