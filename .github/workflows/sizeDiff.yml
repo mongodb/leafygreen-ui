@@ -8,8 +8,6 @@ jobs:
   sizeDiff:
     name: Check file size
     runs-on: ubuntu-latest
-    # TODO: REMOVE
-    if: ${{false}}
     steps:
       - uses: actions/checkout@v2
 
