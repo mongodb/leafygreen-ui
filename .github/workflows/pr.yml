@@ -106,7 +106,6 @@ jobs:
           buildScriptName: 'build-storybook'
           exitOnceUploaded: true
           exitZeroOnChanges: true
-          debug: true
 
   tests:
     name: Run tests
