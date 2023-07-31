@@ -99,9 +99,6 @@ jobs:
             !**/node_modules
           key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
 
-      - name: Storybook version
-        run: npx storybook --version
-
       - name: Build Storybook
         run: npx build-storybook
 

@@ -1,0 +1,25 @@
+name: Debug CI
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  DEBUG_STORYBOOK:
+    name: Debug Storybook
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Storybook version
+        run: npx storybook --version
