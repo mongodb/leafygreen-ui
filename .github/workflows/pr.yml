@@ -99,16 +99,13 @@ jobs:
             !**/node_modules
           key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
 
-      # - name: Publish to Chromatic
-      #   uses: chromaui/action@v1
-      #   with:
-      #     projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-      #     buildScriptName: 'build-storybook'
-      #     exitOnceUploaded: true
-      #     exitZeroOnChanges: true
-
       - name: Publish to Chromatic
-        run: npx chromatic --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-once-uploaded --ci
+        uses: chromaui/action@v1
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          buildScriptName: 'build-storybook'
+          exitOnceUploaded: true
+          exitZeroOnChanges: true
 
   tests:
     name: Run tests
