@@ -108,7 +108,7 @@ jobs:
       #     exitZeroOnChanges: true
 
       - name: Publish to Chromatic
-        run: npx chromatic --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-once-uploaded
+        run: npx chromatic --project-token ${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-once-uploaded --ci
 
   tests:
     name: Run tests
