@@ -24,6 +24,9 @@ jobs:
       - name: Install
         run: yarn install --frozen-lockfile
 
+      - name: Build packages
+        run: yarn build
+
       - name: Storybook version
         run: npx storybook --version
 
