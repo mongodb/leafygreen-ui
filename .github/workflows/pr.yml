@@ -99,6 +99,9 @@ jobs:
             !**/node_modules
           key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
 
+      - name: Build Storybook
+        run: yarn build-storybook --ci
+
       - name: Publish to Chromatic
         uses: chromaui/action@v1
         with:
@@ -106,6 +109,7 @@ jobs:
           buildScriptName: 'build-storybook'
           exitOnceUploaded: true
           exitZeroOnChanges: true
+          storybookBuildDir: ./storybook-static
 
   tests:
     name: Run tests
