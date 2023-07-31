@@ -38,7 +38,7 @@
     "@lg-tools/slackbot": "^0.1.0",
     "@lg-tools/storybook": "^0.1.0",
     "@lg-tools/storybook-decorators": "^0.1.0",
-    "@storybook/cli": "^7.1.1",
+    "@storybook/cli": "7.0.26",
     "@types/lodash": "^4.14.170",
     "@types/react": "^16.9.56",
     "@types/react-dom": "^16.9.9",
