@@ -35,9 +35,7 @@
     "buffer": "^6.0.3",
     "file-loader": "^6.0.0",
     "glob": "^10.3.3",
-    "glob-promise": "^6.0.3",
     "lodash": "^4.17.21",
-    "npmlog": "^7.0.1",
     "path-browserify": "^1.0.1",
     "react-docgen-typescript": "^2.2.2",
     "storybook-addon-performance": "^0.17.1",
@@ -46,8 +44,8 @@
     "webpack": "^5.0.0"
   },
   "peerDependencies": {
+    "storybook": "^7.1.0",
     "react": "^17.0.0",
-    "react-dom": "^17.0.0",
-    "storybook": "^7.1.0"
+    "react-dom": "^17.0.0"
   }
 }
