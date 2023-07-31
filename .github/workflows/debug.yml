@@ -21,5 +21,8 @@ jobs:
         with:
           node-version: '16'
 
+      - name: Install
+        run: yarn install --frozen-lockfile
+
       - name: Storybook version
         run: npx storybook --version
