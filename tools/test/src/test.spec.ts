@@ -71,11 +71,10 @@ describe('tools/test', () => {
     );
   });
 
-  test('runs for only specific tests (-t)', () => {
-    lgTest(undefined, {
+  test('runs for only specific tests', () => {
+    lgTest('--testNamePattern=button', {
       watch: false,
       ci: true,
-      testNamePattern: 'button',
     });
     expect(spawnSpy).toHaveBeenCalledWith(
       'jest',
