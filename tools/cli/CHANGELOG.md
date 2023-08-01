@@ -1,5 +1,19 @@
 # @lg-tools/cli
 
+## 0.2.0
+
+### Minor Changes
+
+- 61ab7efc: Add `testFilesPattern` argument to `lg test` which is passed to `jest` as `regexForTestFiles`. See [jest docs](https://jestjs.io/docs/cli#jest-regexfortestfiles) for more
+
+### Patch Changes
+
+- Updated dependencies [ff02d0bb]
+- Updated dependencies [61ab7efc]
+- Updated dependencies [61ab7efc]
+  - @lg-tools/build@0.1.1
+  - @lg-tools/test@0.2.0
+
 ## 0.1.0
 
 ### Minor Changes
