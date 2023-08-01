@@ -37,7 +37,7 @@ jobs:
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         run: yarn install --frozen-lockfile --prefer-offline
 
-      - name: build
+      - name: Build
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         run: yarn build
 
@@ -100,7 +100,7 @@ jobs:
           key: ${{ runner.os }}-build-cache-${{ hashFiles('**/{packages,tools}', '!**/node_modules', '!**/dist') }}
 
       - name: Build Storybook
-        run: npx build-storybook
+        run: npx storybook build
 
       - name: Publish to Chromatic
         uses: chromaui/action@v1
