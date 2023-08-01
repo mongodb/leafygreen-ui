@@ -1,9 +1,9 @@
 import React from 'react';
 import styled, { StyledComponent } from '@emotion/styled';
+import { parseTSDoc } from '@lg-tools/build/src/tsdoc/tsdocParser';
 import { render } from '@testing-library/react';
 import NextLink from 'next/link';
 
-import { parseTSDoc } from '../../../../scripts/utils/tsDocParser';
 import {
   InferredPolymorphic,
   useInferredPolymorphic,
@@ -450,7 +450,7 @@ describe('Polymorphic/Example Higher-order Components', () => {
    * also generate TSDoc
    */
   describe('TSDoc output', () => {
-    const docs = parseTSDoc('polymorphic/src/Example', {
+    const docs = parseTSDoc(__dirname, {
       excludeTags: [], // Include all tags
     });
 

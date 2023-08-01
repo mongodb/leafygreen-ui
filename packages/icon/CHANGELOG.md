@@ -1,5 +1,20 @@
 # @leafygreen-ui/icon
 
+## 11.20.1
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+- Updated dependencies [215268ff]
+  - @leafygreen-ui/emotion@4.0.5
+
+## 11.20.0
+
+### Minor Changes
+
+- 348e56cb: Add Sparkle and Return icons
+- 5c3b9a85: Adds 'list' glyph to Icon set
+
 ## 11.19.0
 
 ### Minor Changes

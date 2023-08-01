@@ -38,6 +38,8 @@ const RowCellChildren = <T extends LGRowData>({
       {React.Children.map(
         CellChildren,
         (child: ReactNode, colIndex: number) => {
+          // FIXME:
+          // eslint-disable-next-line no-unsafe-optional-chaining
           const { children, ...props } = (child as ReactElement)?.props;
           const isFirstCell = colIndex === 0;
           const cell = row.getVisibleCells()[colIndex];

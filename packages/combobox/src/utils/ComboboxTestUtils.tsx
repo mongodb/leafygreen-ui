@@ -199,8 +199,12 @@ export function renderCombobox<T extends Select>(
    * @param newProps
    * @returns
    */
-  const rerenderCombobox = (newProps: renderComboboxProps) =>
-    renderResult.rerender(getComboboxJSX({ ...props, ...newProps }));
+  const rerenderCombobox = (newProps: renderComboboxProps) => {
+    const rerenderProps = { ...props, ...newProps };
+    return renderResult.rerender(
+      getComboboxJSX(rerenderProps as renderComboboxProps),
+    );
+  };
 
   /**
    * @returns all chip elements
