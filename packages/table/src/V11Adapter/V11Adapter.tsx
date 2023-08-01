@@ -8,7 +8,6 @@ import React, {
 import flattenChildren from 'react-keyed-flatten-children';
 import { VirtualItem } from 'react-virtual';
 import { flexRender } from '@tanstack/react-table';
-import { TableHeaderProps } from 'src/TableV10/TableHeader';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce, isComponentType } from '@leafygreen-ui/lib';
@@ -20,6 +19,7 @@ import Table from '../Table';
 import TableBody from '../TableBody';
 import TableHead from '../TableHead';
 import { TableProps as V10TableProps } from '../TableV10/Table';
+import { TableHeaderProps } from '../TableV10/TableHeader';
 import useLeafyGreenTable, {
   LeafyGreenTableCell,
   LeafyGreenTableRow,
