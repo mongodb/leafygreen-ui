@@ -1,5 +1,11 @@
 # @leafygreen-ui/testing-lib
 
+## 0.3.1
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+
 ## 0.3.0
 
 ### Minor Changes

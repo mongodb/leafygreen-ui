@@ -33,6 +33,7 @@ import ClockWithArrow from './ClockWithArrow.svg';
 import Clone from './Clone.svg';
 import Cloud from './Cloud.svg';
 import Code from './Code.svg';
+import CodeBlock from './CodeBlock.svg';
 import Connect from './Connect.svg';
 import Copy from './Copy.svg';
 import CreditCard from './CreditCard.svg';
@@ -69,6 +70,7 @@ import InviteUser from './InviteUser.svg';
 import Key from './Key.svg';
 import Laptop from './Laptop.svg';
 import Link from './Link.svg';
+import List from './List.svg';
 import Lock from './Lock.svg';
 import LogIn from './LogIn.svg';
 import LogOut from './LogOut.svg';
@@ -76,6 +78,8 @@ import MagnifyingGlass from './MagnifyingGlass.svg';
 import Megaphone from './Megaphone.svg';
 import Menu from './Menu.svg';
 import Minus from './Minus.svg';
+import MultiDirectionArrow from './MultiDirectionArrow.svg';
+import MultiLayers from './MultiLayers.svg';
 import NoFilter from './NoFilter.svg';
 import NotAllowed from './NotAllowed.svg';
 import Note from './Note.svg';
@@ -94,6 +98,7 @@ import Refresh from './Refresh.svg';
 import Relationship from './Relationship.svg';
 import ReplicaSet from './ReplicaSet.svg';
 import Resize from './Resize.svg';
+import Return from './Return.svg';
 import Save from './Save.svg';
 import Serverless from './Serverless.svg';
 import Settings from './Settings.svg';
@@ -102,6 +107,7 @@ import Shell from './Shell.svg';
 import SMS from './SMS.svg';
 import SortAscending from './SortAscending.svg';
 import SortDescending from './SortDescending.svg';
+import Sparkle from './Sparkle.svg';
 import SplitHorizontal from './SplitHorizontal.svg';
 import SplitVertical from './SplitVertical.svg';
 import Stitch from './Stitch.svg';
@@ -161,6 +167,7 @@ const _glyphs = {
   Clone,
   Cloud,
   Code,
+  CodeBlock,
   Connect,
   Copy,
   CreditCard,
@@ -197,6 +204,7 @@ const _glyphs = {
   Key,
   Laptop,
   Link,
+  List,
   Lock,
   LogIn,
   LogOut,
@@ -204,6 +212,8 @@ const _glyphs = {
   Megaphone,
   Menu,
   Minus,
+  MultiDirectionArrow,
+  MultiLayers,
   NoFilter,
   NotAllowed,
   Note,
@@ -222,6 +232,7 @@ const _glyphs = {
   Relationship,
   ReplicaSet,
   Resize,
+  Return,
   Save,
   Serverless,
   ShardedCluster,
@@ -230,6 +241,7 @@ const _glyphs = {
   SMS,
   SortAscending,
   SortDescending,
+  Sparkle,
   SplitHorizontal,
   SplitVertical,
   Stitch,

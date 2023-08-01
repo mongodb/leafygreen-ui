@@ -1,9 +1,10 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import NextLink from 'next/link';
 
 import { BoxProps } from '@leafygreen-ui/box';
+import { Spinner } from '@leafygreen-ui/loading-indicator';
 
 import { ButtonProps } from '../types';
 import Button from '..';
@@ -57,6 +58,7 @@ describe('packages/button', () => {
     test(`renders spinner when isLoading is true`, () => {
       const { getByTestId } = renderButton({
         isLoading: true,
+        loadingIndicator: <Spinner />,
       });
       expect(getByTestId('lg-button-spinner')).toBeVisible();
     });
@@ -74,6 +76,7 @@ describe('packages/button', () => {
       const loadingText = 'loading text';
       const { getByText } = renderButton({
         isLoading: true,
+        loadingIndicator: <Spinner />,
         loadingText,
       });
       expect(getByText(loadingText)).toBeVisible();
@@ -234,6 +237,22 @@ describe('packages/button', () => {
         href,
       });
       expect(button).toHaveAttribute('href', href);
+    });
+
+    test('does not invoke a forms submit handler when disabled', () => {
+      const onSubmit = jest.fn();
+
+      render(
+        <form onSubmit={onSubmit}>
+          <Button disabled type="submit">
+            Submit
+          </Button>
+        </form>,
+      );
+
+      const button = screen.getByRole('button');
+      fireEvent.click(button);
+      expect(onSubmit).not.toHaveBeenCalled();
     });
   });
 
