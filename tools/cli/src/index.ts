@@ -78,7 +78,10 @@ cli
 cli
   .command('test')
   .description('Tests leafygreen-ui packages with unified config.')
-  // TODO: Files argument
+  .argument(
+    '[testFilesPattern]',
+    'Run specific test suites based on a regex pattern',
+  )
   .option('--watch', 'Watch all files you intend to test', false)
   .option('--ci', 'Runs tests with CI configuration', false)
   .option(
@@ -90,6 +93,7 @@ cli
     'Alias of jest --testNamePattern. Run only tests with a name that matches the regex.',
     undefined,
   )
+  .option('-v --verbose', 'Prints additional information to the console', false)
   .action(test);
 
 /** Update */

@@ -4,15 +4,19 @@ import fse from 'fs-extra';
 import path from 'path';
 
 export interface TestCommandOptions {
-  watch: boolean;
   ci: boolean;
+  watch?: boolean;
+  verbose?: boolean;
   testNamePattern?: string;
   config?: string;
 }
 
-export const test = (options: TestCommandOptions) => {
+export const test = (
+  testFilesPattern: string | undefined,
+  options: TestCommandOptions,
+) => {
   const rootDir = process.cwd();
-  const { watch, testNamePattern, ci, config: configParam } = options;
+  const { watch, testNamePattern, ci, verbose, config: configParam } = options;
   const ciFlags = [
     '--no-cache',
     '--ci',
@@ -30,23 +34,23 @@ export const test = (options: TestCommandOptions) => {
       ? localConfigFile // otherwise look for a config at the root
       : defaultConfigFile; // fallback to the default config
 
-  spawn(
-    'jest',
-    [
-      `--config`,
-      configFile,
-      `--rootDir`,
-      rootDir,
-      watch ? '--watch' : '',
-      testNamePattern ? `--testNamePattern=${testNamePattern}` : '',
-      ...(ci ? ciFlags : []),
-    ],
-    {
-      env: {
-        ...process.env,
-        JEST_ENV: 'client',
-      },
-      stdio: 'inherit',
+  const commandArgs = [
+    testFilesPattern ?? '',
+    `--config`,
+    configFile,
+    `--rootDir`,
+    rootDir,
+    watch ? '--watch' : '',
+    verbose ? '--verbose' : '',
+    testNamePattern ? `--testNamePattern=${testNamePattern}` : '',
+    ...(ci ? ciFlags : []),
+  ].filter(v => v !== '');
+
+  spawn('jest', commandArgs, {
+    env: {
+      ...process.env,
+      JEST_ENV: 'client',
     },
-  );
+    stdio: 'inherit',
+  }).on('exit', process.exit);
 };
