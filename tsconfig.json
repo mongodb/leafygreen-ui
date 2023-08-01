@@ -1,23 +1,20 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@lg-tools/build/config/package.tsconfig.json",
   "compilerOptions": {
     "module": "CommonJS",
-    "noEmit": true,
-    "tsBuildInfoFile": "./tsconfig.tsbuildinfo",
-    "incremental": true,
-    "target": "ES5",
-    "jsx": "react",
-    "allowJs": true,
-    "pretty": true,
-    "strictNullChecks": true,
-    "noUnusedLocals": false,
-    "esModuleInterop": true,
-    "strict": true,
-    "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
+    "noEmit": true,
+    "incremental": true,
+    "allowJs": true,
     "baseUrl": ".",
-    "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "paths": {
+      "@leafygreen-ui/icon/dist/*": ["./packages/icon/src/generated/*"],
+      "@leafygreen-ui/*": ["packages/*/src"],
+      "@lg-tools/*": ["tools/*/src"]
+    }
   },
+  "include": ["./packages", "./tools", "./scripts"],
   "exclude": ["node_modules", "**/dist"]
 }
