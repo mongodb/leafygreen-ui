@@ -21,7 +21,7 @@ describe('tools/test', () => {
   });
 
   test('runs basic command', () => {
-    lgTest({
+    lgTest(undefined, {
       watch: false,
       ci: false,
     });
@@ -33,7 +33,7 @@ describe('tools/test', () => {
   });
 
   test('runs with watch flag', () => {
-    lgTest({
+    lgTest(undefined, {
       watch: true,
       ci: false,
     });
@@ -45,7 +45,7 @@ describe('tools/test', () => {
   });
 
   test('runs in ci mode', () => {
-    lgTest({
+    lgTest(undefined, {
       watch: false,
       ci: true,
     });
@@ -64,10 +64,9 @@ describe('tools/test', () => {
   });
 
   test('runs for only specific tests', () => {
-    lgTest({
+    lgTest('--testNamePattern=button', {
       watch: false,
       ci: true,
-      testNamePattern: 'button',
     });
     expect(spawnSpy).toHaveBeenCalledWith(
       'jest',
