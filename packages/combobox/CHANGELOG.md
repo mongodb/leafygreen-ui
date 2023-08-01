@@ -1,5 +1,31 @@
 # @leafygreen-ui/combobox
 
+## 6.0.8
+
+### Patch Changes
+
+- 2603d7ac: Component props now properly inherit from `PopoverProps` interface
+
+## 6.0.7
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+- Updated dependencies [215268ff]
+  - @leafygreen-ui/leafygreen-provider@3.1.4
+  - @leafygreen-ui/inline-definition@6.0.8
+  - @leafygreen-ui/input-option@1.0.6
+  - @leafygreen-ui/icon-button@15.0.14
+  - @leafygreen-ui/typography@16.5.2
+  - @leafygreen-ui/checkbox@12.0.13
+  - @leafygreen-ui/emotion@4.0.5
+  - @leafygreen-ui/palette@4.0.5
+  - @leafygreen-ui/popover@11.0.13
+  - @leafygreen-ui/tokens@2.1.2
+  - @leafygreen-ui/hooks@7.7.6
+  - @leafygreen-ui/icon@11.20.1
+  - @leafygreen-ui/lib@10.4.1
+
 ## 6.0.6
 
 ### Patch Changes

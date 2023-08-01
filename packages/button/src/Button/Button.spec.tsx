@@ -4,6 +4,7 @@ import { axe } from 'jest-axe';
 import NextLink from 'next/link';
 
 import { BoxProps } from '@leafygreen-ui/box';
+import { Spinner } from '@leafygreen-ui/loading-indicator';
 
 import { ButtonProps } from '../types';
 import Button from '..';
@@ -57,6 +58,7 @@ describe('packages/button', () => {
     test(`renders spinner when isLoading is true`, () => {
       const { getByTestId } = renderButton({
         isLoading: true,
+        loadingIndicator: <Spinner />,
       });
       expect(getByTestId('lg-button-spinner')).toBeVisible();
     });
@@ -74,6 +76,7 @@ describe('packages/button', () => {
       const loadingText = 'loading text';
       const { getByText } = renderButton({
         isLoading: true,
+        loadingIndicator: <Spinner />,
         loadingText,
       });
       expect(getByText(loadingText)).toBeVisible();

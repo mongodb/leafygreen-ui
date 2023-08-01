@@ -1,5 +1,43 @@
 # @leafygreen-ui/confirmation-modal
 
+## 5.0.2
+
+### Patch Changes
+
+- Updated dependencies [cfba537d]
+  - @leafygreen-ui/button@21.0.0
+
+## 5.0.1
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+- Updated dependencies [215268ff]
+  - @leafygreen-ui/leafygreen-provider@3.1.4
+  - @leafygreen-ui/text-input@12.1.16
+  - @leafygreen-ui/typography@16.5.2
+  - @leafygreen-ui/emotion@4.0.5
+  - @leafygreen-ui/palette@4.0.5
+  - @leafygreen-ui/button@20.3.1
+  - @leafygreen-ui/tokens@2.1.2
+  - @leafygreen-ui/modal@15.0.4
+  - @leafygreen-ui/icon@11.20.1
+  - @leafygreen-ui/lib@10.4.1
+
+## 5.0.0
+
+### Major Changes
+
+- 30bd6f50: Component now accepts a ref prop
+
+### Patch Changes
+
+- Updated dependencies [348e56cb]
+- Updated dependencies [1e6ddb60]
+- Updated dependencies [5c3b9a85]
+  - @leafygreen-ui/icon@11.20.0
+  - @leafygreen-ui/button@20.3.0
+
 ## 4.0.10
 
 ### Patch Changes

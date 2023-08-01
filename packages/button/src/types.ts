@@ -128,6 +128,11 @@ export interface ButtonProps {
   loadingText?: string;
 
   /**
+   * Visual indicator display to convey that component is loading.
+   */
+  loadingIndicator?: React.ReactElement;
+
+  /**
    * The component or HTML Element that the button is rendered as.
    *
    * To use with NextJS Links, pass in a component that wraps the Link:
