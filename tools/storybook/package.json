@@ -24,7 +24,6 @@
     "@storybook/addon-mdx-gfm": "^7.1.1",
     "@storybook/addons": "^7.1.1",
     "@storybook/api": "^7.1.1",
-    "@storybook/cli": "^7.1.1",
     "@storybook/components": "^7.1.1",
     "@storybook/core-events": "^7.1.1",
     "@storybook/jest": "^0.1.0",
@@ -45,8 +44,8 @@
     "webpack": "^5.0.0"
   },
   "peerDependencies": {
-    "storybook": "^7.1.0",
     "react": "^17.0.0",
-    "react-dom": "^17.0.0"
+    "react-dom": "^17.0.0",
+    "storybook": "^7.1.0"
   }
 }
