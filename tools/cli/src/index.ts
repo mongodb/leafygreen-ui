@@ -11,7 +11,7 @@ import { Command } from 'commander';
 const cli = new Command('lg');
 cli
   .description('Command line tools for the LeafyGreen UI library by MongoDB')
-  .enablePositionalOptions();
+  .enablePositionalOptions(true);
 
 /** Create */
 cli
@@ -78,21 +78,14 @@ cli
 cli
   .command('test')
   .description('Tests leafygreen-ui packages with unified config.')
-  .argument(
-    '[testFilesPattern]',
-    'Run specific test suites based on a regex pattern',
-  )
+  .argument('[pass-through...]', 'Pass-through options for `jest`')
   .option('--watch', 'Watch all files you intend to test', false)
   .option('--ci', 'Runs tests with CI configuration', false)
   .option(
     '--config',
     'Specify a jest config file. By default will look for `jest.config.js` at the root, or use `@lg-tools/test/config`',
   )
-  .option(
-    '-t, --testNamePattern <regex>',
-    'Alias of jest --testNamePattern. Run only tests with a name that matches the regex.',
-    undefined,
-  )
+  .allowUnknownOption(true)
   .option('-v --verbose', 'Prints additional information to the console', false)
   .action(test);
 
