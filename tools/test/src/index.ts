@@ -42,10 +42,9 @@ export const test = (
     ...[`--config`, configFile],
     ...[`--rootDir`, rootDir],
     watch ? '--watch' : '',
-    ...(ci ? ciFlags : []),
-    ...passThroughOptions,
     verbose ? '--verbose' : '',
     ...(ci ? ciFlags : []),
+    ...passThroughOptions,
   ].filter(v => v !== '');
 
   spawn('jest', commandArgs, {
