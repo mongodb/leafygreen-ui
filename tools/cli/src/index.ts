@@ -78,7 +78,6 @@ cli
 cli
   .command('test')
   .description('Tests leafygreen-ui packages with unified config.')
-  // TODO: Files argument
   .argument('[pass-through...]', 'Pass-through options for `jest`')
   .option('--watch', 'Watch all files you intend to test', false)
   .option('--ci', 'Runs tests with CI configuration', false)
@@ -87,6 +86,7 @@ cli
     'Specify a jest config file. By default will look for `jest.config.js` at the root, or use `@lg-tools/test/config`',
   )
   .allowUnknownOption(true)
+  .option('-v --verbose', 'Prints additional information to the console', false)
   .action(test);
 
 /** Update */

@@ -4,7 +4,6 @@ import path from 'path';
 import { test as lgTest } from '.';
 
 const spawnSpy = jest.spyOn(child_process, 'spawn');
-spawnSpy.mockImplementation((...args) => ({} as ChildProcess));
 
 describe('tools/test', () => {
   const baseArgs = [
@@ -15,6 +14,15 @@ describe('tools/test', () => {
   ];
 
   const baseEnv = { env: expect.objectContaining({ JEST_ENV: 'client' }) };
+
+  beforeEach(() => {
+    spawnSpy.mockImplementation(
+      (...args) =>
+        ({
+          on: (e: string, cb: (...args: Array<any>) => void) => {},
+        } as ChildProcess),
+    );
+  });
 
   afterEach(() => {
     spawnSpy.mockReset();
@@ -71,6 +79,22 @@ describe('tools/test', () => {
     expect(spawnSpy).toHaveBeenCalledWith(
       'jest',
       expect.arrayContaining([...baseArgs, '--testNamePattern=button']),
+      expect.objectContaining(baseEnv),
+    );
+  });
+
+  test('runs for specific files', () => {
+    lgTest('./packages/button/src/Button/Button.spec.tsx', {
+      watch: false,
+      ci: true,
+    });
+
+    expect(spawnSpy).toHaveBeenCalledWith(
+      'jest',
+      expect.arrayContaining([
+        './packages/button/src/Button/Button.spec.tsx',
+        ...baseArgs,
+      ]),
       expect.objectContaining(baseEnv),
     );
   });
