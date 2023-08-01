@@ -45,7 +45,7 @@ const ToggleExpandedIcon = ({
 
 ToggleExpandedIcon.propTypes = {
   disabled: PropTypes.bool,
-  toggleExpanded: PropTypes.any.isRequired,
+  toggleExpanded: PropTypes.func.isRequired,
   isExpanded: PropTypes.bool.isRequired,
 };
 

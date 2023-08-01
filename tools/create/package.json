@@ -1,0 +1,26 @@
+{
+  "name": "@lg-tools/create",
+  "version": "0.1.0",
+  "description": "Creates a new LeafyGreen packages",
+  "main": "dist/index.js",
+  "module": "dist/esm/index.js",
+  "license": "Apache-2.0",
+  "bin": {
+    "lg-create": "./dist/legacy-create.js"
+  },
+  "scripts": {
+    "build": "lg-internal-build-package",
+    "tsc": "tsc --build tsconfig.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@lg-tools/build": "^0.1.0",
+    "@lg-tools/meta": "^0.1.0",
+    "@types/fs-extra": "^11.0.1",
+    "chalk": "^4.1.2",
+    "fs-extra": "^11.1.1",
+    "lodash": "^4.17.21"
+  }
+}

@@ -6,7 +6,7 @@ import { useAvailableSpace, useForwardedRef } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { palette } from '@leafygreen-ui/palette';
-import Popover from '@leafygreen-ui/popover';
+import Popover, { PortalControlProps } from '@leafygreen-ui/popover';
 import { Error } from '@leafygreen-ui/typography';
 
 import { ComboboxProps } from '../Combobox.types';
@@ -30,17 +30,14 @@ type ComboboxMenuProps = {
   id: string;
   labelId: string;
   menuWidth: number;
-} & Pick<
-  ComboboxProps<any>,
-  | 'searchLoadingMessage'
-  | 'searchErrorMessage'
-  | 'searchEmptyMessage'
-  | 'usePortal'
-  | 'portalClassName'
-  | 'portalContainer'
-  | 'scrollContainer'
-  | 'popoverZIndex'
->;
+} & PortalControlProps &
+  Pick<
+    ComboboxProps<any>,
+    | 'searchLoadingMessage'
+    | 'searchErrorMessage'
+    | 'searchEmptyMessage'
+    | 'popoverZIndex'
+  >;
 
 export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
   (

@@ -1,0 +1,7 @@
+{
+  "$schema": "tools/meta/lg.schema.json",
+  "scopes": {
+    "@leafygreen-ui": "packages",
+    "@lg-tools": "tools"
+  }
+}

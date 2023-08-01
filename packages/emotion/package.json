@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/emotion",
-  "version": "4.0.4",
+  "version": "4.0.5",
   "description": "leafyGreen UI Kit's Custom Instance of Emotion",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -13,8 +13,9 @@
     }
   },
   "scripts": {
-    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js",
-    "tsc": "tsc --build tsconfig.json"
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
   },
   "keywords": [],
   "license": "Apache-2.0",
@@ -33,5 +34,6 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
-  }
+  },
+  "devDependencies": {}
 }
