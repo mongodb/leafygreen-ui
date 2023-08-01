@@ -22,7 +22,6 @@ export const Button = React.forwardRef(function Button(
     darkMode: darkModeProp,
     baseFontSize = BaseFontSize.Body1,
     disabled = false,
-    isLoading = false,
     onClick,
     leftGlyph,
     rightGlyph,
@@ -30,6 +29,8 @@ export const Button = React.forwardRef(function Button(
     className,
     as,
     type,
+    isLoading = false,
+    loadingIndicator,
     loadingText,
     ...rest
   }: BoxProps<'button', ButtonProps>,
@@ -71,6 +72,7 @@ export const Button = React.forwardRef(function Button(
     variant,
     size,
     isLoading,
+    loadingIndicator,
     loadingText,
   } as const;
 
@@ -92,4 +94,7 @@ Button.propTypes = {
   leftGlyph: PropTypes.element,
   rightGlyph: PropTypes.element,
   href: PropTypes.string,
+  isLoading: PropTypes.bool,
+  loadingText: PropTypes.string,
+  loadingIndicator: PropTypes.element,
 };

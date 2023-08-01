@@ -1,5 +1,31 @@
 # @leafygreen-ui/code
 
+## 14.2.10
+
+### Patch Changes
+
+- Updated dependencies [cfba537d]
+  - @leafygreen-ui/button@21.0.0
+  - @leafygreen-ui/select@10.3.9
+
+## 14.2.9
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+- Updated dependencies [215268ff]
+  - @leafygreen-ui/leafygreen-provider@3.1.4
+  - @leafygreen-ui/icon-button@15.0.14
+  - @leafygreen-ui/emotion@4.0.5
+  - @leafygreen-ui/palette@4.0.5
+  - @leafygreen-ui/button@20.3.1
+  - @leafygreen-ui/select@10.3.8
+  - @leafygreen-ui/tokens@2.1.2
+  - @leafygreen-ui/hooks@7.7.6
+  - @leafygreen-ui/a11y@1.4.5
+  - @leafygreen-ui/icon@11.20.1
+  - @leafygreen-ui/lib@10.4.1
+
 ## 14.2.8
 
 ### Patch Changes

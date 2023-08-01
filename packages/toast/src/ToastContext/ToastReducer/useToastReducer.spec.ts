@@ -1,4 +1,4 @@
-import { act } from 'react-test-renderer';
+import { act } from 'react-dom/test-utils';
 import { cleanup } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 

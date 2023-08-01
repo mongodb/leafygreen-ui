@@ -1,0 +1,23 @@
+{
+  "extends": "@lg-tools/build/config/package.tsconfig.json",
+   "compilerOptions": {
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "rootDir": "src",
+    "baseUrl": ".",
+    "paths": {
+      "@lg-tools/*": ["../*/src"]
+    }
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "references": [
+    {
+      "path": "../build"
+    },
+    {
+      "path": "../meta"
+    }
+  ]
+}
