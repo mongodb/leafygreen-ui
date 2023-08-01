@@ -22,7 +22,7 @@ jobs:
           path: |
             **/dist
             !**/node_modules
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/{packages,tools}', '!**/node_modules', '!**/dist') }}
 
       # Only setup & build if there was no build cache hit
       - name: Use Node 16
@@ -62,7 +62,7 @@ jobs:
           path: |
             **/dist
             !**/node_modules
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/{packages,tools}', '!**/node_modules', '!**/dist') }}
 
       - name: Install Dependencies
         run: yarn install --frozen-lockfile --prefer-offline
@@ -97,7 +97,7 @@ jobs:
           path: |
             **/dist
             !**/node_modules
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/{packages,tools}', '!**/node_modules', '!**/dist') }}
 
       - name: Build Storybook
         run: npx build-storybook
@@ -135,7 +135,7 @@ jobs:
           path: |
             **/dist
             !**/node_modules
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/{packages,tools}', '!**/node_modules', '!**/dist') }}
 
       - name: tests
         run: yarn test --ci
@@ -166,7 +166,7 @@ jobs:
           path: |
             **/dist
             !**/node_modules
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/{packages,tools}', '!**/node_modules', '!**/dist') }}
 
       - name: validate
         run: yarn validate
