@@ -1,14 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "@lg-tools/build/config/package.tsconfig.json",
+  "extends": "@lg-tools/build/config/global.tsconfig.json",
   "compilerOptions": {
-    "module": "CommonJS",
-    "moduleResolution": "node",
-    "noEmit": true,
-    "incremental": true,
-    "allowJs": true,
     "baseUrl": ".",
-    "resolveJsonModule": true,
     "paths": {
       "@leafygreen-ui/icon/dist/*": ["./packages/icon/src/generated/*"],
       "@leafygreen-ui/*": ["packages/*/src"],
