@@ -1,5 +1,11 @@
 # @lg-tools/build
 
+## 0.1.1
+
+### Patch Changes
+
+- ff02d0bb: Updates rollup config to polyfill node builtins.
+
 ## 0.1.0
 
 ### Minor Changes
