@@ -7,16 +7,15 @@ export interface TestCommandOptions {
   ci: boolean;
   watch?: boolean;
   verbose?: boolean;
-  testNamePattern?: string;
   config?: string;
 }
 
 export const test = (
-  testFilesPattern: string | undefined,
+  passThrough: Array<string> | string | undefined,
   options: TestCommandOptions,
 ) => {
   const rootDir = process.cwd();
-  const { watch, testNamePattern, ci, verbose, config: configParam } = options;
+  const { watch, ci, verbose, config: configParam } = options;
   const ciFlags = [
     '--no-cache',
     '--ci',
@@ -24,6 +23,11 @@ export const test = (
     '--reporters=default',
     '--reporters=jest-junit',
   ];
+  const passThroughOptions = passThrough
+    ? typeof passThrough === 'string'
+      ? [passThrough]
+      : passThrough
+    : [];
 
   const localConfigFile = path.resolve(rootDir, 'jest.config.js');
   const defaultConfigFile = path.resolve(__dirname, '../config/jest.config.js');
@@ -35,15 +39,12 @@ export const test = (
       : defaultConfigFile; // fallback to the default config
 
   const commandArgs = [
-    testFilesPattern ?? '',
-    `--config`,
-    configFile,
-    `--rootDir`,
-    rootDir,
+    ...[`--config`, configFile],
+    ...[`--rootDir`, rootDir],
     watch ? '--watch' : '',
     verbose ? '--verbose' : '',
-    testNamePattern ? `--testNamePattern=${testNamePattern}` : '',
     ...(ci ? ciFlags : []),
+    ...passThroughOptions,
   ].filter(v => v !== '');
 
   spawn('jest', commandArgs, {
