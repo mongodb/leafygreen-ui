@@ -1,5 +1,12 @@
 # @lg-tools/build
 
+## 0.1.2
+
+### Patch Changes
+
+- cb1e4ba4: Sets @lg-tools package dependencies to specific versions.
+  This should solve dependency resolution issues in consuming applications
+
 ## 0.1.1
 
 ### Patch Changes

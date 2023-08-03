@@ -1,5 +1,11 @@
 # @lg-tools/cli
 
+## 0.2.1
+
+### Patch Changes
+
+- Update @lg-tools dependencies
+
 ## 0.2.0
 
 ### Minor Changes
