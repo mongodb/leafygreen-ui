@@ -1,5 +1,14 @@
 # @lg-tools/storybook
 
+## 0.1.3
+
+### Patch Changes
+
+- cb1e4ba4: Sets @lg-tools package dependencies to specific versions.
+  This should solve dependency resolution issues in consuming applications
+- Updated dependencies [cb1e4ba4]
+  - @lg-tools/build@0.1.2
+
 ## 0.1.2
 
 ### Patch Changes
