@@ -1,5 +1,11 @@
 # @leafygreen-ui/combobox
 
+## 6.0.9
+
+### Patch Changes
+
+- e8ef95e6: Updates disabled styles
+
 ## 6.0.8
 
 ### Patch Changes
