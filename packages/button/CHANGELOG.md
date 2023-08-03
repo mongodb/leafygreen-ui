@@ -1,5 +1,11 @@
 # @leafygreen-ui/button
 
+## 21.0.1
+
+### Patch Changes
+
+- e8ef95e6: Updates disabled styles
+
 ## 21.0.0
 
 ### Major Changes
