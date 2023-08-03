@@ -14,8 +14,8 @@
   },
   "dependencies": {
     "@lg-tools/build": "^0.1.0",
-    "@types/fs-extra": "^11.0.1",
-    "chalk": "^4.1.2",
-    "fs-extra": "^11.1.1"
+    "@types/fs-extra": "11.0.1",
+    "chalk": "4.1.2",
+    "fs-extra": "11.1.1"
   }
 }
