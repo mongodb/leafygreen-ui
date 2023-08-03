@@ -4408,7 +4408,7 @@
     "@storybook/react" "7.1.1"
     "@types/node" "^16.0.0"
 
-"@storybook/react@7.1.1", "@storybook/react@^7.1.1":
+"@storybook/react@7.1.1":
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/@storybook/react/-/react-7.1.1.tgz#74170fbd0b27d565af8e671aa43260b366e62712"
   integrity sha512-qgZ/K2KKR+WrIHZEg5UZn0kqlzDk+sP51yosn7Ymt8j85yNgYm4G1q+oGYY+wKSIJEIi31mrQEz8oFHn8jaT2Q==
