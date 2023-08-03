@@ -22,7 +22,7 @@
     "@leafygreen-ui/palette": "^4.0.5",
     "@leafygreen-ui/tokens": "^2.1.2",
     "@lg-tools/build": "^0.1.0",
-    "@storybook/react": "^7.1.1",
-    "lodash": "^4.17.21"
+    "@storybook/react": "7.1.1",
+    "lodash": "4.17.21"
   }
 }
