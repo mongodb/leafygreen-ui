@@ -12,7 +12,7 @@
     "lg": "lg",
     "init": "yarn && yarn build",
     "create-package": "lg-create",
-    "prebuild": "turbo run build tsc --filter=@lg-tools/cli",
+    "prebuild": "turbo run build tsc --filter=@lg-tools/*",
     "build": "turbo run build tsc",
     "build-storybook": "storybook build",
     "chromatic": "npx chromatic",
@@ -50,7 +50,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "5.2.0",
-    "storybook": "^7.1.0",
+    "storybook": "~7.1.0",
     "turbo": "^1.10.7",
     "typescript": "~4.7.0"
   },
