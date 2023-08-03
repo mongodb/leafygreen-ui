@@ -7,7 +7,7 @@ import terser from '@rollup/plugin-terser';
 import urlPlugin from '@rollup/plugin-url';
 import svgr from '@svgr/rollup';
 import fs from 'fs';
-import glob from 'glob';
+import { glob } from 'glob';
 import path from 'path';
 import { nodeExternals } from 'rollup-plugin-node-externals';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
