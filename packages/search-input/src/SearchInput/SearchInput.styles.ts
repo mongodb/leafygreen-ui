@@ -134,7 +134,7 @@ export const baseInputStyle = css`
   border: none;
   padding: 0;
 
-  &:disabled {
+  &[aria-disabled='true'] {
     cursor: not-allowed;
 
     &:hover,
@@ -169,7 +169,7 @@ export const inputThemeStyle: Record<Theme, string> = {
       border: none;
       -webkit-text-fill-color: inherit;
 
-      &:not(:disabled) {
+      &[aria-disabled='false'] {
         box-shadow: ${autofillShadowOverride(palette.white)};
 
         &:focus {
@@ -189,7 +189,7 @@ export const inputThemeStyle: Record<Theme, string> = {
       font-weight: ${fontWeights.regular};
     }
 
-    &:disabled {
+    &[aria-disabled='true'] {
       &::placeholder {
         color: ${palette.gray.base};
       }
@@ -212,7 +212,7 @@ export const inputThemeStyle: Record<Theme, string> = {
       background: transparent;
       border: none;
       -webkit-text-fill-color: ${palette.gray.light3};
-      &:not(:disabled) {
+      &[aria-disabled='false'] {
         box-shadow: ${autofillShadowOverride(palette.gray.dark4)};
 
         &:focus {
@@ -233,9 +233,9 @@ export const inputThemeStyle: Record<Theme, string> = {
       font-weight: ${fontWeights.regular};
     }
 
-    &:disabled {
+    &[aria-disabled='true'] {
       &::placeholder {
-        color: ${palette.gray.base};
+        color: ${palette.gray.dark1};
       }
 
       &:-webkit-autofill {
