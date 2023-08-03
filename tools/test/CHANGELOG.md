@@ -1,5 +1,18 @@
 # @lg-tools/test
 
+## 0.2.0
+
+### Minor Changes
+
+- 61ab7efc: Add `testFilesPattern` argument to `lg test` which is passed to `jest` as `regexForTestFiles`. See [jest docs](https://jestjs.io/docs/cli#jest-regexfortestfiles) for more
+- 06316485: Adds pass-through arguments to `lg test` command. You can now pass through any command accepted by the `jest` cli
+
+### Patch Changes
+
+- 61ab7efc: Ensures `lg tests` exits with code `1` if there are failing tests
+- Updated dependencies [ff02d0bb]
+  - @lg-tools/build@0.1.1
+
 ## 0.1.0
 
 ### Minor Changes
