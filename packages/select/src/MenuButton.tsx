@@ -131,14 +131,12 @@ const menuButtonDeselectedStyles: Record<Theme, string> = {
 };
 
 const menuButtonDisabledStyles = css`
-  &:disabled {
-    cursor: not-allowed;
-    pointer-events: unset;
-    box-shadow: unset;
+  cursor: not-allowed;
+  pointer-events: unset;
+  box-shadow: unset;
 
-    &:active {
-      pointer-events: none;
-    }
+  &:active {
+    pointer-events: none;
   }
 `;
 
@@ -146,7 +144,7 @@ const menuButtonDisabledThemeStyles: Record<Theme, string> = {
   [Theme.Light]: cx(
     menuButtonDisabledStyles,
     css`
-      &:disabled {
+      &[aria-disabled='true'] {
         background-color: ${palette.gray.light2};
         color: ${palette.gray.base};
 
@@ -161,7 +159,7 @@ const menuButtonDisabledThemeStyles: Record<Theme, string> = {
   [Theme.Dark]: cx(
     menuButtonDisabledStyles,
     css`
-      &:disabled {
+      &[aria-disabled='true'] {
         background-color: ${palette.gray.dark3};
         color: ${palette.gray.dark2};
         border-color: ${palette.gray.dark2};
