@@ -59,7 +59,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
         color: ${palette.black};
       }
 
-      &:hover,
+      &:hover[aria-disabled='false'],
       &:active {
         color: ${palette.black};
         background-color: ${palette.white};
@@ -76,7 +76,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
         color: ${palette.white};
       }
 
-      &:hover,
+      &:hover[aria-disabled='false'],
       &:active {
         color: ${palette.white};
         background-color: #00593f; // Not quite dark3
@@ -94,7 +94,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
         color: ${palette.green.dark2};
       }
 
-      &:hover,
+      &:hover[aria-disabled='false'],
       &:active {
         color: ${palette.green.dark2};
         background-color: ${transparentize(0.96, palette.green.base)};
@@ -111,7 +111,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
         color: ${palette.white};
       }
 
-      &:hover,
+      &:hover[aria-disabled='false'],
       &:active {
         color: ${palette.white};
         background-color: #c82222; // not quite dark1
@@ -129,7 +129,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
         color: ${palette.red.base};
       }
 
-      &:hover,
+      &:hover[aria-disabled='false'],
       &:active {
         color: ${palette.red.dark2};
         background-color: ${transparentize(0.96, palette.red.base)};
@@ -147,7 +147,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
         color: ${palette.green.dark3};
       }
 
-      &:hover,
+      &:hover[aria-disabled='false'],
       &:active {
         color: ${palette.green.dark3};
         background-color: ${mix(0.96, palette.green.base, palette.green.dark3)};
@@ -165,7 +165,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
         color: ${palette.white};
       }
 
-      &:hover,
+      &:hover[aria-disabled='false'],
       &:active {
         background-color: ${palette.gray.dark1};
         border-color: ${palette.gray.base};
@@ -182,7 +182,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
         color: ${palette.white};
       }
 
-      &:hover,
+      &:hover[aria-disabled='false'],
       &:active {
         color: ${palette.white};
         background-color: #00593f; // Off palette
@@ -199,7 +199,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
         color: ${palette.green.base};
       }
 
-      &:hover,
+      &:hover[aria-disabled='false'],
       &:active {
         color: ${palette.green.base};
         background-color: ${transparentize(0.96, palette.green.base)};
@@ -217,7 +217,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
         color: ${palette.white};
       }
 
-      &:hover,
+      &:hover[aria-disabled='false'],
       &:active {
         border-color: ${palette.red.light1};
         color: ${palette.white};
@@ -234,7 +234,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
         color: ${palette.red.light1};
       }
 
-      &:hover,
+      &:hover[aria-disabled='false'],
       &:active {
         color: ${palette.red.light1};
         background-color: ${transparentize(0.96, palette.red.base)};
@@ -251,7 +251,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
         color: ${palette.green.dark3};
       }
 
-      &:hover,
+      &:hover[aria-disabled='false'],
       &:active {
         color: ${palette.green.dark3};
         background-color: ${mix(
