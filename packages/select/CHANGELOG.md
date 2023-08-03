@@ -1,5 +1,13 @@
 # @leafygreen-ui/select
 
+## 10.3.10
+
+### Patch Changes
+
+- e8ef95e6: Updates disabled styles
+- Updated dependencies [e8ef95e6]
+  - @leafygreen-ui/button@21.0.1
+
 ## 10.3.9
 
 ### Patch Changes
