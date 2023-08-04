@@ -1,5 +1,5 @@
 import React from 'react';
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 import { darken, lighten, readableColor, transparentize } from 'polished';
 
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -26,7 +26,7 @@ const ShadeNames = [
   'light2',
   'light3',
 ] as const;
-type ShadeName = typeof ShadeNames[number];
+type ShadeName = (typeof ShadeNames)[number];
 
 interface ColorBlockProps extends HTMLElementProps<'div'> {
   hue: HueName;

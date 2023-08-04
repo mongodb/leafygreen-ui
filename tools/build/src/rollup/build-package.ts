@@ -1,8 +1,15 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
-import { spawn } from 'cross-spawn';
+// import { spawn } from 'cross-spawn';
 import fse from 'fs-extra';
 import path from 'path';
+import rollup, { type MergedRollupOptions } from 'rollup';
+import {
+  type BatchWarnings,
+  type LoadConfigFile,
+} from 'rollup/dist/loadConfigFile';
+// @ts-expect-error - type declaration incorrectly defined
+import { loadConfigFile } from 'rollup/loadConfigFile';
 
 interface BuildPackageOptions {
   /**
@@ -17,7 +24,7 @@ interface BuildPackageOptions {
 /**
  * Builds packages using rollup for the current directory
  */
-export function buildPackage({ direct }: BuildPackageOptions) {
+export function buildPackage({ direct, verbose }: BuildPackageOptions) {
   const packageDir = process.cwd();
   const localRollupConfigPath = path.join(packageDir, 'rollup.config.mjs');
   const defaultRollupConfigPath = path.join(
@@ -51,8 +58,39 @@ export function buildPackage({ direct }: BuildPackageOptions) {
     );
   }
 
-  spawn('rollup', ['--config', rollupConfigPath], {
-    cwd: packageDir,
-    stdio: 'inherit',
-  });
+  // load the rollup config file, and run rollup
+  (loadConfigFile as LoadConfigFile)(rollupConfigPath, {}).then(
+    async ({
+      options,
+      warnings,
+    }: {
+      options: Array<MergedRollupOptions>;
+      warnings: BatchWarnings;
+    }) => {
+      if (warnings.count > 0) {
+        if (verbose) {
+          // This prints all deferred warnings
+          warnings.flush();
+        } else {
+          console.log(
+            warnings.count + ' build warnings. Run with `--verbose` for more',
+          );
+        }
+      }
+
+      for (const optionsObj of options) {
+        const bundle = await rollup.rollup({
+          ...optionsObj,
+          logLevel: verbose ? 'debug' : 'warn',
+        });
+        verbose &&
+          console.log(
+            `${chalk.bold(optionsObj.input)} > ${chalk.bold(
+              optionsObj.output.map(obj => obj.dir || obj.file),
+            )}`,
+          );
+        await Promise.all(optionsObj.output.map(bundle.write));
+      }
+    },
+  );
 }
