@@ -7,9 +7,13 @@ import { test } from '@lg-tools/test';
 import { update } from '@lg-tools/update';
 import { validate } from '@lg-tools/validate';
 import { Command } from 'commander';
+import { sync as readPackageUpSync } from 'read-pkg-up';
+
+const pkg = readPackageUpSync({ cwd: __dirname })?.packageJson;
 
 const cli = new Command('lg');
 cli
+  .version(pkg?.version ?? '0.0.0')
   .description('Command line tools for the LeafyGreen UI library by MongoDB')
   .enablePositionalOptions(true);
 
