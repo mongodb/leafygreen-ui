@@ -1,6 +1,6 @@
 import { addons } from '@storybook/addons';
 
-import theme from '@lg-tools/storybook/theme';
+import theme from './theme';
 
 addons.setConfig({
   name: 'LeafyGreen UI',
