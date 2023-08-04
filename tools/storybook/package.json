@@ -15,7 +15,12 @@
     "access": "public"
   },
   "dependencies": {
+    "@leafygreen-ui/lib": "^10.4.0",
+    "@leafygreen-ui/palette": "^4.0.5",
+    "@leafygreen-ui/tokens": "^2.1.2",
+    "@leafygreen-ui/typography": "^16.5.1",
     "@lg-tools/build": "^0.1.2",
+    "@lg-tools/storybook-decorators": "^0.1.1",
     "@mdx-js/react": "1.6.22",
     "@storybook/addon-a11y": "7.1.1",
     "@storybook/addon-actions": "7.1.1",
@@ -47,11 +52,7 @@
     "webpack": "5.88.0"
   },
   "peerDependencies": {
-    "@leafygreen-ui/lib": "^10.4.0",
-    "@leafygreen-ui/palette": "^4.0.5",
-    "@leafygreen-ui/tokens": "^2.1.2",
-    "@leafygreen-ui/typography": "^16.5.1",
-    "@lg-tools/storybook-decorators": "^0.1.1",
+
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "storybook": "^7.1.0"
