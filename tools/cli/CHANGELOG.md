@@ -1,5 +1,27 @@
 # @lg-tools/cli
 
+## 0.3.0
+
+### Minor Changes
+
+- c2908c5a: Updates `build` package to use Rollup's JS API rather than spawning rollup using the command line. This gives us more control over the build, and we don't need to worry about the path of the `rollup` binary in consuming ap
+  plications
+
+### Patch Changes
+
+- 6a1495fa: Adds CLI version flag
+- Updated dependencies [746962d9]
+- Updated dependencies [c2908c5a]
+- Updated dependencies [6776fee7]
+  - @lg-tools/build@0.2.0
+  - @lg-tools/create@0.1.2
+  - @lg-tools/install@0.1.2
+  - @lg-tools/link@0.1.2
+  - @lg-tools/lint@0.1.3
+  - @lg-tools/test@0.2.2
+  - @lg-tools/update@0.1.2
+  - @lg-tools/validate@0.1.2
+
 ## 0.2.1
 
 ### Patch Changes
