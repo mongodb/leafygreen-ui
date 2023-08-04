@@ -4,6 +4,7 @@ import { LGGlyph } from '../types';
 // Glyphs
 import ActivityFeed from './ActivityFeed.svg';
 import AddFile from './AddFile.svg';
+import AllProducts from './AllProducts.svg';
 import Apps from './Apps.svg';
 import Array from './Array.svg';
 import ArrowDown from './ArrowDown.svg';
@@ -80,6 +81,8 @@ import Menu from './Menu.svg';
 import Minus from './Minus.svg';
 import MultiDirectionArrow from './MultiDirectionArrow.svg';
 import MultiLayers from './MultiLayers.svg';
+import NavCollapse from './NavCollapse.svg';
+import NavExpand from './NavExpand.svg';
 import NoFilter from './NoFilter.svg';
 import NotAllowed from './NotAllowed.svg';
 import Note from './Note.svg';
@@ -138,6 +141,7 @@ import XWithCircle from './XWithCircle.svg';
 const _glyphs = {
   ActivityFeed,
   AddFile,
+  AllProducts,
   Apps,
   Array,
   ArrowDown,
@@ -214,6 +218,8 @@ const _glyphs = {
   Minus,
   MultiDirectionArrow,
   MultiLayers,
+  NavCollapse,
+  NavExpand,
   NoFilter,
   NotAllowed,
   Note,
