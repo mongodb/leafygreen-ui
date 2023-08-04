@@ -1,5 +1,5 @@
 import React from 'react';
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 import { darken, lighten, readableColor, transparentize } from 'polished';
 
 import { css, cx } from '@leafygreen-ui/emotion';
