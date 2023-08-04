@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 import React from 'react';
-import { startCase } from 'lodash';
+import startCase from 'lodash/startCase';
 
 import { css } from '@leafygreen-ui/emotion';
 import { StoryMetaType } from '@leafygreen-ui/lib';
