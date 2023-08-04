@@ -24,6 +24,7 @@
     "@lg-tools/test": "0.2.1",
     "@lg-tools/update": "0.1.1",
     "@lg-tools/validate": "0.1.1",
-    "commander": "^11.0.0"
+    "commander": "^11.0.0",
+    "read-pkg-up": "7.0.1"
   }
 }
