@@ -26,7 +26,7 @@ const ShadeNames = [
   'light2',
   'light3',
 ] as const;
-type ShadeName = (typeof ShadeNames)[number];
+type ShadeName = typeof ShadeNames[number];
 
 interface ColorBlockProps extends HTMLElementProps<'div'> {
   hue: HueName;
