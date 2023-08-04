@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/create",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Creates a new LeafyGreen packages",
   "main": "dist/index.js",
   "module": "dist/esm/index.js",
@@ -16,8 +16,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@lg-tools/build": "^0.1.0",
-    "@lg-tools/meta": "^0.1.0",
+    "@lg-tools/build": "^0.1.2",
+    "@lg-tools/meta": "^0.1.1",
     "@types/fs-extra": "11.0.1",
     "chalk": "4.1.2",
     "fs-extra": "11.1.1",
