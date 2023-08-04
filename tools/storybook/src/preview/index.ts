@@ -49,7 +49,7 @@ const parameters = {
   },
 };
 
-export const decorators = [PropCombinations, ReactStrictMode, ComponentPreview];
+const decorators = [PropCombinations, ReactStrictMode, ComponentPreview];
 
 const preview: Preview = {
   parameters,

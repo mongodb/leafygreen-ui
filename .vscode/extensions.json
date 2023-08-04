@@ -6,6 +6,7 @@
     "esbenp.prettier-vscode",
     "wayou.vscode-todo-highlight",
     "styled-components.vscode-styled-components",
-    "redhat.vscode-yaml"
+    "redhat.vscode-yaml",
+    "julienetie.vscode-template-literals"
   ]
 }

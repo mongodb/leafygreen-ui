@@ -1,9 +1,16 @@
+/**
+ * In this file we create default values for storybook `main.ts` properties
+ */
+
 import type { StorybookConfig } from '@storybook/react-webpack5';
 import { isRegExp } from 'lodash';
 import { ProvidePlugin, RuleSetRule } from 'webpack';
 
 import { findStories } from './findStories';
 import { isRule } from './utils';
+
+export { managerHead } from './manager-head';
+export { previewHead } from './preview-head';
 
 // @ts-expect-error https://github.com/storybookjs/storybook/issues/23624
 export const stories: StorybookConfig['stories'] = findStories(
@@ -30,7 +37,10 @@ export const core: StorybookConfig['core'] = {
   disableTelemetry: true,
 };
 
-export const staticDirs: StorybookConfig['staticDirs'] = ['./static'];
+export const staticDirs: StorybookConfig['staticDirs'] = [
+  './static',
+  '../node_modules/@lg-tools/storybook/static',
+];
 
 export const babel: StorybookConfig['babel'] = async options => {
   return {

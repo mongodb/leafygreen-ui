@@ -1,6 +1,12 @@
 import { globSync } from 'glob';
 import path from 'path';
 
+/**
+ * Finds story files to include based on the provided include/exclude glob patterns
+ * @param includePattern
+ * @param excludePattern
+ * @returns Array of all included files
+ */
 export function findStories(
   includePattern: string,
   excludePattern: string,

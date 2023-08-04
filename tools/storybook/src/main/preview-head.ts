@@ -1,3 +1,11 @@
+import { StorybookConfig } from '@storybook/react-webpack5';
+
+/**
+ * The HTML head for the Storybook preview iframe
+ * https://storybook.js.org/docs/react/api/main-config-preview-head
+ */
+export const previewHead: StorybookConfig['previewHead'] = (head: string) => `
+${head}
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -146,3 +154,4 @@
       url('https://d2va9gm4j17fy9.cloudfront.net/fonts/value-serif/MongoDBValueSerif-Regular.ttf') format('truetype');
   }
 </style>
+`;
