@@ -418,6 +418,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
                 placeholder={placeholder}
                 ref={inputRef}
                 readOnly={disabled}
+                aria-disabled={disabled}
               />
               {value && (
                 <IconButton

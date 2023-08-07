@@ -16,7 +16,7 @@ module.exports = {
       ],
     ],
     'prefer-caret-version-dependencies': [
-      'warning',
+      'off',
       { exceptions: ['highlight.js', 'prettier'] },
     ],
     'valid-values-license': ['error', ['Apache-2.0']],

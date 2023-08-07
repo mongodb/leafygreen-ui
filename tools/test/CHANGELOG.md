@@ -1,5 +1,36 @@
 # @lg-tools/test
 
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies [746962d9]
+- Updated dependencies [c2908c5a]
+- Updated dependencies [6776fee7]
+  - @lg-tools/build@0.2.0
+
+## 0.2.1
+
+### Patch Changes
+
+- cb1e4ba4: Sets @lg-tools package dependencies to specific versions.
+  This should solve dependency resolution issues in consuming applications
+- Updated dependencies [cb1e4ba4]
+  - @lg-tools/build@0.1.2
+
+## 0.2.0
+
+### Minor Changes
+
+- 61ab7efc: Add `testFilesPattern` argument to `lg test` which is passed to `jest` as `regexForTestFiles`. See [jest docs](https://jestjs.io/docs/cli#jest-regexfortestfiles) for more
+- 06316485: Adds pass-through arguments to `lg test` command. You can now pass through any command accepted by the `jest` cli
+
+### Patch Changes
+
+- 61ab7efc: Ensures `lg tests` exits with code `1` if there are failing tests
+- Updated dependencies [ff02d0bb]
+  - @lg-tools/build@0.1.1
+
 ## 0.1.0
 
 ### Minor Changes

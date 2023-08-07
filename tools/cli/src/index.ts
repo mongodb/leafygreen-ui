@@ -8,11 +8,15 @@ import { test } from '@lg-tools/test';
 import { update } from '@lg-tools/update';
 import { validate } from '@lg-tools/validate';
 import { Command } from 'commander';
+import { sync as readPackageUpSync } from 'read-pkg-up';
+
+const pkg = readPackageUpSync({ cwd: __dirname })?.packageJson;
 
 const cli = new Command('lg');
 cli
+  .version(pkg?.version ?? '0.0.0')
   .description('Command line tools for the LeafyGreen UI library by MongoDB')
-  .enablePositionalOptions();
+  .enablePositionalOptions(true);
 
 /** Create */
 cli
@@ -114,18 +118,15 @@ cli
 cli
   .command('test')
   .description('Tests leafygreen-ui packages with unified config.')
-  // TODO: Files argument
+  .argument('[pass-through...]', 'Pass-through options for `jest`')
   .option('--watch', 'Watch all files you intend to test', false)
   .option('--ci', 'Runs tests with CI configuration', false)
   .option(
     '--config',
     'Specify a jest config file. By default will look for `jest.config.js` at the root, or use `@lg-tools/test/config`',
   )
-  .option(
-    '-t, --testNamePattern <regex>',
-    'Alias of jest --testNamePattern. Run only tests with a name that matches the regex.',
-    undefined,
-  )
+  .allowUnknownOption(true)
+  .option('-v --verbose', 'Prints additional information to the console', false)
   .action(test);
 
 /** Update */
@@ -163,14 +164,17 @@ cli
 cli
   .command('build-package')
   .description('Builds a package')
+  .option('-v --verbose', 'Prints additional information to the console', false)
   .action(buildPackage);
 cli
   .command('build-ts')
   .description("Builds a package's TypeScript definitions")
+  .option('-v --verbose', 'Prints additional information to the console', false)
   .action(buildTypescript);
 cli
   .command('build-tsdoc')
   .description("Builds a package's TSDoc file")
+  .option('-v --verbose', 'Prints additional information to the console', false)
   .action(buildTSDoc);
 
 cli.parse(process.argv);

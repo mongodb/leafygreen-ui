@@ -4,15 +4,18 @@ import fse from 'fs-extra';
 import path from 'path';
 
 export interface TestCommandOptions {
-  watch: boolean;
   ci: boolean;
-  testNamePattern?: string;
+  watch?: boolean;
+  verbose?: boolean;
   config?: string;
 }
 
-export const test = (options: TestCommandOptions) => {
+export const test = (
+  passThrough: Array<string> | string | undefined,
+  options: TestCommandOptions,
+) => {
   const rootDir = process.cwd();
-  const { watch, testNamePattern, ci, config: configParam } = options;
+  const { watch, ci, verbose, config: configParam } = options;
   const ciFlags = [
     '--no-cache',
     '--ci',
@@ -20,6 +23,11 @@ export const test = (options: TestCommandOptions) => {
     '--reporters=default',
     '--reporters=jest-junit',
   ];
+  const passThroughOptions = passThrough
+    ? typeof passThrough === 'string'
+      ? [passThrough]
+      : passThrough
+    : [];
 
   const localConfigFile = path.resolve(rootDir, 'jest.config.js');
   const defaultConfigFile = path.resolve(__dirname, '../config/jest.config.js');
@@ -30,23 +38,20 @@ export const test = (options: TestCommandOptions) => {
       ? localConfigFile // otherwise look for a config at the root
       : defaultConfigFile; // fallback to the default config
 
-  spawn(
-    'jest',
-    [
-      `--config`,
-      configFile,
-      `--rootDir`,
-      rootDir,
-      watch ? '--watch' : '',
-      testNamePattern ? `--testNamePattern=${testNamePattern}` : '',
-      ...(ci ? ciFlags : []),
-    ],
-    {
-      env: {
-        ...process.env,
-        JEST_ENV: 'client',
-      },
-      stdio: 'inherit',
+  const commandArgs = [
+    ...[`--config`, configFile],
+    ...[`--rootDir`, rootDir],
+    watch ? '--watch' : '',
+    verbose ? '--verbose' : '',
+    ...(ci ? ciFlags : []),
+    ...passThroughOptions,
+  ].filter(v => v !== '');
+
+  spawn('jest', commandArgs, {
+    env: {
+      ...process.env,
+      JEST_ENV: 'client',
     },
-  );
+    stdio: 'inherit',
+  }).on('exit', process.exit);
 };
