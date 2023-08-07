@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/storybook",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "Storybook config for LeafyGreen",
   "license": "Apache-2.0",
   "main": "./dist/index.js",
@@ -52,7 +52,6 @@
     "webpack": "5.88.0"
   },
   "peerDependencies": {
-
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "storybook": "^7.1.0"
