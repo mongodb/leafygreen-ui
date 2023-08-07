@@ -1,5 +1,11 @@
 # @leafygreen-ui/search-input
 
+## 2.0.10
+
+### Patch Changes
+
+- e8ef95e6: Updates disabled styles
+
 ## 2.0.9
 
 ### Patch Changes

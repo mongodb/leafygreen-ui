@@ -4,6 +4,7 @@ import { StoryFn } from '@storybook/react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import {
+  storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -68,6 +69,7 @@ const meta: StoryMetaType<typeof Select> = {
     readOnly: { control: 'boolean' },
     errorMessage: { control: 'text' },
     allowDeselect: { control: 'boolean' },
+    darkMode: storybookArgTypes.darkMode,
   },
 };
 export default meta;

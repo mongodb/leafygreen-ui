@@ -1,5 +1,30 @@
 # @lg-tools/build
 
+## 0.2.0
+
+### Minor Changes
+
+- c2908c5a: Updates `build` package to use Rollup's JS API rather than spawning rollup using the command line. This gives us more control over the build, and we don't need to worry about the path of the `rollup` binary in consuming ap
+  plications
+
+### Patch Changes
+
+- 746962d9: Adds missing dependency `glob` to build package
+- 6776fee7: Adds `root.tsconfig.json`. Establishes rules for the root level tsconfig
+
+## 0.1.2
+
+### Patch Changes
+
+- cb1e4ba4: Sets @lg-tools package dependencies to specific versions.
+  This should solve dependency resolution issues in consuming applications
+
+## 0.1.1
+
+### Patch Changes
+
+- ff02d0bb: Updates rollup config to polyfill node builtins.
+
 ## 0.1.0
 
 ### Minor Changes
