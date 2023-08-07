@@ -23,3 +23,4 @@ export default {
   },
 };
 ```
+ - There is no need for a `manager.ts`, `preview.ts`, or `*-head.html` file, unless you need to extend the defaults in this addon
