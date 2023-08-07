@@ -3,7 +3,7 @@ import { createPackage } from '@lg-tools/create';
 import { installLeafyGreen } from '@lg-tools/install';
 import { linkPackages, unlinkPackages } from '@lg-tools/link';
 import { lint } from '@lg-tools/lint';
-import { Channels, releaseBot } from '@lg-tools/slackbot';
+import { releaseBot } from '@lg-tools/slackbot';
 import { test } from '@lg-tools/test';
 import { update } from '@lg-tools/update';
 import { validate } from '@lg-tools/validate';
