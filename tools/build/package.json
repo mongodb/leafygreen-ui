@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/build",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Build config for LeafyGreen repositories",
   "license": "Apache-2.0",
   "publishConfig": {
@@ -47,7 +47,7 @@
     "glob": "10.3.3",
     "lodash": "4.17.21",
     "react-docgen-typescript": "2.2.2",
-    "rollup": "3.25.1",
+    "rollup": "3.25.3",
     "rollup-plugin-node-externals": "6.1.1",
     "rollup-plugin-polyfill-node": "0.12.0"
   },

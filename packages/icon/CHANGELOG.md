@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 11.21.0
+
+### Minor Changes
+
+- 1629efe6: Adds `AllProducts`, `NavCollapse`, and `NavExpand` glyphs to icon
+
 ## 11.20.1
 
 ### Patch Changes

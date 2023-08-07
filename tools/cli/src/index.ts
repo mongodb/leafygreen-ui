@@ -133,14 +133,17 @@ cli
 cli
   .command('build-package')
   .description('Builds a package')
+  .option('-v --verbose', 'Prints additional information to the console', false)
   .action(buildPackage);
 cli
   .command('build-ts')
   .description("Builds a package's TypeScript definitions")
+  .option('-v --verbose', 'Prints additional information to the console', false)
   .action(buildTypescript);
 cli
   .command('build-tsdoc')
   .description("Builds a package's TSDoc file")
+  .option('-v --verbose', 'Prints additional information to the console', false)
   .action(buildTSDoc);
 
 cli.parse(process.argv);
