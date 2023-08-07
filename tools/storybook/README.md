@@ -1,26 +1,41 @@
 # `@lg-tools/storybook`
 
-Shared Storybook configuration for LeafyGreen repositories.
+Storybook addon to share configuration in LeafyGreen repositories.
 
-##
+## Usage
 
-Install this package, and consume it in your `.storybook` config files.
+Install this package, and consume it in your `.storybook/` config files.
 
-```js
+```ts
 // .storybook/main.ts
-
-import main from '@lg-tools/storybook';
-export default main;
+export default {
+  addons: ['@lg-tools/storybook'],
+  framework: {
+    name: '@storybook/react-webpack5',
+    options: {
+      fastRefresh: true,
+      strictMode: true,
+    },
+  },
+};
 ```
 
+Most parameters `preview.ts` will be automatically populated by the addon. However you may want to customize certain things like section ordering:
+
 ```js
-// .storybook/manager.js
-import { addons } from '@storybook/addons';
+// .storybook/preview.js
+const parameters = {
+  options: {
+    storySort: {
+      method: 'alphabetical',
+      order: [
+        // ... section headers
+      ],
+    },
+  },
+};
 
-import theme from '@lg-tools/storybook/theme';
-
-addons.setConfig({
-  name: 'LeafyGreen UI',
-  theme,
-});
+export default {
+  parameters,
+};
 ```
