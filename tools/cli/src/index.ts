@@ -71,6 +71,18 @@ cli
 /** Slackbot */
 const slackbotCmd = cli.command('slackbot');
 
+/**
+ * This command is run by GitHub Actions immediately after \`changeset\`.
+ *
+ * Must have the \`.env\` variable "SLACK_BOT_TOKEN" set.
+ * This is the "Bot User OAuth Token" found at https://api.slack.com/apps/A02H2UGAMDM/oauth, and should start with "xoxb-"
+ *
+ * To run this automatically, pass in an array of updates (in the format output by \`changeset\`) as the first argument.
+ * i.e. \`yarn slackbot '[{"name": "@leafygreen-ui/sample", "version": "0.1.0"}]' \`
+ *
+ * Optionally pass in a channel name (defaults to 'leafygreen-ui-releases').
+ * Valid channels are: \`${Object.keys(Channels).join('`, `')}\`.
+ */
 slackbotCmd
   .command('release')
   .arguments('[updates]')
@@ -84,21 +96,6 @@ slackbotCmd
     '-c, --channel <channel>',
     'Channel to post to.',
     'leafygreen-ui-releases',
-  )
-  .addHelpText(
-    'after',
-    `
-This command is run by GitHub Actions immediately after \`changeset\`.
-
-Must have the \`.env\` variable "SLACK_BOT_TOKEN" set.
-This is the "Bot User OAuth Token" found at https://api.slack.com/apps/A02H2UGAMDM/oauth, and should start with "xoxb-"
-
-To run this automatically, pass in an array of updates (in the format output by \`changeset\`) as the first argument.
-i.e. \`yarn slackbot '[{"name": "@leafygreen-ui/sample", "version": "0.1.0"}]' \`
-
-Optionally pass in a channel name (defaults to 'leafygreen-ui-releases').
-Valid channels are: \`${Object.keys(Channels).join('`, `')}\`.
-  `,
   )
   .action(releaseBot);
 
