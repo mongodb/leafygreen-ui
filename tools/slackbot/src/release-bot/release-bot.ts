@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 require('dotenv').config();
+import { isValidJSON } from '@lg-tools/meta';
 import { WebClient } from '@slack/web-api';
 import chalk from 'chalk';
 
@@ -11,7 +12,7 @@ import {
 import { generateGreeting } from './utils/generateGreeting';
 import { getSortedUpdates } from './utils/getSortedUpdates';
 import { TEST_DATA } from './utils/test.data';
-import { exists, isValidJSON } from './utils/utils';
+import { exists } from './utils/utils';
 import {
   Channels,
   ComponentUpdateObject,

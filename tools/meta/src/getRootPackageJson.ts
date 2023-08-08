@@ -11,7 +11,7 @@ export function getRootPackageJson(): Record<string, any> | undefined {
   }
 }
 
-function isValidJSON(str?: string): boolean {
+export function isValidJSON(str?: string): boolean {
   if (!str) return false;
 
   try {
