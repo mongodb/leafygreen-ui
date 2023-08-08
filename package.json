@@ -24,7 +24,7 @@
     "lint": "lg lint",
     "prepublishOnly": "yarn build",
     "publish": "yarn changeset publish --public",
-    "slackbot": "lg slackbot",
+    "slackbot": "lg slackbot release",
     "start": "storybook dev -p 9001 --no-version-updates",
     "test": "lg test",
     "unlink": "lg unlink",

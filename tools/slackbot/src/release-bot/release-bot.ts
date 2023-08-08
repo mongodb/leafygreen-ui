@@ -1,9 +1,8 @@
 /* eslint-disable no-console */
 require('dotenv').config();
+import { isValidJSON } from '@lg-tools/meta';
 import { WebClient } from '@slack/web-api';
 import chalk from 'chalk';
-import { Command } from 'commander';
-import { isUndefined } from 'lodash';
 
 import {
   constructBasicUpdateText,
@@ -12,45 +11,20 @@ import {
 } from './utils/constructUpdateText';
 import { generateGreeting } from './utils/generateGreeting';
 import { getSortedUpdates } from './utils/getSortedUpdates';
+import { TEST_DATA } from './utils/test.data';
+import { exists } from './utils/utils';
 import {
   Channels,
   ComponentUpdateObject,
   isValidUpdatesArray,
-  Opts,
-} from './slackbot.types';
+  ReleaseBotOptions,
+} from './release-bot.types';
 
-const cli = new Command('slackbot')
-  .arguments('[updates]')
-  .option(
-    '-c, --channel <channel>',
-    'Channel to post to.',
-    'leafygreen-ui-releases',
-  )
-  .option('--test', 'Post to `design-system-testing`', false)
-  .option('--dry', 'Dry run. Does not post', false)
-  .option('--verbose', 'Verbose mode', false)
-  .parse(process.argv);
-
-cli.addHelpText(
-  'after',
-  `
-  Runs the update announcement Slackbot.
-  This command is run by GitHub Actions immediately after \`changeset\`.
-
-  Must have the \`.env\` variable "SLACK_BOT_TOKEN" set.
-  This is the "Bot User OAuth Token" found at https://api.slack.com/apps/A02H2UGAMDM/oauth, and should start with "xoxb-"
-
-  To run this automatically, pass in an array of updates (in the format output by \`changeset\`) as the first argument.
-  i.e. \`yarn slackbot '[{"name": "@leafygreen-ui/sample", "version": "0.1.0"}]' \`
-
-  Optionally pass in a channel name (defaults to 'leafygreen-ui-releases').
-  Valid channels are: ${Object.keys(Channels).join(', ')}.
-`,
-);
-
-const { channel, test, dry, verbose }: Opts = cli.opts();
-
-try {
+export function releaseBot(
+  updates: string | undefined,
+  options: ReleaseBotOptions,
+) {
+  const { channel, test } = options;
   /**
    * Obtain a bot token by logging into the slack API docs here: https://api.slack.com/apps/A02H2UGAMDM
    * Click "OAuth & Permissions", and copy the "Bot User OAuth Token"
@@ -59,33 +33,49 @@ try {
   const channelName: keyof typeof Channels = test
     ? 'design-system-testing'
     : channel;
-  const updatesArray: any = JSON.parse(cli.args[0]);
-  let errMsg = '';
 
-  if (exists(botToken) && typeof botToken === 'string') {
-    if (exists(channelName) && Object.keys(Channels).includes(channelName)) {
-      if (exists(updatesArray) && isValidUpdatesArray(updatesArray)) {
-        const channel: string = Channels[channelName as keyof typeof Channels];
-        slackbot(botToken, channel, updatesArray);
-      } else {
-        errMsg =
-          'Updates array not found/incorrect format. Expected array of `{name: "@xx/yy", version: "a.b.c"}`';
-      }
-    } else {
-      errMsg = `Channel name incorrect. Received ${channelName}`;
-    }
-  } else {
-    errMsg = 'Bot Token not found';
+  // Exit if there's no bot token
+  const isValidBotToken = exists(botToken) && typeof botToken === 'string';
+
+  if (!isValidBotToken) {
+    console.warn(chalk.yellow('Bot Token not found'));
+    process.exit(1);
   }
-  console.warn(chalk.yellow(errMsg));
-} catch (error: any) {
-  console.error(`Error:`, error.message);
+
+  // Exit if the channel name is invalid
+  const isValidChannel =
+    exists(channelName) && Object.keys(Channels).includes(channelName);
+
+  if (!isValidChannel) {
+    console.warn(
+      chalk.yellow(`Channel name incorrect. Received ${channelName}`),
+    );
+    process.exit(1);
+  }
+
+  const updatesArray = getUpdatesArray(updates, options);
+
+  // Exit if the updates array is not valid
+  if (!isValidUpdatesArray(updatesArray)) {
+    const errMsg =
+      updatesArray +
+      `\nExpected array of objects with interface \`${chalk.black.yellowBright(
+        `{name: "@xx/yy", version: "a.b.c"}`,
+      )}\``;
+    console.warn(chalk.yellow(errMsg));
+    process.exit(1);
+  }
+
+  // Finally, once everything is checked, we run the slackbot
+  runSlackbot(botToken, channelName, updatesArray, options);
 }
 
-async function slackbot(
+/** The main slackbot logic */
+async function runSlackbot(
   botToken: string,
   channel: string,
   updates: Array<ComponentUpdateObject>,
+  { dry, verbose }: ReleaseBotOptions,
 ) {
   verbose && console.log({ updates, channel });
   const sortedUpdates = await getSortedUpdates(updates);
@@ -155,8 +145,19 @@ async function slackbot(
   }
 }
 
-/* UTILS */
+function getUpdatesArray(
+  updatesStr: string | undefined,
+  { test }: ReleaseBotOptions,
+): Array<ComponentUpdateObject> | string {
+  if (!exists(updatesStr)) {
+    if (test) return TEST_DATA;
+    else return 'Updates argument is required.';
+  }
 
-function exists(arg?: string | Array<any>) {
-  return !isUndefined(arg) && arg.length > 0;
+  const isUpdatesValidJson: boolean = isValidJSON(updatesStr);
+  const parsedUpdates = isUpdatesValidJson ? JSON.parse(updatesStr) : undefined;
+
+  return isValidUpdatesArray(parsedUpdates)
+    ? parsedUpdates
+    : 'Updates argument is in an incorrect format.';
 }
