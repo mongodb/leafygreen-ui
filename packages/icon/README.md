@@ -149,7 +149,7 @@ A `LGGlyph.Component`
 
 (For DS engineers)
 
-- After uploading a new SVG file to `src/glyphs`, replace all `fill` property values with `#000`.
+- After uploading a new SVG file to `src/glyphs`, replace all `fill` property values for strokes with `#000`.
 - Update `src/glyphs/index.ts` to import/export the SVG file.
 - Build the package with `yarn build:packages icon` to create the component in `src/generated`.
 - Update README
