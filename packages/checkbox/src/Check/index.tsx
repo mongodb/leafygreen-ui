@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Transition } from 'react-transition-group';
 
 import { usePrefersReducedMotion } from '@leafygreen-ui/a11y';
@@ -56,6 +56,8 @@ export function Check({
   const showCheckIcon = indeterminate || isChecked;
   const shouldAnimate = animate && !indeterminate && !prefersReducedMotion;
 
+  const transitionRef = useRef<null>(null);
+
   return (
     <>
       <div
@@ -72,6 +74,7 @@ export function Check({
           timeout={prefersReducedMotion ? 0 : checkAnimationDuration}
           enter={shouldAnimate}
           exit={shouldAnimate}
+          nodeRef={transitionRef}
         >
           {state => (
             <CheckSVG

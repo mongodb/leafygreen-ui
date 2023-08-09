@@ -38,6 +38,7 @@ import {
   titleTextStyle,
 } from '../styles';
 import { Size } from '../types';
+import { useDescendant } from '../utils/useDescendants';
 
 import {
   chevronClassName,
@@ -81,8 +82,9 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
       as,
       ...rest
     },
-    ref: React.Ref<any>,
+    __,
   ): React.ReactElement => {
+    const { ref } = useDescendant({ disabled });
     const { Component } = useInferredPolymorphic(as, rest, 'button');
     const { theme, darkMode } = useContext(MenuContext);
     const hoverStyles = getHoverStyles(subMenuContainerClassName, theme);

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { flushSync } from 'react-dom';
 
 import Button from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
@@ -70,11 +71,17 @@ export const UnitSelectButton = React.forwardRef(
       : false;
 
     const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
-      // If there is no popover parent that means that we are not hovering over the popover menu. If that's the case then we should show the tooltip.
+      // Hovering over both the button and the menu popover triggers `onMouseEnter` but we only want the tooltip to show up on hover of the button. If the target has no ancestor with the popoverClassName then that means we are hovering over the button.
       const popoverParent = (e.target as HTMLButtonElement).closest(
         `.${popoverClassName}`,
       );
-      if (!popoverParent) setOpen(true);
+
+      if (!popoverParent) {
+        // React 18 automatically batches all updates which appears to break the opening transition. flushSync prevents this state update from automically batching. Instead updates are made synchronously.
+        flushSync(() => {
+          setOpen(true);
+        });
+      }
     };
 
     const handleMouseLeave = () => setOpen(false);

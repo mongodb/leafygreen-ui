@@ -1,3 +1,5 @@
 exports.process = svg => {
-  return `module.exports = ${JSON.stringify({ svg })};`;
+  return {
+    code: `module.exports = ${JSON.stringify({ svg })};`,
+  };
 };

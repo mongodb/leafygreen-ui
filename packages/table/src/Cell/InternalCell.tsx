@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
@@ -28,6 +28,7 @@ const InternalCell = ({
   const isFirstCell = cellIndex === 0;
   const { table } = useTableContext();
   const isSelectable = !!table && !!table.hasSelectableRows;
+  const transitionRef = useRef<null>(null);
 
   return (
     <td
@@ -40,7 +41,7 @@ const InternalCell = ({
       )}
       {...rest}
     >
-      <Transition in={isVisible} timeout={0}>
+      <Transition in={isVisible} timeout={0} nodeRef={transitionRef}>
         {state => (
           <div
             data-state={state}
