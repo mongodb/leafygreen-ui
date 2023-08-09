@@ -92,55 +92,59 @@ describe('packages/sub-menu', () => {
     });
   });
 
-  //   test('renders as `div` tag when the "as" prop is set', async () => {
-  //     const { getByTestId } = renderSubMenu();
-  //     // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
-  //     // https://jira.mongodb.org/browse/LG-2904
-  //     waitFor(() => {
-  //       const subMenu = getByTestId(subMenu3Id);
-  //       expect(subMenu.tagName.toLowerCase()).toBe('div');
-  //     });
-  //   });
-  //   /* eslint-disable jest/no-disabled-tests, jest/expect-expect */
-  //   describe.skip('Types behave as expected', () => {
-  //     test('Accepts string as `as` prop', () => {
-  //       <SubMenu data-testid="sub-menu-a" as="p" />;
-  //     });
-  //     test('Accepts component as `as` prop', () => {
-  //       const As = ({ children }: { children: React.ReactNode }) => (
-  //         <>{children}</>
-  //       );
-  //       render(
-  //         <Menu>
-  //           <SubMenu as={As}>Test</SubMenu>
-  //         </Menu>,
-  //       );
-  //     });
-  //     test.skip('types', () => {
-  //       const AnchorLikeWrapper = (props: JSX.IntrinsicElements['a']) => {
-  //         return <a {...props}>content</a>;
-  //       };
-  //       const ButtonWrapper = (props: JSX.IntrinsicElements['button']) => {
-  //         return <button {...props} />;
-  //       };
-  //       <>
-  //         <SubMenu href="allowed">Children</SubMenu>
-  //         <SubMenu as="a" href="allowed">
-  //           Children
-  //         </SubMenu>
-  //         {/* @ts-expect-error - href not allowed when as is div*/}
-  //         <SubMenu as="div" href="string">
-  //           Children
-  //         </SubMenu>
-  //         {/* @ts-expect-error - href not allowed on ButtonWrapper */}
-  //         <SubMenu as={ButtonWrapper} href="string">
-  //           Children
-  //         </SubMenu>
-  //         <SubMenu as={AnchorLikeWrapper} href="string">
-  //           Children
-  //         </SubMenu>
-  //       </>;
-  //     });
-  //   });
-  //   /* eslint-enable jest/no-disabled-tests, jest/expect-expect */
+  test('renders as `div` tag when the "as" prop is set', async () => {
+    const { getByTestId } = renderSubMenu();
+    // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
+    // https://jira.mongodb.org/browse/LG-2904
+    waitFor(() => {
+      const subMenu = getByTestId(subMenu3Id);
+      expect(subMenu.tagName.toLowerCase()).toBe('div');
+    });
+  });
+
+  /* eslint-disable jest/no-disabled-tests, jest/expect-expect */
+  describe.skip('Types behave as expected', () => {
+    test('Accepts string as `as` prop', () => {
+      <SubMenu data-testid="sub-menu-a" as="p" />;
+    });
+    test('Accepts component as `as` prop', () => {
+      const As = ({ children }: { children: React.ReactNode }) => (
+        <>{children}</>
+      );
+      render(
+        <Menu>
+          <SubMenu as={As}>Test</SubMenu>
+        </Menu>,
+      );
+    });
+
+    test.skip('types', () => {
+      const AnchorLikeWrapper = (props: JSX.IntrinsicElements['a']) => {
+        return <a {...props}>content</a>;
+      };
+
+      const ButtonWrapper = (props: JSX.IntrinsicElements['button']) => {
+        return <button {...props} />;
+      };
+
+      <>
+        <SubMenu href="allowed">Children</SubMenu>
+        <SubMenu as="a" href="allowed">
+          Children
+        </SubMenu>
+        {/* @ts-expect-error - href not allowed when as is div*/}
+        <SubMenu as="div" href="string">
+          Children
+        </SubMenu>
+        {/* @ts-expect-error - href not allowed on ButtonWrapper */}
+        <SubMenu as={ButtonWrapper} href="string">
+          Children
+        </SubMenu>
+        <SubMenu as={AnchorLikeWrapper} href="string">
+          Children
+        </SubMenu>
+      </>;
+    });
+  });
+  /* eslint-enable jest/no-disabled-tests, jest/expect-expect */
 });
