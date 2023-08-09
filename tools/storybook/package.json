@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/storybook",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Storybook config for LeafyGreen",
   "license": "Apache-2.0",
   "main": "./dist/index.js",

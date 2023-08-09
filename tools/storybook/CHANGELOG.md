@@ -1,5 +1,11 @@
 # @lg-tools/storybook
 
+## 0.2.1
+
+### Patch Changes
+
+- 6815ee6e: Updates README for storybook addon
+
 ## 0.2.0
 
 ### Minor Changes
