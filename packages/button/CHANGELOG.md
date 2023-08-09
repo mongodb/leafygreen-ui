@@ -185,7 +185,7 @@
 
   ##### Cypress
 
-  TODO: //
+  Similarly to unit tests, you should generally test functionality, not implementation details. However, to test this in Cypress replace any `cy.get(button).should('be.disabled');` checks with `cy.get(button).invoke('attr', 'aria-disabled').should('eq', 'true');`
 
 ### Patch Changes
 
