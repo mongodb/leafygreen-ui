@@ -108,7 +108,8 @@ export interface TableRowInterface<Shape = {}> {
  * @deprecated
  * @noDocgen
  */
-export interface TableProps<Shape> extends HTMLElementProps<'table'> {
+export interface TableProps<Shape>
+  extends Omit<HTMLElementProps<'table'>, 'children' | 'columns'> {
   /**
    * The array of data displayed in rows. Each array element's type is determined by the `Shape` generic.
    *
@@ -121,6 +122,7 @@ export interface TableProps<Shape> extends HTMLElementProps<'table'> {
    * @type Array of `<TableHeader />`
    */
   columns:
+    | React.ReactElement<HeaderRowProps | TableHeaderProps<Shape>>
     | Array<React.ReactElement<HeaderRowProps | TableHeaderProps<Shape>>>
     | React.ReactFragment;
 

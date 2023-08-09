@@ -13,6 +13,7 @@ import { axe } from 'jest-axe';
 import Icon from '@leafygreen-ui/icon';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import { HTMLElementProps, OneOf } from '@leafygreen-ui/lib';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import Tooltip from './Tooltip';
 import { TooltipProps } from './Tooltip.types';
@@ -122,6 +123,10 @@ describe('packages/tooltip', () => {
 
       // checking that in the Document, because in the document before opacity hits 1
       await waitFor(() => tooltip);
+      // Wait for tooltip delay
+      await act(async () => {
+        await waitForTimeout(transitionDuration.slowest);
+      });
       expect(tooltip).toBeVisible();
 
       // checking for visibility, because opacity changes before tooltip transitions out of the DOM
@@ -247,6 +252,9 @@ describe('packages/tooltip', () => {
 
       fireEvent.click(button);
       const tooltip = getByTestId(tooltipTestId);
+      await act(async () => {
+        await waitForTimeout(transitionDuration.slowest);
+      });
       await act(() => waitFor(() => expect(tooltip).toBeVisible()));
 
       fireEvent.keyDown(button, {
@@ -264,6 +272,9 @@ describe('packages/tooltip', () => {
 
       fireEvent.click(button);
       const tooltip = getByTestId(tooltipTestId);
+      await act(async () => {
+        await waitForTimeout(transitionDuration.slowest);
+      });
       await act(() => waitFor(() => expect(tooltip).toBeVisible()));
 
       fireEvent.click(backdrop);
@@ -278,6 +289,9 @@ describe('packages/tooltip', () => {
 
       fireEvent.click(button);
       const tooltip = getByTestId(tooltipTestId);
+      await act(async () => {
+        await waitForTimeout(transitionDuration.slowest);
+      });
       await act(() => waitFor(() => expect(tooltip).toBeVisible()));
 
       fireEvent.click(backdrop);
@@ -691,6 +705,9 @@ describe('packages/tooltip', () => {
 
       fireEvent.click(button);
       const tooltip = getByTestId(tooltipTestId);
+      await act(async () => {
+        await waitForTimeout(transitionDuration.slowest);
+      });
       await act(() => waitFor(() => expect(tooltip).toBeVisible()));
 
       fireEvent.keyDown(button, {

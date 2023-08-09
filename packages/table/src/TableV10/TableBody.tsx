@@ -15,7 +15,9 @@ type TableBodyProps<Shape> = Pick<TableProps<Shape>, 'children'>;
  */
 function useRenderedChildren<Datum>(
   data: Array<Datum>,
-  renderFunction: React.FunctionComponent<TableRowInterface<Datum>>,
+  renderFunction: React.FunctionComponent<
+    React.PropsWithChildren<TableRowInterface<Datum>>
+  >,
   compareFn?: (a: Datum, b: Datum) => number,
 ): Array<React.ReactNode> {
   const resultMap = useMemo(() => {

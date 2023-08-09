@@ -5,4 +5,4 @@ export interface ComponentProps extends SVGProps<SVGSVGElement> {
   role?: 'presentation' | 'img';
 }
 
-export type Component = ComponentType<ComponentProps>;
+export type Component = ComponentType<React.PropsWithChildren<ComponentProps>>;

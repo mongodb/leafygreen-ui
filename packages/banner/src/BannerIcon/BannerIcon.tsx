@@ -16,7 +16,10 @@ import {
 } from './styles';
 import BannerIconProps from './types';
 
-const Icons: Record<Variant, React.ComponentType<any>> = {
+const Icons: Record<
+  Variant,
+  React.ComponentType<React.PropsWithChildren<any>>
+> = {
   [Variant.Info]: InfoWithCircleIcon,
   [Variant.Warning]: ImportantWithCircleIcon,
   [Variant.Danger]: WarningIcon,

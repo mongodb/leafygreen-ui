@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import {
   Align as PopoverAlign,
@@ -26,7 +28,7 @@ export type Align = typeof Align[keyof typeof Align];
 export { Justify };
 
 export interface PopoverFunctionParameters {
-  align: Align;
+  align: PopoverAlign;
   justify: Justify;
   referenceElPos: ElementPosition;
 }
@@ -94,4 +96,6 @@ export type TooltipProps = Omit<
      *
      */
     baseFontSize?: BaseFontSize;
+
+    children?: React.ReactNode;
   };

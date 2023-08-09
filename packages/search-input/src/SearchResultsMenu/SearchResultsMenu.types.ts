@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { ComponentPropsWithoutRef } from 'react';
 
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { PortalControlProps } from '@leafygreen-ui/popover';
 
-export type SearchResultsMenuProps = HTMLElementProps<'ul', HTMLUListElement> &
+export type SearchResultsMenuProps = ComponentPropsWithoutRef<'ul'> &
   PortalControlProps & {
     refEl: React.RefObject<HTMLElement>;
     open?: boolean;

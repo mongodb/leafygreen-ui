@@ -130,7 +130,7 @@ LiveExample.parameters = {
 };
 
 const Template = (
-  LogoComponent: React.FunctionComponent<LogoProps>,
+  LogoComponent: React.FunctionComponent<React.PropsWithChildren<LogoProps>>,
   args: LogoProps & { background?: string },
 ) => {
   const containerStyle = css`

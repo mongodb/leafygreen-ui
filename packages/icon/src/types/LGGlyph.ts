@@ -7,6 +7,8 @@ export interface ComponentProps extends SVGR.ComponentProps {
   ['data-testid']?: string;
 }
 
-export type Component = ComponentType<ComponentProps> & { isGlyph?: boolean };
+export type Component = ComponentType<
+  React.PropsWithChildren<ComponentProps>
+> & { isGlyph?: boolean };
 
 export type Element = ReactComponentElement<Component, ComponentProps>;

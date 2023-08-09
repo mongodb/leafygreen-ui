@@ -24,6 +24,7 @@ import { MenuContext } from '../MenuContext/MenuContext';
 import MenuSeparator from '../MenuSeparator/MenuSeparator';
 import { SubMenu, type SubMenuProps } from '../SubMenu/';
 import { ElementOf } from '../types';
+import { DescendantContext, useDescendants } from '../utils/useDescendants';
 
 import { MenuProps } from './Menu.types';
 
@@ -94,6 +95,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   }: MenuProps,
   forwardRef,
 ) {
+  const { ref: popoverRef, ...contextProps } = useDescendants();
   const { theme, darkMode } = useDarkMode(darkModeProp);
 
   const hasSetInitialFocus = useRef(false);
@@ -102,7 +104,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   const [, setClosed] = useState(false);
   const currentSubMenuRef = useRef<ElementOf<typeof SubMenu> | null>(null);
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
-  const popoverRef = useRef<HTMLUListElement | null>(null);
 
   const setOpen =
     (typeof controlledOpen === 'boolean' && controlledSetOpen) ||
@@ -128,16 +129,15 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     ? `${Math.min(memoizedAvailableSpace, maxHeight)}px`
     : 'unset';
 
-  const { updatedChildren, refs } = React.useMemo(() => {
+  const { updatedChildren } = React.useMemo(() => {
     if (
       children == null ||
       ['boolean', 'number', 'string'].includes(typeof children)
     ) {
-      return { updatedChildren: undefined, refs: [] };
+      return { updatedChildren: undefined };
     }
 
     const titleArr: Array<string> = [];
-    const refs: Array<HTMLElement> = [];
 
     function updateChildren(children: React.ReactNode): React.ReactNode {
       return React.Children.map(children, child => {
@@ -147,21 +147,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 
         const { props } = child;
 
-        let currentChildRef: HTMLElement | null = null;
-
-        const setRef = (ref: HTMLElement) => {
-          if (ref == null) {
-            return;
-          }
-
-          refs.push(ref);
-          currentChildRef = ref;
-
-          if (open && hasSetInitialFocus.current === false) {
-            setFocus(refs[0]);
-            hasSetInitialFocus.current = true;
-          }
-        };
+        const currentChildRef: HTMLElement | null = null;
 
         const title = props?.title ?? false;
 
@@ -195,7 +181,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
             (currentSubMenuRef.current?.props as SubMenuProps)?.title === title;
 
           return React.cloneElement(child, {
-            ref: setRef,
             open: isCurrentSubMenu,
             setOpen: (state: boolean) => {
               if (currentChildRef) {
@@ -230,7 +215,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 
         if (isComponentType(child, 'MenuItem')) {
           return React.cloneElement(child, {
-            ref: setRef,
             onFocus,
             onClick: (e: React.MouseEvent) => {
               child.props?.onClick?.(e);
@@ -241,7 +225,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 
         if (isComponentType(child, 'FocusableMenuItem')) {
           return React.cloneElement(child, {
-            ref: setRef,
             onFocus,
           });
         }
@@ -262,10 +245,21 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
       });
     }
 
-    return { updatedChildren: updateChildren(children), refs };
-  }, [children, open, updateCurrentSubMenu, handleClose]);
+    return { updatedChildren: updateChildren(children) };
+  }, [children, updateCurrentSubMenu, handleClose]);
 
-  const focusedRef = useRef<HTMLElement | null>(refs[0] || null);
+  const enabledItems: Array<HTMLElement> = useMemo(() => {
+    const temp: Array<HTMLElement> = [];
+    contextProps.map.current.forEach(({ disabled, element }) => {
+      if (!disabled && element) {
+        temp.push(element);
+      }
+    });
+
+    return temp;
+  }, [contextProps]);
+
+  const focusedRef = useRef<HTMLElement | null>(enabledItems[0] || null);
 
   const setFocus = (el: HTMLElement | null) => {
     if (el == null) {
@@ -278,10 +272,22 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 
   useEffect(() => {
     if (open) {
-      hasSetInitialFocus.current = false;
       hasSetInitialOpen.current = false;
     }
   }, [open]);
+
+  useEffect(() => {
+    if (
+      open &&
+      hasSetInitialFocus.current === false &&
+      document.body.contains(enabledItems[0])
+    ) {
+      setFocus(enabledItems[0]);
+      hasSetInitialFocus.current = true;
+    } else {
+      contextProps.force();
+    }
+  }, [open, enabledItems, contextProps]);
 
   useBackdropClick(handleClose, [popoverRef, triggerRef], open);
 
@@ -292,7 +298,10 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
       case keyMap.ArrowDown:
         e.preventDefault(); // Prevents page scrolling
         refToFocus =
-          refs[(refs.indexOf(focusedRef.current!) + 1) % refs.length];
+          enabledItems[
+            (enabledItems.indexOf(focusedRef.current!) + 1) %
+              enabledItems.length
+          ];
 
         setFocus(refToFocus);
         break;
@@ -300,8 +309,11 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
       case keyMap.ArrowUp:
         e.preventDefault(); // Prevents page scrolling
         refToFocus =
-          refs[
-            (refs.indexOf(focusedRef.current!) - 1 + refs.length) % refs.length
+          enabledItems[
+            (enabledItems.indexOf(focusedRef.current!) -
+              1 +
+              enabledItems.length) %
+              enabledItems.length
           ];
         setFocus(refToFocus);
         break;
@@ -320,7 +332,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
       case keyMap.Space:
       case keyMap.Enter:
         if (!open) {
-          setFocus(refs[0]);
+          setFocus(enabledItems[0]);
         }
         break;
     }
@@ -346,41 +358,43 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   }, [theme, darkMode]);
 
   const popoverContent = (
-    <MenuContext.Provider value={providerData}>
-      <Popover
-        key="popover"
-        active={open}
-        align={align}
-        justify={justify}
-        refEl={refEl}
-        adjustOnMutation={adjustOnMutation}
-        {...popoverProps}
-      >
-        <div
-          className={cx(
-            rootMenuStyle,
-            rootMenuThemeStyles[theme],
-            css`
-              max-height: ${maxMenuHeightValue};
-            `,
-            className,
-          )}
-          ref={forwardRef}
+    <DescendantContext.Provider value={contextProps}>
+      <MenuContext.Provider value={providerData}>
+        <Popover
+          key="popover"
+          active={open}
+          align={align}
+          justify={justify}
+          refEl={refEl}
+          adjustOnMutation={adjustOnMutation}
+          {...popoverProps}
         >
-          {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
-          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
-          <ul
-            {...rest}
-            className={scrollContainerStyle}
-            role="menu"
-            onClick={e => e.stopPropagation()}
-            ref={popoverRef}
+          <div
+            className={cx(
+              rootMenuStyle,
+              rootMenuThemeStyles[theme],
+              css`
+                max-height: ${maxMenuHeightValue};
+              `,
+              className,
+            )}
+            ref={forwardRef}
           >
-            {updatedChildren}
-          </ul>
-        </div>
-      </Popover>
-    </MenuContext.Provider>
+            {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
+            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
+            <ul
+              {...rest}
+              className={scrollContainerStyle}
+              role="menu"
+              onClick={e => e.stopPropagation()}
+              ref={popoverRef}
+            >
+              {updatedChildren}
+            </ul>
+          </div>
+        </Popover>
+      </MenuContext.Provider>
+    </DescendantContext.Provider>
   );
 
   if (trigger) {

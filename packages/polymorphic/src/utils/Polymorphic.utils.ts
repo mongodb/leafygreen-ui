@@ -34,12 +34,12 @@ export type PropsOf<
   C extends
     | PolymorphicComponentType
     | InferredPolymorphicComponentType
-    | ComponentType,
+    | ComponentType<React.PropsWithChildren<unknown>>,
 > = C extends PolymorphicComponentType<infer P, infer T>
   ? PolymorphicPropsWithRef<T, P>
   : C extends InferredPolymorphicComponentType<infer P, infer T>
   ? InferredPolymorphicPropsWithRef<T, P>
-  : C extends ComponentType
+  : C extends ComponentType<React.PropsWithChildren<unknown>>
   ? ComponentProps<C>
   : never;
 

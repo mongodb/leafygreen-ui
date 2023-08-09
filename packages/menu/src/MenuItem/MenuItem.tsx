@@ -31,6 +31,7 @@ import {
   titleTextStyle,
 } from '../styles';
 import { Size } from '../types';
+import { useDescendant } from '../utils/useDescendants';
 
 import { disabledIconStyle } from './MenuItem.styles';
 import { MenuItemProps } from './MenuItem.types';
@@ -50,8 +51,9 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
       glyph,
       ...rest
     },
-    ref: React.Ref<any>,
+    __,
   ) => {
+    const { ref } = useDescendant({ disabled });
     const { Component } = useInferredPolymorphic(as, rest, 'button');
     const { theme } = useContext(MenuContext);
     const hoverStyles = getHoverStyles(menuItemContainerClassName, theme);
