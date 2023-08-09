@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/display-name */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
@@ -9,6 +9,7 @@ import CaretDown from '@leafygreen-ui/icon/dist/CaretDown';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import {
+  storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -119,6 +120,7 @@ const meta: StoryMetaType<typeof Menu> = {
       description:
         'Size of the `MenuItem` component, can be `default` or `large`',
     },
+    darkMode: storybookArgTypes.darkMode,
   },
 };
 export default meta;
@@ -129,6 +131,14 @@ export const LiveExample: StoryFn<MenuProps & { size: Size }> = ({
   darkMode,
   ...args
 }: MenuProps & { size: Size }) => {
+  const [testDisabled, setTestDisabled] = useState(false);
+
+  useEffect(() => {
+    setInterval(() => {
+      setTestDisabled(true);
+    }, 5000);
+  }, []);
+
   return (
     <LeafyGreenProvider>
       <Menu
@@ -140,7 +150,7 @@ export const LiveExample: StoryFn<MenuProps & { size: Size }> = ({
         }
         {...args}
       >
-        <MenuItem size={size} glyph={<CloudIcon />}>
+        <MenuItem disabled={testDisabled} size={size} glyph={<CloudIcon />}>
           Menu Item
         </MenuItem>
         <MenuItem

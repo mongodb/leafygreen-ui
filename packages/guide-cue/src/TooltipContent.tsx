@@ -64,11 +64,11 @@ function TooltipContent({
   ...tooltipProps
 }: TooltipContentProps) {
   const focusId = useIdAllocator({ prefix: 'guide-cue' });
-  // Test are failing because of `focus-trap-react`. Even though there is a focusable element it does not find it in time and throws an error. A fix is to point to the primary button and set that as the fallback focus. (https://github.com/focus-trap/focus-trap-react/issues/91)
+
   const focusTrapOptions = {
-    fallbackFocus: `#${focusId}`,
     clickOutsideDeactivates: true,
   };
+
   return (
     <>
       <Tooltip
@@ -132,8 +132,8 @@ function TooltipContent({
                 variant="primary"
                 onClick={() => handleButtonClick()}
                 darkMode={!darkMode}
-                id={focusId}
                 className={buttonStyles}
+                id={focusId}
               >
                 {buttonText}
               </Button>

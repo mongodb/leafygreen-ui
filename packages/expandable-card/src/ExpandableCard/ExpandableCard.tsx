@@ -53,6 +53,8 @@ const ExpandableCard = ({
   const summaryId = useIdAllocator({ prefix: 'expandable-card-summary' });
   const contentId = useIdAllocator({ prefix: 'expandable-card-content' });
 
+  const transitionRef = useRef<null>(null);
+
   // When the controlled prop changes, update the internal state
   useEffect(() => {
     if (isControlled) {
@@ -109,7 +111,11 @@ const ExpandableCard = ({
             <Body className={summaryTextThemeStyle[theme]}>{description}</Body>
           )}
 
-          <Transition in={isOpen} timeout={transitionDuration}>
+          <Transition
+            in={isOpen}
+            timeout={transitionDuration}
+            nodeRef={transitionRef}
+          >
             {state => (
               <IconButton
                 // Setting 'as="div"' to avoid nesting interactive components for accessibility

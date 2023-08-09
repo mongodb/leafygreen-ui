@@ -16,7 +16,10 @@ import {
 import { SegmentL, SegmentM, SegmentS, SegmentXs } from './svgs';
 import { CounterProps, Size } from './types';
 
-const segments: Record<Size, React.ComponentType<any>> = {
+const segments: Record<
+  Size,
+  React.ComponentType<React.PropsWithChildren<any>>
+> = {
   [Size.XSmall]: SegmentXs,
   [Size.Small]: SegmentS,
   [Size.Normal]: SegmentM,

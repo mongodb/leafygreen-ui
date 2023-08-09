@@ -112,7 +112,7 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
             children &&
             typeof children === 'object' &&
             'length' in children &&
-            children.length > 0
+            (children as Array<React.ReactNode>).length > 0
           ) {
             return <ul className={menuList}>{children}</ul>;
           }

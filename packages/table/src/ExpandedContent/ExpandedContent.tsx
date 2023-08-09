@@ -23,6 +23,7 @@ const ExpandedContent = <T extends RowData>({
 }: ExpandedContentProps<T>) => {
   const { getParentRow } = useTableContext();
   const contentRef = useRef<HTMLDivElement>(null);
+  const transitionRef = useRef<null>(null);
   const areAncestorsExpanded = getAreAncestorsExpanded(row.id, getParentRow);
   const isNestedRow = !!getParentRow?.(row.id);
   const isExpanded =
@@ -43,7 +44,7 @@ const ExpandedContent = <T extends RowData>({
   return (
     <InternalRowBase {...rest}>
       <td colSpan={row.getVisibleCells().length} className={cx(baseStyles)}>
-        <Transition in={isExpanded} timeout={0}>
+        <Transition in={isExpanded} timeout={0} nodeRef={transitionRef}>
           {state => (
             <div
               data-state={state}
