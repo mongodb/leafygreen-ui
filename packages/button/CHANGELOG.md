@@ -164,7 +164,28 @@
 
 ### Major Changes
 
-- 1cff328a3: No longer sets `pointer-events: "none"` when Button components are disabled.
+- 1cff328a3: Disabled buttons no longer render the `disabled` attribute, but rely on `aria-disabled`. They also no longer set `pointer-events: "none"` in their styles. `onClick` events are explicitly prevented within the component to maintain functionality.
+
+  This change was made to ensure that:
+
+  1. Disabled buttons are still focusable to users when navigating via the `Tab` key, and
+  2. Disabled buttons are valid triggers for a `Tooltip`.
+
+  For more on `aria-disabled` see the [documentation on MDN](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-disabled)
+
+  #### Migration guide
+
+  Functionally, migration from v19 to v20 should be seamless, however there may be unit/integration/e2e tests that relied on this behavior.
+
+  ##### Jest/RTL
+
+  Generally, only this repo should need to test that the button has a specific attribute. If possible, we recommend changing unit tests to check that some event was or was not called.
+
+  However there are cases where this still needs to be tested. To change this, replace any `expect(button).toBeDisabled()` with an explicit check for `expect(button).toHaveAttribute("aria-disabled", "true")`.
+
+  ##### Cypress
+
+  TODO: //
 
 ### Patch Changes
 
