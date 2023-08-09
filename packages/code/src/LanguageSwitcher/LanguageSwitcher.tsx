@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Button, { ButtonProps } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
@@ -19,6 +18,7 @@ import {
   menuButtonStyle,
   selectStyle,
 } from './LanguageSwitcher.styles';
+import { LanguageSwitcherButton } from './LanguageSwitcherButton';
 
 function isLeafyGreenIcon(element: React.ReactNode) {
   if (isComponentGlyph(element) || isComponentType(element, 'Icon')) {
@@ -83,21 +83,6 @@ function LanguageSwitcher({
     }
   }
 
-  // eslint-disable-next-line react/display-name
-  const LanguageSwitcherButton = React.forwardRef(
-    ({ className, children, ...props }: ButtonProps, ref) => (
-      <Button
-        {...props}
-        className={cx(className, menuButtonStyle, buttonModeStyle[theme])}
-        darkMode={darkMode}
-        ref={ref}
-        leftGlyph={renderedLogo}
-      >
-        {children}
-      </Button>
-    ),
-  );
-
   const popoverProps = {
     popoverZIndex,
     usePortal,
@@ -116,9 +101,11 @@ function LanguageSwitcher({
         className={selectStyle}
         allowDeselect={false}
         {...popoverProps}
-        // Component missing displayName
-        // eslint-disable-next-line
         __INTERNAL__menuButtonSlot__={LanguageSwitcherButton}
+        __INTERNAL__menuButtonSlotProps__={{
+          className: cx(menuButtonStyle, buttonModeStyle[theme]),
+          leftGlyph: renderedLogo,
+        }}
       >
         {languageOptions?.map(option => (
           <Option key={option?.displayName} value={option?.displayName}>

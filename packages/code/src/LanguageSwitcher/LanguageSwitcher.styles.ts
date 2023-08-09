@@ -19,7 +19,7 @@ export const menuButtonStyle = css`
   border: 0;
   font-size: 12px;
 
-  &:hover,
+  &:hover[aria-disabled='false'],
   &:focus,
   &:active {
     box-shadow: 0 0 0 0;
@@ -43,13 +43,13 @@ export const buttonModeStyle: Record<Theme, string> = {
     border-right: 1px solid ${palette.gray.light2};
     box-shadow: 0 0 0 0;
 
-    &:hover,
+    &:hover[aria-disabled='false'],
     &:active,
     &:focus {
       border-right: 1px solid ${palette.gray.light2};
     }
 
-    &:hover {
+    &:hover[aria-disabled='false'] {
       background-color: ${palette.gray.light2};
     }
 
@@ -62,13 +62,13 @@ export const buttonModeStyle: Record<Theme, string> = {
     border-right: 1px solid ${palette.gray.dark1};
     color: ${palette.gray.light2};
 
-    &:hover,
+    &:hover[aria-disabled='false'],
     &:focus,
     &:active {
       border-right: 1px solid ${palette.gray.dark1};
     }
 
-    &:hover,
+    &:hover[aria-disabled='false'],
     &:active {
       background-color: ${palette.gray.dark1};
     }
