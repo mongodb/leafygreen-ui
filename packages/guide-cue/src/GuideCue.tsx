@@ -145,7 +145,6 @@ function GuideCue({
         </TooltipContent>
       ) : (
         // Multistep tooltip
-
         <Popover
           active={popoverOpen}
           refEl={refEl}
@@ -164,6 +163,8 @@ function GuideCue({
             <div />
           </div>
 
+          {/* The tooltip is using the ref of the beacon as the trigger to position itself against */}
+          {/* Instead of passing the beacon as the tooltip trigger prop we pass a reference to the beacon to the `refEl` prop. By passing only the reference we avoid default tooltip behaviors such as closing the tooltip on background click or showing and hiding the tooltip on hover. */}
           <TooltipContent
             {...tooltipContentProps}
             refEl={beaconRef}

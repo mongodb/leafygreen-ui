@@ -65,6 +65,10 @@ function TooltipContent({
 }: TooltipContentProps) {
   const focusId = useIdAllocator({ prefix: 'guide-cue' });
 
+  const focusTrapOptions = {
+    clickOutsideDeactivates: true,
+  };
+
   return (
     <>
       <Tooltip
@@ -89,7 +93,7 @@ function TooltipContent({
         usePortal={usePortal}
         {...tooltipProps}
       >
-        <FocusTrap>
+        <FocusTrap focusTrapOptions={focusTrapOptions}>
           <div>
             {!isStandalone && (
               <IconButton
