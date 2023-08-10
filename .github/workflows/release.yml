@@ -19,7 +19,9 @@ jobs:
           path: |
             **/dist
             !**/node_modules
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
+            **/tsdoc.json
+            **/stories.js
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist', '**/tsdoc.json', '**/stories.js') }}
 
       # Only setup & build if there was no build cache hit
       - name: Use Node 16
@@ -67,7 +69,9 @@ jobs:
           path: |
             **/dist
             !**/node_modules
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
+            **/tsdoc.json
+            **/stories.js
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist', '**/tsdoc.json', '**/stories.js') }}
 
       - name: Publish to Chromatic
         uses: chromaui/action@v1
@@ -105,7 +109,9 @@ jobs:
           path: |
             **/dist
             !**/node_modules
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
+            **/tsdoc.json
+            **/stories.js
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist', '**/tsdoc.json', '**/stories.js') }}
 
       - name: Version packages
         id: changesets
