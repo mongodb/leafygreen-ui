@@ -1,5 +1,13 @@
 # @leafygreen-ui/icon
 
+## 11.22.1
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+- Updated dependencies [c11bbc29]
+  - @leafygreen-ui/emotion@4.0.7
+
 ## 11.22.0
 
 ### Minor Changes

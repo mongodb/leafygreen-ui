@@ -1,5 +1,11 @@
 # @leafygreen-ui/box
 
+## 3.1.7
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+
 ## 3.1.6
 
 ### Patch Changes

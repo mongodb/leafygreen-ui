@@ -1,5 +1,22 @@
 # @leafygreen-ui/confirmation-modal
 
+## 5.0.4
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+- Updated dependencies [c11bbc29]
+  - @leafygreen-ui/button@21.0.3
+  - @leafygreen-ui/emotion@4.0.7
+  - @leafygreen-ui/icon@11.22.1
+  - @leafygreen-ui/leafygreen-provider@3.1.6
+  - @leafygreen-ui/lib@10.4.3
+  - @leafygreen-ui/modal@15.0.6
+  - @leafygreen-ui/palette@4.0.7
+  - @leafygreen-ui/text-input@12.1.18
+  - @leafygreen-ui/tokens@2.1.4
+  - @leafygreen-ui/typography@16.5.4
+
 ## 5.0.3
 
 ### Patch Changes
