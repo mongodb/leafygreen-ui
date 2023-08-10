@@ -1,5 +1,11 @@
 # @leafygreen-ui/testing-lib
 
+## 0.3.2
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+
 ## 0.3.1
 
 ### Patch Changes

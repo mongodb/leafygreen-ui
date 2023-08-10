@@ -1,5 +1,11 @@
 # @leafygreen-ui/hooks
 
+## 7.7.7
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+
 ## 7.7.6
 
 ### Patch Changes
