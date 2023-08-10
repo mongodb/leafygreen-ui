@@ -11,8 +11,8 @@ export const LGConfigFileName = 'lg.json';
  *
  * @returns The LG config object for the current repository
  */
-export const getLGConfig = (): LGConfig => {
-  const rootDir = process.cwd();
+export const getLGConfig = (dir?: string): LGConfig => {
+  const rootDir = dir ?? process.cwd();
   const lgConfigPath = path.resolve(rootDir, LGConfigFileName);
 
   // Check if an lg.json exists

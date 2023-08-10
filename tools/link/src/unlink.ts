@@ -5,7 +5,7 @@ import { spawn } from 'cross-spawn';
 import fse from 'fs-extra';
 import path from 'path';
 
-import { formatLog } from './utils';
+import { formatLog } from './utils/formatLog';
 
 interface UnlinkOpts {
   verbose: boolean;
