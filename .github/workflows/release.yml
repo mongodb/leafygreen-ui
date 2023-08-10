@@ -133,6 +133,15 @@ jobs:
       - name: Install
         run: yarn install --frozen-lockfile --prefer-offline
 
+      - uses: actions/cache/restore@v3
+        name: Restore build cache
+        id: build-cache
+        with:
+          path: |
+            **/dist
+            !**/node_modules
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
+
       - name: Notify Slack channel of new releases
         id: slackbot
         run: yarn slackbot '${{ needs.release.outputs.publishedPackages }}'
