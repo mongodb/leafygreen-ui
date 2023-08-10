@@ -50,7 +50,12 @@ cli
 cli
   .command('link')
   .description('Link local LeafyGreen packages to a destination app.')
-  .argument('destination', 'The destination app path')
+  .argument('[destination]', 'The destination app path')
+  .option('--to <destination>', 'Alias for `destination`')
+  .option(
+    '--from <source>',
+    'When running from a consuming application, defines the source of linked packages',
+  )
   .option('-v --verbose', 'Prints additional information to the console', false)
   .option('--scope <name>', 'The NPM organization')
   .option(
