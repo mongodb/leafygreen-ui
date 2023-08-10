@@ -1,5 +1,20 @@
 # @leafygreen-ui/input-option
 
+## 1.0.7
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+- Updated dependencies [c15ee2ac]
+  - @leafygreen-ui/a11y@1.4.6
+  - @leafygreen-ui/emotion@4.0.6
+  - @leafygreen-ui/leafygreen-provider@3.1.5
+  - @leafygreen-ui/lib@10.4.2
+  - @leafygreen-ui/palette@4.0.6
+  - @leafygreen-ui/polymorphic@1.3.4
+  - @leafygreen-ui/tokens@2.1.3
+  - @leafygreen-ui/typography@16.5.3
+
 ## 1.0.6
 
 ### Patch Changes

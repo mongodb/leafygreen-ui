@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 10.4.2
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+
 ## 10.4.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/box
 
+## 3.1.6
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+
 ## 3.1.5
 
 ### Patch Changes
