@@ -34,9 +34,12 @@ jobs:
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         run: yarn install --frozen-lockfile --prefer-offline
 
-      - name: build
+      - name: Build
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         run: yarn build
+
+      - name: Generate docs
+        run: turbo run docs
 
   chromatic:
     name: Establish Chromatic baseline
