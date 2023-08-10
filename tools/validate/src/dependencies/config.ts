@@ -20,6 +20,7 @@ export interface DependencyIssues {
 
 // We won't check dependencies imported by files matching these patterns
 export const ignoreFilePatterns: Array<RegExp> = [
+  /.*scripts\/.*/,
   /.*.spec.tsx?/,
   /.*.?stor(y|ies).(t|j)sx?/,
   /.*.stories.tsx?/,
