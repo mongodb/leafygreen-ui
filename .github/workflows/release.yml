@@ -21,7 +21,7 @@ jobs:
             !**/node_modules
             **/tsdoc.json
             **/stories.js
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist', '**/tsdoc.json', '**/stories.js') }}
+          key: ${{ runner.os }}-release-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
 
       # Only setup & build if there was no build cache hit
       - name: Use Node 16
@@ -71,7 +71,7 @@ jobs:
             !**/node_modules
             **/tsdoc.json
             **/stories.js
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist', '**/tsdoc.json', '**/stories.js') }}
+          key: ${{ runner.os }}-release-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
 
       - name: Publish to Chromatic
         uses: chromaui/action@v1
@@ -111,7 +111,7 @@ jobs:
             !**/node_modules
             **/tsdoc.json
             **/stories.js
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist', '**/tsdoc.json', '**/stories.js') }}
+          key: ${{ runner.os }}-release-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
 
       - name: Version packages
         id: changesets
@@ -149,7 +149,9 @@ jobs:
           path: |
             **/dist
             !**/node_modules
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
+            **/tsdoc.json
+            **/stories.js
+          key: ${{ runner.os }}-release-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
 
       - name: Notify Slack channel of new releases
         id: slackbot
