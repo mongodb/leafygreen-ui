@@ -58,4 +58,4 @@
 '@leafygreen-ui/typography': patch
 ---
 
-Bundle ts-docs
+Fixes problem with ts-docs not being available in bundle.
