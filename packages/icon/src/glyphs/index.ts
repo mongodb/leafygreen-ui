@@ -91,6 +91,7 @@ import Pause from './Pause.svg';
 import Person from './Person.svg';
 import PersonGroup from './PersonGroup.svg';
 import PersonWithLock from './PersonWithLock.svg';
+import Pin from './Pin.svg';
 import Play from './Play.svg';
 import Plus from './Plus.svg';
 import PlusWithCircle from './PlusWithCircle.svg';
@@ -228,6 +229,7 @@ const _glyphs = {
   Person,
   PersonGroup,
   PersonWithLock,
+  Pin,
   Play,
   Plus,
   PlusWithCircle,
