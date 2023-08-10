@@ -1,5 +1,15 @@
 # @leafygreen-ui/logo
 
+## 8.0.6
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+- Updated dependencies [c15ee2ac]
+  - @leafygreen-ui/emotion@4.0.6
+  - @leafygreen-ui/lib@10.4.2
+  - @leafygreen-ui/palette@4.0.6
+
 ## 8.0.5
 
 ### Patch Changes

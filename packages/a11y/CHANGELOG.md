@@ -1,5 +1,15 @@
 # @leafygreen-ui/a11y
 
+## 1.4.6
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+- Updated dependencies [c15ee2ac]
+  - @leafygreen-ui/emotion@4.0.6
+  - @leafygreen-ui/hooks@7.7.7
+  - @leafygreen-ui/lib@10.4.2
+
 ## 1.4.5
 
 ### Patch Changes

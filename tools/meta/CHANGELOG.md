@@ -1,5 +1,11 @@
 # @lg-tools/meta
 
+## 0.1.3
+
+### Patch Changes
+
+- fbb968b4: Exports `isValidJSON` utility
+
 ## 0.1.2
 
 ### Patch Changes
