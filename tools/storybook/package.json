@@ -21,7 +21,7 @@
     "@leafygreen-ui/typography": "^16.5.1",
     "@lg-tools/build": "^0.2.0",
     "@lg-tools/storybook-decorators": "^0.1.2",
-    "@mdx-js/react": "1.6.22",
+    "@mdx-js/react": "2.3.0",
     "@storybook/addon-a11y": "7.1.1",
     "@storybook/addon-actions": "7.1.1",
     "@storybook/addon-docs": "7.1.1",
@@ -52,8 +52,8 @@
     "webpack": "5.88.0"
   },
   "peerDependencies": {
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0",
+    "react": "^17.0.0 || ^18.2.0",
+    "react-dom": "^17.0.0 || ^18.2.0",
     "storybook": "^7.1.0"
   }
 }
