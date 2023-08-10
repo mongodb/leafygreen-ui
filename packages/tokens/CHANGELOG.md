@@ -1,5 +1,13 @@
 # @leafygreen-ui/tokens
 
+## 2.1.3
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+- Updated dependencies [c15ee2ac]
+  - @leafygreen-ui/palette@4.0.6
+
 ## 2.1.2
 
 ### Patch Changes
