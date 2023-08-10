@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/hooks",
-  "version": "7.7.6",
+  "version": "7.7.7",
   "description": "LeafyGreen UI Kit Custom Hooks",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -34,7 +34,7 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@leafygreen-ui/emotion": "^4.0.5",
-    "@leafygreen-ui/lib": "^10.4.1"
+    "@leafygreen-ui/emotion": "^4.0.6",
+    "@leafygreen-ui/lib": "^10.4.2"
   }
 }

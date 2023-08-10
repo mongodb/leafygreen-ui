@@ -1,5 +1,27 @@
 # @leafygreen-ui/combobox
 
+## 6.0.10
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+- Updated dependencies [f73807cf]
+- Updated dependencies [31c09354]
+- Updated dependencies [c15ee2ac]
+  - @leafygreen-ui/icon@11.22.0
+  - @leafygreen-ui/checkbox@12.0.14
+  - @leafygreen-ui/emotion@4.0.6
+  - @leafygreen-ui/hooks@7.7.7
+  - @leafygreen-ui/icon-button@15.0.15
+  - @leafygreen-ui/inline-definition@6.0.9
+  - @leafygreen-ui/input-option@1.0.7
+  - @leafygreen-ui/leafygreen-provider@3.1.5
+  - @leafygreen-ui/lib@10.4.2
+  - @leafygreen-ui/palette@4.0.6
+  - @leafygreen-ui/popover@11.0.14
+  - @leafygreen-ui/tokens@2.1.3
+  - @leafygreen-ui/typography@16.5.3
+
 ## 6.0.9
 
 ### Patch Changes

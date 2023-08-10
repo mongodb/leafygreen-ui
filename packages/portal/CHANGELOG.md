@@ -1,5 +1,14 @@
 # @leafygreen-ui/portal
 
+## 4.1.6
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+- Updated dependencies [c15ee2ac]
+  - @leafygreen-ui/hooks@7.7.7
+  - @leafygreen-ui/lib@10.4.2
+
 ## 4.1.5
 
 ### Patch Changes
