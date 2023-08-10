@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 10.4.3
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+
 ## 10.4.2
 
 ### Patch Changes

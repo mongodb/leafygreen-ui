@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/portal",
-  "version": "4.1.6",
+  "version": "4.1.7",
   "description": "LeafyGreen UI Kit Portal",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -25,8 +25,8 @@
     "react-dom": "^17.0.0"
   },
   "dependencies": {
-    "@leafygreen-ui/hooks": "^7.7.7",
-    "@leafygreen-ui/lib": "^10.4.2"
+    "@leafygreen-ui/hooks": "^7.7.8",
+    "@leafygreen-ui/lib": "^10.4.3"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/portal",
@@ -38,6 +38,6 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@leafygreen-ui/emotion": "^4.0.6"
+    "@leafygreen-ui/emotion": "^4.0.7"
   }
 }

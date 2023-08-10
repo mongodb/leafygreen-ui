@@ -1,5 +1,22 @@
 # @leafygreen-ui/toast
 
+## 6.1.12
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+- Updated dependencies [c11bbc29]
+  - @leafygreen-ui/emotion@4.0.7
+  - @leafygreen-ui/hooks@7.7.8
+  - @leafygreen-ui/icon@11.22.1
+  - @leafygreen-ui/icon-button@15.0.16
+  - @leafygreen-ui/leafygreen-provider@3.1.6
+  - @leafygreen-ui/lib@10.4.3
+  - @leafygreen-ui/palette@4.0.7
+  - @leafygreen-ui/portal@4.1.7
+  - @leafygreen-ui/tokens@2.1.4
+  - @leafygreen-ui/typography@16.5.4
+
 ## 6.1.11
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @leafygreen-ui/tokens
 
+## 2.1.4
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+- Updated dependencies [c11bbc29]
+  - @leafygreen-ui/palette@4.0.7
+
 ## 2.1.3
 
 ### Patch Changes
