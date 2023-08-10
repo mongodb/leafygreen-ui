@@ -232,6 +232,7 @@ interface MenuButtonProps
   __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
     React.RefAttributes<unknown>
   >;
+  __INTERNAL__menuButtonSlotProps__?: Record<string, any>;
 }
 
 type LabelProp = Pick<
@@ -262,6 +263,7 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
     state,
     baseFontSize,
     __INTERNAL__menuButtonSlot__,
+    __INTERNAL__menuButtonSlotProps__,
     ...rest
   }: Props,
   forwardedRef,
@@ -312,9 +314,11 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
 
   const testId =
     (rest as any)['data-testid'] ?? 'leafygreen-ui-select-menubutton';
+
   return (
     <Component
       {...rest}
+      {...__INTERNAL__menuButtonSlotProps__}
       ref={ref}
       name={name}
       value={value}
@@ -325,11 +329,15 @@ const MenuButton = React.forwardRef<HTMLElement, Props>(function MenuButton(
       rightGlyph={<CaretDownIcon />}
       size={size}
       data-testid={testId}
-      className={cx(buttonClassName, {
-        [css`
-          font-size: ${baseFontSize}px;
-        `]: size === ButtonSize.Default,
-      })}
+      className={cx(
+        buttonClassName,
+        {
+          [css`
+            font-size: ${baseFontSize}px;
+          `]: size === ButtonSize.Default,
+        },
+        __INTERNAL__menuButtonSlotProps__?.className,
+      )}
     >
       <div className={menuButtonTextWrapperStyle}>
         <div className={cx(menuButtonTextClassName, menuButtonTextStyle)}>
