@@ -1,5 +1,13 @@
 # @leafygreen-ui/ripple
 
+## 1.1.11
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+- Updated dependencies [c15ee2ac]
+  - @leafygreen-ui/tokens@2.1.3
+
 ## 1.1.10
 
 ### Patch Changes
