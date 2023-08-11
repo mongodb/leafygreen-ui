@@ -42,7 +42,7 @@ jobs:
 
       - name: Generate docs
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
-        run: turbo run docs
+        run: yarn turbo run docs
 
   chromatic:
     name: Establish Chromatic baseline
