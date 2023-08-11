@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/box",
-  "version": "3.1.5",
+  "version": "3.1.7",
   "description": "leafyGreen UI Kit Box",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -31,6 +31,6 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@leafygreen-ui/lib": "^10.4.1"
+    "@leafygreen-ui/lib": "^10.4.3"
   }
 }
