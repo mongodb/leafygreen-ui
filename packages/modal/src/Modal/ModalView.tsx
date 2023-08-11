@@ -75,6 +75,15 @@ const ModalView = React.forwardRef(
 
     useEscapeKey(handleClose, { enabled: open && !isPopoverOpen });
 
+    const focusTrapOptions = initialFocus
+      ? {
+          initialFocus: `#${id} ${initialFocus}`,
+          fallbackFocus: `#${closeId}`,
+        }
+      : {
+          fallbackFocus: `#${closeId}`, // tests fail without a fallback. (https://github.com/focus-trap/focus-trap-react/issues/91)
+        };
+
     return (
       <Transition
         in={open}
@@ -101,9 +110,7 @@ const ModalView = React.forwardRef(
               <LeafyGreenProvider darkMode={darkMode}>
                 <FocusTrap
                   active={state === 'entered'}
-                  focusTrapOptions={{
-                    fallbackFocus: `#${closeButton}`,
-                  }}
+                  focusTrapOptions={focusTrapOptions}
                 >
                   <div
                     className={scrollContainer}
