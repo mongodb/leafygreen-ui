@@ -331,7 +331,7 @@ export const focusedMenuItemContainerStyle: Record<Theme, string> = {
 export const getFocusedStyles = (containerClassName: string, theme: Theme) => {
   return {
     textStyle: css`
-      .${containerClassName}:focus & {
+      .${containerClassName}:focus-visible & {
         color: ${theme === Theme.Light
           ? palette.blue.light3
           : palette.blue.dark1};
