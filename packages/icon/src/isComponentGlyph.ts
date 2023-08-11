@@ -5,7 +5,7 @@ import { LGGlyph } from './types';
 type Unknown = {} | null | undefined;
 
 type ExtendedComponentType =
-  | ComponentType<React.PropsWithChildren<any>> & {
+  | ComponentType<any> & {
       [key: string]: any;
     };
 /**
