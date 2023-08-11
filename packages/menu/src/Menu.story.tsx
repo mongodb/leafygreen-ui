@@ -131,14 +131,6 @@ export const LiveExample: StoryFn<MenuProps & { size: Size }> = ({
   darkMode,
   ...args
 }: MenuProps & { size: Size }) => {
-  const [testDisabled, setTestDisabled] = useState(false);
-
-  useEffect(() => {
-    setInterval(() => {
-      setTestDisabled(true);
-    }, 5000);
-  }, []);
-
   return (
     <LeafyGreenProvider>
       <Menu
@@ -150,7 +142,7 @@ export const LiveExample: StoryFn<MenuProps & { size: Size }> = ({
         }
         {...args}
       >
-        <MenuItem disabled={testDisabled} size={size} glyph={<CloudIcon />}>
+        <MenuItem size={size} glyph={<CloudIcon />}>
           Menu Item
         </MenuItem>
         <MenuItem
