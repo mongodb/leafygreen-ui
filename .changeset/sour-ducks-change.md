@@ -6,7 +6,6 @@
 '@leafygreen-ui/banner': patch
 '@leafygreen-ui/table': patch
 '@leafygreen-ui/toast': patch
-'@leafygreen-ui/icon': patch
 '@leafygreen-ui/logo': patch
 '@leafygreen-ui/menu': patch
 '@leafygreen-ui/box': patch
