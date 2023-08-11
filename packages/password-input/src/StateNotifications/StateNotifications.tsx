@@ -18,10 +18,7 @@ import {
 } from './StateNotifications.styles';
 import { StateNotificationsProps } from './StateNotifications.types';
 
-const icons: Record<
-  State,
-  React.ComponentType<React.PropsWithChildren<any>>
-> = {
+const icons: Record<State, React.ComponentType<any>> = {
   [State.Error]: ErrorIcon,
   [State.Warning]: WarningIcon,
   [State.Valid]: CheckmarkIcon,

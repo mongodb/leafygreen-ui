@@ -1,7 +1,5 @@
 ---
-'@leafygreen-ui/password-input': patch
 '@leafygreen-ui/polymorphic': patch
-'@leafygreen-ui/pipeline': patch
 '@leafygreen-ui/callout': patch
 '@leafygreen-ui/banner': patch
 '@leafygreen-ui/table': patch
