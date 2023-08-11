@@ -645,9 +645,7 @@ describe('packages/combobox', () => {
         test('Menu closes on click-away', async () => {
           const { containerEl, openMenu } = renderCombobox(select);
           const { menuContainerEl } = openMenu();
-          await waitFor(() => {
-            userEvent.click(containerEl.parentElement!);
-          });
+          userEvent.click(containerEl.parentElement!);
           await waitForElementToBeRemoved(menuContainerEl);
           expect(menuContainerEl).not.toBeInTheDocument();
           expect(containerEl).toContainFocus();
@@ -972,10 +970,9 @@ describe('packages/combobox', () => {
       });
 
       describe('Backspace key', () => {
-        // FIXME: act warning
         test('Deletes text when cursor is NOT at beginning of selection', async () => {
           const { inputEl } = renderCombobox(select);
-          userEvent.type(inputEl, 'app{backspace}');
+          await userEvent.type(inputEl, 'app{backspace}');
           expect(inputEl).toHaveFocus();
           expect(inputEl).toHaveValue('ap');
         });
