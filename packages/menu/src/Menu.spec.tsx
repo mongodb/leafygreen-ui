@@ -47,6 +47,13 @@ describe('packages/menu', () => {
     expect(menuItem).toBeInTheDocument();
   });
 
+  test('first item is focused when menu is opened', () => {
+    const { getByTestId } = renderMenu({ open: true });
+    const menu = getByTestId(menuTestId);
+    const options = globalGetAllByRole(menu, 'menuitem');
+    expect(options[0]).toHaveFocus();
+  });
+
   describe('when uncontrolled', () => {
     const uncontrolledSetOpen = jest.fn();
 
