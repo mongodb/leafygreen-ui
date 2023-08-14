@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/expandable-card",
-  "version": "3.0.16",
+  "version": "3.0.17",
   "description": "leafyGreen UI Kit Expandable Card",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
