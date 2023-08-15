@@ -285,6 +285,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
       setFocus(enabledItems[0]);
       hasSetInitialFocus.current = true;
     } else {
+      // Forcing the contextProps to open so it has access to the refs that are currently in the DOM
       contextProps.force();
     }
   }, [open, enabledItems, contextProps]);
@@ -295,28 +296,26 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     let refToFocus: HTMLElement;
 
     switch (e.keyCode) {
-      case keyMap.ArrowDown:
+      case keyMap.ArrowDown: {
         e.preventDefault(); // Prevents page scrolling
-        refToFocus =
-          enabledItems[
-            (enabledItems.indexOf(focusedRef.current!) + 1) %
-              enabledItems.length
-          ];
-
+        const index =
+          (enabledItems.indexOf(focusedRef.current!) + 1) % enabledItems.length;
+        refToFocus = enabledItems[index];
         setFocus(refToFocus);
         break;
+      }
 
-      case keyMap.ArrowUp:
+      case keyMap.ArrowUp: {
         e.preventDefault(); // Prevents page scrolling
-        refToFocus =
-          enabledItems[
-            (enabledItems.indexOf(focusedRef.current!) -
-              1 +
-              enabledItems.length) %
-              enabledItems.length
-          ];
+        const index =
+          (enabledItems.indexOf(focusedRef.current!) -
+            1 +
+            enabledItems.length) %
+          enabledItems.length;
+        refToFocus = enabledItems[index];
         setFocus(refToFocus);
         break;
+      }
 
       case keyMap.Tab:
         e.preventDefault(); // Prevent tabbing outside of portal and outside of the DOM when `usePortal={true}`
