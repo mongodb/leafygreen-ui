@@ -58,19 +58,23 @@ function GuideCue({
 
     if (open && !isStandalone) {
       // Adding a timeout to the tooltip so the tooltip is positioned correctly. Without the delay the tooltip can sometime shift when it is first visible. Only applies to multi-step tooltip.
-      setPopoverOpen(true); // beacon opens first
+      // beacon opens first
+      setPopoverOpen(true);
       openTimeout = setTimeout(
         () =>
           // React 18 automatically batches all updates which appears to break the opening transition. flushSync prevents this state update from automically batching. Instead updates are made synchronously.
           flushSync(() => {
+            // tooltip opens a little after the beacon opens
             setTooltipOpen(true);
           }),
         timeout1,
-      ); // tooltip opens a little after the beacon opens
+      );
     } else {
       // Adding a timeout to the popover because if we close both the tooltip and the popover at the same time the transition is not visible. Only applies to multi-step tooltip.
-      setTooltipOpen(false); // tooltip closes first
-      closeTimeout = setTimeout(() => setPopoverOpen(false), timeout2); // beacon closes a little after the tooltip cloese
+      // tooltip closes first
+      setTooltipOpen(false);
+      // beacon closes a little after the tooltip cloese
+      closeTimeout = setTimeout(() => setPopoverOpen(false), timeout2);
     }
 
     return () => {
