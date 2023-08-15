@@ -28,7 +28,7 @@ const InternalCell = ({
   const isFirstCell = cellIndex === 0;
   const { table } = useTableContext();
   const isSelectable = !!table && !!table.hasSelectableRows;
-  const transitionRef = useRef<null>(null);
+  const transitionRef = useRef<HTMLElement | null>(null);
 
   return (
     <td

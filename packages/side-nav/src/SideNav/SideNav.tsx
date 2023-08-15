@@ -74,7 +74,7 @@ function SideNav({
   const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
   const { usingKeyboard } = useUsingKeyboardContext();
   const { darkMode, theme } = useDarkMode(darkModeProp);
-  const transitionRef = useRef<null>(null);
+  const transitionRef = useRef<HTMLElement | null>(null);
   const [hover, setHover] = useState(false);
   const [focus, setFocus] = useState(false);
   const navId = useIdAllocator({ prefix: 'side-nav', id: idProp });

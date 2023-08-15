@@ -53,7 +53,7 @@ const ExpandableCard = ({
   const summaryId = useIdAllocator({ prefix: 'expandable-card-summary' });
   const contentId = useIdAllocator({ prefix: 'expandable-card-content' });
 
-  const transitionRef = useRef<null>(null);
+  const transitionRef = useRef<HTMLElement | null>(null);
 
   // When the controlled prop changes, update the internal state
   useEffect(() => {

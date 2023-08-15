@@ -56,7 +56,7 @@ export function Check({
   const showCheckIcon = indeterminate || isChecked;
   const shouldAnimate = animate && !indeterminate && !prefersReducedMotion;
 
-  const transitionRef = useRef<null>(null);
+  const transitionRef = useRef<HTMLElement | null>(null);
 
   return (
     <>
