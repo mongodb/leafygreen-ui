@@ -129,12 +129,12 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     ? `${Math.min(memoizedAvailableSpace, maxHeight)}px`
     : 'unset';
 
-  const { updatedChildren } = React.useMemo(() => {
+  const updatedChildren = React.useMemo(() => {
     if (
       children == null ||
       ['boolean', 'number', 'string'].includes(typeof children)
     ) {
-      return { updatedChildren: undefined };
+      return undefined;
     }
 
     const titleArr: Array<string> = [];
@@ -245,7 +245,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
       });
     }
 
-    return { updatedChildren: updateChildren(children) };
+    return updateChildren(children);
   }, [children, updateCurrentSubMenu, handleClose]);
 
   const enabledItems: Array<HTMLElement> = useMemo(() => {
