@@ -66,11 +66,11 @@ function GuideCue({
             setTooltipOpen(true);
           }),
         timeout1,
-      ); // tooltip opens a little after
+      ); // tooltip opens a little after the beacon opens
     } else {
       // Adding a timeout to the popover because if we close both the tooltip and the popover at the same time the transition is not visible. Only applies to multi-step tooltip.
       setTooltipOpen(false); // tooltip closes first
-      closeTimeout = setTimeout(() => setPopoverOpen(false), timeout2); // beacon closes a little after
+      closeTimeout = setTimeout(() => setPopoverOpen(false), timeout2); // beacon closes a little after the tooltip cloese
     }
 
     return () => {
