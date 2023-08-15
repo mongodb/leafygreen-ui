@@ -29,7 +29,8 @@ export const Polymorphic = <
   // (i.e. we don't know if `as="button"`, and if `type` is a valid prop)
 
   // If no `ref` arg was passed in, we use the plain render function
-  // @ts-expect-error FIXME: https://jira.mongodb.org/browse/LG-3410
+  // Using ignore instead of expect since this throws a TS error in a React environment
+  // @ts-ignore FIXME: https://jira.mongodb.org/browse/LG-3410
   const PolyComponent: PolymorphicComponentType<XP, DefaultAs> =
     render.length === 1 ? render : forwardRef(render);
 
