@@ -30,9 +30,11 @@ import LeafyGreenProvider, {
 import {
   createSyntheticEvent,
   getNodeTextContent,
+  HTMLElementProps,
   isComponentType,
   keyMap,
 } from '@leafygreen-ui/lib';
+import { Polymorph } from '@leafygreen-ui/polymorphic';
 
 import { SearchInputContextProvider } from '../SearchInputContext';
 import { SearchResultProps } from '../SearchResult';
@@ -81,6 +83,10 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       onSubmit: onSubmitProp,
       'aria-label': ariaLabel,
       'aria-labelledby': ariaLabelledBy,
+      __INTERNAL__divWrapperSlot__,
+      __INTERNAL__divWrapperProps__,
+      __INTERNAL__inputSlot__,
+      __INTERNAL__inputProps__,
       ...rest
     }: SearchInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
@@ -245,6 +251,9 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
 
     const handleInputChange: ChangeEventHandler<HTMLInputElement> = e => {
       handleChange?.(e);
+      __INTERNAL__inputProps__ &&
+        __INTERNAL__inputProps__.onChange &&
+        __INTERNAL__inputProps__.onChange(e);
     };
 
     const handleOpenMenuAction: EventHandler<SyntheticEvent<any>> = e => {
@@ -380,7 +389,8 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
           >
             {/* Disable eslint: onClick sets focus. Key events would already have focus */}
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */}
-            <div
+            <Polymorph
+              as={__INTERNAL__divWrapperSlot__ ?? 'div'}
               ref={searchBoxRef}
               role="searchbox"
               tabIndex={-1}
@@ -401,16 +411,20 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
               )}
               aria-label={ariaLabel}
               aria-labelledby={ariaLabelledBy}
+              {...__INTERNAL__divWrapperProps__}
             >
-              <MagnifyingGlass
-                className={cx(
-                  searchIconThemeStyle[theme],
-                  searchIconSizeStyle[size],
-                  { [searchIconDisabledStyle[theme]]: disabled },
-                )}
-                role="presentation"
-              />
-              <input
+              {!__INTERNAL__divWrapperSlot__ && (
+                <MagnifyingGlass
+                  className={cx(
+                    searchIconThemeStyle[theme],
+                    searchIconSizeStyle[size],
+                    { [searchIconDisabledStyle[theme]]: disabled },
+                  )}
+                  role="presentation"
+                />
+              )}
+              <Polymorph
+                as={__INTERNAL__inputSlot__ ?? 'input'}
                 type="search"
                 className={cx(baseInputStyle, inputThemeStyle[theme])}
                 value={value}
@@ -419,8 +433,9 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
                 ref={inputRef}
                 readOnly={disabled}
                 aria-disabled={disabled}
+                {...__INTERNAL__inputProps__}
               />
-              {value && (
+              {!__INTERNAL__divWrapperSlot__ && value && (
                 <IconButton
                   ref={clearButtonRef}
                   type="button"
@@ -433,7 +448,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
                   <XIcon />
                 </IconButton>
               )}
-            </div>
+            </Polymorph>
             {withTypeAhead && (
               <SearchResultsMenu
                 open={isOpen}

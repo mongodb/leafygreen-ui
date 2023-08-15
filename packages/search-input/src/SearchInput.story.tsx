@@ -1,5 +1,10 @@
 /* eslint-disable no-console */
-import React, { ChangeEventHandler, FormEventHandler, useState } from 'react';
+import React, {
+  ChangeEventHandler,
+  FormEventHandler,
+  forwardRef,
+  useState,
+} from 'react';
 import { StoryFn } from '@storybook/react';
 import { kebabCase, startCase } from 'lodash';
 
@@ -299,6 +304,73 @@ export const WithResults: StoryFn<SearchInputProps> = (
   </SearchInput>
 );
 WithResults.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+
+// eslint-disable-next-line react/display-name, react/prop-types
+const CustomDivWrapper = forwardRef(({ children, ...rest }: any, ref) => {
+  return (
+    <div ref={ref} style={{ background: 'red' }} {...rest}>
+      custom
+      {children}
+    </div>
+  );
+});
+
+// eslint-disable-next-line react/display-name, react/prop-types
+const CustomInput = forwardRef(({ children, ...rest }: any, ref) => {
+  return (
+    <input ref={ref} style={{ background: 'blue' }} {...rest}>
+      {children}
+    </input>
+  );
+});
+
+export const CustomElementsWithResults: StoryFn<SearchInputProps> = (
+  props: SearchInputProps,
+) => (
+  <SearchInput
+    className={css`
+      width: 200px;
+    `}
+    onChange={() => {
+      console.log('SB: Change');
+    }}
+    __INTERNAL__divWrapperSlot__={CustomDivWrapper}
+    __INTERNAL__inputSlot__={CustomInput}
+    __INTERNAL__inputProps__={{
+      placeholder: 'This is a custom input',
+    }}
+    {...props}
+  >
+    <SearchResult
+      onClick={() => {
+        console.log('SB: Click Apple');
+      }}
+      description="This is a description"
+    >
+      Apple
+    </SearchResult>
+    <SearchResult>Banana</SearchResult>
+    <SearchResult as="a" href="#" description="This is a link">
+      Carrot
+    </SearchResult>
+    <SearchResult description="This is a very very long description. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.">
+      Dragonfruit
+    </SearchResult>
+    <SearchResultGroup label="Peppers">
+      <SearchResult description="A moderately hot chili pepper used to flavor dishes">
+        Cayenne
+      </SearchResult>
+      <SearchResult>Ghost pepper</SearchResult>
+      <SearchResult>Habanero</SearchResult>
+      <SearchResult>Jalapeño</SearchResult>
+      <SearchResult>Red pepper</SearchResult>
+      <SearchResult>Scotch bonnet</SearchResult>
+    </SearchResultGroup>
+  </SearchInput>
+);
+CustomElementsWithResults.parameters = {
   chromatic: { disableSnapshot: true },
 };
 

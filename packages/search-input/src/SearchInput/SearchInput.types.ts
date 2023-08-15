@@ -62,6 +62,33 @@ interface BaseSearchInputProps
    * The placeholder text shown in the input field before the user begins typing.
    */
   placeholder?: string;
+
+  /**
+   * For internal uses, expose a slot to render a custom div to wrap the input
+   * @internal
+   */
+  __INTERNAL__divWrapperSlot__?: React.ForwardRefExoticComponent<
+    React.RefAttributes<unknown>
+  >;
+  /**
+   * For internal uses, allow props to be passed to the custom internal div wrapper
+   * @internal
+   */
+  __INTERNAL__divWrapperProps__?: Record<string, any>;
+
+  /**
+   * For internal uses, expose a slot to render a custom input
+   * @internal
+   */
+  __INTERNAL__inputSlot__?: React.ForwardRefExoticComponent<
+    React.RefAttributes<unknown>
+  >;
+
+  /**
+   * For internal uses, allow props to be passed to the custom input
+   * @internal
+   */
+  __INTERNAL__inputProps__?: Record<string, any>;
 }
 
 export type SearchInputProps = BaseSearchInputProps & AriaLabelProps;
