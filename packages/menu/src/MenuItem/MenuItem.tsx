@@ -32,6 +32,7 @@ import {
 } from '../styles';
 import { Size } from '../types';
 import { useDescendant } from '../utils/useDescendants';
+import { useMergeRefs } from '../utils/useMergeRefs';
 
 import { disabledIconStyle } from './MenuItem.styles';
 import { MenuItemProps } from './MenuItem.types';
@@ -51,13 +52,15 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
       glyph,
       ...rest
     },
-    __,
+    forwardRef,
   ) => {
     const { ref } = useDescendant({ disabled });
     const { Component } = useInferredPolymorphic(as, rest, 'button');
     const { theme } = useContext(MenuContext);
     const hoverStyles = getHoverStyles(menuItemContainerClassName, theme);
     const focusStyles = getFocusedStyles(menuItemContainerClassName, theme);
+
+    const itemRefs = useMergeRefs(ref, forwardRef);
 
     const isAnchor = Component === 'a';
 
@@ -78,7 +81,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
       });
 
     const baseProps = {
-      ref,
+      ref: itemRefs,
       role: 'menuitem',
       tabIndex: -1,
       'aria-disabled': disabled,
