@@ -1,5 +1,15 @@
 # @leafygreen-ui/logo
 
+## 8.0.7
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+- Updated dependencies [c11bbc29]
+  - @leafygreen-ui/emotion@4.0.7
+  - @leafygreen-ui/lib@10.4.3
+  - @leafygreen-ui/palette@4.0.7
+
 ## 8.0.6
 
 ### Patch Changes
