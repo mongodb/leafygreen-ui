@@ -94,6 +94,11 @@ interface BaseSelectProps
   __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
     React.RefAttributes<unknown>
   >;
+
+  /**
+   * @internal
+   */
+  __INTERNAL__menuButtonSlotProps__?: Record<string, any>;
 }
 
 interface LabelProp {
