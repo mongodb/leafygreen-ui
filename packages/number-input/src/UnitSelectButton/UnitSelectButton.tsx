@@ -70,17 +70,21 @@ export const UnitSelectButton = React.forwardRef(
       ? (textNode as HTMLElement).offsetWidth < textNode.scrollWidth
       : false;
 
-    const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
-      // Hovering over both the button and the menu popover triggers `onMouseEnter` but we only want the tooltip to show up on hover of the button. If the target has no ancestor with the popoverClassName then that means we are hovering over the button.
-      const popoverParent = (e.target as HTMLButtonElement).closest(
-        `.${popoverClassName}`,
-      );
+    const isEnabled = hasEllipsis && !disabled;
 
-      if (!popoverParent) {
-        // React 18 automatically batches all updates which appears to break the opening transition. flushSync prevents this state update from automically batching. Instead updates are made synchronously.
-        flushSync(() => {
-          setOpen(true);
-        });
+    const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
+      if (isEnabled) {
+        // Hovering over both the button and the menu popover triggers `onMouseEnter` but we only want the tooltip to show up on hover of the button. If the target has no ancestor with the popoverClassName then that means we are hovering over the button.
+        const popoverParent = (e.target as HTMLButtonElement).closest(
+          `.${popoverClassName}`,
+        );
+
+        if (!popoverParent) {
+          // React 18 automatically batches all updates which appears to break the opening transition. flushSync prevents this state update from automically batching. Instead updates are made synchronously.
+          flushSync(() => {
+            setOpen(true);
+          });
+        }
       }
     };
 
@@ -91,7 +95,7 @@ export const UnitSelectButton = React.forwardRef(
     return (
       <div className={wrapperStyles}>
         <Tooltip
-          enabled={hasEllipsis && !disabled}
+          enabled={isEnabled}
           justify="middle"
           // Using refEl instead of a trigger element because triggerProps by default, such as onMouseEnter, are added to the trigger element inside the tooltip component. OnMouseEnter is triggered by hovering over the trigger or any of its children. In the case of this custom menu button we don't want the tooltip to open when children are hovered so we add our own open logic with onMouseEnter.
           refEl={buttonRef}

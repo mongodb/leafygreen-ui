@@ -8,13 +8,13 @@ export const Size = {
   Default: 'default',
   Large: 'large',
 } as const;
-export type Size = typeof Size[keyof typeof Size];
+export type Size = (typeof Size)[keyof typeof Size];
 
 export const State = {
   None: 'none',
   Error: 'error',
 } as const;
-export type State = typeof State[keyof typeof State];
+export type State = (typeof State)[keyof typeof State];
 
 export const DropdownWidthBasis = {
   Trigger: 'trigger',
@@ -22,7 +22,7 @@ export const DropdownWidthBasis = {
 } as const;
 
 export type DropdownWidthBasis =
-  typeof DropdownWidthBasis[keyof typeof DropdownWidthBasis];
+  (typeof DropdownWidthBasis)[keyof typeof DropdownWidthBasis];
 
 interface BaseSelectProps
   extends Omit<
@@ -94,6 +94,11 @@ interface BaseSelectProps
   __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
     React.RefAttributes<unknown>
   >;
+
+  /**
+   * @internal
+   */
+  __INTERNAL__menuButtonSlotProps__?: Record<string, any>;
 }
 
 interface LabelProp {
