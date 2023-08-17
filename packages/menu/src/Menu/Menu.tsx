@@ -22,11 +22,10 @@ import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 
 import { MenuContext } from '../MenuContext/MenuContext';
 import MenuSeparator from '../MenuSeparator/MenuSeparator';
-import { SubMenu, type SubMenuProps } from '../SubMenu/';
-import { ElementOf } from '../types';
+import { type SubMenuProps } from '../SubMenu/';
 import { DescendantContext, useDescendants } from '../utils/useDescendants';
 
-import { MenuProps } from './Menu.types';
+import { MenuProps, type SubMenuType } from './Menu.types';
 
 const rootMenuStyle = css`
   width: 210px;
@@ -102,7 +101,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   const hasSetInitialOpen = useRef(false);
 
   const [, setClosed] = useState(false);
-  const currentSubMenuRef = useRef<ElementOf<typeof SubMenu> | null>(null);
+  const currentSubMenuRef = useRef<SubMenuType | null>(null);
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
 
   const setOpen =
@@ -155,10 +154,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           focusedRef.current = target;
         };
 
-        if (
-          isComponentType<ElementOf<typeof SubMenu>>(child, 'SubMenu') &&
-          title
-        ) {
+        if (isComponentType<SubMenuType>(child, 'SubMenu') && title) {
           if (titleArr.includes(title)) {
             throw new Error('SubMenu titles must be unique');
           }
