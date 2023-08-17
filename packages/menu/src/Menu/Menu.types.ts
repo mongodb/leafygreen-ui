@@ -1,6 +1,16 @@
-import { ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 
+import {
+  InferredPolymorphicProps,
+  PolymorphicAs,
+} from '@leafygreen-ui/polymorphic';
 import { PopoverProps } from '@leafygreen-ui/popover';
+
+import { type SubMenuProps } from '../SubMenu/';
+
+export type SubMenuType = ReactElement<
+  InferredPolymorphicProps<PolymorphicAs, SubMenuProps>
+>;
 
 export interface MenuProps extends Omit<PopoverProps, 'active'> {
   /**
