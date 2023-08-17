@@ -39,7 +39,6 @@ import {
 } from '../styles';
 import { Size } from '../types';
 import { useDescendant } from '../utils/useDescendants';
-import { useMergeRefs } from '../utils/useMergeRefs';
 
 import {
   chevronClassName,
@@ -83,14 +82,13 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
       as,
       ...rest
     },
-    forwardRef,
+    __,
   ): React.ReactElement => {
     const { ref } = useDescendant({ disabled });
     const { Component } = useInferredPolymorphic(as, rest, 'button');
     const { theme, darkMode } = useContext(MenuContext);
     const hoverStyles = getHoverStyles(subMenuContainerClassName, theme);
     const focusStyles = getFocusedStyles(subMenuContainerClassName, theme);
-    const itemRefs = useMergeRefs(ref, forwardRef);
 
     const nodeRef = React.useRef(null);
 
@@ -149,7 +147,7 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
       });
 
     const baseProps = {
-      ref: itemRefs,
+      ref,
       role: 'menuitem',
       'aria-haspopup': true,
       onClick: onRootClick,
