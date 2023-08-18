@@ -1,5 +1,19 @@
 # @leafygreen-ui/toggle
 
+## 10.0.14
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+- Updated dependencies [c11bbc29]
+  - @leafygreen-ui/a11y@1.4.7
+  - @leafygreen-ui/emotion@4.0.7
+  - @leafygreen-ui/icon@11.22.1
+  - @leafygreen-ui/leafygreen-provider@3.1.6
+  - @leafygreen-ui/lib@10.4.3
+  - @leafygreen-ui/palette@4.0.7
+  - @leafygreen-ui/tokens@2.1.4
+
 ## 10.0.13
 
 ### Patch Changes

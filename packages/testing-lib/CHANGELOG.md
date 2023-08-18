@@ -1,5 +1,11 @@
 # @leafygreen-ui/testing-lib
 
+## 0.3.3
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+
 ## 0.3.2
 
 ### Patch Changes

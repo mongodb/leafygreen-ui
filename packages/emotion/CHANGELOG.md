@@ -1,5 +1,11 @@
 # @leafygreen-ui/emotion
 
+## 4.0.7
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+
 ## 4.0.6
 
 ### Patch Changes
