@@ -282,6 +282,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
       hasSetInitialFocus.current = true;
     } else {
       // Forcing the contextProps to open so it has access to the refs that are currently in the DOM
+      // @ts-ignore
       contextProps.force();
     }
   }, [open, enabledItems, contextProps]);
