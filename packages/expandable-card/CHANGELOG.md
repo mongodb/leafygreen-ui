@@ -1,5 +1,11 @@
 # @leafygreen-ui/expandable-card
 
+## 3.0.17
+
+### Patch Changes
+
+- 696fe27e: Updates `background-color` when rendered in dark mode to match design spec.
+
 ## 3.0.16
 
 ### Patch Changes
