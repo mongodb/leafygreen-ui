@@ -31,7 +31,16 @@ const meta: StoryMetaType<typeof SearchInput> = {
   parameters: {
     default: 'LiveExample',
     controls: {
-      exclude: [...storybookExcludedControlParams, 'value', 'id', 'showWedge'],
+      exclude: [
+        ...storybookExcludedControlParams,
+        'value',
+        'id',
+        'showWedge',
+        '__INTERNAL__divWrapperProps__',
+        '__INTERNAL__divWrapperSlot__',
+        '__INTERNAL__inputProps__',
+        '__INTERNAL__inputSlot__',
+      ],
     },
     generate: {
       combineArgs: {
@@ -179,7 +188,7 @@ const data = [
 export const LiveExample: StoryFn<SearchInputProps> = (
   args: SearchInputProps,
 ) => {
-  const [currentPage, setPage] = useState<typeof data[0]>();
+  const [currentPage, setPage] = useState<(typeof data)[0]>();
   const [searchResults, setSearchResults] = useState(data);
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
