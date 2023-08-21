@@ -1,5 +1,14 @@
 # @leafygreen-ui/portal
 
+## 4.1.7
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+- Updated dependencies [c11bbc29]
+  - @leafygreen-ui/hooks@7.7.8
+  - @leafygreen-ui/lib@10.4.3
+
 ## 4.1.6
 
 ### Patch Changes

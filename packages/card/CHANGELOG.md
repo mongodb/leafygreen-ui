@@ -1,5 +1,18 @@
 # @leafygreen-ui/card
 
+## 10.0.3
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+- Updated dependencies [c11bbc29]
+  - @leafygreen-ui/box@3.1.7
+  - @leafygreen-ui/emotion@4.0.7
+  - @leafygreen-ui/leafygreen-provider@3.1.6
+  - @leafygreen-ui/lib@10.4.3
+  - @leafygreen-ui/palette@4.0.7
+  - @leafygreen-ui/tokens@2.1.4
+
 ## 10.0.2
 
 ### Patch Changes

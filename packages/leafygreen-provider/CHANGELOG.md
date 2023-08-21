@@ -1,5 +1,14 @@
 # @leafygreen-ui/leafygreen-provider
 
+## 3.1.6
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+- Updated dependencies [c11bbc29]
+  - @leafygreen-ui/hooks@7.7.8
+  - @leafygreen-ui/lib@10.4.3
+
 ## 3.1.5
 
 ### Patch Changes

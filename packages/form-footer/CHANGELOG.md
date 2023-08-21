@@ -1,5 +1,19 @@
 # @leafygreen-ui/form-footer
 
+## 3.0.12
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+- Updated dependencies [c11bbc29]
+  - @leafygreen-ui/banner@7.0.12
+  - @leafygreen-ui/button@21.0.3
+  - @leafygreen-ui/emotion@4.0.7
+  - @leafygreen-ui/icon@11.22.1
+  - @leafygreen-ui/leafygreen-provider@3.1.6
+  - @leafygreen-ui/lib@10.4.3
+  - @leafygreen-ui/palette@4.0.7
+
 ## 3.0.11
 
 ### Patch Changes
