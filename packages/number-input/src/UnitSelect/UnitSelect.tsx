@@ -4,8 +4,8 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { DropdownWidthBasis, Option, Select } from '@leafygreen-ui/select';
 
-import { CustomSelectMenuButton } from '../CustomSelectMenuButton';
 import { UnitOption } from '../NumberInput/NumberInput.types';
+import { UnitSelectButton } from '../UnitSelectButton';
 
 import {
   selectDisabledStyles,
@@ -77,7 +77,7 @@ export function UnitSelect({
         size={size}
         data-testid={dataTestId}
         {...popoverProps}
-        __INTERNAL__menuButtonSlot__={CustomSelectMenuButton}
+        __INTERNAL__menuButtonSlot__={UnitSelectButton}
         __INTERNAL__menuButtonSlotProps__={{
           disabled,
           displayName: currentUnitOption.displayName,
