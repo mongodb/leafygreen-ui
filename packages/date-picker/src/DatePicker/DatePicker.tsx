@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
-// TODO: forwardRef
-export function DatePicker({}) {
+import { DatePickerProps } from './DatePicker.types';
+
+// eslint-disable-next-line no-empty-pattern
+export const DatePicker = forwardRef(({}: DatePickerProps) => {
   return <div>your content here</div>;
-}
+});
 
 DatePicker.displayName = 'DatePicker';
