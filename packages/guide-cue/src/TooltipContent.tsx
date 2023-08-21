@@ -1,4 +1,5 @@
 import React from 'react';
+import { Options } from 'focus-trap';
 import FocusTrap from 'focus-trap-react';
 
 import Button from '@leafygreen-ui/button';
@@ -65,7 +66,7 @@ function TooltipContent({
 }: TooltipContentProps) {
   const focusId = useIdAllocator({ prefix: 'guide-cue' });
 
-  const focusTrapOptions = {
+  const focusTrapOptions: Options = {
     clickOutsideDeactivates: true,
   };
 

@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { Transition, TransitionStatus } from 'react-transition-group';
+import { Options } from 'focus-trap';
 import FocusTrap from 'focus-trap-react';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -75,7 +76,7 @@ const ModalView = React.forwardRef(
 
     useEscapeKey(handleClose, { enabled: open && !isPopoverOpen });
 
-    const focusTrapOptions = initialFocus
+    const focusTrapOptions: Options = initialFocus
       ? {
           initialFocus: `#${id} ${initialFocus}`,
           fallbackFocus: `#${closeId}`,

@@ -7339,7 +7339,7 @@ focus-trap-react@9.0.2, focus-trap-react@^9.0.2:
     focus-trap "^6.9.4"
     tabbable "^5.3.3"
 
-focus-trap@^6.9.4:
+focus-trap@6.9.4, focus-trap@^6.9.4:
   version "6.9.4"
   resolved "https://registry.yarnpkg.com/focus-trap/-/focus-trap-6.9.4.tgz#436da1a1d935c48b97da63cd8f361c6f3aa16444"
   integrity sha512-v2NTsZe2FF59Y+sDykKY+XjqZ0cPfhq/hikWVL88BqLivnNiEffAsac6rP6H45ff9wG9LL5ToiDqrLEP9GX9mw==
