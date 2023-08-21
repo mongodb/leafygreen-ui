@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { useDescendant } from '../utils/useDescendants';
-
 import { FocusableMenuItemProps } from './MenuItem.types';
 
 /**
@@ -10,10 +8,9 @@ import { FocusableMenuItemProps } from './MenuItem.types';
  * @internal
  */
 export const FocusableMenuItem = React.forwardRef(
-  ({ children }: FocusableMenuItemProps, __) => {
-    const { ref } = useDescendant({});
+  ({ children }: FocusableMenuItemProps, forwardRef) => {
     return React.cloneElement(children, {
-      ref,
+      ref: forwardRef,
     });
   },
 );
