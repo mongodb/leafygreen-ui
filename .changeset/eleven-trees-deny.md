@@ -2,4 +2,4 @@
 '@leafygreen-ui/combobox': patch
 ---
 
-Fixes a TS error. 
+Type assert children as `Array<React.ReactNode>` inside the internal function `renderedMenuContents` and add explicit return type to internal function `renderCombobox`.
