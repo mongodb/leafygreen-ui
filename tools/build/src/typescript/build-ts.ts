@@ -18,5 +18,7 @@ export function buildTypescript() {
   spawn('tsc', ['--build', tsConfigPath], {
     cwd: packageDir,
     stdio: 'inherit',
+  }).on('exit', code => {
+    process.exit(code ?? undefined);
   });
 }
