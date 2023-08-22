@@ -1,5 +1,43 @@
 # @leafygreen-ui/table
 
+## 12.0.7
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+- Updated dependencies [c11bbc29]
+  - @leafygreen-ui/checkbox@12.0.15
+  - @leafygreen-ui/emotion@4.0.7
+  - @leafygreen-ui/hooks@7.7.8
+  - @leafygreen-ui/icon@11.22.1
+  - @leafygreen-ui/icon-button@15.0.16
+  - @leafygreen-ui/leafygreen-provider@3.1.6
+  - @leafygreen-ui/lib@10.4.3
+  - @leafygreen-ui/palette@4.0.7
+  - @leafygreen-ui/polymorphic@1.3.5
+  - @leafygreen-ui/tokens@2.1.4
+  - @leafygreen-ui/typography@16.5.4
+
+## 12.0.6
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+- Updated dependencies [f73807cf]
+- Updated dependencies [31c09354]
+- Updated dependencies [c15ee2ac]
+  - @leafygreen-ui/icon@11.22.0
+  - @leafygreen-ui/checkbox@12.0.14
+  - @leafygreen-ui/emotion@4.0.6
+  - @leafygreen-ui/hooks@7.7.7
+  - @leafygreen-ui/icon-button@15.0.15
+  - @leafygreen-ui/leafygreen-provider@3.1.5
+  - @leafygreen-ui/lib@10.4.2
+  - @leafygreen-ui/palette@4.0.6
+  - @leafygreen-ui/polymorphic@1.3.4
+  - @leafygreen-ui/tokens@2.1.3
+  - @leafygreen-ui/typography@16.5.3
+
 ## 12.0.5
 
 ### Patch Changes

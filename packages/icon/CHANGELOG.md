@@ -1,5 +1,32 @@
 # @leafygreen-ui/icon
 
+## 11.22.1
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+- Updated dependencies [c11bbc29]
+  - @leafygreen-ui/emotion@4.0.7
+
+## 11.22.0
+
+### Minor Changes
+
+- f73807cf: Adds `Pin` icon and updates `Warning` icon to match Figma specs
+
+### Patch Changes
+
+- 31c09354: Fixing issue where dark mode would not change ThumbsUp and ThumbsDown icon fills
+- c15ee2ac: Fixes missing documentation file
+- Updated dependencies [c15ee2ac]
+  - @leafygreen-ui/emotion@4.0.6
+
+## 11.21.0
+
+### Minor Changes
+
+- 1629efe6: Adds `AllProducts`, `NavCollapse`, and `NavExpand` glyphs to icon
+
 ## 11.20.1
 
 ### Patch Changes

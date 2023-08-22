@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/icon",
-  "version": "11.20.1",
+  "version": "11.22.1",
   "description": "LeafyGreen UI Kit Icons",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -23,13 +23,13 @@
     "access": "public"
   },
   "devDependencies": {
-    "@leafygreen-ui/palette": "^4.0.5",
+    "@leafygreen-ui/palette": "^4.0.7",
     "@types/xml2json": "^0.11.0",
     "xml2json": "^0.12.0",
-    "@leafygreen-ui/lib": "^10.4.1"
+    "@leafygreen-ui/lib": "^10.4.3"
   },
   "dependencies": {
-    "@leafygreen-ui/emotion": "^4.0.5",
+    "@leafygreen-ui/emotion": "^4.0.7",
     "@svgr/core": "^5.3.1",
     "@types/meow": "^6.0.0",
     "lodash": "^4.17.21",

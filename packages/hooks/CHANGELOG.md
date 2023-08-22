@@ -1,5 +1,17 @@
 # @leafygreen-ui/hooks
 
+## 7.7.8
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+
+## 7.7.7
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+
 ## 7.7.6
 
 ### Patch Changes

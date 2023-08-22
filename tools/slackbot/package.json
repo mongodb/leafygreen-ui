@@ -1,11 +1,13 @@
 {
   "name": "@lg-tools/slackbot",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Slackbot for LeafyGreen",
   "license": "Apache-2.0",
   "bin": {
     "lg-slackbot": "./bin/slackbot.js"
   },
+  "main": "dist/index.js",
+  "module": "dist/esm/index.js",
   "scripts": {
     "build": "lg-internal-build-package",
     "tsc": "tsc --build tsconfig.json"
@@ -14,11 +16,11 @@
     "access": "public"
   },
   "dependencies": {
-    "@lg-tools/build": "^0.1.0",
-    "@slack/web-api": "^6.4.0",
-    "chalk": "^4.1.2",
-    "commander": "^11.0.0",
-    "lodash": "^4.17.21",
-    "node-fetch": "^2.6.1"
+    "@lg-tools/build": "^0.2.0",
+    "@lg-tools/meta": "^0.1.3",
+    "@slack/web-api": "6.7.1",
+    "chalk": "4.1.2",
+    "lodash": "4.17.21",
+    "node-fetch": "2.6.11"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/ripple",
-  "version": "1.1.10",
+  "version": "1.1.12",
   "description": "leafyGreen UI Kit Ripple",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,7 +22,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/tokens": "^2.1.2"
+    "@leafygreen-ui/tokens": "^2.1.4"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/ripple",
   "repository": {

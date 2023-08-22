@@ -3,15 +3,20 @@ import { createPackage } from '@lg-tools/create';
 import { installLeafyGreen } from '@lg-tools/install';
 import { linkPackages, unlinkPackages } from '@lg-tools/link';
 import { lint } from '@lg-tools/lint';
+import { releaseBot } from '@lg-tools/slackbot';
 import { test } from '@lg-tools/test';
 import { update } from '@lg-tools/update';
 import { validate } from '@lg-tools/validate';
 import { Command } from 'commander';
+import { sync as readPackageUpSync } from 'read-pkg-up';
+
+const pkg = readPackageUpSync({ cwd: __dirname })?.packageJson;
 
 const cli = new Command('lg');
 cli
+  .version(pkg?.version ?? '0.0.0')
   .description('Command line tools for the LeafyGreen UI library by MongoDB')
-  .enablePositionalOptions();
+  .enablePositionalOptions(true);
 
 /** Create */
 cli
@@ -45,7 +50,12 @@ cli
 cli
   .command('link')
   .description('Link local LeafyGreen packages to a destination app.')
-  .argument('destination', 'The destination app path')
+  .argument('[destination]', 'The destination app path')
+  .option('--to <destination>', 'Alias for `destination`')
+  .option(
+    '--from <source>',
+    'When running from a consuming application, defines the source of linked packages',
+  )
   .option('-v --verbose', 'Prints additional information to the console', false)
   .option('--scope <name>', 'The NPM organization')
   .option(
@@ -63,6 +73,37 @@ cli
   .option('--scope <name>', 'The NPM organization')
   .action(unlinkPackages);
 
+/** Slackbot */
+const slackbotCmd = cli.command('slackbot');
+
+/**
+ * This command is run by GitHub Actions immediately after \`changeset\`.
+ *
+ * Must have the \`.env\` variable "SLACK_BOT_TOKEN" set.
+ * This is the "Bot User OAuth Token" found at https://api.slack.com/apps/A02H2UGAMDM/oauth, and should start with "xoxb-"
+ *
+ * To run this automatically, pass in an array of updates (in the format output by \`changeset\`) as the first argument.
+ * i.e. \`yarn slackbot '[{"name": "@leafygreen-ui/sample", "version": "0.1.0"}]' \`
+ *
+ * Optionally pass in a channel name (defaults to 'leafygreen-ui-releases').
+ * Valid channels are: \`${Object.keys(Channels).join('`, `')}\`.
+ */
+slackbotCmd
+  .command('release')
+  .arguments('[updates]')
+  .description(
+    'Notifies the MongoDB leafygreen-ui releases channel of any new packages.',
+  )
+  .option('-t, --test', 'Post to `design-system-testing`', false)
+  .option('-d, --dry', 'Dry run. Does not post', false)
+  .option('-v --verbose', 'Prints additional information to the console', false)
+  .option(
+    '-c, --channel <channel>',
+    'Channel to post to.',
+    'leafygreen-ui-releases',
+  )
+  .action(releaseBot);
+
 /** Lint */
 cli
   .command('lint')
@@ -78,18 +119,15 @@ cli
 cli
   .command('test')
   .description('Tests leafygreen-ui packages with unified config.')
-  // TODO: Files argument
+  .argument('[pass-through...]', 'Pass-through options for `jest`')
   .option('--watch', 'Watch all files you intend to test', false)
   .option('--ci', 'Runs tests with CI configuration', false)
   .option(
     '--config',
     'Specify a jest config file. By default will look for `jest.config.js` at the root, or use `@lg-tools/test/config`',
   )
-  .option(
-    '-t, --testNamePattern <regex>',
-    'Alias of jest --testNamePattern. Run only tests with a name that matches the regex.',
-    undefined,
-  )
+  .allowUnknownOption(true)
+  .option('-v --verbose', 'Prints additional information to the console', false)
   .action(test);
 
 /** Update */
@@ -127,14 +165,17 @@ cli
 cli
   .command('build-package')
   .description('Builds a package')
+  .option('-v --verbose', 'Prints additional information to the console', false)
   .action(buildPackage);
 cli
   .command('build-ts')
   .description("Builds a package's TypeScript definitions")
+  .option('-v --verbose', 'Prints additional information to the console', false)
   .action(buildTypescript);
 cli
   .command('build-tsdoc')
   .description("Builds a package's TSDoc file")
+  .option('-v --verbose', 'Prints additional information to the console', false)
   .action(buildTSDoc);
 
 cli.parse(process.argv);

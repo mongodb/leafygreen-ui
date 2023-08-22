@@ -1,5 +1,73 @@
 # @lg-tools/storybook
 
+## 0.2.1
+
+### Patch Changes
+
+- 6815ee6e: Updates README for storybook addon
+- Updated dependencies [c15ee2ac]
+  - @leafygreen-ui/lib@10.4.2
+  - @leafygreen-ui/palette@4.0.6
+  - @leafygreen-ui/tokens@2.1.3
+  - @leafygreen-ui/typography@16.5.3
+
+## 0.2.0
+
+### Minor Changes
+
+- 34cfcdff: Updates `storybook` package to be a Storybook addon.
+
+  #### Usage
+
+  1. Install
+
+  ```bash
+  > yarn add @lg-tools/storybook@latest
+  ```
+
+  2. Add to `./storybook/main.ts`
+
+  ```ts
+  export default {
+    addons: ['@lg-tools/storybook'],
+    framework: {
+      name: '@storybook/react-webpack5',
+      options: {
+        fastRefresh: true,
+        strictMode: true,
+      },
+    },
+  };
+  ```
+
+  - There is no need for a `manager.ts`, `preview.ts`, or `*-head.html` file, unless you need to extend the defaults in this addon
+
+## 0.1.4
+
+### Patch Changes
+
+- Updated dependencies [746962d9]
+- Updated dependencies [c2908c5a]
+- Updated dependencies [6776fee7]
+  - @lg-tools/build@0.2.0
+
+## 0.1.3
+
+### Patch Changes
+
+- cb1e4ba4: Sets @lg-tools package dependencies to specific versions.
+  This should solve dependency resolution issues in consuming applications
+- Updated dependencies [cb1e4ba4]
+  - @lg-tools/build@0.1.2
+
+## 0.1.2
+
+### Patch Changes
+
+- a370c9ef: Updates storybook main config. Prevents Storybook from building nested `*.story` files inside a package's `node_modules`.
+- Updated dependencies [ff02d0bb]
+  - @lg-tools/build@0.1.1
+
 ## 0.1.1
 
 ### Patch Changes

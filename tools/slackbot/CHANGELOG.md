@@ -1,5 +1,25 @@
 # @lg-tools/slackbot
 
+## 0.2.0
+
+### Minor Changes
+
+- 8183be9c: Adds `lg slackbot release` command to main CLI. Adds support for running the slackbot in other repos & for other scopes
+
+### Patch Changes
+
+- Updated dependencies [fbb968b4]
+  - @lg-tools/meta@0.1.3
+
+## 0.1.1
+
+### Patch Changes
+
+- Updated dependencies [746962d9]
+- Updated dependencies [c2908c5a]
+- Updated dependencies [6776fee7]
+  - @lg-tools/build@0.2.0
+
 ## 0.1.0
 
 ### Minor Changes

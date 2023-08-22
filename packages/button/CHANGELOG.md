@@ -1,5 +1,45 @@
 # @leafygreen-ui/button
 
+## 21.0.4
+
+### Patch Changes
+
+- db014722: Retroactively updates changeset notes around reason to update Button from using `disabled` to `aria-disabled` under the hood. See details at version 20.0.0
+
+## 21.0.3
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+- Updated dependencies [c11bbc29]
+  - @leafygreen-ui/box@3.1.7
+  - @leafygreen-ui/emotion@4.0.7
+  - @leafygreen-ui/leafygreen-provider@3.1.6
+  - @leafygreen-ui/lib@10.4.3
+  - @leafygreen-ui/palette@4.0.7
+  - @leafygreen-ui/ripple@1.1.12
+  - @leafygreen-ui/tokens@2.1.4
+
+## 21.0.2
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+- Updated dependencies [c15ee2ac]
+  - @leafygreen-ui/box@3.1.6
+  - @leafygreen-ui/emotion@4.0.6
+  - @leafygreen-ui/leafygreen-provider@3.1.5
+  - @leafygreen-ui/lib@10.4.2
+  - @leafygreen-ui/palette@4.0.6
+  - @leafygreen-ui/ripple@1.1.11
+  - @leafygreen-ui/tokens@2.1.3
+
+## 21.0.1
+
+### Patch Changes
+
+- e8ef95e6: Updates disabled styles
+
 ## 21.0.0
 
 ### Major Changes
@@ -158,7 +198,28 @@
 
 ### Major Changes
 
-- 1cff328a3: No longer sets `pointer-events: "none"` when Button components are disabled.
+- 1cff328a3: Disabled buttons no longer render the `disabled` attribute, but rely on `aria-disabled`. They also no longer set `pointer-events: "none"` in their styles. `onClick` events are explicitly prevented within the component to maintain functionality.
+
+  This change was made to ensure that:
+
+  1. Disabled buttons are still focusable to users when navigating via the `Tab` key, and
+  2. Disabled buttons are valid triggers for a `Tooltip`.
+
+  For more on `aria-disabled` see the [documentation on MDN](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-disabled)
+
+  #### Migration guide
+
+  Functionally, migration from v19 to v20 should be seamless, however there may be unit/integration/e2e tests that relied on this behavior.
+
+  ##### Jest/RTL
+
+  Generally, only this repo should need to test that the button has a specific attribute. If possible, we recommend changing unit tests to check that some event was or was not called.
+
+  However there are cases where this still needs to be tested. To change this, replace any `expect(button).toBeDisabled()` with an explicit check for `expect(button).toHaveAttribute("aria-disabled", "true")`.
+
+  ##### Cypress
+
+  Similarly to unit tests, you should generally test functionality, not implementation details. However, to test this in Cypress replace any `cy.get(button).should('be.disabled');` checks with `cy.get(button).invoke('attr', 'aria-disabled').should('eq', 'true');`
 
 ### Patch Changes
 
