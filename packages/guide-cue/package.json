@@ -30,6 +30,7 @@
     "access": "public"
   },
   "dependencies": {
+    "focus-trap": "6.9.4",
     "focus-trap-react": "9.0.2",
     "polished": "^4.2.2",
     "@leafygreen-ui/a11y": "^1.4.7",
@@ -45,8 +46,7 @@
     "@leafygreen-ui/typography": "^16.5.4"
   },
   "devDependencies": {
-    "@leafygreen-ui/tokens": "^2.1.4",
-    "focus-trap": "6.9.4"
+    "@leafygreen-ui/tokens": "^2.1.4"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.6"
