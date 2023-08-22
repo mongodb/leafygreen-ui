@@ -4,7 +4,6 @@
 
 ### Patch Changes
 
-- 4fcf2e94: Internally refactored how we deal with refs to a Menu component's children to better handle keyboard navigation.
 - 4fcf2e94: Updates types with `React.PropsWithChildren`
 - 4fcf2e94: Bumps `react-transition-group` to `^4.4.5`.
 - Updated dependencies [4fcf2e94]
