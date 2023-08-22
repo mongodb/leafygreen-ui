@@ -11,7 +11,7 @@
   "scripts": {
     "lg": "lg",
     "init": "yarn && yarn build",
-    "create-package": "lg-create",
+    "create-package": "lg create",
     "prebuild": "turbo run build tsc --filter=@lg-tools/cli",
     "build": "turbo run build tsc",
     "build-storybook": "storybook build",
