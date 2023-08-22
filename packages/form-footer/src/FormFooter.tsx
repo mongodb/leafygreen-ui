@@ -76,7 +76,7 @@ export interface FormFooterProps extends HTMLElementProps<'footer'> {
    *
    * darkMode is handled internally so you do not have to pass the darkMode prop.
    */
-  primaryButton: React.ReactChild | PrimaryButtonProps;
+  primaryButton: React.ReactElement | PrimaryButtonProps;
 
   /**
    * Text for the cancel button.
@@ -178,8 +178,8 @@ export default function FormFooter({
               {cancelButtonText || 'Cancel'}
             </Button>
           )}
-          {isComponentType(primaryButton, 'Button') ? (
-            React.cloneElement(primaryButton, {
+          {isComponentType(primaryButton as React.ReactElement, 'Button') ? (
+            React.cloneElement(primaryButton as React.ReactElement, {
               darkMode: darkMode,
             })
           ) : (

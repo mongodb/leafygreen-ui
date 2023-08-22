@@ -133,7 +133,7 @@ const SideNavItem: ExtendableBox<
   }, [children, active, indentLevel]);
 
   const renderedChildren = useMemo(() => {
-    const renderedChildren: React.ReactNodeArray = [];
+    const renderedChildren: Array<React.ReactNode> = [];
 
     React.Children.forEach(children, child => {
       if (!child) {
