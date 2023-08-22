@@ -1,5 +1,18 @@
 # @leafygreen-ui/typography
 
+## 16.5.5
+
+### Patch Changes
+
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/icon@11.22.2
+  - @leafygreen-ui/lib@11.0.0
+  - @leafygreen-ui/polymorphic@1.3.6
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+
 ## 16.5.4
 
 ### Patch Changes
