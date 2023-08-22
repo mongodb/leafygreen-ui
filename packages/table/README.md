@@ -231,3 +231,7 @@ https://github.com/mongodb/leafygreen-ui/blob/f61df48a196c731764864d594d7d043634
 [Demo with virtualized scrolling](https://mongodb.github.io/leafygreen-ui/?path=/story/components-table-with-virtualized-scrolling--expandable-content)
 
 To add expandable content to your Table, ensure the `renderExpandedContent` prop is passed to the row's data through `useLeafygreenTable`'s data prop.
+
+### React 18
+
+For cases where you anticipate having more than 20 rows with nested rows, it is advisable to opt for virtual scrolling to improve performance of row transitions.

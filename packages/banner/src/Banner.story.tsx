@@ -41,6 +41,7 @@ const meta: StoryMetaType<typeof Banner> = {
     dismissible: false,
   },
   argTypes: {
+    darkMode: storybookArgTypes.darkMode,
     dismissible: {
       control: 'boolean',
     },

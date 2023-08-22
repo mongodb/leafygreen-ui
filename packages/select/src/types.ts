@@ -1,3 +1,4 @@
+import { ButtonProps } from '@leafygreen-ui/button';
 import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
 import { PopoverProps } from '@leafygreen-ui/popover';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
@@ -94,6 +95,12 @@ interface BaseSelectProps
   __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
     React.RefAttributes<unknown>
   >;
+
+  /**
+   * @internal
+   */
+  __INTERNAL__menuButtonSlotProps__?: Partial<ButtonProps> &
+    Record<string, any>;
 }
 
 interface LabelProp {
