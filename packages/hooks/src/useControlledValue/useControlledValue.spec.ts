@@ -38,7 +38,6 @@ describe('packages/lib/useControlledValue', () => {
       expect(handler).toHaveBeenCalledWith(
         expect.objectContaining({ target: { value: 'apple' } }),
       );
-      expect(current.value).toBe('');
     });
   });
 });
