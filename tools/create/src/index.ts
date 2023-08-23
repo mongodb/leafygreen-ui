@@ -3,6 +3,7 @@ import { getLGConfig } from '@lg-tools/meta';
 
 import { CreatePackageOptions } from './create.types';
 import { createComponent } from './createComponent';
+import { createSubComponent } from './createSubComponent';
 
 export function createPackage(name: string, options: CreatePackageOptions) {
   const { scopes } = getLGConfig();
@@ -14,8 +15,7 @@ export function createPackage(name: string, options: CreatePackageOptions) {
   const directory = options.directory ?? Object.values(scopes)[0];
 
   if (parent) {
-    // TODO:
-    // createSubComponent({});
+    createSubComponent({ name, parent });
   } else {
     createComponent({
       name,

@@ -11,10 +11,12 @@ export function writeFiles(
     packageNamePascal: string;
   },
 ) {
-  // Make the directory src and src/Component
-  fse.mkdirSync(path.resolve(config.dir, 'src', config.packageNamePascal), {
-    recursive: true,
-  });
+  // Make the directory src and src/Component if necessary
+  if (files.some(f => f.name.includes('src/'))) {
+    fse.mkdirSync(path.resolve(config.dir, 'src', config.packageNamePascal), {
+      recursive: true,
+    });
+  }
 
   // Write all component files
   for (const { name, contents } of files) {

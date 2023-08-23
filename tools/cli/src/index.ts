@@ -31,6 +31,10 @@ cli
     '-d, --directory [directory]',
     'The directory to write the new package. Defaults to the first entry in lg.config.json scopes',
   )
+  .option(
+    '-p, --parent [parent]',
+    'Creates a sub-component to the provided parent',
+  )
   .action(createPackage);
 
 /** Install */
