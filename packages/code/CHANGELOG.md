@@ -1,5 +1,25 @@
 # @leafygreen-ui/code
 
+## 14.2.13
+
+### Patch Changes
+
+- 4fcf2e94: Move custom select menu button into separate components and passes custom select menu button props to new internal select prop, `__INTERNAL__menuButtonSlotProps__`.
+- 4fcf2e94: Updates LanguageSwitcher hover styles specificity to `&:hover[aria-disabled='false']`.
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/icon@11.22.2
+  - @leafygreen-ui/lib@11.0.0
+  - @leafygreen-ui/select@10.3.13
+  - @leafygreen-ui/a11y@1.4.8
+  - @leafygreen-ui/button@21.0.5
+  - @leafygreen-ui/icon-button@15.0.17
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+
 ## 14.2.12
 
 ### Patch Changes

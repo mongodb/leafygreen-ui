@@ -1,5 +1,12 @@
 # @lg-tools/build
 
+## 0.2.1
+
+### Patch Changes
+
+- 4fcf2e94: adds `@babel/core` as a peerDependency.
+- 8e06bb20: Updates ts build script to return the same exit code as `tsc`
+
 ## 0.2.0
 
 ### Minor Changes

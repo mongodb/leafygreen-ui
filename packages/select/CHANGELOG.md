@@ -1,5 +1,23 @@
 # @leafygreen-ui/select
 
+## 10.3.13
+
+### Patch Changes
+
+- 4fcf2e94: Bumps `@types/react-is` and `react-is` to latest major version
+- 4fcf2e94: Adds new internal prop, `__INTERNAL__menuButtonSlotProps__`.
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/icon@11.22.2
+  - @leafygreen-ui/lib@11.0.0
+  - @leafygreen-ui/popover@11.0.16
+  - @leafygreen-ui/button@21.0.5
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+  - @leafygreen-ui/typography@16.5.5
+
 ## 10.3.12
 
 ### Patch Changes

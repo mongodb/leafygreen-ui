@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 11.22.2
+
+### Patch Changes
+
+- 4fcf2e94: Updates internal function, `isComponentGlyph`
+
 ## 11.22.1
 
 ### Patch Changes

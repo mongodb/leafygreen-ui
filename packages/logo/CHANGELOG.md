@@ -1,5 +1,15 @@
 # @leafygreen-ui/logo
 
+## 8.0.8
+
+### Patch Changes
+
+- 4fcf2e94: Updates types with `React.PropsWithChildren`
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/lib@11.0.0
+
 ## 8.0.7
 
 ### Patch Changes

@@ -35,6 +35,6 @@
   },
   "devDependencies": {
     "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/lib": "^10.4.3"
+    "@leafygreen-ui/lib": "^11.0.0"
   }
 }
