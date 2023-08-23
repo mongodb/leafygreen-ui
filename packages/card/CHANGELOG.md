@@ -1,5 +1,16 @@
 # @leafygreen-ui/card
 
+## 10.0.4
+
+### Patch Changes
+
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/lib@11.0.0
+  - @leafygreen-ui/box@3.1.8
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+
 ## 10.0.3
 
 ### Patch Changes

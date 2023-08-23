@@ -1,5 +1,23 @@
 # @lg-tools/storybook-decorators
 
+## 0.2.0
+
+### Minor Changes
+
+- 4fcf2e94: Move `@leafygreen-ui/leafygreen-provider` inside `peerDependencies`.
+
+### Patch Changes
+
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [8e06bb20]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/lib@11.0.0
+  - @lg-tools/build@0.2.1
+  - @leafygreen-ui/banner@7.0.13
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+
 ## 0.1.2
 
 ### Patch Changes

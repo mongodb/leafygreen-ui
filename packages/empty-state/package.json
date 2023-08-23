@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/empty-state",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "leafyGreen UI Kit Empty State",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -30,15 +30,15 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/button": "^21.0.3",
+    "@leafygreen-ui/button": "^21.0.5",
     "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/lib": "^10.4.3",
+    "@leafygreen-ui/lib": "^11.0.0",
     "@leafygreen-ui/palette": "^4.0.7",
     "@leafygreen-ui/tokens": "^2.1.4",
-    "@leafygreen-ui/typography": "^16.5.4"
+    "@leafygreen-ui/typography": "^16.5.5"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.6"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.7"
   },
   "devDependencies": {}
 }

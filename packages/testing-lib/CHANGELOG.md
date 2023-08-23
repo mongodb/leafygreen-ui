@@ -1,5 +1,11 @@
 # @leafygreen-ui/testing-lib
 
+## 0.3.4
+
+### Patch Changes
+
+- 4fcf2e94: Fixes `isPromiseLike` TS errors
+
 ## 0.3.3
 
 ### Patch Changes

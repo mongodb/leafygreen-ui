@@ -1,5 +1,16 @@
 # @leafygreen-ui/lib
 
+## 11.0.0
+
+### Major Changes
+
+- 4fcf2e94: Modified the React peerDependency to ensure compatibility with either version 17 or 18.
+
+### Patch Changes
+
+- 4fcf2e94: Updates helper function, `isComponentType` and updates `ExtendedComponentProps` type.
+- 4fcf2e94: Updates types with `React.PropsWithChildren`
+
 ## 10.4.3
 
 ### Patch Changes
