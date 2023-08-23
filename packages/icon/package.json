@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/icon",
-  "version": "11.22.1",
+  "version": "11.22.2",
   "description": "LeafyGreen UI Kit Icons",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@leafygreen-ui/palette": "^4.0.7",
-    "@leafygreen-ui/lib": "^10.4.3",
+    "@leafygreen-ui/lib": "^11.0.0",
     "@svgr/core": "^5.3.1",
     "@types/meow": "^6.0.0",
     "@types/xml2json": "^0.11.0",

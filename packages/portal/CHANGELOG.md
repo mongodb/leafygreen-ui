@@ -1,5 +1,18 @@
 # @leafygreen-ui/portal
 
+## 5.0.0
+
+### Major Changes
+
+- 4fcf2e94: Modified the ReactDOM peerDependency to ensure compatibility with either version 17 or 18.
+
+### Patch Changes
+
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/lib@11.0.0
+
 ## 4.1.7
 
 ### Patch Changes

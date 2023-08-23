@@ -1,5 +1,18 @@
 # @leafygreen-ui/popover
 
+## 11.0.16
+
+### Patch Changes
+
+- 4fcf2e94: Bumps `react-transition-group` to `^4.4.5`.
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/portal@5.0.0
+  - @leafygreen-ui/lib@11.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+
 ## 11.0.15
 
 ### Patch Changes
