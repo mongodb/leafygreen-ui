@@ -1,6 +1,7 @@
 ---
 title: Use Any Decision Records (ADRs) to capture decisions
 date: 2023-08-22
+status: proposal
 ---
 
 # Use Any Decision Records (ADRs) to capture decisions
@@ -43,3 +44,4 @@ date: 2023-08-22
 - ✅ Can solicit feedback via comments
 - 🚫 Hard to keep track of documents. Google docs tend to get lost/forgotten
 - 🚫 Documents not linked to code in any meaningful way
+- 🚫 Harder to format & highlight code. Docs will likely contain a significant amount of code.
