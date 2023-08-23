@@ -37,6 +37,7 @@ status: proposal
 - ✅ Easier to reference history of decisions
 - ✅ Can solicit feedback via GitHub PR review
 - 🚫 Simultaneous collaboration is more difficult
+- 🚫 Harder to read through a markdown file—need a reader/viewer
 
 ### Google Docs
 
