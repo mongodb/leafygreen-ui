@@ -9,7 +9,7 @@ const SupportedColors = {
   GreenBase: 'green-base',
 } as const;
 
-type SupportedColors = (typeof SupportedColors)[keyof typeof SupportedColors];
+type SupportedColors = typeof SupportedColors[keyof typeof SupportedColors];
 
 const SupportedColorsMap: Record<SupportedColors, string> = {
   [SupportedColors.White]: palette.white,
@@ -19,7 +19,7 @@ const SupportedColorsMap: Record<SupportedColors, string> = {
 } as const;
 
 type SupportedColorsMap =
-  (typeof SupportedColorsMap)[keyof typeof SupportedColorsMap];
+  typeof SupportedColorsMap[keyof typeof SupportedColorsMap];
 
 export { SupportedColors, SupportedColorsMap };
 
