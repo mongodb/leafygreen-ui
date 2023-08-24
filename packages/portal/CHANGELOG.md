@@ -1,5 +1,12 @@
 # @leafygreen-ui/portal
 
+## 5.0.1
+
+### Patch Changes
+
+- Updated dependencies [fd907503]
+  - @leafygreen-ui/hooks@8.0.0
+
 ## 5.0.0
 
 ### Major Changes

@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/validate",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Validation tools for LeafyGreen repositories",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

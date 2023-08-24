@@ -1,5 +1,11 @@
 # @lg-tools/validate
 
+## 0.1.3
+
+### Patch Changes
+
+- c9f0055a: Ignores dependencies imported from a `/scripts` directory, or `*.stories.js` file.
+
 ## 0.1.2
 
 ### Patch Changes

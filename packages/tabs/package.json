@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/tabs",
-  "version": "11.1.7",
+  "version": "11.1.8",
   "description": "leafyGreen UI Kit Tabs",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,18 +22,18 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/a11y": "^1.4.8",
+    "@leafygreen-ui/a11y": "^1.4.9",
     "@leafygreen-ui/box": "^3.1.8",
     "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/hooks": "^7.7.8",
+    "@leafygreen-ui/hooks": "^8.0.0",
     "@leafygreen-ui/lib": "^11.0.0",
     "@leafygreen-ui/palette": "^4.0.7",
-    "@leafygreen-ui/portal": "^5.0.0",
-    "@leafygreen-ui/tokens": "^2.1.4",
+    "@leafygreen-ui/portal": "^5.0.1",
+    "@leafygreen-ui/tokens": "^2.2.0",
     "@leafygreen-ui/typography": "^16.5.5"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.7"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.8"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/tabs",
   "repository": {
@@ -47,6 +47,6 @@
     "@leafygreen-ui/card": "^10.0.4",
     "@leafygreen-ui/button": "^21.0.5",
     "@leafygreen-ui/icon-button": "^15.0.17",
-    "@leafygreen-ui/icon": "^11.22.2"
+    "@leafygreen-ui/icon": "^11.23.0"
   }
 }
