@@ -56,6 +56,46 @@ describe('packages/lib/useControlledValue', () => {
       // value doesn't change unless we explicitly change it
       expect(result.current.value).toBe('apple');
     });
+
+    describe('value types', () => {
+      test('accepts number values', () => {
+        const { result } = renderHook(v => useControlledValue(v), {
+          initialProps: 5,
+        });
+        expect(result.current.value).toBe(5);
+      });
+
+      test('accepts boolean values', () => {
+        const { result } = renderHook(v => useControlledValue(v), {
+          initialProps: false,
+        });
+        expect(result.current.value).toBe(false);
+      });
+
+      test('accepts array values', () => {
+        const arr = ['foo', 'bar'];
+        const { result } = renderHook(v => useControlledValue(v), {
+          initialProps: arr,
+        });
+        expect(result.current.value).toBe(arr);
+      });
+
+      test('accepts object values', () => {
+        const obj = { foo: 'foo', bar: 'bar' };
+        const { result } = renderHook(v => useControlledValue(v), {
+          initialProps: obj,
+        });
+        expect(result.current.value).toBe(obj);
+      });
+
+      test('accepts date values', () => {
+        const date = new Date('2023-08-23');
+        const { result } = renderHook(v => useControlledValue(v), {
+          initialProps: date,
+        });
+        expect(result.current.value).toBe(date);
+      });
+    });
   });
 
   describe('with uncontrolled component', () => {
