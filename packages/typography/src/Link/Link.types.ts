@@ -11,7 +11,7 @@ const ArrowAppearance = {
   None: 'none',
 } as const;
 
-type ArrowAppearance = typeof ArrowAppearance[keyof typeof ArrowAppearance];
+type ArrowAppearance = (typeof ArrowAppearance)[keyof typeof ArrowAppearance];
 
 export { ArrowAppearance };
 
