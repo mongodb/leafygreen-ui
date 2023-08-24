@@ -27,7 +27,7 @@ export interface LogoProps extends HTMLElementProps<'svg'> {
   /**
    * Determines Color of the Logo or LogoMark component.
    *
-   * @default 40
+   * @default 'green-dark-2'
    */
   color?: SupportedColors;
 
