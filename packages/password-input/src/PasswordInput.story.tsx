@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import {
@@ -142,15 +142,12 @@ const UserFriendlyTemplate: StoryFn<UserFriendlyProps> = ({
 }: UserFriendlyProps) => {
   const stateNotifications: Array<NotificationProps> =
     userFriendlyObj[stateNotificationsSelect];
-  const [value, setValue] = useState('1');
   return (
     <PasswordInput
       {...rest}
       label={label as string}
       stateNotifications={stateNotifications as Array<NotificationProps>}
       aria-describedby={undefined} //TODO: TS cannot infer what this is when using ...rest?
-      value={value}
-      onChange={e => setValue(e.target.value)}
     />
   );
 };
