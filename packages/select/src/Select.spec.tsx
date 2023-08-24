@@ -506,10 +506,7 @@ describe('packages/select', () => {
           );
 
           const button = getByRole('button');
-          userEvent.click(button);
-
-          // Focus is allowed, but the menu does not open
-          expect(button).toHaveFocus();
+          expect(() => userEvent.click(button)).toThrow();
 
           expect(queryByRole('listbox')).not.toBeInTheDocument();
         });

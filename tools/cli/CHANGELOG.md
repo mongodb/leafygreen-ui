@@ -1,5 +1,15 @@
 # @lg-tools/cli
 
+## 0.4.1
+
+### Patch Changes
+
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [8e06bb20]
+- Updated dependencies [4fcf2e94]
+  - @lg-tools/build@0.2.1
+  - @lg-tools/test@0.3.0
+
 ## 0.4.0
 
 ### Minor Changes

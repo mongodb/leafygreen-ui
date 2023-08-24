@@ -1,5 +1,11 @@
 # @leafygreen-ui/box
 
+## 3.1.8
+
+### Patch Changes
+
+- 4fcf2e94: Updates types with `React.PropsWithChildren`
+
 ## 3.1.7
 
 ### Patch Changes

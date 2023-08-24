@@ -206,10 +206,11 @@ export const SegmentedControl = forwardRef<
   // See https://www.w3.org/TR/wai-aria-1.1/#tab
   const childrenIdList: string = useMemo(() => {
     if (renderedChildren) {
-      return React.Children.map(
-        renderedChildren as React.ReactElement,
-        child => child?.props?._id,
-      ).join(' ');
+      const ids = React.Children.map(renderedChildren, child => {
+        return (child as React.ReactElement)?.props?._id;
+      })?.join(' ');
+
+      return ids ?? '';
     }
 
     return '';

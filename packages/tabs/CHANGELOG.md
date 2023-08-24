@@ -1,5 +1,20 @@
 # @leafygreen-ui/tabs
 
+## 11.1.7
+
+### Patch Changes
+
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/portal@5.0.0
+  - @leafygreen-ui/lib@11.0.0
+  - @leafygreen-ui/box@3.1.8
+  - @leafygreen-ui/a11y@1.4.8
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+  - @leafygreen-ui/typography@16.5.5
+
 ## 11.1.6
 
 ### Patch Changes

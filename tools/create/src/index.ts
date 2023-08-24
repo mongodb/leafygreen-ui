@@ -24,7 +24,7 @@ export function createPackage(name: string, options: CreatePackageOptions) {
 
   const { scopes } = getLGConfig();
   const scope = options.scope ?? Object.keys(scopes)[0];
-  const directory = options.directory ?? Object.values(scopes)[0];
+  const directory = options.directory ?? scopes[scope];
 
   // Construct all required parameters
   const packageNameKebab = kebabCase(name);

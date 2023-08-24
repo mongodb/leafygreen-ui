@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, RenderResult } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { SearchInput, type SearchInputProps } from '..';
@@ -14,7 +14,20 @@ export function getSearchInputJSX(props?: Partial<SearchInputProps>) {
   );
 }
 
-export function renderSearchInput(props: Partial<SearchInputProps> = {}) {
+type RenderSearchInputReturn = RenderResult & {
+  rerenderWithProps?: (
+    newProps?: Partial<SearchInputProps> | undefined,
+  ) => void;
+  containerEl?: HTMLElement;
+  searchBoxEl?: HTMLElement;
+  inputEl?: HTMLElement;
+  openMenu?: Function;
+  getMenuElements?: Function;
+};
+
+export function renderSearchInput(
+  props: Partial<SearchInputProps> = {},
+): RenderSearchInputReturn {
   const renderResult = render(getSearchInputJSX(props));
 
   function rerenderWithProps(newProps?: Partial<SearchInputProps>) {

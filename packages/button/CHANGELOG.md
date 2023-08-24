@@ -1,5 +1,22 @@
 # @leafygreen-ui/button
 
+## 21.0.5
+
+### Patch Changes
+
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/lib@11.0.0
+  - @leafygreen-ui/box@3.1.8
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+
+## 21.0.4
+
+### Patch Changes
+
+- db014722: Retroactively updates changeset notes around reason to update Button from using `disabled` to `aria-disabled` under the hood. See details at version 20.0.0
+
 ## 21.0.3
 
 ### Patch Changes

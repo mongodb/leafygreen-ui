@@ -20,7 +20,6 @@ const meta: StoryMetaType<typeof HeaderRow> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        disabled: [false, true],
       },
       args: {
         children: makeData(false, 1).map(rowData =>

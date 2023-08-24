@@ -34,7 +34,7 @@ export function usePortalContainer(customContainer?: HTMLElement) {
 /**
  * Portals transport their children to a div that is appended to the end of `document.body` to or a node that can be specified with a container prop.
  */
-function Portal(props: PortalProps) {
+function Portal(props: PortalProps): React.ReactPortal | null {
   const container = usePortalContainer(props.container ?? undefined);
 
   useIsomorphicLayoutEffect(() => {
