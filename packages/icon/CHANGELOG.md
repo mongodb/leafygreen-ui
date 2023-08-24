@@ -1,5 +1,15 @@
 # @leafygreen-ui/icon
 
+## 11.23.0
+
+### Minor Changes
+
+- 56459cde: Adds `Mobile` icon and updates `NavCollapse` and `NavExpand` icons.
+
+### Patch Changes
+
+- c9f0055a: Moves some `dependencies` to devDependencies (`@svgr/core`, `@types/meow`, `@types/xml2json`, `meow`)
+
 ## 11.22.2
 
 ### Patch Changes
