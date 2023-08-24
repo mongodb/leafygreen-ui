@@ -19,7 +19,7 @@ jobs:
         run: yarn install --frozen-lockfile --prefer-offline
 
       - name: Install React & React DOM 17
-        run: yarn add -DW react@17 react-dom@17 @types/react@17 @types/react-dom@17
+        run: yarn add -DW react@17 react-dom@17 @types/react@16.9.56 @types/react-dom@16.9.18
 
       - name: Install testing frameworks
         run: yarn add -DW @testing-library/dom@7.31.2 @testing-library/jest-dom@5.16.5 @testing-library/react@10.4.9 @testing-library/react-hooks@3.7.0 @testing-library/user-event@12.8.3 @types/jest@26.0.24 @types/jest-axe@3.5.3 babel-jest@26.6.3 jest@26.6.3 jest-axe@4.1.0 jest-junit@10.0.0 react-test-renderer@17.0.2 regenerator-runtime@0.13.10
