@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/lib",
-  "version": "10.4.3",
+  "version": "11.0.0",
   "description": "leafyGreen UI Kit Internal Library",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -23,7 +23,7 @@
     "access": "public"
   },
   "peerDependencies": {
-    "react": "^17.0.0"
+    "react": "^17.0.0 || ^18.0.0"
   },
   "dependencies": {
     "@storybook/csf": "^0.1.0",

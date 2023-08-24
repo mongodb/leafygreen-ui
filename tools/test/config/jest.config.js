@@ -9,6 +9,8 @@ module.exports = {
   coverageDirectory: 'coverage',
   coveragePathIgnorePatterns: ['/node_modules/', '/dist/', '/index.ts', '.svg'],
 
+  displayName: 'Client',
+
   // An array of file extensions your modules use
   moduleFileExtensions: [
     'js',

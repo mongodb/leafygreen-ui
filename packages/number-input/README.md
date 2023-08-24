@@ -29,7 +29,7 @@ import { NumberInput } from '@leafygreen-ui/number-input';
 or
 
 // single unit
-<NumberInput label={label} onChange={() => {}} unit={unitProps.unit} />
+<NumberInput label={label} onChange={() => {}} unit='Hour' />
 
 or
 
@@ -37,8 +37,25 @@ or
 <NumberInput
   label={label}
   onChange={() => {}}
-  unit={unitProps.unit}
-  unitOptions={selectProps.unitOptions}
+  unit='Hours'
+  unitOptions={[
+  {
+    displayName: 'Hours',
+    value: 'hours',
+  },
+  {
+    displayName: 'Days',
+    value: 'days',
+  },
+  {
+    displayName: 'Months',
+    value: 'months',
+  },
+  {
+    displayName: 'Astronomical units',
+    value: 'au',
+  },
+]}
   onSelectChange={() => {}}
 />
 ```

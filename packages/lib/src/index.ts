@@ -38,7 +38,7 @@ export type { DarkModeProps };
 export type HTMLElementProps<
   Element extends keyof JSX.IntrinsicElements,
   RefType extends HTMLElement = never,
-> = Omit<JSX.IntrinsicElements[Element], 'ref'> & {
+> = React.PropsWithChildren<Omit<JSX.IntrinsicElements[Element], 'ref'>> & {
   ref?: [RefType] extends [never] ? never : React.Ref<RefType>;
   key?: React.Key | null;
 };
@@ -88,10 +88,9 @@ export type OneOf<T1, T2> =
   | (T2 & Partial<Record<Exclude<keyof T1, keyof T2>, never>>);
 
 /** Helper type to check if element is a specific React Component  */
-export function isComponentType<T = React.ReactElement>(
-  element: React.ReactNode,
-  displayName: string,
-): element is T {
+export function isComponentType<
+  T extends React.ReactElement = React.ReactElement,
+>(element: React.ReactNode, displayName: string): element is T {
   return (
     element != null &&
     typeof element === 'object' &&

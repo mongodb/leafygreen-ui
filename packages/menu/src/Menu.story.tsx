@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/display-name */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
@@ -9,6 +9,7 @@ import CaretDown from '@leafygreen-ui/icon/dist/CaretDown';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import {
+  storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -119,6 +120,7 @@ const meta: StoryMetaType<typeof Menu> = {
       description:
         'Size of the `MenuItem` component, can be `default` or `large`',
     },
+    darkMode: storybookArgTypes.darkMode,
   },
 };
 export default meta;

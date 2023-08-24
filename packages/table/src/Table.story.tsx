@@ -283,7 +283,7 @@ export const OverflowingCell: StoryFn<StoryTableProps> = args => {
 
 export const NestedRows: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data] = React.useState(() => makeData(false, 50, 5, 3));
+  const [data] = React.useState(() => makeData(false, 20, 5, 3));
 
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [

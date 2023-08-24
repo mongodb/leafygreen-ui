@@ -144,7 +144,6 @@ export const LargeSize: StoryType<typeof SplitButton> = () => <></>;
 LargeSize.parameters = {
   generate: {
     args: {
-      // @ts-expect-error - types are incorrect
       size: Size.Large,
     },
   },
@@ -154,7 +153,6 @@ export const DefaultSize: StoryType<typeof SplitButton> = () => <></>;
 DefaultSize.parameters = {
   generate: {
     args: {
-      // @ts-expect-error - types are incorrect
       size: Size.Default,
     },
   },
@@ -164,7 +162,6 @@ export const SmallSize: StoryType<typeof SplitButton> = () => <></>;
 SmallSize.parameters = {
   generate: {
     args: {
-      // @ts-expect-error - types are incorrect
       size: Size.Small,
     },
   },
@@ -174,7 +171,6 @@ export const XSmallSize: StoryType<typeof SplitButton> = () => <></>;
 XSmallSize.parameters = {
   generate: {
     args: {
-      // @ts-expect-error - types are incorrect
       size: Size.XSmall,
     },
   },

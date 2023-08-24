@@ -1,5 +1,16 @@
 # @leafygreen-ui/button
 
+## 21.0.5
+
+### Patch Changes
+
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/lib@11.0.0
+  - @leafygreen-ui/box@3.1.8
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+
 ## 21.0.4
 
 ### Patch Changes

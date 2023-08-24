@@ -49,6 +49,11 @@ function SideNavGroup({
   const renderedChildren = useMemo(() => {
     const checkForNestedGroups = (children: React.ReactNode) => {
       return React.Children.map(children, child => {
+        if ((child as React.ReactElement)?.props?.children) {
+          checkForNestedGroups((child as React.ReactElement).props.children);
+          return child;
+        }
+
         if (
           isComponentType(child, 'SideNavGroup') ||
           isComponentType(child, 'SideNavItem')
@@ -56,12 +61,9 @@ function SideNavGroup({
           return React.cloneElement(child, {
             indentLevel: indentLevel + 1,
           });
-        } else if ((child as React.ReactElement)?.props?.children) {
-          checkForNestedGroups((child as React.ReactElement).props.children);
-          return child;
-        } else {
-          return child;
         }
+
+        return child;
       });
     };
 
