@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { fontWeights } from '@leafygreen-ui/tokens';
 import { Description, Label } from '@leafygreen-ui/typography';
 
 import { Size } from '../types';
@@ -55,6 +56,7 @@ function Radio({
   checked,
   size = Size.Default,
   description,
+  bold,
   ...rest
 }: RadioProps) {
   const { darkMode } = useDarkMode(darkModeProp);
@@ -75,6 +77,9 @@ function Radio({
             [css`
               font-size: 12px;
             `]: size === Size.XSmall, // TODO: keeping this style until XS is deprecated
+            [css`
+              font-weight: ${fontWeights.regular};
+            `]: !bold,
           },
           className,
         )}
