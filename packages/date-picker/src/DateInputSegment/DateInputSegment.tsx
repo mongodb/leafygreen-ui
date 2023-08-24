@@ -7,6 +7,8 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Size } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
+import { useDatePickerContext } from '../DatePickerContext';
+
 import {
   charsPerSegment,
   defaultMax,
@@ -37,9 +39,7 @@ export function DateInputSegment({
 
   const { theme } = useDarkMode(darkMode);
   const baseFontSize = useUpdatedBaseFontSize();
-  // TODO: implement context
-  // const { size } = useDatePickerContext();
-  const size = Size.Default;
+  const { size } = useDatePickerContext();
 
   return (
     <input
@@ -55,7 +55,7 @@ export function DateInputSegment({
         baseStyles,
         fontSizeStyles[baseFontSize],
         segmentThemeStyles[theme],
-        // segmentSizeStyles[size],
+        segmentSizeStyles[size ?? Size.Default],
         segmentWidthStyles[segment],
       )}
     />

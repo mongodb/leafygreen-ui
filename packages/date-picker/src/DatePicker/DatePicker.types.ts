@@ -1,4 +1,4 @@
-import { BaseDatePickerProps } from 'src/types';
+import { BaseDatePickerProps } from '../types';
 
 export interface DatePickerProps extends BaseDatePickerProps {
   /** The initial selected date. Ignored if `value` is provided */

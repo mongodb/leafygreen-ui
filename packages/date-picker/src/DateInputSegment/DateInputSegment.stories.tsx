@@ -3,10 +3,16 @@ import { StoryFn } from '@storybook/react';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
+import { Size } from '@leafygreen-ui/tokens';
+
+import {
+  DatePickerContextProps,
+  DatePickerProvider,
+} from '../DatePickerContext';
 
 import { DateInputSegment } from './DateInputSegment';
 
-const meta: StoryMetaType<typeof DateInputSegment> = {
+const meta: StoryMetaType<typeof DateInputSegment, DatePickerContextProps> = {
   title: 'Components/DatePicker/DateInputSegment',
   component: DateInputSegment,
   parameters: {
@@ -16,7 +22,13 @@ const meta: StoryMetaType<typeof DateInputSegment> = {
         darkMode: [false, true],
         value: [undefined, 6, 2023],
         segment: ['day', 'month', 'year'],
+        size: Object.values(Size),
       },
+      decorator: (Instance, ctx) => (
+        <DatePickerProvider value={{ size: ctx?.args.size }}>
+          <Instance />
+        </DatePickerProvider>
+      ),
       excludeCombinations: [
         {
           value: 6,
