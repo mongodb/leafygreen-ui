@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useEffect, useState } from 'react';
+import { ChangeEventHandler, useState } from 'react';
 import isUndefined from 'lodash/isUndefined';
 
 interface ControlledValueReturnObject<T extends any> {
@@ -15,7 +15,7 @@ interface ControlledValueReturnObject<T extends any> {
    * A setter for the internal value.
    * Does not change the controlled value if the provided value has not changed.
    */
-  setInternalValue: React.Dispatch<React.SetStateAction<T>>;
+  setUncontrolledValue: React.Dispatch<React.SetStateAction<T>>;
 }
 
 /**
@@ -27,35 +27,25 @@ interface ControlledValueReturnObject<T extends any> {
 export const useControlledValue = <T extends any>(
   controlledValue?: T,
   changeHandler?: ChangeEventHandler<any>,
-  defaultValue?: T,
 ): ControlledValueReturnObject<T | undefined> => {
   const isControlled = !isUndefined(controlledValue);
 
-  // Keep track of state internally, initializing it to the controlled value
-  const [value, setInternalValue] = useState<T | undefined>(
-    controlledValue ?? defaultValue,
-  );
-
-  // If the controlled value changes, update the internal state variable
-  useEffect(() => {
-    if (!isUndefined(controlledValue)) {
-      setInternalValue(controlledValue);
-    }
-  }, [controlledValue]);
+  // Keep track of the uncontrolled value state internally
+  const [uncontrolledValue, setUncontrolledValue] = useState<T>();
 
   // Create a change event handler that either updates the internal state
   // or fires an external change handler
   const handleChange: ChangeEventHandler<any> = e => {
     changeHandler?.(e);
     if (!isControlled) {
-      setInternalValue(e.target.value as T);
+      setUncontrolledValue(e.target.value as T);
     }
   };
 
   return {
     isControlled,
-    value,
+    value: isControlled ? controlledValue : uncontrolledValue,
     handleChange,
-    setInternalValue,
+    setUncontrolledValue,
   };
 };
