@@ -12,7 +12,7 @@ export function createPackage(name: string, options: CreatePackageOptions) {
 
   // TODO: get scope & directory from parent
   const scope = options.scope ?? Object.keys(scopes)[0];
-  const directory = options.directory ?? Object.values(scopes)[0];
+  const directory = options.directory ?? scopes[scope];
 
   if (parent) {
     createSubComponent({ name, parent });
