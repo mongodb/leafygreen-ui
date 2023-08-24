@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { ChangeEvent, ChangeEventHandler } from 'react';
 import { act } from 'react-test-renderer';
 import { render } from '@testing-library/react';
@@ -10,6 +10,10 @@ import { useControlledValue } from './useControlledValue';
 const changeEventMock = {
   target: { value: 'banana' },
 } as ChangeEvent<any>;
+
+const mutableRefMock = {
+  current: document.createElement('div'),
+};
 
 describe('packages/lib/useControlledValue', () => {
   describe('with controlled component', () => {
@@ -59,6 +63,30 @@ describe('packages/lib/useControlledValue', () => {
       expect(result.current.isControlled).toBe(true);
       act(() => rerender(undefined));
       expect(result.current.isControlled).toBe(true);
+    });
+
+    test('setUncontrolledValue does nothing for controlled components', () => {
+      const { result } = renderHook(v => useControlledValue(v), {
+        initialProps: 'apple',
+      });
+      act(() => {
+        result.current.setUncontrolledValue('banana');
+      });
+      expect(result.current.value).toBe('apple');
+    });
+
+    test('updateValue triggers the provided handler', async () => {
+      const handler = jest.fn();
+
+      const { result } = renderHook(v => useControlledValue(v, handler), {
+        initialProps: 'apple',
+      });
+
+      await act(() => {
+        result.current.updateValue('banana', mutableRefMock);
+      });
+
+      expect(handler).toHaveBeenCalled();
     });
 
     describe('value types', () => {
@@ -111,15 +139,20 @@ describe('packages/lib/useControlledValue', () => {
       expect(result.current.value).toBe(undefined);
     });
 
-    test('calling setter updates value', () => {
-      const { result } = renderHook(v => useControlledValue<string>(v), {
-        initialProps: undefined,
-      });
+    test('setUncontrolledValue updates value', () => {
+      const handler = jest.fn();
+      const { result } = renderHook(
+        v => useControlledValue<string>(v, handler),
+        {
+          initialProps: undefined,
+        },
+      );
 
       act(() => {
         result.current.setUncontrolledValue('apple');
       });
       expect(result.current.value).toBe('apple');
+      expect(handler).not.toHaveBeenCalled();
     });
 
     test('provided handler should be called', () => {
@@ -134,6 +167,23 @@ describe('packages/lib/useControlledValue', () => {
       expect(handler).toHaveBeenCalledWith(
         expect.objectContaining(changeEventMock),
       );
+    });
+
+    test('updateValue updates value & calls handler', () => {
+      const handler = jest.fn();
+      const { result } = renderHook(
+        v => useControlledValue<string>(v, handler),
+        {
+          initialProps: undefined,
+        },
+      );
+
+      act(() => {
+        result.current.updateValue('banana', mutableRefMock);
+      });
+
+      expect(handler).toHaveBeenCalled();
+      expect(result.current.value).toBe('banana');
     });
 
     test('calling the returned handler sets the value', () => {
@@ -171,25 +221,39 @@ describe('packages/lib/useControlledValue', () => {
       valueProp?: string;
       handlerProp?: ChangeEventHandler;
     }) => {
+      const inputRef = useRef<HTMLInputElement>(null);
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      const { value, handleChange } = useControlledValue(
+      const { value, handleChange, updateValue } = useControlledValue(
         valueProp,
         handlerProp,
       );
 
-      return <input data-testid="test" value={value} onChange={handleChange} />;
+      return (
+        <>
+          <input
+            ref={inputRef}
+            data-testid="test-input"
+            value={value}
+            onChange={handleChange}
+          />
+          <button
+            data-testid="test-button"
+            onClick={() => updateValue('carrot', inputRef)}
+          />
+        </>
+      );
     };
 
     describe('Controlled test component', () => {
       test('initially renders with a value', () => {
         const result = render(<TestComponent valueProp="apple" />);
-        const input = result.getByTestId('test');
+        const input = result.getByTestId('test-input');
         expect(input).toHaveValue('apple');
       });
 
       test('responds to value changes', () => {
         const result = render(<TestComponent valueProp="apple" />);
-        const input = result.getByTestId('test');
+        const input = result.getByTestId('test-input');
         result.rerender(<TestComponent valueProp="banana" />);
         expect(input).toHaveValue('banana');
       });
@@ -199,7 +263,7 @@ describe('packages/lib/useControlledValue', () => {
         const result = render(
           <TestComponent valueProp="apple" handlerProp={handler} />,
         );
-        const input = result.getByTestId('test');
+        const input = result.getByTestId('test-input');
         userEvent.type(input, 'b');
         expect(handler).toHaveBeenCalled();
       });
@@ -209,23 +273,31 @@ describe('packages/lib/useControlledValue', () => {
         const result = render(
           <TestComponent valueProp="apple" handlerProp={handler} />,
         );
-        const input = result.getByTestId('test');
+        const input = result.getByTestId('test-input');
         userEvent.type(input, 'b');
         expect(input).toHaveValue('apple');
+      });
+
+      test('clicking the button updates the value', () => {
+        const result = render(<TestComponent valueProp="apple" />);
+        const input = result.getByTestId('test-input');
+        const button = result.getByTestId('test-button');
+        userEvent.click(button);
+        expect(input).toHaveValue('carrot');
       });
     });
 
     describe('Uncontrolled test component', () => {
       test('initially renders without a value', () => {
         const result = render(<TestComponent />);
-        const input = result.getByTestId('test');
+        const input = result.getByTestId('test-input');
         expect(input).toHaveValue('');
       });
 
       test('user interaction triggers handler', () => {
         const handler = jest.fn();
         const result = render(<TestComponent handlerProp={handler} />);
-        const input = result.getByTestId('test');
+        const input = result.getByTestId('test-input');
         userEvent.type(input, 'b');
         expect(handler).toHaveBeenCalled();
       });
@@ -233,9 +305,17 @@ describe('packages/lib/useControlledValue', () => {
       test('user interaction does not change the element value', () => {
         const handler = jest.fn();
         const result = render(<TestComponent handlerProp={handler} />);
-        const input = result.getByTestId('test');
+        const input = result.getByTestId('test-input');
         userEvent.type(input, 'banana');
         expect(input).toHaveValue('banana');
+      });
+
+      test('clicking the button updates the value', () => {
+        const result = render(<TestComponent />);
+        const input = result.getByTestId('test-input');
+        const button = result.getByTestId('test-button');
+        userEvent.click(button);
+        expect(input).toHaveValue('carrot');
       });
     });
   });
