@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useState } from 'react';
+import { ChangeEventHandler, useEffect, useMemo, useState } from 'react';
 import isUndefined from 'lodash/isUndefined';
 
 interface ControlledValueReturnObject<T extends any> {
@@ -28,7 +28,9 @@ export const useControlledValue = <T extends any>(
   controlledValue?: T,
   changeHandler?: ChangeEventHandler<any>,
 ): ControlledValueReturnObject<T | undefined> => {
-  const isControlled = !isUndefined(controlledValue);
+  // isControlled should only be computed once
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const isControlled = useMemo(() => !isUndefined(controlledValue), []);
 
   // Keep track of the uncontrolled value state internally
   const [uncontrolledValue, setUncontrolledValue] = useState<T>();

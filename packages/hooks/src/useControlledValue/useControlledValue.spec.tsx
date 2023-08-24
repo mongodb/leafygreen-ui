@@ -14,8 +14,7 @@ const changeEventMock = {
 describe('packages/lib/useControlledValue', () => {
   describe('with controlled component', () => {
     test('calling with a value sets value and isControlled', () => {
-      const handler = jest.fn();
-      const { result } = renderHook(v => useControlledValue(v, handler), {
+      const { result } = renderHook(v => useControlledValue(v), {
         initialProps: 'apple',
       });
       expect(result.current.isControlled).toBe(true);
@@ -23,13 +22,9 @@ describe('packages/lib/useControlledValue', () => {
     });
 
     test('calling with a new value changes the value', () => {
-      const handler = jest.fn();
-      const { result, rerender } = renderHook(
-        v => useControlledValue(v, handler),
-        {
-          initialProps: 'apple',
-        },
-      );
+      const { result, rerender } = renderHook(v => useControlledValue(v), {
+        initialProps: 'apple',
+      });
 
       expect(result.current.value).toBe('apple');
 
@@ -40,7 +35,7 @@ describe('packages/lib/useControlledValue', () => {
       expect(result.current.value).toBe('banana');
     });
 
-    test('provided handler should be called', () => {
+    test('provided handler is called within returned hook handler', () => {
       const handler = jest.fn();
       const { result } = renderHook(v => useControlledValue(v, handler), {
         initialProps: 'apple',
@@ -55,6 +50,15 @@ describe('packages/lib/useControlledValue', () => {
       );
       // value doesn't change unless we explicitly change it
       expect(result.current.value).toBe('apple');
+    });
+
+    test('setting value to undefined should keep the component controlled', () => {
+      const { result, rerender } = renderHook(v => useControlledValue(v), {
+        initialProps: 'apple',
+      });
+      expect(result.current.isControlled).toBe(true);
+      act(() => rerender(undefined));
+      expect(result.current.isControlled).toBe(true);
     });
 
     describe('value types', () => {
@@ -100,8 +104,7 @@ describe('packages/lib/useControlledValue', () => {
 
   describe('with uncontrolled component', () => {
     test('calling without a value sets value and isControlled', () => {
-      const handler = jest.fn();
-      const { result } = renderHook(v => useControlledValue(v, handler), {
+      const { result } = renderHook(v => useControlledValue(v), {
         initialProps: undefined,
       });
       expect(result.current.isControlled).toBe(false);
@@ -109,13 +112,9 @@ describe('packages/lib/useControlledValue', () => {
     });
 
     test('calling setter updates value', () => {
-      const handler = jest.fn();
-      const { result } = renderHook(
-        v => useControlledValue<string>(v, handler),
-        {
-          initialProps: undefined,
-        },
-      );
+      const { result } = renderHook(v => useControlledValue<string>(v), {
+        initialProps: undefined,
+      });
 
       act(() => {
         result.current.setUncontrolledValue('apple');
@@ -135,6 +134,32 @@ describe('packages/lib/useControlledValue', () => {
       expect(handler).toHaveBeenCalledWith(
         expect.objectContaining(changeEventMock),
       );
+    });
+
+    test('calling the returned handler sets the value', () => {
+      const handler = jest.fn();
+      const { result } = renderHook(v => useControlledValue(v, handler), {
+        initialProps: undefined,
+      });
+
+      act(() => {
+        result.current.handleChange(changeEventMock);
+      });
+      expect(result.current.value).toBe('banana');
+    });
+
+    test('changing value prop from initial undefined is ignored', () => {
+      const { result, rerender } = renderHook(
+        v => useControlledValue<string>(v),
+        {
+          initialProps: undefined,
+        },
+      );
+      expect(result.current.isControlled).toBe(false);
+      // @ts-ignore - picking up renderHook.options types, not actual hook types
+      act(() => rerender('apple'));
+      expect(result.current.isControlled).toBe(false);
+      expect(result.current.value).toBe(undefined);
     });
   });
 
