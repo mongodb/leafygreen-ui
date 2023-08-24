@@ -17,7 +17,7 @@ export const ComboboxElement = {
   Menu: 'Menu',
 } as const;
 export type ComboboxElement =
-  typeof ComboboxElement[keyof typeof ComboboxElement];
+  (typeof ComboboxElement)[keyof typeof ComboboxElement];
 
 /**
  * Prop types
@@ -29,7 +29,7 @@ export const ComboboxSize = {
   Default: 'default',
   Large: 'large',
 } as const;
-export type ComboboxSize = typeof ComboboxSize[keyof typeof ComboboxSize];
+export type ComboboxSize = (typeof ComboboxSize)[keyof typeof ComboboxSize];
 
 export const TruncationLocation = {
   start: 'start',
@@ -38,7 +38,7 @@ export const TruncationLocation = {
   none: 'none',
 } as const;
 export type TruncationLocation =
-  typeof TruncationLocation[keyof typeof TruncationLocation];
+  (typeof TruncationLocation)[keyof typeof TruncationLocation];
 
 export const Overflow = {
   /**
@@ -54,20 +54,20 @@ export const Overflow = {
    */
   expandX: 'expand-x',
 } as const;
-export type Overflow = typeof Overflow[keyof typeof Overflow];
+export type Overflow = (typeof Overflow)[keyof typeof Overflow];
 
 export const State = {
   none: 'none',
   error: 'error',
 } as const;
-export type State = typeof State[keyof typeof State];
+export type State = (typeof State)[keyof typeof State];
 
 export const SearchState = {
   unset: 'unset',
   error: 'error',
   loading: 'loading',
 } as const;
-export type SearchState = typeof SearchState[keyof typeof SearchState];
+export type SearchState = (typeof SearchState)[keyof typeof SearchState];
 
 /**
  * Generic Typing
