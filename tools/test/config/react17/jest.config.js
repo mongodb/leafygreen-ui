@@ -50,7 +50,7 @@ module.exports = {
   transform: {
     '^.+\\.[jt]sx?$': 'babel-jest',
     '.svg':
-      '<rootDir>/node_modules/@lg-tools/test/config/mocks/svgTransformer.js',
+      '<rootDir>/node_modules/@lg-tools/test/config/react17/mocks/svgTransformer.js',
   },
 
   // Ignore transforming node_modules except for:
