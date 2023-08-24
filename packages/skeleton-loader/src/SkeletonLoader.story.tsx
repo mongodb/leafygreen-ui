@@ -8,6 +8,7 @@ import { Body, InlineCode } from '@leafygreen-ui/typography';
 
 import {
   CardSkeleton,
+  CodeSkeleton,
   FormSkeleton,
   ParagraphSkeleton,
   Skeleton,
@@ -74,6 +75,12 @@ export const LiveExample: StoryFn<any> = (props: DarkModeProps) => (
       <TableSkeleton />
       <Body className={labelStyles} weight="medium">
         <InlineCode>TableSkeleton</InlineCode>
+      </Body>
+    </div>
+    <div className={displayOptionContainerStyles}>
+      <CodeSkeleton />
+      <Body className={labelStyles} weight="medium">
+        <InlineCode>CodeSkeleton</InlineCode>
       </Body>
     </div>
   </div>
