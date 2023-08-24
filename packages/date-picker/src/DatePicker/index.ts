@@ -1,2 +1,2 @@
 export { DatePicker } from './DatePicker';
-export { DatePickerProps } from './DatePicker.types';
+export { type DatePickerProps } from './DatePicker.types';

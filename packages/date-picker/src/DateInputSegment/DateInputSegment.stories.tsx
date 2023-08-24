@@ -1,5 +1,6 @@
 import React from 'react';
-import { StoryFn } from '@storybook/react';
+import { StoryFn, StoryObj } from '@storybook/react';
+import { userEvent, within } from '@storybook/testing-library';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
@@ -61,5 +62,22 @@ const Template: StoryFn<typeof DateInputSegment> = props => (
 );
 
 export const Basic = Template.bind({});
+
+export const Type: StoryObj<typeof DateInputSegment> = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByRole('spinbutton');
+    await userEvent.type(input, '12');
+  },
+};
+
+export const ArrowUp: StoryObj<typeof DateInputSegment> = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByRole('spinbutton');
+    input.focus();
+    await userEvent.type(input, '{arrowup}');
+  },
+};
 
 export const Generated = () => {};
