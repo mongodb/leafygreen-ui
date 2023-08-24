@@ -1,5 +1,11 @@
 # @leafygreen-ui/logo
 
+## 8.0.9
+
+### Patch Changes
+
+- 8a2bb167: Export `SupportedColors` from index.ts
+
 ## 8.0.8
 
 ### Patch Changes
