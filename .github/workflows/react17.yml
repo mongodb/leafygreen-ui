@@ -18,7 +18,7 @@ jobs:
       - name: Set react types resolution
         uses: sergeysova/jq-action@v2
         with:
-          cmd: jq --arg pkgname "@types/react" --arg pkgver "^16.9.56" '.resolutions += { ($pkgname): $pkgver }' package.json > tmp_package.json && mv tmp_package.json package.json
+          cmd: echo -E "$(jq '.resolutions = {"@types/react":"^16.9.56"}' package.json)" > package.json
 
       - name: Install package.json
         run: yarn install --frozen-lockfile --prefer-offline
