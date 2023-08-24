@@ -21,7 +21,7 @@ jobs:
           cmd: echo -E "$(jq '.resolutions = {"@types/react":"^16.9.56"}' package.json)" > package.json
 
       - name: Install package.json
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: yarn install --prefer-offline
 
       - name: Install React & React DOM 17
         run: yarn add -DW react@17.0.2 react-dom@17.0.2 @types/react@16.9.56 @types/react-dom@16.9.18 @types/react-is@17
