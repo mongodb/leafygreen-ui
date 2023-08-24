@@ -19,13 +19,22 @@
       "path": "../emotion"
     },
     {
+      "path": "../hooks"
+    },
+    {
       "path": "../leafygreen-provider"
     },
     {
       "path": "../lib"
     },
     {
+      "path": "../palette"
+    },
+    {
       "path": "../tokens"
+    },
+    {
+      "path": "../typography"
     }
   ]
 }

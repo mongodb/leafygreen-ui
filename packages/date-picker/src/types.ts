@@ -1,13 +1,5 @@
 import { DarkModeProps } from '@leafygreen-ui/lib';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
-
-const Size = {
-  xsmall: 'xsmall',
-  small: 'small',
-  default: 'default',
-  large: 'large',
-};
-type Size = typeof Size[keyof typeof Size];
+import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
 export interface BaseDatePickerProps extends DarkModeProps {
   /**
