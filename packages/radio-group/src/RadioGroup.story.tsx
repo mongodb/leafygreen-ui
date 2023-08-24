@@ -20,6 +20,7 @@ const meta: StoryMetaType<typeof RadioGroup> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
+        bold: [false, true],
         size: Object.values(Size),
       },
     },
