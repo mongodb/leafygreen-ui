@@ -1,7 +1,7 @@
 import { ChangeEventHandler, useEffect, useState } from 'react';
 import isUndefined from 'lodash/isUndefined';
 
-interface ControlledValueReturnObject<T extends string> {
+interface ControlledValueReturnObject<T extends any> {
   /** Whether the value is controlled */
   isControlled: boolean;
 
@@ -24,14 +24,17 @@ interface ControlledValueReturnObject<T extends string> {
  * Returns a {@link ControlledValueReturnObject} with the controlled or uncontrolled `value`,
  * `onChange` & `onClear` handlers, a `setInternalValue` setter, and a boolean `isControlled`
  */
-export const useControlledValue = <T extends string>(
+export const useControlledValue = <T extends any>(
   controlledValue?: T,
   changeHandler?: ChangeEventHandler<any>,
-): ControlledValueReturnObject<T> => {
+  defaultValue?: T,
+): ControlledValueReturnObject<T | undefined> => {
   const isControlled = !isUndefined(controlledValue);
 
   // Keep track of state internally, initializing it to the controlled value
-  const [value, setInternalValue] = useState<T>(controlledValue ?? ('' as T));
+  const [value, setInternalValue] = useState<T | undefined>(
+    controlledValue ?? defaultValue,
+  );
 
   // If the controlled value changes, update the internal state variable
   useEffect(() => {
