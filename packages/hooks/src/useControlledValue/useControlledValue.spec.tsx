@@ -15,7 +15,7 @@ const mutableRefMock = {
   current: document.createElement('div'),
 };
 
-describe('packages/lib/useControlledValue', () => {
+describe('packages/hooks/useControlledValue', () => {
   describe('with controlled component', () => {
     test('calling with a value sets value and isControlled', () => {
       const { result } = renderHook(v => useControlledValue(v), {
@@ -89,6 +89,16 @@ describe('packages/lib/useControlledValue', () => {
       expect(handler).toHaveBeenCalled();
     });
 
+    test('initial value is ignored when controlled', () => {
+      const { result } = renderHook(
+        v => useControlledValue(v, null, 'foobar'),
+        {
+          initialProps: 'apple',
+        },
+      );
+      expect(result.current.value).toBe('apple');
+    });
+
     describe('value types', () => {
       test('accepts number values', () => {
         const { result } = renderHook(v => useControlledValue(v), {
@@ -127,22 +137,36 @@ describe('packages/lib/useControlledValue', () => {
         });
         expect(result.current.value).toBe(date);
       });
+
+      test('accepts multiple types', () => {
+        const { result, rerender } = renderHook(
+          v => useControlledValue<string | number>(v),
+          {
+            initialProps: 5 as string | number,
+          },
+        );
+        expect(result.current.value).toBe(5);
+        act(() => {
+          rerender('foo');
+        });
+        expect(result.current.value).toBe('foo');
+      });
     });
   });
 
   describe('with uncontrolled component', () => {
-    test('calling without a value sets value and isControlled', () => {
-      const { result } = renderHook(v => useControlledValue(v), {
+    test('calling without a value sets value to initialValue and isControlled: false', () => {
+      const { result } = renderHook(v => useControlledValue(v, null, ''), {
         initialProps: undefined,
       });
       expect(result.current.isControlled).toBe(false);
-      expect(result.current.value).toBe(undefined);
+      expect(result.current.value).toBe('');
     });
 
     test('setUncontrolledValue updates value', () => {
       const handler = jest.fn();
       const { result } = renderHook(
-        v => useControlledValue<string>(v, handler),
+        v => useControlledValue<string>(v, handler, ''),
         {
           initialProps: undefined,
         },
@@ -157,7 +181,7 @@ describe('packages/lib/useControlledValue', () => {
 
     test('provided handler should be called', () => {
       const handler = jest.fn();
-      const { result } = renderHook(v => useControlledValue(v, handler), {
+      const { result } = renderHook(v => useControlledValue(v, handler, ''), {
         initialProps: undefined,
       });
 
@@ -172,7 +196,7 @@ describe('packages/lib/useControlledValue', () => {
     test('updateValue updates value & calls handler', () => {
       const handler = jest.fn();
       const { result } = renderHook(
-        v => useControlledValue<string>(v, handler),
+        v => useControlledValue<string>(v, handler, ''),
         {
           initialProps: undefined,
         },
@@ -188,7 +212,7 @@ describe('packages/lib/useControlledValue', () => {
 
     test('calling the returned handler sets the value', () => {
       const handler = jest.fn();
-      const { result } = renderHook(v => useControlledValue(v, handler), {
+      const { result } = renderHook(v => useControlledValue(v, handler, ''), {
         initialProps: undefined,
       });
 
@@ -200,7 +224,7 @@ describe('packages/lib/useControlledValue', () => {
 
     test('changing value prop from initial undefined is ignored', () => {
       const { result, rerender } = renderHook(
-        v => useControlledValue<string>(v),
+        v => useControlledValue<string>(v, null, ''),
         {
           initialProps: undefined,
         },
@@ -226,6 +250,7 @@ describe('packages/lib/useControlledValue', () => {
       const { value, handleChange, updateValue } = useControlledValue(
         valueProp,
         handlerProp,
+        '',
       );
 
       return (

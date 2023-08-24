@@ -1,7 +1,13 @@
-import { ChangeEventHandler, MutableRefObject, useMemo, useState } from 'react';
+import {
+  ChangeEventHandler,
+  MutableRefObject,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import isUndefined from 'lodash/isUndefined';
 
-import { createSyntheticEvent } from '@leafygreen-ui/lib';
+import { consoleOnce, createSyntheticEvent } from '@leafygreen-ui/lib';
 
 interface ControlledValueReturnObject<T extends any> {
   /** Whether the value is controlled */
@@ -35,16 +41,19 @@ interface ControlledValueReturnObject<T extends any> {
  * Returns a {@link ControlledValueReturnObject} with the controlled or uncontrolled `value`,
  * `onChange` & `onClear` handlers, a `setInternalValue` setter, and a boolean `isControlled`
  */
-export const useControlledValue = <T extends any>(
+export const useControlledValue = <T>(
   controlledValue?: T,
-  changeHandler?: ChangeEventHandler<any>,
+  changeHandler?: ChangeEventHandler<any> | null,
+  initialValue?: T,
 ): ControlledValueReturnObject<T | undefined> => {
   // isControlled should only be computed once
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const isControlled = useMemo(() => !isUndefined(controlledValue), []);
 
   // Keep track of the uncontrolled value state internally
-  const [uncontrolledValue, setUncontrolledValue] = useState<T>();
+  const [uncontrolledValue, setUncontrolledValue] = useState<T | undefined>(
+    initialValue,
+  );
 
   // Create a change event handler that either updates the internal state
   // or fires an external change handler
@@ -70,6 +79,15 @@ export const useControlledValue = <T extends any>(
       handleChange(synthEvt);
     }
   };
+
+  useEffect(() => {
+    // Log a warning if neither controlled value or initialValue is provided
+    if (isUndefined(controlledValue) && isUndefined(initialValue)) {
+      consoleOnce.error(
+        `Warning: \`useControlledValue\` hook is being used without a value or initialValue. This will cause a React warning when the input changes. Please decide between using a controlled or uncontrolled input element, and provide either a controlledValue or initialValue to \`useControlledValue\``,
+      );
+    }
+  }, [controlledValue, initialValue]);
 
   return {
     isControlled,
