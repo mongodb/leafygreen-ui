@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react';
-import { act } from '@testing-library/react';
+import { act } from 'react-test-renderer';
 import { renderHook } from '@testing-library/react-hooks';
 
 import { useControlledValue } from './useControlledValue';
@@ -16,7 +16,7 @@ describe('packages/lib/useControlledValue', () => {
 
     act(() => {
       current.handleChange({ target: { value: 'banana' } } as ChangeEvent<any>);
-      current.setInternalValue('banana');
+      current.setUncontrolledValue('banana');
     });
     expect(handler).toHaveBeenCalledWith(
       expect.objectContaining({ target: { value: 'banana' } }),
