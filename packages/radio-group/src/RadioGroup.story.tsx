@@ -26,7 +26,19 @@ const meta: StoryMetaType<typeof RadioGroup> = {
     },
   },
   args: {
-    children: <></>,
+    children: (
+      <>
+        <Radio checked value="1">
+          Radio Input 1
+        </Radio>
+        <Radio default value="2" description="This is a description">
+          Radio Input 2
+        </Radio>
+        <Radio disabled value="Selection-4">
+          Disabled Option
+        </Radio>
+      </>
+    ),
   },
   argTypes: {
     children: { control: false },
@@ -40,9 +52,10 @@ const meta: StoryMetaType<typeof RadioGroup> = {
 };
 export default meta;
 
-export const LiveExample: StoryFn<RadioGroupProps> = (
-  args: RadioGroupProps,
-) => (
+export const LiveExample: StoryFn<RadioGroupProps> = ({
+  children,
+  ...args
+}: RadioGroupProps) => (
   <RadioGroup name="radio-group-default" {...args}>
     <Radio value="1">Radio Input 1</Radio>
     <Radio default value="2" description="This is a description">
