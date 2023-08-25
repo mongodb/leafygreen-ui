@@ -17,6 +17,7 @@ const meta: StoryMetaType<typeof Radio> = {
         checked: [false, true],
         size: Object.values(Size),
         disabled: [false, true],
+        bold: [false, true],
       },
       args: {
         children: 'Radio',

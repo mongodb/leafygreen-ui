@@ -41,4 +41,11 @@ export interface RadioGroupProps extends HTMLElementProps<'div'> {
    * @default default
    */
   size?: Size;
+
+  /**
+   * Whether the label's font-weight is bold or regular.
+   * If left `undefined` this prop will default to `true` if a description is provided,
+   * otherwise defaults to `false`
+   */
+  bold?: boolean;
 }

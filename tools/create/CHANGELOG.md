@@ -1,5 +1,12 @@
 # @lg-tools/create
 
+## 0.1.3
+
+### Patch Changes
+
+- 73dd20f0: Fixes broken package.json & tsconfig.json templates.
+  Default `directory` is now based off `scope` parameter, if provided.
+
 ## 0.1.2
 
 ### Patch Changes

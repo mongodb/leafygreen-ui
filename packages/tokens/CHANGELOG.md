@@ -1,5 +1,11 @@
 # @leafygreen-ui/tokens
 
+## 2.2.0
+
+### Minor Changes
+
+- 3fe03b50: Adds `Size` token
+
 ## 2.1.4
 
 ### Patch Changes

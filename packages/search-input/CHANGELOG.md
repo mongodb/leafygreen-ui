@@ -1,5 +1,20 @@
 # @leafygreen-ui/search-input
 
+## 2.0.14
+
+### Patch Changes
+
+- Updated dependencies [3fe03b50]
+- Updated dependencies [fd907503]
+- Updated dependencies [c9f0055a]
+- Updated dependencies [56459cde]
+  - @leafygreen-ui/tokens@2.2.0
+  - @leafygreen-ui/hooks@8.0.0
+  - @leafygreen-ui/icon@11.23.0
+  - @leafygreen-ui/a11y@1.4.9
+  - @leafygreen-ui/leafygreen-provider@3.1.8
+  - @leafygreen-ui/popover@11.0.17
+
 ## 2.0.13
 
 ### Patch Changes

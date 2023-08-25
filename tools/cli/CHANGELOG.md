@@ -1,5 +1,16 @@
 # @lg-tools/cli
 
+## 0.4.2
+
+### Patch Changes
+
+- Updated dependencies [73dd20f0]
+- Updated dependencies [c9f0055a]
+- Updated dependencies [3fe03b50]
+  - @lg-tools/create@0.1.3
+  - @lg-tools/validate@0.1.3
+  - @lg-tools/lint@0.1.4
+
 ## 0.4.1
 
 ### Patch Changes

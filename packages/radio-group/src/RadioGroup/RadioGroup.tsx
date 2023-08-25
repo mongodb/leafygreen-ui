@@ -37,6 +37,7 @@ function RadioGroup({
   children,
   value: controlledValue,
   name: nameProp,
+  bold = true,
   ...rest
 }: RadioGroupProps) {
   let isControlled = controlledValue != null ? true : false,
@@ -87,6 +88,7 @@ function RadioGroup({
       darkMode,
       name,
       size,
+      bold,
     });
   });
 
