@@ -8,7 +8,7 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { characterWidth } from './DateInputSegment.constants';
+import { characterWidth } from './constants';
 import { DateSegment } from './DateInputSegment.types';
 
 export const baseStyles = css`
