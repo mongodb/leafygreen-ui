@@ -5,9 +5,7 @@
  */
 
 import './palette.less';
-import './ui-colors.less';
 
 import palette from './palette';
-import uiColors from './uiColors';
 
-export { palette, uiColors };
+export { palette };

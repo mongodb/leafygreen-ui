@@ -1,9 +1,13 @@
 import React from 'react';
-import { Meta } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
+import {
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
-import Portal from './Portal';
+import Portal, { PortalProps } from '.';
 
 const portalChildrenStyle = css`
   text-align: center;
@@ -12,6 +16,7 @@ const portalChildrenStyle = css`
 function getRoot() {
   const root =
     document.getElementById('root') ||
+    document.getElementById('storybook-root') ||
     document.getElementById('story-container');
 
   if (root == null) {
@@ -21,34 +26,36 @@ function getRoot() {
   return root;
 }
 
-export default {
+const meta: StoryMetaType<typeof Portal> = {
   title: 'Components/Portal',
   component: Portal,
   args: {
     container: getRoot(),
+    children: (
+      <div className={portalChildrenStyle}>
+        Portals transport their children to a <code>div</code> that is appended
+        to the end of the <code>document.body</code> to or a <code>node</code>{' '}
+        that can be specified with a <code>container</code> prop.
+      </div>
+    ),
   },
   argTypes: {
     className: {
       type: 'string',
     },
-    children: {
-      control: false,
-    },
   },
   parameters: {
     default: 'Basic',
     controls: {
-      exclude: ['className', 'container'],
+      exclude: [...storybookExcludedControlParams, 'children', 'container'],
+    },
+    chromatic: {
+      disableSnapshot: true,
     },
   },
-} as Meta<typeof Portal>;
+};
+export default meta;
 
-export const Basic = () => (
-  <Portal container={getRoot()}>
-    <div className={portalChildrenStyle}>
-      Portals transport their children to a <code>div</code> that is appended to
-      the end of the <code>document.body</code> to or a <code>node</code> that
-      can be specified with a <code>container</code> prop.
-    </div>
-  </Portal>
+export const Basic: StoryFn<PortalProps> = (args: PortalProps) => (
+  <Portal {...args} />
 );

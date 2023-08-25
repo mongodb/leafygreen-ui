@@ -1,5 +1,155 @@
 # @leafygreen-ui/popover
 
+## 11.0.17
+
+### Patch Changes
+
+- Updated dependencies [3fe03b50]
+- Updated dependencies [fd907503]
+  - @leafygreen-ui/tokens@2.2.0
+  - @leafygreen-ui/hooks@8.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.8
+  - @leafygreen-ui/portal@5.0.1
+
+## 11.0.16
+
+### Patch Changes
+
+- 4fcf2e94: Bumps `react-transition-group` to `^4.4.5`.
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/portal@5.0.0
+  - @leafygreen-ui/lib@11.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+
+## 11.0.15
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+- Updated dependencies [c11bbc29]
+  - @leafygreen-ui/emotion@4.0.7
+  - @leafygreen-ui/hooks@7.7.8
+  - @leafygreen-ui/leafygreen-provider@3.1.6
+  - @leafygreen-ui/lib@10.4.3
+  - @leafygreen-ui/portal@4.1.7
+  - @leafygreen-ui/tokens@2.1.4
+
+## 11.0.14
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+- Updated dependencies [c15ee2ac]
+  - @leafygreen-ui/emotion@4.0.6
+  - @leafygreen-ui/hooks@7.7.7
+  - @leafygreen-ui/leafygreen-provider@3.1.5
+  - @leafygreen-ui/lib@10.4.2
+  - @leafygreen-ui/portal@4.1.6
+  - @leafygreen-ui/tokens@2.1.3
+
+## 11.0.13
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+- Updated dependencies [215268ff]
+  - @leafygreen-ui/leafygreen-provider@3.1.4
+  - @leafygreen-ui/emotion@4.0.5
+  - @leafygreen-ui/portal@4.1.5
+  - @leafygreen-ui/tokens@2.1.2
+  - @leafygreen-ui/hooks@7.7.6
+  - @leafygreen-ui/lib@10.4.1
+
+## 11.0.12
+
+### Patch Changes
+
+- 76161cf0: Creates `getJustify` and `getAlign` test utils
+- 76161cf0: Updates stories for Chromatic testing
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [735342e9]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+  - @leafygreen-ui/lib@10.4.0
+  - @leafygreen-ui/hooks@7.7.5
+  - @leafygreen-ui/portal@4.1.4
+  - @leafygreen-ui/tokens@2.1.1
+
+## 11.0.11
+
+### Patch Changes
+
+- 63b2deb0b: Upgrade button to v20.1.1
+
+## 11.0.10
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [0cd471676]
+  - @leafygreen-ui/hooks@7.7.4
+  - @leafygreen-ui/leafygreen-provider@3.1.3
+  - @leafygreen-ui/lib@10.3.4
+  - @leafygreen-ui/portal@4.1.3
+
+## 11.0.9
+
+### Patch Changes
+
+- 8ece56980: Minor CSS updates to `react-transition-group` `exiting` styles.
+- Updated dependencies [73cbbd02c]
+- Updated dependencies [8ece56980]
+- Updated dependencies [32b3d3146]
+  - @leafygreen-ui/tokens@2.1.0
+  - @leafygreen-ui/hooks@7.7.2
+
+## 11.0.8
+
+### Patch Changes
+
+- ce0fcb3f6: Excludes `children` from story controls
+- Updated dependencies [55d33e435]
+- Updated dependencies [cf00160ec]
+- Updated dependencies [ce0fcb3f6]
+- Updated dependencies [111b680c5]
+- Updated dependencies [77320a6b8]
+  - @leafygreen-ui/lib@10.3.3
+  - @leafygreen-ui/portal@4.1.2
+  - @leafygreen-ui/tokens@2.0.3
+
+## 11.0.7
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/emotion@4.0.4
+  - @leafygreen-ui/hooks@7.7.1
+  - @leafygreen-ui/leafygreen-provider@3.1.2
+  - @leafygreen-ui/lib@10.3.2
+  - @leafygreen-ui/portal@4.1.1
+  - @leafygreen-ui/tokens@2.0.2
+
+## 11.0.6
+
+### Patch Changes
+
+- 134f370a4: Renders a `span` instead of a `div` inside `Popover` to prevent `validateDOMNesting` warnings. Warnings will still show up if `usePortal` is `false`.
+
+## 11.0.5
+
+### Patch Changes
+
+- 64eee134d: TSDoc: Updates some exported TSDoc interfaces. Storybook: Updates story files.
+- Updated dependencies [64eee134d]
+  - @leafygreen-ui/lib@10.1.0
+
 ## 11.0.4
 
 ### Patch Changes

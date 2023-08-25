@@ -3,8 +3,13 @@ import PropTypes from 'prop-types';
 
 import { PopoverProvider } from '@leafygreen-ui/leafygreen-provider';
 
+import {
+  CloseIconColor,
+  ForwardedRef,
+  ModalProps,
+  ModalSize,
+} from './Modal.types';
 import ModalView from './ModalView';
-import { CloseIconColor, ForwardedRef, ModalProps, ModalSize } from './types';
 
 /**
  *

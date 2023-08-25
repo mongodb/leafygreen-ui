@@ -4,5 +4,4 @@ lib
 packages/icon/src/glyphs/*.svg
 packages/icon/src/generated/*.tsx
 storybook-static
-website/.next
-website/hosting
+packages/**/stories.js*

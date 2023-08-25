@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 
 import {
   Polymorph,
@@ -9,7 +9,7 @@ import {
   usePolymorphic,
 } from '.';
 
-export default {
+const meta: StoryMetaType<typeof Polymorph> = {
   title: 'Components/Internal/Polymorph',
   component: Polymorph,
   args: {
@@ -26,11 +26,10 @@ export default {
     },
   },
   parameters: {
-    controls: {
-      exclude: ['className'],
-    },
+    default: 'Basic',
   },
 };
+export default meta;
 
 export const Basic = (props: PolymorphicPropsWithRef<any>) => (
   <Polymorph {...props} />

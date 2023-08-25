@@ -11,43 +11,49 @@ import { CardProps, ContentStyle } from './types';
 /**
  * Cards are used to organize information into consumable chunks.
  */
-export const Card = ({
-  className,
-  contentStyle,
-  darkMode: darkModeProp,
-  ...rest
-}: BoxProps<'div', CardProps>) => {
-  if (
-    contentStyle === undefined &&
-    (('onClick' in rest && rest.onClick !== undefined) ||
-      ('href' in rest && !!rest.href))
-  ) {
-    contentStyle = ContentStyle.Clickable;
-  }
+export const Card = React.forwardRef(
+  (
+    {
+      className,
+      contentStyle,
+      darkMode: darkModeProp,
+      ...rest
+    }: BoxProps<'div', CardProps>,
+    forwardRef,
+  ) => {
+    if (
+      contentStyle === undefined &&
+      (('onClick' in rest && rest.onClick !== undefined) ||
+        ('href' in rest && !!rest.href))
+    ) {
+      contentStyle = ContentStyle.Clickable;
+    }
 
-  const { theme } = useDarkMode(darkModeProp);
+    const { theme } = useDarkMode(darkModeProp);
 
-  return (
-    <Box
-      // @ts-expect-error
-      className={cx(
-        containerStyle,
-        colorSet[theme].containerStyle,
-        {
-          [colorSet[theme].clickableStyle]:
-            contentStyle === ContentStyle.Clickable,
-        },
-        className,
-      )}
-      {...rest}
-    />
-  );
-};
+    return (
+      <Box
+        // @ts-expect-error
+        className={cx(
+          containerStyle,
+          colorSet[theme].containerStyle,
+          {
+            [colorSet[theme].clickableStyle]:
+              contentStyle === ContentStyle.Clickable,
+          },
+          className,
+        )}
+        ref={forwardRef}
+        {...rest}
+      />
+    );
+  },
+);
 
 Card.displayName = 'Card';
 
 Card.propTypes = {
   className: PropTypes.string,
   darkMode: PropTypes.bool,
-  contentStyle: PropTypes.oneOf(['None', 'Clickable']),
+  contentStyle: PropTypes.oneOf(Object.values(ContentStyle)),
 };

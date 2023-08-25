@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/box",
-  "version": "3.1.1",
+  "version": "3.1.8",
   "description": "leafyGreen UI Kit Box",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -13,7 +13,9 @@
     }
   },
   "scripts": {
-    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
   },
   "license": "Apache-2.0",
   "publishConfig": {
@@ -27,5 +29,8 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
+  },
+  "devDependencies": {
+    "@leafygreen-ui/lib": "^11.0.0"
   }
 }

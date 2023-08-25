@@ -1,5 +1,144 @@
 # @leafygreen-ui/toggle
 
+## 10.0.15
+
+### Patch Changes
+
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/icon@11.22.2
+  - @leafygreen-ui/lib@11.0.0
+  - @leafygreen-ui/a11y@1.4.8
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+
+## 10.0.14
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+- Updated dependencies [c11bbc29]
+  - @leafygreen-ui/a11y@1.4.7
+  - @leafygreen-ui/emotion@4.0.7
+  - @leafygreen-ui/icon@11.22.1
+  - @leafygreen-ui/leafygreen-provider@3.1.6
+  - @leafygreen-ui/lib@10.4.3
+  - @leafygreen-ui/palette@4.0.7
+  - @leafygreen-ui/tokens@2.1.4
+
+## 10.0.13
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+- Updated dependencies [f73807cf]
+- Updated dependencies [31c09354]
+- Updated dependencies [c15ee2ac]
+  - @leafygreen-ui/icon@11.22.0
+  - @leafygreen-ui/a11y@1.4.6
+  - @leafygreen-ui/emotion@4.0.6
+  - @leafygreen-ui/leafygreen-provider@3.1.5
+  - @leafygreen-ui/lib@10.4.2
+  - @leafygreen-ui/palette@4.0.6
+  - @leafygreen-ui/tokens@2.1.3
+
+## 10.0.12
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+- Updated dependencies [215268ff]
+  - @leafygreen-ui/leafygreen-provider@3.1.4
+  - @leafygreen-ui/emotion@4.0.5
+  - @leafygreen-ui/palette@4.0.5
+  - @leafygreen-ui/tokens@2.1.2
+  - @leafygreen-ui/a11y@1.4.5
+  - @leafygreen-ui/icon@11.20.1
+  - @leafygreen-ui/lib@10.4.1
+
+## 10.0.11
+
+### Patch Changes
+
+- 76161cf0: Minor fixes to stories
+- 76161cf0: Updates stories for Chromatic testing
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [95f5107a]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+  - @leafygreen-ui/lib@10.4.0
+  - @leafygreen-ui/icon@11.17.0
+  - @leafygreen-ui/tokens@2.1.1
+
+## 10.0.10
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [0cd471676]
+  - @leafygreen-ui/icon@11.16.1
+  - @leafygreen-ui/leafygreen-provider@3.1.3
+  - @leafygreen-ui/lib@10.3.4
+
+## 10.0.9
+
+### Patch Changes
+
+- 601faca8b: Fixes bug such that xsmall toggle buttons now render properly in their active state
+
+## 10.0.8
+
+### Patch Changes
+
+- 4be31ce3c: Changes component from `26px` to `24px` width to be in line with Figma spec
+- Updated dependencies [73cbbd02c]
+- Updated dependencies [32b3d3146]
+- Updated dependencies [83fc5b31b]
+- Updated dependencies [8ece56980]
+  - @leafygreen-ui/tokens@2.1.0
+  - @leafygreen-ui/a11y@1.4.3
+  - @leafygreen-ui/icon@11.14.0
+
+## 10.0.7
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/a11y@1.4.2
+  - @leafygreen-ui/emotion@4.0.4
+  - @leafygreen-ui/icon@11.13.1
+  - @leafygreen-ui/leafygreen-provider@3.1.2
+  - @leafygreen-ui/lib@10.3.2
+  - @leafygreen-ui/palette@4.0.3
+  - @leafygreen-ui/tokens@2.0.2
+
+## 10.0.6
+
+### Patch Changes
+
+- Updated dependencies [5b036515e]
+- Updated dependencies [26e341a0b]
+- Updated dependencies [997121cc3]
+  - @leafygreen-ui/palette@4.0.0
+  - @leafygreen-ui/lib@10.2.2
+  - @leafygreen-ui/icon@11.12.5
+  - @leafygreen-ui/tokens@2.0.1
+
+## 10.0.5
+
+### Patch Changes
+
+- bf2fedf6d: Version bumps lib
+- Updated dependencies [51c544e2e]
+- Updated dependencies [bf2fedf6d]
+  - @leafygreen-ui/a11y@1.4.0
+  - @leafygreen-ui/leafygreen-provider@3.1.1
+
 ## 10.0.4
 
 ### Patch Changes

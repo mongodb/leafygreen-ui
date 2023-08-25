@@ -3,20 +3,21 @@ import { transparentize } from 'polished';
 import { css, keyframes } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies, spacing, typeScales } from '@leafygreen-ui/tokens';
+import { fontFamilies, spacing } from '@leafygreen-ui/tokens';
 
+import { fontSize, lineHeight } from '../Chip/Chip.styles';
 import { ComboboxSize as Size } from '../Combobox.types';
 
 export const menuItemPadding: Record<Size, { x: number; y: number }> = {
+  [Size.XSmall]: { x: 12, y: 8 },
+  [Size.Small]: { x: 12, y: 8 },
   [Size.Default]: { x: 12, y: 8 },
   [Size.Large]: { x: 12, y: 8 },
 };
 
-/** Height of a menu item (in px) */
-export const menuItemHeight = {
-  [Size.Default]:
-    typeScales.body1.lineHeight + 2 * menuItemPadding[Size.Default].y,
-  [Size.Large]: typeScales.body2.lineHeight + 2 * menuItemPadding[Size.Large].y,
+/** Util that returns the height of a menu item (in px) */
+export const getMenuItemHeight = (size: Size) => {
+  return lineHeight[size] + 2 * menuItemPadding[size].y;
 };
 
 /**
@@ -63,15 +64,6 @@ export const menuThemeStyle: Record<Theme, string> = {
   `,
 };
 
-export const menuSizeStyle: Record<Size, string> = {
-  [Size.Default]: css`
-    min-height: ${menuItemHeight[Size.Default]}px;
-  `,
-  [Size.Large]: css`
-    min-height: ${menuItemHeight[Size.Large]}px;
-  `,
-};
-
 export const menuList = css`
   position: relative;
   margin: 0;
@@ -94,31 +86,11 @@ export const menuMessageThemeStyle: Record<Theme, string> = {
   `,
 };
 
-export const menuMessageSizeStyle: Record<Size, string> = {
-  [Size.Default]: css`
-    font-size: ${typeScales.body1.fontSize}px;
-    line-height: ${typeScales.body1.lineHeight}px;
-    padding: ${menuItemPadding[Size.Default].y}px
-      ${menuItemPadding[Size.Default].x}px;
-  `,
-  [Size.Large]: css`
-    font-size: ${typeScales.body2.fontSize}px;
-    line-height: ${typeScales.body2.lineHeight}px;
-    padding: ${menuItemPadding[Size.Large].y}px
-      ${menuItemPadding[Size.Large].x}px;
-  `,
-};
-
-export const menuMessageIconSizeStyle: Record<Size, string> = {
-  [Size.Default]: css`
-    height: ${typeScales.body1.fontSize}px;
-    width: ${typeScales.body1.fontSize}px;
-  `,
-  [Size.Large]: css`
-    height: ${typeScales.body2.fontSize}px;
-    width: ${typeScales.body2.fontSize}px;
-  `,
-};
+export const menuMessageSizeStyle = (size: Size) => css`
+  font-size: ${fontSize[size]}px;
+  line-height: ${lineHeight[size]}px;
+  padding: ${menuItemPadding[size].y}px ${menuItemPadding[size].x}px;
+`;
 
 const loadingIconAnimation = keyframes`
   0% {

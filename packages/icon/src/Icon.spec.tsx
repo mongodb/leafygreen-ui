@@ -44,26 +44,26 @@ const customTestGlyphs = {
 
 describe('packages/Icon/isComponentGlyph', () => {
   test('returns `true` for a rendered component', () => {
-    const TestNode: React.ComponentType<any> & { isGlyph?: boolean } = () => (
-      <div />
-    );
+    const TestNode: React.ComponentType<any> & {
+      isGlyph?: boolean;
+    } = () => <div />;
     TestNode.isGlyph = true;
     const renderedTestNode = <TestNode />;
     expect(isComponentGlyph(renderedTestNode)).toBeTruthy();
   });
 
   test('returns `true` for a component function', () => {
-    const TestNode: React.ComponentType<any> & { isGlyph?: boolean } = () => (
-      <div />
-    );
+    const TestNode: React.ComponentType<any> & {
+      isGlyph?: boolean;
+    } = () => <div />;
     TestNode.isGlyph = true;
     expect(isComponentGlyph(TestNode)).toBeTruthy();
   });
 
   test('returns `false` if isGlyph is false', () => {
-    const TestNode: React.ComponentType<any> & { isGlyph?: boolean } = () => (
-      <div />
-    );
+    const TestNode: React.ComponentType<any> & {
+      isGlyph?: boolean;
+    } = () => <div />;
     TestNode.isGlyph = false;
     const renderedTestNode = <TestNode />;
     expect(isComponentGlyph(TestNode)).toBeFalsy();
@@ -245,6 +245,14 @@ describe('packages/Icon/createIconComponent', () => {
       const glyph = getByTestId('my-glyph');
       expect(glyph).toHaveAttribute('role', 'presentation');
     });
+  });
+
+  test('returned Icon function logs an error when glyph does not exist', () => {
+    const consoleSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+    render(<IconComponent glyph="error" />);
+    expect(consoleSpy).toHaveBeenCalled();
   });
 });
 

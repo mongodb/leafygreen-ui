@@ -11,9 +11,9 @@ import {
 import { baseTypographyStyles, defaultTextColor } from '../styles';
 
 import { subtitleStyles } from './Subtitle.styles';
-import { SubtitleProps } from './Subtitle.types';
+import { BaseSubtitleProps } from './Subtitle.types';
 
-const Subtitle = Polymorphic<SubtitleProps>(
+const Subtitle = Polymorphic<BaseSubtitleProps>(
   ({
     darkMode: darkModeProp,
     className,

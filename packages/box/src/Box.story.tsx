@@ -1,41 +1,31 @@
 import React from 'react';
-import { Meta, Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { storybookArgTypes, type StoryMetaType } from '@leafygreen-ui/lib';
 
 import Box, { BoxProps } from '.';
 
-// This is a workaround to make sure props are correctly imported despite Button using forwardRef
-// https://github.com/storybookjs/storybook/issues/15334
-// TODO: Ensure that TSDocs are being read from the Box component directly, not this StoryBox component
-// eslint-disable-next-line react/jsx-props-no-spreading
-/**
- * Box component handles the `as` prop, allowing the component to be rendered using alternate HTML elements.
- *
- * It also defaults to an `<a>` tag when a `href` prop is set.
- */
-export const StoryBox: React.FC<BoxProps> = props => (
-  // @ts-ignore-next-line
-  <Box {...props} />
-);
-
-export default {
+// Intentionally not using `StoryMeta` since Box is different (and will soon be deprecated)
+const meta: StoryMetaType<typeof Box, BoxProps> = {
   title: 'Components/Box',
-  component: StoryBox,
-  excludeStories: ['StoryBox'],
+  component: Box,
+  parameters: {
+    default: 'Basic',
+  },
   argTypes: {
     as: {
-      defaultValue: 'div',
       ...storybookArgTypes.as,
+      defaultValue: 'div',
     },
     href: {
       control: 'text',
     },
   },
-} as Meta<typeof Box>;
+};
+export default meta;
 
 // eslint-disable-next-line react/prop-types
-const Template: Story<BoxProps> = ({ as, ...args }) => (
+const Template: StoryFn<BoxProps> = ({ as, ...args }: BoxProps) => (
   <Box as={(as ? as : 'div') as keyof JSX.IntrinsicElements} {...args} />
 );
 

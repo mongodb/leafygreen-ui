@@ -6,16 +6,16 @@ export const BlobPosition = {
   BottomRight: 'bottom right',
 } as const;
 
-export type BlobPosition = typeof BlobPosition[keyof typeof BlobPosition];
+export type BlobPosition = (typeof BlobPosition)[keyof typeof BlobPosition];
 
 export const GraphicStyle = {
   Center: 'center',
   Fill: 'fill',
 } as const;
 
-export type GraphicStyle = typeof GraphicStyle[keyof typeof GraphicStyle];
+export type GraphicStyle = (typeof GraphicStyle)[keyof typeof GraphicStyle];
 
-export interface MarketingModalProps extends ModalProps {
+export interface MarketingModalProps extends Omit<ModalProps, 'size'> {
   /**
    * Text of header element
    */

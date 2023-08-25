@@ -4,8 +4,10 @@ import isUndefined from 'lodash/isUndefined';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useAvailableSpace, useForwardedRef } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { palette } from '@leafygreen-ui/palette';
-import Popover from '@leafygreen-ui/popover';
+import Popover, { PortalControlProps } from '@leafygreen-ui/popover';
+import { Error } from '@leafygreen-ui/typography';
 
 import { ComboboxProps } from '../Combobox.types';
 import { ComboboxContext } from '../ComboboxContext';
@@ -28,17 +30,14 @@ type ComboboxMenuProps = {
   id: string;
   labelId: string;
   menuWidth: number;
-} & Pick<
-  ComboboxProps<any>,
-  | 'searchLoadingMessage'
-  | 'searchErrorMessage'
-  | 'searchEmptyMessage'
-  | 'usePortal'
-  | 'portalClassName'
-  | 'portalContainer'
-  | 'scrollContainer'
-  | 'popoverZIndex'
->;
+} & PortalControlProps &
+  Pick<
+    ComboboxProps<any>,
+    | 'searchLoadingMessage'
+    | 'searchErrorMessage'
+    | 'searchEmptyMessage'
+    | 'popoverZIndex'
+  >;
 
 export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
   (
@@ -55,8 +54,8 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
     }: ComboboxMenuProps,
     forwardedRef,
   ) => {
-    const { disabled, darkMode, theme, size, isOpen, searchState } =
-      useContext(ComboboxContext);
+    const { darkMode, theme } = useDarkMode();
+    const { disabled, size, isOpen, searchState } = useContext(ComboboxContext);
     const ref = useForwardedRef(forwardedRef, null);
 
     /** The max height of the menu element */
@@ -73,7 +72,12 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
       const messageStyles = cx(
         menuMessageBaseStyle,
         menuMessageThemeStyle[theme],
-        menuMessageSizeStyle[size],
+        menuMessageSizeStyle(size),
+      );
+
+      const errorMessageStyles = cx(
+        menuMessageBaseStyle,
+        menuMessageSizeStyle(size),
       );
 
       switch (searchState) {
@@ -92,13 +96,13 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
 
         case 'error': {
           return (
-            <span className={messageStyles}>
+            <Error className={errorMessageStyles}>
               <Icon
                 glyph="Warning"
                 color={darkMode ? palette.red.light1 : palette.red.base}
               />
-              {searchErrorMessage}
-            </span>
+              <span>{searchErrorMessage}</span>
+            </Error>
           );
         }
 
@@ -108,7 +112,7 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
             children &&
             typeof children === 'object' &&
             'length' in children &&
-            children.length > 0
+            (children as Array<React.ReactNode>).length > 0
           ) {
             return <ul className={menuList}>{children}</ul>;
           }

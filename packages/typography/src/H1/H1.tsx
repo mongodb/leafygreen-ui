@@ -11,9 +11,9 @@ import {
 import { baseTypographyStyles } from '../styles';
 
 import { h1Color, h1Styles } from './H1.styles';
-import { H1Props } from './H1.types';
+import { BaseH1Props } from './H1.types';
 
-const H1 = Polymorphic<H1Props>(
+const H1 = Polymorphic<BaseH1Props>(
   ({
     darkMode: darkModeProp,
     className,
@@ -25,7 +25,6 @@ const H1 = Polymorphic<H1Props>(
 
     return (
       <Component
-        as="h1"
         className={cx(
           baseTypographyStyles,
           h1Styles,

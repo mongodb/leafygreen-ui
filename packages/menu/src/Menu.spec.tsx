@@ -1,73 +1,32 @@
 import React from 'react';
 import {
-  act,
-  fireEvent,
+  getAllByRole as globalGetAllByRole,
   render,
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { MenuItemProps } from './MenuItem';
-import { SubMenuProps } from './SubMenu';
-import { MenuProps } from './types';
-import { Menu, MenuItem, MenuSeparator, SubMenu } from '.';
+import { MenuProps } from './Menu';
+import { Menu, MenuItem, MenuSeparator } from '.';
 
 const menuTestId = 'menu-test-id';
-const className = 'menu-item-class-name';
 const trigger = <button data-testid="menu-trigger">trigger</button>;
-const onClick = jest.fn();
 
 function renderMenu(props: Omit<MenuProps, 'children'> = {}) {
   const utils = render(
-    <Menu {...props} data-testid={menuTestId}>
-      <MenuItem>Item A</MenuItem>
-      <MenuSeparator />
-      <MenuItem href="http://mongodb.design">Item B</MenuItem>
-    </Menu>,
-  );
-  return utils;
-}
-
-function renderMenuItem(props: MenuItemProps = {}) {
-  const utils = render(
-    <MenuItem {...props} data-testid="menu-item-test-id">
-      Item 1
-    </MenuItem>,
-  );
-  const menuItem = utils.getByTestId('menu-item-test-id');
-  return { ...utils, menuItem };
-}
-
-function renderSubMenuItem(props: SubMenuProps = {}) {
-  const utils = render(
-    <Menu open={true} setOpen={jest.fn()}>
-      <SubMenu title="First SubMenu" data-testid="sub-menu-a" {...props}>
-        <MenuItem data-testid="sub-menu-item-a">SubMenu Item One</MenuItem>
-      </SubMenu>
-      <SubMenu title="Second SubMenu" data-testid="sub-menu-b">
-        <MenuItem data-testid="sub-menu-item-b">SubMenu Item Two</MenuItem>
-      </SubMenu>
-    </Menu>,
-  );
-  const subMenu = utils.getByTestId('sub-menu-a');
-  const subMenuB = utils.getByTestId('sub-menu-b');
-  const [subMenuButtonA, subMenuButtonB] = utils.getAllByTestId(
-    'lg-sub-menu-icon-button',
+    <>
+      <div data-testid="backdrop" />
+      <Menu {...props} data-testid={menuTestId}>
+        <MenuItem data-testid="menu-item-a">Item A</MenuItem>
+        <MenuSeparator />
+        <MenuItem href="http://mongodb.design">Item B</MenuItem>
+      </Menu>
+    </>,
   );
 
-  const getItemA = () => utils.getByTestId('sub-menu-item-a');
-  const getItemB = () => utils.getByTestId('sub-menu-item-b');
-
-  return {
-    subMenu,
-    subMenuB,
-    subMenuButtonA,
-    subMenuButtonB,
-    getItemA,
-    getItemB,
-    ...utils,
-  };
+  const backdrop = utils.getByTestId('backdrop');
+  return { ...utils, backdrop };
 }
 
 describe('packages/menu', () => {
@@ -88,25 +47,115 @@ describe('packages/menu', () => {
     expect(menuItem).toBeInTheDocument();
   });
 
+  test('first item is focused when menu is opened', () => {
+    const { getByTestId } = renderMenu({ open: true });
+    const menu = getByTestId(menuTestId);
+    const options = globalGetAllByRole(menu, 'menuitem');
+    expect(options[0]).toHaveFocus();
+  });
+
   describe('when uncontrolled', () => {
     const uncontrolledSetOpen = jest.fn();
-    const trigger = <button>trigger</button>;
 
     test('and "setOpen" is provided, but "open" prop is not set', async () => {
-      const { getByText } = renderMenu({
+      const { getByTestId, getByText } = renderMenu({
         setOpen: uncontrolledSetOpen,
         trigger,
       });
 
-      const button = getByText('trigger');
-      fireEvent.click(button);
+      const button = getByTestId('menu-trigger');
+      userEvent.click(button);
 
       const menuItem = getByText('Item B');
-      await act(() => waitFor(() => expect(menuItem).toBeVisible()));
 
-      fireEvent.click(button);
+      expect(menuItem).toBeInTheDocument();
+
+      userEvent.click(button);
 
       await waitForElementToBeRemoved(menuItem);
+      expect(menuItem).not.toBeInTheDocument();
+    });
+  });
+
+  test('clicking a menuitem closes the menu', async () => {
+    const { getByTestId } = renderMenu({
+      trigger,
+    });
+
+    const button = getByTestId('menu-trigger');
+
+    userEvent.click(button);
+    const menu = getByTestId(menuTestId);
+
+    expect(menu).toBeInTheDocument();
+
+    const menuItem = getByTestId('menu-item-a');
+    userEvent.click(menuItem);
+
+    await waitForElementToBeRemoved(menu);
+    expect(menu).not.toBeInTheDocument();
+  });
+
+  test('clicking outside the menu closes the menu', async () => {
+    const { getByTestId, backdrop } = renderMenu({
+      trigger,
+    });
+
+    const button = getByTestId('menu-trigger');
+    userEvent.click(button);
+    const menu = getByTestId(menuTestId);
+
+    expect(menu).toBeInTheDocument();
+
+    userEvent.click(backdrop);
+
+    await waitForElementToBeRemoved(menu);
+    expect(menu).not.toBeInTheDocument();
+  });
+
+  describe('when controlled', () => {
+    const ControlledExample = () => {
+      const [open, setOpen] = React.useState(true);
+
+      return (
+        <>
+          <div data-testid="backdrop" />
+          <Menu open={open} setOpen={setOpen} data-testid="controlled-menu">
+            <MenuItem data-testid="controlled-menu-item">Text</MenuItem>
+          </Menu>
+        </>
+      );
+    };
+
+    test('clicking a menuitem closes the menu', async () => {
+      const { getByTestId } = render(<ControlledExample />);
+
+      const menu = getByTestId('controlled-menu');
+      const menuItem = getByTestId('controlled-menu-item');
+
+      expect(menu).toBeInTheDocument();
+
+      userEvent.click(menuItem);
+
+      await waitForElementToBeRemoved(menu);
+      expect(menu).not.toBeInTheDocument();
+    });
+
+    test('clicking outside the menu closes the menu', async () => {
+      const { getByTestId } = render(<ControlledExample />);
+
+      const menu = getByTestId('controlled-menu');
+
+      await waitFor(() => {
+        expect(menu).toBeInTheDocument();
+      });
+
+      const backdrop = getByTestId('backdrop');
+
+      userEvent.click(backdrop);
+
+      await waitForElementToBeRemoved(menu);
+      expect(menu).not.toBeInTheDocument();
     });
   });
 
@@ -120,12 +169,10 @@ describe('packages/menu', () => {
       userEvent.click(button);
       const menu = getByTestId(menuTestId);
 
-      waitFor(() => {
-        expect(menu).toBeInTheDocument();
-      });
+      expect(menu).toBeInTheDocument();
     });
 
-    test('Click handlers on parent elements fire', () => {
+    test('Click handlers on parent elements fire', async () => {
       const parentHandler = jest.fn();
       const { getByTestId } = render(
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
@@ -140,25 +187,35 @@ describe('packages/menu', () => {
 
       userEvent.click(button);
       const menu = getByTestId(menuTestId);
-      waitFor(() => {
+      await waitFor(() => {
         expect(menu).toBeInTheDocument();
         expect(parentHandler).toHaveBeenCalled();
       });
     });
   });
 
+  type Keys = 'esc' | 'tab';
+  const closeKeys: Array<Array<Keys>> = [['esc'], ['tab']];
+
   describe('Keyboard Interaction', () => {
-    describe('Escape key', () => {
+    const userEventInteraction = (menu: HTMLElement, key: Keys) => {
+      if (key === 'tab') {
+        userEvent.tab();
+      } else {
+        userEvent.type(menu, `{${key}}`);
+      }
+    };
+
+    describe.each(closeKeys)('%s key', key => {
       test('Closes menu', async () => {
         const { getByRole, getByTestId } = renderMenu({
           trigger,
         });
         const button = getByRole('button');
-
         userEvent.click(button);
         const menu = getByTestId(menuTestId);
-        userEvent.type(menu, '{esc}');
 
+        userEventInteraction(menu, key);
         await waitForElementToBeRemoved(menu);
         expect(menu).not.toBeInTheDocument();
       });
@@ -170,7 +227,8 @@ describe('packages/menu', () => {
         const button = getByRole('button');
         userEvent.click(button);
         const menu = getByTestId(menuTestId);
-        userEvent.type(menu, '{esc}');
+
+        userEventInteraction(menu, key);
         await waitForElementToBeRemoved(menu);
         expect(button).toHaveFocus();
       });
@@ -183,125 +241,51 @@ describe('packages/menu', () => {
         const button = getByRole('button');
         userEvent.click(button);
         const menu = getByTestId(menuTestId);
-        userEvent.type(menu, '{esc}');
+
+        userEventInteraction(menu, key);
         await waitForElementToBeRemoved(menu);
         expect(button).toHaveFocus();
       });
     });
-  });
-});
 
-describe('packages/menu/menu-item', () => {
-  test('fires onClick callback when clicked', () => {
-    const { menuItem } = renderMenuItem({ onClick });
-    fireEvent.click(menuItem);
-    expect(onClick).toHaveBeenCalledTimes(1);
-  });
+    describe('Arrow keys', () => {
+      let menu: HTMLElement;
+      let options: Array<HTMLElement>;
 
-  test(`renders "${className}" in the MenuItem container's classList`, () => {
-    const { menuItem } = renderMenuItem({ className });
-    expect(menuItem.classList.contains(className)).toBe(true);
-  });
+      beforeEach(() => {
+        const { getByTestId } = renderMenu({ trigger });
+        const triggerButton = getByTestId('menu-trigger');
 
-  test('renders MenuItem inside button tag by default', () => {
-    const { menuItem } = renderMenuItem();
-    expect(menuItem.tagName.toLowerCase()).toBe('button');
-  });
+        userEvent.click(triggerButton);
+        menu = getByTestId(menuTestId);
+        options = globalGetAllByRole(menu, 'menuitem');
+      });
 
-  test('renders inside of an `a` instead of a `button` tag, when `href` prop is supplied', () => {
-    const { menuItem } = renderMenuItem({ href: 'https://mongodb.design' });
-    expect(menuItem.tagName.toLowerCase()).toBe('a');
-  });
+      describe('Down arrow', () => {
+        test('highlights the next option in the menu', () => {
+          userEvent.type(menu, '{arrowdown}');
+          expect(options[1]).toHaveFocus();
+        });
+        test('cycles highlight to the top', () => {
+          // programmatically set focus on last option
+          options[options.length - 1].focus();
+          userEvent.type(menu, '{arrowdown}');
+          expect(options[0]).toHaveFocus();
+        });
+      });
 
-  test('renders with correct target and rel values when set', () => {
-    const { menuItem } = renderMenuItem({
-      href: 'https://mongodb.design',
-      target: '_blank',
-      rel: 'help',
-    });
-
-    expect((menuItem as HTMLAnchorElement).target).toBe('_blank');
-    expect((menuItem as HTMLAnchorElement).rel).toBe('help');
-  });
-
-  test('renders as `div` tag when the "as" prop is set', () => {
-    const { menuItem } = renderMenuItem({ as: 'div' });
-    expect(menuItem.tagName.toLowerCase()).toBe('div');
-  });
-
-  test('has the `aria-current` attribute when active', () => {
-    const { menuItem } = renderMenuItem({ active: true });
-    expect(menuItem).toHaveAttribute('aria-current', 'true');
-  });
-
-  /* eslint-disable jest/no-disabled-tests, jest/expect-expect */
-  describe.skip('Types behave as expected', () => {
-    test('Accepts string as `as` prop', () => {
-      <MenuItem as="p" />;
-    });
-
-    test('Accepts component as `as` prop', () => {
-      <MenuItem as={() => <></>} />;
+      describe('Up arrow', () => {
+        test('highlights the previous option in the menu', () => {
+          // programmatically set focus on second option
+          options[1].focus();
+          userEvent.type(menu, '{arrowup}');
+          expect(options[0]).toHaveFocus();
+        });
+        test('cycles highlight to the bottom', () => {
+          userEvent.type(menu, '{arrowup}');
+          expect(options[options.length - 1]).toHaveFocus();
+        });
+      });
     });
   });
-  /* eslint-enable jest/no-disabled-tests, jest/expect-expect */
-});
-
-describe('packages/menu/sub-menu', () => {
-  test('renders a SubMenu open by default, when the SubMenu is active', () => {
-    const { getItemA } = renderSubMenuItem({ active: true });
-    const subMenuItem = getItemA();
-    expect(subMenuItem).toBeInTheDocument();
-  });
-
-  test('when a SubMenu is clicked, it opens and closes the previously opened SubMenu', async () => {
-    const { subMenuButtonB, getItemA, getItemB } = renderSubMenuItem({
-      active: true,
-    });
-
-    fireEvent.click(subMenuButtonB as HTMLElement);
-
-    const subMenuItem = getItemA();
-    await act(async () => {
-      await waitForElementToBeRemoved(subMenuItem);
-    });
-
-    const subMenuItemB = getItemB();
-    expect(subMenuItemB).toBeVisible();
-  });
-
-  test('onClick is fired when SubMenu is clicked', () => {
-    const { subMenu } = renderSubMenuItem({ onClick });
-    fireEvent.click(subMenu);
-    expect(onClick).toHaveBeenCalled();
-  });
-
-  test('renders as a button by default', () => {
-    const { getByTestId } = renderSubMenuItem();
-    const subMenu = getByTestId('sub-menu-a');
-    expect(subMenu.tagName.toLowerCase()).toBe('button');
-  });
-
-  test('renders inside an anchor tag when the href prop is set', () => {
-    const { getByTestId } = renderSubMenuItem({ href: 'string' });
-    const subMenu = getByTestId('sub-menu-a');
-    expect(subMenu.tagName.toLowerCase()).toBe('a');
-  });
-
-  test('renders as `div` tag when the "as" prop is set', () => {
-    const { getByTestId } = renderSubMenuItem({ as: 'div' });
-    const subMenu = getByTestId('sub-menu-a');
-    expect(subMenu.tagName.toLowerCase()).toBe('div');
-  });
-
-  /* eslint-disable jest/no-disabled-tests, jest/expect-expect */
-  describe.skip('Types behave as expected', () => {
-    test('Accepts string as `as` prop', () => {
-      <SubMenu as="p" />;
-    });
-    test('Accepts component as `as` prop', () => {
-      <SubMenu as={() => <></>} />;
-    });
-  });
-  /* eslint-enable jest/no-disabled-tests, jest/expect-expect */
 });

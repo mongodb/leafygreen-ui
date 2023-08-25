@@ -1,5 +1,107 @@
 # @leafygreen-ui/portal
 
+## 5.0.1
+
+### Patch Changes
+
+- Updated dependencies [fd907503]
+  - @leafygreen-ui/hooks@8.0.0
+
+## 5.0.0
+
+### Major Changes
+
+- 4fcf2e94: Modified the ReactDOM peerDependency to ensure compatibility with either version 17 or 18.
+
+### Patch Changes
+
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/lib@11.0.0
+
+## 4.1.7
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+- Updated dependencies [c11bbc29]
+  - @leafygreen-ui/hooks@7.7.8
+  - @leafygreen-ui/lib@10.4.3
+
+## 4.1.6
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+- Updated dependencies [c15ee2ac]
+  - @leafygreen-ui/hooks@7.7.7
+  - @leafygreen-ui/lib@10.4.2
+
+## 4.1.5
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+- Updated dependencies [215268ff]
+  - @leafygreen-ui/hooks@7.7.6
+  - @leafygreen-ui/lib@10.4.1
+
+## 4.1.4
+
+### Patch Changes
+
+- 76161cf0: Updates stories for Chromatic testing
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [735342e9]
+- Updated dependencies [76161cf0]
+  - @leafygreen-ui/lib@10.4.0
+  - @leafygreen-ui/hooks@7.7.5
+
+## 4.1.3
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- d2ce54e2f: Exports primary component props
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [0cd471676]
+  - @leafygreen-ui/hooks@7.7.4
+  - @leafygreen-ui/lib@10.3.4
+
+## 4.1.2
+
+### Patch Changes
+
+- cf00160ec: Updates TSDocs
+- ce0fcb3f6: Excludes `children` from story controls
+- Updated dependencies [55d33e435]
+- Updated dependencies [cf00160ec]
+- Updated dependencies [111b680c5]
+  - @leafygreen-ui/lib@10.3.3
+
+## 4.1.1
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/hooks@7.7.1
+  - @leafygreen-ui/lib@10.3.2
+
+## 4.1.0
+
+### Minor Changes
+
+- 52dcb3316: Exports `usePortalContainer` hook
+
+### Patch Changes
+
+- Updated dependencies [26e341a0b]
+  - @leafygreen-ui/lib@10.2.2
+
 ## 4.0.9
 
 ### Patch Changes

@@ -15,6 +15,7 @@ import {
   fontFamilies,
   spacing,
   transitionDuration,
+  typeScales,
 } from '@leafygreen-ui/tokens';
 import { Description, Label } from '@leafygreen-ui/typography';
 
@@ -23,7 +24,7 @@ import MenuButton from './MenuButton';
 import { InternalOption, OptionElement } from './Option';
 import SelectContext from './SelectContext';
 import { mobileSizeSet, SizeSet, sizeSets } from './styleSets';
-import { SelectProps, Size, State } from './types';
+import { DropdownWidthBasis, SelectProps, Size, State } from './types';
 import {
   convertToInternalElements,
   getOptionValue,
@@ -35,19 +36,20 @@ import {
   useStateRef,
 } from './utils';
 
+const labelDescriptionContainerStyle = css`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: ${spacing[1]}px;
+`;
+
 const wrapperStyle = css`
   display: flex;
   flex-direction: column;
-
-  > label + button,
-  > p + button {
-    margin-top: 3px;
-  }
 `;
 
 const largeLabelStyles = css`
-  font-size: 18px;
-  line-height: 22px;
+  font-size: ${typeScales.large.fontSize}px;
+  line-height: ${typeScales.large.lineHeight}px;
 `;
 
 const errorTextStyle = ({
@@ -77,26 +79,27 @@ export default function Select({
   size = Size.Default,
   disabled = false,
   allowDeselect = true,
+  usePortal = true,
   placeholder = 'Select',
-  className,
+  errorMessage = '',
+  state = State.None,
+  dropdownWidthBasis = DropdownWidthBasis.Trigger,
+  baseFontSize = BaseFontSize.Body1,
   id: idProp,
-  label,
   'aria-labelledby': ariaLabelledby,
   'aria-label': ariaLabel,
+  className,
+  label,
   description,
   name,
   defaultValue,
   value,
   onChange,
   readOnly,
-  usePortal = true,
   portalContainer,
   scrollContainer,
   portalClassName,
   popoverZIndex,
-  errorMessage = 'error message right here',
-  state = State.None,
-  baseFontSize = BaseFontSize.Body1,
   __INTERNAL__menuButtonSlot__,
   ...rest
 }: SelectProps) {
@@ -495,59 +498,63 @@ export default function Select({
 
   return (
     <div className={cx(wrapperStyle, className)}>
-      {label && (
-        <Label
-          htmlFor={menuButtonId}
-          id={labelId}
-          darkMode={darkMode}
-          disabled={disabled}
-          className={cx(
-            {
-              [largeLabelStyles]: size === Size.Large,
-              [css`
-                font-size: ${baseFontSize}px;
-                line-height: 20px;
-              `]: size === Size.Default,
-            },
-            css`
-              // Prevent hover state from showing when hovering label
-              pointer-events: none;
-            `,
-            css`
-              ${MobileMediaQuery} {
-                font-size: ${mobileSizeSet.label.text}px;
-                line-height: ${mobileSizeSet.label.lineHeight}px;
-              }
-            `,
+      {(label || description) && (
+        <div className={labelDescriptionContainerStyle}>
+          {label && (
+            <Label
+              htmlFor={menuButtonId}
+              id={labelId}
+              darkMode={darkMode}
+              disabled={disabled}
+              className={cx(
+                {
+                  [largeLabelStyles]: size === Size.Large,
+                  [css`
+                    font-size: ${baseFontSize}px;
+                    line-height: 20px;
+                  `]: size === Size.Default,
+                },
+                css`
+                  // Prevent hover state from showing when hovering label
+                  pointer-events: none;
+                `,
+                css`
+                  ${MobileMediaQuery} {
+                    font-size: ${mobileSizeSet.label.text}px;
+                    line-height: ${mobileSizeSet.label.lineHeight}px;
+                  }
+                `,
+              )}
+            >
+              {label}
+            </Label>
           )}
-        >
-          {label}
-        </Label>
-      )}
 
-      {description && (
-        <Description
-          id={descriptionId}
-          darkMode={darkMode}
-          disabled={disabled}
-          className={cx(
-            {
-              [largeLabelStyles]: size === Size.Large,
-              [css`
-                font-size: ${baseFontSize}px;
-                line-height: 20px;
-              `]: size === Size.Default,
-            },
-            css`
-              ${MobileMediaQuery} {
-                font-size: ${mobileSizeSet.description.text}px;
-                line-height: ${mobileSizeSet.description.lineHeight}px;
-              }
-            `,
+          {description && (
+            <Description
+              id={descriptionId}
+              darkMode={darkMode}
+              disabled={disabled}
+              className={cx(
+                {
+                  [largeLabelStyles]: size === Size.Large,
+                  [css`
+                    font-size: ${baseFontSize}px;
+                    line-height: 20px;
+                  `]: size === Size.Default,
+                },
+                css`
+                  ${MobileMediaQuery} {
+                    font-size: ${mobileSizeSet.description.text}px;
+                    line-height: ${mobileSizeSet.description.lineHeight}px;
+                  }
+                `,
+              )}
+            >
+              {description}
+            </Description>
           )}
-        >
-          {description}
-        </Description>
+        </div>
       )}
 
       <SelectContext.Provider value={providerData}>
@@ -583,9 +590,12 @@ export default function Select({
             id={menuId}
             referenceElement={menuButtonRef}
             ref={listMenuRef}
-            className={css`
-              width: ${menuButtonRef.current?.clientWidth}px;
-            `}
+            className={cx({
+              [css`
+                width: ${menuButtonRef.current?.clientWidth}px;
+              `]: dropdownWidthBasis === DropdownWidthBasis.Trigger,
+            })}
+            dropdownWidthBasis={dropdownWidthBasis}
             {...popoverProps}
           >
             {allowDeselect && deselectionOption}
@@ -640,4 +650,5 @@ Select.propTypes = {
   state: PropTypes.oneOf(Object.values(State)),
   allowDeselect: PropTypes.bool,
   baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
+  dropdownWidthBasis: PropTypes.oneOf(Object.values(DropdownWidthBasis)),
 };

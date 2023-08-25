@@ -7,6 +7,9 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { baseStyles, variantStyles } from './styles';
 import BannerDismissButtonProps from './types';
 
+/**
+ * @internal
+ */
 const BannerDismissButton = ({
   onClose,
   darkMode,

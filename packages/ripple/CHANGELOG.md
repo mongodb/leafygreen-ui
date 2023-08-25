@@ -1,5 +1,37 @@
 # @leafygreen-ui/ripple
 
+## 1.1.12
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+- Updated dependencies [c11bbc29]
+  - @leafygreen-ui/tokens@2.1.4
+
+## 1.1.11
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+- Updated dependencies [c15ee2ac]
+  - @leafygreen-ui/tokens@2.1.3
+
+## 1.1.10
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+- Updated dependencies [215268ff]
+  - @leafygreen-ui/tokens@2.1.2
+
+## 1.1.9
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/tokens@2.0.2
+
 ## 1.1.8
 
 ### Patch Changes

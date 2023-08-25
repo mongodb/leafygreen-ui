@@ -1,6 +1,10 @@
 export { Polymorph } from './Polymorph';
 export { Polymorphic } from './Polymorphic';
-export { usePolymorphic, usePolymorphicRef } from './Polymorphic.hooks';
+export {
+  usePolymorphic,
+  usePolymorphicComponent,
+  usePolymorphicRef,
+} from './Polymorphic.hooks';
 export type {
   PolymorphicAs,
   PolymorphicComponentType,

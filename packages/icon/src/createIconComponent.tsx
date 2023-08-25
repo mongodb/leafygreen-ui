@@ -1,4 +1,5 @@
 import React from 'react';
+import kebabCase from 'lodash/kebabCase';
 import PropTypes from 'prop-types';
 
 import { Size } from './glyphCommon';
@@ -29,8 +30,22 @@ export function createIconComponent<G extends GlyphObject = GlyphObject>(
 ) {
   const Icon = ({ glyph, ...rest }: IconProps) => {
     const SVGComponent = glyphs[glyph];
-    SVGComponent.isGlyph = true;
-    return <SVGComponent {...rest} />;
+
+    if (SVGComponent) {
+      return <SVGComponent {...rest} />;
+    } else {
+      // TODO: improve fuzzy match
+      // Suggest the proper icon casing if there's a near match
+      const nearMatch = Object.keys(glyphs).find(
+        key => kebabCase(key) === kebabCase(glyph),
+      );
+      console.error(
+        'Error in Icon',
+        `Could not find glyph named "${glyph}" in the icon set.`,
+        nearMatch && `Did you mean "${nearMatch}?"`,
+      );
+      return <></>;
+    }
   };
 
   Icon.displayName = 'Icon';

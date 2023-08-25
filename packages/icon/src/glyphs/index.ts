@@ -4,6 +4,7 @@ import { LGGlyph } from '../types';
 // Glyphs
 import ActivityFeed from './ActivityFeed.svg';
 import AddFile from './AddFile.svg';
+import AllProducts from './AllProducts.svg';
 import Apps from './Apps.svg';
 import Array from './Array.svg';
 import ArrowDown from './ArrowDown.svg';
@@ -20,6 +21,7 @@ import CaretDown from './CaretDown.svg';
 import CaretLeft from './CaretLeft.svg';
 import CaretRight from './CaretRight.svg';
 import CaretUp from './CaretUp.svg';
+import ChartFilled from './ChartFilled.svg';
 import Charts from './Charts.svg';
 import Checkmark from './Checkmark.svg';
 import CheckmarkWithCircle from './CheckmarkWithCircle.svg';
@@ -32,11 +34,13 @@ import ClockWithArrow from './ClockWithArrow.svg';
 import Clone from './Clone.svg';
 import Cloud from './Cloud.svg';
 import Code from './Code.svg';
+import CodeBlock from './CodeBlock.svg';
 import Connect from './Connect.svg';
 import Copy from './Copy.svg';
 import CreditCard from './CreditCard.svg';
 import CurlyBraces from './CurlyBraces.svg';
 import Cursor from './Cursor.svg';
+import Dashboard from './Dashboard.svg';
 import Database from './Database.svg';
 import Diagram from './Diagram.svg';
 import Diagram2 from './Diagram2.svg';
@@ -49,13 +53,16 @@ import Ellipsis from './Ellipsis.svg';
 import Email from './Email.svg';
 import Export from './Export.svg';
 import Favorite from './Favorite.svg';
+import Federation from './Federation.svg';
 import File from './File.svg';
 import Filter from './Filter.svg';
 import Folder from './Folder.svg';
 import FullScreenEnter from './FullScreenEnter.svg';
 import FullScreenExit from './FullScreenExit.svg';
+import Gauge from './Gauge.svg';
 import GlobeAmericas from './GlobeAmericas.svg';
 import GovernmentBuilding from './GovernmentBuilding.svg';
+import Highlight from './Highlight.svg';
 import Home from './Home.svg';
 import Import from './Import.svg';
 import ImportantWithCircle from './ImportantWithCircle.svg';
@@ -64,11 +71,19 @@ import InviteUser from './InviteUser.svg';
 import Key from './Key.svg';
 import Laptop from './Laptop.svg';
 import Link from './Link.svg';
+import List from './List.svg';
 import Lock from './Lock.svg';
+import LogIn from './LogIn.svg';
+import LogOut from './LogOut.svg';
 import MagnifyingGlass from './MagnifyingGlass.svg';
 import Megaphone from './Megaphone.svg';
 import Menu from './Menu.svg';
 import Minus from './Minus.svg';
+import Mobile from './Mobile.svg';
+import MultiDirectionArrow from './MultiDirectionArrow.svg';
+import MultiLayers from './MultiLayers.svg';
+import NavCollapse from './NavCollapse.svg';
+import NavExpand from './NavExpand.svg';
 import NoFilter from './NoFilter.svg';
 import NotAllowed from './NotAllowed.svg';
 import Note from './Note.svg';
@@ -77,6 +92,7 @@ import Pause from './Pause.svg';
 import Person from './Person.svg';
 import PersonGroup from './PersonGroup.svg';
 import PersonWithLock from './PersonWithLock.svg';
+import Pin from './Pin.svg';
 import Play from './Play.svg';
 import Plus from './Plus.svg';
 import PlusWithCircle from './PlusWithCircle.svg';
@@ -87,6 +103,7 @@ import Refresh from './Refresh.svg';
 import Relationship from './Relationship.svg';
 import ReplicaSet from './ReplicaSet.svg';
 import Resize from './Resize.svg';
+import Return from './Return.svg';
 import Save from './Save.svg';
 import Serverless from './Serverless.svg';
 import Settings from './Settings.svg';
@@ -95,12 +112,16 @@ import Shell from './Shell.svg';
 import SMS from './SMS.svg';
 import SortAscending from './SortAscending.svg';
 import SortDescending from './SortDescending.svg';
+import Sparkle from './Sparkle.svg';
 import SplitHorizontal from './SplitHorizontal.svg';
 import SplitVertical from './SplitVertical.svg';
 import Stitch from './Stitch.svg';
 import Support from './Support.svg';
 import Sweep from './Sweep.svg';
 import Table from './Table.svg';
+import Tag from './Tag.svg';
+import ThumbsDown from './ThumbsDown.svg';
+import ThumbsUp from './ThumbsUp.svg';
 import TimeSeries from './TimeSeries.svg';
 import Trash from './Trash.svg';
 import Undo from './Undo.svg';
@@ -113,6 +134,8 @@ import VerticalEllipsis from './VerticalEllipsis.svg';
 import Visibility from './Visibility.svg';
 import VisibilityOff from './VisibilityOff.svg';
 import Warning from './Warning.svg';
+import Wizard from './Wizard.svg';
+import Wrench from './Wrench.svg';
 import Write from './Write.svg';
 import X from './X.svg';
 import XWithCircle from './XWithCircle.svg';
@@ -120,6 +143,7 @@ import XWithCircle from './XWithCircle.svg';
 const _glyphs = {
   ActivityFeed,
   AddFile,
+  AllProducts,
   Apps,
   Array,
   ArrowDown,
@@ -136,6 +160,7 @@ const _glyphs = {
   CaretLeft,
   CaretRight,
   CaretUp,
+  ChartFilled,
   Charts,
   Checkmark,
   CheckmarkWithCircle,
@@ -148,11 +173,13 @@ const _glyphs = {
   Clone,
   Cloud,
   Code,
+  CodeBlock,
   Connect,
   Copy,
   CreditCard,
   CurlyBraces,
   Cursor,
+  Dashboard,
   Database,
   Diagram,
   Diagram2,
@@ -165,13 +192,16 @@ const _glyphs = {
   Email,
   Export,
   Favorite,
+  Federation,
   File,
   Filter,
   FullScreenEnter,
   FullScreenExit,
   Folder,
+  Gauge,
   GlobeAmericas,
   GovernmentBuilding,
+  Highlight,
   Home,
   Import,
   ImportantWithCircle,
@@ -180,11 +210,19 @@ const _glyphs = {
   Key,
   Laptop,
   Link,
+  List,
   Lock,
+  LogIn,
+  LogOut,
   MagnifyingGlass,
   Megaphone,
   Menu,
   Minus,
+  Mobile,
+  MultiDirectionArrow,
+  MultiLayers,
+  NavCollapse,
+  NavExpand,
   NoFilter,
   NotAllowed,
   Note,
@@ -193,6 +231,7 @@ const _glyphs = {
   Person,
   PersonGroup,
   PersonWithLock,
+  Pin,
   Play,
   Plus,
   PlusWithCircle,
@@ -203,6 +242,7 @@ const _glyphs = {
   Relationship,
   ReplicaSet,
   Resize,
+  Return,
   Save,
   Serverless,
   ShardedCluster,
@@ -211,12 +251,16 @@ const _glyphs = {
   SMS,
   SortAscending,
   SortDescending,
+  Sparkle,
   SplitHorizontal,
   SplitVertical,
   Stitch,
   Support,
   Sweep,
   Table,
+  Tag,
+  ThumbsDown,
+  ThumbsUp,
   TimeSeries,
   Trash,
   Undo,
@@ -229,6 +273,8 @@ const _glyphs = {
   Visibility,
   VisibilityOff,
   Warning,
+  Wizard,
+  Wrench,
   Write,
   X,
   XWithCircle,

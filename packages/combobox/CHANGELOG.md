@@ -1,5 +1,316 @@
 # @leafygreen-ui/combobox
 
+## 6.0.13
+
+### Patch Changes
+
+- Updated dependencies [3fe03b50]
+- Updated dependencies [fd907503]
+- Updated dependencies [c9f0055a]
+- Updated dependencies [56459cde]
+  - @leafygreen-ui/tokens@2.2.0
+  - @leafygreen-ui/hooks@8.0.0
+  - @leafygreen-ui/icon@11.23.0
+  - @leafygreen-ui/checkbox@12.0.17
+  - @leafygreen-ui/leafygreen-provider@3.1.8
+  - @leafygreen-ui/popover@11.0.17
+
+## 6.0.12
+
+### Patch Changes
+
+- 4fcf2e94: Type assert children as `Array<React.ReactNode>` inside the internal function `renderedMenuContents` and add explicit return type to internal function `renderCombobox`.
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/icon@11.22.2
+  - @leafygreen-ui/lib@11.0.0
+  - @leafygreen-ui/checkbox@12.0.16
+  - @leafygreen-ui/popover@11.0.16
+  - @leafygreen-ui/icon-button@15.0.17
+  - @leafygreen-ui/inline-definition@6.0.11
+  - @leafygreen-ui/input-option@1.0.9
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+  - @leafygreen-ui/typography@16.5.5
+
+## 6.0.11
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+- Updated dependencies [c11bbc29]
+  - @leafygreen-ui/checkbox@12.0.15
+  - @leafygreen-ui/emotion@4.0.7
+  - @leafygreen-ui/hooks@7.7.8
+  - @leafygreen-ui/icon@11.22.1
+  - @leafygreen-ui/icon-button@15.0.16
+  - @leafygreen-ui/inline-definition@6.0.10
+  - @leafygreen-ui/input-option@1.0.8
+  - @leafygreen-ui/leafygreen-provider@3.1.6
+  - @leafygreen-ui/lib@10.4.3
+  - @leafygreen-ui/palette@4.0.7
+  - @leafygreen-ui/popover@11.0.15
+  - @leafygreen-ui/tokens@2.1.4
+  - @leafygreen-ui/typography@16.5.4
+
+## 6.0.10
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+- Updated dependencies [f73807cf]
+- Updated dependencies [31c09354]
+- Updated dependencies [c15ee2ac]
+  - @leafygreen-ui/icon@11.22.0
+  - @leafygreen-ui/checkbox@12.0.14
+  - @leafygreen-ui/emotion@4.0.6
+  - @leafygreen-ui/hooks@7.7.7
+  - @leafygreen-ui/icon-button@15.0.15
+  - @leafygreen-ui/inline-definition@6.0.9
+  - @leafygreen-ui/input-option@1.0.7
+  - @leafygreen-ui/leafygreen-provider@3.1.5
+  - @leafygreen-ui/lib@10.4.2
+  - @leafygreen-ui/palette@4.0.6
+  - @leafygreen-ui/popover@11.0.14
+  - @leafygreen-ui/tokens@2.1.3
+  - @leafygreen-ui/typography@16.5.3
+
+## 6.0.9
+
+### Patch Changes
+
+- e8ef95e6: Updates disabled styles
+
+## 6.0.8
+
+### Patch Changes
+
+- 2603d7ac: Component props now properly inherit from `PopoverProps` interface
+
+## 6.0.7
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+- Updated dependencies [215268ff]
+  - @leafygreen-ui/leafygreen-provider@3.1.4
+  - @leafygreen-ui/inline-definition@6.0.8
+  - @leafygreen-ui/input-option@1.0.6
+  - @leafygreen-ui/icon-button@15.0.14
+  - @leafygreen-ui/typography@16.5.2
+  - @leafygreen-ui/checkbox@12.0.13
+  - @leafygreen-ui/emotion@4.0.5
+  - @leafygreen-ui/palette@4.0.5
+  - @leafygreen-ui/popover@11.0.13
+  - @leafygreen-ui/tokens@2.1.2
+  - @leafygreen-ui/hooks@7.7.6
+  - @leafygreen-ui/icon@11.20.1
+  - @leafygreen-ui/lib@10.4.1
+
+## 6.0.6
+
+### Patch Changes
+
+- 76161cf0: Updates stories for Chromatic testing
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [735342e9]
+- Updated dependencies [95f5107a]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+  - @leafygreen-ui/lib@10.4.0
+  - @leafygreen-ui/hooks@7.7.5
+  - @leafygreen-ui/icon@11.17.0
+  - @leafygreen-ui/popover@11.0.12
+  - @leafygreen-ui/checkbox@12.0.12
+  - @leafygreen-ui/icon-button@15.0.12
+  - @leafygreen-ui/inline-definition@6.0.7
+  - @leafygreen-ui/input-option@1.0.5
+  - @leafygreen-ui/tokens@2.1.1
+  - @leafygreen-ui/typography@16.5.1
+
+## 6.0.5
+
+### Patch Changes
+
+- 63b2deb0b: Upgrade button to v20.1.1
+- Updated dependencies [63b2deb0b]
+  - @leafygreen-ui/popover@11.0.11
+
+## 6.0.4
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- d2ce54e2f: Exports primary component props
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [75099c60b]
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [0cd471676]
+  - @leafygreen-ui/checkbox@12.0.11
+  - @leafygreen-ui/hooks@7.7.4
+  - @leafygreen-ui/icon@11.16.1
+  - @leafygreen-ui/icon-button@15.0.11
+  - @leafygreen-ui/inline-definition@6.0.6
+  - @leafygreen-ui/input-option@1.0.4
+  - @leafygreen-ui/leafygreen-provider@3.1.3
+  - @leafygreen-ui/lib@10.3.4
+  - @leafygreen-ui/popover@11.0.10
+  - @leafygreen-ui/typography@16.5.0
+
+## 6.0.3
+
+### Patch Changes
+
+- 78d36936d: Combobox tooltips receive same zindex as Combobox menu
+- Updated dependencies [6a3f03fd2]
+  - @leafygreen-ui/typography@16.4.1
+
+## 6.0.2
+
+### Patch Changes
+
+- a3a52e131: Bumps to use new `useIdAllocator` hook
+- Updated dependencies [614f7617d]
+- Updated dependencies [a3a52e131]
+- Updated dependencies [614f7617d]
+- Updated dependencies [a3a52e131]
+  - @leafygreen-ui/icon@11.15.0
+  - @leafygreen-ui/hooks@7.7.3
+  - @leafygreen-ui/checkbox@12.0.10
+
+## 6.0.1
+
+### Patch Changes
+
+- 32b3d3146: Bumps to use new `useIdAllocator` hook
+- 73cbbd02c: Uses fontWeight token from `@leafygreen-ui/tokens`
+- Updated dependencies [73cbbd02c]
+- Updated dependencies [32b3d3146]
+- Updated dependencies [8ece56980]
+- Updated dependencies [83fc5b31b]
+- Updated dependencies [9bcf8b925]
+- Updated dependencies [8ece56980]
+- Updated dependencies [32b3d3146]
+- Updated dependencies [73cbbd02c]
+  - @leafygreen-ui/tokens@2.1.0
+  - @leafygreen-ui/checkbox@12.0.9
+  - @leafygreen-ui/popover@11.0.9
+  - @leafygreen-ui/icon@11.14.0
+  - @leafygreen-ui/typography@16.4.0
+  - @leafygreen-ui/hooks@7.7.2
+  - @leafygreen-ui/inline-definition@6.0.5
+
+## 6.0.0
+
+### Major Changes
+
+- 77320a6b8: - Adds new size variants, `small` and `xsmall`.
+  - Removes truncation from chips when overflow is set to `scroll-x`. Chips do not need truncation since consumers can scroll horizontally to read the text.
+  - Sets a max height of 3 rows to the input when overflow is `expand-y`. An overflow shadow is added to indicate there is a scroll.
+  - Warning icon that appears when `state='error'` is now positioned to the left of the caret or clear icon. Previously it replaced the caret icon.
+
+### Minor Changes
+
+- 77320a6b8: - Adds `onClick` and `description` prop to `ComboboxOption`
+
+### Patch Changes
+
+- 77320a6b8: Switch to `useAutoScroll` hook to auto scroll the focused option
+- d9d8f770d: Updates disabled styles
+- ce0fcb3f6: Excludes `children` from story controls
+- 77320a6b8: Fix padding discrepancy between Combobox, Select, Text Input, and Number Input
+- Updated dependencies [55d33e435]
+- Updated dependencies [77320a6b8]
+- Updated dependencies [07db42330]
+- Updated dependencies [55d33e435]
+- Updated dependencies [cf00160ec]
+- Updated dependencies [ce0fcb3f6]
+- Updated dependencies [111b680c5]
+- Updated dependencies [77320a6b8]
+  - @leafygreen-ui/input-option@1.0.3
+  - @leafygreen-ui/lib@10.3.3
+  - @leafygreen-ui/palette@4.0.4
+  - @leafygreen-ui/typography@16.3.0
+  - @leafygreen-ui/icon-button@15.0.10
+  - @leafygreen-ui/popover@11.0.8
+  - @leafygreen-ui/tokens@2.0.3
+
+## 5.0.11
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/checkbox@12.0.8
+  - @leafygreen-ui/emotion@4.0.4
+  - @leafygreen-ui/hooks@7.7.1
+  - @leafygreen-ui/icon@11.13.1
+  - @leafygreen-ui/icon-button@15.0.9
+  - @leafygreen-ui/inline-definition@6.0.4
+  - @leafygreen-ui/input-option@1.0.2
+  - @leafygreen-ui/leafygreen-provider@3.1.2
+  - @leafygreen-ui/lib@10.3.2
+  - @leafygreen-ui/palette@4.0.3
+  - @leafygreen-ui/popover@11.0.7
+  - @leafygreen-ui/tokens@2.0.2
+  - @leafygreen-ui/typography@16.2.1
+
+## 5.0.10
+
+### Patch Changes
+
+- Updated dependencies [5b036515e]
+- Updated dependencies [26e341a0b]
+- Updated dependencies [997121cc3]
+- Updated dependencies [eb0cc4498]
+  - @leafygreen-ui/palette@4.0.0
+  - @leafygreen-ui/lib@10.2.2
+  - @leafygreen-ui/icon@11.12.5
+  - @leafygreen-ui/typography@16.1.0
+  - @leafygreen-ui/checkbox@12.0.7
+  - @leafygreen-ui/icon-button@15.0.7
+  - @leafygreen-ui/inline-definition@6.0.3
+  - @leafygreen-ui/input-option@1.0.1
+  - @leafygreen-ui/tokens@2.0.1
+
+## 5.0.9
+
+### Patch Changes
+
+- 2e8a572db: Internal refactoring. Adds `input-option` as a dependency
+- Updated dependencies [2e8a572db]
+- Updated dependencies [4ccc353e7]
+- Updated dependencies [4ccc353e7]
+  - @leafygreen-ui/lib@10.2.1
+
+## 5.0.8
+
+### Patch Changes
+
+- 95eeb5a06: Spread `...rest` to `ComboboxOption`
+- d58af1054: Fixes bug where clicking the clear icon button triggered the menu to reopen.
+- Updated dependencies [0541bd776]
+- Updated dependencies [ec2a3d66d]
+- Updated dependencies [ec2a3d66d]
+  - @leafygreen-ui/lib@10.2.0
+  - @leafygreen-ui/hooks@7.6.0
+
+## 5.0.7
+
+### Patch Changes
+
+- 64eee134d: TSDoc: Updates some exported TSDoc interfaces. Storybook: Updates story files.
+- Updated dependencies [64eee134d]
+- Updated dependencies [64eee134d]
+  - @leafygreen-ui/inline-definition@6.0.2
+  - @leafygreen-ui/popover@11.0.5
+  - @leafygreen-ui/lib@10.1.0
+
 ## 5.0.6
 
 ### Patch Changes

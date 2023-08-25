@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/combobox",
-  "version": "5.0.6",
+  "version": "6.0.13",
   "description": "leafyGreen UI Kit Combobox",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -13,33 +13,36 @@
     }
   },
   "scripts": {
-    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
   },
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/checkbox": "^12.0.4",
-    "@leafygreen-ui/emotion": "^4.0.3",
-    "@leafygreen-ui/hooks": "^7.3.3",
-    "@leafygreen-ui/icon": "^11.12.4",
-    "@leafygreen-ui/icon-button": "^15.0.4",
-    "@leafygreen-ui/inline-definition": "^6.0.1",
-    "@leafygreen-ui/lib": "^10.0.0",
-    "@leafygreen-ui/palette": "^3.4.7",
-    "@leafygreen-ui/popover": "^11.0.4",
-    "@leafygreen-ui/tokens": "^2.0.0",
-    "@leafygreen-ui/typography": "^16.0.0",
+    "@leafygreen-ui/checkbox": "^12.0.17",
+    "@leafygreen-ui/emotion": "^4.0.7",
+    "@leafygreen-ui/hooks": "^8.0.0",
+    "@leafygreen-ui/icon": "^11.23.0",
+    "@leafygreen-ui/icon-button": "^15.0.17",
+    "@leafygreen-ui/inline-definition": "^6.0.11",
+    "@leafygreen-ui/input-option": "^1.0.9",
+    "@leafygreen-ui/lib": "^11.0.0",
+    "@leafygreen-ui/palette": "^4.0.7",
+    "@leafygreen-ui/popover": "^11.0.17",
+    "@leafygreen-ui/tokens": "^2.2.0",
+    "@leafygreen-ui/typography": "^16.5.5",
     "chalk": "^4.1.2",
     "lodash": "^4.17.21",
     "polished": "^4.2.2"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.0"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.8"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "^19.0.4"
+    "@leafygreen-ui/button": "^21.0.5"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/combobox",
   "repository": {

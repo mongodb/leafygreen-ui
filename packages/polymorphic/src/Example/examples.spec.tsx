@@ -1,12 +1,23 @@
 import React from 'react';
-import styled from '@emotion/styled';
+import styled, { StyledComponent } from '@emotion/styled';
+import { parseTSDoc } from '@lg-tools/build/src/tsdoc/tsdocParser';
 import { render } from '@testing-library/react';
+import NextLink from 'next/link';
 
-import { parseTSDoc } from '../../../../scripts/utils/tsDocParser';
-import { InferredPolymorphicComponentType } from '../InferredPolymorphic';
+import {
+  InferredPolymorphic,
+  useInferredPolymorphic,
+} from '../InferredPolymorphic';
 import { makeWrapperComponent } from '../utils/Polymorphic.testutils';
-import { type PolymorphicComponentType, usePolymorphicRef } from '..';
+import {
+  InferredPolymorphicProps,
+  PolymorphicAs,
+  type PolymorphicComponentType,
+  PolymorphicProps,
+  usePolymorphicRef,
+} from '..';
 
+import { ExampleProps } from './Polymorphic.example';
 import {
   AdvancedPolymorphic,
   AdvancedPolymorphicWithRef,
@@ -16,7 +27,6 @@ import {
   ExamplePolymorphicWithRef,
   RestrictedExample,
 } from '.';
-
 /**
  * Here we test Example Higher-order components
  * and ensure Polymorphic behavior is properly extendable
@@ -45,47 +55,151 @@ describe('Polymorphic/Example Higher-order Components', () => {
       expect(queryByTestId('hoc')).toHaveAttribute('href', 'mongodb.design');
     });
 
-    test('works with `styled`', () => {
-      const StyledExample = styled(ExampleInferred)`
-        color: #ff69b4;
-      ` as InferredPolymorphicComponentType;
+    describe('with default', () => {
+      test('sets default props', () => {
+        const { queryByTestId } = render(
+          <ExampleInferredDefaultButton data-testid="hoc" name="foobar" />,
+        );
+        expect(queryByTestId('hoc')).toBeInTheDocument();
+        expect(queryByTestId('hoc')?.tagName.toLowerCase()).toBe('button');
+        expect(queryByTestId('hoc')).toHaveAttribute('name', 'foobar');
+      });
 
-      const { getByTestId } = render(
-        <StyledExample href="mongodb.design" data-testid="styled">
-          Some text
-        </StyledExample>,
-      );
-      expect(getByTestId('styled')).toBeInTheDocument();
-      expect(getByTestId('styled').tagName.toLowerCase()).toBe('a');
-      expect(getByTestId('styled')).toHaveAttribute('href', 'mongodb.design');
-      expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
+      test('infers href', () => {
+        const { queryByTestId } = render(
+          <ExampleInferredDefaultButton
+            data-testid="hoc"
+            href="mongodb.design"
+          />,
+        );
+        expect(queryByTestId('hoc')).toBeInTheDocument();
+        expect(queryByTestId('hoc')?.tagName.toLowerCase()).toBe('a');
+        expect(queryByTestId('hoc')).toHaveAttribute('href', 'mongodb.design');
+      });
+
+      test('respects `as` for HTML elements', () => {
+        const { queryByTestId } = render(
+          <ExampleInferredDefaultButton as="div" data-testid="hoc" />,
+        );
+        expect(queryByTestId('hoc')).toBeInTheDocument();
+        expect(queryByTestId('hoc')?.tagName.toLowerCase()).toBe('div');
+      });
+
+      test('respects `as` for custom components', () => {
+        const { Wrapper } = makeWrapperComponent();
+        const { queryByTestId } = render(
+          <ExampleInferredDefaultButton as={Wrapper} />,
+        );
+        expect(queryByTestId('wrapper')).toBeInTheDocument();
+        expect(queryByTestId('wrapper')?.tagName.toLowerCase()).toBe('span');
+      });
+
+      describe('Improperly implemented InferredPolymorphic components', () => {
+        const TestComponent = InferredPolymorphic<{}, 'button'>(
+          // NOTE: in general, `as` should *not* be given a default JS value
+          ({ as = 'button' as PolymorphicAs, ...rest }) => {
+            const { Component } = useInferredPolymorphic(as, rest, 'button');
+            return <Component data-testid="component" />;
+          },
+        );
+
+        test('should render with the given default', () => {
+          const { getByTestId } = render(<TestComponent />);
+          const component = getByTestId('component');
+
+          expect(component.tagName.toLowerCase()).toBe('button');
+        });
+
+        test('will NOT infer as from href', () => {
+          const { getByTestId } = render(<TestComponent href="string" />);
+          const component = getByTestId('component');
+
+          // This is NOT what we want generally,
+          // but is a sign of an improperly implemented InferredPolymorphic component
+          expect(component.tagName.toLowerCase()).not.toBe('a');
+        });
+      });
     });
 
-    test('Works with a default, and sets default props', () => {
-      const { queryByTestId } = render(
-        <ExampleInferredDefaultButton data-testid="hoc" name="foobar" />,
-      );
-      expect(queryByTestId('hoc')).toBeInTheDocument();
-      expect(queryByTestId('hoc')?.tagName.toLowerCase()).toBe('button');
-      expect(queryByTestId('hoc')).toHaveAttribute('name', 'foobar');
+    describe('styled', () => {
+      test('works with `styled`', () => {
+        const StyledExample = styled(ExampleInferred)`
+          color: #ff69b4;
+        ` as typeof ExampleInferred;
+
+        const { getByTestId } = render(
+          <StyledExample href="mongodb.design" data-testid="styled">
+            Some text
+          </StyledExample>,
+        );
+        expect(getByTestId('styled')).toBeInTheDocument();
+        expect(getByTestId('styled').tagName.toLowerCase()).toBe('a');
+        expect(getByTestId('styled')).toHaveAttribute('href', 'mongodb.design');
+        expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
+      });
+
+      test('works with `styled` props', () => {
+        // We need to define the additional props that styled should expect
+        interface StyledProps {
+          color?: string;
+          size?: string;
+        }
+        const StyledExample = styled(ExampleInferred)<StyledProps>`
+          color: ${props => props.color};
+          font-size: ${props => props.size}px;
+        ` as StyledComponent<
+          StyledProps & InferredPolymorphicProps<PolymorphicAs, ExampleProps>
+        >;
+
+        const { getByTestId } = render(
+          <StyledExample
+            href="mongodb.design"
+            data-testid="styled"
+            color="#ff69b4"
+          >
+            Some text
+          </StyledExample>,
+        );
+        expect(getByTestId('styled')).toBeInTheDocument();
+        expect(getByTestId('styled').tagName.toLowerCase()).toBe('a');
+        expect(getByTestId('styled')).toHaveAttribute('href', 'mongodb.design');
+        expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
+      });
     });
 
-    // eslint-disable-next-line jest/no-disabled-tests
-    test.skip('Types work when a default is used', () => {
-      <>
-        <ExampleInferredDefaultButton data-testid="hoc" name="foobar" />
-        <ExampleInferredDefaultButton />
-        <ExampleInferredDefaultButton type="submit" />
-        {/* @ts-expect-error - Require href when as="a" */}
-        <ExampleInferredDefaultButton as="a" />
-        <ExampleInferredDefaultButton as="a" href="mongodb.design" />
-        {/* @ts-expect-error - href not valid when explicitly set to button */}
-        <ExampleInferredDefaultButton as="button" href="mongodb.design" />
-        {/* @ts-expect-error - href not valid when explicitly set to div */}
-        <ExampleInferredDefaultButton as="div" href="mongodb.design" />
-        {/* @ts-expect-error - type not valid for anchor */}
-        <ExampleInferredDefaultButton as="a" type="submit" />
-      </>;
+    describe('NextJS', () => {
+      test('control', () => {
+        const { getByText } = render(
+          <NextLink href="mongodb.design" data-testid="next" target="_blank">
+            Content
+          </NextLink>,
+        );
+
+        const link = getByText('Content');
+        expect(link).toBeInTheDocument();
+        expect(link.tagName.toLowerCase()).toBe('a');
+        expect(link.getAttribute('href')).toContain('mongodb.design');
+        expect(link).toHaveAttribute('target');
+      });
+
+      test('Works with NextLink', () => {
+        const { getByText } = render(
+          <ExampleInferred
+            as={NextLink}
+            href="mongodb.design"
+            data-testid="next"
+            target="_blank"
+          >
+            Content
+          </ExampleInferred>,
+        );
+
+        const link = getByText('Content');
+        expect(link).toBeInTheDocument();
+        expect(link.tagName.toLowerCase()).toBe('a');
+        expect(link.getAttribute('href')).toContain('mongodb.design');
+        expect(link).toHaveAttribute('target');
+      });
     });
   });
 
@@ -96,49 +210,6 @@ describe('Polymorphic/Example Higher-order Components', () => {
     AdvancedPolymorphic,
     AdvancedPolymorphicWithRef,
   ])('Higher-Order Polymorphic Components', ExampleComponent => {
-    /* eslint-disable jest/no-disabled-tests */
-    test.skip('Prop Types behave correctly', () => {
-      const { Wrapper } = makeWrapperComponent();
-      const divRef = usePolymorphicRef<'div'>(); // React.useRef<HTMLDivElement | null>(null);
-      const anchorRef = usePolymorphicRef<'a'>();
-      const spanRef = usePolymorphicRef<'span'>();
-
-      <>
-        <ExampleComponent />
-        <ExampleComponent>some content</ExampleComponent>
-        <ExampleComponent as="div" />
-        <ExampleComponent as="div" ref={divRef} />
-        {/* @ts-expect-error - Must pass the correct ref type */}
-        <ExampleComponent as="div" ref={anchorRef} />
-        <ExampleComponent as="div" ref={divRef}>
-          some content
-        </ExampleComponent>
-        <ExampleComponent key="some-key" />
-
-        {/* @ts-expect-error - Require href when as="a" */}
-        <ExampleComponent as="a" />
-        <ExampleComponent as="a" href="mongodb.design" />
-        <ExampleComponent as="a" href="mongodb.design" ref={anchorRef} />
-        <ExampleComponent as="a" href="mongodb.design">
-          some content
-        </ExampleComponent>
-
-        {/* @ts-expect-error href is not allowed on explicit div */}
-        <ExampleComponent as="div" href="mongodb.design" />
-
-        <ExampleComponent as="input" />
-
-        <ExampleComponent as={Wrapper} />
-        <ExampleComponent as={Wrapper} ref={spanRef} />
-        {/* TODO: ts-expect-error - Must pass the correct ref type */}
-        <ExampleComponent as={Wrapper} ref={divRef} />
-        <ExampleComponent as={Wrapper} ref={spanRef} darkMode={true} />
-        {/* @ts-expect-error - Theme is not a prop on Wrapper */}
-        <ExampleComponent as={Wrapper} ref={spanRef} theme={'dark'} />
-      </>;
-    });
-    /* eslint-enable jest/no-disabled-tests */
-
     test(`displayName is defined for ${ExampleComponent.displayName!}`, () => {
       expect(ExampleComponent.displayName).not.toBeUndefined();
     });
@@ -184,9 +255,11 @@ describe('Polymorphic/Example Higher-order Components', () => {
 
       describe('With Emotion `styled` API', () => {
         test('Basic styled component', () => {
-          const StyledExample = styled(ExampleComponent)`
+          const StyledExample = styled(
+            ExampleComponent as PolymorphicComponentType,
+          )`
             color: #ff69b4;
-          `;
+          ` as typeof ExampleComponent;
 
           const { getByTestId } = render(
             <StyledExample title="Title" data-testid="styled">
@@ -199,7 +272,9 @@ describe('Polymorphic/Example Higher-order Components', () => {
         });
 
         test('as an HTML element', () => {
-          const StyledExample = styled(ExampleComponent)`
+          const StyledExample = styled(
+            ExampleComponent as PolymorphicComponentType,
+          )`
             color: #ff69b4;
           ` as PolymorphicComponentType;
 
@@ -224,7 +299,9 @@ describe('Polymorphic/Example Higher-order Components', () => {
 
         test('as a custom component', () => {
           const { Wrapper } = makeWrapperComponent();
-          const StyledExample = styled(ExampleComponent)`
+          const StyledExample = styled(
+            ExampleComponent as PolymorphicComponentType,
+          )`
             color: #ff69b4;
           ` as PolymorphicComponentType;
           const { getByTestId } = render(
@@ -245,13 +322,18 @@ describe('Polymorphic/Example Higher-order Components', () => {
             size: string;
           }
 
-          const StyledExample = styled(ExampleComponent)<StyledProps>`
+          const StyledExample = styled(
+            ExampleComponent as PolymorphicComponentType,
+          )<StyledProps>`
             color: ${props => props.color};
             font-size: ${props => props.size}px;
-          `;
+          ` as StyledComponent<
+            StyledProps & PolymorphicProps<PolymorphicAs, ExampleProps>
+          >;
 
           const { getByTestId } = render(
             <StyledExample
+              as="span"
               title="Title"
               data-testid="styled"
               color="#ff69b4"
@@ -261,9 +343,44 @@ describe('Polymorphic/Example Higher-order Components', () => {
             </StyledExample>,
           );
           expect(getByTestId('styled')).toBeInTheDocument();
-          expect(getByTestId('styled').tagName.toLowerCase()).toBe('div');
+          expect(getByTestId('styled').tagName.toLowerCase()).toBe('span');
           expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
           expect(getByTestId('styled')).toHaveStyle(`font-size: 16px;`);
+        });
+      });
+
+      describe('NextJS', () => {
+        test('control', () => {
+          const { getByText } = render(
+            <NextLink href="mongodb.design" data-testid="next" target="_blank">
+              Content
+            </NextLink>,
+          );
+
+          const link = getByText('Content');
+          expect(link).toBeInTheDocument();
+          expect(link.tagName.toLowerCase()).toBe('a');
+          expect(link.getAttribute('href')).toContain('mongodb.design');
+          expect(link).toHaveAttribute('target');
+        });
+
+        test('Works with NextLink', () => {
+          const { getByText } = render(
+            <ExampleComponent
+              as={NextLink}
+              href="mongodb.design"
+              data-testid="next"
+              target="_blank"
+            >
+              Content
+            </ExampleComponent>,
+          );
+
+          const link = getByText('Content');
+          expect(link).toBeInTheDocument();
+          expect(link.tagName.toLowerCase()).toBe('a');
+          expect(link.getAttribute('href')).toContain('mongodb.design');
+          expect(link).toHaveAttribute('target');
         });
       });
     });
@@ -341,7 +458,7 @@ describe('Polymorphic/Example Higher-order Components', () => {
    * also generate TSDoc
    */
   describe('TSDoc output', () => {
-    const docs = parseTSDoc('polymorphic/src/Example', {
+    const docs = parseTSDoc(__dirname, {
       excludeTags: [], // Include all tags
     });
 

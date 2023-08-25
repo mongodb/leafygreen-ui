@@ -1,5 +1,29 @@
 # @leafygreen-ui/emotion
 
+## 4.0.7
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+
+## 4.0.6
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+
+## 4.0.5
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+
+## 4.0.4
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+
 ## 4.0.3
 
 ### Patch Changes

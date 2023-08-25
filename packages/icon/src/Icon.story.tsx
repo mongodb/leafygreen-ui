@@ -1,22 +1,25 @@
 // TODO: Generate Icon props with controls
 import React from 'react';
-import { ComponentStory, Meta } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
+import {
+  storybookExcludedControlParams,
+  StoryMetaType,
+  StoryType,
+} from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
-import { IconProps } from './createIconComponent';
-import { Size } from './glyphCommon';
 import { GlyphName } from './glyphs';
-import Icon, { glyphs } from '.';
+import Icon, { glyphs, IconProps, Size } from '.';
 
-export default {
+const meta: StoryMetaType<typeof Icon> = {
   title: 'Components/Icon',
   component: Icon,
   parameters: {
     default: 'AllIcons',
     controls: {
-      exclude: ['className', 'title', 'data-testid'],
+      exclude: [...storybookExcludedControlParams, 'title', 'data-testid'],
     },
   },
   argTypes: {
@@ -26,8 +29,13 @@ export default {
       defaultValue: Size.Default,
     },
     glyph: { control: 'none' },
+    fill: {
+      control: 'color',
+    },
   },
-} as Meta<typeof Icon>;
+};
+
+export default meta;
 
 const containerStyle = css`
   width: 150px;
@@ -49,7 +57,7 @@ const textStyle = css`
   margin-top: 0.5rem;
 `;
 
-export const Single: ComponentStory<typeof Icon> = (args: IconProps) => {
+export const Single: StoryType<typeof Icon> = (args: IconProps) => {
   if (!args.glyph) {
     args = {
       ...args,
@@ -66,8 +74,9 @@ Single.argTypes = {
     options: Object.keys(glyphs),
   },
 };
+Single.parameters = { chromatic: { disableSnapshot: true } };
 
-export const AllIcons: ComponentStory<typeof Icon> = (
+export const AllIcons: StoryFn<IconProps> = (
   args: Omit<IconProps, 'glyph'>,
 ) => (
   <div
@@ -87,3 +96,6 @@ export const AllIcons: ComponentStory<typeof Icon> = (
     })}
   </div>
 );
+
+export const Error = () => <Icon glyph="glyph-does-not-exist" />;
+Error.parameters = { chromatic: { disableSnapshot: true } };

@@ -1,3 +1,4 @@
+import { ButtonProps } from '@leafygreen-ui/button';
 import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
 import { PopoverProps } from '@leafygreen-ui/popover';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
@@ -8,13 +9,21 @@ export const Size = {
   Default: 'default',
   Large: 'large',
 } as const;
-export type Size = typeof Size[keyof typeof Size];
+export type Size = (typeof Size)[keyof typeof Size];
 
 export const State = {
   None: 'none',
   Error: 'error',
 } as const;
-export type State = typeof State[keyof typeof State];
+export type State = (typeof State)[keyof typeof State];
+
+export const DropdownWidthBasis = {
+  Trigger: 'trigger',
+  Option: 'option',
+} as const;
+
+export type DropdownWidthBasis =
+  (typeof DropdownWidthBasis)[keyof typeof DropdownWidthBasis];
 
 interface BaseSelectProps
   extends Omit<
@@ -73,6 +82,12 @@ interface BaseSelectProps
    *  determines the base font size if sizeVariant is set to default.
    */
   baseFontSize?: BaseFontSize;
+  /**
+   *  Determines the width of the dropdown. `trigger` will make the dropdown width the width of the menu button. `option` will make the dropdown width as wide as the widest option.
+   *
+   * @default 'trigger'
+   */
+  dropdownWidthBasis?: DropdownWidthBasis;
 
   /**
    * @internal
@@ -80,6 +95,12 @@ interface BaseSelectProps
   __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
     React.RefAttributes<unknown>
   >;
+
+  /**
+   * @internal
+   */
+  __INTERNAL__menuButtonSlotProps__?: Partial<ButtonProps> &
+    Record<string, any>;
 }
 
 interface LabelProp {

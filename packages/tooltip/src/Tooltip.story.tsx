@@ -1,37 +1,102 @@
+/* eslint-disable react/display-name */
 import React, { useState } from 'react';
-import { ComponentStory } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
-import Button from '@leafygreen-ui/button';
+import Button, { Size } from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
+import { TestUtils } from '@leafygreen-ui/popover';
+import { BaseFontSize, transitionDuration } from '@leafygreen-ui/tokens';
 import { Body, InlineCode, Subtitle } from '@leafygreen-ui/typography';
 
 import Tooltip, { Align, Justify, TooltipProps } from '.';
 
-export default {
+const { getAlign, getJustify } = TestUtils;
+
+const longText =
+  '5hhs8d83jj2992h88d9s49ns94jsjsj9456j9djdf95hhs8d83jj2992h88d9s49ns94jsjsj9456j9djdf9';
+
+const meta: StoryMetaType<typeof Tooltip> = {
   title: 'Components/Tooltip',
   component: Tooltip,
+  parameters: {
+    default: 'LiveExample',
+    controls: {
+      exclude: [...storybookExcludedControlParams, 'trigger'],
+    },
+    chromatic: {
+      delay: transitionDuration.slowest,
+    },
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        align: Object.values(Align),
+        justify: Object.values(Justify),
+        baseFontSize: Object.values(BaseFontSize),
+        children: [
+          'I am a tooltip!',
+          longText,
+          // eslint-disable-next-line react/jsx-key
+          <InlineCode>@leafygreen-ui/tooltip</InlineCode>,
+        ],
+      },
+      excludeCombinations: [
+        {
+          justify: Justify.Fit,
+          children: longText,
+        },
+        {
+          justify: Justify.Fit,
+          align: [Align.Left, Align.Right],
+        },
+      ],
+      args: {
+        open: true,
+      },
+      decorator: (Instance, ctx) => (
+        <div
+          className={css`
+            width: 256px;
+            height: 100px;
+            display: flex;
+            align-items: ${getAlign(ctx?.args.align, ctx?.args.justify)};
+            justify-content: ${getJustify(ctx?.args.align, ctx?.args.justify)};
+          `}
+        >
+          <Instance
+            trigger={
+              <Button darkMode={ctx?.args.darkMode} size="xsmall">
+                trigger
+              </Button>
+            }
+          />
+        </div>
+      ),
+    },
+  },
   args: {
-    children: 'I am a tooltip!',
-    trigger: <Button>trigger</Button>,
     enabled: true,
     usePortal: true,
+    trigger: <Button size={Size.XSmall}>Trigger</Button>,
   },
   argTypes: {
     open: { control: 'boolean' },
     darkMode: storybookArgTypes.darkMode,
     children: storybookArgTypes.children,
-  },
-  parameters: {
-    default: 'Basic',
-    controls: {
-      exclude: ['trigger', 'className'],
+    baseFontSize: {
+      control: 'radio',
+      options: Object.values(BaseFontSize),
     },
   },
 };
+export default meta;
 
-export const Basic: ComponentStory<typeof Tooltip> = ({
+export const LiveExample: StoryFn<TooltipProps> = ({
   darkMode,
   ...args
 }: TooltipProps) => (
@@ -43,9 +108,17 @@ export const Basic: ComponentStory<typeof Tooltip> = ({
     <Tooltip darkMode={darkMode} {...args} />
   </div>
 );
-Basic.argTypes = {
+LiveExample.args = {
+  children: 'I am a tooltip!',
+};
+LiveExample.argTypes = {
   open: {
     control: 'none',
+  },
+};
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
   },
 };
 
@@ -53,8 +126,13 @@ export const ControlledWithState = (args: TooltipProps) => {
   const [open, setOpen] = useState(true);
   return <Tooltip {...args} open={open} setOpen={setOpen} />;
 };
+ControlledWithState.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
-export const WithLeafyGreenChildren = Basic.bind({});
+export const WithLeafyGreenChildren = LiveExample.bind({});
 WithLeafyGreenChildren.args = {
   children: (
     <>
@@ -63,6 +141,12 @@ WithLeafyGreenChildren.args = {
       <InlineCode>@leafygreen-ui/tooltip</InlineCode>
     </>
   ),
+};
+
+WithLeafyGreenChildren.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
 export const AlignmentTest = ({ darkMode, ...args }: TooltipProps) => {
@@ -97,11 +181,10 @@ export const AlignmentTest = ({ darkMode, ...args }: TooltipProps) => {
     </div>
   );
 };
-
-export const LongText = Basic.bind({});
-LongText.args = {
-  children:
-    '5hhs8d83jj2992h88d9s49ns94jsjsj9456j9djdf95hhs8d83jj2992h88d9s49ns94jsjsj9456j9djdf9',
+AlignmentTest.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
 const scrollableStyle = css`
@@ -184,6 +267,11 @@ export const ScrollableContainer = ({
     </div>
   );
 };
+ScrollableContainer.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 ScrollableContainer.args = {
   usePortal: true,
@@ -210,3 +298,5 @@ ScrollableContainer.argTypes = {
   children: { control: 'none' },
   darkMode: { control: 'none' },
 };
+
+export const Generated = () => {};

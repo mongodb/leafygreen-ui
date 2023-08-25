@@ -1,6 +1,6 @@
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 
-interface BadgeProps extends HTMLElementProps<'div'>, DarkModeProps {
+export interface BadgeProps extends HTMLElementProps<'div'>, DarkModeProps {
   /**
    * An additional className to add to the component's classList
    */
@@ -28,6 +28,4 @@ export const Variant = {
   Green: 'green',
 } as const;
 
-export type Variant = typeof Variant[keyof typeof Variant];
-
-export default BadgeProps;
+export type Variant = (typeof Variant)[keyof typeof Variant];

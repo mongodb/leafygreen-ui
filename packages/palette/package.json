@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/palette",
-  "version": "3.4.7",
+  "version": "4.0.7",
   "description": "LeafyGreen UI Palettes",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -13,15 +13,19 @@
     }
   },
   "scripts": {
-    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
   },
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"
   },
   "devDependencies": {
-    "@leafygreen-ui/emotion": "^4.0.3",
-    "polished": "^4.2.2"
+    "@leafygreen-ui/emotion": "^4.0.7",
+    "lodash": "^4.17.21",
+    "polished": "^4.2.2",
+    "@leafygreen-ui/lib": "^11.0.0"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/palette",

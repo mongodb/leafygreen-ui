@@ -1,0 +1,35 @@
+name: File Size
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  sizeDiff:
+    name: Check file size
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: yarn
+          cache-dependency-path: 'yarn.lock'
+
+      - run: yarn install --frozen-lockfile --prefer-offline
+
+      - uses: actions/cache/restore@v3
+        name: Restore build cache
+        id: build-cache
+        with:
+          path: |
+            **/dist
+            !**/node_modules
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
+
+      - uses: preactjs/compressed-size-action@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          build-script: 'build'

@@ -1,9 +1,10 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import NextLink from 'next/link';
 
 import { BoxProps } from '@leafygreen-ui/box';
+import { Spinner } from '@leafygreen-ui/loading-indicator';
 
 import { ButtonProps } from '../types';
 import Button from '..';
@@ -54,6 +55,33 @@ describe('packages/button', () => {
       expect(button.textContent).toBe(child);
     });
 
+    test(`renders spinner when isLoading is true`, () => {
+      const { getByTestId } = renderButton({
+        isLoading: true,
+        loadingIndicator: <Spinner />,
+      });
+      expect(getByTestId('lg-button-spinner')).toBeVisible();
+    });
+
+    test(`does not loadingText when isLoading is false`, () => {
+      const loadingText = 'loading text';
+      const { queryByText } = renderButton({
+        isLoading: false,
+        loadingText,
+      });
+      expect(queryByText(loadingText)).toBeNull();
+    });
+
+    test(`renders loadingText when isLoading is true`, () => {
+      const loadingText = 'loading text';
+      const { getByText } = renderButton({
+        isLoading: true,
+        loadingIndicator: <Spinner />,
+        loadingText,
+      });
+      expect(getByText(loadingText)).toBeVisible();
+    });
+
     test(`renders "${title}" as the button title`, () => {
       const { button } = renderButton({
         title,
@@ -61,11 +89,10 @@ describe('packages/button', () => {
       expect(button.title).toBe(title);
     });
 
-    test(`renders the disabled and aria-disabled attributes when disabled is set`, () => {
+    test(`renders aria-disabled attribute when disabled is set`, () => {
       const { button } = renderButton({
         disabled: true,
       });
-      expect((button as HTMLButtonElement).disabled).toBe(true);
       expect(button.getAttribute('aria-disabled')).toBe('true');
     });
 
@@ -110,16 +137,33 @@ describe('packages/button', () => {
 
     test(`renders a button as another HTML element if the "as" prop is set`, () => {
       const { container, button } = renderButton({
-        as: 'p',
+        as: 'div',
       });
       expect(container.querySelector('button')).not.toBeInTheDocument();
-      expect(button.tagName.toLowerCase()).toBe('p');
+      expect(button.tagName.toLowerCase()).toBe('div');
     });
 
     test(`renders a when passing in a NextJS Link wrapper`, () => {
       // eslint-disable-next-line react/prop-types
       const Linker = ({ href, children, ...props }: any) => (
-        <NextLink href={href}>
+        <NextLink href={href} {...props}>
+          {children}
+        </NextLink>
+      );
+
+      const { container, button } = renderButton({
+        href: 'https://mongodb.design',
+        as: Linker,
+      });
+
+      expect(container.querySelector('button')).not.toBeInTheDocument();
+      expect(button.tagName.toLowerCase()).toBe('a');
+    });
+
+    test(`renders a when passing in a legacy NextJS Link wrapper`, () => {
+      // eslint-disable-next-line react/prop-types
+      const Linker = ({ href, children, ...props }: any) => (
+        <NextLink legacyBehavior href={href}>
           <a {...props}>{children}</a>
         </NextLink>
       );
@@ -171,6 +215,16 @@ describe('packages/button', () => {
       expect(onClick).toHaveBeenCalledTimes(0);
     });
 
+    test('does not fire onClick handler when loading', () => {
+      const onClick = jest.fn();
+      const { button } = renderButton({
+        isLoading: true,
+        onClick,
+      });
+      fireEvent.click(button);
+      expect(onClick).toHaveBeenCalledTimes(0);
+    });
+
     test('does not fire onClick handler on disabled anchor', () => {
       const onClick = jest.fn();
       const { button } = renderButton({
@@ -201,6 +255,22 @@ describe('packages/button', () => {
       });
       expect(button).toHaveAttribute('href', href);
     });
+
+    test('does not invoke a forms submit handler when disabled', () => {
+      const onSubmit = jest.fn();
+
+      render(
+        <form onSubmit={onSubmit}>
+          <Button disabled type="submit">
+            Submit
+          </Button>
+        </form>,
+      );
+
+      const button = screen.getByRole('button');
+      fireEvent.click(button);
+      expect(onSubmit).not.toHaveBeenCalled();
+    });
   });
 
   /* eslint-disable jest/no-disabled-tests, jest/expect-expect*/
@@ -214,7 +284,7 @@ describe('packages/button', () => {
     });
 
     test('accepts a string as `as`', () => {
-      <Button as="p" />;
+      <Button as="div" />;
     });
 
     test('accepts a component as `as`', () => {

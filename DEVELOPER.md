@@ -71,3 +71,34 @@ We use @testing-library/react for writing tests locally. This library helps mock
 #### Linking
 
 We also have a link script, such that you can test components that are in development in environments beyond Storybook. To do so, run `yarn run link -- [path-to-application]`.
+
+## Creating a new component
+
+- Run `yarn create-package <package-name>` to create a new component directory with default configurations
+- Add the new component to `build.tsconfig.json`
+- If you are using any `leafygreen-ui` dependencies in your new component, add the dependency to the component directory's `tsconfig.json`.
+- Run `yarn run init` to link all packages before starting development
+
+## Marking a Storybook story to be imported in mongodb.design
+
+The mongodb.design website will automatically import the `*.story.tsx` file from its installed package directory to render its live example. By default, the first exported story from the `*.story.tsx` file will be rendered. To specify a different story to be rendered, define the following in the Storybook file's Meta object:
+
+```
+import { StoryMetaType } from '@leafygreen-ui/lib';
+
+const meta: StoryMetaType<typeof Component> = {
+  title: 'Components/name',
+  component: Component,
+  parameters: {
+    default: 'StoryName',
+  }
+}
+
+export default meta
+```
+
+The `StoryMetaType` utility type from `@leafygreen-ui/lib` will enforce parameters required for use with Chromatic and on `mongodb.design`
+
+## Preventing an interface from being imported in mongodb.design's Code Docs
+
+The mongodb.design website's code docs page will automatically import all exported interfaces. Interfaces and components marked with `@internal` and `@example` in TSDocs will be removed by default. To force an interface to be removed, add a `@noDocgen` flag to the TSDocs.

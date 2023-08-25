@@ -1,0 +1,20 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "prebuild": {
+      "dependsOn": ["^prebuild"]
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", "stories.js"]
+    },
+    "tsc": {
+      "dependsOn": ["^tsc", "^build"],
+      "outputs": ["dist/**", "tsconfig.tsbuildinfo"]
+    },
+    "docs": {
+      "dependsOn": ["^tsc"],
+      "outputs": ["tsdoc.json"]
+    }
+  }
+}

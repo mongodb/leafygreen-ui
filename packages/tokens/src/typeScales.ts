@@ -3,7 +3,7 @@ export const BaseFontSize = {
   Body2: 16,
 } as const;
 
-export type BaseFontSize = typeof BaseFontSize[keyof typeof BaseFontSize];
+export type BaseFontSize = (typeof BaseFontSize)[keyof typeof BaseFontSize];
 
 /**
  * Defines font sizes and line heights of common typographic elements.
@@ -29,6 +29,10 @@ const typeScales = {
   disclaimer: {
     fontSize: 12,
     lineHeight: 20,
+  } as const,
+  large: {
+    fontSize: 18,
+    lineHeight: 22,
   } as const,
 } as const;
 

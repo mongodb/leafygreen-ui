@@ -2,22 +2,17 @@ import { usePolymorphic } from '../Polymorphic/Polymorphic.hooks';
 import { PolymorphicAs } from '../Polymorphic/Polymorphic.types';
 
 /**
- * Internal function to compute the inferred polymorphic component based on the `as` prop, and any other props passed in
- * @internal
+ * A hook that computes & returns the inferred polymorphic component based on the `as` prop, and any other props passed in.
+ *
+ * For client-side components, prefer using `useInferredPolymorphic`, which returns a typed `ref` as well as the polymorphic component
  */
-function getInferredPolymorphComponent(
+export function useInferredPolymorphicComponent(
   as?: PolymorphicAs,
   rest?: { [key: string]: any },
+  defaultAs?: PolymorphicAs,
 ): PolymorphicAs | undefined {
-  if (!as) {
-    if (typeof rest?.href === 'string') {
-      as = 'a' as PolymorphicAs;
-    } else {
-      as = 'div' as PolymorphicAs;
-    }
-  }
-
-  return as;
+  defaultAs = defaultAs ?? ('div' as PolymorphicAs);
+  return as ? as : typeof rest?.href === 'string' ? 'a' : defaultAs;
 }
 
 /**
@@ -31,7 +26,8 @@ function getInferredPolymorphComponent(
 export function useInferredPolymorphic(
   as?: PolymorphicAs,
   rest?: { [key: string]: any },
+  defaultAs?: PolymorphicAs,
 ) {
-  as = getInferredPolymorphComponent(as, rest);
+  as = useInferredPolymorphicComponent(as, rest, defaultAs);
   return usePolymorphic(as);
 }

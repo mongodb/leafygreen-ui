@@ -1,10 +1,11 @@
-import { Polymorphic, PolymorphicAs } from '../Polymorphic';
-import {
-  PolymorphicComponentType,
-  PolymorphicRenderFunction,
-} from '../Polymorphic/Polymorphic.types';
+import React from 'react';
 
-import { InferredPolymorphicProps } from './InferredPolymorphic.types';
+import { PolymorphicAs } from '../Polymorphic';
+
+import {
+  InferredPolymorphicComponentType,
+  InferredPolymorphicRenderFunction,
+} from './InferredPolymorphic.types';
 
 /**
  * Inferred copy of the {@link Polymorphic} factory function.
@@ -16,11 +17,21 @@ export const InferredPolymorphic = <
   XP extends object = {},
   DefaultAs extends PolymorphicAs = PolymorphicAs,
 >(
-  render: PolymorphicRenderFunction<XP, DefaultAs>,
+  render: InferredPolymorphicRenderFunction<XP, DefaultAs>,
   displayName?: string,
-): PolymorphicComponentType<InferredPolymorphicProps<XP>, DefaultAs> => {
-  return Polymorphic<InferredPolymorphicProps<XP>, DefaultAs>(
-    render,
-    displayName,
-  );
+): InferredPolymorphicComponentType<XP, DefaultAs> => {
+  let PolyComponent: InferredPolymorphicComponentType<XP, DefaultAs>;
+
+  if (render.length === 1) {
+    PolyComponent = render;
+  } else {
+    type PropTypes = Parameters<typeof render>[0];
+    type RefType = Parameters<typeof render>[1];
+    /// @ts-expect-error - types too complex. Return type is still computed correctly
+    PolyComponent = React.forwardRef<RefType, PropTypes>(render);
+  }
+
+  PolyComponent.displayName =
+    displayName ?? render.displayName ?? 'PolymorphicComponent';
+  return PolyComponent;
 };

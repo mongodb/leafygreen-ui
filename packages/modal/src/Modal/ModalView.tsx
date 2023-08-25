@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { Transition, TransitionStatus } from 'react-transition-group';
+import { Options } from 'focus-trap';
 import FocusTrap from 'focus-trap-react';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -24,8 +25,13 @@ import {
   scrollContainer,
   visibleBackdrop,
   visibleModalContentStyle,
-} from './styles';
-import { CloseIconColor, ForwardedRef, ModalProps, ModalSize } from './types';
+} from './Modal.styles';
+import {
+  CloseIconColor,
+  ForwardedRef,
+  ModalProps,
+  ModalSize,
+} from './Modal.types';
 
 /**
  * @internal
@@ -70,7 +76,7 @@ const ModalView = React.forwardRef(
 
     useEscapeKey(handleClose, { enabled: open && !isPopoverOpen });
 
-    const focusTrapOptions = initialFocus
+    const focusTrapOptions: Options = initialFocus
       ? {
           initialFocus: `#${id} ${initialFocus}`,
           fallbackFocus: `#${closeId}`,
@@ -103,7 +109,10 @@ const ModalView = React.forwardRef(
               )}
             >
               <LeafyGreenProvider darkMode={darkMode}>
-                <FocusTrap focusTrapOptions={focusTrapOptions}>
+                <FocusTrap
+                  active={state === 'entered'}
+                  focusTrapOptions={focusTrapOptions}
+                >
                   <div
                     className={scrollContainer}
                     ref={el => setScrollContainerRef(el)}

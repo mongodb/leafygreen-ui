@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/hooks",
-  "version": "7.4.0",
+  "version": "8.0.0",
   "description": "LeafyGreen UI Kit Custom Hooks",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -13,7 +13,9 @@
     }
   },
   "scripts": {
-    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
   },
   "license": "Apache-2.0",
   "publishConfig": {
@@ -30,5 +32,9 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
+  },
+  "devDependencies": {
+    "@leafygreen-ui/emotion": "^4.0.7",
+    "@leafygreen-ui/lib": "^11.0.0"
   }
 }

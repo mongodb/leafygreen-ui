@@ -1,10 +1,11 @@
 {
-  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "prettier.configPath": "node_modules/@lg-tools/lint/config/prettier.config.js",
+  "eslint.lintTask.enable": true,
+  "eslint.lintTask.options": "--config ./tools/lint/eslint.config.js",
+  "eslint.format.enable": true,
+  "eslint.runtime": "node",
+  "eslint.workingDirectories": ["./"]
 }

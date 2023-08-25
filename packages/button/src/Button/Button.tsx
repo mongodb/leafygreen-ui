@@ -29,21 +29,25 @@ export const Button = React.forwardRef(function Button(
     className,
     as,
     type,
+    isLoading = false,
+    loadingIndicator,
+    loadingText,
     ...rest
   }: BoxProps<'button', ButtonProps>,
   forwardRef,
 ) {
   const { darkMode } = useDarkMode(darkModeProp);
 
+  const isAnchor: boolean = (!!rest.href || as === 'a') && !disabled;
+  const isInteractive = !(disabled || isLoading);
+
   const buttonStyles = getClassName({
     variant,
     size,
     darkMode,
     baseFontSize,
-    disabled,
+    disabled: !isInteractive,
   });
-
-  const isAnchor: boolean = (!!rest.href || as === 'a') && !disabled;
 
   const buttonProps = {
     type: isAnchor ? undefined : type || 'button',
@@ -52,10 +56,11 @@ export const Button = React.forwardRef(function Button(
     // Provide a default value for the as prop
     // If consuming application passes a value for as, it will override the default set here
     as: as ? as : ((isAnchor ? 'a' : 'button') as keyof JSX.IntrinsicElements),
-    // only add a disabled prop if not an anchor
-    ...(typeof rest.href !== 'string' && { disabled }),
     'aria-disabled': disabled,
-    onClick: !disabled ? onClick : undefined,
+    onClick: isInteractive
+      ? onClick
+      : (e: React.MouseEvent) => e.preventDefault(),
+    href: isInteractive ? rest.href : undefined,
     ...rest,
   } as const;
 
@@ -66,6 +71,9 @@ export const Button = React.forwardRef(function Button(
     disabled,
     variant,
     size,
+    isLoading,
+    loadingIndicator,
+    loadingText,
   } as const;
 
   return (
@@ -86,4 +94,7 @@ Button.propTypes = {
   leftGlyph: PropTypes.element,
   rightGlyph: PropTypes.element,
   href: PropTypes.string,
+  isLoading: PropTypes.bool,
+  loadingText: PropTypes.string,
+  loadingIndicator: PropTypes.element,
 };

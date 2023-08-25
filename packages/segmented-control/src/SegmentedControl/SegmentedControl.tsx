@@ -29,8 +29,12 @@ import {
   optionsWrapperStyle,
   selectionIndicatorStyle,
   wrapperStyle,
-} from './styles';
-import { SegmentedControlProps, Size } from './types';
+} from './SegmentedControl.styles';
+import {
+  DeprecatedSize,
+  SegmentedControlProps,
+  Size,
+} from './SegmentedControl.types';
 
 /**
  * Segmented controls act as a toggle between a current state and related states, often changing the view of information within a single page.
@@ -42,7 +46,7 @@ export const SegmentedControl = forwardRef<
   {
     children,
     name: nameProp,
-    size = Size.Default,
+    size: sizeProp = Size.Default,
     darkMode: darkModeProp,
     defaultValue,
     value: controlledValue,
@@ -66,7 +70,7 @@ export const SegmentedControl = forwardRef<
 
   const name = useIdAllocator({
     prefix: 'segmented-control',
-    id: nameProp ?? label,
+    id: nameProp,
   });
 
   // If a value is given, then it's controlled
@@ -141,6 +145,10 @@ export const SegmentedControl = forwardRef<
   const renderedChildren: React.ReactNode = useMemo(
     () =>
       React.Children.map(children, (child, index) => {
+        if (child == null) {
+          return child;
+        }
+
         if (!isComponentType(child, 'SegmentedControlOption')) {
           errorOnce(
             `Error in Segmented Control: ${child} is not a SegmentedControlOption`,
@@ -198,10 +206,11 @@ export const SegmentedControl = forwardRef<
   // See https://www.w3.org/TR/wai-aria-1.1/#tab
   const childrenIdList: string = useMemo(() => {
     if (renderedChildren) {
-      return React.Children.map(
-        renderedChildren as React.ReactElement,
-        child => child?.props?._id,
-      ).join(' ');
+      const ids = React.Children.map(renderedChildren, child => {
+        return (child as React.ReactElement)?.props?._id;
+      })?.join(' ');
+
+      return ids ?? '';
     }
 
     return '';
@@ -303,6 +312,9 @@ export const SegmentedControl = forwardRef<
     [renderedChildren],
   );
 
+  // deprecated size "small" no longer supported, but we want to gracefully degrade the prop value
+  const size = sizeProp === DeprecatedSize.Small ? Size.XSmall : sizeProp;
+
   /**
    * Return
    */
@@ -363,7 +375,7 @@ SegmentedControl.propTypes = {
   onChange: PropTypes.func,
   defaultValue: PropTypes.string,
   value: PropTypes.string,
-  label: PropTypes.string,
+  label: PropTypes.node,
   name: PropTypes.string,
   followFocus: PropTypes.bool,
   className: PropTypes.string,

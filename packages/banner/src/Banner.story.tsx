@@ -1,20 +1,37 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable react/jsx-key */
 import React from 'react';
-import { ComponentStory, Meta } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
-import { Link } from '@leafygreen-ui/typography';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
-import Banner from './Banner/Banner';
-import { BannerProps, Variant } from './Banner/types';
+import Banner, { BannerProps, Variant } from '.';
 
-export default {
+const meta: StoryMetaType<typeof Banner> = {
   title: 'Components/Banner',
   component: Banner,
   parameters: {
-    default: 'Basic',
+    default: 'LiveExample',
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        image: [
+          undefined,
+          <Icon glyph={'Visibility'} />,
+          <img src="favicon.ico" />,
+        ],
+        variant: Object.values(Variant),
+        dismissible: [false, true],
+      },
+    },
     controls: {
-      exclude: ['ref', 'className', 'onClose', 'image'],
+      exclude: [...storybookExcludedControlParams, 'image'],
     },
   },
   args: {
@@ -24,6 +41,7 @@ export default {
     dismissible: false,
   },
   argTypes: {
+    darkMode: storybookArgTypes.darkMode,
     dismissible: {
       control: 'boolean',
     },
@@ -33,56 +51,21 @@ export default {
       defaultValue: Variant.Info,
     },
     children: storybookArgTypes.children,
-    ref: storybookArgTypes.ref,
-    darkMode: storybookArgTypes.darkMode,
+    glyph: {
+      options: [undefined, ...Object.keys(glyphs)],
+      control: { type: 'select' },
+    },
   },
-} as Meta<typeof Banner>;
+};
+export default meta;
 
-// eslint-disable-next-line react/prop-types
-export const Basic: ComponentStory<typeof Banner> = ({ ...args }) => (
-  <Banner {...args} />
-);
+type StoryProps = BannerProps & { glyph: keyof typeof glyphs };
 
-export const WithIcon: ComponentStory<any> = ({
-  glyph,
-  ...args
-}: BannerProps & { glyph: keyof typeof glyphs }) => (
+export const LiveExample: StoryFn<StoryProps> = ({ glyph, ...args }) => (
   <Banner image={glyph ? <Icon glyph={glyph} /> : undefined} {...args} />
 );
-WithIcon.argTypes = {
-  glyph: {
-    options: Object.keys(glyphs),
-    control: { type: 'select' },
-    defaultValue: 'ActivityFeed',
-  },
+LiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
 };
 
-export const WithLink: ComponentStory<typeof Banner> = ({
-  // eslint-disable-next-line react/prop-types
-  image,
-  // eslint-disable-next-line react/prop-types
-  children,
-  ...args
-}) => {
-  return (
-    <Banner
-      // @ts-expect-error
-      image={image ? <Icon glyph={image} /> : undefined}
-      {...args}
-    >
-      {children}
-      &nbsp;
-      <Link href="http://localhost:9001">Link style</Link>
-      &nbsp;
-      <a href="http://localhost:9001">Regular link</a>
-    </Banner>
-  );
-};
-
-export const WithCustomImage: ComponentStory<typeof Banner> = ({ ...args }) => (
-  /// @ts-ignore
-  <Banner image="copy" {...args} />
-);
-WithCustomImage.args = {
-  variant: Variant.Info,
-};
+export const Generated = () => {};

@@ -2,9 +2,12 @@ import React from 'react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
-import InlineDefinition from '@leafygreen-ui/inline-definition';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  type StoryMetaType,
+  type StoryType,
+} from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 import {
@@ -42,26 +45,8 @@ const displayFlex = css`
   gap: 8px;
 `;
 
-export default {
-  title: 'Components/Typography',
-  parameters: {
-    controls: {
-      exclude: ['className'],
-    },
-  },
-  argTypes: {
-    baseFontSize: {
-      options: [14, 16],
-      control: { type: 'radio' },
-      description:
-        'Storybook prop only. This font size is passed into the LeafygreenProvider.',
-    },
-    darkMode: storybookArgTypes.darkMode,
-  },
-};
-
 // eslint-disable-next-line react/prop-types
-export const AllTypography = ({
+const TypographyDemoComponent = ({
   baseFontSize,
   darkMode,
 }: {
@@ -76,22 +61,18 @@ export const AllTypography = ({
         <H3>Heading 3</H3>
         <Subtitle>Subtitle</Subtitle>
 
-        <div className={cx(displayFlex)}>
-          <Body>Body</Body>
-          <Body>
-            <strong>Body (Semibold)</strong>
-          </Body>
-        </div>
-        <div className={cx(displayFlex)}>
-          <Body>
-            <em>Body (Italic)</em>
-          </Body>
-          <Body>
-            <strong>
-              <em>Body (Semibold Italic)</em>
-            </strong>
-          </Body>
-        </div>
+        <Body>Body</Body>
+        <Body>
+          <strong>Body (Semibold)</strong>
+        </Body>
+        <Body>
+          <em>Body (Italic)</em>
+        </Body>
+        <Body>
+          <strong>
+            <em>Body (Semibold Italic)</em>
+          </strong>
+        </Body>
 
         <div className={cx(displayFlex)}>
           <InlineCode>&quot;Inline Code&quot;</InlineCode>
@@ -100,20 +81,20 @@ export const AllTypography = ({
           </InlineCode>
         </div>
 
-        <div className={cx(displayFlex)}>
+        <div>
           <Link href="http://localhost:9001" arrowAppearance="hover">
             Local (Arrow on Hover)
           </Link>
+          <br />
           <Link href="http://localhost:9001" arrowAppearance="none">
             Local (No Arrow)
           </Link>
+          <br />
           <Link href="?path=/story/button--icon-only" arrowAppearance="persist">
             Internal (Persist Arrow)
           </Link>
-          <Link
-            href="https://mongodb.github.io/leafygreen-ui/?path=/story/*"
-            arrowAppearance="persist"
-          >
+          <br />
+          <Link href="https://mongodb.github.io/leafygreen-ui/?path=/story/*">
             External
           </Link>
         </div>
@@ -127,16 +108,6 @@ export const AllTypography = ({
         <Overline className={displayBlock}>Overline</Overline>
         <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
 
-        <div
-          className={css`
-            color: ${darkMode ? palette.gray.light2 : palette.black};
-          `}
-        >
-          <InlineDefinition definition="Tooltip Definition">
-            Inline definition
-          </InlineDefinition>
-        </div>
-
         <Error>Hello I am an Error!</Error>
 
         <div className={cx(displayBlock)}>
@@ -146,6 +117,37 @@ export const AllTypography = ({
       </div>
     </LeafygreenProvider>
   );
+};
+
+const meta: StoryMetaType<typeof TypographyDemoComponent> = {
+  title: 'Components/Typography',
+  component: TypographyDemoComponent,
+  parameters: {
+    default: 'AllTypography',
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        baseFontSize: [14, 16],
+      },
+    },
+  },
+};
+export default meta;
+
+export const AllTypography: StoryType<typeof TypographyDemoComponent> =
+  TypographyDemoComponent.bind({});
+AllTypography.argTypes = {
+  baseFontSize: {
+    ...storybookArgTypes.baseFontSize,
+    description:
+      'Storybook prop only. This font size is passed into the LeafygreenProvider.',
+  },
+  darkMode: storybookArgTypes.darkMode,
+};
+AllTypography.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
 export const StaticWidthTextStory = () => {
@@ -232,3 +234,10 @@ export const StaticWidthTextStory = () => {
     </div>
   );
 };
+StaticWidthTextStory.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+
+export const Generated = () => <></>;

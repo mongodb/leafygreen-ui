@@ -17,7 +17,6 @@ async function expectElementToNotBeRemoved(element: HTMLElement) {
     await waitForElementToBeRemoved(element);
     throw new Error('Expected to catch error.');
   } catch (error) {
-    // eslint-disable-next-line jest/no-try-expect
     if (error instanceof Error) {
       expect(error.toString()).toMatch(
         'Timed out in waitForElementToBeRemoved.',
@@ -84,8 +83,10 @@ describe('packages/guide-cue', () => {
   describe('A11y', () => {
     test('does not have basic accessibility violations', async () => {
       const { container } = renderGuideCue({ open: true });
-      const results = await axe(container);
-      expect(results).toHaveNoViolations();
+      await waitFor(async () => {
+        const results = await axe(container);
+        expect(results).toHaveNoViolations();
+      });
     });
   });
 
@@ -158,10 +159,11 @@ describe('packages/guide-cue', () => {
     });
 
     test('content should render in a portal', () => {
-      const { container, getByTestId } = renderGuideCue({
+      const { container, queryByTestId } = renderGuideCue({
         open: true,
       });
-      expect(container).not.toContain(getByTestId(guideCueTestId));
+      const guideCue = queryByTestId(guideCueTestId);
+      expect(container).not.toContainElement(guideCue);
     });
 
     test('number of steps should not be visible', () => {
@@ -250,9 +252,7 @@ describe('packages/guide-cue', () => {
       });
       const button = getByLabelText('Close Tooltip', { selector: 'button' });
       userEvent.click(button);
-      await act(async () => {
-        await waitFor(() => expect(onClose).toHaveBeenCalledTimes(1));
-      });
+      await waitFor(() => expect(onClose).toHaveBeenCalledTimes(1));
     });
 
     test('closes when the primary button is clicked', async () => {
@@ -286,11 +286,9 @@ describe('packages/guide-cue', () => {
       });
       const button = getAllByRole('button')[1];
       userEvent.click(button);
-      await act(async () => {
-        await waitFor(() =>
-          expect(onPrimaryButtonClick).toHaveBeenCalledTimes(1),
-        );
-      });
+      await waitFor(() =>
+        expect(onPrimaryButtonClick).toHaveBeenCalledTimes(1),
+      );
     });
 
     test('a click outside the tooltip should do nothing', async () => {
@@ -324,16 +322,14 @@ describe('packages/guide-cue', () => {
     });
 
     test('content should render in a portal', async () => {
-      const { container, getByTestId } = renderGuideCue({
+      const { container, findByTestId } = renderGuideCue({
         open: true,
         numberOfSteps: 2,
         currentStep: 1,
       });
-      await act(async () => {
-        await waitFor(() =>
-          expect(container).not.toContain(getByTestId(guideCueTestId)),
-        );
-      });
+
+      const guideCue = await findByTestId(guideCueTestId);
+      expect(container).not.toContainElement(guideCue);
     });
 
     test('number of steps should be visible', async () => {
@@ -391,18 +387,16 @@ describe('packages/guide-cue', () => {
     test('will render inside portal and scroll container', async () => {
       const elem = document.createElement('div');
       document.body.appendChild(elem);
-      renderGuideCue({
+      const { findByText } = renderGuideCue({
         open: true,
         numberOfSteps: 2,
         currentStep: 1,
         portalContainer: elem,
         scrollContainer: elem,
       });
-      await act(async () => {
-        await waitFor(() =>
-          expect(elem.innerHTML.includes(guideCueTitle)).toBe(true),
-        );
-      });
+
+      const guideCue = await findByText(guideCueTitle);
+      expect(elem).toContainElement(guideCue);
     });
   });
 });

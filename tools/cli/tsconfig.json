@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@lg-tools/build/config/package.tsconfig.json",
+  "compilerOptions": {
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "rootDir": "src",
+    "baseUrl": ".",
+    "paths": {
+      "@lg-tools/*": ["../*/src"]
+    }
+  },
+  "references": [
+    {
+      "path": "../build"
+    },
+    {
+      "path": "../create"
+    },
+    {
+      "path": "../install"
+    },
+    {
+      "path": "../link"
+    },
+    {
+      "path": "../lint"
+    },
+    {
+      "path": "../slackbot"
+    },
+    {
+      "path": "../test"
+    },
+    {
+      "path": "../update"
+    },
+    {
+      "path": "../validate"
+    }
+  ]
+}

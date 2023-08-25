@@ -1,17 +1,64 @@
-import React, { useState } from 'react';
-import { Meta } from '@storybook/react';
+import React from 'react';
+import { StoryFn } from '@storybook/react';
 
-import Icon from '@leafygreen-ui/icon';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
+import {
+  SegmentedControl,
+  SegmentedControlProps,
+} from '@leafygreen-ui/segmented-control';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
-import { SegmentedControlProps, Size } from './SegmentedControl/types';
-import { SegmentedControl, SegmentedControlOption } from '.';
+import { Size } from './SegmentedControl/SegmentedControl.types';
+import { TestChildren } from './SegmentedControl.testutils';
 
-export default {
+interface LiveExampleProps {
+  childrenOptions: keyof typeof TestChildren;
+}
+
+const meta: StoryMetaType<typeof SegmentedControl> = {
   title: 'Components/SegmentedControl',
   component: SegmentedControl,
+  parameters: {
+    default: 'LiveExample',
+    controls: {
+      exclude: [
+        ...storybookExcludedControlParams,
+        'children',
+        'value',
+        'defaultValue',
+      ],
+    },
+    chromatic: {
+      delay: transitionDuration.default,
+    },
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        children: [
+          TestChildren.Basic,
+          TestChildren.WithIcons,
+          TestChildren.IconsOnly,
+        ],
+        size: Object.values(Size),
+        label: [undefined, 'Select'],
+      },
+    },
+  },
+  args: {
+    label: 'Fruit',
+    name: 'fruit',
+    childrenOptions: 'Basic',
+  },
   argTypes: {
-    children: { control: false },
+    childrenOptions: {
+      control: 'select',
+      options: Object.keys(TestChildren),
+      description: 'LiveExample toggle for children',
+    },
     label: { control: 'text' },
     name: { control: 'text' },
     defaultValue: { control: 'text' },
@@ -21,123 +68,26 @@ export default {
     size: {
       control: {
         type: 'radio',
-        options: Object.values(Size),
+        options: [...Object.values(Size)],
       },
     },
     darkMode: storybookArgTypes.darkMode,
+    baseFontSize: storybookArgTypes.updatedBaseFontSize,
   },
-  parameters: {
-    controls: {
-      exclude: [
-        'aria-controls',
-        'className',
-        'children',
-        'onChange',
-        'value',
-        'defaultValue',
-      ],
-    },
-  },
-} as Meta<typeof SegmentedControl>;
+};
+export default meta;
 
-export const Uncontrolled = (args: SegmentedControlProps) => (
-  <SegmentedControl {...args} />
+export const LiveExample: StoryFn<SegmentedControlProps & LiveExampleProps> = (
+  args: SegmentedControlProps & LiveExampleProps,
+) => (
+  <SegmentedControl {...args}>
+    {TestChildren[args.childrenOptions]}
+  </SegmentedControl>
 );
-Uncontrolled.args = {
-  label: 'Fruit',
-  name: 'fruit',
-  children: [
-    <SegmentedControlOption key="dragonfruit" value="dragonfruit">
-      Dragonfruit
-    </SegmentedControlOption>,
-    <SegmentedControlOption key="eggplant" value="eggplant">
-      Eggplant
-    </SegmentedControlOption>,
-    <SegmentedControlOption key="fig" value="fig">
-      Fig
-    </SegmentedControlOption>,
-    <SegmentedControlOption disabled key="grape" value="grape">
-      Grape
-    </SegmentedControlOption>,
-  ],
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
-export const Controlled = (args: SegmentedControlProps) => {
-  const [selectedFruit, setSelectedFruit] = useState('eggplant');
-  return (
-    <Uncontrolled
-      {...args}
-      key="selectedFruit"
-      value={selectedFruit}
-      onChange={setSelectedFruit}
-    />
-  );
-};
-Controlled.args = {
-  label: 'Fruit overwhelmed',
-  name: 'fruit',
-  children: [
-    <SegmentedControlOption key="dragonfruit" value="dragonfruit">
-      Dragonfruit fruit
-    </SegmentedControlOption>,
-    <SegmentedControlOption key="eggplant" value="eggplant">
-      Eggplant bananana
-    </SegmentedControlOption>,
-    <SegmentedControlOption key="fig" value="fig">
-      Fig
-    </SegmentedControlOption>,
-    <SegmentedControlOption key="grape" value="grape">
-      Grape
-    </SegmentedControlOption>,
-  ],
-};
-
-export const WithIcons = Uncontrolled.bind({});
-WithIcons.args = {
-  label: 'View as',
-  name: 'language',
-  children: [
-    <SegmentedControlOption
-      key="json"
-      value="json"
-      glyph={<Icon glyph="CurlyBraces" />}
-    >
-      JSONNNNN and more
-    </SegmentedControlOption>,
-    <SegmentedControlOption key="xml" value="xml" glyph={<Icon glyph="Code" />}>
-      XML
-    </SegmentedControlOption>,
-    <SegmentedControlOption
-      disabled
-      key="shell"
-      value="shell"
-      glyph={<Icon glyph="Shell" />}
-    >
-      Shell
-    </SegmentedControlOption>,
-  ],
-};
-
-export const IconsOnly = Uncontrolled.bind({});
-IconsOnly.args = {
-  label: 'Location',
-  name: 'location',
-  children: [
-    <SegmentedControlOption
-      key="cloud"
-      value="cloud"
-      glyph={<Icon glyph="Cloud" />}
-    />,
-    <SegmentedControlOption
-      key="globe"
-      value="globe"
-      glyph={<Icon glyph="GlobeAmericas" />}
-    />,
-    <SegmentedControlOption
-      disabled
-      key="government"
-      value="government"
-      glyph={<Icon glyph="GovernmentBuilding" />}
-    />,
-  ],
-};
+export const Generated = () => <></>;

@@ -28,9 +28,6 @@ yarn-error.log
 # TypeScript type-checking artifact
 tsconfig.tsbuildinfo
 
-# Website build files
-website/hosting/
-
 # Environment variables
 .env
 
@@ -41,5 +38,20 @@ coverage/
 parsed-docs.json
 packages/**/tsdoc.json
 
+# Compiled story files
+packages/**/stories.js*
+
 # Local yarn releases
 .yarn
+
+# Storybook/Chromatic logs
+build-storybook.log
+
+.turbo
+scripts/tmp.*.ts
+
+# 
+.npmrc
+.changeset/pre.json
+
+TODO.md

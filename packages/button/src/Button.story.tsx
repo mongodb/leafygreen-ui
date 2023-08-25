@@ -1,41 +1,60 @@
-import React, { ElementType } from 'react';
-import { Meta, Story } from '@storybook/react';
+/* eslint-disable react/jsx-key */
+/* eslint-disable react/display-name */
+import React from 'react';
+import { userEvent, within } from '@storybook/testing-library';
 
-import { BoxProps } from '@leafygreen-ui/box';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  type PlayFn,
+  storybookArgTypes,
+  type StoryMetaType,
+  type StoryType,
+} from '@leafygreen-ui/lib';
+import { Spinner } from '@leafygreen-ui/loading-indicator';
 
 import { Size } from './types';
 import Button, { ButtonProps, Variant } from '.';
 
-type ButtonStoryProps = BoxProps<ElementType<HTMLButtonElement>, ButtonProps>;
-
-// TODO: Ensure that TSDocs are being read from the Button component directly, not this StoryButton component
-/**
- * Buttons allow users to take actions, and make choices, with a single tap.
- */
-export const StoryButton: React.FC<ButtonStoryProps> = props => (
-  <Button {...props} />
-);
-
-export default {
+const meta: StoryMetaType<typeof Button> = {
   title: 'Components/Button',
-  component: StoryButton,
-  excludeStories: ['StoryButton'],
-  args: {
-    children: 'MongoDB',
-    variant: Variant.Default,
-  },
+  component: Button,
   parameters: {
-    controls: {
-      exclude: ['ref', 'onClick', 'className'],
+    default: 'LiveExample',
+    generate: {
+      storyNames: ['LargeSize', 'DefaultSize', 'SmallSize', 'XSmallSize'],
+      combineArgs: {
+        darkMode: [false, true],
+        rightGlyph: [undefined, <Icon glyph={'ArrowRight'} />],
+        leftGlyph: [undefined, <Icon glyph={'Cloud'} />],
+        children: ['MongoDB', undefined],
+        variant: Object.values(Variant),
+      },
+      excludeCombinations: [
+        {
+          children: undefined,
+          rightGlyph: undefined,
+          leftGlyph: undefined,
+        },
+        {
+          rightGlyph: <Icon glyph={'ArrowRight'} />,
+          leftGlyph: <Icon glyph={'Cloud'} />,
+          children: undefined,
+        },
+      ],
     },
   },
+  args: {
+    children: 'MongoDB',
+    loadingIndicator: <Spinner />,
+    leftGlyph: undefined,
+    rightGlyph: undefined,
+  },
   argTypes: {
+    ...storybookArgTypes,
     disabled: {
       control: { type: 'boolean' },
     },
+    darkMode: storybookArgTypes.darkMode,
     leftGlyph: {
       options: Object.keys(glyphs),
       control: { type: 'select' },
@@ -57,15 +76,22 @@ export default {
     href: {
       control: 'text',
     },
-    ...storybookArgTypes,
+    isLoading: {
+      control: 'boolean',
+    },
+    loadingText: {
+      control: 'text',
+    },
   },
-} as Meta<ButtonStoryProps>;
+};
 
-const Template: Story<ButtonStoryProps> = ({
+export default meta;
+
+export const LiveExample: StoryType<typeof Button> = ({
   leftGlyph,
   rightGlyph,
   ...args
-}: ButtonStoryProps) => (
+}: ButtonProps) => (
   <Button
     // @ts-expect-error
     leftGlyph={leftGlyph ? <Icon glyph={leftGlyph} /> : undefined}
@@ -74,39 +100,72 @@ const Template: Story<ButtonStoryProps> = ({
     {...args}
   />
 );
-
-export const Default = Template.bind({});
-Default.args = {
-  variant: Variant.Default,
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshots: true,
+  },
 };
 
-export const Primary = Template.bind({});
-Primary.args = {
-  variant: Variant.Primary,
+export const Focused: StoryType<typeof Button> = LiveExample.bind({});
+Focused.play = (async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const button = canvas.getByRole('button');
+  await userEvent.click(button);
+}) as PlayFn<typeof Button>;
+
+export const LargeSize: StoryType<typeof Button> = () => <></>;
+LargeSize.parameters = {
+  generate: {
+    args: {
+      size: Size.Large,
+    },
+  },
 };
 
-export const PrimaryOutline = Template.bind({});
-PrimaryOutline.args = {
-  variant: Variant.PrimaryOutline,
+export const DefaultSize: StoryType<typeof Button> = () => <></>;
+DefaultSize.parameters = {
+  generate: {
+    args: {
+      size: Size.Default,
+    },
+  },
 };
 
-export const Danger = Template.bind({});
-Danger.args = {
-  variant: Variant.Danger,
+export const SmallSize: StoryType<typeof Button> = () => <></>;
+SmallSize.parameters = {
+  generate: {
+    args: {
+      size: Size.Small,
+    },
+  },
 };
 
-export const DangerOutline = Template.bind({});
-DangerOutline.args = {
-  variant: Variant.DangerOutline,
+export const XSmallSize: StoryType<typeof Button> = () => <></>;
+XSmallSize.parameters = {
+  generate: {
+    args: {
+      size: Size.XSmall,
+    },
+  },
 };
 
-export const BaseGreen = Template.bind({});
-BaseGreen.args = {
-  variant: Variant.BaseGreen,
+export const Loading: StoryType<typeof Button> = () => <></>;
+Loading.parameters = {
+  generate: {
+    combineArgs: {
+      size: Object.values(Size),
+      loadingText: [undefined, 'Saving'],
+    },
+    args: {
+      isLoading: true,
+      variant: Variant.Default,
+      rightGlyph: undefined,
+      leftGlyph: undefined,
+      loadingIndicator: <Spinner />,
+    },
+  },
+  // Avoids flakey Chromatic tests
+  chromatic: {
+    disableSnapshots: true,
+  },
 };
-
-export const WithGlobalDarkMode: Story<ButtonStoryProps> = args => (
-  <LeafygreenProvider darkMode={true}>
-    <Button {...args}>Test</Button>
-  </LeafygreenProvider>
-);

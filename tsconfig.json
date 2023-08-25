@@ -1,11 +1,14 @@
 {
-  "extends": "./common.tsconfig.json",
-  "include": ["packages/**/src/**/*", "typings/**/*"],
-  "exclude": ["packages/testing-lib/src/**/*"],
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@lg-tools/build/config/root.tsconfig.json",
   "compilerOptions": {
-    "module": "system",
-    "noEmit": true,
-    "tsBuildInfoFile": "./tsconfig.tsbuildinfo",
-    "incremental": true
-  }
+    "baseUrl": ".",
+    "paths": {
+      "@leafygreen-ui/icon/dist/*": ["./packages/icon/src/generated/*"],
+      "@leafygreen-ui/*": ["packages/*/src"],
+      "@lg-tools/*": ["tools/*/src"]
+    }
+  },
+  "include": ["./packages", "./tools", "./scripts"],
+  "exclude": ["node_modules", "**/dist"]
 }

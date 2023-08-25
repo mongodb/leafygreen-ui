@@ -1,0 +1,169 @@
+name: Pull Request CI
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build packages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/cache@v3
+        name: Check for build cache
+        id: build-cache
+        with:
+          path: |
+            **/dist
+            !**/node_modules
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
+
+      # Only setup & build if there was no build cache hit
+      - name: Use Node 16
+        uses: actions/setup-node@v3
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
+        with:
+          node-version: '16'
+          cache: yarn
+          cache-dependency-path: 'yarn.lock'
+
+      - name: Install
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
+        run: yarn install --frozen-lockfile --prefer-offline
+
+      - name: Build
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
+        run: yarn build
+
+  lint:
+    name: Check lints
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: yarn
+          cache-dependency-path: 'yarn.lock'
+
+      - uses: actions/cache/restore@v3
+        name: Restore build cache
+        id: build-cache
+        with:
+          path: |
+            **/dist
+            !**/node_modules
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
+
+      - name: lint
+        run: yarn lint
+
+  chromatic:
+    name: Chromatic
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Use Node 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: yarn
+          cache-dependency-path: 'yarn.lock'
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
+
+      - uses: actions/cache/restore@v3
+        name: Restore build cache
+        id: build-cache
+        with:
+          path: |
+            **/dist
+            !**/node_modules
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
+
+      - name: Publish to Chromatic
+        uses: chromaui/action@v1
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          buildScriptName: 'build-storybook'
+          onlyChanged: true
+          exitOnceUploaded: true
+          exitZeroOnChanges: true
+
+  tests:
+    name: Run tests
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: yarn
+          cache-dependency-path: 'yarn.lock'
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
+
+      - uses: actions/cache/restore@v3
+        name: Restore build cache
+        id: build-cache
+        with:
+          path: |
+            **/dist
+            !**/node_modules
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
+
+      - name: tests
+        run: yarn test --ci
+        env:
+          JEST_JUNIT_OUTPUT: 'reports/junit/js-test-results.xml'
+
+  validate-builds:
+    name: Validate builds & dependencies
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: yarn
+          cache-dependency-path: 'yarn.lock'
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
+
+      - uses: actions/cache/restore@v3
+        name: Restore build cache
+        id: build-cache
+        with:
+          path: |
+            **/dist
+            !**/node_modules
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
+
+      - name: validate
+        run: yarn validate

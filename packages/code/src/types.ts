@@ -7,14 +7,14 @@ export const Mode = {
   Dark: 'dark',
 } as const;
 
-export type Mode = typeof Mode[keyof typeof Mode];
+export type Mode = (typeof Mode)[keyof typeof Mode];
 
 export const Language = {
   ...SupportedLanguages,
   None: 'none',
 } as const;
 
-export type Language = typeof Language[keyof typeof Language];
+export type Language = (typeof Language)[keyof typeof Language];
 
 export type LineHighlightingDefinition = ReadonlyArray<
   number | readonly [number, number]
@@ -133,7 +133,7 @@ export type CodeProps = Omit<
 } & (
     | {
         /**
-         * The language to format the code. See {@link SupportedLanguages}.
+         * The language to format the code. See {@link https://github.com/mongodb/leafygreen-ui/blob/main/packages/code/src/languages.ts | SupportedLanguages}.
          */
         language: Language;
         languageOptions?: undefined;

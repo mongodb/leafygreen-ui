@@ -1,44 +1,58 @@
 import React from 'react';
-import { Meta } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
-import Pipeline from './Pipeline';
 import Stage from './Stage';
-import { PipelineProps, Size } from './types';
+import { Size } from './types';
+import { Pipeline, PipelineProps } from '.';
 
-export default {
+const meta: StoryMetaType<typeof Pipeline> = {
   title: 'Components/Pipeline',
   component: Pipeline,
+  parameters: {
+    default: 'LiveExample',
+    controls: {
+      exclude: [...storybookExcludedControlParams, 'children'],
+    },
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        size: Object.values(Size),
+        children: [
+          ['$match', '$group', '$project', '$addFields'],
+          // prettier-ignore
+          ['$match', '$group', '$project', '$addFields', '$limit', '$foobar', '$barbaz', '$loremipsum', '$doloramet'],
+        ],
+      },
+    },
+  },
   args: {
-    stages: ['$match', '$group', '$project', '$addFields', '$limit'].join(','),
     darkMode: false,
     size: Size.Normal,
+    children: ['$match', '$group', '$project', '$addFields', '$limit'].map(
+      (stage, index) => <Stage key={`${stage}-${index}`}>{stage}</Stage>,
+    ),
   },
   argTypes: {
-    className: {
-      type: 'string',
-    },
-    children: {
-      control: false,
-    },
     darkMode: storybookArgTypes.darkMode,
-    stages: {
-      description:
-        '[STORYBOOK ONLY]\n\nThis prop is used to generate DOM elements to render children. It is not defined in the component.',
-    },
   },
-} as Meta<typeof Pipeline>;
+};
+export default meta;
 
-export const Basic = ({
-  stages,
+export const LiveExample: StoryFn<PipelineProps & { stages: string }> = ({
   ...args
 }: PipelineProps & { stages: string }) => {
-  return (
-    <Pipeline {...args}>
-      {stages.split(',').map((stage, index) => (
-        <Stage key={`${stage}-${index}`}>{stage}</Stage>
-      ))}
-    </Pipeline>
-  );
+  return <Pipeline {...args} />;
 };
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+
+export const Generated = () => {};

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/button",
-  "version": "19.0.4",
+  "version": "21.0.5",
   "description": "leafyGreen UI Kit Button",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -13,27 +13,30 @@
     }
   },
   "scripts": {
-    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
   },
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/box": "^3.1.1",
-    "@leafygreen-ui/emotion": "^4.0.3",
-    "@leafygreen-ui/lib": "^10.0.0",
-    "@leafygreen-ui/palette": "^3.4.7",
-    "@leafygreen-ui/ripple": "^1.1.8",
-    "@leafygreen-ui/tokens": "^2.0.0",
+    "@leafygreen-ui/box": "^3.1.8",
+    "@leafygreen-ui/emotion": "^4.0.7",
+    "@leafygreen-ui/lib": "^11.0.0",
+    "@leafygreen-ui/palette": "^4.0.7",
+    "@leafygreen-ui/ripple": "^1.1.12",
+    "@leafygreen-ui/tokens": "^2.1.4",
     "polished": "^4.2.2"
   },
   "devDependencies": {
     "next": "^13.0.5",
-    "@leafygreen-ui/icon": "^11.12.4"
+    "@leafygreen-ui/icon": "^11.22.2",
+    "@leafygreen-ui/loading-indicator": "^2.0.4"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.0"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.7"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/button",

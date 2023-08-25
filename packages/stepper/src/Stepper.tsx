@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import EllipsesStep from './EllipsesStep';
 import Step from './InternalStep';
@@ -23,10 +24,11 @@ const Stepper = ({
   currentStep,
   maxDisplayedSteps = Array.isArray(children) ? children.length : 1,
   completedStepsShown = 1,
-  darkMode = false,
+  darkMode: darkModeProp,
   className,
   ...rest
 }: StepperProps) => {
+  const { darkMode } = useDarkMode(darkModeProp);
   // Helper Variables
   const numSteps = React.Children.count(children);
   maxDisplayedSteps = Math.min(maxDisplayedSteps, numSteps);
@@ -109,6 +111,8 @@ const Stepper = ({
     </StepperContextProvider>
   );
 };
+
+Stepper.displayName = 'Stepper';
 
 Stepper.propTypes = {
   currentStep: PropTypes.number,

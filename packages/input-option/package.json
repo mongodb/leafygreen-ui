@@ -1,0 +1,47 @@
+{
+  "name": "@leafygreen-ui/input-option",
+  "version": "1.0.9",
+  "description": "leafyGreen UI Kit Internal Input Option",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "<3.9": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/input-option",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@leafygreen-ui/a11y": "^1.4.8",
+    "@leafygreen-ui/emotion": "^4.0.7",
+    "@leafygreen-ui/lib": "^11.0.0",
+    "@leafygreen-ui/palette": "^4.0.7",
+    "@leafygreen-ui/polymorphic": "^1.3.6",
+    "@leafygreen-ui/tokens": "^2.1.4",
+    "@leafygreen-ui/typography": "^16.5.5"
+  },
+  "devDependencies": {
+    "@leafygreen-ui/icon": "^11.22.2"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^3.1.7"
+  }
+}

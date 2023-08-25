@@ -25,7 +25,6 @@ import {
   MongoDBLogo,
   MongoDBLogoMark,
   AtlasLogoLockup,
-  RealmLogoLockup,
   CommunityEditionLogoLockup,
   EnterpriseAdvancedLogoLockup,
 } from '@leafygreen-ui/logo';
@@ -87,16 +86,6 @@ return <MongoDBLogo />;
 | `className` | `string`                                               | Adds a className to the root `<svg>` element. |                  |
 
 # AtlasForGovernmentLogoLockup
-
-## Properties
-
-| Prop        | Type                                                   | Description                                   | Default          |
-| ----------- | ------------------------------------------------------ | --------------------------------------------- | ---------------- |
-| `height`    | `number`                                               | Sets the height of the component.             | `40`             |
-| `color`     | `'white'`, `'black'`, `'green-dark-2'`, `'green-base'` | Sets the color of the component.              | `'green-dark-2'` |
-| `className` | `string`                                               | Adds a className to the root `<svg>` element. |                  |
-
-# RealmLogoLockup
 
 ## Properties
 

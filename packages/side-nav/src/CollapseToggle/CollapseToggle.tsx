@@ -33,6 +33,7 @@ export function CollapseToggle({
 
   return (
     <Tooltip
+      usePortal={false}
       align="right"
       justify="middle"
       open={typeof hideTooltip === 'boolean' ? !hideTooltip : undefined}

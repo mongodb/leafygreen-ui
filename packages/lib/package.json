@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/lib",
-  "version": "10.0.0",
+  "version": "11.0.0",
   "description": "leafyGreen UI Kit Internal Library",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -13,7 +13,9 @@
     }
   },
   "scripts": {
-    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
   },
   "keywords": [],
   "license": "Apache-2.0",
@@ -21,11 +23,14 @@
     "access": "public"
   },
   "peerDependencies": {
-    "react": "^17.0.0"
+    "react": "^17.0.0 || ^18.0.0"
   },
   "dependencies": {
-    "lodash": "^4.17.21"
+    "@storybook/csf": "^0.1.0",
+    "lodash": "^4.17.21",
+    "prop-types": "^15.7.2"
   },
+  "devDependencies": {},
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/lib",
   "repository": {

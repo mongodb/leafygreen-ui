@@ -1,61 +1,91 @@
+/* eslint-disable react/display-name */
 import React, { useState } from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
-import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
-import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { storybookArgTypes, Theme } from '@leafygreen-ui/lib';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+  StoryType,
+  Theme,
+} from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { Option, Select, Size } from '@leafygreen-ui/select';
 import { Body, H1 } from '@leafygreen-ui/typography';
 
-import { SideNavProps } from './SideNav/SideNav.types';
-import { CollapsedSideNavItem, SideNav, SideNavGroup, SideNavItem } from '.';
-
-export default {
-  title: 'Components/SideNav',
-  component: SideNav,
-  parameters: {
-    controls: {
-      exclude: ['children', 'className', 'setCollapsed', 'id', 'collapsed'],
-    },
-  },
-  argTypes: {
-    darkMode: storybookArgTypes.darkMode,
-  },
-  args: {
-    widthOverride: 200,
-  },
-} as ComponentMeta<typeof SideNav>;
+import {
+  CollapsedSideNavItem,
+  SideNav,
+  SideNavGroup,
+  SideNavItem,
+  type SideNavProps,
+} from '.';
 
 const basicStyles = css`
   height: 50vh;
 `;
 
-export const Basic: ComponentStory<typeof SideNav> = ({
+const meta: StoryMetaType<typeof SideNav> = {
+  title: 'Components/SideNav',
+  component: SideNav,
+  parameters: {
+    default: 'LiveExample',
+    controls: {
+      exclude: [
+        ...storybookExcludedControlParams,
+        'children',
+        'setCollapsed',
+        'collapsed',
+      ],
+    },
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        baseFontSize: [14, 16],
+        collapsed: [false, true],
+      },
+      args: {
+        className: basicStyles,
+      },
+    },
+  },
+  argTypes: {
+    darkMode: storybookArgTypes.darkMode,
+    baseFontSize: storybookArgTypes.baseFontSize,
+  },
+  args: {
+    widthOverride: 200,
+    children: [
+      <SideNavGroup
+        key="header"
+        glyph={<Icon glyph="Support" />}
+        header="Header text"
+      >
+        <SideNavItem active>Active State</SideNavItem>
+        <SideNavItem disabled>Disabled State</SideNavItem>
+      </SideNavGroup>,
+      <SideNavGroup key="test" header="Test">
+        <SideNavItem>
+          Default root element
+          <SideNavItem>Nested Item</SideNavItem>
+        </SideNavItem>
+        <SideNavItem href="#">Anchor root element</SideNavItem>
+      </SideNavGroup>,
+    ],
+  },
+};
+export default meta;
+
+export const LiveExample: StoryType<typeof SideNav> = ({
   className,
   ...args
 }: SideNavProps) => {
   return <SideNav className={cx(basicStyles, className)} {...args} />;
 };
-Basic.args = {
-  children: [
-    <SideNavGroup
-      key="header"
-      glyph={<Icon glyph="Support" />}
-      header="Header text"
-    >
-      <SideNavItem active>Active State</SideNavItem>
-      <SideNavItem disabled>Disabled State</SideNavItem>
-    </SideNavGroup>,
-    <SideNavGroup key="test" header="Test">
-      <SideNavItem>Default root element</SideNavItem>
-      <SideNavItem href="#">Anchor root element</SideNavItem>
-      <SideNavItem>Another item</SideNavItem>
-    </SideNavGroup>,
-  ],
+LiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
 };
 
 const appContainer = css`
@@ -65,11 +95,6 @@ const appContainer = css`
   grid-template-columns: auto 1fr;
   height: 100vh;
   width: 100%;
-`;
-
-const realmAppContainer = css`
-  display: flex;
-  flex-grow: 1;
 `;
 
 const mongoNavBaseStyles = css`
@@ -107,12 +132,6 @@ const contentStyles = css`
   overflow-y: auto;
 `;
 
-const realmAppId = css`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
 const MongoNavPlaceholder = ({ darkMode, ...props }: any) => (
   <header
     className={cx(
@@ -147,6 +166,7 @@ export const InLayout = ({
   navItemText,
   hasActiveItem,
   darkMode,
+  ...rest
 }: any) => {
   const [collapsed, setCollapsed] = useState(false);
   const textHeader = 'States';
@@ -161,6 +181,7 @@ export const InLayout = ({
           className={sideNavStyles}
           aria-label="General example"
           darkMode={darkMode}
+          {...rest}
         >
           <SideNavGroup glyph={<Icon glyph="Support" />} header={textHeader}>
             <SideNavItem active>Active State</SideNavItem>
@@ -207,82 +228,15 @@ InLayout.args = {
   navItemText: 'Modify Me!',
   hasActiveItem: false,
 };
-
-export const Realm = ({ darkMode }: SideNavProps) => {
-  return (
-    <LeafyGreenProvider>
-      <MongoNavPlaceholder darkMode={darkMode} />
-      <div className={realmAppContainer}>
-        <SideNav
-          className={sideNavStyles}
-          aria-label="Realm app"
-          darkMode={darkMode}
-        >
-          <SideNavItem
-            href="https://realm.mongodb.com"
-            glyph={
-              <Icon
-                glyph="Apps"
-                fill={darkMode ? palette.blue.light1 : palette.blue.base}
-              />
-            }
-          >
-            Realm Apps
-          </SideNavItem>
-
-          <SideNavItem active className={realmAppId}>
-            <span id="arbitrary-1">App ID</span>
-            <IconButton aria-label="copy arbitrary-1">
-              <Icon glyph="Copy" />
-            </IconButton>
-          </SideNavItem>
-
-          <SideNavGroup glyph={<CloudIcon />} header="Data Access">
-            <SideNavItem href="/">Rules</SideNavItem>
-            <SideNavItem href="/">Schema</SideNavItem>
-            <SideNavItem href="/">App Users</SideNavItem>
-            <SideNavItem href="/">Authentication</SideNavItem>
-          </SideNavGroup>
-
-          <SideNavGroup glyph={<Icon glyph="Laptop" />} header="Build">
-            <SideNavItem>SDKs</SideNavItem>
-            <SideNavItem>Sync</SideNavItem>
-            <SideNavItem>GraphQL</SideNavItem>
-            <SideNavItem>Functions</SideNavItem>
-            <SideNavItem>Triggers</SideNavItem>
-            <SideNavItem>HTTPS Endpoints</SideNavItem>
-            <SideNavItem>Values</SideNavItem>
-          </SideNavGroup>
-
-          <SideNavGroup glyph={<Icon glyph="Settings" />} header="Manage">
-            <SideNavItem>Linked Data Sources</SideNavItem>
-            <SideNavItem>Deployment</SideNavItem>
-            <SideNavItem>Hosting</SideNavItem>
-            <SideNavItem>Logs</SideNavItem>
-            <SideNavItem>App Settings</SideNavItem>
-            <SideNavItem>Push Notifications</SideNavItem>
-          </SideNavGroup>
-
-          <SideNavGroup glyph={<Icon glyph="Support" />} header="Help">
-            <SideNavItem>Documentation</SideNavItem>
-            <SideNavItem>Feature Requests</SideNavItem>
-          </SideNavGroup>
-
-          <SideNavGroup header="Admin">
-            <SideNavItem>Trigger State Console</SideNavItem>
-          </SideNavGroup>
-        </SideNav>
-
-        {content}
-      </div>
-    </LeafyGreenProvider>
-  );
+InLayout.parameters = {
+  chromatic: { disableSnapshot: true },
 };
 
 export const OrgSettings = ({
   baseFontSize,
   widthOverride,
   darkMode,
+  ...rest
 }: SideNavProps) => {
   return (
     <LeafyGreenProvider>
@@ -294,6 +248,7 @@ export const OrgSettings = ({
           baseFontSize={baseFontSize}
           widthOverride={widthOverride}
           darkMode={darkMode}
+          {...rest}
         >
           <SideNavGroup
             glyph={<Icon glyph="Cloud" />}
@@ -360,19 +315,16 @@ OrgSettings.args = {
   baseFontSize: 14,
   widthOverride: 200,
 };
-OrgSettings.argTypes = {
-  baseFontSize: {
-    options: [14, 16],
-    control: { type: 'select' },
-  },
+OrgSettings.parameters = {
+  chromatic: { disableSnapshot: true },
 };
 
-export const Nested = ({ darkMode }: SideNavProps) => {
+export const Nested = ({ darkMode, ...rest }: SideNavProps) => {
   return (
     <LeafyGreenProvider>
       <div className={appContainer}>
         <MongoNavPlaceholder darkMode={darkMode} />
-        <SideNav widthOverride={300} darkMode={darkMode}>
+        <SideNav widthOverride={300} darkMode={darkMode} {...rest}>
           <SideNavItem>Overview</SideNavItem>
           <SideNavItem>Introduction</SideNavItem>
           <SideNavItem>
@@ -400,7 +352,12 @@ export const Nested = ({ darkMode }: SideNavProps) => {
     </LeafyGreenProvider>
   );
 };
+Nested.parameters = {
+  chromatic: { disableSnapshot: true },
+};
 
 Nested.argTypes = {
   darkMode: storybookArgTypes.darkMode,
 };
+
+export const Generated = () => {};

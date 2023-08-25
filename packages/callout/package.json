@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/callout",
-  "version": "9.0.3",
+  "version": "9.0.14",
   "description": "leafyGreen UI Kit Callout",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -13,25 +13,27 @@
     }
   },
   "scripts": {
-    "build": "../../node_modules/.bin/rollup --config ../../rollup.config.js"
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
   },
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/emotion": "^4.0.3",
-    "@leafygreen-ui/icon": "^11.12.4",
-    "@leafygreen-ui/lib": "^10.0.0",
-    "@leafygreen-ui/palette": "^3.4.7",
-    "@leafygreen-ui/tokens": "^2.0.0",
-    "@leafygreen-ui/typography": "^16.0.0"
+    "@leafygreen-ui/emotion": "^4.0.7",
+    "@leafygreen-ui/icon": "^11.22.2",
+    "@leafygreen-ui/lib": "^11.0.0",
+    "@leafygreen-ui/palette": "^4.0.7",
+    "@leafygreen-ui/tokens": "^2.1.4",
+    "@leafygreen-ui/typography": "^16.5.5"
   },
   "devDependencies": {
-    "@leafygreen-ui/code": "^14.1.2"
+    "@leafygreen-ui/code": "^14.2.13"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.0"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.7"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/callout",
   "repository": {

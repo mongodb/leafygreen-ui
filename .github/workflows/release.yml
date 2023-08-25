@@ -1,4 +1,4 @@
-name: Version
+name: Release
 
 on:
   push:
@@ -6,39 +6,131 @@ on:
       - main
 
 jobs:
+  build:
+    name: Build packages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/cache@v3
+        name: Check for build cache
+        id: build-cache
+        with:
+          path: |
+            **/dist
+            !**/node_modules
+            **/tsdoc.json
+            **/stories.js
+          key: ${{ runner.os }}-release-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
+
+      # Only setup & build if there was no build cache hit
+      - name: Use Node 16
+        uses: actions/setup-node@v3
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
+        with:
+          node-version: '16'
+          cache: yarn
+          cache-dependency-path: 'yarn.lock'
+
+      - name: Install
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
+        run: yarn install --frozen-lockfile --prefer-offline
+
+      - name: Build
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
+        run: yarn build
+
+      - name: Generate docs
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
+        run: yarn turbo run docs
+
+  chromatic:
+    name: Establish Chromatic baseline
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Use Node 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: yarn
+          cache-dependency-path: 'yarn.lock'
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile --prefer-offline
+
+      - uses: actions/cache/restore@v3
+        name: Restore build cache
+        id: build-cache
+        with:
+          path: |
+            **/dist
+            !**/node_modules
+            **/tsdoc.json
+            **/stories.js
+          key: ${{ runner.os }}-release-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
+
+      - name: Publish to Chromatic
+        uses: chromaui/action@v1
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          buildScriptName: 'build-storybook'
+          exitOnceUploaded: true
+          exitZeroOnChanges: true
+          autoAcceptChanges: true
+
   release:
     name: Release
     runs-on: ubuntu-latest
+    needs: [build]
+    outputs:
+      published: ${{ steps.changesets.outputs.published }}
+      publishedPackages: ${{ steps.changesets.outputs.publishedPackages }}
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-      - name: Setup Node.js 14.x
-        uses: actions/setup-node@v1
+      - name: Use Node 16
+        uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: '16'
+          cache: yarn
+          cache-dependency-path: 'yarn.lock'
 
       - name: Install Dependencies
-        run: yarn
+        run: yarn install --frozen-lockfile --prefer-offline
 
-      - name: Build packages
-        run: yarn build:packages
+      - uses: actions/cache/restore@v3
+        name: Restore build cache
+        id: build-cache
+        with:
+          path: |
+            **/dist
+            !**/node_modules
+            **/tsdoc.json
+            **/stories.js
+          key: ${{ runner.os }}-release-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
 
-      - name: Build typescript
-        run: yarn build:ts
-
-      - name: Build TSDoc
-        run: yarn docs:tsdoc
-
-      - name: Create Release Pull Request
+      - name: Version packages
         id: changesets
         uses: changesets/action@v1
         with:
           version: yarn changeset version
-          publish: yarn publish:packages
+          publish: yarn run publish
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
           NPM_TOKEN: '${{ secrets.NPM_TOKEN }}'
+
+  notify:
+    name: Notify Slack & Website
+    runs-on: ubuntu-latest
+    needs: [release]
+    if: ${{ needs.release.outputs.published == 'true' }}
+    steps:
+      - uses: actions/checkout@v2
 
       - name: Dispatch to Website repo
         uses: peter-evans/repository-dispatch@v2
@@ -48,17 +140,22 @@ jobs:
           repository: mongodb/design
           event-type: release-leafygreen-ui
 
+      - name: Install
+        run: yarn install --frozen-lockfile --prefer-offline
+
+      - uses: actions/cache/restore@v3
+        name: Restore build cache
+        id: build-cache
+        with:
+          path: |
+            **/dist
+            !**/node_modules
+            **/tsdoc.json
+            **/stories.js
+          key: ${{ runner.os }}-release-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
+
       - name: Notify Slack channel of new releases
-        if: steps.changesets.outputs.published == 'true'
         id: slackbot
-        run: yarn slackbot '${{steps.changesets.outputs.publishedPackages}}'
+        run: yarn slackbot '${{ needs.release.outputs.publishedPackages }}'
         env:
-          SLACK_BOT_TOKEN: '${{secrets.SLACK_BOT_TOKEN}}'
-
-      - name: Publish storybook with package updates
-        if: steps.changesets.outputs.published == 'true'
-        run: yarn publish:storybook
-
-      - name: Publish mongodb.design with package updates
-        if: steps.changesets.outputs.published == 'true'
-        run: yarn publish:website
+          SLACK_BOT_TOKEN: '${{ secrets.SLACK_BOT_TOKEN }}'

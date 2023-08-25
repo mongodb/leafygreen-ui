@@ -1,17 +1,38 @@
-import React, { useRef, useState } from 'react';
-import { isUndefined } from 'lodash';
+import React from 'react';
+import isUndefined from 'lodash/isUndefined';
 import { darken, lighten, readableColor, transparentize } from 'polished';
 
 import { css, cx } from '@leafygreen-ui/emotion';
-import {
-  focusRing,
-  hoverRing,
-  transitionDuration,
-  typeScales,
-} from '@leafygreen-ui/tokens';
-import Tooltip from '@leafygreen-ui/tooltip';
+import { HTMLElementProps, StoryMetaType } from '@leafygreen-ui/lib';
 
+// import {
+//   focusRing,
+//   hoverRing,
+//   transitionDuration,
+//   typeScales,
+// } from '@leafygreen-ui/tokens';
+// import Tooltip from '@leafygreen-ui/tooltip';
 import palette from './palette';
+
+type HueName = keyof typeof palette;
+
+const ShadeNames = [
+  'dark4',
+  'dark3',
+  'dark2',
+  'dark1',
+  'base',
+  'light1',
+  'light2',
+  'light3',
+] as const;
+type ShadeName = (typeof ShadeNames)[number];
+
+interface ColorBlockProps extends HTMLElementProps<'div'> {
+  hue: HueName;
+  name: string;
+  shade?: ShadeName;
+}
 
 const BLOCK_WIDTH = 88;
 
@@ -29,15 +50,6 @@ const colorBlock = css`
   padding-bottom: 100%;
   border-radius: 8px;
   cursor: pointer;
-  transition: box-shadow ease-in-out ${transitionDuration.default}ms;
-
-  &:hover {
-    box-shadow: ${hoverRing.light.gray};
-  }
-
-  &:focus {
-    box-shadow: ${focusRing.light.default};
-  }
 `;
 
 const hexLabelStyle = css`
@@ -45,8 +57,7 @@ const hexLabelStyle = css`
   position: absolute;
   left: 50%;
   margin: auto;
-  font-size: ${typeScales.body1.fontSize}px;
-  line-height: ${typeScales.body1.lineHeight}px;
+  font-size: 13px;
   text-align: center;
   padding: 3px 0.3rem;
   border-radius: 4px;
@@ -54,37 +65,19 @@ const hexLabelStyle = css`
 `;
 
 const nameLabelStyle = css`
-  font-size: ${typeScales.body1.fontSize}px;
-  line-height: ${typeScales.body1.lineHeight}px;
   text-align: center;
   color: ${palette.gray.dark1};
   margin: auto;
   padding-block: 0.3em;
 `;
 
-type HueName = keyof typeof palette;
+const colorRowStyle = css`
+  grid-template-columns: repeat(${ShadeNames.length}, ${BLOCK_WIDTH}px);
+  display: grid;
+  gap: 24px;
+`;
 
-const ShadeNames = [
-  'dark4',
-  'dark3',
-  'dark2',
-  'dark1',
-  'base',
-  'light1',
-  'light2',
-  'light3',
-] as const;
-type ShadeName = typeof ShadeNames[number];
-
-interface ColorBlockProps {
-  hue: HueName;
-  name: string;
-  shade?: ShadeName;
-}
-
-function ColorBlock({ hue, shade }: ColorBlockProps) {
-  const [copied, setCopied] = useState(false);
-  const colorBlockRef = useRef<HTMLButtonElement>(null);
+function ColorBlock({ hue, shade, ...rest }: ColorBlockProps) {
   const name = `${hue} ${shade ?? ''}`;
 
   let color: string;
@@ -96,7 +89,7 @@ function ColorBlock({ hue, shade }: ColorBlockProps) {
   }
 
   const colorBlockWrapperDynamic = css`
-    grid-column: ${shade ? ShadeNames.indexOf(shade) + 1 : 'unset'};
+    grid-column: ${shade ? ShadeNames.indexOf(shade) + 1 : '0'};
   `;
 
   const colorBlockColor = css`
@@ -110,35 +103,21 @@ function ColorBlock({ hue, shade }: ColorBlockProps) {
     background-color: ${lighten(0.2, color)};
   `;
 
-  const copyHex = () => {
-    navigator.clipboard.writeText(color);
-
-    setCopied(true);
-
-    setTimeout(() => {
-      setCopied(false);
-    }, 1500);
-  };
-
   return (
-    <div className={cx(colorBlockWrapper, colorBlockWrapperDynamic)}>
-      <button className={cx(colorBlock, colorBlockColor)} onClick={copyHex} />
+    <div className={cx(colorBlockWrapper, colorBlockWrapperDynamic)} {...rest}>
+      <button className={cx(colorBlock, colorBlockColor)} />
       <div className={cx(hexLabelStyle, hexLabelColor)}>{color}</div>
       <div className={nameLabelStyle}>{name}</div>
-      <Tooltip
-        open={copied}
-        refEl={colorBlockRef}
-        usePortal={false}
-        spacing={0}
-      >
-        Copied {color}
-      </Tooltip>
     </div>
   );
 }
 
-export default {
+const meta: StoryMetaType<any> = {
   title: 'Components/Palette',
+  component: null,
+  parameters: {
+    default: 'AllColors',
+  },
   argTypes: {
     className: {
       table: {
@@ -148,38 +127,39 @@ export default {
   },
 };
 
+export default meta;
+
 export function AllColors() {
-  const hues = Object.keys(palette) as Array<keyof typeof palette>;
+  const allColors = Object.keys(palette);
+  const hues = (allColors as Array<keyof typeof palette>).slice(
+    2,
+    allColors.length,
+  ); // remove black and white
 
-  const renderedRanges = hues.map(hue => {
-    const hueValues = palette[hue];
-
-    if (typeof hueValues === 'string') {
-      return <ColorBlock key={hue} hue={hue} name={hue} />;
-    }
-
-    return (
-      <div
-        key={hue}
-        className={css`
-          grid-template-columns: repeat(${ShadeNames.length}, ${BLOCK_WIDTH}px);
-          display: grid;
-          gap: 24px;
-        `}
-      >
-        {(Object.keys(hueValues) as Array<keyof typeof hueValues>).map(
-          shade => (
-            <ColorBlock
-              key={hueValues[shade]}
-              hue={hue}
-              shade={shade}
-              name={`${hue} ${shade}`}
-            />
-          ),
-        )}
+  return (
+    <div>
+      <div className={colorRowStyle}>
+        <ColorBlock hue="white" name="white" />
+        <ColorBlock hue="black" name="black" />
       </div>
-    );
-  });
+      {hues.map(hue => {
+        const hueValues = palette[hue];
 
-  return <div>{renderedRanges}</div>;
+        return (
+          <div key={hue} className={colorRowStyle}>
+            {(Object.keys(hueValues) as Array<keyof typeof hueValues>).map(
+              shade => (
+                <ColorBlock
+                  key={hueValues[shade]}
+                  hue={hue}
+                  shade={shade}
+                  name={`${hue} ${shade}`}
+                />
+              ),
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
 }

@@ -12,7 +12,6 @@ import {
   EnterpriseAdvancedLogoLockup,
   MongoDBLogo,
   MongoDBLogoMark,
-  RealmLogoLockup,
   RealmLogoMark,
   UniversityLogoLockup,
 } from '.';
@@ -25,7 +24,6 @@ const renderedComponents = {
   AtlasLogoMark: <AtlasLogoMark />,
   AtlasForGovernmentLogoLockup: <AtlasForGovernmentLogoLockup />,
   ChartsLogoMark: <ChartsLogoMark />,
-  RealmLogoLockup: <RealmLogoLockup />,
   RealmLogoMark: <RealmLogoMark />,
   EnterpriseAdvancedLogoLockup: <EnterpriseAdvancedLogoLockup />,
   CommunityEditionLogoLockup: <CommunityEditionLogoLockup />,

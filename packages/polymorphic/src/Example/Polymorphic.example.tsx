@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
+import { PolymorphicRenderFunction } from '../Polymorphic/Polymorphic.types';
 import {
   InferredPolymorphic,
   Polymorph,
@@ -13,7 +14,7 @@ import {
   usePolymorphic,
 } from '..';
 
-interface ExampleProps {
+export interface ExampleProps {
   /** An arbitrary title */
   title?: string;
   /** Flag for dark mode */
@@ -26,11 +27,11 @@ interface ExampleProps {
  * @example
  */
 export const ExamplePolymorphic = Polymorphic<ExampleProps>(
-  ({ as, title, ...rest }) => {
+  ({ as, title, children, ...rest }) => {
     const { Component, ref } = usePolymorphic(as);
     return (
       <Component ref={ref} {...rest}>
-        {title}
+        {title || children}
       </Component>
     );
   },
@@ -41,11 +42,11 @@ export const ExamplePolymorphic = Polymorphic<ExampleProps>(
  * @example
  */
 export const ExamplePolymorphicWithRef = Polymorphic<ExampleProps>(
-  ({ as, title, ...rest }, ref) => {
+  ({ as, title, children, ...rest }, ref) => {
     const { Component } = usePolymorphic(as);
     return (
       <Component ref={ref} {...rest}>
-        {title}
+        {title || children}
       </Component>
     );
   },
@@ -56,11 +57,11 @@ export const ExamplePolymorphicWithRef = Polymorphic<ExampleProps>(
  * @example
  */
 export const ExampleInferred = InferredPolymorphic<ExampleProps>(
-  ({ as, title, ...rest }) => {
+  ({ as, title, children, ...rest }) => {
     const { Component, ref } = useInferredPolymorphic(as, rest);
     return (
       <Component ref={ref} {...rest}>
-        {title}
+        {title || children}
       </Component>
     );
   },
@@ -74,12 +75,12 @@ export const ExampleInferred = InferredPolymorphic<ExampleProps>(
 export const ExampleInferredDefaultButton = InferredPolymorphic<
   ExampleProps,
   'button'
->(({ as = 'button' as PolymorphicAs, title, ...rest }) => {
-  const { Component, ref } = useInferredPolymorphic(as, rest);
+>(({ as, title, children, ...rest }) => {
+  const { Component, ref } = useInferredPolymorphic(as, rest, 'button');
 
   return (
     <Component ref={ref} {...rest}>
-      {title}
+      {title || children}
     </Component>
   );
 }, 'ExampleInferredDefaultButton');
@@ -95,14 +96,17 @@ type AdvancedProps<T extends PolymorphicAs> = PolymorphicPropsWithRef<
  * Extends Polymorphic
  * @example
  */
-export const AdvancedPolymorphic = <T extends PolymorphicAs = 'div'>({
+export const AdvancedPolymorphic: PolymorphicComponentType<ExampleProps> = <
+  T extends PolymorphicAs = 'div',
+>({
   as,
   title,
+  children,
   ...rest
 }: AdvancedProps<T>) => {
   return (
     <Polymorph as={as as React.ElementType} {...rest}>
-      {title}
+      {title || children}
     </Polymorph>
   );
 };
@@ -112,25 +116,32 @@ AdvancedPolymorphic.displayName = 'AdvancedPolymorphic';
  * Extends Polymorphic
  * @example
  */
-export const AdvancedPolymorphicWithRef = React.forwardRef(
-  <T extends PolymorphicAs = 'div'>(
-    { as, title, ...rest }: AdvancedProps<T>,
-    ref: PolymorphicRef<T>,
-  ) => {
-    return (
-      <Polymorph as={as as React.ElementType} {...rest} ref={ref}>
-        {title}
-      </Polymorph>
-    );
-  },
-);
+
+const AdvRenderFn: PolymorphicRenderFunction<ExampleProps> = <
+  T extends PolymorphicAs = 'div',
+>(
+  { as, title, children, ...rest }: AdvancedProps<T>,
+  ref: PolymorphicRef<T>,
+) => {
+  return (
+    <Polymorph as={as as PolymorphicAs} {...rest} ref={ref}>
+      {title || children}
+    </Polymorph>
+  );
+};
+
+export const AdvancedPolymorphicWithRef: PolymorphicComponentType<ExampleProps> =
+  React.forwardRef(AdvRenderFn);
 AdvancedPolymorphicWithRef.displayName = 'AdvancedPolymorphicWithRef';
 
 /**
  * Ensure `as` types can be restricted
  * @example
  */
-type RestrictedType = 'a' | 'button' | React.ComponentType;
+type RestrictedType =
+  | 'a'
+  | 'button'
+  | React.ComponentType<React.PropsWithChildren<unknown>>;
 type RestrictedProps<T extends RestrictedType> = PolymorphicPropsWithRef<
   T,
   {

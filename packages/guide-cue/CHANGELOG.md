@@ -1,5 +1,259 @@
 # @leafygreen-ui/guide-cue
 
+## 5.0.1
+
+### Patch Changes
+
+- Updated dependencies [fd907503]
+- Updated dependencies [c9f0055a]
+- Updated dependencies [56459cde]
+  - @leafygreen-ui/hooks@8.0.0
+  - @leafygreen-ui/icon@11.23.0
+  - @leafygreen-ui/a11y@1.4.9
+  - @leafygreen-ui/leafygreen-provider@3.1.8
+  - @leafygreen-ui/popover@11.0.17
+  - @leafygreen-ui/tooltip@10.0.9
+
+## 5.0.0
+
+### Major Changes
+
+- 4fcf2e94: Downgrades `focus-trap-react` package to `^9.0.2` so that tests still pass without requiring the use of the `fallbackFocus` option on the `<FocusTrap>` component.
+
+  Refactors multi-step guideCue so that the tooltip no longer uses a portal, as React 18 displays the tooltip in the wrong position when the viewport changes.
+
+### Patch Changes
+
+- 4fcf2e94: Add `focusTrapOptions` type
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/icon@11.22.2
+  - @leafygreen-ui/lib@11.0.0
+  - @leafygreen-ui/tooltip@10.0.8
+  - @leafygreen-ui/popover@11.0.16
+  - @leafygreen-ui/a11y@1.4.8
+  - @leafygreen-ui/button@21.0.5
+  - @leafygreen-ui/icon-button@15.0.17
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+  - @leafygreen-ui/typography@16.5.5
+
+## 4.0.12
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+- Updated dependencies [c11bbc29]
+  - @leafygreen-ui/a11y@1.4.7
+  - @leafygreen-ui/button@21.0.3
+  - @leafygreen-ui/emotion@4.0.7
+  - @leafygreen-ui/hooks@7.7.8
+  - @leafygreen-ui/icon@11.22.1
+  - @leafygreen-ui/icon-button@15.0.16
+  - @leafygreen-ui/leafygreen-provider@3.1.6
+  - @leafygreen-ui/lib@10.4.3
+  - @leafygreen-ui/palette@4.0.7
+  - @leafygreen-ui/popover@11.0.15
+  - @leafygreen-ui/tooltip@10.0.7
+  - @leafygreen-ui/typography@16.5.4
+
+## 4.0.11
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+- Updated dependencies [f73807cf]
+- Updated dependencies [31c09354]
+- Updated dependencies [c15ee2ac]
+  - @leafygreen-ui/icon@11.22.0
+  - @leafygreen-ui/a11y@1.4.6
+  - @leafygreen-ui/button@21.0.2
+  - @leafygreen-ui/emotion@4.0.6
+  - @leafygreen-ui/hooks@7.7.7
+  - @leafygreen-ui/icon-button@15.0.15
+  - @leafygreen-ui/leafygreen-provider@3.1.5
+  - @leafygreen-ui/lib@10.4.2
+  - @leafygreen-ui/palette@4.0.6
+  - @leafygreen-ui/popover@11.0.14
+  - @leafygreen-ui/tooltip@10.0.6
+  - @leafygreen-ui/typography@16.5.3
+
+## 4.0.10
+
+### Patch Changes
+
+- Updated dependencies [cfba537d]
+  - @leafygreen-ui/button@21.0.0
+
+## 4.0.9
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+- Updated dependencies [215268ff]
+  - @leafygreen-ui/leafygreen-provider@3.1.4
+  - @leafygreen-ui/icon-button@15.0.14
+  - @leafygreen-ui/typography@16.5.2
+  - @leafygreen-ui/emotion@4.0.5
+  - @leafygreen-ui/palette@4.0.5
+  - @leafygreen-ui/popover@11.0.13
+  - @leafygreen-ui/tooltip@10.0.5
+  - @leafygreen-ui/button@20.3.1
+  - @leafygreen-ui/hooks@7.7.6
+  - @leafygreen-ui/a11y@1.4.5
+  - @leafygreen-ui/icon@11.20.1
+  - @leafygreen-ui/lib@10.4.1
+
+## 4.0.8
+
+### Patch Changes
+
+- 76161cf0: Minor fixes to stories
+- 76161cf0: Updates devDependencies
+- 76161cf0: Updates stories for Chromatic testing
+- 76161cf0: update types for TooltipAlign and TooltipJustify and switched to const exports
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [735342e9]
+- Updated dependencies [76161cf0]
+- Updated dependencies [95f5107a]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+- Updated dependencies [76161cf0]
+  - @leafygreen-ui/lib@10.4.0
+  - @leafygreen-ui/hooks@7.7.5
+  - @leafygreen-ui/tooltip@10.0.4
+  - @leafygreen-ui/icon@11.17.0
+  - @leafygreen-ui/button@20.2.1
+  - @leafygreen-ui/popover@11.0.12
+  - @leafygreen-ui/icon-button@15.0.12
+  - @leafygreen-ui/typography@16.5.1
+
+## 4.0.7
+
+### Patch Changes
+
+- 63b2deb0b: Upgrade button to v20.1.1
+- Updated dependencies [63b2deb0b]
+  - @leafygreen-ui/popover@11.0.11
+  - @leafygreen-ui/tooltip@10.0.3
+
+## 4.0.6
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- d2ce54e2f: Exports primary component props
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [75099c60b]
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [0cd471676]
+- Updated dependencies [0cd471676]
+- Updated dependencies [2dfc4d0ea]
+  - @leafygreen-ui/button@20.1.0
+  - @leafygreen-ui/hooks@7.7.4
+  - @leafygreen-ui/icon@11.16.1
+  - @leafygreen-ui/icon-button@15.0.11
+  - @leafygreen-ui/leafygreen-provider@3.1.3
+  - @leafygreen-ui/lib@10.3.4
+  - @leafygreen-ui/popover@11.0.10
+  - @leafygreen-ui/tooltip@10.0.2
+  - @leafygreen-ui/typography@16.5.0
+
+## 4.0.5
+
+### Patch Changes
+
+- a3a52e131: Bumps to use new `useIdAllocator` hook
+- Updated dependencies [614f7617d]
+- Updated dependencies [a3a52e131]
+- Updated dependencies [614f7617d]
+- Updated dependencies [a3a52e131]
+  - @leafygreen-ui/icon@11.15.0
+  - @leafygreen-ui/hooks@7.7.3
+  - @leafygreen-ui/a11y@1.4.4
+  - @leafygreen-ui/tooltip@10.0.1
+
+## 4.0.4
+
+### Patch Changes
+
+- 32b3d3146: Bumps to use new `useIdAllocator` hook
+- 1e5dc3e33: Updates required props.
+- 8ece56980: Removes the multi-step tooltip as a child of `Popover` and place it outside of `Popover` as a sibling.
+- Updated dependencies [32b3d3146]
+- Updated dependencies [8ece56980]
+- Updated dependencies [83fc5b31b]
+- Updated dependencies [9bcf8b925]
+- Updated dependencies [8ece56980]
+- Updated dependencies [32b3d3146]
+- Updated dependencies [73cbbd02c]
+  - @leafygreen-ui/a11y@1.4.3
+  - @leafygreen-ui/tooltip@10.0.0
+  - @leafygreen-ui/popover@11.0.9
+  - @leafygreen-ui/icon@11.14.0
+  - @leafygreen-ui/typography@16.4.0
+  - @leafygreen-ui/hooks@7.7.2
+  - @leafygreen-ui/button@20.0.6
+
+## 4.0.3
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/a11y@1.4.2
+  - @leafygreen-ui/button@20.0.4
+  - @leafygreen-ui/emotion@4.0.4
+  - @leafygreen-ui/hooks@7.7.1
+  - @leafygreen-ui/icon@11.13.1
+  - @leafygreen-ui/icon-button@15.0.9
+  - @leafygreen-ui/leafygreen-provider@3.1.2
+  - @leafygreen-ui/lib@10.3.2
+  - @leafygreen-ui/palette@4.0.3
+  - @leafygreen-ui/popover@11.0.7
+  - @leafygreen-ui/tooltip@9.1.7
+  - @leafygreen-ui/typography@16.2.1
+
+## 4.0.2
+
+### Patch Changes
+
+- Updated dependencies [5b036515e]
+- Updated dependencies [26e341a0b]
+- Updated dependencies [997121cc3]
+- Updated dependencies [eb0cc4498]
+  - @leafygreen-ui/palette@4.0.0
+  - @leafygreen-ui/lib@10.2.2
+  - @leafygreen-ui/icon@11.12.5
+  - @leafygreen-ui/typography@16.1.0
+  - @leafygreen-ui/button@20.0.2
+  - @leafygreen-ui/icon-button@15.0.7
+  - @leafygreen-ui/tooltip@9.1.6
+
+## 4.0.1
+
+### Patch Changes
+
+- bf2fedf6d: Version bumps lib
+- Updated dependencies [1cff328a3]
+- Updated dependencies [51c544e2e]
+- Updated dependencies [ffb99f417]
+- Updated dependencies [bf2fedf6d]
+- Updated dependencies [b7a29ea38]
+  - @leafygreen-ui/button@20.0.0
+  - @leafygreen-ui/a11y@1.4.0
+  - @leafygreen-ui/hooks@7.5.0
+  - @leafygreen-ui/icon-button@15.0.6
+  - @leafygreen-ui/leafygreen-provider@3.1.1
+  - @leafygreen-ui/tooltip@9.1.4
+  - @leafygreen-ui/typography@16.0.1
+
 ## 4.0.0
 
 ### Major Changes

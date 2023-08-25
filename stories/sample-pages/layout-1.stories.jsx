@@ -3,6 +3,9 @@ import Button from '@leafygreen-ui/button';
 
 export default {
   title: 'Sample Pages (WIP)/Layout 1',
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
 };
 
 const Template = ({ children }) => {
@@ -15,6 +18,9 @@ const Template = ({ children }) => {
 };
 
 export const ProfilePage = Template.bind({});
+ProfilePage.parameters = {
+  chromatic: {disableSnapshot: true}
+}
 ProfilePage.args = {
   children: (
     <>
@@ -24,6 +30,9 @@ ProfilePage.args = {
 };
 
 export const SomeOtherPage = Template.bind({});
+SomeOtherPage.parameters = {
+  chromatic: {disableSnapshot: true}
+}
 SomeOtherPage.args = {
   children: (
     <>

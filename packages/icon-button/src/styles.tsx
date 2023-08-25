@@ -87,7 +87,7 @@ export const iconButtonMode: Record<Theme, string> = {
       color: ${palette.gray.light3};
 
       &:before {
-        background-color: ${palette.gray.dark1};
+        background-color: ${palette.gray.dark2};
       }
     }
   `,

@@ -1,5 +1,81 @@
 # @leafygreen-ui/hooks
 
+## 8.0.0
+
+### Major Changes
+
+- fd907503: Updates `useControlledValue` hook to remove the controlled value from internal state. Instead the controlled value is consumed directly.
+
+## 7.7.8
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+
+## 7.7.7
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+
+## 7.7.6
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+
+## 7.7.5
+
+### Patch Changes
+
+- 735342e9: Adds `useForceRerender` hook.
+
+## 7.7.4
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+
+## 7.7.3
+
+### Patch Changes
+
+- a3a52e131: Removes call to use React 18's useId hook if found
+
+## 7.7.2
+
+### Patch Changes
+
+- 32b3d3146: Rewrites `useIdAllocator` hook so that it performs properly across client-side and server-side renders
+
+## 7.7.1
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+
+## 7.7.0
+
+### Minor Changes
+
+- d351c02bc: Creates `useStateRef` - a combination of useState and useRef, that returns the current state, a `setState` function, and a `getState` function that will return the current walue of the state. This is useful to avoid referencing stale state inside callbacks
+
+### Patch Changes
+
+- c2c5601f4: Adds missing dependencies. Removes unused dependencies
+
+## 7.6.0
+
+### Minor Changes
+
+- ec2a3d66d: Creates `useAutoScroll` to automatically scroll a container
+
+## 7.5.0
+
+### Minor Changes
+
+- ffb99f417: Creates `useControlledValue` hook
+
 ## 7.4.0
 
 ### Minor Changes

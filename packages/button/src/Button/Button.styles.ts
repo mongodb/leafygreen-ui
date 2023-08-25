@@ -6,6 +6,7 @@ import { palette } from '@leafygreen-ui/palette';
 import {
   BaseFontSize,
   fontFamilies,
+  fontWeights,
   transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
@@ -34,13 +35,9 @@ const baseButtonStyles = css`
   font-family: ${fontFamilies.default};
   border-radius: 6px;
 
-  &:focus {
+  &:focus,
+  &:focus-visible {
     outline: none;
-  }
-
-  &[disabled],
-  &:disabled {
-    pointer-events: none;
   }
 
   &:active,
@@ -57,7 +54,12 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       border-color: ${palette.gray.base};
       color: ${palette.black};
 
-      &:hover,
+      // needed to override any global button styles
+      &:focus {
+        color: ${palette.black};
+      }
+
+      &:hover[aria-disabled='false'],
       &:active {
         color: ${palette.black};
         background-color: ${palette.white};
@@ -70,7 +72,11 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       border-color: ${palette.green.dark2};
       color: ${palette.white};
 
-      &:hover,
+      &:focus {
+        color: ${palette.white};
+      }
+
+      &:hover[aria-disabled='false'],
       &:active {
         color: ${palette.white};
         background-color: #00593f; // Not quite dark3
@@ -84,7 +90,11 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       border-color: ${palette.green.dark2};
       color: ${palette.green.dark2};
 
-      &:hover,
+      &:focus {
+        color: ${palette.green.dark2};
+      }
+
+      &:hover[aria-disabled='false'],
       &:active {
         color: ${palette.green.dark2};
         background-color: ${transparentize(0.96, palette.green.base)};
@@ -97,7 +107,11 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       border-color: ${palette.red.base};
       color: ${palette.white};
 
-      &:hover,
+      &:focus {
+        color: ${palette.white};
+      }
+
+      &:hover[aria-disabled='false'],
       &:active {
         color: ${palette.white};
         background-color: #c82222; // not quite dark1
@@ -111,7 +125,11 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       border-color: ${palette.red.light1};
       color: ${palette.red.base};
 
-      &:hover,
+      &:focus {
+        color: ${palette.red.base};
+      }
+
+      &:hover[aria-disabled='false'],
       &:active {
         color: ${palette.red.dark2};
         background-color: ${transparentize(0.96, palette.red.base)};
@@ -125,7 +143,11 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       border-color: ${palette.green.dark2};
       color: ${palette.green.dark3};
 
-      &:hover,
+      &:focus {
+        color: ${palette.green.dark3};
+      }
+
+      &:hover[aria-disabled='false'],
       &:active {
         color: ${palette.green.dark3};
         background-color: ${mix(0.96, palette.green.base, palette.green.dark3)};
@@ -143,7 +165,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
         color: ${palette.white};
       }
 
-      &:hover,
+      &:hover[aria-disabled='false'],
       &:active {
         background-color: ${palette.gray.dark1};
         border-color: ${palette.gray.base};
@@ -160,7 +182,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
         color: ${palette.white};
       }
 
-      &:hover,
+      &:hover[aria-disabled='false'],
       &:active {
         color: ${palette.white};
         background-color: #00593f; // Off palette
@@ -177,7 +199,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
         color: ${palette.green.base};
       }
 
-      &:hover,
+      &:hover[aria-disabled='false'],
       &:active {
         color: ${palette.green.base};
         background-color: ${transparentize(0.96, palette.green.base)};
@@ -195,7 +217,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
         color: ${palette.white};
       }
 
-      &:hover,
+      &:hover[aria-disabled='false'],
       &:active {
         border-color: ${palette.red.light1};
         color: ${palette.white};
@@ -212,7 +234,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
         color: ${palette.red.light1};
       }
 
-      &:hover,
+      &:hover[aria-disabled='false'],
       &:active {
         color: ${palette.red.light1};
         background-color: ${transparentize(0.96, palette.red.base)};
@@ -225,7 +247,11 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       border-color: ${palette.green.dark2};
       color: ${palette.green.dark3};
 
-      &:hover,
+      &:focus {
+        color: ${palette.green.dark3};
+      }
+
+      &:hover[aria-disabled='false'],
       &:active {
         color: ${palette.green.dark3};
         background-color: ${mix(
@@ -333,6 +359,7 @@ const disabledStyle: Record<Theme, string> = {
     }
 
     &:focus {
+      color: ${palette.gray.base};
       box-shadow: ${focusBoxShadow(palette.white)};
     }
   `,
@@ -347,6 +374,7 @@ const disabledStyle: Record<Theme, string> = {
     }
 
     &:focus {
+      color: ${palette.gray.dark1};
       box-shadow: ${focusBoxShadow(palette.black)};
     }
   `,
@@ -358,7 +386,7 @@ const sizeStyle: Record<Size, string> = {
     text-transform: uppercase;
     font-size: 12px;
     line-height: 1em;
-    font-weight: bold;
+    font-weight: ${fontWeights.bold};
     letter-spacing: 0.4px;
   `,
 
@@ -381,14 +409,14 @@ const fontStyles: Record<BaseFontSize, string> = {
   [BaseFontSize.Body1]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
-    font-weight: 500; // Medium
+    font-weight: ${fontWeights.medium};
   `,
   [BaseFontSize.Body2]: css`
     font-size: ${typeScales.body2.fontSize}px;
     line-height: ${typeScales.body2.lineHeight}px;
     // Pixel pushing for optical alignment purposes
     transform: translateY(1px);
-    font-weight: 500; // Medium
+    font-weight: ${fontWeights.medium};
   `,
 };
 

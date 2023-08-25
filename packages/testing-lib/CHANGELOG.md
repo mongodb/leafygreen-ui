@@ -1,5 +1,41 @@
 # @leafygreen-ui/testing-lib
 
+## 0.3.4
+
+### Patch Changes
+
+- 4fcf2e94: Fixes `isPromiseLike` TS errors
+
+## 0.3.3
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+
+## 0.3.2
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+
+## 0.3.1
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+
+## 0.3.0
+
+### Minor Changes
+
+- e6fd9ecfc: First publish of @leafygreen-ui/testing-lib
+
+## 0.2.2
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+
 ## 0.2.1
 
 ### Patch Changes

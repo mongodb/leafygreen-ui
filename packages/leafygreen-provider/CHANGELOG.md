@@ -1,5 +1,77 @@
 # @leafygreen-ui/leafygreen-provider
 
+## 3.1.8
+
+### Patch Changes
+
+- Updated dependencies [fd907503]
+  - @leafygreen-ui/hooks@8.0.0
+
+## 3.1.7
+
+### Patch Changes
+
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/lib@11.0.0
+
+## 3.1.6
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+- Updated dependencies [c11bbc29]
+  - @leafygreen-ui/hooks@7.7.8
+  - @leafygreen-ui/lib@10.4.3
+
+## 3.1.5
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+- Updated dependencies [c15ee2ac]
+  - @leafygreen-ui/hooks@7.7.7
+  - @leafygreen-ui/lib@10.4.2
+
+## 3.1.4
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+- Updated dependencies [215268ff]
+  - @leafygreen-ui/hooks@7.7.6
+  - @leafygreen-ui/lib@10.4.1
+
+## 3.1.3
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- d2ce54e2f: Exports primary component props
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [0cd471676]
+  - @leafygreen-ui/hooks@7.7.4
+  - @leafygreen-ui/lib@10.3.4
+
+## 3.1.2
+
+### Patch Changes
+
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/hooks@7.7.1
+  - @leafygreen-ui/lib@10.3.2
+
+## 3.1.1
+
+### Patch Changes
+
+- bf2fedf6d: Version bumps lib
+- Updated dependencies [ffb99f417]
+  - @leafygreen-ui/hooks@7.5.0
+
 ## 3.1.0
 
 ### Minor Changes

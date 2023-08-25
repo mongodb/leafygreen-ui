@@ -1,0 +1,26 @@
+{
+  "name": "@lg-tools/update",
+  "version": "0.1.2",
+  "description": "Updates all LeafyGreen UI packages to the latest version",
+  "main": "dist/index.js",
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "lg-update": "./bin/index.js"
+  },
+  "scripts": {
+    "build": "lg-internal-build-package",
+    "tsc": "tsc --build tsconfig.json"
+  },
+  "dependencies": {
+    "@lg-tools/build": "^0.2.0",
+    "@lg-tools/meta": "^0.1.2",
+    "@types/cross-spawn": "6.0.2",
+    "@types/fs-extra": "11.0.1",
+    "chalk": "4.1.2",
+    "cross-spawn": "7.0.3",
+    "fs-extra": "11.1.1"
+  }
+}

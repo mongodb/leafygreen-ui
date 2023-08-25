@@ -5,8 +5,7 @@ packages/icon/src/glyphs/*.svg
 packages/icon/src/generated/*.tsx
 storybook-static
 .changeset/
-website/.next/
-website/hosting/
 **/package.json
 **/tsconfig.json
 **/tsdoc.json
+packages/**/stories.js*

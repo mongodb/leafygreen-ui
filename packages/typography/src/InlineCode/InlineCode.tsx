@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import {
+  InferredPolymorphic,
+  useInferredPolymorphic,
+} from '@leafygreen-ui/polymorphic';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { codeTypeScaleStyles } from '../styles';
@@ -18,28 +22,30 @@ import {
   normal,
   nowrap,
 } from './InlineCode.styles';
-import { InlineCodeProps } from './InlineCode.types';
+import { BaseInlineCodeProps } from './InlineCode.types';
 
-const InlineCode = React.forwardRef<HTMLElement, InlineCodeProps>(
+const InlineCode = InferredPolymorphic<BaseInlineCodeProps, 'code'>(
   (
     {
       children,
       className,
       darkMode: darkModeProp,
       baseFontSize: baseFontSizeOverride,
+      as,
       ...rest
-    }: InlineCodeProps,
+    },
     forwardedRef,
   ) => {
     const { theme } = useDarkMode(darkModeProp);
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
+    const { Component } = useInferredPolymorphic(as, rest, 'code');
 
     const whiteSpace =
       ((typeof children === 'string' && children.match(/./gu)?.length) ?? 0) <=
       30
         ? nowrap
         : normal;
-    const isAnchor = rest?.href !== undefined || rest.onClick !== undefined;
+    const needsWrapper = Component !== 'code';
 
     const renderedInlineCode = (
       <code
@@ -51,7 +57,7 @@ const InlineCode = React.forwardRef<HTMLElement, InlineCodeProps>(
           codeFocusModes[theme],
           whiteSpace,
           {
-            [codeLinkStyleModes[theme]]: isAnchor,
+            [codeLinkStyleModes[theme]]: needsWrapper,
           },
           className,
         )}
@@ -60,14 +66,14 @@ const InlineCode = React.forwardRef<HTMLElement, InlineCodeProps>(
       </code>
     );
 
-    if (isAnchor) {
+    if (needsWrapper) {
       return (
-        <a
+        <Component
           className={cx(anchorClassName, codeLinkWrapper, className)}
           {...rest}
         >
           {renderedInlineCode}
-        </a>
+        </Component>
       );
     }
 

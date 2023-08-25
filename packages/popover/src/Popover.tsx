@@ -277,7 +277,8 @@ function Popover({
     >
       {state => (
         <>
-          <div
+          {/* Using <span> to prevent validateDOMNesting warnings. Warnings will still show up if `usePortal` is false */}
+          <span
             ref={setPlaceholderNode}
             className={css`
               display: none;
@@ -298,6 +299,11 @@ function Popover({
                   `]: typeof popoverZIndex === 'number',
                 },
                 className,
+                {
+                  [css`
+                    transition-delay: 0ms;
+                  `]: state === 'exiting',
+                },
               )}
             >
               {/*

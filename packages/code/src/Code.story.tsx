@@ -1,33 +1,20 @@
 /* eslint-disable no-useless-escape */
 import React from 'react';
-import { Story } from '@storybook/react';
 
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  type StoryMetaType,
+  type StoryType,
+} from '@leafygreen-ui/lib';
 
-import LanguageSwitcherExample from './LanguageSwitcherExample';
-import LGCode, { CodeProps, Language } from '.';
-
-// TODO: Import below comment directly from component definition.
-/**
- *
- * React Component that outputs single-line and multi-line code blocks.
- *
- * ---
- * @param props.children The string to be formatted.
- * @param props.className An additional CSS class added to the root element of Code.
- * @param props.language The language used for syntax highlighing.
- * @param props.darkMode Determines if the code block will be rendered in dark mode. Default: `false`
- * @param props.showLineNumbers When true, shows line numbers in preformatted code blocks. Default: `false`
- * @param props.lineNumberStart Specifies the numbering of the first line in the block. Default: 1
- * @param props.copyable When true, allows the code block to be copied to the user's clipboard. Default: `true`
- * @param props.onCopy Callback fired when Code is copied
- */
-export const Code: React.FC<CodeProps> = props => <LGCode {...props} />;
+import LanguageSwitcherExample from './LanguageSwitcher/LanguageSwitcherExample';
+import Code, { CodeProps, Language } from '.';
 
 const jsSnippet = `
-
 import datetime from './';
 
 const myVar = 42;
@@ -49,17 +36,41 @@ function greeting(entity) {
 }
  
 console.log(greeting('World'));
-
 `;
 
-export default {
+const shortJsSnippet = `
+import {greeting} from './utils/greeting'
+console.log(greeting('World'));
+`;
+
+const meta: StoryMetaType<typeof Code> = {
   title: 'Components/Code',
   component: Code,
-  excludeStories: ['Code'],
+  parameters: {
+    default: 'LiveExample',
+    controls: {
+      exclude: [
+        ...storybookExcludedControlParams,
+        'showCustomActionButtons',
+        'showCustomButtons',
+        'customActionButtons',
+        'languageOptions',
+      ],
+    },
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        copyable: [true, false],
+        showWindowChrome: [false, true],
+        showLineNumbers: [false, true],
+      },
+    },
+  },
   args: {
     language: 'js',
-    highlightLines: [],
     baseFontSize: 14,
+    children: shortJsSnippet,
+    chromeTitle: 'example.ts',
   },
   argTypes: {
     language: {
@@ -68,65 +79,42 @@ export default {
         options: Object.keys(Language),
       },
     },
-    usePortal: { control: 'boolean' },
     copyable: { control: 'boolean' },
     showWindowChrome: { control: 'boolean' },
     showLineNumbers: { control: 'boolean' },
-    darkMode: { control: 'boolean' },
+    highlightLines: { control: 'boolean' },
+    darkMode: storybookArgTypes.darkMode,
     chromeTitle: { control: 'text' },
     lineNumberStart: { control: 'number' },
-    baseFontSize: {
-      options: [14, 16],
-      control: { type: 'radio' },
-      description:
-        '[STORYBOOK ONLY]\n\nThis font size is passed into the LeafygreenProvider.',
-    },
-  },
-  parameters: {
-    controls: {
-      exclude: [
-        'showCustomActionButtons',
-        'showCustomButtons',
-        'customActionButtons',
-        'children',
-        'onCopy',
-        'className',
-        'onChange',
-        'portalClassName',
-        'portalContainer',
-        'scrollContainer',
-        'popoverZIndex',
-        'ref',
-        'languageOptions',
-      ],
-    },
+    baseFontSize: storybookArgTypes.baseFontSize,
   },
 };
+
+export default meta;
 
 type BaseFontSize = 14 | 16;
+interface FontSizeProps {
+  baseFontSize: BaseFontSize;
+}
 
-const Template: Story<CodeProps & { baseFontSize: BaseFontSize }> = ({
-  // eslint-disable-next-line react/prop-types
+export const LiveExample: StoryType<typeof Code, FontSizeProps> = ({
   baseFontSize,
+  highlightLines,
   ...args
-}) => (
+}: CodeProps & FontSizeProps) => (
   <LeafygreenProvider baseFontSize={baseFontSize}>
-    <Code {...args}>{jsSnippet}</Code>
+    <Code
+      {...(args as CodeProps)}
+      highlightLines={highlightLines ? [6, [10, 15]] : undefined}
+    >
+      {jsSnippet}
+    </Code>
   </LeafygreenProvider>
 );
-
-export const Basic = Template.bind({});
-Basic.args = {};
-
-export const HighlightOptions = Template.bind({});
-HighlightOptions.args = {
-  highlightLines: [6, [10, 15]],
-};
-
-export const WithChrome = Template.bind({});
-WithChrome.args = {
-  showWindowChrome: true,
-  chromeTitle: 'directory/fileName.js',
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
 const customActionButtons = [
@@ -144,16 +132,16 @@ const customActionButtons = [
   </IconButton>,
 ];
 
-export const WithCustomActions = Template.bind({});
+export const WithCustomActions = LiveExample.bind({});
 WithCustomActions.args = {
   showCustomActionButtons: true,
   customActionButtons,
 };
 
-export const WithLanguageSwitcher: Story<
-  CodeProps & { baseFontSize: BaseFontSize }
-  // eslint-disable-next-line react/prop-types
-> = ({ baseFontSize, ...args }) => (
+export const WithLanguageSwitcher: StoryType<typeof Code, FontSizeProps> = ({
+  baseFontSize,
+  ...args
+}: CodeProps & FontSizeProps) => (
   <LeafygreenProvider baseFontSize={baseFontSize}>
     <LanguageSwitcherExample
       showCustomActionButtons={true}
@@ -162,3 +150,5 @@ export const WithLanguageSwitcher: Story<
     />
   </LeafygreenProvider>
 );
+
+export const Generated = () => {};

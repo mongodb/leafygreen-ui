@@ -1,5 +1,156 @@
 # @leafygreen-ui/marketing-modal
 
+## 4.0.14
+
+### Patch Changes
+
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/lib@11.0.0
+  - @leafygreen-ui/modal@16.0.0
+  - @leafygreen-ui/button@21.0.5
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+  - @leafygreen-ui/typography@16.5.5
+
+## 4.0.13
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+- Updated dependencies [c11bbc29]
+  - @leafygreen-ui/button@21.0.3
+  - @leafygreen-ui/emotion@4.0.7
+  - @leafygreen-ui/leafygreen-provider@3.1.6
+  - @leafygreen-ui/lib@10.4.3
+  - @leafygreen-ui/modal@15.0.6
+  - @leafygreen-ui/palette@4.0.7
+  - @leafygreen-ui/tokens@2.1.4
+  - @leafygreen-ui/typography@16.5.4
+
+## 4.0.12
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+- Updated dependencies [c15ee2ac]
+  - @leafygreen-ui/button@21.0.2
+  - @leafygreen-ui/emotion@4.0.6
+  - @leafygreen-ui/leafygreen-provider@3.1.5
+  - @leafygreen-ui/lib@10.4.2
+  - @leafygreen-ui/modal@15.0.5
+  - @leafygreen-ui/palette@4.0.6
+  - @leafygreen-ui/tokens@2.1.3
+  - @leafygreen-ui/typography@16.5.3
+
+## 4.0.11
+
+### Patch Changes
+
+- Updated dependencies [cfba537d]
+  - @leafygreen-ui/button@21.0.0
+
+## 4.0.10
+
+### Patch Changes
+
+- 215268ff: Updates build tooling. No functional changes
+- Updated dependencies [215268ff]
+  - @leafygreen-ui/leafygreen-provider@3.1.4
+  - @leafygreen-ui/typography@16.5.2
+  - @leafygreen-ui/emotion@4.0.5
+  - @leafygreen-ui/palette@4.0.5
+  - @leafygreen-ui/button@20.3.1
+  - @leafygreen-ui/tokens@2.1.2
+  - @leafygreen-ui/modal@15.0.4
+  - @leafygreen-ui/lib@10.4.1
+
+## 4.0.9
+
+### Patch Changes
+
+- 63b2deb0b: Upgrade button to v20.1.1
+- Updated dependencies [63b2deb0b]
+  - @leafygreen-ui/modal@15.0.3
+
+## 4.0.8
+
+### Patch Changes
+
+- d2ce54e2f: Updates story files for Storybook 7.x
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [75099c60b]
+- Updated dependencies [d2ce54e2f]
+- Updated dependencies [0cd471676]
+- Updated dependencies [2dfc4d0ea]
+  - @leafygreen-ui/button@20.1.0
+  - @leafygreen-ui/leafygreen-provider@3.1.3
+  - @leafygreen-ui/modal@15.0.2
+  - @leafygreen-ui/typography@16.5.0
+
+## 4.0.7
+
+### Patch Changes
+
+- Updated dependencies [67a0ea5fe]
+- Updated dependencies [73cbbd02c]
+- Updated dependencies [32b3d3146]
+- Updated dependencies [9bcf8b925]
+- Updated dependencies [8ece56980]
+- Updated dependencies [73cbbd02c]
+  - @leafygreen-ui/modal@15.0.0
+  - @leafygreen-ui/tokens@2.1.0
+  - @leafygreen-ui/typography@16.4.0
+  - @leafygreen-ui/button@20.0.6
+
+## 4.0.6
+
+### Patch Changes
+
+- 25729b36a: Removes `size` prop from component, as width is fixed.
+- 8c0c2bdf9: Updates build script to include a transpiled copy of the story file in the bundle
+- Updated dependencies [8c0c2bdf9]
+  - @leafygreen-ui/button@20.0.4
+  - @leafygreen-ui/emotion@4.0.4
+  - @leafygreen-ui/leafygreen-provider@3.1.2
+  - @leafygreen-ui/modal@14.0.5
+  - @leafygreen-ui/palette@4.0.3
+  - @leafygreen-ui/tokens@2.0.2
+  - @leafygreen-ui/typography@16.2.1
+
+## 4.0.5
+
+### Patch Changes
+
+- Updated dependencies [5b036515e]
+- Updated dependencies [eb0cc4498]
+  - @leafygreen-ui/palette@4.0.0
+  - @leafygreen-ui/typography@16.1.0
+  - @leafygreen-ui/button@20.0.2
+  - @leafygreen-ui/modal@14.0.3
+  - @leafygreen-ui/tokens@2.0.1
+
+## 4.0.4
+
+### Patch Changes
+
+- Updated dependencies [1cff328a3]
+- Updated dependencies [bf2fedf6d]
+- Updated dependencies [b7a29ea38]
+  - @leafygreen-ui/button@20.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.1
+  - @leafygreen-ui/modal@14.0.2
+  - @leafygreen-ui/typography@16.0.1
+
+## 4.0.3
+
+### Patch Changes
+
+- 64eee134d: TSDoc: Updates some exported TSDoc interfaces. Storybook: Updates story files.
+
 ## 4.0.2
 
 ### Patch Changes

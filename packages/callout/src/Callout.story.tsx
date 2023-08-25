@@ -1,24 +1,40 @@
 import React from 'react';
-import { ComponentStory, Meta } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 
 import Code from '@leafygreen-ui/code';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Link } from '@leafygreen-ui/typography';
 
-import Callout, { Variant } from '.';
+import Callout, { CalloutProps, Variant } from '.';
 
-export default {
+const loremIpsum = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy children ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`;
+const loremWithLinks = (
+  <div>
+    <Link href="./">Link component</Link> is simply dummy text of the printing
+    and typesetting industry. <a href="./">Anchor tag</a> has been the industry
+    standard dummy children ever since the 1500s, when an unknown printer took a
+    galley of type and scrambled it to make a type specimen book.
+  </div>
+);
+
+const meta: StoryMetaType<typeof Callout> = {
   title: 'Components/Callout',
   component: Callout,
   parameters: {
-    controls: {
-      exclude: ['className'],
+    default: 'LiveExample',
+    generate: {
+      combineArgs: {
+        title: [undefined, 'Test Title'],
+        darkMode: [false, true],
+        variant: Object.values(Variant),
+        baseFontSize: Object.values(BaseFontSize),
+      },
     },
   },
   args: {
     variant: Variant.Note,
-    children:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy children ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    children: loremWithLinks,
     darkMode: false,
   },
   argTypes: {
@@ -30,36 +46,20 @@ export default {
     children: storybookArgTypes.children,
     darkMode: storybookArgTypes.darkMode,
   },
-} as Meta<typeof Callout>;
+};
+export default meta;
 
-const Template: ComponentStory<typeof Callout> = args => <Callout {...args} />;
-
-export const Note = Template.bind({});
-Note.args = {
-  variant: Variant.Note,
+export const LiveExample: StoryFn<CalloutProps> = args => <Callout {...args} />;
+LiveExample.args = {
+  children: loremIpsum,
+};
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
-export const Tip = Template.bind({});
-Tip.args = {
-  variant: Variant.Tip,
-};
-
-export const Important = Template.bind({});
-Important.args = {
-  variant: Variant.Important,
-};
-
-export const Warning = Template.bind({});
-Warning.args = {
-  variant: Variant.Warning,
-};
-
-export const Example = Template.bind({});
-Example.args = {
-  variant: Variant.Example,
-};
-
-export const WithRichContent: ComponentStory<typeof Callout> = ({
+export const WithRichContent: StoryFn<CalloutProps> = ({
   // eslint-disable-next-line react/prop-types
   darkMode,
   ...args
@@ -81,15 +81,4 @@ export const WithRichContent: ComponentStory<typeof Callout> = ({
   );
 };
 
-export const WithLinks = Template.bind({});
-WithLinks.args = {
-  title: 'Title',
-  children: (
-    <>
-      Lorem Ipsum is simply dummy text &nbsp;
-      <Link href="http://localhost:9001">Link component</Link>
-      &nbsp;
-      <a href="http://localhost:9001">Regular link</a>
-    </>
-  ),
-};
+export const Generated = () => {};
