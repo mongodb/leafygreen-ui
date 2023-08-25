@@ -1,6 +1,24 @@
+import isObject from 'lodash/isObject';
 import isUndefined from 'lodash/isUndefined';
 import React, { ReactElement } from 'react';
-import { consoleOnce, isComponentType } from '.';
+import { consoleOnce } from '.';
+
+/** Helper type to check if element is a specific React Component  */
+export function isComponentType<
+  T extends React.ReactElement = React.ReactElement,
+>(element: React.ReactNode, displayName: string): element is T {
+  return (
+    element != null &&
+    typeof element === 'object' &&
+    'type' in element &&
+    ((element.type as any).displayName === displayName ||
+      // TODO: temp solution; Components using InferredPolymorphic have a displayName inside render.
+      // https://jira.mongodb.org/browse/LG-3232
+      (isObject(element.type as any) &&
+        'render' in (element.type as any) &&
+        (element.type as any).render?.displayName === displayName))
+  );
+}
 
 /**
  * Filters children down to a restricted set of component types.
