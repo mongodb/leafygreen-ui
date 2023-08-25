@@ -125,6 +125,7 @@ const V11Adapter = <T extends LGRowData>({
         <HeaderRow {...oldHeaderRow.props}>
           {table.getHeaderGroups()[0].headers.map((header, i) => {
             return (
+              // https://jira.mongodb.org/browse/LG-3538
               // @ts-expect-error
               <HeaderCell
                 key={header.id}
@@ -152,6 +153,7 @@ const V11Adapter = <T extends LGRowData>({
               virtualRow={
                 useVirtualScrolling ? (iterable as VirtualItem) : undefined
               }
+              // https://jira.mongodb.org/browse/LG-3538
               // @ts-expect-error rowProps is an additional prop passed by the `processData` function
               {...row.original.rowProps}
             >
@@ -160,6 +162,7 @@ const V11Adapter = <T extends LGRowData>({
                   if (cell?.column?.id === 'select') {
                     return (
                       <Cell key={cell.column.id}>
+                        {/* https://jira.mongodb.org/browse/LG-3538 */}
                         {/* @ts-expect-error `cell` is instantiated in `processColumns` */}
                         {cell.column.columnDef?.cell({ row, table })}
                       </Cell>
@@ -167,6 +170,7 @@ const V11Adapter = <T extends LGRowData>({
                   } else {
                     const cellChild =
                       // index by row.index (not the index of the loop) to get the sorted order
+                      // https://jira.mongodb.org/browse/LG-3538
                       // @ts-expect-error `processedData` is structured to be indexable by `row.index`
                       processedData[row.index]?.[cell.column.id]?.();
                     const {
@@ -192,12 +196,14 @@ const V11Adapter = <T extends LGRowData>({
               )}
               {row.subRows &&
                 row.subRows.map(subRow => {
+                  // https://jira.mongodb.org/browse/LG-3538
                   // @ts-expect-error rowProps is an additional prop passed by the `processData` function
                   const { children, ...subRowProps } = subRow.original.rowProps;
                   return (
                     <Row key={subRow.id} row={subRow} {...subRowProps}>
                       {subRow.getVisibleCells().map(srCell => {
-                        /* @ts-expect-error subRow.original returns the object in the user's defined shape, and should be string indexable */
+                        // https://jira.mongodb.org/browse/LG-3538
+                        // @ts-expect-error subRow.original returns the object in the user's defined shape, and should be string indexable
                         const subRowCell = subRow.original[srCell.column.id]();
                         const {
                           children,
