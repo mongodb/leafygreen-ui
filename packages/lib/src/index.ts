@@ -4,7 +4,7 @@ import getNodeTextContent from './getNodeTextContent';
 import DarkModeProps, { Theme } from './DarkModeProps';
 import getTheme from './getTheme';
 import { allEqual } from './allEqual';
-export { validateChildren } from './validateChildren';
+export { validateChildren, isComponentType } from './validateChildren';
 export { createSyntheticEvent } from './createSyntheticEvent';
 export { consoleOnce } from './consoleOnce';
 
