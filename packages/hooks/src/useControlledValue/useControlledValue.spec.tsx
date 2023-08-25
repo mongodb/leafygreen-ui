@@ -230,10 +230,11 @@ describe('packages/hooks/useControlledValue', () => {
         },
       );
       expect(result.current.isControlled).toBe(false);
+      expect(result.current.value).toBe('');
       // @ts-ignore - picking up renderHook.options types, not actual hook types
       act(() => rerender('apple'));
       expect(result.current.isControlled).toBe(false);
-      expect(result.current.value).toBe(undefined);
+      expect(result.current.value).toBe('');
     });
   });
 
