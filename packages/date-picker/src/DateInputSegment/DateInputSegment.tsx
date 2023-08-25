@@ -55,7 +55,7 @@ export const DateInputSegment = React.forwardRef<
     const { size } = useDatePickerContext();
 
     const formatValue = (val: string | undefined) =>
-      val && ['', '0', '00'].includes(val)
+      !val || ['', '0', '00'].includes(val)
         ? '' // If the value is any form of zero, we set it to an empty string
         : padStart(val?.toString(), charsPerSegment[segment], '0'); // otherwise, pad the string with 0s
 
