@@ -1,5 +1,16 @@
 # @leafygreen-ui/checkbox
 
+## 12.0.17
+
+### Patch Changes
+
+- Updated dependencies [3fe03b50]
+- Updated dependencies [fd907503]
+  - @leafygreen-ui/tokens@2.2.0
+  - @leafygreen-ui/hooks@8.0.0
+  - @leafygreen-ui/a11y@1.4.9
+  - @leafygreen-ui/leafygreen-provider@3.1.8
+
 ## 12.0.16
 
 ### Patch Changes
