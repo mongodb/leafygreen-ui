@@ -7,7 +7,7 @@ import { getComponentPath } from './utils/getComponentPath';
 import { getNameVariants } from './utils/getNameVariants';
 import { writeFiles } from './utils/writeFiles';
 import { CreatePackageOptions } from './create.types';
-import { component, spec, styles, types } from './templates';
+import { component, componentIndex, spec, styles, types } from './templates';
 
 interface CreateComponentArgs {
   name: string;
@@ -43,6 +43,10 @@ export function createSubComponent({ name, parent }: CreateComponentArgs) {
 
     writeFiles(
       [
+        {
+          name: `index.ts`,
+          contents: componentIndex({ packageNamePascal }),
+        },
         {
           name: `${packageNamePascal}.tsx`,
           contents: component({ packageNamePascal }),
