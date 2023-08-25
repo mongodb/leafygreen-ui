@@ -35,7 +35,6 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/lib": "^11.0.0"
+    "@leafygreen-ui/emotion": "^4.0.7"
   }
 }
