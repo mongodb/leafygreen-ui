@@ -1,5 +1,3 @@
-import isObject from 'lodash/isObject';
-import once from 'lodash/once';
 import * as typeIs from './typeIs';
 import createUniqueClassName from './createUniqueClassName';
 import getNodeTextContent from './getNodeTextContent';
@@ -8,6 +6,7 @@ import getTheme from './getTheme';
 import { allEqual } from './allEqual';
 export { validateChildren } from './validateChildren';
 export { createSyntheticEvent } from './createSyntheticEvent';
+export { consoleOnce } from './consoleOnce';
 
 export {
   type ExtendedComponentProps,
@@ -86,23 +85,6 @@ export type Either<T, Keys extends keyof T = keyof T> = Omit<T, Keys> &
 export type OneOf<T1, T2> =
   | (T1 & Partial<Record<Exclude<keyof T2, keyof T1>, never>>)
   | (T2 & Partial<Record<Exclude<keyof T1, keyof T2>, never>>);
-
-/** Helper type to check if element is a specific React Component  */
-export function isComponentType<
-  T extends React.ReactElement = React.ReactElement,
->(element: React.ReactNode, displayName: string): element is T {
-  return (
-    element != null &&
-    typeof element === 'object' &&
-    'type' in element &&
-    ((element.type as any).displayName === displayName ||
-      // TODO: temp solution; Components using InferredPolymorphic have a displayName inside render.
-      // https://jira.mongodb.org/browse/LG-3232
-      (isObject(element.type as any) &&
-        'render' in (element.type as any) &&
-        (element.type as any).render?.displayName === displayName))
-  );
-}
 
 /**
  * Utility for making it easier to couple a React Component to a css selector.
@@ -220,9 +202,3 @@ export type RecursivePartial<T> = {
 export function enforceExhaustive(value: never): never {
   throw Error(`Received unhandled value: ${value}`);
 }
-
-export const consoleOnce = {
-  error: once(console.error),
-  warn: once(console.warn),
-  log: once(console.log),
-};
