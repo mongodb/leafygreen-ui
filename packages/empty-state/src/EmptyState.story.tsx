@@ -26,7 +26,7 @@ const StoryVariant = {
   ThreeFeatures: 'Three Features',
 } as const;
 
-type StoryVariant = typeof StoryVariant[keyof typeof StoryVariant];
+type StoryVariant = (typeof StoryVariant)[keyof typeof StoryVariant];
 type StoryProps = BasicEmptyStateProps &
   FeaturesEmptyStateProps & { variant: StoryVariant };
 

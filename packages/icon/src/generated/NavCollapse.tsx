@@ -2,7 +2,7 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
-* @checksum 2ea5bd5022b3f89ef21314161e9c7bb6
+* @checksum 9b540c7a71105a9b0c34a3dbc73589f0
 */
 import * as React from "react";
 import PropTypes from 'prop-types';
@@ -33,7 +33,7 @@ const NavCollapse = ({
   });
   return <svg className={cx({
     [fillStyle]: fill != null
-  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16"><path d="M7.5 4H6.5C5.39543 4 4.5 4.89543 4.5 6V10C4.5 11.1046 5.39543 12 6.5 12H7.5V4Z" fill={'currentColor'} /><path d="M8.21716 8.28284C8.06095 8.12663 8.06095 7.87337 8.21716 7.71716L10.7627 5.17157C10.919 5.01536 11.1722 5.01536 11.3284 5.17157C11.4846 5.32778 11.4846 5.58105 11.3284 5.73726L9.06569 8L11.3284 10.2627C11.4846 10.419 11.4846 10.6722 11.3284 10.8284C11.1722 10.9846 10.919 10.9846 10.7627 10.8284L8.21716 8.28284Z" fill={'currentColor'} /><path fillRule="evenodd" clipRule="evenodd" d="M2 4C2 2.89543 2.89543 2 4 2H12C13.1046 2 14 2.89543 14 4V12C14 13.1046 13.1046 14 12 14H4C2.89543 14 2 13.1046 2 12V4ZM4 3.25H12C12.4142 3.25 12.75 3.58579 12.75 4V12C12.75 12.4142 12.4142 12.75 12 12.75H4C3.58579 12.75 3.25 12.4142 3.25 12V4C3.25 3.58579 3.58579 3.25 4 3.25Z" fill={'currentColor'} /></svg>;
+  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16"><path d="M11.3891 4.81802C11.1938 4.62275 10.8772 4.62275 10.682 4.81802L7.85354 7.64644C7.65828 7.84171 7.65828 8.15829 7.85354 8.35355L10.682 11.182C10.8772 11.3772 11.1938 11.3772 11.3891 11.182L11.7426 10.8284C11.9379 10.6331 11.9379 10.3166 11.7426 10.1213L9.62131 8L11.7426 5.87868C11.9379 5.68342 11.9379 5.36683 11.7426 5.17157L11.3891 4.81802Z" fill={'currentColor'} /><path fillRule="evenodd" clipRule="evenodd" d="M4 1C2.34315 1 1 2.34315 1 4V12C1 13.6569 2.34315 15 4 15H12C13.6569 15 15 13.6569 15 12V4C15 2.34315 13.6569 1 12 1H4ZM5 2.5H4C3.17157 2.5 2.5 3.17157 2.5 4V12C2.5 12.8284 3.17157 13.5 4 13.5H5L5 2.5ZM6.5 2.5L6.5 13.5H12C12.8284 13.5 13.5 12.8284 13.5 12V4C13.5 3.17157 12.8284 2.5 12 2.5H6.5Z" fill={'currentColor'} /></svg>;
 };
 NavCollapse.displayName = 'NavCollapse';
 NavCollapse.isGlyph = true;

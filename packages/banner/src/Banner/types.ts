@@ -8,7 +8,7 @@ export const Variant = {
   Success: 'success',
 } as const;
 
-export type Variant = typeof Variant[keyof typeof Variant];
+export type Variant = (typeof Variant)[keyof typeof Variant];
 
 export interface BannerProps
   extends HTMLElementProps<'div', never>,
