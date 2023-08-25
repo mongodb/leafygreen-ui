@@ -15,7 +15,17 @@ const mutableRefMock = {
   current: document.createElement('div'),
 };
 
+const errorSpy = jest.spyOn(console, 'error');
+
 describe('packages/hooks/useControlledValue', () => {
+  beforeEach(() => {
+    errorSpy.mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    errorSpy.mockReset();
+  });
+
   describe('with controlled component', () => {
     test('calling with a value sets value and isControlled', () => {
       const { result } = renderHook(v => useControlledValue(v), {
@@ -235,6 +245,7 @@ describe('packages/hooks/useControlledValue', () => {
       act(() => rerender('apple'));
       expect(result.current.isControlled).toBe(false);
       expect(result.current.value).toBe('');
+      expect(errorSpy).not.toHaveBeenCalled();
     });
   });
 
@@ -246,12 +257,13 @@ describe('packages/hooks/useControlledValue', () => {
       valueProp?: string;
       handlerProp?: ChangeEventHandler;
     }) => {
+      const initialVal = '';
       const inputRef = useRef<HTMLInputElement>(null);
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const { value, handleChange, updateValue } = useControlledValue(
         valueProp,
         handlerProp,
-        '',
+        initialVal,
       );
 
       return (
@@ -318,6 +330,7 @@ describe('packages/hooks/useControlledValue', () => {
         const result = render(<TestComponent />);
         const input = result.getByTestId('test-input');
         expect(input).toHaveValue('');
+        expect(errorSpy).not.toHaveBeenCalled();
       });
 
       test('user interaction triggers handler', () => {
