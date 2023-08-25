@@ -33,4 +33,4 @@ jobs:
         run: yarn build
 
       - name: Run tests in React 17
-        run: lg test --react17
+        run: yarn lg test --react17
