@@ -1,5 +1,12 @@
 # @leafygreen-ui/a11y
 
+## 1.4.9
+
+### Patch Changes
+
+- Updated dependencies [fd907503]
+  - @leafygreen-ui/hooks@8.0.0
+
 ## 1.4.8
 
 ### Patch Changes

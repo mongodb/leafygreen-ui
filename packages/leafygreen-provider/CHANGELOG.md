@@ -1,5 +1,12 @@
 # @leafygreen-ui/leafygreen-provider
 
+## 3.1.8
+
+### Patch Changes
+
+- Updated dependencies [fd907503]
+  - @leafygreen-ui/hooks@8.0.0
+
 ## 3.1.7
 
 ### Patch Changes

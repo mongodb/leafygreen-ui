@@ -1,5 +1,21 @@
 # @leafygreen-ui/radio-group
 
+## 10.2.0
+
+### Minor Changes
+
+- 480cf95d: Adds `bold` prop to RadioGroup, such that you can change whether the label is displayed with a bold font weight.
+
+## 10.1.11
+
+### Patch Changes
+
+- Updated dependencies [3fe03b50]
+- Updated dependencies [fd907503]
+  - @leafygreen-ui/tokens@2.2.0
+  - @leafygreen-ui/hooks@8.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.8
+
 ## 10.1.10
 
 ### Patch Changes

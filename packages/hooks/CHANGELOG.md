@@ -1,5 +1,11 @@
 # @leafygreen-ui/hooks
 
+## 8.0.0
+
+### Major Changes
+
+- fd907503: Updates `useControlledValue` hook to remove the controlled value from internal state. Instead the controlled value is consumed directly.
+
 ## 7.7.8
 
 ### Patch Changes
