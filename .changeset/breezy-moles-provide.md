@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/typography': patch
+'@leafygreen-ui/typography': major
 ---
 
-Link now inherits font sizes from the parent
+Link now inherits font size and line height from the parent's CSS
