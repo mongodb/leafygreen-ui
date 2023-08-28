@@ -23,6 +23,7 @@ const meta: StoryMetaType<typeof DateInputWrapper, DatePickerContextProps> = {
     },
     generate: {
       combineArgs: {
+        darkMode: [false, true],
         label: [undefined, 'Label'],
         description: [undefined, 'United States'],
         state: ['unset', 'error'],
@@ -34,9 +35,14 @@ const meta: StoryMetaType<typeof DateInputWrapper, DatePickerContextProps> = {
         },
       ],
       decorator: (Instance, ctx) => (
-        <DatePickerProvider value={{ size: ctx?.args.size }}>
-          <Instance />
-        </DatePickerProvider>
+        <LeafyGreenProvider
+          darkMode={ctx?.args.darkMode}
+          baseFontSize={ctx?.args.baseFontSize}
+        >
+          <DatePickerProvider value={{ size: ctx?.args.size }}>
+            <Instance />
+          </DatePickerProvider>
+        </LeafyGreenProvider>
       ),
       args: {
         children: (
@@ -46,10 +52,10 @@ const meta: StoryMetaType<typeof DateInputWrapper, DatePickerContextProps> = {
               padding: 0;
               margin: 0;
               font-family: inherit;
-              &::placeholder {
-              }
+              background-color: inherit;
+              color: inherit;
             `}
-            placeholder="placeholder"
+            placeholder="<placeholder text>"
           />
         ),
       },
@@ -65,6 +71,7 @@ const meta: StoryMetaType<typeof DateInputWrapper, DatePickerContextProps> = {
     inputId: { control: 'none' },
     descriptionId: { control: 'none' },
     errorId: { control: 'none' },
+    darkMode: { control: 'boolean' },
   },
 };
 
@@ -81,31 +88,29 @@ const Template: StoryFn<typeof DateInputWrapper> = ({
   const errorId = 'error';
 
   return (
-    <LeafyGreenProvider>
-      <DateInputWrapper
-        label={label}
-        description={description}
-        state={state}
-        errorMessage={errorMessage}
-        inputId={inputId}
-        descriptionId={descriptionId}
-        errorId={errorId}
-      >
-        <input
-          id={inputId}
-          aria-describedby={descriptionId + ' ' + errorId}
-          style={{
-            border: 'none',
-            outline: '1px solid green',
-            padding: 0,
-            margin: 0,
-            width: '100px',
-            fontFamily: 'inherit',
-          }}
-          placeholder="<placeholder>"
-        />
-      </DateInputWrapper>
-    </LeafyGreenProvider>
+    <DateInputWrapper
+      label={label}
+      description={description}
+      state={state}
+      errorMessage={errorMessage}
+      inputId={inputId}
+      descriptionId={descriptionId}
+      errorId={errorId}
+    >
+      <input
+        id={inputId}
+        aria-describedby={descriptionId + ' ' + errorId}
+        style={{
+          border: 'none',
+          outline: '1px solid green',
+          padding: 0,
+          margin: 0,
+          width: '100px',
+          fontFamily: 'inherit',
+        }}
+        placeholder="<placeholder>"
+      />
+    </DateInputWrapper>
   );
 };
 
