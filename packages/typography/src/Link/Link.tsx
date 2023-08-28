@@ -18,7 +18,7 @@ import {
   anchorClassName,
   arrowRightIconHover,
   arrowRightIconPersist,
-  inlineStyles,
+  inheritSizeStyles,
   linkModeStyles,
   linkStyles,
   openInNewTabStyles,
@@ -118,7 +118,7 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
           linkStyles,
           linkModeStyles[theme],
           {
-            [inlineStyles]: inline,
+            [inheritSizeStyles]: inline,
           },
           className,
         )}
