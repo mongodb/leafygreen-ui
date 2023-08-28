@@ -176,6 +176,7 @@ All props extend the HTMLElementProps of their root tag, however the below compo
 | `hideExternalIcon` | `boolean`                        | Hides the external icon when the current host name is different from the host of the destination URL                                                                                     | `false`                                       |
 | `darkMode`         | `boolean`                        | Determines if the component renders in dark mode                                                                                                                                         | `false`                                       |
 | `as`               | `keyof JSX.IntrinsicElements`    | Element to render the component as. **Note**: This will supersede the behavior of any other props.                                                                                       | `'a'`                                         |
+| `inline`           | `boolean`                        | Determines if the Link should be inherit font size from the parent                                                                                                                       | `false`                                       |
 | `baseFontSize`     | `13` \| `16`                     | font-size applied to typography element                                                                                                                                                  | Defaults to value set by LeafyGreen Provider. |
 
 # Label
