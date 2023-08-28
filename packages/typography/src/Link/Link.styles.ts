@@ -95,7 +95,7 @@ export const openInNewTabStyles = css`
   height: 12px;
 `;
 
-export const inlineStyles = css`
+export const inheritSizeStyles = css`
   font-size: inherit;
   line-height: inherit;
 `;
