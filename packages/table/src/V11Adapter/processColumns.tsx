@@ -57,8 +57,8 @@ const processColumns = <T extends LGRowData>(
       // @ts-expect-error each datum is designed to be indexable by string
       return data[indexA][columnId] > data[indexB][columnId]
         ? -1
-        // https://jira.mongodb.org/browse/LG-3538
-        : // @ts-expect-error each datum is designed to be indexable by string
+        : // https://jira.mongodb.org/browse/LG-3538
+        // @ts-expect-error each datum is designed to be indexable by string
         data[indexB][columnId] > data[indexA][columnId]
         ? 1
         : 0;
