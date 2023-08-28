@@ -10,6 +10,7 @@ import {
   StoryMetaType,
 } from '@leafygreen-ui/lib';
 import { CloseIconColor } from '@leafygreen-ui/modal';
+import { Disclaimer, Link } from '@leafygreen-ui/typography';
 
 import MarketingModal, {
   BlobPosition,
@@ -49,6 +50,7 @@ const meta: StoryMetaType<typeof MarketingModal> = {
       control: 'radio',
       options: Object.values(BlobPosition),
     },
+    disclaimer: { control: 'text' },
     children: storybookArgTypes.children,
     darkMode: storybookArgTypes.darkMode,
   },
@@ -70,6 +72,7 @@ export default meta;
 export const LiveExample: StoryFn<MarketingModalProps> = ({
   graphicStyle,
   darkMode,
+  disclaimer,
   ...args
 }) => {
   const graphicCenterImage = 'marketing-center-light.svg';
@@ -98,6 +101,12 @@ export const LiveExample: StoryFn<MarketingModalProps> = ({
           ) : (
             <img alt="Marketing Modal" src={`/examples/${graphicFillImage}`} />
           )
+        }
+        disclaimer={
+          <Disclaimer>
+            {disclaimer}
+            {` `} <Link>Terms and conditions.</Link>
+          </Disclaimer>
         }
         open={open}
         onClose={handleClose}

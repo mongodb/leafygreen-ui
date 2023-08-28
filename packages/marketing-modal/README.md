@@ -124,3 +124,4 @@ function Example() {
 | `closeIconColor` | `'default'`, `'dark'`, `'light'`              | Determines the color of the close icon.                                                                                                   |
 | `showBlob`       | `boolean`                                     | Determines if the blob illustration should appear in the background of the modal. Currently will only work if `darkMode` is set to false. | `false`    |
 | `blobPosition`   | `'top left'`, `'top right'`, `'bottom right'` | Determines the position of the blob if `showBlob` is set to `true`.                                                                       | `top left` |
+| `disclaimer`     | `React.ReactElement`                          | Disclaimer text to be rendered under the primary action button.                                                                           |            |

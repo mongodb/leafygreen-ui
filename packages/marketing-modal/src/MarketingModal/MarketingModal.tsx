@@ -15,6 +15,7 @@ import {
   buttonStyle,
   contentStyle,
   contentThemeStyle,
+  disclaimerStyles,
   footerContentStyle,
   linkStyle,
   titleStyle,
@@ -36,6 +37,7 @@ const MarketingModal = ({
   closeIconColor = CloseIconColor.Dark,
   blobPosition = BlobPosition.TopLeft,
   showBlob = false,
+  disclaimer,
   ...modalProps
 }: MarketingModalProps) => {
   const { theme, darkMode } = useDarkMode(darkModeProp);
@@ -79,6 +81,7 @@ const MarketingModal = ({
         >
           {linkText}
         </Link>
+        {disclaimer && <div className={disclaimerStyles}>{disclaimer}</div>}
       </div>
     </Modal>
   );
