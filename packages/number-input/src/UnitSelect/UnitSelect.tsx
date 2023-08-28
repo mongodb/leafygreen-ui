@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { ButtonProps } from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { DropdownWidthBasis, Option, Select } from '@leafygreen-ui/select';
@@ -58,24 +57,6 @@ export function UnitSelect({
     }
   };
 
-  /**
-   * Custom unit button with a tooltip.
-   * Tooltip will show up if there is an ellipse.
-   */
-  const CustomMenuButton = React.forwardRef(
-    ({ className, children, ...props }: ButtonProps, forwardedRef) => (
-      <UnitSelectButton
-        ref={forwardedRef}
-        disabled={disabled}
-        displayName={currentUnitOption.displayName}
-        {...props}
-      >
-        {children}
-      </UnitSelectButton>
-    ),
-  );
-  CustomMenuButton.displayName = 'CustomMenuButton';
-
   return (
     <div className={wrapperBaseStyles}>
       <Select
@@ -96,7 +77,11 @@ export function UnitSelect({
         size={size}
         data-testid={dataTestId}
         {...popoverProps}
-        __INTERNAL__menuButtonSlot__={CustomMenuButton}
+        __INTERNAL__menuButtonSlot__={UnitSelectButton}
+        __INTERNAL__menuButtonSlotProps__={{
+          disabled,
+          displayName: currentUnitOption.displayName,
+        }}
       >
         {unitOptions.map(option => (
           <Option key={option.displayName} value={option.displayName}>

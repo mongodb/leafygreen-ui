@@ -5,7 +5,7 @@ export const Size = {
   XLarge: 'xlarge',
 } as const;
 
-export type Size = typeof Size[keyof typeof Size];
+export type Size = (typeof Size)[keyof typeof Size];
 
 export const sizeMap: Record<Size, number> = {
   small: 14,

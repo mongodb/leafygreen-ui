@@ -1,5 +1,30 @@
 # @leafygreen-ui/checkbox
 
+## 12.0.17
+
+### Patch Changes
+
+- Updated dependencies [3fe03b50]
+- Updated dependencies [fd907503]
+  - @leafygreen-ui/tokens@2.2.0
+  - @leafygreen-ui/hooks@8.0.0
+  - @leafygreen-ui/a11y@1.4.9
+  - @leafygreen-ui/leafygreen-provider@3.1.8
+
+## 12.0.16
+
+### Patch Changes
+
+- 4fcf2e94: Adds a `nodeRef` to <Transition> to get rid of StrictMode warnings
+- 4fcf2e94: Bumps `react-transition-group` to `^4.4.5`.
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/lib@11.0.0
+  - @leafygreen-ui/a11y@1.4.8
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+  - @leafygreen-ui/typography@16.5.5
+
 ## 12.0.15
 
 ### Patch Changes

@@ -1,5 +1,41 @@
 # @leafygreen-ui/combobox
 
+## 6.0.13
+
+### Patch Changes
+
+- Updated dependencies [3fe03b50]
+- Updated dependencies [fd907503]
+- Updated dependencies [c9f0055a]
+- Updated dependencies [56459cde]
+  - @leafygreen-ui/tokens@2.2.0
+  - @leafygreen-ui/hooks@8.0.0
+  - @leafygreen-ui/icon@11.23.0
+  - @leafygreen-ui/checkbox@12.0.17
+  - @leafygreen-ui/leafygreen-provider@3.1.8
+  - @leafygreen-ui/popover@11.0.17
+
+## 6.0.12
+
+### Patch Changes
+
+- 4fcf2e94: Type assert children as `Array<React.ReactNode>` inside the internal function `renderedMenuContents` and add explicit return type to internal function `renderCombobox`.
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/icon@11.22.2
+  - @leafygreen-ui/lib@11.0.0
+  - @leafygreen-ui/checkbox@12.0.16
+  - @leafygreen-ui/popover@11.0.16
+  - @leafygreen-ui/icon-button@15.0.17
+  - @leafygreen-ui/inline-definition@6.0.11
+  - @leafygreen-ui/input-option@1.0.9
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+  - @leafygreen-ui/typography@16.5.5
+
 ## 6.0.11
 
 ### Patch Changes

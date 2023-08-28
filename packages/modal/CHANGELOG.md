@@ -1,5 +1,40 @@
 # @leafygreen-ui/modal
 
+## 16.0.1
+
+### Patch Changes
+
+- Updated dependencies [3fe03b50]
+- Updated dependencies [fd907503]
+- Updated dependencies [c9f0055a]
+- Updated dependencies [56459cde]
+  - @leafygreen-ui/tokens@2.2.0
+  - @leafygreen-ui/hooks@8.0.0
+  - @leafygreen-ui/icon@11.23.0
+  - @leafygreen-ui/leafygreen-provider@3.1.8
+  - @leafygreen-ui/portal@5.0.1
+
+## 16.0.0
+
+### Major Changes
+
+- 4fcf2e94: Upgrades `focus-trap-react` package to `^9.0.2` to maintain uniformity across other LG components using this package.
+
+### Patch Changes
+
+- 4fcf2e94: Add `focusTrapOptions` type
+- 4fcf2e94: Bumps `react-transition-group` to `^4.4.5`.
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/portal@5.0.0
+  - @leafygreen-ui/icon@11.22.2
+  - @leafygreen-ui/lib@11.0.0
+  - @leafygreen-ui/icon-button@15.0.17
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+
 ## 15.0.6
 
 ### Patch Changes

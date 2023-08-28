@@ -36,8 +36,10 @@ describe('packages/combobox', () => {
     test('does not have basic accessibility violations', async () => {
       const { container, openMenu } = renderCombobox();
       openMenu();
-      const results = await axe(container);
-      expect(results).toHaveNoViolations();
+      await waitFor(async () => {
+        const results = await axe(container);
+        expect(results).toHaveNoViolations();
+      });
     });
   });
 
@@ -763,7 +765,7 @@ describe('packages/combobox', () => {
             });
             const carrotChip = queryChipsByName('Carrot');
             const carrotChipButton = carrotChip!.querySelector('button');
-            userEvent.click(carrotChipButton!);
+            expect(() => userEvent.click(carrotChipButton!)).toThrow();
             await waitFor(() => {
               expect(queryAllChips()).toHaveLength(3);
             });
@@ -968,9 +970,9 @@ describe('packages/combobox', () => {
       });
 
       describe('Backspace key', () => {
-        test('Deletes text when cursor is NOT at beginning of selection', () => {
+        test('Deletes text when cursor is NOT at beginning of selection', async () => {
           const { inputEl } = renderCombobox(select);
-          userEvent.type(inputEl, 'app{backspace}');
+          await userEvent.type(inputEl, 'app{backspace}');
           expect(inputEl).toHaveFocus();
           expect(inputEl).toHaveValue('ap');
         });
@@ -1166,7 +1168,7 @@ describe('packages/combobox', () => {
           });
           userEvent.type(inputEl!, '{arrowright}{arrowleft}');
           expect(inputEl!).toHaveFocus();
-          expect(inputEl!.selectionEnd).toEqual(select === 'multiple' ? 0 : 4);
+          expect(inputEl!.selectionEnd).toEqual(select === 'multiple' ? 0 : 5);
         });
 
         testMultiSelect(
@@ -1229,6 +1231,7 @@ describe('packages/combobox', () => {
           expect(inputEl).toHaveFocus();
         });
 
+        // FIXME: act warning
         testMultiSelect('Focuses input when focus is on last chip', () => {
           const initialValue = ['apple', 'banana'];
           const { inputEl } = renderCombobox(select, {
@@ -1243,6 +1246,7 @@ describe('packages/combobox', () => {
           // expect(inputEl!.selectionStart).toEqual(0);
         });
 
+        // FIXME: act warning
         testMultiSelect('Focuses input when focus is on only chip', () => {
           const initialValue = ['apple'];
           const { inputEl } = renderCombobox(select, {
@@ -1256,6 +1260,7 @@ describe('packages/combobox', () => {
           // expect(inputEl!.selectionStart).toEqual(0);
         });
 
+        // FIXME: act warning
         testMultiSelect(
           'Focuses next chip when focus is on an inner chip',
           () => {

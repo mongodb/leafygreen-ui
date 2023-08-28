@@ -1,5 +1,20 @@
 # @leafygreen-ui/form-footer
 
+## 3.0.13
+
+### Patch Changes
+
+- 4fcf2e94: Updates `PrimaryButton` type from `React.ReactChild` to `React.ReactElement`.
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/icon@11.22.2
+  - @leafygreen-ui/lib@11.0.0
+  - @leafygreen-ui/banner@7.0.13
+  - @leafygreen-ui/button@21.0.5
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+
 ## 3.0.12
 
 ### Patch Changes

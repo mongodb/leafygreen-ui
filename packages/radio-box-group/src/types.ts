@@ -6,7 +6,7 @@ export const Size = {
   Full: 'full',
 } as const;
 
-export type Size = typeof Size[keyof typeof Size];
+export type Size = (typeof Size)[keyof typeof Size];
 
 export interface RadioBoxProps extends Omit<HTMLElementProps<'input'>, 'size'> {
   /**

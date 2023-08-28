@@ -9,7 +9,7 @@ export const Variant = {
   Example: 'example',
 } as const;
 
-export type Variant = typeof Variant[keyof typeof Variant];
+export type Variant = (typeof Variant)[keyof typeof Variant];
 
 export interface CalloutProps extends HTMLElementProps<'div'> {
   /**

@@ -24,7 +24,12 @@ const pascalCase = (str: string) =>
   camelCase(str).slice(0, 1).toUpperCase() + camelCase(str).slice(1);
 
 const skipComponents = ['lib'];
-const skipProps = ['ref', 'key', '__INTERNAL__menuButtonSlot__'];
+const skipProps = [
+  'ref',
+  'key',
+  '__INTERNAL__menuButtonSlot__',
+  '__INTERNAL__menuButtonSlotProps__',
+];
 
 const TSDocOptions: ParserOptions = {
   shouldExtractLiteralValuesFromEnum: true,

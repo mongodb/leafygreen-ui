@@ -12,14 +12,14 @@ export const Direction = {
   Decrement: 'decrement',
 } as const;
 
-export type Direction = typeof Direction[keyof typeof Direction];
+export type Direction = (typeof Direction)[keyof typeof Direction];
 
 export const State = {
   Error: 'error',
   None: 'none',
 } as const;
 
-export type State = typeof State[keyof typeof State];
+export type State = (typeof State)[keyof typeof State];
 
 export const Size = {
   XSmall: 'xsmall',
@@ -27,7 +27,7 @@ export const Size = {
   Default: 'default',
 } as const;
 
-export type Size = typeof Size[keyof typeof Size];
+export type Size = (typeof Size)[keyof typeof Size];
 
 export interface UnitOption {
   displayName: string;

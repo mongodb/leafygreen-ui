@@ -1,7 +1,5 @@
 import React from 'react';
 import {
-  act,
-  fireEvent,
   getAllByRole as globalGetAllByRole,
   render,
   waitFor,
@@ -49,66 +47,70 @@ describe('packages/menu', () => {
     expect(menuItem).toBeInTheDocument();
   });
 
+  test('first item is focused when menu is opened', () => {
+    const { getByTestId } = renderMenu({ open: true });
+    const menu = getByTestId(menuTestId);
+    const options = globalGetAllByRole(menu, 'menuitem');
+    expect(options[0]).toHaveFocus();
+  });
+
   describe('when uncontrolled', () => {
     const uncontrolledSetOpen = jest.fn();
-    const trigger = <button>trigger</button>;
 
     test('and "setOpen" is provided, but "open" prop is not set', async () => {
-      const { getByText } = renderMenu({
+      const { getByTestId, getByText } = renderMenu({
         setOpen: uncontrolledSetOpen,
         trigger,
       });
 
-      const button = getByText('trigger');
-      fireEvent.click(button);
+      const button = getByTestId('menu-trigger');
+      userEvent.click(button);
 
       const menuItem = getByText('Item B');
-      await act(() => waitFor(() => expect(menuItem).toBeVisible()));
 
-      fireEvent.click(button);
+      expect(menuItem).toBeInTheDocument();
+
+      userEvent.click(button);
 
       await waitForElementToBeRemoved(menuItem);
+      expect(menuItem).not.toBeInTheDocument();
+    });
+  });
+
+  test('clicking a menuitem closes the menu', async () => {
+    const { getByTestId } = renderMenu({
+      trigger,
     });
 
-    test('clicking a menuitem closes the menu', async () => {
-      const { getByRole, getByTestId } = renderMenu({
-        trigger,
-      });
-      const button = getByRole('button');
+    const button = getByTestId('menu-trigger');
 
-      userEvent.click(button);
-      const menu = getByTestId(menuTestId);
+    userEvent.click(button);
+    const menu = getByTestId(menuTestId);
 
-      await waitFor(() => {
-        expect(menu).toBeInTheDocument();
-      });
+    expect(menu).toBeInTheDocument();
 
-      const menuItem = getByTestId('menu-item-a');
-      userEvent.click(menuItem);
+    const menuItem = getByTestId('menu-item-a');
+    userEvent.click(menuItem);
 
-      await waitFor(() => {
-        expect(menu).not.toBeInTheDocument();
-      });
+    await waitForElementToBeRemoved(menu);
+    expect(menu).not.toBeInTheDocument();
+  });
+
+  test('clicking outside the menu closes the menu', async () => {
+    const { getByTestId, backdrop } = renderMenu({
+      trigger,
     });
 
-    test('clicking outside the menu closes the menu', async () => {
-      const { getByRole, getByTestId, backdrop } = renderMenu({
-        trigger,
-      });
-      const button = getByRole('button');
-      userEvent.click(button);
-      const menu = getByTestId(menuTestId);
+    const button = getByTestId('menu-trigger');
+    userEvent.click(button);
+    const menu = getByTestId(menuTestId);
 
-      await waitFor(() => {
-        expect(menu).toBeInTheDocument();
-      });
+    expect(menu).toBeInTheDocument();
 
-      userEvent.click(backdrop);
+    userEvent.click(backdrop);
 
-      await waitFor(() => {
-        expect(menu).not.toBeInTheDocument();
-      });
-    });
+    await waitForElementToBeRemoved(menu);
+    expect(menu).not.toBeInTheDocument();
   });
 
   describe('when controlled', () => {
@@ -158,7 +160,7 @@ describe('packages/menu', () => {
   });
 
   describe('Mouse interaction', () => {
-    test('Clicking trigger opens menu', async () => {
+    test('Clicking trigger opens menu', () => {
       const { getByRole, getByTestId } = renderMenu({
         trigger,
       });
@@ -167,9 +169,7 @@ describe('packages/menu', () => {
       userEvent.click(button);
       const menu = getByTestId(menuTestId);
 
-      await waitFor(() => {
-        expect(menu).toBeInTheDocument();
-      });
+      expect(menu).toBeInTheDocument();
     });
 
     test('Click handlers on parent elements fire', async () => {

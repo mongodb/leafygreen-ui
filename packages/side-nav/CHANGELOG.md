@@ -1,5 +1,48 @@
 # @leafygreen-ui/side-nav
 
+## 14.0.1
+
+### Patch Changes
+
+- Updated dependencies [3fe03b50]
+- Updated dependencies [fd907503]
+- Updated dependencies [c9f0055a]
+- Updated dependencies [56459cde]
+  - @leafygreen-ui/tokens@2.2.0
+  - @leafygreen-ui/hooks@8.0.0
+  - @leafygreen-ui/icon@11.23.0
+  - @leafygreen-ui/a11y@1.4.9
+  - @leafygreen-ui/leafygreen-provider@3.1.8
+  - @leafygreen-ui/portal@5.0.1
+  - @leafygreen-ui/tooltip@10.0.9
+
+## 14.0.0
+
+### Major Changes
+
+- 4fcf2e94: Refactors the `CollapseToggle` tooltip so that it no longer uses a portal, as React 18 displays the tooltip in the wrong position when the side nav is toggled.
+
+  Refactor the internal function, `renderedChildren`.
+
+### Patch Changes
+
+- 4fcf2e94: Adds a `nodeRef` to <Transition> to get rid of StrictMode warnings
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/portal@5.0.0
+  - @leafygreen-ui/icon@11.22.2
+  - @leafygreen-ui/lib@11.0.0
+  - @leafygreen-ui/tooltip@10.0.8
+  - @leafygreen-ui/box@3.1.8
+  - @leafygreen-ui/a11y@1.4.8
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+  - @leafygreen-ui/typography@16.5.5
+
 ## 13.0.13
 
 ### Patch Changes

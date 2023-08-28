@@ -1,5 +1,17 @@
 # @lg-tools/test
 
+## 0.3.0
+
+### Minor Changes
+
+- 4fcf2e94: Upgrade `jest` and `testing-library` packages to support React 18
+
+### Patch Changes
+
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [8e06bb20]
+  - @lg-tools/build@0.2.1
+
 ## 0.2.2
 
 ### Patch Changes

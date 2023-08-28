@@ -70,7 +70,7 @@ const meta: StoryMetaType<
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        baseFontSize: [14, 16],
+        baseFontSize: [13, 16],
         glyph: [undefined, 'Cloud'],
         checked: [false, true],
         variant: Object.values(Variant),

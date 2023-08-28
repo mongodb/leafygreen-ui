@@ -16,3 +16,4 @@ export { default as ChartsLogoMark } from './ChartsLogoMark';
 export type { LogoName } from './Logo';
 export { default } from './Logo';
 export { default as RealmLogoMark } from './RealmLogoMark';
+export { SupportedColors } from './utils';
