@@ -19,7 +19,6 @@ export const linkStyles = css`
   align-items: center;
   text-decoration: none;
   cursor: pointer;
-  line-height: 13px;
   font-size: inherit;
   line-height: inherit;
 
