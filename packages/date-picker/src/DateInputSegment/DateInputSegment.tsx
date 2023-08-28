@@ -1,20 +1,14 @@
-import React from 'react';
-import { padStart } from 'lodash';
+import React, { ChangeEventHandler } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { useControlledValue, useForwardedRef } from '@leafygreen-ui/hooks';
+import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Size } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { useDatePickerContext } from '../DatePickerContext/DatePickerContext';
 
-import {
-  charsPerSegment,
-  defaultMax,
-  defaultMin,
-  defaultPlaceholder,
-} from './constants';
+import { defaultMax, defaultMin, defaultPlaceholder } from './constants';
 import {
   baseStyles,
   fontSizeStyles,
@@ -22,7 +16,12 @@ import {
   segmentThemeStyles,
   segmentWidthStyles,
 } from './DateInputSegment.styles';
-import { DateInputSegmentProps } from './DateInputSegment.types';
+import { DateInputSegmentProps, DateSegment } from './DateInputSegment.types';
+import { getValueFormatter } from './utils';
+
+export function isDateSegment(str: string): str is DateSegment {
+  return ['day', 'month', 'year'].includes(str);
+}
 
 export const DateInputSegment = React.forwardRef<
   HTMLInputElement,
@@ -31,11 +30,12 @@ export const DateInputSegment = React.forwardRef<
   (
     {
       segment,
-      value: controlledValue,
+      value,
       min: minProp,
       max: maxProp,
       onChange,
       darkMode,
+      ...rest
     }: DateInputSegmentProps,
     fwdRef, //: ForwardedRef<HTMLInputElement>,
   ) => {
@@ -44,30 +44,26 @@ export const DateInputSegment = React.forwardRef<
 
     const inputRef = useForwardedRef(fwdRef, null);
 
-    const { value, handleChange } = useControlledValue(
-      controlledValue?.toString(),
-      onChange,
-      '',
-    );
-
     const { theme } = useDarkMode(darkMode);
     const baseFontSize = useUpdatedBaseFontSize();
     const { size } = useDatePickerContext();
 
-    const formatValue = (val: string | undefined) =>
-      !val || ['', '0', '00'].includes(val)
-        ? '' // If the value is any form of zero, we set it to an empty string
-        : padStart(val?.toString(), charsPerSegment[segment], '0'); // otherwise, pad the string with 0s
+    const formatValue = getValueFormatter(segment);
+
+    const changeHandler: ChangeEventHandler<HTMLInputElement> = e => {
+      onChange?.(e.target.value);
+    };
 
     return (
       <input
+        {...rest}
         ref={inputRef}
         type="number"
         value={formatValue(value)}
         min={min}
         max={max}
         placeholder={defaultPlaceholder[segment]}
-        onChange={handleChange}
+        onChange={changeHandler}
         className={cx(
           baseStyles,
           fontSizeStyles[baseFontSize],

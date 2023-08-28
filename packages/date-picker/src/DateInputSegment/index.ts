@@ -1,2 +1,2 @@
-export { DateInputSegment } from './DateInputSegment';
+export { DateInputSegment, isDateSegment } from './DateInputSegment';
 export { DateInputSegmentProps } from './DateInputSegment.types';

@@ -1,6 +1,5 @@
 import React from 'react';
-import { StoryFn, StoryObj } from '@storybook/react';
-import { userEvent, within } from '@storybook/testing-library';
+import { StoryFn } from '@storybook/react';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
@@ -21,8 +20,9 @@ const meta: StoryMetaType<typeof DateInputSegment, DatePickerContextProps> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        value: [undefined, 6, 2023],
+        value: [undefined, '6', '2023'],
         segment: ['day', 'month', 'year'],
+        // @ts-expect-error
         size: Object.values(Size),
       },
       decorator: (Instance, ctx) => (
@@ -32,11 +32,11 @@ const meta: StoryMetaType<typeof DateInputSegment, DatePickerContextProps> = {
       ),
       excludeCombinations: [
         {
-          value: 6,
+          value: '6',
           segment: 'year',
         },
         {
-          value: 2023,
+          value: '2023',
           segment: ['day', 'month'],
         },
       ],
@@ -62,22 +62,5 @@ const Template: StoryFn<typeof DateInputSegment> = props => (
 );
 
 export const Basic = Template.bind({});
-
-export const Type: StoryObj<typeof DateInputSegment> = {
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const input = canvas.getByRole('spinbutton');
-    await userEvent.type(input, '12');
-  },
-};
-
-export const ArrowUp: StoryObj<typeof DateInputSegment> = {
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const input = canvas.getByRole('spinbutton');
-    input.focus();
-    await userEvent.type(input, '{arrowup}');
-  },
-};
 
 export const Generated = () => {};
