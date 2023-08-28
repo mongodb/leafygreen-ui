@@ -20,6 +20,8 @@ export const linkStyles = css`
   text-decoration: none;
   cursor: pointer;
   line-height: 13px;
+  font-size: inherit;
+  line-height: inherit;
 
   &:focus {
     outline: none;
@@ -93,9 +95,4 @@ export const openInNewTabStyles = css`
   bottom: 4px;
   left: -1px;
   height: 12px;
-`;
-
-export const inlineStyles = css`
-  font-size: inherit;
-  line-height: inherit;
 `;

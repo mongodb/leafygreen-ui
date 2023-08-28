@@ -24,10 +24,6 @@ export interface BaseLinkProps extends ResponsiveTypographyProps {
    * Hides the external icon when the current host name is different from the host of the destination URL
    */
   hideExternalIcon?: boolean;
-  /**
-   * Determines if the Link should be inherit font size from the parent
-   */
-  inline?: boolean;
 }
 
 // For external consumption only
