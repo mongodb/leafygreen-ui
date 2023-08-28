@@ -126,6 +126,7 @@ cli
     '--config',
     'Specify a jest config file. By default will look for `jest.config.js` at the root, or use `@lg-tools/test/config`',
   )
+  .option('--react17', 'Runs tests in a React17 environment', false)
   .allowUnknownOption(true)
   .option('-v --verbose', 'Prints additional information to the console', false)
   .action(test);
