@@ -18,6 +18,7 @@ import {
   anchorClassName,
   arrowRightIconHover,
   arrowRightIconPersist,
+  inlineStyles,
   linkModeStyles,
   linkStyles,
   openInNewTabStyles,
@@ -45,6 +46,7 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
     hideExternalIcon = false,
     baseFontSize: baseFontSizeOverride,
     darkMode: darkModeProp,
+    inline,
     as,
     ...rest
   }) => {
@@ -115,6 +117,9 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
           bodyTypeScaleStyles[baseFontSize],
           linkStyles,
           linkModeStyles[theme],
+          {
+            [inlineStyles]: inline,
+          },
           className,
         )}
         {...defaultAnchorProps}

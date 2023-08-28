@@ -16,8 +16,18 @@ type ArrowAppearance = (typeof ArrowAppearance)[keyof typeof ArrowAppearance];
 export { ArrowAppearance };
 
 export interface BaseLinkProps extends ResponsiveTypographyProps {
+  /**
+   * Determines the variant of the link arrow to provide feedforward for how the link wil behave
+   */
   arrowAppearance?: ArrowAppearance;
+  /**
+   * The external icon will be hidden if true
+   */
   hideExternalIcon?: boolean;
+  /**
+   * Determines if the Link should be inherit font size from the parent
+   */
+  inline?: boolean;
 }
 
 // For external consumption only

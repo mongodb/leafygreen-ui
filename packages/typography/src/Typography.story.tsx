@@ -105,14 +105,21 @@ const TypographyDemoComponent = ({
           <InlineKeyCode>C</InlineKeyCode>
         </div>
 
-        <Overline className={displayBlock}>Overline</Overline>
-        <Disclaimer className={displayBlock}>Disclaimer</Disclaimer>
+        <Overline className={displayBlock}>
+          Overline <Link inline>This is a test inline link.</Link>
+        </Overline>
+        <Disclaimer className={displayBlock}>
+          Disclaimer <Link inline>This is a test inline link.</Link>
+        </Disclaimer>
 
         <Error>Hello I am an Error!</Error>
 
         <div className={cx(displayBlock)}>
           <Label htmlFor="id">This is a label</Label>
-          <Description>This is the description for said label</Description>
+          <Description>
+            This is the description for said label.{' '}
+            <Link inline>This is a test inline link.</Link>
+          </Description>
         </div>
       </div>
     </LeafygreenProvider>
