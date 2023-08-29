@@ -1,4 +1,5 @@
 export { CardSkeleton, type CardSkeletonProps } from './CardSkeleton';
+export { CodeSkeleton, type CodeSkeletonProps } from './CodeSkeleton';
 export { FormSkeleton, type FormSkeletonProps } from './FormSkeleton';
 export {
   ParagraphSkeleton,
