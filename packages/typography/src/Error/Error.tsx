@@ -8,7 +8,13 @@ import {
   usePolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
-import { errorMessageModeStyle, errorMessageStyle } from './Error.styles';
+import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
+
+import {
+  errorMessageModeStyle,
+  errorMessageStyle,
+  errorMessageTypeScaleStyles,
+} from './Error.styles';
 import { BaseErrorProps } from './Error.types';
 
 const Error = Polymorphic<BaseErrorProps>(
@@ -20,6 +26,7 @@ const Error = Polymorphic<BaseErrorProps>(
     ...rest
   }) => {
     const { theme } = useDarkMode(darkModeProp);
+    const baseFontSize = useUpdatedBaseFontSize();
     const { Component } = usePolymorphic(as);
 
     return (
@@ -28,6 +35,7 @@ const Error = Polymorphic<BaseErrorProps>(
         className={cx(
           errorMessageStyle,
           errorMessageModeStyle[theme],
+          errorMessageTypeScaleStyles[baseFontSize],
           className,
         )}
       >

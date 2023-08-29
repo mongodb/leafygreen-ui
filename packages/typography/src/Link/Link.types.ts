@@ -16,7 +16,13 @@ type ArrowAppearance = (typeof ArrowAppearance)[keyof typeof ArrowAppearance];
 export { ArrowAppearance };
 
 export interface BaseLinkProps extends ResponsiveTypographyProps {
+  /**
+   * Displays a right arrow adjacent to the anchor tag. When set to `persist` the arrow will always be present. When set to `hover`, the arrow will only appear when hovering over the arrow.
+   */
   arrowAppearance?: ArrowAppearance;
+  /**
+   * Hides the external icon when the current host name is different from the host of the destination URL
+   */
   hideExternalIcon?: boolean;
 }
 
