@@ -51,7 +51,7 @@ export const DateInputSegment = React.forwardRef<
     const formatValue = getValueFormatter(segment);
 
     const changeHandler: ChangeEventHandler<HTMLInputElement> = e => {
-      onChange?.(e.target.value);
+      onChange?.(formatValue(e.target.value));
     };
 
     return (

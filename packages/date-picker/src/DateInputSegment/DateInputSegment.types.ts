@@ -1,6 +1,7 @@
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 
 export type DateSegment = 'day' | 'month' | 'year';
+export type DateSegmentValue = number;
 
 export interface DateInputSegmentProps
   extends DarkModeProps,
@@ -9,7 +10,7 @@ export interface DateInputSegmentProps
   segment: DateSegment;
 
   /** The value of the date segment */
-  value?: string | number;
+  value?: DateSegmentValue;
 
   /** Optional minimum value. Defaults to 0 for day/month segments, and 1970 for year segments */
   min?: number;
