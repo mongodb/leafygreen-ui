@@ -68,16 +68,26 @@ const processData = <T extends LGRowData>(
               ...acc,
               // TODO: remove as any
               [(processedColumns[index] as any)?.accessorKey]: () =>
-                (currVal as ReactElement).props.children,
+                currVal as ReactElement,
             };
           },
           {},
         );
-        newDatum.subRows.push(processedSubRow);
+        const {
+          children,
+          expanded,
+          indentLevel,
+          isAnyAncestorCollapsed,
+          ...rowProps
+        } = (subRow as ReactElement).props;
+        newDatum.subRows.push({
+          ...processedSubRow,
+          rowProps,
+        });
       }
     });
 
-    return newDatum;
+    return { ...newDatum, rowProps: (evaluatedRow as ReactElement).props };
   });
   return processedData;
 };
