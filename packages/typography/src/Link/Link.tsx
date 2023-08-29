@@ -11,13 +11,12 @@ import {
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
-import { bodyTypeScaleStyles } from '../styles';
-
 import {
   anchorClassName,
   arrowRightIconHover,
   arrowRightIconPersist,
   linkModeStyles,
+  linkScaleStyles,
   linkStyles,
   openInNewTabStyles,
   overwriteDefaultStyles,
@@ -111,8 +110,7 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
           anchorClassName,
           overwriteDefaultStyles,
           linkStyles,
-          // @ts-expect-error baseFontSize will not be used an index when undefined
-          { [bodyTypeScaleStyles[baseFontSize]]: baseFontSize !== undefined },
+          linkScaleStyles(baseFontSize),
           linkModeStyles[theme],
           className,
         )}
