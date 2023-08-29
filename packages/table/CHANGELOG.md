@@ -1,5 +1,15 @@
 # @leafygreen-ui/table
 
+## 12.0.10
+
+### Patch Changes
+
+- f8bfa386: Fixes bug in V11Adapter where not all props on rows and cells were not being passed to their rendered elements
+- Updated dependencies [a5770c15]
+- Updated dependencies [c89d17a4]
+  - @leafygreen-ui/typography@17.0.0
+  - @leafygreen-ui/checkbox@12.0.18
+
 ## 12.0.9
 
 ### Patch Changes

@@ -70,4 +70,9 @@ export interface MarketingModalProps extends Omit<ModalProps, 'size'> {
    * 	Determines whether the blob should be rendered.
    */
   showBlob?: boolean;
+
+  /**
+   * Disclaimer text to be rendered under the primary action button
+   */
+  disclaimer?: React.ReactElement;
 }
