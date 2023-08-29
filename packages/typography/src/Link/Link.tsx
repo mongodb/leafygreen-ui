@@ -11,14 +11,12 @@ import {
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
-import { bodyTypeScaleStyles } from '../styles';
-import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
-
 import {
   anchorClassName,
   arrowRightIconHover,
   arrowRightIconPersist,
   linkModeStyles,
+  linkScaleStyles,
   linkStyles,
   openInNewTabStyles,
   overwriteDefaultStyles,
@@ -43,7 +41,7 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
     className,
     arrowAppearance = ArrowAppearance.None,
     hideExternalIcon = false,
-    baseFontSize: baseFontSizeOverride,
+    baseFontSize,
     darkMode: darkModeProp,
     as,
     ...rest
@@ -54,7 +52,6 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
     }, []);
 
     const { theme } = useDarkMode(darkModeProp);
-    const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
     const { Component } = useInferredPolymorphic(as, rest, 'span');
 
     const hrefHostname = useMemo(() => {
@@ -112,8 +109,8 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
         className={cx(
           anchorClassName,
           overwriteDefaultStyles,
-          bodyTypeScaleStyles[baseFontSize],
           linkStyles,
+          linkScaleStyles(baseFontSize),
           linkModeStyles[theme],
           className,
         )}
