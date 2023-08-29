@@ -1,5 +1,15 @@
 # @leafygreen-ui/combobox
 
+## 6.0.14
+
+### Patch Changes
+
+- Updated dependencies [a5770c15]
+- Updated dependencies [c89d17a4]
+  - @leafygreen-ui/typography@17.0.0
+  - @leafygreen-ui/checkbox@12.0.18
+  - @leafygreen-ui/input-option@1.0.10
+
 ## 6.0.13
 
 ### Patch Changes
