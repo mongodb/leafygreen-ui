@@ -4,10 +4,10 @@ import { charsPerSegment } from './constants';
 import { DateSegment } from './DateInputSegment.types';
 
 const isZeroLike = (val: any) =>
-  !val || isNaN(val) || ['', '0', '00'].includes(val);
+  !val || isNaN(val) || ['', '0', '00', 0].includes(val);
 
 export const getValueFormatter =
-  (segment: DateSegment) => (val: string | undefined) => {
+  (segment: DateSegment) => (val: string | number | undefined) => {
     // If the value is any form of zero, we set it to an empty string
     if (isZeroLike(val)) return '';
 

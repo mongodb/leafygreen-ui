@@ -13,7 +13,7 @@ describe('packages/date-picker/date-input-segment', () => {
     handler.mockClear();
   });
 
-  describe('format value', () => {
+  describe('utils/valueFormatter', () => {
     describe.each(['day', 'month'] as Array<DateSegment>)('', segment => {
       const formatter = getValueFormatter(segment);
 
@@ -109,6 +109,19 @@ describe('packages/date-picker/date-input-segment', () => {
       const input = result.getByTestId('testid');
       userEvent.type(input, 'abc');
       expect(handler).not.toHaveBeenCalled();
+    });
+
+    test('typing 3+ characters truncates', () => {
+      const result = render(
+        <DateInputSegment
+          segment="day"
+          data-testid="testid"
+          onChange={handler}
+        />,
+      );
+      const input = result.getByTestId('testid');
+      userEvent.type(input, '123');
+      expect(handler).toHaveBeenCalledWith('23');
     });
   });
 

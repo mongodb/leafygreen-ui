@@ -13,7 +13,10 @@ import {
 
 import { DateInputWrapper } from './DateInputWrapper';
 
-const meta: StoryMetaType<typeof DateInputWrapper, DatePickerContextProps> = {
+const meta: StoryMetaType<
+  typeof DateInputWrapper,
+  Partial<DatePickerContextProps>
+> = {
   title: 'Components/DatePicker/DateInputWrapper',
   component: DateInputWrapper,
   parameters: {
@@ -39,6 +42,7 @@ const meta: StoryMetaType<typeof DateInputWrapper, DatePickerContextProps> = {
           darkMode={ctx?.args.darkMode}
           baseFontSize={ctx?.args.baseFontSize}
         >
+          {/* @ts-expect-error - incomplete context value */}
           <DatePickerProvider value={{ size: ctx?.args.size }}>
             <Instance />
           </DatePickerProvider>

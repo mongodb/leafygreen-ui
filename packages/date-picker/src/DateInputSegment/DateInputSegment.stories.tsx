@@ -22,10 +22,10 @@ const meta: StoryMetaType<typeof DateInputSegment, DatePickerContextProps> = {
         darkMode: [false, true],
         value: [undefined, '6', '2023'],
         segment: ['day', 'month', 'year'],
-        // @ts-expect-error
         size: Object.values(Size),
       },
       decorator: (Instance, ctx) => (
+        // @ts-expect-error - incomplete context value
         <DatePickerProvider value={{ size: ctx?.args.size }}>
           <Instance />
         </DatePickerProvider>

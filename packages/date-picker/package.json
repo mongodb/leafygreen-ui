@@ -16,15 +16,21 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/hooks": "^7.7.8",
+    "@leafygreen-ui/hooks": "^8.0.0",
     "@leafygreen-ui/icon": "^11.23.0",
     "@leafygreen-ui/lib": "^11.0.0",
     "@leafygreen-ui/palette": "^4.0.7",
-    "@leafygreen-ui/tokens": "^2.1.4",
-    "@leafygreen-ui/typography": "^16.5.5"
+    "@leafygreen-ui/tokens": "^2.2.0",
+    "@leafygreen-ui/typography": "^16.5.5",
+    "date-fns": "^2.30.0",
+    "date-fns-tz": "^2.0.0"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.6"
+  },
+  "resolutions": {
+    "date-fns/@babel/runtime": "7.22.10",
+    "date-fns-tz/@babel/runtime": "7.22.10"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/date-picker",
   "repository": {
