@@ -6,7 +6,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import Modal from '@leafygreen-ui/modal';
 import { CloseIconColor } from '@leafygreen-ui/modal';
-import { H3, Link } from '@leafygreen-ui/typography';
+import { Body, Disclaimer, H3, Link } from '@leafygreen-ui/typography';
 
 import { Graphic } from '../Graphic/Graphic';
 
@@ -73,15 +73,16 @@ const MarketingModal = ({
         >
           {buttonText}
         </Button>
-        <Link
-          tabIndex={0}
-          onClick={onLinkClick}
-          hideExternalIcon
-          className={linkStyle}
-        >
-          {linkText}
-        </Link>
-        {disclaimer && <div className={disclaimerStyles}>{disclaimer}</div>}
+        <Body className={linkStyle}>
+          <Link tabIndex={0} onClick={onLinkClick} hideExternalIcon>
+            {linkText}
+          </Link>
+        </Body>
+        {disclaimer && (
+          <div className={disclaimerStyles}>
+            <Disclaimer>{disclaimer}</Disclaimer>
+          </div>
+        )}
       </div>
     </Modal>
   );
