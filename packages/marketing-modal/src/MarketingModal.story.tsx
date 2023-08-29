@@ -103,10 +103,12 @@ export const LiveExample: StoryFn<MarketingModalProps> = ({
           )
         }
         disclaimer={
-          <Disclaimer>
-            {disclaimer}
-            {` `} <Link>Terms and conditions.</Link>
-          </Disclaimer>
+          disclaimer && (
+            <Disclaimer>
+              {disclaimer}
+              {` `} <Link>Terms and conditions.</Link>
+            </Disclaimer>
+          )
         }
         open={open}
         onClose={handleClose}

@@ -106,10 +106,10 @@ const TypographyDemoComponent = ({
         </div>
 
         <Overline className={displayBlock}>
-          Overline <Link inline>This is a test inline link.</Link>
+          Overline <Link>This is a test inline link.</Link>
         </Overline>
         <Disclaimer className={displayBlock}>
-          Disclaimer <Link inline>This is a test inline link.</Link>
+          Disclaimer <Link>This is a test inline link.</Link>
         </Disclaimer>
 
         <Error>Hello I am an Error!</Error>
@@ -118,7 +118,7 @@ const TypographyDemoComponent = ({
           <Label htmlFor="id">This is a label</Label>
           <Description>
             This is the description for said label.{' '}
-            <Link inline>This is a test inline link.</Link>
+            <Link>This is a test inline link.</Link>
           </Description>
         </div>
       </div>
