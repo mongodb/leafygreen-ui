@@ -1,30 +1,9 @@
-import { useEffect, useState } from 'react';
 import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';
+import { isUndefined } from 'lodash';
 
-import { consoleOnce } from '@leafygreen-ui/lib';
-
-import { isValidLocale } from '../utils/isValidLocale';
+import { DateSegmentValue } from '../DateInputSegment';
 
 import { DateSegmentsState } from './DateInputBox.types';
-
-/**
- * Hook that returns an Intl.DateTimeFormat object for the provided format string
- */
-export const useFormatter = (format: string, timeZone?: string) => {
-  const [formatter, setFormatter] = useState<Intl.DateTimeFormat | undefined>(
-    isValidLocale(format) ? Intl.DateTimeFormat(format) : undefined,
-  );
-
-  useEffect(() => {
-    if (isValidLocale(format)) {
-      setFormatter(Intl.DateTimeFormat(format, { timeZone }));
-    } else {
-      consoleOnce.error('Invalid dateFormat', format);
-    }
-  }, [format, timeZone]);
-
-  return formatter;
-};
 
 /**
  * Converts a date in the client's time zone to
@@ -47,6 +26,29 @@ export const toClientTimeZone = (
   return client;
 };
 
-/** Constructs a date string from day, month, year segments */
-export const constructDateString = ({ day, month, year }: DateSegmentsState) =>
-  `${Number(year)}-${Number(month)}-${Number(day)}` + 'T00:00:00';
+/** Constructs a date object from day, month, year segments */
+export const newDateFromSegments = (
+  segments: DateSegmentsState,
+): Date | undefined => {
+  if (segments && Object.values(segments).every(isValidSegment)) {
+    const { day, month, year } = segments;
+    return new Date(year, month - 1, day, 0, 0, 0);
+  }
+};
+
+/**
+ * Constructs a date string from day, month, year segments
+ * @deprecated
+ * */
+export const constructDateString = (
+  segments: DateSegmentsState,
+): string | undefined => {
+  if (segments && Object.values(segments).every(isValidSegment)) {
+    const { day, month, year } = segments;
+
+    return `${year}-${month}-${day}` + 'T00:00:00';
+  }
+};
+
+export const isValidSegment = (segment?: DateSegmentValue) =>
+  !isUndefined(segment) && !isNaN(Number(segment));

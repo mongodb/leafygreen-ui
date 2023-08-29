@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { StoryFn } from '@storybook/react';
 import { isValid } from 'date-fns';
 
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 
 import {
@@ -12,20 +13,39 @@ import {
 
 import { DateInputBox } from './DateInputBox';
 
+const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
+  <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
+    <DatePickerProvider
+      value={{
+        ...ctx?.args,
+      }}
+    >
+      <Story />
+    </DatePickerProvider>
+  </LeafyGreenProvider>
+);
+
 const meta: StoryMetaType<typeof DateInputBox, DatePickerContextProps> = {
   title: 'Components/DatePicker/DateInputBox',
   component: DateInputBox,
-  decorators: [
-    (Story, ctx) => (
-      // @ts-expect-error - decoratorFn context only has access to component props
-      <DatePickerProvider value={{ ...ctx.args }}>
-        <Story />
-      </DatePickerProvider>
-    ),
-  ],
+  decorators: [ProviderWrapper],
   parameters: {
     default: null,
-    generate: {},
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        dateFormat: ['iso8601', 'en-US', 'en-UK', 'de-DE'],
+        timeZone: ['UTC', 'Europe/London', 'America/New_York', 'Asia/Seoul'],
+        value: [null, new Date('1993-12-26')],
+      },
+      excludeCombinations: [
+        {
+          timeZone: ['Europe/London', 'America/New_York', 'Asia/Seoul'],
+          value: null,
+        },
+      ],
+      decorator: ProviderWrapper,
+    },
   },
   args: {
     label: 'Label',
@@ -55,6 +75,8 @@ export const Basic: StoryFn<typeof DateInputBox> = props => {
   return (
     <>
       <DateInputBox {...props} value={date} setValue={updateDate} />
+      <b>Current date</b>
+      <span>{date?.toISOString()}</span>
     </>
   );
 };

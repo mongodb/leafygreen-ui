@@ -3,7 +3,7 @@ import { getDate, getMonth, getYear, isSameDay } from 'date-fns';
 
 import { usePrevious } from '@leafygreen-ui/hooks';
 
-import { DateSegment } from '../DateInputSegment';
+import type { DateSegment, DateSegmentValue } from '../DateInputSegment';
 
 import { DateSegmentsState } from './DateInputBox.types';
 import { toTimeZone } from './utils';
@@ -12,7 +12,7 @@ type OnUpdateCallback = (value: DateSegmentsState) => void;
 
 interface UseDateSegmentsOptions {
   /** A formatter used to separate the date value into segments */
-  formatter?: Intl.DateTimeFormat;
+  timeZone: string;
 
   /** A callback fired when the segment values change */
   onUpdate?: OnUpdateCallback;
@@ -21,7 +21,7 @@ interface UseDateSegmentsOptions {
 /** Merges old state & new state */
 const dateSegmentsReducer = (
   currentState: DateSegmentsState,
-  newState: DateSegmentsState,
+  newState: Partial<DateSegmentsState>,
 ) => {
   const state = {
     ...currentState,
@@ -38,7 +38,7 @@ const dateSegmentsReducer = (
 export const useDateSegments = (
   /** Provided date is relative to the client's time zone */
   date: Date | null,
-  { formatter, onUpdate }: UseDateSegmentsOptions,
+  { timeZone, onUpdate }: UseDateSegmentsOptions,
 ) => {
   const [segments, dispatch] = useReducer(
     dateSegmentsReducer,
@@ -49,18 +49,18 @@ export const useDateSegments = (
 
   // If `date` prop changes, update the segments
   useEffect(() => {
-    if (formatter && date && !(prevDate && isSameDay(date, prevDate))) {
-      const tzDate = toTimeZone(date, formatter.resolvedOptions().timeZone);
+    if (date && !(prevDate && isSameDay(date, prevDate))) {
+      const tzDate = toTimeZone(date, timeZone);
       const newSegments = getSegmentsFromDate(tzDate);
       onUpdate?.(newSegments);
       dispatch(newSegments);
     }
-  }, [date, formatter, onUpdate, prevDate]);
+  }, [date, onUpdate, prevDate, timeZone]);
 
   /**
    * Custom dispatch that triggers the provided side effects, and updates state
    */
-  const setSegment = (segment: DateSegment, value: string) => {
+  const setSegment = (segment: DateSegment, value: DateSegmentValue) => {
     // Calculate next state
     // then, execute any side effects based on the new state
     // finally, commit the new state
@@ -81,5 +81,5 @@ const getSegmentsFromDate = (date: Date | null): DateSegmentsState => {
     day: date ? getDate(date) : undefined,
     month: date ? getMonth(date) + 1 : undefined,
     year: date ? getYear(date) : undefined,
-  };
+  } as DateSegmentsState;
 };

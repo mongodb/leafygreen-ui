@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useRef } from 'react';
 import { isSameDay } from 'date-fns';
 
 import { useIdAllocator } from '@leafygreen-ui/hooks';
@@ -7,7 +7,6 @@ import { DateInputSegment, DateSegment } from '../DateInputSegment';
 import { isDateSegment } from '../DateInputSegment';
 import { DateInputWrapper } from '../DateInputWrapper';
 import { useDatePickerContext } from '../DatePickerContext';
-import { isValidDate } from '../utils/isValidDate';
 
 import {
   segmentPartsWrapperStyles,
@@ -15,9 +14,8 @@ import {
 } from './DateInputBox.styles';
 import { DateInputBoxProps, DateSegmentsState } from './DateInputBox.types';
 import { useDateSegments } from './useDateSegments';
-import { constructDateString, toClientTimeZone, useFormatter } from './utils';
-
-const now = new Date();
+import { useFormatParts } from './useFormat';
+import { newDateFromSegments, toClientTimeZone } from './utils';
 
 /**
  * @internal
@@ -29,22 +27,20 @@ export function DateInputBox({ value, setValue }: DateInputBoxProps) {
   const inputId = useIdAllocator({ prefix: 'date-input' });
   const inputWrapperRef = useRef(null);
 
-  const formatter = useFormatter(dateFormat, timeZone);
-
-  // Only used to track the _order_ of segments, not the value itself
-  const formatOrder = useMemo(() => formatter?.formatToParts(now), [formatter]);
+  // // Only used to track the _order_ of segments, not the value itself
+  const formatParts = useFormatParts(dateFormat);
 
   /**
-   * When a segment is updated, check if we should set the external value
+   * When a segment is updated, update the external value
    */
   const onSegmentsUpdate = (newSegments: DateSegmentsState) => {
     const { day, month, year } = newSegments;
-    const sourceDateStr = constructDateString({ day, month, year });
+    const sourceDate = newDateFromSegments({ day, month, year });
 
     // Only update the value iff all parts are set, and create a valid date.
-    if (isValidDate(sourceDateStr)) {
+    if (sourceDate) {
       /** New date relative to client time zone */
-      const clientDate = toClientTimeZone(sourceDateStr, timeZone);
+      const clientDate = toClientTimeZone(sourceDate, timeZone);
 
       /** Whether we need to update the external value */
       const shouldUpdate = !value || !isSameDay(clientDate, value);
@@ -60,7 +56,7 @@ export function DateInputBox({ value, setValue }: DateInputBoxProps) {
 
   // Keep track of each date segment
   const { segments, setSegment } = useDateSegments(value, {
-    formatter,
+    timeZone,
     onUpdate: onSegmentsUpdate,
   });
 
@@ -69,7 +65,7 @@ export function DateInputBox({ value, setValue }: DateInputBoxProps) {
    * Sets the segment value
    */
   const handleSegmentChange = (segment: DateSegment) => (newValue: string) => {
-    setSegment(segment, newValue);
+    setSegment(segment, Number(newValue));
   };
 
   return (
@@ -83,7 +79,7 @@ export function DateInputBox({ value, setValue }: DateInputBoxProps) {
         className={segmentPartsWrapperStyles}
         ref={inputWrapperRef}
       >
-        {formatOrder?.map((part, i) => {
+        {formatParts?.map((part, i) => {
           if (part.type === 'literal') {
             return (
               <span className={separatorLiteralStyles} key={'literal-' + i}>
