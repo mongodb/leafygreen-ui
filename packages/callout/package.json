@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/callout",
-  "version": "9.0.14",
+  "version": "9.0.15",
   "description": "leafyGreen UI Kit Callout",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -27,7 +27,7 @@
     "@leafygreen-ui/lib": "^11.0.0",
     "@leafygreen-ui/palette": "^4.0.7",
     "@leafygreen-ui/tokens": "^2.1.4",
-    "@leafygreen-ui/typography": "^16.5.5"
+    "@leafygreen-ui/typography": "^17.0.0"
   },
   "devDependencies": {
     "@leafygreen-ui/code": "^14.2.13"
