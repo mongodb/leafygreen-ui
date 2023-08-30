@@ -5,7 +5,7 @@ export const baseStyles = css``;
 export const segmentPartsWrapperStyles = css`
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 1px;
 `;
 
 export const separatorLiteralStyles = css``;

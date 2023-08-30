@@ -8,12 +8,11 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { characterWidth } from './constants';
+import { characterWidth, charsPerSegment } from './constants';
 import { DateSegment } from './DateInputSegment.types';
 
 export const baseStyles = css`
   font-family: ${fontFamilies.default};
-  /* font-family: ${fontFamilies.code}; */
   font-size: ${BaseFontSize.Body1}px;
   font-variant: tabular-nums;
   text-align: center;
@@ -31,12 +30,6 @@ export const baseStyles = css`
   &:focus {
     outline: none;
   }
-
-  // TODO: Remove if not using small caps
-  /* &::placeholder {
-    font-variant: all-small-caps;
-    font-size: 1.25em;
-  } */
 `;
 
 export const segmentThemeStyles: Record<Theme, string> = {
@@ -92,12 +85,12 @@ export const segmentSizeStyles: Record<Size, string> = {
 
 export const segmentWidthStyles: Record<DateSegment, string> = {
   day: css`
-    width: ${2 * characterWidth.D}ch;
+    width: ${charsPerSegment.day * characterWidth.D}ch;
   `,
   month: css`
-    width: ${2 * characterWidth.M}ch;
+    width: ${charsPerSegment.month * characterWidth.M}ch;
   `,
   year: css`
-    width: ${4 * characterWidth.Y}ch;
+    width: ${charsPerSegment.year * characterWidth.Y}ch;
   `,
 };

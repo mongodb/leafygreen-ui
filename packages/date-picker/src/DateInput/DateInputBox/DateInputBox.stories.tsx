@@ -38,7 +38,6 @@ const meta: StoryMetaType<typeof DateInputBox, DatePickerContextProps> = {
       storyNames: ['Formats', 'TimeZones'],
       combineArgs: {
         darkMode: [false, true],
-        size: Object.values(Size),
         value: [null, testDate],
       },
       decorator: ProviderWrapper,

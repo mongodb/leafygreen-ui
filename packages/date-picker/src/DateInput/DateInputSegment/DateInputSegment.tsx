@@ -54,6 +54,9 @@ export const DateInputSegment = React.forwardRef<
       onChange?.(formatValue(e.target.value));
     };
 
+    // TODO:
+    // Use a text input with pattern attribute due to Firefox stripping leading zeros on number inputs. (╯°□°)╯︵ ┻━┻
+    // Thanks @matt-d-rat
     return (
       <input
         {...rest}
