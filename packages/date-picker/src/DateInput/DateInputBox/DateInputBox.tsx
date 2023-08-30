@@ -3,12 +3,15 @@ import { isSameDay } from 'date-fns';
 
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 
-import { DateInputSegment, DateSegment } from '../DateInputSegment';
-import { isDateSegment } from '../DateInputSegment';
+import { useDatePickerContext } from '../../DatePickerContext';
+import { newDateFromSegments } from '../../utils/newDateFromSegments';
+import { toClientTimeZone } from '../../utils/toTimeZone';
+import {
+  DateInputSegment,
+  DateSegment,
+  isDateSegment,
+} from '../DateInputSegment';
 import { DateInputWrapper } from '../DateInputWrapper';
-import { useDatePickerContext } from '../DatePickerContext';
-import { newDateFromSegments } from '../utils/newDateFromSegments';
-import { toClientTimeZone } from '../utils/toTimeZone';
 
 import {
   segmentPartsWrapperStyles,

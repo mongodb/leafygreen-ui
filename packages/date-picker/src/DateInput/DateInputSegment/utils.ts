@@ -1,10 +1,9 @@
 import { padStart } from 'lodash';
 
+import { isZeroLike } from '../../utils/isZeroLike';
+
 import { charsPerSegment } from './constants';
 import { DateSegment } from './DateInputSegment.types';
-
-const isZeroLike = (val: any) =>
-  !val || isNaN(val) || ['', '0', '00', 0].includes(val);
 
 export const getValueFormatter =
   (segment: DateSegment) => (val: string | number | undefined) => {

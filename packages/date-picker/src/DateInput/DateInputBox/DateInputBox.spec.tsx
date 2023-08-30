@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import {
   DatePickerContextProps,
   DatePickerProvider,
-} from '../DatePickerContext';
+} from '../../DatePickerContext';
 
 import { DateInputBox, type DateInputBoxProps } from '.';
 

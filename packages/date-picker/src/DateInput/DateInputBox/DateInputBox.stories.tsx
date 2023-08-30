@@ -9,7 +9,7 @@ import { StoryMetaType } from '@leafygreen-ui/lib';
 import {
   DatePickerContextProps,
   DatePickerProvider,
-} from '../DatePickerContext';
+} from '../../DatePickerContext';
 
 import { DateInputBox } from './DateInputBox';
 

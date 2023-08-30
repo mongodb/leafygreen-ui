@@ -11,7 +11,7 @@ import {
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 
-import { useDatePickerContext } from '../DatePickerContext';
+import { useDatePickerContext } from '../../DatePickerContext';
 
 import {
   baseWrapperStyles,
