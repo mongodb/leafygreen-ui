@@ -34,9 +34,9 @@ const meta: StoryMetaType<typeof DateInputBox, DatePickerContextProps> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
+        value: [null, new Date('1993-12-26')],
         dateFormat: ['iso8601', 'en-US', 'en-UK', 'de-DE'],
         timeZone: ['UTC', 'Europe/London', 'America/New_York', 'Asia/Seoul'],
-        value: [null, new Date('1993-12-26')],
       },
       excludeCombinations: [
         {

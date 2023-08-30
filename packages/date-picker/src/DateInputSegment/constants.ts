@@ -36,11 +36,16 @@ export const defaultPlaceholder = {
 
 /** The percentage of 1ch these specific characters take up */
 export const characterWidth = {
+  // Standard font
   D: 1.1875,
   M: 1.375,
   Y: 1.125,
-  // TODO: Remove if not using small-caps placeholders
+  // TODO: for small-caps placeholders
   // D: 1.05,
   // M: 1.25,
   // Y: 0.975,
+  // TODO: for monospace
+  // D: 1.05,
+  // M: 1.05,
+  // Y: 1.05,
 } as const;

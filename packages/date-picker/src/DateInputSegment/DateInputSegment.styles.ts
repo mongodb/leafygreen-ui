@@ -13,6 +13,7 @@ import { DateSegment } from './DateInputSegment.types';
 
 export const baseStyles = css`
   font-family: ${fontFamilies.default};
+  /* font-family: ${fontFamilies.code}; */
   font-size: ${BaseFontSize.Body1}px;
   font-variant: tabular-nums;
   text-align: center;
