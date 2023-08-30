@@ -4,7 +4,8 @@ import { StoryFn } from '@storybook/react';
 import { isValid } from 'date-fns';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { StoryMetaType } from '@leafygreen-ui/lib';
+import { StoryMetaType, StoryType } from '@leafygreen-ui/lib';
+import { Size } from '@leafygreen-ui/tokens';
 
 import {
   DatePickerContextProps,
@@ -12,6 +13,8 @@ import {
 } from '../../DatePickerContext';
 
 import { DateInputBox } from './DateInputBox';
+
+const testDate = new Date('1993-12-26');
 
 const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
   <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
@@ -32,18 +35,12 @@ const meta: StoryMetaType<typeof DateInputBox, DatePickerContextProps> = {
   parameters: {
     default: null,
     generate: {
+      storyNames: ['Formats', 'TimeZones'],
       combineArgs: {
         darkMode: [false, true],
-        value: [null, new Date('1993-12-26')],
-        dateFormat: ['iso8601', 'en-US', 'en-UK', 'de-DE'],
-        timeZone: ['UTC', 'Europe/London', 'America/New_York', 'Asia/Seoul'],
+        size: Object.values(Size),
+        value: [null, testDate],
       },
-      excludeCombinations: [
-        {
-          timeZone: ['Europe/London', 'America/New_York', 'Asia/Seoul'],
-          value: null,
-        },
-      ],
       decorator: ProviderWrapper,
     },
   },
@@ -75,10 +72,43 @@ export const Basic: StoryFn<typeof DateInputBox> = props => {
   return (
     <>
       <DateInputBox {...props} value={date} setValue={updateDate} />
-      <b>Current date</b>
-      <span>{date?.toISOString()}</span>
     </>
   );
 };
 
-export const Generated = () => {};
+export const Formats: StoryType<
+  typeof DateInputBox,
+  DatePickerContextProps
+> = () => <></>;
+Formats.parameters = {
+  generate: {
+    combineArgs: {
+      dateFormat: ['iso8601', 'en-US', 'en-UK', 'de-DE'],
+    },
+  },
+};
+
+export const TimeZones: StoryType<
+  typeof DateInputBox,
+  DatePickerContextProps
+> = () => <></>;
+TimeZones.parameters = {
+  generate: {
+    args: {
+      dateFormat: 'iso8601',
+      size: Size.Default,
+    },
+    combineArgs: {
+      timeZone: [
+        'Pacific/Honolulu',
+        'America/Los_Angeles',
+        'America/New_York',
+        'Europe/London',
+        'Asia/Istanbul',
+        'Asia/Seoul',
+        'Pacific/Auckland',
+      ],
+    },
+    excludeCombinations: [{ value: null }, {}],
+  },
+};

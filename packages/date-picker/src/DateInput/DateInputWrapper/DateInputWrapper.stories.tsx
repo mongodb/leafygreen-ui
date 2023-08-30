@@ -28,13 +28,13 @@ const meta: StoryMetaType<
       combineArgs: {
         darkMode: [false, true],
         label: [undefined, 'Label'],
-        description: [undefined, 'United States'],
+        description: [undefined, 'Description'],
         state: ['unset', 'error'],
       },
       excludeCombinations: [
         {
           label: undefined,
-          description: 'United States',
+          description: 'Description',
         },
       ],
       decorator: (Instance, ctx) => (
@@ -67,8 +67,8 @@ const meta: StoryMetaType<
   },
   args: {
     label: 'Label',
-    description: 'United States',
-    state: 'unset',
+    description: 'Description',
+    state: 'error',
     errorMessage: 'This is an error message',
   },
   argTypes: {

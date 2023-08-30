@@ -4,8 +4,8 @@ export const baseStyles = css``;
 
 export const segmentPartsWrapperStyles = css`
   display: flex;
+  align-items: center;
   gap: 2px;
-  width: 100%;
 `;
 
 export const separatorLiteralStyles = css``;

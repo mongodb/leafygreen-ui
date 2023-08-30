@@ -15,6 +15,11 @@ export interface DateInputBoxProps
    * Date object is relative to the client's time zone
    */
   setValue?: (date: Date | null) => void;
+
+  /**
+   * id of the labelling element
+   */
+  labelledBy?: string;
 }
 
 // export interface DateSegmentsState {

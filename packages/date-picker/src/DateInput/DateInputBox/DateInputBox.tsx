@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { isSameDay } from 'date-fns';
 
-import { useIdAllocator } from '@leafygreen-ui/hooks';
+import { cx } from '@leafygreen-ui/emotion';
 
 import { useDatePickerContext } from '../../DatePickerContext';
 import { newDateFromSegments } from '../../utils/newDateFromSegments';
@@ -11,7 +11,6 @@ import {
   DateSegment,
   isDateSegment,
 } from '../DateInputSegment';
-import { DateInputWrapper } from '../DateInputWrapper';
 
 import {
   segmentPartsWrapperStyles,
@@ -26,12 +25,14 @@ import { useFormatParts } from './useFormat';
  *
  * Must be controlled
  */
-export function DateInputBox({ value, setValue }: DateInputBoxProps) {
-  const { label, dateFormat, timeZone } = useDatePickerContext();
-  const labelId = useIdAllocator({ prefix: 'date-label' });
-  const descriptionId = useIdAllocator({ prefix: 'date-description' });
-  const errorId = useIdAllocator({ prefix: 'date-description' });
-  const inputId = useIdAllocator({ prefix: 'date-input' });
+export function DateInputBox({
+  value,
+  setValue,
+  className,
+  labelledBy,
+  ...rest
+}: DateInputBoxProps) {
+  const { dateFormat, timeZone } = useDatePickerContext();
   const inputWrapperRef = useRef(null);
 
   // // Only used to track the _order_ of segments, not the value itself
@@ -76,41 +77,31 @@ export function DateInputBox({ value, setValue }: DateInputBoxProps) {
   };
 
   return (
-    <DateInputWrapper
-      label={label}
-      description={dateFormat + ' ' + timeZone}
-      inputId={inputId}
-      labelId={labelId}
-      descriptionId={descriptionId}
-      errorId={errorId}
+    <div
+      className={cx(segmentPartsWrapperStyles, className)}
+      ref={inputWrapperRef}
+      {...rest}
     >
-      <div
-        id={inputId}
-        className={segmentPartsWrapperStyles}
-        ref={inputWrapperRef}
-      >
-        {formatParts?.map((part, i) => {
-          if (part.type === 'literal') {
-            return (
-              <span className={separatorLiteralStyles} key={'literal-' + i}>
-                {part.value}
-              </span>
-            );
-          } else if (isDateSegment(part.type)) {
-            return (
-              <DateInputSegment
-                key={part.type}
-                segment={part.type}
-                value={segments[part.type]}
-                onChange={handleSegmentChange(part.type)}
-                aria-labelledby={labelId}
-                aria-describedby={descriptionId}
-              />
-            );
-          }
-        })}
-      </div>
-    </DateInputWrapper>
+      {formatParts?.map((part, i) => {
+        if (part.type === 'literal') {
+          return (
+            <span className={separatorLiteralStyles} key={'literal-' + i}>
+              {part.value}
+            </span>
+          );
+        } else if (isDateSegment(part.type)) {
+          return (
+            <DateInputSegment
+              key={part.type}
+              segment={part.type}
+              value={segments[part.type]}
+              onChange={handleSegmentChange(part.type)}
+              aria-labelledby={labelledBy}
+            />
+          );
+        }
+      })}
+    </div>
   );
 }
 
