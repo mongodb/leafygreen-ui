@@ -25,7 +25,7 @@
     "@leafygreen-ui/emotion": "^4.0.7",
     "@leafygreen-ui/lib": "^11.0.0",
     "@leafygreen-ui/palette": "^4.0.7",
-    "@leafygreen-ui/tooltip": "^10.0.8"
+    "@leafygreen-ui/tooltip": "^10.0.10"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.7"
@@ -39,6 +39,6 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@leafygreen-ui/typography": "^16.5.5"
+    "@leafygreen-ui/typography": "^17.0.0"
   }
 }
