@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/search-input",
-  "version": "2.0.15",
+  "version": "2.0.16",
   "description": "leafyGreen UI Kit Search Input",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
