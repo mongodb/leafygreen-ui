@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/segmented-control",
-  "version": "8.2.5",
+  "version": "8.2.6",
   "description": "leafyGreen UI Kit Segmented Control",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -29,7 +29,7 @@
     "@leafygreen-ui/lib": "^11.0.0",
     "@leafygreen-ui/palette": "^4.0.7",
     "@leafygreen-ui/tokens": "^2.2.0",
-    "@leafygreen-ui/typography": "^16.5.5",
+    "@leafygreen-ui/typography": "^17.0.0",
     "lodash": "^4.17.21",
     "polished": "^4.2.2"
   },

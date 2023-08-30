@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/skeleton-loader",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "description": "leafyGreen UI Kit Skeleton Loader",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -35,7 +35,7 @@
     "@leafygreen-ui/lib": "^11.0.0",
     "@leafygreen-ui/palette": "^4.0.7",
     "@leafygreen-ui/tokens": "^2.1.4",
-    "@leafygreen-ui/typography": "^16.5.5"
+    "@leafygreen-ui/typography": "^17.0.0"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.7"

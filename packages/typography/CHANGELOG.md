@@ -1,5 +1,12 @@
 # @leafygreen-ui/typography
 
+## 17.0.0
+
+### Major Changes
+
+- a5770c15: Link now inherits font size and line height from the parent's CSS
+- c89d17a4: Updates `Error` component to read from TypographyProvider to set font size
+
 ## 16.5.5
 
 ### Patch Changes
