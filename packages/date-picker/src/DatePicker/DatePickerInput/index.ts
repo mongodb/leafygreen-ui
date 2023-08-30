@@ -1,3 +1,2 @@
-
-export  { DatePickerInput } from './DatePickerInput';
+export { DatePickerInput } from './DatePickerInput';
 export { DatePickerInputProps } from './DatePickerInput.types';
