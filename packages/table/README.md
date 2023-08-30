@@ -56,7 +56,7 @@ import {
     </HeaderRow>
   </TableHead>
   <TableBody>
-    {data.map((row: AnyDict) => (
+    {data.map((row: { [key: string]: any }) => (
       <Row key={row.id}>
         {Object.keys(row).map((cellKey: string, index: number) => {
           return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
