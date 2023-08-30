@@ -13,6 +13,7 @@ export interface DateInputWrapperProps extends HTMLElementProps<'div'> {
   state?: InputState;
   errorMessage?: string;
   inputId: string;
+  labelId?: string;
   descriptionId?: string;
   errorId?: string;
 }

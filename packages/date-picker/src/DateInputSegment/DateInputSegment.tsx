@@ -57,6 +57,7 @@ export const DateInputSegment = React.forwardRef<
     return (
       <input
         {...rest}
+        aria-label={segment}
         ref={inputRef}
         type="number"
         value={formatValue(value)}

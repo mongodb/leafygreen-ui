@@ -23,4 +23,7 @@ export interface DateInputBoxProps
 //   year?: number;
 // }
 
-export type DateSegmentsState = Record<DateSegment, DateSegmentValue>;
+export type DateSegmentsState = Record<
+  DateSegment,
+  DateSegmentValue | undefined
+>;

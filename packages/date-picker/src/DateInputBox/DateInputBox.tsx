@@ -24,6 +24,9 @@ import { newDateFromSegments, toClientTimeZone } from './utils';
  */
 export function DateInputBox({ value, setValue }: DateInputBoxProps) {
   const { label, dateFormat, timeZone } = useDatePickerContext();
+  const labelId = useIdAllocator({ prefix: 'date-label' });
+  const descriptionId = useIdAllocator({ prefix: 'date-description' });
+  const errorId = useIdAllocator({ prefix: 'date-description' });
   const inputId = useIdAllocator({ prefix: 'date-input' });
   const inputWrapperRef = useRef(null);
 
@@ -73,6 +76,9 @@ export function DateInputBox({ value, setValue }: DateInputBoxProps) {
       label={label}
       description={dateFormat + ' ' + timeZone}
       inputId={inputId}
+      labelId={labelId}
+      descriptionId={descriptionId}
+      errorId={errorId}
     >
       <div
         id={inputId}
@@ -93,6 +99,8 @@ export function DateInputBox({ value, setValue }: DateInputBoxProps) {
                 segment={part.type}
                 value={segments[part.type]}
                 onChange={handleSegmentChange(part.type)}
+                aria-labelledby={labelId}
+                aria-describedby={descriptionId}
               />
             );
           }

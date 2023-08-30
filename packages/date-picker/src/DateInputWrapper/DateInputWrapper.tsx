@@ -40,6 +40,7 @@ export const DateInputWrapper = React.forwardRef<
       errorMessage,
       children,
       inputId,
+      labelId,
       descriptionId,
       errorId,
       ...rest
@@ -57,7 +58,11 @@ export const DateInputWrapper = React.forwardRef<
         {...rest}
       >
         <div className={textContainerStyle}>
-          {label && <Label htmlFor={inputId}>{label}</Label>}
+          {label && (
+            <Label htmlFor={inputId} id={labelId}>
+              {label}
+            </Label>
+          )}
           {description && (
             <Description id={descriptionId}>{description}</Description>
           )}

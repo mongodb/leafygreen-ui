@@ -1,4 +1,5 @@
-import { createContext, useContext } from 'react';
+import React from 'react';
+import { createContext, PropsWithChildren, useContext } from 'react';
 
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
@@ -21,5 +22,15 @@ export const defaultDatePickerContext: DatePickerContextProps = {
 export const DatePickerContext = createContext<DatePickerContextProps>(
   defaultDatePickerContext,
 );
-export const DatePickerProvider = DatePickerContext.Provider;
+export const DatePickerProvider = ({
+  children,
+  value,
+}: PropsWithChildren<{ value: DatePickerContextProps }>) => {
+  const providerValue = { ...defaultDatePickerContext, ...value };
+  return (
+    <DatePickerContext.Provider value={providerValue}>
+      {children}
+    </DatePickerContext.Provider>
+  );
+};
 export const useDatePickerContext = () => useContext(DatePickerContext);
