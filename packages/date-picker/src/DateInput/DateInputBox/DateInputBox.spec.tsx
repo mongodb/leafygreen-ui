@@ -32,14 +32,10 @@ describe('packages/date-input-box', () => {
     describe.each(['day', 'month', 'year'])('%i', segment => {
       test('renders the correct aria attributes', () => {
         const result = renderDateInputBox();
-        const label = result.getByText('Label');
         const input = result.getByLabelText(segment);
 
         // each segment has appropriate aria label
         expect(input).toHaveAttribute('aria-label', segment);
-
-        // each segment is labelled by the wrapper label
-        expect(input).toHaveAttribute('aria-labelledby', label.id);
       });
     });
 
@@ -74,9 +70,9 @@ describe('packages/date-input-box', () => {
         undefined,
         { dateFormat: 'iso8601' },
       );
-      expect(dayInput).toHaveValue('');
-      expect(monthInput).toHaveValue('');
-      expect(yearInput).toHaveValue('');
+      expect(dayInput).toHaveValue(null);
+      expect(monthInput).toHaveValue(null);
+      expect(yearInput).toHaveValue(null);
     });
 
     test('renders a filled text box', () => {

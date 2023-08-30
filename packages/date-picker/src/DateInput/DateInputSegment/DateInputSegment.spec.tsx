@@ -2,175 +2,89 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { DateSegment } from './DateInputSegment.types';
-import { getValueFormatter } from './utils';
-import { DateInputSegment } from '.';
+import { DateInputSegment, type DateInputSegmentProps } from '.';
 
 const handler = jest.fn();
+
+const renderSegment = (props: DateInputSegmentProps) => {
+  const result = render(<DateInputSegment data-testid="testid" {...props} />);
+  const input = result.getByTestId('testid');
+  return {
+    ...result,
+    input: input as HTMLInputElement,
+  };
+};
 
 describe('packages/date-picker/date-input-segment', () => {
   beforeEach(() => {
     handler.mockClear();
   });
 
-  describe('utils/valueFormatter', () => {
-    describe.each(['day', 'month'] as Array<DateSegment>)('', segment => {
-      const formatter = getValueFormatter(segment);
-
-      test('formats 2 digit values', () => {
-        expect(formatter('12')).toEqual('12');
-      });
-
-      test('pads 1 digit value', () => {
-        expect(formatter('2')).toEqual('02');
-      });
-
-      test('truncates 3+ digit values', () => {
-        expect(formatter('123')).toEqual('23');
-      });
-
-      test('truncates 3+ digit padded values', () => {
-        expect(formatter('012')).toEqual('12');
-      });
-
-      test('sets 0 to empty string', () => {
-        expect(formatter('0')).toEqual('');
-      });
-
-      test('sets undefined to empty string', () => {
-        expect(formatter(undefined)).toEqual('');
-      });
-    });
-
-    describe('year', () => {
-      const formatter = getValueFormatter('year');
-
-      test('formats 4 digit values', () => {
-        expect(formatter('2023')).toEqual('2023');
-      });
-
-      test('pads < 4 digit value', () => {
-        expect(formatter('123')).toEqual('0123');
-      });
-
-      test('truncates 5+ digit values', () => {
-        expect(formatter('12345')).toEqual('2345');
-      });
-
-      test('truncates 5+ digit padded values', () => {
-        expect(formatter('02345')).toEqual('2345');
-      });
-
-      test('sets 0 to empty string', () => {
-        expect(formatter('0')).toEqual('');
-      });
-
-      test('sets undefined to empty string', () => {
-        expect(formatter(undefined)).toEqual('');
-      });
-    });
-  });
-
   describe('rendering', () => {
     describe('day segment', () => {
       test('Rendering with undefined sets the value to empty string', () => {
-        const result = render(
-          <DateInputSegment
-            segment="day"
-            data-testid="testid"
-            value={undefined}
-          />,
-        );
-        const input = result.getByTestId('testid');
-        expect((input as HTMLInputElement).value).toBe('');
+        const { input } = renderSegment({ segment: 'day' });
+        expect(input.value).toBe('');
       });
 
       test('Rendering with a value sets the input value', () => {
-        const result = render(
-          <DateInputSegment segment="day" data-testid="testid" value={12} />,
-        );
-        const input = result.getByTestId('testid');
-        expect((input as HTMLInputElement).value).toBe('12');
+        const { input } = renderSegment({ segment: 'day', value: 12 });
+        expect(input.value).toBe('12');
       });
 
       test('values get appropriately padded', () => {
-        const result = render(
-          <DateInputSegment segment="day" data-testid="testid" value={8} />,
-        );
-        const input = result.getByTestId('testid');
-        expect((input as HTMLInputElement).value).toBe('08');
+        const { input } = renderSegment({ segment: 'day', value: 8 });
+        expect(input.value).toBe('08');
       });
 
       test('values get appropriately truncated', () => {
-        const result = render(
-          <DateInputSegment segment="day" data-testid="testid" value={123} />,
-        );
-        const input = result.getByTestId('testid');
-        expect((input as HTMLInputElement).value).toBe('23');
+        const { input } = renderSegment({ segment: 'day', value: 123 });
+        expect(input.value).toBe('23');
       });
 
       test('rerendering updates the value', () => {
-        const result = render(
-          <DateInputSegment segment="day" data-testid="testid" value={12} />,
-        );
-        const input = result.getByTestId('testid');
-        result.rerender(
+        const { input, rerender } = renderSegment({
+          segment: 'day',
+          value: 12,
+        });
+
+        rerender(
           <DateInputSegment segment="day" data-testid="testid" value={8} />,
         );
-        expect((input as HTMLInputElement).value).toBe('08');
+        expect(input.value).toBe('08');
       });
     });
 
     describe('year segment', () => {
       test('Rendering with undefined sets the value to empty string', () => {
-        const result = render(
-          <DateInputSegment
-            segment="year"
-            data-testid="testid"
-            value={undefined}
-          />,
-        );
-        const input = result.getByTestId('testid');
-        expect((input as HTMLInputElement).value).toBe('');
+        const { input } = renderSegment({ segment: 'year' });
+        expect(input.value).toBe('');
       });
 
       test('Rendering with a value sets the input value', () => {
-        const result = render(
-          <DateInputSegment segment="year" data-testid="testid" value={2023} />,
-        );
-        const input = result.getByTestId('testid');
-        expect((input as HTMLInputElement).value).toBe('2023');
+        const { input } = renderSegment({ segment: 'year', value: 2023 });
+        expect(input.value).toBe('2023');
       });
 
       test('values get appropriately padded', () => {
-        const result = render(
-          <DateInputSegment segment="year" data-testid="testid" value={123} />,
-        );
-        const input = result.getByTestId('testid');
-        expect((input as HTMLInputElement).value).toBe('0123');
+        const { input } = renderSegment({ segment: 'year', value: 123 });
+        expect(input.value).toBe('0123');
       });
 
       test('values get appropriately truncated', () => {
-        const result = render(
-          <DateInputSegment
-            segment="year"
-            data-testid="testid"
-            value={12031}
-          />,
-        );
-        const input = result.getByTestId('testid');
-        expect((input as HTMLInputElement).value).toBe('2031');
+        const { input } = renderSegment({ segment: 'year', value: 12031 });
+        expect(input.value).toBe('2031');
       });
 
       test('rerendering updates the value', () => {
-        const result = render(
-          <DateInputSegment segment="year" data-testid="testid" value={2023} />,
-        );
-        const input = result.getByTestId('testid');
-        result.rerender(
+        const { input, rerender } = renderSegment({
+          segment: 'year',
+          value: 2023,
+        });
+        rerender(
           <DateInputSegment segment="year" data-testid="testid" value={1993} />,
         );
-        expect((input as HTMLInputElement).value).toBe('1993');
+        expect(input.value).toBe('1993');
       });
     });
   });

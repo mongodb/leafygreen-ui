@@ -8,6 +8,7 @@ import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { useDatePickerContext } from '../../DatePickerContext';
 
+import { getValueFormatter } from './utils/valueFormatter';
 import { defaultMax, defaultMin, defaultPlaceholder } from './constants';
 import {
   baseStyles,
@@ -17,7 +18,6 @@ import {
   segmentWidthStyles,
 } from './DateInputSegment.styles';
 import { DateInputSegmentProps, DateSegment } from './DateInputSegment.types';
-import { getValueFormatter } from './utils';
 
 export function isDateSegment(str: string): str is DateSegment {
   return ['day', 'month', 'year'].includes(str);
