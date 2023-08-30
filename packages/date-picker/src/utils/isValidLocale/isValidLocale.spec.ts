@@ -1,4 +1,4 @@
-import { isValidLocale } from './isValidLocale';
+import { isValidLocale } from '.';
 
 describe('packages/date-picker/utils/isValidLocale', () => {
   test('en-US is valid', () => {

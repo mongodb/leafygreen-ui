@@ -7,6 +7,8 @@ import { DateInputSegment, DateSegment } from '../DateInputSegment';
 import { isDateSegment } from '../DateInputSegment';
 import { DateInputWrapper } from '../DateInputWrapper';
 import { useDatePickerContext } from '../DatePickerContext';
+import { newDateFromSegments } from '../utils/newDateFromSegments';
+import { toClientTimeZone } from '../utils/toTimeZone';
 
 import {
   segmentPartsWrapperStyles,
@@ -15,7 +17,6 @@ import {
 import { DateInputBoxProps, DateSegmentsState } from './DateInputBox.types';
 import { useDateSegments } from './useDateSegments';
 import { useFormatParts } from './useFormat';
-import { newDateFromSegments, toClientTimeZone } from './utils';
 
 /**
  * @internal

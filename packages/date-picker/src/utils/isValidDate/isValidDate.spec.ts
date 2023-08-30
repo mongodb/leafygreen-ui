@@ -1,4 +1,4 @@
-import { isValidDate } from './isValidDate';
+import { isValidDate } from '.';
 
 describe('packages/date-picker/utils/isValidDate', () => {
   test('us format is valid', () => {

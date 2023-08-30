@@ -1,3 +1,5 @@
-
-export  { DateInputBox } from './DateInputBox';
-export { DateInputBoxProps } from './DateInputBox.types';
+export { DateInputBox } from './DateInputBox';
+export type {
+  DateInputBoxProps,
+  DateSegmentsState,
+} from './DateInputBox.types';

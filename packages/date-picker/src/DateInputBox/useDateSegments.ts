@@ -4,9 +4,9 @@ import { getDate, getMonth, getYear, isSameDay } from 'date-fns';
 import { usePrevious } from '@leafygreen-ui/hooks';
 
 import type { DateSegment, DateSegmentValue } from '../DateInputSegment';
+import { toTimeZone } from '../utils/toTimeZone';
 
 import { DateSegmentsState } from './DateInputBox.types';
-import { toTimeZone } from './utils';
 
 type OnUpdateCallback = (value: DateSegmentsState) => void;
 
