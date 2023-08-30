@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/badge",
-  "version": "8.0.9",
+  "version": "8.0.12",
   "description": "leafyGreen UI Kit Badge",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,13 +22,13 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/emotion": "^4.0.5",
-    "@leafygreen-ui/lib": "^10.4.1",
-    "@leafygreen-ui/palette": "^4.0.5",
-    "@leafygreen-ui/tokens": "^2.1.2"
+    "@leafygreen-ui/emotion": "^4.0.7",
+    "@leafygreen-ui/lib": "^11.0.0",
+    "@leafygreen-ui/palette": "^4.0.7",
+    "@leafygreen-ui/tokens": "^2.1.4"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.4"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.7"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/badge",

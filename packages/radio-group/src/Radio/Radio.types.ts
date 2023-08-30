@@ -4,7 +4,7 @@ import { RadioGroupProps } from '..';
 
 export interface RadioProps
   extends Omit<HTMLElementProps<'input'>, 'size'>,
-    Pick<RadioGroupProps, 'darkMode' | 'size'> {
+    Pick<RadioGroupProps, 'darkMode' | 'size' | 'bold'> {
   /**
    * Used to determine what Radio is active.
    */

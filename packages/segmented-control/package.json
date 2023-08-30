@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/segmented-control",
-  "version": "8.2.1",
+  "version": "8.2.6",
   "description": "leafyGreen UI Kit Segmented Control",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,22 +22,22 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/box": "^3.1.5",
-    "@leafygreen-ui/emotion": "^4.0.5",
-    "@leafygreen-ui/hooks": "^7.7.6",
-    "@leafygreen-ui/icon": "^11.20.1",
-    "@leafygreen-ui/lib": "^10.4.1",
-    "@leafygreen-ui/palette": "^4.0.5",
-    "@leafygreen-ui/tokens": "^2.1.2",
-    "@leafygreen-ui/typography": "^16.5.2",
+    "@leafygreen-ui/box": "^3.1.8",
+    "@leafygreen-ui/emotion": "^4.0.7",
+    "@leafygreen-ui/hooks": "^8.0.0",
+    "@leafygreen-ui/icon": "^11.23.0",
+    "@leafygreen-ui/lib": "^11.0.0",
+    "@leafygreen-ui/palette": "^4.0.7",
+    "@leafygreen-ui/tokens": "^2.2.0",
+    "@leafygreen-ui/typography": "^17.0.0",
     "lodash": "^4.17.21",
     "polished": "^4.2.2"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "^21.0.0"
+    "@leafygreen-ui/button": "^21.0.5"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.4"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.8"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/segmented-control",
   "repository": {

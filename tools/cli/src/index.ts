@@ -31,6 +31,10 @@ cli
     '-d, --directory [directory]',
     'The directory to write the new package. Defaults to the first entry in lg.config.json scopes',
   )
+  .option(
+    '-p, --parent [parent]',
+    'Creates a sub-component to the provided parent',
+  )
   .action(createPackage);
 
 /** Install */
@@ -126,6 +130,7 @@ cli
     '--config',
     'Specify a jest config file. By default will look for `jest.config.js` at the root, or use `@lg-tools/test/config`',
   )
+  .option('--react17', 'Runs tests in a React17 environment', false)
   .allowUnknownOption(true)
   .option('-v --verbose', 'Prints additional information to the console', false)
   .action(test);

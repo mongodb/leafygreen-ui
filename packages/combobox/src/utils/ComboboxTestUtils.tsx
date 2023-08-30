@@ -6,6 +6,7 @@ import {
   queryByAttribute,
   queryByText,
   render,
+  RenderResult,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import chalk from 'chalk';
@@ -146,7 +147,7 @@ export const getComboboxJSX = (props?: renderComboboxProps) => {
 export function renderCombobox<T extends Select>(
   select: T = 'single' as T,
   props?: renderComboboxProps,
-) {
+): RenderResult & Record<string, any> {
   const multiselect = select === 'multiple';
   const options = props?.options || defaultOptions;
   props = { options, multiselect, ...props };

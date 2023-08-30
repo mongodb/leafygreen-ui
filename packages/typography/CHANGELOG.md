@@ -1,5 +1,55 @@
 # @leafygreen-ui/typography
 
+## 17.0.0
+
+### Major Changes
+
+- a5770c15: Link now inherits font size and line height from the parent's CSS
+- c89d17a4: Updates `Error` component to read from TypographyProvider to set font size
+
+## 16.5.5
+
+### Patch Changes
+
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/icon@11.22.2
+  - @leafygreen-ui/lib@11.0.0
+  - @leafygreen-ui/polymorphic@1.3.6
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+
+## 16.5.4
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+- Updated dependencies [c11bbc29]
+  - @leafygreen-ui/emotion@4.0.7
+  - @leafygreen-ui/icon@11.22.1
+  - @leafygreen-ui/leafygreen-provider@3.1.6
+  - @leafygreen-ui/lib@10.4.3
+  - @leafygreen-ui/palette@4.0.7
+  - @leafygreen-ui/polymorphic@1.3.5
+  - @leafygreen-ui/tokens@2.1.4
+
+## 16.5.3
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+- Updated dependencies [f73807cf]
+- Updated dependencies [31c09354]
+- Updated dependencies [c15ee2ac]
+  - @leafygreen-ui/icon@11.22.0
+  - @leafygreen-ui/emotion@4.0.6
+  - @leafygreen-ui/leafygreen-provider@3.1.5
+  - @leafygreen-ui/lib@10.4.2
+  - @leafygreen-ui/palette@4.0.6
+  - @leafygreen-ui/polymorphic@1.3.4
+  - @leafygreen-ui/tokens@2.1.3
+
 ## 16.5.2
 
 ### Patch Changes

@@ -9,9 +9,8 @@
     "npm": ">= 8.19.4"
   },
   "scripts": {
-    "lg": "lg",
     "init": "yarn && yarn build",
-    "create-package": "lg-create",
+    "create-package": "lg create",
     "prebuild": "turbo run build tsc --filter=@lg-tools/cli",
     "build": "turbo run build tsc",
     "build-storybook": "storybook build",
@@ -31,7 +30,7 @@
     "validate": "lg validate"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0",
+    "@babel/core": "7.21.8",
     "@changesets/cli": "^2.26.0",
     "@lg-tools/cli": "*",
     "@lg-tools/meta": "*",
@@ -39,16 +38,16 @@
     "@lg-tools/storybook": "*",
     "@lg-tools/storybook-decorators": "*",
     "@types/lodash": "^4.14.170",
-    "@types/react": "^16.9.56",
-    "@types/react-dom": "^16.9.9",
-    "@types/react-transition-group": "4.4.1",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@types/react-transition-group": "^4.4.6",
     "chromatic": "^6.17.2",
     "dotenv": "^10.0.0",
     "gh-pages": "^3.1.0",
     "npm-run-all": "^4.1.5",
     "prop-types": "^15.7.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-router-dom": "5.2.0",
     "storybook": "7.1.1",
     "turbo": "^1.10.7",
@@ -56,7 +55,7 @@
   },
   "resolutions": {
     "caniuse-lite": "^1.0.30001135",
-    "@types/react": "^16.9.56"
+    "@types/react-transition-group/@types/react": "^17.0.2"
   },
   "workspaces": [
     "packages/*",

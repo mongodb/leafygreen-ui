@@ -1,5 +1,23 @@
 # @leafygreen-ui/box
 
+## 3.1.8
+
+### Patch Changes
+
+- 4fcf2e94: Updates types with `React.PropsWithChildren`
+
+## 3.1.7
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+
+## 3.1.6
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+
 ## 3.1.5
 
 ### Patch Changes

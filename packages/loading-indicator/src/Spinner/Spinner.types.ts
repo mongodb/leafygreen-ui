@@ -8,7 +8,7 @@ export const DisplayOption = {
   XlargeVertical: 'xlarge-vertical',
 };
 
-export type DisplayOption = typeof DisplayOption[keyof typeof DisplayOption];
+export type DisplayOption = (typeof DisplayOption)[keyof typeof DisplayOption];
 
 export interface SpinnerProps extends DarkModeProps, HTMLElementProps<'div'> {
   /**

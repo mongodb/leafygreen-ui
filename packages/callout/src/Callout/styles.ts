@@ -73,7 +73,10 @@ export const headerLabels: Record<Variant, string> = {
   [Variant.Example]: 'Example',
 } as const;
 
-export const headerIcons: Record<Variant, React.ComponentType<any>> = {
+export const headerIcons: Record<
+  Variant,
+  React.ComponentType<React.PropsWithChildren<any>>
+> = {
   [Variant.Note]: InfoWithCircleIcon,
   [Variant.Tip]: BulbIcon,
   [Variant.Important]: ImportantWithCircleIcon,

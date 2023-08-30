@@ -1,5 +1,23 @@
 # @leafygreen-ui/polymorphic
 
+## 1.3.6
+
+### Patch Changes
+
+- 4fcf2e94: Updates types with `React.PropsWithChildren`
+
+## 1.3.5
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+
+## 1.3.4
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+
 ## 1.3.3
 
 ### Patch Changes

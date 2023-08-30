@@ -10,7 +10,7 @@ export const State = {
   None: 'none', // gray checkmark, gray text
 } as const;
 
-export type State = typeof State[keyof typeof State];
+export type State = (typeof State)[keyof typeof State];
 
 export const Size = {
   Small: 'small',
@@ -18,7 +18,7 @@ export const Size = {
   Large: 'large',
 } as const;
 
-export type Size = typeof Size[keyof typeof Size];
+export type Size = (typeof Size)[keyof typeof Size];
 
 export interface NotificationProps {
   notification?: string;

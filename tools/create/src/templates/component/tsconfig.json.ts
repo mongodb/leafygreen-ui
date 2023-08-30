@@ -22,4 +22,5 @@ export const tsConfig = `{
       "path": "../lib"
     }
   ]
-}`;
+}
+`;

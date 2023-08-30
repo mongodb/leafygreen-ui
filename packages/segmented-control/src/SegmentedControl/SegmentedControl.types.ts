@@ -7,7 +7,8 @@ export const DeprecatedSize = {
   Small: 'small',
 } as const;
 
-export type DeprecatedSize = typeof DeprecatedSize[keyof typeof DeprecatedSize];
+export type DeprecatedSize =
+  (typeof DeprecatedSize)[keyof typeof DeprecatedSize];
 
 export const Size = {
   XSmall: 'xsmall',
@@ -15,7 +16,7 @@ export const Size = {
   Large: 'large',
 } as const;
 
-export type Size = typeof Size[keyof typeof Size];
+export type Size = (typeof Size)[keyof typeof Size];
 
 export interface SegmentedControlProps
   extends Omit<HTMLElementProps<'div'>, 'onChange'> {

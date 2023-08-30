@@ -57,6 +57,7 @@ type Resolve<T extends MaybePromise<any>> = T extends MaybePromise<infer U>
 
 function isPromiseLike<T>(obj: MaybePromise<T>): obj is PromiseLike<T> {
   return (
+    obj != null &&
     (typeof obj === 'object' || typeof obj === 'function') &&
     'then' in obj &&
     typeof obj.then === 'function'

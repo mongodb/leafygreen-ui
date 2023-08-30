@@ -1,5 +1,48 @@
 # @lg-tools/cli
 
+## 0.5.0
+
+### Minor Changes
+
+- 3e8485e9: Adds `--parent` flag to `lg create` command. Passing in this flag will create a subcomponent of the given parent.
+
+### Patch Changes
+
+- Updated dependencies [3e8485e9]
+  - @lg-tools/create@0.2.0
+
+## 0.4.2
+
+### Patch Changes
+
+- Updated dependencies [73dd20f0]
+- Updated dependencies [c9f0055a]
+- Updated dependencies [3fe03b50]
+  - @lg-tools/create@0.1.3
+  - @lg-tools/validate@0.1.3
+  - @lg-tools/lint@0.1.4
+
+## 0.4.1
+
+### Patch Changes
+
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [8e06bb20]
+- Updated dependencies [4fcf2e94]
+  - @lg-tools/build@0.2.1
+  - @lg-tools/test@0.3.0
+
+## 0.4.0
+
+### Minor Changes
+
+- 8183be9c: Adds `lg slackbot release` command to main CLI. Adds support for running the slackbot in other repos & for other scopes
+
+### Patch Changes
+
+- Updated dependencies [8183be9c]
+  - @lg-tools/slackbot@0.2.0
+
 ## 0.3.0
 
 ### Minor Changes

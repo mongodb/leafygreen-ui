@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 import PropTypes from 'prop-types';
 
 import { usePrefersReducedMotion } from '@leafygreen-ui/a11y';
@@ -57,12 +58,23 @@ function GuideCue({
 
     if (open && !isStandalone) {
       // Adding a timeout to the tooltip so the tooltip is positioned correctly. Without the delay the tooltip can sometime shift when it is first visible. Only applies to multi-step tooltip.
-      setPopoverOpen(true); // beacon opens first
-      openTimeout = setTimeout(() => setTooltipOpen(true), timeout1); // tooltip opens a little after
+      // beacon opens first
+      setPopoverOpen(true);
+      openTimeout = setTimeout(
+        () =>
+          // React 18 automatically batches all updates which appears to break the opening transition. flushSync prevents this state update from automically batching. Instead updates are made synchronously.
+          flushSync(() => {
+            // tooltip opens a little after the beacon opens
+            setTooltipOpen(true);
+          }),
+        timeout1,
+      );
     } else {
       // Adding a timeout to the popover because if we close both the tooltip and the popover at the same time the transition is not visible. Only applies to multi-step tooltip.
-      setTooltipOpen(false); // tooltip closes first
-      closeTimeout = setTimeout(() => setPopoverOpen(false), timeout2); // beacon closes a little after
+      // tooltip closes first
+      setTooltipOpen(false);
+      // beacon closes a little after the tooltip cloese
+      closeTimeout = setTimeout(() => setPopoverOpen(false), timeout2);
     }
 
     return () => {
@@ -116,7 +128,6 @@ function GuideCue({
     onEscClose,
     handleButtonClick,
     handleCloseClick,
-    ...sharedProps,
     ...tooltipProps,
   };
 
@@ -133,38 +144,40 @@ function GuideCue({
       {isStandalone ? (
         // Standalone tooltip
         // this is using the reference from the `refEl` prop to position itself against
-        <TooltipContent {...tooltipContentProps}>{children}</TooltipContent>
+        <TooltipContent {...tooltipContentProps} {...sharedProps}>
+          {children}
+        </TooltipContent>
       ) : (
         // Multistep tooltip
-        <>
-          <Popover
-            active={popoverOpen}
-            refEl={refEl}
-            align={beaconAlign}
-            justify={TooltipJustify.Middle}
-            spacing={-12} // width of beacon is 24px, 24/2 = 12
-            adjustOnMutation={true}
-            popoverZIndex={popoverZIndex}
-            {...sharedProps}
+        <Popover
+          active={popoverOpen}
+          refEl={refEl}
+          align={beaconAlign}
+          justify={TooltipJustify.Middle}
+          spacing={-12} // width of beacon is 24px, 24/2 = 12
+          adjustOnMutation={true}
+          popoverZIndex={popoverZIndex}
+          {...sharedProps}
+        >
+          {/* The beacon is using the popover component to position itself */}
+          <div
+            ref={beaconRef}
+            className={beaconStyles(prefersReducedMotion, darkMode)}
           >
-            {/* The beacon is using the popover component to position itself */}
-            <div
-              ref={beaconRef}
-              className={beaconStyles(prefersReducedMotion, darkMode)}
-            >
-              <div />
-            </div>
-          </Popover>
+            <div />
+          </div>
+
           {/* The tooltip is using the ref of the beacon as the trigger to position itself against */}
           {/* Instead of passing the beacon as the tooltip trigger prop we pass a reference to the beacon to the `refEl` prop. By passing only the reference we avoid default tooltip behaviors such as closing the tooltip on background click or showing and hiding the tooltip on hover. */}
           <TooltipContent
             {...tooltipContentProps}
             refEl={beaconRef}
             open={tooltipOpen}
+            usePortal={false}
           >
             {children}
           </TooltipContent>
-        </>
+        </Popover>
       )}
     </>
   );

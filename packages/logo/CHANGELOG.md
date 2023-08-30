@@ -1,5 +1,41 @@
 # @leafygreen-ui/logo
 
+## 8.0.9
+
+### Patch Changes
+
+- 8a2bb167: Export `SupportedColors` from index.ts
+
+## 8.0.8
+
+### Patch Changes
+
+- 4fcf2e94: Updates types with `React.PropsWithChildren`
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/lib@11.0.0
+
+## 8.0.7
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+- Updated dependencies [c11bbc29]
+  - @leafygreen-ui/emotion@4.0.7
+  - @leafygreen-ui/lib@10.4.3
+  - @leafygreen-ui/palette@4.0.7
+
+## 8.0.6
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+- Updated dependencies [c15ee2ac]
+  - @leafygreen-ui/emotion@4.0.6
+  - @leafygreen-ui/lib@10.4.2
+  - @leafygreen-ui/palette@4.0.6
+
 ## 8.0.5
 
 ### Patch Changes

@@ -12,7 +12,7 @@ export const State = {
   Loading: 'loading',
 } as const;
 
-export type State = typeof State[keyof typeof State];
+export type State = (typeof State)[keyof typeof State];
 
 export const Size = {
   Small: 'small',
@@ -20,7 +20,7 @@ export const Size = {
   Large: 'large',
 } as const;
 
-export type Size = typeof Size[keyof typeof Size];
+export type Size = (typeof Size)[keyof typeof Size];
 
 interface BaseSearchInputProps
   extends DarkModeProps,

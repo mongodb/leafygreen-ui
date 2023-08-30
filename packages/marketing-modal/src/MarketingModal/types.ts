@@ -6,14 +6,14 @@ export const BlobPosition = {
   BottomRight: 'bottom right',
 } as const;
 
-export type BlobPosition = typeof BlobPosition[keyof typeof BlobPosition];
+export type BlobPosition = (typeof BlobPosition)[keyof typeof BlobPosition];
 
 export const GraphicStyle = {
   Center: 'center',
   Fill: 'fill',
 } as const;
 
-export type GraphicStyle = typeof GraphicStyle[keyof typeof GraphicStyle];
+export type GraphicStyle = (typeof GraphicStyle)[keyof typeof GraphicStyle];
 
 export interface MarketingModalProps extends Omit<ModalProps, 'size'> {
   /**
@@ -70,4 +70,9 @@ export interface MarketingModalProps extends Omit<ModalProps, 'size'> {
    * 	Determines whether the blob should be rendered.
    */
   showBlob?: boolean;
+
+  /**
+   * Disclaimer text to be rendered under the primary action button
+   */
+  disclaimer?: React.ReactElement;
 }

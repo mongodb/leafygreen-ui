@@ -1,5 +1,78 @@
 # @leafygreen-ui/code
 
+## 14.2.14
+
+### Patch Changes
+
+- Updated dependencies [3fe03b50]
+- Updated dependencies [fd907503]
+- Updated dependencies [c9f0055a]
+- Updated dependencies [56459cde]
+  - @leafygreen-ui/tokens@2.2.0
+  - @leafygreen-ui/hooks@8.0.0
+  - @leafygreen-ui/icon@11.23.0
+  - @leafygreen-ui/a11y@1.4.9
+  - @leafygreen-ui/leafygreen-provider@3.1.8
+  - @leafygreen-ui/select@10.3.14
+
+## 14.2.13
+
+### Patch Changes
+
+- 4fcf2e94: Move custom select menu button into separate components and passes custom select menu button props to new internal select prop, `__INTERNAL__menuButtonSlotProps__`.
+- 4fcf2e94: Updates LanguageSwitcher hover styles specificity to `&:hover[aria-disabled='false']`.
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/icon@11.22.2
+  - @leafygreen-ui/lib@11.0.0
+  - @leafygreen-ui/select@10.3.13
+  - @leafygreen-ui/a11y@1.4.8
+  - @leafygreen-ui/button@21.0.5
+  - @leafygreen-ui/icon-button@15.0.17
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+
+## 14.2.12
+
+### Patch Changes
+
+- c11bbc29: Fixes problem with ts-docs not being available in bundle.
+- Updated dependencies [c11bbc29]
+  - @leafygreen-ui/a11y@1.4.7
+  - @leafygreen-ui/button@21.0.3
+  - @leafygreen-ui/emotion@4.0.7
+  - @leafygreen-ui/hooks@7.7.8
+  - @leafygreen-ui/icon@11.22.1
+  - @leafygreen-ui/icon-button@15.0.16
+  - @leafygreen-ui/leafygreen-provider@3.1.6
+  - @leafygreen-ui/lib@10.4.3
+  - @leafygreen-ui/palette@4.0.7
+  - @leafygreen-ui/select@10.3.12
+  - @leafygreen-ui/tokens@2.1.4
+
+## 14.2.11
+
+### Patch Changes
+
+- c15ee2ac: Fixes missing documentation file
+- Updated dependencies [f73807cf]
+- Updated dependencies [31c09354]
+- Updated dependencies [c15ee2ac]
+  - @leafygreen-ui/icon@11.22.0
+  - @leafygreen-ui/a11y@1.4.6
+  - @leafygreen-ui/button@21.0.2
+  - @leafygreen-ui/emotion@4.0.6
+  - @leafygreen-ui/hooks@7.7.7
+  - @leafygreen-ui/icon-button@15.0.15
+  - @leafygreen-ui/leafygreen-provider@3.1.5
+  - @leafygreen-ui/lib@10.4.2
+  - @leafygreen-ui/palette@4.0.6
+  - @leafygreen-ui/select@10.3.11
+  - @leafygreen-ui/tokens@2.1.3
+
 ## 14.2.10
 
 ### Patch Changes

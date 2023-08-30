@@ -1,6 +1,10 @@
 import React, { PropsWithChildren, useEffect } from 'react';
 import { render } from '@testing-library/react';
-import { cleanup, HookResult, renderHook } from '@testing-library/react-hooks';
+import {
+  cleanup,
+  renderHook,
+  RenderHookResult,
+} from '@testing-library/react-hooks';
 
 import { ToastProps, Variant } from '../../Toast.types';
 import { ToastContext } from '../ToastContext';
@@ -52,7 +56,10 @@ describe('packages/toast/useToast', () => {
     });
 
     describe('returned functions return correct values', () => {
-      let current: HookResult<ToastContextProps>['current'];
+      let current: RenderHookResult<
+        unknown,
+        ToastContextProps
+      >['result']['current'];
 
       beforeEach(() => {
         const { result } = renderHook(useToast, { wrapper: ToastProviderMock });

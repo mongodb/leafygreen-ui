@@ -34,7 +34,6 @@ const renderSubMenu = () => {
 describe('packages/sub-menu', () => {
   test('renders a SubMenu open by default, when the SubMenu is active', () => {
     const { getByTestId } = renderSubMenu();
-
     // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
     // https://jira.mongodb.org/browse/LG-2904
     waitFor(() => {
@@ -47,19 +46,15 @@ describe('packages/sub-menu', () => {
 
   test('when a SubMenu is clicked, it opens and closes the previously opened SubMenu', async () => {
     const { queryByTestId } = renderSubMenu();
-
     // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
     // https://jira.mongodb.org/browse/LG-2904
     waitFor(async () => {
       const subMenuItem = queryByTestId(menuItem1Id);
       expect(subMenuItem).not.toBeNull();
       expect(subMenuItem).toBeInTheDocument();
-
       const subMenu2 = queryByTestId(subMenu2Id);
       userEvent.click(subMenu2 as HTMLElement);
-
       await waitForElementToBeRemoved(subMenuItem);
-
       const subMenuItem2 = queryByTestId(menuItem2Id);
       expect(subMenuItem2).not.toBeNull();
       expect(subMenuItem2).toBeInTheDocument();
@@ -68,7 +63,6 @@ describe('packages/sub-menu', () => {
 
   test('onClick is fired when SubMenu is clicked', async () => {
     const { getByTestId } = renderSubMenu();
-
     // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
     // https://jira.mongodb.org/browse/LG-2904
     waitFor(() => {
@@ -80,7 +74,6 @@ describe('packages/sub-menu', () => {
 
   test('renders as a button by default', async () => {
     const { getByTestId } = renderSubMenu();
-
     // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
     // https://jira.mongodb.org/browse/LG-2904
     waitFor(() => {
@@ -91,7 +84,6 @@ describe('packages/sub-menu', () => {
 
   test('renders inside an anchor tag when the href prop is set', async () => {
     const { getByTestId } = renderSubMenu();
-
     // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
     // https://jira.mongodb.org/browse/LG-2904
     waitFor(() => {
@@ -102,7 +94,6 @@ describe('packages/sub-menu', () => {
 
   test('renders as `div` tag when the "as" prop is set', async () => {
     const { getByTestId } = renderSubMenu();
-
     // TODO: Fix redundant rendering in `Menu`. The submenu is closed on initial render, but opens on second render
     // https://jira.mongodb.org/browse/LG-2904
     waitFor(() => {
@@ -116,12 +107,10 @@ describe('packages/sub-menu', () => {
     test('Accepts string as `as` prop', () => {
       <SubMenu data-testid="sub-menu-a" as="p" />;
     });
-
     test('Accepts component as `as` prop', () => {
       const As = ({ children }: { children: React.ReactNode }) => (
         <>{children}</>
       );
-
       render(
         <Menu>
           <SubMenu as={As}>Test</SubMenu>

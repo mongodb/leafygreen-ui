@@ -9,8 +9,7 @@ import {
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
-import { Body, H1 } from '@leafygreen-ui/typography';
+import { Body, H2 } from '@leafygreen-ui/typography';
 
 import { State } from './SearchInput/SearchInput.types';
 import {
@@ -26,7 +25,13 @@ const meta: StoryMetaType<typeof SearchInput> = {
   parameters: {
     default: 'LiveExample',
     controls: {
-      exclude: [...storybookExcludedControlParams, 'value', 'id', 'showWedge'],
+      exclude: [
+        ...storybookExcludedControlParams,
+        'value',
+        'id',
+        'showWedge',
+        'onSubmit',
+      ],
     },
     generate: {
       combineArgs: {
@@ -174,7 +179,7 @@ const data = [
 export const LiveExample: StoryFn<SearchInputProps> = (
   args: SearchInputProps,
 ) => {
-  const [currentPage, setPage] = useState<typeof data[0]>();
+  const [currentPage, setPage] = useState<(typeof data)[0]>();
   const [searchResults, setSearchResults] = useState(data);
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
@@ -228,10 +233,10 @@ export const LiveExample: StoryFn<SearchInputProps> = (
             min-width: min-content;
             margin-block: 20px;
             padding: 20px;
-            outline: 1px solid ${palette.green.dark2};
+            outline: 1px solid green;
           `}
         >
-          <H1>{startCase(currentPage.name)}</H1>
+          <H2>{startCase(currentPage.name)}</H2>
           <Body>{currentPage.description}</Body>
         </div>
       )}

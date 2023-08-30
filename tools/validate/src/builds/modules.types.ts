@@ -6,4 +6,4 @@ export const ModuleType = {
   amd: 'amd',
   steal: 'steal',
 } as const;
-export type ModuleType = typeof ModuleType[keyof typeof ModuleType];
+export type ModuleType = (typeof ModuleType)[keyof typeof ModuleType];

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/icon",
-  "version": "11.21.0",
+  "version": "11.23.0",
   "description": "LeafyGreen UI Kit Icons",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -23,17 +23,17 @@
     "access": "public"
   },
   "devDependencies": {
-    "@leafygreen-ui/palette": "^4.0.5",
-    "@types/xml2json": "^0.11.0",
-    "xml2json": "^0.12.0",
-    "@leafygreen-ui/lib": "^10.4.1"
-  },
-  "dependencies": {
-    "@leafygreen-ui/emotion": "^4.0.5",
+    "@leafygreen-ui/palette": "^4.0.7",
+    "@leafygreen-ui/lib": "^11.0.0",
     "@svgr/core": "^5.3.1",
     "@types/meow": "^6.0.0",
-    "lodash": "^4.17.21",
-    "meow": "^6.1.0"
+    "@types/xml2json": "^0.11.0",
+    "meow": "^6.1.0",
+    "xml2json": "^0.12.0"
+  },
+  "dependencies": {
+    "@leafygreen-ui/emotion": "^4.0.7",
+    "lodash": "^4.17.21"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/icon",
