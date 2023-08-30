@@ -37,7 +37,7 @@ export const DateInputSegment = React.forwardRef<
       darkMode,
       ...rest
     }: DateInputSegmentProps,
-    fwdRef, //: ForwardedRef<HTMLInputElement>,
+    fwdRef,
   ) => {
     const min = minProp ?? defaultMin[segment];
     const max = maxProp ?? defaultMax[segment];

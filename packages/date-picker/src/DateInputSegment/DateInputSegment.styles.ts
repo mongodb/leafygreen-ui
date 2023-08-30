@@ -14,6 +14,8 @@ import { DateSegment } from './DateInputSegment.types';
 export const baseStyles = css`
   font-family: ${fontFamilies.default};
   font-size: ${BaseFontSize.Body1}px;
+  font-variant: tabular-nums;
+  text-align: center;
   border: none;
   border-radius: 0;
   padding: 0;
@@ -28,6 +30,12 @@ export const baseStyles = css`
   &:focus {
     outline: none;
   }
+
+  // TODO: Remove if not using small caps
+  /* &::placeholder {
+    font-variant: all-small-caps;
+    font-size: 1.25em;
+  } */
 `;
 
 export const segmentThemeStyles: Record<Theme, string> = {

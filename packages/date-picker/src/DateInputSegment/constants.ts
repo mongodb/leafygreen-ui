@@ -39,4 +39,8 @@ export const characterWidth = {
   D: 1.1875,
   M: 1.375,
   Y: 1.125,
+  // TODO: Remove if not using small-caps placeholders
+  // D: 1.05,
+  // M: 1.25,
+  // Y: 0.975,
 } as const;
