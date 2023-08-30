@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import {
   DatePickerContextProps,
@@ -23,6 +24,10 @@ const renderDateInputBox = (
     'input[aria-label="month"]',
   );
   const yearInput = result.container.querySelector('input[aria-label="year"]');
+
+  if (!(dayInput && monthInput && yearInput)) {
+    throw new Error('Some or all input segments are missing');
+  }
 
   return { ...result, dayInput, monthInput, yearInput };
 };
@@ -87,9 +92,121 @@ describe('packages/date-input-box', () => {
     });
   });
 
-  describe('typing', () => {});
+  describe('typing', () => {
+    test('typing into a segment updates the segment', () => {
+      const { dayInput } = renderDateInputBox(undefined, {
+        dateFormat: 'iso8601',
+        timeZone: 'UTC',
+      });
 
-  describe('mouse interaction', () => {});
+      userEvent.type(dayInput, '26');
+      expect(dayInput).toHaveValue(26);
+    });
 
-  describe('keyboard interaction', () => {});
+    test('typing into a segment does not fire the change handler ', () => {
+      const handler = jest.fn();
+      const { dayInput } = renderDateInputBox(
+        {
+          value: null,
+          setValue: handler,
+        },
+        {
+          dateFormat: 'iso8601',
+          timeZone: 'UTC',
+        },
+      );
+
+      userEvent.type(dayInput, '26');
+      expect(handler).not.toHaveBeenCalled();
+    });
+
+    test('typing a complete date fires the change handler', () => {
+      const handler = jest.fn();
+      const { dayInput, monthInput, yearInput } = renderDateInputBox(
+        {
+          value: null,
+          setValue: handler,
+        },
+        {
+          dateFormat: 'iso8601',
+          timeZone: 'UTC',
+        },
+      );
+      userEvent.type(yearInput, '1993');
+      userEvent.type(monthInput, '12');
+      userEvent.type(dayInput, '26');
+
+      expect(handler).toHaveBeenCalled();
+    });
+
+    test.todo(
+      'typing a complete segment value focuses the next segment',
+      // () => {
+      //   const { yearInput, monthInput } = renderDateInputBox(undefined, {
+      //     dateFormat: 'iso8601',
+      //     timeZone: 'UTC',
+      //   });
+      //   userEvent.type(yearInput, '1993');
+      //   expect(monthInput).toHaveFocus();
+      // },
+    );
+
+    test.todo(
+      'typing an incomplete segment does not focus the next segment',
+      // () => {
+      //   const { yearInput } = renderDateInputBox(undefined, {
+      //     dateFormat: 'iso8601',
+      //     timeZone: 'UTC',
+      //   });
+      //   userEvent.type(yearInput, '200');
+      //   expect(yearInput).toHaveFocus();
+      // },
+    );
+  });
+
+  describe('mouse interaction', () => {
+    test('click on segment focuses it', () => {
+      const { dayInput } = renderDateInputBox(undefined, {
+        dateFormat: 'iso8601',
+      });
+      userEvent.click(dayInput);
+      expect(dayInput).toHaveFocus();
+    });
+  });
+
+  describe('keyboard interaction', () => {
+    test('Tab moves focus', () => {
+      const { dayInput, monthInput, yearInput } = renderDateInputBox(
+        undefined,
+        { dateFormat: 'iso8601' },
+      );
+      userEvent.click(yearInput);
+      userEvent.tab();
+      expect(monthInput).toHaveFocus();
+      userEvent.tab();
+      expect(dayInput).toHaveFocus();
+    });
+
+    describe('Arrow Keys', () => {
+      test('ArrowRight moves focus right', () => {
+        const { monthInput, yearInput } = renderDateInputBox(undefined, {
+          dateFormat: 'iso8601',
+        });
+
+        userEvent.click(yearInput);
+        userEvent.type(yearInput, '{arrowright}');
+        expect(monthInput).toHaveFocus();
+      });
+
+      test('ArrowLeft moves focus left', () => {
+        const { dayInput, monthInput } = renderDateInputBox(undefined, {
+          dateFormat: 'iso8601',
+        });
+
+        userEvent.click(dayInput);
+        userEvent.type(dayInput, '{arrowleft}');
+        expect(monthInput).toHaveFocus();
+      });
+    });
+  });
 });
