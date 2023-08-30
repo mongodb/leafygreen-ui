@@ -73,6 +73,18 @@ describe('packages/date-picker/date-input-segment', () => {
 
   describe('rendering', () => {
     describe('day segment', () => {
+      test('Rendering with undefined sets the value to empty string', () => {
+        const result = render(
+          <DateInputSegment
+            segment="day"
+            data-testid="testid"
+            value={undefined}
+          />,
+        );
+        const input = result.getByTestId('testid');
+        expect((input as HTMLInputElement).value).toBe('');
+      });
+
       test('Rendering with a value sets the input value', () => {
         const result = render(
           <DateInputSegment segment="day" data-testid="testid" value={12} />,
@@ -110,6 +122,18 @@ describe('packages/date-picker/date-input-segment', () => {
     });
 
     describe('year segment', () => {
+      test('Rendering with undefined sets the value to empty string', () => {
+        const result = render(
+          <DateInputSegment
+            segment="year"
+            data-testid="testid"
+            value={undefined}
+          />,
+        );
+        const input = result.getByTestId('testid');
+        expect((input as HTMLInputElement).value).toBe('');
+      });
+
       test('Rendering with a value sets the input value', () => {
         const result = render(
           <DateInputSegment segment="year" data-testid="testid" value={2023} />,
