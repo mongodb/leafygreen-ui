@@ -1,5 +1,16 @@
 # @lg-tools/cli
 
+## 0.5.0
+
+### Minor Changes
+
+- 3e8485e9: Adds `--parent` flag to `lg create` command. Passing in this flag will create a subcomponent of the given parent.
+
+### Patch Changes
+
+- Updated dependencies [3e8485e9]
+  - @lg-tools/create@0.2.0
+
 ## 0.4.2
 
 ### Patch Changes
