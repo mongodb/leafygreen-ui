@@ -85,6 +85,8 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
     const handleKeyDown: KeyboardEventHandler = ({ keyCode }) => {
       /** moves the focused segment left or right */
       const moveFocus = (dir: 'left' | 'right') => {
+        // TODO: check the position of the cursor before updating focus (see combobox)
+
         // get the currently focused element
         const focus = document.activeElement;
         const activeSegment = focus?.id;
