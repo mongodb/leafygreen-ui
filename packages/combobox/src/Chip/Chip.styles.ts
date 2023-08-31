@@ -128,10 +128,7 @@ export const chipButtonStyle = css`
   cursor: pointer;
   transition: background-color ${transitionDuration.faster}ms ease-in-out;
   padding: 0 2px;
-`;
-
-export const chipButtonSizeStyle = (size: ComboboxSize) => css`
-  height: ${getChipHeight(size)}px;
+  align-self: stretch;
 `;
 
 export const chipButtonThemeStyle: Record<Theme, string> = {

@@ -13,7 +13,6 @@ import { ComboboxContext } from '../ComboboxContext';
 import {
   chipButtonBaseDisabledStyles,
   chipButtonDisabledStyle,
-  chipButtonSizeStyle,
   chipButtonStyle,
   chipButtonThemeStyle,
   chipTextSizeStyle,
@@ -153,17 +152,10 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
           aria-disabled={disabled}
           disabled={disabled}
           ref={buttonRef}
-          className={cx(
-            chipButtonStyle,
-            chipButtonThemeStyle[theme],
-            chipButtonSizeStyle(size),
-            {
-              [cx(
-                chipButtonDisabledStyle[theme],
-                chipButtonBaseDisabledStyles,
-              )]: disabled,
-            },
-          )}
+          className={cx(chipButtonStyle, chipButtonThemeStyle[theme], {
+            [cx(chipButtonDisabledStyle[theme], chipButtonBaseDisabledStyles)]:
+              disabled,
+          })}
           onClick={handleButtonClick}
         >
           <Icon glyph="X" />
