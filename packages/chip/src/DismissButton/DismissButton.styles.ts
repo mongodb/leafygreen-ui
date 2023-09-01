@@ -6,9 +6,6 @@ import { transitionDuration } from '@leafygreen-ui/tokens';
 import { variantColor } from '../Chip/Chip.styles';
 import { Variant } from '../Chip/Chip.types';
 
-/**
- * Chip Dismiss Button
- */
 export const chipButtonStyle = css`
   position: relative;
   display: flex;
