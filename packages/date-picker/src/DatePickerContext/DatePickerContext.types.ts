@@ -6,4 +6,6 @@ export interface DatePickerContextProps extends Required<BaseDatePickerProps> {
 
   /** The latest date accepted */
   max: Date;
+
+  isInRange: (d?: Date | null) => boolean;
 }

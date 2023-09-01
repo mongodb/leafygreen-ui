@@ -50,6 +50,8 @@ const meta: StoryMetaType<typeof DatePickerMenu, DatePickerContextProps> = {
     dateFormat: 'en-UK',
     timeZone: 'Europe/London',
     isOpen: true,
+    min: new Date('1996-10-14'),
+    max: new Date('2026-10-14'),
   },
   argTypes: {
     value: { control: 'date' },
