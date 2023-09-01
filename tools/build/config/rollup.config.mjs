@@ -109,7 +109,7 @@ const external = [
   'typescript',
   /^@emotion\//,
   /^@leafygreen-ui\//,
-  /^@lg-tools\//,
+  /^@lg-[a-z]+\//,
   /^@storybook\//,
   /^highlight/,
   /^lodash\//,
