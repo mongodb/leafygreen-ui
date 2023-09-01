@@ -121,9 +121,14 @@ export type PopoverProps = {
   active?: boolean;
 
   /**
-   * Class name applied to popover content container.
+   * Class name applied to popover container.
    */
   className?: string;
+
+  /**
+   * Class name applied to the popover content container
+   */
+  contentClassName?: string;
 
   /**
    * Determines the alignment of the popover content relative to the trigger element
