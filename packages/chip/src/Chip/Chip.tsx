@@ -28,15 +28,16 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       chipCharacterLimit = 15,
       disabled = false,
       size = Size.Default,
-      onDismiss,
       variant = Variant.Blue,
+      darkMode: darkModeProp,
+      onDismiss,
       popoverZIndex,
       className,
       ...rest
     }: ChipProps,
     forwardedRef,
   ) => {
-    const { darkMode, theme } = useDarkMode();
+    const { darkMode, theme } = useDarkMode(darkModeProp);
 
     const isTruncated =
       !!chipCharacterLimit &&

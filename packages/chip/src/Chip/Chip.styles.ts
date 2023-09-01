@@ -161,7 +161,7 @@ export const chipWrapperSizeStyle = (size: Size) => css`
 
 export const disabledBaseChipWrapperStyles = css`
   cursor: not-allowed;
-  pointer-events: none;
+  // pointer-events: none; //TODO: are tooltips still allowed when disabled?
 `;
 
 export const disabledChipWrapperStyle: Record<Theme, string> = {
@@ -217,26 +217,32 @@ export const chipButtonStyle = css`
 export const chipButtonThemeStyle = (variant: Variant, theme: Theme) => css`
   color: ${variantColor[variant][theme].dismissColor};
 
-  &:hover,
-  &:focus-visible {
+  &:not(:disabled):hover,
+  &:not(:disabled):focus-visible {
     color: ${variantColor[variant][theme].dismissFocusColor};
     background-color: ${variantColor[variant][theme].dismissFocuBgColor};
   }
 `;
 
 export const chipButtonBaseDisabledStyles = css`
-  cursor: not-allowed;
-  &:hover {
-    color: inherit;
-    background-color: unset;
+  &:disabled {
+    cursor: not-allowed;
+    // &:hover {
+    //   color: inherit;
+    //   background-color: unset;
+    // }
   }
 `;
 
 export const chipButtonDisabledStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${palette.gray.light1};
+    &:disabled {
+      color: ${palette.gray.light1};
+    }
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.dark2};
+    &:disabled {
+      color: ${palette.gray.dark2};
+    }
   `,
 };
