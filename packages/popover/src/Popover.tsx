@@ -76,7 +76,6 @@ function Popover({
   adjustOnMutation = false,
   children,
   className,
-  contentClassName,
   popoverZIndex,
   refEl,
   usePortal = true,

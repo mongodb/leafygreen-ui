@@ -25,6 +25,9 @@
       "path": "../icon"
     },
     {
+      "path": "../icon-button"
+    },
+    {
       "path": "../leafygreen-provider"
     },
     {
@@ -35,6 +38,9 @@
     },
     {
       "path": "../popover"
+    },
+    {
+      "path": "../select"
     },
     {
       "path": "../tokens"

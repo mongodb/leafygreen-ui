@@ -18,13 +18,16 @@
     "@leafygreen-ui/emotion": "^4.0.7",
     "@leafygreen-ui/hooks": "^8.0.0",
     "@leafygreen-ui/icon": "^11.23.0",
+    "@leafygreen-ui/icon-button": "^15.0.17",
     "@leafygreen-ui/lib": "^11.0.0",
     "@leafygreen-ui/palette": "^4.0.7",
     "@leafygreen-ui/popover": "^11.0.17",
+    "@leafygreen-ui/select": "^10.3.15",
     "@leafygreen-ui/tokens": "^2.2.0",
     "@leafygreen-ui/typography": "^16.5.5",
     "date-fns": "^2.30.0",
     "date-fns-tz": "^2.0.0",
+    "polished": "^4.2.2",
     "weekstart": "^2.0.0"
   },
   "peerDependencies": {

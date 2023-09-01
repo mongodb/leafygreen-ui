@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
@@ -59,11 +59,21 @@ const meta: StoryMetaType<typeof DatePickerMenu, DatePickerContextProps> = {
 export default meta;
 
 export const Basic: StoryFn<typeof DatePickerMenu> = props => {
+  const [value, setValue] = useState<Date | null>(new Date('2023-09-11'));
+  const [month, setMonth] = useState<Date>(new Date('2023-09-11'));
+
   const refEl = useRef<HTMLDivElement>(null);
   return (
     <>
       <div ref={refEl}>refEl</div>
-      <DatePickerMenu refEl={refEl} {...props} />
+      <DatePickerMenu
+        refEl={refEl}
+        {...props}
+        value={value}
+        month={month}
+        onCellClick={setValue}
+        onMonthChange={newMonth => setMonth(newMonth)}
+      />
     </>
   );
 };

@@ -45,7 +45,11 @@ export function CalendarGrid({
       </thead>
       <tbody>
         {weeks.map((week, w) => (
-          <tr key={w}>{week.map(children)}</tr>
+          <tr key={w}>
+            {week.map((day, d) => {
+              return day ? children(day, w * daysPerWeek + d) : <td></td>;
+            })}
+          </tr>
         ))}
       </tbody>
     </table>

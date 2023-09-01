@@ -1,3 +1,5 @@
+import { transparentize } from 'polished';
+
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
@@ -9,6 +11,7 @@ const baseStyles = css`
   border-radius: ${spacing[2] + spacing[1]}px;
   outline: 1px solid;
   outline-offset: -1px;
+  box-shadow: 0 4px 7px ${transparentize(0.85, palette.black)};
 `;
 
 export const menuStyles: Record<Theme, string> = {

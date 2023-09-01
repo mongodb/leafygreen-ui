@@ -1,4 +1,5 @@
 export const daysPerWeek = 7 as const;
+
 // Note: no lightweight library (date-fns, day.js, @internationalized)
 // includes a similar enum
 export const DaysOfWeek = [
@@ -21,5 +22,5 @@ export interface CalendarGridProps
    */
   month: Date;
 
-  children: (day: Date | null, index: number) => React.ReactNode;
+  children: (day: Date, index: number) => React.ReactNode;
 }
