@@ -14,7 +14,7 @@ import {
   usePopoverContext,
   usePopoverPortalContainer,
 } from '@leafygreen-ui/leafygreen-provider';
-import { consoleOnce } from '@leafygreen-ui/lib';
+import { consoleOnce, createUniqueClassName } from '@leafygreen-ui/lib';
 import Portal from '@leafygreen-ui/portal';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
@@ -42,6 +42,8 @@ const mutationOptions = {
   // Extend watching to entire sub tree to make sure we catch any modifications
   subtree: true,
 };
+
+export const contentClassName = createUniqueClassName('popover-content');
 
 /**
  *
@@ -74,7 +76,6 @@ function Popover({
   adjustOnMutation = false,
   children,
   className,
-  contentClassName,
   popoverZIndex,
   refEl,
   usePortal = true,
