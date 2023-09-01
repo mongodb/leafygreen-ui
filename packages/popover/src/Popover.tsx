@@ -74,6 +74,7 @@ function Popover({
   adjustOnMutation = false,
   children,
   className,
+  contentClassName,
   popoverZIndex,
   refEl,
   usePortal = true,
@@ -310,7 +311,9 @@ function Popover({
                   We create this inner node with a ref because placing it on its parent
                   creates an infinite loop in some cases when dynamic styles are applied.
                 */}
-              <div ref={setContentNode}>{renderedChildren}</div>
+              <div ref={setContentNode} className={contentClassName}>
+                {renderedChildren}
+              </div>
             </div>
           </Root>
         </>
