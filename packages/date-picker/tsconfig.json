@@ -34,6 +34,9 @@
       "path": "../palette"
     },
     {
+      "path": "../popover"
+    },
+    {
       "path": "../tokens"
     },
     {
