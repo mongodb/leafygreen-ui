@@ -8,7 +8,7 @@ import React, {
 import flattenChildren from 'react-keyed-flatten-children';
 import { VirtualItem } from 'react-virtual';
 import { flexRender } from '@tanstack/react-table';
-import { omit } from 'lodash';
+import omit from 'lodash/omit';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce, isComponentType } from '@leafygreen-ui/lib';
