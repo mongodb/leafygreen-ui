@@ -1,4 +1,4 @@
-import { DateSegmentsState } from '../../DateInputBox';
+import { DateSegmentsState } from '../../DateInput';
 import { isValidSegment } from '../isValidSegment';
 
 /** Constructs a date object from day, month, year segments */

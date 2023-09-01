@@ -1,5 +1,6 @@
 import React, { KeyboardEventHandler } from 'react';
 import { isSameDay } from 'date-fns';
+import { zonedTimeToUtc } from 'date-fns-tz';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDynamicRefs, useForwardedRef } from '@leafygreen-ui/hooks';
@@ -8,7 +9,6 @@ import { keyMap } from '@leafygreen-ui/lib';
 import { useDatePickerContext } from '../../DatePickerContext';
 import { isValidSegmentName } from '../../utils/isValidSegment';
 import { newDateFromSegments } from '../../utils/newDateFromSegments';
-import { toClientTimeZone } from '../../utils/toTimeZone';
 import {
   DateInputSegment,
   DateSegment,
@@ -48,18 +48,18 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
      */
     const onSegmentsUpdate = (newSegments: DateSegmentsState) => {
       const { day, month, year } = newSegments;
-      const sourceDate = newDateFromSegments({ day, month, year });
+      const zonedDate = newDateFromSegments({ day, month, year });
 
       // Only update the value iff all parts are set, and create a valid date.
-      if (sourceDate) {
-        /** New date relative to client time zone */
-        const clientDate = toClientTimeZone(sourceDate, timeZone);
+      if (zonedDate) {
+        /** New date in UTC */
+        const utcDate = zonedTimeToUtc(zonedDate, timeZone);
 
         /** Whether we need to update the external value */
-        const shouldUpdate = !value || !isSameDay(clientDate, value);
+        const shouldUpdate = !value || !isSameDay(utcDate, value);
 
         if (shouldUpdate) {
-          setValue?.(clientDate);
+          setValue?.(utcDate);
         }
       } else if (!(day || month || year)) {
         // if no segment exists, set the external value to null

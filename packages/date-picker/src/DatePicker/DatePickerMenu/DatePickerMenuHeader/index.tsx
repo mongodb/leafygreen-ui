@@ -71,6 +71,7 @@ export const DatePickerMenuHeader = ({
             const newMonth = setMonth(month, Number(m));
             updateMonth(newMonth);
           }}
+          usePortal={false}
         >
           {Months.map((m, i) => (
             <Option value={i.toString()} key={m.short}>
@@ -88,6 +89,8 @@ export const DatePickerMenuHeader = ({
             const newMonth = setYear(month, Number(y));
             updateMonth(newMonth);
           }}
+          usePortal={false}
+          popoverZIndex={2}
         >
           {yearOptions.map(y => (
             <Option value={y.toString()} key={y}>

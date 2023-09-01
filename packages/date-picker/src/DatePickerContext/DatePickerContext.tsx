@@ -1,10 +1,15 @@
 import React from 'react';
 import { createContext, PropsWithChildren, useContext } from 'react';
-import { isDate, isWithinInterval } from 'date-fns';
+import { isWithinInterval } from 'date-fns';
 
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
-import { DatePickerContextProps } from './DatePickerContext.types';
+import { toDate } from '../utils/toDate';
+
+import {
+  DatePickerContextProps,
+  DatePickerProviderProps,
+} from './DatePickerContext.types';
 
 export const defaultDatePickerContext: DatePickerContextProps = {
   label: '',
@@ -24,25 +29,24 @@ export const defaultDatePickerContext: DatePickerContextProps = {
 export const DatePickerContext = createContext<DatePickerContextProps>(
   defaultDatePickerContext,
 );
+
 export const DatePickerProvider = ({
   children,
   value,
-}: PropsWithChildren<{ value: DatePickerContextProps }>) => {
-  const providerValue = {
+}: PropsWithChildren<{ value: DatePickerProviderProps }>) => {
+  const providerValue: DatePickerContextProps = {
     ...defaultDatePickerContext,
     ...value,
+    min: value.min ? toDate(value.min) : defaultDatePickerContext.min,
+    max: value.max ? toDate(value.max) : defaultDatePickerContext.max,
   };
 
   const isInRange = (d?: Date | null): boolean =>
     !!(
       d &&
       isWithinInterval(d, {
-        start: isDate(providerValue.min)
-          ? providerValue.min
-          : new Date(providerValue.min),
-        end: isDate(providerValue.max)
-          ? providerValue.max
-          : new Date(providerValue.max),
+        start: providerValue.min,
+        end: providerValue.max,
       })
     );
 

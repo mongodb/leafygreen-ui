@@ -43,6 +43,7 @@ export const DateInputWrapper = React.forwardRef<
       labelId,
       descriptionId,
       errorId,
+      onInputClick,
       ...rest
     }: DateInputWrapperProps,
     fwdRef,
@@ -67,7 +68,9 @@ export const DateInputWrapper = React.forwardRef<
             <Description id={descriptionId}>{description}</Description>
           )}
         </div>
+        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
         <div
+          onClick={onInputClick}
           className={cx(
             inputBaseStyles,
             inputModeStyles[theme],

@@ -3,21 +3,27 @@ import { contentClassName } from '@leafygreen-ui/popover';
 import { spacing } from '@leafygreen-ui/tokens';
 
 export const menuWrapperStyles = css`
-  min-width: 265px; // width of "September" select trigger
+  width: 266px; // width of "September" select trigger
 
   & > .${contentClassName} {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    width: 100%;
   }
 `;
 
+export const menuContentStyles = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 export const menuHeaderStyles = css`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   padding-bottom: ${spacing[3]}px;
+  z-index: 1;
 `;
 
 export const menuHeaderSelectContainerStyles = css`

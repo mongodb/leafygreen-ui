@@ -1,3 +1,5 @@
+import { MouseEventHandler } from 'react';
+
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 export const InputState = {
@@ -16,4 +18,6 @@ export interface DateInputWrapperProps extends HTMLElementProps<'div'> {
   labelId?: string;
   descriptionId?: string;
   errorId?: string;
+  /** Fired when the input wrapper is clicked (not any surrounding text) */
+  onInputClick?: MouseEventHandler;
 }

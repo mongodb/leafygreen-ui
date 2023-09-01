@@ -1,11 +1,10 @@
 import { BaseDatePickerProps } from '../types';
 
 export interface DatePickerProps extends BaseDatePickerProps {
-  /** The initial selected date. Ignored if `value` is provided */
-  initialValue: string | Date;
-
-  /** The selected date */
-  value: string | Date;
+  /**
+   * The selected date, given in UTC time
+   */
+  value?: string | Date | null;
 
   /**
    * A Callback fired when the user makes a value change.
@@ -13,7 +12,10 @@ export interface DatePickerProps extends BaseDatePickerProps {
    *
    * Callback date argument will be a Date object in ISO-8601 format, and in UTC time.
    */
-  onChange: (value: Date) => void;
+  onChange: (value: Date | null) => void;
+
+  /** The initial selected date. Ignored if `value` is provided */
+  initialValue?: string | Date;
 
   /**
    * A callback fired when validation should run, based on our [form validation guidelines](https://www.mongodb.design/foundation/forms/#form-validation-error-handling).
@@ -21,5 +23,5 @@ export interface DatePickerProps extends BaseDatePickerProps {
    *
    * Callback date argument will be a Date object in ISO 8601 format, and in UTC time.
    */
-  handleValidation: (value: Date) => void;
+  handleValidation?: (value: Date) => void;
 }

@@ -50,6 +50,7 @@ export const useDateSegments = (
   // If `date` prop changes, update the segments
   useEffect(() => {
     if (date && !(prevDate && isSameDay(date, prevDate))) {
+      console.log('useDateSegments. Date Updated', { date, prevDate });
       const tzDate = toTimeZone(date, timeZone);
       const newSegments = getSegmentsFromDate(tzDate);
       onUpdate?.(newSegments);
