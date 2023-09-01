@@ -7,6 +7,7 @@ import {
   getSortedRowModel,
   Row,
 } from '@tanstack/react-table';
+import omit from 'lodash/omit';
 
 import Checkbox from '@leafygreen-ui/checkbox';
 
@@ -18,7 +19,7 @@ const checkboxWidth = 14;
 /**
  * A `ColumnDef` object injected into `useReactTable`'s `columns` option when the user is using selectable rows.
  */
-const selectColumnConfig: LGColumnDef<LGRowData> = {
+const baseSelectColumnConfig: LGColumnDef<LGRowData> = {
   id: 'select',
   size: checkboxWidth,
   header:
@@ -59,9 +60,18 @@ function useLeafyGreenTable<T extends LGRowData>({
   hasSelectableRows,
   withPagination = false,
   useVirtualScrolling = false,
+  allowSelectAll = true,
   ...rest
 }: LeafyGreenTableOptions<T>): LeafyGreenTable<T> {
   let hasSortableColumns = false;
+  let selectColumnConfig;
+
+  if (!allowSelectAll) {
+    selectColumnConfig = omit(baseSelectColumnConfig, 'header');
+  } else {
+    selectColumnConfig = baseSelectColumnConfig;
+  }
+
   const columns: Array<LGColumnDef<T>> = [
     ...(hasSelectableRows ? [selectColumnConfig as LGColumnDef<T>] : []),
     ...columnsProp.map(propColumn => {
