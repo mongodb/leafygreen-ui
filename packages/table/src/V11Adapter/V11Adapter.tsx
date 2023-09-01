@@ -23,13 +23,13 @@ import { TableHeaderProps } from '../TableV10/TableHeader';
 import useLeafyGreenTable, {
   LeafyGreenTableCell,
   LeafyGreenTableRow,
-  LGRowData,
+  LGColumnDef,
   LGTableDataType,
 } from '../useLeafyGreenTable';
 
 import processColumns from './processColumns';
 import processData from './processData';
-import { V11AdapterProps } from './V11Adapter.types';
+import { V11AdapterProps, ValidDataType } from './V11Adapter.types';
 
 /**
  * Converts a v10 Table component to a v11 Table component.
@@ -40,7 +40,7 @@ import { V11AdapterProps } from './V11Adapter.types';
  * the user is expected to pass in the labels through the `headerLabels` prop.
  * - Currently only supports up to one layer of nested rows
  */
-const V11Adapter = <T extends LGRowData>({
+const V11Adapter = <T extends ValidDataType>({
   children,
   shouldAlternateRowColor,
   useVirtualScrolling = false,
@@ -62,14 +62,18 @@ const V11Adapter = <T extends LGRowData>({
   type TData = typeof OldTableProps.data extends Array<infer U> ? U : never;
 
   const {
-    data,
-    columns,
+    data: oldData,
+    columns: oldColumns,
     children: childrenFn,
+    baseFontSize,
+    ...oldTableProps
   } = OldTableProps as V10TableProps<TData>;
 
+  const data = oldData as Array<T>;
+
   const processedColumns = useMemo(
-    () => processColumns(data, columns, headerLabels),
-    [data, columns, headerLabels],
+    () => processColumns(data, oldColumns, headerLabels),
+    [data, oldColumns, headerLabels],
   );
 
   const [processedData, setProcessedData] = useState<Array<LGTableDataType<T>>>(
@@ -83,7 +87,7 @@ const V11Adapter = <T extends LGRowData>({
   const table = useLeafyGreenTable<T>({
     containerRef,
     data: processedData,
-    columns: processedColumns,
+    columns: processedColumns as Array<LGColumnDef<T>>,
     useVirtualScrolling,
     hasSelectableRows,
   });
@@ -92,10 +96,10 @@ const V11Adapter = <T extends LGRowData>({
 
   const iterables = useVirtualScrolling ? table.virtualRows ?? [] : rows;
 
-  const columnsChildren = React.Children.toArray(columns);
+  const columnsChildren = React.Children.toArray(oldColumns);
   const oldHeaderRow = columnsChildren[0] as ReactElement;
 
-  const oldHeaderCellProps: Array<TableHeaderProps<any>> = [];
+  const oldHeaderCellProps: Array<TableHeaderProps<T>> = [];
 
   if (columnsChildren.length < 2) {
     React.Children.toArray(oldHeaderRow.props.children).map(child => {
@@ -103,12 +107,6 @@ const V11Adapter = <T extends LGRowData>({
       oldHeaderCellProps.push(props);
     });
   }
-
-  const {
-    data: oldData,
-    columns: oldColumns,
-    ...oldTableProps
-  } = (OldTable as ReactElement).props;
 
   return (
     <Table
@@ -119,18 +117,27 @@ const V11Adapter = <T extends LGRowData>({
       }
       className={className}
       ref={containerRef}
+      baseFontSize={baseFontSize === 14 ? 13 : baseFontSize}
       {...oldTableProps}
     >
       <TableHead>
         <HeaderRow {...oldHeaderRow.props}>
           {table.getHeaderGroups()[0].headers.map((header, i) => {
+            const { onClick, ...validOldHeaderCellProps } =
+              oldHeaderCellProps[i];
             return (
-              // https://jira.mongodb.org/browse/LG-3538
-              // @ts-expect-error
               <HeaderCell
                 key={header.id}
                 header={header}
-                {...oldHeaderCellProps[i]}
+                {...validOldHeaderCellProps}
+                onClick={
+                  onClick
+                    ? () => {
+                        // return a function from this function to bypass different type signatures
+                        return onClick;
+                      }
+                    : undefined
+                }
               >
                 {flexRender(
                   header.column.columnDef.header,
@@ -153,25 +160,22 @@ const V11Adapter = <T extends LGRowData>({
               virtualRow={
                 useVirtualScrolling ? (iterable as VirtualItem) : undefined
               }
-              // https://jira.mongodb.org/browse/LG-3538
-              // @ts-expect-error rowProps is an additional prop passed by the `processData` function
-              {...row.original.rowProps}
+              {...(row.original as T).rowProps}
             >
-              {row.getVisibleCells().map((cell: LeafyGreenTableCell<any>) => {
+              {row.getVisibleCells().map((cell: LeafyGreenTableCell<T>) => {
                 if (cell?.column?.id) {
                   if (cell?.column?.id === 'select') {
                     return (
                       <Cell key={cell.column.id}>
-                        {/* https://jira.mongodb.org/browse/LG-3538 */}
-                        {/* @ts-expect-error `cell` is instantiated in `processColumns` */}
-                        {cell.column.columnDef?.cell({ row, table })}
+                        {cell.column.columnDef?.cell &&
+                          typeof cell.column.columnDef?.cell != 'string' &&
+                          // Use default values defined by react-table instead of passing in expected parameters
+                          // @ts-expect-error
+                          cell.column.columnDef?.cell({ row, table })}
                       </Cell>
                     );
                   } else {
                     const cellChild =
-                      // index by row.index (not the index of the loop) to get the sorted order
-                      // https://jira.mongodb.org/browse/LG-3538
-                      // @ts-expect-error `processedData` is structured to be indexable by `row.index`
                       processedData[row.index]?.[cell.column.id]?.();
                     const {
                       children,
@@ -196,14 +200,11 @@ const V11Adapter = <T extends LGRowData>({
               )}
               {row.subRows &&
                 row.subRows.map(subRow => {
-                  // https://jira.mongodb.org/browse/LG-3538
-                  // @ts-expect-error rowProps is an additional prop passed by the `processData` function
-                  const { children, ...subRowProps } = subRow.original.rowProps;
+                  const { children, ...subRowProps } = subRow.original
+                    .rowProps as ValidDataType['rowProps'];
                   return (
                     <Row key={subRow.id} row={subRow} {...subRowProps}>
                       {subRow.getVisibleCells().map(srCell => {
-                        // https://jira.mongodb.org/browse/LG-3538
-                        // @ts-expect-error subRow.original returns the object in the user's defined shape, and should be string indexable
                         const subRowCell = subRow.original[srCell.column.id]();
                         const {
                           children,

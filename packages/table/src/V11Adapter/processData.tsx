@@ -4,9 +4,11 @@ import flattenChildren from 'react-keyed-flatten-children';
 import { isComponentType } from '@leafygreen-ui/lib';
 
 import { TableRowInterface } from '../TableV10/Table';
-import { LGColumnDef, LGRowData, LGTableDataType } from '../useLeafyGreenTable';
+import { LGColumnDef, LGTableDataType } from '../useLeafyGreenTable';
 
-const processData = <T extends LGRowData>(
+import { ValidDataType } from './V11Adapter.types';
+
+const processData = <T extends ValidDataType>(
   data: Array<any>,
   processedColumns: Array<LGColumnDef<T>>,
   childrenFn: (TableRowArgs: TableRowInterface<unknown>) => JSX.Element,
@@ -27,17 +29,17 @@ const processData = <T extends LGRowData>(
       isComponentType(child, 'Cell'),
     );
 
-    const newDatum: LGTableDataType<any> = evaluatedCells.reduce(
+    const newDatum: LGTableDataType<T> = evaluatedCells.reduce(
       (acc: object, currVal, index) => {
         return {
           ...acc,
-          // TODO: remove as any
+          // `any` is the expected type by react-table for non string/symbol/number values
           [(processedColumns[index] as any)?.accessorKey]: () =>
             currVal as ReactElement,
         };
       },
       {},
-    );
+    ) as LGTableDataType<T>;
 
     const subRowChildren = rowChildren.filter(child =>
       isComponentType(child, 'Row'),
@@ -66,7 +68,6 @@ const processData = <T extends LGRowData>(
           (acc: object, currVal, index) => {
             return {
               ...acc,
-              // TODO: remove as any
               [(processedColumns[index] as any)?.accessorKey]: () =>
                 currVal as ReactElement,
             };
@@ -80,10 +81,11 @@ const processData = <T extends LGRowData>(
           isAnyAncestorCollapsed,
           ...rowProps
         } = (subRow as ReactElement).props;
-        newDatum.subRows.push({
-          ...processedSubRow,
-          rowProps,
-        });
+        newDatum.subRows &&
+          newDatum.subRows.push({
+            ...processedSubRow,
+            rowProps,
+          } as T);
       }
     });
 
