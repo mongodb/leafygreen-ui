@@ -1,5 +1,20 @@
 # @leafygreen-ui/search-input
 
+## 2.0.16
+
+### Patch Changes
+
+- 1a0b9996: Export SearchResultsMenu component
+
+## 2.0.15
+
+### Patch Changes
+
+- Updated dependencies [a5770c15]
+- Updated dependencies [c89d17a4]
+  - @leafygreen-ui/typography@17.0.0
+  - @leafygreen-ui/input-option@1.0.10
+
 ## 2.0.14
 
 ### Patch Changes
