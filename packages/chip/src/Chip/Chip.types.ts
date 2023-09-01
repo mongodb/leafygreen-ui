@@ -9,7 +9,6 @@ export const TruncationLocation = {
 export type TruncationLocation =
   (typeof TruncationLocation)[keyof typeof TruncationLocation];
 
-//TODO: need to conform correct sizes
 export const Size = {
   Default: 'default',
   Large: 'large',
