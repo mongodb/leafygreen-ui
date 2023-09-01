@@ -13,7 +13,7 @@ export type CalendarCellState =
 export interface CalendarCellProps
   extends React.HTMLProps<HTMLTableCellElement> {
   /** The current state of the cell */
-  state: CalendarCellState;
+  state?: CalendarCellState;
 
   /** Whether the cell represents the current date */
   isCurrent?: boolean;

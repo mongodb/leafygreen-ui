@@ -34,6 +34,14 @@ export const CalendarCell = React.forwardRef<
     const ref = useForwardedRef(fwdRef, null);
     const { theme } = useDarkMode();
 
+    const isActive = (
+      [
+        CalendarCellState.Active,
+        CalendarCellState.Start,
+        CalendarCellState.End,
+      ] as Array<CalendarCellState>
+    ).includes(state);
+
     return (
       <td
         ref={ref}
@@ -47,6 +55,7 @@ export const CalendarCell = React.forwardRef<
           },
           className,
         )}
+        aria-selected={isActive}
         {...rest}
       >
         <div className={cx(indicatorBaseStyles, indicatorClassName)}></div>
