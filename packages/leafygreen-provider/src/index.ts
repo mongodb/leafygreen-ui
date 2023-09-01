@@ -1,3 +1,7 @@
+export {
+  ComponentContextProvider,
+  useComponentContext,
+} from './ComponentContext';
 export { useDarkMode, useDarkModeContext } from './DarkModeContext';
 export { default, type LeafyGreenProviderProps } from './LeafyGreenContext';
 export {

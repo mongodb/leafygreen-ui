@@ -91,7 +91,7 @@ const InternalRowWithRT = <T extends LGRowData>({
           },
           className,
         )}
-        data-selected={isSelected}
+        aria-selected={isSelected}
         disabled={disabled}
         aria-hidden={!isRowVisible}
         id={`lg-table-row-${row.id}`}

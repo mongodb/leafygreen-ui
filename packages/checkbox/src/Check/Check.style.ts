@@ -77,6 +77,24 @@ export const wrapperThemeStyle: Record<Theme, string> = {
   `,
 };
 
+// Unselected checkboxes
+export const disabledTableRowStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    border-color: ${palette.gray.light1};
+
+    &:before {
+      background-color: ${palette.gray.light1};
+    }
+  `,
+  [Theme.Dark]: css`
+    border-color: ${palette.gray.dark1};
+
+    &:before {
+      background-color: ${palette.gray.dark1};
+    }
+  `,
+};
+
 export const wrapperCheckedBaseStyle = css`
   // Delay background transition in
   transition-delay: 0ms, ${checkAnimationDuration}ms, 0ms;

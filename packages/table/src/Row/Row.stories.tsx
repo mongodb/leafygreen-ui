@@ -6,6 +6,8 @@ import { StoryFn } from '@storybook/react';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import {
+  DarkModeProps,
+  storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -21,7 +23,15 @@ import useLeafyGreenTable, {
 } from '../useLeafyGreenTable';
 import { makeData, Person } from '../utils/makeData.testutils';
 import { AnyDict } from '../utils/types';
-import { ColumnDef, ExpandedState, flexRender, HeaderGroup } from '..';
+import {
+  ColumnDef,
+  ExpandedState,
+  flexRender,
+  HeaderGroup,
+  RowProps,
+} from '..';
+
+interface StorybookRowProps extends DarkModeProps, RowProps<any> {}
 
 const meta: StoryMetaType<typeof Row> = {
   title: 'Components/Table/Row',
@@ -31,6 +41,7 @@ const meta: StoryMetaType<typeof Row> = {
     row: { control: 'none' },
     className: { control: 'none' },
     disabled: { control: 'boolean' },
+    darkMode: storybookArgTypes.darkMode,
   },
   parameters: {
     default: null,
@@ -72,11 +83,14 @@ const meta: StoryMetaType<typeof Row> = {
 
 export default meta;
 
-const Template: StoryFn<typeof Row> = args => {
+const Template: StoryFn<typeof Row> = ({
+  darkMode,
+  ...args
+}: StorybookRowProps) => {
   const data = makeData(false, 100);
   const columns = Object.keys(data[0]);
   return (
-    <Table>
+    <Table darkMode={darkMode}>
       <TableHead>
         <HeaderRow>
           {columns.map((columnName: string) => (
@@ -102,7 +116,11 @@ DisabledRows.args = {
   disabled: true,
 };
 
-export const DisabledNestedRows: StoryFn<typeof Row> = ({ row, ...rest }) => {
+export const DisabledNestedRows: StoryFn<typeof Row> = ({
+  row,
+  darkMode,
+  ...rest
+}: StorybookRowProps) => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 100, 5, 3))[0];
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
@@ -166,7 +184,7 @@ export const DisabledNestedRows: StoryFn<typeof Row> = ({ row, ...rest }) => {
         <pre>Expanded rows: {JSON.stringify(expanded, null, 2)}</pre>
       </div>
 
-      <Table table={table} ref={tableContainerRef}>
+      <Table table={table} ref={tableContainerRef} darkMode={darkMode}>
         <TableHead>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
             <HeaderRow key={headerGroup.id}>
@@ -208,6 +226,108 @@ export const DisabledNestedRows: StoryFn<typeof Row> = ({ row, ...rest }) => {
   );
 };
 DisabledNestedRows.args = {
+  disabled: true,
+};
+
+export const DisabledSelectableRows: StoryFn<typeof Row> = ({
+  row,
+  darkMode,
+  ...rest
+}: StorybookRowProps) => {
+  const tableContainerRef = React.useRef<HTMLDivElement>(null);
+  const data = React.useState(() => makeData(false, 100, 5, 3))[0];
+
+  const columns = React.useMemo<Array<ColumnDef<Person>>>(
+    () => [
+      {
+        accessorKey: 'id',
+        header: 'ID',
+        size: 60,
+      },
+      {
+        accessorKey: 'firstName',
+        header: 'First Name',
+        cell: info => info.getValue(),
+      },
+      {
+        accessorFn: row => row.lastName,
+        id: 'lastName',
+        cell: info => info.getValue(),
+        // eslint-disable-next-line react/display-name
+        header: () => <span>Last Name</span>,
+      },
+      {
+        accessorKey: 'age',
+        // eslint-disable-next-line react/display-name
+        header: () => 'Age',
+        size: 50,
+      },
+      {
+        accessorKey: 'visits',
+        // eslint-disable-next-line react/display-name
+        header: () => <span>Visits</span>,
+        size: 50,
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        size: 90,
+      },
+    ],
+    [],
+  );
+
+  const table = useLeafyGreenTable<Person>({
+    containerRef: tableContainerRef,
+    data,
+    columns,
+    hasSelectableRows: true,
+  });
+
+  const { rows } = table.getRowModel();
+
+  return (
+    <Table table={table} ref={tableContainerRef} darkMode={darkMode}>
+      <TableHead>
+        {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+          <HeaderRow key={headerGroup.id}>
+            {headerGroup.headers.map(header => {
+              return (
+                <HeaderCell key={header.id} header={header}>
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext(),
+                  )}
+                </HeaderCell>
+              );
+            })}
+          </HeaderRow>
+        ))}
+      </TableHead>
+      <TableBody>
+        {rows.map((row: LeafyGreenTableRow<Person>) => {
+          return (
+            <Row key={row.id} row={row} {...rest}>
+              {row
+                .getVisibleCells()
+                .map((cell: LeafyGreenTableCell<Person>) => {
+                  return (
+                    <Cell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </Cell>
+                  );
+                })}
+            </Row>
+          );
+        })}
+      </TableBody>
+    </Table>
+  );
+};
+DisabledSelectableRows.args = {
   disabled: true,
 };
 

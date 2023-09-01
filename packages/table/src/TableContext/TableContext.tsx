@@ -1,6 +1,8 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
 
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider, {
+  ComponentContextProvider,
+} from '@leafygreen-ui/leafygreen-provider';
 
 import { LGRowData } from '../useLeafyGreenTable';
 import getParentRowId from '../utils/getParentRowId';
@@ -34,16 +36,18 @@ const TableContextProvider = <T extends LGRowData>({
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
-      <TableProvider
-        value={{
-          table,
-          getRowById,
-          getParentRow,
-          shouldAlternateRowColor,
-        }}
-      >
-        {children}
-      </TableProvider>
+      <ComponentContextProvider contextComponent="lgTable">
+        <TableProvider
+          value={{
+            table,
+            getRowById,
+            getParentRow,
+            shouldAlternateRowColor,
+          }}
+        >
+          {children}
+        </TableProvider>
+      </ComponentContextProvider>
     </LeafyGreenProvider>
   );
 };

@@ -3,6 +3,7 @@ import { Transition } from 'react-transition-group';
 
 import { usePrefersReducedMotion } from '@leafygreen-ui/a11y';
 import { cx } from '@leafygreen-ui/emotion';
+import { useComponentContext } from '@leafygreen-ui/leafygreen-provider';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
@@ -13,6 +14,7 @@ import {
   checkIconStyles,
   checkIconTransitionStyles,
   disableAnimation,
+  disabledTableRowStyles,
   rippleBaseStyles,
   rippleCheckedStyles,
   rippleClassName,
@@ -51,6 +53,11 @@ export function Check({
   selector,
 }: CheckProps) {
   const prefersReducedMotion = usePrefersReducedMotion();
+  const { contextComponent, componentProps } = useComponentContext();
+  const isInDisabledTableRow =
+    contextComponent === 'lgTableRow' &&
+    componentProps &&
+    componentProps.disabled;
 
   const CheckSVG = indeterminate ? SvgIndeterminate : SvgCheck;
   const showCheckIcon = indeterminate || isChecked;
@@ -67,6 +74,7 @@ export function Check({
           [wrapperDisabledStyle[theme]]: disabled,
           [wrapperCheckedDisabledStyle[theme]]: disabled && showCheckIcon,
           [disableAnimation]: !shouldAnimate,
+          [disabledTableRowStyles[theme]]: isInDisabledTableRow,
         })}
       >
         <Transition
