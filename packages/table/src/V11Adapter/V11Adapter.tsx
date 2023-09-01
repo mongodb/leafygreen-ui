@@ -8,6 +8,7 @@ import React, {
 import flattenChildren from 'react-keyed-flatten-children';
 import { VirtualItem } from 'react-virtual';
 import { flexRender } from '@tanstack/react-table';
+import { omit } from 'lodash';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce, isComponentType } from '@leafygreen-ui/lib';
@@ -123,21 +124,17 @@ const V11Adapter = <T extends ValidDataType>({
       <TableHead>
         <HeaderRow {...oldHeaderRow.props}>
           {table.getHeaderGroups()[0].headers.map((header, i) => {
-            const { onClick, ...validOldHeaderCellProps } =
-              oldHeaderCellProps[i];
+            // remove onClick as the API is incompatible with the new API
+            const validOldHeaderCellProps = omit(
+              oldHeaderCellProps[i],
+              'onClick',
+            );
             return (
               <HeaderCell
                 key={header.id}
                 header={header}
+                // {...oldHeaderCellProps[i]}
                 {...validOldHeaderCellProps}
-                onClick={
-                  onClick
-                    ? () => {
-                        // return a function from this function to bypass different type signatures
-                        return onClick;
-                      }
-                    : undefined
-                }
               >
                 {flexRender(
                   header.column.columnDef.header,
