@@ -2,4 +2,4 @@
 '@leafygreen-ui/popover': minor
 ---
 
-Adds contentClassName to Popover to enable styling of Popover inner content wrapper
+Exports a unique `contentClassName` from Popover to enable styling of Popover inner content wrapper
