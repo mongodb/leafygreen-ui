@@ -38,6 +38,8 @@
     "@storybook/react-webpack5": "7.1.1",
     "@storybook/testing-library": "0.2.0",
     "@storybook/theming": "7.1.1",
+    "@storybook/web-components-webpack5":"7.4.0",
+    "@storybook/preset-scss":"1.0.3",
     "@svgr/webpack": "8.0.1",
     "buffer": "6.0.3",
     "file-loader": "6.2.0",
