@@ -1,0 +1,67 @@
+# This is a basic workflow to help you get started with Actions
+name: Build
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
+
+    # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+permissions:
+  write-all
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: yarn
+          cache-dependency-path: 'yarn.lock'
+
+      - uses: actions/cache@v3
+        name: Check for build cache
+        id: build-cache
+        with:
+            path: |
+              **/dist
+              !**/node_modules
+              **/tsdoc.json
+              **/stories.js
+            key: ${{ runner.os }}-release-build-cache-${{ hashFiles('**/src/', '!**/node_modules', '!**/dist') }}
+  
+        # Only setup & build if there was no build cache hit
+      - name: Use Node 16
+        uses: actions/setup-node@v3
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
+        with:
+            node-version: '16'
+            cache: yarn
+            cache-dependency-path: 'yarn.lock'
+  
+      - name: Install
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
+        run: yarn install --frozen-lockfile --prefer-offline
+  
+      - name: Build
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
+        run: npm run build-storybook --loglevel verbose
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: storybook-static # The folder the action should deploy.
