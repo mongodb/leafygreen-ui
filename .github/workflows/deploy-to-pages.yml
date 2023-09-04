@@ -54,7 +54,9 @@ jobs:
   
       - name: Install
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: |
+            yarn init -y
+            yarn install --frozen-lockfile --prefer-offline
   
       - name: Build
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
