@@ -51,7 +51,10 @@
     "storybook-addon-performance": "0.17.1",
     "stream-browserify": "3.0.0",
     "url-loader": "4.1.1",
-    "webpack": "5.88.0"
+    "webpack": "5.88.0",
+    "sass-loader":"13.3.2",
+    "lit":"2.8.0",
+    "lit-html":"2.8.0"
   },
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0",
