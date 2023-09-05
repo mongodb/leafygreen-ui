@@ -33,17 +33,12 @@ const meta: StoryMetaType<typeof Tooltip> = {
       delay: transitionDuration.slowest,
     },
     generate: {
+      storyNames: ['ShortString', 'LongString', 'JSXChildren'],
       combineArgs: {
         darkMode: [false, true],
         align: Object.values(Align),
         justify: Object.values(Justify),
         baseFontSize: Object.values(BaseFontSize),
-        children: [
-          'I am a tooltip!',
-          longText,
-          // eslint-disable-next-line react/jsx-key
-          <InlineCode>@leafygreen-ui/tooltip</InlineCode>,
-        ],
       },
       excludeCombinations: [
         {
@@ -299,4 +294,22 @@ ScrollableContainer.argTypes = {
   darkMode: { control: 'none' },
 };
 
-export const Generated = () => {};
+export const ShortString: StoryFn<typeof Tooltip> = () => <></>;
+ShortString.args = { children: 'I am a tooltip!' };
+
+export const LongString: StoryFn<typeof Tooltip> = () => <></>;
+LongString.args = { children: longText };
+LongString.parameters = {
+  generate: {
+    excludeCombinations: [
+      {
+        justify: Justify.Fit,
+      },
+    ],
+  },
+};
+
+export const JSXChildren: StoryFn<typeof Tooltip> = () => <></>;
+JSXChildren.args = {
+  children: <InlineCode>@leafygreen-ui/tooltip</InlineCode>,
+};
