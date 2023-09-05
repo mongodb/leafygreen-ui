@@ -1,5 +1,11 @@
 # @leafygreen-ui/polymorphic
 
+## 1.3.6
+
+### Patch Changes
+
+- 4fcf2e94: Updates types with `React.PropsWithChildren`
+
 ## 1.3.5
 
 ### Patch Changes

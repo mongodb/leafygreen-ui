@@ -1,5 +1,60 @@
 # @leafygreen-ui/number-input
 
+## 1.0.14
+
+### Patch Changes
+
+- Updated dependencies [a5770c15]
+- Updated dependencies [c89d17a4]
+  - @leafygreen-ui/typography@17.0.0
+  - @leafygreen-ui/select@10.3.15
+  - @leafygreen-ui/tooltip@10.0.10
+
+## 1.0.13
+
+### Patch Changes
+
+- Updated dependencies [3fe03b50]
+- Updated dependencies [fd907503]
+- Updated dependencies [c9f0055a]
+- Updated dependencies [56459cde]
+  - @leafygreen-ui/tokens@2.2.0
+  - @leafygreen-ui/hooks@8.0.0
+  - @leafygreen-ui/icon@11.23.0
+  - @leafygreen-ui/a11y@1.4.9
+  - @leafygreen-ui/leafygreen-provider@3.1.8
+  - @leafygreen-ui/popover@11.0.17
+  - @leafygreen-ui/select@10.3.14
+  - @leafygreen-ui/tooltip@10.0.9
+
+## 1.0.12
+
+### Patch Changes
+
+- 4fcf2e94: Move custom select menu button into separate components and passes custom select menu button props to new internal select prop, `__INTERNAL__menuButtonSlotProps__`.
+- 4fcf2e94: Adds the `setOpen()` state update inside the [flushSync](https://react.dev/reference/react-dom/flushSync) callback to prevent batch updates in React 18. This addresses an issue where the unit tooltip would occasionally appear without a transition, particularly when hovering. This should have no impact on behavior in React 17.
+
+  Updates `README` code snippet.
+
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/icon@11.22.2
+  - @leafygreen-ui/lib@11.0.0
+  - @leafygreen-ui/tooltip@10.0.8
+  - @leafygreen-ui/select@10.3.13
+  - @leafygreen-ui/popover@11.0.16
+  - @leafygreen-ui/a11y@1.4.8
+  - @leafygreen-ui/button@21.0.5
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+  - @leafygreen-ui/typography@16.5.5
+
 ## 1.0.11
 
 ### Patch Changes

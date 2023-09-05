@@ -1,5 +1,11 @@
 # @lg-tools/lint
 
+## 0.1.4
+
+### Patch Changes
+
+- 3fe03b50: Bumps prettier version to 2.8.8
+
 ## 0.1.3
 
 ### Patch Changes

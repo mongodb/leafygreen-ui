@@ -1,5 +1,28 @@
 # @leafygreen-ui/banner
 
+## 7.0.14
+
+### Patch Changes
+
+- Updated dependencies [a5770c15]
+- Updated dependencies [c89d17a4]
+  - @leafygreen-ui/typography@17.0.0
+
+## 7.0.13
+
+### Patch Changes
+
+- 4fcf2e94: Updates types with `React.PropsWithChildren`
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/icon@11.22.2
+  - @leafygreen-ui/lib@11.0.0
+  - @leafygreen-ui/icon-button@15.0.17
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+  - @leafygreen-ui/typography@16.5.5
+
 ## 7.0.12
 
 ### Patch Changes

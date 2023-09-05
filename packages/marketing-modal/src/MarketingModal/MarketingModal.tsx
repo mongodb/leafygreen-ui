@@ -6,7 +6,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import Modal from '@leafygreen-ui/modal';
 import { CloseIconColor } from '@leafygreen-ui/modal';
-import { H3, Link } from '@leafygreen-ui/typography';
+import { Body, Disclaimer, H3, Link } from '@leafygreen-ui/typography';
 
 import { Graphic } from '../Graphic/Graphic';
 
@@ -15,6 +15,7 @@ import {
   buttonStyle,
   contentStyle,
   contentThemeStyle,
+  disclaimerStyles,
   footerContentStyle,
   linkStyle,
   titleStyle,
@@ -36,6 +37,7 @@ const MarketingModal = ({
   closeIconColor = CloseIconColor.Dark,
   blobPosition = BlobPosition.TopLeft,
   showBlob = false,
+  disclaimer,
   ...modalProps
 }: MarketingModalProps) => {
   const { theme, darkMode } = useDarkMode(darkModeProp);
@@ -71,14 +73,16 @@ const MarketingModal = ({
         >
           {buttonText}
         </Button>
-        <Link
-          tabIndex={0}
-          onClick={onLinkClick}
-          hideExternalIcon
-          className={linkStyle}
-        >
-          {linkText}
-        </Link>
+        <Body className={linkStyle}>
+          <Link tabIndex={0} onClick={onLinkClick} hideExternalIcon>
+            {linkText}
+          </Link>
+        </Body>
+        {disclaimer && (
+          <div className={disclaimerStyles}>
+            <Disclaimer>{disclaimer}</Disclaimer>
+          </div>
+        )}
       </div>
     </Modal>
   );

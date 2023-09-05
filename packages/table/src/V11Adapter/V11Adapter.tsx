@@ -10,7 +10,7 @@ import { VirtualItem } from 'react-virtual';
 import { flexRender } from '@tanstack/react-table';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { isComponentType } from '@leafygreen-ui/lib';
+import { consoleOnce, isComponentType } from '@leafygreen-ui/lib';
 
 import { Cell, HeaderCell } from '../Cell';
 import ExpandedContent from '../ExpandedContent/ExpandedContent';
@@ -19,6 +19,7 @@ import Table from '../Table';
 import TableBody from '../TableBody';
 import TableHead from '../TableHead';
 import { TableProps as V10TableProps } from '../TableV10/Table';
+import { TableHeaderProps } from '../TableV10/TableHeader';
 import useLeafyGreenTable, {
   LeafyGreenTableCell,
   LeafyGreenTableRow,
@@ -47,17 +48,17 @@ const V11Adapter = <T extends LGRowData>({
   headerLabels,
   className,
 }: V11AdapterProps<T>) => {
-  const { darkMode } = useDarkMode();
   const containerRef = useRef(null);
   const OldTable = flattenChildren(children)[0];
 
   if (!isComponentType(OldTable, 'Table')) {
-    console.error(
+    consoleOnce.error(
       'The first and only child of `Table.V11Adapter` must be a `V10Table` component',
     );
   }
 
   const OldTableProps = (OldTable as ReactElement).props;
+  const { darkMode } = useDarkMode(OldTableProps.darkMode);
   type TData = typeof OldTableProps.data extends Array<infer U> ? U : never;
 
   const {
@@ -91,6 +92,24 @@ const V11Adapter = <T extends LGRowData>({
 
   const iterables = useVirtualScrolling ? table.virtualRows ?? [] : rows;
 
+  const columnsChildren = React.Children.toArray(columns);
+  const oldHeaderRow = columnsChildren[0] as ReactElement;
+
+  const oldHeaderCellProps: Array<TableHeaderProps<any>> = [];
+
+  if (columnsChildren.length < 2) {
+    React.Children.toArray(oldHeaderRow.props.children).map(child => {
+      const { label, dataType, ...props } = (child as ReactElement).props;
+      oldHeaderCellProps.push(props);
+    });
+  }
+
+  const {
+    data: oldData,
+    columns: oldColumns,
+    ...oldTableProps
+  } = (OldTable as ReactElement).props;
+
   return (
     <Table
       darkMode={darkMode}
@@ -100,12 +119,19 @@ const V11Adapter = <T extends LGRowData>({
       }
       className={className}
       ref={containerRef}
+      {...oldTableProps}
     >
       <TableHead>
-        <HeaderRow>
-          {table.getHeaderGroups()[0].headers.map(header => {
+        <HeaderRow {...oldHeaderRow.props}>
+          {table.getHeaderGroups()[0].headers.map((header, i) => {
             return (
-              <HeaderCell key={header.id} header={header}>
+              // https://jira.mongodb.org/browse/LG-3538
+              // @ts-expect-error
+              <HeaderCell
+                key={header.id}
+                header={header}
+                {...oldHeaderCellProps[i]}
+              >
                 {flexRender(
                   header.column.columnDef.header,
                   header.getContext(),
@@ -127,12 +153,16 @@ const V11Adapter = <T extends LGRowData>({
               virtualRow={
                 useVirtualScrolling ? (iterable as VirtualItem) : undefined
               }
+              // https://jira.mongodb.org/browse/LG-3538
+              // @ts-expect-error rowProps is an additional prop passed by the `processData` function
+              {...row.original.rowProps}
             >
               {row.getVisibleCells().map((cell: LeafyGreenTableCell<any>) => {
                 if (cell?.column?.id) {
                   if (cell?.column?.id === 'select') {
                     return (
                       <Cell key={cell.column.id}>
+                        {/* https://jira.mongodb.org/browse/LG-3538 */}
                         {/* @ts-expect-error `cell` is instantiated in `processColumns` */}
                         {cell.column.columnDef?.cell({ row, table })}
                       </Cell>
@@ -140,11 +170,18 @@ const V11Adapter = <T extends LGRowData>({
                   } else {
                     const cellChild =
                       // index by row.index (not the index of the loop) to get the sorted order
+                      // https://jira.mongodb.org/browse/LG-3538
                       // @ts-expect-error `processedData` is structured to be indexable by `row.index`
                       processedData[row.index]?.[cell.column.id]?.();
+                    const {
+                      children,
+                      isHeader,
+                      isDisabled,
+                      ...cellChildProps
+                    } = cellChild.props;
                     return cellChild ? (
-                      <Cell key={cell.id} {...cellChild?.props}>
-                        <>{cellChild?.props.children}</>
+                      <Cell key={cell.id} {...cellChildProps}>
+                        <>{children}</>
                       </Cell>
                     ) : (
                       <></>
@@ -158,18 +195,31 @@ const V11Adapter = <T extends LGRowData>({
                 <ExpandedContent row={row} />
               )}
               {row.subRows &&
-                row.subRows.map(subRow => (
-                  <Row key={subRow.id} row={subRow}>
-                    {subRow.getVisibleCells().map(subRowCell => {
-                      return (
-                        <Cell key={subRowCell.id}>
-                          {/* @ts-expect-error subRow.original returns the object in the user's defined shape, and should be string indexable */}
-                          {subRow.original[subRowCell.column.id]()}
-                        </Cell>
-                      );
-                    })}
-                  </Row>
-                ))}
+                row.subRows.map(subRow => {
+                  // https://jira.mongodb.org/browse/LG-3538
+                  // @ts-expect-error rowProps is an additional prop passed by the `processData` function
+                  const { children, ...subRowProps } = subRow.original.rowProps;
+                  return (
+                    <Row key={subRow.id} row={subRow} {...subRowProps}>
+                      {subRow.getVisibleCells().map(srCell => {
+                        // https://jira.mongodb.org/browse/LG-3538
+                        // @ts-expect-error subRow.original returns the object in the user's defined shape, and should be string indexable
+                        const subRowCell = subRow.original[srCell.column.id]();
+                        const {
+                          children,
+                          isHeader,
+                          isDisabled,
+                          ...subRowCellProps
+                        } = subRowCell.props;
+                        return (
+                          <Cell key={subRowCell.id} {...subRowCellProps}>
+                            {children}
+                          </Cell>
+                        );
+                      })}
+                    </Row>
+                  );
+                })}
             </Row>
           );
         })}

@@ -1,5 +1,35 @@
 # @lg-tools/storybook
 
+## 0.3.1
+
+### Patch Changes
+
+- Updated dependencies [a5770c15]
+- Updated dependencies [c89d17a4]
+  - @leafygreen-ui/typography@17.0.0
+
+## 0.3.0
+
+### Minor Changes
+
+- 4fcf2e94: Bump `@mdx-js/react` to the latest major version, `2.3.0`. This version will not work with React 17.
+
+  Modified the ReactDOM peerDependency to ensure compatibility with either version 17 or 18.
+
+### Patch Changes
+
+- 4fcf2e94: Modified the React peerDependency to ensure compatibility with either version 17 or 18.
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [8e06bb20]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/lib@11.0.0
+  - @lg-tools/build@0.2.1
+  - @lg-tools/storybook-decorators@0.2.0
+  - @leafygreen-ui/typography@16.5.5
+
 ## 0.2.1
 
 ### Patch Changes

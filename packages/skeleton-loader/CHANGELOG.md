@@ -1,5 +1,29 @@
 # @leafygreen-ui/skeleton-loader
 
+## 1.1.0
+
+### Minor Changes
+
+- 83665947: Adds `CodeSkeleton`
+
+### Patch Changes
+
+- Updated dependencies [a5770c15]
+- Updated dependencies [c89d17a4]
+  - @leafygreen-ui/typography@17.0.0
+
+## 1.0.6
+
+### Patch Changes
+
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/lib@11.0.0
+  - @leafygreen-ui/card@10.0.4
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+  - @leafygreen-ui/typography@16.5.5
+
 ## 1.0.5
 
 ### Patch Changes

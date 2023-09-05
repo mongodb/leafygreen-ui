@@ -1,5 +1,40 @@
 # @leafygreen-ui/tabs
 
+## 11.1.9
+
+### Patch Changes
+
+- Updated dependencies [a5770c15]
+- Updated dependencies [c89d17a4]
+  - @leafygreen-ui/typography@17.0.0
+
+## 11.1.8
+
+### Patch Changes
+
+- Updated dependencies [3fe03b50]
+- Updated dependencies [fd907503]
+  - @leafygreen-ui/tokens@2.2.0
+  - @leafygreen-ui/hooks@8.0.0
+  - @leafygreen-ui/a11y@1.4.9
+  - @leafygreen-ui/leafygreen-provider@3.1.8
+  - @leafygreen-ui/portal@5.0.1
+
+## 11.1.7
+
+### Patch Changes
+
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/portal@5.0.0
+  - @leafygreen-ui/lib@11.0.0
+  - @leafygreen-ui/box@3.1.8
+  - @leafygreen-ui/a11y@1.4.8
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+  - @leafygreen-ui/typography@16.5.5
+
 ## 11.1.6
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/modal",
-  "version": "15.0.6",
+  "version": "16.0.1",
   "description": "LeafyGreen UI Kit Modal",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -23,13 +23,13 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/hooks": "^7.7.8",
-    "@leafygreen-ui/icon": "^11.22.1",
-    "@leafygreen-ui/icon-button": "^15.0.16",
-    "@leafygreen-ui/lib": "^10.4.3",
+    "@leafygreen-ui/hooks": "^8.0.0",
+    "@leafygreen-ui/icon": "^11.23.0",
+    "@leafygreen-ui/icon-button": "^15.0.17",
+    "@leafygreen-ui/lib": "^11.0.0",
     "@leafygreen-ui/palette": "^4.0.7",
-    "@leafygreen-ui/portal": "^4.1.7",
-    "@leafygreen-ui/tokens": "^2.1.4",
+    "@leafygreen-ui/portal": "^5.0.1",
+    "@leafygreen-ui/tokens": "^2.2.0",
     "focus-trap": "6.9.4",
     "focus-trap-react": "^9.0.2",
     "polished": "^4.2.2",
@@ -38,14 +38,14 @@
   },
   "devDependencies": {
     "@faker-js/faker": "8.0.2",
-    "@leafygreen-ui/select": "^10.3.12",
-    "@leafygreen-ui/typography": "^16.5.4",
-    "@leafygreen-ui/copyable": "^8.0.16",
-    "@leafygreen-ui/code": "^14.2.12",
-    "@leafygreen-ui/button": "^21.0.3"
+    "@leafygreen-ui/select": "^10.3.15",
+    "@leafygreen-ui/typography": "^17.0.0",
+    "@leafygreen-ui/copyable": "^8.0.19",
+    "@leafygreen-ui/code": "^14.2.14",
+    "@leafygreen-ui/button": "^21.0.5"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.6"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.8"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/modal",
   "repository": {

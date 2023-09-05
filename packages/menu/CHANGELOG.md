@@ -1,5 +1,37 @@
 # @leafygreen-ui/menu
 
+## 22.0.7
+
+### Patch Changes
+
+- Updated dependencies [3fe03b50]
+- Updated dependencies [fd907503]
+- Updated dependencies [c9f0055a]
+- Updated dependencies [56459cde]
+  - @leafygreen-ui/tokens@2.2.0
+  - @leafygreen-ui/hooks@8.0.0
+  - @leafygreen-ui/icon@11.23.0
+  - @leafygreen-ui/leafygreen-provider@3.1.8
+  - @leafygreen-ui/popover@11.0.17
+
+## 22.0.6
+
+### Patch Changes
+
+- 4fcf2e94: Updates types with `React.PropsWithChildren`
+- 4fcf2e94: Bumps `react-transition-group` to `^4.4.5`.
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/icon@11.22.2
+  - @leafygreen-ui/lib@11.0.0
+  - @leafygreen-ui/polymorphic@1.3.6
+  - @leafygreen-ui/popover@11.0.16
+  - @leafygreen-ui/icon-button@15.0.17
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+
 ## 22.0.5
 
 ### Patch Changes

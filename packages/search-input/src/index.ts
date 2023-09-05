@@ -4,3 +4,7 @@ export {
   SearchResultGroup,
   type SearchResultGroupProps,
 } from './SearchResultGroup';
+export {
+  SearchResultsMenu,
+  type SearchResultsMenuProps,
+} from './SearchResultsMenu';

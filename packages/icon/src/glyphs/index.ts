@@ -79,6 +79,7 @@ import MagnifyingGlass from './MagnifyingGlass.svg';
 import Megaphone from './Megaphone.svg';
 import Menu from './Menu.svg';
 import Minus from './Minus.svg';
+import Mobile from './Mobile.svg';
 import MultiDirectionArrow from './MultiDirectionArrow.svg';
 import MultiLayers from './MultiLayers.svg';
 import NavCollapse from './NavCollapse.svg';
@@ -217,6 +218,7 @@ const _glyphs = {
   Megaphone,
   Menu,
   Minus,
+  Mobile,
   MultiDirectionArrow,
   MultiLayers,
   NavCollapse,

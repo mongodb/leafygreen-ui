@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/select",
-  "version": "10.3.12",
+  "version": "10.3.15",
   "description": "leafyGreen UI Kit Select",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,22 +22,22 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/button": "^21.0.3",
+    "@leafygreen-ui/button": "^21.0.5",
     "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/hooks": "^7.7.8",
-    "@leafygreen-ui/icon": "^11.22.1",
-    "@leafygreen-ui/lib": "^10.4.3",
+    "@leafygreen-ui/hooks": "^8.0.0",
+    "@leafygreen-ui/icon": "^11.23.0",
+    "@leafygreen-ui/lib": "^11.0.0",
     "@leafygreen-ui/palette": "^4.0.7",
-    "@leafygreen-ui/popover": "^11.0.15",
-    "@leafygreen-ui/tokens": "^2.1.4",
-    "@leafygreen-ui/typography": "^16.5.4",
+    "@leafygreen-ui/popover": "^11.0.17",
+    "@leafygreen-ui/tokens": "^2.2.0",
+    "@leafygreen-ui/typography": "^17.0.0",
     "@types/react-is": "^18.0.0",
     "lodash": "^4.17.21",
     "polished": "^4.1.3",
     "react-is": "^18.0.1"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.6"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.8"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/select",
   "repository": {
@@ -48,6 +48,6 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@leafygreen-ui/testing-lib": "^0.3.3"
+    "@leafygreen-ui/testing-lib": "^0.3.4"
   }
 }

@@ -1,5 +1,50 @@
 # @leafygreen-ui/table
 
+## 12.0.10
+
+### Patch Changes
+
+- f8bfa386: Fixes bug in V11Adapter where not all props on rows and cells were not being passed to their rendered elements
+- Updated dependencies [a5770c15]
+- Updated dependencies [c89d17a4]
+  - @leafygreen-ui/typography@17.0.0
+  - @leafygreen-ui/checkbox@12.0.18
+
+## 12.0.9
+
+### Patch Changes
+
+- Updated dependencies [3fe03b50]
+- Updated dependencies [fd907503]
+- Updated dependencies [c9f0055a]
+- Updated dependencies [56459cde]
+  - @leafygreen-ui/tokens@2.2.0
+  - @leafygreen-ui/hooks@8.0.0
+  - @leafygreen-ui/icon@11.23.0
+  - @leafygreen-ui/checkbox@12.0.17
+  - @leafygreen-ui/leafygreen-provider@3.1.8
+
+## 12.0.8
+
+### Patch Changes
+
+- 4fcf2e94: Adds a `nodeRef` to <Transition> to get rid of StrictMode warnings
+- 4fcf2e94: Updates types with `React.PropsWithChildren`
+- 4fcf2e94: Bumps `react-transition-group` to `^4.4.5`.
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+- Updated dependencies [4fcf2e94]
+  - @leafygreen-ui/icon@11.22.2
+  - @leafygreen-ui/lib@11.0.0
+  - @leafygreen-ui/checkbox@12.0.16
+  - @leafygreen-ui/polymorphic@1.3.6
+  - @leafygreen-ui/icon-button@15.0.17
+  - @leafygreen-ui/leafygreen-provider@3.1.7
+  - @leafygreen-ui/typography@16.5.5
+
 ## 12.0.7
 
 ### Patch Changes

@@ -6,7 +6,7 @@ export const Size = {
   XSmall: 'xsmall',
 } as const;
 
-export type Size = typeof Size[keyof typeof Size];
+export type Size = (typeof Size)[keyof typeof Size];
 
 interface BaseToggleProps {
   /**
