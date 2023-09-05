@@ -37,6 +37,10 @@ const meta: StoryMetaType<typeof Chip> = {
       },
     },
   },
+  args: {
+    label: 'Chip',
+    onDismiss: () => {},
+  },
 };
 export default meta;
 
@@ -97,10 +101,7 @@ Yellow.parameters = {
 const Template: StoryFn<typeof Chip> = props => {
   return (
     <>
-      <Chip {...props} label="meow meow meow meow meow" />
-      <Chip {...props} label="hi " />
-      <Chip {...props} onDismiss={() => {}} label="meow meow meow meow meow" />
-      <Chip {...props} onDismiss={() => {}} label="hi " />
+      <Chip {...props} />
     </>
   );
 };

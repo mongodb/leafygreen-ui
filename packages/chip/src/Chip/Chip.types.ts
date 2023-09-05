@@ -70,5 +70,5 @@ export interface ChipProps
    * Callback when dismiss button is clicked.
    * If set, a dismiss button will render.
    */
-  onDismiss?: React.ReactEventHandler;
+  onDismiss?: React.MouseEventHandler<HTMLButtonElement>;
 }
