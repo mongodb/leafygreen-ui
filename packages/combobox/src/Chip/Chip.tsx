@@ -127,7 +127,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
         chipCharacterLimit={chipCharacterLimit}
         chipTruncationLocation={updatedChipTruncationLocation}
         popoverZIndex={popoverZIndex}
-        variant="blue"
+        variant="gray"
         ref={chipRef}
       />
       // eslint-disable-next-line jsx-a11y/click-events-have-key-events
