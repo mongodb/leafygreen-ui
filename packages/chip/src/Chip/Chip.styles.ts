@@ -119,9 +119,9 @@ export const chipWrapperThemeStyle = (variant: Variant, theme: Theme) => css`
   background-color: ${variantColor[variant][theme].bgColor};
   transition: background-color ${transitionDuration.faster}ms ease-in-out;
 
-  &:focus-within {
-    background-color: ${variantColor[variant][theme].focusWithinBgColor};
-  }
+  // &:focus-within {
+  //   background-color: ${variantColor[variant][theme].focusWithinBgColor};
+  // }
 `;
 
 export const chipWrapperBaseStyle = css`
@@ -174,3 +174,15 @@ export const chipTextDismissSizeStyle: Record<Size, string> = {
     padding-inline-end: 2px;
   `,
 };
+
+export const chipTextStyles = css`
+  &:focus-within {
+    background: ${palette.red.light2};
+  }
+
+  span {
+    &:focus-visible {
+      outline: none;
+    }
+  }
+`;

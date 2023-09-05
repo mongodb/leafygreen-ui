@@ -10,6 +10,7 @@ import { getTruncatedName } from '../utils/getTruncatedName';
 import {
   chipTextDismissSizeStyle,
   chipTextSizeStyle,
+  chipTextStyles,
   chipWrapperBaseStyle,
   chipWrapperSizeStyle,
   chipWrapperThemeStyle,
@@ -73,7 +74,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
         {...rest}
       >
         <span
-          className={cx(chipTextSizeStyle[size], {
+          className={cx(chipTextStyles, chipTextSizeStyle[size], {
             [chipTextDismissSizeStyle[size]]: !!onDismiss,
           })}
         >
