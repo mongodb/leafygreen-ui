@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useMemo, useRef } from 'react';
 
+import { Chip as LGChip } from '@leafygreen-ui/chip';
 import { cx } from '@leafygreen-ui/emotion';
+import { useForwardedRef } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -24,7 +26,10 @@ import {
 } from './Chip.styles';
 
 export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
-  ({ displayName, isFocused, onRemove, onFocus }: ChipProps, forwardedRef) => {
+  (
+    { displayName, isFocused, onRemove, onFocus, className }: ChipProps,
+    forwardedRef,
+  ) => {
     const { darkMode, theme } = useDarkMode();
     const {
       size,
@@ -35,55 +40,53 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       popoverZIndex,
     } = useContext(ComboboxContext);
 
-    const isTruncated =
-      overflow !== Overflow.scrollX &&
-      !!chipCharacterLimit &&
-      !!chipTruncationLocation &&
-      chipTruncationLocation !== 'none' &&
-      displayName.length > chipCharacterLimit;
+    const updatedChipTruncationLocation =
+      overflow === Overflow.scrollX ? 'none' : chipTruncationLocation;
 
-    const buttonRef = useRef<HTMLButtonElement>(null);
+    const chipRef = useForwardedRef(forwardedRef, null);
 
-    const truncatedName = useMemo(() => {
-      if (isTruncated) {
-        const ellipsis = '…';
-        const chars = chipCharacterLimit - 3; // ellipsis dots included in the char limit
+    const buttonRef = chipRef.current?.querySelector('button');
 
-        switch (chipTruncationLocation) {
-          case 'start': {
-            const end = displayName
-              .substring(displayName.length - chars)
-              .trim();
-            return ellipsis + end;
-          }
+    // const truncatedName = useMemo(() => {
+    //   if (isTruncated) {
+    //     const ellipsis = '…';
+    //     const chars = chipCharacterLimit - 3; // ellipsis dots included in the char limit
 
-          case 'middle': {
-            const start = displayName.substring(0, chars / 2).trim();
-            const end = displayName
-              .substring(displayName.length - chars / 2)
-              .trim();
-            return start + ellipsis + end;
-          }
+    //     switch (chipTruncationLocation) {
+    //       case 'start': {
+    //         const end = displayName
+    //           .substring(displayName.length - chars)
+    //           .trim();
+    //         return ellipsis + end;
+    //       }
 
-          case 'end': {
-            const start = displayName.substring(0, chars).trim();
-            return start + ellipsis;
-          }
+    //       case 'middle': {
+    //         const start = displayName.substring(0, chars / 2).trim();
+    //         const end = displayName
+    //           .substring(displayName.length - chars / 2)
+    //           .trim();
+    //         return start + ellipsis + end;
+    //       }
 
-          default: {
-            return displayName;
-          }
-        }
-      }
+    //       case 'end': {
+    //         const start = displayName.substring(0, chars).trim();
+    //         return start + ellipsis;
+    //       }
 
-      return false;
-    }, [chipCharacterLimit, chipTruncationLocation, displayName, isTruncated]);
+    //       default: {
+    //         return displayName;
+    //       }
+    //     }
+    //   }
+
+    //   return false;
+    // }, [chipCharacterLimit, chipTruncationLocation, displayName, isTruncated]);
 
     useEffect(() => {
       if (isFocused && !disabled) {
-        buttonRef?.current?.focus();
+        buttonRef?.focus();
       }
-    }, [disabled, forwardedRef, isFocused]);
+    }, [disabled, buttonRef, isFocused]);
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
       if (
@@ -99,7 +102,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
 
     const handleChipClick = (e: React.MouseEvent) => {
       // Did not click button
-      if (!buttonRef.current?.contains(e.target as Node)) {
+      if (!buttonRef?.contains(e.target as Node)) {
         onFocus();
       }
     };
@@ -111,56 +114,72 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
     };
 
     return (
-      // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-      <span
+      <LGChip
+        label={displayName}
+        className={className}
         role="option"
         aria-selected={isFocused}
         data-testid="lg-combobox-chip"
-        ref={forwardedRef}
-        className={cx(
-          chipClassName,
-          chipWrapperBaseStyle,
-          chipWrapperThemeStyle[theme],
-          chipWrapperSizeStyle(size),
-          {
-            [cx(
-              disabledChipWrapperStyle[theme],
-              disabledBaseChipWrapperStyles,
-            )]: disabled,
-          },
-        )}
         onClick={handleChipClick}
         onKeyDown={handleKeyDown}
-        tabIndex={-1}
-      >
-        <span className={cx(chipTextSizeStyle[size])}>
-          {truncatedName ? (
-            <InlineDefinition
-              darkMode={darkMode}
-              definition={displayName}
-              align="bottom"
-              popoverZIndex={popoverZIndex}
-            >
-              {truncatedName}
-            </InlineDefinition>
-          ) : (
-            displayName
-          )}
-        </span>
-        <button
-          aria-label={`Deselect ${displayName}`}
-          aria-disabled={disabled}
-          disabled={disabled}
-          ref={buttonRef}
-          className={cx(chipButtonStyle, chipButtonThemeStyle[theme], {
-            [cx(chipButtonDisabledStyle[theme], chipButtonBaseDisabledStyles)]:
-              disabled,
-          })}
-          onClick={handleButtonClick}
-        >
-          <Icon glyph="X" />
-        </button>
-      </span>
+        onDismiss={handleButtonClick}
+        size="default"
+        chipCharacterLimit={chipCharacterLimit}
+        chipTruncationLocation={updatedChipTruncationLocation}
+        popoverZIndex={popoverZIndex}
+        variant="blue"
+        ref={chipRef}
+      />
+      // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+      // <span
+      //   role="option"
+      //   aria-selected={isFocused}
+      //   data-testid="lg-combobox-chip"
+      //   ref={forwardedRef}
+      //   className={cx(
+      //     chipClassName,
+      //     chipWrapperBaseStyle,
+      //     chipWrapperThemeStyle[theme],
+      //     chipWrapperSizeStyle(size),
+      //     {
+      //       [cx(
+      //         disabledChipWrapperStyle[theme],
+      //         disabledBaseChipWrapperStyles,
+      //       )]: disabled,
+      //     },
+      //   )}
+      //   onClick={handleChipClick}
+      //   onKeyDown={handleKeyDown}
+      //   tabIndex={-1}
+      // >
+      //   <span className={cx(chipTextSizeStyle[size])}>
+      //     {truncatedName ? (
+      //       <InlineDefinition
+      //         darkMode={darkMode}
+      //         definition={displayName}
+      //         align="bottom"
+      //         popoverZIndex={popoverZIndex}
+      //       >
+      //         {truncatedName}
+      //       </InlineDefinition>
+      //     ) : (
+      //       displayName
+      //     )}
+      //   </span>
+      //   <button
+      //     aria-label={`Deselect ${displayName}`}
+      //     aria-disabled={disabled}
+      //     disabled={disabled}
+      //     ref={buttonRef}
+      //     className={cx(chipButtonStyle, chipButtonThemeStyle[theme], {
+      //       [cx(chipButtonDisabledStyle[theme], chipButtonBaseDisabledStyles)]:
+      //         disabled,
+      //     })}
+      //     onClick={handleButtonClick}
+      //   >
+      //     <Icon glyph="X" />
+      //   </button>
+      // </span>
     );
   },
 );

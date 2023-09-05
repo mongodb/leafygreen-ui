@@ -1,22 +1,32 @@
 {
   "extends": "@lg-tools/build/config/package.tsconfig.json",
-   "compilerOptions": {
+  "compilerOptions": {
     "declarationDir": "dist",
     "outDir": "dist",
     "rootDir": "src",
     "baseUrl": ".",
     "paths": {
-      "@leafygreen-ui/icon/dist/*": ["../icon/src/generated/*"],
-      "@leafygreen-ui/*": ["../*/src"]
+      "@leafygreen-ui/icon/dist/*": [
+        "../icon/src/generated/*"
+      ],
+      "@leafygreen-ui/*": [
+        "../*/src"
+      ]
     }
   },
   "include": [
     "src/**/*"
   ],
-  "exclude": ["**/*.spec.*", "**/*.story.*"],
+  "exclude": [
+    "**/*.spec.*",
+    "**/*.story.*"
+  ],
   "references": [
     {
       "path": "../checkbox"
+    },
+    {
+      "path": "../chip"
     },
     {
       "path": "../emotion"
