@@ -9,4 +9,12 @@ describe('packages/date-picker/utils/getSegmentsFromDate', () => {
     expect(segments.month).toBe(9);
     expect(segments.year).toBe(2023);
   });
+
+  test('returns undefined for each segment when date is null', () => {
+    const segments = getSegmentsFromDate(null);
+    expect(segments).toBeDefined();
+    expect(segments.day).toBeUndefined();
+    expect(segments.month).toBeUndefined();
+    expect(segments.year).toBeUndefined();
+  });
 });

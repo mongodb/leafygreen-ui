@@ -5,8 +5,8 @@ import { isValid } from 'date-fns';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType, StoryType } from '@leafygreen-ui/lib';
-import { Size } from '@leafygreen-ui/tokens';
 
+import { Month } from '../../constants';
 import {
   DatePickerContextProps,
   DatePickerProvider,
@@ -14,7 +14,7 @@ import {
 
 import { DateInputBox } from './DateInputBox';
 
-const testDate = new Date(Date.UTC(1993, 12, 26));
+const testDate = new Date(Date.UTC(1993, Month.December, 26));
 
 const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
   <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
@@ -35,7 +35,7 @@ const meta: StoryMetaType<typeof DateInputBox, DatePickerContextProps> = {
   parameters: {
     default: null,
     generate: {
-      storyNames: ['Formats', 'TimeZones'],
+      storyNames: ['Formats'],
       combineArgs: {
         darkMode: [false, true],
         value: [null, testDate],
@@ -75,6 +75,14 @@ export const Basic: StoryFn<typeof DateInputBox> = props => {
   );
 };
 
+export const Static: StoryFn<typeof DateInputBox> = props => {
+  return (
+    <>
+      <DateInputBox {...props} value={testDate} />
+    </>
+  );
+};
+
 export const Formats: StoryType<
   typeof DateInputBox,
   DatePickerContextProps
@@ -84,30 +92,5 @@ Formats.parameters = {
     combineArgs: {
       dateFormat: ['iso8601', 'en-US', 'en-UK', 'de-DE'],
     },
-  },
-};
-
-export const TimeZones: StoryType<
-  typeof DateInputBox,
-  DatePickerContextProps
-> = () => <></>;
-TimeZones.parameters = {
-  generate: {
-    args: {
-      dateFormat: 'iso8601',
-      size: Size.Default,
-    },
-    combineArgs: {
-      timeZone: [
-        'Pacific/Honolulu',
-        'America/Los_Angeles',
-        'America/New_York',
-        'Europe/London',
-        'Asia/Istanbul',
-        'Asia/Seoul',
-        'Pacific/Auckland',
-      ],
-    },
-    excludeCombinations: [{ value: null }, {}],
   },
 };
