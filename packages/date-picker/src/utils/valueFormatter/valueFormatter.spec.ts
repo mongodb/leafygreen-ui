@@ -1,8 +1,8 @@
-import { DateSegment } from '../../DateInput.types';
+import { DateSegment } from '../../DateInput/DateInput.types';
 
 import { getValueFormatter } from '.';
 
-describe('utils/valueFormatter', () => {
+describe('packages/date-picker/utils/valueFormatter', () => {
   describe.each(['day', 'month'] as Array<DateSegment>)('', segment => {
     const formatter = getValueFormatter(segment);
 

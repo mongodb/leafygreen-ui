@@ -1,8 +1,8 @@
 import { padStart } from 'lodash';
 
-import { isZeroLike } from '../../../utils/isZeroLike';
-import { DateSegment } from '../../DateInput.types';
-import { charsPerSegment } from '../../DateInputSegment/constants';
+import { DateSegment } from '../../DateInput/DateInput.types';
+import { charsPerSegment } from '../../DateInput/DateInputSegment/constants';
+import { isZeroLike } from '../isZeroLike';
 
 export const getValueFormatter =
   (segment: DateSegment) => (val: string | number | undefined) => {

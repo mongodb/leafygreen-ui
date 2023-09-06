@@ -3,12 +3,8 @@ import { utcToZonedTime } from 'date-fns-tz';
 import { chunk, fill, range } from 'lodash';
 import { getWeekStartByLocale } from 'weekstart';
 
-import { daysPerWeek } from '../../../constants';
-import { BaseDatePickerProps } from '../../../types';
-import {
-  setToMidnight,
-  setToUTCMidnight,
-} from '../../../utils/setToUTCMidnight';
+import { daysPerWeek } from '../../constants';
+import { BaseDatePickerProps } from '../../types';
 
 interface GetWeeksArrayOptions
   extends Required<Pick<BaseDatePickerProps, 'dateFormat' | 'timeZone'>> {}
@@ -49,12 +45,6 @@ export const getWeeksArray = (
   });
   // splice in enough empty elements so that the first is in the right column
   allDays.splice(0, 0, ...fill(range(startColumn), null));
-
-  console.log({
-    timeZone,
-    mo: month.toISOString(),
-    tz: tzMonth.toISOString(),
-  });
 
   // Break the array into chunks of 7
   const weeks = chunk(allDays, daysPerWeek);

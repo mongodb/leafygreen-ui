@@ -1,29 +1,10 @@
-import { utcToZonedTime } from 'date-fns-tz';
 import { isUndefined, padStart, range } from 'lodash';
 
-import { Month } from '../../../constants';
+import { Month } from '../../constants';
 
 import { getWeeksArray } from '.';
 
-describe.skip('utcToZonedTime', () => {
-  const date = new Date(Date.UTC(2023, 8 /* Sept */, 1));
-
-  test('date is in UTC', () => {
-    expect(date.toISOString()).toEqual('2023-09-01T00:00:00.000Z');
-  });
-
-  test('converting to UTC has no effect', () => {
-    const utc = utcToZonedTime(date, 'UTC');
-    expect(utc.toISOString()).toEqual(date.toISOString());
-  });
-
-  test('converting to America/New_York rolls back -4 for EDT', () => {
-    const nyc = utcToZonedTime(date, 'America/New_York');
-    expect(nyc.toISOString()).toEqual('2023-08-31T20:00:00.000Z');
-  });
-});
-
-describe.skip('packages/date-picker/calendar/utils/getWeeksArray', () => {
+describe('packages/date-picker/utils/getWeeksArray', () => {
   test('returned array has the correct number of elements', () => {
     const month = new Date(Date.UTC(2023, Month.August, 1));
     const arr = getWeeksArray(month, {

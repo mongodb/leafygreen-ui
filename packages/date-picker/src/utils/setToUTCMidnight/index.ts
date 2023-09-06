@@ -1,4 +1,7 @@
-/** Returns a new date set to midnight */
+/**
+ * Returns a new date set to midnight
+ * @deprecated
+ */
 export const setToUTCMidnight = (date: Date): Date => {
   const midnight = new Date(date);
   midnight.setUTCHours(0);
@@ -8,6 +11,7 @@ export const setToUTCMidnight = (date: Date): Date => {
   return midnight;
 };
 
+/** @deprecated */
 export const setToMidnight = (date: Date): Date => {
   const midnight = new Date(date);
   midnight.setHours(0);

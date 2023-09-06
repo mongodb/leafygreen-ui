@@ -7,8 +7,8 @@ import {
   DateSegment,
   DateSegmentsState,
   DateSegmentValue,
-} from '../../DateInput.types';
-import { getSegmentsFromDate } from '../getSegmentsFromDate';
+} from '../../DateInput/DateInput.types';
+import { getSegmentsFromDate } from '../../utils/getSegmentsFromDate';
 
 type OnUpdateCallback = (value: DateSegmentsState) => void;
 

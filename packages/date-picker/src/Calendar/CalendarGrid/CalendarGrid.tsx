@@ -6,7 +6,7 @@ import { Disclaimer } from '@leafygreen-ui/typography';
 
 import { DaysOfWeek, daysPerWeek } from '../../constants';
 import { useDatePickerContext } from '../../DatePickerContext';
-import { getWeeksArray } from '../utils/getWeeksArray';
+import { getWeeksArray } from '../../utils/getWeeksArray';
 
 import { calendarHeaderCellStyles } from './CalendarGrid.styles';
 import { CalendarGridProps } from './CalendarGrid.types';
