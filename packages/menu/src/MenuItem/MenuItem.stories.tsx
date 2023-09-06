@@ -18,26 +18,16 @@ const meta: StoryMetaType<typeof MenuItem> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        destructive: [false, true],
         description: [undefined, 'This is a description'],
         glyph: [undefined, <Icon glyph="Cloud" size="large" />],
         active: [false, true],
         size: Object.values(Size),
         disabled: [false, true],
       },
-      excludeCombinations: [
-        {
-          destructive: true,
-          active: true,
-        },
-        {
-          destructive: true,
-          description: 'This is a description',
-        },
-      ],
       args: {
         children: 'Menu Item',
       },
+      storyNames: ['NotDestructive', 'Destructive'],
       decorator: (Instance, ctx) => {
         return (
           <MenuContext.Provider
@@ -55,4 +45,15 @@ const meta: StoryMetaType<typeof MenuItem> = {
 };
 export default meta;
 
-export const Generated = () => <></>;
+export const NotDestructive = () => <></>;
+export const Destructive = () => <></>;
+Destructive.parameters = {
+  generate: {
+    args: {
+      destructive: true,
+      children: 'Menu Item',
+      description: undefined,
+      active: false,
+    },
+  },
+};
