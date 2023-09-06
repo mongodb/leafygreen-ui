@@ -74,9 +74,13 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
         {...rest}
       >
         <span
-          className={cx(chipTextStyles, chipTextSizeStyle[size], {
-            [chipTextDismissSizeStyle[size]]: !!onDismiss,
-          })}
+          className={cx(
+            chipTextStyles(variant, theme),
+            chipTextSizeStyle[size],
+            {
+              [chipTextDismissSizeStyle[size]]: !!onDismiss,
+            },
+          )}
         >
           {isTruncated ? (
             <InlineDefinition

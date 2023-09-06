@@ -358,5 +358,4 @@ export interface ChipProps {
   isFocused: boolean;
   onRemove: () => void;
   onFocus: () => void;
-  className: string;
 }

@@ -68,7 +68,6 @@ import {
   baseInputElementStyle,
   caretIconDisabledStyles,
   caretIconThemeStyles,
-  chipSizeStyles,
   clearButtonStyle,
   comboboxDisabledStyles,
   comboboxErrorStyles,
@@ -741,7 +740,6 @@ export function Combobox<M extends boolean>({
             onRemove={onRemove}
             onFocus={onFocus}
             ref={chipRef}
-            className={cx(chipSizeStyles[size])}
           />
         );
       });
@@ -756,7 +754,6 @@ export function Combobox<M extends boolean>({
     updateSelection,
     setInputFocus,
     updateFocusedChip,
-    size,
   ]);
 
   /**

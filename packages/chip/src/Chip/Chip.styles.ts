@@ -36,7 +36,7 @@ export const variantColor: Record<
     {
       color: string;
       bgColor: string;
-      focusWithinBgColor: string;
+      focusBgColor: string;
     }
   >
 > = {
@@ -44,72 +44,72 @@ export const variantColor: Record<
     [Theme.Dark]: {
       color: palette.blue.light2,
       bgColor: palette.blue.dark3,
-      focusWithinBgColor: palette.blue.dark2,
+      focusBgColor: palette.blue.dark1,
     },
     [Theme.Light]: {
       color: palette.blue.dark3,
       bgColor: palette.blue.light3,
-      focusWithinBgColor: palette.blue.light2,
+      focusBgColor: '#89D2FF',
     },
   },
   [Variant.Red]: {
     [Theme.Dark]: {
       color: palette.red.light2,
       bgColor: palette.red.dark3,
-      focusWithinBgColor: palette.red.dark2,
+      focusBgColor: '#BB1A1A',
     },
     [Theme.Light]: {
       color: palette.red.dark3,
       bgColor: palette.red.light3,
-      focusWithinBgColor: palette.red.light2,
+      focusBgColor: '#FF9789',
     },
   },
   [Variant.Gray]: {
     [Theme.Dark]: {
       color: palette.gray.light2,
       bgColor: palette.gray.dark2,
-      focusWithinBgColor: palette.gray.dark1,
+      focusBgColor: palette.gray.base,
     },
     [Theme.Light]: {
       color: palette.black,
       bgColor: palette.gray.light2,
-      focusWithinBgColor: palette.gray.light1,
+      focusBgColor: '#A0A9A8',
     },
   },
   [Variant.Green]: {
     [Theme.Dark]: {
       color: palette.green.light2,
       bgColor: palette.green.dark3,
-      focusWithinBgColor: palette.green.dark2,
+      focusBgColor: palette.green.dark1,
     },
     [Theme.Light]: {
       color: palette.green.dark3,
       bgColor: palette.green.light3,
-      focusWithinBgColor: palette.green.light2,
+      focusBgColor: palette.green.light1,
     },
   },
   [Variant.Purple]: {
     [Theme.Dark]: {
       color: palette.purple.light2,
       bgColor: palette.purple.dark3,
-      focusWithinBgColor: palette.purple.dark2,
+      focusBgColor: '#892CCA',
     },
     [Theme.Light]: {
       color: palette.purple.dark3,
       bgColor: palette.purple.light3,
-      focusWithinBgColor: palette.purple.light2,
+      focusBgColor: '#E19AFF',
     },
   },
   [Variant.Yellow]: {
     [Theme.Dark]: {
       color: palette.yellow.light2,
       bgColor: palette.yellow.dark3,
-      focusWithinBgColor: palette.yellow.dark2,
+      focusBgColor: '#C27823',
     },
     [Theme.Light]: {
       color: palette.yellow.dark3,
       bgColor: palette.yellow.light3,
-      focusWithinBgColor: palette.yellow.light2,
+      focusBgColor: '#FFD664',
     },
   },
 };
@@ -118,10 +118,6 @@ export const chipWrapperThemeStyle = (variant: Variant, theme: Theme) => css`
   color: ${variantColor[variant][theme].color};
   background-color: ${variantColor[variant][theme].bgColor};
   transition: background-color ${transitionDuration.faster}ms ease-in-out;
-
-  // &:focus-within {
-  //   background-color: ${variantColor[variant][theme].focusWithinBgColor};
-  // }
 `;
 
 export const chipWrapperBaseStyle = css`
@@ -140,7 +136,6 @@ export const chipWrapperSizeStyle = (size: Size) => css`
 
 export const disabledBaseChipWrapperStyles = css`
   cursor: not-allowed;
-  // pointer-events: none; //TODO: are tooltips still allowed when disabled?
 `;
 
 export const disabledChipWrapperStyle: Record<Theme, string> = {
@@ -175,9 +170,9 @@ export const chipTextDismissSizeStyle: Record<Size, string> = {
   `,
 };
 
-export const chipTextStyles = css`
+export const chipTextStyles = (variant: Variant, theme: Theme) => css`
   &:focus-within {
-    background: ${palette.red.light2};
+    background-color: ${variantColor[variant][theme].focusBgColor};
   }
 
   span {

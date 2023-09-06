@@ -12,106 +12,94 @@ export const variantColor: Record<
     Theme,
     {
       color: string;
+      focusBgColor: string;
+      hoverBgColor: string;
       hoverFocusColor: string;
-      hoverFocusBgColor: string;
-      hoverAndFocusBgColor: string;
     }
   >
 > = {
   [Variant.Blue]: {
     [Theme.Dark]: {
       color: palette.blue.light2,
+      focusBgColor: chipVariantColor[Variant.Blue][Theme.Dark].focusBgColor,
+      hoverBgColor: palette.blue.dark2,
       hoverFocusColor: palette.blue.light3,
-      hoverFocusBgColor:
-        chipVariantColor[Variant.Blue][Theme.Dark].focusWithinBgColor,
-      hoverAndFocusBgColor: palette.blue.dark1,
     },
     [Theme.Light]: {
       color: palette.blue.dark3,
+      focusBgColor: chipVariantColor[Variant.Blue][Theme.Light].focusBgColor,
+      hoverBgColor: palette.blue.light2,
       hoverFocusColor: palette.blue.dark3,
-      hoverFocusBgColor:
-        chipVariantColor[Variant.Blue][Theme.Light].focusWithinBgColor,
-      hoverAndFocusBgColor: '#89D2FF',
     },
   },
   [Variant.Red]: {
     [Theme.Dark]: {
       color: palette.red.light2,
+      focusBgColor: chipVariantColor[Variant.Red][Theme.Dark].focusBgColor,
+      hoverBgColor: palette.red.dark2,
       hoverFocusColor: palette.red.light3,
-      hoverFocusBgColor:
-        chipVariantColor[Variant.Red][Theme.Dark].focusWithinBgColor,
-      hoverAndFocusBgColor: '#BB1A1A',
     },
     [Theme.Light]: {
       color: palette.red.dark3,
+      focusBgColor: chipVariantColor[Variant.Red][Theme.Light].focusBgColor,
+      hoverBgColor: palette.red.light2,
       hoverFocusColor: palette.red.dark3,
-      hoverFocusBgColor:
-        chipVariantColor[Variant.Red][Theme.Light].focusWithinBgColor,
-      hoverAndFocusBgColor: '#FF9789',
     },
   },
   [Variant.Gray]: {
     [Theme.Dark]: {
       color: palette.gray.light1,
+      focusBgColor: chipVariantColor[Variant.Gray][Theme.Dark].focusBgColor,
+      hoverBgColor: palette.gray.dark1,
       hoverFocusColor: palette.gray.light3,
-      hoverFocusBgColor:
-        chipVariantColor[Variant.Gray][Theme.Dark].focusWithinBgColor,
-      hoverAndFocusBgColor: palette.gray.base,
     },
     [Theme.Light]: {
       color: palette.gray.dark2,
+      focusBgColor: chipVariantColor[Variant.Gray][Theme.Light].focusBgColor,
+      hoverBgColor: palette.gray.light1,
       hoverFocusColor: palette.black,
-      hoverFocusBgColor:
-        chipVariantColor[Variant.Gray][Theme.Light].focusWithinBgColor,
-      hoverAndFocusBgColor: '#A0A9A8',
     },
   },
   [Variant.Green]: {
     [Theme.Dark]: {
       color: palette.green.light2,
+      focusBgColor: chipVariantColor[Variant.Green][Theme.Dark].focusBgColor,
+      hoverBgColor: palette.green.dark2,
       hoverFocusColor: palette.green.light3,
-      hoverFocusBgColor:
-        chipVariantColor[Variant.Green][Theme.Dark].focusWithinBgColor,
-      hoverAndFocusBgColor: palette.green.dark1,
     },
     [Theme.Light]: {
       color: palette.green.dark3,
+      focusBgColor: chipVariantColor[Variant.Green][Theme.Light].focusBgColor,
+      hoverBgColor: palette.green.light2,
       hoverFocusColor: palette.green.dark3,
-      hoverFocusBgColor:
-        chipVariantColor[Variant.Green][Theme.Light].focusWithinBgColor,
-      hoverAndFocusBgColor: palette.green.light1,
     },
   },
   [Variant.Purple]: {
     [Theme.Dark]: {
       color: palette.purple.light2,
+      focusBgColor: chipVariantColor[Variant.Purple][Theme.Dark].focusBgColor,
+      hoverBgColor: palette.purple.dark2,
       hoverFocusColor: palette.purple.light3,
-      hoverFocusBgColor:
-        chipVariantColor[Variant.Purple][Theme.Dark].focusWithinBgColor,
-      hoverAndFocusBgColor: '#892CCA',
     },
     [Theme.Light]: {
       color: palette.purple.dark3,
+      focusBgColor: chipVariantColor[Variant.Purple][Theme.Light].focusBgColor,
+      hoverBgColor: palette.purple.light2,
       hoverFocusColor: palette.purple.dark3,
-      hoverFocusBgColor:
-        chipVariantColor[Variant.Purple][Theme.Light].focusWithinBgColor,
-      hoverAndFocusBgColor: '#E19AFF',
     },
   },
   [Variant.Yellow]: {
     [Theme.Dark]: {
       color: palette.yellow.light2,
+      focusBgColor: chipVariantColor[Variant.Yellow][Theme.Dark].focusBgColor,
+      hoverBgColor: palette.yellow.dark2,
       hoverFocusColor: palette.yellow.light3,
-      hoverFocusBgColor:
-        chipVariantColor[Variant.Yellow][Theme.Dark].focusWithinBgColor,
-      hoverAndFocusBgColor: '#C27823',
     },
     [Theme.Light]: {
       color: palette.yellow.dark3,
+      focusBgColor: chipVariantColor[Variant.Yellow][Theme.Light].focusBgColor,
+      hoverBgColor: palette.yellow.light2,
       hoverFocusColor: palette.yellow.dark3,
-      hoverFocusBgColor:
-        chipVariantColor[Variant.Yellow][Theme.Light].focusWithinBgColor,
-      hoverAndFocusBgColor: '#FFD664',
     },
   },
 };
@@ -134,16 +122,17 @@ export const chipButtonStyle = css`
 export const chipButtonThemeStyle = (variant: Variant, theme: Theme) => css`
   color: ${variantColor[variant][theme].color};
 
-  &:not(:disabled):hover,
-  &:focus-visible {
+  &:not(:disabled):hover {
+    background-color: ${variantColor[variant][theme].hoverBgColor};
     color: ${variantColor[variant][theme].hoverFocusColor};
-    background-color: ${variantColor[variant][theme].hoverFocusBgColor};
   }
 
-  &:focus-visible &,
   &:focus-visible {
+    color: ${variantColor[variant][theme].hoverFocusColor};
+    background-color: ${variantColor[variant][theme].focusBgColor};
+
     &:not(:disabled):hover {
-      background-color: ${variantColor[variant][theme].hoverAndFocusBgColor};
+      background-color: ${variantColor[variant][theme].hoverBgColor};
     }
   }
 `;
@@ -151,6 +140,7 @@ export const chipButtonThemeStyle = (variant: Variant, theme: Theme) => css`
 export const chipButtonBaseDisabledStyles = css`
   &:disabled {
     cursor: not-allowed;
+    pointer-events: none;
   }
 `;
 
