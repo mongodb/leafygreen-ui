@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 
-import { Chip as LGChip } from '@leafygreen-ui/chip';
+import { Chip as LGChip, Size, Variant } from '@leafygreen-ui/chip';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
 
@@ -67,11 +67,11 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
         onClick={handleChipClick}
         onKeyDown={handleKeyDown}
         onDismiss={handleButtonClick}
-        size="default" //TODO: use var
+        size={Size.Default}
         chipCharacterLimit={chipCharacterLimit}
         chipTruncationLocation={updatedChipTruncationLocation}
         popoverZIndex={popoverZIndex}
-        variant="gray"
+        variant={Variant.Gray}
         ref={chipRef}
         disabled={disabled}
         tabIndex={-1}

@@ -8,6 +8,7 @@ import { DismissButton } from '../DismissButton';
 import { getTruncatedName } from '../utils/getTruncatedName';
 
 import {
+  chipTextDisabledStyles,
   chipTextDismissSizeStyle,
   chipTextSizeStyle,
   chipTextStyles,
@@ -79,6 +80,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
             chipTextSizeStyle[size],
             {
               [chipTextDismissSizeStyle[size]]: !!onDismiss,
+              [chipTextDisabledStyles[theme]]: disabled,
             },
           )}
         >

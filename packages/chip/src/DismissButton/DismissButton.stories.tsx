@@ -26,18 +26,6 @@ const meta: StoryMetaType<typeof DismissButton> = {
           Variant.Blue,
         ],
       },
-      excludeCombinations: [
-        {
-          disabled: [true],
-          variant: [
-            Variant.Gray,
-            Variant.Green,
-            Variant.Red,
-            Variant.Purple,
-            Variant.Yellow,
-          ],
-        },
-      ],
       args: {
         onDismiss: () => {},
       },

@@ -181,3 +181,16 @@ export const chipTextStyles = (variant: Variant, theme: Theme) => css`
     }
   }
 `;
+
+export const chipTextDisabledStyles: Record<Theme, string> = {
+  [Theme.Dark]: css`
+    &:focus-within {
+      background-color: ${palette.gray.dark1};
+    }
+  `,
+  [Theme.Light]: css`
+    &:focus-within {
+      background-color: ${palette.gray.light1};
+    }
+  `,
+};

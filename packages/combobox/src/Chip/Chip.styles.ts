@@ -46,6 +46,7 @@ export const chipSizeStyles: Record<ComboboxSize, string> = {
     font-size: ${fontSize[ComboboxSize.Default]}px;
     line-height: ${lineHeight[ComboboxSize.Default]}px;
 
+    // TODO: maybe use classname
     span {
       padding-inline-end: 2px;
       padding-block: ${chipWrapperPaddingY[ComboboxSize.Default]}px;
