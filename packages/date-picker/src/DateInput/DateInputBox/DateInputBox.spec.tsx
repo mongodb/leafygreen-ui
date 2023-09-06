@@ -90,17 +90,6 @@ describe('packages/date-input-box', () => {
       expect(monthInput).toHaveValue(12);
       expect(yearInput).toHaveValue(1993);
     });
-
-    test('renders in the correct time zone', () => {
-      const { dayInput, monthInput, yearInput } = renderDateInputBox(
-        { value: new Date('1993-12-26') },
-        { dateFormat: 'iso8601', timeZone: 'America/Los_Angeles' },
-      );
-
-      expect(dayInput).toHaveValue(25);
-      expect(monthInput).toHaveValue(12);
-      expect(yearInput).toHaveValue(1993);
-    });
   });
 
   describe('typing', () => {

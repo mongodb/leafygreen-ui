@@ -1,5 +1,4 @@
-import { getDay, getDaysInMonth, setDate } from 'date-fns';
-import { utcToZonedTime } from 'date-fns-tz';
+import { getDaysInMonth } from 'date-fns';
 import { chunk, fill, range } from 'lodash';
 import { getWeekStartByLocale } from 'weekstart';
 
@@ -7,7 +6,7 @@ import { daysPerWeek } from '../../constants';
 import { BaseDatePickerProps } from '../../types';
 
 interface GetWeeksArrayOptions
-  extends Required<Pick<BaseDatePickerProps, 'dateFormat' | 'timeZone'>> {}
+  extends Required<Pick<BaseDatePickerProps, 'dateFormat'>> {}
 
 /**
  * Returns a 7x5 (or 7x6) 2D array of Dates for the given month
@@ -18,19 +17,17 @@ export const getWeeksArray = (
    */
   month: Date,
 
-  { dateFormat, timeZone }: GetWeeksArrayOptions,
+  { dateFormat }: GetWeeksArrayOptions,
 ): Array<Array<Date | null>> => {
   // What day of the week do weeks start on for this locale? (Sun = 0)
   const weekStartsOn = getWeekStartByLocale(dateFormat);
 
-  // Convert the given month to the provided timeZone
-  const tzMonth = utcToZonedTime(month, timeZone);
-
   // The first day of the month
-  const firstOfMonth = setDate(tzMonth, 1);
+  const firstOfMonth = new Date(month);
+  firstOfMonth.setUTCDate(1);
 
   // What day of the week does this month start on? (Sun = 0)
-  const startDayOfWeek = getDay(firstOfMonth);
+  const startDayOfWeek = firstOfMonth.getUTCDay();
 
   // How many days in the month?
   const daysInMonth = getDaysInMonth(firstOfMonth);
@@ -41,7 +38,9 @@ export const getWeeksArray = (
 
   // Create an array from 1 -> daysInMonth
   const allDays: Array<Date | null> = range(daysInMonth).map(i => {
-    return setDate(firstOfMonth, i + 1);
+    const newDay = new Date(firstOfMonth);
+    newDay.setUTCDate(i + 1);
+    return newDay;
   });
   // splice in enough empty elements so that the first is in the right column
   allDays.splice(0, 0, ...fill(range(startColumn), null));
