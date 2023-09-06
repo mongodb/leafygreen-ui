@@ -36,12 +36,17 @@ export type ActiveOrDestructive = OneOf<
      * Description element displayed below title in MenuItem.
      */
     description?: React.ReactNode;
+
+    destructive?: never;
   },
   {
     /**
      * Determines if the MenuItem should appear as destructive.
      */
     destructive?: boolean;
+
+    active?: never;
+    description?: never;
   }
 >;
 
