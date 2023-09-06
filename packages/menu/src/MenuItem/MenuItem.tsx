@@ -170,6 +170,7 @@ MenuItem.propTypes = {
   disabled: PropTypes.bool,
   active: PropTypes.bool,
   children: PropTypes.node,
+  destructive: PropTypes.bool,
 };
 
 export default MenuItem;
