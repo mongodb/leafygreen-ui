@@ -9,19 +9,20 @@ import { useDatePickerContext } from '../../DatePickerContext';
 import { isValidSegmentName } from '../../utils/isValidSegment';
 import { newDateFromSegments } from '../../utils/newDateFromSegments';
 import {
-  DateInputSegment,
   DateSegment,
+  DateSegmentsState,
   isDateSegment,
-} from '../DateInputSegment';
+} from '../DateInput.types';
+import { DateInputSegment } from '../DateInputSegment';
 import { getRemainingParts } from '../utils/getRemainingParts';
+import { useDateSegments } from '../utils/useDateSegments';
+import { useFormatParts } from '../utils/useFormat';
 
 import {
   segmentPartsWrapperStyles,
   separatorLiteralStyles,
 } from './DateInputBox.styles';
-import { DateInputBoxProps, DateSegmentsState } from './DateInputBox.types';
-import { useDateSegments } from './useDateSegments';
-import { useFormatParts } from './useFormat';
+import { DateInputBoxProps } from './DateInputBox.types';
 
 /**
  * Renders a styled date input with appropriate segment order & separator characters.
@@ -38,7 +39,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
     { value, setValue, className, labelledBy, ...rest }: DateInputBoxProps,
     fwdRef,
   ) => {
-    const { dateFormat, timeZone } = useDatePickerContext();
+    const { dateFormat } = useDatePickerContext();
     const containerRef = useForwardedRef(fwdRef, null);
     const segmentRefs = useDynamicRefs<HTMLInputElement>({ prefix: 'segment' });
 
@@ -69,7 +70,6 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
 
     // Keep track of each date segment
     const { segments, setSegment } = useDateSegments(value, {
-      timeZone,
       onUpdate: onSegmentsUpdate,
     });
 

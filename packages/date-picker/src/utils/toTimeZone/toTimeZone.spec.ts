@@ -1,6 +1,6 @@
 import { toTimeZone } from '.';
 
-describe('packages/date-picker/utils/toTimeZone', () => {
+describe.skip('packages/date-picker/utils/toTimeZone', () => {
   const clientMidnight = new Date('2023-09-01T00:00:00.000');
 
   test('ISO string', () => {

@@ -1,7 +1,5 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-import { DateSegment, DateSegmentValue } from '../DateInputSegment';
-
 export interface DateInputBoxProps
   extends Omit<HTMLElementProps<'div'>, 'onChange'> {
   /**
@@ -20,8 +18,3 @@ export interface DateInputBoxProps
    */
   labelledBy?: string;
 }
-
-export type DateSegmentsState = Record<
-  DateSegment,
-  DateSegmentValue | undefined
->;

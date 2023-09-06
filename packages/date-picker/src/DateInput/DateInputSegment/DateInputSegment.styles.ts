@@ -8,8 +8,9 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
+import { DateSegment } from '../DateInput.types';
+
 import { characterWidth, charsPerSegment } from './constants';
-import { DateSegment } from './DateInputSegment.types';
 
 export const baseStyles = css`
   font-family: ${fontFamilies.default};

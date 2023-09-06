@@ -1,13 +1,6 @@
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 
-export const DateSegment = {
-  Day: 'day',
-  Month: 'month',
-  Year: 'year',
-} as const;
-export type DateSegment = (typeof DateSegment)[keyof typeof DateSegment];
-
-export type DateSegmentValue = number;
+import { DateSegment, DateSegmentValue } from '../DateInput.types';
 
 export interface DateInputSegmentProps
   extends DarkModeProps,

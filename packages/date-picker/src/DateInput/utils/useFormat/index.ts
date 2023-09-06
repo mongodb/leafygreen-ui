@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { consoleOnce } from '@leafygreen-ui/lib';
 
-import { isValidLocale } from '../../utils/isValidLocale';
+import { isValidLocale } from '../../../utils/isValidLocale';
 
 const now = new Date();
 const ISO = 'iso8601';

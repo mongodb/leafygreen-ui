@@ -1,21 +1,28 @@
 import { useEffect, useReducer } from 'react';
-import { getDate, getMonth, getYear, isSameDay } from 'date-fns';
+import { isSameDay } from 'date-fns';
 
 import { usePrevious } from '@leafygreen-ui/hooks';
 
-import { toTimeZone } from '../../utils/toTimeZone';
-import type { DateSegment, DateSegmentValue } from '../DateInputSegment';
-
-import { DateSegmentsState } from './DateInputBox.types';
+import {
+  DateSegment,
+  DateSegmentsState,
+  DateSegmentValue,
+} from '../../DateInput.types';
+import { getSegmentsFromDate } from '../getSegmentsFromDate';
 
 type OnUpdateCallback = (value: DateSegmentsState) => void;
 
 interface UseDateSegmentsOptions {
   /** A formatter used to separate the date value into segments */
-  timeZone: string;
+  // timeZone: string;
 
   /** A callback fired when the segment values change */
   onUpdate?: OnUpdateCallback;
+}
+
+interface UseDateSegmentsReturnValue {
+  segments: DateSegmentsState;
+  setSegment: (segment: DateSegment, value: DateSegmentValue) => void;
 }
 
 /** Merges old state & new state */
@@ -38,8 +45,8 @@ const dateSegmentsReducer = (
 export const useDateSegments = (
   /** Provided date is relative to the client's time zone */
   date: Date | null,
-  { timeZone, onUpdate }: UseDateSegmentsOptions,
-) => {
+  { onUpdate }: UseDateSegmentsOptions,
+): UseDateSegmentsReturnValue => {
   const [segments, dispatch] = useReducer(
     dateSegmentsReducer,
     date,
@@ -50,12 +57,11 @@ export const useDateSegments = (
   // If `date` prop changes, update the segments
   useEffect(() => {
     if (date && !(prevDate && isSameDay(date, prevDate))) {
-      const tzDate = toTimeZone(date, timeZone);
-      const newSegments = getSegmentsFromDate(tzDate);
+      const newSegments = getSegmentsFromDate(date);
       onUpdate?.(newSegments);
       dispatch(newSegments);
     }
-  }, [date, onUpdate, prevDate, timeZone]);
+  }, [date, onUpdate, prevDate]);
 
   /**
    * Custom dispatch that triggers the provided side effects, and updates state
@@ -73,13 +79,4 @@ export const useDateSegments = (
     segments,
     setSegment,
   };
-};
-
-/** Returns a single object with day, month & year segments */
-const getSegmentsFromDate = (date: Date | null): DateSegmentsState => {
-  return {
-    day: date ? getDate(date) : undefined,
-    month: date ? getMonth(date) + 1 : undefined,
-    year: date ? getYear(date) : undefined,
-  } as DateSegmentsState;
 };

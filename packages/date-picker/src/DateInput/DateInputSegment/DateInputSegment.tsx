@@ -7,8 +7,8 @@ import { Size } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { useDatePickerContext } from '../../DatePickerContext';
+import { getValueFormatter } from '../utils/valueFormatter';
 
-import { getValueFormatter } from './utils/valueFormatter';
 import { defaultMax, defaultMin, defaultPlaceholder } from './constants';
 import {
   baseStyles,
@@ -17,11 +17,7 @@ import {
   segmentThemeStyles,
   segmentWidthStyles,
 } from './DateInputSegment.styles';
-import { DateInputSegmentProps, DateSegment } from './DateInputSegment.types';
-
-export function isDateSegment(str: string): str is DateSegment {
-  return ['day', 'month', 'year'].includes(str);
-}
+import { DateInputSegmentProps } from './DateInputSegment.types';
 
 export const DateInputSegment = React.forwardRef<
   HTMLInputElement,

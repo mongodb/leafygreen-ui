@@ -1,9 +1,6 @@
 import { isUndefined } from 'lodash';
 
-import {
-  DateSegment,
-  DateSegmentValue,
-} from '../../DateInput/DateInputSegment';
+import { DateSegment, DateSegmentValue } from '../../DateInput/DateInput.types';
 
 /**
  * Returns whether a given value is a valid segment value

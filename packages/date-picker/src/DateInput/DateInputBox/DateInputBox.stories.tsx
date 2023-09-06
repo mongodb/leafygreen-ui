@@ -14,7 +14,7 @@ import {
 
 import { DateInputBox } from './DateInputBox';
 
-const testDate = new Date('1993-12-26');
+const testDate = new Date(Date.UTC(1993, 12, 26));
 
 const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
   <LeafyGreenProvider darkMode={ctx?.args.darkMode}>

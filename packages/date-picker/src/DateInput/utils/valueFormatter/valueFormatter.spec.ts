@@ -1,6 +1,6 @@
-import { DateSegment } from '../DateInputSegment.types';
+import { DateSegment } from '../../DateInput.types';
 
-import { getValueFormatter } from './valueFormatter';
+import { getValueFormatter } from '.';
 
 describe('utils/valueFormatter', () => {
   describe.each(['day', 'month'] as Array<DateSegment>)('', segment => {
