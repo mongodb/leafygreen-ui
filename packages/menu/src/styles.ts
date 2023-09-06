@@ -249,7 +249,6 @@ export const activeIconStyle: Record<Theme, string> = {
 /**
  * Disabled styles
  */
-
 const disabledMenuItemContainerStyle = css`
   cursor: not-allowed;
 
@@ -288,6 +287,20 @@ export const disabledTextStyle: Record<Theme, string> = {
   `,
   [Theme.Dark]: css`
     color: ${palette.gray.base};
+    font-weight: ${fontWeights.regular};
+  `,
+};
+
+/**
+ * Destructive styles
+ */
+export const destructiveTextStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.red.light1};
+    font-weight: ${fontWeights.regular};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.red.dark2};
     font-weight: ${fontWeights.regular};
   `,
 };

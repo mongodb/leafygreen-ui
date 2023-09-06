@@ -15,6 +15,7 @@ import {
   activeMenuItemContainerStyle,
   activeTitleTextStyle,
   descriptionTextThemeStyle,
+  destructiveTextStyle,
   disabledMenuItemContainerThemeStyle,
   disabledTextStyle,
   focusedMenuItemContainerStyle,
@@ -32,7 +33,7 @@ import {
 } from '../styles';
 import { Size } from '../types';
 
-import { disabledIconStyle } from './MenuItem.styles';
+import { destructiveIconStyle, disabledIconStyle } from './MenuItem.styles';
 import { MenuItemProps } from './MenuItem.types';
 
 const menuItemContainerClassName = createUniqueClassName('menu-item-container');
@@ -48,6 +49,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
       children,
       description,
       glyph,
+      destructive,
       ...rest
     },
     ref: React.Ref<any>,
@@ -70,6 +72,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
           {
             [activeIconStyle[theme]]: active,
             [disabledIconStyle[theme]]: disabled,
+            [destructiveIconStyle]: destructive,
           },
           glyph.props?.className,
         ),
@@ -106,6 +109,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
                 [activeTitleTextStyle[theme]]: active,
                 [hoverStyles.activeText]: active,
                 [disabledTextStyle[theme]]: disabled,
+                [destructiveTextStyle[theme]]: destructive,
               },
               focusStyles.textStyle,
             )}

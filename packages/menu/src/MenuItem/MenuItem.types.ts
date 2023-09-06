@@ -1,16 +1,8 @@
+import { OneOf } from '@leafygreen-ui/lib';
+
 import { Size } from '../types';
 
-export interface MenuItemProps {
-  /**
-   * Determines whether or not the MenuItem is active.
-   */
-  active?: boolean;
-
-  /**
-   * Description element displayed below title in MenuItem.
-   */
-  description?: React.ReactNode;
-
+export interface BaseMenuItemProps {
   /**
    * Determines whether or not the MenuItem is disabled.
    */
@@ -32,6 +24,28 @@ export interface MenuItemProps {
    */
   children?: React.ReactNode;
 }
+
+export type ActiveOrDestructive = OneOf<
+  {
+    /**
+     * Determines whether or not the MenuItem is active.
+     */
+    active?: boolean;
+
+    /**
+     * Description element displayed below title in MenuItem.
+     */
+    description?: React.ReactNode;
+  },
+  {
+    /**
+     * Determines if the MenuItem should appear as destructive.
+     */
+    destructive?: boolean;
+  }
+>;
+
+export type MenuItemProps = BaseMenuItemProps & ActiveOrDestructive;
 
 export interface FocusableMenuItemProps {
   children: React.ReactElement;
