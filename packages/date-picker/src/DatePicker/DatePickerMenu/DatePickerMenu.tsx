@@ -70,8 +70,9 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
                 state={getCellState(day)}
                 onMouseEnter={() => setHighlight(day)}
                 onClick={() => onCellClick(day)}
+                date-iso={day.toISOString()}
               >
-                {day?.getDate()}
+                {day.getDate()}
               </CalendarCell>
             )}
           </CalendarGrid>

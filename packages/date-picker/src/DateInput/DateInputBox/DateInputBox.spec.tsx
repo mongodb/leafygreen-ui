@@ -3,15 +3,15 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import {
-  DatePickerContextProps,
   DatePickerProvider,
+  DatePickerProviderProps,
 } from '../../DatePickerContext';
 
 import { DateInputBox, type DateInputBoxProps } from '.';
 
 const renderDateInputBox = (
   props?: DateInputBoxProps,
-  context?: DatePickerContextProps,
+  context?: DatePickerProviderProps,
 ) => {
   const result = render(
     <DatePickerProvider value={{ label: 'Label', ...context }}>
@@ -87,6 +87,17 @@ describe('packages/date-input-box', () => {
       );
 
       expect(dayInput).toHaveValue(26);
+      expect(monthInput).toHaveValue(12);
+      expect(yearInput).toHaveValue(1993);
+    });
+
+    test('renders in the correct time zone', () => {
+      const { dayInput, monthInput, yearInput } = renderDateInputBox(
+        { value: new Date('1993-12-26') },
+        { dateFormat: 'iso8601', timeZone: 'America/Los_Angeles' },
+      );
+
+      expect(dayInput).toHaveValue(25);
       expect(monthInput).toHaveValue(12);
       expect(yearInput).toHaveValue(1993);
     });

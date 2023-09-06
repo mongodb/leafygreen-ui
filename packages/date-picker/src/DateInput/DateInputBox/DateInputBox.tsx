@@ -1,6 +1,5 @@
 import React, { KeyboardEventHandler } from 'react';
 import { isSameDay } from 'date-fns';
-import { zonedTimeToUtc } from 'date-fns-tz';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDynamicRefs, useForwardedRef } from '@leafygreen-ui/hooks';
@@ -14,13 +13,13 @@ import {
   DateSegment,
   isDateSegment,
 } from '../DateInputSegment';
+import { getRemainingParts } from '../utils/getRemainingParts';
 
 import {
   segmentPartsWrapperStyles,
   separatorLiteralStyles,
 } from './DateInputBox.styles';
 import { DateInputBoxProps, DateSegmentsState } from './DateInputBox.types';
-import { getRemainingParts } from './DateInputBox.utils';
 import { useDateSegments } from './useDateSegments';
 import { useFormatParts } from './useFormat';
 
@@ -29,6 +28,9 @@ import { useFormatParts } from './useFormat';
  *
  * Uses vars value & dateFormat with `Intl.DateTimeFormat.prototype.formatToParts()`
  * to determine the segment order and separator characters.
+ *
+ * Provided value is assumed to be UTC.
+ * Argument passed into `setValue` callback is also in UTC
  * @internal
  */
 export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
@@ -48,13 +50,11 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
      */
     const onSegmentsUpdate = (newSegments: DateSegmentsState) => {
       const { day, month, year } = newSegments;
-      const zonedDate = newDateFromSegments({ day, month, year });
+      /** New date in UTC */
+      const utcDate = newDateFromSegments({ day, month, year });
 
       // Only update the value iff all parts are set, and create a valid date.
-      if (zonedDate) {
-        /** New date in UTC */
-        const utcDate = zonedTimeToUtc(zonedDate, timeZone);
-
+      if (utcDate) {
         /** Whether we need to update the external value */
         const shouldUpdate = !value || !isSameDay(utcDate, value);
 

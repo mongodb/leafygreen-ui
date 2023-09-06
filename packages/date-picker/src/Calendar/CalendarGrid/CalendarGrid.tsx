@@ -1,30 +1,28 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { range } from 'lodash';
 import { getWeekStartByLocale } from 'weekstart';
 
 import { Disclaimer } from '@leafygreen-ui/typography';
 
+import { DaysOfWeek, daysPerWeek } from '../../constants';
 import { useDatePickerContext } from '../../DatePickerContext';
+import { getWeeksArray } from '../utils/getWeeksArray';
 
 import { calendarHeaderCellStyles } from './CalendarGrid.styles';
-import {
-  CalendarGridProps,
-  DaysOfWeek,
-  daysPerWeek,
-} from './CalendarGrid.types';
-import { getWeeksArray } from './utils';
+import { CalendarGridProps } from './CalendarGrid.types';
 
 /**
  * A simple table that renders the `CalendarCell` components passed as children
  */
-export function CalendarGrid({
-  month = new Date(),
-  children,
-  ...rest
-}: CalendarGridProps) {
-  const { dateFormat } = useDatePickerContext();
+export function CalendarGrid({ month, children, ...rest }: CalendarGridProps) {
+  const { dateFormat, timeZone } = useDatePickerContext();
   const weekStartsOn = getWeekStartByLocale(dateFormat);
-  const weeks = getWeeksArray(month, dateFormat);
+  const weeks = useMemo(
+    () => getWeeksArray(month, { dateFormat, timeZone }),
+    [dateFormat, month, timeZone],
+  );
+
+  console.log(weeks.flatMap(week => week.map(d => d?.toISOString())));
 
   return (
     <table {...rest}>

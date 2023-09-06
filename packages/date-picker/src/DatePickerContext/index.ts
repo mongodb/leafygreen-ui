@@ -3,4 +3,7 @@ export {
   DatePickerProvider,
   useDatePickerContext,
 } from './DatePickerContext';
-export { DatePickerContextProps } from './DatePickerContext.types';
+export {
+  DatePickerContextProps,
+  DatePickerProviderProps,
+} from './DatePickerContext.types';

@@ -5,6 +5,7 @@ import { StoryFn } from '@storybook/react';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 
+import { Locales, TimeZones } from '../DatePicker.testUtils';
 import {
   DatePickerContextProps,
   DatePickerProvider,
@@ -49,6 +50,10 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
   },
   argTypes: {
     value: { control: 'date' },
+    dateFormat: { control: 'select', options: Locales },
+    timeZone: { control: 'select', options: TimeZones },
+    min: { control: 'date' },
+    max: { control: 'date' },
   },
 };
 

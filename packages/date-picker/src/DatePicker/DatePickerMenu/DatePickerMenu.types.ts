@@ -6,7 +6,7 @@ export type DatePickerMenuProps = PortalControlProps &
     /** Whether the calendar menu popover is open */
     isOpen: boolean;
 
-    /** The value of the component */
+    /** The value of the component, provided in UTC time */
     value: Date | null;
 
     /** The month to display in the calendar grid */

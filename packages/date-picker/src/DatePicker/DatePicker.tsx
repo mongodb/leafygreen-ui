@@ -1,11 +1,10 @@
 import React, { forwardRef, useMemo, useRef, useState } from 'react';
-import { utcToZonedTime } from 'date-fns-tz';
+import { isSameMonth, setMonth } from 'date-fns';
 
 import { useBackdropClick } from '@leafygreen-ui/hooks';
 
 import { DatePickerProvider } from '../DatePickerContext';
 import { toDate } from '../utils/toDate';
-import { toClientTimeZone, toTimeZone } from '../utils/toTimeZone';
 
 import { DatePickerProps } from './DatePicker.types';
 import { DatePickerInput } from './DatePickerInput';
@@ -13,7 +12,7 @@ import { DatePickerMenu } from './DatePickerMenu';
 
 export const DatePicker = forwardRef(
   ({
-    value,
+    value: valueProp,
     initialValue,
     onChange,
     handleValidation,
@@ -22,29 +21,17 @@ export const DatePicker = forwardRef(
     const inputRef = useRef<HTMLDivElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
     const [isOpen, setOpen] = useState(false);
-    const [month, setMonth] = useState<Date>(new Date('2023-09-11'));
+    const [displayMonth, setDisplayMonth] = useState<Date>(new Date());
 
-    const timeZonedValue = useMemo(() => {
-      const utcDate = toDate(value) as Date;
-      return utcDate
-        ? utcToZonedTime(utcDate, rest.timeZone ?? 'default')
-        : utcDate;
-    }, [rest.timeZone, value]);
-
-    console.log('Source', {
-      type: typeof value,
-      value,
-      iso: value ? new Date(value).toISOString() : '',
-      utc: value ? new Date(value).toUTCString() : '',
-      dateString: value ? new Date(value).toDateString() : '',
-      timeZonedValue,
-    });
+    const utcValue = useMemo(() => toDate(valueProp), [valueProp]);
 
     const updateValue = (newVal: Date | null) => {
-      const tzDate = newVal
-        ? toClientTimeZone(newVal, rest.timeZone ?? 'default')
-        : newVal;
-      onChange?.(tzDate);
+      // if the new value is not the current month, update the month
+      if (newVal && !isSameMonth(newVal, displayMonth)) {
+        setDisplayMonth(setMonth(displayMonth, newVal.getMonth()));
+      }
+
+      onChange?.(newVal);
     };
 
     useBackdropClick(
@@ -56,9 +43,7 @@ export const DatePicker = forwardRef(
     );
 
     const handleInputChange = (inputVal: Date | null) => {
-      console.log('InputChange', { inputVal });
-      updateValue(inputVal);
-      debugger;
+      if (inputVal !== utcValue) updateValue(inputVal);
     };
 
     const handleCellClick = (cellValue: Date) => {
@@ -67,14 +52,14 @@ export const DatePicker = forwardRef(
     };
 
     const handleMonthChange = (newMonth: Date) => {
-      setMonth(newMonth);
+      setDisplayMonth(newMonth);
     };
 
     return (
       <DatePickerProvider value={rest}>
         <DatePickerInput
           ref={inputRef}
-          value={toDate(value)}
+          value={utcValue}
           setValue={handleInputChange}
           onClick={() => {
             // TODO: Set focus to appropriate segment
@@ -84,9 +69,9 @@ export const DatePicker = forwardRef(
         <DatePickerMenu
           refEl={inputRef}
           ref={menuRef}
-          value={timeZonedValue}
+          value={utcValue}
           isOpen={isOpen}
-          month={month}
+          month={displayMonth}
           onCellClick={handleCellClick}
           onMonthChange={handleMonthChange}
           usePortal={true}
