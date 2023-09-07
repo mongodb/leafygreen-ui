@@ -63,6 +63,7 @@ const storybookModuleFederationConfig = {
     filename: 'dtk/remoteEntry.js',
     exposes: {
         './BaseStyles': '/src/assets/global.css',
+        './Button': '/packages/button/src/Button/Button.tsx'
     }
 }
 
