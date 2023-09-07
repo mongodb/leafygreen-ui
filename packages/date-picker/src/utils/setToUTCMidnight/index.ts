@@ -1,6 +1,5 @@
 /**
  * Returns a new date set to midnight
- * @deprecated
  */
 export const setToUTCMidnight = (date: Date): Date => {
   const midnight = new Date(date);

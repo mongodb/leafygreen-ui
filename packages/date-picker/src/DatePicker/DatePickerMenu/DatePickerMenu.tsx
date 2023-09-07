@@ -1,5 +1,4 @@
 import React, { forwardRef, useState } from 'react';
-import { isSameDay, isToday } from 'date-fns';
 
 import { useForwardedRef } from '@leafygreen-ui/select/src/utils';
 import { spacing } from '@leafygreen-ui/tokens';
@@ -8,6 +7,8 @@ import { CalendarCell, CalendarCellState } from '../../Calendar/CalendarCell';
 import { CalendarGrid } from '../../Calendar/CalendarGrid';
 import { MenuWrapper } from '../../Calendar/MenuWrapper';
 import { useDatePickerContext } from '../../DatePickerContext';
+import { isCurrentUTCDay } from '../../utils/isCurrentUTCDay';
+import { isSameUTCDay } from '../../utils/isSameUTCDay';
 
 import {
   menuCalendarGridStyles,
@@ -16,9 +17,6 @@ import {
 } from './DatePickerMenu.styles';
 import { DatePickerMenuProps } from './DatePickerMenu.types';
 import { DatePickerMenuHeader } from './DatePickerMenuHeader';
-
-const nullIsSameDay = (d1?: Date | null, d2?: Date | null) =>
-  !!(d1 && d2 && isSameDay(d1, d2));
 
 export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
   (
@@ -37,7 +35,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
 
     const getCellState = (cellDay: Date | null) => {
       if (isInRange(cellDay)) {
-        if (nullIsSameDay(cellDay, value)) {
+        if (isSameUTCDay(cellDay, value)) {
           return CalendarCellState.Active;
         }
 
@@ -65,14 +63,14 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
           >
             {day => (
               <CalendarCell
-                isHighlighted={nullIsSameDay(day, highlight)}
-                isCurrent={isToday(day)}
+                isHighlighted={isSameUTCDay(day, highlight)}
+                isCurrent={isCurrentUTCDay(day)}
                 state={getCellState(day)}
                 onMouseEnter={() => setHighlight(day)}
                 onClick={() => onCellClick(day)}
-                date-iso={day.toISOString()}
+                data-iso={day.toISOString()}
               >
-                {day.getDate()}
+                {day.getUTCDate()}
               </CalendarCell>
             )}
           </CalendarGrid>

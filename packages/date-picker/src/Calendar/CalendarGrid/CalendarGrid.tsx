@@ -15,14 +15,12 @@ import { CalendarGridProps } from './CalendarGrid.types';
  * A simple table that renders the `CalendarCell` components passed as children
  */
 export function CalendarGrid({ month, children, ...rest }: CalendarGridProps) {
-  const { dateFormat, timeZone } = useDatePickerContext();
+  const { dateFormat } = useDatePickerContext();
   const weekStartsOn = getWeekStartByLocale(dateFormat);
   const weeks = useMemo(
-    () => getWeeksArray(month, { dateFormat, timeZone }),
-    [dateFormat, month, timeZone],
+    () => getWeeksArray(month, { dateFormat }),
+    [dateFormat, month],
   );
-
-  console.log(weeks.flatMap(week => week.map(d => d?.toISOString())));
 
   return (
     <table {...rest}>
@@ -45,7 +43,11 @@ export function CalendarGrid({ month, children, ...rest }: CalendarGridProps) {
         {weeks.map((week, w) => (
           <tr key={w}>
             {week.map((day, d) => {
-              return day ? children(day, w * daysPerWeek + d) : <td></td>;
+              return day ? (
+                children(day, w * daysPerWeek + d)
+              ) : (
+                <td key=""></td>
+              );
             })}
           </tr>
         ))}

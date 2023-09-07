@@ -4,9 +4,8 @@ import { isToday } from 'date-fns';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
-import { InlineCode } from '@leafygreen-ui/typography';
 
-import { Month, Months } from '../../constants';
+import { Month } from '../../constants';
 import { Locales, TimeZones } from '../../DatePicker.testUtils';
 import {
   DatePickerContextProps,
@@ -44,8 +43,6 @@ const meta: StoryMetaType<typeof CalendarGrid, DatePickerContextProps> = {
   decorators: [ProviderWrapper],
   args: {
     dateFormat: 'en-US',
-    // timeZone: 'America/Los_Angeles',
-    // timeZone: 'Europe/London',
     timeZone: 'UTC',
   },
   argTypes: {
@@ -64,7 +61,7 @@ const meta: StoryMetaType<typeof CalendarGrid, DatePickerContextProps> = {
 export default meta;
 
 export const Demo: StoryFn<typeof CalendarGrid> = ({ ...props }) => {
-  const [month] = useState(new Date(Date.UTC(2023, Month.August, 5)));
+  const [month] = useState(new Date(Date.UTC(2023, Month.August, 1)));
 
   const [hovered, setHovered] = useState<string | undefined>();
 
@@ -73,28 +70,23 @@ export const Demo: StoryFn<typeof CalendarGrid> = ({ ...props }) => {
   };
 
   return (
-    <div>
-      <InlineCode>
-        <b>{Months[month.getMonth()].long}</b> <b>{month.toISOString()}</b>
-      </InlineCode>
-      <CalendarGrid
-        {...props}
-        month={month}
-        onMouseLeave={handleHover(undefined)}
-      >
-        {(day, i) => (
-          <CalendarCell
-            key={i}
-            isCurrent={!!(day && isToday(day))}
-            isHighlighted={hovered ? hovered === day?.toISOString() : false}
-            onMouseEnter={handleHover(day?.toISOString())}
-            data-iso={day?.toISOString()}
-          >
-            {day?.getUTCDate()}
-          </CalendarCell>
-        )}
-      </CalendarGrid>
-    </div>
+    <CalendarGrid
+      {...props}
+      month={month}
+      onMouseLeave={handleHover(undefined)}
+    >
+      {(day, i) => (
+        <CalendarCell
+          key={i}
+          isCurrent={!!(day && isToday(day))}
+          isHighlighted={hovered ? hovered === day?.toISOString() : false}
+          onMouseEnter={handleHover(day?.toISOString())}
+          data-iso={day?.toISOString()}
+        >
+          {day?.getUTCDate()}
+        </CalendarCell>
+      )}
+    </CalendarGrid>
   );
 };
 

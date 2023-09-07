@@ -4,6 +4,7 @@ import { getWeekStartByLocale } from 'weekstart';
 
 import { daysPerWeek } from '../../constants';
 import { BaseDatePickerProps } from '../../types';
+import { setToUTCMidnight } from '../setToUTCMidnight';
 
 interface GetWeeksArrayOptions
   extends Required<Pick<BaseDatePickerProps, 'dateFormat'>> {}
@@ -23,13 +24,14 @@ export const getWeeksArray = (
   const weekStartsOn = getWeekStartByLocale(dateFormat);
 
   // The first day of the month
-  const firstOfMonth = new Date(month);
+  const firstOfMonth = setToUTCMidnight(month);
   firstOfMonth.setUTCDate(1);
 
   // What day of the week does this month start on? (Sun = 0)
   const startDayOfWeek = firstOfMonth.getUTCDay();
 
   // How many days in the month?
+  // TODO: need to rewrite getDaysInUTCMonth
   const daysInMonth = getDaysInMonth(firstOfMonth);
 
   // Shift the start column based on locale (weekStartsOn)
