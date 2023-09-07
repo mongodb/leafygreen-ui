@@ -50,7 +50,10 @@ const storybookConfig = {
     config.module.rules.push({
       test: /\.scss$/,
       use: ['style-loader', 'css-loader', 'sass-loader'],
-      include: path.resolve(__dirname, '../', 'node_modules'),
+      options: {
+        publicPath: ''
+      },
+      include: path.resolve(__dirname, '..', 'node_modules'),
     });
     return config;
   },
