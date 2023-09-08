@@ -8,6 +8,8 @@ import {
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
+import { keyMap } from '@leafygreen-ui/lib';
+
 import { Tab, Tabs } from '.';
 
 const tabsClassName = 'tabs-class-name';
@@ -140,7 +142,7 @@ describe('packages/tabs', () => {
       const activeTabListItem = screen.getByText('Second');
       const activeTab = screen.getByText('Content 2');
       fireEvent.keyDown(activeTabListItem, {
-        key: 'ArrowLeft',
+        key: keyMap.ArrowLeft,
       });
       expect(activeTab).toBeVisible();
     });
@@ -174,7 +176,7 @@ describe('packages/tabs', () => {
 
       // Keyboard navigate between tabs
       fireEvent.keyDown(firstTab, {
-        key: 'ArrowRight',
+        key: keyMap.ArrowRight,
       });
       expect(secondTab).toHaveFocus();
     });
@@ -206,7 +208,7 @@ describe('packages/tabs', () => {
 
       // Keyboard navigate between tabs
       fireEvent.keyDown(firstTab, {
-        key: 'ArrowRight',
+        key: keyMap.ArrowRight,
       });
       const [thirdTab] = getAllByTestId('third-tab');
       expect(thirdTab).toHaveFocus();
@@ -217,7 +219,7 @@ describe('packages/tabs', () => {
       const activeTabListItem = screen.getByText('First');
 
       fireEvent.keyDown(activeTabListItem, {
-        key: 'ArrowRight',
+        key: keyMap.ArrowRight,
         metaKey: true,
       });
 
@@ -262,7 +264,7 @@ describe('packages/tabs', () => {
       expect(tab1A).toHaveFocus();
 
       fireEvent.keyDown(tab1A, {
-        key: 'ArrowRight',
+        key: keyMap.ArrowRight,
       });
 
       expect(tab1B).toHaveFocus();
