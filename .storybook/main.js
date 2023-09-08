@@ -3,6 +3,7 @@ const {
   withStorybookModuleFederation,
 } = require('storybook-module-federation');
 const CopyPlugin = require('copy-webpack-plugin');
+const ProvidePlugin = require('webpack').ProvidePlugin;
 const storybookConfig = {
   framework: '@storybook/web-components-webpack5',
   stories: [
@@ -45,10 +46,10 @@ const storybookConfig = {
           },
         ],
       }),
-      new webpack.ProvidePlugin({
+      new ProvidePlugin({
         Buffer: ['buffer', 'Buffer'],
       }),
-      new webpack.ProvidePlugin({
+      new ProvidePlugin({
         process: 'process/browser',
       }),
     );
