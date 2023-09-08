@@ -54,15 +54,14 @@ const storybookConfig = {
       }),
     );
 
-    config.resolve.push({
+    config.resolve = {
+      ...config.resolve,
       fallback: {
-        extensions: [ '.ts', '.js' ],
-        fallback: {
-            "stream": require.resolve("stream-browserify"),
-            "buffer": require.resolve("buffer")
-        }
-      }
-    });
+        ...(config.resolve || {}).fallback,
+        buffer: require.resolve('buffer'),
+        stream: require.resolve('stream-browserify'),
+      },
+    };
 
     config.module.rules.push({
       test: /\.scss$/,
