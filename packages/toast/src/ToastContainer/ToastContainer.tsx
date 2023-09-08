@@ -244,7 +244,7 @@ export const ToastContainer = ({
 
   /** When expanded, collapse the stack when the escape key is pressed */
   const handleContainerKeydown: React.KeyboardEventHandler = e => {
-    if (isExpanded && e.keyCode === keyMap.Escape) {
+    if (isExpanded && e.key === keyMap.Escape) {
       collapseToasts();
     }
   };

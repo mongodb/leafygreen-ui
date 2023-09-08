@@ -96,10 +96,10 @@ function Tabs(props: AccessibleTabsProps) {
   const handleArrowKeyPress = useCallback(
     (e: KeyboardEvent) => {
       if (!(e.metaKey || e.ctrlKey)) {
-        if (e.keyCode === keyMap.ArrowRight) {
+        if (e.key === keyMap.ArrowRight) {
           const [enabledIndexes, current] = getEnabledIndexes();
           setSelected?.(enabledIndexes[(current + 1) % enabledIndexes.length]);
-        } else if (e.keyCode === keyMap.ArrowLeft) {
+        } else if (e.key === keyMap.ArrowLeft) {
           const [enabledIndexes, current] = getEnabledIndexes();
           setSelected?.(
             enabledIndexes[
