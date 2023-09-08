@@ -45,7 +45,23 @@ const storybookConfig = {
           },
         ],
       }),
+      new webpack.ProvidePlugin({
+        Buffer: ['buffer', 'Buffer'],
+      }),
+      new webpack.ProvidePlugin({
+        process: 'process/browser',
+      }),
     );
+
+    config.resolve.push({
+      fallback: {
+        extensions: [ '.ts', '.js' ],
+        fallback: {
+            "stream": require.resolve("stream-browserify"),
+            "buffer": require.resolve("buffer")
+        }
+      }
+    });
 
     config.module.rules.push({
       test: /\.scss$/,
