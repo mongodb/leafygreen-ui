@@ -31,10 +31,6 @@ const storybookConfig = {
       rule => rule.use && rule.use.options && rule.use.options.babelrc === true,
     );
 
-    config.output = {
-      publicPath: '',
-    };
-
     config.module.rules.push({
       test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
       use: [{ loader: 'url-loader' }],
@@ -81,7 +77,7 @@ const storybookModuleFederationConfig = {
   filename: 'dtk/remoteEntry.js',
   exposes: {
     './BaseStyles': '/src/assets/global.css',
-    './Button': '/packages/button/src/Button/index.ts',
+    './Button': '/packages/button/src/Button/Button.tsx',
   },
 };
 
