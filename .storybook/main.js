@@ -2,7 +2,6 @@ const path = require('path');
 const {
   withStorybookModuleFederation,
 } = require('storybook-module-federation');
-const packageJson = require('../package.json');
 const CopyPlugin = require('copy-webpack-plugin');
 const ProvidePlugin = require('webpack').ProvidePlugin;
 const storybookConfig = {
@@ -31,6 +30,10 @@ const storybookConfig = {
     const webComponentsRule = config.module.rules.find(
       rule => rule.use && rule.use.options && rule.use.options.babelrc === true,
     );
+
+    config.output = {
+      publicPath: '',
+    };
 
     config.module.rules.push({
       test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
@@ -78,7 +81,7 @@ const storybookModuleFederationConfig = {
   filename: 'dtk/remoteEntry.js',
   exposes: {
     './BaseStyles': '/src/assets/global.css',
-    './Button': '/packages/button/src/Button/Button.tsx',
+    './Button': '/packages/button/src/Button/index.ts',
   },
 };
 
