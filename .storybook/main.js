@@ -2,7 +2,7 @@ const path = require('path');
 const {
   withStorybookModuleFederation,
 } = require('storybook-module-federation');
-const { dependencies } = require("../package.json");
+const { dependencies } = require("../package.json").dependencies;
 const CopyPlugin = require('copy-webpack-plugin');
 const ProvidePlugin = require('webpack').ProvidePlugin;
 const storybookConfig = {
