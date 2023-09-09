@@ -2,6 +2,7 @@ const path = require('path');
 const {
   withStorybookModuleFederation,
 } = require('storybook-module-federation');
+const { dependencies } = require("../package.json");
 const CopyPlugin = require('copy-webpack-plugin');
 const ProvidePlugin = require('webpack').ProvidePlugin;
 const storybookConfig = {
@@ -80,6 +81,7 @@ const storybookModuleFederationConfig = {
     './Button': '/packages/button/src/Button/Button.tsx',
   },
   shared: {
+    ...dependencies,
     react: {
       singleton: true,
     },
