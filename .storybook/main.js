@@ -78,6 +78,7 @@ const storybookModuleFederationConfig = {
   exposes: {
     './BaseStyles': '/src/assets/global.css',
     './Button': '/packages/button/src/Button/Button.tsx',
+    './Select': '/packages/select/src/Select.tsx',
   },
 };
 
