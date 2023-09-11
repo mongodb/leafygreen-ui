@@ -40,6 +40,12 @@ const meta: StoryMetaType<typeof Chip> = {
   args: {
     label: 'Chip',
     onDismiss: () => {},
+    chipTruncationLocation: 'none',
+  },
+  argTypes: {
+    onDismiss: {
+      control: { type: 'object' },
+    },
   },
 };
 export default meta;

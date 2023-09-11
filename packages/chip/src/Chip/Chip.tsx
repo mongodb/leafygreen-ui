@@ -25,7 +25,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
   (
     {
       label,
-      chipTruncationLocation = 'end',
+      chipTruncationLocation = 'none',
       chipCharacterLimit = 15,
       disabled = false,
       size = Size.Default,
@@ -62,6 +62,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
     return (
       <span
         ref={forwardedRef}
+        aria-disabled={disabled}
         className={cx(
           chipWrapperBaseStyle,
           chipWrapperThemeStyle(variant, theme),
@@ -77,6 +78,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
         {...rest}
       >
         <span
+          data-testid="chip-text"
           className={cx(
             chipTextStyles(variant, theme),
             chipTextSizeStyle[size],

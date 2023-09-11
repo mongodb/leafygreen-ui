@@ -30,6 +30,7 @@ export function DismissButton({
 
   return (
     <button
+      data-testid="chip-dismiss-button"
       aria-label={ariaLabel}
       aria-disabled={disabled}
       disabled={disabled}
@@ -39,7 +40,7 @@ export function DismissButton({
       })}
       onClick={onDismiss}
     >
-      <Icon glyph="X" />
+      <Icon glyph="X" aria-hidden />
     </button>
   );
 }
