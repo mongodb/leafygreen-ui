@@ -25,3 +25,7 @@ export interface ValidDataType {
   [key: string]: any;
   rowProps: AdapterRowProps;
 }
+
+export interface ProcessedRowData extends ValidDataType {
+  rowProps: AdapterRowProps;
+}

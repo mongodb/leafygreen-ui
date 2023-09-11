@@ -1,16 +1,21 @@
 import React, { ReactElement } from 'react';
 import flattenChildren from 'react-keyed-flatten-children';
+import { AccessorKeyColumnDef } from '@tanstack/react-table';
 
 import { isComponentType } from '@leafygreen-ui/lib';
 
 import { TableRowInterface } from '../TableV10/Table';
-import { LGColumnDef, LGTableDataType } from '../useLeafyGreenTable';
+import { LGTableDataType } from '../useLeafyGreenTable';
 
-import { ValidDataType } from './V11Adapter.types';
+import { ProcessedRowData, ValidDataType } from './V11Adapter.types';
 
-const processData = <T extends ValidDataType>(
+const processData: (
   data: Array<any>,
-  processedColumns: Array<LGColumnDef<T>>,
+  processedColumns: Array<AccessorKeyColumnDef<any>>,
+  childrenFn: (TableRowArgs: TableRowInterface<unknown>) => JSX.Element,
+) => Array<ProcessedRowData> = <T extends ValidDataType>(
+  data: Array<any>,
+  processedColumns: Array<AccessorKeyColumnDef<T>>,
   childrenFn: (TableRowArgs: TableRowInterface<unknown>) => JSX.Element,
 ) => {
   const processedData = data.map((oldDatum, index) => {
@@ -29,17 +34,15 @@ const processData = <T extends ValidDataType>(
       isComponentType(child, 'Cell'),
     );
 
-    const newDatum: LGTableDataType<T> = evaluatedCells.reduce(
+    const newDatum: LGTableDataType<object> = evaluatedCells.reduce(
       (acc: object, currVal, index) => {
         return {
           ...acc,
-          // `any` is the expected type by react-table for non string/symbol/number values
-          [(processedColumns[index] as any)?.accessorKey]: () =>
-            currVal as ReactElement,
+          [processedColumns[index]?.accessorKey]: () => currVal as ReactElement,
         };
       },
       {},
-    ) as LGTableDataType<T>;
+    );
 
     const subRowChildren = rowChildren.filter(child =>
       isComponentType(child, 'Row'),
@@ -68,7 +71,7 @@ const processData = <T extends ValidDataType>(
           (acc: object, currVal, index) => {
             return {
               ...acc,
-              [(processedColumns[index] as any)?.accessorKey]: () =>
+              [processedColumns[index]?.accessorKey]: () =>
                 currVal as ReactElement,
             };
           },
@@ -85,7 +88,7 @@ const processData = <T extends ValidDataType>(
           newDatum.subRows.push({
             ...processedSubRow,
             rowProps,
-          } as T);
+          } as ProcessedRowData);
       }
     });
 

@@ -30,7 +30,11 @@ import useLeafyGreenTable, {
 
 import processColumns from './processColumns';
 import processData from './processData';
-import { V11AdapterProps, ValidDataType } from './V11Adapter.types';
+import {
+  ProcessedRowData,
+  V11AdapterProps,
+  ValidDataType,
+} from './V11Adapter.types';
 
 /**
  * Converts a v10 Table component to a v11 Table component.
@@ -63,23 +67,23 @@ const V11Adapter = <T extends ValidDataType>({
   type TData = typeof OldTableProps.data extends Array<infer U> ? U : never;
 
   const {
-    data: oldData,
-    columns: oldColumns,
+    data: initialData,
+    columns: initialColumns,
     children: childrenFn,
     baseFontSize,
     ...oldTableProps
   } = OldTableProps as V10TableProps<TData>;
 
-  const data = oldData as Array<T>;
+  const data = initialData as Array<T>;
 
   const processedColumns = useMemo(
-    () => processColumns(data, oldColumns, headerLabels),
-    [data, oldColumns, headerLabels],
+    () => processColumns(data, initialColumns, headerLabels),
+    [data, initialColumns, headerLabels],
   );
 
-  const [processedData, setProcessedData] = useState<Array<LGTableDataType<T>>>(
-    () => processData(data, processedColumns, childrenFn),
-  );
+  const [processedData, setProcessedData] = useState<
+    Array<LGTableDataType<ProcessedRowData>>
+  >(() => processData(data, processedColumns, childrenFn));
 
   useEffect(() => {
     setProcessedData(processData(data, processedColumns, childrenFn));
@@ -87,7 +91,7 @@ const V11Adapter = <T extends ValidDataType>({
 
   const table = useLeafyGreenTable<T>({
     containerRef,
-    data: processedData,
+    data: processedData as Array<LGTableDataType<T>>,
     columns: processedColumns as Array<LGColumnDef<T>>,
     useVirtualScrolling,
     hasSelectableRows,
@@ -97,7 +101,7 @@ const V11Adapter = <T extends ValidDataType>({
 
   const iterables = useVirtualScrolling ? table.virtualRows ?? [] : rows;
 
-  const columnsChildren = React.Children.toArray(oldColumns);
+  const columnsChildren = React.Children.toArray(initialColumns);
   const oldHeaderRow = columnsChildren[0] as ReactElement;
 
   const oldHeaderCellProps: Array<TableHeaderProps<T>> = [];
@@ -133,7 +137,6 @@ const V11Adapter = <T extends ValidDataType>({
               <HeaderCell
                 key={header.id}
                 header={header}
-                // {...oldHeaderCellProps[i]}
                 {...validOldHeaderCellProps}
               >
                 {flexRender(

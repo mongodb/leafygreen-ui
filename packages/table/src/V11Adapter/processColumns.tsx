@@ -8,11 +8,11 @@ import { TableProps } from '../TableV10/Table';
 import { ValidDataType } from './V11Adapter.types';
 
 /**
- * Converts T10's HeaderRow ReactElement to an Array<ColumnDef>
+ * Converts V10's HeaderRow ReactElement to an Array<ColumnDef>
  * to be consumed by `react-table`.
  *
  * @param data returned value from `processData`
- * @param columns T10's `columns` prop
+ * @param columns V10's `columns` prop
  * @param headerLabels any overrides to the header's label when the label does not correspond to its data's key in `data`
  * @returns Array<ColumnDef>
  */
@@ -41,7 +41,11 @@ const processColumns = <T extends ValidDataType>(
       !!headerProps.handleSort ||
       !!headerProps.compareFn;
 
-    const convertedCompareFn = (rowA: Row<T>, rowB: Row<T>, _: any) => {
+    const convertedCompareFn: SortingFn<T> = (
+      rowA: Row<T>,
+      rowB: Row<T>,
+      _: any,
+    ) => {
       const indexA = rowA.index;
       const indexB = rowB.index;
       return headerProps.compareFn(data[indexA], data[indexB]);
@@ -57,7 +61,7 @@ const processColumns = <T extends ValidDataType>(
         : 0;
     };
 
-    const retTal = {
+    const retVal = {
       accessorKey:
         (headerLabels && headerLabels[headerProps.label]) ??
         camelCase(headerProps.label),
@@ -65,13 +69,13 @@ const processColumns = <T extends ValidDataType>(
       align: (headerProps.dataType === 'number' ? 'right' : 'left') as Align,
       enableSorting: hasSorting,
       sortingFn: headerProps.compareFn
-        ? (convertedCompareFn as SortingFn<T>)
+        ? convertedCompareFn
         : hasSorting
-        ? (defaultSortingFn as SortingFn<T>)
+        ? defaultSortingFn
         : undefined,
     };
 
-    return retTal;
+    return retVal;
   });
   return processedColumns;
 };
