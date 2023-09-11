@@ -1,15 +1,12 @@
-import React from 'react';
 import { useVirtual } from 'react-virtual';
-import { Table, useReactTable } from '@tanstack/react-table';
+import { useReactTable } from '@tanstack/react-table';
 import {
   getCoreRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  Row,
 } from '@tanstack/react-table';
 
-import Checkbox from '@leafygreen-ui/checkbox';
-
+import { TableCellCheckbox, TableHeaderCheckbox } from './TableCheckbox';
 import { LeafyGreenTableOptions, LGRowData } from './useLeafyGreenTable.types';
 import { LeafyGreenTable, LGColumnDef, LGTableDataType } from '.';
 
@@ -21,35 +18,8 @@ const checkboxWidth = 14;
 const selectColumnConfig: LGColumnDef<LGRowData> = {
   id: 'select',
   size: checkboxWidth,
-  header:
-    // eslint-disable-next-line react/display-name
-    ({ table }: { table: Table<LGTableDataType<LGRowData>> }) => (
-      <Checkbox
-        checked={table.getIsAllRowsSelected()}
-        indeterminate={table.getIsSomeRowsSelected()}
-        onChange={table.getToggleAllRowsSelectedHandler()}
-        aria-label="Select all rows"
-      />
-    ),
-  cell:
-    // eslint-disable-next-line react/display-name
-    ({
-      row,
-      table,
-    }: {
-      table: Table<LGTableDataType<LGRowData>>;
-      row: Row<LGTableDataType<LGRowData>>;
-    }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        indeterminate={row.getIsSomeSelected()}
-        onChange={row.getToggleSelectedHandler()}
-        aria-label={`Select row ${row.id}`}
-        aria-controls={`lg-table-row-${row.id}`}
-        // Don't animate if _all_ rows have been checked (usually, if header row is clicked). Not the _best_ check, but it mostly works
-        animate={!table.getIsAllRowsSelected()}
-      />
-    ),
+  header: TableHeaderCheckbox,
+  cell: TableCellCheckbox,
 };
 
 function useLeafyGreenTable<T extends LGRowData>({
