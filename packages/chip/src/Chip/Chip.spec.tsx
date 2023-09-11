@@ -254,4 +254,25 @@ describe('packages/chip', () => {
       expect(chipText).toHaveTextContent('crush c…');
     });
   });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  test.skip('types behave as expected', () => {
+    <>
+      {/* @ts-expect-error - Missing label prop */}
+      <Chip />
+
+      <Chip label="chip" />
+      <Chip
+        label="chip"
+        variant="blue"
+        size="large"
+        disabled
+        onDismiss={() => {}}
+        popoverZIndex={1}
+        chipCharacterLimit={10}
+        chipTruncationLocation="end"
+        dismissButtonAriaLabel="deselect"
+      />
+    </>;
+  });
 });
