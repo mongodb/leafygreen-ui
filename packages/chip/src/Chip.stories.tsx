@@ -40,7 +40,10 @@ const meta: StoryMetaType<typeof Chip> = {
   args: {
     label: 'Chip',
     onDismiss: () => {},
-    chipTruncationLocation: 'none',
+    chipTruncationLocation: TruncationLocation.none,
+    size: Size.Default,
+    variant: Variant.Gray,
+    chipCharacterLimit: 15,
   },
   argTypes: {
     onDismiss: {
