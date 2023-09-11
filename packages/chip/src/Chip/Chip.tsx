@@ -33,6 +33,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       onDismiss,
       popoverZIndex,
       className,
+      dismissButtonAriaLabel,
       ...rest
     }: ChipProps,
     forwardedRef,
@@ -103,6 +104,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
             onDismiss={onDismiss}
             disabled={disabled}
             variant={variant}
+            dismissButtonAriaLabel={dismissButtonAriaLabel}
           />
         )}
       </span>

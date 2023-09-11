@@ -53,16 +53,19 @@ export interface ChipProps
 
   /**
    * The size of the chip
+   * @default 'default'
    */
   size?: Size;
 
   /**
    * The color of the chip
+   * @default 'blue'
    */
   variant?: Variant;
 
   /**
    * Determines if the chip should be disabled
+   * @default false
    */
   disabled?: boolean;
 
@@ -71,4 +74,9 @@ export interface ChipProps
    * If set, a dismiss button will render.
    */
   onDismiss?: React.MouseEventHandler<HTMLButtonElement>;
+
+  /**
+   * aria-label for the dismiss button.
+   */
+  dismissButtonAriaLabel?: string;
 }

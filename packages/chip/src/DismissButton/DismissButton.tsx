@@ -20,15 +20,17 @@ export function DismissButton({
   disabled,
   variant,
   onDismiss,
+  dismissButtonAriaLabel,
 }: DismissButtonProps) {
   const { theme } = useDarkMode();
 
-  // if aria prop then use that, else check if label is a string and use that else use generic label
-  // const labelText = typeof label === 'string' ? `Deselect ${label}` : '';
+  const labelText =
+    typeof label === 'string' ? `Deselect ${label}` : 'Deselect';
+  const ariaLabel = dismissButtonAriaLabel ? dismissButtonAriaLabel : labelText;
 
   return (
     <button
-      aria-label={`Deselect ${label}`} //TODO: make a prop
+      aria-label={ariaLabel}
       aria-disabled={disabled}
       disabled={disabled}
       className={cx(chipButtonStyle, chipButtonThemeStyle(variant, theme), {
