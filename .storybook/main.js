@@ -81,6 +81,16 @@ const storybookModuleFederationConfig = {
     './Select': '/packages/select/src/Select.tsx',
     './leafygreen-provider': '/packages/leafygreen-provider/src/index.ts',
   },
+  shared: {
+    react: {
+        singleton: true,
+        eager: true
+    },
+    'react-dom': {
+        singleton: true,
+        eager: true,
+    }
+  }
 };
 
 module.exports = withStorybookModuleFederation(storybookModuleFederationConfig)(
