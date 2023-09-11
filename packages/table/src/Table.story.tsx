@@ -739,7 +739,7 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
   );
 };
 
-export const SelectableRowsWithNoHeader: StoryFn<StoryTableProps> = args => {
+export const SelectableRowsNoSelectAll: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 100))[0];
   const [rowSelection, setRowSelection] = React.useState({});

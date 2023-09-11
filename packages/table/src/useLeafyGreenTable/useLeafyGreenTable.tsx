@@ -64,14 +64,9 @@ function useLeafyGreenTable<T extends LGRowData>({
   ...rest
 }: LeafyGreenTableOptions<T>): LeafyGreenTable<T> {
   let hasSortableColumns = false;
-  let selectColumnConfig;
-
-  if (!allowSelectAll) {
-    selectColumnConfig = omit(baseSelectColumnConfig, 'header');
-  } else {
-    selectColumnConfig = baseSelectColumnConfig;
-  }
-
+  const selectColumnConfig = allowSelectAll
+    ? baseSelectColumnConfig
+    : omit(baseSelectColumnConfig, 'header');
   const columns: Array<LGColumnDef<T>> = [
     ...(hasSelectableRows ? [selectColumnConfig as LGColumnDef<T>] : []),
     ...columnsProp.map(propColumn => {
