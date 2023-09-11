@@ -84,10 +84,12 @@ const storybookModuleFederationConfig = {
   shared: {
     react: {
         singleton: true,
+        requiredVersion: '^17.0.2',
         eager: true
     },
     'react-dom': {
         singleton: true,
+        requiredVersion: '^17.0.2',
         eager: true,
     }
   }
