@@ -739,6 +739,134 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
   );
 };
 
+export const SelectableRowsWithNoHeader: StoryFn<StoryTableProps> = args => {
+  const tableContainerRef = React.useRef<HTMLDivElement>(null);
+  const data = React.useState(() => makeData(false, 100))[0];
+  const [rowSelection, setRowSelection] = React.useState({});
+
+  const columns = React.useMemo<Array<LGColumnDef<Person>>>(
+    () => [
+      {
+        accessorKey: 'id',
+        header: 'ID',
+        size: 60,
+      },
+      {
+        accessorKey: 'firstName',
+        header: 'First Name',
+        cell: info => info.getValue(),
+      },
+      {
+        accessorFn: row => row.lastName,
+        id: 'lastName',
+        cell: info => info.getValue(),
+        // eslint-disable-next-line react/display-name
+        header: () => <span>Last Name</span>,
+      },
+      {
+        accessorKey: 'age',
+        // eslint-disable-next-line react/display-name
+        header: () => 'Age',
+        size: 50,
+      },
+      {
+        accessorKey: 'visits',
+        // eslint-disable-next-line react/display-name
+        header: () => <span>Visits</span>,
+        size: 50,
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        size: 90,
+      },
+    ],
+    [],
+  );
+
+  const table = useLeafyGreenTable<Person>({
+    containerRef: tableContainerRef,
+    data,
+    columns,
+    state: {
+      rowSelection,
+    },
+    onRowSelectionChange: setRowSelection,
+    hasSelectableRows: true,
+    allowSelectAll: false,
+  });
+
+  const { rows } = table.getRowModel();
+
+  return (
+    <div>
+      <div>
+        <Button
+          onClick={
+            // eslint-disable-next-line no-console
+            () => console.info('rowSelection', rowSelection)
+          }
+        >
+          Log rowSelection state
+        </Button>
+        <Button
+          onClick={() =>
+            // eslint-disable-next-line no-console
+            console.info(
+              'table.getSelectedFlatRows()',
+              table.getSelectedRowModel().flatRows,
+            )
+          }
+        >
+          Log table.getSelectedFlatRows()
+        </Button>
+      </div>
+
+      <Table
+        {...args}
+        table={table}
+        ref={tableContainerRef}
+        data-total-rows={table.getRowModel().rows.length}
+      >
+        <TableHead>
+          {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+            <HeaderRow key={headerGroup.id}>
+              {headerGroup.headers.map(header => {
+                return (
+                  <HeaderCell key={header.id} header={header}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )}
+                  </HeaderCell>
+                );
+              })}
+            </HeaderRow>
+          ))}
+        </TableHead>
+        <TableBody>
+          {rows.map((row: LeafyGreenTableRow<Person>) => {
+            return (
+              <Row key={row.id} row={row}>
+                {row.getVisibleCells().map(cell => {
+                  return (
+                    <Cell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </Cell>
+                  );
+                })}
+              </Row>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </div>
+  );
+};
+
 export const WithPagination: StoryFn<StoryTableProps> = ({
   // eslint-disable-next-line react/prop-types
   darkMode,

@@ -43,6 +43,7 @@ export interface LeafyGreenTableOptions<T extends LGRowData>
   useVirtualScrolling?: boolean;
   columns: Array<LGColumnDef<T>>;
   withPagination?: boolean;
+  allowSelectAll?: boolean;
 }
 
 /** LeafyGreen extension of `useReactTable` {@link Table}*/
