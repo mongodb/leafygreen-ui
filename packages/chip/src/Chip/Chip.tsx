@@ -9,6 +9,7 @@ import { DismissButton } from '../DismissButton';
 import { getTruncatedName } from '../utils/getTruncatedName';
 
 import {
+  chipInlineDefinitionClassName,
   chipTextDisabledStyles,
   chipTextDismissSizeStyle,
   chipTextSizeStyle,
@@ -18,7 +19,6 @@ import {
   chipWrapperThemeStyle,
   disabledBaseChipWrapperStyles,
   disabledChipWrapperStyle,
-  inlineDefinitionClassName,
 } from './Chip.styles';
 import { ChipProps, Size, TruncationLocation, Variant } from './Chip.types';
 
@@ -95,7 +95,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
               definition={label}
               align="bottom"
               popoverZIndex={popoverZIndex}
-              className={inlineDefinitionClassName}
+              className={chipInlineDefinitionClassName}
             >
               {truncatedName}
             </InlineDefinition>

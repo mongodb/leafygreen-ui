@@ -5,9 +5,10 @@ import { transitionDuration, typeScales } from '@leafygreen-ui/tokens';
 
 import { Size, Variant } from './Chip.types';
 
-export const inlineDefinitionClassName = createUniqueClassName(
+export const chipInlineDefinitionClassName = createUniqueClassName(
   'chip-inline-definition',
 );
+export const chipTextClassName = createUniqueClassName('chip-text');
 
 /**
  * The line-height of the chip.
@@ -179,7 +180,7 @@ export const chipTextStyles = (variant: Variant, theme: Theme) => css`
     background-color: ${variantColor[variant][theme].focusBgColor};
   }
 
-  .${inlineDefinitionClassName} {
+  .${chipInlineDefinitionClassName} {
     &:focus-visible {
       outline: none;
     }

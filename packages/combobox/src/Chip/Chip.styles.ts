@@ -1,3 +1,4 @@
+import { chipTextClassName } from '@leafygreen-ui/chip';
 import { css } from '@leafygreen-ui/emotion';
 import { typeScales } from '@leafygreen-ui/tokens';
 
@@ -34,20 +35,32 @@ export const chipWrapperPaddingY = {
 } as const;
 
 /**
- * Util to get the chip height
- * `lineHeight + (2 * paddingY)`
+ * Override chip sizes
  */
-export const getChipHeight = (size: ComboboxSize) => {
-  return lineHeight[size] + 2 * chipWrapperPaddingY[size];
-};
-
 export const chipSizeStyles: Record<ComboboxSize, string> = {
+  [ComboboxSize.XSmall]: css`
+    font-size: ${fontSize[ComboboxSize.XSmall]}px;
+    line-height: ${lineHeight[ComboboxSize.XSmall]}px;
+
+    .${chipTextClassName} {
+      padding-inline-end: 2px;
+      padding-block: ${chipWrapperPaddingY[ComboboxSize.XSmall]}px;
+    }
+  `,
+  [ComboboxSize.Small]: css`
+    font-size: ${fontSize[ComboboxSize.Small]}px;
+    line-height: ${lineHeight[ComboboxSize.Small]}px;
+
+    .${chipTextClassName} {
+      padding-inline-end: 2px;
+      padding-block: ${chipWrapperPaddingY[ComboboxSize.Small]}px;
+    }
+  `,
   [ComboboxSize.Default]: css`
     font-size: ${fontSize[ComboboxSize.Default]}px;
     line-height: ${lineHeight[ComboboxSize.Default]}px;
 
-    // TODO: use classname
-    span {
+    .${chipTextClassName} {
       padding-inline-end: 2px;
       padding-block: ${chipWrapperPaddingY[ComboboxSize.Default]}px;
     }
@@ -56,27 +69,9 @@ export const chipSizeStyles: Record<ComboboxSize, string> = {
     font-size: ${fontSize[ComboboxSize.Large]}px;
     line-height: ${lineHeight[ComboboxSize.Large]}px;
 
-    span {
+    .${chipTextClassName} {
       padding-inline-end: 10px;
       padding-block: ${chipWrapperPaddingY[ComboboxSize.Large]}px;
-    }
-  `,
-  [ComboboxSize.Small]: css`
-    font-size: ${fontSize[ComboboxSize.Small]}px;
-    line-height: ${lineHeight[ComboboxSize.Small]}px;
-
-    span {
-      padding-inline-end: 2px;
-      padding-block: ${chipWrapperPaddingY[ComboboxSize.Small]}px;
-    }
-  `,
-  [ComboboxSize.XSmall]: css`
-    font-size: ${fontSize[ComboboxSize.XSmall]}px;
-    line-height: ${lineHeight[ComboboxSize.XSmall]}px;
-
-    span {
-      padding-inline-end: 2px;
-      padding-block: ${chipWrapperPaddingY[ComboboxSize.XSmall]}px;
     }
   `,
 };
