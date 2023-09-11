@@ -17,6 +17,7 @@ import {
   chipWrapperThemeStyle,
   disabledBaseChipWrapperStyles,
   disabledChipWrapperStyle,
+  inlineDefinitionClassName,
 } from './Chip.styles';
 import { ChipProps, Size, Variant } from './Chip.types';
 
@@ -91,6 +92,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
               definition={label}
               align="bottom"
               popoverZIndex={popoverZIndex}
+              className={inlineDefinitionClassName}
             >
               {truncatedName}
             </InlineDefinition>

@@ -1,9 +1,13 @@
 import { css } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { transitionDuration, typeScales } from '@leafygreen-ui/tokens';
 
 import { Size, Variant } from './Chip.types';
+
+export const inlineDefinitionClassName = createUniqueClassName(
+  'chip-inline-definition',
+);
 
 /**
  * The line-height of the chip.
@@ -14,7 +18,7 @@ export const lineHeight: Record<Size, number> = {
 };
 
 /**
- * The font-size of the combobox.
+ * The font-size of the chip.
  */
 export const fontSize: Record<Size, number> = {
   [Size.Default]: typeScales.body1.fontSize,
@@ -175,7 +179,7 @@ export const chipTextStyles = (variant: Variant, theme: Theme) => css`
     background-color: ${variantColor[variant][theme].focusBgColor};
   }
 
-  span {
+  .${inlineDefinitionClassName} {
     &:focus-visible {
       outline: none;
     }
