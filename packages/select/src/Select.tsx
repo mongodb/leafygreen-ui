@@ -347,7 +347,7 @@ export default function Select({
 
       // We only respond to keypresses if the focus is in the component
       if (isFocusInComponent) {
-        switch (event.keyCode) {
+        switch (event.key) {
           case keyMap.Tab:
           case keyMap.Escape:
             onClose();
