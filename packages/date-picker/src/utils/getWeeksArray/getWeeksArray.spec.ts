@@ -41,45 +41,45 @@ describe('packages/date-picker/utils/getWeeksArray', () => {
         expect.arrayContaining([
           expect.arrayContaining([
             null, // Mo
-            new Date(Date.UTC(2023, 7, 1)), // Tu
-            new Date(Date.UTC(2023, 7, 2)), // We
-            new Date(Date.UTC(2023, 7, 3)), // Th
-            new Date(Date.UTC(2023, 7, 4)), // Fr
-            new Date(Date.UTC(2023, 7, 5)), // Sa
-            new Date(Date.UTC(2023, 7, 6)), // Su
+            new Date(Date.UTC(2023, Month.August, 1)), // Tu
+            new Date(Date.UTC(2023, Month.August, 2)), // We
+            new Date(Date.UTC(2023, Month.August, 3)), // Th
+            new Date(Date.UTC(2023, Month.August, 4)), // Fr
+            new Date(Date.UTC(2023, Month.August, 5)), // Sa
+            new Date(Date.UTC(2023, Month.August, 6)), // Su
           ]),
           expect.arrayContaining([
-            new Date(Date.UTC(2023, 7, 7)), // Mo
-            new Date(Date.UTC(2023, 7, 8)), // Tu
-            new Date(Date.UTC(2023, 7, 9)), // We
-            new Date(Date.UTC(2023, 7, 10)), // Th
-            new Date(Date.UTC(2023, 7, 11)), // Fr
-            new Date(Date.UTC(2023, 7, 12)), // Sa
-            new Date(Date.UTC(2023, 7, 13)), // Su
+            new Date(Date.UTC(2023, Month.August, 7)), // Mo
+            new Date(Date.UTC(2023, Month.August, 8)), // Tu
+            new Date(Date.UTC(2023, Month.August, 9)), // We
+            new Date(Date.UTC(2023, Month.August, 10)), // Th
+            new Date(Date.UTC(2023, Month.August, 11)), // Fr
+            new Date(Date.UTC(2023, Month.August, 12)), // Sa
+            new Date(Date.UTC(2023, Month.August, 13)), // Su
           ]),
           expect.arrayContaining([
-            new Date(Date.UTC(2023, 7, 14)), // Mo
-            new Date(Date.UTC(2023, 7, 15)), // Tu
-            new Date(Date.UTC(2023, 7, 16)), // We
-            new Date(Date.UTC(2023, 7, 17)), // Th
-            new Date(Date.UTC(2023, 7, 18)), // Fr
-            new Date(Date.UTC(2023, 7, 19)), // Sa
-            new Date(Date.UTC(2023, 7, 20)), // Su
+            new Date(Date.UTC(2023, Month.August, 14)), // Mo
+            new Date(Date.UTC(2023, Month.August, 15)), // Tu
+            new Date(Date.UTC(2023, Month.August, 16)), // We
+            new Date(Date.UTC(2023, Month.August, 17)), // Th
+            new Date(Date.UTC(2023, Month.August, 18)), // Fr
+            new Date(Date.UTC(2023, Month.August, 19)), // Sa
+            new Date(Date.UTC(2023, Month.August, 20)), // Su
           ]),
           expect.arrayContaining([
-            new Date(Date.UTC(2023, 7, 21)), // Mo
-            new Date(Date.UTC(2023, 7, 22)), // Tu
-            new Date(Date.UTC(2023, 7, 23)), // We
-            new Date(Date.UTC(2023, 7, 24)), // Th
-            new Date(Date.UTC(2023, 7, 25)), // Fr
-            new Date(Date.UTC(2023, 7, 26)), // Sa
-            new Date(Date.UTC(2023, 7, 27)), // Su
+            new Date(Date.UTC(2023, Month.August, 21)), // Mo
+            new Date(Date.UTC(2023, Month.August, 22)), // Tu
+            new Date(Date.UTC(2023, Month.August, 23)), // We
+            new Date(Date.UTC(2023, Month.August, 24)), // Th
+            new Date(Date.UTC(2023, Month.August, 25)), // Fr
+            new Date(Date.UTC(2023, Month.August, 26)), // Sa
+            new Date(Date.UTC(2023, Month.August, 27)), // Su
           ]),
           expect.arrayContaining([
-            new Date(Date.UTC(2023, 7, 28)), // Mo
-            new Date(Date.UTC(2023, 7, 29)), // Tu
-            new Date(Date.UTC(2023, 7, 30)), // We
-            new Date(Date.UTC(2023, 7, 31)), // Th
+            new Date(Date.UTC(2023, Month.August, 28)), // Mo
+            new Date(Date.UTC(2023, Month.August, 29)), // Tu
+            new Date(Date.UTC(2023, Month.August, 30)), // We
+            new Date(Date.UTC(2023, Month.August, 31)), // Th
           ]),
         ]),
       );
@@ -120,44 +120,44 @@ describe('packages/date-picker/utils/getWeeksArray', () => {
             null, // Tu
             null, // We
             null, // Th
-            new Date(Date.UTC(2023, 8, 1)), // Fr
-            new Date(Date.UTC(2023, 8, 2)), // Sa
-            new Date(Date.UTC(2023, 8, 3)), // Su
+            new Date(Date.UTC(2023, Month.September, 1)), // Fr
+            new Date(Date.UTC(2023, Month.September, 2)), // Sa
+            new Date(Date.UTC(2023, Month.September, 3)), // Su
           ]),
           expect.arrayContaining([
-            new Date(Date.UTC(2023, 8, 4)), // Mo
-            new Date(Date.UTC(2023, 8, 5)), // Tu
-            new Date(Date.UTC(2023, 8, 6)), // We
-            new Date(Date.UTC(2023, 8, 7)), // Th
-            new Date(Date.UTC(2023, 8, 8)), // Fr
-            new Date(Date.UTC(2023, 8, 9)), // Sa
-            new Date(Date.UTC(2023, 8, 10)), // Su
+            new Date(Date.UTC(2023, Month.September, 4)), // Mo
+            new Date(Date.UTC(2023, Month.September, 5)), // Tu
+            new Date(Date.UTC(2023, Month.September, 6)), // We
+            new Date(Date.UTC(2023, Month.September, 7)), // Th
+            new Date(Date.UTC(2023, Month.September, 8)), // Fr
+            new Date(Date.UTC(2023, Month.September, 9)), // Sa
+            new Date(Date.UTC(2023, Month.September, 10)), // Su
           ]),
           expect.arrayContaining([
-            new Date(Date.UTC(2023, 8, 11)), // Mo
-            new Date(Date.UTC(2023, 8, 12)), // Tu
-            new Date(Date.UTC(2023, 8, 13)), // We
-            new Date(Date.UTC(2023, 8, 14)), // Th
-            new Date(Date.UTC(2023, 8, 15)), // Fr
-            new Date(Date.UTC(2023, 8, 16)), // Sa
-            new Date(Date.UTC(2023, 8, 17)), // Su
+            new Date(Date.UTC(2023, Month.September, 11)), // Mo
+            new Date(Date.UTC(2023, Month.September, 12)), // Tu
+            new Date(Date.UTC(2023, Month.September, 13)), // We
+            new Date(Date.UTC(2023, Month.September, 14)), // Th
+            new Date(Date.UTC(2023, Month.September, 15)), // Fr
+            new Date(Date.UTC(2023, Month.September, 16)), // Sa
+            new Date(Date.UTC(2023, Month.September, 17)), // Su
           ]),
           expect.arrayContaining([
-            new Date(Date.UTC(2023, 8, 18)), // Mo
-            new Date(Date.UTC(2023, 8, 19)), // Tu
-            new Date(Date.UTC(2023, 8, 20)), // We
-            new Date(Date.UTC(2023, 8, 21)), // Th
-            new Date(Date.UTC(2023, 8, 22)), // Fr
-            new Date(Date.UTC(2023, 8, 23)), // Sa
-            new Date(Date.UTC(2023, 8, 24)), // Su
+            new Date(Date.UTC(2023, Month.September, 18)), // Mo
+            new Date(Date.UTC(2023, Month.September, 19)), // Tu
+            new Date(Date.UTC(2023, Month.September, 20)), // We
+            new Date(Date.UTC(2023, Month.September, 21)), // Th
+            new Date(Date.UTC(2023, Month.September, 22)), // Fr
+            new Date(Date.UTC(2023, Month.September, 23)), // Sa
+            new Date(Date.UTC(2023, Month.September, 24)), // Su
           ]),
           expect.arrayContaining([
-            new Date(Date.UTC(2023, 8, 25)), // Mo
-            new Date(Date.UTC(2023, 8, 26)), // Tu
-            new Date(Date.UTC(2023, 8, 27)), // We
-            new Date(Date.UTC(2023, 8, 28)), // Th
-            new Date(Date.UTC(2023, 8, 29)), // Fr
-            new Date(Date.UTC(2023, 8, 30)), // Sa
+            new Date(Date.UTC(2023, Month.September, 25)), // Mo
+            new Date(Date.UTC(2023, Month.September, 26)), // Tu
+            new Date(Date.UTC(2023, Month.September, 27)), // We
+            new Date(Date.UTC(2023, Month.September, 28)), // Th
+            new Date(Date.UTC(2023, Month.September, 29)), // Fr
+            new Date(Date.UTC(2023, Month.September, 30)), // Sa
           ]),
         ]),
       );
@@ -194,42 +194,42 @@ describe('packages/date-picker/utils/getWeeksArray', () => {
           expect.arrayContaining([
             null, // Mo
             null, // Tu
-            new Date(Date.UTC(2023, 2, 1)), // We
-            new Date(Date.UTC(2023, 2, 2)), // Th
-            new Date(Date.UTC(2023, 2, 3)), // Fr
-            new Date(Date.UTC(2023, 2, 4)), // Sa
-            new Date(Date.UTC(2023, 2, 5)), // Su
+            new Date(Date.UTC(2023, Month.February, 1)), // We
+            new Date(Date.UTC(2023, Month.February, 2)), // Th
+            new Date(Date.UTC(2023, Month.February, 3)), // Fr
+            new Date(Date.UTC(2023, Month.February, 4)), // Sa
+            new Date(Date.UTC(2023, Month.February, 5)), // Su
           ]),
           expect.arrayContaining([
-            new Date(Date.UTC(2023, 2, 6)), // Mo
-            new Date(Date.UTC(2023, 2, 7)), // Tu
-            new Date(Date.UTC(2023, 2, 8)), // We
-            new Date(Date.UTC(2023, 2, 9)), // Th
-            new Date(Date.UTC(2023, 2, 10)), // Fr
-            new Date(Date.UTC(2023, 2, 11)), // Sa
-            new Date(Date.UTC(2023, 2, 12)), // Su
+            new Date(Date.UTC(2023, Month.February, 6)), // Mo
+            new Date(Date.UTC(2023, Month.February, 7)), // Tu
+            new Date(Date.UTC(2023, Month.February, 8)), // We
+            new Date(Date.UTC(2023, Month.February, 9)), // Th
+            new Date(Date.UTC(2023, Month.February, 10)), // Fr
+            new Date(Date.UTC(2023, Month.February, 11)), // Sa
+            new Date(Date.UTC(2023, Month.February, 12)), // Su
           ]),
           expect.arrayContaining([
-            new Date(Date.UTC(2023, 2, 13)), // Mo
-            new Date(Date.UTC(2023, 2, 14)), // Tu
-            new Date(Date.UTC(2023, 2, 15)), // We
-            new Date(Date.UTC(2023, 2, 16)), // Th
-            new Date(Date.UTC(2023, 2, 17)), // Fr
-            new Date(Date.UTC(2023, 2, 18)), // Sa
-            new Date(Date.UTC(2023, 2, 19)), // Su
+            new Date(Date.UTC(2023, Month.February, 13)), // Mo
+            new Date(Date.UTC(2023, Month.February, 14)), // Tu
+            new Date(Date.UTC(2023, Month.February, 15)), // We
+            new Date(Date.UTC(2023, Month.February, 16)), // Th
+            new Date(Date.UTC(2023, Month.February, 17)), // Fr
+            new Date(Date.UTC(2023, Month.February, 18)), // Sa
+            new Date(Date.UTC(2023, Month.February, 19)), // Su
           ]),
           expect.arrayContaining([
-            new Date(Date.UTC(2023, 2, 20)), // Mo
-            new Date(Date.UTC(2023, 2, 21)), // Tu
-            new Date(Date.UTC(2023, 2, 22)), // We
-            new Date(Date.UTC(2023, 2, 23)), // Th
-            new Date(Date.UTC(2023, 2, 24)), // Fr
-            new Date(Date.UTC(2023, 2, 25)), // Sa
-            new Date(Date.UTC(2023, 2, 26)), // Su
+            new Date(Date.UTC(2023, Month.February, 20)), // Mo
+            new Date(Date.UTC(2023, Month.February, 21)), // Tu
+            new Date(Date.UTC(2023, Month.February, 22)), // We
+            new Date(Date.UTC(2023, Month.February, 23)), // Th
+            new Date(Date.UTC(2023, Month.February, 24)), // Fr
+            new Date(Date.UTC(2023, Month.February, 25)), // Sa
+            new Date(Date.UTC(2023, Month.February, 26)), // Su
           ]),
           expect.arrayContaining([
-            new Date(Date.UTC(2023, 2, 27)), // Mo
-            new Date(Date.UTC(2023, 2, 28)), // Tu
+            new Date(Date.UTC(2023, Month.February, 27)), // Mo
+            new Date(Date.UTC(2023, Month.February, 28)), // Tu
           ]),
         ]),
       );
@@ -268,43 +268,43 @@ describe('packages/date-picker/utils/getWeeksArray', () => {
             null, // Mo
             null, // Tu
             null, // We
-            new Date(Date.UTC(2023, 2, 1)), // Th
-            new Date(Date.UTC(2023, 2, 2)), // Fr
-            new Date(Date.UTC(2023, 2, 3)), // Sa
-            new Date(Date.UTC(2023, 2, 4)), // Su
+            new Date(Date.UTC(2024, Month.February, 1)), // Th
+            new Date(Date.UTC(2024, Month.February, 2)), // Fr
+            new Date(Date.UTC(2024, Month.February, 3)), // Sa
+            new Date(Date.UTC(2024, Month.February, 4)), // Su
           ]),
           expect.arrayContaining([
-            new Date(Date.UTC(2023, 2, 5)), // Mo
-            new Date(Date.UTC(2023, 2, 6)), // Tu
-            new Date(Date.UTC(2023, 2, 7)), // We
-            new Date(Date.UTC(2023, 2, 8)), // Th
-            new Date(Date.UTC(2023, 2, 9)), // Fr
-            new Date(Date.UTC(2023, 2, 10)), // Sa
-            new Date(Date.UTC(2023, 2, 11)), // Su
+            new Date(Date.UTC(2024, Month.February, 5)), // Mo
+            new Date(Date.UTC(2024, Month.February, 6)), // Tu
+            new Date(Date.UTC(2024, Month.February, 7)), // We
+            new Date(Date.UTC(2024, Month.February, 8)), // Th
+            new Date(Date.UTC(2024, Month.February, 9)), // Fr
+            new Date(Date.UTC(2024, Month.February, 10)), // Sa
+            new Date(Date.UTC(2024, Month.February, 11)), // Su
           ]),
           expect.arrayContaining([
-            new Date(Date.UTC(2023, 2, 12)), // Mo
-            new Date(Date.UTC(2023, 2, 13)), // Tu
-            new Date(Date.UTC(2023, 2, 14)), // We
-            new Date(Date.UTC(2023, 2, 15)), // Th
-            new Date(Date.UTC(2023, 2, 16)), // Fr
-            new Date(Date.UTC(2023, 2, 17)), // Sa
-            new Date(Date.UTC(2023, 2, 18)), // Su
+            new Date(Date.UTC(2024, Month.February, 12)), // Mo
+            new Date(Date.UTC(2024, Month.February, 13)), // Tu
+            new Date(Date.UTC(2024, Month.February, 14)), // We
+            new Date(Date.UTC(2024, Month.February, 15)), // Th
+            new Date(Date.UTC(2024, Month.February, 16)), // Fr
+            new Date(Date.UTC(2024, Month.February, 17)), // Sa
+            new Date(Date.UTC(2024, Month.February, 18)), // Su
           ]),
           expect.arrayContaining([
-            new Date(Date.UTC(2023, 2, 19)), // Mo
-            new Date(Date.UTC(2023, 2, 20)), // Tu
-            new Date(Date.UTC(2023, 2, 21)), // We
-            new Date(Date.UTC(2023, 2, 22)), // Th
-            new Date(Date.UTC(2023, 2, 23)), // Fr
-            new Date(Date.UTC(2023, 2, 24)), // Sa
-            new Date(Date.UTC(2023, 2, 25)), // Su
+            new Date(Date.UTC(2024, Month.February, 19)), // Mo
+            new Date(Date.UTC(2024, Month.February, 20)), // Tu
+            new Date(Date.UTC(2024, Month.February, 21)), // We
+            new Date(Date.UTC(2024, Month.February, 22)), // Th
+            new Date(Date.UTC(2024, Month.February, 23)), // Fr
+            new Date(Date.UTC(2024, Month.February, 24)), // Sa
+            new Date(Date.UTC(2024, Month.February, 25)), // Su
           ]),
           expect.arrayContaining([
-            new Date(Date.UTC(2023, 2, 26)), // Mo
-            new Date(Date.UTC(2023, 2, 27)), // Tu
-            new Date(Date.UTC(2023, 2, 28)), // We
-            new Date(Date.UTC(2023, 2, 29)), // Th
+            new Date(Date.UTC(2024, Month.February, 26)), // Mo
+            new Date(Date.UTC(2024, Month.February, 27)), // Tu
+            new Date(Date.UTC(2024, Month.February, 28)), // We
+            new Date(Date.UTC(2024, Month.February, 29)), // Th
           ]),
         ]),
       );

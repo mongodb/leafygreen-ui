@@ -1,9 +1,9 @@
-import { getDaysInMonth } from 'date-fns';
 import { chunk, fill, range } from 'lodash';
 import { getWeekStartByLocale } from 'weekstart';
 
 import { daysPerWeek } from '../../constants';
 import { BaseDatePickerProps } from '../../types';
+import { getDaysInUTCMonth } from '../getDaysInUTCMonth';
 import { setToUTCMidnight } from '../setToUTCMidnight';
 
 interface GetWeeksArrayOptions
@@ -31,8 +31,7 @@ export const getWeeksArray = (
   const startDayOfWeek = firstOfMonth.getUTCDay();
 
   // How many days in the month?
-  // TODO: need to rewrite getDaysInUTCMonth
-  const daysInMonth = getDaysInMonth(firstOfMonth);
+  const daysInMonth = getDaysInUTCMonth(firstOfMonth);
 
   // Shift the start column based on locale (weekStartsOn)
   const startColumn =
