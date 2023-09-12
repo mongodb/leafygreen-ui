@@ -44,6 +44,7 @@ const meta: StoryMetaType<typeof Chip> = {
     size: Size.Default,
     variant: Variant.Gray,
     chipCharacterLimit: 15,
+    disabled: false,
   },
 };
 export default meta;

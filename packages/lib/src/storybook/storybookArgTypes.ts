@@ -78,6 +78,7 @@ export const storybookExcludedArgTypes: Record<string, StoryArgType> = {
   onClick: { control: 'none' },
   onClose: { control: 'none' },
   onConfirm: { control: 'none' },
+  onDismiss: { control: 'none' },
   onFilter: { control: 'none' },
   onSubmit: { control: 'none' },
   portalClassName: { control: 'none' },

@@ -112,7 +112,6 @@ const meta: StoryMetaType<any> = {
     buttonText: {
       control: 'text',
     },
-    onDismiss: { control: 'none' },
   },
   args: {
     title: 'New feature',
