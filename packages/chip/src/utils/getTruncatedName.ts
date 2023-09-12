@@ -1,5 +1,16 @@
 import { TruncationLocation } from 'src/Chip/Chip.types';
 
+/**
+ *
+ * Returns a truncated string
+ *
+ * @param chipCharacterLimit the character limit for the chip
+ * @param chipTruncationLocation the location of the truncation
+ * @param label the label
+ * @param isTruncated boolean that determines if the label should truncate
+ * @returns `string`
+ * @internal
+ */
 export const getTruncatedName = (
   chipCharacterLimit: number,
   chipTruncationLocation: TruncationLocation,

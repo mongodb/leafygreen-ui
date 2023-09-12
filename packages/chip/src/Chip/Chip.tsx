@@ -10,15 +10,16 @@ import { getTruncatedName } from '../utils/getTruncatedName';
 
 import {
   chipInlineDefinitionClassName,
+  chipTextClassName,
   chipTextDisabledStyles,
   chipTextDismissSizeStyle,
   chipTextSizeStyle,
   chipTextStyles,
+  chipWrapperBaseDisabledStyles,
   chipWrapperBaseStyle,
+  chipWrapperDisabledStyle,
   chipWrapperSizeStyle,
   chipWrapperThemeStyle,
-  disabledBaseChipWrapperStyles,
-  disabledChipWrapperStyle,
 } from './Chip.styles';
 import { ChipProps, Size, TruncationLocation, Variant } from './Chip.types';
 
@@ -70,8 +71,8 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
           chipWrapperSizeStyle(size),
           {
             [cx(
-              disabledChipWrapperStyle[theme],
-              disabledBaseChipWrapperStyles,
+              chipWrapperDisabledStyle[theme],
+              chipWrapperBaseDisabledStyles,
             )]: disabled,
           },
           className,
@@ -82,11 +83,12 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
           data-testid="chip-text"
           className={cx(
             chipTextStyles(variant, theme),
-            chipTextSizeStyle[size],
+            chipTextSizeStyle(size),
             {
-              [chipTextDismissSizeStyle[size]]: !!onDismiss,
+              [chipTextDismissSizeStyle]: !!onDismiss,
               [chipTextDisabledStyles[theme]]: disabled,
             },
+            chipTextClassName,
           )}
         >
           {isTruncated ? (

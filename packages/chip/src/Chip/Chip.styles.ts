@@ -27,13 +27,22 @@ export const fontSize: Record<Size, number> = {
 };
 
 /**
- * Vertical padding on a chip (in px)
+ * Padding on a chip (in px)
  */
-export const chipWrapperPaddingY = {
-  [Size.Default]: 0,
-  [Size.Large]: 2,
+export const chipWrapperPadding: Record<Size, { x: number; y: number }> = {
+  [Size.Default]: {
+    y: 0,
+    x: 6,
+  },
+  [Size.Large]: {
+    y: 2,
+    x: 6,
+  },
 } as const;
 
+/**
+ * Chip Variants
+ */
 export const variantColor: Record<
   Variant,
   Record<
@@ -119,6 +128,9 @@ export const variantColor: Record<
   },
 };
 
+/**
+ * Chip wrapper
+ */
 export const chipWrapperThemeStyle = (variant: Variant, theme: Theme) => css`
   color: ${variantColor[variant][theme].color};
   background-color: ${variantColor[variant][theme].bgColor};
@@ -139,11 +151,11 @@ export const chipWrapperSizeStyle = (size: Size) => css`
   line-height: ${lineHeight[size]}px;
 `;
 
-export const disabledBaseChipWrapperStyles = css`
+export const chipWrapperBaseDisabledStyles = css`
   cursor: not-allowed;
 `;
 
-export const disabledChipWrapperStyle: Record<Theme, string> = {
+export const chipWrapperDisabledStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.gray.base};
     background-color: ${palette.gray.light3};
@@ -155,25 +167,17 @@ export const disabledChipWrapperStyle: Record<Theme, string> = {
   `,
 };
 
-export const chipTextSizeStyle: Record<Size, string> = {
-  [Size.Default]: css`
-    padding-inline: 6px;
-    padding-block: ${chipWrapperPaddingY[Size.Default]}px;
-  `,
-  [Size.Large]: css`
-    padding-inline: 6px;
-    padding-block: ${chipWrapperPaddingY[Size.Large]}px;
-  `,
-};
+/**
+ * Chip text
+ */
+export const chipTextSizeStyle = (size: Size) => css`
+  padding-inline: ${chipWrapperPadding[size].x}px;
+  padding-block: ${chipWrapperPadding[size].y}px;
+`;
 
-export const chipTextDismissSizeStyle: Record<Size, string> = {
-  [Size.Default]: css`
-    padding-inline-end: 2px;
-  `,
-  [Size.Large]: css`
-    padding-inline-end: 2px;
-  `,
-};
+export const chipTextDismissSizeStyle = css`
+  padding-inline-end: 2px;
+`;
 
 export const chipTextStyles = (variant: Variant, theme: Theme) => css`
   &:focus-within {

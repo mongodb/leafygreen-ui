@@ -37,6 +37,17 @@ export const chipWrapperPaddingY = {
 /**
  * Override chip sizes
  */
+
+// export const chipSizeStyles = (size: ComboboxSize) => css`
+// font-size: ${fontSize[size]}px;
+// line-height: ${lineHeight[size]}px;
+
+// .${chipTextClassName} {
+//   padding-inline-end: 2px;
+//   padding-block: ${chipWrapperPaddingY[size]}px;
+// }
+// `;
+
 export const chipSizeStyles: Record<ComboboxSize, string> = {
   [ComboboxSize.XSmall]: css`
     font-size: ${fontSize[ComboboxSize.XSmall]}px;
