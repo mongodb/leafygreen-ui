@@ -118,7 +118,7 @@ export const keyMap = {
   ArrowLeft: 'ArrowLeft',
   ArrowRight: 'ArrowRight',
   Backspace: 'Backspace',
-  BracketLeft: 'BracketLeft',
+  BracketLeft: '[',
   Delete: 'Delete',
   Enter: 'Enter',
   Escape: 'Escape',
