@@ -45,11 +45,6 @@ const meta: StoryMetaType<typeof Chip> = {
     variant: Variant.Gray,
     chipCharacterLimit: 15,
   },
-  argTypes: {
-    onDismiss: {
-      control: { type: 'object' },
-    },
-  },
 };
 export default meta;
 
