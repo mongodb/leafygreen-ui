@@ -117,17 +117,6 @@ describe('packages/menu/menu-item', () => {
         <MenuItem as={AnchorLikeWrapper} href="string">
           Children
         </MenuItem>
-        {/* @ts-expect-error - cant be both active and destructive */}
-        <MenuItem destructive active>
-          Children
-        </MenuItem>
-        {/* @ts-expect-error - cant be both active and destructive */}
-        <MenuItem destructive description="test">
-          Children
-        </MenuItem>
-        <MenuItem active description="test">
-          Children
-        </MenuItem>
       </>;
     });
   });

@@ -1,6 +1,13 @@
-import { OneOf } from '@leafygreen-ui/lib';
-
 import { Size } from '../types';
+
+const Variant = {
+  Default: 'default',
+  Destructive: 'destructive',
+} as const;
+
+type Variant = (typeof Variant)[keyof typeof Variant];
+
+export { Variant };
 
 export interface BaseMenuItemProps {
   /**
@@ -23,34 +30,24 @@ export interface BaseMenuItemProps {
    * Content to appear inside of `<MenuItem />` component
    */
   children?: React.ReactNode;
+
+  /**
+   * Determines whether or not the MenuItem is active.
+   */
+  active?: boolean;
+
+  /**
+   * Description element displayed below title in MenuItem.
+   */
+  description?: React.ReactNode;
+
+  /**
+   * Variant of MenuItem
+   */
+  variant?: Variant;
 }
 
-export type ActiveOrDestructive = OneOf<
-  {
-    /**
-     * Determines whether or not the MenuItem is active.
-     */
-    active?: boolean;
-
-    /**
-     * Description element displayed below title in MenuItem.
-     */
-    description?: React.ReactNode;
-
-    destructive?: never;
-  },
-  {
-    /**
-     * Determines if the MenuItem should appear as destructive.
-     */
-    destructive?: boolean;
-
-    active?: never;
-    description?: never;
-  }
->;
-
-export type MenuItemProps = BaseMenuItemProps & ActiveOrDestructive;
+export type MenuItemProps = BaseMenuItemProps;
 
 export interface FocusableMenuItemProps {
   children: React.ReactElement;

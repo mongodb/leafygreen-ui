@@ -34,7 +34,7 @@ import {
 import { Size } from '../types';
 
 import { destructiveIconStyle, disabledIconStyle } from './MenuItem.styles';
-import { MenuItemProps } from './MenuItem.types';
+import { MenuItemProps, Variant } from './MenuItem.types';
 
 const menuItemContainerClassName = createUniqueClassName('menu-item-container');
 
@@ -49,7 +49,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
       children,
       description,
       glyph,
-      destructive,
+      variant = Variant.Default,
       ...rest
     },
     ref: React.Ref<any>,
@@ -58,6 +58,8 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
     const { theme } = useContext(MenuContext);
     const hoverStyles = getHoverStyles(menuItemContainerClassName, theme);
     const focusStyles = getFocusedStyles(menuItemContainerClassName, theme);
+    const isDestructive = variant === Variant.Destructive;
+    const showActiveStyles = active && !isDestructive;
 
     const isAnchor = Component === 'a';
 
@@ -70,9 +72,9 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
           mainIconThemeStyle[theme],
           focusStyles.iconStyle,
           {
-            [activeIconStyle[theme]]: active,
+            [activeIconStyle[theme]]: active && !isDestructive,
             [disabledIconStyle[theme]]: disabled,
-            [destructiveIconStyle]: destructive,
+            [destructiveIconStyle]: isDestructive,
           },
           glyph.props?.className,
         ),
@@ -106,10 +108,10 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
               titleTextStyle,
               hoverStyles.text,
               {
-                [activeTitleTextStyle[theme]]: active,
+                [activeTitleTextStyle[theme]]: showActiveStyles,
                 [hoverStyles.activeText]: active,
                 [disabledTextStyle[theme]]: disabled,
-                [destructiveTextStyle[theme]]: destructive,
+                [destructiveTextStyle[theme]]: isDestructive,
               },
               focusStyles.textStyle,
             )}
@@ -121,7 +123,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
               className={cx(
                 descriptionTextThemeStyle[theme],
                 {
-                  [activeDescriptionTextStyle[theme]]: active,
+                  [activeDescriptionTextStyle[theme]]: showActiveStyles,
                   [disabledTextStyle[theme]]: disabled,
                   [linkDescriptionTextStyle]: isAnchor,
                 },
@@ -148,7 +150,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
             menuItemHeight(size),
             linkStyle,
             {
-              [activeMenuItemContainerStyle[theme]]: active,
+              [activeMenuItemContainerStyle[theme]]: showActiveStyles,
               [disabledMenuItemContainerThemeStyle[theme]]: disabled,
             },
             focusedMenuItemContainerStyle[theme],

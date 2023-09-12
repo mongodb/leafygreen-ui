@@ -23,11 +23,11 @@ const meta: StoryMetaType<typeof MenuItem> = {
         active: [false, true],
         size: Object.values(Size),
         disabled: [false, true],
+        variant: ['default', 'destructive'],
       },
       args: {
         children: 'Menu Item',
       },
-      storyNames: ['NotDestructive', 'Destructive'],
       decorator: (Instance, ctx) => {
         return (
           <MenuContext.Provider
@@ -45,15 +45,4 @@ const meta: StoryMetaType<typeof MenuItem> = {
 };
 export default meta;
 
-export const NotDestructive = () => <></>;
-export const Destructive = () => <></>;
-Destructive.parameters = {
-  generate: {
-    args: {
-      destructive: true,
-      children: 'Menu Item',
-      description: undefined,
-      active: false,
-    },
-  },
-};
+export const Generated = () => {};

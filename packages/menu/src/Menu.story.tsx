@@ -57,7 +57,7 @@ const meta: StoryMetaType<typeof Menu> = {
               active={true}
             >
               <MenuItem active>Apple</MenuItem>
-              <MenuItem destructive>Banana</MenuItem>
+              <MenuItem variant="destructive">Banana</MenuItem>
               <MenuItem>Carrot</MenuItem>
               <MenuItem>Dragonfruit</MenuItem>
               <MenuItem>Eggplant</MenuItem>
