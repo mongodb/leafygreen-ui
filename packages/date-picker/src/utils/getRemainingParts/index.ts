@@ -1,12 +1,6 @@
 import { isUndefined } from 'lodash';
 
-const cloneReverse = <T extends any>(arr?: Array<T>): Array<T> | undefined => {
-  if (!arr) return;
-
-  const clone = [...arr];
-  clone.reverse();
-  return clone;
-};
+import { cloneReverse } from '../cloneReverse';
 
 /** Returns the ordered parts to the left or right of the provided index
  * e.g:
