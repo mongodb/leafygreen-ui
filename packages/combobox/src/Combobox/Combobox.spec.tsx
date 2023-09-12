@@ -874,7 +874,7 @@ describe('packages/combobox', () => {
           userEvent.type(comboboxEl, '{arrowleft}');
           const chip = queryChipsByName('Carrot');
           // Calling `userEvent.type` doesn't fire the necessary `keyDown` event
-          fireEvent.keyDown(chip!, { keyCode: keyMap.Enter });
+          fireEvent.keyDown(chip!, { key: keyMap.Enter });
           expect(queryAllChips()).toHaveLength(2);
         });
       });
@@ -899,7 +899,7 @@ describe('packages/combobox', () => {
           userEvent.type(comboboxEl, '{arrowleft}');
           const chip = queryChipsByName('Carrot');
           // Calling `userEvent.type` doesn't fire the necessary `keyDown` event
-          fireEvent.keyDown(chip!, { keyCode: keyMap.Space });
+          fireEvent.keyDown(chip!, { key: keyMap.Space });
           waitFor(() => expect(queryAllChips()).toHaveLength(2));
         });
       });
@@ -1038,7 +1038,7 @@ describe('packages/combobox', () => {
           userEvent.type(comboboxEl, '{arrowleft}');
           const lastChip = queryChipsByIndex(2);
           // Calling `userEvent.type` doesn't fire the necessary `keyDown` event
-          fireEvent.keyDown(lastChip!, { keyCode: keyMap.Backspace });
+          fireEvent.keyDown(lastChip!, { key: keyMap.Backspace });
           expect(queryAllChips()).toHaveLength(2);
         });
 
@@ -1050,7 +1050,7 @@ describe('packages/combobox', () => {
           );
           userEvent.type(comboboxEl, '{arrowleft}');
           const lastChip = queryChipsByIndex(1);
-          fireEvent.keyDown(lastChip!, { keyCode: keyMap.Backspace });
+          fireEvent.keyDown(lastChip!, { key: keyMap.Backspace });
           expect(inputEl).toHaveFocus();
         });
 
@@ -1064,7 +1064,7 @@ describe('packages/combobox', () => {
             userEvent.type(comboboxEl, '{arrowleft}');
             const appleChip = queryChipsByIndex(0);
             const bananaChip = queryChipsByIndex(1);
-            fireEvent.keyDown(appleChip!, { keyCode: keyMap.Backspace });
+            fireEvent.keyDown(appleChip!, { key: keyMap.Backspace });
             expect(bananaChip).toContainFocus();
           },
         );
