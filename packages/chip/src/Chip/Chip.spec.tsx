@@ -272,6 +272,7 @@ describe('packages/chip', () => {
         chipCharacterLimit={10}
         chipTruncationLocation="end"
         dismissButtonAriaLabel="deselect"
+        darkMode
       />
     </>;
   });
