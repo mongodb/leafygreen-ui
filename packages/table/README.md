@@ -172,6 +172,12 @@ Setting this prop will inject checkbox cells into all rows. Refer to our [Storyb
 
 ---
 
+#### `allowSelectAll?: boolean`
+
+This prop controls whether a 'select all' checkbox will be rendered in the header row. This will be set to `true` by default.
+
+---
+
 #### `withPagination?: boolean`
 
 Setting this prop will indicate that the Table component is being used with the Pagination component. This will expose various pagination utilities from `table.getState().pagination`. Find an example of how this prop should be used on our [Storybook deployment](https://mongodb.github.io/leafygreen-ui).
