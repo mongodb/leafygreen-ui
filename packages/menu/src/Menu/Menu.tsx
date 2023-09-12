@@ -204,13 +204,13 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
               updateCurrentSubMenu();
             },
             onKeyDown: (e: React.KeyboardEvent<HTMLButtonElement>) => {
-              if (e.keyCode === keyMap.ArrowLeft && isCurrentSubMenu) {
+              if (e.key === keyMap.ArrowLeft && isCurrentSubMenu) {
                 currentSubMenuRef.current = null;
                 hasSetInitialOpen.current = true;
                 updateCurrentSubMenu();
               }
 
-              if (e.keyCode === keyMap.ArrowRight) {
+              if (e.key === keyMap.ArrowRight) {
                 currentSubMenuRef.current = child;
                 hasSetInitialOpen.current = true;
                 updateCurrentSubMenu();
@@ -284,7 +284,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   function handleKeyDown(e: KeyboardEvent) {
     let refToFocus: HTMLElement;
 
-    switch (e.keyCode) {
+    switch (e.key) {
       case keyMap.ArrowDown:
         e.preventDefault(); // Prevents page scrolling
         refToFocus =

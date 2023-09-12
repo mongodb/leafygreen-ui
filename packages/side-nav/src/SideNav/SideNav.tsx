@@ -112,7 +112,7 @@ function SideNav({
       // @ts-expect-error
       const shouldToggle = disabledTagNames.includes(e.target?.tagName);
 
-      if (e.keyCode === keyMap.BracketLeft && !shouldToggle) {
+      if (e.key === keyMap.BracketLeft && !shouldToggle) {
         setCollapsed(curr => !curr);
       }
     },
