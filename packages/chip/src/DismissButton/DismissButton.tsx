@@ -5,10 +5,10 @@ import Icon from '@leafygreen-ui/icon';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import {
-  chipButtonBaseDisabledStyles,
-  chipButtonDisabledStyle,
-  chipButtonStyle,
-  chipButtonThemeStyle,
+  dismissButtonBaseDisabledStyles,
+  dismissButtonBaseStyle,
+  dismissButtonDisabledStyle,
+  dismissButtonThemeStyle,
 } from './DismissButton.styles';
 import { type DismissButtonProps } from './DismissButton.types';
 
@@ -34,10 +34,16 @@ export function DismissButton({
       aria-label={ariaLabel}
       aria-disabled={disabled}
       disabled={disabled}
-      className={cx(chipButtonStyle, chipButtonThemeStyle(variant, theme), {
-        [cx(chipButtonDisabledStyle[theme], chipButtonBaseDisabledStyles)]:
-          disabled,
-      })}
+      className={cx(
+        dismissButtonBaseStyle,
+        dismissButtonThemeStyle(variant, theme),
+        {
+          [cx(
+            dismissButtonDisabledStyle[theme],
+            dismissButtonBaseDisabledStyles,
+          )]: disabled,
+        },
+      )}
       onClick={onDismiss}
     >
       <Icon glyph="X" aria-hidden />

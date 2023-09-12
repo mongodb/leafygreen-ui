@@ -48,6 +48,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       !!chipTruncationLocation &&
       chipTruncationLocation !== 'none' &&
       typeof label === 'string' &&
+      !!label &&
       (label as string).length > chipCharacterLimit;
 
     const truncatedName = useMemo(
@@ -55,10 +56,9 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
         getTruncatedName(
           chipCharacterLimit,
           chipTruncationLocation,
-          label,
-          isTruncated,
+          label as string,
         ),
-      [chipCharacterLimit, chipTruncationLocation, label, isTruncated],
+      [chipCharacterLimit, chipTruncationLocation, label],
     );
 
     return (

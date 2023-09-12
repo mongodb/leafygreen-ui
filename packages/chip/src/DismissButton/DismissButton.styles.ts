@@ -104,7 +104,7 @@ export const variantColor: Record<
   },
 };
 
-export const chipButtonStyle = css`
+export const dismissButtonBaseStyle = css`
   position: relative;
   display: flex;
   align-items: center;
@@ -119,7 +119,7 @@ export const chipButtonStyle = css`
   align-self: stretch;
 `;
 
-export const chipButtonThemeStyle = (variant: Variant, theme: Theme) => css`
+export const dismissButtonThemeStyle = (variant: Variant, theme: Theme) => css`
   color: ${variantColor[variant][theme].color};
 
   &:not(:disabled):hover {
@@ -137,14 +137,14 @@ export const chipButtonThemeStyle = (variant: Variant, theme: Theme) => css`
   }
 `;
 
-export const chipButtonBaseDisabledStyles = css`
+export const dismissButtonBaseDisabledStyles = css`
   &:disabled {
     cursor: not-allowed;
     pointer-events: none;
   }
 `;
 
-export const chipButtonDisabledStyle: Record<Theme, string> = {
+export const dismissButtonDisabledStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     &:disabled {
       color: ${palette.gray.light1};
