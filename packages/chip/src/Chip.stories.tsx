@@ -11,7 +11,7 @@ const meta: StoryMetaType<typeof Chip> = {
   title: 'Components/Chip',
   component: Chip,
   parameters: {
-    default: null,
+    default: 'LiveExample',
     generate: {
       storyNames: ['Gray', 'Green', 'Blue', 'Red', 'Purple', 'Yellow'],
       combineArgs: {
@@ -102,12 +102,6 @@ Yellow.parameters = {
   },
 };
 
-const Template: StoryFn<typeof Chip> = props => {
-  return (
-    <>
-      <Chip {...props} />
-    </>
-  );
-};
+const Template: StoryFn<typeof Chip> = props => <Chip {...props} />;
 
 export const LiveExample = Template.bind({});
