@@ -34,14 +34,14 @@ const processData: (
       isComponentType(child, 'Cell'),
     );
 
-    const newDatum: LGTableDataType<object> = evaluatedCells.reduce(
-      (acc: object, currVal, index) => {
+    const newDatum: LGTableDataType<T> = evaluatedCells.reduce(
+      (acc: T, currVal, index) => {
         return {
           ...acc,
           [processedColumns[index]?.accessorKey]: () => currVal as ReactElement,
-        };
+        } as T;
       },
-      {},
+      {} as T,
     );
 
     const subRowChildren = rowChildren.filter(child =>
@@ -67,16 +67,13 @@ const processData: (
           </div>
         );
       } else {
-        const processedSubRow = subRowCells.reduce(
-          (acc: object, currVal, index) => {
-            return {
-              ...acc,
-              [processedColumns[index]?.accessorKey]: () =>
-                currVal as ReactElement,
-            };
-          },
-          {},
-        );
+        const processedSubRow = subRowCells.reduce((acc: T, currVal, index) => {
+          return {
+            ...acc,
+            [processedColumns[index]?.accessorKey]: () =>
+              currVal as ReactElement,
+          };
+        }, {} as T);
         const {
           children,
           expanded,
@@ -88,7 +85,7 @@ const processData: (
           newDatum.subRows.push({
             ...processedSubRow,
             rowProps,
-          } as ProcessedRowData);
+          } as T);
       }
     });
 
