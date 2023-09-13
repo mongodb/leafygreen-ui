@@ -1,4 +1,10 @@
-import React, { forwardRef, useMemo, useRef, useState } from 'react';
+import React, {
+  forwardRef,
+  MouseEventHandler,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { isSameMonth, setMonth } from 'date-fns';
 
 import { useBackdropClick } from '@leafygreen-ui/hooks';
@@ -7,8 +13,8 @@ import { DatePickerProvider } from '../DatePickerContext';
 import { toDate } from '../utils/toDate';
 
 import { DatePickerProps } from './DatePicker.types';
-import { DatePickerInput } from './DatePickerInput';
-import { DatePickerMenu } from './DatePickerMenu';
+import { DatePickerInput, DatePickerInputProps } from './DatePickerInput';
+import { DatePickerMenu, DatePickerMenuProps } from './DatePickerMenu';
 
 export const DatePicker = forwardRef(
   ({
@@ -42,17 +48,25 @@ export const DatePicker = forwardRef(
       isOpen,
     );
 
-    const handleInputChange = (inputVal: Date | null) => {
+    const handleInputChange: DatePickerInputProps['setValue'] = (
+      inputVal: Date | null,
+    ) => {
       if (inputVal !== utcValue) updateValue(inputVal);
     };
 
-    const handleCellClick = (cellValue: Date) => {
+    const handleCellClick: DatePickerMenuProps['onCellClick'] = cellValue => {
       updateValue(cellValue);
       setOpen(false);
     };
 
-    const handleMonthChange = (newMonth: Date) => {
-      setDisplayMonth(newMonth);
+    const handleMonthChange: DatePickerMenuProps['onMonthChange'] =
+      newMonth => {
+        setDisplayMonth(newMonth);
+      };
+
+    const handleInputClick: MouseEventHandler = e => {
+      // TODO: Set focus to appropriate segment
+      setOpen(true);
     };
 
     return (
@@ -61,10 +75,7 @@ export const DatePicker = forwardRef(
           ref={inputRef}
           value={utcValue}
           setValue={handleInputChange}
-          onClick={() => {
-            // TODO: Set focus to appropriate segment
-            setOpen(true);
-          }}
+          onClick={handleInputClick}
         />
         <DatePickerMenu
           refEl={inputRef}
