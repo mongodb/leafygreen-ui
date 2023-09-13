@@ -26,16 +26,22 @@
       "path": "../emotion"
     },
     {
-      "path": "../lib"
-    },
-    {
-      "path": "../leafygreen-provider"
+      "path": "../icon"
     },
     {
       "path": "../inline-definition"
     },
     {
-      "path": "../icon"
-    }
+      "path": "../leafygreen-provider"
+    },
+    {
+      "path": "../lib"
+    },
+    {
+      "path": "../palette"
+    },
+    {
+      "path": "../tokens"
+    },
   ]
 }
