@@ -44,7 +44,7 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
   args: {
     label: 'Pick a date',
     dateFormat: 'iso8601',
-    timeZone: 'Europe/London',
+    // timeZone: 'Europe/London',
     min: new Date('1996-10-14'),
     max: new Date('2026-10-14'),
   },
@@ -60,9 +60,7 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
 export default meta;
 
 export const Basic: StoryFn<typeof DatePicker> = props => {
-  const [value, setValue] = useState<Date | null | undefined>(
-    new Date('2023-09-10T00:00:00.000Z'),
-  );
+  const [value, setValue] = useState<Date | null | undefined>();
 
   return <DatePicker {...props} value={value} onChange={setValue} />;
 };

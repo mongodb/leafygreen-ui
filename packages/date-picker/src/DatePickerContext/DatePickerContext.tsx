@@ -4,6 +4,7 @@ import { isWithinInterval } from 'date-fns';
 
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
+import { isValidDate } from '../utils/isValidDate';
 import { toDate } from '../utils/toDate';
 
 import {
@@ -14,7 +15,7 @@ import {
 export const defaultDatePickerContext: DatePickerContextProps = {
   label: '',
   dateFormat: 'en-US',
-  timeZone: 'America/New_York',
+  timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   min: new Date('12-31-1969'),
   max: new Date('01-19-2038'),
   isInRange: () => true,
@@ -34,11 +35,12 @@ export const DatePickerProvider = ({
   children,
   value,
 }: PropsWithChildren<{ value: DatePickerProviderProps }>) => {
+  const { min, max, ...rest } = value;
   const providerValue: DatePickerContextProps = {
     ...defaultDatePickerContext,
-    ...value,
-    min: value.min ? toDate(value.min) : defaultDatePickerContext.min,
-    max: value.max ? toDate(value.max) : defaultDatePickerContext.max,
+    ...rest,
+    min: isValidDate(min) ? toDate(min)! : defaultDatePickerContext.min,
+    max: isValidDate(max) ? toDate(max)! : defaultDatePickerContext.max,
   };
 
   const isInRange = (d?: Date | null): boolean =>

@@ -9,7 +9,7 @@ import { DatePickerInputProps } from './DatePickerInput.types';
 
 export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
   ({ value, setValue, onClick, ...rest }: DatePickerInputProps, fwdRef) => {
-    const { label, dateFormat, timeZone } = useDatePickerContext();
+    const { label, timeZone } = useDatePickerContext();
     const labelId = useIdAllocator({ prefix: 'date-label' });
     const descriptionId = useIdAllocator({ prefix: 'date-description' });
     const errorId = useIdAllocator({ prefix: 'date-description' });
@@ -19,7 +19,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
     return (
       <DateInputWrapper
         label={label}
-        description={'Current time: ' + new Date(Date.now()).toLocaleString()}
+        description={timeZone}
         inputId={inputId}
         labelId={labelId}
         descriptionId={descriptionId}
