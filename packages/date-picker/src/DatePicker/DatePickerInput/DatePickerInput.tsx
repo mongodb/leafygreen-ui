@@ -19,7 +19,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
     return (
       <DateInputWrapper
         label={label}
-        description={dateFormat + ' ' + timeZone}
+        description={'Current time: ' + new Date(Date.now()).toLocaleString()}
         inputId={inputId}
         labelId={labelId}
         descriptionId={descriptionId}

@@ -1,6 +1,6 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { StoryFn } from '@storybook/react';
-import { isToday } from 'date-fns';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
@@ -10,7 +10,9 @@ import { Locales, TimeZones } from '../../DatePicker.testUtils';
 import {
   DatePickerContextProps,
   DatePickerProvider,
+  useDatePickerContext,
 } from '../../DatePickerContext';
+import { isTodayTZ } from '../../utils/isTodayTZ';
 import { CalendarCell } from '../CalendarCell/CalendarCell';
 
 import { CalendarGrid } from './CalendarGrid';
@@ -35,7 +37,7 @@ const meta: StoryMetaType<typeof CalendarGrid, DatePickerContextProps> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        dateFormat: ['en-us', 'iso8601', 'en-UK', 'de', 'fa-AF'],
+        dateFormat: Locales,
       },
       decorator: ProviderWrapper,
     },
@@ -61,6 +63,7 @@ const meta: StoryMetaType<typeof CalendarGrid, DatePickerContextProps> = {
 export default meta;
 
 export const Demo: StoryFn<typeof CalendarGrid> = ({ ...props }) => {
+  const { timeZone } = useDatePickerContext();
   const [month] = useState(new Date(Date.UTC(2023, Month.August, 1)));
 
   const [hovered, setHovered] = useState<string | undefined>();
@@ -78,7 +81,7 @@ export const Demo: StoryFn<typeof CalendarGrid> = ({ ...props }) => {
       {(day, i) => (
         <CalendarCell
           key={i}
-          isCurrent={!!(day && isToday(day))}
+          isCurrent={isTodayTZ(day, timeZone)}
           isHighlighted={hovered ? hovered === day?.toISOString() : false}
           onMouseEnter={handleHover(day?.toISOString())}
           data-iso={day?.toISOString()}
@@ -90,4 +93,16 @@ export const Demo: StoryFn<typeof CalendarGrid> = ({ ...props }) => {
   );
 };
 
-export const Generated = () => {};
+export const Generated: StoryFn<typeof CalendarGrid> = () => <></>;
+Generated.parameters = {
+  generate: {
+    args: {
+      month: new Date(Date.UTC(2023, Month.August, 1)),
+      children: (day: Date, i: number) => (
+        <CalendarCell key={i} isCurrent={false} isHighlighted={false}>
+          {day?.getUTCDate()}
+        </CalendarCell>
+      ),
+    },
+  },
+};

@@ -28,11 +28,11 @@ export function CalendarGrid({ month, children, ...rest }: CalendarGridProps) {
         <tr>
           {range(daysPerWeek).map(i => {
             const dayIndex = (i + weekStartsOn) % daysPerWeek;
-            const d = DaysOfWeek[dayIndex];
+            const day = DaysOfWeek[dayIndex];
             return (
-              <th key={d.short} abbr={d.long}>
+              <th key={day.short} abbr={day.long}>
                 <Disclaimer className={calendarHeaderCellStyles}>
-                  {d.short}
+                  {day.short}
                 </Disclaimer>
               </th>
             );
@@ -43,11 +43,8 @@ export function CalendarGrid({ month, children, ...rest }: CalendarGridProps) {
         {weeks.map((week, w) => (
           <tr key={w}>
             {week.map((day, d) => {
-              return day ? (
-                children(day, w * daysPerWeek + d)
-              ) : (
-                <td key=""></td>
-              );
+              const index: number = w * daysPerWeek + d;
+              return day ? children(day, index) : <td key={index}></td>;
             })}
           </tr>
         ))}
