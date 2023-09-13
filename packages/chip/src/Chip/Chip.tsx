@@ -105,7 +105,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
             label
           )}
         </span>
-        {onDismiss && (
+        {!!onDismiss && (
           <DismissButton
             label={label}
             onDismiss={onDismiss}
