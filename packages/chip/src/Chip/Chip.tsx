@@ -26,7 +26,7 @@ import { ChipProps, Size, TruncationLocation, Variant } from './Chip.types';
 export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
   (
     {
-      chipTruncationLocation = TruncationLocation.none,
+      chipTruncationLocation = TruncationLocation.None,
       chipCharacterLimit = 15,
       disabled = false,
       size = Size.Default,

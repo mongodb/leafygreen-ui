@@ -15,7 +15,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       size,
       disabled,
       overflow,
-      chipTruncationLocation = TruncationLocation.end,
+      chipTruncationLocation = TruncationLocation.End,
       chipCharacterLimit = 12,
       popoverZIndex,
     } = useContext(ComboboxContext);

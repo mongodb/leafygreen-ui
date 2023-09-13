@@ -20,10 +20,10 @@ const meta: StoryMetaType<typeof Chip> = {
         disabled: [false, true],
         onDismiss: [() => {}, undefined],
         chipTruncationLocation: [
-          TruncationLocation.end,
-          TruncationLocation.middle,
-          TruncationLocation.none,
-          TruncationLocation.start,
+          TruncationLocation.End,
+          TruncationLocation.Middle,
+          TruncationLocation.None,
+          TruncationLocation.Start,
         ],
         size: [Size.Default, Size.Large],
       },
@@ -40,7 +40,7 @@ const meta: StoryMetaType<typeof Chip> = {
   args: {
     label: 'Chip',
     onDismiss: () => {},
-    chipTruncationLocation: TruncationLocation.none,
+    chipTruncationLocation: TruncationLocation.None,
     size: Size.Default,
     variant: Variant.Gray,
     chipCharacterLimit: 15,

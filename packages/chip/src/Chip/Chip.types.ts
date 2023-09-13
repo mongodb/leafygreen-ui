@@ -1,10 +1,10 @@
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 
 export const TruncationLocation = {
-  start: 'start',
-  middle: 'middle',
-  end: 'end',
-  none: 'none',
+  Start: 'start',
+  Middle: 'middle',
+  End: 'end',
+  None: 'none',
 } as const;
 export type TruncationLocation =
   (typeof TruncationLocation)[keyof typeof TruncationLocation];
