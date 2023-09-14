@@ -1,5 +1,12 @@
 # @lg-tools/lint
 
+## 0.1.5
+
+### Patch Changes
+
+- Updated dependencies [74071b67]
+  - @lg-tools/build@0.3.0
+
 ## 0.1.4
 
 ### Patch Changes
