@@ -70,7 +70,7 @@ export const colorSets: Record<Theme, ColorSet> = {
 
   [Theme.Dark]: {
     menu: {
-      border: palette.gray.base,
+      border: 'rgba(255, 255, 255, 0)',
       shadow: transparentize(0.85, '#000000'),
     },
     option: {

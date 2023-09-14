@@ -13,6 +13,7 @@ export const searchResultsMenuStyles = css`
 export const searchResultsMenuThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     background-color: ${palette.white};
+    border: 1px solid ${palette.gray.light2};
   `,
   [Theme.Dark]: css`
     background-color: ${palette.gray.dark3};
