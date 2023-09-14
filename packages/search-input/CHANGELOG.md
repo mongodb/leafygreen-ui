@@ -1,5 +1,19 @@
 # @leafygreen-ui/search-input
 
+## 2.0.17
+
+### Patch Changes
+
+- 3a9b274d: Handles keyboard event based on the event's `key` property rather than its `keyCode` property
+- Updated dependencies [3a9b274d]
+  - @leafygreen-ui/lib@12.0.0
+  - @leafygreen-ui/a11y@1.4.10
+  - @leafygreen-ui/icon-button@15.0.18
+  - @leafygreen-ui/input-option@1.0.11
+  - @leafygreen-ui/leafygreen-provider@3.1.9
+  - @leafygreen-ui/popover@11.0.18
+  - @leafygreen-ui/typography@17.0.1
+
 ## 2.0.16
 
 ### Patch Changes
