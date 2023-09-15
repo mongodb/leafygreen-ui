@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  getMonth,
-  getYear,
-  isBefore,
-  isSameMonth,
-  setMonth,
-  setYear,
-} from 'date-fns';
+import { getYear, isBefore, setYear } from 'date-fns';
 import { range } from 'lodash';
 
 import Icon from '@leafygreen-ui/icon';
@@ -15,6 +8,8 @@ import { DropdownWidthBasis, Option, Select } from '@leafygreen-ui/select';
 
 import { Months } from '../../../constants';
 import { useDatePickerContext } from '../../../DatePickerContext';
+import { isSameUTCMonth } from '../../../utils/isSameUTCMonth';
+import { setUTCMonth } from '../../../utils/setUTCMonth';
 import {
   menuHeaderSelectContainerStyles,
   menuHeaderStyles,
@@ -48,13 +43,16 @@ export const DatePickerMenuHeader = ({
     }
   };
 
+  const prevMonth = month.getUTCMonth() - 1;
+  const nextMonth = month.getUTCMonth() + 1;
+
   return (
     <div className={menuHeaderStyles}>
       <IconButton
         aria-label="Previous month"
-        disabled={isSameMonth(month, min)}
+        disabled={isSameUTCMonth(month, min)}
         onClick={() => {
-          const newMonth = setMonth(month, getMonth(month) - 1);
+          const newMonth = setUTCMonth(month, prevMonth);
           updateMonth(newMonth);
         }}
       >
@@ -68,7 +66,7 @@ export const DatePickerMenuHeader = ({
           value={month.getUTCMonth().toString()}
           dropdownWidthBasis={DropdownWidthBasis.Option}
           onChange={m => {
-            const newMonth = setMonth(month, Number(m));
+            const newMonth = setUTCMonth(month, Number(m));
             updateMonth(newMonth);
           }}
           usePortal={false}
@@ -101,9 +99,9 @@ export const DatePickerMenuHeader = ({
       </div>
       <IconButton
         aria-label="Next month"
-        disabled={isSameMonth(month, max)}
+        disabled={isSameUTCMonth(month, max)}
         onClick={() => {
-          const newMonth = setMonth(month, getMonth(month) + 1);
+          const newMonth = setUTCMonth(month, nextMonth);
           updateMonth(newMonth);
         }}
       >

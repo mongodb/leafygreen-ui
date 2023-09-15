@@ -1,6 +1,20 @@
+import tzMock from 'timezone-mock';
+
+import { Month } from '../../constants';
+
 import { isSameUTCDay } from '.';
 
 describe('packages/date-picker/utils/isSameUTCDay', () => {
+  beforeAll(() => {
+    tzMock.register('US/Eastern');
+  });
+
+  beforeEach(() => {
+    jest
+      .useFakeTimers()
+      .setSystemTime(new Date(Date.UTC(2023, Month.September, 1, 0, 0, 0)));
+  });
+
   test('true: when both dates are defined in UTC', () => {
     const utc1 = new Date(Date.UTC(2023, 8, 1, 0, 0, 0));
     const utc2 = new Date(Date.UTC(2023, 8, 1, 21, 0, 0));

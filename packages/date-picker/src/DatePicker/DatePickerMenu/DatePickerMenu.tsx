@@ -31,7 +31,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
     }: DatePickerMenuProps,
     fwdRef,
   ) => {
-    const { isInRange, min, max } = useDatePickerContext();
+    const { isInRange } = useDatePickerContext();
     const [highlight, setHighlight] = useState<Date | null>(null);
 
     const getCellState = (cellDay: Date | null) => {

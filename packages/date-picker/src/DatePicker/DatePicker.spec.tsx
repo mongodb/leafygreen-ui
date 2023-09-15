@@ -80,6 +80,45 @@ describe('packages/date-picker', () => {
         const { calendarCells } = openMenu();
         expect(calendarCells).toHaveLength(29);
       });
+
+      describe('Chevrons', () => {
+        beforeEach(() => {
+          jest
+            .useFakeTimers()
+            .setSystemTime(new Date(Date.UTC(2023, Month.December, 26)));
+        });
+        test('Left is disabled if prev. month is entirely out of range', () => {
+          const { openMenu } = renderDatePicker({
+            min: new Date(Date.UTC(2023, Month.December, 1)),
+          });
+          const { leftChevron } = openMenu();
+          expect(leftChevron).toHaveAttribute('aria-disabled', 'true');
+        });
+
+        test('Right is disabled if next month is entirely out of range', () => {
+          const { openMenu } = renderDatePicker({
+            max: new Date(Date.UTC(2023, Month.December, 31)),
+          });
+          const { rightChevron } = openMenu();
+          expect(rightChevron).toHaveAttribute('aria-disabled', 'true');
+        });
+
+        test('Left is not disabled if part of prev. month is in range', () => {
+          const { openMenu } = renderDatePicker({
+            min: new Date(Date.UTC(2023, Month.November, 29)),
+          });
+          const { leftChevron } = openMenu();
+          expect(leftChevron).toHaveAttribute('aria-disabled', 'false');
+        });
+
+        test('Right is not disabled if part of next month is in of range', () => {
+          const { openMenu } = renderDatePicker({
+            max: new Date(Date.UTC(2024, Month.January, 2)),
+          });
+          const { rightChevron } = openMenu();
+          expect(rightChevron).toHaveAttribute('aria-disabled', 'false');
+        });
+      });
     });
   });
 
@@ -101,7 +140,7 @@ describe('packages/date-picker', () => {
       });
     });
 
-    describe.only('Clicking a Calendar cell', () => {
+    describe('Clicking a Calendar cell', () => {
       test('fires a change handler', () => {
         const onChange = jest.fn();
         const { openMenu } = renderDatePicker({
@@ -134,7 +173,6 @@ describe('packages/date-picker', () => {
           .useFakeTimers()
           .setSystemTime(new Date(Date.UTC(2023, Month.December, 26)));
       });
-
       test('Left does not close the menu', async () => {
         const { openMenu } = renderDatePicker();
         const { leftChevron, menuContainerEl } = openMenu();
@@ -160,8 +198,8 @@ describe('packages/date-picker', () => {
         userEvent.click(leftChevron!);
         await waitFor(() => {
           expect(calendarGrid).toHaveAttribute('aria-label', 'November 2023');
-          expect(monthSelect).toHaveValue(Month.November);
-          expect(yearSelect).toHaveValue((2023).toString());
+          expect(monthSelect).toHaveValue(Month.November.toString());
+          expect(yearSelect).toHaveValue('2023');
         });
       });
 
@@ -172,25 +210,9 @@ describe('packages/date-picker', () => {
         userEvent.click(rightChevron!);
         await waitFor(() => {
           expect(calendarGrid).toHaveAttribute('aria-label', 'January 2024');
-          expect(monthSelect).toHaveValue(Month.January);
-          expect(yearSelect).toHaveValue((2024).toString());
+          expect(monthSelect).toHaveValue(Month.January.toString());
+          expect(yearSelect).toHaveValue('2024');
         });
-      });
-
-      test('Left is disabled if prev. month is entirely out of range', () => {
-        const { openMenu } = renderDatePicker({
-          min: new Date(Date.UTC(2023, Month.December, 1)),
-        });
-        const { leftChevron } = openMenu();
-        expect(leftChevron).toHaveAttribute('aria-disabled', 'true');
-      });
-
-      test('Right is disabled if next month is entirely out of range', () => {
-        const { openMenu } = renderDatePicker({
-          max: new Date(Date.UTC(2023, Month.December, 31)),
-        });
-        const { rightChevron } = openMenu();
-        expect(rightChevron).toHaveAttribute('aria-disabled', 'true');
       });
 
       test.todo('changing the month is announced in an aria-live region');

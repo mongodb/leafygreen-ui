@@ -74,7 +74,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       onChange?.(newVal);
     };
 
-    // useBackdropClick(closeMenu, [inputRef, menuRef], isOpen);
+    useBackdropClick(closeMenu, [inputRef, menuRef], isOpen);
 
     const handleInputChange: DatePickerInputProps['setValue'] = (
       inputVal: Date | null,
