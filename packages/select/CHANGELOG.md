@@ -1,5 +1,17 @@
 # @leafygreen-ui/select
 
+## 10.3.16
+
+### Patch Changes
+
+- 3a9b274d: Handles keyboard event based on the event's `key` property rather than its `keyCode` property
+- Updated dependencies [3a9b274d]
+  - @leafygreen-ui/lib@12.0.0
+  - @leafygreen-ui/button@21.0.6
+  - @leafygreen-ui/leafygreen-provider@3.1.9
+  - @leafygreen-ui/popover@11.0.18
+  - @leafygreen-ui/typography@17.0.1
+
 ## 10.3.15
 
 ### Patch Changes

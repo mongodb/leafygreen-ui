@@ -1,5 +1,14 @@
 # @leafygreen-ui/toggle
 
+## 10.0.16
+
+### Patch Changes
+
+- Updated dependencies [3a9b274d]
+  - @leafygreen-ui/lib@12.0.0
+  - @leafygreen-ui/a11y@1.4.10
+  - @leafygreen-ui/leafygreen-provider@3.1.9
+
 ## 10.0.15
 
 ### Patch Changes

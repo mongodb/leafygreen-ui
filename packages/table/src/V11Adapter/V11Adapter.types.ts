@@ -15,3 +15,17 @@ export type V11AdapterProps<T extends LGRowData> = PropsWithChildren<
       headerLabels?: { [key: string]: string };
     }
 >;
+
+export interface AdapterRowProps {
+  children?: React.ReactNode;
+  [key: string]: any;
+}
+
+export interface ValidDataType {
+  [key: string]: any;
+  rowProps: AdapterRowProps;
+}
+
+export interface ProcessedRowData extends ValidDataType {
+  rowProps: AdapterRowProps;
+}
