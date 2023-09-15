@@ -27,7 +27,7 @@ describe('packages/hooks/useControlledValue', () => {
   });
 
   describe('with controlled component', () => {
-    test('calling with a value sets value and isControlled', () => {
+    test('rendering with no value', () => {
       const { result } = renderHook(v => useControlledValue(v), {
         initialProps: 'apple',
       });
@@ -35,7 +35,15 @@ describe('packages/hooks/useControlledValue', () => {
       expect(result.current.value).toBe('apple');
     });
 
-    test('calling with a new value changes the value', () => {
+    test('rendering with a value sets value and isControlled', () => {
+      const { result } = renderHook(v => useControlledValue(v), {
+        initialProps: 'apple',
+      });
+      expect(result.current.isControlled).toBe(true);
+      expect(result.current.value).toBe('apple');
+    });
+
+    test('rerendering with a new value changes the value', () => {
       const { result, rerender } = renderHook(v => useControlledValue(v), {
         initialProps: 'apple',
       });
@@ -109,7 +117,7 @@ describe('packages/hooks/useControlledValue', () => {
       expect(result.current.value).toBe('apple');
     });
 
-    describe('value types', () => {
+    describe('accepts various value types', () => {
       test('accepts number values', () => {
         const { result } = renderHook(v => useControlledValue(v), {
           initialProps: 5,
@@ -148,7 +156,7 @@ describe('packages/hooks/useControlledValue', () => {
         expect(result.current.value).toBe(date);
       });
 
-      test('accepts multiple types', () => {
+      test('accepts multiple/union types', () => {
         const { result, rerender } = renderHook(
           v => useControlledValue<string | number>(v),
           {
