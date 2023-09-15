@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { act, fireEvent, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
@@ -33,6 +33,18 @@ describe('packages/popover', () => {
       expect(newResults).toHaveNoViolations();
     });
   });
+
+  test('accepts a ref', () => {
+    const ref = createRef();
+    render(
+      <Popover ref={ref} data-testid="popover-test-id">
+        Popover Content
+      </Popover>,
+    );
+
+    expect(ref.current).toBeDefined();
+  });
+
   test('displays popover when the "active" prop is set', () => {
     const { getByTestId } = renderPopover({ active: true });
     expect(getByTestId('popover-test-id')).toBeInTheDocument();
