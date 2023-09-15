@@ -11,15 +11,18 @@ import { menuStyles } from './MenuWrapper.styles';
  * A styled popover
  */
 export const MenuWrapper = forwardRef(
-  ({
-    className,
-    children,
-    ...props
-  }: PopoverProps & HTMLElementProps<'div'>) => {
+  (
+    { className, children, ...props }: PopoverProps & HTMLElementProps<'div'>,
+    fwdRef,
+  ) => {
     const { theme } = useDarkMode();
 
     return (
-      <Popover className={cx(menuStyles[theme], className)} {...props}>
+      <Popover
+        ref={fwdRef}
+        className={cx(menuStyles[theme], className)}
+        {...props}
+      >
         {children}
       </Popover>
     );

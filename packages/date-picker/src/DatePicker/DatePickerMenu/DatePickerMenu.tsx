@@ -6,6 +6,7 @@ import { spacing } from '@leafygreen-ui/tokens';
 import { CalendarCell, CalendarCellState } from '../../Calendar/CalendarCell';
 import { CalendarGrid } from '../../Calendar/CalendarGrid';
 import { MenuWrapper } from '../../Calendar/MenuWrapper';
+import { Months } from '../../constants';
 import { useDatePickerContext } from '../../DatePickerContext';
 import { isCurrentUTCDay } from '../../utils/isCurrentUTCDay';
 import { isSameUTCDay } from '../../utils/isSameUTCDay';
@@ -46,7 +47,12 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
     };
 
     const ref = useForwardedRef(fwdRef, null);
+    const monthLabel =
+      Months[month.getUTCMonth()].long + ' ' + month.getUTCFullYear();
 
+    const makeCellHoverHandler = (day: Date) => () => setHighlight(day);
+
+    const makeCellClickHandler = (day: Date) => () => onCellClick(day);
     return (
       <MenuWrapper
         active={isOpen}
@@ -62,6 +68,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
             month={month}
             className={menuCalendarGridStyles}
             onMouseLeave={() => setHighlight(null)}
+            aria-label={monthLabel}
           >
             {(day, i) => (
               <CalendarCell
@@ -69,8 +76,8 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
                 isHighlighted={isSameUTCDay(day, highlight)}
                 isCurrent={isCurrentUTCDay(day)}
                 state={getCellState(day)}
-                onMouseEnter={() => setHighlight(day)}
-                onClick={() => onCellClick(day)}
+                onMouseEnter={makeCellHoverHandler(day)}
+                onClick={makeCellClickHandler(day)}
                 data-iso={day.toISOString()}
               >
                 {day.getUTCDate()}

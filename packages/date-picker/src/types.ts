@@ -5,7 +5,14 @@ export interface BaseDatePickerProps extends DarkModeProps {
   /**
    * A label for the input
    */
-  label: string;
+  label: React.ReactNode;
+
+  /**
+   * A description for the date picker.
+   *
+   * It's recommended to set a meaningful time zone representation as the description (e.g. "Coordinated Universal Time")
+   */
+  description?: React.ReactNode;
 
   /**
    * Sets the _presentation format_ for the displayed date.

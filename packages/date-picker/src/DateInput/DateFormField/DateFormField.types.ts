@@ -10,8 +10,8 @@ export const InputState = {
 export type InputState = (typeof InputState)[keyof typeof InputState];
 
 export interface DateFormFieldProps extends HTMLElementProps<'div'> {
-  label?: string;
-  description?: string;
+  label?: React.ReactNode;
+  description?: React.ReactNode;
   state?: InputState;
   errorMessage?: string;
   inputId: string;

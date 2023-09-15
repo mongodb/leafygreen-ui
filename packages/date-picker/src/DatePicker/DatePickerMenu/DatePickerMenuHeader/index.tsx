@@ -65,7 +65,7 @@ export const DatePickerMenuHeader = ({
           size="xsmall"
           aria-label="Select month"
           allowDeselect={false}
-          value={month.getMonth().toString()}
+          value={month.getUTCMonth().toString()}
           dropdownWidthBasis={DropdownWidthBasis.Option}
           onChange={m => {
             const newMonth = setMonth(month, Number(m));

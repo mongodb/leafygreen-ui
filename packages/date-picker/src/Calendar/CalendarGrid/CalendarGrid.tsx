@@ -23,14 +23,14 @@ export function CalendarGrid({ month, children, ...rest }: CalendarGridProps) {
   );
 
   return (
-    <table {...rest}>
+    <table {...rest} role="grid">
       <thead>
-        <tr>
+        <tr role="row">
           {range(daysPerWeek).map(i => {
             const dayIndex = (i + weekStartsOn) % daysPerWeek;
             const day = DaysOfWeek[dayIndex];
             return (
-              <th key={day.short} abbr={day.long}>
+              <th role="columnheader" key={day.short} abbr={day.long}>
                 <Disclaimer className={calendarHeaderCellStyles}>
                   {day.short}
                 </Disclaimer>
@@ -41,13 +41,14 @@ export function CalendarGrid({ month, children, ...rest }: CalendarGridProps) {
       </thead>
       <tbody>
         {weeks.map((week, w) => (
-          <tr key={`week-${w}`}>
+          <tr key={`week-${w}`} role="row">
             {week.map((day, d) => {
               const index: number = w * daysPerWeek + d;
               return day ? (
                 children(day, index)
               ) : (
-                <td key={`null-${index}`}></td>
+                // eslint-disable-next-line jsx-a11y/no-interactive-element-to-noninteractive-role
+                <td key={`null-${index}`} role="none"></td>
               );
             })}
           </tr>

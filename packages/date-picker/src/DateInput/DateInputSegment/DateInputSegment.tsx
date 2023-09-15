@@ -60,6 +60,7 @@ export const DateInputSegment = React.forwardRef<
         id={segment}
         ref={inputRef}
         type="number"
+        role="spinbutton"
         value={formatValue(value)}
         min={min}
         max={max}

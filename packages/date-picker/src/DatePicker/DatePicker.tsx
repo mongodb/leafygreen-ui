@@ -7,7 +7,11 @@ import React, {
 } from 'react';
 import { isSameMonth, setMonth } from 'date-fns';
 
-import { useBackdropClick, useIdAllocator } from '@leafygreen-ui/hooks';
+import {
+  useBackdropClick,
+  useForwardedRef,
+  useIdAllocator,
+} from '@leafygreen-ui/hooks';
 
 import {
   DatePickerContextProps,
@@ -40,23 +44,27 @@ const contextPropNames: Array<
 /**
  * LeafyGreen Date Picker component
  */
-export const DatePicker = forwardRef(
-  ({
-    value: valueProp,
-    initialValue,
-    onChange,
-    handleValidation,
-    ...props
-  }: DatePickerProps) => {
+export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
+  (
+    {
+      value: valueProp,
+      initialValue,
+      onChange,
+      handleValidation,
+      ...props
+    }: DatePickerProps,
+    fwdRef,
+  ) => {
     const [contextProps, restProps] = pickAndOmit(props, contextPropNames);
     const menuId = useIdAllocator({ prefix: 'lg-date-picker-menu' });
-    const inputRef = useRef<HTMLDivElement>(null);
+    const inputRef = useForwardedRef(fwdRef, null);
     const menuRef = useRef<HTMLDivElement>(null);
-    const [displayMonth, setDisplayMonth] = useState<Date>(new Date());
+    const utcValue = useMemo(() => toDate(valueProp), [valueProp]);
+    const [displayMonth, setDisplayMonth] = useState<Date>(
+      utcValue ?? new Date(),
+    );
     const [isOpen, setOpen] = useState(false);
     const closeMenu = () => setOpen(false);
-
-    const utcValue = useMemo(() => toDate(valueProp), [valueProp]);
 
     const updateValue = (newVal: Date | null) => {
       // if the new value is not the current month, update the month
@@ -86,10 +94,9 @@ export const DatePicker = forwardRef(
         setDisplayMonth(newMonth);
       };
 
-    const handleInputClick: MouseEventHandler = e => {
-      console.log('handleInputClick');
-      // TODO: Set focus to appropriate segment
+    const handleInputClick: MouseEventHandler = () => {
       setOpen(true);
+      // TODO: Set focus to appropriate segment
     };
 
     return (

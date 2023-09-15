@@ -3,6 +3,6 @@ import { render } from '@testing-library/react';
 
 import { DateFormField } from '.';
 
-describe('packages/input-wrapper', () => {
-  test('condition', () => {});
+describe('packages/date-picker/date-form-field', () => {
+  test('renders', () => {});
 });

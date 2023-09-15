@@ -45,6 +45,8 @@ export const CalendarCell = React.forwardRef<
     return (
       <td
         ref={ref}
+        role="gridcell"
+        aria-selected={isActive}
         className={cx(
           calendarCellStyles,
 
@@ -55,7 +57,6 @@ export const CalendarCell = React.forwardRef<
           },
           className,
         )}
-        aria-selected={isActive}
         {...rest}
       >
         <div className={cx(indicatorBaseStyles, indicatorClassName)}></div>

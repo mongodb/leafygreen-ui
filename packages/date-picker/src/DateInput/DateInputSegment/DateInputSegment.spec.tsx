@@ -21,6 +21,25 @@ describe('packages/date-picker/date-input-segment', () => {
   });
 
   describe('rendering', () => {
+    describe('aria attributes', () => {
+      test('has `spinbutton` role', () => {
+        const { input } = renderSegment({ segment: 'day' });
+        expect(input).toHaveAttribute('role', 'spinbutton');
+      });
+      test('day segment has aria-label', () => {
+        const { input } = renderSegment({ segment: 'day' });
+        expect(input).toHaveAttribute('aria-label', 'day');
+      });
+      test('month segment has aria-label', () => {
+        const { input } = renderSegment({ segment: 'month' });
+        expect(input).toHaveAttribute('aria-label', 'month');
+      });
+      test('year segment has aria-label', () => {
+        const { input } = renderSegment({ segment: 'year' });
+        expect(input).toHaveAttribute('aria-label', 'year');
+      });
+    });
+
     describe('day segment', () => {
       test('Rendering with undefined sets the value to empty string', () => {
         const { input } = renderSegment({ segment: 'day' });
