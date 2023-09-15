@@ -1,5 +1,5 @@
 import React from 'react';
-import { getYear, isBefore, setYear } from 'date-fns';
+import { isBefore, setYear } from 'date-fns';
 import { range } from 'lodash';
 
 import Icon from '@leafygreen-ui/icon';
@@ -27,7 +27,7 @@ export const DatePickerMenuHeader = ({
 }: DatePickerMenuHeaderProps) => {
   const { min, max, isInRange } = useDatePickerContext();
 
-  const yearOptions = range(getYear(min), getYear(max) + 1);
+  const yearOptions = range(min.getUTCFullYear(), max.getUTCFullYear() + 1);
 
   const updateMonth = (newMonth: Date) => {
     // TODO: may need to update this function to check if the months are in range

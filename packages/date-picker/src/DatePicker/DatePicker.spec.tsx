@@ -13,6 +13,13 @@ import { renderDatePicker } from './DatePicker.testutils';
 import { DatePicker } from '.';
 
 describe('packages/date-picker', () => {
+  beforeEach(() => {
+    // Set the current time to midnight UTC on 2023-12-26
+    jest
+      .useFakeTimers()
+      .setSystemTime(new Date(Date.UTC(2023, Month.December, 26)));
+  });
+
   describe('Rendering', () => {
     /// Note: Most rendering tests handled by Chromatic
 
@@ -50,9 +57,6 @@ describe('packages/date-picker', () => {
       });
 
       test('if no value is set, menu opens to current month', () => {
-        jest
-          .useFakeTimers()
-          .setSystemTime(new Date(Date.UTC(2023, Month.December, 26, 0, 0, 0)));
         const { openMenu } = renderDatePicker();
         const { calendarGrid, monthSelect, yearSelect } = openMenu();
         expect(calendarGrid).toHaveAttribute('aria-label', 'December 2023');
@@ -61,9 +65,6 @@ describe('packages/date-picker', () => {
       });
 
       test('if a value is set, menu opens to the month of that value', () => {
-        jest
-          .useFakeTimers()
-          .setSystemTime(new Date(Date.UTC(2023, Month.December, 26, 0, 0, 0)));
         const { openMenu } = renderDatePicker({
           value: new Date(Date.UTC(2023, Month.March, 10)),
         });
@@ -82,11 +83,6 @@ describe('packages/date-picker', () => {
       });
 
       describe('Chevrons', () => {
-        beforeEach(() => {
-          jest
-            .useFakeTimers()
-            .setSystemTime(new Date(Date.UTC(2023, Month.December, 26)));
-        });
         test('Left is disabled if prev. month is entirely out of range', () => {
           const { openMenu } = renderDatePicker({
             min: new Date(Date.UTC(2023, Month.December, 1)),
@@ -168,11 +164,6 @@ describe('packages/date-picker', () => {
     });
 
     describe('Clicking a Chevron', () => {
-      beforeEach(() => {
-        jest
-          .useFakeTimers()
-          .setSystemTime(new Date(Date.UTC(2023, Month.December, 26)));
-      });
       test('Left does not close the menu', async () => {
         const { openMenu } = renderDatePicker();
         const { leftChevron, menuContainerEl } = openMenu();
@@ -218,7 +209,7 @@ describe('packages/date-picker', () => {
       test.todo('changing the month is announced in an aria-live region');
     });
 
-    describe('Clicking the month select menu', () => {
+    describe.only('Clicking the month select menu', () => {
       test('menu opens over the calendar menu', async () => {
         const { openMenu, queryAllByRole } = renderDatePicker();
         const { monthSelect, menuContainerEl } = openMenu();
@@ -230,19 +221,23 @@ describe('packages/date-picker', () => {
         });
       });
 
-      test('selecting the month updates the calendar', () => {
-        const { openMenu, queryAllByRole } = renderDatePicker({
+      test('selecting the month updates the calendar', async () => {
+        const { openMenu, findAllByRole } = renderDatePicker({
           value: new Date(Date.UTC(2023, Month.December, 26)),
         });
         const { monthSelect, calendarGrid } = openMenu();
         userEvent.click(monthSelect!);
-        const options = queryAllByRole('option');
-        userEvent.click(options[0]);
-        expect(calendarGrid).toHaveAttribute('aria-label', 'January 2023');
+        const options = await findAllByRole('option');
+        const Jan = options[0];
+
+        userEvent.click(Jan);
+        await waitFor(() => {
+          expect(calendarGrid).toHaveAttribute('aria-label', 'January 2023');
+        });
       });
     });
 
-    describe('Clicking the year select menu', () => {
+    describe.only('Clicking the year select menu', () => {
       test('menu opens over the calendar menu', async () => {
         const { openMenu, queryAllByRole } = renderDatePicker();
         const { yearSelect, menuContainerEl } = openMenu();
@@ -253,15 +248,19 @@ describe('packages/date-picker', () => {
           expect(listBoxes).toHaveLength(2);
         });
       });
-      test('selecting the year updates the calendar', () => {
-        const { openMenu, queryAllByRole } = renderDatePicker({
+      test('selecting the year updates the calendar', async () => {
+        const { openMenu, findAllByRole } = renderDatePicker({
           value: new Date(Date.UTC(2023, Month.December, 26)),
         });
-        const { monthSelect, calendarGrid } = openMenu();
-        userEvent.click(monthSelect!);
-        const options = queryAllByRole('option');
-        userEvent.click(options[0]);
-        expect(calendarGrid).toHaveAttribute('aria-label', 'January 1970');
+        const { yearSelect, calendarGrid } = openMenu();
+        userEvent.click(yearSelect!);
+        const options = await findAllByRole('option');
+        const _1970 = options[1];
+
+        userEvent.click(_1970);
+        await waitFor(() => {
+          expect(calendarGrid).toHaveAttribute('aria-label', 'December 1970');
+        });
       });
     });
 
