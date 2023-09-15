@@ -66,7 +66,7 @@ const mutationOptions = {
  * @param props.portalContainer HTML element that the popover is portaled within.
  * @param props.scrollContainer HTML ancestor element that's scrollable to position the popover accurately within scrolling containers.
  */
-const Popover = forwardRef<any, PopoverProps>(
+const Popover = forwardRef<HTMLDivElement, PopoverProps>(
   (
     {
       active = false,
