@@ -1,6 +1,7 @@
 import React from 'react';
 import { createContext, PropsWithChildren, useContext } from 'react';
 import { isWithinInterval } from 'date-fns';
+import { defaults } from 'lodash';
 
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
@@ -14,10 +15,11 @@ import {
 
 export const defaultDatePickerContext: DatePickerContextProps = {
   label: '',
-  dateFormat: 'en-US',
+  dateFormat: 'iso8601',
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   min: new Date('12-31-1969'),
   max: new Date('01-19-2038'),
+  isOpen: false,
   isInRange: () => true,
   disabled: false,
   size: Size.Default,
@@ -25,6 +27,7 @@ export const defaultDatePickerContext: DatePickerContextProps = {
   errorMessage: '',
   baseFontSize: BaseFontSize.Body1,
   darkMode: false,
+  menuId: '',
 };
 
 export const DatePickerContext = createContext<DatePickerContextProps>(
@@ -37,8 +40,7 @@ export const DatePickerProvider = ({
 }: PropsWithChildren<{ value: DatePickerProviderProps }>) => {
   const { min, max, ...rest } = value;
   const providerValue: DatePickerContextProps = {
-    ...defaultDatePickerContext,
-    ...rest,
+    ...defaults(rest, defaultDatePickerContext),
     min: isValidDate(min) ? toDate(min)! : defaultDatePickerContext.min,
     max: isValidDate(max) ? toDate(max)! : defaultDatePickerContext.max,
   };

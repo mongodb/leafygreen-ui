@@ -1,8 +1,10 @@
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { PopoverProps } from '@leafygreen-ui/popover';
 import { PortalControlProps } from '@leafygreen-ui/popover';
 
 export type DatePickerMenuProps = PortalControlProps &
-  Pick<PopoverProps, 'refEl'> & {
+  Pick<PopoverProps, 'refEl'> &
+  HTMLElementProps<'div'> & {
     /** Whether the calendar menu popover is open */
     isOpen: boolean;
 

@@ -5,11 +5,11 @@ import { StoryFn } from '@storybook/react';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 
-import { Locales, TimeZones } from '../DatePicker.testUtils';
 import {
   DatePickerContextProps,
   DatePickerProvider,
 } from '../DatePickerContext';
+import { Locales, TimeZones } from '../testUtils';
 
 import { DatePicker } from './DatePicker';
 
@@ -43,8 +43,6 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
   },
   args: {
     label: 'Pick a date',
-    dateFormat: 'iso8601',
-    // timeZone: 'Europe/London',
     min: new Date('1996-10-14'),
     max: new Date('2026-10-14'),
   },

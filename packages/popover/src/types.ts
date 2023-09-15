@@ -49,7 +49,7 @@ export interface ElementPosition {
   width: number;
 }
 
-interface ChildrenFunctionParameters {
+export interface ChildrenFunctionParameters {
   align: Align;
   justify: Justify;
   referenceElPos: ElementPosition;

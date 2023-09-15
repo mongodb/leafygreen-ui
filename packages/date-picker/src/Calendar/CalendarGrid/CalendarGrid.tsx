@@ -41,10 +41,14 @@ export function CalendarGrid({ month, children, ...rest }: CalendarGridProps) {
       </thead>
       <tbody>
         {weeks.map((week, w) => (
-          <tr key={w}>
+          <tr key={`week-${w}`}>
             {week.map((day, d) => {
               const index: number = w * daysPerWeek + d;
-              return day ? children(day, index) : <td key={index}></td>;
+              return day ? (
+                children(day, index)
+              ) : (
+                <td key={`null-${index}`}></td>
+              );
             })}
           </tr>
         ))}

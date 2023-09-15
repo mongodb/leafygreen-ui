@@ -52,17 +52,20 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
         active={isOpen}
         spacing={spacing[1]}
         className={menuWrapperStyles}
+        ref={ref}
+        role="listbox"
         {...rest}
       >
-        <div ref={ref} className={menuContentStyles}>
+        <div className={menuContentStyles}>
           <DatePickerMenuHeader month={month} onMonthChange={onMonthChange} />
           <CalendarGrid
             month={month}
             className={menuCalendarGridStyles}
             onMouseLeave={() => setHighlight(null)}
           >
-            {day => (
+            {(day, i) => (
               <CalendarCell
+                key={i}
                 isHighlighted={isSameUTCDay(day, highlight)}
                 isCurrent={isCurrentUTCDay(day)}
                 state={getCellState(day)}

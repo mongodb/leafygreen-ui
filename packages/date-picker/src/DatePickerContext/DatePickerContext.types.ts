@@ -1,9 +1,17 @@
 import { BaseDatePickerProps } from 'src/types';
 
+/** The props expected by the provider */
+export interface DatePickerProviderProps extends BaseDatePickerProps {
+  /** Whether the calendar menu is open */
+  isOpen: boolean;
+  menuId: string;
+}
+
 /**
  * The values in context
  */
-export interface DatePickerContextProps extends Required<BaseDatePickerProps> {
+export interface DatePickerContextProps
+  extends Required<DatePickerProviderProps> {
   /** The earliest date accepted */
   min: Date;
 
@@ -15,6 +23,3 @@ export interface DatePickerContextProps extends Required<BaseDatePickerProps> {
    */
   isInRange: (d?: Date | null) => boolean;
 }
-
-/** The props expected by the provider */
-export interface DatePickerProviderProps extends BaseDatePickerProps {}

@@ -7,27 +7,54 @@ import React, {
 } from 'react';
 import { isSameMonth, setMonth } from 'date-fns';
 
-import { useBackdropClick } from '@leafygreen-ui/hooks';
+import { useBackdropClick, useIdAllocator } from '@leafygreen-ui/hooks';
 
-import { DatePickerProvider } from '../DatePickerContext';
+import {
+  DatePickerContextProps,
+  DatePickerProvider,
+  DatePickerProviderProps,
+} from '../DatePickerContext';
+import { pickAndOmit } from '../utils/pickAndOmit';
 import { toDate } from '../utils/toDate';
 
 import { DatePickerProps } from './DatePicker.types';
 import { DatePickerInput, DatePickerInputProps } from './DatePickerInput';
 import { DatePickerMenu, DatePickerMenuProps } from './DatePickerMenu';
 
+/** Prop names that are in both DatePickerProps and DatePickerProviderProps */
+const contextPropNames: Array<
+  keyof Omit<DatePickerProviderProps, 'isOpen' | 'menuId'>
+> = [
+  'label',
+  'dateFormat',
+  'timeZone',
+  'min',
+  'max',
+  'baseFontSize',
+  'disabled',
+  'size',
+  'state',
+  'errorMessage',
+];
+
+/**
+ * LeafyGreen Date Picker component
+ */
 export const DatePicker = forwardRef(
   ({
     value: valueProp,
     initialValue,
     onChange,
     handleValidation,
-    ...rest
+    ...props
   }: DatePickerProps) => {
+    const [contextProps, restProps] = pickAndOmit(props, contextPropNames);
+    const menuId = useIdAllocator({ prefix: 'lg-date-picker-menu' });
     const inputRef = useRef<HTMLDivElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
-    const [isOpen, setOpen] = useState(false);
     const [displayMonth, setDisplayMonth] = useState<Date>(new Date());
+    const [isOpen, setOpen] = useState(false);
+    const closeMenu = () => setOpen(false);
 
     const utcValue = useMemo(() => toDate(valueProp), [valueProp]);
 
@@ -40,13 +67,7 @@ export const DatePicker = forwardRef(
       onChange?.(newVal);
     };
 
-    useBackdropClick(
-      () => {
-        setOpen(false);
-      },
-      [inputRef, menuRef],
-      isOpen,
-    );
+    useBackdropClick(closeMenu, [inputRef, menuRef], isOpen);
 
     const handleInputChange: DatePickerInputProps['setValue'] = (
       inputVal: Date | null,
@@ -55,6 +76,7 @@ export const DatePicker = forwardRef(
     };
 
     const handleCellClick: DatePickerMenuProps['onCellClick'] = cellValue => {
+      console.log('onCellClick', cellValue);
       updateValue(cellValue);
       setOpen(false);
     };
@@ -65,21 +87,30 @@ export const DatePicker = forwardRef(
       };
 
     const handleInputClick: MouseEventHandler = e => {
+      console.log('handleInputClick');
       // TODO: Set focus to appropriate segment
       setOpen(true);
     };
 
     return (
-      <DatePickerProvider value={rest}>
+      <DatePickerProvider
+        value={{
+          ...contextProps,
+          isOpen,
+          menuId,
+        }}
+      >
         <DatePickerInput
           ref={inputRef}
           value={utcValue}
           setValue={handleInputChange}
           onClick={handleInputClick}
+          {...restProps}
         />
         <DatePickerMenu
-          refEl={inputRef}
           ref={menuRef}
+          id={menuId}
+          refEl={inputRef}
           value={utcValue}
           isOpen={isOpen}
           month={displayMonth}

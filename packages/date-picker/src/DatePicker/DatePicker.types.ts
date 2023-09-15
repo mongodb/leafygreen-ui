@@ -12,7 +12,7 @@ export interface DatePickerProps extends BaseDatePickerProps {
    *
    * Callback date argument will be a Date object in ISO-8601 format, and in UTC time.
    */
-  onChange: (value: Date | null) => void;
+  onChange?: (value: Date | null) => void;
 
   /** The initial selected date. Ignored if `value` is provided */
   initialValue?: string | Date;

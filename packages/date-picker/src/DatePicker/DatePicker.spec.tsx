@@ -1,8 +1,102 @@
+import React from 'react';
+import {
+  getByRole as globalGetByRole,
+  render,
+  waitFor,
+} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
+import { DatePickerProps } from './DatePicker.types';
+import { DatePicker } from '.';
+
+const renderDatePicker = (props?: DatePickerProps) => {
+  const result = render(
+    <DatePicker label="" data-testid="lg-date-picker" {...props} />,
+  );
+
+  const formFieldWrapper = result.getByTestId('lg-date-picker');
+  const inputContainer = result.getByRole('combobox');
+  const dayInput = result.container.querySelector('input[aria-label="day"]');
+  const monthInput = result.container.querySelector(
+    'input[aria-label="month"]',
+  );
+  const yearInput = result.container.querySelector('input[aria-label="year"]');
+
+  /**
+   * Returns relevant menu elements.
+   * Call this after the menu has been opened
+   */
+  function getMenuElements() {
+    const menuContainerEl = result.queryByRole('listbox');
+
+    return {
+      menuContainerEl,
+    };
+  }
+
+  return {
+    ...result,
+    formFieldWrapper,
+    inputContainer,
+    dayInput,
+    monthInput,
+    yearInput,
+    getMenuElements,
+  };
+};
+
 describe('packages/date-picker', () => {
+  describe('Rendering', () => {
+    /// Note: Most rendering tests handled by Chromatic
+    test('spreads rest to formFieldWrapper', () => {
+      const { getByTestId } = render(
+        <DatePicker label="Label" data-testid="lg-date-picker" />,
+      );
+      const wrapper = getByTestId('lg-date-picker');
+      expect(wrapper).toBeInTheDocument();
+    });
+
+    test('wrapper contains label', () => {
+      const { getByTestId } = render(
+        <DatePicker label="Label" data-testid="lg-date-picker" />,
+      );
+      const wrapper = getByTestId('lg-date-picker');
+      expect(wrapper.querySelector('label')).toBeInTheDocument();
+      expect(wrapper.querySelector('label')).toHaveTextContent('Label');
+    });
+
+    test('renders 3 inputs', () => {
+      const { dayInput, monthInput, yearInput } = renderDatePicker();
+      expect(dayInput).toBeInTheDocument();
+      expect(monthInput).toBeInTheDocument();
+      expect(yearInput).toBeInTheDocument();
+    });
+
+    test('menu is initially closed', () => {
+      const { getMenuElements } = renderDatePicker();
+      const { menuContainerEl } = getMenuElements();
+      expect(menuContainerEl).not.toBeInTheDocument();
+    });
+  });
+
   describe('Mouse interaction', () => {
     describe('Clicking the input', () => {
-      test.todo('focuses the first empty segment');
-      test.todo('opens the menu');
+      test('opens the menu', async () => {
+        const { inputContainer, getMenuElements } = renderDatePicker();
+        userEvent.click(inputContainer);
+        await waitFor(() => {
+          const { menuContainerEl } = getMenuElements();
+          expect(menuContainerEl).toBeInTheDocument();
+        });
+      });
+
+      test('focuses the first empty segment', async () => {
+        const { inputContainer, yearInput } = renderDatePicker();
+        userEvent.click(inputContainer);
+        await waitFor(() => {
+          expect(yearInput).toHaveFocus();
+        });
+      });
     });
 
     describe('Clicking a Calendar cell', () => {

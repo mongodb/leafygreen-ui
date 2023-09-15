@@ -49,7 +49,7 @@ export const DateInputWrapper = React.forwardRef<
     fwdRef,
   ) => {
     const { theme } = useDarkMode();
-    const { size } = useDatePickerContext();
+    const { size, isOpen, menuId } = useDatePickerContext();
     const baseFontSize = useUpdatedBaseFontSize();
 
     return (
@@ -70,6 +70,10 @@ export const DateInputWrapper = React.forwardRef<
         </div>
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
         <div
+          role="combobox"
+          aria-expanded={isOpen}
+          aria-controls={menuId}
+          tabIndex={-1}
           onClick={onInputClick}
           className={cx(
             inputBaseStyles,
