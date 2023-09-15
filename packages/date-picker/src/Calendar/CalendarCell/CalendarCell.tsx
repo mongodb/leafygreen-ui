@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
@@ -27,6 +27,7 @@ export const CalendarCell = React.forwardRef<
       isCurrent,
       isHighlighted,
       className,
+      onClick,
       ...rest
     }: CalendarCellProps,
     fwdRef,
@@ -42,11 +43,18 @@ export const CalendarCell = React.forwardRef<
       ] as Array<CalendarCellState>
     ).includes(state);
 
+    const handleClick: MouseEventHandler<HTMLTableCellElement> = e => {
+      if (state !== CalendarCellState.Disabled) {
+        onClick?.(e);
+      }
+    };
+
     return (
       <td
         ref={ref}
         role="gridcell"
         aria-selected={isActive}
+        aria-disabled={state === CalendarCellState.Disabled}
         className={cx(
           calendarCellStyles,
 
@@ -57,6 +65,7 @@ export const CalendarCell = React.forwardRef<
           },
           className,
         )}
+        onClick={handleClick}
         {...rest}
       >
         <div className={cx(indicatorBaseStyles, indicatorClassName)}></div>

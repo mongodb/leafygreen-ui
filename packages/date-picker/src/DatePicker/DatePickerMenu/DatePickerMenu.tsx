@@ -31,7 +31,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
     }: DatePickerMenuProps,
     fwdRef,
   ) => {
-    const { isInRange } = useDatePickerContext();
+    const { isInRange, min, max } = useDatePickerContext();
     const [highlight, setHighlight] = useState<Date | null>(null);
 
     const getCellState = (cellDay: Date | null) => {
@@ -52,7 +52,12 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
 
     const makeCellHoverHandler = (day: Date) => () => setHighlight(day);
 
-    const makeCellClickHandler = (day: Date) => () => onCellClick(day);
+    const makeCellClickHandler = (day: Date) => () => {
+      if (isInRange(day)) {
+        onCellClick(day);
+      }
+    };
+
     return (
       <MenuWrapper
         active={isOpen}
@@ -73,6 +78,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
             {(day, i) => (
               <CalendarCell
                 key={i}
+                aria-label={day.toDateString()}
                 isHighlighted={isSameUTCDay(day, highlight)}
                 isCurrent={isCurrentUTCDay(day)}
                 state={getCellState(day)}

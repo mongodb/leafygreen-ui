@@ -15,6 +15,7 @@ import {
 
 export const defaultDatePickerContext: DatePickerContextProps = {
   label: '',
+  description: '',
   dateFormat: 'iso8601',
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   min: new Date('12-31-1969'),

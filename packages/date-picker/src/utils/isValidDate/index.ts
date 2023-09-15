@@ -1,24 +1,27 @@
-import { has, isNull, isUndefined } from 'lodash';
+import { isValid } from 'date-fns';
+import { isNull, isUndefined } from 'lodash';
 
 export const isValidDate = (
-  maybeDate?: Date | string | null,
+  maybeDate?: Date | string | number | null,
 ): maybeDate is Date | string => {
   if (isUndefined(maybeDate) || isNull(maybeDate)) return false;
 
-  if (typeof maybeDate === 'string') {
-    return isValidDateString(maybeDate);
-  }
+  switch (typeof maybeDate) {
+    case 'string':
+      return isValidDateString(maybeDate);
+    case 'number':
+      return isValid(maybeDate);
 
-  if (typeof maybeDate === 'object') {
-    return isValidDateObject(maybeDate);
+    default:
+      return isValidDateObject(maybeDate);
   }
-
-  return false;
 };
 
 export const isValidDateObject = (date?: any): date is Date => {
   return (
-    !isUndefined(date) && typeof date === 'object' && has(date, 'getISOString')
+    !isUndefined(date) &&
+    typeof date === 'object' &&
+    date.constructor.name === 'Date'
   );
 };
 

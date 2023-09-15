@@ -14,7 +14,6 @@ import {
 } from '@leafygreen-ui/hooks';
 
 import {
-  DatePickerContextProps,
   DatePickerProvider,
   DatePickerProviderProps,
 } from '../DatePickerContext';
@@ -75,7 +74,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       onChange?.(newVal);
     };
 
-    useBackdropClick(closeMenu, [inputRef, menuRef], isOpen);
+    // useBackdropClick(closeMenu, [inputRef, menuRef], isOpen);
 
     const handleInputChange: DatePickerInputProps['setValue'] = (
       inputVal: Date | null,
@@ -84,7 +83,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     };
 
     const handleCellClick: DatePickerMenuProps['onCellClick'] = cellValue => {
-      console.log('onCellClick', cellValue);
       updateValue(cellValue);
       setOpen(false);
     };
