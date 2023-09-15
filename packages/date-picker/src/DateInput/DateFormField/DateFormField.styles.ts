@@ -13,7 +13,7 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { InputState } from './DateInputWrapper.types';
+import { InputState } from './DateFormField.types';
 
 export const baseWrapperStyles = css``;
 

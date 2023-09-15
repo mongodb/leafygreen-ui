@@ -25,12 +25,12 @@ import {
   inputStateStyles,
   textContainerStyle,
   wrapperFontStyles,
-} from './DateInputWrapper.styles';
-import { DateInputWrapperProps, InputState } from './DateInputWrapper.types';
+} from './DateFormField.styles';
+import { DateFormFieldProps, InputState } from './DateFormField.types';
 
-export const DateInputWrapper = React.forwardRef<
+export const DateFormField = React.forwardRef<
   HTMLDivElement,
-  DateInputWrapperProps
+  DateFormFieldProps
 >(
   (
     {
@@ -45,7 +45,7 @@ export const DateInputWrapper = React.forwardRef<
       errorId,
       onInputClick,
       ...rest
-    }: DateInputWrapperProps,
+    }: DateFormFieldProps,
     fwdRef,
   ) => {
     const { theme } = useDarkMode();
@@ -97,4 +97,4 @@ export const DateInputWrapper = React.forwardRef<
   },
 );
 
-DateInputWrapper.displayName = 'DateInputWrapper';
+DateFormField.displayName = 'DateFormField';

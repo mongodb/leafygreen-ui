@@ -11,14 +11,14 @@ import {
   DatePickerProvider,
 } from '../../DatePickerContext';
 
-import { DateInputWrapper } from './DateInputWrapper';
+import { DateFormField } from './DateFormField';
 
 const meta: StoryMetaType<
-  typeof DateInputWrapper,
+  typeof DateFormField,
   Partial<DatePickerContextProps>
 > = {
-  title: 'Components/DatePicker/DateInputWrapper',
-  component: DateInputWrapper,
+  title: 'Components/DatePicker/DateFormField',
+  component: DateFormField,
   parameters: {
     default: null,
     controls: {
@@ -81,7 +81,7 @@ const meta: StoryMetaType<
 
 export default meta;
 
-const Template: StoryFn<typeof DateInputWrapper> = ({
+const Template: StoryFn<typeof DateFormField> = ({
   label,
   description,
   state,
@@ -92,7 +92,7 @@ const Template: StoryFn<typeof DateInputWrapper> = ({
   const errorId = 'error';
 
   return (
-    <DateInputWrapper
+    <DateFormField
       label={label}
       description={description}
       state={state}
@@ -114,7 +114,7 @@ const Template: StoryFn<typeof DateInputWrapper> = ({
         }}
         placeholder="<placeholder>"
       />
-    </DateInputWrapper>
+    </DateFormField>
   );
 };
 

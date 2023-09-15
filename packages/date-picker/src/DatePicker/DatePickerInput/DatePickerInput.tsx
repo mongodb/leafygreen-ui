@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 
 import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
 
-import { DateInputBox, DateInputWrapper } from '../../DateInput';
+import { DateInputBox, DateFormField } from '../../DateInput';
 import { useDatePickerContext } from '../../DatePickerContext';
 
 import { DatePickerInputProps } from './DatePickerInput.types';
@@ -17,7 +17,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
     const ref = useForwardedRef(fwdRef, null);
 
     return (
-      <DateInputWrapper
+      <DateFormField
         label={label}
         description={timeZone}
         inputId={inputId}
@@ -34,7 +34,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           id={inputId}
           labelledBy={labelId}
         />
-      </DateInputWrapper>
+      </DateFormField>
     );
   },
 );
