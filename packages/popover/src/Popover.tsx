@@ -14,7 +14,7 @@ import {
   usePopoverContext,
   usePopoverPortalContainer,
 } from '@leafygreen-ui/leafygreen-provider';
-import { consoleOnce } from '@leafygreen-ui/lib';
+import { consoleOnce, createUniqueClassName } from '@leafygreen-ui/lib';
 import Portal from '@leafygreen-ui/portal';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
@@ -42,6 +42,8 @@ const mutationOptions = {
   // Extend watching to entire sub tree to make sure we catch any modifications
   subtree: true,
 };
+
+export const contentClassName = createUniqueClassName('popover-content');
 
 /**
  *
@@ -310,7 +312,9 @@ function Popover({
                   We create this inner node with a ref because placing it on its parent
                   creates an infinite loop in some cases when dynamic styles are applied.
                 */}
-              <div ref={setContentNode}>{renderedChildren}</div>
+              <div ref={setContentNode} className={contentClassName}>
+                {renderedChildren}
+              </div>
             </div>
           </Root>
         </>
