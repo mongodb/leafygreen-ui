@@ -59,7 +59,7 @@ jobs:
             yarn install --frozen-lockfile --prefer-offline
   
       - name: Build
-        run: 
+        run: |
           npm run scss
           npm run build-storybook --loglevel verbose
 
