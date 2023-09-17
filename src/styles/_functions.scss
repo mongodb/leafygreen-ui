@@ -1,0 +1,30 @@
+@function toRem($value) {
+    $remValue: calc($value / 16) + rem;
+    @return $remValue;
+}
+
+@each $color, $value in $theme-colors {
+    .link-#{$color} {
+        color: $value;
+
+        &:hover, &:focus {
+            color: darken($value, 10%);
+        }
+
+        &:active {
+            color: darken($value, 20%);
+        }
+
+        &:visited {
+            color: darken($value, 10%);
+        }
+
+        &:disabled {
+            color: lighten($value, 20%);
+        }
+
+        &.active {
+            color: darken($value, 10%);
+        }
+    }
+}

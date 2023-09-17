@@ -59,7 +59,9 @@ jobs:
             yarn install --frozen-lockfile --prefer-offline
   
       - name: Build
-        run: npm run build-storybook --loglevel verbose
+        run: 
+          npm run scss
+          npm run build-storybook --loglevel verbose
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4

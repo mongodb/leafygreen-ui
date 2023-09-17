@@ -27,7 +27,8 @@
     "start": "storybook dev -p 9001 --no-version-updates",
     "test": "lg test",
     "unlink": "lg unlink",
-    "validate": "lg validate"
+    "validate": "lg validate",
+    "scss": "gulp sass"
   },
   "devDependencies": {
     "@babel/core": "7.21.8",
@@ -54,7 +55,14 @@
     "typescript": "~4.7.0",
     "storybook-module-federation":"0.6.2",
     "copy-webpack-plugin":"11.0.0",
-    "@storybook/addon-storyshots":"7.4.0"
+    "@storybook/addon-storyshots":"7.4.0",
+    "gulp":"^4.0.2",
+    "gulp-clean-css":"^4.3.0",
+    "gulp-copy":"^4.0.1",
+    "gulp-sass":"^5.1.0"
+  },
+  "dependencies": {
+    "bootstrap":"^5.3.2"
   },
   "resolutions": {
     "caniuse-lite": "^1.0.30001135",

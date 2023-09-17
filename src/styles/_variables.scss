@@ -1,0 +1,82 @@
+$blue: #1274BF;
+$purple: #6F2CAC;
+$green: #00A651;
+$orange: #F26C23;
+$red: #E21B3C;
+$yellow: #FECB2F;
+$gray: #4D4D4D;
+$white: #FFFFFF;
+$black: #000000;
+$light-gray: #F5F5F5;
+$dark-gray: #333333;
+$light-blue: #E6F2FA;
+$light-purple: #F2E6FA;
+$light-green: #E6FAE6;
+$light-orange: #FAE6E6;
+$light-red: #FAE6E6;
+$light-yellow: #FAF2E6;
+$light-white: #F5F5F5;
+$light-black: #333333;
+$dark-blue: #0D2C4C;
+$dark-purple: #4C0D4C;
+$dark-green: #006B3C;
+$dark-orange: #B34C0D;
+$dark-red: #B34C0D;
+$dark-yellow: #B38C0D;
+$dark-white: #B3B3B3;
+$dark-black: #4D4D4D;
+$primary: $blue;
+$secondary: $purple;
+$success: $green;
+$info: $orange;
+$warning: $yellow;
+$danger: $red;
+$light: $light-gray;
+$dark: $dark-gray;
+$background: $light-white;
+$foreground: $dark-black;
+$border: $dark-white;
+$border-radius: 0.25rem;
+$border-radius-lg: 0.5rem;
+$border-radius-sm: 0.125rem;
+$border-radius-pill: 10rem;
+$border-radius-pill-lg: 10rem;
+$border-radius-pill-sm: 10rem;
+$border-radius-top: 0.25rem 0.25rem 0 0;
+$border-radius-top-lg: 0.5rem 0.5rem 0 0;
+$border-radius-top-sm: 0.125rem 0.125rem 0 0;
+$border-radius-right: 0 0.25rem 0.25rem 0;
+$border-radius-right-lg: 0 0.5rem 0.5rem 0;
+$border-radius-right-sm: 0 0.125rem 0.125rem 0;
+$border-radius-bottom: 0 0 0.25rem 0.25rem;
+$border-radius-bottom-lg: 0 0 0.5rem 0.5rem;
+$border-radius-bottom-sm: 0 0 0.125rem 0.125rem;
+$border-radius-left: 0.25rem 0 0 0.25rem;
+$border-radius-left-lg: 0.5rem 0 0 0.5rem;
+$border-radius-left-sm: 0.125rem 0 0 0.125rem;
+$border-radius-circle: 50%;
+$border-radius-circle-lg: 50%;
+$border-radius-circle-sm: 50%;
+$border-radius-0: 0;
+$border-radius-1: 0.125rem;
+$border-radius-2: 0.25rem;
+$border-radius-3: 0.5rem;
+$border-radius-4: 1rem;
+$border-radius-5: 2rem;
+$border-radius-6: 4rem;
+$border-radius-7: 8rem;
+
+$theme-colors: (
+    "primary": $primary,
+    "secondary": $secondary,
+    "success": $success,
+    "info": $info,
+    "warning": $warning,
+    "danger": $danger,
+    "light": $light,
+    "dark": $dark,
+    "background": $background,
+    "foreground": $foreground,
+    "border": $border
+);
+
