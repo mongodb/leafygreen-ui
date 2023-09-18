@@ -35,6 +35,7 @@ import Clone from './Clone.svg';
 import Cloud from './Cloud.svg';
 import Code from './Code.svg';
 import CodeBlock from './CodeBlock.svg';
+import Colon from './Colon.svg';
 import Connect from './Connect.svg';
 import Copy from './Copy.svg';
 import CreditCard from './CreditCard.svg';
@@ -123,6 +124,7 @@ import Tag from './Tag.svg';
 import ThumbsDown from './ThumbsDown.svg';
 import ThumbsUp from './ThumbsUp.svg';
 import TimeSeries from './TimeSeries.svg';
+import TimeSeriesCollection from './TimeSeriesCollection.svg';
 import Trash from './Trash.svg';
 import Undo from './Undo.svg';
 import University from './University.svg';
@@ -174,6 +176,7 @@ const _glyphs = {
   Cloud,
   Code,
   CodeBlock,
+  Colon,
   Connect,
   Copy,
   CreditCard,
@@ -262,6 +265,7 @@ const _glyphs = {
   ThumbsDown,
   ThumbsUp,
   TimeSeries,
+  TimeSeriesCollection,
   Trash,
   Undo,
   University,
