@@ -1,10 +1,11 @@
 import React, { ReactElement } from 'react';
-import { Row } from '@tanstack/react-table';
+import { Row, SortingFn } from '@tanstack/react-table';
 import camelCase from 'lodash/camelCase';
 
 import { Align } from '../Cell/Cell.types';
 import { TableProps } from '../TableV10/Table';
-import { LGRowData } from '../useLeafyGreenTable';
+
+import { ValidDataType } from './V11Adapter.types';
 
 /**
  * Converts V10's HeaderRow ReactElement to an Array<ColumnDef>
@@ -15,7 +16,7 @@ import { LGRowData } from '../useLeafyGreenTable';
  * @param headerLabels any overrides to the header's label when the label does not correspond to its data's key in `data`
  * @returns Array<ColumnDef>
  */
-const processColumns = <T extends LGRowData>(
+const processColumns = <T extends ValidDataType>(
   data: Array<T>,
   columns: TableProps<T>['columns'],
   headerLabels?: { [key: string]: string },
@@ -40,24 +41,22 @@ const processColumns = <T extends LGRowData>(
       !!headerProps.handleSort ||
       !!headerProps.compareFn;
 
-    const convertedCompareFn = (rowA: Row<any>, rowB: Row<any>, _: any) => {
+    const convertedCompareFn: SortingFn<T> = (
+      rowA: Row<T>,
+      rowB: Row<T>,
+      _: any,
+    ) => {
       const indexA = rowA.index;
       const indexB = rowB.index;
       return headerProps.compareFn(data[indexA], data[indexB]);
     };
 
-    const defaultSortingFn = (
-      rowA: Row<any>,
-      rowB: Row<any>,
-      columnId: string,
-    ) => {
+    const defaultSortingFn = (rowA: Row<T>, rowB: Row<T>, columnId: string) => {
       const indexA = rowA.index;
       const indexB = rowB.index;
-      // @ts-expect-error each datum is designed to be indexable by string
-      return data[indexA][columnId] > data[indexB][columnId]
+      return (data[indexA] as T)[columnId] > (data[indexB] as T)[columnId]
         ? -1
-        : // @ts-expect-error each datum is designed to be indexable by string
-        data[indexB][columnId] > data[indexA][columnId]
+        : (data[indexB] as T)[columnId] > (data[indexA] as T)[columnId]
         ? 1
         : 0;
     };

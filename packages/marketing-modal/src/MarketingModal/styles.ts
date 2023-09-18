@@ -50,3 +50,8 @@ export const buttonStyle = css`
 export const linkStyle = css`
   margin-top: ${spacing[3]}px;
 `;
+
+export const disclaimerStyles = css`
+  padding: ${spacing[5]}px ${spacing[5] + spacing[3]}px 0px;
+  color: ${palette.gray.dark1};
+`;

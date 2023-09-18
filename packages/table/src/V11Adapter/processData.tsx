@@ -1,14 +1,21 @@
 import React, { ReactElement } from 'react';
 import flattenChildren from 'react-keyed-flatten-children';
+import { AccessorKeyColumnDef } from '@tanstack/react-table';
 
 import { isComponentType } from '@leafygreen-ui/lib';
 
 import { TableRowInterface } from '../TableV10/Table';
-import { LGColumnDef, LGRowData, LGTableDataType } from '../useLeafyGreenTable';
+import { LGTableDataType } from '../useLeafyGreenTable';
 
-const processData = <T extends LGRowData>(
+import { ProcessedRowData, ValidDataType } from './V11Adapter.types';
+
+const processData: (
   data: Array<any>,
-  processedColumns: Array<LGColumnDef<T>>,
+  processedColumns: Array<AccessorKeyColumnDef<any>>,
+  childrenFn: (TableRowArgs: TableRowInterface<unknown>) => JSX.Element,
+) => Array<ProcessedRowData> = <T extends ValidDataType>(
+  data: Array<any>,
+  processedColumns: Array<AccessorKeyColumnDef<T>>,
   childrenFn: (TableRowArgs: TableRowInterface<unknown>) => JSX.Element,
 ) => {
   const processedData = data.map((oldDatum, index) => {
@@ -27,16 +34,14 @@ const processData = <T extends LGRowData>(
       isComponentType(child, 'Cell'),
     );
 
-    const newDatum: LGTableDataType<any> = evaluatedCells.reduce(
-      (acc: object, currVal, index) => {
+    const newDatum: LGTableDataType<T> = evaluatedCells.reduce(
+      (acc: T, currVal, index) => {
         return {
           ...acc,
-          // TODO: remove as any
-          [(processedColumns[index] as any)?.accessorKey]: () =>
-            currVal as ReactElement,
-        };
+          [processedColumns[index]?.accessorKey]: () => currVal as ReactElement,
+        } as T;
       },
-      {},
+      {} as T,
     );
 
     const subRowChildren = rowChildren.filter(child =>
@@ -62,22 +67,29 @@ const processData = <T extends LGRowData>(
           </div>
         );
       } else {
-        const processedSubRow = subRowCells.reduce(
-          (acc: object, currVal, index) => {
-            return {
-              ...acc,
-              // TODO: remove as any
-              [(processedColumns[index] as any)?.accessorKey]: () =>
-                (currVal as ReactElement).props.children,
-            };
-          },
-          {},
-        );
-        newDatum.subRows.push(processedSubRow);
+        const processedSubRow = subRowCells.reduce((acc: T, currVal, index) => {
+          return {
+            ...acc,
+            [processedColumns[index]?.accessorKey]: () =>
+              currVal as ReactElement,
+          };
+        }, {} as T);
+        const {
+          children,
+          expanded,
+          indentLevel,
+          isAnyAncestorCollapsed,
+          ...rowProps
+        } = (subRow as ReactElement).props;
+        newDatum.subRows &&
+          newDatum.subRows.push({
+            ...processedSubRow,
+            rowProps,
+          } as T);
       }
     });
 
-    return newDatum;
+    return { ...newDatum, rowProps: (evaluatedRow as ReactElement).props };
   });
   return processedData;
 };

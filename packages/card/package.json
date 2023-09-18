@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/card",
-  "version": "10.0.4",
+  "version": "10.0.5",
   "description": "leafyGreen UI Kit Card",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -24,13 +24,13 @@
   "dependencies": {
     "@leafygreen-ui/box": "^3.1.8",
     "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/lib": "^11.0.0",
+    "@leafygreen-ui/lib": "^12.0.0",
     "@leafygreen-ui/palette": "^4.0.7",
     "@leafygreen-ui/tokens": "^2.1.4",
     "polished": "^4.2.2"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.7"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.9"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/card",

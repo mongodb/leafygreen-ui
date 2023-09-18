@@ -1,5 +1,23 @@
 # @leafygreen-ui/input-option
 
+## 1.0.11
+
+### Patch Changes
+
+- Updated dependencies [3a9b274d]
+  - @leafygreen-ui/lib@12.0.0
+  - @leafygreen-ui/a11y@1.4.10
+  - @leafygreen-ui/leafygreen-provider@3.1.9
+  - @leafygreen-ui/typography@17.0.1
+
+## 1.0.10
+
+### Patch Changes
+
+- Updated dependencies [a5770c15]
+- Updated dependencies [c89d17a4]
+  - @leafygreen-ui/typography@17.0.0
+
 ## 1.0.9
 
 ### Patch Changes

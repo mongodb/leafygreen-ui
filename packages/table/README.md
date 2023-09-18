@@ -33,7 +33,7 @@ yarn add @leafygreen-ui/table
 npm install @leafygreen-ui/table
 ```
 
-## Example
+## Basic Example
 
 ---
 
@@ -51,13 +51,13 @@ import {
   <TableHead>
     <HeaderRow>
       {columns.map((columnName: string) => (
-        <HeaderCell key={columnName} columnName={columnName} />
+        <HeaderCell key={columnName}>{columnName}</HeaderCell>
       ))}
     </HeaderRow>
   </TableHead>
   <TableBody>
-    {data.map((row: LeafygreenTableRow<T>) => (
-      <Row>
+    {data.map((row: { [key: string]: any }) => (
+      <Row key={row.id}>
         {Object.keys(row).map((cellKey: string, index: number) => {
           return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
         })}
@@ -66,6 +66,87 @@ import {
   </TableBody>
 </Table>;
 ```
+
+## Example using `useLeafyGreenTable`
+
+```js
+import {
+  Table,
+  TableHead,
+  HeaderRow,
+  TableBody,
+  Row,
+  Cell,
+} from '@leafygreen-ui/table';
+
+const tableContainerRef = React.useRef<HTMLDivElement>(null);
+const data = React.useState(() => makeData(false, 10_000))[0];
+
+const columns = React.useMemo<Array<ColumnDef<Person>>>(
+  () => [
+    {
+      accessorKey: 'id',
+      header: 'ID',
+      size: 60,
+    },
+    {
+      accessorKey: 'firstName',
+      header: 'First Name',
+      cell: info => info.getValue(),
+    },
+  ],
+  [],
+);
+
+const table = useLeafyGreenTable<Person>({
+  containerRef: tableContainerRef,
+  data,
+  columns,
+});
+
+const { rows } = table.getRowModel();
+
+<Table
+  {...args}
+  table={table}
+  ref={tableContainerRef}
+>
+  <TableHead>
+    {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+      <HeaderRow key={headerGroup.id}>
+        {headerGroup.headers.map(header => {
+          return (
+            <HeaderCell key={header.id} header={header}>
+              {flexRender(
+                header.column.columnDef.header,
+                header.getContext(),
+              )}
+            </HeaderCell>
+          );
+        })}
+      </HeaderRow>
+    ))}
+  </TableHead>
+  <TableBody>
+    {rows.map((row: LeafyGreenTableRow<Person>) => (
+      <Row key={row.id}>
+        {row.getVisibleCells().map((cell: LeafyGreenTableCell<Person>) => {
+          return (
+            <Cell key={cell.id}>
+              {flexRender(
+                cell.column.columnDef.cell,
+                cell.getContext(),
+              )}
+            </Cell>
+          );
+        })}
+      </Row>
+    )}
+  </TableBody>
+</Table>
+```
+
+More specific code samples are available below pertaining to each documented feature.
 
 # Exports
 
@@ -77,7 +158,7 @@ import {
 
 `useLeafygreenTable` takes an `options` object and returns a table.
 
-https://github.com/mongodb/leafygreen-ui/blob/734da7f621c96c6e0de5e431e28162757166fa79/packages/table/src/Table/TableWithVS.stories.tsx#L79-L85
+https://github.com/mongodb/leafygreen-ui/blob/63877b7ef6f40e165f691a39ca00fc5de39b690d/packages/table/src/Table.story.tsx#L660-L669
 
 ### Options
 
@@ -88,6 +169,12 @@ https://github.com/mongodb/leafygreen-ui/blob/734da7f621c96c6e0de5e431e281627571
 #### `hasSelectableRows?: boolean`
 
 Setting this prop will inject checkbox cells into all rows. Refer to our [Storybook deployment](https://mongodb.github.io/leafygreen-ui) to find examples.
+
+---
+
+#### `allowSelectAll?: boolean`
+
+This prop controls whether a 'select all' checkbox will be rendered in the header row. This will be set to `true` by default.
 
 ---
 
@@ -109,7 +196,7 @@ Setting this prop will indicate that the Table component is being used with the 
 
 `useLeafygreenTable` extends `react-table`'s `data` [option](https://tanstack.com/table/v8/docs/api/core/table#data) to allow a `renderExpandedContent` prop to be passed to the table's data type.
 
-https://github.com/mongodb/leafygreen-ui/blob/734da7f621c96c6e0de5e431e28162757166fa79/packages/table/src/useLeafygreenTable/useLeafygreenTable.types.ts#L27-L29
+https://github.com/mongodb/leafygreen-ui/blob/63877b7ef6f40e165f691a39ca00fc5de39b690d/packages/table/src/useLeafyGreenTable/useLeafyGreenTable.types.ts#L19-L22
 
 This option determines how the row's expanded content will be rendered. Refer to [Storybook deployment](https://mongodb.github.io/leafygreen-ui) for an example.
 
@@ -119,7 +206,7 @@ This option determines how the row's expanded content will be rendered. Refer to
 
 `useLeafygreenTable` extends `react-table`'s `data` [option](https://tanstack.com/table/v8/docs/api/core/table#data) to allow a `subRows` prop to be passed to the table's data type.
 
-https://github.com/mongodb/leafygreen-ui/blob/734da7f621c96c6e0de5e431e28162757166fa79/packages/table/src/useLeafygreenTable/useLeafygreenTable.types.ts#L27-L29
+https://github.com/mongodb/leafygreen-ui/blob/63877b7ef6f40e165f691a39ca00fc5de39b690d/packages/table/src/useLeafyGreenTable/useLeafyGreenTable.types.ts#L19-L22
 
 This option defines the data displayed in nested rows and expects an array of objects with the same shape as other rows. Rows can be nested multiple times. Refer to [Storybook deployment](https://mongodb.github.io/leafygreen-ui) for an example.
 
@@ -204,7 +291,7 @@ All HTML `tr` element props
 
 [Demo](https://mongodb.github.io/leafygreen-ui/?path=/story/components-table-with-virtualized-scrolling--basic)
 
-https://github.com/mongodb/leafygreen-ui/blob/f61df48a196c731764864d594d7d043634a9bcdc/packages/table/src/Table/TableWithVS.stories.tsx#L101-L139
+https://github.com/mongodb/leafygreen-ui/blob/63877b7ef6f40e165f691a39ca00fc5de39b690d/packages/table/src/TableWithVS.story.tsx#L115-L158
 
 > Note that the number of virtual rows rendered depends on the height passed to the `Table` component. For a reasonably performant use of virtual scrolling, ensure that there is a height set on the component to reduce the number of virtual rows rendered.
 
@@ -214,7 +301,7 @@ https://github.com/mongodb/leafygreen-ui/blob/f61df48a196c731764864d594d7d043634
 
 [Demo with virtualized scrolling](https://mongodb.github.io/leafygreen-ui/?path=/story/components-table-with-virtualized-scrolling--sortable-rows)
 
-https://github.com/mongodb/leafygreen-ui/blob/f61df48a196c731764864d594d7d043634a9bcdc/packages/table/src/Table/Table.stories.tsx#L221-L228
+https://github.com/mongodb/leafygreen-ui/blob/f61df48a196c731764864d594d7d043634a9bcdc/packages/table/src/Table/TableWithVS.stories.tsx#L42-L48
 
 ### Selectable Rows
 

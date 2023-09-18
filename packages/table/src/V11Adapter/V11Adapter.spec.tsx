@@ -109,23 +109,43 @@ const NestedRows = () => {
       <Table
         data={defaultData.slice(0, 8)}
         columns={
-          <HeaderRow>
-            <TableHeader key="name" label="Name" dataType="string" />
+          <HeaderRow data-testid="test-header-row">
+            <TableHeader
+              key="name"
+              label="Name"
+              dataType="string"
+              data-testid="test-header-cell"
+            />
             <TableHeader key="age" label="Age" dataType="number" />
             <TableHeader key="color" label="Color" dataType="string" />
             <TableHeader key="location" label="Location" />
           </HeaderRow>
         }
+        data-testid="test-table"
       >
         {({ datum }: any) => (
-          <Row>
-            <Cell>{datum.name}</Cell>
+          <Row data-testid={datum.name === 'Alice' ? 'test-row' : undefined}>
+            <Cell
+              data-testid={datum.name === 'Alice' ? 'test-cell' : undefined}
+            >
+              {datum.name}
+            </Cell>
             <Cell>{datum.age}</Cell>
             <Cell>{datum.color}</Cell>
             <Cell>{datum.location}</Cell>
             {datum.name !== 'Donna' && (
-              <Row>
-                <Cell>expanded name: {datum.name}</Cell>
+              <Row
+                data-testid={
+                  datum.name === 'Alice' ? 'test-nested-row' : undefined
+                }
+              >
+                <Cell
+                  data-testid={
+                    datum.name === 'Alice' ? 'test-nested-cell' : undefined
+                  }
+                >
+                  expanded name: {datum.name}
+                </Cell>
                 <Cell>expanded age: {datum.age}</Cell>
                 <Cell>expanded color: {datum.color}</Cell>
                 <Cell>expanded location: {datum.location}</Cell>
@@ -364,6 +384,16 @@ describe('packages/table/Table', () => {
     test('having a row with nested rows render all rows as tbody elements', async () => {
       const { getAllByRole } = render(<NestedRows />);
       expect(getAllByRole('rowgroup').length).toBe(9); // 1 for thead, 9 for tbody
+    });
+    test('all data- attributes are passed to all elements', async () => {
+      const { getByTestId } = render(<NestedRows />);
+      expect(getByTestId('test-table')).toBeInTheDocument();
+      expect(getByTestId('test-header-row')).toBeInTheDocument();
+      expect(getByTestId('test-header-cell')).toBeInTheDocument();
+      expect(getByTestId('test-row')).toBeInTheDocument();
+      expect(getByTestId('test-cell')).toBeInTheDocument();
+      expect(getByTestId('test-nested-row')).toBeInTheDocument();
+      expect(getByTestId('test-nested-cell')).toBeInTheDocument();
     });
     // eslint-disable-next-line jest/no-disabled-tests
     test.skip('clicking expand icon button renders collapse button and nested row content', async () => {

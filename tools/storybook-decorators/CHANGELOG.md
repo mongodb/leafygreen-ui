@@ -1,5 +1,16 @@
 # @lg-tools/storybook-decorators
 
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [3a9b274d]
+- Updated dependencies [74071b67]
+  - @leafygreen-ui/lib@12.0.0
+  - @lg-tools/build@0.3.0
+  - @leafygreen-ui/banner@7.0.15
+  - @leafygreen-ui/leafygreen-provider@3.1.9
+
 ## 0.2.0
 
 ### Minor Changes

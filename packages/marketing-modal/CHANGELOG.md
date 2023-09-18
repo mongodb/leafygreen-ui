@@ -1,5 +1,28 @@
 # @leafygreen-ui/marketing-modal
 
+## 4.1.1
+
+### Patch Changes
+
+- Updated dependencies [3a9b274d]
+  - @leafygreen-ui/lib@12.0.0
+  - @leafygreen-ui/button@21.0.6
+  - @leafygreen-ui/leafygreen-provider@3.1.9
+  - @leafygreen-ui/modal@16.0.2
+  - @leafygreen-ui/typography@17.0.1
+
+## 4.1.0
+
+### Minor Changes
+
+- 5e877c20: Adds `disclaimer` field for text under the primary action button
+
+### Patch Changes
+
+- Updated dependencies [a5770c15]
+- Updated dependencies [c89d17a4]
+  - @leafygreen-ui/typography@17.0.0
+
 ## 4.0.14
 
 ### Patch Changes

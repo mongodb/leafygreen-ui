@@ -1,5 +1,23 @@
 # @leafygreen-ui/banner
 
+## 7.0.15
+
+### Patch Changes
+
+- Updated dependencies [3a9b274d]
+  - @leafygreen-ui/lib@12.0.0
+  - @leafygreen-ui/icon-button@15.0.18
+  - @leafygreen-ui/leafygreen-provider@3.1.9
+  - @leafygreen-ui/typography@17.0.1
+
+## 7.0.14
+
+### Patch Changes
+
+- Updated dependencies [a5770c15]
+- Updated dependencies [c89d17a4]
+  - @leafygreen-ui/typography@17.0.0
+
 ## 7.0.13
 
 ### Patch Changes

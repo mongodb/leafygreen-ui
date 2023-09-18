@@ -1,5 +1,30 @@
 # @leafygreen-ui/combobox
 
+## 6.0.15
+
+### Patch Changes
+
+- 3a9b274d: Handles keyboard event based on the event's `key` property rather than its `keyCode` property
+- Updated dependencies [3a9b274d]
+  - @leafygreen-ui/lib@12.0.0
+  - @leafygreen-ui/checkbox@12.0.19
+  - @leafygreen-ui/icon-button@15.0.18
+  - @leafygreen-ui/inline-definition@6.0.12
+  - @leafygreen-ui/input-option@1.0.11
+  - @leafygreen-ui/leafygreen-provider@3.1.9
+  - @leafygreen-ui/popover@11.0.18
+  - @leafygreen-ui/typography@17.0.1
+
+## 6.0.14
+
+### Patch Changes
+
+- Updated dependencies [a5770c15]
+- Updated dependencies [c89d17a4]
+  - @leafygreen-ui/typography@17.0.0
+  - @leafygreen-ui/checkbox@12.0.18
+  - @leafygreen-ui/input-option@1.0.10
+
 ## 6.0.13
 
 ### Patch Changes
