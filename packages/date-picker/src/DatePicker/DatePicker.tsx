@@ -59,7 +59,9 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       initialProp,
     );
 
-    const [displayMonth, setDisplayMonth] = useState<Date>(new Date());
+    const [displayMonth, setDisplayMonth] = useState<Date>(
+      valueProp ?? new Date(),
+    );
     const [isOpen, setOpen] = useState(false);
     const closeMenu = () => setOpen(false);
 
