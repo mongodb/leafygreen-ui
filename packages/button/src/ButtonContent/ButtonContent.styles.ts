@@ -50,6 +50,7 @@ export const buttonContentStyle = css`
   height: 100%;
   width: 100%;
   position: relative;
+  user-select: none;
   z-index: 0;
   transition: all ${transitionDuration.default} ease-in-out;
 `;
