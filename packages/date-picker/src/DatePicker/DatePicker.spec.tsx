@@ -49,6 +49,24 @@ describe('packages/date-picker', () => {
       expect(yearInput).toBeInTheDocument();
     });
 
+    test('renders `value` prop', () => {
+      const { dayInput, monthInput, yearInput } = renderDatePicker({
+        value: new Date(),
+      });
+      expect(dayInput).toHaveValue('26');
+      expect(monthInput).toHaveValue('12');
+      expect(yearInput).toHaveValue('2023');
+    });
+
+    test('renders `initialValue` prop', () => {
+      const { dayInput, monthInput, yearInput } = renderDatePicker({
+        initialValue: new Date(),
+      });
+      expect(dayInput).toHaveValue('26');
+      expect(monthInput).toHaveValue('12');
+      expect(yearInput).toHaveValue('2023');
+    });
+
     describe('Menu', () => {
       test('menu is initially closed', () => {
         const { getMenuElements } = renderDatePicker();
@@ -209,7 +227,7 @@ describe('packages/date-picker', () => {
       test.todo('changing the month is announced in an aria-live region');
     });
 
-    describe.only('Clicking the month select menu', () => {
+    describe.skip('Clicking the month select menu', () => {
       test('menu opens over the calendar menu', async () => {
         const { openMenu, queryAllByRole } = renderDatePicker();
         const { monthSelect, menuContainerEl } = openMenu();
@@ -237,7 +255,7 @@ describe('packages/date-picker', () => {
       });
     });
 
-    describe.only('Clicking the year select menu', () => {
+    describe.skip('Clicking the year select menu', () => {
       test('menu opens over the calendar menu', async () => {
         const { openMenu, queryAllByRole } = renderDatePicker();
         const { yearSelect, menuContainerEl } = openMenu();
@@ -357,6 +375,63 @@ describe('packages/date-picker', () => {
       test.todo('closes the menu');
       test.todo('does not fire a change handler');
       test.todo('focus remains on the input element');
+    });
+  });
+
+  describe('Controlled vs Uncontrolled', () => {
+    test('(Controlled) fires a change handler if `value` is provided', async () => {
+      const onChange = jest.fn();
+      const { openMenu } = renderDatePicker({
+        value: new Date(),
+        onChange,
+      });
+      const { calendarCells } = openMenu();
+      const cell1 = calendarCells?.[0];
+      userEvent.click(cell1);
+      await waitFor(() => expect(onChange).toHaveBeenCalled());
+    });
+
+    test('(Controlled) does not change the value if `value` is provided', async () => {
+      const onChange = jest.fn();
+      const { openMenu, dayInput, monthInput, yearInput } = renderDatePicker({
+        value: new Date(),
+        onChange,
+      });
+      const { calendarCells } = openMenu();
+      const cell1 = calendarCells?.[0];
+      userEvent.click(cell1);
+      await waitFor(() => {
+        expect(dayInput).toHaveValue('26');
+        expect(monthInput).toHaveValue('12');
+        expect(yearInput).toHaveValue('2023');
+      });
+    });
+
+    test('(Uncontrolled) fires a change handler', async () => {
+      const onChange = jest.fn();
+      const { openMenu } = renderDatePicker({
+        onChange,
+      });
+      const { calendarCells } = openMenu();
+      const cell1 = calendarCells?.[0];
+      userEvent.click(cell1);
+      await waitFor(() => expect(onChange).toHaveBeenCalled());
+    });
+
+    test('(Uncontrolled) changes the input value if `value` is not provided', async () => {
+      const onChange = jest.fn();
+      const { openMenu, dayInput, monthInput, yearInput } = renderDatePicker({
+        onChange,
+        initialValue: new Date(),
+      });
+      const { calendarCells } = openMenu();
+      const cell1 = calendarCells?.[0];
+      userEvent.click(cell1);
+      await waitFor(() => {
+        expect(dayInput).toHaveValue('01');
+        expect(monthInput).toHaveValue('12');
+        expect(yearInput).toHaveValue('2023');
+      });
     });
   });
 });

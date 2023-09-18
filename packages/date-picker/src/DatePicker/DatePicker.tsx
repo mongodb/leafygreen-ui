@@ -6,11 +6,14 @@ import React, {
   useState,
 } from 'react';
 import { isSameMonth, setMonth } from 'date-fns';
+import { isUndefined } from 'lodash';
 
 import {
   useBackdropClick,
+  useControlledValue,
   useForwardedRef,
   useIdAllocator,
+  usePrevious,
 } from '@leafygreen-ui/hooks';
 
 import {
@@ -20,7 +23,7 @@ import {
 import { pickAndOmit } from '../utils/pickAndOmit';
 import { toDate } from '../utils/toDate';
 
-import { DatePickerProps } from './DatePicker.types';
+import { DatePickerProps, DateType } from './DatePicker.types';
 import { DatePickerInput, DatePickerInputProps } from './DatePickerInput';
 import { DatePickerMenu, DatePickerMenuProps } from './DatePickerMenu';
 
@@ -47,8 +50,8 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
   (
     {
       value: valueProp,
-      initialValue,
-      onChange,
+      initialValue: initialProp,
+      onChange: onChangeProp,
       handleValidation,
       ...props
     }: DatePickerProps,
@@ -58,20 +61,38 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const menuId = useIdAllocator({ prefix: 'lg-date-picker-menu' });
     const inputRef = useForwardedRef(fwdRef, null);
     const menuRef = useRef<HTMLDivElement>(null);
-    const utcValue = useMemo(() => toDate(valueProp), [valueProp]);
-    const [displayMonth, setDisplayMonth] = useState<Date>(
-      utcValue ?? new Date(),
-    );
+
+    // Initially set to the existence of `valueProp`
+    // If value prop is initially undefined is initially false
+    // If the value prop then changes, then isControlled is set to true,
+    // and will remain true for the life of the component
+    const isControlled: boolean = useMemo(() => {
+      return isControlled ?? isUndefined(valueProp);
+    }, [valueProp]);
+
+    // We set the initial value to either the `value` or the temporary `initialValue`
+    const initialValue = isControlled ? valueProp : initialProp;
+    const [value, setInternalValue] = useState(initialValue);
+
+    const updateValue = (newValue: DateType) => {
+      if (!isControlled) {
+        setInternalValue(newValue);
+      }
+
+      onChangeProp?.(newValue);
+    };
+
+    const [displayMonth, setDisplayMonth] = useState<Date>(value ?? new Date());
     const [isOpen, setOpen] = useState(false);
     const closeMenu = () => setOpen(false);
 
-    const updateValue = (newVal: Date | null) => {
+    const changeValue = (newVal: Date | null) => {
       // if the new value is not the current month, update the month
       if (newVal && !isSameMonth(newVal, displayMonth)) {
         setDisplayMonth(setMonth(displayMonth, newVal.getMonth()));
       }
 
-      onChange?.(newVal);
+      updateValue(newVal);
     };
 
     useBackdropClick(closeMenu, [inputRef, menuRef], isOpen);
@@ -79,11 +100,11 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const handleInputChange: DatePickerInputProps['setValue'] = (
       inputVal: Date | null,
     ) => {
-      if (inputVal !== utcValue) updateValue(inputVal);
+      if (inputVal !== value) changeValue(inputVal);
     };
 
     const handleCellClick: DatePickerMenuProps['onCellClick'] = cellValue => {
-      updateValue(cellValue);
+      changeValue(cellValue);
       setOpen(false);
     };
 
@@ -107,7 +128,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       >
         <DatePickerInput
           ref={inputRef}
-          value={utcValue}
+          value={value}
           setValue={handleInputChange}
           onClick={handleInputClick}
           {...restProps}
@@ -116,7 +137,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
           ref={menuRef}
           id={menuId}
           refEl={inputRef}
-          value={utcValue}
+          value={value}
           isOpen={isOpen}
           month={displayMonth}
           onCellClick={handleCellClick}

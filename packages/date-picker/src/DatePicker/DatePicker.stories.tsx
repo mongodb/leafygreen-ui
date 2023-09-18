@@ -63,4 +63,8 @@ export const Basic: StoryFn<typeof DatePicker> = props => {
   return <DatePicker {...props} value={value} onChange={setValue} />;
 };
 
+export const Uncontrolled: StoryFn<typeof DatePicker> = props => {
+  return <DatePicker {...props} />;
+};
+
 export const Generated = () => {};

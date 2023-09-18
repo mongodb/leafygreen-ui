@@ -2,6 +2,8 @@ import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { PopoverProps } from '@leafygreen-ui/popover';
 import { PortalControlProps } from '@leafygreen-ui/popover';
 
+import { DateType } from '../DatePicker.types';
+
 export type DatePickerMenuProps = PortalControlProps &
   Pick<PopoverProps, 'refEl'> &
   HTMLElementProps<'div'> & {
@@ -9,7 +11,7 @@ export type DatePickerMenuProps = PortalControlProps &
     isOpen: boolean;
 
     /** The value of the component, provided in UTC time */
-    value: Date | null;
+    value?: DateType;
 
     /** The month to display in the calendar grid */
     month: Date;
