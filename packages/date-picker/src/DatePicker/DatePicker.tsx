@@ -1,15 +1,9 @@
-import React, {
-  forwardRef,
-  MouseEventHandler,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { forwardRef, MouseEventHandler, useRef, useState } from 'react';
 import { isSameMonth, setMonth } from 'date-fns';
-import isUndefined from 'lodash/isUndefined';
 
 import {
   useBackdropClick,
+  useControlledValue,
   useForwardedRef,
   useIdAllocator,
 } from '@leafygreen-ui/hooks';
@@ -20,7 +14,7 @@ import {
 } from '../DatePickerContext';
 import { pickAndOmit } from '../utils/pickAndOmit';
 
-import { DatePickerProps, DateType } from './DatePicker.types';
+import { DatePickerProps } from './DatePicker.types';
 import { DatePickerInput, DatePickerInputProps } from './DatePickerInput';
 import { DatePickerMenu, DatePickerMenuProps } from './DatePickerMenu';
 
@@ -59,27 +53,48 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const inputRef = useForwardedRef(fwdRef, null);
     const menuRef = useRef<HTMLDivElement>(null);
 
-    // Initially set to the existence of `valueProp`
-    // If value prop is initially undefined is initially false
-    // If the value prop then changes, then isControlled is set to true,
-    // and will remain true for the life of the component
-    const isControlled: boolean = useMemo(() => {
-      return isControlled ?? isUndefined(valueProp);
-    }, [valueProp]);
+    const { value, updateValue } = useControlledValue(
+      valueProp,
+      onChangeProp,
+      initialProp,
+    );
 
-    // We set the initial value to either the `value` or the temporary `initialValue`
-    const initialValue = isControlled ? valueProp : initialProp;
-    const [value, setInternalValue] = useState(initialValue);
+    // // Initially set to the existence of `valueProp`
+    // // If value prop is initially undefined, it's initially uncontrolled
+    // // If the value prop then changes, then isControlled is set to true,
+    // // and will remain true for the life of the component
+    // const isControlled: boolean = useMemo(() => {
+    //   return isControlled || !isUndefined(valueProp);
+    // }, [valueProp]);
 
-    const updateValue = (newValue: DateType) => {
-      if (!isControlled) {
-        setInternalValue(newValue);
-      }
+    // // We set the initial value to either the `value` or the temporary `initialValue`
+    // const initialValue = useMemo(
+    //   () => (isControlled ? valueProp : initialProp),
+    //   [initialProp, isControlled, valueProp],
+    // );
+    // const [internalValue, setInternalValue] = useState(initialValue);
 
-      onChangeProp?.(newValue);
-    };
+    // // if valueProp changes, update the internal value
+    // // useEffect(() => {
+    // //   if (!wasControlled && !isUndefined(valueProp)) {
+    // //     setInternalValue;
+    // //   }
+    // // }, [valueProp, wasControlled]);
 
-    const [displayMonth, setDisplayMonth] = useState<Date>(value ?? new Date());
+    // const updateValue = useCallback(
+    //   (newValue: DateType) => {
+    //     if (!isControlled) {
+    //       setInternalValue(newValue);
+    //     }
+
+    //     onChangeProp?.(newValue);
+    //   },
+    //   [isControlled, onChangeProp],
+    // );
+
+    // const value = isControlled ? valueProp : internalValue;
+
+    const [displayMonth, setDisplayMonth] = useState<Date>(new Date());
     const [isOpen, setOpen] = useState(false);
     const closeMenu = () => setOpen(false);
 

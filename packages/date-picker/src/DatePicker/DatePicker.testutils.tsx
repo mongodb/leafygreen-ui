@@ -8,21 +8,21 @@ import { DatePicker } from '.';
 interface RenderDatePickerResult extends RenderResult {
   formField: HTMLElement;
   inputContainer: HTMLElement;
-  dayInput: HTMLElement;
-  monthInput: HTMLElement;
-  yearInput: HTMLElement;
+  dayInput: HTMLInputElement;
+  monthInput: HTMLInputElement;
+  yearInput: HTMLInputElement;
   getMenuElements: () => RenderMenuResult;
   openMenu: () => RenderMenuResult;
 }
 
 interface RenderMenuResult {
   menuContainerEl: HTMLElement | null;
-  leftChevron: HTMLElement | null;
-  rightChevron: HTMLElement | null;
-  monthSelect: HTMLElement | null;
-  yearSelect: HTMLElement | null;
-  calendarGrid: HTMLElement | null;
-  calendarCells: Array<HTMLElement>;
+  leftChevron: HTMLButtonElement | null;
+  rightChevron: HTMLButtonElement | null;
+  monthSelect: HTMLButtonElement | null;
+  yearSelect: HTMLButtonElement | null;
+  calendarGrid: HTMLTableElement | null;
+  calendarCells: Array<HTMLTableCellElement>;
 }
 
 /**
@@ -38,9 +38,9 @@ export const renderDatePicker = (
 
   const formField = result.getByTestId('lg-date-picker');
   const inputContainer = result.getByRole('combobox');
-  const dayInput = result.getByLabelText('day');
-  const monthInput = result.getByLabelText('month');
-  const yearInput = result.getByLabelText('year');
+  const dayInput = result.getByLabelText('day') as HTMLInputElement;
+  const monthInput = result.getByLabelText('month') as HTMLInputElement;
+  const yearInput = result.getByLabelText('year') as HTMLInputElement;
 
   /**
    * Returns relevant menu elements.
@@ -48,14 +48,24 @@ export const renderDatePicker = (
    */
   function getMenuElements(): RenderMenuResult {
     const menuContainerEl = result.queryByRole('listbox');
-    const calendarGrid = result.queryByRole('grid');
-    const calendarCells = result.queryAllByRole('gridcell');
+    const calendarGrid = result.queryByRole('grid') as HTMLTableElement;
+    const calendarCells = result.queryAllByRole(
+      'gridcell',
+    ) as Array<HTMLTableCellElement>;
 
     // label text is tested in DatePickerMenu.spec
-    const leftChevron = result.queryByLabelText('Previous month');
-    const rightChevron = result.queryByLabelText('Next month');
-    const monthSelect = result.queryByLabelText('Select month');
-    const yearSelect = result.queryByLabelText('Select year');
+    const leftChevron = result.queryByLabelText(
+      'Previous month',
+    ) as HTMLButtonElement;
+    const rightChevron = result.queryByLabelText(
+      'Next month',
+    ) as HTMLButtonElement;
+    const monthSelect = result.queryByLabelText(
+      'Select month',
+    ) as HTMLButtonElement;
+    const yearSelect = result.queryByLabelText(
+      'Select year',
+    ) as HTMLButtonElement;
 
     return {
       menuContainerEl,

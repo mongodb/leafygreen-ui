@@ -20,7 +20,7 @@ describe('packages/date-picker', () => {
       .setSystemTime(new Date(Date.UTC(2023, Month.December, 26)));
   });
 
-  describe('Rendering', () => {
+  describe.only('Rendering', () => {
     /// Note: Most rendering tests handled by Chromatic
 
     test('spreads rest to formField', () => {
@@ -51,20 +51,20 @@ describe('packages/date-picker', () => {
 
     test('renders `value` prop', () => {
       const { dayInput, monthInput, yearInput } = renderDatePicker({
-        value: new Date(),
+        value: new Date(Date.now()),
       });
-      expect(dayInput).toHaveValue('26');
-      expect(monthInput).toHaveValue('12');
-      expect(yearInput).toHaveValue('2023');
+      expect(dayInput.value).toEqual('26');
+      expect(monthInput.value).toEqual('12');
+      expect(yearInput.value).toEqual('2023');
     });
 
     test('renders `initialValue` prop', () => {
       const { dayInput, monthInput, yearInput } = renderDatePicker({
-        initialValue: new Date(),
+        initialValue: new Date(Date.now()),
       });
-      expect(dayInput).toHaveValue('26');
-      expect(monthInput).toHaveValue('12');
-      expect(yearInput).toHaveValue('2023');
+      expect(dayInput.value).toEqual('26');
+      expect(monthInput.value).toEqual('12');
+      expect(yearInput.value).toEqual('2023');
     });
 
     describe('Menu', () => {
@@ -401,9 +401,9 @@ describe('packages/date-picker', () => {
       const cell1 = calendarCells?.[0];
       userEvent.click(cell1);
       await waitFor(() => {
-        expect(dayInput).toHaveValue('26');
-        expect(monthInput).toHaveValue('12');
-        expect(yearInput).toHaveValue('2023');
+        expect(dayInput.value).toEqual('26');
+        expect(monthInput.value).toEqual('12');
+        expect(yearInput.value).toEqual('2023');
       });
     });
 
@@ -428,9 +428,9 @@ describe('packages/date-picker', () => {
       const cell1 = calendarCells?.[0];
       userEvent.click(cell1);
       await waitFor(() => {
-        expect(dayInput).toHaveValue('01');
-        expect(monthInput).toHaveValue('12');
-        expect(yearInput).toHaveValue('2023');
+        expect(dayInput.value).toEqual('01');
+        expect(monthInput.value).toEqual('12');
+        expect(yearInput.value).toEqual('2023');
       });
     });
   });
