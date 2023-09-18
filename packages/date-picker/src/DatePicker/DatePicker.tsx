@@ -3,7 +3,6 @@ import { isSameMonth, setMonth } from 'date-fns';
 
 import {
   useBackdropClick,
-  useControlledValue,
   useForwardedRef,
   useIdAllocator,
 } from '@leafygreen-ui/hooks';
@@ -12,6 +11,7 @@ import {
   DatePickerProvider,
   DatePickerProviderProps,
 } from '../DatePickerContext';
+import { useControlledValue } from '../hooks/useControlledValue';
 import { pickAndOmit } from '../utils/pickAndOmit';
 
 import { DatePickerProps } from './DatePicker.types';
@@ -58,41 +58,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       onChangeProp,
       initialProp,
     );
-
-    // // Initially set to the existence of `valueProp`
-    // // If value prop is initially undefined, it's initially uncontrolled
-    // // If the value prop then changes, then isControlled is set to true,
-    // // and will remain true for the life of the component
-    // const isControlled: boolean = useMemo(() => {
-    //   return isControlled || !isUndefined(valueProp);
-    // }, [valueProp]);
-
-    // // We set the initial value to either the `value` or the temporary `initialValue`
-    // const initialValue = useMemo(
-    //   () => (isControlled ? valueProp : initialProp),
-    //   [initialProp, isControlled, valueProp],
-    // );
-    // const [internalValue, setInternalValue] = useState(initialValue);
-
-    // // if valueProp changes, update the internal value
-    // // useEffect(() => {
-    // //   if (!wasControlled && !isUndefined(valueProp)) {
-    // //     setInternalValue;
-    // //   }
-    // // }, [valueProp, wasControlled]);
-
-    // const updateValue = useCallback(
-    //   (newValue: DateType) => {
-    //     if (!isControlled) {
-    //       setInternalValue(newValue);
-    //     }
-
-    //     onChangeProp?.(newValue);
-    //   },
-    //   [isControlled, onChangeProp],
-    // );
-
-    // const value = isControlled ? valueProp : internalValue;
 
     const [displayMonth, setDisplayMonth] = useState<Date>(new Date());
     const [isOpen, setOpen] = useState(false);
