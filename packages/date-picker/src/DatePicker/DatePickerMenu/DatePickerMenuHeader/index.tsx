@@ -21,6 +21,15 @@ type DatePickerMenuHeaderProps = Pick<
   'month' | 'onMonthChange'
 >;
 
+const selectElementProps = {
+  size: 'xsmall',
+  allowDeselect: false,
+  dropdownWidthBasis: DropdownWidthBasis.Option,
+  // using no portal so the select menus are included in the backdrop "foreground"
+  // there is currently no way to pass a ref into the Select portal to use inf backdrop "foreground"
+  usePortal: false,
+} as const;
+
 export const DatePickerMenuHeader = ({
   month,
   onMonthChange,
@@ -60,16 +69,13 @@ export const DatePickerMenuHeader = ({
       </IconButton>
       <div className={menuHeaderSelectContainerStyles}>
         <Select
-          size="xsmall"
+          {...selectElementProps}
           aria-label="Select month"
-          allowDeselect={false}
           value={month.getUTCMonth().toString()}
-          dropdownWidthBasis={DropdownWidthBasis.Option}
           onChange={m => {
             const newMonth = setUTCMonth(month, Number(m));
             updateMonth(newMonth);
           }}
-          usePortal={false}
         >
           {Months.map((m, i) => (
             <Option value={i.toString()} key={m.short}>
@@ -78,17 +84,13 @@ export const DatePickerMenuHeader = ({
           ))}
         </Select>
         <Select
-          size="xsmall"
+          {...selectElementProps}
           aria-label="Select year"
-          allowDeselect={false}
           value={month.getFullYear().toString()}
-          dropdownWidthBasis={DropdownWidthBasis.Option}
           onChange={y => {
             const newMonth = setYear(month, Number(y));
             updateMonth(newMonth);
           }}
-          usePortal={false}
-          popoverZIndex={2}
         >
           {yearOptions.map(y => (
             <Option value={y.toString()} key={y}>
