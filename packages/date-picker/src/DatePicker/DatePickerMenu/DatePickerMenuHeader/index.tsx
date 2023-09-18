@@ -1,6 +1,6 @@
 import React from 'react';
 import { isBefore, setYear } from 'date-fns';
-import { range } from 'lodash';
+import range from 'lodash/range';
 
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';

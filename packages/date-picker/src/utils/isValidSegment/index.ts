@@ -1,4 +1,4 @@
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 
 import { DateSegment, DateSegmentValue } from '../../DateInput/DateInput.types';
 

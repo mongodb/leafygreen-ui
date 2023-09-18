@@ -1,4 +1,5 @@
-import { omit, pick } from 'lodash';
+import omit from 'lodash/omit';
+import pick from 'lodash/pick';
 
 /**
  * Returns an array of 2 objects,

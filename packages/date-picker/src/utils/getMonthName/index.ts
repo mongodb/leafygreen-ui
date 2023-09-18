@@ -1,4 +1,4 @@
-import { padStart } from 'lodash';
+import padStart from 'lodash/padStart';
 
 /**
  * Returns the month name from a given index and optional locale

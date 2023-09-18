@@ -1,4 +1,4 @@
-import { range } from 'lodash';
+import range from 'lodash/range';
 
 import { getMonthName } from './utils/getMonthName';
 

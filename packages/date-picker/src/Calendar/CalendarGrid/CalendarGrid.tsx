@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { range } from 'lodash';
+import range from 'lodash/range';
 import { getWeekStartByLocale } from 'weekstart';
 
 import { Disclaimer } from '@leafygreen-ui/typography';

@@ -1,5 +1,6 @@
 import { isValid, toDate as _toDate } from 'date-fns';
-import { isNull, isUndefined } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 
 import { isValidDateObject } from '../isValidDate';
 

@@ -1,4 +1,6 @@
-import { chunk, fill, range } from 'lodash';
+import chunk from 'lodash/chunk';
+import fill from 'lodash/fill';
+import range from 'lodash/range';
 import { getWeekStartByLocale } from 'weekstart';
 
 import { daysPerWeek } from '../../constants';

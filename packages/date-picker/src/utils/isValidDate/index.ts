@@ -1,5 +1,6 @@
 import { isValid } from 'date-fns';
-import { isNull, isUndefined } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 
 export const isValidDate = (
   maybeDate?: Date | string | number | null,

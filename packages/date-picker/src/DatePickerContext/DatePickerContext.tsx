@@ -1,7 +1,7 @@
 import React from 'react';
 import { createContext, PropsWithChildren, useContext } from 'react';
 import { isWithinInterval } from 'date-fns';
-import { defaults } from 'lodash';
+import defaults from 'lodash/defaults';
 
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 

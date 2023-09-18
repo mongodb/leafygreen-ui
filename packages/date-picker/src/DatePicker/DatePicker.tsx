@@ -6,14 +6,12 @@ import React, {
   useState,
 } from 'react';
 import { isSameMonth, setMonth } from 'date-fns';
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 
 import {
   useBackdropClick,
-  useControlledValue,
   useForwardedRef,
   useIdAllocator,
-  usePrevious,
 } from '@leafygreen-ui/hooks';
 
 import {
@@ -21,7 +19,6 @@ import {
   DatePickerProviderProps,
 } from '../DatePickerContext';
 import { pickAndOmit } from '../utils/pickAndOmit';
-import { toDate } from '../utils/toDate';
 
 import { DatePickerProps, DateType } from './DatePicker.types';
 import { DatePickerInput, DatePickerInputProps } from './DatePickerInput';
