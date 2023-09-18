@@ -6,7 +6,8 @@ import {
   getSortedRowModel,
 } from '@tanstack/react-table';
 
-import { TableCellCheckbox, TableHeaderCheckbox } from './TableCheckbox';
+import { TableHeaderCheckbox } from './TableHeaderCheckbox';
+import { TableRowCheckbox } from './TableRowCheckbox';
 import { LeafyGreenTableOptions, LGRowData } from './useLeafyGreenTable.types';
 import { LeafyGreenTable, LGColumnDef, LGTableDataType } from '.';
 
@@ -19,7 +20,7 @@ const selectColumnConfig: LGColumnDef<LGRowData> = {
   id: 'select',
   size: checkboxWidth,
   header: TableHeaderCheckbox,
-  cell: TableCellCheckbox,
+  cell: TableRowCheckbox,
 };
 
 function useLeafyGreenTable<T extends LGRowData>({
