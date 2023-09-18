@@ -6,12 +6,12 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 
 import { Month } from '../../constants';
-import { Locales, TimeZones } from '../../testUtils';
 import {
   DatePickerContextProps,
   DatePickerProvider,
   useDatePickerContext,
 } from '../../DatePickerContext';
+import { Locales, TimeZones } from '../../testUtils';
 import { isTodayTZ } from '../../utils/isTodayTZ';
 import { CalendarCell } from '../CalendarCell/CalendarCell';
 
@@ -80,6 +80,7 @@ export const Demo: StoryFn<typeof CalendarGrid> = ({ ...props }) => {
     >
       {(day, i) => (
         <CalendarCell
+          aria-label="test"
           key={i}
           isCurrent={isTodayTZ(day, timeZone)}
           isHighlighted={hovered ? hovered === day?.toISOString() : false}
@@ -99,7 +100,12 @@ Generated.parameters = {
     args: {
       month: new Date(Date.UTC(2023, Month.August, 1)),
       children: (day: Date, i: number) => (
-        <CalendarCell key={i} isCurrent={false} isHighlighted={false}>
+        <CalendarCell
+          key={i}
+          aria-label="test"
+          isCurrent={false}
+          isHighlighted={false}
+        >
           {day?.getUTCDate()}
         </CalendarCell>
       ),

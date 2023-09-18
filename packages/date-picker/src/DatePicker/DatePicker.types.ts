@@ -1,6 +1,4 @@
-import { BaseDatePickerProps } from '../types';
-
-export type DateType = Date | null;
+import { BaseDatePickerProps, DateType } from '../types';
 
 export interface DatePickerProps extends BaseDatePickerProps {
   /**

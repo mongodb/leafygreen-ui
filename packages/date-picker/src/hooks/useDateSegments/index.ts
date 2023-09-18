@@ -8,6 +8,7 @@ import {
   DateSegmentsState,
   DateSegmentValue,
 } from '../../DateInput/DateInput.types';
+import { DateType } from '../../types';
 import { getSegmentsFromDate } from '../../utils/getSegmentsFromDate';
 
 type OnUpdateCallback = (value: DateSegmentsState) => void;
@@ -44,9 +45,10 @@ const dateSegmentsReducer = (
  */
 export const useDateSegments = (
   /** Provided date is relative to the client's time zone */
-  date: Date | null,
+  date: DateType,
   { onUpdate }: UseDateSegmentsOptions,
 ): UseDateSegmentsReturnValue => {
+  //
   const [segments, dispatch] = useReducer(
     dateSegmentsReducer,
     date,

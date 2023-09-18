@@ -10,7 +10,10 @@ import { menuStyles } from './MenuWrapper.styles';
 /**
  * A styled popover
  */
-export const MenuWrapper = forwardRef(
+export const MenuWrapper = forwardRef<
+  HTMLDivElement,
+  PopoverProps & HTMLElementProps<'div'>
+>(
   (
     { className, children, ...props }: PopoverProps & HTMLElementProps<'div'>,
     fwdRef,

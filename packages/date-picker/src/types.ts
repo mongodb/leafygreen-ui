@@ -1,6 +1,8 @@
 import { DarkModeProps } from '@leafygreen-ui/lib';
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
+export type DateType = Date | null;
+
 export interface BaseDatePickerProps extends DarkModeProps {
   /**
    * A label for the input

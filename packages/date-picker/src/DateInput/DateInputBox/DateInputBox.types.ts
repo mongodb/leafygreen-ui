@@ -1,6 +1,6 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-import { DateType } from '../../DatePicker/DatePicker.types';
+import { DateType } from '../../types';
 
 export interface DateInputBoxProps
   extends Omit<HTMLElementProps<'div'>, 'onChange'> {

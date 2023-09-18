@@ -69,7 +69,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
     };
 
     // Keep track of each date segment
-    const { segments, setSegment } = useDateSegments(value, {
+    const { segments, setSegment } = useDateSegments(value ?? null, {
       onUpdate: onSegmentsUpdate,
     });
 
@@ -82,7 +82,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
         setSegment(segment, Number(newValue));
       };
 
-    const handleKeyDown: KeyboardEventHandler = ({ keyCode }) => {
+    const handleKeyDown: KeyboardEventHandler = ({ key }) => {
       /** moves the focused segment left or right */
       const moveFocus = (dir: 'left' | 'right') => {
         // TODO: check the position of the cursor before updating focus (see combobox)
@@ -114,7 +114,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
         }
       };
 
-      switch (keyCode) {
+      switch (key) {
         case keyMap.ArrowRight: {
           moveFocus('right');
           break;
