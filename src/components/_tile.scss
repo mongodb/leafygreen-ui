@@ -1,0 +1,138 @@
+.tile {
+  border: 1px solid $grey-600;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  position: relative;
+
+  .lines-container {
+    margin: 0rem 24px;
+  }
+
+  .tile-color {
+    color: $grey-600;
+  }
+
+  .form-btn-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 7rem;
+    align-items: end;
+  }
+
+  .title-container {
+    width: 100%;
+  }
+
+  .tile-control {
+    position: absolute;
+    right: toRem(0);
+    top: toRem(10);
+  }
+
+  &__info {
+    padding: toRem(16);
+    flex-direction: column;
+    display: flex;
+
+    .btn.btn-icon {
+      margin-right: 10px;
+      color: $black;
+    }
+
+    .action-btn {
+      width: 5rem !important;
+    }
+
+    @include media-breakpoint-up(sm) {
+      flex-direction: row;
+      padding: toRem(24);
+    }
+
+    &__controls {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: toRem(16);
+      margin-top: 0.25rem;
+
+      .form-check {
+        margin-right: 0;
+      }
+
+      @include media-breakpoint-up(sm) {
+        margin-bottom: 0;
+        width: auto;
+
+        .form-check {
+          margin-right: toRem(24);
+        }
+      }
+    }
+
+    .tile-title {
+      display: block;
+      line-height: 32px;
+      width: 72%;
+      font-weight: 500;
+      color: $black;
+    }
+
+    @include media-breakpoint-down(lg) {
+      .tile-title {
+        width: 385px;
+      }
+
+      .title-container {
+        width: 70%;
+      }
+    }
+
+    @include media-breakpoint-down(md) {
+      .tile-button-wrapper {
+        top: -1rem !important;
+      }
+
+      .lines-container {
+        margin: 0;
+        margin-right: 16px;
+      }
+
+      .title-container {
+        width: 70%;
+      }
+
+      .tile-title {
+        width: 302px;
+      }
+
+      .form-switch {
+        display: flex;
+        flex-direction: row;
+        min-width: 7rem;
+        align-items: center;
+        align-self: flex-end;
+      }
+
+      .last-update-text {
+        display: block;
+        width: 191px;
+      }
+
+      .tile-control {
+        position: relative !important;
+        right: toRem(0);
+        top: toRem(10);
+      }
+    }
+  }
+
+  .toggle-swap {
+    display: flex;
+  }
+
+  .leftAlign {
+    flex-direction: column-reverse;
+  }
+}

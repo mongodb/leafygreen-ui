@@ -1,3 +1,78 @@
 @import "../styles/_variables";
 @import "../styles/_functions";
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
+
+h1,
+h4,
+.h1,
+.h4 {
+    font-weight: $font-weight-normal;
+}
+
+h2,
+h3,
+h5,
+h6,
+.h2,
+.h3,
+.h5,
+.h6 {
+    font-weight: $font-weight-bold;
+}
+
+.sub-title {
+    font-size: $font-size-base * 1.25;
+    font-weight: $font-weight-normal;
+}
+
+.sub-title-2 {
+    font-size: $font-size-base * 1.125;
+    font-weight: $font-weight-bold;
+}
+
+.sub-title-3 {
+    font-size: toRem(14.22);
+    font-weight: normal;
+}
+
+.sub-title-4 {
+    font-size: toRem(11.2);
+    margin-top: 1px;
+    margin-left: 1px;
+}
+
+.body-1 {
+    font-size: $font-size-base;
+    margin-top: 1px;
+    margin-left: 1px;
+}
+
+.body-2 {
+    font-size: $fnt-size-base *0.875;
+    margin-top: 1px;
+    margin-left: 1px;
+}
+
+.body-3 {
+    font-size: $font-size-base * 0.75;
+    margin-top: 1px;
+    margin-left: 1px;
+}
+
+#root {
+    width: 100%;
+}
+
+legend {
+    margin-bottom: 0.75rem;
+    font-family: $font-family-sans-serif-medium;
+    font-size: $font-size-base;
+}
+
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+@import "../components/tile/_tile.scss";
