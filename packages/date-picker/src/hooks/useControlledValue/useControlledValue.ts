@@ -1,9 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
 import isUndefined from 'lodash/isUndefined';
 
+import { usePrevious } from '@leafygreen-ui/hooks';
 import { consoleOnce } from '@leafygreen-ui/lib';
 
-import usePrevious from '../usePrevious';
+/**
+ * TODO: move this to `packages/hooks`
+ * https://jira.mongodb.org/browse/LG-3608
+ */
 
 interface ControlledValueReturnObject<T extends any> {
   /** Whether the value is controlled */
