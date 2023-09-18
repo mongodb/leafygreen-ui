@@ -36,7 +36,7 @@ export const SearchResultsMenu = React.forwardRef<
       portalClassName,
       portalContainer,
       scrollContainer,
-      dropdownFooterSlot,
+      footerSlot,
       ...rest
     }: SearchResultsMenuProps,
     ref,
@@ -98,7 +98,7 @@ export const SearchResultsMenu = React.forwardRef<
             >
               {React.Children.count(children) ? children : <EmptyOption />}
             </ul>
-            {dropdownFooterSlot}
+            {footerSlot}
           </>
         )}
       </Popover>

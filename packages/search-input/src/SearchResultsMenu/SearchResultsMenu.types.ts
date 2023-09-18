@@ -7,5 +7,5 @@ export type SearchResultsMenuProps = HTMLElementProps<'ul', HTMLUListElement> &
   PortalControlProps & {
     refEl: React.RefObject<HTMLElement>;
     open?: boolean;
-    dropdownFooterSlot?: ReactElement;
+    footerSlot?: ReactElement;
   };
