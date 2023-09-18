@@ -121,7 +121,7 @@ export type PopoverProps = {
   active?: boolean;
 
   /**
-   * Class name applied to popover content container.
+   * Class name applied to popover container.
    */
   className?: string;
 

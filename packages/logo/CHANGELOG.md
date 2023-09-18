@@ -1,5 +1,12 @@
 # @leafygreen-ui/logo
 
+## 8.0.10
+
+### Patch Changes
+
+- Updated dependencies [3a9b274d]
+  - @leafygreen-ui/lib@12.0.0
+
 ## 8.0.9
 
 ### Patch Changes

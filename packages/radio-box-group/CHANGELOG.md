@@ -1,5 +1,13 @@
 # @leafygreen-ui/radio-box-group
 
+## 12.0.15
+
+### Patch Changes
+
+- Updated dependencies [3a9b274d]
+  - @leafygreen-ui/lib@12.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.9
+
 ## 12.0.14
 
 ### Patch Changes
