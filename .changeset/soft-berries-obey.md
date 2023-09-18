@@ -1,8 +1,8 @@
 ---
-'@leafygreen-ui/hooks': minor
+'@leafygreen-ui/hooks': major
 ---
 
 - Extends `useControlledValue` to accept any type.
-- Adds `updateValue` function in return value. This method triggers a synthetic event to update the value of a controlled or uncontrolled component.
-- Adds `initialValue` argument. Used for setting the initial value for uncontrolled components. Without this we may encounter a React error for switching between controlled/uncontrolled inputs
-- The value of `isControlled` is now immutable after the first render
+  - Adds `initialValue` argument. Used for setting the initial value for uncontrolled components. Without this we may encounter a React error for switching between controlled/uncontrolled inputs
+  - Changes signature of `onChange` argument to be a simple setter function (`(value: T) => void`)
+  - Changes return object to include only `isControlled`, `value` and an `updateValue` setter function
