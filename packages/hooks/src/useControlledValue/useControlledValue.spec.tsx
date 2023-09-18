@@ -1,6 +1,5 @@
 import React from 'react';
 import { ChangeEventHandler } from 'react';
-import { act } from 'react-test-renderer';
 import { render } from '@testing-library/react';
 import { renderHook, RenderHookResult } from '@testing-library/react-hooks';
 import userEvent from '@testing-library/user-event';
@@ -29,129 +28,98 @@ describe('packages/hooks/useControlledValue', () => {
   });
 
   test('rendering without any arguments sets hook to uncontrolled', () => {
-    const {
-      result: { current },
-    } = renderUseControlledValueHook();
-    expect(current.isControlled).toEqual(false);
+    const { result } = renderUseControlledValueHook();
+    expect(result.current.isControlled).toEqual(false);
   });
 
   describe('accepts various value types', () => {
     test('accepts number values', () => {
-      const {
-        result: { current },
-      } = renderUseControlledValueHook(5);
-      expect(current.value).toBe(5);
+      const { result } = renderUseControlledValueHook(5);
+      expect(result.current.value).toBe(5);
     });
 
     test('accepts boolean values', () => {
-      const {
-        result: { current },
-      } = renderUseControlledValueHook(false);
-      expect(current.value).toBe(false);
+      const { result } = renderUseControlledValueHook(false);
+      expect(result.current.value).toBe(false);
     });
 
     test('accepts array values', () => {
       const arr = ['foo', 'bar'];
-      const {
-        result: { current },
-      } = renderUseControlledValueHook(arr);
-      expect(current.value).toBe(arr);
+      const { result } = renderUseControlledValueHook(arr);
+      expect(result.current.value).toBe(arr);
     });
 
     test('accepts object values', () => {
       const obj = { foo: 'foo', bar: 'bar' };
-      const {
-        result: { current },
-      } = renderUseControlledValueHook(obj);
-      expect(current.value).toBe(obj);
+      const { result } = renderUseControlledValueHook(obj);
+      expect(result.current.value).toBe(obj);
     });
 
     test('accepts date values', () => {
       const date = new Date('2023-08-23');
-      const {
-        result: { current },
-      } = renderUseControlledValueHook(date);
-      expect(current.value).toBe(date);
+      const { result } = renderUseControlledValueHook(date);
+      expect(result.current.value).toBe(date);
     });
 
     test('accepts multiple/union types', () => {
-      const { result, rerender } = renderHook(
-        v => useControlledValue<string | number>(v),
-        {
-          initialProps: 5 as string | number,
-        },
-      );
+      const { result, rerender } = renderUseControlledValueHook<
+        string | number
+      >(5);
       expect(result.current.value).toBe(5);
-      act(() => {
-        rerender('foo');
-      });
+      rerender('foo');
       expect(result.current.value).toBe('foo');
     });
   });
 
   describe('Controlled', () => {
     test('rendering with a value sets value and isControlled', () => {
-      const {
-        result: { current },
-      } = renderUseControlledValueHook('apple');
-      expect(current.isControlled).toBe(true);
-      expect(current.value).toBe('apple');
+      const { result } = renderUseControlledValueHook('apple');
+      expect(result.current.isControlled).toBe(true);
+      expect(result.current.value).toBe('apple');
     });
 
     test('rerendering from initial undefined sets value and isControlled', async () => {
       const { rerender, result } = renderUseControlledValueHook();
       rerender('apple');
-
       expect(result.current.isControlled).toBe(true);
       expect(result.current.value).toEqual('apple');
     });
 
     test('rerendering with a new value changes the value', () => {
       const { rerender, result } = renderUseControlledValueHook('apple');
-
       expect(result.current.value).toBe('apple');
-
       rerender('banana');
       expect(result.current.value).toBe('banana');
     });
 
     test('provided handler is called within `updateValue`', () => {
       const handler = jest.fn();
-      const {
-        result: { current },
-      } = renderUseControlledValueHook<string>('apple', handler);
-
-      current.updateValue('banana');
-
+      const { result } = renderUseControlledValueHook<string>('apple', handler);
+      result.current.updateValue('banana');
       expect(handler).toHaveBeenCalledWith('banana');
     });
 
     test('hook value does not change when `updateValue` is called', () => {
-      const {
-        result: { current },
-      } = renderUseControlledValueHook<string>('apple');
-
-      current.updateValue('banana');
-
+      const { result } = renderUseControlledValueHook<string>('apple');
+      result.current.updateValue('banana');
       // value doesn't change unless we explicitly change it
-      expect(current.value).toBe('apple');
+      expect(result.current.value).toBe('apple');
     });
 
     test('setting value to undefined should keep the component controlled', () => {
-      const {
-        rerender,
-        result: { current },
-      } = renderUseControlledValueHook<string>('apple');
-      expect(current.isControlled).toBe(true);
-      act(() => rerender(undefined));
-      expect(current.isControlled).toBe(true);
+      const { rerender, result } = renderUseControlledValueHook('apple');
+      expect(result.current.isControlled).toBe(true);
+      rerender(undefined);
+      expect(result.current.isControlled).toBe(true);
     });
 
     test('initial value is ignored when controlled', () => {
-      const {
-        result: { current },
-      } = renderUseControlledValueHook<string>('apple', () => {}, 'banana');
-      expect(current.value).toBe('apple');
+      const { result } = renderUseControlledValueHook<string>(
+        'apple',
+        () => {},
+        'banana',
+      );
+      expect(result.current.value).toBe('apple');
     });
   });
 
@@ -217,7 +185,7 @@ describe('packages/hooks/useControlledValue', () => {
       );
     };
 
-    describe('Controlled test component', () => {
+    describe('Controlled', () => {
       test('initially renders with a value', () => {
         const result = render(<TestComponent valueProp="apple" />);
         const input = result.getByTestId('test-input');
@@ -242,9 +210,17 @@ describe('packages/hooks/useControlledValue', () => {
       });
 
       test('user interaction does not change the element value', () => {
+        const result = render(<TestComponent valueProp="apple" />);
+        const input = result.getByTestId('test-input');
+        userEvent.type(input, 'b');
+        expect(input).toHaveValue('apple');
+      });
+
+      // eslint-disable-next-line jest/no-disabled-tests
+      test.skip('user interaction does not change the element value when initially undefined', () => {
         const handler = jest.fn();
         const result = render(
-          <TestComponent valueProp="apple" handlerProp={handler} />,
+          <TestComponent valueProp={undefined} handlerProp={handler} />,
         );
         const input = result.getByTestId('test-input');
         userEvent.type(input, 'b');
@@ -252,7 +228,7 @@ describe('packages/hooks/useControlledValue', () => {
       });
     });
 
-    describe('Uncontrolled test component', () => {
+    describe('Uncontrolled', () => {
       test('initially renders without a value', () => {
         const result = render(<TestComponent />);
         const input = result.getByTestId('test-input');

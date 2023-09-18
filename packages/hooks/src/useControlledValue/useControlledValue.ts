@@ -1,5 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import isUndefined from 'lodash/isUndefined';
+
+import { consoleOnce } from '@leafygreen-ui/lib';
+
+import usePrevious from '../usePrevious';
 
 interface ControlledValueReturnObject<T extends any> {
   /** Whether the value is controlled */
@@ -32,6 +36,25 @@ export const useControlledValue = <T extends any>(
   const isControlled: boolean = useMemo(() => {
     return isControlled || !isUndefined(valueProp);
   }, [valueProp]);
+  const wasControlled = usePrevious(isControlled);
+
+  useEffect(() => {
+    if (isUndefined(isControlled) || isUndefined(wasControlled)) return;
+
+    if (isControlled !== wasControlled) {
+      const err = `WARN: A component changed from ${
+        wasControlled ? 'controlled' : 'uncontrolled'
+      } to ${
+        isControlled ? 'controlled' : 'uncontrolled'
+      }. This can cause issues with React states. ${
+        isControlled
+          ? 'To control a component but have an initially empty input, consider setting the `value` prop to `null`.'
+          : ''
+      }`;
+
+      consoleOnce.warn(err);
+    }
+  }, [isControlled, wasControlled]);
 
   // We set the initial value to either the `value`
   // or the temporary `initialValue` prop
