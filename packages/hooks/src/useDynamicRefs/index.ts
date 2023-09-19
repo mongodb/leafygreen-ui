@@ -13,22 +13,6 @@ export interface UseDynamicRefsArgs {
 /** The Map type for a given ref object  */
 export type RefMap<T> = Map<string, React.RefObject<T>>;
 
-// export type DynamicRefNamespace<T> = Record<string, RefMap<T>>;
-
-// // Create an object to track unique namespaced ref maps
-// const refNameSpaces: DynamicRefNamespace<any> = {};
-
-// /**
-//  * Returns the namespace map for the given string
-//  *
-//  * @internal
-//  */
-// function getNamespace<T>(namespace: string): RefMap<T> {
-//   if (refNameSpaces[namespace]) return refNameSpaces[namespace];
-//   refNameSpaces[namespace] = new Map<string, React.RefObject<T>>();
-//   return refNameSpaces[namespace];
-// }
-
 /**
  * @internal
  */
