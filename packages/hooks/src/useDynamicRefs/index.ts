@@ -40,7 +40,7 @@ export function getGetRef<T>(refMap: RefMap<T>) {
   function getRef(key: string): React.RefObject<T>;
   function getRef(key?: string): React.RefObject<T> | undefined {
     if (!key) {
-      consoleOnce.error(`useDynamicRefs: Cannot get ref without key`);
+      consoleOnce.error('`useDynamicRefs`: Cannot get ref without key');
       return;
     }
 
