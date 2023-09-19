@@ -20,7 +20,7 @@ interface ControlledValueReturnObject<T extends any> {
    * Either updates the uncontrolled value,
    * or calls the provided `onChange` callback
    */
-  updateValue: (newVal?: T, ...args: Array<any>) => void;
+  setValue: (newVal?: T, ...args: Array<any>) => void;
 }
 
 /**
@@ -80,7 +80,7 @@ export const useControlledValue = <T extends any>(
   );
 
   // A wrapper around `handleChange` that fires a simulated event
-  const updateValue = (newVal: T | undefined) => {
+  const setValue = (newVal: T | undefined) => {
     if (!isControlled) {
       setUncontrolledValue(newVal);
     }
@@ -91,6 +91,6 @@ export const useControlledValue = <T extends any>(
   return {
     isControlled,
     value,
-    updateValue,
+    setValue,
   };
 };

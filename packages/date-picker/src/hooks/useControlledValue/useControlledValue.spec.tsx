@@ -92,16 +92,16 @@ describe('packages/hooks/useControlledValue', () => {
       expect(result.current.value).toBe('banana');
     });
 
-    test('provided handler is called within `updateValue`', () => {
+    test('provided handler is called within `setValue`', () => {
       const handler = jest.fn();
       const { result } = renderUseControlledValueHook<string>('apple', handler);
-      result.current.updateValue('banana');
+      result.current.setValue('banana');
       expect(handler).toHaveBeenCalledWith('banana');
     });
 
-    test('hook value does not change when `updateValue` is called', () => {
+    test('hook value does not change when `setValue` is called', () => {
       const { result } = renderUseControlledValueHook<string>('apple');
-      result.current.updateValue('banana');
+      result.current.setValue('banana');
       // value doesn't change unless we explicitly change it
       expect(result.current.value).toBe('apple');
     });
@@ -133,19 +133,19 @@ describe('packages/hooks/useControlledValue', () => {
       expect(current.value).toBe('apple');
     });
 
-    test('provided handler is called within `updateValue`', () => {
+    test('provided handler is called within `setValue`', () => {
       const handler = jest.fn();
       const {
         result: { current },
       } = renderUseControlledValueHook(undefined, handler);
 
-      current.updateValue('apple');
+      current.setValue('apple');
       expect(handler).toHaveBeenCalledWith('apple');
     });
 
-    test('updateValue updates the value', () => {
+    test('setValue updates the value', () => {
       const { result } = renderUseControlledValueHook<string>(undefined);
-      result.current.updateValue('banana');
+      result.current.setValue('banana');
       expect(result.current.value).toBe('banana');
     });
   });
@@ -160,14 +160,14 @@ describe('packages/hooks/useControlledValue', () => {
     }) => {
       const initialVal = '';
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      const { value, updateValue } = useControlledValue(
+      const { value, setValue } = useControlledValue(
         valueProp,
         handlerProp,
         initialVal,
       );
 
       const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
-        updateValue(e.target.value);
+        setValue(e.target.value);
       };
 
       return (
@@ -179,7 +179,7 @@ describe('packages/hooks/useControlledValue', () => {
           />
           <button
             data-testid="test-button"
-            onClick={() => updateValue('carrot')}
+            onClick={() => setValue('carrot')}
           />
         </>
       );

@@ -52,8 +52,10 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const menuId = useIdAllocator({ prefix: 'lg-date-picker-menu' });
     const inputRef = useForwardedRef(fwdRef, null);
     const menuRef = useRef<HTMLDivElement>(null);
+    const [isOpen, setOpen] = useState(false);
+    const closeMenu = () => setOpen(false);
 
-    const { value, updateValue } = useControlledValue(
+    const { value, setValue } = useControlledValue(
       valueProp,
       onChangeProp,
       initialProp,
@@ -62,16 +64,14 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const [displayMonth, setDisplayMonth] = useState<Date>(
       valueProp ?? new Date(),
     );
-    const [isOpen, setOpen] = useState(false);
-    const closeMenu = () => setOpen(false);
 
-    const changeValue = (newVal: Date | null) => {
+    const updateValue = (newVal: Date | null) => {
       // if the new value is not the current month, update the month
       if (newVal && !isSameMonth(newVal, displayMonth)) {
         setDisplayMonth(setMonth(displayMonth, newVal.getMonth()));
       }
 
-      updateValue(newVal);
+      setValue(newVal);
     };
 
     useBackdropClick(closeMenu, [inputRef, menuRef], isOpen);
@@ -79,11 +79,13 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const handleInputChange: DatePickerInputProps['setValue'] = (
       inputVal: Date | null,
     ) => {
-      if (inputVal !== value) changeValue(inputVal);
+      if (inputVal !== value) {
+        updateValue(inputVal);
+      }
     };
 
     const handleCellClick: DatePickerMenuProps['onCellClick'] = cellValue => {
-      changeValue(cellValue);
+      updateValue(cellValue);
       setOpen(false);
     };
 
