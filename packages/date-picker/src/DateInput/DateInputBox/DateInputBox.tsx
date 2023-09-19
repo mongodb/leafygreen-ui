@@ -7,7 +7,6 @@ import { keyMap } from '@leafygreen-ui/lib';
 
 import { useDatePickerContext } from '../../DatePickerContext';
 import { useDateSegments } from '../../hooks/useDateSegments';
-import { useFormatParts } from '../../hooks/useFormat';
 import { getRemainingParts } from '../../utils/getRemainingParts';
 import { isValidSegmentName } from '../../utils/isValidSegment';
 import { newDateFromSegments } from '../../utils/newDateFromSegments';
@@ -36,15 +35,19 @@ import { DateInputBoxProps } from './DateInputBox.types';
  */
 export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
   (
-    { value, setValue, className, labelledBy, ...rest }: DateInputBoxProps,
+    {
+      value,
+      setValue,
+      className,
+      labelledBy,
+      segmentRefs,
+      ...rest
+    }: DateInputBoxProps,
     fwdRef,
   ) => {
-    const { dateFormat, segmentRefs } = useDatePickerContext();
+    const { formatParts } = useDatePickerContext();
 
     const containerRef = useForwardedRef(fwdRef, null);
-
-    // Only used to track the _order_ of segments, not the value itself
-    const formatParts = useFormatParts(dateFormat);
 
     /**
      * When a segment is updated, update the external value
@@ -107,7 +110,9 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
         );
 
         // focus the element with that segment id
-        const nextRef = nextIndex ? segmentRefs(nextIndex.type) : null;
+        const nextRef = nextIndex
+          ? segmentRefs[nextIndex.type as DateSegment]
+          : null;
 
         if (nextRef) {
           nextRef.current?.focus();
@@ -148,7 +153,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
             return (
               <DateInputSegment
                 key={part.type}
-                ref={segmentRefs(part.type)}
+                ref={segmentRefs[part.type]}
                 segment={part.type}
                 value={segments[part.type]}
                 onChange={handleSegmentChange(part.type)}

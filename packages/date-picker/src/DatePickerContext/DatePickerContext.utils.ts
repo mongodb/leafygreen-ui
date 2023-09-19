@@ -1,8 +1,11 @@
 import { isWithinInterval } from 'date-fns';
-import { defaults, defaultTo } from 'lodash';
+import defaults from 'lodash/defaults';
+import defaultTo from 'lodash/defaultTo';
 
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
+import { BaseDatePickerProps } from '../types';
+import { getFormatParts } from '../utils/getFormatParts';
 import { toDate } from '../utils/toDate';
 
 import {
@@ -14,6 +17,22 @@ export const MIN_DATE = new Date('12-31-1969');
 export const MAX_DATE = new Date('01-19-2038');
 export const TZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
+/** Prop names that are in both DatePickerProps and DatePickerProviderProps */
+export const contextPropNames: Array<
+  keyof DatePickerProviderProps & keyof BaseDatePickerProps
+> = [
+  'label',
+  'dateFormat',
+  'timeZone',
+  'min',
+  'max',
+  'baseFontSize',
+  'disabled',
+  'size',
+  'state',
+  'errorMessage',
+];
+
 /** The default context value */
 export const defaultDatePickerContext: DatePickerContextProps = {
   label: '',
@@ -23,6 +42,7 @@ export const defaultDatePickerContext: DatePickerContextProps = {
   min: MIN_DATE,
   max: MAX_DATE,
   isOpen: false,
+  setOpen: () => {},
   isInRange: () => true,
   disabled: false,
   size: Size.Default,
@@ -31,7 +51,6 @@ export const defaultDatePickerContext: DatePickerContextProps = {
   baseFontSize: BaseFontSize.Body1,
   darkMode: false,
   menuId: '',
-  segmentRefs: () => undefined,
 };
 
 /**
@@ -64,5 +83,8 @@ export const getContextProps = (
 
   const isInRange = getIsInRange(providerValue.min, providerValue.max);
 
-  return { ...providerValue, isInRange };
+  // Only used to track the _order_ of segments, not the value itself
+  const formatParts = getFormatParts(providerValue.dateFormat);
+
+  return { ...providerValue, isInRange, formatParts };
 };

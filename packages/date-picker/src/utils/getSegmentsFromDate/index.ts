@@ -1,4 +1,4 @@
-import { DateSegmentsState } from 'src/DateInput/DateInput.types';
+import { DateSegmentsState } from '../../DateInput/DateInput.types';
 
 /** Returns a single object with day, month & year segments */
 export const getSegmentsFromDate = (date: Date | null): DateSegmentsState => {

@@ -16,6 +16,7 @@ const IsoFormatParts: Array<Intl.DateTimeFormatPart> = [
 
 /**
  * Hook that returns an Intl.DateTimeFormat object for the provided format string
+ * @deprecated
  */
 export const useFormatter = (format: string) => {
   const [formatter, setFormatter] = useState<Intl.DateTimeFormat | undefined>(
@@ -35,6 +36,9 @@ export const useFormatter = (format: string) => {
   return formatter;
 };
 
+/**
+ * @deprecated
+ */
 export const useFormatParts = (
   format: string,
 ): Array<Intl.DateTimeFormatPart> | undefined => {

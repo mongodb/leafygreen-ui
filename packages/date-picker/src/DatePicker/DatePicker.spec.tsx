@@ -20,7 +20,7 @@ describe('packages/date-picker', () => {
       .setSystemTime(new Date(Date.UTC(2023, Month.December, 26)));
   });
 
-  describe.only('Rendering', () => {
+  describe('Rendering', () => {
     /// Note: Most rendering tests handled by Chromatic
 
     test('spreads rest to formField', () => {

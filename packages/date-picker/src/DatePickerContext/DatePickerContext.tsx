@@ -18,8 +18,10 @@ export const DatePickerProvider = ({
   children,
   value,
 }: PropsWithChildren<{ value: DatePickerProviderProps }>) => {
+  const contextValue = getContextProps(value);
+
   return (
-    <DatePickerContext.Provider value={getContextProps(value)}>
+    <DatePickerContext.Provider value={contextValue}>
       {children}
     </DatePickerContext.Provider>
   );

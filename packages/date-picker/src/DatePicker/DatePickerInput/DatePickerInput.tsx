@@ -8,7 +8,10 @@ import { useDatePickerContext } from '../../DatePickerContext';
 import { DatePickerInputProps } from './DatePickerInput.types';
 
 export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
-  ({ value, setValue, onClick, ...rest }: DatePickerInputProps, fwdRef) => {
+  (
+    { value, setValue, onClick, segmentRefs, ...rest }: DatePickerInputProps,
+    fwdRef,
+  ) => {
     const { label, timeZone } = useDatePickerContext();
     const labelId = useIdAllocator({ prefix: 'lg-date-label' });
     const descriptionId = useIdAllocator({ prefix: 'lg-date-description' });
@@ -34,6 +37,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           setValue={setValue}
           id={inputId}
           labelledBy={labelId}
+          segmentRefs={segmentRefs}
         />
       </DateFormField>
     );

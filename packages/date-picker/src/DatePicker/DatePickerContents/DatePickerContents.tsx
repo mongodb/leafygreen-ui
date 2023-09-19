@@ -1,0 +1,112 @@
+import React, { forwardRef, MouseEventHandler, useRef, useState } from 'react';
+import { isSameMonth, setMonth } from 'date-fns';
+
+import {
+  useBackdropClick,
+  useDynamicRefs,
+  useForwardedRef,
+} from '@leafygreen-ui/hooks';
+
+import { DateSegment } from '../../DateInput/DateInput.types';
+import { useDatePickerContext } from '../../DatePickerContext';
+import { DatePickerInput, DatePickerInputProps } from '../DatePickerInput';
+import { DatePickerMenu, DatePickerMenuProps } from '../DatePickerMenu';
+
+import { DatePickerContentsProps } from './DatePickerContents.types';
+
+export const DatePickerContents = forwardRef<
+  HTMLDivElement,
+  DatePickerContentsProps
+>(({ value, setValue, ...rest }: DatePickerContentsProps, fwdRef) => {
+  const { isOpen, setOpen, formatParts, menuId } = useDatePickerContext();
+  const closeMenu = () => setOpen(false);
+
+  const getSegmentRef = useDynamicRefs<HTMLInputElement>({
+    prefix: 'segment',
+  });
+
+  const segmentRefs: Record<DateSegment, ReturnType<typeof getSegmentRef>> = {
+    day: getSegmentRef('day') || undefined,
+    month: getSegmentRef('month') || undefined,
+    year: getSegmentRef('year') || undefined,
+  };
+
+  const formFieldRef = useForwardedRef(fwdRef, null);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  const [displayMonth, setDisplayMonth] = useState<Date>(value ?? new Date());
+
+  const updateValue = (newVal: Date | null) => {
+    // if the new value is not the current month, update the month
+    if (newVal && !isSameMonth(newVal, displayMonth)) {
+      setDisplayMonth(setMonth(displayMonth, newVal.getMonth()));
+    }
+
+    setValue(newVal);
+  };
+
+  useBackdropClick(closeMenu, [formFieldRef, menuRef], isOpen);
+
+  const handleInputChange: DatePickerInputProps['setValue'] = (
+    inputVal: Date | null,
+  ) => {
+    if (inputVal !== value) {
+      updateValue(inputVal);
+    }
+  };
+
+  const handleCellClick: DatePickerMenuProps['onCellClick'] = cellValue => {
+    updateValue(cellValue);
+    setOpen(false);
+  };
+
+  const handleMonthChange: DatePickerMenuProps['onMonthChange'] = newMonth => {
+    setDisplayMonth(newMonth);
+  };
+
+  const handleInputClick: MouseEventHandler<HTMLElement> = e => {
+    setOpen(true);
+    // TODO: Set focus to appropriate segment
+
+    if (
+      !Object.values(segmentRefs)
+        .map(r => r.current)
+        .includes(e.target as HTMLInputElement)
+    ) {
+      // eslint-disable-next-line no-console
+      console.log(formatParts);
+
+      // otherwise, check which segments are filled,
+      // if all are filled, focus the last one,
+      // if 1+ are empty, focus the first empty one
+    }
+    // otherwise, we clicked a specific segment,
+    // so we focus on that segment (default behavior)
+  };
+
+  return (
+    <>
+      <DatePickerInput
+        ref={formFieldRef}
+        value={value}
+        setValue={handleInputChange}
+        onClick={handleInputClick}
+        segmentRefs={segmentRefs}
+        {...rest}
+      />
+      <DatePickerMenu
+        ref={menuRef}
+        id={menuId}
+        refEl={formFieldRef}
+        value={value}
+        isOpen={isOpen}
+        month={displayMonth}
+        onCellClick={handleCellClick}
+        onMonthChange={handleMonthChange}
+        usePortal={true}
+      />
+    </>
+  );
+});
+
+DatePickerContents.displayName = 'DatePickerContents';

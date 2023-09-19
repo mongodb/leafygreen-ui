@@ -1,13 +1,11 @@
-import { useDynamicRefs } from '@leafygreen-ui/hooks';
-
 import { BaseDatePickerProps } from '../types';
 
 /** The props expected by the provider */
 export interface DatePickerProviderProps extends BaseDatePickerProps {
   /** Whether the calendar menu is open */
   isOpen: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   menuId: string;
-  segmentRefs: ReturnType<typeof useDynamicRefs<HTMLInputElement>>;
 }
 
 /**
@@ -25,4 +23,6 @@ export interface DatePickerContextProps
    * Returns whether the given date is within the component's min/max dates
    */
   isInRange: (d?: Date | null) => boolean;
+
+  formatParts?: Array<Intl.DateTimeFormatPart>;
 }
