@@ -1,5 +1,17 @@
 # @leafygreen-ui/toast
 
+## 6.1.16
+
+### Patch Changes
+
+- 3a9b274d: Handles keyboard event based on the event's `key` property rather than its `keyCode` property
+- Updated dependencies [3a9b274d]
+  - @leafygreen-ui/lib@12.0.0
+  - @leafygreen-ui/icon-button@15.0.18
+  - @leafygreen-ui/leafygreen-provider@3.1.9
+  - @leafygreen-ui/portal@5.0.2
+  - @leafygreen-ui/typography@17.0.1
+
 ## 6.1.15
 
 ### Patch Changes

@@ -41,6 +41,14 @@ export const labelBaseStyle = css`
   font-weight: ${fontWeights.bold};
 `;
 
+export const disabledStyle = css`
+  cursor: not-allowed;
+`;
+
+export const labelWeightStyle = css`
+  font-weight: ${fontWeights.regular};
+`;
+
 export const inputThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     &:checked {

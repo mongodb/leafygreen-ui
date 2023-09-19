@@ -295,7 +295,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       const isFocusInComponent = isFocusOnSearchBox || isFocusInMenu;
 
       if (isFocusInComponent) {
-        switch (e.keyCode) {
+        switch (e.key) {
           case keyMap.Enter: {
             highlightedElementRef?.current?.click();
             break;
