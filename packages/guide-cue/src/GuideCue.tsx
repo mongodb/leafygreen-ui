@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { flushSync } from 'react-dom';
+// import { flushSync } from 'react-dom';
 import PropTypes from 'prop-types';
 
 import { usePrefersReducedMotion } from '@leafygreen-ui/a11y';
@@ -63,10 +63,10 @@ function GuideCue({
       openTimeout = setTimeout(
         () =>
           // React 18 automatically batches all updates which appears to break the opening transition. flushSync prevents this state update from automically batching. Instead updates are made synchronously.
-          flushSync(() => {
-            // tooltip opens a little after the beacon opens
-            setTooltipOpen(true);
-          }),
+          // flushSync(() => {
+          //   // tooltip opens a little after the beacon opens
+          //   setTooltipOpen(true);
+          // }),
         timeout1,
       );
     } else {

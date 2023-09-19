@@ -67,7 +67,8 @@
   "resolutions": {
     "caniuse-lite": "^1.0.30001135",
     "@types/react-transition-group/@types/react": "^17.0.2",
-    "@types/react": "18.2.21"
+    "@types/react": "17.0.2",
+    "@types/react-dom": "17.0.2"
   },
   "workspaces": [
     "packages/*",

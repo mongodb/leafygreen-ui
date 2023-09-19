@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { flushSync } from 'react-dom';
+// import { flushSync } from 'react-dom';
 
 import Button from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
@@ -81,9 +81,9 @@ export const UnitSelectButton = React.forwardRef(
 
         if (!popoverParent) {
           // React 18 automatically batches all updates which appears to break the opening transition. flushSync prevents this state update from automically batching. Instead updates are made synchronously.
-          flushSync(() => {
-            setOpen(true);
-          });
+          // flushSync(() => {
+          //   setOpen(true);
+          // });
         }
       }
     };

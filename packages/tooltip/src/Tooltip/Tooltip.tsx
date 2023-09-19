@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { flushSync } from 'react-dom';
+// import { flushSync } from 'react-dom';
 import debounce from 'lodash/debounce';
 import PropTypes from 'prop-types';
 
@@ -138,9 +138,9 @@ function Tooltip({
               userTriggerHandler('onMouseEnter', e);
               // Without this the tooltip sometimes opens without a transition. flushSync prevents this state update from automically batching. Instead updates are made synchronously.
               // https://react.dev/reference/react-dom/flushSync#flushing-updates-for-third-party-integrations
-              flushSync(() => {
-                setOpen(true);
-              });
+              // flushSync(() => {
+              //   setOpen(true);
+              // });
             }, 35),
             onMouseLeave: debounce((e: MouseEvent) => {
               userTriggerHandler('onMouseLeave', e);
