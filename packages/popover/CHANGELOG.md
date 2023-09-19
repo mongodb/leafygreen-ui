@@ -1,5 +1,12 @@
 # @leafygreen-ui/popover
 
+## 11.1.0
+
+### Minor Changes
+
+- f8c77c5d: Exports a unique `contentClassName` from Popover to enable styling of Popover inner content wrapper
+- 827060f6: Allows Popover to accept a `ref`
+
 ## 11.0.18
 
 ### Patch Changes
