@@ -19,6 +19,7 @@ describe('packages/hooks/useDynamicRefs', () => {
   });
 
   test('returns unique getters when called with the same prefix', () => {
+    // to prevent collisions
     const { result: A } = renderHook(() => useDynamicRefs({ prefix: 'A' }));
     const { result: B } = renderHook(() => useDynamicRefs({ prefix: 'A' }));
     expect(A.current).not.toBe(B.current);
@@ -30,7 +31,8 @@ describe('packages/hooks/useDynamicRefs', () => {
     expect(A.current).not.toBe(B.current);
   });
 
-  test('returns unique getters when rerendered with a different prefix', () => {
+  test('returns unique getters when re-rendered with a different prefix', () => {
+    // This is an edge-case, but this is the behavior we want if it happens
     const { result, rerender } = renderHook(v => useDynamicRefs(v), {
       initialProps: { prefix: 'A' },
     });
@@ -58,7 +60,9 @@ describe('packages/hooks/useDynamicRefs', () => {
         .mockImplementation(() => {});
       const { result } = renderHook(() => useDynamicRefs({ prefix: 'A' }));
       result.current();
-      expect(error).toHaveBeenCalled();
+      expect(error).toHaveBeenCalledWith(
+        expect.stringContaining('Cannot get ref without key'),
+      );
     });
 
     test('returns identical refs when called with the same key', () => {
@@ -96,6 +100,7 @@ describe('packages/hooks/useDynamicRefs', () => {
     });
 
     test('returns unique refs when rerendered with a different prefix', () => {
+      // edge-case
       const { result, rerender } = renderHook(v => useDynamicRefs(v), {
         initialProps: { prefix: 'A' },
       });

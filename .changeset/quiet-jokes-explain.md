@@ -2,4 +2,5 @@
 '@leafygreen-ui/hooks': patch
 ---
 
-Improves inner workings and adds tests to `useDynamicRefs`
+- Makes `useDynamicRefs` `prefix` argument optional 
+  - Adds tests to `useDynamicRefs`
