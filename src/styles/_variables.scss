@@ -1,3 +1,34 @@
+$font-family-sans-serif: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-family-sans-serif-medium: "Roboto Medium", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-familty-dtk-icons: 'dtkicons;'
+
+$font-size-root: 1rem;
+$font-size-base: 1rem;
+$font-size-xs: $font-size-base * .7875;
+$font-size-sm: $font-size-base * .875;
+$font-size-md: $font-size-base;
+$font-size-lg: $font-size-base * 1.125;
+$font-size-xl: $font-size-base * 1.25;
+
+$h1-font-size: $font-size-base * 2.5;
+$h2-font-size: $font-size-base * 2;
+$h3-font-size: $font-size-base * 1.75;
+$h4-font-size: $font-size-base * 1.5;
+$h5-font-size: $font-size-base * 1.25;
+$h6-font-size: $font-size-base * 1;
+
+$grey-100: #f8f9fa;
+$grey-200: #e9ecef;
+$grey-300: #dee2e6;
+$grey-400: #ced4da;
+$grey-500: #adb5bd;
+$grey-600: #6c757d;
+$grey-700: #495057;
+$grey-800: #343a40;
+$grey-900: #212529;
+$grey-disabled: #e9ecef;
+
+
 $blue: #1274BF;
 $purple: #6F2CAC;
 $green: #00A651;
@@ -80,3 +111,37 @@ $theme-colors: (
     "border": $border
 );
 
+$body-bg: $white;
+$body-color: $black;
+
+$grid-breakpoints: (
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px
+    xxl: 1792px
+) !default;
+
+$container-max-widths: (
+    sm: 540px,
+    md: 720px,
+    lg: 960px,
+    xl: 1140px,
+    xxl: 1720px
+) !default;
+
+$grid-columns: 12 !default;
+$grid-gutter-width: 30px !default;
+
+$spacer: 1rem !default;
+$spacers: (
+    0: 0,
+    1: ($spacer * .25),
+    2: ($spacer * .5),
+    3: $spacer,
+    4: ($spacer * 1.5),
+    5: ($spacer * 3)
+) !default;
+
+$enable-negative-margins: true;
