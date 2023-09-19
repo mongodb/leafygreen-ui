@@ -56,7 +56,7 @@ jobs:
       - name: Install
         run: |
             yarn run init
-            yarn install --frozen-lockfile --prefer-offline
+            yarn install 
   
       - name: Build
         run: |
