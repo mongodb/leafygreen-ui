@@ -13,26 +13,26 @@ export interface UseDynamicRefsArgs {
 /** The Map type for a given ref object  */
 export type RefMap<T> = Map<string, React.RefObject<T>>;
 
-export type DynamicRefNamespace<T> = Record<string, RefMap<T>>;
+// export type DynamicRefNamespace<T> = Record<string, RefMap<T>>;
 
-// Create an object to track unique namespaced ref maps
-const refNameSpaces: DynamicRefNamespace<any> = {};
+// // Create an object to track unique namespaced ref maps
+// const refNameSpaces: DynamicRefNamespace<any> = {};
+
+// /**
+//  * Returns the namespace map for the given string
+//  *
+//  * @internal
+//  */
+// function getNamespace<T>(namespace: string): RefMap<T> {
+//   if (refNameSpaces[namespace]) return refNameSpaces[namespace];
+//   refNameSpaces[namespace] = new Map<string, React.RefObject<T>>();
+//   return refNameSpaces[namespace];
+// }
 
 /**
- * Returns the namespace map for the given string
- *
  * @internal
  */
-function getNamespace<T>(namespace: string): RefMap<T> {
-  if (refNameSpaces[namespace]) return refNameSpaces[namespace];
-  refNameSpaces[namespace] = new Map<string, React.RefObject<T>>();
-  return refNameSpaces[namespace];
-}
-
-/**
- * @internal
- */
-export function getGetRef<T>(prefix: string) {
+export function getGetRef<T>(refMap: RefMap<T>) {
   /**
    * Returns a ref (or creates a new one) for the provided key
    */
@@ -44,14 +44,12 @@ export function getGetRef<T>(prefix: string) {
       return;
     }
 
-    const namespaceMap = getNamespace<T>(prefix);
-
-    if (namespaceMap.get(key)) {
-      return namespaceMap.get(key) as React.RefObject<T>;
+    if (refMap.get(key)) {
+      return refMap.get(key) as React.RefObject<T>;
     }
 
     const ref = React.createRef<T>();
-    namespaceMap.set(key, ref);
+    refMap.set(key, ref);
     return ref;
   }
 
@@ -61,23 +59,22 @@ export function getGetRef<T>(prefix: string) {
 /** The function signature for the function returned by `useDynamicRefs` */
 export type DynamicRefGetter<T> = ReturnType<typeof getGetRef<T>>;
 
-/** Maintain a map of all getters to ensure uniqueness */
-const getterMap = new Map<string, DynamicRefGetter<unknown>>();
-
 /**
  * Returns a ref "getter" function for the specified namespace (prefix).
  *
  * Calling the ref "getter" with a key will return a ref for the given namespace and key
  */
-export function useDynamicRefs<T>({
-  prefix,
-}: UseDynamicRefsArgs): DynamicRefGetter<T> {
-  if (getterMap.get(prefix)) {
-    const getter = getterMap.get(prefix);
-    return getter as DynamicRefGetter<T>;
-  }
+export function useDynamicRefs<T>(
+  args?: UseDynamicRefsArgs,
+): DynamicRefGetter<T> {
+  const prefix = args?.prefix;
 
-  const getter = getGetRef<T>(prefix);
-  getterMap.set(prefix, getter);
-  return getter;
+  const getRef = React.useMemo(() => {
+    const refMap: RefMap<T> = new Map<string, React.RefObject<T>>();
+    const getter = getGetRef<T>(refMap);
+    return getter;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prefix]);
+
+  return getRef;
 }

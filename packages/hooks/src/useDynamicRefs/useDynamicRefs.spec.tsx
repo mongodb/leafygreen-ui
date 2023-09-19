@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react';
+import { renderHook } from '@testing-library/react-hooks';
 
 import { consoleOnce } from '@leafygreen-ui/lib';
 
@@ -10,25 +10,32 @@ describe('packages/hooks/useDynamicRefs', () => {
     expect(typeof result.current).toBe('function');
   });
 
-  test('returns identical ref getter when rerendered ', () => {
-    const { result, rerender } = renderHook(() =>
-      useDynamicRefs({ prefix: 'A' }),
-    );
-    const getter1 = result.current;
+  test('returns identical getter when rerendered ', () => {
+    const { result, rerender } = renderHook(v => useDynamicRefs(v), {
+      initialProps: { prefix: 'A' },
+    });
     rerender();
-    expect(result.current).toBe(getter1);
+    expect(result.all[0]).toBe(result.all[1]);
   });
 
-  test('returns identical getters when called with the same prefix', () => {
+  test('returns unique getters when called with the same prefix', () => {
     const { result: A } = renderHook(() => useDynamicRefs({ prefix: 'A' }));
     const { result: B } = renderHook(() => useDynamicRefs({ prefix: 'A' }));
-    expect(A.current).toBe(B.current);
+    expect(A.current).not.toBe(B.current);
   });
 
   test('returns unique getters when called with different prefixes', () => {
     const { result: A } = renderHook(() => useDynamicRefs({ prefix: 'A' }));
     const { result: B } = renderHook(() => useDynamicRefs({ prefix: 'B' }));
     expect(A.current).not.toBe(B.current);
+  });
+
+  test('returns unique getters when rerendered with a different prefix', () => {
+    const { result, rerender } = renderHook(v => useDynamicRefs(v), {
+      initialProps: { prefix: 'A' },
+    });
+    rerender({ prefix: 'B' });
+    expect(result.all[0]).not.toBe(result.all[1]);
   });
 
   describe('ref getter function', () => {
@@ -54,19 +61,30 @@ describe('packages/hooks/useDynamicRefs', () => {
       expect(error).toHaveBeenCalled();
     });
 
-    test('returns identical refs when called with the same key', async () => {
+    test('returns identical refs when called with the same key', () => {
       const { result } = renderHook(() => useDynamicRefs({ prefix: 'A' }));
       const ref1 = result.current('key');
       const ref2 = result.current('key');
       expect(ref1).toBe(ref2);
     });
 
-    test('returns identical refs when the hook is called twice with the same prefix', async () => {
-      const { result: A } = renderHook(() => useDynamicRefs({ prefix: 'A' }));
-      const { result: A2 } = renderHook(() => useDynamicRefs({ prefix: 'A' }));
-      const ref1 = A.current('key');
-      const ref2 = A2.current('key');
+    test('returns identical refs when rerendered', () => {
+      const { result, rerender } = renderHook(v => useDynamicRefs(v), {
+        initialProps: { prefix: 'A' },
+      });
+      const ref1 = result.current('key');
+      rerender();
+      const ref2 = result.current('key');
       expect(ref1).toBe(ref2);
+    });
+
+    test('returns unique refs when the hook is called twice with the same prefix', () => {
+      // This avoids collisions
+      const { result: A1 } = renderHook(() => useDynamicRefs({ prefix: 'A' }));
+      const { result: A2 } = renderHook(() => useDynamicRefs({ prefix: 'A' }));
+      const ref1 = A1.current('key');
+      const ref2 = A2.current('key');
+      expect(ref1).not.toBe(ref2);
     });
 
     test('returns unique refs when unique getters are called with the same key', () => {
@@ -76,27 +94,15 @@ describe('packages/hooks/useDynamicRefs', () => {
       const refB = B.current('key');
       expect(refA).not.toBe(refB);
     });
-  });
 
-  // eslint-disable-next-line jest/no-disabled-tests
-  test.skip('TypeScript Error when called with different types', () => {
-    type Mutable<T> = {
-      -readonly [K in keyof T]: T[K];
-    };
-
-    const { result: A } = renderHook(() =>
-      useDynamicRefs<HTMLButtonElement>({ prefix: 'A' }),
-    );
-    const { result: B } = renderHook(() =>
-      useDynamicRefs<HTMLAnchorElement>({ prefix: 'A' }),
-    );
-    const refA = A.current('key');
-    const refB = B.current('key');
-
-    const newButton = document.createElement('button');
-    const newLink = document.createElement('a');
-
-    (refA.current as Mutable<typeof refA.current>) = newButton;
-    (refB.current as Mutable<typeof refB.current>) = newLink;
+    test('returns unique refs when rerendered with a different prefix', () => {
+      const { result, rerender } = renderHook(v => useDynamicRefs(v), {
+        initialProps: { prefix: 'A' },
+      });
+      const ref1 = result.current('key');
+      rerender({ prefix: 'B' });
+      const ref2 = result.current('key');
+      expect(ref1).not.toBe(ref2);
+    });
   });
 });
