@@ -68,7 +68,7 @@ export const Menu = ({
   }, [setOpen]);
 
   const handleKeyDown = (e: KeyboardEvent) => {
-    switch (e.keyCode) {
+    switch (e.key) {
       case keyMap.Tab:
       case keyMap.Escape:
         handleClose();

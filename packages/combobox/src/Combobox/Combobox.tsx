@@ -972,7 +972,7 @@ export function Combobox<M extends boolean>({
         return;
       }
 
-      switch (event.keyCode) {
+      switch (event.key) {
         case keyMap.Tab: {
           switch (focusedElementName) {
             case 'Input': {
