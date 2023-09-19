@@ -3,44 +3,12 @@ import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { fontWeights } from '@leafygreen-ui/tokens';
 
-import { Option } from './Option';
-import SelectContext from './SelectContext';
-import { colorSets } from './styleSets';
+import SelectContext from '../SelectContext';
+import { colorSets } from '../styleSets';
 
-const optionGroupStyle = css`
-  padding: 8px 0;
-`;
-
-const optionGroupLabelStyle = css`
-  cursor: default;
-  width: 100%;
-  padding: 0 12px 2px;
-  outline: none;
-  overflow-wrap: anywhere;
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: ${fontWeights.bold};
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-`;
-
-export type ReactEmpty = null | undefined | false | '';
-
-export interface InternalOptionProps
-  extends HTMLElementProps<'div', HTMLDivElement> {
-  /**
-   * Adds a className to the outermost element.
-   */
-  className?: string;
-  /**
-   * Text shown above the group's options.
-   */
-  label: string;
-  children: React.ReactNode;
-}
+import { optionGroupLabelStyle, optionGroupStyle } from './OptionGroup.styles';
+import { InternalOptionProps, OptionGroupProps } from './OptionGroup.types';
 
 export function InternalOptionGroup({
   className,
@@ -74,27 +42,6 @@ export function InternalOptionGroup({
 }
 
 InternalOptionGroup.displayName = 'OptionGroup';
-
-interface OptionGroupProps extends InternalOptionProps {
-  /**
-   * Prevents all the contained options from being selectable.
-   * @default false
-   */
-  disabled?: boolean;
-
-  /**
-   * `<Option />` elements
-   * @type <Option />
-   */
-  children:
-    | React.ReactFragment
-    | React.ReactComponentElement<typeof Option>
-    | Array<
-        | React.ReactComponentElement<typeof Option>
-        | React.ReactFragment
-        | ReactEmpty
-      >;
-}
 
 export function OptionGroup(_: OptionGroupProps): JSX.Element {
   throw Error('`OptionGroup` must be a child of a `Select` instance');

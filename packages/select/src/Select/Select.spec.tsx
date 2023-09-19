@@ -14,8 +14,9 @@ import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import { keyMap } from '@leafygreen-ui/lib';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 
-import { State } from './types';
-import { Option, OptionGroup, Select } from '.';
+import { Option, OptionGroup, Select } from '..';
+
+import { State } from './Select.types';
 
 const Color = {
   Red: 'Explicit value: Red',

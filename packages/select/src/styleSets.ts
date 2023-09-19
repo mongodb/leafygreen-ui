@@ -3,7 +3,7 @@ import { transparentize } from 'polished';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
-import { Size } from './types';
+import { Size } from './Select/Select.types';
 
 interface ColorSet {
   menu: {

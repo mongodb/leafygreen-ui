@@ -9,22 +9,14 @@ import {
 } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
-import {
-  BaseFontSize,
-  fontFamilies,
-  spacing,
-  transitionDuration,
-  typeScales,
-} from '@leafygreen-ui/tokens';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Description, Label } from '@leafygreen-ui/typography';
 
-import ListMenu from './ListMenu';
-import MenuButton from './MenuButton';
-import { InternalOption, OptionElement } from './Option';
-import SelectContext from './SelectContext';
-import { mobileSizeSet, SizeSet, sizeSets } from './styleSets';
-import { DropdownWidthBasis, SelectProps, Size, State } from './types';
+import ListMenu from '../ListMenu';
+import MenuButton from '../MenuButton';
+import { InternalOption, OptionElement } from '../Option';
+import SelectContext from '../SelectContext';
+import { mobileSizeSet, sizeSets } from '../styleSets';
 import {
   convertToInternalElements,
   getOptionValue,
@@ -34,39 +26,15 @@ import {
   reconcileOption,
   traverseSelectChildren,
   useStateRef,
-} from './utils';
+} from '../utils';
 
-const labelDescriptionContainerStyle = css`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: ${spacing[1]}px;
-`;
-
-const wrapperStyle = css`
-  display: flex;
-  flex-direction: column;
-`;
-
-const largeLabelStyles = css`
-  font-size: ${typeScales.large.fontSize}px;
-  line-height: ${typeScales.large.lineHeight}px;
-`;
-
-const errorTextStyle = ({
-  darkMode,
-  sizeSet,
-}: {
-  darkMode: boolean;
-  sizeSet: SizeSet;
-}) => css`
-  font-family: ${fontFamilies.default};
-  color: ${darkMode ? palette.red.light1 : palette.red.base};
-  font-size: ${sizeSet.text}px;
-  margin-top: ${spacing[1]}px;
-  padding-left: 2px;
-  transition: color ${transitionDuration.faster}ms ease-in-out;
-  transition-delay: ${transitionDuration.faster}ms;
-`;
+import {
+  errorTextStyle,
+  labelDescriptionContainerStyle,
+  largeLabelStyles,
+  wrapperStyle,
+} from './Select.styles';
+import { DropdownWidthBasis, SelectProps, Size, State } from './Select.types';
 
 /**
  * Select inputs are typically used alongside other form elements like toggles, radio boxes, or text inputs when a user needs to make a selection from a list of items.

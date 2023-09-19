@@ -5,89 +5,19 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
-import { LGGlyph } from '@leafygreen-ui/icon/src/types';
-import { createUniqueClassName, HTMLElementProps } from '@leafygreen-ui/lib';
-import {
-  fontFamilies,
-  fontWeights,
-  transitionDuration,
-} from '@leafygreen-ui/tokens';
+import { fontWeights } from '@leafygreen-ui/tokens';
 
 import SelectContext from '../SelectContext';
 import { colorSets } from '../styleSets';
 
-const OptionClassName = createUniqueClassName('option');
-
-export type ReactEmpty = null | undefined | false | '';
-
-const optionStyle = css`
-  display: flex;
-  width: 100%;
-  outline: none;
-  overflow-wrap: anywhere;
-  transition: background-color ${transitionDuration.default}ms ease-in-out;
-  position: relative;
-  padding: 8px 12px;
-
-  &:before {
-    content: '';
-    position: absolute;
-    transform: scaleY(0.3);
-    top: 7px;
-    bottom: 7px;
-    left: 0;
-    right: 0;
-    width: 4px;
-    border-radius: 0px 4px 4px 0px;
-    opacity: 0;
-    transition: all ${transitionDuration.default}ms ease-in-out;
-  }
-`;
-
-const optionTextStyle = css`
-  display: flex;
-  align-items: center;
-  font-family: ${fontFamilies.default};
-`;
-
-const iconStyle = css`
-  min-width: 16px;
-  margin-right: 6px;
-`;
-
-const glyphFocusStyle = css`
-  .${OptionClassName} {
-    &:focus-visible & {
-      color: currentColor;
-    }
-  }
-`;
-
-export interface InternalProps extends HTMLElementProps<'li', HTMLLIElement> {
-  /**
-   * Content to appear inside of the Option.
-   */
-  children: React.ReactNode;
-  /**
-   * Adds a className to the outermost element.
-   */
-  className?: string;
-  /**
-   * Icon to display next to the option text.
-   */
-  glyph?: LGGlyph.Element;
-  /**
-   * Prevents the option from being selectable.
-   * @default false
-   */
-  disabled?: boolean;
-  selected: boolean;
-  focused: boolean;
-  onClick: React.MouseEventHandler;
-  onFocus: React.FocusEventHandler;
-  hasGlyphs: boolean;
-  triggerScrollIntoView: boolean;
-}
+import { InternalProps, OptionProps } from './Option.types';
+import {
+  glyphFocusStyle,
+  iconStyle,
+  OptionClassName,
+  optionStyle,
+  optionTextStyle,
+} from './Options.styles';
 
 export function InternalOption({
   children,
@@ -295,15 +225,6 @@ export function InternalOption({
 }
 
 InternalOption.displayName = 'Option';
-
-interface OptionProps
-  extends Pick<InternalProps, 'children' | 'className' | 'glyph' | 'disabled'> {
-  /**
-   * Corresponds to the value passed into the onChange prop of <Select /> when the option is selected.
-   * @default children
-   */
-  value?: string;
-}
 
 export function Option(_: OptionProps): JSX.Element {
   throw Error('`Option` must be a child of a `Select` instance');
