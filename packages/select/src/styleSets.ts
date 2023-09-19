@@ -1,5 +1,6 @@
 import { transparentize } from 'polished';
 
+import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
@@ -70,7 +71,7 @@ export const colorSets: Record<Theme, ColorSet> = {
 
   [Theme.Dark]: {
     menu: {
-      border: 'rgba(255, 255, 255, 0)',
+      border: palette.gray.dark3,
       shadow: transparentize(0.85, '#000000'),
     },
     option: {
