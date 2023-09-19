@@ -9,8 +9,10 @@
 ### Patch Changes
 
 - Updated dependencies [f8c77c5d]
+- Updated dependencies [1c7c9608]
 - Updated dependencies [827060f6]
   - @leafygreen-ui/popover@11.1.0
+  - @leafygreen-ui/icon@11.24.0
 
 ## 2.0.17
 
