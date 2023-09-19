@@ -14,9 +14,7 @@
     "src/**/*"
   ],
   "exclude": ["**/*.spec.*", "**/*.story.*"],
-  "references": [
-    {
-      "path": "../lib"
-    }
-  ]
+  "references": [{
+    "path": "../lib"
+  }]
 }
