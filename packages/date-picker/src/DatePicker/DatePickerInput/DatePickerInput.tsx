@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 
-import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 
 import { DateFormField, DateInputBox } from '../../DateInput';
 import { useDatePickerContext } from '../../DatePickerContext';
@@ -14,7 +14,6 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
     const descriptionId = useIdAllocator({ prefix: 'lg-date-description' });
     const errorId = useIdAllocator({ prefix: 'lg-date-description' });
     const inputId = useIdAllocator({ prefix: 'lg-date-input' });
-    const ref = useForwardedRef(fwdRef, null);
 
     const handleInputClick = onClick;
 
@@ -26,7 +25,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
         labelId={labelId}
         descriptionId={descriptionId}
         errorId={errorId}
-        ref={ref}
+        ref={fwdRef}
         onInputClick={handleInputClick}
         {...rest}
       >

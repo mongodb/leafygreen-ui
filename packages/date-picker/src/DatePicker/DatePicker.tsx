@@ -3,6 +3,7 @@ import { isSameMonth, setMonth } from 'date-fns';
 
 import {
   useBackdropClick,
+  useDynamicRefs,
   useForwardedRef,
   useIdAllocator,
 } from '@leafygreen-ui/hooks';
@@ -20,7 +21,7 @@ import { DatePickerMenu, DatePickerMenuProps } from './DatePickerMenu';
 
 /** Prop names that are in both DatePickerProps and DatePickerProviderProps */
 const contextPropNames: Array<
-  keyof Omit<DatePickerProviderProps, 'isOpen' | 'menuId'>
+  keyof DatePickerProviderProps & keyof DatePickerProps
 > = [
   'label',
   'dateFormat',
@@ -50,7 +51,12 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
   ) => {
     const [contextProps, restProps] = pickAndOmit(props, contextPropNames);
     const menuId = useIdAllocator({ prefix: 'lg-date-picker-menu' });
-    const inputRef = useForwardedRef(fwdRef, null);
+
+    const formFieldRef = useForwardedRef(fwdRef, null);
+    const inputBoxRef = useRef<HTMLDivElement>(null);
+    const segmentRefs = useDynamicRefs<HTMLInputElement>({ prefix: 'segment' });
+    console.assert(segmentRefs);
+
     const menuRef = useRef<HTMLDivElement>(null);
     const [isOpen, setOpen] = useState(false);
     const closeMenu = () => setOpen(false);
@@ -74,7 +80,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       setValue(newVal);
     };
 
-    useBackdropClick(closeMenu, [inputRef, menuRef], isOpen);
+    useBackdropClick(closeMenu, [formFieldRef, menuRef], isOpen);
 
     const handleInputChange: DatePickerInputProps['setValue'] = (
       inputVal: Date | null,
@@ -97,6 +103,10 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const handleInputClick: MouseEventHandler = () => {
       setOpen(true);
       // TODO: Set focus to appropriate segment
+      // if we clicked a specific segment, focus on that segment
+      // otherwise, check which segments are filled,
+      // if all are filled, focus the last one,
+      // if 1+ are empty, focus the first empty one
     };
 
     return (
@@ -105,10 +115,11 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
           ...contextProps,
           isOpen,
           menuId,
+          segmentRefs,
         }}
       >
         <DatePickerInput
-          ref={inputRef}
+          ref={formFieldRef}
           value={value}
           setValue={handleInputChange}
           onClick={handleInputClick}
@@ -117,7 +128,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         <DatePickerMenu
           ref={menuRef}
           id={menuId}
-          refEl={inputRef}
+          refEl={formFieldRef}
           value={value}
           isOpen={isOpen}
           month={displayMonth}

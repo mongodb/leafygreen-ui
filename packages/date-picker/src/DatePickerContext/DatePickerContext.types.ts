@@ -1,10 +1,13 @@
-import { BaseDatePickerProps } from 'src/types';
+import { useDynamicRefs } from '@leafygreen-ui/hooks';
+
+import { BaseDatePickerProps } from '../types';
 
 /** The props expected by the provider */
 export interface DatePickerProviderProps extends BaseDatePickerProps {
   /** Whether the calendar menu is open */
   isOpen: boolean;
   menuId: string;
+  segmentRefs: ReturnType<typeof useDynamicRefs<HTMLInputElement>>;
 }
 
 /**

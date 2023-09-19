@@ -2,7 +2,7 @@ import React, { KeyboardEventHandler } from 'react';
 import { isSameDay } from 'date-fns';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { useDynamicRefs, useForwardedRef } from '@leafygreen-ui/hooks';
+import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
 
 import { useDatePickerContext } from '../../DatePickerContext';
@@ -39,9 +39,9 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
     { value, setValue, className, labelledBy, ...rest }: DateInputBoxProps,
     fwdRef,
   ) => {
-    const { dateFormat } = useDatePickerContext();
+    const { dateFormat, segmentRefs } = useDatePickerContext();
+
     const containerRef = useForwardedRef(fwdRef, null);
-    const segmentRefs = useDynamicRefs<HTMLInputElement>({ prefix: 'segment' });
 
     // Only used to track the _order_ of segments, not the value itself
     const formatParts = useFormatParts(dateFormat);
