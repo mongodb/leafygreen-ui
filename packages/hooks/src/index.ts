@@ -2,7 +2,7 @@ export { useAutoScroll } from './useAutoScroll';
 export { default as useAvailableSpace } from './useAvailableSpace';
 export { useBackdropClick } from './useBackdropClick';
 export { useControlledValue } from './useControlledValue';
-export { default as useDynamicRefs } from './useDynamicRefs';
+export { useDynamicRefs } from './useDynamicRefs';
 export { default as useEscapeKey } from './useEscapeKey';
 export { default as useEventListener } from './useEventListener';
 export { useForceRerender } from './useForceRerender';
