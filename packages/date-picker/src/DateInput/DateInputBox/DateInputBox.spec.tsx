@@ -198,27 +198,5 @@ describe('packages/date-input-box', () => {
       userEvent.tab();
       expect(dayInput).toHaveFocus();
     });
-
-    describe('Arrow Keys', () => {
-      test('ArrowRight moves focus right', () => {
-        const { monthInput, yearInput } = renderDateInputBox(undefined, {
-          dateFormat: 'iso8601',
-        });
-
-        userEvent.click(yearInput);
-        userEvent.type(yearInput, '{arrowright}');
-        expect(monthInput).toHaveFocus();
-      });
-
-      test('ArrowLeft moves focus left', () => {
-        const { dayInput, monthInput } = renderDateInputBox(undefined, {
-          dateFormat: 'iso8601',
-        });
-
-        userEvent.click(dayInput);
-        userEvent.type(dayInput, '{arrowleft}');
-        expect(monthInput).toHaveFocus();
-      });
-    });
   });
 });

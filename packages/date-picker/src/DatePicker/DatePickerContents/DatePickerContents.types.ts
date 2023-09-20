@@ -4,6 +4,9 @@ import { DateType } from '../../types';
 import { DatePickerProps } from '../DatePicker.types';
 
 export interface DatePickerContentsProps
-  extends Omit<DatePickerProps, (typeof contextPropNames)[number]> {
+  extends Omit<
+    DatePickerProps,
+    (typeof contextPropNames)[number] | 'onChange'
+  > {
   setValue: ReturnType<typeof useControlledValue<DateType>>['setValue'];
 }

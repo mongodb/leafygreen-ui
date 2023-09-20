@@ -363,8 +363,20 @@ describe('packages/date-picker', () => {
     describe('Left/Right Arrow', () => {
       describe('when the input is focused', () => {
         describe('when the segment is empty', () => {
-          test.todo('left arrow focuses the prev. segment');
-          test.todo('right arrow focuses the next segment');
+          test('Left arrow focuses the prev. segment', () => {
+            const { monthInput, yearInput } = renderDatePicker();
+
+            userEvent.click(yearInput);
+            userEvent.type(yearInput, '{arrowright}');
+            expect(monthInput).toHaveFocus();
+          });
+          test('Right arrow focuses the next segment', () => {
+            const { dayInput, monthInput } = renderDatePicker();
+
+            userEvent.click(dayInput);
+            userEvent.type(dayInput, '{arrowleft}');
+            expect(monthInput).toHaveFocus();
+          });
         });
 
         describe('when the segment has a value', () => {
