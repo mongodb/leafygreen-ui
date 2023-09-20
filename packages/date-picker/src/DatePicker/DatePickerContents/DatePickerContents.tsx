@@ -1,6 +1,5 @@
 import React, { forwardRef, MouseEventHandler, useRef, useState } from 'react';
 import { isSameMonth, setMonth } from 'date-fns';
-import last from 'lodash/last';
 
 import {
   useBackdropClick,
@@ -8,10 +7,11 @@ import {
   useForwardedRef,
 } from '@leafygreen-ui/hooks';
 
-import { DateSegment, isDateSegment } from '../../DateInput/DateInput.types';
 import { useDatePickerContext } from '../../DatePickerContext';
+import { SegmentRefs } from '../DatePicker.types';
 import { DatePickerInput, DatePickerInputProps } from '../DatePickerInput';
 import { DatePickerMenu, DatePickerMenuProps } from '../DatePickerMenu';
+import { focusRelevantSegment } from '../utils/focusRelevantSegment';
 
 import { DatePickerContentsProps } from './DatePickerContents.types';
 
@@ -26,7 +26,7 @@ export const DatePickerContents = forwardRef<
     prefix: 'segment',
   });
 
-  const segmentRefs: Record<DateSegment, ReturnType<typeof getSegmentRef>> = {
+  const segmentRefs: SegmentRefs = {
     day: getSegmentRef('day') || undefined,
     month: getSegmentRef('month') || undefined,
     year: getSegmentRef('year') || undefined,
@@ -65,53 +65,14 @@ export const DatePickerContents = forwardRef<
     setDisplayMonth(newMonth);
   };
 
-  const handleInputClick: MouseEventHandler<HTMLElement> = e => {
+  const handleInputClick: MouseEventHandler<HTMLElement> = ({ target }) => {
     setOpen(true);
 
-    if (!formatParts) {
-      return;
-    }
-
-    const segmentRefsArray = Object.values(segmentRefs).map(r => r.current);
-
-    // If we didn't explicitly click on an input segment...
-    if (!segmentRefsArray.includes(e.target as HTMLInputElement)) {
-      // filter out the literals from the format parts
-      const formatSegments = formatParts.filter(
-        part => part.type !== 'literal',
-      );
-
-      // Check which segments are filled,
-      if (segmentRefsArray.every(el => el?.value)) {
-        // if all are filled, focus the last one,
-        const keyOfLastSegment = (
-          last(formatSegments) as Intl.DateTimeFormatPart
-        ).type;
-
-        if (isDateSegment(keyOfLastSegment)) {
-          const lastSegmentRef = segmentRefs[keyOfLastSegment];
-          lastSegmentRef?.current?.focus();
-        }
-      } else {
-        // if 1+ are empty, focus the first empty one
-        const emptySegmentKeys = formatSegments
-          .map(p => p.type)
-          .filter(type => {
-            if (isDateSegment(type)) {
-              const element = segmentRefs[type];
-              return !element?.current?.value;
-            }
-          });
-        const firstEmptySegmentKey = emptySegmentKeys[0];
-
-        if (isDateSegment(firstEmptySegmentKey)) {
-          const firstEmptySegmentRef = segmentRefs[firstEmptySegmentKey];
-          firstEmptySegmentRef?.current?.focus();
-        }
-      }
-    }
-    // otherwise, we clicked a specific segment,
-    // so we focus on that segment (default behavior)
+    focusRelevantSegment({
+      target,
+      formatParts,
+      segmentRefs,
+    });
   };
 
   return (

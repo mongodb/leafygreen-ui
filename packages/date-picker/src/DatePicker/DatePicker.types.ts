@@ -1,4 +1,12 @@
+import { DynamicRefGetter } from '@leafygreen-ui/hooks/src/useDynamicRefs';
+
+import { DateSegment } from '../DateInput/DateInput.types';
 import { BaseDatePickerProps, DateType } from '../types';
+
+export type SegmentRefs = Record<
+  DateSegment,
+  ReturnType<DynamicRefGetter<HTMLInputElement>>
+>;
 
 export interface DatePickerProps extends BaseDatePickerProps {
   /**
