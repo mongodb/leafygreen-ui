@@ -145,12 +145,32 @@ describe('packages/date-picker', () => {
         expect(menuContainerEl).toBeInTheDocument();
       });
 
-      test.skip('focuses the first empty segment', async () => {
+      test('focuses a specific segment when clicked', () => {
+        const { monthInput } = renderDatePicker();
+        userEvent.click(monthInput);
+        expect(monthInput).toHaveFocus();
+      });
+
+      test('focuses the first segment when all are empty', () => {
         const { inputContainer, yearInput } = renderDatePicker();
         userEvent.click(inputContainer);
-        await waitFor(() => {
-          expect(yearInput).toHaveFocus();
+        expect(yearInput).toHaveFocus();
+      });
+
+      test('focuses the first empty segment when some are empty', () => {
+        const { inputContainer, yearInput, monthInput } = renderDatePicker();
+        yearInput.value = '2023';
+        yearInput.blur();
+        userEvent.click(inputContainer);
+        expect(monthInput).toHaveFocus();
+      });
+
+      test('focuses the last segment when all are filled', () => {
+        const { inputContainer, dayInput } = renderDatePicker({
+          value: new Date(),
         });
+        userEvent.click(inputContainer);
+        expect(dayInput).toHaveFocus();
       });
     });
 

@@ -1,9 +1,9 @@
 import isUndefined from 'lodash/isUndefined';
 import last from 'lodash/last';
 
-import { isDateSegment } from '../../DateInput/DateInput.types';
-import { SegmentRefs } from '../../DateInput/DateInputBox/DateInputBox.types';
-import { DatePickerContextProps } from '../../DatePickerContext';
+import { isDateSegment } from '../../../DateInput/DateInput.types';
+import { SegmentRefs } from '../../../DateInput/DateInputBox/DateInputBox.types';
+import { DatePickerContextProps } from '../../../DatePickerContext';
 
 interface FocusRelevantSegmentArgs {
   target: EventTarget;
