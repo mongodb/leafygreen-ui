@@ -4,6 +4,11 @@ import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { DateType } from '../../types';
 import { DateSegment } from '../DateInput.types';
 
+export type SegmentRefs = Record<
+  DateSegment,
+  ReturnType<DynamicRefGetter<HTMLInputElement>>
+>;
+
 export interface DateInputBoxProps
   extends Omit<HTMLElementProps<'div'>, 'onChange'> {
   /**
@@ -23,8 +28,5 @@ export interface DateInputBoxProps
   labelledBy?: string;
 
   /** Refs  */
-  segmentRefs: Record<
-    DateSegment,
-    ReturnType<DynamicRefGetter<HTMLInputElement>>
-  >;
+  segmentRefs: SegmentRefs;
 }

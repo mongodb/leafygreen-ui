@@ -6,16 +6,28 @@ import {
   DatePickerProvider,
   DatePickerProviderProps,
 } from '../../DatePickerContext';
+import { defaultDatePickerContext } from '../../DatePickerContext/DatePickerContext.utils';
 
+import { SegmentRefs } from './DateInputBox.types';
 import { DateInputBox, type DateInputBoxProps } from '.';
 
 const renderDateInputBox = (
-  props?: DateInputBoxProps,
-  context?: DatePickerProviderProps,
+  props?: Omit<DateInputBoxProps, 'segmentRefs'>,
+  context?: Partial<DatePickerProviderProps>,
 ) => {
+  const segmentRefsMock: SegmentRefs = {
+    day: React.createRef(),
+    month: React.createRef(),
+    year: React.createRef(),
+  };
+
   const result = render(
-    <DatePickerProvider value={{ label: 'Label', ...context }}>
-      <DateInputBox {...props} value={props?.value ?? null} />
+    <DatePickerProvider value={{ ...defaultDatePickerContext, ...context }}>
+      <DateInputBox
+        {...props}
+        value={props?.value ?? null}
+        segmentRefs={segmentRefsMock}
+      />
     </DatePickerProvider>,
   );
 

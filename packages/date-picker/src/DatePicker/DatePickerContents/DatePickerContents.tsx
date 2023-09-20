@@ -7,8 +7,8 @@ import {
   useForwardedRef,
 } from '@leafygreen-ui/hooks';
 
+import { SegmentRefs } from '../../DateInput/DateInputBox/DateInputBox.types';
 import { useDatePickerContext } from '../../DatePickerContext';
-import { SegmentRefs } from '../DatePicker.types';
 import { DatePickerInput, DatePickerInputProps } from '../DatePickerInput';
 import { DatePickerMenu, DatePickerMenuProps } from '../DatePickerMenu';
 import { focusRelevantSegment } from '../utils/focusRelevantSegment';
