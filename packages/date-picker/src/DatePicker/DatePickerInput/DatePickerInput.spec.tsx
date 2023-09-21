@@ -83,5 +83,25 @@ describe('packages/date-picker/date-picker-input', () => {
         expect(monthInput).toHaveFocus();
       });
     });
+
+    describe('Backspace key', () => {
+      test('deletes any value in the input', () => {
+        const { dayInput } = renderDatePickerInput();
+        userEvent.type(dayInput, '26{backspace}');
+        expect(dayInput.value).toBe('02');
+      });
+
+      test('deletes the whole value on multiple presses', () => {
+        const { monthInput } = renderDatePickerInput();
+        userEvent.type(monthInput, '11{backspace}{backspace}');
+        expect(monthInput.value).toBe('');
+      });
+
+      test('focuses the previous segment if current segment is empty', () => {
+        const { yearInput, monthInput } = renderDatePickerInput();
+        userEvent.type(monthInput, '{backspace}');
+        expect(yearInput).toHaveFocus();
+      });
+    });
   });
 });

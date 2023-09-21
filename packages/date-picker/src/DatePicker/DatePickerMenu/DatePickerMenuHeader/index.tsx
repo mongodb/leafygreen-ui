@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { isBefore, setYear } from 'date-fns';
 import range from 'lodash/range';
 
@@ -30,10 +30,10 @@ const selectElementProps = {
   usePortal: false,
 } as const;
 
-export const DatePickerMenuHeader = ({
-  month,
-  onMonthChange,
-}: DatePickerMenuHeaderProps) => {
+export const DatePickerMenuHeader = forwardRef<
+  HTMLDivElement,
+  DatePickerMenuHeaderProps
+>(({ month, onMonthChange }: DatePickerMenuHeaderProps, fwdRef) => {
   const { min, max, isInRange } = useDatePickerContext();
 
   const yearOptions = range(min.getUTCFullYear(), max.getUTCFullYear() + 1);
@@ -56,7 +56,7 @@ export const DatePickerMenuHeader = ({
   const nextMonth = month.getUTCMonth() + 1;
 
   return (
-    <div className={menuHeaderStyles}>
+    <div ref={fwdRef} className={menuHeaderStyles}>
       <IconButton
         aria-label="Previous month"
         disabled={isSameUTCMonth(month, min)}
@@ -111,4 +111,6 @@ export const DatePickerMenuHeader = ({
       </IconButton>
     </div>
   );
-};
+});
+
+DatePickerMenuHeader.displayName = 'DatePickerMenuHeader';

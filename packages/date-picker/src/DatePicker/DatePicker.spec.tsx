@@ -6,6 +6,7 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { range } from 'lodash';
 
 import { Month } from '../constants';
 
@@ -322,43 +323,130 @@ describe('packages/date-picker', () => {
 
   describe('Typing', () => {
     describe('Typing into the input', () => {
-      test.todo('fires a change handler when the value is a valid date');
-      test.todo('does not fire a change handler when the value is incomplete');
-      test.todo('focuses the next segment if the segment value is valid');
-      test.todo('fires a validation handler if the value is updated');
-    });
+      test('does not fire a change handler when the value is incomplete', () => {
+        const onChange = jest.fn();
+        const { yearInput } = renderDatePicker({
+          onChange,
+        });
+        userEvent.type(yearInput, '2023');
+        expect(onChange).not.toHaveBeenCalled();
+      });
 
-    describe('Delete key', () => {
-      test.todo('deletes any value in the input');
-      test.todo('deletes the whole value on multiple presses');
-      test.todo('focuses the previous segment if current segment is empty');
+      test('fires a change handler when the value is a valid date', () => {
+        const onChange = jest.fn();
+        const { yearInput, monthInput, dayInput } = renderDatePicker({
+          onChange,
+        });
+        userEvent.type(yearInput, '2023');
+        userEvent.type(monthInput, '12');
+        userEvent.type(dayInput, '26');
+        expect(onChange).toHaveBeenCalled();
+      });
+
+      // TODO:
+      test.skip('fires a validation handler if the value is updated', () => {
+        const handleValidation = jest.fn();
+        const { dayInput } = renderDatePicker({
+          value: new Date(),
+          handleValidation,
+        });
+
+        userEvent.type(dayInput, '05');
+        expect(handleValidation).toHaveBeenCalledTimes(2);
+      });
+
+      test.todo('focuses the next segment if the segment value is valid');
     });
   });
 
   describe('Keyboard navigation', () => {
-    describe('Tab', () => {
-      describe('when the menu is open', () => {
-        test.todo('tab 1: Input'); // TODO: Should tab focus each segment separately?
-        test.todo('tab 2: Left Chevron');
-        test.todo('tab 3: Month menu');
-        test.todo('tab 4: Year menu');
-        test.todo('tab 5: Right Chevron');
-        test.todo('tab 6: Calendar grid (selected date)');
-        test.todo('tab 7: Returns to Input');
-      });
+    const tabNTimes = (count: number) => {
+      for (const _ in range(count)) {
+        userEvent.tab();
+      }
+    };
+
+    describe('Tab order', () => {
       describe('when menu is closed', () => {
-        test.todo('tab 1: Input'); // TODO: Should tab focus each segment separately?
-        test.todo('tab 2: next element in tab order');
+        test('tab 1: Year', () => {
+          const { yearInput } = renderDatePicker();
+          userEvent.tab();
+          expect(yearInput).toHaveFocus();
+        });
+
+        test('tab 2: Month', () => {
+          const { monthInput } = renderDatePicker();
+          tabNTimes(2);
+          expect(monthInput).toHaveFocus();
+        });
+
+        test('tab 3: Day', () => {
+          const { dayInput } = renderDatePicker();
+          tabNTimes(3);
+          expect(dayInput).toHaveFocus();
+        });
+
+        test.skip('tab 4: next element in tab order', () => {
+          const { inputContainer } = renderDatePicker();
+          tabNTimes(4);
+          expect(inputContainer).not.toContainElement(
+            document.activeElement as HTMLElement,
+          );
+        });
+      });
+
+      describe.each(range(0, 9))('when the menu is open', n => {
+        test(`Tab ${n} times`, () => {
+          const { yearInput, monthInput, dayInput, openMenu } =
+            renderDatePicker();
+          const {
+            leftChevron,
+            monthSelect,
+            yearSelect,
+            rightChevron,
+            calendarGrid,
+          } = openMenu();
+
+          tabNTimes(n);
+
+          switch (n) {
+            case 0:
+              expect(yearInput).toHaveFocus();
+              break;
+            case 1:
+              expect(monthInput).toHaveFocus();
+              break;
+            case 2:
+              expect(dayInput).toHaveFocus();
+              break;
+            case 3:
+              expect(leftChevron).toHaveFocus();
+              break;
+            case 4:
+              expect(monthSelect).toHaveFocus();
+              break;
+            case 5:
+              expect(yearSelect).toHaveFocus();
+              break;
+            case 6:
+              expect(rightChevron).toHaveFocus();
+              break;
+            case 7:
+              expect(calendarGrid).toHaveFocus();
+              break;
+            case 8:
+              // Focus is trapped within the menu
+              expect(leftChevron).toHaveFocus();
+              break;
+          }
+        });
       });
     });
 
-    describe('Up/Down Arrow', () => {
-      describe('when the input is focused', () => {
-        test.todo('up arrow increments the segments value');
-        test.todo('down arrow decrements the segments value');
-      });
-      describe('when any menu element is focused', () => {});
-    });
+    /**
+     * Since arrow key behavior changes based on whether the input or menu is focused,
+     * these tests exist in the "DatePickerInput" and "DatePickerMenu" components, respectively
+     */
 
     describe('Left/Right Arrow', () => {
       describe('when any menu element is focused', () => {

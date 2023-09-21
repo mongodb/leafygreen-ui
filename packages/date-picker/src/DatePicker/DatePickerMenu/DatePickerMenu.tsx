@@ -1,5 +1,11 @@
-import React, { forwardRef, useState } from 'react';
+import React, {
+  forwardRef,
+  KeyboardEventHandler,
+  useRef,
+  useState,
+} from 'react';
 
+import { keyMap } from '@leafygreen-ui/lib';
 import { useForwardedRef } from '@leafygreen-ui/select/src/utils';
 import { spacing } from '@leafygreen-ui/tokens';
 
@@ -31,6 +37,8 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
     }: DatePickerMenuProps,
     fwdRef,
   ) => {
+    const headerRef = useRef<HTMLDivElement>(null);
+    const calendarRef = useRef<HTMLTableElement>(null);
     const { isInRange } = useDatePickerContext();
     const [highlight, setHighlight] = useState<Date | null>(null);
 
@@ -58,22 +66,60 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       }
     };
 
+    const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = ({
+      shiftKey,
+      target,
+      key,
+    }) => {
+      switch (key) {
+        case keyMap.Tab:
+          {
+            // Implementing custom focus-trap logic,
+            // since focus-trap-react focuses the first element immediately on mount
+            const activeElement = document.activeElement;
+            const firstElement = headerRef.current?.firstElementChild;
+            const lastElement = calendarRef.current;
+
+            if (!shiftKey && activeElement === lastElement) {
+              (firstElement as HTMLElement)?.focus();
+            } else if (shiftKey && activeElement === firstElement) {
+              lastElement?.focus();
+            }
+          }
+          break;
+
+        case keyMap.ArrowDown: {
+          break;
+        }
+
+        default:
+          break;
+      }
+    };
+
     return (
       <MenuWrapper
+        ref={ref}
+        role="listbox"
         active={isOpen}
         spacing={spacing[1]}
         className={menuWrapperStyles}
-        ref={ref}
-        role="listbox"
+        onKeyDown={handleKeyDown}
         {...rest}
       >
         <div className={menuContentStyles}>
-          <DatePickerMenuHeader month={month} onMonthChange={onMonthChange} />
+          <DatePickerMenuHeader
+            ref={headerRef}
+            month={month}
+            onMonthChange={onMonthChange}
+          />
           <CalendarGrid
+            ref={calendarRef}
             month={month}
             className={menuCalendarGridStyles}
             onMouseLeave={() => setHighlight(null)}
             aria-label={monthLabel}
+            tabIndex={0}
           >
             {(day, i) => (
               <CalendarCell

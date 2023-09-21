@@ -74,17 +74,23 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           break;
         }
 
-        case keyMap.ArrowUp: {
-          // if incrementing the segment's value is in range
-          // increment that segment value
-          // This is the default `input type=number` behavior
-          break;
-        }
-
+        case keyMap.ArrowUp:
         case keyMap.ArrowDown: {
           // if decrementing the segment's value is in range
           // decrement that segment value
           // This is the default `input type=number` behavior
+          break;
+        }
+
+        case keyMap.Backspace: {
+          if (isInputEmpty) {
+            const segmentToFocus = getRelativeSegment('prev', {
+              segment: target,
+              formatParts,
+              segmentRefs,
+            });
+            segmentToFocus?.current?.focus();
+          }
           break;
         }
 
