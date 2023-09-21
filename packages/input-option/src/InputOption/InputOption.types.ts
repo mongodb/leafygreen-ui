@@ -28,7 +28,7 @@ export interface BaseInputOptionProps {
   /**
    * Whether the component is selected, regardless of keyboard navigation
    */
-  selected?: boolean;
+  checked?: boolean;
 
   /**
    * Whether a wedge displays on the left side of the item

@@ -26,7 +26,7 @@ export const InputOption = Polymorphic<InputOptionProps>(
       children,
       disabled,
       highlighted,
-      selected,
+      checked,
       darkMode: darkModeProp,
       showWedge = true,
       isInteractive = true,
@@ -42,6 +42,7 @@ export const InputOption = Polymorphic<InputOptionProps>(
         ref={ref}
         role="option"
         aria-selected={highlighted}
+        aria-checked={checked}
         tabIndex={-1}
         className={cx(
           inputOptionStyles,
@@ -50,9 +51,9 @@ export const InputOption = Polymorphic<InputOptionProps>(
             [inputOptionWedge]: showWedge,
             [inputOptionHoverStyles[theme]]: isInteractive,
             [inputOptionActiveStyles[theme]]:
-              isInteractive && (selected || highlighted),
+              isInteractive && (checked || highlighted),
             [inputOptionDisabledStyles[theme]]: disabled,
-            [titleSelectionStyles]: selected,
+            [titleSelectionStyles]: checked,
           },
           className,
         )}
