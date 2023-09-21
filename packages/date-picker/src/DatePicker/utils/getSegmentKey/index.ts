@@ -1,4 +1,4 @@
-import { SegmentRefs } from '../../../DateInput/DateInputBox/DateInputBox.types';
+import { SegmentRefs } from '../../../hooks/useSegmentRefs';
 
 /** Returns the key of a given segment ref or element */
 export const getSegmentKey = (

@@ -1,4 +1,4 @@
-import { SegmentRefs } from '../../../DateInput/DateInputBox/DateInputBox.types';
+import { SegmentRefs } from '../../../hooks/useSegmentRefs';
 
 /**
  * Returns whether the given element is a segment

@@ -1,8 +1,8 @@
 import isUndefined from 'lodash/isUndefined';
 import last from 'lodash/last';
 
-import { SegmentRefs } from '../../../DateInput/DateInputBox/DateInputBox.types';
 import { DatePickerContextProps } from '../../../DatePickerContext';
+import { SegmentRefs } from '../../../hooks/useSegmentRefs';
 import { getSegmentKey } from '../getSegmentKey';
 import { getSegmentRefFromDateTimeFormatPart } from '../getSegmentRefFromDateTimeFormatPart';
 
