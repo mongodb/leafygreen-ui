@@ -51,36 +51,36 @@ describe('packages/date-picker/date-picker-input', () => {
   });
 
   describe('Keyboard interaction', () => {
-    describe('Left/Right Arrow', () => {
-      describe('when the segment is empty', () => {
-        test('Left arrow focuses the prev segment', () => {
-          const { dayInput, monthInput } = renderDatePickerInput();
-          userEvent.type(dayInput, '{arrowleft}');
-          expect(monthInput).toHaveFocus();
-        });
-
-        test('Right arrow focuses the next segment', () => {
-          const { monthInput, yearInput } = renderDatePickerInput();
-          userEvent.type(yearInput, '{arrowright}');
-          expect(monthInput).toHaveFocus();
-        });
+    // yyyy-mm-dd
+    describe('Left Arrow', () => {
+      test('focuses the previous segment when the segment is empty', () => {
+        const { yearInput, monthInput } = renderDatePickerInput();
+        userEvent.type(monthInput, '{arrowleft}');
+        expect(yearInput).toHaveFocus();
       });
 
-      describe('when the segment has a value', () => {
-        test('Left arrow moves the cursor', () => {
-          const { monthInput } = renderDatePickerInput({
-            value: new Date(),
-          });
-          userEvent.type(monthInput, '{arrowleft}');
-          expect(monthInput).toHaveFocus();
+      test('moves the cursor when the segment has a value', () => {
+        const { monthInput } = renderDatePickerInput({
+          value: new Date(),
         });
-        test('Right arrow moves the cursor', () => {
-          const { monthInput } = renderDatePickerInput({
-            value: new Date(),
-          });
-          userEvent.type(monthInput, '{arrowright}');
-          expect(monthInput).toHaveFocus();
+        userEvent.type(monthInput, '{arrowleft}');
+        expect(monthInput).toHaveFocus();
+      });
+    });
+
+    describe('Right Arrow', () => {
+      test('focuses the next segment when the segment is empty', () => {
+        const { monthInput, dayInput } = renderDatePickerInput();
+        userEvent.type(monthInput, '{arrowright}');
+        expect(dayInput).toHaveFocus();
+      });
+
+      test('moves the cursor when the segment has a value', () => {
+        const { monthInput } = renderDatePickerInput({
+          value: new Date(),
         });
+        userEvent.type(monthInput, '{arrowright}');
+        expect(monthInput).toHaveFocus();
       });
     });
   });

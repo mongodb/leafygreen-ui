@@ -7,8 +7,8 @@ import {
   DatePickerProviderProps,
 } from '../../DatePickerContext';
 import { defaultDatePickerContext } from '../../DatePickerContext/DatePickerContext.utils';
+import { SegmentRefs } from '../../hooks/useSegmentRefs';
 
-import { SegmentRefs } from './DateInputBox.types';
 import { DateInputBox, type DateInputBoxProps } from '.';
 
 const renderDateInputBox = (
@@ -31,11 +31,15 @@ const renderDateInputBox = (
     </DatePickerProvider>,
   );
 
-  const dayInput = result.container.querySelector('input[aria-label="day"]');
+  const dayInput = result.container.querySelector(
+    'input[aria-label="day"]',
+  ) as HTMLInputElement;
   const monthInput = result.container.querySelector(
     'input[aria-label="month"]',
-  );
-  const yearInput = result.container.querySelector('input[aria-label="year"]');
+  ) as HTMLInputElement;
+  const yearInput = result.container.querySelector(
+    'input[aria-label="year"]',
+  ) as HTMLInputElement;
 
   if (!(dayInput && monthInput && yearInput)) {
     throw new Error('Some or all input segments are missing');
@@ -186,7 +190,28 @@ describe('packages/date-input-box', () => {
     });
   });
 
-  describe('keyboard interaction', () => {
+  describe('Keyboard interaction', () => {
+    // eslint-disable-next-line jest/no-disabled-tests
+    describe.skip('Up arrow', () => {
+      describe('increments the input value', () => {
+        test('day input', async () => {
+          const { dayInput } = renderDateInputBox();
+          userEvent.type(dayInput, '26{arrowup}');
+          expect(dayInput.value).toBe('27');
+        });
+        test('month input', async () => {
+          const { monthInput } = renderDateInputBox();
+          userEvent.type(monthInput, '9{arrowup}');
+          expect(monthInput.value).toBe('10');
+        });
+        test('year input', async () => {
+          const { yearInput } = renderDateInputBox();
+          userEvent.type(yearInput, '2023{arrowup}');
+          expect(yearInput.value).toBe('2024');
+        });
+      });
+    });
+
     test('Tab moves focus', () => {
       const { dayInput, monthInput, yearInput } = renderDateInputBox(
         undefined,

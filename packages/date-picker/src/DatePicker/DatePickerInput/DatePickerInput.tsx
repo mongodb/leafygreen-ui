@@ -32,8 +32,10 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
 
       if (!isSegment) return;
 
-      const isInputEmpty = !isZeroLike(target.value);
+      const isInputEmpty = isZeroLike(target.value);
       const cursorPosition = target.selectionEnd;
+
+      // console.log({ value: target.value, key, isInputEmpty, cursorPosition });
 
       switch (key) {
         case keyMap.ArrowLeft: {
@@ -41,14 +43,14 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           // or the cursor is at the beginning of the input
           // set focus to prev. input (if it exists)
           if (isInputEmpty || cursorPosition === 0) {
-            const segmentToFocus = getRelativeSegment('next', {
+            const segmentToFocus = getRelativeSegment('prev', {
               segment: target,
               formatParts,
               segmentRefs,
             });
+
             segmentToFocus?.current?.focus();
           }
-
           // otherwise, use default behavior
 
           break;
@@ -67,7 +69,6 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
 
             segmentToFocus?.current?.focus();
           }
-
           // otherwise, use default behavior
 
           break;
@@ -76,12 +77,14 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
         case keyMap.ArrowUp: {
           // if incrementing the segment's value is in range
           // increment that segment value
+          // This is the default `input type=number` behavior
           break;
         }
 
         case keyMap.ArrowDown: {
           // if decrementing the segment's value is in range
           // decrement that segment value
+          // This is the default `input type=number` behavior
           break;
         }
 
