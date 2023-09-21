@@ -6,8 +6,8 @@ import ToggleExpandedIcon from '../ToggleExpandedIcon';
 import { LGRowData } from '../useLeafyGreenTable';
 import { getAreAncestorsExpanded } from '../utils/areAncestorsExpanded';
 
-import { RowProps } from '.';
 import { useRowContext } from './RowContext';
+import { RowProps } from '.';
 
 type RowCellChildrenProps<T extends LGRowData> = Required<
   Pick<RowProps<T>, 'row'>
