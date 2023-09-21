@@ -14,6 +14,7 @@ export const descriptionBaseStyles = css`
   max-height: ${spacing[3] * 3}px;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: inherit;
 `;
 
 export const contentWrapper = css`

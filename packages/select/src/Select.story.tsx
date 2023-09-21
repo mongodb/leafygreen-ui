@@ -39,7 +39,7 @@ const meta: StoryMetaType<typeof Select> = {
     allowDeselect: false,
     darkMode: false,
     children: [
-      <Option key="long" value="long">
+      <Option key="long" value="long" description="What language is this?">
         Cras mattis consectetur purus sit amet fermentum. Maecenas sed diam eget
         risus varius blandit sit amet non magna.
       </Option>,
@@ -56,6 +56,14 @@ const meta: StoryMetaType<typeof Select> = {
       </Option>,
       <Option key="spider" value="spider" disabled>
         Spider
+      </Option>,
+      <Option
+        key="aardvark"
+        value="aardvark"
+        disabled
+        description="Call me Arthur"
+      >
+        Aardvark
       </Option>,
     ],
     usePortal: true,
@@ -103,7 +111,7 @@ WithIcons.args = {
       <Option glyph={<BeakerIcon />} value="dog">
         Dog
       </Option>
-      <Option glyph={<BeakerIcon />} value="cat">
+      <Option glyph={<BeakerIcon />} value="cat" description="Bark bark">
         Cat
       </Option>
     </OptionGroup>,
@@ -118,7 +126,13 @@ WithIcons.args = {
     <Option glyph={<BeakerIcon />} key="iguana" value="iguana">
       Mexican spiny-tailed iguana
     </Option>,
-    <Option glyph={<BeakerIcon />} key="spider" value="spider" disabled>
+    <Option
+      glyph={<BeakerIcon />}
+      key="spider"
+      value="spider"
+      disabled
+      description="I'm chill, I swear"
+    >
       Spider
     </Option>,
   ],

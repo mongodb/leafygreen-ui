@@ -27,10 +27,18 @@ export interface InternalProps extends HTMLElementProps<'li', HTMLLIElement> {
   onFocus: React.FocusEventHandler;
   hasGlyphs: boolean;
   triggerScrollIntoView: boolean;
+
+  /**
+   * Optional descriptive text under the value.
+   */
+  description?: string;
 }
 
 export interface OptionProps
-  extends Pick<InternalProps, 'children' | 'className' | 'glyph' | 'disabled'> {
+  extends Pick<
+    InternalProps,
+    'children' | 'className' | 'glyph' | 'disabled' | 'description'
+  > {
   /**
    * Corresponds to the value passed into the onChange prop of <Select /> when the option is selected.
    * @default children

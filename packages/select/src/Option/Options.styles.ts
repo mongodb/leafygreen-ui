@@ -12,6 +12,7 @@ export const optionStyle = css`
   transition: background-color ${transitionDuration.default}ms ease-in-out;
   position: relative;
   padding: 8px 12px;
+  line-height: inherit;
 
   &:before {
     content: '';
@@ -26,6 +27,11 @@ export const optionStyle = css`
     opacity: 0;
     transition: all ${transitionDuration.default}ms ease-in-out;
   }
+
+  // TODO: temps styles until styles are consistent with other dropdowns
+  > div {
+    grid-gap: 6px;
+  }
 `;
 
 export const optionTextStyle = css`
@@ -36,7 +42,6 @@ export const optionTextStyle = css`
 
 export const iconStyle = css`
   min-width: 16px;
-  margin-right: 6px;
 `;
 
 export const glyphFocusStyle = css`

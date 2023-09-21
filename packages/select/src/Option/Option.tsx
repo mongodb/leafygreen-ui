@@ -5,6 +5,11 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
+import {
+  descriptionClassName,
+  InputOption,
+  InputOptionContent,
+} from '@leafygreen-ui/input-option';
 import { fontWeights } from '@leafygreen-ui/tokens';
 
 import SelectContext from '../SelectContext';
@@ -30,6 +35,7 @@ export function InternalOption({
   onFocus,
   triggerScrollIntoView,
   hasGlyphs,
+  description,
   ...rest
 }: InternalProps) {
   const { theme } = useContext(SelectContext);
@@ -87,18 +93,7 @@ export function InternalOption({
     </span>
   );
 
-  const iconPlaceholder = (
-    <span
-      className={cx(
-        iconStyle,
-        css`
-          height: 100%;
-        `,
-      )}
-    />
-  );
-
-  let styledGlyph = iconPlaceholder;
+  let glyphProp;
 
   if (glyph) {
     if (!isComponentGlyph(glyph)) {
@@ -106,7 +101,7 @@ export function InternalOption({
         '`Option` instance did not render icon because it is not a known glyph element.',
       );
     } else {
-      styledGlyph = React.cloneElement(glyph, {
+      glyphProp = React.cloneElement(glyph, {
         key: 'glyph',
         className: cx(
           iconStyle,
@@ -125,7 +120,7 @@ export function InternalOption({
     }
   }
 
-  const checkmark = selected ? (
+  const checkmark = selected && (
     <CheckmarkIcon
       key="checkmark"
       className={cx(
@@ -141,44 +136,16 @@ export function InternalOption({
         },
       )}
     />
-  ) : (
-    iconPlaceholder
   );
 
-  let renderedChildren: React.ReactNode;
-
-  if (hasGlyphs) {
-    renderedChildren = (
-      <span
-        className={css`
-          display: flex;
-          justify-content: space-between;
-          width: 100%;
-        `}
-      >
-        <span
-          className={css`
-            display: flex;
-          `}
-        >
-          {styledGlyph}
-          {styledChildren}
-        </span>
-        {checkmark}
-      </span>
-    );
-  } else {
-    renderedChildren = (
-      <>
-        {checkmark}
-        {styledChildren}
-      </>
-    );
-  }
+  const leftGlyph = hasGlyphs ? glyphProp : checkmark;
+  const rightGlyph = hasGlyphs ? checkmark : undefined;
 
   return (
-    <li
+    <InputOption
+      aria-label={typeof children === 'string' ? children : 'option'}
       {...rest}
+      disabled={disabled}
       role="option"
       aria-selected={selected}
       tabIndex={-1}
@@ -186,10 +153,7 @@ export function InternalOption({
       className={cx(
         OptionClassName,
         optionStyle,
-        css`
-          cursor: pointer;
-          color: ${colorSet.text.base};
-        `,
+        // TODO: temps styles until styles are consistent with other dropdowns
         {
           [css`
             &:hover {
@@ -209,8 +173,10 @@ export function InternalOption({
             }
           `]: !disabled,
           [css`
-            cursor: not-allowed;
-            color: ${colorSet.text.disabled};
+            &,
+            & .${descriptionClassName} {
+              color: ${colorSet.text.disabled};
+            }
           `]: disabled,
         },
         className,
@@ -219,8 +185,14 @@ export function InternalOption({
       onFocus={onFocus}
       onKeyDown={undefined}
     >
-      {renderedChildren}
-    </li>
+      <InputOptionContent
+        leftGlyph={leftGlyph}
+        rightGlyph={rightGlyph}
+        description={description}
+      >
+        {styledChildren}
+      </InputOptionContent>
+    </InputOption>
   );
 }
 
@@ -238,6 +210,7 @@ Option.propTypes = {
   glyph: PropTypes.element,
   value: PropTypes.string,
   disabled: PropTypes.bool,
+  description: PropTypes.string,
 };
 
 // React.ReactComponentElement messes up the original
