@@ -33,6 +33,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       onChangeProp,
       initialProp,
     );
+
     return (
       <DatePickerProvider
         value={{
