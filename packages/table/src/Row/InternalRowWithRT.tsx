@@ -19,6 +19,7 @@ import {
 } from './Row.styles';
 import { InternalRowWithRTProps } from './Row.types';
 import RowCellChildren from './RowCellChildren';
+import { useRowContext } from './RowContext';
 
 /**
  * Renders row data provided by `useReactTable`
@@ -28,10 +29,10 @@ const InternalRowWithRT = <T extends LGRowData>({
   className,
   row,
   virtualRow,
-  disabled,
   ...rest
 }: InternalRowWithRTProps<T>) => {
   const { theme } = useDarkMode();
+  const { disabled } = useRowContext();
   const { table, getParentRow, shouldAlternateRowColor } = useTableContext();
   const parentRow = getParentRow?.(row.id);
   const rowRef = virtualRow?.measureRef;

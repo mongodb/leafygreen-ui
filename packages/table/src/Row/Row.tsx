@@ -22,7 +22,7 @@ const Row = <T extends LGRowData>({
       {row ? (
         <InternalRowWithRT row={row} virtualRow={virtualRow} {...rest} />
       ) : (
-        <InternalRowWithoutRT disabled={disabled} {...rest} />
+        <InternalRowWithoutRT {...rest} />
       )}
     </RowContextProvider>
   );

@@ -7,6 +7,7 @@ import { LGRowData } from '../useLeafyGreenTable';
 import { getAreAncestorsExpanded } from '../utils/areAncestorsExpanded';
 
 import { RowProps } from '.';
+import { useRowContext } from './RowContext';
 
 type RowCellChildrenProps<T extends LGRowData> = Required<
   Pick<RowProps<T>, 'row'>
@@ -19,9 +20,9 @@ type RowCellChildrenProps<T extends LGRowData> = Required<
 const RowCellChildren = <T extends LGRowData>({
   row,
   children: CellChildren,
-  disabled,
 }: RowCellChildrenProps<T>) => {
   const { getParentRow } = useTableContext();
+  const { disabled } = useRowContext();
   const parentRow = getParentRow?.(row.id);
   const isNested = !!parentRow;
   const isParentExpanded = !!parentRow && parentRow.getIsExpanded();
