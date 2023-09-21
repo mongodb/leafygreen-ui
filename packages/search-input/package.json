@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/search-input",
-  "version": "2.0.16",
+  "version": "2.1.0",
   "description": "leafyGreen UI Kit Search Input",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -30,23 +30,23 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/a11y": "^1.4.9",
+    "@leafygreen-ui/a11y": "^1.4.10",
     "@leafygreen-ui/emotion": "^4.0.7",
     "@leafygreen-ui/hooks": "^8.0.0",
-    "@leafygreen-ui/icon": "^11.23.0",
-    "@leafygreen-ui/icon-button": "^15.0.17",
-    "@leafygreen-ui/input-option": "^1.0.10",
-    "@leafygreen-ui/lib": "^11.0.0",
+    "@leafygreen-ui/icon": "^11.24.0",
+    "@leafygreen-ui/icon-button": "^15.0.18",
+    "@leafygreen-ui/input-option": "^1.0.11",
+    "@leafygreen-ui/lib": "^12.0.0",
     "@leafygreen-ui/palette": "^4.0.7",
     "@leafygreen-ui/polymorphic": "^1.3.6",
-    "@leafygreen-ui/popover": "^11.0.17",
+    "@leafygreen-ui/popover": "^11.1.0",
     "@leafygreen-ui/tokens": "^2.2.0",
-    "@leafygreen-ui/typography": "^17.0.0",
+    "@leafygreen-ui/typography": "^17.0.1",
     "lodash": "^4.17.21",
     "polished": "^4.2.2"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.8"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.9"
   },
   "devDependencies": {}
 }

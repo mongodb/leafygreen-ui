@@ -2,8 +2,7 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
-import { StoryMetaType } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
+import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 
 import { LogoNames } from './Logo';
 import { LogoProps, SupportedColors } from './utils';
@@ -26,7 +25,7 @@ const meta: StoryMetaType<typeof Logo> = {
   title: 'Components/Logo',
   component: Logo,
   decorators: [
-    (Story, context) => (
+    Story => (
       <div
         className={css`
           display: inline-flex;
@@ -34,10 +33,6 @@ const meta: StoryMetaType<typeof Logo> = {
           justify-content: center;
           width: 100%;
           padding: 40px 0;
-          background-color: ${
-            /* @ts-expect-error */
-            Story?.args?.background ?? context?.args?.background ?? 'white'
-          };
         `}
       >
         <Story />
@@ -73,20 +68,19 @@ const meta: StoryMetaType<typeof Logo> = {
     },
   },
   argTypes: {
+    darkMode: storybookArgTypes.darkMode,
     color: {
-      default: SupportedColors.White,
       control: 'radio',
       options: Object.values(SupportedColors),
-    },
-    background: {
-      default: palette.white,
-      control: 'radio',
-      options: [palette.white, palette.gray.dark3],
     },
     name: {
       control: 'select',
       options: LogoNames,
     },
+  },
+  args: {
+    color: SupportedColors.GreenDark2,
+    darkMode: false,
   },
 };
 export default meta;
@@ -105,9 +99,9 @@ const divStyle = css`
   margin: 0.5rem;
 `;
 
-export const LiveExample: StoryFn<
-  LogoProps & { name: LogoName; background?: string }
-> = (args: LogoProps & { name: LogoName } & { background?: string }) => {
+export const LiveExample: StoryFn<LogoProps & { name: LogoName }> = (
+  args: LogoProps & { name: LogoName },
+) => {
   if (!args.name) {
     args = { ...args, name: 'MongoDBLogo' };
   }
@@ -131,11 +125,10 @@ LiveExample.parameters = {
 
 const Template = (
   LogoComponent: React.FunctionComponent<LogoProps>,
-  args: LogoProps & { background?: string },
+  args: LogoProps,
 ) => {
   const containerStyle = css`
     ${divStyle}
-    background-color: ${args.background};
   `;
   return (
     <div className={containerStyle}>

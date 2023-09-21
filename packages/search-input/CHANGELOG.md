@@ -1,5 +1,33 @@
 # @leafygreen-ui/search-input
 
+## 2.1.0
+
+### Minor Changes
+
+- f6698369: SearchResultMenu now supports a footer slot prop for children rendered under the list of search results. Popover props are also now correctly passed to the Popover component.
+
+### Patch Changes
+
+- Updated dependencies [f8c77c5d]
+- Updated dependencies [1c7c9608]
+- Updated dependencies [827060f6]
+  - @leafygreen-ui/popover@11.1.0
+  - @leafygreen-ui/icon@11.24.0
+
+## 2.0.17
+
+### Patch Changes
+
+- 3a9b274d: Handles keyboard event based on the event's `key` property rather than its `keyCode` property
+- Updated dependencies [3a9b274d]
+  - @leafygreen-ui/lib@12.0.0
+  - @leafygreen-ui/a11y@1.4.10
+  - @leafygreen-ui/icon-button@15.0.18
+  - @leafygreen-ui/input-option@1.0.11
+  - @leafygreen-ui/leafygreen-provider@3.1.9
+  - @leafygreen-ui/popover@11.0.18
+  - @leafygreen-ui/typography@17.0.1
+
 ## 2.0.16
 
 ### Patch Changes

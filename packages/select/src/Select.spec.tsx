@@ -656,8 +656,7 @@ describe('packages/select', () => {
           act(() => targetOption!.focus());
 
           fireEvent.keyDown(targetOption!, {
-            key: 'Enter',
-            keyCode: keyMap.Enter,
+            key: keyMap.Enter,
           });
 
           expect(onChangeSpy).toHaveBeenCalledTimes(1);
@@ -717,8 +716,7 @@ describe('packages/select', () => {
 
           act(() => targetOption!.focus());
           fireEvent.keyDown(targetOption!, {
-            key: 'Enter',
-            keyCode: keyMap.Enter,
+            key: keyMap.Enter,
           });
 
           expect(onChangeSpy).not.toHaveBeenCalled();

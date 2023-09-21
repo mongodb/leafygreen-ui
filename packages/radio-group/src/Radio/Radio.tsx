@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { fontWeights } from '@leafygreen-ui/tokens';
 import { Description, Label } from '@leafygreen-ui/typography';
 
 import { Size } from '../types';
@@ -13,6 +12,7 @@ import {
   containerSizeStyle,
   containerStyle,
   descriptionStyles,
+  disabledStyle,
   hoverThemeStyles,
   inputBaseStyle,
   inputClassName,
@@ -23,6 +23,7 @@ import {
   inputDisplayWrapperClassName,
   inputThemeStyles,
   labelBaseStyle,
+  labelWeightStyle,
   radioBoxBaseStyle,
   radioBoxSizeStyles,
 } from './Radio.styles';
@@ -77,9 +78,8 @@ function Radio({
             [css`
               font-size: 12px;
             `]: size === Size.XSmall, // TODO: keeping this style until XS is deprecated
-            [css`
-              font-weight: ${fontWeights.regular};
-            `]: !bold,
+            [labelWeightStyle]: !bold,
+            [disabledStyle]: disabled,
           },
           className,
         )}
@@ -131,7 +131,10 @@ function Radio({
       </Label>
 
       {description && (
-        <Description id={descriptionId} className={descriptionStyles}>
+        <Description
+          id={descriptionId}
+          className={cx(descriptionStyles, { [disabledStyle]: disabled })}
+        >
           {description}
         </Description>
       )}

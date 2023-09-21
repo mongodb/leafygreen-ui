@@ -68,7 +68,7 @@ export const iconButtonSizes = {
 
 export const iconButtonMode: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${palette.gray.dark1};
+    color: ${palette.gray.base};
 
     &:active,
     &:hover {
