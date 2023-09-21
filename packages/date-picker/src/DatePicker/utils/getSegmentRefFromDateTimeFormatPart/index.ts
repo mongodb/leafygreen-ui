@@ -1,6 +1,6 @@
 import isUndefined from 'lodash/isUndefined';
 
-import { isDateSegment } from '../../../DateInput/DateInput.types';
+import { isDateSegment } from '../../../hooks/useDateSegments/DateSegments.types';
 import { SegmentRefs } from '../../../DateInput/DateInputBox/DateInputBox.types';
 
 /**

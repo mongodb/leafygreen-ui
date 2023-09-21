@@ -6,7 +6,7 @@ import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
 
 import { useDatePickerContext } from '../../DatePickerContext';
-import { useDateSegments } from '../../hooks/useDateSegments';
+import { useDateSegments } from '../../hooks/useDateSegments/useDateSegments';
 import { getRemainingParts } from '../../utils/getRemainingParts';
 import { isValidSegmentName } from '../../utils/isValidSegment';
 import { newDateFromSegments } from '../../utils/newDateFromSegments';
@@ -14,7 +14,7 @@ import {
   DateSegment,
   DateSegmentsState,
   isDateSegment,
-} from '../DateInput.types';
+} from '../../hooks/useDateSegments/DateSegments.types';
 import { DateInputSegment } from '../DateInputSegment';
 
 import {

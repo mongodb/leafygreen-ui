@@ -1,6 +1,6 @@
 import padStart from 'lodash/padStart';
 
-import { DateSegment } from '../../DateInput/DateInput.types';
+import { DateSegment } from '../../hooks/useDateSegments/DateSegments.types';
 import { charsPerSegment } from '../../DateInput/DateInputSegment/constants';
 import { isZeroLike } from '../isZeroLike';
 

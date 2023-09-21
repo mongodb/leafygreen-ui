@@ -1,13 +1,7 @@
-import { DynamicRefGetter } from '@leafygreen-ui/hooks/src/useDynamicRefs';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
+import { SegmentRefs } from '../../hooks/useSegmentRefs';
 import { DateType } from '../../types';
-import { DateSegment } from '../DateInput.types';
-
-export type SegmentRefs = Record<
-  DateSegment,
-  ReturnType<DynamicRefGetter<HTMLInputElement>>
->;
 
 export interface DateInputBoxProps
   extends Omit<HTMLElementProps<'div'>, 'onChange'> {

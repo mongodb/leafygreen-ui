@@ -7,15 +7,11 @@ import React, {
 } from 'react';
 import { isSameMonth, setMonth } from 'date-fns';
 
-import {
-  useBackdropClick,
-  useDynamicRefs,
-  useForwardedRef,
-} from '@leafygreen-ui/hooks';
+import { useBackdropClick, useForwardedRef } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
 
-import { SegmentRefs } from '../../DateInput/DateInputBox/DateInputBox.types';
 import { useDatePickerContext } from '../../DatePickerContext';
+import { useSegmentRefs } from '../../hooks/useSegmentRefs';
 import { isZeroLike } from '../../utils/isZeroLike';
 import { DatePickerInput, DatePickerInputProps } from '../DatePickerInput';
 import { DatePickerMenu, DatePickerMenuProps } from '../DatePickerMenu';
@@ -32,15 +28,7 @@ export const DatePickerContents = forwardRef<
   const { isOpen, setOpen, formatParts, menuId } = useDatePickerContext();
   const closeMenu = () => setOpen(false);
 
-  const getSegmentRef = useDynamicRefs<HTMLInputElement>({
-    prefix: 'segment',
-  });
-
-  const segmentRefs: SegmentRefs = {
-    day: getSegmentRef('day') || undefined,
-    month: getSegmentRef('month') || undefined,
-    year: getSegmentRef('year') || undefined,
-  };
+  const segmentRefs = useSegmentRefs();
 
   const formFieldRef = useForwardedRef(fwdRef, null);
   const menuRef = useRef<HTMLDivElement>(null);

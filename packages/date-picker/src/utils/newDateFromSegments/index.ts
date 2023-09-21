@@ -1,4 +1,4 @@
-import { DateSegmentsState } from '../../DateInput/DateInput.types';
+import { DateSegmentsState } from '../../hooks/useDateSegments/DateSegments.types';
 import { isValidSegment } from '../isValidSegment';
 
 /** Constructs a date object in UTC from day, month, year segments */

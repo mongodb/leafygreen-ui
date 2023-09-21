@@ -1,4 +1,4 @@
-import { DateSegment } from '../../DateInput/DateInput.types';
+import { DateSegment } from '../../hooks/useDateSegments/DateSegments.types';
 
 import { getValueFormatter } from '.';
 
