@@ -85,13 +85,13 @@ export const colorSets: Record<Theme, ColorSet> = {
       text: {
         base: palette.gray.light2,
         selected: palette.gray.light2,
-        disabled: palette.gray.dark2,
+        disabled: palette.gray.base,
         focused: palette.blue.light3,
       },
       icon: {
         base: palette.gray.base,
         selected: palette.blue.light1,
-        disabled: palette.gray.dark1,
+        disabled: palette.gray.base,
       },
       indicator: {
         focused: palette.blue.light1,

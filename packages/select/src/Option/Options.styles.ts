@@ -27,11 +27,6 @@ export const optionStyle = css`
     opacity: 0;
     transition: all ${transitionDuration.default}ms ease-in-out;
   }
-
-  // TODO: temps styles until styles are consistent with other dropdowns
-  > div {
-    grid-gap: 6px;
-  }
 `;
 
 export const optionTextStyle = css`

@@ -39,7 +39,7 @@ const meta: StoryMetaType<typeof Select> = {
     allowDeselect: false,
     darkMode: false,
     children: [
-      <Option key="long" value="long" description="What language is this?">
+      <Option key="long" value="long" description="I know a little lorem ipsum">
         Cras mattis consectetur purus sit amet fermentum. Maecenas sed diam eget
         risus varius blandit sit amet non magna.
       </Option>,
@@ -54,7 +54,7 @@ const meta: StoryMetaType<typeof Select> = {
       <Option key="iguana" value="iguana">
         Mexican spiny-tailed iguana
       </Option>,
-      <Option key="spider" value="spider" disabled>
+      <Option key="spider" value="spider" description="I'm chill, I swear">
         Spider
       </Option>,
       <Option

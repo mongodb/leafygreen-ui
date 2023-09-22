@@ -81,46 +81,37 @@ export function InternalOption({
     }
   }, [shouldFocus]);
 
-  const styledChildren: React.ReactNode = (
-    <span
-      className={cx(optionTextStyle, {
-        [css`
-          font-weight: ${fontWeights.bold};
-        `]: selected,
-      })}
-    >
-      {children}
-    </span>
-  );
-
-  let glyphProp;
-
   if (glyph) {
     if (!isComponentGlyph(glyph)) {
       console.error(
         '`Option` instance did not render icon because it is not a known glyph element.',
       );
-    } else {
-      glyphProp = React.cloneElement(glyph, {
-        key: 'glyph',
-        className: cx(
-          iconStyle,
-          css`
-            color: ${colorSet.icon.base};
-          `,
-          glyphFocusStyle,
-          {
-            [css`
-              color: ${colorSet.icon.disabled};
-            `]: disabled,
-          },
-          glyph.props.className,
-        ),
-      });
     }
   }
 
-  const checkmark = selected && (
+  // FIXME: temps styles until styles are consistent with InputOption
+  const glyphProp =
+    glyph && isComponentGlyph(glyph)
+      ? React.cloneElement(glyph, {
+          key: 'glyph',
+          className: cx(
+            iconStyle,
+            css`
+              color: ${colorSet.icon.base};
+            `,
+            glyphFocusStyle,
+            {
+              [css`
+                color: ${colorSet.icon.disabled};
+              `]: disabled,
+            },
+            glyph.props.className,
+          ),
+        })
+      : undefined;
+
+  // FIXME: temps styles until styles are consistent with InputOption
+  const checkmark = selected ? (
     <CheckmarkIcon
       key="checkmark"
       className={cx(
@@ -136,7 +127,7 @@ export function InternalOption({
         },
       )}
     />
-  );
+  ) : undefined;
 
   const leftGlyph = hasGlyphs ? glyphProp : checkmark;
   const rightGlyph = hasGlyphs ? checkmark : undefined;
@@ -147,19 +138,13 @@ export function InternalOption({
       {...rest}
       disabled={disabled}
       role="option"
-      aria-selected={selected}
       tabIndex={-1}
       ref={ref}
       className={cx(
         OptionClassName,
         optionStyle,
-        // TODO: temps styles until styles are consistent with other dropdowns
+        // FIXME: temps styles until styles are consistent with InputOption
         {
-          [css`
-            &:hover {
-              background-color: ${colorSet.background.hovered};
-            }
-          `]: !disabled,
           [css`
             &:focus-visible {
               color: ${colorSet.text.focused};
@@ -172,6 +157,7 @@ export function InternalOption({
               }
             }
           `]: !disabled,
+          // FIXME: override the disabled colors since they are not consistent with InputOption
           [css`
             &,
             & .${descriptionClassName} {
@@ -190,7 +176,15 @@ export function InternalOption({
         rightGlyph={rightGlyph}
         description={description}
       >
-        {styledChildren}
+        <span
+          className={cx(optionTextStyle, {
+            [css`
+              font-weight: ${fontWeights.bold};
+            `]: selected,
+          })}
+        >
+          {children}
+        </span>
       </InputOptionContent>
     </InputOption>
   );
