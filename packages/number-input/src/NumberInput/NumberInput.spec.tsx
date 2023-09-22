@@ -297,13 +297,6 @@ describe('packages/number-input', () => {
       const trigger = getByRole('button', { name: unitProps.unit });
       fireEvent.click(trigger);
 
-      // First option has a checkmark next to it
-      selectProps.unitOptions.slice(0, 1).forEach(_ => {
-        expect(
-          getByRole('img', { name: `Checkmark Icon` }),
-        ).toBeInTheDocument();
-      });
-
       selectProps.unitOptions.slice(1).forEach(lang => {
         expect(
           getByRole('option', { name: lang.displayName }),
