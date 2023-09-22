@@ -297,7 +297,7 @@ describe('packages/number-input', () => {
       const trigger = getByRole('button', { name: unitProps.unit });
       fireEvent.click(trigger);
 
-      selectProps.unitOptions.slice(1).forEach(lang => {
+      selectProps.unitOptions.forEach(lang => {
         expect(
           getByRole('option', { name: lang.displayName }),
         ).toBeInTheDocument();
