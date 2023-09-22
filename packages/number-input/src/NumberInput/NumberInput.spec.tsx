@@ -292,15 +292,15 @@ describe('packages/number-input', () => {
       expect(getByRole('listbox')).toBeInTheDocument();
     });
 
-    test('options displayed in select are based on the languageOptions prop', () => {
+    test('options displayed in select are based on the unitOptions prop', () => {
       const { getByRole } = renderNumberInput({ ...selectProps });
       const trigger = getByRole('button', { name: unitProps.unit });
       fireEvent.click(trigger);
 
       // First option has a checkmark next to it
-      selectProps.unitOptions.slice(0, 1).forEach(lang => {
+      selectProps.unitOptions.slice(0, 1).forEach(_ => {
         expect(
-          getByRole('option', { name: `Checkmark Icon ${lang.displayName}` }),
+          getByRole('img', { name: `Checkmark Icon` }),
         ).toBeInTheDocument();
       });
 

@@ -37,7 +37,12 @@ export interface InternalProps extends HTMLElementProps<'li', HTMLLIElement> {
 export interface OptionProps
   extends Pick<
     InternalProps,
-    'children' | 'className' | 'glyph' | 'disabled' | 'description'
+    | 'children'
+    | 'className'
+    | 'glyph'
+    | 'disabled'
+    | 'description'
+    | 'aria-label'
   > {
   /**
    * Corresponds to the value passed into the onChange prop of <Select /> when the option is selected.
