@@ -1,5 +1,11 @@
 # @leafygreen-ui/logo
 
+## 8.0.11
+
+### Patch Changes
+
+- bedc2034: Update story so that the background color toggles
+
 ## 8.0.10
 
 ### Patch Changes
