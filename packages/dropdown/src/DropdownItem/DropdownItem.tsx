@@ -15,7 +15,7 @@ export const DropdownItem = React.forwardRef(
     {
       children,
       disabled,
-      as,
+      as = 'div',
       active,
       className,
       description,
@@ -57,7 +57,7 @@ export const DropdownItem = React.forwardRef(
 
     return (
       <InputOption
-        role="menuitem"
+        role="option"
         as={as}
         ref={itemRef}
         aria-labelledby={label}

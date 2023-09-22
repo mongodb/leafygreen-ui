@@ -28,7 +28,7 @@ export const DropdownGroup = React.forwardRef(
       leftGlyph,
       active = false,
       disabled = false,
-      as,
+      as = 'div',
       ...rest
     }: DropdownGroupProps<PolymorphicAs>,
     forwardRef,
@@ -96,7 +96,7 @@ export const DropdownGroup = React.forwardRef(
     return (
       <>
         <InputOption
-          role="menuitem"
+          role="option"
           as={as}
           ref={itemRef}
           aria-labelledby={label}
@@ -133,6 +133,7 @@ export const DropdownGroup = React.forwardRef(
           {(state: string) => {
             return (
               <div
+                role="group"
                 className={cx(
                   css`
                     height: 0;

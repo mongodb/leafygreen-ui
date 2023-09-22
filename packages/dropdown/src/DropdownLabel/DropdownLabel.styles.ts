@@ -1,4 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
+import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { fontWeights } from '@leafygreen-ui/tokens';
 
@@ -19,3 +20,12 @@ export const labelStyle = css`
   letter-spacing: 0.4px;
   color: ${palette.gray.dark1};
 `;
+
+export const labelThemeStyle = {
+  [Theme.Light]: css`
+    color: palette.gray.dark1;
+  `,
+  [Theme.Dark]: css`
+    color: palette.gray.base;
+  `,
+};

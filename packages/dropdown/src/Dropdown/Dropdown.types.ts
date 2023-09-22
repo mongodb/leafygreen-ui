@@ -27,4 +27,5 @@ export type DropdownProps = SelectPopoverProps & {
   darkMode?: boolean;
   triggerRef: React.RefObject<HTMLElement>;
   highlightBehavior?: HighlightBehavior;
+  maxWidth?: number;
 };

@@ -23,7 +23,13 @@ const DropdownExample = props => {
   return (
     <Button ref={ref} onClick={handleTriggerClick}>
       Content!
-      <Dropdown triggerRef={ref} open={open} setOpen={setOpen} {...props}>
+      <Dropdown
+        triggerRef={ref}
+        open={open}
+        setOpen={setOpen}
+        maxWidth={400}
+        {...props}
+      >
         <DropdownLabel label="Testing">
           <DropdownItem description="I am a description">Child A</DropdownItem>
           <DropdownItem>Child B</DropdownItem>
@@ -52,6 +58,7 @@ export default {
         'refEl',
         'setOpen',
         'as',
+        'open',
       ],
     },
   },

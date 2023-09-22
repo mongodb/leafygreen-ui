@@ -2,11 +2,14 @@ import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { groupStyle, labelStyle } from './DropdownLabel.styles';
+import {
+  groupStyle,
+  labelStyle,
+  labelThemeStyle,
+} from './DropdownLabel.styles';
 import { DropdownLabelProps } from './DropdownLabel.types';
-
-export type ReactEmpty = null | undefined | false | '';
 
 export function DropdownLabel({
   className,
@@ -14,11 +17,12 @@ export function DropdownLabel({
   children,
   ...rest
 }: DropdownLabelProps) {
+  const { theme } = useDarkMode();
   const groupId = useIdAllocator({ prefix: 'select-option-group' });
 
   return (
     <div className={cx(groupStyle, className)} {...rest}>
-      <div id={groupId} className={labelStyle}>
+      <div id={groupId} className={cx(labelStyle, labelThemeStyle[theme])}>
         {label}
       </div>
       <div role="group" aria-labelledby={groupId}>
@@ -28,4 +32,4 @@ export function DropdownLabel({
   );
 }
 
-DropdownLabel.displayName = 'OptionGroup';
+DropdownLabel.displayName = 'DropdownLabel';

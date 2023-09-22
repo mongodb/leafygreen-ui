@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import {
   useAutoScroll,
   useBackdropClick,
@@ -8,7 +8,9 @@ import {
   useIsomorphicLayoutEffect,
   usePrevious,
 } from '@leafygreen-ui/hooks';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 
 import { DescendantContext, useDescendants } from '../DescendantContext';
@@ -22,13 +24,10 @@ import {
 } from './Dropdown.styles';
 import { DropdownProps, HighlightBehavior } from './Dropdown.types';
 
-// accessibility
 // sub menu
 // tests
 // size prop
-// dropdown width
 // prop-types everywhere
-// group labels
 export const Dropdown = React.forwardRef(
   (
     {
@@ -39,6 +38,7 @@ export const Dropdown = React.forwardRef(
       darkMode: darkModeProp,
       highlightBehavior = HighlightBehavior.Focus,
       justify = Justify.End,
+      maxWidth,
       open,
       portalClassName,
       portalContainer,
@@ -53,7 +53,7 @@ export const Dropdown = React.forwardRef(
     }: DropdownProps,
     forwardRef,
   ) => {
-    const { theme } = useDarkMode(darkModeProp);
+    const { darkMode, theme } = useDarkMode(darkModeProp);
     const { ref, ...contextProps } = useDescendants();
     const dropdownRef = useMergeRefs(forwardRef, ref);
     const [highlightedRef, setHighlightedRef] = useState<HTMLElement | null>(
@@ -62,8 +62,8 @@ export const Dropdown = React.forwardRef(
     const [firstOpen, setFirstOpen] = useState(false);
     const previousOpenState = usePrevious(open);
 
-    // Gets list of DropdownItem/Group refs and filters out disabled items
-    // We use this to accurately cycle focus of DropdownItem/Groups
+    // Gets list of registered item refs and filters out disabled items
+    // We use this to accurately cycle highlighted state
     const enabledRefs = contextProps?.list?.current
       ?.filter(element => {
         const id = element._internalId;
@@ -71,7 +71,7 @@ export const Dropdown = React.forwardRef(
       })
       .map(element => element.element);
 
-    // Keeps currently highlighted Item in state
+    // Keeps currently highlighted item in state
     // And manually moves focus to appropriate item if `highlightBehavior` is set to 'focus'
     const setHighlighted = useCallback(
       (ref: HTMLElement | null) => {
@@ -121,7 +121,6 @@ export const Dropdown = React.forwardRef(
     };
 
     // Attaches global listeners
-    // const handleKeyboardNavigation = (event) => {}
     useEventListener(
       'keydown',
       event =>
@@ -152,38 +151,46 @@ export const Dropdown = React.forwardRef(
     };
 
     return (
-      <DescendantContext.Provider value={contextProps}>
-        <HighlightContext.Provider
-          value={{
-            highlightBehavior,
-            highlightedRef,
-            setHighlightedRef: setHighlighted,
-          }}
-        >
-          <Popover
-            active={open}
-            align={align}
-            adjustOnMutation={adjustOnMutation}
-            justify={justify}
-            refEl={triggerRef}
-            {...popoverProps}
+      <LeafyGreenProvider darkMode={darkMode}>
+        <DescendantContext.Provider value={contextProps}>
+          <HighlightContext.Provider
+            value={{
+              highlightBehavior,
+              highlightedRef,
+              setHighlightedRef: setHighlighted,
+            }}
           >
-            <div className={cx(baseMenuStyle, menuThemeStyles[theme])}>
-              {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
-              {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
-              <ul
-                role="menu"
-                ref={dropdownRef}
-                onClick={e => e.stopPropagation()}
-                className={menuListStyle}
-                {...rest}
-              >
-                {children}
-              </ul>
-            </div>
-          </Popover>
-        </HighlightContext.Provider>
-      </DescendantContext.Provider>
+            <Popover
+              active={open}
+              align={align}
+              adjustOnMutation={adjustOnMutation}
+              justify={justify}
+              refEl={triggerRef}
+              {...popoverProps}
+            >
+              <div className={cx(baseMenuStyle, menuThemeStyles[theme])}>
+                {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
+                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
+                <div
+                  role="listbox"
+                  ref={dropdownRef}
+                  onClick={e => e.stopPropagation()}
+                  className={cx(
+                    menuListStyle,
+                    css`
+                      max-width: ${maxWidth}px;
+                    `,
+                  )}
+                  tabIndex={-1}
+                  {...rest}
+                >
+                  {children}
+                </div>
+              </div>
+            </Popover>
+          </HighlightContext.Provider>
+        </DescendantContext.Provider>
+      </LeafyGreenProvider>
     );
   },
 );
