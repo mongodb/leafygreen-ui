@@ -26,8 +26,9 @@ const selectElementProps = {
   allowDeselect: false,
   dropdownWidthBasis: DropdownWidthBasis.Option,
   // using no portal so the select menus are included in the backdrop "foreground"
-  // there is currently no way to pass a ref into the Select portal to use inf backdrop "foreground"
+  // there is currently no way to pass a ref into the Select portal to use in backdrop "foreground"
   usePortal: false,
+  // TODO: portalContainer = menuRef...
 } as const;
 
 export const DatePickerMenuHeader = forwardRef<

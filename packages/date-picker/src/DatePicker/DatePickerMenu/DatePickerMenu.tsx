@@ -4,7 +4,9 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { addDays, subDays } from 'date-fns';
 
+import { useDynamicRefs } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
 import { useForwardedRef } from '@leafygreen-ui/select/src/utils';
 import { spacing } from '@leafygreen-ui/tokens';
@@ -14,8 +16,8 @@ import { CalendarGrid } from '../../Calendar/CalendarGrid';
 import { MenuWrapper } from '../../Calendar/MenuWrapper';
 import { Months } from '../../constants';
 import { useDatePickerContext } from '../../DatePickerContext';
-import { isCurrentUTCDay } from '../../utils/isCurrentUTCDay';
 import { isSameUTCDay } from '../../utils/isSameUTCDay';
+import { setToUTCMidnight } from '../../utils/setToUTCMidnight';
 
 import {
   menuCalendarGridStyles,
@@ -24,6 +26,8 @@ import {
 } from './DatePickerMenu.styles';
 import { DatePickerMenuProps } from './DatePickerMenu.types';
 import { DatePickerMenuHeader } from './DatePickerMenuHeader';
+
+const today = setToUTCMidnight(new Date(Date.now()));
 
 export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
   (
@@ -39,8 +43,11 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
   ) => {
     const headerRef = useRef<HTMLDivElement>(null);
     const calendarRef = useRef<HTMLTableElement>(null);
+    // TODO: useDynamicRefs may overflow if a user navigates to too many months.
+    // consider purging the refs map within the hook
+    const cellRefs = useDynamicRefs<HTMLTableCellElement>();
     const { isInRange } = useDatePickerContext();
-    const [highlight, setHighlight] = useState<Date | null>(null);
+    const [highlight, setHighlight] = useState<Date | null>(value || today);
 
     const getCellState = (cellDay: Date | null) => {
       if (isInRange(cellDay)) {
@@ -58,43 +65,66 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
     const monthLabel =
       Months[month.getUTCMonth()].long + ' ' + month.getUTCFullYear();
 
-    const makeCellHoverHandler = (day: Date) => () => setHighlight(day);
-
-    const makeCellClickHandler = (day: Date) => () => {
+    const cellClickHandlerForDay = (day: Date) => () => {
       if (isInRange(day)) {
         onCellClick(day);
       }
     };
 
-    const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = ({
-      shiftKey,
-      target,
+    // Implementing custom focus-trap logic,
+    // since focus-trap-react focuses the first element immediately on mount
+    const handleWrapperTabKeyPress: KeyboardEventHandler<
+      HTMLDivElement
+    > = e => {
+      if (e.key === keyMap.Tab) {
+        const currentFocus = document.activeElement;
+        const calendarElement = calendarRef.current;
+        const rightChevron = headerRef.current?.lastElementChild;
+
+        if (!e.shiftKey && currentFocus === rightChevron) {
+          (calendarElement as HTMLElement)?.focus();
+          e.preventDefault();
+        } else if (e.shiftKey && currentFocus === calendarElement) {
+          (rightChevron as HTMLElement)?.focus();
+          e.preventDefault();
+        }
+      }
+    };
+
+    const handleCalendarKeyDown: KeyboardEventHandler<HTMLTableElement> = ({
       key,
     }) => {
-      switch (key) {
-        case keyMap.Tab:
-          {
-            // Implementing custom focus-trap logic,
-            // since focus-trap-react focuses the first element immediately on mount
-            const activeElement = document.activeElement;
-            const firstElement = headerRef.current?.firstElementChild;
-            const lastElement = calendarRef.current;
+      const highlightStart = highlight || value || today;
+      let nextHighlight = highlightStart;
 
-            if (!shiftKey && activeElement === lastElement) {
-              (firstElement as HTMLElement)?.focus();
-            } else if (shiftKey && activeElement === firstElement) {
-              lastElement?.focus();
-            }
-          }
+      switch (key) {
+        case keyMap.ArrowLeft: {
+          nextHighlight = subDays(highlightStart, 1);
           break;
+        }
+
+        case keyMap.ArrowRight: {
+          nextHighlight = addDays(highlightStart, 1);
+          break;
+        }
+
+        case keyMap.ArrowUp: {
+          nextHighlight = subDays(highlightStart, 7);
+          break;
+        }
 
         case keyMap.ArrowDown: {
+          nextHighlight = addDays(highlightStart, 7);
           break;
         }
 
         default:
           break;
       }
+
+      // TODO - change month if nextHighlight is different than `month`
+      setHighlight(nextHighlight);
+      cellRefs(nextHighlight.toISOString()).current?.focus();
     };
 
     return (
@@ -104,38 +134,46 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
         active={isOpen}
         spacing={spacing[1]}
         className={menuWrapperStyles}
-        onKeyDown={handleKeyDown}
+        onKeyDown={handleWrapperTabKeyPress}
+        usePortal
         {...rest}
       >
         <div className={menuContentStyles}>
-          <DatePickerMenuHeader
-            ref={headerRef}
-            month={month}
-            onMonthChange={onMonthChange}
-          />
+          {/**
+           * Calendar & Header are reversed in the DOM,
+           * and visually updated with CSS grid
+           * in order to achieve the correct tab-order
+           * (i.e. calendar is focused first)
+           */}
           <CalendarGrid
             ref={calendarRef}
             month={month}
             className={menuCalendarGridStyles}
-            onMouseLeave={() => setHighlight(null)}
+            onKeyDown={handleCalendarKeyDown}
             aria-label={monthLabel}
             tabIndex={0}
           >
             {(day, i) => (
               <CalendarCell
                 key={i}
-                aria-label={day.toDateString()}
+                ref={cellRefs(day.toISOString())}
+                // TODO: use a more friendly label
+                aria-label={day.toISOString()}
                 isHighlighted={isSameUTCDay(day, highlight)}
-                isCurrent={isCurrentUTCDay(day)}
+                isCurrent={isSameUTCDay(day, today)}
                 state={getCellState(day)}
-                onMouseEnter={makeCellHoverHandler(day)}
-                onClick={makeCellClickHandler(day)}
+                onClick={cellClickHandlerForDay(day)}
                 data-iso={day.toISOString()}
               >
                 {day.getUTCDate()}
               </CalendarCell>
             )}
           </CalendarGrid>
+          <DatePickerMenuHeader
+            ref={headerRef}
+            month={month}
+            onMonthChange={onMonthChange}
+          />
         </div>
       </MenuWrapper>
     );

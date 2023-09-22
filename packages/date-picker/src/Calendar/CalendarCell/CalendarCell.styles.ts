@@ -254,6 +254,15 @@ export const calendarCellHighlightStyles: ThemedStateStyles = {
   },
 };
 
+export const calendarCellHoverStyles = (
+  theme: Theme,
+  state: CalendarCellState,
+) => css`
+  &:hover {
+    ${calendarCellHighlightStyles[theme][state]}
+  }
+`;
+
 export const currentStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.blue.base};

@@ -1,6 +1,6 @@
 import { BaseDatePickerProps } from '../types';
 
-/** The props expected by the provider */
+/** The props expected to pass int the provider */
 export interface DatePickerProviderProps extends BaseDatePickerProps {
   /** Whether the calendar menu is open */
   isOpen: boolean;

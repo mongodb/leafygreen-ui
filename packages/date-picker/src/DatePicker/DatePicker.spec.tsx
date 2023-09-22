@@ -419,24 +419,25 @@ describe('packages/date-picker', () => {
             case 2:
               expect(dayInput).toHaveFocus();
               break;
+
             case 3:
-              expect(leftChevron).toHaveFocus();
+              expect(calendarGrid).toHaveFocus();
               break;
             case 4:
-              expect(monthSelect).toHaveFocus();
+              expect(leftChevron).toHaveFocus();
               break;
             case 5:
-              expect(yearSelect).toHaveFocus();
+              expect(monthSelect).toHaveFocus();
               break;
             case 6:
-              expect(rightChevron).toHaveFocus();
+              expect(yearSelect).toHaveFocus();
               break;
             case 7:
-              expect(calendarGrid).toHaveFocus();
+              expect(rightChevron).toHaveFocus();
               break;
             case 8:
               // Focus is trapped within the menu
-              expect(leftChevron).toHaveFocus();
+              expect(calendarGrid).toHaveFocus();
               break;
           }
         });
@@ -444,22 +445,10 @@ describe('packages/date-picker', () => {
     });
 
     /**
+     * Arrow Keys:
      * Since arrow key behavior changes based on whether the input or menu is focused,
      * these tests exist in the "DatePickerInput" and "DatePickerMenu" components, respectively
      */
-
-    describe('Left/Right Arrow', () => {
-      describe('when any menu element is focused', () => {
-        test.todo('up arrow decrements the week by 1');
-        test.todo('down arrow decrements the week by 1');
-        test.todo('left arrow decrements the day by 1');
-        test.todo('right arrow increments the day by 1');
-        test.todo('up arrow changes the displayed month if necessary');
-        test.todo('down arrow changes the displayed month if necessary');
-        test.todo('left arrow changes the displayed month if necessary');
-        test.todo('right arrow changes the displayed month if necessary');
-      });
-    });
 
     describe('Enter key', () => {
       test.todo('fires a change handler');

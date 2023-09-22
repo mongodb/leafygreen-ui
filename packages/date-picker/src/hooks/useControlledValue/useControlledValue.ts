@@ -52,7 +52,7 @@ export const useControlledValue = <T extends any>(
         isControlled ? 'controlled' : 'uncontrolled'
       }. This can cause issues with React states. ${
         isControlled
-          ? 'To control a component but have an initially empty input, consider setting the `value` prop to `null`.'
+          ? 'To control a component, but have an initially empty input, consider setting the `value` prop to `null`.'
           : ''
       }`;
 

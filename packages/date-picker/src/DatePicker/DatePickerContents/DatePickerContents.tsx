@@ -23,7 +23,6 @@ export const DatePickerContents = forwardRef<
     const closeMenu = () => setOpen(false);
 
     const segmentRefs = useSegmentRefs();
-
     const formFieldRef = useForwardedRef(fwdRef, null);
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -48,16 +47,6 @@ export const DatePickerContents = forwardRef<
       }
     };
 
-    const handleCellClick: DatePickerMenuProps['onCellClick'] = cellValue => {
-      updateValue(cellValue);
-      setOpen(false);
-    };
-
-    const handleMonthChange: DatePickerMenuProps['onMonthChange'] =
-      newMonth => {
-        setDisplayMonth(newMonth);
-      };
-
     const handleInputClick: MouseEventHandler<HTMLElement> = ({ target }) => {
       setOpen(true);
 
@@ -67,6 +56,16 @@ export const DatePickerContents = forwardRef<
         segmentRefs,
       });
     };
+
+    const handleCellClick: DatePickerMenuProps['onCellClick'] = cellValue => {
+      updateValue(cellValue);
+      setOpen(false);
+    };
+
+    const handleMonthChange: DatePickerMenuProps['onMonthChange'] =
+      newMonth => {
+        setDisplayMonth(newMonth);
+      };
 
     return (
       <>
@@ -87,7 +86,6 @@ export const DatePickerContents = forwardRef<
           month={displayMonth}
           onCellClick={handleCellClick}
           onMonthChange={handleMonthChange}
-          usePortal={true}
         />
       </>
     );

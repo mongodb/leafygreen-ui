@@ -11,12 +11,14 @@ export const menuWrapperStyles = css`
 `;
 
 export const menuContentStyles = css`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-areas: 'header' 'calendar';
   align-items: center;
 `;
 
 export const menuHeaderStyles = css`
+  grid-area: header;
   position: relative;
   display: flex;
   align-items: center;
@@ -33,5 +35,6 @@ export const menuHeaderSelectContainerStyles = css`
 `;
 
 export const menuCalendarGridStyles = css`
+  grid-area: calendar;
   margin: auto;
 `;

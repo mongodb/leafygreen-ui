@@ -7,6 +7,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
   calendarCellCurrentStyles,
   calendarCellHighlightStyles,
+  calendarCellHoverStyles,
   calendarCellStateStyles,
   calendarCellStyles,
   cellTextCurrentStyles,
@@ -53,12 +54,16 @@ export const CalendarCell = React.forwardRef<
       <td
         ref={ref}
         role="gridcell"
+        data-highlighted={isHighlighted}
+        aria-current={isCurrent}
         aria-selected={isActive}
         aria-disabled={state === CalendarCellState.Disabled}
+        tabIndex={isHighlighted ? 0 : -1}
         className={cx(
           calendarCellStyles,
 
           calendarCellStateStyles[theme][state],
+          calendarCellHoverStyles(theme, state),
           {
             [calendarCellCurrentStyles[theme][state]]: isCurrent,
             [calendarCellHighlightStyles[theme][state]]: isHighlighted,
