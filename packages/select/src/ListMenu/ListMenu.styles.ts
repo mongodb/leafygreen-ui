@@ -38,6 +38,7 @@ export const getMenuStyles = (theme: Theme, size: Size) => {
       border-radius: 12px;
       box-shadow: 0 4px 7px 0 ${colorSet.menu.shadow};
       padding: 8px 0;
+      border: 1px solid ${colorSet.menu.border};
     `,
   );
 };
