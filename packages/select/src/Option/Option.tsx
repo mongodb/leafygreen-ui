@@ -178,6 +178,7 @@ export function InternalOption({
       >
         <span
           className={cx(optionTextStyle, {
+            // FIXME: temps styles since we're not passing the `selected` prop to InputOption
             [css`
               font-weight: ${fontWeights.bold};
             `]: selected,
