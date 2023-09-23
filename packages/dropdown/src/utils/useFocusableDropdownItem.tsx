@@ -36,5 +36,6 @@ export const useFocusableDropdownItem = () => {
     onBlur,
     tabIndex: -1,
     ['aria-selected']: highlighted,
+    ['data-selected']: highlighted,
   };
 };

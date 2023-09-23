@@ -8,6 +8,7 @@ import React, {
 import isUndefined from 'lodash/isUndefined';
 import PropTypes from 'prop-types';
 
+import { Dropdown } from '@leafygreen-ui/dropdown';
 import { css, cx } from '@leafygreen-ui/emotion';
 import {
   useAvailableSpace,
@@ -71,10 +72,10 @@ const scrollContainerStyle = css`
  */
 export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   {
-    align = Align.Bottom,
-    justify = Justify.End,
-    adjustOnMutation = false,
-    shouldClose = () => true,
+    // align = Align.Bottom,
+    // justify = Justify.End,
+    // adjustOnMutation = false,
+    // shouldClose = () => true,
     spacing = 6,
     maxHeight = 344,
     usePortal = true,
@@ -95,23 +96,23 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 ) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
 
-  const hasSetInitialFocus = useRef(false);
-  const hasSetInitialOpen = useRef(false);
+  // const hasSetInitialFocus = useRef(false);
+  // const hasSetInitialOpen = useRef(false);
 
-  const [, setClosed] = useState(false);
-  const currentSubMenuRef = useRef<SubMenuType | null>(null);
+  // const [, setClosed] = useState(false);
+  // const currentSubMenuRef = useRef<SubMenuType | null>(null);
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
-  const popoverRef = useRef<HTMLUListElement | null>(null);
+  // const popoverRef = useRef<HTMLUListElement | null>(null);
 
   const setOpen =
     (typeof controlledOpen === 'boolean' && controlledSetOpen) ||
     uncontrolledSetOpen;
   const open = controlledOpen ?? uncontrolledOpen;
-  const handleClose = useCallback(() => {
-    if (shouldClose()) {
-      setOpen(false);
-    }
-  }, [setOpen, shouldClose]);
+  // const handleClose = useCallback(() => {
+  //   if (shouldClose()) {
+  //     setOpen(false);
+  //   }
+  // }, [setOpen, shouldClose]);
 
   // Used to trigger a state update when the current subMenu changes since the current subMenu is stored in a ref to avoid extra rerenders on initial load.
   const updateCurrentSubMenu = useForceRerender();
@@ -127,202 +128,202 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     ? `${Math.min(memoizedAvailableSpace, maxHeight)}px`
     : 'unset';
 
-  const { updatedChildren, refs } = React.useMemo(() => {
-    if (
-      children == null ||
-      ['boolean', 'number', 'string'].includes(typeof children)
-    ) {
-      return { updatedChildren: undefined, refs: [] };
-    }
+  // const { updatedChildren, refs } = React.useMemo(() => {
+  //   if (
+  //     children == null ||
+  //     ['boolean', 'number', 'string'].includes(typeof children)
+  //   ) {
+  //     return { updatedChildren: undefined, refs: [] };
+  //   }
 
-    const titleArr: Array<string> = [];
-    const refs: Array<HTMLElement> = [];
+  //   const titleArr: Array<string> = [];
+  //   const refs: Array<HTMLElement> = [];
 
-    function updateChildren(children: React.ReactNode): React.ReactNode {
-      return React.Children.map(children, child => {
-        if (!React.isValidElement(child) || child.props?.disabled) {
-          return child;
-        }
+  //   function updateChildren(children: React.ReactNode): React.ReactNode {
+  //     return React.Children.map(children, child => {
+  //       if (!React.isValidElement(child) || child.props?.disabled) {
+  //         return child;
+  //       }
 
-        const { props } = child;
+  //       const { props } = child;
 
-        let currentChildRef: HTMLElement | null = null;
+  //       let currentChildRef: HTMLElement | null = null;
 
-        const setRef = (ref: HTMLElement) => {
-          if (ref == null) {
-            return;
-          }
+  //       const setRef = (ref: HTMLElement) => {
+  //         if (ref == null) {
+  //           return;
+  //         }
 
-          refs.push(ref);
-          currentChildRef = ref;
+  //         refs.push(ref);
+  //         currentChildRef = ref;
 
-          if (open && hasSetInitialFocus.current === false) {
-            setFocus(refs[0]);
-            hasSetInitialFocus.current = true;
-          }
-        };
+  //         if (open && hasSetInitialFocus.current === false) {
+  //           setFocus(refs[0]);
+  //           hasSetInitialFocus.current = true;
+  //         }
+  //       };
 
-        const title = props?.title ?? false;
+  //       const title = props?.title ?? false;
 
-        const onFocus = ({ target }: React.FocusEvent<HTMLElement>) => {
-          focusedRef.current = target;
-        };
+  //       const onFocus = ({ target }: React.FocusEvent<HTMLElement>) => {
+  //         focusedRef.current = target;
+  //       };
 
-        if (isComponentType<SubMenuType>(child, 'SubMenu') && title) {
-          if (titleArr.includes(title)) {
-            throw new Error('SubMenu titles must be unique');
-          }
+  //       if (isComponentType<SubMenuType>(child, 'SubMenu') && title) {
+  //         if (titleArr.includes(title)) {
+  //           throw new Error('SubMenu titles must be unique');
+  //         }
 
-          titleArr.push(title);
+  //         titleArr.push(title);
 
-          const shouldOpenActiveSubMenu =
-            !currentSubMenuRef.current &&
-            props.active &&
-            !hasSetInitialOpen.current;
+  //         const shouldOpenActiveSubMenu =
+  //           !currentSubMenuRef.current &&
+  //           props.active &&
+  //           !hasSetInitialOpen.current;
 
-          // This opens the active submenu on inital load
-          if (shouldOpenActiveSubMenu) {
-            // Using a ref here prevents an extra rerender on initial load.
-            currentSubMenuRef.current = child;
-            hasSetInitialOpen.current = true;
-          }
+  //         // This opens the active submenu on inital load
+  //         if (shouldOpenActiveSubMenu) {
+  //           // Using a ref here prevents an extra rerender on initial load.
+  //           currentSubMenuRef.current = child;
+  //           hasSetInitialOpen.current = true;
+  //         }
 
-          const isCurrentSubMenu =
-            (currentSubMenuRef.current?.props as SubMenuProps)?.title === title;
+  //         const isCurrentSubMenu =
+  //           (currentSubMenuRef.current?.props as SubMenuProps)?.title === title;
 
-          return React.cloneElement(child, {
-            ref: setRef,
-            open: isCurrentSubMenu,
-            setOpen: (state: boolean) => {
-              if (currentChildRef) {
-                focusedRef.current = currentChildRef;
-              }
+  //         return React.cloneElement(child, {
+  //           ref: setRef,
+  //           open: isCurrentSubMenu,
+  //           setOpen: (state: boolean) => {
+  //             if (currentChildRef) {
+  //               focusedRef.current = currentChildRef;
+  //             }
 
-              currentSubMenuRef.current = state ? child : null;
-              hasSetInitialOpen.current = true;
-              // Force update since the updated currentSubMenu is set in a ref.
-              updateCurrentSubMenu();
-            },
-            onKeyDown: (e: React.KeyboardEvent<HTMLButtonElement>) => {
-              if (e.key === keyMap.ArrowLeft && isCurrentSubMenu) {
-                currentSubMenuRef.current = null;
-                hasSetInitialOpen.current = true;
-                updateCurrentSubMenu();
-              }
+  //             currentSubMenuRef.current = state ? child : null;
+  //             hasSetInitialOpen.current = true;
+  //             // Force update since the updated currentSubMenu is set in a ref.
+  //             updateCurrentSubMenu();
+  //           },
+  //           onKeyDown: (e: React.KeyboardEvent<HTMLButtonElement>) => {
+  //             if (e.key === keyMap.ArrowLeft && isCurrentSubMenu) {
+  //               currentSubMenuRef.current = null;
+  //               hasSetInitialOpen.current = true;
+  //               updateCurrentSubMenu();
+  //             }
 
-              if (e.key === keyMap.ArrowRight) {
-                currentSubMenuRef.current = child;
-                hasSetInitialOpen.current = true;
-                updateCurrentSubMenu();
-              }
-            },
-            onFocus,
-            children: updateChildren(props.children),
-            onExited: () => {
-              setClosed(curr => !curr);
-            },
-          });
-        }
+  //             if (e.key === keyMap.ArrowRight) {
+  //               currentSubMenuRef.current = child;
+  //               hasSetInitialOpen.current = true;
+  //               updateCurrentSubMenu();
+  //             }
+  //           },
+  //           onFocus,
+  //           children: updateChildren(props.children),
+  //           onExited: () => {
+  //             setClosed(curr => !curr);
+  //           },
+  //         });
+  //       }
 
-        if (isComponentType(child, 'MenuItem')) {
-          return React.cloneElement(child, {
-            ref: setRef,
-            onFocus,
-            onClick: (e: React.MouseEvent) => {
-              child.props?.onClick?.(e);
-              handleClose();
-            },
-          });
-        }
+  //       if (isComponentType(child, 'MenuItem')) {
+  //         return React.cloneElement(child, {
+  //           ref: setRef,
+  //           onFocus,
+  //           onClick: (e: React.MouseEvent) => {
+  //             child.props?.onClick?.(e);
+  //             handleClose();
+  //           },
+  //         });
+  //       }
 
-        if (isComponentType(child, 'FocusableMenuItem')) {
-          return React.cloneElement(child, {
-            ref: setRef,
-            onFocus,
-          });
-        }
+  //       if (isComponentType(child, 'FocusableMenuItem')) {
+  //         return React.cloneElement(child, {
+  //           ref: setRef,
+  //           onFocus,
+  //         });
+  //       }
 
-        if (isComponentType(child, 'MenuSeparator')) {
-          return <MenuSeparator {...props} />;
-        }
+  //       if (isComponentType(child, 'MenuSeparator')) {
+  //         return <MenuSeparator {...props} />;
+  //       }
 
-        if (props?.children) {
-          const { children, ...rest } = props;
-          return React.cloneElement(child, {
-            children: updateChildren(props.children),
-            ...rest,
-          });
-        }
+  //       if (props?.children) {
+  //         const { children, ...rest } = props;
+  //         return React.cloneElement(child, {
+  //           children: updateChildren(props.children),
+  //           ...rest,
+  //         });
+  //       }
 
-        return child;
-      });
-    }
+  //       return child;
+  //     });
+  //   }
 
-    return { updatedChildren: updateChildren(children), refs };
-  }, [children, open, updateCurrentSubMenu, handleClose]);
+  //   return { updatedChildren: updateChildren(children), refs };
+  // }, [children, open, updateCurrentSubMenu, handleClose]);
 
-  const focusedRef = useRef<HTMLElement | null>(refs[0] || null);
+  // const focusedRef = useRef<HTMLElement | null>(refs[0] || null);
 
-  const setFocus = (el: HTMLElement | null) => {
-    if (el == null) {
-      return;
-    }
+  // const setFocus = (el: HTMLElement | null) => {
+  //   if (el == null) {
+  //     return;
+  //   }
 
-    focusedRef.current = el;
-    el.focus();
-  };
+  //   focusedRef.current = el;
+  //   el.focus();
+  // };
 
-  useEffect(() => {
-    if (open) {
-      hasSetInitialFocus.current = false;
-      hasSetInitialOpen.current = false;
-    }
-  }, [open]);
+  // useEffect(() => {
+  //   if (open) {
+  //     hasSetInitialFocus.current = false;
+  //     hasSetInitialOpen.current = false;
+  //   }
+  // }, [open]);
 
-  useBackdropClick(handleClose, [popoverRef, triggerRef], open);
+  // useBackdropClick(handleClose, [popoverRef, triggerRef], open);
 
-  function handleKeyDown(e: KeyboardEvent) {
-    let refToFocus: HTMLElement;
+  // function handleKeyDown(e: KeyboardEvent) {
+  //   let refToFocus: HTMLElement;
 
-    switch (e.key) {
-      case keyMap.ArrowDown:
-        e.preventDefault(); // Prevents page scrolling
-        refToFocus =
-          refs[(refs.indexOf(focusedRef.current!) + 1) % refs.length];
+  //   switch (e.key) {
+  //     case keyMap.ArrowDown:
+  //       e.preventDefault(); // Prevents page scrolling
+  //       refToFocus =
+  //         refs[(refs.indexOf(focusedRef.current!) + 1) % refs.length];
 
-        setFocus(refToFocus);
-        break;
+  //       setFocus(refToFocus);
+  //       break;
 
-      case keyMap.ArrowUp:
-        e.preventDefault(); // Prevents page scrolling
-        refToFocus =
-          refs[
-            (refs.indexOf(focusedRef.current!) - 1 + refs.length) % refs.length
-          ];
-        setFocus(refToFocus);
-        break;
+  //     case keyMap.ArrowUp:
+  //       e.preventDefault(); // Prevents page scrolling
+  //       refToFocus =
+  //         refs[
+  //           (refs.indexOf(focusedRef.current!) - 1 + refs.length) % refs.length
+  //         ];
+  //       setFocus(refToFocus);
+  //       break;
 
-      case keyMap.Tab:
-        e.preventDefault(); // Prevent tabbing outside of portal and outside of the DOM when `usePortal={true}`
-        handleClose();
-        setFocus((refEl || triggerRef)?.current); // Focus the trigger on close
-        break;
+  //     case keyMap.Tab:
+  //       e.preventDefault(); // Prevent tabbing outside of portal and outside of the DOM when `usePortal={true}`
+  //       handleClose();
+  //       setFocus((refEl || triggerRef)?.current); // Focus the trigger on close
+  //       break;
 
-      case keyMap.Escape:
-        handleClose();
-        setFocus((refEl || triggerRef)?.current); // Focus the trigger on close
-        break;
+  //     case keyMap.Escape:
+  //       handleClose();
+  //       setFocus((refEl || triggerRef)?.current); // Focus the trigger on close
+  //       break;
 
-      case keyMap.Space:
-      case keyMap.Enter:
-        if (!open) {
-          setFocus(refs[0]);
-        }
-        break;
-    }
-  }
+  //     case keyMap.Space:
+  //     case keyMap.Enter:
+  //       if (!open) {
+  //         setFocus(refs[0]);
+  //       }
+  //       break;
+  //   }
+  // }
 
-  useEventListener('keydown', handleKeyDown, { enabled: open });
+  // useEventListener('keydown', handleKeyDown, { enabled: open });
 
   const popoverProps = {
     popoverZIndex,
@@ -337,46 +338,64 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
       : { spacing, usePortal }),
   };
 
-  const providerData = useMemo(() => {
-    return { theme, darkMode };
-  }, [theme, darkMode]);
+  // const providerData = useMemo(() => {
+  //   return { theme, darkMode };
+  // }, [theme, darkMode]);
 
   const popoverContent = (
-    <MenuContext.Provider value={providerData}>
-      <Popover
-        key="popover"
-        active={open}
-        align={align}
-        justify={justify}
-        refEl={refEl}
-        adjustOnMutation={adjustOnMutation}
-        {...popoverProps}
-      >
-        <div
-          className={cx(
-            rootMenuStyle,
-            rootMenuThemeStyles[theme],
-            css`
-              max-height: ${maxMenuHeightValue};
-            `,
-            className,
-          )}
-          ref={forwardRef}
-        >
-          {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
-          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
-          <ul
-            {...rest}
-            className={scrollContainerStyle}
-            role="menu"
-            onClick={e => e.stopPropagation()}
-            ref={popoverRef}
-          >
-            {updatedChildren}
-          </ul>
-        </div>
-      </Popover>
-    </MenuContext.Provider>
+    <Dropdown
+      {...popoverProps}
+      ref={forwardRef}
+      triggerRef={refEl ? refEl : triggerRef}
+      darkMode={darkMode}
+      open={open}
+      setOpen={setOpen}
+      role="menu"
+      className={cx(
+        css`
+          max-height: ${maxMenuHeightValue};
+        `,
+        className,
+      )}
+      {...rest}
+    >
+      {children}
+    </Dropdown>
+    // <MenuContext.Provider value={providerData}>
+    //   <Popover
+    //     key="popover"
+    //     active={open}
+    //     align={align}
+    //     justify={justify}
+    //     refEl={refEl}
+    //     adjustOnMutation={adjustOnMutation}
+    //     {...popoverProps}
+    //   >
+    //     <div
+    //       className={cx(
+    //         rootMenuStyle,
+    //         rootMenuThemeStyles[theme],
+    //         css`
+    //           max-height: ${maxMenuHeightValue};
+    //         `,
+    //         className,
+    //       )}
+    //       ref={forwardRef}
+    //     >
+    //       {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
+    //       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
+    //       <ul
+    //         {...rest}
+    //         className={scrollContainerStyle}
+    //         role="menu"
+    //         onClick={e => e.stopPropagation()}
+    //         ref={popoverRef}
+    //       >
+    //         {updatedChildren}
+    //       </ul>
+    //     </div>
+    //   </Popover>
+    // </MenuContext.Provider>
   );
 
   if (trigger) {

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { PopoverProps, PortalControlProps } from '@leafygreen-ui/popover';
 
 const HighlightBehavior = {
@@ -18,14 +19,15 @@ type SelectPopoverProps = PortalControlProps &
     'adjustOnMutation' | 'align' | 'justify' | 'spacing' | 'popoverZIndex'
   >;
 
-export type DropdownProps = SelectPopoverProps & {
-  children?: React.ReactNode;
-  shouldClose?: () => boolean;
-  className?: string;
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  darkMode?: boolean;
-  triggerRef: React.RefObject<HTMLElement>;
-  highlightBehavior?: HighlightBehavior;
-  maxWidth?: number;
-};
+export type DropdownProps = HTMLElementProps<'div'> &
+  SelectPopoverProps & {
+    children?: React.ReactNode;
+    shouldClose?: () => boolean;
+    className?: string;
+    open: boolean;
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    darkMode?: boolean;
+    triggerRef: React.RefObject<HTMLElement>;
+    highlightBehavior?: HighlightBehavior;
+    maxWidth?: number;
+  };

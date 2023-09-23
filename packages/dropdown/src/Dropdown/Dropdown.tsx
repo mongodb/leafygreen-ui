@@ -24,6 +24,7 @@ import {
 } from './Dropdown.styles';
 import { DropdownProps, HighlightBehavior } from './Dropdown.types';
 
+// support green menu
 // sub menu
 // tests
 // size prop
