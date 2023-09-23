@@ -79,6 +79,7 @@ const storybookModuleFederationConfig = {
     './BaseStyles': '/src/assets/global.css',
     './Button': '/packages/button/src/Button/Button.tsx',
     './Select': '/packages/select/src/Select.tsx',
+    './Popover': '/packages/popover/src/Popover.tsx',
     './leafygreen-provider': '/packages/leafygreen-provider/src/index.ts',
   },
   shared: {
