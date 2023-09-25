@@ -34,7 +34,10 @@ const meta: StoryMetaType<typeof RadioGroup> = {
         <Radio default value="2" description="This is a description">
           Radio Input 2
         </Radio>
-        <Radio disabled value="Selection-4">
+        <Radio disabled value="3" description="This is a description">
+          Disabled Option
+        </Radio>
+        <Radio disabled value="4">
           Disabled Option
         </Radio>
       </>
@@ -61,7 +64,10 @@ export const LiveExample: StoryFn<RadioGroupProps> = ({
     <Radio default value="2" description="This is a description">
       Radio Input 2
     </Radio>
-    <Radio disabled value="Selection-4">
+    <Radio disabled value="3" description="This is a description">
+      Disabled Option
+    </Radio>
+    <Radio disabled value="4">
       Disabled Option
     </Radio>
   </RadioGroup>
