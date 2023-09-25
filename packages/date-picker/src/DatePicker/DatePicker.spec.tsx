@@ -22,7 +22,7 @@ describe('packages/date-picker', () => {
   });
 
   describe('Rendering', () => {
-    /// Note: Most rendering tests handled by Chromatic
+    /// Note: Many rendering tests should be handled by Chromatic
 
     test('spreads rest to formField', () => {
       const { getByTestId } = render(
@@ -448,12 +448,6 @@ describe('packages/date-picker', () => {
       });
     });
 
-    /**
-     * Arrow Keys:
-     * Since arrow key behavior changes based on whether the input or menu is focused,
-     * these tests exist in the "DatePickerInput" and "DatePickerMenu" components, respectively
-     */
-
     describe('Enter key', () => {
       test.todo('fires a change handler');
       test.todo('closes the menu');
@@ -466,6 +460,12 @@ describe('packages/date-picker', () => {
       test.todo('does not fire a change handler');
       test.todo('focus remains on the input element');
     });
+
+    /**
+     * Arrow Keys:
+     * Since arrow key behavior changes based on whether the input or menu is focused,
+     * many of these tests exist in the "DatePickerInput" and "DatePickerMenu" components
+     */
   });
 
   describe('Controlled vs Uncontrolled', () => {

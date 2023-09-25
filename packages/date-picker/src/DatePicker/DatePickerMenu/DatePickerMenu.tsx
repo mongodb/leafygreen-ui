@@ -126,15 +126,18 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
           break;
       }
 
-      // change month if nextHighlight is different than `month`
-      if (month.getUTCMonth() !== nextHighlight.getUTCMonth()) {
-        onMonthChange(nextHighlight);
+      // if nextHighlight is in range
+      if (isInRange(nextHighlight)) {
+        // change month if nextHighlight is different than `month`
+        if (month.getUTCMonth() !== nextHighlight.getUTCMonth()) {
+          onMonthChange(nextHighlight);
+        }
+
+        setHighlight(nextHighlight);
+
+        const nextCellRef = cellRefs(nextHighlight.toISOString());
+        nextCellRef.current?.focus();
       }
-
-      setHighlight(nextHighlight);
-
-      const nextCellRef = cellRefs(nextHighlight.toISOString());
-      nextCellRef.current?.focus();
     };
 
     return (

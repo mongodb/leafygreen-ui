@@ -41,16 +41,4 @@ export const characterWidth = {
   D: 46 / 40,
   M: 55 / 40,
   Y: 50 / 40,
-  // TODO: rm. for 1.25 small-caps placeholders
-  // D: 41 / 40,
-  // M: 49 / 40,
-  // Y: 44 / 40,
-  // TODO: rm. for small-caps placeholders
-  // D: 32 / 40,
-  // M: 37 / 40,
-  // Y: 35 / 40,
-  // TODO: rm. for monospace
-  // D: 1,
-  // M: 1,
-  // Y: 1,
 } as const;

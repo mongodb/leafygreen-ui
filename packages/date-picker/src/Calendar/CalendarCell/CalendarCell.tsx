@@ -36,6 +36,8 @@ export const CalendarCell = React.forwardRef<
     const ref = useForwardedRef(fwdRef, null);
     const { theme } = useDarkMode();
 
+    const isFocusable = isHighlighted && state !== CalendarCellState.Disabled;
+
     const isActive = (
       [
         CalendarCellState.Active,
@@ -58,10 +60,11 @@ export const CalendarCell = React.forwardRef<
         aria-current={isCurrent}
         aria-selected={isActive}
         aria-disabled={state === CalendarCellState.Disabled}
-        tabIndex={isHighlighted ? 0 : -1}
+        tabIndex={isFocusable ? 0 : -1}
+        // @ts-expect-error https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/inert
+        inert={isFocusable}
         className={cx(
           calendarCellStyles,
-
           calendarCellStateStyles[theme][state],
           calendarCellHoverStyles(theme, state),
           {
