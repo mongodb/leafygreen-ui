@@ -26,7 +26,7 @@ const renderDatePickerMenu = (
         isOpen
         value={null}
         month={new Date(Date.UTC(2023, Month.September, 1))}
-        onMonthChange={() => {}}
+        setMonth={() => {}}
         onCellClick={() => {}}
         {...props}
       />
@@ -91,10 +91,7 @@ describe('packages/date-picker/date-picker-menu', () => {
 
     describe('rendered cells', () => {
       test('have appropriate `aria-label`', () => {
-        const { calendarGrid } = renderDatePickerMenu();
-        const todayCell = calendarGrid.querySelector(
-          `[data-iso="${testToday.toISOString()}"]`,
-        );
+        const { todayCell } = renderDatePickerMenu();
         expect(todayCell).toHaveAttribute('aria-label', 'Sun Sep 10 2023');
       });
     });
@@ -212,47 +209,47 @@ describe('packages/date-picker/date-picker-menu', () => {
 
       describe('call the month change handler', () => {
         test('left arrow triggers handler', () => {
-          const onMonthChange = jest.fn();
+          const setMonth = jest.fn();
           const value = new Date(Date.UTC(2023, Month.September, 1));
-          renderDatePickerMenu({ value, onMonthChange });
+          renderDatePickerMenu({ value, setMonth });
           userEvent.tab();
           userEvent.keyboard('{arrowleft}');
-          expect(onMonthChange).toHaveBeenCalled();
+          expect(setMonth).toHaveBeenCalled();
         });
 
         test('right arrow triggers handler', () => {
-          const onMonthChange = jest.fn();
+          const setMonth = jest.fn();
           const value = new Date(Date.UTC(2023, Month.September, 30));
-          renderDatePickerMenu({ value, onMonthChange });
+          renderDatePickerMenu({ value, setMonth });
           userEvent.tab();
           userEvent.keyboard('{arrowright}');
-          expect(onMonthChange).toHaveBeenCalled();
+          expect(setMonth).toHaveBeenCalled();
         });
 
         test('up arrow triggers handler', () => {
           const value = new Date(Date.UTC(2023, Month.September, 6));
-          const onMonthChange = jest.fn();
-          renderDatePickerMenu({ value, onMonthChange });
+          const setMonth = jest.fn();
+          renderDatePickerMenu({ value, setMonth });
           userEvent.tab();
           userEvent.keyboard('{arrowup}');
-          expect(onMonthChange).toHaveBeenCalled();
+          expect(setMonth).toHaveBeenCalled();
         });
 
         test('down arrow triggers handler', async () => {
           const value = new Date(Date.UTC(2023, Month.September, 25));
-          const onMonthChange = jest.fn();
-          renderDatePickerMenu({ value, onMonthChange });
+          const setMonth = jest.fn();
+          renderDatePickerMenu({ value, setMonth });
           userEvent.tab();
           userEvent.keyboard('{arrowdown}');
-          expect(onMonthChange).toHaveBeenCalled();
+          expect(setMonth).toHaveBeenCalled();
         });
 
         test('does not trigger handler when month does not need to change', () => {
-          const onMonthChange = jest.fn();
-          renderDatePickerMenu({ value: testValue, onMonthChange });
+          const setMonth = jest.fn();
+          renderDatePickerMenu({ value: testValue, setMonth });
           userEvent.tab();
           userEvent.keyboard('{arrowleft}{arrowright}{arrowup}{arrowdown}');
-          expect(onMonthChange).not.toHaveBeenCalled();
+          expect(setMonth).not.toHaveBeenCalled();
         });
       });
 

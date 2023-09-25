@@ -62,11 +62,6 @@ export const DatePickerContents = forwardRef<
       setOpen(false);
     };
 
-    const handleMonthChange: DatePickerMenuProps['onMonthChange'] =
-      newMonth => {
-        setDisplayMonth(newMonth);
-      };
-
     return (
       <>
         <DatePickerInput
@@ -84,8 +79,8 @@ export const DatePickerContents = forwardRef<
           value={value}
           isOpen={isOpen}
           month={displayMonth}
+          setMonth={setDisplayMonth}
           onCellClick={handleCellClick}
-          onMonthChange={handleMonthChange}
         />
       </>
     );

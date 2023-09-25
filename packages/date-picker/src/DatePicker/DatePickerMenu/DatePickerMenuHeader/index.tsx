@@ -18,7 +18,7 @@ import { DatePickerMenuProps } from '../DatePickerMenu.types';
 
 type DatePickerMenuHeaderProps = Pick<
   DatePickerMenuProps,
-  'month' | 'onMonthChange'
+  'month' | 'setMonth'
 >;
 
 const selectElementProps = {
@@ -33,7 +33,7 @@ const selectElementProps = {
 export const DatePickerMenuHeader = forwardRef<
   HTMLDivElement,
   DatePickerMenuHeaderProps
->(({ month, onMonthChange }: DatePickerMenuHeaderProps, fwdRef) => {
+>(({ month, setMonth }: DatePickerMenuHeaderProps, fwdRef) => {
   const { min, max, isInRange } = useDatePickerContext();
 
   const yearOptions = range(min.getUTCFullYear(), max.getUTCFullYear() + 1);
@@ -42,13 +42,13 @@ export const DatePickerMenuHeader = forwardRef<
     // TODO: may need to update this function to check if the months are in range
     // (could cause errors when the min date is near the end of the month)
     if (isInRange(newMonth)) {
-      onMonthChange(newMonth);
+      setMonth(newMonth);
     } else if (isBefore(newMonth, min)) {
       // if the selected month is not in range,
       // set the month to the first or last possible month
-      onMonthChange(min);
+      setMonth(min);
     } else {
-      onMonthChange(max);
+      setMonth(max);
     }
   };
 

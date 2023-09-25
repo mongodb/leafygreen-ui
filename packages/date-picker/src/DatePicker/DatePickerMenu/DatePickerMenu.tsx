@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { addDays, subDays } from 'date-fns';
+import { addDays, isAfter, subDays } from 'date-fns';
 
 import { useDynamicRefs } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
@@ -17,9 +17,13 @@ import { CalendarGrid } from '../../Calendar/CalendarGrid';
 import { MenuWrapper } from '../../Calendar/MenuWrapper';
 import { Months } from '../../constants';
 import { useDatePickerContext } from '../../DatePickerContext';
+import { getDaysInUTCMonth } from '../../utils/getDaysInUTCMonth';
 import { getUTCDateString } from '../../utils/getUTCDateString';
 import { isSameUTCDay } from '../../utils/isSameUTCDay';
+import { isSameUTCMonth } from '../../utils/isSameUTCMonth';
 import { setToUTCMidnight } from '../../utils/setToUTCMidnight';
+import { setUTCDate } from '../../utils/setUTCDate';
+import { setUTCMonth } from '../../utils/setUTCMonth';
 
 import {
   menuCalendarGridStyles,
@@ -35,13 +39,16 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       isOpen,
       value,
       month,
-      onMonthChange,
+      setMonth,
       onCellClick,
       ...rest
     }: DatePickerMenuProps,
     fwdRef,
   ) => {
     const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
+    const monthLabel =
+      Months[month.getUTCMonth()].long + ' ' + month.getUTCFullYear();
+    const ref = useForwardedRef(fwdRef, null);
     const headerRef = useRef<HTMLDivElement>(null);
     const calendarRef = useRef<HTMLTableElement>(null);
     // TODO:
@@ -50,6 +57,36 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
     const cellRefs = useDynamicRefs<HTMLTableCellElement>();
     const { isInRange } = useDatePickerContext();
     const [highlight, setHighlight] = useState<Date | null>(value || today);
+
+    // A wrapper for setMonth that handles side effects
+    const updateMonth: typeof setMonth = newMonth => {
+      if (
+        isSameUTCMonth(newMonth, month) ||
+        isSameUTCMonth(newMonth, highlight)
+      ) {
+        return;
+      }
+
+      if (isAfter(newMonth, month)) {
+        // set highlight to first of month
+        const newHighlight = highlight
+          ? setUTCMonth(setUTCDate(highlight, 1), newMonth.getUTCMonth())
+          : setUTCDate(newMonth, 1);
+        setHighlight(newHighlight);
+      } else {
+        // set highlight to last of month
+        const daysInMonth = getDaysInUTCMonth(newMonth);
+        const newHighlight = highlight
+          ? setUTCMonth(
+              setUTCDate(highlight, daysInMonth),
+              newMonth.getUTCMonth(),
+            )
+          : setUTCDate(newMonth, daysInMonth);
+        setHighlight(newHighlight);
+      }
+
+      setMonth(newMonth);
+    };
 
     const getCellState = (cellDay: Date | null) => {
       if (isInRange(cellDay)) {
@@ -62,10 +99,6 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
 
       return CalendarCellState.Disabled;
     };
-
-    const ref = useForwardedRef(fwdRef, null);
-    const monthLabel =
-      Months[month.getUTCMonth()].long + ' ' + month.getUTCFullYear();
 
     const cellClickHandlerForDay = (day: Date) => () => {
       if (isInRange(day)) {
@@ -131,7 +164,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       if (isInRange(nextHighlight)) {
         // change month if nextHighlight is different than `month`
         if (month.getUTCMonth() !== nextHighlight.getUTCMonth()) {
-          onMonthChange(nextHighlight);
+          updateMonth(nextHighlight);
         }
 
         setHighlight(nextHighlight);
@@ -185,7 +218,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
           <DatePickerMenuHeader
             ref={headerRef}
             month={month}
-            onMonthChange={onMonthChange}
+            setMonth={updateMonth}
           />
         </div>
       </MenuWrapper>
