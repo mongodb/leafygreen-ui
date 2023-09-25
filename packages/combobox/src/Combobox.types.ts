@@ -1,9 +1,6 @@
 import { ComponentPropsWithoutRef, ReactElement, ReactNode } from 'react';
 
-import {
-  type ChipProps as LGChipProps,
-  TruncationLocation,
-} from '@leafygreen-ui/chip';
+import { type ChipProps, TruncationLocation } from '@leafygreen-ui/chip';
 import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
 import { PortalControlProps } from '@leafygreen-ui/popover';
 
@@ -130,14 +127,14 @@ export interface ComboboxMultiselectProps<M extends boolean> {
   overflow?: M extends true ? Overflow : undefined;
 }
 
-type ComboboxChipProps = Pick<
-  LGChipProps,
+type PartialChipProps = Pick<
+  ChipProps,
   'chipTruncationLocation' | 'chipCharacterLimit' | 'popoverZIndex'
 >;
 
 export type BaseComboboxProps = Omit<HTMLElementProps<'div'>, 'onChange'> &
   PortalControlProps &
-  ComboboxChipProps & {
+  PartialChipProps & {
     /**
      * Defines the Combobox Options by passing children. Must be `ComboboxOption` or `ComboboxGroup`
      */
@@ -340,7 +337,7 @@ export interface ComboboxGroupProps {
  * Combobox Chip
  */
 
-export interface ChipProps {
+export interface ComboboxChipProps {
   displayName: string;
   isFocused: boolean;
   onRemove: () => void;

@@ -11,7 +11,11 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { chipWrapperPaddingY, fontSize, lineHeight } from '../Chip/Chip.styles';
+import {
+  chipWrapperPaddingY,
+  fontSize,
+  lineHeight,
+} from '../ComboboxChip/ComboboxChip.styles';
 import {
   ComboboxSize,
   ComboboxSize as Size,

@@ -4,13 +4,23 @@ import { Chip as LGChip, Size, Variant } from '@leafygreen-ui/chip';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
 
-import { ChipProps, Overflow, TruncationLocation } from '../Combobox.types';
+import {
+  ComboboxChipProps,
+  Overflow,
+  TruncationLocation,
+} from '../Combobox.types';
 import { ComboboxContext } from '../ComboboxContext';
 
-import { chipSizeStyles } from './Chip.styles';
+import { chipSizeStyles } from './ComboboxChip.styles';
 
-export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
-  ({ displayName, isFocused, onRemove, onFocus }: ChipProps, forwardedRef) => {
+export const ComboboxChip = React.forwardRef<
+  HTMLSpanElement,
+  ComboboxChipProps
+>(
+  (
+    { displayName, isFocused, onRemove, onFocus }: ComboboxChipProps,
+    forwardedRef,
+  ) => {
     const {
       size,
       disabled,
@@ -79,4 +89,4 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
     );
   },
 );
-Chip.displayName = 'Chip';
+ComboboxChip.displayName = 'ComboboxChip';
