@@ -47,7 +47,7 @@ describe('packages/date-picker/calendar-cell', () => {
       </TestCellWrapper>,
     );
     const gridcell = queryByRole('gridcell');
-    userEvent.click(gridcell!);
+    userEvent.click(gridcell!, {}, { skipPointerEventsCheck: true });
     expect(clickHandler).toHaveBeenCalled();
   });
 
@@ -63,7 +63,29 @@ describe('packages/date-picker/calendar-cell', () => {
       </TestCellWrapper>,
     );
     const gridcell = queryByRole('gridcell');
-    userEvent.click(gridcell!);
+    userEvent.click(gridcell!, {}, { skipPointerEventsCheck: true });
     expect(clickHandler).not.toHaveBeenCalled();
+  });
+
+  test('is focusable when highlighted', () => {
+    const { queryByRole } = render(
+      <TestCellWrapper>
+        <CalendarCell aria-label="" isHighlighted />
+      </TestCellWrapper>,
+    );
+    const gridcell = queryByRole('gridcell');
+    userEvent.click(gridcell!, {}, { skipPointerEventsCheck: true });
+    expect(gridcell).toHaveFocus();
+  });
+
+  test('is not focusable when disabled', () => {
+    const { queryByRole } = render(
+      <TestCellWrapper>
+        <CalendarCell aria-label="" state={CalendarCellState.Disabled} />
+      </TestCellWrapper>,
+    );
+    const gridcell = queryByRole('gridcell');
+    userEvent.click(gridcell!, {}, { skipPointerEventsCheck: true });
+    expect(gridcell).not.toHaveFocus();
   });
 });

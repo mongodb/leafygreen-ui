@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { addDays, subDays } from 'date-fns';
+import { addDays } from 'date-fns';
 
 import { Month } from '../../constants';
 import {
@@ -119,7 +119,7 @@ describe('packages/date-picker/date-picker-menu', () => {
     });
 
     describe('Arrow Keys', () => {
-      test('left arrow decrements the day by 1', async () => {
+      test('left arrow moves focus to the previous day', async () => {
         const { calendarGrid } = renderDatePickerMenu({
           value: testValue,
         });
@@ -132,7 +132,7 @@ describe('packages/date-picker/date-picker-menu', () => {
         expect(prevDay).toHaveFocus();
       });
 
-      test('right arrow increments the day by 1', () => {
+      test('right arrow moves focus to the next day', () => {
         const { calendarGrid } = renderDatePickerMenu({
           value: testValue,
         });
@@ -144,7 +144,7 @@ describe('packages/date-picker/date-picker-menu', () => {
         expect(nextDay).toHaveFocus();
       });
 
-      test('up arrow decrements the week by 1', () => {
+      test('up arrow moves focus to the previous week', () => {
         const { calendarGrid } = renderDatePickerMenu({
           value: testValue,
         });
@@ -157,7 +157,7 @@ describe('packages/date-picker/date-picker-menu', () => {
         expect(prevWeek).toHaveFocus();
       });
 
-      test('down arrow decrements the week by 1', () => {
+      test('down arrow moves focus to the next week', () => {
         const { calendarGrid } = renderDatePickerMenu({
           value: testValue,
         });
@@ -171,56 +171,39 @@ describe('packages/date-picker/date-picker-menu', () => {
       });
 
       describe('when next day would be out of range', () => {
+        const props = {
+          value: testToday,
+        };
         test('left arrow does nothing', () => {
-          const { todayCell } = renderDatePickerMenu(
-            {
-              value: testToday,
-            },
-            {
-              min: subDays(testToday, 1),
-            },
-          );
+          const { todayCell } = renderDatePickerMenu(props, {
+            min: testToday,
+          });
           userEvent.tab();
           userEvent.keyboard('{arrowleft}');
           expect(todayCell).toHaveFocus();
         });
 
         test('right arrow does nothing', () => {
-          const { todayCell } = renderDatePickerMenu(
-            {
-              value: testToday,
-            },
-            {
-              max: addDays(testToday, 1),
-            },
-          );
+          const { todayCell } = renderDatePickerMenu(props, {
+            max: testToday,
+          });
           userEvent.tab();
           userEvent.keyboard('{arrowright}');
           expect(todayCell).toHaveFocus();
         });
 
         test('up arrow does nothing', () => {
-          const { todayCell } = renderDatePickerMenu(
-            {
-              value: testToday,
-            },
-            {
-              min: subDays(testToday, 7),
-            },
-          );
+          const { todayCell } = renderDatePickerMenu(props, {
+            min: addDays(testToday, -6),
+          });
           userEvent.tab();
           userEvent.keyboard('{arrowup}');
           expect(todayCell).toHaveFocus();
         });
         test('down arrow does nothing', () => {
-          const { todayCell } = renderDatePickerMenu(
-            {
-              value: testToday,
-            },
-            {
-              max: addDays(testToday, 7),
-            },
-          );
+          const { todayCell } = renderDatePickerMenu(props, {
+            max: addDays(testToday, 6),
+          });
           userEvent.tab();
           userEvent.keyboard('{arrowdown}');
           expect(todayCell).toHaveFocus();

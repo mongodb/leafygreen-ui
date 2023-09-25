@@ -78,6 +78,7 @@ export const calendarCellStateStyles: ThemedStateStyles = {
     [CalendarCellState.Disabled]: css`
       color: ${palette.gray.light1};
       cursor: not-allowed;
+      pointer-events: none;
     `,
     [CalendarCellState.Active]: _baseActiveCellStyles[Theme.Light],
     [CalendarCellState.Start]: cx(
@@ -116,6 +117,7 @@ export const calendarCellStateStyles: ThemedStateStyles = {
     [CalendarCellState.Disabled]: css`
       color: ${palette.gray.dark1};
       cursor: not-allowed;
+      pointer-events: none;
     `,
     [CalendarCellState.Active]: _baseActiveCellStyles[Theme.Dark],
     [CalendarCellState.Start]: cx(

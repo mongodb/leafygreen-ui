@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from 'react';
+import React, { FocusEventHandler, MouseEventHandler } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
@@ -52,6 +52,14 @@ export const CalendarCell = React.forwardRef<
       }
     };
 
+    const handleFocus: FocusEventHandler<HTMLTableCellElement> = e => {
+      // not checking `isHighlighted` since this event is triggered
+      // before the prop changes
+      if (state === CalendarCellState.Disabled) {
+        e.currentTarget.blur();
+      }
+    };
+
     return (
       <td
         ref={ref}
@@ -61,8 +69,6 @@ export const CalendarCell = React.forwardRef<
         aria-selected={isActive}
         aria-disabled={state === CalendarCellState.Disabled}
         tabIndex={isFocusable ? 0 : -1}
-        // @ts-expect-error https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/inert
-        inert={isFocusable}
         className={cx(
           calendarCellStyles,
           calendarCellStateStyles[theme][state],
@@ -74,6 +80,7 @@ export const CalendarCell = React.forwardRef<
           className,
         )}
         onClick={handleClick}
+        onFocus={handleFocus}
         {...rest}
       >
         <div className={cx(indicatorBaseStyles, indicatorClassName)}></div>

@@ -44,7 +44,8 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
     const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
     const headerRef = useRef<HTMLDivElement>(null);
     const calendarRef = useRef<HTMLTableElement>(null);
-    // TODO: useDynamicRefs may overflow if a user navigates to too many months.
+    // TODO:
+    // useDynamicRefs may overflow if a user navigates to too many months.
     // consider purging the refs map within the hook
     const cellRefs = useDynamicRefs<HTMLTableCellElement>();
     const { isInRange } = useDatePickerContext();
@@ -170,7 +171,6 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
               <CalendarCell
                 key={i}
                 ref={cellRefs(day.toISOString())}
-                // TODO: use a more friendly label
                 aria-label={getUTCDateString(day)}
                 isHighlighted={isSameUTCDay(day, highlight)}
                 isCurrent={isSameUTCDay(day, today)}

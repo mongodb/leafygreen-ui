@@ -196,7 +196,7 @@ describe('packages/date-picker', () => {
         });
         const { calendarCells } = openMenu();
         const cell1 = calendarCells?.[0];
-        userEvent.click(cell1);
+        userEvent.click(cell1, {}, { skipPointerEventsCheck: true });
         expect(cell1).toHaveAttribute('aria-disabled', 'true');
         expect(onChange).not.toHaveBeenCalled();
       });
