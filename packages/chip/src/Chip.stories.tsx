@@ -3,8 +3,9 @@ import { StoryFn } from '@storybook/react';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType, StoryType } from '@leafygreen-ui/lib';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
-import { Size, TruncationLocation, Variant } from './Chip/Chip.types';
+import { TruncationLocation, Variant } from './Chip/Chip.types';
 import { Chip } from '.';
 
 const meta: StoryMetaType<typeof Chip> = {
@@ -25,7 +26,7 @@ const meta: StoryMetaType<typeof Chip> = {
           TruncationLocation.None,
           TruncationLocation.Start,
         ],
-        size: [Size.Default, Size.Large],
+        baseFontSize: [BaseFontSize.Body1, BaseFontSize.Body2],
       },
       args: {},
       decorator: (Instance, context) => {
@@ -41,7 +42,7 @@ const meta: StoryMetaType<typeof Chip> = {
     label: 'Chip',
     onDismiss: () => {},
     chipTruncationLocation: TruncationLocation.None,
-    size: Size.Default,
+    baseFontSize: BaseFontSize.Body1,
     variant: Variant.Gray,
     chipCharacterLimit: 15,
     disabled: false,

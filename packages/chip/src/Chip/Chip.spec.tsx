@@ -265,7 +265,7 @@ describe('packages/chip', () => {
       <Chip
         label="chip"
         variant="blue"
-        size="large"
+        baseFontSize={13}
         disabled
         onDismiss={() => {}}
         popoverZIndex={1}

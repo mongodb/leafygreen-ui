@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 
-import { Chip as LGChip, Size, Variant } from '@leafygreen-ui/chip';
+import { BaseFontSize, Chip, Variant } from '@leafygreen-ui/chip';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
 
@@ -68,7 +68,7 @@ export const ComboboxChip = React.forwardRef<
     };
 
     return (
-      <LGChip
+      <Chip
         label={displayName}
         className={chipSizeStyles[size]}
         role="option"
@@ -77,7 +77,7 @@ export const ComboboxChip = React.forwardRef<
         onClick={handleChipClick}
         onKeyDown={handleKeyDown}
         onDismiss={handleButtonClick}
-        size={Size.Default}
+        baseFontSize={BaseFontSize.Body1}
         chipCharacterLimit={chipCharacterLimit}
         chipTruncationLocation={updatedChipTruncationLocation}
         popoverZIndex={popoverZIndex}

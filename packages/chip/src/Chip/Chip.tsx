@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { cx } from '@leafygreen-ui/emotion';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { DismissButton } from '../DismissButton';
 import { getTruncatedName } from '../utils/getTruncatedName';
@@ -21,7 +22,7 @@ import {
   chipWrapperSizeStyle,
   chipWrapperThemeStyle,
 } from './Chip.styles';
-import { ChipProps, Size, TruncationLocation, Variant } from './Chip.types';
+import { ChipProps, TruncationLocation, Variant } from './Chip.types';
 
 export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
   (
@@ -29,8 +30,8 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       chipTruncationLocation = TruncationLocation.None,
       chipCharacterLimit = 15,
       disabled = false,
-      size = Size.Default,
       variant = Variant.Blue,
+      baseFontSize = BaseFontSize.Body1,
       darkMode: darkModeProp,
       label,
       onDismiss,
@@ -68,7 +69,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
         className={cx(
           chipWrapperBaseStyle,
           chipWrapperThemeStyle(variant, theme),
-          chipWrapperSizeStyle(size),
+          chipWrapperSizeStyle(baseFontSize),
           {
             [cx(
               chipWrapperDisabledStyle[theme],
@@ -83,7 +84,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
           data-testid="chip-text"
           className={cx(
             chipTextStyles(variant, theme),
-            chipTextSizeStyle(size),
+            chipTextSizeStyle(baseFontSize),
             {
               [chipTextDismissSizeStyle]: !!onDismiss,
               [chipTextDisabledStyles[theme]]: disabled,
@@ -125,7 +126,7 @@ Chip.propTypes = {
   chipCharacterLimit: PropTypes.number,
   chipTruncationLocation: PropTypes.oneOf(Object.values(TruncationLocation)),
   popoverZIndex: PropTypes.number,
-  size: PropTypes.oneOf(Object.values(Size)),
+  baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
   variant: PropTypes.oneOf(Object.values(Variant)),
   onDismiss: PropTypes.func,
   dismissButtonAriaLabel: PropTypes.string,

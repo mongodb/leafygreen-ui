@@ -1,9 +1,13 @@
 import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { transitionDuration, typeScales } from '@leafygreen-ui/tokens';
+import {
+  BaseFontSize,
+  transitionDuration,
+  typeScales,
+} from '@leafygreen-ui/tokens';
 
-import { Size, Variant } from './Chip.types';
+import { Variant } from './Chip.types';
 
 export const chipInlineDefinitionClassName = createUniqueClassName(
   'chip-inline-definition',
@@ -13,28 +17,31 @@ export const chipTextClassName = createUniqueClassName('chip-text');
 /**
  * The line-height of the chip.
  */
-export const lineHeight: Record<Size, number> = {
-  [Size.Default]: 18,
-  [Size.Large]: 20,
+export const lineHeight: Record<BaseFontSize, number> = {
+  [BaseFontSize.Body1]: 18,
+  [BaseFontSize.Body2]: 20,
 };
 
 /**
  * The font-size of the chip.
  */
-export const fontSize: Record<Size, number> = {
-  [Size.Default]: typeScales.body1.fontSize,
-  [Size.Large]: typeScales.body2.fontSize,
+export const fontSize: Record<BaseFontSize, number> = {
+  [BaseFontSize.Body1]: typeScales.body1.fontSize,
+  [BaseFontSize.Body2]: typeScales.body2.fontSize,
 };
 
 /**
  * Padding on a chip (in px)
  */
-export const chipWrapperPadding: Record<Size, { x: number; y: number }> = {
-  [Size.Default]: {
+export const chipWrapperPadding: Record<
+  BaseFontSize,
+  { x: number; y: number }
+> = {
+  [BaseFontSize.Body1]: {
     y: 0,
     x: 6,
   },
-  [Size.Large]: {
+  [BaseFontSize.Body2]: {
     y: 2,
     x: 6,
   },
@@ -146,9 +153,9 @@ export const chipWrapperBaseStyle = css`
   border-radius: 4px;
 `;
 
-export const chipWrapperSizeStyle = (size: Size) => css`
-  font-size: ${fontSize[size]}px;
-  line-height: ${lineHeight[size]}px;
+export const chipWrapperSizeStyle = (baseFontSize: BaseFontSize) => css`
+  font-size: ${fontSize[baseFontSize]}px;
+  line-height: ${lineHeight[baseFontSize]}px;
 `;
 
 export const chipWrapperBaseDisabledStyles = css`
@@ -170,9 +177,9 @@ export const chipWrapperDisabledStyle: Record<Theme, string> = {
 /**
  * Chip text
  */
-export const chipTextSizeStyle = (size: Size) => css`
-  padding-inline: ${chipWrapperPadding[size].x}px;
-  padding-block: ${chipWrapperPadding[size].y}px;
+export const chipTextSizeStyle = (baseFontSize: BaseFontSize) => css`
+  padding-inline: ${chipWrapperPadding[baseFontSize].x}px;
+  padding-block: ${chipWrapperPadding[baseFontSize].y}px;
 `;
 
 export const chipTextDismissSizeStyle = css`

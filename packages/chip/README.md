@@ -30,7 +30,7 @@ or
 <Chip
   label="leafygreen"
   variant="blue"
-  size="large"
+  baseFontSize={13}
   disabled
   onDismiss={() => {}}
   popoverZIndex={1}
@@ -50,7 +50,7 @@ or
 | `chipTruncationLocation` | `'end'` \| `'middle'` \| `'none'` \| `'start'`                                       | Defines where the ellipses will appear in a Chip when the label length exceeds the `chipCharacterLimit`. If `none` is passed, the chip will not truncate. **Note**: If there is any truncation, the full label text will appear inside a tooltip on hover | `none`              |
 | `chipCharacterLimit`     | `number`                                                                             | Defined the character limit of a multiselect Chip before they start truncating. **Note**: the three ellipses dots are included in the character limit.                                                                                                    |                     |
 | `popoverZIndex`          | `number`                                                                             | Number that controls the z-index of the tooltip containing the full label text.                                                                                                                                                                           |                     |
-| `size`                   | `'default'` \| `'large'`                                                             | The size of the chip.                                                                                                                                                                                                                                     |                     |
+| `baseFontSize`           | `'13'` \| `'16'`                                                                     | Determines the base font-size of the chip.                                                                                                                                                                                                                |                     |
 | `variant`                | `'gray'` \| `'blue'` \| `'green'` \| `'purple'` \| `'red'` \| `'yellow'` \| `'blue'` | The color of the chip.                                                                                                                                                                                                                                    |                     |
 | `disabled`               | `boolean`                                                                            | Determines if the chip should be disabled.                                                                                                                                                                                                                | `false`             |
 | `onDismiss`              | `React.MouseEventHandler<HTMLButtonElement>`                                         | Callback when dismiss button is clicked. If set, a dismiss button will render.                                                                                                                                                                            |                     |

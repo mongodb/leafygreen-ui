@@ -4,8 +4,8 @@ export {
   chipTextClassName,
 } from './Chip.styles';
 export {
+  BaseFontSize,
   type ChipProps,
-  Size,
   TruncationLocation,
   Variant,
 } from './Chip.types';

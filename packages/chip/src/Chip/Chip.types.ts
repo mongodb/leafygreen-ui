@@ -1,4 +1,7 @@
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
+
+export { BaseFontSize };
 
 export const TruncationLocation = {
   Start: 'start',
@@ -8,12 +11,6 @@ export const TruncationLocation = {
 } as const;
 export type TruncationLocation =
   (typeof TruncationLocation)[keyof typeof TruncationLocation];
-
-export const Size = {
-  Default: 'default',
-  Large: 'large',
-} as const;
-export type Size = (typeof Size)[keyof typeof Size];
 
 export const Variant = {
   Gray: 'gray',
@@ -52,10 +49,11 @@ export interface ChipProps
   popoverZIndex?: number;
 
   /**
-   * The size of the chip
-   * @default 'default'
+   * Determines the base font-size of the component
+   *
+   * @default 13
    */
-  size?: Size;
+  baseFontSize?: BaseFontSize;
 
   /**
    * The color of the chip
