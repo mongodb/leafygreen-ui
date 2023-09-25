@@ -4,8 +4,8 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { fontWeights, spacing } from '@leafygreen-ui/tokens';
 
-import { fontSize, lineHeight } from '../ComboboxChip/ComboboxChip.styles';
 import { ComboboxSize } from '../Combobox.types';
+import { fontSize, lineHeight } from '../ComboboxChip/ComboboxChip.styles';
 import {
   getMenuItemHeight,
   menuItemPadding,

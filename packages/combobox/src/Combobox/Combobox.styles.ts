@@ -12,15 +12,15 @@ import {
 } from '@leafygreen-ui/tokens';
 
 import {
-  chipWrapperPaddingY,
-  fontSize,
-  lineHeight,
-} from '../ComboboxChip/ComboboxChip.styles';
-import {
   ComboboxSize,
   ComboboxSize as Size,
   Overflow,
 } from '../Combobox.types';
+import {
+  chipWrapperPaddingY,
+  fontSize,
+  lineHeight,
+} from '../ComboboxChip/ComboboxChip.styles';
 
 /**
  * Util to get the chip height
