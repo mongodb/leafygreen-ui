@@ -20,6 +20,9 @@ import {
 } from './ListMenu.styles';
 import { ListMenuProps } from './ListMenu.types';
 
+/**
+ * @internal
+ */
 const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
   function ListMenu(
     {

@@ -26,6 +26,9 @@ import {
 } from './MenuButton.styles';
 import { MenuButtonProps } from './MenuButton.types';
 
+/**
+ * @internal
+ */
 const MenuButton = React.forwardRef<HTMLElement, MenuButtonProps>(
   function MenuButton(
     {
