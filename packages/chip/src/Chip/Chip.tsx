@@ -28,7 +28,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
   (
     {
       chipTruncationLocation = TruncationLocation.None,
-      chipCharacterLimit = 15,
+      chipCharacterLimit,
       disabled = false,
       variant = Variant.Blue,
       baseFontSize = BaseFontSize.Body1,
@@ -44,18 +44,21 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
   ) => {
     const { darkMode, theme } = useDarkMode(darkModeProp);
 
+    /**
+     * Returns true if chipCharacterLimit is defined, the chipTruncationLocation isn't `none`, and the label is a valid string with a length that is greater than the chipCharacterLimit.
+     * @returns `boolean`
+     */
     const isTruncated =
-      !!chipCharacterLimit &&
-      !!chipTruncationLocation &&
+      Number.isInteger(chipCharacterLimit) &&
       chipTruncationLocation !== 'none' &&
       typeof label === 'string' &&
       !!label &&
-      (label as string).length > chipCharacterLimit;
+      (label as string).length > (chipCharacterLimit as number);
 
     const truncatedName = useMemo(
       () =>
         getTruncatedName(
-          chipCharacterLimit,
+          chipCharacterLimit as number,
           chipTruncationLocation,
           label as string,
         ),

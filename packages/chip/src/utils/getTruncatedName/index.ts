@@ -1,4 +1,4 @@
-import { TruncationLocation } from '../Chip';
+import { TruncationLocation } from '../../Chip';
 
 /**
  *
