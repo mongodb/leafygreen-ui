@@ -13,12 +13,12 @@ import { Month } from '../constants';
 import { renderDatePicker } from './DatePicker.testutils';
 import { DatePicker } from '.';
 
+const testToday = new Date(Date.UTC(2023, Month.December, 26));
+
 describe('packages/date-picker', () => {
   beforeEach(() => {
     // Set the current time to midnight UTC on 2023-12-26
-    jest
-      .useFakeTimers()
-      .setSystemTime(new Date(Date.UTC(2023, Month.December, 26)));
+    jest.useFakeTimers().setSystemTime(testToday);
   });
 
   describe('Rendering', () => {
@@ -407,6 +407,10 @@ describe('packages/date-picker', () => {
             calendarGrid,
           } = openMenu();
 
+          const highlightedCell = calendarGrid?.querySelector(
+            '[data-highlight="true"]',
+          );
+
           tabNTimes(n);
 
           switch (n) {
@@ -421,7 +425,7 @@ describe('packages/date-picker', () => {
               break;
 
             case 3:
-              expect(calendarGrid).toHaveFocus();
+              expect(highlightedCell).toHaveFocus();
               break;
             case 4:
               expect(leftChevron).toHaveFocus();
@@ -437,7 +441,7 @@ describe('packages/date-picker', () => {
               break;
             case 8:
               // Focus is trapped within the menu
-              expect(calendarGrid).toHaveFocus();
+              expect(highlightedCell).toHaveFocus();
               break;
           }
         });

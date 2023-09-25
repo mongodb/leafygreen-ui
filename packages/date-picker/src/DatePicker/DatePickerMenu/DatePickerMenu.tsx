@@ -1,6 +1,7 @@
 import React, {
   forwardRef,
   KeyboardEventHandler,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -27,8 +28,6 @@ import {
 import { DatePickerMenuProps } from './DatePickerMenu.types';
 import { DatePickerMenuHeader } from './DatePickerMenuHeader';
 
-const today = setToUTCMidnight(new Date(Date.now()));
-
 export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
   (
     {
@@ -41,6 +40,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
     }: DatePickerMenuProps,
     fwdRef,
   ) => {
+    const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
     const headerRef = useRef<HTMLDivElement>(null);
     const calendarRef = useRef<HTMLTableElement>(null);
     // TODO: useDynamicRefs may overflow if a user navigates to too many months.
@@ -78,14 +78,17 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
     > = e => {
       if (e.key === keyMap.Tab) {
         const currentFocus = document.activeElement;
-        const calendarElement = calendarRef.current;
-        const rightChevron = headerRef.current?.lastElementChild;
+        const highlightKey = highlight?.toISOString();
+        const highlightedCellElement = highlightKey
+          ? cellRefs(highlightKey)?.current
+          : undefined;
+        const rightChevronElement = headerRef.current?.lastElementChild;
 
-        if (!e.shiftKey && currentFocus === rightChevron) {
-          (calendarElement as HTMLElement)?.focus();
+        if (!e.shiftKey && currentFocus === rightChevronElement) {
+          (highlightedCellElement as HTMLElement)?.focus();
           e.preventDefault();
-        } else if (e.shiftKey && currentFocus === calendarElement) {
-          (rightChevron as HTMLElement)?.focus();
+        } else if (e.shiftKey && currentFocus === highlightedCellElement) {
+          (rightChevronElement as HTMLElement)?.focus();
           e.preventDefault();
         }
       }
@@ -122,9 +125,15 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
           break;
       }
 
-      // TODO - change month if nextHighlight is different than `month`
+      // change month if nextHighlight is different than `month`
+      if (month.getUTCMonth() !== nextHighlight.getUTCMonth()) {
+        onMonthChange(nextHighlight);
+      }
+
       setHighlight(nextHighlight);
-      cellRefs(nextHighlight.toISOString()).current?.focus();
+
+      const nextCellRef = cellRefs(nextHighlight.toISOString());
+      nextCellRef.current?.focus();
     };
 
     return (
@@ -151,7 +160,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
             className={menuCalendarGridStyles}
             onKeyDown={handleCalendarKeyDown}
             aria-label={monthLabel}
-            tabIndex={0}
+            // tabIndex={0}
           >
             {(day, i) => (
               <CalendarCell

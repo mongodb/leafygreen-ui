@@ -54,7 +54,7 @@ export const CalendarCell = React.forwardRef<
       <td
         ref={ref}
         role="gridcell"
-        data-highlighted={isHighlighted}
+        data-highlight={isHighlighted}
         aria-current={isCurrent}
         aria-selected={isActive}
         aria-disabled={state === CalendarCellState.Disabled}
