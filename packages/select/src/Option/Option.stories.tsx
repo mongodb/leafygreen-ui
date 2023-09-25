@@ -20,6 +20,7 @@ const meta: StoryMetaType<typeof InternalOption> = {
         darkMode: [false, true],
         selected: [false, true],
         disabled: [false, true],
+        description: [undefined, "I'm a description"],
       },
       args: {
         children: 'Option',
