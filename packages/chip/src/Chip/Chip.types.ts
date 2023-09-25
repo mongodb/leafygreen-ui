@@ -38,8 +38,8 @@ export interface ChipProps
   chipTruncationLocation?: TruncationLocation;
 
   /**
-   * Defined the character limit of a multiselect Chip before they start truncating.
-   * Note: the three ellipses dots are included in the character limit.
+   * Defines the character limit of a Chip before they start truncating.
+   * Note: the three ellipses dots are included in the character limit and the chip will only truncate if the chip length is greater than the `chipCharacterLimit`
    */
   chipCharacterLimit?: number;
 
