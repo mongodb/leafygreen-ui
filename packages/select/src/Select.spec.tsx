@@ -919,4 +919,51 @@ describe('packages/select', () => {
       });
     });
   });
+
+  describe('without Portal (usePortal="false")', () => {
+    test('menu opens', async () => {
+      const { getByRole, findByRole } = render(
+        <Select {...defaultProps} usePortal={false}>
+          <Option data-testid="option-apple">Apple</Option>
+          <Option data-testid="option-banana">Banana</Option>
+        </Select>,
+      );
+      const button = getByRole('button');
+      userEvent.click(button);
+
+      const listbox = await findByRole('listbox');
+
+      expect(listbox).toBeInTheDocument();
+    });
+
+    test('menu renders as a child of button', async () => {
+      const { getByRole, findByRole } = render(
+        <Select {...defaultProps} usePortal={false}>
+          <Option data-testid="option-apple">Apple</Option>
+          <Option data-testid="option-banana">Banana</Option>
+        </Select>,
+      );
+      const button = getByRole('button');
+      userEvent.click(button);
+      const listbox = await findByRole('listbox');
+
+      expect(button).toContainElement(listbox);
+    });
+
+    test('clicking an option fires onChange', async () => {
+      const onChange = jest.fn();
+      const { getByRole, findAllByRole } = render(
+        <Select {...defaultProps} usePortal={false} onChange={onChange}>
+          <Option data-testid="option-apple">Apple</Option>
+          <Option data-testid="option-banana">Banana</Option>
+        </Select>,
+      );
+      const button = getByRole('button');
+      userEvent.click(button);
+      const options = await findAllByRole('option');
+      const apple = options[0];
+      userEvent.click(apple);
+      expect(onChange).toHaveBeenCalled();
+    });
+  });
 });
