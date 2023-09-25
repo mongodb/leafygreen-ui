@@ -24,9 +24,6 @@ describe('packages/date-picker/calendar-cell', () => {
     expect(getByTestId('tr').firstChild).toEqual(gridcell);
   });
 
-  // TODO: need to pass in the Date object to the cell
-  test.todo('has appropriate `aria-label`');
-
   test('renders as aria-disabled', () => {
     const clickHandler = jest.fn();
     const { queryByRole } = render(

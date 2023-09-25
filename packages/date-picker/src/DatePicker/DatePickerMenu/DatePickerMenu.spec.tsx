@@ -65,6 +65,16 @@ describe('packages/date-picker/date-picker-menu', () => {
       expect(monthSelect).toHaveValue(Month.September.toString());
       expect(yearSelect).toHaveValue('2023');
     });
+
+    describe('rendered cells', () => {
+      test('have appropriate `aria-label`', () => {
+        const { calendarGrid } = renderDatePickerMenu();
+        const todayCell = calendarGrid.querySelector(
+          `[data-iso="${today.toISOString()}"]`,
+        );
+        expect(todayCell).toHaveAttribute('aria-label', 'Sun Sep 10 2023');
+      });
+    });
   });
 
   describe('Keyboard navigation', () => {

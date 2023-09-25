@@ -17,6 +17,7 @@ import { CalendarGrid } from '../../Calendar/CalendarGrid';
 import { MenuWrapper } from '../../Calendar/MenuWrapper';
 import { Months } from '../../constants';
 import { useDatePickerContext } from '../../DatePickerContext';
+import { getUTCDateString } from '../../utils/getUTCDateString';
 import { isSameUTCDay } from '../../utils/isSameUTCDay';
 import { setToUTCMidnight } from '../../utils/setToUTCMidnight';
 
@@ -167,7 +168,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
                 key={i}
                 ref={cellRefs(day.toISOString())}
                 // TODO: use a more friendly label
-                aria-label={day.toISOString()}
+                aria-label={getUTCDateString(day)}
                 isHighlighted={isSameUTCDay(day, highlight)}
                 isCurrent={isSameUTCDay(day, today)}
                 state={getCellState(day)}
