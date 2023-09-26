@@ -248,14 +248,24 @@ describe('packages/chip', () => {
   describe('dismiss button with truncated text', () => {
     test('renders when onDismiss is passed', () => {
       const onDismiss = jest.fn();
-      const { queryByTestId } = renderChip({ onDismiss, label: longLabel });
+      const { queryByTestId } = renderChip({
+        onDismiss,
+        label: longLabel,
+        chipTruncationLocation: 'end',
+        chipCharacterLimit: 15,
+      });
       const button = queryByTestId('chip-dismiss-button');
       expect(button).toBeInTheDocument();
     });
 
     test('fires onDismiss callback', () => {
       const onDismiss = jest.fn();
-      const { queryByTestId } = renderChip({ onDismiss, label: longLabel });
+      const { queryByTestId } = renderChip({
+        onDismiss,
+        label: longLabel,
+        chipTruncationLocation: 'end',
+        chipCharacterLimit: 15,
+      });
       const button = queryByTestId('chip-dismiss-button');
       userEvent.click(button!);
       expect(onDismiss).toHaveBeenCalledTimes(1);
@@ -263,7 +273,12 @@ describe('packages/chip', () => {
 
     test('renders with default aria-label', () => {
       const onDismiss = jest.fn();
-      const { queryByTestId } = renderChip({ onDismiss, label: longLabel });
+      const { queryByTestId } = renderChip({
+        onDismiss,
+        label: longLabel,
+        chipTruncationLocation: 'end',
+        chipCharacterLimit: 15,
+      });
       const button = queryByTestId('chip-dismiss-button');
       expect(button?.getAttribute('aria-label')).toBe(
         'Deselect crush crush crush',
@@ -276,6 +291,8 @@ describe('packages/chip', () => {
         label: longLabel,
         onDismiss,
         dismissButtonAriaLabel: 'new aria label',
+        chipTruncationLocation: 'end',
+        chipCharacterLimit: 15,
       });
       const button = queryByTestId('chip-dismiss-button');
       expect(button?.getAttribute('aria-label')).toBe('new aria label');
