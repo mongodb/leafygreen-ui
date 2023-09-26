@@ -18,6 +18,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       setValue,
       onClick,
       segmentRefs,
+      onKeyDown,
       onSegmentChange,
       ...rest
     }: DatePickerInputProps,
@@ -31,7 +32,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
 
     const handleInputClick = onClick;
 
-    const handleKeyDown: KeyboardEventHandler = e => {
+    const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
       const { target: _target, key } = e;
       const target = _target as HTMLElement;
       // if target is not a segment, do nothing
@@ -41,8 +42,6 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
 
       const isInputEmpty = isZeroLike(target.value);
       const cursorPosition = target.selectionEnd;
-
-      // console.log({ value: target.value, key, isInputEmpty, cursorPosition });
 
       switch (key) {
         case keyMap.ArrowLeft: {
@@ -104,6 +103,9 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
         default:
           break;
       }
+
+      // call any handler that was passed in
+      onKeyDown?.(e);
     };
 
     return (

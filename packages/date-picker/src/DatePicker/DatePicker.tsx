@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 
@@ -33,6 +33,16 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       onChangeProp,
       initialProp,
     );
+
+    // useEffect(() => {
+    //   const logActiveElement = () => {
+    //     console.log(document.activeElement);
+    //   };
+
+    //   document.addEventListener('focusin', logActiveElement);
+
+    //   return () => document.removeEventListener('focusin', logActiveElement);
+    // }, []);
 
     return (
       <DatePickerProvider

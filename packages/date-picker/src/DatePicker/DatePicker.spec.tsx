@@ -538,6 +538,7 @@ describe('packages/date-picker', () => {
        * Since arrow key behavior changes based on whether the input or menu is focused,
        * many of these tests exist in the "DatePickerInput" and "DatePickerMenu" components
        */
+      test.todo('Basic arrow key tests');
     });
 
     describe('Typing', () => {
