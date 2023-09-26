@@ -3,7 +3,7 @@ import { useControlledValue } from '../../hooks/useControlledValue';
 import { DateType } from '../../types';
 import { DatePickerProps } from '../DatePicker.types';
 
-export interface DatePickerContentsProps
+export interface DatePickerComponentProps
   extends Omit<
     DatePickerProps,
     (typeof contextPropNames)[number] | 'onChange'

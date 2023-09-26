@@ -16,14 +16,14 @@ import { DatePickerInput, DatePickerInputProps } from '../DatePickerInput';
 import { DatePickerMenu, DatePickerMenuProps } from '../DatePickerMenu';
 import { focusRelevantSegment } from '../utils/focusRelevantSegment';
 
-import { DatePickerContentsProps } from './DatePickerContents.types';
+import { DatePickerComponentProps } from './DatePickerComponent.types';
 
-export const DatePickerContents = forwardRef<
+export const DatePickerComponent = forwardRef<
   HTMLDivElement,
-  DatePickerContentsProps
+  DatePickerComponentProps
 >(
   (
-    { value, setValue, handleValidation, ...rest }: DatePickerContentsProps,
+    { value, setValue, handleValidation, ...rest }: DatePickerComponentProps,
     fwdRef,
   ) => {
     const { isOpen, setOpen, formatParts, menuId } = useDatePickerContext();
@@ -120,4 +120,4 @@ export const DatePickerContents = forwardRef<
   },
 );
 
-DatePickerContents.displayName = 'DatePickerContents';
+DatePickerComponent.displayName = 'DatePickerContents';

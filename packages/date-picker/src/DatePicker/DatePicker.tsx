@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 
@@ -8,7 +8,7 @@ import { useControlledValue } from '../hooks/useControlledValue';
 import { pickAndOmit } from '../utils/pickAndOmit';
 
 import { DatePickerProps } from './DatePicker.types';
-import { DatePickerContents } from './DatePickerContents';
+import { DatePickerComponent } from './DatePickerComponent';
 
 /**
  * LeafyGreen Date Picker component
@@ -53,7 +53,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
           menuId,
         }}
       >
-        <DatePickerContents
+        <DatePickerComponent
           ref={fwdRef}
           value={value}
           setValue={setValue}
