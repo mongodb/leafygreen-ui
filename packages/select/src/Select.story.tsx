@@ -3,6 +3,7 @@ import { StoryFn } from '@storybook/react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
@@ -30,6 +31,13 @@ const meta: StoryMetaType<typeof Select> = {
         className: css`
           width: 256px;
         `,
+      },
+      decorator: (Instance, context) => {
+        return (
+          <LeafyGreenProvider darkMode={context?.args.darkMode}>
+            <Instance glyph={context?.args.glyph} />
+          </LeafyGreenProvider>
+        );
       },
     },
   },
