@@ -11,7 +11,7 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { ComboboxSize, Overflow } from '../Combobox.types';
+import { ComboboxSize as Size, Overflow } from '../Combobox.types';
 import {
   chipWrapperPaddingY,
   fontSize,
@@ -23,7 +23,7 @@ import {
  * `lineHeight + (2 * paddingY)`
  */
 // Rename the variable defined in chip styles
-const inputHeight = (size: ComboboxSize) => {
+const inputHeight = (size: Size) => {
   return lineHeight[size] + 2 * chipWrapperPaddingY[size];
 };
 
@@ -33,18 +33,18 @@ const flexGap = 4;
 /**
  * The min-height of the combobox.
  */
-export const wrapperHeight: Record<ComboboxSize, number> = {
-  [ComboboxSize.XSmall]: 22,
-  [ComboboxSize.Small]: 28,
-  [ComboboxSize.Default]: 36,
-  [ComboboxSize.Large]: 48,
+export const wrapperHeight: Record<Size, number> = {
+  [Size.XSmall]: 22,
+  [Size.Small]: 28,
+  [Size.Default]: 36,
+  [Size.Large]: 48,
 };
 
 /**
  * Util that calculates the Y padding.
  * `(wrapperHeight - inputHeight(- (borderTop + borderBottom)) / 2`
  */
-const getYPadding = (size: ComboboxSize) => {
+const getYPadding = (size: Size) => {
   return (wrapperHeight[size] - inputHeight(size) - 2) / 2;
 };
 
@@ -53,7 +53,7 @@ const getYPadding = (size: ComboboxSize) => {
  * (wrapperHeight - inputHeight(- (borderTop + borderBottom)) / 2
  */
 export const comboboxPadding: Record<
-  ComboboxSize,
+  Size,
   {
     y: number;
     xLeftWithChip: number;
@@ -61,26 +61,26 @@ export const comboboxPadding: Record<
     xRight: number;
   }
 > = {
-  [ComboboxSize.XSmall]: {
-    y: getYPadding(ComboboxSize.XSmall),
+  [Size.XSmall]: {
+    y: getYPadding(Size.XSmall),
     xLeftWithChip: 1,
     xLeftWithoutChip: 10,
     xRight: 4,
   },
-  [ComboboxSize.Small]: {
-    y: getYPadding(ComboboxSize.Small),
+  [Size.Small]: {
+    y: getYPadding(Size.Small),
     xLeftWithChip: 4,
     xLeftWithoutChip: 10,
     xRight: 8,
   },
-  [ComboboxSize.Default]: {
-    y: getYPadding(ComboboxSize.Default),
+  [Size.Default]: {
+    y: getYPadding(Size.Default),
     xLeftWithChip: 6,
     xLeftWithoutChip: 12,
     xRight: 12,
   },
-  [ComboboxSize.Large]: {
-    y: getYPadding(ComboboxSize.Large),
+  [Size.Large]: {
+    y: getYPadding(Size.Large),
     xLeftWithChip: spacing[2] - 1,
     xLeftWithoutChip: spacing[2] - 1,
     xRight: spacing[2] - 1,
@@ -95,7 +95,7 @@ export const caretIconSize = spacing[3];
 
 export const chipClassName = createUniqueClassName('combobox-chip');
 
-export const comboboxParentStyle = (size: ComboboxSize): string => {
+export const comboboxParentStyle = (size: Size): string => {
   return css`
     font-family: ${fontFamilies.default};
     width: 100%;
@@ -149,8 +149,8 @@ export const comboboxThemeStyles: Record<Theme, string> = {
   `,
 };
 
-export const comboboxSizeStyles = (
-  size: ComboboxSize,
+export const SizeStyles = (
+  size: Size,
   isMultiselectWithSelections: boolean,
 ) => css`
   padding-top: ${comboboxPadding[size].y}px;
@@ -205,17 +205,17 @@ export const iconsWrapperBaseStyles = css`
   align-items: center;
 `;
 
-export const iconsWrapperSizeStyles: Record<ComboboxSize, string> = {
-  [ComboboxSize.XSmall]: css`
+export const iconsWrapperSizeStyles: Record<Size, string> = {
+  [Size.XSmall]: css`
     gap: ${spacing[1]}px;
   `,
-  [ComboboxSize.Small]: css`
+  [Size.Small]: css`
     gap: ${spacing[2]}px;
   `,
-  [ComboboxSize.Default]: css`
+  [Size.Default]: css`
     gap: ${spacing[2]}px;
   `,
-  [ComboboxSize.Large]: css`
+  [Size.Large]: css`
     gap: ${spacing[2]}px;
   `,
 };
@@ -225,7 +225,7 @@ export const inputWrapperStyle = ({
   size,
 }: {
   overflow: Overflow;
-  size: ComboboxSize;
+  size: Size;
 }) => {
   const baseWrapperStyle = css`
     flex-grow: 1;
@@ -329,7 +329,7 @@ export const inputElementDisabledThemeStyle: Record<Theme, string> = {
   `,
 };
 
-export const inputElementSizeStyle = (size: ComboboxSize) => css`
+export const inputElementSizeStyle = (size: Size) => css`
   height: ${inputHeight(size)}px;
   font-size: ${fontSize[size]}px;
   line-height: ${lineHeight[size]}px;
@@ -347,7 +347,7 @@ export const inputElementTransitionStyles = (isOpen: boolean) => css`
 // Previously defined in inputWrapperStyle
 /** Should only be applied to a multiselect */
 export const multiselectInputElementStyle = (
-  size: ComboboxSize,
+  size: Size,
   inputValue?: string,
 ) => {
   const inputLength = inputValue?.length ?? 0;
@@ -377,7 +377,7 @@ export const errorMessageThemeStyle: Record<Theme, string> = {
   `,
 };
 
-export const errorMessageSizeStyle = (size: ComboboxSize) => css`
+export const errorMessageSizeStyle = (size: Size) => css`
   font-size: ${fontSize[size]}px;
   line-height: ${lineHeight[size]}px;
   padding-top: ${comboboxPadding[size].y}px;
