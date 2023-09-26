@@ -3,13 +3,12 @@ import React from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
-  Polymorphic,
-  PolymorphicAs,
-  usePolymorphic,
+  InferredPolymorphic,
+  useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
 import {
-  inputOptionActiveStyles,
+  getInputOptionActiveStyles,
   inputOptionDisabledStyles,
   inputOptionHoverStyles,
   inputOptionStyles,
@@ -17,12 +16,12 @@ import {
   inputOptionWedge,
   titleSelectionStyles,
 } from './InputOption.style';
-import { InputOptionProps } from './InputOption.types';
+import { InputOptionProps, Variant } from './InputOption.types';
 
-export const InputOption = Polymorphic<InputOptionProps>(
+export const InputOption = InferredPolymorphic<InputOptionProps>(
   (
     {
-      as = 'li' as PolymorphicAs,
+      as,
       children,
       disabled,
       highlighted,
@@ -31,12 +30,14 @@ export const InputOption = Polymorphic<InputOptionProps>(
       showWedge = true,
       isInteractive = true,
       className,
+      variant = 'blue',
       ...rest
     },
     ref,
   ) => {
-    const { Component } = usePolymorphic(as);
+    const { Component } = useInferredPolymorphic(as, rest, 'li');
     const { theme } = useDarkMode(darkModeProp);
+
     return (
       <Component
         ref={ref}
@@ -50,8 +51,10 @@ export const InputOption = Polymorphic<InputOptionProps>(
           {
             [inputOptionWedge]: showWedge,
             [inputOptionHoverStyles[theme]]: isInteractive,
-            [inputOptionActiveStyles[theme]]:
-              isInteractive && (checked || highlighted),
+            [getInputOptionActiveStyles(theme, variant)]:
+              isInteractive && checked,
+            [getInputOptionActiveStyles(theme, Variant.Blue)]:
+              isInteractive && highlighted,
             [inputOptionDisabledStyles[theme]]: disabled,
             [titleSelectionStyles]: checked,
           },

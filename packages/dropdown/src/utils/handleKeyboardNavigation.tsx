@@ -30,6 +30,7 @@ export const handleKeyboardNavigation = ({
   switch (event.key) {
     case keyMap.ArrowDown:
       event.preventDefault(); // Prevents page scrolling
+
       refToFocus =
         checkRefs[(checkRefs.indexOf(currentRef!) + 1) % checkRefs?.length];
 

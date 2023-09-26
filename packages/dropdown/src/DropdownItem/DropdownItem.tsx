@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
-import { PolymorphicAs } from '@leafygreen-ui/polymorphic';
+import {
+  PolymorphicAs,
+  useInferredPolymorphic,
+} from '@leafygreen-ui/polymorphic';
 
 import { DescendantContext, useDescendant } from '../DescendantContext';
 import { HighlightBehavior } from '../Dropdown/Dropdown.types';
@@ -15,7 +18,7 @@ export const DropdownItem = React.forwardRef(
     {
       children,
       disabled,
-      as = 'div',
+      as: asProp,
       active,
       className,
       description,
@@ -25,6 +28,7 @@ export const DropdownItem = React.forwardRef(
     }: DropdownItemProps<PolymorphicAs>,
     forwardRef,
   ) => {
+    const { Component: as } = useInferredPolymorphic(asProp, rest, 'div');
     const { index, ref } = useDescendant(DescendantContext, {
       disabled,
     });

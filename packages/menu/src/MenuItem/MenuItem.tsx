@@ -1,9 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import { DropdownItem } from '@leafygreen-ui/dropdown';
 import { cx } from '@leafygreen-ui/emotion';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { createUniqueClassName, getNodeTextContent } from '@leafygreen-ui/lib';
 import {
   InferredPolymorphic,
@@ -42,19 +40,24 @@ const menuItemContainerClassName = createUniqueClassName('menu-item-container');
 export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
   (
     {
-      // as,
-      // disabled = false,
-      // active = false,
-      // size = Size.Default,
-      // children,
-      // description,
-      glyph,
+      as,
+      disabled = false,
+      active = false,
+      size = Size.Default,
       className,
+      children,
+      description,
+      glyph,
       ...rest
     },
     ref: React.Ref<any>,
   ) => {
-    const { theme } = useDarkMode();
+    const { Component } = useInferredPolymorphic(as, rest, 'button');
+    const { theme } = useContext(MenuContext);
+    const hoverStyles = getHoverStyles(menuItemContainerClassName, theme);
+    const focusStyles = getFocusedStyles(menuItemContainerClassName, theme);
+
+    const isAnchor = Component === 'a';
 
     const updatedGlyph =
       glyph &&
@@ -72,121 +75,86 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
         ),
       });
 
-    return (
-      <DropdownItem
-        leftGlyph={updatedGlyph}
-        checked={active}
-        role="menuitemradio"
-        className={cx(menuItemContainerClassName, className)}
-        ref={ref}
-        {...rest}
-      >
-        {children}
-      </DropdownItem>
+    const baseProps = {
+      ref,
+      role: 'menuitem',
+      tabIndex: -1,
+      'aria-disabled': disabled,
+      'aria-current': active ?? undefined,
+      // only add a disabled prop if not an anchor
+      ...(!isAnchor && { disabled }),
+    };
+
+    const anchorProps = isAnchor
+      ? {
+          target: '_self',
+          rel: '',
+        }
+      : {};
+
+    const content = (
+      <>
+        {updatedGlyph}
+        <div className={textContainer}>
+          <div
+            // Add text as data attribute to ensure no layout shift on hover
+            data-text={getNodeTextContent(children)}
+            className={cx(
+              titleTextStyle,
+              hoverStyles.text,
+              {
+                [activeTitleTextStyle[theme]]: active,
+                [hoverStyles.activeText]: active,
+                [disabledTextStyle[theme]]: disabled,
+              },
+              focusStyles.textStyle,
+            )}
+          >
+            {children}
+          </div>
+          {description && (
+            <div
+              className={cx(
+                descriptionTextThemeStyle[theme],
+                {
+                  [activeDescriptionTextStyle[theme]]: active,
+                  [disabledTextStyle[theme]]: disabled,
+                  [linkDescriptionTextStyle]: isAnchor,
+                },
+                focusStyles.descriptionStyle,
+              )}
+            >
+              {description}
+            </div>
+          )}
+        </div>
+      </>
     );
-    // const { Component } = useInferredPolymorphic(as, rest, 'button');
-    // const { theme } = useContext(MenuContext);
-    // const hoverStyles = getHoverStyles(menuItemContainerClassName, theme);
-    // const focusStyles = getFocusedStyles(menuItemContainerClassName, theme);
 
-    // const isAnchor = Component === 'a';
-
-    // const updatedGlyph =
-    //   glyph &&
-    //   React.cloneElement(glyph, {
-    //     role: 'presentation',
-    //     className: cx(
-    //       mainIconBaseStyle,
-    //       mainIconThemeStyle[theme],
-    //       focusStyles.iconStyle,
-    //       {
-    //         [activeIconStyle[theme]]: active,
-    //         [disabledIconStyle[theme]]: disabled,
-    //       },
-    //       glyph.props?.className,
-    //     ),
-    //   });
-
-    // const baseProps = {
-    //   ref,
-    //   role: 'menuitem',
-    //   tabIndex: -1,
-    //   'aria-disabled': disabled,
-    //   'aria-current': active ?? undefined,
-    //   // only add a disabled prop if not an anchor
-    //   ...(!isAnchor && { disabled }),
-    // };
-
-    // const anchorProps = isAnchor
-    //   ? {
-    //       target: '_self',
-    //       rel: '',
-    //     }
-    //   : {};
-
-    // const content = (
-    //   <>
-    //     {updatedGlyph}
-    //     <div className={textContainer}>
-    //       <div
-    //         // Add text as data attribute to ensure no layout shift on hover
-    //         data-text={getNodeTextContent(children)}
-    //         className={cx(
-    //           titleTextStyle,
-    //           hoverStyles.text,
-    //           {
-    //             [activeTitleTextStyle[theme]]: active,
-    //             [hoverStyles.activeText]: active,
-    //             [disabledTextStyle[theme]]: disabled,
-    //           },
-    //           focusStyles.textStyle,
-    //         )}
-    //       >
-    //         {children}
-    //       </div>
-    //       {description && (
-    //         <div
-    //           className={cx(
-    //             descriptionTextThemeStyle[theme],
-    //             {
-    //               [activeDescriptionTextStyle[theme]]: active,
-    //               [disabledTextStyle[theme]]: disabled,
-    //               [linkDescriptionTextStyle]: isAnchor,
-    //             },
-    //             focusStyles.descriptionStyle,
-    //           )}
-    //         >
-    //           {description}
-    //         </div>
-    //       )}
-    //     </div>
-    //   </>
-    // );
-
-    // return (
-    //   <li role="none">
-    //     <Component
-    //       {...baseProps}
-    //       {...anchorProps}
-    //       {...rest}
-    //       className={cx(
-    //         menuItemContainerClassName,
-    //         menuItemContainerStyle,
-    //         menuItemContainerThemeStyle[theme],
-    //         menuItemHeight(size),
-    //         linkStyle,
-    //         {
-    //           [activeMenuItemContainerStyle[theme]]: active,
-    //           [disabledMenuItemContainerThemeStyle[theme]]: disabled,
-    //         },
-    //         focusedMenuItemContainerStyle[theme],
-    //         className,
-    //       )}
-    //     >
-    //       {content}
-    //     </Component>
-    //   </li>
-    // );
+    return (
+      <li role="none">
+        <Component
+          {...baseProps}
+          {...anchorProps}
+          {...rest}
+          className={cx(
+            menuItemContainerClassName,
+            menuItemContainerStyle,
+            menuItemContainerThemeStyle[theme],
+            menuItemHeight(size),
+            linkStyle,
+            {
+              [activeMenuItemContainerStyle[theme]]: active,
+              [disabledMenuItemContainerThemeStyle[theme]]: disabled,
+            },
+            focusedMenuItemContainerStyle[theme],
+            className,
+          )}
+        >
+          {content}
+        </Component>
+      </li>
+    );
   },
   'MenuItem',
 );

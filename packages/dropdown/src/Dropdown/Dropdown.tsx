@@ -24,7 +24,6 @@ import {
 } from './Dropdown.styles';
 import { DropdownProps, HighlightBehavior } from './Dropdown.types';
 
-// support green menu
 // sub menu
 // tests
 // size prop
@@ -101,7 +100,11 @@ export const Dropdown = React.forwardRef(
         setHighlighted(enabledRefs[0]);
         setFirstOpen(false);
       }
-    }, [firstOpen, enabledRefs, setHighlighted]);
+
+      if (highlightBehavior === HighlightBehavior.AriaSelected) {
+        triggerRef?.current?.focus();
+      }
+    }, [firstOpen, enabledRefs, setHighlighted, highlightBehavior, triggerRef]);
 
     // Updates highlightedRef when a DropdownGroup's IconButton is clicked to the appropriate item
     useIsomorphicLayoutEffect(() => {
@@ -151,6 +154,8 @@ export const Dropdown = React.forwardRef(
         : { spacing, usePortal }),
     };
 
+    // console.log({ open });
+
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <DescendantContext.Provider value={contextProps}>
@@ -181,6 +186,7 @@ export const Dropdown = React.forwardRef(
                     css`
                       max-width: ${maxWidth}px;
                     `,
+                    className,
                   )}
                   tabIndex={-1}
                   {...rest}

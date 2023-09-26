@@ -3,6 +3,15 @@ import { PropsWithChildren } from 'react';
 import { AriaLabelProps } from '@leafygreen-ui/a11y';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
+const Variant = {
+  Blue: 'blue',
+  Green: 'green',
+} as const;
+
+type Variant = (typeof Variant)[keyof typeof Variant];
+
+export { Variant };
+
 /**
  * TERMINOLOGY
  *
@@ -26,7 +35,7 @@ export interface BaseInputOptionProps {
   highlighted?: boolean;
 
   /**
-   * Whether the component is selected, regardless of keyboard navigation
+   * Whether the component is checked, regardless of keyboard navigation
    */
   checked?: boolean;
 
@@ -42,6 +51,8 @@ export interface BaseInputOptionProps {
    * @default true
    */
   isInteractive?: boolean;
+
+  variant?: Variant;
 }
 
 export type InputOptionProps = AriaLabelProps &

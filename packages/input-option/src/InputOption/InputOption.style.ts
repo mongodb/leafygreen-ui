@@ -8,6 +8,8 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
+import { Variant } from './InputOption.types';
+
 export const titleClassName = createUniqueClassName('input-option-title');
 export const descriptionClassName = createUniqueClassName(
   'input-option-description',
@@ -91,27 +93,32 @@ export const inputOptionWedge = css`
   }
 `;
 
-export const inputOptionActiveStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
+export const getInputOptionActiveStyles = (theme: Theme, variant: Variant) => {
+  const isBlue = variant === Variant.Blue;
+
+  if (theme === Theme.Light) {
+    return css`
+      outline: none;
+      background-color: ${isBlue ? palette.blue.light3 : palette.green.light3};
+      color: ${isBlue ? palette.blue.dark2 : palette.green.dark2};
+
+      &:before {
+        transform: scaleY(1) translateY(-50%);
+        background-color: ${isBlue ? palette.blue.base : palette.green.dark2};
+      }
+    `;
+  }
+
+  return css`
     outline: none;
-    background-color: ${palette.blue.light3};
-    color: ${palette.blue.dark2};
+    background-color: ${isBlue ? palette.blue.dark3 : palette.green.dark3};
+    color: ${isBlue ? palette.blue.light3 : palette.white};
 
     &:before {
       transform: scaleY(1) translateY(-50%);
-      background-color: ${palette.blue.base};
+      background-color: ${isBlue ? palette.blue.light1 : palette.green.base};
     }
-  `,
-  [Theme.Dark]: css`
-    outline: none;
-    background-color: ${palette.blue.dark3};
-    color: ${palette.blue.light3};
-
-    &:before {
-      transform: scaleY(1) translateY(-50%);
-      background-color: ${palette.blue.light1};
-    }
-  `,
+  `;
 };
 
 export const inputOptionDisabledStyles: Record<Theme, string> = {
