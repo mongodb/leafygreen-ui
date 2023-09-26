@@ -104,7 +104,7 @@ describe('packages/chip', () => {
         expect(chipText).toHaveTextContent(shortLabel);
       });
 
-      test('does not truncate text when chipCharacterLimit is 15 chipTruncationLocation is end', () => {
+      test('does not truncate text when chipCharacterLimit is 15 and chipTruncationLocation is end', () => {
         const { chipText } = renderChip({
           label: shortLabel,
           chipTruncationLocation: 'end',
@@ -113,7 +113,7 @@ describe('packages/chip', () => {
         expect(chipText).toHaveTextContent(shortLabel);
       });
 
-      test('does not truncate text when chipCharacterLimit is 15 chipTruncationLocation is start', () => {
+      test('does not truncate text when chipCharacterLimit is 15 and chipTruncationLocation is start', () => {
         const { chipText } = renderChip({
           label: shortLabel,
           chipTruncationLocation: 'start',
@@ -122,7 +122,7 @@ describe('packages/chip', () => {
         expect(chipText).toHaveTextContent(shortLabel);
       });
 
-      test('does not truncate text when chipCharacterLimit is 15 chipTruncationLocation is middle', () => {
+      test('does not truncate text when chipCharacterLimit is 15 and chipTruncationLocation is middle', () => {
         const { chipText } = renderChip({
           label: shortLabel,
           chipTruncationLocation: 'middle',
@@ -141,7 +141,7 @@ describe('packages/chip', () => {
         expect(chipText).toHaveTextContent(longLabel);
       });
 
-      test('renders correct label when chipCharacterLimit is 15 chipTruncationLocation is end', () => {
+      test('renders correct label when chipCharacterLimit is 15 and chipTruncationLocation is end', () => {
         const { chipText } = renderChip({
           label: longLabel,
           chipTruncationLocation: 'end',
@@ -150,7 +150,7 @@ describe('packages/chip', () => {
         expect(chipText).toHaveTextContent('crush crush…');
       });
 
-      test('renders correct label when chipCharacterLimit is 15 chipTruncationLocation is start', () => {
+      test('renders correct label when chipCharacterLimit is 15 and chipTruncationLocation is start', () => {
         const { chipText } = renderChip({
           label: longLabel,
           chipTruncationLocation: 'start',
@@ -159,7 +159,7 @@ describe('packages/chip', () => {
         expect(chipText).toHaveTextContent('…crush crush');
       });
 
-      test('renders correct label when chipCharacterLimit is 15 chipTruncationLocation is middle', () => {
+      test('renders correct label when chipCharacterLimit is 15 and chipTruncationLocation is middle', () => {
         const { chipText } = renderChip({
           label: longLabel,
           chipTruncationLocation: 'middle',
@@ -281,7 +281,7 @@ describe('packages/chip', () => {
       expect(button?.getAttribute('aria-label')).toBe('new aria label');
     });
 
-    test('renders correct label when chipCharacterLimit is 15 chipTruncationLocation is end', () => {
+    test('renders correct label when chipCharacterLimit is 15 and chipTruncationLocation is end', () => {
       const onDismiss = jest.fn();
       const { chipText } = renderChip({
         onDismiss,
