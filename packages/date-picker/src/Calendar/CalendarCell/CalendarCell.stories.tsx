@@ -20,9 +20,10 @@ const meta: StoryMetaType<typeof CalendarCell, DatePickerContextProps> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        state: Object.values(CalendarCellState),
-        isCurrent: [false, true],
         isHighlighted: [false, true],
+        'data-hover': [false, true],
+        isCurrent: [false, true],
+        state: Object.values(CalendarCellState),
       },
       decorator: (Instance, ctx) => (
         <LeafyGreenProvider darkMode={ctx?.args.darkMode}>

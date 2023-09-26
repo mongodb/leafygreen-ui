@@ -72,10 +72,10 @@ export const CalendarCell = React.forwardRef<
         className={cx(
           calendarCellStyles,
           calendarCellStateStyles[theme][state],
-          calendarCellHoverStyles(theme, state),
+          calendarCellHoverStyles[theme][state],
           {
             [calendarCellCurrentStyles[theme][state]]: isCurrent,
-            [calendarCellHighlightStyles[theme][state]]: isHighlighted,
+            [calendarCellHighlightStyles[theme]]: isFocusable,
           },
           className,
         )}

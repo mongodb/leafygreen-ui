@@ -5,13 +5,19 @@ import {
   fontFamilies,
   fontWeights,
   spacing,
+  transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
 
 import { CalendarCellState } from './CalendarCell.types';
 
 const CELL_SIZE = 28;
-export const indicatorClassName = createUniqueClassName('lg-calendar-cell');
+export const indicatorClassName = createUniqueClassName('calendar-cell');
+
+const calendarCellFocusRing: Record<Theme, string> = {
+  [Theme.Light]: `0 0 0 1px ${palette.white}, 0 0 0 3px ${palette.blue.light1}`,
+  [Theme.Dark]: `0 0 0 1px ${palette.black}, 0 0 0 3px ${palette.blue.light1}`,
+};
 
 export const calendarCellStyles = css`
   position: relative;
@@ -69,7 +75,9 @@ const _baseRangeEndStyles = css`
   }
 `;
 
-/** Base styles for each state */
+/**
+ * Base styles for each state
+ */
 export const calendarCellStateStyles: ThemedStateStyles = {
   [Theme.Light]: {
     [CalendarCellState.Default]: css`
@@ -103,6 +111,7 @@ export const calendarCellStateStyles: ThemedStateStyles = {
       _baseRangeStartStyles,
       _baseRangeEndStyles,
       css`
+        color: ${palette.black};
         &:before,
         &:after {
           background-color: ${palette.blue.light3};
@@ -142,6 +151,7 @@ export const calendarCellStateStyles: ThemedStateStyles = {
       _baseRangeStartStyles,
       _baseRangeEndStyles,
       css`
+        color: ${palette.blue.light3};
         &:before,
         &:after {
           background-color: ${palette.blue.dark3};
@@ -151,7 +161,9 @@ export const calendarCellStateStyles: ThemedStateStyles = {
   },
 };
 
-/** Styles for the current date */
+/**
+ * Styles for the current date
+ */
 export const calendarCellCurrentStyles: ThemedStateStyles = {
   [Theme.Light]: {
     [CalendarCellState.Default]: css`
@@ -191,79 +203,107 @@ export const calendarCellCurrentStyles: ThemedStateStyles = {
   },
 };
 
-const _activeHoverStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.black};
+/**
+ * Highlighted / Focus styles
+ */
+const highlightSelector = '&:focus-visible, &[data-highlight="true"]'; // using a data selector lets us easily test these states
 
-    & > .${indicatorClassName} {
-      background-color: ${palette.white};
-      outline: 1px solid ${palette.blue.dark1};
+export const calendarCellHighlightStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    ${highlightSelector} {
+      outline: none;
+
+      & > .${indicatorClassName} {
+        box-shadow: ${calendarCellFocusRing.light};
+        transition: ease-in-out ${transitionDuration.default}ms box-shadow;
+      }
     }
   `,
   [Theme.Dark]: css`
-    color: ${palette.white};
+    ${highlightSelector} {
+      outline: none;
 
-    & > .${indicatorClassName} {
-      background-color: ${palette.gray.dark3};
-      outline: 1px solid ${palette.blue.light1};
+      & > .${indicatorClassName} {
+        transition: ease-in-out ${transitionDuration.default}ms box-shadow;
+
+        box-shadow: ${calendarCellFocusRing.dark};
+      }
     }
   `,
 };
 
-/** Styles for a hovered date */
-export const calendarCellHighlightStyles: ThemedStateStyles = {
-  [Theme.Light]: {
-    [CalendarCellState.Default]: css`
+/**
+ * Hover Styles
+ */
+const hoverSelector = '&:hover, &[data-hover="true"]';
+const _defaultThemeHoverStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    ${hoverSelector} {
       color: ${palette.black};
 
       & > .${indicatorClassName} {
         background-color: ${palette.gray.light2};
       }
-    `,
+    }
+  `,
+  [Theme.Dark]: css`
+    ${hoverSelector} {
+      color: ${palette.white};
+
+      & > .${indicatorClassName} {
+        background-color: ${palette.gray.dark3};
+      }
+    }
+  `,
+};
+
+const _activeHoverStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    ${hoverSelector} {
+      & > .${indicatorClassName} {
+        background-color: ${palette.blue.dark2};
+      }
+    }
+  `,
+  [Theme.Dark]: css`
+    ${hoverSelector} {
+      & > .${indicatorClassName} {
+        background-color: ${palette.blue.light2};
+      }
+    }
+  `,
+};
+
+export const calendarCellHoverStyles: ThemedStateStyles = {
+  [Theme.Light]: {
+    [CalendarCellState.Default]: _defaultThemeHoverStyles[Theme.Light],
     [CalendarCellState.Active]: _activeHoverStyles[Theme.Light],
     [CalendarCellState.Start]: _activeHoverStyles[Theme.Light],
     [CalendarCellState.End]: _activeHoverStyles[Theme.Light],
-    [CalendarCellState.Range]: cx(
-      _activeHoverStyles[Theme.Light],
-      css`
+    [CalendarCellState.Range]: css`
+      ${hoverSelector} {
         & > .${indicatorClassName} {
-          background-color: ${palette.blue.light3};
+          background-color: ${palette.blue.light2};
         }
-      `,
-    ),
-    [CalendarCellState.Disabled]: css``, // No change
-  },
-  [Theme.Dark]: {
-    [CalendarCellState.Default]: css`
-      color: ${palette.gray.light2};
-
-      & > .${indicatorClassName} {
-        background-color: ${palette.gray.dark2};
       }
     `,
+    [CalendarCellState.Disabled]: css``,
+  },
+  [Theme.Dark]: {
+    [CalendarCellState.Default]: _defaultThemeHoverStyles[Theme.Dark],
     [CalendarCellState.Active]: _activeHoverStyles[Theme.Dark],
     [CalendarCellState.Start]: _activeHoverStyles[Theme.Dark],
     [CalendarCellState.End]: _activeHoverStyles[Theme.Dark],
-    [CalendarCellState.Range]: cx(
-      _activeHoverStyles[Theme.Dark],
-      css`
+    [CalendarCellState.Range]: css`
+      ${hoverSelector} {
         & > .${indicatorClassName} {
-          background-color: ${palette.blue.dark3};
+          background-color: ${palette.blue.dark2};
         }
-      `,
-    ),
-    [CalendarCellState.Disabled]: css``, // No change
+      }
+    `,
+    [CalendarCellState.Disabled]: css``,
   },
 };
-
-export const calendarCellHoverStyles = (
-  theme: Theme,
-  state: CalendarCellState,
-) => css`
-  &:hover {
-    ${calendarCellHighlightStyles[theme][state]}
-  }
-`;
 
 export const currentStyles: Record<Theme, string> = {
   [Theme.Light]: css`
