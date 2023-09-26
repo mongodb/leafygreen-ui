@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -10,9 +10,9 @@ import {
   InputOption,
   InputOptionContent,
 } from '@leafygreen-ui/input-option';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { fontWeights } from '@leafygreen-ui/tokens';
 
-import SelectContext from '../SelectContext';
 import { colorSets } from '../styleSets';
 
 import { InternalProps, OptionProps } from './Option.types';
@@ -38,7 +38,7 @@ export function InternalOption({
   description,
   ...rest
 }: InternalProps) {
-  const { theme } = useContext(SelectContext);
+  const { theme } = useDarkMode();
 
   const { option: colorSet } = colorSets[theme];
 

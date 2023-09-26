@@ -2,4 +2,6 @@
 '@leafygreen-ui/select': major
 ---
 
-Reorganizes internal file structure and refactors `Option` to use internal `InputOption` component.
+- Reorganizes internal file structure
+- Refactor `Option` to use internal `InputOption` component
+- Internally removes `theme` from `SelectContext` in favor of `LeafygreenProvider`. 

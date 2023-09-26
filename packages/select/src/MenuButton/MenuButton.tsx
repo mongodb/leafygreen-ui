@@ -4,6 +4,7 @@ import Button, { Size as ButtonSize, Variant } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Theme } from '@leafygreen-ui/lib';
 
 import { State } from '../Select/Select.types';
@@ -49,7 +50,8 @@ const MenuButton = React.forwardRef<HTMLElement, MenuButtonProps>(
     }: MenuButtonProps,
     forwardedRef,
   ) {
-    const { theme, open, size, disabled } = useContext(SelectContext);
+    const { theme } = useDarkMode();
+    const { open, size, disabled } = useContext(SelectContext);
 
     const ref = useForwardedRef(forwardedRef, null);
 

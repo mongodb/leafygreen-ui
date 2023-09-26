@@ -3,6 +3,7 @@ import isUndefined from 'lodash/isUndefined';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useAvailableSpace } from '@leafygreen-ui/hooks';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 
 import { DropdownWidthBasis } from '../Select/Select.types';
@@ -40,7 +41,8 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
     }: ListMenuProps,
     forwardedRef,
   ) {
-    const { theme, size, disabled, open } = useContext(SelectContext);
+    const { theme } = useDarkMode();
+    const { size, disabled, open } = useContext(SelectContext);
 
     const ref = useForwardedRef(forwardedRef, null);
 

@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import SelectContext from '../SelectContext';
 import { colorSets } from '../styleSets';
 
 import { optionGroupLabelStyle, optionGroupStyle } from './OptionGroup.styles';
@@ -16,7 +16,7 @@ export function InternalOptionGroup({
   children,
   ...rest
 }: InternalOptionProps) {
-  const { theme } = useContext(SelectContext);
+  const { theme } = useDarkMode();
   const colorSet = colorSets[theme].option;
 
   const groupId = useIdAllocator({ prefix: 'select-option-group' });
