@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 
 import { BaseFontSize, Chip, Variant } from '@leafygreen-ui/chip';
+import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
 
@@ -11,7 +12,7 @@ import {
 } from '../Combobox.types';
 import { ComboboxContext } from '../ComboboxContext';
 
-import { chipSizeStyles } from './ComboboxChip.styles';
+import { chipClassName, chipSizeStyles } from './ComboboxChip.styles';
 
 export const ComboboxChip = React.forwardRef<
   HTMLSpanElement,
@@ -72,7 +73,7 @@ export const ComboboxChip = React.forwardRef<
     return (
       <Chip
         label={displayName}
-        className={chipSizeStyles[size]}
+        className={cx(chipClassName, chipSizeStyles[size])}
         role="option"
         aria-selected={isFocused}
         data-testid="lg-combobox-chip"

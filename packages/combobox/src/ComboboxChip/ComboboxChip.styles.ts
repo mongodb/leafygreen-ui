@@ -1,8 +1,11 @@
 import { chipTextClassName } from '@leafygreen-ui/chip';
 import { css } from '@leafygreen-ui/emotion';
+import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { typeScales } from '@leafygreen-ui/tokens';
 
 import { ComboboxSize } from '../Combobox.types';
+
+export const chipClassName = createUniqueClassName('combobox-chip');
 
 /**
  * The line-height of the combobox.

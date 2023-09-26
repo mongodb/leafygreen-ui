@@ -1,7 +1,7 @@
 import { transparentize } from 'polished';
 
 import { css } from '@leafygreen-ui/emotion';
-import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
+import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   focusRing,
@@ -13,6 +13,7 @@ import {
 
 import { ComboboxSize as Size, Overflow } from '../Combobox.types';
 import {
+  chipClassName,
   chipWrapperPaddingY,
   fontSize,
   lineHeight,
@@ -92,8 +93,6 @@ export const clearButtonIconSize = 28;
 
 /** Width of the dropdown caret icon (in px) */
 export const caretIconSize = spacing[3];
-
-export const chipClassName = createUniqueClassName('combobox-chip');
 
 export const comboboxParentStyle = (size: Size): string => {
   return css`
