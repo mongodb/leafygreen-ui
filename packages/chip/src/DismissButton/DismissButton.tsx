@@ -37,12 +37,8 @@ export function DismissButton({
       className={cx(
         dismissButtonBaseStyle,
         dismissButtonThemeStyle(variant, theme),
-        {
-          [cx(
-            dismissButtonDisabledStyle[theme],
-            dismissButtonBaseDisabledStyles,
-          )]: disabled,
-        },
+        dismissButtonDisabledStyle[theme],
+        dismissButtonBaseDisabledStyles,
       )}
       onClick={onDismiss}
     >
