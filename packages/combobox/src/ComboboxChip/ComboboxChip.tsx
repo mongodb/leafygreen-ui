@@ -31,7 +31,9 @@ export const ComboboxChip = React.forwardRef<
     } = useContext(ComboboxContext);
 
     const updatedChipTruncationLocation =
-      overflow === Overflow.scrollX ? 'none' : chipTruncationLocation;
+      overflow === Overflow.scrollX
+        ? TruncationLocation.None
+        : chipTruncationLocation;
 
     const chipRef = useForwardedRef(forwardedRef, null);
     const buttonRef = chipRef.current?.querySelector('button');
