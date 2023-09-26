@@ -1,4 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
+import { descriptionClassName } from '@leafygreen-ui/input-option';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
 
@@ -26,6 +27,10 @@ export const optionStyle = css`
     border-radius: 0px 4px 4px 0px;
     opacity: 0;
     transition: all ${transitionDuration.default}ms ease-in-out;
+  }
+
+  .${descriptionClassName} {
+    line-height: 16px; // Hardcoding because it does not match a token
   }
 `;
 
