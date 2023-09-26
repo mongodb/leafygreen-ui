@@ -5,14 +5,6 @@ export type ReactEmpty = null | undefined | false | '';
 
 export interface InternalProps extends HTMLElementProps<'li', HTMLLIElement> {
   /**
-   * Content to appear inside of the Option.
-   */
-  children: React.ReactNode;
-  /**
-   * Adds a className to the outermost element.
-   */
-  className?: string;
-  /**
    * Icon to display next to the option text.
    */
   glyph?: LGGlyph.Element;

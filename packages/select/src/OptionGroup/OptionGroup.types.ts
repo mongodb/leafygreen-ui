@@ -7,14 +7,9 @@ export type ReactEmpty = null | undefined | false | '';
 export interface InternalOptionProps
   extends HTMLElementProps<'div', HTMLDivElement> {
   /**
-   * Adds a className to the outermost element.
-   */
-  className?: string;
-  /**
    * Text shown above the group's options.
    */
   label: string;
-  children: React.ReactNode;
 }
 
 export interface OptionGroupProps extends InternalOptionProps {

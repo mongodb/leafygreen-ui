@@ -1,8 +1,8 @@
 import { css } from '@leafygreen-ui/emotion';
-import { fontWeights } from '@leafygreen-ui/tokens';
+import { fontWeights, spacing } from '@leafygreen-ui/tokens';
 
 export const optionGroupStyle = css`
-  padding: 8px 0;
+  padding: ${spacing[2]}px 0;
 `;
 
 export const optionGroupLabelStyle = css`

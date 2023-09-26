@@ -1,7 +1,11 @@
 import { css } from '@leafygreen-ui/emotion';
 import { descriptionClassName } from '@leafygreen-ui/input-option';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
-import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
+import {
+  fontFamilies,
+  spacing,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
 
 export const OptionClassName = createUniqueClassName('option');
 
@@ -12,7 +16,7 @@ export const optionStyle = css`
   overflow-wrap: anywhere;
   transition: background-color ${transitionDuration.default}ms ease-in-out;
   position: relative;
-  padding: 8px 12px;
+  padding: ${spacing[2]}px 12px;
   line-height: inherit;
 
   &:before {
