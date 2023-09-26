@@ -44,6 +44,8 @@ describe('packages/chip', () => {
     test('does not have basic accessibility issues with truncated text tooltip', async () => {
       const { container, chipText } = renderChip({
         label: longLabel,
+        chipTruncationLocation: 'end',
+        chipCharacterLimit: 15,
       });
       const results = await axe(container);
       expect(results).toHaveNoViolations();
@@ -59,6 +61,8 @@ describe('packages/chip', () => {
     test('does not have basic accessibility issues with truncated text and dismiss button', async () => {
       const { container } = renderChip({
         label: longLabel,
+        chipTruncationLocation: 'end',
+        chipCharacterLimit: 15,
         onDismiss: () => {},
       });
       const results = await axe(container);
