@@ -149,7 +149,7 @@ export const comboboxThemeStyles: Record<Theme, string> = {
   `,
 };
 
-export const SizeStyles = (
+export const comboboxSizeStyles = (
   size: Size,
   isMultiselectWithSelections: boolean,
 ) => css`
