@@ -1,5 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   BaseFontSize,
@@ -15,6 +15,7 @@ import {
 
 import { InputState } from './DateFormField.types';
 
+export const iconButtonClassName = createUniqueClassName('calendar-button');
 export const baseWrapperStyles = css``;
 
 export const wrapperFontStyles: Record<BaseFontSize, string> = {
@@ -172,37 +173,52 @@ export const inputModeStyles: Record<Theme, string> = {
   `,
 };
 
-export const inputFocusStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
+const focusSelector = (styles: string) => css`
+  @supports selector(:has(a, b)) {
+    &:not(:disabled):focus-within:not(:has(.${iconButtonClassName}:focus)) {
+      ${styles}
+    }
+  }
+
+  /* Fallback for when "has" is unsupported */
+  @supports not selector(:has(a, b)) {
     &:not(:disabled):focus-within {
+      ${styles}
+    }
+  }
+`;
+
+export const inputFocusStyles: Record<Theme, string> = {
+  [Theme.Light]: focusSelector(`
+     {
       box-shadow: ${focusRing.light.input};
       border-color: ${palette.white};
     }
-  `,
-  [Theme.Dark]: css`
-    &:not(:disabled):focus-within {
+  `),
+  [Theme.Dark]: focusSelector(`
+     {
       box-shadow: ${focusRing.dark.input};
       border-color: ${palette.gray.dark4};
     }
-  `,
+  `),
 };
 
 export const inputSizeStyles: Record<Size, string> = {
   [Size.XSmall]: css`
     height: 22px;
-    padding-inline: 10px;
+    padding-inline: 10px 2px;
   `,
   [Size.Small]: css`
     height: 28px;
-    padding-inline: 10px;
+    padding-inline: 10px 2px;
   `,
   [Size.Default]: css`
     height: 36px;
-    padding-inline: 12px;
+    padding-inline: 12px 4px;
   `,
   [Size.Large]: css`
     height: 48px;
-    padding-inline: 16px;
+    padding-inline: 16px 8px;
   `,
 };
 
@@ -251,7 +267,3 @@ export const errorIconStyles: Record<Theme, string> = {
     color: ${palette.red.light1};
   `,
 };
-
-export const iconStyles = css`
-  color: ${palette.gray.base};
-`;

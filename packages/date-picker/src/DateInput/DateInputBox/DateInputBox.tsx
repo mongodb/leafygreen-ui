@@ -38,6 +38,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       className,
       labelledBy,
       segmentRefs,
+      onSegmentChange,
       ...rest
     }: DateInputBoxProps,
     fwdRef,
@@ -79,7 +80,9 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
      */
     const handleSegmentChange =
       (segment: DateSegment) => (newValue: string) => {
-        setSegment(segment, Number(newValue));
+        const newSegmentValue = Number(newValue);
+        setSegment(segment, newSegmentValue);
+        onSegmentChange?.(segment, newSegmentValue);
       };
 
     return (

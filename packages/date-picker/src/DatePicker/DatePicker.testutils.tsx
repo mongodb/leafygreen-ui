@@ -11,6 +11,7 @@ interface RenderDatePickerResult extends RenderResult {
   dayInput: HTMLInputElement;
   monthInput: HTMLInputElement;
   yearInput: HTMLInputElement;
+  calendarButton: HTMLButtonElement;
   getMenuElements: () => RenderMenuResult;
   openMenu: () => RenderMenuResult;
 }
@@ -41,6 +42,7 @@ export const renderDatePicker = (
   const dayInput = result.getByLabelText('day') as HTMLInputElement;
   const monthInput = result.getByLabelText('month') as HTMLInputElement;
   const yearInput = result.getByLabelText('year') as HTMLInputElement;
+  const calendarButton = result.getByRole('button') as HTMLButtonElement;
 
   /**
    * Returns relevant menu elements.
@@ -90,6 +92,7 @@ export const renderDatePicker = (
     dayInput,
     monthInput,
     yearInput,
+    calendarButton,
     getMenuElements,
     openMenu,
   };

@@ -13,7 +13,14 @@ import { DatePickerInputProps } from './DatePickerInput.types';
 
 export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
   (
-    { value, setValue, onClick, segmentRefs, ...rest }: DatePickerInputProps,
+    {
+      value,
+      setValue,
+      onClick,
+      segmentRefs,
+      onSegmentChange,
+      ...rest
+    }: DatePickerInputProps,
     fwdRef,
   ) => {
     const { label, timeZone, formatParts } = useDatePickerContext();
@@ -118,6 +125,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           id={inputId}
           labelledBy={labelId}
           segmentRefs={segmentRefs}
+          onSegmentChange={onSegmentChange}
         />
       </DateFormField>
     );

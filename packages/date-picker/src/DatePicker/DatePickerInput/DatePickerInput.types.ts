@@ -7,7 +7,7 @@ import { DateInputBoxProps } from '../../DateInput';
 import { DateSegment } from '../../hooks/useDateSegments/DateSegments.types';
 
 export interface DatePickerInputProps
-  extends Pick<DateInputBoxProps, 'value' | 'setValue'>,
+  extends Pick<DateInputBoxProps, 'value' | 'setValue' | 'onSegmentChange'>,
     HTMLElementProps<'div'> {
   /**
    * Click handler

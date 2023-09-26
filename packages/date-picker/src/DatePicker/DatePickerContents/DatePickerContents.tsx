@@ -1,7 +1,14 @@
-import React, { forwardRef, MouseEventHandler, useRef, useState } from 'react';
+import React, {
+  forwardRef,
+  KeyboardEventHandler,
+  MouseEventHandler,
+  useRef,
+  useState,
+} from 'react';
 import { isSameMonth, setMonth } from 'date-fns';
 
 import { useBackdropClick, useForwardedRef } from '@leafygreen-ui/hooks';
+import { keyMap } from '@leafygreen-ui/lib';
 
 import { useDatePickerContext } from '../../DatePickerContext';
 import { useSegmentRefs } from '../../hooks/useSegmentRefs';
@@ -20,6 +27,7 @@ export const DatePickerContents = forwardRef<
     fwdRef,
   ) => {
     const { isOpen, setOpen, formatParts, menuId } = useDatePickerContext();
+    const openMenu = () => setOpen(true);
     const closeMenu = () => setOpen(false);
 
     const segmentRefs = useSegmentRefs();
@@ -62,6 +70,29 @@ export const DatePickerContents = forwardRef<
       setOpen(false);
     };
 
+    const handleInputKeydown: KeyboardEventHandler = ({ key }) => {
+      switch (key) {
+        case keyMap.Enter:
+          openMenu();
+          break;
+        case keyMap.Escape:
+          closeMenu();
+          break;
+        default:
+          break;
+      }
+    };
+
+    const handleMenuKeydown: KeyboardEventHandler = ({ key }) => {
+      switch (key) {
+        case keyMap.Escape:
+          closeMenu();
+          break;
+        default:
+          break;
+      }
+    };
+
     return (
       <>
         <DatePickerInput
@@ -69,6 +100,7 @@ export const DatePickerContents = forwardRef<
           value={value}
           setValue={handleInputChange}
           onClick={handleInputClick}
+          onKeyDown={handleInputKeydown}
           segmentRefs={segmentRefs}
           {...rest}
         />
@@ -81,6 +113,7 @@ export const DatePickerContents = forwardRef<
           month={displayMonth}
           setMonth={setDisplayMonth}
           onCellClick={handleCellClick}
+          onKeyDown={handleMenuKeydown}
         />
       </>
     );

@@ -183,6 +183,15 @@ describe('packages/date-picker', () => {
         });
       });
 
+      describe('Clicking the Calendar button', () => {
+        test('opens the menu', () => {
+          const { calendarButton, getMenuElements } = renderDatePicker();
+          userEvent.click(calendarButton);
+          const { menuContainerEl } = getMenuElements();
+          expect(menuContainerEl).toBeInTheDocument();
+        });
+      });
+
       describe('Clicking a Calendar cell', () => {
         test('fires a change handler', () => {
           const onChange = jest.fn();
@@ -354,8 +363,194 @@ describe('packages/date-picker', () => {
       });
     });
 
+    describe('Keyboard navigation', () => {
+      describe('Tab', () => {
+        test('menu does not open on keyboard focus', () => {
+          const { getMenuElements } = renderDatePicker();
+          userEvent.tab();
+          const { menuContainerEl } = getMenuElements();
+          expect(menuContainerEl).not.toBeInTheDocument();
+        });
+
+        describe('Tab order', () => {
+          describe.each(range(0, 4))('when menu is closed', n => {
+            test(`Tab ${n} times`, () => {
+              const {
+                yearInput,
+                monthInput,
+                dayInput,
+                calendarButton,
+                inputContainer,
+              } = renderDatePicker();
+              tabNTimes(n);
+
+              switch (n) {
+                case 0:
+                  expect(
+                    inputContainer.contains(document.activeElement),
+                  ).toBeFalsy();
+                  break;
+                case 1:
+                  expect(yearInput).toHaveFocus();
+                  break;
+                case 2:
+                  expect(monthInput).toHaveFocus();
+                  break;
+                case 3:
+                  expect(dayInput).toHaveFocus();
+                  break;
+                case 4:
+                  expect(calendarButton).toHaveFocus();
+                  break;
+                case 5:
+                  expect(
+                    inputContainer.contains(document.activeElement),
+                  ).toBeFalsy();
+                  break;
+              }
+            });
+          });
+
+          describe.each(range(0, 9))('when the menu is open', n => {
+            test(`Tab ${n} times`, () => {
+              const {
+                yearInput,
+                monthInput,
+                dayInput,
+                calendarButton,
+                openMenu,
+              } = renderDatePicker();
+              const {
+                leftChevron,
+                monthSelect,
+                yearSelect,
+                rightChevron,
+                calendarGrid,
+              } = openMenu();
+
+              const highlightedCell = calendarGrid?.querySelector(
+                '[data-highlight="true"]',
+              );
+
+              tabNTimes(n);
+
+              switch (n) {
+                case 0:
+                  expect(yearInput).toHaveFocus();
+                  break;
+                case 1:
+                  expect(monthInput).toHaveFocus();
+                  break;
+                case 2:
+                  expect(dayInput).toHaveFocus();
+                  break;
+                case 3:
+                  expect(calendarButton).toHaveFocus();
+                  break;
+                case 4:
+                  expect(highlightedCell).toHaveFocus();
+                  break;
+                case 5:
+                  expect(leftChevron).toHaveFocus();
+                  break;
+                case 6:
+                  expect(monthSelect).toHaveFocus();
+                  break;
+                case 7:
+                  expect(yearSelect).toHaveFocus();
+                  break;
+                case 8:
+                  expect(rightChevron).toHaveFocus();
+                  break;
+                case 9:
+                  // Focus is trapped within the menu
+                  expect(highlightedCell).toHaveFocus();
+                  break;
+              }
+            });
+          });
+        });
+      });
+
+      describe('Enter key', () => {
+        test.skip('if menu is closed, opens the menu', () => {
+          const { getMenuElements } = renderDatePicker();
+          userEvent.tab();
+          userEvent.keyboard('{enter}');
+          const { menuContainerEl } = getMenuElements();
+          expect(menuContainerEl).toBeInTheDocument();
+        });
+
+        test('if month/year select is open, updates the displayed month', async () => {
+          const { openMenu, findAllByRole } = renderDatePicker();
+          const { monthSelect } = openMenu();
+          userEvent.type(monthSelect!, '{enter}');
+          const options = await findAllByRole('option');
+          expect(options.length).toBeGreaterThan(0);
+        });
+
+        test('if a cell is focused, fires a change handler', () => {
+          const onChange = jest.fn();
+          const { openMenu } = renderDatePicker({ onChange });
+          const { calendarCells } = openMenu();
+          const firstCell = calendarCells[0];
+          userEvent.type(firstCell, '{enter}');
+          expect(onChange).toHaveBeenCalled();
+        });
+
+        test('if a cell is focused, closes the menu', async () => {
+          const { openMenu } = renderDatePicker();
+          const { calendarCells, menuContainerEl } = openMenu();
+          const firstCell = calendarCells[0];
+          userEvent.type(firstCell, '{enter}');
+          await waitForElementToBeRemoved(menuContainerEl);
+        });
+      });
+
+      describe('Escape key', () => {
+        test('closes the menu', async () => {
+          const { openMenu } = renderDatePicker();
+          const { menuContainerEl } = openMenu();
+          userEvent.keyboard('{escape}');
+          await waitForElementToBeRemoved(menuContainerEl);
+          expect(menuContainerEl).not.toBeInTheDocument();
+        });
+
+        test('does not fire a change handler', () => {
+          const onChange = jest.fn();
+          const { openMenu } = renderDatePicker({ onChange });
+          openMenu();
+          userEvent.keyboard('{escape}');
+          expect(onChange).not.toHaveBeenCalled();
+        });
+
+        test('focus remains in the input element', () => {
+          const onChange = jest.fn();
+          const { openMenu, inputContainer } = renderDatePicker({ onChange });
+          openMenu();
+          userEvent.keyboard('{escape}');
+          expect(inputContainer.contains(document.activeElement)).toBeTruthy();
+        });
+      });
+
+      /**
+       * Arrow Keys:
+       * Since arrow key behavior changes based on whether the input or menu is focused,
+       * many of these tests exist in the "DatePickerInput" and "DatePickerMenu" components
+       */
+    });
+
     describe('Typing', () => {
       describe('Typing into the input', () => {
+        test.skip('opens the menu', () => {
+          const { yearInput, getMenuElements } = renderDatePicker();
+          userEvent.tab();
+          expect(yearInput).toHaveFocus();
+          userEvent.keyboard('2');
+          const { menuContainerEl } = getMenuElements();
+          expect(menuContainerEl).toBeInTheDocument();
+        });
+
         test('does not fire a change handler when the value is incomplete', () => {
           const onChange = jest.fn();
           const { yearInput } = renderDatePicker({
@@ -363,6 +558,13 @@ describe('packages/date-picker', () => {
           });
           userEvent.type(yearInput, '2023');
           expect(onChange).not.toHaveBeenCalled();
+        });
+
+        test('fires a segment change handler', () => {
+          const onSegmentChange = jest.fn();
+          const { yearInput } = renderDatePicker({ onSegmentChange });
+          userEvent.type(yearInput, '2023');
+          expect(onSegmentChange).toHaveBeenCalledWith('year', 2023);
         });
 
         test('fires a change handler when the value is a valid date', () => {
@@ -390,109 +592,6 @@ describe('packages/date-picker', () => {
 
         test.todo('focuses the next segment if the segment value is valid');
       });
-    });
-
-    describe('Keyboard navigation', () => {
-      describe('Tab order', () => {
-        describe('when menu is closed', () => {
-          test('tab 1: Year', () => {
-            const { yearInput } = renderDatePicker();
-            userEvent.tab();
-            expect(yearInput).toHaveFocus();
-          });
-
-          test('tab 2: Month', () => {
-            const { monthInput } = renderDatePicker();
-            tabNTimes(2);
-            expect(monthInput).toHaveFocus();
-          });
-
-          test('tab 3: Day', () => {
-            const { dayInput } = renderDatePicker();
-            tabNTimes(3);
-            expect(dayInput).toHaveFocus();
-          });
-
-          test('tab 4: next element in tab order', () => {
-            const { inputContainer } = renderDatePicker();
-            tabNTimes(4);
-            expect(inputContainer).not.toContainElement(
-              document.activeElement as HTMLElement,
-            );
-          });
-        });
-
-        describe.each(range(0, 9))('when the menu is open', n => {
-          test(`Tab ${n} times`, () => {
-            const { yearInput, monthInput, dayInput, openMenu } =
-              renderDatePicker();
-            const {
-              leftChevron,
-              monthSelect,
-              yearSelect,
-              rightChevron,
-              calendarGrid,
-            } = openMenu();
-
-            const highlightedCell = calendarGrid?.querySelector(
-              '[data-highlight="true"]',
-            );
-
-            tabNTimes(n);
-
-            switch (n) {
-              case 0:
-                expect(yearInput).toHaveFocus();
-                break;
-              case 1:
-                expect(monthInput).toHaveFocus();
-                break;
-              case 2:
-                expect(dayInput).toHaveFocus();
-                break;
-
-              case 3:
-                expect(highlightedCell).toHaveFocus();
-                break;
-              case 4:
-                expect(leftChevron).toHaveFocus();
-                break;
-              case 5:
-                expect(monthSelect).toHaveFocus();
-                break;
-              case 6:
-                expect(yearSelect).toHaveFocus();
-                break;
-              case 7:
-                expect(rightChevron).toHaveFocus();
-                break;
-              case 8:
-                // Focus is trapped within the menu
-                expect(highlightedCell).toHaveFocus();
-                break;
-            }
-          });
-        });
-      });
-
-      describe('Enter key', () => {
-        test.todo('if menu is closed, opens the menu');
-        test.todo('if month/year select is open, updates the displayed month');
-        test.todo('fires a change handler');
-        test.todo('closes the menu');
-      });
-
-      describe('Escape key', () => {
-        test.todo('closes the menu');
-        test.todo('does not fire a change handler');
-        test.todo('focus remains on the input element');
-      });
-
-      /**
-       * Arrow Keys:
-       * Since arrow key behavior changes based on whether the input or menu is focused,
-       * many of these tests exist in the "DatePickerInput" and "DatePickerMenu" components
-       */
     });
   });
 

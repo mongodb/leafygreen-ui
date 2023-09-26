@@ -1,3 +1,4 @@
+import { DateSegment, DateSegmentValue } from '../hooks/useDateSegments';
 import { BaseDatePickerProps, DateType } from '../types';
 
 export interface DatePickerProps extends BaseDatePickerProps {
@@ -8,7 +9,7 @@ export interface DatePickerProps extends BaseDatePickerProps {
   value?: DateType;
 
   /**
-   * A Callback fired when the user makes a value change.
+   * Callback fired when the user makes a value change.
    * Fired on click of a new date in the menu, or on keydown if the input contains a valid date
    *
    * Callback date argument will be a Date object in ISO-8601 format, and in UTC time.
@@ -25,4 +26,12 @@ export interface DatePickerProps extends BaseDatePickerProps {
    * Callback date argument will be a Date object in ISO 8601 format, and in UTC time.
    */
   handleValidation?: (value: Date) => void;
+
+  /**
+   * Callback fired when any segment changes, but not necessarily a full value
+   */
+  onSegmentChange?: (
+    segment: DateSegment,
+    segmentValue: DateSegmentValue,
+  ) => void;
 }

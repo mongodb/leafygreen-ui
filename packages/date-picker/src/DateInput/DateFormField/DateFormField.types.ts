@@ -19,5 +19,7 @@ export interface DateFormFieldProps extends HTMLElementProps<'div'> {
   descriptionId?: string;
   errorId?: string;
   /** Fired when the input wrapper is clicked (not any surrounding text) */
-  onInputClick?: MouseEventHandler;
+  onInputClick?: MouseEventHandler<HTMLDivElement>;
+  /** Fired then the calendar icon button is clicked */
+  onIconButtonClick?: MouseEventHandler<HTMLButtonElement>;
 }

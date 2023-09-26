@@ -136,6 +136,24 @@ describe('packages/date-input-box', () => {
       expect(handler).not.toHaveBeenCalled();
     });
 
+    test('typing into a segment fires a segment change handler', () => {
+      const onSegmentChange = jest.fn();
+
+      const { yearInput } = renderDateInputBox(
+        {
+          value: null,
+          onSegmentChange,
+        },
+        {
+          dateFormat: 'iso8601',
+          timeZone: 'UTC',
+        },
+      );
+      userEvent.type(yearInput, '1993');
+
+      expect(onSegmentChange).toHaveBeenCalledWith('year', 1993);
+    });
+
     test('typing a complete date fires the change handler', () => {
       const handler = jest.fn();
       const { dayInput, monthInput, yearInput } = renderDateInputBox(

@@ -2,6 +2,7 @@ import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
+import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Size } from '@leafygreen-ui/tokens';
 import {
@@ -17,7 +18,7 @@ import {
   baseWrapperStyles,
   childrenWrapperStyles,
   errorIconStyles,
-  iconStyles,
+  iconButtonClassName,
   inputBaseStyles,
   inputFocusStyles,
   inputModeStyles,
@@ -44,6 +45,7 @@ export const DateFormField = React.forwardRef<
       descriptionId,
       errorId,
       onInputClick,
+      onIconButtonClick,
       ...rest
     }: DateFormFieldProps,
     fwdRef,
@@ -87,7 +89,14 @@ export const DateFormField = React.forwardRef<
           {state === InputState.Error && (
             <Icon glyph="Warning" className={errorIconStyles[theme]} />
           )}
-          <Icon glyph="Calendar" className={iconStyles} />
+          <IconButton
+            aria-label="Open calendar menu"
+            className={iconButtonClassName}
+            onClick={onIconButtonClick}
+            type="button"
+          >
+            <Icon glyph="Calendar" />
+          </IconButton>
         </div>
         {state === InputState.Error && (
           <Error id={errorId}>{errorMessage}</Error>
