@@ -35,12 +35,9 @@ import { DatePickerMenuProps } from './DatePickerMenu.types';
 import { DatePickerMenuHeader } from './DatePickerMenuHeader';
 
 export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
-  (
-    { isOpen, value, onKeyDown, onCellClick, ...rest }: DatePickerMenuProps,
-    fwdRef,
-  ) => {
+  ({ value, onKeyDown, onCellClick, ...rest }: DatePickerMenuProps, fwdRef) => {
     const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
-    const { isInRange } = useDatePickerContext();
+    const { isInRange, isOpen } = useDatePickerContext();
 
     // TODO:
     // useDynamicRefs may overflow if a user navigates to too many months.

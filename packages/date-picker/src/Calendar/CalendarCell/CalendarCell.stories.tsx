@@ -25,14 +25,23 @@ const meta: StoryMetaType<typeof CalendarCell, DatePickerContextProps> = {
         isCurrent: [false, true],
         state: Object.values(CalendarCellState),
       },
-      decorator: (Instance, ctx) => (
-        <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
-          {/* @ts-expect-error - incomplete context value */}
-          <DatePickerProvider value={{ size: ctx?.args.size }}>
-            <Instance />
-          </DatePickerProvider>
-        </LeafyGreenProvider>
-      ),
+      decorator: (Instance, ctx) => {
+        const {
+          args: { darkMode, size, ...props },
+        } = ctx ?? { args: {} };
+
+        return (
+          <LeafyGreenProvider darkMode={darkMode}>
+            {/* @ts-expect-error - incomplete context value */}
+            <DatePickerProvider value={{ size }}>
+              <Instance {...props} />
+            </DatePickerProvider>
+          </LeafyGreenProvider>
+        );
+      },
+      args: {
+        'data-highlight': true,
+      },
     },
   },
   args: { children: '26' },

@@ -1,3 +1,6 @@
+import userEvent from '@testing-library/user-event';
+import { range } from 'lodash';
+
 /** Time zones used to test with */
 export const TimeZones = [
   'Pacific/Honolulu',
@@ -18,3 +21,10 @@ export const TimeZones = [
  * English-Maldives (week starts on Fri.)
  */
 export const Locales = ['iso8601', 'en-US', 'en-UK', 'de-DE', 'fa-AF', 'en-MV'];
+
+/** Presses the `tab` key `count` times */
+export const tabNTimes = (count: number) => {
+  for (const _ in range(count)) {
+    userEvent.tab();
+  }
+};

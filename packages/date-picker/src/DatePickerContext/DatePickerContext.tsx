@@ -10,10 +10,12 @@ import {
   getContextProps,
 } from './DatePickerContext.utils';
 
+/** Create the DatePickerContext */
 export const DatePickerContext = createContext<DatePickerContextProps>(
   defaultDatePickerContext,
 );
 
+/** The Provider component for DatePickerContext */
 export const DatePickerProvider = ({
   children,
   value,
@@ -26,4 +28,6 @@ export const DatePickerProvider = ({
     </DatePickerContext.Provider>
   );
 };
+
+/** A hook to access DatePickerContext value */
 export const useDatePickerContext = () => useContext(DatePickerContext);

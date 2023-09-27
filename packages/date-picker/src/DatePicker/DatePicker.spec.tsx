@@ -9,19 +9,13 @@ import userEvent from '@testing-library/user-event';
 import { range } from 'lodash';
 
 import { Month } from '../constants';
+import { tabNTimes } from '../testUtils';
 import { newUTC } from '../utils/newUTC';
 
 import { renderDatePicker } from './DatePicker.testutils';
 import { DatePicker } from '.';
 
 const testToday = new Date(Date.UTC(2023, Month.December, 26));
-
-/** Presses the `tab` key `count` times */
-const tabNTimes = (count: number) => {
-  for (const _ in range(count)) {
-    userEvent.tab();
-  }
-};
 
 describe('packages/date-picker', () => {
   beforeEach(() => {
@@ -449,17 +443,14 @@ describe('packages/date-picker', () => {
                 calendarButton,
                 openMenu,
               } = renderDatePicker();
+
               const {
                 leftChevron,
                 monthSelect,
                 yearSelect,
                 rightChevron,
-                calendarGrid,
+                todayCell,
               } = openMenu();
-
-              const highlightedCell = calendarGrid?.querySelector(
-                '[data-highlight="true"]',
-              );
 
               tabNTimes(n);
 
@@ -477,7 +468,7 @@ describe('packages/date-picker', () => {
                   expect(calendarButton).toHaveFocus();
                   break;
                 case 4:
-                  expect(highlightedCell).toHaveFocus();
+                  expect(todayCell).toHaveFocus();
                   break;
                 case 5:
                   expect(leftChevron).toHaveFocus();
@@ -493,7 +484,7 @@ describe('packages/date-picker', () => {
                   break;
                 case 9:
                   // Focus is trapped within the menu
-                  expect(highlightedCell).toHaveFocus();
+                  expect(todayCell).toHaveFocus();
                   break;
               }
             });

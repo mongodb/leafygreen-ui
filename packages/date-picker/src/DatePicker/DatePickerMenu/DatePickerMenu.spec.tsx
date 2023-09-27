@@ -22,16 +22,19 @@ const renderDatePickerMenu = (
   context?: Partial<DatePickerProviderProps>,
 ) => {
   const result = render(
-    <DatePickerProvider value={{ ...defaultDatePickerContext, ...context }}>
-      <DatePickerMenu isOpen value={null} onCellClick={() => {}} {...props} />,
+    <DatePickerProvider
+      value={{ ...defaultDatePickerContext, ...context, isOpen: true }}
+    >
+      <DatePickerMenu value={null} onCellClick={() => {}} {...props} />,
     </DatePickerProvider>,
   );
 
   const rerenderDatePickerMenu = (newProps?: Partial<DatePickerMenuProps>) =>
     result.rerender(
-      <DatePickerProvider value={{ ...defaultDatePickerContext, ...context }}>
+      <DatePickerProvider
+        value={{ ...defaultDatePickerContext, ...context, isOpen: true }}
+      >
         <DatePickerMenu
-          isOpen
           value={null}
           onCellClick={() => {}}
           {...({ ...props, ...newProps } as Partial<DatePickerMenuProps>)}

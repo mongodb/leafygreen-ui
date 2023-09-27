@@ -24,6 +24,7 @@ interface RenderMenuResult {
   yearSelect: HTMLButtonElement | null;
   calendarGrid: HTMLTableElement | null;
   calendarCells: Array<HTMLTableCellElement>;
+  todayCell: HTMLTableCellElement | null;
 }
 
 /**
@@ -68,11 +69,15 @@ export const renderDatePicker = (
     const yearSelect = result.queryByLabelText(
       'Select year',
     ) as HTMLButtonElement;
+    const todayCell = calendarGrid?.querySelector(
+      '[aria-current="true"]',
+    ) as HTMLTableCellElement;
 
     return {
       menuContainerEl,
       calendarGrid,
       calendarCells,
+      todayCell,
       leftChevron,
       rightChevron,
       monthSelect,
