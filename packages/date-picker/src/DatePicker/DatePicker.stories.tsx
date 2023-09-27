@@ -6,11 +6,13 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 
+import { Month } from '../constants';
 import {
   DatePickerContextProps,
   DatePickerProvider,
 } from '../DatePickerContext';
 import { Locales, TimeZones } from '../testUtils';
+import { newUTC } from '../utils/newUTC';
 
 import { DatePicker } from './DatePicker';
 
@@ -44,7 +46,7 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        value: [new Date('1993-12-26')],
+        value: [newUTC(2023, Month.December, 26)],
         dateFormat: ['iso8601', 'en-US', 'en-UK', 'de-DE'],
         timeZone: ['UTC', 'Europe/London', 'America/New_York', 'Asia/Seoul'],
         disabled: [false, true],
@@ -55,8 +57,8 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
   args: {
     dateFormat: 'en-US',
     label: 'Pick a date',
-    min: new Date('1996-10-14'),
-    max: new Date('2026-10-14'),
+    min: newUTC(1996, Month.October, 14),
+    max: newUTC(2026, Month.October, 14),
     size: Size.Default,
     timeZone: 'America/New_York',
   },
