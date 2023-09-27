@@ -11,10 +11,11 @@ import {
   DatePickerContextProps,
   DatePickerProvider,
 } from '../../DatePickerContext';
+import { newUTC } from '../../utils/newUTC';
 
 import { DateInputBox } from './DateInputBox';
 
-const testDate = new Date(Date.UTC(1993, Month.December, 26));
+const testDate = newUTC(1993, Month.December, 26);
 
 const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
   <LeafyGreenProvider darkMode={ctx?.args.darkMode}>

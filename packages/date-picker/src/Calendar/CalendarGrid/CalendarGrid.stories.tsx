@@ -16,6 +16,7 @@ import { isTodayTZ } from '../../utils/isTodayTZ';
 import { CalendarCell } from '../CalendarCell/CalendarCell';
 
 import { CalendarGrid } from './CalendarGrid';
+import { newUTC } from '../../utils/newUTC';
 
 const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
   <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
@@ -64,7 +65,7 @@ export default meta;
 
 export const Demo: StoryFn<typeof CalendarGrid> = ({ ...props }) => {
   const { timeZone } = useDatePickerContext();
-  const [month] = useState(new Date(Date.UTC(2023, Month.August, 1)));
+  const [month] = useState(newUTC(2023, Month.August, 1));
 
   const [hovered, setHovered] = useState<string | undefined>();
 
@@ -98,7 +99,7 @@ export const Generated: StoryFn<typeof CalendarGrid> = () => <></>;
 Generated.parameters = {
   generate: {
     args: {
-      month: new Date(Date.UTC(2023, Month.August, 1)),
+      month: newUTC(2023, Month.August, 1),
       children: (day: Date, i: number) => (
         <CalendarCell
           key={i}
