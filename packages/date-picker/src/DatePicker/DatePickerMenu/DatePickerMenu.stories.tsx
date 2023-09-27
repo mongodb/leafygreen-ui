@@ -8,6 +8,7 @@ import MockDate from 'mockdate';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 import { transitionDuration } from '@leafygreen-ui/tokens';
+import { InlineCode } from '@leafygreen-ui/typography';
 
 import { Month } from '../../constants';
 import {
@@ -112,16 +113,24 @@ export const WithValue: DatePickerMenuStory = {
     const props = omit(args, [...contextPropNames, 'isOpen']);
     const refEl = useRef<HTMLDivElement>(null);
     return (
-      <>
-        <code ref={refEl}>refEl</code>
+      <div style={{ minHeight: '50vh' }}>
+        <InlineCode ref={refEl}>refEl</InlineCode>
         <DatePickerMenu
           {...props}
           refEl={refEl}
           value={newUTC(2023, Month.September, 10)}
           onCellClick={() => {}}
         />
-      </>
+      </div>
     );
+  },
+};
+
+export const DarkMode: DatePickerMenuStory = {
+  ...WithValue,
+  args: {
+    // @ts-expect-error - DatePickerMenuStory does not include Context props
+    darkMode: true,
   },
 };
 

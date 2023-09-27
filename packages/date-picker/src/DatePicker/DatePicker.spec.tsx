@@ -347,7 +347,7 @@ describe('packages/date-picker', () => {
       });
     });
 
-    describe.skip('Changing the month', () => {
+    describe('Changing the month', () => {
       test.todo('is announced in an aria-live region');
 
       describe('updates the highlighted cell', () => {
@@ -363,8 +363,6 @@ describe('packages/date-picker', () => {
           const jan31Cell = calendarGrid?.querySelector(
             '[data-iso="2023-01-31T00:00:00.000Z"]',
           );
-          expect(jan31Cell).toHaveAttribute('data-highlight', 'true');
-          tabNTimes(3);
           expect(jan31Cell).toHaveFocus();
         });
         test('to the beginning of the month if we went forwards', async () => {
@@ -379,8 +377,6 @@ describe('packages/date-picker', () => {
           const dec1Cell = calendarGrid?.querySelector(
             '[data-iso="2023-12-01T00:00:00.000Z"]',
           );
-          expect(dec1Cell).toHaveAttribute('data-highlight', 'true');
-          tabNTimes(3);
           expect(dec1Cell).toHaveFocus();
         });
       });
@@ -493,6 +489,7 @@ describe('packages/date-picker', () => {
       });
 
       describe('Enter key', () => {
+        // TODO: TBD if this is the desired behavior
         test.skip('if menu is closed, opens the menu', () => {
           const { getMenuElements } = renderDatePicker();
           userEvent.tab();
@@ -504,7 +501,9 @@ describe('packages/date-picker', () => {
         test('if month/year select is open, updates the displayed month', async () => {
           const { openMenu, findAllByRole } = renderDatePicker();
           const { monthSelect } = openMenu();
-          userEvent.type(monthSelect!, '{enter}');
+          tabNTimes(6);
+          userEvent.keyboard('{enter}');
+          expect(monthSelect).toHaveFocus();
           const options = await findAllByRole('option');
           expect(options.length).toBeGreaterThan(0);
         });
@@ -512,18 +511,21 @@ describe('packages/date-picker', () => {
         test('if a cell is focused, fires a change handler', () => {
           const onChange = jest.fn();
           const { openMenu } = renderDatePicker({ onChange });
-          const { calendarCells } = openMenu();
-          const firstCell = calendarCells[0];
-          userEvent.type(firstCell, '{enter}');
+          const { todayCell } = openMenu();
+          tabNTimes(4);
+          expect(todayCell).toHaveFocus();
+          userEvent.type(todayCell!, '{enter}');
           expect(onChange).toHaveBeenCalled();
         });
 
         test('if a cell is focused, closes the menu', async () => {
           const { openMenu } = renderDatePicker();
-          const { calendarCells, menuContainerEl } = openMenu();
-          const firstCell = calendarCells[0];
-          userEvent.type(firstCell, '{enter}');
+          const { todayCell, menuContainerEl } = openMenu();
+          tabNTimes(4);
+          userEvent.keyboard('{enter}');
+          userEvent.type(todayCell!, '{enter}');
           await waitForElementToBeRemoved(menuContainerEl);
+          expect(menuContainerEl).not.toBeInTheDocument();
         });
       });
 

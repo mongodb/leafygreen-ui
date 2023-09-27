@@ -101,9 +101,6 @@ export const DatePickerComponent = forwardRef<
           id={menuId}
           refEl={formFieldRef}
           value={value}
-          isOpen={isOpen}
-          // month={displayMonth}
-          // setMonth={setDisplayMonth}
           onCellClick={handleCellClick}
           onKeyDown={handleMenuKeydown}
         />
