@@ -192,7 +192,8 @@ export const chipTextStyles = (variant: Variant, theme: Theme) => css`
   }
 
   .${chipInlineDefinitionClassName} {
-    &:focus-visible {
+    &:focus-visible,
+    &:focus {
       outline: none;
     }
   }
