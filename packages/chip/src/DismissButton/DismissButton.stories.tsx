@@ -17,14 +17,7 @@ const meta: StoryMetaType<typeof DismissButton> = {
         darkMode: [false, true],
         label: ['Chip'],
         disabled: [false, true],
-        variant: [
-          Variant.Gray,
-          Variant.Green,
-          Variant.Red,
-          Variant.Purple,
-          Variant.Yellow,
-          Variant.Blue,
-        ],
+        variant: Object.values(Variant),
       },
       args: {
         onDismiss: () => {},
