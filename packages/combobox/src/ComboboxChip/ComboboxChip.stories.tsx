@@ -4,11 +4,11 @@ import React from 'react';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 
-import { Chip } from './Chip';
+import { ComboboxChip } from './ComboboxChip';
 
-const meta: StoryMetaType<typeof Chip> = {
-  title: 'Components/Combobox/Chip',
-  component: Chip,
+const meta: StoryMetaType<typeof ComboboxChip> = {
+  title: 'Components/Combobox/ComboboxChip',
+  component: ComboboxChip,
   parameters: {
     default: null,
     generate: {
