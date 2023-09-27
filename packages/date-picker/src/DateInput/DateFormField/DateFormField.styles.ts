@@ -69,13 +69,13 @@ export const inputModeStyles: Record<Theme, string> = {
       -webkit-text-fill-color: ${palette.black};
       box-shadow: ${autofillShadowOverride(palette.white)};
 
-      &:not(:disabled):focus {
+      &:not([aria-disabled='true']):focus {
         box-shadow: ${autofillShadowOverride(palette.white)},
           ${focusRing.light.input};
         border-color: ${palette.white};
       }
 
-      &:not(:disabled):hover:not(:focus) {
+      &:not([aria-disabled='true']):hover:not(:focus) {
         box-shadow: ${autofillShadowOverride(palette.white)},
           ${hoverRing.light.gray};
       }
@@ -88,29 +88,8 @@ export const inputModeStyles: Record<Theme, string> = {
 
     &:hover,
     &:active {
-      &:not(:disabled):not(:focus) {
+      &:not([aria-disabled='true']):not(:focus) {
         box-shadow: ${hoverRing.light.gray};
-      }
-    }
-
-    &:disabled {
-      color: ${palette.gray.base};
-      background-color: ${palette.gray.light2};
-      border-color: ${palette.gray.light1};
-
-      &::placeholder {
-        color: inherit;
-      }
-
-      &:-webkit-autofill {
-        &,
-        &:hover,
-        &:focus {
-          appearance: none;
-          border: 1px solid ${palette.gray.base};
-          -webkit-text-fill-color: ${palette.gray.base};
-          box-shadow: ${autofillShadowOverride(palette.gray.light2)};
-        }
       }
     }
   `,
@@ -126,13 +105,13 @@ export const inputModeStyles: Record<Theme, string> = {
       -webkit-text-fill-color: ${palette.gray.light3};
       box-shadow: ${autofillShadowOverride(palette.gray.dark4)};
 
-      &:not(:disabled):focus {
+      &:not([aria-disabled='true']):focus {
         box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
           ${focusRing.dark.input};
         border-color: ${palette.blue.light1};
       }
 
-      &:not(:disabled):hover:not(:focus) {
+      &:not([aria-disabled='true']):hover:not(:focus) {
         box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
           ${hoverRing.dark.gray};
       }
@@ -140,7 +119,7 @@ export const inputModeStyles: Record<Theme, string> = {
 
     &:hover,
     &:active {
-      &:not(:disabled):not(:focus) {
+      &:not([aria-disabled='true']):not(:focus) {
         box-shadow: ${hoverRing.dark.gray};
       }
     }
@@ -149,40 +128,21 @@ export const inputModeStyles: Record<Theme, string> = {
       color: ${palette.gray.dark1};
       font-weight: ${fontWeights.regular};
     }
-
-    &:disabled {
-      color: ${palette.gray.dark1};
-      background-color: ${palette.gray.dark3};
-      border-color: ${palette.gray.dark2};
-
-      &::placeholder {
-        color: inherit;
-      }
-
-      &:-webkit-autofill {
-        &,
-        &:hover,
-        &:focus {
-          appearance: none;
-          border: 1px solid ${palette.gray.dark1};
-          -webkit-text-fill-color: ${palette.gray.dark1};
-          box-shadow: ${autofillShadowOverride(palette.gray.dark2)};
-        }
-      }
-    }
   `,
 };
 
 const focusSelector = (styles: string) => css`
   @supports selector(:has(a, b)) {
-    &:not(:disabled):focus-within:not(:has(.${iconButtonClassName}:focus)) {
+    &:not([aria-disabled='true']):focus-within:not(
+        :has(.${iconButtonClassName}:focus)
+      ) {
       ${styles}
     }
   }
 
   /* Fallback for when "has" is unsupported */
   @supports not selector(:has(a, b)) {
-    &:not(:disabled):focus-within {
+    &:not([aria-disabled='true']):focus-within {
       ${styles}
     }
   }
@@ -225,24 +185,24 @@ export const inputSizeStyles: Record<Size, string> = {
 export const inputStateStyles: Record<InputState, Record<Theme, string>> = {
   [InputState.Error]: {
     [Theme.Light]: css`
-      &:not(:disabled) {
+      &:not([aria-disabled='true']) {
         border-color: ${palette.red.base};
 
         &:hover,
         &:active {
-          &:not(:disabled):not(:focus) {
+          &:not([aria-disabled='true']):not(:focus) {
             box-shadow: ${hoverRing.light.red};
           }
         }
       }
     `,
     [Theme.Dark]: css`
-      &:not(:disabled) {
+      &:not([aria-disabled='true']) {
         border-color: ${palette.red.light1};
 
         &:hover,
         &:active {
-          &:not(:disabled):not(:focus) {
+          &:not([aria-disabled='true']):not(:focus) {
             box-shadow: ${hoverRing.dark.red};
           }
         }
@@ -253,6 +213,62 @@ export const inputStateStyles: Record<InputState, Record<Theme, string>> = {
     [Theme.Light]: css``,
     [Theme.Dark]: css``,
   },
+};
+
+export const inputDisabledStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    cursor: not-allowed;
+    background-color: ${palette.gray.light2};
+    border-color: ${palette.gray.light1};
+
+    & input {
+      cursor: not-allowed;
+      pointer-events: none;
+      color: ${palette.gray.base};
+
+      &::placeholder {
+        color: inherit;
+      }
+
+      &:-webkit-autofill {
+        &,
+        &:hover,
+        &:focus {
+          appearance: none;
+          border: 1px solid ${palette.gray.base};
+          -webkit-text-fill-color: ${palette.gray.base};
+          box-shadow: ${autofillShadowOverride(palette.gray.light2)};
+        }
+      }
+    }
+  `,
+  [Theme.Dark]: css`
+    cursor: not-allowed;
+    color: ${palette.gray.dark2};
+    background-color: ${palette.gray.dark3};
+    border-color: ${palette.gray.dark2};
+
+    & input {
+      cursor: not-allowed;
+      pointer-events: none;
+      color: ${palette.gray.dark2};
+
+      &::placeholder {
+        color: inherit;
+      }
+
+      &:-webkit-autofill {
+        &,
+        &:hover,
+        &:focus {
+          appearance: none;
+          border: 1px solid ${palette.gray.dark1};
+          -webkit-text-fill-color: ${palette.gray.dark1};
+          box-shadow: ${autofillShadowOverride(palette.gray.dark2)};
+        }
+      }
+    }
+  `,
 };
 
 export const childrenWrapperStyles = css`

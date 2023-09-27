@@ -43,7 +43,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
     }: DateInputBoxProps,
     fwdRef,
   ) => {
-    const { formatParts } = useDatePickerContext();
+    const { formatParts, disabled } = useDatePickerContext();
 
     const containerRef = useForwardedRef(fwdRef, null);
 

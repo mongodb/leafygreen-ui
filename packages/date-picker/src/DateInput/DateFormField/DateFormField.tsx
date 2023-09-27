@@ -20,6 +20,7 @@ import {
   errorIconStyles,
   iconButtonClassName,
   inputBaseStyles,
+  inputDisabledStyles,
   inputFocusStyles,
   inputModeStyles,
   inputSizeStyles,
@@ -51,7 +52,7 @@ export const DateFormField = React.forwardRef<
     fwdRef,
   ) => {
     const { theme } = useDarkMode();
-    const { size, isOpen, menuId } = useDatePickerContext();
+    const { size, isOpen, menuId, disabled } = useDatePickerContext();
     const baseFontSize = useUpdatedBaseFontSize();
 
     return (
@@ -62,12 +63,14 @@ export const DateFormField = React.forwardRef<
       >
         <div className={textContainerStyle}>
           {label && (
-            <Label htmlFor={inputId} id={labelId}>
+            <Label htmlFor={inputId} id={labelId} disabled={disabled}>
               {label}
             </Label>
           )}
           {description && (
-            <Description id={descriptionId}>{description}</Description>
+            <Description id={descriptionId} disabled={disabled}>
+              {description}
+            </Description>
           )}
         </div>
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
@@ -75,6 +78,7 @@ export const DateFormField = React.forwardRef<
           role="combobox"
           aria-expanded={isOpen}
           aria-controls={menuId}
+          aria-disabled={disabled}
           tabIndex={-1}
           onClick={onInputClick}
           className={cx(
@@ -83,6 +87,9 @@ export const DateFormField = React.forwardRef<
             inputFocusStyles[theme],
             inputSizeStyles[size ?? Size.Default],
             inputStateStyles[state][theme],
+            {
+              [inputDisabledStyles[theme]]: disabled,
+            },
           )}
         >
           <div className={childrenWrapperStyles}>{children}</div>
@@ -94,6 +101,7 @@ export const DateFormField = React.forwardRef<
             className={iconButtonClassName}
             onClick={onIconButtonClick}
             type="button"
+            disabled={disabled}
           >
             <Icon glyph="Calendar" />
           </IconButton>

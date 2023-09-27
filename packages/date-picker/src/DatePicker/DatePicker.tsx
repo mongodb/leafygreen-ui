@@ -34,16 +34,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       initialProp,
     );
 
-    // useEffect(() => {
-    //   const logActiveElement = () => {
-    //     console.log(document.activeElement);
-    //   };
-
-    //   document.addEventListener('focusin', logActiveElement);
-
-    //   return () => document.removeEventListener('focusin', logActiveElement);
-    // }, []);
-
     return (
       <DatePickerProvider
         value={{

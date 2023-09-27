@@ -42,7 +42,7 @@ export const DateInputSegment = React.forwardRef<
 
     const { theme } = useDarkMode(darkMode);
     const baseFontSize = useUpdatedBaseFontSize();
-    const { size } = useDatePickerContext();
+    const { size, disabled } = useDatePickerContext();
 
     const formatValue = getValueFormatter(segment);
 
@@ -66,6 +66,7 @@ export const DateInputSegment = React.forwardRef<
         max={max}
         placeholder={defaultPlaceholder[segment]}
         onChange={changeHandler}
+        disabled={disabled}
         className={cx(
           baseStyles,
           fontSizeStyles[baseFontSize],

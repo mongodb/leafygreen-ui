@@ -24,7 +24,8 @@ export const DatePickerComponent = forwardRef<
     { value, setValue, handleValidation, ...rest }: DatePickerComponentProps,
     fwdRef,
   ) => {
-    const { isOpen, setOpen, formatParts, menuId } = useDatePickerContext();
+    const { disabled, isOpen, setOpen, formatParts, menuId } =
+      useDatePickerContext();
     const openMenu = () => setOpen(true);
     const closeMenu = () => setOpen(false);
 
@@ -48,13 +49,15 @@ export const DatePickerComponent = forwardRef<
     };
 
     const handleInputClick: MouseEventHandler<HTMLElement> = ({ target }) => {
-      setOpen(true);
+      if (!disabled) {
+        setOpen(true);
 
-      focusRelevantSegment({
-        target,
-        formatParts,
-        segmentRefs,
-      });
+        focusRelevantSegment({
+          target,
+          formatParts,
+          segmentRefs,
+        });
+      }
     };
 
     const handleCellClick: DatePickerMenuProps['onCellClick'] = cellValue => {

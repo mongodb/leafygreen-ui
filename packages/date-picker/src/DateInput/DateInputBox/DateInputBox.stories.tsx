@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react';
+import React, { createRef, useEffect, useState } from 'react';
 import { StoryFn } from '@storybook/react';
 import { isValid } from 'date-fns';
 
@@ -48,6 +48,11 @@ const meta: StoryMetaType<typeof DateInputBox, DatePickerContextProps> = {
     label: 'Label',
     dateFormat: 'en-UK',
     timeZone: 'Europe/London',
+    segmentRefs: {
+      day: createRef(),
+      month: createRef(),
+      year: createRef(),
+    },
   },
   argTypes: {
     value: { control: 'date' },

@@ -27,9 +27,10 @@ const meta: StoryMetaType<
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        label: [undefined, 'Label'],
+        label: ['Label', undefined],
         description: [undefined, 'Description'],
         state: ['unset', 'error'],
+        disabled: [false, true],
       },
       excludeCombinations: [
         {
@@ -42,8 +43,10 @@ const meta: StoryMetaType<
           darkMode={ctx?.args.darkMode}
           baseFontSize={ctx?.args.baseFontSize}
         >
-          {/* @ts-expect-error - incomplete context value */}
-          <DatePickerProvider value={{ size: ctx?.args.size }}>
+          <DatePickerProvider
+            // @ts-expect-error - incomplete context value
+            value={{ size: ctx?.args.size, disabled: ctx?.args.disabled }}
+          >
             <Instance />
           </DatePickerProvider>
         </LeafyGreenProvider>
