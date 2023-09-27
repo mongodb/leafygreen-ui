@@ -13,10 +13,10 @@ import {
 } from '../../DatePickerContext';
 import { Locales, TimeZones } from '../../testUtils';
 import { isTodayTZ } from '../../utils/isTodayTZ';
+import { newUTC } from '../../utils/newUTC';
 import { CalendarCell } from '../CalendarCell/CalendarCell';
 
 import { CalendarGrid } from './CalendarGrid';
-import { newUTC } from '../../utils/newUTC';
 
 const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
   <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
