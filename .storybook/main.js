@@ -84,6 +84,8 @@ const storybookModuleFederationConfig = {
     './Badge': '/packages/badge/src/index.ts',
     './Icon': '/packages/icon/src/Icon.tsx',
     './Typography': '/packages/typography/src/index.ts',
+    './LoadingIndicator': '/packages/loading-indicator/src/index.ts',
+    './SideNav': '/packages/side-nav/src/index.ts',
     './leafygreen-provider': '/packages/leafygreen-provider/src/index.ts',
   },
   shared: {
