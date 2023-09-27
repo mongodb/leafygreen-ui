@@ -306,45 +306,6 @@ describe('packages/date-picker', () => {
         });
       });
 
-      describe('Changing the month', () => {
-        test.todo('is announced in an aria-live region');
-
-        describe('updates the highlighted cell', () => {
-          test('to the end of the month if we went backwards', async () => {
-            const { openMenu, findAllByRole } = renderDatePicker({
-              value: new Date(Date.UTC(2023, Month.July, 5)),
-            });
-            const { monthSelect, calendarGrid } = openMenu();
-            userEvent.click(monthSelect!);
-            const options = await findAllByRole('option');
-            const Jan = options[0];
-            userEvent.click(Jan);
-            const jan31Cell = calendarGrid?.querySelector(
-              '[data-iso="2023-01-31T00:00:00.000Z"]',
-            );
-            expect(jan31Cell).toHaveAttribute('data-highlight', 'true');
-            tabNTimes(3);
-            expect(jan31Cell).toHaveFocus();
-          });
-          test('to the beginning of the month if we went forwards', async () => {
-            const { openMenu, findAllByRole } = renderDatePicker({
-              value: new Date(Date.UTC(2023, Month.July, 5)),
-            });
-            const { monthSelect, calendarGrid } = openMenu();
-            userEvent.click(monthSelect!);
-            const options = await findAllByRole('option');
-            const Dec = options[11];
-            userEvent.click(Dec);
-            const dec1Cell = calendarGrid?.querySelector(
-              '[data-iso="2023-12-01T00:00:00.000Z"]',
-            );
-            expect(dec1Cell).toHaveAttribute('data-highlight', 'true');
-            tabNTimes(3);
-            expect(dec1Cell).toHaveFocus();
-          });
-        });
-      });
-
       describe('Clicking backdrop', () => {
         test('closes the menu', async () => {
           const { openMenu, container } = renderDatePicker();
@@ -359,6 +320,45 @@ describe('packages/date-picker', () => {
           openMenu();
           userEvent.click(container.parentElement!);
           expect(onChange).not.toHaveBeenCalled();
+        });
+      });
+    });
+
+    describe('Changing the month', () => {
+      test.todo('is announced in an aria-live region');
+
+      describe('updates the highlighted cell', () => {
+        test('to the end of the month if we went backwards', async () => {
+          const { openMenu, findAllByRole } = renderDatePicker({
+            value: new Date(Date.UTC(2023, Month.July, 5)),
+          });
+          const { monthSelect, calendarGrid } = openMenu();
+          userEvent.click(monthSelect!);
+          const options = await findAllByRole('option');
+          const Jan = options[0];
+          userEvent.click(Jan);
+          const jan31Cell = calendarGrid?.querySelector(
+            '[data-iso="2023-01-31T00:00:00.000Z"]',
+          );
+          expect(jan31Cell).toHaveAttribute('data-highlight', 'true');
+          tabNTimes(3);
+          expect(jan31Cell).toHaveFocus();
+        });
+        test('to the beginning of the month if we went forwards', async () => {
+          const { openMenu, findAllByRole } = renderDatePicker({
+            value: new Date(Date.UTC(2023, Month.July, 5)),
+          });
+          const { monthSelect, calendarGrid } = openMenu();
+          userEvent.click(monthSelect!);
+          const options = await findAllByRole('option');
+          const Dec = options[11];
+          userEvent.click(Dec);
+          const dec1Cell = calendarGrid?.querySelector(
+            '[data-iso="2023-12-01T00:00:00.000Z"]',
+          );
+          expect(dec1Cell).toHaveAttribute('data-highlight', 'true');
+          tabNTimes(3);
+          expect(dec1Cell).toHaveFocus();
         });
       });
     });
