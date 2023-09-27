@@ -187,6 +187,7 @@ describe('packages/date-picker', () => {
         });
       });
 
+      // TODO: Move these tests to DatePickerMenu
       describe('Clicking a Calendar cell', () => {
         test('fires a change handler', () => {
           const onChange = jest.fn();

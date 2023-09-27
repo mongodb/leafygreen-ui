@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/rules-of-hooks, react/prop-types */
 import React, { useRef, useState } from 'react';
 import { StoryFn, StoryObj } from '@storybook/react';
-import { findByRole, userEvent, within } from '@storybook/testing-library';
-import { omit } from 'lodash';
+import { userEvent, within } from '@storybook/testing-library';
+import { last, omit } from 'lodash';
 import MockDate from 'mockdate';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
@@ -34,6 +34,7 @@ const MenuDecorator = (Story: StoryFn, ctx: any) => {
     [...contextPropNames],
   );
 
+  // Force `new Date()` to return `mockToday`
   MockDate.set(mockToday);
 
   return (
@@ -86,9 +87,9 @@ const meta: StoryMetaType<typeof DatePickerMenu, DecoratorArgs> = {
 
 export default meta;
 
-type DatePickerMenuStory = StoryObj<typeof DatePickerMenu>;
+type DatePickerMenuStoryType = StoryObj<typeof DatePickerMenu>;
 
-export const Basic: DatePickerMenuStory = {
+export const Basic: DatePickerMenuStoryType = {
   render: args => {
     const [value, setValue] = useState<Date | null>(null);
 
@@ -108,7 +109,7 @@ export const Basic: DatePickerMenuStory = {
   },
 };
 
-export const WithValue: DatePickerMenuStory = {
+export const WithValue: DatePickerMenuStoryType = {
   render: args => {
     const props = omit(args, [...contextPropNames, 'isOpen']);
     const refEl = useRef<HTMLDivElement>(null);
@@ -126,86 +127,125 @@ export const WithValue: DatePickerMenuStory = {
   },
 };
 
-export const DarkMode: DatePickerMenuStory = {
+export const DarkMode: DatePickerMenuStoryType = {
   ...WithValue,
   args: {
-    // @ts-expect-error - DatePickerMenuStory does not include Context props
+    // @ts-expect-error - DatePickerMenuStoryType does not include Context props
     darkMode: true,
   },
 };
+
+type DatePickerMenuInteractionTestType = Omit<DatePickerMenuStoryType, 'play'> &
+  Required<Pick<DatePickerMenuStoryType, 'play'>>;
 
 /**
  * Chromatic Interaction tests
  */
 
-export const InitialTodayHighlight: DatePickerMenuStory = {
+export const InitialFocusToday: DatePickerMenuInteractionTestType = {
   ...Basic,
   play: async ctx => {
-    within(ctx.canvasElement);
-    await findByRole(ctx.canvasElement.parentElement!, 'listbox');
+    const { findByRole } = within(ctx.canvasElement.parentElement!);
+    await findByRole('listbox');
     userEvent.tab();
   },
 };
-export const InitialValueHighlight: DatePickerMenuStory = {
+export const InitialFocusValue: DatePickerMenuInteractionTestType = {
   ...WithValue,
   play: async ctx => {
-    within(ctx.canvasElement);
-    await findByRole(ctx.canvasElement.parentElement!, 'listbox');
+    const { findByRole } = within(ctx.canvasElement.parentElement!);
+    await findByRole('listbox');
     userEvent.tab();
   },
 };
 
-export const LeftArrowKey: DatePickerMenuStory = {
+export const LeftArrowKey: DatePickerMenuInteractionTestType = {
   ...Basic,
   play: async ctx => {
-    // @ts-expect-error
-    await InitialTodayHighlight.play(ctx);
+    await InitialFocusToday.play(ctx);
     userEvent.keyboard('{arrowleft}');
   },
 };
 
-export const RightArrowKey: DatePickerMenuStory = {
+export const RightArrowKey: DatePickerMenuInteractionTestType = {
   ...Basic,
   play: async ctx => {
-    // @ts-expect-error
-    await InitialTodayHighlight.play(ctx);
+    await InitialFocusToday.play(ctx);
     userEvent.keyboard('{arrowright}');
   },
 };
 
-export const UpArrowKey: DatePickerMenuStory = {
+export const UpArrowKey: DatePickerMenuInteractionTestType = {
   ...Basic,
   play: async ctx => {
-    // @ts-expect-error
-    await InitialTodayHighlight.play(ctx);
+    await InitialFocusToday.play(ctx);
     userEvent.keyboard('{arrowup}');
   },
 };
 
-export const DownArrowKey: DatePickerMenuStory = {
+export const DownArrowKey: DatePickerMenuInteractionTestType = {
   ...Basic,
   play: async ctx => {
-    // @ts-expect-error
-    await InitialTodayHighlight.play(ctx);
+    await InitialFocusToday.play(ctx);
     userEvent.keyboard('{arrowdown}');
   },
 };
 
-export const UpToPrevMonth: DatePickerMenuStory = {
+export const UpToPrevMonth: DatePickerMenuInteractionTestType = {
   ...Basic,
   play: async ctx => {
-    // @ts-expect-error
-    await InitialTodayHighlight.play(ctx);
+    await InitialFocusToday.play(ctx);
     userEvent.keyboard('{arrowup}{arrowup}');
   },
 };
 
-export const DownToNextMonth: DatePickerMenuStory = {
+export const DownToNextMonth: DatePickerMenuInteractionTestType = {
   ...Basic,
   play: async ctx => {
-    // @ts-expect-error
-    await InitialTodayHighlight.play(ctx);
+    await InitialFocusToday.play(ctx);
     userEvent.keyboard('{arrowdown}{arrowdown}{arrowdown}');
+  },
+};
+
+export const OpenMonthMenu: DatePickerMenuInteractionTestType = {
+  ...Basic,
+  play: async ctx => {
+    const canvas = within(ctx.canvasElement.parentElement!);
+    await canvas.findByRole('listbox');
+    const monthMenu = await canvas.findByLabelText('Select month');
+    userEvent.click(monthMenu);
+  },
+};
+
+export const SelectJanuary: DatePickerMenuInteractionTestType = {
+  ...Basic,
+  play: async ctx => {
+    await OpenMonthMenu.play(ctx);
+    const { findAllByRole } = within(ctx.canvasElement.parentElement!);
+    const options = await findAllByRole('option');
+    const Jan = options[0];
+    userEvent.click(Jan);
+  },
+};
+
+export const OpenYearMenu: DatePickerMenuInteractionTestType = {
+  ...Basic,
+  play: async ctx => {
+    const canvas = within(ctx.canvasElement.parentElement!);
+    await canvas.findByRole('listbox');
+    const monthMenu = await canvas.findByLabelText('Select year');
+    userEvent.click(monthMenu);
+  },
+};
+
+export const Select2026: DatePickerMenuInteractionTestType = {
+  ...Basic,
+  play: async ctx => {
+    await OpenYearMenu.play(ctx);
+    const { findAllByRole } = within(ctx.canvasElement.parentElement!);
+    const options = await findAllByRole('option');
+    const _2026 = last(options);
+    userEvent.click(_2026!);
   },
 };
 
