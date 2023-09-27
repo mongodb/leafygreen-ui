@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react';
+import React, { createRef, useEffect, useState } from 'react';
 import { StoryFn } from '@storybook/react';
 import { isValid } from 'date-fns';
 
@@ -32,20 +32,16 @@ const meta: StoryMetaType<typeof DatePickerInput, DatePickerContextProps> = {
   decorators: [ProviderWrapper],
   parameters: {
     default: null,
+    controls: {
+      exclude: ['segmentRefs'],
+    },
     generate: {
       combineArgs: {
         darkMode: [false, true],
         value: [null, new Date('1993-12-26')],
         dateFormat: ['iso8601', 'en-US', 'en-UK', 'de-DE'],
-        timeZone: ['UTC', 'Europe/London', 'America/New_York', 'Asia/Seoul'],
         size: Object.values(Size),
       },
-      excludeCombinations: [
-        {
-          timeZone: ['Europe/London', 'America/New_York', 'Asia/Seoul'],
-          value: null,
-        },
-      ],
       decorator: ProviderWrapper,
     },
   },
@@ -53,6 +49,11 @@ const meta: StoryMetaType<typeof DatePickerInput, DatePickerContextProps> = {
     label: 'Label',
     dateFormat: 'en-UK',
     timeZone: 'Europe/London',
+    segmentRefs: {
+      day: createRef(),
+      month: createRef(),
+      year: createRef(),
+    },
   },
   argTypes: {
     value: { control: 'date' },
