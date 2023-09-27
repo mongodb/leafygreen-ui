@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { addDays } from 'date-fns';
+import { addDays, subDays } from 'date-fns';
 
 import { Month } from '../../constants';
 import {
@@ -9,6 +9,7 @@ import {
   DatePickerProviderProps,
 } from '../../DatePickerContext';
 import { defaultDatePickerContext } from '../../DatePickerContext/DatePickerContext.utils';
+import { newUTC } from '../../utils/newUTC';
 import { setUTCDate } from '../../utils/setUTCDate';
 
 import { DatePickerMenu, DatePickerMenuProps } from '.';
@@ -22,17 +23,23 @@ const renderDatePickerMenu = (
 ) => {
   const result = render(
     <DatePickerProvider value={{ ...defaultDatePickerContext, ...context }}>
-      <DatePickerMenu
-        isOpen
-        value={null}
-        month={new Date(Date.UTC(2023, Month.September, 1))}
-        setMonth={() => {}}
-        onCellClick={() => {}}
-        {...props}
-      />
-      ,
+      <DatePickerMenu isOpen value={null} onCellClick={() => {}} {...props} />,
     </DatePickerProvider>,
   );
+
+  const rerenderDatePickerMenu = (newProps?: Partial<DatePickerMenuProps>) =>
+    result.rerender(
+      <DatePickerProvider value={{ ...defaultDatePickerContext, ...context }}>
+        <DatePickerMenu
+          isOpen
+          value={null}
+          onCellClick={() => {}}
+          {...({ ...props, ...newProps } as Partial<DatePickerMenuProps>)}
+        />
+        ,
+      </DatePickerProvider>,
+    );
+
   const calendarGrid = result.getByRole('grid');
 
   const calendarCells = result.queryAllByRole(
@@ -43,11 +50,16 @@ const renderDatePickerMenu = (
     `[data-iso="${testToday.toISOString()}"]`,
   );
 
+  const getCellWithValue = (date: Date) =>
+    calendarGrid.querySelector(`[data-iso="${date.toISOString()}"]`);
+
   return {
     ...result,
+    rerenderDatePickerMenu,
     calendarGrid,
     calendarCells,
     todayCell,
+    getCellWithValue,
   };
 };
 
@@ -81,7 +93,7 @@ describe('packages/date-picker/date-picker-menu', () => {
       expect(monthSelect).toBeInTheDocument();
       expect(yearSelect).toBeInTheDocument();
     });
-    test('select menus have appropriate values', () => {
+    test('select menus have correct values', () => {
       const result = renderDatePickerMenu();
       const monthSelect = result.getByLabelText('Select month');
       const yearSelect = result.getByLabelText('Select year');
@@ -90,9 +102,28 @@ describe('packages/date-picker/date-picker-menu', () => {
     });
 
     describe('rendered cells', () => {
-      test('have appropriate `aria-label`', () => {
+      test('have correct `aria-label`', () => {
         const { todayCell } = renderDatePickerMenu();
         expect(todayCell).toHaveAttribute('aria-label', 'Sun Sep 10 2023');
+      });
+    });
+
+    describe('when value is updated', () => {
+      test('grid is labelled as the current month', () => {
+        const { getByRole, rerenderDatePickerMenu } = renderDatePickerMenu();
+        rerenderDatePickerMenu({ value: newUTC(2024, Month.March, 10) });
+        const grid = getByRole('grid');
+        expect(grid).toHaveAttribute('aria-label', 'March 2024');
+      });
+      test('select menus have correct values', () => {
+        const { getByLabelText, rerenderDatePickerMenu } =
+          renderDatePickerMenu();
+        rerenderDatePickerMenu({ value: newUTC(2024, Month.March, 10) });
+
+        const monthSelect = getByLabelText('Select month');
+        const yearSelect = getByLabelText('Select year');
+        expect(monthSelect).toHaveValue(Month.March.toString());
+        expect(yearSelect).toHaveValue('2024');
       });
     });
   });
@@ -105,65 +136,55 @@ describe('packages/date-picker/date-picker-menu', () => {
     });
 
     test('highlight starts on on current value when provided', () => {
-      const { calendarGrid } = renderDatePickerMenu({
+      const { getCellWithValue } = renderDatePickerMenu({
         value: testValue,
       });
       userEvent.tab();
-      const valueCell = calendarGrid.querySelector(
-        `[data-iso="${testValue.toISOString()}"]`,
-      );
+      const valueCell = getCellWithValue(testValue);
       expect(valueCell).toHaveFocus();
     });
 
     describe('Arrow Keys', () => {
       test('left arrow moves focus to the previous day', async () => {
-        const { calendarGrid } = renderDatePickerMenu({
+        const { getCellWithValue } = renderDatePickerMenu({
           value: testValue,
         });
         userEvent.tab();
         userEvent.keyboard('{arrowleft}');
 
-        const prevDay = calendarGrid.querySelector(
-          `[data-iso="${setUTCDate(testValue, 13).toISOString()}"]`,
-        );
+        const prevDay = getCellWithValue(setUTCDate(testValue, 13));
         expect(prevDay).toHaveFocus();
       });
 
       test('right arrow moves focus to the next day', () => {
-        const { calendarGrid } = renderDatePickerMenu({
+        const { getCellWithValue } = renderDatePickerMenu({
           value: testValue,
         });
         userEvent.tab();
         userEvent.keyboard('{arrowright}');
-        const nextDay = calendarGrid.querySelector(
-          `[data-iso="${setUTCDate(testValue, 15).toISOString()}"]`,
-        );
+        const nextDay = getCellWithValue(setUTCDate(testValue, 15));
         expect(nextDay).toHaveFocus();
       });
 
       test('up arrow moves focus to the previous week', () => {
-        const { calendarGrid } = renderDatePickerMenu({
+        const { getCellWithValue } = renderDatePickerMenu({
           value: testValue,
         });
         userEvent.tab();
         userEvent.keyboard('{arrowup}');
 
-        const prevWeek = calendarGrid.querySelector(
-          `[data-iso="${setUTCDate(testValue, 7).toISOString()}"]`,
-        );
+        const prevWeek = getCellWithValue(setUTCDate(testValue, 7));
         expect(prevWeek).toHaveFocus();
       });
 
       test('down arrow moves focus to the next week', () => {
-        const { calendarGrid } = renderDatePickerMenu({
+        const { getCellWithValue } = renderDatePickerMenu({
           value: testValue,
         });
         userEvent.tab();
         userEvent.keyboard('{arrowdown}');
 
-        const nextWeek = calendarGrid.querySelector(
-          `[data-iso="${setUTCDate(testValue, 21).toISOString()}"]`,
-        );
+        const nextWeek = getCellWithValue(setUTCDate(testValue, 21));
         expect(nextWeek).toHaveFocus();
       });
 
@@ -207,57 +228,80 @@ describe('packages/date-picker/date-picker-menu', () => {
         });
       });
 
-      describe('call the month change handler', () => {
-        test('left arrow triggers handler', () => {
-          const setMonth = jest.fn();
+      describe('update the displayed month', () => {
+        test('left arrow updates displayed month to previous', () => {
           const value = new Date(Date.UTC(2023, Month.September, 1));
-          renderDatePickerMenu({ value, setMonth });
+          const { calendarGrid } = renderDatePickerMenu({ value });
           userEvent.tab();
           userEvent.keyboard('{arrowleft}');
-          expect(setMonth).toHaveBeenCalled();
+          expect(calendarGrid).toHaveAttribute('aria-label', 'August 2023');
         });
 
-        test('right arrow triggers handler', () => {
-          const setMonth = jest.fn();
+        test('right arrow updates displayed month to next', () => {
           const value = new Date(Date.UTC(2023, Month.September, 30));
-          renderDatePickerMenu({ value, setMonth });
+          const { calendarGrid } = renderDatePickerMenu({ value });
           userEvent.tab();
           userEvent.keyboard('{arrowright}');
-          expect(setMonth).toHaveBeenCalled();
+          expect(calendarGrid).toHaveAttribute('aria-label', 'October 2023');
         });
 
-        test('up arrow triggers handler', () => {
+        test('up arrow updates displayed month to previous', () => {
           const value = new Date(Date.UTC(2023, Month.September, 6));
-          const setMonth = jest.fn();
-          renderDatePickerMenu({ value, setMonth });
+          const { calendarGrid } = renderDatePickerMenu({ value });
           userEvent.tab();
           userEvent.keyboard('{arrowup}');
-          expect(setMonth).toHaveBeenCalled();
+          expect(calendarGrid).toHaveAttribute('aria-label', 'August 2023');
         });
 
-        test('down arrow triggers handler', async () => {
+        test('down arrow updates displayed month to next', () => {
           const value = new Date(Date.UTC(2023, Month.September, 25));
-          const setMonth = jest.fn();
-          renderDatePickerMenu({ value, setMonth });
+          const { calendarGrid } = renderDatePickerMenu({ value });
           userEvent.tab();
           userEvent.keyboard('{arrowdown}');
-          expect(setMonth).toHaveBeenCalled();
+          expect(calendarGrid).toHaveAttribute('aria-label', 'October 2023');
         });
 
-        test('does not trigger handler when month does not need to change', () => {
-          const setMonth = jest.fn();
-          renderDatePickerMenu({ value: testValue, setMonth });
+        test('does not update month when month does not need to change', () => {
+          const { calendarGrid } = renderDatePickerMenu({ value: testValue });
           userEvent.tab();
           userEvent.keyboard('{arrowleft}{arrowright}{arrowup}{arrowdown}');
-          expect(setMonth).not.toHaveBeenCalled();
+          expect(calendarGrid).toHaveAttribute('aria-label', 'September 2023');
         });
       });
 
-      describe('when month is updated', () => {
-        test.todo('left arrow focuses the correct day');
-        test.todo('right arrow focuses the correct day');
-        test.todo('up arrow focuses the correct day');
-        test.todo('down arrow focuses the correct day');
+      describe('when month should be updated', () => {
+        test('left arrow focuses the previous day', () => {
+          const value = new Date(Date.UTC(2023, Month.September, 1));
+          const { getCellWithValue } = renderDatePickerMenu({ value });
+          userEvent.tab();
+          userEvent.keyboard('{arrowleft}');
+          const highlightedCell = getCellWithValue(subDays(value, 1));
+          expect(highlightedCell).toHaveFocus();
+        });
+        test('right arrow focuses the next day', () => {
+          const value = new Date(Date.UTC(2023, Month.September, 30));
+          const { getCellWithValue } = renderDatePickerMenu({ value });
+          userEvent.tab();
+          userEvent.keyboard('{arrowright}');
+          const highlightedCell = getCellWithValue(addDays(value, 1));
+          expect(highlightedCell).toHaveFocus();
+        });
+        test('up arrow focuses the previous week', () => {
+          const value = new Date(Date.UTC(2023, Month.September, 6));
+          const { getCellWithValue } = renderDatePickerMenu({ value });
+          userEvent.tab();
+          userEvent.keyboard('{arrowup}');
+          const highlightedCell = getCellWithValue(subDays(value, 7));
+          expect(highlightedCell).toHaveFocus();
+        });
+        test('down arrow focuses the next week', () => {
+          const value = new Date(Date.UTC(2023, Month.September, 25));
+          const { getCellWithValue } = renderDatePickerMenu({ value });
+          userEvent.tab();
+          userEvent.keyboard('{arrowdown}');
+          const highlightedCell = getCellWithValue(addDays(value, 7));
+          expect(highlightedCell).toHaveFocus();
+        });
       });
     });
   });

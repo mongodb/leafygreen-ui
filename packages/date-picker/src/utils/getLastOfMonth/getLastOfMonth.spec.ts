@@ -26,4 +26,12 @@ describe('packages/date-picker/utils/getLastOfMonth', () => {
       getLastOfMonth(new Date(Date.UTC(2020, Month.February, 14))),
     ).toEqual(new Date(Date.UTC(2020, Month.February, 29)));
   });
+
+  test('returned time is midnight', () => {
+    const last = getLastOfMonth(new Date(Date.UTC(2020, Month.February, 14)));
+    expect(last.getUTCHours()).toEqual(0);
+    expect(last.getUTCMinutes()).toEqual(0);
+    expect(last.getUTCSeconds()).toEqual(0);
+    expect(last.getUTCMilliseconds()).toEqual(0);
+  });
 });

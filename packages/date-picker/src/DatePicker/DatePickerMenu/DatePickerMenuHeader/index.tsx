@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { isBefore, setYear } from 'date-fns';
+import { isBefore } from 'date-fns';
 import range from 'lodash/range';
 
 import Icon from '@leafygreen-ui/icon';
@@ -10,16 +10,16 @@ import { Months } from '../../../constants';
 import { useDatePickerContext } from '../../../DatePickerContext';
 import { isSameUTCMonth } from '../../../utils/isSameUTCMonth';
 import { setUTCMonth } from '../../../utils/setUTCMonth';
+import { setUTCYear } from '../../../utils/setUTCYear';
 import {
   menuHeaderSelectContainerStyles,
   menuHeaderStyles,
 } from '../DatePickerMenu.styles';
-import { DatePickerMenuProps } from '../DatePickerMenu.types';
 
-type DatePickerMenuHeaderProps = Pick<
-  DatePickerMenuProps,
-  'month' | 'setMonth'
->;
+interface DatePickerMenuHeaderProps {
+  month: Date;
+  setMonth: (newMonth: Date) => void;
+}
 
 const selectElementProps = {
   size: 'xsmall',
@@ -30,6 +30,11 @@ const selectElementProps = {
   usePortal: false,
 } as const;
 
+/**
+ * A helper component for DatePickerMenu.
+ * Tests for this component are in DatePickerMenu
+ * @internal
+ */
 export const DatePickerMenuHeader = forwardRef<
   HTMLDivElement,
   DatePickerMenuHeaderProps
@@ -86,9 +91,9 @@ export const DatePickerMenuHeader = forwardRef<
         <Select
           {...selectElementProps}
           aria-label="Select year"
-          value={month.getFullYear().toString()}
+          value={month.getUTCFullYear().toString()}
           onChange={y => {
-            const newMonth = setYear(month, Number(y));
+            const newMonth = setUTCYear(month, Number(y));
             updateMonth(newMonth);
           }}
         >

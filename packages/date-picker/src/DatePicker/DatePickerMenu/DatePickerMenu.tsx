@@ -1,6 +1,7 @@
 import React, {
   forwardRef,
   KeyboardEventHandler,
+  useEffect,
   useLayoutEffect,
   useMemo,
   useRef,
@@ -16,8 +17,9 @@ import { spacing } from '@leafygreen-ui/tokens';
 import { CalendarCell, CalendarCellState } from '../../Calendar/CalendarCell';
 import { CalendarGrid } from '../../Calendar/CalendarGrid';
 import { MenuWrapper } from '../../Calendar/MenuWrapper';
-import { Months } from '../../constants';
 import { useDatePickerContext } from '../../DatePickerContext';
+import { getFirstOfMonth } from '../../utils/getFirstOfMonth';
+import { getFullMonthLabel } from '../../utils/getFullMonthLabel';
 import { getUTCDateString } from '../../utils/getUTCDateString';
 import { isSameUTCDay } from '../../utils/isSameUTCDay';
 import { isSameUTCMonth } from '../../utils/isSameUTCMonth';
@@ -34,69 +36,82 @@ import { DatePickerMenuHeader } from './DatePickerMenuHeader';
 
 export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
   (
-    {
-      isOpen,
-      value,
-      month,
-      setMonth,
-      onKeyDown,
-      onCellClick,
-      ...rest
-    }: DatePickerMenuProps,
+    { isOpen, value, onKeyDown, onCellClick, ...rest }: DatePickerMenuProps,
     fwdRef,
   ) => {
     const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
-    const monthLabel =
-      Months[month.getUTCMonth()].long + ' ' + month.getUTCFullYear();
-    const prevMonth = usePrevious(month);
-    const ref = useForwardedRef(fwdRef, null);
-    const headerRef = useRef<HTMLDivElement>(null);
-    const calendarRef = useRef<HTMLTableElement>(null);
+    const { isInRange } = useDatePickerContext();
+
     // TODO:
     // useDynamicRefs may overflow if a user navigates to too many months.
     // consider purging the refs map within the hook
     const cellRefs = useDynamicRefs<HTMLTableCellElement>();
-    const { isInRange } = useDatePickerContext();
+    const ref = useForwardedRef(fwdRef, null);
+    const headerRef = useRef<HTMLDivElement>(null);
+    const calendarRef = useRef<HTMLTableElement>(null);
+
+    const [month, setDisplayMonth] = useState<Date>(
+      value ?? getFirstOfMonth(today),
+    );
     const [highlight, setHighlight] = useState<Date | null>(value || today);
 
-    // setMonth with side effects
-    const updateMonth: typeof setMonth = newMonth => {
-      if (
-        isSameUTCMonth(newMonth, month) ||
-        isSameUTCMonth(newMonth, highlight)
-      ) {
+    const prevValue = usePrevious(value);
+    const prevHighlight = usePrevious(highlight);
+
+    const monthLabel = getFullMonthLabel(month);
+
+    /** setDisplayMonth with side effects */
+    const updateMonth = (newMonth: Date) => {
+      if (isSameUTCMonth(newMonth, month)) {
         return;
       }
 
       const newHighlight = getNewHighlight(highlight, month, newMonth);
+      const shouldUpdateHighlight = !isSameUTCDay(highlight, newHighlight);
 
-      if (newHighlight) {
-        updateHighlight(newHighlight);
+      if (newHighlight && shouldUpdateHighlight) {
+        setHighlight(newHighlight);
       }
 
-      setMonth(newMonth);
+      setDisplayMonth(newMonth);
     };
 
-    // setHighlight with side effects
+    /** setHighlight with side effects */
     const updateHighlight = (newHighlight: Date) => {
       // change month if nextHighlight is different than `month`
-      if (month.getUTCMonth() !== newHighlight.getUTCMonth()) {
-        updateMonth(newHighlight);
+      if (!isSameUTCMonth(month, newHighlight)) {
+        setDisplayMonth(newHighlight);
       }
 
       // keep track of the highlighted cell
       setHighlight(newHighlight);
     };
 
-    // When month changes, after the DOM changes, focus the relevant cell
+    /**
+     * When month changes, after the DOM changes, focus the relevant cell \
+     */
     useLayoutEffect(() => {
-      if (highlight && !isSameUTCMonth(month, prevMonth)) {
-        const nextCellRef = cellRefs(highlight.toISOString());
-        nextCellRef.current?.focus();
+      if (highlight && !isSameUTCDay(highlight, prevHighlight)) {
+        const highlightCellRef = cellRefs(highlight.toISOString());
+        highlightCellRef.current?.focus();
       }
-    }, [cellRefs, highlight, month, prevMonth]);
+    }, [cellRefs, highlight, prevHighlight]);
 
-    const getCellState = (cellDay: Date | null) => {
+    /**
+     * If the new value is not the current month, update the month
+     */
+    useEffect(() => {
+      if (
+        value &&
+        !isSameUTCDay(value, prevValue) &&
+        !isSameUTCMonth(value, month)
+      ) {
+        setDisplayMonth(getFirstOfMonth(value));
+      }
+    }, [month, prevValue, value]);
+
+    /** Returns the current state of the cell */
+    const getCellState = (cellDay: Date | null): CalendarCellState => {
       if (isInRange(cellDay)) {
         if (isSameUTCDay(cellDay, value)) {
           return CalendarCellState.Active;
@@ -108,17 +123,18 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       return CalendarCellState.Disabled;
     };
 
+    /** Creates a click handler for a specific cell date */
     const cellClickHandlerForDay = (day: Date) => () => {
       if (isInRange(day)) {
         onCellClick(day);
       }
     };
 
-    // Implementing custom focus-trap logic,
-    // since focus-trap-react focuses the first element immediately on mount
     const handleWrapperTabKeyPress: KeyboardEventHandler<
       HTMLDivElement
     > = e => {
+      // Implementing custom focus-trap logic,
+      // since focus-trap-react focuses the first element immediately on mount
       if (e.key === keyMap.Tab) {
         const currentFocus = document.activeElement;
         const highlightKey = highlight?.toISOString();

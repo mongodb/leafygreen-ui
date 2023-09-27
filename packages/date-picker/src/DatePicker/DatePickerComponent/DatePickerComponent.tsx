@@ -3,9 +3,7 @@ import React, {
   KeyboardEventHandler,
   MouseEventHandler,
   useRef,
-  useState,
 } from 'react';
-import { isSameMonth, setMonth } from 'date-fns';
 
 import { useBackdropClick, useForwardedRef } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
@@ -34,14 +32,8 @@ export const DatePickerComponent = forwardRef<
     const formFieldRef = useForwardedRef(fwdRef, null);
     const menuRef = useRef<HTMLDivElement>(null);
 
-    const [displayMonth, setDisplayMonth] = useState<Date>(value ?? new Date());
-
+    /** setValue with possible side effects */
     const updateValue = (newVal: Date | null) => {
-      // if the new value is not the current month, update the month
-      if (newVal && !isSameMonth(newVal, displayMonth)) {
-        setDisplayMonth(setMonth(displayMonth, newVal.getMonth()));
-      }
-
       setValue(newVal);
     };
 
@@ -110,8 +102,8 @@ export const DatePickerComponent = forwardRef<
           refEl={formFieldRef}
           value={value}
           isOpen={isOpen}
-          month={displayMonth}
-          setMonth={setDisplayMonth}
+          // month={displayMonth}
+          // setMonth={setDisplayMonth}
           onCellClick={handleCellClick}
           onKeyDown={handleMenuKeydown}
         />

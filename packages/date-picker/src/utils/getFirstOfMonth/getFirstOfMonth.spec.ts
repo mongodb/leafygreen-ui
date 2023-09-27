@@ -12,4 +12,12 @@ describe('packages/date-picker/utils/getFirstOfMonth', () => {
       new Date(Date.UTC(2023, 11, 1)),
     );
   });
+
+  test('returned time is midnight', () => {
+    const first = getFirstOfMonth(new Date(Date.UTC(2023, 11, 1)));
+    expect(first.getUTCHours()).toEqual(0);
+    expect(first.getUTCMinutes()).toEqual(0);
+    expect(first.getUTCSeconds()).toEqual(0);
+    expect(first.getUTCMilliseconds()).toEqual(0);
+  });
 });

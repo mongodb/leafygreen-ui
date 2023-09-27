@@ -1,6 +1,7 @@
+import { setToUTCMidnight } from '../setToUTCMidnight';
 import { setUTCDate } from '../setUTCDate';
 
-/** Returns the fist day of the provided month */
+/** Returns midnight on the fist day of the provided month */
 export const getFirstOfMonth = (date: Date) => {
-  return setUTCDate(date, 1);
+  return setToUTCMidnight(setUTCDate(date, 1));
 };

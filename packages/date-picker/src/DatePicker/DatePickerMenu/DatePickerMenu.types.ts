@@ -13,16 +13,6 @@ export type DatePickerMenuProps = PortalControlProps &
     /** The value of the component, provided in UTC time */
     value?: DateType;
 
-    /** The month to display in the calendar grid */
-    month: Date;
-    // highlight: ;
-
-    /**
-     * Callback fired when the date carets are clicked,
-     * or when the month/year dropdowns are modified
-     */
-    setMonth: (newMonth: Date) => void;
-
     /** Callback fired when a cell is clicked */
     onCellClick: (cellDate: Date) => void;
   };

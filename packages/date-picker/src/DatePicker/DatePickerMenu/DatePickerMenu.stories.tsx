@@ -62,7 +62,6 @@ export default meta;
 
 export const Basic: StoryFn<typeof DatePickerMenu> = props => {
   const [value, setValue] = useState<Date | null>(new Date('2023-09-11'));
-  const [month, setMonth] = useState<Date>(new Date('2023-09-11'));
 
   const refEl = useRef<HTMLDivElement>(null);
   return (
@@ -72,9 +71,7 @@ export const Basic: StoryFn<typeof DatePickerMenu> = props => {
         {...props}
         refEl={refEl}
         value={value}
-        month={month}
         onCellClick={setValue}
-        onMonthChange={newMonth => setMonth(newMonth)}
       />
     </>
   );

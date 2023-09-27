@@ -56,4 +56,10 @@ describe('packages/date-picker/utils/isSameUTCMonth', () => {
     expect(isSameUTCMonth(null, new Date())).toBe(false);
     expect(isSameUTCMonth(null, null)).toBe(false);
   });
+
+  test('false for different years', () => {
+    const utc1 = new Date(Date.UTC(2023, Month.September, 1));
+    const utc2 = new Date(Date.UTC(2024, Month.September, 10));
+    expect(isSameUTCMonth(utc1, utc2)).toBe(false);
+  });
 });

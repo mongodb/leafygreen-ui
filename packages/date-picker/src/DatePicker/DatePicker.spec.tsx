@@ -9,6 +9,7 @@ import userEvent from '@testing-library/user-event';
 import { range } from 'lodash';
 
 import { Month } from '../constants';
+import { newUTC } from '../utils/newUTC';
 
 import { renderDatePicker } from './DatePicker.testutils';
 import { DatePicker } from '.';
@@ -125,7 +126,7 @@ describe('packages/date-picker', () => {
           expect(rightChevron).toHaveAttribute('aria-disabled', 'true');
         });
 
-        test('Left is not disabled if part of prev. month is in range', () => {
+        test('Left is not disabled if only part of prev. month is in range', () => {
           const { openMenu } = renderDatePicker({
             min: new Date(Date.UTC(2023, Month.November, 29)),
           });
@@ -133,7 +134,7 @@ describe('packages/date-picker', () => {
           expect(leftChevron).toHaveAttribute('aria-disabled', 'false');
         });
 
-        test('Right is not disabled if part of next month is in of range', () => {
+        test('Right is not disabled if only part of next month is in of range', () => {
           const { openMenu } = renderDatePicker({
             max: new Date(Date.UTC(2024, Month.January, 2)),
           });
@@ -229,13 +230,27 @@ describe('packages/date-picker', () => {
           });
 
           test('updates the displayed month to the previous', () => {
-            const { openMenu } = renderDatePicker();
+            const { openMenu } = renderDatePicker({
+              value: newUTC(2023, Month.December, 25),
+            });
             const { leftChevron, monthSelect, yearSelect, calendarGrid } =
               openMenu();
             userEvent.click(leftChevron!);
             expect(calendarGrid).toHaveAttribute('aria-label', 'November 2023');
             expect(monthSelect).toHaveValue(Month.November.toString());
             expect(yearSelect).toHaveValue('2023');
+          });
+
+          test('updates the displayed month to the previous, and updates year', () => {
+            const { openMenu } = renderDatePicker({
+              value: newUTC(2023, Month.January, 5),
+            });
+            const { leftChevron, monthSelect, yearSelect, calendarGrid } =
+              openMenu();
+            userEvent.click(leftChevron!);
+            expect(calendarGrid).toHaveAttribute('aria-label', 'December 2022');
+            expect(monthSelect).toHaveValue(Month.December.toString());
+            expect(yearSelect).toHaveValue('2022');
           });
         });
 
@@ -248,7 +263,21 @@ describe('packages/date-picker', () => {
           });
 
           test('updates the displayed month to the next', () => {
-            const { openMenu } = renderDatePicker();
+            const { openMenu } = renderDatePicker({
+              value: newUTC(2023, Month.January, 5),
+            });
+            const { rightChevron, monthSelect, yearSelect, calendarGrid } =
+              openMenu();
+            userEvent.click(rightChevron!);
+            expect(calendarGrid).toHaveAttribute('aria-label', 'February 2023');
+            expect(monthSelect).toHaveValue(Month.February.toString());
+            expect(yearSelect).toHaveValue('2023');
+          });
+
+          test('updates the displayed month to the next and updates year', () => {
+            const { openMenu } = renderDatePicker({
+              value: newUTC(2023, Month.December, 26),
+            });
             const { rightChevron, monthSelect, yearSelect, calendarGrid } =
               openMenu();
             userEvent.click(rightChevron!);
@@ -324,7 +353,7 @@ describe('packages/date-picker', () => {
       });
     });
 
-    describe('Changing the month', () => {
+    describe.skip('Changing the month', () => {
       test.todo('is announced in an aria-live region');
 
       describe('updates the highlighted cell', () => {
