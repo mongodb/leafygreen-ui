@@ -31,6 +31,9 @@
     "@leafygreen-ui/typography": "^17.0.1",
     "react-transition-group": "^4.4.5"
   },
+  "devDependencies": {
+    "@types/react-transition-group": "^4.4.7"
+  },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.9"
   },
@@ -42,6 +45,5 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
-  },
-  "devDependencies": {}
+  }
 }

@@ -40,7 +40,8 @@
     "@leafygreen-ui/leafygreen-provider": "^3.1.9"
   },
   "devDependencies": {
-    "@leafygreen-ui/select": "^10.3.16"
+    "@leafygreen-ui/select": "^10.3.16",
+    "@types/react-transition-group": "^4.4.7"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/side-nav",
   "repository": {
