@@ -1,5 +1,16 @@
 # @leafygreen-ui/combobox
 
+## 7.0.0
+
+### Major Changes
+
+- 9a728c7b: Replaces internal `Chip` component with new LG `Chip` component and exposes an upgraded `TruncationLocation` object which capitalizes the first letter of each key. Instead of referring to it as `TruncationLocation.end`, it will now be represented as `TruncationLocation.End`.
+
+### Patch Changes
+
+- Updated dependencies [9a728c7b]
+  - @leafygreen-ui/chip@1.0.0
+
 ## 6.0.15
 
 ### Patch Changes
