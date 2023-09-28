@@ -1,5 +1,11 @@
 # @leafygreen-ui/select
 
+## 10.3.17
+
+### Patch Changes
+
+- d70768a7: Add a 1px `gray.light2` border to light mode dropdowns and a 1px `gray.dark3` border to dark mode dropdowns to match Figma specs.
+
 ## 10.3.16
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/table
 
+## 12.1.1
+
+### Patch Changes
+
+- 11089c73: Checkboxes in Tables are now styled different for better contrast
+
 ## 12.1.0
 
 ### Minor Changes
