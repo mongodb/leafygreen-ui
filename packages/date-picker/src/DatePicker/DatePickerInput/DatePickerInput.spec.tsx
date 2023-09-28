@@ -88,10 +88,11 @@ describe('packages/date-picker/date-picker-input', () => {
       test('deletes any value in the input', () => {
         const { dayInput } = renderDatePickerInput();
         userEvent.type(dayInput, '26{backspace}');
+        expect(dayInput.value).toBe('2');
+        userEvent.tab();
         expect(dayInput.value).toBe('02');
       });
 
-      // TODO: FIXME:
       test('deletes the whole value on multiple presses', () => {
         const { monthInput } = renderDatePickerInput();
         userEvent.type(monthInput, '11');

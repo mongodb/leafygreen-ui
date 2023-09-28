@@ -1,4 +1,10 @@
-import React, { ChangeEventHandler } from 'react';
+import React, {
+  ChangeEventHandler,
+  FocusEventHandler,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
@@ -30,6 +36,7 @@ export const DateInputSegment = React.forwardRef<
       min: minProp,
       max: maxProp,
       onChange,
+      onBlur,
       darkMode,
       ...rest
     }: DateInputSegmentProps,
@@ -44,10 +51,33 @@ export const DateInputSegment = React.forwardRef<
     const baseFontSize = useUpdatedBaseFontSize();
     const { size, disabled } = useDatePickerContext();
 
-    const formatValue = getValueFormatter(segment);
+    const formatValue = useMemo(() => getValueFormatter(segment), [segment]);
 
-    const changeHandler: ChangeEventHandler<HTMLInputElement> = e => {
-      onChange?.(formatValue(e.target.value));
+    // internally, keep track of the input value
+    const [internalValue, setInternalValue] = useState<string>(
+      formatValue(value),
+    );
+
+    // If the value changes externally, update the internal value
+    useEffect(() => {
+      setInternalValue(formatValue(value));
+    }, [formatValue, value]);
+
+    // On input element change, we update the internal value
+    const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
+      setInternalValue(e.target.value);
+    };
+
+    // When the user unfocuses the element, then we fire the change handler
+    const handleBlur: FocusEventHandler<HTMLInputElement> = e => {
+      const formattedValue = formatValue(internalValue);
+
+      // If the value has changed, call the change handler
+      if (formattedValue !== formatValue(value)) {
+        onChange?.(formattedValue);
+      }
+
+      onBlur?.(e);
     };
 
     return (
@@ -58,11 +88,12 @@ export const DateInputSegment = React.forwardRef<
         ref={inputRef}
         type="number"
         role="spinbutton"
-        value={formatValue(value)}
+        value={internalValue}
         min={min}
         max={max}
         placeholder={defaultPlaceholder[segment]}
-        onChange={changeHandler}
+        onChange={handleChange}
+        onBlur={handleBlur}
         disabled={disabled}
         className={cx(
           baseStyles,

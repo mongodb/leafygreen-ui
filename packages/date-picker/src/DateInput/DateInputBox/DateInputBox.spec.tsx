@@ -2,12 +2,14 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { Month } from '../../constants';
 import {
   DatePickerProvider,
   DatePickerProviderProps,
 } from '../../DatePickerContext';
 import { defaultDatePickerContext } from '../../DatePickerContext/DatePickerContext.utils';
 import { SegmentRefs } from '../../hooks/useSegmentRefs';
+import { newUTC } from '../../utils';
 
 import { DateInputBox, type DateInputBoxProps } from '.';
 
@@ -86,7 +88,7 @@ describe('packages/date-picker/shared/date-input-box', () => {
       });
     });
 
-    test('renders an empty text box', () => {
+    test('renders an empty text box when no value is passed', () => {
       const { dayInput, monthInput, yearInput } = renderDateInputBox(
         undefined,
         { dateFormat: 'iso8601' },
@@ -96,7 +98,7 @@ describe('packages/date-picker/shared/date-input-box', () => {
       expect(yearInput).toHaveValue(null);
     });
 
-    test('renders a filled text box', () => {
+    test('renders a filled text box when value is passed', () => {
       const { dayInput, monthInput, yearInput } = renderDateInputBox(
         { value: new Date('1993-12-26') },
         { dateFormat: 'iso8601', timeZone: 'UTC' },
@@ -109,7 +111,7 @@ describe('packages/date-picker/shared/date-input-box', () => {
   });
 
   describe('typing', () => {
-    test('typing into a segment updates the segment', () => {
+    test('typing into a segment updates the segment value', () => {
       const { dayInput } = renderDateInputBox(undefined, {
         dateFormat: 'iso8601',
         timeZone: 'UTC',
@@ -119,12 +121,12 @@ describe('packages/date-picker/shared/date-input-box', () => {
       expect(dayInput).toHaveValue(26);
     });
 
-    test('typing into a segment does not fire the change handler ', () => {
-      const handler = jest.fn();
+    test('typing into a segment does not fire the value change handler ', () => {
+      const setValue = jest.fn();
       const { dayInput } = renderDateInputBox(
         {
           value: null,
-          setValue: handler,
+          setValue,
         },
         {
           dateFormat: 'iso8601',
@@ -133,10 +135,10 @@ describe('packages/date-picker/shared/date-input-box', () => {
       );
 
       userEvent.type(dayInput, '26');
-      expect(handler).not.toHaveBeenCalled();
+      expect(setValue).not.toHaveBeenCalled();
     });
 
-    test('typing into a segment fires a segment change handler', () => {
+    test('typing into a segment does not immediately fire the segment change handler', () => {
       const onSegmentChange = jest.fn();
 
       const { yearInput } = renderDateInputBox(
@@ -151,15 +153,37 @@ describe('packages/date-picker/shared/date-input-box', () => {
       );
       userEvent.type(yearInput, '1993');
 
+      expect(onSegmentChange).not.toHaveBeenCalled();
+    });
+
+    test('only the segment change handler is fired when the input is blurred', () => {
+      const setValue = jest.fn();
+      const onSegmentChange = jest.fn();
+
+      const { yearInput } = renderDateInputBox(
+        {
+          value: null,
+          setValue,
+          onSegmentChange,
+        },
+        {
+          dateFormat: 'iso8601',
+          timeZone: 'UTC',
+        },
+      );
+
+      userEvent.type(yearInput, '1993');
+      userEvent.tab();
+      expect(setValue).not.toHaveBeenCalled();
       expect(onSegmentChange).toHaveBeenCalledWith('year', 1993);
     });
 
-    test('typing a complete date fires the change handler', () => {
-      const handler = jest.fn();
+    test('change handler is called when a complete date is entered, and is blurred', () => {
+      const setValue = jest.fn();
       const { dayInput, monthInput, yearInput } = renderDateInputBox(
         {
           value: null,
-          setValue: handler,
+          setValue,
         },
         {
           dateFormat: 'iso8601',
@@ -169,8 +193,11 @@ describe('packages/date-picker/shared/date-input-box', () => {
       userEvent.type(yearInput, '1993');
       userEvent.type(monthInput, '12');
       userEvent.type(dayInput, '26');
-
-      expect(handler).toHaveBeenCalled();
+      expect(setValue).not.toHaveBeenCalled();
+      userEvent.tab();
+      expect(setValue).toHaveBeenCalledWith(
+        expect.objectContaining(newUTC(1993, Month.December, 26)),
+      );
     });
 
     test.todo(
