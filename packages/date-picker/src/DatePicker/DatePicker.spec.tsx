@@ -213,6 +213,17 @@ describe('packages/date-picker', () => {
           expect(firstCell).toHaveAttribute('aria-disabled', 'true');
           expect(onChange).not.toHaveBeenCalled();
         });
+
+        test('fires a validation handler', () => {
+          const handleValidation = jest.fn();
+          const { openMenu } = renderDatePicker({
+            handleValidation,
+          });
+          const { calendarCells } = openMenu();
+          const firstCell = calendarCells?.[0];
+          userEvent.click(firstCell);
+          expect(handleValidation).toHaveBeenCalled();
+        });
       });
 
       describe('Clicking a Chevron', () => {
@@ -487,6 +498,20 @@ describe('packages/date-picker', () => {
             });
           });
         });
+
+        test('calls validation handler when last segment is unfocused', () => {
+          const handleValidation = jest.fn();
+          renderDatePicker({ handleValidation });
+          tabNTimes(5);
+          expect(handleValidation).toHaveBeenCalled();
+        });
+
+        test('does not call validation handler when changing segment focus', () => {
+          const handleValidation = jest.fn();
+          renderDatePicker({ handleValidation });
+          tabNTimes(2);
+          expect(handleValidation).not.toHaveBeenCalled();
+        });
       });
 
       describe('Enter key', () => {
@@ -498,7 +523,13 @@ describe('packages/date-picker', () => {
           expect(menuContainerEl).not.toBeInTheDocument();
         });
 
-        test.todo('calls validation handler');
+        test('calls validation handler', () => {
+          const handleValidation = jest.fn();
+          renderDatePicker({ handleValidation });
+          userEvent.tab();
+          userEvent.keyboard('{enter}');
+          expect(handleValidation).toHaveBeenCalled();
+        });
 
         test('if menu is closed, enter key on calendar button opens the menu', () => {
           const { getMenuElements } = renderDatePicker();
@@ -611,8 +642,18 @@ describe('packages/date-picker', () => {
           expect(onChange).toHaveBeenCalled();
         });
 
-        // TODO: validation handlers
-        test.skip('fires a validation handler if the value is updated', () => {
+        test('does not fire a validation handler when the value is first set', () => {
+          const handleValidation = jest.fn();
+          const { yearInput, monthInput, dayInput } = renderDatePicker({
+            handleValidation,
+          });
+          userEvent.type(yearInput, '2023');
+          userEvent.type(monthInput, '12');
+          userEvent.type(dayInput, '26');
+          expect(handleValidation).not.toHaveBeenCalled();
+        });
+
+        test('fires a validation handler any time the value is updated', () => {
           const handleValidation = jest.fn();
           const { dayInput } = renderDatePicker({
             value: new Date(),
@@ -620,7 +661,7 @@ describe('packages/date-picker', () => {
           });
 
           userEvent.type(dayInput, '05');
-          expect(handleValidation).toHaveBeenCalledTimes(2);
+          expect(handleValidation).toHaveBeenCalled();
         });
 
         test.todo('focuses the next segment if the segment value is valid');

@@ -19,13 +19,14 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       value: valueProp,
       initialValue: initialProp,
       onChange: onChangeProp,
-      handleValidation,
       ...props
     }: DatePickerProps,
     fwdRef,
   ) => {
     const [contextProps, restProps] = pickAndOmit(props, contextPropNames);
     const menuId = useIdAllocator({ prefix: 'lg-date-picker-menu' });
+
+    // TODO: initialize this in the Provider
     const [isOpen, setOpen] = useState(false);
 
     const { value, setValue } = useControlledValue(

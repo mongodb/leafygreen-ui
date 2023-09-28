@@ -104,10 +104,10 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
               <DateInputSegment
                 key={part.type}
                 ref={segmentRefs[part.type]}
+                aria-labelledby={labelledBy}
                 segment={part.type}
                 value={segments[part.type]}
                 onChange={handleSegmentChange(part.type)}
-                aria-labelledby={labelledBy}
               />
             );
           }

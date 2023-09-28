@@ -25,7 +25,7 @@ export interface DatePickerProps extends BaseDatePickerProps {
    *
    * Callback date argument will be a Date object in ISO 8601 format, and in UTC time.
    */
-  handleValidation?: (value: Date) => void;
+  handleValidation?: (value?: DateType) => void;
 
   /**
    * Callback fired when any segment changes, but not necessarily a full value

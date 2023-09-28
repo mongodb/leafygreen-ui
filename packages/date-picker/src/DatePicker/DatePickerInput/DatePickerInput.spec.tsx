@@ -92,10 +92,10 @@ describe('packages/date-picker/date-picker-input', () => {
       });
 
       // TODO: FIXME:
-      // eslint-disable-next-line jest/no-disabled-tests
-      test.skip('deletes the whole value on multiple presses', () => {
+      test('deletes the whole value on multiple presses', () => {
         const { monthInput } = renderDatePickerInput();
-        userEvent.type(monthInput, '11{backspace}{backspace}');
+        userEvent.type(monthInput, '11');
+        userEvent.type(monthInput, '{backspace}{backspace}');
         expect(monthInput.value).toBe('');
       });
 

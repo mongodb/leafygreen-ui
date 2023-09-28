@@ -24,5 +24,15 @@ export interface DatePickerContextProps
    */
   isInRange: (d?: Date | null) => boolean;
 
+  /**
+   * An array of {@link Intl.DateTimeFormatPart},
+   * used to determine the order of segments
+   */
   formatParts?: Array<Intl.DateTimeFormatPart>;
+
+  /** Identifies whether the component has been interacted with */
+  isDirty: boolean;
+
+  /** Setter for whether the component has been interacted with */
+  setIsDirty: React.Dispatch<React.SetStateAction<boolean>>;
 }

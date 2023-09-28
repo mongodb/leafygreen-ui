@@ -1,4 +1,5 @@
 import React, {
+  FocusEventHandler,
   forwardRef,
   KeyboardEventHandler,
   MouseEventHandler,
@@ -10,6 +11,7 @@ import { keyMap } from '@leafygreen-ui/lib';
 
 import { useDatePickerContext } from '../../DatePickerContext';
 import { useSegmentRefs } from '../../hooks/useSegmentRefs';
+import { isSameUTCDay } from '../../utils';
 import { DatePickerInput, DatePickerInputProps } from '../DatePickerInput';
 import { DatePickerMenu, DatePickerMenuProps } from '../DatePickerMenu';
 import { focusRelevantSegment } from '../utils/focusRelevantSegment';
@@ -24,8 +26,15 @@ export const DatePickerComponent = forwardRef<
     { value, setValue, handleValidation, ...rest }: DatePickerComponentProps,
     fwdRef,
   ) => {
-    const { disabled, isOpen, setOpen, formatParts, menuId } =
-      useDatePickerContext();
+    const {
+      disabled,
+      isOpen,
+      setOpen,
+      isDirty,
+      setIsDirty,
+      formatParts,
+      menuId,
+    } = useDatePickerContext();
     const openMenu = () => setOpen(true);
     const closeMenu = () => setOpen(false);
 
@@ -40,14 +49,21 @@ export const DatePickerComponent = forwardRef<
 
     useBackdropClick(closeMenu, [formFieldRef, menuRef], isOpen);
 
+    /** Called when any input segment's value has changed */
     const handleInputChange: DatePickerInputProps['setValue'] = (
       inputVal: Date | null,
     ) => {
-      if (inputVal !== value) {
+      if (!isSameUTCDay(inputVal, value)) {
+        // When the value changes via the input element,
+        // we only trigger validation if the component is dirty
+        if (isDirty) {
+          handleValidation?.(inputVal);
+        }
         updateValue(inputVal);
       }
     };
 
+    /** Called when the input, or any of its children, is clicked */
     const handleInputClick: MouseEventHandler<HTMLElement> = ({ target }) => {
       if (!disabled) {
         setOpen(true);
@@ -60,11 +76,38 @@ export const DatePickerComponent = forwardRef<
       }
     };
 
-    const handleCellClick: DatePickerMenuProps['onCellClick'] = cellValue => {
-      updateValue(cellValue);
-      setOpen(false);
+    /** Called when any child of DatePickerInput is blurred */
+    const handleInputBlur: FocusEventHandler = e => {
+      const nextFocus = e.relatedTarget;
+
+      // If the next focus is _not_ on a segment
+      if (
+        !Object.values(segmentRefs)
+          .map(ref => ref.current)
+          .includes(nextFocus as HTMLInputElement)
+      ) {
+        setIsDirty(true);
+        handleValidation?.(value);
+      }
     };
 
+    /** Called when any calendar cell is clicked */
+    const handleCalendarCellClick: DatePickerMenuProps['onCellClick'] = (
+      cellValue: Date,
+    ) => {
+      if (!isSameUTCDay(cellValue, value)) {
+        // when the value is changed via cell,
+        // we trigger validation every time
+        handleValidation?.(cellValue);
+        setIsDirty(true);
+        // finally we update the component value
+        updateValue(cellValue);
+        // and close the menu
+        setOpen(false);
+      }
+    };
+
+    /** Called on any keydown within the input element */
     const handleInputKeydown: KeyboardEventHandler = ({ key }) => {
       switch (key) {
         case keyMap.Enter:
@@ -80,6 +123,7 @@ export const DatePickerComponent = forwardRef<
       }
     };
 
+    /** Called on any keydown within the menu element */
     const handleMenuKeydown: KeyboardEventHandler = ({ key }) => {
       switch (key) {
         case keyMap.Escape:
@@ -98,6 +142,7 @@ export const DatePickerComponent = forwardRef<
           setValue={handleInputChange}
           onClick={handleInputClick}
           onKeyDown={handleInputKeydown}
+          onBlur={handleInputBlur}
           segmentRefs={segmentRefs}
           {...rest}
         />
@@ -106,7 +151,7 @@ export const DatePickerComponent = forwardRef<
           id={menuId}
           refEl={formFieldRef}
           value={value}
-          onCellClick={handleCellClick}
+          onCellClick={handleCalendarCellClick}
           onKeyDown={handleMenuKeydown}
         />
       </>

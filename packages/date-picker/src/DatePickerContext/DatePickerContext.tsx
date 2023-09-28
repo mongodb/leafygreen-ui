@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createContext, PropsWithChildren, useContext } from 'react';
 
 import {
@@ -20,10 +20,13 @@ export const DatePickerProvider = ({
   children,
   value,
 }: PropsWithChildren<{ value: DatePickerProviderProps }>) => {
+  const [isDirty, setIsDirty] = useState(false);
   const contextValue = getContextProps(value);
 
   return (
-    <DatePickerContext.Provider value={contextValue}>
+    <DatePickerContext.Provider
+      value={{ ...contextValue, isDirty, setIsDirty }}
+    >
       {children}
     </DatePickerContext.Provider>
   );
