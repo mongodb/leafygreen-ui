@@ -209,23 +209,26 @@ describe('packages/date-picker/shared/date-input-box', () => {
   });
 
   describe('Keyboard interaction', () => {
+    // Skipping, since {arrowup}/{arrowdown} do not trigger
+    // a change event in userEvent
+    // https://github.com/testing-library/user-event/issues/1066
     // eslint-disable-next-line jest/no-disabled-tests
     describe.skip('Up arrow', () => {
       describe('increments the input value', () => {
-        test('day input', async () => {
-          const { dayInput } = renderDateInputBox();
-          userEvent.type(dayInput, '26{arrowup}');
-          expect(dayInput.value).toBe('27');
+        test('year input', async () => {
+          const { yearInput } = renderDateInputBox({});
+          userEvent.type(yearInput, '2023{arrowup}');
+          expect(yearInput.value).toBe('2024');
         });
         test('month input', async () => {
           const { monthInput } = renderDateInputBox();
           userEvent.type(monthInput, '9{arrowup}');
           expect(monthInput.value).toBe('10');
         });
-        test('year input', async () => {
-          const { yearInput } = renderDateInputBox();
-          userEvent.type(yearInput, '2023{arrowup}');
-          expect(yearInput.value).toBe('2024');
+        test('day input', async () => {
+          const { dayInput } = renderDateInputBox();
+          userEvent.type(dayInput, '26{arrowup}');
+          expect(dayInput.value).toBe('27');
         });
       });
     });

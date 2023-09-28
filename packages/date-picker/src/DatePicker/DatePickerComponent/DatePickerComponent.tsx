@@ -68,12 +68,14 @@ export const DatePickerComponent = forwardRef<
     const handleInputKeydown: KeyboardEventHandler = ({ key }) => {
       switch (key) {
         case keyMap.Enter:
-          openMenu();
+          // noop. Enter can interfere with Form behavior
           break;
         case keyMap.Escape:
           closeMenu();
           break;
         default:
+          // any other keydown should open the menu
+          openMenu();
           break;
       }
     };

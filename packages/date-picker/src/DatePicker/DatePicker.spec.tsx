@@ -490,10 +490,19 @@ describe('packages/date-picker', () => {
       });
 
       describe('Enter key', () => {
-        // TODO: TBD if this is the desired behavior
-        test.skip('if menu is closed, opens the menu', () => {
+        test('if menu is closed, does not open the menu', () => {
           const { getMenuElements } = renderDatePicker();
           userEvent.tab();
+          userEvent.keyboard('{enter}');
+          const { menuContainerEl } = getMenuElements();
+          expect(menuContainerEl).not.toBeInTheDocument();
+        });
+
+        test.todo('calls validation handler');
+
+        test('if menu is closed, enter key on calendar button opens the menu', () => {
+          const { getMenuElements } = renderDatePicker();
+          tabNTimes(3);
           userEvent.keyboard('{enter}');
           const { menuContainerEl } = getMenuElements();
           expect(menuContainerEl).toBeInTheDocument();
@@ -566,7 +575,7 @@ describe('packages/date-picker', () => {
 
     describe('Typing', () => {
       describe('Typing into the input', () => {
-        test.skip('opens the menu', () => {
+        test('opens the menu', () => {
           const { yearInput, getMenuElements } = renderDatePicker();
           userEvent.tab();
           expect(yearInput).toHaveFocus();
