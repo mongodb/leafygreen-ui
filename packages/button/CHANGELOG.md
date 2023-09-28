@@ -1,5 +1,11 @@
 # @leafygreen-ui/button
 
+## 21.0.7
+
+### Patch Changes
+
+- d2c1ec53: Updates Button to remove `pointer-events: none` styles from it's inner container. This allows the Select component to work as intended when using `usePortal = false`.
+
 ## 21.0.6
 
 ### Patch Changes
