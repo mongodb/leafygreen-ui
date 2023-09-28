@@ -5,8 +5,7 @@ import defaultTo from 'lodash/defaultTo';
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
 import { BaseDatePickerProps } from '../types';
-import { getFormatParts } from '../utils/getFormatParts';
-import { toDate } from '../utils/toDate';
+import { getFormatParts, toDate } from '../utils';
 
 import {
   DatePickerContextProps,

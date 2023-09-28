@@ -1,8 +1,10 @@
 import { isAfter } from 'date-fns';
 
-import { getFirstOfMonth } from '../../../../utils/getFirstOfMonth';
-import { getLastOfMonth } from '../../../../utils/getLastOfMonth';
-import { isSameUTCMonth } from '../../../../utils/isSameUTCMonth';
+import {
+  getFirstOfMonth,
+  getLastOfMonth,
+  isSameUTCMonth,
+} from '../../../../utils';
 
 export const getNewHighlight = (
   currentHighlight: Date | null,

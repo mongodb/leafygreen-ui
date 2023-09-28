@@ -18,12 +18,14 @@ import { CalendarCell, CalendarCellState } from '../../Calendar/CalendarCell';
 import { CalendarGrid } from '../../Calendar/CalendarGrid';
 import { MenuWrapper } from '../../Calendar/MenuWrapper';
 import { useDatePickerContext } from '../../DatePickerContext';
-import { getFirstOfMonth } from '../../utils/getFirstOfMonth';
-import { getFullMonthLabel } from '../../utils/getFullMonthLabel';
-import { getUTCDateString } from '../../utils/getUTCDateString';
-import { isSameUTCDay } from '../../utils/isSameUTCDay';
-import { isSameUTCMonth } from '../../utils/isSameUTCMonth';
-import { setToUTCMidnight } from '../../utils/setToUTCMidnight';
+import {
+  getFirstOfMonth,
+  getFullMonthLabel,
+  getUTCDateString,
+  isSameUTCDay,
+  isSameUTCMonth,
+  setToUTCMidnight,
+} from '../../utils';
 
 import { getNewHighlight } from './utils/getNewHighlight';
 import {

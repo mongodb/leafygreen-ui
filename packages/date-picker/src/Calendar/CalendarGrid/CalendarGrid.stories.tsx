@@ -12,8 +12,7 @@ import {
   useDatePickerContext,
 } from '../../DatePickerContext';
 import { Locales, TimeZones } from '../../testUtils';
-import { isTodayTZ } from '../../utils/isTodayTZ';
-import { newUTC } from '../../utils/newUTC';
+import { isTodayTZ, newUTC } from '../../utils';
 import { CalendarCell } from '../CalendarCell/CalendarCell';
 
 import { CalendarGrid } from './CalendarGrid';

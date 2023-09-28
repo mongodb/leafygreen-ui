@@ -11,7 +11,7 @@ import {
   isDateSegment,
 } from '../../hooks/useDateSegments/DateSegments.types';
 import { useDateSegments } from '../../hooks/useDateSegments/useDateSegments';
-import { newDateFromSegments } from '../../utils/newDateFromSegments';
+import { newDateFromSegments } from '../../utils';
 import { DateInputSegment } from '../DateInputSegment';
 
 import {
@@ -43,7 +43,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
     }: DateInputBoxProps,
     fwdRef,
   ) => {
-    const { formatParts, disabled } = useDatePickerContext();
+    const { formatParts } = useDatePickerContext();
 
     const containerRef = useForwardedRef(fwdRef, null);
 

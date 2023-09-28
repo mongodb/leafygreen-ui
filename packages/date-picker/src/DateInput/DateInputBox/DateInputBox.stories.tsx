@@ -11,7 +11,7 @@ import {
   DatePickerContextProps,
   DatePickerProvider,
 } from '../../DatePickerContext';
-import { newUTC } from '../../utils/newUTC';
+import { newUTC } from '../../utils';
 
 import { DateInputBox } from './DateInputBox';
 

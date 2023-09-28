@@ -1,4 +1,4 @@
-import { isValidLocale } from '../../utils/isValidLocale';
+import { isValidLocale } from '../../utils';
 
 const now = new Date();
 const ISO = 'iso8601';

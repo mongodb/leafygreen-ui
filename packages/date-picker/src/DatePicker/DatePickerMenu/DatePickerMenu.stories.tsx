@@ -19,8 +19,7 @@ import {
   contextPropNames,
   defaultDatePickerContext,
 } from '../../DatePickerContext/DatePickerContext.utils';
-import { newUTC } from '../../utils/newUTC';
-import { pickAndOmit } from '../../utils/pickAndOmit';
+import { newUTC, pickAndOmit } from '../../utils';
 
 import { DatePickerMenu } from './DatePickerMenu';
 import { DatePickerMenuProps } from './DatePickerMenu.types';

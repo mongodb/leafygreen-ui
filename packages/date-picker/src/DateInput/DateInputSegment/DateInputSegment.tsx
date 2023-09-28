@@ -7,7 +7,7 @@ import { Size } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { useDatePickerContext } from '../../DatePickerContext';
-import { getValueFormatter } from '../../utils/getValueFormatter';
+import { getValueFormatter } from '../../utils';
 
 import { defaultMax, defaultMin, defaultPlaceholder } from './constants';
 import {

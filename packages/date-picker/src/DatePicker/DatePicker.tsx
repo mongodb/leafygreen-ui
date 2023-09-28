@@ -5,7 +5,7 @@ import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { DatePickerProvider } from '../DatePickerContext';
 import { contextPropNames } from '../DatePickerContext/DatePickerContext.utils';
 import { useControlledValue } from '../hooks/useControlledValue';
-import { pickAndOmit } from '../utils/pickAndOmit';
+import { pickAndOmit } from '../utils';
 
 import { DatePickerProps } from './DatePicker.types';
 import { DatePickerComponent } from './DatePickerComponent';

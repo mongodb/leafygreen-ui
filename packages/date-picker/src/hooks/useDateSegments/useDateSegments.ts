@@ -4,7 +4,7 @@ import { isSameDay } from 'date-fns';
 import { usePrevious } from '@leafygreen-ui/hooks';
 
 import { DateType } from '../../types';
-import { getSegmentsFromDate } from '../../utils/getSegmentsFromDate';
+import { getSegmentsFromDate } from '../../utils';
 
 import {
   DateSegment,

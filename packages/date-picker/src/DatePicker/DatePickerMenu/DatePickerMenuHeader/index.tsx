@@ -8,9 +8,7 @@ import { DropdownWidthBasis, Option, Select } from '@leafygreen-ui/select';
 
 import { Months } from '../../../constants';
 import { useDatePickerContext } from '../../../DatePickerContext';
-import { isSameUTCMonth } from '../../../utils/isSameUTCMonth';
-import { setUTCMonth } from '../../../utils/setUTCMonth';
-import { setUTCYear } from '../../../utils/setUTCYear';
+import { isSameUTCMonth, setUTCMonth, setUTCYear } from '../../../utils';
 import {
   menuHeaderSelectContainerStyles,
   menuHeaderStyles,

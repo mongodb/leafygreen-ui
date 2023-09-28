@@ -5,7 +5,7 @@ import { keyMap } from '@leafygreen-ui/lib';
 
 import { DateFormField, DateInputBox } from '../../DateInput';
 import { useDatePickerContext } from '../../DatePickerContext';
-import { isZeroLike } from '../../utils/isZeroLike';
+import { isZeroLike } from '../../utils';
 import { getRelativeSegment } from '../utils/getRelativeSegment';
 import { isElementInputSegment } from '../utils/isElementInputSegment';
 
