@@ -18,7 +18,8 @@ jobs:
           cache: yarn
           cache-dependency-path: 'yarn.lock'
 
-      - run: yarn install --frozen-lockfile --prefer-offline
+      - name: Install
+        run: yarn install --frozen-lockfile --prefer-offline
 
       - uses: actions/cache/restore@v3
         name: Restore build cache
