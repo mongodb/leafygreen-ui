@@ -12,7 +12,7 @@ const TestCellWrapper = ({ children }: PropsWithChildren) => (
   </table>
 );
 
-describe('packages/date-picker/calendar-cell', () => {
+describe('packages/date-picker/shared/calendar-cell', () => {
   test('has `gridcell` role', () => {
     const { queryByRole, getByTestId } = render(
       <TestCellWrapper>

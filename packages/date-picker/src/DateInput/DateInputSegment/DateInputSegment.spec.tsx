@@ -15,7 +15,7 @@ const renderSegment = (props: DateInputSegmentProps) => {
   };
 };
 
-describe('packages/date-picker/date-input-segment', () => {
+describe('packages/date-picker/shared/date-input-segment', () => {
   beforeEach(() => {
     handler.mockClear();
   });

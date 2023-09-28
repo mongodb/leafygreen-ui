@@ -48,7 +48,7 @@ const renderDateInputBox = (
   return { ...result, dayInput, monthInput, yearInput };
 };
 
-describe('packages/date-input-box', () => {
+describe('packages/date-picker/shared/date-input-box', () => {
   describe('rendering', () => {
     describe.each(['day', 'month', 'year'])('%i', segment => {
       test('renders the correct aria attributes', () => {

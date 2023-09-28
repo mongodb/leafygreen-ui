@@ -3,6 +3,6 @@ import { render } from '@testing-library/react';
 
 import { MenuWrapper } from '.';
 
-describe('packages/menu-wrapper', () => {
+describe('packages/date-picker/shared/menu-wrapper', () => {
   test('condition', () => {});
 });

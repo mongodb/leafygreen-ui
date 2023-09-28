@@ -30,7 +30,7 @@ const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
 );
 
 const meta: StoryMetaType<typeof DateInputBox, DatePickerContextProps> = {
-  title: 'Components/DatePicker/DateInputBox',
+  title: 'Components/DatePicker/Shared/DateInputBox',
   component: DateInputBox,
   decorators: [ProviderWrapper],
   parameters: {

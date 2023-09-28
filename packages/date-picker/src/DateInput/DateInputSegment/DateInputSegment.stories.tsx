@@ -13,7 +13,7 @@ import {
 import { DateInputSegment } from './DateInputSegment';
 
 const meta: StoryMetaType<typeof DateInputSegment, DatePickerContextProps> = {
-  title: 'Components/DatePicker/DateInputSegment',
+  title: 'Components/DatePicker/Shared/DateInputSegment',
   component: DateInputSegment,
   parameters: {
     default: null,

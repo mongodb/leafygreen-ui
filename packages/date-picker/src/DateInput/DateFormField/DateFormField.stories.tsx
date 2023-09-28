@@ -17,7 +17,7 @@ const meta: StoryMetaType<
   typeof DateFormField,
   Partial<DatePickerContextProps>
 > = {
-  title: 'Components/DatePicker/DateFormField',
+  title: 'Components/DatePicker/Shared/DateFormField',
   component: DateFormField,
   parameters: {
     default: null,

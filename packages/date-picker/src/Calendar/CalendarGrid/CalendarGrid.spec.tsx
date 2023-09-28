@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 
 import { CalendarGrid } from '.';
 
-describe('packages/calendar-grid', () => {
+describe('packages/date-picker/shared/calendar-grid', () => {
   test('has `grid` role', () => {
     const { container, queryByRole } = render(
       <CalendarGrid month={new Date()}>{() => <></>}</CalendarGrid>,
