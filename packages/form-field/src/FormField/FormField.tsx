@@ -79,6 +79,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
           disabled={disabled}
           size={size}
           state={state}
+          {...inputWrapperProps}
         />
         {state === FormFieldState.Error && (
           <Error id={errorId}>{errorMessage}</Error>
