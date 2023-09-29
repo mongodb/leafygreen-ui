@@ -1,9 +1,7 @@
 import { BaseDatePickerProps } from '../types';
 
 /** The props expected to pass int the provider */
-export interface DatePickerProviderProps extends BaseDatePickerProps {
-  menuId: string;
-}
+export interface DatePickerProviderProps extends BaseDatePickerProps {}
 
 /**
  * The values in context
@@ -26,6 +24,9 @@ export interface DatePickerContextProps
    * used to determine the order of segments
    */
   formatParts?: Array<Intl.DateTimeFormatPart>;
+
+  /** a unique id for the menu element */
+  menuId: string;
 
   /** Whether the menu is open */
   isOpen: boolean;

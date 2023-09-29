@@ -4,7 +4,6 @@ import { BaseDatePickerProps, DateType } from '../types';
 export interface DatePickerProps extends BaseDatePickerProps {
   /**
    * The selected date, given in UTC time
-   *
    */
   value?: DateType;
 
@@ -17,7 +16,7 @@ export interface DatePickerProps extends BaseDatePickerProps {
   onChange?: (value?: DateType) => void;
 
   /** The initial selected date. Ignored if `value` is provided */
-  initialValue?: Date;
+  initialValue?: DateType;
 
   /**
    * A callback fired when validation should run, based on our [form validation guidelines](https://www.mongodb.design/foundation/forms/#form-validation-error-handling).

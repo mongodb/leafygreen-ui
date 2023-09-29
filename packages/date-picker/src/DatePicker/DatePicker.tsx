@@ -1,7 +1,5 @@
 import React, { forwardRef } from 'react';
 
-import { useIdAllocator } from '@leafygreen-ui/hooks';
-
 import { DatePickerProvider } from '../DatePickerContext';
 import { contextPropNames } from '../DatePickerContext/DatePickerContext.utils';
 import { useControlledValue } from '../hooks/useControlledValue';
@@ -24,7 +22,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     fwdRef,
   ) => {
     const [contextProps, restProps] = pickAndOmit(props, contextPropNames);
-    const menuId = useIdAllocator({ prefix: 'lg-date-picker-menu' });
 
     const { value, setValue } = useControlledValue(
       valueProp,
@@ -36,7 +33,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       <DatePickerProvider
         value={{
           ...contextProps,
-          menuId,
         }}
       >
         <DatePickerComponent
