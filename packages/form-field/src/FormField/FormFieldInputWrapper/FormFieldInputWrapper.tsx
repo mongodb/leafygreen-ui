@@ -67,7 +67,6 @@ export const FormFieldInputWrapper = forwardRef<
         )}
         {icon &&
           React.cloneElement(icon, {
-            role: 'presentation',
             className: cx(
               iconClassName,
               iconStyles[theme],
