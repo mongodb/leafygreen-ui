@@ -21,17 +21,17 @@ export type FormFieldChildren = React.ReactElement<FormFieldChildrenProps>;
 
 type AriaLabelProps =
   | {
-      label: string;
+      label: React.ReactNode;
       'aria-label'?: string;
       'aria-labelledby'?: string;
     }
   | {
-      label?: string;
+      label?: React.ReactNode;
       'aria-label': string;
       'aria-labelledby'?: string;
     }
   | {
-      label?: string;
+      label?: React.ReactNode;
       'aria-label'?: string;
       'aria-labelledby': string;
     };
@@ -39,7 +39,6 @@ type AriaLabelProps =
 export type FormFieldProps = Omit<HTMLElementProps<'div'>, 'children'> &
   AriaLabelProps & {
     children: FormFieldChildren;
-    label?: React.ReactNode;
     description?: React.ReactNode;
     state?: FormFieldState;
     size?: Size;
