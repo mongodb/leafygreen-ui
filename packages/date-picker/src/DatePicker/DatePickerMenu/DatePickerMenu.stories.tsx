@@ -28,7 +28,7 @@ const mockToday = newUTC(2023, Month.September, 14);
 type DecoratorArgs = DatePickerMenuProps & DatePickerContextProps;
 
 const MenuDecorator = (Story: StoryFn, ctx: any) => {
-  const [{ darkMode, ...contextProps }, { isOpen, ...props }] = pickAndOmit(
+  const [{ darkMode, ...contextProps }, { ...props }] = pickAndOmit(
     ctx?.args as DecoratorArgs,
     [...contextPropNames],
   );
@@ -39,7 +39,11 @@ const MenuDecorator = (Story: StoryFn, ctx: any) => {
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <DatePickerProvider
-        value={{ ...defaultDatePickerContext, ...contextProps, isOpen }}
+        value={{
+          ...defaultDatePickerContext,
+          ...contextProps,
+          initialOpen: true,
+        }}
       >
         <Story {...props} />
       </DatePickerProvider>
@@ -53,21 +57,6 @@ const meta: StoryMetaType<typeof DatePickerMenu, DecoratorArgs> = {
   decorators: [MenuDecorator],
   parameters: {
     default: null,
-    // generate: {
-    //   combineArgs: {
-    //     darkMode: [false, true],
-    //     value: [null, new Date('1993-12-26')],
-    //     dateFormat: ['iso8601', 'en-US', 'en-UK', 'de-DE'],
-    //     timeZone: ['UTC', 'Europe/London', 'America/New_York', 'Asia/Seoul'],
-    //   },
-    //   excludeCombinations: [
-    //     {
-    //       timeZone: ['Europe/London', 'America/New_York', 'Asia/Seoul'],
-    //       value: null,
-    //     },
-    //   ],
-    //   decorator: MenuDecorator,
-    // },
     chromatic: {
       delay: transitionDuration.slower,
     },
@@ -247,5 +236,3 @@ export const Select2026: DatePickerMenuInteractionTestType = {
     userEvent.click(_2026!);
   },
 };
-
-// export const Generated = () => {};
