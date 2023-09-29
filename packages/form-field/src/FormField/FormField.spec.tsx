@@ -26,17 +26,6 @@ describe('packages/form-field', () => {
     expect(formField.classList.contains('form-field')).toBeTruthy();
   });
 
-  test('label has id & htmlFor', () => {
-    const { getByText } = render(
-      <FormField label="Label" data-testid="form-field">
-        <div />
-      </FormField>,
-    );
-    const label = getByText('Label');
-    expect(label).toHaveAttribute('id');
-    expect(label).toHaveAttribute('for');
-  });
-
   test('description has id', () => {
     const { getByText } = render(
       <FormField
@@ -51,6 +40,21 @@ describe('packages/form-field', () => {
     expect(description).toHaveAttribute('id');
   });
 
+  test('description can be ReactNode', () => {
+    const { queryByTestId } = render(
+      <FormField
+        label="Label"
+        description={<span data-testid="description-span">description</span>}
+        data-testid="form-field"
+      >
+        <div />
+      </FormField>,
+    );
+    const descriptionSpan = queryByTestId('description-span');
+    expect(descriptionSpan).toBeInTheDocument();
+    expect(descriptionSpan?.parentElement).toHaveAttribute('id');
+  });
+
   test('input has id,', () => {
     const { getByTestId } = render(
       <FormField label="Label" data-testid="form-field">
@@ -61,54 +65,117 @@ describe('packages/form-field', () => {
     expect(input).toHaveAttribute('id');
   });
 
-  test('input has labelledby attribute', () => {
-    const { getByTestId, getByText } = render(
-      <FormField
-        label="Label"
-        description="Description"
-        data-testid="form-field"
-      >
-        <div data-testid="input" />
-      </FormField>,
-    );
-    const label = getByText('Label');
-    const input = getByTestId('input');
-    expect(input).toHaveAttribute('aria-labelledby', label.id);
-  });
+  describe('Label rendering', () => {
+    test('label element has id & htmlFor', () => {
+      const { getByText } = render(
+        <FormField label="Label" data-testid="form-field">
+          <div />
+        </FormField>,
+      );
+      const label = getByText('Label');
+      expect(label).toHaveAttribute('id');
+      expect(label).toHaveAttribute('for');
+    });
 
-  test('input has describedby attribute', () => {
-    const { getByTestId, getByText } = render(
-      <FormField
-        label="Label"
-        description="Description"
-        data-testid="form-field"
-      >
-        <div data-testid="input" />
-      </FormField>,
-    );
-    const description = getByText('Description');
-    const input = getByTestId('input');
-    expect(input).toHaveAttribute('aria-describedby', description.id);
-  });
+    test('label can be a ReactNode', () => {
+      const { queryByTestId } = render(
+        <FormField
+          label={<span data-testid="label-span">Label</span>}
+          data-testid="form-field"
+        >
+          <div />
+        </FormField>,
+      );
+      const labelSpan = queryByTestId('label-span');
+      expect(labelSpan).toBeInTheDocument();
+      expect(labelSpan?.parentElement).toHaveAttribute('id');
+    });
 
-  test('when aria-label is provided, input has that aria-label', () => {
-    const { getByTestId } = render(
-      <FormField aria-label="Label" data-testid="form-field">
-        <div data-testid="input" />
-      </FormField>,
-    );
-    const input = getByTestId('input');
-    expect(input).toHaveAttribute('aria-label', 'Label');
-  });
+    test('input is labelledby label element', () => {
+      const { getByTestId, getByText } = render(
+        <FormField
+          label="Label"
+          description="Description"
+          data-testid="form-field"
+        >
+          <div data-testid="input" />
+        </FormField>,
+      );
+      const label = getByText('Label');
+      const input = getByTestId('input');
+      expect(input).toHaveAttribute('aria-labelledby', label.id);
+    });
 
-  test('when aria-labelledby is provided, input has that aria-labelledby', () => {
-    const { getByTestId } = render(
-      <FormField aria-labelledby="label-123" data-testid="form-field">
-        <div data-testid="input" />
-      </FormField>,
-    );
-    const input = getByTestId('input');
-    expect(input).toHaveAttribute('aria-labelledby', 'label-123');
+    test("input is labelledby label when it's a ReactNode", () => {
+      const { queryByTestId } = render(
+        <FormField
+          label={<span data-testid="label-span">Label</span>}
+          description="Description"
+          data-testid="form-field"
+        >
+          <div data-testid="input" />
+        </FormField>,
+      );
+      const labelSpan = queryByTestId('label-span');
+      const input = queryByTestId('input');
+      expect(input).toHaveAttribute(
+        'aria-labelledby',
+        labelSpan?.parentElement?.id,
+      );
+    });
+
+    test('input is describedby description element', () => {
+      const { getByTestId, getByText } = render(
+        <FormField
+          label="Label"
+          description="Description"
+          data-testid="form-field"
+        >
+          <div data-testid="input" />
+        </FormField>,
+      );
+      const description = getByText('Description');
+      const input = getByTestId('input');
+      expect(input).toHaveAttribute('aria-describedby', description.id);
+    });
+
+    test("input is describedby description when it's a ReactNode", () => {
+      const { getByTestId, queryByTestId } = render(
+        <FormField
+          label="Label"
+          description={<span data-testid="description-span">description</span>}
+          data-testid="form-field"
+        >
+          <div data-testid="input" />
+        </FormField>,
+      );
+      const descriptionSpan = queryByTestId('description-span');
+      const input = getByTestId('input');
+      expect(input).toHaveAttribute(
+        'aria-describedby',
+        descriptionSpan?.parentElement?.id,
+      );
+    });
+
+    test('when aria-label is provided, input has that aria-label', () => {
+      const { getByTestId } = render(
+        <FormField aria-label="Label" data-testid="form-field">
+          <div data-testid="input" />
+        </FormField>,
+      );
+      const input = getByTestId('input');
+      expect(input).toHaveAttribute('aria-label', 'Label');
+    });
+
+    test('when aria-labelledby is provided, input has that aria-labelledby', () => {
+      const { getByTestId } = render(
+        <FormField aria-labelledby="label-123" data-testid="form-field">
+          <div data-testid="input" />
+        </FormField>,
+      );
+      const input = getByTestId('input');
+      expect(input).toHaveAttribute('aria-labelledby', 'label-123');
+    });
   });
 
   describe('Error state', () => {
@@ -236,6 +303,13 @@ describe('packages/form-field', () => {
     // ...or aria-labelledby
     render(
       <FormField aria-labelledby="">
+        <div />
+      </FormField>,
+    );
+
+    // Label accepts React.ReactNode
+    render(
+      <FormField label={<span>label</span>}>
         <div />
       </FormField>,
     );
