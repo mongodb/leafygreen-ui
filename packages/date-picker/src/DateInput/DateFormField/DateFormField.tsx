@@ -47,6 +47,7 @@ export const DateFormField = React.forwardRef<
       errorId,
       onInputClick,
       onIconButtonClick,
+      className,
       ...rest
     }: DateFormFieldProps,
     fwdRef,
@@ -57,7 +58,11 @@ export const DateFormField = React.forwardRef<
 
     return (
       <div
-        className={cx(baseWrapperStyles, wrapperFontStyles[baseFontSize])}
+        className={cx(
+          baseWrapperStyles,
+          wrapperFontStyles[baseFontSize],
+          className,
+        )}
         ref={fwdRef}
         {...rest}
       >

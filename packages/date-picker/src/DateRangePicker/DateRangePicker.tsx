@@ -15,10 +15,6 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       end: endProp,
       initialEnd: initialEndProp,
       onRangeChange,
-      // handleValidation,
-      // onClear,
-      // onCancel,
-      // showQuickSelection,
       ...props
     }: DateRangePickerProps,
     fwdRef,

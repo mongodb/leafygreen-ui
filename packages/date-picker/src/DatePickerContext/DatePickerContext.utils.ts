@@ -21,6 +21,7 @@ export const contextPropNames: Array<
   keyof DatePickerProviderProps & keyof BaseDatePickerProps
 > = [
   'label',
+  'description',
   'dateFormat',
   'timeZone',
   'min',

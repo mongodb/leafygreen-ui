@@ -44,20 +44,21 @@ const meta: StoryMetaType<typeof DateRangePicker, DatePickerContextProps> = {
         'value',
       ],
     },
-    generate: {
-      combineArgs: {
-        darkMode: [false, true],
-        value: [newUTC(2023, Month.December, 26)],
-        dateFormat: ['iso8601', 'en-US', 'en-UK', 'de-DE'],
-        timeZone: ['UTC', 'Europe/London', 'America/New_York', 'Asia/Seoul'],
-        disabled: [false, true],
-      },
-      decorator: ProviderWrapper,
-    },
+    // generate: {
+    //   combineArgs: {
+    //     darkMode: [false, true],
+    //     value: [newUTC(2023, Month.December, 26)],
+    //     dateFormat: ['iso8601', 'en-US', 'en-UK', 'de-DE'],
+    //     timeZone: ['UTC', 'Europe/London', 'America/New_York', 'Asia/Seoul'],
+    //     disabled: [false, true],
+    //   },
+    //   decorator: ProviderWrapper,
+    // },
   },
   args: {
     dateFormat: 'en-US',
-    label: 'Pick a date',
+    label: 'Pick a Range',
+    description: 'Coordinated Universal Time',
     min: newUTC(1996, Month.October, 14),
     max: newUTC(2026, Month.October, 14),
     size: Size.Default,
@@ -82,8 +83,9 @@ export const Basic: StoryFn<typeof DateRangePicker> = props => {
   const [start, setStart] = useState<Date | null | undefined>();
   const [end, setEnd] = useState<Date | null | undefined>();
 
-  const setRange = ([newStart, newEnd]: DateRangeType) => {
-    setStart(newStart), setEnd(newEnd);
+  const setRange = (range?: DateRangeType) => {
+    setStart(range?.[0]);
+    setEnd(range?.[1]);
   };
 
   return (
@@ -96,8 +98,8 @@ export const Basic: StoryFn<typeof DateRangePicker> = props => {
   );
 };
 
-export const Uncontrolled: StoryFn<typeof DateRangePicker> = props => {
-  return <DateRangePicker {...props} />;
-};
+// export const Uncontrolled: StoryFn<typeof DateRangePicker> = props => {
+//   return <DateRangePicker {...props} />;
+// };
 
-export const Generated = () => {};
+// export const Generated = () => {};

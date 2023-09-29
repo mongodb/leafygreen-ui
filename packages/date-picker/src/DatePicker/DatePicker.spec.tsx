@@ -26,6 +26,20 @@ describe('packages/date-picker', () => {
   describe('Rendering', () => {
     /// Note: Many rendering tests should be handled by Chromatic
 
+    test('renders label', () => {
+      const { getByText } = render(<DatePicker label="Label" />);
+      const label = getByText('Label');
+      expect(label).toBeInTheDocument();
+    });
+
+    test('renders description', () => {
+      const { getByText } = render(
+        <DatePicker label="Label" description="Description" />,
+      );
+      const description = getByText('Description');
+      expect(description).toBeInTheDocument();
+    });
+
     test('spreads rest to formField', () => {
       const { getByTestId } = render(
         <DatePicker label="Label" data-testid="lg-date-picker" />,
