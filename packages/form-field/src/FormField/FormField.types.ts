@@ -17,17 +17,34 @@ export interface FormFieldChildrenProps {
   [key: string]: any;
 }
 
-type FormFieldChildren = React.ReactElement<FormFieldChildrenProps>;
+export type FormFieldChildren = React.ReactElement<FormFieldChildrenProps>;
 
-export interface FormFieldProps
-  extends Omit<HTMLElementProps<'div'>, 'children'> {
-  children: FormFieldChildren;
-  label?: React.ReactNode;
-  description?: React.ReactNode;
-  state?: FormFieldState;
-  size?: Size;
-  disabled?: boolean;
-  errorMessage?: React.ReactNode;
-  icon?: React.ReactElement;
-  inputWrapperProps?: FormFieldInputWrapperProps;
-}
+type AriaLabelProps =
+  | {
+      label: string;
+      'aria-label'?: string;
+      'aria-labelledby'?: string;
+    }
+  | {
+      label?: string;
+      'aria-label': string;
+      'aria-labelledby'?: string;
+    }
+  | {
+      label?: string;
+      'aria-label'?: string;
+      'aria-labelledby': string;
+    };
+
+export type FormFieldProps = Omit<HTMLElementProps<'div'>, 'children'> &
+  AriaLabelProps & {
+    children: FormFieldChildren;
+    label?: React.ReactNode;
+    description?: React.ReactNode;
+    state?: FormFieldState;
+    size?: Size;
+    disabled?: boolean;
+    errorMessage?: React.ReactNode;
+    icon?: React.ReactElement;
+    inputWrapperProps?: FormFieldInputWrapperProps;
+  };
