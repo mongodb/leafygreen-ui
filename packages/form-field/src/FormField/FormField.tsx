@@ -37,7 +37,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       state = FormFieldState.Unset,
       size,
       disabled,
-      notificationMessage,
+      errorMessage,
       icon,
       className,
       inputWrapperProps,
@@ -110,7 +110,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
             })}
         </div>
         {state === FormFieldState.Error && (
-          <Error id={errorId}>{notificationMessage}</Error>
+          <Error id={errorId}>{errorMessage}</Error>
         )}
       </div>
     );

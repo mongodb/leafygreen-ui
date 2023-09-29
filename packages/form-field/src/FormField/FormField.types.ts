@@ -27,7 +27,7 @@ export interface FormFieldProps
   state?: FormFieldState;
   size?: Size;
   disabled?: boolean;
-  notificationMessage?: React.ReactNode;
+  errorMessage?: React.ReactNode;
   icon?: React.ReactElement;
   inputWrapperProps?: FormFieldInputWrapperProps;
 }
