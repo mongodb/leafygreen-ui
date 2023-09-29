@@ -30,11 +30,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     );
 
     return (
-      <DatePickerProvider
-        value={{
-          ...contextProps,
-        }}
-      >
+      <DatePickerProvider value={contextProps}>
         <DatePickerComponent
           ref={fwdRef}
           value={value}

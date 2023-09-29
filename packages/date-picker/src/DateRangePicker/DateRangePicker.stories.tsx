@@ -14,7 +14,8 @@ import {
 import { Locales, TimeZones } from '../testUtils';
 import { newUTC } from '../utils';
 
-import { DatePicker } from './DatePicker';
+import { DateRangePicker } from './DateRangePicker';
+import { DateRangeType } from './DateRangePicker.types';
 
 const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
   <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
@@ -28,9 +29,9 @@ const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
   </LeafyGreenProvider>
 );
 
-const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
-  title: 'Components/DatePicker/Single',
-  component: DatePicker,
+const meta: StoryMetaType<typeof DateRangePicker, DatePickerContextProps> = {
+  title: 'Components/DatePicker/Range',
+  component: DateRangePicker,
   decorators: [ProviderWrapper],
   parameters: {
     default: null,
@@ -77,14 +78,26 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
 
 export default meta;
 
-export const Basic: StoryFn<typeof DatePicker> = props => {
-  const [value, setValue] = useState<Date | null | undefined>();
+export const Basic: StoryFn<typeof DateRangePicker> = props => {
+  const [start, setStart] = useState<Date | null | undefined>();
+  const [end, setEnd] = useState<Date | null | undefined>();
 
-  return <DatePicker {...props} value={value} onChange={setValue} />;
+  const setRange = ([newStart, newEnd]: DateRangeType) => {
+    setStart(newStart), setEnd(newEnd);
+  };
+
+  return (
+    <DateRangePicker
+      {...props}
+      start={start}
+      end={end}
+      onRangeChange={setRange}
+    />
+  );
 };
 
-export const Uncontrolled: StoryFn<typeof DatePicker> = props => {
-  return <DatePicker {...props} />;
+export const Uncontrolled: StoryFn<typeof DateRangePicker> = props => {
+  return <DateRangePicker {...props} />;
 };
 
 export const Generated = () => {};
