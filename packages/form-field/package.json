@@ -1,0 +1,40 @@
+  
+{
+  "name": "@leafygreen-ui/form-field",
+  "version": "0.1.0",
+  "description": "LeafyGreen UI Kit Form Field",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@leafygreen-ui/emotion": "^4.0.7",
+    "@leafygreen-ui/hooks": "^8.0.0",
+    "@leafygreen-ui/icon": "^11.24.0",
+    "@leafygreen-ui/lib": "^12.0.0",
+    "@leafygreen-ui/tokens": "^2.2.0",
+    "@leafygreen-ui/typography": "^17.0.1"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^3.1.9"
+  },
+  "devDependencies": {
+    "@leafygreen-ui/icon-button": "^15.0.18"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/form-field",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
+  }
+}
