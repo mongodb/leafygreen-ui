@@ -5,6 +5,7 @@ import { StoryFn } from '@storybook/react';
 import { css } from '@leafygreen-ui/emotion';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 
@@ -19,11 +20,27 @@ const meta: StoryMetaType<typeof FormField> = {
     controls: {
       exclude: ['inputWrapperProps', 'icon'],
     },
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        description: [undefined, 'Description'],
+        icon: [undefined, <Icon glyph="Cloud" key="" />],
+        size: Object.values(Size),
+        state: Object.values(FormFieldState),
+        disabled: [false, true],
+      },
+      excludeCombinations: [{}],
+      decorator: (Instance, ctx) => (
+        <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
+          <Instance />
+        </LeafyGreenProvider>
+      ),
+    },
   },
   args: {
     label: 'Label',
     description: 'Description',
-    notificationMessage: 'This is a notification',
+    errorMessage: 'This is a notification',
     size: Size.Default,
     state: FormFieldState.Unset,
     glyph: 'Beaker',
@@ -31,7 +48,7 @@ const meta: StoryMetaType<typeof FormField> = {
   argTypes: {
     label: { control: 'text' },
     description: { control: 'text' },
-    notificationMessage: { control: 'text' },
+    errorMessage: { control: 'text' },
     size: { control: 'select' },
     state: { control: 'select' },
     glyph: { control: 'select', options: Object.keys(glyphs) },
@@ -40,21 +57,26 @@ const meta: StoryMetaType<typeof FormField> = {
 
 export default meta;
 
-export const Basic: StoryFn<FormFieldProps & { glyph: string }> = props => (
+type FormFieldStoryProps = FormFieldProps & { glyph: string };
+export const Basic: StoryFn<FormFieldStoryProps> = (
+  props: FormFieldStoryProps,
+) => (
   <FormField {...props} icon={<Icon glyph={props.glyph} />}>
     <input placeholder="placeholder" />
   </FormField>
 );
 
-export const WithIconButton: StoryFn<
-  FormFieldProps & { glyph: string }
-> = props => (
+export const WithIconButton: StoryFn<FormFieldStoryProps> = (
+  props: FormFieldStoryProps,
+) => (
   <FormField
     {...props}
     inputWrapperProps={{
       className: css`
         padding-inline-end: 4px;
       `,
+      role: 'combobox',
+      tabIndex: -1,
     }}
     icon={
       <IconButton aria-label="Icon">
@@ -65,3 +87,5 @@ export const WithIconButton: StoryFn<
     <input placeholder="placeholder" />
   </FormField>
 );
+
+export const Generated = () => <></>;

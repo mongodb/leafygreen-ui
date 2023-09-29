@@ -2,8 +2,6 @@ import React, { forwardRef } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-import Icon from '@leafygreen-ui/icon';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Size } from '@leafygreen-ui/tokens';
 import {
   Description,
@@ -12,21 +10,9 @@ import {
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 
-import {
-  childrenWrapperStyles,
-  errorIconStyles,
-  formFieldFontStyles,
-  iconClassName,
-  iconStyles,
-  inputWrapperBaseStyles,
-  inputWrapperDisabledStyles,
-  inputWrapperFocusStyles,
-  inputWrapperModeStyles,
-  inputWrapperSizeStyles,
-  inputWrapperStateStyles,
-  textContainerStyle,
-} from './FormField.styles';
+import { formFieldFontStyles, textContainerStyle } from './FormField.styles';
 import { type FormFieldProps, FormFieldState } from './FormField.types';
+import { FormFieldInputWrapper } from './FormFieldInputWrapper';
 
 export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
   (
@@ -35,9 +21,9 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       description,
       children,
       state = FormFieldState.Unset,
-      size,
-      disabled,
-      notificationMessage,
+      size = Size.Default,
+      disabled = false,
+      errorMessage,
       icon,
       className,
       inputWrapperProps,
@@ -45,7 +31,6 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
     }: FormFieldProps,
     fwdRef,
   ) => {
-    const { theme } = useDarkMode();
     const baseFontSize = useUpdatedBaseFontSize();
 
     const labelId = useIdAllocator({ prefix: 'lg-form-field-label' });
@@ -54,6 +39,21 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
     });
     const errorId = useIdAllocator({ prefix: 'lg-form-field-description' });
     const inputId = useIdAllocator({ prefix: 'lg-form-field-input' });
+
+    const ariaLabelledby = label ? labelId : rest['aria-labelledby'];
+    const ariaLabel = label ? '' : rest['aria-label'];
+    const describedBy = `${description ? descriptionId : ''} ${
+      state === FormFieldState.Error ? errorId : ''
+    }`.trim();
+
+    const renderedChildren =
+      children &&
+      React.cloneElement(children, {
+        id: inputId,
+        'aria-labelledby': ariaLabelledby,
+        'aria-describedby': describedBy,
+        'aria-label': ariaLabel,
+      });
 
     return (
       <div
@@ -73,44 +73,15 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
             </Description>
           )}
         </div>
-        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-        <div
-          {...inputWrapperProps}
-          aria-disabled={disabled}
-          className={cx(
-            inputWrapperBaseStyles,
-            inputWrapperModeStyles[theme],
-            inputWrapperFocusStyles[theme],
-            inputWrapperSizeStyles[size ?? Size.Default],
-            inputWrapperStateStyles[state][theme],
-            {
-              [inputWrapperDisabledStyles[theme]]: disabled,
-            },
-            inputWrapperProps?.className,
-          )}
-        >
-          <div className={childrenWrapperStyles}>
-            {React.cloneElement(children, {
-              id: inputId,
-              'aria-labelledby': labelId,
-              'aria-describedby': `${descriptionId} ${errorId}`,
-            })}
-          </div>
-          {state === FormFieldState.Error && (
-            <Icon glyph="Warning" className={errorIconStyles[theme]} />
-          )}
-          {icon &&
-            React.cloneElement(icon, {
-              className: cx(
-                iconClassName,
-                iconStyles[theme],
-                icon.props.className,
-              ),
-              disabled,
-            })}
-        </div>
+        <FormFieldInputWrapper
+          input={renderedChildren}
+          icon={icon}
+          disabled={disabled}
+          size={size}
+          state={state}
+        />
         {state === FormFieldState.Error && (
-          <Error id={errorId}>{notificationMessage}</Error>
+          <Error id={errorId}>{errorMessage}</Error>
         )}
       </div>
     );
