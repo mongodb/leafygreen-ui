@@ -528,7 +528,7 @@ describe('packages/date-picker', () => {
           renderDatePicker({ handleValidation });
           userEvent.tab();
           userEvent.keyboard('{enter}');
-          expect(handleValidation).toHaveBeenCalled();
+          expect(handleValidation).toHaveBeenCalledWith(null);
         });
 
         test('if menu is closed, enter key on calendar button opens the menu', () => {
@@ -594,6 +594,14 @@ describe('packages/date-picker', () => {
           userEvent.keyboard('{escape}');
           expect(inputContainer.contains(document.activeElement)).toBeTruthy();
         });
+
+        test('fires a validation handler', () => {
+          const handleValidation = jest.fn();
+          const { openMenu } = renderDatePicker({ handleValidation });
+          openMenu();
+          userEvent.keyboard('{escape}');
+          expect(handleValidation).toHaveBeenCalledWith(null);
+        });
       });
 
       /**
@@ -615,7 +623,7 @@ describe('packages/date-picker', () => {
           expect(menuContainerEl).toBeInTheDocument();
         });
 
-        test('does not fire a change handler when the value is incomplete', () => {
+        test('does not fire a value change handler', () => {
           const onChange = jest.fn();
           const { yearInput } = renderDatePicker({
             onChange,
@@ -624,10 +632,32 @@ describe('packages/date-picker', () => {
           expect(onChange).not.toHaveBeenCalled();
         });
 
+        test('does not fire a segment change handler', () => {
+          const onSegmentChange = jest.fn();
+          const { yearInput } = renderDatePicker({
+            onSegmentChange,
+          });
+          userEvent.type(yearInput, '2023');
+          expect(onSegmentChange).not.toHaveBeenCalled();
+        });
+      });
+
+      describe('when a segment is unfocused/blurred', () => {
+        test('does not fire a change handler if the value is incomplete', () => {
+          const onChange = jest.fn();
+          const { yearInput } = renderDatePicker({
+            onChange,
+          });
+          userEvent.type(yearInput, '2023');
+          userEvent.tab();
+          expect(onChange).not.toHaveBeenCalled();
+        });
+
         test('fires a segment change handler', () => {
           const onSegmentChange = jest.fn();
           const { yearInput } = renderDatePicker({ onSegmentChange });
           userEvent.type(yearInput, '2023');
+          userEvent.tab();
           expect(onSegmentChange).toHaveBeenCalledWith('year', 2023);
         });
 
@@ -639,10 +669,13 @@ describe('packages/date-picker', () => {
           userEvent.type(yearInput, '2023');
           userEvent.type(monthInput, '12');
           userEvent.type(dayInput, '26');
-          expect(onChange).toHaveBeenCalled();
+          userEvent.tab();
+          expect(onChange).toHaveBeenCalledWith(
+            expect.objectContaining(newUTC(2023, Month.December, 26)),
+          );
         });
 
-        test('does not fire a validation handler when the value is first set', () => {
+        test('fires a validation handler when the value is first set', () => {
           const handleValidation = jest.fn();
           const { yearInput, monthInput, dayInput } = renderDatePicker({
             handleValidation,
@@ -650,7 +683,10 @@ describe('packages/date-picker', () => {
           userEvent.type(yearInput, '2023');
           userEvent.type(monthInput, '12');
           userEvent.type(dayInput, '26');
-          expect(handleValidation).not.toHaveBeenCalled();
+          userEvent.tab();
+          expect(handleValidation).toHaveBeenCalledWith(
+            expect.objectContaining(newUTC(2023, Month.December, 26)),
+          );
         });
 
         test('fires a validation handler any time the value is updated', () => {
@@ -659,12 +695,12 @@ describe('packages/date-picker', () => {
             value: new Date(),
             handleValidation,
           });
-
           userEvent.type(dayInput, '05');
-          expect(handleValidation).toHaveBeenCalled();
+          userEvent.tab();
+          expect(handleValidation).toHaveBeenCalledWith(
+            expect.objectContaining(newUTC(2023, Month.December, 5)),
+          );
         });
-
-        test.todo('focuses the next segment if the segment value is valid');
       });
     });
   });
