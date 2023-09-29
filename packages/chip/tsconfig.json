@@ -23,25 +23,16 @@
   ],
   "references": [
     {
-      "path": "../checkbox"
-    },
-    {
-      "path": "../chip"
-    },
-    {
       "path": "../emotion"
-    },
-    {
-      "path": "../hooks"
     },
     {
       "path": "../icon"
     },
     {
-      "path": "../icon-button"
+      "path": "../inline-definition"
     },
     {
-      "path": "../input-option"
+      "path": "../leafygreen-provider"
     },
     {
       "path": "../lib"
@@ -50,16 +41,7 @@
       "path": "../palette"
     },
     {
-      "path": "../popover"
-    },
-    {
       "path": "../tokens"
     },
-    {
-      "path": "../typography"
-    },
-    {
-      "path": "../leafygreen-provider"
-    }
   ]
 }

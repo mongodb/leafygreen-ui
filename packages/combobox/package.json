@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/combobox",
-  "version": "6.0.15",
+  "version": "7.0.0",
   "description": "leafyGreen UI Kit Combobox",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@leafygreen-ui/checkbox": "^12.0.19",
+    "@leafygreen-ui/chip": "^1.0.0",
     "@leafygreen-ui/emotion": "^4.0.7",
     "@leafygreen-ui/hooks": "^8.0.0",
     "@leafygreen-ui/icon": "^11.23.0",
@@ -42,7 +43,7 @@
     "@leafygreen-ui/leafygreen-provider": "^3.1.9"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "^21.0.6"
+    "@leafygreen-ui/button": "^21.0.7"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/combobox",
   "repository": {

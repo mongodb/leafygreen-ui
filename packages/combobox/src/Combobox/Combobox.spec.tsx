@@ -177,7 +177,7 @@ describe('packages/combobox', () => {
         const { openMenu } = renderCombobox(select, { options });
         const { optionElements } = openMenu();
         const [optionEl] = Array.from(optionElements!);
-        userEvent.click(optionEl);
+        userEvent.click(optionEl as Element);
         expect(onClick).toHaveBeenCalledTimes(1);
       });
 
@@ -196,7 +196,7 @@ describe('packages/combobox', () => {
         const { openMenu } = renderCombobox(select, { options });
         const { optionElements } = openMenu();
         const [optionEl] = Array.from(optionElements!);
-        userEvent.click(optionEl);
+        userEvent.click(optionEl as Element);
         expect(onClick).toHaveBeenCalledWith(
           expect.objectContaining({ type: 'click' }),
           options[0].value,
