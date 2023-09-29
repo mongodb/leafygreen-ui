@@ -9,7 +9,9 @@ export const FormFieldState = {
 export type FormFieldState =
   (typeof FormFieldState)[keyof typeof FormFieldState];
 
-export interface FormFieldInputWrapperProps extends HTMLElementProps<'div'> {}
+export interface FormFieldInputWrapperProps extends HTMLElementProps<'div'> {
+  [key: `data-${string}`]: any;
+}
 
 export interface FormFieldChildrenProps {
   id: string;
