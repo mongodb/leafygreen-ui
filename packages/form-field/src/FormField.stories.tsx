@@ -75,6 +75,8 @@ export const WithIconButton: StoryFn<FormFieldStoryProps> = (
       className: css`
         padding-inline-end: 4px;
       `,
+      role: 'combobox',
+      tabIndex: -1,
     }}
     icon={
       <IconButton aria-label="Icon">
