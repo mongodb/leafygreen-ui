@@ -1,11 +1,18 @@
-import React, { forwardRef, KeyboardEventHandler } from 'react';
+import React, {
+  FocusEventHandler,
+  forwardRef,
+  KeyboardEventHandler,
+  MouseEventHandler,
+} from 'react';
 
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
 
 import { DateFormField, DateInputBox } from '../../DateInput';
 import { useDatePickerContext } from '../../DatePickerContext';
+import { useSegmentRefs } from '../../hooks/useSegmentRefs';
 import { isZeroLike } from '../../utils';
+import { focusRelevantSegment } from '../utils/focusRelevantSegment';
 import { getRelativeSegment } from '../utils/getRelativeSegment';
 import { isElementInputSegment } from '../utils/isElementInputSegment';
 
@@ -17,21 +24,36 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       value,
       setValue,
       onClick,
-      segmentRefs,
       onKeyDown,
       onSegmentChange,
+      handleValidation,
       ...rest
     }: DatePickerInputProps,
     fwdRef,
   ) => {
-    const { label, timeZone, formatParts } = useDatePickerContext();
+    const { label, timeZone, formatParts, disabled, setOpen, setIsDirty } =
+      useDatePickerContext();
+    const segmentRefs = useSegmentRefs();
+
     const labelId = useIdAllocator({ prefix: 'lg-date-label' });
     const descriptionId = useIdAllocator({ prefix: 'lg-date-description' });
     const errorId = useIdAllocator({ prefix: 'lg-date-description' });
     const inputId = useIdAllocator({ prefix: 'lg-date-input' });
 
-    const handleInputClick = onClick;
+    /** Called when the input, or any of its children, is clicked */
+    const handleInputClick: MouseEventHandler<HTMLElement> = ({ target }) => {
+      if (!disabled) {
+        setOpen(true);
 
+        focusRelevantSegment({
+          target,
+          formatParts,
+          segmentRefs,
+        });
+      }
+    };
+
+    /** Called on any keydown within the input element */
     const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
       const { target: _target, key } = e;
       const target = _target as HTMLElement;
@@ -100,12 +122,37 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           break;
         }
 
-        default:
+        case keyMap.Enter:
+          handleValidation?.(value);
           break;
+
+        case keyMap.Escape:
+          setOpen(false);
+          handleValidation?.(value);
+          break;
+
+        default:
+          // any other keydown should open the menu
+          setOpen(true);
       }
 
       // call any handler that was passed in
       onKeyDown?.(e);
+    };
+
+    /** Called when any child of DatePickerInput is blurred */
+    const handleInputBlur: FocusEventHandler = e => {
+      const nextFocus = e.relatedTarget;
+
+      // If the next focus is _not_ on a segment
+      if (
+        !Object.values(segmentRefs)
+          .map(ref => ref.current)
+          .includes(nextFocus as HTMLInputElement)
+      ) {
+        setIsDirty(true);
+        handleValidation?.(value);
+      }
     };
 
     return (
@@ -119,6 +166,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
         ref={fwdRef}
         onInputClick={handleInputClick}
         onKeyDown={handleKeyDown}
+        onBlur={handleInputBlur}
         {...rest}
       >
         <DateInputBox

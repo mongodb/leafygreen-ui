@@ -1,10 +1,10 @@
 import { MouseEventHandler } from 'react';
 
-import { DynamicRefGetter } from '@leafygreen-ui/hooks/src/useDynamicRefs';
+// import { DynamicRefGetter } from '@leafygreen-ui/hooks/src/useDynamicRefs';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 import { DateInputBoxProps } from '../../DateInput';
-import { DateSegment } from '../../hooks/useDateSegments/DateSegments.types';
+// import { DateSegment } from '../../hooks/useDateSegments/DateSegments.types';
 import { DatePickerProps } from '../DatePicker.types';
 
 export interface DatePickerInputProps
@@ -15,9 +15,4 @@ export interface DatePickerInputProps
    * Click handler
    */
   onClick?: MouseEventHandler;
-
-  segmentRefs: Record<
-    DateSegment,
-    ReturnType<DynamicRefGetter<HTMLInputElement>>
-  >;
 }

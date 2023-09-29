@@ -3,9 +3,11 @@ import { PopoverProps } from '@leafygreen-ui/popover';
 import { PortalControlProps } from '@leafygreen-ui/popover';
 
 import { DateType } from '../../types';
+import { DatePickerProps } from '..';
 
 export type DatePickerMenuProps = PortalControlProps &
   Pick<PopoverProps, 'refEl'> &
+  Pick<DatePickerProps, 'handleValidation'> &
   HTMLElementProps<'div'> & {
     /** The value of the component, provided in UTC time */
     value?: DateType;

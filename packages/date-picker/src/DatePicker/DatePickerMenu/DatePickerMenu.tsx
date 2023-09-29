@@ -37,9 +37,12 @@ import { DatePickerMenuProps } from './DatePickerMenu.types';
 import { DatePickerMenuHeader } from './DatePickerMenuHeader';
 
 export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
-  ({ value, onKeyDown, onCellClick, ...rest }: DatePickerMenuProps, fwdRef) => {
+  (
+    { value, onCellClick, handleValidation, ...rest }: DatePickerMenuProps,
+    fwdRef,
+  ) => {
     const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
-    const { isInRange, isOpen } = useDatePickerContext();
+    const { isInRange, isOpen, setOpen } = useDatePickerContext();
 
     // TODO:
     // useDynamicRefs may overflow if a user navigates to too many months.
@@ -152,6 +155,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       }
     };
 
+    /** Called on any keydown within the menu element */
     const handleCalendarKeyDown: KeyboardEventHandler<HTMLTableElement> = e => {
       const { key } = e;
       const highlightStart = highlight || value || today;
@@ -177,6 +181,11 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
           nextHighlight = addDays(highlightStart, 7);
           break;
         }
+
+        case keyMap.Escape:
+          setOpen(false);
+          handleValidation?.(value);
+          break;
 
         default:
           break;
