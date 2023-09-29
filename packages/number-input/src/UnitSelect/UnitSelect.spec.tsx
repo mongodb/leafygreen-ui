@@ -46,19 +46,12 @@ describe('packages/number-input/select', () => {
     expect(getByRole('listbox')).toBeInTheDocument();
   });
 
-  test('options displayed in select are based on the languageOptions prop', () => {
+  test('options displayed in select are based on the unitOptions prop', () => {
     const { getByRole } = renderSelect({ ...selectProps });
     const trigger = getByRole('button', { name: selectProps.unit });
     fireEvent.click(trigger);
 
-    // First option has a checkmark next to it
-    selectProps.unitOptions.slice(0, 1).forEach(lang => {
-      expect(
-        getByRole('option', { name: `Checkmark Icon ${lang.displayName}` }),
-      ).toBeInTheDocument();
-    });
-
-    selectProps.unitOptions.slice(1).forEach(lang => {
+    selectProps.unitOptions.forEach(lang => {
       expect(
         getByRole('option', { name: lang.displayName }),
       ).toBeInTheDocument();
