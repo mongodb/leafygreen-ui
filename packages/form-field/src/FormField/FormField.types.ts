@@ -9,13 +9,14 @@ export const FormFieldState = {
 export type FormFieldState =
   (typeof FormFieldState)[keyof typeof FormFieldState];
 
-interface FormFieldInputWrapperProps extends HTMLElementProps<'div'> {}
+export interface FormFieldInputWrapperProps extends HTMLElementProps<'div'> {}
 
-interface FormFieldChildrenProps {
+export interface FormFieldChildrenProps {
   id: string;
   'aria-labelledby': string;
   [key: string]: any;
 }
+
 type FormFieldChildren = React.ReactElement<FormFieldChildrenProps>;
 
 export interface FormFieldProps
