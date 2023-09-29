@@ -1,7 +1,7 @@
-
 # Form Field
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/form-field.svg)
+
 #### [View on MongoDB.design](https://www.mongodb.design/component/form-field/example/)
 
 ## Installation
@@ -17,4 +17,3 @@ yarn add @leafygreen-ui/form-field
 ```shell
 npm install @leafygreen-ui/form-field
 ```
-

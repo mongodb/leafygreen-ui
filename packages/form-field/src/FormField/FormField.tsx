@@ -26,7 +26,7 @@ import {
   inputWrapperStateStyles,
   textContainerStyle,
 } from './FormField.styles';
-import { FormFieldProps, FormFieldState } from './FormField.types';
+import { type FormFieldProps, FormFieldState } from './FormField.types';
 
 export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
   (
@@ -77,7 +77,6 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
         <div
           {...inputWrapperProps}
           aria-disabled={disabled}
-          tabIndex={-1}
           className={cx(
             inputWrapperBaseStyles,
             inputWrapperModeStyles[theme],
