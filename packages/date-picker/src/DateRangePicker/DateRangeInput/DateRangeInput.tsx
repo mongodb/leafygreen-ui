@@ -10,9 +10,12 @@ import { DateRangeInputProps } from './DateRangeInput.types';
 const EN_DASH = '–';
 
 export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
-  (props: DateRangeInputProps) => {
-    const { label, description, formatParts, disabled, setOpen, setIsDirty } =
-      useDatePickerContext();
+  (_props: DateRangeInputProps) => {
+    const {
+      label,
+      description,
+      // formatParts, disabled, setOpen, setIsDirty
+    } = useDatePickerContext();
 
     const startSegmentRefs = useSegmentRefs();
     const endSegmentRefs = useSegmentRefs();

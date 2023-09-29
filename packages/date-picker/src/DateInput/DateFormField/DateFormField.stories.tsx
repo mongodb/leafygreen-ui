@@ -75,9 +75,6 @@ const meta: StoryMetaType<
     errorMessage: 'This is an error message',
   },
   argTypes: {
-    inputId: { control: 'none' },
-    descriptionId: { control: 'none' },
-    errorId: { control: 'none' },
     darkMode: { control: 'boolean' },
   },
 };
@@ -100,9 +97,6 @@ const Template: StoryFn<typeof DateFormField> = ({
       description={description}
       state={state}
       errorMessage={errorMessage}
-      inputId={inputId}
-      descriptionId={descriptionId}
-      errorId={errorId}
     >
       <input
         id={inputId}

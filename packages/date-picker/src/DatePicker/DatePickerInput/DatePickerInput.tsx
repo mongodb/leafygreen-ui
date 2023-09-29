@@ -5,7 +5,6 @@ import React, {
   MouseEventHandler,
 } from 'react';
 
-import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
 
 import { DateFormField, DateInputBox } from '../../DateInput';
@@ -31,14 +30,17 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
     }: DatePickerInputProps,
     fwdRef,
   ) => {
-    const { label, description, formatParts, disabled, setOpen, setIsDirty } =
-      useDatePickerContext();
+    const {
+      label,
+      description,
+      menuId,
+      formatParts,
+      disabled,
+      isOpen,
+      setOpen,
+      setIsDirty,
+    } = useDatePickerContext();
     const segmentRefs = useSegmentRefs();
-
-    const labelId = useIdAllocator({ prefix: 'lg-date-label' });
-    const descriptionId = useIdAllocator({ prefix: 'lg-date-description' });
-    const errorId = useIdAllocator({ prefix: 'lg-date-description' });
-    const inputId = useIdAllocator({ prefix: 'lg-date-input' });
 
     /** Called when the input, or any of its children, is clicked */
     const handleInputClick: MouseEventHandler<HTMLElement> = ({ target }) => {
@@ -157,23 +159,22 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
 
     return (
       <DateFormField
+        ref={fwdRef}
         label={label}
         description={description}
-        inputId={inputId}
-        labelId={labelId}
-        descriptionId={descriptionId}
-        errorId={errorId}
-        ref={fwdRef}
-        onInputClick={handleInputClick}
+        disabled={disabled}
         onKeyDown={handleKeyDown}
         onBlur={handleInputBlur}
+        inputWrapperProps={{
+          onClick: handleInputClick,
+          'aria-expanded': isOpen,
+          'aria-controls': menuId,
+        }}
         {...rest}
       >
         <DateInputBox
           value={value}
           setValue={setValue}
-          id={inputId}
-          labelledBy={labelId}
           segmentRefs={segmentRefs}
           onSegmentChange={onSegmentChange}
         />
