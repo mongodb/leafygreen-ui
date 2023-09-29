@@ -12,6 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Install node-gyp
+        run: yarn global add node-gyp
+
       - uses: actions/cache@v3
         name: Check for build cache
         id: build-cache
