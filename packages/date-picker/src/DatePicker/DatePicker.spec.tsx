@@ -77,6 +77,12 @@ describe('packages/date-picker', () => {
         expect(menuContainerEl).not.toBeInTheDocument();
       });
 
+      test('menu is initially open when rendered with `initialOpen`', async () => {
+        const { getMenuElements } = renderDatePicker({ initialOpen: true });
+        const { menuContainerEl } = getMenuElements();
+        await waitFor(() => expect(menuContainerEl).toBeInTheDocument());
+      });
+
       test('if no value is set, menu opens to current month', () => {
         const { openMenu } = renderDatePicker();
         const { calendarGrid, monthSelect, yearSelect } = openMenu();
@@ -528,7 +534,7 @@ describe('packages/date-picker', () => {
           renderDatePicker({ handleValidation });
           userEvent.tab();
           userEvent.keyboard('{enter}');
-          expect(handleValidation).toHaveBeenCalledWith(null);
+          expect(handleValidation).toHaveBeenCalledWith(undefined);
         });
 
         test('if menu is closed, enter key on calendar button opens the menu', () => {
@@ -600,7 +606,7 @@ describe('packages/date-picker', () => {
           const { openMenu } = renderDatePicker({ handleValidation });
           openMenu();
           userEvent.keyboard('{escape}');
-          expect(handleValidation).toHaveBeenCalledWith(null);
+          expect(handleValidation).toHaveBeenCalledWith(undefined);
         });
       });
 

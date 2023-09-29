@@ -2,9 +2,6 @@ import { BaseDatePickerProps } from '../types';
 
 /** The props expected to pass int the provider */
 export interface DatePickerProviderProps extends BaseDatePickerProps {
-  /** Whether the calendar menu is open */
-  isOpen: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   menuId: string;
 }
 
@@ -29,6 +26,12 @@ export interface DatePickerContextProps
    * used to determine the order of segments
    */
   formatParts?: Array<Intl.DateTimeFormatPart>;
+
+  /** Whether the menu is open */
+  isOpen: boolean;
+
+  /** Setter to open or close the menu */
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 
   /** Identifies whether the component has been interacted with */
   isDirty: boolean;

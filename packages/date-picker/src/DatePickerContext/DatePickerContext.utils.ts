@@ -30,6 +30,7 @@ export const contextPropNames: Array<
   'size',
   'state',
   'errorMessage',
+  'initialOpen',
 ];
 
 /** The default context value */
@@ -41,7 +42,10 @@ export const defaultDatePickerContext: DatePickerContextProps = {
   min: MIN_DATE,
   max: MAX_DATE,
   isOpen: false,
+  initialOpen: false,
   setOpen: () => {},
+  isDirty: false,
+  setIsDirty: () => {},
   isInRange: () => true,
   disabled: false,
   size: Size.Default,

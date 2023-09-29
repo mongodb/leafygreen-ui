@@ -23,7 +23,7 @@ const renderDatePickerMenu = (
 ) => {
   const result = render(
     <DatePickerProvider
-      value={{ ...defaultDatePickerContext, ...context, isOpen: true }}
+      value={{ ...defaultDatePickerContext, ...context, initialOpen: true }}
     >
       <DatePickerMenu value={null} onCellClick={() => {}} {...props} />,
     </DatePickerProvider>,
@@ -32,7 +32,7 @@ const renderDatePickerMenu = (
   const rerenderDatePickerMenu = (newProps?: Partial<DatePickerMenuProps>) =>
     result.rerender(
       <DatePickerProvider
-        value={{ ...defaultDatePickerContext, ...context, isOpen: true }}
+        value={{ ...defaultDatePickerContext, ...context, initialOpen: true }}
       >
         <DatePickerMenu
           value={null}

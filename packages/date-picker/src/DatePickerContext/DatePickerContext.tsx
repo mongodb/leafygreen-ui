@@ -18,14 +18,15 @@ export const DatePickerContext = createContext<DatePickerContextProps>(
 /** The Provider component for DatePickerContext */
 export const DatePickerProvider = ({
   children,
-  value,
+  value: { initialOpen, ...rest },
 }: PropsWithChildren<{ value: DatePickerProviderProps }>) => {
+  const [isOpen, setOpen] = useState<boolean>(initialOpen ?? false);
   const [isDirty, setIsDirty] = useState(false);
-  const contextValue = getContextProps(value);
+  const contextValue = getContextProps(rest);
 
   return (
     <DatePickerContext.Provider
-      value={{ ...contextValue, isDirty, setIsDirty }}
+      value={{ ...contextValue, isOpen, setOpen, isDirty, setIsDirty }}
     >
       {children}
     </DatePickerContext.Provider>

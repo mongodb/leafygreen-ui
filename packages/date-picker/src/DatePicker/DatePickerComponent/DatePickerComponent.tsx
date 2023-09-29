@@ -129,6 +129,7 @@ export const DatePickerComponent = forwardRef<
       switch (key) {
         case keyMap.Escape:
           closeMenu();
+          handleValidation?.(value);
           break;
         default:
           break;

@@ -67,4 +67,7 @@ export interface BaseDatePickerProps extends DarkModeProps {
    * A message to show in red underneath the input when in an error state
    */
   errorMessage?: string;
+
+  /** Whether the calendar menu is initially open */
+  initialOpen?: boolean;
 }

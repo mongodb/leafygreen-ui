@@ -1,5 +1,9 @@
 import React from 'react';
-import { render, RenderResult } from '@testing-library/react';
+import {
+  getByRole as globalGetByRole,
+  render,
+  RenderResult,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { DatePickerProps } from './DatePicker.types';
@@ -43,7 +47,10 @@ export const renderDatePicker = (
   const dayInput = result.getByLabelText('day') as HTMLInputElement;
   const monthInput = result.getByLabelText('month') as HTMLInputElement;
   const yearInput = result.getByLabelText('year') as HTMLInputElement;
-  const calendarButton = result.getByRole('button') as HTMLButtonElement;
+  const calendarButton = globalGetByRole(
+    inputContainer,
+    'button',
+  ) as HTMLButtonElement;
 
   /**
    * Returns relevant menu elements.
