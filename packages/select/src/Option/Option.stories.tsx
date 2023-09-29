@@ -3,7 +3,8 @@
 import React from 'react';
 
 import Icon from '@leafygreen-ui/icon/';
-import { StoryMetaType, StoryType, Theme } from '@leafygreen-ui/lib';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import { StoryMetaType, StoryType } from '@leafygreen-ui/lib';
 
 import SelectContext from '../SelectContext';
 
@@ -20,21 +21,23 @@ const meta: StoryMetaType<typeof InternalOption> = {
         darkMode: [false, true],
         selected: [false, true],
         disabled: [false, true],
+        description: [undefined, "I'm a description"],
       },
       args: {
         children: 'Option',
       },
       decorator: (Instance, ctx) => (
-        <SelectContext.Provider
-          value={{
-            theme: ctx?.args.darkMode ? Theme.Dark : Theme.Light,
-            size: ctx?.args.size,
-            disabled: ctx?.args.disabled,
-            open: true,
-          }}
-        >
-          <Instance />
-        </SelectContext.Provider>
+        <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
+          <SelectContext.Provider
+            value={{
+              size: ctx?.args.size,
+              disabled: ctx?.args.disabled,
+              open: true,
+            }}
+          >
+            <Instance />
+          </SelectContext.Provider>
+        </LeafyGreenProvider>
       ),
     },
   },
