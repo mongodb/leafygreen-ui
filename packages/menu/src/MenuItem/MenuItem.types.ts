@@ -9,7 +9,7 @@ type Variant = (typeof Variant)[keyof typeof Variant];
 
 export { Variant };
 
-export interface BaseMenuItemProps {
+export interface MenuItemProps {
   /**
    * Determines whether or not the MenuItem is disabled.
    */
@@ -46,8 +46,6 @@ export interface BaseMenuItemProps {
    */
   variant?: Variant;
 }
-
-export type MenuItemProps = BaseMenuItemProps;
 
 export interface FocusableMenuItemProps {
   children: React.ReactElement;
