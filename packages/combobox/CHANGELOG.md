@@ -1,5 +1,31 @@
 # @leafygreen-ui/combobox
 
+## 7.0.0
+
+### Major Changes
+
+- 9a728c7b: Replaces internal `Chip` component with new LG `Chip` component and exposes an upgraded `TruncationLocation` object which capitalizes the first letter of each key. Instead of referring to it as `TruncationLocation.end`, it will now be represented as `TruncationLocation.End`.
+
+### Patch Changes
+
+- Updated dependencies [9a728c7b]
+  - @leafygreen-ui/chip@1.0.0
+
+## 6.0.15
+
+### Patch Changes
+
+- 3a9b274d: Handles keyboard event based on the event's `key` property rather than its `keyCode` property
+- Updated dependencies [3a9b274d]
+  - @leafygreen-ui/lib@12.0.0
+  - @leafygreen-ui/checkbox@12.0.19
+  - @leafygreen-ui/icon-button@15.0.18
+  - @leafygreen-ui/inline-definition@6.0.12
+  - @leafygreen-ui/input-option@1.0.11
+  - @leafygreen-ui/leafygreen-provider@3.1.9
+  - @leafygreen-ui/popover@11.0.18
+  - @leafygreen-ui/typography@17.0.1
+
 ## 6.0.14
 
 ### Patch Changes

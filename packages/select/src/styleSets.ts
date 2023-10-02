@@ -3,7 +3,7 @@ import { transparentize } from 'polished';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
-import { Size } from './types';
+import { Size } from './Select/Select.types';
 
 interface ColorSet {
   menu: {
@@ -70,7 +70,7 @@ export const colorSets: Record<Theme, ColorSet> = {
 
   [Theme.Dark]: {
     menu: {
-      border: palette.gray.base,
+      border: palette.gray.dark3,
       shadow: transparentize(0.85, '#000000'),
     },
     option: {
@@ -85,13 +85,13 @@ export const colorSets: Record<Theme, ColorSet> = {
       text: {
         base: palette.gray.light2,
         selected: palette.gray.light2,
-        disabled: palette.gray.dark2,
+        disabled: palette.gray.base,
         focused: palette.blue.light3,
       },
       icon: {
         base: palette.gray.base,
         selected: palette.blue.light1,
-        disabled: palette.gray.dark1,
+        disabled: palette.gray.base,
       },
       indicator: {
         focused: palette.blue.light1,

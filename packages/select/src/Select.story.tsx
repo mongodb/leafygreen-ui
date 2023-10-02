@@ -3,6 +3,7 @@ import { StoryFn } from '@storybook/react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
@@ -31,6 +32,13 @@ const meta: StoryMetaType<typeof Select> = {
           width: 256px;
         `,
       },
+      decorator: (Instance, context) => {
+        return (
+          <LeafyGreenProvider darkMode={context?.args.darkMode}>
+            <Instance glyph={context?.args.glyph} />
+          </LeafyGreenProvider>
+        );
+      },
     },
   },
   args: {
@@ -39,7 +47,7 @@ const meta: StoryMetaType<typeof Select> = {
     allowDeselect: false,
     darkMode: false,
     children: [
-      <Option key="long" value="long">
+      <Option key="long" value="long" description="I know a little lorem ipsum">
         Cras mattis consectetur purus sit amet fermentum. Maecenas sed diam eget
         risus varius blandit sit amet non magna.
       </Option>,
@@ -54,8 +62,16 @@ const meta: StoryMetaType<typeof Select> = {
       <Option key="iguana" value="iguana">
         Mexican spiny-tailed iguana
       </Option>,
-      <Option key="spider" value="spider" disabled>
+      <Option key="spider" value="spider" description="I'm chill, I swear">
         Spider
+      </Option>,
+      <Option
+        key="aardvark"
+        value="aardvark"
+        disabled
+        description="Call me Arthur"
+      >
+        Aardvark
       </Option>,
     ],
     usePortal: true,
@@ -103,7 +119,7 @@ WithIcons.args = {
       <Option glyph={<BeakerIcon />} value="dog">
         Dog
       </Option>
-      <Option glyph={<BeakerIcon />} value="cat">
+      <Option glyph={<BeakerIcon />} value="cat" description="Bark bark">
         Cat
       </Option>
     </OptionGroup>,
@@ -118,7 +134,13 @@ WithIcons.args = {
     <Option glyph={<BeakerIcon />} key="iguana" value="iguana">
       Mexican spiny-tailed iguana
     </Option>,
-    <Option glyph={<BeakerIcon />} key="spider" value="spider" disabled>
+    <Option
+      glyph={<BeakerIcon />}
+      key="spider"
+      value="spider"
+      disabled
+      description="I'm chill, I swear"
+    >
       Spider
     </Option>,
   ],

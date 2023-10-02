@@ -14,8 +14,9 @@ import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import { keyMap } from '@leafygreen-ui/lib';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 
-import { State } from './types';
-import { Option, OptionGroup, Select } from '.';
+import { Option, OptionGroup, Select } from '..';
+
+import { State } from './Select.types';
 
 const Color = {
   Red: 'Explicit value: Red',
@@ -656,8 +657,7 @@ describe('packages/select', () => {
           act(() => targetOption!.focus());
 
           fireEvent.keyDown(targetOption!, {
-            key: 'Enter',
-            keyCode: keyMap.Enter,
+            key: keyMap.Enter,
           });
 
           expect(onChangeSpy).toHaveBeenCalledTimes(1);
@@ -717,8 +717,7 @@ describe('packages/select', () => {
 
           act(() => targetOption!.focus());
           fireEvent.keyDown(targetOption!, {
-            key: 'Enter',
-            keyCode: keyMap.Enter,
+            key: keyMap.Enter,
           });
 
           expect(onChangeSpy).not.toHaveBeenCalled();
@@ -919,6 +918,53 @@ describe('packages/select', () => {
         const { container } = render(<Select {...defaultProps} />);
         expect(container.innerHTML).not.toContain(errorMessage);
       });
+    });
+  });
+
+  describe('without Portal (usePortal="false")', () => {
+    test('menu opens', async () => {
+      const { getByRole, findByRole } = render(
+        <Select {...defaultProps} usePortal={false}>
+          <Option data-testid="option-apple">Apple</Option>
+          <Option data-testid="option-banana">Banana</Option>
+        </Select>,
+      );
+      const button = getByRole('button');
+      userEvent.click(button);
+
+      const listbox = await findByRole('listbox');
+
+      expect(listbox).toBeInTheDocument();
+    });
+
+    test('menu renders as a child of button', async () => {
+      const { getByRole, findByRole } = render(
+        <Select {...defaultProps} usePortal={false}>
+          <Option data-testid="option-apple">Apple</Option>
+          <Option data-testid="option-banana">Banana</Option>
+        </Select>,
+      );
+      const button = getByRole('button');
+      userEvent.click(button);
+      const listbox = await findByRole('listbox');
+
+      expect(button).toContainElement(listbox);
+    });
+
+    test('clicking an option fires onChange', async () => {
+      const onChange = jest.fn();
+      const { getByRole, findAllByRole } = render(
+        <Select {...defaultProps} usePortal={false} onChange={onChange}>
+          <Option data-testid="option-apple">Apple</Option>
+          <Option data-testid="option-banana">Banana</Option>
+        </Select>,
+      );
+      const button = getByRole('button');
+      userEvent.click(button);
+      const options = await findAllByRole('option');
+      const apple = options[0];
+      userEvent.click(apple);
+      expect(onChange).toHaveBeenCalled();
     });
   });
 });

@@ -26,60 +26,84 @@ const MAX_MENU_HEIGHT = 256;
 export const SearchResultsMenu = React.forwardRef<
   HTMLUListElement,
   SearchResultsMenuProps
->(({ children, open = false, refEl }: SearchResultsMenuProps, ref) => {
-  const { theme } = useDarkMode();
-  const { state } = useSearchInputContext();
+>(
+  (
+    {
+      children,
+      open = false,
+      refEl,
+      usePortal,
+      portalClassName,
+      portalContainer,
+      scrollContainer,
+      footerSlot,
+      ...rest
+    }: SearchResultsMenuProps,
+    ref,
+  ) => {
+    const { theme } = useDarkMode();
+    const { state } = useSearchInputContext();
 
-  const menuWidth = useMemo(
-    () => refEl.current?.clientWidth ?? 0,
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [refEl, open],
-  );
+    const menuWidth = useMemo(
+      () => refEl.current?.clientWidth ?? 0,
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [refEl, open],
+    );
 
-  /** The max height of the menu element */
-  const availableSpace = useAvailableSpace(refEl);
-  const maxHeightValue = !isUndefined(availableSpace)
-    ? `${Math.min(availableSpace, MAX_MENU_HEIGHT)}px`
-    : 'unset';
+    /** The max height of the menu element */
+    const availableSpace = useAvailableSpace(refEl);
+    const maxHeightValue = !isUndefined(availableSpace)
+      ? `${Math.min(availableSpace, MAX_MENU_HEIGHT)}px`
+      : 'unset';
 
-  return (
-    <Popover
-      data-testid="lg-search-input-popover"
-      spacing={spacing[2]}
-      active={open}
-      align="bottom"
-      justify="start"
-      className={cx(
-        searchResultsMenuStyles,
-        searchResultsMenuThemeStyles[theme],
-        css`
-          width: ${menuWidth}px;
-          min-width: ${menuWidth}px;
-        `,
-      )}
-      refEl={refEl}
-    >
-      {state === 'loading' ? (
-        <LoadingOption />
-      ) : (
-        <ul
-          role="listbox"
-          aria-live="polite"
-          aria-relevant="additions removals"
-          aria-expanded={open}
-          ref={ref}
-          className={cx(
-            searchResultsListStyles,
-            css`
-              max-height: ${maxHeightValue};
-            `,
-          )}
-        >
-          {React.Children.count(children) ? children : <EmptyOption />}
-        </ul>
-      )}
-    </Popover>
-  );
-});
+    return (
+      // @ts-ignore `portalClassName`, `portalContainer` and `scrollContainer` are only passed in when `usePortal` is true.
+      <Popover
+        data-testid="lg-search-input-popover"
+        spacing={spacing[2]}
+        active={open}
+        align="bottom"
+        justify="start"
+        className={cx(
+          searchResultsMenuStyles,
+          searchResultsMenuThemeStyles[theme],
+          css`
+            width: ${menuWidth}px;
+            min-width: ${menuWidth}px;
+          `,
+        )}
+        refEl={refEl}
+        usePortal={usePortal}
+        portalClassName={usePortal ? portalClassName : undefined}
+        portalContainer={usePortal ? portalContainer : null}
+        scrollContainer={usePortal ? scrollContainer : null}
+      >
+        {state === 'loading' ? (
+          <LoadingOption />
+        ) : (
+          <>
+            <ul
+              role="listbox"
+              aria-live="polite"
+              aria-relevant="additions removals"
+              aria-expanded={open}
+              ref={ref}
+              className={cx(
+                searchResultsListStyles,
+                css`
+                  max-height: ${maxHeightValue};
+                `,
+              )}
+              {...rest}
+            >
+              {React.Children.count(children) ? children : <EmptyOption />}
+            </ul>
+            {footerSlot}
+          </>
+        )}
+      </Popover>
+    );
+  },
+);
 
 SearchResultsMenu.displayName = 'SearchResultsMenu';

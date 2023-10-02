@@ -49,8 +49,8 @@ export const buttonContentStyle = css`
   align-items: center;
   height: 100%;
   width: 100%;
-  pointer-events: none;
   position: relative;
+  user-select: none;
   z-index: 0;
   transition: all ${transitionDuration.default} ease-in-out;
 `;

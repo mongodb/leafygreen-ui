@@ -3,62 +3,27 @@ import isUndefined from 'lodash/isUndefined';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useAvailableSpace } from '@leafygreen-ui/hooks';
-import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
-import Popover, { Align, Justify, PopoverProps } from '@leafygreen-ui/popover';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 
-import SelectContext from './SelectContext';
-import { colorSets, mobileSizeSet, sizeSets } from './styleSets';
-import { DropdownWidthBasis, Size } from './types';
-import { MobileMediaQuery, useForwardedRef } from './utils';
+import { DropdownWidthBasis } from '../Select/Select.types';
+import SelectContext from '../SelectContext';
+import { mobileSizeSet } from '../styleSets';
+import { MobileMediaQuery, useForwardedRef } from '../utils';
 
-export const popoverClassName = createUniqueClassName('select-popover');
+import {
+  autoWidthStyles,
+  baseMenuStyle,
+  getMenuStyles,
+  maxMenuHeight,
+  menuMargin,
+  popoverClassName,
+} from './ListMenu.styles';
+import { ListMenuProps } from './ListMenu.types';
 
-const maxMenuHeight = 274;
-const menuMargin = 8;
-
-const baseMenuStyle = css`
-  position: relative;
-  text-align: left;
-  width: 100%;
-  border-radius: 3px;
-  line-height: 16px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  overflow: auto;
-`;
-
-const autoWidthStyles = css`
-  width: max-content;
-`;
-
-const getMenuStyles = (theme: Theme, size: Size) => {
-  const sizeSet = sizeSets[size];
-  const colorSet = colorSets[theme];
-
-  return cx(
-    css`
-      font-family: ${fontFamilies.default};
-      font-size: ${sizeSet.option.text}px;
-      min-height: ${sizeSet.height}px;
-      background-color: ${colorSet.option.background.base};
-      border-radius: 12px;
-      box-shadow: 0 4px 7px 0 ${colorSet.menu.shadow};
-      padding: 8px 0;
-    `,
-  );
-};
-
-type ListMenuProps = {
-  children: React.ReactNode;
-  id: string;
-  referenceElement: React.MutableRefObject<HTMLElement | null>;
-  className?: string;
-  labelId?: string;
-  dropdownWidthBasis: DropdownWidthBasis;
-} & Omit<PopoverProps, 'active' | 'refEl'>;
-
+/**
+ * @internal
+ */
 const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
   function ListMenu(
     {
@@ -76,7 +41,8 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
     }: ListMenuProps,
     forwardedRef,
   ) {
-    const { theme, size, disabled, open } = useContext(SelectContext);
+    const { theme } = useDarkMode();
+    const { size, disabled, open } = useContext(SelectContext);
 
     const ref = useForwardedRef(forwardedRef, null);
 

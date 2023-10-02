@@ -13,6 +13,7 @@ export const titleBaseStyles = css`
 export const descriptionBaseStyles = css`
   max-height: ${spacing[3] * 3}px;
   overflow: hidden;
+  font-size: inherit;
   text-overflow: ellipsis;
 `;
 

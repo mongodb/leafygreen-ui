@@ -7,24 +7,18 @@ import {
   useIdAllocator,
   useViewportSize,
 } from '@leafygreen-ui/hooks';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
-import {
-  BaseFontSize,
-  fontFamilies,
-  spacing,
-  transitionDuration,
-  typeScales,
-} from '@leafygreen-ui/tokens';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Description, Label } from '@leafygreen-ui/typography';
 
-import ListMenu from './ListMenu';
-import MenuButton from './MenuButton';
-import { InternalOption, OptionElement } from './Option';
-import SelectContext from './SelectContext';
-import { mobileSizeSet, SizeSet, sizeSets } from './styleSets';
-import { DropdownWidthBasis, SelectProps, Size, State } from './types';
+import ListMenu from '../ListMenu';
+import MenuButton from '../MenuButton';
+import { InternalOption, OptionElement } from '../Option';
+import SelectContext from '../SelectContext';
+import { mobileSizeSet, sizeSets } from '../styleSets';
 import {
   convertToInternalElements,
   getOptionValue,
@@ -34,39 +28,15 @@ import {
   reconcileOption,
   traverseSelectChildren,
   useStateRef,
-} from './utils';
+} from '../utils';
 
-const labelDescriptionContainerStyle = css`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: ${spacing[1]}px;
-`;
-
-const wrapperStyle = css`
-  display: flex;
-  flex-direction: column;
-`;
-
-const largeLabelStyles = css`
-  font-size: ${typeScales.large.fontSize}px;
-  line-height: ${typeScales.large.lineHeight}px;
-`;
-
-const errorTextStyle = ({
-  darkMode,
-  sizeSet,
-}: {
-  darkMode: boolean;
-  sizeSet: SizeSet;
-}) => css`
-  font-family: ${fontFamilies.default};
-  color: ${darkMode ? palette.red.light1 : palette.red.base};
-  font-size: ${sizeSet.text}px;
-  margin-top: ${spacing[1]}px;
-  padding-left: 2px;
-  transition: color ${transitionDuration.faster}ms ease-in-out;
-  transition-delay: ${transitionDuration.faster}ms;
-`;
+import {
+  errorTextStyle,
+  labelDescriptionContainerStyle,
+  largeLabelStyles,
+  wrapperStyle,
+} from './Select.styles';
+import { DropdownWidthBasis, SelectProps, Size, State } from './Select.types';
 
 /**
  * Select inputs are typically used alongside other form elements like toggles, radio boxes, or text inputs when a user needs to make a selection from a list of items.
@@ -115,7 +85,7 @@ export default function Select({
     );
   }
 
-  const { darkMode, theme } = useDarkMode(darkModeProp);
+  const { darkMode } = useDarkMode(darkModeProp);
 
   const descriptionId = `${id}-description`;
   const menuId = `${id}-menu`;
@@ -129,8 +99,8 @@ export default function Select({
   const sizeSet = sizeSets[size];
 
   const providerData = useMemo(() => {
-    return { theme, size, open, disabled };
-  }, [theme, size, open, disabled]);
+    return { size, open, disabled };
+  }, [size, open, disabled]);
 
   useEffect(() => {
     if (value !== undefined && onChange === undefined && readOnly !== true) {
@@ -347,7 +317,7 @@ export default function Select({
 
       // We only respond to keypresses if the focus is in the component
       if (isFocusInComponent) {
-        switch (event.keyCode) {
+        switch (event.key) {
           case keyMap.Tab:
           case keyMap.Escape:
             onClose();
@@ -497,135 +467,137 @@ export default function Select({
   };
 
   return (
-    <div className={cx(wrapperStyle, className)}>
-      {(label || description) && (
-        <div className={labelDescriptionContainerStyle}>
-          {label && (
-            <Label
-              htmlFor={menuButtonId}
-              id={labelId}
-              darkMode={darkMode}
-              disabled={disabled}
-              className={cx(
-                {
-                  [largeLabelStyles]: size === Size.Large,
-                  [css`
-                    font-size: ${baseFontSize}px;
-                    line-height: 20px;
-                  `]: size === Size.Default,
-                },
-                css`
-                  // Prevent hover state from showing when hovering label
-                  pointer-events: none;
-                `,
-                css`
-                  ${MobileMediaQuery} {
-                    font-size: ${mobileSizeSet.label.text}px;
-                    line-height: ${mobileSizeSet.label.lineHeight}px;
-                  }
-                `,
-              )}
-            >
-              {label}
-            </Label>
-          )}
+    <LeafyGreenProvider darkMode={darkMode}>
+      <div className={cx(wrapperStyle, className)}>
+        {(label || description) && (
+          <div className={labelDescriptionContainerStyle}>
+            {label && (
+              <Label
+                htmlFor={menuButtonId}
+                id={labelId}
+                darkMode={darkMode}
+                disabled={disabled}
+                className={cx(
+                  {
+                    [largeLabelStyles]: size === Size.Large,
+                    [css`
+                      font-size: ${baseFontSize}px;
+                      line-height: 20px;
+                    `]: size === Size.Default,
+                  },
+                  css`
+                    // Prevent hover state from showing when hovering label
+                    pointer-events: none;
+                  `,
+                  css`
+                    ${MobileMediaQuery} {
+                      font-size: ${mobileSizeSet.label.text}px;
+                      line-height: ${mobileSizeSet.label.lineHeight}px;
+                    }
+                  `,
+                )}
+              >
+                {label}
+              </Label>
+            )}
 
-          {description && (
-            <Description
-              id={descriptionId}
-              darkMode={darkMode}
-              disabled={disabled}
-              className={cx(
-                {
-                  [largeLabelStyles]: size === Size.Large,
-                  [css`
-                    font-size: ${baseFontSize}px;
-                    line-height: 20px;
-                  `]: size === Size.Default,
-                },
-                css`
-                  ${MobileMediaQuery} {
-                    font-size: ${mobileSizeSet.description.text}px;
-                    line-height: ${mobileSizeSet.description.lineHeight}px;
-                  }
-                `,
-              )}
-            >
-              {description}
-            </Description>
-          )}
-        </div>
-      )}
+            {description && (
+              <Description
+                id={descriptionId}
+                darkMode={darkMode}
+                disabled={disabled}
+                className={cx(
+                  {
+                    [largeLabelStyles]: size === Size.Large,
+                    [css`
+                      font-size: ${baseFontSize}px;
+                      line-height: 20px;
+                    `]: size === Size.Default,
+                  },
+                  css`
+                    ${MobileMediaQuery} {
+                      font-size: ${mobileSizeSet.description.text}px;
+                      line-height: ${mobileSizeSet.description.lineHeight}px;
+                    }
+                  `,
+                )}
+              >
+                {description}
+              </Description>
+            )}
+          </div>
+        )}
 
-      <SelectContext.Provider value={providerData}>
-        <MenuButton
-          {...rest}
-          id={menuButtonId}
-          ref={menuButtonRef}
-          name={name}
-          readOnly={readOnly}
-          value={getOptionValue(selectedOption)}
-          text={
-            selectedOption !== null
-              ? selectedOption.props.children
-              : placeholder
-          }
-          deselected={selectedOption === null}
-          onOpen={onOpen}
-          onClose={onClose}
-          aria-labelledby={labelId}
-          aria-label={!label && !ariaLabelledby ? ariaLabel : undefined}
-          aria-controls={menuId}
-          aria-expanded={open}
-          aria-describedby={descriptionId}
-          aria-invalid={state === State.Error}
-          aria-disabled={disabled}
-          errorMessage={errorMessage}
-          state={state}
-          baseFontSize={baseFontSize}
-          __INTERNAL__menuButtonSlot__={__INTERNAL__menuButtonSlot__}
-        >
-          <ListMenu
-            labelId={labelId}
-            id={menuId}
-            referenceElement={menuButtonRef}
-            ref={listMenuRef}
-            className={cx({
-              [css`
-                width: ${menuButtonRef.current?.clientWidth}px;
-              `]: dropdownWidthBasis === DropdownWidthBasis.Trigger,
-            })}
-            dropdownWidthBasis={dropdownWidthBasis}
-            {...popoverProps}
+        <SelectContext.Provider value={providerData}>
+          <MenuButton
+            {...rest}
+            id={menuButtonId}
+            ref={menuButtonRef}
+            name={name}
+            readOnly={readOnly}
+            value={getOptionValue(selectedOption)}
+            text={
+              selectedOption !== null
+                ? selectedOption.props.children
+                : placeholder
+            }
+            deselected={selectedOption === null}
+            onOpen={onOpen}
+            onClose={onClose}
+            aria-labelledby={labelId}
+            aria-label={!label && !ariaLabelledby ? ariaLabel : undefined}
+            aria-controls={menuId}
+            aria-expanded={open}
+            aria-describedby={descriptionId}
+            aria-invalid={state === State.Error}
+            aria-disabled={disabled}
+            errorMessage={errorMessage}
+            state={state}
+            baseFontSize={baseFontSize}
+            __INTERNAL__menuButtonSlot__={__INTERNAL__menuButtonSlot__}
           >
-            {allowDeselect && deselectionOption}
-            {renderedChildren}
-          </ListMenu>
-        </MenuButton>
-      </SelectContext.Provider>
-      {state === State.Error && errorMessage && (
-        <span
-          className={cx(
-            errorTextStyle({ darkMode, sizeSet }),
-            css`
-              ${MobileMediaQuery} {
-                font-size: ${mobileSizeSet.description.text}px;
-                line-height: ${mobileSizeSet.description.lineHeight}px;
-              }
-            `,
-            {
-              [css`
-                // Hide error text when menu is open,
-                // so it doesn't peek around the menu corner
-                color: transparent;
-              `]: open,
-            },
-          )}
-        >
-          {errorMessage}
-        </span>
-      )}
-    </div>
+            <ListMenu
+              labelId={labelId}
+              id={menuId}
+              referenceElement={menuButtonRef}
+              ref={listMenuRef}
+              className={cx({
+                [css`
+                  width: ${menuButtonRef.current?.clientWidth}px;
+                `]: dropdownWidthBasis === DropdownWidthBasis.Trigger,
+              })}
+              dropdownWidthBasis={dropdownWidthBasis}
+              {...popoverProps}
+            >
+              {allowDeselect && deselectionOption}
+              {renderedChildren}
+            </ListMenu>
+          </MenuButton>
+        </SelectContext.Provider>
+        {state === State.Error && errorMessage && (
+          <span
+            className={cx(
+              errorTextStyle({ darkMode, sizeSet }),
+              css`
+                ${MobileMediaQuery} {
+                  font-size: ${mobileSizeSet.description.text}px;
+                  line-height: ${mobileSizeSet.description.lineHeight}px;
+                }
+              `,
+              {
+                [css`
+                  // Hide error text when menu is open,
+                  // so it doesn't peek around the menu corner
+                  color: transparent;
+                `]: open,
+              },
+            )}
+          >
+            {errorMessage}
+          </span>
+        )}
+      </div>
+    </LeafyGreenProvider>
   );
 }
 

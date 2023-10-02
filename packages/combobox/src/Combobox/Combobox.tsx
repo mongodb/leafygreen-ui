@@ -36,7 +36,6 @@ import LeafyGreenProvider, {
 import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { Description, Label } from '@leafygreen-ui/typography';
 
-import { Chip } from '../Chip';
 import {
   ComboboxElement,
   ComboboxProps,
@@ -50,6 +49,7 @@ import {
   State,
   TruncationLocation,
 } from '../Combobox.types';
+import { ComboboxChip } from '../ComboboxChip';
 import { ComboboxContext } from '../ComboboxContext';
 import { InternalComboboxGroup } from '../ComboboxGroup';
 import { ComboboxMenu } from '../ComboboxMenu';
@@ -733,7 +733,7 @@ export function Combobox<M extends boolean>({
         };
 
         return (
-          <Chip
+          <ComboboxChip
             key={value}
             displayName={displayName}
             isFocused={isFocused}
@@ -972,7 +972,7 @@ export function Combobox<M extends boolean>({
         return;
       }
 
-      switch (event.keyCode) {
+      switch (event.key) {
         case keyMap.Tab: {
           switch (focusedElementName) {
             case 'Input': {

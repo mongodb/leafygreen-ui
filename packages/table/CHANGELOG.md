@@ -1,5 +1,27 @@
 # @leafygreen-ui/table
 
+## 12.1.1
+
+### Patch Changes
+
+- 11089c73: Checkboxes in Tables are now styled different for better contrast
+
+## 12.1.0
+
+### Minor Changes
+
+- e3a4b391: useLeafyGreenTable now accepts an `allowSelectAll` prop to toggle a checkbox in the header row
+
+### Patch Changes
+
+- 853d6ec6: Addresses ignored TS issues in V11Adapter
+- Updated dependencies [3a9b274d]
+  - @leafygreen-ui/lib@12.0.0
+  - @leafygreen-ui/checkbox@12.0.19
+  - @leafygreen-ui/icon-button@15.0.18
+  - @leafygreen-ui/leafygreen-provider@3.1.9
+  - @leafygreen-ui/typography@17.0.1
+
 ## 12.0.10
 
 ### Patch Changes

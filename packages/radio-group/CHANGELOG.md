@@ -1,5 +1,15 @@
 # @leafygreen-ui/radio-group
 
+## 10.2.2
+
+### Patch Changes
+
+- cd9952bb: Adds disabled cursor to disabled radio group.
+- Updated dependencies [3a9b274d]
+  - @leafygreen-ui/lib@12.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.9
+  - @leafygreen-ui/typography@17.0.1
+
 ## 10.2.1
 
 ### Patch Changes
