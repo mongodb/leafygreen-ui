@@ -34,10 +34,6 @@
     "lodash": "^4.17.21",
     "react-transition-group": "^4.4.5"
   },
-  "devDependencies": {
-    "@leafygreen-ui/button": "^21.0.6",
-    "@types/react-transition-group": "^4.4.7"
-  },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.9"
   },
@@ -49,5 +45,8 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
+  },
+  "devDependencies": {
+    "@leafygreen-ui/button": "^21.0.6"
   }
 }
