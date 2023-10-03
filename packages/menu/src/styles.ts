@@ -258,7 +258,6 @@ const disabledMenuItemContainerStyle = css`
   }
 
   &:hover {
-    &,
     &:before {
       background-color: unset;
     }
@@ -270,6 +269,10 @@ export const disabledMenuItemContainerThemeStyle: Record<Theme, string> = {
     disabledMenuItemContainerStyle,
     css`
       background-color: ${palette.gray.light2};
+
+      &:hover {
+        background-color: ${palette.gray.light2};
+      }
     `,
   ),
   [Theme.Light]: cx(
