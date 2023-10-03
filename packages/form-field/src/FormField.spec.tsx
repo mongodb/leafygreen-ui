@@ -3,13 +3,20 @@ import { render } from '@testing-library/react';
 
 import Icon from '@leafygreen-ui/icon';
 
-import { FormField, FormFieldState } from '.';
+import {
+  FormField,
+  FormFieldInput,
+  FormFieldState,
+  useFormFieldContext,
+} from '.';
 
 describe('packages/form-field', () => {
   test('rest passed to outer element', () => {
     const { getByTestId } = render(
       <FormField label="Label" data-testid="form-field">
-        <div />
+        <FormFieldInput>
+          <div />
+        </FormFieldInput>
       </FormField>,
     );
     const formField = getByTestId('form-field');
@@ -19,7 +26,9 @@ describe('packages/form-field', () => {
   test('className passed to outer element', () => {
     const { getByTestId } = render(
       <FormField label="Label" data-testid="form-field" className="form-field">
-        <div />
+        <FormFieldInput>
+          <div />
+        </FormFieldInput>
       </FormField>,
     );
     const formField = getByTestId('form-field');
@@ -33,7 +42,9 @@ describe('packages/form-field', () => {
         description="Description"
         data-testid="form-field"
       >
-        <div />
+        <FormFieldInput>
+          <div />
+        </FormFieldInput>
       </FormField>,
     );
     const description = getByText('Description');
@@ -47,7 +58,9 @@ describe('packages/form-field', () => {
         description={<span data-testid="description-span">description</span>}
         data-testid="form-field"
       >
-        <div />
+        <FormFieldInput>
+          <div />
+        </FormFieldInput>
       </FormField>,
     );
     const descriptionSpan = queryByTestId('description-span');
@@ -58,7 +71,9 @@ describe('packages/form-field', () => {
   test('input has id,', () => {
     const { getByTestId } = render(
       <FormField label="Label" data-testid="form-field">
-        <div data-testid="input" />
+        <FormFieldInput>
+          <div data-testid="input" />
+        </FormFieldInput>
       </FormField>,
     );
     const input = getByTestId('input');
@@ -69,7 +84,9 @@ describe('packages/form-field', () => {
     test('label element has id & htmlFor', () => {
       const { getByText } = render(
         <FormField label="Label" data-testid="form-field">
-          <div />
+          <FormFieldInput>
+            <div />
+          </FormFieldInput>
         </FormField>,
       );
       const label = getByText('Label');
@@ -83,7 +100,9 @@ describe('packages/form-field', () => {
           label={<span data-testid="label-span">Label</span>}
           data-testid="form-field"
         >
-          <div />
+          <FormFieldInput>
+            <div />
+          </FormFieldInput>
         </FormField>,
       );
       const labelSpan = queryByTestId('label-span');
@@ -98,7 +117,9 @@ describe('packages/form-field', () => {
           description="Description"
           data-testid="form-field"
         >
-          <div data-testid="input" />
+          <FormFieldInput>
+            <div data-testid="input" />
+          </FormFieldInput>
         </FormField>,
       );
       const label = getByText('Label');
@@ -113,7 +134,9 @@ describe('packages/form-field', () => {
           description="Description"
           data-testid="form-field"
         >
-          <div data-testid="input" />
+          <FormFieldInput>
+            <div data-testid="input" />
+          </FormFieldInput>
         </FormField>,
       );
       const labelSpan = queryByTestId('label-span');
@@ -131,7 +154,9 @@ describe('packages/form-field', () => {
           description="Description"
           data-testid="form-field"
         >
-          <div data-testid="input" />
+          <FormFieldInput>
+            <div data-testid="input" />
+          </FormFieldInput>
         </FormField>,
       );
       const description = getByText('Description');
@@ -146,7 +171,9 @@ describe('packages/form-field', () => {
           description={<span data-testid="description-span">description</span>}
           data-testid="form-field"
         >
-          <div data-testid="input" />
+          <FormFieldInput>
+            <div data-testid="input" />
+          </FormFieldInput>
         </FormField>,
       );
       const descriptionSpan = queryByTestId('description-span');
@@ -160,7 +187,9 @@ describe('packages/form-field', () => {
     test('when aria-label is provided, input has that aria-label', () => {
       const { getByTestId } = render(
         <FormField aria-label="Label" data-testid="form-field">
-          <div data-testid="input" />
+          <FormFieldInput>
+            <div data-testid="input" />
+          </FormFieldInput>
         </FormField>,
       );
       const input = getByTestId('input');
@@ -170,7 +199,9 @@ describe('packages/form-field', () => {
     test('when aria-labelledby is provided, input has that aria-labelledby', () => {
       const { getByTestId } = render(
         <FormField aria-labelledby="label-123" data-testid="form-field">
-          <div data-testid="input" />
+          <FormFieldInput>
+            <div data-testid="input" />
+          </FormFieldInput>
         </FormField>,
       );
       const input = getByTestId('input');
@@ -186,7 +217,9 @@ describe('packages/form-field', () => {
           errorMessage="This is an error message"
           data-testid="form-field"
         >
-          <div data-testid="input" />
+          <FormFieldInput>
+            <div data-testid="input" />
+          </FormFieldInput>
         </FormField>,
       );
       const error = queryByText('This is an error message');
@@ -201,7 +234,9 @@ describe('packages/form-field', () => {
           state={FormFieldState.Error}
           data-testid="form-field"
         >
-          <div data-testid="input" />
+          <FormFieldInput>
+            <div data-testid="input" />
+          </FormFieldInput>
         </FormField>,
       );
       const error = queryByText('This is an error message');
@@ -216,7 +251,9 @@ describe('packages/form-field', () => {
           state={FormFieldState.Error}
           data-testid="form-field"
         >
-          <div data-testid="input" />
+          <FormFieldInput>
+            <div data-testid="input" />
+          </FormFieldInput>
         </FormField>,
       );
       const error = queryByText('This is an error message');
@@ -231,7 +268,9 @@ describe('packages/form-field', () => {
           state={FormFieldState.Error}
           data-testid="form-field"
         >
-          <div data-testid="input" />
+          <FormFieldInput>
+            <div data-testid="input" />
+          </FormFieldInput>
         </FormField>,
       );
       const input = getByTestId('input');
@@ -248,7 +287,9 @@ describe('packages/form-field', () => {
           state={FormFieldState.Error}
           data-testid="form-field"
         >
-          <div data-testid="input" />
+          <FormFieldInput>
+            <div data-testid="input" />
+          </FormFieldInput>
         </FormField>,
       );
       const input = getByTestId('input');
@@ -263,12 +304,10 @@ describe('packages/form-field', () => {
 
   test('Renders an icon', () => {
     const { queryByTestId } = render(
-      <FormField
-        label="Label"
-        icon={<Icon glyph="Beaker" data-testid="icon" />}
-        data-testid="form-field"
-      >
-        <div data-testid="input" />
+      <FormField label="Label" data-testid="form-field">
+        <FormFieldInput icon={<Icon glyph="Beaker" data-testid="icon" />}>
+          <div data-testid="input" />
+        </FormFieldInput>
       </FormField>,
     );
 
@@ -277,23 +316,35 @@ describe('packages/form-field', () => {
     expect(icon?.tagName).toEqual('svg');
   });
 
-  test('inputWrapperProps are passed through', () => {
-    const { queryByTestId } = render(
-      <FormField
-        label="Label"
-        inputWrapperProps={{
-          'data-testid': 'input-wrapper',
-          role: 'combobox',
-          className: 'input-class',
-        }}
-      >
-        <div />
-      </FormField>,
-    );
-    const wrapper = queryByTestId('input-wrapper');
-    expect(wrapper).toBeInTheDocument();
-    expect(wrapper).toHaveAttribute('role', 'combobox');
-    expect(wrapper?.classList.contains('input-class')).toBeTruthy();
+  describe('custom children', () => {
+    const TestChild = () => {
+      const { inputProps } = useFormFieldContext();
+      return <div data-testid="child" {...inputProps} />;
+    };
+
+    test('custom child is rendered', () => {
+      const { queryByTestId } = render(
+        <FormField label="Label" data-testid="form-field">
+          <TestChild />
+        </FormField>,
+      );
+
+      const child = queryByTestId('child');
+      expect(child).toBeInTheDocument();
+    });
+
+    test('custom child is labelled by the label element', () => {
+      const { queryByTestId, getByText } = render(
+        <FormField label="Label" data-testid="form-field">
+          <TestChild />
+        </FormField>,
+      );
+      const label = getByText('Label');
+      const child = queryByTestId('child');
+      expect(child!.id).toBeDefined();
+      expect(child!.id).toEqual(label.getAttribute('for'));
+      expect(child!.getAttribute('aria-labelledby')).toEqual(label.id);
+    });
   });
 
   // eslint-disable-next-line jest/no-disabled-tests
