@@ -2,7 +2,6 @@
 import React from 'react';
 import { StoryFn } from '@storybook/react';
 
-import { css } from '@leafygreen-ui/emotion';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
@@ -108,9 +107,6 @@ export const WithIconButton: StoryFn<FormFieldStoryProps> = ({
     {...rest}
   >
     <FormFieldInput
-      className={css`
-        padding-inline-end: 4px;
-      `}
       role="combobox"
       tabIndex={-1}
       icon={

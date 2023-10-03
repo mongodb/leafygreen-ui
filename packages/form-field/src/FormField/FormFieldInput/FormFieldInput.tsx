@@ -5,21 +5,22 @@ import Icon from '@leafygreen-ui/icon';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Size } from '@leafygreen-ui/tokens';
 
+import { FormFieldState } from '../FormField.types';
+import { useFormFieldContext } from '../FormFieldContext/FormFieldContext';
+
 import {
   childrenWrapperStyles,
   errorIconStyles,
   iconClassName,
   iconStyles,
+  inputElementClassName,
   inputWrapperBaseStyles,
   inputWrapperDisabledStyles,
   inputWrapperFocusStyles,
   inputWrapperModeStyles,
   inputWrapperSizeStyles,
   inputWrapperStateStyles,
-} from '../FormField.styles';
-import { FormFieldState } from '../FormField.types';
-import { useFormFieldContext } from '../FormFieldContext/FormFieldContext';
-
+} from './FormFieldInput.styles';
 import { FormFieldInputProps } from './FormFieldInput.types';
 
 export const FormFieldInput = forwardRef<HTMLDivElement, FormFieldInputProps>(
@@ -27,7 +28,10 @@ export const FormFieldInput = forwardRef<HTMLDivElement, FormFieldInputProps>(
     const { theme } = useDarkMode();
     const { disabled, size, state, inputProps } = useFormFieldContext();
 
-    const renderedChildren = React.cloneElement(children, inputProps);
+    const renderedChildren = React.cloneElement(children, {
+      ...inputProps,
+      className: cx(inputElementClassName, children.props.className),
+    });
 
     return (
       <div
