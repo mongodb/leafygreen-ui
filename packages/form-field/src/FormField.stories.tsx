@@ -10,6 +10,7 @@ import { StoryMetaType } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 
 import { FormFieldProps, FormFieldState } from './FormField/FormField.types';
+import { useFormFieldContext } from './FormField/FormFieldContext/FormFieldContext';
 import { FormFieldInput } from './FormField/FormFieldInput';
 import { FormField } from '.';
 
@@ -121,11 +122,20 @@ export const WithIconButton: StoryFn<FormFieldStoryProps> = ({
   </FormField>
 );
 
+const DemoFormFieldButton = (props: FormFieldStoryProps) => {
+  const { inputProps } = useFormFieldContext();
+  return (
+    <Button rightGlyph={<Icon glyph={props.glyph} {...inputProps} />}>
+      Click Me
+    </Button>
+  );
+};
+
 export const WithButtonInput: StoryFn<FormFieldStoryProps> = (
   props: FormFieldStoryProps,
 ) => (
   <FormField {...props}>
-    <Button rightGlyph={<Icon glyph={props.glyph} />}>Click Me</Button>
+    <DemoFormFieldButton {...props} />
   </FormField>
 );
 
