@@ -1,5 +1,6 @@
 export { cloneReverse } from './cloneReverse';
 export { getDaysInUTCMonth } from './getDaysInUTCMonth';
+export { getFirstEmptySegment } from './getFirstEmptySegment';
 export { getFirstOfMonth } from './getFirstOfMonth';
 export { getFormatParts } from './getFormatParts';
 export { getFullMonthLabel } from './getFullMonthLabel';

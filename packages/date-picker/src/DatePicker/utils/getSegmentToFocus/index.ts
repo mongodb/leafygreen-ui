@@ -4,11 +4,12 @@ import last from 'lodash/last';
 import { DatePickerContextProps } from '../../../DatePickerContext';
 import { DateSegment } from '../../../hooks/useDateSegments';
 import { SegmentRefs } from '../../../hooks/useSegmentRefs';
+import { getFirstEmptySegment } from '../../../utils';
 
-interface FocusRelevantSegmentArgs {
+interface GetSegmentToFocusProps {
   target: EventTarget;
   formatParts: DatePickerContextProps['formatParts'];
-  segmentRefs: SegmentRefs; //| Array<SegmentRefs>;
+  segmentRefs: SegmentRefs;
 }
 
 /**
@@ -23,7 +24,7 @@ export const getSegmentToFocus = ({
   target,
   formatParts,
   segmentRefs,
-}: FocusRelevantSegmentArgs): HTMLElement | undefined | null => {
+}: GetSegmentToFocusProps): HTMLElement | undefined | null => {
   if (
     isUndefined(target) ||
     isUndefined(formatParts) ||
@@ -53,15 +54,10 @@ export const getSegmentToFocus = ({
       return lastSegmentRef.current;
     } else {
       // if 1+ are empty, focus the first empty one
-      const emptySegmentKeys = formatSegments
-        .map(p => p.type)
-        .filter(type => {
-          const element = segmentRefs[type as DateSegment];
-          return !element?.current?.value;
-        });
-      const firstEmptySegmentKey = emptySegmentKeys[0] as DateSegment;
-      const firstEmptySegmentRef = segmentRefs[firstEmptySegmentKey];
-      return firstEmptySegmentRef.current;
+      return getFirstEmptySegment({
+        formatParts,
+        segmentRefs,
+      });
     }
   }
 
