@@ -12,8 +12,8 @@ import { DateFormField } from '../../DateInput/DateFormField';
 import { useDatePickerContext } from '../../DatePickerContext';
 import { useSegmentRefs } from '../../hooks/useSegmentRefs';
 import { isZeroLike } from '../../utils';
-import { focusRelevantSegment } from '../utils/focusRelevantSegment';
 import { getRelativeSegment } from '../utils/getRelativeSegment';
+import { getSegmentToFocus } from '../utils/getSegmentToFocus';
 import { isElementInputSegment } from '../utils/isElementInputSegment';
 
 import { DatePickerInputProps } from './DatePickerInput.types';
@@ -40,11 +40,13 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       if (!disabled) {
         setOpen(true);
 
-        focusRelevantSegment({
+        const segmentToFocus = getSegmentToFocus({
           target,
           formatParts,
           segmentRefs,
         });
+
+        segmentToFocus?.focus();
       }
     };
 
