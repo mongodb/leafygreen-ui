@@ -73,8 +73,8 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
           focusStyles.iconStyle,
           {
             [activeIconStyle[theme]]: showActiveStyles,
-            [disabledIconStyle[theme]]: disabled,
             [destructiveIconStyle[theme]]: isDestructive,
+            [disabledIconStyle[theme]]: disabled,
           },
           glyph.props?.className,
         ),
@@ -110,8 +110,8 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
               {
                 [activeTitleTextStyle[theme]]: showActiveStyles,
                 [hoverStyles.activeText]: showActiveStyles,
-                [disabledTextStyle[theme]]: disabled,
                 [destructiveTextStyle[theme]]: isDestructive,
+                [disabledTextStyle[theme]]: disabled,
               },
               focusStyles.textStyle,
             )}

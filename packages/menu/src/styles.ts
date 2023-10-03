@@ -62,10 +62,7 @@ export const menuItemContainerThemeStyle: Record<Theme, string> = {
     color: ${palette.white};
     background-color: ${palette.black};
 
-    &:hover {
-      background-color: ${palette.gray.dark3};
-    }
-
+    &:hover,
     &:active {
       background-color: ${palette.gray.dark3};
     }
@@ -74,10 +71,7 @@ export const menuItemContainerThemeStyle: Record<Theme, string> = {
     color: ${palette.black};
     background-color: ${palette.gray.light2};
 
-    &:hover {
-      background-color: ${palette.gray.light1};
-    }
-
+    &:hover,
     &:active {
       background-color: ${palette.gray.light1};
     }
@@ -255,18 +249,17 @@ export const activeIconStyle: Record<Theme, string> = {
 /**
  * Disabled styles
  */
+
 const disabledMenuItemContainerStyle = css`
   cursor: not-allowed;
 
   &:active {
     pointer-events: none;
-  }
-
-  &:before {
     background-color: unset;
   }
 
   &:hover {
+    &,
     &:before {
       background-color: unset;
     }
@@ -281,8 +274,6 @@ export const disabledMenuItemContainerThemeStyle: Record<Theme, string> = {
 
       &:hover {
         background-color: ${palette.gray.light2};
-        color: ${palette.gray.dark1};
-        font-weight: ${fontWeights.regular};
       }
     `,
   ),
@@ -293,8 +284,6 @@ export const disabledMenuItemContainerThemeStyle: Record<Theme, string> = {
 
       &:hover {
         background-color: ${palette.black};
-        color: ${palette.gray.dark1};
-        font-weight: ${fontWeights.regular};
       }
     `,
   ),
@@ -307,20 +296,6 @@ export const disabledTextStyle: Record<Theme, string> = {
   `,
   [Theme.Dark]: css`
     color: ${palette.gray.base};
-    font-weight: ${fontWeights.regular};
-  `,
-};
-
-/**
- * Destructive styles
- */
-export const destructiveTextStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.red.light1};
-    font-weight: ${fontWeights.regular};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.red.dark2};
     font-weight: ${fontWeights.regular};
   `,
 };
@@ -385,6 +360,20 @@ export const getFocusedStyles = (containerClassName: string, theme: Theme) => {
       }
     `,
   };
+};
+
+/**
+ * Destructive styles
+ */
+export const destructiveTextStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.red.light1};
+    font-weight: ${fontWeights.regular};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.red.dark2};
+    font-weight: ${fontWeights.regular};
+  `,
 };
 
 export const linkStyle = css`
