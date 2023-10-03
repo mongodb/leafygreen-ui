@@ -62,7 +62,10 @@ export const menuItemContainerThemeStyle: Record<Theme, string> = {
     color: ${palette.white};
     background-color: ${palette.black};
 
-    &:hover,
+    &:hover {
+      background-color: ${palette.gray.dark3};
+    }
+
     &:active {
       background-color: ${palette.gray.dark3};
     }
@@ -71,7 +74,10 @@ export const menuItemContainerThemeStyle: Record<Theme, string> = {
     color: ${palette.black};
     background-color: ${palette.gray.light2};
 
-    &:hover,
+    &:hover {
+      background-color: ${palette.gray.light1};
+    }
+
     &:active {
       background-color: ${palette.gray.light1};
     }
@@ -284,8 +290,12 @@ export const disabledMenuItemContainerThemeStyle: Record<Theme, string> = {
     disabledMenuItemContainerStyle,
     css`
       background-color: ${palette.black};
-      color: ${palette.gray.dark1};
-      font-weight: ${fontWeights.regular};
+
+      &:hover {
+        background-color: ${palette.black};
+        color: ${palette.gray.dark1};
+        font-weight: ${fontWeights.regular};
+      }
     `,
   ),
 };
