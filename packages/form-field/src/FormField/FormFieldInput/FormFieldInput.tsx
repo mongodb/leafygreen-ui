@@ -18,26 +18,16 @@ import {
   inputWrapperStateStyles,
 } from '../FormField.styles';
 import { FormFieldState } from '../FormField.types';
+import { useFormFieldContext } from '../FormFieldContext/FormFieldContext';
 
-import { FormFieldInputWrapperProps } from './FormFieldInputWrapper.types';
+import { FormFieldInputProps } from './FormFieldInput.types';
 
-export const FormFieldInputWrapper = forwardRef<
-  HTMLDivElement,
-  FormFieldInputWrapperProps
->(
-  (
-    {
-      input,
-      icon,
-      size,
-      state,
-      disabled,
-      className,
-      ...rest
-    }: FormFieldInputWrapperProps,
-    fwdRef,
-  ) => {
+export const FormFieldInput = forwardRef<HTMLDivElement, FormFieldInputProps>(
+  ({ icon, className, children, ...rest }: FormFieldInputProps, fwdRef) => {
     const { theme } = useDarkMode();
+    const { disabled, size, state, inputProps } = useFormFieldContext();
+
+    const renderedChildren = React.cloneElement(children, inputProps);
 
     return (
       <div
@@ -56,7 +46,7 @@ export const FormFieldInputWrapper = forwardRef<
           className,
         )}
       >
-        <div className={childrenWrapperStyles}>{input}</div>
+        <div className={childrenWrapperStyles}>{renderedChildren}</div>
         {state === FormFieldState.Error && (
           <Icon
             role="presentation"
@@ -79,4 +69,4 @@ export const FormFieldInputWrapper = forwardRef<
   },
 );
 
-FormFieldInputWrapper.displayName = 'FormFieldInputWrapper';
+FormFieldInput.displayName = 'FormFieldInputWrapper';

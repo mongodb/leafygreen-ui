@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { FormFieldInputWrapper } from '.';
+import { FormFieldInput } from '.';
 
 describe('packages/form-field-input-wrapper', () => {
   test('condition', () => {});

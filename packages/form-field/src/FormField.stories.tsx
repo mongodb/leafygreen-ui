@@ -10,6 +10,7 @@ import { StoryMetaType } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 
 import { FormFieldProps, FormFieldState } from './FormField/FormField.types';
+import { FormFieldInput } from './FormField/FormFieldInput';
 import { FormField } from '.';
 
 const meta: StoryMetaType<typeof FormField> = {
@@ -35,7 +36,11 @@ const meta: StoryMetaType<typeof FormField> = {
       },
       decorator: (Instance, ctx) => (
         <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
-          <Instance />
+          <Instance>
+            <FormFieldInput icon={ctx?.args.icon}>
+              {ctx?.args.children}
+            </FormFieldInput>
+          </Instance>
         </LeafyGreenProvider>
       ),
     },
@@ -62,33 +67,60 @@ const meta: StoryMetaType<typeof FormField> = {
 export default meta;
 
 type FormFieldStoryProps = FormFieldProps & { glyph: string };
-export const Basic: StoryFn<FormFieldStoryProps> = (
-  props: FormFieldStoryProps,
-) => (
-  <FormField {...props} icon={<Icon glyph={props.glyph} />}>
-    <input placeholder="placeholder" />
+export const Basic: StoryFn<FormFieldStoryProps> = ({
+  label,
+  description,
+  state,
+  size,
+  disabled,
+  glyph,
+  ...rest
+}: FormFieldStoryProps) => (
+  <FormField
+    label={label}
+    description={description}
+    state={state}
+    size={size}
+    disabled={disabled}
+    {...rest}
+  >
+    <FormFieldInput role="combobox" tabIndex={-1} icon={<Icon glyph={glyph} />}>
+      <input placeholder="placeholder" />
+    </FormFieldInput>
   </FormField>
 );
 
-export const WithIconButton: StoryFn<FormFieldStoryProps> = (
-  props: FormFieldStoryProps,
-) => (
+export const WithIconButton: StoryFn<FormFieldStoryProps> = ({
+  label,
+  description,
+  state,
+  size,
+  disabled,
+  glyph,
+  ...rest
+}: FormFieldStoryProps) => (
   <FormField
-    {...props}
-    inputWrapperProps={{
-      className: css`
-        padding-inline-end: 4px;
-      `,
-      role: 'combobox',
-      tabIndex: -1,
-    }}
-    icon={
-      <IconButton aria-label="Icon">
-        <Icon glyph={props.glyph} />
-      </IconButton>
-    }
+    label={label}
+    description={description}
+    state={state}
+    size={size}
+    disabled={disabled}
+    {...rest}
   >
-    <input placeholder="placeholder" />
+    <FormFieldInput
+      className={css`
+        padding-inline-end: 4px;
+      `}
+      role="combobox"
+      tabIndex={-1}
+      icon={
+        <IconButton aria-label="Icon">
+          <Icon glyph={glyph} />
+        </IconButton>
+      }
+    >
+      <input placeholder="placeholder" />
+    </FormFieldInput>
   </FormField>
 );
 

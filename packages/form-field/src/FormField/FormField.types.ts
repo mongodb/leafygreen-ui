@@ -46,6 +46,4 @@ export type FormFieldProps = Omit<HTMLElementProps<'div'>, 'children'> &
     size?: Size;
     disabled?: boolean;
     errorMessage?: React.ReactNode;
-    icon?: React.ReactElement;
-    inputWrapperProps?: FormFieldInputWrapperProps;
   };
