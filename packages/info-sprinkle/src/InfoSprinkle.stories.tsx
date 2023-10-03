@@ -3,6 +3,7 @@ import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
 import {
+  storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
@@ -48,13 +49,29 @@ const meta: StoryMetaType<typeof InfoSprinkle> = {
     justify: Justify.Start,
     align: Align.Bottom,
   },
+  argTypes: {
+    open: { control: 'boolean' },
+    darkMode: storybookArgTypes.darkMode,
+    children: storybookArgTypes.children,
+    baseFontSize: {
+      control: 'radio',
+      options: Object.values(BaseFontSize),
+    },
+  },
 };
 
 export default meta;
 
-const Template: StoryFn<typeof InfoSprinkle> = props => (
+export const LiveExample: StoryFn<typeof InfoSprinkle> = props => (
   <InfoSprinkle {...props} />
 );
+LiveExample.args = {
+  spacing: 10,
+};
+LiveExample.argTypes = {
+  open: {
+    control: 'none',
+  },
+};
 
-export const Basic = Template.bind({});
 export const Generated = () => {};
