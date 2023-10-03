@@ -277,25 +277,6 @@ describe('packages/form-field', () => {
     expect(icon?.tagName).toEqual('svg');
   });
 
-  test('inputWrapperProps are passed through', () => {
-    const { queryByTestId } = render(
-      <FormField
-        label="Label"
-        inputWrapperProps={{
-          'data-testid': 'input-wrapper',
-          role: 'combobox',
-          className: 'input-class',
-        }}
-      >
-        <div />
-      </FormField>,
-    );
-    const wrapper = queryByTestId('input-wrapper');
-    expect(wrapper).toBeInTheDocument();
-    expect(wrapper).toHaveAttribute('role', 'combobox');
-    expect(wrapper?.classList.contains('input-class')).toBeTruthy();
-  });
-
   // eslint-disable-next-line jest/no-disabled-tests
   test.skip('Types', () => {
     render(

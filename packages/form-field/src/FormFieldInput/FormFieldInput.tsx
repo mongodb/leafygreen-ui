@@ -5,7 +5,7 @@ import Icon from '@leafygreen-ui/icon';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Size } from '@leafygreen-ui/tokens';
 
-import { FormFieldState } from '../FormField.types';
+import { FormFieldState } from '../FormField/FormField.types';
 import { useFormFieldContext } from '../FormFieldContext/FormFieldContext';
 
 import {

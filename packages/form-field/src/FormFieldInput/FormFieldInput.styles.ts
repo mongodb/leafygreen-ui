@@ -11,7 +11,7 @@ import {
   transitionDuration,
 } from '@leafygreen-ui/tokens';
 
-import { FormFieldState } from '../FormField.types';
+import { FormFieldState } from '../FormField/FormField.types';
 
 export const inputElementClassName = createUniqueClassName('form-field-input');
 export const iconClassName = createUniqueClassName('form-field-icon');

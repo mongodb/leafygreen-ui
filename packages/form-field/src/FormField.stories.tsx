@@ -10,8 +10,8 @@ import { StoryMetaType } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 
 import { FormFieldProps, FormFieldState } from './FormField/FormField.types';
-import { useFormFieldContext } from './FormField/FormFieldContext/FormFieldContext';
-import { FormFieldInput } from './FormField/FormFieldInput';
+import { useFormFieldContext } from './FormFieldContext/FormFieldContext';
+import { FormFieldInput } from './FormFieldInput';
 import { FormField } from '.';
 
 const meta: StoryMetaType<typeof FormField> = {

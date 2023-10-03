@@ -9,7 +9,7 @@ import {
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 
-import { FormFieldProvider } from './FormFieldContext/FormFieldContext';
+import { FormFieldProvider } from '../FormFieldContext/FormFieldContext';
 import { formFieldFontStyles, textContainerStyle } from './FormField.styles';
 import { type FormFieldProps, FormFieldState } from './FormField.types';
 import { useFormFieldProps } from './useFormFieldProps';

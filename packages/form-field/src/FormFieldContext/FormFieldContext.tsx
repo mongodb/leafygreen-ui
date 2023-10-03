@@ -2,8 +2,8 @@ import React, { PropsWithChildren, useContext } from 'react';
 
 import { Size } from '@leafygreen-ui/tokens';
 
-import { FormFieldState } from '../FormField.types';
-import { FormFieldInputElementProps } from '../useFormFieldProps';
+import { FormFieldState } from '../FormField/FormField.types';
+import { FormFieldInputElementProps } from '../FormField/useFormFieldProps';
 
 interface FormFieldContextProps {
   disabled: boolean;
