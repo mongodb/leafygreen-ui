@@ -1,10 +1,18 @@
-import React, { forwardRef, MouseEventHandler } from 'react';
+import React, {
+  forwardRef,
+  KeyboardEventHandler,
+  MouseEventHandler,
+} from 'react';
+
+import { keyMap } from '@leafygreen-ui/lib';
 
 import { DateInputBox } from '../../DateInput';
 import { DateFormField } from '../../DateInput/DateFormField';
 import { useDatePickerContext } from '../../DatePickerContext';
 import { useSegmentRefs } from '../../hooks/useSegmentRefs';
+import { isElementInputSegment, isZeroLike } from '../../utils';
 import { getRangeSegmentToFocus } from '../utils/getRangeSegmentToFocus';
+import { getRelativeRangeSegment } from '../utils/getRelativeRangeSegment';
 
 import { inputWrapperStyles } from './DateRangeInput.styles';
 import { DateRangeInputProps } from './DateRangeInput.types';
@@ -12,7 +20,7 @@ import { DateRangeInputProps } from './DateRangeInput.types';
 const EN_DASH = '–';
 
 export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
-  (_props: DateRangeInputProps, fwdRef) => {
+  ({ start, end, handleValidation }: DateRangeInputProps, fwdRef) => {
     const { disabled, formatParts, setOpen } = useDatePickerContext();
 
     const startSegmentRefs = useSegmentRefs();
@@ -31,6 +39,53 @@ export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
       });
 
       segmentToFocus?.focus();
+    };
+
+    const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
+      const { target: _target, key } = e;
+      const target = _target as HTMLElement;
+      const isSegment =
+        isElementInputSegment(target, startSegmentRefs) ||
+        isElementInputSegment(target, endSegmentRefs);
+
+      // if target is not a segment, do nothing
+      if (!isSegment) return;
+
+      const isInputEmpty = isZeroLike(target.value);
+      const cursorPosition = target.selectionEnd;
+
+      switch (key) {
+        case keyMap.ArrowLeft:
+          // TODO:
+          getRelativeRangeSegment();
+          break;
+        case keyMap.ArrowRight:
+          // TODO:
+          break;
+        case keyMap.ArrowDown:
+          // TODO:
+          break;
+        case keyMap.ArrowUp:
+          // TODO:
+          break;
+        case keyMap.Backspace: {
+          // TODO:
+          break;
+        }
+
+        case keyMap.Enter:
+          handleValidation?.([start || null, end || null]);
+          break;
+
+        case keyMap.Escape:
+          setOpen(false);
+          handleValidation?.([start || null, end || null]);
+          break;
+
+        default:
+          // any other keydown should open the menu
+          setOpen(true);
+      }
     };
 
     return (

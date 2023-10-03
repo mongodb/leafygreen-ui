@@ -12,9 +12,9 @@ import { DateFormField } from '../../DateInput/DateFormField';
 import { useDatePickerContext } from '../../DatePickerContext';
 import { useSegmentRefs } from '../../hooks/useSegmentRefs';
 import { isZeroLike } from '../../utils';
+import { isElementInputSegment } from '../../utils/isElementInputSegment';
 import { getRelativeSegment } from '../utils/getRelativeSegment';
 import { getSegmentToFocus } from '../utils/getSegmentToFocus';
-import { isElementInputSegment } from '../utils/isElementInputSegment';
 
 import { DatePickerInputProps } from './DatePickerInput.types';
 
@@ -54,9 +54,9 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
     const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
       const { target: _target, key } = e;
       const target = _target as HTMLElement;
-      // if target is not a segment, do nothing
       const isSegment = isElementInputSegment(target, segmentRefs);
 
+      // if target is not a segment, do nothing
       if (!isSegment) return;
 
       const isInputEmpty = isZeroLike(target.value);

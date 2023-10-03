@@ -12,6 +12,7 @@ export { getUTCDateString } from './getUTCDateString';
 export { getValueFormatter } from './getValueFormatter';
 export { getWeeksArray } from './getWeeksArray';
 export { isCurrentUTCDay } from './isCurrentUTCDay';
+export { isElementInputSegment } from './isElementInputSegment';
 export { isSameTZDay } from './isSameTZDay';
 export { isSameUTCDay } from './isSameUTCDay';
 export { isSameUTCMonth } from './isSameUTCMonth';
