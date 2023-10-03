@@ -302,6 +302,12 @@ export const childrenWrapperStyles = css`
   width: 100%;
 `;
 
+export const iconsWrapperStyles = css`
+  display: flex;
+  align-items: center;
+  gap: ${spacing[1]}px;
+`;
+
 export const iconStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.gray.base};

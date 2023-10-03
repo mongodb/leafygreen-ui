@@ -13,6 +13,7 @@ import {
   errorIconStyles,
   iconClassName,
   iconStyles,
+  iconsWrapperStyles,
   inputElementClassName,
   inputWrapperBaseStyles,
   inputWrapperDisabledStyles,
@@ -52,23 +53,25 @@ export const FormFieldInput = forwardRef<HTMLDivElement, FormFieldInputProps>(
         )}
       >
         <div className={childrenWrapperStyles}>{renderedChildren}</div>
-        {state === FormFieldState.Error && (
-          <Icon
-            role="presentation"
-            title="Error"
-            glyph="Warning"
-            className={errorIconStyles[theme]}
-          />
-        )}
-        {icon &&
-          React.cloneElement(icon, {
-            className: cx(
-              iconClassName,
-              iconStyles[theme],
-              icon.props.className,
-            ),
-            disabled,
-          })}
+        <div className={iconsWrapperStyles}>
+          {state === FormFieldState.Error && (
+            <Icon
+              role="presentation"
+              title="Error"
+              glyph="Warning"
+              className={errorIconStyles[theme]}
+            />
+          )}
+          {icon &&
+            React.cloneElement(icon, {
+              className: cx(
+                iconClassName,
+                iconStyles[theme],
+                icon.props.className,
+              ),
+              disabled,
+            })}
+        </div>
       </div>
     );
   },

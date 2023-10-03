@@ -3,6 +3,7 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
+import { css } from '@leafygreen-ui/emotion';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
@@ -12,19 +13,20 @@ import { Size } from '@leafygreen-ui/tokens';
 import {
   FormField,
   FormFieldInput,
+  FormFieldInputProps,
   FormFieldProps,
   FormFieldState,
   useFormFieldContext,
 } from '.';
 
-const meta: StoryMetaType<typeof FormField> = {
+type FormFieldStoryProps = FormFieldProps &
+  FormFieldInputProps & { glyph: string };
+
+const meta: StoryMetaType<typeof FormField, FormFieldStoryProps> = {
   title: 'Components/FormField',
   component: FormField,
   parameters: {
     default: 'Basic',
-    controls: {
-      exclude: ['inputWrapperProps', 'icon'],
-    },
     generate: {
       combineArgs: {
         darkMode: [false, true],
@@ -34,7 +36,12 @@ const meta: StoryMetaType<typeof FormField> = {
         state: Object.values(FormFieldState),
         disabled: [false, true],
       },
-      excludeCombinations: [{}],
+      excludeCombinations: [
+        {
+          disabled: true,
+          state: FormFieldState.Error,
+        },
+      ],
       args: {
         children: <input placeholder="placeholder" />,
       },
@@ -70,7 +77,6 @@ const meta: StoryMetaType<typeof FormField> = {
 
 export default meta;
 
-type FormFieldStoryProps = FormFieldProps & { glyph: string };
 export const Basic: StoryFn<FormFieldStoryProps> = ({
   label,
   description,
@@ -125,6 +131,34 @@ export const WithIconButton: StoryFn<FormFieldStoryProps> = ({
   </FormField>
 );
 
+export const Custom_TwoIcons: StoryFn<FormFieldStoryProps> = ({
+  glyph,
+  ...props
+}: FormFieldStoryProps) => (
+  <FormField {...props}>
+    <FormFieldInput
+      role="combobox"
+      tabIndex={-1}
+      icon={
+        <span
+          className={css`
+            display: flex;
+            align-items: center;
+            gap: 0;
+          `}
+        >
+          <IconButton aria-label="Icon">
+            <Icon glyph="XWithCircle" />
+          </IconButton>
+          <Icon glyph="CaretDown" />
+        </span>
+      }
+    >
+      <input placeholder="placeholder" />
+    </FormFieldInput>
+  </FormField>
+);
+
 const DemoFormFieldButton = (props: FormFieldStoryProps) => {
   const { inputProps } = useFormFieldContext();
   return (
@@ -134,7 +168,7 @@ const DemoFormFieldButton = (props: FormFieldStoryProps) => {
   );
 };
 
-export const WithButtonInput: StoryFn<FormFieldStoryProps> = (
+export const Custom_ButtonInput: StoryFn<FormFieldStoryProps> = (
   props: FormFieldStoryProps,
 ) => (
   <FormField {...props}>
