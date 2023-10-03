@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import Tooltip from '@leafygreen-ui/tooltip';
-
-import { useDarkMode } from '../../../leafygreen-provider/src/DarkModeContext';
 
 import { iconBaseStyles, iconThemeStyles } from './InfoSprinkle.styles';
 import { Align, InfoSprinkleProps, Justify } from './InfoSprinkle.types';

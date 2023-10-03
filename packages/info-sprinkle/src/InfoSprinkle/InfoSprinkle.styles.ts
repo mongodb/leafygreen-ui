@@ -1,8 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import { focusRing, transitionDuration } from '@leafygreen-ui/tokens';
-
-import palette from '../../../palette/src/palette';
 
 export const themeColor: Record<
   Theme,

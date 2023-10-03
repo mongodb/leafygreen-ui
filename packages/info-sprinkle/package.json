@@ -23,6 +23,9 @@
     "@leafygreen-ui/tooltip": "^10.0.11",
     "@leafygreen-ui/tokens": "^2.2.0"
   },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^3.1.9"
+  },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/info-sprinkle",
   "repository": {
     "type": "git",
