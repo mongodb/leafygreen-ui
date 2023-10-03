@@ -1,0 +1,25 @@
+import React, { forwardRef } from 'react';
+
+import { cx } from '@leafygreen-ui/emotion';
+import Icon from '@leafygreen-ui/icon';
+import IconButton, { BaseIconButtonProps } from '@leafygreen-ui/icon-button';
+
+import { iconButtonStyles } from './CalendarButton.styles';
+
+export const CalendarButton = forwardRef<
+  HTMLButtonElement,
+  BaseIconButtonProps
+>(({ className, ...rest }: BaseIconButtonProps) => {
+  return (
+    <IconButton
+      aria-label="Open calendar menu"
+      type="button"
+      className={cx(iconButtonStyles, className)}
+      {...rest}
+    >
+      <Icon glyph="Calendar" />
+    </IconButton>
+  );
+});
+
+CalendarButton.displayName = 'CalendarButton';

@@ -1,3 +1,2 @@
-
-export  { DateRangeInput } from './DateRangeInput';
+export { DateRangeInput } from './DateRangeInput';
 export { DateRangeInputProps } from './DateRangeInput.types';

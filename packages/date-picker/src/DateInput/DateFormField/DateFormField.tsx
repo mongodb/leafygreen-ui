@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { FormField } from '@leafygreen-ui/form-field';
-import Icon from '@leafygreen-ui/icon';
-import IconButton from '@leafygreen-ui/icon-button';
+import { FormField, FormFieldInput } from '@leafygreen-ui/form-field';
 
-import { iconButtonStyles } from './DateFormField.styles';
+import { useDatePickerContext } from '../../DatePickerContext';
+import { CalendarButton } from '../CalendarButton';
+
 import { DateFormFieldProps } from './DateFormField.types';
 
 /** A wrapper around `FormField` that sets the icon */
@@ -13,36 +13,39 @@ export const DateFormField = React.forwardRef<
   DateFormFieldProps
 >(
   (
-    {
-      children,
-      onIconButtonClick,
-      inputWrapperProps,
-      ...rest
-    }: DateFormFieldProps,
+    { children, onInputClick, onIconButtonClick, ...rest }: DateFormFieldProps,
     fwdRef,
   ) => {
+    const {
+      label,
+      description,
+      state,
+      errorMessage,
+      disabled,
+      isOpen,
+      menuId,
+    } = useDatePickerContext();
+
     return (
       <FormField
         ref={fwdRef}
-        icon={
-          <IconButton
-            aria-label="Open calendar menu"
-            className={iconButtonStyles}
-            onClick={onIconButtonClick}
-            type="button"
-            disabled={rest.disabled}
-          >
-            <Icon glyph="Calendar" />
-          </IconButton>
-        }
-        inputWrapperProps={{
-          ...inputWrapperProps,
-          role: 'combobox',
-          tabIndex: -1,
-        }}
+        label={label}
+        description={description}
+        disabled={disabled}
+        state={state}
+        errorMessage={errorMessage}
         {...rest}
       >
-        {children}
+        <FormFieldInput
+          role="combobox"
+          tabIndex={-1}
+          aria-expanded={isOpen}
+          aria-controls={menuId}
+          onClick={onInputClick}
+          icon={<CalendarButton onClick={onIconButtonClick} />}
+        >
+          {children}
+        </FormFieldInput>
       </FormField>
     );
   },

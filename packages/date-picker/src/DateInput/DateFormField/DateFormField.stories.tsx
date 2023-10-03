@@ -3,6 +3,7 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
+import { FormFieldState } from '@leafygreen-ui/form-field';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 
@@ -45,7 +46,7 @@ const meta: StoryMetaType<
         >
           <DatePickerProvider
             // @ts-expect-error - incomplete context value
-            value={{ size: ctx?.args.size, disabled: ctx?.args.disabled }}
+            value={{ ...ctx?.args }}
           >
             <Instance />
           </DatePickerProvider>
@@ -81,37 +82,29 @@ const meta: StoryMetaType<
 
 export default meta;
 
-const Template: StoryFn<typeof DateFormField> = ({
-  label,
-  description,
-  state,
-  errorMessage,
-}) => {
-  const inputId = 'input';
-  const descriptionId = 'descr';
-  const errorId = 'error';
-
+const Template: StoryFn<typeof DateFormField> = () => {
   return (
-    <DateFormField
-      label={label}
-      description={description}
-      state={state}
-      errorMessage={errorMessage}
+    <DatePickerProvider
+      value={{
+        label: 'Label',
+        description: 'Description',
+        state: FormFieldState.Error,
+        errorMessage: 'This is an error message',
+      }}
     >
-      <input
-        id={inputId}
-        aria-describedby={descriptionId + ' ' + errorId}
-        style={{
-          border: 'none',
-          outline: '1px solid green',
-          padding: 0,
-          margin: 0,
-          width: '100px',
-          fontFamily: 'inherit',
-        }}
-        placeholder="<placeholder>"
-      />
-    </DateFormField>
+      <DateFormField>
+        <input
+          style={{
+            border: 'none',
+            padding: 0,
+            margin: 0,
+            width: '100px',
+            fontFamily: 'inherit',
+          }}
+          placeholder="<placeholder>"
+        />
+      </DateFormField>
+    </DatePickerProvider>
   );
 };
 

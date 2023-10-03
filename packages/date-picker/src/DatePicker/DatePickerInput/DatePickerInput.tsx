@@ -7,7 +7,8 @@ import React, {
 
 import { keyMap } from '@leafygreen-ui/lib';
 
-import { DateFormField, DateInputBox } from '../../DateInput';
+import { DateInputBox } from '../../DateInput';
+import { DateFormField } from '../../DateInput/DateFormField';
 import { useDatePickerContext } from '../../DatePickerContext';
 import { useSegmentRefs } from '../../hooks/useSegmentRefs';
 import { isZeroLike } from '../../utils';
@@ -30,16 +31,8 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
     }: DatePickerInputProps,
     fwdRef,
   ) => {
-    const {
-      label,
-      description,
-      menuId,
-      formatParts,
-      disabled,
-      isOpen,
-      setOpen,
-      setIsDirty,
-    } = useDatePickerContext();
+    const { formatParts, disabled, setOpen, setIsDirty } =
+      useDatePickerContext();
     const segmentRefs = useSegmentRefs();
 
     /** Called when the input, or any of its children, is clicked */
@@ -160,16 +153,9 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
     return (
       <DateFormField
         ref={fwdRef}
-        label={label}
-        description={description}
-        disabled={disabled}
         onKeyDown={handleKeyDown}
+        onInputClick={handleInputClick}
         onBlur={handleInputBlur}
-        inputWrapperProps={{
-          onClick: handleInputClick,
-          'aria-expanded': isOpen,
-          'aria-controls': menuId,
-        }}
         {...rest}
       >
         <DateInputBox
