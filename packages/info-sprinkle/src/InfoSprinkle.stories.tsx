@@ -24,7 +24,7 @@ const meta: StoryMetaType<typeof InfoSprinkle> = {
         baseFontSize: [BaseFontSize.Body1, BaseFontSize.Body2],
       },
       args: {
-        tooltip: "I'm LeafyGreen",
+        info: "I'm LeafyGreen, you're LeafyGreen",
         open: true,
       },
       decorator: Instance => (
@@ -42,7 +42,7 @@ const meta: StoryMetaType<typeof InfoSprinkle> = {
     },
   },
   args: {
-    tooltip: "I'm Leafygreen",
+    info: "I'm LeafyGreen",
     baseFontSize: BaseFontSize.Body1,
     darkMode: false,
     justify: Justify.Start,
