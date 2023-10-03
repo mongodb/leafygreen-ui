@@ -8,5 +8,5 @@ type ModifiedTooltipProps = Omit<
 >;
 
 export interface InfoSprinkleProps extends ModifiedTooltipProps {
-  info: string;
+  children: string;
 }

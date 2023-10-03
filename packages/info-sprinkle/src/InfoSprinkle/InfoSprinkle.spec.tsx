@@ -6,11 +6,9 @@ import { InfoSprinkle } from '.';
 
 function renderInfoSprinkle(props = {}) {
   const utils = render(
-    <InfoSprinkle
-      data-testid="info-sprinkle"
-      info="info sprinkle"
-      {...props}
-    />,
+    <InfoSprinkle data-testid="info-sprinkle" {...props}>
+      info sprinkle
+    </InfoSprinkle>,
   );
 
   const infoSprinkleIcon = utils.getByTestId('info-sprinkle-icon');
@@ -21,6 +19,7 @@ function renderInfoSprinkle(props = {}) {
   };
 }
 
+// Tooltip functionality is tested in `Tooltip` https://github.com/mongodb/leafygreen-ui/blob/main/packages/tooltip/src/Tooltip/Tooltip.spec.tsx
 describe('packages/info-sprinkle', () => {
   describe('a11y', () => {
     test('does not have basic accessibility issues when tooltip is not open', async () => {
@@ -59,5 +58,3 @@ describe('packages/info-sprinkle', () => {
     });
   });
 });
-
-// test that it opens

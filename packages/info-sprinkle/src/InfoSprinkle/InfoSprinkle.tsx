@@ -12,7 +12,12 @@ import { Align, InfoSprinkleProps, Justify } from './InfoSprinkle.types';
 
 export const InfoSprinkle = React.forwardRef<HTMLDivElement, InfoSprinkleProps>(
   (
-    { darkMode: darkModeProp, info, baseFontSize, ...rest }: InfoSprinkleProps,
+    {
+      darkMode: darkModeProp,
+      children,
+      baseFontSize,
+      ...rest
+    }: InfoSprinkleProps,
     forwardRef,
   ) => {
     const { darkMode, theme } = useDarkMode(darkModeProp);
@@ -33,7 +38,7 @@ export const InfoSprinkle = React.forwardRef<HTMLDivElement, InfoSprinkleProps>(
         }
         {...rest}
       >
-        {info}
+        {children}
       </Tooltip>
     );
   },
@@ -42,7 +47,7 @@ export const InfoSprinkle = React.forwardRef<HTMLDivElement, InfoSprinkleProps>(
 InfoSprinkle.displayName = 'InfoSprinkle';
 
 InfoSprinkle.propTypes = {
-  info: PropTypes.string.isRequired,
+  children: PropTypes.string.isRequired,
   className: PropTypes.string,
   align: PropTypes.oneOf(Object.values(Align)),
   justify: PropTypes.oneOf(Object.values(Justify)),
