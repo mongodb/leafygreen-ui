@@ -5,20 +5,20 @@ import { Size } from '@leafygreen-ui/tokens';
 import { FormFieldState } from '../FormField/FormField.types';
 import { FormFieldInputElementProps } from '../FormField/useFormFieldProps';
 
-interface FormFieldContextProps {
+export interface FormFieldContextProps {
   disabled: boolean;
   size: Size;
   state: FormFieldState;
   inputProps?: FormFieldInputElementProps;
 }
 
-const defaultFormFieldContext = {
+export const defaultFormFieldContext = {
   disabled: false,
   size: Size.Default,
   state: FormFieldState.Unset,
 };
 
-const FormFieldContext = React.createContext<FormFieldContextProps>(
+export const FormFieldContext = React.createContext<FormFieldContextProps>(
   defaultFormFieldContext,
 );
 

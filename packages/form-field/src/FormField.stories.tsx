@@ -9,10 +9,13 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 
-import { FormFieldProps, FormFieldState } from './FormField/FormField.types';
-import { useFormFieldContext } from './FormFieldContext/FormFieldContext';
-import { FormFieldInput } from './FormFieldInput';
-import { FormField } from '.';
+import {
+  FormField,
+  FormFieldInput,
+  FormFieldProps,
+  FormFieldState,
+  useFormFieldContext,
+} from '.';
 
 const meta: StoryMetaType<typeof FormField> = {
   title: 'Components/FormField',
