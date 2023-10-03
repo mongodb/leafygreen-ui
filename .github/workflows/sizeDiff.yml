@@ -15,11 +15,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16'
-          cache: yarn
-          cache-dependency-path: 'yarn.lock'
-
-      - name: Install
-        run: yarn install --frozen-lockfile --prefer-offline
 
       - uses: preactjs/compressed-size-action@v2
         with:
