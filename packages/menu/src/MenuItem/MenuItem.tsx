@@ -74,7 +74,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
           {
             [activeIconStyle[theme]]: showActiveStyles,
             [disabledIconStyle[theme]]: disabled,
-            [destructiveIconStyle]: isDestructive,
+            [destructiveIconStyle[theme]]: isDestructive,
           },
           glyph.props?.className,
         ),

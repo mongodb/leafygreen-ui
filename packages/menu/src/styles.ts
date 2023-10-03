@@ -254,6 +254,9 @@ const disabledMenuItemContainerStyle = css`
 
   &:active {
     pointer-events: none;
+  }
+
+  &:before {
     background-color: unset;
   }
 
@@ -272,6 +275,8 @@ export const disabledMenuItemContainerThemeStyle: Record<Theme, string> = {
 
       &:hover {
         background-color: ${palette.gray.light2};
+        color: ${palette.gray.dark1};
+        font-weight: ${fontWeights.regular};
       }
     `,
   ),
@@ -279,6 +284,8 @@ export const disabledMenuItemContainerThemeStyle: Record<Theme, string> = {
     disabledMenuItemContainerStyle,
     css`
       background-color: ${palette.black};
+      color: ${palette.gray.dark1};
+      font-weight: ${fontWeights.regular};
     `,
   ),
 };
