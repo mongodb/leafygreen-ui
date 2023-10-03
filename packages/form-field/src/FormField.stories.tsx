@@ -2,6 +2,7 @@
 import React from 'react';
 import { StoryFn } from '@storybook/react';
 
+import Button from '@leafygreen-ui/button';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
@@ -117,6 +118,14 @@ export const WithIconButton: StoryFn<FormFieldStoryProps> = ({
     >
       <input placeholder="placeholder" />
     </FormFieldInput>
+  </FormField>
+);
+
+export const WithButtonInput: StoryFn<FormFieldStoryProps> = (
+  props: FormFieldStoryProps,
+) => (
+  <FormField {...props}>
+    <Button rightGlyph={<Icon glyph={props.glyph} />}>Click Me</Button>
   </FormField>
 );
 

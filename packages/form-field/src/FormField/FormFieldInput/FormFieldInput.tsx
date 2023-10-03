@@ -23,6 +23,7 @@ import {
 } from './FormFieldInput.styles';
 import { FormFieldInputProps } from './FormFieldInput.types';
 
+/** Applies styling around the input of a FormField element */
 export const FormFieldInput = forwardRef<HTMLDivElement, FormFieldInputProps>(
   ({ icon, className, children, ...rest }: FormFieldInputProps, fwdRef) => {
     const { theme } = useDarkMode();

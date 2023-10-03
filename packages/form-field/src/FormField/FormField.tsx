@@ -14,6 +14,14 @@ import { formFieldFontStyles, textContainerStyle } from './FormField.styles';
 import { type FormFieldProps, FormFieldState } from './FormField.types';
 import { useFormFieldProps } from './useFormFieldProps';
 
+/**
+ * Creates a form field element with the appropriate styles and attributes for each element.
+ *
+ * Use the {@link FormFieldInput} element to apply the appropriate
+ * interaction styles to the inner container element.
+ *
+ * See .stories file for examples
+ * */
 export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
   (
     {
