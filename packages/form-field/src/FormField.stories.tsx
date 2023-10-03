@@ -30,6 +30,9 @@ const meta: StoryMetaType<typeof FormField> = {
         disabled: [false, true],
       },
       excludeCombinations: [{}],
+      args: {
+        children: <input placeholder="placeholder" />,
+      },
       decorator: (Instance, ctx) => (
         <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
           <Instance />
@@ -46,6 +49,7 @@ const meta: StoryMetaType<typeof FormField> = {
     glyph: 'Beaker',
   },
   argTypes: {
+    darkMode: { control: 'boolean' },
     label: { control: 'text' },
     description: { control: 'text' },
     errorMessage: { control: 'text' },
