@@ -41,16 +41,10 @@ export const listTitleModeStyles: Record<Theme, ListTitleMode> = {
       }
     `,
     selected: css`
-      color: ${palette.green.dark2};
-      font-weight: ${fontWeights.bold};
-
-      &:after {
-        transform: scaleX(1);
-        background-color: ${palette.green.dark1};
-      }
-
+      &,
       &:hover {
         color: ${palette.green.dark2};
+        font-weight: ${fontWeights.bold};
 
         &:after {
           transform: scaleX(1);
@@ -88,16 +82,10 @@ export const listTitleModeStyles: Record<Theme, ListTitleMode> = {
       }
     `,
     selected: css`
-      color: ${palette.green.base};
-      font-weight: ${fontWeights.bold};
-
-      &:after {
-        transform: scaleX(1);
-        background-color: ${palette.green.dark1};
-      }
-
+      &,
       &:hover {
-        color: ${palette.green.base};
+        color: ${palette.gray.light2};
+        font-weight: ${fontWeights.bold};
 
         &:after {
           transform: scaleX(1);
