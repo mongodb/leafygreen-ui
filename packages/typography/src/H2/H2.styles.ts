@@ -15,6 +15,6 @@ export const h2Color: Record<Theme, string> = {
     color: ${palette.green.dark2};
   `,
   [Theme.Dark]: css`
-    color: ${palette.green.light1};
+    color: ${palette.gray.light2};
   `,
 };
