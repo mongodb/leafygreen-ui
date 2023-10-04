@@ -271,12 +271,20 @@ export const disabledMenuItemContainerThemeStyle: Record<Theme, string> = {
     disabledMenuItemContainerStyle,
     css`
       background-color: ${palette.gray.light2};
+
+      &:hover {
+        background-color: ${palette.gray.light2};
+      }
     `,
   ),
   [Theme.Light]: cx(
     disabledMenuItemContainerStyle,
     css`
       background-color: ${palette.black};
+
+      &:hover {
+        background-color: ${palette.black};
+      }
     `,
   ),
 };
@@ -352,6 +360,20 @@ export const getFocusedStyles = (containerClassName: string, theme: Theme) => {
       }
     `,
   };
+};
+
+/**
+ * Destructive styles
+ */
+export const destructiveTextStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.red.light1};
+    font-weight: ${fontWeights.regular};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.red.dark2};
+    font-weight: ${fontWeights.regular};
+  `,
 };
 
 export const linkStyle = css`
