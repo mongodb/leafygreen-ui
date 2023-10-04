@@ -51,7 +51,13 @@ describe('packages/info-sprinkle', () => {
   });
 
   describe('info sprinkle', () => {
-    test('renders icon', async () => {
+    test('renders icon when tooltip is closed', async () => {
+      renderInfoSprinkle();
+      const circleIcon = screen.getByLabelText('Info With Circle Icon');
+      expect(circleIcon).toBeInTheDocument();
+    });
+
+    test('renders icon when tooltip is open', async () => {
       renderInfoSprinkle({ open: true });
       const circleIcon = screen.getByLabelText('Info With Circle Icon');
       expect(circleIcon).toBeInTheDocument();
