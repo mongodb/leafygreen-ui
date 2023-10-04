@@ -33,7 +33,7 @@ export const activeThemeStyle: Record<Theme, string> = {
     background-color: ${palette.green.light3};
   `,
   [Theme.Dark]: css`
-    color: ${palette.green.light3};
+    color: ${palette.green.light1};
     background-color: ${palette.green.dark3};
   `,
 };
