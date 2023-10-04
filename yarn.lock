@@ -2258,15 +2258,6 @@
   resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-3.4.0.tgz#08d6c5e20cf7e4cc02fd181c4b0c225cd31dbb60"
   integrity sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==
 
-"@leafygreen-ui/lib@^10.4.0":
-  version "10.4.3"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/lib/-/lib-10.4.3.tgz#f5ebdabc82922067adee8f37833237685bb1b1a8"
-  integrity sha512-p5BtXHeQsvLnnrN0eunPFZeaMtW9z7Mbvm2WOS9lvnAySj8xZp5Vn9Y3XjyYLbPhpGVBhhOAJFP3YMxbP9DKgg==
-  dependencies:
-    "@storybook/csf" "^0.1.0"
-    lodash "^4.17.21"
-    prop-types "^15.7.2"
-
 "@leafygreen-ui/lib@^11.0.0":
   version "11.0.0"
   resolved "https://registry.yarnpkg.com/@leafygreen-ui/lib/-/lib-11.0.0.tgz#dde085e103adc8650699785407650cef61cedd40"
