@@ -243,6 +243,7 @@ _Any other properties will be spread on the Menu `ul` container_
 | `as`          | `React.ElementType`                                | Determines what the `<MenuItem />` will be rendered as                                           |             |
 | `size`        | `default`, `large`                                 | Size of the `<MenuItem />` component                                                             | `'default'` |
 | `glyph`       | `React.ReactElement`                               | Slot to pass in an Icon rendered to the left of `<MenuItem />` text.                             |             |
+| `variant`     | `'default', 'destructive'`                         | Determines variant of `<MenuItem />` component                                                   | `'default'` |
 | ...           | native attributes of component passed to `as` prop | Any other props will be spread on the root element                                               |             |
 
 # SubMenu
