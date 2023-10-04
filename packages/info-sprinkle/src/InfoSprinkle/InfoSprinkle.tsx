@@ -2,14 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
+import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import Tooltip from '@leafygreen-ui/tooltip';
 
 import { iconBaseStyles, iconThemeStyles } from './InfoSprinkle.styles';
 import { Align, InfoSprinkleProps, Justify } from './InfoSprinkle.types';
 
-export const InfoSprinkle = React.forwardRef<HTMLDivElement, InfoSprinkleProps>(
+export const InfoSprinkle = React.forwardRef<
+  HTMLSpanElement,
+  InfoSprinkleProps
+>(
   (
     {
       darkMode: darkModeProp,
@@ -32,7 +35,7 @@ export const InfoSprinkle = React.forwardRef<HTMLDivElement, InfoSprinkleProps>(
             className={cx(iconBaseStyles, iconThemeStyles(theme))}
             data-testid="info-sprinkle-icon"
           >
-            <Icon glyph="InfoWithCircle" size={baseFontSize} aria-hidden />
+            <InfoWithCircleIcon size={baseFontSize} aria-hidden />
           </span>
         }
         {...rest}
