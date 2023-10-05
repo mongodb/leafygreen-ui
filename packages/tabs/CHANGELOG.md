@@ -1,5 +1,13 @@
 # @leafygreen-ui/tabs
 
+## 11.1.11
+
+### Patch Changes
+
+- 324d9730: Updates the text color of dark mode active tabs from `green.base` to `gray.light2`
+- Updated dependencies [324d9730]
+  - @leafygreen-ui/typography@17.0.2
+
 ## 11.1.10
 
 ### Patch Changes
