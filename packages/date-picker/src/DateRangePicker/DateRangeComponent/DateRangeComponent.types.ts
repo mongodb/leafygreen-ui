@@ -1,6 +1,7 @@
-import { DateRangeType } from '../DateRangePicker.types';
+import { DateRangePickerProps, DateRangeType } from '../DateRangePicker.types';
 
-export interface DateRangeComponentProps {
+export interface DateRangeComponentProps
+  extends Pick<DateRangePickerProps, 'showQuickSelection'> {
   range?: DateRangeType;
   setRange: (newVal?: DateRangeType | undefined) => void;
 }

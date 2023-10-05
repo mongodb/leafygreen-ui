@@ -29,7 +29,7 @@ const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
 );
 
 const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
-  title: 'Components/DatePicker/Single',
+  title: 'Components/DatePicker/DatePicker',
   component: DatePicker,
   decorators: [ProviderWrapper],
   parameters: {

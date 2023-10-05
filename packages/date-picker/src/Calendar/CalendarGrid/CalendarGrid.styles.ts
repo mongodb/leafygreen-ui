@@ -1,7 +1,9 @@
 import { css } from '@leafygreen-ui/emotion';
 import { fontWeights } from '@leafygreen-ui/tokens';
 
-export const baseStyles = css``;
+export const calendarGridStyles = css`
+  height: max-content;
+`;
 
 export const calendarHeaderCellStyles = css`
   font-weight: ${fontWeights.regular};

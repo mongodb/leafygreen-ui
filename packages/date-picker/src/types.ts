@@ -1,4 +1,4 @@
-import { omit } from 'lodash';
+import omit from 'lodash/omit';
 
 import { FormFieldState } from '@leafygreen-ui/form-field';
 import { DarkModeProps } from '@leafygreen-ui/lib';

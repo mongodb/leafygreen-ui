@@ -1,5 +1,7 @@
 import range from 'lodash/range';
 
+import { DropdownWidthBasis } from '@leafygreen-ui/select';
+
 import { getMonthName } from './utils/getMonthName';
 
 // Compute the long & short form of each month index
@@ -37,3 +39,13 @@ export const DaysOfWeek = [
 ] as const;
 
 export type DaysOfWeek = (typeof DaysOfWeek)[number];
+
+/** Default props for the month & year select menus */
+export const selectElementProps = {
+  size: 'xsmall',
+  allowDeselect: false,
+  dropdownWidthBasis: DropdownWidthBasis.Option,
+  // using no portal so the select menus are included in the backdrop "foreground"
+  // there is currently no way to pass a ref into the Select portal to use in backdrop "foreground"
+  usePortal: false,
+} as const;

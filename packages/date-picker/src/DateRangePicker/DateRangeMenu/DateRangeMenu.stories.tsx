@@ -52,7 +52,7 @@ const MenuDecorator = (Story: StoryFn, ctx: any) => {
 };
 
 const meta: StoryMetaType<typeof DateRangeMenu, DecoratorArgs> = {
-  title: 'Components/DatePicker/Range/DateRangeMenu',
+  title: 'Components/DatePicker/DateRangePicker/DateRangeMenu',
   component: DateRangeMenu,
   decorators: [MenuDecorator],
   parameters: {
@@ -67,10 +67,9 @@ const meta: StoryMetaType<typeof DateRangeMenu, DecoratorArgs> = {
     timeZone: 'Europe/London',
     min: new Date('1996-10-14'),
     max: new Date('2026-10-14'),
+    showQuickSelection: true,
   },
-  argTypes: {
-    value: { control: 'date' },
-  },
+  argTypes: {},
 };
 
 export default meta;

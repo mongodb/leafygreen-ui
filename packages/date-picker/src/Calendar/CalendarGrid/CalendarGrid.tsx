@@ -2,20 +2,24 @@ import React, { forwardRef, useMemo } from 'react';
 import range from 'lodash/range';
 import { getWeekStartByLocale } from 'weekstart';
 
+import { cx } from '@leafygreen-ui/emotion';
 import { Disclaimer } from '@leafygreen-ui/typography';
 
 import { DaysOfWeek, daysPerWeek } from '../../constants';
 import { useDatePickerContext } from '../../DatePickerContext';
 import { getWeeksArray } from '../../utils';
 
-import { calendarHeaderCellStyles } from './CalendarGrid.styles';
+import {
+  calendarGridStyles,
+  calendarHeaderCellStyles,
+} from './CalendarGrid.styles';
 import { CalendarGridProps } from './CalendarGrid.types';
 
 /**
  * A simple table that renders the `CalendarCell` components passed as children
  */
 export const CalendarGrid = forwardRef<HTMLTableElement, CalendarGridProps>(
-  ({ month, children, ...rest }: CalendarGridProps, fwdRef) => {
+  ({ month, children, className, ...rest }: CalendarGridProps, fwdRef) => {
     const { dateFormat } = useDatePickerContext();
     const weekStartsOn = getWeekStartByLocale(dateFormat);
     const weeks = useMemo(
@@ -24,7 +28,12 @@ export const CalendarGrid = forwardRef<HTMLTableElement, CalendarGridProps>(
     );
 
     return (
-      <table {...rest} role="grid" ref={fwdRef}>
+      <table
+        {...rest}
+        role="grid"
+        ref={fwdRef}
+        className={cx(calendarGridStyles, className)}
+      >
         <thead>
           <tr role="row">
             {range(daysPerWeek).map(i => {

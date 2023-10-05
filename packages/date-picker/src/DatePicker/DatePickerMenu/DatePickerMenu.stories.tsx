@@ -52,7 +52,7 @@ const MenuDecorator = (Story: StoryFn, ctx: any) => {
 };
 
 const meta: StoryMetaType<typeof DatePickerMenu, DecoratorArgs> = {
-  title: 'Components/DatePicker/Single/DatePickerMenu',
+  title: 'Components/DatePicker/DatePicker/DatePickerMenu',
   component: DatePickerMenu,
   decorators: [MenuDecorator],
   parameters: {

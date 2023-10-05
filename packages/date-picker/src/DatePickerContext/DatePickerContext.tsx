@@ -36,5 +36,5 @@ export const DatePickerProvider = ({
   );
 };
 
-/** A hook to access DatePickerContext value */
+/** A hook to access {@link DatePickerContextProps} */
 export const useDatePickerContext = () => useContext(DatePickerContext);

@@ -4,9 +4,9 @@ import range from 'lodash/range';
 
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
-import { DropdownWidthBasis, Option, Select } from '@leafygreen-ui/select';
+import { Option, Select } from '@leafygreen-ui/select';
 
-import { Months } from '../../../constants';
+import { Months, selectElementProps } from '../../../constants';
 import { useDatePickerContext } from '../../../DatePickerContext';
 import { isSameUTCMonth, setUTCMonth, setUTCYear } from '../../../utils';
 import {
@@ -18,15 +18,6 @@ interface DatePickerMenuHeaderProps {
   month: Date;
   setMonth: (newMonth: Date) => void;
 }
-
-const selectElementProps = {
-  size: 'xsmall',
-  allowDeselect: false,
-  dropdownWidthBasis: DropdownWidthBasis.Option,
-  // using no portal so the select menus are included in the backdrop "foreground"
-  // there is currently no way to pass a ref into the Select portal to use in backdrop "foreground"
-  usePortal: false,
-} as const;
 
 /**
  * A helper component for DatePickerMenu.

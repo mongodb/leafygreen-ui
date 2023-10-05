@@ -15,6 +15,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       end: endProp,
       initialEnd: initialEndProp,
       onRangeChange,
+      showQuickSelection,
       ...props
     }: DateRangePickerProps,
     fwdRef,
@@ -33,6 +34,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
           ref={fwdRef}
           range={range}
           setRange={setRange}
+          showQuickSelection={showQuickSelection}
           {...restProps}
         />
       </DatePickerProvider>

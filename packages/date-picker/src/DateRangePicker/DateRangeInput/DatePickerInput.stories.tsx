@@ -27,7 +27,7 @@ const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
 );
 
 const meta: StoryMetaType<typeof DateRangeInput, DatePickerContextProps> = {
-  title: 'Components/DatePicker/Range/DateRangeInput',
+  title: 'Components/DatePicker/DateRangePicker/DateRangeInput',
   component: DateRangeInput,
   decorators: [ProviderWrapper],
   parameters: {

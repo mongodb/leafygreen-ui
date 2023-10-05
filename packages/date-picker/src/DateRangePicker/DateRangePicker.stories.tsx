@@ -30,7 +30,7 @@ const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
 );
 
 const meta: StoryMetaType<typeof DateRangePicker, DatePickerContextProps> = {
-  title: 'Components/DatePicker/Range',
+  title: 'Components/DatePicker/DateRangePicker',
   component: DateRangePicker,
   decorators: [ProviderWrapper],
   parameters: {

@@ -224,7 +224,6 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
             className={menuCalendarGridStyles}
             onKeyDown={handleCalendarKeyDown}
             aria-label={monthLabel}
-            // tabIndex={0}
           >
             {(day, i) => (
               <CalendarCell
