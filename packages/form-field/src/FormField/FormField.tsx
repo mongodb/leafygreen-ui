@@ -34,7 +34,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       label,
       description,
       children,
-      state = FormFieldState.Default,
+      state = FormFieldState.None,
       size = Size.Default,
       disabled = false,
       errorMessage,

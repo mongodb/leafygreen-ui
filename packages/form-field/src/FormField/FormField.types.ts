@@ -2,7 +2,7 @@ import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 
 export const FormFieldState = {
-  Default: 'default',
+  None: 'none',
   Error: 'error',
   Valid: 'valid',
 } as const;

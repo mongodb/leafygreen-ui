@@ -62,7 +62,7 @@ const meta: StoryMetaType<typeof FormField, FormFieldStoryProps> = {
     description: 'Description',
     errorMessage: 'This is a notification',
     size: Size.Default,
-    state: FormFieldState.Default,
+    state: FormFieldState.None,
     glyph: 'Beaker',
   },
   argTypes: {

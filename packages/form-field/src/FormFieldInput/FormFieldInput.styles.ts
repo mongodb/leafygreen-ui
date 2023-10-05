@@ -231,7 +231,7 @@ export const inputWrapperStateStyles: Record<
       }
     `,
   },
-  [FormFieldState.Default]: {
+  [FormFieldState.None]: {
     [Theme.Light]: css``,
     [Theme.Dark]: css``,
   },
