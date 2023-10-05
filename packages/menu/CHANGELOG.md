@@ -1,5 +1,11 @@
 # @leafygreen-ui/menu
 
+## 22.0.9
+
+### Patch Changes
+
+- b15c4805: Adds `variant` prop to MenuItem component. The value can either be `'default'` or `'destructive'`
+
 ## 22.0.8
 
 ### Patch Changes
