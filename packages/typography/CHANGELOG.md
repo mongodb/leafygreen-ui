@@ -1,5 +1,11 @@
 # @leafygreen-ui/typography
 
+## 17.0.2
+
+### Patch Changes
+
+- 324d9730: Updates H1 and H2 components in dark mode. Previously, their default color was `'green.light1'` in dark mode, and now the default is `'gray.light2'`
+
 ## 17.0.1
 
 ### Patch Changes
