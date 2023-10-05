@@ -56,7 +56,7 @@ export const badgeVariants: Record<Theme, Record<Variant, string>> = {
     [Variant.Green]: css`
       background-color: ${palette.green.dark3};
       border-color: ${palette.green.dark2};
-      color: ${palette.green.base};
+      color: ${palette.green.light1};
     `,
   },
   [Theme.Light]: {
