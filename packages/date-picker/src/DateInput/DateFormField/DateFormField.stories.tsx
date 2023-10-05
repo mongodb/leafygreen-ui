@@ -3,7 +3,6 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
-import { FormFieldState } from '@leafygreen-ui/form-field';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 
@@ -11,6 +10,7 @@ import {
   DatePickerContextProps,
   DatePickerProvider,
 } from '../../DatePickerContext';
+import { DatePickerState } from '../../types';
 
 import { DateFormField } from './DateFormField';
 
@@ -30,7 +30,7 @@ const meta: StoryMetaType<
         darkMode: [false, true],
         label: ['Label', undefined],
         description: [undefined, 'Description'],
-        state: ['unset', 'error'],
+        state: Object.values(DatePickerState),
         disabled: [false, true],
       },
       excludeCombinations: [
@@ -72,7 +72,7 @@ const meta: StoryMetaType<
   args: {
     label: 'Label',
     description: 'Description',
-    state: 'error',
+    state: DatePickerState.Error,
     errorMessage: 'This is an error message',
   },
   argTypes: {
@@ -88,7 +88,7 @@ const Template: StoryFn<typeof DateFormField> = () => {
       value={{
         label: 'Label',
         description: 'Description',
-        state: FormFieldState.Error,
+        state: DatePickerState.Error,
         errorMessage: 'This is an error message',
       }}
     >

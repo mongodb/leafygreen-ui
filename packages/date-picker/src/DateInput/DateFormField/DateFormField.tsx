@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FormField, FormFieldInput } from '@leafygreen-ui/form-field';
+import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
 
 import { useDatePickerContext } from '../../DatePickerContext';
 import { CalendarButton } from '../CalendarButton';
@@ -36,7 +36,7 @@ export const DateFormField = React.forwardRef<
         errorMessage={errorMessage}
         {...rest}
       >
-        <FormFieldInput
+        <FormFieldInputContainer
           role="combobox"
           tabIndex={-1}
           aria-expanded={isOpen}
@@ -45,7 +45,7 @@ export const DateFormField = React.forwardRef<
           icon={<CalendarButton onClick={onIconButtonClick} />}
         >
           {children}
-        </FormFieldInput>
+        </FormFieldInputContainer>
       </FormField>
     );
   },

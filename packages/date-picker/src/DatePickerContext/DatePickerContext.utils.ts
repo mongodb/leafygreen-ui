@@ -4,7 +4,7 @@ import defaultTo from 'lodash/defaultTo';
 
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
-import { BaseDatePickerProps } from '../types';
+import { BaseDatePickerProps, DatePickerState } from '../types';
 import { getFormatParts, toDate } from '../utils';
 
 import {
@@ -50,7 +50,7 @@ export const defaultDatePickerContext: DatePickerContextProps = {
   isInRange: () => true,
   disabled: false,
   size: Size.Default,
-  state: 'unset',
+  state: DatePickerState.None,
   errorMessage: '',
   baseFontSize: BaseFontSize.Body1,
   darkMode: false,

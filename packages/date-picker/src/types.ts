@@ -1,5 +1,12 @@
+import { omit } from 'lodash';
+
+import { FormFieldState } from '@leafygreen-ui/form-field';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
+
+export const DatePickerState = omit(FormFieldState, 'Valid');
+export type DatePickerState =
+  (typeof DatePickerState)[keyof typeof DatePickerState];
 
 export type DateType = Date | null;
 
@@ -61,7 +68,7 @@ export interface BaseDatePickerProps extends DarkModeProps {
   /**
    * Whether to show an error message
    */
-  state?: 'unset' | 'error';
+  state?: DatePickerState;
 
   /**
    * A message to show in red underneath the input when in an error state
