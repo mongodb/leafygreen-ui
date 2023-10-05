@@ -1,17 +1,8 @@
-import { TemplateParameters } from '../../create.types';
-
-export const pkgJson = ({
-  scope,
-  packageNameKebab,
-  packageNameTitle,
-}: Pick<
-  TemplateParameters,
-  'scope' | 'packageNameKebab' | 'packageNameTitle'
->) => `  
+  
 {
-  "name": "${scope}/${packageNameKebab}",
+  "name": "@leafygreen-ui/info-sprinkle",
   "version": "0.1.0",
-  "description": "LeafyGreen UI Kit ${packageNameTitle}",
+  "description": "LeafyGreen UI Kit Info Sprinkle",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
@@ -26,9 +17,16 @@ export const pkgJson = ({
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/lib": "^12.0.0"
+    "@leafygreen-ui/icon": "^11.24.0",
+    "@leafygreen-ui/lib": "^12.0.0",
+    "@leafygreen-ui/palette": "^4.0.7",
+    "@leafygreen-ui/tooltip": "^10.0.11",
+    "@leafygreen-ui/tokens": "^2.2.0"
   },
-  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/${packageNameKebab}",
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^3.1.9"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/info-sprinkle",
   "repository": {
     "type": "git",
     "url": "https://github.com/mongodb/leafygreen-ui"
@@ -37,4 +35,3 @@ export const pkgJson = ({
     "url": "https://jira.mongodb.org/projects/PD/summary"
   }
 }
-`;
