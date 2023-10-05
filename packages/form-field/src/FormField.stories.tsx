@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { StoryFn } from '@storybook/react';
-import { omit } from 'lodash';
+import omit from 'lodash/omit';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
