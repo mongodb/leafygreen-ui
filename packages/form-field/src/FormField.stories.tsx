@@ -13,15 +13,15 @@ import { Size } from '@leafygreen-ui/tokens';
 
 import {
   FormField,
-  FormFieldInput,
-  FormFieldInputProps,
+  FormFieldInputContainer,
+  FormFieldInputContainerProps,
   FormFieldProps,
   FormFieldState,
   useFormFieldContext,
 } from '.';
 
 type FormFieldStoryProps = FormFieldProps &
-  FormFieldInputProps & { glyph: string };
+  FormFieldInputContainerProps & { glyph: string };
 
 const meta: StoryMetaType<typeof FormField, FormFieldStoryProps> = {
   title: 'Components/FormField',
@@ -49,9 +49,9 @@ const meta: StoryMetaType<typeof FormField, FormFieldStoryProps> = {
       decorator: (Instance, ctx) => (
         <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
           <Instance>
-            <FormFieldInput icon={ctx?.args.icon}>
+            <FormFieldInputContainer icon={ctx?.args.icon}>
               {ctx?.args.children}
-            </FormFieldInput>
+            </FormFieldInputContainer>
           </Instance>
         </LeafyGreenProvider>
       ),
@@ -98,9 +98,13 @@ export const Basic: StoryFn<FormFieldStoryProps> = ({
     disabled={disabled}
     {...rest}
   >
-    <FormFieldInput role="combobox" tabIndex={-1} icon={<Icon glyph={glyph} />}>
+    <FormFieldInputContainer
+      role="combobox"
+      tabIndex={-1}
+      icon={<Icon glyph={glyph} />}
+    >
       <input placeholder="placeholder" />
-    </FormFieldInput>
+    </FormFieldInputContainer>
   </FormField>
 );
 
@@ -121,7 +125,7 @@ export const WithIconButton: StoryFn<FormFieldStoryProps> = ({
     disabled={disabled}
     {...rest}
   >
-    <FormFieldInput
+    <FormFieldInputContainer
       role="combobox"
       tabIndex={-1}
       icon={
@@ -131,7 +135,7 @@ export const WithIconButton: StoryFn<FormFieldStoryProps> = ({
       }
     >
       <input placeholder="placeholder" />
-    </FormFieldInput>
+    </FormFieldInputContainer>
   </FormField>
 );
 
@@ -140,7 +144,7 @@ export const Custom_TwoIcons: StoryFn<FormFieldStoryProps> = ({
   ...props
 }: FormFieldStoryProps) => (
   <FormField {...props}>
-    <FormFieldInput
+    <FormFieldInputContainer
       role="combobox"
       tabIndex={-1}
       icon={
@@ -159,7 +163,7 @@ export const Custom_TwoIcons: StoryFn<FormFieldStoryProps> = ({
       }
     >
       <input placeholder="placeholder" />
-    </FormFieldInput>
+    </FormFieldInputContainer>
   </FormField>
 );
 

@@ -21,12 +21,21 @@ import {
   inputWrapperModeStyles,
   inputWrapperSizeStyles,
   inputWrapperStateStyles,
-} from './FormFieldInput.styles';
-import { FormFieldInputProps } from './FormFieldInput.types';
+} from './FormFieldInputContainer.styles';
+import { FormFieldInputContainerProps } from './FormFieldInputContainer.types';
 
-/** Applies styling around the input of a FormField element */
-export const FormFieldInput = forwardRef<HTMLDivElement, FormFieldInputProps>(
-  ({ icon, className, children, ...rest }: FormFieldInputProps, fwdRef) => {
+/**
+ * Applies styling around the `input` of a FormField element
+ * @internal
+ */
+export const FormFieldInputContainer = forwardRef<
+  HTMLDivElement,
+  FormFieldInputContainerProps
+>(
+  (
+    { icon, className, children, ...rest }: FormFieldInputContainerProps,
+    fwdRef,
+  ) => {
     const { theme } = useDarkMode();
     const { disabled, size, state, inputProps } = useFormFieldContext();
 
@@ -77,4 +86,4 @@ export const FormFieldInput = forwardRef<HTMLDivElement, FormFieldInputProps>(
   },
 );
 
-FormFieldInput.displayName = 'FormFieldInputWrapper';
+FormFieldInputContainer.displayName = 'FormFieldInputWrapper';
