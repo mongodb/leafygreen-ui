@@ -15,7 +15,7 @@ export interface FormFieldContextProps {
 export const defaultFormFieldContext = {
   disabled: false,
   size: Size.Default,
-  state: FormFieldState.Unset,
+  state: FormFieldState.Default,
 };
 
 export const FormFieldContext = React.createContext<FormFieldContextProps>(

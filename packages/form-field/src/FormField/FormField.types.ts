@@ -1,8 +1,8 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 
 export const FormFieldState = {
-  Unset: 'unset',
+  Default: 'default',
   Error: 'error',
   Valid: 'valid',
 } as const;
@@ -39,7 +39,8 @@ type AriaLabelProps =
     };
 
 export type FormFieldProps = Omit<HTMLElementProps<'div'>, 'children'> &
-  AriaLabelProps & {
+  AriaLabelProps &
+  DarkModeProps & {
     children: FormFieldChildren;
     description?: React.ReactNode;
     state?: FormFieldState;

@@ -34,11 +34,12 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       label,
       description,
       children,
-      state = FormFieldState.Unset,
+      state = FormFieldState.Default,
       size = Size.Default,
       disabled = false,
       errorMessage,
       className,
+      darkMode,
       ...rest
     }: FormFieldProps,
     fwdRef,
@@ -51,7 +52,10 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       useFormFieldProps({ label, description, state, ...rest });
 
     return (
-      <LeafyGreenProvider baseFontSize={baseFontSize === 16 ? 16 : 14}>
+      <LeafyGreenProvider
+        darkMode={darkMode}
+        baseFontSize={baseFontSize === 16 ? 16 : 14}
+      >
         <FormFieldProvider value={{ disabled, size, state, inputProps }}>
           <div
             className={cx(formFieldFontStyles[baseFontSize], className)}
