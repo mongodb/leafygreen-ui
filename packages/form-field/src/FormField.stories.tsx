@@ -32,7 +32,11 @@ const meta: StoryMetaType<typeof FormField, FormFieldStoryProps> = {
       combineArgs: {
         darkMode: [false, true],
         description: [undefined, 'Description'],
-        icon: [undefined, <Icon glyph="Cloud" key="" />],
+        contentEnd: [
+          undefined,
+          <Icon glyph="Cloud" key="" />,
+          <em key="">Optional</em>,
+        ],
         size: Object.values(Size),
         state: omit(Object.values(FormFieldState), 'valid'),
         disabled: [false, true],
@@ -49,7 +53,7 @@ const meta: StoryMetaType<typeof FormField, FormFieldStoryProps> = {
       decorator: (Instance, ctx) => (
         <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
           <Instance>
-            <FormFieldInputContainer icon={ctx?.args.icon}>
+            <FormFieldInputContainer contentEnd={ctx?.args.contentEnd}>
               {ctx?.args.children}
             </FormFieldInputContainer>
           </Instance>
@@ -101,7 +105,34 @@ export const Basic: StoryFn<FormFieldStoryProps> = ({
     <FormFieldInputContainer
       role="combobox"
       tabIndex={-1}
-      icon={<Icon glyph={glyph} />}
+      contentEnd={<Icon glyph={glyph} />}
+    >
+      <input placeholder="placeholder" />
+    </FormFieldInputContainer>
+  </FormField>
+);
+
+export const WithOptionalText: StoryFn<FormFieldStoryProps> = ({
+  label,
+  description,
+  state,
+  size,
+  disabled,
+  glyph: _,
+  ...rest
+}: FormFieldStoryProps) => (
+  <FormField
+    label={label}
+    description={description}
+    state={state}
+    size={size}
+    disabled={disabled}
+    {...rest}
+  >
+    <FormFieldInputContainer
+      role="combobox"
+      tabIndex={-1}
+      contentEnd={<em>Optional</em>}
     >
       <input placeholder="placeholder" />
     </FormFieldInputContainer>
@@ -128,7 +159,7 @@ export const WithIconButton: StoryFn<FormFieldStoryProps> = ({
     <FormFieldInputContainer
       role="combobox"
       tabIndex={-1}
-      icon={
+      contentEnd={
         <IconButton aria-label="Icon">
           <Icon glyph={glyph} />
         </IconButton>
@@ -147,7 +178,7 @@ export const Custom_TwoIcons: StoryFn<FormFieldStoryProps> = ({
     <FormFieldInputContainer
       role="combobox"
       tabIndex={-1}
-      icon={
+      contentEnd={
         <span
           className={css`
             display: flex;
