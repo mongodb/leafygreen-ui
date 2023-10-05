@@ -34,7 +34,7 @@ export const FormFieldProvider = ({
 );
 
 /**
- * Returns {@link FormFieldContextProps} used within the FormFieldInputContainer,
+ * Returns {@link FormFieldContextProps} to be used within the FormFieldInputContainer,
  * or within and custom FormField children
  */
 export const useFormFieldContext = () => useContext(FormFieldContext);
