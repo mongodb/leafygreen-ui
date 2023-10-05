@@ -147,12 +147,12 @@ export const menuButtonDisabledThemeStyles: Record<Theme, string> = {
     css`
       &[aria-disabled='true'] {
         background-color: ${palette.gray.dark3};
-        color: ${palette.gray.dark2};
+        color: ${palette.gray.dark1};
         border-color: ${palette.gray.dark2};
 
         > *:last-child {
           > svg {
-            color: ${palette.gray.dark2};
+            color: ${palette.gray.dark1};
           }
         }
       }
