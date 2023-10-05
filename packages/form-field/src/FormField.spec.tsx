@@ -306,7 +306,7 @@ describe('packages/form-field', () => {
     const { queryByTestId } = render(
       <FormField label="Label" data-testid="form-field">
         <FormFieldInputContainer
-          icon={<Icon glyph="Beaker" data-testid="icon" />}
+          contentEnd={<Icon glyph="Beaker" data-testid="icon" />}
         >
           <div data-testid="input" />
         </FormFieldInputContainer>
@@ -315,7 +315,21 @@ describe('packages/form-field', () => {
 
     const icon = queryByTestId('icon');
     expect(icon).toBeInTheDocument();
-    expect(icon?.tagName).toEqual('svg');
+    expect(icon?.tagName.toLowerCase()).toEqual('svg');
+  });
+
+  test('Renders other content', () => {
+    const { queryByText } = render(
+      <FormField label="Label" data-testid="form-field">
+        <FormFieldInputContainer contentEnd={<em>Optional</em>}>
+          <div data-testid="input" />
+        </FormFieldInputContainer>
+      </FormField>,
+    );
+
+    const em = queryByText('Optional');
+    expect(em).toBeInTheDocument();
+    expect(em?.tagName.toLowerCase()).toEqual('em');
   });
 
   describe('custom children', () => {
