@@ -5,7 +5,7 @@ import Icon from '@leafygreen-ui/icon';
 
 import {
   FormField,
-  FormFieldInput,
+  FormFieldInputContainer,
   FormFieldState,
   useFormFieldContext,
 } from '.';
@@ -14,9 +14,9 @@ describe('packages/form-field', () => {
   test('rest passed to outer element', () => {
     const { getByTestId } = render(
       <FormField label="Label" data-testid="form-field">
-        <FormFieldInput>
+        <FormFieldInputContainer>
           <div />
-        </FormFieldInput>
+        </FormFieldInputContainer>
       </FormField>,
     );
     const formField = getByTestId('form-field');
@@ -26,9 +26,9 @@ describe('packages/form-field', () => {
   test('className passed to outer element', () => {
     const { getByTestId } = render(
       <FormField label="Label" data-testid="form-field" className="form-field">
-        <FormFieldInput>
+        <FormFieldInputContainer>
           <div />
-        </FormFieldInput>
+        </FormFieldInputContainer>
       </FormField>,
     );
     const formField = getByTestId('form-field');
@@ -42,9 +42,9 @@ describe('packages/form-field', () => {
         description="Description"
         data-testid="form-field"
       >
-        <FormFieldInput>
+        <FormFieldInputContainer>
           <div />
-        </FormFieldInput>
+        </FormFieldInputContainer>
       </FormField>,
     );
     const description = getByText('Description');
@@ -58,9 +58,9 @@ describe('packages/form-field', () => {
         description={<span data-testid="description-span">description</span>}
         data-testid="form-field"
       >
-        <FormFieldInput>
+        <FormFieldInputContainer>
           <div />
-        </FormFieldInput>
+        </FormFieldInputContainer>
       </FormField>,
     );
     const descriptionSpan = queryByTestId('description-span');
@@ -71,9 +71,9 @@ describe('packages/form-field', () => {
   test('input has id,', () => {
     const { getByTestId } = render(
       <FormField label="Label" data-testid="form-field">
-        <FormFieldInput>
+        <FormFieldInputContainer>
           <div data-testid="input" />
-        </FormFieldInput>
+        </FormFieldInputContainer>
       </FormField>,
     );
     const input = getByTestId('input');
@@ -84,9 +84,9 @@ describe('packages/form-field', () => {
     test('label element has id & htmlFor', () => {
       const { getByText } = render(
         <FormField label="Label" data-testid="form-field">
-          <FormFieldInput>
+          <FormFieldInputContainer>
             <div />
-          </FormFieldInput>
+          </FormFieldInputContainer>
         </FormField>,
       );
       const label = getByText('Label');
@@ -100,9 +100,9 @@ describe('packages/form-field', () => {
           label={<span data-testid="label-span">Label</span>}
           data-testid="form-field"
         >
-          <FormFieldInput>
+          <FormFieldInputContainer>
             <div />
-          </FormFieldInput>
+          </FormFieldInputContainer>
         </FormField>,
       );
       const labelSpan = queryByTestId('label-span');
@@ -117,9 +117,9 @@ describe('packages/form-field', () => {
           description="Description"
           data-testid="form-field"
         >
-          <FormFieldInput>
+          <FormFieldInputContainer>
             <div data-testid="input" />
-          </FormFieldInput>
+          </FormFieldInputContainer>
         </FormField>,
       );
       const label = getByText('Label');
@@ -134,9 +134,9 @@ describe('packages/form-field', () => {
           description="Description"
           data-testid="form-field"
         >
-          <FormFieldInput>
+          <FormFieldInputContainer>
             <div data-testid="input" />
-          </FormFieldInput>
+          </FormFieldInputContainer>
         </FormField>,
       );
       const labelSpan = queryByTestId('label-span');
@@ -154,9 +154,9 @@ describe('packages/form-field', () => {
           description="Description"
           data-testid="form-field"
         >
-          <FormFieldInput>
+          <FormFieldInputContainer>
             <div data-testid="input" />
-          </FormFieldInput>
+          </FormFieldInputContainer>
         </FormField>,
       );
       const description = getByText('Description');
@@ -171,9 +171,9 @@ describe('packages/form-field', () => {
           description={<span data-testid="description-span">description</span>}
           data-testid="form-field"
         >
-          <FormFieldInput>
+          <FormFieldInputContainer>
             <div data-testid="input" />
-          </FormFieldInput>
+          </FormFieldInputContainer>
         </FormField>,
       );
       const descriptionSpan = queryByTestId('description-span');
@@ -187,9 +187,9 @@ describe('packages/form-field', () => {
     test('when aria-label is provided, input has that aria-label', () => {
       const { getByTestId } = render(
         <FormField aria-label="Label" data-testid="form-field">
-          <FormFieldInput>
+          <FormFieldInputContainer>
             <div data-testid="input" />
-          </FormFieldInput>
+          </FormFieldInputContainer>
         </FormField>,
       );
       const input = getByTestId('input');
@@ -199,9 +199,9 @@ describe('packages/form-field', () => {
     test('when aria-labelledby is provided, input has that aria-labelledby', () => {
       const { getByTestId } = render(
         <FormField aria-labelledby="label-123" data-testid="form-field">
-          <FormFieldInput>
+          <FormFieldInputContainer>
             <div data-testid="input" />
-          </FormFieldInput>
+          </FormFieldInputContainer>
         </FormField>,
       );
       const input = getByTestId('input');
@@ -217,9 +217,9 @@ describe('packages/form-field', () => {
           errorMessage="This is an error message"
           data-testid="form-field"
         >
-          <FormFieldInput>
+          <FormFieldInputContainer>
             <div data-testid="input" />
-          </FormFieldInput>
+          </FormFieldInputContainer>
         </FormField>,
       );
       const error = queryByText('This is an error message');
@@ -234,9 +234,9 @@ describe('packages/form-field', () => {
           state={FormFieldState.Error}
           data-testid="form-field"
         >
-          <FormFieldInput>
+          <FormFieldInputContainer>
             <div data-testid="input" />
-          </FormFieldInput>
+          </FormFieldInputContainer>
         </FormField>,
       );
       const error = queryByText('This is an error message');
@@ -251,9 +251,9 @@ describe('packages/form-field', () => {
           state={FormFieldState.Error}
           data-testid="form-field"
         >
-          <FormFieldInput>
+          <FormFieldInputContainer>
             <div data-testid="input" />
-          </FormFieldInput>
+          </FormFieldInputContainer>
         </FormField>,
       );
       const error = queryByText('This is an error message');
@@ -268,9 +268,9 @@ describe('packages/form-field', () => {
           state={FormFieldState.Error}
           data-testid="form-field"
         >
-          <FormFieldInput>
+          <FormFieldInputContainer>
             <div data-testid="input" />
-          </FormFieldInput>
+          </FormFieldInputContainer>
         </FormField>,
       );
       const input = getByTestId('input');
@@ -287,9 +287,9 @@ describe('packages/form-field', () => {
           state={FormFieldState.Error}
           data-testid="form-field"
         >
-          <FormFieldInput>
+          <FormFieldInputContainer>
             <div data-testid="input" />
-          </FormFieldInput>
+          </FormFieldInputContainer>
         </FormField>,
       );
       const input = getByTestId('input');
@@ -305,9 +305,11 @@ describe('packages/form-field', () => {
   test('Renders an icon', () => {
     const { queryByTestId } = render(
       <FormField label="Label" data-testid="form-field">
-        <FormFieldInput icon={<Icon glyph="Beaker" data-testid="icon" />}>
+        <FormFieldInputContainer
+          icon={<Icon glyph="Beaker" data-testid="icon" />}
+        >
           <div data-testid="input" />
-        </FormFieldInput>
+        </FormFieldInputContainer>
       </FormField>,
     );
 

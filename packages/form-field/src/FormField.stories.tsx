@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { StoryFn } from '@storybook/react';
+import omit from 'lodash/omit';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
@@ -12,15 +13,15 @@ import { Size } from '@leafygreen-ui/tokens';
 
 import {
   FormField,
-  FormFieldInput,
-  FormFieldInputProps,
+  FormFieldInputContainer,
+  FormFieldInputContainerProps,
   FormFieldProps,
   FormFieldState,
   useFormFieldContext,
 } from '.';
 
 type FormFieldStoryProps = FormFieldProps &
-  FormFieldInputProps & { glyph: string };
+  FormFieldInputContainerProps & { glyph: string };
 
 const meta: StoryMetaType<typeof FormField, FormFieldStoryProps> = {
   title: 'Components/FormField',
@@ -33,7 +34,7 @@ const meta: StoryMetaType<typeof FormField, FormFieldStoryProps> = {
         description: [undefined, 'Description'],
         icon: [undefined, <Icon glyph="Cloud" key="" />],
         size: Object.values(Size),
-        state: Object.values(FormFieldState),
+        state: omit(Object.values(FormFieldState), 'valid'),
         disabled: [false, true],
       },
       excludeCombinations: [
@@ -48,9 +49,9 @@ const meta: StoryMetaType<typeof FormField, FormFieldStoryProps> = {
       decorator: (Instance, ctx) => (
         <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
           <Instance>
-            <FormFieldInput icon={ctx?.args.icon}>
+            <FormFieldInputContainer icon={ctx?.args.icon}>
               {ctx?.args.children}
-            </FormFieldInput>
+            </FormFieldInputContainer>
           </Instance>
         </LeafyGreenProvider>
       ),
@@ -61,7 +62,7 @@ const meta: StoryMetaType<typeof FormField, FormFieldStoryProps> = {
     description: 'Description',
     errorMessage: 'This is a notification',
     size: Size.Default,
-    state: FormFieldState.Unset,
+    state: FormFieldState.None,
     glyph: 'Beaker',
   },
   argTypes: {
@@ -70,7 +71,10 @@ const meta: StoryMetaType<typeof FormField, FormFieldStoryProps> = {
     description: { control: 'text' },
     errorMessage: { control: 'text' },
     size: { control: 'select' },
-    state: { control: 'select' },
+    state: {
+      control: 'select',
+      options: omit(Object.values(FormFieldState), 'valid'),
+    },
     glyph: { control: 'select', options: Object.keys(glyphs) },
   },
 };
@@ -94,9 +98,13 @@ export const Basic: StoryFn<FormFieldStoryProps> = ({
     disabled={disabled}
     {...rest}
   >
-    <FormFieldInput role="combobox" tabIndex={-1} icon={<Icon glyph={glyph} />}>
+    <FormFieldInputContainer
+      role="combobox"
+      tabIndex={-1}
+      icon={<Icon glyph={glyph} />}
+    >
       <input placeholder="placeholder" />
-    </FormFieldInput>
+    </FormFieldInputContainer>
   </FormField>
 );
 
@@ -117,7 +125,7 @@ export const WithIconButton: StoryFn<FormFieldStoryProps> = ({
     disabled={disabled}
     {...rest}
   >
-    <FormFieldInput
+    <FormFieldInputContainer
       role="combobox"
       tabIndex={-1}
       icon={
@@ -127,7 +135,7 @@ export const WithIconButton: StoryFn<FormFieldStoryProps> = ({
       }
     >
       <input placeholder="placeholder" />
-    </FormFieldInput>
+    </FormFieldInputContainer>
   </FormField>
 );
 
@@ -136,7 +144,7 @@ export const Custom_TwoIcons: StoryFn<FormFieldStoryProps> = ({
   ...props
 }: FormFieldStoryProps) => (
   <FormField {...props}>
-    <FormFieldInput
+    <FormFieldInputContainer
       role="combobox"
       tabIndex={-1}
       icon={
@@ -155,7 +163,7 @@ export const Custom_TwoIcons: StoryFn<FormFieldStoryProps> = ({
       }
     >
       <input placeholder="placeholder" />
-    </FormFieldInput>
+    </FormFieldInputContainer>
   </FormField>
 );
 

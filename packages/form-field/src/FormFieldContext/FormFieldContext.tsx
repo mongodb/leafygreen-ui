@@ -15,7 +15,7 @@ export interface FormFieldContextProps {
 export const defaultFormFieldContext = {
   disabled: false,
   size: Size.Default,
-  state: FormFieldState.Unset,
+  state: FormFieldState.None,
 };
 
 export const FormFieldContext = React.createContext<FormFieldContextProps>(
@@ -33,4 +33,8 @@ export const FormFieldProvider = ({
   </FormFieldContext.Provider>
 );
 
+/**
+ * Returns {@link FormFieldContextProps} to be used within the FormFieldInputContainer,
+ * or within and custom FormField children
+ */
 export const useFormFieldContext = () => useContext(FormFieldContext);

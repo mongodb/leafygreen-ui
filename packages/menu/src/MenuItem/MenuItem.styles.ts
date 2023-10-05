@@ -10,3 +10,12 @@ export const disabledIconStyle: Record<Theme, string> = {
     color: ${palette.gray.base};
   `,
 };
+
+export const destructiveIconStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.red.light1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.red.base};
+  `,
+};

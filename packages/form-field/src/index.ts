@@ -12,4 +12,7 @@ export {
   FormFieldProvider,
   useFormFieldContext,
 } from './FormFieldContext';
-export { FormFieldInput, type FormFieldInputProps } from './FormFieldInput';
+export {
+  FormFieldInputContainer,
+  type FormFieldInputContainerProps,
+} from './FormFieldInputContainer';

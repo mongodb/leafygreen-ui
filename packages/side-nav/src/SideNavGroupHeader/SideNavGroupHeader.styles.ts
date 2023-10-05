@@ -18,7 +18,7 @@ export const iconCustomThemeStyle: Record<Theme, string> = {
     color: ${palette.green.dark2};
   `,
   [Theme.Dark]: css`
-    color: ${palette.green.dark1};
+    color: ${palette.green.light1};
   `,
 };
 
