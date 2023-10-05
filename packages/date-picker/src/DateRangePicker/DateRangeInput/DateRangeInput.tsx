@@ -89,7 +89,11 @@ export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
     };
 
     return (
-      <DateFormField ref={fwdRef} onInputClick={handleInputClick}>
+      <DateFormField
+        ref={fwdRef}
+        onKeyDown={handleKeyDown}
+        onInputClick={handleInputClick}
+      >
         <div className={inputWrapperStyles}>
           <DateInputBox segmentRefs={startSegmentRefs} />
           <span>{EN_DASH}</span>
