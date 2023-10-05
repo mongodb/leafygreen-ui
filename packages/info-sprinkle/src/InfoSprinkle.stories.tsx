@@ -48,7 +48,6 @@ const meta: StoryMetaType<typeof InfoSprinkle> = {
     darkMode: false,
     justify: Justify.Start,
     align: Align.Top,
-    open: true,
   },
   argTypes: {
     open: { control: 'boolean' },
