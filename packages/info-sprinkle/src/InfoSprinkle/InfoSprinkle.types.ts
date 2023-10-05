@@ -12,4 +12,11 @@ export interface InfoSprinkleProps extends ModifiedTooltipProps {
    * String rendered inside the tooltip
    */
   children: string;
+
+  /**
+   * aria-label for the trigger icon.
+   *
+   * @default 'more info'
+   */
+  triggerAriaLabel?: string;
 }
