@@ -77,7 +77,7 @@ const meta: StoryMetaType<typeof FormField, FormFieldStoryProps> = {
     size: { control: 'select' },
     state: {
       control: 'select',
-      options: omit(Object.values(FormFieldState), 'valid'),
+      options: Object.values(omit(FormFieldState, 'Valid')),
     },
     glyph: { control: 'select', options: Object.keys(glyphs) },
   },
