@@ -33,7 +33,7 @@ export const FormFieldInputContainer = forwardRef<
   FormFieldInputContainerProps
 >(
   (
-    { icon, className, children, ...rest }: FormFieldInputContainerProps,
+    { contentEnd, className, children, ...rest }: FormFieldInputContainerProps,
     fwdRef,
   ) => {
     const { theme } = useDarkMode();
@@ -71,12 +71,12 @@ export const FormFieldInputContainer = forwardRef<
               className={errorIconStyles[theme]}
             />
           )}
-          {icon &&
-            React.cloneElement(icon, {
+          {contentEnd &&
+            React.cloneElement(contentEnd, {
               className: cx(
                 iconClassName,
                 iconStyles[theme],
-                icon.props.className,
+                contentEnd.props.className,
               ),
               disabled,
             })}

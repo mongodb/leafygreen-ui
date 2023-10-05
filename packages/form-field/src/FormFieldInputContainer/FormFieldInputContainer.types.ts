@@ -9,7 +9,7 @@ export interface FormFieldInputContainerProps extends HTMLElementProps<'div'> {
   children: FormFieldChildren;
 
   /**
-   * The icon rendered on the right of the input box
+   * The content rendered after the children
    */
-  icon?: React.ReactElement;
+  contentEnd?: React.ReactElement;
 }
