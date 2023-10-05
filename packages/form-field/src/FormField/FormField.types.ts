@@ -1,5 +1,5 @@
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
-import { Size } from '@leafygreen-ui/tokens';
+import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
 export const FormFieldState = {
   None: 'none',
@@ -23,28 +23,67 @@ export type FormFieldChildren = React.ReactElement<FormFieldChildrenProps>;
 
 type AriaLabelProps =
   | {
+      /**
+       * The label rendered before the input
+       */
       label: React.ReactNode;
       'aria-label'?: string;
       'aria-labelledby'?: string;
     }
   | {
       label?: React.ReactNode;
+
+      /**
+       * A label for screen readers
+       */
       'aria-label': string;
       'aria-labelledby'?: string;
     }
   | {
       label?: React.ReactNode;
       'aria-label'?: string;
+
+      /**
+       * A reference to an external label element
+       */
       'aria-labelledby': string;
     };
 
 export type FormFieldProps = Omit<HTMLElementProps<'div'>, 'children'> &
   AriaLabelProps &
   DarkModeProps & {
+    /**
+     * `FormFieldInputContainer` component, or other custom input component
+     */
     children: FormFieldChildren;
+
+    /**
+     * A description for the form field
+     */
     description?: React.ReactNode;
+
+    /**
+     * The state of the component
+     */
     state?: FormFieldState;
+
+    /**
+     * The size of the component
+     */
     size?: Size;
+
+    /**
+     * Defines whether the component is disabled
+     */
     disabled?: boolean;
+
+    /**
+     * The message to display below the form field when in an error state
+     */
     errorMessage?: React.ReactNode;
+
+    /**
+     * Base font size of the component. Only effective when `size == 'default'`
+     */
+    baseFontSize?: BaseFontSize;
   };
