@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { StoryFn } from '@storybook/react';
+import { omit } from 'lodash';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
@@ -33,7 +34,7 @@ const meta: StoryMetaType<typeof FormField, FormFieldStoryProps> = {
         description: [undefined, 'Description'],
         icon: [undefined, <Icon glyph="Cloud" key="" />],
         size: Object.values(Size),
-        state: Object.values(FormFieldState),
+        state: omit(Object.values(FormFieldState), 'valid'),
         disabled: [false, true],
       },
       excludeCombinations: [
@@ -70,7 +71,10 @@ const meta: StoryMetaType<typeof FormField, FormFieldStoryProps> = {
     description: { control: 'text' },
     errorMessage: { control: 'text' },
     size: { control: 'select' },
-    state: { control: 'select' },
+    state: {
+      control: 'select',
+      options: omit(Object.values(FormFieldState), 'valid'),
+    },
     glyph: { control: 'select', options: Object.keys(glyphs) },
   },
 };
