@@ -30,7 +30,7 @@ export const collapsibleThemeStyle: Record<Theme, string> = {
     border-bottom: 1px solid ${palette.gray.dark1};
 
     &:hover {
-      background-color: ${palette.gray.dark3};
+      background-color: ${palette.gray.dark2};
       border-color: ${palette.green.base};
     }
   `,
