@@ -4,7 +4,7 @@ export { Align, Justify };
 
 type ModifiedTooltipProps = Omit<
   TooltipProps,
-  'onClick' | 'trigger' | 'triggerEvent' | 'refEl' | 'children'
+  'onClick' | 'trigger' | 'triggerEvent' | 'refEl' | 'children' | 'spacing'
 >;
 
 export interface InfoSprinkleProps extends ModifiedTooltipProps {

@@ -65,9 +65,6 @@ export default meta;
 export const LiveExample: StoryFn<typeof InfoSprinkle> = props => (
   <InfoSprinkle {...props} />
 );
-LiveExample.args = {
-  spacing: 10,
-};
 LiveExample.argTypes = {
   open: {
     control: 'none',

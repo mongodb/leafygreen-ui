@@ -63,4 +63,14 @@ describe('packages/info-sprinkle', () => {
       expect(circleIcon).toBeInTheDocument();
     });
   });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  test.skip('types behave as expected', () => {
+    <>
+      {/* @ts-expect-error - Missing children */}
+      <InfoSprinkle />
+
+      <InfoSprinkle>Tooltip</InfoSprinkle>
+    </>;
+  });
 });
