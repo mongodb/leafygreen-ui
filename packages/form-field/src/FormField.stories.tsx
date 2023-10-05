@@ -38,7 +38,7 @@ const meta: StoryMetaType<typeof FormField, FormFieldStoryProps> = {
           <em key="">Optional</em>,
         ],
         size: Object.values(Size),
-        state: omit(Object.values(FormFieldState), 'valid'),
+        state: Object.values(omit(FormFieldState, 'Valid')),
         disabled: [false, true],
       },
       excludeCombinations: [
