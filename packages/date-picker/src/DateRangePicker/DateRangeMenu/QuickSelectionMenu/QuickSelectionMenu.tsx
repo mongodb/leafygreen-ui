@@ -13,13 +13,13 @@ import { useDatePickerContext } from '../../../DatePickerContext';
 import { setUTCMonth, setUTCYear } from '../../../utils';
 import { useDateRangeMenuContext } from '../DateRangeMenuContext';
 
+import { QuickRangeButton } from './QuickRangeButton';
 import {
   quickSelectMenuStyles,
   quickSelectMenuThemeStyles,
-} from './DateRangeMenuQuickSelection.styles';
-import { QuickRangeButton } from './QuickRangeButton';
+} from './QuickSelectionMenu.styles';
 
-export const DateRangeMenuQuickSelection = forwardRef<HTMLDivElement, {}>(
+export const QuickSelectionMenu = forwardRef<HTMLDivElement, {}>(
   (_props, fwdRef) => {
     const { theme } = useDarkMode();
     const { min, max, isInRange } = useDatePickerContext();
@@ -93,4 +93,4 @@ export const DateRangeMenuQuickSelection = forwardRef<HTMLDivElement, {}>(
   },
 );
 
-DateRangeMenuQuickSelection.displayName = 'DateRangeMenuQuickSelection';
+QuickSelectionMenu.displayName = 'DateRangeMenuQuickSelection';

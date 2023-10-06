@@ -13,7 +13,7 @@ import { DateRangeMenuProps } from './DateRangeMenu.types';
 import { DateRangeMenuCalendars } from './DateRangeMenuCalendars';
 import { DateRangeMenuProvider } from './DateRangeMenuContext';
 import { DateRangeMenuFooter } from './DateRangeMenuFooter';
-import { DateRangeMenuQuickSelection } from './DateRangeMenuQuickSelection';
+import { QuickSelectionMenu } from './QuickSelectionMenu';
 
 export const DateRangeMenu = forwardRef<HTMLDivElement, DateRangeMenuProps>(
   ({ start, end, showQuickSelection, ...rest }: DateRangeMenuProps, fwdRef) => {
@@ -33,7 +33,7 @@ export const DateRangeMenu = forwardRef<HTMLDivElement, DateRangeMenuProps>(
           {...rest}
         >
           <div className={menuContentStyles}>
-            {showQuickSelection && <DateRangeMenuQuickSelection />}
+            {showQuickSelection && <QuickSelectionMenu />}
             <DateRangeMenuCalendars />
           </div>
           <DateRangeMenuFooter />
