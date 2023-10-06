@@ -44,7 +44,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
     const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
     const { isInRange, isOpen, setOpen } = useDatePickerContext();
 
-    // TODO:
+    // TODO: https://jira.mongodb.org/browse/LG-3666
     // useDynamicRefs may overflow if a user navigates to too many months.
     // consider purging the refs map within the hook
     const cellRefs = useDynamicRefs<HTMLTableCellElement>();
