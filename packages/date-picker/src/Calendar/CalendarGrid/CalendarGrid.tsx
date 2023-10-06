@@ -17,6 +17,21 @@ import { CalendarGridProps } from './CalendarGrid.types';
 
 /**
  * A simple table that renders the `CalendarCell` components passed as children
+ *
+ * Accepts a mapped render function as children.
+ *
+ * Example usage:
+ * ```tsx
+ * // Renders the current month
+ * <CalendarGrid month={new Date()}>
+ *    {(day) => (
+ *      <CalendarCell>
+ *        {day.getUTCDate()}
+ *      </CalendarCell>
+ *    )}
+ * </CalendarGrid>
+ * ```
+ *
  */
 export const CalendarGrid = forwardRef<HTMLTableElement, CalendarGridProps>(
   ({ month, children, className, ...rest }: CalendarGridProps, fwdRef) => {

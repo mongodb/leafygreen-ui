@@ -6,6 +6,9 @@ import IconButton, { BaseIconButtonProps } from '@leafygreen-ui/icon-button';
 
 import { iconButtonStyles } from './CalendarButton.styles';
 
+/**
+ * The icon button on the right of the DatePicker form field
+ */
 export const CalendarButton = forwardRef<
   HTMLButtonElement,
   BaseIconButtonProps

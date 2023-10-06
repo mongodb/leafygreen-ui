@@ -25,6 +25,12 @@ import {
 } from './DateInputSegment.styles';
 import { DateInputSegmentProps } from './DateInputSegment.types';
 
+/**
+ * Renders a single date segment with the
+ * appropriate character padding/truncation.
+ *
+ * Only fires a change handler when the input is blurred
+ */
 export const DateInputSegment = React.forwardRef<
   HTMLInputElement,
   DateInputSegmentProps
@@ -68,7 +74,7 @@ export const DateInputSegment = React.forwardRef<
       setInternalValue(e.target.value);
     };
 
-    // When the user unfocuses the element, then we fire the change handler
+    // When the user un-focuses the element, then we fire the change handler
     const handleBlur: FocusEventHandler<HTMLInputElement> = e => {
       const formattedValue = formatValue(internalValue);
 

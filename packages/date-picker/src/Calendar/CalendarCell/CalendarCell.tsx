@@ -17,6 +17,12 @@ import {
 } from './CalendarCell.styles';
 import { CalendarCellProps, CalendarCellState } from './CalendarCell.types';
 
+/**
+ * A single calendar cell.
+ *
+ * Renders the appropriate styles based on
+ * the provided state, current & highlight props
+ */
 export const CalendarCell = React.forwardRef<
   HTMLTableCellElement,
   CalendarCellProps

@@ -23,10 +23,13 @@ import { DateInputBoxProps } from './DateInputBox.types';
 /**
  * Renders a styled date input with appropriate segment order & separator characters.
  *
- * Uses vars value & dateFormat with `Intl.DateTimeFormat.prototype.formatToParts()`
+ * Depends on {@link DateInputSegment}
+ *
+ * Uses parameters `value` & `dateFormat` along with {@link Intl.DateTimeFormat.prototype.formatToParts}
  * to determine the segment order and separator characters.
  *
  * Provided value is assumed to be UTC.
+ *
  * Argument passed into `setValue` callback is also in UTC
  * @internal
  */

@@ -8,7 +8,7 @@ import Popover, { PopoverProps } from '@leafygreen-ui/popover';
 import { menuStyles } from './MenuWrapper.styles';
 
 /**
- * A styled popover
+ * A simple styled popover component
  */
 export const MenuWrapper = forwardRef<
   HTMLDivElement,

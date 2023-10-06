@@ -7,7 +7,10 @@ import { CalendarButton } from '../CalendarButton';
 
 import { DateFormFieldProps } from './DateFormField.types';
 
-/** A wrapper around `FormField` that sets the icon */
+/**
+ * A wrapper around `FormField` that sets the relevant
+ * attributes, styling & icon button
+ */
 export const DateFormField = React.forwardRef<
   HTMLDivElement,
   DateFormFieldProps
