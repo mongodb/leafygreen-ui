@@ -95,8 +95,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 ) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
 
-  console.log('MENUUUU');
-
   const hasSetInitialFocus = useRef(false);
   const hasSetInitialOpen = useRef(false);
 
