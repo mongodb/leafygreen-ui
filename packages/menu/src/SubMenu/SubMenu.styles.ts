@@ -218,7 +218,7 @@ export const subItemThemeStyle: Record<Theme, string> = {
     color: ${palette.gray.light2};
 
     &:hover {
-      color: ${palette.black};
+      color: ${palette.white};
     }
 
     &::after {
