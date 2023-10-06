@@ -38,7 +38,7 @@ const rootMenuThemeStyles: Record<Theme, string> = {
     background-color: ${palette.black};
   `,
   [Theme.Dark]: css`
-    background-color: ${palette.gray.light2};
+    background-color: ${palette.gray.dark3};
   `,
 };
 

@@ -25,7 +25,7 @@ export const borderThemeStyle: Record<Theme, string> = {
   `,
   [Theme.Dark]: css`
     &::before {
-      background-color: ${palette.gray.light1};
+      background-color: ${palette.gray.dark2};
     }
   `,
 };

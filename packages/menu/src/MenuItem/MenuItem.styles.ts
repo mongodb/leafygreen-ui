@@ -7,7 +7,7 @@ export const disabledIconStyle: Record<Theme, string> = {
     color: ${palette.gray.dark2};
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.base};
+    color: ${palette.gray.dark1};
   `,
 };
 

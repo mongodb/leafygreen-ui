@@ -26,7 +26,7 @@ export const subMenuThemeStyle: Record<Theme, string> = {
   [Theme.Dark]: cx(
     subMenuStyle,
     css`
-      background-color: ${palette.gray.light2};
+      background-color: ${palette.gray.dark3};
     `,
   ),
 };
@@ -43,7 +43,7 @@ export const subMenuOpenStyle: Record<Theme, string> = {
     background-color: transparent;
 
     &:hover {
-      background-color: ${palette.gray.light1};
+      background-color: ${palette.gray.dark2};
     }
   `,
 };
@@ -55,7 +55,7 @@ export const closedIconStyle: Record<Theme, string> = {
   `,
   [Theme.Dark]: css`
     transition: color 200ms ease-in-out;
-    color: ${palette.gray.dark1};
+    color: ${palette.gray.light1};
   `,
 };
 
@@ -64,7 +64,7 @@ export const openIconStyle: Record<Theme, string> = {
     color: ${palette.gray.light1};
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.dark1};
+    color: ${palette.gray.light1};
   `,
 };
 
@@ -87,7 +87,7 @@ export const iconButtonThemeStyle: Record<Theme, string> = {
     }
   `,
   [Theme.Dark]: css`
-    background-color: ${palette.gray.light2};
+    background-color: ${palette.gray.dark3};
 
     &:hover {
       &:before {
@@ -119,7 +119,7 @@ export const openIconButtonStyle: Record<Theme, string> = {
     background-color: ${palette.black};
   `,
   [Theme.Dark]: css`
-    background-color: ${palette.gray.light2};
+    background-color: ${palette.gray.dark3};
   `,
 };
 
@@ -158,7 +158,7 @@ export const ulThemeStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     &::before,
     &::after {
-      background-color: ${palette.gray.light1};
+      background-color: ${palette.gray.dark2};
     }
   `,
 };
@@ -215,14 +215,14 @@ export const subItemThemeStyle: Record<Theme, string> = {
     }
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.dark2};
+    color: ${palette.gray.light2};
 
     &:hover {
       color: ${palette.black};
     }
 
     &::after {
-      background-color: ${palette.gray.light1};
+      background-color: ${palette.gray.dark2};
     }
   `,
 };
