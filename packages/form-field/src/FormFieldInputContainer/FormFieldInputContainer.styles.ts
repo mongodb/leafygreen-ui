@@ -236,9 +236,30 @@ export const inputWrapperStateStyles: Record<
     [Theme.Dark]: css``,
   },
   [FormFieldState.Valid]: {
-    // TODO:
-    [Theme.Light]: css``,
-    [Theme.Dark]: css``,
+    [Theme.Light]: css`
+      &:not([aria-disabled='true']) {
+        border-color: ${palette.green.dark1};
+
+        &:hover,
+        &:active {
+          &:not([aria-disabled='true']):not(:focus) {
+            box-shadow: ${hoverRing.light.green};
+          }
+        }
+      }
+    `,
+    [Theme.Dark]: css`
+      &:not([aria-disabled='true']) {
+        border-color: ${palette.green.dark1};
+
+        &:hover,
+        &:active {
+          &:not([aria-disabled='true']):not(:focus) {
+            box-shadow: ${hoverRing.dark.green};
+          }
+        }
+      }
+    `,
   },
 };
 
