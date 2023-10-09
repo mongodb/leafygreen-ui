@@ -2,39 +2,16 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
+import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
 import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
-import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
-import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
-import {
-  Description,
-  Error,
-  Label,
-  useUpdatedBaseFontSize,
-} from '@leafygreen-ui/typography';
+import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import {
-  baseInputStyle,
-  errorMessageStyle,
-  getWrapperFontSize,
-  iconClassName,
-  inheritTypeScale,
-  inputContainerStyle,
-  inputFocusStyles,
-  inputIndicatorSizeStyle,
-  inputIndicatorStyle,
-  inputModeStyles,
-  inputPaddingForIndicator,
-  inputPaddingForOptionalText,
-  inputSizeStyles,
-  inputStateStyles,
   optionalTextBaseStyle,
   optionalTextThemeStyle,
-  stateIndicatorStyles,
-  textContainerStyle,
-  wrapperStyle,
 } from './TextInput.styles';
 import {
   SizeVariant,
@@ -156,53 +133,46 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       state === State.None && !disabled && optional;
 
     return (
-      <div
-        className={cx(
-          wrapperStyle,
-          getWrapperFontSize(sizeVariant, baseFontSize),
-          className,
-        )}
+      <FormField
+        label={label}
+        description={description}
+        errorMessage={errorMessage}
+        state={state}
+        size={sizeVariant}
+        disabled={disabled}
+        baseFontSize={baseFontSize}
+        darkMode={darkMode}
       >
-        {(label || description) && (
-          <div className={textContainerStyle}>
-            {label && (
-              <Label
-                darkMode={darkMode}
-                htmlFor={id}
-                disabled={disabled}
-                className={inheritTypeScale}
+        <FormFieldInputContainer
+          contentEnd={
+            shouldRenderOptionalText ? (
+              <div
+                className={cx(
+                  optionalTextBaseStyle,
+                  optionalTextThemeStyle[theme],
+                )}
               >
-                {label}
-              </Label>
-            )}
-            {description && (
-              <Description
-                darkMode={darkMode}
-                disabled={disabled}
-                className={inheritTypeScale}
-              >
-                {description}
-              </Description>
-            )}
-          </div>
-        )}
-        <div className={inputContainerStyle}>
+                <p>Optional</p>
+              </div>
+            ) : undefined
+          }
+        >
           <input
             {...rest}
             aria-labelledby={ariaLabelledby}
             type={type}
-            className={cx(
-              baseInputStyle,
-              inputModeStyles[theme],
-              inputSizeStyles[sizeVariant],
-              inputStateStyles[state][theme],
-              inputFocusStyles[theme], // Always show focus styles
-              {
-                [inputPaddingForIndicator[sizeVariant]]: state !== State.None,
-                [inputPaddingForOptionalText[sizeVariant]]:
-                  shouldRenderOptionalText,
-              },
-            )}
+            // className={cx(
+            //   baseInputStyle,
+            //   inputModeStyles[theme],
+            //   inputSizeStyles[sizeVariant],
+            //   inputStateStyles[state][theme],
+            //   inputFocusStyles[theme], // Always show focus styles
+            //   {
+            //     [inputPaddingForIndicator[sizeVariant]]: state !== State.None,
+            //     [inputPaddingForOptionalText[sizeVariant]]:
+            //       shouldRenderOptionalText,
+            //   },
+            // )}
             value={value}
             required={!optional}
             disabled={disabled}
@@ -214,47 +184,8 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
             autoComplete={disabled ? 'off' : rest?.autoComplete || 'on'}
             aria-invalid={state === 'error'}
           />
-
-          <div
-            className={cx(
-              iconClassName,
-              inputIndicatorStyle,
-              inputIndicatorSizeStyle[sizeVariant],
-            )}
-          >
-            {/* Render State Icon or Optional text*/}
-            {state === State.Valid && (
-              <CheckmarkIcon
-                role="presentation"
-                className={stateIndicatorStyles.valid[theme]}
-              />
-            )}
-
-            {state === State.Error && (
-              <WarningIcon
-                role="presentation"
-                className={stateIndicatorStyles.error[theme]}
-              />
-            )}
-
-            {shouldRenderOptionalText && (
-              <div
-                className={cx(
-                  optionalTextBaseStyle,
-                  optionalTextThemeStyle[theme],
-                )}
-              >
-                <p>Optional</p>
-              </div>
-            )}
-          </div>
-        </div>
-        {state === State.Error && errorMessage && (
-          <Error darkMode={darkMode} className={errorMessageStyle}>
-            {errorMessage}
-          </Error>
-        )}
-      </div>
+        </FormFieldInputContainer>
+      </FormField>
     );
   },
 ) as TextInputComponentType;
