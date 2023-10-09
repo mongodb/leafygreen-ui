@@ -132,6 +132,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       }
     };
 
+    // Focus trap
     const handleWrapperTabKeyPress: KeyboardEventHandler<
       HTMLDivElement
     > = e => {

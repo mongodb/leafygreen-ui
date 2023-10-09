@@ -1,7 +1,6 @@
 import React from 'react';
 import { forwardRef } from 'react';
-import { addMonths } from 'date-fns';
-import { range } from 'lodash';
+import range from 'lodash/range';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -25,8 +24,7 @@ export const QuickSelectionMenu = forwardRef<HTMLDivElement, {}>(
   (_props, fwdRef) => {
     const { theme } = useDarkMode();
     const { min, max, isInRange } = useDatePickerContext();
-    const { startMonth, setStartMonth, setEndMonth } =
-      useDateRangeMenuContext();
+    const { month, setMonth } = useDateRangeMenuContext();
 
     // TODO: is this the right logic?
     const yearOptions = range(min.getUTCFullYear(), max.getUTCFullYear() + 1);
@@ -34,8 +32,7 @@ export const QuickSelectionMenu = forwardRef<HTMLDivElement, {}>(
     const updateMonth = (newMonth: Date) => {
       // TODO: refine this logic
       if (isInRange(newMonth)) {
-        setStartMonth(newMonth);
-        setEndMonth(addMonths(newMonth, 1));
+        setMonth(newMonth);
       }
     };
 
@@ -48,9 +45,9 @@ export const QuickSelectionMenu = forwardRef<HTMLDivElement, {}>(
           <Select
             {...selectElementProps}
             aria-label="Select month"
-            value={startMonth.getUTCMonth().toString()}
+            value={month.getUTCMonth().toString()}
             onChange={m => {
-              const newMonth = setUTCMonth(startMonth, Number(m));
+              const newMonth = setUTCMonth(month, Number(m));
               updateMonth(newMonth);
             }}
           >
@@ -63,9 +60,9 @@ export const QuickSelectionMenu = forwardRef<HTMLDivElement, {}>(
           <Select
             {...selectElementProps}
             aria-label="Select year"
-            value={startMonth.getUTCFullYear().toString()}
+            value={month.getUTCFullYear().toString()}
             onChange={y => {
-              const newMonth = setUTCYear(startMonth, Number(y));
+              const newMonth = setUTCYear(month, Number(y));
               updateMonth(newMonth);
             }}
           >

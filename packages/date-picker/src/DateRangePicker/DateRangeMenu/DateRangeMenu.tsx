@@ -17,7 +17,13 @@ import { QuickSelectionMenu } from './QuickSelectionMenu';
 
 export const DateRangeMenu = forwardRef<HTMLDivElement, DateRangeMenuProps>(
   (
-    { value, onChange, showQuickSelection, ...rest }: DateRangeMenuProps,
+    {
+      value,
+      setValue,
+      onCellClick,
+      showQuickSelection,
+      ...rest
+    }: DateRangeMenuProps,
     fwdRef,
   ) => {
     const { isOpen } = useDatePickerContext();
@@ -37,7 +43,11 @@ export const DateRangeMenu = forwardRef<HTMLDivElement, DateRangeMenuProps>(
         >
           <div className={menuContentStyles}>
             {showQuickSelection && <QuickSelectionMenu />}
-            <DateRangeMenuCalendars />
+            <DateRangeMenuCalendars
+              value={value}
+              setValue={setValue}
+              onCellClick={onCellClick}
+            />
           </div>
           <DateRangeMenuFooter />
         </MenuWrapper>

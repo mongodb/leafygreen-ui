@@ -1,10 +1,13 @@
 import { PopoverProps, PortalControlProps } from '@leafygreen-ui/popover';
 
-import { DateRangePickerProps } from '../DateRangePicker.types';
+import { DateRangeComponentProps } from '../DateRangeComponent';
 
 export type DateRangeMenuProps = PortalControlProps &
   Pick<PopoverProps, 'refEl'> &
   Pick<
-    DateRangePickerProps,
-    'value' | 'onChange' | 'showQuickSelection' | 'handleValidation' // TODO: Setter
-  > & {};
+    DateRangeComponentProps,
+    'value' | 'setValue' | 'showQuickSelection' | 'handleValidation' // TODO: Setter
+  > & {
+    /** Callback fired when a cell is clicked */
+    onCellClick: (cellDate: Date) => void;
+  };

@@ -1,15 +1,21 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, KeyboardEventHandler } from 'react';
 
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { Subtitle } from '@leafygreen-ui/typography';
 
-import { CalendarCell, CalendarGrid } from '../../../Calendar';
+import {
+  CalendarCell,
+  CalendarCellState,
+  CalendarGrid,
+} from '../../../Calendar';
+import { useDatePickerContext } from '../../../DatePickerContext';
 import {
   getFullMonthLabel,
   getUTCDateString,
   isSameUTCDay,
 } from '../../../utils';
+import { DateRangeMenuProps } from '../DateRangeMenu.types';
 import { useDateRangeMenuContext } from '../DateRangeMenuContext';
 
 import {
@@ -19,18 +25,37 @@ import {
   calendarsFrameStyles,
 } from './DateRangeMenuCalendars.styles';
 
-export const DateRangeMenuCalendars = forwardRef<HTMLDivElement, {}>(() => {
+export const DateRangeMenuCalendars = forwardRef<
+  HTMLDivElement,
+  DateRangeMenuProps
+>(({ onCellClick }) => {
+  const { isInRange } = useDatePickerContext();
+
   const { month, nextMonth, startCellRefs, endCellRefs, today } =
     useDateRangeMenuContext();
+
+  /** Creates a click handler for a specific cell date */
+  const cellClickHandlerForDay = (day: Date) => () => {
+    if (isInRange(day)) {
+      onCellClick(day);
+    }
+  };
+
+  /** Returns the current state of the cell */
+  const getCellState = (cellDay: Date | null): CalendarCellState => {
+    // TODO:
+    return CalendarCellState.Default;
+  };
+
+  /** Called on any keydown within the menu element */
+  const handleCalendarKeyDown: KeyboardEventHandler<HTMLTableElement> = e => {};
 
   return (
     <div className={calendarsFrameStyles}>
       <div className={calendarsContainerStyles}>
         <CalendarGrid
-          // ref={startCalendarRef}
           month={month}
-          // className={menuCalendarGridStyles}
-          // onKeyDown={handleCalendarKeyDown}
+          onKeyDown={handleCalendarKeyDown}
           aria-label={getFullMonthLabel(month)}
         >
           {(day, i) => (
@@ -40,8 +65,8 @@ export const DateRangeMenuCalendars = forwardRef<HTMLDivElement, {}>(() => {
               aria-label={getUTCDateString(day)}
               // isHighlighted={isSameUTCDay(day, highlight)}
               isCurrent={isSameUTCDay(day, today)}
-              // state={getCellState(day)}
-              // onClick={cellClickHandlerForDay(day)}
+              state={getCellState(day)}
+              onClick={cellClickHandlerForDay(day)}
               data-iso={day.toISOString()}
             >
               {day.getUTCDate()}
@@ -50,9 +75,7 @@ export const DateRangeMenuCalendars = forwardRef<HTMLDivElement, {}>(() => {
         </CalendarGrid>
 
         <CalendarGrid
-          // ref={endCalendarRef}
           month={nextMonth}
-          // className={menuCalendarGridStyles}
           // onKeyDown={handleCalendarKeyDown}
           aria-label={getFullMonthLabel(nextMonth)}
         >
@@ -63,8 +86,8 @@ export const DateRangeMenuCalendars = forwardRef<HTMLDivElement, {}>(() => {
               aria-label={getUTCDateString(day)}
               // isHighlighted={isSameUTCDay(day, highlight)}
               isCurrent={isSameUTCDay(day, today)}
-              // state={getCellState(day)}
-              // onClick={cellClickHandlerForDay(day)}
+              state={getCellState(day)}
+              onClick={cellClickHandlerForDay(day)}
               data-iso={day.toISOString()}
             >
               {day.getUTCDate()}

@@ -1,5 +1,4 @@
 import React, { PropsWithChildren, useMemo, useState } from 'react';
-import { addMonths } from 'date-fns';
 
 import { useDynamicRefs } from '@leafygreen-ui/hooks';
 

@@ -16,7 +16,11 @@ export const DateRangeComponent = forwardRef<
     return (
       <>
         <DateRangeInput value={value} ref={fwdRef} {...rest} />
-        <DateRangeMenu value={value} />
+        <DateRangeMenu
+          value={value}
+          setValue={setValue}
+          onCellClick={() => {}}
+        />
       </>
     );
   },
