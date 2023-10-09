@@ -142,6 +142,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
         disabled={disabled}
         baseFontSize={baseFontSize}
         darkMode={darkMode}
+        className={className}
       >
         <FormFieldInputContainer
           contentEnd={
@@ -161,18 +162,6 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
             {...rest}
             aria-labelledby={ariaLabelledby}
             type={type}
-            // className={cx(
-            //   baseInputStyle,
-            //   inputModeStyles[theme],
-            //   inputSizeStyles[sizeVariant],
-            //   inputStateStyles[state][theme],
-            //   inputFocusStyles[theme], // Always show focus styles
-            //   {
-            //     [inputPaddingForIndicator[sizeVariant]]: state !== State.None,
-            //     [inputPaddingForOptionalText[sizeVariant]]:
-            //       shouldRenderOptionalText,
-            //   },
-            // )}
             value={value}
             required={!optional}
             disabled={disabled}
