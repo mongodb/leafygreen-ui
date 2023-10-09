@@ -99,9 +99,9 @@ export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
         {...rest}
       >
         <div className={inputWrapperStyles}>
-          <DateInputBox segmentRefs={startSegmentRefs} />
+          <DateInputBox value={value?.[0]} segmentRefs={startSegmentRefs} />
           <span>{EN_DASH}</span>
-          <DateInputBox segmentRefs={endSegmentRefs} />
+          <DateInputBox value={value?.[1]} segmentRefs={endSegmentRefs} />
         </div>
       </DateFormField>
     );

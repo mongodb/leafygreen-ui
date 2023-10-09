@@ -80,13 +80,16 @@ const meta: StoryMetaType<typeof DateRangePicker, DatePickerContextProps> = {
 export default meta;
 
 export const Basic: StoryFn<typeof DateRangePicker> = props => {
-  const [range, setRange] = useState<DateRangeType>();
+  const [range, setRange] = useState<DateRangeType | undefined>([
+    newUTC(2023, Month.October, 14),
+    newUTC(2023, Month.December, 26),
+  ]);
 
   return <DateRangePicker {...props} value={range} onChange={setRange} />;
 };
 
-// export const Uncontrolled: StoryFn<typeof DateRangePicker> = props => {
-//   return <DateRangePicker {...props} />;
-// };
+export const Uncontrolled: StoryFn<typeof DateRangePicker> = props => {
+  return <DateRangePicker {...props} />;
+};
 
 // export const Generated = () => {};

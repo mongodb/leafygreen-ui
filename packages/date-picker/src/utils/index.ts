@@ -1,3 +1,4 @@
+export { addMonthsUTC } from './addMonthsUTC';
 export { cloneReverse } from './cloneReverse';
 export { getDaysInUTCMonth } from './getDaysInUTCMonth';
 export { getFirstEmptySegment } from './getFirstEmptySegment';

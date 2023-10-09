@@ -4,6 +4,7 @@ import { addMonths } from 'date-fns';
 import { useDynamicRefs } from '@leafygreen-ui/hooks';
 
 import { getFirstOfMonth, setToUTCMidnight } from '../../../utils';
+import { addMonthsUTC } from '../../../utils';
 import { DateRangeMenuProps } from '../DateRangeMenu.types';
 
 import { DateRangeMenuContext } from './DateRangeMenuContext';
@@ -21,12 +22,11 @@ export const DateRangeMenuProvider = ({
   children,
 }: DateRangeMenuProviderProps) => {
   const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
-  const thisMonth = useMemo(() => getFirstOfMonth(today), [today]);
 
-  const [startMonth, setStartMonth] = useState<Date>(value?.[0] ?? thisMonth);
-  const [endMonth, setEndMonth] = useState<Date>(
-    value?.[1] ?? addMonths(thisMonth, 1),
+  const [month, setMonth] = useState<Date>(
+    getFirstOfMonth(value?.[0] ?? today),
   );
+  const nextMonth = useMemo<Date>(() => addMonthsUTC(month, 1), [month]);
 
   const startCellRefs = useDynamicRefs<HTMLTableCellElement>();
   const endCellRefs = useDynamicRefs<HTMLTableCellElement>();
@@ -34,11 +34,10 @@ export const DateRangeMenuProvider = ({
   return (
     <DateRangeMenuContext.Provider
       value={{
-        startMonth,
-        setStartMonth,
+        month,
+        nextMonth,
+        setMonth,
         startCellRefs,
-        endMonth,
-        setEndMonth,
         endCellRefs,
         today,
       }}

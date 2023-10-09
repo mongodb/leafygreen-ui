@@ -64,12 +64,13 @@ describe('packages/date-picker/date-range-picker', () => {
           newUTC(2023, Month.February, 14),
         ],
       });
-      expect(inputElements[0]).toEqual('05');
-      expect(inputElements[1]).toEqual('01');
-      expect(inputElements[2]).toEqual('2023');
-      expect(inputElements[3]).toEqual('14');
-      expect(inputElements[4]).toEqual('02');
-      expect(inputElements[5]).toEqual('2023');
+      expect(inputElements[0].value).toEqual('2023');
+      expect(inputElements[1].value).toEqual('01');
+      expect(inputElements[2].value).toEqual('05');
+
+      expect(inputElements[3].value).toEqual('2023');
+      expect(inputElements[4].value).toEqual('02');
+      expect(inputElements[5].value).toEqual('14');
     });
 
     test('renders `initialStart` & `initialEnd` prop', () => {
@@ -79,12 +80,13 @@ describe('packages/date-picker/date-range-picker', () => {
           newUTC(2023, Month.August, 10),
         ],
       });
-      expect(inputElements[0]).toEqual('05');
-      expect(inputElements[1]).toEqual('07');
-      expect(inputElements[2]).toEqual('2023');
-      expect(inputElements[3]).toEqual('10');
-      expect(inputElements[4]).toEqual('08');
-      expect(inputElements[5]).toEqual('2023');
+      expect(inputElements[0].value).toEqual('2023');
+      expect(inputElements[1].value).toEqual('07');
+      expect(inputElements[2].value).toEqual('05');
+
+      expect(inputElements[3].value).toEqual('2023');
+      expect(inputElements[4].value).toEqual('08');
+      expect(inputElements[5].value).toEqual('10');
     });
 
     describe('Menu', () => {

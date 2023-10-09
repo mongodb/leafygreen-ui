@@ -20,25 +20,18 @@ import {
 } from './DateRangeMenuCalendars.styles';
 
 export const DateRangeMenuCalendars = forwardRef<HTMLDivElement, {}>(() => {
-  const {
-    startMonth,
-    // setStartMonth,
-    startCellRefs,
-    endMonth,
-    // setEndMonth,
-    endCellRefs,
-    today,
-  } = useDateRangeMenuContext();
+  const { month, nextMonth, startCellRefs, endCellRefs, today } =
+    useDateRangeMenuContext();
 
   return (
     <div className={calendarsFrameStyles}>
       <div className={calendarsContainerStyles}>
         <CalendarGrid
           // ref={startCalendarRef}
-          month={startMonth}
+          month={month}
           // className={menuCalendarGridStyles}
           // onKeyDown={handleCalendarKeyDown}
-          aria-label={getFullMonthLabel(startMonth)}
+          aria-label={getFullMonthLabel(month)}
         >
           {(day, i) => (
             <CalendarCell
@@ -58,10 +51,10 @@ export const DateRangeMenuCalendars = forwardRef<HTMLDivElement, {}>(() => {
 
         <CalendarGrid
           // ref={endCalendarRef}
-          month={endMonth}
+          month={nextMonth}
           // className={menuCalendarGridStyles}
           // onKeyDown={handleCalendarKeyDown}
-          aria-label={getFullMonthLabel(endMonth)}
+          aria-label={getFullMonthLabel(nextMonth)}
         >
           {(day, i) => (
             <CalendarCell
@@ -85,11 +78,11 @@ export const DateRangeMenuCalendars = forwardRef<HTMLDivElement, {}>(() => {
           <IconButton aria-label="Previous month">
             <Icon glyph="ChevronLeft" />
           </IconButton>
-          <Subtitle>{getFullMonthLabel(startMonth)}</Subtitle>
+          <Subtitle>{getFullMonthLabel(month)}</Subtitle>
         </div>
 
         <div className={calendarHeaderStyles}>
-          <Subtitle>{getFullMonthLabel(endMonth)}</Subtitle>
+          <Subtitle>{getFullMonthLabel(nextMonth)}</Subtitle>
           <IconButton aria-label="Next month">
             <Icon glyph="ChevronRight" />
           </IconButton>

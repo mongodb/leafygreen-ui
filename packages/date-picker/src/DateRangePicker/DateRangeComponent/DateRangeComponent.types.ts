@@ -1,8 +1,12 @@
+import { contextPropNames } from '../../DatePickerContext';
+import { useControlledValue } from '../../hooks/useControlledValue';
 import { DateRangeType } from '../../types';
 import { DateRangePickerProps } from '../DateRangePicker.types';
 
 export interface DateRangeComponentProps
-  extends Pick<DateRangePickerProps, 'showQuickSelection'> {
-  range?: DateRangeType;
-  setRange: (newVal?: DateRangeType | undefined) => void;
+  extends Omit<
+    DateRangePickerProps,
+    (typeof contextPropNames)[number] | 'onChange'
+  > {
+  setValue: ReturnType<typeof useControlledValue<DateRangeType>>['setValue'];
 }

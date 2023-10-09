@@ -3,20 +3,23 @@ import React, { createContext, useContext } from 'react';
 import { DynamicRefGetter } from '@leafygreen-ui/hooks';
 
 export interface DateRangeMenuContextProps {
-  /** The month displayed on the left */
-  startMonth: Date;
+  /**
+   * The month displayed on the left
+   */
+  month: Date;
 
-  /** Setter for the start month */
-  setStartMonth: React.Dispatch<React.SetStateAction<Date>>;
+  /**
+   * Setter for the displayed month
+   */
+  setMonth: React.Dispatch<React.SetStateAction<Date>>;
+
+  /**
+   * The month displayed on the right
+   */
+  nextMonth: Date;
 
   /** A dynamic ref setter/getter for the start calendar cells */
   startCellRefs: DynamicRefGetter<HTMLTableCellElement>;
-
-  /** The month displayed on the right */
-  endMonth: Date;
-
-  /** Setter for the end month */
-  setEndMonth: React.Dispatch<React.SetStateAction<Date>>;
 
   /** A dynamic ref setter/getter for the end calendar cells */
   endCellRefs: DynamicRefGetter<HTMLTableCellElement>;
@@ -26,11 +29,10 @@ export interface DateRangeMenuContextProps {
 }
 
 export const DateRangeMenuContext = createContext<DateRangeMenuContextProps>({
-  startMonth: new Date(),
-  setStartMonth: () => {},
+  month: new Date(),
+  nextMonth: new Date(),
+  setMonth: () => {},
   startCellRefs: (() => undefined) as DynamicRefGetter<HTMLTableCellElement>,
-  endMonth: new Date(),
-  setEndMonth: () => {},
   endCellRefs: (() => undefined) as DynamicRefGetter<HTMLTableCellElement>,
 });
 
