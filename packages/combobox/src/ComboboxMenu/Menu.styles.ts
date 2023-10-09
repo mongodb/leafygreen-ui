@@ -38,7 +38,7 @@ export const popoverThemeStyle: Record<Theme, string> = {
   `,
   [Theme.Dark]: css`
     box-shadow: 0px 4px 7px ${transparentize(0.85, palette.black)};
-    border-color: ${palette.gray.dark3};
+    border-color: ${palette.gray.dark2};
   `,
 };
 
