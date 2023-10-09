@@ -8,7 +8,6 @@ import {
   DatePickerProviderProps,
 } from '../../DatePickerContext';
 import { defaultDatePickerContext } from '../../DatePickerContext/DatePickerContext.utils';
-import { SegmentRefs } from '../../hooks/useSegmentRefs';
 
 import { DatePickerInput, DatePickerInputProps } from '.';
 
@@ -16,15 +15,9 @@ const renderDatePickerInput = (
   props?: Omit<DatePickerInputProps, 'segmentRefs'>,
   context?: DatePickerProviderProps,
 ) => {
-  const segmentRefsMock: SegmentRefs = {
-    day: React.createRef(),
-    month: React.createRef(),
-    year: React.createRef(),
-  };
-
   const result = render(
     <DatePickerProvider value={{ ...defaultDatePickerContext, ...context }}>
-      <DatePickerInput {...props} segmentRefs={segmentRefsMock} />
+      <DatePickerInput {...props} />
     </DatePickerProvider>,
   );
 
@@ -66,6 +59,10 @@ describe('packages/date-picker/date-picker-input', () => {
         userEvent.type(monthInput, '{arrowleft}');
         expect(monthInput).toHaveFocus();
       });
+
+      test.todo(
+        'focuses the previous segment if the cursor is at the start of the input text',
+      );
     });
 
     describe('Right Arrow', () => {
@@ -82,6 +79,10 @@ describe('packages/date-picker/date-picker-input', () => {
         userEvent.type(monthInput, '{arrowright}');
         expect(monthInput).toHaveFocus();
       });
+
+      test.todo(
+        'focuses the next segment if the cursor is at the end of the input text',
+      );
     });
 
     describe('Backspace key', () => {

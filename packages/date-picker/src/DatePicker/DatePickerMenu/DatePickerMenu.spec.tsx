@@ -129,16 +129,14 @@ describe('packages/date-picker/date-picker-menu', () => {
         expect(yearSelect).toHaveValue('2024');
       });
     });
-  });
 
-  describe('Keyboard navigation', () => {
     test('default highlight is on today', () => {
       const { todayCell } = renderDatePickerMenu();
       userEvent.tab();
       expect(todayCell).toHaveFocus();
     });
 
-    test('highlight starts on on current value when provided', () => {
+    test('highlight starts on current value when provided', () => {
       const { getCellWithValue } = renderDatePickerMenu({
         value: testValue,
       });
@@ -146,7 +144,9 @@ describe('packages/date-picker/date-picker-menu', () => {
       const valueCell = getCellWithValue(testValue);
       expect(valueCell).toHaveFocus();
     });
+  });
 
+  describe('Keyboard navigation', () => {
     describe('Arrow Keys', () => {
       test('left arrow moves focus to the previous day', async () => {
         const { getCellWithValue } = renderDatePickerMenu({

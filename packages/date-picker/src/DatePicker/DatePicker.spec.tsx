@@ -15,7 +15,7 @@ import { newUTC } from '../utils/newUTC';
 import { renderDatePicker } from './DatePicker.testutils';
 import { DatePicker } from '.';
 
-const testToday = new Date(Date.UTC(2023, Month.December, 26));
+const testToday = newUTC(2023, Month.December, 26);
 
 describe('packages/date-picker', () => {
   beforeEach(() => {
@@ -551,7 +551,7 @@ describe('packages/date-picker', () => {
           expect(handleValidation).toHaveBeenCalledWith(undefined);
         });
 
-        test('if menu is closed, enter key on calendar button opens the menu', () => {
+        test('opens menu if calendar button is focused', () => {
           const { getMenuElements } = renderDatePicker();
           tabNTimes(3);
           userEvent.keyboard('{enter}');
@@ -559,7 +559,7 @@ describe('packages/date-picker', () => {
           expect(menuContainerEl).toBeInTheDocument();
         });
 
-        test('if month/year select is open, updates the displayed month', async () => {
+        test('if month/year select is focused, opens the select menu', async () => {
           const { openMenu, findAllByRole } = renderDatePicker();
           const { monthSelect } = openMenu();
           tabNTimes(6);

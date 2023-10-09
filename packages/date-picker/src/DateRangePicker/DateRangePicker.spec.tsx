@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, waitFor } from '@testing-library/react';
+import range from 'lodash/range';
 
 import { Month } from '../constants';
 import { newUTC } from '../utils';
@@ -7,7 +8,14 @@ import { newUTC } from '../utils';
 import { renderDateRangePicker } from './DateRangePicker.testutils';
 import { DateRangePicker } from '.';
 
+const testToday = newUTC(2023, Month.December, 26);
+
 describe('packages/date-picker/date-range-picker', () => {
+  beforeEach(() => {
+    // Set the current time to midnight UTC on 2023-12-26
+    jest.useFakeTimers().setSystemTime(testToday);
+  });
+
   describe('Rendering', () => {
     /// Note: Many rendering tests should be handled by Chromatic
 
@@ -117,6 +125,176 @@ describe('packages/date-picker/date-range-picker', () => {
         });
         const { calendarCells } = openMenu();
         expect(calendarCells).toHaveLength(29 + 31);
+      });
+    });
+  });
+
+  describe('Interaction', () => {
+    describe('Mouse interaction', () => {
+      describe('Clicking the input', () => {
+        test.todo('opens the menu');
+        test.todo('focuses the clicked segment');
+        test.todo('focuses the first segment when all are empty');
+        test.todo('focuses the first empty segment in start input');
+        test.todo('focuses the first empty segment in end input');
+        test.todo('focuses the last segment when all are filled');
+      });
+
+      describe('Clicking a calendar cell', () => {
+        test.todo(
+          'if no value is set, fires a change handler for the start date',
+        );
+        test.todo(
+          'if only start value is set, fires change handler for the end date',
+        );
+        test.todo(
+          'if only end value is set, fires change handler for the start date',
+        );
+
+        describe('if a full range is set', () => {
+          test.todo('fires a change handler for start date');
+          test.todo('fires a change handler to clear the end date');
+        });
+      });
+
+      describe('Clicking the Apply button', () => {
+        test.todo('fires a change handler with the current input value');
+      });
+
+      describe('Clicking the Cancel button', () => {
+        test.todo('fires an onCancel handler');
+        test.todo('fires a change handler with the previous input value');
+      });
+
+      describe('Clicking the Clear button', () => {
+        test.todo('fires an onClear handler');
+        test.todo('fires a change handler with the to clear the range values');
+      });
+
+      describe('Clicking a Chevron', () => {
+        describe('Left', () => {
+          test.todo('does not close the menu');
+
+          test.todo('updates the displayed month to the previous');
+
+          test.todo(
+            'updates the displayed month to the previous, and updates year',
+          );
+        });
+
+        describe('Right', () => {
+          test.todo('does not close the menu');
+
+          test.todo('updates the displayed month to the next');
+
+          test.todo('updates the displayed month to the next and updates year');
+        });
+      });
+
+      describe('Month select menu', () => {
+        test.todo('menu opens over the calendar menu');
+
+        test.todo('selecting the month updates the calendar');
+      });
+
+      describe('Year select menu', () => {
+        test.todo('menu opens over the calendar menu');
+
+        test.todo('selecting the year updates the calendar');
+      });
+
+      describe('Clicking backdrop', () => {
+        test.todo('closes the menu');
+        test.todo('does not fire a change handler');
+      });
+    });
+
+    describe('Keyboard interaction', () => {
+      describe('Tab', () => {
+        test.todo('menu does not open on initial focus');
+
+        const closedTabStops = 3 + 3 + 1; // start + end + button
+        const basicMenuTabStops = closedTabStops + 3; // chevrons + cell
+        const quickSelectTabStops = basicMenuTabStops + 2 + 7; // selects + quick select buttons
+
+        describe('Tab order', () => {
+          describe.each(range(0, closedTabStops))('when menu is closed', n => {
+            test.todo(`Tab ${n} times`);
+          });
+
+          describe.each(range(0, basicMenuTabStops))(
+            'when basic menu is open',
+            n => {
+              test.todo(`Tab ${n} times`);
+            },
+          );
+
+          describe.each(range(0, quickSelectTabStops))(
+            'when quick select menu is open',
+            n => {
+              test.todo(`Tab ${n} times`);
+            },
+          );
+        });
+
+        test.todo('calls validation handler when last segment is unfocused');
+        test.todo('does not call validation handler when changing segment');
+      });
+
+      describe('Enter key', () => {
+        test.todo('if menu is closed, does not open the menu');
+        test.todo('opens menu if calendar button is focused');
+        test.todo('calls validation handler');
+        test.todo('if month/year select is focused, opens the select menu');
+        test.todo('if a cell is focused, fires a change handler');
+        test.todo('if a cell is focused, closes the menu');
+        test.todo('if a Chevron is focused, updates the displayed month');
+        test.todo('if Quick Select button is clicked, fires change handler');
+      });
+
+      describe('Escape key', () => {
+        test.todo('closes the menu');
+        test.todo('does not fire a change handler');
+        test.todo('fires a validation handler');
+        test.todo('focus remains in the input element');
+      });
+
+      /**
+       * Arrow Keys:
+       * Since arrow key behavior changes based on whether the input or menu is focused,
+       * many of these tests exist in the "DatePickerInput" and "DatePickerMenu" components
+       */
+    });
+
+    describe('Typing', () => {
+      test.todo('opens the menu');
+
+      describe('into start date', () => {
+        test.todo('updates segment value');
+        test.todo('does not fire range change handler');
+        test.todo('does not fire segment change handler');
+
+        describe('on un-focus/blur', () => {
+          test.todo('fires a change handler if the value is valid');
+          test.todo('does not fire a change handler if value is incomplete');
+          test.todo('fires a segment change handler');
+          test.todo('fires a validation handler when the value is first set');
+          test.todo('fires a validation handler when the value is updated');
+        });
+      });
+
+      describe('into end date', () => {
+        test.todo('updates segment value');
+        test.todo('does not fire range change handler');
+        test.todo('does not fire segment change handler');
+
+        describe('on un-focus/blur', () => {
+          test.todo('fires a change handler if the value is valid');
+          test.todo('does not fire a change handler if value is incomplete');
+          test.todo('fires a segment change handler');
+          test.todo('fires a validation handler when the value is first set');
+          test.todo('fires a validation handler when the value is updated');
+        });
       });
     });
   });
