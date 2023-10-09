@@ -338,6 +338,15 @@ export const iconStyles: Record<Theme, string> = {
   `,
 };
 
+export const validIconStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.green.dark1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.green.base};
+  `,
+};
+
 export const errorIconStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.red.base};

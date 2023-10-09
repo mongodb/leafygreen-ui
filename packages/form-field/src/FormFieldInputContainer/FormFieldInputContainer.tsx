@@ -21,6 +21,7 @@ import {
   inputWrapperModeStyles,
   inputWrapperSizeStyles,
   inputWrapperStateStyles,
+  validIconStyles,
 } from './FormFieldInputContainer.styles';
 import { FormFieldInputContainerProps } from './FormFieldInputContainer.types';
 
@@ -63,6 +64,14 @@ export const FormFieldInputContainer = forwardRef<
       >
         <div className={childrenWrapperStyles}>{renderedChildren}</div>
         <div className={iconsWrapperStyles}>
+          {state === FormFieldState.Valid && (
+            <Icon
+              role="presentation"
+              title="Valid"
+              glyph="Checkmark"
+              className={validIconStyles[theme]}
+            />
+          )}
           {state === FormFieldState.Error && (
             <Icon
               role="presentation"
