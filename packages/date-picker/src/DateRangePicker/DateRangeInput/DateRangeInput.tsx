@@ -1,4 +1,5 @@
 import React, {
+  FocusEventHandler,
   forwardRef,
   KeyboardEventHandler,
   MouseEventHandler,
@@ -24,7 +25,8 @@ export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
     { value, onChange, handleValidation, ...rest }: DateRangeInputProps,
     fwdRef,
   ) => {
-    const { disabled, formatParts, setOpen } = useDatePickerContext();
+    const { disabled, formatParts, setOpen, setIsDirty } =
+      useDatePickerContext();
 
     const startSegmentRefs = useSegmentRefs();
     const endSegmentRefs = useSegmentRefs();
@@ -54,25 +56,51 @@ export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
       // if target is not a segment, do nothing
       if (!isSegment) return;
 
-      const isInputEmpty = isZeroLike(target.value);
+      const isSegmentEmpty = isZeroLike(target.value);
       const cursorPosition = target.selectionEnd;
+
+      const ctx = {
+        target,
+        formatParts,
+        rangeSegmentRefs: [startSegmentRefs, endSegmentRefs],
+      };
 
       switch (key) {
         case keyMap.ArrowLeft:
-          // TODO:
-          getRelativeRangeSegment();
+          // If the segment is empty,
+          // or if the cursor is at the beginning of the input,
+          // set focus to prev
+          if (isSegmentEmpty || cursorPosition === 0) {
+            const prevSegment = getRelativeRangeSegment('prev', ctx);
+
+            prevSegment?.current?.focus();
+          }
+
           break;
         case keyMap.ArrowRight:
-          // TODO:
+          // If the segment is empty,
+          // or if the cursor is at the end of the input,
+          // set focus to prev
+          if (isSegmentEmpty || cursorPosition === target.value.length) {
+            const nextSegment = getRelativeRangeSegment('next', ctx);
+
+            nextSegment?.current?.focus();
+          }
           break;
         case keyMap.ArrowDown:
-          // TODO:
-          break;
         case keyMap.ArrowUp:
-          // TODO:
+          {
+            // if decrementing the segment's value is in range
+            // decrement that segment value
+            // This is the default `input type=number` behavior
+          }
           break;
+
         case keyMap.Backspace: {
-          // TODO:
+          if (isSegmentEmpty) {
+            const prevSegment = getRelativeRangeSegment('prev', ctx);
+            prevSegment?.current?.focus();
+          }
           break;
         }
 
@@ -91,11 +119,27 @@ export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
       }
     };
 
+    /** Called when any child of DatePickerInput is blurred */
+    const handleInputBlur: FocusEventHandler = e => {
+      const nextFocus = e.relatedTarget as HTMLInputElement;
+
+      // If the next focus is _not_ on a segment
+      if (
+        ![startSegmentRefs, endSegmentRefs]
+          .flatMap(refs => Object.values(refs).map(ref => ref.current))
+          .includes(nextFocus)
+      ) {
+        setIsDirty(true);
+        handleValidation?.(value);
+      }
+    };
+
     return (
       <DateFormField
         ref={fwdRef}
         onKeyDown={handleKeyDown}
         onInputClick={handleInputClick}
+        onBlur={handleInputBlur}
         {...rest}
       >
         <div className={inputWrapperStyles}>

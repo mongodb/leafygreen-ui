@@ -1,6 +1,9 @@
 import { SegmentRefs } from '../../../hooks/useSegmentRefs';
 
-/** Returns the key of a given segment ref or element */
+/**
+ * Returns the key of a given segment ref or element
+ * @deprecated
+ */
 export const getSegmentKey = (
   segment: HTMLInputElement | React.RefObject<HTMLInputElement>,
   segmentRefs: SegmentRefs,

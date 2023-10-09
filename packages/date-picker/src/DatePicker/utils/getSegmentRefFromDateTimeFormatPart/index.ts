@@ -6,6 +6,8 @@ import { SegmentRefs } from '../../../hooks/useSegmentRefs';
 /**
  * Given a {@link Intl.DateTimeFormatPart},
  * return the segmentRefs entry with the same type
+ *
+ * @deprecated
  */
 export const getSegmentRefFromDateTimeFormatPart = (
   formatPart: Intl.DateTimeFormatPart | undefined,

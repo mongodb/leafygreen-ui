@@ -2,9 +2,8 @@ import isUndefined from 'lodash/isUndefined';
 import last from 'lodash/last';
 
 import { DatePickerContextProps } from '../../../DatePickerContext';
+import { DateSegment } from '../../../hooks/useDateSegments';
 import { SegmentRefs } from '../../../hooks/useSegmentRefs';
-import { getSegmentKey } from '../getSegmentKey';
-import { getSegmentRefFromDateTimeFormatPart } from '../getSegmentRefFromDateTimeFormatPart';
 
 type RelativeDirection = 'next' | 'prev' | 'first' | 'last';
 interface GetRelativeSegmentContext {
@@ -32,24 +31,24 @@ export const getRelativeSegment = (
 
   // only the relevant segments, not separators
   const formatSegments = formatParts.filter(part => part.type !== 'literal');
+  const orderedSegmentRefs = formatSegments.map(
+    ({ type }) => segmentRefs[type as DateSegment],
+  );
+
+  const currentSegmentIndex: number | undefined = orderedSegmentRefs.findIndex(
+    ref => ref.current === segment,
+  );
 
   switch (direction) {
     case 'first': {
-      const firstSegmentRef = getSegmentRefFromDateTimeFormatPart(
-        formatSegments[0],
-        segmentRefs,
-      );
+      const firstSegmentRef = orderedSegmentRefs[0];
       return firstSegmentRef;
     }
 
     case 'last': {
-      const lastSegment = last(formatSegments);
+      const lastSegmentRef = last(orderedSegmentRefs);
 
-      if (lastSegment) {
-        const lastSegmentRef = getSegmentRefFromDateTimeFormatPart(
-          lastSegment,
-          segmentRefs,
-        );
+      if (lastSegmentRef) {
         return lastSegmentRef;
       }
 
@@ -57,22 +56,13 @@ export const getRelativeSegment = (
     }
 
     case 'next': {
-      const currentSegmentKey = getSegmentKey(segment, segmentRefs);
-
-      if (currentSegmentKey) {
-        const currentSegmentIndex = formatSegments.findIndex(
-          p => p.type === currentSegmentKey,
-        );
-
+      if (currentSegmentIndex) {
         const nextSegmentIndex = Math.min(
           currentSegmentIndex + 1,
-          formatSegments.length - 1,
+          orderedSegmentRefs.length - 1,
         );
 
-        const nextSegmentRef = getSegmentRefFromDateTimeFormatPart(
-          formatSegments[nextSegmentIndex],
-          segmentRefs,
-        );
+        const nextSegmentRef = orderedSegmentRefs[nextSegmentIndex];
         return nextSegmentRef;
       }
 
@@ -80,19 +70,10 @@ export const getRelativeSegment = (
     }
 
     case 'prev': {
-      const currentSegmentKey = getSegmentKey(segment, segmentRefs);
-
-      if (currentSegmentKey) {
-        const currentSegmentIndex = formatSegments.findIndex(
-          p => p.type === currentSegmentKey,
-        );
-
+      if (currentSegmentIndex) {
         const prevSegmentIndex = Math.max(currentSegmentIndex - 1, 0);
 
-        const prevSegmentRef = getSegmentRefFromDateTimeFormatPart(
-          formatSegments[prevSegmentIndex],
-          segmentRefs,
-        );
+        const prevSegmentRef = orderedSegmentRefs[prevSegmentIndex];
         return prevSegmentRef;
       }
 

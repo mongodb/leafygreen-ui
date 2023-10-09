@@ -25,7 +25,7 @@ export interface DateRangeMenuContextProps {
   endCellRefs: DynamicRefGetter<HTMLTableCellElement>;
 
   /** Memoized reference for Date.now */
-  today?: Date;
+  today: Date;
 }
 
 export const DateRangeMenuContext = createContext<DateRangeMenuContextProps>({
@@ -34,6 +34,7 @@ export const DateRangeMenuContext = createContext<DateRangeMenuContextProps>({
   setMonth: () => {},
   startCellRefs: (() => undefined) as DynamicRefGetter<HTMLTableCellElement>,
   endCellRefs: (() => undefined) as DynamicRefGetter<HTMLTableCellElement>,
+  today: new Date(),
 });
 
 /** Hook to access {@link DateRangeMenuContextProps} */

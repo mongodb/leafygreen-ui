@@ -59,7 +59,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       // if target is not a segment, do nothing
       if (!isSegment) return;
 
-      const isInputEmpty = isZeroLike(target.value);
+      const isSegmentEmpty = isZeroLike(target.value);
       const cursorPosition = target.selectionEnd;
 
       switch (key) {
@@ -67,7 +67,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           // if input is empty,
           // or the cursor is at the beginning of the input
           // set focus to prev. input (if it exists)
-          if (isInputEmpty || cursorPosition === 0) {
+          if (isSegmentEmpty || cursorPosition === 0) {
             const segmentToFocus = getRelativeSegment('prev', {
               segment: target,
               formatParts,
@@ -85,7 +85,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           // if input is empty,
           // or the cursor is at the end of the input
           // set focus to next. input (if it exists)
-          if (isInputEmpty || cursorPosition === target.value.length) {
+          if (isSegmentEmpty || cursorPosition === target.value.length) {
             const segmentToFocus = getRelativeSegment('next', {
               segment: target,
               formatParts,
@@ -108,7 +108,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
         }
 
         case keyMap.Backspace: {
-          if (isInputEmpty) {
+          if (isSegmentEmpty) {
             const segmentToFocus = getRelativeSegment('prev', {
               segment: target,
               formatParts,
@@ -139,13 +139,13 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
 
     /** Called when any child of DatePickerInput is blurred */
     const handleInputBlur: FocusEventHandler = e => {
-      const nextFocus = e.relatedTarget;
+      const nextFocus = e.relatedTarget as HTMLInputElement;
 
       // If the next focus is _not_ on a segment
       if (
         !Object.values(segmentRefs)
           .map(ref => ref.current)
-          .includes(nextFocus as HTMLInputElement)
+          .includes(nextFocus)
       ) {
         setIsDirty(true);
         handleValidation?.(value);
