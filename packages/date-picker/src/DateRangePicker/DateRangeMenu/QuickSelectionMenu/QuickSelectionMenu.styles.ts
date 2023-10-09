@@ -4,6 +4,9 @@ import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
 export const quickSelectMenuStyles = css`
+  display: flex;
+  flex-direction: column;
+  gap: ${spacing[4]}px;
   padding: ${spacing[4]}px;
   // TODO: Fix the menu vs clear button z-index
 `;
@@ -17,3 +20,16 @@ export const quickSelectMenuThemeStyles: Record<Theme, string> = {
     // TODO:
   `,
 };
+
+export const quickSelectMenuMonthSelectContainerStyles = css`
+  display: flex;
+  flex-direction: column;
+  gap: ${spacing[2]}px;
+`;
+
+export const quickSelectMenuSelectionsContainerStyles = css`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: ${spacing[2]}px;
+`;

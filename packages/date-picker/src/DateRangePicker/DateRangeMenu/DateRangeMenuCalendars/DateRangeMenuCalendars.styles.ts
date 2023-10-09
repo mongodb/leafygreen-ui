@@ -1,5 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
-import { spacing } from '@leafygreen-ui/tokens';
+import { spacing, typeScales } from '@leafygreen-ui/tokens';
 
 const calendarGapX = spacing[4] * 2;
 
@@ -16,7 +16,7 @@ export const calendarsContainerStyles = css`
   grid-area: calendars;
   display: flex;
   gap: ${calendarGapX}px;
-  align-items: center;
+  align-items: start;
 `;
 
 export const calendarHeadersContainerStyle = css`
@@ -33,6 +33,8 @@ export const calendarHeaderStyles = css`
   align-items: center;
 
   h6 {
+    font-size: ${typeScales.body2.fontSize}px;
+    line-height: ${typeScales.body2.lineHeight}px;
     width: 100%;
     text-align: center;
   }

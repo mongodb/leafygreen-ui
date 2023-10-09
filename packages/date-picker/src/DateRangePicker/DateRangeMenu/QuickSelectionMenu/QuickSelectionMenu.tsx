@@ -15,6 +15,8 @@ import { useDateRangeMenuContext } from '../DateRangeMenuContext';
 
 import { QuickRangeButton } from './QuickRangeButton';
 import {
+  quickSelectMenuMonthSelectContainerStyles,
+  quickSelectMenuSelectionsContainerStyles,
   quickSelectMenuStyles,
   quickSelectMenuThemeStyles,
 } from './QuickSelectionMenu.styles';
@@ -42,7 +44,7 @@ export const QuickSelectionMenu = forwardRef<HTMLDivElement, {}>(
         ref={fwdRef}
         className={cx(quickSelectMenuStyles, quickSelectMenuThemeStyles[theme])}
       >
-        <div>
+        <div className={quickSelectMenuMonthSelectContainerStyles}>
           <Select
             {...selectElementProps}
             aria-label="Select month"
@@ -74,7 +76,7 @@ export const QuickSelectionMenu = forwardRef<HTMLDivElement, {}>(
             ))}
           </Select>
         </div>
-        <div>
+        <div className={quickSelectMenuSelectionsContainerStyles}>
           <Overline>Quick Ranges:</Overline>
           {/*
            TODO: this functionality
