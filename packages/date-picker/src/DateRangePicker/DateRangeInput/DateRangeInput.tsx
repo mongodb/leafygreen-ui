@@ -11,6 +11,7 @@ import { DateInputBox } from '../../DateInput';
 import { DateFormField } from '../../DateInput/DateFormField';
 import { useDatePickerContext } from '../../DatePickerContext';
 import { useSegmentRefs } from '../../hooks/useSegmentRefs';
+import { DateType } from '../../types';
 import { isElementInputSegment, isZeroLike } from '../../utils';
 import { getRangeSegmentToFocus } from '../utils/getRangeSegmentToFocus';
 import { getRelativeRangeSegment } from '../utils/getRelativeRangeSegment';
@@ -22,7 +23,7 @@ const EN_DASH = '–';
 
 export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
   (
-    { value, onChange, handleValidation, ...rest }: DateRangeInputProps,
+    { value, setValue, handleValidation, ...rest }: DateRangeInputProps,
     fwdRef,
   ) => {
     const { disabled, formatParts, setOpen, setIsDirty } =
@@ -67,9 +68,6 @@ export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
 
       switch (key) {
         case keyMap.ArrowLeft:
-          // If the segment is empty,
-          // or if the cursor is at the beginning of the input,
-          // set focus to prev
           if (isSegmentEmpty || cursorPosition === 0) {
             const prevSegment = getRelativeRangeSegment('prev', ctx);
 
@@ -78,9 +76,6 @@ export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
 
           break;
         case keyMap.ArrowRight:
-          // If the segment is empty,
-          // or if the cursor is at the end of the input,
-          // set focus to prev
           if (isSegmentEmpty || cursorPosition === target.value.length) {
             const nextSegment = getRelativeRangeSegment('next', ctx);
 
@@ -90,9 +85,7 @@ export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
         case keyMap.ArrowDown:
         case keyMap.ArrowUp:
           {
-            // if decrementing the segment's value is in range
-            // decrement that segment value
-            // This is the default `input type=number` behavior
+            // default number input behavior
           }
           break;
 
@@ -134,6 +127,16 @@ export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
       }
     };
 
+    const handleStartInputChange = (newStart: DateType) => {
+      const end = value ? value[0] : null;
+      setValue([newStart, end]);
+    };
+
+    const handleEndInputChange = (newEnd: DateType) => {
+      const start = value ? value[0] : null;
+      setValue([start, newEnd]);
+    };
+
     return (
       <DateFormField
         ref={fwdRef}
@@ -143,9 +146,17 @@ export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
         {...rest}
       >
         <div className={inputWrapperStyles}>
-          <DateInputBox value={value?.[0]} segmentRefs={startSegmentRefs} />
+          <DateInputBox
+            value={value?.[0]}
+            setValue={handleStartInputChange}
+            segmentRefs={startSegmentRefs}
+          />
           <span>{EN_DASH}</span>
-          <DateInputBox value={value?.[1]} segmentRefs={endSegmentRefs} />
+          <DateInputBox
+            value={value?.[1]}
+            setValue={handleEndInputChange}
+            segmentRefs={endSegmentRefs}
+          />
         </div>
       </DateFormField>
     );

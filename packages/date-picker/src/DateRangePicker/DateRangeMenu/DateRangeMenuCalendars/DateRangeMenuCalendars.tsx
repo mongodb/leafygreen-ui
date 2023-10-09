@@ -30,7 +30,7 @@ import {
 export const DateRangeMenuCalendars = forwardRef<
   HTMLDivElement,
   DateRangeMenuProps
->(({ value, onCellClick }) => {
+>(({ value, setValue }) => {
   const { isInRange } = useDatePickerContext();
   const {
     month,
@@ -78,7 +78,7 @@ export const DateRangeMenuCalendars = forwardRef<
   /** Creates a click handler for a specific cell date */
   const cellClickHandlerForDay = (day: Date) => () => {
     if (isInRange(day)) {
-      onCellClick(day);
+      // TODO:
     }
   };
 

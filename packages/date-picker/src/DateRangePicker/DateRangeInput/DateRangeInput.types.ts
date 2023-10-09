@@ -1,7 +1,7 @@
-import { DateRangePickerProps } from '../DateRangePicker.types';
+import { DateRangeComponentProps } from '../DateRangeComponent';
 
 export interface DateRangeInputProps
   extends Pick<
-    DateRangePickerProps,
-    'value' | 'onChange' | 'handleValidation'
+    DateRangeComponentProps,
+    'value' | 'setValue' | 'handleValidation'
   > {}

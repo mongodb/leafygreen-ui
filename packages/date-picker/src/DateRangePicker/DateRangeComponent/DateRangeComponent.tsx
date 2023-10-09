@@ -1,5 +1,9 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useRef } from 'react';
 
+import { useBackdropClick, useForwardedRef } from '@leafygreen-ui/hooks';
+
+import { useDatePickerContext } from '../../DatePickerContext';
+import { DateRangeType } from '../../types';
 import { DateRangeInput } from '../DateRangeInput';
 import { DateRangeMenu } from '../DateRangeMenu';
 
@@ -10,16 +14,55 @@ export const DateRangeComponent = forwardRef<
   DateRangeComponentProps
 >(
   (
-    { value, setValue, onCancel, onClear, ...rest }: DateRangeComponentProps,
+    {
+      value,
+      setValue,
+      onCancel,
+      onClear,
+      showQuickSelection,
+      ...rest
+    }: DateRangeComponentProps,
     fwdRef,
   ) => {
+    const { isOpen, setOpen, isDirty, setIsDirty, menuId } =
+      useDatePickerContext();
+    const closeMenu = () => setOpen(false);
+
+    const formFieldRef = useForwardedRef(fwdRef, null);
+    const menuRef = useRef<HTMLDivElement>(null);
+
+    /** setValue with possible side effects */
+    const updateValue = (newVal?: DateRangeType) => {
+      setValue(newVal);
+    };
+
+    useBackdropClick(closeMenu, [formFieldRef, menuRef], isOpen);
+
+    /** Called when the input's start or end value has changed */
+    const handleInputValueChange = (newRange?: DateRangeType) => {
+      // TODO: more logic here
+      updateValue(newRange);
+    };
+
+    /** Called when any calendar cell is clicked */
+    const handleCalendarValueChange = (newRange?: DateRangeType) => {
+      // TODO: more logic here
+      updateValue(newRange);
+    };
+
     return (
       <>
-        <DateRangeInput value={value} ref={fwdRef} {...rest} />
-        <DateRangeMenu
+        <DateRangeInput
           value={value}
-          setValue={setValue}
-          onCellClick={() => {}}
+          setValue={handleInputValueChange}
+          ref={formFieldRef}
+          {...rest}
+        />
+        <DateRangeMenu
+          ref={menuRef}
+          refEl={formFieldRef}
+          value={value}
+          setValue={handleCalendarValueChange}
         />
       </>
     );

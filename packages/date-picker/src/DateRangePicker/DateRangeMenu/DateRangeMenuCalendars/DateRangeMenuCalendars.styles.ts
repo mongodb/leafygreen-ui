@@ -9,7 +9,7 @@ export const calendarsFrameStyles = css`
   grid-template-areas: 'header' 'calendars';
   gap: ${spacing[3]}px;
   padding: ${spacing[4]}px;
-  padding-top: ${spacing[6]}px;
+  /* padding-top: ${spacing[6]}px; */
 `;
 
 export const calendarsContainerStyles = css`

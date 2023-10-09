@@ -7,7 +7,4 @@ export type DateRangeMenuProps = PortalControlProps &
   Pick<
     DateRangeComponentProps,
     'value' | 'setValue' | 'showQuickSelection' | 'handleValidation' // TODO: Setter
-  > & {
-    /** Callback fired when a cell is clicked */
-    onCellClick: (cellDate: Date) => void;
-  };
+  > & {};
