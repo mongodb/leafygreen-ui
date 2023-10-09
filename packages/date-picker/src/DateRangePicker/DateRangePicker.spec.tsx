@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import range from 'lodash/range';
 
 import { Month } from '../constants';
@@ -138,12 +139,47 @@ describe('packages/date-picker/date-range-picker', () => {
   describe('Interaction', () => {
     describe('Mouse interaction', () => {
       describe('Clicking the input', () => {
-        test.todo('opens the menu');
-        test.todo('focuses the clicked segment');
-        test.todo('focuses the first segment when all are empty');
-        test.todo('focuses the first empty segment in start input');
-        test.todo('focuses the first empty segment in end input');
-        test.todo('focuses the last segment when all are filled');
+        test('opens the menu', () => {
+          const { inputContainer, getMenuElements } = renderDateRangePicker();
+          userEvent.click(inputContainer);
+          const { menuContainerEl } = getMenuElements();
+          expect(menuContainerEl).toBeInTheDocument();
+        });
+
+        test('focuses the clicked segment', () => {
+          const { inputElements } = renderDateRangePicker();
+          userEvent.click(inputElements[2]);
+          expect(document.activeElement).toBe(inputElements[2]);
+        });
+
+        test('focuses the first segment when all are empty', () => {
+          const { inputContainer, inputElements } = renderDateRangePicker();
+          userEvent.click(inputContainer);
+          expect(document.activeElement).toBe(inputElements[0]);
+        });
+
+        test('focuses the first empty segment in start input', () => {
+          const { inputContainer, inputElements } = renderDateRangePicker();
+          userEvent.type(inputElements[0], '01');
+          userEvent.click(inputContainer);
+          expect(document.activeElement).toBe(inputElements[1]);
+        });
+
+        test('focuses the first empty segment in end input', () => {
+          const { inputContainer, inputElements } = renderDateRangePicker({
+            value: [newUTC(2023, 1, 1), null],
+          });
+          userEvent.click(inputContainer);
+          expect(document.activeElement).toBe(inputElements[3]);
+        });
+
+        test('focuses the last segment when all are filled', () => {
+          const { inputContainer, inputElements } = renderDateRangePicker({
+            value: [newUTC(2023, 1, 1), newUTC(2023, 1, 14)],
+          });
+          userEvent.click(inputContainer);
+          expect(document.activeElement).toBe(inputElements[5]);
+        });
       });
 
       describe('Clicking a calendar cell', () => {
@@ -273,7 +309,12 @@ describe('packages/date-picker/date-range-picker', () => {
     });
 
     describe('Typing', () => {
-      test.todo('opens the menu');
+      test('opens the menu', () => {
+        const { inputElements, getMenuElements } = renderDateRangePicker();
+        userEvent.type(inputElements[0], '1');
+        const { menuContainerEl } = getMenuElements();
+        expect(menuContainerEl).toBeInTheDocument();
+      });
 
       describe('into start date', () => {
         test.todo('updates segment value');
