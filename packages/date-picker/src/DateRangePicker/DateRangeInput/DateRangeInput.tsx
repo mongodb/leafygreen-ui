@@ -20,7 +20,7 @@ import { DateRangeInputProps } from './DateRangeInput.types';
 const EN_DASH = '–';
 
 export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
-  ({ start, end, handleValidation }: DateRangeInputProps, fwdRef) => {
+  ({ start, end, handleValidation, ...rest }: DateRangeInputProps, fwdRef) => {
     const { disabled, formatParts, setOpen } = useDatePickerContext();
 
     const startSegmentRefs = useSegmentRefs();
@@ -93,6 +93,7 @@ export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
         ref={fwdRef}
         onKeyDown={handleKeyDown}
         onInputClick={handleInputClick}
+        {...rest}
       >
         <div className={inputWrapperStyles}>
           <DateInputBox segmentRefs={startSegmentRefs} />

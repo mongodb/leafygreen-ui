@@ -8,10 +8,10 @@ import { DateRangeComponentProps } from './DateRangeComponent.types';
 export const DateRangeComponent = forwardRef<
   HTMLDivElement,
   DateRangeComponentProps
->((props: DateRangeComponentProps, fwdRef) => {
+>(({ ...rest }: DateRangeComponentProps, fwdRef) => {
   return (
     <>
-      <DateRangeInput />
+      <DateRangeInput ref={fwdRef} {...rest} />
       <DateRangeMenu />
     </>
   );
