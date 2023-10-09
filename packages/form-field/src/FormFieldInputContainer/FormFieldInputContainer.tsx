@@ -63,8 +63,8 @@ export const FormFieldInputContainer = forwardRef<
         )}
       >
         <div className={childrenWrapperStyles}>{renderedChildren}</div>
-        <div className={iconsWrapperStyles}>
-          {state === FormFieldState.Valid && (
+        <div className={iconsWrapperStyles(size)}>
+          {state === FormFieldState.Valid && !disabled && (
             <Icon
               role="presentation"
               title="Valid"
@@ -72,7 +72,7 @@ export const FormFieldInputContainer = forwardRef<
               className={validIconStyles[theme]}
             />
           )}
-          {state === FormFieldState.Error && (
+          {state === FormFieldState.Error && !disabled && (
             <Icon
               role="presentation"
               title="Error"
