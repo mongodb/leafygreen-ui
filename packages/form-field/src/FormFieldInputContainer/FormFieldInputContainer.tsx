@@ -21,6 +21,8 @@ import {
   inputWrapperModeStyles,
   inputWrapperSizeStyles,
   inputWrapperStateStyles,
+  optionalTextBaseStyle,
+  optionalTextThemeStyle,
   validIconStyles,
 } from './FormFieldInputContainer.styles';
 import { FormFieldInputContainerProps } from './FormFieldInputContainer.types';
@@ -38,12 +40,16 @@ export const FormFieldInputContainer = forwardRef<
     fwdRef,
   ) => {
     const { theme } = useDarkMode();
-    const { disabled, size, state, inputProps } = useFormFieldContext();
+    const { disabled, size, state, inputProps, optional } =
+      useFormFieldContext();
 
     const renderedChildren = React.cloneElement(children, {
       ...inputProps,
       className: cx(inputElementClassName, children.props.className),
     });
+
+    const shouldRenderOptionalText =
+      state === FormFieldState.None && !disabled && optional;
 
     return (
       <div
@@ -72,6 +78,7 @@ export const FormFieldInputContainer = forwardRef<
               className={validIconStyles[theme]}
             />
           )}
+
           {state === FormFieldState.Error && !disabled && (
             <Icon
               role="presentation"
@@ -80,6 +87,18 @@ export const FormFieldInputContainer = forwardRef<
               className={errorIconStyles[theme]}
             />
           )}
+
+          {shouldRenderOptionalText && (
+            <div
+              className={cx(
+                optionalTextBaseStyle,
+                optionalTextThemeStyle[theme],
+              )}
+            >
+              <p>Optional</p>
+            </div>
+          )}
+
           {contentEnd &&
             React.cloneElement(contentEnd, {
               className: cx(

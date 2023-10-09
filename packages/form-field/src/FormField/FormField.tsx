@@ -41,6 +41,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       errorMessage,
       className,
       darkMode,
+      optional,
       ...rest
     }: FormFieldProps,
     fwdRef,
@@ -52,7 +53,9 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <FormFieldProvider value={{ disabled, size, state, inputProps }}>
+        <FormFieldProvider
+          value={{ disabled, size, state, inputProps, optional }}
+        >
           <div
             className={cx(getFontSize({ baseFontSize, size }), className)}
             ref={fwdRef}

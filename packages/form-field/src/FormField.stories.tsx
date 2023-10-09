@@ -30,13 +30,19 @@ const meta: StoryMetaType<typeof FormField, FormFieldStoryProps> = {
     generate: {
       storyNames: ['LargeSize', 'DefaultSize', 'SmallSize', 'XSmallSize'],
       combineArgs: {
-        baseFontSize: [13, 16],
         darkMode: [false, true],
+        optional: [false, true],
         description: [undefined, 'Description'],
-        contentEnd: [undefined, <em key="">Optional</em>],
+        contentEnd: [undefined, <Icon glyph="Cloud" key="" />],
         state: Object.values(FormFieldState),
         disabled: [false, true],
       },
+      excludeCombinations: [
+        {
+          disabled: true,
+          state: FormFieldState.Error,
+        },
+      ],
       args: {
         children: <input placeholder="placeholder" />,
       },
@@ -96,33 +102,6 @@ export const LiveExample: StoryFn<FormFieldStoryProps> = ({
       role="combobox"
       tabIndex={-1}
       contentEnd={<Icon glyph={glyph} />}
-    >
-      <input placeholder="placeholder" />
-    </FormFieldInputContainer>
-  </FormField>
-);
-
-export const WithOptionalText: StoryFn<FormFieldStoryProps> = ({
-  label,
-  description,
-  state,
-  size,
-  disabled,
-  glyph: _,
-  ...rest
-}: FormFieldStoryProps) => (
-  <FormField
-    label={label}
-    description={description}
-    state={state}
-    size={size}
-    disabled={disabled}
-    {...rest}
-  >
-    <FormFieldInputContainer
-      role="combobox"
-      tabIndex={-1}
-      contentEnd={<em>Optional</em>}
     >
       <input placeholder="placeholder" />
     </FormFieldInputContainer>
