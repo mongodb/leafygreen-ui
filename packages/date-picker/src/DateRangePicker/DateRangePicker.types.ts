@@ -1,15 +1,12 @@
 import { MouseEventHandler } from 'react';
 
-import { BaseDatePickerProps, DateType } from '../types';
-
-export type DateRangeType = [DateType, DateType];
+import { BaseDatePickerProps, DateRangeType } from '../types';
 
 export interface DateRangePickerProps extends BaseDatePickerProps {
-  /** The selected start date */
-  start?: DateType;
-
-  /**  The selected end date */
-  end?: DateType;
+  /**
+   * The selected start & end date
+   */
+  value?: DateRangeType;
 
   /**
    * Callback fired when the “Apply” button is clicked, or when either the start or end date changes. If either start or end is unset, then that value will be null.
@@ -19,13 +16,14 @@ export interface DateRangePickerProps extends BaseDatePickerProps {
    *
    * Callback date arguments will be in Date objects in UTC time, or null
    */
-  onRangeChange?: (range?: DateRangeType) => void;
+  onChange?: (range?: DateRangeType) => void;
 
-  /** The initial selected start date. Ignored if `start` is provided */
-  initialStart?: DateType;
-
-  /** The initial selected end date. Ignored if `end` is provided */
-  initialEnd?: DateType;
+  /**
+   * The initial selected start & end dates.
+   *
+   * A given initial index is ignored if `range[x]` is defined
+   */
+  initialValue?: DateRangeType;
 
   // TODO: onSegmentChange: () => {};
 
@@ -37,7 +35,7 @@ export interface DateRangePickerProps extends BaseDatePickerProps {
    *
    * Callback date arguments will be in Date objects in UTC time, or null
    */
-  handleValidation?: (range: DateRangeType) => void;
+  handleValidation?: (range?: DateRangeType) => void;
 
   /** Callback fired when the “clear” button is clicked. */
   onClear?: MouseEventHandler;

@@ -9,7 +9,7 @@ import { DateRangeMenuProps } from '../DateRangeMenu.types';
 import { DateRangeMenuContext } from './DateRangeMenuContext';
 
 export interface DateRangeMenuProviderProps
-  extends Pick<DateRangeMenuProps, 'start' | 'end'>,
+  extends Pick<DateRangeMenuProps, 'value'>,
     PropsWithChildren<{}> {}
 
 /**
@@ -17,16 +17,15 @@ export interface DateRangeMenuProviderProps
  * and initializes the start & end display months
  */
 export const DateRangeMenuProvider = ({
-  start,
-  end,
+  value,
   children,
 }: DateRangeMenuProviderProps) => {
   const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
   const thisMonth = useMemo(() => getFirstOfMonth(today), [today]);
 
-  const [startMonth, setStartMonth] = useState<Date>(start ?? thisMonth);
+  const [startMonth, setStartMonth] = useState<Date>(value?.[0] ?? thisMonth);
   const [endMonth, setEndMonth] = useState<Date>(
-    end ?? addMonths(thisMonth, 1),
+    value?.[1] ?? addMonths(thisMonth, 1),
   );
 
   const startCellRefs = useDynamicRefs<HTMLTableCellElement>();

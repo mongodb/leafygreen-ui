@@ -10,11 +10,9 @@ import { DateRangePickerProps } from './DateRangePicker.types';
 export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
   (
     {
-      start: startProp,
-      initialStart: initialStartProp,
-      end: endProp,
-      initialEnd: initialEndProp,
-      onRangeChange,
+      value: rangeProp,
+      initialValue: initialProp,
+      onChange,
       showQuickSelection,
       ...props
     }: DateRangePickerProps,
@@ -23,9 +21,9 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     const [contextProps, restProps] = pickAndOmit(props, contextPropNames);
 
     const { value: range, setValue: setRange } = useControlledValue(
-      [startProp || null, endProp || null],
-      onRangeChange,
-      [initialStartProp || null, initialEndProp || null],
+      rangeProp,
+      onChange,
+      initialProp,
     );
 
     return (

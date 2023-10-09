@@ -16,13 +16,16 @@ import { DateRangeMenuFooter } from './DateRangeMenuFooter';
 import { QuickSelectionMenu } from './QuickSelectionMenu';
 
 export const DateRangeMenu = forwardRef<HTMLDivElement, DateRangeMenuProps>(
-  ({ start, end, showQuickSelection, ...rest }: DateRangeMenuProps, fwdRef) => {
+  (
+    { value, onChange, showQuickSelection, ...rest }: DateRangeMenuProps,
+    fwdRef,
+  ) => {
     const { isOpen } = useDatePickerContext();
 
     // TODO: Focus trap
 
     return (
-      <DateRangeMenuProvider start={start} end={end}>
+      <DateRangeMenuProvider value={value}>
         <MenuWrapper
           ref={fwdRef}
           usePortal

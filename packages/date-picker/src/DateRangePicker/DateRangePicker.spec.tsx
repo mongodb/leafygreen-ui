@@ -59,8 +59,10 @@ describe('packages/date-picker/date-range-picker', () => {
 
     test('renders `start` & `end` prop', () => {
       const { inputElements } = renderDateRangePicker({
-        start: newUTC(2023, Month.January, 5),
-        end: newUTC(2023, Month.February, 14),
+        value: [
+          newUTC(2023, Month.January, 5),
+          newUTC(2023, Month.February, 14),
+        ],
       });
       expect(inputElements[0]).toEqual('05');
       expect(inputElements[1]).toEqual('01');
@@ -72,8 +74,10 @@ describe('packages/date-picker/date-range-picker', () => {
 
     test('renders `initialStart` & `initialEnd` prop', () => {
       const { inputElements } = renderDateRangePicker({
-        initialStart: newUTC(2023, Month.July, 5),
-        initialEnd: newUTC(2023, Month.August, 10),
+        initialValue: [
+          newUTC(2023, Month.July, 5),
+          newUTC(2023, Month.August, 10),
+        ],
       });
       expect(inputElements[0]).toEqual('05');
       expect(inputElements[1]).toEqual('07');
@@ -113,7 +117,7 @@ describe('packages/date-picker/date-range-picker', () => {
 
       test('if a value is set, menu opens to the month of that value', () => {
         const { openMenu } = renderDateRangePicker({
-          start: newUTC(2023, Month.March, 10),
+          value: [newUTC(2023, Month.March, 10), null],
         });
         const { calendarGrids } = openMenu();
         expect(calendarGrids?.[0]).toHaveAttribute('aria-label', 'March 2023');
@@ -121,7 +125,7 @@ describe('packages/date-picker/date-range-picker', () => {
 
       test('renders the appropriate number of cells', () => {
         const { openMenu } = renderDateRangePicker({
-          start: newUTC(2024, Month.February, 14),
+          value: [newUTC(2024, Month.February, 14), null],
         });
         const { calendarCells } = openMenu();
         expect(calendarCells).toHaveLength(29 + 31);

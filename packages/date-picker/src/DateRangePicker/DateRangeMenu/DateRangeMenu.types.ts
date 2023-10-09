@@ -6,5 +6,5 @@ export type DateRangeMenuProps = PortalControlProps &
   Pick<PopoverProps, 'refEl'> &
   Pick<
     DateRangePickerProps,
-    'start' | 'end' | 'showQuickSelection' | 'handleValidation' // TODO: Setter
+    'value' | 'onChange' | 'showQuickSelection' | 'handleValidation' // TODO: Setter
   > & {};

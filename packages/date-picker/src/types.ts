@@ -9,6 +9,7 @@ export type DatePickerState =
   (typeof DatePickerState)[keyof typeof DatePickerState];
 
 export type DateType = Date | null;
+export type DateRangeType = [DateType, DateType];
 
 export interface BaseDatePickerProps extends DarkModeProps {
   /**

@@ -12,10 +12,10 @@ import {
   DatePickerProvider,
 } from '../DatePickerContext';
 import { Locales, TimeZones } from '../testUtils';
+import { DateRangeType } from '../types';
 import { newUTC } from '../utils';
 
 import { DateRangePicker } from './DateRangePicker';
-import { DateRangeType } from './DateRangePicker.types';
 
 const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
   <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
@@ -80,22 +80,9 @@ const meta: StoryMetaType<typeof DateRangePicker, DatePickerContextProps> = {
 export default meta;
 
 export const Basic: StoryFn<typeof DateRangePicker> = props => {
-  const [start, setStart] = useState<Date | null | undefined>();
-  const [end, setEnd] = useState<Date | null | undefined>();
+  const [range, setRange] = useState<DateRangeType>();
 
-  const setRange = (range?: DateRangeType) => {
-    setStart(range?.[0]);
-    setEnd(range?.[1]);
-  };
-
-  return (
-    <DateRangePicker
-      {...props}
-      start={start}
-      end={end}
-      onRangeChange={setRange}
-    />
-  );
+  return <DateRangePicker {...props} value={range} onChange={setRange} />;
 };
 
 // export const Uncontrolled: StoryFn<typeof DateRangePicker> = props => {
