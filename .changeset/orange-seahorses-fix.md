@@ -1,6 +1,5 @@
 ---
 '@leafygreen-ui/text-input': patch
-'@leafygreen-ui/text-area': patch
 ---
 
-Refactors components to use FormField component under the hood
+Refactors component to use FormField under the hood. Also, per the latest design guidelines, we no longer surface an error message when an input is disabled.
