@@ -136,6 +136,60 @@ describe('packages/date-picker/date-range-picker', () => {
     });
   });
 
+  describe('Typing', () => {
+    test('opens the menu', () => {
+      const { inputElements, getMenuElements } = renderDateRangePicker();
+      userEvent.type(inputElements[0], '1');
+      const { menuContainerEl } = getMenuElements();
+      expect(menuContainerEl).toBeInTheDocument();
+    });
+
+    describe('into start date', () => {
+      test('updates segment value', () => {
+        const { inputElements } = renderDateRangePicker();
+        userEvent.type(inputElements[0], '1');
+        expect(inputElements[0].value).toBe('1'); // Not '01' if not blurred
+      });
+      test('does not fire range change handler', () => {
+        const onChange = jest.fn();
+        const { inputElements } = renderDateRangePicker({ onChange });
+        userEvent.type(inputElements[0], '1');
+        expect(onChange).not.toHaveBeenCalled();
+      });
+
+      test.skip('does not fire segment change handler', () => {
+        const onSegmentChange = jest.fn();
+        const { inputElements } = renderDateRangePicker({
+          onSegmentChange,
+        });
+        userEvent.type(inputElements[0], '1');
+        expect(onSegmentChange).not.toHaveBeenCalled();
+      });
+
+      describe('on un-focus/blur', () => {
+        test.todo('fires a change handler if the value is valid');
+        test.todo('does not fire a change handler if value is incomplete');
+        test.todo('fires a segment change handler');
+        test.todo('fires a validation handler when the value is first set');
+        test.todo('fires a validation handler when the value is updated');
+      });
+    });
+
+    describe('into end date', () => {
+      test.todo('updates segment value');
+      test.todo('does not fire range change handler');
+      test.todo('does not fire segment change handler');
+
+      describe('on un-focus/blur', () => {
+        test.todo('fires a change handler if the value is valid');
+        test.todo('does not fire a change handler if value is incomplete');
+        test.todo('fires a segment change handler');
+        test.todo('fires a validation handler when the value is first set');
+        test.todo('fires a validation handler when the value is updated');
+      });
+    });
+  });
+
   describe('Interaction', () => {
     describe('Mouse interaction', () => {
       describe('Clicking the input', () => {
@@ -306,43 +360,6 @@ describe('packages/date-picker/date-range-picker', () => {
        * Since arrow key behavior changes based on whether the input or menu is focused,
        * many of these tests exist in the "DatePickerInput" and "DatePickerMenu" components
        */
-    });
-
-    describe('Typing', () => {
-      test('opens the menu', () => {
-        const { inputElements, getMenuElements } = renderDateRangePicker();
-        userEvent.type(inputElements[0], '1');
-        const { menuContainerEl } = getMenuElements();
-        expect(menuContainerEl).toBeInTheDocument();
-      });
-
-      describe('into start date', () => {
-        test.todo('updates segment value');
-        test.todo('does not fire range change handler');
-        test.todo('does not fire segment change handler');
-
-        describe('on un-focus/blur', () => {
-          test.todo('fires a change handler if the value is valid');
-          test.todo('does not fire a change handler if value is incomplete');
-          test.todo('fires a segment change handler');
-          test.todo('fires a validation handler when the value is first set');
-          test.todo('fires a validation handler when the value is updated');
-        });
-      });
-
-      describe('into end date', () => {
-        test.todo('updates segment value');
-        test.todo('does not fire range change handler');
-        test.todo('does not fire segment change handler');
-
-        describe('on un-focus/blur', () => {
-          test.todo('fires a change handler if the value is valid');
-          test.todo('does not fire a change handler if value is incomplete');
-          test.todo('fires a segment change handler');
-          test.todo('fires a validation handler when the value is first set');
-          test.todo('fires a validation handler when the value is updated');
-        });
-      });
     });
   });
 });
