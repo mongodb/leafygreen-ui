@@ -32,8 +32,8 @@ const dateSegmentsReducer = (
  * Returned segments are relative to the formatter time zone
  */
 export const useDateSegments = (
-  /** Provided date is relative to the client's time zone */
-  date: DateType,
+  /** Provided date is UTC */
+  date: DateType = null,
   { onUpdate }: UseDateSegmentsOptions,
 ): UseDateSegmentsReturnValue => {
   //
@@ -48,10 +48,10 @@ export const useDateSegments = (
   useEffect(() => {
     if (date && !(prevDate && isSameDay(date, prevDate))) {
       const newSegments = getSegmentsFromDate(date);
-      onUpdate?.(newSegments);
+      onUpdate?.(newSegments, { ...segments });
       dispatch(newSegments);
     }
-  }, [date, onUpdate, prevDate]);
+  }, [date, onUpdate, prevDate, segments]);
 
   /**
    * Custom dispatch that triggers the provided side effects, and updates state
@@ -60,9 +60,11 @@ export const useDateSegments = (
     // Calculate next state
     // then, execute any side effects based on the new state
     // finally, commit the new state
-    const nextState = dateSegmentsReducer(segments, { [segment]: value });
-    onUpdate?.(nextState);
-    dispatch({ [segment]: value });
+
+    const updateObject = { [segment]: value };
+    const nextState = dateSegmentsReducer(segments, updateObject);
+    onUpdate?.(nextState, { ...segments }, segment);
+    dispatch(updateObject);
   };
 
   return {

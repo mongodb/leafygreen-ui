@@ -2,6 +2,8 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { eventContainingTargetValue } from '../../testUtils';
+
 import { DateInputSegment, type DateInputSegmentProps } from '.';
 
 const handler = jest.fn();
@@ -47,28 +49,18 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       });
 
       test('Rendering with a value sets the input value', () => {
-        const { input } = renderSegment({ segment: 'day', value: 12 });
+        const { input } = renderSegment({ segment: 'day', value: '12' });
         expect(input.value).toBe('12');
-      });
-
-      test('values get appropriately padded', () => {
-        const { input } = renderSegment({ segment: 'day', value: 8 });
-        expect(input.value).toBe('08');
-      });
-
-      test('values get appropriately truncated', () => {
-        const { input } = renderSegment({ segment: 'day', value: 123 });
-        expect(input.value).toBe('23');
       });
 
       test('rerendering updates the value', () => {
         const { input, rerender } = renderSegment({
           segment: 'day',
-          value: 12,
+          value: '12',
         });
 
         rerender(
-          <DateInputSegment segment="day" data-testid="testid" value={8} />,
+          <DateInputSegment segment="day" data-testid="testid" value={'08'} />,
         );
         expect(input.value).toBe('08');
       });
@@ -81,27 +73,21 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       });
 
       test('Rendering with a value sets the input value', () => {
-        const { input } = renderSegment({ segment: 'year', value: 2023 });
+        const { input } = renderSegment({ segment: 'year', value: '2023' });
         expect(input.value).toBe('2023');
-      });
-
-      test('values get appropriately padded', () => {
-        const { input } = renderSegment({ segment: 'year', value: 123 });
-        expect(input.value).toBe('0123');
-      });
-
-      test('values get appropriately truncated', () => {
-        const { input } = renderSegment({ segment: 'year', value: 12031 });
-        expect(input.value).toBe('2031');
       });
 
       test('rerendering updates the value', () => {
         const { input, rerender } = renderSegment({
           segment: 'year',
-          value: 2023,
+          value: '2023',
         });
         rerender(
-          <DateInputSegment segment="year" data-testid="testid" value={1993} />,
+          <DateInputSegment
+            segment="year"
+            data-testid="testid"
+            value={'1993'}
+          />,
         );
         expect(input.value).toBe('1993');
       });
@@ -109,7 +95,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
   });
 
   describe('Typing', () => {
-    test('does not immediately call the change handler', () => {
+    test('calls the change handler', () => {
       const result = render(
         <DateInputSegment
           segment="day"
@@ -119,95 +105,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       );
       const input = result.getByTestId('testid');
       userEvent.type(input, '12');
-      expect(handler).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('When the input is unfocused (onBlur)', () => {
-    test('entering a number calls the change handler', () => {
-      const result = render(
-        <DateInputSegment
-          segment="day"
-          data-testid="testid"
-          onChange={handler}
-        />,
-      );
-      const input = result.getByTestId('testid');
-      userEvent.type(input, '12');
-      userEvent.tab();
-      expect(handler).toHaveBeenCalledWith('12');
-    });
-
-    test('deleting a value calls the change handler', () => {
-      const result = render(
-        <DateInputSegment
-          segment="day"
-          data-testid="testid"
-          onChange={handler}
-          value={12}
-        />,
-      );
-      const input = result.getByTestId('testid');
-      userEvent.type(input, '{backspace}{backspace}');
-      userEvent.tab();
-      expect(handler).toHaveBeenCalledWith('');
-    });
-
-    test('entering the same value as previous does not call the handler', () => {
-      const result = render(
-        <DateInputSegment
-          segment="day"
-          data-testid="testid"
-          onChange={handler}
-          value={12}
-        />,
-      );
-      const input = result.getByTestId('testid');
-      userEvent.type(input, '{backspace}{backspace}12');
-      userEvent.tab();
-      expect(handler).not.toHaveBeenCalled();
-    });
-
-    test('entering letters does not call the handler', () => {
-      const result = render(
-        <DateInputSegment
-          segment="day"
-          data-testid="testid"
-          onChange={handler}
-        />,
-      );
-      const input = result.getByTestId('testid');
-      userEvent.type(input, 'abc');
-      userEvent.tab();
-      expect(handler).not.toHaveBeenCalled();
-    });
-
-    test('change handler is called with padded value', () => {
-      const result = render(
-        <DateInputSegment
-          segment="day"
-          data-testid="testid"
-          onChange={handler}
-        />,
-      );
-      const input = result.getByTestId('testid');
-      userEvent.type(input, '1');
-      userEvent.tab();
-      expect(handler).toHaveBeenCalledWith('01');
-    });
-
-    test('change handler is called with truncated value', () => {
-      const result = render(
-        <DateInputSegment
-          segment="day"
-          data-testid="testid"
-          onChange={handler}
-        />,
-      );
-      const input = result.getByTestId('testid');
-      userEvent.type(input, '123');
-      userEvent.tab();
-      expect(handler).toHaveBeenCalledWith('23');
+      expect(handler).toHaveBeenCalledWith(eventContainingTargetValue('12'));
     });
   });
 
@@ -222,7 +120,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           segment="day"
           data-testid="testid"
           onChange={handler}
-          value={8}
+          value={'08'}
         />,
       );
       const input = result.getByTestId('testid');
@@ -236,7 +134,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           segment="day"
           data-testid="testid"
           onChange={handler}
-          value={8}
+          value={'08'}
         />,
       );
       const input = result.getByTestId('testid');

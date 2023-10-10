@@ -12,9 +12,10 @@ import { iconButtonStyles } from './CalendarButton.styles';
 export const CalendarButton = forwardRef<
   HTMLButtonElement,
   BaseIconButtonProps
->(({ className, ...rest }: BaseIconButtonProps) => {
+>(({ className, ...rest }: BaseIconButtonProps, fwdRef) => {
   return (
     <IconButton
+      ref={fwdRef}
       aria-label="Open calendar menu"
       type="button"
       className={cx(iconButtonStyles, className)}

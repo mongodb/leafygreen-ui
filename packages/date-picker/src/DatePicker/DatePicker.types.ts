@@ -1,4 +1,5 @@
-import { DateSegment, DateSegmentValue } from '../hooks/useDateSegments';
+import { ChangeEvent } from 'react';
+
 import { BaseDatePickerProps, DateType } from '../types';
 
 export interface DatePickerProps extends BaseDatePickerProps {
@@ -31,8 +32,9 @@ export interface DatePickerProps extends BaseDatePickerProps {
   /**
    * Callback fired when any segment changes, but not necessarily a full value
    */
-  onSegmentChange?: (
-    segment: DateSegment,
-    segmentValue: DateSegmentValue,
-  ) => void;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  // onSegmentChange?: (
+  //   segment: DateSegment,
+  //   segmentValue: DateSegmentValue,
+  // ) => void;
 }

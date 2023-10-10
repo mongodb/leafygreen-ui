@@ -28,3 +28,8 @@ export const tabNTimes = (count: number) => {
     userEvent.tab();
   }
 };
+
+export const eventContainingTargetValue = (value: any) =>
+  expect.objectContaining({
+    target: expect.objectContaining({ value }),
+  });

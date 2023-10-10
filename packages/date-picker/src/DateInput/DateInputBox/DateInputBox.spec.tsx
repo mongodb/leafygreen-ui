@@ -9,6 +9,7 @@ import {
 } from '../../DatePickerContext';
 import { defaultDatePickerContext } from '../../DatePickerContext/DatePickerContext.utils';
 import { SegmentRefs } from '../../hooks/useSegmentRefs';
+import { eventContainingTargetValue } from '../../testUtils';
 import { newUTC } from '../../utils';
 
 import { DateInputBox, type DateInputBoxProps } from '.';
@@ -51,6 +52,11 @@ const renderDateInputBox = (
 };
 
 describe('packages/date-picker/shared/date-input-box', () => {
+  const testContext = {
+    dateFormat: 'iso8601',
+    timeZone: 'UTC',
+  };
+
   describe('rendering', () => {
     describe.each(['day', 'month', 'year'])('%i', segment => {
       test('renders the correct aria attributes', () => {
@@ -91,7 +97,7 @@ describe('packages/date-picker/shared/date-input-box', () => {
     test('renders an empty text box when no value is passed', () => {
       const { dayInput, monthInput, yearInput } = renderDateInputBox(
         undefined,
-        { dateFormat: 'iso8601' },
+        testContext,
       );
       expect(dayInput).toHaveValue(null);
       expect(monthInput).toHaveValue(null);
@@ -100,129 +106,125 @@ describe('packages/date-picker/shared/date-input-box', () => {
 
     test('renders a filled text box when value is passed', () => {
       const { dayInput, monthInput, yearInput } = renderDateInputBox(
-        { value: new Date('1993-12-26') },
-        { dateFormat: 'iso8601', timeZone: 'UTC' },
+        { value: newUTC(1993, Month.December, 26) },
+        testContext,
       );
 
-      expect(dayInput).toHaveValue(26);
-      expect(monthInput).toHaveValue(12);
-      expect(yearInput).toHaveValue(1993);
+      expect(dayInput.value).toBe('26');
+      expect(monthInput.value).toBe('12');
+      expect(yearInput.value).toBe('1993');
     });
   });
 
   describe('typing', () => {
     test('typing into a segment updates the segment value', () => {
-      const { dayInput } = renderDateInputBox(undefined, {
-        dateFormat: 'iso8601',
-        timeZone: 'UTC',
-      });
-
+      const { dayInput } = renderDateInputBox(undefined, testContext);
       userEvent.type(dayInput, '26');
-      expect(dayInput).toHaveValue(26);
+      expect(dayInput.value).toBe('26');
     });
 
-    test('typing into a segment does not fire the value change handler ', () => {
+    test('segment value is not immediately formatted', () => {
+      const { dayInput } = renderDateInputBox(undefined, testContext);
+      userEvent.type(dayInput, '2');
+      expect(dayInput.value).toBe('2');
+    });
+
+    test('deleting characters works as expected', () => {
+      const { dayInput, yearInput } = renderDateInputBox(
+        { value: newUTC(1993, Month.December, 26) },
+        testContext,
+      );
+      userEvent.type(dayInput, '{backspace}');
+      expect(dayInput.value).toBe('2');
+      userEvent.type(yearInput, '{backspace}');
+      expect(yearInput.value).toBe('199');
+    });
+
+    test('typing into a segment does not fire the value setter', () => {
       const setValue = jest.fn();
       const { dayInput } = renderDateInputBox(
         {
           value: null,
           setValue,
         },
-        {
-          dateFormat: 'iso8601',
-          timeZone: 'UTC',
-        },
+        testContext,
       );
 
       userEvent.type(dayInput, '26');
       expect(setValue).not.toHaveBeenCalled();
     });
 
-    test('typing into a segment does not immediately fire the segment change handler', () => {
-      const onSegmentChange = jest.fn();
+    test('typing into a segment fires the change handler', () => {
+      const onChange = jest.fn();
 
       const { yearInput } = renderDateInputBox(
         {
           value: null,
-          onSegmentChange,
+          onChange,
         },
-        {
-          dateFormat: 'iso8601',
-          timeZone: 'UTC',
-        },
+        testContext,
       );
       userEvent.type(yearInput, '1993');
 
-      expect(onSegmentChange).not.toHaveBeenCalled();
+      expect(onChange).toHaveBeenCalledWith(eventContainingTargetValue('1993'));
     });
 
-    test('only the segment change handler is fired when the input is blurred', () => {
-      const setValue = jest.fn();
-      const onSegmentChange = jest.fn();
-
-      const { yearInput } = renderDateInputBox(
-        {
-          value: null,
-          setValue,
-          onSegmentChange,
-        },
-        {
-          dateFormat: 'iso8601',
-          timeZone: 'UTC',
-        },
-      );
-
-      userEvent.type(yearInput, '1993');
-      userEvent.tab();
-      expect(setValue).not.toHaveBeenCalled();
-      expect(onSegmentChange).toHaveBeenCalledWith('year', 1993);
-    });
-
-    test('change handler is called when a complete date is entered, and is blurred', () => {
+    test('value setter is called when a complete date is entered', () => {
       const setValue = jest.fn();
       const { dayInput, monthInput, yearInput } = renderDateInputBox(
         {
           value: null,
           setValue,
         },
-        {
-          dateFormat: 'iso8601',
-          timeZone: 'UTC',
-        },
+        testContext,
       );
       userEvent.type(yearInput, '1993');
       userEvent.type(monthInput, '12');
       userEvent.type(dayInput, '26');
-      expect(setValue).not.toHaveBeenCalled();
-      userEvent.tab();
       expect(setValue).toHaveBeenCalledWith(
         expect.objectContaining(newUTC(1993, Month.December, 26)),
       );
     });
 
-    test.todo(
-      'typing a complete segment value focuses the next segment',
-      // () => {
-      //   const { yearInput, monthInput } = renderDateInputBox(undefined, {
-      //     dateFormat: 'iso8601',
-      //     timeZone: 'UTC',
-      //   });
-      //   userEvent.type(yearInput, '1993');
-      //   expect(monthInput).toHaveFocus();
-      // },
-    );
+    test('value is only formatted on segment blur', () => {
+      const { dayInput } = renderDateInputBox(undefined, testContext);
+      userEvent.type(dayInput, '2');
+      userEvent.tab();
+      expect(dayInput.value).toBe('02');
+    });
 
-    test.todo(
-      'typing an incomplete segment does not focus the next segment',
-      // () => {
-      //   const { yearInput } = renderDateInputBox(undefined, {
-      //     dateFormat: 'iso8601',
-      //     timeZone: 'UTC',
-      //   });
-      //   userEvent.type(yearInput, '200');
-      //   expect(yearInput).toHaveFocus();
-      // },
-    );
+    // TODO:
+    describe.skip('Auto-focus', () => {
+      test('typing a complete segment value focuses the next segment', () => {
+        const { yearInput, monthInput } = renderDateInputBox(
+          undefined,
+          testContext,
+        );
+        userEvent.type(yearInput, '1993');
+        expect(monthInput).toHaveFocus();
+      });
+
+      test('typing an incomplete segment does not focus the next segment', () => {
+        const { monthInput } = renderDateInputBox(undefined, testContext);
+        userEvent.type(monthInput, '1');
+        expect(monthInput).toHaveFocus();
+      });
+
+      test('typing an incomplete value focuses the next segment if there are no valid second characters', () => {
+        const { monthInput, dayInput } = renderDateInputBox(
+          undefined,
+          testContext,
+        );
+        userEvent.type(monthInput, '2'); // There are no months that start with 2#
+        expect(dayInput).toHaveFocus();
+      });
+
+      test('value is formatted on auto-focus', () => {
+        const { monthInput } = renderDateInputBox(undefined, testContext);
+        userEvent.type(monthInput, '2'); // There are no months that start with 2#
+        expect(monthInput).toHaveValue('02');
+      });
+    });
   });
 
   describe('mouse interaction', () => {
@@ -260,7 +262,7 @@ describe('packages/date-picker/shared/date-input-box', () => {
       });
     });
 
-    test('Tab moves focus', () => {
+    test('Tab moves focus to next segment', () => {
       const { dayInput, monthInput, yearInput } = renderDateInputBox(
         undefined,
         { dateFormat: 'iso8601' },

@@ -9,7 +9,7 @@ import userEvent from '@testing-library/user-event';
 import { range } from 'lodash';
 
 import { Month } from '../constants';
-import { tabNTimes } from '../testUtils';
+import { eventContainingTargetValue, tabNTimes } from '../testUtils';
 import { newUTC } from '../utils/newUTC';
 
 import { renderDatePicker } from './DatePicker.testutils';
@@ -653,13 +653,15 @@ describe('packages/date-picker', () => {
           expect(onDateChange).not.toHaveBeenCalled();
         });
 
-        test('does not fire a segment change handler', () => {
-          const onSegmentChange = jest.fn();
+        test('fires a segment change handler', () => {
+          const onChange = jest.fn();
           const { yearInput } = renderDatePicker({
-            onSegmentChange,
+            onChange,
           });
           userEvent.type(yearInput, '2023');
-          expect(onSegmentChange).not.toHaveBeenCalled();
+          expect(onChange).toHaveBeenCalledWith(
+            eventContainingTargetValue('2023'),
+          );
         });
       });
 
@@ -675,11 +677,13 @@ describe('packages/date-picker', () => {
         });
 
         test('fires a segment change handler', () => {
-          const onSegmentChange = jest.fn();
-          const { yearInput } = renderDatePicker({ onSegmentChange });
+          const onChange = jest.fn();
+          const { yearInput } = renderDatePicker({ onChange });
           userEvent.type(yearInput, '2023');
           userEvent.tab();
-          expect(onSegmentChange).toHaveBeenCalledWith('year', 2023);
+          expect(onChange).toHaveBeenCalledWith(
+            eventContainingTargetValue('2023'),
+          );
         });
 
         test('fires a change handler when the value is a valid date', () => {
