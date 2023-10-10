@@ -38,3 +38,8 @@ export const menuCalendarGridStyles = css`
   grid-area: calendar;
   margin: auto;
 `;
+
+// Hardcoding the width
+export const selectInputWidthStyles = css`
+  width: 68.5px;
+`;
