@@ -80,7 +80,14 @@ export default meta;
 export const Basic: StoryFn<typeof DatePicker> = props => {
   const [value, setValue] = useState<Date | null | undefined>();
 
-  return <DatePicker {...props} value={value} onChange={setValue} />;
+  return (
+    <DatePicker
+      {...props}
+      value={value}
+      onChange={setValue}
+      handleValidation={() => console.log('validation')}
+    />
+  );
 };
 
 export const Uncontrolled: StoryFn<typeof DatePicker> = props => {
