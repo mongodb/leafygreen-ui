@@ -169,7 +169,7 @@ const iconIsButtonSelector = `&:has(button.${iconClassName})`;
 export const inputWrapperSizeStyles: Record<Size, string> = {
   [Size.XSmall]: css`
     height: 22px;
-    padding-inline: 10px;
+    padding-inline: 6px;
 
     ${iconIsButtonSelector} {
       padding-inline-end: 4px;
@@ -177,7 +177,7 @@ export const inputWrapperSizeStyles: Record<Size, string> = {
   `,
   [Size.Small]: css`
     height: 28px;
-    padding-inline: 10px;
+    padding-inline: 6px;
 
     ${iconIsButtonSelector} {
       padding-inline-end: 4px;

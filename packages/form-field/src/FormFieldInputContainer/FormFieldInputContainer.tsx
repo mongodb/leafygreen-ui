@@ -59,9 +59,9 @@ export const FormFieldInputContainer = forwardRef<
         className={cx(
           inputWrapperBaseStyles,
           inputWrapperModeStyles[theme],
-          inputWrapperFocusStyles[theme],
           inputWrapperSizeStyles[size ?? Size.Default],
           inputWrapperStateStyles[state][theme],
+          inputWrapperFocusStyles[theme],
           {
             [inputWrapperDisabledStyles[theme]]: disabled,
           },
