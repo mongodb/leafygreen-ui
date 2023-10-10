@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { cx } from '@leafygreen-ui/emotion';
 import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
-import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
+import { useValidation } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import {
-  optionalTextBaseStyle,
-  optionalTextThemeStyle,
-} from './TextInput.styles';
 import {
   SizeVariant,
   State,
@@ -58,7 +53,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       disabled = false,
       state = State.None,
       type = TextInputType.Text,
-      id: propsId,
+      id,
       value: controlledValue,
       className,
       darkMode: darkModeProp,
@@ -70,11 +65,10 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     }: TextInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
   ) => {
-    const { darkMode, theme } = useDarkMode(darkModeProp);
+    const { darkMode } = useDarkMode(darkModeProp);
     const isControlled = typeof controlledValue === 'string';
     const [uncontrolledValue, setValue] = useState('');
     const value = isControlled ? controlledValue : uncontrolledValue;
-    const id = useIdAllocator({ prefix: 'textinput', id: propsId });
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
 
     // Validation
@@ -129,9 +123,6 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       );
     }
 
-    const shouldRenderOptionalText =
-      state === State.None && !disabled && optional;
-
     return (
       <FormField
         label={label}
@@ -143,21 +134,10 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
         baseFontSize={baseFontSize}
         darkMode={darkMode}
         className={className}
+        id={id}
+        optional={optional}
       >
-        <FormFieldInputContainer
-          contentEnd={
-            shouldRenderOptionalText ? (
-              <div
-                className={cx(
-                  optionalTextBaseStyle,
-                  optionalTextThemeStyle[theme],
-                )}
-              >
-                <p>Optional</p>
-              </div>
-            ) : undefined
-          }
-        >
+        <FormFieldInputContainer>
           <input
             {...rest}
             aria-labelledby={ariaLabelledby}
@@ -169,7 +149,6 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
             onChange={onValueChange}
             onBlur={onBlurHandler}
             ref={forwardRef}
-            id={id}
             autoComplete={disabled ? 'off' : rest?.autoComplete || 'on'}
             aria-invalid={state === 'error'}
           />

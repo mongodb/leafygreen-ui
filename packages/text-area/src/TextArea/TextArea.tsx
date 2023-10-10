@@ -1,12 +1,28 @@
 import React, { forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
+import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
+import Warning from '@leafygreen-ui/icon/dist/Warning';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
+import {
+  bodyTypeScaleStyles,
+  Description,
+  Error,
+  Label,
+  useUpdatedBaseFontSize,
+} from '@leafygreen-ui/typography';
 
-import { containerStyle, textAreaStyle } from './TextArea.styles';
+import {
+  colorSets,
+  containerStyles,
+  errorContainerStyle,
+  errorIconStyle,
+  errorMessageLabelStyles,
+  textAreaStyle,
+} from './TextArea.styles';
 import { State, TextAreaProps } from './TextArea.types';
 
 /**
@@ -59,7 +75,7 @@ export const TextArea: TextArea = forwardRef<
 ) {
   const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
   const id = useIdAllocator({ prefix: 'textarea', id: idProp });
-  const { darkMode } = useDarkMode(darkModeProp);
+  const { darkMode, theme } = useDarkMode(darkModeProp);
 
   const isControlled = typeof controlledValue === 'string';
   const [uncontrolledValue, setValue] = useState('');
@@ -95,95 +111,59 @@ export const TextArea: TextArea = forwardRef<
   }
 
   return (
-    <FormField
-      label={label}
-      description={description}
-      errorMessage={errorMessage}
-      state={state}
-      disabled={disabled}
-      baseFontSize={baseFontSize}
+    <LeafyGreenProvider
       darkMode={darkMode}
-      className={className}
+      // TODO: We cannot simply pass baseFontSize to the Provider, since the updatedBaseFontSize values are not in line with those accepted by the Provider.
+      // Once we fix this in this Provider, we should update to pass baseFontSize here rather than coercing the value.
+      // This works as-is because all of the Typography elements are using useUpdatedBaseFontSize to convert 14 to 13px.
+      baseFontSize={baseFontSize === 16 ? 16 : 14}
     >
-      <FormFieldInputContainer className={containerStyle}>
+      <div className={cx(containerStyles, className)}>
+        {label && (
+          <Label htmlFor={id} disabled={disabled}>
+            {label}
+          </Label>
+        )}
+        {description && (
+          <Description disabled={disabled}>{description}</Description>
+        )}
         <textarea
           {...rest}
           ref={forwardedRef}
           title={label != null ? label : undefined}
           id={id}
-          className={textAreaStyle}
-          // className={cx(
-          //   textAreaStyle,
-          //   bodyTypeScaleStyles[baseFontSize],
-          //   colorSets[theme].textArea,
-          //   {
-          //     [colorSets[theme].errorBorder]:
-          //       state === State.Error && !disabled,
-          //   },
-          // )}
+          className={cx(
+            textAreaStyle,
+            bodyTypeScaleStyles[baseFontSize],
+            colorSets[theme].textArea,
+            {
+              [colorSets[theme].errorBorder]:
+                state === State.Error && !disabled,
+            },
+          )}
           disabled={disabled}
           onChange={onValueChange}
           onBlur={onBlurHandler}
           value={value}
         />
-      </FormFieldInputContainer>
-    </FormField>
+        {!disabled && state === State.Error && errorMessage && (
+          <div className={errorContainerStyle}>
+            <Warning
+              className={cx(errorIconStyle, colorSets[theme].errorIcon)}
+            />
+            <Error
+              className={cx(
+                bodyTypeScaleStyles[baseFontSize],
+                errorMessageLabelStyles,
+              )}
+            >
+              {errorMessage}
+            </Error>
+          </div>
+        )}
+      </div>
+    </LeafyGreenProvider>
   );
-
-  // return (
-  //   <LeafyGreenProvider
-  //     darkMode={darkMode}
-  //     // TODO: We cannot simply pass baseFontSize to the Provider, since the updatedBaseFontSize values are not in line with those accepted by the Provider.
-  //     // Once we fix this in this Provider, we should update to pass baseFontSize here rather than coercing the value.
-  //     // This works as-is because all of the Typography elements are using useUpdatedBaseFontSize to convert 14 to 13px.
-  //     baseFontSize={baseFontSize === 16 ? 16 : 14}
-  //   >
-  //     <div className={cx(containerStyles, className)}>
-  //       {label && (
-  //         <Label htmlFor={id} disabled={disabled}>
-  //           {label}
-  //         </Label>
-  //       )}
-  //       {description && (
-  //         <Description disabled={disabled}>{description}</Description>
-  //       )}
-  //       <textarea
-  //         {...rest}
-  //         ref={forwardedRef}
-  //         title={label != null ? label : undefined}
-  //         id={id}
-  //         className={cx(
-  //           textAreaStyle,
-  //           bodyTypeScaleStyles[baseFontSize],
-  //           colorSets[theme].textArea,
-  //           {
-  //             [colorSets[theme].errorBorder]:
-  //               state === State.Error && !disabled,
-  //           },
-  //         )}
-  //         disabled={disabled}
-  //         onChange={onValueChange}
-  //         onBlur={onBlurHandler}
-  //         value={value}
-  //       />
-  //       {!disabled && state === State.Error && errorMessage && (
-  //         <div className={errorContainerStyle}>
-  //           <Warning
-  //             className={cx(errorIconStyle, colorSets[theme].errorIcon)}
-  //           />
-  //           <Error
-  //             className={cx(
-  //               bodyTypeScaleStyles[baseFontSize],
-  //               errorMessageLabelStyles,
-  //             )}
-  //           >
-  //             {errorMessage}
-  //           </Error>
-  //         </div>
-  //       )}
-  //     </div>
-  //   </LeafyGreenProvider>
-  // );
 });
 
 TextArea.displayName = 'TextArea';
