@@ -9,11 +9,13 @@ export interface DatePickerProps extends BaseDatePickerProps {
 
   /**
    * Callback fired when the user makes a value change.
-   * Fired on click of a new date in the menu, or on keydown if the input contains a valid date
+   * Fired on click of a new date in the menu, or on keydown if the input contains a valid date.
+   *
+   * _Not_ fired when a date segment changes, but does not create a full date
    *
    * Callback date argument will be a Date object in ISO-8601 format, and in UTC time.
    */
-  onChange?: (value?: DateType) => void;
+  onDateChange?: (value?: DateType) => void;
 
   /** The initial selected date. Ignored if `value` is provided */
   initialValue?: DateType;
