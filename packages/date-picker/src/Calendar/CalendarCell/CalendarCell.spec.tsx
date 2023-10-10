@@ -39,7 +39,7 @@ describe('packages/date-picker/shared/calendar-cell', () => {
     expect(gridcell).toHaveAttribute('aria-disabled', 'true');
   });
 
-  test('receives click handlers', () => {
+  test('triggers click handler on click', () => {
     const clickHandler = jest.fn();
     const { queryByRole } = render(
       <TestCellWrapper>
@@ -48,6 +48,30 @@ describe('packages/date-picker/shared/calendar-cell', () => {
     );
     const gridcell = queryByRole('gridcell');
     userEvent.click(gridcell!, {}, { skipPointerEventsCheck: true });
+    expect(clickHandler).toHaveBeenCalled();
+  });
+
+  test('triggers click handler on enter', () => {
+    const clickHandler = jest.fn();
+    const { queryByRole } = render(
+      <TestCellWrapper>
+        <CalendarCell aria-label="" onClick={clickHandler} />
+      </TestCellWrapper>,
+    );
+    const gridcell = queryByRole('gridcell');
+    userEvent.type(gridcell!, `{enter}`);
+    expect(clickHandler).toHaveBeenCalled();
+  });
+
+  test('triggers click handler on space', () => {
+    const clickHandler = jest.fn();
+    const { queryByRole } = render(
+      <TestCellWrapper>
+        <CalendarCell aria-label="" onClick={clickHandler} />
+      </TestCellWrapper>,
+    );
+    const gridcell = queryByRole('gridcell');
+    userEvent.type(gridcell!, `{space}`);
     expect(clickHandler).toHaveBeenCalled();
   });
 
