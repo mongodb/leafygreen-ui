@@ -42,6 +42,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       className,
       darkMode,
       optional,
+      id,
       ...rest
     }: FormFieldProps,
     fwdRef,
@@ -49,7 +50,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
 
     const { labelId, descriptionId, errorId, inputId, inputProps } =
-      useFormFieldProps({ label, description, state, ...rest });
+      useFormFieldProps({ label, description, state, id, ...rest });
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
