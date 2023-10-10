@@ -14,7 +14,7 @@ import { FormFieldProvider } from '../FormFieldContext';
 
 import {
   errorTextContainerStyle,
-  formFieldFontStyles,
+  getFontSize,
   labelTextContainerStyle,
 } from './FormField.styles';
 import { type FormFieldProps, FormFieldState } from './FormField.types';
@@ -34,50 +34,63 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       label,
       description,
       children,
+      baseFontSize: baseFontSizeProp,
       state = FormFieldState.None,
       size = Size.Default,
       disabled = false,
       errorMessage,
       className,
       darkMode,
+      optional,
       ...rest
     }: FormFieldProps,
     fwdRef,
   ) => {
-    const baseFontSize = useUpdatedBaseFontSize(
-      size === Size.Large ? 16 : undefined,
-    );
+    const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
 
     const { labelId, descriptionId, errorId, inputId, inputProps } =
       useFormFieldProps({ label, description, state, ...rest });
 
     return (
-      <LeafyGreenProvider
-        darkMode={darkMode}
-        baseFontSize={baseFontSize === 16 ? 16 : 14}
-      >
-        <FormFieldProvider value={{ disabled, size, state, inputProps }}>
+      <LeafyGreenProvider darkMode={darkMode}>
+        <FormFieldProvider
+          value={{ disabled, size, state, inputProps, optional }}
+        >
           <div
-            className={cx(formFieldFontStyles[baseFontSize], className)}
+            className={cx(getFontSize({ baseFontSize, size }), className)}
             ref={fwdRef}
             {...rest}
           >
             <div className={labelTextContainerStyle}>
               {label && (
-                <Label htmlFor={inputId} id={labelId} disabled={disabled}>
+                <Label
+                  className={getFontSize({ baseFontSize, size })}
+                  htmlFor={inputId}
+                  id={labelId}
+                  disabled={disabled}
+                >
                   {label}
                 </Label>
               )}
               {description && (
-                <Description id={descriptionId} disabled={disabled}>
+                <Description
+                  className={getFontSize({ baseFontSize, size })}
+                  id={descriptionId}
+                  disabled={disabled}
+                >
                   {description}
                 </Description>
               )}
             </div>
             {children}
             <div className={errorTextContainerStyle}>
-              {state === FormFieldState.Error && (
-                <Error id={errorId}>{errorMessage}</Error>
+              {state === FormFieldState.Error && !disabled && (
+                <Error
+                  className={getFontSize({ baseFontSize, size })}
+                  id={errorId}
+                >
+                  {errorMessage}
+                </Error>
               )}
             </div>
           </div>

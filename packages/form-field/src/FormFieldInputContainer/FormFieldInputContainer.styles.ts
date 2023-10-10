@@ -323,10 +323,10 @@ export const childrenWrapperStyles = css`
   width: 100%;
 `;
 
-export const iconsWrapperStyles = css`
+export const iconsWrapperStyles = (size: Size) => css`
   display: flex;
   align-items: center;
-  gap: ${spacing[1]}px;
+  gap: ${size === Size.XSmall ? spacing[1] : spacing[2]}px;
 `;
 
 export const iconStyles: Record<Theme, string> = {
@@ -353,5 +353,26 @@ export const errorIconStyles: Record<Theme, string> = {
   `,
   [Theme.Dark]: css`
     color: ${palette.red.light1};
+  `,
+};
+
+export const optionalTextBaseStyle = css`
+  font-size: 12px;
+  line-height: 12px;
+  font-style: italic;
+  font-weight: ${fontWeights.regular};
+  display: flex;
+  align-items: center;
+  > p {
+    margin: 0;
+  }
+`;
+
+export const optionalTextThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.dark1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.base};
   `,
 };

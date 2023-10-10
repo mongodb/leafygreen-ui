@@ -7,7 +7,7 @@ import { css } from '@leafygreen-ui/emotion';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { StoryMetaType } from '@leafygreen-ui/lib';
+import { StoryMetaType, StoryType } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 
 import {
@@ -26,17 +26,14 @@ const meta: StoryMetaType<typeof FormField, FormFieldStoryProps> = {
   title: 'Components/FormField',
   component: FormField,
   parameters: {
-    default: 'Basic',
+    default: 'LiveExample',
     generate: {
+      storyNames: ['LargeSize', 'DefaultSize', 'SmallSize', 'XSmallSize'],
       combineArgs: {
         darkMode: [false, true],
+        optional: [false, true],
         description: [undefined, 'Description'],
-        contentEnd: [
-          undefined,
-          <Icon glyph="Cloud" key="" />,
-          <em key="">Optional</em>,
-        ],
-        size: Object.values(Size),
+        contentEnd: [undefined, <Icon glyph="Cloud" key="" />],
         state: Object.values(FormFieldState),
         disabled: [false, true],
       },
@@ -84,7 +81,7 @@ const meta: StoryMetaType<typeof FormField, FormFieldStoryProps> = {
 
 export default meta;
 
-export const Basic: StoryFn<FormFieldStoryProps> = ({
+export const LiveExample: StoryFn<FormFieldStoryProps> = ({
   label,
   description,
   state,
@@ -105,33 +102,6 @@ export const Basic: StoryFn<FormFieldStoryProps> = ({
       role="combobox"
       tabIndex={-1}
       contentEnd={<Icon glyph={glyph} />}
-    >
-      <input placeholder="placeholder" />
-    </FormFieldInputContainer>
-  </FormField>
-);
-
-export const WithOptionalText: StoryFn<FormFieldStoryProps> = ({
-  label,
-  description,
-  state,
-  size,
-  disabled,
-  glyph: _,
-  ...rest
-}: FormFieldStoryProps) => (
-  <FormField
-    label={label}
-    description={description}
-    state={state}
-    size={size}
-    disabled={disabled}
-    {...rest}
-  >
-    <FormFieldInputContainer
-      role="combobox"
-      tabIndex={-1}
-      contentEnd={<em>Optional</em>}
     >
       <input placeholder="placeholder" />
     </FormFieldInputContainer>
@@ -214,4 +184,38 @@ export const Custom_ButtonInput: StoryFn<FormFieldStoryProps> = (
   </FormField>
 );
 
-export const Generated = () => <></>;
+export const LargeSize: StoryType<typeof Button> = () => <></>;
+LargeSize.parameters = {
+  generate: {
+    args: {
+      size: Size.Large,
+    },
+  },
+};
+
+export const DefaultSize: StoryType<typeof Button> = () => <></>;
+DefaultSize.parameters = {
+  generate: {
+    args: {
+      size: Size.Default,
+    },
+  },
+};
+
+export const SmallSize: StoryType<typeof Button> = () => <></>;
+SmallSize.parameters = {
+  generate: {
+    args: {
+      size: Size.Small,
+    },
+  },
+};
+
+export const XSmallSize: StoryType<typeof Button> = () => <></>;
+XSmallSize.parameters = {
+  generate: {
+    args: {
+      size: Size.XSmall,
+    },
+  },
+};

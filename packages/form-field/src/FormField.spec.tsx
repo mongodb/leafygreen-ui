@@ -332,6 +332,19 @@ describe('packages/form-field', () => {
     expect(em?.tagName.toLowerCase()).toEqual('em');
   });
 
+  test('renders optional through the "optional" prop', () => {
+    const { queryByText } = render(
+      <FormField label="Label" data-testid="form-field" optional>
+        <FormFieldInputContainer>
+          <div data-testid="input" />
+        </FormFieldInputContainer>
+      </FormField>,
+    );
+
+    const optional = queryByText('Optional');
+    expect(optional).toBeInTheDocument();
+  });
+
   describe('custom children', () => {
     const TestChild = () => {
       const { inputProps } = useFormFieldContext();
