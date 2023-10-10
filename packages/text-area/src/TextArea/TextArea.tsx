@@ -6,7 +6,7 @@ import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import { textAreaStyle } from './TextArea.styles';
+import { containerStyle, textAreaStyle } from './TextArea.styles';
 import { State, TextAreaProps } from './TextArea.types';
 
 /**
@@ -105,7 +105,7 @@ export const TextArea: TextArea = forwardRef<
       darkMode={darkMode}
       className={className}
     >
-      <FormFieldInputContainer>
+      <FormFieldInputContainer className={containerStyle}>
         <textarea
           {...rest}
           ref={forwardedRef}
