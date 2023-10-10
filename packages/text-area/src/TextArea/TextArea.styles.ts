@@ -16,7 +16,10 @@ export const containerStyles = css`
 `;
 
 export const textAreaStyle = css`
-  font-family: ${fontFamilies.default};
+  min-height: ${spacing[6]}px;
+  padding: 8px 12px 1px 12px;
+  resize: none;
+  /* font-family: ${fontFamilies.default};
   width: 100%;
   min-height: ${spacing[6]}px;
   resize: none;
@@ -39,7 +42,7 @@ export const textAreaStyle = css`
 
   &:disabled {
     cursor: not-allowed;
-  }
+  } */
 `;
 
 export const errorContainerStyle = css`

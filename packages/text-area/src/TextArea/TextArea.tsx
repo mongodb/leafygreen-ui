@@ -1,29 +1,12 @@
 import React, { forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { cx } from '@leafygreen-ui/emotion';
 import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
 import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
-import Warning from '@leafygreen-ui/icon/dist/Warning';
-import LeafyGreenProvider, {
-  useDarkMode,
-} from '@leafygreen-ui/leafygreen-provider';
-import {
-  bodyTypeScaleStyles,
-  Description,
-  Error,
-  Label,
-  useUpdatedBaseFontSize,
-} from '@leafygreen-ui/typography';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import {
-  colorSets,
-  containerStyles,
-  errorContainerStyle,
-  errorIconStyle,
-  errorMessageLabelStyles,
-  textAreaStyle,
-} from './TextArea.styles';
+import { textAreaStyle } from './TextArea.styles';
 import { State, TextAreaProps } from './TextArea.types';
 
 /**
@@ -128,6 +111,7 @@ export const TextArea: TextArea = forwardRef<
           ref={forwardedRef}
           title={label != null ? label : undefined}
           id={id}
+          className={textAreaStyle}
           // className={cx(
           //   textAreaStyle,
           //   bodyTypeScaleStyles[baseFontSize],
