@@ -11,6 +11,6 @@ export const calendarHeaderCellStyles = css`
   text-transform: capitalize;
 `;
 
-export const thStyles = css`
+export const calendarThStyles = css`
   padding: 0;
 `;

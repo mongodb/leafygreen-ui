@@ -12,7 +12,7 @@ import { getWeeksArray } from '../../utils';
 import {
   calendarGridStyles,
   calendarHeaderCellStyles,
-  thStyles,
+  calendarThStyles,
 } from './CalendarGrid.styles';
 import { CalendarGridProps } from './CalendarGrid.types';
 
@@ -60,7 +60,7 @@ export const CalendarGrid = forwardRef<HTMLTableElement, CalendarGridProps>(
                   role="columnheader"
                   key={day.short}
                   abbr={day.long}
-                  className={thStyles}
+                  className={calendarThStyles}
                 >
                   <Disclaimer className={calendarHeaderCellStyles}>
                     {day.short}
