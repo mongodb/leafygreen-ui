@@ -1,8 +1,13 @@
-import React, { FocusEventHandler, MouseEventHandler } from 'react';
+import React, {
+  FocusEventHandler,
+  KeyboardEventHandler,
+  MouseEventHandler,
+} from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { keyMap } from '@leafygreen-ui/lib';
 
 import {
   calendarCellCurrentStyles,
@@ -54,7 +59,18 @@ export const CalendarCell = React.forwardRef<
 
     const handleClick: MouseEventHandler<HTMLTableCellElement> = e => {
       if (state !== CalendarCellState.Disabled) {
-        onClick?.(e);
+        (onClick as MouseEventHandler<HTMLTableCellElement>)?.(e);
+      }
+    };
+
+    // td does not trigger `onClick` on enter/space so we have to listen on key up
+    const handleKeyUp: KeyboardEventHandler<HTMLTableCellElement> = e => {
+      if (
+        state !== CalendarCellState.Disabled &&
+        (e.key === keyMap.Enter || e.key === keyMap.Space)
+      ) {
+        (onClick as KeyboardEventHandler<HTMLTableCellElement>)?.(e);
+        // TODO: add focus back to input
       }
     };
 
@@ -86,6 +102,7 @@ export const CalendarCell = React.forwardRef<
           className,
         )}
         onClick={handleClick}
+        onKeyUp={handleKeyUp}
         onFocus={handleFocus}
         {...rest}
       >
