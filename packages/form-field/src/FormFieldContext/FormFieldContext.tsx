@@ -10,6 +10,7 @@ export interface FormFieldContextProps {
   size: Size;
   state: FormFieldState;
   inputProps?: FormFieldInputElementProps;
+  optional?: boolean;
 }
 
 export const defaultFormFieldContext = {

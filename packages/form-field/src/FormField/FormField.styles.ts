@@ -1,15 +1,33 @@
 import { css } from '@leafygreen-ui/emotion';
-import { BaseFontSize, spacing, typeScales } from '@leafygreen-ui/tokens';
+import { BaseFontSize, Size, spacing, typeScales } from '@leafygreen-ui/tokens';
 
-export const formFieldFontStyles: Record<BaseFontSize, string> = {
-  [BaseFontSize.Body1]: css`
-    font-size: ${typeScales.body1.fontSize}px;
-    line-height: ${typeScales.body1.lineHeight}px;
-  `,
-  [BaseFontSize.Body2]: css`
-    font-size: ${typeScales.body2.fontSize}px;
-    line-height: 20px; // Hardcoding because it does not match body2 lineHeight
-  `,
+export const getFontSize = ({
+  baseFontSize,
+  size,
+}: {
+  baseFontSize: BaseFontSize;
+  size: Size;
+}) => {
+  if (size === Size.XSmall || size === Size.Small) {
+    return css`
+      font-size: ${typeScales.body1.fontSize}px;
+      line-height: ${typeScales.body1.lineHeight}px;
+    `;
+  }
+
+  if (size === Size.Default) {
+    return css`
+      font-size: ${baseFontSize}px;
+      line-height: ${typeScales.body1.lineHeight}px;
+    `;
+  }
+
+  if (size === Size.Large) {
+    return css`
+      font-size: 18px;
+      line-height: 24px;
+    `;
+  }
 };
 
 export const labelTextContainerStyle = css`

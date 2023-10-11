@@ -86,4 +86,9 @@ export type FormFieldProps = Omit<HTMLElementProps<'div'>, 'children'> &
      * Base font size of the component. Only effective when `size == 'default'`
      */
     baseFontSize?: BaseFontSize;
+
+    /**
+     * Whether or not the field is labeled as optional.
+     */
+    optional?: boolean;
   };
