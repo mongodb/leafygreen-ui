@@ -571,7 +571,7 @@ describe('packages/date-picker/date-range-picker', () => {
             expect(listBoxes).toHaveLength(2);
           });
 
-          test.todo('selecting the year updates the calendar', async () => {
+          test('selecting the year updates the calendar', async () => {
             const { openMenu, findAllByRole } = renderDateRangePicker({
               showQuickSelection: true,
             });
@@ -620,11 +620,26 @@ describe('packages/date-picker/date-range-picker', () => {
           expect(inputContainer.contains(document.activeElement)).toBeFalsy();
         });
 
-        const closedTabStops = 3 + 3 + 1; // = 7; start + end + button
-        const basicMenuTabStops = closedTabStops + 3; // = 10; chevrons + cell
-        const quickSelectTabStops = basicMenuTabStops + 2 + 7; // = 19; selects + quick select buttons
+        test('calls validation handler when last segment is unfocused', () => {
+          const handleValidation = jest.fn();
+          const { inputElements } = renderDateRangePicker({ handleValidation });
+          userEvent.click(inputElements[5]);
+          userEvent.tab();
+          expect(handleValidation).toHaveBeenCalled();
+        });
+
+        test('does not call validation handler when changing segment', () => {
+          const handleValidation = jest.fn();
+          const { inputElements } = renderDateRangePicker({ handleValidation });
+          userEvent.click(inputElements[0]);
+          userEvent.tab();
+          expect(handleValidation).not.toHaveBeenCalled();
+        });
 
         describe('Tab order', () => {
+          const closedTabStops = 3 + 3 + 1; // = 7; start + end + button
+          const basicMenuTabStops = closedTabStops + 3; // = 10; chevrons + cell
+          const quickSelectTabStops = basicMenuTabStops + 2 + 7; // = 19; selects + quick select buttons
           describe.each(range(0, closedTabStops))('when menu is closed', n => {
             test(`Tab ${n} times`, () => {
               const { inputContainer, inputElements, calendarButton } =
@@ -746,9 +761,6 @@ describe('packages/date-picker/date-range-picker', () => {
             },
           );
         });
-
-        test.todo('calls validation handler when last segment is unfocused');
-        test.todo('does not call validation handler when changing segment');
       });
 
       describe('Enter key', () => {
