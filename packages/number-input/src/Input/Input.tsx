@@ -8,6 +8,7 @@ import React, {
 import isUndefined from 'lodash/isUndefined';
 
 import { cx } from '@leafygreen-ui/emotion';
+import { FormFieldInputContainer } from '@leafygreen-ui/form-field';
 import { useControlledValue, useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { createSyntheticEvent } from '@leafygreen-ui/lib';
@@ -173,7 +174,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     };
 
     return (
-      <div
+      <FormFieldInputContainer
         ref={containerRef}
         onMouseEnter={() => handleSetErrorTransition()}
         onMouseLeave={() => handleRemoveErrorTransition()}
@@ -184,29 +185,36 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           wrapperClassName,
           wrapperBaseStyles,
           wrapperThemeStyles[theme],
-          wrapperStateStyles[theme][state],
+          // wrapperStateStyles[theme][state],
           {
-            [wrapperHoverStyles[theme][state]]: !disabled,
-            [wrapperDisabledStyles[theme]]: disabled,
+            // [wrapperHoverStyles[theme][state]]: !disabled,
+            // [wrapperDisabledStyles[theme]]: disabled,
             [selectBaseStyles]: hasSelectOptions,
           },
           className,
         )}
+        contentEnd={
+          <Arrows
+            disabled={disabled}
+            onClick={handleValueChange}
+            onKeyDown={handleArrowKeyDown}
+          />
+        }
       >
         <input
           ref={inputRef}
           className={cx(
             inputBaseStyles,
-            inputThemeStyles[theme],
-            inputSizeStyles[size],
-            {
-              // padding without error icon
-              [inputAnimateStyles]: !disabled,
-              // padding with error icon
-              [inputErrorAnimateStyles[size]]:
-                shouldRenderErrorIcon && !disabled,
-              [inputErrorPaddingTransitionStyles]: shouldErrorTransition,
-            },
+            //   inputThemeStyles[theme],
+            //   inputSizeStyles[size],
+            //   {
+            //     // padding without error icon
+            //     [inputAnimateStyles]: !disabled,
+            //     // padding with error icon
+            //     [inputErrorAnimateStyles[size]]:
+            //       shouldRenderErrorIcon && !disabled,
+            //     [inputErrorPaddingTransitionStyles]: shouldErrorTransition,
+            //   },
           )}
           type="number"
           value={isControlled ? valueProp : value} // TODO: temp fix for useControlledValue hook. The hook was not returning the correct value when controlled. For example when typing 2e3 the hook would return 3 but it should return 2e3 like a native number input would.
@@ -215,19 +223,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           readOnly={disabled}
           {...rest}
         />
-        <ErrorIcon
-          disabled={disabled}
-          shouldRenderErrorIcon={shouldRenderErrorIcon}
-          size={size}
-          shouldErrorTransition={shouldErrorTransition}
-        />
-
-        <Arrows
-          disabled={disabled}
-          onClick={handleValueChange}
-          onKeyDown={handleArrowKeyDown}
-        />
-      </div>
+      </FormFieldInputContainer>
     );
   },
 );

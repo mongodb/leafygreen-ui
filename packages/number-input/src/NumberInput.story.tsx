@@ -142,12 +142,12 @@ const Template: StoryFn<StoryNumberInputProps> = (
       unitOptions={unitOptions}
       onSelectChange={handleSelectChange}
       onChange={handleChange}
-      inputClassName={css`
-        width: 100px;
-      `}
-      selectClassName={css`
-        max-width: 100px;
-      `}
+      // inputClassName={css`
+      //   width: 100px;
+      // `}
+      // selectClassName={css`
+      //   max-width: 100px;
+      // `}
     />
   );
 };

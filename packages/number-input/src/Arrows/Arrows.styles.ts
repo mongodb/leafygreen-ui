@@ -8,12 +8,8 @@ import { wrapperClassName } from '../Input/Input.styles';
 export const arrowsBaseStyles = css`
   display: flex;
   flex-direction: column;
-  position: absolute;
-  top: 0;
-  right: ${spacing[2]}px;
-  height: 100%;
+  /* translate: -${spacing[2]}px 0; */
   justify-content: center;
-  translate: 16px 0;
   transition: translate ${transitionDuration.default}ms ease-in-out;
 `;
 

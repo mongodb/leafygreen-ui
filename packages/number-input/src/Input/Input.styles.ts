@@ -3,12 +3,9 @@ import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   focusRing,
-  fontFamilies,
-  fontWeights,
   hoverRing,
   spacing,
   transitionDuration,
-  typeScales,
 } from '@leafygreen-ui/tokens';
 
 import { Size, State } from '../NumberInput/NumberInput.types';
@@ -22,16 +19,10 @@ export const wrapperClassName = createUniqueClassName('number-input-wrapper');
 
 export const inputBaseStyles = css`
   all: unset;
-  font-family: ${fontFamilies.default};
-  font-weight: ${fontWeights.regular};
-  width: 100%;
-  font-size: ${typeScales.body1.fontSize}px;
-  line-height: ${typeScales.body1.lineHeight}px;
   height: inherit;
   box-sizing: border-box;
   transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: background-color;
-  padding: 0 0 0 12px;
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -108,7 +99,6 @@ export const inputThemeStyles: Record<Theme, string> = {
 
 export const wrapperBaseStyles = css`
   position: relative;
-  border: 1px solid;
   border-radius: 6px;
   transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: border-color, box-shadow;
@@ -118,6 +108,7 @@ export const wrapperBaseStyles = css`
   flex-grow: 1;
   flex-shrink: 0;
   z-index: 1;
+  width: unset;
 `;
 
 export const selectBaseStyles = css`

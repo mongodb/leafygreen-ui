@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
+import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
   useDarkMode,
@@ -79,81 +80,55 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
     } as const;
 
     return (
-      <LeafyGreenProvider darkMode={darkMode}>
-        <div className={className}>
-          {(label || description) && (
-            <div className={labelDescriptionStyles}>
-              {label && (
-                <Label htmlFor={inputId} disabled={disabled}>
-                  {label}
-                </Label>
-              )}
-              {description && (
-                <Description id={descriptionId} disabled={disabled}>
-                  {description}
-                </Description>
-              )}
-            </div>
+      <FormField
+        label={label}
+        description={description}
+        errorMessage={errorMessage}
+        state={state}
+        size={size}
+        darkMode={darkMode}
+      >
+        <div
+          className={cx(wrapperBaseStyles, wrapperSizeStyles[size], {
+            [wrapperGapStyles]: renderUnitOnly,
+          })}
+        >
+          <Input
+            ref={forwardedRef}
+            className={inputClassName}
+            value={value}
+            onChange={onChange}
+            disabled={disabled}
+            size={size}
+            id={inputId}
+            hasSelectOptions={renderSelectOnly}
+            state={state}
+            {...rest}
+          />
+
+          {renderUnitOnly && (
+            <Overline
+              className={cx(unitBaseStyles, unitThemeStyles[theme], {
+                [unitDisabledStyles[theme]]: disabled,
+              })}
+            >
+              {unit}
+            </Overline>
           )}
-          <div
-            className={cx(wrapperBaseStyles, wrapperSizeStyles[size], {
-              [wrapperGapStyles]: renderUnitOnly,
-            })}
-          >
-            <Input
-              ref={forwardedRef}
-              className={inputClassName}
-              value={value}
-              onChange={onChange}
+          {renderSelectOnly && (
+            <UnitSelect
+              id={selectId}
               disabled={disabled}
+              unit={unit}
+              unitOptions={unitOptions}
+              onChange={onSelectChange}
               size={size}
-              id={inputId}
-              hasSelectOptions={renderSelectOnly}
-              state={state}
-              errorMessage={errorMessage}
-              aria-describedby={`${errorMessageId} ${
-                description ? descriptionId : ''
-              } ${renderSelectOnly ? selectId : ''}`}
-              aria-labelledby={
-                !label && ariaLabelledbyProp ? ariaLabelledbyProp : ''
-              }
-              aria-label={!label && ariaLabelProp ? ariaLabelProp : ''}
-              {...rest}
+              className={selectClassName}
+              {...popoverProps}
             />
-            {renderUnitOnly && (
-              <Overline
-                className={cx(unitBaseStyles, unitThemeStyles[theme], {
-                  [unitDisabledStyles[theme]]: disabled,
-                })}
-              >
-                {unit}
-              </Overline>
-            )}
-            {renderSelectOnly && (
-              <UnitSelect
-                id={selectId}
-                disabled={disabled}
-                unit={unit}
-                unitOptions={unitOptions}
-                onChange={onSelectChange}
-                size={size}
-                className={selectClassName}
-                {...popoverProps}
-              />
-            )}
-          </div>
-          <div
-            className={errorMessageWrapperStyles}
-            aria-live="polite"
-            aria-relevant="all"
-            id={errorMessageId}
-          >
-            {renderErrorMessage && (
-              <Error className={errorMessageStyles}>{errorMessage}</Error>
-            )}
-          </div>
+          )}
         </div>
-      </LeafyGreenProvider>
+      </FormField>
     );
   },
 );
