@@ -93,11 +93,13 @@ export const iconButtonThemeStyle: Record<Theme, string> = {
     }
   `,
   [Theme.Dark]: css`
-    background-color: ${palette.gray.dark3};
-
     &:hover {
       &:before {
         background-color: ${palette.gray.dark1};
+      }
+
+      svg {
+        color: ${palette.gray.light3};
       }
     }
   `,

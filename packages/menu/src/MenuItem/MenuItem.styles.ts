@@ -16,6 +16,6 @@ export const destructiveIconStyle: Record<Theme, string> = {
     color: ${palette.red.light1};
   `,
   [Theme.Dark]: css`
-    color: ${palette.red.base};
+    color: ${palette.red.light1};
   `,
 };

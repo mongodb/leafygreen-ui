@@ -375,7 +375,7 @@ export const destructiveTextStyle: Record<Theme, string> = {
     font-weight: ${fontWeights.regular};
   `,
   [Theme.Dark]: css`
-    color: ${palette.red.dark2};
+    color: ${palette.red.light1};
     font-weight: ${fontWeights.regular};
   `,
 };
