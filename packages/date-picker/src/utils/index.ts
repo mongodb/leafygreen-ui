@@ -20,6 +20,7 @@ export { isElementInputSegment } from './isElementInputSegment';
 export { isSameTZDay } from './isSameTZDay';
 export { isSameUTCDay } from './isSameUTCDay';
 export { isSameUTCMonth } from './isSameUTCMonth';
+export { isSameUTCRange } from './isSameUTCRange';
 export { isTodayTZ } from './isTodayTZ';
 export { isValidDate } from './isValidDate';
 export { isValidLocale } from './isValidLocale';
