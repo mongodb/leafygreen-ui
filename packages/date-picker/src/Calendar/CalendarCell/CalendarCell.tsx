@@ -67,7 +67,7 @@ export const CalendarCell = React.forwardRef<
     const handleKeyUp: KeyboardEventHandler<HTMLTableCellElement> = e => {
       if (
         state !== CalendarCellState.Disabled &&
-        (e.key === keyMap.Enter || e.key === keyMap.Space)
+        (e.code === keyMap.Enter || e.code === keyMap.Space)
       ) {
         (onClick as KeyboardEventHandler<HTMLTableCellElement>)?.(e);
         // TODO: add focus back to input

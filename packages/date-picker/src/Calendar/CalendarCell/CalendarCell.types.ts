@@ -12,7 +12,6 @@ export type CalendarCellState =
 
 export interface CalendarCellProps
   extends Omit<React.HTMLProps<HTMLTableCellElement>, 'onClick'> {
-  // extends React.HTMLProps<HTMLTableCellElement> {
   /** The label for the calendar cell */
   ['aria-label']: string;
 
