@@ -12,6 +12,7 @@ import { isSameUTCMonth, setUTCMonth, setUTCYear } from '../../../utils';
 import {
   menuHeaderSelectContainerStyles,
   menuHeaderStyles,
+  selectInputWidthStyles,
 } from '../DatePickerMenu.styles';
 
 interface DatePickerMenuHeaderProps {
@@ -70,10 +71,11 @@ export const DatePickerMenuHeader = forwardRef<
             const newMonth = setUTCMonth(month, Number(m));
             updateMonth(newMonth);
           }}
+          className={selectInputWidthStyles}
         >
           {Months.map((m, i) => (
             <Option value={i.toString()} key={m.short}>
-              {m.long}
+              {m.short}
             </Option>
           ))}
         </Select>
@@ -85,6 +87,7 @@ export const DatePickerMenuHeader = forwardRef<
             const newMonth = setUTCYear(month, Number(y));
             updateMonth(newMonth);
           }}
+          className={selectInputWidthStyles}
         >
           {yearOptions.map(y => (
             <Option value={y.toString()} key={y}>
