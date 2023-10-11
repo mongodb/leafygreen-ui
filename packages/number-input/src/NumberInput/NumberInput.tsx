@@ -112,6 +112,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
               unitOptions={unitOptions}
               onChange={onSelectChange}
               size={size}
+              state={state}
               className={selectClassName}
               {...popoverProps}
             />

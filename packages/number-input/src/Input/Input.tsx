@@ -10,19 +10,17 @@ import isUndefined from 'lodash/isUndefined';
 import { cx } from '@leafygreen-ui/emotion';
 import { FormFieldInputContainer } from '@leafygreen-ui/form-field';
 import { useControlledValue, useForwardedRef } from '@leafygreen-ui/hooks';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { createSyntheticEvent } from '@leafygreen-ui/lib';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { Arrows } from '../Arrows';
-import { Direction } from '../NumberInput/NumberInput.types';
+import { Direction, State } from '../NumberInput/NumberInput.types';
 
 import {
   inputBaseStyles,
   selectBaseStyles,
   wrapperBaseStyles,
   wrapperClassName,
-  wrapperThemeStyles,
 } from './Input.styles';
 import { InputProps } from './Input.types';
 
@@ -39,6 +37,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       hasSelectOptions,
       errorMessage,
       className,
+      state,
       ...rest
     }: InputProps,
     forwardRef,
@@ -51,8 +50,9 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const [_, setShouldErrorTransition] = useState<boolean>(false);
     const isFocusedRef = useRef<boolean>(false);
     const inputRef = useForwardedRef<HTMLInputElement | null>(forwardRef, null);
-    const { theme } = useDarkMode();
     const isControlled = !isUndefined(valueProp);
+
+    const shouldRenderArrows = state === State.None && !disabled;
 
     useEffect(() => {
       // On unmount, removes the timeout that is set on `onMouseLeave` and `'onBlur` of the wrapper container.
@@ -167,21 +167,17 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         onFocus={() => handleOnFocus()}
         onBlur={() => handleOnBlur()}
         aria-disabled={disabled}
-        className={cx(
-          wrapperClassName,
-          wrapperBaseStyles,
-          wrapperThemeStyles[theme],
-          {
-            [selectBaseStyles]: hasSelectOptions,
-          },
-          // className,
-        )}
+        className={cx(wrapperClassName, wrapperBaseStyles, {
+          [selectBaseStyles]: hasSelectOptions,
+        })}
         contentEnd={
-          <Arrows
-            disabled={disabled}
-            onClick={handleValueChange}
-            onKeyDown={handleArrowKeyDown}
-          />
+          shouldRenderArrows ? (
+            <Arrows
+              disabled={disabled}
+              onClick={handleValueChange}
+              onKeyDown={handleArrowKeyDown}
+            />
+          ) : undefined
         }
       >
         <input
