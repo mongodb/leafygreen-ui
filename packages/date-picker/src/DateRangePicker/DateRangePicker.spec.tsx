@@ -145,16 +145,22 @@ describe('packages/date-picker/date-range-picker', () => {
       expect(menuContainerEl).toBeInTheDocument();
     });
 
-    describe('into start date', () => {
+    describe.each([
+      ['start', 0],
+      ['end', 3],
+    ])('into %p input', (input, index) => {
       test('updates segment value', () => {
         const { inputElements } = renderDateRangePicker();
-        userEvent.type(inputElements[0], '1');
-        expect(inputElements[0].value).toBe('1'); // Not '01' if not blurred
+        const element = inputElements[index];
+        userEvent.type(element, '1');
+        expect(element.value).toBe('1'); // Not '01' if not blurred
       });
+
       test('does not fire range change handler', () => {
         const onRangeChange = jest.fn();
         const { inputElements } = renderDateRangePicker({ onRangeChange });
-        userEvent.type(inputElements[0], '1');
+        const element = inputElements[index];
+        userEvent.type(element, '1');
         expect(onRangeChange).not.toHaveBeenCalled();
       });
 
@@ -163,30 +169,90 @@ describe('packages/date-picker/date-range-picker', () => {
         const { inputElements } = renderDateRangePicker({
           onChange,
         });
-        userEvent.type(inputElements[0], '1');
+        const element = inputElements[index];
+        userEvent.type(element, '1');
         expect(onChange).toHaveBeenCalledWith(eventContainingTargetValue('1'));
       });
 
       describe('on un-focus/blur', () => {
-        test.todo('fires a change handler if the value is valid');
-        test.todo('does not fire a change handler if value is incomplete');
-        test.todo('fires a segment change handler');
-        test.todo('fires a validation handler when the value is first set');
-        test.todo('fires a validation handler when the value is updated');
-      });
-    });
+        test('does not fire a change handler if value is incomplete', () => {
+          const onRangeChange = jest.fn();
+          const { inputElements } = renderDateRangePicker({ onRangeChange });
+          const element = inputElements[index];
+          userEvent.type(element, '2023');
+          userEvent.tab();
+          expect(onRangeChange).not.toHaveBeenCalled();
+        });
 
-    describe('into end date', () => {
-      test.todo('updates segment value');
-      test.todo('does not fire range change handler');
-      test.todo('does not fire segment change handler');
+        test('fires a change handler if the value is valid', () => {
+          const onRangeChange = jest.fn();
+          const { inputElements } = renderDateRangePicker({ onRangeChange });
+          const year = inputElements[index];
+          const month = inputElements[index + 1];
+          const day = inputElements[index + 2];
 
-      describe('on un-focus/blur', () => {
-        test.todo('fires a change handler if the value is valid');
-        test.todo('does not fire a change handler if value is incomplete');
-        test.todo('fires a segment change handler');
-        test.todo('fires a validation handler when the value is first set');
-        test.todo('fires a validation handler when the value is updated');
+          userEvent.type(year, '2023');
+          userEvent.type(month, '12');
+          userEvent.type(day, '26');
+          userEvent.tab();
+          expect(onRangeChange).toHaveBeenCalledWith(
+            expect.arrayContaining([
+              expect.objectContaining(newUTC(2023, Month.December, 26)),
+            ]),
+          );
+        });
+
+        test('fires a segment change handler', () => {
+          const onChange = jest.fn();
+          const { inputElements } = renderDateRangePicker({
+            onChange,
+          });
+          const element = inputElements[index];
+          userEvent.type(element, '2023');
+          userEvent.tab();
+          expect(onChange).toHaveBeenCalledWith(
+            eventContainingTargetValue('2023'),
+          );
+        });
+
+        test('fires a validation handler when the value is first set', () => {
+          const handleValidation = jest.fn();
+          const { inputElements } = renderDateRangePicker({
+            handleValidation,
+          });
+          const year = inputElements[index];
+          const month = inputElements[index + 1];
+          const day = inputElements[index + 2];
+          userEvent.type(year, '2023');
+          userEvent.type(month, '12');
+          userEvent.type(day, '26');
+          userEvent.tab();
+
+          expect(handleValidation).toHaveBeenCalledWith(
+            expect.arrayContaining([
+              expect.objectContaining(newUTC(2023, Month.December, 26)),
+            ]),
+          );
+        });
+
+        test('fires a validation handler when the value is updated', () => {
+          const initialStart = newUTC(2023, Month.March, 10);
+          const initialEnd = newUTC(2023, Month.December, 26);
+          const handleValidation = jest.fn();
+          const { inputElements } = renderDateRangePicker({
+            value: [initialStart, initialEnd],
+            handleValidation,
+          });
+          const day = inputElements[index + 2];
+          userEvent.type(day, '15');
+
+          const expectedValue = expect.arrayContaining([
+            input === 'start' ? newUTC(2023, Month.March, 15) : initialStart,
+            input === 'end' ? newUTC(2023, Month.December, 15) : initialEnd,
+          ]);
+
+          expect(handleValidation).toHaveBeenCalledWith(expectedValue);
+        });
       });
     });
   });

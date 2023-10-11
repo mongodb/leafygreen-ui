@@ -665,7 +665,7 @@ describe('packages/date-picker', () => {
         });
       });
 
-      describe('when a segment is unfocused/blurred', () => {
+      describe('on un-focus/blur', () => {
         test('does not fire a change handler if the value is incomplete', () => {
           const onDateChange = jest.fn();
           const { yearInput } = renderDatePicker({
