@@ -175,7 +175,7 @@ export const getHoverStyles = (containerClass: string, theme: Theme) => ({
       &:not(:disabled):hover & {
         color: ${theme === Theme.Light
           ? palette.green.base
-          : palette.green.dark3}; // TODO: what is this?
+          : palette.green.dark3};
       }
     }
   `,
