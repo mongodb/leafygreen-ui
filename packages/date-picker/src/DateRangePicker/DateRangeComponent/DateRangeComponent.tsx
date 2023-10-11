@@ -69,6 +69,7 @@ export const DateRangeComponent = forwardRef<
         <DateRangeMenu
           ref={menuRef}
           refEl={formFieldRef}
+          id={menuId}
           value={value}
           setValue={handleCalendarValueChange}
         />

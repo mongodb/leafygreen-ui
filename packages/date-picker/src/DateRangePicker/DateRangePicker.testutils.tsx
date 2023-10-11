@@ -21,11 +21,14 @@ interface RenderMenuResult {
   menuContainerEl: HTMLElement | null;
   leftChevron: HTMLButtonElement | null;
   rightChevron: HTMLButtonElement | null;
-  monthSelect: HTMLButtonElement | null;
-  yearSelect: HTMLButtonElement | null;
   calendarGrids: Array<HTMLTableElement> | null;
   calendarCells: Array<HTMLTableCellElement>;
   todayCell: HTMLTableCellElement | null;
+  menuFooter: HTMLDivElement | null;
+  quickSelectMenu: HTMLDivElement | null;
+  monthSelect: HTMLButtonElement | null;
+  yearSelect: HTMLButtonElement | null;
+  quickRangeButtons: Array<HTMLButtonElement | null>;
 }
 
 /**
@@ -75,15 +78,31 @@ export const renderDateRangePicker = (
     const rightChevron = result.queryByLabelText(
       'Next month',
     ) as HTMLButtonElement;
-    const monthSelect = result.queryByLabelText(
-      'Select month',
-    ) as HTMLButtonElement;
-    const yearSelect = result.queryByLabelText(
-      'Select year',
-    ) as HTMLButtonElement;
     const todayCell = menuContainerEl?.querySelector(
       '[aria-current="true"]',
     ) as HTMLTableCellElement;
+
+    // Footer
+    const menuFooter = menuContainerEl?.querySelector(
+      '[data-lg="date-range-picker-menu-footer"]',
+    ) as HTMLDivElement | null;
+
+    // Quick select menu
+    const quickSelectMenu = menuContainerEl?.querySelector(
+      '[data-lg="date-range-picker-quick-select-menu"]',
+    ) as HTMLDivElement | null;
+    const monthSelect = result.queryByLabelText(
+      'Select month',
+    ) as HTMLButtonElement | null;
+    const yearSelect = result.queryByLabelText(
+      'Select year',
+    ) as HTMLButtonElement | null;
+
+    const quickRangeButtons = Array.from(
+      quickSelectMenu?.querySelectorAll(
+        '[data-lg="date-range-picker-quick-range-button"]',
+      ) || [null],
+    ) as Array<HTMLButtonElement | null>;
 
     return {
       menuContainerEl,
@@ -92,8 +111,11 @@ export const renderDateRangePicker = (
       todayCell,
       leftChevron,
       rightChevron,
+      menuFooter,
+      quickSelectMenu,
       monthSelect,
       yearSelect,
+      quickRangeButtons,
     };
   }
 

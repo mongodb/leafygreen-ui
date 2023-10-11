@@ -40,6 +40,7 @@ export const QuickSelectionMenu = forwardRef<HTMLDivElement, {}>(
       <div
         ref={fwdRef}
         className={cx(quickSelectMenuStyles, quickSelectMenuThemeStyles[theme])}
+        data-lg="date-range-picker-quick-select-menu"
       >
         <div className={quickSelectMenuMonthSelectContainerStyles}>
           <Select

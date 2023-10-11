@@ -324,9 +324,7 @@ describe('packages/date-picker', () => {
         });
 
         test('selecting the month updates the calendar', async () => {
-          const { openMenu, findAllByRole } = renderDatePicker({
-            value: new Date(Date.UTC(2023, Month.December, 26)),
-          });
+          const { openMenu, findAllByRole } = renderDatePicker();
           const { monthSelect, calendarGrid } = openMenu();
           userEvent.click(monthSelect!);
           const options = await findAllByRole('option');

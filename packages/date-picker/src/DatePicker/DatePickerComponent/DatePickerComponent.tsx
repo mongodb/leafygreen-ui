@@ -4,7 +4,7 @@ import { useBackdropClick, useForwardedRef } from '@leafygreen-ui/hooks';
 
 import { useDatePickerContext } from '../../DatePickerContext';
 import { isSameUTCDay } from '../../utils';
-import { DatePickerInput, DatePickerInputProps } from '../DatePickerInput';
+import { DatePickerInput } from '../DatePickerInput';
 import { DatePickerMenu, DatePickerMenuProps } from '../DatePickerMenu';
 
 import { DatePickerComponentProps } from './DatePickerComponent.types';

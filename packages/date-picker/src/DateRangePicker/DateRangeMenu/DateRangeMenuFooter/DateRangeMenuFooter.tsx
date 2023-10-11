@@ -7,7 +7,7 @@ import { clearButtonStyles, footerStyles } from './DateRangeMenuFooter.styles';
 
 export const DateRangeMenuFooter = () => {
   return (
-    <div className={footerStyles}>
+    <div className={footerStyles} data-lg="date-range-picker-menu-footer">
       <Link as="button" className={clearButtonStyles}>
         Clear
       </Link>
