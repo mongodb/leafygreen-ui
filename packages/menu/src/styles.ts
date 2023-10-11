@@ -7,6 +7,7 @@ import {
   transitionDuration,
 } from '@leafygreen-ui/tokens';
 
+import { iconButtonClassName } from './SubMenu/SubMenu.styles';
 import { Size } from './types';
 
 export const svgWidth = 24;
@@ -326,6 +327,10 @@ export const focusedMenuItemContainerStyle: Record<Theme, string> = {
 
       &:before {
         background-color: ${palette.blue.light1};
+      }
+
+      .${iconButtonClassName} {
+        background-color: ${palette.blue.dark3};
       }
     }
 

@@ -27,6 +27,12 @@ export const subMenuThemeStyle: Record<Theme, string> = {
     subMenuStyle,
     css`
       background-color: ${palette.gray.dark3};
+
+      &:hover {
+        .${iconButtonClassName} {
+          background-color: ${palette.gray.dark2};
+        }
+      }
     `,
   ),
 };
@@ -91,7 +97,7 @@ export const iconButtonThemeStyle: Record<Theme, string> = {
 
     &:hover {
       &:before {
-        background-color: ${palette.gray.light3};
+        background-color: ${palette.gray.dark1};
       }
     }
   `,
