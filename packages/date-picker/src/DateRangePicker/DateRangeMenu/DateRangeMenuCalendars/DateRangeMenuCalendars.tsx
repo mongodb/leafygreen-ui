@@ -1,5 +1,6 @@
 import React, { forwardRef, KeyboardEventHandler, useState } from 'react';
 
+import { cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { Subtitle } from '@leafygreen-ui/typography';
@@ -23,6 +24,7 @@ import { useDateRangeMenuContext } from '../DateRangeMenuContext';
 import {
   calendarHeadersContainerStyle,
   calendarHeaderStyles,
+  calendarsClassName,
   calendarsContainerStyles,
   calendarsFrameStyles,
 } from './DateRangeMenuCalendars.styles';
@@ -94,7 +96,7 @@ export const DateRangeMenuCalendars = forwardRef<
   };
 
   return (
-    <div ref={fwdRef} className={calendarsFrameStyles}>
+    <div ref={fwdRef} className={cx(calendarsClassName, calendarsFrameStyles)}>
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div
         className={calendarsContainerStyles}

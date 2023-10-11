@@ -85,7 +85,7 @@ export const Basic: StoryFn<typeof DateRangePicker> = props => {
     newUTC(2023, Month.December, 26),
   ]);
 
-  return <DateRangePicker {...props} value={range} onChange={setRange} />;
+  return <DateRangePicker {...props} value={range} onRangeChange={setRange} />;
 };
 
 export const Uncontrolled: StoryFn<typeof DateRangePicker> = props => {

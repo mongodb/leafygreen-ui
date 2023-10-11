@@ -3,7 +3,7 @@ import { forwardRef } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { getNodeTextContent, HTMLElementProps } from '@leafygreen-ui/lib';
 
 import {
   baseQuickRangeButtonStyles,
@@ -24,6 +24,7 @@ export const QuickRangeButton = forwardRef<
         baseQuickRangeButtonThemeStyles[theme],
         className,
       )}
+      aria-label={getNodeTextContent(children)}
       {...rest}
     >
       {children}

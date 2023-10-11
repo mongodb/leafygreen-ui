@@ -14,6 +14,7 @@ import { useDateRangeMenuContext } from '../DateRangeMenuContext';
 
 import { QuickRangeButton } from './QuickRangeButton';
 import {
+  quickSelectionClassName,
   quickSelectMenuMonthSelectContainerStyles,
   quickSelectMenuSelectionsContainerStyles,
   quickSelectMenuStyles,
@@ -39,7 +40,11 @@ export const QuickSelectionMenu = forwardRef<HTMLDivElement, {}>(
     return (
       <div
         ref={fwdRef}
-        className={cx(quickSelectMenuStyles, quickSelectMenuThemeStyles[theme])}
+        className={cx(
+          quickSelectionClassName,
+          quickSelectMenuStyles,
+          quickSelectMenuThemeStyles[theme],
+        )}
         data-lg="date-range-picker-quick-select-menu"
       >
         <div className={quickSelectMenuMonthSelectContainerStyles}>

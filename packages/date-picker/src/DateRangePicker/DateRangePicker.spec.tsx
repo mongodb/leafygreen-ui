@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  cleanup,
   queryByText as globalQueryByText,
   render,
   waitFor,
@@ -13,8 +14,14 @@ import { Month } from '../constants';
 import { eventContainingTargetValue, tabNTimes } from '../testUtils';
 import { newUTC, setUTCDate } from '../utils';
 
-import { renderDateRangePicker } from './DateRangePicker.testutils';
+import {
+  ExpectedTabStop,
+  getExpectedTabStopSelector,
+  renderDateRangePicker,
+  RenderDateRangePickerResult,
+} from './DateRangePicker.testutils';
 import { DateRangePicker } from '.';
+import { element } from '@leafygreen-ui/lib/dist/typeIs';
 
 const testToday = newUTC(2023, Month.December, 26);
 
@@ -451,8 +458,7 @@ describe('packages/date-picker/date-range-picker', () => {
               value: [start, end],
             });
             userEvent.type(inputElements[2], '5');
-            const { menuFooter } = getMenuElements();
-            const applyButton = globalQueryByText(menuFooter!, 'Apply');
+            const { applyButton } = getMenuElements();
             userEvent.click(applyButton!);
             expect(onRangeChange).toHaveBeenCalledWith(
               expect.arrayContaining([setUTCDate(start, 5), end]),
@@ -470,8 +476,7 @@ describe('packages/date-picker/date-range-picker', () => {
               value: [start, end],
             });
             userEvent.type(inputElements[2], '5');
-            const { menuFooter } = getMenuElements();
-            const cancelButton = globalQueryByText(menuFooter!, 'Cancel');
+            const { cancelButton } = getMenuElements();
             userEvent.click(cancelButton!);
             expect(onCancel).toHaveBeenCalled();
           });
@@ -485,8 +490,7 @@ describe('packages/date-picker/date-range-picker', () => {
               value: [start, end],
             });
             userEvent.type(inputElements[2], '5');
-            const { menuFooter } = getMenuElements();
-            const cancelButton = globalQueryByText(menuFooter!, 'Cancel');
+            const { cancelButton } = getMenuElements();
             userEvent.click(cancelButton!);
             expect(onRangeChange).toHaveBeenCalledWith(
               expect.arrayContaining([start, end]),
@@ -503,8 +507,7 @@ describe('packages/date-picker/date-range-picker', () => {
               onClear,
               value: [start, end],
             });
-            const { menuFooter } = openMenu();
-            const clearButton = globalQueryByText(menuFooter!, 'Clear');
+            const { clearButton } = openMenu();
             userEvent.click(clearButton!);
             expect(onClear).toHaveBeenCalled();
           });
@@ -516,8 +519,7 @@ describe('packages/date-picker/date-range-picker', () => {
               onRangeChange,
               value: [start, end],
             });
-            const { menuFooter } = openMenu();
-            const clearButton = globalQueryByText(menuFooter!, 'Clear');
+            const { clearButton } = openMenu();
             userEvent.click(clearButton!);
             expect(onRangeChange).toHaveBeenCalledWith(
               expect.arrayContaining([null, null]),
@@ -636,130 +638,86 @@ describe('packages/date-picker/date-range-picker', () => {
           expect(handleValidation).not.toHaveBeenCalled();
         });
 
-        describe('Tab order', () => {
-          const closedTabStops = 3 + 3 + 1; // = 7; start + end + button
-          const basicMenuTabStops = closedTabStops + 3; // = 10; chevrons + cell
-          const quickSelectTabStops = basicMenuTabStops + 2 + 7; // = 19; selects + quick select buttons
-          describe.each(range(0, closedTabStops))('when menu is closed', n => {
-            test(`Tab ${n} times`, () => {
-              const { inputContainer, inputElements, calendarButton } =
-                renderDateRangePicker();
-              tabNTimes(n);
+        describe.only('Tab order', () => {
+          describe('when menu is closed', () => {
+            const tabStops = getExpectedTabStopSelector('closed');
+            const testCases: Array<[number, string | null]> = tabStops.map(
+              (stop, n) => [n, stop],
+            );
 
-              // initial tab & final tab do not have focus in the component
-              if (n === 0 || n === closedTabStops) {
-                expect(
-                  inputContainer.contains(document.activeElement),
-                ).toBeFalsy();
-              } else if (n === closedTabStops - 1) {
-                // second last tab focuses on button
-                expect(calendarButton).toHaveFocus();
-              } else {
-                // otherwise, tab focuses on the next input element
-                expect(inputElements[n - 1]).toHaveFocus();
-              }
+            describe.each(testCases)('Tab %i times', (n, selector) => {
+              let renderResult: RenderDateRangePickerResult;
+              let element: HTMLElement | null;
+
+              beforeEach(() => {
+                renderResult = renderDateRangePicker();
+                element = selector
+                  ? renderResult.container.querySelector(selector)
+                  : null;
+                tabNTimes(n);
+              });
+
+              test(`focus on ${selector}`, () => {
+                if (selector === null) {
+                  expect(
+                    renderResult.inputContainer.contains(
+                      document.activeElement,
+                    ),
+                  ).toBeFalsy();
+                } else {
+                  expect(element).toHaveFocus();
+                }
+              });
             });
           });
 
-          describe.each(range(0, basicMenuTabStops))(
-            'when basic menu is open',
-            n => {
-              test(`Tab ${n} times`, () => {
-                const { inputElements, calendarButton, openMenu } =
-                  renderDateRangePicker();
+          describe('when basic menu is open', () => {
+            const tabStops = getExpectedTabStopSelector('basic');
+            const testCases: Array<[number, string | null]> = tabStops.map(
+              (stop, n) => [n, stop],
+            );
+
+            describe.each(testCases)(`Tab %i times`, (n, selector) => {
+              let renderResult: RenderDateRangePickerResult;
+              let element: HTMLElement | null;
+
+              beforeEach(() => {
+                renderResult = renderDateRangePicker();
+                element = selector
+                  ? renderResult.container.querySelector(selector)
+                  : null;
                 tabNTimes(n);
-
-                const { leftChevron, rightChevron, todayCell } = openMenu();
-
-                if (n <= 5) {
-                  // initial focus is on first input when the menu opens,
-                  // then follows inputs sequentially
-                  expect(inputElements[n]).toHaveFocus();
-                }
-
-                switch (n) {
-                  case 6:
-                    expect(calendarButton).toHaveFocus();
-                    break;
-                  case 7:
-                    expect(todayCell).toHaveFocus();
-                    break;
-                  case 8:
-                    expect(leftChevron).toHaveFocus();
-                    break;
-                  case 9:
-                    expect(rightChevron).toHaveFocus();
-                    break;
-                  case 10:
-                    // Focus is trapped within the menu
-                    expect(todayCell).toHaveFocus();
-                    break;
-                }
               });
-            },
-          );
 
-          describe.each(range(0, quickSelectTabStops))(
-            'when quick select menu is open',
-            n => {
-              test(`Tab ${n} times`, () => {
-                const { inputElements, calendarButton, openMenu } =
-                  renderDateRangePicker({
-                    showQuickSelection: true,
-                  });
+              test(`focus on ${selector}`, () => {
+                expect(element).toHaveFocus();
+              });
+            });
+          });
+
+          describe('when quick-select menu is open', () => {
+            const tabStops = getExpectedTabStopSelector('quick-select');
+            const testCases: Array<[number, string | null]> = tabStops.map(
+              (stop, n) => [n, stop],
+            );
+
+            describe.each(testCases)(`Tab %i times`, (n, selector) => {
+              let renderResult: RenderDateRangePickerResult;
+              let element: HTMLElement | null;
+
+              beforeEach(() => {
+                renderResult = renderDateRangePicker();
+                element = selector
+                  ? renderResult.container.querySelector(selector)
+                  : null;
                 tabNTimes(n);
-
-                const {
-                  monthSelect,
-                  yearSelect,
-                  quickRangeButtons,
-                  leftChevron,
-                  rightChevron,
-                  todayCell,
-                } = openMenu();
-
-                if (n <= 5) {
-                  // initial focus is on first input when the menu opens,
-                  // then follows inputs sequentially
-                  expect(inputElements[n]).toHaveFocus();
-                }
-
-                switch (n) {
-                  case 6:
-                    expect(calendarButton).toHaveFocus();
-                    break;
-                  case 7:
-                    expect(todayCell).toHaveFocus();
-                    break;
-                  case 8:
-                    expect(monthSelect).toHaveFocus();
-                    break;
-                  case 9:
-                    expect(yearSelect).toHaveFocus();
-                    break;
-                  case 10:
-                  case 11:
-                  case 12:
-                  case 13:
-                  case 14:
-                  case 15:
-                  case 16:
-                    expect(quickRangeButtons[n + 10]).toHaveFocus();
-                    break;
-                  case 17:
-                    expect(leftChevron).toHaveFocus();
-                    break;
-                  case 18:
-                    expect(rightChevron).toHaveFocus();
-                    break;
-                  case 19:
-                    // Focus is trapped within the menu
-                    expect(todayCell).toHaveFocus();
-                    break;
-                }
               });
-            },
-          );
+
+              test(`focus on ${selector}`, () => {
+                expect(element).toHaveFocus();
+              });
+            });
+          });
         });
       });
 
