@@ -1,4 +1,4 @@
-import { MouseEventHandler } from 'react';
+import { ChangeEvent, MouseEventHandler } from 'react';
 
 import { BaseDatePickerProps, DateRangeType } from '../types';
 
@@ -16,7 +16,12 @@ export interface DateRangePickerProps extends BaseDatePickerProps {
    *
    * Callback date arguments will be in Date objects in UTC time, or null
    */
-  onChange?: (range?: DateRangeType) => void;
+  onRangeChange?: (range?: DateRangeType) => void;
+
+  /**
+   * Callback fired when any segment changes, (but not necessarily a full value)
+   */
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 
   /**
    * The initial selected start & end dates.
@@ -24,8 +29,6 @@ export interface DateRangePickerProps extends BaseDatePickerProps {
    * A given initial index is ignored if `range[x]` is defined
    */
   initialValue?: DateRangeType;
-
-  // TODO: onSegmentChange: () => {};
 
   /**
    * A callback fired when validation should run, based on our form validation guidelines.
@@ -37,12 +40,18 @@ export interface DateRangePickerProps extends BaseDatePickerProps {
    */
   handleValidation?: (range?: DateRangeType) => void;
 
-  /** Callback fired when the “clear” button is clicked. */
+  /**
+   * Callback fired when the “clear” button is clicked.
+   */
   onClear?: MouseEventHandler;
 
-  /** Callback fired when the “cancel” button is clicked.  */
+  /**
+   * Callback fired when the “cancel” button is clicked.
+   */
   onCancel?: MouseEventHandler;
 
-  /** Whether or not to show the Quick Range Selection menu */
+  /**
+   * Whether or not to show the Quick Range Selection menu
+   */
   showQuickSelection?: boolean;
 }

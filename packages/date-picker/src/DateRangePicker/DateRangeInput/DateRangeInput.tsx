@@ -23,7 +23,13 @@ const EN_DASH = '–';
 
 export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
   (
-    { value, setValue, handleValidation, ...rest }: DateRangeInputProps,
+    {
+      value,
+      setValue,
+      handleValidation,
+      onChange,
+      ...rest
+    }: DateRangeInputProps,
     fwdRef,
   ) => {
     const { disabled, formatParts, setOpen, setIsDirty } =
@@ -150,12 +156,14 @@ export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
             value={value?.[0]}
             setValue={handleStartInputChange}
             segmentRefs={startSegmentRefs}
+            onChange={onChange}
           />
           <span>{EN_DASH}</span>
           <DateInputBox
             value={value?.[1]}
             setValue={handleEndInputChange}
             segmentRefs={endSegmentRefs}
+            onChange={onChange}
           />
         </div>
       </DateFormField>

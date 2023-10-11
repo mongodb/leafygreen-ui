@@ -30,7 +30,7 @@ import {
 export const DateRangeMenuCalendars = forwardRef<
   HTMLDivElement,
   DateRangeMenuProps
->(({ value, setValue }) => {
+>(({ value, setValue }, fwdRef) => {
   const { isInRange } = useDatePickerContext();
   const {
     month,
@@ -94,7 +94,7 @@ export const DateRangeMenuCalendars = forwardRef<
   };
 
   return (
-    <div className={calendarsFrameStyles}>
+    <div ref={fwdRef} className={calendarsFrameStyles}>
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div
         className={calendarsContainerStyles}

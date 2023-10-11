@@ -30,11 +30,7 @@ export interface DatePickerProps extends BaseDatePickerProps {
   handleValidation?: (value?: DateType) => void;
 
   /**
-   * Callback fired when any segment changes, but not necessarily a full value
+   * Callback fired when any segment changes, (but not necessarily a full value)
    */
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-  // onSegmentChange?: (
-  //   segment: DateSegment,
-  //   segmentValue: DateSegmentValue,
-  // ) => void;
 }

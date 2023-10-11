@@ -12,7 +12,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     {
       value: rangeProp,
       initialValue: initialProp,
-      onChange,
+      onRangeChange: onChangeProp,
       showQuickSelection,
       ...props
     }: DateRangePickerProps,
@@ -22,7 +22,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
 
     const { value, setValue } = useControlledValue(
       rangeProp,
-      onChange,
+      onChangeProp,
       initialProp,
     );
 

@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import range from 'lodash/range';
 
 import { Month } from '../constants';
+import { eventContainingTargetValue } from '../testUtils';
 import { newUTC } from '../utils';
 
 import { renderDateRangePicker } from './DateRangePicker.testutils';
@@ -151,19 +152,19 @@ describe('packages/date-picker/date-range-picker', () => {
         expect(inputElements[0].value).toBe('1'); // Not '01' if not blurred
       });
       test('does not fire range change handler', () => {
-        const onChange = jest.fn();
-        const { inputElements } = renderDateRangePicker({ onChange });
+        const onRangeChange = jest.fn();
+        const { inputElements } = renderDateRangePicker({ onRangeChange });
         userEvent.type(inputElements[0], '1');
-        expect(onChange).not.toHaveBeenCalled();
+        expect(onRangeChange).not.toHaveBeenCalled();
       });
 
-      test.skip('does not fire segment change handler', () => {
-        const onSegmentChange = jest.fn();
+      test('fires segment change handler', () => {
+        const onChange = jest.fn();
         const { inputElements } = renderDateRangePicker({
-          onSegmentChange,
+          onChange,
         });
         userEvent.type(inputElements[0], '1');
-        expect(onSegmentChange).not.toHaveBeenCalled();
+        expect(onChange).toHaveBeenCalledWith(eventContainingTargetValue('1'));
       });
 
       describe('on un-focus/blur', () => {
