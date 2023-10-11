@@ -2,20 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
+import { FormField } from '@leafygreen-ui/form-field';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-import LeafyGreenProvider, {
-  useDarkMode,
-} from '@leafygreen-ui/leafygreen-provider';
-import { Description, Error, Label, Overline } from '@leafygreen-ui/typography';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { Overline } from '@leafygreen-ui/typography';
 
 import { Input } from '../Input';
 import { UnitSelect } from '../UnitSelect';
 
 import {
-  errorMessageStyles,
-  errorMessageWrapperStyles,
-  labelDescriptionStyles,
   unitBaseStyles,
   unitDisabledStyles,
   unitThemeStyles,
@@ -57,9 +52,6 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
     forwardedRef,
   ) => {
     const prefix = 'lg-number-input';
-    const inputId = useIdAllocator({ prefix, id: idProp });
-    const errorMessageId = useIdAllocator({ prefix, id: ariaDescribedbyProp });
-    const descriptionId = useIdAllocator({ prefix });
     const selectId = useIdAllocator({ prefix });
     const { darkMode, theme } = useDarkMode(darkModeProp);
 
@@ -69,7 +61,6 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
     const isUnitInOptions = unitOptions.find(u => u.displayName === unit);
     const renderUnitOnly = hasUnit && !hasSelectOptions;
     const renderSelectOnly = hasUnit && hasSelectOptions && !!isUnitInOptions;
-    const renderErrorMessage = state === State.Error && errorMessage;
 
     const popoverProps = {
       popoverZIndex,
@@ -87,6 +78,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
         state={state}
         size={size}
         darkMode={darkMode}
+        id={idProp}
       >
         <div
           className={cx(wrapperBaseStyles, wrapperSizeStyles[size], {
@@ -99,10 +91,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
             value={value}
             onChange={onChange}
             disabled={disabled}
-            size={size}
-            id={inputId}
             hasSelectOptions={renderSelectOnly}
-            state={state}
             {...rest}
           />
 

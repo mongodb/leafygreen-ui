@@ -15,22 +15,13 @@ import { createSyntheticEvent } from '@leafygreen-ui/lib';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { Arrows } from '../Arrows';
-import { ErrorIcon } from '../ErrorIcon';
-import { Direction, Size, State } from '../NumberInput/NumberInput.types';
+import { Direction } from '../NumberInput/NumberInput.types';
 
 import {
-  inputAnimateStyles,
   inputBaseStyles,
-  inputErrorAnimateStyles,
-  inputErrorPaddingTransitionStyles,
-  inputSizeStyles,
-  inputThemeStyles,
   selectBaseStyles,
   wrapperBaseStyles,
   wrapperClassName,
-  wrapperDisabledStyles,
-  wrapperHoverStyles,
-  wrapperStateStyles,
   wrapperThemeStyles,
 } from './Input.styles';
 import { InputProps } from './Input.types';
@@ -45,8 +36,6 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       value: valueProp,
       onChange: onChangeProp,
       disabled = false,
-      size = Size.Default,
-      state = State.None,
       hasSelectOptions,
       errorMessage,
       className,
@@ -59,8 +48,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
      */
     const translateTimeout = useRef<NodeJS.Timeout>();
     const containerRef = useRef<HTMLDivElement | null>(null);
-    const [shouldErrorTransition, setShouldErrorTransition] =
-      useState<boolean>(false);
+    const [_, setShouldErrorTransition] = useState<boolean>(false);
     const isFocusedRef = useRef<boolean>(false);
     const inputRef = useForwardedRef<HTMLInputElement | null>(forwardRef, null);
     const { theme } = useDarkMode();
@@ -74,8 +62,6 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         }
       };
     }, []);
-
-    const shouldRenderErrorIcon = state === State.Error;
 
     const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
 
@@ -185,10 +171,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           wrapperClassName,
           wrapperBaseStyles,
           wrapperThemeStyles[theme],
-          // wrapperStateStyles[theme][state],
           {
-            // [wrapperHoverStyles[theme][state]]: !disabled,
-            // [wrapperDisabledStyles[theme]]: disabled,
             [selectBaseStyles]: hasSelectOptions,
           },
           className,
@@ -203,19 +186,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       >
         <input
           ref={inputRef}
-          className={cx(
-            inputBaseStyles,
-            //   inputThemeStyles[theme],
-            //   inputSizeStyles[size],
-            //   {
-            //     // padding without error icon
-            //     [inputAnimateStyles]: !disabled,
-            //     // padding with error icon
-            //     [inputErrorAnimateStyles[size]]:
-            //       shouldRenderErrorIcon && !disabled,
-            //     [inputErrorPaddingTransitionStyles]: shouldErrorTransition,
-            //   },
-          )}
+          className={cx(inputBaseStyles)}
           type="number"
           value={isControlled ? valueProp : value} // TODO: temp fix for useControlledValue hook. The hook was not returning the correct value when controlled. For example when typing 2e3 the hook would return 3 but it should return 2e3 like a native number input would.
           onChange={handleChange}

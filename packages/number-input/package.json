@@ -33,6 +33,7 @@
     "@leafygreen-ui/a11y": "^1.4.10",
     "@leafygreen-ui/button": "^21.0.8",
     "@leafygreen-ui/emotion": "^4.0.7",
+    "@leafygreen0ui/form-field": "^0.1.0",
     "@leafygreen-ui/hooks": "^8.0.0",
     "@leafygreen-ui/icon": "^11.23.0",
     "@leafygreen-ui/lib": "^12.0.0",
