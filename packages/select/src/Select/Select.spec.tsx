@@ -673,6 +673,37 @@ describe('packages/select', () => {
           expect(button).toHaveValue(optionValue);
         });
 
+        test('by space key', async () => {
+          userEvent.click(button);
+
+          const listbox = await waitFor(() => {
+            const listbox = getByRole('listbox');
+            expect(listbox).toBeVisible();
+            return listbox;
+          });
+
+          const targetOption = getByTextFor(listbox, optionText).closest('li');
+          expect(targetOption).not.toBe(null);
+
+          act(() => targetOption!.focus());
+
+          fireEvent.keyDown(targetOption!, {
+            key: keyMap.Space,
+          });
+
+          expect(onChangeSpy).toHaveBeenCalledTimes(1);
+          expect(onChangeSpy).toHaveBeenCalledWith(
+            optionValue,
+            expect.anything(),
+          );
+
+          await waitForElementToBeRemoved(listbox);
+
+          expect(getByTextFor(button, optionText)).toBeVisible();
+          expect(button).toHaveFocus();
+          expect(button).toHaveValue(optionValue);
+        });
+
         test('by clicking', async () => {
           userEvent.click(button);
 
