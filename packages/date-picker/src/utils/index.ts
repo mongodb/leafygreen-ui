@@ -8,7 +8,10 @@ export { getFullMonthLabel } from './getFullMonthLabel';
 export { getLastOfMonth } from './getLastOfMonth';
 export { getMonthName } from './getMonthName';
 export { getRemainingParts } from './getRemainingParts';
-export { getSegmentsFromDate } from './getSegmentsFromDate';
+export {
+  getFormattedSegmentsFromDate,
+  getSegmentsFromDate,
+} from './getSegmentsFromDate';
 export { getUTCDateString } from './getUTCDateString';
 export { getValueFormatter } from './getValueFormatter';
 export { getWeeksArray } from './getWeeksArray';

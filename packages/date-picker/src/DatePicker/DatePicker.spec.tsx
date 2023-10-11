@@ -731,27 +731,27 @@ describe('packages/date-picker', () => {
   });
 
   describe('Controlled vs Uncontrolled', () => {
-    test('(Controlled) fires a change handler if `value` is provided', async () => {
+    test('(Controlled) Cell click fires a change handler if `value` is provided', async () => {
       const onDateChange = jest.fn();
       const { openMenu } = renderDatePicker({
         value: new Date(),
         onDateChange,
       });
       const { calendarCells } = openMenu();
-      const cell1 = calendarCells?.[0];
-      userEvent.click(cell1);
+      const firstCell = calendarCells?.[0];
+      userEvent.click(firstCell);
       await waitFor(() => expect(onDateChange).toHaveBeenCalled());
     });
 
-    test('(Controlled) does not change the value if `value` is provided', async () => {
+    test('(Controlled) Cell click does not change the value if `value` is provided', async () => {
       const onDateChange = jest.fn();
       const { openMenu, dayInput, monthInput, yearInput } = renderDatePicker({
         value: new Date(),
         onDateChange,
       });
       const { calendarCells } = openMenu();
-      const cell1 = calendarCells?.[0];
-      userEvent.click(cell1);
+      const firstCell = calendarCells?.[0];
+      userEvent.click(firstCell);
       await waitFor(() => {
         expect(dayInput.value).toEqual('26');
         expect(monthInput.value).toEqual('12');
@@ -759,26 +759,26 @@ describe('packages/date-picker', () => {
       });
     });
 
-    test('(Uncontrolled) fires a change handler', async () => {
+    test('(Uncontrolled) Cell click fires a change handler', async () => {
       const onDateChange = jest.fn();
       const { openMenu } = renderDatePicker({
         onDateChange,
       });
       const { calendarCells } = openMenu();
-      const cell1 = calendarCells?.[0];
-      userEvent.click(cell1);
+      const firstCell = calendarCells?.[0];
+      userEvent.click(firstCell);
       await waitFor(() => expect(onDateChange).toHaveBeenCalled());
     });
 
-    test('(Uncontrolled) changes the input value if `value` is not provided', async () => {
+    test('(Uncontrolled) Cell click changes the input value if `value` is not provided', async () => {
       const onDateChange = jest.fn();
       const { openMenu, dayInput, monthInput, yearInput } = renderDatePicker({
         onDateChange,
         initialValue: new Date(),
       });
       const { calendarCells } = openMenu();
-      const cell1 = calendarCells?.[0];
-      userEvent.click(cell1);
+      const firstCell = calendarCells?.[0];
+      userEvent.click(firstCell);
       await waitFor(() => {
         expect(dayInput.value).toEqual('01');
         expect(monthInput.value).toEqual('12');
