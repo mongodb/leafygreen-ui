@@ -1,5 +1,13 @@
 # @leafygreen-ui/input-option
 
+## 1.0.12
+
+### Patch Changes
+
+- c5d95794: Exports `descriptionClassName` and adds `font-size: inherit;` to input descriptions.
+- Updated dependencies [324d9730]
+  - @leafygreen-ui/typography@17.0.2
+
 ## 1.0.11
 
 ### Patch Changes

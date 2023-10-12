@@ -20,7 +20,7 @@ export const themeStyle: Record<Theme, string> = {
   `,
   [Theme.Dark]: css`
     border-bottom: 1px solid ${palette.gray.dark2};
-    color: ${palette.green.dark1};
+    color: ${palette.gray.light1};
 
     &:first-of-type {
       border-top: 1px solid ${palette.gray.dark2};
@@ -33,7 +33,7 @@ export const activeThemeStyle: Record<Theme, string> = {
     background-color: ${palette.green.light3};
   `,
   [Theme.Dark]: css`
-    color: ${palette.white};
+    color: ${palette.green.light1};
     background-color: ${palette.green.dark3};
   `,
 };

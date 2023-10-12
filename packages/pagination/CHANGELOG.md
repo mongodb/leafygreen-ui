@@ -1,5 +1,14 @@
 # @leafygreen-ui/pagination
 
+## 1.0.17
+
+### Patch Changes
+
+- Updated dependencies [c5d95794]
+- Updated dependencies [324d9730]
+  - @leafygreen-ui/select@11.0.0
+  - @leafygreen-ui/typography@17.0.2
+
 ## 1.0.16
 
 ### Patch Changes
