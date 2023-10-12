@@ -154,69 +154,102 @@ export interface ExpectedTabStop {
 /**
  * Returns the elements we expect to have focus after pressing `Tab` N times
  */
-export const getExpectedTabStopSelector = (
-  menuState: 'closed' | 'basic' | 'quick-select',
-): Array<string | null> => {
-  switch (menuState) {
-    case 'closed': {
-      return [
-        null,
-        '[data-lg="date-range-input-start"] > input[aria-label="year"]',
-        '[data-lg="date-range-input-start"] > input[aria-label="month"]',
-        '[data-lg="date-range-input-start"] > input[aria-label="day"]',
-        '[data-lg="date-range-input-end"] > input[aria-label="year"]',
-        '[data-lg="date-range-input-end"] > input[aria-label="month"]',
-        '[data-lg="date-range-input-end"] > input[aria-label="day"]',
-        'button[aria-label="Open calendar menu"]',
-        null,
-      ];
-    }
+export const expectedTabStopLabels = {
+  closed: [
+    'none',
+    'input > start date > year segment',
+    'input > start date > month segment',
+    'input > start date > day segment',
+    'input > end date > year segment',
+    'input > end date > month segment',
+    'input > end date > day segment',
+    'input > open menu button',
+    'none',
+  ],
+  basic: [
+    'input > start date > year segment',
+    'input > start date > month segment',
+    'input > start date > day segment',
+    'input > end date > year segment',
+    'input > end date > month segment',
+    'input > end date > day segment',
+    'input > open menu button',
+    `menu > today cell`,
+    'menu > footer > clear button',
+    'menu > footer > cancel button',
+    'menu > footer > apply button',
+    'menu > left chevron',
+    'menu > right chevron',
+    `menu > today cell`,
+  ],
+  'quick-select': [
+    'input > start date > year segment',
+    'input > start date > month segment',
+    'input > start date > day segment',
+    'input > end date > year segment',
+    'input > end date > month segment',
+    'input > end date > day segment',
+    'input > open menu button',
+    `menu > today cell`,
+    'menu > footer > clear button',
+    'menu > footer > cancel button',
+    'menu > footer > apply button',
+    'menu > quick select > month select',
+    'menu > quick select > year select',
+    'menu > quick select > quick range > Today',
+    'menu > quick select > quick range > Yesterday',
+    'menu > quick select > quick range > Last 7 days',
+    'menu > quick select > quick range > Last 30 days',
+    'menu > quick select > quick range > Last 90 days',
+    'menu > quick select > quick range > Last 12 months',
+    'menu > quick select > quick range > All time',
+    'menu > left chevron',
+    'menu > right chevron',
+    `menu > today cell`,
+  ],
+} as const;
 
-    case 'basic': {
-      return [
-        '[data-lg="date-range-input-start"] > input[aria-label="year"]',
-        '[data-lg="date-range-input-start"] > input[aria-label="month"]',
-        '[data-lg="date-range-input-start"] > input[aria-label="day"]',
-        '[data-lg="date-range-input-end"] > input[aria-label="year"]',
-        '[data-lg="date-range-input-end"] > input[aria-label="month"]',
-        '[data-lg="date-range-input-end"] > input[aria-label="day"]',
-        'button[aria-label="Open calendar menu"]',
-        `listbox[data-lg="date-range-menu"] table td[data-iso="${new Date().toISOString()}"]`,
-        'listbox[data-lg="date-range-menu"] [data-lg="date-range-picker-menu-footer"] button:nth-child(1)',
-        'listbox[data-lg="date-range-menu"] [data-lg="date-range-picker-menu-footer"] button:nth-child(2)',
-        'listbox[data-lg="date-range-menu"] [data-lg="date-range-picker-menu-footer"] button:nth-child(3)',
-        'listbox[data-lg="date-range-menu"] button[aria-label="Previous month"]',
-        'listbox[data-lg="date-range-menu"] button[aria-label="Next month"]',
-        `listbox[data-lg="date-range-menu"] table td[data-iso="${new Date().toISOString()}"]`,
-      ];
-    }
+type TabStopLabel =
+  (typeof expectedTabStopLabels)[keyof typeof expectedTabStopLabels][number];
 
-    case 'quick-select': {
-      return [
-        '[data-lg="date-range-input-start"] > input[aria-label="year"]',
-        '[data-lg="date-range-input-start"] > input[aria-label="month"]',
-        '[data-lg="date-range-input-start"] > input[aria-label="day"]',
-        '[data-lg="date-range-input-end"] > input[aria-label="year"]',
-        '[data-lg="date-range-input-end"] > input[aria-label="month"]',
-        '[data-lg="date-range-input-end"] > input[aria-label="day"]',
-        'button[aria-label="Open calendar menu"]',
-        `listbox[data-lg="date-range-menu"] table td[data-iso="${new Date().toISOString()}"]`,
-        'listbox[data-lg="date-range-menu"] [data-lg="date-range-picker-menu-footer"] button:nth-child(1)',
-        'listbox[data-lg="date-range-menu"] [data-lg="date-range-picker-menu-footer"] button:nth-child(2)',
-        'listbox[data-lg="date-range-menu"] [data-lg="date-range-picker-menu-footer"] button:nth-child(3)',
-        'listbox[data-lg="date-range-menu"] [data-lg="date-range-picker-quick-select-menu"] button[aria-label="Select month"]',
-        'listbox[data-lg="date-range-menu"] [data-lg="date-range-picker-quick-select-menu"] button[aria-label="Select year"]',
-        'listbox[data-lg="date-range-menu"] [data-lg="date-range-picker-quick-select-menu"] [data-lg="date-range-picker-quick-range-button"] [aria-label="Today"]',
-        'listbox[data-lg="date-range-menu"] [data-lg="date-range-picker-quick-select-menu"] [data-lg="date-range-picker-quick-range-button"] [aria-label="Yesterday"]',
-        'listbox[data-lg="date-range-menu"] [data-lg="date-range-picker-quick-select-menu"] [data-lg="date-range-picker-quick-range-button"] [aria-label="Last 7 days"]',
-        'listbox[data-lg="date-range-menu"] [data-lg="date-range-picker-quick-select-menu"] [data-lg="date-range-picker-quick-range-button"] [aria-label="Last 30 days"]',
-        'listbox[data-lg="date-range-menu"] [data-lg="date-range-picker-quick-select-menu"] [data-lg="date-range-picker-quick-range-button"] [aria-label="Last 90 days"]',
-        'listbox[data-lg="date-range-menu"] [data-lg="date-range-picker-quick-select-menu"] [data-lg="date-range-picker-quick-range-button"] [aria-label="Last 12 months"]',
-        'listbox[data-lg="date-range-menu"] [data-lg="date-range-picker-quick-select-menu"] [data-lg="date-range-picker-quick-range-button"] [aria-label="All time"]',
-        'listbox[data-lg="date-range-menu"] button[aria-label="Previous month"]',
-        'listbox[data-lg="date-range-menu"] button[aria-label="Next month"]',
-        `listbox[data-lg="date-range-menu"] table td[data-iso="${new Date().toISOString()}"]`,
-      ];
-    }
-  }
+export const getTabStopElementMap = (
+  renderResult: RenderDateRangePickerResult,
+): Record<TabStopLabel, HTMLElement | null> => {
+  const { inputElements, calendarButton, getMenuElements } = renderResult;
+  const {
+    todayCell,
+    clearButton,
+    cancelButton,
+    applyButton,
+    monthSelect,
+    yearSelect,
+    leftChevron,
+    rightChevron,
+    quickRangeButtons,
+  } = getMenuElements();
+  return {
+    none: null,
+    'input > start date > year segment': inputElements[0],
+    'input > start date > month segment': inputElements[1],
+    'input > start date > day segment': inputElements[2],
+    'input > end date > year segment': inputElements[3],
+    'input > end date > month segment': inputElements[4],
+    'input > end date > day segment': inputElements[5],
+    'input > open menu button': calendarButton,
+    'menu > today cell': todayCell,
+    'menu > footer > clear button': clearButton,
+    'menu > footer > cancel button': cancelButton,
+    'menu > footer > apply button': applyButton,
+    'menu > quick select > month select': monthSelect,
+    'menu > quick select > year select': yearSelect,
+    'menu > quick select > quick range > Today': quickRangeButtons[0],
+    'menu > quick select > quick range > Yesterday': quickRangeButtons[1],
+    'menu > quick select > quick range > Last 7 days': quickRangeButtons[2],
+    'menu > quick select > quick range > Last 30 days': quickRangeButtons[3],
+    'menu > quick select > quick range > Last 90 days': quickRangeButtons[4],
+    'menu > quick select > quick range > Last 12 months': quickRangeButtons[5],
+    'menu > quick select > quick range > All time': quickRangeButtons[6],
+    'menu > left chevron': leftChevron,
+    'menu > right chevron': rightChevron,
+  };
 };

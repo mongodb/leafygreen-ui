@@ -153,7 +153,7 @@ export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
       >
         <div className={inputWrapperStyles}>
           <DateInputBox
-            data-lg="date-range-input-start"
+            data-lg="date-range_start-input"
             value={value?.[0]}
             setValue={handleStartInputChange}
             segmentRefs={startSegmentRefs}
@@ -161,7 +161,7 @@ export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
           />
           <span>{EN_DASH}</span>
           <DateInputBox
-            data-lg="date-range-input-end"
+            data-lg="date-range_end-input"
             value={value?.[1]}
             setValue={handleEndInputChange}
             segmentRefs={endSegmentRefs}

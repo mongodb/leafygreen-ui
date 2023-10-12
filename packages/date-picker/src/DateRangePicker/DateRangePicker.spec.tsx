@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  cleanup,
   queryByText as globalQueryByText,
   render,
   waitFor,
@@ -8,20 +7,18 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import last from 'lodash/last';
-import range from 'lodash/range';
 
 import { Month } from '../constants';
 import { eventContainingTargetValue, tabNTimes } from '../testUtils';
 import { newUTC, setUTCDate } from '../utils';
 
 import {
-  ExpectedTabStop,
-  getExpectedTabStopSelector,
+  expectedTabStopLabels,
+  getTabStopElementMap,
   renderDateRangePicker,
   RenderDateRangePickerResult,
 } from './DateRangePicker.testutils';
 import { DateRangePicker } from '.';
-import { element } from '@leafygreen-ui/lib/dist/typeIs';
 
 const testToday = newUTC(2023, Month.December, 26);
 
@@ -638,82 +635,75 @@ describe('packages/date-picker/date-range-picker', () => {
           expect(handleValidation).not.toHaveBeenCalled();
         });
 
-        describe.only('Tab order', () => {
+        describe('Tab order', () => {
           describe('when menu is closed', () => {
-            const tabStops = getExpectedTabStopSelector('closed');
-            const testCases: Array<[number, string | null]> = tabStops.map(
-              (stop, n) => [n, stop],
-            );
+            const tabStops = expectedTabStopLabels['closed'];
+            const testCases: Array<[number, (typeof tabStops)[number]]> =
+              tabStops.map((stop, n) => [n, stop]);
 
-            describe.each(testCases)('Tab %i times', (n, selector) => {
+            describe.each(testCases)('Tab %i times', (n, label) => {
               let renderResult: RenderDateRangePickerResult;
               let element: HTMLElement | null;
 
               beforeEach(() => {
                 renderResult = renderDateRangePicker();
-                element = selector
-                  ? renderResult.container.querySelector(selector)
-                  : null;
+                element = getTabStopElementMap(renderResult)[label];
                 tabNTimes(n);
               });
 
-              test(`focus on ${selector}`, () => {
-                if (selector === null) {
+              test(`focus on ${label}`, () => {
+                if (element !== null) {
+                  expect(element).toHaveFocus();
+                } else {
                   expect(
                     renderResult.inputContainer.contains(
                       document.activeElement,
                     ),
                   ).toBeFalsy();
-                } else {
-                  expect(element).toHaveFocus();
                 }
               });
             });
           });
 
           describe('when basic menu is open', () => {
-            const tabStops = getExpectedTabStopSelector('basic');
-            const testCases: Array<[number, string | null]> = tabStops.map(
-              (stop, n) => [n, stop],
-            );
+            const tabStops = expectedTabStopLabels['basic'];
+            const testCases: Array<[number, (typeof tabStops)[number]]> =
+              tabStops.map((stop, n) => [n, stop]);
 
-            describe.each(testCases)(`Tab %i times`, (n, selector) => {
+            describe.each(testCases)(`Tab %i times`, (n, label) => {
               let renderResult: RenderDateRangePickerResult;
               let element: HTMLElement | null;
 
               beforeEach(() => {
                 renderResult = renderDateRangePicker();
-                element = selector
-                  ? renderResult.container.querySelector(selector)
-                  : null;
+                renderResult.openMenu();
+                element = getTabStopElementMap(renderResult)[label];
                 tabNTimes(n);
               });
 
-              test(`focus on ${selector}`, () => {
+              test(`focus on ${label}`, () => {
                 expect(element).toHaveFocus();
               });
             });
           });
 
           describe('when quick-select menu is open', () => {
-            const tabStops = getExpectedTabStopSelector('quick-select');
-            const testCases: Array<[number, string | null]> = tabStops.map(
-              (stop, n) => [n, stop],
-            );
+            const tabStops = expectedTabStopLabels['quick-select'];
+            const testCases: Array<[number, (typeof tabStops)[number]]> =
+              tabStops.map((stop, n) => [n, stop]);
 
-            describe.each(testCases)(`Tab %i times`, (n, selector) => {
+            describe.each(testCases)(`Tab %i times`, (n, label) => {
               let renderResult: RenderDateRangePickerResult;
               let element: HTMLElement | null;
 
               beforeEach(() => {
                 renderResult = renderDateRangePicker();
-                element = selector
-                  ? renderResult.container.querySelector(selector)
-                  : null;
+                renderResult.openMenu();
+                element = getTabStopElementMap(renderResult)[label];
                 tabNTimes(n);
               });
 
-              test(`focus on ${selector}`, () => {
+              test(`focus on ${label}`, () => {
                 expect(element).toHaveFocus();
               });
             });

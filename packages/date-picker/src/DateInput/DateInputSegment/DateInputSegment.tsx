@@ -18,6 +18,8 @@ import {
 } from './DateInputSegment.styles';
 import { DateInputSegmentProps } from './DateInputSegment.types';
 
+const lgid = 'date-picker_input-segment';
+
 /**
  * Renders a single date segment with the
  * appropriate character padding/truncation.
@@ -65,6 +67,7 @@ export const DateInputSegment = React.forwardRef<
         onChange={onChange}
         onBlur={onBlur}
         disabled={disabled}
+        data-lg={lgid}
         className={cx(
           baseStyles,
           fontSizeStyles[baseFontSize],
