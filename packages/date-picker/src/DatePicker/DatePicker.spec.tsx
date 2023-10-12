@@ -420,6 +420,13 @@ describe('packages/date-picker', () => {
           expect(menuContainerEl).not.toBeInTheDocument();
         });
 
+        test('menu does not open on subsequent keyboard focus', () => {
+          const { getMenuElements } = renderDatePicker();
+          tabNTimes(3);
+          const { menuContainerEl } = getMenuElements();
+          expect(menuContainerEl).not.toBeInTheDocument();
+        });
+
         describe('Tab order', () => {
           describe.each(range(0, 4))('when menu is closed', n => {
             test(`Tab ${n} times`, () => {
@@ -550,7 +557,7 @@ describe('packages/date-picker', () => {
 
         test('opens menu if calendar button is focused', () => {
           const { getMenuElements } = renderDatePicker();
-          tabNTimes(3);
+          tabNTimes(4);
           userEvent.keyboard('{enter}');
           const { menuContainerEl } = getMenuElements();
           expect(menuContainerEl).toBeInTheDocument();

@@ -50,6 +50,10 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       }
     };
 
+    const handleIconButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
+      setOpen(true);
+    };
+
     /** Called on any keydown within the input element */
     const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
       const { target: _target, key } = e;
@@ -128,6 +132,11 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           handleValidation?.(value);
           break;
 
+        case keyMap.Tab:
+          // default behavior
+          // focus trap handled by parent
+          break;
+
         default:
           // any other keydown should open the menu
           setOpen(true);
@@ -158,6 +167,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
         onKeyDown={handleKeyDown}
         onInputClick={handleInputClick}
         onBlur={handleInputBlur}
+        onIconButtonClick={handleIconButtonClick}
         {...rest}
       >
         <DateInputBox
