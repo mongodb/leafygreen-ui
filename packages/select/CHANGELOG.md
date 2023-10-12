@@ -1,5 +1,23 @@
 # @leafygreen-ui/select
 
+## 11.0.0
+
+### Major Changes
+
+- c5d95794: - Adds `description` prop to `Option`
+  - Refactor `Option` to use internal `InputOption` component
+  - Internally removes `theme` from `SelectContext` by opting to enclose `Select` within the `LeafygreenProvider` and consuming `theme` from there. This adjustment enables nested children to access the dark mode context provided by `LeafygreenProvider` as well.
+  - Reorganizes internal file structure
+
+### Patch Changes
+
+- Updated dependencies [a4b3b704]
+- Updated dependencies [c5d95794]
+- Updated dependencies [324d9730]
+  - @leafygreen-ui/button@21.0.8
+  - @leafygreen-ui/input-option@1.0.12
+  - @leafygreen-ui/typography@17.0.2
+
 ## 10.3.18
 
 ### Patch Changes

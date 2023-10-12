@@ -1,5 +1,13 @@
 # @leafygreen-ui/side-nav
 
+## 14.0.4
+
+### Patch Changes
+
+- 324d9730: Updates SideNav component to conform to updated dark mode palette
+- Updated dependencies [324d9730]
+  - @leafygreen-ui/typography@17.0.2
+
 ## 14.0.3
 
 ### Patch Changes
