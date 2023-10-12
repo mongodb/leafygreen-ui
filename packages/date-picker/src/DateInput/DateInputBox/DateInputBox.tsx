@@ -7,6 +7,7 @@ import { isSameDay } from 'date-fns';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { createSyntheticEvent } from '@leafygreen-ui/lib';
 
 import { useDatePickerContext } from '../../DatePickerContext';
@@ -21,6 +22,7 @@ import { DateInputSegment } from '../DateInputSegment';
 
 import {
   segmentPartsWrapperStyles,
+  separatorLiteralDisbledStyles,
   separatorLiteralStyles,
 } from './DateInputBox.styles';
 import { DateInputBoxProps } from './DateInputBox.types';
@@ -51,7 +53,8 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
     }: DateInputBoxProps,
     fwdRef,
   ) => {
-    const { formatParts } = useDatePickerContext();
+    const { formatParts, disabled } = useDatePickerContext();
+    const { theme } = useDarkMode();
 
     const containerRef = useForwardedRef(fwdRef, null);
 
@@ -141,7 +144,12 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
         {formatParts?.map((part, i) => {
           if (part.type === 'literal') {
             return (
-              <span className={separatorLiteralStyles} key={'literal-' + i}>
+              <span
+                className={cx(separatorLiteralStyles, {
+                  [separatorLiteralDisbledStyles[theme]]: disabled,
+                })}
+                key={'literal-' + i}
+              >
                 {part.value}
               </span>
             );
