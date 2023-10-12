@@ -656,9 +656,7 @@ describe('packages/select', () => {
 
           act(() => targetOption!.focus());
 
-          fireEvent.keyDown(targetOption!, {
-            key: keyMap.Enter,
-          });
+          userEvent.keyboard('[Enter]');
 
           expect(onChangeSpy).toHaveBeenCalledTimes(1);
           expect(onChangeSpy).toHaveBeenCalledWith(
@@ -687,9 +685,7 @@ describe('packages/select', () => {
 
           act(() => targetOption!.focus());
 
-          fireEvent.keyDown(targetOption!, {
-            key: keyMap.Space,
-          });
+          userEvent.keyboard('[Space]');
 
           expect(onChangeSpy).toHaveBeenCalledTimes(1);
           expect(onChangeSpy).toHaveBeenCalledWith(

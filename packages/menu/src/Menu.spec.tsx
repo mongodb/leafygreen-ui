@@ -110,7 +110,8 @@ describe('packages/menu', () => {
 
     const menuItem = getByTestId('menu-item-a');
 
-    userEvent.type(menuItem, `{enter}`);
+    menuItem.focus();
+    userEvent.keyboard('[Enter]');
 
     await waitForElementToBeRemoved(menu);
     expect(menu).not.toBeInTheDocument();
@@ -130,7 +131,8 @@ describe('packages/menu', () => {
 
     const menuItem = getByTestId('menu-item-a');
 
-    userEvent.type(menuItem, `{space}`);
+    menuItem.focus();
+    userEvent.keyboard('[Space]');
 
     await waitForElementToBeRemoved(menu);
     expect(menu).not.toBeInTheDocument();
