@@ -191,7 +191,8 @@ describe('packages/menu', () => {
 
       expect(menu).toBeInTheDocument();
 
-      userEvent.type(menuItem, `{enter}`);
+      menuItem.focus();
+      userEvent.keyboard('[Enter]');
 
       await waitForElementToBeRemoved(menu);
       expect(menu).not.toBeInTheDocument();
@@ -205,7 +206,8 @@ describe('packages/menu', () => {
 
       expect(menu).toBeInTheDocument();
 
-      userEvent.type(menuItem, `{space}`);
+      menuItem.focus();
+      userEvent.keyboard('[Space]');
 
       await waitForElementToBeRemoved(menu);
       expect(menu).not.toBeInTheDocument();
