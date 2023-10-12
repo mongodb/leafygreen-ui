@@ -1,10 +1,21 @@
-import React, { forwardRef, KeyboardEventHandler } from 'react';
+import React, {
+  FocusEventHandler,
+  forwardRef,
+  KeyboardEventHandler,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
+import { useDynamicRefs } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
+import { useForwardedRef } from '@leafygreen-ui/select/src/utils';
 import { spacing } from '@leafygreen-ui/tokens';
 
 import { MenuWrapper } from '../../Calendar/MenuWrapper';
 import { useDatePickerContext } from '../../DatePickerContext';
+import { DateType } from '../../types';
+import { setToUTCMidnight } from '../../utils';
 
 import {
   menuContentStyles,
@@ -16,40 +27,99 @@ import { DateRangeMenuProvider } from './DateRangeMenuContext';
 import { DateRangeMenuFooter } from './DateRangeMenuFooter';
 import { QuickSelectionMenu } from './QuickSelectionMenu';
 
+const lgid = 'date-range_menu';
+
 export const DateRangeMenu = forwardRef<HTMLDivElement, DateRangeMenuProps>(
   (
     { value, setValue, showQuickSelection, ...rest }: DateRangeMenuProps,
     fwdRef,
   ) => {
+    const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
     const { isOpen } = useDatePickerContext();
+    const menuRef = useForwardedRef(fwdRef, null);
+    const calendarSectionRef = useRef<HTMLDivElement>(null);
+    const chevronRefs = useDynamicRefs<HTMLButtonElement>();
+    const calendarCellRefs = useDynamicRefs<HTMLTableCellElement>();
+    const footerButtonRefs = useDynamicRefs<HTMLButtonElement>();
+    const selectRefs = useDynamicRefs<HTMLButtonElement>();
+    const quickRangeButtonRefs = useDynamicRefs<HTMLButtonElement>();
 
-    // Focus trap
+    // Keep track of the element the user is highlighting with the keyboard
+    const [highlight, setHighlight] = useState<DateType>(
+      value ? value[0] : today,
+    );
+
+    const getHighlightedCell = () => {
+      const highlightKey = highlight?.toISOString();
+      return highlightKey ? calendarCellRefs(highlightKey)?.current : undefined;
+    };
+
+    /** Triggered any time an element in the menu is focused */
+    const handleMenuFocus: FocusEventHandler<HTMLDivElement> = e => {
+      const element = e.target;
+      const previousFocus = e.relatedTarget;
+
+      const isInitialMenuFocus =
+        menuRef.current?.contains(element) &&
+        !menuRef.current.contains(previousFocus);
+
+      if (isInitialMenuFocus) {
+        const highlightedCell = getHighlightedCell();
+        highlightedCell?.focus();
+      }
+    };
+
+    /** Triggered on any key down event */
     const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
       if (e.key === keyMap.Tab) {
-        const currentFocus = document.activeElement;
+        const currentFocus = e.target;
 
-        // if focus is on a cell, move focus to the footer
+        // Focus trap:
+        // if focus is on the "Apply" button, move focus to either
+        // left chevron or month select menu
+        if (currentFocus === footerButtonRefs('apply').current) {
+          const elementToFocus = showQuickSelection
+            ? selectRefs('month')
+            : chevronRefs('left');
+
+          elementToFocus.current?.focus();
+          e.preventDefault();
+        }
       }
     };
 
     return (
-      <DateRangeMenuProvider value={value}>
+      <DateRangeMenuProvider value={value} today={today}>
         <MenuWrapper
-          data-lg="date-range-menu"
-          ref={fwdRef}
+          data-lg={lgid}
+          ref={menuRef}
           usePortal
           role="listbox"
           active={isOpen}
           spacing={spacing[1]}
           className={rangeMenuWrapperStyles}
           onKeyDown={handleKeyDown}
+          onFocus={handleMenuFocus}
           {...rest}
         >
           <div className={menuContentStyles}>
-            <DateRangeMenuCalendars value={value} setValue={setValue} />
-            {showQuickSelection && <QuickSelectionMenu />}
+            {showQuickSelection && (
+              <QuickSelectionMenu
+                selectRefs={selectRefs}
+                quickRangeButtonRefs={quickRangeButtonRefs}
+              />
+            )}
+            <DateRangeMenuCalendars
+              ref={calendarSectionRef}
+              cellRefs={calendarCellRefs}
+              chevronRefs={chevronRefs}
+              value={value}
+              setValue={setValue}
+              highlight={highlight}
+              setHighlight={setHighlight}
+            />
           </div>
-          <DateRangeMenuFooter />
+          <DateRangeMenuFooter buttonRefs={footerButtonRefs} />
         </MenuWrapper>
       </DateRangeMenuProvider>
     );

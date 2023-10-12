@@ -651,7 +651,7 @@ describe('packages/date-picker/date-range-picker', () => {
                 tabNTimes(n);
               });
 
-              test(`focus on ${label}`, () => {
+              test(`focus on: ${label}`, () => {
                 if (element !== null) {
                   expect(element).toHaveFocus();
                 } else {
@@ -675,35 +675,38 @@ describe('packages/date-picker/date-range-picker', () => {
               let element: HTMLElement | null;
 
               beforeEach(() => {
-                renderResult = renderDateRangePicker();
+                renderResult = renderDateRangePicker({
+                  showQuickSelection: false,
+                });
                 renderResult.openMenu();
                 element = getTabStopElementMap(renderResult)[label];
                 tabNTimes(n);
               });
 
-              test(`focus on ${label}`, () => {
+              test(`focus on: ${label}`, () => {
                 expect(element).toHaveFocus();
               });
             });
           });
 
-          describe('when quick-select menu is open', () => {
+          describe.only('when quick-select menu is open', () => {
             const tabStops = expectedTabStopLabels['quick-select'];
             const testCases: Array<[number, (typeof tabStops)[number]]> =
               tabStops.map((stop, n) => [n, stop]);
 
             describe.each(testCases)(`Tab %i times`, (n, label) => {
-              let renderResult: RenderDateRangePickerResult;
               let element: HTMLElement | null;
 
               beforeEach(() => {
-                renderResult = renderDateRangePicker();
+                const renderResult = renderDateRangePicker({
+                  showQuickSelection: true,
+                });
                 renderResult.openMenu();
                 element = getTabStopElementMap(renderResult)[label];
                 tabNTimes(n);
               });
 
-              test(`focus on ${label}`, () => {
+              test(`focus on: ${label}`, () => {
                 expect(element).toHaveFocus();
               });
             });

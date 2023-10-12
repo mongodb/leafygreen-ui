@@ -87,17 +87,21 @@ export const renderDateRangePicker = (
 
     // Footer
     const menuFooter = menuContainerEl?.querySelector(
-      '[data-lg="date-range-picker-menu-footer"]',
+      '[data-lg="date-range_menu_footer"]',
     ) as HTMLDivElement | null;
-    const clearButton = result.queryByText('Clear') as HTMLButtonElement | null;
-    const cancelButton = result.queryByText(
-      'Cancel',
+    const clearButton = result.queryByLabelText(
+      'Clear selection',
     ) as HTMLButtonElement | null;
-    const applyButton = result.queryByText('Apply') as HTMLButtonElement | null;
+    const cancelButton = result.queryByLabelText(
+      'Cancel selection',
+    ) as HTMLButtonElement | null;
+    const applyButton = result.queryByLabelText(
+      'Apply selection',
+    ) as HTMLButtonElement | null;
 
     // Quick select menu
     const quickSelectMenu = menuContainerEl?.querySelector(
-      '[data-lg="date-range-picker-quick-select-menu"]',
+      '[data-lg="date-range_menu_quick-select"]',
     ) as HTMLDivElement | null;
     const monthSelect = result.queryByLabelText(
       'Select month',
@@ -108,7 +112,7 @@ export const renderDateRangePicker = (
 
     const quickRangeButtons = Array.from(
       quickSelectMenu?.querySelectorAll(
-        '[data-lg="date-range-picker-quick-range-button"]',
+        '[data-lg="date-range_menu_quick-range-button"]',
       ) || [null],
     ) as Array<HTMLButtonElement | null>;
 

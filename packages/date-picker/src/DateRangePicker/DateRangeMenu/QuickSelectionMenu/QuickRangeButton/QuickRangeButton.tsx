@@ -10,24 +10,29 @@ import {
   baseQuickRangeButtonThemeStyles,
 } from './QuickRangeButton.styles';
 
+interface QuickRangeButtonProps
+  extends Omit<HTMLElementProps<'button'>, 'children'> {
+  label: string;
+}
+
 export const QuickRangeButton = forwardRef<
   HTMLButtonElement,
-  HTMLElementProps<'button'>
->(({ children, className, ...rest }, fwdRef) => {
+  QuickRangeButtonProps
+>(({ label, className, ...rest }, fwdRef) => {
   const { theme } = useDarkMode();
   return (
     <button
       ref={fwdRef}
-      data-lg="date-range-picker-quick-range-button"
+      data-lg="date-range_menu_quick-range-button"
       className={cx(
         baseQuickRangeButtonStyles,
         baseQuickRangeButtonThemeStyles[theme],
         className,
       )}
-      aria-label={getNodeTextContent(children)}
+      aria-label={getNodeTextContent(label)}
       {...rest}
     >
-      {children}
+      {label}
     </button>
   );
 });
