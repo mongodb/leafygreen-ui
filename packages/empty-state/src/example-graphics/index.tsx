@@ -16,8 +16,13 @@ interface SVGModuleImport {
   svg: string;
 }
 
-const mapSvg = (svg: SVGModuleImport | SVGComponentImport): JSX.Element => {
-  const Component: JSX.Element | string =
+// Depending on the environment (and svg-loaders installed)
+// svg imports will be imported as an object in test suites,
+// or a FunctionComponent when used with svgr in Storybook or production
+const mapSvg = (
+  svg: SVGModuleImport | SVGComponentImport,
+): React.ReactElement => {
+  const Component: React.ReactElement | string =
     typeof svg === 'function'
       ? React.createElement(svg as SVGComponentImport)
       : React.createElement((svg as SVGModuleImport).svg);
@@ -25,8 +30,7 @@ const mapSvg = (svg: SVGModuleImport | SVGComponentImport): JSX.Element => {
   return Component;
 };
 
-// svg will be imported as an object in test suites, and ReactElement when used with svgr
-export const graphics: Record<Theme, Array<any>> = {
+export const graphics: Record<Theme, Array<React.ReactElement>> = {
   [Theme.Dark]: [DarkModeFeature1, DarkModeFeature2, DarkModeFeature3].map(
     mapSvg,
   ),
