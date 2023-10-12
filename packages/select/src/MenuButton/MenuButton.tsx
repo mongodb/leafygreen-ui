@@ -30,7 +30,7 @@ import { MenuButtonProps } from './MenuButton.types';
 /**
  * @internal
  */
-const MenuButton = React.forwardRef<HTMLElement, MenuButtonProps>(
+const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
   function MenuButton(
     {
       children,
