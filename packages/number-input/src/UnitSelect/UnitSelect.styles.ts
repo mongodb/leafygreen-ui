@@ -20,8 +20,8 @@ export const selectDisabledStyles: Record<Theme, string> = {
   `,
   [Theme.Dark]: css`
     button {
-      background-color: ${palette.gray.dark4};
-      border-color: ${palette.gray.dark3};
+      background-color: ${palette.gray.dark3};
+      border-color: ${palette.gray.dark2};
     }
   `,
 };
