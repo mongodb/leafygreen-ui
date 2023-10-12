@@ -72,18 +72,18 @@ export const DateRangeMenu = forwardRef<HTMLDivElement, DateRangeMenuProps>(
     /** Triggered on any key down event */
     const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
       if (e.key === keyMap.Tab) {
-        const currentFocus = e.target;
+        const currentFocus = document.activeElement;
 
         // Focus trap:
         // if focus is on the "Apply" button, move focus to either
         // left chevron or month select menu
         if (currentFocus === footerButtonRefs('apply').current) {
           const elementToFocus = showQuickSelection
-            ? selectRefs('month')
-            : chevronRefs('left');
+            ? selectRefs('month').current?.querySelector('button')
+            : chevronRefs('left').current;
 
-          elementToFocus.current?.focus();
           e.preventDefault();
+          elementToFocus?.focus();
         }
       }
     };

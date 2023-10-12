@@ -689,7 +689,7 @@ describe('packages/date-picker/date-range-picker', () => {
             });
           });
 
-          describe.only('when quick-select menu is open', () => {
+          describe('when quick-select menu is open', () => {
             const tabStops = expectedTabStopLabels['quick-select'];
             const testCases: Array<[number, (typeof tabStops)[number]]> =
               tabStops.map((stop, n) => [n, stop]);
