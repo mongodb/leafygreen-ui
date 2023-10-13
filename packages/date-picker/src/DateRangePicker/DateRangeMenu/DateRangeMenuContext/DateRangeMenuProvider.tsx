@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, useMemo, useState } from 'react';
 
-import { getFirstOfMonth, setToUTCMidnight } from '../../../utils';
+import { getFirstOfMonth } from '../../../utils';
 import { addMonthsUTC } from '../../../utils';
 import { DateRangeMenuProps } from '../DateRangeMenu.types';
 

@@ -1,22 +1,34 @@
 export const CalendarCellState = {
   Default: 'default',
   Active: 'active',
+  Disabled: 'disabled',
+} as const;
+export type CalendarCellState =
+  (typeof CalendarCellState)[keyof typeof CalendarCellState];
+
+export const CalendarCellRangeState = {
+  None: 'none',
   Start: 'start',
   End: 'end',
   Range: 'range',
-  Disabled: 'disabled',
 } as const;
-
-export type CalendarCellState =
-  (typeof CalendarCellState)[keyof typeof CalendarCellState];
+export type CalendarCellRangeState =
+  (typeof CalendarCellRangeState)[keyof typeof CalendarCellRangeState];
 
 export interface CalendarCellProps
   extends React.HTMLProps<HTMLTableCellElement> {
   /** The label for the calendar cell */
   ['aria-label']: string;
 
-  /** The current state of the cell */
+  /**
+   * The current state of the cell
+   */
   state?: CalendarCellState;
+
+  /**
+   * Whether the cell is in a selected range
+   */
+  rangeState?: CalendarCellRangeState;
 
   /** Whether the cell represents the current date */
   isCurrent?: boolean;

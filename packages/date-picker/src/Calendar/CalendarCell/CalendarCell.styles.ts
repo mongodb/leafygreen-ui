@@ -9,7 +9,10 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { CalendarCellState } from './CalendarCell.types';
+import {
+  CalendarCellRangeState,
+  CalendarCellState,
+} from './CalendarCell.types';
 
 const CELL_SIZE = 28;
 export const indicatorClassName = createUniqueClassName('calendar-cell');
@@ -51,30 +54,6 @@ const _baseActiveCellStyles: Record<Theme, string> = {
   `,
 };
 
-const _baseRangeStartStyles = css`
-  &:before {
-    content: '';
-    position: absolute;
-    width: 50%;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    z-index: 0;
-  }
-`;
-
-const _baseRangeEndStyles = css`
-  &:after {
-    content: '';
-    position: absolute;
-    width: 50%;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    z-index: 0;
-  }
-`;
-
 /**
  * Base styles for each state
  */
@@ -89,35 +68,6 @@ export const calendarCellStateStyles: ThemedStateStyles = {
       pointer-events: none;
     `,
     [CalendarCellState.Active]: _baseActiveCellStyles[Theme.Light],
-    [CalendarCellState.Start]: cx(
-      _baseActiveCellStyles[Theme.Light],
-      _baseRangeStartStyles,
-      css`
-        &:before {
-          background-color: ${palette.blue.light3};
-        }
-      `,
-    ),
-    [CalendarCellState.End]: cx(
-      _baseActiveCellStyles[Theme.Light],
-      _baseRangeEndStyles,
-      css`
-        &:after {
-          background-color: ${palette.blue.light3};
-        }
-      `,
-    ),
-    [CalendarCellState.Range]: cx(
-      _baseRangeStartStyles,
-      _baseRangeEndStyles,
-      css`
-        color: ${palette.black};
-        &:before,
-        &:after {
-          background-color: ${palette.blue.light3};
-        }
-      `,
-    ),
   },
   [Theme.Dark]: {
     [CalendarCellState.Default]: css`
@@ -129,35 +79,6 @@ export const calendarCellStateStyles: ThemedStateStyles = {
       pointer-events: none;
     `,
     [CalendarCellState.Active]: _baseActiveCellStyles[Theme.Dark],
-    [CalendarCellState.Start]: cx(
-      _baseActiveCellStyles[Theme.Dark],
-      _baseRangeStartStyles,
-      css`
-        &:before {
-          background-color: ${palette.blue.dark3};
-        }
-      `,
-    ),
-    [CalendarCellState.End]: cx(
-      _baseActiveCellStyles[Theme.Dark],
-      _baseRangeEndStyles,
-      css`
-        &:after {
-          background-color: ${palette.blue.dark3};
-        }
-      `,
-    ),
-    [CalendarCellState.Range]: cx(
-      _baseRangeStartStyles,
-      _baseRangeEndStyles,
-      css`
-        color: ${palette.blue.light3};
-        &:before,
-        &:after {
-          background-color: ${palette.blue.dark3};
-        }
-      `,
-    ),
   },
 };
 
@@ -172,15 +93,6 @@ export const calendarCellCurrentStyles: ThemedStateStyles = {
     [CalendarCellState.Active]: css`
       color: ${palette.white};
     `,
-    [CalendarCellState.Start]: css`
-      color: ${palette.white};
-    `,
-    [CalendarCellState.End]: css`
-      color: ${palette.white};
-    `,
-    [CalendarCellState.Range]: css`
-      color: ${palette.blue.dark1};
-    `,
     [CalendarCellState.Disabled]: css``, // No additional styles
   },
   [Theme.Dark]: {
@@ -190,16 +102,101 @@ export const calendarCellCurrentStyles: ThemedStateStyles = {
     [CalendarCellState.Active]: css`
       color: ${palette.black};
     `,
-    [CalendarCellState.Start]: css`
-      color: ${palette.black};
-    `,
-    [CalendarCellState.End]: css`
-      color: ${palette.black};
-    `,
-    [CalendarCellState.Range]: css`
-      color: ${palette.blue.light1};
-    `,
     [CalendarCellState.Disabled]: css``, // No additional styles
+  },
+};
+
+/**
+ * Range styles
+ */
+
+const _baseRangeStartStyles = css`
+  &:after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 0;
+  }
+`;
+
+const _baseRangeEndStyles = css`
+  &:before {
+    content: '';
+    position: absolute;
+    width: 50%;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 0;
+  }
+`;
+
+export const calendarCellRangeStyles: Record<
+  Theme,
+  Record<CalendarCellRangeState, string>
+> = {
+  [Theme.Light]: {
+    [CalendarCellRangeState.Start]: cx(
+      _baseRangeStartStyles,
+      css`
+        &:after {
+          background-color: ${palette.blue.light3};
+        }
+      `,
+    ),
+    [CalendarCellRangeState.End]: cx(
+      _baseRangeEndStyles,
+      css`
+        &:before {
+          background-color: ${palette.blue.light3};
+        }
+      `,
+    ),
+    [CalendarCellRangeState.Range]: cx(
+      _baseRangeStartStyles,
+      _baseRangeEndStyles,
+      css`
+        color: ${palette.black};
+        &:before,
+        &:after {
+          background-color: ${palette.blue.light3};
+        }
+      `,
+    ),
+    [CalendarCellRangeState.None]: css``,
+  },
+  [Theme.Dark]: {
+    [CalendarCellRangeState.Start]: cx(
+      _baseRangeStartStyles,
+      css`
+        &:after {
+          background-color: ${palette.blue.dark3};
+        }
+      `,
+    ),
+    [CalendarCellRangeState.End]: cx(
+      _baseRangeEndStyles,
+      css`
+        &:before {
+          background-color: ${palette.blue.dark3};
+        }
+      `,
+    ),
+    [CalendarCellRangeState.Range]: cx(
+      _baseRangeStartStyles,
+      _baseRangeEndStyles,
+      css`
+        color: ${palette.blue.light3};
+        &:before,
+        &:after {
+          background-color: ${palette.blue.dark3};
+        }
+      `,
+    ),
+    [CalendarCellRangeState.None]: css``,
   },
 };
 
@@ -236,65 +233,19 @@ export const calendarCellHighlightStyles: Record<Theme, string> = {
  * Hover Styles
  */
 const hoverSelector = '&:hover, &[data-hover="true"]';
-const _defaultThemeHoverStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    ${hoverSelector} {
-      color: ${palette.black};
-
-      & > .${indicatorClassName} {
-        background-color: ${palette.gray.light2};
-      }
-    }
-  `,
-  [Theme.Dark]: css`
-    ${hoverSelector} {
-      color: ${palette.white};
-
-      & > .${indicatorClassName} {
-        background-color: ${palette.gray.dark3};
-      }
-    }
-  `,
-};
-
-const _activeHoverStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    ${hoverSelector} {
-      & > .${indicatorClassName} {
-        background-color: ${palette.blue.dark2};
-      }
-    }
-  `,
-  [Theme.Dark]: css`
-    ${hoverSelector} {
-      & > .${indicatorClassName} {
-        background-color: ${palette.blue.light2};
-      }
-    }
-  `,
-};
 
 export const calendarCellHoverStyles: ThemedStateStyles = {
   [Theme.Light]: {
-    [CalendarCellState.Default]: _defaultThemeHoverStyles[Theme.Light],
-    [CalendarCellState.Active]: _activeHoverStyles[Theme.Light],
-    [CalendarCellState.Start]: _activeHoverStyles[Theme.Light],
-    [CalendarCellState.End]: _activeHoverStyles[Theme.Light],
-    [CalendarCellState.Range]: css`
+    [CalendarCellState.Default]: css`
       ${hoverSelector} {
+        color: ${palette.black};
+
         & > .${indicatorClassName} {
-          background-color: ${palette.blue.light2};
+          background-color: ${palette.gray.light2};
         }
       }
     `,
-    [CalendarCellState.Disabled]: css``,
-  },
-  [Theme.Dark]: {
-    [CalendarCellState.Default]: _defaultThemeHoverStyles[Theme.Dark],
-    [CalendarCellState.Active]: _activeHoverStyles[Theme.Dark],
-    [CalendarCellState.Start]: _activeHoverStyles[Theme.Dark],
-    [CalendarCellState.End]: _activeHoverStyles[Theme.Dark],
-    [CalendarCellState.Range]: css`
+    [CalendarCellState.Active]: css`
       ${hoverSelector} {
         & > .${indicatorClassName} {
           background-color: ${palette.blue.dark2};
@@ -303,6 +254,42 @@ export const calendarCellHoverStyles: ThemedStateStyles = {
     `,
     [CalendarCellState.Disabled]: css``,
   },
+  [Theme.Dark]: {
+    [CalendarCellState.Default]: css`
+      ${hoverSelector} {
+        color: ${palette.white};
+
+        & > .${indicatorClassName} {
+          background-color: ${palette.gray.dark3};
+        }
+      }
+    `,
+    [CalendarCellState.Active]: css`
+      ${hoverSelector} {
+        & > .${indicatorClassName} {
+          background-color: ${palette.blue.light2};
+        }
+      }
+    `,
+    [CalendarCellState.Disabled]: css``,
+  },
+};
+
+export const calendarCellRangeHoverStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    ${hoverSelector} {
+      & > .${indicatorClassName} {
+        background-color: ${palette.blue.light2};
+      }
+    }
+  `,
+  [Theme.Dark]: css`
+    ${hoverSelector} {
+      & > .${indicatorClassName} {
+        background-color: ${palette.blue.dark2};
+      }
+    }
+  `,
 };
 
 export const currentStyles: Record<Theme, string> = {

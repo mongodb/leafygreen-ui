@@ -1,12 +1,12 @@
 import React, {
   forwardRef,
   KeyboardEventHandler,
-  MouseEvent,
   MouseEventHandler,
   useState,
 } from 'react';
 import { isAfter, isBefore, isWithinInterval, max, min } from 'date-fns';
-import { isNull, isUndefined } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 
 import { cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
@@ -18,6 +18,7 @@ import {
   CalendarCellState,
   CalendarGrid,
 } from '../../../Calendar';
+import { CalendarCellRangeState } from '../../../Calendar/CalendarCell';
 import { useDatePickerContext } from '../../../DatePickerContext';
 import { DateType } from '../../../types';
 import {
@@ -128,6 +129,20 @@ export const DateRangeMenuCalendars = forwardRef<
 
       // if at least the start/end date is defined...
       if (value && value.some(v => !isNull(v))) {
+        if (
+          isSameUTCDay(cellDay, minDate(value)) ||
+          isSameUTCDay(cellDay, maxDate(value))
+        ) {
+          return CalendarCellState.Active;
+        }
+      }
+
+      return CalendarCellState.Default;
+    };
+
+    const getCellRangeState = (cellDay: Date): CalendarCellRangeState => {
+      // if at least the start/end date is defined...
+      if (value && value.some(v => !isNull(v))) {
         // for the purposes of visualizing the calendar,
         // the range start is the earliest date of the hovered cell,
         // or the start/end value
@@ -138,19 +153,19 @@ export const DateRangeMenuCalendars = forwardRef<
         // if this cell is the first of `value`
         // and it is _before_ the hovered cell
         if (
-          isSameUTCDay(cellDay, minDate(value)) &&
-          (!hoveredCell || isOnOrBefore(cellDay, hoveredCell))
+          isSameUTCDay(cellDay, rangeStart) //&&
+          // (!hoveredCell || isOnOrBefore(cellDay, hoveredCell))
         ) {
-          return CalendarCellState.Start;
+          return CalendarCellRangeState.Start;
         }
 
         // if this cell is the last of `value`
         // and it is _after_ the hovered cell
         if (
-          isSameUTCDay(cellDay, maxDate(value)) &&
-          (!hoveredCell || isOnOrAfter(cellDay, hoveredCell))
+          isSameUTCDay(cellDay, rangeEnd) // &&
+          // (!hoveredCell || isOnOrAfter(cellDay, hoveredCell))
         ) {
-          return CalendarCellState.End;
+          return CalendarCellRangeState.End;
         }
 
         // otherwise if the current cell is within the range of start & end
@@ -159,11 +174,11 @@ export const DateRangeMenuCalendars = forwardRef<
           !isUndefined(rangeEnd) &&
           isWithinInterval(cellDay, { start: rangeStart, end: rangeEnd })
         ) {
-          return CalendarCellState.Range;
+          return CalendarCellRangeState.Range;
         }
       }
 
-      return CalendarCellState.Default;
+      return CalendarCellRangeState.None;
     };
 
     /** Called on any keydown within the menu element */
@@ -221,6 +236,7 @@ export const DateRangeMenuCalendars = forwardRef<
                 isHighlighted={isSameUTCDay(day, highlight)}
                 isCurrent={isSameUTCDay(day, today)}
                 state={getCellState(day)}
+                rangeState={getCellRangeState(day)}
                 onClick={cellClickHandlerForDay(day)}
                 onMouseEnter={handleCellHover(day)}
                 data-iso={day.toISOString()}
@@ -242,6 +258,7 @@ export const DateRangeMenuCalendars = forwardRef<
                 isHighlighted={isSameUTCDay(day, highlight)}
                 isCurrent={isSameUTCDay(day, today)}
                 state={getCellState(day)}
+                rangeState={getCellRangeState(day)}
                 onClick={cellClickHandlerForDay(day)}
                 onMouseEnter={handleCellHover(day)}
                 data-iso={day.toISOString()}

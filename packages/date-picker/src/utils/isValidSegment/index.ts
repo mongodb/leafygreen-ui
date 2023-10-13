@@ -8,7 +8,9 @@ import {
 /**
  * Returns whether a given value is a valid segment value
  */
-export const isValidSegment = (segment?: DateSegmentValue): segment is number =>
+export const isValidSegment = (
+  segment?: DateSegmentValue,
+): segment is DateSegmentValue =>
   !isUndefined(segment) && !isNaN(Number(segment)) && Number(segment) > 0;
 
 /**
