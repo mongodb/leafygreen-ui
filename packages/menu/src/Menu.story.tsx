@@ -202,4 +202,24 @@ LiveExample.parameters = {
   },
 };
 
+export const InitialOpen = () => {
+  return (
+    <LeafyGreenProvider>
+      <Menu
+        initialOpen
+        trigger={<Button rightGlyph={<CaretDown />}>Menu</Button>}
+      >
+        <MenuItem>Lorem</MenuItem>
+        <MenuItem>Ipsum</MenuItem>
+        <MenuItem>Adipiscing</MenuItem>
+      </Menu>
+    </LeafyGreenProvider>
+  );
+};
+InitialOpen.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+
 export const Generated = () => <></>;
