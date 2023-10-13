@@ -20,7 +20,7 @@ import {
 } from '../../../Calendar';
 import { CalendarCellRangeState } from '../../../Calendar/CalendarCell';
 import { useDatePickerContext } from '../../../DatePickerContext';
-import { DateType } from '../../../types';
+import { DateRangeType, DateType } from '../../../types';
 import {
   getFullMonthLabel,
   getUTCDateString,
@@ -92,7 +92,20 @@ export const DateRangeMenuCalendars = forwardRef<
     /** Creates a click handler for a specific cell date */
     const cellClickHandlerForDay = (day: Date) => () => {
       if (isInRange(day)) {
-        // TODO:
+        // if no value is set, set the start date
+        if (!value || value.every(isNull)) {
+          setValue([day, null]);
+        } else if (value.some(isNull)) {
+          // if only one date is set, set both dates
+          const newRange: DateRangeType = [
+            minDate([...value, day]) ?? day,
+            maxDate([...value, day]) ?? day,
+          ];
+          setValue(newRange);
+        } else if (value.every(isDefined)) {
+          // if both values are set, set the start date & clear the end date
+          setValue([day, null]);
+        }
       }
     };
 
@@ -146,17 +159,17 @@ export const DateRangeMenuCalendars = forwardRef<
 
     /** Called on any keydown within the menu element */
     const handleCalendarKeyDown: KeyboardEventHandler<HTMLTableElement> = e => {
-      // TODO:
+      // TODO: Arrow keys
     };
 
     const handleCellHover =
       (day: Date): MouseEventHandler<HTMLTableCellElement> =>
-      e => {
+      _ => {
         setHover(day);
       };
 
     const handleCalendarMouseOut: MouseEventHandler<HTMLDivElement> = e => {
-      // TODO: improve this logiv
+      // TODO: improve this logic
       if (e.target === e.currentTarget) {
         // ... if the calendar container is the event's target
         setHover(null);
