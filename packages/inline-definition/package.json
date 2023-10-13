@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/inline-definition",
-  "version": "6.0.12",
+  "version": "6.0.13",
   "description": "leafyGreen UI Kit Inline Definition",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -23,12 +23,12 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/lib": "^12.0.0",
+    "@leafygreen-ui/lib": "^13.0.0",
     "@leafygreen-ui/palette": "^4.0.7",
-    "@leafygreen-ui/tooltip": "^10.0.11"
+    "@leafygreen-ui/tooltip": "^10.1.0"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.9"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.10"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/inline-definition",
   "repository": {
@@ -39,6 +39,6 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@leafygreen-ui/typography": "^17.0.1"
+    "@leafygreen-ui/typography": "^18.0.0"
   }
 }
