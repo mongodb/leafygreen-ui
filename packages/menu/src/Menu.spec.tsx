@@ -57,6 +57,17 @@ describe('packages/menu', () => {
   describe('when uncontrolled', () => {
     const uncontrolledSetOpen = jest.fn();
 
+    test('and `initialOpen` is set to true', () => {
+      const { getByText } = renderMenu({
+        initialOpen: true,
+        trigger,
+      });
+
+      const menuItem = getByText('Item B');
+
+      expect(menuItem).toBeInTheDocument();
+    });
+
     test('and "setOpen" is provided, but "open" prop is not set', async () => {
       const { getByTestId, getByText } = renderMenu({
         setOpen: uncontrolledSetOpen,

@@ -12,10 +12,3 @@ declare module '*.gif' {
   const value: string;
   export = value;
 }
-
-declare module '*.svg' {
-  const content: {
-    svg: React.FunctionComponent<React.SVGAttributes<SVGElement>>;
-  };
-  export default content;
-}
