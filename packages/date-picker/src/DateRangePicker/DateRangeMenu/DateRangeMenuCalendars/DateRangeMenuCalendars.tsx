@@ -4,13 +4,14 @@ import React, {
   MouseEventHandler,
   useState,
 } from 'react';
-import { isWithinInterval } from 'date-fns';
+import { addDays, isWithinInterval, subDays } from 'date-fns';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 
 import { cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
+import { keyMap } from '@leafygreen-ui/lib';
 import { Subtitle } from '@leafygreen-ui/typography';
 
 import {
@@ -46,10 +47,18 @@ export const DateRangeMenuCalendars = forwardRef<
   DateRangeMenuCalendarsProps
 >(
   (
-    { value, setValue, highlight, setHighlight, cellRefs, chevronRefs },
+    {
+      value,
+      setValue,
+      handleValidation,
+      highlight,
+      setHighlight,
+      cellRefs,
+      chevronRefs,
+    },
     fwdRef,
   ) => {
-    const { isInRange } = useDatePickerContext();
+    const { isInRange, setOpen } = useDatePickerContext();
     const {
       month,
       nextMonth,
@@ -90,24 +99,26 @@ export const DateRangeMenuCalendars = forwardRef<
     };
 
     /** Creates a click handler for a specific cell date */
-    const cellClickHandlerForDay = (day: Date) => () => {
-      if (isInRange(day)) {
-        // if no value is set, set the start date
-        if (!value || value.every(isNull)) {
-          setValue([day, null]);
-        } else if (value.some(isNull)) {
-          // if only one date is set, set both dates
-          const newRange: DateRangeType = [
-            minDate([...value, day]) ?? day,
-            maxDate([...value, day]) ?? day,
-          ];
-          setValue(newRange);
-        } else if (value.every(isDefined)) {
-          // if both values are set, set the start date & clear the end date
-          setValue([day, null]);
+    const cellClickHandlerForDay =
+      (day: Date): MouseEventHandler<HTMLTableCellElement> =>
+      () => {
+        if (isInRange(day)) {
+          // if no value is set, set the start date
+          if (!value || value.every(isNull)) {
+            setValue([day, null]);
+          } else if (value.some(isNull)) {
+            // if only one date is set, set both dates
+            const newRange: DateRangeType = [
+              minDate([...value, day]) ?? day,
+              maxDate([...value, day]) ?? day,
+            ];
+            setValue(newRange);
+          } else if (value.every(isDefined)) {
+            // if both values are set, set the start date & clear the end date
+            setValue([day, null]);
+          }
         }
-      }
-    };
+      };
 
     /** Returns the current state of the cell */
     const getCellState = (cellDay: Date): CalendarCellState => {
@@ -158,8 +169,50 @@ export const DateRangeMenuCalendars = forwardRef<
     };
 
     /** Called on any keydown within the menu element */
-    const handleCalendarKeyDown: KeyboardEventHandler<HTMLTableElement> = e => {
-      // TODO: Arrow keys
+    const handleCalendarKeyDown: KeyboardEventHandler<
+      HTMLTableElement
+    > = event => {
+      const { key } = event;
+      const highlightStart = highlight || value?.[0] || value?.[1] || today;
+      let nextHighlight = highlightStart;
+
+      switch (key) {
+        case keyMap.ArrowLeft: {
+          nextHighlight = subDays(highlightStart, 1);
+          break;
+        }
+
+        case keyMap.ArrowRight: {
+          nextHighlight = addDays(highlightStart, 1);
+          break;
+        }
+
+        case keyMap.ArrowUp: {
+          nextHighlight = subDays(highlightStart, 7);
+          break;
+        }
+
+        case keyMap.ArrowDown: {
+          nextHighlight = addDays(highlightStart, 7);
+          break;
+        }
+
+        case keyMap.Escape:
+          setOpen(false);
+          handleValidation?.(value);
+          break;
+
+        default:
+          break;
+      }
+
+      // if nextHighlight is in range
+      if (isInRange(nextHighlight)) {
+        updateHighlight(nextHighlight);
+
+        // Prevent the parent keydown handler from being called
+        event.stopPropagation();
+      }
     };
 
     const handleCellHover =
