@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks, react/prop-types */
 import React, { useRef, useState } from 'react';
 import { StoryFn, StoryObj } from '@storybook/react';
-import { userEvent, within } from '@storybook/testing-library';
-import { last, omit } from 'lodash';
+import omit from 'lodash/omit';
 import MockDate from 'mockdate';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';

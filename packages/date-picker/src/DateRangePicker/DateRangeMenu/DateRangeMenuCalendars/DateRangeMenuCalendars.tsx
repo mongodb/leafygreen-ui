@@ -4,7 +4,7 @@ import React, {
   MouseEventHandler,
   useState,
 } from 'react';
-import { isAfter, isBefore, isWithinInterval, max, min } from 'date-fns';
+import { isWithinInterval } from 'date-fns';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 
@@ -26,6 +26,8 @@ import {
   getUTCDateString,
   isSameUTCDay,
   isSameUTCMonth,
+  maxDate,
+  minDate,
 } from '../../../utils';
 import { useDateRangeMenuContext } from '../DateRangeMenuContext';
 
@@ -37,34 +39,6 @@ import {
   calendarsFrameStyles,
 } from './DateRangeMenuCalendars.styles';
 import { DateRangeMenuCalendarsProps } from './DateRangeMenuCalendars.types';
-
-// TODO: move to utils
-const minDate = (datesArray: Array<DateType>): Date | undefined => {
-  const filteredDates = datesArray.filter(d => !isNull(d)) as Array<Date>;
-
-  if (filteredDates.length > 0) {
-    return min(filteredDates);
-  }
-};
-
-// TODO: move to utils
-const maxDate = (datesArray: Array<DateType>): Date | undefined => {
-  const filteredDates = datesArray.filter(d => !isNull(d)) as Array<Date>;
-
-  if (filteredDates.length > 0) {
-    return max(filteredDates);
-  }
-};
-
-// TODO: move to utils
-const isOnOrBefore = (day: Date, dayToCompare: Date) => {
-  return isSameUTCDay(day, dayToCompare) || isBefore(day, dayToCompare);
-};
-
-// TODO: move to utils
-const isOnOrAfter = (day: Date, dayToCompare: Date) => {
-  return isSameUTCDay(day, dayToCompare) || isAfter(day, dayToCompare);
-};
 
 export const DateRangeMenuCalendars = forwardRef<
   HTMLDivElement,
