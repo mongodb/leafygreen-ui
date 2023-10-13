@@ -36,9 +36,11 @@ const rootMenuStyle = css`
 const rootMenuThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     background-color: ${palette.black};
+    border: 1px solid ${palette.black};
   `,
   [Theme.Dark]: css`
-    background-color: ${palette.gray.light2};
+    background-color: ${palette.gray.dark3};
+    border: 1px solid ${palette.gray.dark2};
   `,
 };
 
