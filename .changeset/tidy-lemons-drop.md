@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/typography': minor
+'@leafygreen-ui/typography': major
 ---
 
 Allows `Link` component to accept a ref
