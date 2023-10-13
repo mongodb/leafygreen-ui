@@ -100,7 +100,7 @@ export const Basic: DateRangeMenuStoryType = {
 export const WithValue: DateRangeMenuStoryType = {
   render: args => {
     const [value, setValue] = useState<DateRangeType | undefined>([
-      newUTC(2023, Month.September, 10),
+      newUTC(2023, Month.September, 14),
       null,
     ]);
 

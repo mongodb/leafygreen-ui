@@ -427,6 +427,20 @@ describe('packages/date-picker', () => {
           expect(menuContainerEl).not.toBeInTheDocument();
         });
 
+        test('calls validation handler when last segment is unfocused', () => {
+          const handleValidation = jest.fn();
+          renderDatePicker({ handleValidation });
+          tabNTimes(5);
+          expect(handleValidation).toHaveBeenCalled();
+        });
+
+        test('does not call validation handler when changing segment focus', () => {
+          const handleValidation = jest.fn();
+          renderDatePicker({ handleValidation });
+          tabNTimes(2);
+          expect(handleValidation).not.toHaveBeenCalled();
+        });
+
         describe('Tab order', () => {
           describe.each(range(0, 4))('when menu is closed', n => {
             test(`Tab ${n} times`, () => {
@@ -521,20 +535,6 @@ describe('packages/date-picker', () => {
               }
             });
           });
-        });
-
-        test('calls validation handler when last segment is unfocused', () => {
-          const handleValidation = jest.fn();
-          renderDatePicker({ handleValidation });
-          tabNTimes(5);
-          expect(handleValidation).toHaveBeenCalled();
-        });
-
-        test('does not call validation handler when changing segment focus', () => {
-          const handleValidation = jest.fn();
-          renderDatePicker({ handleValidation });
-          tabNTimes(2);
-          expect(handleValidation).not.toHaveBeenCalled();
         });
       });
 

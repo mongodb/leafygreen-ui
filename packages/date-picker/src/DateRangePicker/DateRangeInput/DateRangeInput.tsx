@@ -112,6 +112,11 @@ export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
           handleValidation?.(value);
           break;
 
+        case keyMap.Tab:
+          // default behavior
+          // focus trap handled by parent
+          break;
+
         default:
           // any other keydown should open the menu
           setOpen(true);

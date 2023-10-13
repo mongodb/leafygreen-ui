@@ -22,6 +22,7 @@ export const calendarsContainerStyles = css`
   display: flex;
   gap: ${calendarGapX}px;
   align-items: start;
+  height: fit-content;
 `;
 
 export const calendarHeadersContainerStyle = css`

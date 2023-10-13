@@ -614,24 +614,30 @@ describe('packages/date-picker/date-range-picker', () => {
     describe('Keyboard interaction', () => {
       describe('Tab', () => {
         test('menu does not open on initial focus', () => {
-          const { inputContainer } = renderDateRangePicker();
+          const { getMenuElements } = renderDateRangePicker();
           tabNTimes(1);
-          expect(inputContainer.contains(document.activeElement)).toBeFalsy();
+          const { menuContainerEl } = getMenuElements();
+          expect(menuContainerEl).not.toBeInTheDocument();
+        });
+
+        test('menu does not open on subsequent focuses', () => {
+          const { getMenuElements } = renderDateRangePicker();
+          tabNTimes(5);
+          const { menuContainerEl } = getMenuElements();
+          expect(menuContainerEl).not.toBeInTheDocument();
         });
 
         test('calls validation handler when last segment is unfocused', () => {
           const handleValidation = jest.fn();
-          const { inputElements } = renderDateRangePicker({ handleValidation });
-          userEvent.click(inputElements[5]);
-          userEvent.tab();
+          renderDateRangePicker({ handleValidation });
+          tabNTimes(8);
           expect(handleValidation).toHaveBeenCalled();
         });
 
         test('does not call validation handler when changing segment', () => {
           const handleValidation = jest.fn();
-          const { inputElements } = renderDateRangePicker({ handleValidation });
-          userEvent.click(inputElements[0]);
-          userEvent.tab();
+          renderDateRangePicker({ handleValidation });
+          tabNTimes(1);
           expect(handleValidation).not.toHaveBeenCalled();
         });
 
@@ -716,42 +722,47 @@ describe('packages/date-picker/date-range-picker', () => {
 
       describe('Enter key', () => {
         test('if menu is closed, does not open the menu', () => {
-          const { inputElements, getMenuElements } = renderDateRangePicker();
-          userEvent.type(inputElements[0], '{enter}');
+          const { getMenuElements } = renderDateRangePicker();
+          userEvent.tab();
+          userEvent.keyboard('{enter}');
           const { menuContainerEl } = getMenuElements();
           expect(menuContainerEl).not.toBeInTheDocument();
         });
 
         test('opens menu if calendar button is focused', () => {
-          const { calendarButton, getMenuElements } = renderDateRangePicker();
-          userEvent.type(calendarButton, '{enter}');
+          const { getMenuElements } = renderDateRangePicker();
+          tabNTimes(7);
+          userEvent.keyboard('{enter}');
           const { menuContainerEl } = getMenuElements();
           expect(menuContainerEl).toBeInTheDocument();
         });
 
         test('calls validation handler', () => {
           const handleValidation = jest.fn();
-          const { inputElements } = renderDateRangePicker({
+          renderDateRangePicker({
             handleValidation,
           });
-          userEvent.type(inputElements[0], '{enter}');
+          tabNTimes(2);
+          userEvent.keyboard('{enter}');
           expect(handleValidation).toHaveBeenCalled();
         });
 
         test('if a cell is focused, fires a change handler', () => {
           const onRangeChange = jest.fn();
           const { openMenu } = renderDateRangePicker({ onRangeChange });
-          const { calendarCells } = openMenu();
-          const firstCell = calendarCells[0];
-          userEvent.type(firstCell, '{enter}');
+          const { todayCell } = openMenu();
+          tabNTimes(8);
+          expect(todayCell).toHaveFocus();
+          userEvent.keyboard('{enter}');
           expect(onRangeChange).toHaveBeenCalled();
         });
 
         test('if a cell is focused, closes the menu', async () => {
           const { openMenu } = renderDateRangePicker();
-          const { calendarCells, menuContainerEl } = openMenu();
-          const firstCell = calendarCells[0];
-          userEvent.type(firstCell, '{enter}');
+          const { todayCell, menuContainerEl } = openMenu();
+          tabNTimes(8);
+          expect(todayCell).toHaveFocus();
+          userEvent.keyboard('{enter}');
           await waitForElementToBeRemoved(menuContainerEl);
           expect(menuContainerEl).not.toBeInTheDocument();
         });
@@ -759,7 +770,9 @@ describe('packages/date-picker/date-range-picker', () => {
         test('if a Chevron is focused, updates the displayed month', () => {
           const { openMenu } = renderDateRangePicker();
           const { leftChevron, menuContainerEl } = openMenu();
-          userEvent.type(leftChevron!, '{enter}');
+          tabNTimes(11);
+          expect(leftChevron).toHaveFocus();
+          userEvent.keyboard('{enter}');
           const monthHeaders = menuContainerEl?.querySelectorAll('h6');
           expect(monthHeaders?.[0]).toHaveTextContent('November 2023');
           expect(monthHeaders?.[1]).toHaveTextContent('December 2023');
@@ -772,7 +785,9 @@ describe('packages/date-picker/date-range-picker', () => {
             onRangeChange,
           });
           const { quickRangeButtons } = openMenu();
-          userEvent.type(quickRangeButtons?.[0]!, '{enter}');
+          tabNTimes(13);
+          expect(quickRangeButtons?.[0]).toHaveFocus();
+          userEvent.keyboard('{enter}');
           expect(onRangeChange).toHaveBeenCalled(); // TODO: with
         });
 
@@ -781,7 +796,9 @@ describe('packages/date-picker/date-range-picker', () => {
             showQuickSelection: true,
           });
           const { monthSelect } = openMenu();
-          userEvent.type(monthSelect!, '{enter}');
+          tabNTimes(11);
+          expect(monthSelect).toHaveFocus();
+          userEvent.keyboard('{enter}');
           const listBoxes = queryAllByRole('listbox');
           expect(listBoxes).toHaveLength(2);
         });
