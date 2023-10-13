@@ -2,6 +2,7 @@ import React, {
   forwardRef,
   KeyboardEventHandler,
   MouseEventHandler,
+  useLayoutEffect,
   useState,
 } from 'react';
 import { addDays, isWithinInterval, subDays } from 'date-fns';
@@ -9,6 +10,7 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 
 import { cx } from '@leafygreen-ui/emotion';
+import { usePrevious } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { keyMap } from '@leafygreen-ui/lib';
@@ -30,6 +32,7 @@ import {
   isSameUTCMonth,
   maxDate,
   minDate,
+  setUTCMonth,
 } from '../../../utils';
 import { useDateRangeMenuContext } from '../DateRangeMenuContext';
 
@@ -67,8 +70,11 @@ export const DateRangeMenuCalendars = forwardRef<
     } = useDateRangeMenuContext();
 
     const [hoveredCell, setHover] = useState<DateType>(null);
+    const prevHighlight = usePrevious(highlight);
 
-    /** setDisplayMonth with side effects */
+    /**
+     * setDisplayMonth with side effects
+     */
     const updateMonth = (newMonth: Date) => {
       if (isSameUTCMonth(newMonth, month)) {
         return;
@@ -84,7 +90,9 @@ export const DateRangeMenuCalendars = forwardRef<
       setDisplayMonth(newMonth);
     };
 
-    /** setHighlight with side effects */
+    /**
+     * setHighlight with side effects
+     */
     const updateHighlight = (newHighlight: Date) => {
       // change month if nextHighlight is different than `month` or `nextMonth`
       if (
@@ -98,7 +106,19 @@ export const DateRangeMenuCalendars = forwardRef<
       setHighlight(newHighlight);
     };
 
-    /** Creates a click handler for a specific cell date */
+    /**
+     * When highlight changes, after the DOM changes, focus the relevant cell
+     */
+    useLayoutEffect(() => {
+      if (highlight && !isSameUTCDay(highlight, prevHighlight)) {
+        const highlightCellRef = cellRefs(highlight.toISOString());
+        highlightCellRef.current?.focus();
+      }
+    }, [cellRefs, highlight, prevHighlight]);
+
+    /**
+     * Creates a click handler for a specific cell date
+     */
     const cellClickHandlerForDay =
       (day: Date): MouseEventHandler<HTMLTableCellElement> =>
       () => {
@@ -229,6 +249,15 @@ export const DateRangeMenuCalendars = forwardRef<
       }
     };
 
+    const handleChevronClick =
+      (dir: 'left' | 'right'): MouseEventHandler<HTMLButtonElement> =>
+      () => {
+        const increment = dir === 'left' ? -1 : 1;
+        const newMonthIndex = month.getUTCMonth() + increment;
+        const newMonth = setUTCMonth(month, newMonthIndex);
+        updateMonth(newMonth);
+      };
+
     return (
       <div
         ref={fwdRef}
@@ -236,7 +265,11 @@ export const DateRangeMenuCalendars = forwardRef<
       >
         <div className={calendarHeadersContainerStyle}>
           <div className={calendarHeaderStyles}>
-            <IconButton aria-label="Previous month" ref={chevronRefs('left')}>
+            <IconButton
+              aria-label="Previous month"
+              ref={chevronRefs('left')}
+              onClick={handleChevronClick('left')}
+            >
               <Icon glyph="ChevronLeft" />
             </IconButton>
             <Subtitle>{getFullMonthLabel(month)}</Subtitle>
@@ -244,7 +277,11 @@ export const DateRangeMenuCalendars = forwardRef<
 
           <div className={calendarHeaderStyles}>
             <Subtitle>{getFullMonthLabel(nextMonth)}</Subtitle>
-            <IconButton aria-label="Next month" ref={chevronRefs('right')}>
+            <IconButton
+              aria-label="Next month"
+              ref={chevronRefs('right')}
+              onClick={handleChevronClick('right')}
+            >
               <Icon glyph="ChevronRight" />
             </IconButton>
           </div>
