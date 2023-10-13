@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { render } from '@testing-library/react';
 
 import Button from '@leafygreen-ui/button';
@@ -10,16 +10,13 @@ import { graphics } from '../example-graphics';
 import { MAX_NUM_FEATURES, MIN_NUM_FEATURES } from './FeaturesEmptyState';
 import { FeaturesEmptyState } from '.';
 
-type TestGraphics = Record<Theme, Array<ReactElement>>;
 const testGraphics = Object.keys(graphics).reduce((acc, theme) => {
-  acc[theme as Theme] = graphics[theme as Theme].map(
-    (graphic: any, index: number) => (
-      // jest will not process SVGs, so render them as <img /> elements
-      <img key={index} src={graphic} alt="" />
-    ),
-  );
+  acc[theme] = graphics[theme].map((graphic, index: number) => (
+    // jest will not process SVGs, so render them as <img /> elements
+    <img key={index} src={graphic} alt="" />
+  ));
   return acc;
-}, {} as TestGraphics);
+}, {} as typeof graphics);
 
 const testFeatures = Array.from({ length: MAX_NUM_FEATURES }, (_, i) => ({
   graphic: testGraphics[Theme.Light][0],
@@ -123,6 +120,7 @@ describe('packages/empty-state/features', () => {
     );
     expect(getByText('test button 2')).toBeInTheDocument();
   });
+
   test('renders external link', () => {
     const { getByText } = render(
       <FeaturesEmptyState
@@ -133,6 +131,34 @@ describe('packages/empty-state/features', () => {
     );
     expect(getByText('test external link')).toBeInTheDocument();
   });
+
+  test('renders graphic', () => {
+    const { queryByTestId } = render(
+      <FeaturesEmptyState
+        {...defaultProps}
+        features={[
+          {
+            ...testFeatures[0],
+            graphic: React.cloneElement(testGraphics[Theme.Light][0], {
+              'data-testid': 'feature-1',
+            }),
+          },
+          {
+            ...testFeatures[1],
+            graphic: React.cloneElement(testGraphics[Theme.Light][0], {
+              'data-testid': 'feature-2',
+            }),
+          },
+        ]}
+      />,
+    );
+
+    const feat1 = queryByTestId('feature-1');
+    const feat2 = queryByTestId('feature-2');
+    expect(feat1).toBeInTheDocument();
+    expect(feat2).toBeInTheDocument();
+  });
+
   test('rendered link is external by default', () => {
     const { getByTestId } = render(
       <FeaturesEmptyState
@@ -146,6 +172,7 @@ describe('packages/empty-state/features', () => {
       getByTestId('features-empty-states-link').getElementsByTagName('svg')[0],
     ).toBeInTheDocument();
   });
+
   // eslint-disable-next-line jest/no-disabled-tests
   test.skip('errors when secondary button is passed without primary', () => {
     const { primaryButton, ...propsWithoutPrimaryButton } = defaultProps;
