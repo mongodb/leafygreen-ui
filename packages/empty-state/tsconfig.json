@@ -12,7 +12,7 @@
   },
   "include": [
     "src/**/*",
-    "../../typings/*.d.ts"
+    "./example-graphics/svg.d.ts"
   ],
   "exclude": ["**/*.spec.*", "**/*.story.*"],
   "references": [
