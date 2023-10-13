@@ -17,7 +17,7 @@ import {
   usePolymorphicRef,
 } from '..';
 
-import { ExampleProps } from './Polymorphic.example';
+import { ExampleInferredWithRef, ExampleProps } from './Polymorphic.example';
 import {
   AdvancedPolymorphic,
   AdvancedPolymorphicWithRef,
@@ -207,6 +207,7 @@ describe('Polymorphic/Example Higher-order Components', () => {
     ExamplePolymorphic,
     ExamplePolymorphicWithRef,
     ExampleInferred,
+    ExampleInferredWithRef,
     AdvancedPolymorphic,
     AdvancedPolymorphicWithRef,
   ])('Higher-Order Polymorphic Components', ExampleComponent => {
@@ -386,72 +387,73 @@ describe('Polymorphic/Example Higher-order Components', () => {
     });
   });
 
-  describe.each([ExamplePolymorphicWithRef, AdvancedPolymorphicWithRef])(
-    'Higher-Order Polymorphic Components with Ref',
-    ExampleComponent => {
-      describe(`${ExampleComponent.displayName!}`, () => {
-        test('ref is defined with default props', () => {
-          let testRef: React.MutableRefObject<HTMLDivElement | null>;
+  describe.each([
+    ExamplePolymorphicWithRef,
+    ExampleInferredWithRef,
+    AdvancedPolymorphicWithRef,
+  ])('Higher-Order Polymorphic Components with Ref', ExampleComponent => {
+    describe(`${ExampleComponent.displayName!}`, () => {
+      test('ref is defined with default props', () => {
+        let testRef: React.MutableRefObject<HTMLDivElement | null>;
 
-          const TestComponent = () => {
-            const myRef = usePolymorphicRef<'div'>();
-            testRef = myRef;
-            return <ExampleComponent ref={myRef} data-testid="hoc" />;
-          };
+        const TestComponent = () => {
+          const myRef = usePolymorphicRef<'div'>();
+          testRef = myRef;
+          return <ExampleComponent ref={myRef} data-testid="hoc" />;
+        };
 
-          const { getByTestId } = render(<TestComponent />);
-          expect(getByTestId('hoc')).toBeInTheDocument();
-          expect(getByTestId('hoc').tagName.toLowerCase()).toBe('div');
-          expect(testRef!).toBeDefined();
-          expect(testRef!.current).toBeDefined();
-        });
-
-        test('ref is defined as an HTML element', () => {
-          let testRef: React.MutableRefObject<HTMLAnchorElement | null>;
-
-          const TestComponent = () => {
-            const myRef = usePolymorphicRef<'a'>();
-            testRef = myRef;
-            return (
-              <ExampleComponent
-                ref={myRef}
-                as="a"
-                href="mongodb.design"
-                data-testid="hoc"
-              />
-            );
-          };
-
-          const { getByTestId } = render(<TestComponent />);
-          expect(getByTestId('hoc')).toBeInTheDocument();
-          expect(getByTestId('hoc').tagName.toLowerCase()).toBe('a');
-          expect(testRef!).toBeDefined();
-          expect(testRef!.current).toBeDefined();
-        });
-
-        test('ref is defined as a custom component', () => {
-          const { Wrapper, wrapperDidRender } = makeWrapperComponent();
-
-          let testRef: React.MutableRefObject<HTMLAnchorElement | null>;
-
-          const TestComponent = () => {
-            const myRef = usePolymorphicRef<'a'>();
-            testRef = myRef;
-            return (
-              <ExampleComponent ref={myRef} as={Wrapper} data-testid="hoc" />
-            );
-          };
-
-          const { getByTestId } = render(<TestComponent />);
-          expect(getByTestId('hoc')).toBeInTheDocument();
-          expect(getByTestId('hoc').tagName.toLowerCase()).toBe('span');
-          expect(wrapperDidRender).toHaveBeenCalled();
-          expect(testRef!).toBeDefined();
-          expect(testRef!.current).toBeDefined();
-        });
+        const { getByTestId } = render(<TestComponent />);
+        expect(getByTestId('hoc')).toBeInTheDocument();
+        expect(getByTestId('hoc').tagName.toLowerCase()).toBe('div');
+        expect(testRef!).toBeDefined();
+        expect(testRef!.current).toBeDefined();
       });
-    },
-  );
+
+      test('ref is defined as an HTML element', () => {
+        let testRef: React.MutableRefObject<HTMLAnchorElement | null>;
+
+        const TestComponent = () => {
+          const myRef = usePolymorphicRef<'a'>();
+          testRef = myRef;
+          return (
+            <ExampleComponent
+              ref={myRef}
+              as="a"
+              href="mongodb.design"
+              data-testid="hoc"
+            />
+          );
+        };
+
+        const { getByTestId } = render(<TestComponent />);
+        expect(getByTestId('hoc')).toBeInTheDocument();
+        expect(getByTestId('hoc').tagName.toLowerCase()).toBe('a');
+        expect(testRef!).toBeDefined();
+        expect(testRef!.current).toBeDefined();
+      });
+
+      test('ref is defined as a custom component', () => {
+        const { Wrapper, wrapperDidRender } = makeWrapperComponent();
+
+        let testRef: React.MutableRefObject<HTMLAnchorElement | null>;
+
+        const TestComponent = () => {
+          const myRef = usePolymorphicRef<'a'>();
+          testRef = myRef;
+          return (
+            <ExampleComponent ref={myRef} as={Wrapper} data-testid="hoc" />
+          );
+        };
+
+        const { getByTestId } = render(<TestComponent />);
+        expect(getByTestId('hoc')).toBeInTheDocument();
+        expect(getByTestId('hoc').tagName.toLowerCase()).toBe('span');
+        expect(wrapperDidRender).toHaveBeenCalled();
+        expect(testRef!).toBeDefined();
+        expect(testRef!.current).toBeDefined();
+      });
+    });
+  });
 
   /**
    * Ensure that any components that build on top of Polymorphic
