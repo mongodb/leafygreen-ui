@@ -106,6 +106,12 @@ describe('packages/tooltip', () => {
     });
   });
   describe('when uncontrolled', () => {
+    test('responds to the `intialOpen` prop when set', () => {
+      const { getByTestId } = renderTooltip({ initialOpen: true });
+      const tooltip = getByTestId(tooltipTestId);
+      expect(tooltip).toBeInTheDocument();
+    });
+
     test(`renders a button to the DOM with ${buttonText}`, () => {
       const { getByText } = renderTooltip();
       expect(getByText(buttonText)).toBeInTheDocument();

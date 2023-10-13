@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import { InferredPolymorphicProps } from '@leafygreen-ui/polymorphic';
@@ -19,6 +19,16 @@ const renderLink = (props: LinkRenderProps) => {
 
 describe('packages/typography', () => {
   describe('Link', () => {
+    test('accepts a ref', () => {
+      const ref = createRef<HTMLAnchorElement>();
+      const { container } = render(
+        <Link ref={ref} href="http://mongodb.design">
+          Link
+        </Link>,
+      );
+      expect(ref.current).toBe(container.firstElementChild);
+    });
+
     describe('when the current host is different from the destination URL host', () => {
       test('and the "arrowAppearance" prop is set to hover', () => {
         renderLink({

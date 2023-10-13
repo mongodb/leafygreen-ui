@@ -80,6 +80,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     spacing = 6,
     maxHeight = 344,
     usePortal = true,
+    initialOpen = false,
     open: controlledOpen,
     setOpen: controlledSetOpen,
     darkMode: darkModeProp,
@@ -102,7 +103,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 
   const [, setClosed] = useState(false);
   const currentSubMenuRef = useRef<SubMenuType | null>(null);
-  const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
+  const [uncontrolledOpen, uncontrolledSetOpen] = useState(initialOpen);
   const popoverRef = useRef<HTMLUListElement | null>(null);
 
   const setOpen =

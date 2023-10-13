@@ -1,5 +1,11 @@
 # @leafygreen-ui/button
 
+## 21.0.8
+
+### Patch Changes
+
+- a4b3b704: Assigns Button Size object `as const` to improve Intellisense/autocomplete
+
 ## 21.0.7
 
 ### Patch Changes
