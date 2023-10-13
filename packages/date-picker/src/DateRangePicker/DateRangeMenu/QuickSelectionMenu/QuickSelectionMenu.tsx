@@ -23,7 +23,7 @@ import {
 } from './QuickSelectionMenu.styles';
 
 interface QuickSelectionMenuProps {
-  selectRefs: DynamicRefGetter<HTMLButtonElement>;
+  selectRefs: DynamicRefGetter<HTMLDivElement>;
   quickRangeButtonRefs: DynamicRefGetter<HTMLButtonElement>;
 }
 

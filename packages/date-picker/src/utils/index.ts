@@ -16,6 +16,7 @@ export { getUTCDateString } from './getUTCDateString';
 export { getValueFormatter } from './getValueFormatter';
 export { getWeeksArray } from './getWeeksArray';
 export { isCurrentUTCDay } from './isCurrentUTCDay';
+export { isDefined } from './isDefined';
 export { isElementInputSegment } from './isElementInputSegment';
 export { isOnOrAfter } from './isOnOrAfter';
 export { isOnOrBefore } from './isOnOrBefore';

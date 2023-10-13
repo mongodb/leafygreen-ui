@@ -41,7 +41,7 @@ export const DateRangeMenu = forwardRef<HTMLDivElement, DateRangeMenuProps>(
     const chevronRefs = useDynamicRefs<HTMLButtonElement>();
     const calendarCellRefs = useDynamicRefs<HTMLTableCellElement>();
     const footerButtonRefs = useDynamicRefs<HTMLButtonElement>();
-    const selectRefs = useDynamicRefs<HTMLButtonElement>();
+    const selectRefs = useDynamicRefs<HTMLDivElement>();
     const quickRangeButtonRefs = useDynamicRefs<HTMLButtonElement>();
 
     // Keep track of the element the user is highlighting with the keyboard

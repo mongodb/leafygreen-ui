@@ -24,6 +24,7 @@ import { DateType } from '../../../types';
 import {
   getFullMonthLabel,
   getUTCDateString,
+  isDefined,
   isSameUTCDay,
   isSameUTCMonth,
   maxDate,
@@ -102,7 +103,7 @@ export const DateRangeMenuCalendars = forwardRef<
       }
 
       // if at least the start/end date is defined...
-      if (value && value.some(v => !isNull(v))) {
+      if (value && value.some(isDefined)) {
         if (
           isSameUTCDay(cellDay, minDate(value)) ||
           isSameUTCDay(cellDay, maxDate(value))
@@ -116,29 +117,17 @@ export const DateRangeMenuCalendars = forwardRef<
 
     const getCellRangeState = (cellDay: Date): CalendarCellRangeState => {
       // if at least the start/end date is defined...
-      if (value && value.some(v => !isNull(v))) {
+      if (value && value.some(isDefined)) {
         // for the purposes of visualizing the calendar,
-        // the range start is the earliest date of the hovered cell,
-        // or the start/end value
+        // the range start is the earliest/latest date of the start/end value or hovered cell,
         const rangeStart = minDate([...value, hoveredCell]);
-        // same for range end
         const rangeEnd = maxDate([...value, hoveredCell]);
 
-        // if this cell is the first of `value`
-        // and it is _before_ the hovered cell
-        if (
-          isSameUTCDay(cellDay, rangeStart) //&&
-          // (!hoveredCell || isOnOrBefore(cellDay, hoveredCell))
-        ) {
+        if (isSameUTCDay(cellDay, rangeStart)) {
           return CalendarCellRangeState.Start;
         }
 
-        // if this cell is the last of `value`
-        // and it is _after_ the hovered cell
-        if (
-          isSameUTCDay(cellDay, rangeEnd) // &&
-          // (!hoveredCell || isOnOrAfter(cellDay, hoveredCell))
-        ) {
+        if (isSameUTCDay(cellDay, rangeEnd)) {
           return CalendarCellRangeState.End;
         }
 
