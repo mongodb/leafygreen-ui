@@ -1,22 +1,48 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 import Button, { Size, Variant } from '@leafygreen-ui/button';
+import { DynamicRefGetter } from '@leafygreen-ui/hooks';
 import { Link } from '@leafygreen-ui/typography';
 
 import { clearButtonStyles, footerStyles } from './DateRangeMenuFooter.styles';
 
-export const DateRangeMenuFooter = () => {
+interface DateRangeMenuFooterProps {
+  buttonRefs: DynamicRefGetter<HTMLButtonElement>;
+}
+
+export const DateRangeMenuFooter = forwardRef<
+  HTMLDivElement,
+  DateRangeMenuFooterProps
+>(({ buttonRefs }: DateRangeMenuFooterProps, fwdRef) => {
   return (
-    <div className={footerStyles}>
-      <Link as="button" className={clearButtonStyles}>
+    <div ref={fwdRef} className={footerStyles} data-lg="date-range_menu_footer">
+      <Link
+        ref={buttonRefs('clear')}
+        as="button"
+        className={clearButtonStyles}
+        aria-label="Clear selection"
+      >
         Clear
       </Link>
       <div>
-        <Button size={Size.XSmall}>Cancel</Button>
-        <Button size={Size.XSmall} variant={Variant.Primary}>
+        <Button
+          ref={buttonRefs('cancel')}
+          size={Size.XSmall}
+          aria-label="Cancel selection"
+        >
+          Cancel
+        </Button>
+        <Button
+          ref={buttonRefs('apply')}
+          size={Size.XSmall}
+          variant={Variant.Primary}
+          aria-label="Apply selection"
+        >
           Apply
         </Button>
       </div>
     </div>
   );
-};
+});
+
+DateRangeMenuFooter.displayName = 'DateRangeMenuFooter';

@@ -3,7 +3,7 @@ import { contentClassName } from '@leafygreen-ui/popover';
 import { spacing } from '@leafygreen-ui/tokens';
 
 export const menuWrapperStyles = css`
-  width: 266px; // width of "September" select trigger
+  width: 244px;
 
   & > .${contentClassName} {
     width: 100%;
@@ -37,4 +37,9 @@ export const menuHeaderSelectContainerStyles = css`
 export const menuCalendarGridStyles = css`
   grid-area: calendar;
   margin: auto;
+`;
+
+// Hardcoding the width
+export const selectInputWidthStyles = css`
+  width: 68.5px;
 `;

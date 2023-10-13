@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks, react/prop-types */
 import React, { useRef, useState } from 'react';
 import { StoryFn, StoryObj } from '@storybook/react';
-import { userEvent, within } from '@storybook/testing-library';
-import { last, omit } from 'lodash';
+import omit from 'lodash/omit';
 import MockDate from 'mockdate';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
@@ -19,6 +18,7 @@ import {
   contextPropNames,
   defaultDatePickerContext,
 } from '../../DatePickerContext/DatePickerContext.utils';
+import { DateRangeType } from '../../types';
 import { newUTC, pickAndOmit } from '../../utils';
 
 import { DateRangeMenu } from './DateRangeMenu';
@@ -78,7 +78,7 @@ type DateRangeMenuStoryType = StoryObj<typeof DateRangeMenu>;
 
 export const Basic: DateRangeMenuStoryType = {
   render: args => {
-    const [value, setValue] = useState<Date | null>(null);
+    const [value, setValue] = useState<DateRangeType | undefined>();
 
     const props = omit(args, [...contextPropNames, 'isOpen']);
     const refEl = useRef<HTMLDivElement>(null);
@@ -89,7 +89,7 @@ export const Basic: DateRangeMenuStoryType = {
           {...props}
           refEl={refEl}
           value={value}
-          onCellClick={setValue}
+          setValue={setValue}
         />
       </>
     );
@@ -98,6 +98,11 @@ export const Basic: DateRangeMenuStoryType = {
 
 export const WithValue: DateRangeMenuStoryType = {
   render: args => {
+    const [value, setValue] = useState<DateRangeType | undefined>([
+      newUTC(2023, Month.September, 14),
+      null,
+    ]);
+
     const props = omit(args, [...contextPropNames, 'isOpen']);
     const refEl = useRef<HTMLDivElement>(null);
     return (
@@ -106,8 +111,8 @@ export const WithValue: DateRangeMenuStoryType = {
         <DateRangeMenu
           {...props}
           refEl={refEl}
-          value={newUTC(2023, Month.September, 10)}
-          onCellClick={() => {}}
+          value={value}
+          setValue={setValue}
         />
       </div>
     );

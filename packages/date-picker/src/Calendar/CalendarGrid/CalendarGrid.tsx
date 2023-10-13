@@ -12,6 +12,7 @@ import { getWeeksArray } from '../../utils';
 import {
   calendarGridStyles,
   calendarHeaderCellStyles,
+  calendarThStyles,
 } from './CalendarGrid.styles';
 import { CalendarGridProps } from './CalendarGrid.types';
 
@@ -55,7 +56,12 @@ export const CalendarGrid = forwardRef<HTMLTableElement, CalendarGridProps>(
               const dayIndex = (i + weekStartsOn) % daysPerWeek;
               const day = DaysOfWeek[dayIndex];
               return (
-                <th role="columnheader" key={day.short} abbr={day.long}>
+                <th
+                  role="columnheader"
+                  key={day.short}
+                  abbr={day.long}
+                  className={calendarThStyles}
+                >
                   <Disclaimer className={calendarHeaderCellStyles}>
                     {day.short}
                   </Disclaimer>

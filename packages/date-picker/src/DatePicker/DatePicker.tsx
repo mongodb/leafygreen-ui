@@ -16,7 +16,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     {
       value: valueProp,
       initialValue: initialProp,
-      onChange: onChangeProp,
+      onDateChange: onChangeProp,
       ...props
     }: DatePickerProps,
     fwdRef,

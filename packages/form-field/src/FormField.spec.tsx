@@ -332,6 +332,19 @@ describe('packages/form-field', () => {
     expect(em?.tagName.toLowerCase()).toEqual('em');
   });
 
+  test('renders optional through the "optional" prop', () => {
+    const { queryByText } = render(
+      <FormField label="Label" data-testid="form-field" optional>
+        <FormFieldInputContainer>
+          <div data-testid="input" />
+        </FormFieldInputContainer>
+      </FormField>,
+    );
+
+    const optional = queryByText('Optional');
+    expect(optional).toBeInTheDocument();
+  });
+
   describe('custom children', () => {
     const TestChild = () => {
       const { inputProps } = useFormFieldContext();
@@ -361,6 +374,23 @@ describe('packages/form-field', () => {
       expect(child!.id).toEqual(label.getAttribute('for'));
       expect(child!.getAttribute('aria-labelledby')).toEqual(label.id);
     });
+  });
+
+  test('allows input id to be controlled by user', () => {
+    const id = 'testId';
+
+    const { getByTestId, getByText } = render(
+      <FormField label="Label" data-testid="form-field" id={id}>
+        <FormFieldInputContainer>
+          <div data-testid="input" />
+        </FormFieldInputContainer>
+      </FormField>,
+    );
+    const input = getByTestId('input');
+    expect(input.getAttribute('id')).toBe(id);
+
+    const label = getByText('Label');
+    expect(label.getAttribute('for')).toBe(id);
   });
 
   // eslint-disable-next-line jest/no-disabled-tests

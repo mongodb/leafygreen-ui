@@ -4,7 +4,7 @@ import { useBackdropClick, useForwardedRef } from '@leafygreen-ui/hooks';
 
 import { useDatePickerContext } from '../../DatePickerContext';
 import { isSameUTCDay } from '../../utils';
-import { DatePickerInput, DatePickerInputProps } from '../DatePickerInput';
+import { DatePickerInput } from '../DatePickerInput';
 import { DatePickerMenu, DatePickerMenuProps } from '../DatePickerMenu';
 
 import { DatePickerComponentProps } from './DatePickerComponent.types';
@@ -32,16 +32,14 @@ export const DatePickerComponent = forwardRef<
     useBackdropClick(closeMenu, [formFieldRef, menuRef], isOpen);
 
     /** Called when the input's Date value has changed */
-    const handleInputValueChange: DatePickerInputProps['setValue'] = (
-      inputVal: Date | null,
-    ) => {
+    const handleInputValueChange = (inputVal?: Date | null) => {
       if (!isSameUTCDay(inputVal, value)) {
         // When the value changes via the input element,
         // we only trigger validation if the component is dirty
         if (isDirty) {
           handleValidation?.(inputVal);
         }
-        updateValue(inputVal);
+        updateValue(inputVal || null);
       }
     };
 

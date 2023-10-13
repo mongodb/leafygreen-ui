@@ -90,7 +90,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
     };
 
     /**
-     * When month changes, after the DOM changes, focus the relevant cell
+     * When highlight changes, after the DOM changes, focus the relevant cell
      */
     useLayoutEffect(() => {
       if (highlight && !isSameUTCDay(highlight, prevHighlight)) {

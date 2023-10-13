@@ -21,6 +21,7 @@ export const useFormFieldProps = ({
   label,
   description,
   state,
+  id,
   ...rest
 }: Partial<FormFieldProps>): FormFieldElementProps => {
   const labelId = useIdAllocator({ prefix: 'lg-form-field-label' });
@@ -28,7 +29,8 @@ export const useFormFieldProps = ({
     prefix: 'lg-form-field-description',
   });
   const errorId = useIdAllocator({ prefix: 'lg-form-field-description' });
-  const inputId = useIdAllocator({ prefix: 'lg-form-field-input' });
+  const generatedInputId = useIdAllocator({ prefix: 'lg-form-field-input' });
+  const inputId = id ?? generatedInputId;
 
   const ariaLabelledby = label ? labelId : rest['aria-labelledby'];
   const ariaLabel = label ? '' : rest['aria-label'];

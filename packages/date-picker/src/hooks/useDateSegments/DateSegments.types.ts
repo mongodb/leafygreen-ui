@@ -5,23 +5,26 @@ export const DateSegment = {
 } as const;
 export type DateSegment = (typeof DateSegment)[keyof typeof DateSegment];
 
-export type DateSegmentValue = number;
+export type DateSegmentValue = string;
 
 export type DateSegmentsState = Record<
   DateSegment,
   DateSegmentValue | undefined
 >;
 
-export function isDateSegment(str: string): str is DateSegment {
+export function isDateSegment(str: any): str is DateSegment {
+  if (typeof str !== 'string') return false;
   return ['day', 'month', 'year'].includes(str);
 }
 
-export type OnUpdateCallback = (value: DateSegmentsState) => void;
+/** Callback passed into the hook, called when any segment updates */
+export type OnUpdateCallback = (
+  value: DateSegmentsState,
+  previous?: DateSegmentsState,
+  updatedSegment?: DateSegment,
+) => void;
 
 export interface UseDateSegmentsOptions {
-  /** A formatter used to separate the date value into segments */
-  // timeZone: string;
-
   /** A callback fired when the segment values change */
   onUpdate?: OnUpdateCallback;
 }

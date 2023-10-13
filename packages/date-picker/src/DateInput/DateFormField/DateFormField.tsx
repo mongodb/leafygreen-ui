@@ -27,6 +27,7 @@ export const DateFormField = React.forwardRef<
       disabled,
       isOpen,
       menuId,
+      size,
     } = useDatePickerContext();
 
     return (
@@ -37,6 +38,7 @@ export const DateFormField = React.forwardRef<
         disabled={disabled}
         state={state}
         errorMessage={errorMessage}
+        size={size}
         {...rest}
       >
         <FormFieldInputContainer

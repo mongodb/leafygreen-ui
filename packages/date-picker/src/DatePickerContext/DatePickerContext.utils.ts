@@ -16,10 +16,11 @@ export const MIN_DATE = new Date('12-31-1969');
 export const MAX_DATE = new Date('01-19-2038');
 export const TZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
+export type ContextPropKeys = keyof DatePickerProviderProps &
+  keyof BaseDatePickerProps;
+
 /** Prop names that are in both DatePickerProps and DatePickerProviderProps */
-export const contextPropNames: Array<
-  keyof DatePickerProviderProps & keyof BaseDatePickerProps
-> = [
+export const contextPropNames: Array<ContextPropKeys> = [
   'label',
   'description',
   'dateFormat',

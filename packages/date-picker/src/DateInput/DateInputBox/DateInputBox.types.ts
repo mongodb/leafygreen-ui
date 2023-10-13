@@ -1,6 +1,7 @@
+import { ChangeEventHandler } from 'react';
+
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-import { DateSegment, DateSegmentValue } from '../../hooks/useDateSegments';
 import { SegmentRefs } from '../../hooks/useSegmentRefs';
 import { DateType } from '../../types';
 
@@ -20,10 +21,7 @@ export interface DateInputBoxProps
   /**
    * Callback fired when any segment changes, but not necessarily a full value
    */
-  onSegmentChange?: (
-    segment: DateSegment,
-    segmentValue: DateSegmentValue,
-  ) => void;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
 
   /**
    * id of the labelling element

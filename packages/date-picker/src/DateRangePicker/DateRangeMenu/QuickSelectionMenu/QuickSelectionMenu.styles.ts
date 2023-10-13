@@ -1,7 +1,11 @@
 import { css } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
+
+export const quickSelectionClassName = createUniqueClassName(
+  'date-range-quick-selection',
+);
 
 export const quickSelectMenuStyles = css`
   display: flex;

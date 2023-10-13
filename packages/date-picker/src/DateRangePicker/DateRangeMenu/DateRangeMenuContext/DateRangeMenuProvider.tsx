@@ -1,8 +1,6 @@
 import React, { PropsWithChildren, useMemo, useState } from 'react';
 
-import { useDynamicRefs } from '@leafygreen-ui/hooks';
-
-import { getFirstOfMonth, setToUTCMidnight } from '../../../utils';
+import { getFirstOfMonth } from '../../../utils';
 import { addMonthsUTC } from '../../../utils';
 import { DateRangeMenuProps } from '../DateRangeMenu.types';
 
@@ -10,7 +8,9 @@ import { DateRangeMenuContext } from './DateRangeMenuContext';
 
 export interface DateRangeMenuProviderProps
   extends Pick<DateRangeMenuProps, 'value'>,
-    PropsWithChildren<{}> {}
+    PropsWithChildren<{}> {
+  today: Date;
+}
 
 /**
  * Receives the start & end dates
@@ -18,17 +18,13 @@ export interface DateRangeMenuProviderProps
  */
 export const DateRangeMenuProvider = ({
   value,
+  today,
   children,
 }: DateRangeMenuProviderProps) => {
-  const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
-
   const [month, setMonth] = useState<Date>(
     getFirstOfMonth(value?.[0] ?? today),
   );
   const nextMonth = useMemo<Date>(() => addMonthsUTC(month, 1), [month]);
-
-  const startCellRefs = useDynamicRefs<HTMLTableCellElement>();
-  const endCellRefs = useDynamicRefs<HTMLTableCellElement>();
 
   return (
     <DateRangeMenuContext.Provider
@@ -36,8 +32,6 @@ export const DateRangeMenuProvider = ({
         month,
         nextMonth,
         setMonth,
-        startCellRefs,
-        endCellRefs,
         today,
       }}
     >

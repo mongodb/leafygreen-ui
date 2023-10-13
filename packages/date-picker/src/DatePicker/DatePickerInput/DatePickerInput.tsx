@@ -25,7 +25,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       setValue,
       onClick,
       onKeyDown,
-      onSegmentChange,
+      onChange: onSegmentChange,
       handleValidation,
       ...rest
     }: DatePickerInputProps,
@@ -48,6 +48,10 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
 
         segmentToFocus?.focus();
       }
+    };
+
+    const handleIconButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
+      setOpen(true);
     };
 
     /** Called on any keydown within the input element */
@@ -128,6 +132,11 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           handleValidation?.(value);
           break;
 
+        case keyMap.Tab:
+          // default behavior
+          // focus trap handled by parent
+          break;
+
         default:
           // any other keydown should open the menu
           setOpen(true);
@@ -158,13 +167,14 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
         onKeyDown={handleKeyDown}
         onInputClick={handleInputClick}
         onBlur={handleInputBlur}
+        onIconButtonClick={handleIconButtonClick}
         {...rest}
       >
         <DateInputBox
           value={value}
           setValue={setValue}
           segmentRefs={segmentRefs}
-          onSegmentChange={onSegmentChange}
+          onChange={onSegmentChange}
         />
       </DateFormField>
     );

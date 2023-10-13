@@ -4,7 +4,7 @@ import { isSameDay } from 'date-fns';
 import { usePrevious } from '@leafygreen-ui/hooks';
 
 import { DateType } from '../../types';
-import { getSegmentsFromDate } from '../../utils';
+import { getFormattedSegmentsFromDate } from '../../utils';
 
 import {
   DateSegment,
@@ -32,26 +32,26 @@ const dateSegmentsReducer = (
  * Returned segments are relative to the formatter time zone
  */
 export const useDateSegments = (
-  /** Provided date is relative to the client's time zone */
-  date: DateType,
+  /** Provided date is UTC */
+  date: DateType = null,
   { onUpdate }: UseDateSegmentsOptions,
 ): UseDateSegmentsReturnValue => {
   //
   const [segments, dispatch] = useReducer(
     dateSegmentsReducer,
     date,
-    getSegmentsFromDate,
+    getFormattedSegmentsFromDate,
   );
   const prevDate = usePrevious(date);
 
   // If `date` prop changes, update the segments
   useEffect(() => {
     if (date && !(prevDate && isSameDay(date, prevDate))) {
-      const newSegments = getSegmentsFromDate(date);
-      onUpdate?.(newSegments);
+      const newSegments = getFormattedSegmentsFromDate(date);
+      onUpdate?.(newSegments, { ...segments });
       dispatch(newSegments);
     }
-  }, [date, onUpdate, prevDate]);
+  }, [date, onUpdate, prevDate, segments]);
 
   /**
    * Custom dispatch that triggers the provided side effects, and updates state
@@ -60,9 +60,11 @@ export const useDateSegments = (
     // Calculate next state
     // then, execute any side effects based on the new state
     // finally, commit the new state
-    const nextState = dateSegmentsReducer(segments, { [segment]: value });
-    onUpdate?.(nextState);
-    dispatch({ [segment]: value });
+
+    const updateObject = { [segment]: value };
+    const nextState = dateSegmentsReducer(segments, updateObject);
+    onUpdate?.(nextState, { ...segments }, segment);
+    dispatch(updateObject);
   };
 
   return {

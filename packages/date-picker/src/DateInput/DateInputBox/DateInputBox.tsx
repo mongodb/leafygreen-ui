@@ -1,8 +1,14 @@
-import React from 'react';
+import React, {
+  ChangeEvent,
+  ChangeEventHandler,
+  FocusEventHandler,
+} from 'react';
 import { isSameDay } from 'date-fns';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { createSyntheticEvent } from '@leafygreen-ui/lib';
 
 import { useDatePickerContext } from '../../DatePickerContext';
 import {
@@ -11,11 +17,12 @@ import {
   isDateSegment,
 } from '../../hooks/useDateSegments/DateSegments.types';
 import { useDateSegments } from '../../hooks/useDateSegments/useDateSegments';
-import { newDateFromSegments } from '../../utils';
+import { getValueFormatter, newDateFromSegments } from '../../utils';
 import { DateInputSegment } from '../DateInputSegment';
 
 import {
   segmentPartsWrapperStyles,
+  separatorLiteralDisbledStyles,
   separatorLiteralStyles,
 } from './DateInputBox.styles';
 import { DateInputBoxProps } from './DateInputBox.types';
@@ -36,60 +43,99 @@ import { DateInputBoxProps } from './DateInputBox.types';
 export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
   (
     {
-      value,
-      setValue,
+      value: dateValue,
+      setValue: setDateValue,
       className,
       labelledBy,
       segmentRefs,
-      onSegmentChange,
+      onChange: onSegmentChange,
       ...rest
     }: DateInputBoxProps,
     fwdRef,
   ) => {
-    const { formatParts } = useDatePickerContext();
+    const { formatParts, disabled } = useDatePickerContext();
+    const { theme } = useDarkMode();
 
     const containerRef = useForwardedRef(fwdRef, null);
 
     /**
-     * When a segment is updated, update the external value
+     * Fires a synthetic change event
+     * and calls the provided `onChange` handler
      */
-    const onSegmentsUpdate = (newSegments: DateSegmentsState) => {
-      const { day, month, year } = newSegments;
-      /** New date in UTC */
-      const utcDate = newDateFromSegments({ day, month, year });
+    const triggerChangeEventForSegment = (segment: DateSegment) => {
+      const changeEvent = new Event('change');
+      const eventTarget = segmentRefs[segment].current;
 
-      // Only update the value iff all parts are set, and create a valid date.
-      if (utcDate) {
-        /** Whether we need to update the external value */
-        const shouldUpdate = !value || !isSameDay(utcDate, value);
-
-        if (shouldUpdate) {
-          setValue?.(utcDate);
-        }
-      } else if (!(day || month || year)) {
-        // if no segment exists, set the external value to null
-        setValue?.(null);
+      if (eventTarget) {
+        const reactEvent = createSyntheticEvent(
+          changeEvent,
+          eventTarget,
+        ) as ChangeEvent<HTMLInputElement>;
+        onSegmentChange?.(reactEvent);
       }
     };
 
-    // Keep track of each date segment
-    const { segments, setSegment } = useDateSegments(value ?? null, {
+    /**
+     * When a segment is updated,
+     * trigger a `change` event for the segment, and
+     * update the external Date value if necessary
+     */
+    const onSegmentsUpdate = (
+      newSegments: DateSegmentsState,
+      _prev?: DateSegmentsState,
+      updatedSegment?: DateSegment,
+    ) => {
+      const utcDate = newDateFromSegments(newSegments);
+
+      // Synthetically trigger the onChange event passed in from the parent
+      if (updatedSegment) {
+        triggerChangeEventForSegment(updatedSegment);
+      } else {
+        Object.keys(newSegments).forEach(seg => {
+          triggerChangeEventForSegment(seg as DateSegment);
+        });
+      }
+
+      if (utcDate) {
+        // Only update the value iff all parts are set, and create a valid date.
+        const shouldUpdate = !dateValue || !isSameDay(utcDate, dateValue);
+
+        if (shouldUpdate) {
+          setDateValue?.(utcDate);
+        }
+      } else if (!(newSegments.day || newSegments.month || newSegments.year)) {
+        // if no segment exists, set the external value to null
+        setDateValue?.(null);
+      }
+    };
+
+    /** Keep track of each date segment */
+    const { segments, setSegment } = useDateSegments(dateValue, {
       onUpdate: onSegmentsUpdate,
     });
 
-    /**
-     * Curried function that creates a callback function for each segment.
-     * Sets the segment value
-     */
-    const handleSegmentChange =
-      (segment: DateSegment) => (newValue: string) => {
-        const newSegmentValue = Number(newValue);
-        setSegment(segment, newSegmentValue);
-        onSegmentChange?.(segment, newSegmentValue);
-      };
+    /** fired when an individual segment value changes */
+    const handleSegmentChange: ChangeEventHandler<HTMLInputElement> = e => {
+      const segmentName = e.target.getAttribute('id');
+      const newValue = e.target.value;
+
+      if (isDateSegment(segmentName)) {
+        setSegment(segmentName, newValue);
+      }
+    };
+
+    const handleSegmentBlur: FocusEventHandler<HTMLInputElement> = e => {
+      const segmentName = e.target.getAttribute('id');
+      const newValue = e.target.value;
+
+      if (isDateSegment(segmentName)) {
+        const formatter = getValueFormatter(segmentName);
+        const formattedValue = formatter(newValue);
+        setSegment(segmentName, formattedValue);
+      }
+    };
 
     return (
-      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div
         className={cx(segmentPartsWrapperStyles, className)}
         ref={containerRef}
@@ -98,7 +144,12 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
         {formatParts?.map((part, i) => {
           if (part.type === 'literal') {
             return (
-              <span className={separatorLiteralStyles} key={'literal-' + i}>
+              <span
+                className={cx(separatorLiteralStyles, {
+                  [separatorLiteralDisbledStyles[theme]]: disabled,
+                })}
+                key={'literal-' + i}
+              >
                 {part.value}
               </span>
             );
@@ -110,7 +161,8 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
                 aria-labelledby={labelledBy}
                 segment={part.type}
                 value={segments[part.type]}
-                onChange={handleSegmentChange(part.type)}
+                onChange={handleSegmentChange}
+                onBlur={handleSegmentBlur}
               />
             );
           }

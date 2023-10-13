@@ -8,20 +8,29 @@ export { getFullMonthLabel } from './getFullMonthLabel';
 export { getLastOfMonth } from './getLastOfMonth';
 export { getMonthName } from './getMonthName';
 export { getRemainingParts } from './getRemainingParts';
-export { getSegmentsFromDate } from './getSegmentsFromDate';
+export {
+  getFormattedSegmentsFromDate,
+  getSegmentsFromDate,
+} from './getSegmentsFromDate';
 export { getUTCDateString } from './getUTCDateString';
 export { getValueFormatter } from './getValueFormatter';
 export { getWeeksArray } from './getWeeksArray';
 export { isCurrentUTCDay } from './isCurrentUTCDay';
+export { isDefined } from './isDefined';
 export { isElementInputSegment } from './isElementInputSegment';
+export { isOnOrAfter } from './isOnOrAfter';
+export { isOnOrBefore } from './isOnOrBefore';
 export { isSameTZDay } from './isSameTZDay';
 export { isSameUTCDay } from './isSameUTCDay';
 export { isSameUTCMonth } from './isSameUTCMonth';
+export { isSameUTCRange } from './isSameUTCRange';
 export { isTodayTZ } from './isTodayTZ';
 export { isValidDate } from './isValidDate';
 export { isValidLocale } from './isValidLocale';
 export { isValidSegment } from './isValidSegment';
 export { isZeroLike } from './isZeroLike';
+export { maxDate } from './maxDate';
+export { minDate } from './minDate';
 export { newDateFromSegments } from './newDateFromSegments';
 export { newUTC } from './newUTC';
 export { pickAndOmit } from './pickAndOmit';

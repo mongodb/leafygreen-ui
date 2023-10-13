@@ -1,7 +1,12 @@
 import { css } from '@leafygreen-ui/emotion';
+import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { spacing, typeScales } from '@leafygreen-ui/tokens';
 
 const calendarGapX = spacing[4] * 2;
+
+export const calendarsClassName = createUniqueClassName(
+  'date-range-menu-calendars',
+);
 
 export const calendarsFrameStyles = css`
   display: grid;
@@ -17,6 +22,7 @@ export const calendarsContainerStyles = css`
   display: flex;
   gap: ${calendarGapX}px;
   align-items: start;
+  height: fit-content;
 `;
 
 export const calendarHeadersContainerStyle = css`

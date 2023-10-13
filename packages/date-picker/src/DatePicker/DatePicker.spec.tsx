@@ -9,7 +9,7 @@ import userEvent from '@testing-library/user-event';
 import { range } from 'lodash';
 
 import { Month } from '../constants';
-import { tabNTimes } from '../testUtils';
+import { eventContainingTargetValue, tabNTimes } from '../testUtils';
 import { newUTC } from '../utils/newUTC';
 
 import { renderDatePicker } from './DatePicker.testutils';
@@ -207,23 +207,22 @@ describe('packages/date-picker', () => {
         });
       });
 
-      // TODO: Move these tests to DatePickerMenu
       describe('Clicking a Calendar cell', () => {
         test('fires a change handler', () => {
-          const onChange = jest.fn();
+          const onDateChange = jest.fn();
           const { openMenu } = renderDatePicker({
-            onChange,
+            onDateChange,
           });
           const { calendarCells } = openMenu();
           const firstCell = calendarCells?.[0];
           userEvent.click(firstCell);
-          expect(onChange).toHaveBeenCalled();
+          expect(onDateChange).toHaveBeenCalled();
         });
 
         test('does nothing if the cell is out-of-range', () => {
-          const onChange = jest.fn();
+          const onDateChange = jest.fn();
           const { openMenu } = renderDatePicker({
-            onChange,
+            onDateChange,
             value: new Date(Date.UTC(2023, Month.September, 15)),
             min: new Date(Date.UTC(2023, Month.September, 10)),
           });
@@ -231,7 +230,7 @@ describe('packages/date-picker', () => {
           const firstCell = calendarCells?.[0];
           userEvent.click(firstCell, {}, { skipPointerEventsCheck: true });
           expect(firstCell).toHaveAttribute('aria-disabled', 'true');
-          expect(onChange).not.toHaveBeenCalled();
+          expect(onDateChange).not.toHaveBeenCalled();
         });
 
         test('fires a validation handler', () => {
@@ -325,9 +324,7 @@ describe('packages/date-picker', () => {
         });
 
         test('selecting the month updates the calendar', async () => {
-          const { openMenu, findAllByRole } = renderDatePicker({
-            value: new Date(Date.UTC(2023, Month.December, 26)),
-          });
+          const { openMenu, findAllByRole } = renderDatePicker();
           const { monthSelect, calendarGrid } = openMenu();
           userEvent.click(monthSelect!);
           const options = await findAllByRole('option');
@@ -373,11 +370,11 @@ describe('packages/date-picker', () => {
         });
 
         test('does not fire a change handler', () => {
-          const onChange = jest.fn();
-          const { openMenu, container } = renderDatePicker({ onChange });
+          const onDateChange = jest.fn();
+          const { openMenu, container } = renderDatePicker({ onDateChange });
           openMenu();
           userEvent.click(container.parentElement!);
-          expect(onChange).not.toHaveBeenCalled();
+          expect(onDateChange).not.toHaveBeenCalled();
         });
       });
     });
@@ -424,6 +421,27 @@ describe('packages/date-picker', () => {
           userEvent.tab();
           const { menuContainerEl } = getMenuElements();
           expect(menuContainerEl).not.toBeInTheDocument();
+        });
+
+        test('menu does not open on subsequent keyboard focus', () => {
+          const { getMenuElements } = renderDatePicker();
+          tabNTimes(3);
+          const { menuContainerEl } = getMenuElements();
+          expect(menuContainerEl).not.toBeInTheDocument();
+        });
+
+        test('calls validation handler when last segment is unfocused', () => {
+          const handleValidation = jest.fn();
+          renderDatePicker({ handleValidation });
+          tabNTimes(5);
+          expect(handleValidation).toHaveBeenCalled();
+        });
+
+        test('does not call validation handler when changing segment focus', () => {
+          const handleValidation = jest.fn();
+          renderDatePicker({ handleValidation });
+          tabNTimes(2);
+          expect(handleValidation).not.toHaveBeenCalled();
         });
 
         describe('Tab order', () => {
@@ -521,20 +539,6 @@ describe('packages/date-picker', () => {
             });
           });
         });
-
-        test('calls validation handler when last segment is unfocused', () => {
-          const handleValidation = jest.fn();
-          renderDatePicker({ handleValidation });
-          tabNTimes(5);
-          expect(handleValidation).toHaveBeenCalled();
-        });
-
-        test('does not call validation handler when changing segment focus', () => {
-          const handleValidation = jest.fn();
-          renderDatePicker({ handleValidation });
-          tabNTimes(2);
-          expect(handleValidation).not.toHaveBeenCalled();
-        });
       });
 
       describe('Enter key', () => {
@@ -556,7 +560,7 @@ describe('packages/date-picker', () => {
 
         test('opens menu if calendar button is focused', () => {
           const { getMenuElements } = renderDatePicker();
-          tabNTimes(3);
+          tabNTimes(4);
           userEvent.keyboard('{enter}');
           const { menuContainerEl } = getMenuElements();
           expect(menuContainerEl).toBeInTheDocument();
@@ -573,13 +577,13 @@ describe('packages/date-picker', () => {
         });
 
         test('if a cell is focused, fires a change handler', () => {
-          const onChange = jest.fn();
-          const { openMenu } = renderDatePicker({ onChange });
+          const onDateChange = jest.fn();
+          const { openMenu } = renderDatePicker({ onDateChange });
           const { todayCell } = openMenu();
           tabNTimes(4);
           expect(todayCell).toHaveFocus();
           userEvent.type(todayCell!, '{enter}');
-          expect(onChange).toHaveBeenCalled();
+          expect(onDateChange).toHaveBeenCalled();
         });
 
         test('if a cell is focused, closes the menu', async () => {
@@ -643,16 +647,18 @@ describe('packages/date-picker', () => {
         });
 
         test('does not fire a change handler', () => {
-          const onChange = jest.fn();
-          const { openMenu } = renderDatePicker({ onChange });
+          const onDateChange = jest.fn();
+          const { openMenu } = renderDatePicker({ onDateChange });
           openMenu();
           userEvent.keyboard('{escape}');
-          expect(onChange).not.toHaveBeenCalled();
+          expect(onDateChange).not.toHaveBeenCalled();
         });
 
         test('focus remains in the input element', () => {
-          const onChange = jest.fn();
-          const { openMenu, inputContainer } = renderDatePicker({ onChange });
+          const onDateChange = jest.fn();
+          const { openMenu, inputContainer } = renderDatePicker({
+            onDateChange,
+          });
           openMenu();
           userEvent.keyboard('{escape}');
           expect(inputContainer.contains(document.activeElement)).toBeTruthy();
@@ -687,53 +693,57 @@ describe('packages/date-picker', () => {
         });
 
         test('does not fire a value change handler', () => {
-          const onChange = jest.fn();
+          const onDateChange = jest.fn();
           const { yearInput } = renderDatePicker({
-            onChange,
+            onDateChange,
           });
           userEvent.type(yearInput, '2023');
-          expect(onChange).not.toHaveBeenCalled();
-        });
-
-        test('does not fire a segment change handler', () => {
-          const onSegmentChange = jest.fn();
-          const { yearInput } = renderDatePicker({
-            onSegmentChange,
-          });
-          userEvent.type(yearInput, '2023');
-          expect(onSegmentChange).not.toHaveBeenCalled();
-        });
-      });
-
-      describe('when a segment is unfocused/blurred', () => {
-        test('does not fire a change handler if the value is incomplete', () => {
-          const onChange = jest.fn();
-          const { yearInput } = renderDatePicker({
-            onChange,
-          });
-          userEvent.type(yearInput, '2023');
-          userEvent.tab();
-          expect(onChange).not.toHaveBeenCalled();
+          expect(onDateChange).not.toHaveBeenCalled();
         });
 
         test('fires a segment change handler', () => {
-          const onSegmentChange = jest.fn();
-          const { yearInput } = renderDatePicker({ onSegmentChange });
+          const onChange = jest.fn();
+          const { yearInput } = renderDatePicker({
+            onChange,
+          });
+          userEvent.type(yearInput, '2023');
+          expect(onChange).toHaveBeenCalledWith(
+            eventContainingTargetValue('2023'),
+          );
+        });
+      });
+
+      describe('on un-focus/blur', () => {
+        test('does not fire a change handler if the value is incomplete', () => {
+          const onDateChange = jest.fn();
+          const { yearInput } = renderDatePicker({
+            onDateChange,
+          });
           userEvent.type(yearInput, '2023');
           userEvent.tab();
-          expect(onSegmentChange).toHaveBeenCalledWith('year', 2023);
+          expect(onDateChange).not.toHaveBeenCalled();
+        });
+
+        test('fires a segment change handler', () => {
+          const onChange = jest.fn();
+          const { yearInput } = renderDatePicker({ onChange });
+          userEvent.type(yearInput, '2023');
+          userEvent.tab();
+          expect(onChange).toHaveBeenCalledWith(
+            eventContainingTargetValue('2023'),
+          );
         });
 
         test('fires a change handler when the value is a valid date', () => {
-          const onChange = jest.fn();
+          const onDateChange = jest.fn();
           const { yearInput, monthInput, dayInput } = renderDatePicker({
-            onChange,
+            onDateChange,
           });
           userEvent.type(yearInput, '2023');
           userEvent.type(monthInput, '12');
           userEvent.type(dayInput, '26');
           userEvent.tab();
-          expect(onChange).toHaveBeenCalledWith(
+          expect(onDateChange).toHaveBeenCalledWith(
             expect.objectContaining(newUTC(2023, Month.December, 26)),
           );
         });
@@ -769,27 +779,27 @@ describe('packages/date-picker', () => {
   });
 
   describe('Controlled vs Uncontrolled', () => {
-    test('(Controlled) fires a change handler if `value` is provided', async () => {
-      const onChange = jest.fn();
+    test('(Controlled) Cell click fires a change handler if `value` is provided', async () => {
+      const onDateChange = jest.fn();
       const { openMenu } = renderDatePicker({
         value: new Date(),
-        onChange,
+        onDateChange,
       });
       const { calendarCells } = openMenu();
-      const cell1 = calendarCells?.[0];
-      userEvent.click(cell1);
-      await waitFor(() => expect(onChange).toHaveBeenCalled());
+      const firstCell = calendarCells?.[0];
+      userEvent.click(firstCell);
+      await waitFor(() => expect(onDateChange).toHaveBeenCalled());
     });
 
-    test('(Controlled) does not change the value if `value` is provided', async () => {
-      const onChange = jest.fn();
+    test('(Controlled) Cell click does not change the value if `value` is provided', async () => {
+      const onDateChange = jest.fn();
       const { openMenu, dayInput, monthInput, yearInput } = renderDatePicker({
         value: new Date(),
-        onChange,
+        onDateChange,
       });
       const { calendarCells } = openMenu();
-      const cell1 = calendarCells?.[0];
-      userEvent.click(cell1);
+      const firstCell = calendarCells?.[0];
+      userEvent.click(firstCell);
       await waitFor(() => {
         expect(dayInput.value).toEqual('26');
         expect(monthInput.value).toEqual('12');
@@ -797,26 +807,26 @@ describe('packages/date-picker', () => {
       });
     });
 
-    test('(Uncontrolled) fires a change handler', async () => {
-      const onChange = jest.fn();
+    test('(Uncontrolled) Cell click fires a change handler', async () => {
+      const onDateChange = jest.fn();
       const { openMenu } = renderDatePicker({
-        onChange,
+        onDateChange,
       });
       const { calendarCells } = openMenu();
-      const cell1 = calendarCells?.[0];
-      userEvent.click(cell1);
-      await waitFor(() => expect(onChange).toHaveBeenCalled());
+      const firstCell = calendarCells?.[0];
+      userEvent.click(firstCell);
+      await waitFor(() => expect(onDateChange).toHaveBeenCalled());
     });
 
-    test('(Uncontrolled) changes the input value if `value` is not provided', async () => {
-      const onChange = jest.fn();
+    test('(Uncontrolled) Cell click changes the input value if `value` is not provided', async () => {
+      const onDateChange = jest.fn();
       const { openMenu, dayInput, monthInput, yearInput } = renderDatePicker({
-        onChange,
+        onDateChange,
         initialValue: new Date(),
       });
       const { calendarCells } = openMenu();
-      const cell1 = calendarCells?.[0];
-      userEvent.click(cell1);
+      const firstCell = calendarCells?.[0];
+      userEvent.click(firstCell);
       await waitFor(() => {
         expect(dayInput.value).toEqual('01');
         expect(monthInput.value).toEqual('12');

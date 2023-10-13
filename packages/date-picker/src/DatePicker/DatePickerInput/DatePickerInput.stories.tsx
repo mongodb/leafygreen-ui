@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { StoryFn } from '@storybook/react';
 import { isValid } from 'date-fns';
+import { isUndefined } from 'lodash';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
@@ -66,8 +67,10 @@ export const Basic: StoryFn<typeof DatePickerInput> = props => {
     }
   }, [props.value]);
 
-  const updateDate = (date: Date | null) => {
-    setDate(date);
+  const updateDate = (date?: Date | null) => {
+    if (!isUndefined(date)) {
+      setDate(date);
+    }
   };
 
   return (

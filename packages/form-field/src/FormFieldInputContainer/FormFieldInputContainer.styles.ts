@@ -169,7 +169,7 @@ const iconIsButtonSelector = `&:has(button.${iconClassName})`;
 export const inputWrapperSizeStyles: Record<Size, string> = {
   [Size.XSmall]: css`
     height: 22px;
-    padding-inline: 10px;
+    padding-inline: 6px;
 
     ${iconIsButtonSelector} {
       padding-inline-end: 4px;
@@ -177,7 +177,7 @@ export const inputWrapperSizeStyles: Record<Size, string> = {
   `,
   [Size.Small]: css`
     height: 28px;
-    padding-inline: 10px;
+    padding-inline: 6px;
 
     ${iconIsButtonSelector} {
       padding-inline-end: 4px;
@@ -236,9 +236,30 @@ export const inputWrapperStateStyles: Record<
     [Theme.Dark]: css``,
   },
   [FormFieldState.Valid]: {
-    // TODO:
-    [Theme.Light]: css``,
-    [Theme.Dark]: css``,
+    [Theme.Light]: css`
+      &:not([aria-disabled='true']) {
+        border-color: ${palette.green.dark1};
+
+        &:hover,
+        &:active {
+          &:not([aria-disabled='true']):not(:focus) {
+            box-shadow: ${hoverRing.light.green};
+          }
+        }
+      }
+    `,
+    [Theme.Dark]: css`
+      &:not([aria-disabled='true']) {
+        border-color: ${palette.green.dark1};
+
+        &:hover,
+        &:active {
+          &:not([aria-disabled='true']):not(:focus) {
+            box-shadow: ${hoverRing.dark.green};
+          }
+        }
+      }
+    `,
   },
 };
 
@@ -302,10 +323,10 @@ export const childrenWrapperStyles = css`
   width: 100%;
 `;
 
-export const iconsWrapperStyles = css`
+export const iconsWrapperStyles = (size: Size) => css`
   display: flex;
   align-items: center;
-  gap: ${spacing[1]}px;
+  gap: ${size === Size.XSmall ? spacing[1] : spacing[2]}px;
 `;
 
 export const iconStyles: Record<Theme, string> = {
@@ -317,11 +338,41 @@ export const iconStyles: Record<Theme, string> = {
   `,
 };
 
+export const validIconStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.green.dark1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.green.base};
+  `,
+};
+
 export const errorIconStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.red.base};
   `,
   [Theme.Dark]: css`
     color: ${palette.red.light1};
+  `,
+};
+
+export const optionalTextBaseStyle = css`
+  font-size: 12px;
+  line-height: 12px;
+  font-style: italic;
+  font-weight: ${fontWeights.regular};
+  display: flex;
+  align-items: center;
+  > p {
+    margin: 0;
+  }
+`;
+
+export const optionalTextThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.dark1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.base};
   `,
 };

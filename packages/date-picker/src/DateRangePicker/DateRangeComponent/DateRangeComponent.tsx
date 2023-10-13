@@ -4,6 +4,7 @@ import { useBackdropClick, useForwardedRef } from '@leafygreen-ui/hooks';
 
 import { useDatePickerContext } from '../../DatePickerContext';
 import { DateRangeType } from '../../types';
+import { isSameUTCRange } from '../../utils';
 import { DateRangeInput } from '../DateRangeInput';
 import { DateRangeMenu } from '../DateRangeMenu';
 
@@ -17,6 +18,7 @@ export const DateRangeComponent = forwardRef<
     {
       value,
       setValue,
+      handleValidation,
       onCancel,
       onClear,
       showQuickSelection,
@@ -40,8 +42,14 @@ export const DateRangeComponent = forwardRef<
 
     /** Called when the input's start or end value has changed */
     const handleInputValueChange = (newRange?: DateRangeType) => {
-      // TODO: more logic here
-      updateValue(newRange);
+      if (!isSameUTCRange(value, newRange)) {
+        // When the value changes via the input element,
+        // we only trigger validation if the component is dirty
+        if (isDirty) {
+          handleValidation?.(newRange);
+        }
+        updateValue(newRange);
+      }
     };
 
     /** Called when any calendar cell is clicked */
@@ -61,8 +69,10 @@ export const DateRangeComponent = forwardRef<
         <DateRangeMenu
           ref={menuRef}
           refEl={formFieldRef}
+          id={menuId}
           value={value}
           setValue={handleCalendarValueChange}
+          showQuickSelection={showQuickSelection}
         />
       </>
     );

@@ -7,8 +7,6 @@ export const newDateFromSegments = (
 ): Date | undefined => {
   if (segments && Object.values(segments).every(isValidSegment)) {
     const { day, month, year } = segments;
-    return new Date(
-      Date.UTC(year as number, (month as number) - 1, day as number),
-    );
+    return new Date(Date.UTC(Number(year), Number(month) - 1, Number(day)));
   }
 };

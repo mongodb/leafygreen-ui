@@ -10,7 +10,10 @@ import {
 } from '../../DatePickerContext';
 
 import { CalendarCell } from './CalendarCell';
-import { CalendarCellState } from './CalendarCell.types';
+import {
+  CalendarCellRangeState,
+  CalendarCellState,
+} from './CalendarCell.types';
 
 const meta: StoryMetaType<typeof CalendarCell, DatePickerContextProps> = {
   title: 'Components/DatePicker/Shared/CalendarCell',
@@ -18,12 +21,13 @@ const meta: StoryMetaType<typeof CalendarCell, DatePickerContextProps> = {
   parameters: {
     default: null,
     generate: {
+      storyNames: ['DefaultCells', 'ActiveCells', 'DisabledCells'],
       combineArgs: {
         darkMode: [false, true],
-        isHighlighted: [false, true],
         'data-hover': [false, true],
+        isHighlighted: [false, true],
         isCurrent: [false, true],
-        state: Object.values(CalendarCellState),
+        rangeState: Object.values(CalendarCellRangeState),
       },
       decorator: (Instance, ctx) => {
         const {
@@ -58,4 +62,58 @@ const Template: StoryFn<typeof CalendarCell> = props => (
 
 export const Basic = Template.bind({});
 
-export const Generated = () => {};
+// export const Generated = () => {};
+export const DefaultCells: StoryFn<typeof CalendarCell> = () => <></>;
+DefaultCells.parameters = {
+  generate: {
+    args: {
+      state: CalendarCellState.Default,
+    },
+
+    excludeCombinations: [
+      {
+        'data-hover': false,
+        rangeState: CalendarCellRangeState.Start,
+      },
+      {
+        'data-hover': false,
+        rangeState: CalendarCellRangeState.End,
+      },
+      {
+        'data-hover': true,
+        rangeState: CalendarCellRangeState.Range,
+      },
+    ],
+  },
+};
+
+export const ActiveCells: StoryFn<typeof CalendarCell> = () => <></>;
+ActiveCells.parameters = {
+  generate: {
+    args: {
+      state: CalendarCellState.Active,
+    },
+    excludeCombinations: [
+      {
+        rangeState: CalendarCellRangeState.Range,
+      },
+    ],
+  },
+};
+
+export const DisabledCells: StoryFn<typeof CalendarCell> = () => <></>;
+DisabledCells.parameters = {
+  generate: {
+    args: {
+      state: CalendarCellState.Disabled,
+    },
+    excludeCombinations: [
+      {
+        'data-hover': true,
+      },
+      {
+        isHighlighted: true,
+      },
+    ],
+  },
+};

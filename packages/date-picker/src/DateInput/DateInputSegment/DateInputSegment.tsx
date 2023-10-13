@@ -1,10 +1,4 @@
-import React, {
-  ChangeEventHandler,
-  FocusEventHandler,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
@@ -13,7 +7,6 @@ import { Size } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { useDatePickerContext } from '../../DatePickerContext';
-import { getValueFormatter } from '../../utils';
 
 import { defaultMax, defaultMin, defaultPlaceholder } from './constants';
 import {
@@ -24,6 +17,8 @@ import {
   segmentWidthStyles,
 } from './DateInputSegment.styles';
 import { DateInputSegmentProps } from './DateInputSegment.types';
+
+const lgid = 'date-picker_input-segment';
 
 /**
  * Renders a single date segment with the
@@ -57,35 +52,6 @@ export const DateInputSegment = React.forwardRef<
     const baseFontSize = useUpdatedBaseFontSize();
     const { size, disabled } = useDatePickerContext();
 
-    const formatValue = useMemo(() => getValueFormatter(segment), [segment]);
-
-    // internally, keep track of the input value
-    const [internalValue, setInternalValue] = useState<string>(
-      formatValue(value),
-    );
-
-    // If the value changes externally, update the internal value
-    useEffect(() => {
-      setInternalValue(formatValue(value));
-    }, [formatValue, value]);
-
-    // On input element change, we update the internal value
-    const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
-      setInternalValue(e.target.value);
-    };
-
-    // When the user un-focuses the element, then we fire the change handler
-    const handleBlur: FocusEventHandler<HTMLInputElement> = e => {
-      const formattedValue = formatValue(internalValue);
-
-      // If the value has changed, call the change handler
-      if (formattedValue !== formatValue(value)) {
-        onChange?.(formattedValue);
-      }
-
-      onBlur?.(e);
-    };
-
     return (
       <input
         {...rest}
@@ -94,13 +60,14 @@ export const DateInputSegment = React.forwardRef<
         ref={inputRef}
         type="number"
         role="spinbutton"
-        value={internalValue}
+        value={value}
         min={min}
         max={max}
         placeholder={defaultPlaceholder[segment]}
-        onChange={handleChange}
-        onBlur={handleBlur}
+        onChange={onChange}
+        onBlur={onBlur}
         disabled={disabled}
+        data-lg={lgid}
         className={cx(
           baseStyles,
           fontSizeStyles[baseFontSize],

@@ -6,6 +6,7 @@ import IconButton, { BaseIconButtonProps } from '@leafygreen-ui/icon-button';
 
 import { iconButtonStyles } from './CalendarButton.styles';
 
+const lgid = 'date-picker_calendar-button';
 /**
  * The icon button on the right of the DatePicker form field
  */
@@ -19,6 +20,7 @@ export const CalendarButton = forwardRef<
       aria-label="Open calendar menu"
       type="button"
       className={cx(iconButtonStyles, className)}
+      data-lg={lgid}
       {...rest}
     >
       <Icon glyph="Calendar" />

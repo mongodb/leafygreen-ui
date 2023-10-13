@@ -1,4 +1,4 @@
-export { default as Select } from './Select';
+export { Select } from './Select';
 export {
   DropdownWidthBasis,
   type SelectProps,

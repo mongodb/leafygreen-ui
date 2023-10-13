@@ -13,6 +13,8 @@ import {
   calendarCellCurrentStyles,
   calendarCellHighlightStyles,
   calendarCellHoverStyles,
+  calendarCellRangeHoverStyles,
+  calendarCellRangeStyles,
   calendarCellStateStyles,
   calendarCellStyles,
   cellTextCurrentStyles,
@@ -20,7 +22,11 @@ import {
   indicatorBaseStyles,
   indicatorClassName,
 } from './CalendarCell.styles';
-import { CalendarCellProps, CalendarCellState } from './CalendarCell.types';
+import {
+  CalendarCellProps,
+  CalendarCellRangeState,
+  CalendarCellState,
+} from './CalendarCell.types';
 
 /**
  * A single calendar cell.
@@ -36,6 +42,7 @@ export const CalendarCell = React.forwardRef<
     {
       children,
       state = CalendarCellState.Default,
+      rangeState = CalendarCellRangeState.None,
       isCurrent,
       isHighlighted,
       className,
@@ -47,28 +54,20 @@ export const CalendarCell = React.forwardRef<
     const ref = useForwardedRef(fwdRef, null);
     const { theme } = useDarkMode();
 
-    const isFocusable = isHighlighted && state !== CalendarCellState.Disabled;
-
-    const isActive = (
-      [
-        CalendarCellState.Active,
-        CalendarCellState.Start,
-        CalendarCellState.End,
-      ] as Array<CalendarCellState>
-    ).includes(state);
+    const isDisabled = state === CalendarCellState.Disabled;
+    const isFocusable = isHighlighted && !isDisabled;
+    const isActive = state === CalendarCellState.Active;
+    const isInRange = rangeState !== CalendarCellRangeState.None;
 
     const handleClick: MouseEventHandler<HTMLTableCellElement> = e => {
-      if (state !== CalendarCellState.Disabled) {
+      if (!isDisabled) {
         (onClick as MouseEventHandler<HTMLTableCellElement>)?.(e);
       }
     };
 
     // td does not trigger `onClick` on enter/space so we have to listen on key up
     const handleKeyUp: KeyboardEventHandler<HTMLTableCellElement> = e => {
-      if (
-        state !== CalendarCellState.Disabled &&
-        (e.code === keyMap.Enter || e.code === keyMap.Space)
-      ) {
+      if (!isDisabled && (e.code === keyMap.Enter || e.code === keyMap.Space)) {
         (onClick as KeyboardEventHandler<HTMLTableCellElement>)?.(e);
         // TODO: add focus back to input
       }
@@ -96,7 +95,9 @@ export const CalendarCell = React.forwardRef<
           calendarCellStateStyles[theme][state],
           calendarCellHoverStyles[theme][state],
           {
+            [calendarCellRangeStyles[theme][rangeState]]: !isDisabled,
             [calendarCellCurrentStyles[theme][state]]: isCurrent,
+            [calendarCellRangeHoverStyles[theme]]: isInRange && !isActive,
             [calendarCellHighlightStyles[theme]]: isFocusable,
           },
           className,

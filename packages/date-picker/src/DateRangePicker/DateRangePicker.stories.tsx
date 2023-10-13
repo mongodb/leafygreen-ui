@@ -85,7 +85,23 @@ export const Basic: StoryFn<typeof DateRangePicker> = props => {
     newUTC(2023, Month.December, 26),
   ]);
 
-  return <DateRangePicker {...props} value={range} onChange={setRange} />;
+  return <DateRangePicker {...props} value={range} onRangeChange={setRange} />;
+};
+
+export const WithQuickSelection: StoryFn<typeof DateRangePicker> = props => {
+  const [range, setRange] = useState<DateRangeType | undefined>([
+    newUTC(2023, Month.October, 14),
+    newUTC(2023, Month.December, 26),
+  ]);
+
+  return (
+    <DateRangePicker
+      {...props}
+      value={range}
+      onRangeChange={setRange}
+      showQuickSelection
+    />
+  );
 };
 
 export const Uncontrolled: StoryFn<typeof DateRangePicker> = props => {
