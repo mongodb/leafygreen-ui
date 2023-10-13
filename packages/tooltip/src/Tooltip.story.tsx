@@ -127,6 +127,29 @@ ControlledWithState.parameters = {
   },
 };
 
+export const InitialOpen = (args: TooltipProps) => {
+  return (
+    <div
+      className={css`
+        padding: 100px;
+      `}
+    >
+      <Tooltip initialOpen {...args} />
+    </div>
+  );
+};
+InitialOpen.args = {
+  enabled: true,
+  usePortal: true,
+  trigger: <Button size={Size.XSmall}>Trigger</Button>,
+  children: 'I am a tooltip!',
+};
+InitialOpen.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+
 export const WithLeafyGreenChildren = LiveExample.bind({});
 WithLeafyGreenChildren.args = {
   children: (
