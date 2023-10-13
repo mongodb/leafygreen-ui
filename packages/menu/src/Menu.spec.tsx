@@ -107,6 +107,48 @@ describe('packages/menu', () => {
     expect(menu).not.toBeInTheDocument();
   });
 
+  test('pressing enter on a menuitem closes the menu', async () => {
+    const { getByTestId } = renderMenu({
+      trigger,
+    });
+
+    const button = getByTestId('menu-trigger');
+
+    userEvent.click(button);
+    const menu = getByTestId(menuTestId);
+
+    expect(menu).toBeInTheDocument();
+
+    const menuItem = getByTestId('menu-item-a');
+
+    menuItem.focus();
+    userEvent.keyboard('[Enter]');
+
+    await waitForElementToBeRemoved(menu);
+    expect(menu).not.toBeInTheDocument();
+  });
+
+  test('pressing space on a menuitem closes the menu', async () => {
+    const { getByTestId } = renderMenu({
+      trigger,
+    });
+
+    const button = getByTestId('menu-trigger');
+
+    userEvent.click(button);
+    const menu = getByTestId(menuTestId);
+
+    expect(menu).toBeInTheDocument();
+
+    const menuItem = getByTestId('menu-item-a');
+
+    menuItem.focus();
+    userEvent.keyboard('[Space]');
+
+    await waitForElementToBeRemoved(menu);
+    expect(menu).not.toBeInTheDocument();
+  });
+
   test('clicking outside the menu closes the menu', async () => {
     const { getByTestId, backdrop } = renderMenu({
       trigger,
@@ -147,6 +189,36 @@ describe('packages/menu', () => {
       expect(menu).toBeInTheDocument();
 
       userEvent.click(menuItem);
+
+      await waitForElementToBeRemoved(menu);
+      expect(menu).not.toBeInTheDocument();
+    });
+
+    test('pressing enter on a menuitem closes the menu', async () => {
+      const { getByTestId } = render(<ControlledExample />);
+
+      const menu = getByTestId('controlled-menu');
+      const menuItem = getByTestId('controlled-menu-item');
+
+      expect(menu).toBeInTheDocument();
+
+      menuItem.focus();
+      userEvent.keyboard('[Enter]');
+
+      await waitForElementToBeRemoved(menu);
+      expect(menu).not.toBeInTheDocument();
+    });
+
+    test('pressing space on a menuitem closes the menu', async () => {
+      const { getByTestId } = render(<ControlledExample />);
+
+      const menu = getByTestId('controlled-menu');
+      const menuItem = getByTestId('controlled-menu-item');
+
+      expect(menu).toBeInTheDocument();
+
+      menuItem.focus();
+      userEvent.keyboard('[Space]');
 
       await waitForElementToBeRemoved(menu);
       expect(menu).not.toBeInTheDocument();
