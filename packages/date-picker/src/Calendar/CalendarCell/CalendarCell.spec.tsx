@@ -59,7 +59,8 @@ describe('packages/date-picker/shared/calendar-cell', () => {
       </TestCellWrapper>,
     );
     const gridcell = queryByRole('gridcell');
-    userEvent.type(gridcell!, `{enter}`);
+    gridcell!.focus();
+    userEvent.keyboard('[Enter]');
     expect(clickHandler).toHaveBeenCalled();
   });
 
@@ -71,7 +72,8 @@ describe('packages/date-picker/shared/calendar-cell', () => {
       </TestCellWrapper>,
     );
     const gridcell = queryByRole('gridcell');
-    userEvent.type(gridcell!, `{space}`);
+    gridcell!.focus();
+    userEvent.keyboard('[Space]');
     expect(clickHandler).toHaveBeenCalled();
   });
 
