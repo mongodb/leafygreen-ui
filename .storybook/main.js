@@ -101,7 +101,7 @@ const storybookModuleFederationConfig = {
     './GuideCue': '/packages/guide-cue/src/index.ts',
     './IconButton': '/packages/icon-button/src/index.ts',
     './InlineDefinition': '/packages/inline-definition/src/index.ts',
-    './InputOptional': '/packages/input-optional/src/index.ts',
+    './InputOption': '/packages/input-option/src/index.ts',
     './Logo': '/packages/logo/src/index.ts',
     './MarketingModal': '/packages/marketing-modal/src/index.ts',
     './Menu': '/packages/menu/src/index.ts',
