@@ -41,8 +41,8 @@ const storybookConfig = {
       new CopyPlugin({
         patterns: [
           {
-            from: path.resolve(__dirname, '../src/assets'),
-            to: path.resolve(__dirname, '../storybook-static/assets'),
+            from: path.resolve(__dirname, '../src/assets/global.css'),
+            to: path.resolve(__dirname, '../storybook-static/assets/global.css'),
           },
         ],
       }),

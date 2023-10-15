@@ -12,7 +12,7 @@
     "init": "yarn && yarn build",
     "create-package": "lg create",
     "prebuild": "turbo run build tsc --filter=@lg-tools/cli",
-    "build": "turbo run build tsc",
+    "build": "turbo run build tsc && gulp sass",
     "build-storybook": "storybook build",
     "chromatic": "npx chromatic",
     "clean": "npm-run-all --parallel clean:*",
