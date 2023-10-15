@@ -90,14 +90,14 @@ const storybookModuleFederationConfig = {
   },
   shared: {
     react: {
-        singleton: true,
-        requiredVersion: '^17.0.2'
+      singleton: true,
+      requiredVersion: '^17.0.2',
     },
     'react-dom': {
-        singleton: true,
-        requiredVersion: '^17.0.2'
-    }
-  }
+      singleton: true,
+      requiredVersion: '^17.0.2',
+    },
+  },
 };
 
 module.exports = withStorybookModuleFederation(storybookModuleFederationConfig)(
