@@ -1,23 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { css, cx } from '@leafygreen-ui/emotion';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { cx } from '@leafygreen-ui/emotion';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 
-import EllipsesStep from './EllipsesStep';
-import Step from './InternalStep';
-import StepperContextProvider from './StepperContext';
-import { StepperProps, StepStates } from './types';
+import { EllipsesStep } from '../EllipsesStep/EllipsesStep';
+import { InternalStep } from '../InternalStep/InternalStep';
 
-const baseStyles = css`
-  list-style: none;
-  padding-inline-start: 0;
-  width: 100%;
-  display: flex;
-  & > * {
-    flex: 1;
-  }
-`;
+import { baseStyles } from './Stepper.styles';
+import { StepperProps, StepStates } from './Stepper.types';
 
 const Stepper = ({
   children,
@@ -71,7 +64,7 @@ const Stepper = ({
   };
 
   return (
-    <StepperContextProvider darkMode={darkMode}>
+    <LeafyGreenProvider darkMode={darkMode}>
       <ol className={cx(baseStyles, className)} aria-label="progress" {...rest}>
         {hasPriorSteps && (
           <EllipsesStep
@@ -87,13 +80,13 @@ const Stepper = ({
           childrenArray.slice(firstDisplayedStep, lastDisplayedStep),
           (stepContents, i) => (
             <li>
-              <Step
+              <InternalStep
                 state={getStepState(firstDisplayedStep + i)}
                 shouldDisplayLine={!isLastStep(firstDisplayedStep + i)}
                 index={firstDisplayedStep + i + 1}
               >
                 {stepContents}
-              </Step>
+              </InternalStep>
             </li>
           ),
         )}
@@ -108,7 +101,7 @@ const Stepper = ({
           </EllipsesStep>
         )}
       </ol>
-    </StepperContextProvider>
+    </LeafyGreenProvider>
   );
 };
 
