@@ -1,9 +1,9 @@
-import { stepIconClassName } from 'src/constants';
-
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
+
+import { stepIconClassName } from '../constants';
 
 import { EllipsesStepState, EllipsesStepStates } from './EllipsesStep.types';
 

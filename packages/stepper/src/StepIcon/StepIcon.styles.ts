@@ -1,9 +1,9 @@
-import { StepState, StepStates } from 'src/Stepper/Stepper.types';
-
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
+
+import { StepState, StepStates } from '../Stepper/Stepper.types';
 
 export const baseStyles = css`
   box-sizing: content-box;
@@ -42,9 +42,9 @@ export const themedStateBgColor = {
   [Theme.Dark]: {
     [StepStates.CompletedMultiple]: palette.green.base,
     [StepStates.Completed]: palette.green.base,
-    [StepStates.Current]: palette.green.base,
-    [StepStates.Upcoming]: palette.gray.light1,
-    [StepStates.UpcomingMultiple]: palette.gray.light1,
+    [StepStates.Current]: palette.black,
+    [StepStates.Upcoming]: palette.black,
+    [StepStates.UpcomingMultiple]: palette.black,
   },
   [Theme.Light]: {
     [StepStates.CompletedMultiple]: palette.green.dark1,
@@ -74,6 +74,6 @@ export const themedStateBorderColor = {
 
 export const getThemedStateStyles = (theme: Theme, state: StepState) => css`
   color: ${themedStateColor[theme][state]};
-  background-color: ${palette.black};
-  border-color: ${palette.gray.light1};
+  background-color: ${themedStateBgColor[theme][state]};
+  border-color: ${themedStateBorderColor[theme][state]};
 `;

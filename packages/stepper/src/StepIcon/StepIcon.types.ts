@@ -1,6 +1,6 @@
-import { StepState } from 'src/Stepper/Stepper.types';
-
 import { HTMLElementProps } from '@leafygreen-ui/lib';
+
+import { StepState } from '../Stepper/Stepper.types';
 
 export interface StepIconProps extends HTMLElementProps<'div'> {
   state: StepState;

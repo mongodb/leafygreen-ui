@@ -1,12 +1,12 @@
 import React from 'react';
 import { PropsWithChildren } from 'react';
-import { StepStates } from 'src/Stepper/Stepper.types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
 import { stepLabelClassName } from '../constants';
+import { StepStates } from '../Stepper/Stepper.types';
 
 import { getThemedStateColorStyles, multipleStyles } from './StepLabel.styles';
 import { StepLabelProps } from './StepLabel.types';
