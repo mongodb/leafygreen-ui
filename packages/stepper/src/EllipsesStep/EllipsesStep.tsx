@@ -5,7 +5,7 @@ import Tooltip, { Align, Justify } from '@leafygreen-ui/tooltip';
 
 import { InternalStep } from '../InternalStep/InternalStep';
 
-import { ellipsesStepStyles, tooltipStyles } from './EllipsesStep.styles';
+import { getMultipleStyles, tooltipStyles } from './EllipsesStep.styles';
 import { EllipsesStepProps } from './EllipsesStep.types';
 
 export const EllipsesStep = ({
@@ -26,7 +26,7 @@ export const EllipsesStep = ({
         // The <li> needs to be defined here and not in <Stepper> because the Tooltip doesn't trigger without a wrapping HTML element.
         <li>
           <InternalStep
-            className={ellipsesStepStyles[state][theme]}
+            className={getMultipleStyles(theme, state)}
             state={state}
             tabIndex={0}
             {...rest}

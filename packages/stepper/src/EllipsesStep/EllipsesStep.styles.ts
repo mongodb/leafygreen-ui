@@ -13,39 +13,23 @@ export const tooltipStyles = css`
   padding-inline-start: ${spacing[4]}px;
 `;
 
-export const completedMultipleStyles: Record<Theme, string> = {
-  [Theme.Dark]: css`
-    &:hover .${stepIconClassName} {
-      // TODO: use centralized box-shadow value
-      box-shadow: 0px 0px 0px 3px ${palette.green.dark1};
-    }
-  `,
-  [Theme.Light]: css`
-    &:hover .${stepIconClassName} {
-      box-shadow: 0px 0px 0px 3px ${palette.green.light2};
-    }
-  `,
+export const themedStateShadowColor = {
+  [Theme.Dark]: {
+    [EllipsesStepStates.CompletedMultiple]: palette.green.dark1,
+    [EllipsesStepStates.UpcomingMultiple]: palette.gray.dark2,
+  },
+  [Theme.Light]: {
+    [EllipsesStepStates.CompletedMultiple]: palette.green.light2,
+    [EllipsesStepStates.UpcomingMultiple]: palette.gray.light2,
+  },
 };
 
-export const upcomingMultipleStyles: Record<Theme, string> = {
-  [Theme.Dark]: css`
-    &:hover .${stepIconClassName} {
-      // TODO: use centralized box-shadow value
-      box-shadow: 0px 0px 0px 3px ${palette.gray.dark2};
-    }
-  `,
-  [Theme.Light]: css`
-    &:hover .${stepIconClassName} {
-      // TODO: use centralized box-shadow value
-      box-shadow: 0px 0px 0px 3px ${palette.gray.light2};
-    }
-  `,
-};
-
-export const ellipsesStepStyles: Record<
-  EllipsesStepState,
-  Record<Theme, string>
-> = {
-  [EllipsesStepStates.CompletedMultiple]: completedMultipleStyles,
-  [EllipsesStepStates.UpcomingMultiple]: upcomingMultipleStyles,
-};
+export const getMultipleStyles = (
+  theme: Theme,
+  state: EllipsesStepState,
+) => css`
+  &:hover .${stepIconClassName} {
+    // TODO: use centralized box-shadow value
+    box-shadow: 0px 0px 0px 3px ${themedStateShadowColor[theme][state]};
+  }
+`;
