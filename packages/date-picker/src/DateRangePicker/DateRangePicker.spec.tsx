@@ -361,6 +361,13 @@ describe('packages/date-picker/date-range-picker', () => {
           const { menuContainerEl } = getMenuElements();
           expect(menuContainerEl).toBeInTheDocument();
         });
+
+        test('focuses on the highlighted cell', () => {
+          const { calendarButton, getMenuElements } = renderDateRangePicker();
+          userEvent.click(calendarButton);
+          const { todayCell } = getMenuElements();
+          expect(todayCell).toHaveFocus();
+        });
       });
 
       describe('Basic menu', () => {
