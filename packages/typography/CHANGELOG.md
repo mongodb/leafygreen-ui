@@ -1,5 +1,17 @@
 # @leafygreen-ui/typography
 
+## 18.0.0
+
+### Major Changes
+
+- 90053e16: Allows `Link` component to accept a ref
+
+### Patch Changes
+
+- Updated dependencies [dd4f3da8]
+  - @leafygreen-ui/lib@13.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.10
+
 ## 17.0.2
 
 ### Patch Changes

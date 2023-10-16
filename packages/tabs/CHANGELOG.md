@@ -1,5 +1,17 @@
 # @leafygreen-ui/tabs
 
+## 11.1.12
+
+### Patch Changes
+
+- Updated dependencies [dd4f3da8]
+- Updated dependencies [90053e16]
+  - @leafygreen-ui/lib@13.0.0
+  - @leafygreen-ui/typography@18.0.0
+  - @leafygreen-ui/a11y@1.4.11
+  - @leafygreen-ui/leafygreen-provider@3.1.10
+  - @leafygreen-ui/portal@5.0.3
+
 ## 11.1.11
 
 ### Patch Changes
