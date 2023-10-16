@@ -324,8 +324,16 @@ describe('packages/date-picker/date-range-picker', () => {
           expect(document.activeElement).toBe(inputElements[2]);
         });
 
-        test('focuses the first segment when all are empty', () => {
+        test('focuses the first segment when all are empty (`undefined`)', () => {
           const { inputContainer, inputElements } = renderDateRangePicker();
+          userEvent.click(inputContainer);
+          expect(document.activeElement).toBe(inputElements[0]);
+        });
+
+        test('focuses the first segment when all are empty (`[null, null]`)', () => {
+          const { inputContainer, inputElements } = renderDateRangePicker({
+            value: [null, null],
+          });
           userEvent.click(inputContainer);
           expect(document.activeElement).toBe(inputElements[0]);
         });
@@ -337,7 +345,7 @@ describe('packages/date-picker/date-range-picker', () => {
           expect(document.activeElement).toBe(inputElements[1]);
         });
 
-        test('focuses the first empty segment in end input', () => {
+        test('focuses the first empty segment in end input when start value is set', () => {
           const { inputContainer, inputElements } = renderDateRangePicker({
             value: [newUTC(2023, 1, 1), null],
           });
@@ -699,6 +707,8 @@ describe('packages/date-picker/date-range-picker', () => {
           expect(handleValidation).not.toHaveBeenCalled();
         });
 
+        // TODO: Repeat these tests for values:
+        // `undefined`, `[null, null]` & `[Date, Date]`
         describe('Tab order', () => {
           describe('when menu is closed', () => {
             const tabStops = expectedTabStopLabels['closed'];

@@ -1,7 +1,6 @@
-import React, { PropsWithChildren, useMemo, useState } from 'react';
+import React, { PropsWithChildren, useMemo } from 'react';
 
 import { addMonthsUTC } from '../../../utils';
-import { getInitialMonth } from '../../utils/getInitialMonth';
 import { DateRangeMenuProps } from '../DateRangeMenu.types';
 
 import { DateRangeMenuContext } from './DateRangeMenuContext';
@@ -9,6 +8,8 @@ import { DateRangeMenuContext } from './DateRangeMenuContext';
 export interface DateRangeMenuProviderProps
   extends Pick<DateRangeMenuProps, 'value'>,
     PropsWithChildren<{}> {
+  month: Date;
+  setMonth: React.Dispatch<React.SetStateAction<Date>>;
   today: Date;
 }
 
@@ -17,11 +18,11 @@ export interface DateRangeMenuProviderProps
  * and initializes the start & end display months
  */
 export const DateRangeMenuProvider = ({
-  value,
+  month,
+  setMonth,
   today,
   children,
 }: DateRangeMenuProviderProps) => {
-  const [month, setMonth] = useState<Date>(getInitialMonth(value, today));
   const nextMonth = useMemo<Date>(() => addMonthsUTC(month, 1), [month]);
 
   return (
