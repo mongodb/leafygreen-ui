@@ -98,7 +98,6 @@ export const DateRangeMenu = forwardRef<HTMLDivElement, DateRangeMenuProps>(
 
     /** Triggered when the Apply button is clicked */
     const handleApply: MouseEventHandler<HTMLButtonElement> = _ => {
-      console.log('handle Apply');
       setValue(value);
       setOpen(false);
     };
@@ -113,7 +112,6 @@ export const DateRangeMenu = forwardRef<HTMLDivElement, DateRangeMenuProps>(
     /** Triggered when the clear button is clicked */
     const handleClear: MouseEventHandler<HTMLButtonElement> = e => {
       setValue([null, null]);
-      // setOpen(false);
       onClear?.(e);
     };
 

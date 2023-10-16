@@ -488,6 +488,14 @@ describe('packages/date-picker/date-range-picker', () => {
               expect.arrayContaining([start, end]),
             );
           });
+
+          test('closes menu', async () => {
+            const { openMenu } = renderDateRangePicker();
+            const { applyButton, menuContainerEl } = openMenu();
+            userEvent.click(applyButton!);
+            await waitForElementToBeRemoved(menuContainerEl);
+            expect(menuContainerEl).not.toBeInTheDocument();
+          });
         });
 
         describe('Clicking the Cancel button', () => {
@@ -520,6 +528,14 @@ describe('packages/date-picker/date-range-picker', () => {
               expect.arrayContaining([start, end]),
             );
           });
+
+          test('closes menu', async () => {
+            const { openMenu } = renderDateRangePicker();
+            const { cancelButton, menuContainerEl } = openMenu();
+            userEvent.click(cancelButton!);
+            await waitForElementToBeRemoved(menuContainerEl);
+            expect(menuContainerEl).not.toBeInTheDocument();
+          });
         });
 
         describe('Clicking the Clear button', () => {
@@ -535,6 +551,7 @@ describe('packages/date-picker/date-range-picker', () => {
             userEvent.click(clearButton!);
             expect(onClear).toHaveBeenCalled();
           });
+
           test('fires a change handler with the to clear the range values', () => {
             const start = newUTC(2023, Month.April, 1);
             const end = newUTC(2023, Month.July, 5);
@@ -548,6 +565,13 @@ describe('packages/date-picker/date-range-picker', () => {
             expect(onRangeChange).toHaveBeenCalledWith(
               expect.arrayContaining([null, null]),
             );
+          });
+
+          test('does not close the menu', () => {
+            const { openMenu } = renderDateRangePicker();
+            const { clearButton, menuContainerEl } = openMenu();
+            userEvent.click(clearButton!);
+            expect(menuContainerEl).toBeInTheDocument();
           });
         });
       });
