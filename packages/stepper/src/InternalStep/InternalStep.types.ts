@@ -7,7 +7,6 @@ export interface InternalStepProps extends HTMLElementProps<'div'> {
   index?: number;
   stepIcon?: React.ReactNode;
   ariaLabel?: string;
-  className?: string;
   iconSize?: number;
   shouldDisplayLine?: boolean;
 }
