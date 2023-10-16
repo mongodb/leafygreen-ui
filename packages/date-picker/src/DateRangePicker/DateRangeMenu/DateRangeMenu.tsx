@@ -2,6 +2,7 @@ import React, {
   FocusEventHandler,
   forwardRef,
   KeyboardEventHandler,
+  MouseEventHandler,
   useMemo,
   useRef,
   useState,
@@ -31,11 +32,18 @@ const lgid = 'date-range_menu';
 
 export const DateRangeMenu = forwardRef<HTMLDivElement, DateRangeMenuProps>(
   (
-    { value, setValue, showQuickSelection, ...rest }: DateRangeMenuProps,
+    {
+      value,
+      setValue,
+      showQuickSelection,
+      onCancel,
+      onClear,
+      ...rest
+    }: DateRangeMenuProps,
     fwdRef,
   ) => {
     const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
-    const { isOpen } = useDatePickerContext();
+    const { isOpen, setOpen } = useDatePickerContext();
     const menuRef = useForwardedRef(fwdRef, null);
     const calendarSectionRef = useRef<HTMLDivElement>(null);
     const chevronRefs = useDynamicRefs<HTMLButtonElement>();
@@ -88,6 +96,27 @@ export const DateRangeMenu = forwardRef<HTMLDivElement, DateRangeMenuProps>(
       }
     };
 
+    /** Triggered when the Apply button is clicked */
+    const handleApply: MouseEventHandler<HTMLButtonElement> = _ => {
+      console.log('handle Apply');
+      setValue(value);
+      setOpen(false);
+    };
+
+    /** Triggered when the cancel button is clicked */
+    const handleCancel: MouseEventHandler<HTMLButtonElement> = e => {
+      setValue(value);
+      setOpen(false);
+      onCancel?.(e);
+    };
+
+    /** Triggered when the clear button is clicked */
+    const handleClear: MouseEventHandler<HTMLButtonElement> = e => {
+      setValue([null, null]);
+      // setOpen(false);
+      onClear?.(e);
+    };
+
     return (
       <DateRangeMenuProvider value={value} today={today}>
         <MenuWrapper
@@ -119,7 +148,12 @@ export const DateRangeMenu = forwardRef<HTMLDivElement, DateRangeMenuProps>(
               setHighlight={setHighlight}
             />
           </div>
-          <DateRangeMenuFooter buttonRefs={footerButtonRefs} />
+          <DateRangeMenuFooter
+            onApply={handleApply}
+            onCancel={handleCancel}
+            onClear={handleClear}
+            buttonRefs={footerButtonRefs}
+          />
         </MenuWrapper>
       </DateRangeMenuProvider>
     );

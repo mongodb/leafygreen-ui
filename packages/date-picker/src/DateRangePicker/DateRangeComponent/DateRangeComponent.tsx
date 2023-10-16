@@ -72,6 +72,8 @@ export const DateRangeComponent = forwardRef<
           id={menuId}
           value={value}
           setValue={handleCalendarValueChange}
+          onCancel={onCancel}
+          onClear={onClear}
           showQuickSelection={showQuickSelection}
         />
       </>

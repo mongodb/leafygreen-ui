@@ -478,15 +478,14 @@ describe('packages/date-picker/date-range-picker', () => {
             const start = newUTC(2023, Month.April, 1);
             const end = newUTC(2023, Month.July, 5);
             const onRangeChange = jest.fn();
-            const { inputElements, getMenuElements } = renderDateRangePicker({
+            const { openMenu } = renderDateRangePicker({
               onRangeChange,
               value: [start, end],
             });
-            userEvent.type(inputElements[2], '5');
-            const { applyButton } = getMenuElements();
+            const { applyButton } = openMenu();
             userEvent.click(applyButton!);
             expect(onRangeChange).toHaveBeenCalledWith(
-              expect.arrayContaining([setUTCDate(start, 5), end]),
+              expect.arrayContaining([start, end]),
             );
           });
         });

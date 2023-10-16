@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { Decorator, StoryFn } from '@storybook/react';
@@ -53,7 +54,9 @@ const meta: StoryMetaType<typeof DateRangePicker, DatePickerContextProps> = {
         'handleValidation',
         'initialValue',
         'onChange',
-        'onSegmentChange',
+        'onRangeChange',
+        'onCancel',
+        'onClear',
         'value',
       ],
     },
@@ -89,6 +92,7 @@ export const Basic: StoryFn<typeof DateRangePicker> = props => {
   ]);
 
   const handleRangeChange = (range?: DateRangeType) => {
+    console.log('Storybook: Range changed:', range);
     setRange(range);
   };
 
