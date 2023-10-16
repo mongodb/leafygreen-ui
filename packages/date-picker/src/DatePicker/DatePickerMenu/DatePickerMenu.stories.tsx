@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks, react/prop-types */
 import React, { useRef, useState } from 'react';
-import { StoryFn, StoryObj } from '@storybook/react';
+import { Decorator, StoryFn, StoryObj } from '@storybook/react';
 import { userEvent, within } from '@storybook/testing-library';
 import { last, omit } from 'lodash';
 import MockDate from 'mockdate';
@@ -27,7 +27,7 @@ import { DatePickerMenuProps } from './DatePickerMenu.types';
 const mockToday = newUTC(2023, Month.September, 14);
 type DecoratorArgs = DatePickerMenuProps & DatePickerContextProps;
 
-const MenuDecorator = (Story: StoryFn, ctx: any) => {
+const MenuDecorator: Decorator = (Story: StoryFn, ctx: any) => {
   const [{ darkMode, ...contextProps }, { ...props }] = pickAndOmit(
     ctx?.args as DecoratorArgs,
     [...contextPropNames],

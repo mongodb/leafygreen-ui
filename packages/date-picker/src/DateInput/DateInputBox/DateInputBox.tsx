@@ -4,6 +4,7 @@ import React, {
   FocusEventHandler,
 } from 'react';
 import { isSameDay } from 'date-fns';
+import { isEqual } from 'lodash';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
@@ -17,12 +18,16 @@ import {
   isDateSegment,
 } from '../../hooks/useDateSegments/DateSegments.types';
 import { useDateSegments } from '../../hooks/useDateSegments/useDateSegments';
-import { getValueFormatter, newDateFromSegments } from '../../utils';
+import {
+  doesSomeSegmentExist,
+  getValueFormatter,
+  newDateFromSegments,
+} from '../../utils';
 import { DateInputSegment } from '../DateInputSegment';
 
 import {
   segmentPartsWrapperStyles,
-  separatorLiteralDisbledStyles,
+  separatorLiteralDisabledStyles,
   separatorLiteralStyles,
 } from './DateInputBox.styles';
 import { DateInputBoxProps } from './DateInputBox.types';
@@ -82,30 +87,34 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
      */
     const onSegmentsUpdate = (
       newSegments: DateSegmentsState,
-      _prev?: DateSegmentsState,
+      prevSegments?: DateSegmentsState,
       updatedSegment?: DateSegment,
     ) => {
       const utcDate = newDateFromSegments(newSegments);
+      const haveSegmentValuesChanged = !isEqual(newSegments, prevSegments);
+      const areAllSegmentsEmpty = !doesSomeSegmentExist(newSegments);
 
-      // Synthetically trigger the onChange event passed in from the parent
-      if (updatedSegment) {
-        triggerChangeEventForSegment(updatedSegment);
-      } else {
-        Object.keys(newSegments).forEach(seg => {
-          triggerChangeEventForSegment(seg as DateSegment);
-        });
-      }
-
-      if (utcDate) {
-        // Only update the value iff all parts are set, and create a valid date.
-        const shouldUpdate = !dateValue || !isSameDay(utcDate, dateValue);
-
-        if (shouldUpdate) {
-          setDateValue?.(utcDate);
+      if (haveSegmentValuesChanged) {
+        // Synthetically trigger the onChange event passed in from the parent
+        if (updatedSegment) {
+          triggerChangeEventForSegment(updatedSegment);
+        } else {
+          Object.keys(newSegments).forEach(seg => {
+            triggerChangeEventForSegment(seg as DateSegment);
+          });
         }
-      } else if (!(newSegments.day || newSegments.month || newSegments.year)) {
-        // if no segment exists, set the external value to null
-        setDateValue?.(null);
+
+        if (utcDate) {
+          // Only update the value iff all parts are set, and create a valid date.
+          const shouldUpdate = !dateValue || !isSameDay(utcDate, dateValue);
+
+          if (shouldUpdate) {
+            setDateValue?.(utcDate);
+          }
+        } else if (haveSegmentValuesChanged && areAllSegmentsEmpty) {
+          // if no segment exists, set the external value to null
+          setDateValue?.(null);
+        }
       }
     };
 
@@ -146,7 +155,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
             return (
               <span
                 className={cx(separatorLiteralStyles, {
-                  [separatorLiteralDisbledStyles[theme]]: disabled,
+                  [separatorLiteralDisabledStyles[theme]]: disabled,
                 })}
                 key={'literal-' + i}
               >

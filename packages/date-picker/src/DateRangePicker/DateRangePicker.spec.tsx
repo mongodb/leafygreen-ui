@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  queryByText as globalQueryByText,
   render,
   waitFor,
   waitForElementToBeRemoved,
@@ -134,9 +133,38 @@ describe('packages/date-picker/date-range-picker', () => {
         );
       });
 
-      test('if a value is set, menu opens to the month of that value', () => {
+      test('if only a start value is set, menu opens to the month of that value', () => {
         const { openMenu } = renderDateRangePicker({
           value: [newUTC(2023, Month.March, 10), null],
+        });
+
+        const { calendarGrids, menuContainerEl } = openMenu();
+        const headers = menuContainerEl?.querySelectorAll('h6');
+        expect(headers?.[0]).toHaveTextContent('March 2023');
+        expect(headers?.[1]).toHaveTextContent('April 2023');
+        expect(calendarGrids?.[0]).toHaveAttribute('aria-label', 'March 2023');
+        expect(calendarGrids?.[1]).toHaveAttribute('aria-label', 'April 2023');
+      });
+
+      test('if only an end value is set, menu opens to the month _before_ value', () => {
+        const { openMenu } = renderDateRangePicker({
+          value: [null, newUTC(2023, Month.March, 10)],
+        });
+
+        const { calendarGrids, menuContainerEl } = openMenu();
+        const headers = menuContainerEl?.querySelectorAll('h6');
+        expect(headers?.[0]).toHaveTextContent('February 2023');
+        expect(headers?.[1]).toHaveTextContent('March 2023');
+        expect(calendarGrids?.[0]).toHaveAttribute(
+          'aria-label',
+          'February 2023',
+        );
+        expect(calendarGrids?.[1]).toHaveAttribute('aria-label', 'March 2023');
+      });
+
+      test('if a full value is set, menu opens to the month of the start value', () => {
+        const { openMenu } = renderDateRangePicker({
+          value: [newUTC(2023, Month.March, 10), newUTC(2023, Month.April, 1)],
         });
 
         const { calendarGrids, menuContainerEl } = openMenu();
