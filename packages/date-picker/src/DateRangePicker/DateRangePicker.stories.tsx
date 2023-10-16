@@ -18,7 +18,7 @@ import {
   Locales,
   TimeZones,
 } from '../testUtils';
-import { DateRangeType } from '../types';
+import { DatePickerState, DateRangeType } from '../types';
 import { newUTC } from '../utils';
 
 import { DateRangePicker } from './DateRangePicker';
@@ -92,7 +92,7 @@ export const Basic: StoryFn<typeof DateRangePicker> = props => {
   ]);
 
   const handleRangeChange = (range?: DateRangeType) => {
-    console.log('Storybook: Range changed:', range);
+    console.log('Storybook: Range changed', range);
     setRange(range);
   };
 
@@ -123,6 +123,40 @@ export const WithQuickSelection: StoryFn<typeof DateRangePicker> = props => {
 
 export const Uncontrolled: StoryFn<typeof DateRangePicker> = props => {
   return <DateRangePicker {...props} />;
+};
+
+export const WithValidation: StoryFn<typeof DateRangePicker> = props => {
+  const expectedDate = newUTC(2023, Month.December, 26);
+
+  const [state, setState] = useState<DatePickerState>(DatePickerState.None);
+  const [range, setRange] = useState<DateRangeType | undefined>([null, null]);
+
+  const handleRangeChange = (range?: DateRangeType) => {
+    console.log('Storybook: Range changed', range);
+    setRange(range);
+  };
+
+  const handleValidation = (range?: DateRangeType) => {
+    console.log('Storybook: Handling validation', range);
+
+    if (range && range[0] === expectedDate) {
+      setState(DatePickerState.None);
+    }
+    setState(DatePickerState.Error);
+  };
+
+  console.log(state);
+
+  return (
+    <DateRangePicker
+      {...props}
+      value={range}
+      state={state}
+      errorMessage={`Start date must be ${expectedDate.toUTCString()}`}
+      onRangeChange={handleRangeChange}
+      handleValidation={handleValidation}
+    />
+  );
 };
 
 // export const Generated = () => {};
