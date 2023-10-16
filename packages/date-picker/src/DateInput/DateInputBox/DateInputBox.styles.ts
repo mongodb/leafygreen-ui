@@ -12,7 +12,7 @@ export const separatorLiteralStyles = css`
   user-select: none;
 `;
 
-export const separatorLiteralDisbledStyles: Record<Theme, string> = {
+export const separatorLiteralDisabledStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     color: ${palette.gray.dark2};
   `,

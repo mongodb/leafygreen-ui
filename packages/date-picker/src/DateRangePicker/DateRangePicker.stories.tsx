@@ -1,6 +1,8 @@
+/* eslint-disable no-console */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import { StoryFn } from '@storybook/react';
+import { Decorator, StoryFn } from '@storybook/react';
+import { mockDateDecorator } from 'storybook-mock-date-decorator';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
@@ -11,49 +13,53 @@ import {
   DatePickerContextProps,
   DatePickerProvider,
 } from '../DatePickerContext';
-import { Locales, TimeZones } from '../testUtils';
+import {
+  getProviderPropsFromStoryContext,
+  Locales,
+  TimeZones,
+} from '../testUtils';
 import { DateRangeType } from '../types';
 import { newUTC } from '../utils';
 
 import { DateRangePicker } from './DateRangePicker';
 
-const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
-  <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
-    <DatePickerProvider
-      value={{
-        ...ctx?.args,
-      }}
-    >
-      <Story />
-    </DatePickerProvider>
-  </LeafyGreenProvider>
-);
+const ProviderWrapper: Decorator = (Story, ctx) => {
+  const { leafyGreenProviderProps, datePickerProviderProps, storyProps } =
+    getProviderPropsFromStoryContext(ctx);
+
+  return (
+    <LeafyGreenProvider {...leafyGreenProviderProps}>
+      <DatePickerProvider
+        value={{
+          ...datePickerProviderProps,
+        }}
+      >
+        <Story {...storyProps} />
+      </DatePickerProvider>
+    </LeafyGreenProvider>
+  );
+};
+
+const mockToday = newUTC(2023, Month.September, 14);
 
 const meta: StoryMetaType<typeof DateRangePicker, DatePickerContextProps> = {
   title: 'Components/DatePicker/DateRangePicker',
   component: DateRangePicker,
-  decorators: [ProviderWrapper],
+  decorators: [mockDateDecorator, ProviderWrapper],
   parameters: {
     default: null,
+    date: mockToday,
     controls: {
       exclude: [
         'handleValidation',
         'initialValue',
         'onChange',
-        'onSegmentChange',
+        'onRangeChange',
+        'onCancel',
+        'onClear',
         'value',
       ],
     },
-    // generate: {
-    //   combineArgs: {
-    //     darkMode: [false, true],
-    //     value: [newUTC(2023, Month.December, 26)],
-    //     dateFormat: ['iso8601', 'en-US', 'en-UK', 'de-DE'],
-    //     timeZone: ['UTC', 'Europe/London', 'America/New_York', 'Asia/Seoul'],
-    //     disabled: [false, true],
-    //   },
-    //   decorator: ProviderWrapper,
-    // },
   },
   args: {
     dateFormat: 'en-US',
@@ -85,7 +91,18 @@ export const Basic: StoryFn<typeof DateRangePicker> = props => {
     newUTC(2023, Month.December, 26),
   ]);
 
-  return <DateRangePicker {...props} value={range} onRangeChange={setRange} />;
+  const handleRangeChange = (range?: DateRangeType) => {
+    console.log('Storybook: Range changed:', range);
+    setRange(range);
+  };
+
+  return (
+    <DateRangePicker
+      {...props}
+      value={range}
+      onRangeChange={handleRangeChange}
+    />
+  );
 };
 
 export const WithQuickSelection: StoryFn<typeof DateRangePicker> = props => {

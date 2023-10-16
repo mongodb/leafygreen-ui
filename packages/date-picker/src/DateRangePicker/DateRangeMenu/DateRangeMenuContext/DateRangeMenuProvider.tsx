@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, useMemo, useState } from 'react';
 
-import { getFirstOfMonth } from '../../../utils';
 import { addMonthsUTC } from '../../../utils';
+import { getInitialMonth } from '../../utils/getInitialMonth';
 import { DateRangeMenuProps } from '../DateRangeMenu.types';
 
 import { DateRangeMenuContext } from './DateRangeMenuContext';
@@ -21,9 +21,7 @@ export const DateRangeMenuProvider = ({
   today,
   children,
 }: DateRangeMenuProviderProps) => {
-  const [month, setMonth] = useState<Date>(
-    getFirstOfMonth(value?.[0] ?? today),
-  );
+  const [month, setMonth] = useState<Date>(getInitialMonth(value, today));
   const nextMonth = useMemo<Date>(() => addMonthsUTC(month, 1), [month]);
 
   return (

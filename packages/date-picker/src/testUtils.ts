@@ -1,5 +1,16 @@
+import { StoryContext } from '@storybook/react';
 import userEvent from '@testing-library/user-event';
 import { range } from 'lodash';
+
+import { LeafyGreenProviderProps } from '@leafygreen-ui/leafygreen-provider';
+
+import {
+  ContextPropKeys,
+  defaultDatePickerContext,
+} from './DatePickerContext/DatePickerContext.utils';
+import { contextPropNames, DatePickerProviderProps } from './DatePickerContext';
+import { BaseDatePickerProps } from './types';
+import { pickAndOmit } from './utils';
 
 /** Time zones used to test with */
 export const TimeZones = [
@@ -29,7 +40,35 @@ export const tabNTimes = (count: number) => {
   }
 };
 
+/** Returns a jest object containing the expected target value  */
 export const eventContainingTargetValue = (value: any) =>
   expect.objectContaining({
     target: expect.objectContaining({ value }),
   });
+
+interface ProviderPropsObject<T> {
+  leafyGreenProviderProps: LeafyGreenProviderProps;
+  datePickerProviderProps: DatePickerProviderProps;
+  storyProps: T;
+}
+
+export const getProviderPropsFromStoryContext = <P = BaseDatePickerProps>(
+  ctx: StoryContext<Partial<P & DatePickerProviderProps>>,
+): ProviderPropsObject<Partial<Omit<P, ContextPropKeys>>> => {
+  const [
+    { darkMode, baseFontSize, ...datePickerProviderProps },
+    { ...storyProps },
+  ] = pickAndOmit(ctx.args, [...contextPropNames]);
+
+  return {
+    leafyGreenProviderProps: {
+      darkMode,
+      baseFontSize: baseFontSize === 13 ? 14 : baseFontSize,
+    },
+    datePickerProviderProps: {
+      ...defaultDatePickerContext,
+      ...datePickerProviderProps,
+    },
+    storyProps,
+  };
+};

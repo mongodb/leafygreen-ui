@@ -7,6 +7,11 @@ export type DateRangeMenuProps = PortalControlProps &
   Pick<PopoverProps, 'refEl'> &
   Pick<
     DateRangeComponentProps,
-    'value' | 'setValue' | 'showQuickSelection' | 'handleValidation' // TODO: Setter
+    | 'value'
+    | 'setValue'
+    | 'showQuickSelection'
+    | 'handleValidation'
+    | 'onCancel'
+    | 'onClear'
   > &
   HTMLElementProps<'div'> & {};

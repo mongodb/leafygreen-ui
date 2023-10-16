@@ -2,7 +2,6 @@ import React, {
   forwardRef,
   KeyboardEventHandler,
   MouseEventHandler,
-  useLayoutEffect,
   useState,
 } from 'react';
 import { addDays, isWithinInterval, subDays } from 'date-fns';
@@ -10,7 +9,6 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { usePrevious } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { keyMap } from '@leafygreen-ui/lib';
@@ -70,7 +68,6 @@ export const DateRangeMenuCalendars = forwardRef<
     } = useDateRangeMenuContext();
 
     const [hoveredCell, setHover] = useState<DateType>(null);
-    const prevHighlight = usePrevious(highlight);
 
     /**
      * setDisplayMonth with side effects
@@ -103,18 +100,17 @@ export const DateRangeMenuCalendars = forwardRef<
       }
 
       // keep track of the highlighted cell
-      setHighlight(newHighlight);
-    };
 
-    /**
-     * When highlight changes, after the DOM changes, focus the relevant cell
-     */
-    useLayoutEffect(() => {
-      if (highlight && !isSameUTCDay(highlight, prevHighlight)) {
-        const highlightCellRef = cellRefs(highlight.toISOString());
-        highlightCellRef.current?.focus();
+      if (!isSameUTCDay(newHighlight, highlight)) {
+        setHighlight(newHighlight);
+
+        // After the DOM changes, focus the relevant cell
+        requestAnimationFrame(() => {
+          const highlightCellRef = cellRefs(newHighlight.toISOString());
+          highlightCellRef.current?.focus();
+        });
       }
-    }, [cellRefs, highlight, prevHighlight]);
+    };
 
     /**
      * Creates a click handler for a specific cell date
