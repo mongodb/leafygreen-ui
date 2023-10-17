@@ -8,9 +8,10 @@ import LeafyGreenProvider, {
 
 import { EllipsesStep } from '../EllipsesStep';
 import { InternalStep } from '../InternalStep';
+import { StepStates } from '../types';
 
 import { baseStyles } from './Stepper.styles';
-import { StepperProps, StepStates } from './Stepper.types';
+import { StepperProps } from './Stepper.types';
 
 export const Stepper = ({
   children,

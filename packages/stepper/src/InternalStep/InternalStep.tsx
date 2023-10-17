@@ -5,7 +5,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { StepIcon } from '../StepIcon';
 import { StepLabel } from '../StepLabel';
-import { StepStates } from '../Stepper';
+import { StepStates } from '../types';
 
 import {
   baseStyles,

@@ -1,7 +1,7 @@
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
 import { InternalStepProps } from '../InternalStep';
-import { StepStates } from '../Stepper';
+import { StepStates } from '../types';
 
 export const EllipsesStepStates = {
   CompletedMultiple: StepStates.CompletedMultiple,

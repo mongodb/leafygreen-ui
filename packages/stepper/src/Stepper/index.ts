@@ -1,2 +1,3 @@
+export { type StepState, StepStates } from '../types';
 export { Stepper } from './Stepper';
-export { type StepperProps, type StepState, StepStates } from './Stepper.types';
+export { type StepperProps } from './Stepper.types';

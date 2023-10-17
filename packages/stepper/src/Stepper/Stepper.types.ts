@@ -1,15 +1,4 @@
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
-
-export const StepStates = {
-  CompletedMultiple: 'completed-multiple',
-  Completed: 'completed',
-  Current: 'current',
-  Upcoming: 'upcoming',
-  UpcomingMultiple: 'upcoming-multiple',
-};
-
-export type StepState = (typeof StepStates)[keyof typeof StepStates];
-
 export interface StepperProps extends HTMLElementProps<'ol'>, DarkModeProps {
   /**
    * The index of the step that should be marked as current. (zero-indexed)
