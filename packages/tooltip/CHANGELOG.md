@@ -1,5 +1,20 @@
 # @leafygreen-ui/tooltip
 
+## 10.1.0
+
+### Minor Changes
+
+- 7c3e6d39: Adds `initialOpen` prop, which allows consuming applications to control the initial state of an uncontrolled implementation of the component.
+
+### Patch Changes
+
+- Updated dependencies [dd4f3da8]
+- Updated dependencies [90053e16]
+  - @leafygreen-ui/lib@13.0.0
+  - @leafygreen-ui/typography@18.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.10
+  - @leafygreen-ui/popover@11.1.1
+
 ## 10.0.11
 
 ### Patch Changes

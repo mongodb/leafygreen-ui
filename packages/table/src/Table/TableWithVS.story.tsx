@@ -4,7 +4,7 @@ import { StoryFn } from '@storybook/react';
 import { css } from '@leafygreen-ui/emotion';
 import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 
-import { makeData, Person } from './utils/makeData.testutils';
+import { makeData, Person } from '../utils/makeData.testutils';
 import {
   Cell,
   type ColumnDef,
@@ -24,7 +24,7 @@ import {
   type TableProps,
   useLeafyGreenTable,
   type VirtualItem,
-} from '.';
+} from '..';
 
 type StoryTableProps = TableProps<unknown>;
 
