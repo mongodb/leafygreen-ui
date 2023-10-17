@@ -1,5 +1,20 @@
 # @leafygreen-ui/code
 
+## 14.2.17
+
+### Patch Changes
+
+- Updated dependencies [dd4f3da8]
+- Updated dependencies [9a471879]
+- Updated dependencies [784e9d8a]
+- Updated dependencies [dd4f3da8]
+  - @leafygreen-ui/lib@13.0.0
+  - @leafygreen-ui/select@11.0.1
+  - @leafygreen-ui/icon-button@15.0.19
+  - @leafygreen-ui/a11y@1.4.11
+  - @leafygreen-ui/button@21.0.9
+  - @leafygreen-ui/leafygreen-provider@3.1.10
+
 ## 14.2.16
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 13.0.0
+
+### Major Changes
+
+- dd4f3da8: Update mapped value of `Space` in `keyMap` object from `space` to `' '`.
+
 ## 12.0.0
 
 ### Major Changes

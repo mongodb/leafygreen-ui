@@ -1,5 +1,13 @@
 # @leafygreen-ui/card
 
+## 10.0.6
+
+### Patch Changes
+
+- Updated dependencies [dd4f3da8]
+  - @leafygreen-ui/lib@13.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.10
+
 ## 10.0.5
 
 ### Patch Changes

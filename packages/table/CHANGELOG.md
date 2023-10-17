@@ -1,5 +1,19 @@
 # @leafygreen-ui/table
 
+## 12.1.2
+
+### Patch Changes
+
+- c05ac7f1: Moving stories for virtualized scrolling to allow .design to correctly locate the right LiveExample story
+- Updated dependencies [dd4f3da8]
+- Updated dependencies [784e9d8a]
+- Updated dependencies [90053e16]
+  - @leafygreen-ui/lib@13.0.0
+  - @leafygreen-ui/icon-button@15.0.19
+  - @leafygreen-ui/typography@18.0.0
+  - @leafygreen-ui/checkbox@12.0.20
+  - @leafygreen-ui/leafygreen-provider@3.1.10
+
 ## 12.1.1
 
 ### Patch Changes

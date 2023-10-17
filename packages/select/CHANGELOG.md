@@ -1,5 +1,22 @@
 # @leafygreen-ui/select
 
+## 11.0.1
+
+### Patch Changes
+
+- 9a471879: - Updates disabled dark mode text color from `gray.dark2` to `gray.dark1`
+  - Updates disabled dark mode caret from `gray.dark2` to `gray.dark1`
+  - Updates dark mode dropdown border from `gray.dark3` to `gray.dark2`
+- dd4f3da8: Adds tests for pressing space on a select option
+- Updated dependencies [dd4f3da8]
+- Updated dependencies [90053e16]
+  - @leafygreen-ui/lib@13.0.0
+  - @leafygreen-ui/typography@18.0.0
+  - @leafygreen-ui/button@21.0.9
+  - @leafygreen-ui/input-option@1.0.13
+  - @leafygreen-ui/leafygreen-provider@3.1.10
+  - @leafygreen-ui/popover@11.1.1
+
 ## 11.0.0
 
 ### Major Changes
