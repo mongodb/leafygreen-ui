@@ -6,6 +6,7 @@ lerna-debug.log
 
 # Dist files
 dist/
+tmp/
 *.tgz
 storybook-static
 
