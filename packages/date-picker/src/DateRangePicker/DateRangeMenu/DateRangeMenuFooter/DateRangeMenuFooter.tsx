@@ -25,7 +25,7 @@ export const DateRangeMenuFooter = forwardRef<
       <div
         ref={fwdRef}
         className={footerStyles}
-        data-lg="date-range_menu_footer"
+        data-testid="lg-date_picker-menu-footer"
       >
         <Link
           ref={buttonRefs('clear')}
@@ -33,6 +33,7 @@ export const DateRangeMenuFooter = forwardRef<
           className={clearButtonStyles}
           aria-label="Clear selection"
           onClick={onClear}
+          data-testid="lg-date_picker-menu-footer_button"
         >
           Clear
         </Link>
@@ -42,6 +43,7 @@ export const DateRangeMenuFooter = forwardRef<
             size={Size.XSmall}
             aria-label="Cancel selection"
             onClick={onCancel}
+            data-testid="lg-date_picker-menu-footer_button"
           >
             Cancel
           </Button>
@@ -51,6 +53,7 @@ export const DateRangeMenuFooter = forwardRef<
             variant={Variant.Primary}
             aria-label="Apply selection"
             onClick={onApply}
+            data-testid="lg-date_picker-menu-footer_button"
           >
             Apply
           </Button>

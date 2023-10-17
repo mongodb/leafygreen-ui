@@ -15,6 +15,7 @@ export interface RenderDateRangePickerResult extends RenderResult {
   calendarButton: HTMLButtonElement;
   getMenuElements: () => RenderMenuResult;
   openMenu: () => RenderMenuResult;
+  rerenderWithProps: () => void;
 }
 
 export interface RenderMenuResult {
@@ -48,6 +49,17 @@ export const renderDateRangePicker = (
       {...props}
     />,
   );
+
+  function rerenderWithProps(newProps?: Partial<DateRangePickerProps>) {
+    return result?.rerender(
+      <DateRangePicker
+        data-testid="lg-date-picker"
+        {...defaultProps}
+        {...props}
+        {...newProps}
+      />,
+    );
+  }
 
   const formField = result.getByTestId('lg-date-picker');
   const inputContainer = result.getByRole('combobox');
@@ -87,7 +99,7 @@ export const renderDateRangePicker = (
 
     // Footer
     const menuFooter = menuContainerEl?.querySelector(
-      '[data-lg="date-range_menu_footer"]',
+      '[data-testid="lg-date_picker-menu-footer"]',
     ) as HTMLDivElement | null;
     const clearButton = result.queryByLabelText(
       'Clear selection',
@@ -101,7 +113,7 @@ export const renderDateRangePicker = (
 
     // Quick select menu
     const quickSelectMenu = menuContainerEl?.querySelector(
-      '[data-lg="date-range_menu_quick-select"]',
+      '[data-testid="lg-date_picker-menu-quick_select"]',
     ) as HTMLDivElement | null;
     const monthSelect = result.queryByLabelText(
       'Select month',
@@ -112,7 +124,7 @@ export const renderDateRangePicker = (
 
     const quickRangeButtons = Array.from(
       quickSelectMenu?.querySelectorAll(
-        '[data-lg="date-range_menu_quick-range-button"]',
+        '[data-testid="lg-date_picker-menu-quick-range-button"]',
       ) || [null],
     ) as Array<HTMLButtonElement | null>;
 
@@ -141,6 +153,7 @@ export const renderDateRangePicker = (
 
   return {
     ...result,
+    rerenderWithProps,
     formField,
     inputContainer,
     inputElements,
