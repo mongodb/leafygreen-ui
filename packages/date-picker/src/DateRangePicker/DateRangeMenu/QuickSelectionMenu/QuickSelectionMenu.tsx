@@ -53,7 +53,7 @@ export const QuickSelectionMenu = forwardRef<
         quickSelectMenuStyles,
         quickSelectMenuThemeStyles[theme],
       )}
-      data-lg="date-range_menu_quick-select"
+      data-testid="lg-date_picker-menu-quick_select"
     >
       <div className={quickSelectMenuMonthSelectContainerStyles}>
         <Select

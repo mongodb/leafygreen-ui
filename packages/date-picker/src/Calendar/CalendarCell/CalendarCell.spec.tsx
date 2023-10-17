@@ -73,7 +73,7 @@ describe('packages/date-picker/shared/calendar-cell', () => {
     );
     const gridcell = queryByRole('gridcell');
     gridcell!.focus();
-    userEvent.keyboard('[Space]');
+    userEvent.keyboard('{space}');
     expect(clickHandler).toHaveBeenCalled();
   });
 

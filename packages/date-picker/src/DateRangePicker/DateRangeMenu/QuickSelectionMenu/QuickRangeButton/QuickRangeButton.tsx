@@ -23,7 +23,7 @@ export const QuickRangeButton = forwardRef<
   return (
     <button
       ref={fwdRef}
-      data-lg="date-range_menu_quick-range-button"
+      data-testid="lg-date_picker-menu-quick-range-button"
       className={cx(
         baseQuickRangeButtonStyles,
         baseQuickRangeButtonThemeStyles[theme],
