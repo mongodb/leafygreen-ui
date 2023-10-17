@@ -2,7 +2,7 @@
 import chalk from 'chalk';
 import depcheck from 'depcheck';
 import { readFileSync, writeFileSync } from 'fs-extra';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 import path from 'path';
 
 import { ignoreFilePatterns, ignoreMatches } from '../config';

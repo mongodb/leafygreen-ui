@@ -4,7 +4,7 @@ import React, {
   FocusEventHandler,
 } from 'react';
 import { isSameDay } from 'date-fns';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
