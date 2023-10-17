@@ -2,7 +2,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
-import { StepState, StepStates } from '../Stepper/Stepper.types';
+import { StepState, StepStates } from '../Stepper';
 
 export const themedStateColor = {
   [Theme.Dark]: {

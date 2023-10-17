@@ -6,13 +6,13 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 
-import { EllipsesStep } from '../EllipsesStep/EllipsesStep';
-import { InternalStep } from '../InternalStep/InternalStep';
+import { EllipsesStep } from '../EllipsesStep';
+import { InternalStep } from '../InternalStep';
 
 import { baseStyles } from './Stepper.styles';
 import { StepperProps, StepStates } from './Stepper.types';
 
-const Stepper = ({
+export const Stepper = ({
   children,
   currentStep,
   maxDisplayedSteps = Array.isArray(children) ? children.length : 1,
@@ -112,5 +112,3 @@ Stepper.propTypes = {
   maxDisplayedSteps: PropTypes.number,
   completedStepsShown: PropTypes.number,
 };
-
-export default Stepper;

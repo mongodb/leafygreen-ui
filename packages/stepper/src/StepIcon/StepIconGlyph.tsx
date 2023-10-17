@@ -6,7 +6,7 @@ import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
 import { fontWeights } from '@leafygreen-ui/tokens';
 import { Overline } from '@leafygreen-ui/typography';
 
-import { StepStates } from '../Stepper/Stepper.types';
+import { StepStates } from '../Stepper';
 
 import { StepIconProps } from './StepIcon.types';
 

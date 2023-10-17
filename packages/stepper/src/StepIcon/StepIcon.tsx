@@ -9,7 +9,12 @@ import { baseStyles, getThemedStateStyles } from './StepIcon.styles';
 import { StepIconProps } from './StepIcon.types';
 import { StepIconGlyph } from './StepIconGlyph';
 
-const StepIcon = ({ state, size, className, ...rest }: StepIconProps) => {
+export const StepIcon = ({
+  state,
+  size,
+  className,
+  ...rest
+}: StepIconProps) => {
   const { theme } = useDarkMode();
 
   return (
@@ -29,5 +34,3 @@ const StepIcon = ({ state, size, className, ...rest }: StepIconProps) => {
     </div>
   );
 };
-
-export default StepIcon;

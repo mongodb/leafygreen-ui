@@ -3,9 +3,9 @@ import React from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import StepIcon from '../StepIcon/StepIcon';
-import StepLabel from '../StepLabel/StepLabel';
-import { StepStates } from '../Stepper/Stepper.types';
+import { StepIcon } from '../StepIcon';
+import { StepLabel } from '../StepLabel';
+import { StepStates } from '../Stepper';
 
 import {
   baseStyles,

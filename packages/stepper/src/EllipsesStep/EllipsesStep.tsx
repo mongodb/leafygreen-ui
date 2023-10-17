@@ -3,7 +3,7 @@ import React from 'react';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import Tooltip, { Align, Justify } from '@leafygreen-ui/tooltip';
 
-import { InternalStep } from '../InternalStep/InternalStep';
+import { InternalStep } from '../InternalStep';
 
 import { getMultipleStyles, tooltipStyles } from './EllipsesStep.styles';
 import { EllipsesStepProps } from './EllipsesStep.types';

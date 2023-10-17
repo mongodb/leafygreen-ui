@@ -6,12 +6,15 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
 import { stepLabelClassName } from '../constants';
-import { StepStates } from '../Stepper/Stepper.types';
+import { StepStates } from '../Stepper';
 
 import { getThemedStateColorStyles, multipleStyles } from './StepLabel.styles';
 import { StepLabelProps } from './StepLabel.types';
 
-const StepLabel = ({ children, state }: PropsWithChildren<StepLabelProps>) => {
+export const StepLabel = ({
+  children,
+  state,
+}: PropsWithChildren<StepLabelProps>) => {
   const isCurrent = state === StepStates.Current;
   const { theme } = useDarkMode();
 
@@ -33,5 +36,3 @@ const StepLabel = ({ children, state }: PropsWithChildren<StepLabelProps>) => {
     </Body>
   );
 };
-
-export default StepLabel;
