@@ -712,20 +712,13 @@ describe('packages/date-picker/date-range-picker', () => {
         describe('Tab order', () => {
           describe('when menu is closed', () => {
             const tabStops = expectedTabStopLabels['closed'];
-            const testCases: Array<[number, (typeof tabStops)[number]]> =
-              tabStops.map((stop, n) => [n, stop]);
 
-            describe.each(testCases)('Tab %i times', (n, label) => {
-              let renderResult: RenderDateRangePickerResult;
-              let element: HTMLElement | null;
+            test('Tab N times focuses correct element', () => {
+              const renderResult = renderDateRangePicker();
 
-              beforeEach(() => {
-                renderResult = renderDateRangePicker();
-                element = getTabStopElementMap(renderResult)[label];
-                tabNTimes(n);
-              });
+              for (const label of tabStops) {
+                const element = getTabStopElementMap(renderResult)[label];
 
-              test(`focus on: ${label}`, () => {
                 if (element !== null) {
                   expect(element).toHaveFocus();
                 } else {
@@ -735,55 +728,105 @@ describe('packages/date-picker/date-range-picker', () => {
                     ),
                   ).toBeFalsy();
                 }
-              });
+
+                userEvent.tab();
+              }
             });
+
+            // const testCases: Array<[number, (typeof tabStops)[number]]> = tabStops.map((stop, n) => [n, stop]);
+            // describe.each(testCases)('Tab %i times', (n, label) => {
+            //   let renderResult: RenderDateRangePickerResult;
+            //   let element: HTMLElement | null;
+
+            //   beforeEach(() => {
+            //     renderResult = renderDateRangePicker();
+            //     element = getTabStopElementMap(renderResult)[label];
+            //     tabNTimes(n);
+            //   });
+
+            //   test(`focus on: ${label}`, () => {
+            //     if (element !== null) {
+            //       expect(element).toHaveFocus();
+            //     } else {
+            //       expect(
+            //         renderResult.inputContainer.contains(
+            //           document.activeElement,
+            //         ),
+            //       ).toBeFalsy();
+            //     }
+            //   });
+            // });
           });
 
           describe('when basic menu is open', () => {
-            const tabStops = expectedTabStopLabels['basic'];
-            const testCases: Array<[number, (typeof tabStops)[number]]> =
-              tabStops.map((stop, n) => [n, stop]);
+            const tabStops = expectedTabStopLabels['basic']; // array of label strings
 
-            describe.each(testCases)(`Tab %i times`, (n, label) => {
-              let renderResult: RenderDateRangePickerResult;
-              let element: HTMLElement | null;
-
-              beforeEach(() => {
-                renderResult = renderDateRangePicker({
-                  showQuickSelection: false,
-                });
-                renderResult.openMenu();
-                element = getTabStopElementMap(renderResult)[label];
-                tabNTimes(n);
+            test(`Tab N times focus on correct element`, () => {
+              const renderResult = renderDateRangePicker({
+                showQuickSelection: false,
               });
+              renderResult.openMenu();
 
-              test(`focus on: ${label}`, () => {
+              for (const label of tabStops) {
+                const element = getTabStopElementMap(renderResult)[label];
                 expect(element).toHaveFocus();
-              });
+                userEvent.tab();
+              }
             });
+            // const testCases: Array<[number, (typeof tabStops)[number]]> = tabStops.map((stop, n) => [n, stop]);
+
+            // describe.each(testCases)(`Tab %i times`, (n, label) => {
+            //   let renderResult: RenderDateRangePickerResult;
+            //   let element: HTMLElement | null;
+
+            //   beforeEach(() => {
+            //     renderResult = renderDateRangePicker({
+            //       showQuickSelection: false,
+            //     });
+            //     renderResult.openMenu();
+            //     element = getTabStopElementMap(renderResult)[label];
+            //     tabNTimes(n);
+            //   });
+
+            //   test(`focus on: ${label}`, () => {
+            //     expect(element).toHaveFocus();
+            //   });
+            // });
           });
 
           describe('when quick-select menu is open', () => {
             const tabStops = expectedTabStopLabels['quick-select'];
-            const testCases: Array<[number, (typeof tabStops)[number]]> =
-              tabStops.map((stop, n) => [n, stop]);
 
-            describe.each(testCases)(`Tab %i times`, (n, label) => {
-              let element: HTMLElement | null;
-
-              beforeEach(() => {
-                const renderResult = renderDateRangePicker({
-                  showQuickSelection: true,
-                });
-                renderResult.openMenu();
-                element = getTabStopElementMap(renderResult)[label];
-                tabNTimes(n);
+            test(`Tab N times focuses the correct element`, () => {
+              const renderResult = renderDateRangePicker({
+                showQuickSelection: true,
               });
+              renderResult.openMenu();
 
-              test(`focus on: ${label}`, () => {
+              for (const label of tabStops) {
+                const element = getTabStopElementMap(renderResult)[label];
                 expect(element).toHaveFocus();
-              });
+                userEvent.tab();
+              }
             });
+
+            // const testCases: Array<[number, (typeof tabStops)[number]]> = tabStops.map((stop, n) => [n, stop]);
+            // describe.each(testCases)(`Tab %i times`, (n, label) => {
+            //   let element: HTMLElement | null;
+
+            //   beforeEach(() => {
+            //     const renderResult = renderDateRangePicker({
+            //       showQuickSelection: true,
+            //     });
+            //     renderResult.openMenu();
+            //     element = getTabStopElementMap(renderResult)[label];
+            //     tabNTimes(n);
+            //   });
+
+            //   test(`focus on: ${label}`, () => {
+            //     expect(element).toHaveFocus();
+            //   });
+            // });
           });
         });
       });
