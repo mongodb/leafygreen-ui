@@ -713,7 +713,7 @@ describe('packages/date-picker/date-range-picker', () => {
           describe('when menu is closed', () => {
             const tabStops = expectedTabStopLabels['closed'];
 
-            test('Tab N times focuses correct element', () => {
+            test('Tab order proceeds as expected', () => {
               const renderResult = renderDateRangePicker();
 
               for (const label of tabStops) {
@@ -761,7 +761,7 @@ describe('packages/date-picker/date-range-picker', () => {
           describe('when basic menu is open', () => {
             const tabStops = expectedTabStopLabels['basic']; // array of label strings
 
-            test(`Tab N times focus on correct element`, () => {
+            test(`Tab order proceeds as expected`, () => {
               const renderResult = renderDateRangePicker({
                 showQuickSelection: false,
               });
@@ -797,7 +797,7 @@ describe('packages/date-picker/date-range-picker', () => {
           describe('when quick-select menu is open', () => {
             const tabStops = expectedTabStopLabels['quick-select'];
 
-            test(`Tab N times focuses the correct element`, () => {
+            test(`Tab order proceeds as expected`, () => {
               const renderResult = renderDateRangePicker({
                 showQuickSelection: true,
               });

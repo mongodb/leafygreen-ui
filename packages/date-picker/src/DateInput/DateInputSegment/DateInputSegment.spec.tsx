@@ -9,8 +9,8 @@ import { DateInputSegment, type DateInputSegmentProps } from '.';
 const handler = jest.fn();
 
 const renderSegment = (props: DateInputSegmentProps) => {
-  const result = render(<DateInputSegment data-testid="testid" {...props} />);
-  const input = result.getByTestId('testid');
+  const result = render(<DateInputSegment {...props} />);
+  const input = result.getByTestId('lg-date_picker_input-segment');
   return {
     ...result,
     input: input as HTMLInputElement,
@@ -59,9 +59,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           value: '12',
         });
 
-        rerender(
-          <DateInputSegment segment="day" data-testid="testid" value={'08'} />,
-        );
+        rerender(<DateInputSegment segment="day" value={'08'} />);
         expect(input.value).toBe('08');
       });
     });
@@ -82,13 +80,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           segment: 'year',
           value: '2023',
         });
-        rerender(
-          <DateInputSegment
-            segment="year"
-            data-testid="testid"
-            value={'1993'}
-          />,
-        );
+        rerender(<DateInputSegment segment="year" value={'1993'} />);
         expect(input.value).toBe('1993');
       });
     });
@@ -97,13 +89,9 @@ describe('packages/date-picker/shared/date-input-segment', () => {
   describe('Typing', () => {
     test('calls the change handler', () => {
       const result = render(
-        <DateInputSegment
-          segment="day"
-          data-testid="testid"
-          onChange={handler}
-        />,
+        <DateInputSegment segment="day" onChange={handler} />,
       );
-      const input = result.getByTestId('testid');
+      const input = result.getByTestId('lg-date_picker_input-segment');
       userEvent.type(input, '12');
       expect(handler).toHaveBeenCalledWith(eventContainingTargetValue('12'));
     });
@@ -116,28 +104,18 @@ describe('packages/date-picker/shared/date-input-segment', () => {
   describe.skip('Arrow Keys', () => {
     test('ArrowUp calls handler with +1', () => {
       const result = render(
-        <DateInputSegment
-          segment="day"
-          data-testid="testid"
-          onChange={handler}
-          value={'08'}
-        />,
+        <DateInputSegment segment="day" onChange={handler} value={'08'} />,
       );
-      const input = result.getByTestId('testid');
+      const input = result.getByTestId('lg-date_picker_input-segment');
       userEvent.type(input, '{arrowup}');
       expect(handler).toHaveBeenCalledWith('09');
     });
 
     test('ArrowDown calls handler with -1', () => {
       const result = render(
-        <DateInputSegment
-          segment="day"
-          data-testid="testid"
-          onChange={handler}
-          value={'08'}
-        />,
+        <DateInputSegment segment="day" onChange={handler} value={'08'} />,
       );
-      const input = result.getByTestId('testid');
+      const input = result.getByTestId('lg-date_picker_input-segment');
       userEvent.type(input, '{arrowdown}');
       expect(handler).toHaveBeenCalledWith('07');
     });
