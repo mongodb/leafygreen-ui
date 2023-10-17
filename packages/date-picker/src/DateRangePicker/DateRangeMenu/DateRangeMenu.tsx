@@ -17,6 +17,8 @@ import { MenuWrapper } from '../../Calendar/MenuWrapper';
 import { useDatePickerContext } from '../../DatePickerContext';
 import { DateType } from '../../types';
 import { setToUTCMidnight } from '../../utils';
+import { getInitialHighlight } from '../utils/getInitialHighlight';
+import { getInitialMonth } from '../utils/getInitialMonth';
 
 import {
   menuContentStyles,
@@ -52,9 +54,10 @@ export const DateRangeMenu = forwardRef<HTMLDivElement, DateRangeMenuProps>(
     const selectRefs = useDynamicRefs<HTMLDivElement>();
     const quickRangeButtonRefs = useDynamicRefs<HTMLButtonElement>();
 
+    const [month, setMonth] = useState<Date>(getInitialMonth(value, today));
     // Keep track of the element the user is highlighting with the keyboard
     const [highlight, setHighlight] = useState<DateType>(
-      value ? value[0] : today,
+      getInitialHighlight(value, today, month),
     );
 
     const getHighlightedCell = () => {
@@ -98,7 +101,6 @@ export const DateRangeMenu = forwardRef<HTMLDivElement, DateRangeMenuProps>(
 
     /** Triggered when the Apply button is clicked */
     const handleApply: MouseEventHandler<HTMLButtonElement> = _ => {
-      console.log('handle Apply');
       setValue(value);
       setOpen(false);
     };
@@ -113,12 +115,11 @@ export const DateRangeMenu = forwardRef<HTMLDivElement, DateRangeMenuProps>(
     /** Triggered when the clear button is clicked */
     const handleClear: MouseEventHandler<HTMLButtonElement> = e => {
       setValue([null, null]);
-      // setOpen(false);
       onClear?.(e);
     };
 
     return (
-      <DateRangeMenuProvider value={value} today={today}>
+      <DateRangeMenuProvider month={month} setMonth={setMonth} today={today}>
         <MenuWrapper
           data-lg={lgid}
           ref={menuRef}

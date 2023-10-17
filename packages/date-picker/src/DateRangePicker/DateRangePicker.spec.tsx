@@ -324,8 +324,16 @@ describe('packages/date-picker/date-range-picker', () => {
           expect(document.activeElement).toBe(inputElements[2]);
         });
 
-        test('focuses the first segment when all are empty', () => {
+        test('focuses the first segment when all are empty (`undefined`)', () => {
           const { inputContainer, inputElements } = renderDateRangePicker();
+          userEvent.click(inputContainer);
+          expect(document.activeElement).toBe(inputElements[0]);
+        });
+
+        test('focuses the first segment when all are empty (`[null, null]`)', () => {
+          const { inputContainer, inputElements } = renderDateRangePicker({
+            value: [null, null],
+          });
           userEvent.click(inputContainer);
           expect(document.activeElement).toBe(inputElements[0]);
         });
@@ -337,7 +345,7 @@ describe('packages/date-picker/date-range-picker', () => {
           expect(document.activeElement).toBe(inputElements[1]);
         });
 
-        test('focuses the first empty segment in end input', () => {
+        test('focuses the first empty segment in end input when start value is set', () => {
           const { inputContainer, inputElements } = renderDateRangePicker({
             value: [newUTC(2023, 1, 1), null],
           });
@@ -360,6 +368,13 @@ describe('packages/date-picker/date-range-picker', () => {
           userEvent.click(calendarButton);
           const { menuContainerEl } = getMenuElements();
           expect(menuContainerEl).toBeInTheDocument();
+        });
+
+        test('focuses on the highlighted cell', () => {
+          const { calendarButton, getMenuElements } = renderDateRangePicker();
+          userEvent.click(calendarButton);
+          const { todayCell } = getMenuElements();
+          expect(todayCell).toHaveFocus();
         });
       });
 
@@ -488,6 +503,14 @@ describe('packages/date-picker/date-range-picker', () => {
               expect.arrayContaining([start, end]),
             );
           });
+
+          test('closes menu', async () => {
+            const { openMenu } = renderDateRangePicker();
+            const { applyButton, menuContainerEl } = openMenu();
+            userEvent.click(applyButton!);
+            await waitForElementToBeRemoved(menuContainerEl);
+            expect(menuContainerEl).not.toBeInTheDocument();
+          });
         });
 
         describe('Clicking the Cancel button', () => {
@@ -520,6 +543,14 @@ describe('packages/date-picker/date-range-picker', () => {
               expect.arrayContaining([start, end]),
             );
           });
+
+          test('closes menu', async () => {
+            const { openMenu } = renderDateRangePicker();
+            const { cancelButton, menuContainerEl } = openMenu();
+            userEvent.click(cancelButton!);
+            await waitForElementToBeRemoved(menuContainerEl);
+            expect(menuContainerEl).not.toBeInTheDocument();
+          });
         });
 
         describe('Clicking the Clear button', () => {
@@ -535,6 +566,7 @@ describe('packages/date-picker/date-range-picker', () => {
             userEvent.click(clearButton!);
             expect(onClear).toHaveBeenCalled();
           });
+
           test('fires a change handler with the to clear the range values', () => {
             const start = newUTC(2023, Month.April, 1);
             const end = newUTC(2023, Month.July, 5);
@@ -548,6 +580,13 @@ describe('packages/date-picker/date-range-picker', () => {
             expect(onRangeChange).toHaveBeenCalledWith(
               expect.arrayContaining([null, null]),
             );
+          });
+
+          test('does not close the menu', () => {
+            const { openMenu } = renderDateRangePicker();
+            const { clearButton, menuContainerEl } = openMenu();
+            userEvent.click(clearButton!);
+            expect(menuContainerEl).toBeInTheDocument();
           });
         });
       });
@@ -668,6 +707,8 @@ describe('packages/date-picker/date-range-picker', () => {
           expect(handleValidation).not.toHaveBeenCalled();
         });
 
+        // TODO: Repeat these tests for values:
+        // `undefined`, `[null, null]` & `[Date, Date]`
         describe('Tab order', () => {
           describe('when menu is closed', () => {
             const tabStops = expectedTabStopLabels['closed'];
