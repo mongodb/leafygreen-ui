@@ -140,6 +140,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       // since focus-trap-react focuses the first element immediately on mount
       if (e.key === keyMap.Tab) {
         const currentFocus = document.activeElement;
+
         const highlightKey = highlight?.toISOString();
         const highlightedCellElement = highlightKey
           ? cellRefs(highlightKey)?.current
@@ -188,6 +189,11 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
           handleValidation?.(value);
           break;
 
+        // The isInRange check below prevents tab presses from propagating up so we add a switch case for tab presses where we can then call handleWrapperTabKeyPress which will handle trapping focus
+        case keyMap.Tab:
+          handleWrapperTabKeyPress(e);
+          break;
+
         default:
           break;
       }
@@ -195,7 +201,6 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       // if nextHighlight is in range
       if (isInRange(nextHighlight)) {
         updateHighlight(nextHighlight);
-
         // Prevent the parent keydown handler from being called
         e.stopPropagation();
       }

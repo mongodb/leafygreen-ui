@@ -260,7 +260,7 @@ export const calendarCellHoverStyles: ThemedStateStyles = {
         color: ${palette.white};
 
         & > .${indicatorClassName} {
-          background-color: ${palette.gray.dark3};
+          background-color: ${palette.gray.dark2};
         }
       }
     `,
