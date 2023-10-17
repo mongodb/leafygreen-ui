@@ -16,7 +16,7 @@ export type CalendarCellRangeState =
   (typeof CalendarCellRangeState)[keyof typeof CalendarCellRangeState];
 
 export interface CalendarCellProps
-  extends React.HTMLProps<HTMLTableCellElement> {
+  extends Omit<React.HTMLProps<HTMLTableCellElement>, 'onClick'> {
   /** The label for the calendar cell */
   ['aria-label']: string;
 
@@ -38,4 +38,8 @@ export interface CalendarCellProps
    * This is used to programmatically set highlight when using keyboard navigation
    */
   isHighlighted?: boolean;
+
+  onClick?:
+    | React.MouseEventHandler<HTMLTableCellElement>
+    | React.KeyboardEventHandler<HTMLTableCellElement>;
 }

@@ -332,6 +332,9 @@ describe('packages/date-picker', () => {
           userEvent.click(Jan);
           expect(calendarGrid).toHaveAttribute('aria-label', 'January 2023');
         });
+        test.todo(
+          'making a selection with enter does not close the datePicker menu',
+        );
       });
 
       describe('Year select menu', () => {
@@ -589,6 +592,46 @@ describe('packages/date-picker', () => {
           tabNTimes(4);
           userEvent.keyboard('{enter}');
           userEvent.type(todayCell!, '{enter}');
+          await waitForElementToBeRemoved(menuContainerEl);
+          expect(menuContainerEl).not.toBeInTheDocument();
+        });
+      });
+
+      describe('Space key', () => {
+        test('opens menu if calendar button is focused', () => {
+          const { getMenuElements } = renderDatePicker();
+          tabNTimes(3);
+          userEvent.keyboard('{space}');
+          const { menuContainerEl } = getMenuElements();
+          expect(menuContainerEl).toBeInTheDocument();
+        });
+
+        test('if month/year select is focused, opens the select menu', async () => {
+          const { openMenu, findAllByRole } = renderDatePicker();
+          const { monthSelect } = openMenu();
+          tabNTimes(6);
+          userEvent.keyboard('{space}');
+          expect(monthSelect).toHaveFocus();
+          const options = await findAllByRole('option');
+          expect(options.length).toBeGreaterThan(0);
+        });
+
+        test('if a cell is focused, fires a change handler', () => {
+          const onChange = jest.fn();
+          const { openMenu } = renderDatePicker({ onChange });
+          const { todayCell } = openMenu();
+          tabNTimes(4);
+          expect(todayCell).toHaveFocus();
+          userEvent.type(todayCell!, '{space}');
+          expect(onChange).toHaveBeenCalled();
+        });
+
+        test('if a cell is focused, closes the menu', async () => {
+          const { openMenu } = renderDatePicker();
+          const { todayCell, menuContainerEl } = openMenu();
+          tabNTimes(4);
+          userEvent.keyboard('{space}');
+          userEvent.type(todayCell!, '{space}');
           await waitForElementToBeRemoved(menuContainerEl);
           expect(menuContainerEl).not.toBeInTheDocument();
         });
