@@ -3,15 +3,14 @@ import { PopoverProps, PortalControlProps } from '@leafygreen-ui/popover';
 
 import { DateRangeComponentProps } from '../DateRangeComponent';
 
+/**
+ * Pass into the menu specific properties of ComponentProps
+ * and any other `div` attributes
+ */
 export type DateRangeMenuProps = PortalControlProps &
   Pick<PopoverProps, 'refEl'> &
   Pick<
     DateRangeComponentProps,
-    | 'value'
-    | 'setValue'
-    | 'showQuickSelection'
-    | 'handleValidation'
-    | 'onCancel'
-    | 'onClear'
+    'showQuickSelection' | 'handleValidation' | 'onCancel' | 'onClear'
   > &
   HTMLElementProps<'div'> & {};

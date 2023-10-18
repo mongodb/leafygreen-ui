@@ -10,9 +10,9 @@ import { keyMap } from '@leafygreen-ui/lib';
 import { DateInputBox } from '../../DateInput';
 import { DateFormField } from '../../DateInput/DateFormField';
 import { useDatePickerContext } from '../../DatePickerContext';
-import { useSegmentRefs } from '../../hooks/useSegmentRefs';
-import { DateType } from '../../types';
-import { isElementInputSegment, isZeroLike } from '../../utils';
+import { DateRangeType, DateType } from '../../types';
+import { isElementInputSegment, isSameUTCRange, isZeroLike } from '../../utils';
+import { useDateRangeContext } from '../DateRangeContext';
 import { getRangeSegmentToFocus } from '../utils/getRangeSegmentToFocus';
 import { getRelativeRangeSegment } from '../utils/getRelativeRangeSegment';
 
@@ -22,21 +22,15 @@ import { DateRangeInputProps } from './DateRangeInput.types';
 const EN_DASH = '–';
 
 export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
-  (
-    {
-      value,
-      setValue,
-      handleValidation,
-      onChange,
-      ...rest
-    }: DateRangeInputProps,
-    fwdRef,
-  ) => {
-    const { disabled, formatParts, setOpen, setIsDirty } =
+  ({ handleValidation, onChange, ...rest }: DateRangeInputProps, fwdRef) => {
+    const { disabled, formatParts, setOpen, isDirty, setIsDirty } =
       useDatePickerContext();
 
-    const startSegmentRefs = useSegmentRefs();
-    const endSegmentRefs = useSegmentRefs();
+    const {
+      value,
+      setValue,
+      refs: { startSegmentRefs, endSegmentRefs },
+    } = useDateRangeContext();
 
     /** Called when the input, or any of its children, is clicked */
     const handleInputClick: MouseEventHandler<HTMLElement> = ({ target }) => {
@@ -138,14 +132,35 @@ export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
       }
     };
 
+    const handleCalendarButtonClick: MouseEventHandler<
+      HTMLButtonElement
+    > = e => {
+      if (!disabled) {
+        e.stopPropagation();
+        setOpen(true);
+      }
+    };
+
+    /** Called when the input's start or end value has changed */
+    const updateValue = (newRange?: DateRangeType) => {
+      if (!isSameUTCRange(value, newRange)) {
+        // When the value changes via the input element,
+        // we only trigger validation if the component is dirty
+        if (isDirty) {
+          handleValidation?.(newRange);
+        }
+        setValue(newRange);
+      }
+    };
+
     const handleStartInputChange = (newStart: DateType) => {
-      const end = value ? value[0] : null;
-      setValue([newStart, end]);
+      const end = value ? value[1] : null;
+      updateValue([newStart, end]);
     };
 
     const handleEndInputChange = (newEnd: DateType) => {
       const start = value ? value[0] : null;
-      setValue([start, newEnd]);
+      updateValue([start, newEnd]);
     };
 
     return (
@@ -154,6 +169,7 @@ export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
         onKeyDown={handleKeyDown}
         onInputClick={handleInputClick}
         onBlur={handleInputBlur}
+        onIconButtonClick={handleCalendarButtonClick}
         {...rest}
       >
         <div className={inputWrapperStyles}>

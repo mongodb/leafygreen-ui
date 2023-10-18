@@ -5,6 +5,7 @@ import { useControlledValue } from '../hooks/useControlledValue';
 import { pickAndOmit } from '../utils';
 
 import { DateRangeComponent } from './DateRangeComponent';
+import { DateRangeProvider } from './DateRangeContext';
 import { DateRangePickerProps } from './DateRangePicker.types';
 
 export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
@@ -13,12 +14,14 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       value: rangeProp,
       initialValue: initialProp,
       onRangeChange: onChangeProp,
-      showQuickSelection,
       ...props
     }: DateRangePickerProps,
     fwdRef,
   ) => {
-    const [contextProps, restProps] = pickAndOmit(props, contextPropNames);
+    const [datePickerContextProps, restProps] = pickAndOmit(
+      props,
+      contextPropNames,
+    );
 
     const { value, setValue } = useControlledValue(
       rangeProp,
@@ -27,14 +30,10 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     );
 
     return (
-      <DatePickerProvider value={contextProps}>
-        <DateRangeComponent
-          ref={fwdRef}
-          value={value}
-          setValue={setValue}
-          showQuickSelection={showQuickSelection}
-          {...restProps}
-        />
+      <DatePickerProvider value={datePickerContextProps}>
+        <DateRangeProvider rootRef={fwdRef} value={value} setValue={setValue}>
+          <DateRangeComponent ref={fwdRef} {...restProps} />
+        </DateRangeProvider>
       </DatePickerProvider>
     );
   },

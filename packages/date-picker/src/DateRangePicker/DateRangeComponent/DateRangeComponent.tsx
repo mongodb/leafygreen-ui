@@ -1,10 +1,9 @@
-import React, { forwardRef, useRef } from 'react';
+import React, { forwardRef } from 'react';
 
-import { useBackdropClick, useForwardedRef } from '@leafygreen-ui/hooks';
+import { useBackdropClick } from '@leafygreen-ui/hooks';
 
 import { useDatePickerContext } from '../../DatePickerContext';
-import { DateRangeType } from '../../types';
-import { isSameUTCRange } from '../../utils';
+import { useDateRangeContext } from '../DateRangeContext';
 import { DateRangeInput } from '../DateRangeInput';
 import { DateRangeMenu } from '../DateRangeMenu';
 
@@ -16,8 +15,6 @@ export const DateRangeComponent = forwardRef<
 >(
   (
     {
-      value,
-      setValue,
       handleValidation,
       onCancel,
       onClear,
@@ -26,52 +23,21 @@ export const DateRangeComponent = forwardRef<
     }: DateRangeComponentProps,
     fwdRef,
   ) => {
-    const { isOpen, setOpen, isDirty, setIsDirty, menuId } =
-      useDatePickerContext();
-    const closeMenu = () => setOpen(false);
+    const { isOpen, setOpen, menuId } = useDatePickerContext();
 
-    const formFieldRef = useForwardedRef(fwdRef, null);
-    const menuRef = useRef<HTMLDivElement>(null);
+    const {
+      refs: { formFieldRef, menuRef },
+    } = useDateRangeContext();
 
-    /** setValue with possible side effects */
-    const updateValue = (newVal?: DateRangeType) => {
-      setValue(newVal);
-    };
-
-    useBackdropClick(closeMenu, [formFieldRef, menuRef], isOpen);
-
-    /** Called when the input's start or end value has changed */
-    const handleInputValueChange = (newRange?: DateRangeType) => {
-      if (!isSameUTCRange(value, newRange)) {
-        // When the value changes via the input element,
-        // we only trigger validation if the component is dirty
-        if (isDirty) {
-          handleValidation?.(newRange);
-        }
-        updateValue(newRange);
-      }
-    };
-
-    /** Called when any calendar cell is clicked */
-    const handleCalendarValueChange = (newRange?: DateRangeType) => {
-      // TODO: more logic here
-      updateValue(newRange);
-    };
+    useBackdropClick(() => setOpen(false), [formFieldRef, menuRef], isOpen);
 
     return (
       <>
-        <DateRangeInput
-          value={value}
-          setValue={handleInputValueChange}
-          ref={formFieldRef}
-          {...rest}
-        />
+        <DateRangeInput ref={formFieldRef} {...rest} />
         <DateRangeMenu
           ref={menuRef}
           refEl={formFieldRef}
           id={menuId}
-          value={value}
-          setValue={handleCalendarValueChange}
           onCancel={onCancel}
           onClear={onClear}
           showQuickSelection={showQuickSelection}

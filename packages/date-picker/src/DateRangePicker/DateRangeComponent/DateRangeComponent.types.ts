@@ -1,12 +1,14 @@
-import { contextPropNames } from '../../DatePickerContext';
-import { useControlledValue } from '../../hooks/useControlledValue';
-import { DateRangeType } from '../../types';
+import { DatePickerContextProps } from '../../DatePickerContext';
+import { DateRangeContextProps } from '../DateRangeContext/DateRangeContext.types';
 import { DateRangePickerProps } from '../DateRangePicker.types';
 
+/**
+ * We pass into the component anything in
+ * DateRangePickerProps that is _not_ in
+ * DatePickerContext or DateRangeContext
+ */
 export interface DateRangeComponentProps
   extends Omit<
     DateRangePickerProps,
-    (typeof contextPropNames)[number] | 'onRangeChange'
-  > {
-  setValue: ReturnType<typeof useControlledValue<DateRangeType>>['setValue'];
-}
+    keyof (DatePickerContextProps & DateRangeContextProps)
+  > {}
