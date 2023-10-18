@@ -32,7 +32,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
     return (
       <DatePickerProvider value={datePickerContextProps}>
         <DateRangeProvider rootRef={fwdRef} value={value} setValue={setValue}>
-          <DateRangeComponent ref={fwdRef} {...restProps} />
+          <DateRangeComponent {...restProps} />
         </DateRangeProvider>
       </DatePickerProvider>
     );

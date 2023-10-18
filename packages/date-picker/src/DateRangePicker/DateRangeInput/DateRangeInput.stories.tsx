@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { StoryFn } from '@storybook/react';
-import { isValid } from 'date-fns';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
@@ -50,32 +49,15 @@ const meta: StoryMetaType<typeof DateRangeInput, DatePickerContextProps> = {
     dateFormat: 'en-UK',
     timeZone: 'Europe/London',
   },
-  argTypes: {
-    // value: { control: 'date' },
-  },
+  argTypes: {},
 };
 
 export default meta;
 
 export const Basic: StoryFn<typeof DateRangeInput> = props => {
-  const [date, setDate] = useState<Date | null>(null);
-
-  // useEffect(() => {
-  //   if (props.value && isValid(new Date(props.value))) {
-  //     setDate(new Date(props.value));
-  //   }
-  // }, [props.value]);
-
-  const updateDate = (date: Date | null) => {
-    setDate(date);
-  };
-
   return (
     <>
-      <DateRangeInput
-        {...props}
-        // value={date} setValue={updateDate}
-      />
+      <DateRangeInput {...props} />
     </>
   );
 };

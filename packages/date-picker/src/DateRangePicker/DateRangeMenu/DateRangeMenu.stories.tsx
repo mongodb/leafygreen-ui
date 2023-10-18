@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks, react/prop-types */
-import React, { useRef, useState } from 'react';
-import { StoryFn, StoryObj } from '@storybook/react';
+import React, { useRef } from 'react';
+import { Decorator, StoryObj } from '@storybook/react';
 import omit from 'lodash/omit';
 import MockDate from 'mockdate';
 
@@ -18,20 +18,33 @@ import {
   contextPropNames,
   defaultDatePickerContext,
 } from '../../DatePickerContext/DatePickerContext.utils';
-import { DateRangeType } from '../../types';
-import { newUTC, pickAndOmit } from '../../utils';
+import { newUTC } from '../../utils';
+import { DateRangeProvider } from '../DateRangeContext';
+import { DateRangeContextProps } from '../DateRangeContext/DateRangeContext.types';
 
 import { DateRangeMenu } from './DateRangeMenu';
 import { DateRangeMenuProps } from './DateRangeMenu.types';
 
 const mockToday = newUTC(2023, Month.September, 14);
-type DecoratorArgs = DateRangeMenuProps & DatePickerContextProps;
 
-const MenuDecorator = (Story: StoryFn, ctx: any) => {
-  const [{ darkMode, ...contextProps }, { ...props }] = pickAndOmit(
-    ctx?.args as DecoratorArgs,
-    [...contextPropNames],
-  );
+type DateRangeMenuStoryProps = DateRangeMenuProps &
+  DateRangeContextProps &
+  DatePickerContextProps;
+
+type DateRangeMenuStoryType = StoryObj<DateRangeMenuStoryProps>;
+
+const MenuDecorator: Decorator<DateRangeMenuStoryProps> = (Story, ctx) => {
+  const {
+    darkMode,
+    value,
+    label,
+    description,
+    dateFormat,
+    timeZone,
+    min,
+    max,
+    ...args
+  } = ctx.args as DateRangeMenuStoryProps;
 
   // Force `new Date()` to return `mockToday`
   MockDate.set(mockToday);
@@ -41,19 +54,31 @@ const MenuDecorator = (Story: StoryFn, ctx: any) => {
       <DatePickerProvider
         value={{
           ...defaultDatePickerContext,
-          ...contextProps,
+          label,
+          description,
+          dateFormat,
+          timeZone,
+          min,
+          max,
           initialOpen: true,
         }}
       >
-        <Story {...props} />
+        <DateRangeProvider
+          rootRef={React.createRef()}
+          value={value}
+          setValue={() => {}}
+        >
+          <Story {...args} />
+        </DateRangeProvider>
       </DatePickerProvider>
     </LeafyGreenProvider>
   );
 };
 
-const meta: StoryMetaType<typeof DateRangeMenu, DecoratorArgs> = {
+const meta: StoryMetaType<typeof DateRangeMenu, DateRangeMenuStoryProps> = {
   title: 'Components/DatePicker/DateRangePicker/DateRangeMenu',
   component: DateRangeMenu,
+  // @ts-expect-error
   decorators: [MenuDecorator],
   parameters: {
     default: null,
@@ -74,46 +99,30 @@ const meta: StoryMetaType<typeof DateRangeMenu, DecoratorArgs> = {
 
 export default meta;
 
-type DateRangeMenuStoryType = StoryObj<typeof DateRangeMenu>;
-
 export const Basic: DateRangeMenuStoryType = {
-  render: args => {
-    const [value, setValue] = useState<DateRangeType | undefined>();
-
+  render: (args: DateRangeMenuProps) => {
     const props = omit(args, [...contextPropNames, 'isOpen']);
     const refEl = useRef<HTMLDivElement>(null);
     return (
       <>
         <code ref={refEl}>refEl</code>
-        <DateRangeMenu
-          {...props}
-          refEl={refEl}
-          value={value}
-          setValue={setValue}
-        />
+        <DateRangeMenu {...props} refEl={refEl} />
       </>
     );
   },
 };
 
 export const WithValue: DateRangeMenuStoryType = {
-  render: args => {
-    const [value, setValue] = useState<DateRangeType | undefined>([
-      newUTC(2023, Month.September, 14),
-      null,
-    ]);
-
+  args: {
+    value: [newUTC(2023, Month.September, 14), null],
+  },
+  render: (args: DateRangeMenuProps) => {
     const props = omit(args, [...contextPropNames, 'isOpen']);
     const refEl = useRef<HTMLDivElement>(null);
     return (
       <div style={{ minHeight: '50vh' }}>
         <InlineCode ref={refEl}>refEl</InlineCode>
-        <DateRangeMenu
-          {...props}
-          refEl={refEl}
-          value={value}
-          setValue={setValue}
-        />
+        <DateRangeMenu {...props} refEl={refEl} />
       </div>
     );
   },
@@ -122,7 +131,6 @@ export const WithValue: DateRangeMenuStoryType = {
 export const DarkMode: DateRangeMenuStoryType = {
   ...WithValue,
   args: {
-    // @ts-expect-error - DateRangeMenuStoryType does not include Context props
     darkMode: true,
   },
 };

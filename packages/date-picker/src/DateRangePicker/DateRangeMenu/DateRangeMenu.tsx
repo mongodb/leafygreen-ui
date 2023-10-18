@@ -98,7 +98,7 @@ export const DateRangeMenu = forwardRef<HTMLDivElement, DateRangeMenuProps>(
 
     return (
       <MenuWrapper
-        ref={refs.menuRef}
+        ref={fwdRef}
         usePortal
         role="listbox"
         active={isOpen}

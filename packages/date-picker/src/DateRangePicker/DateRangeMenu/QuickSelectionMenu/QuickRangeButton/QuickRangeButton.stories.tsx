@@ -31,7 +31,7 @@ const meta: StoryMetaType<typeof QuickRangeButton> = {
 export default meta;
 
 export const Basic: StoryType<typeof QuickRangeButton> = () => {
-  return <QuickRangeButton>Last 12 months</QuickRangeButton>;
+  return <QuickRangeButton label="Last 12 months"></QuickRangeButton>;
 };
 
 export const Generated = () => <></>;
