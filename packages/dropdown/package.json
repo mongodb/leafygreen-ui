@@ -22,7 +22,7 @@
     "@leafygreen-ui/icon-button": "^15.0.18",
     "@leafygreen-ui/input-option": "^1.0.11",
     "@leafygreen-ui/popover": "^11.1.0",
-    "@leafygreen-ui/lib": "^10.4.0"
+    "@leafygreen-ui/lib": "^13.0.0"
   },
   "devDependencies": {
     "@lg-tools/cli": "^0.5.0"
