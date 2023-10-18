@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/combobox",
-  "version": "6.0.15",
+  "version": "7.0.1",
   "description": "leafyGreen UI Kit Combobox",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,27 +22,28 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/checkbox": "^12.0.19",
+    "@leafygreen-ui/checkbox": "^12.0.20",
+    "@leafygreen-ui/chip": "^1.0.0",
     "@leafygreen-ui/emotion": "^4.0.7",
     "@leafygreen-ui/hooks": "^8.0.0",
     "@leafygreen-ui/icon": "^11.23.0",
-    "@leafygreen-ui/icon-button": "^15.0.18",
-    "@leafygreen-ui/inline-definition": "^6.0.12",
-    "@leafygreen-ui/input-option": "^1.0.11",
-    "@leafygreen-ui/lib": "^12.0.0",
+    "@leafygreen-ui/icon-button": "^15.0.19",
+    "@leafygreen-ui/inline-definition": "^6.0.13",
+    "@leafygreen-ui/input-option": "^1.0.13",
+    "@leafygreen-ui/lib": "^13.0.0",
     "@leafygreen-ui/palette": "^4.0.7",
-    "@leafygreen-ui/popover": "^11.0.18",
+    "@leafygreen-ui/popover": "^11.1.1",
     "@leafygreen-ui/tokens": "^2.2.0",
-    "@leafygreen-ui/typography": "^17.0.1",
+    "@leafygreen-ui/typography": "^18.0.0",
     "chalk": "^4.1.2",
     "lodash": "^4.17.21",
     "polished": "^4.2.2"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.9"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.10"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "^21.0.6"
+    "@leafygreen-ui/button": "^21.0.9"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/combobox",
   "repository": {

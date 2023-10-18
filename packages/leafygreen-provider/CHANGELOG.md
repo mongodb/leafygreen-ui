@@ -1,5 +1,12 @@
 # @leafygreen-ui/leafygreen-provider
 
+## 3.1.10
+
+### Patch Changes
+
+- Updated dependencies [dd4f3da8]
+  - @leafygreen-ui/lib@13.0.0
+
 ## 3.1.9
 
 ### Patch Changes

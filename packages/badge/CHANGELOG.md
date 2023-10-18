@@ -1,5 +1,19 @@
 # @leafygreen-ui/badge
 
+## 8.0.15
+
+### Patch Changes
+
+- Updated dependencies [dd4f3da8]
+  - @leafygreen-ui/lib@13.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.10
+
+## 8.0.14
+
+### Patch Changes
+
+- 324d9730: Updates the text color in `'green'` badges when rendered in dark mode to match Figma specs.
+
 ## 8.0.13
 
 ### Patch Changes

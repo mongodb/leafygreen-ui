@@ -122,7 +122,7 @@ export const keyMap = {
   Delete: 'Delete',
   Enter: 'Enter',
   Escape: 'Escape',
-  Space: 'Space',
+  Space: ' ',
   Tab: 'Tab',
 } as const;
 

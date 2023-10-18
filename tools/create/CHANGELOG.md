@@ -1,5 +1,11 @@
 # @lg-tools/create
 
+## 0.2.2
+
+### Patch Changes
+
+- 954645a5: Update `lib` and `emotion` versions
+
 ## 0.2.1
 
 ### Patch Changes

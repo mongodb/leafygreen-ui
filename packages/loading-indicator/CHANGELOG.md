@@ -1,5 +1,15 @@
 # @leafygreen-ui/loading-indicator
 
+## 2.0.7
+
+### Patch Changes
+
+- Updated dependencies [dd4f3da8]
+- Updated dependencies [90053e16]
+  - @leafygreen-ui/lib@13.0.0
+  - @leafygreen-ui/typography@18.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.10
+
 ## 2.0.6
 
 ### Patch Changes

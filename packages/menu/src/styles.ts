@@ -7,6 +7,7 @@ import {
   transitionDuration,
 } from '@leafygreen-ui/tokens';
 
+import { iconButtonClassName } from './SubMenu/SubMenu.styles';
 import { Size } from './types';
 
 export const svgWidth = 24;
@@ -68,12 +69,12 @@ export const menuItemContainerThemeStyle: Record<Theme, string> = {
     }
   `,
   [Theme.Dark]: css`
-    color: ${palette.black};
-    background-color: ${palette.gray.light2};
+    color: ${palette.gray.light2};
+    background-color: ${palette.gray.dark3};
 
     &:hover,
     &:active {
-      background-color: ${palette.gray.light1};
+      background-color: ${palette.gray.dark2};
     }
   `,
 };
@@ -104,7 +105,7 @@ export const mainIconThemeStyle: Record<Theme, string> = {
     color: ${palette.gray.base};
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.dark1};
+    color: ${palette.gray.light1};
   `,
 };
 
@@ -134,7 +135,6 @@ const descriptionTextStyle = css`
   font-size: 13px;
   font-weight: ${fontWeights.regular};
   line-height: 16px;
-  color: ${palette.gray.light1};
 `;
 
 export const descriptionTextThemeStyle: Record<Theme, string> = {
@@ -147,7 +147,7 @@ export const descriptionTextThemeStyle: Record<Theme, string> = {
   [Theme.Dark]: cx(
     descriptionTextStyle,
     css`
-      color: ${palette.gray.dark2};
+      color: ${palette.gray.light1};
     `,
   ),
 };
@@ -201,17 +201,17 @@ export const activeMenuItemContainerStyle: Record<Theme, string> = {
     }
   `,
   [Theme.Dark]: css`
-    background-color: ${palette.gray.light2};
+    background-color: ${palette.gray.dark3};
 
     &:before {
-      background-color: ${palette.green.dark2};
+      background-color: ${palette.green.base};
     }
 
     &:hover {
-      color: ${palette.green.dark3};
+      color: ${palette.white};
 
       &:before {
-        background-color: ${palette.green.dark2};
+        background-color: ${palette.green.base};
       }
     }
   `,
@@ -224,7 +224,7 @@ export const activeTitleTextStyle: Record<Theme, string> = {
   `,
   [Theme.Dark]: css`
     font-weight: ${fontWeights.bold};
-    color: ${palette.green.dark2};
+    color: ${palette.gray.light2};
   `,
 };
 
@@ -233,7 +233,7 @@ export const activeDescriptionTextStyle: Record<Theme, string> = {
     color: ${palette.gray.light1};
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.dark2};
+    color: ${palette.gray.light1};
   `,
 };
 
@@ -242,7 +242,7 @@ export const activeIconStyle: Record<Theme, string> = {
     color: ${palette.green.base};
   `,
   [Theme.Dark]: css`
-    color: ${palette.green.dark2};
+    color: ${palette.green.base};
   `,
 };
 
@@ -270,13 +270,21 @@ export const disabledMenuItemContainerThemeStyle: Record<Theme, string> = {
   [Theme.Dark]: cx(
     disabledMenuItemContainerStyle,
     css`
-      background-color: ${palette.gray.light2};
+      background-color: ${palette.gray.dark3};
+
+      &:hover {
+        background-color: ${palette.gray.dark3};
+      }
     `,
   ),
   [Theme.Light]: cx(
     disabledMenuItemContainerStyle,
     css`
       background-color: ${palette.black};
+
+      &:hover {
+        background-color: ${palette.black};
+      }
     `,
   ),
 };
@@ -287,7 +295,7 @@ export const disabledTextStyle: Record<Theme, string> = {
     font-weight: ${fontWeights.regular};
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.base};
+    color: ${palette.gray.dark1};
     font-weight: ${fontWeights.regular};
   `,
 };
@@ -314,11 +322,15 @@ export const focusedMenuItemContainerStyle: Record<Theme, string> = {
   [Theme.Dark]: css`
     &:focus-visible {
       text-decoration: none;
-      background-color: ${palette.blue.light2};
-      color: ${palette.blue.dark2};
+      background-color: ${palette.blue.dark3};
+      color: ${palette.blue.light3};
 
       &:before {
-        background-color: ${palette.blue.base};
+        background-color: ${palette.blue.light1};
+      }
+
+      .${iconButtonClassName} {
+        background-color: ${palette.blue.dark3};
       }
     }
 
@@ -334,24 +346,38 @@ export const getFocusedStyles = (containerClassName: string, theme: Theme) => {
       .${containerClassName}:focus-visible & {
         color: ${theme === Theme.Light
           ? palette.blue.light3
-          : palette.blue.dark1};
+          : palette.blue.light3};
       }
     `,
     descriptionStyle: css`
       .${containerClassName}:focus-visible & {
         color: ${theme === Theme.Light
           ? palette.blue.light3
-          : palette.blue.dark1};
+          : palette.blue.light3};
       }
     `,
     iconStyle: css`
       .${containerClassName}:focus-visible & {
         color: ${theme === Theme.Light
           ? palette.blue.light3
-          : palette.blue.dark1};
+          : palette.blue.light3};
       }
     `,
   };
+};
+
+/**
+ * Destructive styles
+ */
+export const destructiveTextStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.red.light1};
+    font-weight: ${fontWeights.regular};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.red.light1};
+    font-weight: ${fontWeights.regular};
+  `,
 };
 
 export const linkStyle = css`
@@ -369,7 +395,7 @@ export const focusedSubMenuItemBorderStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     &:focus-visible {
       &::after {
-        background-color: ${palette.blue.light2};
+        background-color: ${palette.blue.dark3};
       }
     }
   `,

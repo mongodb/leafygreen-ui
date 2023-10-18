@@ -1,5 +1,21 @@
 # @leafygreen-ui/search-input
 
+## 2.1.2
+
+### Patch Changes
+
+- 9a471879: - Updates dark mode dropdown border from `gray.dark3` to `gray.dark2`
+- Updated dependencies [dd4f3da8]
+- Updated dependencies [784e9d8a]
+- Updated dependencies [90053e16]
+  - @leafygreen-ui/lib@13.0.0
+  - @leafygreen-ui/icon-button@15.0.19
+  - @leafygreen-ui/typography@18.0.0
+  - @leafygreen-ui/a11y@1.4.11
+  - @leafygreen-ui/input-option@1.0.13
+  - @leafygreen-ui/leafygreen-provider@3.1.10
+  - @leafygreen-ui/popover@11.1.1
+
 ## 2.1.1
 
 ### Patch Changes
