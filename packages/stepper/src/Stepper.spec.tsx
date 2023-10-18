@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import Stepper from '.';
+import { Stepper } from './Stepper/Stepper';
 
 const defaultProps = {
   currentStep: 0,

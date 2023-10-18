@@ -1,6 +1,2 @@
-import Step from './Step';
-import Stepper from './Stepper';
-import type { StepperProps } from './types';
-export { Step };
-export type { StepperProps };
-export default Stepper;
+export { Step } from './Step';
+export { Stepper as default, type StepperProps } from './Stepper';

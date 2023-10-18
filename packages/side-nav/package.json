@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/side-nav",
-  "version": "14.0.4",
+  "version": "14.0.5",
   "description": "leafyGreen UI Kit Side Nav",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,25 +22,25 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/a11y": "^1.4.10",
+    "@leafygreen-ui/a11y": "^1.4.11",
     "@leafygreen-ui/box": "^3.1.8",
     "@leafygreen-ui/emotion": "^4.0.7",
     "@leafygreen-ui/hooks": "^8.0.0",
     "@leafygreen-ui/icon": "^11.23.0",
-    "@leafygreen-ui/lib": "^12.0.0",
+    "@leafygreen-ui/lib": "^13.0.0",
     "@leafygreen-ui/palette": "^4.0.7",
-    "@leafygreen-ui/portal": "^5.0.2",
+    "@leafygreen-ui/portal": "^5.0.3",
     "@leafygreen-ui/tokens": "^2.2.0",
-    "@leafygreen-ui/tooltip": "^10.0.11",
-    "@leafygreen-ui/typography": "^17.0.2",
+    "@leafygreen-ui/tooltip": "^10.1.0",
+    "@leafygreen-ui/typography": "^18.0.0",
     "polished": "^4.2.2",
     "react-transition-group": "^4.4.5"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.9"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.10"
   },
   "devDependencies": {
-    "@leafygreen-ui/select": "^11.0.0"
+    "@leafygreen-ui/select": "^11.0.1"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/side-nav",
   "repository": {

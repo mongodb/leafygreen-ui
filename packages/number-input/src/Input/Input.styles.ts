@@ -219,8 +219,8 @@ export const wrapperDisabledStyles: Record<Theme, string> = {
     color: ${palette.gray.base};
   `,
   [Theme.Dark]: css`
-    background-color: ${palette.gray.dark4};
-    border-color: ${palette.gray.dark3};
+    background-color: ${palette.gray.dark3};
+    border-color: ${palette.gray.dark2};
     color: ${palette.gray.dark1};
   `,
 };
