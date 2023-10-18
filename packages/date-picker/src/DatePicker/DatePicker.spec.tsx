@@ -208,7 +208,7 @@ describe('packages/date-picker', () => {
           await waitFor(() => expect(menuContainerEl).not.toBeInTheDocument());
         });
 
-        test('closes the menu', async () => {
+        test('closes the menu when "initialOpen: true"', async () => {
           const { calendarButton, getMenuElements } = renderDatePicker({
             initialOpen: true,
           });
