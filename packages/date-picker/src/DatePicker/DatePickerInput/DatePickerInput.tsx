@@ -50,8 +50,10 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       }
     };
 
-    const handleIconButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
-      setOpen(true);
+    const handleIconButtonClick: MouseEventHandler<HTMLButtonElement> = e => {
+      // Prevent the parent click handler from being called since clicks on the parent always opens the dropdown
+      e.stopPropagation();
+      setOpen(o => !o);
     };
 
     /** Called on any keydown within the input element */
