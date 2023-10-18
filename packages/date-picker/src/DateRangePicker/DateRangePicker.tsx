@@ -14,6 +14,7 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
       value: rangeProp,
       initialValue: initialProp,
       onRangeChange: onChangeProp,
+      handleValidation,
       ...props
     }: DateRangePickerProps,
     fwdRef,
@@ -31,7 +32,12 @@ export const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(
 
     return (
       <DatePickerProvider value={datePickerContextProps}>
-        <DateRangeProvider rootRef={fwdRef} value={value} setValue={setValue}>
+        <DateRangeProvider
+          rootRef={fwdRef}
+          value={value}
+          setValue={setValue}
+          handleValidation={handleValidation}
+        >
           <DateRangeComponent {...restProps} />
         </DateRangeProvider>
       </DatePickerProvider>

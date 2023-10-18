@@ -32,6 +32,7 @@ export const DateRangeProvider = ({
   children,
   value,
   setValue,
+  handleValidation,
   rootRef,
 }: PropsWithChildren<DateRangeProviderProps>) => {
   const refs = useDateRangeComponentRefs(rootRef);
@@ -58,6 +59,7 @@ export const DateRangeProvider = ({
         today,
         value,
         setValue,
+        handleValidation,
         month,
         nextMonth,
         setMonth,

@@ -145,8 +145,6 @@ export const WithValidation: StoryFn<typeof DateRangePicker> = props => {
     setState(DatePickerState.Error);
   };
 
-  console.log(state);
-
   return (
     <DateRangePicker
       {...props}

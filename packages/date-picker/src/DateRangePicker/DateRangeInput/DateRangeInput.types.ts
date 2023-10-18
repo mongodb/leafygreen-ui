@@ -7,5 +7,5 @@ import { DateRangeComponentProps } from '../DateRangeComponent';
  * and any other `div` attributes
  */
 export interface DateRangeInputProps
-  extends Pick<DateRangeComponentProps, 'handleValidation' | 'onChange'>,
+  extends Pick<DateRangeComponentProps, 'onChange'>,
     Omit<HTMLElementProps<'div'>, 'onChange'> {}

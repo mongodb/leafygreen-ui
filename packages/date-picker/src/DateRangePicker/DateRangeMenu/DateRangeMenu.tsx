@@ -3,6 +3,7 @@ import React, {
   forwardRef,
   KeyboardEventHandler,
   MouseEventHandler,
+  useEffect,
 } from 'react';
 
 import { keyMap } from '@leafygreen-ui/lib';
@@ -24,18 +25,19 @@ import { QuickSelectionMenu } from './QuickSelectionMenu';
 
 export const DateRangeMenu = forwardRef<HTMLDivElement, DateRangeMenuProps>(
   (
-    {
-      showQuickSelection,
-      onCancel,
-      onClear,
-      handleValidation,
-      ...rest
-    }: DateRangeMenuProps,
+    { showQuickSelection, onCancel, onClear, ...rest }: DateRangeMenuProps,
     fwdRef,
   ) => {
     // const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
-    const { isOpen, setOpen } = useDatePickerContext();
+    const { isOpen, setOpen, setIsDirty } = useDatePickerContext();
     const { value, setValue, getHighlightedCell, refs } = useDateRangeContext();
+
+    useEffect(() => {
+      // Once the menu opens, mark the input as dirty
+      if (isOpen) {
+        setIsDirty(true);
+      }
+    }, [setIsDirty, isOpen]);
 
     /** Called when any calendar cell is clicked */
     const updateValue = (newRange?: DateRangeType) => {
@@ -110,10 +112,7 @@ export const DateRangeMenu = forwardRef<HTMLDivElement, DateRangeMenuProps>(
       >
         <div className={menuContentStyles}>
           {showQuickSelection && <QuickSelectionMenu />}
-          <DateRangeMenuCalendars
-            ref={refs.calendarSectionRef}
-            handleValidation={handleValidation}
-          />
+          <DateRangeMenuCalendars ref={refs.calendarSectionRef} />
         </div>
         <DateRangeMenuFooter
           onApply={handleApply}

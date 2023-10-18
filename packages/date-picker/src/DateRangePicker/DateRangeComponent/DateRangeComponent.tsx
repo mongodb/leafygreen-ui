@@ -10,7 +10,6 @@ import { DateRangeMenu } from '../DateRangeMenu';
 import { DateRangeComponentProps } from './DateRangeComponent.types';
 
 export const DateRangeComponent = ({
-  handleValidation,
   onCancel,
   onClear,
   showQuickSelection,

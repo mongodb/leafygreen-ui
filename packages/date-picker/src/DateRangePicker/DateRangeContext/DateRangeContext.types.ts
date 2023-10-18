@@ -2,6 +2,7 @@ import { DynamicRefGetter } from '@leafygreen-ui/hooks';
 
 import { SegmentRefs } from '../../hooks/useSegmentRefs';
 import { DateRangeType, DateType } from '../../types';
+import { DateRangePickerProps } from '../DateRangePicker.types';
 
 export interface DateRangeComponentRefs {
   formFieldRef: React.RefObject<HTMLDivElement>;
@@ -18,9 +19,10 @@ export interface DateRangeComponentRefs {
 
 export interface DateRangeContextProps {
   refs: DateRangeComponentRefs;
-  today: Date;
   value: DateRangeType | undefined;
   setValue: (newVal: DateRangeType | undefined) => void;
+  handleValidation: DateRangePickerProps['handleValidation'];
+  today: Date;
   month: Date;
   nextMonth: Date;
   setMonth: React.Dispatch<React.SetStateAction<Date>>;
@@ -33,4 +35,5 @@ export interface DateRangeProviderProps {
   rootRef: React.ForwardedRef<HTMLDivElement | null>;
   value: DateRangeType | undefined;
   setValue: (newVal: DateRangeType | undefined) => void;
+  handleValidation: DateRangePickerProps['handleValidation'];
 }

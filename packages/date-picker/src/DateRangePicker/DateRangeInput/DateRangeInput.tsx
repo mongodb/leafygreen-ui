@@ -22,14 +22,16 @@ import { DateRangeInputProps } from './DateRangeInput.types';
 const EN_DASH = '–';
 
 export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
-  ({ handleValidation, onChange, ...rest }: DateRangeInputProps, fwdRef) => {
+  ({ onChange, ...rest }: DateRangeInputProps, fwdRef) => {
     const { disabled, formatParts, setOpen, isDirty, setIsDirty } =
       useDatePickerContext();
 
     const {
+      refs: { startSegmentRefs, endSegmentRefs },
       value,
       setValue,
-      refs: { startSegmentRefs, endSegmentRefs },
+      handleValidation,
+      getHighlightedCell,
     } = useDateRangeContext();
 
     /** Called when the input, or any of its children, is clicked */
@@ -121,12 +123,14 @@ export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
     const handleInputBlur: FocusEventHandler = e => {
       const nextFocus = e.relatedTarget as HTMLInputElement;
 
+      const segmentElements = [startSegmentRefs, endSegmentRefs].flatMap(refs =>
+        Object.values(refs).map(ref => ref.current),
+      );
+
+      const isNextFocusASegment = segmentElements.includes(nextFocus);
+
       // If the next focus is _not_ on a segment
-      if (
-        ![startSegmentRefs, endSegmentRefs]
-          .flatMap(refs => Object.values(refs).map(ref => ref.current))
-          .includes(nextFocus)
-      ) {
+      if (!isNextFocusASegment) {
         setIsDirty(true);
         handleValidation?.(value);
       }
@@ -138,6 +142,11 @@ export const DateRangeInput = forwardRef<HTMLDivElement, DateRangeInputProps>(
       if (!disabled) {
         e.stopPropagation();
         setOpen(true);
+        requestAnimationFrame(() => {
+          // once the menu is open
+          const highlightedCell = getHighlightedCell();
+          highlightedCell?.focus();
+        });
       }
     };
 

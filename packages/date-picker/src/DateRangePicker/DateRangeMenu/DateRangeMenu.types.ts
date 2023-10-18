@@ -9,8 +9,5 @@ import { DateRangeComponentProps } from '../DateRangeComponent';
  */
 export type DateRangeMenuProps = PortalControlProps &
   Pick<PopoverProps, 'refEl'> &
-  Pick<
-    DateRangeComponentProps,
-    'showQuickSelection' | 'handleValidation' | 'onCancel' | 'onClear'
-  > &
+  Pick<DateRangeComponentProps, 'showQuickSelection' | 'onCancel' | 'onClear'> &
   HTMLElementProps<'div'> & {};

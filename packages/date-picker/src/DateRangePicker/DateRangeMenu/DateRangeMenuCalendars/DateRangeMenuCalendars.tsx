@@ -46,12 +46,13 @@ import { DateRangeMenuCalendarsProps } from './DateRangeMenuCalendars.types';
 export const DateRangeMenuCalendars = forwardRef<
   HTMLDivElement,
   DateRangeMenuCalendarsProps
->(({ handleValidation }, fwdRef) => {
+>((_, fwdRef) => {
   const { isInRange, setOpen } = useDatePickerContext();
   const {
     refs,
     value,
     setValue,
+    handleValidation,
     highlight,
     setHighlight,
     month,

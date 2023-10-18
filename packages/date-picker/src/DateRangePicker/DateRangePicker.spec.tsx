@@ -15,7 +15,6 @@ import {
   expectedTabStopLabels,
   getTabStopElementMap,
   renderDateRangePicker,
-  RenderDateRangePickerResult,
 } from './DateRangePicker.testutils';
 import { DateRangePicker } from '.';
 
@@ -370,11 +369,13 @@ describe('packages/date-picker/date-range-picker', () => {
           expect(menuContainerEl).toBeInTheDocument();
         });
 
-        test('focuses on the highlighted cell', () => {
+        test('focuses on the highlighted cell', async () => {
           const { calendarButton, getMenuElements } = renderDateRangePicker();
           userEvent.click(calendarButton);
           const { todayCell } = getMenuElements();
-          expect(todayCell).toHaveFocus();
+          await waitFor(() => {
+            expect(todayCell).toHaveFocus();
+          });
         });
       });
 
@@ -732,30 +733,6 @@ describe('packages/date-picker/date-range-picker', () => {
                 userEvent.tab();
               }
             });
-
-            // const testCases: Array<[number, (typeof tabStops)[number]]> = tabStops.map((stop, n) => [n, stop]);
-            // describe.each(testCases)('Tab %i times', (n, label) => {
-            //   let renderResult: RenderDateRangePickerResult;
-            //   let element: HTMLElement | null;
-
-            //   beforeEach(() => {
-            //     renderResult = renderDateRangePicker();
-            //     element = getTabStopElementMap(renderResult)[label];
-            //     tabNTimes(n);
-            //   });
-
-            //   test(`focus on: ${label}`, () => {
-            //     if (element !== null) {
-            //       expect(element).toHaveFocus();
-            //     } else {
-            //       expect(
-            //         renderResult.inputContainer.contains(
-            //           document.activeElement,
-            //         ),
-            //       ).toBeFalsy();
-            //     }
-            //   });
-            // });
           });
 
           describe('when basic menu is open', () => {
@@ -773,25 +750,6 @@ describe('packages/date-picker/date-range-picker', () => {
                 userEvent.tab();
               }
             });
-            // const testCases: Array<[number, (typeof tabStops)[number]]> = tabStops.map((stop, n) => [n, stop]);
-
-            // describe.each(testCases)(`Tab %i times`, (n, label) => {
-            //   let renderResult: RenderDateRangePickerResult;
-            //   let element: HTMLElement | null;
-
-            //   beforeEach(() => {
-            //     renderResult = renderDateRangePicker({
-            //       showQuickSelection: false,
-            //     });
-            //     renderResult.openMenu();
-            //     element = getTabStopElementMap(renderResult)[label];
-            //     tabNTimes(n);
-            //   });
-
-            //   test(`focus on: ${label}`, () => {
-            //     expect(element).toHaveFocus();
-            //   });
-            // });
           });
 
           describe('when quick-select menu is open', () => {
@@ -809,24 +767,6 @@ describe('packages/date-picker/date-range-picker', () => {
                 userEvent.tab();
               }
             });
-
-            // const testCases: Array<[number, (typeof tabStops)[number]]> = tabStops.map((stop, n) => [n, stop]);
-            // describe.each(testCases)(`Tab %i times`, (n, label) => {
-            //   let element: HTMLElement | null;
-
-            //   beforeEach(() => {
-            //     const renderResult = renderDateRangePicker({
-            //       showQuickSelection: true,
-            //     });
-            //     renderResult.openMenu();
-            //     element = getTabStopElementMap(renderResult)[label];
-            //     tabNTimes(n);
-            //   });
-
-            //   test(`focus on: ${label}`, () => {
-            //     expect(element).toHaveFocus();
-            //   });
-            // });
           });
         });
       });
@@ -862,7 +802,7 @@ describe('packages/date-picker/date-range-picker', () => {
           const onRangeChange = jest.fn();
           const { openMenu } = renderDateRangePicker({ onRangeChange });
           const { todayCell } = openMenu();
-          tabNTimes(8);
+          tabNTimes(7);
           expect(todayCell).toHaveFocus();
           userEvent.keyboard('{enter}');
           expect(onRangeChange).toHaveBeenCalled();
@@ -871,7 +811,7 @@ describe('packages/date-picker/date-range-picker', () => {
         test('if a cell is focused, closes the menu', async () => {
           const { openMenu } = renderDateRangePicker();
           const { todayCell, menuContainerEl } = openMenu();
-          tabNTimes(8);
+          tabNTimes(7);
           expect(todayCell).toHaveFocus();
           userEvent.keyboard('{enter}');
           await waitForElementToBeRemoved(menuContainerEl);
@@ -932,12 +872,15 @@ describe('packages/date-picker/date-range-picker', () => {
           expect(onRangeChange).not.toHaveBeenCalled();
         });
 
-        test('fires a validation handler', () => {
+        test('fires a validation handler', async () => {
           const handleValidation = jest.fn();
           const { openMenu } = renderDateRangePicker({ handleValidation });
           openMenu();
+          userEvent.tab();
           userEvent.keyboard('{escape}');
-          expect(handleValidation).toHaveBeenCalledWith([null, null]);
+          await waitFor(() => {
+            expect(handleValidation).toHaveBeenCalledWith([null, null]);
+          });
         });
 
         test('focus remains in the input element', () => {
