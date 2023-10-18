@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import {
@@ -6,10 +6,7 @@ import {
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
-import { DescendantContext, useDescendant } from '../DescendantContext';
-import { HighlightBehavior } from '../Dropdown/Dropdown.types';
-import { useHighlightContext } from '../HighlightContext';
-import { useMergeRefs } from '../utils';
+import { useFocusableDropdownItem, useMergeRefs } from '../utils';
 
 import { DropdownItemProps } from './DropdownItem.types';
 
@@ -29,35 +26,17 @@ export const DropdownItem = React.forwardRef(
     forwardRef,
   ) => {
     const { Component: as } = useInferredPolymorphic(asProp, rest, 'div');
-    const { index, ref } = useDescendant(DescendantContext, {
-      disabled,
-    });
-    const { highlightBehavior, highlightedRef, setHighlightedRef } =
-      useHighlightContext();
+    const {
+      ref,
+      index,
+      onFocus,
+      onBlur,
+      tabIndex,
+      ['data-selected']: dataSelected,
+    } = useFocusableDropdownItem({ disabled });
+
     const itemRef = useMergeRefs(forwardRef, ref);
-    const [_, force] = useState({});
-
     const label = `menu item ${index}`;
-
-    useEffect(() => {
-      if (index && index < 0) {
-        force({});
-      }
-    }, [index]);
-
-    const highlighted = highlightedRef === ref.current;
-
-    const onFocus = () => {
-      if (highlightBehavior === HighlightBehavior.Focus) {
-        setHighlightedRef?.(ref.current);
-      }
-    };
-
-    const onBlur = () => {
-      if (highlightBehavior === HighlightBehavior.Focus) {
-        setHighlightedRef?.(null);
-      }
-    };
 
     return (
       <InputOption
@@ -66,11 +45,12 @@ export const DropdownItem = React.forwardRef(
         ref={itemRef}
         aria-labelledby={label}
         disabled={disabled}
-        highlighted={highlighted}
+        highlighted={dataSelected}
         checked={active}
         className={className}
         onFocus={onFocus}
         onBlur={onBlur}
+        tab-index={tabIndex}
         {...rest}
       >
         <InputOptionContent

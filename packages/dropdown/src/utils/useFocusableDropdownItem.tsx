@@ -4,8 +4,8 @@ import { DescendantContext, useDescendant } from '../DescendantContext';
 import { HighlightBehavior } from '../Dropdown/Dropdown.types';
 import { useHighlightContext } from '../HighlightContext';
 
-export const useFocusableDropdownItem = () => {
-  const { index, ref } = useDescendant(DescendantContext, {});
+export const useFocusableDropdownItem = ({ disabled }) => {
+  const { index, ref } = useDescendant(DescendantContext, { disabled });
   const { highlightBehavior, highlightedRef, setHighlightedRef } =
     useHighlightContext();
   const [_, force] = useState({});
@@ -32,6 +32,7 @@ export const useFocusableDropdownItem = () => {
 
   return {
     ref,
+    index,
     onFocus,
     onBlur,
     tabIndex: -1,

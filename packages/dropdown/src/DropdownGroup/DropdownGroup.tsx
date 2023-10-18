@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Transition } from 'react-transition-group';
 
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -8,12 +8,12 @@ import ChevronUpIcon from '@leafygreen-ui/icon/dist/ChevronUp';
 import IconButton from '@leafygreen-ui/icon-button';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { keyMap } from '@leafygreen-ui/lib';
-import { PolymorphicAs } from '@leafygreen-ui/polymorphic';
+import {
+  PolymorphicAs,
+  useInferredPolymorphic,
+} from '@leafygreen-ui/polymorphic';
 
-import { DescendantContext, useDescendant } from '../DescendantContext';
-import { HighlightBehavior } from '../Dropdown/Dropdown.types';
-import { useHighlightContext } from '../HighlightContext';
-import { useMergeRefs } from '../utils';
+import { useFocusableDropdownItem, useMergeRefs } from '../utils';
 
 import { DropdownGroupProps } from './DropdownGroup.types';
 
@@ -28,40 +28,24 @@ export const DropdownGroup = React.forwardRef(
       leftGlyph,
       active = false,
       disabled = false,
-      as = 'div',
+      as: asProp,
       ...rest
     }: DropdownGroupProps<PolymorphicAs>,
     forwardRef,
   ) => {
-    const { highlightBehavior, highlightedRef, setHighlightedRef } =
-      useHighlightContext();
-    const { index, ref } = useDescendant(DescendantContext, {
-      disabled,
-    });
+    const { Component: as } = useInferredPolymorphic(asProp, rest, 'div');
+    const {
+      ref,
+      index,
+      onFocus,
+      onBlur,
+      tabIndex,
+      ['data-selected']: dataSelected,
+    } = useFocusableDropdownItem({ disabled });
+
     const itemRef = useMergeRefs(forwardRef, ref);
     const [open, setOpen] = useState(false);
-    const [_, force] = useState({});
     const label = `menu item ${index}`;
-
-    useEffect(() => {
-      if (index && index < 0) {
-        force({});
-      }
-    }, [index]);
-
-    const highlighted = highlightedRef === ref.current;
-
-    const onFocus = () => {
-      if (highlightBehavior === HighlightBehavior.Focus) {
-        setHighlightedRef?.(ref.current);
-      }
-    };
-
-    const onBlur = () => {
-      if (highlightBehavior === HighlightBehavior.Focus) {
-        setHighlightedRef?.(null);
-      }
-    };
 
     const handleClick = (e: React.MouseEvent) => {
       e.stopPropagation();
@@ -75,8 +59,6 @@ export const DropdownGroup = React.forwardRef(
       e.nativeEvent.stopImmediatePropagation();
 
       setOpen(curr => !curr);
-
-      force({});
     };
 
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -89,7 +71,7 @@ export const DropdownGroup = React.forwardRef(
       }
     };
 
-    useEventListener('keydown', handleKeyDown, { enabled: highlighted });
+    useEventListener('keydown', handleKeyDown, { enabled: dataSelected });
 
     const numberOfMenuItems = React.Children.toArray(children).length;
 
@@ -101,12 +83,13 @@ export const DropdownGroup = React.forwardRef(
           ref={itemRef}
           aria-labelledby={label}
           disabled={disabled}
-          highlighted={highlighted}
+          highlighted={dataSelected}
           checked={active}
           className={className}
           onClick={handleClick}
           onFocus={onFocus}
           onBlur={onBlur}
+          tab-index={tabIndex}
           {...rest}
         >
           <InputOptionContent

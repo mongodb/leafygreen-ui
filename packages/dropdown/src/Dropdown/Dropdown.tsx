@@ -24,10 +24,7 @@ import {
 } from './Dropdown.styles';
 import { DropdownProps, HighlightBehavior } from './Dropdown.types';
 
-// sub menu
 // tests
-// size prop
-// prop-types everywhere
 export const Dropdown = React.forwardRef(
   (
     {

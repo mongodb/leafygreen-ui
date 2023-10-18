@@ -60,4 +60,21 @@ describe('packages/dropdown/dropdown-item', () => {
     const item = screen.getByRole('option');
     expect(item.getAttribute('aria-checked')).toBe('true');
   });
+
+  test('accepts a ref', () => {
+    let testRef: React.MutableRefObject<HTMLElement | null>;
+
+    const TestComponent = () => {
+      const myRef = React.useRef<HTMLElement | null>(null);
+      testRef = myRef;
+
+      return <DropdownItem data-testid="ref" ref={myRef}></DropdownItem>;
+    };
+
+    const { getByTestId } = render(<TestComponent />);
+    expect(getByTestId('ref')).toBeInTheDocument();
+    expect(getByTestId('ref').tagName.toLowerCase()).toBe('div');
+    expect(testRef!).toBeDefined();
+    expect(testRef!.current).toBeDefined();
+  });
 });
