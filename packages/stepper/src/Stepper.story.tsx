@@ -64,7 +64,7 @@ const meta: StoryMetaType<typeof Stepper> = {
   },
   decorators: [
     StoryFn => (
-      <div style={{ width: '100%' }}>
+      <div style={{ minWidth: '600px' }}>
         <StoryFn />
       </div>
     ),
