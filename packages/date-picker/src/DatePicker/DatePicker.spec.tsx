@@ -199,11 +199,23 @@ describe('packages/date-picker', () => {
       });
 
       describe('Clicking the Calendar button', () => {
-        test('opens the menu', () => {
+        test('toggles the menu open and close', async () => {
           const { calendarButton, getMenuElements } = renderDatePicker();
           userEvent.click(calendarButton);
           const { menuContainerEl } = getMenuElements();
           expect(menuContainerEl).toBeInTheDocument();
+          userEvent.click(calendarButton);
+          await waitFor(() => expect(menuContainerEl).not.toBeInTheDocument());
+        });
+
+        test('closes the menu', async () => {
+          const { calendarButton, getMenuElements } = renderDatePicker({
+            initialOpen: true,
+          });
+          const { menuContainerEl } = getMenuElements();
+          await waitFor(() => expect(menuContainerEl).toBeInTheDocument());
+          userEvent.click(calendarButton);
+          await waitFor(() => expect(menuContainerEl).not.toBeInTheDocument());
         });
       });
 
