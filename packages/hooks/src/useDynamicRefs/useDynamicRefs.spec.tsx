@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react-hooks';
 
 import { consoleOnce } from '@leafygreen-ui/lib';
 
-import useDynamicRefs from '.';
+import { useDynamicRefs } from '.';
 
 describe('packages/hooks/useDynamicRefs', () => {
   test('returns a ref getter function', () => {

@@ -1,1 +1,1 @@
-export { default } from './useDynamicRefs';
+export { type DynamicRefGetter, useDynamicRefs } from './useDynamicRefs';
