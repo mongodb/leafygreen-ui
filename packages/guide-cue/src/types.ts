@@ -37,6 +37,7 @@ type ModifiedTooltipProps = Omit<
   | 'open'
   | 'refEl'
   | 'darkMode'
+  | 'initialOpen'
 >;
 
 interface StandaloneProps {

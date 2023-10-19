@@ -55,6 +55,12 @@ export type TooltipProps = Omit<
     triggerEvent?: TriggerEvent;
 
     /**
+     * Provides an initial value to uncontrolled open/setOpen state
+     * @default `false`
+     */
+    initialOpen?: boolean;
+
+    /**
      * Controls component and determines the open state of the `Tooltip`
      * @default `false`
      */

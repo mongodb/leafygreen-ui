@@ -76,6 +76,7 @@ const stopClickPropagation = (evt: React.MouseEvent) => {
  * @param props.onClose Callback that is fired when the tooltip is closed.
  */
 function Tooltip({
+  initialOpen = false,
   open: controlledOpen,
   setOpen: controlledSetOpen,
   darkMode: darkThemeProp,
@@ -100,7 +101,7 @@ function Tooltip({
   ...rest
 }: TooltipProps) {
   const isControlled = typeof controlledOpen === 'boolean';
-  const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
+  const [uncontrolledOpen, uncontrolledSetOpen] = useState(initialOpen);
   const size = useUpdatedBaseFontSize(baseFontSizeOverride);
   const open = isControlled ? controlledOpen : uncontrolledOpen;
   // typescript is not recognizing isControlled checks that controlledSetOpen exists

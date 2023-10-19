@@ -1,7 +1,7 @@
 import { transparentize } from 'polished';
 
 import { css } from '@leafygreen-ui/emotion';
-import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
+import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   focusRing,
@@ -11,11 +11,22 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { fontSize, getChipHeight, lineHeight } from '../Chip/Chip.styles';
 import { ComboboxSize as Size, Overflow } from '../Combobox.types';
+import {
+  chipClassName,
+  chipWrapperPaddingY,
+  fontSize,
+  lineHeight,
+} from '../ComboboxChip/ComboboxChip.styles';
 
+/**
+ * Util to get the chip height
+ * `lineHeight + (2 * paddingY)`
+ */
 // Rename the variable defined in chip styles
-const inputHeight = getChipHeight;
+const inputHeight = (size: Size) => {
+  return lineHeight[size] + 2 * chipWrapperPaddingY[size];
+};
 
 // Gap between each chip
 const flexGap = 4;
@@ -82,8 +93,6 @@ export const clearButtonIconSize = 28;
 
 /** Width of the dropdown caret icon (in px) */
 export const caretIconSize = spacing[3];
-
-export const chipClassName = createUniqueClassName('combobox-chip');
 
 export const comboboxParentStyle = (size: Size): string => {
   return css`
@@ -261,7 +270,7 @@ export const inputWrapperStyle = ({
         gap: ${flexGap}px;
         overflow-x: hidden;
         min-height: ${inputHeight(size)}px;
-        max-height: calc((${getChipHeight(size) * 3}px) + (${flexGap}px * 2));
+        max-height: calc((${inputHeight(size) * 3}px) + (${flexGap}px * 2));
       `;
     }
   }
@@ -410,5 +419,5 @@ export const caretIconThemeStyles: Record<Theme, string> = {
 
 export const caretIconDisabledStyles: Record<Theme, string> = {
   [Theme.Light]: palette.gray.base,
-  [Theme.Dark]: palette.gray.dark2,
+  [Theme.Dark]: palette.gray.dark1,
 };

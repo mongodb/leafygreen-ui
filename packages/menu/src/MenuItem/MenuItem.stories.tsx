@@ -23,6 +23,7 @@ const meta: StoryMetaType<typeof MenuItem> = {
         active: [false, true],
         size: Object.values(Size),
         disabled: [false, true],
+        variant: ['default', 'destructive'],
       },
       args: {
         children: 'Menu Item',
@@ -44,4 +45,4 @@ const meta: StoryMetaType<typeof MenuItem> = {
 };
 export default meta;
 
-export const Generated = () => <></>;
+export const Generated = () => {};

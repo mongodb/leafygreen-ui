@@ -26,6 +26,13 @@ export interface MenuProps extends Omit<PopoverProps, 'active'> {
   trigger?: React.ReactElement | Function;
 
   /**
+   * Provides an initial value to uncontrolled open/setOpen state
+   *
+   * default: `false`
+   */
+  initialOpen?: boolean;
+
+  /**
    * Determines the open state of the menu
    *
    * default: `false`

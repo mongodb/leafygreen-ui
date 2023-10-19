@@ -5,6 +5,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { clickableStyles, disabledStyles } from './Row.styles';
 import { InternalRowBaseProps } from './Row.types';
+import { useRowContext } from './RowContext';
 
 /**
  * The base Row component, extended by `InternalRow(With/Without)RT`
@@ -12,10 +13,10 @@ import { InternalRowBaseProps } from './Row.types';
 const InternalRowBase = ({
   className,
   onClick,
-  disabled,
   ...rest
 }: InternalRowBaseProps) => {
   const { theme } = useDarkMode();
+  const { disabled } = useRowContext();
   return (
     <tr
       onClick={onClick}

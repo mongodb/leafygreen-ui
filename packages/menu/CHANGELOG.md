@@ -1,5 +1,32 @@
 # @leafygreen-ui/menu
 
+## 23.0.0
+
+### Major Changes
+
+- 2724d6b7: - Updates dark mode `Menu`. Previously `Menu` had an inverted light theme in dark mode but now `Menu` will have a dark theme in dark mode. Light mode and dark mode will have different dark themes.
+  - Adds a 1px border around the menu dropdown.
+
+### Minor Changes
+
+- 7c3e6d39: Adds `initialOpen` prop, which allows consuming applications to control the initial state of an uncontrolled implementation of the component.
+
+### Patch Changes
+
+- dd4f3da8: Adds tests for pressing enter/space on a menuItem
+- Updated dependencies [dd4f3da8]
+- Updated dependencies [784e9d8a]
+  - @leafygreen-ui/lib@13.0.0
+  - @leafygreen-ui/icon-button@15.0.19
+  - @leafygreen-ui/leafygreen-provider@3.1.10
+  - @leafygreen-ui/popover@11.1.1
+
+## 22.0.9
+
+### Patch Changes
+
+- b15c4805: Adds `variant` prop to MenuItem component. The value can either be `'default'` or `'destructive'`
+
 ## 22.0.8
 
 ### Patch Changes

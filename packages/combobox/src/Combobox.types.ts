@@ -1,7 +1,10 @@
 import { ComponentPropsWithoutRef, ReactElement, ReactNode } from 'react';
 
+import { type ChipProps, TruncationLocation } from '@leafygreen-ui/chip';
 import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
 import { PortalControlProps } from '@leafygreen-ui/popover';
+
+export { TruncationLocation };
 
 /**
  * Prop Enums & Types
@@ -30,15 +33,6 @@ export const ComboboxSize = {
   Large: 'large',
 } as const;
 export type ComboboxSize = (typeof ComboboxSize)[keyof typeof ComboboxSize];
-
-export const TruncationLocation = {
-  start: 'start',
-  middle: 'middle',
-  end: 'end',
-  none: 'none',
-} as const;
-export type TruncationLocation =
-  (typeof TruncationLocation)[keyof typeof TruncationLocation];
 
 export const Overflow = {
   /**
@@ -133,8 +127,14 @@ export interface ComboboxMultiselectProps<M extends boolean> {
   overflow?: M extends true ? Overflow : undefined;
 }
 
+type PartialChipProps = Pick<
+  ChipProps,
+  'chipTruncationLocation' | 'chipCharacterLimit' | 'popoverZIndex'
+>;
+
 export type BaseComboboxProps = Omit<HTMLElementProps<'div'>, 'onChange'> &
-  PortalControlProps & {
+  PortalControlProps &
+  PartialChipProps & {
     /**
      * Defines the Combobox Options by passing children. Must be `ComboboxOption` or `ComboboxGroup`
      */
@@ -228,22 +228,6 @@ export type BaseComboboxProps = Omit<HTMLElementProps<'div'>, 'onChange'> &
      * Do not remove options from the JSX children, as this will affect the selected options
      */
     filteredOptions?: Array<string>;
-
-    /**
-     * Defines where the ellipses appear in a Chip when the length exceeds the `chipCharacterLimit`
-     */
-    chipTruncationLocation?: TruncationLocation;
-
-    /**
-     * Defined the character limit of a multiselect Chip before they start truncating.
-     * Note: the three ellipses dots are included in the character limit.
-     */
-    chipCharacterLimit?: number;
-
-    /**
-     * Number that controls the z-index of the popover element directly.
-     */
-    popoverZIndex?: number;
   };
 
 export type ComboboxProps<M extends boolean> = Either<
@@ -353,7 +337,7 @@ export interface ComboboxGroupProps {
  * Combobox Chip
  */
 
-export interface ChipProps {
+export interface ComboboxChipProps {
   displayName: string;
   isFocused: boolean;
   onRemove: () => void;

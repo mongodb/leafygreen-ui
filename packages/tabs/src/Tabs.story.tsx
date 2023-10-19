@@ -33,6 +33,11 @@ const meta: StoryMetaType<typeof Tabs> = {
   component: Tabs,
   parameters: {
     default: 'LiveExample',
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+      },
+    },
     controls: {
       exclude: [
         ...storybookExcludedControlParams,
@@ -122,3 +127,5 @@ WithInlineChildren.args = {
 WithInlineChildren.argTypes = {
   inlineChildren: { control: 'none' },
 };
+
+export const Generated = () => {};

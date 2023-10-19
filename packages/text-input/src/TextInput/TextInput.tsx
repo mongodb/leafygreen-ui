@@ -1,41 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { cx } from '@leafygreen-ui/emotion';
-import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
-import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
-import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
+import { css } from '@leafygreen-ui/emotion';
+import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
+import { useValidation } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
-import {
-  Description,
-  Error,
-  Label,
-  useUpdatedBaseFontSize,
-} from '@leafygreen-ui/typography';
+import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import {
-  baseInputStyle,
-  errorMessageStyle,
-  getWrapperFontSize,
-  iconClassName,
-  inheritTypeScale,
-  inputContainerStyle,
-  inputFocusStyles,
-  inputIndicatorSizeStyle,
-  inputIndicatorStyle,
-  inputModeStyles,
-  inputPaddingForIndicator,
-  inputPaddingForOptionalText,
-  inputSizeStyles,
-  inputStateStyles,
-  optionalTextBaseStyle,
-  optionalTextThemeStyle,
-  stateIndicatorStyles,
-  textContainerStyle,
-  wrapperStyle,
-} from './TextInput.styles';
 import {
   SizeVariant,
   State,
@@ -81,7 +54,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       disabled = false,
       state = State.None,
       type = TextInputType.Text,
-      id: propsId,
+      id,
       value: controlledValue,
       className,
       darkMode: darkModeProp,
@@ -93,11 +66,10 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     }: TextInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
   ) => {
-    const { darkMode, theme } = useDarkMode(darkModeProp);
+    const { darkMode } = useDarkMode(darkModeProp);
     const isControlled = typeof controlledValue === 'string';
     const [uncontrolledValue, setValue] = useState('');
     const value = isControlled ? controlledValue : uncontrolledValue;
-    const id = useIdAllocator({ prefix: 'textinput', id: propsId });
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
 
     // Validation
@@ -152,57 +124,25 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       );
     }
 
-    const shouldRenderOptionalText =
-      state === State.None && !disabled && optional;
-
     return (
-      <div
-        className={cx(
-          wrapperStyle,
-          getWrapperFontSize(sizeVariant, baseFontSize),
-          className,
-        )}
+      <FormField
+        label={label}
+        description={description}
+        errorMessage={errorMessage}
+        state={state}
+        size={sizeVariant}
+        disabled={disabled}
+        baseFontSize={baseFontSize}
+        darkMode={darkMode}
+        className={className}
+        id={id}
+        optional={optional}
       >
-        {(label || description) && (
-          <div className={textContainerStyle}>
-            {label && (
-              <Label
-                darkMode={darkMode}
-                htmlFor={id}
-                disabled={disabled}
-                className={inheritTypeScale}
-              >
-                {label}
-              </Label>
-            )}
-            {description && (
-              <Description
-                darkMode={darkMode}
-                disabled={disabled}
-                className={inheritTypeScale}
-              >
-                {description}
-              </Description>
-            )}
-          </div>
-        )}
-        <div className={inputContainerStyle}>
+        <FormFieldInputContainer>
           <input
             {...rest}
             aria-labelledby={ariaLabelledby}
             type={type}
-            className={cx(
-              baseInputStyle,
-              inputModeStyles[theme],
-              inputSizeStyles[sizeVariant],
-              inputStateStyles[state][theme],
-              inputFocusStyles[theme], // Always show focus styles
-              {
-                [inputPaddingForIndicator[sizeVariant]]: state !== State.None,
-                [inputPaddingForOptionalText[sizeVariant]]:
-                  shouldRenderOptionalText,
-              },
-            )}
             value={value}
             required={!optional}
             disabled={disabled}
@@ -210,51 +150,14 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
             onChange={onValueChange}
             onBlur={onBlurHandler}
             ref={forwardRef}
-            id={id}
             autoComplete={disabled ? 'off' : rest?.autoComplete || 'on'}
             aria-invalid={state === 'error'}
+            className={css`
+              width: 100%;
+            `}
           />
-
-          <div
-            className={cx(
-              iconClassName,
-              inputIndicatorStyle,
-              inputIndicatorSizeStyle[sizeVariant],
-            )}
-          >
-            {/* Render State Icon or Optional text*/}
-            {state === State.Valid && (
-              <CheckmarkIcon
-                role="presentation"
-                className={stateIndicatorStyles.valid[theme]}
-              />
-            )}
-
-            {state === State.Error && (
-              <WarningIcon
-                role="presentation"
-                className={stateIndicatorStyles.error[theme]}
-              />
-            )}
-
-            {shouldRenderOptionalText && (
-              <div
-                className={cx(
-                  optionalTextBaseStyle,
-                  optionalTextThemeStyle[theme],
-                )}
-              >
-                <p>Optional</p>
-              </div>
-            )}
-          </div>
-        </div>
-        {state === State.Error && errorMessage && (
-          <Error darkMode={darkMode} className={errorMessageStyle}>
-            {errorMessage}
-          </Error>
-        )}
-      </div>
+        </FormFieldInputContainer>
+      </FormField>
     );
   },
 ) as TextInputComponentType;

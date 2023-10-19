@@ -1,3 +1,3 @@
 export { FocusableMenuItem } from './FocusableMenuItem';
 export { MenuItem } from './MenuItem';
-export { MenuItemProps } from './MenuItem.types';
+export { MenuItemProps, Variant } from './MenuItem.types';

@@ -205,7 +205,7 @@ describe('packages/Code', () => {
       const trigger = screen.getByRole('button', { name: 'JavaScript' });
       fireEvent.click(trigger);
 
-      ['Checkmark Icon JavaScript', 'Python'].forEach(lang => {
+      ['JavaScript', 'Python'].forEach(lang => {
         expect(screen.getByRole('option', { name: lang })).toBeInTheDocument();
       });
     });

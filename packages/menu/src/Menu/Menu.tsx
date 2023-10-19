@@ -36,9 +36,11 @@ const rootMenuStyle = css`
 const rootMenuThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     background-color: ${palette.black};
+    border: 1px solid ${palette.black};
   `,
   [Theme.Dark]: css`
-    background-color: ${palette.gray.light2};
+    background-color: ${palette.gray.dark3};
+    border: 1px solid ${palette.gray.dark2};
   `,
 };
 
@@ -78,6 +80,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     spacing = 6,
     maxHeight = 344,
     usePortal = true,
+    initialOpen = false,
     open: controlledOpen,
     setOpen: controlledSetOpen,
     darkMode: darkModeProp,
@@ -100,7 +103,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 
   const [, setClosed] = useState(false);
   const currentSubMenuRef = useRef<SubMenuType | null>(null);
-  const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
+  const [uncontrolledOpen, uncontrolledSetOpen] = useState(initialOpen);
   const popoverRef = useRef<HTMLUListElement | null>(null);
 
   const setOpen =

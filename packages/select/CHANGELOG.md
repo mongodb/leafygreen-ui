@@ -1,5 +1,54 @@
 # @leafygreen-ui/select
 
+## 11.0.1
+
+### Patch Changes
+
+- 9a471879: - Updates disabled dark mode text color from `gray.dark2` to `gray.dark1`
+  - Updates disabled dark mode caret from `gray.dark2` to `gray.dark1`
+  - Updates dark mode dropdown border from `gray.dark3` to `gray.dark2`
+- dd4f3da8: Adds tests for pressing space on a select option
+- Updated dependencies [dd4f3da8]
+- Updated dependencies [90053e16]
+  - @leafygreen-ui/lib@13.0.0
+  - @leafygreen-ui/typography@18.0.0
+  - @leafygreen-ui/button@21.0.9
+  - @leafygreen-ui/input-option@1.0.13
+  - @leafygreen-ui/leafygreen-provider@3.1.10
+  - @leafygreen-ui/popover@11.1.1
+
+## 11.0.0
+
+### Major Changes
+
+- c5d95794: - Adds `description` prop to `Option`
+  - Refactor `Option` to use internal `InputOption` component
+  - Internally removes `theme` from `SelectContext` by opting to enclose `Select` within the `LeafygreenProvider` and consuming `theme` from there. This adjustment enables nested children to access the dark mode context provided by `LeafygreenProvider` as well.
+  - Reorganizes internal file structure
+
+### Patch Changes
+
+- Updated dependencies [a4b3b704]
+- Updated dependencies [c5d95794]
+- Updated dependencies [324d9730]
+  - @leafygreen-ui/button@21.0.8
+  - @leafygreen-ui/input-option@1.0.12
+  - @leafygreen-ui/typography@17.0.2
+
+## 10.3.18
+
+### Patch Changes
+
+- d2c1ec53: Updates Button to remove `pointer-events: none` styles from it's inner container. This allows the Select component to work as intended when using `usePortal = false`.
+- Updated dependencies [d2c1ec53]
+  - @leafygreen-ui/button@21.0.7
+
+## 10.3.17
+
+### Patch Changes
+
+- d70768a7: Add a 1px `gray.light2` border to light mode dropdowns and a 1px `gray.dark3` border to dark mode dropdowns to match Figma specs.
+
 ## 10.3.16
 
 ### Patch Changes
