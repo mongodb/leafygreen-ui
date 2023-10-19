@@ -366,7 +366,7 @@ describe('packages/date-picker', () => {
           const { yearSelect, calendarGrid } = openMenu();
           userEvent.click(yearSelect!);
           const options = await findAllByRole('option');
-          const _1970 = options[1];
+          const _1970 = options[0];
 
           userEvent.click(_1970);
           expect(calendarGrid).toHaveAttribute('aria-label', 'December 1970');

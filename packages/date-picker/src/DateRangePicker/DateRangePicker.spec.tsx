@@ -29,74 +29,76 @@ describe('packages/date-picker/date-range-picker', () => {
   describe('Rendering', () => {
     /// Note: Many rendering tests should be handled by Chromatic
 
-    test('renders label', () => {
-      const { getByText } = render(<DateRangePicker label="Label" />);
-      const label = getByText('Label');
-      expect(label).toBeInTheDocument();
-    });
-
-    test('renders description', () => {
-      const { getByText } = render(
-        <DateRangePicker label="Label" description="Description" />,
-      );
-      const description = getByText('Description');
-      expect(description).toBeInTheDocument();
-    });
-
-    test('spreads rest to formField', () => {
-      const { getByTestId } = render(
-        <DateRangePicker label="Label" data-testid="lg-date-range-picker" />,
-      );
-      const formField = getByTestId('lg-date-range-picker');
-      expect(formField).toBeInTheDocument();
-    });
-
-    test('formField contains label & input elements', () => {
-      const { getByTestId, getByRole } = render(
-        <DateRangePicker label="Label" data-testid="lg-date-range-picker" />,
-      );
-      const formField = getByTestId('lg-date-range-picker');
-      const inputContainer = getByRole('combobox');
-      expect(formField.querySelector('label')).toBeInTheDocument();
-      expect(formField.querySelector('label')).toHaveTextContent('Label');
-      expect(inputContainer).toBeInTheDocument();
-    });
-
-    test('renders 6 inputs', () => {
-      const { inputElements } = renderDateRangePicker();
-      expect(inputElements).toHaveLength(6);
-    });
-
-    test('renders `start` & `end` prop', () => {
-      const { inputElements } = renderDateRangePicker({
-        value: [
-          newUTC(2023, Month.January, 5),
-          newUTC(2023, Month.February, 14),
-        ],
+    describe('Input', () => {
+      test('renders label', () => {
+        const { getByText } = render(<DateRangePicker label="Label" />);
+        const label = getByText('Label');
+        expect(label).toBeInTheDocument();
       });
-      expect(inputElements[0].value).toEqual('2023');
-      expect(inputElements[1].value).toEqual('01');
-      expect(inputElements[2].value).toEqual('05');
 
-      expect(inputElements[3].value).toEqual('2023');
-      expect(inputElements[4].value).toEqual('02');
-      expect(inputElements[5].value).toEqual('14');
-    });
-
-    test('renders `initialStart` & `initialEnd` prop', () => {
-      const { inputElements } = renderDateRangePicker({
-        initialValue: [
-          newUTC(2023, Month.July, 5),
-          newUTC(2023, Month.August, 10),
-        ],
+      test('renders description', () => {
+        const { getByText } = render(
+          <DateRangePicker label="Label" description="Description" />,
+        );
+        const description = getByText('Description');
+        expect(description).toBeInTheDocument();
       });
-      expect(inputElements[0].value).toEqual('2023');
-      expect(inputElements[1].value).toEqual('07');
-      expect(inputElements[2].value).toEqual('05');
 
-      expect(inputElements[3].value).toEqual('2023');
-      expect(inputElements[4].value).toEqual('08');
-      expect(inputElements[5].value).toEqual('10');
+      test('spreads rest to formField', () => {
+        const { getByTestId } = render(
+          <DateRangePicker label="Label" data-testid="lg-date-range-picker" />,
+        );
+        const formField = getByTestId('lg-date-range-picker');
+        expect(formField).toBeInTheDocument();
+      });
+
+      test('formField contains label & input elements', () => {
+        const { getByTestId, getByRole } = render(
+          <DateRangePicker label="Label" data-testid="lg-date-range-picker" />,
+        );
+        const formField = getByTestId('lg-date-range-picker');
+        const inputContainer = getByRole('combobox');
+        expect(formField.querySelector('label')).toBeInTheDocument();
+        expect(formField.querySelector('label')).toHaveTextContent('Label');
+        expect(inputContainer).toBeInTheDocument();
+      });
+
+      test('renders 6 inputs', () => {
+        const { inputElements } = renderDateRangePicker();
+        expect(inputElements).toHaveLength(6);
+      });
+
+      test('renders `start` & `end` prop', () => {
+        const { inputElements } = renderDateRangePicker({
+          value: [
+            newUTC(2023, Month.January, 5),
+            newUTC(2023, Month.February, 14),
+          ],
+        });
+        expect(inputElements[0].value).toEqual('2023');
+        expect(inputElements[1].value).toEqual('01');
+        expect(inputElements[2].value).toEqual('05');
+
+        expect(inputElements[3].value).toEqual('2023');
+        expect(inputElements[4].value).toEqual('02');
+        expect(inputElements[5].value).toEqual('14');
+      });
+
+      test('renders `initialStart` & `initialEnd` prop', () => {
+        const { inputElements } = renderDateRangePicker({
+          initialValue: [
+            newUTC(2023, Month.July, 5),
+            newUTC(2023, Month.August, 10),
+          ],
+        });
+        expect(inputElements[0].value).toEqual('2023');
+        expect(inputElements[1].value).toEqual('07');
+        expect(inputElements[2].value).toEqual('05');
+
+        expect(inputElements[3].value).toEqual('2023');
+        expect(inputElements[4].value).toEqual('08');
+        expect(inputElements[5].value).toEqual('10');
+      });
     });
 
     describe('Menu', () => {
@@ -644,7 +646,7 @@ describe('packages/date-picker/date-range-picker', () => {
             const { yearSelect, calendarGrids } = openMenu();
             userEvent.click(yearSelect!);
             const options = await findAllByRole('option');
-            const _1970 = options[1];
+            const _1970 = options[0];
             userEvent.click(_1970);
             expect(calendarGrids?.[0]).toHaveAttribute(
               'aria-label',

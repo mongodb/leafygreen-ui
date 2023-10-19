@@ -4,6 +4,7 @@ import defaultTo from 'lodash/defaultTo';
 
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
+import { MAX_DATE, MIN_DATE } from '../constants';
 import { BaseDatePickerProps, DatePickerState } from '../types';
 import { getFormatParts, toDate } from '../utils';
 
@@ -12,8 +13,6 @@ import {
   DatePickerProviderProps,
 } from './DatePickerContext.types';
 
-export const MIN_DATE = new Date('12-31-1969');
-export const MAX_DATE = new Date('01-19-2038');
 export const TZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 export type ContextPropKeys = keyof DatePickerProviderProps &

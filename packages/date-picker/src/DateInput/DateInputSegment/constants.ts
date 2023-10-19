@@ -1,15 +1,17 @@
+import { MAX_DATE, MIN_DATE } from '../../constants';
+
 /** The minimum number for each segment */
 export const defaultMin = {
   day: 1,
   month: 1,
-  year: 1970,
+  year: MIN_DATE.getUTCFullYear(),
 } as const;
 
 /** The maximum number for each segment */
 export const defaultMax = {
   day: 31,
   month: 12,
-  year: 2038,
+  year: MAX_DATE.getUTCFullYear(),
 } as const;
 
 /** The shorthand for each char */

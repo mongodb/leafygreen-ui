@@ -28,6 +28,9 @@ export enum Month {
 
 export const daysPerWeek = 7 as const;
 
+export const MIN_DATE = new Date(Date.UTC(1970, Month.January, 1));
+export const MAX_DATE = new Date(Date.UTC(2038, Month.January, 19));
+
 export const DaysOfWeek = [
   { long: 'Sunday', short: 'su' },
   { long: 'Monday', short: 'mo' },
