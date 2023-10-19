@@ -5,8 +5,31 @@ import {
   RenderResult,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { subDays } from 'date-fns';
+
+import { MIN_DATE, Month } from '../constants';
+import { newUTC } from '../utils';
 
 import { DateRangePicker, DateRangePickerProps } from '.';
+
+const testToday = newUTC(2023, Month.December, 26);
+
+/** Explicit test cases for quick range buttons */
+export const quickSelectButtonTestCases = [
+  { label: 'Today', expectedRange: [testToday, testToday] },
+  {
+    label: 'Yesterday',
+    expectedRange: [subDays(testToday, 1), subDays(testToday, 1)],
+  },
+  { label: 'Last 7 days', expectedRange: [subDays(testToday, 7), testToday] },
+  { label: 'Last 30 days', expectedRange: [subDays(testToday, 30), testToday] },
+  { label: 'Last 90 days', expectedRange: [subDays(testToday, 90), testToday] },
+  {
+    label: 'Last 12 months',
+    expectedRange: [subDays(testToday, 365), testToday],
+  },
+  { label: 'All time', expectedRange: [MIN_DATE, testToday] },
+].map((arr, index) => ({ index, ...arr }));
 
 export interface RenderDateRangePickerResult extends RenderResult {
   formField: HTMLElement;

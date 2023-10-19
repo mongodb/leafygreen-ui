@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react';
 
-import { DateType } from '../../types';
+import { DateRangeType, DateType } from '../../types';
 import { addMonthsUTC, setToUTCMidnight } from '../../utils';
 import { getInitialHighlight } from '../utils/getInitialHighlight';
 import { getInitialMonth } from '../utils/getInitialMonth';
@@ -31,7 +31,7 @@ export const useDateRangeContext = () => useContext(DateRangeContext);
 export const DateRangeProvider = ({
   children,
   value,
-  setValue,
+  setValue: _setValue,
   handleValidation,
   rootRef,
 }: PropsWithChildren<DateRangeProviderProps>) => {
@@ -39,6 +39,11 @@ export const DateRangeProvider = ({
   const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
   const [month, setMonth] = useState<Date>(getInitialMonth(value, today));
   const nextMonth = useMemo(() => addMonthsUTC(month, 1), [month]);
+
+  /** Handle possible side effects here */
+  const setValue = (newRange?: DateRangeType) => {
+    _setValue(newRange);
+  };
 
   // Keep track of the element the user is highlighting with the keyboard
   const [highlight, setHighlight] = useState<DateType>(

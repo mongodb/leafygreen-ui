@@ -14,6 +14,7 @@ import { newUTC, setUTCDate } from '../utils';
 import {
   expectedTabStopLabels,
   getTabStopElementMap,
+  quickSelectButtonTestCases,
   renderDateRangePicker,
 } from './DateRangePicker.testutils';
 import { DateRangePicker } from '.';
@@ -117,7 +118,9 @@ describe('packages/date-picker/date-range-picker', () => {
       });
 
       test('if no value is set, menu opens to current month', () => {
-        const { openMenu } = renderDateRangePicker();
+        const { openMenu } = renderDateRangePicker({
+          // initialOpen: true,
+        });
         const { calendarGrids, menuContainerEl } = openMenu();
 
         const headers = menuContainerEl?.querySelectorAll('h6');
@@ -182,6 +185,26 @@ describe('packages/date-picker/date-range-picker', () => {
         });
         const { calendarCells } = openMenu();
         expect(calendarCells).toHaveLength(29 + 31);
+      });
+
+      describe('Quick select buttons', () => {
+        test.each(quickSelectButtonTestCases)(
+          'Renders correct label: $label',
+          ({ index, label }) => {
+            const { getAllByTestId } = renderDateRangePicker({
+              initialOpen: true,
+              showQuickSelection: true,
+            });
+            const quickSelectButtons = getAllByTestId(
+              'lg-date_picker-menu-quick-range-button',
+            );
+
+            expect(quickSelectButtons[index]).toHaveAttribute(
+              'aria-label',
+              label,
+            );
+          },
+        );
       });
     });
   });
@@ -307,76 +330,85 @@ describe('packages/date-picker/date-range-picker', () => {
         });
       });
     });
+
+    // e.g. selected range is 2023-09-10 -> 2023-10-14
+    // change start date to 2024 or end date to 2023
+    // should reject input and revert
+    test.todo(
+      'Entering an invalid date into start/end rejects the input, and reverts to the previous value',
+    );
   });
 
   describe('Interaction', () => {
     describe('Mouse interaction', () => {
-      describe('Clicking the input', () => {
-        test('opens the menu', () => {
-          const { inputContainer, getMenuElements } = renderDateRangePicker();
-          userEvent.click(inputContainer);
-          const { menuContainerEl } = getMenuElements();
-          expect(menuContainerEl).toBeInTheDocument();
-        });
-
-        test('focuses the clicked segment', () => {
-          const { inputElements } = renderDateRangePicker();
-          userEvent.click(inputElements[2]);
-          expect(document.activeElement).toBe(inputElements[2]);
-        });
-
-        test('focuses the first segment when all are empty (`undefined`)', () => {
-          const { inputContainer, inputElements } = renderDateRangePicker();
-          userEvent.click(inputContainer);
-          expect(document.activeElement).toBe(inputElements[0]);
-        });
-
-        test('focuses the first segment when all are empty (`[null, null]`)', () => {
-          const { inputContainer, inputElements } = renderDateRangePicker({
-            value: [null, null],
+      describe('Input', () => {
+        describe('Clicking the input', () => {
+          test('opens the menu', () => {
+            const { inputContainer, getMenuElements } = renderDateRangePicker();
+            userEvent.click(inputContainer);
+            const { menuContainerEl } = getMenuElements();
+            expect(menuContainerEl).toBeInTheDocument();
           });
-          userEvent.click(inputContainer);
-          expect(document.activeElement).toBe(inputElements[0]);
-        });
 
-        test('focuses the first empty segment in start input', () => {
-          const { inputContainer, inputElements } = renderDateRangePicker();
-          userEvent.type(inputElements[0], '01');
-          userEvent.click(inputContainer);
-          expect(document.activeElement).toBe(inputElements[1]);
-        });
-
-        test('focuses the first empty segment in end input when start value is set', () => {
-          const { inputContainer, inputElements } = renderDateRangePicker({
-            value: [newUTC(2023, 1, 1), null],
+          test('focuses the clicked segment', () => {
+            const { inputElements } = renderDateRangePicker();
+            userEvent.click(inputElements[2]);
+            expect(document.activeElement).toBe(inputElements[2]);
           });
-          userEvent.click(inputContainer);
-          expect(document.activeElement).toBe(inputElements[3]);
-        });
 
-        test('focuses the last segment when all are filled', () => {
-          const { inputContainer, inputElements } = renderDateRangePicker({
-            value: [newUTC(2023, 1, 1), newUTC(2023, 1, 14)],
+          test('focuses the first segment when all are empty (`undefined`)', () => {
+            const { inputContainer, inputElements } = renderDateRangePicker();
+            userEvent.click(inputContainer);
+            expect(document.activeElement).toBe(inputElements[0]);
           });
-          userEvent.click(inputContainer);
-          expect(document.activeElement).toBe(inputElements[5]);
-        });
-      });
 
-      describe('Clicking the Calendar button', () => {
-        test('opens the menu', () => {
-          const { calendarButton, getMenuElements } = renderDateRangePicker();
-          userEvent.click(calendarButton);
-          const { menuContainerEl } = getMenuElements();
-          expect(menuContainerEl).toBeInTheDocument();
+          test('focuses the first segment when all are empty (`[null, null]`)', () => {
+            const { inputContainer, inputElements } = renderDateRangePicker({
+              value: [null, null],
+            });
+            userEvent.click(inputContainer);
+            expect(document.activeElement).toBe(inputElements[0]);
+          });
+
+          test('focuses the first empty segment in start input', () => {
+            const { inputContainer, inputElements } = renderDateRangePicker();
+            userEvent.type(inputElements[0], '01');
+            userEvent.click(inputContainer);
+            expect(document.activeElement).toBe(inputElements[1]);
+          });
+
+          test('focuses the first empty segment in end input when start value is set', () => {
+            const { inputContainer, inputElements } = renderDateRangePicker({
+              value: [newUTC(2023, 1, 1), null],
+            });
+            userEvent.click(inputContainer);
+            expect(document.activeElement).toBe(inputElements[3]);
+          });
+
+          test('focuses the last segment when all are filled', () => {
+            const { inputContainer, inputElements } = renderDateRangePicker({
+              value: [newUTC(2023, 1, 1), newUTC(2023, 1, 14)],
+            });
+            userEvent.click(inputContainer);
+            expect(document.activeElement).toBe(inputElements[5]);
+          });
         });
 
-        test('focuses on the highlighted cell', async () => {
-          const { calendarButton, getMenuElements } = renderDateRangePicker();
-          userEvent.click(calendarButton);
-          const { todayCell } = getMenuElements();
-          await waitFor(() => {
-            expect(todayCell).toHaveFocus();
+        describe('Clicking the Calendar button', () => {
+          test('opens the menu', () => {
+            const { calendarButton, getMenuElements } = renderDateRangePicker();
+            userEvent.click(calendarButton);
+            const { menuContainerEl } = getMenuElements();
+            expect(menuContainerEl).toBeInTheDocument();
+          });
+
+          test('focuses on the highlighted cell', async () => {
+            const { calendarButton, getMenuElements } = renderDateRangePicker();
+            userEvent.click(calendarButton);
+            const { todayCell } = getMenuElements();
+            await waitFor(() => {
+              expect(todayCell).toHaveFocus();
+            });
           });
         });
       });
@@ -658,9 +690,35 @@ describe('packages/date-picker/date-range-picker', () => {
             );
           });
         });
+
+        describe('Quick range buttons', () => {
+          test.each(quickSelectButtonTestCases)(
+            '$label button fires the correct change & validation handlers',
+            ({ index, expectedRange }) => {
+              const onRangeChange = jest.fn();
+              const handleValidation = jest.fn();
+              const { getAllByTestId } = renderDateRangePicker({
+                initialOpen: true,
+                showQuickSelection: true,
+                onRangeChange,
+                handleValidation,
+              });
+              const quickSelectButtons = getAllByTestId(
+                'lg-date_picker-menu-quick-range-button',
+              );
+              userEvent.click(quickSelectButtons[index]);
+              expect(onRangeChange).toHaveBeenCalledWith(expectedRange);
+              expect(handleValidation).toHaveBeenCalledWith(expectedRange);
+            },
+          );
+        });
+
+        test.todo(
+          'When value changes via quick ranges, update the displayed month',
+        );
       });
 
-      describe('Clicking backdrop', () => {
+      describe('Backdrop', () => {
         test('closes the menu', async () => {
           const { openMenu, container } = renderDateRangePicker();
           const { menuContainerEl } = openMenu();
@@ -876,7 +934,10 @@ describe('packages/date-picker/date-range-picker', () => {
 
         test('fires a validation handler', async () => {
           const handleValidation = jest.fn();
-          const { openMenu } = renderDateRangePicker({ handleValidation });
+          const { openMenu } = renderDateRangePicker({
+            handleValidation,
+            value: [null, null],
+          });
           openMenu();
           userEvent.tab();
           userEvent.keyboard('{escape}');
