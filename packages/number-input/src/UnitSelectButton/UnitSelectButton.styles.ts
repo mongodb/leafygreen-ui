@@ -73,8 +73,8 @@ export const themeDisabledStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     &:hover {
       box-shadow: unset;
-      background-color: ${palette.gray.dark4};
-      border-color: ${palette.gray.dark3};
+      background-color: ${palette.gray.dark3};
+      border-color: ${palette.gray.dark2};
     }
 
     &:focus {

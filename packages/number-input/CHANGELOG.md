@@ -1,5 +1,37 @@
 # @leafygreen-ui/number-input
 
+## 1.0.17
+
+### Patch Changes
+
+- 9a471879: - Updates dark mode dropdown border from `gray.dark3` to `gray.dark2`
+  - Updates disabled dark mode input border from `gray.dark3` to `gray.dark2`
+  - Updates disabled dark mode input background from `gray.dark4` to `gray.dark3`
+- Updated dependencies [dd4f3da8]
+- Updated dependencies [9a471879]
+- Updated dependencies [dd4f3da8]
+- Updated dependencies [90053e16]
+- Updated dependencies [7c3e6d39]
+  - @leafygreen-ui/lib@13.0.0
+  - @leafygreen-ui/select@11.0.1
+  - @leafygreen-ui/typography@18.0.0
+  - @leafygreen-ui/tooltip@10.1.0
+  - @leafygreen-ui/a11y@1.4.11
+  - @leafygreen-ui/button@21.0.9
+  - @leafygreen-ui/leafygreen-provider@3.1.10
+  - @leafygreen-ui/popover@11.1.1
+
+## 1.0.16
+
+### Patch Changes
+
+- Updated dependencies [c5d95794]
+- Updated dependencies [a4b3b704]
+- Updated dependencies [324d9730]
+  - @leafygreen-ui/select@11.0.0
+  - @leafygreen-ui/button@21.0.8
+  - @leafygreen-ui/typography@17.0.2
+
 ## 1.0.15
 
 ### Patch Changes

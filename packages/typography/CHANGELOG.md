@@ -1,5 +1,23 @@
 # @leafygreen-ui/typography
 
+## 18.0.0
+
+### Major Changes
+
+- 90053e16: Allows `Link` component to accept a ref
+
+### Patch Changes
+
+- Updated dependencies [dd4f3da8]
+  - @leafygreen-ui/lib@13.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.10
+
+## 17.0.2
+
+### Patch Changes
+
+- 324d9730: Updates H1 and H2 components in dark mode. Previously, their default color was `'green.light1'` in dark mode, and now the default is `'gray.light2'`
+
 ## 17.0.1
 
 ### Patch Changes

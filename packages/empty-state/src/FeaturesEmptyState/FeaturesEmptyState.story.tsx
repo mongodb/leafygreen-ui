@@ -12,49 +12,51 @@ import { Link } from '@leafygreen-ui/typography';
 
 import { graphics } from '../example-graphics';
 
+import { Feature } from './FeaturesEmptyState.types';
 import { FeaturesEmptyState, FeaturesEmptyStateProps } from '.';
 
-const lightModeFeatures = [
-  {
-    graphic: graphics[Theme.Light][0],
-    title: 'Multi-region, multi-cloud',
-    description:
-      'Run powerful and resilient apps that span multiple regions or clouds at once.',
-  },
-  {
-    graphic: graphics[Theme.Light][1],
-    title: 'Serverless and elastic',
-    description:
-      'Run powerful and resilient apps that span multiple regions or clouds at once.',
-  },
-  {
-    graphic: graphics[Theme.Light][2],
-    title: 'Always-on security',
-    description:
-      'Secure data with built-in defaults for access and end-toend encryption.',
-  },
-];
-
-const darkModeFeatures = [
-  {
-    graphic: graphics[Theme.Dark][0],
-    title: 'Multi-region, multi-cloud',
-    description:
-      'Run powerful and resilient apps that span multiple regions or clouds at once.',
-  },
-  {
-    graphic: graphics[Theme.Dark][1],
-    title: 'Serverless and elastic',
-    description:
-      'Run powerful and resilient apps that span multiple regions or clouds at once.',
-  },
-  {
-    graphic: graphics[Theme.Dark][2],
-    title: 'Always-on security',
-    description:
-      'Secure data with built-in defaults for access and end-toend encryption.',
-  },
-];
+const features: Record<Theme, Array<Feature>> = {
+  [Theme.Light]: [
+    {
+      graphic: graphics[Theme.Light][0],
+      title: 'Multi-region, multi-cloud',
+      description:
+        'Run powerful and resilient apps that span multiple regions or clouds at once.',
+    },
+    {
+      graphic: graphics[Theme.Light][1],
+      title: 'Serverless and elastic',
+      description:
+        'Run powerful and resilient apps that span multiple regions or clouds at once.',
+    },
+    {
+      graphic: graphics[Theme.Light][2],
+      title: 'Always-on security',
+      description:
+        'Secure data with built-in defaults for access and end-toend encryption.',
+    },
+  ],
+  [Theme.Dark]: [
+    {
+      graphic: graphics[Theme.Dark][0],
+      title: 'Multi-region, multi-cloud',
+      description:
+        'Run powerful and resilient apps that span multiple regions or clouds at once.',
+    },
+    {
+      graphic: graphics[Theme.Dark][1],
+      title: 'Serverless and elastic',
+      description:
+        'Run powerful and resilient apps that span multiple regions or clouds at once.',
+    },
+    {
+      graphic: graphics[Theme.Dark][2],
+      title: 'Always-on security',
+      description:
+        'Secure data with built-in defaults for access and end-toend encryption.',
+    },
+  ],
+};
 
 const meta: StoryMetaType<typeof FeaturesEmptyState> = {
   title: 'Components/EmptyState/Features',
@@ -77,10 +79,10 @@ const meta: StoryMetaType<typeof FeaturesEmptyState> = {
       combineArgs: {
         darkMode: [false, true],
         features: [
-          lightModeFeatures.slice(0, 2),
-          lightModeFeatures,
-          darkModeFeatures.slice(0, 2),
-          darkModeFeatures,
+          features[Theme.Light].slice(0, 2),
+          features[Theme.Light],
+          features[Theme.Dark].slice(0, 2),
+          features[Theme.Dark],
         ],
         externalLink: [
           undefined,
@@ -92,11 +94,11 @@ const meta: StoryMetaType<typeof FeaturesEmptyState> = {
       excludeCombinations: [
         {
           darkMode: true,
-          features: [lightModeFeatures.slice(0, 2), lightModeFeatures],
+          features: [features[Theme.Light].slice(0, 2), features[Theme.Light]],
         },
         {
           darkMode: false,
-          features: [darkModeFeatures.slice(0, 2), darkModeFeatures],
+          features: [features[Theme.Dark].slice(0, 2), features[Theme.Dark]],
         },
       ],
     },
@@ -143,31 +145,31 @@ TwoFeatures.args = {
 
 export const TwoFeaturesWithSecondaryAction = Template.bind({});
 TwoFeaturesWithSecondaryAction.args = {
-  features: lightModeFeatures.slice(0, 2),
+  features: features[Theme.Light].slice(0, 2),
   secondaryButton: <Button>Upload Module</Button>,
 };
 
 export const TwoFeaturesWithSecondaryActionAndLink = Template.bind({});
 TwoFeaturesWithSecondaryActionAndLink.args = {
-  features: lightModeFeatures.slice(0, 2),
+  features: features[Theme.Light].slice(0, 2),
   secondaryButton: <Button>Upload Module</Button>,
   externalLink: <Link href="http://www.google.com">Test external link</Link>,
 };
 
 export const ThreeFeatures = Template.bind({});
 ThreeFeatures.args = {
-  features: lightModeFeatures,
+  features: features[Theme.Light],
 };
 
 export const ThreeFeaturesWithSecondaryAction = Template.bind({});
 ThreeFeaturesWithSecondaryAction.args = {
-  features: lightModeFeatures,
+  features: features[Theme.Light],
   secondaryButton: <Button>Upload Module</Button>,
 };
 
 export const ThreeFeaturesWithSecondaryActionAndLink = Template.bind({});
 ThreeFeaturesWithSecondaryActionAndLink.args = {
-  features: lightModeFeatures,
+  features: features[Theme.Light],
   secondaryButton: <Button>Upload Module</Button>,
   externalLink: <Link href="http://www.google.com">Test external link</Link>,
 };

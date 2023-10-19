@@ -1,3 +1,5 @@
+import { DarkModeProps } from '@leafygreen-ui/lib';
+
 const Variant = {
   Success: 'success',
   Note: 'note',
@@ -11,7 +13,8 @@ type Variant = (typeof Variant)[keyof typeof Variant];
 export { Variant };
 
 export interface ToastProps
-  extends Omit<React.ComponentPropsWithoutRef<'div'>, 'title'> {
+  extends Omit<React.ComponentPropsWithoutRef<'div'>, 'title'>,
+    DarkModeProps {
   /**
    * Primary text for the toast
    */
