@@ -64,6 +64,7 @@ const meta: StoryMetaType<typeof InternalToast, ToastProviderProps> = {
         actionElement: [undefined, <Button size="small">Action</Button>],
       },
       args: {
+        title: "This is a toast",
         className: css`
           position: relative;
         `,
