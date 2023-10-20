@@ -344,9 +344,18 @@ describe('packages/date-picker', () => {
           userEvent.click(Jan);
           expect(calendarGrid).toHaveAttribute('aria-label', 'January 2023');
         });
-        test.todo(
-          'making a selection with enter does not close the datePicker menu',
-        );
+
+        test('making a selection with enter does not close the datePicker menu', async () => {
+          const { openMenu, findAllByRole } = renderDatePicker();
+          const { monthSelect, menuContainerEl } = openMenu();
+          userEvent.click(monthSelect!);
+          await findAllByRole('option');
+          userEvent.keyboard('{arrowdown}');
+          userEvent.keyboard('{enter}');
+          await waitFor(() => {
+            expect(menuContainerEl).toBeInTheDocument();
+          });
+        });
       });
 
       describe('Year select menu', () => {
@@ -370,6 +379,18 @@ describe('packages/date-picker', () => {
 
           userEvent.click(_1970);
           expect(calendarGrid).toHaveAttribute('aria-label', 'December 1970');
+        });
+
+        test('making a selection with enter does not close the datePicker menu', async () => {
+          const { openMenu, findAllByRole } = renderDatePicker();
+          const { yearSelect, menuContainerEl } = openMenu();
+          userEvent.click(yearSelect!);
+          await findAllByRole('option');
+          userEvent.keyboard('{arrowdown}');
+          userEvent.keyboard('{enter}');
+          await waitFor(() => {
+            expect(menuContainerEl).toBeInTheDocument();
+          });
         });
       });
 
