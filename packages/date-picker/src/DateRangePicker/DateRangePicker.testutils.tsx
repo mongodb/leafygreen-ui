@@ -12,7 +12,7 @@ import { newUTC } from '../utils';
 
 import { DateRangePicker, DateRangePickerProps } from '.';
 
-const testToday = newUTC(2023, Month.December, 26);
+export const testToday = newUTC(2023, Month.December, 26);
 
 /** Explicit test cases for quick range buttons */
 export const quickSelectButtonTestCases = [
@@ -38,7 +38,7 @@ export interface RenderDateRangePickerResult extends RenderResult {
   calendarButton: HTMLButtonElement;
   getMenuElements: () => RenderMenuResult;
   openMenu: () => RenderMenuResult;
-  rerenderWithProps: () => void;
+  rerenderWithProps: (p?: Partial<DateRangePickerProps>) => void;
 }
 
 export interface RenderMenuResult {

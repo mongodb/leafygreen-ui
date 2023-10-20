@@ -2,6 +2,7 @@ import React, {
   forwardRef,
   KeyboardEventHandler,
   MouseEventHandler,
+  useLayoutEffect,
   useState,
 } from 'react';
 import { addDays, isWithinInterval, subDays } from 'date-fns';
@@ -9,6 +10,7 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 
 import { cx } from '@leafygreen-ui/emotion';
+import { usePrevious } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { keyMap } from '@leafygreen-ui/lib';
@@ -47,7 +49,7 @@ export const DateRangeMenuCalendars = forwardRef<
   HTMLDivElement,
   DateRangeMenuCalendarsProps
 >((_, fwdRef) => {
-  const { isInRange, setOpen } = useDatePickerContext();
+  const { isInRange, isOpen, setOpen } = useDatePickerContext();
   const {
     refs,
     value,
@@ -61,7 +63,16 @@ export const DateRangeMenuCalendars = forwardRef<
     today,
   } = useDateRangeContext();
 
+  const prevOpen = usePrevious(isOpen);
   const [hoveredCell, setHover] = useState<DateType>(null);
+
+  /** On initial open, focus the cell */
+  useLayoutEffect(() => {
+    if (highlight && isOpen && !prevOpen) {
+      const highlightCellRef = refs.calendarCellRefs(highlight.toISOString());
+      highlightCellRef.current?.focus();
+    }
+  }, [highlight, isOpen, prevOpen, refs]);
 
   /**
    * setDisplayMonth with side effects

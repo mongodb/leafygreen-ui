@@ -3,13 +3,14 @@ import {
   render,
   waitFor,
   waitForElementToBeRemoved,
+  within,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import last from 'lodash/last';
 
 import { Month } from '../constants';
 import { eventContainingTargetValue, tabNTimes } from '../testUtils';
-import { newUTC, setUTCDate } from '../utils';
+import { newUTC, setUTCDate, setUTCMonth } from '../utils';
 
 import {
   expectedTabStopLabels,
@@ -22,7 +23,7 @@ import { DateRangePicker } from '.';
 const testToday = newUTC(2023, Month.December, 26);
 
 describe('packages/date-picker/date-range-picker', () => {
-  beforeEach(() => {
+  beforeAll(() => {
     // Set the current time to midnight UTC on 2023-12-26
     jest.useFakeTimers().setSystemTime(testToday);
   });
@@ -117,77 +118,192 @@ describe('packages/date-picker/date-range-picker', () => {
         await waitFor(() => expect(menuContainerEl).toBeInTheDocument());
       });
 
-      test('if no value is set, menu opens to current month', () => {
-        const { openMenu } = renderDateRangePicker({
-          // initialOpen: true,
+      test('renders two calendar grids', () => {
+        const { getMenuElements } = renderDateRangePicker({
+          initialOpen: true,
         });
-        const { calendarGrids, menuContainerEl } = openMenu();
-
-        const headers = menuContainerEl?.querySelectorAll('h6');
-        expect(headers?.[0]).toHaveTextContent('December 2023');
-        expect(headers?.[1]).toHaveTextContent('January 2024');
-
-        expect(calendarGrids?.[0]).toHaveAttribute(
-          'aria-label',
-          'December 2023',
-        );
-        expect(calendarGrids?.[1]).toHaveAttribute(
-          'aria-label',
-          'January 2024',
-        );
+        const { calendarGrids } = getMenuElements();
+        expect(calendarGrids).toHaveLength(2);
       });
 
-      test('if only a start value is set, menu opens to the month of that value', () => {
-        const { openMenu } = renderDateRangePicker({
-          value: [newUTC(2023, Month.March, 10), null],
+      test('chevrons have correct `aria-label`s', () => {
+        const { getMenuElements } = renderDateRangePicker({
+          initialOpen: true,
         });
-
-        const { calendarGrids, menuContainerEl } = openMenu();
-        const headers = menuContainerEl?.querySelectorAll('h6');
-        expect(headers?.[0]).toHaveTextContent('March 2023');
-        expect(headers?.[1]).toHaveTextContent('April 2023');
-        expect(calendarGrids?.[0]).toHaveAttribute('aria-label', 'March 2023');
-        expect(calendarGrids?.[1]).toHaveAttribute('aria-label', 'April 2023');
+        const { leftChevron, rightChevron } = getMenuElements();
+        expect(leftChevron).toHaveAttribute('aria-label', 'Previous month');
+        expect(rightChevron).toHaveAttribute('aria-label', 'Next month');
       });
 
-      test('if only an end value is set, menu opens to the month _before_ value', () => {
-        const { openMenu } = renderDateRangePicker({
-          value: [null, newUTC(2023, Month.March, 10)],
+      describe('Displayed month', () => {
+        test('if no value is set, menu displays current month', () => {
+          const { getMenuElements } = renderDateRangePicker({
+            initialOpen: true,
+          });
+          const { calendarGrids, menuContainerEl } = getMenuElements();
+
+          const headers = menuContainerEl?.querySelectorAll('h6');
+          expect(headers?.[0]).toHaveTextContent('December 2023');
+          expect(headers?.[1]).toHaveTextContent('January 2024');
+
+          expect(calendarGrids?.[0]).toHaveAttribute(
+            'aria-label',
+            'December 2023',
+          );
+          expect(calendarGrids?.[1]).toHaveAttribute(
+            'aria-label',
+            'January 2024',
+          );
         });
 
-        const { calendarGrids, menuContainerEl } = openMenu();
-        const headers = menuContainerEl?.querySelectorAll('h6');
-        expect(headers?.[0]).toHaveTextContent('February 2023');
-        expect(headers?.[1]).toHaveTextContent('March 2023');
-        expect(calendarGrids?.[0]).toHaveAttribute(
-          'aria-label',
-          'February 2023',
-        );
-        expect(calendarGrids?.[1]).toHaveAttribute('aria-label', 'March 2023');
-      });
+        test('if only a start value is set, menu displays the month of that value', () => {
+          const { getMenuElements } = renderDateRangePicker({
+            initialOpen: true,
+            value: [newUTC(2023, Month.March, 10), null],
+          });
 
-      test('if a full value is set, menu opens to the month of the start value', () => {
-        const { openMenu } = renderDateRangePicker({
-          value: [newUTC(2023, Month.March, 10), newUTC(2023, Month.April, 1)],
+          const { calendarGrids, menuContainerEl } = getMenuElements();
+          const headers = menuContainerEl?.querySelectorAll('h6');
+          expect(headers?.[0]).toHaveTextContent('March 2023');
+          expect(headers?.[1]).toHaveTextContent('April 2023');
+          expect(calendarGrids?.[0]).toHaveAttribute(
+            'aria-label',
+            'March 2023',
+          );
+          expect(calendarGrids?.[1]).toHaveAttribute(
+            'aria-label',
+            'April 2023',
+          );
         });
 
-        const { calendarGrids, menuContainerEl } = openMenu();
-        const headers = menuContainerEl?.querySelectorAll('h6');
-        expect(headers?.[0]).toHaveTextContent('March 2023');
-        expect(headers?.[1]).toHaveTextContent('April 2023');
-        expect(calendarGrids?.[0]).toHaveAttribute('aria-label', 'March 2023');
-        expect(calendarGrids?.[1]).toHaveAttribute('aria-label', 'April 2023');
+        test('if only an end value is set, menu displays the month _before_ value', () => {
+          const { getMenuElements } = renderDateRangePicker({
+            initialOpen: true,
+            value: [null, newUTC(2023, Month.March, 10)],
+          });
+
+          const { calendarGrids, menuContainerEl } = getMenuElements();
+          const headers = menuContainerEl?.querySelectorAll('h6');
+          expect(headers?.[0]).toHaveTextContent('February 2023');
+          expect(headers?.[1]).toHaveTextContent('March 2023');
+          expect(calendarGrids?.[0]).toHaveAttribute(
+            'aria-label',
+            'February 2023',
+          );
+          expect(calendarGrids?.[1]).toHaveAttribute(
+            'aria-label',
+            'March 2023',
+          );
+        });
+
+        test('if a full value is set, menu displays the month of the start value', () => {
+          const { getMenuElements } = renderDateRangePicker({
+            initialOpen: true,
+            value: [
+              newUTC(2023, Month.March, 10),
+              newUTC(2023, Month.April, 1),
+            ],
+          });
+
+          const { calendarGrids, menuContainerEl } = getMenuElements();
+          const headers = menuContainerEl?.querySelectorAll('h6');
+          expect(headers?.[0]).toHaveTextContent('March 2023');
+          expect(headers?.[1]).toHaveTextContent('April 2023');
+          expect(calendarGrids?.[0]).toHaveAttribute(
+            'aria-label',
+            'March 2023',
+          );
+          expect(calendarGrids?.[1]).toHaveAttribute(
+            'aria-label',
+            'April 2023',
+          );
+        });
+
+        test('month changes when value changes', () => {
+          const { getMenuElements, rerenderWithProps } = renderDateRangePicker({
+            initialOpen: true,
+          });
+
+          rerenderWithProps({
+            value: [
+              newUTC(2023, Month.July, 5),
+              newUTC(2023, Month.September, 10),
+            ],
+          });
+
+          const { calendarGrids } = getMenuElements();
+
+          expect(calendarGrids?.[0]).toHaveAttribute('aria-label', 'July 2023');
+          expect(calendarGrids?.[1]).toHaveAttribute(
+            'aria-label',
+            'August 2023',
+          );
+        });
       });
 
       test('renders the appropriate number of cells', () => {
-        const { openMenu } = renderDateRangePicker({
+        const { getMenuElements } = renderDateRangePicker({
+          initialOpen: true,
           value: [newUTC(2024, Month.February, 14), null],
         });
-        const { calendarCells } = openMenu();
+        const { calendarCells } = getMenuElements();
         expect(calendarCells).toHaveLength(29 + 31);
       });
 
-      describe('Quick select buttons', () => {
+      test('rendered cells have correct `aria-label`', () => {
+        const { getMenuElements } = renderDateRangePicker({
+          initialOpen: true,
+          value: [newUTC(2024, Month.February, 14), null],
+        });
+        const { calendarCells } = getMenuElements();
+        expect(calendarCells[0]).toHaveAttribute(
+          'aria-label',
+          'Thu Feb 01 2024',
+        );
+      });
+
+      describe('Quick select menu', () => {
+        describe('Month/Year select', () => {
+          test('render the correct text', () => {
+            const { getMenuElements } = renderDateRangePicker({
+              initialOpen: true,
+              showQuickSelection: true,
+            });
+            const { yearSelect, monthSelect } = getMenuElements();
+            expect(monthSelect).toHaveTextContent('Dec');
+            expect(yearSelect).toHaveTextContent('2023');
+          });
+
+          test('have correct `aria-label`s', () => {
+            const { getMenuElements } = renderDateRangePicker({
+              initialOpen: true,
+              showQuickSelection: true,
+            });
+            const { yearSelect, monthSelect } = getMenuElements();
+            expect(monthSelect).toHaveAttribute('aria-label', 'Select month');
+            expect(yearSelect).toHaveAttribute('aria-label', 'Select year');
+          });
+
+          test('update when the value changes', () => {
+            const { getMenuElements, rerenderWithProps } =
+              renderDateRangePicker({
+                initialOpen: true,
+                showQuickSelection: true,
+              });
+
+            rerenderWithProps({
+              value: [
+                newUTC(2024, Month.July, 5),
+                newUTC(2024, Month.September, 10),
+              ],
+            });
+
+            const { yearSelect, monthSelect } = getMenuElements();
+            expect(monthSelect).toHaveTextContent('July');
+            expect(yearSelect).toHaveTextContent('2024');
+          });
+        });
+
         test.each(quickSelectButtonTestCases)(
           'Renders correct label: $label',
           ({ index, label }) => {
@@ -209,137 +325,220 @@ describe('packages/date-picker/date-range-picker', () => {
     });
   });
 
-  describe('Typing', () => {
-    test('opens the menu', () => {
-      const { inputElements, getMenuElements } = renderDateRangePicker();
-      userEvent.type(inputElements[0], '1');
-      const { menuContainerEl } = getMenuElements();
-      expect(menuContainerEl).toBeInTheDocument();
-    });
-
-    describe.each([
-      ['start', 0],
-      ['end', 3],
-    ])('into %p input', (input, index) => {
-      test('updates segment value', () => {
-        const { inputElements } = renderDateRangePicker();
-        const element = inputElements[index];
-        userEvent.type(element, '1');
-        expect(element.value).toBe('1'); // Not '01' if not blurred
+  describe('Interaction', () => {
+    describe('Typing', () => {
+      test('opens the menu', () => {
+        const { inputElements, getMenuElements } = renderDateRangePicker();
+        userEvent.type(inputElements[0], '1');
+        const { menuContainerEl } = getMenuElements();
+        expect(menuContainerEl).toBeInTheDocument();
       });
 
-      test('does not fire range change handler', () => {
-        const onRangeChange = jest.fn();
-        const { inputElements } = renderDateRangePicker({ onRangeChange });
-        const element = inputElements[index];
-        userEvent.type(element, '1');
-        expect(onRangeChange).not.toHaveBeenCalled();
-      });
-
-      test('fires segment change handler', () => {
-        const onChange = jest.fn();
-        const { inputElements } = renderDateRangePicker({
-          onChange,
+      describe.each([
+        ['start', 0],
+        ['end', 3],
+      ])('into %p input', (input, index) => {
+        test('updates segment value', () => {
+          const { inputElements } = renderDateRangePicker();
+          const element = inputElements[index];
+          userEvent.type(element, '1');
+          expect(element.value).toBe('1'); // Not '01' if not blurred
         });
-        const element = inputElements[index];
-        userEvent.type(element, '1');
-        expect(onChange).toHaveBeenCalledWith(eventContainingTargetValue('1'));
-      });
 
-      describe('on un-focus/blur', () => {
-        test('does not fire a change handler if value is incomplete', () => {
+        test('does not fire range change handler', () => {
           const onRangeChange = jest.fn();
           const { inputElements } = renderDateRangePicker({ onRangeChange });
           const element = inputElements[index];
-          userEvent.type(element, '2023');
-          userEvent.tab();
+          userEvent.type(element, '1');
           expect(onRangeChange).not.toHaveBeenCalled();
         });
 
-        test('fires a change handler if the value is valid', () => {
-          const onRangeChange = jest.fn();
-          const { inputElements } = renderDateRangePicker({ onRangeChange });
-          const year = inputElements[index];
-          const month = inputElements[index + 1];
-          const day = inputElements[index + 2];
-
-          userEvent.type(year, '2023');
-          userEvent.type(month, '12');
-          userEvent.type(day, '26');
-          userEvent.tab();
-          expect(onRangeChange).toHaveBeenCalledWith(
-            expect.arrayContaining([
-              expect.objectContaining(newUTC(2023, Month.December, 26)),
-            ]),
-          );
-        });
-
-        test('fires a segment change handler', () => {
+        test('fires segment change handler', () => {
           const onChange = jest.fn();
           const { inputElements } = renderDateRangePicker({
             onChange,
           });
           const element = inputElements[index];
-          userEvent.type(element, '2023');
-          userEvent.tab();
+          userEvent.type(element, '1');
           expect(onChange).toHaveBeenCalledWith(
-            eventContainingTargetValue('2023'),
+            eventContainingTargetValue('1'),
           );
         });
 
-        // eslint-disable-next-line jest/no-disabled-tests
-        describe.skip('validation handler', () => {
-          test('fired when the value is first set', () => {
-            const handleValidation = jest.fn();
-            const { inputElements } = renderDateRangePicker({
-              handleValidation,
-            });
+        describe('on un-focus/blur', () => {
+          test('does not fire a change handler if value is incomplete', () => {
+            const onRangeChange = jest.fn();
+            const { inputElements } = renderDateRangePicker({ onRangeChange });
+            const element = inputElements[index];
+            userEvent.type(element, '2023');
+            userEvent.tab();
+            expect(onRangeChange).not.toHaveBeenCalled();
+          });
+
+          test('fires a change handler if the value is valid', () => {
+            const onRangeChange = jest.fn();
+            const { inputElements } = renderDateRangePicker({ onRangeChange });
             const year = inputElements[index];
             const month = inputElements[index + 1];
             const day = inputElements[index + 2];
+
             userEvent.type(year, '2023');
             userEvent.type(month, '12');
             userEvent.type(day, '26');
             userEvent.tab();
-
-            expect(handleValidation).toHaveBeenCalledWith(
+            expect(onRangeChange).toHaveBeenCalledWith(
               expect.arrayContaining([
                 expect.objectContaining(newUTC(2023, Month.December, 26)),
               ]),
             );
           });
 
-          test('fired when the value is updated', () => {
-            const initialStart = newUTC(2023, Month.March, 10);
-            const initialEnd = newUTC(2023, Month.December, 26);
-            const handleValidation = jest.fn();
+          test('fires a segment change handler', () => {
+            const onChange = jest.fn();
             const { inputElements } = renderDateRangePicker({
-              value: [initialStart, initialEnd],
-              handleValidation,
+              onChange,
             });
-            const day = inputElements[index + 2];
-            userEvent.type(day, '15');
-
-            const expectedValue = expect.arrayContaining([
-              input === 'start' ? newUTC(2023, Month.March, 15) : initialStart,
-              input === 'end' ? newUTC(2023, Month.December, 15) : initialEnd,
-            ]);
-
-            expect(handleValidation).toHaveBeenCalledWith(expectedValue);
+            const element = inputElements[index];
+            userEvent.type(element, '2023');
+            userEvent.tab();
+            expect(onChange).toHaveBeenCalledWith(
+              eventContainingTargetValue('2023'),
+            );
           });
+
+          // eslint-disable-next-line jest/no-disabled-tests
+          describe.skip('validation handler', () => {
+            test('fired when the value is first set', () => {
+              const handleValidation = jest.fn();
+              const { inputElements } = renderDateRangePicker({
+                handleValidation,
+              });
+              const year = inputElements[index];
+              const month = inputElements[index + 1];
+              const day = inputElements[index + 2];
+              userEvent.type(year, '2023');
+              userEvent.type(month, '12');
+              userEvent.type(day, '26');
+              userEvent.tab();
+
+              expect(handleValidation).toHaveBeenCalledWith(
+                expect.arrayContaining([
+                  expect.objectContaining(newUTC(2023, Month.December, 26)),
+                ]),
+              );
+            });
+
+            test('fired when the value is updated', () => {
+              const initialStart = newUTC(2023, Month.March, 10);
+              const initialEnd = newUTC(2023, Month.December, 26);
+              const handleValidation = jest.fn();
+              const { inputElements } = renderDateRangePicker({
+                value: [initialStart, initialEnd],
+                handleValidation,
+              });
+              const day = inputElements[index + 2];
+              userEvent.type(day, '15');
+
+              const expectedValue = expect.arrayContaining([
+                input === 'start'
+                  ? newUTC(2023, Month.March, 15)
+                  : initialStart,
+                input === 'end' ? newUTC(2023, Month.December, 15) : initialEnd,
+              ]);
+
+              expect(handleValidation).toHaveBeenCalledWith(expectedValue);
+            });
+          });
+        });
+      });
+
+      describe('when entering a new value', () => {
+        const initialStart = newUTC(2023, Month.September, 2);
+        const initialEnd = newUTC(2023, Month.September, 10);
+
+        test('start date is updated', () => {
+          const onRangeChange = jest.fn();
+          const { inputElements } = renderDateRangePicker({
+            value: [initialStart, initialEnd],
+            onRangeChange,
+          });
+          const startMonthInput = inputElements[1];
+          userEvent.type(startMonthInput, '{delete}8');
+          userEvent.tab();
+          expect(onRangeChange).toHaveBeenCalledWith([
+            setUTCMonth(initialStart, Month.August),
+            initialEnd,
+          ]);
+        });
+
+        test('end date is updated', () => {
+          const onRangeChange = jest.fn();
+          const { inputElements } = renderDateRangePicker({
+            value: [initialStart, initialEnd],
+            onRangeChange,
+          });
+          const endMonthInput = inputElements[4];
+          userEvent.type(endMonthInput, '{delete}10');
+          userEvent.tab();
+          expect(onRangeChange).toHaveBeenCalledWith([
+            initialStart,
+            setUTCMonth(initialEnd, Month.October),
+          ]);
+        });
+
+        test('input is rejected if start date is invalid', () => {
+          const onRangeChange = jest.fn();
+          const { inputElements } = renderDateRangePicker({
+            value: [initialStart, initialEnd],
+            onRangeChange,
+          });
+          const startMonthInput = inputElements[2];
+          userEvent.type(startMonthInput, '1');
+          userEvent.tab();
+          expect(onRangeChange).not.toHaveBeenCalled();
+        });
+
+        test('input is rejected if end date is invalid', () => {
+          const onRangeChange = jest.fn();
+          const { inputElements } = renderDateRangePicker({
+            value: [initialStart, initialEnd],
+            onRangeChange,
+          });
+          const endMonthInput = inputElements[4];
+          userEvent.type(endMonthInput, '1');
+          userEvent.tab();
+          expect(onRangeChange).not.toHaveBeenCalled();
+        });
+
+        test('input is rejected if start date is after end date', () => {
+          const onRangeChange = jest.fn();
+          const { inputElements } = renderDateRangePicker({
+            value: [initialStart, initialEnd],
+            onRangeChange,
+          });
+          const startDayInput = inputElements[2];
+          userEvent.type(startDayInput, '1');
+          userEvent.tab();
+          expect(onRangeChange).not.toHaveBeenCalled();
+        });
+
+        test('input is rejected if end date is before start date', () => {
+          const onRangeChange = jest.fn();
+          const { inputElements } = renderDateRangePicker({
+            value: [
+              newUTC(2023, Month.September, 2),
+              newUTC(2023, Month.September, 10),
+            ],
+            onRangeChange,
+          });
+          const endDayInput = inputElements[5];
+          userEvent.type(endDayInput, '{backspace}');
+          userEvent.tab();
+          expect(onRangeChange).not.toHaveBeenCalled();
         });
       });
     });
 
-    // e.g. selected range is 2023-09-10 -> 2023-10-14
-    // change start date to 2024 or end date to 2023
-    // should reject input and revert
-    test.todo(
-      'Entering an invalid date into start/end rejects the input, and reverts to the previous value',
-    );
-  });
-
-  describe('Interaction', () => {
     describe('Mouse interaction', () => {
       describe('Input', () => {
         describe('Clicking the input', () => {
@@ -410,6 +609,33 @@ describe('packages/date-picker/date-range-picker', () => {
               expect(todayCell).toHaveFocus();
             });
           });
+
+          test('initial highlight on `start` value when provided', async () => {
+            const { calendarButton, getMenuElements } = renderDateRangePicker({
+              value: [newUTC(2023, Month.September, 10), null],
+            });
+            userEvent.click(calendarButton);
+            const { menuContainerEl } = getMenuElements();
+            const sep10Cell = within(menuContainerEl!).getByLabelText(
+              'Sun Sep 10 2023',
+            );
+            await waitFor(() => {
+              expect(sep10Cell).toHaveFocus();
+            });
+          });
+          test('initial highlight on `end` value when only end provided', async () => {
+            const { calendarButton, getMenuElements } = renderDateRangePicker({
+              value: [null, newUTC(2023, Month.September, 10)],
+            });
+            userEvent.click(calendarButton);
+            const { menuContainerEl } = getMenuElements();
+            const sep10Cell = within(menuContainerEl!).getByLabelText(
+              'Sun Sep 10 2023',
+            );
+            await waitFor(() => {
+              expect(sep10Cell).toHaveFocus();
+            });
+          });
         });
       });
 
@@ -463,25 +689,20 @@ describe('packages/date-picker/date-range-picker', () => {
             );
           });
 
-          describe('if a full range is set', () => {
-            test('fires a change handler to set the start date & clear the end date', () => {
-              const onRangeChange = jest.fn();
-              const startDate = newUTC(2023, Month.September, 10);
-              const endDate = newUTC(2023, Month.October, 31);
-              const { openMenu } = renderDateRangePicker({
-                value: [startDate, endDate],
-                onRangeChange,
-              });
-              const { calendarCells } = openMenu();
-              const firstCell = calendarCells[0];
-              userEvent.click(firstCell);
-              expect(onRangeChange).toHaveBeenCalledWith(
-                expect.arrayContaining([
-                  newUTC(2023, Month.September, 1),
-                  null,
-                ]),
-              );
+          test('if a full range is set, fires a change handler to set the start date & clear the end date', () => {
+            const onRangeChange = jest.fn();
+            const startDate = newUTC(2023, Month.September, 10);
+            const endDate = newUTC(2023, Month.October, 31);
+            const { openMenu } = renderDateRangePicker({
+              value: [startDate, endDate],
+              onRangeChange,
             });
+            const { calendarCells } = openMenu();
+            const firstCell = calendarCells[0];
+            userEvent.click(firstCell);
+            expect(onRangeChange).toHaveBeenCalledWith(
+              expect.arrayContaining([newUTC(2023, Month.September, 1), null]),
+            );
           });
         });
 
@@ -711,11 +932,28 @@ describe('packages/date-picker/date-range-picker', () => {
               expect(handleValidation).toHaveBeenCalledWith(expectedRange);
             },
           );
-        });
 
-        test.todo(
-          'When value changes via quick ranges, update the displayed month',
-        );
+          test('update the displayed calendars', () => {
+            const { getAllByTestId, getMenuElements } = renderDateRangePicker({
+              initialOpen: true,
+              showQuickSelection: true,
+            });
+            const quickSelectButtons = getAllByTestId(
+              'lg-date_picker-menu-quick-range-button',
+            );
+            const { calendarGrids } = getMenuElements();
+            const last90Button = quickSelectButtons[4];
+            userEvent.click(last90Button);
+            expect(calendarGrids?.[0]).toHaveAttribute(
+              'aria-label',
+              'September 2023',
+            );
+            expect(calendarGrids?.[1]).toHaveAttribute(
+              'aria-label',
+              'October 2023',
+            );
+          });
+        });
       });
 
       describe('Backdrop', () => {
@@ -740,14 +978,14 @@ describe('packages/date-picker/date-range-picker', () => {
 
     describe('Keyboard interaction', () => {
       describe('Tab', () => {
-        test('menu does not open on initial focus', () => {
+        test('menu does not open on initial input focus', () => {
           const { getMenuElements } = renderDateRangePicker();
           tabNTimes(1);
           const { menuContainerEl } = getMenuElements();
           expect(menuContainerEl).not.toBeInTheDocument();
         });
 
-        test('menu does not open on subsequent focuses', () => {
+        test('menu does not open on subsequent input focuses', () => {
           const { getMenuElements } = renderDateRangePicker();
           tabNTimes(5);
           const { menuContainerEl } = getMenuElements();

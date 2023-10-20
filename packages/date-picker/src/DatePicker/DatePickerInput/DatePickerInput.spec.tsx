@@ -12,12 +12,12 @@ import { defaultDatePickerContext } from '../../DatePickerContext/DatePickerCont
 import { DatePickerInput, DatePickerInputProps } from '.';
 
 const renderDatePickerInput = (
-  props?: Omit<DatePickerInputProps, 'segmentRefs'>,
+  props?: Omit<DatePickerInputProps, 'segmentRefs' | 'setValue'>,
   context?: DatePickerProviderProps,
 ) => {
   const result = render(
     <DatePickerProvider value={{ ...defaultDatePickerContext, ...context }}>
-      <DatePickerInput {...props} />
+      <DatePickerInput {...props} setValue={() => {}} />
     </DatePickerProvider>,
   );
 

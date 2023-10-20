@@ -85,6 +85,7 @@ export const CalendarCell = React.forwardRef<
       <td
         ref={ref}
         role="gridcell"
+        data-testid="lg-date_picker-calendar_cell"
         data-highlighted={isHighlighted}
         aria-current={isCurrent}
         aria-selected={isActive}
