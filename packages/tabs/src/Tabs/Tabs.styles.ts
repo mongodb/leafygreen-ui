@@ -34,6 +34,7 @@ export const tabContainerStyle = css`
 export const inlineChildrenWrapperStyle = css`
   display: flex;
   align-items: center;
+  align-self: flex-end;
 `;
 
 export const listStyle = css`
