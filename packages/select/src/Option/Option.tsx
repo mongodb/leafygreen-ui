@@ -1,93 +1,28 @@
-import React, { useCallback, useContext, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
-import { LGGlyph } from '@leafygreen-ui/icon/src/types';
-import { createUniqueClassName, HTMLElementProps } from '@leafygreen-ui/lib';
 import {
-  fontFamilies,
-  fontWeights,
-  transitionDuration,
-} from '@leafygreen-ui/tokens';
+  descriptionClassName,
+  InputOption,
+  InputOptionContent,
+} from '@leafygreen-ui/input-option';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { fontWeights } from '@leafygreen-ui/tokens';
 
-import SelectContext from '../SelectContext';
 import { colorSets } from '../styleSets';
 
-const OptionClassName = createUniqueClassName('option');
-
-export type ReactEmpty = null | undefined | false | '';
-
-const optionStyle = css`
-  display: flex;
-  width: 100%;
-  outline: none;
-  overflow-wrap: anywhere;
-  transition: background-color ${transitionDuration.default}ms ease-in-out;
-  position: relative;
-  padding: 8px 12px;
-
-  &:before {
-    content: '';
-    position: absolute;
-    transform: scaleY(0.3);
-    top: 7px;
-    bottom: 7px;
-    left: 0;
-    right: 0;
-    width: 4px;
-    border-radius: 0px 4px 4px 0px;
-    opacity: 0;
-    transition: all ${transitionDuration.default}ms ease-in-out;
-  }
-`;
-
-const optionTextStyle = css`
-  display: flex;
-  align-items: center;
-  font-family: ${fontFamilies.default};
-`;
-
-const iconStyle = css`
-  min-width: 16px;
-  margin-right: 6px;
-`;
-
-const glyphFocusStyle = css`
-  .${OptionClassName} {
-    &:focus-visible & {
-      color: currentColor;
-    }
-  }
-`;
-
-export interface InternalProps extends HTMLElementProps<'li', HTMLLIElement> {
-  /**
-   * Content to appear inside of the Option.
-   */
-  children: React.ReactNode;
-  /**
-   * Adds a className to the outermost element.
-   */
-  className?: string;
-  /**
-   * Icon to display next to the option text.
-   */
-  glyph?: LGGlyph.Element;
-  /**
-   * Prevents the option from being selectable.
-   * @default false
-   */
-  disabled?: boolean;
-  selected: boolean;
-  focused: boolean;
-  onClick: React.MouseEventHandler;
-  onFocus: React.FocusEventHandler;
-  hasGlyphs: boolean;
-  triggerScrollIntoView: boolean;
-}
+import { InternalProps, OptionProps } from './Option.types';
+import {
+  glyphFocusStyle,
+  iconStyle,
+  OptionClassName,
+  optionStyle,
+  optionTextStyle,
+} from './Options.styles';
 
 export function InternalOption({
   children,
@@ -100,9 +35,10 @@ export function InternalOption({
   onFocus,
   triggerScrollIntoView,
   hasGlyphs,
+  description,
   ...rest
 }: InternalProps) {
-  const { theme } = useContext(SelectContext);
+  const { theme } = useDarkMode();
 
   const { option: colorSet } = colorSets[theme];
 
@@ -145,56 +81,36 @@ export function InternalOption({
     }
   }, [shouldFocus]);
 
-  const styledChildren: React.ReactNode = (
-    <span
-      className={cx(optionTextStyle, {
-        [css`
-          font-weight: ${fontWeights.bold};
-        `]: selected,
-      })}
-    >
-      {children}
-    </span>
-  );
-
-  const iconPlaceholder = (
-    <span
-      className={cx(
-        iconStyle,
-        css`
-          height: 100%;
-        `,
-      )}
-    />
-  );
-
-  let styledGlyph = iconPlaceholder;
-
   if (glyph) {
     if (!isComponentGlyph(glyph)) {
       console.error(
         '`Option` instance did not render icon because it is not a known glyph element.',
       );
-    } else {
-      styledGlyph = React.cloneElement(glyph, {
-        key: 'glyph',
-        className: cx(
-          iconStyle,
-          css`
-            color: ${colorSet.icon.base};
-          `,
-          glyphFocusStyle,
-          {
-            [css`
-              color: ${colorSet.icon.disabled};
-            `]: disabled,
-          },
-          glyph.props.className,
-        ),
-      });
     }
   }
 
+  // FIXME: temps styles until styles are consistent with InputOption
+  const glyphProp =
+    glyph && isComponentGlyph(glyph)
+      ? React.cloneElement(glyph, {
+          key: 'glyph',
+          className: cx(
+            iconStyle,
+            css`
+              color: ${colorSet.icon.base};
+            `,
+            glyphFocusStyle,
+            {
+              [css`
+                color: ${colorSet.icon.disabled};
+              `]: disabled,
+            },
+            glyph.props.className,
+          ),
+        })
+      : undefined;
+
+  // FIXME: temps styles until styles are consistent with InputOption
   const checkmark = selected ? (
     <CheckmarkIcon
       key="checkmark"
@@ -211,61 +127,24 @@ export function InternalOption({
         },
       )}
     />
-  ) : (
-    iconPlaceholder
-  );
+  ) : undefined;
 
-  let renderedChildren: React.ReactNode;
-
-  if (hasGlyphs) {
-    renderedChildren = (
-      <span
-        className={css`
-          display: flex;
-          justify-content: space-between;
-          width: 100%;
-        `}
-      >
-        <span
-          className={css`
-            display: flex;
-          `}
-        >
-          {styledGlyph}
-          {styledChildren}
-        </span>
-        {checkmark}
-      </span>
-    );
-  } else {
-    renderedChildren = (
-      <>
-        {checkmark}
-        {styledChildren}
-      </>
-    );
-  }
+  const leftGlyph = hasGlyphs ? glyphProp : checkmark;
+  const rightGlyph = hasGlyphs ? checkmark : undefined;
 
   return (
-    <li
+    <InputOption
+      aria-label={typeof children === 'string' ? children : 'option'}
       {...rest}
+      disabled={disabled}
       role="option"
-      aria-selected={selected}
       tabIndex={-1}
       ref={ref}
       className={cx(
         OptionClassName,
         optionStyle,
-        css`
-          cursor: pointer;
-          color: ${colorSet.text.base};
-        `,
+        // FIXME: temps styles until styles are consistent with InputOption
         {
-          [css`
-            &:hover {
-              background-color: ${colorSet.background.hovered};
-            }
-          `]: !disabled,
           [css`
             &:focus-visible {
               color: ${colorSet.text.focused};
@@ -278,9 +157,12 @@ export function InternalOption({
               }
             }
           `]: !disabled,
+          // FIXME: override the disabled colors since they are not consistent with InputOption
           [css`
-            cursor: not-allowed;
-            color: ${colorSet.text.disabled};
+            &,
+            & .${descriptionClassName} {
+              color: ${colorSet.text.disabled};
+            }
           `]: disabled,
         },
         className,
@@ -289,21 +171,27 @@ export function InternalOption({
       onFocus={onFocus}
       onKeyDown={undefined}
     >
-      {renderedChildren}
-    </li>
+      <InputOptionContent
+        leftGlyph={leftGlyph}
+        rightGlyph={rightGlyph}
+        description={description}
+      >
+        <span
+          className={cx(optionTextStyle, {
+            // FIXME: temps styles since we're not passing the `selected` prop to InputOption
+            [css`
+              font-weight: ${fontWeights.bold};
+            `]: selected,
+          })}
+        >
+          {children}
+        </span>
+      </InputOptionContent>
+    </InputOption>
   );
 }
 
 InternalOption.displayName = 'Option';
-
-interface OptionProps
-  extends Pick<InternalProps, 'children' | 'className' | 'glyph' | 'disabled'> {
-  /**
-   * Corresponds to the value passed into the onChange prop of <Select /> when the option is selected.
-   * @default children
-   */
-  value?: string;
-}
 
 export function Option(_: OptionProps): JSX.Element {
   throw Error('`Option` must be a child of a `Select` instance');
@@ -317,6 +205,7 @@ Option.propTypes = {
   glyph: PropTypes.element,
   value: PropTypes.string,
   disabled: PropTypes.bool,
+  description: PropTypes.string,
 };
 
 // React.ReactComponentElement messes up the original

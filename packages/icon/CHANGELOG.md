@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 11.24.0
+
+### Minor Changes
+
+- 1c7c9608: Add `Colon` and `TimeSeriesCollection` icons.
+
 ## 11.23.0
 
 ### Minor Changes

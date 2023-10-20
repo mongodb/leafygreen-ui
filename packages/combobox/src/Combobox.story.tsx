@@ -52,7 +52,7 @@ const meta: StoryMetaType<typeof Combobox> = {
       ],
     },
     generate: {
-      storyNames: ['SingleSelect', 'MultiSelect'],
+      storyNames: ['SingleSelect', 'MultiSelect', 'DisabledInput'],
       combineArgs: {
         darkMode: [false, true],
         clearable: [true, false],
@@ -249,6 +249,18 @@ MultiSelect.parameters = {
   generate: {
     combineArgs: {
       value: [undefined, multiValue],
+    },
+  },
+};
+
+export const DisabledInput = () => <></>;
+DisabledInput.args = {
+  disabled: true,
+};
+DisabledInput.parameters = {
+  generate: {
+    combineArgs: {
+      darkMode: [true, false],
     },
   },
 };

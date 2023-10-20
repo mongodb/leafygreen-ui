@@ -1,5 +1,34 @@
 # @leafygreen-ui/combobox
 
+## 7.0.1
+
+### Patch Changes
+
+- 9a471879: - Updates disabled dark mode caret from `gray.dark2` to `gray.dark1`
+  - Updates dark mode dropdown border from `gray.dark3` to `gray.dark2`
+- Updated dependencies [dd4f3da8]
+- Updated dependencies [784e9d8a]
+- Updated dependencies [90053e16]
+  - @leafygreen-ui/lib@13.0.0
+  - @leafygreen-ui/icon-button@15.0.19
+  - @leafygreen-ui/typography@18.0.0
+  - @leafygreen-ui/checkbox@12.0.20
+  - @leafygreen-ui/inline-definition@6.0.13
+  - @leafygreen-ui/input-option@1.0.13
+  - @leafygreen-ui/leafygreen-provider@3.1.10
+  - @leafygreen-ui/popover@11.1.1
+
+## 7.0.0
+
+### Major Changes
+
+- 9a728c7b: Replaces internal `Chip` component with new LG `Chip` component and exposes an upgraded `TruncationLocation` object which capitalizes the first letter of each key. Instead of referring to it as `TruncationLocation.end`, it will now be represented as `TruncationLocation.End`.
+
+### Patch Changes
+
+- Updated dependencies [9a728c7b]
+  - @leafygreen-ui/chip@1.0.0
+
 ## 6.0.15
 
 ### Patch Changes

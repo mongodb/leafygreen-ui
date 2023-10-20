@@ -10,8 +10,9 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
-import { ToastProps, Variant } from '../Toast.types';
+import { Variant } from '../Toast.types';
 
+import { defaultToastProps } from './defaultProps';
 import {
   baseIconStyle,
   baseToastStyle,
@@ -30,16 +31,6 @@ import {
 import { InternalToastProps } from './InternalToast.types';
 import { ProgressBar } from './ProgressBar';
 import { variantIcons } from './VariantIcon';
-
-/** The default props. Merged with provided props via `_.defaults` */
-export const defaultToastProps: Required<
-  Pick<ToastProps, 'variant' | 'progress' | 'dismissible' | 'timeout'>
-> = {
-  variant: Variant.Note,
-  progress: 1.0,
-  timeout: 6_000,
-  dismissible: true,
-};
 
 /**
  * The internal toast component
@@ -66,6 +57,7 @@ export const InternalToast = React.forwardRef<
       variant: variantProp,
       progress: progressProp,
       dismissible: dismissibleProp,
+      darkMode: darkModeProp,
       ...rest
     }: InternalToastProps,
     forwardedRef,
@@ -86,7 +78,7 @@ export const InternalToast = React.forwardRef<
       );
     }
 
-    const { theme, darkMode } = useDarkMode();
+    const { theme, darkMode } = useDarkMode(darkModeProp);
     const showContent = index === 0 || isHovered;
     const VariantIcon = variantIcons[variant];
     const iconThemeStyle = variantIconStyle[variant];

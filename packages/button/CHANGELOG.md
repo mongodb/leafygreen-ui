@@ -1,5 +1,25 @@
 # @leafygreen-ui/button
 
+## 21.0.9
+
+### Patch Changes
+
+- Updated dependencies [dd4f3da8]
+  - @leafygreen-ui/lib@13.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.10
+
+## 21.0.8
+
+### Patch Changes
+
+- a4b3b704: Assigns Button Size object `as const` to improve Intellisense/autocomplete
+
+## 21.0.7
+
+### Patch Changes
+
+- d2c1ec53: Updates Button to remove `pointer-events: none` styles from it's inner container. This allows the Select component to work as intended when using `usePortal = false`.
+
 ## 21.0.6
 
 ### Patch Changes

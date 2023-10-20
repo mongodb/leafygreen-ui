@@ -5,8 +5,8 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies, spacing } from '@leafygreen-ui/tokens';
 
-import { fontSize, lineHeight } from '../Chip/Chip.styles';
 import { ComboboxSize as Size } from '../Combobox.types';
+import { fontSize, lineHeight } from '../ComboboxChip/ComboboxChip.styles';
 
 export const menuItemPadding: Record<Size, { x: number; y: number }> = {
   [Size.XSmall]: { x: 12, y: 8 },
@@ -38,7 +38,7 @@ export const popoverThemeStyle: Record<Theme, string> = {
   `,
   [Theme.Dark]: css`
     box-shadow: 0px 4px 7px ${transparentize(0.85, palette.black)};
-    border-color: ${palette.gray.dark3};
+    border-color: ${palette.gray.dark2};
   `,
 };
 

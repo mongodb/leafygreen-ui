@@ -36,16 +36,19 @@ const hasAnchorLikeProps = (
 };
 
 const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
-  ({
-    children,
-    className,
-    arrowAppearance = ArrowAppearance.None,
-    hideExternalIcon = false,
-    baseFontSize,
-    darkMode: darkModeProp,
-    as,
-    ...rest
-  }) => {
+  (
+    {
+      children,
+      className,
+      arrowAppearance = ArrowAppearance.None,
+      hideExternalIcon = false,
+      baseFontSize,
+      darkMode: darkModeProp,
+      as,
+      ...rest
+    },
+    fwdRef,
+  ) => {
     const [currentHostname, setCurrentHostname] = useState('');
     useEffect(() => {
       setCurrentHostname(window.location.hostname);
@@ -114,6 +117,7 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
           linkModeStyles[theme],
           className,
         )}
+        ref={fwdRef}
         {...defaultAnchorProps}
         {...rest}
       >
