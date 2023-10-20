@@ -25,7 +25,7 @@ export const DropdownWidthBasis = {
 export type DropdownWidthBasis =
   (typeof DropdownWidthBasis)[keyof typeof DropdownWidthBasis];
 
-interface BaseSelectProps
+export interface BaseSelectProps
   extends Omit<
       HTMLElementProps<'button', HTMLButtonElement>,
       'onChange' | 'onClick'
@@ -103,7 +103,7 @@ interface BaseSelectProps
     Record<string, any>;
 }
 
-interface LabelProp {
+export interface LabelProp {
   label: string;
   'aria-labelledby': string;
   'aria-label': string;
