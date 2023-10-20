@@ -358,7 +358,7 @@ const disabledStyle: Record<Theme, string> = {
       cursor: not-allowed;
     }
 
-    &:focus {
+    &:focus-visible {
       color: ${palette.gray.base};
       box-shadow: ${focusBoxShadow(palette.white)};
     }
@@ -373,7 +373,7 @@ const disabledStyle: Record<Theme, string> = {
       cursor: not-allowed;
     }
 
-    &:focus {
+    &:focus-visible {
       color: ${palette.gray.dark1};
       box-shadow: ${focusBoxShadow(palette.black)};
     }
