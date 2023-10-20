@@ -1,5 +1,11 @@
 # @leafygreen-ui/text-input
 
+## 12.1.24
+
+### Patch Changes
+
+- d39acdc6: Ensure inner input element properly inherits width property from parent.
+
 ## 12.1.23
 
 ### Patch Changes

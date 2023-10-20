@@ -20,6 +20,8 @@ export const useToastTimers = ({
 }) => {
   const timers = useRef<Map<ToastId, NodeJS.Timeout | null>>(new Map());
 
+  const stackSize = stack?.size;
+
   const setTimer = useCallback(
     (id: ToastId, timeout?: number | null) => {
       if (timeout && !timers.current.has(id)) {
@@ -49,7 +51,7 @@ export const useToastTimers = ({
   useEffect(() => {
     startTimers(stack);
     return () => clearAllTimers();
-  }, [setTimer, stack, startTimers]);
+  }, [setTimer, stack, startTimers, stackSize]);
 
   // When isHovered changes, pause the timers
   useEffect(() => {
@@ -60,7 +62,7 @@ export const useToastTimers = ({
     }
 
     return () => clearAllTimers();
-  }, [isHovered, setTimer, stack, startTimers]);
+  }, [isHovered, setTimer, stack, startTimers, stackSize]);
 
   function clearAllTimers() {
     timers.current.forEach((timerId, toastId) => {

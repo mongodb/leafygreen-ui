@@ -1,5 +1,11 @@
 # @leafygreen-ui/toast
 
+## 6.1.18
+
+### Patch Changes
+
+- d9afce38: Fixes a bug where timeout timers would not always be set/reset when toasts were added/removed from the stack
+
 ## 6.1.17
 
 ### Patch Changes
