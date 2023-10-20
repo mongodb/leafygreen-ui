@@ -77,9 +77,9 @@ const storybookModuleFederationConfig = {
   filename: 'dtk/remoteEntry.js',
   exposes: {
     './BaseStyles': '/src/assets/global.css',
-    './Button': '/packages/button/src/Button/Button.tsx',
-    './Select': '/packages/select/src/Select.tsx',
-    './Popover': '/packages/popover/src/Popover.tsx',
+    './Button': '/packages/button/src/index.ts',
+    './Select': '/packages/select/src/index.ts',
+    './Popover': '/packages/popover/src/index.ts',
     './Modal': '/packages/modal/src/index.ts',
     './Badge': '/packages/badge/src/index.ts',
     './Icon': '/packages/icon/src/Icon.tsx',
