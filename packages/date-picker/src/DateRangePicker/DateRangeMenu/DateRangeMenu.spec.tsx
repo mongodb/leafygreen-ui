@@ -176,7 +176,17 @@ describe('packages/date-picker/date-range-picker/menu', () => {
             'October 2023',
           );
         });
-        test.todo('does not update month when month does not need to change');
+        test('does not update month when month does not need to change', () => {
+          const { getAllByRole } = renderDateRangeMenu({
+            rangeContext: { value: [testToday, null] },
+          });
+          userEvent.keyboard('{downarrow}');
+          const calendarGrids = getAllByRole('grid');
+          expect(calendarGrids[0]).toHaveAttribute(
+            'aria-label',
+            'October 2023',
+          );
+        });
       });
 
       describe('when month should be updated', () => {
