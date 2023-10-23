@@ -28,6 +28,9 @@
       "path": "../palette"
     },
     {
+      "path": "../segmented-control"
+    },
+    {
       "path": "../tokens"
     },
     {

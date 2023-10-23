@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Meta, Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react';
 import { cloneDeep, upperFirst } from 'lodash';
 
 import Button from '@leafygreen-ui/button';
 import Code, { Language } from '@leafygreen-ui/code';
 import { LanguageOption } from '@leafygreen-ui/code/src/types';
 import { css } from '@leafygreen-ui/emotion';
+import { StoryMetaType } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   SegmentedControl,
@@ -23,17 +24,20 @@ import {
 } from './types';
 import { Blob } from '.';
 
-export default {
+const meta: StoryMetaType<typeof Blob> = {
   title: 'Components/Blob',
   component: Blob,
   parameters: {
+    default: 'Basic',
     controls: {
       exclude: ['children', 'className'],
     },
   },
-} as Meta<Blob>;
+};
 
-const Template: Story<BlobProps> = ({ shape }: BlobProps) => (
+export default meta;
+
+const Template: StoryFn<BlobProps> = ({ shape }: BlobProps) => (
   <Blob shape={shape} />
 );
 
