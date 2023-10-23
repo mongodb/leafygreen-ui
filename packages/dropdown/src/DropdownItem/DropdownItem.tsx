@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { css, cx } from '@leafygreen-ui/emotion';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import {
   PolymorphicAs,
@@ -18,7 +17,6 @@ export const DropdownItem = React.forwardRef(
       disabled,
       as: asProp,
       active,
-      className,
       description,
       leftGlyph,
       rightGlyph,
@@ -52,12 +50,6 @@ export const DropdownItem = React.forwardRef(
         onFocus={onFocus}
         onBlur={onBlur}
         tab-index={tabIndex}
-        className={cx(
-          css`
-            display: block;
-          `,
-          className,
-        )}
         {...rest}
       >
         <InputOptionContent

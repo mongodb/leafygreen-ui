@@ -57,6 +57,7 @@ export const DropdownGroup = React.forwardRef(
     const ChevronIcon = open ? ChevronDownIcon : ChevronUpIcon;
 
     const handleChevronClick = (e: React.MouseEvent) => {
+      e.preventDefault();
       // we stop the event from propagating and closing the entire menu
       e.nativeEvent.stopImmediatePropagation();
 

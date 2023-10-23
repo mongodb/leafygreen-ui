@@ -38,7 +38,7 @@ const DropdownExample = props => {
         <DropdownItem href="test" active>
           Child D
         </DropdownItem>
-        <DropdownGroup title="title">
+        <DropdownGroup href="string" title="title">
           <DropdownItem>Hey</DropdownItem>
           <DropdownItem>There</DropdownItem>
         </DropdownGroup>
