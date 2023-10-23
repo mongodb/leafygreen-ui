@@ -1,8 +1,16 @@
 import React, { useRef, useState } from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import {
+  fireEvent,
+  render,
+  screen,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
+import { keyMap } from '@leafygreen-ui/lib';
 import { PolymorphicAs } from '@leafygreen-ui/polymorphic';
 
+import { HighlightBehavior } from '../Dropdown/Dropdown.types';
 import {
   Dropdown,
   DropdownGroup,
@@ -13,6 +21,7 @@ import {
 
 const title = 'Title';
 const testId = 'dropdown-group';
+const itemTestId = 'item-id';
 
 const renderDropdownGroup = (props?: DropdownGroupProps<PolymorphicAs>) => {
   const utils = render(
@@ -27,7 +36,11 @@ const renderDropdownGroup = (props?: DropdownGroupProps<PolymorphicAs>) => {
   return utils;
 };
 
-const WithTriggerExample = (props?: Partial<DropdownProps>) => {
+const WithTriggerExample = ({
+  hasAction,
+  onClick,
+  ...props
+}: Partial<DropdownProps> & { hasAction?: boolean }) => {
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
@@ -42,16 +55,22 @@ const WithTriggerExample = (props?: Partial<DropdownProps>) => {
         triggerRef={triggerRef}
         {...props}
       >
-        <DropdownGroup data-testid={testId}>
-          <DropdownItem>Dropdown Item A</DropdownItem>
+        <DropdownGroup
+          data-testid={testId}
+          hasAction={hasAction}
+          onClick={onClick}
+        >
+          <DropdownItem data-testid={itemTestId}>Item A</DropdownItem>
         </DropdownGroup>
       </Dropdown>
     </>
   );
 };
 
-const testFocus = () => {
-  const utils = render(<WithTriggerExample />);
+const renderTestKeyboardExample = (
+  props: Partial<DropdownProps> & { hasAction?: boolean },
+) => {
+  const utils = render(<WithTriggerExample {...props} />);
   return utils;
 };
 
@@ -77,8 +96,128 @@ describe('packages/dropdown/dropdown-group', () => {
   });
 
   describe('handles keyboard navigation', () => {
-    describe('when highlight behavior is focus', () => {});
-    describe('when highlight behavior is ariaSelected', () => {});
+    describe('when highlight behavior is focus', () => {
+      test('right arrow key opens the menu and arrow down moves focus', async () => {
+        renderTestKeyboardExample({});
+        const button = screen.getByRole('button');
+        fireEvent.click(button);
+
+        const group = screen.getByTestId(testId);
+        expect(group).toHaveFocus();
+
+        fireEvent.keyDown(group, { key: keyMap.ArrowRight });
+        const subMenuItem = await screen.findByTestId(itemTestId);
+        expect(subMenuItem).toBeInTheDocument();
+
+        fireEvent.keyDown(group, { key: keyMap.ArrowDown });
+        expect(subMenuItem).toHaveFocus();
+      });
+
+      test('left arrow key closes the menu', async () => {
+        renderTestKeyboardExample({});
+        const button = screen.getByRole('button');
+        fireEvent.click(button);
+
+        const group = screen.getByTestId(testId);
+        expect(group).toHaveFocus();
+
+        fireEvent.keyDown(group, { key: keyMap.ArrowRight });
+        const subMenuItem = await screen.findByTestId(itemTestId);
+        expect(subMenuItem).toBeInTheDocument();
+
+        fireEvent.keyDown(group, { key: keyMap.ArrowLeft });
+        await waitForElementToBeRemoved(subMenuItem);
+        expect(subMenuItem).not.toBeInTheDocument();
+      });
+
+      describe('and "hasAction" is true', () => {
+        test('space key triggers onClick', async () => {
+          const onClick = jest.fn();
+          renderTestKeyboardExample({ onClick, hasAction: true });
+
+          const button = screen.getByRole('button');
+          fireEvent.click(button);
+
+          const group = screen.getByTestId(testId);
+          expect(group).toHaveFocus();
+
+          userEvent.keyboard('[Space]');
+          expect(onClick).toHaveBeenCalled();
+        });
+
+        test('enter key triggers onClick', async () => {
+          const onClick = jest.fn();
+          renderTestKeyboardExample({ onClick, hasAction: true });
+
+          const button = screen.getByRole('button');
+          fireEvent.click(button);
+
+          const group = screen.getByTestId(testId);
+          expect(group).toHaveFocus();
+
+          userEvent.keyboard('[Enter]');
+          expect(onClick).toHaveBeenCalled();
+        });
+      });
+    });
+
+    describe('when highlight behavior is ariaSelected', () => {
+      test('right arrow key opens the menu and arrow down moves aria-selected', async () => {
+        renderTestKeyboardExample({
+          highlightBehavior: HighlightBehavior.AriaSelected,
+        });
+        const button = screen.getByRole('button');
+        fireEvent.click(button);
+
+        const group = screen.getByTestId(testId);
+        expect(group.getAttribute('aria-selected')).toBe('true');
+
+        fireEvent.keyDown(group, { key: keyMap.ArrowRight });
+        const subMenuItem = await screen.findByTestId(itemTestId);
+        expect(subMenuItem).toBeInTheDocument();
+
+        fireEvent.keyDown(group, { key: keyMap.ArrowDown });
+        expect(subMenuItem.getAttribute('aria-selected')).toBe('true');
+      });
+
+      describe('and "hasAction" is true', () => {
+        test('space key triggers onClick', async () => {
+          const onClick = jest.fn();
+          renderTestKeyboardExample({
+            highlightBehavior: HighlightBehavior.AriaSelected,
+            onClick,
+            hasAction: true,
+          });
+
+          const button = screen.getByRole('button');
+          fireEvent.click(button);
+
+          const group = screen.getByTestId(testId);
+          expect(group.getAttribute('aria-selected')).toBe('true');
+
+          userEvent.keyboard('[Space]');
+          expect(onClick).toHaveBeenCalled();
+        });
+
+        test('enter key triggers onClick', async () => {
+          const onClick = jest.fn();
+          renderTestKeyboardExample({
+            highlightBehavior: HighlightBehavior.AriaSelected,
+            onClick,
+            hasAction: true,
+          });
+
+          const button = screen.getByRole('button');
+          fireEvent.click(button);
+
+          const group = screen.getByTestId(testId);
+          expect(group.getAttribute('aria-selected')).toBe('true');
+
+          userEvent.keyboard('[Enter]');
+          expect(onClick).toHaveBeenCalled();
+        });
+      });
+    });
   });
 
   describe('handles click behavior', () => {

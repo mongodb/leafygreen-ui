@@ -8,7 +8,7 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { Variant } from './InputOption.types';
+import { CheckedVariant } from './InputOption.types';
 
 export const titleClassName = createUniqueClassName('input-option-title');
 export const descriptionClassName = createUniqueClassName(
@@ -18,6 +18,7 @@ export const descriptionClassName = createUniqueClassName(
 export const inputOptionStyles = css`
   position: relative;
   list-style: none;
+  display: block;
   outline: none;
   border: unset;
   margin: 0;
@@ -93,8 +94,11 @@ export const inputOptionWedge = css`
   }
 `;
 
-export const getInputOptionActiveStyles = (theme: Theme, variant: Variant) => {
-  const isBlue = variant === Variant.Blue;
+export const getInputOptionActiveStyles = (
+  theme: Theme,
+  variant: CheckedVariant,
+) => {
+  const isBlue = variant === CheckedVariant.Blue;
 
   if (theme === Theme.Light) {
     return css`
@@ -119,6 +123,15 @@ export const getInputOptionActiveStyles = (theme: Theme, variant: Variant) => {
       background-color: ${isBlue ? palette.blue.light1 : palette.green.base};
     }
   `;
+};
+
+export const destructiveVariantStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.red.light1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.red.light1};
+  `,
 };
 
 export const inputOptionDisabledStyles: Record<Theme, string> = {

@@ -25,10 +25,10 @@ import {
 import { DropdownProps, HighlightBehavior } from './Dropdown.types';
 
 // clean up input-option props and type errors
-// tests
+// tests - dropdowngroup/label
 // test in mongo nav
 // add data-focus and data-select
-// add a hook for dropdown trigger props
+// fix dropdown submenu when link
 export const Dropdown = React.forwardRef(
   (
     {

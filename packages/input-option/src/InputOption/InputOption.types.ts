@@ -3,9 +3,18 @@ import { PropsWithChildren } from 'react';
 import { AriaLabelProps } from '@leafygreen-ui/a11y';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
-const Variant = {
+const CheckedVariant = {
   Blue: 'blue',
   Green: 'green',
+} as const;
+
+type CheckedVariant = (typeof CheckedVariant)[keyof typeof CheckedVariant];
+
+export { CheckedVariant };
+
+const Variant = {
+  Default: 'default',
+  Destructive: 'destructive',
 } as const;
 
 type Variant = (typeof Variant)[keyof typeof Variant];
@@ -51,6 +60,8 @@ export interface BaseInputOptionProps {
    * @default true
    */
   isInteractive?: boolean;
+
+  checkedVariant?: CheckedVariant;
 
   variant?: Variant;
 }

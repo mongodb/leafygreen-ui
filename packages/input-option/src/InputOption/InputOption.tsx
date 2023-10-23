@@ -8,6 +8,7 @@ import {
 } from '@leafygreen-ui/polymorphic';
 
 import {
+  destructiveVariantStyles,
   getInputOptionActiveStyles,
   inputOptionDisabledStyles,
   inputOptionHoverStyles,
@@ -16,7 +17,7 @@ import {
   inputOptionWedge,
   titleSelectionStyles,
 } from './InputOption.style';
-import { InputOptionProps, Variant } from './InputOption.types';
+import { CheckedVariant, InputOptionProps, Variant } from './InputOption.types';
 
 export const InputOption = InferredPolymorphic<InputOptionProps>(
   (
@@ -30,7 +31,8 @@ export const InputOption = InferredPolymorphic<InputOptionProps>(
       showWedge = true,
       isInteractive = true,
       className,
-      variant = 'blue',
+      checkedVariant = CheckedVariant.Blue,
+      variant = Variant.Default,
       ...rest
     },
     ref,
@@ -51,12 +53,13 @@ export const InputOption = InferredPolymorphic<InputOptionProps>(
           {
             [inputOptionWedge]: showWedge,
             [inputOptionHoverStyles[theme]]: isInteractive,
-            [getInputOptionActiveStyles(theme, variant)]:
+            [getInputOptionActiveStyles(theme, checkedVariant)]:
               isInteractive && checked,
-            [getInputOptionActiveStyles(theme, Variant.Blue)]:
+            [getInputOptionActiveStyles(theme, CheckedVariant.Blue)]:
               isInteractive && highlighted,
-            [inputOptionDisabledStyles[theme]]: disabled,
             [titleSelectionStyles]: checked,
+            [destructiveVariantStyles[theme]]: variant === Variant.Destructive,
+            [inputOptionDisabledStyles[theme]]: disabled,
           },
           className,
         )}

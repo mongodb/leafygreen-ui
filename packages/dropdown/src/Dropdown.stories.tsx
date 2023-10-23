@@ -35,7 +35,9 @@ const DropdownExample = props => {
           <DropdownItem>Child B</DropdownItem>
         </DropdownLabel>
         <DropdownItem disabled>Child C</DropdownItem>
-        <DropdownItem active>Child D</DropdownItem>
+        <DropdownItem href="test" active>
+          Child D
+        </DropdownItem>
         <DropdownGroup title="title">
           <DropdownItem>Hey</DropdownItem>
           <DropdownItem>There</DropdownItem>

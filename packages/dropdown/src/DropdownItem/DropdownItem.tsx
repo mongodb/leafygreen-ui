@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { css, cx } from '@leafygreen-ui/emotion';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import {
   PolymorphicAs,
@@ -26,6 +27,7 @@ export const DropdownItem = React.forwardRef(
     forwardRef,
   ) => {
     const { Component: as } = useInferredPolymorphic(asProp, rest, 'div');
+
     const {
       ref,
       index,
@@ -41,16 +43,21 @@ export const DropdownItem = React.forwardRef(
     return (
       <InputOption
         role="option"
-        as={as}
+        as={as as PolymorphicAs}
         ref={itemRef}
         aria-labelledby={label}
         disabled={disabled}
         highlighted={dataSelected}
         checked={active}
-        className={className}
         onFocus={onFocus}
         onBlur={onBlur}
         tab-index={tabIndex}
+        className={cx(
+          css`
+            display: block;
+          `,
+          className,
+        )}
         {...rest}
       >
         <InputOptionContent
