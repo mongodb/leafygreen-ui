@@ -26,6 +26,7 @@ export const DropdownGroup = React.forwardRef(
       description,
       className,
       leftGlyph,
+      hasAction,
       active = false,
       disabled = false,
       as: asProp,
@@ -34,6 +35,7 @@ export const DropdownGroup = React.forwardRef(
     forwardRef,
   ) => {
     const { Component: as } = useInferredPolymorphic(asProp, rest, 'div');
+
     const {
       ref,
       index,
@@ -68,6 +70,10 @@ export const DropdownGroup = React.forwardRef(
 
       if (e.key === keyMap.ArrowRight) {
         setOpen(true);
+      }
+
+      if (hasAction && (e.key === keyMap.Space || e.key === keyMap.Enter)) {
+        handleClick(e);
       }
     };
 

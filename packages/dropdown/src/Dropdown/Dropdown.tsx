@@ -24,7 +24,11 @@ import {
 } from './Dropdown.styles';
 import { DropdownProps, HighlightBehavior } from './Dropdown.types';
 
+// clean up input-option props and type errors
 // tests
+// test in mongo nav
+// add data-focus and data-select
+// add a hook for dropdown trigger props
 export const Dropdown = React.forwardRef(
   (
     {
@@ -150,8 +154,6 @@ export const Dropdown = React.forwardRef(
           }
         : { spacing, usePortal }),
     };
-
-    // console.log({ open });
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
