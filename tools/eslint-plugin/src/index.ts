@@ -1,16 +1,25 @@
-import requireIndex from 'requireindex';
-import { getPackageJson } from '@lg-tools/meta';
+import { ESLint } from 'eslint';
+
+import { rules } from './rules';
+
 //------------------------------------------------------------------------------
 // Plugin Definition
 //------------------------------------------------------------------------------
 
-const pkg = getPackageJson();
-const rules = requireIndex(__dirname + '/rules');
-
-export default {
+const plugin: ESLint.Plugin = {
   meta: {
     name: '@lg-tools/eslint-plugin',
-    version: pkg?.version,
+    version: '0.0.1',
   },
   rules,
+  configs: {
+    contributor: {
+      plugins: ['@lg-tools'],
+      rules: {
+        '@lg-tools/test-rule': ['error'],
+      },
+    },
+  },
 };
+
+export default plugin;

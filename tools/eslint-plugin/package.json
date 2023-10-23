@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/eslint-plugin",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "ESLint Rules for LeafyGreen",
   "keywords": [
     "eslint",
@@ -16,7 +16,6 @@
     "lint": "npm-run-all \"lint:*\"",
     "lint:eslint-docs": "npm-run-all \"update:eslint-docs -- --check\"",
     "lint:js": "eslint .",
-    "test": "mocha tests --recursive",
     "update:eslint-docs": "eslint-doc-generator"
   },
   "dependencies": {
@@ -28,8 +27,6 @@
     "@types/requireindex": "^1.2.2",
     "eslint": "8.43.0",
     "eslint-doc-generator": "1.5.2",
-    "eslint-plugin-eslint-plugin": "5.1.1",
-    "eslint-plugin-node": "11.1.0",
     "mocha": "^10.0.0"
   },
   "peerDependencies": {
