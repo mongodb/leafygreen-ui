@@ -102,9 +102,9 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   const hasSetInitialOpen = useRef(false);
 
   const [, setClosed] = useState(false);
-  const currentSubMenuRef = useRef<SubMenuType | null>(null);
-  const [uncontrolledOpen, uncontrolledSetOpen] = useState(initialOpen);
-  const popoverRef = useRef<HTMLUListElement | null>(null);
+  const [currentSubMenu, setCurrentSubMenu] =
+    useState<SubMenuElement | null>(null);
+  const [uncontrolledOpen, uncontrolledSetOpen] = useState(false);
 
   const setOpen =
     (typeof controlledOpen === 'boolean' && controlledSetOpen) ||

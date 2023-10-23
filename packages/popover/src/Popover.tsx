@@ -68,31 +68,26 @@ export const contentClassName = createUniqueClassName('popover-content');
  * @param props.portalContainer HTML element that the popover is portaled within.
  * @param props.scrollContainer HTML ancestor element that's scrollable to position the popover accurately within scrolling containers.
  */
-const Popover = forwardRef<HTMLDivElement, PopoverProps>(
-  (
-    {
-      active = false,
-      spacing = 10,
-      align = Align.Bottom,
-      justify = Justify.Start,
-      adjustOnMutation = false,
-      children,
-      className,
-      popoverZIndex,
-      refEl,
-      usePortal = true,
-      portalClassName,
-      portalContainer: portalContainerProp,
-      scrollContainer: scrollContainerProp,
-      ...rest
-    }: PopoverProps,
-    fwdRef,
-  ) => {
-    const [placeholderNode, setPlaceholderNode] = useState<HTMLElement | null>(
-      null,
-    );
-    const [contentNode, setContentNode] = useState<HTMLElement | null>(null);
-    const [forceUpdateCounter, setForceUpdateCounter] = useState(0);
+function Popover({
+  active = false,
+  spacing = 10,
+  align = Align.Bottom,
+  justify = Justify.Start,
+  adjustOnMutation = false,
+  children,
+  className,
+  popoverZIndex,
+  refEl,
+  usePortal = true,
+  portalClassName,
+  portalContainer: portalContainerProp,
+  scrollContainer: scrollContainerProp,
+  ...rest
+}: PopoverProps) {
+  const [placeholderNode, setPlaceholderNode] =
+    useState<HTMLElement | null>(null);
+  const [contentNode, setContentNode] = useState<HTMLElement | null>(null);
+  const [forceUpdateCounter, setForceUpdateCounter] = useState(0);
 
     const { setIsPopoverOpen } = usePopoverContext();
 
