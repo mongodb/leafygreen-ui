@@ -13,11 +13,15 @@ const plugin: ESLint.Plugin = {
   },
   rules,
   configs: {
-    contributor: {
+    maintainer: {
       plugins: ['@lg-tools'],
       rules: {
         '@lg-tools/test-rule': ['error'],
       },
+    },
+    consumer: {
+      plugins: ['@lg-tools'],
+      rules: {},
     },
   },
 };

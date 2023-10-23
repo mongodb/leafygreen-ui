@@ -1,13 +1,15 @@
 /* eslint-disable no-console */
-import { Rule } from 'eslint';
+import { hasProp } from 'jsx-ast-utils';
 
-export const testRule: Rule.RuleModule = {
+import { JSXRuleModule } from '../types/rules';
+
+export const testRule: JSXRuleModule = {
   meta: {
     type: 'suggestion',
   },
-  create: (context: Rule.RuleContext): Rule.RuleListener => {
+  create: context => {
     return {
-      VariableDeclaration(node) {
+      VariableDeclaration: node => {
         console.log(node);
         const vars = context.sourceCode.getDeclaredVariables(node);
         console.log(vars);
@@ -19,6 +21,16 @@ export const testRule: Rule.RuleModule = {
               message: 'Variable names must start with lg',
             });
           }
+        }
+      },
+      JSXOpeningElement: node => {
+        const onChange = hasProp(node.attributes, 'onChange');
+
+        if (onChange) {
+          context.report({
+            node,
+            message: `No onChange!`,
+          });
         }
       },
     };
