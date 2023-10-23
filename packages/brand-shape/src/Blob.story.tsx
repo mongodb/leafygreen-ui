@@ -28,7 +28,7 @@ const meta: StoryMetaType<typeof Blob> = {
   title: 'Components/Blob',
   component: Blob,
   parameters: {
-    default: 'Basic',
+    default: 'Interactive',
     controls: {
       exclude: ['children', 'className'],
     },
