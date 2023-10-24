@@ -13,7 +13,12 @@ import {
   InputOptionContentProps,
 } from '../InputOptionContent';
 
-import { InputOption, type InputOptionProps } from '.';
+import {
+  ActionType,
+  CheckedVariant,
+  InputOption,
+  type InputOptionProps,
+} from '.';
 
 const meta: StoryMetaType<typeof InputOption> = {
   title: 'Components/InputOption',
@@ -32,14 +37,13 @@ const meta: StoryMetaType<typeof InputOption> = {
     },
     generate: {
       combineArgs: {
-        darkMode: [false, true],
-        selected: [false, true],
-        isInteractive: [false, true],
-        showWedge: [false, true],
         disabled: [false, true],
-        href: ['string', undefined],
-        checkedVariant: ['green', 'blue'],
-        variant: ['default', 'destructive'],
+        highlighted: [false, true],
+        checked: [false, true],
+        showWedge: [false, true],
+        checkedVariant: Object.values(CheckedVariant),
+        actionType: Object.values(ActionType),
+        darkMode: [false, true],
       },
     },
   },

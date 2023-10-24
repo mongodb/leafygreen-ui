@@ -31,7 +31,6 @@ import { DropdownProps, HighlightBehavior } from './Dropdown.types';
 // add data-focus and data-select
 // fix dropdown group transition styling
 // add generated story
-// document all new props & get feedback on props
 // add separator
 export const Dropdown = React.forwardRef(
   (
