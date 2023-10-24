@@ -144,7 +144,10 @@ export const Dropdown = React.forwardRef(
         }),
       { enabled: open },
     );
+
+    // @ts-expect-error TODO: backdrop click not set up to handle output of mergeRef - need to update types there
     useBackdropClick(handleClose, [ref!, triggerRef], open);
+    // @ts-expect-error TODO: autoscroll hook click not set up to handle output of mergeRef - need to update types there
     useAutoScroll({ current: highlightedRef }, ref!);
 
     const popoverProps = {

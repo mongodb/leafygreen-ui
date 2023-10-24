@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { Variant } from '@leafygreen-ui/input-otion';
 import { PolymorphicAs } from '@leafygreen-ui/polymorphic';
 
 export interface BaseItemProps {
@@ -13,5 +12,4 @@ export interface BaseItemProps {
   leftGlyph?: React.ReactNode;
   rightGlyph?: React.ReactNode;
   onClick?: React.MouseEventHandler;
-  variant?: Variant;
 }
