@@ -37,14 +37,11 @@ export const exampleRule = createRule({
       //   // }
       // },
       JSXOpeningElement: node => {
-        const attributes = node.attributes;
-
-        if (attributes.length > 0) {
-          const sourceCode = context.sourceCode;
-          console.log({ node, attributes, sourceCode });
-          process.exit();
-        }
-
+        // const attributes = node.attributes;
+        // if (attributes.length > 0) {
+        // const sourceCode = context.sourceCode;
+        //   console.log({ node, attributes, sourceCode });
+        // }
         // if (onChange) {
         //   context.report({
         //     node,

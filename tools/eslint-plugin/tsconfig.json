@@ -4,10 +4,10 @@
     "declarationDir": "dist",
     "outDir": "dist",
     "rootDir": "src",
-    "baseUrl": "."
+    "baseUrl": ".",
+    "types": ["@typescript-eslint/utils/dist"]
   },
   "include": ["src/**/*"],
-  "exclude": ["../../node_modules/**/*"],
   "references": [
     {
       "path": "../build"

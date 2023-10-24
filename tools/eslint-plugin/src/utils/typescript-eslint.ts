@@ -1,9 +1,8 @@
-// importing directly from the relative `node_modules` directory,
-// since `@typescript-eslint/utils` resolves to the wrong version
-import {
-  ESLintUtils,
-  TSESLint,
-} from 'node_modules/@typescript-eslint/utils/dist';
+/**
+ * NOTE: This is likely the wrong version of `@typescript-eslint/utils`
+ * We want ^6.9.0, but this is importing ^5.60.0
+ */
+import { ESLintUtils, TSESLint } from '@typescript-eslint/utils/dist';
 
 export { ESLintUtils, TSESLint };
 

@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@typescript-eslint/utils": "6.9.0",
-    "eslint": "8.52.0"
+    "eslint": "8.43.0"
   },
   "devDependencies": {
     "@lg-tools/build": "0.3.0",
