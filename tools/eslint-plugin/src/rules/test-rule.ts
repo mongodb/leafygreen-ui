@@ -1,38 +1,57 @@
 /* eslint-disable no-console */
-import { hasProp } from 'jsx-ast-utils';
+// import { hasProp } from 'jsx-ast-utils';
+import { createRule } from '../utils/createRule';
 
-import { JSXRuleModule } from '../types/rules';
-
-export const testRule: JSXRuleModule = {
+export const testRule = createRule({
+  name: 'test-rule',
   meta: {
     type: 'suggestion',
+    messages: {
+      'message-1': '',
+    },
+    schema: [],
+    docs: {
+      description: 'A test rule',
+    },
   },
+  defaultOptions: [],
   create: context => {
     return {
-      VariableDeclaration: node => {
-        console.log(node);
-        const vars = context.sourceCode.getDeclaredVariables(node);
-        console.log(vars);
+      // VariableDeclaration: node => {
+      //   // const vars = context.sourceCode.getDeclaredVariables(node);
+      //   console.dir({
+      //     ...node,
 
-        for (const _var of vars) {
-          if (!_var.name.startsWith('lg')) {
-            context.report({
-              node,
-              message: 'Variable names must start with lg',
-            });
-          }
-        }
-      },
+      //     declarations: node.declarations[0],
+      //   });
+
+      //   process.exit();
+
+      //   // for (const _var of vars) {
+      //   //   if (!_var.name.startsWith('lg')) {
+      //   //     context.report({
+      //   //       node,
+      //   //       message: 'Variable names must start with lg',
+      //   //     });
+      //   //   }
+      //   // }
+      // },
       JSXOpeningElement: node => {
-        const onChange = hasProp(node.attributes, 'onChange');
+        const attributes = node.attributes;
 
-        if (onChange) {
-          context.report({
-            node,
-            message: `No onChange!`,
-          });
+        if (attributes.length > 0) {
+          const sourceCode = context.sourceCode;
+          console.log({ node, attributes, sourceCode });
+          process.exit();
         }
+
+        // if (onChange) {
+        //   context.report({
+        //     node,
+        //     message: `No onChange!`,
+        //   });
+        // }
       },
     };
   },
-};
+});

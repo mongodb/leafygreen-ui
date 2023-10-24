@@ -1,12 +1,10 @@
-import { ESLint } from 'eslint';
-
 import { rules } from './rules';
 
 //------------------------------------------------------------------------------
 // Plugin Definition
 //------------------------------------------------------------------------------
 
-const plugin: ESLint.Plugin = {
+const plugin = {
   meta: {
     name: '@lg-tools/eslint-plugin',
     version: '0.0.1',

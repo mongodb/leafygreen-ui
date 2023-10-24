@@ -1,12 +1,9 @@
-import { RuleTester } from 'eslint';
+import { TSESLint } from '../utils/typescript-eslint';
 
 import { testRule } from './test-rule';
 
-const ruleTester = new RuleTester({
-  parserOptions: {
-    ecmaVersion: 6,
-    sourceType: 'module',
-  },
+const ruleTester = new TSESLint.RuleTester({
+  parser: '@typescript-eslint/parser',
 });
 
 ruleTester.run('test-rule', testRule, {
@@ -18,7 +15,7 @@ ruleTester.run('test-rule', testRule, {
   invalid: [
     {
       code: 'var invalidVariable = true',
-      errors: [{ message: 'Variable names must start with lg' }],
+      errors: [{ messageId: 'message-1' }],
     },
   ],
 });
