@@ -96,7 +96,7 @@ describe('packages/dropdown/dropdown-group', () => {
   });
 
   describe('handles click behavior', () => {
-    test('clicking the chevron opens the menu group without closing the menu or changing the menugroup open/closed state and onClick is not called', () => {
+    test('clicking the chevron opens the menu group without closing the menu or firing onClick', () => {
       const onClick = jest.fn();
       renderTestKeyboardExample({ onClick });
       const button = screen.getByRole('button');
@@ -112,43 +112,41 @@ describe('packages/dropdown/dropdown-group', () => {
       expect(onClick).not.toHaveBeenCalled();
     });
 
-    test('onclick is fired when menugroup is clicked', () => {
-      const onClick = jest.fn();
-      renderTestKeyboardExample({ onClick });
-      const button = screen.getByRole('button');
-      fireEvent.click(button);
+    describe('clicking the menugroup', () => {
+      test('fires onClick callback and does not close the menu', () => {
+        const onClick = jest.fn();
+        renderTestKeyboardExample({ onClick });
+        const button = screen.getByRole('button');
+        fireEvent.click(button);
 
-      const group = screen.getByTestId(testId);
-      expect(group).toBeInTheDocument();
+        const group = screen.getByTestId(testId);
 
-      fireEvent.click(group);
-      expect(onClick).toHaveBeenCalled();
-    });
+        fireEvent.click(group);
+        expect(onClick).toHaveBeenCalled();
+        expect(group).toBeInTheDocument();
+      });
 
-    test('if "hasAction" is false, clicking the menugroup toggles its open/close state', () => {
-      renderTestKeyboardExample({});
-      const button = screen.getByRole('button');
-      fireEvent.click(button);
+      test('when "hasAction" is true, clicking menugroup does not toggle its open/close state', () => {
+        renderTestKeyboardExample({ hasAction: true });
+        const button = screen.getByRole('button');
+        fireEvent.click(button);
 
-      const group = screen.getByTestId(testId);
-      expect(group).toBeInTheDocument();
+        const group = screen.getByTestId(testId);
+        fireEvent.click(group);
+        const subMenuItem = screen.queryByTestId(itemTestId);
+        expect(subMenuItem).not.toBeInTheDocument();
+      });
 
-      fireEvent.click(group);
-      const subMenuItem = screen.queryByTestId(itemTestId);
-      expect(subMenuItem).toBeInTheDocument();
-    });
+      test('when "hasAction" is false, clicking the menugroup toggles its open/close state', () => {
+        renderTestKeyboardExample({});
+        const button = screen.getByRole('button');
+        fireEvent.click(button);
 
-    test('if "hasAction" is true, clicking the menugroup toggles its open/close state', () => {
-      renderTestKeyboardExample({ hasAction: true });
-      const button = screen.getByRole('button');
-      fireEvent.click(button);
-
-      const group = screen.getByTestId(testId);
-      expect(group).toBeInTheDocument();
-
-      fireEvent.click(group);
-      const subMenuItem = screen.queryByTestId(itemTestId);
-      expect(subMenuItem).not.toBeInTheDocument();
+        const group = screen.getByTestId(testId);
+        fireEvent.click(group);
+        const subMenuItem = screen.queryByTestId(itemTestId);
+        expect(subMenuItem).toBeInTheDocument();
+      });
     });
   });
 
@@ -274,25 +272,6 @@ describe('packages/dropdown/dropdown-group', () => {
           expect(onClick).toHaveBeenCalled();
         });
       });
-    });
-  });
-
-  describe('handles click behavior', () => {
-    test('fires onClick callback when clicked', () => {
-      const onClick = jest.fn();
-      renderDropdownGroup({ onClick });
-      const group = screen.getByTestId(testId);
-      fireEvent.click(group);
-      expect(onClick).toHaveBeenCalled();
-    });
-
-    test('opens the submenu when chevron is clicked', () => {
-      renderDropdownGroup();
-      const chevron = screen.getByRole('button');
-      fireEvent.click(chevron);
-
-      const subMenuItem = screen.getByText('Item A');
-      expect(subMenuItem).toBeInTheDocument();
     });
   });
 

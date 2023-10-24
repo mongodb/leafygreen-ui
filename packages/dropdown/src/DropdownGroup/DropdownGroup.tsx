@@ -13,7 +13,6 @@ import {
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
-import { useDropdownContext } from '../DropdownContext';
 import { useFocusableDropdownItem, useMergeRefs } from '../utils';
 
 import { DropdownGroupProps } from './DropdownGroup.types';
@@ -36,7 +35,6 @@ export const DropdownGroup = React.forwardRef(
     forwardRef,
   ) => {
     const { Component: as } = useInferredPolymorphic(asProp, rest, 'div');
-    const { handleDropdownClose } = useDropdownContext();
     const chevronRef = useRef<HTMLElement | null>(null);
 
     const {
@@ -55,7 +53,7 @@ export const DropdownGroup = React.forwardRef(
     const handleClick = (e: React.MouseEvent) => {
       e.preventDefault();
 
-      if (!chevronRef.current.contains(e.target)) {
+      if (!chevronRef?.current?.contains(e.target as Node)) {
         onClick?.(e);
 
         if (!hasAction) {
@@ -74,7 +72,7 @@ export const DropdownGroup = React.forwardRef(
       setOpen(curr => !curr);
     };
 
-    const handleKeyDown = (e: React.Event) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === keyMap.ArrowLeft) {
         setOpen(false);
       }
@@ -96,7 +94,7 @@ export const DropdownGroup = React.forwardRef(
       <>
         <InputOption
           role="option"
-          as={as}
+          as={as as PolymorphicAs}
           ref={itemRef}
           aria-labelledby={label}
           disabled={disabled}
