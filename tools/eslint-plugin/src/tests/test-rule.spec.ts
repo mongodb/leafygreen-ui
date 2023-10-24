@@ -1,10 +1,5 @@
-import { TSESLint } from '../utils/typescript-eslint';
-
-import { testRule } from './test-rule';
-
-const ruleTester = new TSESLint.RuleTester({
-  parser: '@typescript-eslint/parser',
-});
+import { ruleTester } from '../utils/typescript-eslint';
+import { testRule } from '../rules/test-rule';
 
 ruleTester.run('test-rule', testRule, {
   valid: [
