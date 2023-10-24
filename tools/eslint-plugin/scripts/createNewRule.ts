@@ -1,24 +1,27 @@
 import path from 'path';
-import fse from 'fs-extra';
 import { Command } from 'commander';
-import { camelCase, kebabCase, startCase } from 'lodash';
+import fse from 'fs-extra';
+import { buildRulesIndexFile } from './buildRulesIndex';
+import { makeFileName, makeId, makeVarName } from './utils';
 
 const cli = new Command('');
 cli.argument('<rule-name>', 'The name of the rule');
+cli.action(createNewRule);
+cli.parse();
 
-cli.action(ruleName => {
+function createNewRule(ruleName: string) {
   const rulesDir = path.resolve(__dirname, '../src/rules');
   const testsDir = path.resolve(__dirname, '../src/tests');
 
-  const varName = camelCase(ruleName) + 'Rule';
-  const kebabName = kebabCase(ruleName);
-  const fileName = kebabCase(ruleName);
+  const varName = makeVarName(ruleName);
+  const ruleId = makeId(ruleName);
+  const fileName = makeFileName(ruleName);
 
   const ruleTemplate = `
 import { createRule } from '../utils/createRule';
 
 export const ${varName} = createRule({
-  name: '${kebabCase(ruleName)}',
+  name: '${ruleId}',
   meta: {
     type: 'suggestion',
     messages: {},
@@ -39,7 +42,7 @@ import { ruleTester } from '../utils/typescript-eslint';
 
 import { ${varName} } from '../rules/${fileName}';
 
-ruleTester.run('${kebabName}', ${varName}, {
+ruleTester.run('${ruleId}', ${varName}, {
   valid: [{
     code: \`\`,
   }],
@@ -55,6 +58,5 @@ ruleTester.run('${kebabName}', ${varName}, {
     path.resolve(testsDir, `${fileName}.spec.ts`),
     testTemplate,
   );
-});
-
-cli.parse();
+  buildRulesIndexFile();
+}

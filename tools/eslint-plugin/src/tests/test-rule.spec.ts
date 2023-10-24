@@ -1,7 +1,7 @@
 import { ruleTester } from '../utils/typescript-eslint';
-import { testRule } from '../rules/test-rule';
+import { exampleRule } from '../rules/example';
 
-ruleTester.run('test-rule', testRule, {
+ruleTester.run('test-rule', exampleRule, {
   valid: [
     {
       code: 'const lgMyVar = 5;',

@@ -2,8 +2,8 @@
 // import { hasProp } from 'jsx-ast-utils';
 import { createRule } from '../utils/createRule';
 
-export const testRule = createRule({
-  name: 'test-rule',
+export const exampleRule = createRule({
+  name: 'example',
   meta: {
     type: 'suggestion',
     messages: {
