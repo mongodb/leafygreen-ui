@@ -14,6 +14,7 @@ import LeafyGreenProvider, {
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 
 import { DescendantContext, useDescendants } from '../DescendantContext';
+import { DropdownContext } from '../DropdownContext';
 import { HighlightContext } from '../HighlightContext';
 import { handleKeyboardNavigation, useMergeRefs } from '../utils';
 
@@ -29,8 +30,7 @@ import { DropdownProps, HighlightBehavior } from './Dropdown.types';
 // add data-focus and data-select
 // fix dropdown group transition styling
 // add generated story
-// document all new props
-// get feedback on new prop names
+// document all new props & get feedback on props
 // add separator
 export const Dropdown = React.forwardRef(
   (
@@ -125,6 +125,7 @@ export const Dropdown = React.forwardRef(
       if (shouldClose()) {
         setOpen(false);
         setHighlighted(null);
+        triggerRef?.current?.focus();
       }
     };
 
@@ -168,35 +169,39 @@ export const Dropdown = React.forwardRef(
               setHighlightedRef: setHighlighted,
             }}
           >
-            <Popover
-              active={open}
-              align={align}
-              adjustOnMutation={adjustOnMutation}
-              justify={justify}
-              refEl={triggerRef}
-              {...popoverProps}
+            <DropdownContext.Provider
+              value={{ handleDropdownClose: handleClose }}
             >
-              <div className={cx(baseMenuStyle, menuThemeStyles[theme])}>
-                {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
-                {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
-                <div
-                  role="listbox"
-                  ref={dropdownRef}
-                  onClick={e => e.stopPropagation()}
-                  className={cx(
-                    menuListStyle,
-                    css`
-                      max-width: ${maxWidth}px;
-                    `,
-                    className,
-                  )}
-                  tabIndex={-1}
-                  {...rest}
-                >
-                  {children}
+              <Popover
+                active={open}
+                align={align}
+                adjustOnMutation={adjustOnMutation}
+                justify={justify}
+                refEl={triggerRef}
+                {...popoverProps}
+              >
+                <div className={cx(baseMenuStyle, menuThemeStyles[theme])}>
+                  {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
+                  {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
+                  <div
+                    role="listbox"
+                    ref={dropdownRef}
+                    onClick={e => e.stopPropagation()}
+                    className={cx(
+                      menuListStyle,
+                      css`
+                        max-width: ${maxWidth}px;
+                      `,
+                      className,
+                    )}
+                    tabIndex={-1}
+                    {...rest}
+                  >
+                    {children}
+                  </div>
                 </div>
-              </div>
-            </Popover>
+              </Popover>
+            </DropdownContext.Provider>
           </HighlightContext.Provider>
         </DescendantContext.Provider>
       </LeafyGreenProvider>

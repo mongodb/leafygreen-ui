@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Transition } from 'react-transition-group';
 
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -13,6 +13,7 @@ import {
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
+import { useDropdownContext } from '../DropdownContext';
 import { useFocusableDropdownItem, useMergeRefs } from '../utils';
 
 import { DropdownGroupProps } from './DropdownGroup.types';
@@ -35,6 +36,8 @@ export const DropdownGroup = React.forwardRef(
     forwardRef,
   ) => {
     const { Component: as } = useInferredPolymorphic(asProp, rest, 'div');
+    const { handleDropdownClose } = useDropdownContext();
+    const chevronRef = useRef<HTMLElement | null>(null);
 
     const {
       ref,
@@ -50,8 +53,15 @@ export const DropdownGroup = React.forwardRef(
     const label = `menu item ${index}`;
 
     const handleClick = (e: React.MouseEvent) => {
-      e.stopPropagation();
-      onClick?.(e);
+      e.preventDefault();
+
+      if (!chevronRef.current.contains(e.target)) {
+        onClick?.(e);
+
+        if (!hasAction) {
+          setOpen(curr => !curr);
+        }
+      }
     };
 
     const ChevronIcon = open ? ChevronDownIcon : ChevronUpIcon;
@@ -64,7 +74,7 @@ export const DropdownGroup = React.forwardRef(
       setOpen(curr => !curr);
     };
 
-    const handleKeyDown = (e: KeyboardEvent) => {
+    const handleKeyDown = (e: React.Event) => {
       if (e.key === keyMap.ArrowLeft) {
         setOpen(false);
       }
@@ -73,7 +83,7 @@ export const DropdownGroup = React.forwardRef(
         setOpen(true);
       }
 
-      if (hasAction && (e.key === keyMap.Space || e.key === keyMap.Enter)) {
+      if (e.key === keyMap.Space || e.key === keyMap.Enter) {
         handleClick(e);
       }
     };
@@ -104,6 +114,7 @@ export const DropdownGroup = React.forwardRef(
             leftGlyph={leftGlyph}
             rightGlyph={
               <IconButton
+                ref={chevronRef}
                 onClick={handleChevronClick}
                 aria-labelledby="close icon"
               >

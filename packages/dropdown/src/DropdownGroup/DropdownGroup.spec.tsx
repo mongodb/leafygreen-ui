@@ -95,6 +95,63 @@ describe('packages/dropdown/dropdown-group', () => {
     });
   });
 
+  describe('handles click behavior', () => {
+    test('clicking the chevron opens the menu group without closing the menu or changing the menugroup open/closed state and onClick is not called', () => {
+      const onClick = jest.fn();
+      renderTestKeyboardExample({ onClick });
+      const button = screen.getByRole('button');
+      fireEvent.click(button);
+
+      const group = screen.getByTestId(testId);
+      expect(group).toBeInTheDocument();
+
+      const iconButton = screen.getAllByRole('button')[1];
+      fireEvent.click(iconButton);
+      const subMenuItem = screen.queryByTestId(itemTestId);
+      expect(subMenuItem).toBeInTheDocument();
+      expect(onClick).not.toHaveBeenCalled();
+    });
+
+    test('onclick is fired when menugroup is clicked', () => {
+      const onClick = jest.fn();
+      renderTestKeyboardExample({ onClick });
+      const button = screen.getByRole('button');
+      fireEvent.click(button);
+
+      const group = screen.getByTestId(testId);
+      expect(group).toBeInTheDocument();
+
+      fireEvent.click(group);
+      expect(onClick).toHaveBeenCalled();
+    });
+
+    test('if "hasAction" is false, clicking the menugroup toggles its open/close state', () => {
+      renderTestKeyboardExample({});
+      const button = screen.getByRole('button');
+      fireEvent.click(button);
+
+      const group = screen.getByTestId(testId);
+      expect(group).toBeInTheDocument();
+
+      fireEvent.click(group);
+      const subMenuItem = screen.queryByTestId(itemTestId);
+      expect(subMenuItem).toBeInTheDocument();
+    });
+
+    test('if "hasAction" is true, clicking the menugroup toggles its open/close state', () => {
+      renderTestKeyboardExample({ hasAction: true });
+      const button = screen.getByRole('button');
+      fireEvent.click(button);
+
+      const group = screen.getByTestId(testId);
+      expect(group).toBeInTheDocument();
+
+      fireEvent.click(group);
+      const subMenuItem = screen.queryByTestId(itemTestId);
+      expect(subMenuItem).not.toBeInTheDocument();
+    });
+  });
+
   describe('handles keyboard navigation', () => {
     describe('when highlight behavior is focus', () => {
       test('right arrow key opens the menu and arrow down moves focus', async () => {

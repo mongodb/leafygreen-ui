@@ -32,13 +32,13 @@ const DropdownExample = props => {
       >
         <DropdownLabel label="Testing">
           <DropdownItem description="I am a description">Child A</DropdownItem>
-          <DropdownItem>Child B</DropdownItem>
+          <DropdownItem onClick={() => console.log('did this get triggered?')}>
+            Child B
+          </DropdownItem>
         </DropdownLabel>
         <DropdownItem disabled>Child C</DropdownItem>
-        <DropdownItem href="test" active>
-          Child D
-        </DropdownItem>
-        <DropdownGroup href="string" title="title">
+        <DropdownItem active>Child D</DropdownItem>
+        <DropdownGroup hasAction href="string" title="title">
           <DropdownItem>Hey</DropdownItem>
           <DropdownItem>There</DropdownItem>
         </DropdownGroup>
