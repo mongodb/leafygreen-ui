@@ -12,14 +12,14 @@ type CheckedVariant = (typeof CheckedVariant)[keyof typeof CheckedVariant];
 
 export { CheckedVariant };
 
-const Variant = {
+const ActionType = {
   Default: 'default',
   Destructive: 'destructive',
 } as const;
 
-type Variant = (typeof Variant)[keyof typeof Variant];
+type ActionType = (typeof ActionType)[keyof typeof ActionType];
 
-export { Variant };
+export { ActionType };
 
 /**
  * TERMINOLOGY
@@ -61,9 +61,17 @@ export interface BaseInputOptionProps {
    */
   isInteractive?: boolean;
 
+  /**
+   * Determines styles when input option is "checked"
+   * @default 'blue'
+   */
   checkedVariant?: CheckedVariant;
 
-  variant?: Variant;
+  /**
+   * Styles input based on intended action
+   * @default 'default'
+   */
+  actionType?: ActionType;
 }
 
 export type InputOptionProps = AriaLabelProps &

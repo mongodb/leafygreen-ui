@@ -17,7 +17,11 @@ import {
   inputOptionWedge,
   titleSelectionStyles,
 } from './InputOption.style';
-import { CheckedVariant, InputOptionProps, Variant } from './InputOption.types';
+import {
+  ActionType,
+  CheckedVariant,
+  InputOptionProps,
+} from './InputOption.types';
 
 export const InputOption = InferredPolymorphic<InputOptionProps>(
   (
@@ -32,7 +36,7 @@ export const InputOption = InferredPolymorphic<InputOptionProps>(
       isInteractive = true,
       className,
       checkedVariant = CheckedVariant.Blue,
-      variant = Variant.Default,
+      actionType = ActionType.Default,
       ...rest
     },
     ref,
@@ -58,7 +62,8 @@ export const InputOption = InferredPolymorphic<InputOptionProps>(
             [getInputOptionActiveStyles(theme, CheckedVariant.Blue)]:
               isInteractive && highlighted,
             [titleSelectionStyles]: checked,
-            [destructiveVariantStyles[theme]]: variant === Variant.Destructive,
+            [destructiveVariantStyles[theme]]:
+              actionType === ActionType.Destructive,
             [inputOptionDisabledStyles[theme]]: disabled,
           },
           className,

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { InputOptionProps } from '@leafygreen-ui/input-option';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { PopoverProps, PortalControlProps } from '@leafygreen-ui/popover';
 
@@ -29,5 +30,6 @@ export type DropdownProps = HTMLElementProps<'div'> &
     darkMode?: boolean;
     triggerRef: React.RefObject<HTMLElement>;
     highlightBehavior?: HighlightBehavior;
+    checkedVariant?: InputOptionProps['checkedVariant'];
     maxWidth?: number;
   };

@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { useEventListener } from '@leafygreen-ui/hooks';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { keyMap } from '@leafygreen-ui/lib';
 import {
@@ -32,6 +31,7 @@ export const DropdownItem = React.forwardRef(
     const { handleDropdownClose } = useDropdownContext();
 
     const {
+      checkedVariant,
       ref,
       index,
       onFocus,
@@ -43,19 +43,17 @@ export const DropdownItem = React.forwardRef(
     const itemRef = useMergeRefs(forwardRef, ref);
     const label = `menu item ${index}`;
 
-    const handleClick = (e: React.Event) => {
+    const handleClick = (e: React.SyntheticEvent) => {
       e.preventDefault();
-      onClick?.(e);
+      onClick?.(e as React.MouseEvent);
       handleDropdownClose?.();
     };
 
-    const handleKeyDown = (e: React.Event) => {
+    const handleKeyDown = (e: React.KeyboardEvent) => {
       if (e.key === keyMap.Enter) {
         handleClick(e);
       }
     };
-
-    useEventListener('keydown', handleKeyDown, { enabled: dataSelected });
 
     return (
       <InputOption
@@ -68,8 +66,10 @@ export const DropdownItem = React.forwardRef(
         checked={active}
         onFocus={onFocus}
         onBlur={onBlur}
-        tab-index={tabIndex}
         onClick={handleClick}
+        onKeyDown={handleKeyDown}
+        tab-index={tabIndex}
+        checkedVariant={checkedVariant}
         {...rest}
       >
         <InputOptionContent

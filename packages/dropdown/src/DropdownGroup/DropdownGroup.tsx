@@ -38,6 +38,7 @@ export const DropdownGroup = React.forwardRef(
     const chevronRef = useRef<HTMLElement | null>(null);
 
     const {
+      checkedVariant,
       ref,
       index,
       onFocus,
@@ -50,11 +51,11 @@ export const DropdownGroup = React.forwardRef(
     const [open, setOpen] = useState(false);
     const label = `menu item ${index}`;
 
-    const handleClick = (e: React.MouseEvent) => {
+    const handleClick = (e: React.SyntheticEvent) => {
       e.preventDefault();
 
       if (!chevronRef?.current?.contains(e.target as Node)) {
-        onClick?.(e);
+        onClick?.(e as React.MouseEvent);
 
         if (!hasAction) {
           setOpen(curr => !curr);
@@ -64,7 +65,7 @@ export const DropdownGroup = React.forwardRef(
 
     const ChevronIcon = open ? ChevronDownIcon : ChevronUpIcon;
 
-    const handleChevronClick = (e: React.MouseEvent) => {
+    const handleChevronClick = (e: React.SyntheticEvent) => {
       e.preventDefault();
       // we stop the event from propagating and closing the entire menu
       e.nativeEvent.stopImmediatePropagation();
@@ -105,6 +106,7 @@ export const DropdownGroup = React.forwardRef(
           onFocus={onFocus}
           onBlur={onBlur}
           tab-index={tabIndex}
+          checkedVariant={checkedVariant}
           {...rest}
         >
           <InputOptionContent

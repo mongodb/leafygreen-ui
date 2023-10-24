@@ -4,10 +4,18 @@ import { DescendantContext, useDescendant } from '../DescendantContext';
 import { HighlightBehavior } from '../Dropdown/Dropdown.types';
 import { useHighlightContext } from '../HighlightContext';
 
-export const useFocusableDropdownItem = ({ disabled }) => {
+export const useFocusableDropdownItem = ({
+  disabled,
+}: {
+  disabled?: boolean;
+}) => {
   const { index, ref } = useDescendant(DescendantContext, { disabled });
-  const { highlightBehavior, highlightedRef, setHighlightedRef } =
-    useHighlightContext();
+  const {
+    highlightBehavior,
+    highlightedRef,
+    setHighlightedRef,
+    checkedVariant,
+  } = useHighlightContext();
   const [_, force] = useState({});
 
   useEffect(() => {
@@ -36,6 +44,7 @@ export const useFocusableDropdownItem = ({ disabled }) => {
     onFocus,
     onBlur,
     tabIndex: -1,
+    checkedVariant,
     ['aria-selected']: highlighted,
     ['data-selected']: highlighted,
   };

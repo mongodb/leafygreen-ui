@@ -1,7 +1,8 @@
 export { InputOption } from './InputOption';
 export { descriptionClassName } from './InputOption.style';
-export type {
+export {
+  ActionType,
   BaseInputOptionProps,
+  CheckedVariant,
   InputOptionProps,
-  Variant,
 } from './InputOption.types';

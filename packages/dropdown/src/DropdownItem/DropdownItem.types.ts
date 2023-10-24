@@ -1,3 +1,4 @@
+import { ActionType } from '@leafygreen-ui/input-option';
 import {
   InferredPolymorphicPropsWithRef,
   PolymorphicAs,
@@ -6,4 +7,6 @@ import {
 import { BaseItemProps } from '../types';
 
 export type DropdownItemProps<T extends PolymorphicAs> =
-  InferredPolymorphicPropsWithRef<T, BaseItemProps>;
+  InferredPolymorphicPropsWithRef<T, BaseItemProps> & {
+    actionType: ActionType;
+  };
