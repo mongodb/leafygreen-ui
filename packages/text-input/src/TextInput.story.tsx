@@ -83,11 +83,17 @@ export default meta;
 export const LiveExample: StoryFn<TextInputProps> = ({
   ...args
 }: TextInputProps) => <TextInput {...args} />;
+LiveExample.args = {
+  label: 'Username',
+  description: 'Usually either the email or username you used during sign up.',
+};
 LiveExample.parameters = {
   chromatic: {
     disableSnapshot: true,
   },
 };
+
+export const;
 
 export const WithValidation = (args: TextInputProps) => {
   const [state, setState] = useState<'none' | 'valid' | 'error'>('none');
