@@ -8,5 +8,9 @@ import { BaseItemProps } from '../types';
 
 export type DropdownItemProps<T extends PolymorphicAs> =
   InferredPolymorphicPropsWithRef<T, BaseItemProps> & {
+    /**
+     * Styles input based on intended action
+     * @default 'default'
+     */
     actionType: ActionType;
   };

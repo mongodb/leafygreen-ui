@@ -44,6 +44,7 @@ export const Dropdown = React.forwardRef(
       highlightBehavior = HighlightBehavior.Focus,
       justify = Justify.End,
       maxWidth,
+      maxHeight,
       open,
       portalClassName,
       portalContainer,
@@ -196,6 +197,7 @@ export const Dropdown = React.forwardRef(
                       menuListStyle,
                       css`
                         max-width: ${maxWidth}px;
+                        max-height: ${maxHeight}px;
                       `,
                       className,
                     )}
