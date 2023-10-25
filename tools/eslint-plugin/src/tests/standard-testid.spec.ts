@@ -1,5 +1,5 @@
 import { standardTestidRule } from '../rules/standard-testid';
-import { ruleTester } from '../utils/typescript-eslint';
+import { ruleTester } from '../utils/ruleTester';
 
 ruleTester.run('standard-testid', standardTestidRule, {
   valid: [

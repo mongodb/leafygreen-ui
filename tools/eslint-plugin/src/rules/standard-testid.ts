@@ -9,7 +9,6 @@ export const standardTestidRule = createRule({
       nonstandard: 'Nonstandard testid',
     },
     schema: [],
-    // @ts-expect-error
     docs: {
       description: '',
     },

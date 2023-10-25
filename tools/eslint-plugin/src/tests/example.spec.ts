@@ -1,5 +1,5 @@
 import { exampleRule } from '../rules/example';
-import { ruleTester } from '../utils/typescript-eslint';
+import { ruleTester } from '../utils/ruleTester';
 
 ruleTester.run('test-rule', exampleRule, {
   valid: [
