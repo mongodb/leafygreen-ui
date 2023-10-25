@@ -29,6 +29,7 @@
     "@lg-tools/meta": "0.1.4",
     "@types/eslint": "^8.44.6",
     "@types/jsx-ast-utils": "3.3.0",
+    "@typescript-eslint/rule-tester": "6.9.0",
     "commander": "^11.0.0",
     "fs-extra": "11.1.1",
     "jsx-ast-utils": "3.3.5",

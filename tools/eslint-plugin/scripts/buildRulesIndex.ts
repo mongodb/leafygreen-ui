@@ -1,6 +1,7 @@
+import { Command } from 'commander';
 import fse from 'fs-extra';
 import path from 'path';
-import { Command } from 'commander';
+
 import { makeId, makeVarName } from './utils';
 
 buildRulesIndexFile();

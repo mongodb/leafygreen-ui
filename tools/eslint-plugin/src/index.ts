@@ -14,7 +14,7 @@ const plugin = {
     maintainer: {
       plugins: ['@lg-tools'],
       rules: {
-        '@lg-tools/test-rule': ['error'],
+        '@lg-tools/example': ['off'],
       },
     },
     consumer: {
