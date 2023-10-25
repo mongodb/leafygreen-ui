@@ -30,9 +30,8 @@ import { DropdownProps, HighlightBehavior } from './Dropdown.types';
 // test in mongo nav
 // add data-focus and data-select
 // fix dropdown group transition styling
-// add generated story
-// document all new props & get feedback on props
 // add separator
+// clean up types
 export const Dropdown = React.forwardRef(
   (
     {

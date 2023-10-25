@@ -78,7 +78,7 @@ export const DropdownGroup = InferredPolymorphic<DropdownGroupProps, 'div'>(
       }
 
       if (e.key === keyMap.Space || e.key === keyMap.Enter) {
-        handleClick(e);
+        handleClick(e as unknown as React.SyntheticEvent);
       }
     };
 

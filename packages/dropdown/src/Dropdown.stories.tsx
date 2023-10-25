@@ -100,8 +100,8 @@ const meta: StoryMetaType<typeof Dropdown> = {
 
 export default meta;
 
-export const LiveExample: StoryFn<typeof Dropdown> = (props: DropdownProps) => (
-  <DropdownExample {...props} />
-);
+export const LiveExample: StoryFn<React.ComponentType<DropdownProps>> = (
+  props: DropdownProps,
+) => <DropdownExample {...props} />;
 
 export const Generated = () => <></>;
