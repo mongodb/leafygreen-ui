@@ -2,8 +2,6 @@
 // import util from 'util';
 
 import { TSESTree } from '@typescript-eslint/types';
-import isObject from 'lodash/isObject';
-import omit from 'lodash/omit';
 
 // import snakeCase from 'lodash/snakeCase';
 // import uniq from 'lodash/uniq';
@@ -46,19 +44,6 @@ export const standardTestidRule = createRule({
 });
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function deepOmit(obj: Record<string, any>, paths: Array<string>) {
-  const omittedObject: Record<string, any> = omit(obj, paths);
-
-  for (const key in omittedObject) {
-    const value = omittedObject[key];
-
-    if (isObject(value)) {
-      omittedObject[key] = deepOmit(omittedObject[key], paths);
-    }
-  }
-
-  return omittedObject;
-}
 
 type ThisRuleContext = Parameters<(typeof standardTestidRule)['create']>[0];
 
