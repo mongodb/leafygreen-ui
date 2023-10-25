@@ -3,7 +3,12 @@ import fse from 'fs-extra';
 import path from 'path';
 
 import { buildRulesIndexFile } from './buildRulesIndex';
-import { makeFileName, makeId, makeVarName } from './utils';
+import {
+  makeDefaultMessageId,
+  makeFileName,
+  makeId,
+  makeVarName,
+} from './utils';
 
 const cli = new Command('');
 cli.argument('<rule-name>', 'The name of the rule');
@@ -17,6 +22,7 @@ function createNewRule(ruleName: string) {
   const varName = makeVarName(ruleName);
   const ruleId = makeId(ruleName);
   const fileName = makeFileName(ruleName);
+  const msgId = makeDefaultMessageId(ruleName);
 
   const ruleTemplate = `
 import { createRule } from '../utils/createRule';
@@ -25,7 +31,9 @@ export const ${varName} = createRule({
   name: '${ruleId}',
   meta: {
     type: 'suggestion',
-    messages: {},
+    messages: {
+      ${msgId}: '',
+    },
     schema: [],
     docs: {
       description: '',
@@ -39,9 +47,8 @@ export const ${varName} = createRule({
 `;
 
   const testTemplate = `
-import { ruleTester } from '../utils/typescript-eslint';
-
 import { ${varName} } from '../rules/${fileName}';
+import { ruleTester } from '../utils/ruleTester';
 
 ruleTester.run('${ruleId}', ${varName}, {
   valid: [{
@@ -49,7 +56,9 @@ ruleTester.run('${ruleId}', ${varName}, {
   }],
   invalid: [{
     code: \`\`,
-    errors: [{}]
+    errors: [{
+      messageId: '${msgId}'
+    }]
   }]
 })
 `;
