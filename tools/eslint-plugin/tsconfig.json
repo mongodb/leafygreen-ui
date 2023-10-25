@@ -11,6 +11,7 @@
     "outDir": "dist",
     "rootDir": "src",
     "baseUrl": ".",
+    "noUnusedLocals": false
   },
   "include": ["src/**/*"],
   "references": [

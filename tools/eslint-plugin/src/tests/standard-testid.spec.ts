@@ -12,7 +12,7 @@ ruleTester.run('standard-testid', standardTestidRule, {
       code: ``,
       errors: [
         {
-          messageId: 'nonstandard',
+          messageId: 'namespaced',
         },
       ],
     },

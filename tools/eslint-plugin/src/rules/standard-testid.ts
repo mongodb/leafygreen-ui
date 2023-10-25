@@ -1,4 +1,12 @@
 /* eslint-disable no-console */
+// import util from 'util';
+
+import { TSESTree } from '@typescript-eslint/types';
+import isObject from 'lodash/isObject';
+import omit from 'lodash/omit';
+
+// import snakeCase from 'lodash/snakeCase';
+// import uniq from 'lodash/uniq';
 import { createRule } from '../utils/createRule';
 
 export const standardTestidRule = createRule({
@@ -6,19 +14,111 @@ export const standardTestidRule = createRule({
   meta: {
     type: 'suggestion',
     messages: {
-      nonstandard: 'Nonstandard testid',
+      namespaced:
+        'Hard-coded `data-testid` attributes should be namespaced with lg-',
+      bem: 'Hard-coded `data-testid` attributes should match the component structure',
     },
     schema: [],
     docs: {
       description: '',
     },
+    fixable: 'code',
   },
   defaultOptions: [],
   create: context => {
     return {
-      JSXOpeningElement: node => {
-        console.log(node);
+      JSXAttribute: node => {
+        const testFileRegex = /.+\.((spec)|(story)|(testutils))\.tsx?$/;
+        const nodeName = node.name.name;
+        const isTestFile = testFileRegex.test(context.filename);
+        const value = (node.value as TSESTree.Literal)?.value;
+
+        if (typeof value !== 'string') {
+          return;
+        }
+
+        if (nodeName === 'data-testid' && !isTestFile) {
+          lintTestIdPrefix(context, node);
+        }
       },
     };
   },
 });
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function deepOmit(obj: Record<string, any>, paths: Array<string>) {
+  const omittedObject: Record<string, any> = omit(obj, paths);
+
+  for (const key in omittedObject) {
+    const value = omittedObject[key];
+
+    if (isObject(value)) {
+      omittedObject[key] = deepOmit(omittedObject[key], paths);
+    }
+  }
+
+  return omittedObject;
+}
+
+type ThisRuleContext = Parameters<(typeof standardTestidRule)['create']>[0];
+
+/**
+ * Checks whether the `data-testid` attribute starts with `lg-`
+ */
+function lintTestIdPrefix(
+  context: ThisRuleContext,
+  node: TSESTree.JSXAttribute,
+) {
+  const value = (node.value as TSESTree.Literal)?.value;
+
+  if (typeof value !== 'string') return;
+
+  if (!value.startsWith('lg-')) {
+    context.report({
+      node,
+      messageId: 'namespaced',
+      fix: fixer => {
+        return fixer.replaceText(
+          node.value as TSESTree.StringLiteral,
+          `"lg-${value}"`,
+        );
+      },
+    });
+  }
+}
+
+/**
+ * Checks whether the `data-testid` attribute is named according to its file path
+ */
+// function lintTestIdStructure(
+//   context: ThisRuleContext,
+//   node: TSESTree.JSXAttribute,
+// ) {
+//   const value = (node.value as TSESTree.Literal)?.value;
+
+//   if (typeof value !== 'string') return;
+
+//   const relativePath = context.filename.split('packages')[1];
+//   const pathSegments = uniq(
+//     relativePath
+//       .split('/')
+//       .filter(segment => segment.length > 0 && segment !== 'src')
+//       .map(segment => segment.replace(/(\.tsx$)/, ''))
+//       .map(segment => snakeCase(segment)),
+//   );
+
+//   const expectedId = ['lg', ...pathSegments].join('-');
+
+//   if (!value.startsWith(expectedId)) {
+//     context.report({
+//       node,
+//       messageId: 'bem',
+//       fix: fixer => {
+//         return fixer.replaceText(
+//           node.value as TSESTree.StringLiteral,
+//           `"${expectedId}"`,
+//         );
+//       },
+//     });
+//   }
+// }
