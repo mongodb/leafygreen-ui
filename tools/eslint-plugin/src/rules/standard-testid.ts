@@ -6,6 +6,7 @@ import { TSESTree } from '@typescript-eslint/types';
 // import snakeCase from 'lodash/snakeCase';
 // import uniq from 'lodash/uniq';
 import { createRule } from '../utils/createRule';
+import { isTestFile } from '../utils/isTestFile';
 
 export const standardTestidRule = createRule({
   name: 'standard-testid',
@@ -26,16 +27,14 @@ export const standardTestidRule = createRule({
   create: context => {
     return {
       JSXAttribute: node => {
-        const testFileRegex = /.+\.((spec)|(story)|(testutils))\.tsx?$/;
         const nodeName = node.name.name;
-        const isTestFile = testFileRegex.test(context.filename);
         const value = (node.value as TSESTree.Literal)?.value;
 
         if (typeof value !== 'string') {
           return;
         }
 
-        if (nodeName === 'data-testid' && !isTestFile) {
+        if (nodeName === 'data-testid' && !isTestFile(context.filename)) {
           lintTestIdPrefix(context, node);
         }
       },

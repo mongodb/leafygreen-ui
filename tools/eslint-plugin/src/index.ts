@@ -8,6 +8,9 @@ import { rules } from './rules';
 //------------------------------------------------------------------------------
 
 type RuleKey = keyof typeof rules;
+// type DefaultConfigsRecord = Exclude<ESLint.Plugin['configs'], undefined>;
+// type DefaultConfig = DefaultConfigsRecord[string];
+// type DefaultConfigRules = DefaultConfig['rules'];
 
 interface Plugin extends Omit<ESLint.Plugin, 'rules'> {
   rules: Record<RuleKey, RuleModule<any, any, any>>;
@@ -25,6 +28,10 @@ const plugin: Plugin = {
       rules: {
         '@lg-tools/example': ['off'],
         '@lg-tools/standard-testid': ['warn'],
+        '@lg-tools/boolean-verb-prefix': [
+          'warn',
+          { allowVarNames: ['darkMode'] },
+        ],
       },
     },
     consumer: {
