@@ -2,7 +2,7 @@ import { createContext, useContext, useRef, useState } from 'react';
 
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 
-import { ItemProps } from '../types';
+import { BaseItemProps } from '../types';
 
 import { List, Map, UseDescendantsContext } from './DescendantProvider.types';
 
@@ -55,7 +55,7 @@ const genId = () => `_${Math.random().toString(36).substr(2, 9)}`;
 
 export const useDescendant = (
   ctx: React.Context<Partial<UseDescendantsContext>>,
-  props: ItemProps,
+  props: BaseItemProps,
 ) => {
   const index = useRef<number | undefined>(-1);
   const ref = useRef<HTMLElement | null>(null);

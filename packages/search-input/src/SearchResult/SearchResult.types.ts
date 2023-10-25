@@ -1,9 +1,13 @@
 import React from 'react';
 
-import { BaseInputOptionProps } from '@leafygreen-ui/input-option';
+import { ActionType, BaseInputOptionProps } from '@leafygreen-ui/input-option';
 import { DarkModeProps } from '@leafygreen-ui/lib';
+import {
+  InferredPolymorphicPropsWithRef,
+  PolymorphicAs,
+} from '@leafygreen-ui/polymorphic';
 
-export type SearchResultProps = DarkModeProps &
+export type BaseSearchResultProps = DarkModeProps &
   Omit<BaseInputOptionProps, 'showWedge' | 'active' | 'isInteractive'> & {
     /**
      * The value of the result
@@ -19,4 +23,9 @@ export type SearchResultProps = DarkModeProps &
      * Callback fired when the option is clicked
      */
     onClick?: React.MouseEventHandler;
+  };
+
+export type SearchResultProps<T extends PolymorphicAs> =
+  InferredPolymorphicPropsWithRef<T, BaseSearchResultProps> & {
+    actionType: ActionType;
   };

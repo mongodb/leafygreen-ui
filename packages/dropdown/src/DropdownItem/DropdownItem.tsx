@@ -3,6 +3,7 @@ import React from 'react';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { keyMap } from '@leafygreen-ui/lib';
 import {
+  InferredPolymorphic,
   PolymorphicAs,
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
@@ -12,7 +13,7 @@ import { useFocusableDropdownItem, useMergeRefs } from '../utils';
 
 import { DropdownItemProps } from './DropdownItem.types';
 
-export const DropdownItem = React.forwardRef(
+export const DropdownItem = InferredPolymorphic(
   (
     {
       children,

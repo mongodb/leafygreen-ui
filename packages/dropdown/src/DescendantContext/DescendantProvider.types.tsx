@@ -1,8 +1,8 @@
-import { ItemProps } from '../types';
+import { BaseItemProps } from '../types';
 
 export type Id = string;
 
-export type SharedProperties = ItemProps & { _internalId: Id };
+export type SharedProperties = BaseItemProps & { _internalId: Id };
 
 export type ListElement = SharedProperties & {
   element: HTMLElement;

@@ -9,6 +9,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { keyMap } from '@leafygreen-ui/lib';
 import {
+  InferredPolymorphic,
   PolymorphicAs,
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
@@ -17,7 +18,7 @@ import { useFocusableDropdownItem, useMergeRefs } from '../utils';
 
 import { DropdownGroupProps } from './DropdownGroup.types';
 
-export const DropdownGroup = React.forwardRef(
+export const DropdownGroup = InferredPolymorphic(
   (
     {
       title,
