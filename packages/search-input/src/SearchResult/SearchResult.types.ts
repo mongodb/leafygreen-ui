@@ -2,6 +2,10 @@ import React from 'react';
 
 import { BaseInputOptionProps } from '@leafygreen-ui/input-option';
 import { DarkModeProps } from '@leafygreen-ui/lib';
+import {
+  InferredPolymorphicPropsWithRef,
+  PolymorphicAs,
+} from '@leafygreen-ui/polymorphic';
 
 export type SearchResultProps = DarkModeProps &
   Omit<BaseInputOptionProps, 'showWedge' | 'active' | 'isInteractive'> & {
@@ -19,4 +23,9 @@ export type SearchResultProps = DarkModeProps &
      * Callback fired when the option is clicked
      */
     onClick?: React.MouseEventHandler;
+  };
+
+export type PolySearchResultProps<T extends PolymorphicAs> =
+  InferredPolymorphicPropsWithRef<T, SearchResultProps> & {
+    actionType: ActionType;
   };
