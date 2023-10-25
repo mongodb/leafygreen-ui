@@ -8,17 +8,13 @@ import ChevronUpIcon from '@leafygreen-ui/icon/dist/ChevronUp';
 import IconButton from '@leafygreen-ui/icon-button';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { keyMap } from '@leafygreen-ui/lib';
-import {
-  InferredPolymorphic,
-  PolymorphicAs,
-  useInferredPolymorphic,
-} from '@leafygreen-ui/polymorphic';
+import { InferredPolymorphic } from '@leafygreen-ui/polymorphic';
 
 import { useFocusableDropdownItem, useMergeRefs } from '../utils';
 
 import { DropdownGroupProps } from './DropdownGroup.types';
 
-export const DropdownGroup = InferredPolymorphic(
+export const DropdownGroup = InferredPolymorphic<DropdownGroupProps, 'div'>(
   (
     {
       title,
@@ -30,12 +26,10 @@ export const DropdownGroup = InferredPolymorphic(
       hasAction,
       active = false,
       disabled = false,
-      as: asProp,
       ...rest
-    }: DropdownGroupProps<PolymorphicAs>,
+    }: DropdownGroupProps,
     forwardRef,
   ) => {
-    const { Component: as } = useInferredPolymorphic(asProp, rest, 'div');
     const chevronRef = useRef<HTMLElement | null>(null);
 
     const {
@@ -96,7 +90,6 @@ export const DropdownGroup = InferredPolymorphic(
       <>
         <InputOption
           role="option"
-          as={as as PolymorphicAs}
           ref={itemRef}
           aria-labelledby={label}
           disabled={disabled}

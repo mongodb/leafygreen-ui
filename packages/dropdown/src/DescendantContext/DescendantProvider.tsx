@@ -10,7 +10,7 @@ export const useDescendants = (): UseDescendantsContext => {
   const list = useRef<List>([]);
   const map = useRef<Map>({});
   const [, force] = useState<{}>();
-  const ref = useRef<HTMLElement | undefined>();
+  const ref = useRef<HTMLElement>(null);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useIsomorphicLayoutEffect(() => {

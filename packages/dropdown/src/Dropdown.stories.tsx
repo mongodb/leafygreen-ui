@@ -2,11 +2,27 @@ import React, { useRef, useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
-import { storybookExcludedControlParams } from '@leafygreen-ui/lib';
+import { css } from '@leafygreen-ui/emotion';
+import { CheckedVariant } from '@leafygreen-ui/input-option';
+import {
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@leafygreen-ui/lib';
 
-import { Dropdown, DropdownGroup, DropdownItem, DropdownLabel } from '.';
+import {
+  Dropdown,
+  DropdownGroup,
+  DropdownItem,
+  DropdownLabel,
+  DropdownProps,
+} from '.';
 
-const DropdownExample = props => {
+type StoryProps = Omit<
+  DropdownProps,
+  'triggerRef' | 'open' | 'setOpen' | 'usePortal'
+>;
+
+const DropdownExample = (props: StoryProps) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLElement>(null);
 
@@ -32,9 +48,7 @@ const DropdownExample = props => {
       >
         <DropdownLabel label="Testing">
           <DropdownItem description="I am a description">Child A</DropdownItem>
-          <DropdownItem onClick={() => console.log('did this get triggered?')}>
-            Child B
-          </DropdownItem>
+          <DropdownItem>Child B</DropdownItem>
         </DropdownLabel>
         <DropdownItem disabled>Child C</DropdownItem>
         <DropdownItem active>Child D</DropdownItem>
@@ -47,7 +61,7 @@ const DropdownExample = props => {
   );
 };
 
-export default {
+const meta: StoryMetaType<typeof Dropdown> = {
   title: 'Components/Dropdown',
   component: Dropdown,
   parameters: {
@@ -55,19 +69,39 @@ export default {
     controls: {
       exclude: [
         ...storybookExcludedControlParams,
-        'trigger',
+        'triggerRef',
         'children',
-        'refEl',
         'setOpen',
         'as',
         'open',
       ],
     },
+    generate: {
+      combineArgs: {
+        darkMode: [true, false],
+        checkedVariant: Object.values(CheckedVariant),
+      },
+      args: {
+        open: true,
+        maxHeight: 200,
+      },
+      decorator: (_, ctx) => (
+        <div
+          className={css`
+            height: 250px;
+          `}
+        >
+          <DropdownExample {...ctx?.args} />
+        </div>
+      ),
+    },
   },
 };
 
-const Template: StoryFn<typeof Dropdown> = props => (
+export default meta;
+
+export const LiveExample: StoryFn<typeof Dropdown> = (props: DropdownProps) => (
   <DropdownExample {...props} />
 );
 
-export const Basic = Template.bind({});
+export const Generated = () => <></>;

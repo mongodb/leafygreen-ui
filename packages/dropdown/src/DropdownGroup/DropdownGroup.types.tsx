@@ -1,11 +1,6 @@
-import {
-  InferredPolymorphicPropsWithRef,
-  PolymorphicAs,
-} from '@leafygreen-ui/polymorphic';
-
 import { BaseItemProps } from '../types';
 
-export interface BaseDropdownGroupProps extends BaseItemProps {
+export interface DropdownGroupProps extends BaseItemProps {
   /*
    ** Title text for DropdownGroup
    */
@@ -16,5 +11,3 @@ export interface BaseDropdownGroupProps extends BaseItemProps {
    */
   hasAction?: boolean;
 }
-export type DropdownGroupProps<T extends PolymorphicAs> =
-  InferredPolymorphicPropsWithRef<T, BaseDropdownGroupProps>;

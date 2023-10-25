@@ -2,33 +2,27 @@ import React from 'react';
 
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { keyMap } from '@leafygreen-ui/lib';
-import {
-  InferredPolymorphic,
-  PolymorphicAs,
-  useInferredPolymorphic,
-} from '@leafygreen-ui/polymorphic';
+import { InferredPolymorphic } from '@leafygreen-ui/polymorphic';
 
 import { useDropdownContext } from '../DropdownContext';
 import { useFocusableDropdownItem, useMergeRefs } from '../utils';
 
 import { DropdownItemProps } from './DropdownItem.types';
 
-export const DropdownItem = InferredPolymorphic(
+export const DropdownItem = InferredPolymorphic<DropdownItemProps, 'div'>(
   (
     {
       children,
       disabled,
-      as: asProp,
       active,
       description,
       leftGlyph,
       rightGlyph,
       onClick,
       ...rest
-    }: DropdownItemProps<PolymorphicAs>,
+    }: DropdownItemProps,
     forwardRef,
   ) => {
-    const { Component: as } = useInferredPolymorphic(asProp, rest, 'div');
     const { handleDropdownClose } = useDropdownContext();
 
     const {
@@ -59,7 +53,6 @@ export const DropdownItem = InferredPolymorphic(
     return (
       <InputOption
         role="option"
-        as={as as PolymorphicAs}
         ref={itemRef}
         aria-labelledby={label}
         disabled={disabled}

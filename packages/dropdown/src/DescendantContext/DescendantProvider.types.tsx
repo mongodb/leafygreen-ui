@@ -13,7 +13,7 @@ export type List = Array<ListElement>;
 export type Map = Record<Id, SharedProperties>;
 
 export interface UseDescendantsContext {
-  ref: React.RefObject<HTMLElement | undefined>;
+  ref: React.RefObject<HTMLElement>;
   list: React.RefObject<List>;
   map: React.RefObject<Map>;
   force: (arg: {}) => void;

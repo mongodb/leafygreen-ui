@@ -1,17 +1,15 @@
 import React from 'react';
 
-import { Variant } from '@leafygreen-ui/input-otion';
-import { PolymorphicAs } from '@leafygreen-ui/polymorphic';
+import { ActionType } from '@leafygreen-ui/input-option';
 
 export interface BaseItemProps {
   children?: React.ReactNode;
   disabled?: boolean;
-  as?: PolymorphicAs;
   active?: boolean;
   className?: string;
   description?: React.ReactNode;
   leftGlyph?: React.ReactNode;
   rightGlyph?: React.ReactNode;
   onClick?: React.MouseEventHandler;
-  variant?: Variant;
+  actionType?: ActionType;
 }

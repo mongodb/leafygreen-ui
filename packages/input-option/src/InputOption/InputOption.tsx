@@ -41,7 +41,7 @@ export const InputOption = InferredPolymorphic<InputOptionProps>(
     },
     ref,
   ) => {
-    const { Component } = useInferredPolymorphic(as, rest, 'li');
+    const { Component } = useInferredPolymorphic(as, rest, 'div');
     const { theme } = useDarkMode(darkModeProp);
 
     return (
