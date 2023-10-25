@@ -8,6 +8,7 @@ import {
 } from '@leafygreen-ui/lib';
 
 import TextInput, { SizeVariant, State, TextInputProps } from '.';
+import { css } from '@leafygreen-ui/emotion';
 
 const emailRegex =
   // eslint-disable-next-line no-control-regex
@@ -38,9 +39,10 @@ const meta: StoryMetaType<typeof TextInput> = {
     },
   },
   args: {
-    label: 'Label',
-    description: 'This is a description',
-    errorMessage: 'Invalid email',
+    label: 'Username',
+    description:
+      'Usually either the email or username you used during sign up.',
+    errorMessage: 'Invalid username',
   },
   argTypes: {
     darkMode: {
@@ -83,17 +85,41 @@ export default meta;
 export const LiveExample: StoryFn<TextInputProps> = ({
   ...args
 }: TextInputProps) => <TextInput {...args} />;
-LiveExample.args = {
-  label: 'Username',
-  description: 'Usually either the email or username you used during sign up.',
-};
 LiveExample.parameters = {
   chromatic: {
     disableSnapshot: true,
   },
 };
 
-export const;
+export const SizeDemo: StoryFn<TextInputProps> = props => {
+  return (
+    <div
+      className={css`
+        display: flex;
+        gap: 24px;
+        flex-wrap: wrap;
+        max-width: 700px;
+        > * {
+          flex-basis: calc(50% - 24px);
+          max-width: 400px;
+        }
+      `}
+    >
+      <TextInput {...props} sizeVariant="xsmall" aria-label="xsmall-input" />
+      <TextInput {...props} sizeVariant="small" aria-label="small-input" />
+      <TextInput {...props} sizeVariant="default" aria-label="default-input" />
+      <TextInput {...props} sizeVariant="large" aria-label="large-input" />
+    </div>
+  );
+};
+SizeDemo.parameters = {
+  test: 'test',
+  sourceCode: `
+<TextInput sizeVariant="xsmall" aria-label="xsmall-input" {...rest}/>
+<TextInput sizeVariant="small" aria-label="small-input" {...rest}/>
+<TextInput sizeVariant="default" aria-label="default-input" {...rest}/>
+<TextInput sizeVariant="large" aria-label="xsmlargeall-input" {...rest}/>`,
+};
 
 export const WithValidation = (args: TextInputProps) => {
   const [state, setState] = useState<'none' | 'valid' | 'error'>('none');
