@@ -26,12 +26,9 @@ import {
 } from './Dropdown.styles';
 import { DropdownProps, HighlightBehavior } from './Dropdown.types';
 
-// clean up input-option props and type errors
 // test in mongo nav
 // add data-focus and data-select
 // fix dropdown group transition styling
-// add separator
-// clean up types
 export const Dropdown = React.forwardRef(
   (
     {

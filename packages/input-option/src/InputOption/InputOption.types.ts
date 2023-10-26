@@ -63,7 +63,7 @@ export interface BaseInputOptionProps {
 
   /**
    * Determines styles when input option is "checked"
-   * @default 'blue'
+   * @default: 'blue'
    */
   checkedVariant?: CheckedVariant;
 
