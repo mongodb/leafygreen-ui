@@ -43,4 +43,9 @@ export interface BaseItemProps {
    * @default: 'default'
    */
   actionType?: ActionType;
+
+  /**
+   * className applied to item
+   */
+  className?: string;
 }

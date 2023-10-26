@@ -7,7 +7,9 @@ import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
 import ChevronUpIcon from '@leafygreen-ui/icon/dist/ChevronUp';
 import IconButton from '@leafygreen-ui/icon-button';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import { InferredPolymorphic } from '@leafygreen-ui/polymorphic';
 
 import { useFocusableDropdownItem, useMergeRefs } from '../utils';
@@ -30,6 +32,7 @@ export const DropdownGroup = InferredPolymorphic<DropdownGroupProps, 'div'>(
     }: DropdownGroupProps,
     forwardRef,
   ) => {
+    const { darkMode } = useDarkMode();
     const chevronRef = useRef<HTMLElement | null>(null);
 
     const {
@@ -131,6 +134,9 @@ export const DropdownGroup = InferredPolymorphic<DropdownGroupProps, 'div'>(
                 role="group"
                 className={cx(
                   css`
+                    background-color: ${darkMode
+                      ? palette.gray.dark2
+                      : palette.white};
                     height: 0;
                     transition: height 150ms ease-in-out;
                   `,
