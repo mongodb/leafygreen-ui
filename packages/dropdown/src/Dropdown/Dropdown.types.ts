@@ -76,4 +76,10 @@ export type DropdownProps = HTMLElementProps<'div'> &
      * The max height of the menu (in px). Defaults to 256
      */
     maxHeight?: number;
+
+    /**
+     * Determines whether the dropdown will render inside a `Menu` component.
+     * @default: `false`
+     */
+    isMenu?: boolean;
   };

@@ -23,7 +23,7 @@ export const DropdownItem = InferredPolymorphic<DropdownItemProps, 'div'>(
     }: DropdownItemProps,
     forwardRef,
   ) => {
-    const { handleDropdownClose } = useDropdownContext();
+    const { handleDropdownClose, isMenu } = useDropdownContext();
 
     const {
       checkedVariant,
@@ -50,6 +50,8 @@ export const DropdownItem = InferredPolymorphic<DropdownItemProps, 'div'>(
       }
     };
 
+    console.log({ isMenu });
+
     return (
       <InputOption
         role="option"
@@ -64,6 +66,7 @@ export const DropdownItem = InferredPolymorphic<DropdownItemProps, 'div'>(
         onKeyDown={handleKeyDown}
         tab-index={tabIndex}
         checkedVariant={checkedVariant}
+        isMenu={isMenu}
         {...rest}
       >
         <InputOptionContent

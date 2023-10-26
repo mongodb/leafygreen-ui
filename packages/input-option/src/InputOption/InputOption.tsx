@@ -37,12 +37,15 @@ export const InputOption = InferredPolymorphic<InputOptionProps>(
       className,
       checkedVariant = CheckedVariant.Blue,
       actionType = ActionType.Default,
+      isMenu,
       ...rest
     },
     ref,
   ) => {
     const { Component } = useInferredPolymorphic(as, rest, 'div');
     const { theme } = useDarkMode(darkModeProp);
+
+    console.log({ isMenu }, { disabled });
 
     return (
       <Component
@@ -53,18 +56,18 @@ export const InputOption = InferredPolymorphic<InputOptionProps>(
         tabIndex={-1}
         className={cx(
           inputOptionStyles,
-          inputOptionThemeStyles[theme],
+          inputOptionThemeStyles(theme, isMenu),
           {
             [inputOptionWedge]: showWedge,
-            [inputOptionHoverStyles[theme]]: isInteractive,
-            [getInputOptionActiveStyles(theme, checkedVariant)]:
+            [inputOptionHoverStyles(theme, isMenu)]: isInteractive,
+            [getInputOptionActiveStyles(theme, checkedVariant, isMenu)]:
               isInteractive && checked,
-            [getInputOptionActiveStyles(theme, CheckedVariant.Blue)]:
+            [getInputOptionActiveStyles(theme, CheckedVariant.Blue, isMenu)]:
               isInteractive && highlighted,
             [titleSelectionStyles]: checked,
-            [destructiveVariantStyles[theme]]:
+            [destructiveVariantStyles(theme, isMenu)]:
               actionType === ActionType.Destructive,
-            [inputOptionDisabledStyles[theme]]: disabled,
+            [inputOptionDisabledStyles(theme, isMenu)]: disabled,
           },
           className,
         )}

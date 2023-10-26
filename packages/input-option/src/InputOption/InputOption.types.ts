@@ -72,6 +72,8 @@ export interface BaseInputOptionProps {
    * @default 'default'
    */
   actionType?: ActionType;
+
+  isMenu: boolean;
 }
 
 export type InputOptionProps = AriaLabelProps &

@@ -44,6 +44,7 @@ const DropdownExample = (props: StoryProps) => {
         open={open}
         setOpen={setOpen}
         maxWidth={400}
+        isMenu
         {...props}
       >
         <DropdownLabel label="Testing">

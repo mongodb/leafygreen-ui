@@ -18,6 +18,84 @@ export const descriptionClassName = createUniqueClassName(
 const hoverSelector = '&:hover, &[data-hover="true"]';
 const focusSelector = '&:focus, &:focus-visible, &[data-focus="true"]';
 
+interface ThemeTypes {
+  color: string;
+  bgColorHover: string;
+  colorDestructive: string;
+  colorDisabled: string;
+  active: Record<
+    CheckedVariant,
+    {
+      bgColor: string;
+      color: string;
+      bgColorWedge: string;
+    }
+  >;
+}
+
+const themeColor: Record<Theme, ThemeTypes> = {
+  [Theme.Dark]: {
+    color: palette.gray.light2,
+    bgColorHover: palette.gray.dark4,
+    colorDestructive: palette.red.light1,
+    colorDisabled: palette.gray.dark1,
+    active: {
+      [CheckedVariant.Blue]: {
+        bgColor: palette.blue.dark3,
+        color: palette.blue.light3,
+        bgColorWedge: palette.blue.light1,
+      },
+      [CheckedVariant.Green]: {
+        bgColor: palette.green.dark3,
+        color: palette.white,
+        bgColorWedge: palette.green.base,
+      },
+    },
+  },
+  [Theme.Light]: {
+    color: palette.black,
+    bgColorHover: palette.gray.light2,
+    colorDestructive: palette.red.light1,
+    colorDisabled: palette.gray.light1,
+    active: {
+      [CheckedVariant.Blue]: {
+        bgColor: palette.blue.light3,
+        color: palette.blue.dark2,
+        bgColorWedge: palette.blue.base,
+      },
+      [CheckedVariant.Green]: {
+        bgColor: palette.green.light3,
+        color: palette.green.dark2,
+        bgColorWedge: palette.green.dark2,
+      },
+    },
+  },
+};
+
+export const menuThemeColor: Record<Theme, ThemeTypes> = {
+  [Theme.Dark]: themeColor[Theme.Dark],
+  [Theme.Light]: {
+    color: 'orange',
+    bgColorHover: 'brown',
+    colorDestructive: palette.red.light1,
+    colorDisabled: '',
+    active: {
+      [CheckedVariant.Blue]: {
+        bgColor: '',
+        color: '',
+        bgColorWedge: '',
+      },
+      [CheckedVariant.Green]: {
+        bgColor: '',
+        color: '',
+        bgColorWedge: '',
+      },
+    },
+  },
+};
+
+const getThemeObj = (isMenu: boolean) => (isMenu ? menuThemeColor : themeColor);
+
 export const inputOptionStyles = css`
   position: relative;
   list-style: none;
@@ -48,28 +126,49 @@ export const titleSelectionStyles = css`
   }
 `;
 
-export const inputOptionThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.black};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.light2};
-  `,
+// export const inputOptionThemeStyles: Record<Theme, string> = {
+//   [Theme.Light]: css`
+//     color: ${palette.black};
+//   `,
+//   [Theme.Dark]: css`
+//     color: ${palette.gray.light2};
+//   `,
+// };
+
+export const inputOptionThemeStyles = (theme: Theme, isMenu: boolean) => {
+  const themeObj = getThemeObj(isMenu);
+
+  return css`
+    ${hoverSelector} {
+      color: ${themeObj[theme].color};
+    }
+  `;
 };
 
-export const inputOptionHoverStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
+// export const inputOptionHoverStyles: Record<Theme, string> = {
+//   [Theme.Light]: css`
+//     ${hoverSelector} {
+//       outline: none;
+//       background-color: ${palette.gray.light2};
+//     }
+//   `,
+//   [Theme.Dark]: css`
+//     ${hoverSelector} {
+//       outline: none;
+//       background-color: ${palette.gray.dark4};
+//     }
+//   `,
+// };
+
+export const inputOptionHoverStyles = (theme: Theme, isMenu: boolean) => {
+  const themeObj = getThemeObj(isMenu);
+
+  return css`
     ${hoverSelector} {
       outline: none;
-      background-color: ${palette.gray.light2};
+      background-color: ${themeObj[theme].bgColorHover};
     }
-  `,
-  [Theme.Dark]: css`
-    ${hoverSelector} {
-      outline: none;
-      background-color: ${palette.gray.dark4};
-    }
-  `,
+  `;
 };
 
 /** in px */
@@ -96,53 +195,106 @@ export const inputOptionWedge = css`
   }
 `;
 
+// export const getInputOptionActiveStyles = (
+//   theme: Theme,
+//   variant: CheckedVariant,
+// ) => {
+//   const isBlue = variant === CheckedVariant.Blue;
+
+//   if (theme === Theme.Light) {
+//     return css`
+//       outline: none;
+//       background-color: ${isBlue ? palette.blue.light3 : palette.green.light3};
+//       color: ${isBlue ? palette.blue.dark2 : palette.green.dark2};
+
+//       &:before {
+//         transform: scaleY(1) translateY(-50%);
+//         background-color: ${isBlue ? palette.blue.base : palette.green.dark2};
+//       }
+//     `;
+//   }
+
+//   return css`
+//     outline: none;
+//     background-color: ${isBlue ? palette.blue.dark3 : palette.green.dark3};
+//     color: ${isBlue ? palette.blue.light3 : palette.white};
+
+//     &:before {
+//       transform: scaleY(1) translateY(-50%);
+//       background-color: ${isBlue ? palette.blue.light1 : palette.green.base};
+//     }
+//   `;
+// };
+
 export const getInputOptionActiveStyles = (
   theme: Theme,
   variant: CheckedVariant,
+  isMenu: boolean,
 ) => {
-  const isBlue = variant === CheckedVariant.Blue;
+  const themeObj = getThemeObj(isMenu);
 
-  if (theme === Theme.Light) {
-    return css`
-      outline: none;
-      background-color: ${isBlue ? palette.blue.light3 : palette.green.light3};
-      color: ${isBlue ? palette.blue.dark2 : palette.green.dark2};
-
-      &:before {
-        transform: scaleY(1) translateY(-50%);
-        background-color: ${isBlue ? palette.blue.base : palette.green.dark2};
-      }
-    `;
-  }
+  // FIXME: isMenu returns undefined when the menu is open, should be true or false
+  console.log({ isMenu }, themeObj);
 
   return css`
     outline: none;
-    background-color: ${isBlue ? palette.blue.dark3 : palette.green.dark3};
-    color: ${isBlue ? palette.blue.light3 : palette.white};
+    background-color: ${themeObj[theme].active[variant].bgColor};
+    color: ${themeObj[theme].active[variant].color};
 
     &:before {
       transform: scaleY(1) translateY(-50%);
-      background-color: ${isBlue ? palette.blue.light1 : palette.green.base};
+      background-color: ${themeObj[theme].active[variant].bgColorWedge};
     }
   `;
 };
 
-export const destructiveVariantStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.red.light1};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.red.light1};
-  `,
+// export const destructiveVariantStyles: Record<Theme, string> = {
+//   [Theme.Light]: css`
+//     color: ${palette.red.light1};
+//   `,
+//   [Theme.Dark]: css`
+//     color: ${palette.red.light1};
+//   `,
+// };
+
+export const destructiveVariantStyles = (theme: Theme, isMenu: boolean) => {
+  const themeObj = getThemeObj(isMenu);
+
+  return css`
+    color: ${themeObj[theme].colorDestructive};
+  `;
 };
 
-export const inputOptionDisabledStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
+// export const inputOptionDisabledStyles: Record<Theme, string> = {
+//   [Theme.Light]: cx(
+//     inputOptionBaseDisabledStyles,
+//     css`
+//       &,
+//       & .${descriptionClassName} {
+//         color: ${palette.gray.light1};
+//       }
+//     `,
+//   ),
+//   [Theme.Dark]: cx(
+//     inputOptionBaseDisabledStyles,
+//     css`
+//       &,
+//       & .${descriptionClassName} {
+//         color: ${palette.gray.dark1};
+//       }
+//     `,
+//   ),
+// };
+
+export const inputOptionDisabledStyles = (theme: Theme, isMenu: boolean) => {
+  const themeObj = getThemeObj(isMenu);
+
+  return css`
     cursor: not-allowed;
 
     &,
     & .${descriptionClassName} {
-      color: ${palette.gray.light1};
+      color: ${themeObj[theme].colorDisabled};
     }
 
     ${hoverSelector} {
@@ -152,21 +304,5 @@ export const inputOptionDisabledStyles: Record<Theme, string> = {
     &:before {
       content: unset;
     }
-  `,
-  [Theme.Dark]: css`
-    cursor: not-allowed;
-
-    &,
-    & .${descriptionClassName} {
-      color: ${palette.gray.dark1};
-    }
-
-    ${hoverSelector} {
-      background-color: inherit;
-    }
-
-    &:before {
-      content: unset;
-    }
-  `,
+  `;
 };

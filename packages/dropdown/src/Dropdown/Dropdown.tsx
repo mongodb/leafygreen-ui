@@ -50,6 +50,7 @@ export const Dropdown = React.forwardRef(
       spacing = 6,
       triggerRef,
       usePortal = true,
+      isMenu = false,
       ...rest
     }: DropdownProps,
     forwardRef,
@@ -168,7 +169,7 @@ export const Dropdown = React.forwardRef(
             }}
           >
             <DropdownContext.Provider
-              value={{ handleDropdownClose: handleClose }}
+              value={{ handleDropdownClose: handleClose, isMenu }}
             >
               <Popover
                 active={open}
