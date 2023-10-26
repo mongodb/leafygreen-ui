@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-// import { hasProp } from 'jsx-ast-utils';
 import { createRule } from '../utils/createRule';
 
 export const exampleRule = createRule({

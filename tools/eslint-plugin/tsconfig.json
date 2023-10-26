@@ -13,8 +13,8 @@
     "baseUrl": ".",
     "noUnusedLocals": false
   },
-  "include": ["src"],
-  "exclude": ["src/tests"],
+  "include": ["src/**/*"],
+  "exclude": ["**/*.spec.*"],
   "references": [
     {
       "path": "../build"
