@@ -1,5 +1,6 @@
 import { booleanVerbPrefixRule } from '../rules/boolean-verb-prefix';
-import { ruleTester } from '../utils/ruleTester';
+
+import { ruleTester } from './utils/ruleTester';
 
 ruleTester.run('boolean-verb-prefix', booleanVerbPrefixRule, {
   valid: [

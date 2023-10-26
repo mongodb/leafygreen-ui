@@ -8,12 +8,13 @@
     "declaration": false,
     "declarationMap": false,
     "emitDeclarationOnly": false,
-    "outDir": "dist",
-    "rootDir": "src",
+    "outDir": "./dist",
+    "rootDir": "./src",
     "baseUrl": ".",
     "noUnusedLocals": false
   },
-  "include": ["src/**/*"],
+  "include": ["src"],
+  "exclude": ["src/tests"],
   "references": [
     {
       "path": "../build"

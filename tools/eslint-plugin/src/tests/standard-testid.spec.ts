@@ -1,5 +1,6 @@
 import { standardTestidRule } from '../rules/standard-testid';
-import { ruleTester } from '../utils/ruleTester';
+
+import { ruleTester } from './utils/ruleTester';
 
 ruleTester.run('standard-testid', standardTestidRule, {
   valid: [
