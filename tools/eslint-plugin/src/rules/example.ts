@@ -17,37 +17,13 @@ export const exampleRule = createRule({
   defaultOptions: [],
   create: context => {
     return {
-      // VariableDeclaration: node => {
-      //   // const vars = context.sourceCode.getDeclaredVariables(node);
-      //   console.dir({
-      //     ...node,
-
-      //     declarations: node.declarations[0],
-      //   });
-
-      //   process.exit();
-
-      //   // for (const _var of vars) {
-      //   //   if (!_var.name.startsWith('lg')) {
-      //   //     context.report({
-      //   //       node,
-      //   //       message: 'Variable names must start with lg',
-      //   //     });
-      //   //   }
-      //   // }
-      // },
+      VariableDeclaration: node => {
+        // Executes on any variable declaration
+        // e.g. const myVar = 5;
+      },
       JSXOpeningElement: node => {
-        // const attributes = node.attributes;
-        // if (attributes.length > 0) {
-        // const sourceCode = context.sourceCode;
-        //   console.log({ node, attributes, sourceCode });
-        // }
-        // if (onChange) {
-        //   context.report({
-        //     node,
-        //     message: `No onChange!`,
-        //   });
-        // }
+        // Executes on any JSX opening element
+        // e.g. <Body>
       },
     };
   },
