@@ -48,16 +48,18 @@ export const ${varName} = createRule({
 
   const testTemplate = `
 import { ${varName} } from '../rules/${fileName}';
-import { ruleTester } from '../utils/ruleTester';
+
+import { ruleTester } from './utils/ruleTester';
 
 ruleTester.run('${ruleId}', ${varName}, {
   valid: [{
-    code: \`\`,
+    code: \`\`, // valid code snippet
   }],
   invalid: [{
-    code: \`\`,
+    code: \`\`, // code with lint errors
     errors: [{
-      messageId: '${msgId}'
+      messageId: '${msgId}',
+      output: '', // fixed code
     }]
   }]
 })
