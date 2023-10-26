@@ -35,5 +35,8 @@
     "jsx-ast-utils": "3.3.5",
     "mocha": "^10.0.0"
   },
+  "peerDependencies": {
+    "eslint": "^8.43.0"
+  },
   "license": "Apache-2.0"
 }
