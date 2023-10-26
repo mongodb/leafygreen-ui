@@ -11,7 +11,9 @@ const isValidString = (str: any): str is string =>
  * - an `aria-labelledby` attribute with a valid associated element
  * - an associated element `<label>` element with the appropriate `for` attribute
  */
-export const toBeLabelled = createMatcher(function (element: Element) {
+export const toBeLabelled = createMatcher(function _toBeLabelled(
+  element: Element,
+) {
   const label = element.getAttribute('label');
   const ariaLabel = element.getAttribute('aria-label');
   const ariaLabelledBy = element.getAttribute('aria-labelledby');

@@ -27,7 +27,7 @@ function createNewMatcher(matcherName: string) {
   const matcherFileTemplate = `
 import { createMatcher } from '../utils/createMatcher';
 
-export const ${matcherName} = createMatcher((element: Element) => {
+export const ${matcherName} = createMatcher(function _${matcherName}(element: Element) {
   return {
     pass: true,
     message: () => '',
