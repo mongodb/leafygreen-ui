@@ -1,0 +1,29 @@
+{
+  "name": "@lg-tools/jest-matchers",
+  "version": "0.0.1",
+  "description": "LeafyGreen UI Kit Jest Matchers",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "jest": "^29.6.2",
+    "@types/jest": "^29.5.3"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/jest-matchers",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
+  }
+}
