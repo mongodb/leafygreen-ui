@@ -5,7 +5,7 @@ const isValidString = (str: any): str is string =>
   str && typeof str === 'string' && str.length > 0;
 
 /**
- * Returns whether the provided element has any of the following:
+ * Returns whether the provided element has at least one of the following:
  * - a `label` attribute
  * - an `aria-label` attribute
  * - an `aria-labelledby` attribute with a valid associated element

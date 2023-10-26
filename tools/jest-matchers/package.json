@@ -16,10 +16,10 @@
     "access": "public"
   },
   "dependencies": {
+    "chalk": "4.1.2",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "chalk": "4.1.2",
     "commander": "^11.1.0",
     "fs-extra": "^11.1.1"
   },
