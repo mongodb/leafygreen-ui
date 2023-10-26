@@ -32,7 +32,7 @@ export const ${varName} = createRule({
   meta: {
     type: 'suggestion',
     messages: {
-      ${msgId}: '',
+      '${msgId}': '',
     },
     schema: [],
     docs: {
@@ -49,7 +49,7 @@ export const ${varName} = createRule({
   const testTemplate = `
 import { ${varName} } from '../rules/${fileName}';
 
-import { ruleTester } from './utils/ruleTester';
+import { ruleTester } from './utils/ruleTester.testutils';
 
 ruleTester.run('${ruleId}', ${varName}, {
   valid: [{
@@ -57,9 +57,9 @@ ruleTester.run('${ruleId}', ${varName}, {
   }],
   invalid: [{
     code: \`\`, // code with lint errors
+    // output: '', // fixed code
     errors: [{
       messageId: '${msgId}',
-      output: '', // fixed code
     }]
   }]
 })

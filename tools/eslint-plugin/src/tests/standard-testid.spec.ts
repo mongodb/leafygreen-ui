@@ -2,7 +2,7 @@ import { standardTestidRule } from '../rules/standard-testid';
 
 import { ruleTester } from './utils/ruleTester.testutils';
 
-ruleTester.run('standard-testid', standardTestidRule, {
+ruleTester.run('tools/eslint-plugin/standard-testid', standardTestidRule, {
   valid: [
     {
       code: `<div data-testid="lg-some-id" />`,

@@ -27,11 +27,12 @@ const plugin: Plugin = {
       plugins: ['@lg-tools'],
       rules: {
         '@lg-tools/example': ['off'],
-        '@lg-tools/standard-testid': ['warn'],
         '@lg-tools/boolean-verb-prefix': [
           'warn',
-          { allowVarNames: ['darkMode'] },
+          { allowVarNames: ['darkMode', 'fix'] },
         ],
+        '@lg-tools/no-indirect-imports': 'error',
+        '@lg-tools/standard-testid': ['warn'],
       },
     },
     consumer: {
