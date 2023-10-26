@@ -18,8 +18,8 @@ export interface DependencyIssues {
   isMissingPeers: boolean;
 }
 
-// We won't check dependencies imported by files matching these patterns
-export const ignoreFilePatterns: Array<RegExp> = [
+/** We treat dependencies imported by files matching these patterns as devDependencies */
+export const devFilePatterns: Array<RegExp> = [
   /.*scripts\/.*/,
   /.*.stories.js/,
   /.*.spec.tsx?/,
@@ -30,8 +30,15 @@ export const ignoreFilePatterns: Array<RegExp> = [
   /.*\/dist\/.*/,
 ];
 
-// these dependencies will be ignored when listed in a package.json
-export const ignoreMatches = [
+/** If a dependency is flagged as bing imported by one of these files, ignore it */
+export const ignoreFilePatterns: Array<RegExp> = [
+  /.*package.json?/,
+  /.*README.md/,
+  /.*CHANGELOG.md/,
+];
+
+/** these dependencies will be ignored when listed in a package.json */
+export const ignoreDependencies = [
   '@leafygreen-ui/mongo-nav',
   '@babel/*',
   '@emotion/*',
@@ -55,5 +62,5 @@ export const ignoreMatches = [
 ];
 
 export const depcheckOptions: depcheck.Options = {
-  ignoreMatches,
+  ignoreMatches: ignoreDependencies,
 };
