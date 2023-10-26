@@ -34,6 +34,7 @@ export const DropdownGroup = InferredPolymorphic<DropdownGroupProps, 'div'>(
   ) => {
     const { darkMode } = useDarkMode();
     const chevronRef = useRef<HTMLElement | null>(null);
+    const transitionRef = useRef<HTMLElement | null>(null);
 
     const {
       checkedVariant,
@@ -127,6 +128,7 @@ export const DropdownGroup = InferredPolymorphic<DropdownGroupProps, 'div'>(
           timeout={{ enter: 0, exit: 150 }}
           mountOnEnter
           unmountOnExit
+          ref={transitionRef}
         >
           {(state: string) => {
             return (
