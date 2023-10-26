@@ -9,14 +9,23 @@
   "scripts": {
     "build": "lg build-package",
     "tsc": "lg build-ts",
-    "docs": "lg build-tsdoc"
+    "docs": "lg build-tsdoc",
+    "create-matcher": "npx ts-node ./scripts/createNewMatcher.ts"
   },
   "publishConfig": {
     "access": "public"
   },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "chalk": "4.1.2",
+    "commander": "^11.1.0",
+    "fs-extra": "^11.1.1"
+  },
   "peerDependencies": {
-    "jest": "^29.6.2",
-    "@types/jest": "^29.5.3"
+    "@types/jest": "^29.5.3",
+    "jest": "^29.6.2"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/jest-matchers",
   "repository": {

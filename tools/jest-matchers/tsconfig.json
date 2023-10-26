@@ -9,5 +9,5 @@
   "include": [
     "src/**/*"
   ],
-  "exclude": ["**/*.spec.*", "**/*.story.*"],
+  "exclude": ["**/*.spec.*", "**/*.story.*", "src/tests"],
 }
