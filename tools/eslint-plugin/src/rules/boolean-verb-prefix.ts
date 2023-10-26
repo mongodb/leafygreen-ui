@@ -6,27 +6,49 @@ import { createRule } from '../utils/createRule';
 import { isTestFile } from '../utils/isTestFile';
 import { RuleContext } from '../utils/RuleContext';
 
-const verbs = ['is', 'are', 'has', 'should', 'did', 'does', 'will', 'use'];
+const VERBS = ['is', 'are', 'has', 'should', 'did', 'does', 'will', 'use'];
 const booleanComparators = ['===', '==', '>', '>=', '<', '<=', '!=', '!=='];
 
-export const booleanVerbPrefixRule = createRule({
+type BooleanVerbPrefixOptions = [
+  {
+    additionalVerbs: Array<string>;
+    allowVarNames: Array<string>;
+  },
+];
+
+type BooleanVerbPrefixMessages =
+  | 'issue:ambiguousVariableName'
+  | 'issue:ambiguousKey'
+  | 'fix:addVerbIs';
+
+export const booleanVerbPrefixRule = createRule<
+  BooleanVerbPrefixOptions,
+  BooleanVerbPrefixMessages
+>({
   name: 'boolean-verb-prefix',
   meta: {
     type: 'suggestion',
     hasSuggestions: true,
     messages: {
-      ambiguousVariableName:
+      'issue:ambiguousVariableName':
         'Ambiguous boolean variable `{{var}}`. Boolean variables must start with a verb',
-      ambiguousKey:
+      'issue:ambiguousKey':
         'Ambiguous type key `{{var}}`. Boolean props must start with a verb',
-      addVerbIs: 'Prefix this variable with `is`',
+      'fix:addVerbIs': 'Prefix this variable with `is`',
     },
     schema: [
       {
         type: 'object',
         properties: {
-          additionalVerbs: { type: 'array' },
-          allowVarNames: { type: 'array' },
+          additionalVerbs: {
+            type: 'array',
+            description:
+              'Additional verbs to allow as prefixes to boolean variable names',
+          },
+          allowVarNames: {
+            type: 'array',
+            description: 'Un-prefixed variable names that should be allowed',
+          },
         },
         additionalProperties: false,
       },
@@ -35,7 +57,12 @@ export const booleanVerbPrefixRule = createRule({
       description: '',
     },
   },
-  defaultOptions: [],
+  defaultOptions: [
+    {
+      additionalVerbs: [],
+      allowVarNames: [],
+    },
+  ],
   create: context => {
     return {
       VariableDeclarator: node => {
@@ -74,21 +101,16 @@ export const booleanVerbPrefixRule = createRule({
 function getVerbs(
   context: RuleContext<typeof booleanVerbPrefixRule>,
 ): Array<string> {
-  return [
-    ...verbs,
-    // TODO:
-    // ...(context.options[0]?.additionalVerbs ?? ([] as Array<string>)),
-  ];
+  const additionalVerbs = context.options[0]?.additionalVerbs ?? [];
+  return [...VERBS, ...additionalVerbs];
 }
 
 /** Returns the list of allowed variable names */
 function getAllowedNames(
   context: RuleContext<typeof booleanVerbPrefixRule>,
 ): Array<string> {
-  // console.log(context.options[0]?.allowVarNames);
-  // TODO:
-  //   return context.options[0]?.allowVarNames ?? [];
-  return [];
+  const allowVarNames = context.options[0]?.allowVarNames ?? [];
+  return allowVarNames;
 }
 
 function lintBooleanDeclaration(
@@ -104,13 +126,13 @@ function lintBooleanDeclaration(
   if (!startsWithVerb) {
     context.report({
       node,
-      messageId: 'ambiguousVariableName',
+      messageId: 'issue:ambiguousVariableName',
       data: {
         var: variableName,
       },
       suggest: [
         {
-          messageId: 'addVerbIs',
+          messageId: 'fix:addVerbIs',
           fix: fixer => {
             return fixer.replaceText(node.id, `is${upperFirst(variableName)}`);
           },
@@ -144,13 +166,13 @@ function lintInterfaceProperty(
     if (!propNameStartsWithVerb && !isNameAllowed) {
       context.report({
         node,
-        messageId: 'ambiguousKey',
+        messageId: 'issue:ambiguousKey',
         data: {
           var: propName,
         },
         suggest: [
           {
-            messageId: 'addVerbIs',
+            messageId: 'fix:addVerbIs',
             fix: fixer => {
               return fixer.replaceText(node.key, `is${upperFirst(propName)}`);
             },

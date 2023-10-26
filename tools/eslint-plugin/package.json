@@ -11,7 +11,7 @@
   "main": "./dist/index.js",
   "exports": "./dist/index.js",
   "scripts": {
-    "prebuild": "npx ts-node ./scripts/buildRulesIndex.ts",
+    "postinstall": "npx ts-node ./scripts/buildRulesIndex.ts",
     "build": "lg-internal-build-package",
     "tsc": "tsc --build tsconfig.json",
     "lint": "npm-run-all \"lint:*\"",

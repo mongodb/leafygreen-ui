@@ -13,9 +13,10 @@ export const standardTestidRule = createRule({
   meta: {
     type: 'suggestion',
     messages: {
-      namespaced:
+      'issue:namespace':
         'Hard-coded `data-testid` attributes should be namespaced with lg-',
-      bem: 'Hard-coded `data-testid` attributes should match the component structure',
+      'issue:structure':
+        'Hard-coded `data-testid` attributes should match the component structure',
     },
     schema: [],
     docs: {
@@ -60,7 +61,7 @@ function lintTestIdPrefix(
   if (!value.startsWith('lg-')) {
     context.report({
       node,
-      messageId: 'namespaced',
+      messageId: 'issue:namespace',
       fix: fixer => {
         return fixer.replaceText(
           node.value as TSESTree.StringLiteral,
@@ -96,7 +97,7 @@ function lintTestIdPrefix(
 //   if (!value.startsWith(expectedId)) {
 //     context.report({
 //       node,
-//       messageId: 'bem',
+//       messageId: 'issue:structure',
 //       fix: fixer => {
 //         return fixer.replaceText(
 //           node.value as TSESTree.StringLiteral,

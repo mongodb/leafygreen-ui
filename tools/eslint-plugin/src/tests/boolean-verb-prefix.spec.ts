@@ -12,15 +12,32 @@ ruleTester.run('boolean-verb-prefix', booleanVerbPrefixRule, {
     {
       code: `const hasLabel = !!label`,
     },
+    {
+      code: `interface MyInterface { isDisabled: boolean; }`,
+    },
   ],
   invalid: [
     {
       code: `const disabled = false`,
       errors: [
         {
-          messageId: 'ambiguousVariableName',
+          messageId: 'issue:ambiguousVariableName',
           suggestions: [
-            { messageId: 'addVerbIs', output: `const isDisabled = false` },
+            { messageId: 'fix:addVerbIs', output: `const isDisabled = false` },
+          ],
+        },
+      ],
+    },
+    {
+      code: `interface MyInterface { disabled: boolean; }`,
+      errors: [
+        {
+          messageId: 'issue:ambiguousKey',
+          suggestions: [
+            {
+              messageId: 'fix:addVerbIs',
+              output: `interface MyInterface { isDisabled: boolean; }`,
+            },
           ],
         },
       ],
