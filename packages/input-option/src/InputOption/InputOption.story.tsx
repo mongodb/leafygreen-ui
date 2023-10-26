@@ -36,6 +36,7 @@ const meta: StoryMetaType<typeof InputOption> = {
       ],
     },
     generate: {
+      storyNames: ['Hover', 'Focus'],
       combineArgs: {
         disabled: [false, true],
         highlighted: [false, true],
@@ -103,3 +104,21 @@ LiveExample.parameters = {
 };
 
 export const Generated = () => {};
+
+export const Hover = () => <></>;
+Hover.parameters = {
+  generate: {
+    args: {
+      'data-hover': true,
+    },
+  },
+};
+
+export const Focus = () => <></>;
+Focus.parameters = {
+  generate: {
+    args: {
+      'data-focus': true,
+    },
+  },
+};

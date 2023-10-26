@@ -15,6 +15,9 @@ export const descriptionClassName = createUniqueClassName(
   'input-option-description',
 );
 
+const hoverSelector = '&:hover, &[data-hover="true"]';
+const focusSelector = '&:focus, &:focus-visible, &[data-focus="true"]';
+
 export const inputOptionStyles = css`
   position: relative;
   list-style: none;
@@ -33,8 +36,7 @@ export const inputOptionStyles = css`
 
   transition: background-color ${transitionDuration.default}ms ease-in-out;
 
-  &:focus,
-  &:focus-visible {
+  ${focusSelector} {
     outline: none;
     border: unset;
   }
@@ -57,13 +59,13 @@ export const inputOptionThemeStyles: Record<Theme, string> = {
 
 export const inputOptionHoverStyles: Record<Theme, string> = {
   [Theme.Light]: css`
-    &:hover {
+    ${hoverSelector} {
       outline: none;
       background-color: ${palette.gray.light2};
     }
   `,
   [Theme.Dark]: css`
-    &:hover {
+    ${hoverSelector} {
       outline: none;
       background-color: ${palette.gray.dark4};
     }
@@ -143,7 +145,7 @@ export const inputOptionDisabledStyles: Record<Theme, string> = {
       color: ${palette.gray.light1};
     }
 
-    &:hover {
+    ${hoverSelector} {
       background-color: inherit;
     }
 
@@ -159,7 +161,7 @@ export const inputOptionDisabledStyles: Record<Theme, string> = {
       color: ${palette.gray.dark1};
     }
 
-    &:hover {
+    ${hoverSelector} {
       background-color: inherit;
     }
 
