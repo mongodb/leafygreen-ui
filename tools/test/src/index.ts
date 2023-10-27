@@ -12,6 +12,8 @@ export interface TestCommandOptions {
   react17?: boolean;
 }
 
+const JEST_BIN_PATH = 'node_modules/jest/bin/jest.js';
+
 export const test = (
   passThrough: Array<string> | string | undefined,
   options: TestCommandOptions,
@@ -49,7 +51,7 @@ export const test = (
     ...passThroughOptions,
   ].filter(v => v !== '');
 
-  spawn('jest', commandArgs, {
+  spawn(JEST_BIN_PATH, commandArgs, {
     env: {
       ...process.env,
       JEST_ENV: 'client',
