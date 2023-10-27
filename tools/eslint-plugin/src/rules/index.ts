@@ -10,4 +10,4 @@ export const rules = {
   'boolean-verb-prefix': booleanVerbPrefixRule,
   'no-indirect-imports': noIndirectImportsRule,
   'standard-testid': standardTestidRule,
-}
+};

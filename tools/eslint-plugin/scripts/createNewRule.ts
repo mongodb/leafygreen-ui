@@ -62,7 +62,7 @@ ruleTester.run('${ruleId}', ${varName}, {
       messageId: '${msgId}',
     }]
   }]
-})
+});
 `;
 
   fse.writeFileSync(path.resolve(rulesDir, `${fileName}.ts`), ruleTemplate);

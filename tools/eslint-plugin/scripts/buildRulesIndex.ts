@@ -31,7 +31,7 @@ ${importStatements}
 
 export const rules = {
 ${declarations}
-}
+};
 `;
 
     fse.writeFile(path.resolve(rulesDir, 'index.ts'), indexContent);
