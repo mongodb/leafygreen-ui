@@ -4,6 +4,8 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
+import { useDropdownContext } from '../DropdownContext';
+
 import {
   groupStyle,
   labelStyle,
@@ -18,11 +20,19 @@ export function DropdownLabel({
   ...rest
 }: DropdownLabelProps) {
   const { theme } = useDarkMode();
+  const { renderedContext } = useDropdownContext();
   const groupId = useIdAllocator({ prefix: 'select-option-group' });
 
   return (
-    <div className={cx(groupStyle, className)} {...rest}>
-      <div id={groupId} className={cx(labelStyle, labelThemeStyle[theme])}>
+    <div
+      className={cx(
+        groupStyle,
+        labelThemeStyle(theme, renderedContext),
+        className,
+      )}
+      {...rest}
+    >
+      <div id={groupId} className={cx(labelStyle)}>
         {label}
       </div>
       <div role="group" aria-labelledby={groupId}>

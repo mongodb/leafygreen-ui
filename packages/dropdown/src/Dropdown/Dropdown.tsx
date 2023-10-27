@@ -26,8 +26,6 @@ import {
 } from './Dropdown.styles';
 import { DropdownProps, HighlightBehavior } from './Dropdown.types';
 
-// test in mongo nav
-// fix dropdown group transition styling
 export const Dropdown = React.forwardRef(
   (
     {

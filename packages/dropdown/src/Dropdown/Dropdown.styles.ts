@@ -3,6 +3,7 @@ import { transparentize } from 'polished';
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
+import { RenderedContext } from '@leafygreen-ui/input-option';
 
 export const baseMenuStyle = css`
   position: relative;
@@ -17,15 +18,30 @@ export const baseMenuStyle = css`
   border-radius: 12px;
 `;
 
-export const menuThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    background-color: ${palette.white};
-    box-shadow: 0 4px 7px 0 ${transparentize(0.75, palette.black)};
-  `,
-  [Theme.Dark]: css`
-    background-color: ${palette.gray.dark3};
-    border: 1px solid ${palette.gray.dark2};
-  `,
+export const menuThemeStyles = (
+  theme: Theme,
+  renderedContext: RenderedContext,
+) => {
+  if (theme === Theme.Light && renderedContext === RenderedContext.Menu) {
+    return css`
+      background-color: ${palette.black};
+      border: 1px solid ${palette.black};
+    `;
+  }
+
+  if (theme === Theme.Light) {
+    return css`
+      background-color: ${palette.white};
+      box-shadow: 0 4px 7px 0 ${transparentize(0.75, palette.black)};
+    `;
+  }
+
+  if (theme === Theme.Dark) {
+    return css`
+      background-color: ${palette.gray.dark3};
+      border: 1px solid ${palette.gray.dark2};
+    `;
+  }
 };
 
 export const menuListStyle = css`

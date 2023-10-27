@@ -1,4 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
+import { RenderedContext } from '@leafygreen-ui/input-option';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { fontWeights } from '@leafygreen-ui/tokens';
@@ -21,11 +22,28 @@ export const labelStyle = css`
   color: ${palette.gray.dark1};
 `;
 
-export const labelThemeStyle = {
-  [Theme.Light]: css`
-    color: palette.gray.dark1;
-  `,
-  [Theme.Dark]: css`
-    color: palette.gray.base;
-  `,
+export const labelThemeStyle = (
+  theme: Theme,
+  renderedContext?: RenderedContext,
+) => {
+  if (renderedContext === RenderedContext.Menu && theme === Theme.Light) {
+    return css`
+      color: ${palette.white};
+      background-color: ${palette.black};
+    `;
+  }
+
+  if (theme === Theme.Light) {
+    return css`
+      color: ${palette.gray.dark1};
+      background-color: ${palette.white};
+    `;
+  }
+
+  if (theme === Theme.Dark) {
+    return css`
+      color: ${palette.gray.base};
+      background-color: ${palette.gray.dark3};
+    `;
+  }
 };
