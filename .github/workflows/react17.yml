@@ -21,6 +21,11 @@ jobs:
       - name: Set react types resolution
         uses: sergeysova/jq-action@v2
         with:
+          cmd: echo -E "$(jq '.engines = {"node":">= 16.20.0", "yarn":"<= 1.22.0"}' package.json)" > package.json
+
+      - name: Set react types resolution
+        uses: sergeysova/jq-action@v2
+        with:
           cmd: echo -E "$(jq '.resolutions = {"@types/react":"16.9.56"}' package.json)" > package.json
 
       - name: Install React & React DOM 17
