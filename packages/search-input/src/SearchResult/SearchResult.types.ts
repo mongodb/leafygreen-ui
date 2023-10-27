@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ActionType, BaseInputOptionProps } from '@leafygreen-ui/input-option';
+import { BaseInputOptionProps } from '@leafygreen-ui/input-option';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export type SearchResultProps = DarkModeProps &
@@ -19,6 +19,4 @@ export type SearchResultProps = DarkModeProps &
      * Callback fired when the option is clicked
      */
     onClick?: React.MouseEventHandler;
-
-    actionType: ActionType;
   };

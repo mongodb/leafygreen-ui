@@ -29,7 +29,6 @@ export const SearchResult = InferredPolymorphic<SearchResultProps>(
       rest['aria-label'] ?? (rest['aria-labelledby'] ? '' : textContent);
 
     return (
-      // @ts-expect-error
       <InputOption
         {...rest}
         ref={ref}
