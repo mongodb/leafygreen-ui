@@ -27,6 +27,9 @@
   "devDependencies": {
     "@lg-tools/cli": "^0.5.0"
   },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^3.1.10"
+  },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/dropdown",
   "repository": {
     "type": "git",
