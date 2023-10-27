@@ -68,7 +68,7 @@ jobs:
           key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'yarn.lock', '**/src/', '!**/node_modules', '!**/dist') }}
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: yarn install --immutable-cache
 
       - name: lint
         run: yarn lint
@@ -91,7 +91,7 @@ jobs:
           cache-dependency-path: 'yarn.lock'
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: yarn install --immutable-cache
 
       - uses: actions/cache/restore@v3
         name: Restore build cache
@@ -126,7 +126,7 @@ jobs:
           cache-dependency-path: 'yarn.lock'
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: yarn install --immutable-cache
 
       - uses: actions/cache/restore@v3
         name: Restore build cache
@@ -157,7 +157,7 @@ jobs:
           cache-dependency-path: 'yarn.lock'
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: yarn install --immutable-cache
 
       - uses: actions/cache/restore@v3
         name: Restore build cache
