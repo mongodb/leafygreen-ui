@@ -8,7 +8,7 @@ import {
   useIsomorphicLayoutEffect,
   usePrevious,
 } from '@leafygreen-ui/hooks';
-import { CheckedVariant, RenderedContext } from '@leafygreen-ui/input-option';
+import { RenderedContext } from '@leafygreen-ui/input-option';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
@@ -35,7 +35,6 @@ export const Dropdown = React.forwardRef(
       adjustOnMutation = false,
       children,
       className,
-      checkedVariant = CheckedVariant.Blue,
       darkMode: darkModeProp,
       highlightBehavior = HighlightBehavior.Focus,
       justify = Justify.End,
@@ -162,7 +161,6 @@ export const Dropdown = React.forwardRef(
         <DescendantContext.Provider value={contextProps}>
           <HighlightContext.Provider
             value={{
-              checkedVariant,
               highlightBehavior,
               highlightedRef,
               setHighlightedRef: setHighlighted,

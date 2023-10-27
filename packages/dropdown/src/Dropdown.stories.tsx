@@ -3,7 +3,7 @@ import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import { CheckedVariant } from '@leafygreen-ui/input-option';
+import { RenderedContext } from '@leafygreen-ui/input-option';
 import {
   storybookExcludedControlParams,
   StoryMetaType,
@@ -79,7 +79,7 @@ const meta: StoryMetaType<typeof Dropdown> = {
     generate: {
       combineArgs: {
         darkMode: [true, false],
-        checkedVariant: Object.values(CheckedVariant),
+        renderedContext: Object.values(RenderedContext),
       },
       args: {
         open: true,

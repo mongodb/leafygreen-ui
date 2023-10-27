@@ -15,9 +15,9 @@ import {
 
 import {
   ActionType,
-  CheckedVariant,
   InputOption,
   type InputOptionProps,
+  RenderedContext,
 } from '.';
 
 const meta: StoryMetaType<typeof InputOption> = {
@@ -36,29 +36,36 @@ const meta: StoryMetaType<typeof InputOption> = {
       ],
     },
     generate: {
-      storyNames: ['Hover', 'Focus'],
+      storyNames: ['FormElement', 'Menu'],
+      args: {
+        showWedge: true,
+      },
       combineArgs: {
         disabled: [false, true],
         highlighted: [false, true],
         checked: [false, true],
-        showWedge: [false, true],
-        checkedVariant: Object.values(CheckedVariant),
-        actionType: Object.values(ActionType),
         darkMode: [false, true],
+        'data-hover': [false, true],
+        'data-focus': [false, true],
       },
+      decorator: (Instance, context) => (
+        <Instance>
+          <InputOptionContent
+            description="Description"
+            leftGlyph={<Icon glyph="Cloud" />}
+            rightGlyph={<Icon glyph="ChevronDown" />}
+          >
+            Title
+          </InputOptionContent>
+        </Instance>
+      ),
     },
-  },
-  args: {
-    children: 'Some text',
   },
   argTypes: {
     disabled: {
       control: 'boolean',
     },
     highlighted: {
-      control: 'boolean',
-    },
-    selected: {
       control: 'boolean',
     },
     showWedge: {
@@ -103,22 +110,23 @@ LiveExample.parameters = {
   chromatic: { disableSnapshot: true },
 };
 
-export const Generated = () => {};
-
-export const Hover = () => <></>;
-Hover.parameters = {
+export const FormElement = () => <></>;
+FormElement.parameters = {
   generate: {
     args: {
-      'data-hover': true,
+      renderedContext: RenderedContext.FormElement,
     },
   },
 };
 
-export const Focus = () => <></>;
-Focus.parameters = {
+export const Menu = () => <></>;
+Menu.parameters = {
   generate: {
+    combineArgs: {
+      actionType: Object.values(ActionType),
+    },
     args: {
-      'data-focus': true,
+      renderedContext: RenderedContext.Menu,
     },
   },
 };

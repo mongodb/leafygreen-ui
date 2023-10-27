@@ -39,7 +39,6 @@ export const DropdownGroup = InferredPolymorphic<DropdownGroupProps, 'div'>(
     const transitionRef = useRef<HTMLElement | null>(null);
 
     const {
-      checkedVariant,
       ref,
       index,
       onFocus,
@@ -107,7 +106,6 @@ export const DropdownGroup = InferredPolymorphic<DropdownGroupProps, 'div'>(
           onFocus={onFocus}
           onBlur={onBlur}
           tab-index={tabIndex}
-          checkedVariant={checkedVariant}
           {...rest}
         >
           <InputOptionContent

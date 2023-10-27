@@ -8,19 +8,16 @@ import {
 } from '@leafygreen-ui/polymorphic';
 
 import {
-  destructiveVariantStyles,
-  getInputOptionActiveStyles,
-  inputOptionDisabledStyles,
-  inputOptionHoverStyles,
+  disabledStyles,
+  getFormElementStyle,
+  getMenuElementStyle,
   inputOptionStyles,
-  inputOptionThemeStyles,
   inputOptionWedge,
-  titleSelectionStyles,
 } from './InputOption.style';
 import {
   ActionType,
-  CheckedVariant,
   InputOptionProps,
+  RenderedContext,
 } from './InputOption.types';
 
 export const InputOption = InferredPolymorphic<InputOptionProps>(
@@ -35,14 +32,32 @@ export const InputOption = InferredPolymorphic<InputOptionProps>(
       showWedge = true,
       isInteractive = true,
       className,
-      checkedVariant = CheckedVariant.Blue,
       actionType = ActionType.Default,
+      renderedContext = RenderedContext.FormElement,
       ...rest
     },
     ref,
   ) => {
     const { Component } = useInferredPolymorphic(as, rest, 'div');
     const { theme } = useDarkMode(darkModeProp);
+
+    const themedStatefulStyles =
+      renderedContext === RenderedContext.FormElement
+        ? getFormElementStyle({
+            theme,
+            checked,
+            highlighted,
+            disabled,
+            showWedge,
+          })
+        : getMenuElementStyle({
+            theme,
+            checked,
+            highlighted,
+            disabled,
+            showWedge,
+            actionType,
+          });
 
     return (
       <Component
@@ -53,18 +68,10 @@ export const InputOption = InferredPolymorphic<InputOptionProps>(
         tabIndex={-1}
         className={cx(
           inputOptionStyles,
-          inputOptionThemeStyles[theme],
+          themedStatefulStyles,
           {
             [inputOptionWedge]: showWedge,
-            [inputOptionHoverStyles[theme]]: isInteractive,
-            [getInputOptionActiveStyles(theme, checkedVariant)]:
-              isInteractive && checked,
-            [getInputOptionActiveStyles(theme, CheckedVariant.Blue)]:
-              isInteractive && highlighted,
-            [titleSelectionStyles]: checked,
-            [destructiveVariantStyles[theme]]:
-              actionType === ActionType.Destructive,
-            [inputOptionDisabledStyles[theme]]: disabled,
+            [disabledStyles]: disabled,
           },
           className,
         )}

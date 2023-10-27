@@ -10,12 +10,8 @@ export const useFocusableDropdownItem = ({
   disabled?: boolean;
 }) => {
   const { index, ref } = useDescendant(DescendantContext, { disabled });
-  const {
-    highlightBehavior,
-    highlightedRef,
-    setHighlightedRef,
-    checkedVariant,
-  } = useHighlightContext();
+  const { highlightBehavior, highlightedRef, setHighlightedRef } =
+    useHighlightContext();
   const [_, force] = useState({});
 
   useEffect(() => {
@@ -44,7 +40,6 @@ export const useFocusableDropdownItem = ({
     onFocus,
     onBlur,
     tabIndex: -1,
-    checkedVariant,
     ['aria-selected']: highlighted,
     ['data-selected']: highlighted,
   };

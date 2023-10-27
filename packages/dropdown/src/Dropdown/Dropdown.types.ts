@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { InputOptionProps, RenderedContext } from '@leafygreen-ui/input-option';
+import { RenderedContext } from '@leafygreen-ui/input-option';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { PopoverProps, PortalControlProps } from '@leafygreen-ui/popover';
 
@@ -60,12 +60,6 @@ export type DropdownProps = HTMLElementProps<'div'> &
      * @default: 'focus'
      */
     highlightBehavior?: HighlightBehavior;
-
-    /**
-     * Determines styles when input option is "checked"
-     * @default: 'blue'
-     */
-    checkedVariant?: InputOptionProps['checkedVariant'];
 
     /**
      * The max width of the menu (in px). Defaults to 256

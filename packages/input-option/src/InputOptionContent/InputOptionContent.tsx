@@ -5,6 +5,7 @@ import { Description } from '@leafygreen-ui/typography';
 
 import {
   descriptionClassName,
+  leftGlyphClassName,
   titleClassName,
 } from '../InputOption/InputOption.style';
 import {
@@ -12,7 +13,6 @@ import {
   descriptionBaseStyles,
   glyphContainer,
   glyphRightStyles,
-  leftGlyphClassName,
   textWrapper,
   titleBaseStyles,
 } from '../InputOptionContent/InputOptionContent.styles';

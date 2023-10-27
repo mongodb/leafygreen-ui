@@ -26,7 +26,6 @@ export const DropdownItem = InferredPolymorphic<DropdownItemProps, 'div'>(
     const { handleDropdownClose, renderedContext } = useDropdownContext();
 
     const {
-      checkedVariant,
       ref,
       index,
       onFocus,
@@ -64,7 +63,6 @@ export const DropdownItem = InferredPolymorphic<DropdownItemProps, 'div'>(
         onClick={handleClick}
         onKeyDown={handleKeyDown}
         tab-index={tabIndex}
-        checkedVariant={checkedVariant}
         {...rest}
       >
         <InputOptionContent

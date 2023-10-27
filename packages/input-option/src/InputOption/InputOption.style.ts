@@ -1,4 +1,4 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
@@ -8,17 +8,22 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { CheckedVariant } from './InputOption.types';
+import { ActionType } from './InputOption.types';
+import { FormState, formThemeStyles, menuThemeStyles, State } from './themes';
 
 export const titleClassName = createUniqueClassName('input-option-title');
 export const descriptionClassName = createUniqueClassName(
   'input-option-description',
+);
+export const leftGlyphClassName = createUniqueClassName(
+  'input-option-left-glyph',
 );
 
 const hoverSelector = '&:hover, &[data-hover="true"]';
 const focusSelector = '&:focus, &:focus-visible, &[data-focus="true"]';
 
 export const inputOptionStyles = css`
+  outline: none;
   position: relative;
   list-style: none;
   display: block;
@@ -41,36 +46,6 @@ export const inputOptionStyles = css`
     border: unset;
   }
 `;
-
-export const titleSelectionStyles = css`
-  .${titleClassName} {
-    font-weight: bold;
-  }
-`;
-
-export const inputOptionThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.black};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.light2};
-  `,
-};
-
-export const inputOptionHoverStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    ${hoverSelector} {
-      outline: none;
-      background-color: ${palette.gray.light2};
-    }
-  `,
-  [Theme.Dark]: css`
-    ${hoverSelector} {
-      outline: none;
-      background-color: ${palette.gray.dark4};
-    }
-  `,
-};
 
 /** in px */
 const wedgeWidth = spacing[1];
@@ -96,77 +71,166 @@ export const inputOptionWedge = css`
   }
 `;
 
-export const getInputOptionActiveStyles = (
-  theme: Theme,
-  variant: CheckedVariant,
-) => {
-  const isBlue = variant === CheckedVariant.Blue;
+export const disabledStyles = css`
+  cursor: not-allowed;
 
-  if (theme === Theme.Light) {
-    return css`
-      outline: none;
-      background-color: ${isBlue ? palette.blue.light3 : palette.green.light3};
-      color: ${isBlue ? palette.blue.dark2 : palette.green.dark2};
+  &:before {
+    content: unset;
+  }
+`;
 
-      &:before {
-        transform: scaleY(1) translateY(-50%);
-        background-color: ${isBlue ? palette.blue.base : palette.green.dark2};
-      }
-    `;
+export const getFormElementStyle = ({
+  theme,
+  checked,
+  highlighted,
+  disabled,
+  showWedge,
+}: {
+  theme: Theme;
+  checked?: boolean;
+  highlighted?: boolean;
+  disabled?: boolean;
+  showWedge?: boolean;
+}) => {
+  let state: FormState = 'default';
+
+  if (disabled) {
+    state = State.Disabled;
+  } else if (highlighted) {
+    state = State.Focus;
+  } else if (checked) {
+    state = State.Checked;
   }
 
-  return css`
-    outline: none;
-    background-color: ${isBlue ? palette.blue.dark3 : palette.green.dark3};
-    color: ${isBlue ? palette.blue.light3 : palette.white};
-
+  const wedge = css`
     &:before {
       transform: scaleY(1) translateY(-50%);
-      background-color: ${isBlue ? palette.blue.light1 : palette.green.base};
+      background-color: ${formThemeStyles[theme][state].wedge};
     }
   `;
+
+  const hover = css`
+    ${hoverSelector} {
+      outline: none;
+      background-color: ${formThemeStyles[theme].hover.backgroundColor};
+
+      &,
+      & .${leftGlyphClassName} {
+        color: ${formThemeStyles[theme].hover.leftGlyph};
+      }
+    }
+  `;
+
+  return cx(
+    css`
+      background-color: ${formThemeStyles[theme][state].backgroundColor};
+
+      .${titleClassName} {
+        color: ${formThemeStyles[theme][state].title};
+        font-weight: ${checked && !disabled ? 'bold' : 'normal'};
+      }
+
+      &,
+      & .${descriptionClassName} {
+        color: ${formThemeStyles[theme][state].description};
+      }
+
+      &,
+      & .${leftGlyphClassName} {
+        color: ${formThemeStyles[theme][state].leftGlyph};
+      }
+    `,
+    { [wedge]: state === 'focus' && showWedge, [hover]: !disabled },
+  );
 };
 
-export const destructiveVariantStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.red.light1};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.red.light1};
-  `,
-};
+export const getMenuElementStyle = ({
+  theme,
+  checked,
+  highlighted,
+  disabled,
+  actionType,
+  showWedge,
+}: {
+  theme: Theme;
+  checked?: boolean;
+  highlighted?: boolean;
+  disabled?: boolean;
+  actionType: ActionType;
+  showWedge?: boolean;
+}) => {
+  let state: State = 'default';
 
-export const inputOptionDisabledStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    cursor: not-allowed;
+  if (disabled) {
+    state = State.Disabled;
+  } else if (highlighted) {
+    state = State.Focus;
+  } else if (checked) {
+    state = State.Checked;
+  } else if (actionType === ActionType.Destructive) {
+    state = State.Destructive;
+  }
 
-    &,
-    & .${descriptionClassName} {
-      color: ${palette.gray.light1};
-    }
-
-    ${hoverSelector} {
-      background-color: inherit;
-    }
-
+  const wedge = css`
     &:before {
-      content: unset;
+      transform: scaleY(1) translateY(-50%);
+      background-color: ${menuThemeStyles[theme][state].wedge};
     }
-  `,
-  [Theme.Dark]: css`
-    cursor: not-allowed;
+  `;
 
-    &,
-    & .${descriptionClassName} {
-      color: ${palette.gray.dark1};
-    }
+  const shouldOverride = state === State.Checked || state === State.Destructive;
 
+  const overrideHoverBgColor =
+    theme === Theme.Light ? palette.gray.dark3 : palette.gray.dark2;
+
+  const hover = css`
     ${hoverSelector} {
-      background-color: inherit;
-    }
+      outline: none;
+      background-color: ${shouldOverride
+        ? overrideHoverBgColor
+        : menuThemeStyles[theme].hover.backgroundColor};
 
-    &:before {
-      content: unset;
+      &,
+      & .${leftGlyphClassName} {
+        color: ${menuThemeStyles[theme].hover.leftGlyph};
+      }
     }
-  `,
+  `;
+
+  const titleHoverOverride = css`
+    ${hoverSelector} {
+      &,
+      & .${titleClassName} {
+        color: ${state === State.Destructive
+          ? palette.red.light2
+          : palette.white};
+      }
+    }
+  `;
+
+  return cx(
+    css`
+      background-color: ${menuThemeStyles[theme][state].backgroundColor};
+
+      .${titleClassName} {
+        color: ${menuThemeStyles[theme][state].title};
+        font-weight: ${checked && !disabled ? 'bold' : 'normal'};
+      }
+
+      &,
+      & .${descriptionClassName} {
+        color: ${menuThemeStyles[theme][state].description};
+      }
+
+      &,
+      & .${leftGlyphClassName} {
+        color: ${menuThemeStyles[theme][state].leftGlyph};
+      }
+    `,
+    {
+      [wedge]: showWedge && (state === 'focus' || state === 'checked'),
+      [hover]: !disabled,
+      [titleHoverOverride]: shouldOverride && !disabled && theme === Theme.Dark,
+    },
+  );
 };

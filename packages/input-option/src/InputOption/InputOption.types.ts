@@ -3,15 +3,6 @@ import { PropsWithChildren } from 'react';
 import { AriaLabelProps } from '@leafygreen-ui/a11y';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
-const CheckedVariant = {
-  Blue: 'blue',
-  Green: 'green',
-} as const;
-
-type CheckedVariant = (typeof CheckedVariant)[keyof typeof CheckedVariant];
-
-export { CheckedVariant };
-
 const ActionType = {
   Default: 'default',
   Destructive: 'destructive',
@@ -69,12 +60,6 @@ export interface BaseInputOptionProps {
    * @default true
    */
   isInteractive?: boolean;
-
-  /**
-   * Determines styles when input option is "checked"
-   * @default: 'blue'
-   */
-  checkedVariant?: CheckedVariant;
 
   /**
    * Styles input based on intended action

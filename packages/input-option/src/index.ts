@@ -1,7 +1,6 @@
 export {
   ActionType,
   type BaseInputOptionProps,
-  CheckedVariant,
   descriptionClassName,
   InputOption,
   type InputOptionProps,
