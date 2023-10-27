@@ -42,7 +42,7 @@ export function InternalOption({
 
   const { option: colorSet } = colorSets[theme];
 
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLLIElement>(null);
 
   const scrollIntoView = useCallback(() => {
     if (ref.current == null) {
