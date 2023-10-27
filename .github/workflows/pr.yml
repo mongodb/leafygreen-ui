@@ -33,6 +33,9 @@ jobs:
           cache: yarn
           cache-dependency-path: 'yarn.lock'
 
+      - name: Use Yarn 4
+        run: yarn set version berry
+
       - name: Install
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         run: yarn install --frozen-lockfile --prefer-offline
