@@ -47,6 +47,5 @@
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.10"
-  },
-  "devDependencies": {}
+  }
 }

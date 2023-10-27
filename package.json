@@ -4,9 +4,11 @@
   "description": "leafyGreen UI Kit",
   "license": "Apache-2.0",
   "private": true,
+  "packageManager": "yarn@4.0.0",
   "engines": {
-    "node": ">= 16.20.0",
-    "npm": ">= 8.19.4"
+    "node": ">= 18.16.0",
+    "npm": ">= 9.6.1",
+    "yarn": ">= 4.0.0"
   },
   "scripts": {
     "init": "yarn && yarn build",

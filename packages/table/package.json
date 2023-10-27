@@ -41,9 +41,9 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.0",
-    "@leafygreen-ui/code": "^14.2.17",
-    "@leafygreen-ui/button": "^21.0.9",
     "@leafygreen-ui/badge": "^8.0.15",
+    "@leafygreen-ui/button": "^21.0.9",
+    "@leafygreen-ui/code": "^14.2.17",
     "@leafygreen-ui/pagination": "^1.0.18"
   },
   "peerDependencies": {

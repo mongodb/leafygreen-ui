@@ -31,8 +31,8 @@
   },
   "devDependencies": {
     "@emotion/styled": "^11.10.5",
+    "@leafygreen-ui/lib": "^13.0.0",
     "@lg-tools/build": "^0.3.0",
-    "next": "^13.1.6",
-    "@leafygreen-ui/lib": "^13.0.0"
+    "next": "^13.1.6"
   }
 }

@@ -44,9 +44,9 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@leafygreen-ui/card": "^10.0.6",
     "@leafygreen-ui/button": "^21.0.9",
-    "@leafygreen-ui/icon-button": "^15.0.19",
-    "@leafygreen-ui/icon": "^11.23.0"
+    "@leafygreen-ui/card": "^10.0.6",
+    "@leafygreen-ui/icon": "^11.23.0",
+    "@leafygreen-ui/icon-button": "^15.0.19"
   }
 }

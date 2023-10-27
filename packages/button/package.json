@@ -31,9 +31,9 @@
     "polished": "^4.2.2"
   },
   "devDependencies": {
-    "next": "^13.0.5",
     "@leafygreen-ui/icon": "^11.22.2",
-    "@leafygreen-ui/loading-indicator": "^2.0.7"
+    "@leafygreen-ui/loading-indicator": "^2.0.7",
+    "next": "^13.0.5"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.10"

@@ -21,7 +21,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {},
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/box",
   "repository": {
     "type": "git",
