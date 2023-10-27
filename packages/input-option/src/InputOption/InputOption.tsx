@@ -20,7 +20,7 @@ import {
   RenderedContext,
 } from './InputOption.types';
 
-export const InputOption = InferredPolymorphic<InputOptionProps>(
+export const InputOption = InferredPolymorphic<InputOptionProps, 'div'>(
   (
     {
       as,
@@ -49,6 +49,7 @@ export const InputOption = InferredPolymorphic<InputOptionProps>(
             highlighted,
             disabled,
             showWedge,
+            isInteractive,
           })
         : getMenuElementStyle({
             theme,
@@ -57,6 +58,7 @@ export const InputOption = InferredPolymorphic<InputOptionProps>(
             disabled,
             showWedge,
             actionType,
+            isInteractive,
           });
 
     return (

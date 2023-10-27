@@ -25,10 +25,12 @@ export const SearchResultGroup = ({
 
   return (
     <div>
+      {/* @ts-expect-error */}
       <InputOption
         aria-label={label}
         isInteractive={false}
         className={searchResultLabelWrapperStyle}
+        as="li"
         {...rest}
       >
         <Overline className={searchResultLabelStyle[theme]}>{label}</Overline>

@@ -42,7 +42,7 @@ export function InternalOption({
 
   const { option: colorSet } = colorSets[theme];
 
-  const ref = useRef<HTMLLIElement>(null);
+  const ref = useRef<HTMLElement>(null);
 
   const scrollIntoView = useCallback(() => {
     if (ref.current == null) {
@@ -139,6 +139,7 @@ export function InternalOption({
       disabled={disabled}
       role="option"
       tabIndex={-1}
+      as="li"
       ref={ref}
       className={cx(
         OptionClassName,

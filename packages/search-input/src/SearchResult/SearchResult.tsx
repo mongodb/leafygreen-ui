@@ -4,7 +4,10 @@ import { cx } from '@leafygreen-ui/emotion';
 import { InputOption } from '@leafygreen-ui/input-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
-import { InferredPolymorphic } from '@leafygreen-ui/polymorphic';
+import {
+  InferredPolymorphic,
+  useInferredPolymorphic,
+} from '@leafygreen-ui/polymorphic';
 
 import {
   descriptionClassName,
@@ -16,8 +19,16 @@ import {
 } from './SearchResult.styles';
 import { SearchResultProps } from './SearchResult.types';
 
-export const SearchResult = InferredPolymorphic<SearchResultProps>(
-  ({ children, description, disabled, className, darkMode, ...rest }, ref) => {
+export const SearchResult = InferredPolymorphic<SearchResultProps, 'li'>(
+  (
+    { children, description, disabled, className, darkMode, as, href, ...rest },
+    ref,
+  ) => {
+    const { Component: renderedAs } = useInferredPolymorphic(
+      as,
+      { href, ...rest },
+      'li',
+    );
     const { theme } = useDarkMode(darkMode);
     const textContent = getNodeTextContent(children);
     /**
@@ -29,8 +40,10 @@ export const SearchResult = InferredPolymorphic<SearchResultProps>(
       rest['aria-label'] ?? (rest['aria-labelledby'] ? '' : textContent);
 
     return (
+      // @ts-expect-error
       <InputOption
         {...rest}
+        as={renderedAs}
         ref={ref}
         className={cx(
           searchResultStyles,
@@ -43,6 +56,7 @@ export const SearchResult = InferredPolymorphic<SearchResultProps>(
         disabled={disabled}
         aria-labelledby={rest['aria-labelledby']}
         aria-label={ariaLabel}
+        href={href}
       >
         <div className={titleClassName}>{children}</div>
         {description && (

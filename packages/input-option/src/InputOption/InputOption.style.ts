@@ -85,12 +85,14 @@ export const getFormElementStyle = ({
   highlighted,
   disabled,
   showWedge,
+  isInteractive,
 }: {
   theme: Theme;
   checked?: boolean;
   highlighted?: boolean;
   disabled?: boolean;
   showWedge?: boolean;
+  isInteractive?: boolean;
 }) => {
   let state: FormState = 'default';
 
@@ -140,7 +142,10 @@ export const getFormElementStyle = ({
         color: ${formThemeStyles[theme][state].leftGlyph};
       }
     `,
-    { [wedge]: state === 'focus' && showWedge, [hover]: !disabled },
+    {
+      [wedge]: state === 'focus' && showWedge,
+      [hover]: !disabled && isInteractive,
+    },
   );
 };
 
@@ -151,6 +156,7 @@ export const getMenuElementStyle = ({
   disabled,
   actionType,
   showWedge,
+  isInteractive,
 }: {
   theme: Theme;
   checked?: boolean;
@@ -158,6 +164,7 @@ export const getMenuElementStyle = ({
   disabled?: boolean;
   actionType: ActionType;
   showWedge?: boolean;
+  isInteractive?: boolean;
 }) => {
   let state: State = 'default';
 
@@ -229,8 +236,9 @@ export const getMenuElementStyle = ({
     `,
     {
       [wedge]: showWedge && (state === 'focus' || state === 'checked'),
-      [hover]: !disabled,
-      [titleHoverOverride]: shouldOverride && !disabled && theme === Theme.Dark,
+      [hover]: !disabled && isInteractive,
+      [titleHoverOverride]:
+        shouldOverride && !disabled && theme === Theme.Dark && isInteractive,
     },
   );
 };
