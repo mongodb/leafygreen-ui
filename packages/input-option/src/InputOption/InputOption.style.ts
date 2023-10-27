@@ -23,10 +23,8 @@ const hoverSelector = '&:hover, &[data-hover="true"]';
 const focusSelector = '&:focus, &:focus-visible, &[data-focus="true"]';
 
 export const inputOptionStyles = css`
-  outline: none;
   position: relative;
   list-style: none;
-  display: block;
   outline: none;
   border: unset;
   margin: 0;
@@ -84,7 +82,7 @@ export const getFormElementStyle = ({
   checked,
   highlighted,
   disabled,
-  showWedge,
+  showWedge = true,
   isInteractive,
 }: {
   theme: Theme;
@@ -103,6 +101,9 @@ export const getFormElementStyle = ({
   } else if (checked) {
     state = State.Checked;
   }
+
+  const shouldShowWedge = state === State.Focus && showWedge;
+  console.log({ shouldShowWedge });
 
   const wedge = css`
     &:before {
@@ -143,7 +144,7 @@ export const getFormElementStyle = ({
       }
     `,
     {
-      [wedge]: state === 'focus' && showWedge,
+      [wedge]: shouldShowWedge,
       [hover]: !disabled && isInteractive,
     },
   );

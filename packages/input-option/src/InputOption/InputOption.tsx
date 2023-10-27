@@ -69,12 +69,12 @@ export const InputOption = InferredPolymorphic<InputOptionProps, 'div'>(
         aria-checked={checked}
         tabIndex={-1}
         className={cx(
-          inputOptionStyles,
-          themedStatefulStyles,
           {
             [inputOptionWedge]: showWedge,
             [disabledStyles]: disabled,
           },
+          inputOptionStyles,
+          themedStatefulStyles,
           className,
         )}
         {...rest}
