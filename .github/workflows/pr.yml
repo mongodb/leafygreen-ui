@@ -38,7 +38,7 @@ jobs:
 
       - name: Install
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: yarn install --immutable-cache
 
       - name: Build
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
