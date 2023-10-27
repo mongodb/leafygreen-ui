@@ -37,7 +37,7 @@ export const formThemeStyles: FormShape = {
       description: palette.gray.dark1,
       leftGlyph: palette.blue.base,
       backgroundColor: palette.blue.light3,
-      wedge: palette.blue.dark1,
+      wedge: palette.blue.base,
     },
     disabled: {
       title: palette.gray.light1,
