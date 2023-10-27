@@ -1,8 +1,8 @@
-import { Command } from 'commander';
 import chalk from 'chalk';
-import path from 'path';
+import { Command } from 'commander';
 import fse from 'fs-extra';
 import { camelCase, lowerFirst } from 'lodash';
+import path from 'path';
 
 const cli = new Command();
 cli

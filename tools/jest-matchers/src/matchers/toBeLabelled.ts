@@ -1,4 +1,5 @@
 import { isNull } from 'lodash';
+
 import { createMatcher } from '../utils/createMatcher';
 
 const isValidString = (str: any): str is string =>
@@ -39,11 +40,13 @@ export const toBeLabelled = createMatcher(function _toBeLabelled(
         : `Could not find element referenced by \`aria-labelledby\`` +
             document.body.innerHTML;
     }
+
     if (!pass && elementId) {
       return this.isNot
         ? `Expected not to find label for ${elementId}`
         : `Could not find a label for the element with id ${elementId}`;
     }
+
     return `Expected the element ${this.isNot ? 'not ' : ''}to have a label`;
   };
 

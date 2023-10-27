@@ -1,6 +1,7 @@
-import chalk from 'chalk';
 import React from 'react';
 import { render } from '@testing-library/react';
+import chalk from 'chalk';
+
 import { createMatcher } from '../utils/createMatcher';
 
 /**
