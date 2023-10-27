@@ -23,7 +23,7 @@ export const DropdownItem = InferredPolymorphic<DropdownItemProps, 'div'>(
     }: DropdownItemProps,
     forwardRef,
   ) => {
-    const { handleDropdownClose } = useDropdownContext();
+    const { handleDropdownClose, renderedContext } = useDropdownContext();
 
     const {
       checkedVariant,
@@ -52,6 +52,7 @@ export const DropdownItem = InferredPolymorphic<DropdownItemProps, 'div'>(
 
     return (
       <InputOption
+        renderedContext={renderedContext}
         role="option"
         ref={itemRef}
         aria-labelledby={label}

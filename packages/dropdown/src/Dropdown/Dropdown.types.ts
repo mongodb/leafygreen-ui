@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { InputOptionProps } from '@leafygreen-ui/input-option';
+import { InputOptionProps, RenderedContext } from '@leafygreen-ui/input-option';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { PopoverProps, PortalControlProps } from '@leafygreen-ui/popover';
 
@@ -76,4 +76,9 @@ export type DropdownProps = HTMLElementProps<'div'> &
      * The max height of the menu (in px). Defaults to 256
      */
     maxHeight?: number;
+
+    /**
+     * Determines how the items are styled
+     */
+    renderedContext?: RenderedContext;
   };

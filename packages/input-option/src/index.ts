@@ -5,6 +5,7 @@ export {
   descriptionClassName,
   InputOption,
   type InputOptionProps,
+  RenderedContext,
 } from './InputOption';
 export {
   InputOptionContent,

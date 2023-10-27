@@ -5,4 +5,5 @@ export {
   BaseInputOptionProps,
   CheckedVariant,
   InputOptionProps,
+  RenderedContext,
 } from './InputOption.types';

@@ -21,6 +21,15 @@ type ActionType = (typeof ActionType)[keyof typeof ActionType];
 
 export { ActionType };
 
+const RenderedContext = {
+  FormElement: 'form-element',
+  Menu: 'menu',
+} as const;
+
+type RenderedContext = (typeof RenderedContext)[keyof typeof RenderedContext];
+
+export { RenderedContext };
+
 /**
  * TERMINOLOGY
  *
@@ -72,6 +81,11 @@ export interface BaseInputOptionProps {
    * @default 'default'
    */
   actionType?: ActionType;
+
+  /**
+   * Determines how the items are styled
+   */
+  renderedContext?: RenderedContext;
 }
 
 export type InputOptionProps = AriaLabelProps &

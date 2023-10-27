@@ -8,7 +8,7 @@ import {
   useIsomorphicLayoutEffect,
   usePrevious,
 } from '@leafygreen-ui/hooks';
-import { CheckedVariant } from '@leafygreen-ui/input-option';
+import { CheckedVariant, RenderedContext } from '@leafygreen-ui/input-option';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
@@ -50,6 +50,7 @@ export const Dropdown = React.forwardRef(
       spacing = 6,
       triggerRef,
       usePortal = true,
+      renderedContext = RenderedContext.Menu,
       ...rest
     }: DropdownProps,
     forwardRef,
@@ -168,7 +169,7 @@ export const Dropdown = React.forwardRef(
             }}
           >
             <DropdownContext.Provider
-              value={{ handleDropdownClose: handleClose }}
+              value={{ handleDropdownClose: handleClose, renderedContext }}
             >
               <Popover
                 active={open}

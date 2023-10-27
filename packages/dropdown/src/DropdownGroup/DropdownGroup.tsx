@@ -12,6 +12,7 @@ import { keyMap } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { InferredPolymorphic } from '@leafygreen-ui/polymorphic';
 
+import { useDropdownContext } from '../DropdownContext';
 import { useFocusableDropdownItem, useMergeRefs } from '../utils';
 
 import { DropdownGroupProps } from './DropdownGroup.types';
@@ -32,6 +33,7 @@ export const DropdownGroup = InferredPolymorphic<DropdownGroupProps, 'div'>(
     }: DropdownGroupProps,
     forwardRef,
   ) => {
+    const { renderedContext } = useDropdownContext();
     const { darkMode } = useDarkMode();
     const chevronRef = useRef<HTMLElement | null>(null);
     const transitionRef = useRef<HTMLElement | null>(null);
@@ -93,6 +95,7 @@ export const DropdownGroup = InferredPolymorphic<DropdownGroupProps, 'div'>(
     return (
       <>
         <InputOption
+          renderedContext={renderedContext}
           role="option"
           ref={itemRef}
           aria-labelledby={label}
