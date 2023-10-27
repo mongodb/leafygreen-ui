@@ -129,7 +129,7 @@ export const DropdownGroup = InferredPolymorphic<DropdownGroupProps, 'div'>(
           timeout={{ enter: 0, exit: 150 }}
           mountOnEnter
           unmountOnExit
-          ref={transitionRef}
+          nodeRef={transitionRef}
         >
           {(state: string) => {
             return (

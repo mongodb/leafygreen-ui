@@ -1,9 +1,9 @@
 import { transparentize } from 'polished';
 
 import { css } from '@leafygreen-ui/emotion';
+import { RenderedContext } from '@leafygreen-ui/input-option';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { RenderedContext } from '@leafygreen-ui/input-option';
 
 export const baseMenuStyle = css`
   position: relative;

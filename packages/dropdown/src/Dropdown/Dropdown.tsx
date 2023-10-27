@@ -175,7 +175,12 @@ export const Dropdown = React.forwardRef(
                 refEl={triggerRef}
                 {...popoverProps}
               >
-                <div className={cx(baseMenuStyle, menuThemeStyles[theme])}>
+                <div
+                  className={cx(
+                    baseMenuStyle,
+                    menuThemeStyles(theme, renderedContext),
+                  )}
+                >
                   {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
                   {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
                   <div

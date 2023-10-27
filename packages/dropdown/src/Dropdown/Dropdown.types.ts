@@ -28,7 +28,7 @@ export type DropdownProps = HTMLElementProps<'div'> &
     children?: React.ReactNode;
 
     /**
-     * Callback to determine whether or not Menu should close when user tries to close it.
+     * Callback to determine whether or not Menu should close when user tries to close it
      */
     shouldClose?: () => boolean;
 
@@ -44,7 +44,7 @@ export type DropdownProps = HTMLElementProps<'div'> &
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 
     /**
-     * Determines whether or not the component will be rendered in dark mode.
+     * Determines whether or not the component will be rendered in dark mode
      * @default: `false`
      */
     darkMode?: boolean;
@@ -62,17 +62,19 @@ export type DropdownProps = HTMLElementProps<'div'> &
     highlightBehavior?: HighlightBehavior;
 
     /**
-     * The max width of the menu (in px). Defaults to 256
+     * The max width of the menu (in px).
      */
     maxWidth?: number;
 
     /**
-     * The max height of the menu (in px). Defaults to 256
+     * The max height of the menu (in px).
      */
     maxHeight?: number;
 
     /**
      * Determines how the items are styled
+     *
+     * @default: 'menu'
      */
     renderedContext?: RenderedContext;
   };

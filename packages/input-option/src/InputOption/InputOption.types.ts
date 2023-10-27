@@ -13,7 +13,7 @@ type ActionType = (typeof ActionType)[keyof typeof ActionType];
 export { ActionType };
 
 const RenderedContext = {
-  FormElement: 'form-element',
+  FormElement: 'formElement',
   Menu: 'menu',
 } as const;
 
