@@ -23,19 +23,18 @@ const plugin: Plugin = {
   },
   rules,
   configs: {
-    maintainer: {
+    internal: {
       plugins: ['@lg-tools'],
       rules: {
-        '@lg-tools/example': ['off'],
         '@lg-tools/boolean-verb-prefix': [
           'warn',
           { allowVarNames: ['darkMode', 'fix'] },
         ],
-        '@lg-tools/no-indirect-imports': 'error',
-        '@lg-tools/standard-testid': ['warn'],
+        '@lg-tools/no-indirect-imports': ['warn'],
+        '@lg-tools/standard-testid': ['warn', { prefix: 'lg-' }],
       },
     },
-    consumer: {
+    external: {
       plugins: ['@lg-tools'],
       rules: {},
     },

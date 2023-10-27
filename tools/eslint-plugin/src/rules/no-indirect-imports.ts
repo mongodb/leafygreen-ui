@@ -3,16 +3,16 @@ import { createRule } from '../utils/createRule';
 export const noIndirectImportsRule = createRule({
   name: 'no-indirect-imports',
   meta: {
+    docs: {
+      description: 'Forbid indirect imports from `src/` or `packages/`',
+    },
+    fixable: 'code',
     type: 'suggestion',
     messages: {
       'issue:importFromPackages': 'Do not import from the `packages` directory',
       'issue:importFromSrc': "Do not import from a package's `src` directory",
     },
-    fixable: 'code',
     schema: [],
-    docs: {
-      description: '',
-    },
   },
   defaultOptions: [],
   create: context => {

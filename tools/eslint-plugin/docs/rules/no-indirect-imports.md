@@ -1,0 +1,7 @@
+# Forbid indirect imports from `src/` or `packages/` (`@lg-tools/no-indirect-imports`)
+
+⚠️ This rule _warns_ in the `internal` config.
+
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->

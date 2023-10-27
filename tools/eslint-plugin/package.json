@@ -14,15 +14,15 @@
     "postinstall": "npx ts-node ./scripts/buildRulesIndex.ts",
     "build": "lg-internal-build-package",
     "tsc": "tsc --build tsconfig.json",
+    "docs": "eslint-doc-generator",
     "lint": "npm-run-all \"lint:*\"",
     "lint:eslint-docs": "npm-run-all \"update:eslint-docs -- --check\"",
     "lint:js": "eslint .",
-    "update:eslint-docs": "eslint-doc-generator",
     "create-rule": "npx ts-node ./scripts/createNewRule.ts"
   },
   "dependencies": {
-    "@typescript-eslint/utils": "6.9.0",
     "@typescript-eslint/types": "6.9.0",
+    "@typescript-eslint/utils": "6.9.0",
     "eslint": "8.43.0",
     "lodash": "^4.17.21"
   },
@@ -31,6 +31,7 @@
     "@types/eslint": "^8.44.6",
     "@typescript-eslint/rule-tester": "6.9.0",
     "commander": "^11.0.0",
+    "eslint-doc-generator": "^1.5.2",
     "fs-extra": "11.1.1"
   },
   "peerDependencies": {

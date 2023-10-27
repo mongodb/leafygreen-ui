@@ -1,30 +1,43 @@
-/* eslint-disable no-console */
-// import util from 'util';
-
 import { TSESTree } from '@typescript-eslint/types';
 
-// import snakeCase from 'lodash/snakeCase';
-// import uniq from 'lodash/uniq';
 import { createRule } from '../utils/createRule';
 import { isTestFile } from '../utils/isTestFile';
+
+const PREFIX = 'lg-';
 
 export const standardTestidRule = createRule({
   name: 'standard-testid',
   meta: {
+    docs: {
+      description:
+        'Enforce a consistent prefix for hard-coded `data-testid` attributes',
+    },
+    fixable: 'code',
     type: 'suggestion',
     messages: {
       'issue:namespace':
-        'Hard-coded `data-testid` attributes should be namespaced with lg-',
+        'Hard-coded `data-testid` attributes should be namespaced with {{prefix}}',
       'issue:structure':
         'Hard-coded `data-testid` attributes should match the component structure',
     },
-    schema: [],
-    docs: {
-      description: '',
-    },
-    fixable: 'code',
+    schema: [
+      {
+        type: 'object',
+        properties: {
+          prefix: {
+            type: 'string',
+            description: 'Prefix for `data-testid` attributes',
+            default: PREFIX,
+          },
+        },
+      },
+    ],
   },
-  defaultOptions: [],
+  defaultOptions: [
+    {
+      prefix: PREFIX,
+    },
+  ],
   create: context => {
     return {
       JSXAttribute: node => {
@@ -54,18 +67,19 @@ function lintTestIdPrefix(
   context: ThisRuleContext,
   node: TSESTree.JSXAttribute,
 ) {
+  const prefix = context.options[0].prefix;
   const value = (node.value as TSESTree.Literal)?.value;
 
   if (typeof value !== 'string') return;
 
-  if (!value.startsWith('lg-')) {
+  if (!value.startsWith(prefix)) {
     context.report({
       node,
       messageId: 'issue:namespace',
       fix: fixer => {
         return fixer.replaceText(
           node.value as TSESTree.StringLiteral,
-          `"lg-${value}"`,
+          `"${prefix}${value}"`,
         );
       },
     });

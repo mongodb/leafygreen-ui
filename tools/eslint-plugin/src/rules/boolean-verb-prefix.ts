@@ -27,6 +27,9 @@ export const booleanVerbPrefixRule = createRule<
 >({
   name: 'boolean-verb-prefix',
   meta: {
+    docs: {
+      description: `Enforce prefixing boolean variables & properties with a conditional verb`,
+    },
     type: 'suggestion',
     hasSuggestions: true,
     messages: {
@@ -44,18 +47,17 @@ export const booleanVerbPrefixRule = createRule<
             type: 'array',
             description:
               'Additional verbs to allow as prefixes to boolean variable names',
+            default: [],
           },
           allowVarNames: {
             type: 'array',
             description: 'Un-prefixed variable names that should be allowed',
+            default: [],
           },
         },
         additionalProperties: false,
       },
     ],
-    docs: {
-      description: '',
-    },
   },
   defaultOptions: [
     {
