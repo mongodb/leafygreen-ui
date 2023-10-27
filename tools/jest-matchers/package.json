@@ -7,9 +7,8 @@
   "types": "./dist/index.d.ts",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "lg build-package",
-    "tsc": "lg build-ts",
-    "docs": "lg build-tsdoc",
+    "build": "lg-internal-build-package",
+    "tsc": "tsc --build tsconfig.json",
     "create-matcher": "npx ts-node ./scripts/createNewMatcher.ts"
   },
   "publishConfig": {
@@ -20,6 +19,7 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
+    "@lg-tools/build": "0.3.0",
     "commander": "^11.1.0",
     "fs-extra": "^11.1.1"
   },
