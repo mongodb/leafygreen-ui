@@ -67,7 +67,7 @@ function lintTestIdPrefix(
   context: ThisRuleContext,
   node: TSESTree.JSXAttribute,
 ) {
-  const prefix = context.options[0].prefix;
+  const prefix = context.options[0]?.prefix ?? PREFIX;
   const value = (node.value as TSESTree.Literal)?.value;
 
   if (typeof value !== 'string') return;
