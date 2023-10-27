@@ -19,14 +19,14 @@ export function buildRulesIndexFile() {
     const declarations = files
       .map(fileName => {
         const fileId = makeId(fileName.replace('.ts', ''));
-        return `  '${fileId}' : ${makeVarName(fileId)},`;
+        return `  '${fileId}': ${makeVarName(fileId)},`;
       })
       .join('\n');
 
     const indexContent = `/**
-* DO NOT MODIFY THIS FILE
-* ANY CHANGES WILL BE REMOVED ON THE NEXT BUILD
-*/
+ * DO NOT MODIFY THIS FILE
+ * ANY CHANGES WILL BE REMOVED ON THE NEXT BUILD
+ */
 ${importStatements}
 
 export const rules = {
