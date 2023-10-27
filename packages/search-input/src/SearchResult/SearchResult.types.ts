@@ -4,7 +4,7 @@ import { InputOptionProps } from '@leafygreen-ui/input-option';
 
 export type SearchResultProps = Omit<
   InputOptionProps,
-  'showWedge' | 'active' | 'isInteractive'
+  'showWedge' | 'checked' | 'isInteractive'
 > & {
   /**
    * Optional description text
