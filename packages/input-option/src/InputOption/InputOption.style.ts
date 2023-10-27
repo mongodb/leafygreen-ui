@@ -103,7 +103,6 @@ export const getFormElementStyle = ({
   }
 
   const shouldShowWedge = state === State.Focus && showWedge;
-  console.log({ shouldShowWedge });
 
   const wedge = css`
     &:before {
