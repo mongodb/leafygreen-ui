@@ -5,14 +5,12 @@ import { range } from 'lodash';
 import { LeafyGreenProviderProps } from '@leafygreen-ui/leafygreen-provider';
 
 import {
+  ContextPropKeys,
   contextPropNames,
   DatePickerProviderProps,
-} from '../DatePickerContext';
-import {
-  ContextPropKeys,
   defaultDatePickerContext,
-} from '../DatePickerContext/DatePickerContext.utils';
-import { BaseDatePickerProps } from '../types';
+} from '../shared/DatePickerContext';
+import { BaseDatePickerProps } from '../shared/types';
 import { pickAndOmit } from '../utils';
 
 /** Time zones used to test with */

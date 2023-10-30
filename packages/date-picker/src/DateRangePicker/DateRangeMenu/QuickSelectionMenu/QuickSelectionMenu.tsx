@@ -3,7 +3,6 @@ import { forwardRef } from 'react';
 import { addDays } from 'date-fns';
 import isFinite from 'lodash/isFinite';
 import range from 'lodash/range';
-import { DateRangeType } from '../../../types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -15,8 +14,9 @@ import {
   MIN_DATE,
   Months,
   selectElementProps,
-} from '../../../constants';
-import { useDatePickerContext } from '../../../DatePickerContext';
+} from '../../../shared/constants';
+import { useDatePickerContext } from '../../../shared/DatePickerContext';
+import { DateRangeType } from '../../../shared/types';
 import {
   isSameUTCMonth,
   setToUTCMidnight,

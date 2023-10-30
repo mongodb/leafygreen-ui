@@ -3,8 +3,8 @@ import fill from 'lodash/fill';
 import range from 'lodash/range';
 import { getWeekStartByLocale } from 'weekstart';
 
-import { daysPerWeek } from '../../constants';
-import { BaseDatePickerProps } from '../../types';
+import { daysPerWeek } from '../../shared/constants';
+import { BaseDatePickerProps } from '../../shared/types';
 import { getDaysInUTCMonth } from '../getDaysInUTCMonth';
 import { setToUTCMidnight } from '../setToUTCMidnight';
 

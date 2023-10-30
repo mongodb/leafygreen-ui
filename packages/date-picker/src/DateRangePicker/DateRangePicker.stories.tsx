@@ -8,12 +8,12 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 
-import { Month } from '../constants';
+import { Month } from '../shared/constants';
 import {
   DatePickerContextProps,
   DatePickerProvider,
-} from '../DatePickerContext';
-import { DatePickerState, DateRangeType } from '../types';
+} from '../shared/DatePickerContext';
+import { DatePickerState, DateRangeType } from '../shared/types';
 import { newUTC } from '../utils';
 import {
   getProviderPropsFromStoryContext,

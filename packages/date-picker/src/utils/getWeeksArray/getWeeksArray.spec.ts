@@ -1,6 +1,6 @@
 import { isNull } from 'lodash';
 
-import { Month } from '../../constants';
+import { Month } from '../../shared/constants';
 
 import { getWeeksArray } from '.';
 

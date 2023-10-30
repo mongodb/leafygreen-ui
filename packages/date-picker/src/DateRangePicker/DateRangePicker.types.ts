@@ -1,6 +1,6 @@
 import { ChangeEvent, MouseEventHandler } from 'react';
 
-import { BaseDatePickerProps, DateRangeType } from '../types';
+import { BaseDatePickerProps, DateRangeType } from '../shared/types';
 
 export interface DateRangePickerProps extends BaseDatePickerProps {
   /**

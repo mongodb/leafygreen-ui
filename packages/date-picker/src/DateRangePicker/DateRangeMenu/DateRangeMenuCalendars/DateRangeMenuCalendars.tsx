@@ -18,12 +18,12 @@ import { Subtitle } from '@leafygreen-ui/typography';
 
 import {
   CalendarCell,
+  CalendarCellRangeState,
   CalendarCellState,
   CalendarGrid,
-} from '../../../Calendar';
-import { CalendarCellRangeState } from '../../../Calendar/CalendarCell';
-import { useDatePickerContext } from '../../../DatePickerContext';
-import { DateRangeType, DateType } from '../../../types';
+} from '../../../shared/Calendar';
+import { useDatePickerContext } from '../../../shared/DatePickerContext';
+import { DateRangeType, DateType } from '../../../shared/types';
 import {
   getFullMonthLabel,
   getUTCDateString,

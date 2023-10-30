@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { addDays, subDays } from 'date-fns';
 
-import { Month } from '../../constants';
+import { Month } from '../../shared/constants';
 import {
   DatePickerProvider,
   DatePickerProviderProps,

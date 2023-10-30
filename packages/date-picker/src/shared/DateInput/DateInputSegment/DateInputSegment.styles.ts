@@ -8,7 +8,7 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { DateSegment } from '../../hooks/useDateSegments/DateSegments.types';
+import { DateSegment } from '../../../hooks';
 
 import { characterWidth, charsPerSegment } from './constants';
 

@@ -1,8 +1,8 @@
 export { useControlledValue } from './useControlledValue';
 export {
   DateSegment,
-  DateSegmentsState,
-  DateSegmentValue,
+  type DateSegmentsState,
+  type DateSegmentValue,
   isDateSegment,
   useDateSegments,
 } from './useDateSegments';

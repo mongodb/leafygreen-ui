@@ -1,9 +1,8 @@
 import isUndefined from 'lodash/isUndefined';
 import last from 'lodash/last';
-import { DatePickerContextProps } from 'src/DatePickerContext';
 
-import { DateSegment } from '../../../hooks/useDateSegments';
-import { SegmentRefs } from '../../../hooks/useSegmentRefs';
+import { DateSegment, SegmentRefs } from '../../../hooks';
+import { DatePickerContextProps } from '../../../shared/DatePickerContext';
 import { getFirstEmptySegment } from '../../../utils';
 
 interface GetRangeSegmentToFocusProps {

@@ -6,7 +6,7 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 
-import { Month } from '../constants';
+import { Month } from '../shared/constants';
 import {
   DatePickerContextProps,
   DatePickerProvider,

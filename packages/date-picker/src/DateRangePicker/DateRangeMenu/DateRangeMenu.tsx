@@ -9,9 +9,9 @@ import React, {
 import { keyMap } from '@leafygreen-ui/lib';
 import { spacing } from '@leafygreen-ui/tokens';
 
-import { MenuWrapper } from '../../Calendar/MenuWrapper';
-import { useDatePickerContext } from '../../DatePickerContext';
-import { DateRangeType } from '../../types';
+import { useDatePickerContext } from '../../shared/DatePickerContext';
+import { MenuWrapper } from '../../shared/MenuWrapper';
+import { DateRangeType } from '../../shared/types';
 import { useDateRangeContext } from '../DateRangeContext';
 
 import {

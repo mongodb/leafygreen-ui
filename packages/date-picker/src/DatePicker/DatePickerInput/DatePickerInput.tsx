@@ -8,7 +8,7 @@ import React, {
 import { keyMap } from '@leafygreen-ui/lib';
 
 import { useSegmentRefs } from '../../hooks';
-import { DateFormField } from '../../shared/DateFormField';
+import { DateFormField } from '../../shared/DateInput';
 import { DateInputBox } from '../../shared/DateInput';
 import { useDatePickerContext } from '../../shared/DatePickerContext';
 import { isElementInputSegment, isZeroLike } from '../../utils';

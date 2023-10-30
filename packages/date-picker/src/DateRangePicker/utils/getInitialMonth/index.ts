@@ -1,4 +1,4 @@
-import { DateRangeType } from '../../../types';
+import { DateRangeType } from '../../../shared/types';
 import { addMonthsUTC, getFirstOfMonth, isDefined } from '../../../utils';
 
 export const getInitialMonth = (

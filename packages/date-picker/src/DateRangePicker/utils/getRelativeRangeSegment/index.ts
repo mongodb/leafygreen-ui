@@ -3,8 +3,8 @@ import isUndefined from 'lodash/isUndefined';
 import last from 'lodash/last';
 import { DateSegment } from 'src/hooks/useDateSegments';
 
-import { DatePickerContextProps } from '../../../DatePickerContext';
-import { SegmentRefs } from '../../../hooks/useSegmentRefs';
+import { SegmentRefs } from '../../../hooks';
+import { DatePickerContextProps } from '../../../shared/DatePickerContext';
 
 type RelativeDirection = 'next' | 'prev' | 'first' | 'last';
 interface GetRelativeSegmentContext {

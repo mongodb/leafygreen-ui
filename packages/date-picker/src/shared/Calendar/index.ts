@@ -1,6 +1,7 @@
 export {
   CalendarCell,
-  CalendarCellProps,
+  type CalendarCellProps,
+  CalendarCellRangeState,
   CalendarCellState,
 } from './CalendarCell';
-export { CalendarGrid, CalendarGridProps } from './CalendarGrid';
+export { CalendarGrid, type CalendarGridProps } from './CalendarGrid';

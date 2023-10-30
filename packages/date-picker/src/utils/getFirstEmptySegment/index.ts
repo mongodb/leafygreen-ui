@@ -1,6 +1,5 @@
-import { DatePickerContextProps } from '../../DatePickerContext';
-import { DateSegment } from '../../hooks/useDateSegments';
-import { SegmentRefs } from '../../hooks/useSegmentRefs';
+import { DateSegment, SegmentRefs } from '../../hooks';
+import { DatePickerContextProps } from '../../shared/DatePickerContext';
 
 /**
  *

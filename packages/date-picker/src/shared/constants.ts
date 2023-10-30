@@ -2,7 +2,7 @@ import range from 'lodash/range';
 
 import { DropdownWidthBasis } from '@leafygreen-ui/select';
 
-import { getMonthName } from './utils/getMonthName';
+import { getMonthName } from '../utils/getMonthName';
 
 // Compute the long & short form of each month index
 export const Months: Array<{

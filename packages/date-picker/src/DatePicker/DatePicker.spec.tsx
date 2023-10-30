@@ -8,7 +8,7 @@ import {
 import userEvent from '@testing-library/user-event';
 import { range } from 'lodash';
 
-import { Month } from '../constants';
+import { Month } from '../shared/constants';
 import { newUTC } from '../utils';
 import { eventContainingTargetValue, tabNTimes } from '../utils/testUtils';
 

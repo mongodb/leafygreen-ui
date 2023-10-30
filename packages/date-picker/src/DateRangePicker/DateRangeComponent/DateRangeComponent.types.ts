@@ -1,4 +1,4 @@
-import { DatePickerContextProps } from '../../DatePickerContext';
+import { DatePickerContextProps } from '../../shared/DatePickerContext';
 import { DateRangeContextProps } from '../DateRangeContext/DateRangeContext.types';
 import { DateRangePickerProps } from '../DateRangePicker.types';
 

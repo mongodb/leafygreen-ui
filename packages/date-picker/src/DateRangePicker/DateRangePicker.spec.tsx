@@ -8,7 +8,7 @@ import {
 import userEvent from '@testing-library/user-event';
 import last from 'lodash/last';
 
-import { Month } from '../constants';
+import { Month } from '../shared/constants';
 import { eventContainingTargetValue, tabNTimes } from '../testUtils';
 import { newUTC, setUTCDate, setUTCMonth } from '../utils';
 

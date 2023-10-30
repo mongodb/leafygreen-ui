@@ -11,18 +11,18 @@ import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { createSyntheticEvent } from '@leafygreen-ui/lib';
 
-import { useDatePickerContext } from '../../DatePickerContext';
 import {
   DateSegment,
   DateSegmentsState,
   isDateSegment,
-} from '../../hooks/useDateSegments/DateSegments.types';
-import { useDateSegments } from '../../hooks/useDateSegments/useDateSegments';
+  useDateSegments,
+} from '../../../hooks';
 import {
   doesSomeSegmentExist,
   getValueFormatter,
   newDateFromSegments,
-} from '../../utils';
+} from '../../../utils';
+import { useDatePickerContext } from '../../DatePickerContext';
 import { DateInputSegment } from '../DateInputSegment';
 
 import {

@@ -10,7 +10,7 @@ import { StoryMetaType } from '@leafygreen-ui/lib';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 import { InlineCode } from '@leafygreen-ui/typography';
 
-import { Month } from '../../constants';
+import { Month } from '../../shared/constants';
 import {
   contextPropNames,
   DatePickerContextProps,

@@ -1,4 +1,4 @@
-import { DateRangeType } from '../../../types';
+import { DateRangeType } from '../../../shared/types';
 import { isSameUTCMonth } from '../../../utils';
 
 export const getInitialHighlight = (
