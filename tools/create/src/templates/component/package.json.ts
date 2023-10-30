@@ -26,7 +26,7 @@ export const pkgJson = ({
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/lib": "^12.0.0"
+    "@leafygreen-ui/lib": "^13.0.0"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/${packageNameKebab}",
   "repository": {
