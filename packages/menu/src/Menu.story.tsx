@@ -37,6 +37,9 @@ const meta: StoryMetaType<typeof Menu> = {
         'as',
       ],
     },
+    chromatic: {
+      disableSnapshot: true,
+    },
     generate: {
       combineArgs: {
         darkMode: [false, true],
