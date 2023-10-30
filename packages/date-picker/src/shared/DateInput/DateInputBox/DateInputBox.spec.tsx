@@ -9,8 +9,8 @@ import { Month } from '../../constants';
 import {
   DatePickerProvider,
   DatePickerProviderProps,
+  defaultDatePickerContext,
 } from '../../DatePickerContext';
-import { defaultDatePickerContext } from '../../DatePickerContext/DatePickerContext.utils';
 
 import { DateInputBox, type DateInputBoxProps } from '.';
 
