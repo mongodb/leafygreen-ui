@@ -34,7 +34,16 @@
       "path": "../input-option"
     },
     {
+      "path": "../palette"
+    },
+    {
+      "path": "../polymorphic"
+    },
+    {
       "path": "../popover"
+    },
+    {
+      "path": "../tokens"
     },
     {
       "path": "../lib"
