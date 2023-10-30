@@ -42,6 +42,7 @@ const meta: StoryMetaType<any> = {
     },
     chromatic: {
       disableSnapshot: true,
+      delay: transitionDuration.slowest,
     },
     generate: {
       storyNames: [
@@ -96,9 +97,6 @@ const meta: StoryMetaType<any> = {
           </div>
         );
       },
-    },
-    chromatic: {
-      delay: transitionDuration.slowest,
     },
   },
   argTypes: {
