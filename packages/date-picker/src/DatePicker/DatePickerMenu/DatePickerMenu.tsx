@@ -160,7 +160,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       }
     };
 
-    /** Called on any keydown within the menu element */
+    /** Called on any keydown within the CalendarGrid element */
     const handleCalendarKeyDown: KeyboardEventHandler<HTMLTableElement> = e => {
       const { key } = e;
       const highlightStart = highlight || value || today;

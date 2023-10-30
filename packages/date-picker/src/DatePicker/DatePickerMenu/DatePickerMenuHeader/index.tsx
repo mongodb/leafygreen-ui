@@ -1,4 +1,8 @@
-import React, { forwardRef, MouseEventHandler } from 'react';
+import React, {
+  forwardRef,
+  KeyboardEventHandler,
+  MouseEventHandler,
+} from 'react';
 import { isBefore } from 'date-fns';
 import range from 'lodash/range';
 
@@ -66,12 +70,9 @@ export const DatePickerMenuHeader = forwardRef<
         updateMonth(newMonth);
       };
 
-    // TODO: isPopoverOpen updated value is not accessible in `DatePickerMenu` since the `<PopoverProvider>` is inside `DatePickerMenu`
-    const handleEcsPress = e => {
-      // This ensures that if either select menu is open, pressing the ESC key will not close both the select menu and the menuWrapper, only the select men.
-
-      // If a select menu is open and the ESC key is pressed, only the select menu should close -- the date picker menu should remain open.
-      // This check is to ensure that the date picker menu will not close when either select menu is open and the ESC key is pressed.
+    // `isPopoverOpen` updated value is not accessible in `<DatePickerMenu>` since the `<PopoverProvider>` is inside `<MenuWrapper>`
+    const handleEcsPress: KeyboardEventHandler<HTMLDivElement> = e => {
+      // This check is to ensure that the date picker menu will not close when a select menu is open, focus is inside the select menu, and the ESC key is pressed.
       if (!isPopoverOpen && e.key === keyMap.Escape) {
         setOpen(false);
         handleValidation?.(value);
