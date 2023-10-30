@@ -11,7 +11,7 @@ import { Size } from '@leafygreen-ui/tokens';
 import {
   DatePickerContextProps,
   DatePickerProvider,
-} from '../../shared/DatePickerContext';
+} from '../../shared/components/DatePickerContext';
 
 import { DatePickerInput } from './DatePickerInput';
 

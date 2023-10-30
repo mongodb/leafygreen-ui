@@ -4,7 +4,7 @@ import {
   getFirstOfMonth,
   getLastOfMonth,
   isSameUTCMonth,
-} from '../../../../utils';
+} from '../../../../shared/utils';
 
 export const getNewHighlight = (
   currentHighlight: Date | null,

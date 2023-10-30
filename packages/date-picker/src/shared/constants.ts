@@ -2,15 +2,12 @@ import range from 'lodash/range';
 
 import { DropdownWidthBasis } from '@leafygreen-ui/select';
 
-import { getMonthName } from '../utils/getMonthName';
+import { getMonthName } from './utils';
 
-// Compute the long & short form of each month index
-export const Months: Array<{
-  long: string;
-  short: string;
-}> = range(12).map(m => getMonthName(m));
+/** Days in a week */
+export const daysPerWeek = 7 as const;
 
-/** Maps the month name to its index */
+/** Enumerates month names to the 0-indexed value */
 export enum Month {
   January,
   February,
@@ -26,11 +23,21 @@ export enum Month {
   December,
 }
 
-export const daysPerWeek = 7 as const;
-
+/** The default earliest selectable date */
 export const MIN_DATE = new Date(Date.UTC(1970, Month.January, 1));
+
+/** The default latest selectable date */
 export const MAX_DATE = new Date(Date.UTC(2038, Month.January, 19));
 
+/**
+ * Long & short form of each month index
+ */
+export const Months: Array<{
+  long: string;
+  short: string;
+}> = range(12).map(m => getMonthName(m));
+
+/** Long & short form for each Day of the week */
 export const DaysOfWeek = [
   { long: 'Sunday', short: 'su' },
   { long: 'Monday', short: 'mo' },
@@ -40,8 +47,63 @@ export const DaysOfWeek = [
   { long: 'Friday', short: 'fr' },
   { long: 'Saturday', short: 'sa' },
 ] as const;
-
 export type DaysOfWeek = (typeof DaysOfWeek)[number];
+
+/**
+ * The minimum number for each segment
+ */
+export const defaultMin = {
+  day: 1,
+  month: 1,
+  year: MIN_DATE.getUTCFullYear(),
+} as const;
+
+/**
+ * The maximum number for each segment
+ */
+export const defaultMax = {
+  day: 31,
+  month: 12,
+  year: MAX_DATE.getUTCFullYear(),
+} as const;
+
+/**
+ * The shorthand for each char
+ */
+export const placeholderChar = {
+  day: 'D',
+  month: 'M',
+  year: 'Y',
+};
+
+/**
+ * The number of characters per input segment
+ */
+export const charsPerSegment = {
+  day: 2,
+  month: 2,
+  year: 4,
+};
+
+const _makePlaceholder = (n: number, s: string) =>
+  new Array(n).fill(s).join('\u200B');
+
+/**
+ * The default placeholders for each segment
+ */
+export const defaultPlaceholder = {
+  day: _makePlaceholder(charsPerSegment.day, placeholderChar.day),
+  month: _makePlaceholder(charsPerSegment.month, placeholderChar.month),
+  year: _makePlaceholder(charsPerSegment.year, placeholderChar.year),
+} as const;
+
+/** The percentage of 1ch these specific characters take up */
+export const characterWidth = {
+  // // Standard font
+  D: 46 / 40,
+  M: 55 / 40,
+  Y: 50 / 40,
+} as const;
 
 /** Default props for the month & year select menus */
 export const selectElementProps = {

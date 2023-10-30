@@ -21,8 +21,8 @@ import {
   CalendarCellRangeState,
   CalendarCellState,
   CalendarGrid,
-} from '../../../shared/Calendar';
-import { useDatePickerContext } from '../../../shared/DatePickerContext';
+} from '../../../shared/components/Calendar';
+import { useDatePickerContext } from '../../../shared/components/DatePickerContext';
 import { DateRangeType, DateType } from '../../../shared/types';
 import {
   getFullMonthLabel,
@@ -33,7 +33,7 @@ import {
   maxDate,
   minDate,
   setUTCMonth,
-} from '../../../utils';
+} from '../../../shared/utils';
 import { useDateRangeContext } from '../../DateRangeContext';
 
 import {

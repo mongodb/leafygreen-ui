@@ -2,7 +2,7 @@ import { useRef } from 'react';
 
 import { useDynamicRefs, useForwardedRef } from '@leafygreen-ui/hooks';
 
-import { useSegmentRefs } from '../../hooks/useSegmentRefs';
+import { useSegmentRefs } from '../../shared/hooks/useSegmentRefs';
 
 import { DateRangeComponentRefs } from './DateRangeContext.types';
 

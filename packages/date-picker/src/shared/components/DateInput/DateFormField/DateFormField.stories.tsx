@@ -6,11 +6,11 @@ import { css } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 
+import { DatePickerState } from '../../../types';
 import {
   DatePickerContextProps,
   DatePickerProvider,
 } from '../../DatePickerContext';
-import { DatePickerState } from '../../types';
 
 import { DateFormField } from './DateFormField';
 

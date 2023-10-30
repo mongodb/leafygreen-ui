@@ -4,9 +4,9 @@ import defaultTo from 'lodash/defaultTo';
 
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
+import { MAX_DATE, MIN_DATE } from '../../constants';
+import { BaseDatePickerProps, DatePickerState } from '../../types';
 import { getFormatParts, toDate } from '../../utils';
-import { MAX_DATE, MIN_DATE } from '../constants';
-import { BaseDatePickerProps, DatePickerState } from '../types';
 
 import {
   DatePickerContextProps,

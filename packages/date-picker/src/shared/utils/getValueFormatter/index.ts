@@ -1,9 +1,12 @@
 import padStart from 'lodash/padStart';
 
+import { charsPerSegment } from '../../constants';
 import { DateSegment } from '../../hooks';
-import { charsPerSegment } from '../../shared/DateInput/DateInputSegment/constants';
 import { isZeroLike } from '../isZeroLike';
 
+/**
+ * @returns a value formatter function for the provided date segment
+ */
 export const getValueFormatter =
   (segment: DateSegment) => (val: string | number | undefined) => {
     // If the value is any form of zero, we set it to an empty string

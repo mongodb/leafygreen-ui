@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 
 import { DateRangeType, DateType } from '../../shared/types';
-import { addMonthsUTC, setToUTCMidnight } from '../../utils';
+import { addMonthsUTC, setToUTCMidnight } from '../../shared/utils';
 import { getInitialHighlight } from '../utils/getInitialHighlight';
 import { getInitialMonth } from '../utils/getInitialMonth';
 

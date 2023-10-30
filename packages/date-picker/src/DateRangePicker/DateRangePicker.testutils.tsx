@@ -8,7 +8,7 @@ import userEvent from '@testing-library/user-event';
 import { subDays } from 'date-fns';
 
 import { MIN_DATE, Month } from '../shared/constants';
-import { newUTC } from '../utils';
+import { newUTC } from '../shared/utils';
 
 import { DateRangePicker, DateRangePickerProps } from '.';
 

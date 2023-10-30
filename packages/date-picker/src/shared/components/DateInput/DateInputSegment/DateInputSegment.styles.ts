@@ -8,9 +8,8 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
+import { characterWidth, charsPerSegment } from '../../../constants';
 import { DateSegment } from '../../../hooks';
-
-import { characterWidth, charsPerSegment } from './constants';
 
 export const baseStyles = css`
   font-family: ${fontFamilies.default};

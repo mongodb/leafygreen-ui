@@ -18,9 +18,9 @@ import {
   CalendarCell,
   CalendarCellState,
   CalendarGrid,
-} from '../../shared/Calendar';
-import { useDatePickerContext } from '../../shared/DatePickerContext';
-import { MenuWrapper } from '../../shared/MenuWrapper';
+} from '../../shared/components/Calendar';
+import { useDatePickerContext } from '../../shared/components/DatePickerContext';
+import { MenuWrapper } from '../../shared/components/MenuWrapper';
 import {
   getFirstOfMonth,
   getFullMonthLabel,
@@ -28,7 +28,7 @@ import {
   isSameUTCDay,
   isSameUTCMonth,
   setToUTCMidnight,
-} from '../../utils';
+} from '../../shared/utils';
 
 import { getNewHighlight } from './utils/getNewHighlight';
 import {

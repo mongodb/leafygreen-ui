@@ -6,13 +6,13 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 
-import { Month } from '../shared/constants';
 import {
   DatePickerContextProps,
   DatePickerProvider,
-} from '../shared/DatePickerContext';
-import { newUTC } from '../utils';
-import { Locales, TimeZones } from '../utils/testUtils';
+} from '../shared/components/DatePickerContext';
+import { Month } from '../shared/constants';
+import { newUTC } from '../shared/utils';
+import { Locales, TimeZones } from '../shared/utils/testUtils';
 
 import { DatePicker } from './DatePicker';
 

@@ -1,11 +1,11 @@
 import React, { forwardRef } from 'react';
 
-import { useControlledValue } from '../hooks';
 import {
   contextPropNames,
   DatePickerProvider,
-} from '../shared/DatePickerContext';
-import { pickAndOmit } from '../utils';
+} from '../shared/components/DatePickerContext';
+import { useControlledValue } from '../shared/hooks';
+import { pickAndOmit } from '../shared/utils';
 
 import { DateRangeComponent } from './DateRangeComponent';
 import { DateRangeProvider } from './DateRangeContext';

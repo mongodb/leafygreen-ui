@@ -9,14 +9,14 @@ import { StoryMetaType } from '@leafygreen-ui/lib';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 import { InlineCode } from '@leafygreen-ui/typography';
 
-import { Month } from '../../shared/constants';
 import {
   contextPropNames,
   DatePickerContextProps,
   DatePickerProvider,
   defaultDatePickerContext,
-} from '../../shared/DatePickerContext';
-import { newUTC } from '../../utils';
+} from '../../shared/components/DatePickerContext';
+import { Month } from '../../shared/constants';
+import { newUTC } from '../../shared/utils';
 import { DateRangeProvider } from '../DateRangeContext';
 import { DateRangeContextProps } from '../DateRangeContext/DateRangeContext.types';
 

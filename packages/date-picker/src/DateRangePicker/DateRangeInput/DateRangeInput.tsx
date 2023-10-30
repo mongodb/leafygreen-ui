@@ -8,9 +8,13 @@ import React, {
 import { keyMap } from '@leafygreen-ui/lib';
 
 import { DateRangeType, DateType } from '../../shared//types';
-import { DateFormField, DateInputBox } from '../../shared/DateInput';
-import { useDatePickerContext } from '../../shared/DatePickerContext';
-import { isElementInputSegment, isSameUTCRange, isZeroLike } from '../../utils';
+import { DateFormField, DateInputBox } from '../../shared/components/DateInput';
+import { useDatePickerContext } from '../../shared/components/DatePickerContext';
+import {
+  isElementInputSegment,
+  isSameUTCRange,
+  isZeroLike,
+} from '../../shared/utils';
 import { useDateRangeContext } from '../DateRangeContext';
 import { getRangeSegmentToFocus } from '../utils/getRangeSegmentToFocus';
 import { getRelativeRangeSegment } from '../utils/getRelativeRangeSegment';

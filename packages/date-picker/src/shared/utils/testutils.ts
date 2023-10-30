@@ -9,8 +9,8 @@ import {
   contextPropNames,
   DatePickerProviderProps,
   defaultDatePickerContext,
-} from '../shared/DatePickerContext';
-import { BaseDatePickerProps } from '../shared/types';
+} from '../components/DatePickerContext';
+import { BaseDatePickerProps } from '../types';
 import { pickAndOmit } from '../utils';
 
 /** Time zones used to test with */

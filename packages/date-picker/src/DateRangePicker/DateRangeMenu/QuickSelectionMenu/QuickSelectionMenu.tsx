@@ -9,20 +9,20 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Option, Select } from '@leafygreen-ui/select';
 import { Overline } from '@leafygreen-ui/typography';
 
+import { useDatePickerContext } from '../../../shared/components/DatePickerContext';
 import {
   MAX_DATE,
   MIN_DATE,
   Months,
   selectElementProps,
 } from '../../../shared/constants';
-import { useDatePickerContext } from '../../../shared/DatePickerContext';
 import { DateRangeType } from '../../../shared/types';
 import {
   isSameUTCMonth,
   setToUTCMidnight,
   setUTCMonth,
   setUTCYear,
-} from '../../../utils';
+} from '../../../shared/utils';
 import { useDateRangeContext } from '../../DateRangeContext';
 
 import { QuickRangeButton } from './QuickRangeButton';

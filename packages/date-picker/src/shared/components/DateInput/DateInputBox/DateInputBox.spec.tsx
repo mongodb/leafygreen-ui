@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { SegmentRefs } from '../../../hooks';
+import { SegmentRefs } from '../../../shared/hooks';
 import { newUTC } from '../../../utils';
 import { eventContainingTargetValue } from '../../../utils/testUtils';
 import { Month } from '../../constants';

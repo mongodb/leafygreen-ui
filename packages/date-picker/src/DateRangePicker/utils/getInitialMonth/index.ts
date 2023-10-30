@@ -1,5 +1,9 @@
 import { DateRangeType } from '../../../shared/types';
-import { addMonthsUTC, getFirstOfMonth, isDefined } from '../../../utils';
+import {
+  addMonthsUTC,
+  getFirstOfMonth,
+  isDefined,
+} from '../../../shared/utils';
 
 export const getInitialMonth = (
   value: DateRangeType | undefined,

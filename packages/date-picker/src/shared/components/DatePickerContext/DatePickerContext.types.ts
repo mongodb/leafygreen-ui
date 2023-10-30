@@ -1,4 +1,4 @@
-import { BaseDatePickerProps } from '../types';
+import { BaseDatePickerProps } from '../../types';
 
 /** The props expected to pass int the provider */
 export interface DatePickerProviderProps extends BaseDatePickerProps {}

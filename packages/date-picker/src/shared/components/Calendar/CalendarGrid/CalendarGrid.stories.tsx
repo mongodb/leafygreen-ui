@@ -5,9 +5,9 @@ import { StoryFn } from '@storybook/react';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 
+import { Month } from '../../../constants';
 import { isTodayTZ, newUTC } from '../../../utils';
 import { Locales, TimeZones } from '../../../utils/testUtils';
-import { Month } from '../../constants';
 import {
   DatePickerContextProps,
   DatePickerProvider,

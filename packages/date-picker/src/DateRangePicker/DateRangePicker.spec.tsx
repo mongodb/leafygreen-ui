@@ -10,7 +10,7 @@ import last from 'lodash/last';
 
 import { Month } from '../shared/constants';
 import { eventContainingTargetValue, tabNTimes } from '../testUtils';
-import { newUTC, setUTCDate, setUTCMonth } from '../utils';
+import { newUTC, setUTCDate, setUTCMonth } from '../shared/utils';
 
 import {
   expectedTabStopLabels,

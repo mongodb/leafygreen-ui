@@ -1,9 +1,6 @@
 export { DatePicker, type DatePickerProps } from './DatePicker';
-export * from './hooks';
+export * from './shared/components';
 export * from './shared/constants';
-export {
-  type BaseDatePickerProps,
-  type DateRangeType,
-  type DateType,
-} from './shared/types';
-export * from './utils';
+export * from './shared/hooks';
+export * from './shared/types';
+export * from './shared/utils';

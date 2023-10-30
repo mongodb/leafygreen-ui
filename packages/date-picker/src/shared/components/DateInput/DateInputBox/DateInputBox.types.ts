@@ -3,7 +3,7 @@ import { ChangeEventHandler } from 'react';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 import { SegmentRefs } from '../../../hooks';
-import { DateType } from '../../types';
+import { DateType } from '../../../types';
 
 export interface DateInputBoxProps
   extends Omit<HTMLElementProps<'div'>, 'onChange'> {

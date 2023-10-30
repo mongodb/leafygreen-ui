@@ -6,9 +6,9 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Size } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
+import { defaultMax, defaultMin, defaultPlaceholder } from '../../../constants';
 import { useDatePickerContext } from '../../DatePickerContext';
 
-import { defaultMax, defaultMin, defaultPlaceholder } from './constants';
 import {
   baseStyles,
   fontSizeStyles,
