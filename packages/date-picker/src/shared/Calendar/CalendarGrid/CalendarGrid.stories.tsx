@@ -5,14 +5,14 @@ import { StoryFn } from '@storybook/react';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 
-import { Month } from '../../../constants';
-import { isTodayTZ, newUTC } from '../../../utils';
-import { Locales, TimeZones } from '../../../utils/testutils';
+import { Month } from '../../constants';
 import {
   DatePickerContextProps,
   DatePickerProvider,
   useDatePickerContext,
 } from '../../DatePickerContext';
+import { isTodayTZ, newUTC } from '../../utils';
+import { Locales, TimeZones } from '../../utils/testUtils';
 import { CalendarCell } from '../CalendarCell/CalendarCell';
 
 import { CalendarGrid } from './CalendarGrid';

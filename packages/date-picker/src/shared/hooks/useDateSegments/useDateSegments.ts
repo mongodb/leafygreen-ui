@@ -3,7 +3,7 @@ import { isSameDay } from 'date-fns';
 
 import { usePrevious } from '@leafygreen-ui/hooks';
 
-import { DateType } from '../../types';
+import { DateType } from '../../shared/types';
 import { getFormattedSegmentsFromDate } from '../../utils';
 
 import {

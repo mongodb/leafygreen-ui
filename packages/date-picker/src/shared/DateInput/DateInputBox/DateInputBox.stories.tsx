@@ -6,12 +6,12 @@ import { isValid } from 'date-fns';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType, StoryType } from '@leafygreen-ui/lib';
 
-import { Month } from '../../../constants';
-import { newUTC } from '../../../utils';
+import { Month } from '../../constants';
 import {
   DatePickerContextProps,
   DatePickerProvider,
 } from '../../DatePickerContext';
+import { newUTC } from '../../utils';
 
 import { DateInputBox } from './DateInputBox';
 

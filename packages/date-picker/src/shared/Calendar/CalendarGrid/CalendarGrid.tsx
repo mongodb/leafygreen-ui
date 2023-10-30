@@ -5,9 +5,9 @@ import { getWeekStartByLocale } from 'weekstart';
 import { cx } from '@leafygreen-ui/emotion';
 import { Disclaimer } from '@leafygreen-ui/typography';
 
-import { DaysOfWeek, daysPerWeek } from '../../../constants';
-import { getWeeksArray } from '../../../utils';
+import { DaysOfWeek, daysPerWeek } from '../../constants';
 import { useDatePickerContext } from '../../DatePickerContext';
+import { getWeeksArray } from '../../utils';
 
 import {
   calendarGridStyles,
