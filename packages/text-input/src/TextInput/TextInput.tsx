@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+import { css } from '@leafygreen-ui/emotion';
 import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
 import { useValidation } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -151,6 +152,9 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
             ref={forwardRef}
             autoComplete={disabled ? 'off' : rest?.autoComplete || 'on'}
             aria-invalid={state === 'error'}
+            className={css`
+              width: 100%;
+            `}
           />
         </FormFieldInputContainer>
       </FormField>
