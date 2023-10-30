@@ -30,7 +30,7 @@ export const devFilePatterns: Array<RegExp> = [
   /.*\/dist\/.*/,
 ];
 
-/** If a dependency is flagged as bing imported by one of these files, ignore it */
+/** If a dependency is flagged as being imported by one of these files, ignore it */
 export const ignoreFilePatterns: Array<RegExp> = [
   /.*package.json?/,
   /.*README.md/,
