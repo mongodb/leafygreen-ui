@@ -1,4 +1,4 @@
-import { render } from './utils/test-utils';
+import { render } from './utils/testutils';
 
 describe('tools/jest-matchers/.toBeLabelled', () => {
   test('unlabelled', () => {
