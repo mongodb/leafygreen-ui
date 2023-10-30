@@ -2274,6 +2274,27 @@
     lodash "^4.17.21"
     prop-types "^15.7.2"
 
+"@leafygreen-ui/lib@^12.0.0":
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/lib/-/lib-12.0.0.tgz#1ab22c541435e6c0060e21d7097dd65892da24a1"
+  integrity sha512-nhaxi4oBesnizxO0YK7XwcmiLL9U5QuN7lkZdWGDdmoJgNNL+aRju4W5vmZc7vcazSHfr3gAL+NFAGaAuopyRA==
+  dependencies:
+    "@storybook/csf" "^0.1.0"
+    lodash "^4.17.21"
+    prop-types "^15.7.2"
+
+"@leafygreen-ui/typography@^17.0.0":
+  version "17.0.2"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/typography/-/typography-17.0.2.tgz#39b984d6725dbe38e191ac3cf383e77fd7cd2501"
+  integrity sha512-wx+kk5VNMOCTenrIG2AcgAKHt9TiLhSTirZARv0J6l4VOgnO+Mkbh3sqd4mk0EOBCAFmsBR3WqwQh00JXU8Htw==
+  dependencies:
+    "@leafygreen-ui/emotion" "^4.0.7"
+    "@leafygreen-ui/icon" "^11.22.2"
+    "@leafygreen-ui/lib" "^12.0.0"
+    "@leafygreen-ui/palette" "^4.0.7"
+    "@leafygreen-ui/polymorphic" "^1.3.6"
+    "@leafygreen-ui/tokens" "^2.1.4"
+
 "@manypkg/find-root@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@manypkg/find-root/-/find-root-1.1.0.tgz#a62d8ed1cd7e7d4c11d9d52a8397460b5d4ad29f"
