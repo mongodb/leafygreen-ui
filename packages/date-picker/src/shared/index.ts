@@ -12,6 +12,7 @@ export {
   CalendarGrid,
   CalendarGridProps,
 } from './Calendar';
+export { DateInputBox, type DateInputBoxProps } from './DateInput';
 export {
   contextPropNames,
   DatePickerContext,
@@ -20,7 +21,6 @@ export {
   DatePickerProviderProps,
   defaultDatePickerContext,
   useDatePickerContext,
-} from './Context';
-export { DateInputBox, type DateInputBoxProps } from './DateInput';
+} from './DatePickerContext';
 export { MenuWrapper } from './MenuWrapper';
 >>>>>>> bb8304e80 (mv shared to shared)
