@@ -1,3 +1,9 @@
 export { useControlledValue } from './useControlledValue';
-export { useDateSegments } from './useDateSegments';
-export { useSegmentRefs } from './useSegmentRefs';
+export {
+  DateSegment,
+  DateSegmentsState,
+  DateSegmentValue,
+  isDateSegment,
+  useDateSegments,
+} from './useDateSegments';
+export { type SegmentRefs, useSegmentRefs } from './useSegmentRefs';

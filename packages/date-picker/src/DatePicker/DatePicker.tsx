@@ -1,8 +1,10 @@
 import React, { forwardRef } from 'react';
 
-import { DatePickerProvider } from '../DatePickerContext';
-import { contextPropNames } from '../DatePickerContext/DatePickerContext.utils';
 import { useControlledValue } from '../hooks/useControlledValue';
+import {
+  contextPropNames,
+  DatePickerProvider,
+} from '../shared/DatePickerContext';
 import { pickAndOmit } from '../utils';
 
 import { DatePickerProps } from './DatePicker.types';

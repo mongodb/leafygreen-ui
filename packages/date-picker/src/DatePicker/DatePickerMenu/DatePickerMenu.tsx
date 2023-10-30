@@ -14,10 +14,13 @@ import { keyMap } from '@leafygreen-ui/lib';
 import { useForwardedRef } from '@leafygreen-ui/select/src/utils';
 import { spacing } from '@leafygreen-ui/tokens';
 
-import { CalendarCell, CalendarCellState } from '../../Calendar/CalendarCell';
-import { CalendarGrid } from '../../Calendar/CalendarGrid';
-import { MenuWrapper } from '../../Calendar/MenuWrapper';
-import { useDatePickerContext } from '../../DatePickerContext';
+import {
+  CalendarCell,
+  CalendarCellState,
+  CalendarGrid,
+} from '../../shared/Calendar';
+import { useDatePickerContext } from '../../shared/DatePickerContext';
+import { MenuWrapper } from '../../shared/MenuWrapper';
 import {
   getFirstOfMonth,
   getFullMonthLabel,

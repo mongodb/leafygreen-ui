@@ -12,13 +12,11 @@ import { InlineCode } from '@leafygreen-ui/typography';
 
 import { Month } from '../../constants';
 import {
+  contextPropNames,
   DatePickerContextProps,
   DatePickerProvider,
-} from '../../DatePickerContext';
-import {
-  contextPropNames,
   defaultDatePickerContext,
-} from '../../DatePickerContext/DatePickerContext.utils';
+} from '../../shared/DatePickerContext';
 import { newUTC, pickAndOmit } from '../../utils';
 
 import { DatePickerMenu } from './DatePickerMenu';

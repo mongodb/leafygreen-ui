@@ -1,7 +1,6 @@
 import isUndefined from 'lodash/isUndefined';
 
-import { isDateSegment } from '../../../hooks/useDateSegments';
-import { SegmentRefs } from '../../../hooks/useSegmentRefs';
+import { isDateSegment, SegmentRefs } from '../../../hooks';
 
 /**
  * Given a {@link Intl.DateTimeFormatPart},

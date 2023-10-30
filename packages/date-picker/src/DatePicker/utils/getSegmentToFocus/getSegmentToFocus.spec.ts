@@ -1,6 +1,6 @@
 import { createRef } from 'react';
 
-import { SegmentRefs } from '../../../hooks/useSegmentRefs';
+import { SegmentRefs } from '../../../hooks';
 import { getFormatParts } from '../../../utils';
 
 import { getSegmentToFocus } from '.';

@@ -7,10 +7,9 @@ import { Month } from '../../constants';
 import {
   DatePickerProvider,
   DatePickerProviderProps,
-} from '../../DatePickerContext';
-import { defaultDatePickerContext } from '../../DatePickerContext/DatePickerContext.utils';
-import { newUTC } from '../../utils/newUTC';
-import { setUTCDate } from '../../utils/setUTCDate';
+  defaultDatePickerContext,
+} from '../../shared/DatePickerContext';
+import { newUTC, setUTCDate } from '../../utils';
 
 import { DatePickerMenu, DatePickerMenuProps } from '.';
 

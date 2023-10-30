@@ -4,10 +4,11 @@ export {
   useDatePickerContext,
 } from './DatePickerContext';
 export {
-  DatePickerContextProps,
-  DatePickerProviderProps,
+  type DatePickerContextProps,
+  type DatePickerProviderProps,
 } from './DatePickerContext.types';
 export {
+  type ContextPropKeys,
   contextPropNames,
   defaultDatePickerContext,
 } from './DatePickerContext.utils';
