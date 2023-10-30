@@ -4,20 +4,20 @@ import { addDays } from 'date-fns';
 import isFinite from 'lodash/isFinite';
 import range from 'lodash/range';
 
+import { useDatePickerContext } from '@leafygreen-ui/date-picker/shared/components/DatePickerContext';
 import {
   MAX_DATE,
   MIN_DATE,
   Months,
   selectElementProps,
 } from '@leafygreen-ui/date-picker/shared/constants';
-import { useDatePickerContext } from '@leafygreen-ui/date-picker/shared/DatePickerContext';
 import { DateRangeType } from '@leafygreen-ui/date-picker/shared/types';
 import {
   isSameUTCMonth,
   setToUTCMidnight,
   setUTCMonth,
   setUTCYear,
-} from '@leafygreen-ui/date-picker/utils';
+} from '@leafygreen-ui/date-picker/shared/utils';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Option, Select } from '@leafygreen-ui/select';

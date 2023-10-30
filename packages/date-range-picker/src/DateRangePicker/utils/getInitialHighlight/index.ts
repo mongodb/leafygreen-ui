@@ -1,5 +1,5 @@
 import { DateRangeType } from '@leafygreen-ui/date-picker/shared/types';
-import { isSameUTCMonth } from '@leafygreen-ui/date-picker/utils';
+import { isSameUTCMonth } from '@leafygreen-ui/date-picker/shared/utils';
 
 export const getInitialHighlight = (
   value: DateRangeType | undefined,

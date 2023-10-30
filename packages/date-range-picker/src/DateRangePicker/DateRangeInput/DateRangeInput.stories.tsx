@@ -5,7 +5,7 @@ import { StoryFn } from '@storybook/react';
 import {
   DatePickerContextProps,
   DatePickerProvider,
-} from '@leafygreen-ui/date-picker/shared/DatePickerContext';
+} from '@leafygreen-ui/date-picker/shared/components/DatePickerContext';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';

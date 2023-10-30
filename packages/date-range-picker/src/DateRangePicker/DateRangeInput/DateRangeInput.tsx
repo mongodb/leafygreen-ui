@@ -6,19 +6,19 @@ import React, {
 } from 'react';
 
 import {
-  DateRangeType,
-  DateType,
-} from '@leafygreen-ui/date-picker/shared//types';
-import {
   DateFormField,
   DateInputBox,
-} from '@leafygreen-ui/date-picker/shared/DateInput';
-import { useDatePickerContext } from '@leafygreen-ui/date-picker/shared/DatePickerContext';
+} from '@leafygreen-ui/date-picker/shared/components/DateInput';
+import { useDatePickerContext } from '@leafygreen-ui/date-picker/shared/components/DatePickerContext';
+import {
+  DateRangeType,
+  DateType,
+} from '@leafygreen-ui/date-picker/shared/types';
 import {
   isElementInputSegment,
   isSameUTCRange,
   isZeroLike,
-} from '@leafygreen-ui/date-picker/utils';
+} from '@leafygreen-ui/date-picker/shared/utils';
 import { keyMap } from '@leafygreen-ui/lib';
 
 import { useDateRangeContext } from '../DateRangeContext';

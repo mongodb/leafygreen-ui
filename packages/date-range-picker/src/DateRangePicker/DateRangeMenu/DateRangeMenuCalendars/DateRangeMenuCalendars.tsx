@@ -14,8 +14,8 @@ import {
   CalendarCellRangeState,
   CalendarCellState,
   CalendarGrid,
-} from '@leafygreen-ui/date-picker/shared/Calendar';
-import { useDatePickerContext } from '@leafygreen-ui/date-picker/shared/DatePickerContext';
+} from '@leafygreen-ui/date-picker/shared/components/Calendar';
+import { useDatePickerContext } from '@leafygreen-ui/date-picker/shared/components/DatePickerContext';
 import {
   DateRangeType,
   DateType,
@@ -29,7 +29,7 @@ import {
   maxDate,
   minDate,
   setUTCMonth,
-} from '@leafygreen-ui/date-picker/utils';
+} from '@leafygreen-ui/date-picker/shared/utils';
 import { cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';

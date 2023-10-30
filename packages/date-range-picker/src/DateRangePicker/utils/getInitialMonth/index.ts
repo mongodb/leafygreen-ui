@@ -3,7 +3,7 @@ import {
   addMonthsUTC,
   getFirstOfMonth,
   isDefined,
-} from '@leafygreen-ui/date-picker/utils';
+} from '@leafygreen-ui/date-picker/shared/utils';
 
 export const getInitialMonth = (
   value: DateRangeType | undefined,

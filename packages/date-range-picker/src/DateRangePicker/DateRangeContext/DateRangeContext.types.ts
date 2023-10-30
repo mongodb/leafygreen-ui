@@ -1,4 +1,4 @@
-import { SegmentRefs } from '@leafygreen-ui/date-picker/hooks';
+import { SegmentRefs } from '@leafygreen-ui/date-picker/shared/hooks';
 import {
   DateRangeType,
   DateType,

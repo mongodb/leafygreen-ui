@@ -13,7 +13,7 @@ import {
 import {
   addMonthsUTC,
   setToUTCMidnight,
-} from '@leafygreen-ui/date-picker/utils';
+} from '@leafygreen-ui/date-picker/shared/utils';
 
 import { getInitialHighlight } from '../utils/getInitialHighlight';
 import { getInitialMonth } from '../utils/getInitialMonth';

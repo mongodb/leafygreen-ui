@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-import { useSegmentRefs } from '@leafygreen-ui/date-picker/hooks';
+import { useSegmentRefs } from '@leafygreen-ui/date-picker/shared/hooks';
 import { useDynamicRefs, useForwardedRef } from '@leafygreen-ui/hooks';
 
 import { DateRangeComponentRefs } from './DateRangeContext.types';

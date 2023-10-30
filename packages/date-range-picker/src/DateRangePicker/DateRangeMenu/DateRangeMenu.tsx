@@ -6,8 +6,8 @@ import React, {
   useEffect,
 } from 'react';
 
-import { useDatePickerContext } from '@leafygreen-ui/date-picker/shared/DatePickerContext';
-import { MenuWrapper } from '@leafygreen-ui/date-picker/shared/MenuWrapper';
+import { useDatePickerContext } from '@leafygreen-ui/date-picker/shared/components/DatePickerContext';
+import { MenuWrapper } from '@leafygreen-ui/date-picker/shared/components/MenuWrapper';
 import { DateRangeType } from '@leafygreen-ui/date-picker/shared/types';
 import { keyMap } from '@leafygreen-ui/lib';
 import { spacing } from '@leafygreen-ui/tokens';
