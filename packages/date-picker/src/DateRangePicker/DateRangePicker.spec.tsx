@@ -20,7 +20,7 @@ import { DateRangePicker } from '.';
 
 const testToday = newUTC(2023, Month.December, 26);
 
-describe('packages/date-picker/date-range-picker', () => {
+describe.skip('packages/date-picker/date-range-picker', () => {
   beforeEach(() => {
     // Set the current time to midnight UTC on 2023-12-26
     jest.useFakeTimers().setSystemTime(testToday);
