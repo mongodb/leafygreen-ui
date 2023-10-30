@@ -22,7 +22,6 @@ export function validateListedDevDependencies(
 ): Array<string> {
   const { verbose } = options ?? { verbose: false };
   const {
-    // devDependencies: importedPackagesInTestFile,
     dependencies: importedPackagesInSourceFile,
   } = sortDependenciesByUsage(importedPackages, pkgName);
 
