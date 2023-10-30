@@ -2,12 +2,12 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { Month } from '../../shared/constants';
 import {
   DatePickerProvider,
   DatePickerProviderProps,
 } from '../../DatePickerContext';
 import { defaultDatePickerContext } from '../../DatePickerContext/DatePickerContext.utils';
+import { Month } from '../../shared/constants';
 
 import { DatePickerInput, DatePickerInputProps } from '.';
 
