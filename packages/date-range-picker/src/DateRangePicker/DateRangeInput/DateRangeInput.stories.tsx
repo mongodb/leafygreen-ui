@@ -2,14 +2,13 @@
 import React from 'react';
 import { StoryFn } from '@storybook/react';
 
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { StoryMetaType } from '@leafygreen-ui/lib';
-import { Size } from '@leafygreen-ui/tokens';
-
 import {
   DatePickerContextProps,
   DatePickerProvider,
-} from '../../shared/DatePickerContext';
+} from '@leafygreen-ui/date-picker/shared/DatePickerContext';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import { StoryMetaType } from '@leafygreen-ui/lib';
+import { Size } from '@leafygreen-ui/tokens';
 
 import { DateRangeInput } from './DateRangeInput';
 

@@ -1,9 +1,9 @@
 import isUndefined from 'lodash/isUndefined';
 import last from 'lodash/last';
 
-import { DateSegment, SegmentRefs } from '../../../hooks';
-import { DatePickerContextProps } from '../../../shared/DatePickerContext';
-import { getFirstEmptySegment } from '../../../utils';
+import { DateSegment, SegmentRefs } from '@leafygreen-ui/date-picker/hooks';
+import { DatePickerContextProps } from '@leafygreen-ui/date-picker/shared/DatePickerContext';
+import { getFirstEmptySegment } from '@leafygreen-ui/date-picker/utils';
 
 interface GetRangeSegmentToFocusProps {
   target: EventTarget;

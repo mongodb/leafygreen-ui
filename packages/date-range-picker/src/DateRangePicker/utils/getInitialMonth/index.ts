@@ -1,5 +1,9 @@
-import { DateRangeType } from '../../../shared/types';
-import { addMonthsUTC, getFirstOfMonth, isDefined } from '../../../utils';
+import { DateRangeType } from '@leafygreen-ui/date-picker/shared/types';
+import {
+  addMonthsUTC,
+  getFirstOfMonth,
+  isDefined,
+} from '@leafygreen-ui/date-picker/utils';
 
 export const getInitialMonth = (
   value: DateRangeType | undefined,

@@ -1,8 +1,8 @@
 import React from 'react';
 
+import { useDatePickerContext } from '@leafygreen-ui/date-picker/shared/DatePickerContext';
 import { useBackdropClick } from '@leafygreen-ui/hooks';
 
-import { useDatePickerContext } from '../../shared/DatePickerContext';
 import { useDateRangeContext } from '../DateRangeContext';
 import { DateRangeInput } from '../DateRangeInput';
 import { DateRangeMenu } from '../DateRangeMenu';

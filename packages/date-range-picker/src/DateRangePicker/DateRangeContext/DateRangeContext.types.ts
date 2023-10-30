@@ -1,7 +1,10 @@
+import { SegmentRefs } from '@leafygreen-ui/date-picker/hooks';
+import {
+  DateRangeType,
+  DateType,
+} from '@leafygreen-ui/date-picker/shared/types';
 import { DynamicRefGetter } from '@leafygreen-ui/hooks';
 
-import { SegmentRefs } from '../../hooks/useSegmentRefs';
-import { DateRangeType, DateType } from '../../shared/types';
 import { DateRangePickerProps } from '../DateRangePicker.types';
 
 export interface DateRangeComponentRefs {

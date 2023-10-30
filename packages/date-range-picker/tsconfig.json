@@ -6,6 +6,7 @@
     "rootDir": "src",
     "baseUrl": ".",
     "paths": {
+      "@leafygreen-ui/date-picker/*": ["../date-picker/src/*"],
       "@leafygreen-ui/icon/dist/*": ["../icon/src/generated/*"],
       "@leafygreen-ui/*": ["../*/src"]
     }
@@ -15,6 +16,9 @@
   ],
   "exclude": ["**/*.spec.*", "**/*.story.*"],
   "references": [
+    {
+      "path": "../date-picker"
+    },
     {
       "path": "../emotion"
     },

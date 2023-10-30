@@ -6,8 +6,15 @@ import React, {
   useState,
 } from 'react';
 
-import { DateRangeType, DateType } from '../../shared/types';
-import { addMonthsUTC, setToUTCMidnight } from '../../utils';
+import {
+  DateRangeType,
+  DateType,
+} from '@leafygreen-ui/date-picker/shared/types';
+import {
+  addMonthsUTC,
+  setToUTCMidnight,
+} from '@leafygreen-ui/date-picker/utils';
+
 import { getInitialHighlight } from '../utils/getInitialHighlight';
 import { getInitialMonth } from '../utils/getInitialMonth';
 

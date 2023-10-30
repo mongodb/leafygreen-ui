@@ -3,14 +3,15 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { addDays, subDays } from 'date-fns';
 
-import { Month } from '../../shared/constants';
+import { Month } from '@leafygreen-ui/date-picker/shared/constants';
+import { newUTC } from '@leafygreen-ui/date-picker/utils';
+
 import {
   DatePickerProvider,
   DatePickerProviderProps,
   defaultDatePickerContext,
 } from '../../DatePickerContext';
 import { DateRangeType } from '../../types';
-import { newUTC } from '../../utils';
 import {
   DateRangeProvider,
   type DateRangeProviderProps,

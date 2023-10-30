@@ -1,10 +1,9 @@
 import React from 'react';
 import isUndefined from 'lodash/isUndefined';
 import last from 'lodash/last';
-import { DateSegment } from 'src/hooks/useDateSegments';
 
-import { SegmentRefs } from '../../../hooks';
-import { DatePickerContextProps } from '../../../shared/DatePickerContext';
+import { DateSegment, SegmentRefs } from '@leafygreen-ui/date-picker/hooks';
+import { DatePickerContextProps } from '@leafygreen-ui/date-picker/shared';
 
 type RelativeDirection = 'next' | 'prev' | 'first' | 'last';
 interface GetRelativeSegmentContext {

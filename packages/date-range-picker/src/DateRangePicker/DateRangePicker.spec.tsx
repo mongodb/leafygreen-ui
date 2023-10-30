@@ -8,9 +8,14 @@ import {
 import userEvent from '@testing-library/user-event';
 import last from 'lodash/last';
 
-import { Month } from '../shared/constants';
+import { Month } from '@leafygreen-ui/date-picker/shared/constants';
+import {
+  newUTC,
+  setUTCDate,
+  setUTCMonth,
+} from '@leafygreen-ui/date-picker/utils';
+
 import { eventContainingTargetValue, tabNTimes } from '../testUtils';
-import { newUTC, setUTCDate, setUTCMonth } from '../utils';
 
 import {
   expectedTabStopLabels,

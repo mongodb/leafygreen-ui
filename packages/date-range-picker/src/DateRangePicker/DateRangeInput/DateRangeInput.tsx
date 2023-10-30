@@ -5,12 +5,22 @@ import React, {
   MouseEventHandler,
 } from 'react';
 
+import {
+  DateRangeType,
+  DateType,
+} from '@leafygreen-ui/date-picker/shared//types';
+import {
+  DateFormField,
+  DateInputBox,
+} from '@leafygreen-ui/date-picker/shared/DateInput';
+import { useDatePickerContext } from '@leafygreen-ui/date-picker/shared/DatePickerContext';
+import {
+  isElementInputSegment,
+  isSameUTCRange,
+  isZeroLike,
+} from '@leafygreen-ui/date-picker/utils';
 import { keyMap } from '@leafygreen-ui/lib';
 
-import { DateRangeType, DateType } from '../../shared//types';
-import { DateFormField, DateInputBox } from '../../shared/DateInput';
-import { useDatePickerContext } from '../../shared/DatePickerContext';
-import { isElementInputSegment, isSameUTCRange, isZeroLike } from '../../utils';
 import { useDateRangeContext } from '../DateRangeContext';
 import { getRangeSegmentToFocus } from '../utils/getRangeSegmentToFocus';
 import { getRelativeRangeSegment } from '../utils/getRelativeRangeSegment';

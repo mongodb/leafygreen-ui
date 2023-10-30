@@ -1,11 +1,11 @@
 import React, { forwardRef } from 'react';
 
-import { useControlledValue } from '../hooks';
+import { useControlledValue } from '@leafygreen-ui/date-picker/hooks';
 import {
   contextPropNames,
   DatePickerProvider,
-} from '../shared/DatePickerContext';
-import { pickAndOmit } from '../utils';
+} from '@leafygreen-ui/date-picker/shared/DatePickerContext';
+import { pickAndOmit } from '@leafygreen-ui/date-picker/utils';
 
 import { DateRangeComponent } from './DateRangeComponent';
 import { DateRangeProvider } from './DateRangeContext';

@@ -7,8 +7,8 @@ import {
 import userEvent from '@testing-library/user-event';
 import { subDays } from 'date-fns';
 
-import { MIN_DATE, Month } from '../shared/constants';
-import { newUTC } from '../utils';
+import { MIN_DATE, Month } from '@leafygreen-ui/date-picker/shared/constants';
+import { newUTC } from '@leafygreen-ui/date-picker/utils';
 
 import { DateRangePicker, DateRangePickerProps } from '.';
 
