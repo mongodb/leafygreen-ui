@@ -39,7 +39,7 @@
   "dependencies": {
     "@leafygreen-ui/button": "^21.0.7",
     "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/form-field": "^0.1.0",
+    "@leafygreen-ui/form-field": "^0.2.0",
     "@leafygreen-ui/hooks": "^8.0.0",
     "@leafygreen-ui/icon": "^11.23.0",
     "@leafygreen-ui/icon-button": "^15.0.17",
