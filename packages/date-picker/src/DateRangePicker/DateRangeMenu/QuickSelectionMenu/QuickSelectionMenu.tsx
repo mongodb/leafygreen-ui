@@ -1,9 +1,9 @@
 import React, { MouseEventHandler } from 'react';
 import { forwardRef } from 'react';
 import { addDays } from 'date-fns';
-import { isFinite } from 'lodash';
+import isFinite from 'lodash/isFinite';
 import range from 'lodash/range';
-import { DateRangeType } from 'src/types';
+import { DateRangeType } from '../../../types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';

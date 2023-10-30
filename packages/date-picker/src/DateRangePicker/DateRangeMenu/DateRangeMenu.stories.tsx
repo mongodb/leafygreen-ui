@@ -67,6 +67,7 @@ const MenuDecorator: Decorator<DateRangeMenuStoryProps> = (Story, ctx) => {
           rootRef={React.createRef()}
           value={value}
           setValue={() => {}}
+          handleValidation={() => {}}
         >
           <Story {...args} />
         </DateRangeProvider>
