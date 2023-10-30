@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { createRef, useState } from 'react';
 import { act } from 'react-dom/test-utils';
 import {
   fireEvent,
@@ -134,6 +134,13 @@ describe('packages/select', () => {
 
     rerender(<Select {...defaultProps} disabled />);
     expect(button).toHaveAttribute('aria-disabled', 'true');
+  });
+
+  test('accepts a ref', () => {
+    const ref = createRef<HTMLDivElement>();
+    const { container } = render(<Select ref={ref} {...defaultProps} />);
+    expect(ref.current).toBeDefined();
+    expect(ref.current).toBe(container.firstElementChild);
   });
 
   test('must render options in <Select>', () => {

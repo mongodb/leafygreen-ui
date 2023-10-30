@@ -1,5 +1,13 @@
 # @leafygreen-ui/stepper
 
+## 3.2.8
+
+### Patch Changes
+
+- cf06988d: - LiveExample now correctly renders in full width
+  - `darkMode` control now correctly renders in Storybook
+  - Internal code reorganization to match latest standards
+
 ## 3.2.7
 
 ### Patch Changes
