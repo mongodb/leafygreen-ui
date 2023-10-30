@@ -2,15 +2,15 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { SegmentRefs } from '../../../hooks';
+import { newUTC } from '../../../utils';
+import { eventContainingTargetValue } from '../../../utils/testUtils';
 import { Month } from '../../constants';
 import {
   DatePickerProvider,
   DatePickerProviderProps,
 } from '../../DatePickerContext';
 import { defaultDatePickerContext } from '../../DatePickerContext/DatePickerContext.utils';
-import { SegmentRefs } from '../../hooks/useSegmentRefs';
-import { eventContainingTargetValue } from '../../testUtils';
-import { newUTC } from '../../utils';
 
 import { DateInputBox, type DateInputBoxProps } from '.';
 
@@ -194,6 +194,7 @@ describe('packages/date-picker/shared/date-input-box', () => {
     });
 
     // TODO:
+    // eslint-disable-next-line jest/no-disabled-tests
     describe.skip('Auto-focus', () => {
       test('typing a complete segment value focuses the next segment', () => {
         const { yearInput, monthInput } = renderDateInputBox(
