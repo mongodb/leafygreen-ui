@@ -21,6 +21,11 @@
       "require": "./dist/hooks/index.js",
       "import": "./dist/hooks/esm/index.js",
       "types": "./dist/hooks/index.d.ts"
+    },
+    "./shared": {
+      "require": "./dist/shared/index.js",
+      "import": "./dist/shared/esm/index.js",
+      "types": "./dist/shared/index.d.ts"
     }
   },
   "scripts": {

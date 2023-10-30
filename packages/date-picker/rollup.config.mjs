@@ -4,16 +4,11 @@ import {
   umdConfig,
 } from '@lg-tools/build/config/rollup.config.mjs';
 
-const utilsConfig = [esmConfig, umdConfig].map(config => ({
+const sharedConfig = [esmConfig, umdConfig].map(config => ({
   ...config,
-  input: 'src/utils/index.ts',
+  input: 'src/shared/index.ts',
 }));
 
-const hooksConfig = [esmConfig, umdConfig].map(config => ({
-  ...config,
-  input: 'src/hooks/index.ts',
-}));
-
-const config = [esmConfig, umdConfig, ...utilsConfig, ...hooksConfig];
+const config = [esmConfig, umdConfig, ...sharedConfig];
 
 export default config;
