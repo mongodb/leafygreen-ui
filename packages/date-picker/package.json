@@ -2,10 +2,27 @@
   "name": "@leafygreen-ui/date-picker",
   "version": "0.1.0",
   "description": "LeafyGreen UI Kit Date Picker",
+  "license": "Apache-2.0",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
-  "license": "Apache-2.0",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./utils": {
+      "require": "./dist/utils/index.js",
+      "import": "./dist/utils/esm/index.js",
+      "types": "./dist/utils/index.d.ts"
+    },
+    "./hooks": {
+      "require": "./dist/hooks/index.js",
+      "import": "./dist/hooks/esm/index.js",
+      "types": "./dist/hooks/index.d.ts"
+    }
+  },
   "scripts": {
     "build": "lg build-package",
     "tsc": "lg build-ts",

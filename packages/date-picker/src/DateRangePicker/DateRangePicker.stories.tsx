@@ -13,13 +13,13 @@ import {
   DatePickerContextProps,
   DatePickerProvider,
 } from '../DatePickerContext';
+import { DatePickerState, DateRangeType } from '../types';
+import { newUTC } from '../utils';
 import {
   getProviderPropsFromStoryContext,
   Locales,
   TimeZones,
-} from '../testUtils';
-import { DatePickerState, DateRangeType } from '../types';
-import { newUTC } from '../utils';
+} from '../utils/testUtils';
 
 import { DateRangePicker } from './DateRangePicker';
 

@@ -11,8 +11,8 @@ import {
   DatePickerContextProps,
   DatePickerProvider,
 } from '../DatePickerContext';
-import { Locales, TimeZones } from '../testUtils';
 import { newUTC } from '../utils';
+import { Locales, TimeZones } from '../utils/testUtils';
 
 import { DatePicker } from './DatePicker';
 
