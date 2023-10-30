@@ -1,4 +1,4 @@
-import { Month } from '../../shared/constants';
+import { Month } from '../../constants';
 
 import { getUTCDateString } from '.';
 
