@@ -1,8 +1,7 @@
+import padStart from 'lodash/padStart';
 import range from 'lodash/range';
 
 import { DropdownWidthBasis } from '@leafygreen-ui/select';
-
-import { getMonthName } from './utils';
 
 /** Days in a week */
 export const daysPerWeek = 7 as const;
@@ -35,7 +34,14 @@ export const MAX_DATE = new Date(Date.UTC(2038, Month.January, 19));
 export const Months: Array<{
   long: string;
   short: string;
-}> = range(12).map(m => getMonthName(m));
+}> = range(12).map((monthIndex: number) => {
+  const str = `2023-${padStart((monthIndex + 1).toString(), 2, '0')}-15`;
+  const month = new Date(str);
+  return {
+    long: month.toLocaleString('default', { month: 'long' }),
+    short: month.toLocaleString('default', { month: 'short' }),
+  };
+});
 
 /** Long & short form for each Day of the week */
 export const DaysOfWeek = [

@@ -3,13 +3,13 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { addDays, subDays } from 'date-fns';
 
-import { Month } from '../../shared/constants';
 import {
   DatePickerProvider,
   DatePickerProviderProps,
   defaultDatePickerContext,
-} from '../../shared/DatePickerContext';
-import { newUTC, setUTCDate } from '../../utils';
+} from '../../shared/components/DatePickerContext';
+import { Month } from '../../shared/constants';
+import { newUTC, setUTCDate } from '../../shared/utils';
 
 import { DatePickerMenu, DatePickerMenuProps } from '.';
 

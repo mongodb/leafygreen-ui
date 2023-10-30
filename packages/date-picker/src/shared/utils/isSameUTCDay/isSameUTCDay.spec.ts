@@ -1,6 +1,6 @@
 import tzMock from 'timezone-mock';
 
-import { Month } from '../../shared/constants';
+import { Month } from '../../constants';
 
 import { isSameUTCDay } from '.';
 

@@ -5,8 +5,8 @@ import userEvent from '@testing-library/user-event';
 import {
   DatePickerProvider,
   DatePickerProviderProps,
-} from '../../DatePickerContext';
-import { defaultDatePickerContext } from '../../DatePickerContext/DatePickerContext.utils';
+  defaultDatePickerContext,
+} from '../../shared/components/DatePickerContext';
 import { Month } from '../../shared/constants';
 
 import { DatePickerInput, DatePickerInputProps } from '.';

@@ -1,7 +1,7 @@
 import { createRef } from 'react';
 
 import { SegmentRefs } from '../../../shared/hooks';
-import { getFormatParts } from '../../../utils';
+import { getFormatParts } from '../../../shared/utils';
 
 import { getSegmentToFocus } from '.';
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { eventContainingTargetValue } from '../../testUtils';
+import { eventContainingTargetValue } from '../../../utils/testUtils';
 
 import { DateInputSegment, type DateInputSegmentProps } from '.';
 
