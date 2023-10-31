@@ -138,7 +138,7 @@ function Tooltip({
           return {
             onMouseEnter: debounce((e: MouseEvent) => {
               userTriggerHandler('onMouseEnter', e);
-              // Without this the tooltip sometimes opens without a transition. flushSync prevents this state update from automically batching. Instead updates are made synchronously.
+              // Without this the tooltip sometimes opens without a transition. flushSync prevents this state update from automatically batching. Instead updates are made synchronously.
               // https://react.dev/reference/react-dom/flushSync#flushing-updates-for-third-party-integrations
               flushSync(() => {
                 setOpen(true);
