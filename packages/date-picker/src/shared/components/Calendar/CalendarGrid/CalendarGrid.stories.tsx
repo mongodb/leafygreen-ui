@@ -7,7 +7,7 @@ import { StoryMetaType } from '@leafygreen-ui/lib';
 
 import { Month } from '../../../constants';
 import { isTodayTZ, newUTC } from '../../../utils';
-import { Locales, TimeZones } from '../../../utils/testUtils';
+import { Locales, TimeZones } from '../../../utils/testutils';
 import {
   DatePickerContextProps,
   DatePickerProvider,

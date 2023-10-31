@@ -13,7 +13,7 @@ import { newUTC } from '../shared/utils';
 import {
   eventContainingTargetValue,
   tabNTimes,
-} from '../shared/utils/testUtils';
+} from '../shared/utils/testutils';
 
 import { renderDatePicker } from './DatePicker.testutils';
 import { DatePicker } from '.';

@@ -12,7 +12,7 @@ import {
 } from '../shared/components/DatePickerContext';
 import { Month } from '../shared/constants';
 import { newUTC } from '../shared/utils';
-import { Locales, TimeZones } from '../shared/utils/testUtils';
+import { Locales, TimeZones } from '../shared/utils/testutils';
 
 import { DatePicker } from './DatePicker';
 

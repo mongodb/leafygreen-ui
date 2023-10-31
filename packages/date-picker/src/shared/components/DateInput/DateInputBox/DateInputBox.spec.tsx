@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { Month } from '../../../constants';
 import { SegmentRefs } from '../../../hooks';
 import { newUTC } from '../../../utils';
-import { eventContainingTargetValue } from '../../../utils/testUtils';
+import { eventContainingTargetValue } from '../../../utils/testutils';
 import {
   DatePickerProvider,
   DatePickerProviderProps,
