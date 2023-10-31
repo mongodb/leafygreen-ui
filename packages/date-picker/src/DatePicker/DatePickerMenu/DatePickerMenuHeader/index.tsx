@@ -72,8 +72,10 @@ export const DatePickerMenuHeader = forwardRef<
 
     // `isPopoverOpen` updated value is not accessible in `<DatePickerMenu>` since the `<PopoverProvider>` is inside `<MenuWrapper>`
     const handleEcsPress: KeyboardEventHandler<HTMLDivElement> = e => {
+      console.log('handleEcsPress', e.key, { isPopoverOpen });
       // This check is to ensure that the date picker menu will not close when a select menu is open, focus is inside the select menu, and the ESC key is pressed.
       if (!isPopoverOpen && e.key === keyMap.Escape) {
+        console.log('😈😈😈😈😈😈');
         setOpen(false);
         handleValidation?.(value);
       }
