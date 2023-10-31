@@ -109,3 +109,50 @@ export const renderDatePicker = (
     openMenu,
   };
 };
+
+export const expectedTabStopLabels = {
+  closed: [
+    'none',
+    'input > year',
+    'input > month',
+    'input > day',
+    'input > open menu button',
+    'none',
+  ],
+  open: [
+    'input > year',
+    'input > month',
+    'input > day',
+    'input > open menu button',
+    'menu > today cell',
+    'menu > left chevron',
+    'menu > month select',
+    'menu > year select',
+    'menu > right chevron',
+    'menu > today cell',
+  ],
+};
+
+type TabStopLabel =
+  (typeof expectedTabStopLabels)[keyof typeof expectedTabStopLabels][number];
+export const getTabStopElementMap = (
+  renderResult: RenderDatePickerResult,
+): Record<TabStopLabel, HTMLElement | null> => {
+  const { yearInput, monthInput, dayInput, calendarButton, getMenuElements } =
+    renderResult;
+  const { todayCell, monthSelect, yearSelect, leftChevron, rightChevron } =
+    getMenuElements();
+
+  return {
+    none: null,
+    'input > year': yearInput,
+    'input > month': monthInput,
+    'input > day': dayInput,
+    'input > open menu button': calendarButton,
+    'menu > today cell': todayCell,
+    'menu > left chevron': leftChevron,
+    'menu > month select': monthSelect,
+    'menu > year select': yearSelect,
+    'menu > right chevron': rightChevron,
+  };
+};
