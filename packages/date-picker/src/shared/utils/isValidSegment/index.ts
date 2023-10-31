@@ -5,7 +5,7 @@ import { DateSegment, DateSegmentValue } from '../../hooks';
 /**
  * Returns whether a given value is a valid segment value
  */
-export const isValidSegment = (
+export const isValidSegmentValue = (
   segment?: DateSegmentValue,
 ): segment is DateSegmentValue =>
   !isUndefined(segment) && !isNaN(Number(segment)) && Number(segment) > 0;

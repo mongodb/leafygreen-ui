@@ -1,4 +1,5 @@
 import React, {
+  ChangeEventHandler,
   FocusEventHandler,
   forwardRef,
   KeyboardEventHandler,
@@ -10,7 +11,13 @@ import { keyMap } from '@leafygreen-ui/lib';
 import { DateFormField, DateInputBox } from '../../shared/components/DateInput';
 import { useDatePickerContext } from '../../shared/components/DatePickerContext';
 import { useSegmentRefs } from '../../shared/hooks';
-import { isElementInputSegment, isZeroLike } from '../../shared/utils';
+import {
+  isElementInputSegment,
+  isExplicitSegmentValue,
+  isValidSegmentName,
+  isValidValueForSegment,
+  isZeroLike,
+} from '../../shared/utils';
 import { getRelativeSegment } from '../utils/getRelativeSegment';
 import { getSegmentToFocus } from '../utils/getSegmentToFocus';
 
@@ -29,7 +36,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
     }: DatePickerInputProps,
     fwdRef,
   ) => {
-    const { formatParts, disabled, setOpen, setIsDirty } =
+    const { formatParts, disabled, setOpen, isDirty, setIsDirty } =
       useDatePickerContext();
     const segmentRefs = useSegmentRefs();
 
@@ -171,6 +178,32 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       }
     };
 
+    /**
+     * Called when any segment changes
+     */
+    const handleSegmentChange: ChangeEventHandler<HTMLInputElement> = e => {
+      const segment = e.target.dataset['segment'];
+      const segmentValue = e.target.value;
+
+      if (isValidSegmentName(segment)) {
+        if (
+          isValidValueForSegment(segment, segmentValue) &&
+          isExplicitSegmentValue(segment, segmentValue)
+        ) {
+          const nextSegment = getRelativeSegment('next', {
+            segment: segmentRefs[segment],
+            formatParts,
+            segmentRefs,
+          });
+
+          nextSegment?.current?.focus();
+        } else if (!isValidValueForSegment(segment, segmentValue) && isDirty) {
+          handleValidation?.(value);
+        }
+      }
+      onSegmentChange?.(e);
+    };
+
     return (
       <DateFormField
         ref={fwdRef}
@@ -184,7 +217,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           value={value}
           setValue={setValue}
           segmentRefs={segmentRefs}
-          onChange={onSegmentChange}
+          onChange={handleSegmentChange}
         />
       </DateFormField>
     );

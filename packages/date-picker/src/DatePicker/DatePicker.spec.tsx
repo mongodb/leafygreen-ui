@@ -747,6 +747,83 @@ describe('packages/date-picker', () => {
             eventContainingTargetValue('2023'),
           );
         });
+
+        describe('auto-advance focus', () => {
+          describe('ISO format', () => {
+            const dateFormat = 'iso8601';
+            test('when year value is explicit, focus advances to month', () => {
+              const { yearInput, monthInput } = renderDatePicker({
+                dateFormat,
+              });
+              userEvent.type(yearInput, '1999');
+              expect(monthInput).toHaveFocus();
+            });
+            test('when year value is ambiguous, focus does not advance', () => {
+              const { yearInput } = renderDatePicker({ dateFormat });
+              userEvent.type(yearInput, '2');
+              expect(yearInput).toHaveFocus();
+            });
+            test('when year value is out-of-range, focus does not advance', () => {
+              const { yearInput } = renderDatePicker({ dateFormat });
+              userEvent.type(yearInput, '1945');
+              expect(yearInput).toHaveFocus();
+            });
+
+            test('when month value is explicit, focus advances to day', () => {
+              const { monthInput, dayInput } = renderDatePicker({
+                dateFormat,
+              });
+              userEvent.type(monthInput, '5');
+              expect(dayInput).toHaveFocus();
+            });
+            test('when month value is ambiguous, focus does not advance', () => {
+              const { monthInput } = renderDatePicker({
+                dateFormat,
+              });
+              userEvent.type(monthInput, '1');
+              expect(monthInput).toHaveFocus();
+            });
+          });
+
+          describe('en-US format', () => {
+            const dateFormat = 'en-US';
+            test('when month value is explicit, focus advances to day', () => {
+              const { monthInput, dayInput } = renderDatePicker({
+                dateFormat,
+              });
+              userEvent.type(monthInput, '5');
+              expect(dayInput).toHaveFocus();
+            });
+            test('when month value is ambiguous, focus does not advance', () => {
+              const { monthInput } = renderDatePicker({ dateFormat });
+              userEvent.type(monthInput, '1');
+              expect(monthInput).toHaveFocus();
+            });
+
+            test('when day value is explicit, focus advances to year', () => {
+              const { dayInput, yearInput } = renderDatePicker({
+                dateFormat,
+              });
+              userEvent.type(dayInput, '5');
+              expect(yearInput).toHaveFocus();
+            });
+            test('when day value is ambiguous, focus does not advance', () => {
+              const { dayInput } = renderDatePicker({ dateFormat });
+              userEvent.type(dayInput, '2');
+              expect(dayInput).toHaveFocus();
+            });
+
+            test('when year value is ambiguous, focus does not update', () => {
+              const { monthInput, dayInput, yearInput } = renderDatePicker({
+                dateFormat,
+              });
+              userEvent.type(monthInput, '5');
+              userEvent.type(dayInput, '5');
+              userEvent.type(yearInput, '2');
+              expect(yearInput).toHaveFocus();
+            });
+          });
+        });
       });
 
       describe('on un-focus/blur', () => {
