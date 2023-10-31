@@ -100,9 +100,6 @@ const meta: StoryMetaType<typeof Menu> = {
         </div>
       ),
     },
-    chromatic: {
-      delay: transitionDuration.default,
-    },
   },
   args: {
     open: true,
