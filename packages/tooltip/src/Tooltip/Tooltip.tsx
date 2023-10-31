@@ -19,7 +19,7 @@ import { isComponentGlyph } from '@leafygreen-ui/icon';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import Popover, { Align, Justify } from '@leafygreen-ui/popover';
+import Popover, { Justify } from '@leafygreen-ui/popover';
 import {
   bodyTypeScaleStyles,
   useUpdatedBaseFontSize,
@@ -36,6 +36,7 @@ import {
   transitionDelay,
 } from './Tooltip.styles';
 import {
+  Align,
   PopoverFunctionParameters,
   TooltipProps,
   TriggerEvent,
