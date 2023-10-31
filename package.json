@@ -30,7 +30,8 @@
     "validate": "lg validate"
   },
   "devDependencies": {
-    "@babel/core": "7.21.8",
+    "@babel/core": "7.23.2",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@changesets/cli": "^2.26.0",
     "@lg-tools/cli": "*",
     "@lg-tools/meta": "*",
