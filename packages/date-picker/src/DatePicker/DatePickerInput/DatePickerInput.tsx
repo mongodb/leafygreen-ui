@@ -33,7 +33,10 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       useDatePickerContext();
     const segmentRefs = useSegmentRefs();
 
-    /** Called when the input, or any of its children, is clicked */
+    /**
+     * Called when the input, or any of its children, is clicked.
+     * Opens the menu and focuses the appropriate segment
+     */
     const handleInputClick: MouseEventHandler<HTMLElement> = ({ target }) => {
       if (!disabled) {
         setOpen(true);
@@ -48,6 +51,10 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       }
     };
 
+    /**
+     * Called when the calendar button is clicked.
+     * Opens the menu
+     */
     const handleIconButtonClick: MouseEventHandler<HTMLButtonElement> = e => {
       // Prevent the parent click handler from being called since clicks on the parent always opens the dropdown
       e.stopPropagation();
@@ -146,7 +153,10 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       onKeyDown?.(e);
     };
 
-    /** Called when any child of DatePickerInput is blurred */
+    /**
+     * Called when any child of DatePickerInput is blurred.
+     * Calls the validation handler.
+     */
     const handleInputBlur: FocusEventHandler = e => {
       const nextFocus = e.relatedTarget as HTMLInputElement;
 
