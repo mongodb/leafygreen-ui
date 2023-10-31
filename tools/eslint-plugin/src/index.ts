@@ -27,11 +27,11 @@ const plugin: Plugin = {
       plugins: ['@lg-tools'],
       rules: {
         '@lg-tools/boolean-verb-prefix': [
-          'warn',
+          'off',
           { allowVarNames: ['darkMode', 'fix'] },
         ],
-        '@lg-tools/no-indirect-imports': ['warn'],
-        '@lg-tools/standard-testid': ['warn', { prefix: 'lg-' }],
+        '@lg-tools/no-indirect-imports': ['off'],
+        '@lg-tools/standard-testid': ['off', { prefix: 'lg-' }],
       },
     },
     external: {
