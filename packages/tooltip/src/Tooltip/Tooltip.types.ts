@@ -23,7 +23,10 @@ export const Align = {
   Right: PopoverAlign.Right,
 } as const;
 
-export type Align = (typeof Align)[keyof typeof Align];
+export type Align = Exclude<
+  PopoverAlign,
+  'center-vertical' | 'center-horizontal'
+>;
 
 export { Justify };
 
@@ -35,7 +38,7 @@ export interface PopoverFunctionParameters {
 
 type ModifiedPopoverProps = Omit<
   PopoverProps,
-  'active' | 'adjustOnMutation' | 'children'
+  'active' | 'adjustOnMutation' | 'children' | 'align'
 >;
 
 export type TooltipProps = Omit<
@@ -43,6 +46,12 @@ export type TooltipProps = Omit<
   keyof ModifiedPopoverProps
 > &
   ModifiedPopoverProps & {
+    /**
+     * Determines the alignment of the popover content relative to the trigger element
+     *
+     * @default 'top'
+     */
+    align?: Align;
     /**
      * A slot for the element used to trigger the `Tooltip`.
      */
