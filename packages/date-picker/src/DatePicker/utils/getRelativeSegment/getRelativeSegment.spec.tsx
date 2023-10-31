@@ -69,7 +69,7 @@ describe('packages/date-picker/utils/getRelativeSegment', () => {
     ).toBe(segmentRefs.month);
   });
 
-  test('prev from month => month', () => {
+  test('prev from month => year', () => {
     expect(
       getRelativeSegment('prev', {
         segment: segmentRefs.month,
@@ -77,5 +77,25 @@ describe('packages/date-picker/utils/getRelativeSegment', () => {
         segmentRefs,
       }),
     ).toBe(segmentRefs.year);
+  });
+
+  test('first = year', () => {
+    expect(
+      getRelativeSegment('first', {
+        segment: segmentRefs.day,
+        formatParts,
+        segmentRefs,
+      }),
+    ).toBe(segmentRefs.year);
+  });
+
+  test('last = day', () => {
+    expect(
+      getRelativeSegment('first', {
+        segment: segmentRefs.year,
+        formatParts,
+        segmentRefs,
+      }),
+    ).toBe(segmentRefs.day);
   });
 });
