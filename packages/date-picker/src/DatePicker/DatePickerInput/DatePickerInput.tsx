@@ -7,12 +7,10 @@ import React, {
 
 import { keyMap } from '@leafygreen-ui/lib';
 
-import { DateInputBox } from '../../DateInput';
-import { DateFormField } from '../../DateInput/DateFormField';
-import { useDatePickerContext } from '../../DatePickerContext';
-import { useSegmentRefs } from '../../hooks/useSegmentRefs';
-import { isZeroLike } from '../../utils';
-import { isElementInputSegment } from '../../utils/isElementInputSegment';
+import { DateFormField, DateInputBox } from '../../shared/components/DateInput';
+import { useDatePickerContext } from '../../shared/components/DatePickerContext';
+import { useSegmentRefs } from '../../shared/hooks';
+import { isElementInputSegment, isZeroLike } from '../../shared/utils';
 import { getRelativeSegment } from '../utils/getRelativeSegment';
 import { getSegmentToFocus } from '../utils/getSegmentToFocus';
 

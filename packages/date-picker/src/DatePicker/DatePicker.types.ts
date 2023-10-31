@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react';
 
-import { BaseDatePickerProps, DateType } from '../types';
+import { BaseDatePickerProps, DateType } from '../shared/types';
 
 export interface DatePickerProps extends BaseDatePickerProps {
   /**

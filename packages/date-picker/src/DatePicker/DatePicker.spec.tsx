@@ -8,9 +8,12 @@ import {
 import userEvent from '@testing-library/user-event';
 import { range } from 'lodash';
 
-import { Month } from '../constants';
-import { eventContainingTargetValue, tabNTimes } from '../testUtils';
-import { newUTC } from '../utils/newUTC';
+import { Month } from '../shared/constants';
+import { newUTC } from '../shared/utils';
+import {
+  eventContainingTargetValue,
+  tabNTimes,
+} from '../shared/utils/testutils';
 
 import { renderDatePicker } from './DatePicker.testutils';
 import { DatePicker } from '.';

@@ -14,10 +14,13 @@ import { keyMap } from '@leafygreen-ui/lib';
 import { useForwardedRef } from '@leafygreen-ui/select/src/utils';
 import { spacing } from '@leafygreen-ui/tokens';
 
-import { CalendarCell, CalendarCellState } from '../../Calendar/CalendarCell';
-import { CalendarGrid } from '../../Calendar/CalendarGrid';
-import { MenuWrapper } from '../../Calendar/MenuWrapper';
-import { useDatePickerContext } from '../../DatePickerContext';
+import {
+  CalendarCell,
+  CalendarCellState,
+  CalendarGrid,
+} from '../../shared/components/Calendar';
+import { useDatePickerContext } from '../../shared/components/DatePickerContext';
+import { MenuWrapper } from '../../shared/components/MenuWrapper';
 import {
   getFirstOfMonth,
   getFullMonthLabel,
@@ -25,7 +28,7 @@ import {
   isSameUTCDay,
   isSameUTCMonth,
   setToUTCMidnight,
-} from '../../utils';
+} from '../../shared/utils';
 
 import { getNewHighlight } from './utils/getNewHighlight';
 import {

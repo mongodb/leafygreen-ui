@@ -6,9 +6,9 @@ import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { Option, Select } from '@leafygreen-ui/select';
 
-import { Months, selectElementProps } from '../../../constants';
-import { useDatePickerContext } from '../../../DatePickerContext';
-import { isSameUTCMonth, setUTCMonth, setUTCYear } from '../../../utils';
+import { useDatePickerContext } from '../../../shared/components/DatePickerContext';
+import { Months, selectElementProps } from '../../../shared/constants';
+import { isSameUTCMonth, setUTCMonth, setUTCYear } from '../../../shared/utils';
 import {
   menuHeaderSelectContainerStyles,
   menuHeaderStyles,

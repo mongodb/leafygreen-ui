@@ -1,4 +1,4 @@
-import { SegmentRefs } from '../../../hooks/useSegmentRefs';
+import { SegmentRefs } from '../../../shared/hooks';
 
 /**
  * Returns the key of a given segment ref or element
