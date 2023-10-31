@@ -6,7 +6,6 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { range } from 'lodash';
 
 import { Month } from '../shared/constants';
 import { newUTC } from '../shared/utils';
@@ -15,7 +14,11 @@ import {
   tabNTimes,
 } from '../shared/utils/testutils';
 
-import { renderDatePicker } from './DatePicker.testutils';
+import {
+  expectedTabStopLabels,
+  getTabStopElementMap,
+  renderDatePicker,
+} from './DatePicker.testutils';
 import { DatePicker } from '.';
 
 const testToday = newUTC(2023, Month.December, 26);
@@ -481,96 +484,43 @@ describe('packages/date-picker', () => {
         });
 
         describe('Tab order', () => {
-          describe.each(range(0, 4))('when menu is closed', n => {
-            test(`Tab ${n} times`, () => {
-              const {
-                yearInput,
-                monthInput,
-                dayInput,
-                calendarButton,
-                inputContainer,
-              } = renderDatePicker();
-              tabNTimes(n);
+          describe('when menu is closed', () => {
+            const tabStops = expectedTabStopLabels['closed'];
 
-              switch (n) {
-                case 0:
+            test('Tab order proceeds as expected', () => {
+              const renderResult = renderDatePicker();
+
+              for (const label of tabStops) {
+                const element = getTabStopElementMap(renderResult)[label];
+
+                if (element !== null) {
+                  expect(element).toHaveFocus();
+                } else {
                   expect(
-                    inputContainer.contains(document.activeElement),
+                    renderResult.inputContainer.contains(
+                      document.activeElement,
+                    ),
                   ).toBeFalsy();
-                  break;
-                case 1:
-                  expect(yearInput).toHaveFocus();
-                  break;
-                case 2:
-                  expect(monthInput).toHaveFocus();
-                  break;
-                case 3:
-                  expect(dayInput).toHaveFocus();
-                  break;
-                case 4:
-                  expect(calendarButton).toHaveFocus();
-                  break;
-                case 5:
-                  expect(
-                    inputContainer.contains(document.activeElement),
-                  ).toBeFalsy();
-                  break;
+                }
+
+                userEvent.tab();
               }
             });
           });
 
-          describe.each(range(0, 9))('when the menu is open', n => {
-            test(`Tab ${n} times`, () => {
-              const {
-                yearInput,
-                monthInput,
-                dayInput,
-                calendarButton,
-                openMenu,
-              } = renderDatePicker();
+          describe('when menu is open', () => {
+            const tabStops = expectedTabStopLabels['open'];
 
-              const {
-                leftChevron,
-                monthSelect,
-                yearSelect,
-                rightChevron,
-                todayCell,
-              } = openMenu();
+            test(`Tab order proceeds as expected`, () => {
+              const renderResult = renderDatePicker({
+                initialOpen: true,
+              });
+              renderResult.openMenu();
 
-              tabNTimes(n);
-
-              switch (n) {
-                case 0:
-                  expect(yearInput).toHaveFocus();
-                  break;
-                case 1:
-                  expect(monthInput).toHaveFocus();
-                  break;
-                case 2:
-                  expect(dayInput).toHaveFocus();
-                  break;
-                case 3:
-                  expect(calendarButton).toHaveFocus();
-                  break;
-                case 4:
-                  expect(todayCell).toHaveFocus();
-                  break;
-                case 5:
-                  expect(leftChevron).toHaveFocus();
-                  break;
-                case 6:
-                  expect(monthSelect).toHaveFocus();
-                  break;
-                case 7:
-                  expect(yearSelect).toHaveFocus();
-                  break;
-                case 8:
-                  expect(rightChevron).toHaveFocus();
-                  break;
-                case 9:
-                  // Focus is trapped within the menu
-                  expect(todayCell).toHaveFocus();
-                  break;
+              for (const label of tabStops) {
+                const element = getTabStopElementMap(renderResult)[label];
+                expect(element).toHaveFocus();
+                userEvent.tab();
               }
             });
           });
