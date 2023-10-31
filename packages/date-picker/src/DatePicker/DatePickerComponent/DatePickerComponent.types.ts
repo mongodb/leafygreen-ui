@@ -1,6 +1,6 @@
-import { ContextPropKeys } from '../../DatePickerContext/DatePickerContext.utils';
-import { useControlledValue } from '../../hooks/useControlledValue';
-import { DateType } from '../../types';
+import { ContextPropKeys } from '../../shared/components/DatePickerContext';
+import { useControlledValue } from '../../shared/hooks';
+import { DateType } from '../../shared/types';
 import { DatePickerProps } from '../DatePicker.types';
 
 /**

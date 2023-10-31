@@ -2,22 +2,22 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { Month } from '../../constants';
 import {
   DatePickerProvider,
   DatePickerProviderProps,
-} from '../../DatePickerContext';
-import { defaultDatePickerContext } from '../../DatePickerContext/DatePickerContext.utils';
+  defaultDatePickerContext,
+} from '../../shared/components/DatePickerContext';
+import { Month } from '../../shared/constants';
 
 import { DatePickerInput, DatePickerInputProps } from '.';
 
 const renderDatePickerInput = (
-  props?: Omit<DatePickerInputProps, 'segmentRefs'>,
+  props?: Omit<DatePickerInputProps, 'segmentRefs' | 'setValue'>,
   context?: DatePickerProviderProps,
 ) => {
   const result = render(
     <DatePickerProvider value={{ ...defaultDatePickerContext, ...context }}>
-      <DatePickerInput {...props} />
+      <DatePickerInput {...props} setValue={() => {}} />
     </DatePickerProvider>,
   );
 

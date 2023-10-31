@@ -62,6 +62,13 @@ const meta: StoryMetaType<typeof Stepper> = {
       },
     },
   },
+  decorators: [
+    StoryFn => (
+      <div style={{ minWidth: '600px' }}>
+        <StoryFn />
+      </div>
+    ),
+  ],
 };
 export default meta;
 

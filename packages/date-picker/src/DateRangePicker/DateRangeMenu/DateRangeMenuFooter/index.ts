@@ -1,1 +1,0 @@
-export { DateRangeMenuFooter } from './DateRangeMenuFooter';

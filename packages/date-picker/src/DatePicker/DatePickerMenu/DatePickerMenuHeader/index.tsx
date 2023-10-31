@@ -12,9 +12,9 @@ import { usePopoverContext } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 import { Option, Select } from '@leafygreen-ui/select';
 
-import { Months, selectElementProps } from '../../../constants';
-import { useDatePickerContext } from '../../../DatePickerContext';
-import { isSameUTCMonth, setUTCMonth, setUTCYear } from '../../../utils';
+import { useDatePickerContext } from '../../../shared/components/DatePickerContext';
+import { Months, selectElementProps } from '../../../shared/constants';
+import { isSameUTCMonth, setUTCMonth, setUTCYear } from '../../../shared/utils';
 import { DatePickerProps } from '../../DatePicker.types';
 import {
   menuHeaderSelectContainerStyles,

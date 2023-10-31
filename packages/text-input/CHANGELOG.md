@@ -1,5 +1,24 @@
 # @leafygreen-ui/text-input
 
+## 12.1.24
+
+### Patch Changes
+
+- d39acdc6: Ensure inner input element properly inherits width property from parent.
+
+## 12.1.23
+
+### Patch Changes
+
+- 0b91826e: Refactors component to use FormField under the hood. Also, per the latest design guidelines, we no longer surface an error message when an input is disabled.
+- Updated dependencies [dd4f3da8]
+- Updated dependencies [d16fb891]
+- Updated dependencies [90053e16]
+  - @leafygreen-ui/lib@13.0.0
+  - @leafygreen-ui/form-field@0.2.0
+  - @leafygreen-ui/typography@18.0.0
+  - @leafygreen-ui/leafygreen-provider@3.1.10
+
 ## 12.1.22
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @leafygreen-ui/icon-button
 
+## 15.0.19
+
+### Patch Changes
+
+- 784e9d8a: Updates color in light mode back to `gray.dark1`
+- Updated dependencies [dd4f3da8]
+  - @leafygreen-ui/lib@13.0.0
+  - @leafygreen-ui/a11y@1.4.11
+  - @leafygreen-ui/leafygreen-provider@3.1.10
+
 ## 15.0.18
 
 ### Patch Changes
