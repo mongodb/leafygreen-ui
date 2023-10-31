@@ -1,4 +1,4 @@
-import { DatePickerContextProps } from '@leafygreen-ui/date-picker/shared/DatePickerContext';
+import { DatePickerContextProps } from '@leafygreen-ui/date-picker/shared/components/DatePickerContext';
 
 import { DateRangeContextProps } from '../DateRangeContext/DateRangeContext.types';
 import { DateRangePickerProps } from '../DateRangePicker.types';
