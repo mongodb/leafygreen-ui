@@ -37,7 +37,12 @@ export const ignoreFilePatterns: Array<RegExp> = [
   /.*CHANGELOG.md/,
 ];
 
-/** these dependencies will be ignored when listed in a package.json */
+/**
+ * These dependencies will be ignored when listed in a package.json.
+ * These are globally available dev dependencies.
+ * We don't want every component flagged for not having
+ * these packages explicitly declared in its package.json
+ */
 export const ignoreDependencies = [
   '@leafygreen-ui/mongo-nav',
   '@babel/*',
