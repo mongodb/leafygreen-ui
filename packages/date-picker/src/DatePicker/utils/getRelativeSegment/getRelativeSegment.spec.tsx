@@ -91,7 +91,7 @@ describe('packages/date-picker/utils/getRelativeSegment', () => {
 
   test('last = day', () => {
     expect(
-      getRelativeSegment('first', {
+      getRelativeSegment('last', {
         segment: segmentRefs.year,
         formatParts,
         segmentRefs,
