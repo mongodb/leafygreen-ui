@@ -5,7 +5,7 @@ import path from 'path';
 
 import { ValidateCommandOptions } from '../validate.types';
 
-import { DepCheckFunctionProps, ignoreMatches } from './config';
+import { DepCheckFunctionProps, ignoreDependencies } from './config';
 import {
   isDependencyOnlyUsedInTestFile,
   sortDependenciesByUsage,
@@ -38,7 +38,7 @@ export function validateListedDependencies(
     const listedButOnlyUsedAsDev = listedDependencies.filter(
       listedDepName =>
         !importedPackagesInSourceFile.includes(listedDepName) &&
-        !ignoreMatches.includes(listedDepName),
+        !ignoreDependencies.includes(listedDepName),
     );
 
     verbose &&
