@@ -21,9 +21,8 @@ export function validateListedDevDependencies(
   options?: Partial<ValidateCommandOptions>,
 ): Array<string> {
   const { verbose } = options ?? { verbose: false };
-  const {
-    dependencies: importedPackagesInSourceFile,
-  } = sortDependenciesByUsage(importedPackages, pkgName);
+  const { dependencies: importedPackagesInSourceFile } =
+    sortDependenciesByUsage(importedPackages, pkgName);
 
   const { devDependencies: _listedDevObj } = pick(pkgJson, ['devDependencies']);
   const listedDevDependencies = _listedDevObj ? Object.keys(_listedDevObj) : [];
