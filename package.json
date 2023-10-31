@@ -30,7 +30,7 @@
     "validate": "lg validate"
   },
   "devDependencies": {
-    "@babel/core": "7.21.8",
+    "@babel/core": "7.23.2",
     "@changesets/cli": "^2.26.0",
     "@lg-tools/cli": "*",
     "@lg-tools/meta": "*",

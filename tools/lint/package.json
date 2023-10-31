@@ -13,7 +13,7 @@
     "tsc": "tsc --build tsconfig.json"
   },
   "dependencies": {
-    "@babel/core": "7.22.5",
+    "@babel/core": "7.23.2",
     "@babel/eslint-parser": "7.22.5",
     "@emotion/eslint-plugin": "11.11.0",
     "@lg-tools/build": "^0.3.0",
