@@ -2,11 +2,13 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/table.svg)
 
-> _Upgrading from pre-v10 to v11? Check out our [upgrade guide](https://github.com/mongodb/leafygreen-ui/blob/main/packages/table/UPGRADE.md)._
+> _Upgrading from pre-v10? Check out our [upgrade guide](https://github.com/mongodb/leafygreen-ui/blob/main/packages/table/UPGRADE.md) for help on how to migrate to the updated API._
 
 The Table component displays data in rows and columns and optionally supports row selection, sorting, and other features.
 
 ## Supported features
+
+The LeafyGreen Table wraps TanStack's [`react-table`](https://github.com/tanstack/table)'s hooks and types. Although all `react-table` features are supported using LeafyGreen Table, only the following features are styled according to design system guidelines:
 
 - Virtualized scrolling
 - Nested rows
@@ -15,7 +17,7 @@ The Table component displays data in rows and columns and optionally supports ro
 - Sortable rows
 - Sticky headers
 
-While other features from [`react-table`](https://github.com/tanstack/table#quick-features) could be supported, we discourage developers from utilizing them unless they are explicitly supported by Leafygreen, as they would not align with MongoDB design systems guidelines.
+Although other features from [`react-table`](https://github.com/tanstack/table#quick-features) are supported, we discourage developers from utilizing them as they would not align with MongoDB design systems guidelines.
 
 # Installation
 
