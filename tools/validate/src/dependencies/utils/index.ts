@@ -5,7 +5,11 @@ import { readFileSync, writeFileSync } from 'fs-extra';
 import { isEqual } from 'lodash';
 import path from 'path';
 
-import { ignoreFilePatterns, ignoreMatches } from '../config';
+import {
+  devFilePatterns,
+  ignoreDependencies,
+  ignoreFilePatterns,
+} from '../config';
 
 import { getPackageLGDependencies } from './getPackageDependencies';
 
@@ -58,18 +62,22 @@ export function sortDependenciesByUsage(
       // If a dependency is only used in tests or storybook,
       // then we add it as a dev dependency
       .reduce(
-        (_missing, [name, fileUsedIn]) => {
-          if (
-            // If every file used in is a test file...
-            fileUsedIn.every(file =>
-              ignoreFilePatterns.some(pattern => pattern.test(file)),
-            )
-          ) {
+        (_missing, [name, filesUsedIn]) => {
+          // If every file used in is a test file...
+          const isDepOnlyUsedInDevFiles = filesUsedIn.every(file =>
+            devFilePatterns.some(pattern => pattern.test(file)),
+          );
+
+          const isDepOnlyInIgnoredFiles = filesUsedIn.every(file =>
+            ignoreFilePatterns.some(pattern => pattern.test(file)),
+          );
+
+          if (isDepOnlyUsedInDevFiles) {
             // Ignore when we import the package itself in a test file
             if (!name.includes(pkgName)) {
               _missing.devDependencies.push(name);
             }
-          } else {
+          } else if (!isDepOnlyInIgnoredFiles) {
             _missing.dependencies.push(name);
           }
 
@@ -98,11 +106,11 @@ export const isDependencyUsedInSourceFile = (
   importedPackages: depcheck.Results['using'],
 ): boolean => {
   // consider a dependency used in a package file if its in `ignoreMatches`
-  const isIgnored = ignoreMatches.includes(depName);
+  const isIgnored = ignoreDependencies.includes(depName);
   const usedInPackageFile = importedPackages?.[depName]?.some(
     // is used in at least one...
     // file that is not ignored
-    (file: string) => !ignoreFilePatterns.some(pattern => pattern.test(file)),
+    (file: string) => !devFilePatterns.some(pattern => pattern.test(file)),
   );
 
   return isIgnored || usedInPackageFile;
@@ -115,6 +123,6 @@ export const isDependencyOnlyUsedInTestFile = (
 ): boolean => {
   return importedPackages?.[depName]?.every(
     // Every file is a test file
-    (file: string) => ignoreFilePatterns.some(pattern => pattern.test(file)),
+    (file: string) => devFilePatterns.some(pattern => pattern.test(file)),
   );
 };
