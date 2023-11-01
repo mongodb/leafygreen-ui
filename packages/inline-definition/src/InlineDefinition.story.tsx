@@ -7,7 +7,7 @@ import {
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
-import { Body, H2, Link } from '@leafygreen-ui/typography';
+import { Body, H3, Link } from '@leafygreen-ui/typography';
 
 import InlineDefinition, { InlineDefinitionProps } from '.';
 
@@ -65,12 +65,12 @@ export const LiveExample: StoryFn<InlineDefinitionProps> = ({
       flex-direction: column;
     `}
   >
-    <H2 darkMode={darkMode}>
+    <H3 darkMode={darkMode}>
       <InlineDefinition darkMode={darkMode} {...args}>
         Shard
       </InlineDefinition>{' '}
       your cluster
-    </H2>
+    </H3>
 
     <Body darkMode={darkMode}>
       Base hourly rate is for a MongoDB{' '}
