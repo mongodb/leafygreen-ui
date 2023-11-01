@@ -40,9 +40,9 @@ export const SingleDateProvider = ({
   );
 
   /** Handle possible side effects here */
-  const setValue = (newRange?: DateType) => {
-    _setValue(newRange ?? null);
-    // TODO: update display month when value changes
+  const setValue = (newVal?: DateType) => {
+    _setValue(newVal ?? null);
+    setMonth(getFirstOfMonth(newVal ?? today));
   };
 
   /** Set the displayed month and handle side effects */

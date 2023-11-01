@@ -20,6 +20,7 @@ interface RenderDatePickerResult extends RenderResult {
   calendarButton: HTMLButtonElement;
   getMenuElements: () => RenderMenuResult;
   openMenu: () => RenderMenuResult;
+  rerenderDatePicker: (newProps: Partial<DatePickerProps>) => void;
 }
 
 interface RenderMenuResult {
@@ -44,6 +45,17 @@ export const renderDatePicker = (
   const result = render(
     <DatePicker data-testid="lg-date-picker" {...defaultProps} {...props} />,
   );
+
+  const rerenderDatePicker = (newProps: Partial<DatePickerProps>) => {
+    result.rerender(
+      <DatePicker
+        data-testid="lg-date-picker"
+        {...defaultProps}
+        {...props}
+        {...newProps}
+      />,
+    );
+  };
 
   const formField = result.getByTestId('lg-date-picker');
   const inputContainer = result.getByRole('combobox');
@@ -119,6 +131,7 @@ export const renderDatePicker = (
     calendarButton,
     getMenuElements,
     openMenu,
+    rerenderDatePicker,
   };
 };
 
