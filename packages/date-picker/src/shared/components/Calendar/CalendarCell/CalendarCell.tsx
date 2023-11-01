@@ -65,8 +65,8 @@ export const CalendarCell = React.forwardRef<
       }
     };
 
-    // td does not trigger `onClick` on enter/space so we have to listen on key up
-    const handleKeyUp: KeyboardEventHandler<HTMLTableCellElement> = e => {
+    // td does not trigger `onClick` on enter/space so we have to listen on key down
+    const handleKeyDown: KeyboardEventHandler<HTMLTableCellElement> = e => {
       if (!isDisabled && (e.key === keyMap.Enter || e.key === keyMap.Space)) {
         (onClick as KeyboardEventHandler<HTMLTableCellElement>)?.(e);
         // TODO: add focus back to input
@@ -104,7 +104,7 @@ export const CalendarCell = React.forwardRef<
           className,
         )}
         onClick={handleClick}
-        onKeyUp={handleKeyUp}
+        onKeyDown={handleKeyDown}
         onFocus={handleFocus}
         {...rest}
       >

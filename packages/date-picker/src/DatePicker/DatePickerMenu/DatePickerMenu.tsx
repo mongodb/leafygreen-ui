@@ -9,9 +9,12 @@ import React, {
 } from 'react';
 import { addDays, subDays } from 'date-fns';
 
-import { useDynamicRefs, usePrevious } from '@leafygreen-ui/hooks';
+import {
+  useDynamicRefs,
+  useForwardedRef,
+  usePrevious,
+} from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
-import { useForwardedRef } from '@leafygreen-ui/select/src/utils';
 import { spacing } from '@leafygreen-ui/tokens';
 
 import {
@@ -160,7 +163,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       }
     };
 
-    /** Called on any keydown within the menu element */
+    /** Called on any keydown within the CalendarGrid element */
     const handleCalendarKeyDown: KeyboardEventHandler<HTMLTableElement> = e => {
       const { key } = e;
       const highlightStart = highlight || value || today;
@@ -253,6 +256,8 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
             ref={headerRef}
             month={month}
             setMonth={updateMonth}
+            handleValidation={handleValidation}
+            value={value}
           />
         </div>
       </MenuWrapper>

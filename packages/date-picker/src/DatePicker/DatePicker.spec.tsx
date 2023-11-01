@@ -631,6 +631,28 @@ describe('packages/date-picker', () => {
           await waitForElementToBeRemoved(menuContainerEl);
           expect(menuContainerEl).not.toBeInTheDocument();
         });
+
+        describe('chevron', () => {
+          test('if left chevron is focused, does not close the menu', async () => {
+            const { openMenu, getMenuElements } = renderDatePicker();
+            const { leftChevron } = openMenu();
+            tabNTimes(5);
+            expect(leftChevron).toHaveFocus();
+            userEvent.keyboard('{enter}');
+            const { menuContainerEl } = getMenuElements();
+            expect(menuContainerEl).toBeInTheDocument();
+          });
+
+          test('if right chevron is focused, does not close the menu', async () => {
+            const { openMenu, getMenuElements } = renderDatePicker();
+            const { rightChevron } = openMenu();
+            tabNTimes(8);
+            expect(rightChevron).toHaveFocus();
+            userEvent.keyboard('{enter}');
+            const { menuContainerEl } = getMenuElements();
+            expect(menuContainerEl).toBeInTheDocument();
+          });
+        });
       });
 
       describe('Space key', () => {
@@ -706,6 +728,28 @@ describe('packages/date-picker', () => {
           openMenu();
           userEvent.keyboard('{escape}');
           expect(handleValidation).toHaveBeenCalledWith(undefined);
+        });
+
+        test('does not close the main menu if a select menu is open and focus is in the select menu', async () => {
+          const { openMenu, queryAllByRole, findAllByRole } =
+            renderDatePicker();
+          const { monthSelect, menuContainerEl } = openMenu();
+
+          monthSelect?.focus();
+          expect(monthSelect).toHaveFocus();
+          userEvent.keyboard('{enter}');
+          userEvent.keyboard('{arrowdown}');
+          const options = await findAllByRole('option');
+          const firstOption = options[0];
+          expect(firstOption).toHaveFocus();
+          const listBoxes = queryAllByRole('listbox');
+          expect(listBoxes).toHaveLength(2);
+          const selectMenu = listBoxes[1];
+          userEvent.keyboard('{escape}');
+          await waitFor(() => {
+            expect(menuContainerEl).toBeInTheDocument();
+            expect(selectMenu).not.toBeInTheDocument();
+          });
         });
       });
 
