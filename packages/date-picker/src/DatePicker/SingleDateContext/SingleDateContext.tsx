@@ -28,7 +28,7 @@ export const SingleDateProvider = ({
 
   /** Handle possible side effects here */
   const setValue = (newRange?: DateType) => {
-    _setValue(newRange);
+    _setValue(newRange ?? null);
   };
 
   // Keep track of the element the user is highlighting with the keyboard

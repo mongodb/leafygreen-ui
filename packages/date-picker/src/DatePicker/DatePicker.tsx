@@ -40,12 +40,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
           setValue={setValue}
           handleValidation={handleValidation}
         >
-          <DatePickerComponent
-            ref={fwdRef}
-            value={value}
-            setValue={setValue}
-            {...restProps}
-          />
+          <DatePickerComponent ref={fwdRef} {...restProps} />
         </SingleDateProvider>
       </DatePickerProvider>
     );
