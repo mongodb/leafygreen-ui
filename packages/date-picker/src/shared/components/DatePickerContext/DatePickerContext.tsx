@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import { createContext, PropsWithChildren, useContext } from 'react';
 
 import { useIdAllocator } from '@leafygreen-ui/hooks';
@@ -20,8 +20,9 @@ export const DatePickerContext = createContext<DatePickerContextProps>(
 /** The Provider component for DatePickerContext */
 export const DatePickerProvider = ({
   children,
-  value: { initialOpen, ...rest },
-}: PropsWithChildren<{ value: DatePickerProviderProps }>) => {
+  initialOpen,
+  ...rest
+}: PropsWithChildren<DatePickerProviderProps>) => {
   const [isOpen, setOpen] = useState<boolean>(initialOpen ?? false);
   const [isDirty, setIsDirty] = useState(false);
   const menuId = useIdAllocator({ prefix: 'lg-date-picker-menu' });
