@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { MouseEventHandler, useState } from 'react';
 import isUndefined from 'lodash/isUndefined';
 import { darken, lighten, readableColor, transparentize } from 'polished';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps, StoryMetaType } from '@leafygreen-ui/lib';
+import Tooltip from '@leafygreen-ui/tooltip';
 
 // import {
 //   focusRing,
@@ -40,6 +41,7 @@ const colorBlockWrapper = css`
   display: inline-block;
   position: relative;
   width: ${BLOCK_WIDTH}px;
+  padding-bottom: 16px;
 `;
 
 const colorBlock = css`
@@ -50,6 +52,7 @@ const colorBlock = css`
   padding-bottom: 100%;
   border-radius: 8px;
   cursor: pointer;
+  vertical-align: top;
 `;
 
 const hexLabelStyle = css`
@@ -78,6 +81,7 @@ const colorRowStyle = css`
 `;
 
 function ColorBlock({ hue, shade, ...rest }: ColorBlockProps) {
+  const [hasOpenTooltip, setHasOpenTooltip] = useState<boolean>();
   const name = `${hue} ${shade ?? ''}`;
 
   let color: string;
@@ -103,12 +107,34 @@ function ColorBlock({ hue, shade, ...rest }: ColorBlockProps) {
     background-color: ${lighten(0.2, color)};
   `;
 
+  const handleClick: MouseEventHandler<HTMLButtonElement> = () => {
+    navigator.clipboard.writeText(color);
+    setHasOpenTooltip(true);
+    setTimeout(() => {
+      setHasOpenTooltip(false);
+    }, 3000);
+  };
+
   return (
-    <div className={cx(colorBlockWrapper, colorBlockWrapperDynamic)} {...rest}>
-      <button className={cx(colorBlock, colorBlockColor)} />
-      <div className={cx(hexLabelStyle, hexLabelColor)}>{color}</div>
-      <div className={nameLabelStyle}>{name}</div>
-    </div>
+    <Tooltip
+      triggerEvent="click"
+      open={hasOpenTooltip}
+      trigger={
+        <div
+          className={cx(colorBlockWrapper, colorBlockWrapperDynamic)}
+          {...rest}
+        >
+          <button
+            className={cx(colorBlock, colorBlockColor)}
+            onClick={handleClick}
+          />
+          <div className={cx(hexLabelStyle, hexLabelColor)}>{color}</div>
+          <div className={nameLabelStyle}>{name}</div>
+        </div>
+      }
+    >
+      Copied!
+    </Tooltip>
   );
 }
 
