@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useState } from 'react';
 import { createContext, PropsWithChildren, useContext } from 'react';
 
 import { useIdAllocator } from '@leafygreen-ui/hooks';

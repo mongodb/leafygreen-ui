@@ -43,11 +43,9 @@ const MenuDecorator: Decorator = (Story: StoryFn, ctx: any) => {
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <DatePickerProvider
-        value={{
-          ...defaultDatePickerContext,
-          ...contextProps,
-          initialOpen: true,
-        }}
+        {...defaultDatePickerContext}
+        {...contextProps}
+        initialOpen={true}
       >
         <Story {...props} />
       </DatePickerProvider>

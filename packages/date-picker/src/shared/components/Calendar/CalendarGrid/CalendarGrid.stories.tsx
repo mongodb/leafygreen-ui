@@ -19,11 +19,7 @@ import { CalendarGrid } from './CalendarGrid';
 
 const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
   <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
-    <DatePickerProvider
-      value={{
-        ...ctx?.args,
-      }}
-    >
+    <DatePickerProvider {...ctx?.args}>
       <Story />
     </DatePickerProvider>
   </LeafyGreenProvider>

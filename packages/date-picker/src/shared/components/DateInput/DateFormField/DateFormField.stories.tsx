@@ -85,7 +85,7 @@ export default meta;
 const Template: StoryFn<typeof DateFormField> = () => {
   return (
     <DatePickerProvider
-      value={{
+      {...{
         label: 'Label',
         description: 'Description',
         state: DatePickerState.Error,
