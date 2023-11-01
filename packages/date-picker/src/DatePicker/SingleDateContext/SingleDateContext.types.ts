@@ -15,10 +15,11 @@ export interface SingleDateContextProps {
   handleValidation: DatePickerProps['handleValidation'];
   today: Date;
   month: Date;
-  setMonth: React.Dispatch<React.SetStateAction<Date>>;
+  setMonth: (newMonth: Date) => void;
   highlight: DateType;
-  setHighlight: React.Dispatch<React.SetStateAction<DateType>>;
+  setHighlight: (newHighlight: DateType) => void;
   getHighlightedCell: () => HTMLTableCellElement | null | undefined;
+  getCellWithValue: (date: DateType) => HTMLTableCellElement | null | undefined;
 }
 
 export interface SingleDateProviderProps {

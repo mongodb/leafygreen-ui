@@ -1,7 +1,7 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { addDays, subDays } from 'date-fns';
+import { addDays } from 'date-fns';
 
 import {
   DatePickerProvider,
@@ -9,7 +9,7 @@ import {
   defaultDatePickerContext,
 } from '../../shared/components/DatePickerContext';
 import { Month } from '../../shared/constants';
-import { newUTC, setUTCDate } from '../../shared/utils';
+import { getISODate, newUTC, setUTCDate } from '../../shared/utils';
 import {
   SingleDateProvider,
   SingleDateProviderProps,
@@ -69,11 +69,11 @@ const renderDatePickerMenu = (
   ) as Array<HTMLTableCellElement>;
 
   const todayCell = calendarGrid.querySelector(
-    `[data-iso="${testToday.toISOString()}"]`,
+    `[data-iso="${getISODate(testToday)}"]`,
   );
 
   const getCellWithValue = (date: Date) =>
-    calendarGrid.querySelector(`[data-iso="${date.toISOString()}"]`);
+    calendarGrid.querySelector(`[data-iso="${getISODate(date)}"]`);
 
   return {
     ...result,
@@ -177,22 +177,23 @@ describe('packages/date-picker/date-picker-menu', () => {
         });
         userEvent.tab();
         userEvent.keyboard('{arrowleft}');
-
         const prevDay = getCellWithValue(setUTCDate(testValue, 13));
-        expect(prevDay).toHaveFocus();
+
+        await waitFor(() => expect(prevDay).toHaveFocus());
       });
 
-      test('right arrow moves focus to the next day', () => {
+      test('right arrow moves focus to the next day', async () => {
         const { getCellWithValue } = renderDatePickerMenu(null, {
           value: testValue,
         });
         userEvent.tab();
         userEvent.keyboard('{arrowright}');
+
         const nextDay = getCellWithValue(setUTCDate(testValue, 15));
-        expect(nextDay).toHaveFocus();
+        await waitFor(() => expect(nextDay).toHaveFocus());
       });
 
-      test('up arrow moves focus to the previous week', () => {
+      test('up arrow moves focus to the previous week', async () => {
         const { getCellWithValue } = renderDatePickerMenu(null, {
           value: testValue,
         });
@@ -200,10 +201,10 @@ describe('packages/date-picker/date-picker-menu', () => {
         userEvent.keyboard('{arrowup}');
 
         const prevWeek = getCellWithValue(setUTCDate(testValue, 7));
-        expect(prevWeek).toHaveFocus();
+        await waitFor(() => expect(prevWeek).toHaveFocus());
       });
 
-      test('down arrow moves focus to the next week', () => {
+      test('down arrow moves focus to the next week', async () => {
         const { getCellWithValue } = renderDatePickerMenu(null, {
           value: testValue,
         });
@@ -211,46 +212,46 @@ describe('packages/date-picker/date-picker-menu', () => {
         userEvent.keyboard('{arrowdown}');
 
         const nextWeek = getCellWithValue(setUTCDate(testValue, 21));
-        expect(nextWeek).toHaveFocus();
+        await waitFor(() => expect(nextWeek).toHaveFocus());
       });
 
       describe('when next day would be out of range', () => {
         const singleCtx = {
           value: testToday,
         };
-        test('left arrow does nothing', () => {
+        test('left arrow does nothing', async () => {
           const { todayCell } = renderDatePickerMenu(null, singleCtx, {
             min: testToday,
           });
           userEvent.tab();
           userEvent.keyboard('{arrowleft}');
-          expect(todayCell).toHaveFocus();
+          await waitFor(() => expect(todayCell).toHaveFocus());
         });
 
-        test('right arrow does nothing', () => {
+        test('right arrow does nothing', async () => {
           const { todayCell } = renderDatePickerMenu(null, singleCtx, {
             max: testToday,
           });
           userEvent.tab();
           userEvent.keyboard('{arrowright}');
-          expect(todayCell).toHaveFocus();
+          await waitFor(() => expect(todayCell).toHaveFocus());
         });
 
-        test('up arrow does nothing', () => {
+        test('up arrow does nothing', async () => {
           const { todayCell } = renderDatePickerMenu(null, singleCtx, {
             min: addDays(testToday, -6),
           });
           userEvent.tab();
           userEvent.keyboard('{arrowup}');
-          expect(todayCell).toHaveFocus();
+          await waitFor(() => expect(todayCell).toHaveFocus());
         });
-        test('down arrow does nothing', () => {
+        test('down arrow does nothing', async () => {
           const { todayCell } = renderDatePickerMenu(null, singleCtx, {
             max: addDays(testToday, 6),
           });
           userEvent.tab();
           userEvent.keyboard('{arrowdown}');
-          expect(todayCell).toHaveFocus();
+          await waitFor(() => expect(todayCell).toHaveFocus());
         });
       });
 
@@ -298,45 +299,54 @@ describe('packages/date-picker/date-picker-menu', () => {
       });
 
       describe('when month should be updated', () => {
-        test('left arrow focuses the previous day', () => {
-          const value = new Date(Date.UTC(2023, Month.September, 1));
+        test('left arrow focuses the previous day', async () => {
+          const value = newUTC(2023, Month.September, 1);
           const { getCellWithValue } = renderDatePickerMenu(null, {
             value,
           });
           userEvent.tab();
           userEvent.keyboard('{arrowleft}');
-          const highlightedCell = getCellWithValue(subDays(value, 1));
-          expect(highlightedCell).toHaveFocus();
+          const highlightedCell = getCellWithValue(
+            newUTC(2023, Month.August, 31),
+          );
+
+          await waitFor(() => expect(highlightedCell).toHaveFocus());
         });
-        test('right arrow focuses the next day', () => {
-          const value = new Date(Date.UTC(2023, Month.September, 30));
+        test('right arrow focuses the next day', async () => {
+          const value = newUTC(2023, Month.September, 30);
           const { getCellWithValue } = renderDatePickerMenu(null, {
             value,
           });
           userEvent.tab();
           userEvent.keyboard('{arrowright}');
-          const highlightedCell = getCellWithValue(addDays(value, 1));
-          expect(highlightedCell).toHaveFocus();
+          const highlightedCell = getCellWithValue(
+            newUTC(2023, Month.October, 1),
+          );
+          await waitFor(() => expect(highlightedCell).toHaveFocus());
         });
-        test('up arrow focuses the previous week', () => {
-          const value = new Date(Date.UTC(2023, Month.September, 6));
+        test('up arrow focuses the previous week', async () => {
+          const value = newUTC(2023, Month.September, 7);
           const { getCellWithValue } = renderDatePickerMenu(null, {
             value,
           });
           userEvent.tab();
           userEvent.keyboard('{arrowup}');
-          const highlightedCell = getCellWithValue(subDays(value, 7));
-          expect(highlightedCell).toHaveFocus();
+          const highlightedCell = getCellWithValue(
+            newUTC(2023, Month.August, 31),
+          );
+          await waitFor(() => expect(highlightedCell).toHaveFocus());
         });
-        test('down arrow focuses the next week', () => {
-          const value = new Date(Date.UTC(2023, Month.September, 25));
+        test('down arrow focuses the next week', async () => {
+          const value = newUTC(2023, Month.September, 24);
           const { getCellWithValue } = renderDatePickerMenu(null, {
             value,
           });
           userEvent.tab();
           userEvent.keyboard('{arrowdown}');
-          const highlightedCell = getCellWithValue(addDays(value, 7));
-          expect(highlightedCell).toHaveFocus();
+          const highlightedCell = getCellWithValue(
+            newUTC(2023, Month.October, 1),
+          );
+          await waitFor(() => expect(highlightedCell).toHaveFocus());
         });
       });
     });
