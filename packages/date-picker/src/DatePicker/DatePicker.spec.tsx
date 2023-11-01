@@ -5,6 +5,7 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { addDays, subDays } from 'date-fns';
 
 import { Month } from '../shared/constants';
 import { newUTC } from '../shared/utils';
@@ -31,62 +32,64 @@ describe('packages/date-picker', () => {
   describe('Rendering', () => {
     /// Note: Many rendering tests should be handled by Chromatic
 
-    test('renders label', () => {
-      const { getByText } = render(<DatePicker label="Label" />);
-      const label = getByText('Label');
-      expect(label).toBeInTheDocument();
-    });
-
-    test('renders description', () => {
-      const { getByText } = render(
-        <DatePicker label="Label" description="Description" />,
-      );
-      const description = getByText('Description');
-      expect(description).toBeInTheDocument();
-    });
-
-    test('spreads rest to formField', () => {
-      const { getByTestId } = render(
-        <DatePicker label="Label" data-testid="lg-date-picker" />,
-      );
-      const formField = getByTestId('lg-date-picker');
-      expect(formField).toBeInTheDocument();
-    });
-
-    test('formField contains label & input elements', () => {
-      const { getByTestId, getByRole } = render(
-        <DatePicker label="Label" data-testid="lg-date-picker" />,
-      );
-      const formField = getByTestId('lg-date-picker');
-      const inputContainer = getByRole('combobox');
-      expect(formField.querySelector('label')).toBeInTheDocument();
-      expect(formField.querySelector('label')).toHaveTextContent('Label');
-      expect(inputContainer).toBeInTheDocument();
-    });
-
-    test('renders 3 inputs', () => {
-      const { dayInput, monthInput, yearInput } = renderDatePicker();
-      expect(dayInput).toBeInTheDocument();
-      expect(monthInput).toBeInTheDocument();
-      expect(yearInput).toBeInTheDocument();
-    });
-
-    test('renders `value` prop', () => {
-      const { dayInput, monthInput, yearInput } = renderDatePicker({
-        value: new Date(Date.now()),
+    describe('Input', () => {
+      test('renders label', () => {
+        const { getByText } = render(<DatePicker label="Label" />);
+        const label = getByText('Label');
+        expect(label).toBeInTheDocument();
       });
-      expect(dayInput.value).toEqual('26');
-      expect(monthInput.value).toEqual('12');
-      expect(yearInput.value).toEqual('2023');
-    });
 
-    test('renders `initialValue` prop', () => {
-      const { dayInput, monthInput, yearInput } = renderDatePicker({
-        initialValue: new Date(Date.now()),
+      test('renders description', () => {
+        const { getByText } = render(
+          <DatePicker label="Label" description="Description" />,
+        );
+        const description = getByText('Description');
+        expect(description).toBeInTheDocument();
       });
-      expect(dayInput.value).toEqual('26');
-      expect(monthInput.value).toEqual('12');
-      expect(yearInput.value).toEqual('2023');
+
+      test('spreads rest to formField', () => {
+        const { getByTestId } = render(
+          <DatePicker label="Label" data-testid="lg-date-picker" />,
+        );
+        const formField = getByTestId('lg-date-picker');
+        expect(formField).toBeInTheDocument();
+      });
+
+      test('formField contains label & input elements', () => {
+        const { getByTestId, getByRole } = render(
+          <DatePicker label="Label" data-testid="lg-date-picker" />,
+        );
+        const formField = getByTestId('lg-date-picker');
+        const inputContainer = getByRole('combobox');
+        expect(formField.querySelector('label')).toBeInTheDocument();
+        expect(formField.querySelector('label')).toHaveTextContent('Label');
+        expect(inputContainer).toBeInTheDocument();
+      });
+
+      test('renders 3 inputs', () => {
+        const { dayInput, monthInput, yearInput } = renderDatePicker();
+        expect(dayInput).toBeInTheDocument();
+        expect(monthInput).toBeInTheDocument();
+        expect(yearInput).toBeInTheDocument();
+      });
+
+      test('renders `value` prop', () => {
+        const { dayInput, monthInput, yearInput } = renderDatePicker({
+          value: new Date(Date.now()),
+        });
+        expect(dayInput.value).toEqual('26');
+        expect(monthInput.value).toEqual('12');
+        expect(yearInput.value).toEqual('2023');
+      });
+
+      test('renders `initialValue` prop', () => {
+        const { dayInput, monthInput, yearInput } = renderDatePicker({
+          initialValue: new Date(Date.now()),
+        });
+        expect(dayInput.value).toEqual('26');
+        expect(monthInput.value).toEqual('12');
+        expect(yearInput.value).toEqual('2023');
+      });
     });
 
     describe('Menu', () => {
@@ -902,6 +905,73 @@ describe('packages/date-picker', () => {
           expect(handleValidation).toHaveBeenCalledWith(
             expect.objectContaining(newUTC(2023, Month.December, 5)),
           );
+        });
+      });
+    });
+
+    describe.only('User flows', () => {
+      test('month is set when value changes', async () => {
+        const { calendarButton, getMenuElements, rerenderDatePicker } =
+          renderDatePicker();
+        userEvent.click(calendarButton);
+        const { calendarGrid, menuContainerEl } = getMenuElements();
+        expect(calendarGrid).toHaveAttribute('aria-label', 'December 2023');
+        userEvent.tab();
+        userEvent.keyboard('{escape}');
+        await waitForElementToBeRemoved(menuContainerEl);
+
+        const value = newUTC(2023, Month.September, 10);
+        rerenderDatePicker({ value });
+        userEvent.click(calendarButton);
+        expect(calendarGrid).toHaveAttribute('aria-label', 'September 2023');
+      });
+
+      describe('highlight resets when re-opening the menu', () => {
+        test('highlight returns to today', async () => {
+          const { calendarButton, getMenuElements } = renderDatePicker();
+          userEvent.click(calendarButton);
+          const { getCellForDate, menuContainerEl } = getMenuElements();
+          let todayCell = getCellForDate(testToday);
+          expect(todayCell).not.toBeNull();
+          await waitFor(() => expect(todayCell).toHaveFocus());
+
+          userEvent.keyboard('{arrowdown}');
+          const jan2 = addDays(testToday, 7);
+          const jan2Cell = getCellForDate(jan2);
+          await waitFor(() => expect(jan2Cell).toHaveFocus());
+
+          userEvent.keyboard('{escape}');
+          await waitForElementToBeRemoved(menuContainerEl);
+
+          userEvent.click(calendarButton);
+          todayCell = getCellForDate(testToday);
+          expect(todayCell).not.toBeNull();
+          await waitFor(() => expect(todayCell).toHaveFocus());
+        });
+
+        test('highlight returns to value', async () => {
+          const value = newUTC(2023, Month.September, 10);
+          const { calendarButton, getMenuElements } = renderDatePicker({
+            value,
+          });
+          userEvent.click(calendarButton);
+          const { getCellForDate, menuContainerEl } = getMenuElements();
+          let valueCell = getCellForDate(value);
+          expect(valueCell).not.toBeNull();
+          await waitFor(() => expect(valueCell).toHaveFocus());
+
+          userEvent.keyboard('{arrowup}{arrowup}');
+          const aug27 = subDays(value, 14);
+          const aug27Cell = getCellForDate(aug27);
+          await waitFor(() => expect(aug27Cell).toHaveFocus());
+
+          userEvent.keyboard('{escape}');
+          await waitForElementToBeRemoved(menuContainerEl);
+
+          userEvent.click(calendarButton);
+          valueCell = getCellForDate(testToday);
+          expect(valueCell).not.toBeNull();
+          await waitFor(() => expect(valueCell).toHaveFocus());
         });
       });
     });

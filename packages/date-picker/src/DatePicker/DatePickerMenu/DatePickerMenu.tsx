@@ -1,15 +1,18 @@
 import React, {
   forwardRef,
   KeyboardEventHandler,
+  useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
 } from 'react';
 import { addDays, subDays } from 'date-fns';
+import { DateType } from 'src/shared';
 
 import { useForwardedRef, usePrevious } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
-import { spacing } from '@leafygreen-ui/tokens';
+import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
 import {
   CalendarCell,
@@ -61,16 +64,21 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
     const calendarRef = useRef<HTMLTableElement>(null);
 
     const prevValue = usePrevious(value);
+    const prevOpen = usePrevious(isOpen);
+    // const prevHighlight = usePrevious(highlight);
 
     const monthLabel = getFullMonthLabel(month);
 
     // focuses the DOM element for the appropriate cell
-    const focusCellWithDate = (date: Date) => {
-      requestAnimationFrame(() => {
-        const highlightedCell = getCellWithValue(date);
-        highlightedCell?.focus();
-      });
-    };
+    const focusCellWithDate = useCallback(
+      (date: DateType) => {
+        requestAnimationFrame(() => {
+          const highlightedCell = getCellWithValue(date);
+          highlightedCell?.focus();
+        });
+      },
+      [getCellWithValue],
+    );
 
     /** setDisplayMonth with side effects */
     const updateMonth = (newMonth: Date) => {
@@ -96,6 +104,16 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       setHighlight(newHighlight);
       focusCellWithDate(newHighlight);
     };
+
+    // When the menu opens, set focus to the `highlight` cell
+    useLayoutEffect(() => {
+      if (isOpen && !prevOpen) {
+        // TODO: add & use `onEntered` handlers to Popover/MenuWrapper
+        setTimeout(() => {
+          focusCellWithDate(highlight);
+        }, transitionDuration.default);
+      }
+    }, [focusCellWithDate, highlight, isOpen, prevOpen]);
 
     /**
      * If the new value is not the current month, update the month

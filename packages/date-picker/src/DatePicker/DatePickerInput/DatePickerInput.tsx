@@ -76,12 +76,6 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       // Prevent the parent click handler from being called since clicks on the parent always opens the dropdown
       e.stopPropagation();
       setOpen(o => !o);
-
-      requestAnimationFrame(() => {
-        // wait for menu to open, then access the highlighted cell and focus it
-        const highlightedCell = getHighlightedCell();
-        highlightedCell?.focus();
-      });
     };
 
     /** Called on any keydown within the input element */
