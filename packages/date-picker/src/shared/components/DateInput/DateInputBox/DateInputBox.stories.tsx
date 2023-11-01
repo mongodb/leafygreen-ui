@@ -19,11 +19,7 @@ const testDate = newUTC(1993, Month.December, 26);
 
 const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
   <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
-    <DatePickerProvider
-      value={{
-        ...ctx?.args,
-      }}
-    >
+    <DatePickerProvider {...ctx?.args}>
       <Story />
     </DatePickerProvider>
   </LeafyGreenProvider>

@@ -21,7 +21,7 @@ const renderDatePickerInput = (
   context?: Partial<DatePickerProviderProps>,
 ) => {
   const result = render(
-    <DatePickerProvider value={{ ...defaultDatePickerContext, ...context }}>
+    <DatePickerProvider {...defaultDatePickerContext} {...context}>
       <SingleDateProvider
         value={null}
         setValue={() => {}}

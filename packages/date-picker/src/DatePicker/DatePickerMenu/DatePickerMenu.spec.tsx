@@ -27,7 +27,9 @@ const renderDatePickerMenu = (
 ) => {
   const result = render(
     <DatePickerProvider
-      value={{ ...defaultDatePickerContext, ...context, initialOpen: true }}
+      {...defaultDatePickerContext}
+      {...context}
+      initialOpen={true}
     >
       <SingleDateProvider
         value={null}
@@ -46,7 +48,9 @@ const renderDatePickerMenu = (
   ) =>
     result.rerender(
       <DatePickerProvider
-        value={{ ...defaultDatePickerContext, ...context, initialOpen: true }}
+        {...defaultDatePickerContext}
+        {...context}
+        initialOpen={true}
       >
         <SingleDateProvider
           value={null}
