@@ -35,8 +35,9 @@ function useLeafyGreenTable<T extends LGRowData>({
   allowSelectAll = true,
   ...rest
 }: LeafyGreenTableOptions<T>): LeafyGreenTable<T> {
-  const hasSortableColumns = columnsProp.some(
-    propCol => !!propCol.enableSorting,
+  const hasSortableColumns = React.useMemo(
+    () => columnsProp.some(propCol => !!propCol.enableSorting),
+    [columnsProp],
   );
   const selectColumnConfig = allowSelectAll
     ? baseSelectColumnConfig
