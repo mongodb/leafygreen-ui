@@ -29,6 +29,7 @@ export const MenuWrapper = forwardRef<
         className={cx(menuStyles[theme], className)}
         {...props}
       >
+        {/* Adding the provider inside of <Popover /> to keep track of only the select menus */}
         <PopoverProvider>{children}</PopoverProvider>
       </Popover>
     );

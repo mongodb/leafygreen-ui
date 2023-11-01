@@ -730,7 +730,7 @@ describe('packages/date-picker', () => {
           expect(handleValidation).toHaveBeenCalledWith(undefined);
         });
 
-        test('does not close the main menu if the select menu is open and focus is in the select menu', async () => {
+        test('does not close the main menu if a select menu is open and focus is in the select menu', async () => {
           const { openMenu, queryAllByRole, findAllByRole } =
             renderDatePicker();
           const { monthSelect, menuContainerEl } = openMenu();
