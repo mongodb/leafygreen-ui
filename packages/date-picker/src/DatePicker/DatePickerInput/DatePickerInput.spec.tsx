@@ -8,16 +8,27 @@ import {
   defaultDatePickerContext,
 } from '../../shared/components/DatePickerContext';
 import { Month } from '../../shared/constants';
+import {
+  SingleDateProvider,
+  SingleDateProviderProps,
+} from '../SingleDateContext';
 
 import { DatePickerInput, DatePickerInputProps } from '.';
 
 const renderDatePickerInput = (
-  props?: Omit<DatePickerInputProps, 'segmentRefs' | 'setValue'>,
-  context?: DatePickerProviderProps,
+  props?: Omit<DatePickerInputProps, 'segmentRefs' | 'setValue'> | null,
+  singleDateContext?: Partial<SingleDateProviderProps>,
+  context?: Partial<DatePickerProviderProps>,
 ) => {
   const result = render(
     <DatePickerProvider value={{ ...defaultDatePickerContext, ...context }}>
-      <DatePickerInput {...props} setValue={() => {}} />
+      <SingleDateProvider
+        value={null}
+        setValue={() => {}}
+        {...singleDateContext}
+      >
+        <DatePickerInput {...props} />
+      </SingleDateProvider>
     </DatePickerProvider>,
   );
 
@@ -53,7 +64,7 @@ describe('packages/date-picker/date-picker-input', () => {
       });
 
       test('moves the cursor when the segment has a value', () => {
-        const { monthInput } = renderDatePickerInput({
+        const { monthInput } = renderDatePickerInput(null, {
           value: new Date(),
         });
         userEvent.type(monthInput, '{arrowleft}');
@@ -73,7 +84,7 @@ describe('packages/date-picker/date-picker-input', () => {
       });
 
       test('moves the cursor when the segment has a value', () => {
-        const { monthInput } = renderDatePickerInput({
+        const { monthInput } = renderDatePickerInput(null, {
           value: new Date(),
         });
         userEvent.type(monthInput, '{arrowright}');

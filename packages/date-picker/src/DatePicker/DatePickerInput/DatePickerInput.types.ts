@@ -5,11 +5,8 @@ import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { DatePickerComponentProps } from '../DatePickerComponent';
 
 export interface DatePickerInputProps
-  extends Pick<
-      DatePickerComponentProps,
-      'setValue' | 'value' | 'handleValidation' | 'onChange'
-    >,
-    Omit<HTMLElementProps<'div'>, 'onChange'> {
+  extends Omit<HTMLElementProps<'div'>, 'onChange'>,
+    Pick<DatePickerComponentProps, 'onChange'> {
   /**
    * Click handler
    */

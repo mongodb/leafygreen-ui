@@ -32,6 +32,7 @@ import {
   isSameUTCMonth,
   setToUTCMidnight,
 } from '../../shared/utils';
+import { useSingleDateContext } from '../SingleDateContext';
 
 import { getNewHighlight } from './utils/getNewHighlight';
 import {
@@ -43,12 +44,10 @@ import { DatePickerMenuProps } from './DatePickerMenu.types';
 import { DatePickerMenuHeader } from './DatePickerMenuHeader';
 
 export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
-  (
-    { value, onCellClick, handleValidation, ...rest }: DatePickerMenuProps,
-    fwdRef,
-  ) => {
+  ({ ...rest }: DatePickerMenuProps, fwdRef) => {
     const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
-    const { isInRange, isOpen, setOpen } = useDatePickerContext();
+    const { isInRange, isOpen, setOpen, setIsDirty } = useDatePickerContext();
+    const { value, setValue, handleValidation } = useSingleDateContext();
 
     // TODO: https://jira.mongodb.org/browse/LG-3666
     // useDynamicRefs may overflow if a user navigates to too many months.
@@ -131,10 +130,24 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       return CalendarCellState.Disabled;
     };
 
+    /** Called when any calendar cell is clicked */
+    const handleCalendarCellClick = (cellValue: Date) => {
+      if (!isSameUTCDay(cellValue, value)) {
+        // when the value is changed via cell,
+        // we trigger validation every time
+        handleValidation?.(cellValue);
+        setIsDirty(true);
+        // finally we update the component value
+        setValue(cellValue);
+        // and close the menu
+        setOpen(false);
+      }
+    };
+
     /** Creates a click handler for a specific cell date */
     const cellClickHandlerForDay = (day: Date) => () => {
       if (isInRange(day)) {
-        onCellClick(day);
+        handleCalendarCellClick(day);
       }
     };
 

@@ -16,6 +16,6 @@ export interface SingleDateContextProps {
 
 export interface SingleDateProviderProps {
   value: DateType | undefined;
-  setValue: (newVal: DateType | undefined) => void;
-  handleValidation: DatePickerProps['handleValidation'];
+  setValue: (newVal: DateType) => void;
+  handleValidation?: DatePickerProps['handleValidation'];
 }

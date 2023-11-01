@@ -14,10 +14,12 @@ import { useSegmentRefs } from '../../shared/hooks';
 import {
   isElementInputSegment,
   isExplicitSegmentValue,
+  isSameUTCDay,
   isValidSegmentName,
   isValidValueForSegment,
   isZeroLike,
 } from '../../shared/utils';
+import { useSingleDateContext } from '../SingleDateContext';
 import { getRelativeSegment } from '../utils/getRelativeSegment';
 import { getSegmentToFocus } from '../utils/getSegmentToFocus';
 
@@ -26,19 +28,30 @@ import { DatePickerInputProps } from './DatePickerInput.types';
 export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
   (
     {
-      value,
-      setValue,
       onClick,
       onKeyDown,
       onChange: onSegmentChange,
-      handleValidation,
       ...rest
     }: DatePickerInputProps,
     fwdRef,
   ) => {
     const { formatParts, disabled, setOpen, isDirty, setIsDirty } =
       useDatePickerContext();
+    const { value, setValue, handleValidation } = useSingleDateContext();
+
     const segmentRefs = useSegmentRefs();
+
+    /** Called when the input's Date value has changed */
+    const handleInputValueChange = (inputVal?: Date | null) => {
+      if (!isSameUTCDay(inputVal, value)) {
+        // When the value changes via the input element,
+        // we only trigger validation if the component is dirty
+        if (isDirty) {
+          handleValidation?.(inputVal);
+        }
+        setValue(inputVal || null);
+      }
+    };
 
     /**
      * Called when the input, or any of its children, is clicked.
@@ -215,7 +228,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       >
         <DateInputBox
           value={value}
-          setValue={setValue}
+          setValue={handleInputValueChange}
           segmentRefs={segmentRefs}
           onChange={handleSegmentChange}
         />

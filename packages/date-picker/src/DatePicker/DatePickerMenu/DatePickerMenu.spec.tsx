@@ -10,6 +10,10 @@ import {
 } from '../../shared/components/DatePickerContext';
 import { Month } from '../../shared/constants';
 import { newUTC, setUTCDate } from '../../shared/utils';
+import {
+  SingleDateProvider,
+  SingleDateProviderProps,
+} from '../SingleDateContext';
 
 import { DatePickerMenu, DatePickerMenuProps } from '.';
 
@@ -17,28 +21,44 @@ const testToday = new Date(Date.UTC(2023, Month.September, 10));
 const testValue = new Date(Date.UTC(2023, Month.September, 14));
 
 const renderDatePickerMenu = (
-  props?: Partial<DatePickerMenuProps>,
-  context?: Partial<DatePickerProviderProps>,
+  props?: Partial<DatePickerMenuProps> | null,
+  singleContext?: Partial<SingleDateProviderProps> | null,
+  context?: Partial<DatePickerProviderProps> | null,
 ) => {
   const result = render(
     <DatePickerProvider
       value={{ ...defaultDatePickerContext, ...context, initialOpen: true }}
     >
-      <DatePickerMenu value={null} onCellClick={() => {}} {...props} />,
+      <SingleDateProvider
+        value={null}
+        setValue={() => {}}
+        handleValidation={undefined}
+        {...singleContext}
+      >
+        <DatePickerMenu {...props} />,
+      </SingleDateProvider>
     </DatePickerProvider>,
   );
 
-  const rerenderDatePickerMenu = (newProps?: Partial<DatePickerMenuProps>) =>
+  const rerenderDatePickerMenu = (
+    newProps?: Partial<DatePickerMenuProps> | null,
+    newSingleContext?: Partial<SingleDateProviderProps> | null,
+  ) =>
     result.rerender(
       <DatePickerProvider
         value={{ ...defaultDatePickerContext, ...context, initialOpen: true }}
       >
-        <DatePickerMenu
+        <SingleDateProvider
           value={null}
-          onCellClick={() => {}}
-          {...({ ...props, ...newProps } as Partial<DatePickerMenuProps>)}
-        />
-        ,
+          setValue={() => {}}
+          handleValidation={undefined}
+          {...singleContext}
+          {...newSingleContext}
+        >
+          <DatePickerMenu
+            {...({ ...props, ...newProps } as Partial<DatePickerMenuProps>)}
+          />
+        </SingleDateProvider>
       </DatePickerProvider>,
     );
 
@@ -113,14 +133,18 @@ describe('packages/date-picker/date-picker-menu', () => {
     describe('when value is updated', () => {
       test('grid is labelled as the current month', () => {
         const { getByRole, rerenderDatePickerMenu } = renderDatePickerMenu();
-        rerenderDatePickerMenu({ value: newUTC(2024, Month.March, 10) });
+        rerenderDatePickerMenu(null, {
+          value: newUTC(2024, Month.March, 10),
+        });
         const grid = getByRole('grid');
         expect(grid).toHaveAttribute('aria-label', 'March 2024');
       });
       test('select menus have correct values', () => {
         const { getByLabelText, rerenderDatePickerMenu } =
           renderDatePickerMenu();
-        rerenderDatePickerMenu({ value: newUTC(2024, Month.March, 10) });
+        rerenderDatePickerMenu(null, {
+          value: newUTC(2024, Month.March, 10),
+        });
 
         const monthSelect = getByLabelText('Select month');
         const yearSelect = getByLabelText('Select year');
@@ -136,7 +160,7 @@ describe('packages/date-picker/date-picker-menu', () => {
     });
 
     test('highlight starts on current value when provided', () => {
-      const { getCellWithValue } = renderDatePickerMenu({
+      const { getCellWithValue } = renderDatePickerMenu(null, {
         value: testValue,
       });
       userEvent.tab();
@@ -148,7 +172,7 @@ describe('packages/date-picker/date-picker-menu', () => {
   describe('Keyboard navigation', () => {
     describe('Arrow Keys', () => {
       test('left arrow moves focus to the previous day', async () => {
-        const { getCellWithValue } = renderDatePickerMenu({
+        const { getCellWithValue } = renderDatePickerMenu(null, {
           value: testValue,
         });
         userEvent.tab();
@@ -159,7 +183,7 @@ describe('packages/date-picker/date-picker-menu', () => {
       });
 
       test('right arrow moves focus to the next day', () => {
-        const { getCellWithValue } = renderDatePickerMenu({
+        const { getCellWithValue } = renderDatePickerMenu(null, {
           value: testValue,
         });
         userEvent.tab();
@@ -169,7 +193,7 @@ describe('packages/date-picker/date-picker-menu', () => {
       });
 
       test('up arrow moves focus to the previous week', () => {
-        const { getCellWithValue } = renderDatePickerMenu({
+        const { getCellWithValue } = renderDatePickerMenu(null, {
           value: testValue,
         });
         userEvent.tab();
@@ -180,7 +204,7 @@ describe('packages/date-picker/date-picker-menu', () => {
       });
 
       test('down arrow moves focus to the next week', () => {
-        const { getCellWithValue } = renderDatePickerMenu({
+        const { getCellWithValue } = renderDatePickerMenu(null, {
           value: testValue,
         });
         userEvent.tab();
@@ -191,11 +215,11 @@ describe('packages/date-picker/date-picker-menu', () => {
       });
 
       describe('when next day would be out of range', () => {
-        const props = {
+        const singleCtx = {
           value: testToday,
         };
         test('left arrow does nothing', () => {
-          const { todayCell } = renderDatePickerMenu(props, {
+          const { todayCell } = renderDatePickerMenu(null, singleCtx, {
             min: testToday,
           });
           userEvent.tab();
@@ -204,7 +228,7 @@ describe('packages/date-picker/date-picker-menu', () => {
         });
 
         test('right arrow does nothing', () => {
-          const { todayCell } = renderDatePickerMenu(props, {
+          const { todayCell } = renderDatePickerMenu(null, singleCtx, {
             max: testToday,
           });
           userEvent.tab();
@@ -213,7 +237,7 @@ describe('packages/date-picker/date-picker-menu', () => {
         });
 
         test('up arrow does nothing', () => {
-          const { todayCell } = renderDatePickerMenu(props, {
+          const { todayCell } = renderDatePickerMenu(null, singleCtx, {
             min: addDays(testToday, -6),
           });
           userEvent.tab();
@@ -221,7 +245,7 @@ describe('packages/date-picker/date-picker-menu', () => {
           expect(todayCell).toHaveFocus();
         });
         test('down arrow does nothing', () => {
-          const { todayCell } = renderDatePickerMenu(props, {
+          const { todayCell } = renderDatePickerMenu(null, singleCtx, {
             max: addDays(testToday, 6),
           });
           userEvent.tab();
@@ -233,7 +257,7 @@ describe('packages/date-picker/date-picker-menu', () => {
       describe('update the displayed month', () => {
         test('left arrow updates displayed month to previous', () => {
           const value = new Date(Date.UTC(2023, Month.September, 1));
-          const { calendarGrid } = renderDatePickerMenu({ value });
+          const { calendarGrid } = renderDatePickerMenu(null, { value });
           userEvent.tab();
           userEvent.keyboard('{arrowleft}');
           expect(calendarGrid).toHaveAttribute('aria-label', 'August 2023');
@@ -241,7 +265,7 @@ describe('packages/date-picker/date-picker-menu', () => {
 
         test('right arrow updates displayed month to next', () => {
           const value = new Date(Date.UTC(2023, Month.September, 30));
-          const { calendarGrid } = renderDatePickerMenu({ value });
+          const { calendarGrid } = renderDatePickerMenu(null, { value });
           userEvent.tab();
           userEvent.keyboard('{arrowright}');
           expect(calendarGrid).toHaveAttribute('aria-label', 'October 2023');
@@ -249,7 +273,7 @@ describe('packages/date-picker/date-picker-menu', () => {
 
         test('up arrow updates displayed month to previous', () => {
           const value = new Date(Date.UTC(2023, Month.September, 6));
-          const { calendarGrid } = renderDatePickerMenu({ value });
+          const { calendarGrid } = renderDatePickerMenu(null, { value });
           userEvent.tab();
           userEvent.keyboard('{arrowup}');
           expect(calendarGrid).toHaveAttribute('aria-label', 'August 2023');
@@ -257,14 +281,16 @@ describe('packages/date-picker/date-picker-menu', () => {
 
         test('down arrow updates displayed month to next', () => {
           const value = new Date(Date.UTC(2023, Month.September, 25));
-          const { calendarGrid } = renderDatePickerMenu({ value });
+          const { calendarGrid } = renderDatePickerMenu(null, { value });
           userEvent.tab();
           userEvent.keyboard('{arrowdown}');
           expect(calendarGrid).toHaveAttribute('aria-label', 'October 2023');
         });
 
         test('does not update month when month does not need to change', () => {
-          const { calendarGrid } = renderDatePickerMenu({ value: testValue });
+          const { calendarGrid } = renderDatePickerMenu(null, {
+            value: testValue,
+          });
           userEvent.tab();
           userEvent.keyboard('{arrowleft}{arrowright}{arrowup}{arrowdown}');
           expect(calendarGrid).toHaveAttribute('aria-label', 'September 2023');
@@ -274,7 +300,9 @@ describe('packages/date-picker/date-picker-menu', () => {
       describe('when month should be updated', () => {
         test('left arrow focuses the previous day', () => {
           const value = new Date(Date.UTC(2023, Month.September, 1));
-          const { getCellWithValue } = renderDatePickerMenu({ value });
+          const { getCellWithValue } = renderDatePickerMenu(null, {
+            value,
+          });
           userEvent.tab();
           userEvent.keyboard('{arrowleft}');
           const highlightedCell = getCellWithValue(subDays(value, 1));
@@ -282,7 +310,9 @@ describe('packages/date-picker/date-picker-menu', () => {
         });
         test('right arrow focuses the next day', () => {
           const value = new Date(Date.UTC(2023, Month.September, 30));
-          const { getCellWithValue } = renderDatePickerMenu({ value });
+          const { getCellWithValue } = renderDatePickerMenu(null, {
+            value,
+          });
           userEvent.tab();
           userEvent.keyboard('{arrowright}');
           const highlightedCell = getCellWithValue(addDays(value, 1));
@@ -290,7 +320,9 @@ describe('packages/date-picker/date-picker-menu', () => {
         });
         test('up arrow focuses the previous week', () => {
           const value = new Date(Date.UTC(2023, Month.September, 6));
-          const { getCellWithValue } = renderDatePickerMenu({ value });
+          const { getCellWithValue } = renderDatePickerMenu(null, {
+            value,
+          });
           userEvent.tab();
           userEvent.keyboard('{arrowup}');
           const highlightedCell = getCellWithValue(subDays(value, 7));
@@ -298,7 +330,9 @@ describe('packages/date-picker/date-picker-menu', () => {
         });
         test('down arrow focuses the next week', () => {
           const value = new Date(Date.UTC(2023, Month.September, 25));
-          const { getCellWithValue } = renderDatePickerMenu({ value });
+          const { getCellWithValue } = renderDatePickerMenu(null, {
+            value,
+          });
           userEvent.tab();
           userEvent.keyboard('{arrowdown}');
           const highlightedCell = getCellWithValue(addDays(value, 7));
