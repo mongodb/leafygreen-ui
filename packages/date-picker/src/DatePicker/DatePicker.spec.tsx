@@ -742,13 +742,10 @@ describe('packages/date-picker', () => {
           const options = await findAllByRole('option');
           const firstOption = options[0];
           expect(firstOption).toHaveFocus();
-
           const listBoxes = queryAllByRole('listbox');
           expect(listBoxes).toHaveLength(2);
-
           const selectMenu = listBoxes[1];
           userEvent.keyboard('{escape}');
-
           await waitFor(() => {
             expect(menuContainerEl).toBeInTheDocument();
             expect(selectMenu).not.toBeInTheDocument();
