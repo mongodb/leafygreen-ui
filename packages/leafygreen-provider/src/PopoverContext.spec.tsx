@@ -53,7 +53,7 @@ describe('packages/leafygreen-provider/PopoverContext', () => {
   });
 });
 
-function renderUsePopoverContext() {
+function renderTestComponent() {
   const utils = render(<TestContextComponent />);
   const testChild = utils.getByTestId(childTestID);
   return { ...utils, testChild };
@@ -61,12 +61,12 @@ function renderUsePopoverContext() {
 
 describe('usePopoverContext', () => {
   test('when child is not a descendent of PopoverProvider, isPopoverOpen is false', () => {
-    const { testChild } = renderUsePopoverContext();
+    const { testChild } = renderTestComponent();
     expect(testChild.textContent).toBe('false');
   });
 
   test('when child is not a descendent of PopoverProvider, isPopoverOpen is false when setIsPopoverOpen sets isPopoverOpen to true', () => {
-    const { testChild, getByTestId } = renderUsePopoverContext();
+    const { testChild, getByTestId } = renderTestComponent();
 
     // The button's click handler fires setIsPopoverOpen(true)
     fireEvent.click(getByTestId(buttonTestId));
