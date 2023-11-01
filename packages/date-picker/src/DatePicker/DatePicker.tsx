@@ -9,6 +9,7 @@ import { pickAndOmit } from '../shared/utils';
 
 import { DatePickerProps } from './DatePicker.types';
 import { DatePickerComponent } from './DatePickerComponent';
+import { SingleDateProvider } from './SingleDateContext';
 
 /**
  * LeafyGreen Date Picker component
@@ -19,6 +20,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       value: valueProp,
       initialValue: initialProp,
       onDateChange: onChangeProp,
+      handleValidation,
       ...props
     }: DatePickerProps,
     fwdRef,
@@ -33,12 +35,18 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
 
     return (
       <DatePickerProvider value={contextProps}>
-        <DatePickerComponent
-          ref={fwdRef}
+        <SingleDateProvider
           value={value}
           setValue={setValue}
-          {...restProps}
-        />
+          handleValidation={handleValidation}
+        >
+          <DatePickerComponent
+            ref={fwdRef}
+            value={value}
+            setValue={setValue}
+            {...restProps}
+          />
+        </SingleDateProvider>
       </DatePickerProvider>
     );
   },
