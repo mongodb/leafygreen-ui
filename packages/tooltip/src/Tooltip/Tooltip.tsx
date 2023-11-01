@@ -19,7 +19,7 @@ import { isComponentGlyph } from '@leafygreen-ui/icon';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import Popover, { Align, Justify } from '@leafygreen-ui/popover';
+import Popover, { Justify } from '@leafygreen-ui/popover';
 import {
   bodyTypeScaleStyles,
   useUpdatedBaseFontSize,
@@ -36,6 +36,7 @@ import {
   transitionDelay,
 } from './Tooltip.styles';
 import {
+  Align,
   PopoverFunctionParameters,
   TooltipProps,
   TriggerEvent,
@@ -137,7 +138,7 @@ function Tooltip({
           return {
             onMouseEnter: debounce((e: MouseEvent) => {
               userTriggerHandler('onMouseEnter', e);
-              // Without this the tooltip sometimes opens without a transition. flushSync prevents this state update from automically batching. Instead updates are made synchronously.
+              // Without this the tooltip sometimes opens without a transition. flushSync prevents this state update from automatically batching. Instead updates are made synchronously.
               // https://react.dev/reference/react-dom/flushSync#flushing-updates-for-third-party-integrations
               flushSync(() => {
                 setOpen(true);
