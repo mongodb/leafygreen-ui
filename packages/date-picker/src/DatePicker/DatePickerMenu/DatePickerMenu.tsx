@@ -56,6 +56,8 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
     const cellRefs = refs.calendarCellRefs;
     const headerRef = useRef<HTMLDivElement>(null);
     const calendarRef = useRef<HTMLTableElement>(null);
+
+    // TODO: Use context highlight variable
     const [highlight, setHighlight] = useState<Date | null>(value || today);
 
     const prevValue = usePrevious(value);
