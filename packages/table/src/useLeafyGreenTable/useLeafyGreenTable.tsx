@@ -13,14 +13,14 @@ import { TableRowCheckbox } from './TableRowCheckbox';
 import { LeafyGreenTableOptions, LGRowData } from './useLeafyGreenTable.types';
 import { LeafyGreenTable, LGColumnDef, LGTableDataType } from '.';
 
-const checkboxWidth = 14;
+const CHECKBOX_WIDTH = 14;
 
 /**
  * A `ColumnDef` object injected into `useReactTable`'s `columns` option when the user is using selectable rows.
  */
 const baseSelectColumnConfig: LGColumnDef<LGRowData> = {
   id: 'select',
-  size: checkboxWidth,
+  size: CHECKBOX_WIDTH,
   header: TableHeaderCheckbox,
   cell: TableRowCheckbox,
 };
