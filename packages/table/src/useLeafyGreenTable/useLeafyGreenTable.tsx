@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useVirtual } from 'react-virtual';
 import { useReactTable } from '@tanstack/react-table';
 import {
@@ -35,7 +35,9 @@ function useLeafyGreenTable<T extends LGRowData>({
   allowSelectAll = true,
   ...rest
 }: LeafyGreenTableOptions<T>): LeafyGreenTable<T> {
-  const hasSortableColumns = useRef(false);
+  const hasSortableColumns = columnsProp.some(
+    propCol => !!propCol.enableSorting,
+  );
   const selectColumnConfig = allowSelectAll
     ? baseSelectColumnConfig
     : omit(baseSelectColumnConfig, 'header');
@@ -43,7 +45,6 @@ function useLeafyGreenTable<T extends LGRowData>({
     () => [
       ...(hasSelectableRows ? [selectColumnConfig as LGColumnDef<T>] : []),
       ...columnsProp.map(propColumn => {
-        hasSortableColumns.current = propColumn.enableSorting ?? false;
         return {
           ...propColumn,
           align: propColumn.align ?? 'left',
@@ -62,7 +63,7 @@ function useLeafyGreenTable<T extends LGRowData>({
       return !!row.original.renderExpandedContent || !!row.subRows?.length;
     },
     enableExpanding: true,
-    enableSortingRemoval: hasSortableColumns.current ? true : undefined,
+    enableSortingRemoval: hasSortableColumns ? true : undefined,
     getSubRows: row => row.subRows,
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: withPagination ? getPaginationRowModel() : undefined,
