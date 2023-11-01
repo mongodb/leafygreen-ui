@@ -27,8 +27,12 @@ export const modeColors = {
 
 export const tabContainerStyle = css`
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
+`;
+
+export const inlineChildrenContainerStyle = css`
+  display: flex;
 `;
 
 export const inlineChildrenWrapperStyle = css`
