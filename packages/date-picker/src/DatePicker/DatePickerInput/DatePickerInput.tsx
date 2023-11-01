@@ -37,7 +37,8 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
   ) => {
     const { formatParts, disabled, setOpen, isDirty, setIsDirty } =
       useDatePickerContext();
-    const { value, setValue, handleValidation } = useSingleDateContext();
+    const { value, setValue, handleValidation, getHighlightedCell } =
+      useSingleDateContext();
 
     const segmentRefs = useSegmentRefs();
 
@@ -73,12 +74,18 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
 
     /**
      * Called when the calendar button is clicked.
-     * Opens the menu
+     * Opens the menu & focuses the appropriate cell
      */
     const handleIconButtonClick: MouseEventHandler<HTMLButtonElement> = e => {
       // Prevent the parent click handler from being called since clicks on the parent always opens the dropdown
       e.stopPropagation();
       setOpen(o => !o);
+
+      requestAnimationFrame(() => {
+        // wait for menu to open, then access the highlighted cell and focus it
+        const highlightedCell = getHighlightedCell();
+        highlightedCell?.focus();
+      });
     };
 
     /** Called on any keydown within the input element */

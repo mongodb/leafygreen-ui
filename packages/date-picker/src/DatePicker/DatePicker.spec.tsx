@@ -1,4 +1,3 @@
-/* eslint-disable jest/no-disabled-tests */
 import React from 'react';
 import {
   render,
@@ -233,7 +232,7 @@ describe('packages/date-picker', () => {
           });
         });
 
-        test.skip('focuses on the selected cell', async () => {
+        test('focuses on the selected cell', async () => {
           const value = newUTC(1994, Month.September, 10);
           const { calendarButton, getMenuElements } = renderDatePicker({
             value: value,
