@@ -6,7 +6,7 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 
 import { Month } from '../../../constants';
-import { isTodayTZ, newUTC } from '../../../utils';
+import { getISODate, isTodayTZ, newUTC } from '../../../utils';
 import { Locales, TimeZones } from '../../../utils/testutils';
 import {
   DatePickerContextProps,
@@ -83,9 +83,9 @@ export const Demo: StoryFn<typeof CalendarGrid> = ({ ...props }) => {
           aria-label="test"
           key={i}
           isCurrent={isTodayTZ(day, timeZone)}
-          isHighlighted={hovered ? hovered === day?.toISOString() : false}
-          onMouseEnter={handleHover(day?.toISOString())}
-          data-iso={day?.toISOString()}
+          isHighlighted={hovered ? hovered === getISODate(day) : false}
+          onMouseEnter={handleHover(getISODate(day))}
+          data-iso={getISODate(day)}
         >
           {day?.getUTCDate()}
         </CalendarCell>

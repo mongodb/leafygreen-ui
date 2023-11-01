@@ -6,6 +6,8 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { getISODate } from '../shared/utils/getISODate';
+
 import { DatePickerProps } from './DatePicker.types';
 import { DatePicker } from '.';
 
@@ -83,7 +85,7 @@ export const renderDatePicker = (
 
     const getCellForDate = (date: Date): HTMLTableCellElement | null => {
       const cell = calendarGrid.querySelector(
-        `"[date-iso=${date.toISOString()}]"`,
+        `"[date-iso=${getISODate(date)}]"`,
       );
 
       return cell as HTMLTableCellElement | null;

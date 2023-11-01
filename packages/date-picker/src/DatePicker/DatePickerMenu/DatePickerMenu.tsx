@@ -2,10 +2,8 @@ import React, {
   forwardRef,
   KeyboardEventHandler,
   useEffect,
-  useLayoutEffect,
   useMemo,
   useRef,
-  useState,
 } from 'react';
 import { addDays, subDays } from 'date-fns';
 
@@ -23,6 +21,7 @@ import { MenuWrapper } from '../../shared/components/MenuWrapper';
 import {
   getFirstOfMonth,
   getFullMonthLabel,
+  getISODate,
   getUTCDateString,
   isSameUTCDay,
   isSameUTCMonth,
@@ -50,6 +49,9 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       refs,
       month,
       setMonth: setDisplayMonth,
+      highlight,
+      setHighlight,
+      getCellWithValue,
     } = useSingleDateContext();
 
     const ref = useForwardedRef(fwdRef, null);
@@ -57,28 +59,31 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
     const headerRef = useRef<HTMLDivElement>(null);
     const calendarRef = useRef<HTMLTableElement>(null);
 
-    // TODO: Use context highlight variable
-    const [highlight, setHighlight] = useState<Date | null>(value || today);
-
     const prevValue = usePrevious(value);
-    const prevHighlight = usePrevious(highlight);
 
     const monthLabel = getFullMonthLabel(month);
+
+    // focuses the DOM element for the appropriate cell
+    const focusCellWithDate = (date: Date) => {
+      requestAnimationFrame(() => {
+        const highlightedCell = getCellWithValue(date);
+        highlightedCell?.focus();
+      });
+    };
 
     /** setDisplayMonth with side effects */
     const updateMonth = (newMonth: Date) => {
       if (isSameUTCMonth(newMonth, month)) {
         return;
       }
-
+      setDisplayMonth(newMonth);
       const newHighlight = getNewHighlight(highlight, month, newMonth);
       const shouldUpdateHighlight = !isSameUTCDay(highlight, newHighlight);
 
       if (newHighlight && shouldUpdateHighlight) {
         setHighlight(newHighlight);
+        focusCellWithDate(newHighlight);
       }
-
-      setDisplayMonth(newMonth);
     };
 
     /** setHighlight with side effects */
@@ -87,20 +92,9 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       if (!isSameUTCMonth(month, newHighlight)) {
         setDisplayMonth(newHighlight);
       }
-
-      // keep track of the highlighted cell
       setHighlight(newHighlight);
+      focusCellWithDate(newHighlight);
     };
-
-    /**
-     * When highlight changes, after the DOM changes, focus the relevant cell
-     */
-    useLayoutEffect(() => {
-      if (highlight && !isSameUTCDay(highlight, prevHighlight)) {
-        const highlightCellRef = cellRefs(highlight.toISOString());
-        highlightCellRef.current?.focus();
-      }
-    }, [cellRefs, highlight, prevHighlight]);
 
     /**
      * If the new value is not the current month, update the month
@@ -158,7 +152,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       if (e.key === keyMap.Tab) {
         const currentFocus = document.activeElement;
 
-        const highlightKey = highlight?.toISOString();
+        const highlightKey = highlight ? getISODate(highlight) : undefined;
         const highlightedCellElement = highlightKey
           ? cellRefs(highlightKey)?.current
           : undefined;
@@ -251,13 +245,13 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
             {(day, i) => (
               <CalendarCell
                 key={i}
-                ref={cellRefs(day.toISOString())}
+                ref={cellRefs(getISODate(day))}
                 aria-label={getUTCDateString(day)}
                 isHighlighted={isSameUTCDay(day, highlight)}
                 isCurrent={isSameUTCDay(day, today)}
                 state={getCellState(day)}
                 onClick={cellClickHandlerForDay(day)}
-                data-iso={day.toISOString()}
+                data-iso={getISODate(day)}
               >
                 {day.getUTCDate()}
               </CalendarCell>
