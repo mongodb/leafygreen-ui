@@ -71,6 +71,7 @@ import InfoWithCircle from './InfoWithCircle.svg';
 import InviteUser from './InviteUser.svg';
 import Key from './Key.svg';
 import Laptop from './Laptop.svg';
+import LightningBolt from './LightningBolt.svg';
 import Link from './Link.svg';
 import List from './List.svg';
 import Lock from './Lock.svg';
@@ -212,6 +213,7 @@ const _glyphs = {
   InviteUser,
   Key,
   Laptop,
+  LightningBolt,
   Link,
   List,
   Lock,
