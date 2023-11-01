@@ -227,9 +227,7 @@ describe('packages/date-picker', () => {
           const { calendarButton, getMenuElements } = renderDatePicker();
           userEvent.click(calendarButton);
           const { todayCell } = getMenuElements();
-          await waitFor(() => {
-            expect(todayCell).toHaveFocus();
-          });
+          await waitFor(() => expect(todayCell).toHaveFocus());
         });
 
         test('focuses on the selected cell', async () => {
@@ -239,10 +237,8 @@ describe('packages/date-picker', () => {
           });
           userEvent.click(calendarButton);
           const { getCellForDate } = getMenuElements();
-          await waitFor(() => {
-            const valueCell = getCellForDate(value);
-            expect(valueCell).toHaveFocus();
-          });
+          const valueCell = getCellForDate(value);
+          await waitFor(() => expect(valueCell).toHaveFocus());
         });
       });
 
@@ -445,31 +441,27 @@ describe('packages/date-picker', () => {
       describe('updates the highlighted cell', () => {
         test('to the end of the month if we went backwards', async () => {
           const { openMenu, findAllByRole } = renderDatePicker({
-            value: new Date(Date.UTC(2023, Month.July, 5)),
+            value: newUTC(2023, Month.July, 5),
           });
-          const { monthSelect, calendarGrid } = openMenu();
+          const { monthSelect, getCellForDate } = openMenu();
           userEvent.click(monthSelect!);
           const options = await findAllByRole('option');
           const Jan = options[0];
           userEvent.click(Jan);
-          const jan31Cell = calendarGrid?.querySelector(
-            '[data-iso="2023-01-31T00:00:00.000Z"]',
-          );
-          expect(jan31Cell).toHaveFocus();
+          const jan31Cell = getCellForDate(newUTC(2023, Month.January, 31));
+          await waitFor(() => expect(jan31Cell).toHaveFocus());
         });
         test('to the beginning of the month if we went forwards', async () => {
           const { openMenu, findAllByRole } = renderDatePicker({
-            value: new Date(Date.UTC(2023, Month.July, 5)),
+            value: newUTC(2023, Month.July, 5),
           });
-          const { monthSelect, calendarGrid } = openMenu();
+          const { monthSelect, getCellForDate } = openMenu();
           userEvent.click(monthSelect!);
           const options = await findAllByRole('option');
           const Dec = options[11];
           userEvent.click(Dec);
-          const dec1Cell = calendarGrid?.querySelector(
-            '[data-iso="2023-12-01T00:00:00.000Z"]',
-          );
-          expect(dec1Cell).toHaveFocus();
+          const dec1Cell = getCellForDate(newUTC(2023, Month.December, 1));
+          await waitFor(() => expect(dec1Cell).toHaveFocus());
         });
       });
     });
@@ -532,7 +524,7 @@ describe('packages/date-picker', () => {
           describe('when menu is open', () => {
             const tabStops = expectedTabStopLabels['open'];
 
-            test(`Tab order proceeds as expected`, () => {
+            test(`Tab order proceeds as expected`, async () => {
               const renderResult = renderDatePicker({
                 initialOpen: true,
               });
@@ -541,7 +533,7 @@ describe('packages/date-picker', () => {
                 const element = getTabStopElementMap(renderResult)[label];
 
                 if (element !== null) {
-                  expect(element).toHaveFocus();
+                  await waitFor(() => expect(element).toHaveFocus());
                 } else {
                   expect(
                     renderResult.inputContainer.contains(

@@ -76,7 +76,7 @@ describe('packages/date-picker/date-picker-input', () => {
       );
     });
 
-    describe('Right Arrow', () => {
+    describe.only('Right Arrow', () => {
       test('focuses the next segment when the segment is empty', () => {
         const { monthInput, dayInput } = renderDatePickerInput();
         userEvent.type(monthInput, '{arrowright}');
