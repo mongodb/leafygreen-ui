@@ -29,25 +29,31 @@ export const getRelativeSegment = (
   }
 
   // only the relevant segments, not separators
-  const formatSegments = formatParts.filter(part => part.type !== 'literal');
-  const orderedSegmentRefs = formatSegments.map(
-    ({ type }) => segmentRefs[type as DateSegment],
+  const formatSegments: Array<DateSegment> = formatParts
+    .filter(part => part.type !== 'literal')
+    .map(part => part.type as DateSegment);
+
+  /** The index of the reference segment relative to formatParts */
+  const currentSegmentIndex: number | undefined = formatSegments.findIndex(
+    segmentName => segmentRefs[segmentName] === segment,
   );
 
-  const currentSegmentIndex: number | undefined = orderedSegmentRefs.findIndex(
-    ref => ref.current === segment,
-  );
+  const getRefAtIndex = (index: number) => {
+    const segmentName = formatSegments[index];
+    return segmentRefs[segmentName];
+  };
 
   switch (direction) {
     case 'first': {
-      const firstSegmentRef = orderedSegmentRefs[0];
+      const firstSegmentRef = getRefAtIndex(0);
       return firstSegmentRef;
     }
 
     case 'last': {
-      const lastSegmentRef = last(orderedSegmentRefs);
+      const lastSegmentName = last(formatSegments);
 
-      if (lastSegmentRef) {
+      if (lastSegmentName) {
+        const lastSegmentRef = segmentRefs[lastSegmentName];
         return lastSegmentRef;
       }
 
@@ -55,13 +61,13 @@ export const getRelativeSegment = (
     }
 
     case 'next': {
-      if (currentSegmentIndex) {
+      if (!isUndefined(currentSegmentIndex)) {
         const nextSegmentIndex = Math.min(
           currentSegmentIndex + 1,
-          orderedSegmentRefs.length - 1,
+          formatSegments.length - 1,
         );
 
-        const nextSegmentRef = orderedSegmentRefs[nextSegmentIndex];
+        const nextSegmentRef = getRefAtIndex(nextSegmentIndex);
         return nextSegmentRef;
       }
 
@@ -69,10 +75,10 @@ export const getRelativeSegment = (
     }
 
     case 'prev': {
-      if (currentSegmentIndex) {
+      if (!isUndefined(currentSegmentIndex)) {
         const prevSegmentIndex = Math.max(currentSegmentIndex - 1, 0);
 
-        const prevSegmentRef = orderedSegmentRefs[prevSegmentIndex];
+        const prevSegmentRef = getRefAtIndex(prevSegmentIndex);
         return prevSegmentRef;
       }
 

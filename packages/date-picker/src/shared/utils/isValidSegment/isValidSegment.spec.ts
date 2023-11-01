@@ -1,38 +1,38 @@
-import { isValidSegment, isValidSegmentName } from '.';
+import { isValidSegmentName, isValidSegmentValue } from '.';
 
 describe('packages/date-picker/utils/isValidSegment', () => {
   describe('isValidSegment', () => {
     test('undefined returns false', () => {
-      expect(isValidSegment()).toBeFalsy();
+      expect(isValidSegmentValue()).toBeFalsy();
     });
 
     test('a string returns false', () => {
-      // @ts-expect-error
-      expect(isValidSegment('')).toBeFalsy();
+      expect(isValidSegmentValue('')).toBeFalsy();
     });
 
     test('NaN returns false', () => {
-      expect(isValidSegment(NaN)).toBeFalsy();
+      /// @ts-expect-error
+      expect(isValidSegmentValue(NaN)).toBeFalsy();
     });
 
     test('0 returns false', () => {
-      expect(isValidSegment(0)).toBeFalsy();
+      expect(isValidSegmentValue('0')).toBeFalsy();
     });
 
     test('negative returns false', () => {
-      expect(isValidSegment(-1)).toBeFalsy();
+      expect(isValidSegmentValue('-1')).toBeFalsy();
     });
 
     test('1970 returns true', () => {
-      expect(isValidSegment(1970)).toBeTruthy();
+      expect(isValidSegmentValue('1970')).toBeTruthy();
     });
 
     test('1 returns true', () => {
-      expect(isValidSegment(1)).toBeTruthy();
+      expect(isValidSegmentValue('1')).toBeTruthy();
     });
 
     test('2038 returns true', () => {
-      expect(isValidSegment(2038)).toBeTruthy();
+      expect(isValidSegmentValue('2038')).toBeTruthy();
     });
   });
 

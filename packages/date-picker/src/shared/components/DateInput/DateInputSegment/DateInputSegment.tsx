@@ -66,6 +66,7 @@ export const DateInputSegment = React.forwardRef<
         onBlur={onBlur}
         disabled={disabled}
         data-testid="lg-date_picker_input-segment"
+        data-segment={segment}
         className={cx(
           baseStyles,
           fontSizeStyles[baseFontSize],
