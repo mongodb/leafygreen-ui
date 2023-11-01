@@ -61,7 +61,6 @@ export const DatePickerMenuHeader = forwardRef<
 
     /**
      * Calls the `updateMonth` helper with the appropriate month when a Chevron is clicked
-     * @param dir
      */
     const handleChevronClick =
       (dir: 'left' | 'right'): MouseEventHandler<HTMLButtonElement> =>
@@ -76,7 +75,6 @@ export const DatePickerMenuHeader = forwardRef<
 
     /**
      * Ensure that the date picker menu will not close when a select menu is open, focus is inside the select menu, and the ESC key is pressed.
-     * @param KeyboardEvent
      */
     const handleEcsPress: KeyboardEventHandler<HTMLDivElement> = e => {
       // `isPopoverOpen` updated value is not accessible in `<DatePickerMenu>` since the `<PopoverProvider>` is inside `<MenuWrapper>`
