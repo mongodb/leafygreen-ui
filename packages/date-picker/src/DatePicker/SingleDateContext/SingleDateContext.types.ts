@@ -1,7 +1,15 @@
-import { DateType } from '../../shared';
+import { DynamicRefGetter } from '@leafygreen-ui/hooks';
+
+import { DateType, SegmentRefs } from '../../shared';
 import { DatePickerProps } from '../DatePicker.types';
 
+export interface DatePickerComponentRefs {
+  segmentRefs: SegmentRefs;
+  calendarCellRefs: DynamicRefGetter<HTMLTableCellElement>;
+}
+
 export interface SingleDateContextProps {
+  refs: DatePickerComponentRefs;
   value: DateType | undefined;
   setValue: (newVal: DateType | undefined) => void;
   handleValidation: DatePickerProps['handleValidation'];
@@ -10,8 +18,7 @@ export interface SingleDateContextProps {
   setMonth: React.Dispatch<React.SetStateAction<Date>>;
   highlight: DateType;
   setHighlight: React.Dispatch<React.SetStateAction<DateType>>;
-  // TODO:
-  // getHighlightedCell: () => HTMLTableCellElement | null | undefined;
+  getHighlightedCell: () => HTMLTableCellElement | null | undefined;
 }
 
 export interface SingleDateProviderProps {

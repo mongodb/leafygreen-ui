@@ -6,25 +6,36 @@ import React, {
   useState,
 } from 'react';
 
-import { DateType, isSameUTCMonth, setToUTCMidnight } from '../../shared';
+import {
+  DateType,
+  getFirstOfMonth,
+  isSameUTCMonth,
+  setToUTCMidnight,
+} from '../../shared';
 
 import {
   SingleDateContextProps,
   SingleDateProviderProps,
 } from './SingleDateContext.types';
+import { useDateRangeComponentRefs } from './useDatePickerComponentRefs';
 
 const SingleDateContext = createContext<SingleDateContextProps>(
   {} as SingleDateContextProps,
 );
 
+/**
+ * A provider for context values in a single DatePicker
+ */
 export const SingleDateProvider = ({
   children,
   value,
   setValue: _setValue,
   handleValidation,
 }: PropsWithChildren<SingleDateProviderProps>) => {
+  const refs = useDateRangeComponentRefs();
+
   const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
-  const [month, setMonth] = useState<Date>(value ?? today);
+  const [month, setMonth] = useState<Date>(value ?? getFirstOfMonth(today));
 
   /** Handle possible side effects here */
   const setValue = (newRange?: DateType) => {
@@ -36,17 +47,17 @@ export const SingleDateProvider = ({
     value ?? isSameUTCMonth(today, month) ? today : month,
   );
 
-  // TODO:
-  // const getHighlightedCell = () => {
-  //   const highlightKey = highlight?.toISOString();
-  //   return highlightKey
-  //     ? refs.calendarCellRefs(highlightKey)?.current
-  //     : undefined;
-  // };
+  const getHighlightedCell = () => {
+    const highlightKey = highlight?.toISOString();
+    return highlightKey
+      ? refs.calendarCellRefs(highlightKey)?.current
+      : undefined;
+  };
 
   return (
     <SingleDateContext.Provider
       value={{
+        refs,
         today,
         value,
         setValue,
@@ -55,7 +66,7 @@ export const SingleDateProvider = ({
         setMonth,
         highlight,
         setHighlight,
-        // TODO: getHighlightedCell,
+        getHighlightedCell,
       }}
     >
       {children}
@@ -63,7 +74,9 @@ export const SingleDateProvider = ({
   );
 };
 
-/** Access single date picker context values */
+/**
+ * Access single date picker context values
+ */
 export const useSingleDateContext = () => {
   return useContext(SingleDateContext);
 };
