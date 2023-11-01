@@ -76,7 +76,7 @@ const meta: StoryMetaType<typeof Code> = {
     language: {
       control: {
         type: 'select',
-        options: Object.keys(Language),
+        options: Object.values(Language),
       },
     },
     copyable: { control: 'boolean' },
