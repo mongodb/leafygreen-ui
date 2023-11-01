@@ -9,11 +9,7 @@ import React, {
 } from 'react';
 import { addDays, subDays } from 'date-fns';
 
-import {
-  useDynamicRefs,
-  useForwardedRef,
-  usePrevious,
-} from '@leafygreen-ui/hooks';
+import { useForwardedRef, usePrevious } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
 import { spacing } from '@leafygreen-ui/tokens';
 
@@ -47,19 +43,19 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
   ({ ...rest }: DatePickerMenuProps, fwdRef) => {
     const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
     const { isInRange, isOpen, setOpen, setIsDirty } = useDatePickerContext();
-    const { value, setValue, handleValidation } = useSingleDateContext();
+    const {
+      value,
+      setValue,
+      handleValidation,
+      refs,
+      month,
+      setMonth: setDisplayMonth,
+    } = useSingleDateContext();
 
-    // TODO: https://jira.mongodb.org/browse/LG-3666
-    // useDynamicRefs may overflow if a user navigates to too many months.
-    // consider purging the refs map within the hook
-    const cellRefs = useDynamicRefs<HTMLTableCellElement>();
     const ref = useForwardedRef(fwdRef, null);
+    const cellRefs = refs.calendarCellRefs;
     const headerRef = useRef<HTMLDivElement>(null);
     const calendarRef = useRef<HTMLTableElement>(null);
-
-    const [month, setDisplayMonth] = useState<Date>(
-      value ?? getFirstOfMonth(today),
-    );
     const [highlight, setHighlight] = useState<Date | null>(value || today);
 
     const prevValue = usePrevious(value);
@@ -115,7 +111,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       ) {
         setDisplayMonth(getFirstOfMonth(value));
       }
-    }, [month, prevValue, value]);
+    }, [month, prevValue, setDisplayMonth, value]);
 
     /** Returns the current state of the cell */
     const getCellState = (cellDay: Date | null): CalendarCellState => {
