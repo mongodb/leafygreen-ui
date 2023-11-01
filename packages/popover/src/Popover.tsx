@@ -279,13 +279,8 @@ const Popover = forwardRef<HTMLDivElement, PopoverProps>(
         mountOnEnter
         unmountOnExit
         appear
-        onEntered={() => {
-          console.log('🎃🎃setIsPopoverOpen(true)🎃🎃'), setIsPopoverOpen(true);
-        }}
-        onExit={() => {
-          console.log('🎃🎃setIsPopoverOpen(false)🎃🎃'),
-            setIsPopoverOpen(false);
-        }}
+        onEnter={() => setIsPopoverOpen(true)}
+        onExit={() => setIsPopoverOpen(false)}
       >
         {state => (
           <>

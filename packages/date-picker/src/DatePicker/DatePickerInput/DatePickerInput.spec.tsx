@@ -35,7 +35,7 @@ const renderDatePickerInput = (
   };
 };
 
-describe.skip('packages/date-picker/date-picker-input', () => {
+describe('packages/date-picker/date-picker-input', () => {
   beforeEach(() => {
     // Set the current time to midnight UTC on 2023-12-26
     jest
