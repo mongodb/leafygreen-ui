@@ -205,7 +205,7 @@ describe('packages/date-picker', () => {
       });
 
       describe('Clicking the Calendar button', () => {
-        test('toggles the menu open and close', async () => {
+        test('toggles the menu open and closed', async () => {
           const { calendarButton, getMenuElements } = renderDatePicker();
           userEvent.click(calendarButton);
           const { menuContainerEl } = getMenuElements();
@@ -222,6 +222,28 @@ describe('packages/date-picker', () => {
           await waitFor(() => expect(menuContainerEl).toBeInTheDocument());
           userEvent.click(calendarButton);
           await waitFor(() => expect(menuContainerEl).not.toBeInTheDocument());
+        });
+
+        test('focuses on the `today` cell by default', async () => {
+          const { calendarButton, getMenuElements } = renderDatePicker();
+          userEvent.click(calendarButton);
+          const { todayCell } = getMenuElements();
+          await waitFor(() => {
+            expect(todayCell).toHaveFocus();
+          });
+        });
+
+        test('focuses on the selected cell', async () => {
+          const value = newUTC(1994, Month.September, 10);
+          const { calendarButton, getMenuElements } = renderDatePicker({
+            value: value,
+          });
+          userEvent.click(calendarButton);
+          const { getCellForDate } = getMenuElements();
+          await waitFor(() => {
+            const valueCell = getCellForDate(value);
+            expect(valueCell).toHaveFocus();
+          });
         });
       });
 
@@ -515,11 +537,20 @@ describe('packages/date-picker', () => {
               const renderResult = renderDatePicker({
                 initialOpen: true,
               });
-              renderResult.openMenu();
 
               for (const label of tabStops) {
                 const element = getTabStopElementMap(renderResult)[label];
-                expect(element).toHaveFocus();
+
+                if (element !== null) {
+                  expect(element).toHaveFocus();
+                } else {
+                  expect(
+                    renderResult.inputContainer.contains(
+                      document.activeElement,
+                    ),
+                  ).toBeFalsy();
+                }
+
                 userEvent.tab();
               }
             });

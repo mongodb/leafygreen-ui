@@ -29,6 +29,7 @@ interface RenderMenuResult {
   calendarGrid: HTMLTableElement | null;
   calendarCells: Array<HTMLTableCellElement>;
   todayCell: HTMLTableCellElement | null;
+  getCellForDate: (date: Date) => HTMLTableCellElement | null;
 }
 
 /**
@@ -80,6 +81,14 @@ export const renderDatePicker = (
       '[aria-current="true"]',
     ) as HTMLTableCellElement;
 
+    const getCellForDate = (date: Date): HTMLTableCellElement | null => {
+      const cell = calendarGrid.querySelector(
+        `"[date-iso=${date.toISOString()}]"`,
+      );
+
+      return cell as HTMLTableCellElement | null;
+    };
+
     return {
       menuContainerEl,
       calendarGrid,
@@ -89,6 +98,7 @@ export const renderDatePicker = (
       rightChevron,
       monthSelect,
       yearSelect,
+      getCellForDate,
     };
   }
 
@@ -120,6 +130,7 @@ export const expectedTabStopLabels = {
     'none',
   ],
   open: [
+    'none',
     'input > year',
     'input > month',
     'input > day',
