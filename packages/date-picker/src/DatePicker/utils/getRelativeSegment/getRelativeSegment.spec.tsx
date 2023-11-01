@@ -14,15 +14,26 @@ const renderTestComponent = () => {
 
   const result = render(
     <>
-      <input id="day" ref={segmentRefs.day} />
-      <input id="month" ref={segmentRefs.month} />
-      <input id="year" ref={segmentRefs.year} />
+      <input data-testid="day" ref={segmentRefs.day} />
+      <input data-testid="month" ref={segmentRefs.month} />
+      <input data-testid="year" ref={segmentRefs.year} />
     </>,
   );
+
+  const elements = {
+    day: result.getByTestId('day'),
+    month: result.getByTestId('month'),
+    year: result.getByTestId('year'),
+  } as {
+    day: HTMLInputElement;
+    month: HTMLInputElement;
+    year: HTMLInputElement;
+  };
 
   return {
     ...result,
     segmentRefs,
+    elements,
   };
 };
 
@@ -35,67 +46,141 @@ describe('packages/date-picker/utils/getRelativeSegment', () => {
     { type: 'day', value: '31' },
   ];
 
-  let segmentRefs: SegmentRefs;
-  beforeEach(() => {
-    segmentRefs = renderTestComponent().segmentRefs;
+  describe('from ref', () => {
+    let segmentRefs: SegmentRefs;
+    beforeEach(() => {
+      segmentRefs = renderTestComponent().segmentRefs;
+    });
+    test('next from year => month', () => {
+      expect(
+        getRelativeSegment('next', {
+          segment: segmentRefs.year,
+          formatParts,
+          segmentRefs,
+        }),
+      ).toBe(segmentRefs.month);
+    });
+    test('next from month => day', () => {
+      expect(
+        getRelativeSegment('next', {
+          segment: segmentRefs.month,
+          formatParts,
+          segmentRefs,
+        }),
+      ).toBe(segmentRefs.day);
+    });
+
+    test('prev from day => month', () => {
+      expect(
+        getRelativeSegment('prev', {
+          segment: segmentRefs.day,
+          formatParts,
+          segmentRefs,
+        }),
+      ).toBe(segmentRefs.month);
+    });
+
+    test('prev from month => year', () => {
+      expect(
+        getRelativeSegment('prev', {
+          segment: segmentRefs.month,
+          formatParts,
+          segmentRefs,
+        }),
+      ).toBe(segmentRefs.year);
+    });
+
+    test('first = year', () => {
+      expect(
+        getRelativeSegment('first', {
+          segment: segmentRefs.day,
+          formatParts,
+          segmentRefs,
+        }),
+      ).toBe(segmentRefs.year);
+    });
+
+    test('last = day', () => {
+      expect(
+        getRelativeSegment('last', {
+          segment: segmentRefs.year,
+          formatParts,
+          segmentRefs,
+        }),
+      ).toBe(segmentRefs.day);
+    });
   });
 
-  test('next from year => month', () => {
-    expect(
-      getRelativeSegment('next', {
-        segment: segmentRefs.year,
-        formatParts,
-        segmentRefs,
-      }),
-    ).toBe(segmentRefs.month);
-  });
-  test('next from month => day', () => {
-    expect(
-      getRelativeSegment('next', {
-        segment: segmentRefs.month,
-        formatParts,
-        segmentRefs,
-      }),
-    ).toBe(segmentRefs.day);
-  });
+  describe('from element', () => {
+    let segmentRefs: SegmentRefs;
 
-  test('prev from day => month', () => {
-    expect(
-      getRelativeSegment('prev', {
-        segment: segmentRefs.day,
-        formatParts,
-        segmentRefs,
-      }),
-    ).toBe(segmentRefs.month);
-  });
+    let elements: {
+      day: HTMLInputElement;
+      month: HTMLInputElement;
+      year: HTMLInputElement;
+    };
+    beforeEach(() => {
+      const result = renderTestComponent();
+      segmentRefs = result.segmentRefs;
+      elements = result.elements;
+    });
+    test('next from year => month', () => {
+      expect(
+        getRelativeSegment('next', {
+          segment: elements.year,
+          formatParts,
+          segmentRefs,
+        }),
+      ).toBe(segmentRefs.month);
+    });
+    test('next from month => day', () => {
+      expect(
+        getRelativeSegment('next', {
+          segment: elements.month,
+          formatParts,
+          segmentRefs,
+        }),
+      ).toBe(segmentRefs.day);
+    });
 
-  test('prev from month => year', () => {
-    expect(
-      getRelativeSegment('prev', {
-        segment: segmentRefs.month,
-        formatParts,
-        segmentRefs,
-      }),
-    ).toBe(segmentRefs.year);
-  });
+    test('prev from day => month', () => {
+      expect(
+        getRelativeSegment('prev', {
+          segment: elements.day,
+          formatParts,
+          segmentRefs,
+        }),
+      ).toBe(segmentRefs.month);
+    });
 
-  test('first = year', () => {
-    expect(
-      getRelativeSegment('first', {
-        segment: segmentRefs.day,
-        formatParts,
-        segmentRefs,
-      }),
-    ).toBe(segmentRefs.year);
-  });
+    test('prev from month => year', () => {
+      expect(
+        getRelativeSegment('prev', {
+          segment: elements.month,
+          formatParts,
+          segmentRefs,
+        }),
+      ).toBe(segmentRefs.year);
+    });
 
-  test('last = day', () => {
-    expect(
-      getRelativeSegment('last', {
-        segment: segmentRefs.year,
-        formatParts,
-        segmentRefs,
-      }),
-    ).toBe(segmentRefs.day);
+    test('first = year', () => {
+      expect(
+        getRelativeSegment('first', {
+          segment: elements.day,
+          formatParts,
+          segmentRefs,
+        }),
+      ).toBe(segmentRefs.year);
+    });
+
+    test('last = day', () => {
+      expect(
+        getRelativeSegment('last', {
+          segment: elements.year,
+          formatParts,
+          segmentRefs,
+        }),
+      ).toBe(segmentRefs.day);
+    });
   });
 });

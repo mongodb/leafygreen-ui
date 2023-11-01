@@ -85,7 +85,7 @@ export const renderDatePicker = (
 
     const getCellForDate = (date: Date): HTMLTableCellElement | null => {
       const cell = calendarGrid.querySelector(
-        `"[date-iso=${getISODate(date)}]"`,
+        `[data-iso="${getISODate(date)}"]`,
       );
 
       return cell as HTMLTableCellElement | null;

@@ -52,6 +52,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       highlight,
       setHighlight,
       getCellWithValue,
+      getHighlightedCell,
     } = useSingleDateContext();
 
     const ref = useForwardedRef(fwdRef, null);
@@ -152,16 +153,16 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       if (e.key === keyMap.Tab) {
         const currentFocus = document.activeElement;
 
-        const highlightKey = highlight ? getISODate(highlight) : undefined;
-        const highlightedCellElement = highlightKey
-          ? cellRefs(highlightKey)?.current
-          : undefined;
+        const highlightedCellElement = getHighlightedCell();
         const rightChevronElement = headerRef.current?.lastElementChild;
 
-        if (!e.shiftKey && currentFocus === rightChevronElement) {
+        const isFocusOnRightChevron = currentFocus === rightChevronElement;
+        const isFocusOnCell = currentFocus === highlightedCellElement;
+
+        if (!e.shiftKey && isFocusOnRightChevron) {
           (highlightedCellElement as HTMLElement)?.focus();
           e.preventDefault();
-        } else if (e.shiftKey && currentFocus === highlightedCellElement) {
+        } else if (e.shiftKey && isFocusOnCell) {
           (rightChevronElement as HTMLElement)?.focus();
           e.preventDefault();
         }
@@ -210,7 +211,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       }
 
       // if nextHighlight is in range
-      if (isInRange(nextHighlight)) {
+      if (isInRange(nextHighlight) && !isSameUTCDay(nextHighlight, highlight)) {
         updateHighlight(nextHighlight);
         // Prevent the parent keydown handler from being called
         e.stopPropagation();
