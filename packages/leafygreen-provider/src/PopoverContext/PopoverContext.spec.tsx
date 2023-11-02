@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, renderHook } from '@testing-library/react';
 
 import { PopoverProvider, usePopoverContext } from '.';
 
@@ -53,24 +53,37 @@ describe('packages/leafygreen-provider/PopoverContext', () => {
   });
 });
 
-function renderTestComponent() {
-  const utils = render(<TestContextComponent />);
-  const testChild = utils.getByTestId(childTestID);
-  return { ...utils, testChild };
-}
-
 describe('usePopoverContext', () => {
-  test('when child is not a descendent of PopoverProvider, isPopoverOpen is false', () => {
-    const { testChild } = renderTestComponent();
-    expect(testChild.textContent).toBe('false');
+  test('is closed by default', () => {
+    const { result } = renderHook(usePopoverContext);
+    expect(result.current.isPopoverOpen).toBeFalsy();
   });
 
-  test('when child is not a descendent of PopoverProvider, isPopoverOpen is false when setIsPopoverOpen sets isPopoverOpen to true', () => {
-    const { testChild, getByTestId } = renderTestComponent();
+  test('setter updates the value', () => {
+    const { result } = renderHook(usePopoverContext);
+    result.current.setIsPopoverOpen(true);
+    expect(result.current.isPopoverOpen).toBeFalsy();
+  });
 
-    // The button's click handler fires setIsPopoverOpen(true)
-    fireEvent.click(getByTestId(buttonTestId));
+  describe('with test component', () => {
+    function renderTestComponent() {
+      const utils = render(<TestContextComponent />);
+      const testChild = utils.getByTestId(childTestID);
+      return { ...utils, testChild };
+    }
 
-    expect(testChild.textContent).toBe('false');
+    test('when child is not a descendent of PopoverProvider, isPopoverOpen is false', () => {
+      const { testChild } = renderTestComponent();
+      expect(testChild.textContent).toBe('false');
+    });
+
+    test('when child is not a descendent of PopoverProvider, isPopoverOpen is false when setIsPopoverOpen sets isPopoverOpen to true', () => {
+      const { testChild, getByTestId } = renderTestComponent();
+
+      // The button's click handler fires setIsPopoverOpen(true)
+      fireEvent.click(getByTestId(buttonTestId));
+
+      expect(testChild.textContent).toBe('false');
+    });
   });
 });
