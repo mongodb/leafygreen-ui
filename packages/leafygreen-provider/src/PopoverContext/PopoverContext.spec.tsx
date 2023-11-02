@@ -1,13 +1,8 @@
-import React from 'react';
-import {
-  act,
-  fireEvent,
-  render,
-  renderHook,
-  waitFor,
-} from '@testing-library/react';
+import React, { PropsWithChildren } from 'react';
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import { renderHook } from '@testing-library/react-hooks';
 
-import { PopoverProvider, usePopoverContext } from '.';
+import { PopoverProvider, type PopoverState, usePopoverContext } from '.';
 
 const childTestID = 'popover-provider';
 const buttonTestId = 'test-button';
@@ -66,7 +61,10 @@ describe('usePopoverContext', () => {
   });
 
   test('setter updates the value', async () => {
-    const { result, rerender } = renderHook(usePopoverContext, {
+    const { result, rerender } = renderHook<
+      PropsWithChildren<{}>,
+      PopoverState
+    >(usePopoverContext, {
       wrapper: ({ children }) => <PopoverProvider>{children}</PopoverProvider>,
     });
 
