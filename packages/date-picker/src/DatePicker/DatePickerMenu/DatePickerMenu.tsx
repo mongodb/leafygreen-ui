@@ -3,17 +3,16 @@ import React, {
   KeyboardEventHandler,
   useCallback,
   useEffect,
-  useLayoutEffect,
   useMemo,
   useRef,
 } from 'react';
 import { addDays, subDays } from 'date-fns';
-import { DateType } from 'src/shared';
 
 import { useForwardedRef, usePrevious } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
-import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
+import { spacing } from '@leafygreen-ui/tokens';
 
+import { DateType } from '../../shared';
 import {
   CalendarCell,
   CalendarCellState,
@@ -64,7 +63,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
     const calendarRef = useRef<HTMLTableElement>(null);
 
     const prevValue = usePrevious(value);
-    const prevOpen = usePrevious(isOpen);
+    // const prevOpen = usePrevious(isOpen);
     // const prevHighlight = usePrevious(highlight);
 
     const monthLabel = getFullMonthLabel(month);
@@ -104,16 +103,6 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       setHighlight(newHighlight);
       focusCellWithDate(newHighlight);
     };
-
-    // When the menu opens, set focus to the `highlight` cell
-    useLayoutEffect(() => {
-      if (isOpen && !prevOpen) {
-        // TODO: add & use `onEntered` handlers to Popover/MenuWrapper
-        setTimeout(() => {
-          focusCellWithDate(highlight);
-        }, transitionDuration.default);
-      }
-    }, [focusCellWithDate, highlight, isOpen, prevOpen]);
 
     /**
      * If the new value is not the current month, update the month
@@ -243,8 +232,8 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
         active={isOpen}
         spacing={spacing[1]}
         className={menuWrapperStyles}
-        onKeyDown={handleWrapperTabKeyPress}
         usePortal
+        onKeyDown={handleWrapperTabKeyPress}
         {...rest}
       >
         <div className={menuContentStyles}>

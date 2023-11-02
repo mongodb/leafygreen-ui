@@ -37,8 +37,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
   ) => {
     const { formatParts, disabled, setOpen, isDirty, setIsDirty } =
       useDatePickerContext();
-    const { value, setValue, handleValidation, getHighlightedCell } =
-      useSingleDateContext();
+    const { value, setValue, handleValidation } = useSingleDateContext();
 
     const segmentRefs = useSegmentRefs();
 
