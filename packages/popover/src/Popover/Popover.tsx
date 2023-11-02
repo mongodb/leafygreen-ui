@@ -366,9 +366,9 @@ Popover.propTypes = {
         ? PropTypes.instanceOf(Element)
         : PropTypes.any,
   }),
-  /// @ts-expect-error Types of property '[nominalTypeHack]' are incompatible.
+  /// @ts-ignore Types of property '[nominalTypeHack]' are incompatible. - error only in R18
   usePortal: PropTypes.bool,
-  /// @ts-expect-error Types of property '[nominalTypeHack]' are incompatible.
+  /// @ts-ignore Types of property '[nominalTypeHack]' are incompatible. - error only in R18
   portalClassName: PropTypes.string,
   spacing: PropTypes.number,
   adjustOnMutation: PropTypes.bool,
