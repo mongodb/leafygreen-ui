@@ -1,5 +1,15 @@
 # @lg-tools/validate
 
+## 0.1.5
+
+### Patch Changes
+
+- 3e1a7bc3: Updates the logic to check whether a dependency is used in a development file
+- Updated dependencies [4822f43c]
+- Updated dependencies [8b1d2d3a]
+  - @lg-tools/build@0.3.1
+  - @lg-tools/meta@0.1.5
+
 ## 0.1.4
 
 ### Patch Changes
