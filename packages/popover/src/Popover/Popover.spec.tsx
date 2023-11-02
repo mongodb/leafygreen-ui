@@ -231,6 +231,7 @@ describe('packages/popover', () => {
         data-testid="popover-test-id"
         className="some-classname"
         onClick={() => {}}
+        onMouseEnter={() => {}}
         onTransitionEnd={() => {}}
       >
         Popover Content
