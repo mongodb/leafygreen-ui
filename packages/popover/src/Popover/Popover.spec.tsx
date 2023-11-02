@@ -147,6 +147,7 @@ describe('packages/popover', () => {
     // Calls exit callbacks when active is toggled to false
     rerenderPopover({ active: false });
 
+    // Expect the `onEnter*` callbacks to _only_ have been called once (from the previous render)
     expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
     expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
     expect(callbacks.onEntered).toHaveBeenCalledTimes(1);
