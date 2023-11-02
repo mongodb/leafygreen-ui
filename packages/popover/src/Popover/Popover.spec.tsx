@@ -99,16 +99,6 @@ describe('packages/popover', () => {
     );
   });
 
-  // eslint-disable-next-line jest/expect-expect
-  test('does not allow specifying "portalClassName", when "usePortal" is false', () => {
-    renderPopover({
-      active: true,
-      usePortal: false,
-      // @ts-expect-error
-      portalClassName: 'test-classname',
-    });
-  });
-
   test('removes Popover instance on unmount', () => {
     const { container, unmount } = renderPopover();
     unmount();
@@ -214,6 +204,37 @@ describe('packages/popover', () => {
       await waitFor(() =>
         expect(setIsPopoverOpenMock).toHaveBeenCalledWith(false),
       );
+    });
+  });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  describe.skip('types', () => {
+    test('default', () => {
+      <Popover>Popover Content</Popover>;
+    });
+
+    test('requires children', () => {
+      // @ts-expect-error
+      <Popover></Popover>;
+    });
+
+    test('does not allow specifying "portalClassName", when "usePortal" is false', () => {
+      // @ts-expect-error
+      <Popover active usePortal={false} portalClassName="test-classname">
+        Popover Content
+      </Popover>;
+    });
+
+    test('accepts `div` props', () => {
+      <Popover
+        id="some-id"
+        data-testid="popover-test-id"
+        className="some-classname"
+        onClick={() => {}}
+        onTransitionEnd={() => {}}
+      >
+        Popover Content
+      </Popover>;
     });
   });
 });
