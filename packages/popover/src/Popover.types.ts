@@ -1,5 +1,8 @@
 import React from 'react';
 import { Transition } from 'react-transition-group';
+
+import { HTMLElementProps } from '@leafygreen-ui/lib';
+
 type TransitionProps = React.ComponentProps<typeof Transition<HTMLElement>>;
 type TransitionLifecycleCallbacks = Pick<
   TransitionProps,
@@ -173,5 +176,6 @@ export type PopoverProps = {
    * Number that controls the z-index of the popover element directly.
    */
   popoverZIndex?: number;
-} & PortalControlProps &
+} & Omit<HTMLElementProps<'div'>, 'children'> &
+  PortalControlProps &
   TransitionLifecycleCallbacks;
