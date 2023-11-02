@@ -1,5 +1,23 @@
 # @leafygreen-ui/side-nav
 
+## 14.1.0
+
+### Minor Changes
+
+- 1e0cea9d: SideNav now forwards refs
+
+### Patch Changes
+
+- Updated dependencies [e3f4d9ce]
+- Updated dependencies [89f439e8]
+- Updated dependencies [c41752d2]
+- Updated dependencies [783add80]
+- Updated dependencies [89332190]
+  - @leafygreen-ui/typography@18.0.1
+  - @leafygreen-ui/hooks@8.0.1
+  - @leafygreen-ui/icon@11.25.0
+  - @leafygreen-ui/tooltip@11.0.0
+
 ## 14.0.5
 
 ### Patch Changes
