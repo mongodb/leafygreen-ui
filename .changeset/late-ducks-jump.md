@@ -2,5 +2,4 @@
 '@leafygreen-ui/popover': patch
 ---
 
-
-Uses `onEnter` in favor of `onEntering` callback in `<Transition/>` since `OnEntering` does not fire inside tests
+Toggles `isPopoverOpen` in `PopoverContext` in the `onEntered` and `onExited` lifecycle callbacks, to better reflect the true state of the popover state

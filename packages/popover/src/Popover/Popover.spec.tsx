@@ -1,6 +1,8 @@
-import React, { createRef } from 'react';
+import React, { createRef, PropsWithChildren } from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import { axe } from 'jest-axe';
+
+import { PopoverContext } from '@leafygreen-ui/leafygreen-provider';
 
 import { PopoverProps } from '../Popover.types';
 
@@ -154,5 +156,63 @@ describe('packages/popover', () => {
     await waitFor(() => expect(callbacks.onExited).toHaveBeenCalledTimes(1));
   });
 
-  describe('with context', () => {});
+  describe('within context', () => {
+    const setIsPopoverOpenMock = jest.fn();
+
+    function renderPopoverInContext(props?: Partial<PopoverProps>) {
+      const MockPopoverProvider = ({ children }: PropsWithChildren<{}>) => {
+        return (
+          <PopoverContext.Provider
+            value={{
+              isPopoverOpen: false,
+              setIsPopoverOpen: setIsPopoverOpenMock,
+            }}
+          >
+            {children}
+          </PopoverContext.Provider>
+        );
+      };
+
+      const result = render(
+        <MockPopoverProvider>
+          <Popover {...props} data-testid="popover-test-id">
+            Popover Content
+          </Popover>
+        </MockPopoverProvider>,
+      );
+
+      const rerenderPopover = (newProps?: Partial<PopoverProps>) => {
+        const allProps = { ...props, ...newProps };
+        result.rerender(
+          <MockPopoverProvider>
+            <Popover {...allProps} data-testid="popover-test-id">
+              Popover Content
+            </Popover>
+          </MockPopoverProvider>,
+        );
+      };
+
+      return { ...result, rerenderPopover };
+    }
+
+    afterEach(() => {
+      setIsPopoverOpenMock.mockReset();
+    });
+
+    test('toggling `active` calls setIsPopoverOpen', async () => {
+      const { rerenderPopover } = renderPopoverInContext();
+      expect(setIsPopoverOpenMock).not.toHaveBeenCalled();
+
+      rerenderPopover({ active: true });
+      await waitFor(() =>
+        expect(setIsPopoverOpenMock).toHaveBeenCalledWith(true),
+      );
+
+      rerenderPopover({ active: false });
+      expect(setIsPopoverOpenMock).not.toHaveBeenCalledWith(false);
+      await waitFor(() =>
+        expect(setIsPopoverOpenMock).toHaveBeenCalledWith(false),
+      );
+    });
+  });
 });

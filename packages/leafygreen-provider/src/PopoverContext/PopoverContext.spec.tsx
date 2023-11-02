@@ -1,5 +1,11 @@
 import React from 'react';
-import { fireEvent, render, renderHook } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  render,
+  renderHook,
+  waitFor,
+} from '@testing-library/react';
 
 import { PopoverProvider, usePopoverContext } from '.';
 
@@ -59,10 +65,16 @@ describe('usePopoverContext', () => {
     expect(result.current.isPopoverOpen).toBeFalsy();
   });
 
-  test('setter updates the value', () => {
-    const { result } = renderHook(usePopoverContext);
-    result.current.setIsPopoverOpen(true);
-    expect(result.current.isPopoverOpen).toBeFalsy();
+  test('setter updates the value', async () => {
+    const { result, rerender } = renderHook(usePopoverContext, {
+      wrapper: ({ children }) => <PopoverProvider>{children}</PopoverProvider>,
+    });
+
+    act(() => result.current.setIsPopoverOpen(true));
+    rerender();
+    await waitFor(() => {
+      expect(result.current.isPopoverOpen).toBe(true);
+    });
   });
 
   describe('with test component', () => {
