@@ -60,7 +60,7 @@ describe('packages/leafygreen-provider/PopoverContext', () => {
 });
 
 describe('usePopoverContext', () => {
-  test('is closed by default', () => {
+  test('is `false` by default', () => {
     const { result } = renderHook(usePopoverContext);
     expect(result.current.isPopoverOpen).toBeFalsy();
   });
