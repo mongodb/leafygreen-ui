@@ -1,4 +1,10 @@
 import React from 'react';
+import { Transition } from 'react-transition-group';
+type TransitionProps = React.ComponentProps<typeof Transition<HTMLElement>>;
+type TransitionLifecycleCallbacks = Pick<
+  TransitionProps,
+  'onEnter' | 'onEntering' | 'onEntered' | 'onExit' | 'onExiting' | 'onExited'
+>;
 
 /**
  * Options to determine the alignment of the popover relative to
@@ -167,4 +173,5 @@ export type PopoverProps = {
    * Number that controls the z-index of the popover element directly.
    */
   popoverZIndex?: number;
-} & PortalControlProps;
+} & PortalControlProps &
+  TransitionLifecycleCallbacks;

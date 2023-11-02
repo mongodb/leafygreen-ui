@@ -84,6 +84,12 @@ const Popover = forwardRef<HTMLDivElement, PopoverProps>(
       portalClassName,
       portalContainer: portalContainerProp,
       scrollContainer: scrollContainerProp,
+      onEnter,
+      onEntering,
+      onEntered,
+      onExit,
+      onExiting,
+      onExited,
       ...rest
     }: PopoverProps,
     fwdRef,
@@ -279,8 +285,18 @@ const Popover = forwardRef<HTMLDivElement, PopoverProps>(
         mountOnEnter
         unmountOnExit
         appear
-        onEnter={() => setIsPopoverOpen(true)}
-        onExit={() => setIsPopoverOpen(false)}
+        onEnter={(...args) => {
+          setIsPopoverOpen(true);
+          onEnter?.(...args);
+        }}
+        onExit={(...args) => {
+          setIsPopoverOpen(false);
+          onExit?.(...args);
+        }}
+        onEntering={onEntering}
+        onEntered={onEntered}
+        onExiting={onExiting}
+        onExited={onExited}
       >
         {state => (
           <>

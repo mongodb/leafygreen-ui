@@ -1,32 +1,39 @@
 import React, { createRef } from 'react';
-import { act, fireEvent, render } from '@testing-library/react';
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
 import Popover from './Popover';
 import { PopoverProps } from './types';
 
-function renderPopover(props: Partial<PopoverProps> = {}) {
-  const utils = render(
-    <>
-      <button data-testid="button-test-id">Trigger Element</button>
-      <Popover {...props} data-testid="popover-test-id">
-        Popover Content
-      </Popover>
-    </>,
+function renderPopover(props?: Partial<PopoverProps>) {
+  const result = render(
+    <Popover {...props} data-testid="popover-test-id">
+      Popover Content
+    </Popover>,
   );
-  const button = utils.getByTestId('button-test-id');
-  return { ...utils, button };
+
+  const rerenderPopover = (newProps?: Partial<PopoverProps>) => {
+    const allProps = { ...props, ...newProps };
+    result.rerender(
+      <Popover {...allProps} data-testid="popover-test-id">
+        Popover Content
+      </Popover>,
+    );
+  };
+
+  return { ...result, rerenderPopover };
 }
 
 describe('packages/popover', () => {
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
-      const { container, getByText } = renderPopover();
+      const { container, rerenderPopover } = renderPopover();
       const results = await axe(container);
       expect(results).toHaveNoViolations();
 
-      let newResults = null as any;
-      act(() => void fireEvent.click(getByText('Trigger Element')));
+      type AxeResult = Awaited<ReturnType<typeof axe>>;
+      let newResults: AxeResult = {} as AxeResult;
+      rerenderPopover({ active: true });
       await act(async () => {
         newResults = await axe(container);
       });
@@ -35,7 +42,7 @@ describe('packages/popover', () => {
   });
 
   test('accepts a ref', () => {
-    const ref = createRef();
+    const ref = createRef<HTMLDivElement>();
     render(
       <Popover ref={ref} data-testid="popover-test-id">
         Popover Content
@@ -64,7 +71,7 @@ describe('packages/popover', () => {
     expect(clickSpy).toHaveBeenCalledTimes(1);
   });
 
-  test('portals popover content to end of DOM, when "usePortal" is not set', () => {
+  test('portals popover content to end of DOM by default', () => {
     const { container, getByTestId } = renderPopover({ active: true });
     expect(container).not.toContain(getByTestId('popover-test-id'));
   });
@@ -103,5 +110,46 @@ describe('packages/popover', () => {
     const { container, unmount } = renderPopover();
     unmount();
     expect(container.innerHTML).toBe('');
+  });
+
+  test('fires `Transition` lifecycle hooks', async () => {
+    const callbacks = {
+      onEnter: jest.fn(),
+      onEntering: jest.fn(),
+      onEntered: jest.fn(),
+      onExit: jest.fn(),
+      onExiting: jest.fn(),
+      onExited: jest.fn(),
+    };
+    const { rerenderPopover } = renderPopover({
+      ...callbacks,
+    });
+
+    // Does not call any hooks on initial render
+    for (const cb of Object.values(callbacks)) {
+      expect(cb).not.toHaveBeenCalled();
+    }
+
+    // Calls enter callbacks when active is toggled to true
+    rerenderPopover({ active: true });
+
+    expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
+    expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(callbacks.onEntered).toHaveBeenCalledTimes(1));
+
+    expect(callbacks.onExit).not.toHaveBeenCalled();
+    expect(callbacks.onExiting).not.toHaveBeenCalled();
+    expect(callbacks.onExited).not.toHaveBeenCalled();
+
+    // Calls exit callbacks when active is toggled to false
+    rerenderPopover({ active: false });
+
+    expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
+    expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
+    expect(callbacks.onEntered).toHaveBeenCalledTimes(1);
+
+    expect(callbacks.onExit).toHaveBeenCalledTimes(1);
+    expect(callbacks.onExiting).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(callbacks.onExited).toHaveBeenCalledTimes(1));
   });
 });
