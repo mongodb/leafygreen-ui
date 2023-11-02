@@ -281,7 +281,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(
       <Transition
         nodeRef={contentNodeRef}
         in={active}
-        timeout={150}
+        timeout={transitionDuration.default}
         mountOnEnter
         unmountOnExit
         appear
