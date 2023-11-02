@@ -2,8 +2,9 @@ import React, { createRef } from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import Popover from './Popover';
-import { PopoverProps } from './types';
+import { PopoverProps } from '../Popover.types';
+
+import { Popover } from './Popover';
 
 function renderPopover(props?: Partial<PopoverProps>) {
   const result = render(
@@ -152,4 +153,6 @@ describe('packages/popover', () => {
     expect(callbacks.onExiting).toHaveBeenCalledTimes(1);
     await waitFor(() => expect(callbacks.onExited).toHaveBeenCalledTimes(1));
   });
+
+  describe('with context', () => {});
 });

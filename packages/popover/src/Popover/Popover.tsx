@@ -18,12 +18,12 @@ import { consoleOnce, createUniqueClassName } from '@leafygreen-ui/lib';
 import Portal from '@leafygreen-ui/portal';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
+import { Align, Justify, PopoverProps } from '../Popover.types';
 import {
   calculatePosition,
   getElementDocumentPosition,
   getElementViewportPosition,
-} from './positionUtils';
-import { Align, Justify, PopoverProps } from './types';
+} from '../utils/positionUtils';
 
 const rootPopoverStyle = css`
   position: absolute;
@@ -68,7 +68,7 @@ export const contentClassName = createUniqueClassName('popover-content');
  * @param props.portalContainer HTML element that the popover is portaled within.
  * @param props.scrollContainer HTML ancestor element that's scrollable to position the popover accurately within scrolling containers.
  */
-const Popover = forwardRef<HTMLDivElement, PopoverProps>(
+export const Popover = forwardRef<HTMLDivElement, PopoverProps>(
   (
     {
       active = false,
@@ -368,5 +368,3 @@ Popover.propTypes = {
   spacing: PropTypes.number,
   adjustOnMutation: PropTypes.bool,
 };
-
-export default Popover;
