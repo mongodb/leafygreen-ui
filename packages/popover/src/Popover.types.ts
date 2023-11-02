@@ -58,7 +58,7 @@ export interface ElementPosition {
   width: number;
 }
 
-interface ChildrenFunctionParameters {
+export interface ChildrenFunctionParameters {
   align: Align;
   justify: Justify;
   referenceElPos: ElementPosition;
@@ -114,6 +114,10 @@ export type PortalControlProps =
       scrollContainer?: null;
     };
 
+/**
+ * Base popover props.
+ * Use these props to extend popover behavior
+ */
 export type PopoverProps = {
   /**
    * Content that will appear inside of the popover component.
@@ -176,6 +180,9 @@ export type PopoverProps = {
    * Number that controls the z-index of the popover element directly.
    */
   popoverZIndex?: number;
-} & Omit<HTMLElementProps<'div'>, 'children'> &
-  PortalControlProps &
+} & PortalControlProps &
   TransitionLifecycleCallbacks;
+
+/** Props used by the popover component */
+export type PopoverComponentProps = Omit<HTMLElementProps<'div'>, 'children'> &
+  PopoverProps;
