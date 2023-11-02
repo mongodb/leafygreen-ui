@@ -1,5 +1,13 @@
 # @lg-tools/meta
 
+## 0.1.5
+
+### Patch Changes
+
+- 8b1d2d3a: Adds `getPackageJson` utility
+- Updated dependencies [4822f43c]
+  - @lg-tools/build@0.3.1
+
 ## 0.1.4
 
 ### Patch Changes
