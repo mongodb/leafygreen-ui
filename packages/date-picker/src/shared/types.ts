@@ -59,7 +59,7 @@ export interface BaseDatePickerProps extends DarkModeProps {
   baseFontSize?: BaseFontSize;
 
   /**
-   * Whether the input is disabled. The calendar menu will not open if disabled is true. Note: will not set the `disabled` attribute on an input
+   * Whether the input is disabled. Note: will not set the `disabled` attribute on an input and the calendar menu will not open if disabled is set to true.
    */
   disabled?: boolean;
 
@@ -76,6 +76,6 @@ export interface BaseDatePickerProps extends DarkModeProps {
    */
   errorMessage?: string;
 
-  /** Whether the calendar menu is initially open. Note: The calendar menu will not open if disabled is initially set to true.  */
+  /** Whether the calendar menu is initially open. Note: The calendar menu will not open if disabled is set to true.  */
   initialOpen?: boolean;
 }
