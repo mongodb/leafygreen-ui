@@ -41,7 +41,8 @@ interface RenderMenuResult {
   calendarGrid: HTMLTableElement | null;
   calendarCells: Array<HTMLTableCellElement | null>;
   todayCell: HTMLTableCellElement | null;
-  getCellForDate: (date: Date) => HTMLTableCellElement | null;
+  /** Query for a cell with a given date value */
+  queryCellByDate: (date: Date) => HTMLTableCellElement | null;
 }
 
 /**
@@ -92,7 +93,7 @@ export const renderDatePicker = (
     const yearSelect =
       withinElement(menuContainerEl)?.queryByLabelText('Select year');
 
-    const getCellForDate = (date: Date): HTMLTableCellElement | null => {
+    const queryCellByDate = (date: Date): HTMLTableCellElement | null => {
       const cell = calendarGrid?.querySelector(
         `[data-iso="${getISODate(date)}"]`,
       );
@@ -100,7 +101,7 @@ export const renderDatePicker = (
       return cell as HTMLTableCellElement | null;
     };
 
-    const todayCell = getCellForDate(new Date(Date.now()));
+    const todayCell = queryCellByDate(new Date(Date.now()));
 
     return {
       menuContainerEl,
@@ -111,7 +112,7 @@ export const renderDatePicker = (
       monthSelect: monthSelect as HTMLButtonElement | null,
       yearSelect: yearSelect as HTMLButtonElement | null,
       todayCell,
-      getCellForDate,
+      queryCellByDate,
     };
   }
 

@@ -247,8 +247,8 @@ describe('packages/date-picker', () => {
             });
           userEvent.click(calendarButton);
           const menuContainerEl = await findByRole('listbox');
-          const { getCellForDate } = await findMenuElements();
-          const valueCell = getCellForDate(value);
+          const { queryCellByDate } = await findMenuElements();
+          const valueCell = queryCellByDate(value);
           // Manually fire the `transitionEnd` event. This is not fired automatically by JSDOM
           fireEvent.transitionEnd(menuContainerEl!);
           expect(valueCell).toHaveFocus();
@@ -463,24 +463,24 @@ describe('packages/date-picker', () => {
           const { openMenu, findAllByRole } = renderDatePicker({
             value: newUTC(2023, Month.July, 5),
           });
-          const { monthSelect, getCellForDate } = await openMenu();
+          const { monthSelect, queryCellByDate } = await openMenu();
           userEvent.click(monthSelect!);
           const options = await findAllByRole('option');
           const Jan = options[0];
           userEvent.click(Jan);
-          const jan31Cell = getCellForDate(newUTC(2023, Month.January, 31));
+          const jan31Cell = queryCellByDate(newUTC(2023, Month.January, 31));
           await waitFor(() => expect(jan31Cell).toHaveFocus());
         });
         test('to the beginning of the month if we went forwards', async () => {
           const { openMenu, findAllByRole } = renderDatePicker({
             value: newUTC(2023, Month.July, 5),
           });
-          const { monthSelect, getCellForDate } = await openMenu();
+          const { monthSelect, queryCellByDate } = await openMenu();
           userEvent.click(monthSelect!);
           const options = await findAllByRole('option');
           const Dec = options[11];
           userEvent.click(Dec);
-          const dec1Cell = getCellForDate(newUTC(2023, Month.December, 1));
+          const dec1Cell = queryCellByDate(newUTC(2023, Month.December, 1));
           await waitFor(() => expect(dec1Cell).toHaveFocus());
         });
       });
@@ -759,28 +759,28 @@ describe('packages/date-picker', () => {
           test('left arrow moves focus to the previous day', async () => {
             const { calendarButton, findMenuElements } = renderDatePicker();
             userEvent.click(calendarButton);
-            const { todayCell, menuContainerEl, getCellForDate } =
+            const { todayCell, menuContainerEl, queryCellByDate } =
               await findMenuElements();
             // Manually fire the `transitionEnd` event. This is not fired automatically by JSDOM
             fireEvent.transitionEnd(menuContainerEl!);
             expect(todayCell).toHaveFocus();
 
             userEvent.keyboard('{arrowleft}');
-            const prevDayCell = getCellForDate(subDays(testToday, 1));
+            const prevDayCell = queryCellByDate(subDays(testToday, 1));
             await waitFor(() => expect(prevDayCell).toHaveFocus());
           });
 
           test('down arrow moves focus to next week', async () => {
             const { calendarButton, findMenuElements } = renderDatePicker();
             userEvent.click(calendarButton);
-            const { todayCell, menuContainerEl, getCellForDate } =
+            const { todayCell, menuContainerEl, queryCellByDate } =
               await findMenuElements();
             // Manually fire the `transitionEnd` event. This is not fired automatically by JSDOM
             fireEvent.transitionEnd(menuContainerEl!);
             expect(todayCell).toHaveFocus();
 
             userEvent.keyboard('{arrowdown}');
-            const nextWeekCell = getCellForDate(addDays(testToday, 7));
+            const nextWeekCell = queryCellByDate(addDays(testToday, 7));
             await waitFor(() => expect(nextWeekCell).toHaveFocus());
           });
 
@@ -1029,21 +1029,21 @@ describe('packages/date-picker', () => {
         test('highlight returns to today by default', async () => {
           const { calendarButton, findMenuElements } = renderDatePicker();
           userEvent.click(calendarButton);
-          const { getCellForDate, menuContainerEl } = await findMenuElements();
-          let todayCell = getCellForDate(testToday);
+          const { queryCellByDate, menuContainerEl } = await findMenuElements();
+          let todayCell = queryCellByDate(testToday);
           expect(todayCell).not.toBeNull();
           await waitFor(() => expect(todayCell).toHaveFocus());
 
           userEvent.keyboard('{arrowdown}');
           const jan2 = addDays(testToday, 7);
-          const jan2Cell = getCellForDate(jan2);
+          const jan2Cell = queryCellByDate(jan2);
           await waitFor(() => expect(jan2Cell).toHaveFocus());
 
           userEvent.keyboard('{escape}');
           await waitForElementToBeRemoved(menuContainerEl);
 
           userEvent.click(calendarButton);
-          todayCell = getCellForDate(testToday);
+          todayCell = queryCellByDate(testToday);
           expect(todayCell).not.toBeNull();
           await waitFor(() => expect(todayCell).toHaveFocus());
         });
@@ -1054,21 +1054,21 @@ describe('packages/date-picker', () => {
             value,
           });
           userEvent.click(calendarButton);
-          const { getCellForDate, menuContainerEl } = await findMenuElements();
-          let valueCell = getCellForDate(value);
+          const { queryCellByDate, menuContainerEl } = await findMenuElements();
+          let valueCell = queryCellByDate(value);
           expect(valueCell).not.toBeNull();
           await waitFor(() => expect(valueCell).toHaveFocus());
 
           userEvent.keyboard('{arrowup}{arrowup}');
           const aug27 = subDays(value, 14);
-          const aug27Cell = getCellForDate(aug27);
+          const aug27Cell = queryCellByDate(aug27);
           await waitFor(() => expect(aug27Cell).toHaveFocus());
 
           userEvent.keyboard('{escape}');
           await waitForElementToBeRemoved(menuContainerEl);
 
           userEvent.click(calendarButton);
-          valueCell = getCellForDate(testToday);
+          valueCell = queryCellByDate(testToday);
           expect(valueCell).not.toBeNull();
           await waitFor(() => expect(valueCell).toHaveFocus());
         });
