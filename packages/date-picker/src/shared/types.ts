@@ -76,6 +76,6 @@ export interface BaseDatePickerProps extends DarkModeProps {
    */
   errorMessage?: string;
 
-  /** Whether the calendar menu is initially open. Will not open if disabled is initially set to true.  */
+  /** Whether the calendar menu is initially open. Note: The calendar menu will not open if disabled is initially set to true.  */
   initialOpen?: boolean;
 }
