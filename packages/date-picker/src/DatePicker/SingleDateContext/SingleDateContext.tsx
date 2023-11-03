@@ -59,6 +59,7 @@ export const SingleDateProvider = ({
    * Set the `highlight` value & handle side effects
    */
   const setHighlight = useCallback((newHighlight: DateType) => {
+    console.trace('setHighlight', newHighlight?.toISOString());
     _setHighlight(newHighlight);
   }, []);
 
@@ -80,6 +81,7 @@ export const SingleDateProvider = ({
 
   /** Returns the cell element with the current highlight value */
   const getHighlightedCell = () => {
+    console.log('getHighlightedCell', highlight?.toISOString());
     return getCellWithValue(highlight);
   };
 

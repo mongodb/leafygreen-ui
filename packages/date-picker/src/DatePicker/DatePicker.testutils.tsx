@@ -24,11 +24,26 @@ interface RenderDatePickerResult extends RenderResult {
   monthInput: HTMLInputElement;
   yearInput: HTMLInputElement;
   calendarButton: HTMLButtonElement;
-  /** Asynchronously query for the menu elements */
+
+  /**
+   * Asynchronously query for menu elements
+   */
   findMenuElements: () => Promise<RenderMenuResult>;
-  /** Opens the menu by clicking the calendar button */
+
+  /**
+   * Wait for the menu element to finish opening.
+   * When this method resolves, the appropriate calendar cell will be focused
+   */
+  waitForMenuToOpen: () => Promise<RenderMenuResult>;
+
+  /**
+   * Opens the menu by clicking the calendar button.
+   */
   openMenu: () => Promise<RenderMenuResult>;
-  /** re-render the Date Picker with new props */
+
+  /**
+   * Rerender the Date Picker with new props
+   */
   rerenderDatePicker: (newProps: Partial<DatePickerProps>) => void;
 }
 
@@ -68,12 +83,16 @@ export const renderDatePicker = (
     );
   };
 
-  const formField = result.getByTestId('lg-date-picker');
-  const inputContainer = result.getByRole('combobox');
-  const dayInput = result.getByLabelText('day');
-  const monthInput = result.getByLabelText('month');
-  const yearInput = result.getByLabelText('year');
-  const calendarButton = within(inputContainer).getByRole('button');
+  const inputElements = {
+    formField: result.getByTestId('lg-date-picker'),
+    inputContainer: result.getByRole('combobox'),
+    dayInput: result.getByLabelText('day') as HTMLInputElement,
+    monthInput: result.getByLabelText('month') as HTMLInputElement,
+    yearInput: result.getByLabelText('year') as HTMLInputElement,
+    calendarButton: within(result.getByRole('combobox')).getByRole(
+      'button',
+    ) as HTMLButtonElement,
+  };
 
   /**
    * Asynchronously query for menu elements.
@@ -116,31 +135,30 @@ export const renderDatePicker = (
     };
   }
 
-  async function openMenu(): Promise<RenderMenuResult> {
-    userEvent.click(calendarButton);
+  async function waitForMenuToOpen(): Promise<RenderMenuResult> {
     const menuElements = await findMenuElements();
 
-    if (menuElements.menuContainerEl) {
-      fireEvent.transitionEnd(menuElements.menuContainerEl);
-    }
+    fireEvent.transitionEnd(menuElements.menuContainerEl!);
 
     return menuElements;
   }
 
+  async function openMenu(): Promise<RenderMenuResult> {
+    userEvent.click(inputElements.calendarButton);
+    return await waitForMenuToOpen();
+  }
+
   return {
     ...result,
-    formField,
-    inputContainer,
-    dayInput: dayInput as HTMLInputElement,
-    monthInput: monthInput as HTMLInputElement,
-    yearInput: yearInput as HTMLInputElement,
-    calendarButton: calendarButton as HTMLButtonElement,
+    ...inputElements,
     findMenuElements,
+    waitForMenuToOpen,
     openMenu,
     rerenderDatePicker,
   };
 };
 
+/** Labels used for Tab stop testing */
 export const expectedTabStopLabels = {
   closed: [
     'none',

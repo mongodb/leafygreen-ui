@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   fireEvent,
+  prettyDOM,
   render,
   waitFor,
   waitForElementToBeRemoved,
@@ -974,7 +975,7 @@ describe('packages/date-picker', () => {
     });
 
     // TODO: Move these suites to Cypress (or other e2e/integration platform)
-    describe.only('User flows', () => {
+    describe('User flows', () => {
       test('month is updated when value changes', async () => {
         const value = newUTC(2023, Month.September, 10);
         const { calendarButton, findMenuElements, rerenderDatePicker } =
@@ -987,52 +988,48 @@ describe('packages/date-picker', () => {
         );
       });
 
-      describe('when closing and re-opening the menu', () => {
+      describe.only('when closing and re-opening the menu', () => {
         test('month is reset to today by default', async () => {
-          const { calendarButton, findByRole } = renderDatePicker();
-          userEvent.click(calendarButton);
-          const menuContainerEl = await findByRole('listbox');
-          const calendarGrid = within(menuContainerEl).getByRole('grid');
+          const { openMenu } = renderDatePicker();
+          const { calendarGrid, menuContainerEl } = await openMenu();
 
           expect(calendarGrid).toHaveAttribute('aria-label', 'December 2023');
-          userEvent.keyboard('{arrowdown}');
 
-          await waitFor(() =>
-            expect(calendarGrid).toHaveAttribute('aria-label', 'January 2024'),
-          );
+          userEvent.keyboard('{arrowdown}');
+          expect(calendarGrid).toHaveAttribute('aria-label', 'January 2024');
+
           userEvent.keyboard('{escape}');
           await waitForElementToBeRemoved(menuContainerEl);
 
-          userEvent.click(calendarButton);
-          await waitFor(() =>
-            expect(calendarGrid).toHaveAttribute('aria-label', 'December 2023'),
-          );
+          await openMenu();
+          expect(calendarGrid).toHaveAttribute('aria-label', 'December 2023');
         });
 
         test('month is reset to value', async () => {
           const value = newUTC(2023, Month.September, 10);
 
-          const { calendarButton, findMenuElements } = renderDatePicker({
+          const { openMenu } = renderDatePicker({
             value,
           });
-          userEvent.click(calendarButton);
-          const { calendarGrid, menuContainerEl } = await findMenuElements();
+          const { calendarGrid, menuContainerEl } = await openMenu();
+
           expect(calendarGrid).toHaveAttribute('aria-label', 'September 2023');
+
           userEvent.keyboard('{arrowup}{arrowup}');
-          expect(calendarGrid).toHaveAttribute('aria-label', 'August 2024');
+          expect(calendarGrid).toHaveAttribute('aria-label', 'August 2023');
+
           userEvent.keyboard('{escape}');
           await waitForElementToBeRemoved(menuContainerEl);
-          userEvent.click(calendarButton);
+
+          await openMenu();
           expect(calendarGrid).toHaveAttribute('aria-label', 'September 2023');
         });
 
-        test('highlight returns to today by default', async () => {
-          const { calendarButton, findMenuElements } = renderDatePicker();
-          userEvent.click(calendarButton);
-          const { queryCellByDate, menuContainerEl } = await findMenuElements();
-          let todayCell = queryCellByDate(testToday);
-          expect(todayCell).not.toBeNull();
-          await waitFor(() => expect(todayCell).toHaveFocus());
+        test.only('highlight returns to today by default', async () => {
+          const { openMenu } = renderDatePicker();
+          const { todayCell, menuContainerEl, queryCellByDate } =
+            await openMenu();
+          expect(todayCell).toHaveFocus();
 
           userEvent.keyboard('{arrowdown}');
           const jan2 = addDays(testToday, 7);
@@ -1042,10 +1039,9 @@ describe('packages/date-picker', () => {
           userEvent.keyboard('{escape}');
           await waitForElementToBeRemoved(menuContainerEl);
 
-          userEvent.click(calendarButton);
-          todayCell = queryCellByDate(testToday);
-          expect(todayCell).not.toBeNull();
-          await waitFor(() => expect(todayCell).toHaveFocus());
+          const { todayCell: newTodayCell } = await openMenu();
+          console.log(prettyDOM(newTodayCell!));
+          expect(newTodayCell).toHaveFocus();
         });
 
         test('highlight returns to value', async () => {
