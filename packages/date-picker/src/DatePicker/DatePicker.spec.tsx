@@ -114,6 +114,16 @@ describe('packages/date-picker', () => {
         await waitFor(() => expect(menuContainerEl).toBeInTheDocument());
       });
 
+      test('opened menu closes when `disabled` is set to true', async () => {
+        const { getMenuElements, rerenderDatePicker } = renderDatePicker({
+          initialOpen: true,
+        });
+        const { menuContainerEl } = getMenuElements();
+        await waitFor(() => expect(menuContainerEl).toBeInTheDocument());
+        rerenderDatePicker({ disabled: true });
+        await waitFor(() => expect(menuContainerEl).not.toBeInTheDocument());
+      });
+
       test('if no value is set, menu opens to current month', () => {
         const { openMenu } = renderDatePicker();
         const { calendarGrid, monthSelect, yearSelect } = openMenu();
