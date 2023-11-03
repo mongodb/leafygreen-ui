@@ -38,6 +38,7 @@ export const DatePickerComponent = forwardRef<
 
   useBackdropClick(closeMenu, [formFieldRef, menuRef], isOpen);
 
+  /** Fired when the CSS transition to open the menu is fired */
   const handleTransitionEnd: TransitionEventHandler = () => {
     if (isOpen) {
       // When the menu opens, set focus to the `highlight` cell
