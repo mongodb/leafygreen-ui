@@ -34,7 +34,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
     }: DatePickerInputProps,
     fwdRef,
   ) => {
-    const { formatParts, disabled, setOpen, isDirty, setIsDirty } =
+    const { formatParts, disabled, isDirty, setOpen, setIsDirty } =
       useDatePickerContext();
     const {
       refs: { segmentRefs, calendarButtonRef },

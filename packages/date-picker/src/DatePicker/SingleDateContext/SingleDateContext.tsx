@@ -37,9 +37,11 @@ export const SingleDateProvider = ({
   const prevValue = usePrevious(value);
 
   const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
-  // Keep track of the displayed month
+
+  /** Keep track of the displayed month */
   const [month, _setMonth] = useState<Date>(getFirstOfMonth(value ?? today));
-  // Keep track of the element the user is highlighting with the keyboard
+
+  /** Keep track of the element the user is highlighting with the keyboard */
   const [highlight, _setHighlight] = useState<DateType>(
     getInitialHighlight(value, today, month),
   );
@@ -59,11 +61,10 @@ export const SingleDateProvider = ({
    * Set the `highlight` value & handle side effects
    */
   const setHighlight = useCallback((newHighlight: DateType) => {
-    console.trace('setHighlight', newHighlight?.toISOString());
     _setHighlight(newHighlight);
   }, []);
 
-  // If value prop changes, update the month
+  /** If value prop changes, update the month */
   useEffect(() => {
     if (!isSameUTCDay(value, prevValue)) {
       setMonth(getFirstOfMonth(value ?? today));
@@ -81,7 +82,6 @@ export const SingleDateProvider = ({
 
   /** Returns the cell element with the current highlight value */
   const getHighlightedCell = () => {
-    console.log('getHighlightedCell', highlight?.toISOString());
     return getCellWithValue(highlight);
   };
 
@@ -93,6 +93,8 @@ export const SingleDateProvider = ({
         value,
         setValue,
         handleValidation,
+        // closeMenu,
+        // openMenu,
         month,
         setMonth,
         highlight,

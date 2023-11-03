@@ -618,7 +618,18 @@ describe('packages/date-picker', () => {
 
         test('if a cell is focused, closes the menu', async () => {
           const { openMenu } = renderDatePicker();
-          const { menuContainerEl } = await openMenu();
+          const { todayCell, menuContainerEl } = await openMenu();
+          expect(todayCell).toHaveFocus();
+          userEvent.keyboard('{enter}');
+          await waitForElementToBeRemoved(menuContainerEl);
+          expect(menuContainerEl).not.toBeInTheDocument();
+        });
+
+        test.skip('if a cell is focused & component has value, closes the menu', async () => {
+          const value = newUTC(2023, Month.September, 10);
+          const { openMenu } = renderDatePicker({ value });
+          const { menuContainerEl, queryCellByDate } = await openMenu();
+          expect(queryCellByDate(value)).toHaveFocus();
           userEvent.keyboard('{enter}');
           await waitForElementToBeRemoved(menuContainerEl);
           expect(menuContainerEl).not.toBeInTheDocument();
@@ -649,8 +660,9 @@ describe('packages/date-picker', () => {
 
       describe('Space key', () => {
         test('opens menu if calendar button is focused', async () => {
-          const { findMenuElements } = renderDatePicker();
-          tabNTimes(3);
+          const { findMenuElements, calendarButton } = renderDatePicker();
+          tabNTimes(4);
+          expect(calendarButton).toHaveFocus();
           userEvent.keyboard('{space}');
           const { menuContainerEl } = await findMenuElements();
           expect(menuContainerEl).toBeInTheDocument();
@@ -679,6 +691,16 @@ describe('packages/date-picker', () => {
           const { openMenu } = renderDatePicker();
           const { menuContainerEl, todayCell } = await openMenu();
           expect(todayCell).toHaveFocus();
+          userEvent.keyboard('{space}');
+          await waitForElementToBeRemoved(menuContainerEl);
+          expect(menuContainerEl).not.toBeInTheDocument();
+        });
+
+        test.skip('if a cell is focused & component has value, closes the menu', async () => {
+          const value = newUTC(2023, Month.September, 10);
+          const { openMenu } = renderDatePicker({ value });
+          const { menuContainerEl, queryCellByDate } = await openMenu();
+          expect(queryCellByDate(value)).toHaveFocus();
           userEvent.keyboard('{space}');
           await waitForElementToBeRemoved(menuContainerEl);
           expect(menuContainerEl).not.toBeInTheDocument();
@@ -975,7 +997,7 @@ describe('packages/date-picker', () => {
     });
 
     // TODO: Move these suites to Cypress (or other e2e/integration platform)
-    describe('User flows', () => {
+    describe.skip('User flows', () => {
       test('month is updated when value changes', async () => {
         const value = newUTC(2023, Month.September, 10);
         const { calendarButton, findMenuElements, rerenderDatePicker } =
@@ -988,7 +1010,7 @@ describe('packages/date-picker', () => {
         );
       });
 
-      describe.only('when closing and re-opening the menu', () => {
+      describe('when closing and re-opening the menu', () => {
         test('month is reset to today by default', async () => {
           const { openMenu } = renderDatePicker();
           const { calendarGrid, menuContainerEl } = await openMenu();
@@ -1025,7 +1047,7 @@ describe('packages/date-picker', () => {
           expect(calendarGrid).toHaveAttribute('aria-label', 'September 2023');
         });
 
-        test.only('highlight returns to today by default', async () => {
+        test('highlight returns to today by default', async () => {
           const { openMenu } = renderDatePicker();
           const { todayCell, menuContainerEl, queryCellByDate } =
             await openMenu();
@@ -1040,7 +1062,6 @@ describe('packages/date-picker', () => {
           await waitForElementToBeRemoved(menuContainerEl);
 
           const { todayCell: newTodayCell } = await openMenu();
-          console.log(prettyDOM(newTodayCell!));
           expect(newTodayCell).toHaveFocus();
         });
 

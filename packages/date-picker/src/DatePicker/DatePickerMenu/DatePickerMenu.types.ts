@@ -3,5 +3,5 @@ import { PopoverProps } from '@leafygreen-ui/popover';
 import { PortalControlProps } from '@leafygreen-ui/popover';
 
 export type DatePickerMenuProps = PortalControlProps &
-  Pick<PopoverProps, 'refEl'> &
+  Omit<PopoverProps, 'children'> &
   HTMLElementProps<'div'>;

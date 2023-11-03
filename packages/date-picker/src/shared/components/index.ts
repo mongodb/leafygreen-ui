@@ -15,4 +15,4 @@ export {
   defaultDatePickerContext,
   useDatePickerContext,
 } from './DatePickerContext';
-export { MenuWrapper } from './MenuWrapper';
+export { MenuWrapper, type MenuWrapperProps } from './MenuWrapper';

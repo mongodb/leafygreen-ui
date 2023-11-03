@@ -1,4 +1,4 @@
-import React, { forwardRef, useMemo } from 'react';
+import React, { forwardRef, useEffect, useMemo } from 'react';
 import range from 'lodash/range';
 import { getWeekStartByLocale } from 'weekstart';
 

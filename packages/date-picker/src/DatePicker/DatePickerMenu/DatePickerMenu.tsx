@@ -45,10 +45,10 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
     const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
     const { isInRange, isOpen, setOpen, setIsDirty } = useDatePickerContext();
     const {
+      refs,
       value,
       setValue,
       handleValidation,
-      refs,
       month,
       setMonth: setDisplayMonth,
       highlight,
