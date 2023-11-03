@@ -6,6 +6,7 @@ import { DatePickerProps } from '../DatePicker.types';
 export interface DatePickerComponentRefs {
   segmentRefs: SegmentRefs;
   calendarCellRefs: DynamicRefGetter<HTMLTableCellElement>;
+  calendarButtonRef: React.RefObject<HTMLButtonElement>;
 }
 
 export interface SingleDateContextProps {

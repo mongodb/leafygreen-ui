@@ -1,3 +1,5 @@
+import { useRef } from 'react';
+
 import { useDynamicRefs } from '@leafygreen-ui/hooks';
 
 import { useSegmentRefs } from '../../shared/hooks';
@@ -13,8 +15,11 @@ export const useDateRangeComponentRefs = (): DatePickerComponentRefs => {
   // consider purging the refs map within the hook
   const calendarCellRefs = useDynamicRefs<HTMLTableCellElement>();
 
+  const calendarButtonRef = useRef<HTMLButtonElement>(null);
+
   return {
     segmentRefs,
     calendarCellRefs,
+    calendarButtonRef,
   };
 };

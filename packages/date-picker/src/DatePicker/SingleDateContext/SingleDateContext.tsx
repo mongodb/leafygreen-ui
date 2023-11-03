@@ -33,7 +33,7 @@ export const SingleDateProvider = ({
 
   const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
   // Keep track of the displayed month
-  const [month, _setMonth] = useState<Date>(value ?? getFirstOfMonth(today));
+  const [month, _setMonth] = useState<Date>(getFirstOfMonth(value ?? today));
   // Keep track of the element the user is highlighting with the keyboard
   const [highlight, _setHighlight] = useState<DateType>(
     getInitialHighlight(value, today, month),

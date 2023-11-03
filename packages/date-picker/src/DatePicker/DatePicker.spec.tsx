@@ -7,6 +7,8 @@ import {
 import userEvent from '@testing-library/user-event';
 import { addDays, subDays } from 'date-fns';
 
+import { transitionDuration } from '@leafygreen-ui/tokens';
+
 import { Month } from '../shared/constants';
 import { newUTC } from '../shared/utils';
 import {
@@ -230,7 +232,13 @@ describe('packages/date-picker', () => {
           const { calendarButton, getMenuElements } = renderDatePicker();
           userEvent.click(calendarButton);
           const { todayCell } = getMenuElements();
-          await waitFor(() => expect(todayCell).toHaveFocus());
+
+          await waitFor(() =>
+            setTimeout(
+              () => expect(todayCell).toHaveFocus(),
+              transitionDuration.default,
+            ),
+          );
         });
 
         test('focuses on the selected cell', async () => {
@@ -241,7 +249,12 @@ describe('packages/date-picker', () => {
           userEvent.click(calendarButton);
           const { getCellForDate } = getMenuElements();
           const valueCell = getCellForDate(value);
-          await waitFor(() => expect(valueCell).toHaveFocus());
+          await waitFor(() =>
+            setTimeout(
+              () => expect(valueCell).toHaveFocus(),
+              transitionDuration.default,
+            ),
+          );
         });
       });
 
@@ -434,6 +447,13 @@ describe('packages/date-picker', () => {
           openMenu();
           userEvent.click(container.parentElement!);
           expect(onDateChange).not.toHaveBeenCalled();
+        });
+
+        test('returns focus to the calendar button', async () => {
+          const { openMenu, container, calendarButton } = renderDatePicker();
+          openMenu();
+          userEvent.click(container.parentElement!);
+          await waitFor(() => expect(calendarButton).toHaveFocus());
         });
       });
     });
@@ -688,13 +708,17 @@ describe('packages/date-picker', () => {
         });
 
         test('focus remains in the input element', () => {
-          const onDateChange = jest.fn();
-          const { openMenu, inputContainer } = renderDatePicker({
-            onDateChange,
-          });
+          const { openMenu, inputContainer } = renderDatePicker();
           openMenu();
           userEvent.keyboard('{escape}');
           expect(inputContainer.contains(document.activeElement)).toBeTruthy();
+        });
+
+        test('returns focus to the calendar button', async () => {
+          const { openMenu, calendarButton } = renderDatePicker();
+          openMenu();
+          userEvent.keyboard('{escape}');
+          await waitFor(() => expect(calendarButton).toHaveFocus());
         });
 
         test('fires a validation handler', () => {
@@ -705,7 +729,7 @@ describe('packages/date-picker', () => {
           expect(handleValidation).toHaveBeenCalledWith(undefined);
         });
 
-        test('does not close the main menu if a select menu is open and focus is in the select menu', async () => {
+        test('does not close the main menu if a select menu is open', async () => {
           const { openMenu, queryAllByRole, findAllByRole } =
             renderDatePicker();
           const { monthSelect, menuContainerEl } = openMenu();
@@ -909,7 +933,7 @@ describe('packages/date-picker', () => {
       });
     });
 
-    describe.only('User flows', () => {
+    describe('User flows', () => {
       test('month is set when value changes', async () => {
         const { calendarButton, getMenuElements, rerenderDatePicker } =
           renderDatePicker();
