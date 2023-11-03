@@ -1,8 +1,10 @@
 import React from 'react';
 import {
+  fireEvent,
   render,
   waitFor,
   waitForElementToBeRemoved,
+  within,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { addDays, subDays } from 'date-fns';
@@ -10,7 +12,7 @@ import { addDays, subDays } from 'date-fns';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { Month } from '../shared/constants';
-import { newUTC } from '../shared/utils';
+import { getISODate, newUTC } from '../shared/utils';
 import {
   eventContainingTargetValue,
   tabNTimes,
@@ -229,32 +231,29 @@ describe('packages/date-picker', () => {
         });
 
         test('focuses on the `today` cell by default', async () => {
-          const { calendarButton, getMenuElements } = renderDatePicker();
+          const { calendarButton, getMenuElements, findByRole } =
+            renderDatePicker();
           userEvent.click(calendarButton);
+          const menuContainerEl = await findByRole('listbox');
           const { todayCell } = getMenuElements();
-
-          await waitFor(() =>
-            setTimeout(
-              () => expect(todayCell).toHaveFocus(),
-              transitionDuration.default,
-            ),
-          );
+          // Manually fire the `transitionEnd` event. This is not fired automatically by JSDOM
+          fireEvent.transitionEnd(menuContainerEl!);
+          expect(todayCell).toHaveFocus();
         });
 
         test('focuses on the selected cell', async () => {
           const value = newUTC(1994, Month.September, 10);
-          const { calendarButton, getMenuElements } = renderDatePicker({
-            value: value,
-          });
+          const { calendarButton, getMenuElements, findByRole } =
+            renderDatePicker({
+              value: value,
+            });
           userEvent.click(calendarButton);
+          const menuContainerEl = await findByRole('listbox');
           const { getCellForDate } = getMenuElements();
           const valueCell = getCellForDate(value);
-          await waitFor(() =>
-            setTimeout(
-              () => expect(valueCell).toHaveFocus(),
-              transitionDuration.default,
-            ),
-          );
+          // Manually fire the `transitionEnd` event. This is not fired automatically by JSDOM
+          fireEvent.transitionEnd(menuContainerEl!);
+          expect(valueCell).toHaveFocus();
         });
       });
 
@@ -757,7 +756,53 @@ describe('packages/date-picker', () => {
        * Since arrow key behavior changes based on whether the input or menu is focused,
        * many of these tests exist in the "DatePickerInput" and "DatePickerMenu" components
        */
-      test.todo('Basic arrow key tests');
+      describe('Arrow key', () => {
+        describe('Input', () => {
+          test.todo('moves focus to segments');
+        });
+        describe('Menu', () => {
+          test('left arrow moves focus to the previous day', async () => {
+            const { calendarButton, getMenuElements } = renderDatePicker();
+            userEvent.click(calendarButton);
+            const { todayCell, menuContainerEl, getCellForDate } =
+              getMenuElements();
+            // Manually fire the `transitionEnd` event. This is not fired automatically by JSDOM
+            fireEvent.transitionEnd(menuContainerEl!);
+            expect(todayCell).toHaveFocus();
+
+            userEvent.keyboard('{arrowleft}');
+            const prevDayCell = getCellForDate(subDays(testToday, 1));
+            await waitFor(() => expect(prevDayCell).toHaveFocus());
+          });
+
+          test('down arrow moves focus to next week', async () => {
+            const { calendarButton, getMenuElements } = renderDatePicker();
+            userEvent.click(calendarButton);
+            const { todayCell, menuContainerEl, getCellForDate } =
+              getMenuElements();
+            // Manually fire the `transitionEnd` event. This is not fired automatically by JSDOM
+            fireEvent.transitionEnd(menuContainerEl!);
+            expect(todayCell).toHaveFocus();
+
+            userEvent.keyboard('{arrowdown}');
+            const nextWeekCell = getCellForDate(addDays(testToday, 7));
+            await waitFor(() => expect(nextWeekCell).toHaveFocus());
+          });
+
+          test('down arrow can change month', async () => {
+            const { calendarButton, findByRole } = renderDatePicker();
+            userEvent.click(calendarButton);
+            const menuContainerEl = await findByRole('listbox');
+            const calendarGrid = within(menuContainerEl).getByRole('grid');
+            fireEvent.transitionEnd(menuContainerEl!);
+
+            expect(calendarGrid).toHaveAttribute('aria-label', 'December 2023');
+
+            userEvent.keyboard('{arrowdown}');
+            expect(calendarGrid).toHaveAttribute('aria-label', 'January 2024');
+          });
+        });
+      });
     });
 
     describe('Typing', () => {
@@ -933,25 +978,61 @@ describe('packages/date-picker', () => {
       });
     });
 
+    // TODO: Move these suites to Cypress (or other e2e/integration platform)
     describe('User flows', () => {
-      test('month is set when value changes', async () => {
+      test('month is updated when value changes', async () => {
+        const value = newUTC(2023, Month.September, 10);
         const { calendarButton, getMenuElements, rerenderDatePicker } =
           renderDatePicker();
-        userEvent.click(calendarButton);
-        const { calendarGrid, menuContainerEl } = getMenuElements();
-        expect(calendarGrid).toHaveAttribute('aria-label', 'December 2023');
-        userEvent.tab();
-        userEvent.keyboard('{escape}');
-        await waitForElementToBeRemoved(menuContainerEl);
-
-        const value = newUTC(2023, Month.September, 10);
         rerenderDatePicker({ value });
         userEvent.click(calendarButton);
-        expect(calendarGrid).toHaveAttribute('aria-label', 'September 2023');
+        const { calendarGrid } = getMenuElements();
+        await waitFor(() =>
+          expect(calendarGrid).toHaveAttribute('aria-label', 'September 2023'),
+        );
       });
 
-      describe('highlight resets when re-opening the menu', () => {
-        test('highlight returns to today', async () => {
+      describe('when closing and re-opening the menu', () => {
+        test('month is reset to today by default', async () => {
+          const { calendarButton, getMenuElements, findByRole } =
+            renderDatePicker();
+          userEvent.click(calendarButton);
+          const menuContainerEl = await findByRole('listbox');
+          const calendarGrid = within(menuContainerEl).getByRole('grid');
+
+          expect(calendarGrid).toHaveAttribute('aria-label', 'December 2023');
+          userEvent.keyboard('{arrowdown}');
+
+          await waitFor(() =>
+            expect(calendarGrid).toHaveAttribute('aria-label', 'January 2024'),
+          );
+          userEvent.keyboard('{escape}');
+          await waitForElementToBeRemoved(menuContainerEl);
+
+          userEvent.click(calendarButton);
+          await waitFor(() =>
+            expect(calendarGrid).toHaveAttribute('aria-label', 'December 2023'),
+          );
+        });
+
+        test('month is reset to value', async () => {
+          const value = newUTC(2023, Month.September, 10);
+
+          const { calendarButton, getMenuElements } = renderDatePicker({
+            value,
+          });
+          userEvent.click(calendarButton);
+          const { calendarGrid, menuContainerEl } = getMenuElements();
+          expect(calendarGrid).toHaveAttribute('aria-label', 'September 2023');
+          userEvent.keyboard('{arrowup}{arrowup}');
+          expect(calendarGrid).toHaveAttribute('aria-label', 'August 2024');
+          userEvent.keyboard('{escape}');
+          await waitForElementToBeRemoved(menuContainerEl);
+          userEvent.click(calendarButton);
+          expect(calendarGrid).toHaveAttribute('aria-label', 'September 2023');
+        });
+
+        test('highlight returns to today by default', async () => {
           const { calendarButton, getMenuElements } = renderDatePicker();
           userEvent.click(calendarButton);
           const { getCellForDate, menuContainerEl } = getMenuElements();
