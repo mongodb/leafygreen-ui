@@ -99,6 +99,15 @@ describe('packages/date-picker', () => {
         expect(menuContainerEl).not.toBeInTheDocument();
       });
 
+      test('menu is initially closed when rendered with `initialOpen` and `disabled`', async () => {
+        const { getMenuElements } = renderDatePicker({
+          initialOpen: true,
+          disabled: true,
+        });
+        const { menuContainerEl } = getMenuElements();
+        await waitFor(() => expect(menuContainerEl).not.toBeInTheDocument());
+      });
+
       test('menu is initially open when rendered with `initialOpen`', async () => {
         const { getMenuElements } = renderDatePicker({ initialOpen: true });
         const { menuContainerEl } = getMenuElements();
@@ -909,7 +918,7 @@ describe('packages/date-picker', () => {
       });
     });
 
-    describe.only('User flows', () => {
+    describe('User flows', () => {
       test('month is set when value changes', async () => {
         const { calendarButton, getMenuElements, rerenderDatePicker } =
           renderDatePicker();
