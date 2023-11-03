@@ -1,4 +1,4 @@
-import { Align, ElementPosition, Justify } from './types';
+import { Align, ElementPosition, Justify } from '../Popover.types';
 
 interface ElementViewportPositions {
   referenceElViewportPos: ElementPosition;
