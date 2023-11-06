@@ -57,6 +57,21 @@ export interface SingleDateContextProps {
   setHighlight: (newHighlight: DateType) => void;
 
   /**
+   * Opens the menu and handles side effects
+   */
+  openMenu: () => void;
+
+  /**
+   * Closes the menu and handles side effects
+   */
+  closeMenu: () => void;
+
+  /**
+   *  Toggles the menu and handles appropriate side effects
+   */
+  toggleMenu: () => void;
+
+  /**
    * Returns the calendar cell element that has, or should have focus
    */
   getHighlightedCell: () => HTMLTableCellElement | null | undefined;

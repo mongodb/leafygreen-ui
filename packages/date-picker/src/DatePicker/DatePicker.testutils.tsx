@@ -1,6 +1,8 @@
 import React from 'react';
 import {
   fireEvent,
+  // prettyDOM,
+  queryByRole,
   render,
   RenderResult,
   waitFor,
@@ -98,7 +100,9 @@ export const renderDatePicker = (
    * Asynchronously query for menu elements.
    */
   async function findMenuElements(): Promise<RenderMenuResult> {
-    const menuContainerEl = await waitFor(() => result.queryByRole('listbox'));
+    const menuContainerEl = await waitFor(() =>
+      queryByRole(document.body, 'listbox'),
+    );
 
     const calendarGrid = withinElement(menuContainerEl)?.queryByRole('grid');
     const calendarCells =

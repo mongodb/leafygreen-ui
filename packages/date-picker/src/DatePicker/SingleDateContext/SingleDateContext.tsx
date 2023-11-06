@@ -10,7 +10,12 @@ import React, {
 
 import { usePrevious } from '@leafygreen-ui/hooks';
 
-import { DateType, getFirstOfMonth, setToUTCMidnight } from '../../shared';
+import {
+  DateType,
+  getFirstOfMonth,
+  setToUTCMidnight,
+  useDatePickerContext,
+} from '../../shared';
 import { getISODate, isSameUTCDay } from '../../shared/utils';
 import { getInitialHighlight } from '../utils/getInitialHighlight';
 
@@ -34,25 +39,38 @@ export const SingleDateProvider = ({
   handleValidation,
 }: PropsWithChildren<SingleDateProviderProps>) => {
   const refs = useDateRangeComponentRefs();
+  const { isOpen, setOpen } = useDatePickerContext();
   const prevValue = usePrevious(value);
 
   const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
 
-  /** Keep track of the displayed month */
+  /**
+   * Keep track of the displayed month
+   */
   const [month, _setMonth] = useState<Date>(getFirstOfMonth(value ?? today));
 
-  /** Keep track of the element the user is highlighting with the keyboard */
+  /**
+   * Keep track of the element the user is highlighting with the keyboard
+   */
   const [highlight, _setHighlight] = useState<DateType>(
-    getInitialHighlight(value, today, month),
+    getInitialHighlight(value, today),
   );
 
-  /** Set the value and run side effects here */
+  /***********
+   * SETTERS *
+   ***********/
+
+  /**
+   * Set the value and run side effects here
+   */
   const setValue = (newVal?: DateType) => {
     _setValue(newVal ?? null);
     setMonth(getFirstOfMonth(newVal ?? today));
   };
 
-  /** Set the displayed month and handle side effects */
+  /**
+   * Set the displayed month and handle side effects
+   */
   const setMonth = useCallback((newMonth: Date) => {
     _setMonth(newMonth);
   }, []);
@@ -64,14 +82,44 @@ export const SingleDateProvider = ({
     _setHighlight(newHighlight);
   }, []);
 
-  /** If value prop changes, update the month */
-  useEffect(() => {
-    if (!isSameUTCDay(value, prevValue)) {
-      setMonth(getFirstOfMonth(value ?? today));
-    }
-  }, [prevValue, setMonth, today, value]);
+  /**
+   * Opens the menu and handles side effects
+   */
+  const openMenu = () => {
+    setOpen(true);
+  };
 
-  /** Returns the cell element with the provided value */
+  /** Closes the menu and handles side effects */
+  const closeMenu = () => {
+    setOpen(false);
+
+    // Perform side effects once the state has settle
+    requestAnimationFrame(() => {
+      // Return focus to the calendar button
+      refs.calendarButtonRef.current?.focus();
+      // update month to something valid
+      setMonth(getFirstOfMonth(value ?? today));
+      // update highlight to something valid
+      setHighlight(getInitialHighlight(value, today));
+    });
+  };
+
+  /** Toggles the menu and handles appropriate side effects */
+  const toggleMenu = () => {
+    if (isOpen) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  };
+
+  /***********
+   * GETTERS *
+   ***********/
+
+  /**
+   * Returns the cell element with the provided value
+   */
   const getCellWithValue = (date: DateType): HTMLTableCellElement | null => {
     const highlightKey = getISODate(date);
     const cell = highlightKey
@@ -80,10 +128,25 @@ export const SingleDateProvider = ({
     return cell;
   };
 
-  /** Returns the cell element with the current highlight value */
+  /**
+   * Returns the cell element with the current highlight value
+   */
   const getHighlightedCell = () => {
     return getCellWithValue(highlight);
   };
+
+  /****************
+   * SIDE EFFECTS *
+   ****************/
+
+  /**
+   * If `value` prop changes, update the month
+   */
+  useEffect(() => {
+    if (!isSameUTCDay(value, prevValue)) {
+      setMonth(getFirstOfMonth(value ?? today));
+    }
+  }, [prevValue, setMonth, today, value]);
 
   return (
     <SingleDateContext.Provider
@@ -93,8 +156,9 @@ export const SingleDateProvider = ({
         value,
         setValue,
         handleValidation,
-        // closeMenu,
-        // openMenu,
+        closeMenu,
+        openMenu,
+        toggleMenu,
         month,
         setMonth,
         highlight,

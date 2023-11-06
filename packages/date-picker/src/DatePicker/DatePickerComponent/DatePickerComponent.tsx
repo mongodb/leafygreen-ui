@@ -21,21 +21,12 @@ export const DatePickerComponent = forwardRef<
   HTMLDivElement,
   DatePickerComponentProps
 >(({ ...rest }: DatePickerComponentProps, fwdRef) => {
-  const { isOpen, menuId, setOpen } = useDatePickerContext();
-  const { refs, value, today, setMonth, handleValidation, getHighlightedCell } =
+  const { isOpen, menuId } = useDatePickerContext();
+  const { value, closeMenu, handleValidation, getHighlightedCell } =
     useSingleDateContext();
 
   const formFieldRef = useForwardedRef(fwdRef, null);
   const menuRef = useRef<HTMLDivElement>(null);
-
-  /** Close the menu, and perform side-effects */
-  const closeMenu = () => {
-    setOpen(false);
-    // Return focus to the calendar button
-    refs.calendarButtonRef.current?.focus();
-    // update month
-    setMonth(getFirstOfMonth(value ?? today));
-  };
 
   useBackdropClick(closeMenu, [formFieldRef, menuRef], isOpen);
 
@@ -50,7 +41,7 @@ export const DatePickerComponent = forwardRef<
 
   const handleMenuTransitionExited: ExitHandler<HTMLDivElement> = () => {
     if (!isOpen) {
-      refs.calendarButtonRef.current?.focus();
+      closeMenu();
     }
   };
 
