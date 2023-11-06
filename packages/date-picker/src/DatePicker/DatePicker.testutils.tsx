@@ -1,13 +1,23 @@
 import React from 'react';
 import {
-  getByRole as globalGetByRole,
+  fireEvent,
+  // prettyDOM,
+  queryByRole,
   render,
   RenderResult,
+  waitFor,
+  within,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { getISODate } from '../shared/utils/getISODate';
+
 import { DatePickerProps } from './DatePicker.types';
 import { DatePicker } from '.';
+
+const withinElement = (element: HTMLElement | null) => {
+  return element ? within(element) : null;
+};
 
 interface RenderDatePickerResult extends RenderResult {
   formField: HTMLElement;
@@ -16,8 +26,27 @@ interface RenderDatePickerResult extends RenderResult {
   monthInput: HTMLInputElement;
   yearInput: HTMLInputElement;
   calendarButton: HTMLButtonElement;
-  getMenuElements: () => RenderMenuResult;
-  openMenu: () => RenderMenuResult;
+
+  /**
+   * Asynchronously query for menu elements
+   */
+  findMenuElements: () => Promise<RenderMenuResult>;
+
+  /**
+   * Wait for the menu element to finish opening.
+   * When this method resolves, the appropriate calendar cell will be focused
+   */
+  waitForMenuToOpen: () => Promise<RenderMenuResult>;
+
+  /**
+   * Opens the menu by clicking the calendar button.
+   */
+  openMenu: () => Promise<RenderMenuResult>;
+
+  /**
+   * Rerender the Date Picker with new props
+   */
+  rerenderDatePicker: (newProps: Partial<DatePickerProps>) => void;
 }
 
 interface RenderMenuResult {
@@ -27,8 +56,10 @@ interface RenderMenuResult {
   monthSelect: HTMLButtonElement | null;
   yearSelect: HTMLButtonElement | null;
   calendarGrid: HTMLTableElement | null;
-  calendarCells: Array<HTMLTableCellElement>;
+  calendarCells: Array<HTMLTableCellElement | null>;
   todayCell: HTMLTableCellElement | null;
+  /** Query for a cell with a given date value */
+  queryCellByDate: (date: Date) => HTMLTableCellElement | null;
 }
 
 /**
@@ -42,70 +73,141 @@ export const renderDatePicker = (
     <DatePicker data-testid="lg-date-picker" {...defaultProps} {...props} />,
   );
 
-  const formField = result.getByTestId('lg-date-picker');
-  const inputContainer = result.getByRole('combobox');
-  const dayInput = result.getByLabelText('day') as HTMLInputElement;
-  const monthInput = result.getByLabelText('month') as HTMLInputElement;
-  const yearInput = result.getByLabelText('year') as HTMLInputElement;
-  const calendarButton = globalGetByRole(
-    inputContainer,
-    'button',
-  ) as HTMLButtonElement;
+  /** Rerender the Date Picker with new props */
+  const rerenderDatePicker = (newProps: Partial<DatePickerProps>) => {
+    result.rerender(
+      <DatePicker
+        data-testid="lg-date-picker"
+        {...defaultProps}
+        {...props}
+        {...newProps}
+      />,
+    );
+  };
+
+  const inputElements = {
+    formField: result.getByTestId('lg-date-picker'),
+    inputContainer: result.getByRole('combobox'),
+    dayInput: result.getByLabelText('day') as HTMLInputElement,
+    monthInput: result.getByLabelText('month') as HTMLInputElement,
+    yearInput: result.getByLabelText('year') as HTMLInputElement,
+    calendarButton: within(result.getByRole('combobox')).getByRole(
+      'button',
+    ) as HTMLButtonElement,
+  };
 
   /**
-   * Returns relevant menu elements.
-   * Call this after the menu has been opened
+   * Asynchronously query for menu elements.
    */
-  function getMenuElements(): RenderMenuResult {
-    const menuContainerEl = result.queryByRole('listbox');
-    const calendarGrid = result.queryByRole('grid') as HTMLTableElement;
-    const calendarCells = result.queryAllByRole(
-      'gridcell',
-    ) as Array<HTMLTableCellElement>;
+  async function findMenuElements(): Promise<RenderMenuResult> {
+    const menuContainerEl = await waitFor(() =>
+      queryByRole(document.body, 'listbox'),
+    );
 
-    // label text is tested in DatePickerMenu.spec
-    const leftChevron = result.queryByLabelText(
-      'Previous month',
-    ) as HTMLButtonElement;
-    const rightChevron = result.queryByLabelText(
-      'Next month',
-    ) as HTMLButtonElement;
-    const monthSelect = result.queryByLabelText(
-      'Select month',
-    ) as HTMLButtonElement;
-    const yearSelect = result.queryByLabelText(
-      'Select year',
-    ) as HTMLButtonElement;
-    const todayCell = calendarGrid?.querySelector(
-      '[aria-current="true"]',
-    ) as HTMLTableCellElement;
+    const calendarGrid = withinElement(menuContainerEl)?.queryByRole('grid');
+    const calendarCells =
+      withinElement(menuContainerEl)?.getAllByRole('gridcell');
+    const leftChevron =
+      withinElement(menuContainerEl)?.queryByLabelText('Previous month');
+    const rightChevron =
+      withinElement(menuContainerEl)?.queryByLabelText('Next month');
+    const monthSelect =
+      withinElement(menuContainerEl)?.queryByLabelText('Select month');
+    const yearSelect =
+      withinElement(menuContainerEl)?.queryByLabelText('Select year');
+
+    const queryCellByDate = (date: Date): HTMLTableCellElement | null => {
+      const cell = calendarGrid?.querySelector(
+        `[data-iso="${getISODate(date)}"]`,
+      );
+
+      return cell as HTMLTableCellElement | null;
+    };
+
+    const todayCell = queryCellByDate(new Date(Date.now()));
 
     return {
       menuContainerEl,
-      calendarGrid,
-      calendarCells,
+      calendarGrid: calendarGrid as HTMLTableElement | null,
+      calendarCells: calendarCells as Array<HTMLTableCellElement | null>,
+      leftChevron: leftChevron as HTMLButtonElement | null,
+      rightChevron: rightChevron as HTMLButtonElement | null,
+      monthSelect: monthSelect as HTMLButtonElement | null,
+      yearSelect: yearSelect as HTMLButtonElement | null,
       todayCell,
-      leftChevron,
-      rightChevron,
-      monthSelect,
-      yearSelect,
+      queryCellByDate,
     };
   }
 
-  function openMenu(): RenderMenuResult {
-    userEvent.click(inputContainer);
-    return getMenuElements();
+  async function waitForMenuToOpen(): Promise<RenderMenuResult> {
+    const menuElements = await findMenuElements();
+
+    fireEvent.transitionEnd(menuElements.menuContainerEl!);
+
+    return menuElements;
+  }
+
+  async function openMenu(): Promise<RenderMenuResult> {
+    userEvent.click(inputElements.calendarButton);
+    return await waitForMenuToOpen();
   }
 
   return {
     ...result,
-    formField,
-    inputContainer,
-    dayInput,
-    monthInput,
-    yearInput,
-    calendarButton,
-    getMenuElements,
+    ...inputElements,
+    findMenuElements,
+    waitForMenuToOpen,
     openMenu,
+    rerenderDatePicker,
+  };
+};
+
+/** Labels used for Tab stop testing */
+export const expectedTabStopLabels = {
+  closed: [
+    'none',
+    'input > year',
+    'input > month',
+    'input > day',
+    'input > open menu button',
+    'none',
+  ],
+  open: [
+    'none',
+    'input > year',
+    'input > month',
+    'input > day',
+    'input > open menu button',
+    'menu > today cell',
+    'menu > left chevron',
+    'menu > month select',
+    'menu > year select',
+    'menu > right chevron',
+    'menu > today cell',
+  ],
+};
+
+type TabStopLabel =
+  (typeof expectedTabStopLabels)[keyof typeof expectedTabStopLabels][number];
+
+export const findTabStopElementMap = async (
+  renderResult: RenderDatePickerResult,
+): Promise<Record<TabStopLabel, HTMLElement | null>> => {
+  const { yearInput, monthInput, dayInput, calendarButton, findMenuElements } =
+    renderResult;
+  const { todayCell, monthSelect, yearSelect, leftChevron, rightChevron } =
+    await findMenuElements();
+
+  return {
+    none: null,
+    'input > year': yearInput,
+    'input > month': monthInput,
+    'input > day': dayInput,
+    'input > open menu button': calendarButton,
+    'menu > today cell': todayCell,
+    'menu > left chevron': leftChevron,
+    'menu > month select': monthSelect,
+    'menu > year select': yearSelect,
+    'menu > right chevron': rightChevron,
   };
 };

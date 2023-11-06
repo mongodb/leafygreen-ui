@@ -1,22 +1,18 @@
 import React, {
   forwardRef,
   KeyboardEventHandler,
+  useCallback,
   useEffect,
-  useLayoutEffect,
   useMemo,
   useRef,
-  useState,
 } from 'react';
 import { addDays, subDays } from 'date-fns';
 
-import {
-  useDynamicRefs,
-  useForwardedRef,
-  usePrevious,
-} from '@leafygreen-ui/hooks';
+import { useForwardedRef, usePrevious } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
 import { spacing } from '@leafygreen-ui/tokens';
 
+import { DateType } from '../../shared';
 import {
   CalendarCell,
   CalendarCellState,
@@ -27,11 +23,13 @@ import { MenuWrapper } from '../../shared/components/MenuWrapper';
 import {
   getFirstOfMonth,
   getFullMonthLabel,
+  getISODate,
   getUTCDateString,
   isSameUTCDay,
   isSameUTCMonth,
   setToUTCMidnight,
 } from '../../shared/utils';
+import { useSingleDateContext } from '../SingleDateContext';
 
 import { getNewHighlight } from './utils/getNewHighlight';
 import {
@@ -43,45 +41,58 @@ import { DatePickerMenuProps } from './DatePickerMenu.types';
 import { DatePickerMenuHeader } from './DatePickerMenuHeader';
 
 export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
-  (
-    { value, onCellClick, handleValidation, ...rest }: DatePickerMenuProps,
-    fwdRef,
-  ) => {
+  ({ onKeyDown, ...rest }: DatePickerMenuProps, fwdRef) => {
     const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
-    const { isInRange, isOpen, setOpen } = useDatePickerContext();
+    const { isInRange, isOpen, setIsDirty } = useDatePickerContext();
+    const {
+      refs,
+      value,
+      setValue,
+      handleValidation,
+      month,
+      setMonth: setDisplayMonth,
+      highlight,
+      closeMenu,
+      setHighlight,
+      getCellWithValue,
+      getHighlightedCell,
+    } = useSingleDateContext();
 
-    // TODO: https://jira.mongodb.org/browse/LG-3666
-    // useDynamicRefs may overflow if a user navigates to too many months.
-    // consider purging the refs map within the hook
-    const cellRefs = useDynamicRefs<HTMLTableCellElement>();
     const ref = useForwardedRef(fwdRef, null);
+    const cellRefs = refs.calendarCellRefs;
     const headerRef = useRef<HTMLDivElement>(null);
     const calendarRef = useRef<HTMLTableElement>(null);
 
-    const [month, setDisplayMonth] = useState<Date>(
-      value ?? getFirstOfMonth(today),
-    );
-    const [highlight, setHighlight] = useState<Date | null>(value || today);
-
     const prevValue = usePrevious(value);
-    const prevHighlight = usePrevious(highlight);
+    // const prevOpen = usePrevious(isOpen);
+    // const prevHighlight = usePrevious(highlight);
 
     const monthLabel = getFullMonthLabel(month);
+
+    // focuses the DOM element for the appropriate cell
+    const focusCellWithDate = useCallback(
+      (date: DateType) => {
+        requestAnimationFrame(() => {
+          const highlightedCell = getCellWithValue(date);
+          highlightedCell?.focus();
+        });
+      },
+      [getCellWithValue],
+    );
 
     /** setDisplayMonth with side effects */
     const updateMonth = (newMonth: Date) => {
       if (isSameUTCMonth(newMonth, month)) {
         return;
       }
-
+      setDisplayMonth(newMonth);
       const newHighlight = getNewHighlight(highlight, month, newMonth);
       const shouldUpdateHighlight = !isSameUTCDay(highlight, newHighlight);
 
       if (newHighlight && shouldUpdateHighlight) {
         setHighlight(newHighlight);
+        focusCellWithDate(newHighlight);
       }
-
-      setDisplayMonth(newMonth);
     };
 
     /** setHighlight with side effects */
@@ -90,20 +101,9 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       if (!isSameUTCMonth(month, newHighlight)) {
         setDisplayMonth(newHighlight);
       }
-
-      // keep track of the highlighted cell
       setHighlight(newHighlight);
+      focusCellWithDate(newHighlight);
     };
-
-    /**
-     * When highlight changes, after the DOM changes, focus the relevant cell
-     */
-    useLayoutEffect(() => {
-      if (highlight && !isSameUTCDay(highlight, prevHighlight)) {
-        const highlightCellRef = cellRefs(highlight.toISOString());
-        highlightCellRef.current?.focus();
-      }
-    }, [cellRefs, highlight, prevHighlight]);
 
     /**
      * If the new value is not the current month, update the month
@@ -116,7 +116,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       ) {
         setDisplayMonth(getFirstOfMonth(value));
       }
-    }, [month, prevValue, value]);
+    }, [month, prevValue, setDisplayMonth, value]);
 
     /** Returns the current state of the cell */
     const getCellState = (cellDay: Date | null): CalendarCellState => {
@@ -131,10 +131,24 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       return CalendarCellState.Disabled;
     };
 
+    /** Called when any calendar cell is clicked */
+    const handleCalendarCellClick = (cellValue: Date) => {
+      if (!isSameUTCDay(cellValue, value)) {
+        // when the value is changed via cell,
+        // we trigger validation every time
+        handleValidation?.(cellValue);
+        setIsDirty(true);
+        // finally we update the component value
+        setValue(cellValue);
+      }
+      // and close the menu
+      closeMenu();
+    };
+
     /** Creates a click handler for a specific cell date */
     const cellClickHandlerForDay = (day: Date) => () => {
       if (isInRange(day)) {
-        onCellClick(day);
+        handleCalendarCellClick(day);
       }
     };
 
@@ -147,16 +161,16 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       if (e.key === keyMap.Tab) {
         const currentFocus = document.activeElement;
 
-        const highlightKey = highlight?.toISOString();
-        const highlightedCellElement = highlightKey
-          ? cellRefs(highlightKey)?.current
-          : undefined;
+        const highlightedCellElement = getHighlightedCell();
         const rightChevronElement = headerRef.current?.lastElementChild;
 
-        if (!e.shiftKey && currentFocus === rightChevronElement) {
+        const isFocusOnRightChevron = currentFocus === rightChevronElement;
+        const isFocusOnCell = currentFocus === highlightedCellElement;
+
+        if (!e.shiftKey && isFocusOnRightChevron) {
           (highlightedCellElement as HTMLElement)?.focus();
           e.preventDefault();
-        } else if (e.shiftKey && currentFocus === highlightedCellElement) {
+        } else if (e.shiftKey && isFocusOnCell) {
           (rightChevronElement as HTMLElement)?.focus();
           e.preventDefault();
         }
@@ -190,11 +204,6 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
           break;
         }
 
-        case keyMap.Escape:
-          setOpen(false);
-          handleValidation?.(value);
-          break;
-
         // The isInRange check below prevents tab presses from propagating up so we add a switch case for tab presses where we can then call handleWrapperTabKeyPress which will handle trapping focus
         case keyMap.Tab:
           handleWrapperTabKeyPress(e);
@@ -205,11 +214,14 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       }
 
       // if nextHighlight is in range
-      if (isInRange(nextHighlight)) {
+      if (isInRange(nextHighlight) && !isSameUTCDay(nextHighlight, highlight)) {
         updateHighlight(nextHighlight);
         // Prevent the parent keydown handler from being called
         e.stopPropagation();
       }
+
+      // call any handler that was passed in
+      onKeyDown?.(e);
     };
 
     return (
@@ -219,8 +231,8 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
         active={isOpen}
         spacing={spacing[1]}
         className={menuWrapperStyles}
-        onKeyDown={handleWrapperTabKeyPress}
         usePortal
+        onKeyDown={handleWrapperTabKeyPress}
         {...rest}
       >
         <div className={menuContentStyles}>
@@ -240,13 +252,13 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
             {(day, i) => (
               <CalendarCell
                 key={i}
-                ref={cellRefs(day.toISOString())}
+                ref={cellRefs(getISODate(day))}
                 aria-label={getUTCDateString(day)}
                 isHighlighted={isSameUTCDay(day, highlight)}
                 isCurrent={isSameUTCDay(day, today)}
                 state={getCellState(day)}
                 onClick={cellClickHandlerForDay(day)}
-                data-iso={day.toISOString()}
+                data-iso={getISODate(day)}
               >
                 {day.getUTCDate()}
               </CalendarCell>

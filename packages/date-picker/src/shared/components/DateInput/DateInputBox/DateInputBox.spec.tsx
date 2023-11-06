@@ -25,7 +25,7 @@ const renderDateInputBox = (
   };
 
   const result = render(
-    <DatePickerProvider value={{ ...defaultDatePickerContext, ...context }}>
+    <DatePickerProvider {...defaultDatePickerContext} {...context}>
       <DateInputBox
         {...props}
         value={props?.value ?? null}
@@ -52,7 +52,7 @@ const renderDateInputBox = (
 };
 
 describe('packages/date-picker/shared/date-input-box', () => {
-  const testContext = {
+  const testContext: Partial<DatePickerProviderProps> = {
     dateFormat: 'iso8601',
     timeZone: 'UTC',
   };

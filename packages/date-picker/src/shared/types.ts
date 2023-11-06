@@ -36,7 +36,7 @@ export interface BaseDatePickerProps extends DarkModeProps {
    *
    * @default 'iso8601'
    */
-  dateFormat?: 'en-US' | 'en-UK' | 'iso8601' | `${string}-${string}`;
+  dateFormat?: 'iso8601' | `${string}-${string}`;
 
   /**
    * A valid IANA timezone string, or UTC offset.

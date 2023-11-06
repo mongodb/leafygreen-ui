@@ -5,7 +5,6 @@ import {
   fontFamilies,
   fontWeights,
   spacing,
-  transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
 
@@ -201,7 +200,7 @@ export const calendarCellRangeStyles: Record<
 /**
  * Highlighted / Focus styles
  */
-const highlightSelector = '&:focus-visible, &[data-highlight="true"]'; // using a data selector lets us easily test these states
+const highlightSelector = '&:focus, &[data-highlight="true"]'; // using a data selector lets us easily test these states
 
 export const calendarCellHighlightStyles: Record<Theme, string> = {
   [Theme.Light]: css`
@@ -210,7 +209,6 @@ export const calendarCellHighlightStyles: Record<Theme, string> = {
 
       & > .${indicatorClassName} {
         box-shadow: ${calendarCellFocusRing.light};
-        transition: ease-in-out ${transitionDuration.default}ms box-shadow;
       }
     }
   `,
@@ -219,8 +217,6 @@ export const calendarCellHighlightStyles: Record<Theme, string> = {
       outline: none;
 
       & > .${indicatorClassName} {
-        transition: ease-in-out ${transitionDuration.default}ms box-shadow;
-
         box-shadow: ${calendarCellFocusRing.dark};
       }
     }

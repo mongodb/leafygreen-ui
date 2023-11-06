@@ -85,14 +85,14 @@ export default meta;
 const Template: StoryFn<typeof DateFormField> = () => {
   return (
     <DatePickerProvider
-      value={{
+      {...{
         label: 'Label',
         description: 'Description',
         state: DatePickerState.Error,
         errorMessage: 'This is an error message',
       }}
     >
-      <DateFormField>
+      <DateFormField buttonRef={React.createRef()}>
         <input
           style={{
             border: 'none',

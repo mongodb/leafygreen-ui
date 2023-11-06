@@ -18,12 +18,18 @@ import {
 } from '../../shared/components/DatePickerContext';
 import { Month } from '../../shared/constants';
 import { newUTC, pickAndOmit } from '../../shared/utils';
+import {
+  SingleDateContextProps,
+  SingleDateProvider,
+} from '../SingleDateContext';
 
 import { DatePickerMenu } from './DatePickerMenu';
 import { DatePickerMenuProps } from './DatePickerMenu.types';
 
 const mockToday = newUTC(2023, Month.September, 14);
-type DecoratorArgs = DatePickerMenuProps & DatePickerContextProps;
+type DecoratorArgs = DatePickerMenuProps &
+  SingleDateContextProps &
+  DatePickerContextProps;
 
 const MenuDecorator: Decorator = (Story: StoryFn, ctx: any) => {
   const [{ darkMode, ...contextProps }, { ...props }] = pickAndOmit(
@@ -37,11 +43,9 @@ const MenuDecorator: Decorator = (Story: StoryFn, ctx: any) => {
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <DatePickerProvider
-        value={{
-          ...defaultDatePickerContext,
-          ...contextProps,
-          initialOpen: true,
-        }}
+        {...defaultDatePickerContext}
+        {...contextProps}
+        initialOpen={true}
       >
         <Story {...props} />
       </DatePickerProvider>
@@ -82,15 +86,10 @@ export const Basic: DatePickerMenuStoryType = {
     const props = omit(args, [...contextPropNames, 'isOpen']);
     const refEl = useRef<HTMLDivElement>(null);
     return (
-      <>
+      <SingleDateProvider value={value} setValue={setValue}>
         <code ref={refEl}>refEl</code>
-        <DatePickerMenu
-          {...props}
-          refEl={refEl}
-          value={value}
-          onCellClick={setValue}
-        />
-      </>
+        <DatePickerMenu {...props} refEl={refEl} />
+      </SingleDateProvider>
     );
   },
 };
@@ -100,15 +99,15 @@ export const WithValue: DatePickerMenuStoryType = {
     const props = omit(args, [...contextPropNames, 'isOpen']);
     const refEl = useRef<HTMLDivElement>(null);
     return (
-      <div style={{ minHeight: '50vh' }}>
-        <InlineCode ref={refEl}>refEl</InlineCode>
-        <DatePickerMenu
-          {...props}
-          refEl={refEl}
-          value={newUTC(2023, Month.September, 10)}
-          onCellClick={() => {}}
-        />
-      </div>
+      <SingleDateProvider
+        value={newUTC(2023, Month.September, 10)}
+        setValue={() => {}}
+      >
+        <div style={{ minHeight: '50vh' }}>
+          <InlineCode ref={refEl}>refEl</InlineCode>
+          <DatePickerMenu {...props} refEl={refEl} />
+        </div>
+      </SingleDateProvider>
     );
   },
 };

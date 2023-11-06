@@ -1,83 +1,81 @@
-import React, { forwardRef, useRef } from 'react';
+import React, {
+  forwardRef,
+  KeyboardEventHandler,
+  TransitionEventHandler,
+  useRef,
+} from 'react';
+import { ExitHandler } from 'react-transition-group/Transition';
 
 import { useBackdropClick, useForwardedRef } from '@leafygreen-ui/hooks';
+import { keyMap } from '@leafygreen-ui/lib';
 
 import { useDatePickerContext } from '../../shared/components/DatePickerContext';
-import { isSameUTCDay } from '../../shared/utils';
 import { DatePickerInput } from '../DatePickerInput';
-import { DatePickerMenu, DatePickerMenuProps } from '../DatePickerMenu';
+import { DatePickerMenu } from '../DatePickerMenu';
+import { useSingleDateContext } from '../SingleDateContext';
 
 import { DatePickerComponentProps } from './DatePickerComponent.types';
 
 export const DatePickerComponent = forwardRef<
   HTMLDivElement,
   DatePickerComponentProps
->(
-  (
-    { value, setValue, handleValidation, ...rest }: DatePickerComponentProps,
-    fwdRef,
-  ) => {
-    const { isOpen, setOpen, isDirty, setIsDirty, menuId } =
-      useDatePickerContext();
-    const closeMenu = () => setOpen(false);
+>(({ ...rest }: DatePickerComponentProps, fwdRef) => {
+  const { isOpen, menuId } = useDatePickerContext();
+  const { value, closeMenu, handleValidation, getHighlightedCell } =
+    useSingleDateContext();
 
-    const formFieldRef = useForwardedRef(fwdRef, null);
-    const menuRef = useRef<HTMLDivElement>(null);
+  const formFieldRef = useForwardedRef(fwdRef, null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
-    /** setValue with possible side effects */
-    const updateValue = (newVal: Date | null) => {
-      setValue(newVal);
-    };
+  useBackdropClick(closeMenu, [formFieldRef, menuRef], isOpen);
 
-    useBackdropClick(closeMenu, [formFieldRef, menuRef], isOpen);
+  /** Fired when the CSS transition to open the menu is fired */
+  const handleMenuTransitionEntered: TransitionEventHandler = () => {
+    if (isOpen) {
+      // When the menu opens, set focus to the `highlight` cell
+      const highlightedCell = getHighlightedCell();
+      highlightedCell?.focus();
+    }
+  };
 
-    /** Called when the input's Date value has changed */
-    const handleInputValueChange = (inputVal?: Date | null) => {
-      if (!isSameUTCDay(inputVal, value)) {
-        // When the value changes via the input element,
-        // we only trigger validation if the component is dirty
-        if (isDirty) {
-          handleValidation?.(inputVal);
-        }
-        updateValue(inputVal || null);
-      }
-    };
+  const handleMenuTransitionExited: ExitHandler<HTMLDivElement> = () => {
+    if (!isOpen) {
+      closeMenu();
+    }
+  };
 
-    /** Called when any calendar cell is clicked */
-    const handleCalendarCellClick: DatePickerMenuProps['onCellClick'] = (
-      cellValue: Date,
-    ) => {
-      if (!isSameUTCDay(cellValue, value)) {
-        // when the value is changed via cell,
-        // we trigger validation every time
-        handleValidation?.(cellValue);
-        setIsDirty(true);
-        // finally we update the component value
-        updateValue(cellValue);
-        // and close the menu
-        setOpen(false);
-      }
-    };
+  /** Handle key down events that should be fired regardless of target */
+  const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
+    const { key } = e;
 
-    return (
-      <>
-        <DatePickerInput
-          ref={formFieldRef}
-          value={value}
-          setValue={handleInputValueChange}
-          handleValidation={handleValidation}
-          {...rest}
-        />
-        <DatePickerMenu
-          ref={menuRef}
-          id={menuId}
-          refEl={formFieldRef}
-          value={value}
-          onCellClick={handleCalendarCellClick}
-        />
-      </>
-    );
-  },
-);
+    switch (key) {
+      case keyMap.Escape:
+        closeMenu();
+        handleValidation?.(value);
+        break;
+
+      case keyMap.Enter:
+        handleValidation?.(value);
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  return (
+    <>
+      <DatePickerInput ref={formFieldRef} onKeyDown={handleKeyDown} {...rest} />
+      <DatePickerMenu
+        ref={menuRef}
+        id={menuId}
+        refEl={formFieldRef}
+        onKeyDown={handleKeyDown}
+        onTransitionEnd={handleMenuTransitionEntered}
+        onExited={handleMenuTransitionExited}
+      />
+    </>
+  );
+});
 
 DatePickerComponent.displayName = 'DatePickerContents';

@@ -10,14 +10,15 @@ import { keyMap } from '@leafygreen-ui/lib';
 
 import { DateFormField, DateInputBox } from '../../shared/components/DateInput';
 import { useDatePickerContext } from '../../shared/components/DatePickerContext';
-import { useSegmentRefs } from '../../shared/hooks';
 import {
   isElementInputSegment,
   isExplicitSegmentValue,
+  isSameUTCDay,
   isValidSegmentName,
   isValidValueForSegment,
   isZeroLike,
 } from '../../shared/utils';
+import { useSingleDateContext } from '../SingleDateContext';
 import { getRelativeSegment } from '../utils/getRelativeSegment';
 import { getSegmentToFocus } from '../utils/getSegmentToFocus';
 
@@ -26,19 +27,31 @@ import { DatePickerInputProps } from './DatePickerInput.types';
 export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
   (
     {
-      value,
-      setValue,
       onClick,
       onKeyDown,
       onChange: onSegmentChange,
-      handleValidation,
       ...rest
     }: DatePickerInputProps,
     fwdRef,
   ) => {
-    const { formatParts, disabled, setOpen, isDirty, setIsDirty } =
+    const { formatParts, disabled, isDirty, setIsDirty } =
       useDatePickerContext();
-    const segmentRefs = useSegmentRefs();
+    const {
+      refs: { segmentRefs, calendarButtonRef },
+      value,
+      setValue,
+      openMenu,
+      toggleMenu,
+      handleValidation,
+    } = useSingleDateContext();
+
+    /** Called when the input's Date value has changed */
+    const handleInputValueChange = (inputVal?: Date | null) => {
+      if (!isSameUTCDay(inputVal, value)) {
+        handleValidation?.(inputVal);
+        setValue(inputVal || null);
+      }
+    };
 
     /**
      * Called when the input, or any of its children, is clicked.
@@ -46,7 +59,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
      */
     const handleInputClick: MouseEventHandler<HTMLElement> = ({ target }) => {
       if (!disabled) {
-        setOpen(true);
+        openMenu();
 
         const segmentToFocus = getSegmentToFocus({
           target,
@@ -60,12 +73,12 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
 
     /**
      * Called when the calendar button is clicked.
-     * Opens the menu
+     * Opens the menu & focuses the appropriate cell
      */
     const handleIconButtonClick: MouseEventHandler<HTMLButtonElement> = e => {
       // Prevent the parent click handler from being called since clicks on the parent always opens the dropdown
       e.stopPropagation();
-      setOpen(o => !o);
+      toggleMenu();
     };
 
     /** Called on any keydown within the input element */
@@ -121,7 +134,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
         case keyMap.ArrowDown: {
           // if decrementing the segment's value is in range
           // decrement that segment value
-          // This is the default `input type=number` behavior
+          // This is the default `input type=number` & `role="spinbutton"` behavior
           break;
         }
 
@@ -138,22 +151,14 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
         }
 
         case keyMap.Enter:
-          handleValidation?.(value);
-          break;
-
         case keyMap.Escape:
-          setOpen(false);
-          handleValidation?.(value);
-          break;
-
         case keyMap.Tab:
-          // default behavior
-          // focus trap handled by parent
+          // Behavior handled by parent or menu
           break;
 
         default:
           // any other keydown should open the menu
-          setOpen(true);
+          openMenu();
       }
 
       // call any handler that was passed in
@@ -207,6 +212,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
     return (
       <DateFormField
         ref={fwdRef}
+        buttonRef={calendarButtonRef}
         onKeyDown={handleKeyDown}
         onInputClick={handleInputClick}
         onBlur={handleInputBlur}
@@ -215,7 +221,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       >
         <DateInputBox
           value={value}
-          setValue={setValue}
+          setValue={handleInputValueChange}
           segmentRefs={segmentRefs}
           onChange={handleSegmentChange}
         />

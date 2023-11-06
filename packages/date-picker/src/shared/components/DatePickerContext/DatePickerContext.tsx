@@ -17,11 +17,15 @@ export const DatePickerContext = createContext<DatePickerContextProps>(
   defaultDatePickerContext,
 );
 
+// TODO: Consider renaming this to `SharedDatePickerContext`,
+// and use `DatePickerContext` for what's currently `SingleDateContext`
+
 /** The Provider component for DatePickerContext */
 export const DatePickerProvider = ({
   children,
-  value: { initialOpen, ...rest },
-}: PropsWithChildren<{ value: DatePickerProviderProps }>) => {
+  initialOpen,
+  ...rest
+}: PropsWithChildren<DatePickerProviderProps>) => {
   const [isOpen, setOpen] = useState<boolean>(initialOpen ?? false);
   const [isDirty, setIsDirty] = useState(false);
   const menuId = useIdAllocator({ prefix: 'lg-date-picker-menu' });

@@ -6,6 +6,7 @@ export { getFirstEmptySegment } from './getFirstEmptySegment';
 export { getFirstOfMonth } from './getFirstOfMonth';
 export { getFormatParts } from './getFormatParts';
 export { getFullMonthLabel } from './getFullMonthLabel';
+export { getISODate } from './getISODate';
 export { getLastOfMonth } from './getLastOfMonth';
 export { getMonthName } from './getMonthName';
 export { getRemainingParts } from './getRemainingParts';

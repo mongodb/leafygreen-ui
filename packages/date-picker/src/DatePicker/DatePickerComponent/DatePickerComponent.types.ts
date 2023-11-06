@@ -1,6 +1,4 @@
 import { ContextPropKeys } from '../../shared/components/DatePickerContext';
-import { useControlledValue } from '../../shared/hooks';
-import { DateType } from '../../shared/types';
 import { DatePickerProps } from '../DatePicker.types';
 
 /**
@@ -9,6 +7,7 @@ import { DatePickerProps } from '../DatePicker.types';
  * Replaces `onDateChange` with a `setValue` setter function
  */
 export interface DatePickerComponentProps
-  extends Omit<DatePickerProps, ContextPropKeys | 'onDateChange'> {
-  setValue: ReturnType<typeof useControlledValue<DateType>>['setValue'];
-}
+  extends Omit<
+    DatePickerProps,
+    ContextPropKeys | 'value' | 'handleValidation' | 'onDateChange'
+  > {}

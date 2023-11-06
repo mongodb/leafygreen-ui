@@ -16,7 +16,13 @@ export const DateFormField = React.forwardRef<
   DateFormFieldProps
 >(
   (
-    { children, onInputClick, onIconButtonClick, ...rest }: DateFormFieldProps,
+    {
+      children,
+      onInputClick,
+      onIconButtonClick,
+      buttonRef,
+      ...rest
+    }: DateFormFieldProps,
     fwdRef,
   ) => {
     const {
@@ -47,7 +53,9 @@ export const DateFormField = React.forwardRef<
           aria-expanded={isOpen}
           aria-controls={menuId}
           onClick={onInputClick}
-          contentEnd={<CalendarButton onClick={onIconButtonClick} />}
+          contentEnd={
+            <CalendarButton ref={buttonRef} onClick={onIconButtonClick} />
+          }
         >
           {children}
         </FormFieldInputContainer>

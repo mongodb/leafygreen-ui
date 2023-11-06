@@ -35,7 +35,12 @@ export const getRelativeSegment = (
 
   /** The index of the reference segment relative to formatParts */
   const currentSegmentIndex: number | undefined = formatSegments.findIndex(
-    segmentName => segmentRefs[segmentName] === segment,
+    segmentName => {
+      return (
+        segmentRefs[segmentName] === segment ||
+        segmentRefs[segmentName].current === segment
+      );
+    },
   );
 
   const getRefAtIndex = (index: number) => {
@@ -61,7 +66,7 @@ export const getRelativeSegment = (
     }
 
     case 'next': {
-      if (!isUndefined(currentSegmentIndex)) {
+      if (!isUndefined(currentSegmentIndex) && currentSegmentIndex >= 0) {
         const nextSegmentIndex = Math.min(
           currentSegmentIndex + 1,
           formatSegments.length - 1,
@@ -75,7 +80,7 @@ export const getRelativeSegment = (
     }
 
     case 'prev': {
-      if (!isUndefined(currentSegmentIndex)) {
+      if (!isUndefined(currentSegmentIndex) && currentSegmentIndex >= 0) {
         const prevSegmentIndex = Math.max(currentSegmentIndex - 1, 0);
 
         const prevSegmentRef = getRefAtIndex(prevSegmentIndex);

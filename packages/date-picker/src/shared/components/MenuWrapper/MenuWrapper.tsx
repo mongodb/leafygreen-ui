@@ -10,17 +10,13 @@ import Popover, { PopoverProps } from '@leafygreen-ui/popover';
 
 import { menuStyles } from './MenuWrapper.styles';
 
+export type MenuWrapperProps = PopoverProps & HTMLElementProps<'div'>;
+
 /**
  * A simple styled popover component
  */
-export const MenuWrapper = forwardRef<
-  HTMLDivElement,
-  PopoverProps & HTMLElementProps<'div'>
->(
-  (
-    { className, children, ...props }: PopoverProps & HTMLElementProps<'div'>,
-    fwdRef,
-  ) => {
+export const MenuWrapper = forwardRef<HTMLDivElement, MenuWrapperProps>(
+  ({ className, children, ...props }: MenuWrapperProps, fwdRef) => {
     const { theme } = useDarkMode();
 
     return (
