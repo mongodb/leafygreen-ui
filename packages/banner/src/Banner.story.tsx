@@ -42,7 +42,8 @@ const meta: StoryMetaType<typeof Banner> = {
         replica sets as priority=0, votes=0 until they reach secondary state,
         after which Cloud Manager automatically updates the configuration to
         match the priority and votes value specified in the deployment. &nbsp;
-        <a href>Anchor tag</a>&nbsp;<Link>Link Component</Link>
+        <a href="https://mongodb.com">Anchor tag</a>&nbsp;
+        <Link>Link Component</Link>
       </>
     ),
     darkMode: false,
