@@ -1,7 +1,6 @@
 import React, {
   forwardRef,
   KeyboardEventHandler,
-  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -12,7 +11,6 @@ import { useForwardedRef, usePrevious } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
 import { spacing } from '@leafygreen-ui/tokens';
 
-import { DateType } from '../../shared';
 import {
   CalendarCell,
   CalendarCellState,
