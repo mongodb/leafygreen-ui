@@ -9,7 +9,6 @@ import { ExitHandler } from 'react-transition-group/Transition';
 import { useBackdropClick, useForwardedRef } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
 
-import { getFirstOfMonth } from '../../shared';
 import { useDatePickerContext } from '../../shared/components/DatePickerContext';
 import { DatePickerInput } from '../DatePickerInput';
 import { DatePickerMenu } from '../DatePickerMenu';
