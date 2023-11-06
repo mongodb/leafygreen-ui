@@ -31,7 +31,11 @@ export interface DatePickerContextProps
   /** Whether the menu is open */
   isOpen: boolean;
 
-  /** Setter to open or close the menu */
+  /**
+   * Setter to open or close the menu
+   * @internal - Prefer using `open/close/toggleMenu`
+   * from single/range component context
+   */
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 
   /** Identifies whether the component has been interacted with */

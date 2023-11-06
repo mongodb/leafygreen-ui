@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   fireEvent,
-  prettyDOM,
+  // prettyDOM,
   render,
   waitFor,
   waitForElementToBeRemoved,

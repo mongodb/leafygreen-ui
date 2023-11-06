@@ -34,12 +34,14 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
     }: DatePickerInputProps,
     fwdRef,
   ) => {
-    const { formatParts, disabled, isDirty, setOpen, setIsDirty } =
+    const { formatParts, disabled, isDirty, setIsDirty } =
       useDatePickerContext();
     const {
       refs: { segmentRefs, calendarButtonRef },
       value,
       setValue,
+      openMenu,
+      toggleMenu,
       handleValidation,
     } = useSingleDateContext();
 
@@ -57,7 +59,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
      */
     const handleInputClick: MouseEventHandler<HTMLElement> = ({ target }) => {
       if (!disabled) {
-        setOpen(true);
+        openMenu();
 
         const segmentToFocus = getSegmentToFocus({
           target,
@@ -76,7 +78,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
     const handleIconButtonClick: MouseEventHandler<HTMLButtonElement> = e => {
       // Prevent the parent click handler from being called since clicks on the parent always opens the dropdown
       e.stopPropagation();
-      setOpen(o => !o);
+      toggleMenu();
     };
 
     /** Called on any keydown within the input element */
@@ -156,7 +158,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
 
         default:
           // any other keydown should open the menu
-          setOpen(true);
+          openMenu();
       }
 
       // call any handler that was passed in

@@ -43,7 +43,7 @@ import { DatePickerMenuHeader } from './DatePickerMenuHeader';
 export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
   ({ onKeyDown, ...rest }: DatePickerMenuProps, fwdRef) => {
     const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
-    const { isInRange, isOpen, setOpen, setIsDirty } = useDatePickerContext();
+    const { isInRange, isOpen, setIsDirty } = useDatePickerContext();
     const {
       refs,
       value,
@@ -52,6 +52,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       month,
       setMonth: setDisplayMonth,
       highlight,
+      closeMenu,
       setHighlight,
       getCellWithValue,
       getHighlightedCell,
@@ -141,7 +142,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
         setValue(cellValue);
       }
       // and close the menu
-      setOpen(false);
+      closeMenu();
     };
 
     /** Creates a click handler for a specific cell date */

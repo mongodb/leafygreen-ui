@@ -9,12 +9,10 @@ import { ExitHandler } from 'react-transition-group/Transition';
 import { useBackdropClick, useForwardedRef } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
 
-import { getFirstOfMonth } from '../../shared';
 import { useDatePickerContext } from '../../shared/components/DatePickerContext';
 import { DatePickerInput } from '../DatePickerInput';
 import { DatePickerMenu } from '../DatePickerMenu';
 import { useSingleDateContext } from '../SingleDateContext';
-import { getInitialHighlight } from '../utils/getInitialHighlight';
 
 import { DatePickerComponentProps } from './DatePickerComponent.types';
 
@@ -22,38 +20,12 @@ export const DatePickerComponent = forwardRef<
   HTMLDivElement,
   DatePickerComponentProps
 >(({ ...rest }: DatePickerComponentProps, fwdRef) => {
-  const { isOpen, menuId, setOpen } = useDatePickerContext();
-  const {
-    refs,
-    value,
-    today,
-    highlight,
-    month,
-    setHighlight,
-    setMonth,
-    handleValidation,
-    getHighlightedCell,
-  } = useSingleDateContext();
+  const { isOpen, menuId } = useDatePickerContext();
+  const { value, closeMenu, handleValidation, getHighlightedCell } =
+    useSingleDateContext();
 
   const formFieldRef = useForwardedRef(fwdRef, null);
   const menuRef = useRef<HTMLDivElement>(null);
-
-  const onMenuCloseSideEffects = () => {
-    requestAnimationFrame(() => {
-      // Return focus to the calendar button
-      refs.calendarButtonRef.current?.focus();
-      // update month to something valid
-      setMonth(getFirstOfMonth(value ?? today));
-      // update highlight to something valid
-      setHighlight(getInitialHighlight(value, today, month));
-    });
-  };
-
-  /** Close the menu, and perform side-effects */
-  const closeMenu = () => {
-    setOpen(false);
-    onMenuCloseSideEffects();
-  };
 
   useBackdropClick(closeMenu, [formFieldRef, menuRef], isOpen);
 
@@ -68,7 +40,7 @@ export const DatePickerComponent = forwardRef<
 
   const handleMenuTransitionExited: ExitHandler<HTMLDivElement> = () => {
     if (!isOpen) {
-      onMenuCloseSideEffects();
+      closeMenu();
     }
   };
 

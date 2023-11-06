@@ -10,7 +10,12 @@ import React, {
 
 import { usePrevious } from '@leafygreen-ui/hooks';
 
-import { DateType, getFirstOfMonth, setToUTCMidnight } from '../../shared';
+import {
+  DateType,
+  getFirstOfMonth,
+  setToUTCMidnight,
+  useDatePickerContext,
+} from '../../shared';
 import { getISODate, isSameUTCDay } from '../../shared/utils';
 import { getInitialHighlight } from '../utils/getInitialHighlight';
 
@@ -34,6 +39,7 @@ export const SingleDateProvider = ({
   handleValidation,
 }: PropsWithChildren<SingleDateProviderProps>) => {
   const refs = useDateRangeComponentRefs();
+  const { isOpen, setOpen } = useDatePickerContext();
   const prevValue = usePrevious(value);
 
   const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
@@ -49,6 +55,10 @@ export const SingleDateProvider = ({
   const [highlight, _setHighlight] = useState<DateType>(
     getInitialHighlight(value, today, month),
   );
+
+  /***********
+   * SETTERS *
+   ***********/
 
   /**
    * Set the value and run side effects here
@@ -73,13 +83,39 @@ export const SingleDateProvider = ({
   }, []);
 
   /**
-   * If `value` prop changes, update the month
+   * Opens the menu and handles side effects
    */
-  useEffect(() => {
-    if (!isSameUTCDay(value, prevValue)) {
+  const openMenu = () => {
+    setOpen(true);
+  };
+
+  /** Closes the menu and handles side effects */
+  const closeMenu = () => {
+    setOpen(false);
+
+    // Perform side effects once the state has settle
+    requestAnimationFrame(() => {
+      // Return focus to the calendar button
+      refs.calendarButtonRef.current?.focus();
+      // update month to something valid
       setMonth(getFirstOfMonth(value ?? today));
+      // update highlight to something valid
+      setHighlight(getInitialHighlight(value, today, month));
+    });
+  };
+
+  /** Toggles the menu and handles appropriate side effects */
+  const toggleMenu = () => {
+    if (isOpen) {
+      closeMenu();
+    } else {
+      openMenu();
     }
-  }, [prevValue, setMonth, today, value]);
+  };
+
+  /***********
+   * GETTERS *
+   ***********/
 
   /**
    * Returns the cell element with the provided value
@@ -99,6 +135,19 @@ export const SingleDateProvider = ({
     return getCellWithValue(highlight);
   };
 
+  /****************
+   * SIDE EFFECTS *
+   ****************/
+
+  /**
+   * If `value` prop changes, update the month
+   */
+  useEffect(() => {
+    if (!isSameUTCDay(value, prevValue)) {
+      setMonth(getFirstOfMonth(value ?? today));
+    }
+  }, [prevValue, setMonth, today, value]);
+
   return (
     <SingleDateContext.Provider
       value={{
@@ -107,8 +156,9 @@ export const SingleDateProvider = ({
         value,
         setValue,
         handleValidation,
-        // closeMenu,
-        // openMenu,
+        closeMenu,
+        openMenu,
+        toggleMenu,
         month,
         setMonth,
         highlight,
