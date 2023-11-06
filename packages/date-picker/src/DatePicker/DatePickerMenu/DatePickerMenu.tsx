@@ -41,14 +41,14 @@ import { DatePickerMenuProps } from './DatePickerMenu.types';
 import { DatePickerMenuHeader } from './DatePickerMenuHeader';
 
 export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
-  ({ ...rest }: DatePickerMenuProps, fwdRef) => {
+  ({ onKeyDown, ...rest }: DatePickerMenuProps, fwdRef) => {
     const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
     const { isInRange, isOpen, setOpen, setIsDirty } = useDatePickerContext();
     const {
+      refs,
       value,
       setValue,
       handleValidation,
-      refs,
       month,
       setMonth: setDisplayMonth,
       highlight,
@@ -203,11 +203,6 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
           break;
         }
 
-        case keyMap.Escape:
-          setOpen(false);
-          handleValidation?.(value);
-          break;
-
         // The isInRange check below prevents tab presses from propagating up so we add a switch case for tab presses where we can then call handleWrapperTabKeyPress which will handle trapping focus
         case keyMap.Tab:
           handleWrapperTabKeyPress(e);
@@ -223,6 +218,9 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
         // Prevent the parent keydown handler from being called
         e.stopPropagation();
       }
+
+      // call any handler that was passed in
+      onKeyDown?.(e);
     };
 
     return (

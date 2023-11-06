@@ -1,13 +1,17 @@
 import React, {
   createContext,
   PropsWithChildren,
+  useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from 'react';
 
+import { usePrevious } from '@leafygreen-ui/hooks';
+
 import { DateType, getFirstOfMonth, setToUTCMidnight } from '../../shared';
-import { getISODate } from '../../shared/utils';
+import { getISODate, isSameUTCDay } from '../../shared/utils';
 import { getInitialHighlight } from '../utils/getInitialHighlight';
 
 import {
@@ -30,33 +34,44 @@ export const SingleDateProvider = ({
   handleValidation,
 }: PropsWithChildren<SingleDateProviderProps>) => {
   const refs = useDateRangeComponentRefs();
+  const prevValue = usePrevious(value);
 
   const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
-  // Keep track of the displayed month
-  const [month, _setMonth] = useState<Date>(value ?? getFirstOfMonth(today));
-  // Keep track of the element the user is highlighting with the keyboard
+
+  /** Keep track of the displayed month */
+  const [month, _setMonth] = useState<Date>(getFirstOfMonth(value ?? today));
+
+  /** Keep track of the element the user is highlighting with the keyboard */
   const [highlight, _setHighlight] = useState<DateType>(
     getInitialHighlight(value, today, month),
   );
 
-  /** Handle possible side effects here */
+  /** Set the value and run side effects here */
   const setValue = (newVal?: DateType) => {
     _setValue(newVal ?? null);
     setMonth(getFirstOfMonth(newVal ?? today));
   };
 
   /** Set the displayed month and handle side effects */
-  const setMonth = (newMonth: Date) => {
+  const setMonth = useCallback((newMonth: Date) => {
     _setMonth(newMonth);
-  };
+  }, []);
 
   /**
    * Set the `highlight` value & handle side effects
    */
-  const setHighlight = (newHighlight: DateType) => {
+  const setHighlight = useCallback((newHighlight: DateType) => {
     _setHighlight(newHighlight);
-  };
+  }, []);
 
+  /** If value prop changes, update the month */
+  useEffect(() => {
+    if (!isSameUTCDay(value, prevValue)) {
+      setMonth(getFirstOfMonth(value ?? today));
+    }
+  }, [prevValue, setMonth, today, value]);
+
+  /** Returns the cell element with the provided value */
   const getCellWithValue = (date: DateType): HTMLTableCellElement | null => {
     const highlightKey = getISODate(date);
     const cell = highlightKey
@@ -65,13 +80,9 @@ export const SingleDateProvider = ({
     return cell;
   };
 
+  /** Returns the cell element with the current highlight value */
   const getHighlightedCell = () => {
-    const highlightKey = highlight ? getISODate(highlight) : undefined;
-    const cell = highlightKey
-      ? refs.calendarCellRefs(highlightKey)?.current
-      : undefined;
-
-    return cell;
+    return getCellWithValue(highlight);
   };
 
   return (
@@ -82,6 +93,8 @@ export const SingleDateProvider = ({
         value,
         setValue,
         handleValidation,
+        // closeMenu,
+        // openMenu,
         month,
         setMonth,
         highlight,

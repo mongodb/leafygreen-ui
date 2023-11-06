@@ -1,8 +1,11 @@
 import React from 'react';
 import {
+  fireEvent,
+  prettyDOM,
   render,
   waitFor,
   waitForElementToBeRemoved,
+  within,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { addDays, subDays } from 'date-fns';
@@ -16,7 +19,7 @@ import {
 
 import {
   expectedTabStopLabels,
-  getTabStopElementMap,
+  findTabStopElementMap,
   renderDatePicker,
 } from './DatePicker.testutils';
 import { DatePicker } from '.';
@@ -92,33 +95,33 @@ describe('packages/date-picker', () => {
       });
     });
 
-    describe('Menu', () => {
-      test('menu is initially closed', () => {
-        const { getMenuElements } = renderDatePicker();
-        const { menuContainerEl } = getMenuElements();
+    describe.only('Menu', () => {
+      test('menu is initially closed', async () => {
+        const { findMenuElements } = renderDatePicker();
+        const { menuContainerEl } = await findMenuElements();
         expect(menuContainerEl).not.toBeInTheDocument();
       });
 
       test('menu is initially closed when rendered with `initialOpen` and `disabled`', async () => {
-        const { getMenuElements } = renderDatePicker({
+        const { findMenuElements } = renderDatePicker({
           initialOpen: true,
           disabled: true,
         });
-        const { menuContainerEl } = getMenuElements();
+        const { menuContainerEl } = await findMenuElements();
         await waitFor(() => expect(menuContainerEl).not.toBeInTheDocument());
       });
 
       test('menu is initially open when rendered with `initialOpen`', async () => {
-        const { getMenuElements } = renderDatePicker({ initialOpen: true });
-        const { menuContainerEl } = getMenuElements();
+        const { findMenuElements } = renderDatePicker({ initialOpen: true });
+        const { menuContainerEl } = await findMenuElements();
         await waitFor(() => expect(menuContainerEl).toBeInTheDocument());
       });
 
       test('opened menu closes when `disabled` is set to true', async () => {
-        const { getMenuElements, rerenderDatePicker } = renderDatePicker({
+        const { findMenuElements, rerenderDatePicker } = renderDatePicker({
           initialOpen: true,
         });
-        const { menuContainerEl } = getMenuElements();
+        const { menuContainerEl } = await findMenuElements();
         await waitFor(() => expect(menuContainerEl).toBeInTheDocument());
         rerenderDatePicker({ disabled: true });
         await waitFor(() => expect(menuContainerEl).not.toBeInTheDocument());
@@ -126,60 +129,60 @@ describe('packages/date-picker', () => {
 
       test('if no value is set, menu opens to current month', () => {
         const { openMenu } = renderDatePicker();
-        const { calendarGrid, monthSelect, yearSelect } = openMenu();
+        const { calendarGrid, monthSelect, yearSelect } = await openMenu();
         expect(calendarGrid).toHaveAttribute('aria-label', 'December 2023');
         expect(monthSelect).toHaveValue(Month.December.toString());
         expect(yearSelect).toHaveValue('2023');
       });
 
-      test('if a value is set, menu opens to the month of that value', () => {
+      test('if a value is set, menu opens to the month of that value', async () => {
         const { openMenu } = renderDatePicker({
           value: new Date(Date.UTC(2023, Month.March, 10)),
         });
-        const { calendarGrid, monthSelect, yearSelect } = openMenu();
+        const { calendarGrid, monthSelect, yearSelect } = await openMenu();
         expect(calendarGrid).toHaveAttribute('aria-label', 'March 2023');
         expect(monthSelect).toHaveValue(Month.March.toString());
         expect(yearSelect).toHaveValue('2023');
       });
 
-      test('renders the appropriate number of cells', () => {
+      test('renders the appropriate number of cells', async () => {
         const { openMenu } = renderDatePicker({
           value: new Date(Date.UTC(2024, Month.February, 14)),
         });
-        const { calendarCells } = openMenu();
+        const { calendarCells } = await openMenu();
         expect(calendarCells).toHaveLength(29);
       });
 
       describe('Chevrons', () => {
-        test('Left is disabled if prev. month is entirely out of range', () => {
+        test('Left is disabled if prev. month is entirely out of range', async () => {
           const { openMenu } = renderDatePicker({
             min: new Date(Date.UTC(2023, Month.December, 1)),
           });
-          const { leftChevron } = openMenu();
+          const { leftChevron } = await openMenu();
           expect(leftChevron).toHaveAttribute('aria-disabled', 'true');
         });
 
-        test('Right is disabled if next month is entirely out of range', () => {
+        test('Right is disabled if next month is entirely out of range', async () => {
           const { openMenu } = renderDatePicker({
             max: new Date(Date.UTC(2023, Month.December, 31)),
           });
-          const { rightChevron } = openMenu();
+          const { rightChevron } = await openMenu();
           expect(rightChevron).toHaveAttribute('aria-disabled', 'true');
         });
 
-        test('Left is not disabled if only part of prev. month is in range', () => {
+        test('Left is not disabled if only part of prev. month is in range', async () => {
           const { openMenu } = renderDatePicker({
             min: new Date(Date.UTC(2023, Month.November, 29)),
           });
-          const { leftChevron } = openMenu();
+          const { leftChevron } = await openMenu();
           expect(leftChevron).toHaveAttribute('aria-disabled', 'false');
         });
 
-        test('Right is not disabled if only part of next month is in of range', () => {
+        test('Right is not disabled if only part of next month is in of range', async () => {
           const { openMenu } = renderDatePicker({
             max: new Date(Date.UTC(2024, Month.January, 2)),
           });
-          const { rightChevron } = openMenu();
+          const { rightChevron } = await openMenu();
           expect(rightChevron).toHaveAttribute('aria-disabled', 'false');
         });
       });
@@ -189,10 +192,10 @@ describe('packages/date-picker', () => {
   describe('Interaction', () => {
     describe('Mouse interaction', () => {
       describe('Clicking the input', () => {
-        test('opens the menu', () => {
-          const { inputContainer, getMenuElements } = renderDatePicker();
+        test('opens the menu', async () => {
+          const { inputContainer, findMenuElements } = renderDatePicker();
           userEvent.click(inputContainer);
-          const { menuContainerEl } = getMenuElements();
+          const { menuContainerEl } = await findMenuElements();
           expect(menuContainerEl).toBeInTheDocument();
         });
 
@@ -227,108 +230,116 @@ describe('packages/date-picker', () => {
 
       describe('Clicking the Calendar button', () => {
         test('toggles the menu open and closed', async () => {
-          const { calendarButton, getMenuElements } = renderDatePicker();
+          const { calendarButton, findMenuElements } = renderDatePicker();
           userEvent.click(calendarButton);
-          const { menuContainerEl } = getMenuElements();
+          const { menuContainerEl } = await findMenuElements();
           expect(menuContainerEl).toBeInTheDocument();
           userEvent.click(calendarButton);
           await waitFor(() => expect(menuContainerEl).not.toBeInTheDocument());
         });
 
         test('closes the menu when "initialOpen: true"', async () => {
-          const { calendarButton, getMenuElements } = renderDatePicker({
+          const { calendarButton, findMenuElements } = renderDatePicker({
             initialOpen: true,
           });
-          const { menuContainerEl } = getMenuElements();
+          const { menuContainerEl } = await findMenuElements();
           await waitFor(() => expect(menuContainerEl).toBeInTheDocument());
           userEvent.click(calendarButton);
           await waitFor(() => expect(menuContainerEl).not.toBeInTheDocument());
         });
 
         test('focuses on the `today` cell by default', async () => {
-          const { calendarButton, getMenuElements } = renderDatePicker();
+          const { calendarButton, findMenuElements, findByRole } =
+            renderDatePicker();
           userEvent.click(calendarButton);
-          const { todayCell } = getMenuElements();
-          await waitFor(() => expect(todayCell).toHaveFocus());
+          const menuContainerEl = await findByRole('listbox');
+          const { todayCell } = await findMenuElements();
+          // Manually fire the `transitionEnd` event. This is not fired automatically by JSDOM
+          fireEvent.transitionEnd(menuContainerEl!);
+          expect(todayCell).toHaveFocus();
         });
 
         test('focuses on the selected cell', async () => {
           const value = newUTC(1994, Month.September, 10);
-          const { calendarButton, getMenuElements } = renderDatePicker({
-            value: value,
-          });
+          const { calendarButton, findMenuElements, findByRole } =
+            renderDatePicker({
+              value: value,
+            });
           userEvent.click(calendarButton);
-          const { getCellForDate } = getMenuElements();
-          const valueCell = getCellForDate(value);
-          await waitFor(() => expect(valueCell).toHaveFocus());
+          const menuContainerEl = await findByRole('listbox');
+          const { queryCellByDate } = await findMenuElements();
+          const valueCell = queryCellByDate(value);
+          // Manually fire the `transitionEnd` event. This is not fired automatically by JSDOM
+          fireEvent.transitionEnd(menuContainerEl!);
+          expect(valueCell).toHaveFocus();
         });
       });
 
       describe('Clicking a Calendar cell', () => {
-        test('fires a change handler', () => {
+        test('fires a change handler', async () => {
           const onDateChange = jest.fn();
           const { openMenu } = renderDatePicker({
             onDateChange,
           });
-          const { calendarCells } = openMenu();
+          const { calendarCells } = await openMenu();
           const firstCell = calendarCells?.[0];
-          userEvent.click(firstCell);
+          userEvent.click(firstCell!);
           expect(onDateChange).toHaveBeenCalled();
         });
 
-        test('does nothing if the cell is out-of-range', () => {
+        test('does nothing if the cell is out-of-range', async () => {
           const onDateChange = jest.fn();
           const { openMenu } = renderDatePicker({
             onDateChange,
             value: new Date(Date.UTC(2023, Month.September, 15)),
             min: new Date(Date.UTC(2023, Month.September, 10)),
           });
-          const { calendarCells } = openMenu();
+          const { calendarCells } = await openMenu();
           const firstCell = calendarCells?.[0];
-          userEvent.click(firstCell, {}, { skipPointerEventsCheck: true });
+          userEvent.click(firstCell!, {}, { skipPointerEventsCheck: true });
           expect(firstCell).toHaveAttribute('aria-disabled', 'true');
           expect(onDateChange).not.toHaveBeenCalled();
         });
 
-        test('fires a validation handler', () => {
+        test('fires a validation handler', async () => {
           const handleValidation = jest.fn();
           const { openMenu } = renderDatePicker({
             handleValidation,
           });
-          const { calendarCells } = openMenu();
+          const { calendarCells } = await openMenu();
           const firstCell = calendarCells?.[0];
-          userEvent.click(firstCell);
+          userEvent.click(firstCell!);
           expect(handleValidation).toHaveBeenCalled();
         });
       });
 
       describe('Clicking a Chevron', () => {
         describe('Left', () => {
-          test('does not close the menu', () => {
+          test('does not close the menu', async () => {
             const { openMenu } = renderDatePicker();
-            const { leftChevron, menuContainerEl } = openMenu();
+            const { leftChevron, menuContainerEl } = await openMenu();
             userEvent.click(leftChevron!);
             expect(menuContainerEl).toBeInTheDocument();
           });
 
-          test('updates the displayed month to the previous', () => {
+          test('updates the displayed month to the previous', async () => {
             const { openMenu } = renderDatePicker({
               value: newUTC(2023, Month.December, 25),
             });
             const { leftChevron, monthSelect, yearSelect, calendarGrid } =
-              openMenu();
+              await openMenu();
             userEvent.click(leftChevron!);
             expect(calendarGrid).toHaveAttribute('aria-label', 'November 2023');
             expect(monthSelect).toHaveValue(Month.November.toString());
             expect(yearSelect).toHaveValue('2023');
           });
 
-          test('updates the displayed month to the previous, and updates year', () => {
+          test('updates the displayed month to the previous, and updates year', async () => {
             const { openMenu } = renderDatePicker({
               value: newUTC(2023, Month.January, 5),
             });
             const { leftChevron, monthSelect, yearSelect, calendarGrid } =
-              openMenu();
+              await openMenu();
             userEvent.click(leftChevron!);
             expect(calendarGrid).toHaveAttribute('aria-label', 'December 2022');
             expect(monthSelect).toHaveValue(Month.December.toString());
@@ -337,31 +348,31 @@ describe('packages/date-picker', () => {
         });
 
         describe('Right', () => {
-          test('does not close the menu', () => {
+          test('does not close the menu', async () => {
             const { openMenu } = renderDatePicker();
-            const { rightChevron, menuContainerEl } = openMenu();
+            const { rightChevron, menuContainerEl } = await openMenu();
             userEvent.click(rightChevron!);
             expect(menuContainerEl).toBeInTheDocument();
           });
 
-          test('updates the displayed month to the next', () => {
+          test('updates the displayed month to the next', async () => {
             const { openMenu } = renderDatePicker({
               value: newUTC(2023, Month.January, 5),
             });
             const { rightChevron, monthSelect, yearSelect, calendarGrid } =
-              openMenu();
+              await openMenu();
             userEvent.click(rightChevron!);
             expect(calendarGrid).toHaveAttribute('aria-label', 'February 2023');
             expect(monthSelect).toHaveValue(Month.February.toString());
             expect(yearSelect).toHaveValue('2023');
           });
 
-          test('updates the displayed month to the next and updates year', () => {
+          test('updates the displayed month to the next and updates year', async () => {
             const { openMenu } = renderDatePicker({
               value: newUTC(2023, Month.December, 26),
             });
             const { rightChevron, monthSelect, yearSelect, calendarGrid } =
-              openMenu();
+              await openMenu();
             userEvent.click(rightChevron!);
             expect(calendarGrid).toHaveAttribute('aria-label', 'January 2024');
             expect(monthSelect).toHaveValue(Month.January.toString());
@@ -371,9 +382,9 @@ describe('packages/date-picker', () => {
       });
 
       describe('Month select menu', () => {
-        test('menu opens over the calendar menu', () => {
+        test('menu opens over the calendar menu', async () => {
           const { openMenu, queryAllByRole } = renderDatePicker();
-          const { monthSelect, menuContainerEl } = openMenu();
+          const { monthSelect, menuContainerEl } = await openMenu();
           userEvent.click(monthSelect!);
           expect(menuContainerEl).toBeInTheDocument();
           const listBoxes = queryAllByRole('listbox');
@@ -382,7 +393,7 @@ describe('packages/date-picker', () => {
 
         test('selecting the month updates the calendar', async () => {
           const { openMenu, findAllByRole } = renderDatePicker();
-          const { monthSelect, calendarGrid } = openMenu();
+          const { monthSelect, calendarGrid } = await openMenu();
           userEvent.click(monthSelect!);
           const options = await findAllByRole('option');
           const Jan = options[0];
@@ -392,7 +403,7 @@ describe('packages/date-picker', () => {
 
         test('making a selection with enter does not close the datePicker menu', async () => {
           const { openMenu, findAllByRole } = renderDatePicker();
-          const { monthSelect, menuContainerEl } = openMenu();
+          const { monthSelect, menuContainerEl } = await openMenu();
           userEvent.click(monthSelect!);
           await findAllByRole('option');
           userEvent.keyboard('{arrowdown}');
@@ -404,9 +415,9 @@ describe('packages/date-picker', () => {
       });
 
       describe('Year select menu', () => {
-        test('menu opens over the calendar menu', () => {
+        test('menu opens over the calendar menu', async () => {
           const { openMenu, queryAllByRole } = renderDatePicker();
-          const { yearSelect, menuContainerEl } = openMenu();
+          const { yearSelect, menuContainerEl } = await openMenu();
           userEvent.click(yearSelect!);
           expect(menuContainerEl).toBeInTheDocument();
           const listBoxes = queryAllByRole('listbox');
@@ -417,7 +428,7 @@ describe('packages/date-picker', () => {
           const { openMenu, findAllByRole } = renderDatePicker({
             value: new Date(Date.UTC(2023, Month.December, 26)),
           });
-          const { yearSelect, calendarGrid } = openMenu();
+          const { yearSelect, calendarGrid } = await openMenu();
           userEvent.click(yearSelect!);
           const options = await findAllByRole('option');
           const _1970 = options[0];
@@ -428,7 +439,7 @@ describe('packages/date-picker', () => {
 
         test('making a selection with enter does not close the datePicker menu', async () => {
           const { openMenu, findAllByRole } = renderDatePicker();
-          const { yearSelect, menuContainerEl } = openMenu();
+          const { yearSelect, menuContainerEl } = await openMenu();
           userEvent.click(yearSelect!);
           await findAllByRole('option');
           userEvent.keyboard('{arrowdown}');
@@ -442,17 +453,24 @@ describe('packages/date-picker', () => {
       describe('Clicking backdrop', () => {
         test('closes the menu', async () => {
           const { openMenu, container } = renderDatePicker();
-          const { menuContainerEl } = openMenu();
+          const { menuContainerEl } = await openMenu();
           userEvent.click(container.parentElement!);
           await waitForElementToBeRemoved(menuContainerEl);
         });
 
-        test('does not fire a change handler', () => {
+        test('does not fire a change handler', async () => {
           const onDateChange = jest.fn();
           const { openMenu, container } = renderDatePicker({ onDateChange });
-          openMenu();
+          await openMenu();
           userEvent.click(container.parentElement!);
           expect(onDateChange).not.toHaveBeenCalled();
+        });
+
+        test('returns focus to the calendar button', async () => {
+          const { openMenu, container, calendarButton } = renderDatePicker();
+          await openMenu();
+          userEvent.click(container.parentElement!);
+          await waitFor(() => expect(calendarButton).toHaveFocus());
         });
       });
     });
@@ -465,24 +483,24 @@ describe('packages/date-picker', () => {
           const { openMenu, findAllByRole } = renderDatePicker({
             value: newUTC(2023, Month.July, 5),
           });
-          const { monthSelect, getCellForDate } = openMenu();
+          const { monthSelect, queryCellByDate } = await openMenu();
           userEvent.click(monthSelect!);
           const options = await findAllByRole('option');
           const Jan = options[0];
           userEvent.click(Jan);
-          const jan31Cell = getCellForDate(newUTC(2023, Month.January, 31));
+          const jan31Cell = queryCellByDate(newUTC(2023, Month.January, 31));
           await waitFor(() => expect(jan31Cell).toHaveFocus());
         });
         test('to the beginning of the month if we went forwards', async () => {
           const { openMenu, findAllByRole } = renderDatePicker({
             value: newUTC(2023, Month.July, 5),
           });
-          const { monthSelect, getCellForDate } = openMenu();
+          const { monthSelect, queryCellByDate } = await openMenu();
           userEvent.click(monthSelect!);
           const options = await findAllByRole('option');
           const Dec = options[11];
           userEvent.click(Dec);
-          const dec1Cell = getCellForDate(newUTC(2023, Month.December, 1));
+          const dec1Cell = queryCellByDate(newUTC(2023, Month.December, 1));
           await waitFor(() => expect(dec1Cell).toHaveFocus());
         });
       });
@@ -490,17 +508,17 @@ describe('packages/date-picker', () => {
 
     describe('Keyboard navigation', () => {
       describe('Tab', () => {
-        test('menu does not open on keyboard focus', () => {
-          const { getMenuElements } = renderDatePicker();
+        test('menu does not open on keyboard focus', async () => {
+          const { findMenuElements } = renderDatePicker();
           userEvent.tab();
-          const { menuContainerEl } = getMenuElements();
+          const { menuContainerEl } = await findMenuElements();
           expect(menuContainerEl).not.toBeInTheDocument();
         });
 
-        test('menu does not open on subsequent keyboard focus', () => {
-          const { getMenuElements } = renderDatePicker();
+        test('menu does not open on subsequent keyboard focus', async () => {
+          const { findMenuElements } = renderDatePicker();
           tabNTimes(3);
-          const { menuContainerEl } = getMenuElements();
+          const { menuContainerEl } = await findMenuElements();
           expect(menuContainerEl).not.toBeInTheDocument();
         });
 
@@ -511,7 +529,7 @@ describe('packages/date-picker', () => {
           expect(handleValidation).toHaveBeenCalled();
         });
 
-        test('does not call validation handler when changing segment focus', () => {
+        test('todayCelldoes not call validation handler when changing segment focus', () => {
           const handleValidation = jest.fn();
           renderDatePicker({ handleValidation });
           tabNTimes(2);
@@ -522,11 +540,12 @@ describe('packages/date-picker', () => {
           describe('when menu is closed', () => {
             const tabStops = expectedTabStopLabels['closed'];
 
-            test('Tab order proceeds as expected', () => {
+            test('Tab order proceeds as expected', async () => {
               const renderResult = renderDatePicker();
 
               for (const label of tabStops) {
-                const element = getTabStopElementMap(renderResult)[label];
+                const elementMap = await findTabStopElementMap(renderResult);
+                const element = elementMap[label];
 
                 if (element !== null) {
                   expect(element).toHaveFocus();
@@ -552,7 +571,8 @@ describe('packages/date-picker', () => {
               });
 
               for (const label of tabStops) {
-                const element = getTabStopElementMap(renderResult)[label];
+                const elementMap = await findTabStopElementMap(renderResult);
+                const element = elementMap[label];
 
                 if (element !== null) {
                   await waitFor(() => expect(element).toHaveFocus());
@@ -572,11 +592,11 @@ describe('packages/date-picker', () => {
       });
 
       describe('Enter key', () => {
-        test('if menu is closed, does not open the menu', () => {
-          const { getMenuElements } = renderDatePicker();
+        test('if menu is closed, does not open the menu', async () => {
+          const { findMenuElements } = renderDatePicker();
           userEvent.tab();
           userEvent.keyboard('{enter}');
-          const { menuContainerEl } = getMenuElements();
+          const { menuContainerEl } = await findMenuElements();
           expect(menuContainerEl).not.toBeInTheDocument();
         });
 
@@ -588,102 +608,119 @@ describe('packages/date-picker', () => {
           expect(handleValidation).toHaveBeenCalledWith(undefined);
         });
 
-        test('opens menu if calendar button is focused', () => {
-          const { getMenuElements } = renderDatePicker();
+        test('opens menu if calendar button is focused', async () => {
+          const { findMenuElements } = renderDatePicker();
           tabNTimes(4);
           userEvent.keyboard('{enter}');
-          const { menuContainerEl } = getMenuElements();
+          const { menuContainerEl } = await findMenuElements();
           expect(menuContainerEl).toBeInTheDocument();
         });
 
-        test('if month/year select is focused, opens the select menu', async () => {
+        test('if month select is focused, opens the select menu', async () => {
           const { openMenu, findAllByRole } = renderDatePicker();
-          const { monthSelect } = openMenu();
-          tabNTimes(6);
-          userEvent.keyboard('{enter}');
+          const { monthSelect } = await openMenu();
+          tabNTimes(2);
           expect(monthSelect).toHaveFocus();
+          userEvent.keyboard('{enter}');
           const options = await findAllByRole('option');
           expect(options.length).toBeGreaterThan(0);
         });
 
-        test('if a cell is focused, fires a change handler', () => {
+        test('if a cell is focused, fires a change handler', async () => {
           const onDateChange = jest.fn();
           const { openMenu } = renderDatePicker({ onDateChange });
-          const { todayCell } = openMenu();
-          tabNTimes(4);
+          const { todayCell } = await openMenu();
           expect(todayCell).toHaveFocus();
-          userEvent.type(todayCell!, '{enter}');
+          userEvent.keyboard('{enter}');
           expect(onDateChange).toHaveBeenCalled();
         });
 
         test('if a cell is focused, closes the menu', async () => {
           const { openMenu } = renderDatePicker();
-          const { todayCell, menuContainerEl } = openMenu();
-          tabNTimes(4);
+          const { todayCell, menuContainerEl } = await openMenu();
+          expect(todayCell).toHaveFocus();
           userEvent.keyboard('{enter}');
-          userEvent.type(todayCell!, '{enter}');
+          await waitForElementToBeRemoved(menuContainerEl);
+          expect(menuContainerEl).not.toBeInTheDocument();
+        });
+
+        test.skip('if a cell is focused & component has value, closes the menu', async () => {
+          const value = newUTC(2023, Month.September, 10);
+          const { openMenu } = renderDatePicker({ value });
+          const { menuContainerEl, queryCellByDate } = await openMenu();
+          expect(queryCellByDate(value)).toHaveFocus();
+          userEvent.keyboard('{enter}');
           await waitForElementToBeRemoved(menuContainerEl);
           expect(menuContainerEl).not.toBeInTheDocument();
         });
 
         describe('chevron', () => {
           test('if left chevron is focused, does not close the menu', async () => {
-            const { openMenu, getMenuElements } = renderDatePicker();
-            const { leftChevron } = openMenu();
-            tabNTimes(5);
+            const { openMenu, findMenuElements } = renderDatePicker();
+            const { leftChevron } = await openMenu();
+            tabNTimes(1);
             expect(leftChevron).toHaveFocus();
             userEvent.keyboard('{enter}');
-            const { menuContainerEl } = getMenuElements();
+            const { menuContainerEl } = await findMenuElements();
             expect(menuContainerEl).toBeInTheDocument();
           });
 
           test('if right chevron is focused, does not close the menu', async () => {
-            const { openMenu, getMenuElements } = renderDatePicker();
-            const { rightChevron } = openMenu();
-            tabNTimes(8);
+            const { openMenu, findMenuElements } = renderDatePicker();
+            const { rightChevron } = await openMenu();
+            tabNTimes(4);
             expect(rightChevron).toHaveFocus();
             userEvent.keyboard('{enter}');
-            const { menuContainerEl } = getMenuElements();
+            const { menuContainerEl } = await findMenuElements();
             expect(menuContainerEl).toBeInTheDocument();
           });
         });
       });
 
       describe('Space key', () => {
-        test('opens menu if calendar button is focused', () => {
-          const { getMenuElements } = renderDatePicker();
-          tabNTimes(3);
+        test('opens menu if calendar button is focused', async () => {
+          const { findMenuElements, calendarButton } = renderDatePicker();
+          tabNTimes(4);
+          expect(calendarButton).toHaveFocus();
           userEvent.keyboard('{space}');
-          const { menuContainerEl } = getMenuElements();
+          const { menuContainerEl } = await findMenuElements();
           expect(menuContainerEl).toBeInTheDocument();
         });
 
         test('if month/year select is focused, opens the select menu', async () => {
           const { openMenu, findAllByRole } = renderDatePicker();
-          const { monthSelect } = openMenu();
-          tabNTimes(6);
+          const { monthSelect } = await openMenu();
+          tabNTimes(2);
           userEvent.keyboard('{space}');
           expect(monthSelect).toHaveFocus();
           const options = await findAllByRole('option');
           expect(options.length).toBeGreaterThan(0);
         });
 
-        test('if a cell is focused, fires a change handler', () => {
+        test('if a cell is focused, fires a change handler', async () => {
           const onChange = jest.fn();
           const { openMenu } = renderDatePicker({ onChange });
-          const { todayCell } = openMenu();
-          tabNTimes(4);
+          const { todayCell } = await openMenu();
           expect(todayCell).toHaveFocus();
-          userEvent.type(todayCell!, '{space}');
+          userEvent.keyboard('{space}');
           expect(onChange).toHaveBeenCalled();
         });
 
         test('if a cell is focused, closes the menu', async () => {
           const { openMenu } = renderDatePicker();
-          const { todayCell, menuContainerEl } = openMenu();
-          tabNTimes(4);
+          const { menuContainerEl, todayCell } = await openMenu();
+          expect(todayCell).toHaveFocus();
           userEvent.keyboard('{space}');
-          userEvent.type(todayCell!, '{space}');
+          await waitForElementToBeRemoved(menuContainerEl);
+          expect(menuContainerEl).not.toBeInTheDocument();
+        });
+
+        test.skip('if a cell is focused & component has value, closes the menu', async () => {
+          const value = newUTC(2023, Month.September, 10);
+          const { openMenu } = renderDatePicker({ value });
+          const { menuContainerEl, queryCellByDate } = await openMenu();
+          expect(queryCellByDate(value)).toHaveFocus();
+          userEvent.keyboard('{space}');
           await waitForElementToBeRemoved(menuContainerEl);
           expect(menuContainerEl).not.toBeInTheDocument();
         });
@@ -692,42 +729,46 @@ describe('packages/date-picker', () => {
       describe('Escape key', () => {
         test('closes the menu', async () => {
           const { openMenu } = renderDatePicker();
-          const { menuContainerEl } = openMenu();
+          const { menuContainerEl } = await openMenu();
           userEvent.keyboard('{escape}');
           await waitForElementToBeRemoved(menuContainerEl);
           expect(menuContainerEl).not.toBeInTheDocument();
         });
 
-        test('does not fire a change handler', () => {
+        test('does not fire a change handler', async () => {
           const onDateChange = jest.fn();
           const { openMenu } = renderDatePicker({ onDateChange });
-          openMenu();
+          await openMenu();
           userEvent.keyboard('{escape}');
           expect(onDateChange).not.toHaveBeenCalled();
         });
 
-        test('focus remains in the input element', () => {
-          const onDateChange = jest.fn();
-          const { openMenu, inputContainer } = renderDatePicker({
-            onDateChange,
-          });
-          openMenu();
+        test('focus remains in the input element', async () => {
+          const { openMenu, inputContainer } = renderDatePicker();
+          await openMenu();
           userEvent.keyboard('{escape}');
           expect(inputContainer.contains(document.activeElement)).toBeTruthy();
         });
 
-        test('fires a validation handler', () => {
+        test('returns focus to the calendar button', async () => {
+          const { openMenu, calendarButton } = renderDatePicker();
+          await openMenu();
+          userEvent.keyboard('{escape}');
+          await waitFor(() => expect(calendarButton).toHaveFocus());
+        });
+
+        test('fires a validation handler', async () => {
           const handleValidation = jest.fn();
           const { openMenu } = renderDatePicker({ handleValidation });
-          openMenu();
+          await openMenu();
           userEvent.keyboard('{escape}');
           expect(handleValidation).toHaveBeenCalledWith(undefined);
         });
 
-        test('does not close the main menu if a select menu is open and focus is in the select menu', async () => {
+        test('does not close the main menu if a select menu is open', async () => {
           const { openMenu, queryAllByRole, findAllByRole } =
             renderDatePicker();
-          const { monthSelect, menuContainerEl } = openMenu();
+          const { monthSelect, menuContainerEl } = await openMenu();
 
           monthSelect?.focus();
           expect(monthSelect).toHaveFocus();
@@ -752,17 +793,63 @@ describe('packages/date-picker', () => {
        * Since arrow key behavior changes based on whether the input or menu is focused,
        * many of these tests exist in the "DatePickerInput" and "DatePickerMenu" components
        */
-      test.todo('Basic arrow key tests');
+      describe('Arrow key', () => {
+        describe('Input', () => {
+          test.todo('moves focus to segments');
+        });
+        describe('Menu', () => {
+          test('left arrow moves focus to the previous day', async () => {
+            const { calendarButton, findMenuElements } = renderDatePicker();
+            userEvent.click(calendarButton);
+            const { todayCell, menuContainerEl, queryCellByDate } =
+              await findMenuElements();
+            // Manually fire the `transitionEnd` event. This is not fired automatically by JSDOM
+            fireEvent.transitionEnd(menuContainerEl!);
+            expect(todayCell).toHaveFocus();
+
+            userEvent.keyboard('{arrowleft}');
+            const prevDayCell = queryCellByDate(subDays(testToday, 1));
+            await waitFor(() => expect(prevDayCell).toHaveFocus());
+          });
+
+          test('down arrow moves focus to next week', async () => {
+            const { calendarButton, findMenuElements } = renderDatePicker();
+            userEvent.click(calendarButton);
+            const { todayCell, menuContainerEl, queryCellByDate } =
+              await findMenuElements();
+            // Manually fire the `transitionEnd` event. This is not fired automatically by JSDOM
+            fireEvent.transitionEnd(menuContainerEl!);
+            expect(todayCell).toHaveFocus();
+
+            userEvent.keyboard('{arrowdown}');
+            const nextWeekCell = queryCellByDate(addDays(testToday, 7));
+            await waitFor(() => expect(nextWeekCell).toHaveFocus());
+          });
+
+          test('down arrow can change month', async () => {
+            const { calendarButton, findByRole } = renderDatePicker();
+            userEvent.click(calendarButton);
+            const menuContainerEl = await findByRole('listbox');
+            const calendarGrid = within(menuContainerEl).getByRole('grid');
+            fireEvent.transitionEnd(menuContainerEl!);
+
+            expect(calendarGrid).toHaveAttribute('aria-label', 'December 2023');
+
+            userEvent.keyboard('{arrowdown}');
+            expect(calendarGrid).toHaveAttribute('aria-label', 'January 2024');
+          });
+        });
+      });
     });
 
     describe('Typing', () => {
       describe('Typing into the input', () => {
-        test('opens the menu', () => {
-          const { yearInput, getMenuElements } = renderDatePicker();
+        test('opens the menu', async () => {
+          const { yearInput, findMenuElements } = renderDatePicker();
           userEvent.tab();
           expect(yearInput).toHaveFocus();
           userEvent.keyboard('2');
-          const { menuContainerEl } = getMenuElements();
+          const { menuContainerEl } = await findMenuElements();
           expect(menuContainerEl).toBeInTheDocument();
         });
 
@@ -928,6 +1015,7 @@ describe('packages/date-picker', () => {
       });
     });
 
+<<<<<<< HEAD
     describe('User flows', () => {
       test('month is set when value changes', async () => {
         const { calendarButton, getMenuElements, rerenderDatePicker } =
@@ -939,56 +1027,98 @@ describe('packages/date-picker', () => {
         userEvent.keyboard('{escape}');
         await waitForElementToBeRemoved(menuContainerEl);
 
+=======
+    // TODO: Move these suites to Cypress (or other e2e/integration platform)
+    describe.skip('User flows', () => {
+      test('month is updated when value changes', async () => {
+>>>>>>> ea14b1fffdfb5b1fbe1a710ab10e29d0a0ec2ed2
         const value = newUTC(2023, Month.September, 10);
+        const { calendarButton, findMenuElements, rerenderDatePicker } =
+          renderDatePicker();
         rerenderDatePicker({ value });
         userEvent.click(calendarButton);
-        expect(calendarGrid).toHaveAttribute('aria-label', 'September 2023');
+        const { calendarGrid } = await findMenuElements();
+        await waitFor(() =>
+          expect(calendarGrid).toHaveAttribute('aria-label', 'September 2023'),
+        );
       });
 
-      describe('highlight resets when re-opening the menu', () => {
-        test('highlight returns to today', async () => {
-          const { calendarButton, getMenuElements } = renderDatePicker();
-          userEvent.click(calendarButton);
-          const { getCellForDate, menuContainerEl } = getMenuElements();
-          let todayCell = getCellForDate(testToday);
-          expect(todayCell).not.toBeNull();
-          await waitFor(() => expect(todayCell).toHaveFocus());
+      describe('when closing and re-opening the menu', () => {
+        test('month is reset to today by default', async () => {
+          const { openMenu } = renderDatePicker();
+          const { calendarGrid, menuContainerEl } = await openMenu();
+
+          expect(calendarGrid).toHaveAttribute('aria-label', 'December 2023');
+
+          userEvent.keyboard('{arrowdown}');
+          expect(calendarGrid).toHaveAttribute('aria-label', 'January 2024');
+
+          userEvent.keyboard('{escape}');
+          await waitForElementToBeRemoved(menuContainerEl);
+
+          await openMenu();
+          expect(calendarGrid).toHaveAttribute('aria-label', 'December 2023');
+        });
+
+        test('month is reset to value', async () => {
+          const value = newUTC(2023, Month.September, 10);
+
+          const { openMenu } = renderDatePicker({
+            value,
+          });
+          const { calendarGrid, menuContainerEl } = await openMenu();
+
+          expect(calendarGrid).toHaveAttribute('aria-label', 'September 2023');
+
+          userEvent.keyboard('{arrowup}{arrowup}');
+          expect(calendarGrid).toHaveAttribute('aria-label', 'August 2023');
+
+          userEvent.keyboard('{escape}');
+          await waitForElementToBeRemoved(menuContainerEl);
+
+          await openMenu();
+          expect(calendarGrid).toHaveAttribute('aria-label', 'September 2023');
+        });
+
+        test('highlight returns to today by default', async () => {
+          const { openMenu } = renderDatePicker();
+          const { todayCell, menuContainerEl, queryCellByDate } =
+            await openMenu();
+          expect(todayCell).toHaveFocus();
 
           userEvent.keyboard('{arrowdown}');
           const jan2 = addDays(testToday, 7);
-          const jan2Cell = getCellForDate(jan2);
+          const jan2Cell = queryCellByDate(jan2);
           await waitFor(() => expect(jan2Cell).toHaveFocus());
 
           userEvent.keyboard('{escape}');
           await waitForElementToBeRemoved(menuContainerEl);
 
-          userEvent.click(calendarButton);
-          todayCell = getCellForDate(testToday);
-          expect(todayCell).not.toBeNull();
-          await waitFor(() => expect(todayCell).toHaveFocus());
+          const { todayCell: newTodayCell } = await openMenu();
+          expect(newTodayCell).toHaveFocus();
         });
 
         test('highlight returns to value', async () => {
           const value = newUTC(2023, Month.September, 10);
-          const { calendarButton, getMenuElements } = renderDatePicker({
+          const { calendarButton, findMenuElements } = renderDatePicker({
             value,
           });
           userEvent.click(calendarButton);
-          const { getCellForDate, menuContainerEl } = getMenuElements();
-          let valueCell = getCellForDate(value);
+          const { queryCellByDate, menuContainerEl } = await findMenuElements();
+          let valueCell = queryCellByDate(value);
           expect(valueCell).not.toBeNull();
           await waitFor(() => expect(valueCell).toHaveFocus());
 
           userEvent.keyboard('{arrowup}{arrowup}');
           const aug27 = subDays(value, 14);
-          const aug27Cell = getCellForDate(aug27);
+          const aug27Cell = queryCellByDate(aug27);
           await waitFor(() => expect(aug27Cell).toHaveFocus());
 
           userEvent.keyboard('{escape}');
           await waitForElementToBeRemoved(menuContainerEl);
 
           userEvent.click(calendarButton);
-          valueCell = getCellForDate(testToday);
+          valueCell = queryCellByDate(testToday);
           expect(valueCell).not.toBeNull();
           await waitFor(() => expect(valueCell).toHaveFocus());
         });
@@ -1003,9 +1133,9 @@ describe('packages/date-picker', () => {
         value: new Date(),
         onDateChange,
       });
-      const { calendarCells } = openMenu();
+      const { calendarCells } = await openMenu();
       const firstCell = calendarCells?.[0];
-      userEvent.click(firstCell);
+      userEvent.click(firstCell!);
       await waitFor(() => expect(onDateChange).toHaveBeenCalled());
     });
 
@@ -1015,9 +1145,9 @@ describe('packages/date-picker', () => {
         value: new Date(),
         onDateChange,
       });
-      const { calendarCells } = openMenu();
+      const { calendarCells } = await openMenu();
       const firstCell = calendarCells?.[0];
-      userEvent.click(firstCell);
+      userEvent.click(firstCell!);
       await waitFor(() => {
         expect(dayInput.value).toEqual('26');
         expect(monthInput.value).toEqual('12');
@@ -1030,9 +1160,9 @@ describe('packages/date-picker', () => {
       const { openMenu } = renderDatePicker({
         onDateChange,
       });
-      const { calendarCells } = openMenu();
+      const { calendarCells } = await openMenu();
       const firstCell = calendarCells?.[0];
-      userEvent.click(firstCell);
+      userEvent.click(firstCell!);
       await waitFor(() => expect(onDateChange).toHaveBeenCalled());
     });
 
@@ -1042,9 +1172,9 @@ describe('packages/date-picker', () => {
         onDateChange,
         initialValue: new Date(),
       });
-      const { calendarCells } = openMenu();
+      const { calendarCells } = await openMenu();
       const firstCell = calendarCells?.[0];
-      userEvent.click(firstCell);
+      userEvent.click(firstCell!);
       await waitFor(() => {
         expect(dayInput.value).toEqual('01');
         expect(monthInput.value).toEqual('12');

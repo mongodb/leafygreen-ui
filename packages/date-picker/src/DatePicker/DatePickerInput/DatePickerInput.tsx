@@ -10,7 +10,6 @@ import { keyMap } from '@leafygreen-ui/lib';
 
 import { DateFormField, DateInputBox } from '../../shared/components/DateInput';
 import { useDatePickerContext } from '../../shared/components/DatePickerContext';
-import { useSegmentRefs } from '../../shared/hooks';
 import {
   isElementInputSegment,
   isExplicitSegmentValue,
@@ -35,11 +34,14 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
     }: DatePickerInputProps,
     fwdRef,
   ) => {
-    const { formatParts, disabled, setOpen, isDirty, setIsDirty } =
+    const { formatParts, disabled, isDirty, setOpen, setIsDirty } =
       useDatePickerContext();
-    const { value, setValue, handleValidation } = useSingleDateContext();
-
-    const segmentRefs = useSegmentRefs();
+    const {
+      refs: { segmentRefs, calendarButtonRef },
+      value,
+      setValue,
+      handleValidation,
+    } = useSingleDateContext();
 
     /** Called when the input's Date value has changed */
     const handleInputValueChange = (inputVal?: Date | null) => {
@@ -130,7 +132,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
         case keyMap.ArrowDown: {
           // if decrementing the segment's value is in range
           // decrement that segment value
-          // This is the default `input type=number` behavior
+          // This is the default `input type=number` & `role="spinbutton"` behavior
           break;
         }
 
@@ -147,17 +149,9 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
         }
 
         case keyMap.Enter:
-          handleValidation?.(value);
-          break;
-
         case keyMap.Escape:
-          setOpen(false);
-          handleValidation?.(value);
-          break;
-
         case keyMap.Tab:
-          // default behavior
-          // focus trap handled by parent
+          // Behavior handled by parent or menu
           break;
 
         default:
@@ -216,6 +210,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
     return (
       <DateFormField
         ref={fwdRef}
+        buttonRef={calendarButtonRef}
         onKeyDown={handleKeyDown}
         onInputClick={handleInputClick}
         onBlur={handleInputBlur}
