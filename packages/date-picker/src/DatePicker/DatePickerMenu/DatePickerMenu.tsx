@@ -204,11 +204,6 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
           break;
         }
 
-        // The isInRange check below prevents tab presses from propagating up so we add a switch case for tab presses where we can then call handleWrapperTabKeyPress which will handle trapping focus
-        case keyMap.Tab:
-          handleWrapperTabKeyPress(e);
-          break;
-
         default:
           break;
       }

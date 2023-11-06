@@ -558,7 +558,7 @@ describe('packages/date-picker', () => {
                 const element = elementMap[label];
 
                 if (element !== null) {
-                  await waitFor(() => expect(element).toHaveFocus());
+                  expect(element).toHaveFocus();
                 } else {
                   expect(
                     renderResult.inputContainer.contains(
@@ -568,6 +568,9 @@ describe('packages/date-picker', () => {
                 }
 
                 userEvent.tab();
+                // There are side-effects triggered on CSS transition-end events.
+                // Fire this event here to ensure these side-effects don't impact Tab order
+                if (element) fireEvent.transitionEnd(element);
               }
             });
           });
@@ -730,12 +733,8 @@ describe('packages/date-picker', () => {
         });
         describe('Menu', () => {
           test('left arrow moves focus to the previous day', async () => {
-            const { calendarButton, findMenuElements } = renderDatePicker();
-            userEvent.click(calendarButton);
-            const { todayCell, menuContainerEl, queryCellByDate } =
-              await findMenuElements();
-            // Manually fire the `transitionEnd` event. This is not fired automatically by JSDOM
-            fireEvent.transitionEnd(menuContainerEl!);
+            const { openMenu } = renderDatePicker();
+            const { todayCell, queryCellByDate } = await openMenu();
             expect(todayCell).toHaveFocus();
 
             userEvent.keyboard('{arrowleft}');
@@ -744,12 +743,8 @@ describe('packages/date-picker', () => {
           });
 
           test('down arrow moves focus to next week', async () => {
-            const { calendarButton, findMenuElements } = renderDatePicker();
-            userEvent.click(calendarButton);
-            const { todayCell, menuContainerEl, queryCellByDate } =
-              await findMenuElements();
-            // Manually fire the `transitionEnd` event. This is not fired automatically by JSDOM
-            fireEvent.transitionEnd(menuContainerEl!);
+            const { openMenu } = renderDatePicker();
+            const { todayCell, queryCellByDate } = await openMenu();
             expect(todayCell).toHaveFocus();
 
             userEvent.keyboard('{arrowdown}');
