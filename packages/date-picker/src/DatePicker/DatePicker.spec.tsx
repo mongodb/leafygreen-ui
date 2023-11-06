@@ -117,14 +117,19 @@ describe('packages/date-picker', () => {
         expect(menuContainerEl).toBeInTheDocument();
       });
 
-      test('open menu closes when `disabled` is set to true', async () => {
+      test('open menu closes when `disabled` is set to true and fires handler', async () => {
+        const handleValidation = jest.fn();
         const { findMenuElements, rerenderDatePicker } = renderDatePicker({
           initialOpen: true,
+          handleValidation,
         });
         const { menuContainerEl } = await findMenuElements();
         expect(menuContainerEl).toBeInTheDocument();
         rerenderDatePicker({ disabled: true });
-        await waitFor(() => expect(menuContainerEl).not.toBeInTheDocument());
+        await waitFor(() => {
+          expect(handleValidation).toHaveBeenCalled();
+          expect(menuContainerEl).not.toBeInTheDocument();
+        });
       });
 
       test('if no value is set, menu opens to current month', async () => {
