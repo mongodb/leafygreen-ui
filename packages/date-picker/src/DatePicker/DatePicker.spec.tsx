@@ -117,7 +117,7 @@ describe('packages/date-picker', () => {
         expect(menuContainerEl).toBeInTheDocument();
       });
 
-      test('opened menu closes when `disabled` is set to true', async () => {
+      test('open menu closes when `disabled` is set to true', async () => {
         const { findMenuElements, rerenderDatePicker } = renderDatePicker({
           initialOpen: true,
         });
