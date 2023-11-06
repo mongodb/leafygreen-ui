@@ -95,7 +95,7 @@ describe('packages/date-picker', () => {
       });
     });
 
-    describe.only('Menu', () => {
+    describe('Menu', () => {
       test('menu is initially closed', async () => {
         const { findMenuElements } = renderDatePicker();
         const { menuContainerEl } = await findMenuElements();
@@ -127,7 +127,7 @@ describe('packages/date-picker', () => {
         await waitFor(() => expect(menuContainerEl).not.toBeInTheDocument());
       });
 
-      test('if no value is set, menu opens to current month', () => {
+      test('if no value is set, menu opens to current month', async () => {
         const { openMenu } = renderDatePicker();
         const { calendarGrid, monthSelect, yearSelect } = await openMenu();
         expect(calendarGrid).toHaveAttribute('aria-label', 'December 2023');
@@ -1015,23 +1015,9 @@ describe('packages/date-picker', () => {
       });
     });
 
-<<<<<<< HEAD
-    describe('User flows', () => {
-      test('month is set when value changes', async () => {
-        const { calendarButton, getMenuElements, rerenderDatePicker } =
-          renderDatePicker();
-        userEvent.click(calendarButton);
-        const { calendarGrid, menuContainerEl } = getMenuElements();
-        expect(calendarGrid).toHaveAttribute('aria-label', 'December 2023');
-        userEvent.tab();
-        userEvent.keyboard('{escape}');
-        await waitForElementToBeRemoved(menuContainerEl);
-
-=======
     // TODO: Move these suites to Cypress (or other e2e/integration platform)
     describe.skip('User flows', () => {
       test('month is updated when value changes', async () => {
->>>>>>> ea14b1fffdfb5b1fbe1a710ab10e29d0a0ec2ed2
         const value = newUTC(2023, Month.September, 10);
         const { calendarButton, findMenuElements, rerenderDatePicker } =
           renderDatePicker();
