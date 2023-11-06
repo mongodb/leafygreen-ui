@@ -2,6 +2,7 @@ import React, {
   forwardRef,
   KeyboardEventHandler,
   TransitionEventHandler,
+  useEffect,
   useRef,
 } from 'react';
 import { ExitHandler } from 'react-transition-group/Transition';
@@ -20,7 +21,7 @@ export const DatePickerComponent = forwardRef<
   HTMLDivElement,
   DatePickerComponentProps
 >(({ ...rest }: DatePickerComponentProps, fwdRef) => {
-  const { isOpen, menuId } = useDatePickerContext();
+  const { isOpen, menuId, disabled } = useDatePickerContext();
   const { value, closeMenu, handleValidation, getHighlightedCell } =
     useSingleDateContext();
 
@@ -28,6 +29,13 @@ export const DatePickerComponent = forwardRef<
   const menuRef = useRef<HTMLDivElement>(null);
 
   useBackdropClick(closeMenu, [formFieldRef, menuRef], isOpen);
+
+  useEffect(() => {
+    if (disabled) {
+      closeMenu();
+      handleValidation?.(value);
+    }
+  }, [closeMenu, disabled, handleValidation, value]);
 
   /** Fired when the CSS transition to open the menu is fired */
   const handleMenuTransitionEntered: TransitionEventHandler = () => {
