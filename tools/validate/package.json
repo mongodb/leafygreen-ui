@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/validate",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Validation tools for LeafyGreen repositories",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -13,8 +13,8 @@
     "tsc": "tsc --build tsconfig.json"
   },
   "dependencies": {
-    "@lg-tools/build": "^0.3.0",
-    "@lg-tools/meta": "^0.1.4",
+    "@lg-tools/build": "^0.3.1",
+    "@lg-tools/meta": "^0.1.5",
     "@types/cross-spawn": "6.0.2",
     "@types/fs-extra": "11.0.1",
     "chalk": "4.1.2",

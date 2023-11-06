@@ -1,5 +1,13 @@
 # @leafygreen-ui/inline-definition
 
+## 6.0.14
+
+### Patch Changes
+
+- f24a2254: Component story no longer renders with a H2 and is accordance with design guidelines
+- Updated dependencies [783add80]
+  - @leafygreen-ui/tooltip@11.0.0
+
 ## 6.0.13
 
 ### Patch Changes

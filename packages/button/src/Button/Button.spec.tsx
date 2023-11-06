@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 import NextLink from 'next/link';
 
@@ -212,6 +213,28 @@ describe('packages/button', () => {
         onClick,
       });
       fireEvent.click(button);
+      expect(onClick).toHaveBeenCalledTimes(0);
+    });
+
+    test('does not fire onClick handler with ENTER key after focusing when disabled', () => {
+      const onClick = jest.fn();
+      const { button } = renderButton({
+        disabled: true,
+        onClick,
+      });
+      button.focus();
+      userEvent.keyboard('[Enter]');
+      expect(onClick).toHaveBeenCalledTimes(0);
+    });
+
+    test('does not fire onClick handler with SPACE bar after focusing when disabled', () => {
+      const onClick = jest.fn();
+      const { button } = renderButton({
+        disabled: true,
+        onClick,
+      });
+      button.focus();
+      userEvent.keyboard('[Space]');
       expect(onClick).toHaveBeenCalledTimes(0);
     });
 

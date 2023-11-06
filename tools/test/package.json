@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/test",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Jest setup & config for LeafyGreen repositories",
   "license": "Apache-2.0",
   "main": "dist/index.js",
@@ -17,7 +17,7 @@
     "@emotion/css": "11.9.0",
     "@emotion/react": "11.11.1",
     "@emotion/server": "11.11.0",
-    "@lg-tools/build": "0.3.0",
+    "@lg-tools/build": "0.3.1",
     "@testing-library/dom": "9.3.1",
     "@testing-library/jest-dom": "5.17.0",
     "@testing-library/react": "14.0.0",

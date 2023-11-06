@@ -1,5 +1,12 @@
 # @leafygreen-ui/hooks
 
+## 8.0.1
+
+### Patch Changes
+
+- 89f439e8: - Makes `useDynamicRefs` `prefix` argument optional
+  - Adds tests to `useDynamicRefs`
+
 ## 8.0.0
 
 ### Major Changes

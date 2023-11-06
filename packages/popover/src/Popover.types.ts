@@ -1,4 +1,13 @@
 import React from 'react';
+import { Transition } from 'react-transition-group';
+
+import { HTMLElementProps } from '@leafygreen-ui/lib';
+
+type TransitionProps = React.ComponentProps<typeof Transition<HTMLElement>>;
+type TransitionLifecycleCallbacks = Pick<
+  TransitionProps,
+  'onEnter' | 'onEntering' | 'onEntered' | 'onExit' | 'onExiting' | 'onExited'
+>;
 
 /**
  * Options to determine the alignment of the popover relative to
@@ -49,7 +58,7 @@ export interface ElementPosition {
   width: number;
 }
 
-interface ChildrenFunctionParameters {
+export interface ChildrenFunctionParameters {
   align: Align;
   justify: Justify;
   referenceElPos: ElementPosition;
@@ -105,6 +114,10 @@ export type PortalControlProps =
       scrollContainer?: null;
     };
 
+/**
+ * Base popover props.
+ * Use these props to extend popover behavior
+ */
 export type PopoverProps = {
   /**
    * Content that will appear inside of the popover component.
@@ -167,4 +180,9 @@ export type PopoverProps = {
    * Number that controls the z-index of the popover element directly.
    */
   popoverZIndex?: number;
-} & PortalControlProps;
+} & PortalControlProps &
+  TransitionLifecycleCallbacks;
+
+/** Props used by the popover component */
+export type PopoverComponentProps = Omit<HTMLElementProps<'div'>, 'children'> &
+  PopoverProps;
