@@ -27,8 +27,8 @@ export const DatePickerProvider = ({
   disabled = false,
   ...rest
 }: PropsWithChildren<DatePickerProviderProps>) => {
-  const shouldInitiallyOpen = disabled ? false : initialOpen;
-  const [isOpen, setOpen] = useState<boolean>(shouldInitiallyOpen);
+  const isInitiallyOpen = disabled ? false : initialOpen;
+  const [isOpen, setOpen] = useState<boolean>(isInitiallyOpen);
   const [isDirty, setIsDirty] = useState(false);
   const menuId = useIdAllocator({ prefix: 'lg-date-picker-menu' });
   const contextValue = getContextProps(rest);
