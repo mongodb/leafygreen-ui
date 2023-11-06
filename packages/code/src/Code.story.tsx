@@ -73,12 +73,6 @@ const meta: StoryMetaType<typeof Code> = {
     chromeTitle: 'example.ts',
   },
   argTypes: {
-    language: {
-      control: {
-        type: 'select',
-        options: Object.values(Language),
-      },
-    },
     copyable: { control: 'boolean' },
     showWindowChrome: { control: 'boolean' },
     showLineNumbers: { control: 'boolean' },
@@ -87,6 +81,12 @@ const meta: StoryMetaType<typeof Code> = {
     chromeTitle: { control: 'text' },
     lineNumberStart: { control: 'number' },
     baseFontSize: storybookArgTypes.baseFontSize,
+    language: {
+      options: Object.values(Language),
+      control: {
+        type: 'select',
+      },
+    },
   },
 };
 
