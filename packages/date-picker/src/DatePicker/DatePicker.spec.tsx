@@ -327,7 +327,12 @@ describe('packages/date-picker', () => {
             expect(yearSelect).toHaveValue('2022');
           });
 
-          test.todo('does not move focus to the calendar cell');
+          test('keeps focus on chevron button', async () => {
+            const { openMenu } = renderDatePicker();
+            const { leftChevron } = await openMenu();
+            userEvent.click(leftChevron!);
+            expect(leftChevron).toHaveFocus();
+          });
         });
 
         describe('Right', () => {
@@ -454,37 +459,6 @@ describe('packages/date-picker', () => {
           await openMenu();
           userEvent.click(container.parentElement!);
           await waitFor(() => expect(calendarButton).toHaveFocus());
-        });
-      });
-    });
-
-    describe('Changing the month', () => {
-      test.todo('is announced in an aria-live region');
-
-      describe('updates the highlighted cell', () => {
-        test('to the end of the month if we went backwards', async () => {
-          const { openMenu, findAllByRole } = renderDatePicker({
-            value: newUTC(2023, Month.July, 5),
-          });
-          const { monthSelect, queryCellByDate } = await openMenu();
-          userEvent.click(monthSelect!);
-          const options = await findAllByRole('option');
-          const Jan = options[0];
-          userEvent.click(Jan);
-          const jan31Cell = queryCellByDate(newUTC(2023, Month.January, 31));
-          await waitFor(() => expect(jan31Cell).toHaveFocus());
-        });
-        test('to the beginning of the month if we went forwards', async () => {
-          const { openMenu, findAllByRole } = renderDatePicker({
-            value: newUTC(2023, Month.July, 5),
-          });
-          const { monthSelect, queryCellByDate } = await openMenu();
-          userEvent.click(monthSelect!);
-          const options = await findAllByRole('option');
-          const Dec = options[11];
-          userEvent.click(Dec);
-          const dec1Cell = queryCellByDate(newUTC(2023, Month.December, 1));
-          await waitFor(() => expect(dec1Cell).toHaveFocus());
         });
       });
     });
@@ -1033,6 +1007,39 @@ describe('packages/date-picker', () => {
           valueCell = queryCellByDate(value);
           expect(valueCell).not.toBeNull();
           await waitFor(() => expect(valueCell).toHaveFocus());
+        });
+      });
+
+      describe('Changing the month', () => {
+        test.todo('is announced in an aria-live region');
+
+        describe('updates the highlighted cell...', () => {
+          test('to the end of the month if we went backwards', async () => {
+            const { openMenu, findAllByRole } = renderDatePicker({
+              value: newUTC(2023, Month.July, 5),
+            });
+            const { monthSelect, queryCellByDate } = await openMenu();
+            userEvent.click(monthSelect!);
+            const options = await findAllByRole('option');
+            const Jan = options[0];
+            userEvent.click(Jan);
+            tabNTimes(3);
+            const jan31Cell = queryCellByDate(newUTC(2023, Month.January, 31));
+            await waitFor(() => expect(jan31Cell).toHaveFocus());
+          });
+          test('to the beginning of the month if we went forwards', async () => {
+            const { openMenu, findAllByRole } = renderDatePicker({
+              value: newUTC(2023, Month.July, 5),
+            });
+            const { monthSelect, queryCellByDate } = await openMenu();
+            userEvent.click(monthSelect!);
+            const options = await findAllByRole('option');
+            const Dec = options[11];
+            userEvent.click(Dec);
+            tabNTimes(3);
+            const dec1Cell = queryCellByDate(newUTC(2023, Month.December, 1));
+            await waitFor(() => expect(dec1Cell).toHaveFocus());
+          });
         });
       });
     });

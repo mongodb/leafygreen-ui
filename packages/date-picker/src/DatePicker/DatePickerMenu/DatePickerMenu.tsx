@@ -69,17 +69,6 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
 
     const monthLabel = getFullMonthLabel(month);
 
-    // focuses the DOM element for the appropriate cell
-    const focusCellWithDate = useCallback(
-      (date: DateType) => {
-        requestAnimationFrame(() => {
-          const highlightedCell = getCellWithValue(date);
-          highlightedCell?.focus();
-        });
-      },
-      [getCellWithValue],
-    );
-
     /** setDisplayMonth with side effects */
     const updateMonth = (newMonth: Date) => {
       if (isSameUTCMonth(newMonth, month)) {
@@ -91,7 +80,6 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
 
       if (newHighlight && shouldUpdateHighlight) {
         setHighlight(newHighlight);
-        focusCellWithDate(newHighlight);
       }
     };
 
@@ -102,7 +90,10 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
         setDisplayMonth(newHighlight);
       }
       setHighlight(newHighlight);
-      focusCellWithDate(newHighlight);
+      requestAnimationFrame(() => {
+        const highlightedCell = getCellWithValue(newHighlight);
+        highlightedCell?.focus();
+      });
     };
 
     /**
