@@ -92,7 +92,7 @@ const Template: StoryFn<typeof DateFormField> = () => {
         errorMessage: 'This is an error message',
       }}
     >
-      <DateFormField>
+      <DateFormField buttonRef={React.createRef()}>
         <input
           style={{
             border: 'none',
