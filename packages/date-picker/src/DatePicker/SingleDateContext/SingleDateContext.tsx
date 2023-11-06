@@ -38,21 +38,29 @@ export const SingleDateProvider = ({
 
   const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
 
-  /** Keep track of the displayed month */
+  /**
+   * Keep track of the displayed month
+   */
   const [month, _setMonth] = useState<Date>(getFirstOfMonth(value ?? today));
 
-  /** Keep track of the element the user is highlighting with the keyboard */
+  /**
+   * Keep track of the element the user is highlighting with the keyboard
+   */
   const [highlight, _setHighlight] = useState<DateType>(
     getInitialHighlight(value, today, month),
   );
 
-  /** Set the value and run side effects here */
+  /**
+   * Set the value and run side effects here
+   */
   const setValue = (newVal?: DateType) => {
     _setValue(newVal ?? null);
     setMonth(getFirstOfMonth(newVal ?? today));
   };
 
-  /** Set the displayed month and handle side effects */
+  /**
+   * Set the displayed month and handle side effects
+   */
   const setMonth = useCallback((newMonth: Date) => {
     _setMonth(newMonth);
   }, []);
@@ -64,14 +72,18 @@ export const SingleDateProvider = ({
     _setHighlight(newHighlight);
   }, []);
 
-  /** If value prop changes, update the month */
+  /**
+   * If `value` prop changes, update the month
+   */
   useEffect(() => {
     if (!isSameUTCDay(value, prevValue)) {
       setMonth(getFirstOfMonth(value ?? today));
     }
   }, [prevValue, setMonth, today, value]);
 
-  /** Returns the cell element with the provided value */
+  /**
+   * Returns the cell element with the provided value
+   */
   const getCellWithValue = (date: DateType): HTMLTableCellElement | null => {
     const highlightKey = getISODate(date);
     const cell = highlightKey
@@ -80,7 +92,9 @@ export const SingleDateProvider = ({
     return cell;
   };
 
-  /** Returns the cell element with the current highlight value */
+  /**
+   * Returns the cell element with the current highlight value
+   */
   const getHighlightedCell = () => {
     return getCellWithValue(highlight);
   };

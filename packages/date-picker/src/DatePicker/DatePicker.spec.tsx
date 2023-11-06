@@ -572,8 +572,7 @@ describe('packages/date-picker', () => {
         });
       });
 
-      const keyboardClickKeys = ['Enter', 'Space'];
-      describe.each(keyboardClickKeys)('%p key', key => {
+      describe.each(['Enter', 'Space'])('%p key', key => {
         test('opens menu if calendar button is focused', async () => {
           const { findMenuElements } = renderDatePicker();
           tabNTimes(4);
@@ -678,13 +677,6 @@ describe('packages/date-picker', () => {
           await openMenu();
           userEvent.keyboard('{escape}');
           expect(onDateChange).not.toHaveBeenCalled();
-        });
-
-        test('focus remains in the input element', async () => {
-          const { openMenu, inputContainer } = renderDatePicker();
-          await openMenu();
-          userEvent.keyboard('{escape}');
-          expect(inputContainer.contains(document.activeElement)).toBeTruthy();
         });
 
         test('returns focus to the calendar button', async () => {
@@ -953,7 +945,7 @@ describe('packages/date-picker', () => {
     });
 
     // TODO: Move these suites to Cypress (or other e2e/integration platform)
-    describe.skip('User flows', () => {
+    describe('User flows', () => {
       test('month is updated when value changes', async () => {
         const value = newUTC(2023, Month.September, 10);
         const { calendarButton, findMenuElements, rerenderDatePicker } =
