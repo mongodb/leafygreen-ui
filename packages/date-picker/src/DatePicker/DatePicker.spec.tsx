@@ -326,6 +326,8 @@ describe('packages/date-picker', () => {
             expect(monthSelect).toHaveValue(Month.December.toString());
             expect(yearSelect).toHaveValue('2022');
           });
+
+          test.todo('does not move focus to the calendar cell');
         });
 
         describe('Right', () => {
@@ -1015,11 +1017,11 @@ describe('packages/date-picker', () => {
 
         test('highlight returns to value', async () => {
           const value = newUTC(2023, Month.September, 10);
-          const { calendarButton, findMenuElements } = renderDatePicker({
+          const { openMenu, findMenuElements } = renderDatePicker({
             value,
           });
-          userEvent.click(calendarButton);
-          const { queryCellByDate, menuContainerEl } = await findMenuElements();
+          let queryCellByDate = (await openMenu()).queryCellByDate;
+          const { menuContainerEl } = await findMenuElements();
           let valueCell = queryCellByDate(value);
           expect(valueCell).not.toBeNull();
           await waitFor(() => expect(valueCell).toHaveFocus());
@@ -1032,8 +1034,8 @@ describe('packages/date-picker', () => {
           userEvent.keyboard('{escape}');
           await waitForElementToBeRemoved(menuContainerEl);
 
-          userEvent.click(calendarButton);
-          valueCell = queryCellByDate(testToday);
+          queryCellByDate = (await openMenu()).queryCellByDate;
+          valueCell = queryCellByDate(value);
           expect(valueCell).not.toBeNull();
           await waitFor(() => expect(valueCell).toHaveFocus());
         });

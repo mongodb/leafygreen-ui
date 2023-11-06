@@ -53,7 +53,7 @@ export const SingleDateProvider = ({
    * Keep track of the element the user is highlighting with the keyboard
    */
   const [highlight, _setHighlight] = useState<DateType>(
-    getInitialHighlight(value, today, month),
+    getInitialHighlight(value, today),
   );
 
   /***********
@@ -100,7 +100,7 @@ export const SingleDateProvider = ({
       // update month to something valid
       setMonth(getFirstOfMonth(value ?? today));
       // update highlight to something valid
-      setHighlight(getInitialHighlight(value, today, month));
+      setHighlight(getInitialHighlight(value, today));
     });
   };
 
