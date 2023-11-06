@@ -139,9 +139,9 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
         setIsDirty(true);
         // finally we update the component value
         setValue(cellValue);
-        // and close the menu
-        setOpen(false);
       }
+      // and close the menu
+      setOpen(false);
     };
 
     /** Creates a click handler for a specific cell date */

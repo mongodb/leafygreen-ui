@@ -388,7 +388,7 @@ describe('packages/date-picker', () => {
           userEvent.click(monthSelect!);
           await findAllByRole('option');
           userEvent.keyboard('{arrowdown}');
-          userEvent.keyboard('{enter}');
+          userEvent.keyboard('[Enter]');
           await waitFor(() => {
             expect(menuContainerEl).toBeInTheDocument();
           });
@@ -424,7 +424,7 @@ describe('packages/date-picker', () => {
           userEvent.click(yearSelect!);
           await findAllByRole('option');
           userEvent.keyboard('{arrowdown}');
-          userEvent.keyboard('{enter}');
+          userEvent.keyboard('[Enter]');
           await waitFor(() => {
             expect(menuContainerEl).toBeInTheDocument();
           });
@@ -576,7 +576,7 @@ describe('packages/date-picker', () => {
         test('if menu is closed, does not open the menu', async () => {
           const { findMenuElements } = renderDatePicker();
           userEvent.tab();
-          userEvent.keyboard('{enter}');
+          userEvent.keyboard('[Enter]');
           const { menuContainerEl } = await findMenuElements();
           expect(menuContainerEl).not.toBeInTheDocument();
         });
@@ -585,14 +585,14 @@ describe('packages/date-picker', () => {
           const handleValidation = jest.fn();
           renderDatePicker({ handleValidation });
           userEvent.tab();
-          userEvent.keyboard('{enter}');
+          userEvent.keyboard('[Enter]');
           expect(handleValidation).toHaveBeenCalledWith(undefined);
         });
 
         test('opens menu if calendar button is focused', async () => {
           const { findMenuElements } = renderDatePicker();
           tabNTimes(4);
-          userEvent.keyboard('{enter}');
+          userEvent.keyboard('[Enter]');
           const { menuContainerEl } = await findMenuElements();
           expect(menuContainerEl).toBeInTheDocument();
         });
@@ -602,7 +602,7 @@ describe('packages/date-picker', () => {
           const { monthSelect } = await openMenu();
           tabNTimes(2);
           expect(monthSelect).toHaveFocus();
-          userEvent.keyboard('{enter}');
+          userEvent.keyboard('[Enter]');
           const options = await findAllByRole('option');
           expect(options.length).toBeGreaterThan(0);
         });
@@ -612,7 +612,7 @@ describe('packages/date-picker', () => {
           const { openMenu } = renderDatePicker({ onDateChange });
           const { todayCell } = await openMenu();
           expect(todayCell).toHaveFocus();
-          userEvent.keyboard('{enter}');
+          userEvent.keyboard('[Enter]');
           expect(onDateChange).toHaveBeenCalled();
         });
 
@@ -620,19 +620,21 @@ describe('packages/date-picker', () => {
           const { openMenu } = renderDatePicker();
           const { todayCell, menuContainerEl } = await openMenu();
           expect(todayCell).toHaveFocus();
-          userEvent.keyboard('{enter}');
+          userEvent.keyboard('[Enter]');
           await waitForElementToBeRemoved(menuContainerEl);
           expect(menuContainerEl).not.toBeInTheDocument();
         });
 
-        test.skip('if a cell is focused & component has value, closes the menu', async () => {
+        test('if a cell is focused on current value, closes the menu, but does not fire a change handler', async () => {
+          const onDateChange = jest.fn();
           const value = newUTC(2023, Month.September, 10);
-          const { openMenu } = renderDatePicker({ value });
+          const { openMenu } = renderDatePicker({ value, onDateChange });
           const { menuContainerEl, queryCellByDate } = await openMenu();
           expect(queryCellByDate(value)).toHaveFocus();
-          userEvent.keyboard('{enter}');
+          userEvent.keyboard('[Enter]');
           await waitForElementToBeRemoved(menuContainerEl);
           expect(menuContainerEl).not.toBeInTheDocument();
+          expect(onDateChange).not.toHaveBeenCalled();
         });
 
         describe('chevron', () => {
@@ -641,7 +643,7 @@ describe('packages/date-picker', () => {
             const { leftChevron } = await openMenu();
             tabNTimes(1);
             expect(leftChevron).toHaveFocus();
-            userEvent.keyboard('{enter}');
+            userEvent.keyboard('[Enter]');
             const { menuContainerEl } = await findMenuElements();
             expect(menuContainerEl).toBeInTheDocument();
           });
@@ -651,7 +653,7 @@ describe('packages/date-picker', () => {
             const { rightChevron } = await openMenu();
             tabNTimes(4);
             expect(rightChevron).toHaveFocus();
-            userEvent.keyboard('{enter}');
+            userEvent.keyboard('[Enter]');
             const { menuContainerEl } = await findMenuElements();
             expect(menuContainerEl).toBeInTheDocument();
           });
@@ -696,14 +698,16 @@ describe('packages/date-picker', () => {
           expect(menuContainerEl).not.toBeInTheDocument();
         });
 
-        test.skip('if a cell is focused & component has value, closes the menu', async () => {
+        test('if a cell is focused on current value, closes the menu, but does not fire a change handler', async () => {
+          const onDateChange = jest.fn();
           const value = newUTC(2023, Month.September, 10);
-          const { openMenu } = renderDatePicker({ value });
+          const { openMenu } = renderDatePicker({ value, onDateChange });
           const { menuContainerEl, queryCellByDate } = await openMenu();
           expect(queryCellByDate(value)).toHaveFocus();
-          userEvent.keyboard('{space}');
+          userEvent.keyboard('[Space]');
           await waitForElementToBeRemoved(menuContainerEl);
           expect(menuContainerEl).not.toBeInTheDocument();
+          expect(onDateChange).not.toHaveBeenCalled();
         });
       });
 
@@ -753,7 +757,7 @@ describe('packages/date-picker', () => {
 
           monthSelect?.focus();
           expect(monthSelect).toHaveFocus();
-          userEvent.keyboard('{enter}');
+          userEvent.keyboard('[Enter]');
           userEvent.keyboard('{arrowdown}');
           const options = await findAllByRole('option');
           const firstOption = options[0];
