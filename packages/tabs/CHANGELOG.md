@@ -1,5 +1,15 @@
 # @leafygreen-ui/tabs
 
+## 11.1.13
+
+### Patch Changes
+
+- b708fe19: `inlineChildren` are now styled to attach to the bottom of the Tabs component
+- Updated dependencies [e3f4d9ce]
+- Updated dependencies [89f439e8]
+  - @leafygreen-ui/typography@18.0.1
+  - @leafygreen-ui/hooks@8.0.1
+
 ## 11.1.12
 
 ### Patch Changes

@@ -1,3 +1,4 @@
+import React from 'react';
 import { useVirtual } from 'react-virtual';
 import { useReactTable } from '@tanstack/react-table';
 import {
@@ -12,14 +13,14 @@ import { TableRowCheckbox } from './TableRowCheckbox';
 import { LeafyGreenTableOptions, LGRowData } from './useLeafyGreenTable.types';
 import { LeafyGreenTable, LGColumnDef, LGTableDataType } from '.';
 
-const checkboxWidth = 14;
+const CHECKBOX_WIDTH = 14;
 
 /**
  * A `ColumnDef` object injected into `useReactTable`'s `columns` option when the user is using selectable rows.
  */
 const baseSelectColumnConfig: LGColumnDef<LGRowData> = {
   id: 'select',
-  size: checkboxWidth,
+  size: CHECKBOX_WIDTH,
   header: TableHeaderCheckbox,
   cell: TableRowCheckbox,
 };
@@ -34,21 +35,26 @@ function useLeafyGreenTable<T extends LGRowData>({
   allowSelectAll = true,
   ...rest
 }: LeafyGreenTableOptions<T>): LeafyGreenTable<T> {
-  let hasSortableColumns = false;
+  const hasSortableColumns = React.useMemo(
+    () => columnsProp.some(propCol => !!propCol.enableSorting),
+    [columnsProp],
+  );
   const selectColumnConfig = allowSelectAll
     ? baseSelectColumnConfig
     : omit(baseSelectColumnConfig, 'header');
-  const columns: Array<LGColumnDef<T>> = [
-    ...(hasSelectableRows ? [selectColumnConfig as LGColumnDef<T>] : []),
-    ...columnsProp.map(propColumn => {
-      hasSortableColumns = propColumn.enableSorting ?? false;
-      return {
-        ...propColumn,
-        align: propColumn.align ?? 'left',
-        enableSorting: propColumn.enableSorting ?? false,
-      } as LGColumnDef<T>;
-    }),
-  ];
+  const columns = React.useMemo<Array<LGColumnDef<T>>>(
+    () => [
+      ...(hasSelectableRows ? [selectColumnConfig as LGColumnDef<T>] : []),
+      ...columnsProp.map(propColumn => {
+        return {
+          ...propColumn,
+          align: propColumn.align ?? 'left',
+          enableSorting: propColumn.enableSorting ?? false,
+        } as LGColumnDef<T>;
+      }),
+    ],
+    [columnsProp, hasSelectableRows, selectColumnConfig],
+  );
 
   const table = useReactTable<LGTableDataType<T>>({
     data,
