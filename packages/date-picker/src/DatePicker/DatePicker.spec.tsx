@@ -108,13 +108,13 @@ describe('packages/date-picker', () => {
           disabled: true,
         });
         const { menuContainerEl } = await findMenuElements();
-        await waitFor(() => expect(menuContainerEl).not.toBeInTheDocument());
+        expect(menuContainerEl).not.toBeInTheDocument();
       });
 
       test('menu is initially open when rendered with `initialOpen`', async () => {
         const { findMenuElements } = renderDatePicker({ initialOpen: true });
         const { menuContainerEl } = await findMenuElements();
-        await waitFor(() => expect(menuContainerEl).toBeInTheDocument());
+        expect(menuContainerEl).toBeInTheDocument();
       });
 
       test('opened menu closes when `disabled` is set to true', async () => {
@@ -122,7 +122,7 @@ describe('packages/date-picker', () => {
           initialOpen: true,
         });
         const { menuContainerEl } = await findMenuElements();
-        await waitFor(() => expect(menuContainerEl).toBeInTheDocument());
+        expect(menuContainerEl).toBeInTheDocument();
         rerenderDatePicker({ disabled: true });
         await waitFor(() => expect(menuContainerEl).not.toBeInTheDocument());
       });
