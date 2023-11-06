@@ -248,13 +248,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
               </CalendarCell>
             )}
           </CalendarGrid>
-          <DatePickerMenuHeader
-            ref={headerRef}
-            month={month}
-            setMonth={updateMonth}
-            handleValidation={handleValidation}
-            value={value}
-          />
+          <DatePickerMenuHeader ref={headerRef} setMonth={updateMonth} />
         </div>
       </MenuWrapper>
     );

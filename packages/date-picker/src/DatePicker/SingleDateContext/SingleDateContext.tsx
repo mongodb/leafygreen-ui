@@ -25,7 +25,7 @@ import {
 } from './SingleDateContext.types';
 import { useDateRangeComponentRefs } from './useDatePickerComponentRefs';
 
-const SingleDateContext = createContext<SingleDateContextProps>(
+export const SingleDateContext = createContext<SingleDateContextProps>(
   {} as SingleDateContextProps,
 );
 

@@ -14,17 +14,18 @@ import { Option, Select } from '@leafygreen-ui/select';
 import { useDatePickerContext } from '../../../shared/components/DatePickerContext';
 import { Months, selectElementProps } from '../../../shared/constants';
 import { isSameUTCMonth, setUTCMonth, setUTCYear } from '../../../shared/utils';
-import { DatePickerProps } from '../../DatePicker.types';
+import { useSingleDateContext } from '../../SingleDateContext';
 import {
   menuHeaderSelectContainerStyles,
   menuHeaderStyles,
   selectInputWidthStyles,
 } from '../DatePickerMenu.styles';
 
-type DatePickerMenuHeaderProps = {
-  month: Date;
+import { shouldMonthBeEnabled } from './utils/getMonthOptions';
+
+interface DatePickerMenuHeaderProps {
   setMonth: (newMonth: Date) => void;
-} & Pick<DatePickerProps, 'handleValidation' | 'value'>;
+}
 
 /**
  * A helper component for DatePickerMenu.
@@ -34,8 +35,9 @@ type DatePickerMenuHeaderProps = {
 export const DatePickerMenuHeader = forwardRef<
   HTMLDivElement,
   DatePickerMenuHeaderProps
->(({ month, setMonth }: DatePickerMenuHeaderProps, fwdRef) => {
+>(({ setMonth, ...rest }: DatePickerMenuHeaderProps, fwdRef) => {
   const { min, max, isInRange } = useDatePickerContext();
+  const { month } = useSingleDateContext();
   const { isPopoverOpen: isSelectMenuOpen } = usePopoverContext();
 
   const yearOptions = range(min.getUTCFullYear(), max.getUTCFullYear() + 1);
@@ -78,9 +80,18 @@ export const DatePickerMenuHeader = forwardRef<
     }
   };
 
+  /** Returns whether the provided month should be enabled */
+  const isMonthEnabled = (monthName: string) =>
+    shouldMonthBeEnabled(monthName, { month, min, max });
+
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div ref={fwdRef} className={menuHeaderStyles} onKeyDown={handleEcsPress}>
+    <div
+      ref={fwdRef}
+      className={menuHeaderStyles}
+      onKeyDown={handleEcsPress}
+      {...rest}
+    >
       <IconButton
         aria-label="Previous month"
         disabled={isSameUTCMonth(month, min)}
@@ -100,7 +111,11 @@ export const DatePickerMenuHeader = forwardRef<
           className={selectInputWidthStyles}
         >
           {Months.map((m, i) => (
-            <Option value={i.toString()} key={m.short}>
+            <Option
+              disabled={!isMonthEnabled(m.long)}
+              value={i.toString()}
+              key={m.short}
+            >
               {m.short}
             </Option>
           ))}
