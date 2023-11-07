@@ -40,6 +40,7 @@ const meta: StoryMetaType<any> = {
         'onPrimaryButtonClick',
       ],
     },
+    chromatic: { disableSnapshot: true },
     generate: {
       storyNames: [
         'Standalone',
@@ -93,9 +94,6 @@ const meta: StoryMetaType<any> = {
           </div>
         );
       },
-    },
-    chromatic: {
-      delay: transitionDuration.slowest,
     },
   },
   argTypes: {
