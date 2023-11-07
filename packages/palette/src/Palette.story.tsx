@@ -4,7 +4,7 @@ import { darken, lighten, readableColor, transparentize } from 'polished';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps, StoryMetaType } from '@leafygreen-ui/lib';
-import { fontFamilies } from '@leafygreen-ui/tokens';
+import { fontFamilies, spacing } from '@leafygreen-ui/tokens';
 
 import palette from './palette';
 
@@ -61,7 +61,7 @@ const colorBlockWrapper = css`
   display: inline-block;
   position: relative;
   width: ${BLOCK_WIDTH}px;
-  padding-bottom: 16px;
+  padding-bottom: ${spacing[3]}px;
 `;
 
 const colorBlock = css`
