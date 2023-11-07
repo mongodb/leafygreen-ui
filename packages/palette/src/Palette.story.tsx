@@ -4,15 +4,8 @@ import { darken, lighten, readableColor, transparentize } from 'polished';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps, StoryMetaType } from '@leafygreen-ui/lib';
-import Tooltip from '@leafygreen-ui/tooltip';
+import { fontFamilies } from '@leafygreen-ui/tokens';
 
-// import {
-//   focusRing,
-//   hoverRing,
-//   transitionDuration,
-//   typeScales,
-// } from '@leafygreen-ui/tokens';
-// import Tooltip from '@leafygreen-ui/tooltip';
 import palette from './palette';
 
 type HueName = keyof typeof palette;
@@ -37,6 +30,33 @@ interface ColorBlockProps extends HTMLElementProps<'div'> {
 
 const BLOCK_WIDTH = 88;
 
+const copiedPopoverStyle = css`
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 12px);
+  transform: translate(-50%);
+  background: ${palette.gray.dark2};
+  color: ${palette.white};
+  border-radius: 8px;
+  padding: 12px;
+  width: 300px;
+  font-family: ${fontFamilies.default};
+
+  &:after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    left: 50%;
+    top: calc(100% - 6px);
+    background: ${palette.gray.dark2};
+    transform: translateX(-50%);
+    clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
+    transform: rotate(-45deg);
+    border-radius: 0 0 0 3px;
+  }
+`;
+
 const colorBlockWrapper = css`
   display: inline-block;
   position: relative;
@@ -45,6 +65,7 @@ const colorBlockWrapper = css`
 `;
 
 const colorBlock = css`
+  position: relative;
   outline: none;
   border: none;
   border-top-color: transparent;
@@ -112,29 +133,21 @@ function ColorBlock({ hue, shade, ...rest }: ColorBlockProps) {
     setHasOpenTooltip(true);
     setTimeout(() => {
       setHasOpenTooltip(false);
-    }, 3000);
+    }, 1500);
   };
 
   return (
-    <Tooltip
-      triggerEvent="click"
-      open={hasOpenTooltip}
-      trigger={
-        <div
-          className={cx(colorBlockWrapper, colorBlockWrapperDynamic)}
-          {...rest}
-        >
-          <button
-            className={cx(colorBlock, colorBlockColor)}
-            onClick={handleClick}
-          />
-          <div className={cx(hexLabelStyle, hexLabelColor)}>{color}</div>
-          <div className={nameLabelStyle}>{name}</div>
-        </div>
-      }
-    >
-      Copied!
-    </Tooltip>
+    <div className={cx(colorBlockWrapper, colorBlockWrapperDynamic)} {...rest}>
+      <button className={cx(colorBlock, colorBlockColor)} onClick={handleClick}>
+        {hasOpenTooltip && (
+          <div className={copiedPopoverStyle}>
+            Copied hex code for {name} - {color}
+          </div>
+        )}
+      </button>
+      <div className={cx(hexLabelStyle, hexLabelColor)}>{color}</div>
+      <div className={nameLabelStyle}>{name}</div>
+    </div>
   );
 }
 
