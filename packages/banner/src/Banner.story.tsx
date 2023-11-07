@@ -10,6 +10,7 @@ import {
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@leafygreen-ui/lib';
+import { Link } from '@leafygreen-ui/typography';
 
 import Banner, { BannerProps, Variant } from '.';
 
@@ -35,12 +36,21 @@ const meta: StoryMetaType<typeof Banner> = {
     },
   },
   args: {
-    children:
-      'To avoid disrupting majority writes, new members are now added to replica sets as priority=0, votes=0 until they reach secondary state, after which Cloud Manager automatically updates the configuration to match the priority and votes value specified in the deployment.',
+    children: (
+      <>
+        To avoid disrupting majority writes, new members are now added to
+        replica sets as priority=0, votes=0 until they reach secondary state,
+        after which Cloud Manager automatically updates the configuration to
+        match the priority and votes value specified in the deployment. &nbsp;
+        <a href="https://mongodb.com">Anchor tag</a>&nbsp;
+        <Link>Link Component</Link>
+      </>
+    ),
     darkMode: false,
     dismissible: false,
   },
   argTypes: {
+    children: storybookArgTypes.children,
     darkMode: storybookArgTypes.darkMode,
     dismissible: {
       control: 'boolean',
@@ -50,7 +60,6 @@ const meta: StoryMetaType<typeof Banner> = {
       control: { type: 'select' },
       defaultValue: Variant.Info,
     },
-    children: storybookArgTypes.children,
     glyph: {
       options: [undefined, ...Object.keys(glyphs)],
       control: { type: 'select' },
