@@ -21,7 +21,7 @@ export const DatePickerComponent = forwardRef<
   HTMLDivElement,
   DatePickerComponentProps
 >(({ ...rest }: DatePickerComponentProps, fwdRef) => {
-  const { isOpen, menuId, disabled } = useDatePickerContext();
+  const { disabled, isOpen, menuId } = useDatePickerContext();
   const { value, closeMenu, handleValidation, getHighlightedCell } =
     useSingleDateContext();
 
@@ -30,6 +30,7 @@ export const DatePickerComponent = forwardRef<
 
   useBackdropClick(closeMenu, [formFieldRef, menuRef], isOpen);
 
+  /** This listens to when the disabled prop changes to true and closes the menu  */
   useEffect(() => {
     if (disabled) {
       closeMenu();
@@ -38,8 +39,8 @@ export const DatePickerComponent = forwardRef<
   }, [closeMenu, disabled, handleValidation, value]);
 
   /** Fired when the CSS transition to open the menu is fired */
-  const handleMenuTransitionEntered: TransitionEventHandler = () => {
-    if (isOpen) {
+  const handleMenuTransitionEntered: TransitionEventHandler = e => {
+    if (isOpen && e.target === menuRef.current) {
       // When the menu opens, set focus to the `highlight` cell
       const highlightedCell = getHighlightedCell();
       highlightedCell?.focus();
