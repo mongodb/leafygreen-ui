@@ -91,6 +91,40 @@ describe('packages/date-picker/menu/header', () => {
           }
         }
       });
+
+      test('When `month` and `max`/`min` are different years, no month options are disabled', async () => {
+        const { getByLabelText, findAllByRole } = render(
+          <MockDatePickerProvider
+            value={{
+              ...defaultDatePickerContext,
+              min: newUTC(2022, Month.March, 10),
+              max: newUTC(2024, Month.September, 10),
+            }}
+          >
+            <MockSingleDateProvider
+              value={
+                {
+                  month: newUTC(2023, Month.July, 5),
+                } as SingleDateContextProps
+              }
+            >
+              <DatePickerMenuHeader setMonth={() => {}} />
+            </MockSingleDateProvider>
+          </MockDatePickerProvider>,
+        );
+
+        const monthSelect = getByLabelText('Select month');
+
+        userEvent.click(monthSelect);
+
+        const options = await findAllByRole('option');
+
+        for (const element of options) {
+          expect(element).toBeInTheDocument();
+
+          expect(element).not.toHaveAttribute('aria-disabled', 'true');
+        }
+      });
     });
   });
 });
