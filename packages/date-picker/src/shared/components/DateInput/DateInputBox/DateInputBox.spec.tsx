@@ -99,9 +99,9 @@ describe('packages/date-picker/shared/date-input-box', () => {
         undefined,
         testContext,
       );
-      expect(dayInput).toHaveValue(null);
-      expect(monthInput).toHaveValue(null);
-      expect(yearInput).toHaveValue(null);
+      expect(dayInput).toHaveValue('');
+      expect(monthInput).toHaveValue('');
+      expect(yearInput).toHaveValue('');
     });
 
     test('renders a filled text box when value is passed', () => {

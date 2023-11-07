@@ -6,7 +6,7 @@ import { eventContainingTargetValue } from '../../../utils/testutils';
 
 import { DateInputSegment, type DateInputSegmentProps } from '.';
 
-const handler = jest.fn();
+const onChangeHandler = jest.fn();
 
 const renderSegment = (props: DateInputSegmentProps) => {
   const result = render(<DateInputSegment {...props} />);
@@ -18,8 +18,8 @@ const renderSegment = (props: DateInputSegmentProps) => {
 };
 
 describe('packages/date-picker/shared/date-input-segment', () => {
-  beforeEach(() => {
-    handler.mockClear();
+  afterEach(() => {
+    onChangeHandler.mockClear();
   });
 
   describe('rendering', () => {
@@ -89,44 +89,54 @@ describe('packages/date-picker/shared/date-input-segment', () => {
   describe('Typing', () => {
     test('calls the change handler', () => {
       const result = render(
-        <DateInputSegment segment="day" onChange={handler} />,
+        <DateInputSegment segment="day" onChange={onChangeHandler} />,
       );
       const input = result.getByTestId('lg-date_picker_input-segment');
-      userEvent.type(input, '12');
-      expect(handler).toHaveBeenCalledWith(eventContainingTargetValue('12'));
+      userEvent.type(input, '8');
+      expect(onChangeHandler).toHaveBeenCalledWith(
+        eventContainingTargetValue('8'),
+      );
     });
 
     test('does not allow non-number characters', () => {
       const result = render(
-        <DateInputSegment segment="day" onChange={handler} />,
+        <DateInputSegment segment="day" onChange={onChangeHandler} />,
       );
       const input = result.getByTestId('lg-date_picker_input-segment');
       userEvent.type(input, 'aB$/');
-      expect(handler).not.toHaveBeenCalled();
+      expect(onChangeHandler).not.toHaveBeenCalled();
     });
   });
 
-  // Skipping, since {arrowup}/{arrowdown} do not trigger
-  // a change event in userEvent
-  // https://github.com/testing-library/user-event/issues/1066
-  // eslint-disable-next-line jest/no-disabled-tests
-  describe.skip('Arrow Keys', () => {
+  describe('Arrow Keys', () => {
     test('ArrowUp calls handler with +1', () => {
       const result = render(
-        <DateInputSegment segment="day" onChange={handler} value={'08'} />,
+        <DateInputSegment
+          segment="day"
+          onChange={onChangeHandler}
+          value={'08'}
+        />,
       );
       const input = result.getByTestId('lg-date_picker_input-segment');
       userEvent.type(input, '{arrowup}');
-      expect(handler).toHaveBeenCalledWith('09');
+      expect(onChangeHandler).toHaveBeenCalledWith(
+        eventContainingTargetValue('9'),
+      );
     });
 
     test('ArrowDown calls handler with -1', () => {
       const result = render(
-        <DateInputSegment segment="day" onChange={handler} value={'08'} />,
+        <DateInputSegment
+          segment="day"
+          onChange={onChangeHandler}
+          value={'08'}
+        />,
       );
       const input = result.getByTestId('lg-date_picker_input-segment');
       userEvent.type(input, '{arrowdown}');
-      expect(handler).toHaveBeenCalledWith('07');
+      expect(onChangeHandler).toHaveBeenCalledWith(
+        eventContainingTargetValue('7'),
+      );
     });
   });
 });
