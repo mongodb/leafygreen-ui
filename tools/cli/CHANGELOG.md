@@ -1,5 +1,16 @@
 # @lg-tools/cli
 
+## 0.5.3
+
+### Patch Changes
+
+- Updated dependencies [4822f43c]
+- Updated dependencies [3e1a7bc3]
+  - @lg-tools/build@0.3.1
+  - @lg-tools/lint@0.1.6
+  - @lg-tools/validate@0.1.5
+  - @lg-tools/test@0.3.2
+
 ## 0.5.2
 
 ### Patch Changes

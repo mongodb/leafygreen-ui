@@ -1,9 +1,10 @@
+import { Align, Justify } from '../Popover.types';
+
 import {
   calculatePosition,
   getElementDocumentPosition,
   getElementViewportPosition,
 } from './positionUtils';
-import { Align, Justify } from './types';
 
 // These values were explicitly created to test Popover positioning against a clearly defined window size.
 const SPACING = 5;

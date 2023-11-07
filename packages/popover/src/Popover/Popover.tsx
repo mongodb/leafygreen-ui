@@ -19,11 +19,16 @@ import Portal from '@leafygreen-ui/portal';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import {
+  Align,
+  Justify,
+  PopoverComponentProps,
+  PopoverProps,
+} from '../Popover.types';
+import {
   calculatePosition,
   getElementDocumentPosition,
   getElementViewportPosition,
-} from './positionUtils';
-import { Align, Justify, PopoverProps } from './types';
+} from '../utils/positionUtils';
 
 const rootPopoverStyle = css`
   position: absolute;
@@ -68,7 +73,7 @@ export const contentClassName = createUniqueClassName('popover-content');
  * @param props.portalContainer HTML element that the popover is portaled within.
  * @param props.scrollContainer HTML ancestor element that's scrollable to position the popover accurately within scrolling containers.
  */
-const Popover = forwardRef<HTMLDivElement, PopoverProps>(
+export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
   (
     {
       active = false,
@@ -84,6 +89,12 @@ const Popover = forwardRef<HTMLDivElement, PopoverProps>(
       portalClassName,
       portalContainer: portalContainerProp,
       scrollContainer: scrollContainerProp,
+      onEnter,
+      onEntering,
+      onEntered,
+      onExit,
+      onExiting,
+      onExited,
       ...rest
     }: PopoverProps,
     fwdRef,
@@ -275,12 +286,22 @@ const Popover = forwardRef<HTMLDivElement, PopoverProps>(
       <Transition
         nodeRef={contentNodeRef}
         in={active}
-        timeout={150}
+        timeout={transitionDuration.default}
         mountOnEnter
         unmountOnExit
         appear
-        onEntered={() => setIsPopoverOpen(true)}
-        onExit={() => setIsPopoverOpen(false)}
+        onEntering={onEntering}
+        onEnter={onEnter}
+        onEntered={(...args) => {
+          setIsPopoverOpen(true);
+          onEntered?.(...args);
+        }}
+        onExiting={onExiting}
+        onExit={onExit}
+        onExited={(...args) => {
+          setIsPopoverOpen(false);
+          onExited?.(...args);
+        }}
       >
         {state => (
           <>
@@ -345,12 +366,10 @@ Popover.propTypes = {
         ? PropTypes.instanceOf(Element)
         : PropTypes.any,
   }),
-  /// @ts-expect-error Types of property '[nominalTypeHack]' are incompatible.
+  /// @ts-ignore Types of property '[nominalTypeHack]' are incompatible. - error only in R18
   usePortal: PropTypes.bool,
-  /// @ts-expect-error Types of property '[nominalTypeHack]' are incompatible.
+  /// @ts-ignore Types of property '[nominalTypeHack]' are incompatible. - error only in R18
   portalClassName: PropTypes.string,
   spacing: PropTypes.number,
   adjustOnMutation: PropTypes.bool,
 };
-
-export default Popover;
