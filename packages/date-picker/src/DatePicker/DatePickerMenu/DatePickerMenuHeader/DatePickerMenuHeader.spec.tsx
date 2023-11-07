@@ -1,6 +1,8 @@
-import React from 'react';
-import { render } from '@testing-library/react';
+import React, { PropsWithChildren, useState } from 'react';
+import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+
+import { PopoverContext } from '@leafygreen-ui/leafygreen-provider';
 
 import { Month, newUTC } from '../../../shared';
 import {
@@ -125,6 +127,62 @@ describe('packages/date-picker/menu/header', () => {
           expect(element).not.toHaveAttribute('aria-disabled', 'true');
         }
       });
+    });
+  });
+
+  describe('Interaction', () => {
+    const mockSetIsPopoverOpen = jest.fn();
+
+    const MockPopoverProvider = ({ children }: PropsWithChildren<{}>) => {
+      const [isPopoverOpen, _setIsPopoverOpen] = useState(false);
+
+      const setIsPopoverOpen = (action: React.SetStateAction<boolean>) => {
+        mockSetIsPopoverOpen(action);
+        _setIsPopoverOpen(action);
+      };
+
+      return (
+        <PopoverContext.Provider
+          value={{
+            isPopoverOpen,
+            setIsPopoverOpen,
+          }}
+        >
+          {children}
+        </PopoverContext.Provider>
+      );
+    };
+
+    test('opening & closing a select menu calls `setIsPopoverOpen` in PopoverContext', async () => {
+      const { getByLabelText } = render(
+        <MockDatePickerProvider
+          value={{
+            ...defaultDatePickerContext,
+          }}
+        >
+          <MockSingleDateProvider
+            value={
+              {
+                month: newUTC(2022, Month.July, 1),
+              } as SingleDateContextProps
+            }
+          >
+            <MockPopoverProvider>
+              <DatePickerMenuHeader setMonth={() => {}} />
+            </MockPopoverProvider>
+          </MockSingleDateProvider>
+        </MockDatePickerProvider>,
+      );
+
+      const monthSelect = getByLabelText('Select month');
+      userEvent.click(monthSelect);
+      await waitFor(() =>
+        expect(mockSetIsPopoverOpen).toHaveBeenCalledWith(true),
+      );
+      userEvent.click(monthSelect);
+      await waitFor(() =>
+        expect(mockSetIsPopoverOpen).toHaveBeenCalledWith(false),
+      );
     });
   });
 });

@@ -1,4 +1,4 @@
-import React, { createRef, useState } from 'react';
+import React, { createRef, PropsWithChildren, useState } from 'react';
 import { act } from 'react-dom/test-utils';
 import {
   fireEvent,
@@ -11,6 +11,7 @@ import {
 import userEvent from '@testing-library/user-event';
 
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
+import { PopoverContext } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 
@@ -999,6 +1000,41 @@ describe('packages/select', () => {
       const apple = options[0];
       userEvent.click(apple);
       expect(onChange).toHaveBeenCalled();
+    });
+  });
+
+  describe('with PopoverContext', () => {
+    const mockSetIsPopoverOpen = jest.fn();
+
+    const MockPopoverProvider = ({ children }: PropsWithChildren<{}>) => {
+      return (
+        <PopoverContext.Provider
+          value={{
+            isPopoverOpen: false,
+            setIsPopoverOpen: mockSetIsPopoverOpen,
+          }}
+        >
+          {children}
+        </PopoverContext.Provider>
+      );
+    };
+
+    test('calls `setIsPopoverOpen`', async () => {
+      const { getByRole } = render(
+        <MockPopoverProvider>
+          <Select {...defaultProps} />
+        </MockPopoverProvider>,
+      );
+
+      const button = getByRole('button');
+      userEvent.click(button);
+      await waitFor(() =>
+        expect(mockSetIsPopoverOpen).toHaveBeenCalledWith(true),
+      );
+      userEvent.click(button);
+      await waitFor(() =>
+        expect(mockSetIsPopoverOpen).toHaveBeenCalledWith(false),
+      );
     });
   });
 });
