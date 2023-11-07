@@ -1,5 +1,6 @@
 import padStart from 'lodash/padStart';
-import { MonthObject } from 'src/shared/constants';
+
+import { MonthObject } from '../../constants';
 
 /**
  * Returns the month name from a given index and optional locale
