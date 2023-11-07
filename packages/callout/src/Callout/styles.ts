@@ -260,6 +260,10 @@ export const contentStyles = css`
     &:focus,
     &:focus-visible {
       outline: none;
+      // duplicate these styles to override text-decoration: none in Link component
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 2px;
       span {
         &::after {
           display: none;
