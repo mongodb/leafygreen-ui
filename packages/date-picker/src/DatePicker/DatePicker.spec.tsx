@@ -105,7 +105,16 @@ describe('packages/date-picker', () => {
       test('menu is initially open when rendered with `initialOpen`', async () => {
         const { findMenuElements } = renderDatePicker({ initialOpen: true });
         const { menuContainerEl } = await findMenuElements();
-        await waitFor(() => expect(menuContainerEl).toBeInTheDocument());
+        expect(menuContainerEl).toBeInTheDocument();
+      });
+
+      test('menu is initially closed when rendered with `initialOpen` and `disabled`', async () => {
+        const { findMenuElements } = renderDatePicker({
+          initialOpen: true,
+          disabled: true,
+        });
+        const { menuContainerEl } = await findMenuElements();
+        expect(menuContainerEl).not.toBeInTheDocument();
       });
 
       test('if no value is set, menu opens to current month', async () => {
@@ -132,6 +141,34 @@ describe('packages/date-picker', () => {
         });
         const { calendarCells } = await openMenu();
         expect(calendarCells).toHaveLength(29);
+      });
+
+      describe('when disabled is toggled to true', () => {
+        test('menu closes', async () => {
+          const { findMenuElements, rerenderDatePicker } = renderDatePicker({
+            initialOpen: true,
+          });
+          const { menuContainerEl } = await findMenuElements();
+          expect(menuContainerEl).toBeInTheDocument();
+          rerenderDatePicker({ disabled: true });
+          await waitFor(() => {
+            expect(menuContainerEl).not.toBeInTheDocument();
+          });
+        });
+
+        test('validation handler fires', async () => {
+          const handleValidation = jest.fn();
+          const { findMenuElements, rerenderDatePicker } = renderDatePicker({
+            initialOpen: true,
+            handleValidation,
+          });
+          const { menuContainerEl } = await findMenuElements();
+          expect(menuContainerEl).toBeInTheDocument();
+          rerenderDatePicker({ disabled: true });
+          await waitFor(() => {
+            expect(handleValidation).toHaveBeenCalled();
+          });
+        });
       });
 
       describe('Chevrons', () => {
