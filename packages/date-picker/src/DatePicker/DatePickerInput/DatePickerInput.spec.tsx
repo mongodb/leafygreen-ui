@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { newUTC } from '../../shared';
 import {
   DatePickerProvider,
   DatePickerProviderProps,
@@ -46,12 +47,12 @@ const renderDatePickerInput = (
   };
 };
 
+const testDate = newUTC(2023, Month.December, 26);
+
 describe('packages/date-picker/date-picker-input', () => {
   beforeEach(() => {
     // Set the current time to midnight UTC on 2023-12-26
-    jest
-      .useFakeTimers()
-      .setSystemTime(new Date(Date.UTC(2023, Month.December, 26)));
+    jest.useFakeTimers().setSystemTime(testDate);
   });
 
   describe('Keyboard interaction', () => {
@@ -59,27 +60,36 @@ describe('packages/date-picker/date-picker-input', () => {
     describe('Left Arrow', () => {
       test('focuses the previous segment when the segment is empty', () => {
         const { yearInput, monthInput } = renderDatePickerInput();
-        userEvent.type(monthInput, '{arrowleft}');
+        userEvent.click(monthInput);
+        userEvent.keyboard('{arrowleft}');
         expect(yearInput).toHaveFocus();
       });
 
       test('moves the cursor when the segment has a value', () => {
         const { monthInput } = renderDatePickerInput(null, {
-          value: new Date(),
+          value: testDate,
         });
-        userEvent.type(monthInput, '{arrowleft}');
+        userEvent.click(monthInput);
+        userEvent.keyboard('{arrowleft}');
         expect(monthInput).toHaveFocus();
       });
 
-      test.todo(
-        'focuses the previous segment if the cursor is at the start of the input text',
-      );
+      // eslint-disable-next-line jest/no-disabled-tests
+      test.skip('focuses the previous segment if the cursor is at the start of the input text', () => {
+        const { yearInput, monthInput } = renderDatePickerInput(null, {
+          value: testDate,
+        });
+        userEvent.click(monthInput);
+        userEvent.keyboard('{arrowleft}{arrowleft}{arrowleft}');
+        expect(yearInput).toHaveFocus();
+      });
     });
 
     describe('Right Arrow', () => {
       test('focuses the next segment when the segment is empty', () => {
         const { monthInput, dayInput } = renderDatePickerInput();
-        userEvent.type(monthInput, '{arrowright}');
+        userEvent.click(monthInput);
+        userEvent.keyboard('{arrowright}');
         expect(dayInput).toHaveFocus();
       });
 
@@ -87,13 +97,20 @@ describe('packages/date-picker/date-picker-input', () => {
         const { monthInput } = renderDatePickerInput(null, {
           value: new Date(),
         });
-        userEvent.type(monthInput, '{arrowright}');
+        userEvent.click(monthInput);
+        userEvent.keyboard('{arrowright}');
         expect(monthInput).toHaveFocus();
       });
 
-      test.todo(
-        'focuses the next segment if the cursor is at the end of the input text',
-      );
+      // eslint-disable-next-line jest/no-disabled-tests
+      test.skip('focuses the next segment if the cursor is at the start of the input text', () => {
+        const { dayInput, monthInput } = renderDatePickerInput(null, {
+          value: testDate,
+        });
+        userEvent.click(monthInput);
+        userEvent.keyboard('{arrowright}{arrowright}{arrowright}');
+        expect(dayInput).toHaveFocus();
+      });
     });
 
     describe('Backspace key', () => {

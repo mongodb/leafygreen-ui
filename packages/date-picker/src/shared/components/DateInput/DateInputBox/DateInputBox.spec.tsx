@@ -192,40 +192,6 @@ describe('packages/date-picker/shared/date-input-box', () => {
       userEvent.tab();
       expect(dayInput.value).toBe('02');
     });
-
-    // TODO:
-    // eslint-disable-next-line jest/no-disabled-tests
-    describe.skip('Auto-focus', () => {
-      test('typing a complete segment value focuses the next segment', () => {
-        const { yearInput, monthInput } = renderDateInputBox(
-          undefined,
-          testContext,
-        );
-        userEvent.type(yearInput, '1993');
-        expect(monthInput).toHaveFocus();
-      });
-
-      test('typing an incomplete segment does not focus the next segment', () => {
-        const { monthInput } = renderDateInputBox(undefined, testContext);
-        userEvent.type(monthInput, '1');
-        expect(monthInput).toHaveFocus();
-      });
-
-      test('typing an incomplete value focuses the next segment if there are no valid second characters', () => {
-        const { monthInput, dayInput } = renderDateInputBox(
-          undefined,
-          testContext,
-        );
-        userEvent.type(monthInput, '2'); // There are no months that start with 2#
-        expect(dayInput).toHaveFocus();
-      });
-
-      test('value is formatted on auto-focus', () => {
-        const { monthInput } = renderDateInputBox(undefined, testContext);
-        userEvent.type(monthInput, '2'); // There are no months that start with 2#
-        expect(monthInput).toHaveValue('02');
-      });
-    });
   });
 
   describe('mouse interaction', () => {
@@ -239,30 +205,6 @@ describe('packages/date-picker/shared/date-input-box', () => {
   });
 
   describe('Keyboard interaction', () => {
-    // Skipping, since {arrowup}/{arrowdown} do not trigger
-    // a change event in userEvent
-    // https://github.com/testing-library/user-event/issues/1066
-    // eslint-disable-next-line jest/no-disabled-tests
-    describe.skip('Up arrow', () => {
-      describe('increments the input value', () => {
-        test('year input', async () => {
-          const { yearInput } = renderDateInputBox({});
-          userEvent.type(yearInput, '2023{arrowup}');
-          expect(yearInput.value).toBe('2024');
-        });
-        test('month input', async () => {
-          const { monthInput } = renderDateInputBox();
-          userEvent.type(monthInput, '9{arrowup}');
-          expect(monthInput.value).toBe('10');
-        });
-        test('day input', async () => {
-          const { dayInput } = renderDateInputBox();
-          userEvent.type(dayInput, '26{arrowup}');
-          expect(dayInput.value).toBe('27');
-        });
-      });
-    });
-
     test('Tab moves focus to next segment', () => {
       const { dayInput, monthInput, yearInput } = renderDateInputBox(
         undefined,
@@ -274,5 +216,8 @@ describe('packages/date-picker/shared/date-input-box', () => {
       userEvent.tab();
       expect(dayInput).toHaveFocus();
     });
+
+    // Arrow key interaction tested in DateInputSegment
+    // & in relevant DatePicker/RangePicker input component
   });
 });

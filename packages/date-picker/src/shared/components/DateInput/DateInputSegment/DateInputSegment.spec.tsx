@@ -95,6 +95,15 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       userEvent.type(input, '12');
       expect(handler).toHaveBeenCalledWith(eventContainingTargetValue('12'));
     });
+
+    test('does not allow non-number characters', () => {
+      const result = render(
+        <DateInputSegment segment="day" onChange={handler} />,
+      );
+      const input = result.getByTestId('lg-date_picker_input-segment');
+      userEvent.type(input, 'aB$/');
+      expect(handler).not.toHaveBeenCalled();
+    });
   });
 
   // Skipping, since {arrowup}/{arrowdown} do not trigger
