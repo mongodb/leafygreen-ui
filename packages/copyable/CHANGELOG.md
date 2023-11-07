@@ -1,5 +1,21 @@
 # @leafygreen-ui/copyable
 
+## 8.0.22
+
+### Patch Changes
+
+- Updated dependencies [e3f4d9ce]
+- Updated dependencies [89f439e8]
+- Updated dependencies [c41752d2]
+- Updated dependencies [783add80]
+- Updated dependencies [f077faf1]
+- Updated dependencies [89332190]
+  - @leafygreen-ui/typography@18.0.1
+  - @leafygreen-ui/hooks@8.0.1
+  - @leafygreen-ui/icon@11.25.0
+  - @leafygreen-ui/tooltip@11.0.0
+  - @leafygreen-ui/button@21.0.10
+
 ## 8.0.21
 
 ### Patch Changes

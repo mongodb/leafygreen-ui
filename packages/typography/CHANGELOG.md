@@ -1,5 +1,14 @@
 # @leafygreen-ui/typography
 
+## 18.0.1
+
+### Patch Changes
+
+- e3f4d9ce: Improves documentation of Label component
+- Updated dependencies [c41752d2]
+- Updated dependencies [89332190]
+  - @leafygreen-ui/icon@11.25.0
+
 ## 18.0.0
 
 ### Major Changes
