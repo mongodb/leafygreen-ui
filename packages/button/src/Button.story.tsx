@@ -11,9 +11,12 @@ import {
   type StoryType,
 } from '@leafygreen-ui/lib';
 import { Spinner } from '@leafygreen-ui/loading-indicator';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { Size } from './types';
 import Button, { ButtonProps, Variant } from '.';
+
+const { updatedBaseFontSize, ...filteredStorybookArgTypes } = storybookArgTypes;
 
 const meta: StoryMetaType<typeof Button> = {
   title: 'Components/Button',
@@ -48,9 +51,11 @@ const meta: StoryMetaType<typeof Button> = {
     loadingIndicator: <Spinner />,
     leftGlyph: undefined,
     rightGlyph: undefined,
+    baseFontSize: BaseFontSize.Body1,
   },
   argTypes: {
-    ...storybookArgTypes,
+    ...filteredStorybookArgTypes,
+    baseFontSize: storybookArgTypes.updatedBaseFontSize,
     disabled: {
       control: { type: 'boolean' },
     },
