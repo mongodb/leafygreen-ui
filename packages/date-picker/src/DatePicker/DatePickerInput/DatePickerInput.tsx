@@ -91,14 +91,15 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       if (!isSegment) return;
 
       const isSegmentEmpty = isZeroLike(target.value);
-      const cursorPosition = target.selectionEnd;
+
+      const { selectionStart, selectionEnd } = target;
 
       switch (key) {
         case keyMap.ArrowLeft: {
           // if input is empty,
           // or the cursor is at the beginning of the input
           // set focus to prev. input (if it exists)
-          if (isSegmentEmpty || cursorPosition === 0) {
+          if (isSegmentEmpty || selectionStart === 0) {
             const segmentToFocus = getRelativeSegment('prev', {
               segment: target,
               formatParts,
@@ -116,7 +117,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           // if input is empty,
           // or the cursor is at the end of the input
           // set focus to next. input (if it exists)
-          if (isSegmentEmpty || cursorPosition === target.value.length) {
+          if (isSegmentEmpty || selectionEnd === target.value.length) {
             const segmentToFocus = getRelativeSegment('next', {
               segment: target,
               formatParts,

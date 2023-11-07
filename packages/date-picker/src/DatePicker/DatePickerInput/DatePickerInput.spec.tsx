@@ -74,8 +74,7 @@ describe('packages/date-picker/date-picker-input', () => {
         expect(monthInput).toHaveFocus();
       });
 
-      // eslint-disable-next-line jest/no-disabled-tests
-      test.skip('focuses the previous segment if the cursor is at the start of the input text', () => {
+      test('focuses the previous segment if the cursor is at the start of the input text', () => {
         const { yearInput, monthInput } = renderDatePickerInput(null, {
           value: testDate,
         });
@@ -87,29 +86,28 @@ describe('packages/date-picker/date-picker-input', () => {
 
     describe('Right Arrow', () => {
       test('focuses the next segment when the segment is empty', () => {
-        const { monthInput, dayInput } = renderDatePickerInput();
-        userEvent.click(monthInput);
-        userEvent.keyboard('{arrowright}');
-        expect(dayInput).toHaveFocus();
-      });
-
-      test('moves the cursor when the segment has a value', () => {
-        const { monthInput } = renderDatePickerInput(null, {
-          value: new Date(),
-        });
-        userEvent.click(monthInput);
+        const { yearInput, monthInput } = renderDatePickerInput();
+        userEvent.click(yearInput);
         userEvent.keyboard('{arrowright}');
         expect(monthInput).toHaveFocus();
       });
 
-      // eslint-disable-next-line jest/no-disabled-tests
-      test.skip('focuses the next segment if the cursor is at the start of the input text', () => {
-        const { dayInput, monthInput } = renderDatePickerInput(null, {
+      test('focuses the next segment if the cursor is at the start of the input text', () => {
+        const { yearInput, monthInput } = renderDatePickerInput(null, {
           value: testDate,
         });
-        userEvent.click(monthInput);
-        userEvent.keyboard('{arrowright}{arrowright}{arrowright}');
-        expect(dayInput).toHaveFocus();
+        userEvent.click(yearInput);
+        userEvent.keyboard('{arrowright}');
+        expect(monthInput).toHaveFocus();
+      });
+
+      test('moves the cursor when the segment has a value', () => {
+        const { yearInput } = renderDatePickerInput(null, {
+          value: new Date(),
+        });
+        userEvent.click(yearInput);
+        userEvent.keyboard('{arrowleft}{arrowright}');
+        expect(yearInput).toHaveFocus();
       });
     });
 
