@@ -721,7 +721,7 @@ describe('packages/date-picker', () => {
           expect(menuContainerEl).not.toBeInTheDocument();
         });
 
-        test('does not close the main menu if a select menu is open', async () => {
+        test.only('does not close the main menu if a select menu is open', async () => {
           const { openMenu, queryAllByRole, findAllByRole } =
             renderDatePicker();
           const { monthSelect, menuContainerEl } = await openMenu();

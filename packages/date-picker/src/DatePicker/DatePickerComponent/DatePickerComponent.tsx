@@ -54,8 +54,14 @@ export const DatePickerComponent = forwardRef<
   };
 
   /** Handle key down events that should be fired regardless of target */
-  const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
+  const handleDatePickerKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
     const { key } = e;
+
+    key === 'Escape' &&
+      console.log('handleDatePickerKeyDown', {
+        key,
+        target: e.target.outerHTML,
+      });
 
     switch (key) {
       case keyMap.Escape:
@@ -74,12 +80,16 @@ export const DatePickerComponent = forwardRef<
 
   return (
     <>
-      <DatePickerInput ref={formFieldRef} onKeyDown={handleKeyDown} {...rest} />
+      <DatePickerInput
+        ref={formFieldRef}
+        onKeyDown={handleDatePickerKeyDown}
+        {...rest}
+      />
       <DatePickerMenu
         ref={menuRef}
         id={menuId}
         refEl={formFieldRef}
-        onKeyDown={handleKeyDown}
+        onKeyDown={handleDatePickerKeyDown}
         onTransitionEnd={handleMenuTransitionEntered}
         onExited={handleMenuTransitionExited}
       />

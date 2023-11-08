@@ -2,6 +2,7 @@ import React, {
   forwardRef,
   KeyboardEventHandler,
   MouseEventHandler,
+  useEffect,
 } from 'react';
 import { isBefore } from 'date-fns';
 import range from 'lodash/range';
@@ -9,6 +10,7 @@ import range from 'lodash/range';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { usePopoverContext } from '@leafygreen-ui/leafygreen-provider';
+import { keyMap } from '@leafygreen-ui/lib';
 import { Option, Select } from '@leafygreen-ui/select';
 
 import { useDatePickerContext } from '../../../shared/components/DatePickerContext';
@@ -73,12 +75,24 @@ export const DatePickerMenuHeader = forwardRef<
   /**
    * Ensure that the date picker menu will not close when a select menu is open, focus is inside the select menu, and the ESC key is pressed.
    */
-  const handleEcsPress: KeyboardEventHandler<HTMLDivElement> = e => {
+  const handleMenuHeaderKeydown: KeyboardEventHandler<HTMLDivElement> = e => {
+    const { key } = e;
+    key === 'Escape' &&
+      console.log('handleMenuHeaderKeydown', {
+        key,
+        isSelectMenuOpen,
+        targe: e.target.outerHTML,
+      });
+
     // `isSelectMenuOpen` provided by `PopoverProvider` is `true` if any popover _within_ the menu is open
-    if (isSelectMenuOpen) {
+    if (key === keyMap.Escape && isSelectMenuOpen) {
       e.stopPropagation();
     }
   };
+
+  useEffect(() => {
+    console.log('isSelectMenuOpen changed', { isSelectMenuOpen });
+  }, [isSelectMenuOpen]);
 
   /** Returns whether the provided month should be enabled */
   const isMonthEnabled = (monthName: string) =>
@@ -89,7 +103,7 @@ export const DatePickerMenuHeader = forwardRef<
     <div
       ref={fwdRef}
       className={menuHeaderStyles}
-      onKeyDown={handleEcsPress}
+      onKeyDown={handleMenuHeaderKeydown}
       {...rest}
     >
       <IconButton

@@ -142,12 +142,14 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
     };
 
     // Focus trap
-    const handleWrapperTabKeyPress: KeyboardEventHandler<
-      HTMLDivElement
-    > = e => {
+    const handleMenuKeyPress: KeyboardEventHandler<HTMLDivElement> = e => {
+      const { key } = e;
+      key === 'Escape' &&
+        console.log('handleMenuKeyPress', { key, target: e.target.outerHTML });
+
       // Implementing custom focus-trap logic,
       // since focus-trap-react focuses the first element immediately on mount
-      if (e.key === keyMap.Tab) {
+      if (key === keyMap.Tab) {
         const currentFocus = document.activeElement;
 
         const highlightedCellElement = getHighlightedCell();
@@ -164,11 +166,21 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
           e.preventDefault();
         }
       }
+
+      // call any handler that was passed in
+      onKeyDown?.(e);
     };
 
     /** Called on any keydown within the CalendarGrid element */
     const handleCalendarKeyDown: KeyboardEventHandler<HTMLTableElement> = e => {
       const { key } = e;
+
+      key === 'Escape' &&
+        console.log('handleCalendarKeyDown', {
+          key,
+          target: e.target.outerHTML,
+        });
+
       const highlightStart = highlight || value || today;
       let nextHighlight = highlightStart;
 
@@ -200,12 +212,11 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       // if nextHighlight is in range
       if (isInRange(nextHighlight) && !isSameUTCDay(nextHighlight, highlight)) {
         updateHighlight(nextHighlight);
+
         // Prevent the parent keydown handler from being called
+        console.log('handleCalendarKeyDown: Stopping propagation');
         e.stopPropagation();
       }
-
-      // call any handler that was passed in
-      onKeyDown?.(e);
     };
 
     return (
@@ -216,7 +227,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
         spacing={spacing[1]}
         className={menuWrapperStyles}
         usePortal
-        onKeyDown={handleWrapperTabKeyPress}
+        onKeyDown={handleMenuKeyPress}
         {...rest}
       >
         <div className={menuContentStyles}>
