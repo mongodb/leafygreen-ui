@@ -10,6 +10,8 @@ import {
 import userEvent from '@testing-library/user-event';
 import { addDays, subDays } from 'date-fns';
 
+import { transitionDuration } from '@leafygreen-ui/tokens';
+
 import { Month } from '../shared/constants';
 import { newUTC } from '../shared/utils';
 import {
@@ -730,6 +732,11 @@ describe('packages/date-picker', () => {
           expect(monthSelect).toHaveFocus();
 
           userEvent.keyboard('[Enter]');
+          await waitFor(() =>
+            jest.advanceTimersByTime(transitionDuration.default),
+          );
+          // jest.advanceTimersByTime(transitionDuration.default);
+
           const options = await findAllByRole('option');
           const firstOption = options[0];
           userEvent.keyboard('{arrowdown}');

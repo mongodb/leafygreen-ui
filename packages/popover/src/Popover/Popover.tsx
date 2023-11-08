@@ -287,14 +287,20 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
         nodeRef={contentNodeRef}
         in={active}
         timeout={transitionDuration.default}
+        // timeout={0}
         mountOnEnter
         unmountOnExit
         appear
         onEntering={onEntering}
-        onEnter={onEnter}
+        onEnter={(...args) => {
+          // setIsPopoverOpen(true);
+          onEnter?.(...args);
+          console.log('🐙🐙🐙🐙🐙🐙');
+        }}
         onEntered={(...args) => {
           setIsPopoverOpen(true);
           onEntered?.(...args);
+          console.log('🐥🐥🐥🐥');
         }}
         onExiting={onExiting}
         onExit={onExit}
