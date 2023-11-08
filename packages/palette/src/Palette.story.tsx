@@ -38,15 +38,9 @@ const copiedOverlayStyle = css`
   height: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
-`;
-
-const copiedOverlayContentStyle = css`
-  padding: 4px;
-  border-radius: 6px;
-  background: white;
+  padding-top: 32px;
   font-family: ${fontFamilies.default};
-  transform: translateY(-25%);
+  border-radius: inherit;
 `;
 
 const colorBlockWrapper = css`
@@ -132,8 +126,13 @@ function ColorBlock({ hue, shade, ...rest }: ColorBlockProps) {
     <div className={cx(colorBlockWrapper, colorBlockWrapperDynamic)} {...rest}>
       <button className={cx(colorBlock, colorBlockColor)} onClick={handleClick}>
         {wasCopied && (
-          <div className={copiedOverlayStyle}>
-            <div className={copiedOverlayContentStyle}>Copied!</div>
+          <div
+            className={copiedOverlayStyle}
+            style={{
+              color: readableColor(color),
+            }}
+          >
+            &#x2713;&nbsp;Copied!
           </div>
         )}
       </button>
