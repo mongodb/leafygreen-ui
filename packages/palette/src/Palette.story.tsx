@@ -37,10 +37,13 @@ const copiedOverlayStyle = css`
   width: 100%;
   height: 100%;
   display: flex;
+  align-items: center;
   justify-content: center;
-  padding-top: 32px;
+  /* background-color: ${palette.gray.light3}; */
+  /* color: black; */
   font-family: ${fontFamilies.default};
   border-radius: inherit;
+  z-index: 9999;
 `;
 
 const colorBlockWrapper = css`
@@ -117,9 +120,9 @@ function ColorBlock({ hue, shade, ...rest }: ColorBlockProps) {
   const handleClick: MouseEventHandler<HTMLButtonElement> = () => {
     navigator.clipboard.writeText(color);
     setWasCopied(true);
-    setTimeout(() => {
-      setWasCopied(false);
-    }, 3500);
+    // setTimeout(() => {
+    //   setWasCopied(false);
+    // }, 3500);
   };
 
   return (
@@ -128,15 +131,15 @@ function ColorBlock({ hue, shade, ...rest }: ColorBlockProps) {
         {wasCopied && (
           <div
             className={copiedOverlayStyle}
-            style={{
-              color: readableColor(color),
-            }}
+            style={{ color: readableColor(color) }}
           >
             &#x2713;&nbsp;Copied!
           </div>
         )}
       </button>
-      <div className={cx(hexLabelStyle, hexLabelColor)}>{color}</div>
+      {!wasCopied && (
+        <div className={cx(hexLabelStyle, hexLabelColor)}>{color}</div>
+      )}
       <div className={nameLabelStyle}>{name}</div>
     </div>
   );
