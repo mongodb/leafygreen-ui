@@ -13,7 +13,7 @@ import { menuStyles } from './MenuWrapper.styles';
 export type MenuWrapperProps = PopoverProps & HTMLElementProps<'div'>;
 
 /**
- * A simple styled popover component
+ * A simple styled popover component that creates a new Popover Context
  */
 export const MenuWrapper = forwardRef<HTMLDivElement, MenuWrapperProps>(
   ({ className, children, ...props }: MenuWrapperProps, fwdRef) => {
