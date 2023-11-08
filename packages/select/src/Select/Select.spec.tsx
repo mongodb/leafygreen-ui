@@ -1019,10 +1019,32 @@ describe('packages/select', () => {
       );
     };
 
+    beforeEach(() => {
+      mockSetIsPopoverOpen.mockClear();
+    });
+
     test('calls `setIsPopoverOpen`', async () => {
       const { getByRole } = render(
         <MockPopoverProvider>
           <Select {...defaultProps} />
+        </MockPopoverProvider>,
+      );
+
+      const triggerButton = getByRole('button');
+      userEvent.click(triggerButton);
+      await waitFor(() =>
+        expect(mockSetIsPopoverOpen).toHaveBeenCalledWith(true),
+      );
+      userEvent.click(triggerButton);
+      await waitFor(() =>
+        expect(mockSetIsPopoverOpen).toHaveBeenCalledWith(false),
+      );
+    });
+
+    test('calls `setIsPopoverOpen` when `usePortal == false`', async () => {
+      const { getByRole } = render(
+        <MockPopoverProvider>
+          <Select usePortal={false} {...defaultProps} />
         </MockPopoverProvider>,
       );
 
