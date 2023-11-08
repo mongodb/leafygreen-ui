@@ -1,8 +1,12 @@
 import React, { PropsWithChildren, useState } from 'react';
-import { render, waitFor } from '@testing-library/react';
+import { act, render, waitFor } from '@testing-library/react';
+import { renderHook } from '@testing-library/react-hooks';
 import userEvent from '@testing-library/user-event';
 
-import { PopoverContext } from '@leafygreen-ui/leafygreen-provider';
+import {
+  PopoverContext,
+  usePopoverContext,
+} from '@leafygreen-ui/leafygreen-provider';
 
 import { Month, newUTC } from '../../../shared';
 import {
@@ -133,7 +137,11 @@ describe('packages/date-picker/menu/header', () => {
   describe('Interaction', () => {
     const mockSetIsPopoverOpen = jest.fn();
 
-    const MockPopoverProvider = ({ children }: PropsWithChildren<{}>) => {
+    beforeEach(() => {
+      mockSetIsPopoverOpen.mockClear();
+    });
+
+    const AllMockProviders = ({ children }: PropsWithChildren<{}>) => {
       const [isPopoverOpen, _setIsPopoverOpen] = useState(false);
 
       const setIsPopoverOpen = (action: React.SetStateAction<boolean>) => {
@@ -142,19 +150,6 @@ describe('packages/date-picker/menu/header', () => {
       };
 
       return (
-        <PopoverContext.Provider
-          value={{
-            isPopoverOpen,
-            setIsPopoverOpen,
-          }}
-        >
-          {children}
-        </PopoverContext.Provider>
-      );
-    };
-
-    test('opening & closing a select menu calls `setIsPopoverOpen` in PopoverContext', async () => {
-      const { getByLabelText } = render(
         <MockDatePickerProvider
           value={{
             ...defaultDatePickerContext,
@@ -167,11 +162,24 @@ describe('packages/date-picker/menu/header', () => {
               } as SingleDateContextProps
             }
           >
-            <MockPopoverProvider>
-              <DatePickerMenuHeader setMonth={() => {}} />
-            </MockPopoverProvider>
+            <PopoverContext.Provider
+              value={{
+                isPopoverOpen,
+                setIsPopoverOpen,
+              }}
+            >
+              {children}
+            </PopoverContext.Provider>
           </MockSingleDateProvider>
-        </MockDatePickerProvider>,
+        </MockDatePickerProvider>
+      );
+    };
+
+    test('opening & closing a select menu calls `setIsPopoverOpen` in PopoverContext', async () => {
+      const { getByLabelText } = render(
+        <AllMockProviders>
+          <DatePickerMenuHeader setMonth={() => {}} />
+        </AllMockProviders>,
       );
 
       const monthSelect = getByLabelText('Select month');
@@ -183,6 +191,19 @@ describe('packages/date-picker/menu/header', () => {
       await waitFor(() =>
         expect(mockSetIsPopoverOpen).toHaveBeenCalledWith(false),
       );
+    });
+
+    test('Hook returns correct values', async () => {
+      const { result } = renderHook(usePopoverContext, {
+        wrapper: AllMockProviders,
+      });
+
+      expect(result.current.isPopoverOpen).toBe(false);
+      expect(result.current.setIsPopoverOpen).toBeDefined();
+
+      act(() => result.current.setIsPopoverOpen(true));
+      expect(mockSetIsPopoverOpen).toHaveBeenCalledWith(true);
+      expect(result.current.isPopoverOpen).toBe(true);
     });
   });
 });
