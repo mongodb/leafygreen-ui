@@ -30,31 +30,23 @@ interface ColorBlockProps extends HTMLElementProps<'div'> {
 
 const BLOCK_WIDTH = 88;
 
-const copiedPopoverStyle = css`
+const copiedOverlayStyle = css`
   position: absolute;
-  left: 50%;
-  bottom: calc(100% + 12px);
-  transform: translate(-50%);
-  background: ${palette.gray.dark2};
-  color: ${palette.white};
-  border-radius: 8px;
-  padding: 12px;
-  width: 300px;
-  font-family: ${fontFamilies.default};
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
-  &:after {
-    content: '';
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    left: 50%;
-    top: calc(100% - 6px);
-    background: ${palette.gray.dark2};
-    transform: translateX(-50%);
-    clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
-    transform: rotate(-45deg);
-    border-radius: 0 0 0 3px;
-  }
+const copiedOverlayContentStyle = css`
+  padding: 4px;
+  border-radius: 6px;
+  background: white;
+  font-family: ${fontFamilies.default};
+  transform: translateY(-25%);
 `;
 
 const colorBlockWrapper = css`
@@ -102,7 +94,7 @@ const colorRowStyle = css`
 `;
 
 function ColorBlock({ hue, shade, ...rest }: ColorBlockProps) {
-  const [hasOpenTooltip, setHasOpenTooltip] = useState<boolean>();
+  const [wasCopied, setWasCopied] = useState<boolean>();
   const name = `${hue} ${shade ?? ''}`;
 
   let color: string;
@@ -130,18 +122,18 @@ function ColorBlock({ hue, shade, ...rest }: ColorBlockProps) {
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = () => {
     navigator.clipboard.writeText(color);
-    setHasOpenTooltip(true);
+    setWasCopied(true);
     setTimeout(() => {
-      setHasOpenTooltip(false);
+      setWasCopied(false);
     }, 1500);
   };
 
   return (
     <div className={cx(colorBlockWrapper, colorBlockWrapperDynamic)} {...rest}>
       <button className={cx(colorBlock, colorBlockColor)} onClick={handleClick}>
-        {hasOpenTooltip && (
-          <div className={copiedPopoverStyle}>
-            Copied hex code for {name} - {color}
+        {wasCopied && (
+          <div className={copiedOverlayStyle}>
+            <div className={copiedOverlayContentStyle}>Copied!</div>
           </div>
         )}
       </button>
