@@ -120,9 +120,9 @@ function ColorBlock({ hue, shade, ...rest }: ColorBlockProps) {
   const handleClick: MouseEventHandler<HTMLButtonElement> = () => {
     navigator.clipboard.writeText(color);
     setWasCopied(true);
-    // setTimeout(() => {
-    //   setWasCopied(false);
-    // }, 3500);
+    setTimeout(() => {
+      setWasCopied(false);
+    }, 2000);
   };
 
   return (
@@ -133,7 +133,7 @@ function ColorBlock({ hue, shade, ...rest }: ColorBlockProps) {
             className={copiedOverlayStyle}
             style={{ color: readableColor(color) }}
           >
-            &#x2713;&nbsp;Copied!
+            Copied!
           </div>
         )}
       </button>
