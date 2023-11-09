@@ -30,6 +30,7 @@ export const DatePickerProvider = ({
   const isInitiallyOpen = disabled ? false : initialOpen;
   const [isOpen, setOpen] = useState<boolean>(isInitiallyOpen);
   const [isDirty, setIsDirty] = useState(false);
+  const [isSelectOpen, setIsSelectOpen] = useState(false);
   const menuId = useIdAllocator({ prefix: 'lg-date-picker-menu' });
   const contextValue = getContextProps(rest);
 
@@ -43,6 +44,8 @@ export const DatePickerProvider = ({
         isDirty,
         setIsDirty,
         menuId,
+        isSelectOpen,
+        setIsSelectOpen,
       }}
     >
       {children}

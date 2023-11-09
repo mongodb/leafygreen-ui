@@ -38,7 +38,7 @@ export const DatePickerMenuHeader = forwardRef<
   HTMLDivElement,
   DatePickerMenuHeaderProps
 >(({ setMonth, ...rest }: DatePickerMenuHeaderProps, fwdRef) => {
-  const { min, max, isInRange } = useDatePickerContext();
+  const { min, max, isInRange, setIsSelectOpen } = useDatePickerContext();
   const { month } = useSingleDateContext();
   const { isPopoverOpen: isSelectMenuOpen } = usePopoverContext();
 
@@ -81,18 +81,21 @@ export const DatePickerMenuHeader = forwardRef<
       console.log('handleMenuHeaderKeydown', {
         key,
         isSelectMenuOpen,
+        // @ts-ignore
         targe: e.target.outerHTML,
       });
 
     // `isSelectMenuOpen` provided by `PopoverProvider` is `true` if any popover _within_ the menu is open
     if (key === keyMap.Escape && isSelectMenuOpen) {
-      e.stopPropagation();
+      // e.stopPropagation();
+      console.log('key === keyMap.Escape && isSelectMenuOpen');
     }
   };
 
   useEffect(() => {
     console.log('isSelectMenuOpen changed', { isSelectMenuOpen });
-  }, [isSelectMenuOpen]);
+    setIsSelectOpen(isSelectMenuOpen);
+  }, [isSelectMenuOpen, setIsSelectOpen]);
 
   /** Returns whether the provided month should be enabled */
   const isMonthEnabled = (monthName: string) =>

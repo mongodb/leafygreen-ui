@@ -21,7 +21,7 @@ export const DatePickerComponent = forwardRef<
   HTMLDivElement,
   DatePickerComponentProps
 >(({ ...rest }: DatePickerComponentProps, fwdRef) => {
-  const { isOpen, menuId, disabled } = useDatePickerContext();
+  const { isOpen, menuId, disabled, isSelectOpen } = useDatePickerContext();
   const { value, closeMenu, handleValidation, getHighlightedCell } =
     useSingleDateContext();
 
@@ -60,13 +60,17 @@ export const DatePickerComponent = forwardRef<
     key === 'Escape' &&
       console.log('handleDatePickerKeyDown', {
         key,
+        // @ts-ignore
         target: e.target.outerHTML,
       });
 
     switch (key) {
       case keyMap.Escape:
-        closeMenu();
-        handleValidation?.(value);
+        if (!isSelectOpen) {
+          closeMenu();
+          handleValidation?.(value);
+        }
+
         break;
 
       case keyMap.Enter:

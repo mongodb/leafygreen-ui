@@ -79,6 +79,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       // Prevent the parent click handler from being called since clicks on the parent always opens the dropdown
       e.stopPropagation();
       toggleMenu();
+      console.log('handleIconButtonClick');
     };
 
     /** Called on any keydown within the input element */

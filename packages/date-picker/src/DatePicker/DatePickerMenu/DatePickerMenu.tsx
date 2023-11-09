@@ -145,7 +145,11 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
     const handleMenuKeyPress: KeyboardEventHandler<HTMLDivElement> = e => {
       const { key } = e;
       key === 'Escape' &&
-        console.log('handleMenuKeyPress', { key, target: e.target.outerHTML });
+        console.log('handleMenuKeyPress', {
+          key,
+          // @ts-ignore
+          target: e.target.outerHTML,
+        });
 
       // Implementing custom focus-trap logic,
       // since focus-trap-react focuses the first element immediately on mount
@@ -178,6 +182,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       key === 'Escape' &&
         console.log('handleCalendarKeyDown', {
           key,
+          // @ts-ignore
           target: e.target.outerHTML,
         });
 
