@@ -1,9 +1,8 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { Cell } from '../Cell';
 import { useTableContext } from '../TableContext/TableContext';
 
 import InternalRowBase from './InternalRowBase';
@@ -30,11 +29,7 @@ const InternalRowWithoutRT = ({
       )}
       {...rest}
     >
-      {React.Children.map(children, (child: ReactNode, index: number) => {
-        return (
-          <Cell key={`cell-${index}`} {...(child as ReactElement).props} />
-        );
-      })}
+      {children}
     </InternalRowBase>
   );
 };
