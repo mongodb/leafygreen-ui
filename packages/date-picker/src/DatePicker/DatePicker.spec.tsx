@@ -723,7 +723,7 @@ describe('packages/date-picker', () => {
           expect(menuContainerEl).not.toBeInTheDocument();
         });
 
-        test.only('does not close the main menu if a select menu is open', async () => {
+        test('does not close the main menu if a select menu is open', async () => {
           const { openMenu, queryAllByRole, findAllByRole } =
             renderDatePicker();
           const { monthSelect, menuContainerEl } = await openMenu();
@@ -735,7 +735,6 @@ describe('packages/date-picker', () => {
           await waitFor(() =>
             jest.advanceTimersByTime(transitionDuration.default),
           );
-          // jest.advanceTimersByTime(transitionDuration.default);
 
           const options = await findAllByRole('option');
           const firstOption = options[0];
