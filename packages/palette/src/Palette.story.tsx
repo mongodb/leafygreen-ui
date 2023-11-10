@@ -4,7 +4,6 @@ import { darken, lighten, readableColor, transparentize } from 'polished';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps, StoryMetaType } from '@leafygreen-ui/lib';
-import { fontFamilies, spacing } from '@leafygreen-ui/tokens';
 
 import palette from './palette';
 
@@ -39,9 +38,7 @@ const copiedOverlayStyle = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  /* background-color: ${palette.gray.light3}; */
-  /* color: black; */
-  font-family: ${fontFamilies.default};
+  font-family: 'Euclid Circular A', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   border-radius: inherit;
   z-index: 9999;
 `;
@@ -50,7 +47,7 @@ const colorBlockWrapper = css`
   display: inline-block;
   position: relative;
   width: ${BLOCK_WIDTH}px;
-  padding-bottom: ${spacing[3]}px;
+  padding-bottom: 16px;
 `;
 
 const colorBlock = css`
