@@ -3,8 +3,7 @@ name: Release
 on:
   push:
     branches:
-      # - main
-      - LG-3780-3610-2907-gh-release-action
+      - main
 
 jobs:
   build:
@@ -119,15 +118,15 @@ jobs:
             **/stories.js
           key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'yarn.lock', '**/src/', '!**/node_modules', '!**/dist') }}
 
-      # - name: Version packages
-      #   id: changesets
-      #   uses: changesets/action@v1
-      #   with:
-      #     version: yarn changeset version
-      #     publish: yarn run publish
-      #   env:
-      #     GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-      #     NPM_TOKEN: '${{ secrets.NPM_TOKEN }}'
+      - name: Version packages
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          version: yarn changeset version
+          publish: yarn run publish
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          NPM_TOKEN: '${{ secrets.NPM_TOKEN }}'
 
   notify:
     name: Notify Slack & Website
@@ -164,8 +163,8 @@ jobs:
             **/stories.js
           key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'yarn.lock', '**/src/', '!**/node_modules', '!**/dist') }}
 
-      # - name: Notify Slack channel of new releases
-      #   id: slackbot
-      #   run: yarn slackbot '${{ needs.release.outputs.publishedPackages }}'
-      #   env:
-      #     SLACK_BOT_TOKEN: '${{ secrets.SLACK_BOT_TOKEN }}'
+      - name: Notify Slack channel of new releases
+        id: slackbot
+        run: yarn slackbot '${{ needs.release.outputs.publishedPackages }}'
+        env:
+          SLACK_BOT_TOKEN: '${{ secrets.SLACK_BOT_TOKEN }}'
