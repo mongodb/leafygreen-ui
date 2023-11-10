@@ -12,6 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      # Needed following Github's transition from Node 16 to 20
       - name: Install node-gyp
         run: yarn global add node-gyp
 
@@ -142,6 +143,10 @@ jobs:
           token: ${{ secrets.DESIGN_REPO_ACCESS_TOKEN }}
           repository: mongodb/design
           event-type: release-leafygreen-ui
+
+      # Needed following Github's transition from Node 16 to 20
+      - name: Install node-gyp
+        run: yarn global add node-gyp
 
       - name: Install
         run: yarn install --frozen-lockfile --prefer-offline
