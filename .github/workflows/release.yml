@@ -3,7 +3,8 @@ name: Release
 on:
   push:
     branches:
-      - main
+      # - main
+      - LG-3780-3610-2907-gh-release-action
 
 jobs:
   build:
@@ -118,15 +119,15 @@ jobs:
             **/stories.js
           key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'yarn.lock', '**/src/', '!**/node_modules', '!**/dist') }}
 
-      - name: Version packages
-        id: changesets
-        uses: changesets/action@v1
-        with:
-          version: yarn changeset version
-          publish: yarn run publish
-        env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-          NPM_TOKEN: '${{ secrets.NPM_TOKEN }}'
+      # - name: Version packages
+      #   id: changesets
+      #   uses: changesets/action@v1
+      #   with:
+      #     version: yarn changeset version
+      #     publish: yarn run publish
+      #   env:
+      #     GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+      #     NPM_TOKEN: '${{ secrets.NPM_TOKEN }}'
 
   notify:
     name: Notify Slack & Website
@@ -143,6 +144,7 @@ jobs:
           token: ${{ secrets.DESIGN_REPO_ACCESS_TOKEN }}
           repository: mongodb/design
           event-type: release-leafygreen-ui
+          client-payload: '${{ needs.release.outputs.publishedPackages }}'
 
       # Needed following Github's transition from Node 16 to 20
       - name: Install node-gyp
@@ -162,8 +164,8 @@ jobs:
             **/stories.js
           key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'yarn.lock', '**/src/', '!**/node_modules', '!**/dist') }}
 
-      - name: Notify Slack channel of new releases
-        id: slackbot
-        run: yarn slackbot '${{ needs.release.outputs.publishedPackages }}'
-        env:
-          SLACK_BOT_TOKEN: '${{ secrets.SLACK_BOT_TOKEN }}'
+      # - name: Notify Slack channel of new releases
+      #   id: slackbot
+      #   run: yarn slackbot '${{ needs.release.outputs.publishedPackages }}'
+      #   env:
+      #     SLACK_BOT_TOKEN: '${{ secrets.SLACK_BOT_TOKEN }}'
