@@ -216,6 +216,8 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
         option: OptionElement | null,
         event: React.MouseEvent | KeyboardEvent,
       ) => {
+        event.preventDefault();
+        event.stopPropagation();
         if (value === undefined) {
           setUncontrolledSelectedOption(option);
         }
