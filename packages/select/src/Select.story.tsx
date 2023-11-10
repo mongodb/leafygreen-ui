@@ -104,6 +104,8 @@ export const LiveExample: StoryFn<SelectProps> = ({
       `,
       className,
     )}
+    // eslint-disable-next-line no-console
+    onChange={v => console.log(v)}
   />
 );
 LiveExample.parameters = {

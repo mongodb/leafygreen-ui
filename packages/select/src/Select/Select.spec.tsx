@@ -1093,20 +1093,52 @@ describe('packages/select', () => {
       expect(button).toContainElement(listbox);
     });
 
-    test('clicking an option fires onChange', async () => {
-      const onChange = jest.fn();
-      const { getByRole, findAllByRole } = render(
-        <Select {...defaultProps} usePortal={false} onChange={onChange}>
-          <Option data-testid="option-apple">Apple</Option>
-          <Option data-testid="option-banana">Banana</Option>
-        </Select>,
-      );
-      const button = getByRole('button');
-      userEvent.click(button);
-      const options = await findAllByRole('option');
-      const apple = options[0];
-      userEvent.click(apple);
-      expect(onChange).toHaveBeenCalled();
+    describe('fires onChange when selecting an option', () => {
+      test('on mouse click', async () => {
+        const onChange = jest.fn();
+        const { getByRole, findAllByRole } = render(
+          <Select {...defaultProps} usePortal={false} onChange={onChange}>
+            <Option data-testid="option-apple">Apple</Option>
+            <Option data-testid="option-banana">Banana</Option>
+          </Select>,
+        );
+        const button = getByRole('button');
+        userEvent.click(button);
+        const options = await findAllByRole('option');
+        const apple = options[0];
+        userEvent.click(apple);
+        expect(onChange).toHaveBeenCalled();
+      });
+
+      test('on enter', async () => {
+        const onChange = jest.fn();
+        const { getByRole } = render(
+          <Select {...defaultProps} usePortal={false} onChange={onChange}>
+            <Option data-testid="option-apple">Apple</Option>
+            <Option data-testid="option-banana">Banana</Option>
+          </Select>,
+        );
+        const button = getByRole('button');
+        userEvent.type(button, '{arrowdown}');
+        // first option is focused by default
+        userEvent.keyboard('{enter}');
+        expect(onChange).toHaveBeenCalled();
+      });
+
+      test('on space', async () => {
+        const onChange = jest.fn();
+        const { getByRole } = render(
+          <Select {...defaultProps} usePortal={false} onChange={onChange}>
+            <Option data-testid="option-apple">Apple</Option>
+            <Option data-testid="option-banana">Banana</Option>
+          </Select>,
+        );
+        const button = getByRole('button');
+        userEvent.type(button, '{arrowdown}');
+        // first option is focused by default
+        userEvent.keyboard('{space}');
+        expect(onChange).toHaveBeenCalled();
+      });
     });
 
     describe('closing', () => {
