@@ -38,7 +38,8 @@ const copiedOverlayStyle = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Euclid Circular A', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Euclid Circular A', 'Helvetica Neue', Helvetica, Arial,
+    sans-serif;
   border-radius: inherit;
   z-index: 9999;
 `;
@@ -60,6 +61,9 @@ const colorBlock = css`
   border-radius: 8px;
   cursor: pointer;
   vertical-align: top;
+  &:focus {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px #0498ec;
+  }
 `;
 
 const hexLabelStyle = css`
