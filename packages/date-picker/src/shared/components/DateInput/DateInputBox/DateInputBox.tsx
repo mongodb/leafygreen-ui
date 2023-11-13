@@ -64,6 +64,9 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
 
     const containerRef = useForwardedRef(fwdRef, null);
 
+    // Store the value of which key is pressed when handleSegmentChange is fired.
+    // This key value will then be passed inside `triggerChangeEventForSegment`
+    // using ref and state will have stale values and we don't need the component to rerender when this value changes
     let key = '';
 
     /**
@@ -134,6 +137,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       const segmentName = e.target.getAttribute('id');
       const newValue = e.target.value;
 
+      // set the value of the key which will then be used
       key = e.key;
 
       if (isDateSegment(segmentName)) {
