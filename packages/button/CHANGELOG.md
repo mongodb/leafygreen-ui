@@ -1,5 +1,12 @@
 # @leafygreen-ui/button
 
+## 21.0.10
+
+### Patch Changes
+
+- f077faf1: - Buttons now correctly disable click events when disabled or isLoading
+  - Buttons now no longer display focus outlines when disabled or isLoading
+
 ## 21.0.9
 
 ### Patch Changes
