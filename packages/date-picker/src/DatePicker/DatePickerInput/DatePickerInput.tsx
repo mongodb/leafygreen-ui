@@ -191,14 +191,14 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
     const handleSegmentChange: ChangeEventHandler<HTMLInputElement> = e => {
       const segment = e.target.dataset['segment'];
       const segmentValue = e.target.value;
-      const notUpDownKeys =
-        e.key !== keyMap.ArrowDown && e.key !== keyMap.ArrowUp;
+      const areUpDownKeys =
+        e.key === keyMap.ArrowDown || e.key === keyMap.ArrowUp;
 
       if (isValidSegmentName(segment)) {
         if (
           isValidValueForSegment(segment, segmentValue) &&
           isExplicitSegmentValue(segment, segmentValue) &&
-          notUpDownKeys
+          !areUpDownKeys
         ) {
           const nextSegment = getRelativeSegment('next', {
             segment: segmentRefs[segment],
