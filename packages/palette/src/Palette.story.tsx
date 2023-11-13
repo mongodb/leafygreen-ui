@@ -41,7 +41,6 @@ const copiedOverlayStyle = css`
   font-family: 'Euclid Circular A', 'Helvetica Neue', Helvetica, Arial,
     sans-serif;
   border-radius: inherit;
-  z-index: 9999;
 `;
 
 const colorBlockWrapper = css`
@@ -61,6 +60,7 @@ const colorBlock = css`
   border-radius: 8px;
   cursor: pointer;
   vertical-align: top;
+
   &:focus {
     box-shadow: 0 0 0 2px white, 0 0 0 4px #0498ec;
   }
@@ -108,9 +108,16 @@ function ColorBlock({ hue, shade, ...rest }: ColorBlockProps) {
   `;
 
   const colorBlockColor = css`
+    transition: all 0.3s ease;
     background-color: ${color};
     box-shadow: 0 8px 6px -8px ${transparentize(0.7, darken(0.2, color))},
       0 2px 3px ${transparentize(0.8, darken(0.5, color))};
+
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 6px -8px ${transparentize(0.7, darken(0.4, color))},
+        0 2px 3px ${transparentize(0.5, darken(0.3, color))};
+    }
   `;
 
   const hexLabelColor = css`
