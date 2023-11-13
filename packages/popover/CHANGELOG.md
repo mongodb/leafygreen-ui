@@ -1,5 +1,17 @@
 # @leafygreen-ui/popover
 
+## 11.2.0
+
+### Minor Changes
+
+- 99848a0f: Adds `onEnter*` and `onExit*` callbacks to Popover. These callbacks are provided to the internal React Transition element. See [ReactTransitionGroup docs](https://reactcommunity.org/react-transition-group/transition#Transition-prop-onEnter) for more details.
+
+### Patch Changes
+
+- 99848a0f: Toggles `isPopoverOpen` in `PopoverContext` in the `onEntered` and `onExited` lifecycle callbacks, to better reflect the true state of the popover state
+- Updated dependencies [99848a0f]
+  - @leafygreen-ui/lib@13.1.0
+
 ## 11.1.1
 
 ### Patch Changes

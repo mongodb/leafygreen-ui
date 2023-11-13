@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/code",
-  "version": "14.2.17",
+  "version": "14.2.18",
   "description": "leafyGreen UI Kit Code Blocks",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -24,12 +24,12 @@
   },
   "dependencies": {
     "@leafygreen-ui/a11y": "^1.4.11",
-    "@leafygreen-ui/button": "^21.0.9",
+    "@leafygreen-ui/button": "^21.0.11",
     "@leafygreen-ui/emotion": "^4.0.7",
     "@leafygreen-ui/hooks": "^8.0.0",
-    "@leafygreen-ui/icon": "^11.23.0",
+    "@leafygreen-ui/icon": "^11.25.1",
     "@leafygreen-ui/icon-button": "^15.0.19",
-    "@leafygreen-ui/lib": "^13.0.0",
+    "@leafygreen-ui/lib": "^13.1.0",
     "@leafygreen-ui/palette": "^4.0.7",
     "@leafygreen-ui/select": "^11.0.1",
     "@leafygreen-ui/tokens": "^2.2.0",
