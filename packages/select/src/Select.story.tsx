@@ -153,4 +153,14 @@ WithIcons.parameters = {
   },
 };
 
+export const NoPortal = LiveExample.bind({});
+NoPortal.args = {
+  usePortal: false,
+};
+NoPortal.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+
 export const Generated = () => {};
