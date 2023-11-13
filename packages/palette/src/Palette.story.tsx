@@ -76,6 +76,7 @@ const hexLabelStyle = css`
   padding: 3px 0.3rem;
   border-radius: 4px;
   transform: translate(-50%, -125%);
+  pointer-events: none;
 `;
 
 const nameLabelStyle = css`
