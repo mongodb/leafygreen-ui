@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/callout",
-  "version": "9.0.17",
+  "version": "9.0.18",
   "description": "leafyGreen UI Kit Callout",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -23,14 +23,14 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/icon": "^11.22.2",
-    "@leafygreen-ui/lib": "^13.0.0",
+    "@leafygreen-ui/icon": "^11.25.1",
+    "@leafygreen-ui/lib": "^13.1.0",
     "@leafygreen-ui/palette": "^4.0.7",
     "@leafygreen-ui/tokens": "^2.1.4",
     "@leafygreen-ui/typography": "^18.0.0"
   },
   "devDependencies": {
-    "@leafygreen-ui/code": "^14.2.17"
+    "@leafygreen-ui/code": "^14.2.18"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.10"
