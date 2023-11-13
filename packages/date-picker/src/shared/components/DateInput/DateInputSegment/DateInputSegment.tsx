@@ -75,27 +75,39 @@ export const DateInputSegment = React.forwardRef<
     const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
       const { key, target } = e;
 
+      /** adds in leading zero */
+      const getPaddedValue = (num: number) => String(num).padStart(2, '0');
+
+      /** checks if the newValue is within the min and max limits of the segment */
+      const getNewValue = (newValue: number, direction: 'up' | 'down') =>
+        newValue >= min && newValue <= max
+          ? getPaddedValue(newValue)
+          : getPaddedValue(direction === 'up' ? min : max);
+
       switch (key) {
         case keyMap.ArrowUp: {
           e.preventDefault();
-          const incrementedValue = (Number(value) + 1).toString();
+          const newValue = Number(value) + 1;
+          const incrementedValue = getNewValue(newValue, 'up');
+
           (target as HTMLInputElement).value = incrementedValue;
           const changeEvent = createSyntheticEvent<
             ChangeEvent<HTMLInputElement>
-          >(new Event('change'), target as HTMLInputElement);
+          >(new Event('change'), target as HTMLInputElement, keyMap.ArrowUp);
           onChange?.(changeEvent);
           break;
         }
 
         case keyMap.ArrowDown: {
           e.preventDefault();
-          const decrementedValue = (Number(value) - 1).toString();
+          const newValue = Number(value) - 1;
+          const decrementedValue = getNewValue(newValue, 'down');
+
           (target as HTMLInputElement).value = decrementedValue;
           const changeEvent = createSyntheticEvent<
             ChangeEvent<HTMLInputElement>
-          >(new Event('change'), target as HTMLInputElement);
+          >(new Event('change'), target as HTMLInputElement, keyMap.ArrowDown);
           onChange?.(changeEvent);
-
           break;
         }
 

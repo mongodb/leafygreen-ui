@@ -12,9 +12,12 @@ export const createSyntheticEvent = <
 >(
   event: NativeEventType,
   target: TargetType,
+  key?: string,
 ): ReactEventType => {
   // Assign the target property to the event
   Object.defineProperty(event, 'target', { writable: false, value: target });
+
+  console.log({ key });
 
   let isDefaultPrevented = false;
   let isPropagationStopped = false;
@@ -45,5 +48,6 @@ export const createSyntheticEvent = <
     persist: () => {},
     timeStamp: event.timeStamp,
     type: event.type,
+    key,
   } as unknown as ReactEventType;
 };

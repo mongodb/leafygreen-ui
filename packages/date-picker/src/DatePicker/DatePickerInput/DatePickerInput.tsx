@@ -59,7 +59,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
      */
     const handleInputClick: MouseEventHandler<HTMLElement> = ({ target }) => {
       if (!disabled) {
-        openMenu();
+        // openMenu();
 
         const segmentToFocus = getSegmentToFocus({
           target,
@@ -186,15 +186,19 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
 
     /**
      * Called when any segment changes
+     * If up/down arrows are pressed, don't move to the next segment
      */
     const handleSegmentChange: ChangeEventHandler<HTMLInputElement> = e => {
       const segment = e.target.dataset['segment'];
       const segmentValue = e.target.value;
+      const notUpDownKeys =
+        e.key !== keyMap.ArrowDown && e.key !== keyMap.ArrowUp;
 
       if (isValidSegmentName(segment)) {
         if (
           isValidValueForSegment(segment, segmentValue) &&
-          isExplicitSegmentValue(segment, segmentValue)
+          isExplicitSegmentValue(segment, segmentValue) &&
+          notUpDownKeys
         ) {
           const nextSegment = getRelativeSegment('next', {
             segment: segmentRefs[segment],
