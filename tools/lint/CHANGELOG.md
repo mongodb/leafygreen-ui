@@ -1,5 +1,13 @@
 # @lg-tools/lint
 
+## 0.1.6
+
+### Patch Changes
+
+- 4822f43c: Bumps @babel packages that were effected by @babel/traverse security breach
+- Updated dependencies [4822f43c]
+  - @lg-tools/build@0.3.1
+
 ## 0.1.5
 
 ### Patch Changes

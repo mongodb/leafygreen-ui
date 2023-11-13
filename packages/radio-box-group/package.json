@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/hooks": "^8.0.0",
+    "@leafygreen-ui/hooks": "^8.0.1",
     "@leafygreen-ui/lib": "^13.0.0",
     "@leafygreen-ui/palette": "^4.0.7",
     "@leafygreen-ui/tokens": "^2.2.0"
@@ -41,6 +41,6 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@leafygreen-ui/tooltip": "^10.1.0"
+    "@leafygreen-ui/tooltip": "^11.0.0"
   }
 }

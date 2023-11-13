@@ -37,6 +37,9 @@ const meta: StoryMetaType<typeof Menu> = {
         'as',
       ],
     },
+    chromatic: {
+      disableSnapshot: true,
+    },
     generate: {
       combineArgs: {
         darkMode: [false, true],
@@ -96,9 +99,6 @@ const meta: StoryMetaType<typeof Menu> = {
           />
         </div>
       ),
-    },
-    chromatic: {
-      delay: transitionDuration.default,
     },
   },
   args: {

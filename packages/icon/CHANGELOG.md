@@ -1,5 +1,12 @@
 # @leafygreen-ui/icon
 
+## 11.25.0
+
+### Minor Changes
+
+- c41752d2: Adds `LightningBolt` icon to glyph set.
+- 89332190: Adds `Boolean` and `String` icons to glyph set
+
 ## 11.24.0
 
 ### Minor Changes
