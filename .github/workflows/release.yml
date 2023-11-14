@@ -159,6 +159,7 @@ jobs:
         run: yarn slackbot '${{ needs.release.outputs.publishedPackages }}'
         env:
           SLACK_BOT_TOKEN: '${{ secrets.SLACK_BOT_TOKEN }}'
+
   dispatch-to-website:
     name: Dispatch to Website repo
     runs-on: ubuntu-latest
@@ -174,4 +175,4 @@ jobs:
           token: ${{ secrets.DESIGN_REPO_ACCESS_TOKEN }}
           repository: mongodb/design
           event-type: release-leafygreen-ui
-          client-payload: '{ packages: ${{ needs.release.outputs.publishedPackages }} }'
+          client-payload: '{ "packages": ${{ toJson(needs.release.outputs.publishedPackages) }} }'
