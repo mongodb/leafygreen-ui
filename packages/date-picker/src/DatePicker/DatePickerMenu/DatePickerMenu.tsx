@@ -144,12 +144,6 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
     // Focus trap
     const handleMenuKeyPress: KeyboardEventHandler<HTMLDivElement> = e => {
       const { key } = e;
-      key === 'Escape' &&
-        console.log('handleMenuKeyPress', {
-          key,
-          // @ts-ignore
-          target: e.target.outerHTML,
-        });
 
       // Implementing custom focus-trap logic,
       // since focus-trap-react focuses the first element immediately on mount
@@ -178,13 +172,6 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
     /** Called on any keydown within the CalendarGrid element */
     const handleCalendarKeyDown: KeyboardEventHandler<HTMLTableElement> = e => {
       const { key } = e;
-
-      key === 'Escape' &&
-        console.log('handleCalendarKeyDown', {
-          key,
-          // @ts-ignore
-          target: e.target.outerHTML,
-        });
 
       const highlightStart = highlight || value || today;
       let nextHighlight = highlightStart;
@@ -219,7 +206,6 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
         updateHighlight(nextHighlight);
 
         // Prevent the parent keydown handler from being called
-        console.log('handleCalendarKeyDown: Stopping propagation');
         e.stopPropagation();
       }
     };

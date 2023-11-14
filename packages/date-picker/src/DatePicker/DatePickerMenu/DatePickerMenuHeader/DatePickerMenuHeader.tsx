@@ -1,16 +1,9 @@
-import React, {
-  forwardRef,
-  KeyboardEventHandler,
-  MouseEventHandler,
-  useEffect,
-} from 'react';
+import React, { forwardRef, MouseEventHandler } from 'react';
 import { isBefore } from 'date-fns';
 import range from 'lodash/range';
 
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
-// import { usePopoverContext } from '@leafygreen-ui/leafygreen-provider';
-import { keyMap } from '@leafygreen-ui/lib';
 import { Option, Select } from '@leafygreen-ui/select';
 
 import { useDatePickerContext } from '../../../shared/components/DatePickerContext';
@@ -40,7 +33,6 @@ export const DatePickerMenuHeader = forwardRef<
 >(({ setMonth, ...rest }: DatePickerMenuHeaderProps, fwdRef) => {
   const { min, max, isInRange, setIsSelectOpen } = useDatePickerContext();
   const { month } = useSingleDateContext();
-  // const { isPopoverOpen: isSelectMenuOpen } = usePopoverContext();
 
   const yearOptions = range(min.getUTCFullYear(), max.getUTCFullYear() + 1);
 
@@ -72,43 +64,12 @@ export const DatePickerMenuHeader = forwardRef<
       updateMonth(newMonth);
     };
 
-  /**
-   * Ensure that the date picker menu will not close when a select menu is open, focus is inside the select menu, and the ESC key is pressed.
-   */
-  const handleMenuHeaderKeydown: KeyboardEventHandler<HTMLDivElement> = e => {
-    const { key } = e;
-    key === 'Escape' &&
-      console.log('handleMenuHeaderKeydown', {
-        key,
-        // isSelectMenuOpen,
-        // @ts-ignore
-        targe: e.target.outerHTML,
-      });
-
-    // `isSelectMenuOpen` provided by `PopoverProvider` is `true` if any popover _within_ the menu is open
-    // if (key === keyMap.Escape && isSelectMenuOpen) {
-    //   // e.stopPropagation();
-    //   console.log('key === keyMap.Escape && isSelectMenuOpen');
-    // }
-  };
-
-  // useEffect(() => {
-  //   console.log('isSelectMenuOpen changed', { isSelectMenuOpen });
-  //   // setIsSelectOpen(isSelectMenuOpen);
-  // }, [isSelectMenuOpen, setIsSelectOpen]);
-
   /** Returns whether the provided month should be enabled */
   const isMonthEnabled = (monthName: string) =>
     shouldMonthBeEnabled(monthName, { month, min, max });
 
   return (
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div
-      ref={fwdRef}
-      className={menuHeaderStyles}
-      onKeyDown={handleMenuHeaderKeydown}
-      {...rest}
-    >
+    <div ref={fwdRef} className={menuHeaderStyles} {...rest}>
       <IconButton
         aria-label="Previous month"
         disabled={isSameUTCMonth(month, min)}

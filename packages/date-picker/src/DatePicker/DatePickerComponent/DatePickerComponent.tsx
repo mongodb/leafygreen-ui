@@ -57,15 +57,9 @@ export const DatePickerComponent = forwardRef<
   const handleDatePickerKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
     const { key } = e;
 
-    key === 'Escape' &&
-      console.log('handleDatePickerKeyDown', {
-        key,
-        // @ts-ignore
-        target: e.target.outerHTML,
-      });
-
     switch (key) {
       case keyMap.Escape:
+        // Ensure that the date picker menu will not close when a select menu is open, focus is inside the select menu, and the ESC key is pressed.
         if (!isSelectOpen) {
           closeMenu();
           handleValidation?.(value);
