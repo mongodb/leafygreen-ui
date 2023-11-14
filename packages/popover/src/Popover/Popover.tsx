@@ -295,7 +295,6 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
         onEntered={(...args) => {
           setIsPopoverOpen(true);
           onEntered?.(...args);
-          console.log('🐥🐥🐥🐥');
         }}
         onExiting={onExiting}
         onExit={onExit}
