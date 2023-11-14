@@ -9,7 +9,7 @@ import range from 'lodash/range';
 
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
-import { usePopoverContext } from '@leafygreen-ui/leafygreen-provider';
+// import { usePopoverContext } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 import { Option, Select } from '@leafygreen-ui/select';
 
@@ -40,7 +40,7 @@ export const DatePickerMenuHeader = forwardRef<
 >(({ setMonth, ...rest }: DatePickerMenuHeaderProps, fwdRef) => {
   const { min, max, isInRange, setIsSelectOpen } = useDatePickerContext();
   const { month } = useSingleDateContext();
-  const { isPopoverOpen: isSelectMenuOpen } = usePopoverContext();
+  // const { isPopoverOpen: isSelectMenuOpen } = usePopoverContext();
 
   const yearOptions = range(min.getUTCFullYear(), max.getUTCFullYear() + 1);
 
@@ -80,22 +80,22 @@ export const DatePickerMenuHeader = forwardRef<
     key === 'Escape' &&
       console.log('handleMenuHeaderKeydown', {
         key,
-        isSelectMenuOpen,
+        // isSelectMenuOpen,
         // @ts-ignore
         targe: e.target.outerHTML,
       });
 
     // `isSelectMenuOpen` provided by `PopoverProvider` is `true` if any popover _within_ the menu is open
-    if (key === keyMap.Escape && isSelectMenuOpen) {
-      // e.stopPropagation();
-      console.log('key === keyMap.Escape && isSelectMenuOpen');
-    }
+    // if (key === keyMap.Escape && isSelectMenuOpen) {
+    //   // e.stopPropagation();
+    //   console.log('key === keyMap.Escape && isSelectMenuOpen');
+    // }
   };
 
-  useEffect(() => {
-    console.log('isSelectMenuOpen changed', { isSelectMenuOpen });
-    setIsSelectOpen(isSelectMenuOpen);
-  }, [isSelectMenuOpen, setIsSelectOpen]);
+  // useEffect(() => {
+  //   console.log('isSelectMenuOpen changed', { isSelectMenuOpen });
+  //   // setIsSelectOpen(isSelectMenuOpen);
+  // }, [isSelectMenuOpen, setIsSelectOpen]);
 
   /** Returns whether the provided month should be enabled */
   const isMonthEnabled = (monthName: string) =>
@@ -126,6 +126,8 @@ export const DatePickerMenuHeader = forwardRef<
             updateMonth(newMonth);
           }}
           className={selectInputWidthStyles}
+          onEntered={() => setIsSelectOpen(true)}
+          onExited={() => setIsSelectOpen(false)}
         >
           {Months.map((m, i) => (
             <Option
@@ -146,6 +148,8 @@ export const DatePickerMenuHeader = forwardRef<
             updateMonth(newMonth);
           }}
           className={selectInputWidthStyles}
+          onEntered={() => setIsSelectOpen(true)}
+          onExited={() => setIsSelectOpen(false)}
         >
           {yearOptions.map(y => (
             <Option value={y.toString()} key={y}>

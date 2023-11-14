@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import {
-  PopoverProvider,
+  // PopoverProvider,
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
@@ -26,7 +26,7 @@ export const MenuWrapper = forwardRef<HTMLDivElement, MenuWrapperProps>(
         {...props}
       >
         {/* Adding the provider inside of <Popover /> to keep track of only the select menus inside this popover */}
-        <PopoverProvider>{children}</PopoverProvider>
+        {children}
       </Popover>
     );
   },
