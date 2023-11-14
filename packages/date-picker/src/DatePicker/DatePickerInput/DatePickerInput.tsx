@@ -59,7 +59,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
      */
     const handleInputClick: MouseEventHandler<HTMLElement> = ({ target }) => {
       if (!disabled) {
-        // openMenu();
+        openMenu();
 
         const segmentToFocus = getSegmentToFocus({
           target,
@@ -156,10 +156,6 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
         case keyMap.Tab:
           // Behavior handled by parent or menu
           break;
-
-        default:
-          // any other keydown should open the menu
-          openMenu();
       }
 
       // call any handler that was passed in
@@ -192,6 +188,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       const segment = e.target.dataset['segment'];
       const segmentValue = e.target.value;
       const areUpDownKeys =
+        // @ts-ignore FIXME:
         e.key === keyMap.ArrowDown || e.key === keyMap.ArrowUp;
 
       if (isValidSegmentName(segment)) {

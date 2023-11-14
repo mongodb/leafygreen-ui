@@ -2,7 +2,6 @@ import React, {
   ChangeEvent,
   ChangeEventHandler,
   FocusEventHandler,
-  useState,
 } from 'react';
 import { isSameDay } from 'date-fns';
 import isEqual from 'lodash/isEqual';
@@ -138,6 +137,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       const newValue = e.target.value;
 
       // set the value of the key which will then be used
+      // @ts-ignore FIXME:
       key = e.key;
 
       if (isDateSegment(segmentName)) {
