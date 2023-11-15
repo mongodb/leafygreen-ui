@@ -59,7 +59,7 @@ export const DatePickerComponent = forwardRef<
 
     switch (key) {
       case keyMap.Escape:
-        // Ensure that the date picker menu will not close when a select menu is open, focus is inside the select menu, and the ESC key is pressed.
+        // Ensure that the menu will not close when a select menu is open and the ESC key is pressed.
         if (!isSelectOpen) {
           closeMenu();
           handleValidation?.(value);

@@ -14,6 +14,7 @@ import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import { PopoverContext } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { Option, OptionGroup, Select } from '..';
 
@@ -544,6 +545,55 @@ describe('packages/select', () => {
       });
     });
 
+    describe('fires Popover callbacks', () => {
+      test('opening the select fires the `onEnter*` callbacks', async () => {
+        const onEnter = jest.fn();
+        const onEntering = jest.fn();
+        const onEntered = jest.fn();
+        const { getByRole } = render(
+          <Select
+            {...defaultProps}
+            onEnter={onEnter}
+            onEntering={onEntering}
+            onEntered={onEntered}
+          >
+            <Option data-testid="option-apple">Apple</Option>
+            <Option data-testid="option-banana">Banana</Option>
+          </Select>,
+        );
+        const button = getByRole('button');
+        userEvent.click(button);
+
+        expect(onEnter).toHaveBeenCalled();
+        expect(onEntering).toHaveBeenCalled();
+        await waitFor(() => expect(onEntered).toHaveBeenCalled());
+      });
+
+      test('closing the select fires the `onExit*` callbacks', async () => {
+        const onExit = jest.fn();
+        const onExiting = jest.fn();
+        const onExited = jest.fn();
+        const { getByRole } = render(
+          <Select
+            {...defaultProps}
+            onExit={onExit}
+            onExiting={onExiting}
+            onExited={onExited}
+          >
+            <Option data-testid="option-apple">Apple</Option>
+            <Option data-testid="option-banana">Banana</Option>
+          </Select>,
+        );
+        const button = getByRole('button');
+        userEvent.click(button);
+        userEvent.click(button);
+
+        expect(onExit).toHaveBeenCalled();
+        expect(onExiting).toHaveBeenCalled();
+        await waitFor(() => expect(onExited).toHaveBeenCalled());
+      });
+    });
+
     describe.each([
       ['menu button', 'button'],
       ['list menu', 'listbox'],
@@ -1000,6 +1050,57 @@ describe('packages/select', () => {
       const apple = options[0];
       userEvent.click(apple);
       expect(onChange).toHaveBeenCalled();
+    });
+
+    describe('fires Popover callbacks', () => {
+      test('opening the select fires the `onEnter*` callbacks', async () => {
+        const onEnter = jest.fn();
+        const onEntering = jest.fn();
+        const onEntered = jest.fn();
+        const { getByRole } = render(
+          <Select
+            {...defaultProps}
+            usePortal={false}
+            onEnter={onEnter}
+            onEntering={onEntering}
+            onEntered={onEntered}
+          >
+            <Option data-testid="option-apple">Apple</Option>
+            <Option data-testid="option-banana">Banana</Option>
+          </Select>,
+        );
+        const button = getByRole('button');
+        userEvent.click(button);
+
+        expect(onEnter).toHaveBeenCalled();
+        expect(onEntering).toHaveBeenCalled();
+        await waitFor(() => expect(onEntered).toHaveBeenCalled());
+      });
+
+      test('closing the select fires the `onExit*` callbacks', async () => {
+        const onExit = jest.fn();
+        const onExiting = jest.fn();
+        const onExited = jest.fn();
+        const { getByRole } = render(
+          <Select
+            {...defaultProps}
+            usePortal={false}
+            onExit={onExit}
+            onExiting={onExiting}
+            onExited={onExited}
+          >
+            <Option data-testid="option-apple">Apple</Option>
+            <Option data-testid="option-banana">Banana</Option>
+          </Select>,
+        );
+        const button = getByRole('button');
+        userEvent.click(button);
+        userEvent.click(button);
+
+        expect(onExit).toHaveBeenCalled();
+        expect(onExiting).toHaveBeenCalled();
+        await waitFor(() => expect(onExited).toHaveBeenCalled());
+      });
     });
   });
 
