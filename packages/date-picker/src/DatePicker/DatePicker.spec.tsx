@@ -10,6 +10,8 @@ import {
 import userEvent from '@testing-library/user-event';
 import { addDays, subDays } from 'date-fns';
 
+import { transitionDuration } from '@leafygreen-ui/tokens';
+
 import { Month } from '../shared/constants';
 import { newUTC } from '../shared/utils';
 import {
@@ -710,26 +712,43 @@ describe('packages/date-picker', () => {
           expect(handleValidation).toHaveBeenCalledWith(undefined);
         });
 
+        test('closes the menu regardless of which element is focused', async () => {
+          const { openMenu } = renderDatePicker();
+          const { menuContainerEl, leftChevron } = await openMenu();
+          userEvent.tab();
+          expect(leftChevron).toHaveFocus();
+
+          userEvent.keyboard('{escape}');
+          await waitForElementToBeRemoved(menuContainerEl);
+          expect(menuContainerEl).not.toBeInTheDocument();
+        });
+
         test('does not close the main menu if a select menu is open', async () => {
           const { openMenu, queryAllByRole, findAllByRole } =
             renderDatePicker();
           const { monthSelect, menuContainerEl } = await openMenu();
 
-          monthSelect?.focus();
+          tabNTimes(2);
           expect(monthSelect).toHaveFocus();
+
           userEvent.keyboard('[Enter]');
-          userEvent.keyboard('{arrowdown}');
+          await waitFor(() =>
+            jest.advanceTimersByTime(transitionDuration.default),
+          );
+
           const options = await findAllByRole('option');
           const firstOption = options[0];
+          userEvent.keyboard('{arrowdown}');
           expect(firstOption).toHaveFocus();
+
           const listBoxes = queryAllByRole('listbox');
           expect(listBoxes).toHaveLength(2);
+
           const selectMenu = listBoxes[1];
           userEvent.keyboard('{escape}');
-          await waitFor(() => {
-            expect(menuContainerEl).toBeInTheDocument();
-            expect(selectMenu).not.toBeInTheDocument();
-          });
+          await waitForElementToBeRemoved(selectMenu);
+          expect(menuContainerEl).toBeInTheDocument();
+          expect(monthSelect).toHaveFocus();
         });
       });
 
