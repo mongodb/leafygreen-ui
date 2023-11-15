@@ -1,5 +1,15 @@
 # @leafygreen-ui/callout
 
+## 9.0.18
+
+### Patch Changes
+
+- 4ae82dbd: Added links to LiveExample to demonstrate link styles
+- Updated dependencies [99848a0f]
+- Updated dependencies [ed0437ce]
+  - @leafygreen-ui/lib@13.1.0
+  - @leafygreen-ui/icon@11.25.1
+
 ## 9.0.17
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 13.1.0
+
+### Minor Changes
+
+- 99848a0f: Adds `pickAndOnit` helper function
+
 ## 13.0.0
 
 ### Major Changes

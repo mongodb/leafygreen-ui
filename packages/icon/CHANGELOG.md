@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 11.25.1
+
+### Patch Changes
+
+- ed0437ce: Updates `'Key'` icon to match design specs
+
 ## 11.25.0
 
 ### Minor Changes
