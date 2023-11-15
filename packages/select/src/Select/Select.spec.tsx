@@ -13,10 +13,15 @@ import userEvent from '@testing-library/user-event';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import { keyMap } from '@leafygreen-ui/lib';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { Option, OptionGroup, Select } from '..';
 
 import { State } from './Select.types';
+
+function waitForTimeout(timeout = 500) {
+  return new Promise(res => setTimeout(res, timeout));
+}
 
 const Color = {
   Red: 'Explicit value: Red',
@@ -616,6 +621,7 @@ describe('packages/select', () => {
           const apple = options[0];
           userEvent.click(apple);
           await waitForElementToBeRemoved(getByRole('listbox'));
+          await waitForTimeout(transitionDuration.slower);
           expect(queryByRole('listbox')).not.toBeInTheDocument();
         });
 
@@ -631,6 +637,7 @@ describe('packages/select', () => {
           // first option is focused by default
           userEvent.keyboard('{enter}');
           await waitForElementToBeRemoved(getByRole('listbox'));
+          await waitForTimeout(transitionDuration.slower);
           expect(queryByRole('listbox')).not.toBeInTheDocument();
         });
 
@@ -646,6 +653,7 @@ describe('packages/select', () => {
           // first option is focused by default
           userEvent.keyboard('{space}');
           await waitForElementToBeRemoved(getByRole('listbox'));
+          await waitForTimeout(transitionDuration.slower);
           expect(queryByRole('listbox')).not.toBeInTheDocument();
         });
       });
@@ -1213,6 +1221,7 @@ describe('packages/select', () => {
           const apple = options[0];
           userEvent.click(apple);
           await waitForElementToBeRemoved(getByRole('listbox'));
+          await waitForTimeout(transitionDuration.slower);
           expect(queryByRole('listbox')).not.toBeInTheDocument();
         });
 
@@ -1228,6 +1237,7 @@ describe('packages/select', () => {
           // first option is focused by default
           userEvent.keyboard('{enter}');
           await waitForElementToBeRemoved(getByRole('listbox'));
+          await waitForTimeout(transitionDuration.slower);
           expect(queryByRole('listbox')).not.toBeInTheDocument();
         });
 
@@ -1243,6 +1253,7 @@ describe('packages/select', () => {
           // first option is focused by default
           userEvent.keyboard('{space}');
           await waitForElementToBeRemoved(getByRole('listbox'));
+          await waitForTimeout(transitionDuration.slower);
           expect(queryByRole('listbox')).not.toBeInTheDocument();
         });
       });
