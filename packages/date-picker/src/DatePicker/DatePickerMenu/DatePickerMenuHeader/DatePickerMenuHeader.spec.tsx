@@ -7,6 +7,7 @@ import {
   PopoverContext,
   usePopoverContext,
 } from '@leafygreen-ui/leafygreen-provider';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { Month, newUTC } from '../../../shared';
 import {
@@ -130,6 +131,65 @@ describe('packages/date-picker/menu/header', () => {
 
           expect(element).not.toHaveAttribute('aria-disabled', 'true');
         }
+      });
+    });
+  });
+
+  describe('Interaction', () => {
+    const mockSetIsSelectOpen = jest.fn();
+
+    beforeEach(() => {
+      mockSetIsSelectOpen.mockClear();
+      jest.useFakeTimers();
+    });
+
+    const AllMockProviders = ({ children }: PropsWithChildren<{}>) => {
+      const [isSelectOpen, _setIsSelectOpen] = useState(false);
+
+      const setIsSelectOpen = (action: React.SetStateAction<boolean>) => {
+        mockSetIsSelectOpen(action);
+        _setIsSelectOpen(action);
+      };
+
+      return (
+        <MockDatePickerProvider
+          value={{
+            ...defaultDatePickerContext,
+            isSelectOpen,
+            setIsSelectOpen,
+          }}
+        >
+          <MockSingleDateProvider
+            value={
+              {
+                month: newUTC(2022, Month.July, 1),
+              } as SingleDateContextProps
+            }
+          >
+            {children}
+          </MockSingleDateProvider>
+        </MockDatePickerProvider>
+      );
+    };
+
+    test('opening & closing a select menu calls `setIsPopoverOpen` in PopoverContext', async () => {
+      const { getByLabelText } = render(
+        <AllMockProviders>
+          <DatePickerMenuHeader setMonth={() => {}} />
+        </AllMockProviders>,
+      );
+
+      const monthSelect = getByLabelText('Select month');
+      userEvent.click(monthSelect);
+      await waitFor(() => {
+        jest.advanceTimersByTime(transitionDuration.default);
+        expect(mockSetIsSelectOpen).toHaveBeenCalledWith(true);
+      });
+      userEvent.click(monthSelect);
+
+      await waitFor(() => {
+        jest.advanceTimersByTime(transitionDuration.default);
+        expect(mockSetIsSelectOpen).toHaveBeenCalledWith(false);
       });
     });
   });
