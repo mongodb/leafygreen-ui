@@ -7,7 +7,7 @@ import React, {
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { createSyntheticEvent, keyMap } from '@leafygreen-ui/lib';
+import { createSyntheticEvent, keyMap, rollover } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
@@ -73,46 +73,31 @@ export const DateInputSegment = React.forwardRef<
 
     /** Synthetically fire ChangeEvents when the up/down arrow keys are pressed */
     const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
-      const { key, target } = e;
+      const { key, target, ...rest } =
+        e as React.KeyboardEvent<HTMLInputElement> & {
+          target: HTMLInputElement;
+        };
 
-      /** adds in leading zero */
-      const getPaddedValue = (num: number) => String(num).padStart(2, '0');
+      if (key === keyMap.ArrowUp || key === keyMap.ArrowDown) {
+        e.preventDefault();
+        const valueDiff = key === keyMap.ArrowUp ? 1 : -1;
 
-      /** checks if the newValue is within the min and max limits of the segment */
-      const getNewValue = (newValue: number, direction: 'up' | 'down') =>
-        newValue >= min && newValue <= max
-          ? getPaddedValue(newValue)
-          : getPaddedValue(direction === 'up' ? min : max);
+        const initialValue = value
+          ? Number(value)
+          : key === keyMap.ArrowUp
+          ? max
+          : min;
 
-      switch (key) {
-        case keyMap.ArrowUp: {
-          e.preventDefault();
-          const newValue = Number(value) + 1;
-          const incrementedValue = getNewValue(newValue, 'up');
+        const newValue = rollover(initialValue + valueDiff, min, max);
+        const valueString = newValue.toString();
 
-          (target as HTMLInputElement).value = incrementedValue;
-          const changeEvent = createSyntheticEvent<
-            ChangeEvent<HTMLInputElement>
-          >(new Event('change'), target as HTMLInputElement, keyMap.ArrowUp);
-          onChange?.(changeEvent);
-          break;
-        }
-
-        case keyMap.ArrowDown: {
-          e.preventDefault();
-          const newValue = Number(value) - 1;
-          const decrementedValue = getNewValue(newValue, 'down');
-
-          (target as HTMLInputElement).value = decrementedValue;
-          const changeEvent = createSyntheticEvent<
-            ChangeEvent<HTMLInputElement>
-          >(new Event('change'), target as HTMLInputElement, keyMap.ArrowDown);
-          onChange?.(changeEvent);
-          break;
-        }
-
-        default:
-          break;
+        target.value = valueString;
+        const nativeEvent = new Event('change', { ...rest });
+        const changeEvent = createSyntheticEvent<ChangeEvent<HTMLInputElement>>(
+          nativeEvent,
+          target,
+        );
+        onChange?.(changeEvent);
       }
 
       onKeyDown?.(e);
