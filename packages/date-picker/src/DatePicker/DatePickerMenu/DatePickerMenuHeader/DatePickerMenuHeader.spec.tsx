@@ -1,12 +1,7 @@
 import React, { PropsWithChildren, useState } from 'react';
-import { act, render, waitFor } from '@testing-library/react';
-import { renderHook } from '@testing-library/react-hooks';
+import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import {
-  PopoverContext,
-  usePopoverContext,
-} from '@leafygreen-ui/leafygreen-provider';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { Month, newUTC } from '../../../shared';
