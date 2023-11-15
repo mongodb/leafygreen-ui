@@ -156,10 +156,6 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
         case keyMap.Tab:
           // Behavior handled by parent or menu
           break;
-
-        default:
-          // any other keydown should open the menu
-          openMenu();
       }
 
       // call any handler that was passed in
@@ -186,15 +182,20 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
 
     /**
      * Called when any segment changes
+     * If up/down arrows are pressed, don't move to the next segment
      */
     const handleSegmentChange: ChangeEventHandler<HTMLInputElement> = e => {
       const segment = e.target.dataset['segment'];
       const segmentValue = e.target.value;
+      const areUpDownKeys =
+        // @ts-ignore FIXME:
+        e.key === keyMap.ArrowDown || e.key === keyMap.ArrowUp;
 
       if (isValidSegmentName(segment)) {
         if (
           isValidValueForSegment(segment, segmentValue) &&
-          isExplicitSegmentValue(segment, segmentValue)
+          isExplicitSegmentValue(segment, segmentValue) &&
+          !areUpDownKeys
         ) {
           const nextSegment = getRelativeSegment('next', {
             segment: segmentRefs[segment],

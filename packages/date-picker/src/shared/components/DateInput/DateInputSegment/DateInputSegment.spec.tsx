@@ -1,7 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { mean } from 'lodash';
 
+import { defaultMax, defaultMin } from '../../../constants';
+import { DateSegment } from '../../../hooks';
 import { eventContainingTargetValue } from '../../../utils/testutils';
 
 import { DateInputSegment, type DateInputSegmentProps } from '.';
@@ -109,34 +112,102 @@ describe('packages/date-picker/shared/date-input-segment', () => {
   });
 
   describe('Arrow Keys', () => {
-    test('ArrowUp calls handler with +1', () => {
-      const result = render(
-        <DateInputSegment
-          segment="day"
-          onChange={onChangeHandler}
-          value={'08'}
-        />,
-      );
-      const input = result.getByTestId('lg-date_picker_input-segment');
-      userEvent.type(input, '{arrowup}');
-      expect(onChangeHandler).toHaveBeenCalledWith(
-        eventContainingTargetValue('9'),
-      );
-    });
+    const testCases: Array<DateSegment> = ['day', 'month', 'year'];
 
-    test('ArrowDown calls handler with -1', () => {
-      const result = render(
-        <DateInputSegment
-          segment="day"
-          onChange={onChangeHandler}
-          value={'08'}
-        />,
-      );
-      const input = result.getByTestId('lg-date_picker_input-segment');
-      userEvent.type(input, '{arrowdown}');
-      expect(onChangeHandler).toHaveBeenCalledWith(
-        eventContainingTargetValue('7'),
-      );
+    describe.each(testCases)('in %p input', segment => {
+      const minValue = defaultMin[segment];
+      const maxValue = defaultMax[segment];
+      const defaultValue = mean([minValue, maxValue]);
+
+      describe('Up arrow', () => {
+        test('calls handler with value + 1', () => {
+          const result = render(
+            <DateInputSegment
+              segment={segment}
+              onChange={onChangeHandler}
+              value={`${defaultValue}`}
+            />,
+          );
+          const input = result.getByTestId('lg-date_picker_input-segment');
+          userEvent.type(input, '{arrowup}');
+          expect(onChangeHandler).toHaveBeenCalledWith(
+            eventContainingTargetValue(`${defaultValue + 1}`),
+          );
+        });
+
+        test('calls handler with `min` if initially undefined', () => {
+          const result = render(
+            <DateInputSegment onChange={onChangeHandler} segment={segment} />,
+          );
+          const input = result.getByTestId('lg-date_picker_input-segment');
+
+          userEvent.type(input, '{arrowup}');
+          expect(onChangeHandler).toHaveBeenCalledWith(
+            eventContainingTargetValue(`${minValue}`),
+          );
+        });
+
+        test('calls handler with `min` when the new value is greater than the `max` value', () => {
+          const result = render(
+            <DateInputSegment
+              onChange={onChangeHandler}
+              segment={segment}
+              value={`${maxValue}`}
+            />,
+          );
+          const input = result.getByTestId('lg-date_picker_input-segment');
+
+          userEvent.type(input, '{arrowup}');
+          expect(onChangeHandler).toHaveBeenCalledWith(
+            eventContainingTargetValue(`${minValue}`),
+          );
+        });
+      });
+
+      describe('Down arrow', () => {
+        test('calls handler with value - 1', () => {
+          const result = render(
+            <DateInputSegment
+              segment={segment}
+              onChange={onChangeHandler}
+              value={`${defaultValue}`}
+            />,
+          );
+          const input = result.getByTestId('lg-date_picker_input-segment');
+          userEvent.type(input, '{arrowdown}');
+          expect(onChangeHandler).toHaveBeenCalledWith(
+            eventContainingTargetValue(`${defaultValue - 1}`),
+          );
+        });
+
+        test('calls handler with `max` if initially undefined', () => {
+          const result = render(
+            <DateInputSegment onChange={onChangeHandler} segment={segment} />,
+          );
+          const input = result.getByTestId('lg-date_picker_input-segment');
+
+          userEvent.type(input, '{arrowdown}');
+          expect(onChangeHandler).toHaveBeenCalledWith(
+            eventContainingTargetValue(`${maxValue}`),
+          );
+        });
+
+        test('calls handler with `max` value when the new value is less than the `min` value', () => {
+          const result = render(
+            <DateInputSegment
+              onChange={onChangeHandler}
+              segment={segment}
+              value={`${minValue}`}
+            />,
+          );
+          const input = result.getByTestId('lg-date_picker_input-segment');
+
+          userEvent.type(input, '{arrowdown}');
+          expect(onChangeHandler).toHaveBeenCalledWith(
+            eventContainingTargetValue(`${maxValue}`),
+          );
+        });
+      });
     });
   });
 });

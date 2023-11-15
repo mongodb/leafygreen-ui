@@ -133,5 +133,57 @@ describe('packages/date-picker/date-picker-input', () => {
         expect(yearInput).toHaveFocus();
       });
     });
+
+    describe('Up Arrow', () => {
+      test('keeps the focus in the current segment', () => {
+        const { monthInput } = renderDatePickerInput();
+        userEvent.click(monthInput);
+        userEvent.keyboard('{arrowup}');
+        expect(monthInput).toHaveFocus();
+      });
+
+      test('keeps the focus in the current segment even if the value is valid', () => {
+        const { monthInput } = renderDatePickerInput();
+        userEvent.click(monthInput);
+        userEvent.keyboard('{arrowup}{arrowup}{arrowup}');
+        expect(monthInput).toHaveValue('03');
+        expect(monthInput).toHaveFocus();
+      });
+
+      test('Resets the value to the min value when the new value is greater than the max value', () => {
+        const { monthInput } = renderDatePickerInput();
+        userEvent.click(monthInput);
+        userEvent.keyboard('{arrowup}');
+        expect(monthInput).toHaveValue('01');
+        userEvent.keyboard(
+          '{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}',
+        );
+        expect(monthInput).toHaveValue('01');
+      });
+    });
+
+    describe('Down Arrow', () => {
+      test('keeps the focus in the current segment', () => {
+        const { monthInput } = renderDatePickerInput();
+        userEvent.click(monthInput);
+        userEvent.keyboard('{arrowdown}');
+        expect(monthInput).toHaveFocus();
+      });
+
+      test('keeps the focus in the current segment even if the value is valid', () => {
+        const { monthInput } = renderDatePickerInput();
+        userEvent.click(monthInput);
+        userEvent.keyboard('{arrowdown}{arrowdown}{arrowdown}');
+        expect(monthInput).toHaveValue('10');
+        expect(monthInput).toHaveFocus();
+      });
+
+      test('Resets the value to the max value when the new value is less than the min value', () => {
+        const { monthInput } = renderDatePickerInput();
+        userEvent.click(monthInput);
+        userEvent.keyboard('{arrowdown}');
+        expect(monthInput).toHaveValue('12');
+      });
+    });
   });
 });
