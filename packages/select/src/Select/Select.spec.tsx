@@ -607,7 +607,7 @@ describe('packages/select', () => {
         });
       });
 
-      describe('selecting an option closes menu and doesnt reopen the menu', () => {
+      describe("selecting an option closes menu and doesn't reopen the menu", () => {
         test('on mouse click', async () => {
           const { getByRole, findAllByRole, queryByRole } = render(
             <Select {...defaultProps}>
@@ -1207,7 +1207,7 @@ describe('packages/select', () => {
         });
       });
 
-      describe('selecting an option closes menu and doesnt reopen the menu', () => {
+      describe("selecting an option closes menu and doesn't reopen the menu", () => {
         test('on mouse click', async () => {
           const { getByRole, findAllByRole, queryByRole } = render(
             <Select {...defaultProps} usePortal={false}>
