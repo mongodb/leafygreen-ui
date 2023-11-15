@@ -172,7 +172,7 @@ describe('packages/date-picker/menu/header', () => {
       );
     };
 
-    test('opening & closing a select menu calls `setIsPopoverOpen` in PopoverContext', async () => {
+    test('opening & closing a select menu calls `setIsSelectOpen` in DatePickerContext', async () => {
       const { getByLabelText } = render(
         <AllMockProviders>
           <DatePickerMenuHeader setMonth={() => {}} />
