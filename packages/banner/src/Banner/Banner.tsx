@@ -85,7 +85,7 @@ Banner.propTypes = {
   darkMode: PropTypes.bool,
   variant: PropTypes.oneOf(Object.values(Variant)),
   onClose: PropTypes.func,
-  dismissable: PropTypes.bool,
+  dismissible: PropTypes.bool,
   image: PropTypes.element,
   baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
 };
