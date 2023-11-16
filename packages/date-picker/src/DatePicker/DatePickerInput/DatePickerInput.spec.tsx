@@ -55,6 +55,27 @@ describe('packages/date-picker/date-picker-input', () => {
     jest.useFakeTimers().setSystemTime(testDate);
   });
 
+  describe('Typing', () => {
+    test('typing into a segment updates the segment value', () => {
+      const { dayInput } = renderDatePickerInput();
+      userEvent.type(dayInput, '26');
+      expect(dayInput.value).toBe('26');
+    });
+
+    test('segment value is not immediately formatted', () => {
+      const { dayInput } = renderDatePickerInput();
+      userEvent.type(dayInput, '2');
+      expect(dayInput.value).toBe('2');
+    });
+
+    test('value is formatted on segment blur', () => {
+      const { dayInput } = renderDatePickerInput();
+      userEvent.type(dayInput, '2');
+      userEvent.tab();
+      expect(dayInput.value).toBe('02');
+    });
+  });
+
   describe('Keyboard interaction', () => {
     // yyyy-mm-dd
     describe('Left Arrow', () => {

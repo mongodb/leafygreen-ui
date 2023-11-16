@@ -64,7 +64,7 @@ describe('packages/date-picker/shared/date-input-box', () => {
     onChange.mockClear();
   });
 
-  describe('rendering', () => {
+  describe('Rendering', () => {
     describe.each(['day', 'month', 'year'])('%p', segment => {
       test('renders the correct aria attributes', () => {
         const result = renderDateInputBox();
@@ -123,7 +123,7 @@ describe('packages/date-picker/shared/date-input-box', () => {
     });
   });
 
-  describe('typing', () => {
+  describe('Typing', () => {
     test('typing into a segment updates the segment value', () => {
       const { dayInput } = renderDateInputBox(undefined, testContext);
       userEvent.type(dayInput, '26');
@@ -201,7 +201,7 @@ describe('packages/date-picker/shared/date-input-box', () => {
     });
   });
 
-  describe('mouse interaction', () => {
+  describe('Mouse interaction', () => {
     test('click on segment focuses it', () => {
       const { dayInput } = renderDateInputBox(undefined, {
         dateFormat: 'iso8601',

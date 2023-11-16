@@ -292,6 +292,28 @@ describe('packages/date-picker', () => {
           userEvent.click(firstCell!);
           expect(handleValidation).toHaveBeenCalled();
         });
+
+        test('closes the menu', async () => {
+          const { openMenu } = renderDatePicker({});
+          const { calendarCells, menuContainerEl } = await openMenu();
+          const firstCell = calendarCells?.[0];
+          userEvent.click(firstCell!);
+          await waitForElementToBeRemoved(menuContainerEl);
+        });
+
+        test('updates the input', async () => {
+          const { openMenu, dayInput, monthInput, yearInput } =
+            renderDatePicker({});
+          const { todayCell } = await openMenu();
+          userEvent.click(todayCell!);
+          await waitFor(() => {
+            expect(dayInput.value).toBe(testToday.getUTCDate().toString());
+            expect(monthInput.value).toBe(
+              (testToday.getUTCMonth() + 1).toString(),
+            );
+            expect(yearInput.value).toBe(testToday.getUTCFullYear().toString());
+          });
+        });
       });
 
       describe('Clicking a Chevron', () => {
@@ -790,6 +812,23 @@ describe('packages/date-picker', () => {
         );
       });
 
+      test('segment value is not immediately formatted', () => {
+        const onChange = jest.fn();
+        const { dayInput } = renderDatePicker({ onChange });
+        userEvent.type(dayInput, '2');
+        expect(onChange).toHaveBeenCalledWith(eventContainingTargetValue('2'));
+        expect(dayInput.value).toBe('2');
+      });
+
+      test('value is formatted on segment blur', () => {
+        const onChange = jest.fn();
+        const { dayInput } = renderDatePicker({ onChange });
+        userEvent.type(dayInput, '2');
+        userEvent.tab();
+        expect(onChange).toHaveBeenCalledWith(eventContainingTargetValue('02'));
+        expect(dayInput.value).toBe('02');
+      });
+
       describe('auto-advances focus', () => {
         describe('for ISO format', () => {
           const dateFormat = 'iso8601';
@@ -811,7 +850,6 @@ describe('packages/date-picker', () => {
             userEvent.type(yearInput, '1945');
             expect(yearInput).toHaveFocus();
           });
-
           test('when month value is explicit, focus advances to day', () => {
             const { monthInput, dayInput } = renderDatePicker({
               dateFormat,

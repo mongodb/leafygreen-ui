@@ -189,19 +189,25 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
         meta?.key === keyMap.ArrowDown || meta?.key === keyMap.ArrowUp;
 
       if (isValidSegmentName(segment)) {
-        if (
-          isValidValueForSegment(segment, segmentValue) &&
-          isExplicitSegmentValue(segment, segmentValue) &&
-          !usingArrowKeys
-        ) {
-          const nextSegment = getRelativeSegment('next', {
-            segment: segmentRefs[segment],
-            formatParts,
-            segmentRefs,
-          });
+        if (!usingArrowKeys) {
+          // if the segment was changed by typing, open the menu
+          openMenu();
 
-          nextSegment?.current?.focus();
-        } else if (!isValidValueForSegment(segment, segmentValue) && isDirty) {
+          if (
+            isValidValueForSegment(segment, segmentValue) &&
+            isExplicitSegmentValue(segment, segmentValue)
+          ) {
+            const nextSegment = getRelativeSegment('next', {
+              segment: segmentRefs[segment],
+              formatParts,
+              segmentRefs,
+            });
+
+            nextSegment?.current?.focus();
+          }
+        }
+
+        if (!isValidValueForSegment(segment, segmentValue) && isDirty) {
           handleValidation?.(value);
         }
       }
@@ -214,7 +220,6 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           changeEvent,
           target,
         );
-
         onSegmentChange?.(reactEvent);
       }
     };

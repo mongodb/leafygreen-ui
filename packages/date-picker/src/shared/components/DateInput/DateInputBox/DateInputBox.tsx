@@ -68,19 +68,6 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       prevSegments?: DateSegmentsState,
     ) => {
       const hasAnySegmentChanged = !isEqual(newSegments, prevSegments);
-      // const haveAllSegmentsChanged = Object.entries(newSegments).every(
-      //   ([segment, value]) => prevSegments?.[segment as DateSegment] !== value,
-      // );
-
-      // Trigger segment change events if all segments are updated at once
-      // if (haveAllSegmentsChanged) {
-      //   Object.entries(newSegments).forEach(([segment, value]) => {
-      //     onSegmentChangeProp?.({
-      //       segment: segment as DateSegment,
-      //       value: value as DateSegmentValue,
-      //     });
-      //   });
-      // }
 
       if (hasAnySegmentChanged) {
         const utcDate = newDateFromSegments(newSegments);
