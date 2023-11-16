@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/banner",
-  "version": "7.0.17",
+  "version": "7.0.18",
   "description": "leafyGreen UI Kit Banner",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

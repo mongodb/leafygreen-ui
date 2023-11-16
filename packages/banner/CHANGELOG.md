@@ -1,5 +1,11 @@
 # @leafygreen-ui/banner
 
+## 7.0.18
+
+### Patch Changes
+
+- 94cf70a5: Rename `dismissible` in propTypes to reflect correct spelling
+
 ## 7.0.17
 
 ### Patch Changes
