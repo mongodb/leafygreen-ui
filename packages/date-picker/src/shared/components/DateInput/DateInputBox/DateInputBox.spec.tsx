@@ -1,16 +1,17 @@
 import React from 'react';
+import { jest } from '@jest/globals';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { Month } from '../../../constants';
 import { SegmentRefs } from '../../../hooks';
 import { newUTC } from '../../../utils';
-import { eventContainingTargetValue } from '../../../utils/testutils';
 import {
   DatePickerProvider,
   DatePickerProviderProps,
   defaultDatePickerContext,
 } from '../../DatePickerContext';
+import { DateInputSegmentChangeEventHandler } from '../DateInputSegment/DateInputSegment.types';
 
 import { DateInputBox, type DateInputBoxProps } from '.';
 
@@ -52,13 +53,19 @@ const renderDateInputBox = (
 };
 
 describe('packages/date-picker/shared/date-input-box', () => {
+  const onChange = jest.fn<DateInputSegmentChangeEventHandler>();
+
   const testContext: Partial<DatePickerProviderProps> = {
     dateFormat: 'iso8601',
     timeZone: 'UTC',
   };
 
+  afterEach(() => {
+    onChange.mockClear();
+  });
+
   describe('rendering', () => {
-    describe.each(['day', 'month', 'year'])('%i', segment => {
+    describe.each(['day', 'month', 'year'])('%p', segment => {
       test('renders the correct aria attributes', () => {
         const result = renderDateInputBox();
         const input = result.getByLabelText(segment);
@@ -129,6 +136,13 @@ describe('packages/date-picker/shared/date-input-box', () => {
       expect(dayInput.value).toBe('2');
     });
 
+    test('value is formatted on segment blur', () => {
+      const { dayInput } = renderDateInputBox(undefined, testContext);
+      userEvent.type(dayInput, '2');
+      userEvent.tab();
+      expect(dayInput.value).toBe('02');
+    });
+
     test('deleting characters works as expected', () => {
       const { dayInput, yearInput } = renderDateInputBox(
         { value: newUTC(1993, Month.December, 26) },
@@ -155,8 +169,6 @@ describe('packages/date-picker/shared/date-input-box', () => {
     });
 
     test('typing into a segment fires the change handler', () => {
-      const onChange = jest.fn();
-
       const { yearInput } = renderDateInputBox(
         {
           value: null,
@@ -166,7 +178,9 @@ describe('packages/date-picker/shared/date-input-box', () => {
       );
       userEvent.type(yearInput, '1993');
 
-      expect(onChange).toHaveBeenCalledWith(eventContainingTargetValue('1993'));
+      expect(onChange).toHaveBeenCalledWith(
+        expect.objectContaining({ value: '1993' }),
+      );
     });
 
     test('value setter is called when a complete date is entered', () => {
@@ -184,13 +198,6 @@ describe('packages/date-picker/shared/date-input-box', () => {
       expect(setValue).toHaveBeenCalledWith(
         expect.objectContaining(newUTC(1993, Month.December, 26)),
       );
-    });
-
-    test('value is only formatted on segment blur', () => {
-      const { dayInput } = renderDateInputBox(undefined, testContext);
-      userEvent.type(dayInput, '2');
-      userEvent.tab();
-      expect(dayInput.value).toBe('02');
     });
   });
 

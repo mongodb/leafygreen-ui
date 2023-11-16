@@ -1,13 +1,9 @@
-import React, {
-  ChangeEvent,
-  ChangeEventHandler,
-  KeyboardEventHandler,
-} from 'react';
+import React, { ChangeEventHandler, KeyboardEventHandler } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { createSyntheticEvent, keyMap, rollover } from '@leafygreen-ui/lib';
+import { keyMap, rollover } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
@@ -17,6 +13,7 @@ import {
   defaultMin,
   defaultPlaceholder,
 } from '../../../constants';
+import { getValueFormatter } from '../../../utils';
 import { useDatePickerContext } from '../../DatePickerContext';
 
 import {
@@ -60,23 +57,28 @@ export const DateInputSegment = React.forwardRef<
     const { theme } = useDarkMode(darkMode);
     const baseFontSize = useUpdatedBaseFontSize();
     const { size, disabled } = useDatePickerContext();
+    const formatter = getValueFormatter(segment);
     const pattern = `[0-9]{${charsPerSegment.year}}`;
 
+    /** Prevent non-numeric values from triggering a change event */
     const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
       const { target } = e;
       const numericValue = Number(target.value);
 
       if (!isNaN(numericValue)) {
-        onChange?.(e);
+        const stringValue = numericValue.toString();
+        onChange?.({
+          segment,
+          value: stringValue,
+        });
       }
     };
 
     /** Synthetically fire ChangeEvents when the up/down arrow keys are pressed */
     const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
-      const { key, target, ...rest } =
-        e as React.KeyboardEvent<HTMLInputElement> & {
-          target: HTMLInputElement;
-        };
+      const { key } = e as React.KeyboardEvent<HTMLInputElement> & {
+        target: HTMLInputElement;
+      };
 
       if (key === keyMap.ArrowUp || key === keyMap.ArrowDown) {
         e.preventDefault();
@@ -89,15 +91,25 @@ export const DateInputSegment = React.forwardRef<
           : min;
 
         const newValue = rollover(initialValue + valueDiff, min, max);
-        const valueString = newValue.toString();
+        const valueString = formatter(newValue);
 
-        target.value = valueString;
-        const nativeEvent = new Event('change', { ...rest });
-        const changeEvent = createSyntheticEvent<ChangeEvent<HTMLInputElement>>(
-          nativeEvent,
-          target,
-        );
-        onChange?.(changeEvent);
+        onChange?.({
+          segment,
+          value: valueString,
+          meta: { key },
+        });
+      }
+
+      if (key === keyMap.Backspace) {
+        const numChars = value?.length;
+
+        if (numChars === 1) {
+          onChange?.({
+            segment,
+            value: '',
+            meta: { key },
+          });
+        }
       }
 
       onKeyDown?.(e);

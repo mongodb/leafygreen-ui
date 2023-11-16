@@ -31,6 +31,7 @@ export const createSyntheticEvent = <
 
   const syntheticEvent = {
     nativeEvent: event,
+    ...event,
     currentTarget: event.currentTarget as EventTarget & TargetType,
     target: event.target as EventTarget & TargetType,
     bubbles: event.bubbles,

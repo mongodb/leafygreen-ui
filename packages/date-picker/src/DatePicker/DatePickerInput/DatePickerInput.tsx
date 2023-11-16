@@ -1,12 +1,13 @@
 import React, {
-  ChangeEventHandler,
+  ChangeEvent,
   FocusEventHandler,
   forwardRef,
   KeyboardEventHandler,
   MouseEventHandler,
 } from 'react';
+import { DateInputSegmentChangeEventHandler } from 'src/shared/components/DateInput/DateInputSegment/DateInputSegment.types';
 
-import { keyMap } from '@leafygreen-ui/lib';
+import { createSyntheticEvent, keyMap } from '@leafygreen-ui/lib';
 
 import { DateFormField, DateInputBox } from '../../shared/components/DateInput';
 import { useDatePickerContext } from '../../shared/components/DatePickerContext';
@@ -82,7 +83,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
     };
 
     /** Called on any keydown within the input element */
-    const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
+    const handleInputKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
       const { target: _target, key } = e;
       const target = _target as HTMLElement;
       const isSegment = isElementInputSegment(target, segmentRefs);
@@ -133,9 +134,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
 
         case keyMap.ArrowUp:
         case keyMap.ArrowDown: {
-          // if decrementing the segment's value is in range
-          // decrement that segment value
-          // This is the default `input type=number` & `role="spinbutton"` behavior
+          // increment/decrement logic implemented by DateInputSegment
           break;
         }
 
@@ -184,18 +183,16 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
      * Called when any segment changes
      * If up/down arrows are pressed, don't move to the next segment
      */
-    const handleSegmentChange: ChangeEventHandler<HTMLInputElement> = e => {
-      const segment = e.target.dataset['segment'];
-      const segmentValue = e.target.value;
-      const areUpDownKeys =
-        // @ts-ignore FIXME:
-        e.key === keyMap.ArrowDown || e.key === keyMap.ArrowUp;
+    const handleSegmentChange: DateInputSegmentChangeEventHandler = e => {
+      const { segment, value: segmentValue, meta } = e;
+      const usingArrowKeys =
+        meta?.key === keyMap.ArrowDown || meta?.key === keyMap.ArrowUp;
 
       if (isValidSegmentName(segment)) {
         if (
           isValidValueForSegment(segment, segmentValue) &&
           isExplicitSegmentValue(segment, segmentValue) &&
-          !areUpDownKeys
+          !usingArrowKeys
         ) {
           const nextSegment = getRelativeSegment('next', {
             segment: segmentRefs[segment],
@@ -208,14 +205,25 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           handleValidation?.(value);
         }
       }
-      onSegmentChange?.(e);
+
+      const changeEvent = new Event('change');
+      const target = segmentRefs[segment].current;
+
+      if (target) {
+        const reactEvent = createSyntheticEvent<ChangeEvent<HTMLInputElement>>(
+          changeEvent,
+          target,
+        );
+
+        onSegmentChange?.(reactEvent);
+      }
     };
 
     return (
       <DateFormField
         ref={fwdRef}
         buttonRef={calendarButtonRef}
-        onKeyDown={handleKeyDown}
+        onKeyDown={handleInputKeyDown}
         onInputClick={handleInputClick}
         onBlur={handleInputBlur}
         onIconButtonClick={handleIconButtonClick}
