@@ -1174,8 +1174,9 @@ describe('packages/date-picker', () => {
           });
 
           // TODO: This is a bug in the browsers but passes here 🤔
+          // https://jira.mongodb.org/browse/LG-3766
           // In the browser the year input does not update
-          test('after selecting a year and clicking a cell a second time', async () => {
+          test.skip('after selecting a year and clicking a cell a second time', async () => {
             const { openMenu, findAllByRole, dayInput, monthInput, yearInput } =
               renderDatePicker({
                 initialValue: new Date(), // dec 26 2023

@@ -74,6 +74,7 @@ export const DateInputSegment = React.forwardRef<
           segmentSizeStyles[size ?? Size.Default],
           segmentWidthStyles[segment],
         )}
+        // autoComplete="off"
       />
     );
   },

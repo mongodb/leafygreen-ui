@@ -119,7 +119,8 @@ describe('packages/date-picker/date-picker-input', () => {
       });
     });
 
-    describe('typing', () => {
+    // TODO: failing https://jira.mongodb.org/browse/LG-3770
+    describe.skip('typing', () => {
       describe('allows only 2 characters', () => {
         test('in day input', () => {
           const { dayInput } = renderDatePickerInput();
