@@ -1,17 +1,10 @@
-import React from 'react';
+import React, { MouseEventHandler, useState } from 'react';
 import isUndefined from 'lodash/isUndefined';
 import { darken, lighten, readableColor, transparentize } from 'polished';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps, StoryMetaType } from '@leafygreen-ui/lib';
 
-// import {
-//   focusRing,
-//   hoverRing,
-//   transitionDuration,
-//   typeScales,
-// } from '@leafygreen-ui/tokens';
-// import Tooltip from '@leafygreen-ui/tooltip';
 import palette from './palette';
 
 type HueName = keyof typeof palette;
@@ -36,13 +29,29 @@ interface ColorBlockProps extends HTMLElementProps<'div'> {
 
 const BLOCK_WIDTH = 88;
 
+const copiedOverlayStyle = css`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Euclid Circular A', 'Helvetica Neue', Helvetica, Arial,
+    sans-serif;
+  border-radius: inherit;
+`;
+
 const colorBlockWrapper = css`
   display: inline-block;
   position: relative;
   width: ${BLOCK_WIDTH}px;
+  padding-bottom: 16px;
 `;
 
 const colorBlock = css`
+  position: relative;
   outline: none;
   border: none;
   border-top-color: transparent;
@@ -50,6 +59,11 @@ const colorBlock = css`
   padding-bottom: 100%;
   border-radius: 8px;
   cursor: pointer;
+  vertical-align: top;
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px #0498ec;
+  }
 `;
 
 const hexLabelStyle = css`
@@ -62,6 +76,7 @@ const hexLabelStyle = css`
   padding: 3px 0.3rem;
   border-radius: 4px;
   transform: translate(-50%, -125%);
+  pointer-events: none;
 `;
 
 const nameLabelStyle = css`
@@ -78,6 +93,7 @@ const colorRowStyle = css`
 `;
 
 function ColorBlock({ hue, shade, ...rest }: ColorBlockProps) {
+  const [wasCopied, setWasCopied] = useState<boolean>();
   const name = `${hue} ${shade ?? ''}`;
 
   let color: string;
@@ -93,9 +109,16 @@ function ColorBlock({ hue, shade, ...rest }: ColorBlockProps) {
   `;
 
   const colorBlockColor = css`
+    transition: all 0.3s ease;
     background-color: ${color};
     box-shadow: 0 8px 6px -8px ${transparentize(0.7, darken(0.2, color))},
       0 2px 3px ${transparentize(0.8, darken(0.5, color))};
+
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 6px -8px ${transparentize(0.7, darken(0.4, color))},
+        0 2px 3px ${transparentize(0.5, darken(0.3, color))};
+    }
   `;
 
   const hexLabelColor = css`
@@ -103,10 +126,29 @@ function ColorBlock({ hue, shade, ...rest }: ColorBlockProps) {
     background-color: ${lighten(0.2, color)};
   `;
 
+  const handleClick: MouseEventHandler<HTMLButtonElement> = () => {
+    navigator.clipboard.writeText(color);
+    setWasCopied(true);
+    setTimeout(() => {
+      setWasCopied(false);
+    }, 2000);
+  };
+
   return (
     <div className={cx(colorBlockWrapper, colorBlockWrapperDynamic)} {...rest}>
-      <button className={cx(colorBlock, colorBlockColor)} />
-      <div className={cx(hexLabelStyle, hexLabelColor)}>{color}</div>
+      <button className={cx(colorBlock, colorBlockColor)} onClick={handleClick}>
+        {wasCopied && (
+          <div
+            className={copiedOverlayStyle}
+            style={{ color: readableColor(color) }}
+          >
+            Copied!
+          </div>
+        )}
+      </button>
+      {!wasCopied && (
+        <div className={cx(hexLabelStyle, hexLabelColor)}>{color}</div>
+      )}
       <div className={nameLabelStyle}>{name}</div>
     </div>
   );

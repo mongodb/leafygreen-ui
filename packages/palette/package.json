@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/palette",
-  "version": "4.0.7",
+  "version": "4.0.8",
   "description": "LeafyGreen UI Palettes",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -23,9 +23,9 @@
   },
   "devDependencies": {
     "@leafygreen-ui/emotion": "^4.0.7",
+    "@leafygreen-ui/lib": "^13.0.0",
     "lodash": "^4.17.21",
-    "polished": "^4.2.2",
-    "@leafygreen-ui/lib": "^13.0.0"
+    "polished": "^4.2.2"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/palette",

@@ -12,6 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      # Needed following Github's transition from Node 16 to 20
       - name: Install node-gyp
         run: yarn global add node-gyp
 
@@ -135,13 +136,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Dispatch to Website repo
-        uses: peter-evans/repository-dispatch@v2
-        continue-on-error: true
-        with:
-          token: ${{ secrets.DESIGN_REPO_ACCESS_TOKEN }}
-          repository: mongodb/design
-          event-type: release-leafygreen-ui
+      # Needed following Github's transition from Node 16 to 20
+      - name: Install node-gyp
+        run: yarn global add node-gyp
 
       - name: Install
         run: yarn install --frozen-lockfile --prefer-offline
@@ -162,3 +159,19 @@ jobs:
         run: yarn slackbot '${{ needs.release.outputs.publishedPackages }}'
         env:
           SLACK_BOT_TOKEN: '${{ secrets.SLACK_BOT_TOKEN }}'
+  dispatch-to-website:
+    name: Dispatch to Website repo
+    runs-on: ubuntu-latest
+    needs: [release]
+    if: ${{ needs.release.outputs.published == 'true' }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Dispatch to Website repo
+        uses: peter-evans/repository-dispatch@v2
+        continue-on-error: true
+        with:
+          token: ${{ secrets.DESIGN_REPO_ACCESS_TOKEN }}
+          repository: mongodb/design
+          event-type: release-leafygreen-ui
+          client-payload: '{ "packages": ${{ toJson(needs.release.outputs.publishedPackages) }} }'
