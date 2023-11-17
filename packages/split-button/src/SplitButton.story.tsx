@@ -39,6 +39,9 @@ const meta: StoryMetaType<typeof SplitButton> = {
         'triggerAriaLabel',
       ],
     },
+    chromatic: {
+      disableSnapshot: true,
+    },
     generate: {
       storyNames: ['LargeSize', 'DefaultSize', 'SmallSize', 'XSmallSize'],
       combineArgs: {

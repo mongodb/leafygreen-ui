@@ -1,5 +1,11 @@
 # @leafygreen-ui/select
 
+## 11.1.1
+
+### Patch Changes
+
+- 969b0d45: Adds `stopPropagation` and `preventDefault` to prevent menus from reopening when using `usePortal = false` and selecting an option with `space`/`enter`.
+
 ## 11.1.0
 
 ### Minor Changes
