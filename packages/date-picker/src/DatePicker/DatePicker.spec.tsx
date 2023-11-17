@@ -219,31 +219,38 @@ describe('packages/date-picker', () => {
           expect(menuContainerEl).toBeInTheDocument();
         });
 
-        test('focuses a specific segment when clicked', () => {
-          const { monthInput } = renderDatePicker();
+        test('focuses a specific segment when clicked', async () => {
+          const { monthInput, waitForMenuToOpen } = renderDatePicker();
           userEvent.click(monthInput);
+          await waitForMenuToOpen();
           expect(monthInput).toHaveFocus();
         });
 
-        test('focuses the first segment when all are empty', () => {
-          const { inputContainer, yearInput } = renderDatePicker();
+        test('focuses the first segment when all are empty', async () => {
+          const { inputContainer, yearInput, waitForMenuToOpen } =
+            renderDatePicker();
           userEvent.click(inputContainer);
+          await waitForMenuToOpen();
           expect(yearInput).toHaveFocus();
         });
 
-        test('focuses the first empty segment when some are empty', () => {
-          const { inputContainer, yearInput, monthInput } = renderDatePicker();
+        test('focuses the first empty segment when some are empty', async () => {
+          const { inputContainer, yearInput, monthInput, waitForMenuToOpen } =
+            renderDatePicker();
           yearInput.value = '2023';
           yearInput.blur();
           userEvent.click(inputContainer);
+          await waitForMenuToOpen();
           expect(monthInput).toHaveFocus();
         });
 
-        test('focuses the last segment when all are filled', () => {
-          const { inputContainer, dayInput } = renderDatePicker({
-            value: new Date(),
-          });
+        test('focuses the last segment when all are filled', async () => {
+          const { inputContainer, dayInput, waitForMenuToOpen } =
+            renderDatePicker({
+              value: new Date(),
+            });
           userEvent.click(inputContainer);
+          await waitForMenuToOpen();
           expect(dayInput).toHaveFocus();
         });
       });
