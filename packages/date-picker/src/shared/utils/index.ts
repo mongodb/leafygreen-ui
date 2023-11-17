@@ -8,6 +8,7 @@ export { getFormatParts, getFormatter } from './getFormatParts';
 export { getFullMonthLabel } from './getFullMonthLabel';
 export { getISODate } from './getISODate';
 export { getLastOfMonth } from './getLastOfMonth';
+export { getMonthIndex } from './getMonthIndex';
 export { getMonthName } from './getMonthName';
 export { getRemainingParts } from './getRemainingParts';
 export {

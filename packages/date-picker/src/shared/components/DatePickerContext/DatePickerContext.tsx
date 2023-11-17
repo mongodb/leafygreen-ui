@@ -23,17 +23,30 @@ export const DatePickerContext = createContext<DatePickerContextProps>(
 /** The Provider component for DatePickerContext */
 export const DatePickerProvider = ({
   children,
-  initialOpen,
+  initialOpen = false,
+  disabled = false,
   ...rest
 }: PropsWithChildren<DatePickerProviderProps>) => {
-  const [isOpen, setOpen] = useState<boolean>(initialOpen ?? false);
+  const isInitiallyOpen = disabled ? false : initialOpen;
+  const [isOpen, setOpen] = useState<boolean>(isInitiallyOpen);
   const [isDirty, setIsDirty] = useState(false);
+  const [isSelectOpen, setIsSelectOpen] = useState(false);
   const menuId = useIdAllocator({ prefix: 'lg-date-picker-menu' });
   const contextValue = getContextProps(rest);
 
   return (
     <DatePickerContext.Provider
-      value={{ ...contextValue, isOpen, setOpen, isDirty, setIsDirty, menuId }}
+      value={{
+        ...contextValue,
+        disabled,
+        isOpen,
+        setOpen,
+        isDirty,
+        setIsDirty,
+        menuId,
+        isSelectOpen,
+        setIsSelectOpen,
+      }}
     >
       {children}
     </DatePickerContext.Provider>

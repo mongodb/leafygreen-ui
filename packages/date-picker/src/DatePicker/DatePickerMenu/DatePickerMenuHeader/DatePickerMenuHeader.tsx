@@ -1,30 +1,26 @@
-import React, {
-  forwardRef,
-  KeyboardEventHandler,
-  MouseEventHandler,
-} from 'react';
+import React, { forwardRef, MouseEventHandler } from 'react';
 import { isBefore } from 'date-fns';
 import range from 'lodash/range';
 
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
-import { usePopoverContext } from '@leafygreen-ui/leafygreen-provider';
 import { Option, Select } from '@leafygreen-ui/select';
 
 import { useDatePickerContext } from '../../../shared/components/DatePickerContext';
 import { Months, selectElementProps } from '../../../shared/constants';
 import { isSameUTCMonth, setUTCMonth, setUTCYear } from '../../../shared/utils';
-import { DatePickerProps } from '../../DatePicker.types';
+import { useSingleDateContext } from '../../SingleDateContext';
 import {
   menuHeaderSelectContainerStyles,
   menuHeaderStyles,
   selectInputWidthStyles,
 } from '../DatePickerMenu.styles';
 
-type DatePickerMenuHeaderProps = {
-  month: Date;
+import { shouldMonthBeEnabled } from './utils/getMonthOptions';
+
+interface DatePickerMenuHeaderProps {
   setMonth: (newMonth: Date) => void;
-} & Pick<DatePickerProps, 'handleValidation' | 'value'>;
+}
 
 /**
  * A helper component for DatePickerMenu.
@@ -34,9 +30,9 @@ type DatePickerMenuHeaderProps = {
 export const DatePickerMenuHeader = forwardRef<
   HTMLDivElement,
   DatePickerMenuHeaderProps
->(({ month, setMonth }: DatePickerMenuHeaderProps, fwdRef) => {
-  const { min, max, isInRange } = useDatePickerContext();
-  const { isPopoverOpen: isSelectMenuOpen } = usePopoverContext();
+>(({ setMonth, ...rest }: DatePickerMenuHeaderProps, fwdRef) => {
+  const { min, max, isInRange, setIsSelectOpen } = useDatePickerContext();
+  const { month } = useSingleDateContext();
 
   const yearOptions = range(min.getUTCFullYear(), max.getUTCFullYear() + 1);
 
@@ -68,19 +64,12 @@ export const DatePickerMenuHeader = forwardRef<
       updateMonth(newMonth);
     };
 
-  /**
-   * Ensure that the date picker menu will not close when a select menu is open, focus is inside the select menu, and the ESC key is pressed.
-   */
-  const handleEcsPress: KeyboardEventHandler<HTMLDivElement> = e => {
-    // `isSelectMenuOpen` provided by `PopoverProvider` is `true` if any popover _within_ the menu is open
-    if (isSelectMenuOpen) {
-      e.stopPropagation();
-    }
-  };
+  /** Returns whether the provided month should be enabled */
+  const isMonthEnabled = (monthName: string) =>
+    shouldMonthBeEnabled(monthName, { month, min, max });
 
   return (
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div ref={fwdRef} className={menuHeaderStyles} onKeyDown={handleEcsPress}>
+    <div ref={fwdRef} className={menuHeaderStyles} {...rest}>
       <IconButton
         aria-label="Previous month"
         disabled={isSameUTCMonth(month, min)}
@@ -98,9 +87,15 @@ export const DatePickerMenuHeader = forwardRef<
             updateMonth(newMonth);
           }}
           className={selectInputWidthStyles}
+          onEntered={() => setIsSelectOpen(true)}
+          onExited={() => setIsSelectOpen(false)}
         >
           {Months.map((m, i) => (
-            <Option value={i.toString()} key={m.short}>
+            <Option
+              disabled={!isMonthEnabled(m.long)}
+              value={i.toString()}
+              key={m.short}
+            >
               {m.short}
             </Option>
           ))}
@@ -114,6 +109,8 @@ export const DatePickerMenuHeader = forwardRef<
             updateMonth(newMonth);
           }}
           className={selectInputWidthStyles}
+          onEntered={() => setIsSelectOpen(true)}
+          onExited={() => setIsSelectOpen(false)}
         >
           {yearOptions.map(y => (
             <Option value={y.toString()} key={y}>

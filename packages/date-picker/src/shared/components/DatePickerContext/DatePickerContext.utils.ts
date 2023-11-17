@@ -55,6 +55,8 @@ export const defaultDatePickerContext: DatePickerContextProps = {
   baseFontSize: BaseFontSize.Body1,
   darkMode: false,
   menuId: '',
+  isSelectOpen: false,
+  setIsSelectOpen: () => {},
 };
 
 /**

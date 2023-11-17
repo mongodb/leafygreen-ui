@@ -81,6 +81,12 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       scrollContainer,
       portalClassName,
       popoverZIndex,
+      onEntering,
+      onEnter,
+      onEntered,
+      onExiting,
+      onExit,
+      onExited,
       __INTERNAL__menuButtonSlot__,
       ...rest
     },
@@ -216,6 +222,8 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
         option: OptionElement | null,
         event: React.MouseEvent | KeyboardEvent,
       ) => {
+        event.preventDefault();
+        event.stopPropagation();
         if (value === undefined) {
           setUncontrolledSelectedOption(option);
         }
@@ -477,6 +485,12 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
 
     const popoverProps = {
       popoverZIndex,
+      onEntering,
+      onEnter,
+      onEntered,
+      onExiting,
+      onExit,
+      onExited,
       ...(usePortal
         ? {
             usePortal,

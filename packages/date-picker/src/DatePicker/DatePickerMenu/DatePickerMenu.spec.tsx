@@ -186,6 +186,21 @@ describe('packages/date-picker/date-picker-menu', () => {
         await waitFor(() => expect(prevDay).toHaveFocus());
       });
 
+      // FIXME: unsure if daylight savings is the reason this is failing
+      // Sun, Mar 12, 2023 – Sun, Nov 5, 2023
+      // https://jira.mongodb.org/browse/LG-3773
+      test.skip('left arrow moves focus to the previous day when switching between daylight savings and standard time', async () => {
+        const testDLSValue = new Date(Date.UTC(2023, Month.November, 6));
+        const { getCellWithValue } = renderDatePickerMenu(null, {
+          value: testDLSValue,
+        });
+        userEvent.tab();
+        userEvent.keyboard('{arrowleft}');
+        const prevDay = getCellWithValue(setUTCDate(testDLSValue, 5));
+
+        await waitFor(() => expect(prevDay).toHaveFocus());
+      });
+
       test('right arrow moves focus to the next day', async () => {
         const { getCellWithValue } = renderDatePickerMenu(null, {
           value: testValue,
@@ -205,6 +220,21 @@ describe('packages/date-picker/date-picker-menu', () => {
         userEvent.keyboard('{arrowup}');
 
         const prevWeek = getCellWithValue(setUTCDate(testValue, 7));
+        await waitFor(() => expect(prevWeek).toHaveFocus());
+      });
+
+      // FIXME: unsure if daylight savings is the reason this is failing
+      // Sun, Mar 12, 2023 – Sun, Nov 5, 2023
+      // https://jira.mongodb.org/browse/LG-3773
+      test.skip('up arrow moves focus to the previous week when switching between daylight savings and standard time', async () => {
+        const testDLSValue = new Date(Date.UTC(2023, Month.November, 9));
+        const { getCellWithValue } = renderDatePickerMenu(null, {
+          value: testDLSValue,
+        });
+        userEvent.tab();
+        userEvent.keyboard('{arrowup}');
+
+        const prevWeek = getCellWithValue(setUTCDate(testDLSValue, 2));
         await waitFor(() => expect(prevWeek).toHaveFocus());
       });
 

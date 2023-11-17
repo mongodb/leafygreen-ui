@@ -10,6 +10,8 @@ import {
 import userEvent from '@testing-library/user-event';
 import { addDays, subDays } from 'date-fns';
 
+import { transitionDuration } from '@leafygreen-ui/tokens';
+
 import { Month } from '../shared/constants';
 import { newUTC } from '../shared/utils';
 import {
@@ -105,7 +107,16 @@ describe('packages/date-picker', () => {
       test('menu is initially open when rendered with `initialOpen`', async () => {
         const { findMenuElements } = renderDatePicker({ initialOpen: true });
         const { menuContainerEl } = await findMenuElements();
-        await waitFor(() => expect(menuContainerEl).toBeInTheDocument());
+        expect(menuContainerEl).toBeInTheDocument();
+      });
+
+      test('menu is initially closed when rendered with `initialOpen` and `disabled`', async () => {
+        const { findMenuElements } = renderDatePicker({
+          initialOpen: true,
+          disabled: true,
+        });
+        const { menuContainerEl } = await findMenuElements();
+        expect(menuContainerEl).not.toBeInTheDocument();
       });
 
       test('if no value is set, menu opens to current month', async () => {
@@ -132,6 +143,34 @@ describe('packages/date-picker', () => {
         });
         const { calendarCells } = await openMenu();
         expect(calendarCells).toHaveLength(29);
+      });
+
+      describe('when disabled is toggled to true', () => {
+        test('menu closes', async () => {
+          const { findMenuElements, rerenderDatePicker } = renderDatePicker({
+            initialOpen: true,
+          });
+          const { menuContainerEl } = await findMenuElements();
+          expect(menuContainerEl).toBeInTheDocument();
+          rerenderDatePicker({ disabled: true });
+          await waitFor(() => {
+            expect(menuContainerEl).not.toBeInTheDocument();
+          });
+        });
+
+        test('validation handler fires', async () => {
+          const handleValidation = jest.fn();
+          const { findMenuElements, rerenderDatePicker } = renderDatePicker({
+            initialOpen: true,
+            handleValidation,
+          });
+          const { menuContainerEl } = await findMenuElements();
+          expect(menuContainerEl).toBeInTheDocument();
+          rerenderDatePicker({ disabled: true });
+          await waitFor(() => {
+            expect(handleValidation).toHaveBeenCalled();
+          });
+        });
       });
 
       describe('Chevrons', () => {
@@ -695,26 +734,43 @@ describe('packages/date-picker', () => {
           expect(handleValidation).toHaveBeenCalledWith(undefined);
         });
 
+        test('closes the menu regardless of which element is focused', async () => {
+          const { openMenu } = renderDatePicker();
+          const { menuContainerEl, leftChevron } = await openMenu();
+          userEvent.tab();
+          expect(leftChevron).toHaveFocus();
+
+          userEvent.keyboard('{escape}');
+          await waitForElementToBeRemoved(menuContainerEl);
+          expect(menuContainerEl).not.toBeInTheDocument();
+        });
+
         test('does not close the main menu if a select menu is open', async () => {
           const { openMenu, queryAllByRole, findAllByRole } =
             renderDatePicker();
           const { monthSelect, menuContainerEl } = await openMenu();
 
-          monthSelect?.focus();
+          tabNTimes(2);
           expect(monthSelect).toHaveFocus();
+
           userEvent.keyboard('[Enter]');
-          userEvent.keyboard('{arrowdown}');
+          await waitFor(() =>
+            jest.advanceTimersByTime(transitionDuration.default),
+          );
+
           const options = await findAllByRole('option');
           const firstOption = options[0];
+          userEvent.keyboard('{arrowdown}');
           expect(firstOption).toHaveFocus();
+
           const listBoxes = queryAllByRole('listbox');
           expect(listBoxes).toHaveLength(2);
+
           const selectMenu = listBoxes[1];
           userEvent.keyboard('{escape}');
-          await waitFor(() => {
-            expect(menuContainerEl).toBeInTheDocument();
-            expect(selectMenu).not.toBeInTheDocument();
-          });
+          await waitForElementToBeRemoved(selectMenu);
+          expect(menuContainerEl).toBeInTheDocument();
+          expect(monthSelect).toHaveFocus();
         });
       });
 
@@ -1095,6 +1151,115 @@ describe('packages/date-picker', () => {
             tabNTimes(3);
             const dec1Cell = queryCellByDate(newUTC(2023, Month.December, 1));
             await waitFor(() => expect(dec1Cell).toHaveFocus());
+          });
+        });
+
+        describe('shows the correct date in the input', () => {
+          test('after selecting a month and clicking a cell', async () => {
+            const { openMenu, findAllByRole, dayInput, monthInput, yearInput } =
+              renderDatePicker({ initialValue: new Date() });
+            const { monthSelect, queryCellByDate } = await openMenu();
+            userEvent.click(monthSelect!);
+            const options = await findAllByRole('option');
+            const Jan = options[0];
+            userEvent.click(Jan);
+
+            const jan1Cell = queryCellByDate(newUTC(2023, Month.January, 1));
+            userEvent.click(jan1Cell!);
+
+            await waitFor(() => {
+              expect(dayInput.value).toEqual('01');
+              expect(monthInput.value).toEqual('01');
+              expect(yearInput.value).toEqual('2023');
+            });
+          });
+
+          test('after selecting a month and clicking a cell a second time', async () => {
+            const { openMenu, findAllByRole, dayInput, monthInput, yearInput } =
+              renderDatePicker({ initialValue: new Date() });
+            const { monthSelect, queryCellByDate } = await openMenu();
+            userEvent.click(monthSelect!);
+            const options = await findAllByRole('option');
+            const Jan = options[0];
+            userEvent.click(Jan);
+
+            const jan1Cell = queryCellByDate(newUTC(2023, Month.January, 1));
+            userEvent.click(jan1Cell!);
+
+            const Feb = options[1];
+            userEvent.click(Feb);
+
+            const feb1Cell = queryCellByDate(newUTC(2023, Month.February, 1));
+            userEvent.click(feb1Cell!);
+
+            await waitFor(() => {
+              expect(dayInput.value).toEqual('01');
+              expect(monthInput.value).toEqual('02');
+              expect(yearInput.value).toEqual('2023');
+            });
+          });
+        });
+      });
+
+      describe('Changing the year', () => {
+        test.todo('is announced in an aria-live region');
+
+        describe('shows the correct date in the input', () => {
+          test('after selecting a year and clicking a cell', async () => {
+            const { openMenu, findAllByRole, dayInput, monthInput, yearInput } =
+              renderDatePicker({
+                initialValue: new Date(), // dec 26 2023
+                min: newUTC(1996, Month.January, 1),
+                max: newUTC(2026, Month.January, 1),
+              });
+            const { yearSelect, queryCellByDate } = await openMenu();
+            userEvent.click(yearSelect!);
+            const options = await findAllByRole('option');
+            const firstYear = options[0]; // 1996
+
+            userEvent.click(firstYear);
+
+            const dec1Cell = queryCellByDate(newUTC(1996, Month.December, 1));
+            userEvent.click(dec1Cell!);
+
+            await waitFor(() => {
+              expect(dayInput.value).toEqual('01');
+              expect(monthInput.value).toEqual('12');
+              expect(yearInput.value).toEqual('1996');
+            });
+          });
+
+          // TODO: This is a bug in the browsers but passes here 🤔
+          // https://jira.mongodb.org/browse/LG-3766
+          // In the browser the year input does not update
+          test.skip('after selecting a year and clicking a cell a second time', async () => {
+            const { openMenu, findAllByRole, dayInput, monthInput, yearInput } =
+              renderDatePicker({
+                initialValue: new Date(), // dec 26 2023
+                min: newUTC(1996, Month.January, 1),
+                max: newUTC(2026, Month.January, 1),
+              });
+            const { yearSelect, queryCellByDate } = await openMenu();
+            userEvent.click(yearSelect!);
+            const options = await findAllByRole('option');
+            const firstYear = options[0]; // 1996
+
+            userEvent.click(firstYear);
+
+            const dec196Cell = queryCellByDate(newUTC(1996, Month.December, 1));
+            userEvent.click(dec196Cell!);
+
+            const secondYear = options[1]; // 1997
+            userEvent.click(secondYear);
+
+            const dec197Cell = queryCellByDate(newUTC(1997, Month.December, 1));
+            userEvent.click(dec197Cell!);
+
+            await waitFor(() => {
+              expect(dayInput.value).toEqual('01');
+              expect(monthInput.value).toEqual('12');
+              expect(yearInput.value).toEqual('1997');
+            });
           });
         });
       });

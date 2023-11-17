@@ -332,9 +332,19 @@ export const iconsWrapperStyles = (size: Size) => css`
 export const iconStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.gray.base};
+
+    &[aria-disabled='true'],
+    &:disabled {
+      color: ${palette.gray.light1};
+    }
   `,
   [Theme.Dark]: css`
     color: ${palette.gray.base};
+
+    &[aria-disabled='true'],
+    &:disabled {
+      color: ${palette.gray.dark2};
+    }
   `,
 };
 

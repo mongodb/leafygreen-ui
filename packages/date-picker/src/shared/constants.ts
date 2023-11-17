@@ -22,26 +22,45 @@ export enum Month {
   December,
 }
 
+/** An array of all English month names */
+export const MonthsArray = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
 /** The default earliest selectable date */
 export const MIN_DATE = new Date(Date.UTC(1970, Month.January, 1));
 
 /** The default latest selectable date */
 export const MAX_DATE = new Date(Date.UTC(2038, Month.January, 19));
 
-/**
- * Long & short form of each month index
- */
-export const Months: Array<{
+export interface MonthObject {
   long: string;
   short: string;
-}> = range(12).map((monthIndex: number) => {
-  const str = `2023-${padStart((monthIndex + 1).toString(), 2, '0')}-15`;
-  const month = new Date(str);
-  return {
-    long: month.toLocaleString('default', { month: 'long' }),
-    short: month.toLocaleString('default', { month: 'short' }),
-  };
-});
+}
+/**
+ * Long & short form of each month index. Updates based on locale
+ */
+export const Months: Array<MonthObject> = range(12).map(
+  (monthIndex: number) => {
+    const str = `2023-${padStart((monthIndex + 1).toString(), 2, '0')}-15`;
+    const month = new Date(str);
+    return {
+      long: month.toLocaleString('default', { month: 'long' }),
+      short: month.toLocaleString('default', { month: 'short' }),
+    };
+  },
+);
 
 /** Long & short form for each Day of the week */
 export const DaysOfWeek = [

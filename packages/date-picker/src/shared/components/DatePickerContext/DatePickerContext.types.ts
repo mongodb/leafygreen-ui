@@ -43,4 +43,10 @@ export interface DatePickerContextProps
 
   /** Setter for whether the component has been interacted with */
   setIsDirty: React.Dispatch<React.SetStateAction<boolean>>;
+
+  /** Identifies whether the select menus are open inside the menu */
+  isSelectOpen: boolean;
+
+  /** Setter for whether the select menus are open inside the menu */
+  setIsSelectOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }

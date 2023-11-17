@@ -1,4 +1,4 @@
-import { DynamicRefGetter } from '@leafygreen-ui/hooks/src/useDynamicRefs';
+import { DynamicRefGetter } from '@leafygreen-ui/hooks';
 
 import { DateSegment } from '../useDateSegments';
 

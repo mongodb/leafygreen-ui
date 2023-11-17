@@ -142,12 +142,12 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
     };
 
     // Focus trap
-    const handleWrapperTabKeyPress: KeyboardEventHandler<
-      HTMLDivElement
-    > = e => {
+    const handleMenuKeyPress: KeyboardEventHandler<HTMLDivElement> = e => {
+      const { key } = e;
+
       // Implementing custom focus-trap logic,
       // since focus-trap-react focuses the first element immediately on mount
-      if (e.key === keyMap.Tab) {
+      if (key === keyMap.Tab) {
         const currentFocus = document.activeElement;
 
         const highlightedCellElement = getHighlightedCell();
@@ -164,11 +164,15 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
           e.preventDefault();
         }
       }
+
+      // call any handler that was passed in
+      onKeyDown?.(e);
     };
 
     /** Called on any keydown within the CalendarGrid element */
     const handleCalendarKeyDown: KeyboardEventHandler<HTMLTableElement> = e => {
       const { key } = e;
+
       const highlightStart = highlight || value || today;
       let nextHighlight = highlightStart;
 
@@ -184,6 +188,8 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
         }
 
         case keyMap.ArrowUp: {
+          // TODO: https://jira.mongodb.org/browse/LG-3773
+          // console.log(subDays(new Date(Date.UTC(2023, 10, 10)), 1));
           nextHighlight = subDays(highlightStart, 7);
           break;
         }
@@ -200,12 +206,10 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       // if nextHighlight is in range
       if (isInRange(nextHighlight) && !isSameUTCDay(nextHighlight, highlight)) {
         updateHighlight(nextHighlight);
+
         // Prevent the parent keydown handler from being called
         e.stopPropagation();
       }
-
-      // call any handler that was passed in
-      onKeyDown?.(e);
     };
 
     return (
@@ -216,7 +220,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
         spacing={spacing[1]}
         className={menuWrapperStyles}
         usePortal
-        onKeyDown={handleWrapperTabKeyPress}
+        onKeyDown={handleMenuKeyPress}
         {...rest}
       >
         <div className={menuContentStyles}>
@@ -248,13 +252,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
               </CalendarCell>
             )}
           </CalendarGrid>
-          <DatePickerMenuHeader
-            ref={headerRef}
-            month={month}
-            setMonth={updateMonth}
-            handleValidation={handleValidation}
-            value={value}
-          />
+          <DatePickerMenuHeader ref={headerRef} setMonth={updateMonth} />
         </div>
       </MenuWrapper>
     );

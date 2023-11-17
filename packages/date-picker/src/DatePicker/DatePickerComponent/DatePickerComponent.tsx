@@ -2,6 +2,7 @@ import React, {
   forwardRef,
   KeyboardEventHandler,
   TransitionEventHandler,
+  useEffect,
   useRef,
 } from 'react';
 import { ExitHandler } from 'react-transition-group/Transition';
@@ -20,7 +21,7 @@ export const DatePickerComponent = forwardRef<
   HTMLDivElement,
   DatePickerComponentProps
 >(({ ...rest }: DatePickerComponentProps, fwdRef) => {
-  const { isOpen, menuId } = useDatePickerContext();
+  const { isOpen, menuId, disabled, isSelectOpen } = useDatePickerContext();
   const { value, closeMenu, handleValidation, getHighlightedCell } =
     useSingleDateContext();
 
@@ -28,6 +29,14 @@ export const DatePickerComponent = forwardRef<
   const menuRef = useRef<HTMLDivElement>(null);
 
   useBackdropClick(closeMenu, [formFieldRef, menuRef], isOpen);
+
+  /** This listens to when the disabled prop changes to true and closes the menu */
+  useEffect(() => {
+    if (disabled) {
+      closeMenu();
+      handleValidation?.(value);
+    }
+  }, [closeMenu, disabled, handleValidation, value]);
 
   /** Fired when the CSS transition to open the menu is fired */
   const handleMenuTransitionEntered: TransitionEventHandler = e => {
@@ -45,13 +54,17 @@ export const DatePickerComponent = forwardRef<
   };
 
   /** Handle key down events that should be fired regardless of target */
-  const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
+  const handleDatePickerKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
     const { key } = e;
 
     switch (key) {
       case keyMap.Escape:
-        closeMenu();
-        handleValidation?.(value);
+        // Ensure that the menu will not close when a select menu is open and the ESC key is pressed.
+        if (!isSelectOpen) {
+          closeMenu();
+          handleValidation?.(value);
+        }
+
         break;
 
       case keyMap.Enter:
@@ -65,12 +78,16 @@ export const DatePickerComponent = forwardRef<
 
   return (
     <>
-      <DatePickerInput ref={formFieldRef} onKeyDown={handleKeyDown} {...rest} />
+      <DatePickerInput
+        ref={formFieldRef}
+        onKeyDown={handleDatePickerKeyDown}
+        {...rest}
+      />
       <DatePickerMenu
         ref={menuRef}
         id={menuId}
         refEl={formFieldRef}
-        onKeyDown={handleKeyDown}
+        onKeyDown={handleDatePickerKeyDown}
         onTransitionEnd={handleMenuTransitionEntered}
         onExited={handleMenuTransitionExited}
       />
