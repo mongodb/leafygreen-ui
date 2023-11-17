@@ -1236,34 +1236,56 @@ describe('packages/date-picker', () => {
             });
           });
 
-          // TODO: This is a bug in the browsers but passes here 🤔
-          // https://jira.mongodb.org/browse/LG-3766
-          // In the browser the year input does not update
-          test.skip('after selecting a year and clicking a cell a second time', async () => {
-            const { openMenu, findAllByRole, dayInput, monthInput, yearInput } =
+          test('after selecting a year and clicking a cell a second time', async () => {
+            const { openMenu, dayInput, monthInput, yearInput } =
               renderDatePicker({
                 initialValue: new Date(), // dec 26 2023
                 min: newUTC(1996, Month.January, 1),
                 max: newUTC(2026, Month.January, 1),
               });
-            const { yearSelect, queryCellByDate } = await openMenu();
-            userEvent.click(yearSelect!);
-            const options = await findAllByRole('option');
-            const firstYear = options[0]; // 1996
 
-            userEvent.click(firstYear);
+            // Open the menu the first time
+            {
+              const { yearSelect, queryCellByDate, menuContainerEl } =
+                await openMenu();
+              expect;
+              userEvent.click(yearSelect!);
+              const options = await within(menuContainerEl!).findAllByRole(
+                'option',
+              );
+              const yearOption1996 = options[0]; // 1996
 
-            const dec196Cell = queryCellByDate(newUTC(1996, Month.December, 1));
-            userEvent.click(dec196Cell!);
+              userEvent.click(yearOption1996);
 
-            const secondYear = options[1]; // 1997
-            userEvent.click(secondYear);
+              const dec1_96Cell = queryCellByDate(
+                newUTC(1996, Month.December, 1),
+              );
+              userEvent.click(dec1_96Cell!);
+              await waitForElementToBeRemoved(menuContainerEl);
+            }
 
-            const dec197Cell = queryCellByDate(newUTC(1997, Month.December, 1));
-            userEvent.click(dec197Cell!);
+            // Re-open the menu
+            {
+              const { yearSelect, menuContainerEl, queryCellByDate } =
+                await openMenu();
+              userEvent.click(yearSelect!);
+              expect(menuContainerEl).toBeInTheDocument();
+              const options = await within(menuContainerEl!).findAllByRole(
+                'option',
+              );
+
+              const yearOption1997 = options[1]; // 1997
+              userEvent.click(yearOption1997);
+
+              const dec2_97Cell = queryCellByDate(
+                newUTC(1997, Month.December, 2),
+              );
+              expect(dec2_97Cell).toBeInTheDocument();
+              userEvent.click(dec2_97Cell!);
+            }
 
             await waitFor(() => {
-              expect(dayInput.value).toEqual('01');
+              expect(dayInput.value).toEqual('02');
               expect(monthInput.value).toEqual('12');
               expect(yearInput.value).toEqual('1997');
             });
