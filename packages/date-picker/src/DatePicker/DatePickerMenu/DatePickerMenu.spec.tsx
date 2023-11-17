@@ -20,6 +20,11 @@ import { DatePickerMenu, DatePickerMenuProps } from '.';
 const testToday = new Date(Date.UTC(2023, Month.September, 10));
 const testValue = new Date(Date.UTC(2023, Month.September, 14));
 
+const standardTimeEndDate = new Date(Date.UTC(2023, Month.March, 11));
+const daylightTimeStartDate = new Date(Date.UTC(2023, Month.March, 12));
+const daylightTimeEndDate = new Date(Date.UTC(2023, Month.November, 5));
+const standardTimeStartDate = new Date(Date.UTC(2023, Month.November, 6));
+
 const renderDatePickerMenu = (
   props?: Partial<DatePickerMenuProps> | null,
   singleContext?: Partial<SingleDateProviderProps> | null,
@@ -174,7 +179,7 @@ describe('packages/date-picker/date-picker-menu', () => {
   });
 
   describe('Keyboard navigation', () => {
-    describe('Arrow Keys', () => {
+    describe.only('Arrow Keys', () => {
       test('left arrow moves focus to the previous day', async () => {
         const { getCellWithValue } = renderDatePickerMenu(null, {
           value: testValue,
@@ -182,21 +187,6 @@ describe('packages/date-picker/date-picker-menu', () => {
         userEvent.tab();
         userEvent.keyboard('{arrowleft}');
         const prevDay = getCellWithValue(setUTCDate(testValue, 13));
-
-        await waitFor(() => expect(prevDay).toHaveFocus());
-      });
-
-      // FIXME: unsure if daylight savings is the reason this is failing
-      // Sun, Mar 12, 2023 – Sun, Nov 5, 2023
-      // https://jira.mongodb.org/browse/LG-3773
-      test.skip('left arrow moves focus to the previous day when switching between daylight savings and standard time', async () => {
-        const testDLSValue = new Date(Date.UTC(2023, Month.November, 6));
-        const { getCellWithValue } = renderDatePickerMenu(null, {
-          value: testDLSValue,
-        });
-        userEvent.tab();
-        userEvent.keyboard('{arrowleft}');
-        const prevDay = getCellWithValue(setUTCDate(testDLSValue, 5));
 
         await waitFor(() => expect(prevDay).toHaveFocus());
       });
@@ -223,21 +213,6 @@ describe('packages/date-picker/date-picker-menu', () => {
         await waitFor(() => expect(prevWeek).toHaveFocus());
       });
 
-      // FIXME: unsure if daylight savings is the reason this is failing
-      // Sun, Mar 12, 2023 – Sun, Nov 5, 2023
-      // https://jira.mongodb.org/browse/LG-3773
-      test.skip('up arrow moves focus to the previous week when switching between daylight savings and standard time', async () => {
-        const testDLSValue = new Date(Date.UTC(2023, Month.November, 9));
-        const { getCellWithValue } = renderDatePickerMenu(null, {
-          value: testDLSValue,
-        });
-        userEvent.tab();
-        userEvent.keyboard('{arrowup}');
-
-        const prevWeek = getCellWithValue(setUTCDate(testDLSValue, 2));
-        await waitFor(() => expect(prevWeek).toHaveFocus());
-      });
-
       test('down arrow moves focus to the next week', async () => {
         const { getCellWithValue } = renderDatePickerMenu(null, {
           value: testValue,
@@ -247,6 +222,36 @@ describe('packages/date-picker/date-picker-menu', () => {
 
         const nextWeek = getCellWithValue(setUTCDate(testValue, 21));
         await waitFor(() => expect(nextWeek).toHaveFocus());
+      });
+
+      describe('when switching between daylight savings and standard time', () => {
+        // Sun, Mar 12, 2023 – Sun, Nov 5, 2023
+        test('left arrow moves focus to the previous day', async () => {
+          const { getCellWithValue } = renderDatePickerMenu(null, {
+            value: standardTimeStartDate,
+          });
+          userEvent.tab();
+          userEvent.keyboard('{arrowleft}');
+          const prevDay = getCellWithValue(
+            setUTCDate(standardTimeStartDate, 5),
+          );
+
+          await waitFor(() => expect(prevDay).toHaveFocus());
+        });
+
+        test('up arrow moves focus to the previous week', async () => {
+          const weekAfterDaylightTimeEnd = new Date(
+            Date.UTC(2023, Month.November, 12),
+          );
+          const { getCellWithValue } = renderDatePickerMenu(null, {
+            value: weekAfterDaylightTimeEnd,
+          });
+          userEvent.tab();
+          userEvent.keyboard('{arrowup}');
+
+          const prevWeek = getCellWithValue(daylightTimeEndDate);
+          await waitFor(() => expect(prevWeek).toHaveFocus());
+        });
       });
 
       describe('when next day would be out of range', () => {
