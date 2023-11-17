@@ -58,10 +58,10 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
      * Called when the input, or any of its children, is clicked.
      * Opens the menu and focuses the appropriate segment
      */
-    const handleInputClick: MouseEventHandler<HTMLElement> = ({ target }) => {
+    const handleInputClick: MouseEventHandler<HTMLElement> = e => {
       if (!disabled) {
-        openMenu();
-
+        openMenu(e);
+        const { target } = e;
         const segmentToFocus = getSegmentToFocus({
           target,
           formatParts,
@@ -79,7 +79,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
     const handleIconButtonClick: MouseEventHandler<HTMLButtonElement> = e => {
       // Prevent the parent click handler from being called since clicks on the parent always opens the dropdown
       e.stopPropagation();
-      toggleMenu();
+      toggleMenu(e);
     };
 
     /** Called on any keydown within the input element */

@@ -1,6 +1,7 @@
 import React, {
   createContext,
   PropsWithChildren,
+  SyntheticEvent,
   useCallback,
   useContext,
   useEffect,
@@ -82,18 +83,23 @@ export const SingleDateProvider = ({
     _setHighlight(newHighlight);
   }, []);
 
+  /** Track the event that last triggered the menu to open/close */
+  const [menuTriggerEvent, setMenuTriggerEvent] = useState<SyntheticEvent>();
+
   /**
    * Opens the menu and handles side effects
    */
-  const openMenu = () => {
+  const openMenu = (triggerEvent?: SyntheticEvent) => {
+    setMenuTriggerEvent(triggerEvent);
     setOpen(true);
   };
 
   /** Closes the menu and handles side effects */
-  const closeMenu = () => {
+  const closeMenu = (triggerEvent?: SyntheticEvent) => {
+    setMenuTriggerEvent(triggerEvent);
     setOpen(false);
 
-    // Perform side effects once the state has settle
+    // Perform side effects once the state has settled
     requestAnimationFrame(() => {
       // Return focus to the calendar button
       refs.calendarButtonRef.current?.focus();
@@ -105,11 +111,11 @@ export const SingleDateProvider = ({
   };
 
   /** Toggles the menu and handles appropriate side effects */
-  const toggleMenu = () => {
+  const toggleMenu = (triggerEvent?: SyntheticEvent) => {
     if (isOpen) {
-      closeMenu();
+      closeMenu(triggerEvent);
     } else {
-      openMenu();
+      openMenu(triggerEvent);
     }
   };
 
@@ -159,6 +165,7 @@ export const SingleDateProvider = ({
         closeMenu,
         openMenu,
         toggleMenu,
+        menuTriggerEvent,
         month,
         setMonth,
         highlight,

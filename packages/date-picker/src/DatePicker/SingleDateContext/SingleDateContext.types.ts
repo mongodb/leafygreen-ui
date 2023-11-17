@@ -1,3 +1,5 @@
+import { SyntheticEvent } from 'react';
+
 import { DynamicRefGetter } from '@leafygreen-ui/hooks';
 
 import { DateType, SegmentRefs } from '../../shared';
@@ -59,17 +61,20 @@ export interface SingleDateContextProps {
   /**
    * Opens the menu and handles side effects
    */
-  openMenu: () => void;
+  openMenu: (triggerEvent?: SyntheticEvent) => void;
 
   /**
    * Closes the menu and handles side effects
    */
-  closeMenu: () => void;
+  closeMenu: (triggerEvent?: SyntheticEvent) => void;
 
   /**
    *  Toggles the menu and handles appropriate side effects
    */
-  toggleMenu: () => void;
+  toggleMenu: (triggerEvent?: SyntheticEvent) => void;
+
+  /** The event that triggered the last menu toggle  */
+  menuTriggerEvent?: SyntheticEvent;
 
   /**
    * Returns the calendar cell element that has, or should have focus

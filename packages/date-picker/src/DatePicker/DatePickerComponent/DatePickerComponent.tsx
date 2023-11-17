@@ -22,8 +22,14 @@ export const DatePickerComponent = forwardRef<
   DatePickerComponentProps
 >(({ ...rest }: DatePickerComponentProps, fwdRef) => {
   const { isOpen, menuId, disabled, isSelectOpen } = useDatePickerContext();
-  const { value, closeMenu, handleValidation, getHighlightedCell } =
-    useSingleDateContext();
+  const {
+    refs,
+    value,
+    closeMenu,
+    menuTriggerEvent,
+    handleValidation,
+    getHighlightedCell,
+  } = useSingleDateContext();
 
   const formFieldRef = useForwardedRef(fwdRef, null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -40,13 +46,25 @@ export const DatePickerComponent = forwardRef<
 
   /** Fired when the CSS transition to open the menu is fired */
   const handleMenuTransitionEntered: TransitionEventHandler = e => {
-    if (isOpen && e.target === menuRef.current) {
+    // Whether this event is firing in response to the menu transition
+    const isTransitionedElementMenu = e.target === menuRef.current;
+
+    // Whether the latest openMenu event was triggered by the calendar button
+    const isTriggeredByButton =
+      menuTriggerEvent &&
+      refs.calendarButtonRef.current?.contains(
+        menuTriggerEvent.target as HTMLElement,
+      );
+
+    // Only move focus to input when opened via button click
+    if (isOpen && isTransitionedElementMenu && isTriggeredByButton) {
       // When the menu opens, set focus to the `highlight` cell
       const highlightedCell = getHighlightedCell();
       highlightedCell?.focus();
     }
   };
 
+  /** Fired when the Transform element for the menu has exited */
   const handleMenuTransitionExited: ExitHandler<HTMLDivElement> = () => {
     if (!isOpen) {
       closeMenu();
@@ -61,7 +79,7 @@ export const DatePickerComponent = forwardRef<
       case keyMap.Escape:
         // Ensure that the menu will not close when a select menu is open and the ESC key is pressed.
         if (!isSelectOpen) {
-          closeMenu();
+          closeMenu(e);
           handleValidation?.(value);
         }
 
