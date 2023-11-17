@@ -11,6 +11,7 @@ export { getLastOfMonth } from './getLastOfMonth';
 export { getMonthIndex } from './getMonthIndex';
 export { getMonthName } from './getMonthName';
 export { getRemainingParts } from './getRemainingParts';
+export { getSegmentMaxLength } from './getSegmentMaxLength';
 export {
   getFormattedSegmentsFromDate,
   getSegmentsFromDate,

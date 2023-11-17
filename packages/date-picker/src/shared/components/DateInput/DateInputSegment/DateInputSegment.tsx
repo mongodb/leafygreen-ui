@@ -13,7 +13,7 @@ import {
   defaultMin,
   defaultPlaceholder,
 } from '../../../constants';
-import { getValueFormatter } from '../../../utils';
+import { getSegmentMaxLength, getValueFormatter } from '../../../utils';
 import { useDatePickerContext } from '../../DatePickerContext';
 
 import {
@@ -59,6 +59,7 @@ export const DateInputSegment = React.forwardRef<
     const { size, disabled } = useDatePickerContext();
     const formatter = getValueFormatter(segment);
     const pattern = `[0-9]{${charsPerSegment.year}}`;
+    const maxLength = getSegmentMaxLength(segment);
 
     /** Prevent non-numeric values from triggering a change event */
     const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
@@ -144,6 +145,7 @@ export const DateInputSegment = React.forwardRef<
           segmentSizeStyles[size ?? Size.Default],
           segmentWidthStyles[segment],
         )}
+        maxLength={maxLength}
       />
     );
   },
