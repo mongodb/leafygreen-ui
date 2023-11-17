@@ -1,4 +1,3 @@
-import { setMonth } from 'date-fns';
 import tzMock from 'timezone-mock';
 
 import { Month } from '../../constants';
@@ -33,15 +32,9 @@ describe('packages/date-picker/utils/setUTCMonth', () => {
 
   test('does not care about time-zone', () => {
     tzMock.register('US/Pacific');
-    jest
-      .useFakeTimers()
-      .setSystemTime(new Date(Date.UTC(2023, Month.September, 1, 0, 0, 0)));
+
     const d = new Date(Date.UTC(2023, Month.September, 1, 0, 0, 0));
     const d_utc = setUTCMonth(d, Month.August);
     expect(d_utc.getUTCMonth()).toEqual(Month.August);
-
-    // For comparison:
-    const d_tz = setMonth(d, Month.August);
-    expect(d_tz.getUTCMonth()).toEqual(Month.September);
   });
 });

@@ -1,10 +1,23 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, HTMLElementProps, keyMap } from '@leafygreen-ui/lib';
 
 import { DateSegment, DateSegmentValue } from '../../../hooks';
 
+export interface DateInputSegmentChangeEvent {
+  segment: DateSegment;
+  value: DateSegmentValue;
+  meta?: {
+    key?: (typeof keyMap)[keyof typeof keyMap];
+    [key: string]: any;
+  };
+}
+
+export type DateInputSegmentChangeEventHandler = (
+  dateSegmentChangeEvent: DateInputSegmentChangeEvent,
+) => void;
+
 export interface DateInputSegmentProps
   extends DarkModeProps,
-    HTMLElementProps<'input'> {
+    Omit<HTMLElementProps<'input'>, 'onChange'> {
   /** Which date segment this input represents. Determines the aria-label, and min/max values where relevant */
   segment: DateSegment;
 
@@ -16,4 +29,6 @@ export interface DateInputSegmentProps
 
   /** Optional maximum value. Defaults to 31 for day, 12 for month, 2038 for year */
   max?: number;
+
+  onChange?: DateInputSegmentChangeEventHandler;
 }

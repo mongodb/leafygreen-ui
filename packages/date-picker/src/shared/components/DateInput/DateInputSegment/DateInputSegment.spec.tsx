@@ -1,12 +1,17 @@
 import React from 'react';
+import { jest } from '@jest/globals';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { mean, round } from 'lodash';
 
-import { eventContainingTargetValue } from '../../../utils/testutils';
+import { defaultMax, defaultMin } from '../../../constants';
+import { DateSegment } from '../../../hooks';
+import { getValueFormatter } from '../../../utils';
 
+import { DateInputSegmentChangeEventHandler } from './DateInputSegment.types';
 import { DateInputSegment, type DateInputSegmentProps } from '.';
 
-const handler = jest.fn();
+const onChangeHandler = jest.fn<DateInputSegmentChangeEventHandler>();
 
 const renderSegment = (props: DateInputSegmentProps) => {
   const result = render(<DateInputSegment {...props} />);
@@ -18,8 +23,8 @@ const renderSegment = (props: DateInputSegmentProps) => {
 };
 
 describe('packages/date-picker/shared/date-input-segment', () => {
-  beforeEach(() => {
-    handler.mockClear();
+  afterEach(() => {
+    onChangeHandler.mockClear();
   });
 
   describe('rendering', () => {
@@ -89,35 +94,169 @@ describe('packages/date-picker/shared/date-input-segment', () => {
   describe('Typing', () => {
     test('calls the change handler', () => {
       const result = render(
-        <DateInputSegment segment="day" onChange={handler} />,
+        <DateInputSegment segment="day" onChange={onChangeHandler} />,
       );
       const input = result.getByTestId('lg-date_picker_input-segment');
-      userEvent.type(input, '12');
-      expect(handler).toHaveBeenCalledWith(eventContainingTargetValue('12'));
+      userEvent.type(input, '8');
+      expect(onChangeHandler).toHaveBeenCalledWith(
+        expect.objectContaining({ value: '8' }),
+      );
+    });
+
+    test('allows leading zeroes', () => {
+      const result = render(
+        <DateInputSegment segment="day" onChange={onChangeHandler} />,
+      );
+      const input = result.getByTestId('lg-date_picker_input-segment');
+      userEvent.type(input, '0');
+      expect(onChangeHandler).toHaveBeenCalledWith(
+        expect.objectContaining({ value: '0' }),
+      );
+    });
+
+    test('does not allow non-number characters', () => {
+      const result = render(
+        <DateInputSegment segment="day" onChange={onChangeHandler} />,
+      );
+      const input = result.getByTestId('lg-date_picker_input-segment');
+      userEvent.type(input, 'aB$/');
+      expect(onChangeHandler).not.toHaveBeenCalled();
     });
   });
 
-  // Skipping, since {arrowup}/{arrowdown} do not trigger
-  // a change event in userEvent
-  // https://github.com/testing-library/user-event/issues/1066
-  // eslint-disable-next-line jest/no-disabled-tests
-  describe.skip('Arrow Keys', () => {
-    test('ArrowUp calls handler with +1', () => {
-      const result = render(
-        <DateInputSegment segment="day" onChange={handler} value={'08'} />,
-      );
-      const input = result.getByTestId('lg-date_picker_input-segment');
-      userEvent.type(input, '{arrowup}');
-      expect(handler).toHaveBeenCalledWith('09');
+  describe('Keyboard', () => {
+    describe('Backspace', () => {
+      test('deletes value in the input', () => {
+        const result = render(
+          <DateInputSegment
+            segment="day"
+            onChange={onChangeHandler}
+            value="26"
+          />,
+        );
+        const input = result.getByTestId('lg-date_picker_input-segment');
+        userEvent.type(input, '{backspace}');
+        expect(onChangeHandler).toHaveBeenCalledWith(
+          expect.objectContaining({ value: '2' }),
+        );
+      });
+
+      test('fully clears the input', () => {
+        const result = render(
+          <DateInputSegment
+            segment="day"
+            onChange={onChangeHandler}
+            value="2"
+          />,
+        );
+        const input = result.getByTestId('lg-date_picker_input-segment');
+        userEvent.type(input, '{backspace}');
+        expect(onChangeHandler).toHaveBeenCalledWith(
+          expect.objectContaining({ value: '' }),
+        );
+      });
     });
 
-    test('ArrowDown calls handler with -1', () => {
-      const result = render(
-        <DateInputSegment segment="day" onChange={handler} value={'08'} />,
-      );
-      const input = result.getByTestId('lg-date_picker_input-segment');
-      userEvent.type(input, '{arrowdown}');
-      expect(handler).toHaveBeenCalledWith('07');
+    describe('Arrow Keys', () => {
+      const testCases: Array<DateSegment> = ['day', 'month', 'year'];
+
+      describe.each(testCases)('in %p input', segment => {
+        const formatter = getValueFormatter(segment);
+
+        const minValue = defaultMin[segment];
+        const maxValue = defaultMax[segment];
+        const defaultValue = round(mean([minValue, maxValue]));
+
+        describe('Up arrow', () => {
+          test('calls handler with value +1', () => {
+            const result = render(
+              <DateInputSegment
+                segment={segment}
+                onChange={onChangeHandler}
+                value={`${defaultValue}`}
+              />,
+            );
+            const input = result.getByTestId('lg-date_picker_input-segment');
+            userEvent.type(input, '{arrowup}');
+            expect(onChangeHandler).toHaveBeenCalledWith(
+              expect.objectContaining({ value: formatter(defaultValue + 1) }),
+            );
+          });
+
+          test('calls handler with `min` if initially undefined', () => {
+            const result = render(
+              <DateInputSegment onChange={onChangeHandler} segment={segment} />,
+            );
+            const input = result.getByTestId('lg-date_picker_input-segment');
+
+            userEvent.type(input, '{arrowup}');
+            expect(onChangeHandler).toHaveBeenCalledWith(
+              expect.objectContaining({ value: formatter(minValue) }),
+            );
+          });
+
+          test('calls handler with `min` when the new value is greater than the `max` value', () => {
+            const result = render(
+              <DateInputSegment
+                onChange={onChangeHandler}
+                segment={segment}
+                value={`${maxValue}`}
+              />,
+            );
+            const input = result.getByTestId('lg-date_picker_input-segment');
+
+            userEvent.type(input, '{arrowup}');
+            expect(onChangeHandler).toHaveBeenCalledWith(
+              expect.objectContaining({ value: formatter(minValue) }),
+            );
+          });
+        });
+
+        describe('Down arrow', () => {
+          test('calls handler with value -1', () => {
+            const result = render(
+              <DateInputSegment
+                segment={segment}
+                onChange={onChangeHandler}
+                value={`${defaultValue}`}
+              />,
+            );
+            const input = result.getByTestId('lg-date_picker_input-segment');
+            userEvent.type(input, '{arrowdown}');
+            expect(onChangeHandler).toHaveBeenCalledWith(
+              expect.objectContaining({ value: formatter(defaultValue - 1) }),
+            );
+          });
+
+          test('calls handler with `max` if initially undefined', () => {
+            const result = render(
+              <DateInputSegment onChange={onChangeHandler} segment={segment} />,
+            );
+            const input = result.getByTestId('lg-date_picker_input-segment');
+
+            userEvent.type(input, '{arrowdown}');
+            expect(onChangeHandler).toHaveBeenCalledWith(
+              expect.objectContaining({ value: formatter(maxValue) }),
+            );
+          });
+
+          test('calls handler with `max` value when the new value is less than the `min` value', () => {
+            const result = render(
+              <DateInputSegment
+                onChange={onChangeHandler}
+                segment={segment}
+                value={`${minValue}`}
+              />,
+            );
+            const input = result.getByTestId('lg-date_picker_input-segment');
+
+            userEvent.type(input, '{arrowdown}');
+            expect(onChangeHandler).toHaveBeenCalledWith(
+              expect.objectContaining({ value: formatter(maxValue) }),
+            );
+          });
+        });
+      });
     });
   });
 });

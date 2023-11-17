@@ -1,14 +1,15 @@
 import React, {
-  ChangeEventHandler,
+  ChangeEvent,
   FocusEventHandler,
   forwardRef,
   KeyboardEventHandler,
   MouseEventHandler,
 } from 'react';
 
-import { keyMap } from '@leafygreen-ui/lib';
+import { createSyntheticEvent, keyMap } from '@leafygreen-ui/lib';
 
 import { DateFormField, DateInputBox } from '../../shared/components/DateInput';
+import { DateInputSegmentChangeEventHandler } from '../../shared/components/DateInput/DateInputSegment';
 import { useDatePickerContext } from '../../shared/components/DatePickerContext';
 import {
   isElementInputSegment,
@@ -82,7 +83,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
     };
 
     /** Called on any keydown within the input element */
-    const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
+    const handleInputKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
       const { target: _target, key } = e;
       const target = _target as HTMLElement;
       const isSegment = isElementInputSegment(target, segmentRefs);
@@ -91,14 +92,15 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       if (!isSegment) return;
 
       const isSegmentEmpty = isZeroLike(target.value);
-      const cursorPosition = target.selectionEnd;
+
+      const { selectionStart, selectionEnd } = target;
 
       switch (key) {
         case keyMap.ArrowLeft: {
           // if input is empty,
           // or the cursor is at the beginning of the input
           // set focus to prev. input (if it exists)
-          if (isSegmentEmpty || cursorPosition === 0) {
+          if (isSegmentEmpty || selectionStart === 0) {
             const segmentToFocus = getRelativeSegment('prev', {
               segment: target,
               formatParts,
@@ -116,7 +118,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           // if input is empty,
           // or the cursor is at the end of the input
           // set focus to next. input (if it exists)
-          if (isSegmentEmpty || cursorPosition === target.value.length) {
+          if (isSegmentEmpty || selectionEnd === target.value.length) {
             const segmentToFocus = getRelativeSegment('next', {
               segment: target,
               formatParts,
@@ -132,9 +134,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
 
         case keyMap.ArrowUp:
         case keyMap.ArrowDown: {
-          // if decrementing the segment's value is in range
-          // decrement that segment value
-          // This is the default `input type=number` & `role="spinbutton"` behavior
+          // increment/decrement logic implemented by DateInputSegment
           break;
         }
 
@@ -155,10 +155,6 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
         case keyMap.Tab:
           // Behavior handled by parent or menu
           break;
-
-        default:
-          // any other keydown should open the menu
-          openMenu();
       }
 
       // call any handler that was passed in
@@ -185,35 +181,51 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
 
     /**
      * Called when any segment changes
+     * If up/down arrows are pressed, don't move to the next segment
      */
-    const handleSegmentChange: ChangeEventHandler<HTMLInputElement> = e => {
-      const segment = e.target.dataset['segment'];
-      const segmentValue = e.target.value;
+    const handleSegmentChange: DateInputSegmentChangeEventHandler = e => {
+      const { segment, value: segmentValue, meta } = e;
+      const usingArrowKeys =
+        meta?.key === keyMap.ArrowDown || meta?.key === keyMap.ArrowUp;
 
       if (isValidSegmentName(segment)) {
-        if (
-          isValidValueForSegment(segment, segmentValue) &&
-          isExplicitSegmentValue(segment, segmentValue)
-        ) {
-          const nextSegment = getRelativeSegment('next', {
-            segment: segmentRefs[segment],
-            formatParts,
-            segmentRefs,
-          });
+        if (!usingArrowKeys) {
+          if (
+            isValidValueForSegment(segment, segmentValue) &&
+            isExplicitSegmentValue(segment, segmentValue)
+          ) {
+            const nextSegment = getRelativeSegment('next', {
+              segment: segmentRefs[segment],
+              formatParts,
+              segmentRefs,
+            });
 
-          nextSegment?.current?.focus();
-        } else if (!isValidValueForSegment(segment, segmentValue) && isDirty) {
+            nextSegment?.current?.focus();
+          }
+        }
+
+        if (!isValidValueForSegment(segment, segmentValue) && isDirty) {
           handleValidation?.(value);
         }
       }
-      onSegmentChange?.(e);
+
+      const changeEvent = new Event('change');
+      const target = segmentRefs[segment].current;
+
+      if (target) {
+        const reactEvent = createSyntheticEvent<ChangeEvent<HTMLInputElement>>(
+          changeEvent,
+          target,
+        );
+        onSegmentChange?.(reactEvent);
+      }
     };
 
     return (
       <DateFormField
         ref={fwdRef}
         buttonRef={calendarButtonRef}
-        onKeyDown={handleKeyDown}
+        onKeyDown={handleInputKeyDown}
         onInputClick={handleInputClick}
         onBlur={handleInputBlur}
         onIconButtonClick={handleIconButtonClick}

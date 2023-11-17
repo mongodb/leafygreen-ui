@@ -29,7 +29,11 @@ export interface UseDateSegmentsOptions {
   onUpdate?: OnUpdateCallback;
 }
 
+export type SetSegmentCallback = (
+  segment: DateSegment,
+  value: DateSegmentValue,
+) => void;
 export interface UseDateSegmentsReturnValue {
   segments: DateSegmentsState;
-  setSegment: (segment: DateSegment, value: DateSegmentValue) => void;
+  setSegment: SetSegmentCallback;
 }

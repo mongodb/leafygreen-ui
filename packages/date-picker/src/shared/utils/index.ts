@@ -4,7 +4,7 @@ export { doesSomeSegmentExist } from './doesSomeSegmentExist';
 export { getDaysInUTCMonth } from './getDaysInUTCMonth';
 export { getFirstEmptySegment } from './getFirstEmptySegment';
 export { getFirstOfMonth } from './getFirstOfMonth';
-export { getFormatParts } from './getFormatParts';
+export { getFormatParts, getFormatter } from './getFormatParts';
 export { getFullMonthLabel } from './getFullMonthLabel';
 export { getISODate } from './getISODate';
 export { getLastOfMonth } from './getLastOfMonth';
