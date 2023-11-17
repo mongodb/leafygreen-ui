@@ -4,6 +4,7 @@ import { StoryFn } from '@storybook/react';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
+import Modal from '@leafygreen-ui/modal';
 import { Size } from '@leafygreen-ui/tokens';
 
 import {
@@ -81,6 +82,26 @@ export const Basic: StoryFn<typeof DatePicker> = props => {
 
 export const Uncontrolled: StoryFn<typeof DatePicker> = props => {
   return <DatePicker {...props} />;
+};
+
+export const InModal: StoryFn<typeof DatePicker> = props => {
+  const [value, setValue] = useState<Date | null | undefined>();
+  const [isModalOpen, setisModalOpen] = useState(false);
+
+  return (
+    <>
+      <button onClick={() => setisModalOpen(curr => !curr)}>Open Modal</button>
+      <Modal open={isModalOpen} setOpen={setisModalOpen}>
+        Inside the modal
+        <DatePicker {...props} value={value} onDateChange={setValue} />
+      </Modal>
+    </>
+  );
+};
+InModal.parameters = {
+  chromatic: {
+    disableSnapshots: true,
+  },
 };
 
 export const Generated = () => {};
