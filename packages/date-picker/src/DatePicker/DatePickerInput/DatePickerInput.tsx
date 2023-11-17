@@ -190,9 +190,6 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
 
       if (isValidSegmentName(segment)) {
         if (!usingArrowKeys) {
-          // if the segment was changed by typing, open the menu
-          openMenu();
-
           if (
             isValidValueForSegment(segment, segmentValue) &&
             isExplicitSegmentValue(segment, segmentValue)

@@ -783,13 +783,13 @@ describe('packages/date-picker', () => {
     });
 
     describe('Typing', () => {
-      test('opens the menu', async () => {
+      test('does not open the menu', async () => {
         const { yearInput, findMenuElements } = renderDatePicker();
         userEvent.tab();
         expect(yearInput).toHaveFocus();
         userEvent.keyboard('2');
         const { menuContainerEl } = await findMenuElements();
-        expect(menuContainerEl).toBeInTheDocument();
+        expect(menuContainerEl).not.toBeInTheDocument();
       });
 
       test('does not fire a value change handler', () => {
