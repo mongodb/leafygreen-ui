@@ -1097,6 +1097,115 @@ describe('packages/date-picker', () => {
             await waitFor(() => expect(dec1Cell).toHaveFocus());
           });
         });
+
+        describe('shows the correct date in the input', () => {
+          test('after selecting a month and clicking a cell', async () => {
+            const { openMenu, findAllByRole, dayInput, monthInput, yearInput } =
+              renderDatePicker({ initialValue: new Date() });
+            const { monthSelect, queryCellByDate } = await openMenu();
+            userEvent.click(monthSelect!);
+            const options = await findAllByRole('option');
+            const Jan = options[0];
+            userEvent.click(Jan);
+
+            const jan1Cell = queryCellByDate(newUTC(2023, Month.January, 1));
+            userEvent.click(jan1Cell!);
+
+            await waitFor(() => {
+              expect(dayInput.value).toEqual('01');
+              expect(monthInput.value).toEqual('01');
+              expect(yearInput.value).toEqual('2023');
+            });
+          });
+
+          test('after selecting a month and clicking a cell a second time', async () => {
+            const { openMenu, findAllByRole, dayInput, monthInput, yearInput } =
+              renderDatePicker({ initialValue: new Date() });
+            const { monthSelect, queryCellByDate } = await openMenu();
+            userEvent.click(monthSelect!);
+            const options = await findAllByRole('option');
+            const Jan = options[0];
+            userEvent.click(Jan);
+
+            const jan1Cell = queryCellByDate(newUTC(2023, Month.January, 1));
+            userEvent.click(jan1Cell!);
+
+            const Feb = options[1];
+            userEvent.click(Feb);
+
+            const feb1Cell = queryCellByDate(newUTC(2023, Month.February, 1));
+            userEvent.click(feb1Cell!);
+
+            await waitFor(() => {
+              expect(dayInput.value).toEqual('01');
+              expect(monthInput.value).toEqual('02');
+              expect(yearInput.value).toEqual('2023');
+            });
+          });
+        });
+      });
+
+      describe('Changing the year', () => {
+        test.todo('is announced in an aria-live region');
+
+        describe('shows the correct date in the input', () => {
+          test('after selecting a year and clicking a cell', async () => {
+            const { openMenu, findAllByRole, dayInput, monthInput, yearInput } =
+              renderDatePicker({
+                initialValue: new Date(), // dec 26 2023
+                min: newUTC(1996, Month.January, 1),
+                max: newUTC(2026, Month.January, 1),
+              });
+            const { yearSelect, queryCellByDate } = await openMenu();
+            userEvent.click(yearSelect!);
+            const options = await findAllByRole('option');
+            const firstYear = options[0]; // 1996
+
+            userEvent.click(firstYear);
+
+            const dec1Cell = queryCellByDate(newUTC(1996, Month.December, 1));
+            userEvent.click(dec1Cell!);
+
+            await waitFor(() => {
+              expect(dayInput.value).toEqual('01');
+              expect(monthInput.value).toEqual('12');
+              expect(yearInput.value).toEqual('1996');
+            });
+          });
+
+          // TODO: This is a bug in the browsers but passes here 🤔
+          // https://jira.mongodb.org/browse/LG-3766
+          // In the browser the year input does not update
+          test.skip('after selecting a year and clicking a cell a second time', async () => {
+            const { openMenu, findAllByRole, dayInput, monthInput, yearInput } =
+              renderDatePicker({
+                initialValue: new Date(), // dec 26 2023
+                min: newUTC(1996, Month.January, 1),
+                max: newUTC(2026, Month.January, 1),
+              });
+            const { yearSelect, queryCellByDate } = await openMenu();
+            userEvent.click(yearSelect!);
+            const options = await findAllByRole('option');
+            const firstYear = options[0]; // 1996
+
+            userEvent.click(firstYear);
+
+            const dec196Cell = queryCellByDate(newUTC(1996, Month.December, 1));
+            userEvent.click(dec196Cell!);
+
+            const secondYear = options[1]; // 1997
+            userEvent.click(secondYear);
+
+            const dec197Cell = queryCellByDate(newUTC(1997, Month.December, 1));
+            userEvent.click(dec197Cell!);
+
+            await waitFor(() => {
+              expect(dayInput.value).toEqual('01');
+              expect(monthInput.value).toEqual('12');
+              expect(yearInput.value).toEqual('1997');
+            });
+          });
+        });
       });
     });
   });

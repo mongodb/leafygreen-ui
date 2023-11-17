@@ -188,6 +188,8 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
         }
 
         case keyMap.ArrowUp: {
+          // TODO: https://jira.mongodb.org/browse/LG-3773
+          // console.log(subDays(new Date(Date.UTC(2023, 10, 10)), 1));
           nextHighlight = subDays(highlightStart, 7);
           break;
         }
