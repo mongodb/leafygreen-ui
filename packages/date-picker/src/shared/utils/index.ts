@@ -1,3 +1,4 @@
+export { addDaysUTC } from './addDaysUTC';
 export { addMonthsUTC } from './addMonthsUTC';
 export { cloneReverse } from './cloneReverse';
 export { doesSomeSegmentExist } from './doesSomeSegmentExist';
