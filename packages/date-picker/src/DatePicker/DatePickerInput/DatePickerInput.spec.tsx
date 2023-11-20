@@ -207,19 +207,18 @@ describe('packages/date-picker/date-picker-input', () => {
       });
     });
 
-    // TODO: failing https://jira.mongodb.org/browse/LG-3770
-    describe.skip('typing', () => {
+    describe('typing', () => {
       describe('allows only 2 characters', () => {
         test('in day input', () => {
           const { dayInput } = renderDatePickerInput();
           userEvent.type(dayInput, '22222222');
-          expect(dayInput.value.length).toBe('2');
+          expect(dayInput.value.length).toBe(2);
         });
 
         test('in month input', () => {
           const { monthInput } = renderDatePickerInput();
           userEvent.type(monthInput, '22222222');
-          expect(monthInput.value.length).toBe('2');
+          expect(monthInput.value.length).toBe(2);
         });
       });
 
@@ -227,7 +226,7 @@ describe('packages/date-picker/date-picker-input', () => {
         test('in year input', () => {
           const { yearInput } = renderDatePickerInput();
           userEvent.type(yearInput, '22222222');
-          expect(yearInput.value.length).toBe('4');
+          expect(yearInput.value.length).toBe(4);
         });
       });
     });
