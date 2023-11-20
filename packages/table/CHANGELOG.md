@@ -1,5 +1,11 @@
 # @leafygreen-ui/table
 
+## 12.1.4
+
+### Patch Changes
+
+- 0e10308a: Cells are now compatible with styled components
+
 ## 12.1.3
 
 ### Patch Changes
