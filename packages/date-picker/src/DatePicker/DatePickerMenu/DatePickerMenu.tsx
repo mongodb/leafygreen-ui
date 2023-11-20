@@ -149,12 +149,16 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       // since focus-trap-react focuses the first element immediately on mount
       if (key === keyMap.Tab) {
         const currentFocus = document.activeElement;
-
         const highlightedCellElement = getHighlightedCell();
         const rightChevronElement = headerRef.current?.lastElementChild;
 
         const isFocusOnRightChevron = currentFocus === rightChevronElement;
         const isFocusOnCell = currentFocus === highlightedCellElement;
+
+        // If the Date Picker is nested inside a component that uses focus-trap-react this prevents the focus-trap-react package from hijacking the focus when tabbing
+        if (!ref.current?.contains(currentFocus) && !e.shiftKey) {
+          (highlightedCellElement as HTMLElement)?.focus();
+        }
 
         if (!e.shiftKey && isFocusOnRightChevron) {
           (highlightedCellElement as HTMLElement)?.focus();
