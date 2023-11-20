@@ -149,6 +149,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       // since focus-trap-react focuses the first element immediately on mount
       if (key === keyMap.Tab) {
         const currentFocus = document.activeElement;
+
         const highlightedCellElement = getHighlightedCell();
         const rightChevronElement = headerRef.current?.lastElementChild;
 
