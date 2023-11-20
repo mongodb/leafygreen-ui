@@ -179,7 +179,7 @@ describe('packages/date-picker/date-picker-menu', () => {
   });
 
   describe('Keyboard navigation', () => {
-    describe.only('Arrow Keys', () => {
+    describe('Arrow Keys', () => {
       test('left arrow moves focus to the previous day', async () => {
         const { getCellWithValue } = renderDatePickerMenu(null, {
           value: testValue,
@@ -225,32 +225,92 @@ describe('packages/date-picker/date-picker-menu', () => {
       });
 
       describe('when switching between daylight savings and standard time', () => {
-        // Sun, Mar 12, 2023 – Sun, Nov 5, 2023
-        test('left arrow moves focus to the previous day', async () => {
-          const { getCellWithValue } = renderDatePickerMenu(null, {
-            value: standardTimeStartDate,
-          });
-          userEvent.tab();
-          userEvent.keyboard('{arrowleft}');
-          const prevDay = getCellWithValue(
-            setUTCDate(standardTimeStartDate, 5),
-          );
+        // DT: Sun, Mar 12, 2023 – Sun, Nov 5, 2023
 
-          await waitFor(() => expect(prevDay).toHaveFocus());
+        describe('daylight time start (Mar 12 2023)', () => {
+          const weekBeforeDTStart = new Date(Date.UTC(2023, Month.March, 5));
+
+          test('left arrow moves focus to prev day', async () => {
+            jest.useFakeTimers().setSystemTime(daylightTimeStartDate); // Mar 12
+            const { getCellWithValue } = renderDatePickerMenu();
+            userEvent.tab();
+            userEvent.keyboard('{arrowleft}');
+            const prevDayCell = getCellWithValue(standardTimeEndDate); // Mar 11
+
+            await waitFor(() => expect(prevDayCell).toHaveFocus());
+          });
+
+          test('right arrow moves focus to next day', async () => {
+            jest.useFakeTimers().setSystemTime(standardTimeEndDate); // Mar 11
+            const { getCellWithValue } = renderDatePickerMenu();
+            userEvent.tab();
+            userEvent.keyboard('{arrowright}');
+            const nextDayCell = getCellWithValue(daylightTimeStartDate); // Mar 12
+            await waitFor(() => expect(nextDayCell).toHaveFocus());
+          });
+
+          test('up arrow moves focus to the previous week', async () => {
+            jest.useFakeTimers().setSystemTime(daylightTimeStartDate); // Mar 12
+            const { getCellWithValue } = renderDatePickerMenu();
+            userEvent.tab();
+            userEvent.keyboard('{arrowup}');
+            const prevWeekCell = getCellWithValue(weekBeforeDTStart); // Mar 5
+            await waitFor(() => expect(prevWeekCell).toHaveFocus());
+          });
+
+          test('down arrow moves focus to the next week', async () => {
+            jest.useFakeTimers().setSystemTime(weekBeforeDTStart); // Mar 5
+            const { getCellWithValue } = renderDatePickerMenu();
+            userEvent.tab();
+            userEvent.keyboard('{arrowdown}');
+            const nextWeekCell = getCellWithValue(daylightTimeStartDate); // Mar 12
+            await waitFor(() => expect(nextWeekCell).toHaveFocus());
+          });
         });
 
-        test('up arrow moves focus to the previous week', async () => {
-          const weekAfterDaylightTimeEnd = new Date(
-            Date.UTC(2023, Month.November, 12),
-          );
-          const { getCellWithValue } = renderDatePickerMenu(null, {
-            value: weekAfterDaylightTimeEnd,
-          });
-          userEvent.tab();
-          userEvent.keyboard('{arrowup}');
+        describe('daylight time end (Nov 5 2023)', () => {
+          const weekAfterDTEnd = new Date(Date.UTC(2023, Month.November, 12));
 
-          const prevWeek = getCellWithValue(daylightTimeEndDate);
-          await waitFor(() => expect(prevWeek).toHaveFocus());
+          test('left arrow moves focus to prev day', async () => {
+            jest.useFakeTimers().setSystemTime(standardTimeStartDate); // Nov 6
+            const { getCellWithValue } = renderDatePickerMenu();
+            userEvent.tab();
+            userEvent.keyboard('{arrowleft}');
+            const prevDayCell = getCellWithValue(daylightTimeEndDate); // Nov 5
+
+            await waitFor(() => expect(prevDayCell).toHaveFocus());
+          });
+
+          test('right arrow moves focus to next day', async () => {
+            jest.useFakeTimers().setSystemTime(daylightTimeEndDate); // Nov 5
+
+            const { getCellWithValue } = renderDatePickerMenu();
+            userEvent.tab();
+            userEvent.keyboard('{arrowright}');
+
+            const nextDayCell = getCellWithValue(standardTimeStartDate); // Nov 6
+            await waitFor(() => expect(nextDayCell).toHaveFocus());
+          });
+
+          test('up arrow moves focus to the previous week', async () => {
+            jest.useFakeTimers().setSystemTime(weekAfterDTEnd); // Nov 12
+            const { getCellWithValue } = renderDatePickerMenu();
+            userEvent.tab();
+            userEvent.keyboard('{arrowup}');
+
+            const prevWeekCell = getCellWithValue(daylightTimeEndDate); // Nov 5
+            await waitFor(() => expect(prevWeekCell).toHaveFocus());
+          });
+
+          test('down arrow moves focus to the next week', async () => {
+            jest.useFakeTimers().setSystemTime(daylightTimeEndDate); // Nov 5
+            const { getCellWithValue } = renderDatePickerMenu();
+            userEvent.tab();
+            userEvent.keyboard('{arrowdown}');
+
+            const nextWeekCell = getCellWithValue(weekAfterDTEnd); // Nov 12
+            await waitFor(() => expect(nextWeekCell).toHaveFocus());
+          });
         });
       });
 
