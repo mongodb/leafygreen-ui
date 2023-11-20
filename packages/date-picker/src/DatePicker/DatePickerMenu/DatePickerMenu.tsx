@@ -5,7 +5,6 @@ import React, {
   useMemo,
   useRef,
 } from 'react';
-import { addDays, subDays } from 'date-fns';
 
 import { useForwardedRef, usePrevious } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
@@ -19,6 +18,7 @@ import {
 import { useDatePickerContext } from '../../shared/components/DatePickerContext';
 import { MenuWrapper } from '../../shared/components/MenuWrapper';
 import {
+  addDaysUTC,
   getFirstOfMonth,
   getFullMonthLabel,
   getISODate,
@@ -173,29 +173,27 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
     const handleCalendarKeyDown: KeyboardEventHandler<HTMLTableElement> = e => {
       const { key } = e;
 
-      const highlightStart = highlight || value || today;
-      let nextHighlight = highlightStart;
+      const currentHighlight = highlight || value || today;
+      let nextHighlight = currentHighlight;
 
       switch (key) {
         case keyMap.ArrowLeft: {
-          nextHighlight = subDays(highlightStart, 1);
+          nextHighlight = addDaysUTC(currentHighlight, -1);
           break;
         }
 
         case keyMap.ArrowRight: {
-          nextHighlight = addDays(highlightStart, 1);
+          nextHighlight = addDaysUTC(currentHighlight, 1);
           break;
         }
 
         case keyMap.ArrowUp: {
-          // TODO: https://jira.mongodb.org/browse/LG-3773
-          // console.log(subDays(new Date(Date.UTC(2023, 10, 10)), 1));
-          nextHighlight = subDays(highlightStart, 7);
+          nextHighlight = addDaysUTC(currentHighlight, -7);
           break;
         }
 
         case keyMap.ArrowDown: {
-          nextHighlight = addDays(highlightStart, 7);
+          nextHighlight = addDaysUTC(currentHighlight, 7);
           break;
         }
 
