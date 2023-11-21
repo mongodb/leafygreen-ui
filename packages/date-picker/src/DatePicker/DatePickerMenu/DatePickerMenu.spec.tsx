@@ -84,6 +84,9 @@ const renderDatePickerMenu = (
   const getCellWithValue = (date: Date) =>
     calendarGrid.querySelector(`[data-iso="${getISODate(date)}"]`);
 
+  const leftChevron = result?.queryByLabelText('Previous month');
+  const rightChevron = result?.queryByLabelText('Next month');
+
   return {
     ...result,
     rerenderDatePickerMenu,
@@ -91,6 +94,8 @@ const renderDatePickerMenu = (
     calendarCells,
     todayCell,
     getCellWithValue,
+    leftChevron,
+    rightChevron,
   };
 };
 
@@ -446,6 +451,40 @@ describe('packages/date-picker/date-picker-menu', () => {
             newUTC(2023, Month.October, 1),
           );
           await waitFor(() => expect(highlightedCell).toHaveFocus());
+        });
+      });
+
+      describe('focus-trap', () => {
+        test('when a cell is in focus, pressing tab moves the focus to the left chevron', async () => {
+          const { todayCell, leftChevron } = renderDatePickerMenu();
+          userEvent.tab();
+          expect(todayCell).toHaveFocus();
+          userEvent.tab();
+          expect(leftChevron).toHaveFocus();
+        });
+
+        test('when a cell is in focus, pressing tab + shift moves the focus to the right chevron', async () => {
+          const { todayCell, rightChevron } = renderDatePickerMenu();
+          userEvent.tab();
+          expect(todayCell).toHaveFocus();
+          userEvent.tab({ shift: true });
+          expect(rightChevron).toHaveFocus();
+        });
+
+        test('when the left chevron is in focus, pressing shift + tab moves the focus to todays cell', async () => {
+          const { todayCell, leftChevron } = renderDatePickerMenu();
+          leftChevron?.focus();
+          expect(leftChevron).toHaveFocus();
+          userEvent.tab({ shift: true });
+          expect(todayCell).toHaveFocus();
+        });
+
+        test('when the right chevron is in focus, pressing tab moves the focus to todays cell', async () => {
+          const { todayCell, rightChevron } = renderDatePickerMenu();
+          rightChevron?.focus();
+          expect(rightChevron).toHaveFocus();
+          userEvent.tab();
+          expect(todayCell).toHaveFocus();
         });
       });
     });
