@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
+import Button from '@leafygreen-ui/button';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 import Modal from '@leafygreen-ui/modal';
@@ -90,7 +91,7 @@ export const InModal: StoryFn<typeof DatePicker> = props => {
 
   return (
     <>
-      <button onClick={() => setisModalOpen(curr => !curr)}>Open Modal</button>
+      <Button onClick={() => setisModalOpen(curr => !curr)}>Open Modal</Button>
       <Modal open={isModalOpen} setOpen={setisModalOpen}>
         Inside the modal
         <DatePicker {...props} value={value} onDateChange={setValue} />

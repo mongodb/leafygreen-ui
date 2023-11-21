@@ -156,9 +156,12 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
         const isFocusOnRightChevron = currentFocus === rightChevronElement;
         const isFocusOnCell = currentFocus === highlightedCellElement;
 
-        if (!e.shiftKey && isFocusOnRightChevron) {
-          (highlightedCellElement as HTMLElement)?.focus();
-          e.preventDefault();
+        if (!e.shiftKey) {
+          // If the Date Picker is nested inside a component that uses focus-trap-react, e.g. Modal, this prevents the focus-trap-react package from hijacking the focus when tabbing
+          if (!ref.current?.contains(currentFocus) || isFocusOnRightChevron) {
+            (highlightedCellElement as HTMLElement)?.focus();
+            e.preventDefault();
+          }
         } else if (e.shiftKey && isFocusOnCell) {
           (rightChevronElement as HTMLElement)?.focus();
           e.preventDefault();
