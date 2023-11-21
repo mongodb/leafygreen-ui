@@ -28,6 +28,7 @@ jobs:
         uses: sergeysova/jq-action@v2
         with:
           cmd: cat tools/test/config/react17/r17-packages.json | jq -r '.dependencies | to_entries[] | "\(.key)@\(.value)"' | xargs yarn -DW add
+          multiline: true
 
       - name: Install package.json
         run: yarn install --prefer-offline
