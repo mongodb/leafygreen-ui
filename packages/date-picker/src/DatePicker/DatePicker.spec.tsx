@@ -1248,7 +1248,6 @@ describe('packages/date-picker', () => {
             {
               const { yearSelect, queryCellByDate, menuContainerEl } =
                 await openMenu();
-              expect;
               userEvent.click(yearSelect!);
               const options = await within(menuContainerEl!).findAllByRole(
                 'option',

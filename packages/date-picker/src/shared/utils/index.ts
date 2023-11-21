@@ -1,3 +1,4 @@
+export { addDaysUTC } from './addDaysUTC';
 export { addMonthsUTC } from './addMonthsUTC';
 export { cloneReverse } from './cloneReverse';
 export { doesSomeSegmentExist } from './doesSomeSegmentExist';
@@ -11,6 +12,7 @@ export { getLastOfMonth } from './getLastOfMonth';
 export { getMonthIndex } from './getMonthIndex';
 export { getMonthName } from './getMonthName';
 export { getRemainingParts } from './getRemainingParts';
+export { getSegmentMaxLength } from './getSegmentMaxLength';
 export {
   getFormattedSegmentsFromDate,
   getSegmentsFromDate,
