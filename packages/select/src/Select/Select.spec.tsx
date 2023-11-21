@@ -11,6 +11,7 @@ import {
 import userEvent from '@testing-library/user-event';
 
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
+import { PopoverContext } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 import { transitionDuration } from '@leafygreen-ui/tokens';
@@ -547,6 +548,55 @@ describe('packages/select', () => {
 
           expect(queryByRole('listbox')).not.toBeInTheDocument();
         });
+      });
+    });
+
+    describe('fires Popover callbacks', () => {
+      test('opening the select fires the `onEnter*` callbacks', async () => {
+        const onEnter = jest.fn();
+        const onEntering = jest.fn();
+        const onEntered = jest.fn();
+        const { getByRole } = render(
+          <Select
+            {...defaultProps}
+            onEnter={onEnter}
+            onEntering={onEntering}
+            onEntered={onEntered}
+          >
+            <Option data-testid="option-apple">Apple</Option>
+            <Option data-testid="option-banana">Banana</Option>
+          </Select>,
+        );
+        const button = getByRole('button');
+        userEvent.click(button);
+
+        expect(onEnter).toHaveBeenCalled();
+        expect(onEntering).toHaveBeenCalled();
+        await waitFor(() => expect(onEntered).toHaveBeenCalled());
+      });
+
+      test('closing the select fires the `onExit*` callbacks', async () => {
+        const onExit = jest.fn();
+        const onExiting = jest.fn();
+        const onExited = jest.fn();
+        const { getByRole } = render(
+          <Select
+            {...defaultProps}
+            onExit={onExit}
+            onExiting={onExiting}
+            onExited={onExited}
+          >
+            <Option data-testid="option-apple">Apple</Option>
+            <Option data-testid="option-banana">Banana</Option>
+          </Select>,
+        );
+        const button = getByRole('button');
+        userEvent.click(button);
+        userEvent.click(button);
+
+        expect(onExit).toHaveBeenCalled();
+        expect(onExiting).toHaveBeenCalled();
+        await waitFor(() => expect(onExited).toHaveBeenCalled());
       });
     });
 
@@ -1259,6 +1309,114 @@ describe('packages/select', () => {
           expect(queryByRole('listbox')).not.toBeInTheDocument();
         });
       });
+    });
+
+    describe('fires Popover callbacks', () => {
+      test('opening the select fires the `onEnter*` callbacks', async () => {
+        const onEnter = jest.fn();
+        const onEntering = jest.fn();
+        const onEntered = jest.fn();
+        const { getByRole } = render(
+          <Select
+            {...defaultProps}
+            usePortal={false}
+            onEnter={onEnter}
+            onEntering={onEntering}
+            onEntered={onEntered}
+          >
+            <Option data-testid="option-apple">Apple</Option>
+            <Option data-testid="option-banana">Banana</Option>
+          </Select>,
+        );
+        const button = getByRole('button');
+        userEvent.click(button);
+
+        expect(onEnter).toHaveBeenCalled();
+        expect(onEntering).toHaveBeenCalled();
+        await waitFor(() => expect(onEntered).toHaveBeenCalled());
+      });
+
+      test('closing the select fires the `onExit*` callbacks', async () => {
+        const onExit = jest.fn();
+        const onExiting = jest.fn();
+        const onExited = jest.fn();
+        const { getByRole } = render(
+          <Select
+            {...defaultProps}
+            usePortal={false}
+            onExit={onExit}
+            onExiting={onExiting}
+            onExited={onExited}
+          >
+            <Option data-testid="option-apple">Apple</Option>
+            <Option data-testid="option-banana">Banana</Option>
+          </Select>,
+        );
+        const button = getByRole('button');
+        userEvent.click(button);
+        userEvent.click(button);
+
+        expect(onExit).toHaveBeenCalled();
+        expect(onExiting).toHaveBeenCalled();
+        await waitFor(() => expect(onExited).toHaveBeenCalled());
+      });
+    });
+  });
+
+  describe('with PopoverContext', () => {
+    const mockSetIsPopoverOpen = jest.fn();
+
+    const MockPopoverProvider = ({ children }: PropsWithChildren<{}>) => {
+      return (
+        <PopoverContext.Provider
+          value={{
+            isPopoverOpen: false,
+            setIsPopoverOpen: mockSetIsPopoverOpen,
+          }}
+        >
+          {children}
+        </PopoverContext.Provider>
+      );
+    };
+
+    beforeEach(() => {
+      mockSetIsPopoverOpen.mockClear();
+    });
+
+    test('calls `setIsPopoverOpen`', async () => {
+      const { getByRole } = render(
+        <MockPopoverProvider>
+          <Select {...defaultProps} />
+        </MockPopoverProvider>,
+      );
+
+      const triggerButton = getByRole('button');
+      userEvent.click(triggerButton);
+      await waitFor(() =>
+        expect(mockSetIsPopoverOpen).toHaveBeenCalledWith(true),
+      );
+      userEvent.click(triggerButton);
+      await waitFor(() =>
+        expect(mockSetIsPopoverOpen).toHaveBeenCalledWith(false),
+      );
+    });
+
+    test('calls `setIsPopoverOpen` when `usePortal == false`', async () => {
+      const { getByRole } = render(
+        <MockPopoverProvider>
+          <Select usePortal={false} {...defaultProps} />
+        </MockPopoverProvider>,
+      );
+
+      const button = getByRole('button');
+      userEvent.click(button);
+      await waitFor(() =>
+        expect(mockSetIsPopoverOpen).toHaveBeenCalledWith(true),
+      );
+      userEvent.click(button);
+      await waitFor(() =>
+        expect(mockSetIsPopoverOpen).toHaveBeenCalledWith(false),
+      );
     });
   });
 });
