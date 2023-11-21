@@ -23,6 +23,11 @@ jobs:
       - name: Install node-gyp
         run: yarn global add node-gyp
 
+      - name: Log yarn & node versions
+        uses: sergeysova/jq-action@v2
+        with:
+          cmd: cat tools/test/config/react17/r17-packages.json | jq -r '.dependencies | to_entries[] | "\(.key)@\(.value)"' | xargs yarn --version && node --version
+
       # For each dependency listed in the r17-packages.json file, run `yarn add`
       - name: Install testing tools for React 17
         uses: sergeysova/jq-action@v2
