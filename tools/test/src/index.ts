@@ -49,6 +49,8 @@ export const test = (
     ...passThroughOptions,
   ].filter(v => v !== '');
 
+  // TODO: if react17 - use jest 26.x binary
+
   spawn('jest', commandArgs, {
     env: {
       ...process.env,

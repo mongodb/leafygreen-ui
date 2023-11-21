@@ -1,6 +1,6 @@
 import React, { createRef, useState } from 'react';
-import { act } from 'react-dom/test-utils';
 import {
+  act,
   fireEvent,
   getByText as getByTextFor,
   render,
@@ -404,7 +404,9 @@ describe('packages/select', () => {
             </Select>,
           );
 
-          userEvent.click(getByRole('button'));
+          act(() => {
+            userEvent.click(getByRole('button'));
+          });
 
           expect(spy).not.toHaveBeenCalled();
         });
