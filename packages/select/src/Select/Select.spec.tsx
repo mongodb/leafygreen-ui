@@ -1,4 +1,4 @@
-import React, { createRef, useState } from 'react';
+import React, { createRef, PropsWithChildren, useState } from 'react';
 import {
   act,
   fireEvent,
@@ -171,7 +171,6 @@ describe('packages/select', () => {
     Context.within(Jest.spyContext(console, 'error'), spy => {
       spy.mockImplementation();
       render(
-        // @ts-expect-error
         <Select {...defaultProps} label={undefined}>
           <Option>Option</Option>
         </Select>,
@@ -311,7 +310,6 @@ describe('packages/select', () => {
     Context.within(Jest.spyContext(console, 'warn'), spy => {
       spy.mockImplementation();
 
-      // @ts-expect-error
       render(<Select {...defaultProps} value="" />);
 
       expect(spy).toHaveBeenCalledTimes(1);
