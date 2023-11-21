@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/test",
-  "version": "0.0.17",
+  "version": "0.0.0-react17.0",
   "description": "React 17 Jest setup & config for LeafyGreen repositories",
   "license": "Apache-2.0",
   "main": "dist/index.js",
