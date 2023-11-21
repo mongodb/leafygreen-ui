@@ -18,14 +18,7 @@ jobs:
       - name: Install node-gyp
         run: yarn global add node-gyp
 
-      # - name: Set react types resolution
-      #   uses: sergeysova/jq-action@v2
-      #   with:
-      #     cmd: echo -E "$(jq '.resolutions = {"@types/react":"16.9.56"}' package.json)" > package.json
-
-      - name: Install React & React DOM 17
-        run: yarn add -DW react@17.0.2 react-dom@17.0.2
-
+      # For each dependency listed in the r17-packages.json file, run `yarn add`
       - name: Install testing tools for React 17
         uses: sergeysova/jq-action@v2
         with:
