@@ -455,7 +455,7 @@ describe('packages/date-picker/date-picker-menu', () => {
       });
 
       describe('focus-trap', () => {
-        test('when a cell is in focus, pressing tab moves the focus to the left chevron', async () => {
+        test('when a cell is focused, pressing tab moves the focus to the left chevron', () => {
           const { todayCell, leftChevron } = renderDatePickerMenu();
           userEvent.tab();
           expect(todayCell).toHaveFocus();
@@ -463,7 +463,7 @@ describe('packages/date-picker/date-picker-menu', () => {
           expect(leftChevron).toHaveFocus();
         });
 
-        test('when a cell is in focus, pressing tab + shift moves the focus to the right chevron', async () => {
+        test('when a cell is focused, pressing tab + shift moves the focus to the right chevron', () => {
           const { todayCell, rightChevron } = renderDatePickerMenu();
           userEvent.tab();
           expect(todayCell).toHaveFocus();
@@ -471,7 +471,7 @@ describe('packages/date-picker/date-picker-menu', () => {
           expect(rightChevron).toHaveFocus();
         });
 
-        test('when the left chevron is in focus, pressing shift + tab moves the focus to todays cell', async () => {
+        test('when the left chevron is focused, pressing tab + shift moves the focus to todays cell', () => {
           const { todayCell, leftChevron } = renderDatePickerMenu();
           leftChevron?.focus();
           expect(leftChevron).toHaveFocus();
@@ -479,7 +479,7 @@ describe('packages/date-picker/date-picker-menu', () => {
           expect(todayCell).toHaveFocus();
         });
 
-        test('when the right chevron is in focus, pressing tab moves the focus to todays cell', async () => {
+        test('when the right chevron is focused, pressing tab moves the focus to todays cell', () => {
           const { todayCell, rightChevron } = renderDatePickerMenu();
           rightChevron?.focus();
           expect(rightChevron).toHaveFocus();
