@@ -102,7 +102,7 @@ const renderDatePickerMenu = (
 describe('packages/date-picker/date-picker-menu', () => {
   beforeEach(() => {
     // Set the current time to midnight UTC on 2023-09-10
-    jest.useFakeTimers('modern').setSystemTime(testToday);
+    jest.useFakeTimers().setSystemTime(testToday);
   });
 
   describe('Rendering', () => {

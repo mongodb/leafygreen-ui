@@ -52,7 +52,7 @@ const testDate = newUTC(2023, Month.December, 26);
 describe('packages/date-picker/date-picker-input', () => {
   beforeEach(() => {
     // Set the current time to midnight UTC on 2023-12-26
-    jest.useFakeTimers('modern').setSystemTime(testDate);
+    jest.useFakeTimers().setSystemTime(testDate);
   });
 
   describe('Typing', () => {

@@ -135,7 +135,7 @@ describe('packages/date-picker/menu/header', () => {
 
     beforeEach(() => {
       mockSetIsSelectOpen.mockClear();
-      jest.useFakeTimers('modern');
+      jest.useFakeTimers();
     });
 
     const AllMockProviders = ({ children }: PropsWithChildren<{}>) => {
