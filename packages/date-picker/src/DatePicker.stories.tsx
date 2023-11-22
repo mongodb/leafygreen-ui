@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
-import { DatePicker } from '@leafygreen-ui/date-picker';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 import Modal from '@leafygreen-ui/modal';
@@ -16,6 +15,7 @@ import {
 import { Month } from './shared/constants';
 import { newUTC } from './shared/utils';
 import { Locales, TimeZones } from './shared/utils/testutils';
+import { DatePicker } from './DatePicker';
 
 const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
   <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
