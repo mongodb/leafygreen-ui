@@ -3,6 +3,8 @@ import React, { forwardRef } from 'react';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
+import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import {
   contextPropNames,
@@ -26,13 +28,15 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       onDateChange: onChangeProp,
       handleValidation,
       darkMode: darkModeProp,
+      baseFontSize: basefontSizeProp,
       ...props
     }: DatePickerProps,
     fwdRef,
   ) => {
     const { darkMode } = useDarkMode(darkModeProp);
+    const baseFontSize = useUpdatedBaseFontSize(basefontSizeProp);
     const [contextProps, restProps] = pickAndOmit(
-      { darkMode, ...props },
+      { darkMode, baseFontSize, ...props },
       contextPropNames,
     );
 
@@ -49,7 +53,12 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
           setValue={setValue}
           handleValidation={handleValidation}
         >
-          <LeafyGreenProvider darkMode={darkMode}>
+          <LeafyGreenProvider
+            darkMode={darkMode}
+            baseFontSize={
+              baseFontSize === BaseFontSize.Body1 ? 14 : baseFontSize
+            }
+          >
             <DatePickerComponent ref={fwdRef} {...restProps} />
           </LeafyGreenProvider>
         </SingleDateProvider>
