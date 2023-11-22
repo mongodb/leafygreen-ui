@@ -7,7 +7,7 @@ describe('packages/date-picker/utils/isTodayTZ', () => {
 
   describe('NYC Client', () => {
     beforeEach(() => {
-      jest.useFakeTimers().setSystemTime(
+      jest.useFakeTimers('modern').setSystemTime(
         // 23:00 on Dec. 25 in NYC
         new Date(Date.UTC(2023, Month.December, 26, 4, 0, 0)),
       );
@@ -36,7 +36,7 @@ describe('packages/date-picker/utils/isTodayTZ', () => {
 
   describe('Honolulu Client', () => {
     beforeEach(() => {
-      jest.useFakeTimers().setSystemTime(
+      jest.useFakeTimers('modern').setSystemTime(
         // 23:00 on Dec. 25 in HNL
         new Date(Date.UTC(2023, Month.December, 26, 9, 0, 0)),
       );
@@ -64,7 +64,7 @@ describe('packages/date-picker/utils/isTodayTZ', () => {
 
   describe('London Client', () => {
     beforeEach(() => {
-      jest.useFakeTimers().setSystemTime(
+      jest.useFakeTimers('modern').setSystemTime(
         // 23:00 on Dec. 25 in LDN
         new Date(Date.UTC(2023, Month.December, 25, 23, 0, 0)),
       );
@@ -93,7 +93,7 @@ describe('packages/date-picker/utils/isTodayTZ', () => {
 
   describe('Auckland Client', () => {
     beforeEach(() => {
-      jest.useFakeTimers().setSystemTime(
+      jest.useFakeTimers('modern').setSystemTime(
         // 00:00 on Dec. 25 in AKL
         new Date(Date.UTC(2023, Month.December, 24, 12, 0, 0)),
       );

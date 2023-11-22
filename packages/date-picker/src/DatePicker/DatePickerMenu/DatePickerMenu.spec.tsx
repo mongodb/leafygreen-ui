@@ -102,7 +102,7 @@ const renderDatePickerMenu = (
 describe('packages/date-picker/date-picker-menu', () => {
   beforeEach(() => {
     // Set the current time to midnight UTC on 2023-09-10
-    jest.useFakeTimers().setSystemTime(testToday);
+    jest.useFakeTimers('modern').setSystemTime(testToday);
   });
 
   describe('Rendering', () => {
@@ -236,7 +236,7 @@ describe('packages/date-picker/date-picker-menu', () => {
           const weekBeforeDTStart = new Date(Date.UTC(2023, Month.March, 5));
 
           test('left arrow moves focus to prev day', async () => {
-            jest.useFakeTimers().setSystemTime(daylightTimeStartDate); // Mar 12
+            jest.setSystemTime(daylightTimeStartDate); // Mar 12
             const { getCellWithValue } = renderDatePickerMenu();
             userEvent.tab();
             userEvent.keyboard('{arrowleft}');
@@ -246,7 +246,7 @@ describe('packages/date-picker/date-picker-menu', () => {
           });
 
           test('right arrow moves focus to next day', async () => {
-            jest.useFakeTimers().setSystemTime(standardTimeEndDate); // Mar 11
+            jest.setSystemTime(standardTimeEndDate); // Mar 11
             const { getCellWithValue } = renderDatePickerMenu();
             userEvent.tab();
             userEvent.keyboard('{arrowright}');
@@ -255,7 +255,7 @@ describe('packages/date-picker/date-picker-menu', () => {
           });
 
           test('up arrow moves focus to the previous week', async () => {
-            jest.useFakeTimers().setSystemTime(daylightTimeStartDate); // Mar 12
+            jest.setSystemTime(daylightTimeStartDate); // Mar 12
             const { getCellWithValue } = renderDatePickerMenu();
             userEvent.tab();
             userEvent.keyboard('{arrowup}');
@@ -264,7 +264,7 @@ describe('packages/date-picker/date-picker-menu', () => {
           });
 
           test('down arrow moves focus to the next week', async () => {
-            jest.useFakeTimers().setSystemTime(weekBeforeDTStart); // Mar 5
+            jest.setSystemTime(weekBeforeDTStart); // Mar 5
             const { getCellWithValue } = renderDatePickerMenu();
             userEvent.tab();
             userEvent.keyboard('{arrowdown}');
@@ -277,7 +277,7 @@ describe('packages/date-picker/date-picker-menu', () => {
           const weekAfterDTEnd = new Date(Date.UTC(2023, Month.November, 12));
 
           test('left arrow moves focus to prev day', async () => {
-            jest.useFakeTimers().setSystemTime(standardTimeStartDate); // Nov 6
+            jest.setSystemTime(standardTimeStartDate); // Nov 6
             const { getCellWithValue } = renderDatePickerMenu();
             userEvent.tab();
             userEvent.keyboard('{arrowleft}');
@@ -287,7 +287,7 @@ describe('packages/date-picker/date-picker-menu', () => {
           });
 
           test('right arrow moves focus to next day', async () => {
-            jest.useFakeTimers().setSystemTime(daylightTimeEndDate); // Nov 5
+            jest.setSystemTime(daylightTimeEndDate); // Nov 5
 
             const { getCellWithValue } = renderDatePickerMenu();
             userEvent.tab();
@@ -298,7 +298,7 @@ describe('packages/date-picker/date-picker-menu', () => {
           });
 
           test('up arrow moves focus to the previous week', async () => {
-            jest.useFakeTimers().setSystemTime(weekAfterDTEnd); // Nov 12
+            jest.setSystemTime(weekAfterDTEnd); // Nov 12
             const { getCellWithValue } = renderDatePickerMenu();
             userEvent.tab();
             userEvent.keyboard('{arrowup}');
@@ -308,7 +308,7 @@ describe('packages/date-picker/date-picker-menu', () => {
           });
 
           test('down arrow moves focus to the next week', async () => {
-            jest.useFakeTimers().setSystemTime(daylightTimeEndDate); // Nov 5
+            jest.setSystemTime(daylightTimeEndDate); // Nov 5
             const { getCellWithValue } = renderDatePickerMenu();
             userEvent.tab();
             userEvent.keyboard('{arrowdown}');
