@@ -106,19 +106,23 @@ export const test = (
     const r17packages = JSON.parse(r17packagesString);
     const r17expectedJestVersion = r17packages.dependencies['jest'];
 
-    const version = spawnSync(jestBinary, ['--version']).stdout.toString(
-      'utf-8',
-    );
+    const version = spawnSync(jestBinary, ['--version'])
+      .stdout.toString('utf-8')
+      .trim();
 
     if (react17) {
       if (r17expectedJestVersion !== version) {
+        console.log({
+          r17expectedJestVersion,
+          version,
+        });
         throw new Error(
           `Incorrect Jest version installed. Expected ${r17expectedJestVersion}, using ${version}`,
         );
       }
     }
 
-    console.log('Using Jest version', version);
+    console.log(`Using jest@${version}`);
     verbose && console.log('Jest binary path:', jestBinary);
 
     return jestBinary;
