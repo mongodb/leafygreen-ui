@@ -36,6 +36,7 @@
     "jest-canvas-mock": "2.5.1",
     "jest-environment-jsdom": "29.6.2",
     "jest-junit": "16.0.0",
-    "react-test-renderer": "18.2.0"
+    "react-test-renderer": "18.2.0",
+    "regenerator-runtime": "0.14.0"
   }
 }
