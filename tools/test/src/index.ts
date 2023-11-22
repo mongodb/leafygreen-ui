@@ -41,6 +41,7 @@ export const test = (
     watch ? '--watch' : '',
     verbose ? '--verbose' : '',
     ...(ci ? ciFlags : []),
+    '--silent',
     ...passThroughOptions,
   ].filter(v => v !== '');
 
