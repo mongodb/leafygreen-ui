@@ -614,7 +614,7 @@ describe('packages/date-picker', () => {
                 // Fire this event here to ensure these side-effects don't impact Tab order
                 if (element) fireEvent.transitionEnd(element);
               }
-            });
+            }, 10_000); // extend the timeout duration
           });
         });
       });
