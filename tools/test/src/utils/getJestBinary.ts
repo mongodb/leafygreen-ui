@@ -6,11 +6,10 @@ import path from 'path';
 import { TestCommandOptions } from '..';
 
 import { getCurrentJestVersion } from './getCurrentJestVersion';
-import { getExpectedJestVersion } from './getExpectedJestVersion';
 
 /** Returns the path of the correct Jest binary */
 export function getJestBinary(options: TestCommandOptions): string {
-  const { verbose, react17 } = options;
+  const { verbose } = options;
 
   const rootDir = process.cwd();
 
@@ -23,18 +22,9 @@ export function getJestBinary(options: TestCommandOptions): string {
     exitWithErrorMessage(`Could not find jest binary ${jestBinaryPath}`);
   }
 
-  const expectedJestVersion = getExpectedJestVersion(!!react17);
-  const currentVersion = getCurrentJestVersion(jestBinaryPath);
+  const jestVersion = getCurrentJestVersion(jestBinaryPath);
 
-  if (expectedJestVersion !== currentVersion) {
-    exitWithErrorMessage(
-      `Incorrect Jest version installed. Expected ${expectedJestVersion}, using ${currentVersion}. ${
-        react17 ? 'Did you install the appropriate React 17 dependencies?' : ''
-      }`,
-    );
-  }
-
-  console.log(`Using jest@${currentVersion}`);
+  verbose && console.log(`Using jest@${jestVersion}`);
   verbose && console.log('Jest binary path:', jestBinaryPath);
 
   return jestBinaryPath;

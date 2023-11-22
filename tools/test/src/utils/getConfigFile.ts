@@ -15,10 +15,13 @@ export function getConfigFile(options: TestCommandOptions): string {
   }
 
   const localConfigFile = path.resolve(rootDir, 'jest.config.js');
-  const defaultConfigFile = path.resolve(__dirname, '../config/jest.config.js');
+  const defaultConfigFile = path.resolve(
+    rootDir,
+    'tools/test/config/jest.config.js',
+  );
   const react17ConfigFile = path.resolve(
-    __dirname,
-    '../config/react17/jest.config.js',
+    rootDir,
+    'tools/test/config/react17/jest.config.js',
   );
 
   if (react17) {
@@ -27,7 +30,9 @@ export function getConfigFile(options: TestCommandOptions): string {
       verbose && console.log(react17ConfigFile);
       return react17ConfigFile; // If react17 flag was used, use that config
     } else {
-      exitWithErrorMessage('No React17 test config found');
+      exitWithErrorMessage(
+        `No React17 test config found. Reading ${react17ConfigFile}`,
+      );
     }
   }
 
