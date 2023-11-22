@@ -1,5 +1,9 @@
 import React, { forwardRef } from 'react';
 
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
+
 import {
   contextPropNames,
   DatePickerProvider,
@@ -21,11 +25,16 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       initialValue: initialProp,
       onDateChange: onChangeProp,
       handleValidation,
+      darkMode: darkModeProp,
       ...props
     }: DatePickerProps,
     fwdRef,
   ) => {
-    const [contextProps, restProps] = pickAndOmit(props, contextPropNames);
+    const { darkMode } = useDarkMode(darkModeProp);
+    const [contextProps, restProps] = pickAndOmit(
+      { darkMode, ...props },
+      contextPropNames,
+    );
 
     const { value, setValue } = useControlledValue(
       valueProp,
@@ -40,7 +49,9 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
           setValue={setValue}
           handleValidation={handleValidation}
         >
-          <DatePickerComponent ref={fwdRef} {...restProps} />
+          <LeafyGreenProvider darkMode={darkMode}>
+            <DatePickerComponent ref={fwdRef} {...restProps} />
+          </LeafyGreenProvider>
         </SingleDateProvider>
       </DatePickerProvider>
     );
