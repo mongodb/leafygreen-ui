@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
+import { DatePicker } from '@leafygreen-ui/date-picker';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 import Modal from '@leafygreen-ui/modal';
@@ -11,12 +12,10 @@ import { Size } from '@leafygreen-ui/tokens';
 import {
   DatePickerContextProps,
   DatePickerProvider,
-} from '../shared/components/DatePickerContext';
-import { Month } from '../shared/constants';
-import { newUTC } from '../shared/utils';
-import { Locales, TimeZones } from '../shared/utils/testutils';
-
-import { DatePicker } from './DatePicker';
+} from './shared/components/DatePickerContext';
+import { Month } from './shared/constants';
+import { newUTC } from './shared/utils';
+import { Locales, TimeZones } from './shared/utils/testutils';
 
 const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
   <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
@@ -31,7 +30,7 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
   component: DatePicker,
   decorators: [ProviderWrapper],
   parameters: {
-    default: null,
+    default: 'LiveExample',
     controls: {
       exclude: [
         'handleValidation',
@@ -75,7 +74,7 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
 
 export default meta;
 
-export const Basic: StoryFn<typeof DatePicker> = props => {
+export const LiveExample: StoryFn<typeof DatePicker> = props => {
   const [value, setValue] = useState<Date | null | undefined>();
 
   return <DatePicker {...props} value={value} onDateChange={setValue} />;

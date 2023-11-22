@@ -1,6 +1,6 @@
 import { StoryContext } from '@storybook/react';
 import userEvent from '@testing-library/user-event';
-import { range } from 'lodash';
+import range from 'lodash/range';
 
 import { LeafyGreenProviderProps } from '@leafygreen-ui/leafygreen-provider';
 
