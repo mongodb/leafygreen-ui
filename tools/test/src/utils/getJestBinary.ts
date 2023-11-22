@@ -28,7 +28,9 @@ export function getJestBinary(options: TestCommandOptions): string {
 
   if (expectedJestVersion !== currentVersion) {
     exitWithErrorMessage(
-      `Incorrect Jest version installed. Expected ${expectedJestVersion}, using ${currentVersion}`,
+      `Incorrect Jest version installed. Expected ${expectedJestVersion}, using ${currentVersion}. ${
+        react17 ? 'Did you install the appropriate React 17 dependencies?' : ''
+      }`,
     );
   }
 
