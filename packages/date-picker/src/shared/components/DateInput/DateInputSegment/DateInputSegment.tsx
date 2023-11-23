@@ -44,7 +44,6 @@ export const DateInputSegment = React.forwardRef<
       onChange,
       onBlur,
       onKeyDown,
-      darkMode,
       ...rest
     }: DateInputSegmentProps,
     fwdRef,
@@ -54,7 +53,7 @@ export const DateInputSegment = React.forwardRef<
 
     const inputRef = useForwardedRef(fwdRef, null);
 
-    const { theme } = useDarkMode(darkMode);
+    const { theme } = useDarkMode();
     const baseFontSize = useUpdatedBaseFontSize();
     const { size, disabled } = useDatePickerContext();
     const formatter = getValueFormatter(segment);
