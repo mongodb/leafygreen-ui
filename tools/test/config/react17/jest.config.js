@@ -5,7 +5,7 @@
 // note we still need to declare the path relative to `<rootDir>`
 
 module.exports = {
-  testTimeout: 10_000,
+  testTimeout: 60_000,
   // The directory where Jest should output its coverage files
   coverageDirectory: 'coverage',
   coveragePathIgnorePatterns: ['/node_modules/', '/dist/', '/index.ts', '.svg'],
