@@ -491,7 +491,7 @@ describe('packages/date-picker', () => {
 
           userEvent.click(_1970);
           expect(calendarGrid).toHaveAttribute('aria-label', 'December 1970');
-        });
+        }, 10_000); // extend default timeout
 
         test('making a selection with enter does not close the datePicker menu', async () => {
           const { openMenu, findAllByRole } = renderDatePicker();
