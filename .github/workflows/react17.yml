@@ -15,22 +15,24 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Setup Node 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'yarn'
+
       - name: Install node-gyp
         run: yarn global add node-gyp
 
-      - name: Set react types resolution
-        uses: sergeysova/jq-action@v2
-        with:
-          cmd: echo -E "$(jq '.resolutions = {"@types/react":"16.9.56"}' package.json)" > package.json
-
-      - name: Install React & React DOM 17
-        run: yarn add -DW react@17.0.2 react-dom@17.0.2 @types/react@16.9.56 @types/react-dom@16.9.18 @types/react-is@17
-
-      - name: Install testing frameworks
-        run: yarn add -DW @testing-library/dom@7.31.2 @testing-library/jest-dom@5.16.5 @testing-library/react@10.4.9 @testing-library/react-hooks@3.7.0 @types/jest@26.0.24 @types/jest-axe@3.5.3 babel-jest@26.6.3 jest@26.6.3 jest-axe@4.1.0 jest-junit@10.0.0 react-test-renderer@17.0.2 regenerator-runtime@0.13.10 @testing-library/user-event@13.5.0
-
       - name: Install package.json
         run: yarn install --prefer-offline
+
+      - name: Build CLI
+        run: yarn build:cli
+
+      # TODO: Will nohoist help here?
+      - name: Install testing tools for React 17
+        run: npx ts-node tools/test/scripts/install-react17.ts
 
       - name: Build packages
         run: yarn build
