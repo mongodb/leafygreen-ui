@@ -12,8 +12,8 @@ import { addDays, subDays } from 'date-fns';
 
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
-import { Month } from '../shared/constants';
-import { newUTC } from '../shared/utils';
+import { defaultMax, defaultMin, MAX_DATE, Month } from '../shared/constants';
+import { getValueFormatter, newUTC } from '../shared/utils';
 import {
   eventContainingTargetValue,
   tabNTimes,
@@ -785,7 +785,7 @@ describe('packages/date-picker', () => {
       /**
        * Arrow Keys:
        * Since arrow key behavior changes based on whether the input or menu is focused,
-       * many of these tests exist in the "DatePickerInput" and "DatePickerMenu" components
+       * many tests exist in the "DatePickerInput" and "DatePickerMenu" components
        */
       describe('Arrow key', () => {
         describe('Input', () => {
@@ -807,6 +807,61 @@ describe('packages/date-picker', () => {
 
             userEvent.keyboard('{arrowleft}');
             expect(yearInput).toHaveFocus();
+          });
+
+          describe.each(['arrowup', 'arrowdown'])('%p key', key => {
+            test('updates segment value', () => {
+              const { monthInput } = renderDatePicker();
+              userEvent.click(monthInput);
+              userEvent.keyboard(`{${key}}`);
+              const expectedNumberValue =
+                key === 'arrowup' ? defaultMin.month : defaultMax.month;
+
+              expect(monthInput).toHaveValue(
+                getValueFormatter('month')(expectedNumberValue),
+              );
+            });
+
+            test('up arrow fires segment change handler', () => {
+              const onChange = jest.fn();
+              const { monthInput } = renderDatePicker({ onChange });
+              userEvent.click(monthInput);
+              userEvent.keyboard(`{${key}}`);
+              expect(onChange).toHaveBeenCalled();
+            });
+
+            test('up arrow does not fire value change handler', () => {
+              const onDateChange = jest.fn();
+              const { monthInput } = renderDatePicker({ onDateChange });
+              userEvent.click(monthInput);
+              userEvent.keyboard(`{${key}}`);
+              expect(onDateChange).not.toHaveBeenCalled();
+            });
+
+            describe('when a value is set', () => {
+              test('fires value change handler', () => {
+                const onDateChange = jest.fn();
+                const { monthInput } = renderDatePicker({
+                  onDateChange,
+                  value: testToday,
+                });
+                userEvent.click(monthInput);
+                userEvent.keyboard(`{${key}}`);
+                expect(onDateChange).toHaveBeenCalled();
+              });
+            });
+          });
+
+          test('up arrow does not fire the change handler if value would be out of range', () => {
+            const value = newUTC(MAX_DATE.getUTCFullYear() - 1, Month.July, 4);
+            const onDateChange = jest.fn();
+            const { yearInput } = renderDatePicker({
+              onDateChange,
+              value,
+            });
+            userEvent.click(yearInput);
+            userEvent.keyboard(`{arrowup}`);
+            expect(onDateChange).not.toHaveBeenCalled();
           });
         });
         describe('Menu', () => {
