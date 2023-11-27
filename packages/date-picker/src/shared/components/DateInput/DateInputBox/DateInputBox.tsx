@@ -74,7 +74,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
         const areAllSegmentsEmpty = !doesSomeSegmentExist(newSegments);
 
         if (utcDate) {
-          // Only update the value iff all parts are set, and create a valid date.
+          // Update the value _iff_ all parts are set, and create a valid date.
           const shouldUpdate = !dateValue || !isSameDay(utcDate, dateValue);
 
           if (shouldUpdate) {
@@ -98,7 +98,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       onSegmentChangeProp?.(event);
     };
 
-    /** Triggered when  */
+    /** Triggered when a segment is blurred */
     const handleSegmentBlur: FocusEventHandler<HTMLInputElement> = e => {
       const segmentName = e.target.getAttribute('id');
       const newValue = e.target.value;

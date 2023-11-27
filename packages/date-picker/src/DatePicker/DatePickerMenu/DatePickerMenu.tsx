@@ -62,8 +62,6 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
     const calendarRef = useRef<HTMLTableElement>(null);
 
     const prevValue = usePrevious(value);
-    // const prevOpen = usePrevious(isOpen);
-    // const prevHighlight = usePrevious(highlight);
 
     const monthLabel = getFullMonthLabel(month);
 
