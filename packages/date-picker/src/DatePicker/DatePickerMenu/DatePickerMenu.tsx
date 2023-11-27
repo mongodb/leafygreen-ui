@@ -2,7 +2,6 @@ import React, {
   forwardRef,
   KeyboardEventHandler,
   useEffect,
-  useMemo,
   useRef,
 } from 'react';
 
@@ -25,7 +24,6 @@ import {
   getUTCDateString,
   isSameUTCDay,
   isSameUTCMonth,
-  setToUTCMidnight,
 } from '../../shared/utils';
 import { useSingleDateContext } from '../SingleDateContext';
 
@@ -40,10 +38,10 @@ import { DatePickerMenuHeader } from './DatePickerMenuHeader';
 
 export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
   ({ onKeyDown, ...rest }: DatePickerMenuProps, fwdRef) => {
-    const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
     const { isInRange, isOpen, setIsDirty } = useDatePickerContext();
     const {
       refs,
+      today,
       value,
       setValue,
       handleValidation,
