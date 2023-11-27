@@ -555,7 +555,7 @@ describe('packages/date-picker', () => {
           expect(handleValidation).toHaveBeenCalled();
         });
 
-        test('todayCelldoes not call validation handler when changing segment focus', () => {
+        test('todayCell does not call validation handler when changing segment focus', () => {
           const handleValidation = jest.fn();
           renderDatePicker({ handleValidation });
           tabNTimes(2);
@@ -856,123 +856,166 @@ describe('packages/date-picker', () => {
         expect(menuContainerEl).not.toBeInTheDocument();
       });
 
-      test('does not fire a value change handler', () => {
-        const onDateChange = jest.fn();
-        const { yearInput } = renderDatePicker({
-          onDateChange,
-        });
-        userEvent.type(yearInput, '2023');
-        expect(onDateChange).not.toHaveBeenCalled();
-      });
-
-      test('fires a segment change handler', () => {
-        const onChange = jest.fn();
-        const { yearInput } = renderDatePicker({
-          onChange,
-        });
-        userEvent.type(yearInput, '2023');
-        expect(onChange).toHaveBeenCalledWith(
-          eventContainingTargetValue('2023'),
-        );
-      });
-
-      test('segment value is not immediately formatted', () => {
-        const onChange = jest.fn();
-        const { dayInput } = renderDatePicker({ onChange });
-        userEvent.type(dayInput, '2');
-        expect(onChange).toHaveBeenCalledWith(eventContainingTargetValue('2'));
-        expect(dayInput.value).toBe('2');
-      });
-
-      test('value is formatted on segment blur', () => {
-        const onChange = jest.fn();
-        const { dayInput } = renderDatePicker({ onChange });
-        userEvent.type(dayInput, '2');
-        userEvent.tab();
-        expect(onChange).toHaveBeenCalledWith(eventContainingTargetValue('02'));
-        expect(dayInput.value).toBe('02');
-      });
-
-      describe('auto-advances focus', () => {
-        describe('for ISO format', () => {
-          const dateFormat = 'iso8601';
-
-          test('when year value is explicit, focus advances to month', () => {
-            const { yearInput, monthInput } = renderDatePicker({
-              dateFormat,
-            });
-            userEvent.type(yearInput, '1999');
-            expect(monthInput).toHaveFocus();
+      describe('typing a single segment', () => {
+        test('does not fire a value change handler', () => {
+          const onDateChange = jest.fn();
+          const { yearInput } = renderDatePicker({
+            onDateChange,
           });
-          test('when year value is ambiguous, focus does not advance', () => {
-            const { yearInput } = renderDatePicker({ dateFormat });
-            userEvent.type(yearInput, '2');
-            expect(yearInput).toHaveFocus();
-          });
-          test('when year value is out-of-range, focus does not advance', () => {
-            const { yearInput } = renderDatePicker({ dateFormat });
-            userEvent.type(yearInput, '1945');
-            expect(yearInput).toHaveFocus();
-          });
-          test('when month value is explicit, focus advances to day', () => {
-            const { monthInput, dayInput } = renderDatePicker({
-              dateFormat,
-            });
-            userEvent.type(monthInput, '5');
-            expect(dayInput).toHaveFocus();
-          });
-          test('when month value is ambiguous, focus does not advance', () => {
-            const { monthInput } = renderDatePicker({
-              dateFormat,
-            });
-            userEvent.type(monthInput, '1');
-            expect(monthInput).toHaveFocus();
-          });
+          userEvent.type(yearInput, '2023');
+          expect(onDateChange).not.toHaveBeenCalled();
         });
 
-        describe('for en-US format', () => {
-          const dateFormat = 'en-US';
+        test('fires a segment change handler', () => {
+          const onChange = jest.fn();
+          const { yearInput } = renderDatePicker({
+            onChange,
+          });
+          userEvent.type(yearInput, '2023');
+          expect(onChange).toHaveBeenCalledWith(
+            eventContainingTargetValue('2023'),
+          );
+        });
 
-          test('when month value is explicit, focus advances to day', () => {
-            const { monthInput, dayInput } = renderDatePicker({
-              dateFormat,
+        test('segment value is not immediately formatted', () => {
+          const onChange = jest.fn();
+          const { dayInput } = renderDatePicker({ onChange });
+          userEvent.type(dayInput, '2');
+          expect(onChange).toHaveBeenCalledWith(
+            eventContainingTargetValue('2'),
+          );
+          expect(dayInput.value).toBe('2');
+        });
+
+        test('segment value is formatted on segment blur', () => {
+          const onChange = jest.fn();
+          const { dayInput } = renderDatePicker({ onChange });
+          userEvent.type(dayInput, '2');
+          userEvent.tab();
+          expect(onChange).toHaveBeenCalledWith(
+            eventContainingTargetValue('02'),
+          );
+          expect(dayInput.value).toBe('02');
+        });
+
+        describe('auto-advances focus', () => {
+          describe('for ISO format', () => {
+            const dateFormat = 'iso8601';
+
+            test('when year value is explicit, focus advances to month', () => {
+              const { yearInput, monthInput } = renderDatePicker({
+                dateFormat,
+              });
+              userEvent.type(yearInput, '1999');
+              expect(monthInput).toHaveFocus();
             });
-            userEvent.type(monthInput, '5');
-            expect(dayInput).toHaveFocus();
-          });
-          test('when month value is ambiguous, focus does not advance', () => {
-            const { monthInput } = renderDatePicker({ dateFormat });
-            userEvent.type(monthInput, '1');
-            expect(monthInput).toHaveFocus();
+            test('when year value is ambiguous, focus does not advance', () => {
+              const { yearInput } = renderDatePicker({ dateFormat });
+              userEvent.type(yearInput, '2');
+              expect(yearInput).toHaveFocus();
+            });
+            test('when year value is out-of-range, focus does not advance', () => {
+              const { yearInput } = renderDatePicker({ dateFormat });
+              userEvent.type(yearInput, '1945');
+              expect(yearInput).toHaveFocus();
+            });
+            test('when month value is explicit, focus advances to day', () => {
+              const { monthInput, dayInput } = renderDatePicker({
+                dateFormat,
+              });
+              userEvent.type(monthInput, '5');
+              expect(dayInput).toHaveFocus();
+            });
+            test('when month value is ambiguous, focus does not advance', () => {
+              const { monthInput } = renderDatePicker({
+                dateFormat,
+              });
+              userEvent.type(monthInput, '1');
+              expect(monthInput).toHaveFocus();
+            });
           });
 
-          test('when day value is explicit, focus advances to year', () => {
-            const { dayInput, yearInput } = renderDatePicker({
-              dateFormat,
-            });
-            userEvent.type(dayInput, '5');
-            expect(yearInput).toHaveFocus();
-          });
-          test('when day value is ambiguous, focus does not advance', () => {
-            const { dayInput } = renderDatePicker({ dateFormat });
-            userEvent.type(dayInput, '2');
-            expect(dayInput).toHaveFocus();
-          });
+          describe('for en-US format', () => {
+            const dateFormat = 'en-US';
 
-          test('when year value is ambiguous, focus does not update', () => {
-            const { monthInput, dayInput, yearInput } = renderDatePicker({
-              dateFormat,
+            test('when month value is explicit, focus advances to day', () => {
+              const { monthInput, dayInput } = renderDatePicker({
+                dateFormat,
+              });
+              userEvent.type(monthInput, '5');
+              expect(dayInput).toHaveFocus();
             });
-            userEvent.type(monthInput, '5');
-            userEvent.type(dayInput, '5');
-            userEvent.type(yearInput, '2');
-            expect(yearInput).toHaveFocus();
+            test('when month value is ambiguous, focus does not advance', () => {
+              const { monthInput } = renderDatePicker({ dateFormat });
+              userEvent.type(monthInput, '1');
+              expect(monthInput).toHaveFocus();
+            });
+
+            test('when day value is explicit, focus advances to year', () => {
+              const { dayInput, yearInput } = renderDatePicker({
+                dateFormat,
+              });
+              userEvent.type(dayInput, '5');
+              expect(yearInput).toHaveFocus();
+            });
+            test('when day value is ambiguous, focus does not advance', () => {
+              const { dayInput } = renderDatePicker({ dateFormat });
+              userEvent.type(dayInput, '2');
+              expect(dayInput).toHaveFocus();
+            });
+
+            test('when year value is ambiguous, focus does not update', () => {
+              const { monthInput, dayInput, yearInput } = renderDatePicker({
+                dateFormat,
+              });
+              userEvent.type(monthInput, '5');
+              userEvent.type(dayInput, '5');
+              userEvent.type(yearInput, '2');
+              expect(yearInput).toHaveFocus();
+            });
           });
+        });
+      });
+
+      describe('typing a full value', () => {
+        test('fires value change handler', () => {
+          const onDateChange = jest.fn();
+          const { yearInput, monthInput, dayInput } = renderDatePicker({
+            onDateChange,
+          });
+          userEvent.type(yearInput, '2023');
+          userEvent.type(monthInput, '12');
+          userEvent.type(dayInput, '26');
+          expect(onDateChange).toHaveBeenCalledWith(
+            expect.objectContaining(newUTC(2023, Month.December, 26)),
+          );
+        });
+
+        test('does not fire a value change handler if value is after MAX', () => {
+          const onDateChange = jest.fn();
+          const { yearInput, monthInput, dayInput } = renderDatePicker({
+            onDateChange,
+          });
+          userEvent.type(yearInput, '2048');
+          userEvent.type(monthInput, '01');
+          userEvent.type(dayInput, '05');
+          expect(onDateChange).not.toHaveBeenCalled();
+        });
+
+        test('does not fire a value change handler if value is before MIN', () => {
+          const onDateChange = jest.fn();
+          const { yearInput, monthInput, dayInput } = renderDatePicker({
+            onDateChange,
+          });
+          userEvent.type(yearInput, '1944');
+          userEvent.type(monthInput, '06');
+          userEvent.type(dayInput, '06');
+          expect(onDateChange).not.toHaveBeenCalled();
         });
       });
 
       describe('on un-focus/blur', () => {
-        test('does not fire a change handler if the value is incomplete', () => {
+        test('does not fire a value change handler if the value is incomplete', () => {
           const onDateChange = jest.fn();
           const { yearInput } = renderDatePicker({
             onDateChange,
@@ -992,7 +1035,7 @@ describe('packages/date-picker', () => {
           );
         });
 
-        test('fires a change handler when the value is a valid date', () => {
+        test('fires a value change handler when the value is a valid date', () => {
           const onDateChange = jest.fn();
           const { yearInput, monthInput, dayInput } = renderDatePicker({
             onDateChange,
