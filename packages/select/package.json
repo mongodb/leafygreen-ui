@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/select",
-  "version": "11.0.1",
+  "version": "11.1.1",
   "description": "leafyGreen UI Kit Select",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,16 +22,16 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/button": "^21.0.9",
+    "@leafygreen-ui/button": "^21.0.10",
     "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/hooks": "^8.0.0",
-    "@leafygreen-ui/icon": "^11.23.0",
+    "@leafygreen-ui/hooks": "^8.0.1",
+    "@leafygreen-ui/icon": "^11.25.0",
     "@leafygreen-ui/input-option": "^1.0.13",
     "@leafygreen-ui/lib": "^13.0.0",
     "@leafygreen-ui/palette": "^4.0.7",
     "@leafygreen-ui/popover": "^11.1.1",
     "@leafygreen-ui/tokens": "^2.2.0",
-    "@leafygreen-ui/typography": "^18.0.0",
+    "@leafygreen-ui/typography": "^18.0.1",
     "@types/react-is": "^18.0.0",
     "lodash": "^4.17.21",
     "polished": "^4.1.3",

@@ -1,5 +1,20 @@
 # @leafygreen-ui/button
 
+## 21.0.11
+
+### Patch Changes
+
+- 6c89b45b: The baseFontSize knob for Button's LiveExample on .design now toggles correctly
+- Updated dependencies [99848a0f]
+  - @leafygreen-ui/lib@13.1.0
+
+## 21.0.10
+
+### Patch Changes
+
+- f077faf1: - Buttons now correctly disable click events when disabled or isLoading
+  - Buttons now no longer display focus outlines when disabled or isLoading
+
 ## 21.0.9
 
 ### Patch Changes

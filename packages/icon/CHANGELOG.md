@@ -1,5 +1,18 @@
 # @leafygreen-ui/icon
 
+## 11.25.1
+
+### Patch Changes
+
+- ed0437ce: Updates `'Key'` icon to match design specs
+
+## 11.25.0
+
+### Minor Changes
+
+- c41752d2: Adds `LightningBolt` icon to glyph set.
+- 89332190: Adds `Boolean` and `String` icons to glyph set
+
 ## 11.24.0
 
 ### Minor Changes

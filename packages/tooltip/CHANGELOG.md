@@ -1,5 +1,21 @@
 # @leafygreen-ui/tooltip
 
+## 11.0.0
+
+### Major Changes
+
+- 783add80: Exclude `'center-vertical'` and `'center-horizontal'` from Align type.
+
+### Patch Changes
+
+- Updated dependencies [e3f4d9ce]
+- Updated dependencies [89f439e8]
+- Updated dependencies [c41752d2]
+- Updated dependencies [89332190]
+  - @leafygreen-ui/typography@18.0.1
+  - @leafygreen-ui/hooks@8.0.1
+  - @leafygreen-ui/icon@11.25.0
+
 ## 10.1.0
 
 ### Minor Changes

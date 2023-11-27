@@ -1,5 +1,25 @@
 # @leafygreen-ui/table
 
+## 12.1.4
+
+### Patch Changes
+
+- 0e10308a: Cells are now compatible with styled components
+
+## 12.1.3
+
+### Patch Changes
+
+- 86a10028: Updated README to reference TanStack's `react-table` component
+- e516c359: useLeafyGreenTable now memoizes its column prop to improve performance
+- Updated dependencies [e3f4d9ce]
+- Updated dependencies [89f439e8]
+- Updated dependencies [c41752d2]
+- Updated dependencies [89332190]
+  - @leafygreen-ui/typography@18.0.1
+  - @leafygreen-ui/hooks@8.0.1
+  - @leafygreen-ui/icon@11.25.0
+
 ## 12.1.2
 
 ### Patch Changes

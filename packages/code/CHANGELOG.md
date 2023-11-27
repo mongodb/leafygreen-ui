@@ -1,5 +1,17 @@
 # @leafygreen-ui/code
 
+## 14.2.18
+
+### Patch Changes
+
+- fa135957: Code LiveExample now correctly works with 'language="none"'
+- Updated dependencies [99848a0f]
+- Updated dependencies [6c89b45b]
+- Updated dependencies [ed0437ce]
+  - @leafygreen-ui/lib@13.1.0
+  - @leafygreen-ui/button@21.0.11
+  - @leafygreen-ui/icon@11.25.1
+
 ## 14.2.17
 
 ### Patch Changes

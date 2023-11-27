@@ -1,6 +1,6 @@
 import React, { createRef, useState } from 'react';
-import { act } from 'react-dom/test-utils';
 import {
+  act,
   fireEvent,
   getByText as getByTextFor,
   render,
@@ -13,10 +13,15 @@ import userEvent from '@testing-library/user-event';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import { keyMap } from '@leafygreen-ui/lib';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { Option, OptionGroup, Select } from '..';
 
 import { State } from './Select.types';
+
+function waitForTimeout(timeout = 500) {
+  return new Promise(res => setTimeout(res, timeout));
+}
 
 const Color = {
   Red: 'Explicit value: Red',
@@ -399,7 +404,9 @@ describe('packages/select', () => {
             </Select>,
           );
 
-          userEvent.click(getByRole('button'));
+          act(() => {
+            userEvent.click(getByRole('button'));
+          });
 
           expect(spy).not.toHaveBeenCalled();
         });
@@ -538,6 +545,117 @@ describe('packages/select', () => {
           const button = getByRole('button');
           userEvent.type(button, '{arrowup}');
 
+          expect(queryByRole('listbox')).not.toBeInTheDocument();
+        });
+      });
+    });
+
+    describe('closing', () => {
+      describe('selecting an option closes menu', () => {
+        test('on mouse click', async () => {
+          const { getByRole, findAllByRole, queryByRole } = render(
+            <Select {...defaultProps}>
+              <Option data-testid="option-apple">Apple</Option>
+              <Option data-testid="option-banana">Banana</Option>
+            </Select>,
+          );
+          const button = getByRole('button');
+          userEvent.click(button);
+          await waitFor(() => {
+            const listbox = getByRole('listbox');
+            expect(listbox).toBeVisible();
+          });
+          const options = await findAllByRole('option');
+          const apple = options[0];
+          userEvent.click(apple);
+          await waitForElementToBeRemoved(getByRole('listbox'));
+          expect(queryByRole('listbox')).not.toBeInTheDocument();
+        });
+
+        test('on enter', async () => {
+          const { getByRole } = render(
+            <Select {...defaultProps}>
+              <Option data-testid="option-apple">Apple</Option>
+              <Option data-testid="option-banana">Banana</Option>
+            </Select>,
+          );
+          const button = getByRole('button');
+          userEvent.type(button, '{arrowdown}');
+          await waitFor(() => {
+            const listbox = getByRole('listbox');
+            expect(listbox).toBeVisible();
+          });
+          // first option is focused by default
+          userEvent.keyboard('{enter}');
+          await waitForElementToBeRemoved(getByRole('listbox'));
+        });
+
+        test('on space', async () => {
+          const { getByRole } = render(
+            <Select {...defaultProps}>
+              <Option data-testid="option-apple">Apple</Option>
+              <Option data-testid="option-banana">Banana</Option>
+            </Select>,
+          );
+          const button = getByRole('button');
+          userEvent.type(button, '{arrowdown}');
+          await waitFor(() => {
+            const listbox = getByRole('listbox');
+            expect(listbox).toBeVisible();
+          });
+          // first option is focused by default
+          userEvent.keyboard('{space}');
+          await waitForElementToBeRemoved(getByRole('listbox'));
+        });
+      });
+
+      describe("selecting an option closes menu and doesn't reopen the menu", () => {
+        test('on mouse click', async () => {
+          const { getByRole, findAllByRole, queryByRole } = render(
+            <Select {...defaultProps}>
+              <Option data-testid="option-apple">Apple</Option>
+              <Option data-testid="option-banana">Banana</Option>
+            </Select>,
+          );
+          const button = getByRole('button');
+          userEvent.click(button);
+          const options = await findAllByRole('option');
+          const apple = options[0];
+          userEvent.click(apple);
+          await waitForElementToBeRemoved(getByRole('listbox'));
+          await waitForTimeout(transitionDuration.slower);
+          expect(queryByRole('listbox')).not.toBeInTheDocument();
+        });
+
+        test('on enter', async () => {
+          const { getByRole, queryByRole } = render(
+            <Select {...defaultProps}>
+              <Option data-testid="option-apple">Apple</Option>
+              <Option data-testid="option-banana">Banana</Option>
+            </Select>,
+          );
+          const button = getByRole('button');
+          userEvent.type(button, '{arrowdown}');
+          // first option is focused by default
+          userEvent.keyboard('{enter}');
+          await waitForElementToBeRemoved(getByRole('listbox'));
+          await waitForTimeout(transitionDuration.slower);
+          expect(queryByRole('listbox')).not.toBeInTheDocument();
+        });
+
+        test('on space', async () => {
+          const { getByRole, queryByRole } = render(
+            <Select {...defaultProps}>
+              <Option data-testid="option-apple">Apple</Option>
+              <Option data-testid="option-banana">Banana</Option>
+            </Select>,
+          );
+          const button = getByRole('button');
+          userEvent.type(button, '{arrowdown}');
+          // first option is focused by default
+          userEvent.keyboard('{space}');
+          await waitForElementToBeRemoved(getByRole('listbox'));
+          await waitForTimeout(transitionDuration.slower);
           expect(queryByRole('listbox')).not.toBeInTheDocument();
         });
       });
@@ -985,20 +1103,162 @@ describe('packages/select', () => {
       expect(button).toContainElement(listbox);
     });
 
-    test('clicking an option fires onChange', async () => {
-      const onChange = jest.fn();
-      const { getByRole, findAllByRole } = render(
-        <Select {...defaultProps} usePortal={false} onChange={onChange}>
-          <Option data-testid="option-apple">Apple</Option>
-          <Option data-testid="option-banana">Banana</Option>
-        </Select>,
-      );
-      const button = getByRole('button');
-      userEvent.click(button);
-      const options = await findAllByRole('option');
-      const apple = options[0];
-      userEvent.click(apple);
-      expect(onChange).toHaveBeenCalled();
+    describe('fires onChange when selecting an option', () => {
+      test('on mouse click', async () => {
+        const onChange = jest.fn();
+        const { getByRole, findAllByRole } = render(
+          <Select {...defaultProps} usePortal={false} onChange={onChange}>
+            <Option data-testid="option-apple">Apple</Option>
+            <Option data-testid="option-banana">Banana</Option>
+          </Select>,
+        );
+        const button = getByRole('button');
+        userEvent.click(button);
+        const options = await findAllByRole('option');
+        const apple = options[0];
+        userEvent.click(apple);
+        expect(onChange).toHaveBeenCalled();
+      });
+
+      test('on enter', async () => {
+        const onChange = jest.fn();
+        const { getByRole } = render(
+          <Select {...defaultProps} usePortal={false} onChange={onChange}>
+            <Option data-testid="option-apple">Apple</Option>
+            <Option data-testid="option-banana">Banana</Option>
+          </Select>,
+        );
+        const button = getByRole('button');
+        userEvent.type(button, '{arrowdown}');
+        // first option is focused by default
+        userEvent.keyboard('{enter}');
+        expect(onChange).toHaveBeenCalled();
+      });
+
+      test('on space', async () => {
+        const onChange = jest.fn();
+        const { getByRole } = render(
+          <Select {...defaultProps} usePortal={false} onChange={onChange}>
+            <Option data-testid="option-apple">Apple</Option>
+            <Option data-testid="option-banana">Banana</Option>
+          </Select>,
+        );
+        const button = getByRole('button');
+        userEvent.type(button, '{arrowdown}');
+        // first option is focused by default
+        userEvent.keyboard('{space}');
+        expect(onChange).toHaveBeenCalled();
+      });
+    });
+
+    describe('closing', () => {
+      describe('selecting an option closes menu', () => {
+        test('on mouse click', async () => {
+          const { getByRole, findAllByRole } = render(
+            <Select {...defaultProps} usePortal={false}>
+              <Option data-testid="option-apple">Apple</Option>
+              <Option data-testid="option-banana">Banana</Option>
+            </Select>,
+          );
+          const button = getByRole('button');
+          userEvent.click(button);
+          await waitFor(() => {
+            const listbox = getByRole('listbox');
+            expect(listbox).toBeVisible();
+          });
+          const options = await findAllByRole('option');
+          const apple = options[0];
+          userEvent.click(apple);
+          await waitForElementToBeRemoved(getByRole('listbox'));
+        });
+
+        test('on enter', async () => {
+          const { getByRole } = render(
+            <Select {...defaultProps} usePortal={false}>
+              <Option data-testid="option-apple">Apple</Option>
+              <Option data-testid="option-banana">Banana</Option>
+            </Select>,
+          );
+          const button = getByRole('button');
+          userEvent.type(button, '{arrowdown}');
+          await waitFor(() => {
+            const listbox = getByRole('listbox');
+            expect(listbox).toBeVisible();
+          });
+          // first option is focused by default
+          userEvent.keyboard('{enter}');
+          await waitForElementToBeRemoved(getByRole('listbox'));
+        });
+
+        test('on space', async () => {
+          const { getByRole } = render(
+            <Select {...defaultProps} usePortal={false}>
+              <Option data-testid="option-apple">Apple</Option>
+              <Option data-testid="option-banana">Banana</Option>
+            </Select>,
+          );
+          const button = getByRole('button');
+          userEvent.type(button, '{arrowdown}');
+          await waitFor(() => {
+            const listbox = getByRole('listbox');
+            expect(listbox).toBeVisible();
+          });
+          // first option is focused by default
+          userEvent.keyboard('{space}');
+          await waitForElementToBeRemoved(getByRole('listbox'));
+        });
+      });
+
+      describe("selecting an option closes menu and doesn't reopen the menu", () => {
+        test('on mouse click', async () => {
+          const { getByRole, findAllByRole, queryByRole } = render(
+            <Select {...defaultProps} usePortal={false}>
+              <Option data-testid="option-apple">Apple</Option>
+              <Option data-testid="option-banana">Banana</Option>
+            </Select>,
+          );
+          const button = getByRole('button');
+          userEvent.click(button);
+          const options = await findAllByRole('option');
+          const apple = options[0];
+          userEvent.click(apple);
+          await waitForElementToBeRemoved(getByRole('listbox'));
+          await waitForTimeout(transitionDuration.slower);
+          expect(queryByRole('listbox')).not.toBeInTheDocument();
+        });
+
+        test('on enter', async () => {
+          const { getByRole, queryByRole } = render(
+            <Select {...defaultProps} usePortal={false}>
+              <Option data-testid="option-apple">Apple</Option>
+              <Option data-testid="option-banana">Banana</Option>
+            </Select>,
+          );
+          const button = getByRole('button');
+          userEvent.type(button, '{arrowdown}');
+          // first option is focused by default
+          userEvent.keyboard('{enter}');
+          await waitForElementToBeRemoved(getByRole('listbox'));
+          await waitForTimeout(transitionDuration.slower);
+          expect(queryByRole('listbox')).not.toBeInTheDocument();
+        });
+
+        test('on space', async () => {
+          const { getByRole, queryByRole } = render(
+            <Select {...defaultProps} usePortal={false}>
+              <Option data-testid="option-apple">Apple</Option>
+              <Option data-testid="option-banana">Banana</Option>
+            </Select>,
+          );
+          const button = getByRole('button');
+          userEvent.type(button, '{arrowdown}');
+          // first option is focused by default
+          userEvent.keyboard('{space}');
+          await waitForElementToBeRemoved(getByRole('listbox'));
+          await waitForTimeout(transitionDuration.slower);
+          expect(queryByRole('listbox')).not.toBeInTheDocument();
+        });
+      });
     });
   });
 });

@@ -1,5 +1,11 @@
 # @leafygreen-ui/palette
 
+## 4.0.8
+
+### Patch Changes
+
+- 41116a1b: LiveExample now correctly supports click-to-copy functionality
+
 ## 4.0.7
 
 ### Patch Changes

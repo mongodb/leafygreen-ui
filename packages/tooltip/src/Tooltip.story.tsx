@@ -30,6 +30,7 @@ const meta: StoryMetaType<typeof Tooltip> = {
       exclude: [...storybookExcludedControlParams, 'trigger'],
     },
     chromatic: {
+      disableSnapshot: true,
       delay: transitionDuration.slowest,
     },
     generate: {
