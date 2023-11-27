@@ -1,5 +1,4 @@
 import React, { FocusEventHandler } from 'react';
-import { isSameDay } from 'date-fns';
 import isEqual from 'lodash/isEqual';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -43,8 +42,8 @@ import { DateInputBoxProps } from './DateInputBox.types';
 export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
   (
     {
-      value: dateValue,
-      setValue: setDateValue,
+      value,
+      setValue,
       className,
       labelledBy,
       segmentRefs,
@@ -53,7 +52,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
     }: DateInputBoxProps,
     fwdRef,
   ) => {
-    const { formatParts, disabled } = useDatePickerContext();
+    const { formatParts, disabled, isInRange } = useDatePickerContext();
     const { theme } = useDarkMode();
 
     const containerRef = useForwardedRef(fwdRef, null);
@@ -72,23 +71,20 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       if (hasAnySegmentChanged) {
         const utcDate = newDateFromSegments(newSegments);
         const areAllSegmentsEmpty = !doesSomeSegmentExist(newSegments);
+        const isValidDate = !!utcDate && isInRange(utcDate);
 
-        if (utcDate) {
-          // Update the value _iff_ all parts are set, and create a valid date.
-          const shouldUpdate = !dateValue || !isSameDay(utcDate, dateValue);
-
-          if (shouldUpdate) {
-            setDateValue?.(utcDate);
-          }
-        } else if (hasAnySegmentChanged && areAllSegmentsEmpty) {
-          // if no segment exists, set the external value to null
-          setDateValue?.(null);
+        if (isValidDate) {
+          // Update the value iff all segments create a valid date.
+          setValue?.(utcDate);
+        } else if (areAllSegmentsEmpty) {
+          // otherwise, if no segment exists, set the external value to null
+          setValue?.(null);
         }
       }
     };
 
     /** Keep track of each date segment */
-    const { segments, setSegment } = useDateSegments(dateValue, {
+    const { segments, setSegment } = useDateSegments(value, {
       onUpdate: onSegmentsUpdate,
     });
 

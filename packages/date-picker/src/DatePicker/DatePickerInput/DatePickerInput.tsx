@@ -15,7 +15,6 @@ import {
   isElementInputSegment,
   isExplicitSegmentValue,
   isSameUTCDay,
-  isValidSegmentName,
   isValidValueForSegment,
   isZeroLike,
 } from '../../shared/utils';
@@ -35,7 +34,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
     }: DatePickerInputProps,
     fwdRef,
   ) => {
-    const { formatParts, disabled, isDirty, setIsDirty } =
+    const { formatParts, disabled, isDirty, setIsDirty, isInRange } =
       useDatePickerContext();
     const {
       refs: { segmentRefs, calendarButtonRef },
@@ -48,7 +47,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
 
     /** Called when the input's Date value has changed */
     const handleInputValueChange = (inputVal?: Date | null) => {
-      if (!isSameUTCDay(inputVal, value)) {
+      if (!isSameUTCDay(inputVal, value) && isInRange(inputVal)) {
         handleValidation?.(inputVal);
         setValue(inputVal || null);
       }
@@ -188,25 +187,23 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       const usingArrowKeys =
         meta?.key === keyMap.ArrowDown || meta?.key === keyMap.ArrowUp;
 
-      if (isValidSegmentName(segment)) {
-        if (!usingArrowKeys) {
-          if (
-            isValidValueForSegment(segment, segmentValue) &&
-            isExplicitSegmentValue(segment, segmentValue)
-          ) {
-            const nextSegment = getRelativeSegment('next', {
-              segment: segmentRefs[segment],
-              formatParts,
-              segmentRefs,
-            });
+      if (!usingArrowKeys) {
+        if (
+          isValidValueForSegment(segment, segmentValue) &&
+          isExplicitSegmentValue(segment, segmentValue)
+        ) {
+          const nextSegment = getRelativeSegment('next', {
+            segment: segmentRefs[segment],
+            formatParts,
+            segmentRefs,
+          });
 
-            nextSegment?.current?.focus();
-          }
+          nextSegment?.current?.focus();
         }
+      }
 
-        if (!isValidValueForSegment(segment, segmentValue) && isDirty) {
-          handleValidation?.(value);
-        }
+      if (!isValidValueForSegment(segment, segmentValue) && isDirty) {
+        handleValidation?.(value);
       }
 
       const changeEvent = new Event('change');
