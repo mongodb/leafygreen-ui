@@ -38,10 +38,16 @@ export const MonthsArray = [
   'December',
 ];
 
-/** The default earliest selectable date */
+/**
+ * The default earliest selectable date
+ * (Unix epoch start: https://en.wikipedia.org/wiki/Unix_time)
+ * */
 export const MIN_DATE = new Date(Date.UTC(1970, Month.January, 1));
 
-/** The default latest selectable date */
+/**
+ * The default latest selectable date
+ * (Unix 32-bit rollover date: https://en.wikipedia.org/wiki/Year_2038_problem)
+ */
 export const MAX_DATE = new Date(Date.UTC(2038, Month.January, 19));
 
 export interface MonthObject {

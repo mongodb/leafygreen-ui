@@ -1,4 +1,4 @@
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 
 import { DateType } from '../../../../../shared/types';
 import { getMonthIndex } from '../../../../../shared/utils';

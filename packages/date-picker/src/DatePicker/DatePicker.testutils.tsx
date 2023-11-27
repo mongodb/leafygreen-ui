@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   fireEvent,
-  // prettyDOM,
   queryByRole,
   render,
   RenderResult,
