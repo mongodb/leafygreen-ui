@@ -60,6 +60,7 @@ describe('packages/date-picker', () => {
         expect(formField).toBeInTheDocument();
       });
 
+      // TODO: Test a11y linking of label & input
       test('formField contains label & input elements', () => {
         const { getByTestId, getByRole } = render(
           <DatePicker label="Label" data-testid="lg-date-picker" />,
