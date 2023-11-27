@@ -89,6 +89,12 @@ export const DatePickerComponent = forwardRef<
         handleValidation?.(value);
         break;
 
+      case keyMap.ArrowDown:
+      case keyMap.ArrowUp: {
+        e.preventDefault(); // prevent page from scrolling
+        break;
+      }
+
       default:
         break;
     }
