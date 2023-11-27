@@ -34,6 +34,7 @@ export const TimeZones = [
  */
 export const Locales = ['iso8601', 'en-US', 'en-UK', 'de-DE', 'fa-AF', 'en-MV'];
 
+// TODO: Move to `testing-lib`
 /** Presses the `tab` key `count` times */
 export const tabNTimes = (count: number) => {
   for (const _ in range(count)) {
