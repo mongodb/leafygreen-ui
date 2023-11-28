@@ -11,7 +11,7 @@ export type DatePickerState =
 export type DateType = Date | null;
 export type DateRangeType = [DateType, DateType];
 
-export type BaseDatePickerProps = {
+export interface BaseDatePickerProps extends DarkModeProps {
   /**
    * A label for the input
    */
@@ -78,5 +78,9 @@ export type BaseDatePickerProps = {
 
   /** Whether the calendar menu is initially open. Note: The calendar menu will not open if disabled is set to true.  */
   initialOpen?: boolean;
-} & DarkModeProps &
-  Pick<HTMLElementProps<'input'>, 'autoComplete'>;
+
+  /**
+   * Whether the input should autofill
+   */
+  autoComplete?: string;
+}
