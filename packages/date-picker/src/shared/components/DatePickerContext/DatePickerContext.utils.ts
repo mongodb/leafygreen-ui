@@ -57,6 +57,7 @@ export const defaultDatePickerContext: DatePickerContextProps = {
   menuId: '',
   isSelectOpen: false,
   setIsSelectOpen: () => {},
+  autoComplete: 'off',
 };
 
 /**

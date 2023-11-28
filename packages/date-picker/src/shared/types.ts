@@ -1,7 +1,7 @@
 import omit from 'lodash/omit';
 
 import { FormFieldState } from '@leafygreen-ui/form-field';
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
 export const DatePickerState = omit(FormFieldState, 'Valid');
