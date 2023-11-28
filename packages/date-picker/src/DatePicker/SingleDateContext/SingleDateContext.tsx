@@ -103,7 +103,6 @@ export const SingleDateProvider = ({
     requestAnimationFrame(() => {
       // Return focus to the calendar button
       refs.calendarButtonRef.current?.focus();
-
       // update month to something valid
       setMonth(getFirstOfMonth(value ?? today));
       // update highlight to something valid
