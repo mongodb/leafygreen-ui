@@ -43,7 +43,7 @@ export const DatePickerComponent = forwardRef<
 
   /** This listens to when the disabled prop changes to true and closes the menu */
   useEffect(() => {
-    // if disabled is true but was previously false. This prevents this check from rerunning multiple times
+    // if disabled is true but was previously false. This prevents this effect from rerunning multiple times since other states are updated when the menu closes.
     if (disabled && !prevDisabledValue) {
       closeMenu();
       handleValidation?.(value);
