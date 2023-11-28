@@ -12,7 +12,7 @@ import { addDays, subDays } from 'date-fns';
 
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
-import { defaultMax, defaultMin, MAX_DATE, Month } from '../shared/constants';
+import { defaultMax, defaultMin, Month } from '../shared/constants';
 import { getValueFormatter, newUTC } from '../shared/utils';
 import {
   eventContainingTargetValue,
@@ -849,21 +849,89 @@ describe('packages/date-picker', () => {
                 userEvent.keyboard(`{${key}}`);
                 expect(onDateChange).toHaveBeenCalled();
               });
-            });
-          });
 
-          test('up arrow does not fire the change handler if value would be out of range', () => {
-            const value = newUTC(MAX_DATE.getUTCFullYear() - 1, Month.July, 4);
-            const onDateChange = jest.fn();
-            const { yearInput } = renderDatePicker({
-              onDateChange,
-              value,
+              describe('if new value would be out of range', () => {
+                test('updates the input', () => {
+                  const min = newUTC(1999, Month.July, 4);
+                  const max = newUTC(2020, Month.July, 4);
+                  const value =
+                    key === 'arrowup'
+                      ? newUTC(2019, Month.August, 1)
+                      : newUTC(2000, Month.June, 30);
+                  const { yearInput } = renderDatePicker({
+                    min,
+                    max,
+                    value,
+                  });
+                  userEvent.click(yearInput);
+                  userEvent.keyboard(`{${key}}`);
+                  const expectedYearVal = getValueFormatter('year')(
+                    key === 'arrowup' ? 2020 : 1999,
+                  );
+                  expect(yearInput).toHaveValue(expectedYearVal);
+                });
+
+                test('does not fire the change handler', () => {
+                  const onDateChange = jest.fn();
+                  const min = newUTC(1999, Month.July, 4);
+                  const max = newUTC(2020, Month.July, 4);
+                  const value =
+                    key === 'arrowup'
+                      ? newUTC(2019, Month.August, 1)
+                      : newUTC(2000, Month.June, 30);
+                  const { yearInput } = renderDatePicker({
+                    min,
+                    max,
+                    onDateChange,
+                    value,
+                  });
+                  userEvent.click(yearInput);
+                  userEvent.keyboard(`{${key}}`);
+                  expect(onDateChange).not.toHaveBeenCalled();
+                });
+
+                test('fires the segment change handler', () => {
+                  const onChange = jest.fn();
+                  const min = newUTC(1999, Month.July, 4);
+                  const max = newUTC(2020, Month.July, 4);
+                  const value =
+                    key === 'arrowup'
+                      ? newUTC(2019, Month.August, 1)
+                      : newUTC(2000, Month.June, 30);
+                  const { yearInput } = renderDatePicker({
+                    min,
+                    max,
+                    onChange,
+                    value,
+                  });
+                  userEvent.click(yearInput);
+                  userEvent.keyboard(`{${key}}`);
+                  expect(onChange).toHaveBeenCalled();
+                });
+
+                test('fires the validation handler', () => {
+                  const handleValidation = jest.fn();
+                  const min = newUTC(1999, Month.July, 4);
+                  const max = newUTC(2020, Month.July, 4);
+                  const value =
+                    key === 'arrowup'
+                      ? newUTC(2019, Month.August, 1)
+                      : newUTC(2000, Month.June, 30);
+                  const { yearInput } = renderDatePicker({
+                    min,
+                    max,
+                    handleValidation,
+                    value,
+                  });
+                  userEvent.click(yearInput);
+                  userEvent.keyboard(`{${key}}`);
+                  expect(handleValidation).toHaveBeenCalled();
+                });
+              });
             });
-            userEvent.click(yearInput);
-            userEvent.keyboard(`{arrowup}`);
-            expect(onDateChange).not.toHaveBeenCalled();
           });
         });
+
         describe('Menu', () => {
           test('left arrow moves focus to the previous day', async () => {
             const { openMenu } = renderDatePicker();
