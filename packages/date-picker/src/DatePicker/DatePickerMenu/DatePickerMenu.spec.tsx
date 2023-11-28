@@ -40,7 +40,6 @@ const renderDatePickerMenu = (
         value={null}
         setValue={() => {}}
         handleValidation={undefined}
-        disabled={defaultDatePickerContext.disabled}
         {...singleContext}
       >
         <DatePickerMenu {...props} />,
@@ -62,7 +61,6 @@ const renderDatePickerMenu = (
           value={null}
           setValue={() => {}}
           handleValidation={undefined}
-          disabled={defaultDatePickerContext.disabled}
           {...singleContext}
           {...newSingleContext}
         >

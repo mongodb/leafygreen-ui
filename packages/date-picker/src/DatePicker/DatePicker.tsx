@@ -29,7 +29,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       handleValidation,
       darkMode: darkModeProp,
       baseFontSize: basefontSizeProp,
-      disabled = false,
       ...props
     }: DatePickerProps,
     fwdRef,
@@ -37,7 +36,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const { darkMode } = useDarkMode(darkModeProp);
     const baseFontSize = useUpdatedBaseFontSize(basefontSizeProp);
     const [contextProps, restProps] = pickAndOmit(
-      { darkMode, baseFontSize, disabled, ...props },
+      { darkMode, baseFontSize, ...props },
       contextPropNames,
     );
 
@@ -53,7 +52,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
           value={value}
           setValue={setValue}
           handleValidation={handleValidation}
-          disabled={disabled}
         >
           <LeafyGreenProvider
             darkMode={darkMode}

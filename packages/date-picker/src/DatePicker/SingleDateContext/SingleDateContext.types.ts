@@ -92,5 +92,4 @@ export interface SingleDateProviderProps {
   value: DateType | undefined;
   setValue: (newVal: DateType) => void;
   handleValidation?: DatePickerProps['handleValidation'];
-  disabled: boolean;
 }

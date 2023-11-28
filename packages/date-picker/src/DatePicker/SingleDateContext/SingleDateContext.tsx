@@ -38,7 +38,6 @@ export const SingleDateProvider = ({
   value,
   setValue: _setValue,
   handleValidation,
-  disabled,
 }: PropsWithChildren<SingleDateProviderProps>) => {
   const refs = useDateRangeComponentRefs();
   const { isOpen, setOpen } = useDatePickerContext();
@@ -102,10 +101,9 @@ export const SingleDateProvider = ({
 
     // Perform side effects once the state has settled
     requestAnimationFrame(() => {
-      // Return focus to the calendar button if datepicker is not disabled
-      if (!disabled) {
-        refs.calendarButtonRef.current?.focus();
-      }
+      // Return focus to the calendar button
+      refs.calendarButtonRef.current?.focus();
+
       // update month to something valid
       setMonth(getFirstOfMonth(value ?? today));
       // update highlight to something valid
