@@ -24,8 +24,12 @@ describe('packages/date-picker/utils/isValidSegmentValue', () => {
     expect(isValidValueForSegment('year', '2000')).toBe(true);
     expect(isValidValueForSegment('year', '2038')).toBe(true);
 
-    expect(isValidValueForSegment('year', '200')).toBe(false);
-    expect(isValidValueForSegment('year', '1945')).toBe(false);
-    expect(isValidValueForSegment('year', '2048')).toBe(false);
+    // All positive numbers are considered valid years by default
+    expect(isValidValueForSegment('year', '200')).toBe(true);
+    expect(isValidValueForSegment('year', '1945')).toBe(true);
+    expect(isValidValueForSegment('year', '2048')).toBe(true);
+
+    expect(isValidValueForSegment('year', '0')).toBe(false);
+    expect(isValidValueForSegment('year', '-2000')).toBe(false);
   });
 });
