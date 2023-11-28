@@ -38,6 +38,7 @@ export const SingleDateProvider = ({
   value,
   setValue: _setValue,
   handleValidation,
+  disabled,
 }: PropsWithChildren<SingleDateProviderProps>) => {
   const refs = useDateRangeComponentRefs();
   const { isOpen, setOpen } = useDatePickerContext();
@@ -99,15 +100,17 @@ export const SingleDateProvider = ({
     setMenuTriggerEvent(triggerEvent);
     setOpen(false);
 
-    // Perform side effects once the state has settled
-    requestAnimationFrame(() => {
-      // Return focus to the calendar button
-      refs.calendarButtonRef.current?.focus();
-      // update month to something valid
-      setMonth(getFirstOfMonth(value ?? today));
-      // update highlight to something valid
-      setHighlight(getInitialHighlight(value, today));
-    });
+    if (!disabled) {
+      // Perform side effects once the state has settled
+      requestAnimationFrame(() => {
+        // Return focus to the calendar button
+        refs.calendarButtonRef.current?.focus();
+        // update month to something valid
+        setMonth(getFirstOfMonth(value ?? today));
+        // update highlight to something valid
+        setHighlight(getInitialHighlight(value, today));
+      });
+    }
   };
 
   /** Toggles the menu and handles appropriate side effects */
