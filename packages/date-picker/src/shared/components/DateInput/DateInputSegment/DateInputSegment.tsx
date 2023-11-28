@@ -55,7 +55,7 @@ export const DateInputSegment = React.forwardRef<
 
     const { theme } = useDarkMode();
     const baseFontSize = useUpdatedBaseFontSize();
-    const { size, disabled } = useDatePickerContext();
+    const { size, disabled, autoComplete } = useDatePickerContext();
     const formatter = getValueFormatter(segment);
     const pattern = `[0-9]{${charsPerSegment.year}}`;
     const maxLength = getSegmentMaxLength(segment);
@@ -145,6 +145,7 @@ export const DateInputSegment = React.forwardRef<
           segmentWidthStyles[segment],
         )}
         maxLength={maxLength}
+        autoComplete={autoComplete}
       />
     );
   },

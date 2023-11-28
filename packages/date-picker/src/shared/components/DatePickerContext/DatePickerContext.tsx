@@ -25,6 +25,7 @@ export const DatePickerProvider = ({
   children,
   initialOpen = false,
   disabled = false,
+  autoComplete = 'off',
   ...rest
 }: PropsWithChildren<DatePickerProviderProps>) => {
   const isInitiallyOpen = disabled ? false : initialOpen;
@@ -46,6 +47,7 @@ export const DatePickerProvider = ({
         menuId,
         isSelectOpen,
         setIsSelectOpen,
+        autoComplete,
       }}
     >
       {children}

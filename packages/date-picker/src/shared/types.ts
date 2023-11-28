@@ -1,7 +1,7 @@
 import omit from 'lodash/omit';
 
 import { FormFieldState } from '@leafygreen-ui/form-field';
-import { DarkModeProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
 export const DatePickerState = omit(FormFieldState, 'Valid');
@@ -11,7 +11,7 @@ export type DatePickerState =
 export type DateType = Date | null;
 export type DateRangeType = [DateType, DateType];
 
-export interface BaseDatePickerProps extends DarkModeProps {
+export type BaseDatePickerProps = {
   /**
    * A label for the input
    */
@@ -78,4 +78,5 @@ export interface BaseDatePickerProps extends DarkModeProps {
 
   /** Whether the calendar menu is initially open. Note: The calendar menu will not open if disabled is set to true.  */
   initialOpen?: boolean;
-}
+} & DarkModeProps &
+  Pick<HTMLElementProps<'input'>, 'autoComplete'>;
