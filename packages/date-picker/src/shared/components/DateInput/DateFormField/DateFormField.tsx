@@ -54,7 +54,11 @@ export const DateFormField = React.forwardRef<
           aria-controls={menuId}
           onClick={onInputClick}
           contentEnd={
-            <CalendarButton ref={buttonRef} onClick={onIconButtonClick} />
+            <CalendarButton
+              tabIndex={disabled ? -1 : 0}
+              ref={buttonRef}
+              onClick={onIconButtonClick}
+            />
           }
         >
           {children}
