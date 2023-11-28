@@ -81,6 +81,7 @@ export interface BaseDatePickerProps extends DarkModeProps {
 
   /**
    * Whether the input should autofill
+   * @default 'off'
    */
   autoComplete?: string;
 }
