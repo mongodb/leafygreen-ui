@@ -74,41 +74,57 @@ export const DateInputSegment = React.forwardRef<
       }
     };
 
-    /** Synthetically fire ChangeEvents when the up/down arrow keys are pressed */
+    /** Handle keydown presses that don't natively fire a change event */
     const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
       const { key } = e as React.KeyboardEvent<HTMLInputElement> & {
         target: HTMLInputElement;
       };
 
-      if (key === keyMap.ArrowUp || key === keyMap.ArrowDown) {
-        e.preventDefault();
-        const valueDiff = key === keyMap.ArrowUp ? 1 : -1;
+      switch (key) {
+        case keyMap.ArrowUp:
+        case keyMap.ArrowDown: {
+          /** Fire a custom change event when the up/down arrow keys are pressed */
 
-        const initialValue = value
-          ? Number(value)
-          : key === keyMap.ArrowUp
-          ? max
-          : min;
+          e.preventDefault();
+          const valueDiff = key === keyMap.ArrowUp ? 1 : -1;
 
-        const newValue = rollover(initialValue + valueDiff, min, max);
-        const valueString = formatter(newValue);
+          const initialValue = value
+            ? Number(value)
+            : key === keyMap.ArrowUp
+            ? max
+            : min;
 
-        onChange?.({
-          segment,
-          value: valueString,
-          meta: { key },
-        });
-      }
+          const newValue = rollover(initialValue + valueDiff, min, max);
+          const valueString = formatter(newValue);
 
-      if (key === keyMap.Backspace) {
-        const numChars = value?.length;
-
-        if (numChars === 1) {
           onChange?.({
             segment,
-            value: '',
+            value: valueString,
             meta: { key },
           });
+          break;
+        }
+
+        case keyMap.Backspace: {
+          const numChars = value?.length;
+
+          if (numChars === 1) {
+            onChange?.({
+              segment,
+              value: '',
+              meta: { key },
+            });
+          }
+          break;
+        }
+
+        case keyMap.Space: {
+          // TODO:
+          break;
+        }
+
+        default: {
+          break;
         }
       }
 
@@ -127,7 +143,7 @@ export const DateInputSegment = React.forwardRef<
         type="text"
         pattern={pattern}
         role="spinbutton"
-        value={value}
+        value={value ?? ''}
         min={min}
         max={max}
         placeholder={defaultPlaceholder[segment]}
@@ -144,7 +160,7 @@ export const DateInputSegment = React.forwardRef<
           segmentSizeStyles[size ?? Size.Default],
           segmentWidthStyles[segment],
         )}
-        maxLength={maxLength}
+        // maxLength={maxLength}
       />
     );
   },
