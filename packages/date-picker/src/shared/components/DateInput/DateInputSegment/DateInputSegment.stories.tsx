@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 
+import { DateSegmentValue } from '../../../hooks';
 import {
   DatePickerContextProps,
   DatePickerProvider,
@@ -55,11 +56,21 @@ const meta: StoryMetaType<typeof DateInputSegment, DatePickerContextProps> = {
 
 export default meta;
 
-const Template: StoryFn<typeof DateInputSegment> = props => (
-  <LeafyGreenProvider>
-    <DateInputSegment {...props} />
-  </LeafyGreenProvider>
-);
+const Template: StoryFn<typeof DateInputSegment> = props => {
+  const [value, setValue] = useState<DateSegmentValue>('');
+
+  return (
+    <LeafyGreenProvider>
+      <DateInputSegment
+        {...props}
+        value={value}
+        onChange={({ value }) => {
+          setValue(value);
+        }}
+      />
+    </LeafyGreenProvider>
+  );
+};
 
 export const Basic = Template.bind({});
 

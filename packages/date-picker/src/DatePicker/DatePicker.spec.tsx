@@ -12,8 +12,8 @@ import { addDays, subDays } from 'date-fns';
 
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
-import { Month } from '../shared/constants';
-import { newUTC } from '../shared/utils';
+import { defaultMax, defaultMin, Month } from '../shared/constants';
+import { getValueFormatter, newUTC } from '../shared/utils';
 import {
   eventContainingTargetValue,
   tabNTimes,
@@ -23,6 +23,7 @@ import {
   expectedTabStopLabels,
   findTabStopElementMap,
   renderDatePicker,
+  RenderMenuResult,
 } from './DatePicker.testutils';
 import { DatePicker } from '.';
 
@@ -529,6 +530,48 @@ describe('packages/date-picker', () => {
           userEvent.click(container.parentElement!);
           await waitFor(() => expect(calendarButton).toHaveFocus());
         });
+
+        describe('when select is open', () => {
+          describe('Year select menu', () => {
+            test('keeps the menu open', async () => {
+              const { openMenu, container } = renderDatePicker();
+              const { yearSelect, menuContainerEl } = await openMenu();
+              userEvent.click(yearSelect!);
+              userEvent.click(container.parentElement!);
+              await waitFor(() => {
+                expect(menuContainerEl).toBeInTheDocument();
+              });
+            });
+
+            test('closes the month/year select', async () => {
+              const { openMenu, container } = renderDatePicker();
+              const { yearSelect } = await openMenu();
+              userEvent.click(yearSelect!);
+              userEvent.click(container.parentElement!);
+              await waitForElementToBeRemoved(yearSelect);
+            });
+          });
+
+          describe('Month select menu', () => {
+            test('keeps the menu open', async () => {
+              const { openMenu, container } = renderDatePicker();
+              const { monthSelect, menuContainerEl } = await openMenu();
+              userEvent.click(monthSelect!);
+              userEvent.click(container.parentElement!);
+              await waitFor(() => {
+                expect(menuContainerEl).toBeInTheDocument();
+              });
+            });
+
+            test('closes the month/year select', async () => {
+              const { openMenu, container } = renderDatePicker();
+              const { monthSelect } = await openMenu();
+              userEvent.click(monthSelect!);
+              userEvent.click(container.parentElement!);
+              await waitForElementToBeRemoved(monthSelect);
+            });
+          });
+        });
       });
     });
 
@@ -555,7 +598,7 @@ describe('packages/date-picker', () => {
           expect(handleValidation).toHaveBeenCalled();
         });
 
-        test('todayCelldoes not call validation handler when changing segment focus', () => {
+        test('todayCell does not call validation handler when changing segment focus', () => {
           const handleValidation = jest.fn();
           renderDatePicker({ handleValidation });
           tabNTimes(2);
@@ -785,7 +828,7 @@ describe('packages/date-picker', () => {
       /**
        * Arrow Keys:
        * Since arrow key behavior changes based on whether the input or menu is focused,
-       * many of these tests exist in the "DatePickerInput" and "DatePickerMenu" components
+       * many tests exist in the "DatePickerInput" and "DatePickerMenu" components
        */
       describe('Arrow key', () => {
         describe('Input', () => {
@@ -808,7 +851,130 @@ describe('packages/date-picker', () => {
             userEvent.keyboard('{arrowleft}');
             expect(yearInput).toHaveFocus();
           });
+
+          describe.each(['arrowup', 'arrowdown'])('%p key', key => {
+            test('updates segment value', () => {
+              const { monthInput } = renderDatePicker();
+              userEvent.click(monthInput);
+              userEvent.keyboard(`{${key}}`);
+              const expectedNumberValue =
+                key === 'arrowup' ? defaultMin.month : defaultMax.month;
+
+              expect(monthInput).toHaveValue(
+                getValueFormatter('month')(expectedNumberValue),
+              );
+            });
+
+            test('up arrow fires segment change handler', () => {
+              const onChange = jest.fn();
+              const { monthInput } = renderDatePicker({ onChange });
+              userEvent.click(monthInput);
+              userEvent.keyboard(`{${key}}`);
+              expect(onChange).toHaveBeenCalled();
+            });
+
+            test('up arrow does not fire value change handler', () => {
+              const onDateChange = jest.fn();
+              const { monthInput } = renderDatePicker({ onDateChange });
+              userEvent.click(monthInput);
+              userEvent.keyboard(`{${key}}`);
+              expect(onDateChange).not.toHaveBeenCalled();
+            });
+
+            describe('when a value is set', () => {
+              test('fires value change handler', () => {
+                const onDateChange = jest.fn();
+                const { monthInput } = renderDatePicker({
+                  onDateChange,
+                  value: testToday,
+                });
+                userEvent.click(monthInput);
+                userEvent.keyboard(`{${key}}`);
+                expect(onDateChange).toHaveBeenCalled();
+              });
+
+              describe('if new value would be out of range', () => {
+                test('updates the input', () => {
+                  const min = newUTC(1999, Month.July, 4);
+                  const max = newUTC(2020, Month.July, 4);
+                  const value =
+                    key === 'arrowup'
+                      ? newUTC(2019, Month.August, 1)
+                      : newUTC(2000, Month.June, 30);
+                  const { yearInput } = renderDatePicker({
+                    min,
+                    max,
+                    value,
+                  });
+                  userEvent.click(yearInput);
+                  userEvent.keyboard(`{${key}}`);
+                  const expectedYearVal = getValueFormatter('year')(
+                    key === 'arrowup' ? 2020 : 1999,
+                  );
+                  expect(yearInput).toHaveValue(expectedYearVal);
+                });
+
+                test('fires the change handler', () => {
+                  const onDateChange = jest.fn();
+                  const min = newUTC(1999, Month.July, 4);
+                  const max = newUTC(2020, Month.July, 4);
+                  const value =
+                    key === 'arrowup'
+                      ? newUTC(2019, Month.August, 1)
+                      : newUTC(2000, Month.June, 30);
+                  const { yearInput } = renderDatePicker({
+                    min,
+                    max,
+                    onDateChange,
+                    value,
+                  });
+                  userEvent.click(yearInput);
+                  userEvent.keyboard(`{${key}}`);
+                  expect(onDateChange).toHaveBeenCalled();
+                });
+
+                test('fires the segment change handler', () => {
+                  const onChange = jest.fn();
+                  const min = newUTC(1999, Month.July, 4);
+                  const max = newUTC(2020, Month.July, 4);
+                  const value =
+                    key === 'arrowup'
+                      ? newUTC(2019, Month.August, 1)
+                      : newUTC(2000, Month.June, 30);
+                  const { yearInput } = renderDatePicker({
+                    min,
+                    max,
+                    onChange,
+                    value,
+                  });
+                  userEvent.click(yearInput);
+                  userEvent.keyboard(`{${key}}`);
+                  expect(onChange).toHaveBeenCalled();
+                });
+
+                test.skip('fires the validation handler', () => {
+                  const handleValidation = jest.fn();
+                  const min = newUTC(1999, Month.July, 4);
+                  const max = newUTC(2020, Month.July, 4);
+                  const value =
+                    key === 'arrowup'
+                      ? newUTC(2019, Month.August, 1)
+                      : newUTC(2000, Month.June, 30);
+                  const { yearInput } = renderDatePicker({
+                    min,
+                    max,
+                    handleValidation,
+                    value,
+                  });
+                  userEvent.click(yearInput);
+                  userEvent.keyboard(`{${key}}`);
+                  expect(handleValidation).toHaveBeenCalled();
+                });
+              });
+            });
+          });
         });
+
         describe('Menu', () => {
           test('left arrow moves focus to the previous day', async () => {
             const { openMenu } = renderDatePicker();
@@ -856,123 +1022,224 @@ describe('packages/date-picker', () => {
         expect(menuContainerEl).not.toBeInTheDocument();
       });
 
-      test('does not fire a value change handler', () => {
-        const onDateChange = jest.fn();
-        const { yearInput } = renderDatePicker({
-          onDateChange,
-        });
-        userEvent.type(yearInput, '2023');
-        expect(onDateChange).not.toHaveBeenCalled();
-      });
-
-      test('fires a segment change handler', () => {
-        const onChange = jest.fn();
-        const { yearInput } = renderDatePicker({
-          onChange,
-        });
-        userEvent.type(yearInput, '2023');
-        expect(onChange).toHaveBeenCalledWith(
-          eventContainingTargetValue('2023'),
-        );
-      });
-
-      test('segment value is not immediately formatted', () => {
-        const onChange = jest.fn();
-        const { dayInput } = renderDatePicker({ onChange });
-        userEvent.type(dayInput, '2');
-        expect(onChange).toHaveBeenCalledWith(eventContainingTargetValue('2'));
-        expect(dayInput.value).toBe('2');
-      });
-
-      test('value is formatted on segment blur', () => {
-        const onChange = jest.fn();
-        const { dayInput } = renderDatePicker({ onChange });
-        userEvent.type(dayInput, '2');
-        userEvent.tab();
-        expect(onChange).toHaveBeenCalledWith(eventContainingTargetValue('02'));
-        expect(dayInput.value).toBe('02');
-      });
-
-      describe('auto-advances focus', () => {
-        describe('for ISO format', () => {
-          const dateFormat = 'iso8601';
-
-          test('when year value is explicit, focus advances to month', () => {
-            const { yearInput, monthInput } = renderDatePicker({
-              dateFormat,
-            });
-            userEvent.type(yearInput, '1999');
-            expect(monthInput).toHaveFocus();
+      describe('typing a single segment', () => {
+        test('does not fire a value change handler', () => {
+          const onDateChange = jest.fn();
+          const { yearInput } = renderDatePicker({
+            onDateChange,
           });
-          test('when year value is ambiguous, focus does not advance', () => {
-            const { yearInput } = renderDatePicker({ dateFormat });
-            userEvent.type(yearInput, '2');
-            expect(yearInput).toHaveFocus();
-          });
-          test('when year value is out-of-range, focus does not advance', () => {
-            const { yearInput } = renderDatePicker({ dateFormat });
-            userEvent.type(yearInput, '1945');
-            expect(yearInput).toHaveFocus();
-          });
-          test('when month value is explicit, focus advances to day', () => {
-            const { monthInput, dayInput } = renderDatePicker({
-              dateFormat,
-            });
-            userEvent.type(monthInput, '5');
-            expect(dayInput).toHaveFocus();
-          });
-          test('when month value is ambiguous, focus does not advance', () => {
-            const { monthInput } = renderDatePicker({
-              dateFormat,
-            });
-            userEvent.type(monthInput, '1');
-            expect(monthInput).toHaveFocus();
-          });
+          userEvent.type(yearInput, '2023');
+          expect(onDateChange).not.toHaveBeenCalled();
         });
 
-        describe('for en-US format', () => {
-          const dateFormat = 'en-US';
+        test('fires a segment change handler', () => {
+          const onChange = jest.fn();
+          const { yearInput } = renderDatePicker({
+            onChange,
+          });
+          userEvent.type(yearInput, '2023');
+          expect(onChange).toHaveBeenCalledWith(
+            eventContainingTargetValue('2023'),
+          );
+        });
 
-          test('when month value is explicit, focus advances to day', () => {
-            const { monthInput, dayInput } = renderDatePicker({
-              dateFormat,
+        test('segment value is not immediately formatted', () => {
+          const onChange = jest.fn();
+          const { dayInput } = renderDatePicker({ onChange });
+          userEvent.type(dayInput, '2');
+          expect(onChange).toHaveBeenCalledWith(
+            eventContainingTargetValue('2'),
+          );
+          expect(dayInput.value).toBe('2');
+        });
+
+        test('segment value is formatted on segment blur', () => {
+          const onChange = jest.fn();
+          const { dayInput } = renderDatePicker({ onChange });
+          userEvent.type(dayInput, '2');
+          userEvent.tab();
+          expect(onChange).toHaveBeenCalledWith(
+            eventContainingTargetValue('02'),
+          );
+          expect(dayInput.value).toBe('02');
+        });
+
+        describe('auto-advance focus', () => {
+          describe('for ISO format', () => {
+            const dateFormat = 'iso8601';
+
+            test('when year value is explicit, focus advances to month', () => {
+              const { yearInput, monthInput } = renderDatePicker({
+                dateFormat,
+              });
+              userEvent.type(yearInput, '1999');
+              expect(monthInput).toHaveFocus();
             });
-            userEvent.type(monthInput, '5');
-            expect(dayInput).toHaveFocus();
-          });
-          test('when month value is ambiguous, focus does not advance', () => {
-            const { monthInput } = renderDatePicker({ dateFormat });
-            userEvent.type(monthInput, '1');
-            expect(monthInput).toHaveFocus();
+            test('when year value is before MIN, focus still advances', () => {
+              const { yearInput, monthInput } = renderDatePicker({
+                dateFormat,
+              });
+              userEvent.type(yearInput, '1944');
+              expect(monthInput).toHaveFocus();
+            });
+            test('when year value is after MAX, focus still advances', () => {
+              const { yearInput, monthInput } = renderDatePicker({
+                dateFormat,
+              });
+              userEvent.type(yearInput, '2048');
+              expect(monthInput).toHaveFocus();
+            });
+            test('when month value is explicit, focus advances to day', () => {
+              const { monthInput, dayInput } = renderDatePicker({
+                dateFormat,
+              });
+              userEvent.type(monthInput, '5');
+              expect(dayInput).toHaveFocus();
+            });
+
+            test('focus does NOT advance when year value is ambiguous', () => {
+              const { yearInput } = renderDatePicker({ dateFormat });
+              userEvent.type(yearInput, '200');
+              expect(yearInput).toHaveFocus();
+            });
+            test('focus does NOT advance when month value is ambiguous', () => {
+              const { monthInput } = renderDatePicker({
+                dateFormat,
+              });
+              userEvent.type(monthInput, '1');
+              expect(monthInput).toHaveFocus();
+            });
           });
 
-          test('when day value is explicit, focus advances to year', () => {
-            const { dayInput, yearInput } = renderDatePicker({
-              dateFormat,
+          describe('for en-US format', () => {
+            const dateFormat = 'en-US';
+
+            test('when month value is explicit, focus advances to day', () => {
+              const { monthInput, dayInput } = renderDatePicker({
+                dateFormat,
+              });
+              userEvent.type(monthInput, '5');
+              expect(dayInput).toHaveFocus();
             });
-            userEvent.type(dayInput, '5');
-            expect(yearInput).toHaveFocus();
+
+            test('when day value is explicit, focus advances to year', () => {
+              const { dayInput, yearInput } = renderDatePicker({
+                dateFormat,
+              });
+              userEvent.type(dayInput, '5');
+              expect(yearInput).toHaveFocus();
+            });
+
+            test('focus does NOT advance when month value is ambiguous', () => {
+              const { monthInput } = renderDatePicker({ dateFormat });
+              userEvent.type(monthInput, '1');
+              expect(monthInput).toHaveFocus();
+            });
+            test('focus does NOT advance when day value is ambiguous', () => {
+              const { dayInput } = renderDatePicker({ dateFormat });
+              userEvent.type(dayInput, '2');
+              expect(dayInput).toHaveFocus();
+            });
+
+            test('focus does NOT update when year value is ambiguous', () => {
+              const { monthInput, dayInput, yearInput } = renderDatePicker({
+                dateFormat,
+              });
+              userEvent.type(monthInput, '5');
+              userEvent.type(dayInput, '5');
+              userEvent.type(yearInput, '2');
+              expect(yearInput).toHaveFocus();
+            });
           });
-          test('when day value is ambiguous, focus does not advance', () => {
-            const { dayInput } = renderDatePicker({ dateFormat });
-            userEvent.type(dayInput, '2');
-            expect(dayInput).toHaveFocus();
+        });
+      });
+
+      describe('typing a full value', () => {
+        test('fires value change handler', () => {
+          const onDateChange = jest.fn();
+          const { yearInput, monthInput, dayInput } = renderDatePicker({
+            onDateChange,
+          });
+          userEvent.type(yearInput, '2003');
+          userEvent.type(monthInput, '12');
+          userEvent.type(dayInput, '26');
+          expect(onDateChange).toHaveBeenCalledWith(
+            expect.objectContaining(newUTC(2003, Month.December, 26)),
+          );
+        });
+
+        test('properly renders the input', () => {
+          const onDateChange = jest.fn();
+          const { yearInput, monthInput, dayInput } = renderDatePicker({
+            onDateChange,
+          });
+          userEvent.type(yearInput, '2003');
+          userEvent.type(monthInput, '12');
+          userEvent.type(dayInput, '26');
+          expect(yearInput).toHaveValue('2003');
+          expect(monthInput).toHaveValue('12');
+          expect(dayInput).toHaveValue('26');
+        });
+
+        describe('if value is out of range', () => {
+          test('still fires a value change handler if value is after MAX', async () => {
+            const onDateChange = jest.fn();
+            const { yearInput, monthInput, dayInput } = renderDatePicker({
+              onDateChange,
+            });
+            userEvent.type(yearInput, '2048');
+            userEvent.type(monthInput, '12');
+            userEvent.type(dayInput, '26');
+            await waitFor(() =>
+              expect(onDateChange).toHaveBeenCalledWith(
+                expect.objectContaining(newUTC(2048, Month.December, 26)),
+              ),
+            );
           });
 
-          test('when year value is ambiguous, focus does not update', () => {
-            const { monthInput, dayInput, yearInput } = renderDatePicker({
-              dateFormat,
+          test('properly renders input if value is after MAX', () => {
+            const onDateChange = jest.fn();
+            const { yearInput, monthInput, dayInput } = renderDatePicker({
+              onDateChange,
             });
-            userEvent.type(monthInput, '5');
-            userEvent.type(dayInput, '5');
-            userEvent.type(yearInput, '2');
-            expect(yearInput).toHaveFocus();
+            userEvent.type(yearInput, '2048');
+            userEvent.type(monthInput, '12');
+            userEvent.type(dayInput, '23');
+            expect(yearInput).toHaveValue('2048');
+            expect(monthInput).toHaveValue('12');
+            expect(dayInput).toHaveValue('23');
+          });
+
+          test('fire a value change handler if value is before MIN', () => {
+            const onDateChange = jest.fn();
+            const { yearInput, monthInput, dayInput } = renderDatePicker({
+              onDateChange,
+            });
+            userEvent.type(yearInput, '1969');
+            userEvent.type(monthInput, '7');
+            userEvent.type(dayInput, '20');
+            expect(onDateChange).toHaveBeenCalledWith(
+              expect.objectContaining(newUTC(1969, Month.July, 20)),
+            );
+          });
+
+          test('properly renders input if value is before MIN', () => {
+            const onDateChange = jest.fn();
+            const { yearInput, monthInput, dayInput } = renderDatePicker({
+              onDateChange,
+            });
+            userEvent.type(yearInput, '1969');
+            userEvent.type(monthInput, '7');
+            userEvent.type(dayInput, '20');
+            expect(yearInput).toHaveValue('1969');
+            expect(monthInput).toHaveValue('07');
+            expect(dayInput).toHaveValue('20');
           });
         });
       });
 
       describe('on un-focus/blur', () => {
-        test('does not fire a change handler if the value is incomplete', () => {
+        test('does not fire a value change handler if the value is incomplete', () => {
           const onDateChange = jest.fn();
           const { yearInput } = renderDatePicker({
             onDateChange,
@@ -992,7 +1259,7 @@ describe('packages/date-picker', () => {
           );
         });
 
-        test('fires a change handler when the value is a valid date', () => {
+        test('fires a value change handler when the value is a valid date', () => {
           const onDateChange = jest.fn();
           const { yearInput, monthInput, dayInput } = renderDatePicker({
             onDateChange,
@@ -1037,19 +1304,108 @@ describe('packages/date-picker', () => {
 
     // TODO: Move these suites to Cypress (or other e2e/integration platform)
     describe('User flows', () => {
-      test('month is updated when value changes', async () => {
+      test('month is updated when value changes externally', async () => {
         const value = newUTC(2023, Month.September, 10);
-        const { calendarButton, findMenuElements, rerenderDatePicker } =
+        const { calendarButton, waitForMenuToOpen, rerenderDatePicker } =
           renderDatePicker();
         rerenderDatePicker({ value });
         userEvent.click(calendarButton);
-        const { calendarGrid } = await findMenuElements();
+        const { calendarGrid } = await waitForMenuToOpen();
         await waitFor(() =>
           expect(calendarGrid).toHaveAttribute('aria-label', 'September 2023'),
         );
       });
 
-      describe('when closing and re-opening the menu', () => {
+      describe('setting the date to an invalid value', () => {
+        describe('with initial value', () => {
+          let menuElements: RenderMenuResult;
+
+          beforeEach(async () => {
+            const { openMenu } = renderDatePicker({
+              value: newUTC(2038, Month.December, 25),
+            });
+            menuElements = await openMenu();
+          });
+
+          test('sets displayed month to that month', () => {
+            expect(menuElements.calendarGrid).toHaveAttribute(
+              'aria-label',
+              'December 2038',
+            );
+          });
+
+          test.todo('sets the error state');
+        });
+
+        describe('with arrow keys', () => {
+          const onDateChange = jest.fn();
+          let menuElements: RenderMenuResult;
+
+          beforeEach(async () => {
+            const { yearInput, waitForMenuToOpen, findMenuElements } =
+              renderDatePicker({
+                value: newUTC(2037, Month.December, 25),
+                onDateChange,
+              });
+            userEvent.click(yearInput);
+            await waitForMenuToOpen();
+            userEvent.keyboard('{arrowup}');
+            menuElements = await findMenuElements();
+          });
+
+          test('fires onDateChange handler', async () => {
+            expect(onDateChange).toHaveBeenCalledWith(
+              expect.objectContaining(newUTC(2038, Month.December, 25)),
+            );
+          });
+
+          test('sets displayed month to that month', async () => {
+            expect(menuElements.calendarGrid).toHaveAttribute(
+              'aria-label',
+              'December 2038',
+            );
+          });
+
+          test.todo('sets the error state');
+        });
+
+        describe('by typing', () => {
+          let menuElements: RenderMenuResult;
+          const onDateChange = jest.fn();
+
+          beforeEach(async () => {
+            const {
+              yearInput,
+              monthInput,
+              dayInput,
+              calendarButton,
+              waitForMenuToOpen,
+            } = renderDatePicker({ onDateChange });
+            userEvent.type(yearInput, '2038');
+            userEvent.type(monthInput, '12');
+            userEvent.type(dayInput, '25');
+            userEvent.click(calendarButton);
+            menuElements = await waitForMenuToOpen();
+          });
+
+          test('fires onDateChange handler', () => {
+            expect(onDateChange).toHaveBeenCalledWith(
+              expect.objectContaining(newUTC(2038, Month.December, 25)),
+            );
+          });
+
+          test('sets displayed month to that month', () => {
+            expect(menuElements.calendarGrid).toHaveAttribute(
+              'aria-label',
+              'December 2038',
+            );
+          });
+
+          test.todo('sets the error state');
+        });
+      });
+
+      describe('When closing and re-opening the menu', () => {
         test('month is reset to today by default', async () => {
           const { openMenu } = renderDatePicker();
           const { calendarGrid, menuContainerEl } = await openMenu();

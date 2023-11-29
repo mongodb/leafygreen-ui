@@ -3,7 +3,7 @@ import React, { ChangeEventHandler, KeyboardEventHandler } from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { keyMap, rollover } from '@leafygreen-ui/lib';
+import { keyMap, rollover, truncateStart } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
@@ -13,11 +13,7 @@ import {
   defaultMin,
   defaultPlaceholder,
 } from '../../../constants';
-import {
-  getAutoComplete,
-  getSegmentMaxLength,
-  getValueFormatter,
-} from '../../../utils';
+import { getAutoComplete, getValueFormatter } from '../../../utils';
 import { useDatePickerContext } from '../../DatePickerContext';
 
 import {
@@ -65,9 +61,8 @@ export const DateInputSegment = React.forwardRef<
       autoComplete: autoCompleteProp,
     } = useDatePickerContext();
     const formatter = getValueFormatter(segment);
-    const pattern = `[0-9]{${charsPerSegment.year}}`;
-    const maxLength = getSegmentMaxLength(segment);
     const autoComplete = getAutoComplete(autoCompleteProp, segment);
+    const pattern = `[0-9]{${charsPerSegment[segment]}}`;
 
     /** Prevent non-numeric values from triggering a change event */
     const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
@@ -75,49 +70,68 @@ export const DateInputSegment = React.forwardRef<
       const numericValue = Number(target.value);
 
       if (!isNaN(numericValue)) {
-        const stringValue = numericValue.toString();
-        onChange?.({
+        const newValue = truncateStart(target.value, {
+          length: charsPerSegment[segment],
+        });
+
+        onChange({
           segment,
-          value: stringValue,
+          value: newValue,
         });
       }
     };
 
-    /** Synthetically fire ChangeEvents when the up/down arrow keys are pressed */
+    /** Handle keydown presses that don't natively fire a change event */
     const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
       const { key } = e as React.KeyboardEvent<HTMLInputElement> & {
         target: HTMLInputElement;
       };
 
-      if (key === keyMap.ArrowUp || key === keyMap.ArrowDown) {
-        e.preventDefault();
-        const valueDiff = key === keyMap.ArrowUp ? 1 : -1;
+      switch (key) {
+        case keyMap.ArrowUp:
+        case keyMap.ArrowDown: {
+          /** Fire a custom change event when the up/down arrow keys are pressed */
 
-        const initialValue = value
-          ? Number(value)
-          : key === keyMap.ArrowUp
-          ? max
-          : min;
+          e.preventDefault();
+          const valueDiff = key === keyMap.ArrowUp ? 1 : -1;
 
-        const newValue = rollover(initialValue + valueDiff, min, max);
-        const valueString = formatter(newValue);
+          const currentValue: number = value
+            ? Number(value)
+            : key === keyMap.ArrowUp
+            ? max
+            : min;
 
-        onChange?.({
-          segment,
-          value: valueString,
-          meta: { key },
-        });
-      }
+          const newValue = rollover(currentValue + valueDiff, min, max);
+          const valueString = formatter(newValue);
 
-      if (key === keyMap.Backspace) {
-        const numChars = value?.length;
-
-        if (numChars === 1) {
-          onChange?.({
+          onChange({
             segment,
-            value: '',
+            value: valueString,
             meta: { key },
           });
+          break;
+        }
+
+        case keyMap.Backspace: {
+          const numChars = value.length;
+
+          if (numChars === 1) {
+            onChange({
+              segment,
+              value: '',
+              meta: { key },
+            });
+          }
+          break;
+        }
+
+        case keyMap.Space: {
+          // TODO:
+          break;
+        }
+
+        default: {
+          break;
         }
       }
 
@@ -153,7 +167,6 @@ export const DateInputSegment = React.forwardRef<
           segmentSizeStyles[size ?? Size.Default],
           segmentWidthStyles[segment],
         )}
-        maxLength={maxLength}
         autoComplete={autoComplete}
       />
     );

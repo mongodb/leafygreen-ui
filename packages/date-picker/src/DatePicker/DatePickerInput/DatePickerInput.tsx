@@ -15,8 +15,6 @@ import {
   isElementInputSegment,
   isExplicitSegmentValue,
   isSameUTCDay,
-  isValidSegmentName,
-  isValidValueForSegment,
   isZeroLike,
 } from '../../shared/utils';
 import { useSingleDateContext } from '../SingleDateContext';
@@ -51,6 +49,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       if (!isSameUTCDay(inputVal, value)) {
         handleValidation?.(inputVal);
         setValue(inputVal || null);
+        // TODO: update month?
       }
     };
 
@@ -183,17 +182,14 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
      * Called when any segment changes
      * If up/down arrows are pressed, don't move to the next segment
      */
-    const handleSegmentChange: DateInputSegmentChangeEventHandler = e => {
-      const { segment, value: segmentValue, meta } = e;
-      const usingArrowKeys =
-        meta?.key === keyMap.ArrowDown || meta?.key === keyMap.ArrowUp;
+    const handleSegmentChange: DateInputSegmentChangeEventHandler =
+      segmentChangeEvent => {
+        const { segment, value: segmentValue, meta } = segmentChangeEvent;
+        const changedViaArrowKeys =
+          meta?.key === keyMap.ArrowDown || meta?.key === keyMap.ArrowUp;
 
-      if (isValidSegmentName(segment)) {
-        if (!usingArrowKeys) {
-          if (
-            isValidValueForSegment(segment, segmentValue) &&
-            isExplicitSegmentValue(segment, segmentValue)
-          ) {
+        if (!changedViaArrowKeys) {
+          if (isExplicitSegmentValue(segment, segmentValue)) {
             const nextSegment = getRelativeSegment('next', {
               segment: segmentRefs[segment],
               formatParts,
@@ -204,22 +200,23 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           }
         }
 
-        if (!isValidValueForSegment(segment, segmentValue) && isDirty) {
+        if (isDirty) {
           handleValidation?.(value);
         }
-      }
 
-      const changeEvent = new Event('change');
-      const target = segmentRefs[segment].current;
+        /**
+         * Fire a simulated `change` event
+         */
+        const changeEvent = new Event('change');
+        const target = segmentRefs[segment].current;
 
-      if (target) {
-        const reactEvent = createSyntheticEvent<ChangeEvent<HTMLInputElement>>(
-          changeEvent,
-          target,
-        );
-        onSegmentChange?.(reactEvent);
-      }
-    };
+        if (target) {
+          const reactEvent = createSyntheticEvent<
+            ChangeEvent<HTMLInputElement>
+          >(changeEvent, target);
+          onSegmentChange?.(reactEvent);
+        }
+      };
 
     return (
       <DateFormField
@@ -235,7 +232,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           value={value}
           setValue={handleInputValueChange}
           segmentRefs={segmentRefs}
-          onChange={handleSegmentChange}
+          onSegmentChange={handleSegmentChange}
         />
       </DateFormField>
     );

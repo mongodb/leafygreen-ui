@@ -80,6 +80,10 @@ export const DaysOfWeek = [
 ] as const;
 export type DaysOfWeek = (typeof DaysOfWeek)[number];
 
+// TODO: Update how defaultMin & defaultMax are defined,
+// since day/month are constants,
+// but year is consumer-defined
+
 /**
  * The minimum number for each segment
  */

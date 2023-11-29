@@ -7,7 +7,11 @@ import React, {
 } from 'react';
 import { ExitHandler } from 'react-transition-group/Transition';
 
-import { useBackdropClick, useForwardedRef } from '@leafygreen-ui/hooks';
+import {
+  useBackdropClick,
+  useForwardedRef,
+  usePrevious,
+} from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
 
 import { useDatePickerContext } from '../../shared/components/DatePickerContext';
@@ -33,16 +37,18 @@ export const DatePickerComponent = forwardRef<
 
   const formFieldRef = useForwardedRef(fwdRef, null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const prevDisabledValue = usePrevious(disabled);
 
-  useBackdropClick(closeMenu, [formFieldRef, menuRef], isOpen);
+  useBackdropClick(closeMenu, [formFieldRef, menuRef], isOpen && !isSelectOpen);
 
   /** This listens to when the disabled prop changes to true and closes the menu */
   useEffect(() => {
-    if (disabled) {
+    // if disabled is true but was previously false. This prevents this effect from rerunning multiple times since other states are updated when the menu closes.
+    if (disabled && !prevDisabledValue) {
       closeMenu();
       handleValidation?.(value);
     }
-  }, [closeMenu, disabled, handleValidation, value]);
+  }, [closeMenu, disabled, handleValidation, value, prevDisabledValue]);
 
   /** Fired when the CSS transition to open the menu is fired */
   const handleMenuTransitionEntered: TransitionEventHandler = e => {

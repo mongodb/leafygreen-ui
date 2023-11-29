@@ -84,9 +84,9 @@ export const getIsInRange =
  * Returns a valid `Context` value given optional provider props
  */
 export const getContextProps = (
-  value: DatePickerProviderProps,
+  providerProps: DatePickerProviderProps,
 ): DatePickerContextProps => {
-  const { min, max, ...rest } = value;
+  const { min, max, ...rest } = providerProps;
   const providerValue: DatePickerContextProps = {
     ...defaults(rest, defaultDatePickerContext),
     min: defaultTo(toDate(min), defaultDatePickerContext.min),

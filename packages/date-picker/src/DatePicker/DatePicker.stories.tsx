@@ -54,10 +54,8 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
     },
   },
   args: {
-    dateFormat: 'en-US',
+    dateFormat: 'iso8601',
     label: 'Pick a date',
-    min: newUTC(1996, Month.October, 14),
-    max: newUTC(2026, Month.October, 14),
     size: Size.Default,
     timeZone: 'America/New_York',
     autoComplete: AutoComplete.Off,
