@@ -23,6 +23,7 @@ import {
   expectedTabStopLabels,
   findTabStopElementMap,
   renderDatePicker,
+  RenderMenuResult,
 } from './DatePicker.testutils';
 import { DatePicker } from '.';
 
@@ -871,7 +872,7 @@ describe('packages/date-picker', () => {
                   expect(yearInput).toHaveValue(expectedYearVal);
                 });
 
-                test('does not fire the change handler', () => {
+                test('fires the change handler', () => {
                   const onDateChange = jest.fn();
                   const min = newUTC(1999, Month.July, 4);
                   const max = newUTC(2020, Month.July, 4);
@@ -887,7 +888,7 @@ describe('packages/date-picker', () => {
                   });
                   userEvent.click(yearInput);
                   userEvent.keyboard(`{${key}}`);
-                  expect(onDateChange).not.toHaveBeenCalled();
+                  expect(onDateChange).toHaveBeenCalled();
                 });
 
                 test('fires the segment change handler', () => {
@@ -1021,7 +1022,7 @@ describe('packages/date-picker', () => {
           expect(dayInput.value).toBe('02');
         });
 
-        describe('auto-advances focus', () => {
+        describe('auto-advance focus', () => {
           describe('for ISO format', () => {
             const dateFormat = 'iso8601';
 
@@ -1032,15 +1033,19 @@ describe('packages/date-picker', () => {
               userEvent.type(yearInput, '1999');
               expect(monthInput).toHaveFocus();
             });
-            test('when year value is ambiguous, focus does not advance', () => {
-              const { yearInput } = renderDatePicker({ dateFormat });
-              userEvent.type(yearInput, '2');
-              expect(yearInput).toHaveFocus();
+            test('when year value is before MIN, focus still advances', () => {
+              const { yearInput, monthInput } = renderDatePicker({
+                dateFormat,
+              });
+              userEvent.type(yearInput, '1944');
+              expect(monthInput).toHaveFocus();
             });
-            test('when year value is out-of-range, focus does not advance', () => {
-              const { yearInput } = renderDatePicker({ dateFormat });
-              userEvent.type(yearInput, '1945');
-              expect(yearInput).toHaveFocus();
+            test('when year value is after MAX, focus still advances', () => {
+              const { yearInput, monthInput } = renderDatePicker({
+                dateFormat,
+              });
+              userEvent.type(yearInput, '2048');
+              expect(monthInput).toHaveFocus();
             });
             test('when month value is explicit, focus advances to day', () => {
               const { monthInput, dayInput } = renderDatePicker({
@@ -1049,7 +1054,13 @@ describe('packages/date-picker', () => {
               userEvent.type(monthInput, '5');
               expect(dayInput).toHaveFocus();
             });
-            test('when month value is ambiguous, focus does not advance', () => {
+
+            test('focus does NOT advance when year value is ambiguous', () => {
+              const { yearInput } = renderDatePicker({ dateFormat });
+              userEvent.type(yearInput, '200');
+              expect(yearInput).toHaveFocus();
+            });
+            test('focus does NOT advance when month value is ambiguous', () => {
               const { monthInput } = renderDatePicker({
                 dateFormat,
               });
@@ -1068,11 +1079,6 @@ describe('packages/date-picker', () => {
               userEvent.type(monthInput, '5');
               expect(dayInput).toHaveFocus();
             });
-            test('when month value is ambiguous, focus does not advance', () => {
-              const { monthInput } = renderDatePicker({ dateFormat });
-              userEvent.type(monthInput, '1');
-              expect(monthInput).toHaveFocus();
-            });
 
             test('when day value is explicit, focus advances to year', () => {
               const { dayInput, yearInput } = renderDatePicker({
@@ -1081,13 +1087,19 @@ describe('packages/date-picker', () => {
               userEvent.type(dayInput, '5');
               expect(yearInput).toHaveFocus();
             });
-            test('when day value is ambiguous, focus does not advance', () => {
+
+            test('focus does NOT advance when month value is ambiguous', () => {
+              const { monthInput } = renderDatePicker({ dateFormat });
+              userEvent.type(monthInput, '1');
+              expect(monthInput).toHaveFocus();
+            });
+            test('focus does NOT advance when day value is ambiguous', () => {
               const { dayInput } = renderDatePicker({ dateFormat });
               userEvent.type(dayInput, '2');
               expect(dayInput).toHaveFocus();
             });
 
-            test('when year value is ambiguous, focus does not update', () => {
+            test('focus does NOT update when year value is ambiguous', () => {
               const { monthInput, dayInput, yearInput } = renderDatePicker({
                 dateFormat,
               });
@@ -1100,40 +1112,87 @@ describe('packages/date-picker', () => {
         });
       });
 
-      describe('typing a full value', () => {
+      describe.only('typing a full value', () => {
         test('fires value change handler', () => {
           const onDateChange = jest.fn();
           const { yearInput, monthInput, dayInput } = renderDatePicker({
             onDateChange,
           });
-          userEvent.type(yearInput, '2023');
+          userEvent.type(yearInput, '2003');
           userEvent.type(monthInput, '12');
           userEvent.type(dayInput, '26');
           expect(onDateChange).toHaveBeenCalledWith(
-            expect.objectContaining(newUTC(2023, Month.December, 26)),
+            expect.objectContaining(newUTC(2003, Month.December, 26)),
           );
         });
 
-        test('does not fire a value change handler if value is after MAX', () => {
+        test('properly renders the input', () => {
           const onDateChange = jest.fn();
           const { yearInput, monthInput, dayInput } = renderDatePicker({
             onDateChange,
           });
-          userEvent.type(yearInput, '2048');
-          userEvent.type(monthInput, '01');
-          userEvent.type(dayInput, '05');
-          expect(onDateChange).not.toHaveBeenCalled();
+          userEvent.type(yearInput, '2003');
+          userEvent.type(monthInput, '12');
+          userEvent.type(dayInput, '26');
+          expect(yearInput).toHaveValue('2003');
+          expect(monthInput).toHaveValue('12');
+          expect(dayInput).toHaveValue('26');
         });
 
-        test('does not fire a value change handler if value is before MIN', () => {
-          const onDateChange = jest.fn();
-          const { yearInput, monthInput, dayInput } = renderDatePicker({
-            onDateChange,
+        describe('if value is out of range', () => {
+          test('still fires a value change handler if value is after MAX', async () => {
+            const onDateChange = jest.fn();
+            const { yearInput, monthInput, dayInput } = renderDatePicker({
+              onDateChange,
+            });
+            userEvent.type(yearInput, '2048');
+            userEvent.type(monthInput, '12');
+            userEvent.type(dayInput, '26');
+            await waitFor(() =>
+              expect(onDateChange).toHaveBeenCalledWith(
+                expect.objectContaining(newUTC(2048, Month.December, 26)),
+              ),
+            );
           });
-          userEvent.type(yearInput, '1944');
-          userEvent.type(monthInput, '06');
-          userEvent.type(dayInput, '06');
-          expect(onDateChange).not.toHaveBeenCalled();
+
+          test('properly renders input if value is after MAX', () => {
+            const onDateChange = jest.fn();
+            const { yearInput, monthInput, dayInput } = renderDatePicker({
+              onDateChange,
+            });
+            userEvent.type(yearInput, '2048');
+            userEvent.type(monthInput, '12');
+            userEvent.type(dayInput, '23');
+            expect(yearInput).toHaveValue('2048');
+            expect(monthInput).toHaveValue('12');
+            expect(dayInput).toHaveValue('23');
+          });
+
+          test('fire a value change handler if value is before MIN', () => {
+            const onDateChange = jest.fn();
+            const { yearInput, monthInput, dayInput } = renderDatePicker({
+              onDateChange,
+            });
+            userEvent.type(yearInput, '1969');
+            userEvent.type(monthInput, '7');
+            userEvent.type(dayInput, '20');
+            expect(onDateChange).toHaveBeenCalledWith(
+              expect.objectContaining(newUTC(1969, Month.July, 20)),
+            );
+          });
+
+          test('properly renders input if value is before MIN', () => {
+            const onDateChange = jest.fn();
+            const { yearInput, monthInput, dayInput } = renderDatePicker({
+              onDateChange,
+            });
+            userEvent.type(yearInput, '1969');
+            userEvent.type(monthInput, '7');
+            userEvent.type(dayInput, '20');
+            expect(yearInput).toHaveValue('1969');
+            expect(monthInput).toHaveValue('07');
+            expect(dayInput).toHaveValue('20');
+          });
         });
       });
 
@@ -1215,17 +1274,17 @@ describe('packages/date-picker', () => {
         );
       });
 
-      describe.only('setting the date to an invalid value', () => {
+      describe('setting the date to an invalid value', () => {
         const interactionCases = [
           { interaction: 'initial value' },
-          { interaction: 'typing' },
           { interaction: 'arrow keys' },
+          { interaction: 'typing' },
         ] as const;
 
         describe.each(interactionCases)(
-          'via $interaction',
+          'using $interaction',
           ({ interaction }) => {
-            let calendarGrid: HTMLTableElement | null;
+            let menuElements: RenderMenuResult;
 
             /**
              * Change the initial setup based on the interaction
@@ -1236,7 +1295,7 @@ describe('packages/date-picker', () => {
                   const { openMenu } = renderDatePicker({
                     value: newUTC(2038, Month.December, 25),
                   });
-                  calendarGrid = (await openMenu()).calendarGrid;
+                  menuElements = await openMenu();
                   break;
                 }
 
@@ -1248,7 +1307,7 @@ describe('packages/date-picker', () => {
                   userEvent.click(yearInput);
                   await waitForMenuToOpen();
                   userEvent.keyboard('{arrowup}');
-                  calendarGrid = (await findMenuElements()).calendarGrid;
+                  menuElements = await findMenuElements();
                   break;
                 }
 
@@ -1264,20 +1323,34 @@ describe('packages/date-picker', () => {
                   userEvent.type(monthInput, '12');
                   userEvent.type(dayInput, '25');
                   userEvent.click(calendarButton);
-                  calendarGrid = (await waitForMenuToOpen()).calendarGrid;
+                  menuElements = await waitForMenuToOpen();
                   break;
                 }
               }
             });
 
-            test('sets displayed month to that month', async () => {
-              await waitFor(() =>
-                expect(calendarGrid).toHaveAttribute(
-                  'aria-label',
-                  'December 2038',
-                ),
+            test('sets displayed month to that month', () => {
+              expect(menuElements.calendarGrid).toHaveAttribute(
+                'aria-label',
+                'December 2038',
               );
             });
+
+            // TODO: Move these to Menu render tests
+            test('renders all cells disabled', () => {
+              const isEveryCellDisabled = menuElements.calendarCells.every(
+                cell => cell?.getAttribute('aria-disabled') === 'true',
+              );
+              expect(isEveryCellDisabled).toBe(true);
+            });
+
+            test('doest not highlight a cell', () => {
+              const isSomeCellHighlighted = menuElements.calendarCells.some(
+                cell => cell?.getAttribute('aria-selected') === 'true',
+              );
+              expect(isSomeCellHighlighted).toBe(false);
+            });
+
             test.todo('sets the error state');
           },
         );
