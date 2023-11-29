@@ -13,8 +13,15 @@ import { DateInputSegment, type DateInputSegmentProps } from '.';
 
 const onChangeHandler = jest.fn<DateInputSegmentChangeEventHandler>();
 
-const renderSegment = (props: DateInputSegmentProps) => {
-  const result = render(<DateInputSegment {...props} />);
+const renderSegment = (props: Partial<DateInputSegmentProps>) => {
+  const result = render(
+    <DateInputSegment
+      value={''}
+      onChange={() => {}}
+      segment={'day'}
+      {...props}
+    />,
+  );
   const input = result.getByTestId('lg-date_picker_input-segment');
   return {
     ...result,
@@ -64,7 +71,33 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           value: '12',
         });
 
-        rerender(<DateInputSegment segment="day" value={'08'} />);
+        rerender(
+          <DateInputSegment segment="day" value={'08'} onChange={() => {}} />,
+        );
+        expect(input.value).toBe('08');
+      });
+    });
+
+    describe('month segment', () => {
+      test('Rendering with undefined sets the value to empty string', () => {
+        const { input } = renderSegment({ segment: 'month' });
+        expect(input.value).toBe('');
+      });
+
+      test('Rendering with a value sets the input value', () => {
+        const { input } = renderSegment({ segment: 'month', value: '26' });
+        expect(input.value).toBe('26');
+      });
+
+      test('rerendering updates the value', () => {
+        const { input, rerender } = renderSegment({
+          segment: 'month',
+          value: '26',
+        });
+
+        rerender(
+          <DateInputSegment segment="month" value={'08'} onChange={() => {}} />,
+        );
         expect(input.value).toBe('08');
       });
     });
@@ -85,7 +118,13 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           segment: 'year',
           value: '2023',
         });
-        rerender(<DateInputSegment segment="year" value={'1993'} />);
+        rerender(
+          <DateInputSegment
+            segment="year"
+            value={'1993'}
+            onChange={() => {}}
+          />,
+        );
         expect(input.value).toBe('1993');
       });
     });
@@ -94,7 +133,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
   describe('Typing', () => {
     test('calls the change handler', () => {
       const result = render(
-        <DateInputSegment segment="day" onChange={onChangeHandler} />,
+        <DateInputSegment segment="day" value="" onChange={onChangeHandler} />,
       );
       const input = result.getByTestId('lg-date_picker_input-segment');
       userEvent.type(input, '8');
@@ -103,9 +142,26 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       );
     });
 
-    test('allows leading zeroes', () => {
+    test('allows typing additional valid characters', () => {
       const result = render(
-        <DateInputSegment segment="day" onChange={onChangeHandler} />,
+        <DateInputSegment
+          segment="day"
+          value="02"
+          onChange={onChangeHandler}
+        />,
+      );
+
+      const input = result.getByTestId('lg-date_picker_input-segment');
+      userEvent.type(input, '6');
+      expect(onChangeHandler).toHaveBeenCalled();
+      expect(onChangeHandler).toHaveBeenCalledWith(
+        expect.objectContaining({ value: '26' }),
+      );
+    });
+
+    test('allows zero character', () => {
+      const result = render(
+        <DateInputSegment segment="day" value="" onChange={onChangeHandler} />,
       );
       const input = result.getByTestId('lg-date_picker_input-segment');
       userEvent.type(input, '0');
@@ -114,9 +170,20 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       );
     });
 
+    test('allows leading zeroes', () => {
+      const result = render(
+        <DateInputSegment segment="day" value="" onChange={onChangeHandler} />,
+      );
+      const input = result.getByTestId('lg-date_picker_input-segment');
+      userEvent.type(input, '02');
+      expect(onChangeHandler).toHaveBeenCalledWith(
+        expect.objectContaining({ value: '02' }),
+      );
+    });
+
     test('does not allow non-number characters', () => {
       const result = render(
-        <DateInputSegment segment="day" onChange={onChangeHandler} />,
+        <DateInputSegment segment="day" value="" onChange={onChangeHandler} />,
       );
       const input = result.getByTestId('lg-date_picker_input-segment');
       userEvent.type(input, 'aB$/');
@@ -185,7 +252,11 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
           test('calls handler with `min` if initially undefined', () => {
             const result = render(
-              <DateInputSegment onChange={onChangeHandler} segment={segment} />,
+              <DateInputSegment
+                value=""
+                onChange={onChangeHandler}
+                segment={segment}
+              />,
             );
             const input = result.getByTestId('lg-date_picker_input-segment');
 
@@ -230,7 +301,11 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
           test('calls handler with `max` if initially undefined', () => {
             const result = render(
-              <DateInputSegment onChange={onChangeHandler} segment={segment} />,
+              <DateInputSegment
+                value=""
+                onChange={onChangeHandler}
+                segment={segment}
+              />,
             );
             const input = result.getByTestId('lg-date_picker_input-segment');
 
@@ -258,5 +333,6 @@ describe('packages/date-picker/shared/date-input-segment', () => {
         });
       });
     });
+    test.todo('Space Key');
   });
 });
