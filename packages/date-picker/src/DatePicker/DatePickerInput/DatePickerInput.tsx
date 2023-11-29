@@ -15,7 +15,6 @@ import {
   isElementInputSegment,
   isExplicitSegmentValue,
   isSameUTCDay,
-  isValidValueForSegment,
   isZeroLike,
 } from '../../shared/utils';
 import { useSingleDateContext } from '../SingleDateContext';
@@ -34,7 +33,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
     }: DatePickerInputProps,
     fwdRef,
   ) => {
-    const { formatParts, disabled, isDirty, setIsDirty, isInRange } =
+    const { formatParts, disabled, isDirty, setIsDirty } =
       useDatePickerContext();
     const {
       refs: { segmentRefs, calendarButtonRef },

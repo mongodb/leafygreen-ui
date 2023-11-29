@@ -1275,85 +1275,92 @@ describe('packages/date-picker', () => {
       });
 
       describe('setting the date to an invalid value', () => {
-        const interactionCases = [
-          { interaction: 'initial value' },
-          { interaction: 'arrow keys' },
-          { interaction: 'typing' },
-        ] as const;
+        describe('with initial value', () => {
+          let menuElements: RenderMenuResult;
 
-        describe.each(interactionCases)(
-          'using $interaction',
-          ({ interaction }) => {
-            let menuElements: RenderMenuResult;
-
-            /**
-             * Change the initial setup based on the interaction
-             */
-            beforeEach(async () => {
-              switch (interaction) {
-                case 'initial value': {
-                  const { openMenu } = renderDatePicker({
-                    value: newUTC(2038, Month.December, 25),
-                  });
-                  menuElements = await openMenu();
-                  break;
-                }
-
-                case 'arrow keys': {
-                  const { yearInput, waitForMenuToOpen, findMenuElements } =
-                    renderDatePicker({
-                      value: newUTC(2037, 12, 25),
-                    });
-                  userEvent.click(yearInput);
-                  await waitForMenuToOpen();
-                  userEvent.keyboard('{arrowup}');
-                  menuElements = await findMenuElements();
-                  break;
-                }
-
-                case 'typing': {
-                  const {
-                    yearInput,
-                    monthInput,
-                    dayInput,
-                    calendarButton,
-                    waitForMenuToOpen,
-                  } = renderDatePicker();
-                  userEvent.type(yearInput, '2038');
-                  userEvent.type(monthInput, '12');
-                  userEvent.type(dayInput, '25');
-                  userEvent.click(calendarButton);
-                  menuElements = await waitForMenuToOpen();
-                  break;
-                }
-              }
+          beforeEach(async () => {
+            const { openMenu } = renderDatePicker({
+              value: newUTC(2038, Month.December, 25),
             });
+            menuElements = await openMenu();
+          });
 
-            test('sets displayed month to that month', () => {
-              expect(menuElements.calendarGrid).toHaveAttribute(
-                'aria-label',
-                'December 2038',
-              );
-            });
+          test('sets displayed month to that month', () => {
+            expect(menuElements.calendarGrid).toHaveAttribute(
+              'aria-label',
+              'December 2038',
+            );
+          });
 
-            // TODO: Move these to Menu render tests
-            test('renders all cells disabled', () => {
-              const isEveryCellDisabled = menuElements.calendarCells.every(
-                cell => cell?.getAttribute('aria-disabled') === 'true',
-              );
-              expect(isEveryCellDisabled).toBe(true);
-            });
+          test.todo('sets the error state');
+        });
 
-            test('doest not highlight a cell', () => {
-              const isSomeCellHighlighted = menuElements.calendarCells.some(
-                cell => cell?.getAttribute('aria-selected') === 'true',
-              );
-              expect(isSomeCellHighlighted).toBe(false);
-            });
+        describe('with arrow keys', () => {
+          const onDateChange = jest.fn();
+          let menuElements: RenderMenuResult;
 
-            test.todo('sets the error state');
-          },
-        );
+          beforeEach(async () => {
+            const { yearInput, waitForMenuToOpen, findMenuElements } =
+              renderDatePicker({
+                value: newUTC(2037, Month.December, 25),
+                onDateChange,
+              });
+            userEvent.click(yearInput);
+            await waitForMenuToOpen();
+            userEvent.keyboard('{arrowup}');
+            menuElements = await findMenuElements();
+          });
+
+          test('fires onDateChange handler', async () => {
+            expect(onDateChange).toHaveBeenCalledWith(
+              expect.objectContaining(newUTC(2038, Month.December, 25)),
+            );
+          });
+
+          test('sets displayed month to that month', async () => {
+            expect(menuElements.calendarGrid).toHaveAttribute(
+              'aria-label',
+              'December 2038',
+            );
+          });
+
+          test.todo('sets the error state');
+        });
+
+        describe('by typing', () => {
+          let menuElements: RenderMenuResult;
+          const onDateChange = jest.fn();
+
+          beforeEach(async () => {
+            const {
+              yearInput,
+              monthInput,
+              dayInput,
+              calendarButton,
+              waitForMenuToOpen,
+            } = renderDatePicker({ onDateChange });
+            userEvent.type(yearInput, '2038');
+            userEvent.type(monthInput, '12');
+            userEvent.type(dayInput, '25');
+            userEvent.click(calendarButton);
+            menuElements = await waitForMenuToOpen();
+          });
+
+          test('fires onDateChange handler', () => {
+            expect(onDateChange).toHaveBeenCalledWith(
+              expect.objectContaining(newUTC(2038, Month.December, 25)),
+            );
+          });
+
+          test('sets displayed month to that month', () => {
+            expect(menuElements.calendarGrid).toHaveAttribute(
+              'aria-label',
+              'December 2038',
+            );
+          });
+
+          test.todo('sets the error state');
+        });
       });
 
       describe('When closing and re-opening the menu', () => {
