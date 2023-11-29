@@ -1112,7 +1112,7 @@ describe('packages/date-picker', () => {
         });
       });
 
-      describe.only('typing a full value', () => {
+      describe('typing a full value', () => {
         test('fires value change handler', () => {
           const onDateChange = jest.fn();
           const { yearInput, monthInput, dayInput } = renderDatePicker({

@@ -47,9 +47,10 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
 
     /** Called when the input's Date value has changed */
     const handleInputValueChange = (inputVal?: Date | null) => {
-      if (!isSameUTCDay(inputVal, value) && isInRange(inputVal)) {
+      if (!isSameUTCDay(inputVal, value)) {
         handleValidation?.(inputVal);
         setValue(inputVal || null);
+        // TODO: update month?
       }
     };
 
@@ -189,10 +190,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           meta?.key === keyMap.ArrowDown || meta?.key === keyMap.ArrowUp;
 
         if (!changedViaArrowKeys) {
-          if (
-            isValidValueForSegment(segment, segmentValue) &&
-            isExplicitSegmentValue(segment, segmentValue)
-          ) {
+          if (isExplicitSegmentValue(segment, segmentValue)) {
             const nextSegment = getRelativeSegment('next', {
               segment: segmentRefs[segment],
               formatParts,
@@ -203,7 +201,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           }
         }
 
-        if (isDirty && !isValidValueForSegment(segment, segmentValue)) {
+        if (isDirty) {
           handleValidation?.(value);
         }
 
