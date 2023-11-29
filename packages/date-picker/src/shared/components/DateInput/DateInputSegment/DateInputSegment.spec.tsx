@@ -103,15 +103,30 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       );
     });
 
-    test('allows leading zeroes', () => {
-      const result = render(
-        <DateInputSegment segment="day" onChange={onChangeHandler} />,
-      );
-      const input = result.getByTestId('lg-date_picker_input-segment');
-      userEvent.type(input, '0');
-      expect(onChangeHandler).toHaveBeenCalledWith(
-        expect.objectContaining({ value: '0' }),
-      );
+    describe('allows leading zeros', () => {
+      test('when there is one digit', () => {
+        const result = render(
+          <DateInputSegment segment="day" onChange={onChangeHandler} />,
+        );
+        const input = result.getByTestId('lg-date_picker_input-segment');
+        userEvent.type(input, '0');
+        expect(onChangeHandler).toHaveBeenCalledWith(
+          expect.objectContaining({ value: '0' }),
+        );
+      });
+
+      test('when there are two digits', () => {
+        const result = render(
+          <DateInputSegment segment="day" onChange={onChangeHandler} />,
+        );
+        const input = result.getByTestId('lg-date_picker_input-segment');
+        userEvent.type(input, '0');
+        userEvent.type(input, '1');
+
+        expect(onChangeHandler).toHaveBeenCalledWith(
+          expect.objectContaining({ value: '01' }),
+        );
+      });
     });
 
     test('does not allow non-number characters', () => {

@@ -66,7 +66,14 @@ export const DateInputSegment = React.forwardRef<
       const numericValue = Number(target.value);
 
       if (!isNaN(numericValue)) {
-        const stringValue = numericValue.toString();
+        // If the value has 2 digits that mean there is a chance the first digit is a leading 0 so when converting into a string we want to keep that leading 0. This helps in cases where '01' converts into 1 which then becomes an invalid valid.
+        const stringValue =
+          target.value.length === 2
+            ? numericValue.toString().padStart(2, '0')
+            : numericValue.toString();
+
+        // the value has the leading 0 but .toString removes it
+
         onChange?.({
           segment,
           value: stringValue,
@@ -91,6 +98,7 @@ export const DateInputSegment = React.forwardRef<
           : min;
 
         const newValue = rollover(initialValue + valueDiff, min, max);
+        console.log('HANDLEKEYDOWN');
         const valueString = formatter(newValue);
 
         onChange?.({
@@ -145,6 +153,7 @@ export const DateInputSegment = React.forwardRef<
           segmentWidthStyles[segment],
         )}
         maxLength={maxLength}
+        autoComplete="off"
       />
     );
   },
