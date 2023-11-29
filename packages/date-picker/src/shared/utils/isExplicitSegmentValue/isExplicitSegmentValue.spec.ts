@@ -19,8 +19,9 @@ describe('packages/date-picker/utils/isExplicitSegmentValue', () => {
 
   test('year', () => {
     expect(isExplicitSegmentValue('year', '1')).toBe(false);
+    expect(isExplicitSegmentValue('year', '200')).toBe(false);
     expect(isExplicitSegmentValue('year', '1970')).toBe(true);
     expect(isExplicitSegmentValue('year', '2000')).toBe(true);
-    expect(isExplicitSegmentValue('year', '0001')).toBe(false);
+    expect(isExplicitSegmentValue('year', '0001')).toBe(true);
   });
 });

@@ -1,6 +1,7 @@
 import { DateSegmentsState } from '../../hooks';
 import { isValidSegmentName, isValidSegmentValue } from '../isValidSegment';
 import { isValidValueForSegment } from '../isValidValueForSegment';
+import { newUTC } from '../newUTC';
 
 /** Constructs a date object in UTC from day, month, year segments */
 export const newDateFromSegments = (
@@ -16,6 +17,6 @@ export const newDateFromSegments = (
     )
   ) {
     const { day, month, year } = segments;
-    return new Date(Date.UTC(Number(year), Number(month) - 1, Number(day)));
+    return newUTC(Number(year), Number(month) - 1, Number(day));
   }
 };

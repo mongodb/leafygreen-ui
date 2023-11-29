@@ -53,7 +53,7 @@ const renderDateInputBox = (
 };
 
 describe('packages/date-picker/shared/date-input-box', () => {
-  const onChange = jest.fn<DateInputSegmentChangeEventHandler>();
+  const onSegmentChange = jest.fn<DateInputSegmentChangeEventHandler>();
 
   const testContext: Partial<DatePickerProviderProps> = {
     dateFormat: 'iso8601',
@@ -61,7 +61,7 @@ describe('packages/date-picker/shared/date-input-box', () => {
   };
 
   afterEach(() => {
-    onChange.mockClear();
+    onSegmentChange.mockClear();
   });
 
   describe('Rendering', () => {
@@ -124,7 +124,7 @@ describe('packages/date-picker/shared/date-input-box', () => {
   });
 
   describe('Typing', () => {
-    test('typing into a segment updates the segment value', () => {
+    test('updates the rendered segment value', () => {
       const { dayInput } = renderDateInputBox(undefined, testContext);
       userEvent.type(dayInput, '26');
       expect(dayInput.value).toBe('26');
@@ -154,7 +154,7 @@ describe('packages/date-picker/shared/date-input-box', () => {
       expect(yearInput.value).toBe('199');
     });
 
-    test('typing into a segment does not fire the value setter', () => {
+    test('typing into a segment does not immediately fire the value setter', () => {
       const setValue = jest.fn();
       const { dayInput } = renderDateInputBox(
         {
@@ -168,17 +168,17 @@ describe('packages/date-picker/shared/date-input-box', () => {
       expect(setValue).not.toHaveBeenCalled();
     });
 
-    test('typing into a segment fires the change handler', () => {
+    test('typing into a segment fires the segment change handler', () => {
       const { yearInput } = renderDateInputBox(
         {
           value: null,
-          onChange,
+          onSegmentChange,
         },
         testContext,
       );
       userEvent.type(yearInput, '1993');
 
-      expect(onChange).toHaveBeenCalledWith(
+      expect(onSegmentChange).toHaveBeenCalledWith(
         expect.objectContaining({ value: '1993' }),
       );
     });

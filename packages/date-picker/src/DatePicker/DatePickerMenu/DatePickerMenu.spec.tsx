@@ -181,6 +181,34 @@ describe('packages/date-picker/date-picker-menu', () => {
       const valueCell = getCellWithValue(testValue);
       expect(valueCell).toHaveFocus();
     });
+
+    describe('when value is out of range', () => {
+      test('grid is labelled', () => {
+        const { calendarGrid } = renderDatePickerMenu(null, {
+          value: newUTC(2048, Month.December, 25),
+        });
+        expect(calendarGrid).toHaveAttribute('aria-label', 'December 2048');
+      });
+      test('all cells disabled', () => {
+        const { calendarCells } = renderDatePickerMenu(null, {
+          value: newUTC(2048, Month.December, 25),
+        });
+        const isEveryCellDisabled = calendarCells.every(
+          cell => cell?.getAttribute('aria-disabled') === 'true',
+        );
+        expect(isEveryCellDisabled).toBe(true);
+      });
+
+      test('doest not highlight a cell', () => {
+        const { calendarCells } = renderDatePickerMenu(null, {
+          value: newUTC(2048, Month.December, 25),
+        });
+        const isSomeCellHighlighted = calendarCells.some(
+          cell => cell?.getAttribute('aria-selected') === 'true',
+        );
+        expect(isSomeCellHighlighted).toBe(false);
+      });
+    });
   });
 
   describe('Keyboard navigation', () => {

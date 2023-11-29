@@ -1,6 +1,6 @@
 import { charsPerSegment } from '../../constants';
 import { DateSegment, DateSegmentValue } from '../../hooks';
-import { isValidValueForSegment } from '../isValidValueForSegment';
+import { isValidSegmentName, isValidSegmentValue } from '../isValidSegment';
 
 /**
  * Returns whether the provided value is an explicit, unique value for a given segment.
@@ -12,7 +12,8 @@ export const isExplicitSegmentValue = (
   segment: DateSegment,
   value: DateSegmentValue,
 ): boolean => {
-  if (!isValidValueForSegment(segment, value)) return false;
+  if (!(isValidSegmentValue(value) && isValidSegmentName(segment)))
+    return false;
 
   switch (segment) {
     case DateSegment.Day:

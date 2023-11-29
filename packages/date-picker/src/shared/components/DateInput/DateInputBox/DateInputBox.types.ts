@@ -20,7 +20,7 @@ export interface DateInputBoxProps
   /**
    * Callback fired when any segment changes, but not necessarily a full value
    */
-  onChange?: DateInputSegmentChangeEventHandler;
+  onSegmentChange?: DateInputSegmentChangeEventHandler;
 
   /**
    * id of the labelling element

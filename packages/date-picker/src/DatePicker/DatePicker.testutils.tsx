@@ -9,6 +9,7 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { DateSegment } from '../shared';
 import { getISODate } from '../shared/utils/getISODate';
 
 import { DatePickerProps } from './DatePicker.types';
@@ -25,6 +26,7 @@ interface RenderDatePickerResult extends RenderResult {
   monthInput: HTMLInputElement;
   yearInput: HTMLInputElement;
   calendarButton: HTMLButtonElement;
+  getInputByName: (name: DateSegment) => HTMLInputElement;
 
   /**
    * Asynchronously query for menu elements
@@ -48,7 +50,7 @@ interface RenderDatePickerResult extends RenderResult {
   rerenderDatePicker: (newProps: Partial<DatePickerProps>) => void;
 }
 
-interface RenderMenuResult {
+export interface RenderMenuResult {
   menuContainerEl: HTMLElement | null;
   leftChevron: HTMLButtonElement | null;
   rightChevron: HTMLButtonElement | null;
@@ -94,6 +96,9 @@ export const renderDatePicker = (
       'button',
     ) as HTMLButtonElement,
   };
+
+  const getInputByName = (name: DateSegment) =>
+    result.getByLabelText(name) as HTMLInputElement;
 
   /**
    * Asynchronously query for menu elements.
@@ -154,6 +159,7 @@ export const renderDatePicker = (
   return {
     ...result,
     ...inputElements,
+    getInputByName,
     findMenuElements,
     waitForMenuToOpen,
     openMenu,

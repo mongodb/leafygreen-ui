@@ -1,5 +1,4 @@
 import React, { FocusEventHandler } from 'react';
-import { isSameDay } from 'date-fns';
 import isEqual from 'lodash/isEqual';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -43,12 +42,12 @@ import { DateInputBoxProps } from './DateInputBox.types';
 export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
   (
     {
-      value: dateValue,
-      setValue: setDateValue,
+      value,
+      setValue,
       className,
       labelledBy,
       segmentRefs,
-      onChange: onSegmentChangeProp,
+      onSegmentChange,
       ...rest
     }: DateInputBoxProps,
     fwdRef,
@@ -74,28 +73,24 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
         const areAllSegmentsEmpty = !doesSomeSegmentExist(newSegments);
 
         if (utcDate) {
-          // Update the value _iff_ all parts are set, and create a valid date.
-          const shouldUpdate = !dateValue || !isSameDay(utcDate, dateValue);
-
-          if (shouldUpdate) {
-            setDateValue?.(utcDate);
-          }
-        } else if (hasAnySegmentChanged && areAllSegmentsEmpty) {
-          // if no segment exists, set the external value to null
-          setDateValue?.(null);
+          // Update the value iff all segments create a valid date.
+          setValue?.(utcDate);
+        } else if (areAllSegmentsEmpty) {
+          // otherwise, if no segment exists, set the external value to null
+          setValue?.(null);
         }
       }
     };
 
     /** Keep track of each date segment */
-    const { segments, setSegment } = useDateSegments(dateValue, {
+    const { segments, setSegment } = useDateSegments(value, {
       onUpdate: onSegmentsUpdate,
     });
 
     /** fired when an individual segment value changes */
     const handleSegmentChange: DateInputSegmentChangeEventHandler = event => {
       setSegment(event.segment, event.value);
-      onSegmentChangeProp?.(event);
+      onSegmentChange?.(event);
     };
 
     /** Triggered when a segment is blurred */
