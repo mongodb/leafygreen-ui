@@ -4,7 +4,10 @@ import { defaultMax, defaultMin } from '../../constants';
 import { DateSegment, DateSegmentValue } from '../../hooks';
 import { isValidSegmentName, isValidSegmentValue } from '../isValidSegment';
 
-/** Returns whether a value is valid for a given segment type */
+/**
+ * Returns whether a value is valid for a given segment type
+ * @deprecated
+ */
 export const isValidValueForSegment = (
   segment: DateSegment,
   value: DateSegmentValue,
