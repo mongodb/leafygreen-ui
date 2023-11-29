@@ -1,6 +1,6 @@
 import React from 'react';
 import { jest } from '@jest/globals';
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mean, round } from 'lodash';
 
@@ -142,7 +142,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       );
     });
 
-    test('allows typing additional valid characters', () => {
+    test('allows typing additional characters to create a valid value', () => {
       const result = render(
         <DateInputSegment
           segment="day"
@@ -159,6 +159,25 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       );
     });
 
+    test('allows typing additional characters to create an invalid value', () => {
+      // Note: event may be ignored by the parent,
+      // but this component still fires the event
+      const result = render(
+        <DateInputSegment
+          segment="day"
+          value="26"
+          onChange={onChangeHandler}
+        />,
+      );
+
+      const input = result.getByTestId('lg-date_picker_input-segment');
+      userEvent.type(input, '6');
+      expect(onChangeHandler).toHaveBeenCalled();
+      expect(onChangeHandler).toHaveBeenCalledWith(
+        expect.objectContaining({ value: '66' }),
+      );
+    });
+
     test('allows zero character', () => {
       const result = render(
         <DateInputSegment segment="day" value="" onChange={onChangeHandler} />,
@@ -170,14 +189,16 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       );
     });
 
-    test('allows leading zeroes', () => {
+    test('allows leading zeroes', async () => {
       const result = render(
-        <DateInputSegment segment="day" value="" onChange={onChangeHandler} />,
+        <DateInputSegment segment="day" value="0" onChange={onChangeHandler} />,
       );
       const input = result.getByTestId('lg-date_picker_input-segment');
-      userEvent.type(input, '02');
-      expect(onChangeHandler).toHaveBeenCalledWith(
-        expect.objectContaining({ value: '02' }),
+      userEvent.type(input, '2');
+      await waitFor(() =>
+        expect(onChangeHandler).toHaveBeenCalledWith(
+          expect.objectContaining({ value: '02' }),
+        ),
       );
     });
 

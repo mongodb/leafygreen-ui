@@ -3,7 +3,7 @@ import React, { ChangeEventHandler, KeyboardEventHandler } from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { keyMap, rollover } from '@leafygreen-ui/lib';
+import { keyMap, rollover, truncateStart } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
@@ -13,7 +13,7 @@ import {
   defaultMin,
   defaultPlaceholder,
 } from '../../../constants';
-import { getSegmentMaxLength, getValueFormatter } from '../../../utils';
+import { getValueFormatter } from '../../../utils';
 import { useDatePickerContext } from '../../DatePickerContext';
 
 import {
@@ -57,8 +57,7 @@ export const DateInputSegment = React.forwardRef<
     const baseFontSize = useUpdatedBaseFontSize();
     const { size, disabled } = useDatePickerContext();
     const formatter = getValueFormatter(segment);
-    const pattern = `[0-9]{${charsPerSegment.year}}`;
-    const maxLength = getSegmentMaxLength(segment);
+    const pattern = `[0-9]{${charsPerSegment[segment]}}`;
 
     /** Prevent non-numeric values from triggering a change event */
     const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
@@ -66,10 +65,13 @@ export const DateInputSegment = React.forwardRef<
       const numericValue = Number(target.value);
 
       if (!isNaN(numericValue)) {
-        const stringValue = numericValue.toString();
+        const newValue = truncateStart(target.value, {
+          length: charsPerSegment[segment],
+        });
+
         onChange({
           segment,
-          value: stringValue,
+          value: newValue,
         });
       }
     };
@@ -88,14 +90,13 @@ export const DateInputSegment = React.forwardRef<
           e.preventDefault();
           const valueDiff = key === keyMap.ArrowUp ? 1 : -1;
 
-          // TODO FIXME:
-          const initialValue = value
+          const currentValue: number = value
             ? Number(value)
             : key === keyMap.ArrowUp
             ? max
             : min;
 
-          const newValue = rollover(initialValue + valueDiff, min, max);
+          const newValue = rollover(currentValue + valueDiff, min, max);
           const valueString = formatter(newValue);
 
           onChange({
