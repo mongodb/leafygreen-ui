@@ -182,41 +182,44 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
      * Called when any segment changes
      * If up/down arrows are pressed, don't move to the next segment
      */
-    const handleSegmentChange: DateInputSegmentChangeEventHandler = e => {
-      const { segment, value: segmentValue, meta } = e;
-      const usingArrowKeys =
-        meta?.key === keyMap.ArrowDown || meta?.key === keyMap.ArrowUp;
+    const handleSegmentChange: DateInputSegmentChangeEventHandler =
+      segmentChangeEvent => {
+        const { segment, value: segmentValue, meta } = segmentChangeEvent;
+        const changedViaArrowKeys =
+          meta?.key === keyMap.ArrowDown || meta?.key === keyMap.ArrowUp;
 
-      if (!usingArrowKeys) {
-        if (
-          isValidValueForSegment(segment, segmentValue) &&
-          isExplicitSegmentValue(segment, segmentValue)
-        ) {
-          const nextSegment = getRelativeSegment('next', {
-            segment: segmentRefs[segment],
-            formatParts,
-            segmentRefs,
-          });
+        if (!changedViaArrowKeys) {
+          if (
+            isValidValueForSegment(segment, segmentValue) &&
+            isExplicitSegmentValue(segment, segmentValue)
+          ) {
+            const nextSegment = getRelativeSegment('next', {
+              segment: segmentRefs[segment],
+              formatParts,
+              segmentRefs,
+            });
 
-          nextSegment?.current?.focus();
+            nextSegment?.current?.focus();
+          }
         }
-      }
 
-      if (!isValidValueForSegment(segment, segmentValue) && isDirty) {
-        handleValidation?.(value);
-      }
+        if (isDirty && !isValidValueForSegment(segment, segmentValue)) {
+          handleValidation?.(value);
+        }
 
-      const changeEvent = new Event('change');
-      const target = segmentRefs[segment].current;
+        /**
+         * Fire a simulated `change` event
+         */
+        const changeEvent = new Event('change');
+        const target = segmentRefs[segment].current;
 
-      if (target) {
-        const reactEvent = createSyntheticEvent<ChangeEvent<HTMLInputElement>>(
-          changeEvent,
-          target,
-        );
-        onSegmentChange?.(reactEvent);
-      }
-    };
+        if (target) {
+          const reactEvent = createSyntheticEvent<
+            ChangeEvent<HTMLInputElement>
+          >(changeEvent, target);
+          onSegmentChange?.(reactEvent);
+        }
+      };
 
     return (
       <DateFormField
