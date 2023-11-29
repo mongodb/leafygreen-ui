@@ -29,7 +29,6 @@ export const contextPropNames: Array<ContextPropKeys> = [
   'baseFontSize',
   'disabled',
   'size',
-  'state',
   'errorMessage',
   'initialOpen',
 ];
@@ -50,13 +49,16 @@ export const defaultDatePickerContext: DatePickerContextProps = {
   isInRange: () => true,
   disabled: false,
   size: Size.Default,
-  state: DatePickerState.None,
   errorMessage: '',
   baseFontSize: BaseFontSize.Body1,
   darkMode: false,
   menuId: '',
   isSelectOpen: false,
   setIsSelectOpen: () => {},
+  state: DatePickerState.None,
+  setState: () => {},
+  message: '',
+  setMessage: () => {},
 };
 
 /**

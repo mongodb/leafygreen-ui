@@ -67,12 +67,7 @@ export interface BaseDatePickerProps extends DarkModeProps {
   size?: Size;
 
   /**
-   * Whether to show an error message
-   */
-  state?: DatePickerState;
-
-  /**
-   * A message to show in red underneath the input when in an error state
+   * A message to show in red underneath the input
    */
   errorMessage?: string;
 

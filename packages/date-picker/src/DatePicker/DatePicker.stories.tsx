@@ -37,6 +37,7 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
         'handleValidation',
         'initialValue',
         'onChange',
+        'onDateChange',
         'onSegmentChange',
         'value',
       ],
@@ -66,7 +67,6 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
     min: { control: 'date' },
     max: { control: 'date' },
     size: { control: 'select' },
-    state: { control: 'select' },
     timeZone: { control: 'select', options: TimeZones },
   },
 };

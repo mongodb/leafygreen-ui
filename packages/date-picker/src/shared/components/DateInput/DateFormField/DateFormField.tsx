@@ -2,6 +2,7 @@ import React from 'react';
 
 import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
 
+import { DatePickerState } from '../../../types';
 import { useDatePickerContext } from '../../DatePickerContext';
 import { CalendarButton } from '../CalendarButton';
 
@@ -28,8 +29,7 @@ export const DateFormField = React.forwardRef<
     const {
       label,
       description,
-      state,
-      errorMessage,
+      stateNotification: { state, message: errorMessage },
       disabled,
       isOpen,
       menuId,
@@ -52,6 +52,7 @@ export const DateFormField = React.forwardRef<
           tabIndex={-1}
           aria-expanded={isOpen}
           aria-controls={menuId}
+          aria-invalid={state === DatePickerState.Error}
           onClick={onInputClick}
           contentEnd={
             <CalendarButton

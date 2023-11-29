@@ -1,4 +1,11 @@
-import { BaseDatePickerProps } from '../../types';
+import { BaseDatePickerProps, DatePickerState } from '../../types';
+
+import { UseDatePickerErrorNotificationsReturnObject } from './useDatePickerErrorNotifications';
+
+export interface StateNotification {
+  state: DatePickerState;
+  message: string;
+}
 
 /** The props expected to pass int the provider */
 export interface DatePickerProviderProps extends BaseDatePickerProps {}
@@ -7,7 +14,8 @@ export interface DatePickerProviderProps extends BaseDatePickerProps {}
  * The values in context
  */
 export interface DatePickerContextProps
-  extends Required<DatePickerProviderProps> {
+  extends Required<DatePickerProviderProps>,
+    UseDatePickerErrorNotificationsReturnObject {
   /** The earliest date accepted */
   min: Date;
 
