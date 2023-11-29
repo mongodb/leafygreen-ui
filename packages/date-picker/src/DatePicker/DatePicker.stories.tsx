@@ -59,7 +59,7 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
     max: newUTC(2026, Month.October, 14),
     size: Size.Default,
     timeZone: 'America/New_York',
-    autoComplete: 'off',
+    autoComplete: 'on',
   },
   argTypes: {
     baseFontSize: { control: 'select' },
