@@ -52,7 +52,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
     }: DateInputBoxProps,
     fwdRef,
   ) => {
-    const { formatParts, disabled, isInRange } = useDatePickerContext();
+    const { formatParts, disabled } = useDatePickerContext();
     const { theme } = useDarkMode();
 
     const containerRef = useForwardedRef(fwdRef, null);
@@ -71,9 +71,8 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       if (hasAnySegmentChanged) {
         const utcDate = newDateFromSegments(newSegments);
         const areAllSegmentsEmpty = !doesSomeSegmentExist(newSegments);
-        const isValidDate = !!utcDate && isInRange(utcDate);
 
-        if (isValidDate) {
+        if (utcDate) {
           // Update the value iff all segments create a valid date.
           setValue?.(utcDate);
         } else if (areAllSegmentsEmpty) {
