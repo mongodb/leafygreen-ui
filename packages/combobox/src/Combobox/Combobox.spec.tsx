@@ -530,7 +530,10 @@ describe('packages/combobox', () => {
         const { openMenu, queryChipsByName, inputEl } = renderCombobox(select);
         const { optionElements } = openMenu();
         expect(optionElements).not.toBeUndefined();
-        userEvent.click((optionElements as HTMLCollectionOf<HTMLLIElement>)[2]);
+        const option3 = (optionElements as HTMLCollectionOf<HTMLLIElement>)[2];
+        act(() => {
+          userEvent.click(option3);
+        });
         if (select === 'multiple') {
           expect(queryChipsByName('Carrot')).toBeInTheDocument();
         } else {
@@ -717,7 +720,9 @@ describe('packages/combobox', () => {
             },
           );
           expect(clearButtonEl).not.toBeNull();
-          userEvent.click(clearButtonEl!);
+          act(() => {
+            userEvent.click(clearButtonEl!);
+          });
           if (select === 'multiple') {
             expect(queryAllChips()).toHaveLength(0);
           } else {
@@ -1391,7 +1396,9 @@ describe('packages/combobox', () => {
           expect(inputEl).toHaveValue('Apple');
         }
 
-        userEvent.click(clearButtonEl!);
+        act(() => {
+          userEvent.click(clearButtonEl!);
+        });
         expect(inputEl).toHaveValue('');
       });
 

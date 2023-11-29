@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json.schemastore.org/package",
+  "description": "Dependencies needed to test in a React 17 environment",
+  "dependencies": {
+    "@types/react": "16.9.56",
+    "@types/react-dom": "16.9.18",
+    "@types/react-is": "17",
+    "@jest/fake-timers": "26.6.2",
+    "@testing-library/dom": "7.31.2",
+    "@testing-library/jest-dom": "5.16.5",
+    "@testing-library/react": "10.4.9",
+    "@testing-library/react-hooks": "3.7.0",
+    "@testing-library/user-event": "13.5.0",
+    "@types/jest": "26.0.24",
+    "@types/jest-axe": "3.5.3",
+    "babel-jest": "26.6.3",
+    "jest": "26.6.3",
+    "jest-axe": "4.1.0",
+    "jest-environment-jsdom": "26.6.2",
+    "jest-junit": "10.0.0",
+    "react-test-renderer": "17.0.2",
+    "regenerator-runtime": "0.13.10",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  },
+  "resolutions": {
+    "@types/react": "16.9.56"
+  }
+}

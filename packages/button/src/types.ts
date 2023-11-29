@@ -68,7 +68,7 @@ export interface ButtonProps {
   /**
    * Sets the variant for the Button
    *
-   * @default default
+   * @default "default"
    */
   variant?: Variant;
 
@@ -89,7 +89,7 @@ export interface ButtonProps {
   /**
    * Sets the size for the Button
    *
-   * @default default
+   * @default "default"
    */
   size?: Size;
 

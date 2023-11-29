@@ -14,6 +14,7 @@ import ArrowUp from './ArrowUp.svg';
 import Beaker from './Beaker.svg';
 import Bell from './Bell.svg';
 import Biometric from './Biometric.svg';
+import Boolean from './Boolean.svg';
 import Building from './Building.svg';
 import Bulb from './Bulb.svg';
 import Calendar from './Calendar.svg';
@@ -71,6 +72,7 @@ import InfoWithCircle from './InfoWithCircle.svg';
 import InviteUser from './InviteUser.svg';
 import Key from './Key.svg';
 import Laptop from './Laptop.svg';
+import LightningBolt from './LightningBolt.svg';
 import Link from './Link.svg';
 import List from './List.svg';
 import Lock from './Lock.svg';
@@ -117,6 +119,7 @@ import Sparkle from './Sparkle.svg';
 import SplitHorizontal from './SplitHorizontal.svg';
 import SplitVertical from './SplitVertical.svg';
 import Stitch from './Stitch.svg';
+import String from './String.svg';
 import Support from './Support.svg';
 import Sweep from './Sweep.svg';
 import Table from './Table.svg';
@@ -155,6 +158,7 @@ const _glyphs = {
   Beaker,
   Bell,
   Biometric,
+  Boolean,
   Building,
   Bulb,
   Calendar,
@@ -212,6 +216,7 @@ const _glyphs = {
   InviteUser,
   Key,
   Laptop,
+  LightningBolt,
   Link,
   List,
   Lock,
@@ -258,6 +263,7 @@ const _glyphs = {
   SplitHorizontal,
   SplitVertical,
   Stitch,
+  String,
   Support,
   Sweep,
   Table,

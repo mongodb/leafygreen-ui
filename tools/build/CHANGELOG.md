@@ -1,5 +1,11 @@
 # @lg-tools/build
 
+## 0.3.1
+
+### Patch Changes
+
+- 4822f43c: Bumps @babel packages that were effected by @babel/traverse security breach
+
 ## 0.3.0
 
 ### Minor Changes

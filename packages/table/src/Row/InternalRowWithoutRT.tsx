@@ -1,9 +1,9 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { consoleOnce, isComponentType } from '@leafygreen-ui/lib';
 
-import { Cell } from '../Cell';
 import { useTableContext } from '../TableContext/TableContext';
 
 import InternalRowBase from './InternalRowBase';
@@ -20,6 +20,14 @@ const InternalRowWithoutRT = ({
 }: InternalRowBaseProps) => {
   const { shouldAlternateRowColor } = useTableContext();
   const { theme } = useDarkMode();
+
+  React.Children.forEach(children, child => {
+    if (!isComponentType(child, 'Cell'))
+      consoleOnce.warn(
+        'LG Row is rendering a custom cell element. Utilize the `Cell` component for standardized styles, correct HTML properties and additional functionalities when using `useLeafyGreenTable`.',
+      );
+  });
+
   return (
     <InternalRowBase
       className={cx(
@@ -30,11 +38,7 @@ const InternalRowWithoutRT = ({
       )}
       {...rest}
     >
-      {React.Children.map(children, (child: ReactNode, index: number) => {
-        return (
-          <Cell key={`cell-${index}`} {...(child as ReactElement).props} />
-        );
-      })}
+      {children}
     </InternalRowBase>
   );
 };

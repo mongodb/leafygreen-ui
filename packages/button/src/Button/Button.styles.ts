@@ -40,7 +40,7 @@ const baseButtonStyles = css`
     outline: none;
   }
 
-  &:active,
+  &:active[aria-disabled='false'],
   &:focus,
   &:hover {
     text-decoration: none;
@@ -60,7 +60,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       }
 
       &:hover[aria-disabled='false'],
-      &:active {
+      &:active[aria-disabled='false'] {
         color: ${palette.black};
         background-color: ${palette.white};
         box-shadow: 0 0 0 3px ${palette.gray.light2};
@@ -77,7 +77,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       }
 
       &:hover[aria-disabled='false'],
-      &:active {
+      &:active[aria-disabled='false'] {
         color: ${palette.white};
         background-color: #00593f; // Not quite dark3
         border-color: #00593f; // Not quite dark3
@@ -95,7 +95,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       }
 
       &:hover[aria-disabled='false'],
-      &:active {
+      &:active[aria-disabled='false'] {
         color: ${palette.green.dark2};
         background-color: ${transparentize(0.96, palette.green.base)};
         box-shadow: 0px 0px 0px 3px ${palette.green.light2};
@@ -112,7 +112,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       }
 
       &:hover[aria-disabled='false'],
-      &:active {
+      &:active[aria-disabled='false'] {
         color: ${palette.white};
         background-color: #c82222; // not quite dark1
         border-color: #c82222; // not quite dark1
@@ -130,7 +130,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       }
 
       &:hover[aria-disabled='false'],
-      &:active {
+      &:active[aria-disabled='false'] {
         color: ${palette.red.dark2};
         background-color: ${transparentize(0.96, palette.red.base)};
         border-color: ${palette.red.base};
@@ -148,7 +148,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       }
 
       &:hover[aria-disabled='false'],
-      &:active {
+      &:active[aria-disabled='false'] {
         color: ${palette.green.dark3};
         background-color: ${mix(0.96, palette.green.base, palette.green.dark3)};
         box-shadow: 0px 0px 0px 3px ${palette.green.light2};
@@ -166,7 +166,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       }
 
       &:hover[aria-disabled='false'],
-      &:active {
+      &:active[aria-disabled='false'] {
         background-color: ${palette.gray.dark1};
         border-color: ${palette.gray.base};
         color: ${palette.white};
@@ -183,7 +183,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       }
 
       &:hover[aria-disabled='false'],
-      &:active {
+      &:active[aria-disabled='false'] {
         color: ${palette.white};
         background-color: #00593f; // Off palette
         box-shadow: 0 0 0 3px ${palette.green.dark3};
@@ -200,7 +200,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       }
 
       &:hover[aria-disabled='false'],
-      &:active {
+      &:active[aria-disabled='false'] {
         color: ${palette.green.base};
         background-color: ${transparentize(0.96, palette.green.base)};
         border-color: ${palette.green.base};
@@ -218,7 +218,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       }
 
       &:hover[aria-disabled='false'],
-      &:active {
+      &:active[aria-disabled='false'] {
         border-color: ${palette.red.light1};
         color: ${palette.white};
         background-color: #c82222; // Off palette
@@ -235,7 +235,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       }
 
       &:hover[aria-disabled='false'],
-      &:active {
+      &:active[aria-disabled='false'] {
         color: ${palette.red.light1};
         background-color: ${transparentize(0.96, palette.red.base)};
         box-shadow: 0px 0px 0px 3px ${palette.yellow.dark3}; // yes, yellow
@@ -252,7 +252,7 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       }
 
       &:hover[aria-disabled='false'],
-      &:active {
+      &:active[aria-disabled='false'] {
         color: ${palette.green.dark3};
         background-color: ${mix(
           0.96,
@@ -358,7 +358,7 @@ const disabledStyle: Record<Theme, string> = {
       cursor: not-allowed;
     }
 
-    &:focus {
+    &:focus-visible {
       color: ${palette.gray.base};
       box-shadow: ${focusBoxShadow(palette.white)};
     }
@@ -373,7 +373,7 @@ const disabledStyle: Record<Theme, string> = {
       cursor: not-allowed;
     }
 
-    &:focus {
+    &:focus-visible {
       color: ${palette.gray.dark1};
       box-shadow: ${focusBoxShadow(palette.black)};
     }

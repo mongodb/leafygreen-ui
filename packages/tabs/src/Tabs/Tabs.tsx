@@ -13,6 +13,7 @@ import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 import { InternalTab } from '../Tab';
 
 import {
+  inlineChildrenContainerStyle,
   inlineChildrenWrapperStyle,
   listStyle,
   modeColors,
@@ -168,7 +169,9 @@ function Tabs(props: AccessibleTabsProps) {
             aria-orientation="horizontal"
             {...accessibilityProps}
           />
-          <div className={inlineChildrenWrapperStyle}>{inlineChildren}</div>
+          <div className={inlineChildrenContainerStyle}>
+            <div className={inlineChildrenWrapperStyle}>{inlineChildren}</div>
+          </div>
         </div>
 
         {/* renderedTabs portals the contents into this element */}
