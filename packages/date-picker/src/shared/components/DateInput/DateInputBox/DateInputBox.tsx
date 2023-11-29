@@ -47,7 +47,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       className,
       labelledBy,
       segmentRefs,
-      onChange: onSegmentChangeProp,
+      onSegmentChange,
       ...rest
     }: DateInputBoxProps,
     fwdRef,
@@ -90,7 +90,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
     /** fired when an individual segment value changes */
     const handleSegmentChange: DateInputSegmentChangeEventHandler = event => {
       setSegment(event.segment, event.value);
-      onSegmentChangeProp?.(event);
+      onSegmentChange?.(event);
     };
 
     /** Triggered when a segment is blurred */

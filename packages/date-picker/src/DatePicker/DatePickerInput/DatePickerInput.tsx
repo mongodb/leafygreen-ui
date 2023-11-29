@@ -235,7 +235,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           value={value}
           setValue={handleInputValueChange}
           segmentRefs={segmentRefs}
-          onChange={handleSegmentChange}
+          onSegmentChange={handleSegmentChange}
         />
       </DateFormField>
     );
