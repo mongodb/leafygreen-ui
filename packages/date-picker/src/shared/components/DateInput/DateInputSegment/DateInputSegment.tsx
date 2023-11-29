@@ -67,7 +67,7 @@ export const DateInputSegment = React.forwardRef<
 
       if (!isNaN(numericValue)) {
         const stringValue = numericValue.toString();
-        onChange?.({
+        onChange({
           segment,
           value: stringValue,
         });
@@ -88,6 +88,7 @@ export const DateInputSegment = React.forwardRef<
           e.preventDefault();
           const valueDiff = key === keyMap.ArrowUp ? 1 : -1;
 
+          // TODO FIXME:
           const initialValue = value
             ? Number(value)
             : key === keyMap.ArrowUp
@@ -97,7 +98,7 @@ export const DateInputSegment = React.forwardRef<
           const newValue = rollover(initialValue + valueDiff, min, max);
           const valueString = formatter(newValue);
 
-          onChange?.({
+          onChange({
             segment,
             value: valueString,
             meta: { key },
@@ -106,10 +107,10 @@ export const DateInputSegment = React.forwardRef<
         }
 
         case keyMap.Backspace: {
-          const numChars = value?.length;
+          const numChars = value.length;
 
           if (numChars === 1) {
-            onChange?.({
+            onChange({
               segment,
               value: '',
               meta: { key },
@@ -143,7 +144,7 @@ export const DateInputSegment = React.forwardRef<
         type="text"
         pattern={pattern}
         role="spinbutton"
-        value={value ?? ''}
+        value={value}
         min={min}
         max={max}
         placeholder={defaultPlaceholder[segment]}
