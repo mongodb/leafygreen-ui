@@ -39,7 +39,7 @@ export const DatePickerComponent = forwardRef<
   const menuRef = useRef<HTMLDivElement>(null);
   const prevDisabledValue = usePrevious(disabled);
 
-  useBackdropClick(closeMenu, [formFieldRef, menuRef], isOpen);
+  useBackdropClick(closeMenu, [formFieldRef, menuRef], isOpen && !isSelectOpen);
 
   /** This listens to when the disabled prop changes to true and closes the menu */
   useEffect(() => {
