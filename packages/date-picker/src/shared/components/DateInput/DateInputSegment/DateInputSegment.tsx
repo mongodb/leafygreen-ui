@@ -72,8 +72,6 @@ export const DateInputSegment = React.forwardRef<
             ? numericValue.toString().padStart(2, '0')
             : numericValue.toString();
 
-        // the value has the leading 0 but .toString removes it
-
         onChange?.({
           segment,
           value: stringValue,
@@ -98,7 +96,6 @@ export const DateInputSegment = React.forwardRef<
           : min;
 
         const newValue = rollover(initialValue + valueDiff, min, max);
-        console.log('HANDLEKEYDOWN');
         const valueString = formatter(newValue);
 
         onChange?.({
@@ -153,7 +150,6 @@ export const DateInputSegment = React.forwardRef<
           segmentWidthStyles[segment],
         )}
         maxLength={maxLength}
-        autoComplete="off"
       />
     );
   },
