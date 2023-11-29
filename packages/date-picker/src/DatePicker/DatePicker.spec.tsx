@@ -1599,6 +1599,9 @@ describe('packages/date-picker', () => {
           });
         });
       });
+
+      // JSDOM does not support layout: https://github.com/testing-library/react-testing-library/issues/671
+      test.todo('page does not scroll when arrow keys are pressed');
     });
   });
 
