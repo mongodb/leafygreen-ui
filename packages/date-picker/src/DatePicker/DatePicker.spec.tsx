@@ -529,6 +529,48 @@ describe('packages/date-picker', () => {
           userEvent.click(container.parentElement!);
           await waitFor(() => expect(calendarButton).toHaveFocus());
         });
+
+        describe('when select is open', () => {
+          describe('Year select menu', () => {
+            test('keeps the menu open', async () => {
+              const { openMenu, container } = renderDatePicker();
+              const { yearSelect, menuContainerEl } = await openMenu();
+              userEvent.click(yearSelect!);
+              userEvent.click(container.parentElement!);
+              await waitFor(() => {
+                expect(menuContainerEl).toBeInTheDocument();
+              });
+            });
+
+            test('closes the month/year select', async () => {
+              const { openMenu, container } = renderDatePicker();
+              const { yearSelect } = await openMenu();
+              userEvent.click(yearSelect!);
+              userEvent.click(container.parentElement!);
+              await waitForElementToBeRemoved(yearSelect);
+            });
+          });
+
+          describe('Month select menu', () => {
+            test('keeps the menu open', async () => {
+              const { openMenu, container } = renderDatePicker();
+              const { monthSelect, menuContainerEl } = await openMenu();
+              userEvent.click(monthSelect!);
+              userEvent.click(container.parentElement!);
+              await waitFor(() => {
+                expect(menuContainerEl).toBeInTheDocument();
+              });
+            });
+
+            test('closes the month/year select', async () => {
+              const { openMenu, container } = renderDatePicker();
+              const { monthSelect } = await openMenu();
+              userEvent.click(monthSelect!);
+              userEvent.click(container.parentElement!);
+              await waitForElementToBeRemoved(monthSelect);
+            });
+          });
+        });
       });
     });
 
