@@ -13,6 +13,7 @@ import {
   DatePickerProvider,
 } from '../shared/components/DatePickerContext';
 import { Month } from '../shared/constants';
+import { AutoComplete } from '../shared/types';
 import { newUTC } from '../shared/utils';
 import { Locales, TimeZones } from '../shared/utils/testutils';
 
@@ -57,6 +58,7 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
     label: 'Pick a date',
     size: Size.Default,
     timeZone: 'America/New_York',
+    autoComplete: AutoComplete.Off,
   },
   argTypes: {
     baseFontSize: { control: 'select' },
@@ -68,6 +70,7 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
     size: { control: 'select' },
     state: { control: 'select' },
     timeZone: { control: 'select', options: TimeZones },
+    autoComplete: { control: 'select', options: Object.values(AutoComplete) },
   },
 };
 

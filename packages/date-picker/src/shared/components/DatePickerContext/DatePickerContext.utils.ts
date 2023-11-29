@@ -5,7 +5,11 @@ import defaultTo from 'lodash/defaultTo';
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
 import { MAX_DATE, MIN_DATE } from '../../constants';
-import { BaseDatePickerProps, DatePickerState } from '../../types';
+import {
+  AutoComplete,
+  BaseDatePickerProps,
+  DatePickerState,
+} from '../../types';
 import { getFormatParts, toDate } from '../../utils';
 
 import {
@@ -32,6 +36,7 @@ export const contextPropNames: Array<ContextPropKeys> = [
   'state',
   'errorMessage',
   'initialOpen',
+  'autoComplete',
 ];
 
 /** The default context value */
@@ -57,6 +62,7 @@ export const defaultDatePickerContext: DatePickerContextProps = {
   menuId: '',
   isSelectOpen: false,
   setIsSelectOpen: () => {},
+  autoComplete: AutoComplete.Off,
 };
 
 /**

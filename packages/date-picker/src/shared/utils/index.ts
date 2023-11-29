@@ -2,6 +2,7 @@ export { addDaysUTC } from './addDaysUTC';
 export { addMonthsUTC } from './addMonthsUTC';
 export { cloneReverse } from './cloneReverse';
 export { doesSomeSegmentExist } from './doesSomeSegmentExist';
+export { getAutoComplete } from './getAutoComplete';
 export { getDaysInUTCMonth } from './getDaysInUTCMonth';
 export { getFirstEmptySegment } from './getFirstEmptySegment';
 export { getFirstOfMonth } from './getFirstOfMonth';
