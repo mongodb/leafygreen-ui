@@ -31,6 +31,7 @@ export const contextPropNames: Array<ContextPropKeys> = [
   'size',
   'errorMessage',
   'initialOpen',
+  'state',
 ];
 
 /** The default context value */

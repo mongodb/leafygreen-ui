@@ -104,70 +104,105 @@ describe('packages/date-picker', () => {
         expect(yearInput.value).toEqual('2023');
       });
 
-      test('renders with error state when `errorMessage` is provided', () => {
-        const { getByTestId, getByRole } = render(
-          <DatePicker label="Label" errorMessage="Custom error message" />,
-        );
-        const inputContainer = getByRole('combobox');
-        expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
+      describe('Error states', () => {
+        test('renders error state when `state` is "error"', () => {
+          const { getByRole } = render(
+            <DatePicker
+              label="Label"
+              state="error"
+              errorMessage="Custom error message"
+            />,
+          );
+          const inputContainer = getByRole('combobox');
+          expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
+        });
 
-        const errorElement = getByTestId('lg-form_field-error_message');
-        expect(errorElement).toBeInTheDocument();
-        expect(errorElement).toHaveTextContent('Custom error message');
-      });
+        test('renders with `errorMessage` when provided', () => {
+          const { queryByTestId } = render(
+            <DatePicker
+              label="Label"
+              state="error"
+              errorMessage="Custom error message"
+            />,
+          );
+          const errorElement = queryByTestId('lg-form_field-error_message');
+          expect(errorElement).toBeInTheDocument();
+          expect(errorElement).toHaveTextContent('Custom error message');
+        });
 
-      test('renders with error state when value is out of range', () => {
-        const { getByTestId, getByRole } = render(
-          <DatePicker label="Label" value={newUTC(2100, 1, 1)} />,
-        );
-        const inputContainer = getByRole('combobox');
-        expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
+        test('does not render `errorMessage` when state is not set', () => {
+          const { getByRole, queryByTestId } = render(
+            <DatePicker label="Label" errorMessage="Custom error message" />,
+          );
+          const inputContainer = getByRole('combobox');
+          expect(inputContainer).toHaveAttribute('aria-invalid', 'false');
+          const errorElement = queryByTestId('lg-form_field-error_message');
+          expect(errorElement).not.toBeInTheDocument();
+        });
 
-        const errorElement = getByTestId('lg-form_field-error_message');
-        expect(errorElement).toBeInTheDocument();
-        expect(errorElement).toHaveTextContent(
-          'Date must be before 2038-01-19',
-        );
-      });
+        test('renders with internal error state when value is out of range', () => {
+          const { getByTestId, getByRole } = render(
+            <DatePicker label="Label" value={newUTC(2100, 1, 1)} />,
+          );
+          const inputContainer = getByRole('combobox');
+          expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
 
-      test('custom error message overrides internal error message', () => {
-        const { getByTestId, getByRole } = render(
-          <DatePicker
-            label="Label"
-            value={newUTC(2100, 1, 1)}
-            errorMessage="Custom error message"
-          />,
-        );
-        const inputContainer = getByRole('combobox');
-        expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
+          const errorElement = getByTestId('lg-form_field-error_message');
+          expect(errorElement).toBeInTheDocument();
+          expect(errorElement).toHaveTextContent(
+            'Date must be before 2038-01-19',
+          );
+        });
 
-        const errorElement = getByTestId('lg-form_field-error_message');
-        expect(errorElement).toBeInTheDocument();
-        expect(errorElement).toHaveTextContent('Custom error message');
-      });
-
-      test('removing a custom error displays an internal error when applicable', () => {
-        const { inputContainer, rerenderDatePicker, getByTestId } =
-          renderDatePicker({
+        test('external error message overrides internal error message', () => {
+          const { getByTestId, getByRole } = renderDatePicker({
             value: newUTC(2100, 1, 1),
+            state: 'error',
+            errorMessage: 'Custom error message',
           });
-        expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
-        expect(getByTestId('lg-form_field-error_message')).toHaveTextContent(
-          'Date must be before 2038-01-19',
-        );
+          const inputContainer = getByRole('combobox');
+          expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
 
-        rerenderDatePicker({ errorMessage: 'Some error' });
+          const errorElement = getByTestId('lg-form_field-error_message');
+          expect(errorElement).toBeInTheDocument();
+          expect(errorElement).toHaveTextContent('Custom error message');
+        });
 
-        expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
-        expect(getByTestId('lg-form_field-error_message')).toHaveTextContent(
-          'Some error',
-        );
+        test('renders internal message if external error message is not set', () => {
+          const { inputContainer, getByTestId } = renderDatePicker({
+            value: newUTC(2100, 1, 1),
+            state: 'error',
+            errorMessage: undefined,
+          });
+          expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
+          expect(getByTestId('lg-form_field-error_message')).toHaveTextContent(
+            'Date must be before 2038-01-19',
+          );
+        });
 
-        rerenderDatePicker({ errorMessage: undefined });
-        expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
-        expect(getByTestId('lg-form_field-error_message')).toHaveTextContent(
-          'Date must be before 2038-01-19',
-        );
+        test('removing an external error displays an internal error when applicable', () => {
+          const { inputContainer, rerenderDatePicker, getByTestId } =
+            renderDatePicker({
+              value: newUTC(2100, 1, 1),
+            });
+          expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
+          expect(getByTestId('lg-form_field-error_message')).toHaveTextContent(
+            'Date must be before 2038-01-19',
+          );
+
+          rerenderDatePicker({ errorMessage: 'Some error', state: 'error' });
+
+          expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
+          expect(getByTestId('lg-form_field-error_message')).toHaveTextContent(
+            'Some error',
+          );
+
+          rerenderDatePicker({ state: 'none' });
+          expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
+          expect(getByTestId('lg-form_field-error_message')).toHaveTextContent(
+            'Date must be before 2038-01-19',
+          );
+        });
       });
     });
 

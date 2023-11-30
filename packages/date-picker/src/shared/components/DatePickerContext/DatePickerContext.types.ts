@@ -14,7 +14,7 @@ export interface DatePickerProviderProps extends BaseDatePickerProps {}
  * The values in context
  */
 export interface DatePickerContextProps
-  extends Required<DatePickerProviderProps>,
+  extends Omit<Required<DatePickerProviderProps>, 'state'>,
     UseDatePickerErrorNotificationsReturnObject {
   /** The earliest date accepted */
   min: Date;

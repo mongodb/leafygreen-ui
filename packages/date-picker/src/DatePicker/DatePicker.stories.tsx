@@ -67,6 +67,7 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
     min: { control: 'date' },
     max: { control: 'date' },
     size: { control: 'select' },
+    state: { control: 'select' },
     timeZone: { control: 'select', options: TimeZones },
   },
 };
@@ -82,6 +83,7 @@ export const Basic: StoryFn<typeof DatePicker> = props => {
       value={value}
       onDateChange={setValue}
       handleValidation={date =>
+        // eslint-disable-next-line no-console
         console.log('Storybook: handleValidation', { date })
       }
     />

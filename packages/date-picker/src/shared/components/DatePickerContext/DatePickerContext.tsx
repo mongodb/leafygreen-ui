@@ -27,6 +27,7 @@ export const DatePickerProvider = ({
   initialOpen = false,
   disabled = false,
   errorMessage,
+  state,
   ...rest
 }: PropsWithChildren<DatePickerProviderProps>) => {
   const isInitiallyOpen = disabled ? false : initialOpen;
@@ -42,7 +43,7 @@ export const DatePickerProvider = ({
     stateNotification,
     setInternalErrorMessage,
     clearInternalErrorMessage,
-  } = useDatePickerErrorNotifications(errorMessage);
+  } = useDatePickerErrorNotifications(state, errorMessage);
 
   return (
     <DatePickerContext.Provider

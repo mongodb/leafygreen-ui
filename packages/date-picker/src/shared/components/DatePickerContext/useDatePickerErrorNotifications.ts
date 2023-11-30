@@ -4,11 +4,6 @@ import { DatePickerState } from '../../types';
 
 import { StateNotification } from './DatePickerContext.types';
 
-/** Gets an error state given the existence of a message */
-const getErrorState = (msg?: string): DatePickerState => {
-  return msg ? DatePickerState.Error : DatePickerState.None;
-};
-
 export interface UseDatePickerErrorNotificationsReturnObject {
   stateNotification: StateNotification;
   setInternalErrorMessage: (msg: string) => void;
@@ -16,67 +11,32 @@ export interface UseDatePickerErrorNotificationsReturnObject {
 }
 
 export const useDatePickerErrorNotifications = (
-  errorMessage?: string,
-  // TODO: pass in external `state` prop
+  externalState?: DatePickerState,
+  externalErrorMessage?: string,
 ): UseDatePickerErrorNotificationsReturnObject => {
+  /**
+   * An external state notification object,
+   * updated when the external message or state prop changes
+   */
+  const externalStateNotification = useMemo<StateNotification>(() => {
+    const state = externalState ?? DatePickerState.None;
+    const message =
+      externalState === DatePickerState.Error ? externalErrorMessage ?? '' : '';
+
+    return {
+      state,
+      message,
+    };
+  }, [externalErrorMessage, externalState]);
+
+  /**
+   * An internal state notification used to handle internal validation (e.g. if date is in range)
+   */
   const [internalStateNotification, setInternalStateNotification] =
     useState<StateNotification>({
       state: DatePickerState.None,
       message: '',
     });
-
-  /**
-   * Update the external state notification when the external message (or state) changes
-   * */
-  const externalStateNotification = useMemo<StateNotification>(() => {
-    return {
-      state: getErrorState(errorMessage),
-      message: errorMessage || '',
-    };
-  }, [errorMessage]);
-
-  /**
-   * Calculate the stateNotification based on external internal states.
-   */
-  const stateNotification = useMemo<StateNotification>(() => {
-    if (externalStateNotification.state === DatePickerState.Error) {
-      return externalStateNotification;
-    } else return internalStateNotification;
-  }, [externalStateNotification, internalStateNotification]);
-
-  // const [stateNotification, _setStateNotification] =
-  //   useState<StateNotification>({
-  //     state: getErrorState(errorMessage),
-  //     message: errorMessage || '',
-  //   });
-
-  // /**
-  //  * Calculates & sets the stateNotification
-  //  * based on external & internal states
-  //  */
-  // const setStateNotification = useCallback(
-  //   (notification: StateNotification) => {
-  //     // If either internal or external state is Error,
-  //     // then there's an error
-  //     const newState = [
-  //       notification.state,
-  //       getErrorState(errorMessage),
-  //     ].includes(DatePickerState.Error)
-  //       ? DatePickerState.Error
-  //       : DatePickerState.None;
-
-  //     const newMessage =
-  //       newState === notification.state
-  //         ? notification.message
-  //         : errorMessage || '';
-
-  //     _setStateNotification({
-  //       state: newState,
-  //       message: newMessage,
-  //     });
-  //   },
-  //   [errorMessage],
-  // );
 
   /**
    * Removes the internal error message
@@ -97,6 +57,25 @@ export const useDatePickerErrorNotifications = (
       message: msg,
     });
   };
+
+  /**
+   * Calculate the stateNotification to use based on external & internal states.
+   * External errors take precedence over internal errors.
+   */
+  const stateNotification = useMemo<StateNotification>(() => {
+    if (externalStateNotification.state === DatePickerState.Error) {
+      if (
+        !externalStateNotification.message &&
+        internalStateNotification.state === DatePickerState.Error
+      ) {
+        return internalStateNotification;
+      } else {
+        return externalStateNotification;
+      }
+    } else {
+      return internalStateNotification;
+    }
+  }, [externalStateNotification, internalStateNotification]);
 
   return {
     stateNotification,
