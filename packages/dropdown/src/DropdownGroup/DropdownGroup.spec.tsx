@@ -112,6 +112,26 @@ describe('packages/dropdown/dropdown-group', () => {
       expect(onClick).not.toHaveBeenCalled();
     });
 
+    test('clicking the chevron closes the menu group without closing the menu or firing onClick', async () => {
+      const onClick = jest.fn();
+      renderTestKeyboardExample({ onClick });
+      const button = screen.getByRole('button');
+      fireEvent.click(button);
+
+      const group = screen.getByTestId(testId);
+      expect(group).toBeInTheDocument();
+
+      const iconButton = screen.getAllByRole('button')[1];
+      fireEvent.click(iconButton);
+      const subMenuItem = screen.queryByTestId(itemTestId);
+      expect(subMenuItem).toBeInTheDocument();
+      expect(onClick).not.toHaveBeenCalled();
+
+      fireEvent.click(iconButton);
+      await waitForElementToBeRemoved(subMenuItem);
+      expect(subMenuItem).not.toBeInTheDocument();
+    });
+
     describe('clicking the menugroup', () => {
       test('fires onClick callback and does not close the menu', () => {
         const onClick = jest.fn();

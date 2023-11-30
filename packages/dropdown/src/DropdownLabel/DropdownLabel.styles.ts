@@ -2,10 +2,10 @@ import { css } from '@leafygreen-ui/emotion';
 import { RenderedContext } from '@leafygreen-ui/input-option';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontWeights } from '@leafygreen-ui/tokens';
+import { fontWeights, spacing } from '@leafygreen-ui/tokens';
 
 export const groupStyle = css`
-  padding: 8px 0;
+  padding: ${spacing[2]}px 0;
 `;
 
 export const labelStyle = css`

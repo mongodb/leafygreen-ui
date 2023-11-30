@@ -104,14 +104,14 @@ export const getFormElementStyle = ({
 
   const shouldShowWedge = state === State.Focus && showWedge;
 
-  const wedge = css`
+  const wedgeStyles = css`
     &:before {
       transform: scaleY(1) translateY(-50%);
       background-color: ${formThemeStyles[theme][state].wedge};
     }
   `;
 
-  const hover = css`
+  const hoverStyles = css`
     ${hoverSelector} {
       outline: none;
       background-color: ${formThemeStyles[theme].hover.backgroundColor};
@@ -143,8 +143,8 @@ export const getFormElementStyle = ({
       }
     `,
     {
-      [wedge]: shouldShowWedge,
-      [hover]: !disabled && isInteractive,
+      [wedgeStyles]: shouldShowWedge,
+      [hoverStyles]: !disabled && isInteractive,
     },
   );
 };
