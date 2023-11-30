@@ -14,10 +14,13 @@ const className = 'testClassName';
 const setOpen = jest.fn();
 const shouldClose = jest.fn();
 const maxWidth = 500;
+let testRef: React.MutableRefObject<HTMLElement | null>;
 
 const DropdownExample = (props?: Partial<DropdownProps>) => {
   const [open, setOpen] = useState(true);
   const triggerRef = useRef<HTMLElement>(null);
+  const myRef = React.useRef<HTMLElement | null>(null);
+  testRef = myRef;
 
   return (
     <>
@@ -28,6 +31,7 @@ const DropdownExample = (props?: Partial<DropdownProps>) => {
         triggerRef={triggerRef}
         className={className}
         maxWidth={maxWidth}
+        ref={myRef}
         {...props}
       >
         <DropdownItem>Dropdown Item A</DropdownItem>
@@ -80,6 +84,7 @@ describe('packages/dropdown', () => {
       renderDropdown();
       const options = screen.getAllByRole('option');
       expect(options[0]).toBeInTheDocument();
+      expect(options.length).toBe(3);
     });
 
     test('it adds the className to the class list', () => {
@@ -87,9 +92,19 @@ describe('packages/dropdown', () => {
       const listbox = screen.getByRole('listbox');
       expect(listbox.closest(`.${className}`)).toBeInTheDocument();
     });
+
+    test('it accepts a ref', () => {
+      renderDropdown();
+      expect(testRef!).toBeDefined();
+      expect(testRef!.current).toBeDefined();
+    });
   });
 
   describe('open and close behavior', () => {
+    beforeEach(() => {
+      jest.restoreAllMocks();
+    });
+
     test('it renders the listbox when open is true', () => {
       renderDropdown();
       const listbox = screen.getByRole('listbox');
@@ -114,6 +129,13 @@ describe('packages/dropdown', () => {
       const backdrop = screen.getByTestId('backdrop');
       fireEvent.click(backdrop);
       expect(setOpen).toHaveBeenCalled();
+    });
+
+    test('it does not call setOpen callback when shouldClose evaluates to false', () => {
+      renderDropdown({ setOpen, shouldClose: () => false });
+      const backdrop = screen.getByTestId('backdrop');
+      fireEvent.click(backdrop);
+      expect(setOpen).not.toHaveBeenCalled();
     });
   });
 

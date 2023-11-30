@@ -55,7 +55,7 @@ export const Dropdown = React.forwardRef(
     const { darkMode, theme } = useDarkMode(darkModeProp);
     const { ref, ...contextProps } = useDescendants();
     const dropdownRef = useMergeRefs(forwardRef, ref);
-    const [highlightedElemenet, setHighlightedElement] =
+    const [highlightedElement, setHighlightedElement] =
       useState<HTMLElement | null>(null);
     const [firstOpen, setFirstOpen] = useState(false);
     const previousOpenState = usePrevious(open);
@@ -63,20 +63,20 @@ export const Dropdown = React.forwardRef(
     // Gets list of registered item refs and filters out disabled items
     // We use this to accurately cycle highlighted state
     const enabledRefs = contextProps?.list?.current
-      ?.filter(element => {
-        const id = element._internalId;
+      ?.filter(dropdownItem => {
+        const id = dropdownItem._internalId;
         return !contextProps?.map?.current?.[id].disabled;
       })
-      .map(element => element.element);
+      .map(dropdownItem => dropdownItem.element);
 
     // Keeps currently highlighted item in state
     // And manually moves focus to appropriate item if `highlightBehavior` is set to 'focus'
     const setHighlighted = useCallback(
-      (ref: HTMLElement | null) => {
-        setHighlightedElement(ref);
+      (element: HTMLElement | null) => {
+        setHighlightedElement(element);
 
-        if (highlightBehavior === HighlightBehavior.Focus && ref) {
-          ref.focus();
+        if (highlightBehavior === HighlightBehavior.Focus && element) {
+          element.focus();
         }
       },
       [highlightBehavior],
@@ -130,7 +130,7 @@ export const Dropdown = React.forwardRef(
         handleKeyboardNavigation({
           event,
           enabledRefs,
-          currentRef: highlightedElemenet,
+          currentRef: highlightedElement,
           handleRefChange: setHighlighted,
           handleClose,
           refEl: triggerRef,
@@ -138,7 +138,7 @@ export const Dropdown = React.forwardRef(
       { enabled: open },
     );
     useBackdropClick(handleClose, [ref!, triggerRef], open);
-    useAutoScroll({ current: highlightedElemenet }, ref!);
+    useAutoScroll({ current: highlightedElement }, ref!);
 
     const popoverProps = {
       popoverZIndex,
@@ -159,7 +159,7 @@ export const Dropdown = React.forwardRef(
           <HighlightContext.Provider
             value={{
               highlightBehavior,
-              highlightedElement: highlightedElemenet,
+              highlightedElement: highlightedElement,
               setHighlightedElement: setHighlighted,
             }}
           >
@@ -188,9 +188,11 @@ export const Dropdown = React.forwardRef(
                     onClick={e => e.stopPropagation()}
                     className={cx(
                       menuListStyle,
-                      css`
-                        max-width: ${maxWidth}px;
-                      `,
+                      {
+                        [css`
+                          max-width: ${maxWidth}px;
+                        `]: !!maxWidth,
+                      },
                       className,
                     )}
                     tabIndex={-1}
