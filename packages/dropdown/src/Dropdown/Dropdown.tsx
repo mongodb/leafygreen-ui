@@ -55,9 +55,8 @@ export const Dropdown = React.forwardRef(
     const { darkMode, theme } = useDarkMode(darkModeProp);
     const { ref, ...contextProps } = useDescendants();
     const dropdownRef = useMergeRefs(forwardRef, ref);
-    const [highlightedRef, setHighlightedRef] = useState<HTMLElement | null>(
-      null,
-    );
+    const [highlightedElemenet, setHighlightedElement] =
+      useState<HTMLElement | null>(null);
     const [firstOpen, setFirstOpen] = useState(false);
     const previousOpenState = usePrevious(open);
 
@@ -74,7 +73,7 @@ export const Dropdown = React.forwardRef(
     // And manually moves focus to appropriate item if `highlightBehavior` is set to 'focus'
     const setHighlighted = useCallback(
       (ref: HTMLElement | null) => {
-        setHighlightedRef(ref);
+        setHighlightedElement(ref);
 
         if (highlightBehavior === HighlightBehavior.Focus && ref) {
           ref.focus();
@@ -131,7 +130,7 @@ export const Dropdown = React.forwardRef(
         handleKeyboardNavigation({
           event,
           enabledRefs,
-          currentRef: highlightedRef,
+          currentRef: highlightedElemenet,
           handleRefChange: setHighlighted,
           handleClose,
           refEl: triggerRef,
@@ -139,7 +138,7 @@ export const Dropdown = React.forwardRef(
       { enabled: open },
     );
     useBackdropClick(handleClose, [ref!, triggerRef], open);
-    useAutoScroll({ current: highlightedRef }, ref!);
+    useAutoScroll({ current: highlightedElemenet }, ref!);
 
     const popoverProps = {
       popoverZIndex,
@@ -160,8 +159,8 @@ export const Dropdown = React.forwardRef(
           <HighlightContext.Provider
             value={{
               highlightBehavior,
-              highlightedRef,
-              setHighlightedRef: setHighlighted,
+              highlightedElement: highlightedElemenet,
+              setHighlightedElement: setHighlighted,
             }}
           >
             <DropdownContext.Provider

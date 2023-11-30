@@ -31,7 +31,7 @@ export const DropdownItem = InferredPolymorphic<DropdownItemProps, 'div'>(
       onFocus,
       onBlur,
       tabIndex,
-      ['data-selected']: dataSelected,
+      highlighted: dataSelected,
     } = useFocusableDropdownItem({ disabled });
 
     const itemRef = useMergeRefs(forwardRef, ref);
@@ -54,7 +54,7 @@ export const DropdownItem = InferredPolymorphic<DropdownItemProps, 'div'>(
         renderedContext={renderedContext}
         role="option"
         ref={itemRef}
-        aria-labelledby={label}
+        aria-label={label}
         disabled={disabled}
         highlighted={dataSelected}
         checked={active}

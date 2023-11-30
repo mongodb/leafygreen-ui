@@ -10,7 +10,7 @@ export const useFocusableDropdownItem = ({
   disabled?: boolean;
 }) => {
   const { index, ref } = useDescendant(DescendantContext, { disabled });
-  const { highlightBehavior, highlightedRef, setHighlightedRef } =
+  const { highlightBehavior, highlightedElement, setHighlightedElement } =
     useHighlightContext();
   const [_, force] = useState({});
 
@@ -22,15 +22,15 @@ export const useFocusableDropdownItem = ({
 
   const onFocus = () => {
     if (highlightBehavior === HighlightBehavior.Focus) {
-      setHighlightedRef?.(ref.current);
+      setHighlightedElement?.(ref.current);
     }
   };
 
-  const highlighted = highlightedRef === ref.current;
+  const highlighted = highlightedElement === ref.current;
 
   const onBlur = () => {
     if (highlightBehavior === HighlightBehavior.Focus) {
-      setHighlightedRef?.(null);
+      setHighlightedElement?.(null);
     }
   };
 
@@ -40,7 +40,7 @@ export const useFocusableDropdownItem = ({
     onFocus,
     onBlur,
     tabIndex: -1,
+    highlighted,
     ['aria-selected']: highlighted,
-    ['data-selected']: highlighted,
   };
 };
