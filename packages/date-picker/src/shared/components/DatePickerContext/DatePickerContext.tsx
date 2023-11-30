@@ -38,8 +38,11 @@ export const DatePickerProvider = ({
   const contextValue = getContextProps(rest);
 
   /** Error state handling */
-  const errorNotificationHandlers =
-    useDatePickerErrorNotifications(errorMessage);
+  const {
+    stateNotification,
+    setInternalErrorMessage,
+    clearInternalErrorMessage,
+  } = useDatePickerErrorNotifications(errorMessage);
 
   return (
     <DatePickerContext.Provider
@@ -53,7 +56,9 @@ export const DatePickerProvider = ({
         setIsDirty,
         isSelectOpen,
         setIsSelectOpen,
-        ...errorNotificationHandlers,
+        stateNotification,
+        setInternalErrorMessage,
+        clearInternalErrorMessage,
       }}
     >
       {children}

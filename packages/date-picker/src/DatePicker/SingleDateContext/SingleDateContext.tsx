@@ -18,8 +18,8 @@ import {
   useDatePickerContext,
 } from '../../shared';
 import {
+  getFormattedDateString,
   getISODate,
-  getUTCDateString,
   isOnOrBefore,
   isSameUTCDay,
 } from '../../shared/utils';
@@ -51,6 +51,7 @@ export const SingleDateProvider = ({
     disabled,
     min,
     max,
+    dateFormat,
     setInternalErrorMessage,
     clearInternalErrorMessage,
     isInRange,
@@ -97,34 +98,28 @@ export const SingleDateProvider = ({
     _setHighlight(newHighlight);
   }, []);
 
-  const handleValidation = useCallback(
-    (val?: DateType) => {
-      // Set an internal error state if necessary
-      if (val && !isInRange(val)) {
-        if (isOnOrBefore(val, min)) {
-          setInternalErrorMessage(
-            `Date must be after ${getUTCDateString(min)}`,
-          );
-        } else {
-          setInternalErrorMessage(
-            `Date must be before ${getUTCDateString(max)}`,
-          );
-        }
+  /**
+   * Handles internal validation,
+   * and calls the provided `handleValidation` callback
+   */
+  const handleValidation = (val?: DateType) => {
+    // Set an internal error state if necessary
+    if (val && !isInRange(val)) {
+      if (isOnOrBefore(val, min)) {
+        setInternalErrorMessage(
+          `Date must be after ${getFormattedDateString(min, dateFormat)}`,
+        );
       } else {
-        clearInternalErrorMessage();
+        setInternalErrorMessage(
+          `Date must be before ${getFormattedDateString(max, dateFormat)}`,
+        );
       }
+    } else {
+      clearInternalErrorMessage();
+    }
 
-      _handleValidation?.(val);
-    },
-    [
-      _handleValidation,
-      clearInternalErrorMessage,
-      isInRange,
-      max,
-      min,
-      setInternalErrorMessage,
-    ],
-  );
+    _handleValidation?.(val);
+  };
 
   /**
    * Track the event that last triggered the menu to open/close

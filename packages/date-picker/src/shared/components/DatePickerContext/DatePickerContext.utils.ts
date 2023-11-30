@@ -55,10 +55,12 @@ export const defaultDatePickerContext: DatePickerContextProps = {
   menuId: '',
   isSelectOpen: false,
   setIsSelectOpen: () => {},
-  state: DatePickerState.None,
-  setState: () => {},
-  message: '',
-  setMessage: () => {},
+  stateNotification: {
+    state: DatePickerState.None,
+    message: '',
+  },
+  setInternalErrorMessage: () => {},
+  clearInternalErrorMessage: () => {},
 };
 
 /**

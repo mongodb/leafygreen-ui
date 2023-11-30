@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { DatePickerState } from '../../types';
 
@@ -17,59 +17,86 @@ export interface UseDatePickerErrorNotificationsReturnObject {
 
 export const useDatePickerErrorNotifications = (
   errorMessage?: string,
+  // TODO: pass in external `state` prop
 ): UseDatePickerErrorNotificationsReturnObject => {
-  const [stateNotification, _setStateNotification] =
+  const [internalStateNotification, setInternalStateNotification] =
     useState<StateNotification>({
-      state: getErrorState(errorMessage),
-      message: errorMessage || '',
+      state: DatePickerState.None,
+      message: '',
     });
 
-  const setStateNotification = useCallback(
-    (notification: StateNotification) => {
-      // If there's either a user-defined error state
-      // or an internally defined one,
-      // use that value
-      const newState = [
-        notification.state,
-        getErrorState(errorMessage),
-      ].includes(DatePickerState.Error)
-        ? DatePickerState.Error
-        : DatePickerState.None;
+  /**
+   * Update the external state notification when the external message (or state) changes
+   * */
+  const externalStateNotification = useMemo<StateNotification>(() => {
+    return {
+      state: getErrorState(errorMessage),
+      message: errorMessage || '',
+    };
+  }, [errorMessage]);
 
-      const newMessage =
-        newState === notification.state
-          ? notification.message
-          : errorMessage || '';
+  /**
+   * Calculate the stateNotification based on external internal states.
+   */
+  const stateNotification = useMemo<StateNotification>(() => {
+    if (externalStateNotification.state === DatePickerState.Error) {
+      return externalStateNotification;
+    } else return internalStateNotification;
+  }, [externalStateNotification, internalStateNotification]);
 
-      _setStateNotification({
-        state: newState,
-        message: newMessage,
-      });
-    },
-    [errorMessage],
-  );
+  // const [stateNotification, _setStateNotification] =
+  //   useState<StateNotification>({
+  //     state: getErrorState(errorMessage),
+  //     message: errorMessage || '',
+  //   });
 
+  // /**
+  //  * Calculates & sets the stateNotification
+  //  * based on external & internal states
+  //  */
+  // const setStateNotification = useCallback(
+  //   (notification: StateNotification) => {
+  //     // If either internal or external state is Error,
+  //     // then there's an error
+  //     const newState = [
+  //       notification.state,
+  //       getErrorState(errorMessage),
+  //     ].includes(DatePickerState.Error)
+  //       ? DatePickerState.Error
+  //       : DatePickerState.None;
+
+  //     const newMessage =
+  //       newState === notification.state
+  //         ? notification.message
+  //         : errorMessage || '';
+
+  //     _setStateNotification({
+  //       state: newState,
+  //       message: newMessage,
+  //     });
+  //   },
+  //   [errorMessage],
+  // );
+
+  /**
+   * Removes the internal error message
+   */
   const clearInternalErrorMessage = () => {
-    setStateNotification({
+    setInternalStateNotification({
       state: DatePickerState.None,
       message: '',
     });
   };
 
+  /**
+   * Sets an internal error message
+   */
   const setInternalErrorMessage = (msg: string) => {
-    setStateNotification({
+    setInternalStateNotification({
       state: DatePickerState.Error,
       message: msg,
     });
   };
-
-  // If the error message changes, use that message
-  useEffect(() => {
-    setStateNotification({
-      state: getErrorState(errorMessage),
-      message: errorMessage || '',
-    });
-  }, [errorMessage, setStateNotification]);
 
   return {
     stateNotification,

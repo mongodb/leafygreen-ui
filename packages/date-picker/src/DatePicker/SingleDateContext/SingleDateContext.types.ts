@@ -27,9 +27,10 @@ export interface SingleDateContextProps {
   setValue: (newVal: DateType | undefined) => void;
 
   /**
-   * Calls the `handleValidation` function provided by the consumer
+   * Performs internal validation, and
+   * calls the `handleValidation` function provided by the consumer
    */
-  handleValidation: DatePickerProps['handleValidation'];
+  handleValidation: Required<DatePickerProps>['handleValidation'];
 
   /**
    * The current date, at UTC midnight

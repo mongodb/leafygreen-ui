@@ -6,6 +6,7 @@ import React, {
   useRef,
 } from 'react';
 import { ExitHandler } from 'react-transition-group/Transition';
+import isEqual from 'lodash/isEqual';
 
 import {
   useBackdropClick,
@@ -15,6 +16,7 @@ import {
 import { keyMap } from '@leafygreen-ui/lib';
 
 import { useDatePickerContext } from '../../shared/components/DatePickerContext';
+import { isSameUTCDay } from '../../shared/utils';
 import { DatePickerInput } from '../DatePickerInput';
 import { DatePickerMenu } from '../DatePickerMenu';
 import { useSingleDateContext } from '../SingleDateContext';
@@ -34,6 +36,8 @@ export const DatePickerComponent = forwardRef<
     handleValidation,
     getHighlightedCell,
   } = useSingleDateContext();
+
+  const prevValue = usePrevious(value);
 
   const formFieldRef = useForwardedRef(fwdRef, null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -105,6 +109,17 @@ export const DatePickerComponent = forwardRef<
         break;
     }
   };
+
+  /**
+   * Side Effects
+   */
+
+  /** When value changes, validate it */
+  useEffect(() => {
+    if (!isEqual(prevValue, value) && !isSameUTCDay(prevValue, value)) {
+      handleValidation(value);
+    }
+  }, [handleValidation, prevValue, value]);
 
   return (
     <>
