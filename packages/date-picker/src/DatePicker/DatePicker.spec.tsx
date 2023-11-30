@@ -13,7 +13,12 @@ import { addDays, subDays } from 'date-fns';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { defaultMax, defaultMin, Month } from '../shared/constants';
-import { getValueFormatter, newUTC, setUTCYear } from '../shared/utils';
+import {
+  getFormattedDateString,
+  getValueFormatter,
+  newUTC,
+  setUTCYear,
+} from '../shared/utils';
 import {
   eventContainingTargetValue,
   tabNTimes,
@@ -100,13 +105,69 @@ describe('packages/date-picker', () => {
       });
 
       test('renders with error state when `errorMessage` is provided', () => {
-        const { getByText, getByRole } = render(
-          <DatePicker label="Label" errorMessage="Error" />,
+        const { getByTestId, getByRole } = render(
+          <DatePicker label="Label" errorMessage="Custom error message" />,
         );
-        const errorMessage = getByText('Error');
-        expect(errorMessage).toBeInTheDocument();
-        const combobox = getByRole('combobox');
-        expect(combobox).toHaveAttribute('aria-invalid', 'true');
+        const inputContainer = getByRole('combobox');
+        expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
+
+        const errorElement = getByTestId('lg-form_field-error_message');
+        expect(errorElement).toBeInTheDocument();
+        expect(errorElement).toHaveTextContent('Custom error message');
+      });
+
+      test('renders with error state when value is out of range', () => {
+        const { getByTestId, getByRole } = render(
+          <DatePicker label="Label" value={newUTC(2100, 1, 1)} />,
+        );
+        const inputContainer = getByRole('combobox');
+        expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
+
+        const errorElement = getByTestId('lg-form_field-error_message');
+        expect(errorElement).toBeInTheDocument();
+        expect(errorElement).toHaveTextContent(
+          'Date must be before 2038-01-19',
+        );
+      });
+
+      test('custom error message overrides internal error message', () => {
+        const { getByTestId, getByRole } = render(
+          <DatePicker
+            label="Label"
+            value={newUTC(2100, 1, 1)}
+            errorMessage="Custom error message"
+          />,
+        );
+        const inputContainer = getByRole('combobox');
+        expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
+
+        const errorElement = getByTestId('lg-form_field-error_message');
+        expect(errorElement).toBeInTheDocument();
+        expect(errorElement).toHaveTextContent('Custom error message');
+      });
+
+      test('removing a custom error displays an internal error when applicable', () => {
+        const { inputContainer, rerenderDatePicker, getByTestId } =
+          renderDatePicker({
+            value: newUTC(2100, 1, 1),
+          });
+        expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
+        expect(getByTestId('lg-form_field-error_message')).toHaveTextContent(
+          'Date must be before 2038-01-19',
+        );
+
+        rerenderDatePicker({ errorMessage: 'Some error' });
+
+        expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
+        expect(getByTestId('lg-form_field-error_message')).toHaveTextContent(
+          'Some error',
+        );
+
+        rerenderDatePicker({ errorMessage: undefined });
+        expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
+        expect(getByTestId('lg-form_field-error_message')).toHaveTextContent(
+          'Date must be before 2038-01-19',
+        );
       });
     });
 
@@ -917,6 +978,16 @@ describe('packages/date-picker', () => {
                 const newYearVal = getValueFormatter('year')(
                   key === 'arrowup' ? 2020 : 1999,
                 );
+                const expectedMessage =
+                  key === 'arrowup'
+                    ? `Date must be before ${getFormattedDateString(
+                        max,
+                        'iso8601',
+                      )}`
+                    : `Date must be after ${getFormattedDateString(
+                        min,
+                        'iso8601',
+                      )}`;
                 let renderResult: RenderDatePickerResult;
 
                 beforeEach(() => {
@@ -930,6 +1001,7 @@ describe('packages/date-picker', () => {
                     value: startValue,
                     onDateChange,
                     onChange: onSegmentChange,
+                    handleValidation,
                   });
                   userEvent.click(renderResult.yearInput);
                   userEvent.keyboard(`{${key}}`);
@@ -965,7 +1037,6 @@ describe('packages/date-picker', () => {
                 });
 
                 test('sets error message', () => {
-                  const expectedMessage = `Date must be within ${min} and ${max}`;
                   const errorMessageElement = within(
                     renderResult.formField,
                   ).queryByText(expectedMessage);
