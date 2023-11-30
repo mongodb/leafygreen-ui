@@ -6,6 +6,7 @@ import { DatePickerState } from '../../../types';
 import { useDatePickerContext } from '../../DatePickerContext';
 import { CalendarButton } from '../CalendarButton';
 
+import { iconButtonStyles } from './DateFormField.styles';
 import { DateFormFieldProps } from './DateFormField.types';
 
 /**
@@ -54,6 +55,7 @@ export const DateFormField = React.forwardRef<
           aria-controls={menuId}
           aria-invalid={state === DatePickerState.Error}
           onClick={onInputClick}
+          className={iconButtonStyles}
           contentEnd={
             <CalendarButton
               tabIndex={disabled ? -1 : 0}

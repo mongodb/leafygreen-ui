@@ -13,7 +13,7 @@ import {
   defaultMin,
   defaultPlaceholder,
 } from '../../../constants';
-import { getValueFormatter } from '../../../utils';
+import { getAutoComplete, getValueFormatter } from '../../../utils';
 import { useDatePickerContext } from '../../DatePickerContext';
 
 import {
@@ -55,8 +55,13 @@ export const DateInputSegment = React.forwardRef<
 
     const { theme } = useDarkMode();
     const baseFontSize = useUpdatedBaseFontSize();
-    const { size, disabled } = useDatePickerContext();
+    const {
+      size,
+      disabled,
+      autoComplete: autoCompleteProp,
+    } = useDatePickerContext();
     const formatter = getValueFormatter(segment);
+    const autoComplete = getAutoComplete(autoCompleteProp, segment);
     const pattern = `[0-9]{${charsPerSegment[segment]}}`;
 
     /** Prevent non-numeric values from triggering a change event */
@@ -162,7 +167,7 @@ export const DateInputSegment = React.forwardRef<
           segmentSizeStyles[size ?? Size.Default],
           segmentWidthStyles[segment],
         )}
-        // maxLength={maxLength}
+        autoComplete={autoComplete}
       />
     );
   },

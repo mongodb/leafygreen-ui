@@ -41,5 +41,5 @@ export const menuCalendarGridStyles = css`
 
 // Hardcoding the width
 export const selectInputWidthStyles = css`
-  width: 68.5px;
+  width: 70px;
 `;

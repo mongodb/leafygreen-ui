@@ -11,6 +11,14 @@ export type DatePickerState =
 export type DateType = Date | null;
 export type DateRangeType = [DateType, DateType];
 
+export const AutoComplete = {
+  Off: 'off',
+  On: 'on',
+  Bday: 'bday',
+} as const;
+
+export type AutoComplete = (typeof AutoComplete)[keyof typeof AutoComplete];
+
 export interface BaseDatePickerProps extends DarkModeProps {
   /**
    * A label for the input
@@ -78,4 +86,10 @@ export interface BaseDatePickerProps extends DarkModeProps {
 
   /** Whether the calendar menu is initially open. Note: The calendar menu will not open if disabled is set to true.  */
   initialOpen?: boolean;
+
+  /**
+   * Whether the input should autofill
+   * @default 'off'
+   */
+  autoComplete?: AutoComplete;
 }

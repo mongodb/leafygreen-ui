@@ -3,6 +3,8 @@ import { createContext, PropsWithChildren, useContext } from 'react';
 
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 
+import { AutoComplete } from '../../types';
+
 import {
   DatePickerContextProps,
   DatePickerProviderProps,
@@ -28,6 +30,7 @@ export const DatePickerProvider = ({
   disabled = false,
   errorMessage,
   state,
+  autoComplete = AutoComplete.Off,
   ...rest
 }: PropsWithChildren<DatePickerProviderProps>) => {
   const isInitiallyOpen = disabled ? false : initialOpen;
@@ -60,6 +63,7 @@ export const DatePickerProvider = ({
         stateNotification,
         setInternalErrorMessage,
         clearInternalErrorMessage,
+        autoComplete,
       }}
     >
       {children}

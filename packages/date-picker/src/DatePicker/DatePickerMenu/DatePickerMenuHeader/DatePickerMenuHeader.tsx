@@ -95,6 +95,7 @@ export const DatePickerMenuHeader = forwardRef<
               disabled={!isMonthEnabled(m.long)}
               value={i.toString()}
               key={m.short}
+              aria-label={m.long}
             >
               {m.short}
             </Option>
@@ -113,7 +114,7 @@ export const DatePickerMenuHeader = forwardRef<
           onExited={() => setIsSelectOpen(false)}
         >
           {yearOptions.map(y => (
-            <Option value={y.toString()} key={y}>
+            <Option value={y.toString()} key={y} aria-label={y.toString()}>
               {y}
             </Option>
           ))}

@@ -1,9 +1,8 @@
 import React, { PropsWithChildren } from 'react';
-import { act, render, waitFor } from '@testing-library/react';
+import { act, waitFor } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 
 import {
-  DatePickerContext,
   DatePickerContextProps,
   DatePickerProvider,
   useDatePickerContext,
