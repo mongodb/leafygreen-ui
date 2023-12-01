@@ -972,7 +972,7 @@ describe('packages/date-picker', () => {
               );
             });
 
-            test('up arrow fires segment change handler', () => {
+            test(`${key} fires segment change handler`, () => {
               const onChange = jest.fn();
               const { monthInput } = renderDatePicker({ onChange });
               userEvent.click(monthInput);
@@ -980,7 +980,7 @@ describe('packages/date-picker', () => {
               expect(onChange).toHaveBeenCalled();
             });
 
-            test('up arrow does not fire value change handler', () => {
+            test(`${key} does not fire value change handler`, () => {
               const onDateChange = jest.fn();
               const { monthInput } = renderDatePicker({ onDateChange });
               userEvent.click(monthInput);
