@@ -1,5 +1,5 @@
 import { DateSegmentsState } from '../../hooks';
-import { isValidSegmentName, isValidSegmentValue } from '../isValidSegment';
+import { isValidSegmentName } from '../isValidSegment';
 import { isValidValueForSegment } from '../isValidValueForSegment';
 import { newUTC } from '../newUTC';
 
@@ -7,16 +7,19 @@ import { newUTC } from '../newUTC';
 export const newDateFromSegments = (
   segments: DateSegmentsState,
 ): Date | undefined => {
-  if (
-    segments &&
-    Object.entries(segments).every(
-      ([key, value]) =>
-        isValidSegmentName(key) &&
-        isValidSegmentValue(value) &&
-        isValidValueForSegment(key, value),
-    )
-  ) {
+  const isEverySegmentValid = Object.entries(segments).every(
+    ([key, value]) =>
+      isValidSegmentName(key) && isValidValueForSegment(key, value),
+  );
+
+  if (isEverySegmentValid) {
     const { day, month, year } = segments;
-    return newUTC(Number(year), Number(month) - 1, Number(day));
+    const newDate = newUTC(Number(year), Number(month) - 1, Number(day));
+    // If day > daysInMonth, then the month will roll-over
+    const isCorrectMonth = newDate.getUTCMonth() === Number(month) - 1;
+
+    if (isCorrectMonth) {
+      return newDate;
+    }
   }
 };

@@ -19,7 +19,7 @@ describe('packages/date=picker/utils/newDateFromSegments', () => {
     expect(newDate?.toISOString()).toEqual('2100-01-01T00:00:00.000Z');
   });
 
-  test.skip('returns undefined if month/day combo is invalid', () => {
+  test('returns undefined if month/day combo is invalid', () => {
     const newDate = newDateFromSegments({
       day: '31',
       month: '02',
