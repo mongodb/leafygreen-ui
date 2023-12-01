@@ -1150,7 +1150,7 @@ describe('packages/date-picker', () => {
           );
         });
 
-        test('segment value is not immediately formatted', () => {
+        test('does not immediately format the segment', () => {
           const onChange = jest.fn();
           const { dayInput } = renderDatePicker({ onChange });
           userEvent.type(dayInput, '2');
@@ -1160,7 +1160,7 @@ describe('packages/date-picker', () => {
           expect(dayInput.value).toBe('2');
         });
 
-        test('segment value is formatted on segment blur', () => {
+        test('formats on segment blur', () => {
           const onChange = jest.fn();
           const { dayInput } = renderDatePicker({ onChange });
           userEvent.type(dayInput, '2');
@@ -1342,6 +1342,52 @@ describe('packages/date-picker', () => {
             expect(monthInput).toHaveValue('07');
             expect(dayInput).toHaveValue('20');
           });
+        });
+      });
+
+      describe('updating a segment', () => {
+        test('clearing the segment updates the input', () => {
+          const { yearInput, monthInput, dayInput } = renderDatePicker({});
+          userEvent.type(yearInput, '2020');
+          userEvent.type(monthInput, '7');
+          userEvent.type(dayInput, '4');
+
+          yearInput.setSelectionRange(0, 4);
+          userEvent.type(yearInput, '{backspace}');
+          expect(yearInput).toHaveValue('');
+        });
+
+        test('clearing and typing a new value does not format the input', () => {
+          const { yearInput, monthInput, dayInput } = renderDatePicker({});
+          userEvent.type(yearInput, '2020');
+          userEvent.type(monthInput, '7');
+          userEvent.type(dayInput, '4');
+
+          yearInput.setSelectionRange(0, 4);
+          userEvent.type(yearInput, '{backspace}');
+          userEvent.type(yearInput, '2');
+          expect(yearInput).toHaveValue('2');
+        });
+
+        test('deleting characters does not format the segment', () => {
+          const { yearInput, monthInput, dayInput } = renderDatePicker({});
+          userEvent.type(yearInput, '2020');
+          userEvent.type(monthInput, '7');
+          userEvent.type(dayInput, '4');
+
+          userEvent.type(yearInput, '{backspace}{backspace}');
+          expect(yearInput).toHaveValue('20');
+        });
+
+        test('typing new characters does not format the segment', () => {
+          const { yearInput, monthInput, dayInput } = renderDatePicker({});
+          userEvent.type(yearInput, '2019');
+          userEvent.type(monthInput, '6');
+          userEvent.type(dayInput, '1');
+
+          userEvent.type(yearInput, '9');
+          userEvent.type(yearInput, '9');
+          expect(yearInput).toHaveValue('1999');
         });
       });
 

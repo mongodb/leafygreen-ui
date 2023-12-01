@@ -12,6 +12,7 @@ import {
   DatePickerContextProps,
   DatePickerProvider,
 } from '../../shared/components/DatePickerContext';
+import { getProviderPropsFromStoryArgs } from '../DatePicker.testutils';
 import { DatePickerProps } from '../DatePicker.types';
 import {
   SingleDateContextProps,
@@ -21,15 +22,19 @@ import {
 
 import { DatePickerInput } from './DatePickerInput';
 
-const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
-  <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
-    <DatePickerProvider {...ctx?.args}>
-      <SingleDateProvider value={ctx?.args.value} setValue={() => {}}>
-        <Story />
-      </SingleDateProvider>
-    </DatePickerProvider>
-  </LeafyGreenProvider>
-);
+const ProviderWrapper = (Story: StoryFn, ctx: any) => {
+  const { contextProps, componentProps } = getProviderPropsFromStoryArgs(
+    ctx?.args,
+  );
+
+  return (
+    <LeafyGreenProvider darkMode={contextProps.darkMode}>
+      <DatePickerProvider {...contextProps}>
+        <Story {...componentProps} />
+      </DatePickerProvider>
+    </LeafyGreenProvider>
+  );
+};
 
 const meta: StoryMetaType<
   typeof DatePickerInput,
@@ -65,16 +70,16 @@ const meta: StoryMetaType<
 
 export default meta;
 
-export const Basic: StoryFn<
-  DatePickerProps & SingleDateProviderProps
-> = props => {
+export const Basic: StoryFn<DatePickerProps & SingleDateProviderProps> = ({
+  value,
+}) => {
   const [date, setDate] = useState<Date | null>(null);
 
   useEffect(() => {
-    if (props.value && isValid(new Date(props.value))) {
-      setDate(new Date(props.value));
+    if (value && isValid(new Date(value))) {
+      setDate(new Date(value));
     }
-  }, [props.value]);
+  }, [value]);
 
   const updateDate = (date?: Date | null) => {
     if (!isUndefined(date)) {
@@ -84,7 +89,7 @@ export const Basic: StoryFn<
 
   return (
     <SingleDateProvider value={date} setValue={updateDate}>
-      <DatePickerInput {...props} />
+      <DatePickerInput />
     </SingleDateProvider>
   );
 };

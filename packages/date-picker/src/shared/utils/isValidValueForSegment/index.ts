@@ -15,7 +15,8 @@ export const isValidValueForSegment = (
     isValidSegmentValue(value) && isValidSegmentName(segment);
 
   if (segment === 'year') {
-    return isValidSegmentAndValue;
+    // allow any 4-digit year value regardless of defined range
+    return isValidSegmentAndValue && inRange(Number(value), 1000, 9999 + 1);
   }
 
   const isInRange = inRange(
