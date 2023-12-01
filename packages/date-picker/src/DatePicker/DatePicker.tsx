@@ -30,7 +30,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       handleValidation,
       darkMode: darkModeProp,
       baseFontSize: basefontSizeProp,
-      state,
       ...props
     }: DatePickerProps,
     fwdRef,

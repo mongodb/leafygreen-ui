@@ -37,6 +37,7 @@ export const contextPropNames: Array<ContextPropKeys> = [
   'size',
   'errorMessage',
   'initialOpen',
+  'state',
   'autoComplete',
 ];
 
