@@ -4,11 +4,13 @@ import { StoryFn } from '@storybook/react';
 import { isValid } from 'date-fns';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { StoryMetaType, StoryType } from '@leafygreen-ui/lib';
+import { pickAndOmit, StoryMetaType, StoryType } from '@leafygreen-ui/lib';
 
 import { Month } from '../../../constants';
 import { newUTC } from '../../../utils';
+import { Locales } from '../../../utils/testutils';
 import {
+  contextPropNames,
   DatePickerContextProps,
   DatePickerProvider,
 } from '../../DatePickerContext';
@@ -17,19 +19,35 @@ import { DateInputBox } from './DateInputBox';
 
 const testDate = newUTC(1993, Month.December, 26);
 
-const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
-  <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
-    <DatePickerProvider {...ctx?.args}>
-      <Story />
-    </DatePickerProvider>
-  </LeafyGreenProvider>
-);
+const segmentRefs = {
+  day: createRef<HTMLInputElement>(),
+  month: createRef<HTMLInputElement>(),
+  year: createRef<HTMLInputElement>(),
+};
+
+const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => {
+  const [contextProps, componentProps] = pickAndOmit(
+    ctx?.args,
+    contextPropNames,
+  );
+
+  return (
+    <LeafyGreenProvider darkMode={contextProps.darkMode}>
+      <DatePickerProvider {...contextProps}>
+        <Story {...componentProps} />
+      </DatePickerProvider>
+    </LeafyGreenProvider>
+  );
+};
 
 const meta: StoryMetaType<typeof DateInputBox, DatePickerContextProps> = {
   title: 'Components/DatePicker/Shared/DateInputBox',
   component: DateInputBox,
   decorators: [ProviderWrapper],
   parameters: {
+    controls: {
+      exclude: ['onSegmentChange', 'setValue'],
+    },
     default: null,
     generate: {
       storyNames: ['Formats'],
@@ -42,16 +60,12 @@ const meta: StoryMetaType<typeof DateInputBox, DatePickerContextProps> = {
   },
   args: {
     label: 'Label',
-    dateFormat: 'en-UK',
+    dateFormat: 'iso8601',
     timeZone: 'Europe/London',
-    segmentRefs: {
-      day: createRef(),
-      month: createRef(),
-      year: createRef(),
-    },
   },
   argTypes: {
     value: { control: 'date' },
+    dateFormat: { control: 'select', options: Locales },
   },
 };
 
@@ -71,18 +85,16 @@ export const Basic: StoryFn<typeof DateInputBox> = props => {
   };
 
   return (
-    <>
-      <DateInputBox {...props} value={date} setValue={updateDate} />
-    </>
+    <DateInputBox
+      value={date}
+      setValue={updateDate}
+      segmentRefs={segmentRefs}
+    />
   );
 };
 
-export const Static: StoryFn<typeof DateInputBox> = props => {
-  return (
-    <>
-      <DateInputBox {...props} value={testDate} />
-    </>
-  );
+export const Static: StoryFn<typeof DateInputBox> = () => {
+  return <DateInputBox value={testDate} segmentRefs={segmentRefs} />;
 };
 
 export const Formats: StoryType<

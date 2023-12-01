@@ -11,15 +11,14 @@ import { transitionDuration } from '@leafygreen-ui/tokens';
 import { InlineCode } from '@leafygreen-ui/typography';
 
 import {
-  type ContextPropKeys,
   contextPropNames,
   type DatePickerContextProps,
   DatePickerProvider,
   defaultDatePickerContext,
 } from '../../shared/components/DatePickerContext';
 import { Month } from '../../shared/constants';
-import { newUTC, pickAndOmit } from '../../shared/utils';
-import { DatePickerProps } from '../DatePicker.types';
+import { newUTC } from '../../shared/utils';
+import { getProviderPropsFromStoryArgs } from '../DatePicker.testutils';
 import {
   type SingleDateContextProps,
   SingleDateProvider,
@@ -34,19 +33,18 @@ type DecoratorArgs = DatePickerMenuProps &
   DatePickerContextProps;
 
 const MenuDecorator: Decorator = (Story: StoryFn, ctx: any) => {
-  const [{ darkMode, ...providerProps }, componentProps] = pickAndOmit<
-    DatePickerProps,
-    ContextPropKeys
-  >(ctx?.args, contextPropNames);
+  const { contextProps, componentProps } = getProviderPropsFromStoryArgs(
+    ctx.args,
+  );
 
   // Force `new Date()` to return `mockToday`
   MockDate.set(mockToday);
 
   return (
-    <LeafyGreenProvider darkMode={darkMode}>
+    <LeafyGreenProvider darkMode={contextProps.darkMode}>
       <DatePickerProvider
         {...defaultDatePickerContext}
-        {...providerProps}
+        {...contextProps}
         initialOpen={true}
       >
         <Story {...componentProps} />
