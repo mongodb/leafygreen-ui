@@ -25,7 +25,6 @@ export const SearchResultGroup = ({
 
   return (
     <div>
-      {/* @ts-expect-error */}
       <InputOption
         aria-label={label}
         isInteractive={false}

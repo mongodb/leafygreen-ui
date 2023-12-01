@@ -57,7 +57,7 @@ export const Dropdown = React.forwardRef(
     const dropdownRef = useMergeRefs(forwardRef, ref);
     const [highlightedElement, setHighlightedElement] =
       useState<HTMLElement | null>(null);
-    const [firstOpen, setFirstOpen] = useState(false);
+    const [firstOpen, setIsFirstOpen] = useState(false);
     const previousOpenState = usePrevious(open);
 
     // Gets list of registered item refs and filters out disabled items
@@ -87,16 +87,16 @@ export const Dropdown = React.forwardRef(
     // `enabledRefs` has been populated
     useEffect(() => {
       if (open && previousOpenState === false) {
-        setFirstOpen(true);
+        setIsFirstOpen(true);
       }
-    }, [open, previousOpenState, setFirstOpen]);
+    }, [open, previousOpenState, setIsFirstOpen]);
 
     // If first open and `enabledRefs` contains the appropriate refs
     // Move focus to first enabled ref
     useEffect(() => {
       if (firstOpen && enabledRefs?.[0]) {
         setHighlighted(enabledRefs[0]);
-        setFirstOpen(false);
+        setIsFirstOpen(false);
       }
 
       if (highlightBehavior === HighlightBehavior.AriaSelected) {
