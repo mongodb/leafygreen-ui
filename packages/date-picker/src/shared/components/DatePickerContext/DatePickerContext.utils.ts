@@ -22,7 +22,9 @@ export const TZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
 export type ContextPropKeys = keyof DatePickerProviderProps &
   keyof BaseDatePickerProps;
 
-/** Prop names that are in both DatePickerProps and DatePickerProviderProps */
+/**
+ * Prop names that are in both DatePickerProps and DatePickerProviderProps
+ * */
 export const contextPropNames: Array<ContextPropKeys> = [
   'label',
   'description',
@@ -33,7 +35,6 @@ export const contextPropNames: Array<ContextPropKeys> = [
   'baseFontSize',
   'disabled',
   'size',
-  'state',
   'errorMessage',
   'initialOpen',
   'autoComplete',
@@ -55,13 +56,18 @@ export const defaultDatePickerContext: DatePickerContextProps = {
   isInRange: () => true,
   disabled: false,
   size: Size.Default,
-  state: DatePickerState.None,
   errorMessage: '',
   baseFontSize: BaseFontSize.Body1,
   darkMode: false,
   menuId: '',
   isSelectOpen: false,
   setIsSelectOpen: () => {},
+  stateNotification: {
+    state: DatePickerState.None,
+    message: '',
+  },
+  setInternalErrorMessage: () => {},
+  clearInternalErrorMessage: () => {},
   autoComplete: AutoComplete.Off,
 };
 

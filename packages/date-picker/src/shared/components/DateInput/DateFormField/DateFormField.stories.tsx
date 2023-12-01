@@ -30,7 +30,7 @@ const meta: StoryMetaType<
         darkMode: [false, true],
         label: ['Label', undefined],
         description: [undefined, 'Description'],
-        state: Object.values(DatePickerState),
+        // state: Object.values(DatePickerState),
         disabled: [false, true],
       },
       excludeCombinations: [
@@ -72,7 +72,6 @@ const meta: StoryMetaType<
   args: {
     label: 'Label',
     description: 'Description',
-    state: DatePickerState.Error,
     errorMessage: 'This is an error message',
   },
   argTypes: {

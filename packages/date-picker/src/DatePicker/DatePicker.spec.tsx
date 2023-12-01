@@ -13,7 +13,12 @@ import { addDays, subDays } from 'date-fns';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { defaultMax, defaultMin, Month } from '../shared/constants';
-import { getValueFormatter, newUTC } from '../shared/utils';
+import {
+  getFormattedDateString,
+  getValueFormatter,
+  newUTC,
+  setUTCYear,
+} from '../shared/utils';
 import {
   eventContainingTargetValue,
   tabNTimes,
@@ -23,6 +28,7 @@ import {
   expectedTabStopLabels,
   findTabStopElementMap,
   renderDatePicker,
+  RenderDatePickerResult,
   RenderMenuResult,
 } from './DatePicker.testutils';
 import { DatePicker } from '.';
@@ -96,6 +102,107 @@ describe('packages/date-picker', () => {
         expect(dayInput.value).toEqual('26');
         expect(monthInput.value).toEqual('12');
         expect(yearInput.value).toEqual('2023');
+      });
+
+      describe('Error states', () => {
+        test('renders error state when `state` is "error"', () => {
+          const { getByRole } = render(
+            <DatePicker
+              label="Label"
+              state="error"
+              errorMessage="Custom error message"
+            />,
+          );
+          const inputContainer = getByRole('combobox');
+          expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
+        });
+
+        test('renders with `errorMessage` when provided', () => {
+          const { queryByTestId } = render(
+            <DatePicker
+              label="Label"
+              state="error"
+              errorMessage="Custom error message"
+            />,
+          );
+          const errorElement = queryByTestId('lg-form_field-error_message');
+          expect(errorElement).toBeInTheDocument();
+          expect(errorElement).toHaveTextContent('Custom error message');
+        });
+
+        test('does not render `errorMessage` when state is not set', () => {
+          const { getByRole, queryByTestId } = render(
+            <DatePicker label="Label" errorMessage="Custom error message" />,
+          );
+          const inputContainer = getByRole('combobox');
+          expect(inputContainer).toHaveAttribute('aria-invalid', 'false');
+          const errorElement = queryByTestId('lg-form_field-error_message');
+          expect(errorElement).not.toBeInTheDocument();
+        });
+
+        test('renders with internal error state when value is out of range', () => {
+          const { getByTestId, getByRole } = render(
+            <DatePicker label="Label" value={newUTC(2100, 1, 1)} />,
+          );
+          const inputContainer = getByRole('combobox');
+          expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
+
+          const errorElement = getByTestId('lg-form_field-error_message');
+          expect(errorElement).toBeInTheDocument();
+          expect(errorElement).toHaveTextContent(
+            'Date must be before 2038-01-19',
+          );
+        });
+
+        test('external error message overrides internal error message', () => {
+          const { getByTestId, getByRole } = renderDatePicker({
+            value: newUTC(2100, 1, 1),
+            state: 'error',
+            errorMessage: 'Custom error message',
+          });
+          const inputContainer = getByRole('combobox');
+          expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
+
+          const errorElement = getByTestId('lg-form_field-error_message');
+          expect(errorElement).toBeInTheDocument();
+          expect(errorElement).toHaveTextContent('Custom error message');
+        });
+
+        test('renders internal message if external error message is not set', () => {
+          const { inputContainer, getByTestId } = renderDatePicker({
+            value: newUTC(2100, 1, 1),
+            state: 'error',
+            errorMessage: undefined,
+          });
+          expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
+          expect(getByTestId('lg-form_field-error_message')).toHaveTextContent(
+            'Date must be before 2038-01-19',
+          );
+        });
+
+        test('removing an external error displays an internal error when applicable', () => {
+          const { inputContainer, rerenderDatePicker, getByTestId } =
+            renderDatePicker({
+              value: newUTC(2100, 1, 1),
+            });
+          expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
+          expect(getByTestId('lg-form_field-error_message')).toHaveTextContent(
+            'Date must be before 2038-01-19',
+          );
+
+          rerenderDatePicker({ errorMessage: 'Some error', state: 'error' });
+
+          expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
+          expect(getByTestId('lg-form_field-error_message')).toHaveTextContent(
+            'Some error',
+          );
+
+          rerenderDatePicker({ state: 'none' });
+          expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
+          expect(getByTestId('lg-form_field-error_message')).toHaveTextContent(
+            'Date must be before 2038-01-19',
+          );
+        });
       });
     });
 
@@ -894,81 +1001,81 @@ describe('packages/date-picker', () => {
               });
 
               describe('if new value would be out of range', () => {
-                test('updates the input', () => {
-                  const min = newUTC(1999, Month.July, 4);
-                  const max = newUTC(2020, Month.July, 4);
-                  const value =
-                    key === 'arrowup'
-                      ? newUTC(2019, Month.August, 1)
-                      : newUTC(2000, Month.June, 30);
-                  const { yearInput } = renderDatePicker({
+                const onDateChange = jest.fn();
+                const onSegmentChange = jest.fn();
+                const handleValidation = jest.fn();
+                const min = newUTC(1999, Month.July, 4);
+                const max = newUTC(2020, Month.July, 4);
+                const startValue =
+                  key === 'arrowup'
+                    ? newUTC(2019, Month.August, 1)
+                    : newUTC(2000, Month.June, 30);
+                const newYearVal = getValueFormatter('year')(
+                  key === 'arrowup' ? 2020 : 1999,
+                );
+                const expectedMessage =
+                  key === 'arrowup'
+                    ? `Date must be before ${getFormattedDateString(
+                        max,
+                        'iso8601',
+                      )}`
+                    : `Date must be after ${getFormattedDateString(
+                        min,
+                        'iso8601',
+                      )}`;
+                let renderResult: RenderDatePickerResult;
+
+                beforeEach(() => {
+                  onDateChange.mockReset();
+                  onSegmentChange.mockReset();
+                  handleValidation.mockReset();
+
+                  renderResult = renderDatePicker({
                     min,
                     max,
-                    value,
+                    value: startValue,
+                    onDateChange,
+                    onChange: onSegmentChange,
+                    handleValidation,
                   });
-                  userEvent.click(yearInput);
+                  userEvent.click(renderResult.yearInput);
                   userEvent.keyboard(`{${key}}`);
-                  const expectedYearVal = getValueFormatter('year')(
-                    key === 'arrowup' ? 2020 : 1999,
-                  );
-                  expect(yearInput).toHaveValue(expectedYearVal);
+                });
+
+                test('updates the input', () => {
+                  expect(renderResult.yearInput).toHaveValue(newYearVal);
                 });
 
                 test('fires the change handler', () => {
-                  const onDateChange = jest.fn();
-                  const min = newUTC(1999, Month.July, 4);
-                  const max = newUTC(2020, Month.July, 4);
-                  const value =
-                    key === 'arrowup'
-                      ? newUTC(2019, Month.August, 1)
-                      : newUTC(2000, Month.June, 30);
-                  const { yearInput } = renderDatePicker({
-                    min,
-                    max,
-                    onDateChange,
-                    value,
-                  });
-                  userEvent.click(yearInput);
-                  userEvent.keyboard(`{${key}}`);
-                  expect(onDateChange).toHaveBeenCalled();
+                  expect(onDateChange).toHaveBeenCalledWith(
+                    setUTCYear(startValue, Number(newYearVal)),
+                  );
                 });
 
                 test('fires the segment change handler', () => {
-                  const onChange = jest.fn();
-                  const min = newUTC(1999, Month.July, 4);
-                  const max = newUTC(2020, Month.July, 4);
-                  const value =
-                    key === 'arrowup'
-                      ? newUTC(2019, Month.August, 1)
-                      : newUTC(2000, Month.June, 30);
-                  const { yearInput } = renderDatePicker({
-                    min,
-                    max,
-                    onChange,
-                    value,
-                  });
-                  userEvent.click(yearInput);
-                  userEvent.keyboard(`{${key}}`);
-                  expect(onChange).toHaveBeenCalled();
+                  expect(onSegmentChange).toHaveBeenCalledWith(
+                    eventContainingTargetValue(newYearVal),
+                  );
                 });
 
-                test.skip('fires the validation handler', () => {
-                  const handleValidation = jest.fn();
-                  const min = newUTC(1999, Month.July, 4);
-                  const max = newUTC(2020, Month.July, 4);
-                  const value =
-                    key === 'arrowup'
-                      ? newUTC(2019, Month.August, 1)
-                      : newUTC(2000, Month.June, 30);
-                  const { yearInput } = renderDatePicker({
-                    min,
-                    max,
-                    handleValidation,
-                    value,
-                  });
-                  userEvent.click(yearInput);
-                  userEvent.keyboard(`{${key}}`);
-                  expect(handleValidation).toHaveBeenCalled();
+                test('fires the validation handler', () => {
+                  expect(handleValidation).toHaveBeenCalledWith(
+                    setUTCYear(startValue, Number(newYearVal)),
+                  );
+                });
+
+                test('sets aria-invalid', () => {
+                  expect(renderResult.inputContainer).toHaveAttribute(
+                    'aria-invalid',
+                    'true',
+                  );
+                });
+
+                test('sets error message', () => {
+                  const errorMessageElement = within(
+                    renderResult.formField,
+                  ).queryByText(expectedMessage);
+                  expect(errorMessageElement).toBeInTheDocument();
                 });
               });
             });

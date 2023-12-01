@@ -49,7 +49,6 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       if (!isSameUTCDay(inputVal, value)) {
         handleValidation?.(inputVal);
         setValue(inputVal || null);
-        // TODO: update month?
       }
     };
 

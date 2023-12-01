@@ -19,7 +19,7 @@ const withinElement = (element: HTMLElement | null) => {
   return element ? within(element) : null;
 };
 
-interface RenderDatePickerResult extends RenderResult {
+export interface RenderDatePickerResult extends RenderResult {
   formField: HTMLElement;
   inputContainer: HTMLElement;
   dayInput: HTMLInputElement;

@@ -38,6 +38,7 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
         'handleValidation',
         'initialValue',
         'onChange',
+        'onDateChange',
         'onSegmentChange',
         'value',
       ],
@@ -79,7 +80,17 @@ export default meta;
 export const Basic: StoryFn<typeof DatePicker> = props => {
   const [value, setValue] = useState<Date | null | undefined>();
 
-  return <DatePicker {...props} value={value} onDateChange={setValue} />;
+  return (
+    <DatePicker
+      {...props}
+      value={value}
+      onDateChange={setValue}
+      handleValidation={date =>
+        // eslint-disable-next-line no-console
+        console.log('Storybook: handleValidation', { date })
+      }
+    />
+  );
 };
 
 export const Uncontrolled: StoryFn<typeof DatePicker> = props => {
