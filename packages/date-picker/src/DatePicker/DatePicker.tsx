@@ -7,6 +7,7 @@ import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import {
+  ContextPropKeys,
   contextPropNames,
   DatePickerProvider,
 } from '../shared/components/DatePickerContext';
@@ -29,16 +30,17 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       handleValidation,
       darkMode: darkModeProp,
       baseFontSize: basefontSizeProp,
+      state,
       ...props
     }: DatePickerProps,
     fwdRef,
   ) => {
     const { darkMode } = useDarkMode(darkModeProp);
     const baseFontSize = useUpdatedBaseFontSize(basefontSizeProp);
-    const [contextProps, restProps] = pickAndOmit(
-      { darkMode, baseFontSize, ...props },
-      contextPropNames,
-    );
+    const [contextProps, componentProps] = pickAndOmit<
+      DatePickerProps,
+      ContextPropKeys
+    >({ ...props }, contextPropNames);
 
     const { value, setValue } = useControlledValue(
       valueProp,
@@ -47,7 +49,11 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     );
 
     return (
-      <DatePickerProvider {...contextProps}>
+      <DatePickerProvider
+        darkMode={darkMode}
+        baseFontSize={baseFontSize}
+        {...contextProps}
+      >
         <SingleDateProvider
           value={value}
           setValue={setValue}
@@ -59,7 +65,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
               baseFontSize === BaseFontSize.Body1 ? 14 : baseFontSize
             }
           >
-            <DatePickerComponent ref={fwdRef} {...restProps} />
+            <DatePickerComponent ref={fwdRef} {...componentProps} />
           </LeafyGreenProvider>
         </SingleDateProvider>
       </DatePickerProvider>

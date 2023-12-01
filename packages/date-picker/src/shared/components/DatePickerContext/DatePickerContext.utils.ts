@@ -22,7 +22,9 @@ export const TZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
 export type ContextPropKeys = keyof DatePickerProviderProps &
   keyof BaseDatePickerProps;
 
-/** Prop names that are in both DatePickerProps and DatePickerProviderProps */
+/**
+ * Prop names that are in both DatePickerProps and DatePickerProviderProps
+ * */
 export const contextPropNames: Array<ContextPropKeys> = [
   'label',
   'description',
@@ -35,7 +37,6 @@ export const contextPropNames: Array<ContextPropKeys> = [
   'size',
   'errorMessage',
   'initialOpen',
-  'state',
   'autoComplete',
 ];
 
