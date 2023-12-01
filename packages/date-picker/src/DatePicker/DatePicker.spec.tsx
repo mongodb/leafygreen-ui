@@ -1385,7 +1385,8 @@ describe('packages/date-picker', () => {
           userEvent.type(monthInput, '6');
           userEvent.type(dayInput, '1');
 
-          userEvent.type(yearInput, '99');
+          userEvent.type(yearInput, '9');
+          userEvent.type(yearInput, '9');
           expect(yearInput).toHaveValue('1999');
         });
       });
