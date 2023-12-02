@@ -12,6 +12,8 @@ import {
 } from '../../../hooks';
 import {
   doesSomeSegmentExist,
+  getMaxSegmentValue,
+  getMinSegmentValue,
   getValueFormatter,
   newDateFromSegments,
 } from '../../../utils';
@@ -52,7 +54,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
     }: DateInputBoxProps,
     fwdRef,
   ) => {
-    const { formatParts, disabled } = useDatePickerContext();
+    const { formatParts, disabled, min, max } = useDatePickerContext();
     const { theme } = useDarkMode();
 
     const containerRef = useForwardedRef(fwdRef, null);
@@ -129,6 +131,8 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
                 key={part.type}
                 ref={segmentRefs[part.type]}
                 aria-labelledby={labelledBy}
+                min={getMinSegmentValue(part.type, { date: value, min })}
+                max={getMaxSegmentValue(part.type, { date: value, max })}
                 segment={part.type}
                 value={segments[part.type]}
                 onChange={handleSegmentChange}
