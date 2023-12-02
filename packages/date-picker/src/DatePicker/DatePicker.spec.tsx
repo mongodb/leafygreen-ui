@@ -1046,7 +1046,7 @@ describe('packages/date-picker', () => {
                 const onDateChange = jest.fn();
                 const { yearInput } = renderDatePicker({
                   onDateChange,
-                  value: newUTC(1969, Month.July, 5),
+                  value: newUTC(2020, Month.July, 5),
                   min: newUTC(1969, Month.June, 20),
                   max: newUTC(2020, Month.September, 10),
                 });
