@@ -84,6 +84,9 @@ const renderDatePickerMenu = (
   const getCellWithValue = (date: Date) =>
     calendarGrid.querySelector(`[data-iso="${getISODate(date)}"]`);
 
+  const getCellWithISOString = (isoStr: string) =>
+    calendarGrid.querySelector(`[data-iso="${isoStr}"]`);
+
   const leftChevron = result?.queryByLabelText('Previous month');
   const rightChevron = result?.queryByLabelText('Next month');
 
@@ -94,6 +97,7 @@ const renderDatePickerMenu = (
     calendarCells,
     todayCell,
     getCellWithValue,
+    getCellWithISOString,
     leftChevron,
     rightChevron,
   };
@@ -137,6 +141,29 @@ describe('packages/date-picker/date-picker-menu', () => {
       expect(yearSelect).toHaveValue('2023');
     });
 
+    test('sets `aria-current` on today cell', () => {
+      const { getCellWithISOString } = renderDatePickerMenu();
+      expect(getCellWithISOString('2023-09-10')).toHaveAttribute(
+        'aria-current',
+        'true',
+      );
+    });
+
+    test('default highlight is on today', () => {
+      const { todayCell } = renderDatePickerMenu();
+      userEvent.tab();
+      expect(todayCell).toHaveFocus();
+    });
+
+    test('highlight starts on current value when provided', () => {
+      const { getCellWithValue } = renderDatePickerMenu(null, {
+        value: testValue,
+      });
+      userEvent.tab();
+      const valueCell = getCellWithValue(testValue);
+      expect(valueCell).toHaveFocus();
+    });
+
     describe('rendered cells', () => {
       test('have correct `aria-label`', () => {
         const { todayCell } = renderDatePickerMenu();
@@ -167,21 +194,6 @@ describe('packages/date-picker/date-picker-menu', () => {
       });
     });
 
-    test('default highlight is on today', () => {
-      const { todayCell } = renderDatePickerMenu();
-      userEvent.tab();
-      expect(todayCell).toHaveFocus();
-    });
-
-    test('highlight starts on current value when provided', () => {
-      const { getCellWithValue } = renderDatePickerMenu(null, {
-        value: testValue,
-      });
-      userEvent.tab();
-      const valueCell = getCellWithValue(testValue);
-      expect(valueCell).toHaveFocus();
-    });
-
     describe('when value is out of range', () => {
       test('grid is labelled', () => {
         const { calendarGrid } = renderDatePickerMenu(null, {
@@ -207,6 +219,68 @@ describe('packages/date-picker/date-picker-menu', () => {
           cell => cell?.getAttribute('aria-selected') === 'true',
         );
         expect(isSomeCellHighlighted).toBe(false);
+      });
+    });
+
+    describe('when `today` value changes', () => {
+      describe('cell marked as `current` updates', () => {
+        test('in UTC', () => {
+          jest.useFakeTimers();
+
+          const dec24UTC = new Date(
+            Date.UTC(2023, Month.December, 24, 11, 59, 59),
+          );
+          const dec25UTC = new Date(
+            Date.UTC(2023, Month.December, 25, 0, 0, 0, 0),
+          );
+          jest.setSystemTime(dec24UTC);
+          const { getCellWithISOString, rerenderDatePickerMenu } =
+            renderDatePickerMenu();
+
+          const dec24Cell = getCellWithISOString('2023-12-24');
+          expect(dec24Cell).toHaveAttribute('aria-current', 'true');
+          jest.setSystemTime(dec25UTC);
+          rerenderDatePickerMenu();
+          const dec25Cell = getCellWithISOString('2023-12-25');
+          expect(dec25Cell).toHaveAttribute('aria-current', 'true');
+        });
+
+        test('in local timezone', () => {
+          jest.useFakeTimers();
+          const dec24Local = new Date(2023, Month.December, 24, 11, 59, 59);
+          const dec25Local = new Date(2023, Month.December, 25, 0, 0, 0, 0);
+
+          jest.setSystemTime(dec24Local);
+          const { getCellWithISOString, rerenderDatePickerMenu } =
+            renderDatePickerMenu();
+          const dec24Cell = getCellWithISOString('2023-12-24');
+          expect(dec24Cell).toHaveAttribute('aria-current', 'true');
+          jest.setSystemTime(dec25Local);
+          rerenderDatePickerMenu();
+          const dec25LocalCell = getCellWithISOString('2023-12-25');
+          expect(dec25LocalCell).toHaveAttribute('aria-current', 'true');
+        });
+
+        test('in a third timezone', () => {
+          jest.useFakeTimers();
+
+          const timeZone = 'Asia/Seoul'; // UTC+9
+          const dec24Seoul = new Date(
+            Date.UTC(2023, Month.December, 25, 8, 59, 59),
+          );
+          const dec25Seoul = new Date(
+            Date.UTC(2023, Month.December, 25, 9, 0, 0, 0),
+          );
+          jest.setSystemTime(dec24Seoul);
+          const { getCellWithISOString, rerenderDatePickerMenu } =
+            renderDatePickerMenu(null, null, { timeZone });
+          const dec24Cell = getCellWithISOString('2023-12-24');
+          expect(dec24Cell).toHaveAttribute('aria-current', 'true');
+          jest.setSystemTime(dec25Seoul);
+          rerenderDatePickerMenu();
+          const dec25Cell = getCellWithISOString('2023-12-25');
+          expect(dec25Cell).toHaveAttribute('aria-current', 'true');
+        });
       });
     });
   });

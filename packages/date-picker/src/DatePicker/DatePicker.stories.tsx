@@ -65,7 +65,6 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
     dateFormat: 'iso8601',
     label: 'Pick a date',
     size: Size.Default,
-    timeZone: 'America/New_York',
     autoComplete: AutoComplete.Off,
   },
   argTypes: {
@@ -77,7 +76,7 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
     max: { control: 'date' },
     size: { control: 'select' },
     state: { control: 'select' },
-    timeZone: { control: 'select', options: TimeZones },
+    timeZone: { control: 'select', options: [undefined, ...TimeZones] },
     autoComplete: { control: 'select', options: Object.values(AutoComplete) },
   },
 };

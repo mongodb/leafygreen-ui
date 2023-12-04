@@ -18,6 +18,7 @@ import {
 } from '../../shared/components/DatePickerContext';
 import { Month } from '../../shared/constants';
 import { newUTC } from '../../shared/utils';
+import { Locales, TimeZones } from '../../shared/utils/testutils';
 import { getProviderPropsFromStoryArgs } from '../DatePicker.testutils';
 import {
   type SingleDateContextProps,
@@ -36,9 +37,6 @@ const MenuDecorator: Decorator = (Story: StoryFn, ctx: any) => {
   const { contextProps, componentProps } = getProviderPropsFromStoryArgs(
     ctx.args,
   );
-
-  // Force `new Date()` to return `mockToday`
-  MockDate.set(mockToday);
 
   return (
     <LeafyGreenProvider darkMode={contextProps.darkMode}>
@@ -65,13 +63,13 @@ const meta: StoryMetaType<typeof DatePickerMenu, DecoratorArgs> = {
   },
   args: {
     isOpen: true,
-    dateFormat: 'en-UK',
-    timeZone: 'Europe/London',
     min: new Date('1996-10-14'),
     max: new Date('2026-10-14'),
   },
   argTypes: {
     value: { control: 'date' },
+    dateFormat: { control: 'select', options: Locales },
+    timeZone: { control: 'select', options: [undefined, ...TimeZones] },
   },
 };
 
@@ -81,13 +79,16 @@ type DatePickerMenuStoryType = StoryObj<typeof DatePickerMenu>;
 
 export const Basic: DatePickerMenuStoryType = {
   render: args => {
+    MockDate.reset();
     const [value, setValue] = useState<Date | null>(null);
 
     const props = omit(args, [...contextPropNames, 'isOpen']);
     const refEl = useRef<HTMLDivElement>(null);
     return (
       <SingleDateProvider value={value} setValue={setValue}>
-        <code ref={refEl}>refEl</code>
+        <InlineCode ref={refEl}>
+          Today: {new Date(Date.now()).toUTCString()}
+        </InlineCode>
         <DatePickerMenu {...props} refEl={refEl} />
       </SingleDateProvider>
     );
@@ -96,6 +97,8 @@ export const Basic: DatePickerMenuStoryType = {
 
 export const WithValue: DatePickerMenuStoryType = {
   render: args => {
+    MockDate.reset();
+
     const props = omit(args, [...contextPropNames, 'isOpen']);
     const refEl = useRef<HTMLDivElement>(null);
     return (
@@ -104,9 +107,30 @@ export const WithValue: DatePickerMenuStoryType = {
         setValue={() => {}}
       >
         <div style={{ minHeight: '50vh' }}>
-          <InlineCode ref={refEl}>refEl</InlineCode>
+          <InlineCode ref={refEl}>
+            Today: {new Date(Date.now()).toUTCString()}
+          </InlineCode>
           <DatePickerMenu {...props} refEl={refEl} />
         </div>
+      </SingleDateProvider>
+    );
+  },
+};
+
+export const MockedToday: DatePickerMenuStoryType = {
+  render: args => {
+    // Force `new Date()` to return `mockToday`
+    MockDate.set(mockToday);
+    const [value, setValue] = useState<Date | null>(null);
+
+    const props = omit(args, [...contextPropNames, 'isOpen']);
+    const refEl = useRef<HTMLDivElement>(null);
+    return (
+      <SingleDateProvider value={value} setValue={setValue}>
+        <InlineCode ref={refEl}>
+          Today: {new Date(Date.now()).toUTCString()}
+        </InlineCode>
+        <DatePickerMenu {...props} refEl={refEl} />
       </SingleDateProvider>
     );
   },
