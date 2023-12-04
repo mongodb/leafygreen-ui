@@ -1,5 +1,4 @@
 import React, { forwardRef, MouseEventHandler } from 'react';
-import { isBefore } from 'date-fns';
 import range from 'lodash/range';
 
 import Icon from '@leafygreen-ui/icon';
@@ -31,23 +30,15 @@ export const DatePickerMenuHeader = forwardRef<
   HTMLDivElement,
   DatePickerMenuHeaderProps
 >(({ setMonth, ...rest }: DatePickerMenuHeaderProps, fwdRef) => {
-  const { min, max, isInRange, setIsSelectOpen } = useDatePickerContext();
+  const { min, max, setIsSelectOpen } = useDatePickerContext();
   const { month } = useSingleDateContext();
 
   const yearOptions = range(min.getUTCFullYear(), max.getUTCFullYear() + 1);
 
   const updateMonth = (newMonth: Date) => {
-    // TODO: may need to update this function to check if the months are in range
-    // (could cause errors when the min date is near the end of the month)
-    if (isInRange(newMonth)) {
-      setMonth(newMonth);
-    } else if (isBefore(newMonth, min)) {
-      // if the selected month is not in range,
-      // set the month to the first or last possible month
-      setMonth(min);
-    } else {
-      setMonth(max);
-    }
+    // We don't do any checks here.
+    // If the month is out of range, we still display it
+    setMonth(newMonth);
   };
 
   /**
