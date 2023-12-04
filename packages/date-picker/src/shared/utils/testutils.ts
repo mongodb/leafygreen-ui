@@ -1,3 +1,4 @@
+import { createRef } from 'react';
 import { StoryContext } from '@storybook/react';
 import userEvent from '@testing-library/user-event';
 import { range } from 'lodash';
@@ -10,8 +11,15 @@ import {
   DatePickerProviderProps,
   defaultDatePickerContext,
 } from '../components/DatePickerContext';
+import { SegmentRefs } from '../hooks';
 import { BaseDatePickerProps } from '../types';
 import { pickAndOmit } from '../utils';
+
+export const segmentRefsMock: SegmentRefs = {
+  day: createRef<HTMLInputElement>(),
+  month: createRef<HTMLInputElement>(),
+  year: createRef<HTMLInputElement>(),
+};
 
 /** Time zones used to test with */
 export const TimeZones = [

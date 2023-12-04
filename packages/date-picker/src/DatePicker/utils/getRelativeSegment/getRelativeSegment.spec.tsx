@@ -2,21 +2,16 @@ import React from 'react';
 import { render } from '@testing-library/react';
 
 import { SegmentRefs } from '../../../shared/hooks';
+import { segmentRefsMock } from '../../../shared/utils/testutils';
 
 import { getRelativeSegment } from '.';
 
 const renderTestComponent = () => {
-  const segmentRefs: SegmentRefs = {
-    day: React.createRef<HTMLInputElement>(),
-    month: React.createRef<HTMLInputElement>(),
-    year: React.createRef<HTMLInputElement>(),
-  };
-
   const result = render(
     <>
-      <input data-testid="day" ref={segmentRefs.day} />
-      <input data-testid="month" ref={segmentRefs.month} />
-      <input data-testid="year" ref={segmentRefs.year} />
+      <input data-testid="day" ref={segmentRefsMock.day} />
+      <input data-testid="month" ref={segmentRefsMock.month} />
+      <input data-testid="year" ref={segmentRefsMock.year} />
     </>,
   );
 
@@ -32,7 +27,7 @@ const renderTestComponent = () => {
 
   return {
     ...result,
-    segmentRefs,
+    segmentRefs: segmentRefsMock,
     elements,
   };
 };

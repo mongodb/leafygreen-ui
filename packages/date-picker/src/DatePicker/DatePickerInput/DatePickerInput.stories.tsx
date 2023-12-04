@@ -1,8 +1,6 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { StoryFn } from '@storybook/react';
-import { isValid } from 'date-fns';
-import { isUndefined } from 'lodash';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
@@ -17,7 +15,6 @@ import { DatePickerProps } from '../DatePicker.types';
 import {
   SingleDateContextProps,
   SingleDateProvider,
-  SingleDateProviderProps,
 } from '../SingleDateContext';
 
 import { DatePickerInput } from './DatePickerInput';
@@ -30,7 +27,9 @@ const ProviderWrapper = (Story: StoryFn, ctx: any) => {
   return (
     <LeafyGreenProvider darkMode={contextProps.darkMode}>
       <DatePickerProvider {...contextProps}>
-        <Story {...componentProps} />
+        <SingleDateProvider value={componentProps.value} setValue={() => {}}>
+          <Story {...componentProps} />
+        </SingleDateProvider>
       </DatePickerProvider>
     </LeafyGreenProvider>
   );
@@ -46,7 +45,7 @@ const meta: StoryMetaType<
   parameters: {
     default: null,
     controls: {
-      exclude: ['segmentRefs'],
+      exclude: ['segmentRefs', 'onChange', 'onSegmentChange', 'onClick'],
     },
     generate: {
       combineArgs: {
@@ -70,28 +69,6 @@ const meta: StoryMetaType<
 
 export default meta;
 
-export const Basic: StoryFn<DatePickerProps & SingleDateProviderProps> = ({
-  value,
-}) => {
-  const [date, setDate] = useState<Date | null>(null);
+export const Basic: StoryFn<DatePickerProps> = () => <DatePickerInput />;
 
-  useEffect(() => {
-    if (value && isValid(new Date(value))) {
-      setDate(new Date(value));
-    }
-  }, [value]);
-
-  const updateDate = (date?: Date | null) => {
-    if (!isUndefined(date)) {
-      setDate(date);
-    }
-  };
-
-  return (
-    <SingleDateProvider value={date} setValue={updateDate}>
-      <DatePickerInput />
-    </SingleDateProvider>
-  );
-};
-
-export const Generated = () => {};
+export const Generated: StoryFn<DatePickerProps> = () => <></>;
