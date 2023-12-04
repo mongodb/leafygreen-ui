@@ -63,6 +63,13 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
 
     const monthLabel = getFullMonthLabel(month);
 
+    /** Set the highlighted cell when the value changes in the input */
+    useEffect(() => {
+      if (value && !isSameUTCDay(value, prevValue) && isInRange(value)) {
+        setHighlight(value);
+      }
+    }, [value, isInRange, setHighlight, prevValue]);
+
     /** setDisplayMonth with side effects */
     const updateMonth = (newMonth: Date) => {
       if (isSameUTCMonth(newMonth, month)) {
