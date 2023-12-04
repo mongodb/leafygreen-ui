@@ -1,7 +1,7 @@
 import React, { ChangeEventHandler, KeyboardEventHandler } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { useForwardedRef } from '@leafygreen-ui/hooks';
+import { useForwardedRef, usePrevious } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap, rollover, truncateStart } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
@@ -48,6 +48,8 @@ export const DateInputSegment = React.forwardRef<
     }: DateInputSegmentProps,
     fwdRef,
   ) => {
+    const prevValue = usePrevious(value);
+
     const min = minProp ?? defaultMin[segment];
     const max = maxProp ?? defaultMax[segment];
 
@@ -67,8 +69,19 @@ export const DateInputSegment = React.forwardRef<
     /** Prevent non-numeric values from triggering a change event */
     const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
       const { target } = e;
+      console.log({
+        prevValue,
+        value: target.value,
+        length: value.length,
+      });
+      // replace any '.' and ' ' with an empty string.
+      // target.value = target.value.replace(/\.|\s+/g, '3');
       const numericValue = Number(target.value);
+      // const isEqualToPrevValue = target.value === prevValue;
 
+      // console.log({ isEqualToPrevValue });
+
+      // if (!isNaN(numericValue) && !isEqualToPrevValue) {
       if (!isNaN(numericValue)) {
         const newValue = truncateStart(target.value, {
           length: charsPerSegment[segment],
@@ -83,7 +96,7 @@ export const DateInputSegment = React.forwardRef<
 
     /** Handle keydown presses that don't natively fire a change event */
     const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
-      const { key } = e as React.KeyboardEvent<HTMLInputElement> & {
+      const { key, target } = e as React.KeyboardEvent<HTMLInputElement> & {
         target: HTMLInputElement;
       };
 
@@ -127,6 +140,12 @@ export const DateInputSegment = React.forwardRef<
 
         case keyMap.Space: {
           // TODO:
+          e.preventDefault();
+
+          console.log({ prevValue });
+
+          // target.value = prevValue!;
+          console.log('handleKeyDown SPACE');
           break;
         }
 
@@ -137,6 +156,25 @@ export const DateInputSegment = React.forwardRef<
 
       onKeyDown?.(e);
     };
+
+    // const handleOnFocus: KeyboardEventHandler<HTMLInputElement> = e => {
+    //   const { key } = e as React.KeyboardEvent<HTMLInputElement> & {
+    //     target: HTMLInputElement;
+    //   };
+
+    //   if (key === keyMap.Space) {
+    //     e.preventDefault();
+    //   }
+    //   // console.log(
+    //   //   'inputRef.current?.selectionStart',
+    //   //   inputRef.current?.selectionStart,
+    //   // );
+    //   // console.log(
+    //   //   'inputRef.current?.selectionEnd',
+    //   //   inputRef.current?.selectionEnd,
+    //   // );
+    //   // inputRef.current?.setSelectionRange(4, 4);
+    // };
 
     // Note: Using a text input with pattern attribute due to Firefox
     // stripping leading zeros on number inputs - Thanks @matt-d-rat
@@ -157,6 +195,7 @@ export const DateInputSegment = React.forwardRef<
         onChange={handleChange}
         onBlur={onBlur}
         onKeyDown={handleKeyDown}
+        // onKeyUp={handleKeyUp}
         disabled={disabled}
         data-testid="lg-date_picker_input-segment"
         data-segment={segment}
