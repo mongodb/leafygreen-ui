@@ -62,7 +62,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
      * trigger a `change` event for the segment, and
      * update the external Date value if necessary
      */
-    const onSegmentsUpdate = (
+    const handleSegmentUpdate = (
       newSegments: DateSegmentsState,
       prevSegments?: DateSegmentsState,
     ) => {
@@ -84,17 +84,18 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
 
     /** Keep track of each date segment */
     const { segments, setSegment } = useDateSegments(value, {
-      onUpdate: onSegmentsUpdate,
+      onUpdate: handleSegmentUpdate,
     });
 
-    /** fired when an individual segment value changes */
-    const handleSegmentChange: DateInputSegmentChangeEventHandler = event => {
-      setSegment(event.segment, event.value);
-      onSegmentChange?.(event);
-    };
+    /** Fired when an individual segment value changes */
+    const handleSegmentInputChange: DateInputSegmentChangeEventHandler =
+      event => {
+        setSegment(event.segment, event.value);
+        onSegmentChange?.(event);
+      };
 
     /** Triggered when a segment is blurred */
-    const handleSegmentBlur: FocusEventHandler<HTMLInputElement> = e => {
+    const handleSegmentInputBlur: FocusEventHandler<HTMLInputElement> = e => {
       const segmentName = e.target.getAttribute('id');
       const newValue = e.target.value;
 
@@ -131,8 +132,8 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
                 aria-labelledby={labelledBy}
                 segment={part.type}
                 value={segments[part.type]}
-                onChange={handleSegmentChange}
-                onBlur={handleSegmentBlur}
+                onChange={handleSegmentInputChange}
+                onBlur={handleSegmentInputBlur}
               />
             );
           }

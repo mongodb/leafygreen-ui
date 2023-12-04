@@ -6,15 +6,24 @@ import { isValidSegmentName, isValidSegmentValue } from '../isValidSegment';
 
 /**
  * Returns whether a value is valid for a given segment type
- * @deprecated
  */
 export const isValidValueForSegment = (
   segment: DateSegment,
   value: DateSegmentValue,
 ): boolean => {
-  if (!(isValidSegmentValue(value) && isValidSegmentName(segment)))
-    return false;
-  return segment === 'year'
-    ? true // Any year number is valid
-    : inRange(Number(value), defaultMin[segment], defaultMax[segment] + 1);
+  const isValidSegmentAndValue =
+    isValidSegmentValue(value) && isValidSegmentName(segment);
+
+  if (segment === 'year') {
+    // allow any 4-digit year value regardless of defined range
+    return isValidSegmentAndValue && inRange(Number(value), 1000, 9999 + 1);
+  }
+
+  const isInRange = inRange(
+    Number(value),
+    defaultMin[segment],
+    defaultMax[segment] + 1,
+  );
+
+  return isValidSegmentAndValue && isInRange;
 };

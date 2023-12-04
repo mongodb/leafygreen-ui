@@ -18,14 +18,21 @@ import { newUTC } from '../shared/utils';
 import { Locales, TimeZones } from '../shared/utils/testutils';
 
 import { DatePicker } from './DatePicker';
+import { getProviderPropsFromStoryArgs } from './DatePicker.testutils';
 
-const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
-  <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
-    <DatePickerProvider {...ctx?.args}>
-      <Story />
-    </DatePickerProvider>
-  </LeafyGreenProvider>
-);
+const ProviderWrapper = (Story: StoryFn, ctx: any) => {
+  const { contextProps, componentProps } = getProviderPropsFromStoryArgs(
+    ctx?.args,
+  );
+
+  return (
+    <LeafyGreenProvider darkMode={contextProps.darkMode}>
+      <DatePickerProvider {...contextProps}>
+        <Story {...componentProps} />
+      </DatePickerProvider>
+    </LeafyGreenProvider>
+  );
+};
 
 const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
   title: 'Components/DatePicker/DatePicker',
@@ -38,6 +45,7 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
         'handleValidation',
         'initialValue',
         'onChange',
+        'onDateChange',
         'onSegmentChange',
         'value',
       ],
@@ -79,7 +87,17 @@ export default meta;
 export const Basic: StoryFn<typeof DatePicker> = props => {
   const [value, setValue] = useState<Date | null | undefined>();
 
-  return <DatePicker {...props} value={value} onDateChange={setValue} />;
+  return (
+    <DatePicker
+      {...props}
+      value={value}
+      onDateChange={setValue}
+      handleValidation={date =>
+        // eslint-disable-next-line no-console
+        console.log('Storybook: handleValidation', { date })
+      }
+    />
+  );
 };
 
 export const Uncontrolled: StoryFn<typeof DatePicker> = props => {
@@ -88,12 +106,12 @@ export const Uncontrolled: StoryFn<typeof DatePicker> = props => {
 
 export const InModal: StoryFn<typeof DatePicker> = props => {
   const [value, setValue] = useState<Date | null | undefined>();
-  const [isModalOpen, setisModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
-      <Button onClick={() => setisModalOpen(curr => !curr)}>Open Modal</Button>
-      <Modal open={isModalOpen} setOpen={setisModalOpen}>
+      <Button onClick={() => setIsModalOpen(curr => !curr)}>Open Modal</Button>
+      <Modal open={isModalOpen} setOpen={setIsModalOpen}>
         Inside the modal
         <DatePicker {...props} value={value} onDateChange={setValue} />
       </Modal>

@@ -13,6 +13,7 @@ import {
   defaultDatePickerContext,
   getContextProps,
 } from './DatePickerContext.utils';
+import { useDatePickerErrorNotifications } from './useDatePickerErrorNotifications';
 
 /** Create the DatePickerContext */
 export const DatePickerContext = createContext<DatePickerContextProps>(
@@ -27,28 +28,41 @@ export const DatePickerProvider = ({
   children,
   initialOpen = false,
   disabled = false,
+  errorMessage,
+  state,
   autoComplete = AutoComplete.Off,
   ...rest
 }: PropsWithChildren<DatePickerProviderProps>) => {
   const isInitiallyOpen = disabled ? false : initialOpen;
+
   const [isOpen, setOpen] = useState<boolean>(isInitiallyOpen);
   const [isDirty, setIsDirty] = useState(false);
   const [isSelectOpen, setIsSelectOpen] = useState(false);
   const menuId = useIdAllocator({ prefix: 'lg-date-picker-menu' });
   const contextValue = getContextProps(rest);
 
+  /** Error state handling */
+  const {
+    stateNotification,
+    setInternalErrorMessage,
+    clearInternalErrorMessage,
+  } = useDatePickerErrorNotifications(state, errorMessage);
+
   return (
     <DatePickerContext.Provider
       value={{
         ...contextValue,
         disabled,
+        menuId,
         isOpen,
         setOpen,
         isDirty,
         setIsDirty,
-        menuId,
         isSelectOpen,
         setIsSelectOpen,
+        stateNotification,
+        setInternalErrorMessage,
+        clearInternalErrorMessage,
         autoComplete,
       }}
     >

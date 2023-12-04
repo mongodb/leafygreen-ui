@@ -17,7 +17,12 @@ import {
   setToUTCMidnight,
   useDatePickerContext,
 } from '../../shared';
-import { getISODate, isSameUTCDay } from '../../shared/utils';
+import {
+  getFormattedDateString,
+  getISODate,
+  isOnOrBefore,
+  isSameUTCDay,
+} from '../../shared/utils';
 import { getInitialHighlight } from '../utils/getInitialHighlight';
 
 import {
@@ -37,10 +42,20 @@ export const SingleDateProvider = ({
   children,
   value,
   setValue: _setValue,
-  handleValidation,
+  handleValidation: _handleValidation,
 }: PropsWithChildren<SingleDateProviderProps>) => {
   const refs = useDateRangeComponentRefs();
-  const { isOpen, setOpen, disabled } = useDatePickerContext();
+  const {
+    isOpen,
+    setOpen,
+    disabled,
+    min,
+    max,
+    dateFormat,
+    setInternalErrorMessage,
+    clearInternalErrorMessage,
+    isInRange,
+  } = useDatePickerContext();
   const prevValue = usePrevious(value);
 
   const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
@@ -83,7 +98,32 @@ export const SingleDateProvider = ({
     _setHighlight(newHighlight);
   }, []);
 
-  /** Track the event that last triggered the menu to open/close */
+  /**
+   * Handles internal validation,
+   * and calls the provided `handleValidation` callback
+   */
+  const handleValidation = (val?: DateType) => {
+    // Set an internal error state if necessary
+    if (val && !isInRange(val)) {
+      if (isOnOrBefore(val, min)) {
+        setInternalErrorMessage(
+          `Date must be after ${getFormattedDateString(min, dateFormat)}`,
+        );
+      } else {
+        setInternalErrorMessage(
+          `Date must be before ${getFormattedDateString(max, dateFormat)}`,
+        );
+      }
+    } else {
+      clearInternalErrorMessage();
+    }
+
+    _handleValidation?.(val);
+  };
+
+  /**
+   * Track the event that last triggered the menu to open/close
+   */
   const [menuTriggerEvent, setMenuTriggerEvent] = useState<SyntheticEvent>();
 
   /**

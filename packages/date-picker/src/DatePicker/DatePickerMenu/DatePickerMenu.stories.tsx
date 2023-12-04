@@ -6,20 +6,21 @@ import { last, omit } from 'lodash';
 import MockDate from 'mockdate';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { StoryMetaType } from '@leafygreen-ui/lib';
+import { type StoryMetaType } from '@leafygreen-ui/lib';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 import { InlineCode } from '@leafygreen-ui/typography';
 
 import {
   contextPropNames,
-  DatePickerContextProps,
+  type DatePickerContextProps,
   DatePickerProvider,
   defaultDatePickerContext,
 } from '../../shared/components/DatePickerContext';
 import { Month } from '../../shared/constants';
-import { newUTC, pickAndOmit } from '../../shared/utils';
+import { newUTC } from '../../shared/utils';
+import { getProviderPropsFromStoryArgs } from '../DatePicker.testutils';
 import {
-  SingleDateContextProps,
+  type SingleDateContextProps,
   SingleDateProvider,
 } from '../SingleDateContext';
 
@@ -32,22 +33,21 @@ type DecoratorArgs = DatePickerMenuProps &
   DatePickerContextProps;
 
 const MenuDecorator: Decorator = (Story: StoryFn, ctx: any) => {
-  const [{ darkMode, ...contextProps }, { ...props }] = pickAndOmit(
-    ctx?.args as DecoratorArgs,
-    [...contextPropNames],
+  const { contextProps, componentProps } = getProviderPropsFromStoryArgs(
+    ctx.args,
   );
 
   // Force `new Date()` to return `mockToday`
   MockDate.set(mockToday);
 
   return (
-    <LeafyGreenProvider darkMode={darkMode}>
+    <LeafyGreenProvider darkMode={contextProps.darkMode}>
       <DatePickerProvider
         {...defaultDatePickerContext}
         {...contextProps}
         initialOpen={true}
       >
-        <Story {...props} />
+        <Story {...componentProps} />
       </DatePickerProvider>
     </LeafyGreenProvider>
   );

@@ -9,7 +9,11 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { DateSegment } from '../shared';
+import { DateSegment, pickAndOmit } from '../shared';
+import {
+  ContextPropKeys,
+  contextPropNames,
+} from '../shared/components/DatePickerContext';
 import { getISODate } from '../shared/utils/getISODate';
 
 import { DatePickerProps } from './DatePicker.types';
@@ -19,7 +23,7 @@ const withinElement = (element: HTMLElement | null) => {
   return element ? within(element) : null;
 };
 
-interface RenderDatePickerResult extends RenderResult {
+export interface RenderDatePickerResult extends RenderResult {
   formField: HTMLElement;
   inputContainer: HTMLElement;
   dayInput: HTMLInputElement;
@@ -214,5 +218,22 @@ export const findTabStopElementMap = async (
     'menu > month select': monthSelect,
     'menu > year select': yearSelect,
     'menu > right chevron': rightChevron,
+  };
+};
+
+export const getProviderPropsFromStoryArgs = (
+  args: any,
+): {
+  contextProps: Pick<DatePickerProps, ContextPropKeys>;
+  componentProps: Omit<DatePickerProps, ContextPropKeys>;
+} => {
+  const [contextProps, componentProps] = pickAndOmit<
+    DatePickerProps,
+    ContextPropKeys
+  >(args, contextPropNames);
+
+  return {
+    contextProps,
+    componentProps,
   };
 };

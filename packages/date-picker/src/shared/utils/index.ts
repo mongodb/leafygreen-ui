@@ -7,6 +7,7 @@ export { getDaysInUTCMonth } from './getDaysInUTCMonth';
 export { getFirstEmptySegment } from './getFirstEmptySegment';
 export { getFirstOfMonth } from './getFirstOfMonth';
 export { getFormatParts, getFormatter } from './getFormatParts';
+export { getFormattedDateString } from './getFormattedDateString';
 export { getFullMonthLabel } from './getFullMonthLabel';
 export { getISODate } from './getISODate';
 export { getLastOfMonth } from './getLastOfMonth';
