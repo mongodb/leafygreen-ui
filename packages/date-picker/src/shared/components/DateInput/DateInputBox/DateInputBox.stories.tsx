@@ -20,15 +20,15 @@ import { DateInputBox } from './DateInputBox';
 const testDate = newUTC(1993, Month.December, 26);
 
 const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => {
-  const [contextProps, componentProps] = pickAndOmit(
+  const [{ darkMode, ...contextProps }, componentProps] = pickAndOmit(
     ctx?.args,
     contextPropNames,
   );
 
   return (
-    <LeafyGreenProvider darkMode={contextProps.darkMode}>
+    <LeafyGreenProvider darkMode={darkMode}>
       <DatePickerProvider {...contextProps}>
-        <Story {...componentProps} />
+        <Story {...componentProps} segmentRefs={segmentRefsMock} />
       </DatePickerProvider>
     </LeafyGreenProvider>
   );
@@ -40,7 +40,7 @@ const meta: StoryMetaType<typeof DateInputBox, DatePickerContextProps> = {
   decorators: [ProviderWrapper],
   parameters: {
     controls: {
-      exclude: ['onSegmentChange', 'setValue'],
+      exclude: ['onSegmentChange', 'setValue', 'segmentRefs'],
     },
     default: null,
     generate: {
