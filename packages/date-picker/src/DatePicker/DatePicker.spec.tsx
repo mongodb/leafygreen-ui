@@ -1369,7 +1369,7 @@ describe('packages/date-picker', () => {
           test.todo('sets the error state');
         });
 
-        describe.only('by typing', () => {
+        describe('by typing', () => {
           let menuElements: RenderMenuResult;
           const onDateChange = jest.fn();
 
