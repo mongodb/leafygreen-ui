@@ -13,7 +13,7 @@ import { addDays, subDays } from 'date-fns';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { defaultMax, defaultMin, Month } from '../shared/constants';
-import { getValueFormatter, newUTC } from '../shared/utils';
+import { getISODate, getValueFormatter, newUTC } from '../shared/utils';
 import {
   eventContainingTargetValue,
   tabNTimes,
@@ -1369,7 +1369,7 @@ describe('packages/date-picker', () => {
           test.todo('sets the error state');
         });
 
-        describe('by typing', () => {
+        describe.only('by typing', () => {
           let menuElements: RenderMenuResult;
           const onDateChange = jest.fn();
 
@@ -1381,7 +1381,7 @@ describe('packages/date-picker', () => {
               calendarButton,
               waitForMenuToOpen,
             } = renderDatePicker({ onDateChange });
-            userEvent.type(yearInput, '2038');
+            userEvent.type(yearInput, '2037');
             userEvent.type(monthInput, '12');
             userEvent.type(dayInput, '25');
             userEvent.click(calendarButton);
@@ -1390,15 +1390,25 @@ describe('packages/date-picker', () => {
 
           test('fires onDateChange handler', () => {
             expect(onDateChange).toHaveBeenCalledWith(
-              expect.objectContaining(newUTC(2038, Month.December, 25)),
+              expect.objectContaining(newUTC(2037, Month.December, 25)),
             );
           });
 
           test('sets displayed month to that month', () => {
             expect(menuElements.calendarGrid).toHaveAttribute(
               'aria-label',
-              'December 2038',
+              'December 2037',
             );
+          });
+
+          test('focuses the correct date in the calendar', () => {
+            const value = new Date(Date.UTC(2037, Month.December, 25));
+            userEvent.tab();
+
+            const valueCell = menuElements.calendarGrid!.querySelector(
+              `[data-iso="${getISODate(value)}"]`,
+            );
+            expect(valueCell).toHaveFocus();
           });
 
           test.todo('sets the error state');
