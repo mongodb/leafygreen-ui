@@ -19,7 +19,7 @@ import { isSameUTCDay } from '../isSameUTCDay';
  * ```
  *
  * @param zoned A Date object presumed to be in `timeZone`
- * @param utc A UTC Date objects
+ * @param utc A UTC Date object
  * @param timeZone An IANA timeZone string
  */
 export const isSameTZDay = (
