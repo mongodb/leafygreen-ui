@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { createRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StoryFn } from '@storybook/react';
 import { isValid } from 'date-fns';
 
@@ -8,7 +8,7 @@ import { pickAndOmit, StoryMetaType, StoryType } from '@leafygreen-ui/lib';
 
 import { Month } from '../../../constants';
 import { newUTC } from '../../../utils';
-import { Locales } from '../../../utils/testutils';
+import { Locales, segmentRefsMock } from '../../../utils/testutils';
 import {
   contextPropNames,
   DatePickerContextProps,
@@ -18,12 +18,6 @@ import {
 import { DateInputBox } from './DateInputBox';
 
 const testDate = newUTC(1993, Month.December, 26);
-
-const segmentRefs = {
-  day: createRef<HTMLInputElement>(),
-  month: createRef<HTMLInputElement>(),
-  year: createRef<HTMLInputElement>(),
-};
 
 const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => {
   const [contextProps, componentProps] = pickAndOmit(
@@ -88,13 +82,13 @@ export const Basic: StoryFn<typeof DateInputBox> = props => {
     <DateInputBox
       value={date}
       setValue={updateDate}
-      segmentRefs={segmentRefs}
+      segmentRefs={segmentRefsMock}
     />
   );
 };
 
 export const Static: StoryFn<typeof DateInputBox> = () => {
-  return <DateInputBox value={testDate} segmentRefs={segmentRefs} />;
+  return <DateInputBox value={testDate} segmentRefs={segmentRefsMock} />;
 };
 
 export const Formats: StoryType<
