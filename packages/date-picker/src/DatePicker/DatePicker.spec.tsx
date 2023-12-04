@@ -1958,6 +1958,38 @@ describe('packages/date-picker', () => {
       describe('Changing the year', () => {
         test.todo('is announced in an aria-live region');
 
+        describe('displays the same month', () => {
+          test('when the month is in range', async () => {
+            const { openMenu, findAllByRole } = renderDatePicker({
+              value: newUTC(2006, Month.July, 4),
+              min: newUTC(1996, Month.January, 1),
+            });
+
+            const { yearSelect, calendarGrid } = await openMenu();
+            userEvent.click(yearSelect!);
+            const options = await findAllByRole('option');
+            const firstYear = options[0]; // 1996
+            userEvent.click(firstYear);
+
+            expect(calendarGrid).toHaveAttribute('aria-label', 'July 1996');
+          });
+
+          test('when the month is not in range', async () => {
+            const { openMenu, findAllByRole } = renderDatePicker({
+              value: newUTC(2006, Month.July, 4),
+              min: newUTC(1996, Month.September, 10),
+            });
+
+            const { yearSelect, calendarGrid } = await openMenu();
+            userEvent.click(yearSelect!);
+            const options = await findAllByRole('option');
+            const firstYear = options[0]; // 1996
+            userEvent.click(firstYear);
+
+            expect(calendarGrid).toHaveAttribute('aria-label', 'July 1996');
+          });
+        });
+
         describe('shows the correct date in the input', () => {
           test('after selecting a year and clicking a cell', async () => {
             const { openMenu, findAllByRole, dayInput, monthInput, yearInput } =
