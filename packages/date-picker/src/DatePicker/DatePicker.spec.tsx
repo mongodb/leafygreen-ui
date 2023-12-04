@@ -248,6 +248,17 @@ describe('packages/date-picker', () => {
         expect(yearSelect).toHaveValue('2023');
       });
 
+      test('if value is invalid, menu still opens to the month of that value', async () => {
+        const { openMenu } = renderDatePicker({
+          value: new Date(Date.UTC(2100, Month.July, 10)),
+        });
+        const { calendarGrid, calendarCells } = await openMenu();
+        expect(calendarGrid).toHaveAttribute('aria-label', 'July 2100');
+        calendarCells.forEach(cell => {
+          expect(cell).toHaveAttribute('aria-disabled', 'true');
+        });
+      });
+
       test('renders the appropriate number of cells', async () => {
         const { openMenu } = renderDatePicker({
           value: new Date(Date.UTC(2024, Month.February, 14)),
