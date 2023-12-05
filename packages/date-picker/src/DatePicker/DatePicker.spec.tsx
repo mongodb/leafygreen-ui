@@ -1358,7 +1358,7 @@ describe('packages/date-picker', () => {
 
       describe('typing a single segment', () => {
         describe.only('typing space', () => {
-          describe('typing a single space', () => {
+          describe('single space', () => {
             test('fires a segment value change', () => {
               const onChange = jest.fn();
 
@@ -1410,7 +1410,7 @@ describe('packages/date-picker', () => {
             });
           });
 
-          describe('typing a double space', () => {
+          describe('double space', () => {
             test('fires a segment value change when the value is initially empty', () => {
               const onChange = jest.fn();
 
