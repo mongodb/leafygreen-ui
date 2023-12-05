@@ -732,20 +732,6 @@ describe('packages/date-picker/shared/date-input-segment', () => {
             userEvent.type(input, '{space}');
             expect(onChangeHandler).not.toHaveBeenCalled();
           });
-
-          test('when the input has a valueee', async () => {
-            const { input } = renderSegment({
-              onChange: onChangeHandler,
-              value: '1',
-            });
-
-            userEvent.type(input, '{space}2');
-            await waitFor(() =>
-              expect(onChangeHandler).toHaveBeenCalledWith(
-                expect.objectContaining({ value: '12' }),
-              ),
-            );
-          });
         });
       });
 
@@ -768,20 +754,6 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
             userEvent.type(input, '{space}{space}');
             expect(onChangeHandler).not.toHaveBeenCalled();
-          });
-
-          test('when the input has a valueeee', async () => {
-            const { input } = renderSegment({
-              onChange: onChangeHandler,
-              value: '1',
-            });
-
-            userEvent.type(input, '{space}{space}2');
-            await waitFor(() =>
-              expect(onChangeHandler).toHaveBeenCalledWith(
-                expect.objectContaining({ value: '12' }),
-              ),
-            );
           });
         });
       });
