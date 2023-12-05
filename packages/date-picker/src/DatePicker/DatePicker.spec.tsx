@@ -1359,19 +1359,27 @@ describe('packages/date-picker', () => {
       describe('typing a single segment', () => {
         describe.only('typing space', () => {
           describe('single space', () => {
-            test('fires a segment value change', () => {
+            test('renders the correct value when the space is at the start of a value', () => {
               const onChange = jest.fn();
 
               const { yearInput } = renderDatePicker({
                 onChange,
               });
-              userEvent.type(yearInput, '202{space}3');
-              expect(onChange).toHaveBeenCalledWith(
-                eventContainingTargetValue('2023'),
-              );
+              userEvent.type(yearInput, '{space}2023');
+              expect(yearInput.value).toBe('2023');
             });
 
-            test('renders the correct value', () => {
+            test('renders the correct value when the space is at the end of a value', () => {
+              const onChange = jest.fn();
+
+              const { yearInput } = renderDatePicker({
+                onChange,
+              });
+              userEvent.type(yearInput, '2023{space}');
+              expect(yearInput.value).toBe('2023');
+            });
+
+            test('renders the correct value when the space is between a value', () => {
               const onChange = jest.fn();
 
               const { yearInput } = renderDatePicker({
@@ -1411,19 +1419,27 @@ describe('packages/date-picker', () => {
           });
 
           describe('double space', () => {
-            test('fires a segment value change when the value is initially empty', () => {
+            test('renders the correct value when the space is at the start of a value', () => {
               const onChange = jest.fn();
 
               const { yearInput } = renderDatePicker({
                 onChange,
               });
-              userEvent.type(yearInput, '202{space}{space}3');
-              expect(onChange).toHaveBeenCalledWith(
-                eventContainingTargetValue('2023'),
-              );
+              userEvent.type(yearInput, '{space}{space}2023');
+              expect(yearInput.value).toBe('2023');
             });
 
-            test('renders the correct value', () => {
+            test('renders the correct value when the space is at the end of a value', () => {
+              const onChange = jest.fn();
+
+              const { yearInput } = renderDatePicker({
+                onChange,
+              });
+              userEvent.type(yearInput, '2023{space}{space}');
+              expect(yearInput.value).toBe('2023');
+            });
+
+            test('renders the correct value when the space is between a value', () => {
               const onChange = jest.fn();
 
               const { yearInput } = renderDatePicker({
