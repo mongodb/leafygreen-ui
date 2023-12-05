@@ -64,37 +64,20 @@ export const DateInputSegment = React.forwardRef<
     } = useDatePickerContext();
     const formatter = getValueFormatter(segment);
     const autoComplete = getAutoComplete(autoCompleteProp, segment);
-    const pattern = `[0-9]{${charsPerSegment[segment]}}`; // can we remove space and period
+    const pattern = `[0-9]{${charsPerSegment[segment]}}`;
 
     /** Prevent non-numeric values from triggering a change event */
     const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
       const { target } = e;
 
-      // target.v === space || target.value.replace(/\.|\s+/g, '') === prevValue then revert to prevValue and don't call onchange
-
-      // const containsPeriodOrSpace = /\s|\./.test(target.value);
-
-      // replace any '.' and ' ' with an empty string.
-      // target.value = target.value.replace(/\.|\s+/g, '');
-
       const containsPeriod = /\./.test(target.value);
 
-      console.log('1. 🪿handleChange', {
-        prevValue,
-        value: target.value,
-      });
-
+      // Double spaces in a text input in macOS adds a period. If that happens replace the value with the prevValue.
       if (containsPeriod) {
         target.value = prevValue ?? '';
       }
 
       const numericValue = Number(target.value);
-
-      console.log('2. 🪿handleChange', {
-        prevValue,
-        value: target.value,
-      });
-
       const isEqualToPrevValue = target.value === prevValue;
 
       if (!isNaN(numericValue) && !isEqualToPrevValue) {
@@ -154,13 +137,7 @@ export const DateInputSegment = React.forwardRef<
         }
 
         case keyMap.Space: {
-          // TODO:
           e.preventDefault();
-
-          console.log({ e: e.key, prevValue });
-
-          // target.value = prevValue!;
-          console.log('handleKeyDown SPACE');
           break;
         }
 
@@ -171,25 +148,6 @@ export const DateInputSegment = React.forwardRef<
 
       onKeyDown?.(e);
     };
-
-    // const handleOnFocus: KeyboardEventHandler<HTMLInputElement> = e => {
-    //   const { key } = e as React.KeyboardEvent<HTMLInputElement> & {
-    //     target: HTMLInputElement;
-    //   };
-
-    //   if (key === keyMap.Space) {
-    //     e.preventDefault();
-    //   }
-    //   // console.log(
-    //   //   'inputRef.current?.selectionStart',
-    //   //   inputRef.current?.selectionStart,
-    //   // );
-    //   // console.log(
-    //   //   'inputRef.current?.selectionEnd',
-    //   //   inputRef.current?.selectionEnd,
-    //   // );
-    //   // inputRef.current?.setSelectionRange(4, 4);
-    // };
 
     // Note: Using a text input with pattern attribute due to Firefox
     // stripping leading zeros on number inputs - Thanks @matt-d-rat
@@ -210,7 +168,6 @@ export const DateInputSegment = React.forwardRef<
         onChange={handleChange}
         onBlur={onBlur}
         onKeyDown={handleKeyDown}
-        // onKeyUp={handleKeyUp}
         disabled={disabled}
         data-testid="lg-date_picker_input-segment"
         data-segment={segment}
