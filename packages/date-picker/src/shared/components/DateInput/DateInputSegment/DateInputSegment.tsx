@@ -69,13 +69,11 @@ export const DateInputSegment = React.forwardRef<
     /** Prevent non-numeric values from triggering a change event */
     const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
       const { target } = e;
-
       const containsPeriod = /\./.test(target.value);
 
-      // macOS adds a period when double spacing inside a text input. If that happens, replace the value with the prevValue.
-      if (containsPeriod) {
-        target.value = prevValue ?? '';
-      }
+      // macOS adds a period when pressing SPACE twice inside a text input.
+      // If there is a period replace the value with the prevValue.
+      if (containsPeriod) target.value = prevValue ?? '';
 
       const numericValue = Number(target.value);
       const isEqualToPrevValue = target.value === prevValue;
