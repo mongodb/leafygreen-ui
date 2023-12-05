@@ -72,7 +72,7 @@ export const DateInputSegment = React.forwardRef<
 
       const containsPeriod = /\./.test(target.value);
 
-      // Double spaces in a text input in macOS adds a period. If that happens replace the value with the prevValue.
+      // macOS adds a period when double spacing inside a text input. If that happens, replace the value with the prevValue.
       if (containsPeriod) {
         target.value = prevValue ?? '';
       }
