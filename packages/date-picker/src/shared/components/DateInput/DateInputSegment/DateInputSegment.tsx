@@ -64,25 +64,40 @@ export const DateInputSegment = React.forwardRef<
     } = useDatePickerContext();
     const formatter = getValueFormatter(segment);
     const autoComplete = getAutoComplete(autoCompleteProp, segment);
-    const pattern = `[0-9]{${charsPerSegment[segment]}}`;
+    const pattern = `[0-9]{${charsPerSegment[segment]}}`; // can we remove space and period
 
     /** Prevent non-numeric values from triggering a change event */
     const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
       const { target } = e;
-      console.log({
+
+      // target.v === space || target.value.replace(/\.|\s+/g, '') === prevValue then revert to prevValue and don't call onchange
+
+      // const containsPeriodOrSpace = /\s|\./.test(target.value);
+
+      // replace any '.' and ' ' with an empty string.
+      // target.value = target.value.replace(/\.|\s+/g, '');
+
+      const containsPeriod = /\./.test(target.value);
+
+      console.log('1. 🪿handleChange', {
         prevValue,
         value: target.value,
-        length: value.length,
       });
-      // replace any '.' and ' ' with an empty string.
-      // target.value = target.value.replace(/\.|\s+/g, '3');
+
+      if (containsPeriod) {
+        target.value = prevValue ?? '';
+      }
+
       const numericValue = Number(target.value);
-      // const isEqualToPrevValue = target.value === prevValue;
 
-      // console.log({ isEqualToPrevValue });
+      console.log('2. 🪿handleChange', {
+        prevValue,
+        value: target.value,
+      });
 
-      // if (!isNaN(numericValue) && !isEqualToPrevValue) {
-      if (!isNaN(numericValue)) {
+      const isEqualToPrevValue = target.value === prevValue;
+
+      if (!isNaN(numericValue) && !isEqualToPrevValue) {
         const newValue = truncateStart(target.value, {
           length: charsPerSegment[segment],
         });
@@ -96,7 +111,7 @@ export const DateInputSegment = React.forwardRef<
 
     /** Handle keydown presses that don't natively fire a change event */
     const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
-      const { key, target } = e as React.KeyboardEvent<HTMLInputElement> & {
+      const { key } = e as React.KeyboardEvent<HTMLInputElement> & {
         target: HTMLInputElement;
       };
 
@@ -142,7 +157,7 @@ export const DateInputSegment = React.forwardRef<
           // TODO:
           e.preventDefault();
 
-          console.log({ prevValue });
+          console.log({ e: e.key, prevValue });
 
           // target.value = prevValue!;
           console.log('handleKeyDown SPACE');
