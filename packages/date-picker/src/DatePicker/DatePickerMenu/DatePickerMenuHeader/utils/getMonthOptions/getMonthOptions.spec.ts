@@ -85,5 +85,23 @@ describe('packages/date-picker/menu/utils/shouldMonthBeEnabled', () => {
         }),
       ).toBeTruthy();
     });
+
+    test('returns false when the year is before the min year', () => {
+      expect(
+        shouldMonthBeEnabled('July', {
+          month: newUTC(2024, Month.March, 10),
+          min: newUTC(2025, Month.September, 10),
+        }),
+      ).toBeFalsy();
+    });
+
+    test('returns false when the year is after the max year', () => {
+      expect(
+        shouldMonthBeEnabled('July', {
+          month: newUTC(2026, Month.March, 10),
+          max: newUTC(2025, Month.September, 10),
+        }),
+      ).toBeFalsy();
+    });
   });
 });
