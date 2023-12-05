@@ -206,6 +206,7 @@ export const calendarCellHighlightStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     ${highlightSelector} {
       outline: none;
+      z-index: 1;
 
       & > .${indicatorClassName} {
         box-shadow: ${calendarCellFocusRing.light};
@@ -215,6 +216,7 @@ export const calendarCellHighlightStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     ${highlightSelector} {
       outline: none;
+      z-index: 1;
 
       & > .${indicatorClassName} {
         box-shadow: ${calendarCellFocusRing.dark};
