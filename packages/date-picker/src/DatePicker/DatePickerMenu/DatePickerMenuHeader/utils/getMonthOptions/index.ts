@@ -25,6 +25,9 @@ export const shouldMonthBeEnabled = (
   const minYear = context.min?.getUTCFullYear();
   const maxYear = context.max?.getUTCFullYear();
 
+  if (year && minYear && year < minYear) return false;
+  if (year && maxYear && year > maxYear) return false;
+
   if (month && min && year === minYear) {
     if (monthIndex < min.getUTCMonth()) return false;
     return true;

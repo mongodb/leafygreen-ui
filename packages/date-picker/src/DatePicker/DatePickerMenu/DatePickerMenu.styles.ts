@@ -39,7 +39,19 @@ export const menuCalendarGridStyles = css`
   margin: auto;
 `;
 
+export const selectTruncateStyles = css`
+  button {
+    > div {
+      &:last-of-type {
+        div {
+          overflow: unset;
+        }
+      }
+    }
+  }
+`;
+
 // Hardcoding the width
 export const selectInputWidthStyles = css`
-  width: 70px;
+  width: 68px;
 `;

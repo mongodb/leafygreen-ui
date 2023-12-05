@@ -1,7 +1,7 @@
 import React, { forwardRef, MouseEventHandler } from 'react';
-import { isBefore } from 'date-fns';
 import range from 'lodash/range';
 
+import { cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { Option, Select } from '@leafygreen-ui/select';
@@ -14,6 +14,7 @@ import {
   menuHeaderSelectContainerStyles,
   menuHeaderStyles,
   selectInputWidthStyles,
+  selectTruncateStyles,
 } from '../DatePickerMenu.styles';
 
 import { shouldMonthBeEnabled } from './utils/getMonthOptions';
@@ -31,23 +32,15 @@ export const DatePickerMenuHeader = forwardRef<
   HTMLDivElement,
   DatePickerMenuHeaderProps
 >(({ setMonth, ...rest }: DatePickerMenuHeaderProps, fwdRef) => {
-  const { min, max, isInRange, setIsSelectOpen } = useDatePickerContext();
+  const { min, max, setIsSelectOpen } = useDatePickerContext();
   const { month } = useSingleDateContext();
 
   const yearOptions = range(min.getUTCFullYear(), max.getUTCFullYear() + 1);
 
   const updateMonth = (newMonth: Date) => {
-    // TODO: may need to update this function to check if the months are in range
-    // (could cause errors when the min date is near the end of the month)
-    if (isInRange(newMonth)) {
-      setMonth(newMonth);
-    } else if (isBefore(newMonth, min)) {
-      // if the selected month is not in range,
-      // set the month to the first or last possible month
-      setMonth(min);
-    } else {
-      setMonth(max);
-    }
+    // We don't do any checks here.
+    // If the month is out of range, we still display it
+    setMonth(newMonth);
   };
 
   /**
@@ -86,9 +79,10 @@ export const DatePickerMenuHeader = forwardRef<
             const newMonth = setUTCMonth(month, Number(m));
             updateMonth(newMonth);
           }}
-          className={selectInputWidthStyles}
+          className={cx(selectTruncateStyles, selectInputWidthStyles)}
           onEntered={() => setIsSelectOpen(true)}
           onExited={() => setIsSelectOpen(false)}
+          placeholder={Months[month.getUTCMonth()].short}
         >
           {Months.map((m, i) => (
             <Option
@@ -109,9 +103,10 @@ export const DatePickerMenuHeader = forwardRef<
             const newMonth = setUTCYear(month, Number(y));
             updateMonth(newMonth);
           }}
-          className={selectInputWidthStyles}
+          className={cx(selectTruncateStyles, selectInputWidthStyles)}
           onEntered={() => setIsSelectOpen(true)}
           onExited={() => setIsSelectOpen(false)}
+          placeholder={month.getUTCFullYear().toString()}
         >
           {yearOptions.map(y => (
             <Option value={y.toString()} key={y} aria-label={y.toString()}>

@@ -127,6 +127,134 @@ describe('packages/date-picker/menu/header', () => {
           expect(element).not.toHaveAttribute('aria-disabled', 'true');
         }
       });
+
+      describe('When `year` is after `max`', () => {
+        test('all options are disabled', async () => {
+          const { getByLabelText, findAllByRole } = render(
+            <MockDatePickerProvider
+              value={{
+                ...defaultDatePickerContext,
+                min: newUTC(2022, Month.March, 10),
+                max: newUTC(2024, Month.September, 10),
+              }}
+            >
+              <MockSingleDateProvider
+                value={
+                  {
+                    month: newUTC(2025, Month.July, 5),
+                  } as SingleDateContextProps
+                }
+              >
+                <DatePickerMenuHeader setMonth={() => {}} />
+              </MockSingleDateProvider>
+            </MockDatePickerProvider>,
+          );
+
+          const monthSelect = getByLabelText('Select month');
+
+          userEvent.click(monthSelect);
+
+          const options = await findAllByRole('option');
+
+          for (const element of options) {
+            expect(element).toBeInTheDocument();
+
+            expect(element).toHaveAttribute('aria-disabled', 'true');
+          }
+        });
+
+        test('placeholder text renders the invalid month/year', async () => {
+          const { getByLabelText } = render(
+            <MockDatePickerProvider
+              value={{
+                ...defaultDatePickerContext,
+                min: newUTC(2022, Month.March, 10),
+                max: newUTC(2024, Month.September, 10),
+              }}
+            >
+              <MockSingleDateProvider
+                value={
+                  {
+                    month: newUTC(2025, Month.July, 5),
+                  } as SingleDateContextProps
+                }
+              >
+                <DatePickerMenuHeader setMonth={() => {}} />
+              </MockSingleDateProvider>
+            </MockDatePickerProvider>,
+          );
+
+          const monthSelect = getByLabelText('Select month');
+          const yearSelect = getByLabelText('Select year');
+
+          expect(monthSelect).toHaveTextContent('Jul');
+          expect(yearSelect).toHaveTextContent('2025');
+        });
+      });
+
+      describe('When `year` is before `min`', () => {
+        test('all options are disabled', async () => {
+          const { getByLabelText, findAllByRole } = render(
+            <MockDatePickerProvider
+              value={{
+                ...defaultDatePickerContext,
+                min: newUTC(2022, Month.March, 10),
+                max: newUTC(2024, Month.September, 10),
+              }}
+            >
+              <MockSingleDateProvider
+                value={
+                  {
+                    month: newUTC(2021, Month.July, 5),
+                  } as SingleDateContextProps
+                }
+              >
+                <DatePickerMenuHeader setMonth={() => {}} />
+              </MockSingleDateProvider>
+            </MockDatePickerProvider>,
+          );
+
+          const monthSelect = getByLabelText('Select month');
+
+          userEvent.click(monthSelect);
+
+          const options = await findAllByRole('option');
+
+          for (const element of options) {
+            expect(element).toBeInTheDocument();
+
+            expect(element).toHaveAttribute('aria-disabled', 'true');
+          }
+        });
+
+        test('placeholder text renders the invalid month/year', async () => {
+          const { getByLabelText } = render(
+            <MockDatePickerProvider
+              value={{
+                ...defaultDatePickerContext,
+                min: newUTC(2022, Month.March, 10),
+                max: newUTC(2024, Month.September, 10),
+              }}
+            >
+              <MockSingleDateProvider
+                value={
+                  {
+                    month: newUTC(2021, Month.July, 5),
+                  } as SingleDateContextProps
+                }
+              >
+                <DatePickerMenuHeader setMonth={() => {}} />
+              </MockSingleDateProvider>
+            </MockDatePickerProvider>,
+          );
+
+          const monthSelect = getByLabelText('Select month');
+          const yearSelect = getByLabelText('Select year');
+
+          expect(monthSelect).toHaveTextContent('Jul');
+          expect(yearSelect).toHaveTextContent('2021');
+        });
+      });
     });
   });
 
