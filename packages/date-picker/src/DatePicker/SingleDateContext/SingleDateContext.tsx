@@ -56,7 +56,7 @@ export const SingleDateProvider = ({
   const today = useMemo(
     () => new Date(Date.now()),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [new Date(Date.now()).getUTCDay()],
+    [new Date(Date.now()).getDate()],
   );
 
   /**

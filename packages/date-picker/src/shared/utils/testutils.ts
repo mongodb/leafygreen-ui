@@ -2,6 +2,7 @@ import { createRef } from 'react';
 import { StoryContext } from '@storybook/react';
 import userEvent from '@testing-library/user-event';
 import { range } from 'lodash';
+import timezoneMock, { TimeZone } from 'timezone-mock';
 
 import { LeafyGreenProviderProps } from '@leafygreen-ui/leafygreen-provider';
 
@@ -21,16 +22,80 @@ export const segmentRefsMock: SegmentRefs = {
   year: createRef<HTMLInputElement>(),
 };
 
+// TODO: Move to separate file
+/**
+ * Mocks the `timeZone` returned from the `Intl.DateTimeFormat`,
+ * and the `getTimeZoneOffset` returned from `Date`
+ * @param timeZone IANA time zone string
+ * @param UTCOffset UTC offset (in hours)
+ */
+export const mockTimeZone = (timeZone: string, UTCOffset: number) => {
+  timezoneMock.register(
+    `Etc/GMT${UTCOffset >= 0 ? '+' : ''}${UTCOffset}` as TimeZone,
+    {
+      Date,
+    },
+  );
+
+  const realDTFOptions = Intl.DateTimeFormat().resolvedOptions();
+
+  /** DTF.resolvedOptions */
+  global.Intl.DateTimeFormat.prototype.resolvedOptions = jest
+    .fn()
+    .mockImplementation(() => ({
+      ...realDTFOptions,
+      timeZone,
+    }));
+
+  /** getTimezoneOffset */
+  global.Date.prototype.getTimezoneOffset = jest
+    .fn()
+    .mockImplementation(() => UTCOffset * 60);
+
+  /** getDate */
+  global.Date.prototype.getDate = jest
+    .fn()
+    .mockImplementation(function getDate() {
+      /// @ts-expect-error - typeof `this` is unknown
+      const utcDate: number = (this as Date).getUTCDate();
+      /// @ts-expect-error - typeof `this` is unknown
+      const utcHrs: number = (this as Date).getUTCHours();
+
+      const adjustedHr = utcHrs + UTCOffset;
+      const daysOffset = adjustedHr >= 24 ? 1 : adjustedHr < 0 ? -1 : 0;
+      return utcDate + daysOffset;
+    });
+
+  /** getHours */
+  global.Date.prototype.getHours = jest
+    .fn()
+    .mockImplementation(function getHours() {
+      /// @ts-expect-error - typeof `this` is unknown
+      const utcHrs: number = (this as Date).getUTCHours();
+      const adjustedHrs = utcHrs + UTCOffset;
+      const hours =
+        adjustedHrs >= 24
+          ? adjustedHrs % 24
+          : adjustedHrs < 0
+          ? adjustedHrs + 24
+          : adjustedHrs;
+
+      return hours;
+    });
+};
+
+export const testTimeZones = [
+  { tz: 'Pacific/Honolulu', UTCOffset: -10 },
+  { tz: 'America/Los_Angeles', UTCOffset: -8 },
+  { tz: 'America/New_York', UTCOffset: -5 },
+  { tz: 'Europe/London', UTCOffset: +0 },
+  { tz: 'Asia/Istanbul', UTCOffset: +3 },
+  { tz: 'Asia/Seoul', UTCOffset: +9 },
+  { tz: 'Pacific/Auckland', UTCOffset: +13 },
+] as const;
+
 /** Time zones used to test with */
-export const TimeZones = [
-  'Pacific/Honolulu',
-  'America/Los_Angeles',
-  'America/New_York',
-  'Europe/London',
-  'Asia/Istanbul',
-  'Asia/Seoul',
-  'Pacific/Auckland',
-];
+export const TimeZones = testTimeZones.map(({ tz }) => tz);
 
 /** Locales (date formats) to test with:
  *

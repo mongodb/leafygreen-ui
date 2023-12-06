@@ -217,8 +217,6 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       }
     };
 
-    console.log({ today, iso: getISODate(today), timeZone });
-
     return (
       <MenuWrapper
         ref={ref}
