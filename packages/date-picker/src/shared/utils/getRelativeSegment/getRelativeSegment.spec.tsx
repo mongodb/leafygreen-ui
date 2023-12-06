@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import { SegmentRefs } from '../../../shared/hooks';
 import { segmentRefsMock } from '../../../shared/testutils';
 
-import { getRelativeSegment } from '.';
+import { getRelativeSegmentRef } from '.';
 
 const renderTestComponent = () => {
   const result = render(
@@ -48,7 +48,7 @@ describe('packages/date-picker/utils/getRelativeSegment', () => {
     });
     test('next from year => month', () => {
       expect(
-        getRelativeSegment('next', {
+        getRelativeSegmentRef('next', {
           segment: segmentRefs.year,
           formatParts,
           segmentRefs,
@@ -57,7 +57,7 @@ describe('packages/date-picker/utils/getRelativeSegment', () => {
     });
     test('next from month => day', () => {
       expect(
-        getRelativeSegment('next', {
+        getRelativeSegmentRef('next', {
           segment: segmentRefs.month,
           formatParts,
           segmentRefs,
@@ -67,7 +67,7 @@ describe('packages/date-picker/utils/getRelativeSegment', () => {
 
     test('prev from day => month', () => {
       expect(
-        getRelativeSegment('prev', {
+        getRelativeSegmentRef('prev', {
           segment: segmentRefs.day,
           formatParts,
           segmentRefs,
@@ -77,7 +77,7 @@ describe('packages/date-picker/utils/getRelativeSegment', () => {
 
     test('prev from month => year', () => {
       expect(
-        getRelativeSegment('prev', {
+        getRelativeSegmentRef('prev', {
           segment: segmentRefs.month,
           formatParts,
           segmentRefs,
@@ -87,7 +87,7 @@ describe('packages/date-picker/utils/getRelativeSegment', () => {
 
     test('first = year', () => {
       expect(
-        getRelativeSegment('first', {
+        getRelativeSegmentRef('first', {
           segment: segmentRefs.day,
           formatParts,
           segmentRefs,
@@ -97,7 +97,7 @@ describe('packages/date-picker/utils/getRelativeSegment', () => {
 
     test('last = day', () => {
       expect(
-        getRelativeSegment('last', {
+        getRelativeSegmentRef('last', {
           segment: segmentRefs.year,
           formatParts,
           segmentRefs,
@@ -121,7 +121,7 @@ describe('packages/date-picker/utils/getRelativeSegment', () => {
     });
     test('next from year => month', () => {
       expect(
-        getRelativeSegment('next', {
+        getRelativeSegmentRef('next', {
           segment: elements.year,
           formatParts,
           segmentRefs,
@@ -130,7 +130,7 @@ describe('packages/date-picker/utils/getRelativeSegment', () => {
     });
     test('next from month => day', () => {
       expect(
-        getRelativeSegment('next', {
+        getRelativeSegmentRef('next', {
           segment: elements.month,
           formatParts,
           segmentRefs,
@@ -140,7 +140,7 @@ describe('packages/date-picker/utils/getRelativeSegment', () => {
 
     test('prev from day => month', () => {
       expect(
-        getRelativeSegment('prev', {
+        getRelativeSegmentRef('prev', {
           segment: elements.day,
           formatParts,
           segmentRefs,
@@ -150,7 +150,7 @@ describe('packages/date-picker/utils/getRelativeSegment', () => {
 
     test('prev from month => year', () => {
       expect(
-        getRelativeSegment('prev', {
+        getRelativeSegmentRef('prev', {
           segment: elements.month,
           formatParts,
           segmentRefs,
@@ -160,7 +160,7 @@ describe('packages/date-picker/utils/getRelativeSegment', () => {
 
     test('first = year', () => {
       expect(
-        getRelativeSegment('first', {
+        getRelativeSegmentRef('first', {
           segment: elements.day,
           formatParts,
           segmentRefs,
@@ -170,7 +170,7 @@ describe('packages/date-picker/utils/getRelativeSegment', () => {
 
     test('last = day', () => {
       expect(
-        getRelativeSegment('last', {
+        getRelativeSegmentRef('last', {
           segment: elements.year,
           formatParts,
           segmentRefs,

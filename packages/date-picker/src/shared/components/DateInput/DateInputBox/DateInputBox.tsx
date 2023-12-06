@@ -4,9 +4,12 @@ import isEqual from 'lodash/isEqual';
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { keyMap } from '@leafygreen-ui/lib';
 
 import {
+  DateSegment,
   DateSegmentsState,
+  DateSegmentValue,
   isDateSegment,
   useDateSegments,
 } from '../../../hooks';
@@ -14,7 +17,9 @@ import {
   doesSomeSegmentExist,
   getMaxSegmentValue,
   getMinSegmentValue,
+  getRelativeSegment,
   getValueFormatter,
+  isExplicitSegmentValue,
   newDateFromSegments,
 } from '../../../utils';
 import { useDatePickerContext } from '../../DatePickerContext';
@@ -59,6 +64,16 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
 
     const containerRef = useForwardedRef(fwdRef, null);
 
+    /** Formats and sets the segment value */
+    const getFormattedSegmentValue = (
+      segmentName: DateSegment,
+      segmentValue: DateSegmentValue,
+    ): DateSegmentValue => {
+      const formatter = getValueFormatter(segmentName);
+      const formattedValue = formatter(segmentValue);
+      return formattedValue;
+    };
+
     /**
      * When a segment is updated,
      * trigger a `change` event for the segment, and
@@ -91,19 +106,45 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
 
     /** Fired when an individual segment value changes */
     const handleSegmentInputChange: DateInputSegmentChangeEventHandler =
-      event => {
-        setSegment(event.segment, event.value);
-        onSegmentChange?.(event);
+      segmentChangeEvent => {
+        let segmentValue = segmentChangeEvent.value;
+        const { segment: segmentName, meta } = segmentChangeEvent;
+        const changedViaArrowKeys =
+          meta?.key === keyMap.ArrowDown || meta?.key === keyMap.ArrowUp;
+
+        // Auto-format the segment
+        if (
+          !changedViaArrowKeys &&
+          isExplicitSegmentValue(segmentName, segmentValue)
+        ) {
+          segmentValue = getFormattedSegmentValue(segmentName, segmentValue);
+
+          // Auto-advance focus
+          const nextSegmentName = getRelativeSegment('next', {
+            segment: segmentName,
+            formatParts,
+          });
+
+          if (nextSegmentName) {
+            const nextSegmentRef = segmentRefs[nextSegmentName];
+            nextSegmentRef?.current?.focus();
+          }
+        }
+
+        setSegment(segmentName, segmentValue);
+        onSegmentChange?.(segmentChangeEvent);
       };
 
     /** Triggered when a segment is blurred */
     const handleSegmentInputBlur: FocusEventHandler<HTMLInputElement> = e => {
       const segmentName = e.target.getAttribute('id');
-      const newValue = e.target.value;
+      const segmentValue = e.target.value;
 
       if (isDateSegment(segmentName)) {
-        const formatter = getValueFormatter(segmentName);
-        const formattedValue = formatter(newValue);
+        const formattedValue = getFormattedSegmentValue(
+          segmentName,
+          segmentValue,
+        );
         setSegment(segmentName, formattedValue);
       }
     };
