@@ -1,6 +1,5 @@
 import { defaultMax } from '../../constants';
-import { DateSegment } from '../../hooks';
-import { DateType } from '../../types';
+import { DateSegment, DateType } from '../../types';
 import { getSegmentsFromDate } from '../getSegmentsFromDate';
 
 /** Returns the maximum value for a segment, given a context */

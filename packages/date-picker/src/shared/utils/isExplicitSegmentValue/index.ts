@@ -1,5 +1,5 @@
 import { charsPerSegment } from '../../constants';
-import { DateSegment, DateSegmentValue } from '../../hooks';
+import { DateSegment, DateSegmentValue } from '../../types';
 import { isValidSegmentName, isValidSegmentValue } from '../isValidSegment';
 
 /**

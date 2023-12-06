@@ -1,7 +1,7 @@
 import { inRange } from 'lodash';
 
 import { defaultMax, defaultMin } from '../../constants';
-import { DateSegment, DateSegmentValue } from '../../hooks';
+import { DateSegment, DateSegmentValue } from '../../types';
 import { isValidSegmentName, isValidSegmentValue } from '../isValidSegment';
 
 /**

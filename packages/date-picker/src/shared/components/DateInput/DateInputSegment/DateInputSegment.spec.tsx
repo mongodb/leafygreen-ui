@@ -4,7 +4,7 @@ import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { defaultMax, defaultMin } from '../../../constants';
-import { DateSegment } from '../../../hooks';
+import { DateSegment } from '../../../types';
 import { getValueFormatter } from '../../../utils';
 import {
   DatePickerProvider,
@@ -165,9 +165,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       );
     });
 
-    test('allows typing additional characters to create an invalid value', () => {
-      // Note: event may be ignored by the parent,
-      // but this component still fires the event
+    test('does not allow additional characters that create an invalid value', () => {
       const { input } = renderSegment({
         value: '26',
         onChange: onChangeHandler,
@@ -176,7 +174,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
       userEvent.type(input, '6');
       expect(onChangeHandler).toHaveBeenCalled();
       expect(onChangeHandler).toHaveBeenCalledWith(
-        expect.objectContaining({ value: '66' }),
+        expect.objectContaining({ value: '06' }),
       );
     });
 

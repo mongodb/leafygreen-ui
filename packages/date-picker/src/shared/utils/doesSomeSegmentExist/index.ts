@@ -1,4 +1,4 @@
-import { DateSegmentsState } from '../../hooks/useDateSegments';
+import { DateSegmentsState } from '../../types';
 import { isNotZeroLike } from '../isZeroLike';
 
 /**
