@@ -1792,7 +1792,7 @@ describe('packages/date-picker', () => {
           expect(yearInput).toHaveValue('20');
         });
 
-        describe.only('typing new characters', () => {
+        describe('typing new characters', () => {
           test('does not immediately format the year', () => {
             const { yearInput, monthInput, dayInput } = renderDatePicker({});
             userEvent.type(yearInput, '2019');
@@ -1814,12 +1814,20 @@ describe('packages/date-picker', () => {
           });
 
           describe('if the resulting value is not valid', () => {
-            test('overwrites the segment with the incoming digit', () => {
+            test('overwrites the segment with the incoming digit 1-9', () => {
               const { monthInput } = renderDatePicker({});
               userEvent.type(monthInput, '6');
               expect(monthInput).toHaveValue('06');
               userEvent.type(monthInput, '9');
               expect(monthInput).toHaveValue('09');
+            });
+
+            test('overwrites the segment with the incoming digit 0', () => {
+              const { monthInput } = renderDatePicker({});
+              userEvent.type(monthInput, '6');
+              expect(monthInput).toHaveValue('06');
+              userEvent.type(monthInput, '0');
+              expect(monthInput).toHaveValue('0');
             });
           });
         });

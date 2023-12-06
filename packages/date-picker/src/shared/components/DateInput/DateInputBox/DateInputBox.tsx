@@ -108,20 +108,20 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
     const handleSegmentInputChange: DateInputSegmentChangeEventHandler =
       segmentChangeEvent => {
         let segmentValue = segmentChangeEvent.value;
-        const { segment, meta } = segmentChangeEvent;
+        const { segment: segmentName, meta } = segmentChangeEvent;
         const changedViaArrowKeys =
           meta?.key === keyMap.ArrowDown || meta?.key === keyMap.ArrowUp;
 
         // Auto-format the segment
         if (
           !changedViaArrowKeys &&
-          isExplicitSegmentValue(segment, segmentValue)
+          isExplicitSegmentValue(segmentName, segmentValue)
         ) {
-          segmentValue = getFormattedSegmentValue(segment, segmentValue);
+          segmentValue = getFormattedSegmentValue(segmentName, segmentValue);
 
           // Auto-advance focus
           const nextSegmentName = getRelativeSegment('next', {
-            segment,
+            segment: segmentName,
             formatParts,
           });
 
@@ -131,7 +131,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
           }
         }
 
-        setSegment(segment, segmentValue);
+        setSegment(segmentName, segmentValue);
         onSegmentChange?.(segmentChangeEvent);
       };
 
