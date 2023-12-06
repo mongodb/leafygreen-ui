@@ -9,6 +9,7 @@ describe('packages/date-picker/testutils/', () => {
       jest.useFakeTimers();
     });
     afterEach(() => {
+      jest.clearAllMocks();
       jest.restoreAllMocks();
     });
 
