@@ -1,4 +1,4 @@
-import { DateSegmentsState } from '../../hooks';
+import { DateSegmentsState } from '../../types';
 import { getValueFormatter } from '../getValueFormatter';
 
 /** Returns a single object with day, month & year segments */

@@ -1,4 +1,4 @@
-import { DateSegmentsState } from '../../hooks';
+import { DateSegmentsState } from '../../types';
 import { isValidSegmentName } from '../isValidSegment';
 import { isValidValueForSegment } from '../isValidValueForSegment';
 import { newUTC } from '../newUTC';

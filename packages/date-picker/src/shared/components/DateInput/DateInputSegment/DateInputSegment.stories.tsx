@@ -5,7 +5,7 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 
-import { DateSegmentValue } from '../../../hooks';
+import { DateSegmentValue } from '../../../types';
 import {
   DatePickerContextProps,
   DatePickerProvider,

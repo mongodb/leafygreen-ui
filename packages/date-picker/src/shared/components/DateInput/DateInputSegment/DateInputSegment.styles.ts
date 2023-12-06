@@ -9,7 +9,7 @@ import {
 } from '@leafygreen-ui/tokens';
 
 import { characterWidth, charsPerSegment } from '../../../constants';
-import { DateSegment } from '../../../hooks';
+import { DateSegment } from '../../../types';
 
 export const baseStyles = css`
   font-family: ${fontFamilies.default};

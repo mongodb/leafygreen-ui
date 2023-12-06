@@ -5,11 +5,8 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import {
-  DateSegmentsState,
-  isDateSegment,
-  useDateSegments,
-} from '../../../hooks';
+import { useDateSegments } from '../../../hooks';
+import { DateSegmentsState, isDateSegment } from '../../../types';
 import {
   doesSomeSegmentExist,
   getMaxSegmentValue,

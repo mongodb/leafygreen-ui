@@ -4,7 +4,7 @@ import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { defaultMax, defaultMin } from '../../../constants';
-import { DateSegment } from '../../../hooks';
+import { DateSegment } from '../../../types';
 import { getValueFormatter } from '../../../utils';
 import {
   DatePickerProvider,
