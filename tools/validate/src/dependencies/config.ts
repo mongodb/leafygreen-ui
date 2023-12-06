@@ -26,7 +26,7 @@ export const devFilePatterns: Array<RegExp> = [
   /.*.?stor(y|ies).(t|j)sx?/,
   /.*.stories.tsx?/,
   /.*.example.tsx?/,
-  /.*.testutils.tsx?/,
+  /.*.testutils((.tsx?)|(\/.*))/,
   /.*\/dist\/.*/,
 ];
 
