@@ -15,6 +15,10 @@ export { getMaxSegmentValue } from './getMaxSegmentValue';
 export { getMinSegmentValue } from './getMinSegmentValue';
 export { getMonthIndex } from './getMonthIndex';
 export { getMonthName } from './getMonthName';
+export {
+  getRelativeSegment,
+  getRelativeSegmentRef,
+} from './getRelativeSegment';
 export { getRemainingParts } from './getRemainingParts';
 export { getSegmentMaxLength } from './getSegmentMaxLength';
 export {

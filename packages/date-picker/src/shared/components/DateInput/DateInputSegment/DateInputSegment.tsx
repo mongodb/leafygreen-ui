@@ -3,7 +3,7 @@ import React, { ChangeEventHandler, KeyboardEventHandler } from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { keyMap, rollover, truncateStart } from '@leafygreen-ui/lib';
+import { keyMap, rollover } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
@@ -16,6 +16,7 @@ import {
 import { getAutoComplete, getValueFormatter } from '../../../utils';
 import { useDatePickerContext } from '../../DatePickerContext';
 
+import { calculateNewSegmentValue } from './calculateNewSegmentValue';
 import {
   baseStyles,
   fontSizeStyles,
@@ -68,20 +69,20 @@ export const DateInputSegment = React.forwardRef<
     const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
       const { target } = e;
       const containsPeriod = /\./.test(target.value);
-      let prevValue = value ?? '';
+      const prevValue = value ?? '';
 
       // macOS adds a period when pressing SPACE twice inside a text input.
       // If there is a period replace the value with the prevValue.
-      if (containsPeriod) target.value = prevValue;
+      if (containsPeriod) {
+        target.value = prevValue;
+        return;
+      }
 
-      const isEqualToPrevValue = target.value === prevValue;
+      const hasValueChanged = target.value !== prevValue;
       const numericValue = Number(target.value);
 
-      if (!isNaN(numericValue) && !isEqualToPrevValue) {
-        prevValue = target.value;
-        const newValue = truncateStart(target.value, {
-          length: charsPerSegment[segment],
-        });
+      if (!isNaN(numericValue) && hasValueChanged) {
+        const newValue = calculateNewSegmentValue(segment, target.value);
 
         onChange({
           segment,
@@ -124,6 +125,8 @@ export const DateInputSegment = React.forwardRef<
         case keyMap.Backspace: {
           const numChars = value.length;
 
+          // If we've cleared the input with backspace,
+          // fire the custom change event
           if (numChars === 1) {
             onChange({
               segment,
