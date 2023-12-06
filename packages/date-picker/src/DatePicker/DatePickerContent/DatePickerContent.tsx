@@ -21,12 +21,12 @@ import { DatePickerInput } from '../DatePickerInput';
 import { DatePickerMenu } from '../DatePickerMenu';
 import { useSingleDateContext } from '../SingleDateContext';
 
-import { DatePickerComponentProps } from './DatePickerComponent.types';
+import { DatePickerContentProps } from './DatePickerContent.types';
 
-export const DatePickerComponent = forwardRef<
+export const DatePickerContent = forwardRef<
   HTMLDivElement,
-  DatePickerComponentProps
->(({ ...rest }: DatePickerComponentProps, fwdRef) => {
+  DatePickerContentProps
+>(({ ...rest }: DatePickerContentProps, fwdRef) => {
   const { isOpen, menuId, disabled, isSelectOpen } = useDatePickerContext();
   const {
     refs,
@@ -140,4 +140,4 @@ export const DatePickerComponent = forwardRef<
   );
 });
 
-DatePickerComponent.displayName = 'DatePickerContents';
+DatePickerContent.displayName = 'DatePickerContent';
