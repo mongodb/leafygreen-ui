@@ -218,20 +218,19 @@ describe('packages/date-picker/date-picker-menu', () => {
       });
     });
 
-    describe.only('when system date changes', () => {
+    describe('when system date changes', () => {
       describe.each(testTimeZones)(
         'when system time zone is $tz',
         ({ tz, UTCOffset }) => {
           beforeEach(() => {
+            mockTimeZone(tz, UTCOffset);
             jest.useFakeTimers();
           });
           afterEach(() => {
-            jest.restoreAllMocks();
+            jest.clearAllMocks();
           });
 
           test('cell marked as `current` updates', () => {
-            mockTimeZone(tz, UTCOffset);
-
             const dec24Local = newUTC(
               2023,
               Month.December,
@@ -264,23 +263,30 @@ describe('packages/date-picker/date-picker-menu', () => {
 
           describe.each(testTimeZones)(
             'and timeZone prop is $tz',
-            ({ tz: tzProp }) => {
+            ({ tz: tzProp, UTCOffset: propOffset }) => {
               test('cell marked as `current` updates', () => {
-                mockTimeZone(tz, UTCOffset);
-
-                const dec24Seoul = new Date(
-                  Date.UTC(2023, Month.December, 24, 2, 59, 59),
+                const dec24Local = newUTC(
+                  2023,
+                  Month.December,
+                  24,
+                  23 - propOffset,
+                  59,
                 );
-                const dec25Seoul = new Date(
-                  Date.UTC(2023, Month.December, 24, 3, 0, 0, 0),
+
+                const dec25Local = newUTC(
+                  2023,
+                  Month.December,
+                  25,
+                  0 - propOffset,
+                  0,
                 );
 
-                jest.setSystemTime(dec24Seoul);
+                jest.setSystemTime(dec24Local);
                 const { getCellWithISOString, rerenderDatePickerMenu } =
                   renderDatePickerMenu(null, null, { timeZone: tzProp });
                 const dec24Cell = getCellWithISOString('2023-12-24');
                 expect(dec24Cell).toHaveAttribute('aria-current', 'true');
-                jest.setSystemTime(dec25Seoul);
+                jest.setSystemTime(dec25Local);
                 rerenderDatePickerMenu();
                 const dec25Cell = getCellWithISOString('2023-12-25');
                 expect(dec25Cell).toHaveAttribute('aria-current', 'true');

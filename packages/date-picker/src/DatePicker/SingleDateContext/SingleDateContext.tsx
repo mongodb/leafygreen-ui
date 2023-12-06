@@ -53,10 +53,13 @@ export const SingleDateProvider = ({
   } = useDatePickerContext();
   const prevValue = usePrevious(value);
 
+  const hour = new Date(Date.now()).getHours();
+
+  // Update this value every hour
   const today = useMemo(
     () => new Date(Date.now()),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [new Date(Date.now()).getDate()],
+    [hour],
   );
 
   /**
