@@ -11,12 +11,7 @@ import React, {
 
 import { usePrevious } from '@leafygreen-ui/hooks';
 
-import {
-  DateType,
-  getFirstOfMonth,
-  setToUTCMidnight,
-  useDatePickerContext,
-} from '../../shared';
+import { DateType, getFirstOfMonth, useDatePickerContext } from '../../shared';
 import {
   getFormattedDateString,
   getISODate,
@@ -58,7 +53,14 @@ export const SingleDateProvider = ({
   } = useDatePickerContext();
   const prevValue = usePrevious(value);
 
-  const today = useMemo(() => setToUTCMidnight(new Date(Date.now())), []);
+  const hour = new Date(Date.now()).getHours();
+
+  // Update this value every hour
+  const today = useMemo(
+    () => new Date(Date.now()),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [hour],
+  );
 
   /**
    * Keep track of the displayed month

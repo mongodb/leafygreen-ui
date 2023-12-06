@@ -13,6 +13,7 @@ import { addDays, subDays } from 'date-fns';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { defaultMax, defaultMin, Month } from '../shared/constants';
+import { eventContainingTargetValue, tabNTimes } from '../shared/testutils';
 import {
   getFormattedDateString,
   getISODate,
@@ -21,10 +22,6 @@ import {
   setUTCMonth,
   setUTCYear,
 } from '../shared/utils';
-import {
-  eventContainingTargetValue,
-  tabNTimes,
-} from '../shared/utils/testutils';
 
 import {
   expectedTabStopLabels,

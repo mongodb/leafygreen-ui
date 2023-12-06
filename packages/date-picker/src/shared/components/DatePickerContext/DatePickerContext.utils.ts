@@ -17,8 +17,6 @@ import {
   DatePickerProviderProps,
 } from './DatePickerContext.types';
 
-export const TZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
 export type ContextPropKeys = keyof DatePickerProviderProps &
   keyof BaseDatePickerProps;
 
@@ -46,7 +44,7 @@ export const defaultDatePickerContext: DatePickerContextProps = {
   label: '',
   description: '',
   dateFormat: 'iso8601',
-  timeZone: TZ,
+  timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   min: MIN_DATE,
   max: MAX_DATE,
   isOpen: false,
@@ -93,9 +91,13 @@ export const getIsInRange =
 export const getContextProps = (
   providerProps: DatePickerProviderProps,
 ): DatePickerContextProps => {
-  const { min, max, ...rest } = providerProps;
+  const { min, max, timeZone, ...rest } = providerProps;
   const providerValue: DatePickerContextProps = {
     ...defaults(rest, defaultDatePickerContext),
+    timeZone: defaultTo(
+      timeZone,
+      Intl.DateTimeFormat().resolvedOptions().timeZone,
+    ),
     min: defaultTo(toDate(min), defaultDatePickerContext.min),
     max: defaultTo(toDate(max), defaultDatePickerContext.max),
   };

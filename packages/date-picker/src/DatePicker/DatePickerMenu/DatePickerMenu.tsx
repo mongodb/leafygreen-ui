@@ -22,6 +22,7 @@ import {
   getFullMonthLabel,
   getISODate,
   getUTCDateString,
+  isSameTZDay,
   isSameUTCDay,
   isSameUTCMonth,
 } from '../../shared/utils';
@@ -38,7 +39,7 @@ import { DatePickerMenuHeader } from './DatePickerMenuHeader';
 
 export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
   ({ onKeyDown, ...rest }: DatePickerMenuProps, fwdRef) => {
-    const { isInRange, isOpen, setIsDirty } = useDatePickerContext();
+    const { isInRange, isOpen, setIsDirty, timeZone } = useDatePickerContext();
     const {
       refs,
       today,
@@ -225,6 +226,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
         className={menuWrapperStyles}
         usePortal
         onKeyDown={handleMenuKeyPress}
+        data-today={today.toISOString()}
         {...rest}
       >
         <div className={menuContentStyles}>
@@ -247,7 +249,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
                 ref={cellRefs(getISODate(day))}
                 aria-label={getUTCDateString(day)}
                 isHighlighted={isSameUTCDay(day, highlight)}
-                isCurrent={isSameUTCDay(day, today)}
+                isCurrent={isSameTZDay(today, day, timeZone)}
                 state={getCellState(day)}
                 onClick={cellClickHandlerForDay(day)}
                 data-iso={getISODate(day)}

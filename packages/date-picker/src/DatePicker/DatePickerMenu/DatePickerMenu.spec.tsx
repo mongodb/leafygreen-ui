@@ -6,9 +6,9 @@ import { addDays } from 'date-fns';
 import {
   DatePickerProvider,
   DatePickerProviderProps,
-  defaultDatePickerContext,
 } from '../../shared/components/DatePickerContext';
 import { Month } from '../../shared/constants';
+import { mockTimeZone, testTimeZones } from '../../shared/testutils';
 import { getISODate, newUTC, setUTCDate } from '../../shared/utils';
 import {
   SingleDateProvider,
@@ -17,13 +17,13 @@ import {
 
 import { DatePickerMenu, DatePickerMenuProps } from '.';
 
-const testToday = new Date(Date.UTC(2023, Month.September, 10));
-const testValue = new Date(Date.UTC(2023, Month.September, 14));
+const testToday = newUTC(2023, Month.September, 10);
+const testValue = newUTC(2023, Month.September, 14);
 
-const standardTimeEndDate = new Date(Date.UTC(2023, Month.March, 11));
-const daylightTimeStartDate = new Date(Date.UTC(2023, Month.March, 12));
-const daylightTimeEndDate = new Date(Date.UTC(2023, Month.November, 5));
-const standardTimeStartDate = new Date(Date.UTC(2023, Month.November, 6));
+const standardTimeEndDate = newUTC(2023, Month.March, 11);
+const daylightTimeStartDate = newUTC(2023, Month.March, 12);
+const daylightTimeEndDate = newUTC(2023, Month.November, 5);
+const standardTimeStartDate = newUTC(2023, Month.November, 6);
 
 const renderDatePickerMenu = (
   props?: Partial<DatePickerMenuProps> | null,
@@ -31,11 +31,7 @@ const renderDatePickerMenu = (
   context?: Partial<DatePickerProviderProps> | null,
 ) => {
   const result = render(
-    <DatePickerProvider
-      {...defaultDatePickerContext}
-      {...context}
-      initialOpen={true}
-    >
+    <DatePickerProvider label="" {...context} initialOpen={true}>
       <SingleDateProvider
         value={null}
         setValue={() => {}}
@@ -52,11 +48,7 @@ const renderDatePickerMenu = (
     newSingleContext?: Partial<SingleDateProviderProps> | null,
   ) =>
     result.rerender(
-      <DatePickerProvider
-        {...defaultDatePickerContext}
-        {...context}
-        initialOpen={true}
-      >
+      <DatePickerProvider label="" {...context} initialOpen={true}>
         <SingleDateProvider
           value={null}
           setValue={() => {}}
@@ -84,6 +76,9 @@ const renderDatePickerMenu = (
   const getCellWithValue = (date: Date) =>
     calendarGrid.querySelector(`[data-iso="${getISODate(date)}"]`);
 
+  const getCellWithISOString = (isoStr: string) =>
+    calendarGrid.querySelector(`[data-iso="${isoStr}"]`);
+
   const leftChevron = result?.queryByLabelText('Previous month');
   const rightChevron = result?.queryByLabelText('Next month');
 
@@ -94,6 +89,7 @@ const renderDatePickerMenu = (
     calendarCells,
     todayCell,
     getCellWithValue,
+    getCellWithISOString,
     leftChevron,
     rightChevron,
   };
@@ -137,6 +133,32 @@ describe('packages/date-picker/date-picker-menu', () => {
       expect(yearSelect).toHaveValue('2023');
     });
 
+    test('sets `aria-current` on today cell', () => {
+      jest.setSystemTime(
+        newUTC(2023, Month.September, 10, 0, testToday.getTimezoneOffset()),
+      );
+      const { getCellWithISOString } = renderDatePickerMenu();
+      expect(getCellWithISOString('2023-09-10')).toHaveAttribute(
+        'aria-current',
+        'true',
+      );
+    });
+
+    test('default highlight is on today', () => {
+      const { todayCell } = renderDatePickerMenu();
+      userEvent.tab();
+      expect(todayCell).toHaveFocus();
+    });
+
+    test('highlight starts on current value when provided', () => {
+      const { getCellWithValue } = renderDatePickerMenu(null, {
+        value: testValue,
+      });
+      userEvent.tab();
+      const valueCell = getCellWithValue(testValue);
+      expect(valueCell).toHaveFocus();
+    });
+
     describe('rendered cells', () => {
       test('have correct `aria-label`', () => {
         const { todayCell } = renderDatePickerMenu();
@@ -167,21 +189,6 @@ describe('packages/date-picker/date-picker-menu', () => {
       });
     });
 
-    test('default highlight is on today', () => {
-      const { todayCell } = renderDatePickerMenu();
-      userEvent.tab();
-      expect(todayCell).toHaveFocus();
-    });
-
-    test('highlight starts on current value when provided', () => {
-      const { getCellWithValue } = renderDatePickerMenu(null, {
-        value: testValue,
-      });
-      userEvent.tab();
-      const valueCell = getCellWithValue(testValue);
-      expect(valueCell).toHaveFocus();
-    });
-
     describe('when value is out of range', () => {
       test('grid is labelled', () => {
         const { calendarGrid } = renderDatePickerMenu(null, {
@@ -208,6 +215,85 @@ describe('packages/date-picker/date-picker-menu', () => {
         );
         expect(isSomeCellHighlighted).toBe(false);
       });
+    });
+
+    describe('when system date changes', () => {
+      describe.each(testTimeZones)(
+        'when system time zone is $tz',
+        ({ tz, UTCOffset }) => {
+          beforeEach(() => {
+            mockTimeZone(tz, UTCOffset);
+            jest.useFakeTimers();
+          });
+          afterEach(() => {
+            jest.clearAllMocks();
+          });
+
+          test('cell marked as `current` updates', () => {
+            const dec24Local = newUTC(
+              2023,
+              Month.December,
+              24,
+              23 - UTCOffset,
+              59,
+            );
+
+            const dec25Local = newUTC(
+              2023,
+              Month.December,
+              25,
+              0 - UTCOffset,
+              0,
+            );
+
+            jest.setSystemTime(dec24Local);
+
+            const { getCellWithISOString, rerenderDatePickerMenu } =
+              renderDatePickerMenu();
+            const dec24Cell = getCellWithISOString('2023-12-24');
+            expect(dec24Cell).toHaveAttribute('aria-current', 'true');
+
+            jest.setSystemTime(dec25Local);
+
+            rerenderDatePickerMenu();
+            const dec25LocalCell = getCellWithISOString('2023-12-25');
+            expect(dec25LocalCell).toHaveAttribute('aria-current', 'true');
+          });
+
+          describe.each(testTimeZones)(
+            'and timeZone prop is $tz',
+            ({ tz: tzProp, UTCOffset: propOffset }) => {
+              test('cell marked as `current` updates', () => {
+                const dec24Local = newUTC(
+                  2023,
+                  Month.December,
+                  24,
+                  23 - propOffset,
+                  59,
+                );
+
+                const dec25Local = newUTC(
+                  2023,
+                  Month.December,
+                  25,
+                  0 - propOffset,
+                  0,
+                );
+
+                jest.setSystemTime(dec24Local);
+                const { getCellWithISOString, rerenderDatePickerMenu } =
+                  renderDatePickerMenu(null, null, { timeZone: tzProp });
+                const dec24Cell = getCellWithISOString('2023-12-24');
+                expect(dec24Cell).toHaveAttribute('aria-current', 'true');
+                jest.setSystemTime(dec25Local);
+                rerenderDatePickerMenu();
+                const dec25Cell = getCellWithISOString('2023-12-25');
+                expect(dec25Cell).toHaveAttribute('aria-current', 'true');
+              });
+            },
+          );
+        },
+      );
     });
   });
 
