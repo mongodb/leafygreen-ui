@@ -70,7 +70,6 @@ export const DateInputSegment = React.forwardRef<
       const { target } = e;
       const containsPeriod = /\./.test(target.value);
       const prevValue = value ?? '';
-      let newValue = target.value;
 
       // macOS adds a period when pressing SPACE twice inside a text input.
       // If there is a period replace the value with the prevValue.
@@ -83,7 +82,7 @@ export const DateInputSegment = React.forwardRef<
       const numericValue = Number(target.value);
 
       if (!isNaN(numericValue) && hasValueChanged) {
-        newValue = calculateNewSegmentValue(segment, newValue);
+        const newValue = calculateNewSegmentValue(segment, target.value);
 
         onChange({
           segment,
