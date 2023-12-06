@@ -1357,6 +1357,176 @@ describe('packages/date-picker', () => {
       });
 
       describe('typing a single segment', () => {
+        describe('typing space', () => {
+          describe('single space', () => {
+            describe('does not fire a segment value change', () => {
+              test('when the value prop is set', () => {
+                const onChange = jest.fn();
+
+                const { yearInput } = renderDatePicker({
+                  onChange,
+                  value: newUTC(2023, Month.December, 25),
+                });
+                userEvent.type(yearInput, '{space}');
+                expect(onChange).not.toHaveBeenCalled();
+              });
+
+              test('when typing another digit', () => {
+                const onChange = jest.fn();
+
+                const { yearInput } = renderDatePicker({
+                  onChange,
+                });
+                userEvent.type(yearInput, '{space}2');
+                expect(onChange).not.toHaveBeenCalledWith(
+                  expect.objectContaining({ value: ' 2' }),
+                );
+              });
+
+              test('when there is no value', () => {
+                const onChange = jest.fn();
+
+                const { yearInput } = renderDatePicker({
+                  onChange,
+                });
+                userEvent.type(yearInput, '{space}');
+                expect(onChange).not.toHaveBeenCalled();
+              });
+            });
+
+            describe('renders the correct value when the space is', () => {
+              test('at the start of a value', () => {
+                const onChange = jest.fn();
+
+                const { yearInput } = renderDatePicker({
+                  onChange,
+                });
+                userEvent.type(yearInput, '{space}2023');
+                expect(yearInput.value).toBe('2023');
+              });
+
+              test('at the end of a value', () => {
+                const onChange = jest.fn();
+
+                const { yearInput } = renderDatePicker({
+                  onChange,
+                });
+                userEvent.type(yearInput, '2023{space}');
+                expect(yearInput.value).toBe('2023');
+              });
+
+              test('between a value', () => {
+                const onChange = jest.fn();
+
+                const { yearInput } = renderDatePicker({
+                  onChange,
+                });
+                userEvent.type(yearInput, '202{space}3');
+                expect(yearInput.value).toBe('2023');
+              });
+
+              test('in multiple spots', () => {
+                const onChange = jest.fn();
+
+                const { yearInput } = renderDatePicker({
+                  onChange,
+                });
+                userEvent.type(yearInput, '2{space}0{space}2{space}3{space}');
+                expect(yearInput.value).toBe('2023');
+              });
+            });
+
+            test('opens the menu', async () => {
+              const { yearInput, findMenuElements } = renderDatePicker({});
+              userEvent.type(yearInput, '{space}');
+              const { menuContainerEl } = await findMenuElements();
+              expect(menuContainerEl).toBeInTheDocument();
+            });
+          });
+
+          describe('double space', () => {
+            describe('does not fire a segment value change', () => {
+              test('when the value prop is set', () => {
+                const onChange = jest.fn();
+
+                const { yearInput } = renderDatePicker({
+                  onChange,
+                  value: newUTC(2023, Month.December, 25),
+                });
+                userEvent.type(yearInput, '{space}{space}');
+                expect(onChange).not.toHaveBeenCalled();
+              });
+
+              test('when typing another digit', () => {
+                const onChange = jest.fn();
+
+                const { yearInput } = renderDatePicker({
+                  onChange,
+                });
+                userEvent.type(yearInput, '{space}{space}2');
+                expect(onChange).not.toHaveBeenCalledWith(
+                  expect.objectContaining({ value: ' 2' }),
+                );
+              });
+
+              test('when there is no value', () => {
+                const onChange = jest.fn();
+
+                const { yearInput } = renderDatePicker({
+                  onChange,
+                });
+                userEvent.type(yearInput, '{space}{space}');
+                expect(onChange).not.toHaveBeenCalled();
+              });
+
+              test('in multiple spots', () => {
+                const onChange = jest.fn();
+
+                const { yearInput } = renderDatePicker({
+                  onChange,
+                });
+                userEvent.type(
+                  yearInput,
+                  '2{space}{space}0{space}{space}2{space}{space}3{space}{space}',
+                );
+                expect(yearInput.value).toBe('2023');
+              });
+            });
+
+            describe('renders the correct value when the space is', () => {
+              test('at the start of a value', () => {
+                const onChange = jest.fn();
+
+                const { yearInput } = renderDatePicker({
+                  onChange,
+                });
+                userEvent.type(yearInput, '{space}{space}2023');
+                expect(yearInput.value).toBe('2023');
+              });
+
+              test('at the end of a value', () => {
+                const onChange = jest.fn();
+
+                const { yearInput } = renderDatePicker({
+                  onChange,
+                });
+                userEvent.type(yearInput, '2023{space}{space}');
+                expect(yearInput.value).toBe('2023');
+              });
+
+              test('between a value', () => {
+                const onChange = jest.fn();
+
+                const { yearInput } = renderDatePicker({
+                  onChange,
+                });
+                userEvent.type(yearInput, '202{space}{space}3');
+                expect(yearInput.value).toBe('2023');
+              });
+            });
+          });
+        });
+
         test('does not fire a value change handler', () => {
           const onDateChange = jest.fn();
           const { yearInput } = renderDatePicker({

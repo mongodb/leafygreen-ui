@@ -711,6 +711,52 @@ describe('packages/date-picker/shared/date-input-segment', () => {
         });
       });
     });
-    test.todo('Space Key');
+    describe('Space Key', () => {
+      describe('on a single SPACE', () => {
+        describe('does not call the onChangeHandler ', () => {
+          test('when the input is initially empty', () => {
+            const { input } = renderSegment({
+              onChange: onChangeHandler,
+            });
+
+            userEvent.type(input, '{space}');
+            expect(onChangeHandler).not.toHaveBeenCalled();
+          });
+
+          test('when the input has a value', () => {
+            const { input } = renderSegment({
+              onChange: onChangeHandler,
+              value: '12',
+            });
+
+            userEvent.type(input, '{space}');
+            expect(onChangeHandler).not.toHaveBeenCalled();
+          });
+        });
+      });
+
+      describe('on a double SPACE', () => {
+        describe('does not call the onChangeHandler ', () => {
+          test('when the input is initially empty', () => {
+            const { input } = renderSegment({
+              onChange: onChangeHandler,
+            });
+
+            userEvent.type(input, '{space}{space}');
+            expect(onChangeHandler).not.toHaveBeenCalled();
+          });
+
+          test('when the input has a value', () => {
+            const { input } = renderSegment({
+              onChange: onChangeHandler,
+              value: '12',
+            });
+
+            userEvent.type(input, '{space}{space}');
+            expect(onChangeHandler).not.toHaveBeenCalled();
+          });
+        });
+      });
+    });
   });
 });

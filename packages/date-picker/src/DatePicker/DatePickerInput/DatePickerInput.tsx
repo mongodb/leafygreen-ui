@@ -148,6 +148,11 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           break;
         }
 
+        case keyMap.Space: {
+          openMenu();
+          break;
+        }
+
         case keyMap.Enter:
         case keyMap.Escape:
         case keyMap.Tab:
