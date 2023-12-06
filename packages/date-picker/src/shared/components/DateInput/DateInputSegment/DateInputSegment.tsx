@@ -1,7 +1,7 @@
 import React, { ChangeEventHandler, KeyboardEventHandler } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { useForwardedRef, usePrevious } from '@leafygreen-ui/hooks';
+import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap, rollover, truncateStart } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
@@ -48,8 +48,6 @@ export const DateInputSegment = React.forwardRef<
     }: DateInputSegmentProps,
     fwdRef,
   ) => {
-    const prevValue = usePrevious(value);
-
     const min = minProp ?? defaultMin[segment];
     const max = maxProp ?? defaultMax[segment];
 
@@ -70,15 +68,17 @@ export const DateInputSegment = React.forwardRef<
     const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
       const { target } = e;
       const containsPeriod = /\./.test(target.value);
+      let prevValue = value ?? '';
 
       // macOS adds a period when pressing SPACE twice inside a text input.
       // If there is a period replace the value with the prevValue.
-      if (containsPeriod) target.value = prevValue ?? '';
+      if (containsPeriod) target.value = prevValue;
 
-      const numericValue = Number(target.value);
       const isEqualToPrevValue = target.value === prevValue;
+      const numericValue = Number(target.value);
 
       if (!isNaN(numericValue) && !isEqualToPrevValue) {
+        prevValue = target.value;
         const newValue = truncateStart(target.value, {
           length: charsPerSegment[segment],
         });
