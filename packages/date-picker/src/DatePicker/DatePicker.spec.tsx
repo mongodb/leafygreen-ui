@@ -1353,7 +1353,7 @@ describe('packages/date-picker', () => {
         expect(menuContainerEl).not.toBeInTheDocument();
       });
 
-      describe('typing a single segment', () => {
+      describe('into a single segment', () => {
         test('does not fire a value change handler', () => {
           const onDateChange = jest.fn();
           const { yearInput } = renderDatePicker({
@@ -1385,12 +1385,12 @@ describe('packages/date-picker', () => {
 
         test('does not immediately format the segment', () => {
           const onChange = jest.fn();
-          const { dayInput } = renderDatePicker({ onChange });
-          userEvent.type(dayInput, '2');
+          const { monthInput } = renderDatePicker({ onChange });
+          userEvent.type(monthInput, '1');
           expect(onChange).toHaveBeenCalledWith(
-            eventContainingTargetValue('2'),
+            eventContainingTargetValue('1'),
           );
-          expect(dayInput.value).toBe('2');
+          expect(monthInput.value).toBe('1');
         });
 
         describe('typing space', () => {
@@ -1563,7 +1563,7 @@ describe('packages/date-picker', () => {
           });
         });
 
-        describe('auto-advance focus', () => {
+        describe('auto-formatting & auto-focus', () => {
           describe('for ISO format', () => {
             const dateFormat = 'iso8601';
 
@@ -1595,18 +1595,34 @@ describe('packages/date-picker', () => {
               userEvent.type(monthInput, '5');
               expect(dayInput).toHaveFocus();
             });
+            test('when day value is explicit, format the day', async () => {
+              const { dayInput } = renderDatePicker({
+                dateFormat,
+              });
+              userEvent.type(dayInput, '5');
+              expect(dayInput).toHaveFocus();
+              await waitFor(() => expect(dayInput).toHaveValue('05'));
+            });
 
-            test('focus does NOT advance when year value is ambiguous', () => {
+            test('when year value is ambiguous, focus does NOT advance', () => {
               const { yearInput } = renderDatePicker({ dateFormat });
               userEvent.type(yearInput, '200');
               expect(yearInput).toHaveFocus();
             });
-            test('focus does NOT advance when month value is ambiguous', () => {
+            test('when month value is ambiguous, focus does NOT advance', () => {
               const { monthInput } = renderDatePicker({
                 dateFormat,
               });
               userEvent.type(monthInput, '1');
               expect(monthInput).toHaveFocus();
+            });
+            test('when day value is ambiguous, segment is NOT formatted', async () => {
+              const { dayInput } = renderDatePicker({
+                dateFormat,
+              });
+              userEvent.type(dayInput, '2');
+              expect(dayInput).toHaveFocus();
+              await waitFor(() => expect(dayInput).toHaveValue('2'));
             });
           });
 
@@ -1620,7 +1636,6 @@ describe('packages/date-picker', () => {
               userEvent.type(monthInput, '5');
               expect(dayInput).toHaveFocus();
             });
-
             test('when day value is explicit, focus advances to year', () => {
               const { dayInput, yearInput } = renderDatePicker({
                 dateFormat,
@@ -1628,26 +1643,32 @@ describe('packages/date-picker', () => {
               userEvent.type(dayInput, '5');
               expect(yearInput).toHaveFocus();
             });
+            test('when year value is explicit, segment value is set', () => {
+              const { yearInput } = renderDatePicker({
+                dateFormat,
+              });
+              userEvent.type(yearInput, '1999');
+              expect(yearInput).toHaveFocus();
+              expect(yearInput).toHaveValue('1999');
+            });
 
-            test('focus does NOT advance when month value is ambiguous', () => {
+            test('when month value is ambiguous, focus does NOT advance', () => {
               const { monthInput } = renderDatePicker({ dateFormat });
               userEvent.type(monthInput, '1');
               expect(monthInput).toHaveFocus();
             });
-            test('focus does NOT advance when day value is ambiguous', () => {
+            test('when day value is ambiguous, focus does NOT advance', () => {
               const { dayInput } = renderDatePicker({ dateFormat });
               userEvent.type(dayInput, '2');
               expect(dayInput).toHaveFocus();
             });
-
-            test('focus does NOT update when year value is ambiguous', () => {
-              const { monthInput, dayInput, yearInput } = renderDatePicker({
+            test('when year value is ambiguous, segment does not format', async () => {
+              const { yearInput } = renderDatePicker({
                 dateFormat,
               });
-              userEvent.type(monthInput, '5');
-              userEvent.type(dayInput, '5');
-              userEvent.type(yearInput, '2');
+              userEvent.type(yearInput, '200');
               expect(yearInput).toHaveFocus();
+              await waitFor(() => expect(yearInput).toHaveValue('200'));
             });
           });
         });
@@ -1771,15 +1792,36 @@ describe('packages/date-picker', () => {
           expect(yearInput).toHaveValue('20');
         });
 
-        test('typing new characters does not format the segment', () => {
-          const { yearInput, monthInput, dayInput } = renderDatePicker({});
-          userEvent.type(yearInput, '2019');
-          userEvent.type(monthInput, '6');
-          userEvent.type(dayInput, '1');
+        describe.only('typing new characters', () => {
+          test('does not immediately format the year', () => {
+            const { yearInput, monthInput, dayInput } = renderDatePicker({});
+            userEvent.type(yearInput, '2019');
+            userEvent.type(monthInput, '6');
+            userEvent.type(dayInput, '1');
 
-          userEvent.type(yearInput, '9');
-          userEvent.type(yearInput, '9');
-          expect(yearInput).toHaveValue('1999');
+            userEvent.type(yearInput, '9');
+            userEvent.type(yearInput, '9');
+            expect(yearInput).toHaveValue('1999');
+          });
+
+          test('appends to the segment value if the resulting value is valid', () => {
+            const { monthInput } = renderDatePicker({});
+            userEvent.type(monthInput, '1');
+            userEvent.tab();
+            expect(monthInput).toHaveValue('01');
+            userEvent.type(monthInput, '2');
+            expect(monthInput).toHaveValue('12');
+          });
+
+          describe('if the resulting value is not valid', () => {
+            test('overwrites the segment with the incoming digit', () => {
+              const { monthInput } = renderDatePicker({});
+              userEvent.type(monthInput, '6');
+              expect(monthInput).toHaveValue('06');
+              userEvent.type(monthInput, '9');
+              expect(monthInput).toHaveValue('09');
+            });
+          });
         });
       });
 

@@ -12,13 +12,12 @@ import { DateFormField, DateInputBox } from '../../shared/components/DateInput';
 import { DateInputSegmentChangeEventHandler } from '../../shared/components/DateInput/DateInputSegment';
 import { useDatePickerContext } from '../../shared/components/DatePickerContext';
 import {
+  getRelativeSegmentRef,
   isElementInputSegment,
-  isExplicitSegmentValue,
   isSameUTCDay,
   isZeroLike,
 } from '../../shared/utils';
 import { useSingleDateContext } from '../SingleDateContext';
-import { getRelativeSegment } from '../utils/getRelativeSegment';
 import { getSegmentToFocus } from '../utils/getSegmentToFocus';
 
 import { DatePickerInputProps } from './DatePickerInput.types';
@@ -99,7 +98,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           // or the cursor is at the beginning of the input
           // set focus to prev. input (if it exists)
           if (isSegmentEmpty || selectionStart === 0) {
-            const segmentToFocus = getRelativeSegment('prev', {
+            const segmentToFocus = getRelativeSegmentRef('prev', {
               segment: target,
               formatParts,
               segmentRefs,
@@ -117,7 +116,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           // or the cursor is at the end of the input
           // set focus to next. input (if it exists)
           if (isSegmentEmpty || selectionEnd === target.value.length) {
-            const segmentToFocus = getRelativeSegment('next', {
+            const segmentToFocus = getRelativeSegmentRef('next', {
               segment: target,
               formatParts,
               segmentRefs,
@@ -138,7 +137,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
 
         case keyMap.Backspace: {
           if (isSegmentEmpty) {
-            const segmentToFocus = getRelativeSegment('prev', {
+            const segmentToFocus = getRelativeSegmentRef('prev', {
               segment: target,
               formatParts,
               segmentRefs,
@@ -188,21 +187,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
      */
     const handleSegmentChange: DateInputSegmentChangeEventHandler =
       segmentChangeEvent => {
-        const { segment, value: segmentValue, meta } = segmentChangeEvent;
-        const changedViaArrowKeys =
-          meta?.key === keyMap.ArrowDown || meta?.key === keyMap.ArrowUp;
-
-        if (!changedViaArrowKeys) {
-          if (isExplicitSegmentValue(segment, segmentValue)) {
-            const nextSegment = getRelativeSegment('next', {
-              segment: segmentRefs[segment],
-              formatParts,
-              segmentRefs,
-            });
-
-            nextSegment?.current?.focus();
-          }
-        }
+        const { segment } = segmentChangeEvent;
 
         if (isDirty) {
           handleValidation?.(value);
