@@ -3,16 +3,18 @@ import { isSameDay } from 'date-fns';
 
 import { usePrevious } from '@leafygreen-ui/hooks';
 
-import { DateType } from '../../types';
-import { getFormattedSegmentsFromDate } from '../../utils';
-
 import {
   DateSegment,
   DateSegmentsState,
   DateSegmentValue,
+  DateType,
+} from '../../types';
+import { getFormattedSegmentsFromDate } from '../../utils';
+
+import {
   UseDateSegmentsOptions,
   UseDateSegmentsReturnValue,
-} from './DateSegments.types';
+} from './useDateSegments.types';
 
 /** Merges old state & new state */
 const dateSegmentsReducer = (

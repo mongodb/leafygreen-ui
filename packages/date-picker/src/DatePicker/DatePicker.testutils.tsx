@@ -9,12 +9,12 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { DateSegment, pickAndOmit } from '../shared';
 import {
   ContextPropKeys,
   contextPropNames,
 } from '../shared/components/DatePickerContext';
-import { getISODate } from '../shared/utils/getISODate';
+import { DateSegment } from '../shared/types';
+import { getISODate, pickAndOmit } from '../shared/utils';
 
 import { DatePickerProps } from './DatePicker.types';
 import { DatePicker } from '.';

@@ -1,5 +1,5 @@
 import { charsPerSegment } from '../../constants';
-import { DateSegment } from '../../hooks';
+import { DateSegment } from '../../types';
 
 /**
  * Returns the maxLength of a segment

@@ -1,5 +1,4 @@
-import { DateSegment } from '../../hooks';
-import { AutoComplete } from '../../types';
+import { AutoComplete, DateSegment } from '../../types';
 
 import { getAutoComplete } from '.';
 

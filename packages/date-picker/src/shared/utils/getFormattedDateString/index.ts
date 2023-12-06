@@ -1,4 +1,4 @@
-import { DateSegment } from '../../hooks';
+import { DateSegment } from '../../types';
 import { getFormatParts } from '../getFormatParts';
 import { getFormattedSegmentsFromDate } from '../getSegmentsFromDate';
 

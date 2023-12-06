@@ -6,13 +6,13 @@ import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 
+import { useDateSegments } from '../../../hooks';
 import {
   DateSegment,
   DateSegmentsState,
   DateSegmentValue,
   isDateSegment,
-  useDateSegments,
-} from '../../../hooks';
+} from '../../../types';
 import {
   doesSomeSegmentExist,
   getMaxSegmentValue,

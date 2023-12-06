@@ -3,7 +3,7 @@ import last from 'lodash/last';
 import { truncateStart } from '@leafygreen-ui/lib';
 
 import { charsPerSegment } from '../../../../constants';
-import { DateSegment, DateSegmentValue } from '../../../../hooks';
+import { DateSegment, DateSegmentValue } from '../../../../types';
 import { getValueFormatter, isValidValueForSegment } from '../../../../utils';
 
 /**

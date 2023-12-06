@@ -1,6 +1,6 @@
 import { DarkModeProps, HTMLElementProps, keyMap } from '@leafygreen-ui/lib';
 
-import { DateSegment, DateSegmentValue } from '../../../hooks';
+import { DateSegment, DateSegmentValue } from '../../../types';
 
 export interface DateInputSegmentChangeEvent {
   segment: DateSegment;
