@@ -4,6 +4,13 @@ import { FormFieldState } from '@leafygreen-ui/form-field';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
+export {
+  DateSegment,
+  type DateSegmentsState,
+  type DateSegmentValue,
+  isDateSegment,
+} from './DateSegment.types';
+
 export const DatePickerState = omit(FormFieldState, 'Valid');
 export type DatePickerState =
   (typeof DatePickerState)[keyof typeof DatePickerState];
