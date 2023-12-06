@@ -1,6 +1,7 @@
-import { Month } from '../constants';
+import { Month } from '../../constants';
+import { testTimeZones } from '../testValues';
 
-import { mockTimeZone, testTimeZones } from './testutils';
+import { mockTimeZone } from '.';
 
 describe('packages/date-picker/testutils/', () => {
   describe('mockTimeZone', () => {
@@ -40,7 +41,7 @@ describe('packages/date-picker/testutils/', () => {
 
         const now = new Date(Date.now());
         expect(now.getDate()).toBe(UTCOffset < 0 ? 24 : 25);
-        expect(now.getHours()).toBe(UTCOffset);
+        expect(now.getHours()).toBe(UTCOffset < 0 ? 24 + UTCOffset : UTCOffset);
         expect(now.getMinutes()).toBe(0);
       });
     });

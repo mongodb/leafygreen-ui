@@ -6,11 +6,10 @@ import { addDays } from 'date-fns';
 import {
   DatePickerProvider,
   DatePickerProviderProps,
-  defaultDatePickerContext,
 } from '../../shared/components/DatePickerContext';
 import { Month } from '../../shared/constants';
+import { mockTimeZone, testTimeZones } from '../../shared/testutils';
 import { getISODate, newUTC, setUTCDate } from '../../shared/utils';
-import { mockTimeZone, testTimeZones } from '../../shared/utils/testutils';
 import {
   SingleDateProvider,
   SingleDateProviderProps,

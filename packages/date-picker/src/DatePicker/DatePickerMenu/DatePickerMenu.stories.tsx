@@ -17,8 +17,8 @@ import {
   defaultDatePickerContext,
 } from '../../shared/components/DatePickerContext';
 import { Month } from '../../shared/constants';
+import { Locales, TimeZones } from '../../shared/testutils';
 import { newUTC } from '../../shared/utils';
-import { Locales, TimeZones } from '../../shared/utils/testutils';
 import { getProviderPropsFromStoryArgs } from '../DatePicker.testutils';
 import {
   type SingleDateContextProps,

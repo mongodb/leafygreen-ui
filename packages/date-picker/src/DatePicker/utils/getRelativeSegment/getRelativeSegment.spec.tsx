@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 
 import { SegmentRefs } from '../../../shared/hooks';
-import { segmentRefsMock } from '../../../shared/utils/testutils';
+import { segmentRefsMock } from '../../../shared/testutils';
 
 import { getRelativeSegment } from '.';
 

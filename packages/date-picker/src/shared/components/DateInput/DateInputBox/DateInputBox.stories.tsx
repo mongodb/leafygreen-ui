@@ -7,8 +7,8 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { pickAndOmit, StoryMetaType, StoryType } from '@leafygreen-ui/lib';
 
 import { Month } from '../../../constants';
+import { Locales, segmentRefsMock } from '../../../testutils';
 import { newUTC } from '../../../utils';
-import { Locales, segmentRefsMock } from '../../../utils/testutils';
 import {
   contextPropNames,
   DatePickerContextProps,

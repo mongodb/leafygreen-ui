@@ -4,8 +4,8 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { Month } from '../../../constants';
+import { segmentRefsMock } from '../../../testutils';
 import { newUTC } from '../../../utils';
-import { segmentRefsMock } from '../../../utils/testutils';
 import {
   DatePickerProvider,
   DatePickerProviderProps,

@@ -13,9 +13,9 @@ import {
   DatePickerProvider,
 } from '../shared/components/DatePickerContext';
 import { Month } from '../shared/constants';
+import { Locales, TimeZones } from '../shared/testutils';
 import { AutoComplete } from '../shared/types';
 import { newUTC } from '../shared/utils';
-import { Locales, TimeZones } from '../shared/utils/testutils';
 
 import { DatePicker } from './DatePicker';
 import { getProviderPropsFromStoryArgs } from './DatePicker.testutils';
