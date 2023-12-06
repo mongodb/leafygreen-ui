@@ -1354,6 +1354,45 @@ describe('packages/date-picker', () => {
       });
 
       describe('typing a single segment', () => {
+        test('does not fire a value change handler', () => {
+          const onDateChange = jest.fn();
+          const { yearInput } = renderDatePicker({
+            onDateChange,
+          });
+          userEvent.type(yearInput, '2023');
+          expect(onDateChange).not.toHaveBeenCalled();
+        });
+
+        test('does not fire a validation handler', () => {
+          const handleValidation = jest.fn();
+          const { yearInput } = renderDatePicker({
+            handleValidation,
+          });
+          userEvent.type(yearInput, '2023');
+          expect(handleValidation).not.toHaveBeenCalled();
+        });
+
+        test('fires a segment change handler', () => {
+          const onChange = jest.fn();
+          const { yearInput } = renderDatePicker({
+            onChange,
+          });
+          userEvent.type(yearInput, '2023');
+          expect(onChange).toHaveBeenCalledWith(
+            eventContainingTargetValue('2023'),
+          );
+        });
+
+        test('does not immediately format the segment', () => {
+          const onChange = jest.fn();
+          const { dayInput } = renderDatePicker({ onChange });
+          userEvent.type(dayInput, '2');
+          expect(onChange).toHaveBeenCalledWith(
+            eventContainingTargetValue('2'),
+          );
+          expect(dayInput.value).toBe('2');
+        });
+
         describe('typing space', () => {
           describe('single space', () => {
             describe('does not fire a segment value change', () => {
@@ -1522,47 +1561,6 @@ describe('packages/date-picker', () => {
               });
             });
           });
-        });
-
-        test('does not fire a value change handler', () => {
-          const onDateChange = jest.fn();
-          const { yearInput } = renderDatePicker({
-            onDateChange,
-          });
-          userEvent.type(yearInput, '2023');
-          expect(onDateChange).not.toHaveBeenCalled();
-        });
-
-        test('fires a segment change handler', () => {
-          const onChange = jest.fn();
-          const { yearInput } = renderDatePicker({
-            onChange,
-          });
-          userEvent.type(yearInput, '2023');
-          expect(onChange).toHaveBeenCalledWith(
-            eventContainingTargetValue('2023'),
-          );
-        });
-
-        test('does not immediately format the segment', () => {
-          const onChange = jest.fn();
-          const { dayInput } = renderDatePicker({ onChange });
-          userEvent.type(dayInput, '2');
-          expect(onChange).toHaveBeenCalledWith(
-            eventContainingTargetValue('2'),
-          );
-          expect(dayInput.value).toBe('2');
-        });
-
-        test('formats on segment blur', () => {
-          const onChange = jest.fn();
-          const { dayInput } = renderDatePicker({ onChange });
-          userEvent.type(dayInput, '2');
-          userEvent.tab();
-          expect(onChange).toHaveBeenCalledWith(
-            eventContainingTargetValue('02'),
-          );
-          expect(dayInput.value).toBe('02');
         });
 
         describe('auto-advance focus', () => {
@@ -1785,17 +1783,7 @@ describe('packages/date-picker', () => {
         });
       });
 
-      describe('on un-focus/blur', () => {
-        test('does not fire a value change handler if the value is incomplete', () => {
-          const onDateChange = jest.fn();
-          const { yearInput } = renderDatePicker({
-            onDateChange,
-          });
-          userEvent.type(yearInput, '2023');
-          userEvent.tab();
-          expect(onDateChange).not.toHaveBeenCalled();
-        });
-
+      describe('on segment un-focus/blur', () => {
         test('fires a segment change handler', () => {
           const onChange = jest.fn();
           const { yearInput } = renderDatePicker({ onChange });
@@ -1806,45 +1794,70 @@ describe('packages/date-picker', () => {
           );
         });
 
-        test('fires a value change handler when the value is a valid date', () => {
-          const onDateChange = jest.fn();
-          const { yearInput, monthInput, dayInput } = renderDatePicker({
-            onDateChange,
-          });
-          userEvent.type(yearInput, '2023');
-          userEvent.type(monthInput, '12');
-          userEvent.type(dayInput, '26');
+        test('formats the segment', () => {
+          const onChange = jest.fn();
+          const { dayInput } = renderDatePicker({ onChange });
+          userEvent.type(dayInput, '2');
           userEvent.tab();
-          expect(onDateChange).toHaveBeenCalledWith(
-            expect.objectContaining(newUTC(2023, Month.December, 26)),
+          expect(onChange).toHaveBeenCalledWith(
+            eventContainingTargetValue('02'),
           );
+          expect(dayInput.value).toBe('02');
         });
 
-        test('fires a validation handler when the value is first set', () => {
-          const handleValidation = jest.fn();
-          const { yearInput, monthInput, dayInput } = renderDatePicker({
-            handleValidation,
+        describe('if the date value is incomplete', () => {
+          test('does not fire a value change handler', () => {
+            const onDateChange = jest.fn();
+            const { yearInput } = renderDatePicker({
+              onDateChange,
+            });
+            userEvent.type(yearInput, '2023');
+            userEvent.tab();
+            expect(onDateChange).not.toHaveBeenCalled();
           });
-          userEvent.type(yearInput, '2023');
-          userEvent.type(monthInput, '12');
-          userEvent.type(dayInput, '26');
-          userEvent.tab();
-          expect(handleValidation).toHaveBeenCalledWith(
-            expect.objectContaining(newUTC(2023, Month.December, 26)),
-          );
         });
 
-        test('fires a validation handler any time the value is updated', () => {
-          const handleValidation = jest.fn();
-          const { dayInput } = renderDatePicker({
-            value: new Date(),
-            handleValidation,
+        describe('if the date value is valid', () => {
+          test('fires a value change handler', () => {
+            const onDateChange = jest.fn();
+            const { yearInput, monthInput, dayInput } = renderDatePicker({
+              onDateChange,
+            });
+            userEvent.type(yearInput, '2023');
+            userEvent.type(monthInput, '12');
+            userEvent.type(dayInput, '26');
+            userEvent.tab();
+            expect(onDateChange).toHaveBeenCalledWith(
+              expect.objectContaining(newUTC(2023, Month.December, 26)),
+            );
           });
-          userEvent.type(dayInput, '05');
-          userEvent.tab();
-          expect(handleValidation).toHaveBeenCalledWith(
-            expect.objectContaining(newUTC(2023, Month.December, 5)),
-          );
+
+          test('fires a validation handler when the value is first set', () => {
+            const handleValidation = jest.fn();
+            const { yearInput, monthInput, dayInput } = renderDatePicker({
+              handleValidation,
+            });
+            userEvent.type(yearInput, '2023');
+            userEvent.type(monthInput, '12');
+            userEvent.type(dayInput, '26');
+            userEvent.tab();
+            expect(handleValidation).toHaveBeenCalledWith(
+              expect.objectContaining(newUTC(2023, Month.December, 26)),
+            );
+          });
+
+          test('fires a validation handler any time the value is updated', () => {
+            const handleValidation = jest.fn();
+            const { dayInput } = renderDatePicker({
+              value: new Date(),
+              handleValidation,
+            });
+            userEvent.type(dayInput, '05');
+            userEvent.tab();
+            expect(handleValidation).toHaveBeenCalledWith(
+              expect.objectContaining(newUTC(2023, Month.December, 5)),
+            );
+          });
         });
       });
     });
