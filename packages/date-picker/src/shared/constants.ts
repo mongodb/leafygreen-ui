@@ -31,18 +31,6 @@ export const MIN_DATE = new Date(Date.UTC(1970, Month.January, 1));
  */
 export const MAX_DATE = new Date(Date.UTC(2038, Month.January, 19));
 
-/** Long & short form for each Day of the week */
-export const DaysOfWeek = [
-  { long: 'Sunday', short: 'su' },
-  { long: 'Monday', short: 'mo' },
-  { long: 'Tuesday', short: 'tu' },
-  { long: 'Wednesday', short: 'we' },
-  { long: 'Thursday', short: 'th' },
-  { long: 'Friday', short: 'fr' },
-  { long: 'Saturday', short: 'sa' },
-] as const;
-export type DaysOfWeek = (typeof DaysOfWeek)[number];
-
 // TODO: Update how defaultMin & defaultMax are defined,
 // since day/month are constants,
 // but year is consumer-defined

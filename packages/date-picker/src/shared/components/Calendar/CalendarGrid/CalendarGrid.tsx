@@ -5,8 +5,8 @@ import { getWeekStartByLocale } from 'weekstart';
 import { cx } from '@leafygreen-ui/emotion';
 import { Disclaimer } from '@leafygreen-ui/typography';
 
-import { DaysOfWeek, daysPerWeek } from '../../../constants';
-import { getWeeksArray } from '../../../utils';
+import { daysPerWeek } from '../../../constants';
+import { getLocaleWeekdays, getWeeksArray } from '../../../utils';
 import { useDatePickerContext } from '../../DatePickerContext';
 
 import {
@@ -54,16 +54,16 @@ export const CalendarGrid = forwardRef<HTMLTableElement, CalendarGridProps>(
           <tr role="row">
             {range(daysPerWeek).map(i => {
               const dayIndex = (i + weekStartsOn) % daysPerWeek;
-              const day = DaysOfWeek[dayIndex];
+              const day = getLocaleWeekdays(dateFormat)[dayIndex];
               return (
                 <th
                   role="columnheader"
-                  key={day.short}
+                  key={day.long}
                   abbr={day.long}
                   className={calendarThStyles}
                 >
                   <Disclaimer className={calendarHeaderCellStyles}>
-                    {day.short}
+                    {day.short ?? day.abbr}
                   </Disclaimer>
                 </th>
               );

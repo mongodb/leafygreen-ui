@@ -37,10 +37,10 @@ export const DatePickerMenuHeader = forwardRef<
   HTMLDivElement,
   DatePickerMenuHeaderProps
 >(({ setMonth, ...rest }: DatePickerMenuHeaderProps, fwdRef) => {
-  const { min, max, setIsSelectOpen } = useDatePickerContext();
+  const { min, max, setIsSelectOpen, dateFormat } = useDatePickerContext();
   const { month } = useSingleDateContext();
 
-  const monthOptions = getLocaleMonths();
+  const monthOptions = getLocaleMonths(dateFormat);
   const yearOptions = range(min.getUTCFullYear(), max.getUTCFullYear() + 1);
 
   const updateMonth = (newMonth: Date) => {
