@@ -32,7 +32,7 @@ export const DatePickerMenuHeader = forwardRef<
   HTMLDivElement,
   DatePickerMenuHeaderProps
 >(({ setMonth, ...rest }: DatePickerMenuHeaderProps, fwdRef) => {
-  const { min, max, setIsSelectOpen } = useDatePickerContext();
+  const { min, max, setIsSelectOpen, isInRange } = useDatePickerContext();
   const { month } = useSingleDateContext();
 
   const yearOptions = range(min.getUTCFullYear(), max.getUTCFullYear() + 1);
@@ -44,6 +44,67 @@ export const DatePickerMenuHeader = forwardRef<
   };
 
   /**
+   * Checks if chevron should be disabled
+   *
+   *
+   * @param direction
+   * @param day1
+   * @param day2
+   * @returns
+   */
+  const testingThis = (
+    direction: 'l' | 'r',
+    day1?: Date | null, // month
+    day2?: Date | null, // min/max
+  ): boolean => {
+    if (!day1 || !day2) return false;
+
+    if (direction === 'r') {
+      console.log('👉🏾right', {
+        month,
+        // isMonthLess: day1.getUTCMonth() >= day2.getUTCMonth(),
+        // isYearLess: day1.getUTCFullYear() >= day2.getUTCFullYear(),
+        // isDisabled:
+        //   day1.getUTCMonth() >= day2.getUTCMonth() &&
+        //   day1.getUTCFullYear() >= day2.getUTCFullYear(),
+      });
+
+      return (
+        // day1.getUTCMonth() >= day2.getUTCMonth() &&
+        // day1.getUTCFullYear() >= day2.getUTCFullYear()
+        day1 >= day2 || isSameUTCMonth(day1, day2)
+      );
+    } else {
+      // console.log('👈🏽left', {
+      //   month,
+      //   selectedYearDate: day1.getUTCFullYear(),
+      //   minYearDate: day2.getUTCFullYear(),
+      //   isMonthLess: day1.getUTCMonth() <= day2.getUTCMonth(),
+      //   isYearLess: day1.getUTCFullYear() <= day2.getUTCFullYear(),
+      //   isDisabled: day1 <= day2,
+      //   // isDisabled:
+      //   //   day1.getUTCMonth() <= day2.getUTCMonth() &&
+      //   //   day1.getUTCFullYear() <= day2.getUTCFullYear(),
+      // });
+      return (
+        // day1.getUTCMonth() <= day2.getUTCMonth() &&
+        // day1.getUTCFullYear() <= day2.getUTCFullYear()
+        day1 <= day2 || isSameUTCMonth(day1, day2)
+      );
+    }
+
+    // return (
+    //   day1.getUTCMonth() <= day2.getUTCMonth() &&
+    //   day1.getUTCFullYear() <= day2.getUTCFullYear()
+    // );
+
+    // return (
+    //   day1.getUTCMonth() === day2.getUTCMonth() &&
+    //   day1.getUTCFullYear() === day2.getUTCFullYear()
+    // );
+  };
+
+  /**
    * Calls the `updateMonth` helper with the appropriate month when a Chevron is clicked
    */
   const handleChevronClick =
@@ -51,10 +112,34 @@ export const DatePickerMenuHeader = forwardRef<
     e => {
       e.stopPropagation();
       e.preventDefault();
-      const increment = dir === 'left' ? -1 : 1;
-      const newMonthIndex = month.getUTCMonth() + increment;
-      const newMonth = setUTCMonth(month, newMonthIndex);
-      updateMonth(newMonth);
+
+      const isOnLastValidMonth = isSameUTCMonth(
+        month,
+        dir === 'left' ? max : min,
+      );
+
+      console.log({
+        'isSameUTCMonth(month, max)': isSameUTCMonth(month, max),
+        month,
+        max,
+      });
+
+      const isDateInRange = isInRange(month);
+
+      console.log({ isDateInRange, isOnLastValidMonth });
+
+      if (!isDateInRange && !isOnLastValidMonth) {
+        console.log('😈😈😈😈needs to go to the next valid month');
+        const newDate = dir === 'left' ? max : min;
+        const newMonthIndex = newDate.getUTCMonth();
+        const newMonth = setUTCMonth(newDate, newMonthIndex);
+        updateMonth(newMonth);
+      } else {
+        const increment = dir === 'left' ? -1 : 1;
+        const newMonthIndex = month.getUTCMonth() + increment;
+        const newMonth = setUTCMonth(month, newMonthIndex);
+        updateMonth(newMonth);
+      }
     };
 
   /** Returns whether the provided month should be enabled */
@@ -65,7 +150,8 @@ export const DatePickerMenuHeader = forwardRef<
     <div ref={fwdRef} className={menuHeaderStyles} {...rest}>
       <IconButton
         aria-label="Previous month"
-        disabled={isSameUTCMonth(month, min)}
+        disabled={testingThis('l', month, min)}
+        // disabled={isSameUTCMonth(month, min)}
         onClick={handleChevronClick('left')}
       >
         <Icon glyph="ChevronLeft" />
@@ -117,7 +203,8 @@ export const DatePickerMenuHeader = forwardRef<
       </div>
       <IconButton
         aria-label="Next month"
-        disabled={isSameUTCMonth(month, max)}
+        disabled={testingThis('r', month, max)}
+        // disabled={isSameUTCMonth(month, max)}
         onClick={handleChevronClick('right')}
       >
         <Icon glyph="ChevronRight" />
