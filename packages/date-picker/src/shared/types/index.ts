@@ -63,15 +63,13 @@ export interface BaseDatePickerProps extends DarkModeProps {
    * Sets the _presentation format_ for the displayed date.
    * Fallback to the user’s browser preference (if supported), otherwise ISO-8601.
    *
-   * Currently only the following values are officially supported.
+   * Currently only the following values are officially supported: 'en-US' | 'en-GB' | 'iso8601'
    * Other valid [Locale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
    * strings may work, however no assurances are made.
    *
-   * @enum 'en-US' | 'en-GB' | 'iso8601'
-   *
    * @default 'iso8601'
    */
-  dateFormat?: 'iso8601' | `${string}-${string}`;
+  dateFormat?: 'iso8601' | string;
 
   /**
    * A valid IANA timezone string, or UTC offset.

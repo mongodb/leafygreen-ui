@@ -1,4 +1,4 @@
-import React, { forwardRef, MouseEventHandler } from 'react';
+import React, { forwardRef, MouseEventHandler, useCallback } from 'react';
 import range from 'lodash/range';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -64,8 +64,11 @@ export const DatePickerMenuHeader = forwardRef<
     };
 
   /** Returns whether the provided month should be enabled */
-  const isMonthEnabled = (monthName: string) =>
-    shouldMonthBeEnabled(monthName, { month, min, max });
+  const isMonthEnabled = useCallback(
+    (monthName: string) =>
+      shouldMonthBeEnabled(monthName, { month, min, max, locale: dateFormat }),
+    [dateFormat, max, min, month],
+  );
 
   return (
     <div ref={fwdRef} className={menuHeaderStyles} {...rest}>
