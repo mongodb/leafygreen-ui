@@ -55,7 +55,8 @@ export interface MonthObject {
   short: string;
 }
 /**
- * Long & short form of each month index. Updates based on locale
+ * Long & short form of each month index.
+ * Updates based on locale
  */
 export const Months: Array<MonthObject> = range(12).map(
   (monthIndex: number) => {

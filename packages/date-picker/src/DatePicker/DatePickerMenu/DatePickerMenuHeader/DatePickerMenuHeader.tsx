@@ -17,7 +17,7 @@ import {
   selectTruncateStyles,
 } from '../DatePickerMenu.styles';
 
-import { shouldMonthBeEnabled } from './utils/getMonthOptions';
+import { shouldMonthBeEnabled } from './utils/shouldMonthBeEnabled';
 
 interface DatePickerMenuHeaderProps {
   setMonth: (newMonth: Date) => void;
