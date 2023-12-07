@@ -13,11 +13,8 @@ import {
   DatePickerProvider,
 } from './shared/components/DatePickerContext';
 import { Month } from './shared/constants';
-import {
-  getProviderPropsFromStoryContext,
-  Locales,
-  TimeZones,
-} from './shared/testutils';
+import { getProviderPropsFromStoryContext } from './shared/testutils/getProviderPropsFromStoryContext';
+import { Locales, TimeZones } from './shared/testutils/testValues';
 import { AutoComplete } from './shared/types';
 import { newUTC } from './shared/utils';
 import { DatePicker } from './DatePicker';
