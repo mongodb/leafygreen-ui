@@ -54,16 +54,16 @@ export const CalendarGrid = forwardRef<HTMLTableElement, CalendarGridProps>(
           <tr role="row">
             {range(daysPerWeek).map(i => {
               const dayIndex = (i + weekStartsOn) % daysPerWeek;
-              const day = getLocaleWeekdays(dateFormat)[dayIndex];
+              const weekday = getLocaleWeekdays(dateFormat)[dayIndex];
               return (
                 <th
                   role="columnheader"
-                  key={day.long}
-                  abbr={day.long}
+                  key={weekday.long}
+                  abbr={weekday.long}
                   className={calendarThStyles}
                 >
                   <Disclaimer className={calendarHeaderCellStyles}>
-                    {day.short ?? day.abbr}
+                    {weekday.short ?? weekday.abbr}
                   </Disclaimer>
                 </th>
               );

@@ -1,5 +1,5 @@
 import { MonthObject } from '../../types';
-import { isValidLocale } from '../isValidLocale';
+import { normalizeLocale } from '../normalizeLocale';
 
 /**
  * Returns the month name from a given index and optional locale
@@ -9,7 +9,7 @@ export const getMonthName = (
   locale?: string,
 ): MonthObject => {
   // Use the default system locale if the provided value is invalid
-  locale = isValidLocale(locale) ? locale : undefined;
+  locale = normalizeLocale(locale);
   return {
     long: new Date(2020, monthIndex, 15).toLocaleString(locale, {
       month: 'long',

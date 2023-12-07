@@ -2,32 +2,33 @@ import { truncate } from 'lodash';
 
 import { Month } from '../../constants';
 import { WeekdayObject } from '../../types';
-import { isValidLocale } from '../isValidLocale';
+import { normalizeLocale } from '../normalizeLocale';
 
 export const getWeekdayName = (
   day: number,
   localeStr?: string,
 ): WeekdayObject => {
   // Use the default system locale if the provided value is invalid
-  localeStr = isValidLocale(localeStr) ? localeStr : 'en-US';
+  localeStr = normalizeLocale(localeStr);
   day = (day % 7) + 1;
+  const sampleDate = new Date(2000, Month.October, day); // October 1 2000 was a Sunday
 
-  // TODO: format a sample date using `date-fns/format`
+  // TODO: format the sample date using `date-fns/format`
   // and unicode date field symbols https://unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table
   return {
-    long: new Date(2000, Month.October, day).toLocaleDateString(localeStr, {
+    long: sampleDate.toLocaleDateString(localeStr, {
       weekday: 'long',
     }),
-    abbr: new Date(2000, Month.October, day).toLocaleDateString(localeStr, {
+    abbr: sampleDate.toLocaleDateString(localeStr, {
       weekday: 'short',
     }),
     short: truncate(
-      new Date(2000, Month.October, day).toLocaleDateString(localeStr, {
+      sampleDate.toLocaleDateString(localeStr, {
         weekday: 'short',
       }),
       { length: 2, omission: '' },
     ),
-    narrow: new Date(2000, Month.October, day).toLocaleDateString(localeStr, {
+    narrow: sampleDate.toLocaleDateString(localeStr, {
       weekday: 'narrow',
     }),
   };
