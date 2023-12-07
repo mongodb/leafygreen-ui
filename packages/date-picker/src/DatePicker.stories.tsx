@@ -52,7 +52,7 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
       combineArgs: {
         darkMode: [false, true],
         value: [newUTC(2023, Month.December, 26)],
-        dateFormat: ['iso8601', 'en-US', 'en-UK', 'de-DE'],
+        locale: ['iso8601', 'en-US', 'en-UK', 'de-DE'],
         timeZone: ['UTC', 'Europe/London', 'America/New_York', 'Asia/Seoul'],
         disabled: [false, true],
       },
@@ -60,14 +60,14 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
     },
   },
   args: {
-    dateFormat: 'iso8601',
+    locale: 'iso8601',
     label: 'Pick a date',
     size: Size.Default,
     autoComplete: AutoComplete.Off,
   },
   argTypes: {
     baseFontSize: { control: 'select' },
-    dateFormat: { control: 'select', options: Locales },
+    locale: { control: 'select', options: Locales },
     description: { control: 'text' },
     label: { control: 'text' },
     min: { control: 'date' },

@@ -37,10 +37,10 @@ export const DatePickerMenuHeader = forwardRef<
   HTMLDivElement,
   DatePickerMenuHeaderProps
 >(({ setMonth, ...rest }: DatePickerMenuHeaderProps, fwdRef) => {
-  const { min, max, setIsSelectOpen, dateFormat } = useDatePickerContext();
+  const { min, max, setIsSelectOpen, locale } = useDatePickerContext();
   const { month } = useSingleDateContext();
 
-  const monthOptions = getLocaleMonths(dateFormat);
+  const monthOptions = getLocaleMonths(locale);
   const yearOptions = range(min.getUTCFullYear(), max.getUTCFullYear() + 1);
 
   const updateMonth = (newMonth: Date) => {
@@ -66,8 +66,8 @@ export const DatePickerMenuHeader = forwardRef<
   /** Returns whether the provided month should be enabled */
   const isMonthEnabled = useCallback(
     (monthName: string) =>
-      shouldMonthBeEnabled(monthName, { month, min, max, locale: dateFormat }),
-    [dateFormat, max, min, month],
+      shouldMonthBeEnabled(monthName, { month, min, max, locale }),
+    [locale, max, min, month],
   );
 
   return (

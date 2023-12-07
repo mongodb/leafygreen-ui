@@ -54,12 +54,12 @@ const meta: StoryMetaType<typeof DateInputBox, DatePickerContextProps> = {
   },
   args: {
     label: 'Label',
-    dateFormat: 'iso8601',
+    locale: 'iso8601',
     timeZone: 'Europe/London',
   },
   argTypes: {
     value: { control: 'date' },
-    dateFormat: { control: 'select', options: Locales },
+    locale: { control: 'select', options: Locales },
   },
 };
 
@@ -98,7 +98,7 @@ export const Formats: StoryType<
 Formats.parameters = {
   generate: {
     combineArgs: {
-      dateFormat: ['iso8601', 'en-US', 'en-UK', 'de-DE'],
+      locale: ['iso8601', 'en-US', 'en-UK', 'de-DE'],
     },
   },
 };

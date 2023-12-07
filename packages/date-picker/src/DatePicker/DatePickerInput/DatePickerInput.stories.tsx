@@ -50,7 +50,7 @@ const meta: StoryMetaType<
       combineArgs: {
         darkMode: [false, true],
         value: [null, new Date('1993-12-26')],
-        dateFormat: ['iso8601', 'en-US', 'en-UK', 'de-DE'],
+        locale: ['iso8601', 'en-US', 'en-UK', 'de-DE'],
         size: Object.values(Size),
       },
       decorator: ProviderWrapper,
@@ -58,7 +58,7 @@ const meta: StoryMetaType<
   },
   args: {
     label: 'Label',
-    dateFormat: 'en-UK',
+    locale: 'en-UK',
     timeZone: 'Europe/London',
   },
   argTypes: {

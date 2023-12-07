@@ -7,7 +7,7 @@ import { getWeeksArray } from '.';
 describe('packages/date-picker/utils/getWeeksArray', () => {
   test('starts the week on the correct day for the locale', () => {
     const month = new Date(Date.UTC(2023, Month.August, 1));
-    const arr = getWeeksArray(month, { dateFormat: 'en-US' });
+    const arr = getWeeksArray(month, { locale: 'en-US' });
     expect(arr[0][0]).toBeNull(); // Sun
     expect(arr[0][1]).toBeNull(); // Mon
     expect(arr[0][2]).not.toBeNull(); // Tues
@@ -15,7 +15,7 @@ describe('packages/date-picker/utils/getWeeksArray', () => {
 
   describe('August 2023', () => {
     const aug23 = new Date(Date.UTC(2023, Month.August, 1));
-    const arr = getWeeksArray(aug23, { dateFormat: 'iso-8601' });
+    const arr = getWeeksArray(aug23, { locale: 'iso-8601' });
 
     test('returned array has the correct number of elements', () => {
       const daysInAugust = 31;
@@ -88,7 +88,7 @@ describe('packages/date-picker/utils/getWeeksArray', () => {
 
   describe('September 2023', () => {
     const sept23 = new Date(Date.UTC(2023, Month.September, 1));
-    const arr = getWeeksArray(sept23, { dateFormat: 'iso8601' });
+    const arr = getWeeksArray(sept23, { locale: 'iso8601' });
 
     test('returned array has the correct number of elements', () => {
       const daysInSept = 30;
@@ -166,7 +166,7 @@ describe('packages/date-picker/utils/getWeeksArray', () => {
 
   describe('February 2023', () => {
     const feb23 = new Date(Date.UTC(2023, Month.February, 1));
-    const arr = getWeeksArray(feb23, { dateFormat: 'iso8601' });
+    const arr = getWeeksArray(feb23, { locale: 'iso8601' });
 
     test('returned array has the correct number of elements', () => {
       const daysInFeb23 = 28;
@@ -238,7 +238,7 @@ describe('packages/date-picker/utils/getWeeksArray', () => {
 
   describe('February 2024 (leap-year)', () => {
     const feb23 = new Date(Date.UTC(2024, Month.February, 1));
-    const arr = getWeeksArray(feb23, { dateFormat: 'iso8601' });
+    const arr = getWeeksArray(feb23, { locale: 'iso8601' });
 
     test('returned array has the correct number of elements', () => {
       const daysInFeb24 = 29;

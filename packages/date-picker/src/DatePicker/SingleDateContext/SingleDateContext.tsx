@@ -46,7 +46,7 @@ export const SingleDateProvider = ({
     disabled,
     min,
     max,
-    dateFormat,
+    locale,
     setInternalErrorMessage,
     clearInternalErrorMessage,
     isInRange,
@@ -109,11 +109,11 @@ export const SingleDateProvider = ({
     if (val && !isInRange(val)) {
       if (isOnOrBefore(val, min)) {
         setInternalErrorMessage(
-          `Date must be after ${getFormattedDateString(min, dateFormat)}`,
+          `Date must be after ${getFormattedDateString(min, locale)}`,
         );
       } else {
         setInternalErrorMessage(
-          `Date must be before ${getFormattedDateString(max, dateFormat)}`,
+          `Date must be before ${getFormattedDateString(max, locale)}`,
         );
       }
     } else {

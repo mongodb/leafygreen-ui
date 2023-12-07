@@ -36,11 +36,11 @@ import { CalendarGridProps } from './CalendarGrid.types';
  */
 export const CalendarGrid = forwardRef<HTMLTableElement, CalendarGridProps>(
   ({ month, children, className, ...rest }: CalendarGridProps, fwdRef) => {
-    const { dateFormat } = useDatePickerContext();
-    const weekStartsOn = getWeekStartByLocale(dateFormat);
+    const { locale } = useDatePickerContext();
+    const weekStartsOn = getWeekStartByLocale(locale);
     const weeks = useMemo(
-      () => getWeeksArray(month, { dateFormat }),
-      [dateFormat, month],
+      () => getWeeksArray(month, { locale }),
+      [locale, month],
     );
 
     return (
@@ -54,7 +54,7 @@ export const CalendarGrid = forwardRef<HTMLTableElement, CalendarGridProps>(
           <tr role="row">
             {range(daysPerWeek).map(i => {
               const dayIndex = (i + weekStartsOn) % daysPerWeek;
-              const weekday = getLocaleWeekdays(dateFormat)[dayIndex];
+              const weekday = getLocaleWeekdays(locale)[dayIndex];
               return (
                 <th
                   role="columnheader"
