@@ -22,6 +22,11 @@ export interface MonthObject {
   long: string;
   short: string;
 }
+export interface WeekdayObject {
+  long: string;
+  short: string;
+  narrow: string;
+}
 
 export const AutoComplete = {
   Off: 'off',

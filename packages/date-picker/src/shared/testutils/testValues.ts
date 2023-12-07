@@ -29,4 +29,13 @@ export const TimeZones = testTimeZones.map(({ tz }) => tz);
  * Farsi-Afghanistan (week starts on Sat)
  * English-Maldives (week starts on Fri.)
  */
-export const Locales = ['iso8601', 'en-US', 'en-UK', 'de-DE', 'fa-AF', 'en-MV'];
+export const Locales = [
+  'iso8601',
+  'en-US',
+  'en-UK',
+  'de-DE',
+  'fa-AF',
+  'es-MX',
+  'fr-FR',
+  'en-MV',
+];
