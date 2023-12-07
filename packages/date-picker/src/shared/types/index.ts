@@ -18,6 +18,26 @@ export type DatePickerState =
 export type DateType = Date | null;
 export type DateRangeType = [DateType, DateType];
 
+export interface MonthObject {
+  long: string;
+  short: string;
+}
+
+/**
+ * Object representing the abbreviations of a given weekday.
+ * Abbreviation formats defined in Unicode: https://www.unicode.org/reports/tr35/tr35-67/tr35-dates.html#dfst-weekday
+ */
+export interface WeekdayObject {
+  /** The long-form weekday name (e.g. Tuesday)*/
+  long: string;
+  /** An abbreviated weekday name (e.g. Tue) */
+  abbr: string;
+  /** A shorter weekday name (e.g. Tu)*/
+  short?: string;
+  /** The shortest weekday name (e.g. T) */
+  narrow: string;
+}
+
 export const AutoComplete = {
   Off: 'off',
   On: 'on',
@@ -43,15 +63,13 @@ export interface BaseDatePickerProps extends DarkModeProps {
    * Sets the _presentation format_ for the displayed date.
    * Fallback to the user’s browser preference (if supported), otherwise ISO-8601.
    *
-   * Currently only the following values are officially supported.
+   * Currently only the following values are officially supported: 'en-US' | 'en-GB' | 'iso8601'
    * Other valid [Locale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
    * strings may work, however no assurances are made.
    *
-   * @enum 'en-US' | 'en-UK' | 'iso8601'
-   *
    * @default 'iso8601'
    */
-  dateFormat?: 'iso8601' | `${string}-${string}`;
+  dateFormat?: 'iso8601' | string;
 
   /**
    * A valid IANA timezone string, or UTC offset.

@@ -1,4 +1,4 @@
-import React, { forwardRef, MouseEventHandler } from 'react';
+import React, { forwardRef, MouseEventHandler, useCallback } from 'react';
 import range from 'lodash/range';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -7,8 +7,13 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { Option, Select } from '@leafygreen-ui/select';
 
 import { useDatePickerContext } from '../../../shared/components/DatePickerContext';
-import { Months, selectElementProps } from '../../../shared/constants';
-import { isSameUTCMonth, setUTCMonth, setUTCYear } from '../../../shared/utils';
+import { selectElementProps } from '../../../shared/constants';
+import {
+  getLocaleMonths,
+  isSameUTCMonth,
+  setUTCMonth,
+  setUTCYear,
+} from '../../../shared/utils';
 import { useSingleDateContext } from '../../SingleDateContext';
 import {
   menuHeaderSelectContainerStyles,
@@ -17,7 +22,7 @@ import {
   selectTruncateStyles,
 } from '../DatePickerMenu.styles';
 
-import { shouldMonthBeEnabled } from './utils/getMonthOptions';
+import { shouldMonthBeEnabled } from './utils/shouldMonthBeEnabled';
 
 interface DatePickerMenuHeaderProps {
   setMonth: (newMonth: Date) => void;
@@ -32,9 +37,10 @@ export const DatePickerMenuHeader = forwardRef<
   HTMLDivElement,
   DatePickerMenuHeaderProps
 >(({ setMonth, ...rest }: DatePickerMenuHeaderProps, fwdRef) => {
-  const { min, max, setIsSelectOpen } = useDatePickerContext();
+  const { min, max, setIsSelectOpen, dateFormat } = useDatePickerContext();
   const { month } = useSingleDateContext();
 
+  const monthOptions = getLocaleMonths(dateFormat);
   const yearOptions = range(min.getUTCFullYear(), max.getUTCFullYear() + 1);
 
   const updateMonth = (newMonth: Date) => {
@@ -58,8 +64,11 @@ export const DatePickerMenuHeader = forwardRef<
     };
 
   /** Returns whether the provided month should be enabled */
-  const isMonthEnabled = (monthName: string) =>
-    shouldMonthBeEnabled(monthName, { month, min, max });
+  const isMonthEnabled = useCallback(
+    (monthName: string) =>
+      shouldMonthBeEnabled(monthName, { month, min, max, locale: dateFormat }),
+    [dateFormat, max, min, month],
+  );
 
   return (
     <div ref={fwdRef} className={menuHeaderStyles} {...rest}>
@@ -82,9 +91,9 @@ export const DatePickerMenuHeader = forwardRef<
           className={cx(selectTruncateStyles, selectInputWidthStyles)}
           onEntered={() => setIsSelectOpen(true)}
           onExited={() => setIsSelectOpen(false)}
-          placeholder={Months[month.getUTCMonth()].short}
+          placeholder={monthOptions[month.getUTCMonth()].short}
         >
-          {Months.map((m, i) => (
+          {monthOptions.map((m, i) => (
             <Option
               disabled={!isMonthEnabled(m.long)}
               value={i.toString()}
