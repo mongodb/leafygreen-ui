@@ -1,4 +1,4 @@
-export { BaseDatePickerProps } from './BaseDatePickerProps.types';
+export { type BaseDatePickerProps } from './BaseDatePickerProps.types';
 export {
   DateSegment,
   type DateSegmentsState,

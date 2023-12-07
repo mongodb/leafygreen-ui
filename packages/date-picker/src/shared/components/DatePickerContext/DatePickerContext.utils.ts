@@ -26,7 +26,7 @@ export type ContextPropKeys = keyof DatePickerProviderProps &
 export const contextPropNames: Array<ContextPropKeys> = [
   'label',
   'description',
-  'dateFormat',
+  'locale',
   'timeZone',
   'min',
   'max',
@@ -43,7 +43,7 @@ export const contextPropNames: Array<ContextPropKeys> = [
 export const defaultDatePickerContext: DatePickerContextProps = {
   label: '',
   description: '',
-  dateFormat: 'iso8601',
+  locale: 'iso8601',
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   min: MIN_DATE,
   max: MAX_DATE,
@@ -105,7 +105,7 @@ export const getContextProps = (
   const isInRange = getIsInRange(providerValue.min, providerValue.max);
 
   // Only used to track the _order_ of segments, not the value itself
-  const formatParts = getFormatParts(providerValue.dateFormat);
+  const formatParts = getFormatParts(providerValue.locale);
 
   return { ...providerValue, isInRange, formatParts };
 };

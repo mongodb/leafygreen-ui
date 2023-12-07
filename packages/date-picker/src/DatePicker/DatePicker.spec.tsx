@@ -1565,39 +1565,39 @@ describe('packages/date-picker', () => {
 
         describe('auto-formatting & auto-focus', () => {
           describe('for ISO format', () => {
-            const dateFormat = 'iso8601';
+            const locale = 'iso8601';
 
             test('when year value is explicit, focus advances to month', () => {
               const { yearInput, monthInput } = renderDatePicker({
-                dateFormat,
+                locale,
               });
               userEvent.type(yearInput, '1999');
               expect(monthInput).toHaveFocus();
             });
             test('when year value is before MIN, focus still advances', () => {
               const { yearInput, monthInput } = renderDatePicker({
-                dateFormat,
+                locale,
               });
               userEvent.type(yearInput, '1944');
               expect(monthInput).toHaveFocus();
             });
             test('when year value is after MAX, focus still advances', () => {
               const { yearInput, monthInput } = renderDatePicker({
-                dateFormat,
+                locale,
               });
               userEvent.type(yearInput, '2048');
               expect(monthInput).toHaveFocus();
             });
             test('when month value is explicit, focus advances to day', () => {
               const { monthInput, dayInput } = renderDatePicker({
-                dateFormat,
+                locale,
               });
               userEvent.type(monthInput, '5');
               expect(dayInput).toHaveFocus();
             });
             test('when day value is explicit, format the day', async () => {
               const { dayInput } = renderDatePicker({
-                dateFormat,
+                locale,
               });
               userEvent.type(dayInput, '5');
               expect(dayInput).toHaveFocus();
@@ -1605,20 +1605,20 @@ describe('packages/date-picker', () => {
             });
 
             test('when year value is ambiguous, focus does NOT advance', () => {
-              const { yearInput } = renderDatePicker({ dateFormat });
+              const { yearInput } = renderDatePicker({ locale });
               userEvent.type(yearInput, '200');
               expect(yearInput).toHaveFocus();
             });
             test('when month value is ambiguous, focus does NOT advance', () => {
               const { monthInput } = renderDatePicker({
-                dateFormat,
+                locale,
               });
               userEvent.type(monthInput, '1');
               expect(monthInput).toHaveFocus();
             });
             test('when day value is ambiguous, segment is NOT formatted', async () => {
               const { dayInput } = renderDatePicker({
-                dateFormat,
+                locale,
               });
               userEvent.type(dayInput, '2');
               expect(dayInput).toHaveFocus();
@@ -1627,25 +1627,25 @@ describe('packages/date-picker', () => {
           });
 
           describe('for en-US format', () => {
-            const dateFormat = 'en-US';
+            const locale = 'en-US';
 
             test('when month value is explicit, focus advances to day', () => {
               const { monthInput, dayInput } = renderDatePicker({
-                dateFormat,
+                locale,
               });
               userEvent.type(monthInput, '5');
               expect(dayInput).toHaveFocus();
             });
             test('when day value is explicit, focus advances to year', () => {
               const { dayInput, yearInput } = renderDatePicker({
-                dateFormat,
+                locale,
               });
               userEvent.type(dayInput, '5');
               expect(yearInput).toHaveFocus();
             });
             test('when year value is explicit, segment value is set', () => {
               const { yearInput } = renderDatePicker({
-                dateFormat,
+                locale,
               });
               userEvent.type(yearInput, '1999');
               expect(yearInput).toHaveFocus();
@@ -1653,18 +1653,18 @@ describe('packages/date-picker', () => {
             });
 
             test('when month value is ambiguous, focus does NOT advance', () => {
-              const { monthInput } = renderDatePicker({ dateFormat });
+              const { monthInput } = renderDatePicker({ locale });
               userEvent.type(monthInput, '1');
               expect(monthInput).toHaveFocus();
             });
             test('when day value is ambiguous, focus does NOT advance', () => {
-              const { dayInput } = renderDatePicker({ dateFormat });
+              const { dayInput } = renderDatePicker({ locale });
               userEvent.type(dayInput, '2');
               expect(dayInput).toHaveFocus();
             });
             test('when year value is ambiguous, segment does not format', async () => {
               const { yearInput } = renderDatePicker({
-                dateFormat,
+                locale,
               });
               userEvent.type(yearInput, '200');
               expect(yearInput).toHaveFocus();

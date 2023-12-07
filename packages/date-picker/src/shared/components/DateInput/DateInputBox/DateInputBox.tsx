@@ -38,7 +38,7 @@ import { DateInputBoxProps } from './DateInputBox.types';
  *
  * Depends on {@link DateInputSegment}
  *
- * Uses parameters `value` & `dateFormat` along with {@link Intl.DateTimeFormat.prototype.formatToParts}
+ * Uses parameters `value` & `locale` along with {@link Intl.DateTimeFormat.prototype.formatToParts}
  * to determine the segment order and separator characters.
  *
  * Provided value is assumed to be UTC.

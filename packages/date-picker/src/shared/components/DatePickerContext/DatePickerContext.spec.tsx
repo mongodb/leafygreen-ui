@@ -21,7 +21,6 @@ const renderDatePickerProvider = () => {
   return { result, rerender };
 };
 
-// TODO: ADD MORE TESTS
 describe('packages/date-picker-context', () => {
   describe('useDatePickerContext', () => {
     describe('isOpen', () => {

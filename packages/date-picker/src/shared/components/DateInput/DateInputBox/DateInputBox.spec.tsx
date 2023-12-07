@@ -50,7 +50,7 @@ describe('packages/date-picker/shared/date-input-box', () => {
   const onSegmentChange = jest.fn<DateInputSegmentChangeEventHandler>();
 
   const testContext: Partial<DatePickerProviderProps> = {
-    dateFormat: 'iso8601',
+    locale: 'iso8601',
     timeZone: 'UTC',
   };
 
@@ -71,7 +71,7 @@ describe('packages/date-picker/shared/date-input-box', () => {
 
     describe('renders segments in the correct order', () => {
       test('iso8601', () => {
-        const result = renderDateInputBox(undefined, { dateFormat: 'iso8601' });
+        const result = renderDateInputBox(undefined, { locale: 'iso8601' });
         const segments = result.getAllByRole('spinbutton');
         expect(segments[0]).toHaveAttribute('aria-label', 'year');
         expect(segments[1]).toHaveAttribute('aria-label', 'month');
@@ -79,7 +79,7 @@ describe('packages/date-picker/shared/date-input-box', () => {
       });
 
       test('en-US', () => {
-        const result = renderDateInputBox(undefined, { dateFormat: 'en-US' });
+        const result = renderDateInputBox(undefined, { locale: 'en-US' });
         const segments = result.getAllByRole('spinbutton');
         expect(segments[0]).toHaveAttribute('aria-label', 'month');
         expect(segments[1]).toHaveAttribute('aria-label', 'day');
@@ -87,7 +87,7 @@ describe('packages/date-picker/shared/date-input-box', () => {
       });
 
       test('en-UK', () => {
-        const result = renderDateInputBox(undefined, { dateFormat: 'en-UK' });
+        const result = renderDateInputBox(undefined, { locale: 'en-UK' });
         const segments = result.getAllByRole('spinbutton');
         expect(segments[0]).toHaveAttribute('aria-label', 'day');
         expect(segments[1]).toHaveAttribute('aria-label', 'month');
@@ -198,7 +198,7 @@ describe('packages/date-picker/shared/date-input-box', () => {
   describe('Mouse interaction', () => {
     test('click on segment focuses it', () => {
       const { dayInput } = renderDateInputBox(undefined, {
-        dateFormat: 'iso8601',
+        locale: 'iso8601',
       });
       userEvent.click(dayInput);
       expect(dayInput).toHaveFocus();
@@ -209,7 +209,7 @@ describe('packages/date-picker/shared/date-input-box', () => {
     test('Tab moves focus to next segment', () => {
       const { dayInput, monthInput, yearInput } = renderDateInputBox(
         undefined,
-        { dateFormat: 'iso8601' },
+        { locale: 'iso8601' },
       );
       userEvent.click(yearInput);
       userEvent.tab();

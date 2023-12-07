@@ -68,7 +68,7 @@ const meta: StoryMetaType<typeof DatePickerMenu, DecoratorArgs> = {
   },
   argTypes: {
     value: { control: 'date' },
-    dateFormat: { control: 'select', options: Locales },
+    locale: { control: 'select', options: Locales },
     timeZone: { control: 'select', options: [undefined, ...TimeZones] },
   },
 };
