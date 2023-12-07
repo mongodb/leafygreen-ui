@@ -11,24 +11,22 @@ import { Size } from '@leafygreen-ui/tokens';
 import {
   DatePickerContextProps,
   DatePickerProvider,
-} from '../shared/components/DatePickerContext';
-import { Month } from '../shared/constants';
-import { Locales, TimeZones } from '../shared/testutils';
-import { AutoComplete } from '../shared/types';
-import { newUTC } from '../shared/utils';
-
+} from './shared/components/DatePickerContext';
+import { Month } from './shared/constants';
+import { getProviderPropsFromStoryContext } from './shared/testutils/getProviderPropsFromStoryContext';
+import { Locales, TimeZones } from './shared/testutils/testValues';
+import { AutoComplete } from './shared/types';
+import { newUTC } from './shared/utils';
 import { DatePicker } from './DatePicker';
-import { getProviderPropsFromStoryArgs } from './DatePicker.testutils';
 
 const ProviderWrapper = (Story: StoryFn, ctx: any) => {
-  const { contextProps, componentProps } = getProviderPropsFromStoryArgs(
-    ctx?.args,
-  );
+  const { leafyGreenProviderProps, datePickerProviderProps, storyProps } =
+    getProviderPropsFromStoryContext(ctx?.args);
 
   return (
-    <LeafyGreenProvider darkMode={contextProps.darkMode}>
-      <DatePickerProvider {...contextProps}>
-        <Story {...componentProps} />
+    <LeafyGreenProvider {...leafyGreenProviderProps}>
+      <DatePickerProvider {...datePickerProviderProps}>
+        <Story {...storyProps} />
       </DatePickerProvider>
     </LeafyGreenProvider>
   );
