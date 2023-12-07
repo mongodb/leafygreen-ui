@@ -6,7 +6,6 @@ import {
   ContextPropKeys,
   contextPropNames,
   DatePickerProviderProps,
-  defaultDatePickerContext,
 } from '../../components/DatePickerContext';
 import { BaseDatePickerProps } from '../../types';
 import { pickAndOmit } from '../../utils';
@@ -31,7 +30,7 @@ export const getProviderPropsFromStoryContext = <P = BaseDatePickerProps>(
       baseFontSize: baseFontSize === 13 ? 14 : baseFontSize,
     },
     datePickerProviderProps: {
-      ...defaultDatePickerContext,
+      label: '',
       ...datePickerProviderProps,
     },
     storyProps,

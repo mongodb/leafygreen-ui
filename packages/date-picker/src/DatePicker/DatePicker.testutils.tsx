@@ -9,12 +9,8 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import {
-  ContextPropKeys,
-  contextPropNames,
-} from '../shared/components/DatePickerContext';
 import { DateSegment } from '../shared/types';
-import { getISODate, pickAndOmit } from '../shared/utils';
+import { getISODate } from '../shared/utils';
 
 import { DatePickerProps } from './DatePicker.types';
 import { DatePicker } from '.';
@@ -218,22 +214,5 @@ export const findTabStopElementMap = async (
     'menu > month select': monthSelect,
     'menu > year select': yearSelect,
     'menu > right chevron': rightChevron,
-  };
-};
-
-export const getProviderPropsFromStoryArgs = (
-  args: any,
-): {
-  contextProps: Pick<DatePickerProps, ContextPropKeys>;
-  componentProps: Omit<DatePickerProps, ContextPropKeys>;
-} => {
-  const [contextProps, componentProps] = pickAndOmit<
-    DatePickerProps,
-    ContextPropKeys
-  >(args, contextPropNames);
-
-  return {
-    contextProps,
-    componentProps,
   };
 };
