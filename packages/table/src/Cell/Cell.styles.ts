@@ -17,7 +17,7 @@ export const standardCellHeight = spacing[5] + spacing[2];
 export const baseCellStyles = css`
   padding: 0 8px;
   overflow: hidden;
-  text-overflow: ellipsis;
+  line-break: anywhere;
 
   &:focus-visible {
     box-shadow: inset;
@@ -80,24 +80,5 @@ export const cellContentContainerStyles = css`
   align-items: center;
   text-overflow: ellipsis;
   transition: ${transitionDuration.default}ms ease-in-out;
-  transition-property: min-height, max-height, opacity, transform;
   min-height: ${standardCellHeight}px;
 `;
-
-const _hiddenStyles = css`
-  opacity: 0;
-  min-height: 0;
-  max-height: 0;
-`;
-
-export const cellContentTransitionStyles: Record<TransitionStatus, string> = {
-  entered: css`
-    opacity: 1;
-    min-height: ${standardCellHeight}px;
-    max-height: ${standardCellHeight}px;
-  `,
-  entering: _hiddenStyles,
-  exiting: _hiddenStyles,
-  exited: _hiddenStyles,
-  unmounted: _hiddenStyles,
-};

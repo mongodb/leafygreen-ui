@@ -1,7 +1,17 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { focusRing, hoverRing } from '@leafygreen-ui/tokens';
+import {
+  focusRing,
+  hoverRing,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
+
+export const baseStyles = css`
+  // delay changes to background-color to time it with the height animation of expanded content and nested rows
+  transition-delay: ${transitionDuration.default}ms;
+  transition-property: background-color;
+`;
 
 export const expandedContentParentStyles: Record<Theme, string> = {
   [Theme.Dark]: css`

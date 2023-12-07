@@ -1,8 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import AnimateHeight from 'react-animate-height';
 import { Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { useTableContext } from '../TableContext/TableContext';
 
@@ -28,7 +30,7 @@ const InternalCell = ({
   const isFirstCell = cellIndex === 0;
   const { table } = useTableContext();
   const isSelectable = !!table && !!table.hasSelectableRows;
-  const transitionRef = useRef<HTMLElement | null>(null);
+  const transitionRef = useRef<HTMLDivElement | null>(null);
 
   return (
     <td
@@ -41,20 +43,22 @@ const InternalCell = ({
       )}
       {...rest}
     >
-      <Transition in={isVisible} timeout={0} nodeRef={transitionRef}>
-        {state => (
-          <div
-            data-state={state}
-            className={cx(
-              cellContentContainerStyles,
-              cellContentTransitionStyles[state],
-              alignmentStyles(align),
-            )}
-          >
-            {children}
-          </div>
-        )}
-      </Transition>
+      <AnimateHeight
+        duration={transitionDuration.default}
+        easing="ease-in-out"
+        ref={transitionRef}
+        height={isVisible ? 'auto' : 0}
+      >
+        <div
+          className={cx(
+            cellContentContainerStyles,
+            // cellContentTransitionStyles(contentHeight)[state],
+            alignmentStyles(align),
+          )}
+        >
+          {children}
+        </div>
+      </AnimateHeight>
     </td>
   );
 };

@@ -242,45 +242,6 @@ ZebraStripes.args = {
   shouldAlternateRowColor: true,
 };
 
-export const OverflowingCell: StoryFn<StoryTableProps> = args => {
-  const data = makeData(false, 100);
-  const columns = Object.keys(data[0]).filter(
-    x => x !== 'renderExpandedContent' && x !== 'subRows',
-  );
-  return (
-    <Table {...args}>
-      <TableHead>
-        <HeaderRow>
-          {columns.map((columnName: string) => (
-            <HeaderCell key={columnName}>{columnName}</HeaderCell>
-          ))}
-        </HeaderRow>
-      </TableHead>
-      <TableBody>
-        {data.map((row: AnyDict) => (
-          <Row key={row.id}>
-            {Object.keys(row).map((cellKey: string, index: number) => {
-              return (
-                <Cell key={`${cellKey}-${index}`}>
-                  <div
-                    style={{
-                      width: '80px',
-                      textOverflow: 'ellipsis',
-                      overflow: 'hidden',
-                    }}
-                  >
-                    {row[cellKey]}
-                  </div>
-                </Cell>
-              );
-            })}
-          </Row>
-        ))}
-      </TableBody>
-    </Table>
-  );
-};
-
 export const NestedRows: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data] = React.useState(() => makeData(false, 20, 5, 3));
@@ -339,6 +300,7 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
   return (
     <Table
       {...args}
+      style={{ tableLayout: 'fixed', width: '100%' }}
       table={table}
       ref={tableContainerRef}
       data-total-rows={table.getRowModel().rows.length}
@@ -385,6 +347,14 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
                             cell.column.columnDef.cell,
                             cell.getContext(),
                           )}
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
                         </Cell>
                       );
                     })}
@@ -394,6 +364,40 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
                           {subSubRow.getVisibleCells().map(cell => {
                             return (
                               <Cell key={cell.id}>
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext(),
+                                )}
+                                &nbsp;
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext(),
+                                )}
+                                &nbsp;
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext(),
+                                )}
+                                &nbsp;
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext(),
+                                )}
+                                &nbsp;
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext(),
+                                )}
+                                &nbsp;
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext(),
+                                )}
+                                &nbsp;
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext(),
+                                )}
                                 {flexRender(
                                   cell.column.columnDef.cell,
                                   cell.getContext(),

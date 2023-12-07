@@ -1,9 +1,11 @@
 import React, { useMemo, useRef } from 'react';
+import AnimateHeight from 'react-animate-height';
 import { Transition } from 'react-transition-group';
 import { RowData } from '@tanstack/react-table';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { cellContentContainerStyles } from '../Cell/Cell.styles';
 import InternalRowBase from '../Row/InternalRowBase';
@@ -22,8 +24,7 @@ const ExpandedContent = <T extends RowData>({
   ...rest
 }: ExpandedContentProps<T>) => {
   const { getParentRow } = useTableContext();
-  const contentRef = useRef<HTMLDivElement>(null);
-  const transitionRef = useRef<HTMLElement | null>(null);
+  const transitionRef = useRef<HTMLDivElement | null>(null);
   const areAncestorsExpanded = getAreAncestorsExpanded(row.id, getParentRow);
   const isNestedRow = !!getParentRow?.(row.id);
   const isExpanded =
@@ -34,30 +35,25 @@ const ExpandedContent = <T extends RowData>({
 
   const { theme } = useDarkMode();
 
-  const contentHeight = useMemo(
-    () => (contentRef.current ? contentRef.current.clientHeight : 0),
-    // Lint flags `content` as an unnecessary dependency, but we want to update `contentHeight` when the value of `content` changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [content],
-  );
-
   return (
     <InternalRowBase {...rest}>
       <td colSpan={row.getVisibleCells().length} className={cx(baseStyles)}>
-        <Transition in={isExpanded} timeout={0} nodeRef={transitionRef}>
-          {state => (
-            <div
-              data-state={state}
-              className={cx(
-                cellContentContainerStyles,
-                expandedContentStyles[theme],
-                expandedContentTransitionStyles(contentHeight)[state],
-              )}
-            >
-              <div ref={contentRef}>{content}</div>
-            </div>
-          )}
-        </Transition>
+        <AnimateHeight
+          duration={transitionDuration.default}
+          easing="ease-in-out"
+          height={isExpanded ? 'auto' : 0}
+          ref={transitionRef}
+        >
+          <div
+            className={cx(
+              cellContentContainerStyles,
+              expandedContentStyles[theme],
+              // expandedContentTransitionStyles(contentHeight)[state],
+            )}
+          >
+            <div>{content}</div>
+          </div>
+        </AnimateHeight>
       </td>
     </InternalRowBase>
   );
