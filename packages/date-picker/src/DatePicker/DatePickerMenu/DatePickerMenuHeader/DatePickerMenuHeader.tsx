@@ -17,7 +17,7 @@ import {
   selectTruncateStyles,
 } from '../DatePickerMenu.styles';
 
-import { shouldMonthBeEnabled } from './utils/getMonthOptions';
+import { isChevronDisabled, shouldMonthBeEnabled } from './utils';
 
 interface DatePickerMenuHeaderProps {
   setMonth: (newMonth: Date) => void;
@@ -44,29 +44,6 @@ export const DatePickerMenuHeader = forwardRef<
   };
 
   /**
-   * Checks if chevron should be disabled
-   *
-   *
-   * @param direction
-   * @param day1
-   * @param day2
-   * @returns
-   */
-  const isChevronDisabled = (
-    direction: 'left' | 'right',
-    day1?: Date | null, // month
-    day2?: Date | null, // min/max
-  ): boolean => {
-    if (!day1 || !day2) return false;
-
-    if (direction === 'right') {
-      return day1 >= day2 || isSameUTCMonth(day1, day2);
-    }
-
-    return day1 <= day2 || isSameUTCMonth(day1, day2);
-  };
-
-  /**
    * Calls the `updateMonth` helper with the appropriate month when a Chevron is clicked
    */
   const handleChevronClick =
@@ -83,10 +60,10 @@ export const DatePickerMenuHeader = forwardRef<
       const isDateInRange = isInRange(month);
 
       if (!isDateInRange && !isOnLastValidMonth) {
-        console.log('😈😈😈😈needs to go to the next valid month');
-        const newDate = dir === 'left' ? max : min;
-        const newMonthIndex = newDate.getUTCMonth();
-        const newMonth = setUTCMonth(newDate, newMonthIndex);
+        // console.log('😈😈😈😈needs to go to the next valid month');
+        const closestValidDate = dir === 'left' ? max : min;
+        const newMonthIndex = closestValidDate.getUTCMonth();
+        const newMonth = setUTCMonth(closestValidDate, newMonthIndex);
         updateMonth(newMonth);
       } else {
         const increment = dir === 'left' ? -1 : 1;
