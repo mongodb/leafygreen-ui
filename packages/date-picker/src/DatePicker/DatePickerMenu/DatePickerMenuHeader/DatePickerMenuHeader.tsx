@@ -7,8 +7,13 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { Option, Select } from '@leafygreen-ui/select';
 
 import { useDatePickerContext } from '../../../shared/components/DatePickerContext';
-import { Months, selectElementProps } from '../../../shared/constants';
-import { isSameUTCMonth, setUTCMonth, setUTCYear } from '../../../shared/utils';
+import { selectElementProps } from '../../../shared/constants';
+import {
+  getLocaleMonths,
+  isSameUTCMonth,
+  setUTCMonth,
+  setUTCYear,
+} from '../../../shared/utils';
 import { useSingleDateContext } from '../../SingleDateContext';
 import {
   menuHeaderSelectContainerStyles,
@@ -35,6 +40,7 @@ export const DatePickerMenuHeader = forwardRef<
   const { min, max, setIsSelectOpen } = useDatePickerContext();
   const { month } = useSingleDateContext();
 
+  const monthOptions = getLocaleMonths();
   const yearOptions = range(min.getUTCFullYear(), max.getUTCFullYear() + 1);
 
   const updateMonth = (newMonth: Date) => {
@@ -82,9 +88,9 @@ export const DatePickerMenuHeader = forwardRef<
           className={cx(selectTruncateStyles, selectInputWidthStyles)}
           onEntered={() => setIsSelectOpen(true)}
           onExited={() => setIsSelectOpen(false)}
-          placeholder={Months[month.getUTCMonth()].short}
+          placeholder={monthOptions[month.getUTCMonth()].short}
         >
-          {Months.map((m, i) => (
+          {monthOptions.map((m, i) => (
             <Option
               disabled={!isMonthEnabled(m.long)}
               value={i.toString()}

@@ -1,9 +1,4 @@
-import padStart from 'lodash/padStart';
-import range from 'lodash/range';
-
 import { DropdownWidthBasis } from '@leafygreen-ui/select';
-
-import { MonthObject } from './types';
 
 /** Days in a week */
 export const daysPerWeek = 7 as const;
@@ -35,22 +30,6 @@ export const MIN_DATE = new Date(Date.UTC(1970, Month.January, 1));
  * (Unix 32-bit rollover date: https://en.wikipedia.org/wiki/Year_2038_problem)
  */
 export const MAX_DATE = new Date(Date.UTC(2038, Month.January, 19));
-
-/**
- * Long & short form of each month index.
- * Updates based on current locale.
- * @deprecated - use getMonths instead
- */
-export const Months: Array<MonthObject> = range(12).map(
-  (monthIndex: number) => {
-    const str = `2023-${padStart((monthIndex + 1).toString(), 2, '0')}-15`;
-    const month = new Date(str);
-    return {
-      long: month.toLocaleString('default', { month: 'long' }),
-      short: month.toLocaleString('default', { month: 'short' }),
-    };
-  },
-);
 
 /** Long & short form for each Day of the week */
 export const DaysOfWeek = [

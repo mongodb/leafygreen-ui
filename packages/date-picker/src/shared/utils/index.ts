@@ -11,6 +11,7 @@ export { getFormattedDateString } from './getFormattedDateString';
 export { getFullMonthLabel } from './getFullMonthLabel';
 export { getISODate } from './getISODate';
 export { getLastOfMonth } from './getLastOfMonth';
+export { getLocaleMonths } from './getLocaleMonths';
 export { getMaxSegmentValue } from './getMaxSegmentValue';
 export { getMinSegmentValue } from './getMinSegmentValue';
 export { getMonthIndex } from './getMonthIndex';
