@@ -3,6 +3,8 @@ import range from 'lodash/range';
 
 import { DropdownWidthBasis } from '@leafygreen-ui/select';
 
+import { MonthObject } from './types';
+
 /** Days in a week */
 export const daysPerWeek = 7 as const;
 
@@ -22,22 +24,6 @@ export enum Month {
   December,
 }
 
-/** An array of all English month names */
-export const MonthsArray = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
-
 /**
  * The default earliest selectable date
  * (Unix epoch start: https://en.wikipedia.org/wiki/Unix_time)
@@ -50,13 +36,10 @@ export const MIN_DATE = new Date(Date.UTC(1970, Month.January, 1));
  */
 export const MAX_DATE = new Date(Date.UTC(2038, Month.January, 19));
 
-export interface MonthObject {
-  long: string;
-  short: string;
-}
 /**
  * Long & short form of each month index.
- * Updates based on locale
+ * Updates based on current locale.
+ * @deprecated - use getMonths instead
  */
 export const Months: Array<MonthObject> = range(12).map(
   (monthIndex: number) => {

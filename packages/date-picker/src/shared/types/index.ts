@@ -18,6 +18,11 @@ export type DatePickerState =
 export type DateType = Date | null;
 export type DateRangeType = [DateType, DateType];
 
+export interface MonthObject {
+  long: string;
+  short: string;
+}
+
 export const AutoComplete = {
   Off: 'off',
   On: 'on',
