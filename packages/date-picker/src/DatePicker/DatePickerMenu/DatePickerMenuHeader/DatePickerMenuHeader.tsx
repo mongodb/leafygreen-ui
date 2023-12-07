@@ -52,56 +52,18 @@ export const DatePickerMenuHeader = forwardRef<
    * @param day2
    * @returns
    */
-  const testingThis = (
-    direction: 'l' | 'r',
+  const isChevronDisabled = (
+    direction: 'left' | 'right',
     day1?: Date | null, // month
     day2?: Date | null, // min/max
   ): boolean => {
     if (!day1 || !day2) return false;
 
-    if (direction === 'r') {
-      console.log('👉🏾right', {
-        month,
-        // isMonthLess: day1.getUTCMonth() >= day2.getUTCMonth(),
-        // isYearLess: day1.getUTCFullYear() >= day2.getUTCFullYear(),
-        // isDisabled:
-        //   day1.getUTCMonth() >= day2.getUTCMonth() &&
-        //   day1.getUTCFullYear() >= day2.getUTCFullYear(),
-      });
-
-      return (
-        // day1.getUTCMonth() >= day2.getUTCMonth() &&
-        // day1.getUTCFullYear() >= day2.getUTCFullYear()
-        day1 >= day2 || isSameUTCMonth(day1, day2)
-      );
-    } else {
-      // console.log('👈🏽left', {
-      //   month,
-      //   selectedYearDate: day1.getUTCFullYear(),
-      //   minYearDate: day2.getUTCFullYear(),
-      //   isMonthLess: day1.getUTCMonth() <= day2.getUTCMonth(),
-      //   isYearLess: day1.getUTCFullYear() <= day2.getUTCFullYear(),
-      //   isDisabled: day1 <= day2,
-      //   // isDisabled:
-      //   //   day1.getUTCMonth() <= day2.getUTCMonth() &&
-      //   //   day1.getUTCFullYear() <= day2.getUTCFullYear(),
-      // });
-      return (
-        // day1.getUTCMonth() <= day2.getUTCMonth() &&
-        // day1.getUTCFullYear() <= day2.getUTCFullYear()
-        day1 <= day2 || isSameUTCMonth(day1, day2)
-      );
+    if (direction === 'right') {
+      return day1 >= day2 || isSameUTCMonth(day1, day2);
     }
 
-    // return (
-    //   day1.getUTCMonth() <= day2.getUTCMonth() &&
-    //   day1.getUTCFullYear() <= day2.getUTCFullYear()
-    // );
-
-    // return (
-    //   day1.getUTCMonth() === day2.getUTCMonth() &&
-    //   day1.getUTCFullYear() === day2.getUTCFullYear()
-    // );
+    return day1 <= day2 || isSameUTCMonth(day1, day2);
   };
 
   /**
@@ -118,15 +80,7 @@ export const DatePickerMenuHeader = forwardRef<
         dir === 'left' ? max : min,
       );
 
-      console.log({
-        'isSameUTCMonth(month, max)': isSameUTCMonth(month, max),
-        month,
-        max,
-      });
-
       const isDateInRange = isInRange(month);
-
-      console.log({ isDateInRange, isOnLastValidMonth });
 
       if (!isDateInRange && !isOnLastValidMonth) {
         console.log('😈😈😈😈needs to go to the next valid month');
@@ -150,8 +104,7 @@ export const DatePickerMenuHeader = forwardRef<
     <div ref={fwdRef} className={menuHeaderStyles} {...rest}>
       <IconButton
         aria-label="Previous month"
-        disabled={testingThis('l', month, min)}
-        // disabled={isSameUTCMonth(month, min)}
+        disabled={isChevronDisabled('left', month, min)}
         onClick={handleChevronClick('left')}
       >
         <Icon glyph="ChevronLeft" />
@@ -203,8 +156,7 @@ export const DatePickerMenuHeader = forwardRef<
       </div>
       <IconButton
         aria-label="Next month"
-        disabled={testingThis('r', month, max)}
-        // disabled={isSameUTCMonth(month, max)}
+        disabled={isChevronDisabled('right', month, max)}
         onClick={handleChevronClick('right')}
       >
         <Icon glyph="ChevronRight" />
