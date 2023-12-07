@@ -7,7 +7,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { Option, Select } from '@leafygreen-ui/select';
 
 import { useDatePickerContext } from '../../../shared/components/DatePickerContext';
-import { Months, selectElementProps } from '../../../shared/constants';
+import { Month, Months, selectElementProps } from '../../../shared/constants';
 import { isSameUTCMonth, setUTCMonth, setUTCYear } from '../../../shared/utils';
 import { useSingleDateContext } from '../../SingleDateContext';
 import {
@@ -59,8 +59,16 @@ export const DatePickerMenuHeader = forwardRef<
 
       const isDateInRange = isInRange(month);
 
+      // If the month is not in range and not the last valid month then set the month to the closest valid month
+      // e.g.
+      // max: new Date(Date.UTC(2038, Month.January, 19));
+      // current input date: new Date(Date.UTC(2038, Month.March, 19));
+      // left chevron will change the month back to the max date
+      // e.g.
+      // min: new Date(Date.UTC(1970, Month.January, 1));
+      // current input date: new Date(Date.UTC(1969, Month.November, 19));
+      // right chevron will change the month back to the min date
       if (!isDateInRange && !isOnLastValidMonth) {
-        // console.log('😈😈😈😈needs to go to the next valid month');
         const closestValidDate = dir === 'left' ? max : min;
         const newMonthIndex = closestValidDate.getUTCMonth();
         const newMonth = setUTCMonth(closestValidDate, newMonthIndex);
