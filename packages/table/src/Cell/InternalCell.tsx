@@ -1,6 +1,5 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import AnimateHeight from 'react-animate-height';
-import { Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -12,7 +11,6 @@ import {
   alignmentStyles,
   baseCellStyles,
   cellContentContainerStyles,
-  cellContentTransitionStyles,
   getCellPadding,
 } from './Cell.styles';
 import { InternalCellProps } from './Cell.types';
@@ -49,13 +47,7 @@ const InternalCell = ({
         ref={transitionRef}
         height={isVisible ? 'auto' : 0}
       >
-        <div
-          className={cx(
-            cellContentContainerStyles,
-            // cellContentTransitionStyles(contentHeight)[state],
-            alignmentStyles(align),
-          )}
-        >
+        <div className={cx(cellContentContainerStyles, alignmentStyles(align))}>
           {children}
         </div>
       </AnimateHeight>

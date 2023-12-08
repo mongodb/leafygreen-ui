@@ -1,5 +1,3 @@
-import { TransitionStatus } from 'react-transition-group';
-
 import { css } from '@leafygreen-ui/emotion';
 import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 

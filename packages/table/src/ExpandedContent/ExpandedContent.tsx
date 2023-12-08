@@ -1,6 +1,5 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useRef } from 'react';
 import AnimateHeight from 'react-animate-height';
-import { Transition } from 'react-transition-group';
 import { RowData } from '@tanstack/react-table';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -12,11 +11,7 @@ import InternalRowBase from '../Row/InternalRowBase';
 import { useTableContext } from '../TableContext/TableContext';
 import { getAreAncestorsExpanded } from '../utils/areAncestorsExpanded';
 
-import {
-  baseStyles,
-  expandedContentStyles,
-  expandedContentTransitionStyles,
-} from './ExpandedContent.styles';
+import { baseStyles, expandedContentStyles } from './ExpandedContent.styles';
 import { ExpandedContentProps } from './ExpandedContent.types';
 
 const ExpandedContent = <T extends RowData>({
@@ -48,7 +43,6 @@ const ExpandedContent = <T extends RowData>({
             className={cx(
               cellContentContainerStyles,
               expandedContentStyles[theme],
-              // expandedContentTransitionStyles(contentHeight)[state],
             )}
           >
             <div>{content}</div>
