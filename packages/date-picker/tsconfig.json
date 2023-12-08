@@ -26,6 +26,9 @@
       "path": "../button"
     },
     {
+      "path": "../date-utils"
+    },
+    {
       "path": "../emotion"
     },
     {
