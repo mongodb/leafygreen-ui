@@ -11,6 +11,7 @@ import {
   DatePickerState,
 } from '../../types';
 import { getFormatParts, toDate } from '../../utils';
+import { sortDates } from '../../utils/sortDates';
 
 import {
   DatePickerContextProps,
@@ -91,15 +92,28 @@ export const getIsInRange =
 export const getContextProps = (
   providerProps: DatePickerProviderProps,
 ): DatePickerContextProps => {
-  const { min, max, timeZone, ...rest } = providerProps;
+  const {
+    min: minProp,
+    max: maxProp,
+    timeZone: tzProp,
+    ...rest
+  } = providerProps;
+
+  const timeZone = defaultTo(
+    tzProp,
+    Intl.DateTimeFormat().resolvedOptions().timeZone,
+  );
+
+  const [min, max] = sortDates([
+    defaultTo(toDate(minProp), defaultDatePickerContext.min),
+    defaultTo(toDate(maxProp), defaultDatePickerContext.max),
+  ]);
+
   const providerValue: DatePickerContextProps = {
     ...defaults(rest, defaultDatePickerContext),
-    timeZone: defaultTo(
-      timeZone,
-      Intl.DateTimeFormat().resolvedOptions().timeZone,
-    ),
-    min: defaultTo(toDate(min), defaultDatePickerContext.min),
-    max: defaultTo(toDate(max), defaultDatePickerContext.max),
+    timeZone,
+    min,
+    max,
   };
 
   const isInRange = getIsInRange(providerValue.min, providerValue.max);

@@ -28,4 +28,13 @@ describe('packages/date-picker/utils/sortDates', () => {
       newUTC(2020, Month.March, 10),
     ]);
   });
+
+  test('ascending by default', () => {
+    expect(sortDates(testDates)).toEqual([
+      newUTC(2020, Month.March, 10),
+      newUTC(2020, Month.March, 13),
+      newUTC(2023, Month.September, 10),
+      newUTC(2023, Month.September, 10),
+    ]);
+  });
 });
