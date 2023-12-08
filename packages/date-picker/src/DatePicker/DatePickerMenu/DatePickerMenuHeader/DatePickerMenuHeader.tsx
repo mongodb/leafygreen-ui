@@ -7,7 +7,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { Option, Select } from '@leafygreen-ui/select';
 
 import { useDatePickerContext } from '../../../shared/components/DatePickerContext';
-import { Month, Months, selectElementProps } from '../../../shared/constants';
+import { Months, selectElementProps } from '../../../shared/constants';
 import { isSameUTCMonth, setUTCMonth, setUTCYear } from '../../../shared/utils';
 import { useSingleDateContext } from '../../SingleDateContext';
 import {
