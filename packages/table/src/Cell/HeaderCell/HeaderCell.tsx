@@ -61,6 +61,7 @@ const HeaderCell = <T extends LGRowData>({
         className,
       )}
       scope="col"
+      colSpan={header?.colSpan}
       {...rest}
     >
       <div
