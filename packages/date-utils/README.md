@@ -4,6 +4,8 @@
 
 LeafyGreen DateUtils provides date manipulation & comparison utilities not included in the [`date-fns`](https://date-fns.org/) library.
 
+Note, this package only contains generic Date utilities. For implementation-specific utilities, see `date-picker/src/shared/utils`
+
 ## Installation
 
 ### Yarn
