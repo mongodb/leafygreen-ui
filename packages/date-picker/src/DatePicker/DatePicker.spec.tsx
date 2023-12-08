@@ -293,36 +293,127 @@ describe('packages/date-picker', () => {
       });
 
       describe('Chevrons', () => {
-        test('Left is disabled if prev. month is entirely out of range', async () => {
-          const { openMenu } = renderDatePicker({
-            min: new Date(Date.UTC(2023, Month.December, 1)),
-          });
-          const { leftChevron } = await openMenu();
-          expect(leftChevron).toHaveAttribute('aria-disabled', 'true');
-        });
+        describe('left', () => {
+          describe('is disabled', () => {
+            test('when the value is before the min', async () => {
+              const { openMenu } = renderDatePicker({
+                min: new Date(Date.UTC(2023, Month.December, 1)),
+                value: new Date(Date.UTC(2022, Month.December, 1)),
+              });
 
-        test('Right is disabled if next month is entirely out of range', async () => {
-          const { openMenu } = renderDatePicker({
-            max: new Date(Date.UTC(2023, Month.December, 31)),
-          });
-          const { rightChevron } = await openMenu();
-          expect(rightChevron).toHaveAttribute('aria-disabled', 'true');
-        });
+              const { leftChevron } = await openMenu();
+              expect(leftChevron).toHaveAttribute('aria-disabled', 'true');
+            });
+            test('when the value is the same as the min', async () => {
+              const { openMenu } = renderDatePicker({
+                min: new Date(Date.UTC(2023, Month.December, 10)),
+                value: new Date(Date.UTC(2023, Month.December, 1)),
+              });
 
-        test('Left is not disabled if only part of prev. month is in range', async () => {
-          const { openMenu } = renderDatePicker({
-            min: new Date(Date.UTC(2023, Month.November, 29)),
-          });
-          const { leftChevron } = await openMenu();
-          expect(leftChevron).toHaveAttribute('aria-disabled', 'false');
-        });
+              const { leftChevron } = await openMenu();
+              expect(leftChevron).toHaveAttribute('aria-disabled', 'true');
+            });
+            test('min and max are in the same month', async () => {
+              const { openMenu } = renderDatePicker({
+                min: new Date(Date.UTC(2023, Month.December, 1)),
+                max: new Date(Date.UTC(2023, Month.December, 20)),
+                value: new Date(Date.UTC(2023, Month.December, 5)),
+              });
 
-        test('Right is not disabled if only part of next month is in of range', async () => {
-          const { openMenu } = renderDatePicker({
-            max: new Date(Date.UTC(2024, Month.January, 2)),
+              const { leftChevron } = await openMenu();
+              expect(leftChevron).toHaveAttribute('aria-disabled', 'true');
+            });
           });
-          const { rightChevron } = await openMenu();
-          expect(rightChevron).toHaveAttribute('aria-disabled', 'false');
+          describe('is not disabled', () => {
+            test('when the year and month is after the max', async () => {
+              const { openMenu } = renderDatePicker({
+                max: new Date(Date.UTC(2024, Month.January, 2)),
+                value: new Date(Date.UTC(2025, Month.December, 1)),
+              });
+
+              const { leftChevron } = await openMenu();
+              expect(leftChevron).toHaveAttribute('aria-disabled', 'false');
+            });
+            test('when the year and month is the same as the max', async () => {
+              const { openMenu } = renderDatePicker({
+                max: new Date(Date.UTC(2024, Month.January, 2)),
+                value: new Date(Date.UTC(2024, Month.January, 1)),
+              });
+
+              const { leftChevron } = await openMenu();
+              expect(leftChevron).toHaveAttribute('aria-disabled', 'false');
+            });
+            test('when the year is the same as the max and the month is after the max', async () => {
+              const { openMenu } = renderDatePicker({
+                max: new Date(Date.UTC(2024, Month.January, 2)),
+                value: new Date(Date.UTC(2024, Month.February, 1)),
+              });
+
+              const { leftChevron } = await openMenu();
+              expect(leftChevron).toHaveAttribute('aria-disabled', 'false');
+            });
+          });
+        });
+        describe('right', () => {
+          describe('is disabled', () => {
+            test('when the value is after the max', async () => {
+              const { openMenu } = renderDatePicker({
+                max: new Date(Date.UTC(2024, Month.January, 2)),
+                value: new Date(Date.UTC(2025, Month.December, 1)),
+              });
+
+              const { rightChevron } = await openMenu();
+              expect(rightChevron).toHaveAttribute('aria-disabled', 'true');
+            });
+            test('when the value is the same as the max', async () => {
+              const { openMenu } = renderDatePicker({
+                max: new Date(Date.UTC(2024, Month.January, 2)),
+                value: new Date(Date.UTC(2024, Month.January, 1)),
+              });
+
+              const { rightChevron } = await openMenu();
+              expect(rightChevron).toHaveAttribute('aria-disabled', 'true');
+            });
+            test('min and max are in the same month', async () => {
+              const { openMenu } = renderDatePicker({
+                min: new Date(Date.UTC(2023, Month.December, 1)),
+                max: new Date(Date.UTC(2023, Month.December, 20)),
+                value: new Date(Date.UTC(2023, Month.December, 5)),
+              });
+
+              const { rightChevron } = await openMenu();
+              expect(rightChevron).toHaveAttribute('aria-disabled', 'true');
+            });
+          });
+          describe('is not disabled', () => {
+            test('when the year and month is before the min', async () => {
+              const { openMenu } = renderDatePicker({
+                min: new Date(Date.UTC(2023, Month.December, 1)),
+                value: new Date(Date.UTC(2022, Month.December, 1)),
+              });
+
+              const { rightChevron } = await openMenu();
+              expect(rightChevron).toHaveAttribute('aria-disabled', 'false');
+            });
+            test('when the year and month is the same as the min', async () => {
+              const { openMenu } = renderDatePicker({
+                min: new Date(Date.UTC(2023, Month.December, 10)),
+                value: new Date(Date.UTC(2023, Month.December, 1)),
+              });
+
+              const { rightChevron } = await openMenu();
+              expect(rightChevron).toHaveAttribute('aria-disabled', 'false');
+            });
+            test('when the year is the same as the min and the month before the min', async () => {
+              const { openMenu } = renderDatePicker({
+                min: new Date(Date.UTC(2023, Month.December, 1)),
+                value: new Date(Date.UTC(2023, Month.November, 1)),
+              });
+
+              const { rightChevron } = await openMenu();
+              expect(rightChevron).toHaveAttribute('aria-disabled', 'false');
+            });
+          });
         });
       });
     });
@@ -514,6 +605,20 @@ describe('packages/date-picker', () => {
             expect(yearSelect).toHaveValue('2022');
           });
 
+          test('updates the displayed month to the max month and year when the value is after the max', async () => {
+            const { openMenu } = renderDatePicker({
+              max: newUTC(2022, Month.January, 5),
+              value: newUTC(2023, Month.January, 5),
+            });
+            const { leftChevron, monthSelect, yearSelect, calendarGrid } =
+              await openMenu();
+            expect(calendarGrid).toHaveAttribute('aria-label', 'January 2023');
+            userEvent.click(leftChevron!);
+            expect(calendarGrid).toHaveAttribute('aria-label', 'January 2022');
+            expect(monthSelect).toHaveValue(Month.January.toString());
+            expect(yearSelect).toHaveValue('2022');
+          });
+
           test('keeps focus on chevron button', async () => {
             const { openMenu } = renderDatePicker();
             const { leftChevron } = await openMenu();
@@ -552,6 +657,20 @@ describe('packages/date-picker', () => {
             expect(calendarGrid).toHaveAttribute('aria-label', 'January 2024');
             expect(monthSelect).toHaveValue(Month.January.toString());
             expect(yearSelect).toHaveValue('2024');
+          });
+
+          test('updates the displayed month to the min month and year when the value is before the min ', async () => {
+            const { openMenu } = renderDatePicker({
+              min: newUTC(2023, Month.December, 26),
+              value: newUTC(2022, Month.November, 26),
+            });
+            const { rightChevron, monthSelect, yearSelect, calendarGrid } =
+              await openMenu();
+            expect(calendarGrid).toHaveAttribute('aria-label', 'November 2022');
+            userEvent.click(rightChevron!);
+            expect(calendarGrid).toHaveAttribute('aria-label', 'December 2023');
+            expect(monthSelect).toHaveValue(Month.December.toString());
+            expect(yearSelect).toHaveValue('2023');
           });
         });
       });
