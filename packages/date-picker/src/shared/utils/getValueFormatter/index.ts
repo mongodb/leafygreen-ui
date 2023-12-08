@@ -1,8 +1,9 @@
 import padStart from 'lodash/padStart';
 
+import { isZeroLike } from '@leafygreen-ui/lib';
+
 import { charsPerSegment } from '../../constants';
 import { DateSegment } from '../../types';
-import { isZeroLike } from '../isZeroLike';
 
 /**
  * @returns a value formatter function for the provided date segment
