@@ -623,6 +623,20 @@ describe('packages/date-picker', () => {
             expect(yearSelect).toHaveValue('2022');
           });
 
+          test('updates the displayed month to the max month and year when the value is after the max', async () => {
+            const { openMenu } = renderDatePicker({
+              max: newUTC(2022, Month.January, 5),
+              value: newUTC(2023, Month.January, 5),
+            });
+            const { leftChevron, monthSelect, yearSelect, calendarGrid } =
+              await openMenu();
+            expect(calendarGrid).toHaveAttribute('aria-label', 'January 2023');
+            userEvent.click(leftChevron!);
+            expect(calendarGrid).toHaveAttribute('aria-label', 'January 2022');
+            expect(monthSelect).toHaveValue(Month.January.toString());
+            expect(yearSelect).toHaveValue('2022');
+          });
+
           test('keeps focus on chevron button', async () => {
             const { openMenu } = renderDatePicker();
             const { leftChevron } = await openMenu();
@@ -661,6 +675,20 @@ describe('packages/date-picker', () => {
             expect(calendarGrid).toHaveAttribute('aria-label', 'January 2024');
             expect(monthSelect).toHaveValue(Month.January.toString());
             expect(yearSelect).toHaveValue('2024');
+          });
+
+          test('updates the displayed month to the min month and year when the value is before the min ', async () => {
+            const { openMenu } = renderDatePicker({
+              min: newUTC(2023, Month.December, 26),
+              value: newUTC(2022, Month.November, 26),
+            });
+            const { rightChevron, monthSelect, yearSelect, calendarGrid } =
+              await openMenu();
+            expect(calendarGrid).toHaveAttribute('aria-label', 'November 2022');
+            userEvent.click(rightChevron!);
+            expect(calendarGrid).toHaveAttribute('aria-label', 'December 2023');
+            expect(monthSelect).toHaveValue(Month.December.toString());
+            expect(yearSelect).toHaveValue('2023');
           });
         });
       });
