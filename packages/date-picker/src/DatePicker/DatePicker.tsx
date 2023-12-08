@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { pickAndOmit } from '@leafygreen-ui/lib';
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
@@ -14,7 +15,6 @@ import {
   DatePickerProvider,
 } from '../shared/components/DatePickerContext';
 import { useControlledValue } from '../shared/hooks';
-import { pickAndOmit } from '../shared/utils';
 
 import { DatePickerProps } from './DatePicker.types';
 import { DatePickerContent } from './DatePickerContent';

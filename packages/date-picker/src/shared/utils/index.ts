@@ -2,6 +2,7 @@ export { doesSomeSegmentExist } from './doesSomeSegmentExist';
 export { getAutoComplete } from './getAutoComplete';
 export { getFirstEmptySegment } from './getFirstEmptySegment';
 export { getFormatParts, getFormatter } from './getFormatParts';
+export { getFormattedDateString } from './getFormattedDateString';
 export { getMaxSegmentValue } from './getMaxSegmentValue';
 export { getMinSegmentValue } from './getMinSegmentValue';
 export {

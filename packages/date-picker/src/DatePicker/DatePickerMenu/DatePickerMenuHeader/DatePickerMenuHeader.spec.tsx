@@ -2,9 +2,9 @@ import React, { PropsWithChildren, useState } from 'react';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { Month, newUTC } from '@leafygreen-ui/date-utils';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
-import { Month, newUTC } from '../../../shared';
 import {
   DatePickerContext,
   defaultDatePickerContext,

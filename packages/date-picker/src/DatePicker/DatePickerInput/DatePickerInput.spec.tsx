@@ -2,13 +2,13 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { newUTC } from '../../shared';
+import { Month, newUTC } from '@leafygreen-ui/date-utils';
+
 import {
   DatePickerProvider,
   DatePickerProviderProps,
   defaultDatePickerContext,
 } from '../../shared/components/DatePickerContext';
-import { Month } from '../../shared/constants';
 import {
   SingleDateProvider,
   SingleDateProviderProps,

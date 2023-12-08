@@ -1,6 +1,12 @@
 import React, { forwardRef, MouseEventHandler, useCallback } from 'react';
 import range from 'lodash/range';
 
+import {
+  getLocaleMonths,
+  isSameUTCMonth,
+  setUTCMonth,
+  setUTCYear,
+} from '@leafygreen-ui/date-utils';
 import { cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -8,12 +14,6 @@ import { Option, Select } from '@leafygreen-ui/select';
 
 import { useDatePickerContext } from '../../../shared/components/DatePickerContext';
 import { selectElementProps } from '../../../shared/constants';
-import {
-  getLocaleMonths,
-  isSameUTCMonth,
-  setUTCMonth,
-  setUTCYear,
-} from '../../../shared/utils';
 import { useSingleDateContext } from '../../SingleDateContext';
 import {
   menuHeaderSelectContainerStyles,

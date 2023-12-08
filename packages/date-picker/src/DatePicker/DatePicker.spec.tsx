@@ -10,18 +10,18 @@ import {
 import userEvent from '@testing-library/user-event';
 import { addDays, subDays } from 'date-fns';
 
-import { transitionDuration } from '@leafygreen-ui/tokens';
-
-import { defaultMax, defaultMin, Month } from '../shared/constants';
-import { eventContainingTargetValue, tabNTimes } from '../shared/testutils';
 import {
-  getFormattedDateString,
   getISODate,
-  getValueFormatter,
+  Month,
   newUTC,
   setUTCMonth,
   setUTCYear,
-} from '../shared/utils';
+} from '@leafygreen-ui/date-utils';
+import { transitionDuration } from '@leafygreen-ui/tokens';
+
+import { defaultMax, defaultMin } from '../shared/constants';
+import { eventContainingTargetValue, tabNTimes } from '../shared/testutils';
+import { getFormattedDateString, getValueFormatter } from '../shared/utils';
 
 import {
   expectedTabStopLabels,

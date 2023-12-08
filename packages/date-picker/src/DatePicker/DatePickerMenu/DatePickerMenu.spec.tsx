@@ -4,12 +4,17 @@ import userEvent from '@testing-library/user-event';
 import { addDays } from 'date-fns';
 
 import {
+  getISODate,
+  Month,
+  newUTC,
+  setUTCDate,
+} from '@leafygreen-ui/date-utils';
+
+import {
   DatePickerProvider,
   DatePickerProviderProps,
 } from '../../shared/components/DatePickerContext';
-import { Month } from '../../shared/constants';
 import { mockTimeZone, testTimeZones } from '../../shared/testutils';
-import { getISODate, newUTC, setUTCDate } from '../../shared/utils';
 import {
   SingleDateProvider,
   SingleDateProviderProps,
