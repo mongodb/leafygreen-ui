@@ -1,6 +1,6 @@
 import { setToUTCMidnight } from '.';
 
-describe('packages/date-picker/utils/setToUTCMidnight', () => {
+describe('packages/date-utils/setToUTCMidnight', () => {
   test('sets a date to UTC midnight', () => {
     const date = new Date();
     const midnight = setToUTCMidnight(date);

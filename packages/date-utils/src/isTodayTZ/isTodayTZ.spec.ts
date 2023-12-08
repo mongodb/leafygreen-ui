@@ -2,7 +2,7 @@ import { Month } from '../constants';
 
 import { isTodayTZ } from '.';
 
-describe('packages/date-picker/utils/isTodayTZ', () => {
+describe('packages/date-utils/isTodayTZ', () => {
   const utc25 = new Date(Date.UTC(2023, Month.December, 25, 0, 0, 0));
 
   describe('NYC Client', () => {

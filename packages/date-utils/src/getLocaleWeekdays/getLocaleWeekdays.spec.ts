@@ -1,6 +1,6 @@
 import { getLocaleWeekdays } from '.';
 
-describe('packages/date-picker/utils/getLocaleWeekdays', () => {
+describe('packages/date-utils/getLocaleWeekdays', () => {
   test('English (default)', () => {
     expect(getLocaleWeekdays()).toHaveLength(7);
     getLocaleWeekdays().forEach(w => {

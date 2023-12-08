@@ -1,6 +1,6 @@
 import { getMonthName } from '.';
 
-describe('packages/date-picker/utils/getMonthName', () => {
+describe('packages/date-utils/getMonthName', () => {
   test('Default (English)', () => {
     expect(getMonthName(0)).toEqual(
       expect.objectContaining({ long: 'January', short: 'Jan' }),

@@ -1,6 +1,6 @@
 import { getLocaleMonths } from '.';
 
-describe('packages/date-picker/utils/getLocaleMonths', () => {
+describe('packages/date-utils/getLocaleMonths', () => {
   test('default (English)', () => {
     expect(getLocaleMonths()).toHaveLength(12);
     getLocaleMonths().forEach(mo => {

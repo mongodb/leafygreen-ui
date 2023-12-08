@@ -4,7 +4,7 @@ import { Month } from '../constants';
 
 import { isSameUTCMonth } from '.';
 
-describe('packages/date-picker/utils/isSameUTCMonth', () => {
+describe('packages/date-utils/isSameUTCMonth', () => {
   beforeEach(() => {
     tzMock.register('US/Eastern');
   });

@@ -2,7 +2,7 @@ import { Month } from '../constants';
 
 import { getUTCDateString } from '.';
 
-describe('date-picker/utils/getUTCDateString', () => {
+describe('packages/date-utils/getUTCDateString', () => {
   test('returns date string relative to UTC', () => {
     const date = new Date(Date.UTC(2023, Month.September, 10));
     const str = getUTCDateString(date);

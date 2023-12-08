@@ -1,6 +1,6 @@
 import { isValidLocale } from '.';
 
-describe('packages/date-picker/utils/isValidLocale', () => {
+describe('packages/date-utils/isValidLocale', () => {
   test('en-US is valid', () => {
     expect(isValidLocale('en-US')).toBeTruthy();
   });

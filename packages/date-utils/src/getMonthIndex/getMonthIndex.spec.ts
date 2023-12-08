@@ -1,6 +1,6 @@
 import { getMonthIndex } from '.';
 
-describe('packages/date-picker/utils/getMonthIndex', () => {
+describe('packages/date-utils/getMonthIndex', () => {
   test('Default (English) long', () => {
     expect(getMonthIndex('January')).toBe(0);
     expect(getMonthIndex('December')).toBe(11);

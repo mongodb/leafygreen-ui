@@ -3,7 +3,7 @@ import { newUTC } from '../newUTC';
 
 import { addDaysUTC } from '.';
 
-describe('packages/date-picker/utils/addDaysUTC', () => {
+describe('packages/date-utils/addDaysUTC', () => {
   const june30 = newUTC(2023, Month.June, 30);
   const july1 = newUTC(2023, Month.July, 1);
   const july2 = newUTC(2023, Month.July, 2);

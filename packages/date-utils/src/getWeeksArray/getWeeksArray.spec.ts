@@ -4,7 +4,7 @@ import { Month } from '../constants';
 
 import { getWeeksArray } from '.';
 
-describe('packages/date-picker/utils/getWeeksArray', () => {
+describe('packages/date-utils/getWeeksArray', () => {
   test('starts the week on the correct day for the locale', () => {
     const month = new Date(Date.UTC(2023, Month.August, 1));
     const arr = getWeeksArray(month, { locale: 'en-US' });

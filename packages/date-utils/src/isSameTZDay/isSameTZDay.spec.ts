@@ -2,7 +2,7 @@ import { Month } from '../constants';
 
 import { isSameTZDay } from './index';
 
-describe('packages/date-picker/utils/isSameTZDay', () => {
+describe('packages/date-utils/isSameTZDay', () => {
   const utc24 = new Date(Date.UTC(2023, Month.December, 24, 0, 0, 0));
   const utc25 = new Date(Date.UTC(2023, Month.December, 25, 0, 0, 0));
   const utc26 = new Date(Date.UTC(2023, Month.December, 26, 0, 0, 0));

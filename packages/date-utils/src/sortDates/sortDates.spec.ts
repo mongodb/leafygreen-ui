@@ -3,7 +3,7 @@ import { newUTC } from '../newUTC';
 
 import { sortDates } from '.';
 
-describe('packages/date-picker/utils/sortDates', () => {
+describe('packages/date-utils/sortDates', () => {
   const testDates = [
     newUTC(2023, Month.September, 10),
     newUTC(2020, Month.March, 13),

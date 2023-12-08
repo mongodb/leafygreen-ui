@@ -2,7 +2,7 @@ import tzMock from 'timezone-mock';
 
 import { isSameUTCDay } from '.';
 
-describe('packages/date-picker/utils/isSameUTCDay', () => {
+describe('packages/date-utils/isSameUTCDay', () => {
   beforeEach(() => {
     tzMock.register('US/Eastern');
   });

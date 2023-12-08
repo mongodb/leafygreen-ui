@@ -1,6 +1,6 @@
 import { normalizeLocale } from '.';
 
-describe('packages/date-picker/utils/normalizeLocale', () => {
+describe('packages/date-utils/normalizeLocale', () => {
   test('pass through valid locale', () => {
     expect(normalizeLocale('de-DE')).toBe('de-DE');
   });

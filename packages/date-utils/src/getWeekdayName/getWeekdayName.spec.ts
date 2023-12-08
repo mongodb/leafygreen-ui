@@ -1,5 +1,5 @@
 import { getWeekdayName } from '.';
-describe('packages/date-picker/utils/getWeekdayName', () => {
+describe('packages/date-utils/getWeekdayName', () => {
   test('default (English)', () => {
     expect(getWeekdayName(0)).toEqual(
       expect.objectContaining({

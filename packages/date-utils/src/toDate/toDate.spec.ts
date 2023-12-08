@@ -1,6 +1,6 @@
 import { toDate } from '.';
 
-describe('packages/date-picker/utils/toDate', () => {
+describe('packages/date-utils/toDate', () => {
   test('Date', () => {
     const d1 = new Date();
     const d2 = toDate(d1);

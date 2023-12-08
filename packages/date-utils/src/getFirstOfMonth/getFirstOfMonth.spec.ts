@@ -1,6 +1,6 @@
 import { getFirstOfMonth } from '.';
 
-describe('packages/date-picker/utils/getFirstOfMonth', () => {
+describe('packages/date-utils/getFirstOfMonth', () => {
   test('returns the first day of the provided month', () => {
     expect(getFirstOfMonth(new Date(Date.UTC(2023, 0, 31)))).toEqual(
       new Date(Date.UTC(2023, 0, 1)),

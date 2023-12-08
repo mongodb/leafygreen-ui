@@ -4,7 +4,7 @@ import { Month } from '../constants';
 
 import { setUTCMonth } from '.';
 
-describe('packages/date-picker/utils/setUTCMonth', () => {
+describe('packages/date-utils/setUTCMonth', () => {
   test('sets the month', () => {
     const d = new Date(Date.UTC(2023, Month.September, 10));
     const d2 = setUTCMonth(d, Month.March);

@@ -1,6 +1,6 @@
 import { getDaysInUTCMonth } from '.';
 
-describe('getDaysInUTCMonth', () => {
+describe('packages/date-utils/getDaysInUTCMonth', () => {
   test('returns the number of days in the month', () => {
     const result = getDaysInUTCMonth(new Date(2100, 1 /* Feb */, 11));
     expect(result).toEqual(28);

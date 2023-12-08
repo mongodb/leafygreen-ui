@@ -1,6 +1,6 @@
 import { isValidDate, isValidDateString } from '.';
 
-describe('packages/date-picker/utils/isValidDate', () => {
+describe('packages/date-utils/isValidDate', () => {
   test('accepts Date objects', () => {
     expect(isValidDate(new Date())).toBe(true);
     expect(isValidDate(new Date(Date.UTC(2023, 1, 1)))).toBe(true);
