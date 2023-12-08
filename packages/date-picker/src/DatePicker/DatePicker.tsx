@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { AutoComplete, DatePickerState } from 'src/shared';
 
 import LeafyGreenProvider, {
   useDarkMode,
@@ -8,6 +7,7 @@ import LeafyGreenProvider, {
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
+import { AutoComplete, DatePickerState } from '../shared';
 import {
   ContextPropKeys,
   contextPropNames,
