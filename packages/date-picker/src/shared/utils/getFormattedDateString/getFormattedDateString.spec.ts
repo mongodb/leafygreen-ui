@@ -1,5 +1,4 @@
-import { Month } from '../../constants';
-import { newUTC } from '../newUTC';
+import { Month, newUTC } from '@leafygreen-ui/date-utils';
 
 import { getFormattedDateString } from '.';
 
