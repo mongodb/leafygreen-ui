@@ -1,5 +1,9 @@
 ---
 '@leafygreen-ui/lib': minor
 ---
-
-Creates `rollover` utility function
+- Creates new utility functions 
+  - `rollover` 
+  - `truncateStart`
+  - `cloneReverse`
+  - `isDefined`
+  - `isZeroLike` & `isNotZeroLike`
