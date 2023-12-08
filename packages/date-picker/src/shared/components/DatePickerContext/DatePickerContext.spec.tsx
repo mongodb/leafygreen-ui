@@ -53,8 +53,8 @@ describe('packages/date-picker-context', () => {
         expect(result.current.max).toEqual(testMax);
       });
 
-      test('if min is after max, sorts & console warns', () => {
-        const warnSpy = jest.spyOn(consoleOnce, 'warn');
+      test('if min is after max, uses default & console errors', () => {
+        const errorSpy = jest.spyOn(consoleOnce, 'error');
 
         const testMax = newUTC(1999, Month.September, 2);
         const testMin = newUTC(2011, Month.June, 22);
@@ -63,9 +63,9 @@ describe('packages/date-picker-context', () => {
           min: testMin,
           max: testMax,
         });
-        expect(result.current.min).toEqual(testMax);
-        expect(result.current.max).toEqual(testMin);
-        expect(warnSpy).toHaveBeenCalled();
+        expect(result.current.min).toEqual(MIN_DATE);
+        expect(result.current.max).toEqual(MAX_DATE);
+        expect(errorSpy).toHaveBeenCalled();
       });
 
       test('if max is before default min, uses default & console errors', () => {

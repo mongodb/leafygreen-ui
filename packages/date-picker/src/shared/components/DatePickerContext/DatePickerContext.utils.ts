@@ -130,14 +130,14 @@ const getMinMax = (min: Date | null, max: Date | null): [Date, Date] => {
   // if both are defined
   if (min && max) {
     if (isBefore(max, min)) {
-      consoleOnce.warn(
+      consoleOnce.error(
         `LeafyGreen DatePicker: Provided max date (${getISODate(
           max,
         )}) is before provided min date (${getISODate(
           min,
-        )}). Interpreting these in reverse order.`,
+        )}). Using default values.`,
       );
-      return [max, min];
+      return defaultRange;
     }
 
     return [min, max];
@@ -148,7 +148,7 @@ const getMinMax = (min: Date | null, max: Date | null): [Date, Date] => {
           min,
         )}) is after the default max date (${getISODate(
           defaultDatePickerContext.max,
-        )}). Using default values`,
+        )}). Using default values.`,
       );
       return defaultRange;
     }
@@ -161,7 +161,7 @@ const getMinMax = (min: Date | null, max: Date | null): [Date, Date] => {
           max,
         )}) is before the default min date (${getISODate(
           defaultDatePickerContext.min,
-        )}). Using default values`,
+        )}). Using default values.`,
       );
       return defaultRange;
     }
