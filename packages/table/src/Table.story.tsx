@@ -101,7 +101,7 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
     () => [
       {
         accessorKey: 'dateCreated',
-        header: () => 'Date Created',
+        header: 'Date Created',
         enableSorting: true,
         cell: info =>
           (info.getValue() as Date).toLocaleDateString('en-us', {
