@@ -62,12 +62,12 @@ export const DatePickerMenuHeader = forwardRef<
       // If the month is not in range and not the last valid month then set the month to the closest valid month
       // e.g.
       // max: new Date(Date.UTC(2038, Month.January, 19));
-      // current input date: new Date(Date.UTC(2038, Month.March, 19));
-      // left chevron will change the month back to the max date
+      // current month date: new Date(Date.UTC(2038, Month.March, 19));
+      // left chevron will change the month back to January 2038
       // e.g.
       // min: new Date(Date.UTC(1970, Month.January, 1));
-      // current input date: new Date(Date.UTC(1969, Month.November, 19));
-      // right chevron will change the month back to the min date
+      // current month date: new Date(Date.UTC(1969, Month.November, 19));
+      // right chevron will change the month back to January 1970
       if (!isDateInRange && !isOnLastValidMonth) {
         const closestValidDate = dir === 'left' ? max : min;
         const newMonthIndex = closestValidDate.getUTCMonth();
