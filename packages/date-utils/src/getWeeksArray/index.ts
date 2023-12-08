@@ -3,13 +3,14 @@ import fill from 'lodash/fill';
 import range from 'lodash/range';
 import { getWeekStartByLocale } from 'weekstart';
 
-import { daysPerWeek } from '../../constants';
-import { BaseDatePickerProps } from '../../types';
+import { daysPerWeek } from '../constants';
 import { getDaysInUTCMonth } from '../getDaysInUTCMonth';
 import { setToUTCMidnight } from '../setToUTCMidnight';
+import { LocaleString } from '../types';
 
-interface GetWeeksArrayOptions
-  extends Required<Pick<BaseDatePickerProps, 'locale'>> {}
+interface GetWeeksArrayOptions {
+  locale: LocaleString;
+}
 
 /**
  * Returns a 7x5 (or 7x6) 2D array of Dates for the given month

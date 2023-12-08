@@ -1,8 +1,8 @@
 import { truncate } from 'lodash';
 
-import { Month } from '../../constants';
-import { WeekdayObject } from '../../types';
+import { Month } from '../constants';
 import { normalizeLocale } from '../normalizeLocale';
+import { WeekdayObject } from '../types';
 
 export const getWeekdayName = (
   day: number,

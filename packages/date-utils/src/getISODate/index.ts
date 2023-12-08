@@ -1,5 +1,5 @@
-import { DateType } from '../../types';
 import { isValidDate } from '../isValidDate';
+import { DateType } from '../types';
 
 /**
  * Returns only the Date portion of the ISOString for a given date

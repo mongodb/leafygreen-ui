@@ -1,8 +1,8 @@
 export { addDaysUTC } from './addDaysUTC';
 export { addMonthsUTC } from './addMonthsUTC';
+export * from './constants';
 export { getDaysInUTCMonth } from './getDaysInUTCMonth';
 export { getFirstOfMonth } from './getFirstOfMonth';
-export { getFormattedDateString } from './getFormattedDateString';
 export { getFullMonthLabel } from './getFullMonthLabel';
 export { getISODate } from './getISODate';
 export { getLastOfMonth } from './getLastOfMonth';
@@ -31,3 +31,4 @@ export { setUTCDate } from './setUTCDate';
 export { setUTCMonth } from './setUTCMonth';
 export { setUTCYear } from './setUTCYear';
 export { toDate } from './toDate';
+export * from './types';

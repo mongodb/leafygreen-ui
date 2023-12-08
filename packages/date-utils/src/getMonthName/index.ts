@@ -1,5 +1,5 @@
-import { MonthObject } from '../../types';
 import { normalizeLocale } from '../normalizeLocale';
+import { MonthObject } from '../types';
 
 /**
  * Returns the month name from a given index and optional locale
