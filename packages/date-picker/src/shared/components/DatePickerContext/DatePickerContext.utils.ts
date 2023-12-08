@@ -1,7 +1,8 @@
-import { isWithinInterval } from 'date-fns';
+import { isBefore, isWithinInterval } from 'date-fns';
 import defaults from 'lodash/defaults';
 import defaultTo from 'lodash/defaultTo';
 
+import { consoleOnce } from '@leafygreen-ui/lib';
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
 import { MAX_DATE, MIN_DATE } from '../../constants';
@@ -10,8 +11,7 @@ import {
   BaseDatePickerProps,
   DatePickerState,
 } from '../../types';
-import { getFormatParts, toDate } from '../../utils';
-import { sortDates } from '../../utils/sortDates';
+import { getFormatParts, getISODate, toDate } from '../../utils';
 
 import {
   DatePickerContextProps,
@@ -104,10 +104,7 @@ export const getContextProps = (
     Intl.DateTimeFormat().resolvedOptions().timeZone,
   );
 
-  const [min, max] = sortDates([
-    defaultTo(toDate(minProp), defaultDatePickerContext.min),
-    defaultTo(toDate(maxProp), defaultDatePickerContext.max),
-  ]);
+  const [min, max] = getMinMax(toDate(minProp), toDate(maxProp));
 
   const providerValue: DatePickerContextProps = {
     ...defaults(rest, defaultDatePickerContext),
@@ -122,4 +119,55 @@ export const getContextProps = (
   const formatParts = getFormatParts(providerValue.locale);
 
   return { ...providerValue, isInRange, formatParts };
+};
+
+const getMinMax = (min: Date | null, max: Date | null): [Date, Date] => {
+  const defaultRange: [Date, Date] = [
+    defaultDatePickerContext.min,
+    defaultDatePickerContext.max,
+  ];
+
+  // if both are defined
+  if (min && max) {
+    if (isBefore(max, min)) {
+      consoleOnce.warn(
+        `LeafyGreen DatePicker: Provided max date (${getISODate(
+          max,
+        )}) is before provided min date (${getISODate(
+          min,
+        )}). Interpreting these in reverse order.`,
+      );
+      return [max, min];
+    }
+
+    return [min, max];
+  } else if (min) {
+    if (isBefore(defaultDatePickerContext.max, min)) {
+      consoleOnce.error(
+        `LeafyGreen DatePicker: Provided min date (${getISODate(
+          min,
+        )}) is after the default max date (${getISODate(
+          defaultDatePickerContext.max,
+        )}). Using default values`,
+      );
+      return defaultRange;
+    }
+
+    return [min, defaultDatePickerContext.max];
+  } else if (max) {
+    if (isBefore(max, defaultDatePickerContext.min)) {
+      consoleOnce.error(
+        `LeafyGreen DatePicker: Provided max date (${getISODate(
+          max,
+        )}) is before the default min date (${getISODate(
+          defaultDatePickerContext.min,
+        )}). Using default values`,
+      );
+      return defaultRange;
+    }
+
+    return [defaultDatePickerContext.min, max];
+  }
+
+  return defaultRange;
 };
