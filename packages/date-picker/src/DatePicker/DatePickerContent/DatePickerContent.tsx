@@ -119,7 +119,7 @@ export const DatePickerContent = forwardRef<
 
   /** When value changes, validate it */
   useEffect(() => {
-    if (!isEqual(prevValue, value) && !isSameUTCDay(prevValue, value)) {
+    if (!isEqual(prevValue, value) && !isSameUTCDay(value, prevValue)) {
       handleValidation(value);
     }
   }, [handleValidation, prevValue, value]);
@@ -128,7 +128,10 @@ export const DatePickerContent = forwardRef<
    * If min/max changes, re-validate the value
    */
   useEffect(() => {
-    if (!isSameUTCDay(min, prevMin) || !isSameUTCDay(max, prevMax)) {
+    if (
+      (prevMin && !isSameUTCDay(min, prevMin)) ||
+      (prevMax && !isSameUTCDay(max, prevMax))
+    ) {
       handleValidation(value);
     }
   }, [min, max, value, prevMin, prevMax, handleValidation]);
