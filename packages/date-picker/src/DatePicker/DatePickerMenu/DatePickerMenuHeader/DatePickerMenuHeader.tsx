@@ -22,7 +22,7 @@ import {
   selectTruncateStyles,
 } from '../DatePickerMenu.styles';
 
-import { isChevronDisabled, shouldMonthBeEnabled } from './utils';
+import { shouldChevronBeDisabled, shouldMonthBeEnabled } from './utils';
 
 interface DatePickerMenuHeaderProps {
   setMonth: (newMonth: Date) => void;
@@ -51,7 +51,15 @@ export const DatePickerMenuHeader = forwardRef<
   };
 
   /**
-   * If the month is not in range and not the last valid month then set the month to the closest valid month
+   * If the month is not in range and is not the last valid month
+   * e.g.
+   * This is not in range and is not the last valid month
+   * min: new Date(Date.UTC(2038, Month.March, 19));
+   * current month date: new Date(Date.UTC(2038, Month.Feburary, 19));
+   *
+   * This is not in range but it is the last valid month
+   * min: new Date(Date.UTC(2038, Month.March, 19));
+   * current month date: new Date(Date.UTC(2038, Month.March, 18));
    */
   const isMonthInValid = (dir: 'left' | 'right') => {
     const isOnLastValidMonth = isSameUTCMonth(
@@ -107,7 +115,7 @@ export const DatePickerMenuHeader = forwardRef<
         aria-label={
           isMonthInValid('left') ? 'Previous valid month' : 'Previous month'
         }
-        disabled={isChevronDisabled('left', month, min)}
+        disabled={shouldChevronBeDisabled('left', month, min)}
         onClick={handleChevronClick('left')}
       >
         <Icon glyph="ChevronLeft" />
@@ -159,7 +167,7 @@ export const DatePickerMenuHeader = forwardRef<
       </div>
       <IconButton
         aria-label={isMonthInValid('right') ? 'Next valid month' : 'Next month'}
-        disabled={isChevronDisabled('right', month, max)}
+        disabled={shouldChevronBeDisabled('right', month, max)}
         onClick={handleChevronClick('right')}
       >
         <Icon glyph="ChevronRight" />

@@ -8,7 +8,7 @@ import { isSameUTCMonth } from '../../../../../shared/utils';
  * @param day2 the full date that current menu date is compared against (min/max)
  * @returns
  */
-export const isChevronDisabled = (
+export const shouldChevronBeDisabled = (
   direction: 'left' | 'right',
   day1: Date,
   day2: Date,

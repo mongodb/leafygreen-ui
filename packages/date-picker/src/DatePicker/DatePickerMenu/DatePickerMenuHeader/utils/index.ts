@@ -1,2 +1,2 @@
-export { isChevronDisabled } from './isChevronDisabled';
+export { shouldChevronBeDisabled } from './shouldChevronBeDisabled';
 export { shouldMonthBeEnabled } from './shouldMonthBeEnabled';

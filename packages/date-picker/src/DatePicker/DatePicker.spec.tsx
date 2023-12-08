@@ -295,7 +295,7 @@ describe('packages/date-picker', () => {
       describe('Chevrons', () => {
         describe('left', () => {
           describe('is disabled', () => {
-            test('when the year and month is before the min', async () => {
+            test('when the value is before the min', async () => {
               const { openMenu } = renderDatePicker({
                 min: new Date(Date.UTC(2023, Month.December, 1)),
                 value: new Date(Date.UTC(2022, Month.December, 1)),
@@ -304,19 +304,10 @@ describe('packages/date-picker', () => {
               const { leftChevron } = await openMenu();
               expect(leftChevron).toHaveAttribute('aria-disabled', 'true');
             });
-            test('when the year and month is the same as the min', async () => {
+            test('when the value is the same as the min', async () => {
               const { openMenu } = renderDatePicker({
                 min: new Date(Date.UTC(2023, Month.December, 10)),
                 value: new Date(Date.UTC(2023, Month.December, 1)),
-              });
-
-              const { leftChevron } = await openMenu();
-              expect(leftChevron).toHaveAttribute('aria-disabled', 'true');
-            });
-            test('when the year is the same as the min and the month is before the min', async () => {
-              const { openMenu } = renderDatePicker({
-                min: new Date(Date.UTC(2023, Month.December, 1)),
-                value: new Date(Date.UTC(2023, Month.November, 1)),
               });
 
               const { leftChevron } = await openMenu();
@@ -365,7 +356,7 @@ describe('packages/date-picker', () => {
         });
         describe('right', () => {
           describe('is disabled', () => {
-            test('when the year and month is after the max', async () => {
+            test('when the value is after the max', async () => {
               const { openMenu } = renderDatePicker({
                 max: new Date(Date.UTC(2024, Month.January, 2)),
                 value: new Date(Date.UTC(2025, Month.December, 1)),
@@ -374,19 +365,10 @@ describe('packages/date-picker', () => {
               const { rightChevron } = await openMenu();
               expect(rightChevron).toHaveAttribute('aria-disabled', 'true');
             });
-            test('when the year and month is the same as the max', async () => {
+            test('when the value is the same as the max', async () => {
               const { openMenu } = renderDatePicker({
                 max: new Date(Date.UTC(2024, Month.January, 2)),
                 value: new Date(Date.UTC(2024, Month.January, 1)),
-              });
-
-              const { rightChevron } = await openMenu();
-              expect(rightChevron).toHaveAttribute('aria-disabled', 'true');
-            });
-            test('when the year is the same as the max and the month is after the max', async () => {
-              const { openMenu } = renderDatePicker({
-                max: new Date(Date.UTC(2024, Month.January, 2)),
-                value: new Date(Date.UTC(2024, Month.February, 1)),
               });
 
               const { rightChevron } = await openMenu();

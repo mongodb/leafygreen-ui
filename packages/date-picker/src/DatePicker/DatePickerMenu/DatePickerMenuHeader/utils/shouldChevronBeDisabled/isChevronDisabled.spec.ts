@@ -1,9 +1,9 @@
 import { Month } from '../../../../../shared/constants';
 
-import { isChevronDisabled } from './';
+import { shouldChevronBeDisabled } from '.';
 
-const MIN_DATE = new Date(Date.UTC(1970, Month.February, 20));
-const MAX_DATE = new Date(Date.UTC(2037, Month.February, 20));
+const testMinDate = new Date(Date.UTC(1970, Month.February, 20));
+const testMaxDate = new Date(Date.UTC(2037, Month.February, 20));
 
 const beforeMinDateDiffYear = new Date(Date.UTC(1969, Month.February, 20));
 const beforeMinDateSameMonth = new Date(Date.UTC(1970, Month.February, 19));
@@ -13,7 +13,7 @@ const beforeMinDateSameYearDiffMonth = new Date(
 
 const afterMinDateSameMonth = new Date(Date.UTC(1970, Month.February, 21));
 const afterMinDateSameYear = new Date(Date.UTC(1970, Month.March, 20));
-const afterMinDateDifferentYear = MAX_DATE;
+const afterMinDateDifferentYear = testMaxDate;
 
 const afterMaxDateSameMonth = new Date(Date.UTC(2037, Month.February, 21));
 const afterMaxDateDiffYear = new Date(Date.UTC(2038, Month.February, 20));
@@ -21,7 +21,7 @@ const afterMaxDateSameYearDiffMonth = new Date(Date.UTC(2037, Month.March, 20));
 
 const beforeMaxDateSameMonth = new Date(Date.UTC(2037, Month.February, 19));
 const beforeMaxDateSameYear = new Date(Date.UTC(2037, Month.January, 20));
-const beforeMaxDateDiffYear = MIN_DATE;
+const beforeMaxDateDiffYear = testMinDate;
 
 describe('packages/date-picker/menu/utils/shouldMonthBeEnabled', () => {
   describe('left chevron', () => {
@@ -29,24 +29,32 @@ describe('packages/date-picker/menu/utils/shouldMonthBeEnabled', () => {
       describe('when the menu date is before the minDate', () => {
         test('but is in a month that has both valid and invalid dates', () => {
           expect(
-            isChevronDisabled('left', beforeMinDateSameMonth, MIN_DATE),
+            shouldChevronBeDisabled(
+              'left',
+              beforeMinDateSameMonth,
+              testMinDate,
+            ),
           ).toBeTruthy();
         });
         test('and is in a different year', () => {
           expect(
-            isChevronDisabled('left', beforeMinDateDiffYear, MIN_DATE),
+            shouldChevronBeDisabled('left', beforeMinDateDiffYear, testMinDate),
           ).toBeTruthy();
         });
         test('and is in the same year and different month', () => {
           expect(
-            isChevronDisabled('left', beforeMinDateSameYearDiffMonth, MIN_DATE),
+            shouldChevronBeDisabled(
+              'left',
+              beforeMinDateSameYearDiffMonth,
+              testMinDate,
+            ),
           ).toBeTruthy();
         });
       });
       describe('when the menu date is after the minDate', () => {
         test('but is in a month that has both valid and invalid dates', () => {
           expect(
-            isChevronDisabled('left', afterMinDateSameMonth, MIN_DATE),
+            shouldChevronBeDisabled('left', afterMinDateSameMonth, testMinDate),
           ).toBeTruthy();
         });
       });
@@ -56,12 +64,16 @@ describe('packages/date-picker/menu/utils/shouldMonthBeEnabled', () => {
       describe('when the menu date is after the minDate', () => {
         test('and is in the same year', () => {
           expect(
-            isChevronDisabled('left', afterMinDateSameYear, MIN_DATE),
+            shouldChevronBeDisabled('left', afterMinDateSameYear, testMinDate),
           ).toBeFalsy();
         });
         test('and is in a different year', () => {
           expect(
-            isChevronDisabled('left', afterMinDateDifferentYear, MIN_DATE),
+            shouldChevronBeDisabled(
+              'left',
+              afterMinDateDifferentYear,
+              testMinDate,
+            ),
           ).toBeFalsy();
         });
       });
@@ -73,24 +85,36 @@ describe('packages/date-picker/menu/utils/shouldMonthBeEnabled', () => {
       describe('when the menu date is after the maxDate', () => {
         test('but is in a month that has both valid and invalid dates', () => {
           expect(
-            isChevronDisabled('right', afterMaxDateSameMonth, MAX_DATE),
+            shouldChevronBeDisabled(
+              'right',
+              afterMaxDateSameMonth,
+              testMaxDate,
+            ),
           ).toBeTruthy();
         });
         test('and is in a different year', () => {
           expect(
-            isChevronDisabled('right', afterMaxDateDiffYear, MAX_DATE),
+            shouldChevronBeDisabled('right', afterMaxDateDiffYear, testMaxDate),
           ).toBeTruthy();
         });
         test('and is in the same year and different month', () => {
           expect(
-            isChevronDisabled('right', afterMaxDateSameYearDiffMonth, MAX_DATE),
+            shouldChevronBeDisabled(
+              'right',
+              afterMaxDateSameYearDiffMonth,
+              testMaxDate,
+            ),
           ).toBeTruthy();
         });
       });
       describe('when the menu date is before the maxDate', () => {
         test('but is in a month that has both valid and invalid dates', () => {
           expect(
-            isChevronDisabled('right', beforeMaxDateSameMonth, MAX_DATE),
+            shouldChevronBeDisabled(
+              'right',
+              beforeMaxDateSameMonth,
+              testMaxDate,
+            ),
           ).toBeTruthy();
         });
       });
@@ -100,12 +124,20 @@ describe('packages/date-picker/menu/utils/shouldMonthBeEnabled', () => {
       describe('when the menu date is before the maxDate', () => {
         test('and is in the same year', () => {
           expect(
-            isChevronDisabled('right', beforeMaxDateSameYear, MAX_DATE),
+            shouldChevronBeDisabled(
+              'right',
+              beforeMaxDateSameYear,
+              testMaxDate,
+            ),
           ).toBeFalsy();
         });
         test('and is in a different year', () => {
           expect(
-            isChevronDisabled('right', beforeMaxDateDiffYear, MAX_DATE),
+            shouldChevronBeDisabled(
+              'right',
+              beforeMaxDateDiffYear,
+              testMaxDate,
+            ),
           ).toBeFalsy();
         });
       });
