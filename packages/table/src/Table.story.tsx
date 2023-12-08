@@ -101,7 +101,7 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
     () => [
       {
         accessorKey: 'dateCreated',
-        header: () => <span style={{ minWidth: '200px' }}>Date Created</span>,
+        header: () => 'Date Created',
         enableSorting: true,
         cell: info =>
           (info.getValue() as Date).toLocaleDateString('en-us', {
@@ -109,7 +109,6 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
             month: 'short',
             day: 'numeric',
           }),
-        padding: '20px',
       },
       {
         accessorKey: 'frequency',
