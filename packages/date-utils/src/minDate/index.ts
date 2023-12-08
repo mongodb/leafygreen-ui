@@ -1,6 +1,6 @@
 import { min } from 'date-fns';
 
-import { isDefined } from '../isDefined';
+import { isDefined } from '@leafygreen-ui/lib';
 
 // TODO: tests
 export const minDate = (

@@ -1,8 +1,8 @@
-
 # Date Utils
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/date-utils.svg)
-#### [View on MongoDB.design](https://www.mongodb.design/component/date-utils/example/)
+
+LeafyGreen DateUtils provides date manipulation & comparison utilities not included in the [`date-fns`](https://date-fns.org/) library.
 
 ## Installation
 
@@ -17,4 +17,3 @@ yarn add @leafygreen-ui/date-utils
 ```shell
 npm install @leafygreen-ui/date-utils
 ```
-
