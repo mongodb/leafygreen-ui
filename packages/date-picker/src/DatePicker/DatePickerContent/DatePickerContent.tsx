@@ -27,7 +27,8 @@ export const DatePickerContent = forwardRef<
   HTMLDivElement,
   DatePickerContentProps
 >(({ ...rest }: DatePickerContentProps, fwdRef) => {
-  const { isOpen, menuId, disabled, isSelectOpen } = useDatePickerContext();
+  const { min, max, isOpen, menuId, disabled, isSelectOpen } =
+    useDatePickerContext();
   const {
     refs,
     value,
@@ -38,6 +39,8 @@ export const DatePickerContent = forwardRef<
   } = useSingleDateContext();
 
   const prevValue = usePrevious(value);
+  const prevMin = usePrevious(min);
+  const prevMax = usePrevious(max);
 
   const formFieldRef = useForwardedRef(fwdRef, null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -120,6 +123,15 @@ export const DatePickerContent = forwardRef<
       handleValidation(value);
     }
   }, [handleValidation, prevValue, value]);
+
+  /**
+   * If min/max changes, re-validate the value
+   */
+  useEffect(() => {
+    if (!isSameUTCDay(min, prevMin) || !isSameUTCDay(max, prevMax)) {
+      handleValidation(value);
+    }
+  }, [min, max, value, prevMin, prevMax, handleValidation]);
 
   return (
     <>
