@@ -11,10 +11,16 @@ export { getFormattedDateString } from './getFormattedDateString';
 export { getFullMonthLabel } from './getFullMonthLabel';
 export { getISODate } from './getISODate';
 export { getLastOfMonth } from './getLastOfMonth';
+export { getLocaleMonths } from './getLocaleMonths';
+export { getLocaleWeekdays } from './getLocaleWeekdays';
 export { getMaxSegmentValue } from './getMaxSegmentValue';
 export { getMinSegmentValue } from './getMinSegmentValue';
 export { getMonthIndex } from './getMonthIndex';
 export { getMonthName } from './getMonthName';
+export {
+  getRelativeSegment,
+  getRelativeSegmentRef,
+} from './getRelativeSegment';
 export { getRemainingParts } from './getRemainingParts';
 export { getSegmentMaxLength } from './getSegmentMaxLength';
 export {
@@ -23,6 +29,7 @@ export {
 } from './getSegmentsFromDate';
 export { getUTCDateString } from './getUTCDateString';
 export { getValueFormatter } from './getValueFormatter';
+export { getWeekdayName } from './getWeekdayName';
 export { getWeeksArray } from './getWeeksArray';
 export { isCurrentUTCDay } from './isCurrentUTCDay';
 export { isDefined } from './isDefined';

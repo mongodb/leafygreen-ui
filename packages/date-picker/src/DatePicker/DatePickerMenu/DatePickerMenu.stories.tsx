@@ -14,12 +14,14 @@ import {
   contextPropNames,
   type DatePickerContextProps,
   DatePickerProvider,
-  defaultDatePickerContext,
 } from '../../shared/components/DatePickerContext';
 import { Month } from '../../shared/constants';
-import { Locales, TimeZones } from '../../shared/testutils';
+import {
+  getProviderPropsFromStoryContext,
+  Locales,
+  TimeZones,
+} from '../../shared/testutils';
 import { newUTC } from '../../shared/utils';
-import { getProviderPropsFromStoryArgs } from '../DatePicker.testutils';
 import {
   type SingleDateContextProps,
   SingleDateProvider,
@@ -34,18 +36,13 @@ type DecoratorArgs = DatePickerMenuProps &
   DatePickerContextProps;
 
 const MenuDecorator: Decorator = (Story: StoryFn, ctx: any) => {
-  const { contextProps, componentProps } = getProviderPropsFromStoryArgs(
-    ctx.args,
-  );
+  const { leafyGreenProviderProps, datePickerProviderProps, storyProps } =
+    getProviderPropsFromStoryContext<DatePickerMenuProps>(ctx.args);
 
   return (
-    <LeafyGreenProvider darkMode={contextProps.darkMode}>
-      <DatePickerProvider
-        {...defaultDatePickerContext}
-        {...contextProps}
-        initialOpen={true}
-      >
-        <Story {...componentProps} />
+    <LeafyGreenProvider {...leafyGreenProviderProps}>
+      <DatePickerProvider {...datePickerProviderProps} initialOpen={true}>
+        <Story {...storyProps} />
       </DatePickerProvider>
     </LeafyGreenProvider>
   );
@@ -68,7 +65,7 @@ const meta: StoryMetaType<typeof DatePickerMenu, DecoratorArgs> = {
   },
   argTypes: {
     value: { control: 'date' },
-    dateFormat: { control: 'select', options: Locales },
+    locale: { control: 'select', options: Locales },
     timeZone: { control: 'select', options: [undefined, ...TimeZones] },
   },
 };

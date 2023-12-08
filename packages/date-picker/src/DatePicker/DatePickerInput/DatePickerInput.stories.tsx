@@ -10,7 +10,7 @@ import {
   DatePickerContextProps,
   DatePickerProvider,
 } from '../../shared/components/DatePickerContext';
-import { getProviderPropsFromStoryArgs } from '../DatePicker.testutils';
+import { getProviderPropsFromStoryContext } from '../../shared/testutils';
 import { DatePickerProps } from '../DatePicker.types';
 import {
   SingleDateContextProps,
@@ -20,15 +20,14 @@ import {
 import { DatePickerInput } from './DatePickerInput';
 
 const ProviderWrapper = (Story: StoryFn, ctx: any) => {
-  const { contextProps, componentProps } = getProviderPropsFromStoryArgs(
-    ctx?.args,
-  );
+  const { leafyGreenProviderProps, datePickerProviderProps, storyProps } =
+    getProviderPropsFromStoryContext<DatePickerProps>(ctx?.args);
 
   return (
-    <LeafyGreenProvider darkMode={contextProps.darkMode}>
-      <DatePickerProvider {...contextProps}>
-        <SingleDateProvider value={componentProps.value} setValue={() => {}}>
-          <Story {...componentProps} />
+    <LeafyGreenProvider {...leafyGreenProviderProps}>
+      <DatePickerProvider {...datePickerProviderProps}>
+        <SingleDateProvider value={storyProps.value} setValue={() => {}}>
+          <Story {...storyProps} />
         </SingleDateProvider>
       </DatePickerProvider>
     </LeafyGreenProvider>
@@ -51,7 +50,7 @@ const meta: StoryMetaType<
       combineArgs: {
         darkMode: [false, true],
         value: [null, new Date('1993-12-26')],
-        dateFormat: ['iso8601', 'en-US', 'en-UK', 'de-DE'],
+        locale: ['iso8601', 'en-US', 'en-UK', 'de-DE'],
         size: Object.values(Size),
       },
       decorator: ProviderWrapper,
@@ -59,7 +58,7 @@ const meta: StoryMetaType<
   },
   args: {
     label: 'Label',
-    dateFormat: 'en-UK',
+    locale: 'en-UK',
     timeZone: 'Europe/London',
   },
   argTypes: {

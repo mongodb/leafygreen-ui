@@ -11,24 +11,22 @@ import { Size } from '@leafygreen-ui/tokens';
 import {
   DatePickerContextProps,
   DatePickerProvider,
-} from '../shared/components/DatePickerContext';
-import { Month } from '../shared/constants';
-import { Locales, TimeZones } from '../shared/testutils';
-import { AutoComplete } from '../shared/types';
-import { newUTC } from '../shared/utils';
-
+} from './shared/components/DatePickerContext';
+import { Month } from './shared/constants';
+import { getProviderPropsFromStoryContext } from './shared/testutils/getProviderPropsFromStoryContext';
+import { Locales, TimeZones } from './shared/testutils/testValues';
+import { AutoComplete } from './shared/types';
+import { newUTC } from './shared/utils';
 import { DatePicker } from './DatePicker';
-import { getProviderPropsFromStoryArgs } from './DatePicker.testutils';
 
 const ProviderWrapper = (Story: StoryFn, ctx: any) => {
-  const { contextProps, componentProps } = getProviderPropsFromStoryArgs(
-    ctx?.args,
-  );
+  const { leafyGreenProviderProps, datePickerProviderProps, storyProps } =
+    getProviderPropsFromStoryContext(ctx?.args);
 
   return (
-    <LeafyGreenProvider darkMode={contextProps.darkMode}>
-      <DatePickerProvider {...contextProps}>
-        <Story {...componentProps} />
+    <LeafyGreenProvider {...leafyGreenProviderProps}>
+      <DatePickerProvider {...datePickerProviderProps}>
+        <Story {...storyProps} />
       </DatePickerProvider>
     </LeafyGreenProvider>
   );
@@ -54,7 +52,7 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
       combineArgs: {
         darkMode: [false, true],
         value: [newUTC(2023, Month.December, 26)],
-        dateFormat: ['iso8601', 'en-US', 'en-UK', 'de-DE'],
+        locale: ['iso8601', 'en-US', 'en-UK', 'de-DE'],
         timeZone: ['UTC', 'Europe/London', 'America/New_York', 'Asia/Seoul'],
         disabled: [false, true],
       },
@@ -62,14 +60,14 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
     },
   },
   args: {
-    dateFormat: 'iso8601',
+    locale: 'iso8601',
     label: 'Pick a date',
     size: Size.Default,
     autoComplete: AutoComplete.Off,
   },
   argTypes: {
     baseFontSize: { control: 'select' },
-    dateFormat: { control: 'select', options: Locales },
+    locale: { control: 'select', options: Locales },
     description: { control: 'text' },
     label: { control: 'text' },
     min: { control: 'date' },

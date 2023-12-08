@@ -9,9 +9,10 @@ export const shouldMonthBeEnabled = (
     month?: DateType;
     min?: DateType;
     max?: DateType;
+    locale?: string;
   },
 ): boolean => {
-  const monthIndex = getMonthIndex(monthName);
+  const monthIndex = getMonthIndex(monthName, context?.locale);
 
   if (isNull(monthIndex)) return false;
 

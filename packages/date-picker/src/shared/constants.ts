@@ -1,6 +1,3 @@
-import padStart from 'lodash/padStart';
-import range from 'lodash/range';
-
 import { DropdownWidthBasis } from '@leafygreen-ui/select';
 
 /** Days in a week */
@@ -22,22 +19,6 @@ export enum Month {
   December,
 }
 
-/** An array of all English month names */
-export const MonthsArray = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
-
 /**
  * The default earliest selectable date
  * (Unix epoch start: https://en.wikipedia.org/wiki/Unix_time)
@@ -49,36 +30,6 @@ export const MIN_DATE = new Date(Date.UTC(1970, Month.January, 1));
  * (Unix 32-bit rollover date: https://en.wikipedia.org/wiki/Year_2038_problem)
  */
 export const MAX_DATE = new Date(Date.UTC(2038, Month.January, 19));
-
-export interface MonthObject {
-  long: string;
-  short: string;
-}
-/**
- * Long & short form of each month index. Updates based on locale
- */
-export const Months: Array<MonthObject> = range(12).map(
-  (monthIndex: number) => {
-    const str = `2023-${padStart((monthIndex + 1).toString(), 2, '0')}-15`;
-    const month = new Date(str);
-    return {
-      long: month.toLocaleString('default', { month: 'long' }),
-      short: month.toLocaleString('default', { month: 'short' }),
-    };
-  },
-);
-
-/** Long & short form for each Day of the week */
-export const DaysOfWeek = [
-  { long: 'Sunday', short: 'su' },
-  { long: 'Monday', short: 'mo' },
-  { long: 'Tuesday', short: 'tu' },
-  { long: 'Wednesday', short: 'we' },
-  { long: 'Thursday', short: 'th' },
-  { long: 'Friday', short: 'fr' },
-  { long: 'Saturday', short: 'sa' },
-] as const;
-export type DaysOfWeek = (typeof DaysOfWeek)[number];
 
 // TODO: Update how defaultMin & defaultMax are defined,
 // since day/month are constants,

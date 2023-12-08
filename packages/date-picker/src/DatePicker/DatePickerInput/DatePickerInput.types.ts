@@ -2,11 +2,11 @@ import { MouseEventHandler } from 'react';
 
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-import { DatePickerComponentProps } from '../DatePickerComponent';
+import { DatePickerContentProps } from '../DatePickerContent';
 
 export interface DatePickerInputProps
   extends Omit<HTMLElementProps<'div'>, 'onChange'>,
-    Pick<DatePickerComponentProps, 'onChange'> {
+    Pick<DatePickerContentProps, 'onChange'> {
   /**
    * Click handler
    */

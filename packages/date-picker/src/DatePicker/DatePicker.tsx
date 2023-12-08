@@ -15,7 +15,7 @@ import { useControlledValue } from '../shared/hooks';
 import { pickAndOmit } from '../shared/utils';
 
 import { DatePickerProps } from './DatePicker.types';
-import { DatePickerComponent } from './DatePickerComponent';
+import { DatePickerContent } from './DatePickerContent';
 import { SingleDateProvider } from './SingleDateContext';
 
 /**
@@ -64,7 +64,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
               baseFontSize === BaseFontSize.Body1 ? 14 : baseFontSize
             }
           >
-            <DatePickerComponent ref={fwdRef} {...componentProps} />
+            <DatePickerContent ref={fwdRef} {...componentProps} />
           </LeafyGreenProvider>
         </SingleDateProvider>
       </DatePickerProvider>

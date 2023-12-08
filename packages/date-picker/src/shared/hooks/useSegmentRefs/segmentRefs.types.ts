@@ -1,6 +1,6 @@
 import { DynamicRefGetter } from '@leafygreen-ui/hooks';
 
-import { DateSegment } from '../useDateSegments';
+import { DateSegment } from '../../types';
 
 export type SegmentRefs = Record<
   DateSegment,

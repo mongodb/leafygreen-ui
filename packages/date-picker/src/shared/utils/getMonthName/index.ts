@@ -1,18 +1,21 @@
-import padStart from 'lodash/padStart';
-
-import { MonthObject } from '../../constants';
+import { MonthObject } from '../../types';
+import { normalizeLocale } from '../normalizeLocale';
 
 /**
  * Returns the month name from a given index and optional locale
  */
 export const getMonthName = (
   monthIndex: number,
-  locale = 'default',
+  locale?: string,
 ): MonthObject => {
-  const str = `2023-${padStart((monthIndex + 1).toString(), 2, '0')}-15`;
-  const month = new Date(str);
+  // Use the default system locale if the provided value is invalid
+  locale = normalizeLocale(locale);
   return {
-    long: month.toLocaleString(locale, { month: 'long' }),
-    short: month.toLocaleString(locale, { month: 'short' }),
+    long: new Date(2020, monthIndex, 15).toLocaleString(locale, {
+      month: 'long',
+    }),
+    short: new Date(2020, monthIndex, 15).toLocaleString(locale, {
+      month: 'short',
+    }),
   };
 };

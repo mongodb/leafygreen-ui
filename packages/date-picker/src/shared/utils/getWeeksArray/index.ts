@@ -9,7 +9,7 @@ import { getDaysInUTCMonth } from '../getDaysInUTCMonth';
 import { setToUTCMidnight } from '../setToUTCMidnight';
 
 interface GetWeeksArrayOptions
-  extends Required<Pick<BaseDatePickerProps, 'dateFormat'>> {}
+  extends Required<Pick<BaseDatePickerProps, 'locale'>> {}
 
 /**
  * Returns a 7x5 (or 7x6) 2D array of Dates for the given month
@@ -20,10 +20,10 @@ export const getWeeksArray = (
    */
   month: Date,
 
-  { dateFormat }: GetWeeksArrayOptions,
+  { locale }: GetWeeksArrayOptions,
 ): Array<Array<Date | null>> => {
   // What day of the week do weeks start on for this locale? (Sun = 0)
-  const weekStartsOn = getWeekStartByLocale(dateFormat);
+  const weekStartsOn = getWeekStartByLocale(locale);
 
   // The first day of the month
   const firstOfMonth = setToUTCMidnight(month);

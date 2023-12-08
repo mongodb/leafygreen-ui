@@ -33,19 +33,19 @@ const meta: StoryMetaType<typeof CalendarGrid, DatePickerContextProps> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        dateFormat: Locales,
+        locale: Locales,
       },
       decorator: ProviderWrapper,
     },
   },
   decorators: [ProviderWrapper],
   args: {
-    dateFormat: 'en-US',
+    locale: 'en-US',
     timeZone: 'UTC',
   },
   argTypes: {
     darkMode: { control: 'boolean' },
-    dateFormat: {
+    locale: {
       control: 'select',
       options: Locales,
     },

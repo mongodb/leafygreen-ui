@@ -1,4 +1,4 @@
-import { DateSegment } from '../../hooks';
+import { DateSegment } from '../../types';
 
 import { getValueFormatter } from '.';
 

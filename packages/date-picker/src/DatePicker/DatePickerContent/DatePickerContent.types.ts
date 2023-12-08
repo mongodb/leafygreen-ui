@@ -6,7 +6,7 @@ import { DatePickerProps } from '../DatePicker.types';
  * but omits props that are added to the context.
  * Replaces `onDateChange` with a `setValue` setter function
  */
-export interface DatePickerComponentProps
+export interface DatePickerContentProps
   extends Omit<
     DatePickerProps,
     ContextPropKeys | 'value' | 'handleValidation' | 'onDateChange'
