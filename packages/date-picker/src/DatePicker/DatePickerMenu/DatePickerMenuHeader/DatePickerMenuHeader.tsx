@@ -44,6 +44,19 @@ export const DatePickerMenuHeader = forwardRef<
   };
 
   /**
+   * If the month is not in range and not the last valid month then set the month to the closest valid month
+   */
+  const isMonthInValid = (dir: 'left' | 'right') => {
+    const isOnLastValidMonth = isSameUTCMonth(
+      month,
+      dir === 'left' ? max : min,
+    );
+    const isDateInRange = isInRange(month);
+
+    return !isDateInRange && !isOnLastValidMonth;
+  };
+
+  /**
    * Calls the `updateMonth` helper with the appropriate month when a Chevron is clicked
    */
   const handleChevronClick =
@@ -52,14 +65,6 @@ export const DatePickerMenuHeader = forwardRef<
       e.stopPropagation();
       e.preventDefault();
 
-      const isOnLastValidMonth = isSameUTCMonth(
-        month,
-        dir === 'left' ? max : min,
-      );
-
-      const isDateInRange = isInRange(month);
-
-      // If the month is not in range and not the last valid month then set the month to the closest valid month
       // e.g.
       // max: new Date(Date.UTC(2038, Month.January, 19));
       // current month date: new Date(Date.UTC(2038, Month.March, 19));
@@ -68,7 +73,8 @@ export const DatePickerMenuHeader = forwardRef<
       // min: new Date(Date.UTC(1970, Month.January, 1));
       // current month date: new Date(Date.UTC(1969, Month.November, 19));
       // right chevron will change the month back to January 1970
-      if (!isDateInRange && !isOnLastValidMonth) {
+      // if (!isMonthInValid(dir, month)) {
+      if (isMonthInValid(dir)) {
         const closestValidDate = dir === 'left' ? max : min;
         const newMonthIndex = closestValidDate.getUTCMonth();
         const newMonth = setUTCMonth(closestValidDate, newMonthIndex);
@@ -88,7 +94,9 @@ export const DatePickerMenuHeader = forwardRef<
   return (
     <div ref={fwdRef} className={menuHeaderStyles} {...rest}>
       <IconButton
-        aria-label="Previous month"
+        aria-label={
+          isMonthInValid('left') ? 'Previous valid month' : 'Previous month'
+        }
         disabled={isChevronDisabled('left', month, min)}
         onClick={handleChevronClick('left')}
       >
@@ -140,7 +148,7 @@ export const DatePickerMenuHeader = forwardRef<
         </Select>
       </div>
       <IconButton
-        aria-label="Next month"
+        aria-label={isMonthInValid('right') ? 'Next valid month' : 'Next month'}
         disabled={isChevronDisabled('right', month, max)}
         onClick={handleChevronClick('right')}
       >

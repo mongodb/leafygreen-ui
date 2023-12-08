@@ -116,9 +116,11 @@ export const renderDatePicker = (
     const calendarCells =
       withinElement(menuContainerEl)?.getAllByRole('gridcell');
     const leftChevron =
-      withinElement(menuContainerEl)?.queryByLabelText('Previous month');
+      withinElement(menuContainerEl)?.queryByLabelText('Previous month') ||
+      withinElement(menuContainerEl)?.queryByLabelText('Previous valid month');
     const rightChevron =
-      withinElement(menuContainerEl)?.queryByLabelText('Next month');
+      withinElement(menuContainerEl)?.queryByLabelText('Next month') ||
+      withinElement(menuContainerEl)?.queryByLabelText('Next valid month');
     const monthSelect =
       withinElement(menuContainerEl)?.queryByLabelText('Select month');
     const yearSelect =
