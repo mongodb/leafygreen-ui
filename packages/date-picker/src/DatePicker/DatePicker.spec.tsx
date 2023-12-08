@@ -182,7 +182,7 @@ describe('packages/date-picker', () => {
         test('removing an external error displays an internal error when applicable', () => {
           const { inputContainer, rerenderDatePicker, getByTestId } =
             renderDatePicker({
-              value: newUTC(2100, 1, 1),
+              value: newUTC(2100, Month.January, 1),
             });
           expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
           expect(getByTestId('lg-form_field-error_message')).toHaveTextContent(
@@ -200,6 +200,42 @@ describe('packages/date-picker', () => {
           expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
           expect(getByTestId('lg-form_field-error_message')).toHaveTextContent(
             'Date must be before 2038-01-19',
+          );
+        });
+
+        test('internal error message updates when min value changes', () => {
+          const { inputContainer, rerenderDatePicker, getByTestId } =
+            renderDatePicker({
+              value: newUTC(1967, Month.March, 10),
+            });
+          expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
+          const errorElement = getByTestId('lg-form_field-error_message');
+          expect(errorElement).toHaveTextContent(
+            'Date must be after 1970-01-01',
+          );
+
+          rerenderDatePicker({ min: newUTC(1968, Month.July, 5) });
+
+          expect(errorElement).toHaveTextContent(
+            'Date must be after 1968-07-05',
+          );
+        });
+
+        test('internal error message updates when max value changes', () => {
+          const { inputContainer, rerenderDatePicker, getByTestId } =
+            renderDatePicker({
+              value: newUTC(2050, Month.January, 1),
+            });
+          expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
+          const errorElement = getByTestId('lg-form_field-error_message');
+          expect(errorElement).toHaveTextContent(
+            'Date must be before 2038-01-19',
+          );
+
+          rerenderDatePicker({ max: newUTC(2048, Month.July, 5) });
+
+          expect(errorElement).toHaveTextContent(
+            'Date must be before 2048-07-05',
           );
         });
       });
