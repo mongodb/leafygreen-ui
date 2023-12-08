@@ -1,4 +1,4 @@
-import { Month } from '../../constants';
+import { Month } from '../constants';
 
 import { isSameTZDay } from './index';
 

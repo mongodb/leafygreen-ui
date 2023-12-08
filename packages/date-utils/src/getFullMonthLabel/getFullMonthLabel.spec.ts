@@ -1,4 +1,4 @@
-import { Month } from '../../constants';
+import { Month } from '../constants';
 import { newUTC } from '../newUTC';
 
 import { getFullMonthLabel } from '.';
