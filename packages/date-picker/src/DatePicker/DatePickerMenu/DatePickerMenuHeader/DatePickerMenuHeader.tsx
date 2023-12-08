@@ -88,7 +88,6 @@ export const DatePickerMenuHeader = forwardRef<
       // min: new Date(Date.UTC(1970, Month.January, 1));
       // current month date: new Date(Date.UTC(1969, Month.November, 19));
       // right chevron will change the month back to January 1970
-      // if (!isMonthInValid(dir, month)) {
       if (isMonthInValid(dir)) {
         const closestValidDate = dir === 'left' ? max : min;
         const newMonthIndex = closestValidDate.getUTCMonth();
