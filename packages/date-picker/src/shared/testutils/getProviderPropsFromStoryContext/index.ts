@@ -1,6 +1,7 @@
 import { StoryContext } from '@storybook/react';
 
 import { LeafyGreenProviderProps } from '@leafygreen-ui/leafygreen-provider';
+import { pickAndOmit } from '@leafygreen-ui/lib';
 
 import {
   ContextPropKeys,
@@ -8,7 +9,6 @@ import {
   DatePickerProviderProps,
 } from '../../components/DatePickerContext';
 import { BaseDatePickerProps } from '../../types';
-import { pickAndOmit } from '../../utils';
 
 export interface ProviderPropsObject<T> {
   leafyGreenProviderProps: LeafyGreenProviderProps;
