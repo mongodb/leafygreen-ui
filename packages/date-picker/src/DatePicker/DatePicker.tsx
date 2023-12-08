@@ -1,9 +1,11 @@
 import React, { forwardRef } from 'react';
+import PropTypes from 'prop-types';
+import { AutoComplete, DatePickerState } from 'src/shared';
 
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
+import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import {
@@ -73,3 +75,25 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
 );
 
 DatePicker.displayName = 'DatePicker';
+
+DatePicker.propTypes = {
+  value: PropTypes.instanceOf(Date),
+  onDateChange: PropTypes.func,
+  initialValue: PropTypes.instanceOf(Date),
+  handleValidation: PropTypes.func,
+  onChange: PropTypes.func,
+  label: PropTypes.node,
+  description: PropTypes.node,
+  locale: PropTypes.string,
+  timeZone: PropTypes.string,
+  min: PropTypes.string || PropTypes.instanceOf(Date),
+  max: PropTypes.string || PropTypes.instanceOf(Date),
+  baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
+  disabled: PropTypes.bool,
+  size: PropTypes.oneOf(Object.values(Size)),
+  state: PropTypes.oneOf(Object.values(DatePickerState)),
+  errorMessage: PropTypes.string,
+  initialOpen: PropTypes.bool,
+  autoComplete: PropTypes.oneOf(Object.values(AutoComplete)),
+  darkMode: PropTypes.bool,
+};
