@@ -35,4 +35,8 @@ describe('packages/date-utils/minDate', () => {
       ]),
     ).toEqual(newUTC(2020, Month.January, 1));
   });
+
+  test('returns undefined for invalid array', () => {
+    expect(minDate([])).toBeUndefined();
+  });
 });

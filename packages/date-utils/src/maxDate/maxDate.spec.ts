@@ -35,4 +35,8 @@ describe('packages/date-utils/maxDate', () => {
       ]),
     ).toEqual(newUTC(2020, Month.January, 3));
   });
+
+  test('returns undefined for invalid array', () => {
+    expect(maxDate([])).toBeUndefined();
+  });
 });
