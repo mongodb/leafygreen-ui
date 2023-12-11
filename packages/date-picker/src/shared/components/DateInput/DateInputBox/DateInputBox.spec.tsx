@@ -3,9 +3,9 @@ import { jest } from '@jest/globals';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { Month } from '../../../constants';
+import { Month, newUTC } from '@leafygreen-ui/date-utils';
+
 import { segmentRefsMock } from '../../../testutils';
-import { newUTC } from '../../../utils';
 import {
   DatePickerProvider,
   DatePickerProviderProps,

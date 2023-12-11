@@ -2,4 +2,5 @@
 '@lg-tools/meta': minor
 ---
 
-Adds `exitWithErrorMessage` util
+- Adds `exitWithErrorMessage` util
+- Fixes recursion in `findPackageJson`

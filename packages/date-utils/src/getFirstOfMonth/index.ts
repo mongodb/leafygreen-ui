@@ -1,0 +1,1 @@
+export { getFirstOfMonth } from './getFirstOfMonth';

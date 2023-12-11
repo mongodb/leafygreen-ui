@@ -9,15 +9,17 @@ import React, {
   useState,
 } from 'react';
 
-import { usePrevious } from '@leafygreen-ui/hooks';
-
-import { DateType, getFirstOfMonth, useDatePickerContext } from '../../shared';
 import {
-  getFormattedDateString,
+  DateType,
+  getFirstOfMonth,
   getISODate,
   isOnOrBefore,
   isSameUTCDay,
-} from '../../shared/utils';
+} from '@leafygreen-ui/date-utils';
+import { usePrevious } from '@leafygreen-ui/hooks';
+
+import { useDatePickerContext } from '../../shared/components';
+import { getFormattedDateString } from '../../shared/utils';
 import { getInitialHighlight } from '../utils/getInitialHighlight';
 
 import {

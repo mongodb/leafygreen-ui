@@ -1,4 +1,4 @@
-import { DateType, isValidDate } from '../../../shared';
+import { DateType, isValidDate } from '@leafygreen-ui/date-utils';
 
 /** Returns the initial highlight value when the date picker is opened */
 export const getInitialHighlight = (

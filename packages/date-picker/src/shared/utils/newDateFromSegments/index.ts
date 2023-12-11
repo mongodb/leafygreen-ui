@@ -1,7 +1,8 @@
+import { newUTC } from '@leafygreen-ui/date-utils';
+
 import { DateSegmentsState } from '../../types';
 import { isValidSegmentName } from '../isValidSegment';
 import { isValidValueForSegment } from '../isValidValueForSegment';
-import { newUTC } from '../newUTC';
 
 /** Constructs a date object in UTC from day, month, year segments */
 export const newDateFromSegments = (

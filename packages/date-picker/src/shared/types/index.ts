@@ -5,11 +5,4 @@ export {
   type DateSegmentValue,
   isDateSegment,
 } from './DateSegment.types';
-export {
-  AutoComplete,
-  DatePickerState,
-  type DateRangeType,
-  type DateType,
-  type MonthObject,
-  type WeekdayObject,
-} from './types';
+export { AutoComplete, DatePickerState } from './types';

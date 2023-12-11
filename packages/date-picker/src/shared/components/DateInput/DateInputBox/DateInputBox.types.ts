@@ -1,7 +1,7 @@
+import { DateType } from '@leafygreen-ui/date-utils';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 import { SegmentRefs } from '../../../hooks';
-import { DateType } from '../../../types';
 import { DateInputSegmentChangeEventHandler } from '../DateInputSegment/DateInputSegment.types';
 
 export interface DateInputBoxProps

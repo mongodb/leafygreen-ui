@@ -2,10 +2,10 @@ import React, { PropsWithChildren } from 'react';
 import { act, waitFor } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 
+import { Month, newUTC } from '@leafygreen-ui/date-utils';
 import { consoleOnce } from '@leafygreen-ui/lib';
 
-import { MAX_DATE, MIN_DATE, Month } from '../../constants';
-import { newUTC } from '../../utils';
+import { MAX_DATE, MIN_DATE } from '../../constants';
 
 import {
   DatePickerContextProps,

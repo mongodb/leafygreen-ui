@@ -1,4 +1,4 @@
-import { isValidLocale } from '../../utils';
+import { isValidLocale } from '@leafygreen-ui/date-utils';
 
 const now = new Date();
 const ISO = 'iso8601';

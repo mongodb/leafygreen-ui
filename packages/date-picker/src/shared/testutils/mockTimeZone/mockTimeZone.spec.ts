@@ -1,4 +1,5 @@
-import { Month } from '../../constants';
+import { Month } from '@leafygreen-ui/date-utils';
+
 import { testTimeZones } from '../testValues';
 
 import { mockTimeZone } from '.';

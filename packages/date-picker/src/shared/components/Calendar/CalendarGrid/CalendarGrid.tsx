@@ -2,11 +2,14 @@ import React, { forwardRef, useMemo } from 'react';
 import range from 'lodash/range';
 import { getWeekStartByLocale } from 'weekstart';
 
+import {
+  daysPerWeek,
+  getLocaleWeekdays,
+  getWeeksArray,
+} from '@leafygreen-ui/date-utils';
 import { cx } from '@leafygreen-ui/emotion';
 import { Disclaimer } from '@leafygreen-ui/typography';
 
-import { daysPerWeek } from '../../../constants';
-import { getLocaleWeekdays, getWeeksArray } from '../../../utils';
 import { useDatePickerContext } from '../../DatePickerContext';
 
 import {

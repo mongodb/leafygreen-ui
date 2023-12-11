@@ -5,6 +5,16 @@ import React, {
   useRef,
 } from 'react';
 
+import {
+  addDaysUTC,
+  getFirstOfMonth,
+  getFullMonthLabel,
+  getISODate,
+  getUTCDateString,
+  isSameTZDay,
+  isSameUTCDay,
+  isSameUTCMonth,
+} from '@leafygreen-ui/date-utils';
 import { useForwardedRef, usePrevious } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
 import { spacing } from '@leafygreen-ui/tokens';
@@ -16,16 +26,6 @@ import {
 } from '../../shared/components/Calendar';
 import { useDatePickerContext } from '../../shared/components/DatePickerContext';
 import { MenuWrapper } from '../../shared/components/MenuWrapper';
-import {
-  addDaysUTC,
-  getFirstOfMonth,
-  getFullMonthLabel,
-  getISODate,
-  getUTCDateString,
-  isSameTZDay,
-  isSameUTCDay,
-  isSameUTCMonth,
-} from '../../shared/utils';
 import { useSingleDateContext } from '../SingleDateContext';
 
 import { getNewHighlight } from './utils/getNewHighlight';

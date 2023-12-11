@@ -2,12 +2,16 @@
 import React, { useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
+import {
+  getISODate,
+  isTodayTZ,
+  Month,
+  newUTC,
+} from '@leafygreen-ui/date-utils';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 
-import { Month } from '../../../constants';
 import { Locales, TimeZones } from '../../../testutils';
-import { getISODate, isTodayTZ, newUTC } from '../../../utils';
 import {
   DatePickerContextProps,
   DatePickerProvider,

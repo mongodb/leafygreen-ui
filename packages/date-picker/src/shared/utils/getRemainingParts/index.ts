@@ -1,6 +1,6 @@
 import isUndefined from 'lodash/isUndefined';
 
-import { cloneReverse } from '../cloneReverse';
+import { cloneReverse } from '@leafygreen-ui/lib';
 
 /** Returns the ordered parts to the left or right of the provided index
  * e.g:

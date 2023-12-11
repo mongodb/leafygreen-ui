@@ -1,14 +1,10 @@
 import { useEffect, useReducer } from 'react';
 import { isSameDay } from 'date-fns';
 
+import { DateType } from '@leafygreen-ui/date-utils';
 import { usePrevious } from '@leafygreen-ui/hooks';
 
-import {
-  DateSegment,
-  DateSegmentsState,
-  DateSegmentValue,
-  DateType,
-} from '../../types';
+import { DateSegment, DateSegmentsState, DateSegmentValue } from '../../types';
 import { getFormattedSegmentsFromDate } from '../../utils';
 
 import {

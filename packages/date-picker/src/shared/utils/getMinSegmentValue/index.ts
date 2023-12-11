@@ -1,5 +1,7 @@
+import { DateType } from '@leafygreen-ui/date-utils';
+
 import { defaultMin } from '../../constants';
-import { DateSegment, DateType } from '../../types';
+import { DateSegment } from '../../types';
 import { getSegmentsFromDate } from '../getSegmentsFromDate';
 
 /** Returns the minimum value for a segment, given a context */
