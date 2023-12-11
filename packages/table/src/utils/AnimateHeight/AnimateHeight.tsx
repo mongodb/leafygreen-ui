@@ -8,11 +8,13 @@ import React, {
 
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
-const AnimateHeight = forwardRef<HTMLDivElement, any>(
-  ({ children, isVisible, ...rest }, ref) => {
+import { AnimateHeightProps } from './AnimateHeight.types';
+
+const AnimateHeight = forwardRef<HTMLDivElement, AnimateHeightProps>(
+  ({ children, isVisible, enabled = true, ...rest }, ref) => {
     const contentRef = useRef<HTMLDivElement>(null);
     const contentHeight = useRef<number>(0);
-    const prevIsVisible = useRef<boolean>(isVisible);
+    const prevIsVisible = useRef<boolean>(!!isVisible);
     const [componentStyle, setComponentStyle] = useState<CSSProperties>();
 
     useEffect(() => {
@@ -22,11 +24,11 @@ const AnimateHeight = forwardRef<HTMLDivElement, any>(
     }, []);
 
     useEffect(() => {
-      if (isVisible !== prevIsVisible) {
+      if (isVisible !== prevIsVisible.current) {
         setComponentStyle({
           height: isVisible ? `${contentHeight.current}px` : 0,
         });
-        prevIsVisible.current = isVisible;
+        prevIsVisible.current = !!isVisible;
       }
     }, [isVisible]);
 
@@ -35,7 +37,9 @@ const AnimateHeight = forwardRef<HTMLDivElement, any>(
         {...rest}
         aria-hidden={!isVisible}
         style={{
-          transition: `${transitionDuration.slower}ms height ease-in-out`,
+          transition: enabled
+            ? `${transitionDuration.slower}ms height ease-in-out`
+            : '',
           ...componentStyle,
         }}
         ref={ref}

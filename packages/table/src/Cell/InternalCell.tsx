@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { cx } from '@leafygreen-ui/emotion';
 
 import { useTableContext } from '../TableContext/TableContext';
-import AnimateHeight from '../utils/AnimateHeight';
+import { AnimateHeight } from '../utils/AnimateHeight';
 
 import {
   alignmentStyles,

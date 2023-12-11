@@ -7,7 +7,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { cellContentContainerStyles } from '../Cell/Cell.styles';
 import InternalRowBase from '../Row/InternalRowBase';
 import { useTableContext } from '../TableContext/TableContext';
-import AnimateHeight from '../utils/AnimateHeight';
+import { AnimateHeight } from '../utils/AnimateHeight';
 import { getAreAncestorsExpanded } from '../utils/areAncestorsExpanded';
 
 import { baseStyles, expandedContentStyles } from './ExpandedContent.styles';
