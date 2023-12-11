@@ -5,9 +5,12 @@ import { RowData } from '@tanstack/react-table';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { cellContentContainerStyles } from '../Cell/Cell.styles';
+import {
+  cellContentContainerStyles,
+  disableAnimationStyles,
+} from '../Cell/Cell.styles';
 import InternalRowBase from '../Row/InternalRowBase';
-import { useTableContext } from '../TableContext/TableContext';
+import { useTableContext } from '../TableContext';
 import { getAreAncestorsExpanded } from '../utils/areAncestorsExpanded';
 
 import {
@@ -21,7 +24,7 @@ const ExpandedContent = <T extends RowData>({
   row,
   ...rest
 }: ExpandedContentProps<T>) => {
-  const { getParentRow } = useTableContext();
+  const { disableAnimations, getParentRow } = useTableContext();
   const contentRef = useRef<HTMLDivElement>(null);
   const transitionRef = useRef<HTMLElement | null>(null);
   const areAncestorsExpanded = getAreAncestorsExpanded(row.id, getParentRow);
@@ -50,6 +53,7 @@ const ExpandedContent = <T extends RowData>({
               data-state={state}
               className={cx(
                 cellContentContainerStyles,
+                { [disableAnimationStyles]: disableAnimations },
                 expandedContentStyles[theme],
                 expandedContentTransitionStyles(contentHeight)[state],
               )}

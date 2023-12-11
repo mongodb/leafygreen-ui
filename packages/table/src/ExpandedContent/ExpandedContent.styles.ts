@@ -3,11 +3,12 @@ import { TransitionStatus } from 'react-transition-group';
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { spacing } from '@leafygreen-ui/tokens';
+import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
 export const baseStyles = css`
   padding: 0;
   overflow: hidden;
+  transition: ${transitionDuration.faster}ms ease-in-out;
 `;
 
 export const expandedContentStyles: Record<Theme, string> = {

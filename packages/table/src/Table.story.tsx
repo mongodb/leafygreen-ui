@@ -235,11 +235,11 @@ LiveExample.argTypes = {
   },
 };
 
-export const AnimationDisabled: StoryFn<StoryTableProps> = args => {
+export const AnimationsDisabled: StoryFn<StoryTableProps> = args => {
   return <LiveExample {...args} />;
 };
 
-AnimationDisabled.args = {
+AnimationsDisabled.args = {
   disableAnimations: true,
 };
 

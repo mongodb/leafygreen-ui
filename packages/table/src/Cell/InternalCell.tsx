@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 
-import { useTableContext } from '../TableContext/TableContext';
+import { useTableContext } from '../TableContext';
 
 import {
   alignmentStyles,
   baseCellStyles,
   cellContentContainerStyles,
   cellContentTransitionStyles,
+  disableAnimationStyles,
   getCellPadding,
 } from './Cell.styles';
 import { InternalCellProps } from './Cell.types';
@@ -26,7 +27,7 @@ const InternalCell = ({
   ...rest
 }: InternalCellProps) => {
   const isFirstCell = cellIndex === 0;
-  const { table } = useTableContext();
+  const { table, disableAnimations } = useTableContext();
   const isSelectable = !!table && !!table.hasSelectableRows;
   const transitionRef = useRef<HTMLElement | null>(null);
 
@@ -48,6 +49,7 @@ const InternalCell = ({
             className={cx(
               cellContentContainerStyles,
               cellContentTransitionStyles[state],
+              { [disableAnimationStyles]: disableAnimations },
               alignmentStyles(align),
             )}
           >

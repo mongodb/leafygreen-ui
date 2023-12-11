@@ -79,9 +79,14 @@ export const cellContentContainerStyles = css`
   display: flex;
   align-items: center;
   text-overflow: ellipsis;
-  transition: ${transitionDuration.faster}ms ease-in-out;
   transition-property: min-height, max-height, opacity, transform;
   min-height: ${standardCellHeight}px;
+  transition-duration: ${transitionDuration.faster}ms;
+  transition-timing-function: ease-in-out;
+`;
+
+export const disableAnimationStyles = css`
+  transition: none;
 `;
 
 const _hiddenStyles = css`

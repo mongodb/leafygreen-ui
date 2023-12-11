@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 
-import { useTableContext } from '../../TableContext/TableContext';
+import { useTableContext } from '../../TableContext';
 import { LGRowData } from '../../useLeafyGreenTable';
 import {
   alignmentStyles,

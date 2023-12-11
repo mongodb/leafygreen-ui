@@ -1,4 +1,4 @@
-import { TableContextValues } from '../TableContext/TableContext.types';
+import { TableContextValues } from '../TableContext.types';
 import { LGRowData } from '../useLeafyGreenTable';
 
 /**
