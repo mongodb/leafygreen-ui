@@ -38,12 +38,18 @@ import {
 } from './DatePicker.testutils';
 import { DatePicker } from '.';
 
-const testToday = newUTC(2023, Month.December, 26);
+// Set the current time to noon UTC on 2023-12-25
+const testToday = newUTC(2023, Month.December, 25, 12);
 
 describe('packages/date-picker', () => {
+  beforeAll(() => {
+    jest.useFakeTimers();
+  });
   beforeEach(() => {
-    // Set the current time to midnight UTC on 2023-12-26
-    jest.useFakeTimers().setSystemTime(testToday);
+    jest.setSystemTime(testToday);
+  });
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   afterEach(() => {
@@ -133,18 +139,18 @@ describe('packages/date-picker', () => {
 
       test('renders `value` prop', () => {
         const { dayInput, monthInput, yearInput } = renderDatePicker({
-          value: new Date(Date.now()),
+          value: newUTC(2023, Month.December, 25),
         });
-        expect(dayInput.value).toEqual('26');
+        expect(dayInput.value).toEqual('25');
         expect(monthInput.value).toEqual('12');
         expect(yearInput.value).toEqual('2023');
       });
 
       test('renders `initialValue` prop', () => {
         const { dayInput, monthInput, yearInput } = renderDatePicker({
-          initialValue: new Date(Date.now()),
+          initialValue: newUTC(2023, Month.December, 25),
         });
-        expect(dayInput.value).toEqual('26');
+        expect(dayInput.value).toEqual('25');
         expect(monthInput.value).toEqual('12');
         expect(yearInput.value).toEqual('2023');
       });
@@ -1239,6 +1245,7 @@ describe('packages/date-picker', () => {
           userEvent.keyboard(`[Enter]`);
           expect(handleValidation).toHaveBeenCalledWith(undefined);
         });
+        test.todo('within a form, does not submit form');
       });
 
       describe('Escape key', () => {
@@ -1580,14 +1587,15 @@ describe('packages/date-picker', () => {
             describe('when a value is set', () => {
               test('fires value change handler', () => {
                 const onDateChange = jest.fn();
+                const testVal = newUTC(2023, Month.September, 10);
                 const { monthInput } = renderDatePicker({
                   onDateChange,
-                  value: testToday,
+                  value: testVal,
                 });
                 userEvent.click(monthInput);
                 userEvent.keyboard(`{arrowdown}`);
                 expect(onDateChange).toHaveBeenCalledWith(
-                  setUTCMonth(testToday, testToday.getUTCMonth() - 1),
+                  setUTCMonth(testVal, testVal.getUTCMonth() - 1),
                 );
               });
 
@@ -2700,7 +2708,7 @@ describe('packages/date-picker', () => {
       const firstCell = calendarCells?.[0];
       userEvent.click(firstCell!);
       await waitFor(() => {
-        expect(dayInput.value).toEqual('26');
+        expect(dayInput.value).toEqual('25');
         expect(monthInput.value).toEqual('12');
         expect(yearInput.value).toEqual('2023');
       });
