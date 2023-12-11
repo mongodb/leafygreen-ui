@@ -1,1 +1,1 @@
-export { maxDate } from './maxDate'
+export { maxDate } from './maxDate';

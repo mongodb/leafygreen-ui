@@ -1,1 +1,1 @@
-export { isSameUTCDay } from './isSameUTCDay'
+export { isSameUTCDay } from './isSameUTCDay';

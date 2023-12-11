@@ -1,1 +1,1 @@
-export { normalizeLocale } from './normalizeLocale'
+export { normalizeLocale } from './normalizeLocale';

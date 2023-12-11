@@ -1,1 +1,1 @@
-export { getLocaleWeekdays } from './getLocaleWeekdays'
+export { getLocaleWeekdays } from './getLocaleWeekdays';

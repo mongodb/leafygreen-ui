@@ -1,1 +1,1 @@
-export { getFullMonthLabel } from './getFullMonthLabel'
+export { getFullMonthLabel } from './getFullMonthLabel';

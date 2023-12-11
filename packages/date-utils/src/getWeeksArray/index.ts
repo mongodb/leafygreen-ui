@@ -1,1 +1,1 @@
-export { getWeeksArray } from './getWeeksArray'
+export { getWeeksArray } from './getWeeksArray';

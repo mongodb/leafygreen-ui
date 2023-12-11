@@ -1,1 +1,1 @@
-export { addDaysUTC } from './addDaysUTC'
+export { addDaysUTC } from './addDaysUTC';

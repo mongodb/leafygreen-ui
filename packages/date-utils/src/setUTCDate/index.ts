@@ -1,1 +1,1 @@
-export { setUTCDate } from './setUTCDate'
+export { setUTCDate } from './setUTCDate';

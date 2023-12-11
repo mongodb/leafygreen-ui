@@ -1,1 +1,1 @@
-export { getLastOfMonth } from './getLastOfMonth'
+export { getLastOfMonth } from './getLastOfMonth';

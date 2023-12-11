@@ -1,1 +1,1 @@
-export { getFirstOfMonth } from './getFirstOfMonth'
+export { getFirstOfMonth } from './getFirstOfMonth';

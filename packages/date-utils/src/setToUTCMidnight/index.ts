@@ -1,1 +1,1 @@
-export { setToUTCMidnight } from './setToUTCMidnight'
+export { setToUTCMidnight } from './setToUTCMidnight';

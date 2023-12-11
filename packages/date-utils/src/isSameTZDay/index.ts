@@ -1,1 +1,1 @@
-export { isSameTZDay } from './isSameTZDay'
+export { isSameTZDay } from './isSameTZDay';

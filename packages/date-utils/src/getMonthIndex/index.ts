@@ -1,1 +1,1 @@
-export { getMonthIndex } from './getMonthIndex'
+export { getMonthIndex } from './getMonthIndex';

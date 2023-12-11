@@ -1,1 +1,1 @@
-export { getMonthName } from './getMonthName'
+export { getMonthName } from './getMonthName';

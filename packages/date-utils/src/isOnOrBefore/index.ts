@@ -1,1 +1,1 @@
-export { isOnOrBefore } from './isOnOrBefore'
+export { isOnOrBefore } from './isOnOrBefore';

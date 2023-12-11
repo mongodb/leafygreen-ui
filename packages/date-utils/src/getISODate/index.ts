@@ -1,1 +1,1 @@
-export { getISODate } from './getISODate'
+export { getISODate } from './getISODate';

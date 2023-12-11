@@ -1,1 +1,1 @@
-export { setUTCMonth } from './setUTCMonth'
+export { setUTCMonth } from './setUTCMonth';

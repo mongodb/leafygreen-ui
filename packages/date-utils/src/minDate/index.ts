@@ -1,1 +1,1 @@
-export { minDate } from './minDate'
+export { minDate } from './minDate';

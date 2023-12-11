@@ -1,1 +1,1 @@
-export { getLocaleMonths } from './getLocaleMonths'
+export { getLocaleMonths } from './getLocaleMonths';

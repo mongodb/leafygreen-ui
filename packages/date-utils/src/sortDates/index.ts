@@ -1,1 +1,1 @@
-export { sortDates } from './sortDates'
+export { sortDates } from './sortDates';

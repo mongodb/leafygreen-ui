@@ -1,1 +1,1 @@
-export { isValidLocale } from './isValidLocale'
+export { isValidLocale } from './isValidLocale';

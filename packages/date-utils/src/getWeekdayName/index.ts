@@ -1,1 +1,1 @@
-export { getWeekdayName } from './getWeekdayName'
+export { getWeekdayName } from './getWeekdayName';

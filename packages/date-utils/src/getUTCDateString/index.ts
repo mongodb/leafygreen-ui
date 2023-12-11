@@ -1,1 +1,1 @@
-export { getUTCDateString } from './getUTCDateString'
+export { getUTCDateString } from './getUTCDateString';

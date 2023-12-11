@@ -1,1 +1,1 @@
-export { isTodayTZ } from './isTodayTZ'
+export { isTodayTZ } from './isTodayTZ';

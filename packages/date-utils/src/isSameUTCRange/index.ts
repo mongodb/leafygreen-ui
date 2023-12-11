@@ -1,1 +1,1 @@
-export { isSameUTCRange } from './isSameUTCRange'
+export { isSameUTCRange } from './isSameUTCRange';

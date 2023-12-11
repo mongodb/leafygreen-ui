@@ -1,1 +1,1 @@
-export { toDate } from './toDate'
+export { toDate } from './toDate';
