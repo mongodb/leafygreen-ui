@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import AnimateHeight from 'react-animate-height';
 import { RowData } from '@tanstack/react-table';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -10,6 +9,7 @@ import { cellContentContainerStyles } from '../Cell/Cell.styles';
 import InternalRowBase from '../Row/InternalRowBase';
 import { useTableContext } from '../TableContext/TableContext';
 import { getAreAncestorsExpanded } from '../utils/areAncestorsExpanded';
+import AnimateHeight from '../utils/MyAnimateHeight';
 
 import { baseStyles, expandedContentStyles } from './ExpandedContent.styles';
 import { ExpandedContentProps } from './ExpandedContent.types';
@@ -33,12 +33,7 @@ const ExpandedContent = <T extends RowData>({
   return (
     <InternalRowBase {...rest}>
       <td colSpan={row.getVisibleCells().length} className={cx(baseStyles)}>
-        <AnimateHeight
-          duration={transitionDuration.default}
-          easing="ease-in-out"
-          height={isExpanded ? 'auto' : 0}
-          ref={transitionRef}
-        >
+        <AnimateHeight isVisible={isExpanded} ref={transitionRef}>
           <div
             className={cx(
               cellContentContainerStyles,

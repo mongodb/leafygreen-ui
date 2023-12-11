@@ -1,11 +1,11 @@
 import React, { useRef } from 'react';
-import AnimateHeight from 'react-animate-height';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { useTableContext } from '../TableContext/TableContext';
+import AnimateHeight from '../utils/MyAnimateHeight';
 
 import {
   alignmentStyles,
@@ -41,12 +41,7 @@ const InternalCell = ({
       )}
       {...rest}
     >
-      <AnimateHeight
-        duration={transitionDuration.default}
-        easing="ease-in-out"
-        ref={transitionRef}
-        height={isVisible ? 'auto' : 0}
-      >
+      <AnimateHeight ref={transitionRef} isVisible={isVisible}>
         <div className={cx(cellContentContainerStyles, alignmentStyles(align))}>
           {children}
         </div>
