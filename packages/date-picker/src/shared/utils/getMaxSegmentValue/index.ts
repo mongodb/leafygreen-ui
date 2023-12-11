@@ -1,5 +1,7 @@
+import { DateType } from '@leafygreen-ui/date-utils';
+
 import { defaultMax } from '../../constants';
-import { DateSegment, DateType } from '../../types';
+import { DateSegment } from '../../types';
 import { getSegmentsFromDate } from '../getSegmentsFromDate';
 
 /** Returns the maximum value for a segment, given a context */

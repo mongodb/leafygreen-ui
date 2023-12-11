@@ -1,3 +1,4 @@
+import { LocaleString } from '@leafygreen-ui/date-utils';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
@@ -25,7 +26,7 @@ export interface BaseDatePickerProps extends DarkModeProps {
    *
    * @default 'iso8601'
    */
-  locale?: 'iso8601' | string;
+  locale?: LocaleString;
 
   /**
    * A valid IANA timezone string, or UTC offset.

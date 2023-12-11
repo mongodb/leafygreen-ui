@@ -1,6 +1,8 @@
 import { ChangeEvent } from 'react';
 
-import { BaseDatePickerProps, DateType } from '../shared/types';
+import { DateType } from '@leafygreen-ui/date-utils';
+
+import { BaseDatePickerProps } from '../shared/types';
 
 export interface DatePickerProps extends BaseDatePickerProps {
   /**

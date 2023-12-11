@@ -2,6 +2,7 @@ import { isBefore, isWithinInterval } from 'date-fns';
 import defaults from 'lodash/defaults';
 import defaultTo from 'lodash/defaultTo';
 
+import { getISODate, toDate } from '@leafygreen-ui/date-utils';
 import { consoleOnce } from '@leafygreen-ui/lib';
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
@@ -11,7 +12,7 @@ import {
   BaseDatePickerProps,
   DatePickerState,
 } from '../../types';
-import { getFormatParts, getISODate, toDate } from '../../utils';
+import { getFormatParts } from '../../utils';
 
 import {
   DatePickerContextProps,

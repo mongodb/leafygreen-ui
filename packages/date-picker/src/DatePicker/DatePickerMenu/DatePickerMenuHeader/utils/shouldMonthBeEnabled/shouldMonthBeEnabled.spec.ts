@@ -1,4 +1,4 @@
-import { Month, newUTC } from '../../../../../shared';
+import { Month, newUTC } from '@leafygreen-ui/date-utils';
 
 import { shouldMonthBeEnabled } from '.';
 

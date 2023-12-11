@@ -8,6 +8,7 @@ import React, {
 import { ExitHandler } from 'react-transition-group/Transition';
 import isEqual from 'lodash/isEqual';
 
+import { isSameUTCDay } from '@leafygreen-ui/date-utils';
 import {
   useBackdropClick,
   useForwardedRef,
@@ -16,7 +17,6 @@ import {
 import { keyMap } from '@leafygreen-ui/lib';
 
 import { useDatePickerContext } from '../../shared/components/DatePickerContext';
-import { isSameUTCDay } from '../../shared/utils';
 import { DatePickerInput } from '../DatePickerInput';
 import { DatePickerMenu } from '../DatePickerMenu';
 import { useSingleDateContext } from '../SingleDateContext';

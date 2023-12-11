@@ -1,8 +1,9 @@
 import { SyntheticEvent } from 'react';
 
+import { DateType } from '@leafygreen-ui/date-utils';
 import { DynamicRefGetter } from '@leafygreen-ui/hooks';
 
-import { DateType, SegmentRefs } from '../../shared';
+import { SegmentRefs } from '../../shared';
 import { DatePickerProps } from '../DatePicker.types';
 
 export interface DatePickerComponentRefs {

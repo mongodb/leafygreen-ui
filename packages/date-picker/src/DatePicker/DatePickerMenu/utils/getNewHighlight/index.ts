@@ -4,7 +4,7 @@ import {
   getFirstOfMonth,
   getLastOfMonth,
   isSameUTCMonth,
-} from '../../../../shared/utils';
+} from '@leafygreen-ui/date-utils';
 
 export const getNewHighlight = (
   currentHighlight: Date | null,

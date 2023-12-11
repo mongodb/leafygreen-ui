@@ -1,5 +1,6 @@
+import { isNotZeroLike } from '@leafygreen-ui/lib';
+
 import { DateSegmentsState } from '../../types';
-import { isNotZeroLike } from '../isZeroLike';
 
 /**
  * Returns whether at least one segment has a value

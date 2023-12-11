@@ -6,6 +6,8 @@ import React, {
   MouseEventHandler,
 } from 'react';
 
+import { isSameUTCDay } from '@leafygreen-ui/date-utils';
+import { isZeroLike } from '@leafygreen-ui/lib';
 import { createSyntheticEvent, keyMap } from '@leafygreen-ui/lib';
 
 import { DateFormField, DateInputBox } from '../../shared/components/DateInput';
@@ -14,8 +16,6 @@ import { useDatePickerContext } from '../../shared/components/DatePickerContext'
 import {
   getRelativeSegmentRef,
   isElementInputSegment,
-  isSameUTCDay,
-  isZeroLike,
 } from '../../shared/utils';
 import { useSingleDateContext } from '../SingleDateContext';
 import { getSegmentToFocus } from '../utils/getSegmentToFocus';
