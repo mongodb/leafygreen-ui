@@ -235,6 +235,14 @@ LiveExample.argTypes = {
   },
 };
 
+export const AnimationDisabled: StoryFn<StoryTableProps> = args => {
+  return <LiveExample {...args} />;
+};
+
+AnimationDisabled.args = {
+  disableAnimations: true,
+};
+
 export const Basic = Template.bind({});
 
 export const ZebraStripes = Template.bind({});
