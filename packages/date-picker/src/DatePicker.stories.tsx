@@ -13,6 +13,7 @@ import {
   DatePickerContextProps,
   DatePickerProvider,
 } from './shared/components/DatePickerContext';
+import { MAX_DATE, MIN_DATE } from './shared/constants';
 import { getProviderPropsFromStoryContext } from './shared/testutils/getProviderPropsFromStoryContext';
 import { Locales, TimeZones } from './shared/testutils/testValues';
 import { AutoComplete } from './shared/types';
@@ -36,7 +37,7 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
   component: DatePicker,
   decorators: [ProviderWrapper],
   parameters: {
-    default: null,
+    default: 'LiveExample',
     controls: {
       exclude: [
         'handleValidation',
@@ -63,6 +64,8 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
     label: 'Pick a date',
     size: Size.Default,
     autoComplete: AutoComplete.Off,
+    min: MIN_DATE,
+    max: MAX_DATE,
   },
   argTypes: {
     baseFontSize: { control: 'select' },
@@ -80,7 +83,7 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
 
 export default meta;
 
-export const Basic: StoryFn<typeof DatePicker> = props => {
+export const LiveExample: StoryFn<typeof DatePicker> = props => {
   const [value, setValue] = useState<Date | null | undefined>();
 
   return (

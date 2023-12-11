@@ -185,21 +185,25 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
 
       switch (key) {
         case keyMap.ArrowLeft: {
+          e.preventDefault();
           nextHighlight = addDaysUTC(currentHighlight, -1);
           break;
         }
 
         case keyMap.ArrowRight: {
+          e.preventDefault();
           nextHighlight = addDaysUTC(currentHighlight, 1);
           break;
         }
 
         case keyMap.ArrowUp: {
+          e.preventDefault();
           nextHighlight = addDaysUTC(currentHighlight, -7);
           break;
         }
 
         case keyMap.ArrowDown: {
+          e.preventDefault();
           nextHighlight = addDaysUTC(currentHighlight, 7);
           break;
         }
