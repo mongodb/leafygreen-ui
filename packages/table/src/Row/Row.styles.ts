@@ -9,7 +9,7 @@ import {
 
 export const baseStyles = css`
   // delay changes to background-color to time it with the height animation of expanded content and nested rows
-  transition-delay: ${transitionDuration.default}ms;
+  transition-delay: ${transitionDuration.slower}ms;
   transition-property: background-color;
 `;
 
