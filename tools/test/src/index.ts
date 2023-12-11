@@ -32,6 +32,15 @@ export const test = (
       : passThrough
     : [];
 
+  // Add coverage options
+  if (passThroughOptions.includes('--coverage')) {
+    const testDir = passThroughOptions.find(opt => !opt.startsWith('--'));
+    const dir = testDir ? `packages/${testDir}/src/` : '';
+    const coverageFlag =
+      '--collectCoverageFrom=' + dir + '**/*.{js,jsx,ts,tsx}';
+    passThroughOptions.push(coverageFlag);
+  }
+
   const configFile = getConfigFile(options);
   const jestBinary = getJestBinary(options);
 
