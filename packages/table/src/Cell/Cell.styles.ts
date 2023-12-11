@@ -94,7 +94,7 @@ export const cellContentTransitionStyles: Record<TransitionStatus, string> = {
   entered: css`
     opacity: 1;
     min-height: ${standardCellHeight}px;
-    max-height: ${standardCellHeight}px;
+    max-height: 9999px;
   `,
   entering: _hiddenStyles,
   exiting: _hiddenStyles,
