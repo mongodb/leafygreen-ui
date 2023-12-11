@@ -79,7 +79,7 @@ export const cellContentContainerStyles = css`
   display: flex;
   align-items: center;
   text-overflow: ellipsis;
-  transition: ${transitionDuration.default}ms ease-in-out;
+  transition: ${transitionDuration.faster}ms ease-in-out;
   transition-property: min-height, max-height, opacity, transform;
   min-height: ${standardCellHeight}px;
 `;
@@ -94,7 +94,7 @@ export const cellContentTransitionStyles: Record<TransitionStatus, string> = {
   entered: css`
     opacity: 1;
     min-height: ${standardCellHeight}px;
-    max-height: 9999px;
+    max-height: 40vh;
   `,
   entering: _hiddenStyles,
   exiting: _hiddenStyles,
