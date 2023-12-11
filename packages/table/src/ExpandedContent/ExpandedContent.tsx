@@ -3,13 +3,12 @@ import { RowData } from '@tanstack/react-table';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { cellContentContainerStyles } from '../Cell/Cell.styles';
 import InternalRowBase from '../Row/InternalRowBase';
 import { useTableContext } from '../TableContext/TableContext';
+import AnimateHeight from '../utils/AnimateHeight';
 import { getAreAncestorsExpanded } from '../utils/areAncestorsExpanded';
-import AnimateHeight from '../utils/MyAnimateHeight';
 
 import { baseStyles, expandedContentStyles } from './ExpandedContent.styles';
 import { ExpandedContentProps } from './ExpandedContent.types';

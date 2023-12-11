@@ -2,10 +2,9 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { useTableContext } from '../TableContext/TableContext';
-import AnimateHeight from '../utils/MyAnimateHeight';
+import AnimateHeight from '../utils/AnimateHeight';
 
 import {
   alignmentStyles,
