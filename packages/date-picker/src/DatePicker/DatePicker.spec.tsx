@@ -17,10 +17,13 @@ import {
   setUTCMonth,
   setUTCYear,
 } from '@leafygreen-ui/date-utils';
+import {
+  eventContainingTargetValue,
+  tabNTimes,
+} from '@leafygreen-ui/testing-lib';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { defaultMax, defaultMin } from '../shared/constants';
-import { eventContainingTargetValue, tabNTimes } from '../shared/testutils';
 import { getFormattedDateString, getValueFormatter } from '../shared/utils';
 
 import {
