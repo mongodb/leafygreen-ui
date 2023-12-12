@@ -246,22 +246,26 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
             month={month}
             className={menuCalendarGridStyles}
             onKeyDown={handleCalendarKeyDown}
+            // TODO: Test month label in different time zones
             aria-label={monthLabel}
           >
-            {(day, i) => (
-              <CalendarCell
-                key={i}
-                ref={cellRefs(getISODate(day))}
-                aria-label={getUTCDateString(day)}
-                isHighlighted={isSameUTCDay(day, highlight)}
-                isCurrent={isSameTZDay(today, day, timeZone)}
-                state={getCellState(day)}
-                onClick={cellClickHandlerForDay(day)}
-                data-iso={getISODate(day)}
-              >
-                {day.getUTCDate()}
-              </CalendarCell>
-            )}
+            {(day, i) => {
+              return (
+                // TODO: Test highlight rendering in different time zones
+                <CalendarCell
+                  key={i}
+                  ref={cellRefs(getISODate(day))}
+                  data-iso={getISODate(day)}
+                  aria-label={getUTCDateString(day)}
+                  isHighlighted={isSameUTCDay(highlight, day)}
+                  isCurrent={isSameTZDay(today, day, timeZone)}
+                  state={getCellState(day)}
+                  onClick={cellClickHandlerForDay(day)}
+                >
+                  {day.getUTCDate()}
+                </CalendarCell>
+              );
+            }}
           </CalendarGrid>
           <DatePickerMenuHeader ref={headerRef} setMonth={updateMonth} />
         </div>
