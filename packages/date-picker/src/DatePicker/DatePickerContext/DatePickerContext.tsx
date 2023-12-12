@@ -173,6 +173,7 @@ export const DatePickerProvider = ({
    * Returns the cell element with the provided value
    */
   const getCellWithValue = (date: DateType): HTMLTableCellElement | null => {
+    // TODO: use TZ key for highlight
     const highlightKey = getISODate(date);
     const cell = highlightKey
       ? refs.calendarCellRefs(highlightKey)?.current
