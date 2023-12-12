@@ -214,7 +214,7 @@ describe('packages/date-picker/date-picker-menu', () => {
         expect(isEveryCellDisabled).toBe(true);
       });
 
-      test("doesn't not highlight a cell", () => {
+      test('does not highlight a cell', () => {
         const { calendarCells } = renderDatePickerMenu(null, {
           value: newUTC(2048, Month.December, 25),
         });
