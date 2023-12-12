@@ -1,7 +1,6 @@
-import { addMilliseconds } from 'date-fns';
-import { getTimezoneOffset } from 'date-fns-tz';
-
+import { getSimulatedTZDate } from '../getSimulatedTZDate';
 import { isSameUTCDay } from '../isSameUTCDay';
+import { DateType } from '../types';
 
 /**
  *
@@ -23,23 +22,16 @@ import { isSameUTCDay } from '../isSameUTCDay';
  * @param timeZone An IANA timeZone string
  */
 export const isSameTZDay = (
-  zoned: Date,
-  utc: Date,
+  zoned: DateType,
+  utc: DateType,
   timeZone: string,
 ): boolean => {
-  // Milliseconds offset between the given time zone & UTC
-  const offsetMs = getTimezoneOffset(timeZone, zoned);
-  if (isNaN(offsetMs)) return false;
-
-  // a date object that, when printed in ISO format,
-  // _looks like_ the local time for the given time zone.
-  // e.g. given zoned = "2023-12-26T01:00Z" and timeZone = "America/New_York",
-  // we get the date "2023-12-25T20:00Z" which _looks like_ the NYC local time (even though the date object technically incorrect)
-  const zonedInUtc = addMilliseconds(zoned, offsetMs);
+  // Get a date object that _looks_ like the zoned date when rendered in ISO format
+  const simulatedTZDate = getSimulatedTZDate(zoned, timeZone);
 
   // We then use this date object to check if it's the same day as the provided utc date
   // e.g. is "2023-12-25T20:00Z" the same day as "2023-12-25T00:00Z"?
-  const isSameDay = isSameUTCDay(utc, zonedInUtc);
+  const isSameDay = isSameUTCDay(utc, simulatedTZDate);
 
   return isSameDay;
 };
