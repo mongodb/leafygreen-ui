@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { StoryFn } from '@storybook/react';
 import { isValid } from 'date-fns';
 
-import { Locales, Month, newUTC } from '@leafygreen-ui/date-utils';
+import { testLocales, Month, newUTC } from '@leafygreen-ui/date-utils';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { pickAndOmit, StoryMetaType, StoryType } from '@leafygreen-ui/lib';
 
@@ -58,7 +58,7 @@ const meta: StoryMetaType<typeof DateInputBox, DatePickerContextProps> = {
   },
   argTypes: {
     value: { control: 'date' },
-    locale: { control: 'select', options: Locales },
+    locale: { control: 'select', options: testLocales },
   },
 };
 

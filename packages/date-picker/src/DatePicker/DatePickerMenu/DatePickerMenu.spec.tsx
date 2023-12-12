@@ -9,7 +9,10 @@ import {
   newUTC,
   setUTCDate,
 } from '@leafygreen-ui/date-utils';
-import { mockTimeZone, testTimeZones } from '@leafygreen-ui/date-utils/testing';
+import {
+  mockTimeZone,
+  testTimeZones,
+} from '@leafygreen-ui/date-utils/src/testing';
 
 import {
   DatePickerProvider,

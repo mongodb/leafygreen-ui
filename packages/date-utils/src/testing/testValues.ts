@@ -9,7 +9,7 @@ export const testTimeZones = [
 ] as const;
 
 /** Time zones used to test with */
-export const TimeZones = testTimeZones.map(({ tz }) => tz);
+export const testTimeZoneLabels = testTimeZones.map(({ tz }) => tz);
 
 /** Locales (date formats) to test with:
  *
@@ -19,7 +19,7 @@ export const TimeZones = testTimeZones.map(({ tz }) => tz);
  * Farsi-Afghanistan (week starts on Sat)
  * English-Maldives (week starts on Fri.)
  */
-export const Locales = [
+export const testLocales = [
   'iso8601',
   'de-DE', // German, Germany (uses `.` char separator)
   'en-US', // English, US (week starts on Sun.)

@@ -5,10 +5,10 @@ import { StoryFn } from '@storybook/react';
 import {
   getISODate,
   isTodayTZ,
-  Locales,
+  testLocales,
   Month,
   newUTC,
-  TimeZones,
+  testTimeZoneLabels,
 } from '@leafygreen-ui/date-utils';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
@@ -38,7 +38,7 @@ const meta: StoryMetaType<typeof CalendarGrid, DatePickerContextProps> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        locale: Locales,
+        locale: testLocales,
       },
       decorator: ProviderWrapper,
     },
@@ -52,11 +52,11 @@ const meta: StoryMetaType<typeof CalendarGrid, DatePickerContextProps> = {
     darkMode: { control: 'boolean' },
     locale: {
       control: 'select',
-      options: Locales,
+      options: testLocales,
     },
     timeZone: {
       control: 'select',
-      options: TimeZones,
+      options: testTimeZoneLabels,
     },
   },
 };
