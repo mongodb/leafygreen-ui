@@ -234,7 +234,7 @@ describe('packages/date-picker/date-picker-menu', () => {
             jest.useFakeTimers();
           });
           afterEach(() => {
-            jest.clearAllMocks();
+            jest.restoreAllMocks();
           });
 
           test('cell marked as `current` updates', () => {

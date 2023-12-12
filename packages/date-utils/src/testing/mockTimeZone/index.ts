@@ -3,7 +3,7 @@ import timezoneMock, { TimeZone } from 'timezone-mock';
 
 /**
  * Mocks the `timeZone` returned from the `Intl.DateTimeFormat`,
- * and the `getTimeZoneOffset` returned from `Date`
+ * and various `get*` methods on the `Date` prototype
  * @param timeZone IANA time zone string
  * @param UTCOffset UTC offset (in hours)
  */
