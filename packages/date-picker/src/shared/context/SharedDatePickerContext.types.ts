@@ -1,3 +1,7 @@
+import { ReactNode } from 'react';
+
+import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
+
 import { BaseDatePickerProps, DatePickerState } from '../types';
 
 import { UseDatePickerErrorNotificationsReturnObject } from './useDatePickerErrorNotifications';
@@ -6,9 +10,17 @@ export interface StateNotification {
   state: DatePickerState;
   message: string;
 }
+type AriaLabelkeys = keyof AriaLabelPropsWithLabel;
 
 /** The props expected to pass int the provider */
-export interface SharedDatePickerProviderProps extends BaseDatePickerProps {}
+export type SharedDatePickerProviderProps = Omit<
+  BaseDatePickerProps,
+  AriaLabelkeys
+> & {
+  label?: ReactNode;
+  'aria-label'?: string;
+  'aria-labelledby'?: string;
+};
 
 /**
  * The values in context

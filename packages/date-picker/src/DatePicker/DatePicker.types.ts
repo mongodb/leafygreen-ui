@@ -4,7 +4,7 @@ import { DateType } from '@leafygreen-ui/date-utils';
 
 import { BaseDatePickerProps } from '../shared/types';
 
-export interface DatePickerProps extends BaseDatePickerProps {
+export type DatePickerProps = {
   /**
    * The selected date, given in UTC time
    */
@@ -35,4 +35,4 @@ export interface DatePickerProps extends BaseDatePickerProps {
    * Callback fired when any segment changes, (but not necessarily a full value)
    */
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-}
+} & BaseDatePickerProps;
