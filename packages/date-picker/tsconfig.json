@@ -12,9 +12,6 @@
       "@leafygreen-ui/*": [
         "../*/src"
       ],
-      "@leafygreen-ui/date-utils/*": [
-        "../my-package/dist/*"
-      ]
     }
   },
   "include": [
