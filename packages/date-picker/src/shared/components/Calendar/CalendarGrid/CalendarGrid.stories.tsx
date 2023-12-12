@@ -5,13 +5,14 @@ import { StoryFn } from '@storybook/react';
 import {
   getISODate,
   isTodayTZ,
+  Locales,
   Month,
   newUTC,
+  TimeZones,
 } from '@leafygreen-ui/date-utils';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 
-import { Locales, TimeZones } from '../../../testutils';
 import {
   DatePickerContextProps,
   DatePickerProvider,

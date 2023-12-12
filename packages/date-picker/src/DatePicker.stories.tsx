@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
-import { Month, newUTC } from '@leafygreen-ui/date-utils';
+import { Locales, Month, newUTC, TimeZones } from '@leafygreen-ui/date-utils';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 import Modal from '@leafygreen-ui/modal';
@@ -15,7 +15,6 @@ import {
 } from './shared/components/DatePickerContext';
 import { MAX_DATE, MIN_DATE } from './shared/constants';
 import { getProviderPropsFromStoryContext } from './shared/testutils/getProviderPropsFromStoryContext';
-import { Locales, TimeZones } from './shared/testutils/testValues';
 import { AutoComplete } from './shared/types';
 import { DatePicker } from './DatePicker';
 
