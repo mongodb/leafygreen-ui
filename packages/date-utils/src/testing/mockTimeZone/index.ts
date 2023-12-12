@@ -1,5 +1,4 @@
-import { padStart } from 'lodash';
-import timezoneMock, { TimeZone } from 'timezone-mock';
+import timezoneMock, { type TimeZone } from 'timezone-mock';
 
 /**
  * Mocks the `timeZone` returned from the `Intl.DateTimeFormat`,
@@ -38,18 +37,6 @@ export const mockTimeZone = (timeZone: string, UTCOffset: number) => {
     .spyOn(global.Date.prototype, 'getHours')
     .mockImplementation(mockGetHours);
 
-  jest
-    .spyOn(global.Date.prototype, 'toLocaleDateString')
-    .mockImplementation(mockToLocaleDateString);
-
-  jest
-    .spyOn(global.Date.prototype, 'toLocaleTimeString')
-    .mockImplementation(mockToLocaleTimeString);
-
-  jest
-    .spyOn(global.Date.prototype, 'toLocaleString')
-    .mockImplementation(mockToLocaleString);
-
   /**
    * MOCK FUNCTIONS
    * */
@@ -76,44 +63,5 @@ export const mockTimeZone = (timeZone: string, UTCOffset: number) => {
         : adjustedHrs;
 
     return hours;
-  }
-
-  function mockToLocaleDateString() {
-    /// @ts-expect-error - typeof `this` is unknown
-    const _this = this as Date;
-
-    return (
-      String(_this.getMonth() + 1) +
-      '/' +
-      String(mockGetDate.call(_this)) +
-      '/' +
-      String(_this.getFullYear())
-    );
-  }
-
-  function mockToLocaleTimeString() {
-    /// @ts-expect-error - typeof `this` is unknown
-    const _this = this as Date;
-    const hrs = mockGetHours.call(_this);
-    return (
-      String(hrs % 12) +
-      ':' +
-      padStart(String(_this.getMinutes()), 2, '0') +
-      ':' +
-      padStart(String(_this.getSeconds()), 2, '0') +
-      ' ' +
-      String(hrs > 12 ? 'PM' : 'AM')
-    );
-  }
-
-  function mockToLocaleString() {
-    /// @ts-expect-error - typeof `this` is unknown
-    const _this = this as Date;
-
-    return (
-      mockToLocaleDateString.call(_this) +
-      ', ' +
-      mockToLocaleTimeString.call(_this)
-    );
   }
 };

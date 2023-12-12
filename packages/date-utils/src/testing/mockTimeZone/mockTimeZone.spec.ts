@@ -41,6 +41,13 @@ describe('packages/date-picker/testutils/mockTimeZone', () => {
       expect(now.getHours()).toBe(UTCOffset < 0 ? 24 + UTCOffset : UTCOffset);
       expect(now.getMinutes()).toBe(0);
     });
+
+    test('maintains default `toLocaleString(...args)` behavior', () => {
+      const date = new Date(Date.UTC(2020, Month.December, 25, 0));
+      expect(date.toLocaleString('en-US', { month: 'long' })).toEqual(
+        'December',
+      );
+    });
   });
 
   test('restores mocks appropriately', () => {
