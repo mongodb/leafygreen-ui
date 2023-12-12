@@ -48,7 +48,9 @@ export const DatePickerContent = forwardRef<
 
   useBackdropClick(closeMenu, [formFieldRef, menuRef], isOpen && !isSelectOpen);
 
-  /** This listens to when the disabled prop changes to true and closes the menu */
+  /**
+   * This listens to when the disabled prop changes to true and closes the menu
+   */
   useEffect(() => {
     // if disabled is true but was previously false. This prevents this effect from rerunning multiple times since other states are updated when the menu closes.
     if (disabled && !prevDisabledValue) {
@@ -57,7 +59,9 @@ export const DatePickerContent = forwardRef<
     }
   }, [closeMenu, disabled, handleValidation, value, prevDisabledValue]);
 
-  /** Fired when the CSS transition to open the menu is fired */
+  /**
+   * Fired when the CSS transition to open the menu is fired
+   */
   const handleMenuTransitionEntered: TransitionEventHandler = e => {
     // Whether this event is firing in response to the menu transition
     const isTransitionedElementMenu = e.target === menuRef.current;

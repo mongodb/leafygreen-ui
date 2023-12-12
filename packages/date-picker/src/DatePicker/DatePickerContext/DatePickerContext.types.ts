@@ -34,12 +34,12 @@ export interface DatePickerContextProps {
   handleValidation: Required<DatePickerProps>['handleValidation'];
 
   /**
-   * The current date, at UTC midnight
+   * The current date, in the browser's time zone
    */
   today: Date;
 
   /**
-   * The currently displayed month in the menu
+   * The currently displayed month in the menu.
    */
   month: Date;
 
@@ -50,7 +50,7 @@ export interface DatePickerContextProps {
   setMonth: (newMonth: Date) => void;
 
   /**
-   * The Date value for the calendar cell in the menu that has, or should have focus
+   * The Date value for the calendar cell in the menu that has, or should have focus.
    */
   highlight: DateType;
 
