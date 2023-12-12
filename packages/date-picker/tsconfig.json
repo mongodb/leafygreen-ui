@@ -11,6 +11,9 @@
       ],
       "@leafygreen-ui/*": [
         "../*/src"
+      ],
+      "@leafygreen-ui/date-utils/*": [
+        "../my-package/dist/*"
       ]
     }
   },
@@ -60,6 +63,9 @@
     },
     {
       "path": "../select"
+    },
+    {
+      "path": "../testing-lib"
     },
     {
       "path": "../tokens"

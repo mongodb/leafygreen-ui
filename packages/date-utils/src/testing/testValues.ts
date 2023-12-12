@@ -1,13 +1,3 @@
-import { createRef } from 'react';
-
-import { SegmentRefs } from '../hooks';
-
-export const segmentRefsMock: SegmentRefs = {
-  day: createRef<HTMLInputElement>(),
-  month: createRef<HTMLInputElement>(),
-  year: createRef<HTMLInputElement>(),
-};
-
 export const testTimeZones = [
   { tz: 'Pacific/Honolulu', UTCOffset: -10 },
   { tz: 'America/Los_Angeles', UTCOffset: -8 },
