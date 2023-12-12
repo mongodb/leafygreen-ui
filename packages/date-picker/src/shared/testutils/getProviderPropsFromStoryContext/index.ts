@@ -31,6 +31,8 @@ export const getProviderPropsFromStoryContext = <P = BaseDatePickerProps>(
     },
     datePickerProviderProps: {
       label: '',
+      'aria-label': '',
+      'aria-labelledby': '',
       ...datePickerProviderProps,
     },
     storyProps,

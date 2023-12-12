@@ -43,6 +43,8 @@ export const contextPropNames: Array<ContextPropKeys> = [
 
 /** The default context value */
 export const defaultDatePickerContext: DatePickerContextProps = {
+  'aria-labelledby': '',
+  'aria-label': '',
   label: '',
   description: '',
   locale: 'iso8601',
