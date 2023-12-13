@@ -7,26 +7,26 @@ import { Month, newUTC } from '@leafygreen-ui/date-utils';
 
 import { segmentRefsMock } from '../../../testutils';
 import {
-  DatePickerProvider,
-  DatePickerProviderProps,
-  defaultDatePickerContext,
-} from '../../DatePickerContext';
+  defaultSharedDatePickerContext,
+  SharedDatePickerProvider,
+  SharedDatePickerProviderProps,
+} from '../../SharedDatePickerContext';
 import { DateInputSegmentChangeEventHandler } from '../DateInputSegment/DateInputSegment.types';
 
 import { DateInputBox, type DateInputBoxProps } from '.';
 
 const renderDateInputBox = (
   props?: Omit<DateInputBoxProps, 'segmentRefs'>,
-  context?: Partial<DatePickerProviderProps>,
+  context?: Partial<SharedDatePickerProviderProps>,
 ) => {
   const result = render(
-    <DatePickerProvider {...defaultDatePickerContext} {...context}>
+    <SharedDatePickerProvider {...defaultSharedDatePickerContext} {...context}>
       <DateInputBox
         {...props}
         value={props?.value ?? null}
         segmentRefs={segmentRefsMock}
       />
-    </DatePickerProvider>,
+    </SharedDatePickerProvider>,
   );
 
   const dayInput = result.container.querySelector(
@@ -49,7 +49,7 @@ const renderDateInputBox = (
 describe('packages/date-picker/shared/date-input-box', () => {
   const onSegmentChange = jest.fn<DateInputSegmentChangeEventHandler>();
 
-  const testContext: Partial<DatePickerProviderProps> = {
+  const testContext: Partial<SharedDatePickerProviderProps> = {
     locale: 'iso8601',
     timeZone: 'UTC',
   };

@@ -7,8 +7,8 @@ import { StoryMetaType } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 
 import {
-  DatePickerContextProps,
-  DatePickerProvider,
+  SharedDatePickerContextProps,
+  SharedDatePickerProvider,
 } from '../../shared/context';
 import { getProviderPropsFromStoryContext } from '../../shared/testutils';
 import { DatePickerProps } from '../DatePicker.types';
@@ -25,18 +25,18 @@ const ProviderWrapper = (Story: StoryFn, ctx: any) => {
 
   return (
     <LeafyGreenProvider {...leafyGreenProviderProps}>
-      <DatePickerProvider {...datePickerProviderProps}>
+      <SharedDatePickerProvider {...datePickerProviderProps}>
         <SingleDateProvider value={storyProps.value} setValue={() => {}}>
           <Story {...storyProps} />
         </SingleDateProvider>
-      </DatePickerProvider>
+      </SharedDatePickerProvider>
     </LeafyGreenProvider>
   );
 };
 
 const meta: StoryMetaType<
   typeof DatePickerInput,
-  SingleDateContextProps & DatePickerContextProps
+  SingleDateContextProps & SharedDatePickerContextProps
 > = {
   title: 'Components/DatePicker/DatePicker/DatePickerInput',
   component: DatePickerInput,

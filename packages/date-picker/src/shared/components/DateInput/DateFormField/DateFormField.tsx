@@ -2,7 +2,7 @@ import React from 'react';
 
 import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
 
-import { useDatePickerContext } from '../../../context';
+import { useSharedDatePickerContext } from '../../../context';
 import { DatePickerState } from '../../../types';
 import { CalendarButton } from '../CalendarButton';
 
@@ -35,7 +35,7 @@ export const DateFormField = React.forwardRef<
       isOpen,
       menuId,
       size,
-    } = useDatePickerContext();
+    } = useSharedDatePickerContext();
 
     return (
       <FormField

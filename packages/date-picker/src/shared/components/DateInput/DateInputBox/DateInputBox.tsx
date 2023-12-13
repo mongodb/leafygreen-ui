@@ -6,7 +6,7 @@ import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 
-import { useDatePickerContext } from '../../../context';
+import { useSharedDatePickerContext } from '../../../context';
 import { useDateSegments } from '../../../hooks';
 import {
   DateSegment,
@@ -59,7 +59,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
     }: DateInputBoxProps,
     fwdRef,
   ) => {
-    const { formatParts, disabled, min, max } = useDatePickerContext();
+    const { formatParts, disabled, min, max } = useSharedDatePickerContext();
     const { theme } = useDarkMode();
 
     const containerRef = useForwardedRef(fwdRef, null);

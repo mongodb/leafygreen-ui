@@ -7,17 +7,17 @@ import { defaultMax, defaultMin } from '../../../constants';
 import { DateSegment } from '../../../types';
 import { getValueFormatter } from '../../../utils';
 import {
-  DatePickerProvider,
-  DatePickerProviderProps,
-  defaultDatePickerContext,
-} from '../../DatePickerContext';
+  defaultSharedDatePickerContext,
+  SharedDatePickerProvider,
+  SharedDatePickerProviderProps,
+} from '../../SharedDatePickerContext';
 
 import { DateInputSegmentChangeEventHandler } from './DateInputSegment.types';
 import { DateInputSegment, type DateInputSegmentProps } from '.';
 
 const renderSegment = (
   props?: Partial<DateInputSegmentProps>,
-  ctx?: Partial<DatePickerProviderProps>,
+  ctx?: Partial<SharedDatePickerProviderProps>,
 ) => {
   const defaultProps = {
     value: '',
@@ -26,9 +26,9 @@ const renderSegment = (
   };
 
   const result = render(
-    <DatePickerProvider {...defaultDatePickerContext} {...ctx}>
+    <SharedDatePickerProvider {...defaultSharedDatePickerContext} {...ctx}>
       <DateInputSegment {...defaultProps} {...props} />
-    </DatePickerProvider>,
+    </SharedDatePickerProvider>,
   );
 
   const rerenderSegment = (newProps: Partial<DateInputSegmentProps>) =>

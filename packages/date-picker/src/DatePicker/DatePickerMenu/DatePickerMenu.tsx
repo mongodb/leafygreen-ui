@@ -25,7 +25,7 @@ import {
   CalendarGrid,
 } from '../../shared/components/Calendar';
 import { MenuWrapper } from '../../shared/components/MenuWrapper';
-import { useDatePickerContext } from '../../shared/context';
+import { useSharedDatePickerContext } from '../../shared/context';
 import { useSingleDateContext } from '../SingleDateContext';
 
 import { getNewHighlight } from './utils/getNewHighlight';
@@ -39,7 +39,8 @@ import { DatePickerMenuHeader } from './DatePickerMenuHeader';
 
 export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
   ({ onKeyDown, ...rest }: DatePickerMenuProps, fwdRef) => {
-    const { isInRange, isOpen, setIsDirty, timeZone } = useDatePickerContext();
+    const { isInRange, isOpen, setIsDirty, timeZone } =
+      useSharedDatePickerContext();
     const {
       refs,
       today,

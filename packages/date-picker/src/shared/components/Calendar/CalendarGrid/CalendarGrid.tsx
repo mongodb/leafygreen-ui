@@ -10,7 +10,7 @@ import {
 import { cx } from '@leafygreen-ui/emotion';
 import { Disclaimer } from '@leafygreen-ui/typography';
 
-import { useDatePickerContext } from '../../../context';
+import { useSharedDatePickerContext } from '../../../context';
 
 import {
   calendarGridStyles,
@@ -39,7 +39,7 @@ import { CalendarGridProps } from './CalendarGrid.types';
  */
 export const CalendarGrid = forwardRef<HTMLTableElement, CalendarGridProps>(
   ({ month, children, className, ...rest }: CalendarGridProps, fwdRef) => {
-    const { locale } = useDatePickerContext();
+    const { locale } = useSharedDatePickerContext();
     const weekStartsOn = getWeekStartByLocale(locale);
     const weeks = useMemo(
       () => getWeeksArray(month, { locale }),

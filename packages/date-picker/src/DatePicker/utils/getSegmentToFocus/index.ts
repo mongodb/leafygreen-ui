@@ -1,14 +1,14 @@
 import isUndefined from 'lodash/isUndefined';
 import last from 'lodash/last';
 
-import { DatePickerContextProps } from '../../../shared/context';
+import { SharedDatePickerContextProps } from '../../../shared/context';
 import { SegmentRefs } from '../../../shared/hooks';
 import { DateSegment } from '../../../shared/types';
 import { getFirstEmptySegment } from '../../../shared/utils';
 
 interface GetSegmentToFocusProps {
   target: EventTarget;
-  formatParts: DatePickerContextProps['formatParts'];
+  formatParts: SharedDatePickerContextProps['formatParts'];
   segmentRefs: SegmentRefs;
 }
 

@@ -5,12 +5,18 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 
-import { DatePickerContextProps, DatePickerProvider } from '../../../context';
+import {
+  SharedDatePickerContextProps,
+  SharedDatePickerProvider,
+} from '../../../context';
 import { DateSegmentValue } from '../../../types';
 
 import { DateInputSegment } from './DateInputSegment';
 
-const meta: StoryMetaType<typeof DateInputSegment, DatePickerContextProps> = {
+const meta: StoryMetaType<
+  typeof DateInputSegment,
+  SharedDatePickerContextProps
+> = {
   title: 'Components/DatePicker/Shared/DateInputSegment',
   component: DateInputSegment,
   parameters: {
@@ -24,9 +30,9 @@ const meta: StoryMetaType<typeof DateInputSegment, DatePickerContextProps> = {
       },
       decorator: (Instance, ctx) => (
         // @ts-expect-error - incomplete context value
-        <DatePickerProvider value={{ size: ctx?.args.size }}>
+        <SharedDatePickerProvider value={{ size: ctx?.args.size }}>
           <Instance />
-        </DatePickerProvider>
+        </SharedDatePickerProvider>
       ),
       excludeCombinations: [
         {

@@ -4,7 +4,10 @@ import { StoryFn } from '@storybook/react';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 
-import { DatePickerContextProps, DatePickerProvider } from '../../../context';
+import {
+  SharedDatePickerContextProps,
+  SharedDatePickerProvider,
+} from '../../../context';
 
 import { CalendarCell } from './CalendarCell';
 import {
@@ -12,7 +15,7 @@ import {
   CalendarCellState,
 } from './CalendarCell.types';
 
-const meta: StoryMetaType<typeof CalendarCell, DatePickerContextProps> = {
+const meta: StoryMetaType<typeof CalendarCell, SharedDatePickerContextProps> = {
   title: 'Components/DatePicker/Shared/CalendarCell',
   component: CalendarCell,
   parameters: {
@@ -34,9 +37,9 @@ const meta: StoryMetaType<typeof CalendarCell, DatePickerContextProps> = {
         return (
           <LeafyGreenProvider darkMode={darkMode}>
             {/* @ts-expect-error - incomplete context value */}
-            <DatePickerProvider value={{ size }}>
+            <SharedDatePickerProvider value={{ size }}>
               <Instance {...props} />
-            </DatePickerProvider>
+            </SharedDatePickerProvider>
           </LeafyGreenProvider>
         );
       },

@@ -8,21 +8,23 @@ import { consoleOnce } from '@leafygreen-ui/lib';
 import { MAX_DATE, MIN_DATE } from '../constants';
 
 import {
-  DatePickerContextProps,
-  DatePickerProvider,
-  DatePickerProviderProps,
-  useDatePickerContext,
+  SharedDatePickerContextProps,
+  SharedDatePickerProvider,
+  SharedDatePickerProviderProps,
+  useSharedDatePickerContext,
 } from '.';
 
-const renderDatePickerProvider = (props?: Partial<DatePickerProviderProps>) => {
+const renderSharedDatePickerProvider = (
+  props?: Partial<SharedDatePickerProviderProps>,
+) => {
   const { result, rerender } = renderHook<
     PropsWithChildren<{}>,
-    DatePickerContextProps
-  >(useDatePickerContext, {
+    SharedDatePickerContextProps
+  >(useSharedDatePickerContext, {
     wrapper: ({ children }) => (
-      <DatePickerProvider label="" {...props}>
+      <SharedDatePickerProvider label="" {...props}>
         {children}
-      </DatePickerProvider>
+      </SharedDatePickerProvider>
     ),
   });
 
@@ -30,13 +32,13 @@ const renderDatePickerProvider = (props?: Partial<DatePickerProviderProps>) => {
 };
 
 describe('packages/date-picker-context', () => {
-  describe('useDatePickerContext', () => {
+  describe('useSharedDatePickerContext', () => {
     describe('min/max', () => {
       afterEach(() => {
         jest.resetAllMocks();
       });
       test('uses default min/max values when not provided', () => {
-        const { result } = renderDatePickerProvider();
+        const { result } = renderSharedDatePickerProvider();
         expect(result.current.min).toEqual(MIN_DATE);
         expect(result.current.max).toEqual(MAX_DATE);
       });
@@ -45,7 +47,7 @@ describe('packages/date-picker-context', () => {
         const testMin = newUTC(1999, Month.September, 2);
         const testMax = newUTC(2011, Month.June, 22);
 
-        const { result } = renderDatePickerProvider({
+        const { result } = renderSharedDatePickerProvider({
           min: testMin,
           max: testMax,
         });
@@ -59,7 +61,7 @@ describe('packages/date-picker-context', () => {
         const testMax = newUTC(1999, Month.September, 2);
         const testMin = newUTC(2011, Month.June, 22);
 
-        const { result } = renderDatePickerProvider({
+        const { result } = renderSharedDatePickerProvider({
           min: testMin,
           max: testMax,
         });
@@ -72,7 +74,7 @@ describe('packages/date-picker-context', () => {
         const errorSpy = jest.spyOn(consoleOnce, 'error');
         const testMax = newUTC(1967, Month.March, 10);
 
-        const { result } = renderDatePickerProvider({
+        const { result } = renderSharedDatePickerProvider({
           max: testMax,
         });
         expect(result.current.min).toEqual(MIN_DATE);
@@ -84,7 +86,7 @@ describe('packages/date-picker-context', () => {
         const errorSpy = jest.spyOn(consoleOnce, 'error');
         const testMin = newUTC(2067, Month.March, 10);
 
-        const { result } = renderDatePickerProvider({
+        const { result } = renderSharedDatePickerProvider({
           min: testMin,
         });
         expect(result.current.min).toEqual(MIN_DATE);
@@ -95,12 +97,12 @@ describe('packages/date-picker-context', () => {
 
     describe('isOpen', () => {
       test('is `false` by default', () => {
-        const { result } = renderDatePickerProvider();
+        const { result } = renderSharedDatePickerProvider();
         expect(result.current.isOpen).toBeFalsy();
       });
 
       test('setter updates the value to `true`', async () => {
-        const { result, rerender } = renderDatePickerProvider();
+        const { result, rerender } = renderSharedDatePickerProvider();
 
         act(() => result.current.setOpen(true));
         rerender();
@@ -112,12 +114,12 @@ describe('packages/date-picker-context', () => {
 
     describe('isDirty', () => {
       test('is `false` by default', () => {
-        const { result } = renderDatePickerProvider();
+        const { result } = renderSharedDatePickerProvider();
         expect(result.current.isDirty).toBeFalsy();
       });
 
       test('setter updates the value to `true`', async () => {
-        const { result, rerender } = renderDatePickerProvider();
+        const { result, rerender } = renderSharedDatePickerProvider();
 
         act(() => result.current.setIsDirty(true));
         rerender();
@@ -129,12 +131,12 @@ describe('packages/date-picker-context', () => {
 
     describe('isSelectOpen', () => {
       test('is `false` by default', () => {
-        const { result } = renderDatePickerProvider();
+        const { result } = renderSharedDatePickerProvider();
         expect(result.current.isSelectOpen).toBeFalsy();
       });
 
       test('setter updates the value to `true`', async () => {
-        const { result, rerender } = renderDatePickerProvider();
+        const { result, rerender } = renderSharedDatePickerProvider();
 
         act(() => result.current.setIsSelectOpen(true));
         rerender();

@@ -18,8 +18,8 @@ import { InlineCode } from '@leafygreen-ui/typography';
 
 import {
   contextPropNames,
-  type DatePickerContextProps,
-  DatePickerProvider,
+  type SharedDatePickerContextProps,
+  SharedDatePickerProvider,
 } from '../../shared/context';
 import { getProviderPropsFromStoryContext } from '../../shared/testutils';
 import {
@@ -33,7 +33,7 @@ import { DatePickerMenuProps } from './DatePickerMenu.types';
 const mockToday = newUTC(2023, Month.September, 14);
 type DecoratorArgs = DatePickerMenuProps &
   SingleDateContextProps &
-  DatePickerContextProps;
+  SharedDatePickerContextProps;
 
 const MenuDecorator: Decorator = (Story: StoryFn, ctx: any) => {
   const { leafyGreenProviderProps, datePickerProviderProps, storyProps } =
@@ -41,9 +41,9 @@ const MenuDecorator: Decorator = (Story: StoryFn, ctx: any) => {
 
   return (
     <LeafyGreenProvider {...leafyGreenProviderProps}>
-      <DatePickerProvider {...datePickerProviderProps} initialOpen={true}>
+      <SharedDatePickerProvider {...datePickerProviderProps} initialOpen={true}>
         <Story {...storyProps} />
-      </DatePickerProvider>
+      </SharedDatePickerProvider>
     </LeafyGreenProvider>
   );
 };

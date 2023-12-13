@@ -1,14 +1,14 @@
 export {
-  DatePickerContext,
-  DatePickerProvider,
-  useDatePickerContext,
-} from './DatePickerContext';
+  SharedDatePickerContext,
+  SharedDatePickerProvider,
+  useSharedDatePickerContext,
+} from './SharedDatePickerContext';
 export {
-  type DatePickerContextProps,
-  type DatePickerProviderProps,
-} from './DatePickerContext.types';
+  type SharedDatePickerContextProps,
+  type SharedDatePickerProviderProps,
+} from './SharedDatePickerContext.types';
 export {
   type ContextPropKeys,
   contextPropNames,
-  defaultDatePickerContext,
-} from './DatePickerContext.utils';
+  defaultSharedDatePickerContext,
+} from './SharedDatePickerContext.utils';

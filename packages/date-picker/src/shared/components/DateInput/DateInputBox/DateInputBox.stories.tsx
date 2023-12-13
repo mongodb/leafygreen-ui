@@ -9,8 +9,8 @@ import { pickAndOmit, StoryMetaType, StoryType } from '@leafygreen-ui/lib';
 
 import {
   contextPropNames,
-  DatePickerContextProps,
-  DatePickerProvider,
+  SharedDatePickerContextProps,
+  SharedDatePickerProvider,
 } from '../../../context';
 import { segmentRefsMock } from '../../../testutils';
 
@@ -26,14 +26,14 @@ const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => {
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
-      <DatePickerProvider {...contextProps}>
+      <SharedDatePickerProvider {...contextProps}>
         <Story {...componentProps} segmentRefs={segmentRefsMock} />
-      </DatePickerProvider>
+      </SharedDatePickerProvider>
     </LeafyGreenProvider>
   );
 };
 
-const meta: StoryMetaType<typeof DateInputBox, DatePickerContextProps> = {
+const meta: StoryMetaType<typeof DateInputBox, SharedDatePickerContextProps> = {
   title: 'Components/DatePicker/Shared/DateInputBox',
   component: DateInputBox,
   decorators: [ProviderWrapper],
@@ -92,7 +92,7 @@ export const Static: StoryFn<typeof DateInputBox> = () => {
 
 export const Formats: StoryType<
   typeof DateInputBox,
-  DatePickerContextProps
+  SharedDatePickerContextProps
 > = () => <></>;
 Formats.parameters = {
   generate: {

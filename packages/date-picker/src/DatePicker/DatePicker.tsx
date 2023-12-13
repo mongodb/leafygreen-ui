@@ -12,7 +12,7 @@ import { AutoComplete, DatePickerState } from '../shared';
 import {
   ContextPropKeys,
   contextPropNames,
-  DatePickerProvider,
+  SharedDatePickerProvider,
 } from '../shared/context';
 import { useControlledValue } from '../shared/hooks';
 
@@ -50,7 +50,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     );
 
     return (
-      <DatePickerProvider
+      <SharedDatePickerProvider
         darkMode={darkMode}
         baseFontSize={baseFontSize}
         {...contextProps}
@@ -69,7 +69,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
             <DatePickerContent ref={fwdRef} {...componentProps} />
           </LeafyGreenProvider>
         </SingleDateProvider>
-      </DatePickerProvider>
+      </SharedDatePickerProvider>
     );
   },
 );

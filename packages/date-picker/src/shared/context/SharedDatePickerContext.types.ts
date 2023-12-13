@@ -8,13 +8,13 @@ export interface StateNotification {
 }
 
 /** The props expected to pass int the provider */
-export interface DatePickerProviderProps extends BaseDatePickerProps {}
+export interface SharedDatePickerProviderProps extends BaseDatePickerProps {}
 
 /**
  * The values in context
  */
-export interface DatePickerContextProps
-  extends Omit<Required<DatePickerProviderProps>, 'state'>,
+export interface SharedDatePickerContextProps
+  extends Omit<Required<SharedDatePickerProviderProps>, 'state'>,
     UseDatePickerErrorNotificationsReturnObject {
   /** The earliest date accepted */
   min: Date;

@@ -15,7 +15,10 @@ import Modal from '@leafygreen-ui/modal';
 import { Size } from '@leafygreen-ui/tokens';
 
 import { MAX_DATE, MIN_DATE } from './shared/constants';
-import { DatePickerContextProps, DatePickerProvider } from './shared/context';
+import {
+  SharedDatePickerContextProps,
+  SharedDatePickerProvider,
+} from './shared/context';
 import { getProviderPropsFromStoryContext } from './shared/testutils/getProviderPropsFromStoryContext';
 import { AutoComplete } from './shared/types';
 import { DatePicker } from './DatePicker';
@@ -26,14 +29,14 @@ const ProviderWrapper = (Story: StoryFn, ctx: any) => {
 
   return (
     <LeafyGreenProvider {...leafyGreenProviderProps}>
-      <DatePickerProvider {...datePickerProviderProps}>
+      <SharedDatePickerProvider {...datePickerProviderProps}>
         <Story {...storyProps} />
-      </DatePickerProvider>
+      </SharedDatePickerProvider>
     </LeafyGreenProvider>
   );
 };
 
-const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
+const meta: StoryMetaType<typeof DatePicker, SharedDatePickerContextProps> = {
   title: 'Components/DatePicker/DatePicker',
   component: DatePicker,
   decorators: [ProviderWrapper],

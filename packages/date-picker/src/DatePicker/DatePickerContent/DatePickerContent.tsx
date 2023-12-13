@@ -16,7 +16,7 @@ import {
 } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
 
-import { useDatePickerContext } from '../../shared/context';
+import { useSharedDatePickerContext } from '../../shared/context';
 import { DatePickerInput } from '../DatePickerInput';
 import { DatePickerMenu } from '../DatePickerMenu';
 import { useSingleDateContext } from '../SingleDateContext';
@@ -28,7 +28,7 @@ export const DatePickerContent = forwardRef<
   DatePickerContentProps
 >(({ ...rest }: DatePickerContentProps, fwdRef) => {
   const { min, max, isOpen, menuId, disabled, isSelectOpen } =
-    useDatePickerContext();
+    useSharedDatePickerContext();
   const {
     refs,
     value,

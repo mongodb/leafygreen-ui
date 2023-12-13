@@ -18,7 +18,7 @@ import {
 } from '@leafygreen-ui/date-utils';
 import { usePrevious } from '@leafygreen-ui/hooks';
 
-import { useDatePickerContext } from '../../shared/context';
+import { useSharedDatePickerContext } from '../../shared/context';
 import { getFormattedDateString } from '../../shared/utils';
 import { getInitialHighlight } from '../utils/getInitialHighlight';
 
@@ -52,7 +52,7 @@ export const SingleDateProvider = ({
     setInternalErrorMessage,
     clearInternalErrorMessage,
     isInRange,
-  } = useDatePickerContext();
+  } = useSharedDatePickerContext();
   const prevValue = usePrevious(value);
 
   const hour = new Date(Date.now()).getHours();

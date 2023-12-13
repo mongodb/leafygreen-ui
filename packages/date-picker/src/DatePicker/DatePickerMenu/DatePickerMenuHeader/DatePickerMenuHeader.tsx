@@ -13,7 +13,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { Option, Select } from '@leafygreen-ui/select';
 
 import { selectElementProps } from '../../../shared/constants';
-import { useDatePickerContext } from '../../../shared/context';
+import { useSharedDatePickerContext } from '../../../shared/context';
 import { useSingleDateContext } from '../../SingleDateContext';
 import {
   menuHeaderSelectContainerStyles,
@@ -38,7 +38,7 @@ export const DatePickerMenuHeader = forwardRef<
   DatePickerMenuHeaderProps
 >(({ setMonth, ...rest }: DatePickerMenuHeaderProps, fwdRef) => {
   const { min, max, setIsSelectOpen, locale, isInRange } =
-    useDatePickerContext();
+    useSharedDatePickerContext();
   const { month } = useSingleDateContext();
 
   const monthOptions = getLocaleMonths(locale);

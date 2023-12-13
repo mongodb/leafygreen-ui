@@ -15,9 +15,9 @@ import {
 } from '@leafygreen-ui/date-utils/src/testing';
 
 import {
-  DatePickerProvider,
-  DatePickerProviderProps,
-} from '../../shared/components/DatePickerContext';
+  SharedDatePickerProvider,
+  SharedDatePickerProviderProps,
+} from '../../shared/components/SharedDatePickerContext';
 import {
   SingleDateProvider,
   SingleDateProviderProps,
@@ -36,10 +36,10 @@ const standardTimeStartDate = newUTC(2023, Month.November, 6);
 const renderDatePickerMenu = (
   props?: Partial<DatePickerMenuProps> | null,
   singleContext?: Partial<SingleDateProviderProps> | null,
-  context?: Partial<DatePickerProviderProps> | null,
+  context?: Partial<SharedDatePickerProviderProps> | null,
 ) => {
   const result = render(
-    <DatePickerProvider label="" {...context} initialOpen={true}>
+    <SharedDatePickerProvider label="" {...context} initialOpen={true}>
       <SingleDateProvider
         value={null}
         setValue={() => {}}
@@ -48,7 +48,7 @@ const renderDatePickerMenu = (
       >
         <DatePickerMenu {...props} />,
       </SingleDateProvider>
-    </DatePickerProvider>,
+    </SharedDatePickerProvider>,
   );
 
   const rerenderDatePickerMenu = (
@@ -56,7 +56,7 @@ const renderDatePickerMenu = (
     newSingleContext?: Partial<SingleDateProviderProps> | null,
   ) =>
     result.rerender(
-      <DatePickerProvider label="" {...context} initialOpen={true}>
+      <SharedDatePickerProvider label="" {...context} initialOpen={true}>
         <SingleDateProvider
           value={null}
           setValue={() => {}}
@@ -68,7 +68,7 @@ const renderDatePickerMenu = (
             {...({ ...props, ...newProps } as Partial<DatePickerMenuProps>)}
           />
         </SingleDateProvider>
-      </DatePickerProvider>,
+      </SharedDatePickerProvider>,
     );
 
   const calendarGrid = result.getByRole('grid');
