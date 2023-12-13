@@ -34,10 +34,10 @@ export type BaseDatePickerProps = {
   timeZone?: string;
 
   /** The earliest date accepted */
-  min?: string | Date;
+  min?: Date;
 
   /** The latest date accepted */
-  max?: string | Date;
+  max?: Date;
 
   /**
    * The base font size of the input. Inherits from the nearest LeafyGreenProvider

@@ -2517,4 +2517,33 @@ describe('packages/date-picker', () => {
       });
     });
   });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  test.skip('Types behave as expected', () => {
+    <>
+      <DatePicker label="Pick a date" />
+      <DatePicker aria-label="Pick a date" />
+      <DatePicker aria-labelledby="Pick a date" />
+      <DatePicker
+        label="Pick a date"
+        min={new Date()}
+        max={new Date()}
+        value={new Date()}
+        onDateChange={() => {}}
+        initialValue={new Date()}
+        handleValidation={() => {}}
+        onChange={() => {}}
+        locale="iso8601"
+        timeZone="utc"
+        baseFontSize={13}
+        disabled={false}
+        size="default"
+        state="none"
+        errorMessage="?"
+        initialOpen={false}
+        autoComplete="off"
+        darkMode={false}
+      />
+    </>;
+  });
 });
