@@ -23,7 +23,7 @@
   ],
   "references": [
     {
-      "path": "../ally"
+      "path": "../a11y"
     },
     {
       "path": "../button"
