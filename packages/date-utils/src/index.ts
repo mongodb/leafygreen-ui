@@ -2,7 +2,7 @@ export { addDaysUTC } from './addDaysUTC';
 export { addMonthsUTC } from './addMonthsUTC';
 export * from './constants';
 export { getDaysInUTCMonth } from './getDaysInUTCMonth';
-export { getFirstOfMonth } from './getFirstOfMonth';
+export { getFirstOfUTCMonth } from './getFirstOfUTCMonth';
 export { getFullMonthLabel } from './getFullMonthLabel';
 export { getISODate } from './getISODate';
 export { getISODateTZ } from './getISODateTZ';

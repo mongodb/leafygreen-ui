@@ -1,7 +1,7 @@
 import { isAfter } from 'date-fns';
 
 import {
-  getFirstOfMonth,
+  getFirstOfUTCMonth,
   getLastOfMonth,
   isSameUTCMonth,
 } from '@leafygreen-ui/date-utils';
@@ -21,7 +21,7 @@ export const getNewHighlight = (
   let newHighlight: Date;
 
   if (isAfter(newMonth, currentMonth)) {
-    newHighlight = getFirstOfMonth(newMonth);
+    newHighlight = getFirstOfUTCMonth(newMonth);
   } else {
     newHighlight = getLastOfMonth(newMonth);
   }

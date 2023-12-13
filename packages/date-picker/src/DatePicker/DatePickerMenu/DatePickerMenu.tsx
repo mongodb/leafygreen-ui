@@ -9,7 +9,7 @@ import { ExitHandler } from 'react-transition-group/Transition';
 
 import {
   addDaysUTC,
-  getFirstOfMonth,
+  getFirstOfUTCMonth,
   getFullMonthLabel,
   getISODate,
   getUTCDateString,
@@ -132,7 +132,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
         !isSameUTCDay(value, prevValue) &&
         !isSameUTCMonth(value, month)
       ) {
-        setDisplayMonth(getFirstOfMonth(value));
+        setDisplayMonth(getFirstOfUTCMonth(value));
       }
     }, [month, prevValue, setDisplayMonth, value]);
 

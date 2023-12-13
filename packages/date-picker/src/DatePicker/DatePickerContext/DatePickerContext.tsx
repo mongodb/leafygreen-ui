@@ -11,7 +11,7 @@ import React, {
 
 import {
   DateType,
-  getFirstOfMonth,
+  getFirstOfUTCMonth,
   getISODate,
   isOnOrBefore,
   isSameUTCDay,
@@ -67,7 +67,7 @@ export const DatePickerProvider = ({
   /**
    * Keep track of the displayed month
    */
-  const [month, _setMonth] = useState<Date>(getFirstOfMonth(value ?? today));
+  const [month, _setMonth] = useState<Date>(getFirstOfUTCMonth(value ?? today));
 
   /**
    * Keep track of the element the user is highlighting with the keyboard
@@ -85,7 +85,7 @@ export const DatePickerProvider = ({
    */
   const setValue = (newVal?: DateType) => {
     _setValue(newVal ?? null);
-    setMonth(getFirstOfMonth(newVal ?? today));
+    setMonth(getFirstOfUTCMonth(newVal ?? today));
   };
 
   /**
@@ -150,7 +150,7 @@ export const DatePickerProvider = ({
         refs.calendarButtonRef.current?.focus();
       }
       // update month to something valid
-      setMonth(getFirstOfMonth(value ?? today));
+      setMonth(getFirstOfUTCMonth(value ?? today));
       // update highlight to something valid
       setHighlight(getInitialHighlight(value, today));
     });
@@ -197,7 +197,7 @@ export const DatePickerProvider = ({
    */
   useEffect(() => {
     if (!isSameUTCDay(value, prevValue)) {
-      setMonth(getFirstOfMonth(value ?? today));
+      setMonth(getFirstOfUTCMonth(value ?? today));
     }
   }, [prevValue, setMonth, today, value]);
 
