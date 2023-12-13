@@ -10,7 +10,7 @@ import {
 import { cx } from '@leafygreen-ui/emotion';
 import { Disclaimer } from '@leafygreen-ui/typography';
 
-import { useDatePickerContext } from '../../DatePickerContext';
+import { useDatePickerContext } from '../../../context';
 
 import {
   calendarGridStyles,

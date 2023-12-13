@@ -18,7 +18,7 @@ import {
 } from '@leafygreen-ui/date-utils';
 import { usePrevious } from '@leafygreen-ui/hooks';
 
-import { useDatePickerContext } from '../../shared/components';
+import { useDatePickerContext } from '../../shared/context';
 import { getFormattedDateString } from '../../shared/utils';
 import { getInitialHighlight } from '../utils/getInitialHighlight';
 

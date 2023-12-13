@@ -13,7 +13,7 @@ import {
   ContextPropKeys,
   contextPropNames,
   DatePickerProvider,
-} from '../shared/components/DatePickerContext';
+} from '../shared/context';
 import { useControlledValue } from '../shared/hooks';
 
 import { DatePickerProps } from './DatePicker.types';

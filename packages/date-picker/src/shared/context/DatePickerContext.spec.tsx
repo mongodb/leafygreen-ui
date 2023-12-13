@@ -5,7 +5,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { Month, newUTC } from '@leafygreen-ui/date-utils';
 import { consoleOnce } from '@leafygreen-ui/lib';
 
-import { MAX_DATE, MIN_DATE } from '../../constants';
+import { MAX_DATE, MIN_DATE } from '../constants';
 
 import {
   DatePickerContextProps,

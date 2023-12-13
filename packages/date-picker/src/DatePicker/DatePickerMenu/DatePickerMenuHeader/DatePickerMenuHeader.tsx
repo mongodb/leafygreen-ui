@@ -12,8 +12,8 @@ import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { Option, Select } from '@leafygreen-ui/select';
 
-import { useDatePickerContext } from '../../../shared/components/DatePickerContext';
 import { selectElementProps } from '../../../shared/constants';
+import { useDatePickerContext } from '../../../shared/context';
 import { useSingleDateContext } from '../../SingleDateContext';
 import {
   menuHeaderSelectContainerStyles,

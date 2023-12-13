@@ -8,7 +8,7 @@ import {
   DatePickerProvider,
   DatePickerProviderProps,
   defaultDatePickerContext,
-} from '../../shared/components/DatePickerContext';
+} from '../../shared/context';
 import {
   SingleDateProvider,
   SingleDateProviderProps,

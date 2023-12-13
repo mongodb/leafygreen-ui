@@ -1,4 +1,4 @@
-import { BaseDatePickerProps, DatePickerState } from '../../types';
+import { BaseDatePickerProps, DatePickerState } from '../types';
 
 import { UseDatePickerErrorNotificationsReturnObject } from './useDatePickerErrorNotifications';
 

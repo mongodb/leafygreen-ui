@@ -16,7 +16,7 @@ import {
 } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
 
-import { useDatePickerContext } from '../../shared/components/DatePickerContext';
+import { useDatePickerContext } from '../../shared/context';
 import { DatePickerInput } from '../DatePickerInput';
 import { DatePickerMenu } from '../DatePickerMenu';
 import { useSingleDateContext } from '../SingleDateContext';

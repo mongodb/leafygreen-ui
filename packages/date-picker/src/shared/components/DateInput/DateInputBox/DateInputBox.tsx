@@ -6,6 +6,7 @@ import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 
+import { useDatePickerContext } from '../../../context';
 import { useDateSegments } from '../../../hooks';
 import {
   DateSegment,
@@ -22,7 +23,6 @@ import {
   isExplicitSegmentValue,
   newDateFromSegments,
 } from '../../../utils';
-import { useDatePickerContext } from '../../DatePickerContext';
 import { DateInputSegment } from '../DateInputSegment';
 import { DateInputSegmentChangeEventHandler } from '../DateInputSegment/DateInputSegment.types';
 

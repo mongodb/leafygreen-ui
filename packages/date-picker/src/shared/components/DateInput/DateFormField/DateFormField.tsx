@@ -2,8 +2,8 @@ import React from 'react';
 
 import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
 
+import { useDatePickerContext } from '../../../context';
 import { DatePickerState } from '../../../types';
-import { useDatePickerContext } from '../../DatePickerContext';
 import { CalendarButton } from '../CalendarButton';
 
 import { iconButtonStyles } from './DateFormField.styles';

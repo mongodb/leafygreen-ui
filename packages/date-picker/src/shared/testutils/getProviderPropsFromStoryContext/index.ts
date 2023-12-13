@@ -7,7 +7,7 @@ import {
   ContextPropKeys,
   contextPropNames,
   DatePickerProviderProps,
-} from '../../components/DatePickerContext';
+} from '../../context';
 import { BaseDatePickerProps } from '../../types';
 
 export interface ProviderPropsObject<T> {

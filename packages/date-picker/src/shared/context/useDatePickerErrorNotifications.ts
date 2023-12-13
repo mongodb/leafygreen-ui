@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 
-import { DatePickerState } from '../../types';
+import { DatePickerState } from '../types';
 
 import { StateNotification } from './DatePickerContext.types';
 

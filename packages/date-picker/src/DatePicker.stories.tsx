@@ -14,11 +14,8 @@ import { StoryMetaType } from '@leafygreen-ui/lib';
 import Modal from '@leafygreen-ui/modal';
 import { Size } from '@leafygreen-ui/tokens';
 
-import {
-  DatePickerContextProps,
-  DatePickerProvider,
-} from './shared/components/DatePickerContext';
 import { MAX_DATE, MIN_DATE } from './shared/constants';
+import { DatePickerContextProps, DatePickerProvider } from './shared/context';
 import { getProviderPropsFromStoryContext } from './shared/testutils/getProviderPropsFromStoryContext';
 import { AutoComplete } from './shared/types';
 import { DatePicker } from './DatePicker';

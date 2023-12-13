@@ -1,7 +1,7 @@
 import isUndefined from 'lodash/isUndefined';
 import last from 'lodash/last';
 
-import { DatePickerContextProps } from '../../components/DatePickerContext';
+import { DatePickerContextProps } from '../../context';
 import { SegmentRefs } from '../../hooks';
 import { DateSegment } from '../../types';
 

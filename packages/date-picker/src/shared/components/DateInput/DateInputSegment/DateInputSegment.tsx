@@ -13,8 +13,8 @@ import {
   defaultMin,
   defaultPlaceholder,
 } from '../../../constants';
+import { useDatePickerContext } from '../../../context';
 import { getAutoComplete, getValueFormatter } from '../../../utils';
-import { useDatePickerContext } from '../../DatePickerContext';
 
 import { calculateNewSegmentValue } from './calculateNewSegmentValue';
 import {

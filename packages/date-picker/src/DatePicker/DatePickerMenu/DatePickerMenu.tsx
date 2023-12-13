@@ -24,8 +24,8 @@ import {
   CalendarCellState,
   CalendarGrid,
 } from '../../shared/components/Calendar';
-import { useDatePickerContext } from '../../shared/components/DatePickerContext';
 import { MenuWrapper } from '../../shared/components/MenuWrapper';
+import { useDatePickerContext } from '../../shared/context';
 import { useSingleDateContext } from '../SingleDateContext';
 
 import { getNewHighlight } from './utils/getNewHighlight';

@@ -17,7 +17,7 @@ import {
   DatePickerContextProps,
   DatePickerProvider,
   useDatePickerContext,
-} from '../../DatePickerContext';
+} from '../../../context';
 import { CalendarCell } from '../CalendarCell/CalendarCell';
 
 import { CalendarGrid } from './CalendarGrid';

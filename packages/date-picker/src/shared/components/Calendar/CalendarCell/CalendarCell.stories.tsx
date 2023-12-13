@@ -4,10 +4,7 @@ import { StoryFn } from '@storybook/react';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 
-import {
-  DatePickerContextProps,
-  DatePickerProvider,
-} from '../../DatePickerContext';
+import { DatePickerContextProps, DatePickerProvider } from '../../../context';
 
 import { CalendarCell } from './CalendarCell';
 import {

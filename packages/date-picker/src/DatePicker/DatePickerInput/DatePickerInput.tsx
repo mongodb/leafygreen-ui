@@ -12,7 +12,7 @@ import { createSyntheticEvent, keyMap } from '@leafygreen-ui/lib';
 
 import { DateFormField, DateInputBox } from '../../shared/components/DateInput';
 import { DateInputSegmentChangeEventHandler } from '../../shared/components/DateInput/DateInputSegment';
-import { useDatePickerContext } from '../../shared/components/DatePickerContext';
+import { useDatePickerContext } from '../../shared/context';
 import {
   getRelativeSegmentRef,
   isElementInputSegment,

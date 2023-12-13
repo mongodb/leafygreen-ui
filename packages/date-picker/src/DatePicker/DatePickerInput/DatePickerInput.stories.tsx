@@ -9,7 +9,7 @@ import { Size } from '@leafygreen-ui/tokens';
 import {
   DatePickerContextProps,
   DatePickerProvider,
-} from '../../shared/components/DatePickerContext';
+} from '../../shared/context';
 import { getProviderPropsFromStoryContext } from '../../shared/testutils';
 import { DatePickerProps } from '../DatePicker.types';
 import {

@@ -3,16 +3,16 @@ import React, { useEffect, useState } from 'react';
 import { StoryFn } from '@storybook/react';
 import { isValid } from 'date-fns';
 
-import { Month, newUTC,testLocales } from '@leafygreen-ui/date-utils';
+import { Month, newUTC, testLocales } from '@leafygreen-ui/date-utils';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { pickAndOmit, StoryMetaType, StoryType } from '@leafygreen-ui/lib';
 
-import { segmentRefsMock } from '../../../testutils';
 import {
   contextPropNames,
   DatePickerContextProps,
   DatePickerProvider,
-} from '../../DatePickerContext';
+} from '../../../context';
+import { segmentRefsMock } from '../../../testutils';
 
 import { DateInputBox } from './DateInputBox';
 

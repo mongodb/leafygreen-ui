@@ -1,4 +1,4 @@
-import { DatePickerContextProps } from '../../components/DatePickerContext';
+import { DatePickerContextProps } from '../../context';
 import { SegmentRefs } from '../../hooks';
 import { DateSegment } from '../../types';
 
