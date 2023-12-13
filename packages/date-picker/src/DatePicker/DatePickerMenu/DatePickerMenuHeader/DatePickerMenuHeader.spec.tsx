@@ -10,14 +10,14 @@ import {
   SharedDatePickerContext,
 } from '../../../shared/components';
 import {
-  SingleDateContext,
-  SingleDateContextProps,
-} from '../../SingleDateContext';
+  DatePickerContext,
+  DatePickerContextProps,
+} from '../../DatePickerContext';
 
 import { DatePickerMenuHeader } from '.';
 
 const MockSharedDatePickerProvider = SharedDatePickerContext.Provider;
-const MockSingleDateProvider = SingleDateContext.Provider;
+const MockDatePickerProvider = DatePickerContext.Provider;
 
 describe('packages/date-picker/menu/header', () => {
   describe('Rendering', () => {
@@ -30,15 +30,15 @@ describe('packages/date-picker/menu/header', () => {
               min: newUTC(2022, Month.March, 10),
             }}
           >
-            <MockSingleDateProvider
+            <MockDatePickerProvider
               value={
                 {
                   month: newUTC(2022, Month.July, 1),
-                } as SingleDateContextProps
+                } as DatePickerContextProps
               }
             >
               <DatePickerMenuHeader setMonth={() => {}} />
-            </MockSingleDateProvider>
+            </MockDatePickerProvider>
           </MockSharedDatePickerProvider>,
         );
 
@@ -66,15 +66,15 @@ describe('packages/date-picker/menu/header', () => {
               max: newUTC(2024, Month.September, 10),
             }}
           >
-            <MockSingleDateProvider
+            <MockDatePickerProvider
               value={
                 {
                   month: newUTC(2024, Month.July, 1),
-                } as SingleDateContextProps
+                } as DatePickerContextProps
               }
             >
               <DatePickerMenuHeader setMonth={() => {}} />
-            </MockSingleDateProvider>
+            </MockDatePickerProvider>
           </MockSharedDatePickerProvider>,
         );
 
@@ -103,15 +103,15 @@ describe('packages/date-picker/menu/header', () => {
               max: newUTC(2024, Month.September, 10),
             }}
           >
-            <MockSingleDateProvider
+            <MockDatePickerProvider
               value={
                 {
                   month: newUTC(2023, Month.July, 5),
-                } as SingleDateContextProps
+                } as DatePickerContextProps
               }
             >
               <DatePickerMenuHeader setMonth={() => {}} />
-            </MockSingleDateProvider>
+            </MockDatePickerProvider>
           </MockSharedDatePickerProvider>,
         );
 
@@ -138,15 +138,15 @@ describe('packages/date-picker/menu/header', () => {
                 max: newUTC(2024, Month.September, 10),
               }}
             >
-              <MockSingleDateProvider
+              <MockDatePickerProvider
                 value={
                   {
                     month: newUTC(2025, Month.July, 5),
-                  } as SingleDateContextProps
+                  } as DatePickerContextProps
                 }
               >
                 <DatePickerMenuHeader setMonth={() => {}} />
-              </MockSingleDateProvider>
+              </MockDatePickerProvider>
             </MockSharedDatePickerProvider>,
           );
 
@@ -172,15 +172,15 @@ describe('packages/date-picker/menu/header', () => {
                 max: newUTC(2024, Month.September, 10),
               }}
             >
-              <MockSingleDateProvider
+              <MockDatePickerProvider
                 value={
                   {
                     month: newUTC(2025, Month.July, 5),
-                  } as SingleDateContextProps
+                  } as DatePickerContextProps
                 }
               >
                 <DatePickerMenuHeader setMonth={() => {}} />
-              </MockSingleDateProvider>
+              </MockDatePickerProvider>
             </MockSharedDatePickerProvider>,
           );
 
@@ -202,15 +202,15 @@ describe('packages/date-picker/menu/header', () => {
                 max: newUTC(2024, Month.September, 10),
               }}
             >
-              <MockSingleDateProvider
+              <MockDatePickerProvider
                 value={
                   {
                     month: newUTC(2021, Month.July, 5),
-                  } as SingleDateContextProps
+                  } as DatePickerContextProps
                 }
               >
                 <DatePickerMenuHeader setMonth={() => {}} />
-              </MockSingleDateProvider>
+              </MockDatePickerProvider>
             </MockSharedDatePickerProvider>,
           );
 
@@ -236,15 +236,15 @@ describe('packages/date-picker/menu/header', () => {
                 max: newUTC(2024, Month.September, 10),
               }}
             >
-              <MockSingleDateProvider
+              <MockDatePickerProvider
                 value={
                   {
                     month: newUTC(2021, Month.July, 5),
-                  } as SingleDateContextProps
+                  } as DatePickerContextProps
                 }
               >
                 <DatePickerMenuHeader setMonth={() => {}} />
-              </MockSingleDateProvider>
+              </MockDatePickerProvider>
             </MockSharedDatePickerProvider>,
           );
 
@@ -282,15 +282,15 @@ describe('packages/date-picker/menu/header', () => {
             setIsSelectOpen,
           }}
         >
-          <MockSingleDateProvider
+          <MockDatePickerProvider
             value={
               {
                 month: newUTC(2022, Month.July, 1),
-              } as SingleDateContextProps
+              } as DatePickerContextProps
             }
           >
             {children}
-          </MockSingleDateProvider>
+          </MockDatePickerProvider>
         </MockSharedDatePickerProvider>
       );
     };

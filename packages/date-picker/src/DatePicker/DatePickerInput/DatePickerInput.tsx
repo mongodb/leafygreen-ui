@@ -17,7 +17,7 @@ import {
   getRelativeSegmentRef,
   isElementInputSegment,
 } from '../../shared/utils';
-import { useSingleDateContext } from '../SingleDateContext';
+import { useDatePickerContext } from '../DatePickerContext';
 import { getSegmentToFocus } from '../utils/getSegmentToFocus';
 
 import { DatePickerInputProps } from './DatePickerInput.types';
@@ -41,7 +41,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       openMenu,
       toggleMenu,
       handleValidation,
-    } = useSingleDateContext();
+    } = useDatePickerContext();
 
     /** Called when the input's Date value has changed */
     const handleInputValueChange = (inputVal?: Date | null) => {

@@ -17,9 +17,9 @@ import {
 import { keyMap } from '@leafygreen-ui/lib';
 
 import { useSharedDatePickerContext } from '../../shared/context';
+import { useDatePickerContext } from '../DatePickerContext';
 import { DatePickerInput } from '../DatePickerInput';
 import { DatePickerMenu } from '../DatePickerMenu';
-import { useSingleDateContext } from '../SingleDateContext';
 
 import { DatePickerContentProps } from './DatePickerContent.types';
 
@@ -36,7 +36,7 @@ export const DatePickerContent = forwardRef<
     menuTriggerEvent,
     handleValidation,
     getHighlightedCell,
-  } = useSingleDateContext();
+  } = useDatePickerContext();
 
   const prevValue = usePrevious(value);
   const prevMin = usePrevious(min);

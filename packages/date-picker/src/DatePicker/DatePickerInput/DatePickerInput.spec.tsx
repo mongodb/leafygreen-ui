@@ -10,26 +10,26 @@ import {
   SharedDatePickerProviderProps,
 } from '../../shared/context';
 import {
-  SingleDateProvider,
-  SingleDateProviderProps,
-} from '../SingleDateContext';
+  DatePickerProvider,
+  DatePickerProviderProps,
+} from '../DatePickerContext';
 
 import { DatePickerInput, DatePickerInputProps } from '.';
 
 const renderDatePickerInput = (
   props?: Omit<DatePickerInputProps, 'segmentRefs' | 'setValue'> | null,
-  singleDateContext?: Partial<SingleDateProviderProps>,
+  singleDateContext?: Partial<DatePickerProviderProps>,
   context?: Partial<SharedDatePickerProviderProps>,
 ) => {
   const result = render(
     <SharedDatePickerProvider {...defaultSharedDatePickerContext} {...context}>
-      <SingleDateProvider
+      <DatePickerProvider
         value={null}
         setValue={() => {}}
         {...singleDateContext}
       >
         <DatePickerInput {...props} />
-      </SingleDateProvider>
+      </DatePickerProvider>
     </SharedDatePickerProvider>,
   );
 

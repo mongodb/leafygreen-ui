@@ -19,9 +19,9 @@ import {
   SharedDatePickerProviderProps,
 } from '../../shared/components/SharedDatePickerContext';
 import {
-  SingleDateProvider,
-  SingleDateProviderProps,
-} from '../SingleDateContext';
+  DatePickerProvider,
+  DatePickerProviderProps,
+} from '../DatePickerContext';
 
 import { DatePickerMenu, DatePickerMenuProps } from '.';
 
@@ -35,29 +35,29 @@ const standardTimeStartDate = newUTC(2023, Month.November, 6);
 
 const renderDatePickerMenu = (
   props?: Partial<DatePickerMenuProps> | null,
-  singleContext?: Partial<SingleDateProviderProps> | null,
+  singleContext?: Partial<DatePickerProviderProps> | null,
   context?: Partial<SharedDatePickerProviderProps> | null,
 ) => {
   const result = render(
     <SharedDatePickerProvider label="" {...context} initialOpen={true}>
-      <SingleDateProvider
+      <DatePickerProvider
         value={null}
         setValue={() => {}}
         handleValidation={undefined}
         {...singleContext}
       >
         <DatePickerMenu {...props} />,
-      </SingleDateProvider>
+      </DatePickerProvider>
     </SharedDatePickerProvider>,
   );
 
   const rerenderDatePickerMenu = (
     newProps?: Partial<DatePickerMenuProps> | null,
-    newSingleContext?: Partial<SingleDateProviderProps> | null,
+    newSingleContext?: Partial<DatePickerProviderProps> | null,
   ) =>
     result.rerender(
       <SharedDatePickerProvider label="" {...context} initialOpen={true}>
-        <SingleDateProvider
+        <DatePickerProvider
           value={null}
           setValue={() => {}}
           handleValidation={undefined}
@@ -67,7 +67,7 @@ const renderDatePickerMenu = (
           <DatePickerMenu
             {...({ ...props, ...newProps } as Partial<DatePickerMenuProps>)}
           />
-        </SingleDateProvider>
+        </DatePickerProvider>
       </SharedDatePickerProvider>,
     );
 

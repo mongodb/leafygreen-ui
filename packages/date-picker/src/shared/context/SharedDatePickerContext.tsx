@@ -20,7 +20,7 @@ export const SharedDatePickerContext =
   createContext<SharedDatePickerContextProps>(defaultSharedDatePickerContext);
 
 // TODO: Consider renaming this to `SharedDatePickerContext`,
-// and use `SharedDatePickerContext` for what's currently `SingleDateContext`
+// and use `SharedDatePickerContext` for what's currently `DatePickerContext`
 
 /** The Provider component for SharedDatePickerContext */
 export const SharedDatePickerProvider = ({

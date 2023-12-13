@@ -26,7 +26,7 @@ import {
 } from '../../shared/components/Calendar';
 import { MenuWrapper } from '../../shared/components/MenuWrapper';
 import { useSharedDatePickerContext } from '../../shared/context';
-import { useSingleDateContext } from '../SingleDateContext';
+import { useDatePickerContext } from '../DatePickerContext';
 
 import { getNewHighlight } from './utils/getNewHighlight';
 import {
@@ -54,7 +54,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       setHighlight,
       getCellWithValue,
       getHighlightedCell,
-    } = useSingleDateContext();
+    } = useDatePickerContext();
 
     const ref = useForwardedRef(fwdRef, null);
     const cellRefs = refs.calendarCellRefs;

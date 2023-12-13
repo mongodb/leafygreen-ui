@@ -14,7 +14,7 @@ import { Option, Select } from '@leafygreen-ui/select';
 
 import { selectElementProps } from '../../../shared/constants';
 import { useSharedDatePickerContext } from '../../../shared/context';
-import { useSingleDateContext } from '../../SingleDateContext';
+import { useDatePickerContext } from '../../DatePickerContext';
 import {
   menuHeaderSelectContainerStyles,
   menuHeaderStyles,
@@ -39,7 +39,7 @@ export const DatePickerMenuHeader = forwardRef<
 >(({ setMonth, ...rest }: DatePickerMenuHeaderProps, fwdRef) => {
   const { min, max, setIsSelectOpen, locale, isInRange } =
     useSharedDatePickerContext();
-  const { month } = useSingleDateContext();
+  const { month } = useDatePickerContext();
 
   const monthOptions = getLocaleMonths(locale);
   const yearOptions = range(min.getUTCFullYear(), max.getUTCFullYear() + 1);

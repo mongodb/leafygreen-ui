@@ -13,9 +13,9 @@ import {
 import { getProviderPropsFromStoryContext } from '../../shared/testutils';
 import { DatePickerProps } from '../DatePicker.types';
 import {
-  SingleDateContextProps,
-  SingleDateProvider,
-} from '../SingleDateContext';
+  DatePickerContextProps,
+  DatePickerProvider,
+} from '../DatePickerContext';
 
 import { DatePickerInput } from './DatePickerInput';
 
@@ -26,9 +26,9 @@ const ProviderWrapper = (Story: StoryFn, ctx: any) => {
   return (
     <LeafyGreenProvider {...leafyGreenProviderProps}>
       <SharedDatePickerProvider {...datePickerProviderProps}>
-        <SingleDateProvider value={storyProps.value} setValue={() => {}}>
+        <DatePickerProvider value={storyProps.value} setValue={() => {}}>
           <Story {...storyProps} />
-        </SingleDateProvider>
+        </DatePickerProvider>
       </SharedDatePickerProvider>
     </LeafyGreenProvider>
   );
@@ -36,7 +36,7 @@ const ProviderWrapper = (Story: StoryFn, ctx: any) => {
 
 const meta: StoryMetaType<
   typeof DatePickerInput,
-  SingleDateContextProps & SharedDatePickerContextProps
+  DatePickerContextProps & SharedDatePickerContextProps
 > = {
   title: 'Components/DatePicker/DatePicker/DatePickerInput',
   component: DatePickerInput,
