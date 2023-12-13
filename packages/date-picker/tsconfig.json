@@ -11,7 +11,7 @@
       ],
       "@leafygreen-ui/*": [
         "../*/src"
-      ]
+      ],
     }
   },
   "include": [
@@ -60,6 +60,9 @@
     },
     {
       "path": "../select"
+    },
+    {
+      "path": "../testing-lib"
     },
     {
       "path": "../tokens"

@@ -12,6 +12,13 @@
       ]
     }
   },
+  "dependencies": {
+    "@testing-library/user-event": "13.5.0",
+    "lodash": "^4.17.21"
+  },
+  "peerDependencies": {
+    "@lg-tools/test": "0.3.2"
+  },
   "scripts": {
     "build": "lg build-package",
     "tsc": "lg build-ts",
@@ -28,6 +35,5 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
-  },
-  "devDependencies": {}
+  }
 }

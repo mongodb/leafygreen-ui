@@ -3,7 +3,12 @@ import React, { useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
-import { Month, newUTC } from '@leafygreen-ui/date-utils';
+import {
+  testLocales,
+  Month,
+  newUTC,
+  testTimeZoneLabels,
+} from '@leafygreen-ui/date-utils';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 import Modal from '@leafygreen-ui/modal';
@@ -15,7 +20,6 @@ import {
 } from './shared/components/DatePickerContext';
 import { MAX_DATE, MIN_DATE } from './shared/constants';
 import { getProviderPropsFromStoryContext } from './shared/testutils/getProviderPropsFromStoryContext';
-import { Locales, TimeZones } from './shared/testutils/testValues';
 import { AutoComplete } from './shared/types';
 import { DatePicker } from './DatePicker';
 
@@ -69,14 +73,17 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
   },
   argTypes: {
     baseFontSize: { control: 'select' },
-    locale: { control: 'select', options: Locales },
+    locale: { control: 'select', options: testLocales },
     description: { control: 'text' },
     label: { control: 'text' },
     min: { control: 'date' },
     max: { control: 'date' },
     size: { control: 'select' },
     state: { control: 'select' },
-    timeZone: { control: 'select', options: [undefined, ...TimeZones] },
+    timeZone: {
+      control: 'select',
+      options: [undefined, ...testTimeZoneLabels],
+    },
     autoComplete: { control: 'select', options: Object.values(AutoComplete) },
   },
 };

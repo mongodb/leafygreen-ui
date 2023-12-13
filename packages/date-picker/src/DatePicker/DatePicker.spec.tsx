@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   fireEvent,
-  // prettyDOM,
   render,
   waitFor,
   waitForElementToBeRemoved,
@@ -17,10 +16,17 @@ import {
   setUTCMonth,
   setUTCYear,
 } from '@leafygreen-ui/date-utils';
+import {
+  mockTimeZone,
+  testTimeZones,
+} from '@leafygreen-ui/date-utils/src/testing';
+import {
+  eventContainingTargetValue,
+  tabNTimes,
+} from '@leafygreen-ui/testing-lib';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { defaultMax, defaultMin } from '../shared/constants';
-import { eventContainingTargetValue, tabNTimes } from '../shared/testutils';
 import { getFormattedDateString, getValueFormatter } from '../shared/utils';
 
 import {
@@ -38,6 +44,10 @@ describe('packages/date-picker', () => {
   beforeEach(() => {
     // Set the current time to midnight UTC on 2023-12-26
     jest.useFakeTimers().setSystemTime(testToday);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   describe('Rendering', () => {
@@ -263,35 +273,6 @@ describe('packages/date-picker', () => {
         expect(menuContainerEl).not.toBeInTheDocument();
       });
 
-      test('if no value is set, menu opens to current month', async () => {
-        const { openMenu } = renderDatePicker();
-        const { calendarGrid, monthSelect, yearSelect } = await openMenu();
-        expect(calendarGrid).toHaveAttribute('aria-label', 'December 2023');
-        expect(monthSelect).toHaveValue(Month.December.toString());
-        expect(yearSelect).toHaveValue('2023');
-      });
-
-      test('if a value is set, menu opens to the month of that value', async () => {
-        const { openMenu } = renderDatePicker({
-          value: new Date(Date.UTC(2023, Month.March, 10)),
-        });
-        const { calendarGrid, monthSelect, yearSelect } = await openMenu();
-        expect(calendarGrid).toHaveAttribute('aria-label', 'March 2023');
-        expect(monthSelect).toHaveValue(Month.March.toString());
-        expect(yearSelect).toHaveValue('2023');
-      });
-
-      test('if value is invalid, menu still opens to the month of that value', async () => {
-        const { openMenu } = renderDatePicker({
-          value: new Date(Date.UTC(2100, Month.July, 10)),
-        });
-        const { calendarGrid, calendarCells } = await openMenu();
-        expect(calendarGrid).toHaveAttribute('aria-label', 'July 2100');
-        calendarCells.forEach(cell => {
-          expect(cell).toHaveAttribute('aria-disabled', 'true');
-        });
-      });
-
       test('renders the appropriate number of cells', async () => {
         const { openMenu } = renderDatePicker({
           value: new Date(Date.UTC(2024, Month.February, 14)),
@@ -300,8 +281,8 @@ describe('packages/date-picker', () => {
         expect(calendarCells).toHaveLength(29);
       });
 
-      describe('when disabled is toggled to true', () => {
-        test('menu closes', async () => {
+      describe('when disabled is toggled to `true`', () => {
+        test('menu closes if open', async () => {
           const { findMenuElements, rerenderDatePicker } = renderDatePicker({
             initialOpen: true,
           });
@@ -452,6 +433,8 @@ describe('packages/date-picker', () => {
           });
         });
       });
+
+      describe('when menu opens', () => {});
     });
   });
 
@@ -521,70 +504,199 @@ describe('packages/date-picker', () => {
           await waitFor(() => expect(menuContainerEl).not.toBeInTheDocument());
         });
 
-        test('focuses on the `today` cell by default', async () => {
-          const { calendarButton, findMenuElements, findByRole } =
-            renderDatePicker();
-          userEvent.click(calendarButton);
-          const menuContainerEl = await findByRole('listbox');
-          const { todayCell } = await findMenuElements();
-          // Manually fire the `transitionEnd` event. This is not fired automatically by JSDOM
-          fireEvent.transitionEnd(menuContainerEl!);
-          expect(todayCell).toHaveFocus();
+        describe('if no value is set', () => {
+          describe.each(testTimeZones)(
+            'when system time is in $tz',
+            ({ tz, UTCOffset }) => {
+              const expectedISO = '2023-12-' + (UTCOffset < 0 ? '24' : '25');
+
+              beforeEach(() => {
+                mockTimeZone(tz, UTCOffset);
+                jest.setSystemTime(newUTC(2023, Month.December, 25, 0, 0)); // Midnight UTC
+              });
+              afterEach(() => {
+                jest.restoreAllMocks();
+              });
+
+              test('menu opens to current month', async () => {
+                const { calendarButton, waitForMenuToOpen } =
+                  renderDatePicker();
+                userEvent.click(calendarButton);
+                const { calendarGrid, monthSelect, yearSelect } =
+                  await waitForMenuToOpen();
+                expect(calendarGrid).toHaveAttribute(
+                  'aria-label',
+                  'December 2023',
+                );
+                expect(monthSelect).toHaveValue(Month.December.toString());
+                expect(yearSelect).toHaveValue('2023');
+              });
+
+              test('initial focus (highlight) is set to `today`', async () => {
+                const { calendarButton, waitForMenuToOpen } =
+                  renderDatePicker();
+                userEvent.click(calendarButton);
+                const { calendarCells } = await waitForMenuToOpen();
+                const highlightCell = calendarCells.find(
+                  cell => cell?.getAttribute('data-highlighted') == 'true',
+                );
+                expect(highlightCell).toHaveAttribute('data-iso', expectedISO);
+                expect(highlightCell).toHaveFocus();
+              });
+            },
+          );
+
+          describe.each(testTimeZones)(
+            'when timeZone prop is $tz',
+            ({ tz, UTCOffset }) => {
+              const expectedISO = '2023-12-' + (UTCOffset < 0 ? '24' : '25');
+
+              test('menu opens to current month', async () => {
+                const { calendarButton, waitForMenuToOpen } = renderDatePicker({
+                  timeZone: tz,
+                });
+                userEvent.click(calendarButton);
+                const { calendarGrid, monthSelect, yearSelect } =
+                  await waitForMenuToOpen();
+                expect(calendarGrid).toHaveAttribute(
+                  'aria-label',
+                  'December 2023',
+                );
+                expect(monthSelect).toHaveValue(Month.December.toString());
+                expect(yearSelect).toHaveValue('2023');
+              });
+
+              test('initial highlight is set to `today`', async () => {
+                jest.setSystemTime(newUTC(2023, Month.December, 25, 16, 0));
+
+                const { calendarButton, waitForMenuToOpen } = renderDatePicker({
+                  timeZone: tz,
+                });
+                userEvent.click(calendarButton);
+
+                const { calendarCells } = await waitForMenuToOpen();
+                const highlightCell = calendarCells.find(
+                  cell => cell?.getAttribute('data-highlighted') == 'true',
+                );
+                expect(highlightCell).toHaveAttribute('data-iso', expectedISO);
+                expect(highlightCell).toHaveFocus();
+              });
+            },
+          );
         });
 
-        test('focuses on the selected cell', async () => {
-          const value = newUTC(1994, Month.September, 10);
-          const { calendarButton, findMenuElements, findByRole } =
-            renderDatePicker({
-              value: value,
+        describe('if a value is set', () => {
+          describe.each(testTimeZones)(
+            'when system time is in $tz',
+            ({ tz, UTCOffset }) => {
+              beforeEach(() => {
+                jest.setSystemTime(newUTC(2023, Month.December, 25, 0, 0)); // Midnight UTC
+                mockTimeZone(tz, UTCOffset);
+              });
+              afterEach(() => {
+                jest.restoreAllMocks();
+              });
+
+              test('menu opens to the month of that `value`', async () => {
+                const testValue = new Date(Date.UTC(2023, Month.March, 1));
+                const { calendarButton, waitForMenuToOpen } = renderDatePicker({
+                  value: testValue,
+                });
+                userEvent.click(calendarButton);
+                const { calendarGrid, monthSelect, yearSelect } =
+                  await waitForMenuToOpen();
+                expect(calendarGrid).toHaveAttribute(
+                  'aria-label',
+                  'March 2023',
+                );
+                expect(monthSelect).toHaveValue(Month.March.toString());
+                expect(yearSelect).toHaveValue('2023');
+              });
+
+              test('initial focus (highlight) is on the date of `value`', async () => {
+                const testValue = new Date(Date.UTC(2023, Month.March, 1));
+                const { calendarButton, waitForMenuToOpen } = renderDatePicker({
+                  value: testValue,
+                });
+                userEvent.click(calendarButton);
+                const { calendarCells } = await waitForMenuToOpen();
+                const highlightCell = calendarCells.find(
+                  cell => cell?.getAttribute('data-highlighted') == 'true',
+                );
+                expect(highlightCell).toHaveAttribute('data-iso', '2023-03-01');
+                expect(highlightCell).toHaveFocus();
+              });
+            },
+          );
+          describe.each(testTimeZones)(
+            'when timeZone prop is $tz',
+            ({ tz, UTCOffset }) => {
+              beforeEach(() => {
+                jest.setSystemTime(newUTC(2023, Month.December, 25, 0, 0)); // Midnight UTC
+                mockTimeZone(tz, UTCOffset);
+              });
+              afterEach(() => {
+                jest.restoreAllMocks();
+              });
+
+              test('menu opens to the month of that `value`', async () => {
+                const testValue = new Date(Date.UTC(2023, Month.March, 1));
+                const { calendarButton, waitForMenuToOpen } = renderDatePicker({
+                  value: testValue,
+                });
+                userEvent.click(calendarButton);
+                const { calendarGrid, monthSelect, yearSelect } =
+                  await waitForMenuToOpen();
+                expect(calendarGrid).toHaveAttribute(
+                  'aria-label',
+                  'March 2023',
+                );
+                expect(monthSelect).toHaveValue(Month.March.toString());
+                expect(yearSelect).toHaveValue('2023');
+              });
+
+              test('initial focus (highlight) is on the date of `value`', async () => {
+                const testValue = new Date(Date.UTC(2023, Month.March, 1));
+                const { calendarButton, waitForMenuToOpen } = renderDatePicker({
+                  value: testValue,
+                });
+                userEvent.click(calendarButton);
+                const { calendarCells } = await waitForMenuToOpen();
+                const highlightCell = calendarCells.find(
+                  cell => cell?.getAttribute('data-highlighted') == 'true',
+                );
+                expect(highlightCell).toHaveAttribute('data-iso', '2023-03-01');
+                expect(highlightCell).toHaveFocus();
+              });
+            },
+          );
+        });
+
+        describe('if value is invalid', () => {
+          test('menu still opens to the month of that value', async () => {
+            const testValue = new Date(Date.UTC(2100, Month.July, 10));
+            const { openMenu } = renderDatePicker({
+              value: testValue,
             });
-          userEvent.click(calendarButton);
-          const menuContainerEl = await findByRole('listbox');
-          const { queryCellByDate } = await findMenuElements();
-          const valueCell = queryCellByDate(value);
-          // Manually fire the `transitionEnd` event. This is not fired automatically by JSDOM
-          fireEvent.transitionEnd(menuContainerEl!);
-          expect(valueCell).toHaveFocus();
+            const { calendarGrid, calendarCells } = await openMenu();
+            expect(calendarGrid).toHaveAttribute('aria-label', 'July 2100');
+            calendarCells.forEach(cell => {
+              expect(cell).toHaveAttribute('aria-disabled', 'true');
+            });
+          });
+
+          test('initial focus (highlight) is on a chevron', async () => {
+            const testValue = new Date(Date.UTC(2100, Month.July, 10));
+            const { openMenu } = renderDatePicker({
+              value: testValue,
+            });
+            const { leftChevron } = await openMenu();
+            expect(leftChevron).toHaveFocus();
+          });
         });
       });
 
       describe('Clicking a Calendar cell', () => {
-        test('fires a change handler', async () => {
-          const onDateChange = jest.fn();
-          const { openMenu } = renderDatePicker({
-            onDateChange,
-          });
-          const { calendarCells } = await openMenu();
-          const firstCell = calendarCells?.[0];
-          userEvent.click(firstCell!);
-          expect(onDateChange).toHaveBeenCalled();
-        });
-
-        test('does nothing if the cell is out-of-range', async () => {
-          const onDateChange = jest.fn();
-          const { openMenu } = renderDatePicker({
-            onDateChange,
-            value: new Date(Date.UTC(2023, Month.September, 15)),
-            min: new Date(Date.UTC(2023, Month.September, 10)),
-          });
-          const { calendarCells } = await openMenu();
-          const firstCell = calendarCells?.[0];
-          userEvent.click(firstCell!, {}, { skipPointerEventsCheck: true });
-          expect(firstCell).toHaveAttribute('aria-disabled', 'true');
-          expect(onDateChange).not.toHaveBeenCalled();
-        });
-
-        test('fires a validation handler', async () => {
-          const handleValidation = jest.fn();
-          const { openMenu } = renderDatePicker({
-            handleValidation,
-          });
-          const { calendarCells } = await openMenu();
-          const firstCell = calendarCells?.[0];
-          userEvent.click(firstCell!);
-          expect(handleValidation).toHaveBeenCalled();
-        });
-
         test('closes the menu', async () => {
           const { openMenu } = renderDatePicker({});
           const { calendarCells, menuContainerEl } = await openMenu();
@@ -593,19 +705,73 @@ describe('packages/date-picker', () => {
           await waitForElementToBeRemoved(menuContainerEl);
         });
 
-        test('updates the input', async () => {
-          const { openMenu, dayInput, monthInput, yearInput } =
-            renderDatePicker({});
-          const { todayCell } = await openMenu();
-          userEvent.click(todayCell!);
-          await waitFor(() => {
-            expect(dayInput.value).toBe(testToday.getUTCDate().toString());
-            expect(monthInput.value).toBe(
-              (testToday.getUTCMonth() + 1).toString(),
-            );
-            expect(yearInput.value).toBe(testToday.getUTCFullYear().toString());
-          });
-        });
+        describe.each(testTimeZones)(
+          'when system time is in $tz',
+          ({ tz, UTCOffset }) => {
+            beforeEach(() => {
+              mockTimeZone(tz, UTCOffset);
+            });
+            afterEach(() => {
+              jest.restoreAllMocks();
+            });
+
+            test('fires a change handler', async () => {
+              const onDateChange = jest.fn();
+              const { openMenu } = renderDatePicker({
+                onDateChange,
+              });
+              const { calendarCells } = await openMenu();
+              const firstCell = calendarCells?.[0];
+              userEvent.click(firstCell!);
+              expect(onDateChange).toHaveBeenCalledWith(
+                newUTC(2023, Month.December, 1),
+              );
+            });
+
+            test('fires a validation handler', async () => {
+              const handleValidation = jest.fn();
+              const { openMenu } = renderDatePicker({
+                handleValidation,
+              });
+              const { calendarCells } = await openMenu();
+              const firstCell = calendarCells?.[0];
+              userEvent.click(firstCell!);
+              expect(handleValidation).toHaveBeenCalledWith(
+                newUTC(2023, Month.December, 1),
+              );
+            });
+
+            test('updates the input', async () => {
+              const { openMenu, dayInput, monthInput, yearInput } =
+                renderDatePicker({});
+              const { todayCell } = await openMenu();
+              userEvent.click(todayCell!);
+              await waitFor(() => {
+                expect(dayInput.value).toBe(testToday.getUTCDate().toString());
+                expect(monthInput.value).toBe(
+                  (testToday.getUTCMonth() + 1).toString(),
+                );
+                expect(yearInput.value).toBe(
+                  testToday.getUTCFullYear().toString(),
+                );
+              });
+            });
+
+            test('does nothing if the cell is out-of-range', async () => {
+              const onDateChange = jest.fn();
+              const { openMenu } = renderDatePicker({
+                onDateChange,
+                value: new Date(Date.UTC(2023, Month.September, 15)),
+                min: new Date(Date.UTC(2023, Month.September, 10)),
+              });
+              const { calendarCells } = await openMenu();
+              const firstCell = calendarCells?.[0];
+              expect(firstCell).toHaveAttribute('aria-disabled', 'true');
+              userEvent.click(firstCell!, {}, { skipPointerEventsCheck: true });
+              expect(onDateChange).not.toHaveBeenCalled();
+            });
+          },
+        );
       });
 
       describe('Clicking a Chevron', () => {

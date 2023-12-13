@@ -9,12 +9,15 @@ import {
   newUTC,
   setUTCDate,
 } from '@leafygreen-ui/date-utils';
+import {
+  mockTimeZone,
+  testTimeZones,
+} from '@leafygreen-ui/date-utils/src/testing';
 
 import {
   DatePickerProvider,
   DatePickerProviderProps,
 } from '../../shared/components/DatePickerContext';
-import { mockTimeZone, testTimeZones } from '../../shared/testutils';
 import {
   SingleDateProvider,
   SingleDateProviderProps,
@@ -231,7 +234,7 @@ describe('packages/date-picker/date-picker-menu', () => {
             jest.useFakeTimers();
           });
           afterEach(() => {
-            jest.clearAllMocks();
+            jest.restoreAllMocks();
           });
 
           test('cell marked as `current` updates', () => {

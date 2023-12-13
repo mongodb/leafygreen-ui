@@ -6,18 +6,14 @@
     "rootDir": "src",
     "baseUrl": ".",
     "paths": {
-      "@leafygreen-ui/icon/dist/*": ["../icon/src/generated/*"],
       "@leafygreen-ui/*": ["../*/src"]
     }
   },
   "include": [
     "src/**/*"
   ],
-  "exclude": ["**/*.spec.*", "**/*.story.*"],
+  "exclude": ["**/*.spec.*"],
   "references": [
-    {
-      "path": "../emotion"
-    },
     {
       "path": "../lib"
     }

@@ -5,7 +5,12 @@ import { userEvent, within } from '@storybook/testing-library';
 import { last, omit } from 'lodash';
 import MockDate from 'mockdate';
 
-import { Month, newUTC } from '@leafygreen-ui/date-utils';
+import {
+  testLocales,
+  Month,
+  newUTC,
+  testTimeZoneLabels,
+} from '@leafygreen-ui/date-utils';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { type StoryMetaType } from '@leafygreen-ui/lib';
 import { transitionDuration } from '@leafygreen-ui/tokens';
@@ -16,11 +21,7 @@ import {
   type DatePickerContextProps,
   DatePickerProvider,
 } from '../../shared/components/DatePickerContext';
-import {
-  getProviderPropsFromStoryContext,
-  Locales,
-  TimeZones,
-} from '../../shared/testutils';
+import { getProviderPropsFromStoryContext } from '../../shared/testutils';
 import {
   type SingleDateContextProps,
   SingleDateProvider,
@@ -64,8 +65,11 @@ const meta: StoryMetaType<typeof DatePickerMenu, DecoratorArgs> = {
   },
   argTypes: {
     value: { control: 'date' },
-    locale: { control: 'select', options: Locales },
-    timeZone: { control: 'select', options: [undefined, ...TimeZones] },
+    locale: { control: 'select', options: testLocales },
+    timeZone: {
+      control: 'select',
+      options: [undefined, ...testTimeZoneLabels],
+    },
   },
 };
 
