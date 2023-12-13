@@ -35,6 +35,8 @@ export const DateFormField = React.forwardRef<
       isOpen,
       menuId,
       size,
+      ariaLabelProp,
+      ariaLabelledbyProp,
     } = useSharedDatePickerContext();
 
     return (
@@ -51,6 +53,12 @@ export const DateFormField = React.forwardRef<
         <FormFieldInputContainer
           role="combobox"
           tabIndex={-1}
+          aria-label={!label && ariaLabelProp ? ariaLabelProp : undefined}
+          aria-labelledby={
+            !label && !ariaLabelProp && ariaLabelledbyProp
+              ? ariaLabelledbyProp
+              : undefined
+          }
           aria-expanded={isOpen}
           aria-controls={menuId}
           aria-invalid={state === DatePickerState.Error}

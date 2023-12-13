@@ -1,14 +1,10 @@
+import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
 import { LocaleString } from '@leafygreen-ui/date-utils';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
 import { AutoComplete, DatePickerState } from './types';
-export interface BaseDatePickerProps extends DarkModeProps {
-  /**
-   * A label for the input
-   */
-  label: React.ReactNode;
-
+export type BaseDatePickerProps = {
   /**
    * A description for the date picker.
    *
@@ -38,10 +34,10 @@ export interface BaseDatePickerProps extends DarkModeProps {
   timeZone?: string;
 
   /** The earliest date accepted */
-  min?: string | Date;
+  min?: Date;
 
   /** The latest date accepted */
-  max?: string | Date;
+  max?: Date;
 
   /**
    * The base font size of the input. Inherits from the nearest LeafyGreenProvider
@@ -74,4 +70,5 @@ export interface BaseDatePickerProps extends DarkModeProps {
    * @default 'off'
    */
   autoComplete?: AutoComplete;
-}
+} & DarkModeProps &
+  AriaLabelPropsWithLabel;

@@ -88,6 +88,42 @@ describe('packages/date-picker', () => {
         expect(inputContainer).toBeInTheDocument();
       });
 
+      test('formField contains aria-label when a label is not provided', () => {
+        const { getByRole } = render(
+          <DatePicker aria-label="Label" data-testid="lg-date-picker" />,
+        );
+        const inputContainer = getByRole('combobox');
+        expect(inputContainer).toHaveAttribute('aria-label', 'Label');
+      });
+
+      test('formField contains aria-labelledby when a label is not provided', () => {
+        const { getByRole } = render(
+          <DatePicker aria-labelledby="Label" data-testid="lg-date-picker" />,
+        );
+        const inputContainer = getByRole('combobox');
+        expect(inputContainer).toHaveAttribute('aria-labelledby', 'Label');
+      });
+
+      test('formField only contains a label if label, aria-label, and aria-labelledby are passes', () => {
+        const { getByRole, getByTestId } = render(
+          <DatePicker
+            label="Label"
+            aria-labelledby="AriaLabelledby"
+            aria-label="AriaLabel"
+            data-testid="lg-date-picker"
+          />,
+        );
+        const formField = getByTestId('lg-date-picker');
+        const inputContainer = getByRole('combobox');
+        expect(formField.querySelector('label')).toBeInTheDocument();
+        expect(formField.querySelector('label')).toHaveTextContent('Label');
+        expect(inputContainer).not.toHaveAttribute(
+          'aria-labelledby',
+          'AriaLabelledby',
+        );
+        expect(inputContainer).not.toHaveAttribute('aria-label', 'AriaLabel');
+      });
+
       test('renders 3 inputs', () => {
         const { dayInput, monthInput, yearInput } = renderDatePicker();
         expect(dayInput).toBeInTheDocument();
@@ -111,6 +147,20 @@ describe('packages/date-picker', () => {
         expect(dayInput.value).toEqual('26');
         expect(monthInput.value).toEqual('12');
         expect(yearInput.value).toEqual('2023');
+      });
+
+      describe('console', () => {
+        test('console warning when no labels are passed in', () => {
+          const consoleSpy = jest
+            .spyOn(console, 'warn')
+            .mockImplementation(() => {});
+
+          /* @ts-expect-error - needs label/aria-label/aria-labelledby */
+          render(<DatePicker />);
+          expect(consoleSpy).toHaveBeenCalledWith(
+            'For screen-reader accessibility, label, aria-labelledby, or aria-label must be provided to DatePicker component',
+          );
+        });
       });
 
       describe('Error states', () => {
@@ -2682,5 +2732,37 @@ describe('packages/date-picker', () => {
         expect(yearInput.value).toEqual('2023');
       });
     });
+  });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  test.skip('Types behave as expected', () => {
+    <>
+      {/* @ts-expect-error - needs label/aria-label/aria-labelledby */}
+      <DatePicker />
+
+      <DatePicker label="Pick a date" />
+      <DatePicker aria-label="Pick a date" />
+      <DatePicker aria-labelledby="Pick a date" />
+      <DatePicker
+        label="Pick a date"
+        min={new Date()}
+        max={new Date()}
+        value={new Date()}
+        onDateChange={() => {}}
+        initialValue={new Date()}
+        handleValidation={() => {}}
+        onChange={() => {}}
+        locale="iso8601"
+        timeZone="utc"
+        baseFontSize={13}
+        disabled={false}
+        size="default"
+        state="none"
+        errorMessage="?"
+        initialOpen={false}
+        autoComplete="off"
+        darkMode={false}
+      />
+    </>;
   });
 });

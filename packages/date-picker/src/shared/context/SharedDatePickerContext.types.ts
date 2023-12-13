@@ -1,3 +1,7 @@
+import { ReactNode } from 'react';
+
+import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
+
 import { BaseDatePickerProps, DatePickerState } from '../types';
 
 import { UseDatePickerErrorNotificationsReturnObject } from './useDatePickerErrorNotifications';
@@ -6,15 +10,28 @@ export interface StateNotification {
   state: DatePickerState;
   message: string;
 }
+type AriaLabelkeys = keyof AriaLabelPropsWithLabel;
 
 /** The props expected to pass int the provider */
-export interface SharedDatePickerProviderProps extends BaseDatePickerProps {}
+export type SharedDatePickerProviderProps = Omit<
+  BaseDatePickerProps,
+  AriaLabelkeys
+> & {
+  label?: ReactNode;
+  'aria-label'?: string;
+  'aria-labelledby'?: string;
+};
+
+type AriaLabelkeysWithoutLabel = Exclude<AriaLabelkeys, 'label'>;
 
 /**
  * The values in context
  */
 export interface SharedDatePickerContextProps
-  extends Omit<Required<SharedDatePickerProviderProps>, 'state'>,
+  extends Omit<
+      Required<SharedDatePickerProviderProps>,
+      'state' | AriaLabelkeysWithoutLabel
+    >,
     UseDatePickerErrorNotificationsReturnObject {
   /** The earliest date accepted */
   min: Date;
@@ -57,4 +74,10 @@ export interface SharedDatePickerContextProps
 
   /** Setter for whether the select menus are open inside the menu */
   setIsSelectOpen: React.Dispatch<React.SetStateAction<boolean>>;
+
+  /** aria-label */
+  ariaLabelProp: string;
+
+  /** aria-labelledby */
+  ariaLabelledbyProp: string;
 }
