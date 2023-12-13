@@ -1,5 +1,6 @@
 import { getSimulatedTZDate } from '../getSimulatedTZDate';
 import { isSameUTCMonth } from '../isSameUTCMonth';
+import { isValidDate } from '../isValidDate';
 import { DateType } from '../types';
 
 /**
@@ -20,6 +21,8 @@ export const isSameTZMonth = (
   utc: DateType,
   timeZone: string,
 ) => {
+  if (!(isValidDate(zoned) && isValidDate(utc))) return false;
+
   // Get a date object that _looks_ like the zoned date when rendered in ISO format
   const simulatedTZDate = getSimulatedTZDate(zoned, timeZone);
 

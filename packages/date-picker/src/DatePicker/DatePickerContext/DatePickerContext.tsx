@@ -49,6 +49,7 @@ export const DatePickerProvider = ({
     min,
     max,
     locale,
+    timeZone,
     setInternalErrorMessage,
     clearInternalErrorMessage,
     isInRange,
@@ -73,7 +74,7 @@ export const DatePickerProvider = ({
    * Keep track of the element the user is highlighting with the keyboard
    */
   const [highlight, _setHighlight] = useState<DateType>(
-    getInitialHighlight(value, today),
+    getInitialHighlight(value, today, timeZone),
   );
 
   /***********
@@ -152,7 +153,7 @@ export const DatePickerProvider = ({
       // update month to something valid
       setMonth(getFirstOfUTCMonth(value ?? today));
       // update highlight to something valid
-      setHighlight(getInitialHighlight(value, today));
+      setHighlight(getInitialHighlight(value, today, timeZone));
     });
   };
 

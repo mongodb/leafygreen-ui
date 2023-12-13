@@ -52,10 +52,6 @@ describe('packages/date-picker', () => {
     jest.restoreAllMocks();
   });
 
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
-
   describe('Rendering', () => {
     /// Note: Many rendering tests should be handled by Chromatic
 
@@ -623,7 +619,7 @@ describe('packages/date-picker', () => {
               });
 
               test('initial highlight is set to `today`', async () => {
-                jest.setSystemTime(newUTC(2023, Month.December, 25, 16, 0));
+                jest.setSystemTime(newUTC(2023, Month.December, 25, 0, 0));
 
                 const { calendarButton, waitForMenuToOpen } = renderDatePicker({
                   timeZone: tz,

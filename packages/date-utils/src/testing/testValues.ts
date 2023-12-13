@@ -1,11 +1,13 @@
 export const testTimeZones = [
+  { tz: 'Pacific/Niue', UTCOffset: -11 },
   { tz: 'Pacific/Honolulu', UTCOffset: -10 },
   { tz: 'America/Los_Angeles', UTCOffset: -8 },
   { tz: 'America/New_York', UTCOffset: -5 },
   { tz: 'Europe/London', UTCOffset: +0 },
   { tz: 'Asia/Istanbul', UTCOffset: +3 },
   { tz: 'Asia/Seoul', UTCOffset: +9 },
-  { tz: 'Pacific/Auckland', UTCOffset: +13 },
+  { tz: 'Australia/Sydney', UTCOffset: +10 },
+  { tz: 'Pacific/Kiritimati', UTCOffset: +14 },
 ] as const;
 
 /** Time zones used to test with */

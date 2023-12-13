@@ -2,7 +2,6 @@ import { addMilliseconds } from 'date-fns';
 import { getTimezoneOffset } from 'date-fns-tz';
 
 import { isValidDate } from '../isValidDate';
-import { DateType } from '../types';
 
 /**
  * Returns a date object that, _looks like_ the local time
@@ -13,10 +12,7 @@ import { DateType } from '../types';
  * which _looks like_ the NYC local time,
  * even though the date object technically incorrect.
  */
-export const getSimulatedTZDate = (
-  date: DateType,
-  timeZone: string,
-): DateType => {
+export const getSimulatedTZDate = (date: Date, timeZone: string): Date => {
   if (!isValidDate(date)) return date;
 
   // Milliseconds offset between the given time zone & UTC
