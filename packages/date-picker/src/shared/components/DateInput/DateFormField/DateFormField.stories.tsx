@@ -6,17 +6,17 @@ import { css } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 
-import { DatePickerState } from '../../../types';
 import {
-  DatePickerContextProps,
-  DatePickerProvider,
-} from '../../DatePickerContext';
+  SharedDatePickerContextProps,
+  SharedDatePickerProvider,
+} from '../../../context';
+import { DatePickerState } from '../../../types';
 
 import { DateFormField } from './DateFormField';
 
 const meta: StoryMetaType<
   typeof DateFormField,
-  Partial<DatePickerContextProps>
+  Partial<SharedDatePickerContextProps>
 > = {
   title: 'Components/DatePicker/Shared/DateFormField',
   component: DateFormField,
@@ -44,12 +44,12 @@ const meta: StoryMetaType<
           darkMode={ctx?.args.darkMode}
           baseFontSize={ctx?.args.baseFontSize}
         >
-          <DatePickerProvider
+          <SharedDatePickerProvider
             // @ts-expect-error - incomplete context value
             value={{ ...ctx?.args }}
           >
             <Instance />
-          </DatePickerProvider>
+          </SharedDatePickerProvider>
         </LeafyGreenProvider>
       ),
       args: {
@@ -83,7 +83,7 @@ export default meta;
 
 const Template: StoryFn<typeof DateFormField> = () => {
   return (
-    <DatePickerProvider
+    <SharedDatePickerProvider
       {...{
         label: 'Label',
         description: 'Description',
@@ -103,7 +103,7 @@ const Template: StoryFn<typeof DateFormField> = () => {
           placeholder="<placeholder>"
         />
       </DateFormField>
-    </DatePickerProvider>
+    </SharedDatePickerProvider>
   );
 };
 

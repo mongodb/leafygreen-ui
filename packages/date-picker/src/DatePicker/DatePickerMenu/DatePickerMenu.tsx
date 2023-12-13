@@ -24,9 +24,9 @@ import {
   CalendarCellState,
   CalendarGrid,
 } from '../../shared/components/Calendar';
-import { useDatePickerContext } from '../../shared/components/DatePickerContext';
 import { MenuWrapper } from '../../shared/components/MenuWrapper';
-import { useSingleDateContext } from '../SingleDateContext';
+import { useSharedDatePickerContext } from '../../shared/context';
+import { useDatePickerContext } from '../DatePickerContext';
 
 import { getNewHighlight } from './utils/getNewHighlight';
 import {
@@ -39,7 +39,8 @@ import { DatePickerMenuHeader } from './DatePickerMenuHeader';
 
 export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
   ({ onKeyDown, ...rest }: DatePickerMenuProps, fwdRef) => {
-    const { isInRange, isOpen, setIsDirty, timeZone } = useDatePickerContext();
+    const { isInRange, isOpen, setIsDirty, timeZone } =
+      useSharedDatePickerContext();
     const {
       refs,
       today,
@@ -53,7 +54,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       setHighlight,
       getCellWithValue,
       getHighlightedCell,
-    } = useSingleDateContext();
+    } = useDatePickerContext();
 
     const ref = useForwardedRef(fwdRef, null);
     const cellRefs = refs.calendarCellRefs;

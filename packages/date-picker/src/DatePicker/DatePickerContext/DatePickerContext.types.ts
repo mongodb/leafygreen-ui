@@ -12,7 +12,7 @@ export interface DatePickerComponentRefs {
   calendarButtonRef: React.RefObject<HTMLButtonElement>;
 }
 
-export interface SingleDateContextProps {
+export interface DatePickerContextProps {
   /**
    * Ref objects for important date picker elements
    */
@@ -90,7 +90,7 @@ export interface SingleDateContextProps {
 }
 
 /** Props passed into the provider component */
-export interface SingleDateProviderProps {
+export interface DatePickerProviderProps {
   value: DateType | undefined;
   setValue: (newVal: DateType) => void;
   handleValidation?: DatePickerProps['handleValidation'];

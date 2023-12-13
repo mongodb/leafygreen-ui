@@ -1,14 +1,14 @@
 import isUndefined from 'lodash/isUndefined';
 import last from 'lodash/last';
 
-import { DatePickerContextProps } from '../../components/DatePickerContext';
+import { SharedDatePickerContextProps } from '../../context';
 import { SegmentRefs } from '../../hooks';
 import { DateSegment } from '../../types';
 
 type RelativeDirection = 'next' | 'prev' | 'first' | 'last';
 interface GetRelativeSegmentContext {
   segment: HTMLInputElement | React.RefObject<HTMLInputElement>;
-  formatParts: DatePickerContextProps['formatParts'];
+  formatParts: SharedDatePickerContextProps['formatParts'];
   segmentRefs: SegmentRefs;
 }
 
@@ -23,7 +23,7 @@ export const getRelativeSegment = (
     formatParts,
   }: {
     segment: DateSegment;
-    formatParts: DatePickerContextProps['formatParts'];
+    formatParts: SharedDatePickerContextProps['formatParts'];
   },
 ): DateSegment | undefined => {
   if (

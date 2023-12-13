@@ -6,24 +6,20 @@ import { getISODate, toDate } from '@leafygreen-ui/date-utils';
 import { consoleOnce } from '@leafygreen-ui/lib';
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
-import { MAX_DATE, MIN_DATE } from '../../constants';
-import {
-  AutoComplete,
-  BaseDatePickerProps,
-  DatePickerState,
-} from '../../types';
-import { getFormatParts } from '../../utils';
+import { MAX_DATE, MIN_DATE } from '../constants';
+import { AutoComplete, BaseDatePickerProps, DatePickerState } from '../types';
+import { getFormatParts } from '../utils';
 
 import {
-  DatePickerContextProps,
-  DatePickerProviderProps,
-} from './DatePickerContext.types';
+  SharedDatePickerContextProps,
+  SharedDatePickerProviderProps,
+} from './SharedDatePickerContext.types';
 
-export type ContextPropKeys = keyof DatePickerProviderProps &
+export type ContextPropKeys = keyof SharedDatePickerProviderProps &
   keyof BaseDatePickerProps;
 
 /**
- * Prop names that are in both DatePickerProps and DatePickerProviderProps
+ * Prop names that are in both DatePickerProps and SharedDatePickerProviderProps
  * */
 export const contextPropNames: Array<ContextPropKeys> = [
   'label',
@@ -42,7 +38,7 @@ export const contextPropNames: Array<ContextPropKeys> = [
 ];
 
 /** The default context value */
-export const defaultDatePickerContext: DatePickerContextProps = {
+export const defaultSharedDatePickerContext: SharedDatePickerContextProps = {
   label: '',
   description: '',
   locale: 'iso8601',
@@ -91,8 +87,8 @@ export const getIsInRange =
  * Returns a valid `Context` value given optional provider props
  */
 export const getContextProps = (
-  providerProps: DatePickerProviderProps,
-): DatePickerContextProps => {
+  providerProps: SharedDatePickerProviderProps,
+): SharedDatePickerContextProps => {
   const {
     min: minProp,
     max: maxProp,
@@ -107,8 +103,8 @@ export const getContextProps = (
 
   const [min, max] = getMinMax(toDate(minProp), toDate(maxProp));
 
-  const providerValue: DatePickerContextProps = {
-    ...defaults(rest, defaultDatePickerContext),
+  const providerValue: SharedDatePickerContextProps = {
+    ...defaults(rest, defaultSharedDatePickerContext),
     timeZone,
     min,
     max,
@@ -124,8 +120,8 @@ export const getContextProps = (
 
 const getMinMax = (min: Date | null, max: Date | null): [Date, Date] => {
   const defaultRange: [Date, Date] = [
-    defaultDatePickerContext.min,
-    defaultDatePickerContext.max,
+    defaultSharedDatePickerContext.min,
+    defaultSharedDatePickerContext.max,
   ];
 
   // if both are defined
@@ -143,31 +139,31 @@ const getMinMax = (min: Date | null, max: Date | null): [Date, Date] => {
 
     return [min, max];
   } else if (min) {
-    if (isBefore(defaultDatePickerContext.max, min)) {
+    if (isBefore(defaultSharedDatePickerContext.max, min)) {
       consoleOnce.error(
         `LeafyGreen DatePicker: Provided min date (${getISODate(
           min,
         )}) is after the default max date (${getISODate(
-          defaultDatePickerContext.max,
+          defaultSharedDatePickerContext.max,
         )}). Using default values.`,
       );
       return defaultRange;
     }
 
-    return [min, defaultDatePickerContext.max];
+    return [min, defaultSharedDatePickerContext.max];
   } else if (max) {
-    if (isBefore(max, defaultDatePickerContext.min)) {
+    if (isBefore(max, defaultSharedDatePickerContext.min)) {
       consoleOnce.error(
         `LeafyGreen DatePicker: Provided max date (${getISODate(
           max,
         )}) is before the default min date (${getISODate(
-          defaultDatePickerContext.min,
+          defaultSharedDatePickerContext.min,
         )}). Using default values.`,
       );
       return defaultRange;
     }
 
-    return [defaultDatePickerContext.min, max];
+    return [defaultSharedDatePickerContext.min, max];
   }
 
   return defaultRange;

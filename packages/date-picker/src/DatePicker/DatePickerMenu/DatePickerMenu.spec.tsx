@@ -15,13 +15,13 @@ import {
 } from '@leafygreen-ui/date-utils/src/testing';
 
 import {
+  SharedDatePickerProvider,
+  SharedDatePickerProviderProps,
+} from '../../shared/context';
+import {
   DatePickerProvider,
   DatePickerProviderProps,
-} from '../../shared/components/DatePickerContext';
-import {
-  SingleDateProvider,
-  SingleDateProviderProps,
-} from '../SingleDateContext';
+} from '../DatePickerContext';
 
 import { DatePickerMenu, DatePickerMenuProps } from '.';
 
@@ -35,29 +35,29 @@ const standardTimeStartDate = newUTC(2023, Month.November, 6);
 
 const renderDatePickerMenu = (
   props?: Partial<DatePickerMenuProps> | null,
-  singleContext?: Partial<SingleDateProviderProps> | null,
-  context?: Partial<DatePickerProviderProps> | null,
+  singleContext?: Partial<DatePickerProviderProps> | null,
+  context?: Partial<SharedDatePickerProviderProps> | null,
 ) => {
   const result = render(
-    <DatePickerProvider label="" {...context} initialOpen={true}>
-      <SingleDateProvider
+    <SharedDatePickerProvider label="" {...context} initialOpen={true}>
+      <DatePickerProvider
         value={null}
         setValue={() => {}}
         handleValidation={undefined}
         {...singleContext}
       >
         <DatePickerMenu {...props} />,
-      </SingleDateProvider>
-    </DatePickerProvider>,
+      </DatePickerProvider>
+    </SharedDatePickerProvider>,
   );
 
   const rerenderDatePickerMenu = (
     newProps?: Partial<DatePickerMenuProps> | null,
-    newSingleContext?: Partial<SingleDateProviderProps> | null,
+    newSingleContext?: Partial<DatePickerProviderProps> | null,
   ) =>
     result.rerender(
-      <DatePickerProvider label="" {...context} initialOpen={true}>
-        <SingleDateProvider
+      <SharedDatePickerProvider label="" {...context} initialOpen={true}>
+        <DatePickerProvider
           value={null}
           setValue={() => {}}
           handleValidation={undefined}
@@ -67,8 +67,8 @@ const renderDatePickerMenu = (
           <DatePickerMenu
             {...({ ...props, ...newProps } as Partial<DatePickerMenuProps>)}
           />
-        </SingleDateProvider>
-      </DatePickerProvider>,
+        </DatePickerProvider>
+      </SharedDatePickerProvider>,
     );
 
   const calendarGrid = result.getByRole('grid');

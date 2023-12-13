@@ -1,4 +1,4 @@
-import { DatePickerContextProps } from '../../components/DatePickerContext';
+import { SharedDatePickerContextProps } from '../../context';
 import { SegmentRefs } from '../../hooks';
 import { DateSegment } from '../../types';
 
@@ -10,7 +10,7 @@ export const getFirstEmptySegment = ({
   formatParts,
   segmentRefs,
 }: {
-  formatParts: Required<DatePickerContextProps>['formatParts'];
+  formatParts: Required<SharedDatePickerContextProps>['formatParts'];
   segmentRefs: SegmentRefs;
 }) => {
   // if 1+ are empty, focus the first empty one

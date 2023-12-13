@@ -14,23 +14,23 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 
 import {
-  DatePickerContextProps,
-  DatePickerProvider,
-  useDatePickerContext,
-} from '../../DatePickerContext';
+  SharedDatePickerContextProps,
+  SharedDatePickerProvider,
+  useSharedDatePickerContext,
+} from '../../../context';
 import { CalendarCell } from '../CalendarCell/CalendarCell';
 
 import { CalendarGrid } from './CalendarGrid';
 
 const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
   <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
-    <DatePickerProvider {...ctx?.args}>
+    <SharedDatePickerProvider {...ctx?.args}>
       <Story />
-    </DatePickerProvider>
+    </SharedDatePickerProvider>
   </LeafyGreenProvider>
 );
 
-const meta: StoryMetaType<typeof CalendarGrid, DatePickerContextProps> = {
+const meta: StoryMetaType<typeof CalendarGrid, SharedDatePickerContextProps> = {
   title: 'Components/DatePicker/Shared/CalendarGrid',
   component: CalendarGrid,
   parameters: {
@@ -64,7 +64,7 @@ const meta: StoryMetaType<typeof CalendarGrid, DatePickerContextProps> = {
 export default meta;
 
 export const Demo: StoryFn<typeof CalendarGrid> = ({ ...props }) => {
-  const { timeZone } = useDatePickerContext();
+  const { timeZone } = useSharedDatePickerContext();
   const [month] = useState(newUTC(2023, Month.August, 1));
 
   const [hovered, setHovered] = useState<string | undefined>();

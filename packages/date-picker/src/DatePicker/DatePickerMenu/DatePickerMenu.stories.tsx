@@ -18,22 +18,22 @@ import { InlineCode } from '@leafygreen-ui/typography';
 
 import {
   contextPropNames,
-  type DatePickerContextProps,
-  DatePickerProvider,
-} from '../../shared/components/DatePickerContext';
+  type SharedDatePickerContextProps,
+  SharedDatePickerProvider,
+} from '../../shared/context';
 import { getProviderPropsFromStoryContext } from '../../shared/testutils';
 import {
-  type SingleDateContextProps,
-  SingleDateProvider,
-} from '../SingleDateContext';
+  type DatePickerContextProps,
+  DatePickerProvider,
+} from '../DatePickerContext';
 
 import { DatePickerMenu } from './DatePickerMenu';
 import { DatePickerMenuProps } from './DatePickerMenu.types';
 
 const mockToday = newUTC(2023, Month.September, 14);
 type DecoratorArgs = DatePickerMenuProps &
-  SingleDateContextProps &
-  DatePickerContextProps;
+  DatePickerContextProps &
+  SharedDatePickerContextProps;
 
 const MenuDecorator: Decorator = (Story: StoryFn, ctx: any) => {
   const { leafyGreenProviderProps, datePickerProviderProps, storyProps } =
@@ -41,9 +41,9 @@ const MenuDecorator: Decorator = (Story: StoryFn, ctx: any) => {
 
   return (
     <LeafyGreenProvider {...leafyGreenProviderProps}>
-      <DatePickerProvider {...datePickerProviderProps} initialOpen={true}>
+      <SharedDatePickerProvider {...datePickerProviderProps} initialOpen={true}>
         <Story {...storyProps} />
-      </DatePickerProvider>
+      </SharedDatePickerProvider>
     </LeafyGreenProvider>
   );
 };
@@ -85,12 +85,12 @@ export const Basic: DatePickerMenuStoryType = {
     const props = omit(args, [...contextPropNames, 'isOpen']);
     const refEl = useRef<HTMLDivElement>(null);
     return (
-      <SingleDateProvider value={value} setValue={setValue}>
+      <DatePickerProvider value={value} setValue={setValue}>
         <InlineCode ref={refEl}>
           Today: {new Date(Date.now()).toUTCString()}
         </InlineCode>
         <DatePickerMenu {...props} refEl={refEl} />
-      </SingleDateProvider>
+      </DatePickerProvider>
     );
   },
 };
@@ -102,7 +102,7 @@ export const WithValue: DatePickerMenuStoryType = {
     const props = omit(args, [...contextPropNames, 'isOpen']);
     const refEl = useRef<HTMLDivElement>(null);
     return (
-      <SingleDateProvider
+      <DatePickerProvider
         value={newUTC(2023, Month.September, 10)}
         setValue={() => {}}
       >
@@ -112,7 +112,7 @@ export const WithValue: DatePickerMenuStoryType = {
           </InlineCode>
           <DatePickerMenu {...props} refEl={refEl} />
         </div>
-      </SingleDateProvider>
+      </DatePickerProvider>
     );
   },
 };
@@ -126,12 +126,12 @@ export const MockedToday: DatePickerMenuStoryType = {
     const props = omit(args, [...contextPropNames, 'isOpen']);
     const refEl = useRef<HTMLDivElement>(null);
     return (
-      <SingleDateProvider value={value} setValue={setValue}>
+      <DatePickerProvider value={value} setValue={setValue}>
         <InlineCode ref={refEl}>
           Today: {new Date(Date.now()).toUTCString()}
         </InlineCode>
         <DatePickerMenu {...props} refEl={refEl} />
-      </SingleDateProvider>
+      </DatePickerProvider>
     );
   },
 };

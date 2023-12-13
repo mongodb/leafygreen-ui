@@ -18,29 +18,29 @@ import {
 } from '@leafygreen-ui/date-utils';
 import { usePrevious } from '@leafygreen-ui/hooks';
 
-import { useDatePickerContext } from '../../shared/components';
+import { useSharedDatePickerContext } from '../../shared/context';
 import { getFormattedDateString } from '../../shared/utils';
 import { getInitialHighlight } from '../utils/getInitialHighlight';
 
 import {
-  SingleDateContextProps,
-  SingleDateProviderProps,
-} from './SingleDateContext.types';
+  DatePickerContextProps,
+  DatePickerProviderProps,
+} from './DatePickerContext.types';
 import { useDateRangeComponentRefs } from './useDatePickerComponentRefs';
 
-export const SingleDateContext = createContext<SingleDateContextProps>(
-  {} as SingleDateContextProps,
+export const DatePickerContext = createContext<DatePickerContextProps>(
+  {} as DatePickerContextProps,
 );
 
 /**
  * A provider for context values in a single DatePicker
  */
-export const SingleDateProvider = ({
+export const DatePickerProvider = ({
   children,
   value,
   setValue: _setValue,
   handleValidation: _handleValidation,
-}: PropsWithChildren<SingleDateProviderProps>) => {
+}: PropsWithChildren<DatePickerProviderProps>) => {
   const refs = useDateRangeComponentRefs();
   const {
     isOpen,
@@ -52,7 +52,7 @@ export const SingleDateProvider = ({
     setInternalErrorMessage,
     clearInternalErrorMessage,
     isInRange,
-  } = useDatePickerContext();
+  } = useSharedDatePickerContext();
   const prevValue = usePrevious(value);
 
   const hour = new Date(Date.now()).getHours();
@@ -201,7 +201,7 @@ export const SingleDateProvider = ({
   }, [prevValue, setMonth, today, value]);
 
   return (
-    <SingleDateContext.Provider
+    <DatePickerContext.Provider
       value={{
         refs,
         today,
@@ -221,13 +221,13 @@ export const SingleDateProvider = ({
       }}
     >
       {children}
-    </SingleDateContext.Provider>
+    </DatePickerContext.Provider>
   );
 };
 
 /**
  * Access single date picker context values
  */
-export const useSingleDateContext = () => {
-  return useContext(SingleDateContext);
+export const useDatePickerContext = () => {
+  return useContext(DatePickerContext);
 };

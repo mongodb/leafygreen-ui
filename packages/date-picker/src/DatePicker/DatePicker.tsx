@@ -12,13 +12,13 @@ import { AutoComplete, DatePickerState } from '../shared';
 import {
   ContextPropKeys,
   contextPropNames,
-  DatePickerProvider,
-} from '../shared/components/DatePickerContext';
+  SharedDatePickerProvider,
+} from '../shared/context';
 import { useControlledValue } from '../shared/hooks';
 
 import { DatePickerProps } from './DatePicker.types';
 import { DatePickerContent } from './DatePickerContent';
-import { SingleDateProvider } from './SingleDateContext';
+import { DatePickerProvider } from './DatePickerContext';
 
 /**
  * LeafyGreen Date Picker component
@@ -50,12 +50,12 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     );
 
     return (
-      <DatePickerProvider
+      <SharedDatePickerProvider
         darkMode={darkMode}
         baseFontSize={baseFontSize}
         {...contextProps}
       >
-        <SingleDateProvider
+        <DatePickerProvider
           value={value}
           setValue={setValue}
           handleValidation={handleValidation}
@@ -68,8 +68,8 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
           >
             <DatePickerContent ref={fwdRef} {...componentProps} />
           </LeafyGreenProvider>
-        </SingleDateProvider>
-      </DatePickerProvider>
+        </DatePickerProvider>
+      </SharedDatePickerProvider>
     );
   },
 );

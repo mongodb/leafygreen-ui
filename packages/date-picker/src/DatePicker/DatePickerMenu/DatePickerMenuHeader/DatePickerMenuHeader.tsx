@@ -12,9 +12,9 @@ import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { Option, Select } from '@leafygreen-ui/select';
 
-import { useDatePickerContext } from '../../../shared/components/DatePickerContext';
 import { selectElementProps } from '../../../shared/constants';
-import { useSingleDateContext } from '../../SingleDateContext';
+import { useSharedDatePickerContext } from '../../../shared/context';
+import { useDatePickerContext } from '../../DatePickerContext';
 import {
   menuHeaderSelectContainerStyles,
   menuHeaderStyles,
@@ -38,8 +38,8 @@ export const DatePickerMenuHeader = forwardRef<
   DatePickerMenuHeaderProps
 >(({ setMonth, ...rest }: DatePickerMenuHeaderProps, fwdRef) => {
   const { min, max, setIsSelectOpen, locale, isInRange } =
-    useDatePickerContext();
-  const { month } = useSingleDateContext();
+    useSharedDatePickerContext();
+  const { month } = useDatePickerContext();
 
   const monthOptions = getLocaleMonths(locale);
   const yearOptions = range(min.getUTCFullYear(), max.getUTCFullYear() + 1);

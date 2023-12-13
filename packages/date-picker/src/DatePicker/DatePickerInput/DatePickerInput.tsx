@@ -12,12 +12,12 @@ import { createSyntheticEvent, keyMap } from '@leafygreen-ui/lib';
 
 import { DateFormField, DateInputBox } from '../../shared/components/DateInput';
 import { DateInputSegmentChangeEventHandler } from '../../shared/components/DateInput/DateInputSegment';
-import { useDatePickerContext } from '../../shared/components/DatePickerContext';
+import { useSharedDatePickerContext } from '../../shared/context';
 import {
   getRelativeSegmentRef,
   isElementInputSegment,
 } from '../../shared/utils';
-import { useSingleDateContext } from '../SingleDateContext';
+import { useDatePickerContext } from '../DatePickerContext';
 import { getSegmentToFocus } from '../utils/getSegmentToFocus';
 
 import { DatePickerInputProps } from './DatePickerInput.types';
@@ -33,7 +33,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
     fwdRef,
   ) => {
     const { formatParts, disabled, isDirty, setIsDirty } =
-      useDatePickerContext();
+      useSharedDatePickerContext();
     const {
       refs: { segmentRefs, calendarButtonRef },
       value,
@@ -41,7 +41,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       openMenu,
       toggleMenu,
       handleValidation,
-    } = useSingleDateContext();
+    } = useDatePickerContext();
 
     /** Called when the input's Date value has changed */
     const handleInputValueChange = (inputVal?: Date | null) => {

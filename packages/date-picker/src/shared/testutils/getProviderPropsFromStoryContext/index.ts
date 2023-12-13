@@ -6,18 +6,18 @@ import { pickAndOmit } from '@leafygreen-ui/lib';
 import {
   ContextPropKeys,
   contextPropNames,
-  DatePickerProviderProps,
-} from '../../components/DatePickerContext';
+  SharedDatePickerProviderProps,
+} from '../../context';
 import { BaseDatePickerProps } from '../../types';
 
 export interface ProviderPropsObject<T> {
   leafyGreenProviderProps: LeafyGreenProviderProps;
-  datePickerProviderProps: DatePickerProviderProps;
+  datePickerProviderProps: SharedDatePickerProviderProps;
   storyProps: T;
 }
 
 export const getProviderPropsFromStoryContext = <P = BaseDatePickerProps>(
-  ctx: StoryContext<Partial<P & DatePickerProviderProps>>,
+  ctx: StoryContext<Partial<P & SharedDatePickerProviderProps>>,
 ): ProviderPropsObject<Partial<Omit<P, ContextPropKeys>>> => {
   const [
     { darkMode, baseFontSize, ...datePickerProviderProps },
