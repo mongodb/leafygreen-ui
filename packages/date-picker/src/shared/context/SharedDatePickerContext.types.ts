@@ -22,11 +22,16 @@ export type SharedDatePickerProviderProps = Omit<
   'aria-labelledby'?: string;
 };
 
+type AriaLabelkeysWithoutLabel = Exclude<AriaLabelkeys, 'label'>;
+
 /**
  * The values in context
  */
 export interface SharedDatePickerContextProps
-  extends Omit<Required<SharedDatePickerProviderProps>, 'state'>,
+  extends Omit<
+      Required<SharedDatePickerProviderProps>,
+      'state' | AriaLabelkeysWithoutLabel
+    >,
     UseDatePickerErrorNotificationsReturnObject {
   /** The earliest date accepted */
   min: Date;
@@ -69,4 +74,10 @@ export interface SharedDatePickerContextProps
 
   /** Setter for whether the select menus are open inside the menu */
   setIsSelectOpen: React.Dispatch<React.SetStateAction<boolean>>;
+
+  /** aria-label */
+  ariaLabelProp: string;
+
+  /** aria-labelledby */
+  ariaLabelledbyProp: string;
 }
