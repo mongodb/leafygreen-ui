@@ -4,9 +4,9 @@ import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import {
-  testLocales,
   Month,
   newUTC,
+  testLocales,
   testTimeZoneLabels,
 } from '@leafygreen-ui/date-utils';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';

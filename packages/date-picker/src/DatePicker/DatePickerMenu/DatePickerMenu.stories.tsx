@@ -6,9 +6,9 @@ import { last, omit } from 'lodash';
 import MockDate from 'mockdate';
 
 import {
-  testLocales,
   Month,
   newUTC,
+  testLocales,
   testTimeZoneLabels,
 } from '@leafygreen-ui/date-utils';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
