@@ -18,6 +18,7 @@ import Boolean from './Boolean.svg';
 import Building from './Building.svg';
 import Bulb from './Bulb.svg';
 import Calendar from './Calendar.svg';
+import Camera from './Camera.svg';
 import CaretDown from './CaretDown.svg';
 import CaretLeft from './CaretLeft.svg';
 import CaretRight from './CaretRight.svg';
@@ -163,6 +164,7 @@ const _glyphs = {
   Building,
   Bulb,
   Calendar,
+  Camera,
   CaretDown,
   CaretLeft,
   CaretRight,
