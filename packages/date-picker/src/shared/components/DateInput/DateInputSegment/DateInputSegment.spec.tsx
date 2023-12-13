@@ -4,20 +4,20 @@ import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { defaultMax, defaultMin } from '../../../constants';
+import {
+  defaultSharedDatePickerContext,
+  SharedDatePickerProvider,
+  SharedDatePickerProviderProps,
+} from '../../../context';
 import { DateSegment } from '../../../types';
 import { getValueFormatter } from '../../../utils';
-import {
-  DatePickerProvider,
-  DatePickerProviderProps,
-  defaultDatePickerContext,
-} from '../../DatePickerContext';
 
 import { DateInputSegmentChangeEventHandler } from './DateInputSegment.types';
 import { DateInputSegment, type DateInputSegmentProps } from '.';
 
 const renderSegment = (
   props?: Partial<DateInputSegmentProps>,
-  ctx?: Partial<DatePickerProviderProps>,
+  ctx?: Partial<SharedDatePickerProviderProps>,
 ) => {
   const defaultProps = {
     value: '',
@@ -26,9 +26,9 @@ const renderSegment = (
   };
 
   const result = render(
-    <DatePickerProvider {...defaultDatePickerContext} {...ctx}>
+    <SharedDatePickerProvider {...defaultSharedDatePickerContext} {...ctx}>
       <DateInputSegment {...defaultProps} {...props} />
-    </DatePickerProvider>,
+    </SharedDatePickerProvider>,
   );
 
   const rerenderSegment = (newProps: Partial<DateInputSegmentProps>) =>

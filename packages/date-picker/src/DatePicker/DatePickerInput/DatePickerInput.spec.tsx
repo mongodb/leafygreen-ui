@@ -5,32 +5,32 @@ import userEvent from '@testing-library/user-event';
 import { Month, newUTC } from '@leafygreen-ui/date-utils';
 
 import {
+  defaultSharedDatePickerContext,
+  SharedDatePickerProvider,
+  SharedDatePickerProviderProps,
+} from '../../shared/context';
+import {
   DatePickerProvider,
   DatePickerProviderProps,
-  defaultDatePickerContext,
-} from '../../shared/components/DatePickerContext';
-import {
-  SingleDateProvider,
-  SingleDateProviderProps,
-} from '../SingleDateContext';
+} from '../DatePickerContext';
 
 import { DatePickerInput, DatePickerInputProps } from '.';
 
 const renderDatePickerInput = (
   props?: Omit<DatePickerInputProps, 'segmentRefs' | 'setValue'> | null,
-  singleDateContext?: Partial<SingleDateProviderProps>,
-  context?: Partial<DatePickerProviderProps>,
+  singleDateContext?: Partial<DatePickerProviderProps>,
+  context?: Partial<SharedDatePickerProviderProps>,
 ) => {
   const result = render(
-    <DatePickerProvider {...defaultDatePickerContext} {...context}>
-      <SingleDateProvider
+    <SharedDatePickerProvider {...defaultSharedDatePickerContext} {...context}>
+      <DatePickerProvider
         value={null}
         setValue={() => {}}
         {...singleDateContext}
       >
         <DatePickerInput {...props} />
-      </SingleDateProvider>
-    </DatePickerProvider>,
+      </DatePickerProvider>
+    </SharedDatePickerProvider>,
   );
 
   const inputContainer = result.getByRole('combobox');

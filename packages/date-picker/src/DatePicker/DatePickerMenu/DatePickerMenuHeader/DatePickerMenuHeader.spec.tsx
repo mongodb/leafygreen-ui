@@ -5,41 +5,42 @@ import userEvent from '@testing-library/user-event';
 import { Month, newUTC } from '@leafygreen-ui/date-utils';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
+import {} from '../../../shared/components';
+import {
+  defaultSharedDatePickerContext,
+  SharedDatePickerContext,
+} from '../../../shared/context';
 import {
   DatePickerContext,
-  defaultDatePickerContext,
-} from '../../../shared/components';
-import {
-  SingleDateContext,
-  SingleDateContextProps,
-} from '../../SingleDateContext';
+  DatePickerContextProps,
+} from '../../DatePickerContext';
 
 import { DatePickerMenuHeader } from '.';
 
+const MockSharedDatePickerProvider = SharedDatePickerContext.Provider;
 const MockDatePickerProvider = DatePickerContext.Provider;
-const MockSingleDateProvider = SingleDateContext.Provider;
 
 describe('packages/date-picker/menu/header', () => {
   describe('Rendering', () => {
     describe('Some month options are disabled', () => {
       test('When `month` and `min` are the same year, earlier month options are disabled', async () => {
         const { getByLabelText, findAllByRole } = render(
-          <MockDatePickerProvider
+          <MockSharedDatePickerProvider
             value={{
-              ...defaultDatePickerContext,
+              ...defaultSharedDatePickerContext,
               min: newUTC(2022, Month.March, 10),
             }}
           >
-            <MockSingleDateProvider
+            <MockDatePickerProvider
               value={
                 {
                   month: newUTC(2022, Month.July, 1),
-                } as SingleDateContextProps
+                } as DatePickerContextProps
               }
             >
               <DatePickerMenuHeader setMonth={() => {}} />
-            </MockSingleDateProvider>
-          </MockDatePickerProvider>,
+            </MockDatePickerProvider>
+          </MockSharedDatePickerProvider>,
         );
 
         const monthSelect = getByLabelText('Select month');
@@ -60,22 +61,22 @@ describe('packages/date-picker/menu/header', () => {
 
       test('When `month` and `max` are the same year, later month options are disabled', async () => {
         const { getByLabelText, findAllByRole } = render(
-          <MockDatePickerProvider
+          <MockSharedDatePickerProvider
             value={{
-              ...defaultDatePickerContext,
+              ...defaultSharedDatePickerContext,
               max: newUTC(2024, Month.September, 10),
             }}
           >
-            <MockSingleDateProvider
+            <MockDatePickerProvider
               value={
                 {
                   month: newUTC(2024, Month.July, 1),
-                } as SingleDateContextProps
+                } as DatePickerContextProps
               }
             >
               <DatePickerMenuHeader setMonth={() => {}} />
-            </MockSingleDateProvider>
-          </MockDatePickerProvider>,
+            </MockDatePickerProvider>
+          </MockSharedDatePickerProvider>,
         );
 
         const monthSelect = getByLabelText('Select month');
@@ -96,23 +97,23 @@ describe('packages/date-picker/menu/header', () => {
 
       test('When `month` and `max`/`min` are different years, no month options are disabled', async () => {
         const { getByLabelText, findAllByRole } = render(
-          <MockDatePickerProvider
+          <MockSharedDatePickerProvider
             value={{
-              ...defaultDatePickerContext,
+              ...defaultSharedDatePickerContext,
               min: newUTC(2022, Month.March, 10),
               max: newUTC(2024, Month.September, 10),
             }}
           >
-            <MockSingleDateProvider
+            <MockDatePickerProvider
               value={
                 {
                   month: newUTC(2023, Month.July, 5),
-                } as SingleDateContextProps
+                } as DatePickerContextProps
               }
             >
               <DatePickerMenuHeader setMonth={() => {}} />
-            </MockSingleDateProvider>
-          </MockDatePickerProvider>,
+            </MockDatePickerProvider>
+          </MockSharedDatePickerProvider>,
         );
 
         const monthSelect = getByLabelText('Select month');
@@ -131,23 +132,23 @@ describe('packages/date-picker/menu/header', () => {
       describe('When `year` is after `max`', () => {
         test('all options are disabled', async () => {
           const { getByLabelText, findAllByRole } = render(
-            <MockDatePickerProvider
+            <MockSharedDatePickerProvider
               value={{
-                ...defaultDatePickerContext,
+                ...defaultSharedDatePickerContext,
                 min: newUTC(2022, Month.March, 10),
                 max: newUTC(2024, Month.September, 10),
               }}
             >
-              <MockSingleDateProvider
+              <MockDatePickerProvider
                 value={
                   {
                     month: newUTC(2025, Month.July, 5),
-                  } as SingleDateContextProps
+                  } as DatePickerContextProps
                 }
               >
                 <DatePickerMenuHeader setMonth={() => {}} />
-              </MockSingleDateProvider>
-            </MockDatePickerProvider>,
+              </MockDatePickerProvider>
+            </MockSharedDatePickerProvider>,
           );
 
           const monthSelect = getByLabelText('Select month');
@@ -165,23 +166,23 @@ describe('packages/date-picker/menu/header', () => {
 
         test('placeholder text renders the invalid month/year', async () => {
           const { getByLabelText } = render(
-            <MockDatePickerProvider
+            <MockSharedDatePickerProvider
               value={{
-                ...defaultDatePickerContext,
+                ...defaultSharedDatePickerContext,
                 min: newUTC(2022, Month.March, 10),
                 max: newUTC(2024, Month.September, 10),
               }}
             >
-              <MockSingleDateProvider
+              <MockDatePickerProvider
                 value={
                   {
                     month: newUTC(2025, Month.July, 5),
-                  } as SingleDateContextProps
+                  } as DatePickerContextProps
                 }
               >
                 <DatePickerMenuHeader setMonth={() => {}} />
-              </MockSingleDateProvider>
-            </MockDatePickerProvider>,
+              </MockDatePickerProvider>
+            </MockSharedDatePickerProvider>,
           );
 
           const monthSelect = getByLabelText('Select month');
@@ -195,23 +196,23 @@ describe('packages/date-picker/menu/header', () => {
       describe('When `year` is before `min`', () => {
         test('all options are disabled', async () => {
           const { getByLabelText, findAllByRole } = render(
-            <MockDatePickerProvider
+            <MockSharedDatePickerProvider
               value={{
-                ...defaultDatePickerContext,
+                ...defaultSharedDatePickerContext,
                 min: newUTC(2022, Month.March, 10),
                 max: newUTC(2024, Month.September, 10),
               }}
             >
-              <MockSingleDateProvider
+              <MockDatePickerProvider
                 value={
                   {
                     month: newUTC(2021, Month.July, 5),
-                  } as SingleDateContextProps
+                  } as DatePickerContextProps
                 }
               >
                 <DatePickerMenuHeader setMonth={() => {}} />
-              </MockSingleDateProvider>
-            </MockDatePickerProvider>,
+              </MockDatePickerProvider>
+            </MockSharedDatePickerProvider>,
           );
 
           const monthSelect = getByLabelText('Select month');
@@ -229,23 +230,23 @@ describe('packages/date-picker/menu/header', () => {
 
         test('placeholder text renders the invalid month/year', async () => {
           const { getByLabelText } = render(
-            <MockDatePickerProvider
+            <MockSharedDatePickerProvider
               value={{
-                ...defaultDatePickerContext,
+                ...defaultSharedDatePickerContext,
                 min: newUTC(2022, Month.March, 10),
                 max: newUTC(2024, Month.September, 10),
               }}
             >
-              <MockSingleDateProvider
+              <MockDatePickerProvider
                 value={
                   {
                     month: newUTC(2021, Month.July, 5),
-                  } as SingleDateContextProps
+                  } as DatePickerContextProps
                 }
               >
                 <DatePickerMenuHeader setMonth={() => {}} />
-              </MockSingleDateProvider>
-            </MockDatePickerProvider>,
+              </MockDatePickerProvider>
+            </MockSharedDatePickerProvider>,
           );
 
           const monthSelect = getByLabelText('Select month');
@@ -275,27 +276,27 @@ describe('packages/date-picker/menu/header', () => {
       };
 
       return (
-        <MockDatePickerProvider
+        <MockSharedDatePickerProvider
           value={{
-            ...defaultDatePickerContext,
+            ...defaultSharedDatePickerContext,
             isSelectOpen,
             setIsSelectOpen,
           }}
         >
-          <MockSingleDateProvider
+          <MockDatePickerProvider
             value={
               {
                 month: newUTC(2022, Month.July, 1),
-              } as SingleDateContextProps
+              } as DatePickerContextProps
             }
           >
             {children}
-          </MockSingleDateProvider>
-        </MockDatePickerProvider>
+          </MockDatePickerProvider>
+        </MockSharedDatePickerProvider>
       );
     };
 
-    test('opening & closing a select menu calls `setIsSelectOpen` in DatePickerContext', async () => {
+    test('opening & closing a select menu calls `setIsSelectOpen` in SharedDatePickerContext', async () => {
       const { getByLabelText } = render(
         <AllMockProviders>
           <DatePickerMenuHeader setMonth={() => {}} />

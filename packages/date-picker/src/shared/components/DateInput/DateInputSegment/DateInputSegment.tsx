@@ -13,8 +13,8 @@ import {
   defaultMin,
   defaultPlaceholder,
 } from '../../../constants';
+import { useSharedDatePickerContext } from '../../../context';
 import { getAutoComplete, getValueFormatter } from '../../../utils';
-import { useDatePickerContext } from '../../DatePickerContext';
 
 import { calculateNewSegmentValue } from './calculateNewSegmentValue';
 import {
@@ -60,7 +60,7 @@ export const DateInputSegment = React.forwardRef<
       size,
       disabled,
       autoComplete: autoCompleteProp,
-    } = useDatePickerContext();
+    } = useSharedDatePickerContext();
     const formatter = getValueFormatter(segment);
     const autoComplete = getAutoComplete(autoCompleteProp, segment);
     const pattern = `[0-9]{${charsPerSegment[segment]}}`;

@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react';
 
-import { DatePickerState } from '../../types';
+import { DatePickerState } from '../types';
 
-import { StateNotification } from './DatePickerContext.types';
+import { StateNotification } from './SharedDatePickerContext.types';
 
 export interface UseDatePickerErrorNotificationsReturnObject {
   stateNotification: StateNotification;

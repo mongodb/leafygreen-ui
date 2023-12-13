@@ -1,4 +1,4 @@
-import { ContextPropKeys } from '../../shared/components/DatePickerContext';
+import { ContextPropKeys } from '../../shared/context';
 import { DatePickerProps } from '../DatePicker.types';
 
 /**

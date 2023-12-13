@@ -3,19 +3,23 @@ import React, { useState } from 'react';
 import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
-import { Month, newUTC } from '@leafygreen-ui/date-utils';
+import {
+  Month,
+  newUTC,
+  testLocales,
+  testTimeZoneLabels,
+} from '@leafygreen-ui/date-utils';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 import Modal from '@leafygreen-ui/modal';
 import { Size } from '@leafygreen-ui/tokens';
 
-import {
-  DatePickerContextProps,
-  DatePickerProvider,
-} from './shared/components/DatePickerContext';
 import { MAX_DATE, MIN_DATE } from './shared/constants';
+import {
+  SharedDatePickerContextProps,
+  SharedDatePickerProvider,
+} from './shared/context';
 import { getProviderPropsFromStoryContext } from './shared/testutils/getProviderPropsFromStoryContext';
-import { Locales, TimeZones } from './shared/testutils/testValues';
 import { AutoComplete } from './shared/types';
 import { DatePicker } from './DatePicker';
 
@@ -25,14 +29,14 @@ const ProviderWrapper = (Story: StoryFn, ctx: any) => {
 
   return (
     <LeafyGreenProvider {...leafyGreenProviderProps}>
-      <DatePickerProvider {...datePickerProviderProps}>
+      <SharedDatePickerProvider {...datePickerProviderProps}>
         <Story {...storyProps} />
-      </DatePickerProvider>
+      </SharedDatePickerProvider>
     </LeafyGreenProvider>
   );
 };
 
-const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
+const meta: StoryMetaType<typeof DatePicker, SharedDatePickerContextProps> = {
   title: 'Components/DatePicker/DatePicker',
   component: DatePicker,
   decorators: [ProviderWrapper],
@@ -69,14 +73,17 @@ const meta: StoryMetaType<typeof DatePicker, DatePickerContextProps> = {
   },
   argTypes: {
     baseFontSize: { control: 'select' },
-    locale: { control: 'select', options: Locales },
+    locale: { control: 'select', options: testLocales },
     description: { control: 'text' },
     label: { control: 'text' },
     min: { control: 'date' },
     max: { control: 'date' },
     size: { control: 'select' },
     state: { control: 'select' },
-    timeZone: { control: 'select', options: [undefined, ...TimeZones] },
+    timeZone: {
+      control: 'select',
+      options: [undefined, ...testTimeZoneLabels],
+    },
     autoComplete: { control: 'select', options: Object.values(AutoComplete) },
   },
 };

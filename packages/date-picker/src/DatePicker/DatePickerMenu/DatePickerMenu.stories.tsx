@@ -5,7 +5,12 @@ import { userEvent, within } from '@storybook/testing-library';
 import { last, omit } from 'lodash';
 import MockDate from 'mockdate';
 
-import { Month, newUTC } from '@leafygreen-ui/date-utils';
+import {
+  Month,
+  newUTC,
+  testLocales,
+  testTimeZoneLabels,
+} from '@leafygreen-ui/date-utils';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { type StoryMetaType } from '@leafygreen-ui/lib';
 import { transitionDuration } from '@leafygreen-ui/tokens';
@@ -13,26 +18,22 @@ import { InlineCode } from '@leafygreen-ui/typography';
 
 import {
   contextPropNames,
+  type SharedDatePickerContextProps,
+  SharedDatePickerProvider,
+} from '../../shared/context';
+import { getProviderPropsFromStoryContext } from '../../shared/testutils';
+import {
   type DatePickerContextProps,
   DatePickerProvider,
-} from '../../shared/components/DatePickerContext';
-import {
-  getProviderPropsFromStoryContext,
-  Locales,
-  TimeZones,
-} from '../../shared/testutils';
-import {
-  type SingleDateContextProps,
-  SingleDateProvider,
-} from '../SingleDateContext';
+} from '../DatePickerContext';
 
 import { DatePickerMenu } from './DatePickerMenu';
 import { DatePickerMenuProps } from './DatePickerMenu.types';
 
 const mockToday = newUTC(2023, Month.September, 14);
 type DecoratorArgs = DatePickerMenuProps &
-  SingleDateContextProps &
-  DatePickerContextProps;
+  DatePickerContextProps &
+  SharedDatePickerContextProps;
 
 const MenuDecorator: Decorator = (Story: StoryFn, ctx: any) => {
   const { leafyGreenProviderProps, datePickerProviderProps, storyProps } =
@@ -40,9 +41,9 @@ const MenuDecorator: Decorator = (Story: StoryFn, ctx: any) => {
 
   return (
     <LeafyGreenProvider {...leafyGreenProviderProps}>
-      <DatePickerProvider {...datePickerProviderProps} initialOpen={true}>
+      <SharedDatePickerProvider {...datePickerProviderProps} initialOpen={true}>
         <Story {...storyProps} />
-      </DatePickerProvider>
+      </SharedDatePickerProvider>
     </LeafyGreenProvider>
   );
 };
@@ -64,8 +65,11 @@ const meta: StoryMetaType<typeof DatePickerMenu, DecoratorArgs> = {
   },
   argTypes: {
     value: { control: 'date' },
-    locale: { control: 'select', options: Locales },
-    timeZone: { control: 'select', options: [undefined, ...TimeZones] },
+    locale: { control: 'select', options: testLocales },
+    timeZone: {
+      control: 'select',
+      options: [undefined, ...testTimeZoneLabels],
+    },
   },
 };
 
@@ -81,12 +85,12 @@ export const Basic: DatePickerMenuStoryType = {
     const props = omit(args, [...contextPropNames, 'isOpen']);
     const refEl = useRef<HTMLDivElement>(null);
     return (
-      <SingleDateProvider value={value} setValue={setValue}>
+      <DatePickerProvider value={value} setValue={setValue}>
         <InlineCode ref={refEl}>
           Today: {new Date(Date.now()).toUTCString()}
         </InlineCode>
         <DatePickerMenu {...props} refEl={refEl} />
-      </SingleDateProvider>
+      </DatePickerProvider>
     );
   },
 };
@@ -98,7 +102,7 @@ export const WithValue: DatePickerMenuStoryType = {
     const props = omit(args, [...contextPropNames, 'isOpen']);
     const refEl = useRef<HTMLDivElement>(null);
     return (
-      <SingleDateProvider
+      <DatePickerProvider
         value={newUTC(2023, Month.September, 10)}
         setValue={() => {}}
       >
@@ -108,7 +112,7 @@ export const WithValue: DatePickerMenuStoryType = {
           </InlineCode>
           <DatePickerMenu {...props} refEl={refEl} />
         </div>
-      </SingleDateProvider>
+      </DatePickerProvider>
     );
   },
 };
@@ -122,12 +126,12 @@ export const MockedToday: DatePickerMenuStoryType = {
     const props = omit(args, [...contextPropNames, 'isOpen']);
     const refEl = useRef<HTMLDivElement>(null);
     return (
-      <SingleDateProvider value={value} setValue={setValue}>
+      <DatePickerProvider value={value} setValue={setValue}>
         <InlineCode ref={refEl}>
           Today: {new Date(Date.now()).toUTCString()}
         </InlineCode>
         <DatePickerMenu {...props} refEl={refEl} />
-      </SingleDateProvider>
+      </DatePickerProvider>
     );
   },
 };

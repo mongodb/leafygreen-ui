@@ -4,7 +4,7 @@ import { useDynamicRefs } from '@leafygreen-ui/hooks';
 
 import { useSegmentRefs } from '../../shared/hooks';
 
-import { DatePickerComponentRefs } from './SingleDateContext.types';
+import { DatePickerComponentRefs } from './DatePickerContext.types';
 
 /** Creates `ref` objects for any & all relevant component elements */
 export const useDateRangeComponentRefs = (): DatePickerComponentRefs => {

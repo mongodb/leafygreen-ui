@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
 
-import { BaseDatePickerProps, DatePickerState } from '../../types';
+import { BaseDatePickerProps, DatePickerState } from '../types';
 
 import { UseDatePickerErrorNotificationsReturnObject } from './useDatePickerErrorNotifications';
 
@@ -13,7 +13,7 @@ export interface StateNotification {
 type AriaLabelkeys = keyof AriaLabelPropsWithLabel;
 
 /** The props expected to pass int the provider */
-export type DatePickerProviderProps = Omit<
+export type SharedDatePickerProviderProps = Omit<
   BaseDatePickerProps,
   AriaLabelkeys
 > & {
@@ -27,9 +27,9 @@ type AriaLabelkeysWithoutLabel = Exclude<AriaLabelkeys, 'label'>;
 /**
  * The values in context
  */
-export interface DatePickerContextProps
+export interface SharedDatePickerContextProps
   extends Omit<
-      Required<DatePickerProviderProps>,
+      Required<SharedDatePickerProviderProps>,
       'state' | AriaLabelkeysWithoutLabel
     >,
     UseDatePickerErrorNotificationsReturnObject {

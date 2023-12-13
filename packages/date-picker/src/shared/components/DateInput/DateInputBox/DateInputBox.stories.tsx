@@ -3,16 +3,16 @@ import React, { useEffect, useState } from 'react';
 import { StoryFn } from '@storybook/react';
 import { isValid } from 'date-fns';
 
-import { Month, newUTC } from '@leafygreen-ui/date-utils';
+import { Month, newUTC, testLocales } from '@leafygreen-ui/date-utils';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { pickAndOmit, StoryMetaType, StoryType } from '@leafygreen-ui/lib';
 
-import { Locales, segmentRefsMock } from '../../../testutils';
 import {
   contextPropNames,
-  DatePickerContextProps,
-  DatePickerProvider,
-} from '../../DatePickerContext';
+  SharedDatePickerContextProps,
+  SharedDatePickerProvider,
+} from '../../../context';
+import { segmentRefsMock } from '../../../testutils';
 
 import { DateInputBox } from './DateInputBox';
 
@@ -26,14 +26,14 @@ const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => {
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
-      <DatePickerProvider {...contextProps}>
+      <SharedDatePickerProvider {...contextProps}>
         <Story {...componentProps} segmentRefs={segmentRefsMock} />
-      </DatePickerProvider>
+      </SharedDatePickerProvider>
     </LeafyGreenProvider>
   );
 };
 
-const meta: StoryMetaType<typeof DateInputBox, DatePickerContextProps> = {
+const meta: StoryMetaType<typeof DateInputBox, SharedDatePickerContextProps> = {
   title: 'Components/DatePicker/Shared/DateInputBox',
   component: DateInputBox,
   decorators: [ProviderWrapper],
@@ -58,7 +58,7 @@ const meta: StoryMetaType<typeof DateInputBox, DatePickerContextProps> = {
   },
   argTypes: {
     value: { control: 'date' },
-    locale: { control: 'select', options: Locales },
+    locale: { control: 'select', options: testLocales },
   },
 };
 
@@ -92,7 +92,7 @@ export const Static: StoryFn<typeof DateInputBox> = () => {
 
 export const Formats: StoryType<
   typeof DateInputBox,
-  DatePickerContextProps
+  SharedDatePickerContextProps
 > = () => <></>;
 Formats.parameters = {
   generate: {

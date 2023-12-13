@@ -3,28 +3,27 @@ import { createContext, PropsWithChildren, useContext } from 'react';
 
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 
-import { AutoComplete } from '../../types';
+import { AutoComplete } from '../types';
 
 import {
-  DatePickerContextProps,
-  DatePickerProviderProps,
-} from './DatePickerContext.types';
+  SharedDatePickerContextProps,
+  SharedDatePickerProviderProps,
+} from './SharedDatePickerContext.types';
 import {
-  defaultDatePickerContext,
+  defaultSharedDatePickerContext,
   getContextProps,
-} from './DatePickerContext.utils';
+} from './SharedDatePickerContext.utils';
 import { useDatePickerErrorNotifications } from './useDatePickerErrorNotifications';
 
-/** Create the DatePickerContext */
-export const DatePickerContext = createContext<DatePickerContextProps>(
-  defaultDatePickerContext,
-);
+/** Create the SharedDatePickerContext */
+export const SharedDatePickerContext =
+  createContext<SharedDatePickerContextProps>(defaultSharedDatePickerContext);
 
 // TODO: Consider renaming this to `SharedDatePickerContext`,
-// and use `DatePickerContext` for what's currently `SingleDateContext`
+// and use `SharedDatePickerContext` for what's currently `DatePickerContext`
 
-/** The Provider component for DatePickerContext */
-export const DatePickerProvider = ({
+/** The Provider component for SharedDatePickerContext */
+export const SharedDatePickerProvider = ({
   children,
   initialOpen = false,
   disabled = false,
@@ -35,7 +34,7 @@ export const DatePickerProvider = ({
   'aria-label': ariaLabelProp = '',
   'aria-labelledby': ariaLabelledbyProp = '',
   ...rest
-}: PropsWithChildren<DatePickerProviderProps>) => {
+}: PropsWithChildren<SharedDatePickerProviderProps>) => {
   const isInitiallyOpen = disabled ? false : initialOpen;
 
   const [isOpen, setOpen] = useState<boolean>(isInitiallyOpen);
@@ -58,7 +57,7 @@ export const DatePickerProvider = ({
   }
 
   return (
-    <DatePickerContext.Provider
+    <SharedDatePickerContext.Provider
       value={{
         ...contextValue,
         disabled,
@@ -79,9 +78,10 @@ export const DatePickerProvider = ({
       }}
     >
       {children}
-    </DatePickerContext.Provider>
+    </SharedDatePickerContext.Provider>
   );
 };
 
-/** A hook to access {@link DatePickerContextProps} */
-export const useDatePickerContext = () => useContext(DatePickerContext);
+/** A hook to access {@link SharedDatePickerContextProps} */
+export const useSharedDatePickerContext = () =>
+  useContext(SharedDatePickerContext);
