@@ -697,42 +697,6 @@ describe('packages/date-picker', () => {
       });
 
       describe('Clicking a Calendar cell', () => {
-        test('fires a change handler', async () => {
-          const onDateChange = jest.fn();
-          const { openMenu } = renderDatePicker({
-            onDateChange,
-          });
-          const { calendarCells } = await openMenu();
-          const firstCell = calendarCells?.[0];
-          userEvent.click(firstCell!);
-          expect(onDateChange).toHaveBeenCalled();
-        });
-
-        test('does nothing if the cell is out-of-range', async () => {
-          const onDateChange = jest.fn();
-          const { openMenu } = renderDatePicker({
-            onDateChange,
-            value: new Date(Date.UTC(2023, Month.September, 15)),
-            min: new Date(Date.UTC(2023, Month.September, 10)),
-          });
-          const { calendarCells } = await openMenu();
-          const firstCell = calendarCells?.[0];
-          userEvent.click(firstCell!, {}, { skipPointerEventsCheck: true });
-          expect(firstCell).toHaveAttribute('aria-disabled', 'true');
-          expect(onDateChange).not.toHaveBeenCalled();
-        });
-
-        test('fires a validation handler', async () => {
-          const handleValidation = jest.fn();
-          const { openMenu } = renderDatePicker({
-            handleValidation,
-          });
-          const { calendarCells } = await openMenu();
-          const firstCell = calendarCells?.[0];
-          userEvent.click(firstCell!);
-          expect(handleValidation).toHaveBeenCalled();
-        });
-
         test('closes the menu', async () => {
           const { openMenu } = renderDatePicker({});
           const { calendarCells, menuContainerEl } = await openMenu();
@@ -741,19 +705,73 @@ describe('packages/date-picker', () => {
           await waitForElementToBeRemoved(menuContainerEl);
         });
 
-        test('updates the input', async () => {
-          const { openMenu, dayInput, monthInput, yearInput } =
-            renderDatePicker({});
-          const { todayCell } = await openMenu();
-          userEvent.click(todayCell!);
-          await waitFor(() => {
-            expect(dayInput.value).toBe(testToday.getUTCDate().toString());
-            expect(monthInput.value).toBe(
-              (testToday.getUTCMonth() + 1).toString(),
-            );
-            expect(yearInput.value).toBe(testToday.getUTCFullYear().toString());
-          });
-        });
+        describe.each(testTimeZones)(
+          'when system time is in $tz',
+          ({ tz, UTCOffset }) => {
+            beforeEach(() => {
+              mockTimeZone(tz, UTCOffset);
+            });
+            afterEach(() => {
+              jest.restoreAllMocks();
+            });
+
+            test('fires a change handler', async () => {
+              const onDateChange = jest.fn();
+              const { openMenu } = renderDatePicker({
+                onDateChange,
+              });
+              const { calendarCells } = await openMenu();
+              const firstCell = calendarCells?.[0];
+              userEvent.click(firstCell!);
+              expect(onDateChange).toHaveBeenCalledWith(
+                newUTC(2023, Month.December, 1),
+              );
+            });
+
+            test('fires a validation handler', async () => {
+              const handleValidation = jest.fn();
+              const { openMenu } = renderDatePicker({
+                handleValidation,
+              });
+              const { calendarCells } = await openMenu();
+              const firstCell = calendarCells?.[0];
+              userEvent.click(firstCell!);
+              expect(handleValidation).toHaveBeenCalledWith(
+                newUTC(2023, Month.December, 1),
+              );
+            });
+
+            test('updates the input', async () => {
+              const { openMenu, dayInput, monthInput, yearInput } =
+                renderDatePicker({});
+              const { todayCell } = await openMenu();
+              userEvent.click(todayCell!);
+              await waitFor(() => {
+                expect(dayInput.value).toBe(testToday.getUTCDate().toString());
+                expect(monthInput.value).toBe(
+                  (testToday.getUTCMonth() + 1).toString(),
+                );
+                expect(yearInput.value).toBe(
+                  testToday.getUTCFullYear().toString(),
+                );
+              });
+            });
+
+            test('does nothing if the cell is out-of-range', async () => {
+              const onDateChange = jest.fn();
+              const { openMenu } = renderDatePicker({
+                onDateChange,
+                value: new Date(Date.UTC(2023, Month.September, 15)),
+                min: new Date(Date.UTC(2023, Month.September, 10)),
+              });
+              const { calendarCells } = await openMenu();
+              const firstCell = calendarCells?.[0];
+              expect(firstCell).toHaveAttribute('aria-disabled', 'true');
+              userEvent.click(firstCell!, {}, { skipPointerEventsCheck: true });
+              expect(onDateChange).not.toHaveBeenCalled();
+            });
+          },
+        );
       });
 
       describe('Clicking a Chevron', () => {
