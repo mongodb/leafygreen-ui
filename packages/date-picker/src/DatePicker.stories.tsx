@@ -96,6 +96,7 @@ export const LiveExample: StoryFn<typeof DatePicker> = props => {
   return (
     <DatePicker
       {...props}
+      aria-label="testing the label"
       value={value}
       onDateChange={setValue}
       handleValidation={date =>

@@ -22,6 +22,8 @@ export type ContextPropKeys = keyof SharedDatePickerProviderProps &
  * Prop names that are in both DatePickerProps and SharedDatePickerProviderProps
  * */
 export const contextPropNames: Array<ContextPropKeys> = [
+  'aria-label',
+  'aria-labelledby',
   'label',
   'description',
   'locale',
