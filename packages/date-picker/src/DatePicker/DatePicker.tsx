@@ -43,8 +43,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       ContextPropKeys
     >({ ...props }, contextPropNames);
 
-    // console.log({ contextProps, componentProps });
-
     const { value, setValue } = useControlledValue(
       valueProp,
       onChangeProp,
