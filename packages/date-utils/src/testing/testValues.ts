@@ -31,4 +31,4 @@ export const testLocales = [
   'he-IL', // Hebrew, Israel
   'ja-JP', // Japanese, Japan
   'zh-CN', // Chinese, China
-];
+] as const;
