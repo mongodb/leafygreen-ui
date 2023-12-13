@@ -31,6 +31,9 @@ export const DatePickerProvider = ({
   errorMessage,
   state,
   autoComplete = AutoComplete.Off,
+  label = '',
+  'aria-label': ariaLabelProp = '',
+  'aria-labelledby': ariaLabelledbyProp = '',
   ...rest
 }: PropsWithChildren<DatePickerProviderProps>) => {
   const isInitiallyOpen = disabled ? false : initialOpen;
@@ -48,6 +51,12 @@ export const DatePickerProvider = ({
     clearInternalErrorMessage,
   } = useDatePickerErrorNotifications(state, errorMessage);
 
+  if (!label && !ariaLabelledbyProp && !ariaLabelProp) {
+    console.warn(
+      'For screen-reader accessibility, label, aria-labelledby, or aria-label must be provided to DatePicker component',
+    );
+  }
+
   return (
     <DatePickerContext.Provider
       value={{
@@ -64,6 +73,9 @@ export const DatePickerProvider = ({
         setInternalErrorMessage,
         clearInternalErrorMessage,
         autoComplete,
+        label,
+        ariaLabelProp,
+        ariaLabelledbyProp,
       }}
     >
       {children}
