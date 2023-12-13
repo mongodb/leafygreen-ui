@@ -5,12 +5,12 @@ import userEvent from '@testing-library/user-event';
 
 import { Month, newUTC } from '@leafygreen-ui/date-utils';
 
-import { segmentRefsMock } from '../../../testutils';
 import {
   defaultSharedDatePickerContext,
   SharedDatePickerProvider,
   SharedDatePickerProviderProps,
-} from '../../SharedDatePickerContext';
+} from '../../../context';
+import { segmentRefsMock } from '../../../testutils';
 import { DateInputSegmentChangeEventHandler } from '../DateInputSegment/DateInputSegment.types';
 
 import { DateInputBox, type DateInputBoxProps } from '.';

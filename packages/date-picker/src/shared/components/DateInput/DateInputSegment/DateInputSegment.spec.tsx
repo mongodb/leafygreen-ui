@@ -4,13 +4,13 @@ import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { defaultMax, defaultMin } from '../../../constants';
-import { DateSegment } from '../../../types';
-import { getValueFormatter } from '../../../utils';
 import {
   defaultSharedDatePickerContext,
   SharedDatePickerProvider,
   SharedDatePickerProviderProps,
-} from '../../SharedDatePickerContext';
+} from '../../../context';
+import { DateSegment } from '../../../types';
+import { getValueFormatter } from '../../../utils';
 
 import { DateInputSegmentChangeEventHandler } from './DateInputSegment.types';
 import { DateInputSegment, type DateInputSegmentProps } from '.';

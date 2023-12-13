@@ -17,7 +17,7 @@ import {
 import {
   SharedDatePickerProvider,
   SharedDatePickerProviderProps,
-} from '../../shared/components/SharedDatePickerContext';
+} from '../../shared/context';
 import {
   DatePickerProvider,
   DatePickerProviderProps,

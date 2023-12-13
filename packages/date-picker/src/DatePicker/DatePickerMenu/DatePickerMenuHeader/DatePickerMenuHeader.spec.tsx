@@ -5,10 +5,11 @@ import userEvent from '@testing-library/user-event';
 import { Month, newUTC } from '@leafygreen-ui/date-utils';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
+import {} from '../../../shared/components';
 import {
   defaultSharedDatePickerContext,
   SharedDatePickerContext,
-} from '../../../shared/components';
+} from '../../../shared/context';
 import {
   DatePickerContext,
   DatePickerContextProps,
