@@ -67,36 +67,29 @@ export const DateInputSegment = React.forwardRef<
     const pattern = `[0-9]{${charsPerSegment[segment]}}`;
 
     /**
-     * if the current value is "full",
-     * do not allow any additional characters to be entered
+     * Receives native input events,
+     * determines whether the input value is valid and should change,
+     * and fires a custom `DateInputSegmentChangeEvent`.
      */
-
-    /** Prevent non-numeric values from triggering a change event */
     const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
       const { target } = e;
-      const containsPeriod = /\./.test(target.value);
-      const prevValue = value ?? '';
 
-      // macOS adds a period when pressing SPACE twice inside a text input.
-      // If there is a period replace the value with the prevValue.
-      if (containsPeriod) {
-        target.value = prevValue;
-        return;
-      }
+      const newValue = getNewSegmentValueFromInputValue(
+        segment,
+        value,
+        target.value,
+      );
 
-      const hasValueChanged = target.value !== prevValue;
-      const numericValue = Number(target.value);
+      const hasValueChanged = newValue !== value;
 
-      if (!isNaN(numericValue) && hasValueChanged) {
-        const newValue = getNewSegmentValueFromInputValue(
-          segment,
-          target.value,
-        );
-
+      if (hasValueChanged) {
         onChange({
           segment,
           value: newValue,
         });
+      } else {
+        // If the value has not changed, ensure the input value is reset
+        target.value = value;
       }
     };
 

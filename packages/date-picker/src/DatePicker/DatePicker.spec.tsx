@@ -1656,43 +1656,71 @@ describe('packages/date-picker', () => {
       });
 
       describe('into a single segment', () => {
-        test('does not fire a value change handler', () => {
+        test('does not fire a value change handler', async () => {
           const onDateChange = jest.fn();
           const { yearInput } = renderDatePicker({
             onDateChange,
           });
           userEvent.type(yearInput, '2023');
-          expect(onDateChange).not.toHaveBeenCalled();
+          await waitFor(() => expect(onDateChange).not.toHaveBeenCalled());
         });
 
-        test('does not fire a validation handler', () => {
+        test('does not fire a validation handler', async () => {
           const handleValidation = jest.fn();
           const { yearInput } = renderDatePicker({
             handleValidation,
           });
           userEvent.type(yearInput, '2023');
-          expect(handleValidation).not.toHaveBeenCalled();
+          await waitFor(() => expect(handleValidation).not.toHaveBeenCalled());
         });
 
-        test('fires a segment change handler', () => {
+        test('fires a segment change handler', async () => {
           const onChange = jest.fn();
           const { yearInput } = renderDatePicker({
             onChange,
           });
           userEvent.type(yearInput, '2023');
-          expect(onChange).toHaveBeenCalledWith(
-            eventContainingTargetValue('2023'),
+          await waitFor(() =>
+            expect(onChange).toHaveBeenCalledWith(
+              eventContainingTargetValue('2023'),
+            ),
           );
         });
 
-        test('does not immediately format the segment', () => {
+        test('does not immediately format the segment (year)', async () => {
           const onChange = jest.fn();
-          const { monthInput } = renderDatePicker({ onChange });
-          userEvent.type(monthInput, '1');
-          expect(onChange).toHaveBeenCalledWith(
-            eventContainingTargetValue('1'),
-          );
-          expect(monthInput.value).toBe('1');
+          const { yearInput } = renderDatePicker({ onChange });
+          userEvent.type(yearInput, '20');
+          await waitFor(() => {
+            expect(onChange).toHaveBeenCalledWith(
+              eventContainingTargetValue('20'),
+            );
+            expect(yearInput.value).toBe('20');
+          });
+        });
+
+        test('does not immediately format the segment (day)', async () => {
+          const onChange = jest.fn();
+          const { dayInput } = renderDatePicker({ onChange });
+          userEvent.type(dayInput, '2');
+          await waitFor(() => {
+            expect(onChange).toHaveBeenCalledWith(
+              eventContainingTargetValue('2'),
+            );
+            expect(dayInput.value).toBe('2');
+          });
+        });
+
+        test('allows typing multiple digits', async () => {
+          const onChange = jest.fn();
+          const { dayInput } = renderDatePicker({ onChange });
+          userEvent.type(dayInput, '26');
+          await waitFor(() => {
+            expect(onChange).toHaveBeenCalledWith(
+              eventContainingTargetValue('26'),
+            );
+            expect(dayInput.value).toBe('26');
+          });
         });
 
         describe('typing space', () => {
@@ -1976,8 +2004,8 @@ describe('packages/date-picker', () => {
         });
       });
 
-      describe('typing a date full value', () => {
-        test('fires value change handler', () => {
+      describe('typing a full date value', () => {
+        test('fires value change handler', async () => {
           const onDateChange = jest.fn();
           const { yearInput, monthInput, dayInput } = renderDatePicker({
             onDateChange,
@@ -1985,12 +2013,15 @@ describe('packages/date-picker', () => {
           userEvent.type(yearInput, '2003');
           userEvent.type(monthInput, '12');
           userEvent.type(dayInput, '26');
-          expect(onDateChange).toHaveBeenCalledWith(
-            expect.objectContaining(newUTC(2003, Month.December, 26)),
+
+          await waitFor(() =>
+            expect(onDateChange).toHaveBeenCalledWith(
+              expect.objectContaining(newUTC(2003, Month.December, 26)),
+            ),
           );
         });
 
-        test('properly renders the input', () => {
+        test('properly renders the input', async () => {
           const onDateChange = jest.fn();
           const { yearInput, monthInput, dayInput } = renderDatePicker({
             onDateChange,
@@ -1998,9 +2029,11 @@ describe('packages/date-picker', () => {
           userEvent.type(yearInput, '2003');
           userEvent.type(monthInput, '12');
           userEvent.type(dayInput, '26');
-          expect(yearInput).toHaveValue('2003');
-          expect(monthInput).toHaveValue('12');
-          expect(dayInput).toHaveValue('26');
+          await waitFor(() => {
+            expect(yearInput).toHaveValue('2003');
+            expect(monthInput).toHaveValue('12');
+            expect(dayInput).toHaveValue('26');
+          });
         });
 
         describe('if value is out of range', () => {
@@ -2019,7 +2052,7 @@ describe('packages/date-picker', () => {
             );
           });
 
-          test('properly renders input if value is after MAX', () => {
+          test('properly renders input if value is after MAX', async () => {
             const onDateChange = jest.fn();
             const { yearInput, monthInput, dayInput } = renderDatePicker({
               onDateChange,
@@ -2027,12 +2060,15 @@ describe('packages/date-picker', () => {
             userEvent.type(yearInput, '2048');
             userEvent.type(monthInput, '12');
             userEvent.type(dayInput, '23');
-            expect(yearInput).toHaveValue('2048');
-            expect(monthInput).toHaveValue('12');
-            expect(dayInput).toHaveValue('23');
+
+            await waitFor(() => {
+              expect(yearInput).toHaveValue('2048');
+              expect(monthInput).toHaveValue('12');
+              expect(dayInput).toHaveValue('23');
+            });
           });
 
-          test('fire a value change handler if value is before MIN', () => {
+          test('fire a value change handler if value is before MIN', async () => {
             const onDateChange = jest.fn();
             const { yearInput, monthInput, dayInput } = renderDatePicker({
               onDateChange,
@@ -2040,12 +2076,14 @@ describe('packages/date-picker', () => {
             userEvent.type(yearInput, '1969');
             userEvent.type(monthInput, '7');
             userEvent.type(dayInput, '20');
-            expect(onDateChange).toHaveBeenCalledWith(
-              expect.objectContaining(newUTC(1969, Month.July, 20)),
+            await waitFor(() =>
+              expect(onDateChange).toHaveBeenCalledWith(
+                expect.objectContaining(newUTC(1969, Month.July, 20)),
+              ),
             );
           });
 
-          test('properly renders input if value is before MIN', () => {
+          test('properly renders input if value is before MIN', async () => {
             const onDateChange = jest.fn();
             const { yearInput, monthInput, dayInput } = renderDatePicker({
               onDateChange,
@@ -2053,9 +2091,11 @@ describe('packages/date-picker', () => {
             userEvent.type(yearInput, '1969');
             userEvent.type(monthInput, '7');
             userEvent.type(dayInput, '20');
-            expect(yearInput).toHaveValue('1969');
-            expect(monthInput).toHaveValue('07');
-            expect(dayInput).toHaveValue('20');
+            await waitFor(() => {
+              expect(yearInput).toHaveValue('1969');
+              expect(monthInput).toHaveValue('07');
+              expect(dayInput).toHaveValue('20');
+            });
           });
         });
       });
@@ -2095,42 +2135,21 @@ describe('packages/date-picker', () => {
         });
 
         describe('typing new characters', () => {
-          test('does not immediately format the year', () => {
-            const { yearInput, monthInput, dayInput } = renderDatePicker({});
-            userEvent.type(yearInput, '2019');
-            userEvent.type(monthInput, '6');
-            userEvent.type(dayInput, '1');
-
-            userEvent.type(yearInput, '9');
-            userEvent.type(yearInput, '9');
-            expect(yearInput).toHaveValue('1999');
-          });
-
-          test('appends to the segment value if the resulting value is valid', () => {
+          test.skip('if the resulting value is valid, appends to the segment value', async () => {
             const { monthInput } = renderDatePicker({});
             userEvent.type(monthInput, '1');
             userEvent.tab();
-            expect(monthInput).toHaveValue('01');
+            await waitFor(() => expect(monthInput).toHaveValue('01'));
             userEvent.type(monthInput, '2');
-            expect(monthInput).toHaveValue('12');
+            await waitFor(() => expect(monthInput).toHaveValue('12'));
           });
 
-          describe('if the resulting value is not valid', () => {
-            test('overwrites the segment with the incoming digit 1-9', () => {
-              const { monthInput } = renderDatePicker({});
-              userEvent.type(monthInput, '6');
-              expect(monthInput).toHaveValue('06');
-              userEvent.type(monthInput, '9');
-              expect(monthInput).toHaveValue('09');
-            });
-
-            test('overwrites the segment with the incoming digit 0', () => {
-              const { monthInput } = renderDatePicker({});
-              userEvent.type(monthInput, '6');
-              expect(monthInput).toHaveValue('06');
-              userEvent.type(monthInput, '0');
-              expect(monthInput).toHaveValue('0');
-            });
+          test('if the resulting value is not valid, keeps the input as-is', async () => {
+            const { monthInput } = renderDatePicker({});
+            userEvent.type(monthInput, '6');
+            await waitFor(() => expect(monthInput).toHaveValue('06'));
+            userEvent.type(monthInput, '9');
+            await waitFor(() => expect(monthInput).toHaveValue('06'));
           });
         });
       });

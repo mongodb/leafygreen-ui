@@ -211,9 +211,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
         });
 
         userEvent.type(input, '6');
-        expect(onChangeHandler).toHaveBeenCalledWith(
-          expect.objectContaining({ value: '26' }),
-        );
+        expect(onChangeHandler).not.toHaveBeenCalled();
       });
     });
   });
