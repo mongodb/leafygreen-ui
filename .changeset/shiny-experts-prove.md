@@ -2,4 +2,4 @@
 '@leafygreen-ui/icon': minor
 ---
 
-Adds GraduationHat icon to glyph set
+Adds `'Cap'` icon to glyph set
