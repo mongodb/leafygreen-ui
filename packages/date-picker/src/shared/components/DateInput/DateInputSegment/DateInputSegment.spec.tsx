@@ -192,14 +192,13 @@ describe('packages/date-picker/shared/date-input-segment', () => {
     });
 
     describe('into a segment with a value', () => {
-      test('allows typing additional characters to create a valid value', () => {
+      test('allows typing additional characters if the current value is incomplete', () => {
         const { input } = renderSegment({
-          value: '02',
+          value: '2',
           onChange: onChangeHandler,
         });
 
         userEvent.type(input, '6');
-        expect(onChangeHandler).toHaveBeenCalled();
         expect(onChangeHandler).toHaveBeenCalledWith(
           expect.objectContaining({ value: '26' }),
         );
@@ -212,9 +211,8 @@ describe('packages/date-picker/shared/date-input-segment', () => {
         });
 
         userEvent.type(input, '6');
-        expect(onChangeHandler).toHaveBeenCalled();
         expect(onChangeHandler).toHaveBeenCalledWith(
-          expect.objectContaining({ value: '06' }),
+          expect.objectContaining({ value: '26' }),
         );
       });
     });

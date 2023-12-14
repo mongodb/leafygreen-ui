@@ -2,14 +2,17 @@ import last from 'lodash/last';
 
 import { truncateStart } from '@leafygreen-ui/lib';
 
-import { charsPerSegment } from '../../../../constants';
-import { DateSegment, DateSegmentValue } from '../../../../types';
-import { getValueFormatter, isValidValueForSegment } from '../../../../utils';
+import { charsPerSegment } from '../../../../../constants';
+import { DateSegment, DateSegmentValue } from '../../../../../types';
+import {
+  getValueFormatter,
+  isValidValueForSegment,
+} from '../../../../../utils';
 
 /**
  * Calculates the new value for the segment given an incoming change
  */
-export const calculateNewSegmentValue = (
+export const getNewSegmentValueFromInputValue = (
   segmentName: DateSegment,
   incomingValue: DateSegmentValue,
 ): DateSegmentValue => {

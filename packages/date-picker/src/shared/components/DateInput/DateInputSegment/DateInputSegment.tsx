@@ -3,7 +3,7 @@ import React, { ChangeEventHandler, KeyboardEventHandler } from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { keyMap, rollover } from '@leafygreen-ui/lib';
+import { keyMap } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
@@ -16,7 +16,7 @@ import {
 import { useSharedDatePickerContext } from '../../../context';
 import { getAutoComplete, getValueFormatter } from '../../../utils';
 
-import { calculateNewSegmentValue } from './calculateNewSegmentValue';
+import { getNewSegmentValueFromArrowKeyPress } from './utils/getNewSegmentValueFromArrowKeyPress/getNewSegmentValueFromArrowKeyPress';
 import {
   baseStyles,
   fontSizeStyles,
@@ -25,6 +25,7 @@ import {
   segmentWidthStyles,
 } from './DateInputSegment.styles';
 import { DateInputSegmentProps } from './DateInputSegment.types';
+import { getNewSegmentValueFromInputValue } from './utils';
 
 /**
  * Renders a single date segment with the
@@ -65,6 +66,11 @@ export const DateInputSegment = React.forwardRef<
     const autoComplete = getAutoComplete(autoCompleteProp, segment);
     const pattern = `[0-9]{${charsPerSegment[segment]}}`;
 
+    /**
+     * if the current value is "full",
+     * do not allow any additional characters to be entered
+     */
+
     /** Prevent non-numeric values from triggering a change event */
     const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
       const { target } = e;
@@ -82,7 +88,10 @@ export const DateInputSegment = React.forwardRef<
       const numericValue = Number(target.value);
 
       if (!isNaN(numericValue) && hasValueChanged) {
-        const newValue = calculateNewSegmentValue(segment, target.value);
+        const newValue = getNewSegmentValueFromInputValue(
+          segment,
+          target.value,
+        );
 
         onChange({
           segment,
@@ -103,17 +112,14 @@ export const DateInputSegment = React.forwardRef<
           /** Fire a custom change event when the up/down arrow keys are pressed */
 
           e.preventDefault();
-          const valueDiff = key === keyMap.ArrowUp ? 1 : -1;
-          const defaultVal = key === keyMap.ArrowUp ? min : max;
 
-          const incrementedValue: number = value
-            ? Number(value) + valueDiff
-            : defaultVal;
-
-          const newValue =
-            segment === 'year'
-              ? incrementedValue
-              : rollover(incrementedValue, min, max);
+          const newValue = getNewSegmentValueFromArrowKeyPress({
+            key,
+            value,
+            min,
+            max,
+            segment,
+          });
           const valueString = formatter(newValue);
 
           onChange({
