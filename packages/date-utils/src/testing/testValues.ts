@@ -1,5 +1,5 @@
 export const testTimeZones = [
-  { tz: 'Pacific/Niue', UTCOffset: -11 },
+  { tz: 'Pacific/Honolulu', UTCOffset: -10 },
   { tz: 'America/Los_Angeles', UTCOffset: -8 },
   { tz: 'America/New_York', UTCOffset: -5 },
   { tz: 'Europe/London', UTCOffset: +0 },
@@ -7,6 +7,11 @@ export const testTimeZones = [
   { tz: 'Asia/Seoul', UTCOffset: +9 },
   { tz: 'Pacific/Kiritimati', UTCOffset: +14 },
 ] as const;
+
+export const undefinedTZ = {
+  tz: undefined,
+  UTCOffset: undefined,
+};
 
 /** Time zones used to test with */
 export const testTimeZoneLabels = testTimeZones.map(({ tz }) => tz);

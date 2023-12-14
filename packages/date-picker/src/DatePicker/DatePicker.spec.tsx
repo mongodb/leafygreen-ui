@@ -19,6 +19,7 @@ import {
 import {
   mockTimeZone,
   testTimeZones,
+  undefinedTZ,
 } from '@leafygreen-ui/date-utils/src/testing';
 import {
   eventContainingTargetValue,
@@ -556,92 +557,92 @@ describe('packages/date-picker', () => {
           await waitFor(() => expect(menuContainerEl).not.toBeInTheDocument());
         });
 
-        describe.each([testTimeZones[0]])(
+        describe.each([testTimeZones])(
           'when system time is in $tz',
           ({ tz, UTCOffset }) => {
-            describe.each([
-              { tz: undefined, UTCOffset: undefined },
-              // ...testTimeZones,
-            ])('and timeZone prop is $tz', props => {
-              const offset = props.UTCOffset ?? UTCOffset;
-              const dec24Local = newUTC(
-                2023,
-                Month.December,
-                24,
-                23 - offset,
-                59,
-              );
-              const dec24ISO = '2023-12-24';
+            describe.each([undefinedTZ, ...testTimeZones])(
+              'and timeZone prop is $tz',
+              props => {
+                const offset = props.UTCOffset ?? UTCOffset;
+                const dec24Local = newUTC(
+                  2023,
+                  Month.December,
+                  24,
+                  23 - offset,
+                  59,
+                );
+                const dec24ISO = '2023-12-24';
 
-              beforeEach(() => {
-                jest.setSystemTime(dec24Local);
-                mockTimeZone(tz, UTCOffset);
-              });
-              afterEach(() => {
-                jest.restoreAllMocks();
-              });
-
-              describe('if no value is set', () => {
-                test('default focus (highlight) is on `today`', async () => {
-                  const { calendarButton, waitForMenuToOpen } =
-                    renderDatePicker({
-                      timeZone: props.tz,
-                    });
-                  userEvent.click(calendarButton);
-                  const { queryCellByISODate } = await waitForMenuToOpen();
-                  expect(queryCellByISODate(dec24ISO)).toHaveFocus();
+                beforeEach(() => {
+                  jest.setSystemTime(dec24Local);
+                  mockTimeZone(tz, UTCOffset);
+                });
+                afterEach(() => {
+                  jest.restoreAllMocks();
                 });
 
-                test('menu opens to current month', async () => {
-                  const { calendarButton, waitForMenuToOpen } =
-                    renderDatePicker({
-                      timeZone: props.tz,
-                    });
-                  userEvent.click(calendarButton);
-                  const { calendarGrid, monthSelect, yearSelect } =
-                    await waitForMenuToOpen();
-                  expect(calendarGrid).toHaveAttribute(
-                    'aria-label',
-                    'December 2023',
-                  );
-                  expect(monthSelect).toHaveTextContent('Dec');
-                  expect(yearSelect).toHaveTextContent('2023');
-                });
-              });
+                describe('if no value is set', () => {
+                  test('default focus (highlight) is on `today`', async () => {
+                    const { calendarButton, waitForMenuToOpen } =
+                      renderDatePicker({
+                        timeZone: props.tz,
+                      });
+                    userEvent.click(calendarButton);
+                    const { queryCellByISODate } = await waitForMenuToOpen();
+                    expect(queryCellByISODate(dec24ISO)).toHaveFocus();
+                  });
 
-              describe('when `value` is set', () => {
-                test('focus (highlight) starts on current value', async () => {
-                  const testValue = newUTC(2024, Month.September, 10);
-                  const { calendarButton, waitForMenuToOpen } =
-                    renderDatePicker({
-                      value: testValue,
-                      timeZone: props.tz,
-                    });
-                  userEvent.click(calendarButton);
-                  const { queryCellByISODate } = await waitForMenuToOpen();
-                  expect(queryCellByISODate('2024-09-10')).toHaveFocus();
+                  test('menu opens to current month', async () => {
+                    const { calendarButton, waitForMenuToOpen } =
+                      renderDatePicker({
+                        timeZone: props.tz,
+                      });
+                    userEvent.click(calendarButton);
+                    const { calendarGrid, monthSelect, yearSelect } =
+                      await waitForMenuToOpen();
+                    expect(calendarGrid).toHaveAttribute(
+                      'aria-label',
+                      'December 2023',
+                    );
+                    expect(monthSelect).toHaveTextContent('Dec');
+                    expect(yearSelect).toHaveTextContent('2023');
+                  });
                 });
 
-                test('menu opens to the month of that `value`', async () => {
-                  const testValue = newUTC(2024, Month.September, 10);
-                  const { calendarButton, waitForMenuToOpen } =
-                    renderDatePicker({
-                      value: testValue,
-                      timeZone: props.tz,
-                    });
-                  userEvent.click(calendarButton);
-                  const { calendarGrid, monthSelect, yearSelect } =
-                    await waitForMenuToOpen();
+                describe('when `value` is set', () => {
+                  test('focus (highlight) starts on current value', async () => {
+                    const testValue = newUTC(2024, Month.September, 10);
+                    const { calendarButton, waitForMenuToOpen } =
+                      renderDatePicker({
+                        value: testValue,
+                        timeZone: props.tz,
+                      });
+                    userEvent.click(calendarButton);
+                    const { queryCellByISODate } = await waitForMenuToOpen();
+                    expect(queryCellByISODate('2024-09-10')).toHaveFocus();
+                  });
 
-                  expect(calendarGrid).toHaveAttribute(
-                    'aria-label',
-                    'September 2024',
-                  );
-                  expect(monthSelect).toHaveTextContent('Sep');
-                  expect(yearSelect).toHaveTextContent('2024');
+                  test('menu opens to the month of that `value`', async () => {
+                    const testValue = newUTC(2024, Month.September, 10);
+                    const { calendarButton, waitForMenuToOpen } =
+                      renderDatePicker({
+                        value: testValue,
+                        timeZone: props.tz,
+                      });
+                    userEvent.click(calendarButton);
+                    const { calendarGrid, monthSelect, yearSelect } =
+                      await waitForMenuToOpen();
+
+                    expect(calendarGrid).toHaveAttribute(
+                      'aria-label',
+                      'September 2024',
+                    );
+                    expect(monthSelect).toHaveTextContent('Sep');
+                    expect(yearSelect).toHaveTextContent('2024');
+                  });
                 });
-              });
-            });
+              },
+            );
           },
         );
 
