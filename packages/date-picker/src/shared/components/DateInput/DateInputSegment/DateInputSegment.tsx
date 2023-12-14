@@ -104,14 +104,16 @@ export const DateInputSegment = React.forwardRef<
 
           e.preventDefault();
           const valueDiff = key === keyMap.ArrowUp ? 1 : -1;
+          const defaultVal = key === keyMap.ArrowUp ? min : max;
 
-          const currentValue: number = value
-            ? Number(value)
-            : key === keyMap.ArrowUp
-            ? max
-            : min;
+          const incrementedValue: number = value
+            ? Number(value) + valueDiff
+            : defaultVal;
 
-          const newValue = rollover(currentValue + valueDiff, min, max);
+          const newValue =
+            segment === 'year'
+              ? incrementedValue
+              : rollover(incrementedValue, min, max);
           const valueString = formatter(newValue);
 
           onChange({

@@ -273,7 +273,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
             );
           });
 
-          test('calls handler with default `min` when the new value is greater than the `max` value', () => {
+          test('rolls value over to default `min` value if value exceeds `max`', () => {
             const { input } = renderSegment({
               segment: 'day',
               onChange: onChangeHandler,
@@ -300,7 +300,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
             );
           });
 
-          test('calls handler with provided `min` prop when the new value is greater than the `max` value', () => {
+          test('rolls value over to provided `min` value if value exceeds `max`', () => {
             const { input } = renderSegment({
               segment: 'day',
               onChange: onChangeHandler,
@@ -344,7 +344,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
             );
           });
 
-          test('calls handler with default `max` value when the new value is less than the `min` value', () => {
+          test('rolls value over to default `max` value if value exceeds `min`', () => {
             const { input } = renderSegment({
               segment: 'day',
               onChange: onChangeHandler,
@@ -371,7 +371,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
             );
           });
 
-          test('calls handler with provided `max` prop value when the new value is less than the `min` value', () => {
+          test('rolls value over to provided `max` value if value exceeds `min`', () => {
             const { input } = renderSegment({
               segment: 'day',
               onChange: onChangeHandler,
@@ -421,7 +421,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
             );
           });
 
-          test('calls handler with default `min` when the new value is greater than the `max` value', () => {
+          test('rolls value over to default `min` value if value exceeds `max`', () => {
             const { input } = renderSegment({
               segment: 'month',
               onChange: onChangeHandler,
@@ -452,7 +452,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
             );
           });
 
-          test('calls handler with provided `min` prop when the new value is greater than the `max` value', () => {
+          test('rolls value over to provided `min` value if value exceeds `max`', () => {
             const { input } = renderSegment({
               segment: 'month',
               onChange: onChangeHandler,
@@ -500,7 +500,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
             );
           });
 
-          test('calls handler with default `max` value when the new value is less than the `min` value', () => {
+          test('rolls value over to default `max` value if value exceeds `min`', () => {
             const { input } = renderSegment({
               segment: 'month',
               onChange: onChangeHandler,
@@ -531,7 +531,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
             );
           });
 
-          test('calls handler with provided `max` prop value when the new value is less than the `min` value', () => {
+          test('rolls value over to provided `max` value if value exceeds `min`', () => {
             const { input } = renderSegment({
               segment: 'month',
               onChange: onChangeHandler,
@@ -582,7 +582,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
             );
           });
 
-          test('calls handler with default `min` when the new value is greater than the `max` value', () => {
+          test('does _not_ rollover if value exceeds max', () => {
             const { input } = renderSegment({
               segment: 'year',
               onChange: onChangeHandler,
@@ -592,7 +592,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
             userEvent.type(input, '{arrowup}');
             expect(onChangeHandler).toHaveBeenCalledWith(
               expect.objectContaining({
-                value: formatter(defaultMin['year']),
+                value: formatter(defaultMax['year'] + 1),
               }),
             );
           });
@@ -602,22 +602,6 @@ describe('packages/date-picker/shared/date-input-segment', () => {
               segment: 'year',
               onChange: onChangeHandler,
               value: '',
-              min: 1969,
-            });
-
-            userEvent.type(input, '{arrowup}');
-            expect(onChangeHandler).toHaveBeenCalledWith(
-              expect.objectContaining({
-                value: formatter(1969),
-              }),
-            );
-          });
-
-          test('calls handler with provided `min` prop when the new value is greater than the `max` value', () => {
-            const { input } = renderSegment({
-              segment: 'year',
-              onChange: onChangeHandler,
-              value: formatter(defaultMax['year']),
               min: 1969,
             });
 
@@ -660,7 +644,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
             );
           });
 
-          test('calls handler with default `max` value when the new value is less than the `min` value', () => {
+          test('does _not_ rollover if value exceeds min', () => {
             const { input } = renderSegment({
               segment: 'year',
               onChange: onChangeHandler,
@@ -670,7 +654,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
             userEvent.type(input, '{arrowdown}');
             expect(onChangeHandler).toHaveBeenCalledWith(
               expect.objectContaining({
-                value: formatter(defaultMax['year']),
+                value: formatter(defaultMin['year'] - 1),
               }),
             );
           });
@@ -680,22 +664,6 @@ describe('packages/date-picker/shared/date-input-segment', () => {
               segment: 'year',
               onChange: onChangeHandler,
               value: '',
-              max: 2000,
-            });
-
-            userEvent.type(input, '{arrowdown}');
-            expect(onChangeHandler).toHaveBeenCalledWith(
-              expect.objectContaining({
-                value: formatter(2000),
-              }),
-            );
-          });
-
-          test('calls handler with provided `max` prop value when the new value is less than the `min` value', () => {
-            const { input } = renderSegment({
-              segment: 'year',
-              onChange: onChangeHandler,
-              value: formatter(defaultMin['year']),
               max: 2000,
             });
 
