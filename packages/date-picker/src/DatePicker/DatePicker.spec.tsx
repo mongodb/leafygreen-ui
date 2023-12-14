@@ -1350,7 +1350,7 @@ describe('packages/date-picker', () => {
                 expect(onDateChange).toHaveBeenCalled();
               });
 
-              test('rolls year value over from max prop to min prop', () => {
+              test('does not roll over year', () => {
                 const onDateChange = jest.fn();
                 const { yearInput } = renderDatePicker({
                   onDateChange,
@@ -1361,7 +1361,7 @@ describe('packages/date-picker', () => {
                 userEvent.click(yearInput);
                 userEvent.keyboard(`{arrowup}`);
                 expect(onDateChange).toHaveBeenCalledWith(
-                  newUTC(1969, Month.July, 5),
+                  newUTC(2021, Month.July, 5),
                 );
               });
 
@@ -1520,7 +1520,7 @@ describe('packages/date-picker', () => {
                 );
               });
 
-              test('rolls year value over from min prop to max prop', () => {
+              test('does not roll over year', () => {
                 const onDateChange = jest.fn();
                 const { yearInput } = renderDatePicker({
                   onDateChange,
@@ -1531,7 +1531,7 @@ describe('packages/date-picker', () => {
                 userEvent.click(yearInput);
                 userEvent.keyboard(`{arrowdown}`);
                 expect(onDateChange).toHaveBeenCalledWith(
-                  newUTC(2020, Month.July, 5),
+                  newUTC(1968, Month.July, 5),
                 );
               });
 
