@@ -556,7 +556,7 @@ describe('packages/date-picker', () => {
           await waitFor(() => expect(menuContainerEl).not.toBeInTheDocument());
         });
 
-        describe.only.each([testTimeZones[0]])(
+        describe.each([testTimeZones[0]])(
           'when system time is in $tz',
           ({ tz, UTCOffset }) => {
             describe.each([
@@ -581,7 +581,7 @@ describe('packages/date-picker', () => {
                 jest.restoreAllMocks();
               });
 
-              describe.only('if no value is set', () => {
+              describe('if no value is set', () => {
                 test('default focus (highlight) is on `today`', async () => {
                   const { calendarButton, waitForMenuToOpen } =
                     renderDatePicker({
@@ -604,8 +604,8 @@ describe('packages/date-picker', () => {
                     'aria-label',
                     'December 2023',
                   );
-                  expect(monthSelect).toHaveValue(Month.December.toString());
-                  expect(yearSelect).toHaveValue('2023');
+                  expect(monthSelect).toHaveTextContent('Dec');
+                  expect(yearSelect).toHaveTextContent('2023');
                 });
               });
 
@@ -637,46 +637,39 @@ describe('packages/date-picker', () => {
                     'aria-label',
                     'September 2024',
                   );
-                  expect(monthSelect).toHaveValue(Month.September.toString());
-                  expect(yearSelect).toHaveValue('2024');
-                });
-              });
-
-              describe('if `value` is not valid', () => {
-                test.skip('focus (highlight) starts on chevron button', async () => {
-                  const testValue = newUTC(2100, Month.July, 4);
-                  const { calendarButton, waitForMenuToOpen } =
-                    renderDatePicker({
-                      value: testValue,
-                      timeZone: props.tz,
-                    });
-                  userEvent.click(calendarButton);
-                  const { leftChevron } = await waitForMenuToOpen();
-                  expect(leftChevron).toHaveFocus();
-                });
-
-                test('menu opens to the month of that `value`', async () => {
-                  const testValue = newUTC(2100, Month.July, 4);
-                  const { calendarButton, waitForMenuToOpen } =
-                    renderDatePicker({
-                      value: testValue,
-                      timeZone: props.tz,
-                    });
-                  userEvent.click(calendarButton);
-                  const { calendarGrid, monthSelect, yearSelect } =
-                    await waitForMenuToOpen();
-
-                  expect(calendarGrid).toHaveAttribute(
-                    'aria-label',
-                    'July 2100',
-                  );
-                  expect(monthSelect).toHaveValue(Month.July.toString());
-                  expect(yearSelect).toHaveValue('2100');
+                  expect(monthSelect).toHaveTextContent('Sep');
+                  expect(yearSelect).toHaveTextContent('2024');
                 });
               });
             });
           },
         );
+
+        describe('if `value` is not valid', () => {
+          test.skip('focus (highlight) starts on chevron button', async () => {
+            const testValue = newUTC(2100, Month.July, 4);
+            const { calendarButton, waitForMenuToOpen } = renderDatePicker({
+              value: testValue,
+            });
+            userEvent.click(calendarButton);
+            const { leftChevron } = await waitForMenuToOpen();
+            expect(leftChevron).toHaveFocus();
+          });
+
+          test('menu opens to the month of that `value`', async () => {
+            const testValue = newUTC(2100, Month.July, 4);
+            const { calendarButton, waitForMenuToOpen } = renderDatePicker({
+              value: testValue,
+            });
+            userEvent.click(calendarButton);
+            const { calendarGrid, monthSelect, yearSelect } =
+              await waitForMenuToOpen();
+
+            expect(calendarGrid).toHaveAttribute('aria-label', 'July 2100');
+            expect(monthSelect).toHaveTextContent('Jul');
+            expect(yearSelect).toHaveTextContent('2100');
+          });
+        });
       });
 
       describe('Clicking a Calendar cell', () => {
