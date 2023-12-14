@@ -4,7 +4,7 @@ import { getTimezoneOffset } from 'date-fns-tz';
 import { isValidDate } from '../isValidDate';
 
 /**
- * Returns a date object that, _looks like_ the local time
+ * Returns a date object that _looks like_ the local time
  * for the given time zone when printed in ISO format.
  *
  * e.g. given `date = "2023-12-25T01:00Z"` and `timeZone = "America/Los_Angeles"`,

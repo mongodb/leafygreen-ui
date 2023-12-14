@@ -4,7 +4,9 @@ export type DateRangeType = [DateType, DateType];
 export type LocaleString = 'iso8601' | string;
 
 export interface MonthObject {
+  /** The localized long-form month name (e.g. December, July) */
   long: string;
+  /** A localized short-form month name (e.g. Dec, Jul) */
   short: string;
 }
 
