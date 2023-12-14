@@ -1,6 +1,6 @@
 import { Month } from '../constants';
 import { newUTC } from '../newUTC';
-import { testTimeZones } from '../testValues';
+import { testTimeZones } from '../testing/testValues';
 
 import { isSameTZMonth } from './isSameTZMonth';
 

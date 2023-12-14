@@ -2,7 +2,7 @@ import { padStart } from 'lodash';
 
 import { Month } from '../constants';
 import { newUTC } from '../newUTC';
-import { testTimeZones } from '../testValues';
+import { testTimeZones } from '../testing/testValues';
 
 import { getSimulatedTZDate } from './getSimulatedTZDate';
 
