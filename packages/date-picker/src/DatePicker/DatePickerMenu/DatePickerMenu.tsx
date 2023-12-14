@@ -30,6 +30,7 @@ import { MenuWrapper } from '../../shared/components/MenuWrapper';
 import { useSharedDatePickerContext } from '../../shared/context';
 import { useDatePickerContext } from '../DatePickerContext';
 
+import { shouldChevronBeDisabled } from './DatePickerMenuHeader/utils';
 import { getNewHighlight } from './utils/getNewHighlight';
 import {
   menuCalendarGridStyles,
@@ -41,7 +42,7 @@ import { DatePickerMenuHeader } from './DatePickerMenuHeader';
 
 export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
   ({ onKeyDown, ...rest }: DatePickerMenuProps, fwdRef) => {
-    const { isInRange, isOpen, setIsDirty, timeZone } =
+    const { min, max, isInRange, isOpen, setIsDirty, timeZone } =
       useSharedDatePickerContext();
     const {
       refs,
@@ -159,7 +160,14 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       if (isOpen && isTransitionedElementMenu && isTriggeredByButton) {
         // When the menu opens, set focus to the `highlight` cell
         const highlightedCell = getHighlightedCell();
-        highlightedCell?.focus();
+
+        if (highlightedCell) {
+          highlightedCell.focus();
+        } else if (!shouldChevronBeDisabled('left', month, min)) {
+          refs.chevronButtonRefs.left.current?.focus();
+        } else if (!shouldChevronBeDisabled('right', month, max)) {
+          refs.chevronButtonRefs.right.current?.focus();
+        }
       }
     };
 

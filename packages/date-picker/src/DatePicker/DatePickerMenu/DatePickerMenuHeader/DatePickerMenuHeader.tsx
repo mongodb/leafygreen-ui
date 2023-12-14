@@ -39,7 +39,7 @@ export const DatePickerMenuHeader = forwardRef<
 >(({ setMonth, ...rest }: DatePickerMenuHeaderProps, fwdRef) => {
   const { min, max, setIsSelectOpen, locale, isInRange } =
     useSharedDatePickerContext();
-  const { month } = useDatePickerContext();
+  const { refs, month } = useDatePickerContext();
 
   const monthOptions = getLocaleMonths(locale);
   const yearOptions = range(min.getUTCFullYear(), max.getUTCFullYear() + 1);
@@ -111,6 +111,7 @@ export const DatePickerMenuHeader = forwardRef<
   return (
     <div ref={fwdRef} className={menuHeaderStyles} {...rest}>
       <IconButton
+        ref={refs.chevronButtonRefs.left}
         aria-label={
           isMonthInValid('left') ? 'Previous valid month' : 'Previous month'
         }
@@ -165,6 +166,7 @@ export const DatePickerMenuHeader = forwardRef<
         </Select>
       </div>
       <IconButton
+        ref={refs.chevronButtonRefs.right}
         aria-label={isMonthInValid('right') ? 'Next valid month' : 'Next month'}
         disabled={shouldChevronBeDisabled('right', month, max)}
         onClick={handleChevronClick('right')}

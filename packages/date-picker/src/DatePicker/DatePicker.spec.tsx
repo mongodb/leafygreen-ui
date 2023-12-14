@@ -646,7 +646,7 @@ describe('packages/date-picker', () => {
         );
 
         describe('if `value` is not valid', () => {
-          test.skip('focus (highlight) starts on chevron button', async () => {
+          test('focus (highlight) starts on chevron button', async () => {
             const testValue = newUTC(2100, Month.July, 4);
             const { calendarButton, waitForMenuToOpen } = renderDatePicker({
               value: testValue,

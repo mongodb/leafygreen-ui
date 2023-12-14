@@ -10,6 +10,10 @@ export interface DatePickerComponentRefs {
   segmentRefs: SegmentRefs;
   calendarCellRefs: DynamicRefGetter<HTMLTableCellElement>;
   calendarButtonRef: React.RefObject<HTMLButtonElement>;
+  chevronButtonRefs: {
+    left: React.RefObject<HTMLButtonElement>;
+    right: React.RefObject<HTMLButtonElement>;
+  };
 }
 
 export interface DatePickerContextProps {

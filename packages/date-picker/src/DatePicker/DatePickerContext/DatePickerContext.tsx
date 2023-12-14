@@ -174,18 +174,21 @@ export const DatePickerProvider = ({
    * Returns the cell element with the provided value
    */
   const getCellWithValue = (date: DateType): HTMLTableCellElement | null => {
-    // TODO: use TZ key for highlight
-    const highlightKey = getISODate(date);
-    const cell = highlightKey
-      ? refs.calendarCellRefs(highlightKey)?.current
-      : null;
-    return cell;
+    if (isInRange(date)) {
+      const highlightKey = getISODate(date);
+      const cell = highlightKey
+        ? refs.calendarCellRefs(highlightKey)?.current
+        : null;
+      return cell;
+    }
+
+    return null;
   };
 
   /**
    * Returns the cell element with the current highlight value
    */
-  const getHighlightedCell = () => {
+  const getHighlightedCell = (): HTMLTableCellElement | null => {
     return getCellWithValue(highlight);
   };
 
