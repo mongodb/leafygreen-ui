@@ -8,13 +8,16 @@ export type BaseDatePickerProps = {
   /**
    * A description for the date picker.
    *
-   * It's recommended to set a meaningful time zone representation as the description (e.g. "Coordinated Universal Time")
+   * It's recommended to set a meaningful time zone representation as the description
+   * (e.g. "Coordinated Universal Time")
    */
   description?: React.ReactNode;
 
   /**
-   * Sets the _presentation format_ for the displayed date.
-   * Fallback to the user’s browser preference (if supported), otherwise ISO-8601.
+   * Sets the _presentation format_ for the displayed date,
+   * and localizes month & weekday labels.
+   * Defaults to the user’s browser preference (if available),
+   * otherwise ISO-8601.
    *
    * Currently only the following values are officially supported: 'en-US' | 'en-GB' | 'iso8601'
    * Other valid [Locale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
@@ -25,18 +28,20 @@ export type BaseDatePickerProps = {
   locale?: LocaleString;
 
   /**
-   * A valid IANA timezone string, or UTC offset.
-   * Sets the _presentation time zone_ for the displayed date.
-   * Fallback to the user’s browser preference (if available), otherwise UTC.
-   *
-   * @default 'utc'
+   * A valid IANA timezone string, or UTC offset,
+   * used to calculate initial values.
+   * Defaults to the user’s browser settings.
    */
   timeZone?: string;
 
-  /** The earliest date accepted */
+  /**
+   * The earliest date accepted, in UTC
+   */
   min?: Date;
 
-  /** The latest date accepted */
+  /**
+   * The latest date accepted, in UTC
+   */
   max?: Date;
 
   /**
@@ -49,7 +54,9 @@ export type BaseDatePickerProps = {
    */
   disabled?: boolean;
 
-  /** The size of the input */
+  /**
+   * The size of the input
+   */
   size?: Size;
 
   /**
@@ -62,7 +69,10 @@ export type BaseDatePickerProps = {
    */
   errorMessage?: string;
 
-  /** Whether the calendar menu is initially open. Note: The calendar menu will not open if disabled is set to true.  */
+  /**
+   * Whether the calendar menu is initially open.
+   * Note: The calendar menu will not open if disabled is set to `true`.
+   */
   initialOpen?: boolean;
 
   /**

@@ -9,8 +9,8 @@ import { isValidDate } from '../isValidDate';
  *
  * e.g. given `date = "2023-12-25T01:00Z"` and `timeZone = "America/Los_Angeles"`,
  * we get a date with the ISO date stamp `"2023-12-24T17:00Z"`,
- * which _looks like_ the NYC local time,
- * even though the date object technically incorrect.
+ * which _looks like_ the LA local time,
+ * (though the date object technically incorrect).
  */
 export const getSimulatedTZDate = (date: Date, timeZone: string): Date => {
   if (!isValidDate(date)) return date;
