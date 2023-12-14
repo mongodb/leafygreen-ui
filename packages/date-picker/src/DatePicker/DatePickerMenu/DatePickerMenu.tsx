@@ -1,13 +1,15 @@
 import React, {
   forwardRef,
   KeyboardEventHandler,
+  TransitionEventHandler,
   useEffect,
   useRef,
 } from 'react';
+import { ExitHandler } from 'react-transition-group/Transition';
 
 import {
   addDaysUTC,
-  getFirstOfMonth,
+  getFirstOfUTCMonth,
   getFullMonthLabel,
   getISODate,
   getUTCDateString,
@@ -28,6 +30,7 @@ import { MenuWrapper } from '../../shared/components/MenuWrapper';
 import { useSharedDatePickerContext } from '../../shared/context';
 import { useDatePickerContext } from '../DatePickerContext';
 
+import { shouldChevronBeDisabled } from './DatePickerMenuHeader/utils';
 import { getNewHighlight } from './utils/getNewHighlight';
 import {
   menuCalendarGridStyles,
@@ -39,7 +42,7 @@ import { DatePickerMenuHeader } from './DatePickerMenuHeader';
 
 export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
   ({ onKeyDown, ...rest }: DatePickerMenuProps, fwdRef) => {
-    const { isInRange, isOpen, setIsDirty, timeZone } =
+    const { min, max, isInRange, isOpen, setIsDirty, timeZone } =
       useSharedDatePickerContext();
     const {
       refs,
@@ -54,6 +57,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       setHighlight,
       getCellWithValue,
       getHighlightedCell,
+      menuTriggerEvent,
     } = useDatePickerContext();
 
     const ref = useForwardedRef(fwdRef, null);
@@ -65,12 +69,22 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
 
     const monthLabel = getFullMonthLabel(month);
 
-    /** Set the highlighted cell when the value changes in the input */
-    useEffect(() => {
-      if (value && !isSameUTCDay(value, prevValue) && isInRange(value)) {
-        setHighlight(value);
+    /** Returns the current state of the cell */
+    const getCellState = (cellDay: Date | null): CalendarCellState => {
+      if (isInRange(cellDay)) {
+        if (isSameUTCDay(cellDay, value)) {
+          return CalendarCellState.Active;
+        }
+
+        return CalendarCellState.Default;
       }
-    }, [value, isInRange, setHighlight, prevValue]);
+
+      return CalendarCellState.Disabled;
+    };
+
+    /**
+     * SETTERS
+     */
 
     /** setDisplayMonth with side effects */
     const updateMonth = (newMonth: Date) => {
@@ -100,6 +114,17 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
     };
 
     /**
+     * SIDE EFFECTS
+     */
+
+    /** Set the highlighted cell when the value changes in the input */
+    useEffect(() => {
+      if (value && !isSameUTCDay(value, prevValue) && isInRange(value)) {
+        setHighlight(value);
+      }
+    }, [value, isInRange, setHighlight, prevValue]);
+
+    /**
      * If the new value is not the current month, update the month
      */
     useEffect(() => {
@@ -108,21 +133,52 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
         !isSameUTCDay(value, prevValue) &&
         !isSameUTCMonth(value, month)
       ) {
-        setDisplayMonth(getFirstOfMonth(value));
+        setDisplayMonth(getFirstOfUTCMonth(value));
       }
     }, [month, prevValue, setDisplayMonth, value]);
 
-    /** Returns the current state of the cell */
-    const getCellState = (cellDay: Date | null): CalendarCellState => {
-      if (isInRange(cellDay)) {
-        if (isSameUTCDay(cellDay, value)) {
-          return CalendarCellState.Active;
+    /**
+     * EVENT HANDLERS
+     */
+
+    /**
+     * Fired when the CSS transition to open the menu is finished.
+     * Sets the initial focus on the highlighted cell
+     */
+    const handleMenuTransitionEntered: TransitionEventHandler = e => {
+      // Whether this event is firing in response to the menu transition
+      const isTransitionedElementMenu = e.target === ref.current;
+
+      // Whether the latest openMenu event was triggered by the calendar button
+      const isTriggeredByButton =
+        menuTriggerEvent &&
+        refs.calendarButtonRef.current?.contains(
+          menuTriggerEvent.target as HTMLElement,
+        );
+
+      // Only move focus to input when opened via button click
+      if (isOpen && isTransitionedElementMenu && isTriggeredByButton) {
+        // When the menu opens, set focus to the `highlight` cell
+        const highlightedCell = getHighlightedCell();
+
+        if (highlightedCell) {
+          highlightedCell.focus();
+        } else if (!shouldChevronBeDisabled('left', month, min)) {
+          refs.chevronButtonRefs.left.current?.focus();
+        } else if (!shouldChevronBeDisabled('right', month, max)) {
+          refs.chevronButtonRefs.right.current?.focus();
         }
-
-        return CalendarCellState.Default;
       }
+    };
 
-      return CalendarCellState.Disabled;
+    /**
+     * Fired when the Transform element for the menu has exited.
+     * Fires side effects when the menu closes
+     */
+    const handleMenuTransitionExited: ExitHandler<HTMLDivElement> = () => {
+      if (!isOpen) {
+        closeMenu();
+      }
     };
 
     /** Called when any calendar cell is clicked */
@@ -146,7 +202,10 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       }
     };
 
-    // Focus trap
+    /**
+     * Fired on any key press.
+     * Handles custom focus trap logic
+     */
     const handleMenuKeyPress: KeyboardEventHandler<HTMLDivElement> = e => {
       const { key } = e;
 
@@ -177,7 +236,10 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       onKeyDown?.(e);
     };
 
-    /** Called on any keydown within the CalendarGrid element */
+    /**
+     * Called on any keydown within the CalendarGrid element.
+     * Responsible for updating the highlight +/- 1 day or 1 week
+     */
     const handleCalendarKeyDown: KeyboardEventHandler<HTMLTableElement> = e => {
       const { key } = e;
 
@@ -228,10 +290,12 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
         role="listbox"
         active={isOpen}
         spacing={spacing[1]}
+        data-today={today.toISOString()}
         className={menuWrapperStyles}
         usePortal
         onKeyDown={handleMenuKeyPress}
-        data-today={today.toISOString()}
+        onTransitionEnd={handleMenuTransitionEntered}
+        onExited={handleMenuTransitionExited}
         {...rest}
       >
         <div className={menuContentStyles}>
@@ -246,22 +310,26 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
             month={month}
             className={menuCalendarGridStyles}
             onKeyDown={handleCalendarKeyDown}
+            // TODO: Test month label in different time zones
             aria-label={monthLabel}
           >
-            {(day, i) => (
-              <CalendarCell
-                key={i}
-                ref={cellRefs(getISODate(day))}
-                aria-label={getUTCDateString(day)}
-                isHighlighted={isSameUTCDay(day, highlight)}
-                isCurrent={isSameTZDay(today, day, timeZone)}
-                state={getCellState(day)}
-                onClick={cellClickHandlerForDay(day)}
-                data-iso={getISODate(day)}
-              >
-                {day.getUTCDate()}
-              </CalendarCell>
-            )}
+            {(day, i) => {
+              return (
+                // TODO: Test highlight rendering in different time zones
+                <CalendarCell
+                  key={i}
+                  ref={cellRefs(getISODate(day))}
+                  data-iso={getISODate(day)}
+                  aria-label={getUTCDateString(day)}
+                  isHighlighted={isSameUTCDay(highlight, day)}
+                  isCurrent={isSameTZDay(today, day, timeZone)}
+                  state={getCellState(day)}
+                  onClick={cellClickHandlerForDay(day)}
+                >
+                  {day.getUTCDate()}
+                </CalendarCell>
+              );
+            }}
           </CalendarGrid>
           <DatePickerMenuHeader ref={headerRef} setMonth={updateMonth} />
         </div>

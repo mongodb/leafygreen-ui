@@ -11,7 +11,7 @@ import React, {
 
 import {
   DateType,
-  getFirstOfMonth,
+  getFirstOfUTCMonth,
   getISODate,
   isOnOrBefore,
   isSameUTCDay,
@@ -49,6 +49,7 @@ export const DatePickerProvider = ({
     min,
     max,
     locale,
+    timeZone,
     setInternalErrorMessage,
     clearInternalErrorMessage,
     isInRange,
@@ -67,13 +68,13 @@ export const DatePickerProvider = ({
   /**
    * Keep track of the displayed month
    */
-  const [month, _setMonth] = useState<Date>(getFirstOfMonth(value ?? today));
+  const [month, _setMonth] = useState<Date>(getFirstOfUTCMonth(value ?? today));
 
   /**
    * Keep track of the element the user is highlighting with the keyboard
    */
   const [highlight, _setHighlight] = useState<DateType>(
-    getInitialHighlight(value, today),
+    getInitialHighlight(value, today, timeZone),
   );
 
   /***********
@@ -85,7 +86,7 @@ export const DatePickerProvider = ({
    */
   const setValue = (newVal?: DateType) => {
     _setValue(newVal ?? null);
-    setMonth(getFirstOfMonth(newVal ?? today));
+    setMonth(getFirstOfUTCMonth(newVal ?? today));
   };
 
   /**
@@ -150,9 +151,9 @@ export const DatePickerProvider = ({
         refs.calendarButtonRef.current?.focus();
       }
       // update month to something valid
-      setMonth(getFirstOfMonth(value ?? today));
+      setMonth(getFirstOfUTCMonth(value ?? today));
       // update highlight to something valid
-      setHighlight(getInitialHighlight(value, today));
+      setHighlight(getInitialHighlight(value, today, timeZone));
     });
   };
 
@@ -173,17 +174,21 @@ export const DatePickerProvider = ({
    * Returns the cell element with the provided value
    */
   const getCellWithValue = (date: DateType): HTMLTableCellElement | null => {
-    const highlightKey = getISODate(date);
-    const cell = highlightKey
-      ? refs.calendarCellRefs(highlightKey)?.current
-      : null;
-    return cell;
+    if (isInRange(date)) {
+      const highlightKey = getISODate(date);
+      const cell = highlightKey
+        ? refs.calendarCellRefs(highlightKey)?.current
+        : null;
+      return cell;
+    }
+
+    return null;
   };
 
   /**
    * Returns the cell element with the current highlight value
    */
-  const getHighlightedCell = () => {
+  const getHighlightedCell = (): HTMLTableCellElement | null => {
     return getCellWithValue(highlight);
   };
 
@@ -196,7 +201,7 @@ export const DatePickerProvider = ({
    */
   useEffect(() => {
     if (!isSameUTCDay(value, prevValue)) {
-      setMonth(getFirstOfMonth(value ?? today));
+      setMonth(getFirstOfUTCMonth(value ?? today));
     }
   }, [prevValue, setMonth, today, value]);
 

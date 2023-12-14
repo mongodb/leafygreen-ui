@@ -1,11 +1,9 @@
 import React, {
   forwardRef,
   KeyboardEventHandler,
-  TransitionEventHandler,
   useEffect,
   useRef,
 } from 'react';
-import { ExitHandler } from 'react-transition-group/Transition';
 import isEqual from 'lodash/isEqual';
 
 import { isSameUTCDay } from '@leafygreen-ui/date-utils';
@@ -29,14 +27,7 @@ export const DatePickerContent = forwardRef<
 >(({ ...rest }: DatePickerContentProps, fwdRef) => {
   const { min, max, isOpen, menuId, disabled, isSelectOpen } =
     useSharedDatePickerContext();
-  const {
-    refs,
-    value,
-    closeMenu,
-    menuTriggerEvent,
-    handleValidation,
-    getHighlightedCell,
-  } = useDatePickerContext();
+  const { value, closeMenu, handleValidation } = useDatePickerContext();
 
   const prevValue = usePrevious(value);
   const prevMin = usePrevious(min);
@@ -48,7 +39,9 @@ export const DatePickerContent = forwardRef<
 
   useBackdropClick(closeMenu, [formFieldRef, menuRef], isOpen && !isSelectOpen);
 
-  /** This listens to when the disabled prop changes to true and closes the menu */
+  /**
+   * This listens to when the disabled prop changes to true and closes the menu
+   */
   useEffect(() => {
     // if disabled is true but was previously false. This prevents this effect from rerunning multiple times since other states are updated when the menu closes.
     if (disabled && !prevDisabledValue) {
@@ -57,34 +50,9 @@ export const DatePickerContent = forwardRef<
     }
   }, [closeMenu, disabled, handleValidation, value, prevDisabledValue]);
 
-  /** Fired when the CSS transition to open the menu is fired */
-  const handleMenuTransitionEntered: TransitionEventHandler = e => {
-    // Whether this event is firing in response to the menu transition
-    const isTransitionedElementMenu = e.target === menuRef.current;
-
-    // Whether the latest openMenu event was triggered by the calendar button
-    const isTriggeredByButton =
-      menuTriggerEvent &&
-      refs.calendarButtonRef.current?.contains(
-        menuTriggerEvent.target as HTMLElement,
-      );
-
-    // Only move focus to input when opened via button click
-    if (isOpen && isTransitionedElementMenu && isTriggeredByButton) {
-      // When the menu opens, set focus to the `highlight` cell
-      const highlightedCell = getHighlightedCell();
-      highlightedCell?.focus();
-    }
-  };
-
-  /** Fired when the Transform element for the menu has exited */
-  const handleMenuTransitionExited: ExitHandler<HTMLDivElement> = () => {
-    if (!isOpen) {
-      closeMenu();
-    }
-  };
-
-  /** Handle key down events that should be fired regardless of target */
+  /**
+   * Handle key down events that should be fired regardless of target.
+   */
   const handleDatePickerKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
     const { key } = e;
 
@@ -114,7 +82,7 @@ export const DatePickerContent = forwardRef<
   };
 
   /**
-   * Side Effects
+   * SIDE EFFECTS
    */
 
   /** When value changes, validate it */
@@ -124,9 +92,7 @@ export const DatePickerContent = forwardRef<
     }
   }, [handleValidation, prevValue, value]);
 
-  /**
-   * If min/max changes, re-validate the value
-   */
+  /** If min/max changes, re-validate the value */
   useEffect(() => {
     if (
       (prevMin && !isSameUTCDay(min, prevMin)) ||
@@ -148,8 +114,6 @@ export const DatePickerContent = forwardRef<
         id={menuId}
         refEl={formFieldRef}
         onKeyDown={handleDatePickerKeyDown}
-        onTransitionEnd={handleMenuTransitionEntered}
-        onExited={handleMenuTransitionExited}
       />
     </>
   );

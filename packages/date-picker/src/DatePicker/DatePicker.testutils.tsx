@@ -63,7 +63,7 @@ export interface RenderMenuResult {
   /** Query for a cell with a given date value */
   queryCellByDate: (date: Date) => HTMLTableCellElement | null;
   /** Query for a cell with a given ISO date string */
-  queryCellISODate: (isoString: string) => HTMLTableCellElement | null;
+  queryCellByISODate: (isoString: string) => HTMLTableCellElement | null;
 }
 
 /**
@@ -133,7 +133,7 @@ export const renderDatePicker = (
       return cell as HTMLTableCellElement | null;
     };
 
-    const queryCellISODate = (
+    const queryCellByISODate = (
       isoString: string,
     ): HTMLTableCellElement | null => {
       const cell = calendarGrid?.querySelector(`[data-iso="${isoString}"]`);
@@ -153,7 +153,7 @@ export const renderDatePicker = (
       yearSelect: yearSelect as HTMLButtonElement | null,
       todayCell,
       queryCellByDate,
-      queryCellISODate,
+      queryCellByISODate,
     };
   }
 

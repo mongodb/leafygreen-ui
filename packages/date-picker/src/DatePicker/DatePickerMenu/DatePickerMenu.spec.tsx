@@ -5,6 +5,7 @@ import { addDays } from 'date-fns';
 
 import {
   getISODate,
+  getISODateTZ,
   Month,
   newUTC,
   setUTCDate,
@@ -27,11 +28,6 @@ import { DatePickerMenu, DatePickerMenuProps } from '.';
 
 const testToday = newUTC(2023, Month.September, 10);
 const testValue = newUTC(2023, Month.September, 14);
-
-const standardTimeEndDate = newUTC(2023, Month.March, 11);
-const daylightTimeStartDate = newUTC(2023, Month.March, 12);
-const daylightTimeEndDate = newUTC(2023, Month.November, 5);
-const standardTimeStartDate = newUTC(2023, Month.November, 6);
 
 const renderDatePickerMenu = (
   props?: Partial<DatePickerMenuProps> | null,
@@ -78,7 +74,10 @@ const renderDatePickerMenu = (
   ) as Array<HTMLTableCellElement>;
 
   const todayCell = calendarGrid.querySelector(
-    `[data-iso="${getISODate(testToday)}"]`,
+    `[data-iso="${getISODateTZ(
+      new Date(Date.now()),
+      context?.timeZone ?? Intl.DateTimeFormat().resolvedOptions().timeZone,
+    )}"]`,
   );
 
   const getCellWithValue = (date: Date) =>
@@ -87,8 +86,17 @@ const renderDatePickerMenu = (
   const getCellWithISOString = (isoStr: string) =>
     calendarGrid.querySelector(`[data-iso="${isoStr}"]`);
 
-  const leftChevron = result?.queryByLabelText('Previous month');
-  const rightChevron = result?.queryByLabelText('Next month');
+  const getCurrentCell = () =>
+    calendarGrid.querySelector('[aria-current="true"]');
+
+  const leftChevron =
+    result.queryByLabelText('Previous month') ||
+    result.queryByLabelText('Previous valid month');
+  const rightChevron =
+    result.queryByLabelText('Next month') ||
+    result.queryByLabelText('Next valid month');
+  const monthSelect = result.queryByLabelText('Select month');
+  const yearSelect = result.queryByLabelText('Select year');
 
   return {
     ...result,
@@ -98,8 +106,11 @@ const renderDatePickerMenu = (
     todayCell,
     getCellWithValue,
     getCellWithISOString,
+    getCurrentCell,
     leftChevron,
     rightChevron,
+    monthSelect,
+    yearSelect,
   };
 };
 
@@ -152,25 +163,13 @@ describe('packages/date-picker/date-picker-menu', () => {
       );
     });
 
-    test('default highlight is on today', () => {
-      const { todayCell } = renderDatePickerMenu();
-      userEvent.tab();
-      expect(todayCell).toHaveFocus();
-    });
-
-    test('highlight starts on current value when provided', () => {
-      const { getCellWithValue } = renderDatePickerMenu(null, {
-        value: testValue,
-      });
-      userEvent.tab();
-      const valueCell = getCellWithValue(testValue);
-      expect(valueCell).toHaveFocus();
-    });
-
     describe('rendered cells', () => {
       test('have correct `aria-label`', () => {
-        const { todayCell } = renderDatePickerMenu();
-        expect(todayCell).toHaveAttribute('aria-label', 'Sun Sep 10 2023');
+        const { getCellWithISOString } = renderDatePickerMenu();
+        expect(getCellWithISOString('2023-09-10')).toHaveAttribute(
+          'aria-label',
+          'Sun Sep 10 2023',
+        );
       });
     });
 
@@ -214,7 +213,7 @@ describe('packages/date-picker/date-picker-menu', () => {
         expect(isEveryCellDisabled).toBe(true);
       });
 
-      test("doesn't not highlight a cell", () => {
+      test('does not highlight a cell', () => {
         const { calendarCells } = renderDatePickerMenu(null, {
           value: newUTC(2048, Month.December, 25),
         });
@@ -225,88 +224,68 @@ describe('packages/date-picker/date-picker-menu', () => {
       });
     });
 
-    describe('when system date changes', () => {
-      describe.each(testTimeZones)(
-        'when system time zone is $tz',
-        ({ tz, UTCOffset }) => {
+    describe.each(testTimeZones)(
+      'when system time is in $tz',
+      ({ tz, UTCOffset }) => {
+        describe.each([
+          { tz: undefined, UTCOffset: undefined },
+          ...testTimeZones,
+        ])('and timeZone prop is $tz', prop => {
+          const dec24Local = newUTC(
+            2023,
+            Month.December,
+            24,
+            23 - (prop.UTCOffset ?? UTCOffset),
+            59,
+          );
+          const dec25Local = newUTC(
+            2023,
+            Month.December,
+            25,
+            0 - (prop.UTCOffset ?? UTCOffset),
+            0,
+          );
+          const dec24ISO = '2023-12-24';
+          const dec25ISO = '2023-12-25';
+          const ctx = {
+            timeZone: prop?.tz,
+          };
+
           beforeEach(() => {
+            jest.setSystemTime(dec24Local);
             mockTimeZone(tz, UTCOffset);
-            jest.useFakeTimers();
           });
           afterEach(() => {
             jest.restoreAllMocks();
           });
 
-          test('cell marked as `current` updates', () => {
-            const dec24Local = newUTC(
-              2023,
-              Month.December,
-              24,
-              23 - UTCOffset,
-              59,
-            );
-
-            const dec25Local = newUTC(
-              2023,
-              Month.December,
-              25,
-              0 - UTCOffset,
-              0,
-            );
-
-            jest.setSystemTime(dec24Local);
-
+          test('when date changes, cell marked as `current` updates', () => {
             const { getCellWithISOString, rerenderDatePickerMenu } =
-              renderDatePickerMenu();
-            const dec24Cell = getCellWithISOString('2023-12-24');
+              renderDatePickerMenu(null, null, ctx);
+            const dec24Cell = getCellWithISOString(dec24ISO);
             expect(dec24Cell).toHaveAttribute('aria-current', 'true');
 
             jest.setSystemTime(dec25Local);
 
             rerenderDatePickerMenu();
-            const dec25LocalCell = getCellWithISOString('2023-12-25');
+            const dec25LocalCell = getCellWithISOString(dec25ISO);
             expect(dec25LocalCell).toHaveAttribute('aria-current', 'true');
           });
-
-          describe.each(testTimeZones)(
-            'and timeZone prop is $tz',
-            ({ tz: tzProp, UTCOffset: propOffset }) => {
-              test('cell marked as `current` updates', () => {
-                const dec24Local = newUTC(
-                  2023,
-                  Month.December,
-                  24,
-                  23 - propOffset,
-                  59,
-                );
-
-                const dec25Local = newUTC(
-                  2023,
-                  Month.December,
-                  25,
-                  0 - propOffset,
-                  0,
-                );
-
-                jest.setSystemTime(dec24Local);
-                const { getCellWithISOString, rerenderDatePickerMenu } =
-                  renderDatePickerMenu(null, null, { timeZone: tzProp });
-                const dec24Cell = getCellWithISOString('2023-12-24');
-                expect(dec24Cell).toHaveAttribute('aria-current', 'true');
-                jest.setSystemTime(dec25Local);
-                rerenderDatePickerMenu();
-                const dec25Cell = getCellWithISOString('2023-12-25');
-                expect(dec25Cell).toHaveAttribute('aria-current', 'true');
-              });
-            },
-          );
-        },
-      );
-    });
+        });
+      },
+    );
   });
 
   describe('Keyboard navigation', () => {
     describe('Arrow Keys', () => {
+      beforeEach(() => {
+        jest.setSystemTime(testToday);
+        mockTimeZone('America/New_York', -5);
+      });
+      afterEach(() => {
+        jest.restoreAllMocks();
+      });
+
       test('left arrow moves focus to the previous day', async () => {
         const { getCellWithValue } = renderDatePickerMenu(null, {
           value: testValue,
@@ -352,58 +331,66 @@ describe('packages/date-picker/date-picker-menu', () => {
       });
 
       describe('when switching between daylight savings and standard time', () => {
-        // DT: Sun, Mar 12, 2023 – Sun, Nov 5, 2023
+        // DST: Sun, Mar 12, 2023 – Sun, Nov 5, 2023
 
-        describe('daylight time start (Mar 12 2023)', () => {
-          const weekBeforeDTStart = new Date(Date.UTC(2023, Month.March, 5));
+        const standardTimeEndDate = newUTC(2023, Month.March, 11, 22);
+        const weekBeforeDTStart = newUTC(2023, Month.March, 5, 22);
+        const daylightTimeStartDate = newUTC(2023, Month.March, 12, 22);
+        const daylightTimeEndDate = newUTC(2023, Month.November, 5, 22);
+        const weekAfterDTEnd = newUTC(2023, Month.November, 12, 22);
+        const standardTimeStartDate = newUTC(2023, Month.November, 6, 22);
 
+        describe('DST start (Mar 12 2023)', () => {
           test('left arrow moves focus to prev day', async () => {
             jest.setSystemTime(daylightTimeStartDate); // Mar 12
-            const { getCellWithValue } = renderDatePickerMenu();
+            const { getCellWithISOString } = renderDatePickerMenu();
             userEvent.tab();
-            userEvent.keyboard('{arrowleft}');
-            const prevDayCell = getCellWithValue(standardTimeEndDate); // Mar 11
+            const currentDayCell = getCellWithISOString('2023-03-12'); // Mar 12
+            await waitFor(() => expect(currentDayCell).toHaveFocus());
 
+            userEvent.keyboard('{arrowleft}');
+            const prevDayCell = getCellWithISOString('2023-03-11'); // Mar 11
             await waitFor(() => expect(prevDayCell).toHaveFocus());
           });
 
           test('right arrow moves focus to next day', async () => {
             jest.setSystemTime(standardTimeEndDate); // Mar 11
-            const { getCellWithValue } = renderDatePickerMenu();
+            const { getCellWithISOString } = renderDatePickerMenu();
             userEvent.tab();
+            const currentDayCell = getCellWithISOString('2023-03-11'); // Mar 11
+            await waitFor(() => expect(currentDayCell).toHaveFocus());
+
             userEvent.keyboard('{arrowright}');
-            const nextDayCell = getCellWithValue(daylightTimeStartDate); // Mar 12
+            const nextDayCell = getCellWithISOString('2023-03-12'); // Mar 12
             await waitFor(() => expect(nextDayCell).toHaveFocus());
           });
 
           test('up arrow moves focus to the previous week', async () => {
             jest.setSystemTime(daylightTimeStartDate); // Mar 12
-            const { getCellWithValue } = renderDatePickerMenu();
+            const { getCellWithISOString } = renderDatePickerMenu();
             userEvent.tab();
             userEvent.keyboard('{arrowup}');
-            const prevWeekCell = getCellWithValue(weekBeforeDTStart); // Mar 5
+            const prevWeekCell = getCellWithISOString('2023-03-05'); // Mar 5
             await waitFor(() => expect(prevWeekCell).toHaveFocus());
           });
 
           test('down arrow moves focus to the next week', async () => {
             jest.setSystemTime(weekBeforeDTStart); // Mar 5
-            const { getCellWithValue } = renderDatePickerMenu();
+            const { getCellWithISOString } = renderDatePickerMenu();
             userEvent.tab();
             userEvent.keyboard('{arrowdown}');
-            const nextWeekCell = getCellWithValue(daylightTimeStartDate); // Mar 12
+            const nextWeekCell = getCellWithISOString('2023-03-12'); // Mar 12
             await waitFor(() => expect(nextWeekCell).toHaveFocus());
           });
         });
 
-        describe('daylight time end (Nov 5 2023)', () => {
-          const weekAfterDTEnd = new Date(Date.UTC(2023, Month.November, 12));
-
+        describe('DST end (Nov 5 2023)', () => {
           test('left arrow moves focus to prev day', async () => {
             jest.setSystemTime(standardTimeStartDate); // Nov 6
-            const { getCellWithValue } = renderDatePickerMenu();
+            const { getCellWithISOString } = renderDatePickerMenu();
             userEvent.tab();
             userEvent.keyboard('{arrowleft}');
-            const prevDayCell = getCellWithValue(daylightTimeEndDate); // Nov 5
+            const prevDayCell = getCellWithISOString('2023-11-05'); // Nov 5
 
             await waitFor(() => expect(prevDayCell).toHaveFocus());
           });
@@ -411,73 +398,99 @@ describe('packages/date-picker/date-picker-menu', () => {
           test('right arrow moves focus to next day', async () => {
             jest.setSystemTime(daylightTimeEndDate); // Nov 5
 
-            const { getCellWithValue } = renderDatePickerMenu();
+            const { getCellWithISOString } = renderDatePickerMenu();
             userEvent.tab();
             userEvent.keyboard('{arrowright}');
 
-            const nextDayCell = getCellWithValue(standardTimeStartDate); // Nov 6
+            const nextDayCell = getCellWithISOString('2023-11-06'); // Nov 6
             await waitFor(() => expect(nextDayCell).toHaveFocus());
           });
 
           test('up arrow moves focus to the previous week', async () => {
             jest.setSystemTime(weekAfterDTEnd); // Nov 12
-            const { getCellWithValue } = renderDatePickerMenu();
+            const { getCellWithISOString } = renderDatePickerMenu();
             userEvent.tab();
             userEvent.keyboard('{arrowup}');
 
-            const prevWeekCell = getCellWithValue(daylightTimeEndDate); // Nov 5
+            const prevWeekCell = getCellWithISOString('2023-11-05'); // Nov 5
             await waitFor(() => expect(prevWeekCell).toHaveFocus());
           });
 
           test('down arrow moves focus to the next week', async () => {
             jest.setSystemTime(daylightTimeEndDate); // Nov 5
-            const { getCellWithValue } = renderDatePickerMenu();
+            const { getCellWithISOString } = renderDatePickerMenu();
             userEvent.tab();
             userEvent.keyboard('{arrowdown}');
 
-            const nextWeekCell = getCellWithValue(weekAfterDTEnd); // Nov 12
+            const nextWeekCell = getCellWithISOString('2023-11-12'); // Nov 12
             await waitFor(() => expect(nextWeekCell).toHaveFocus());
           });
         });
       });
 
       describe('when next day would be out of range', () => {
+        const testValue = newUTC(2023, Month.September, 10);
+        const isoString = '2023-09-10';
         const singleCtx = {
-          value: testToday,
+          value: testValue,
         };
         test('left arrow does nothing', async () => {
-          const { todayCell } = renderDatePickerMenu(null, singleCtx, {
-            min: testToday,
-          });
+          const { getCellWithISOString } = renderDatePickerMenu(
+            null,
+            singleCtx,
+            {
+              min: testValue,
+            },
+          );
           userEvent.tab();
           userEvent.keyboard('{arrowleft}');
-          await waitFor(() => expect(todayCell).toHaveFocus());
+          await waitFor(() =>
+            expect(getCellWithISOString(isoString)).toHaveFocus(),
+          );
         });
 
         test('right arrow does nothing', async () => {
-          const { todayCell } = renderDatePickerMenu(null, singleCtx, {
-            max: testToday,
-          });
+          const { getCellWithISOString } = renderDatePickerMenu(
+            null,
+            singleCtx,
+            {
+              max: testValue,
+            },
+          );
           userEvent.tab();
           userEvent.keyboard('{arrowright}');
-          await waitFor(() => expect(todayCell).toHaveFocus());
+          await waitFor(() =>
+            expect(getCellWithISOString(isoString)).toHaveFocus(),
+          );
         });
 
         test('up arrow does nothing', async () => {
-          const { todayCell } = renderDatePickerMenu(null, singleCtx, {
-            min: addDays(testToday, -6),
-          });
+          const { getCellWithISOString } = renderDatePickerMenu(
+            null,
+            singleCtx,
+            {
+              min: addDays(testValue, -6),
+            },
+          );
           userEvent.tab();
           userEvent.keyboard('{arrowup}');
-          await waitFor(() => expect(todayCell).toHaveFocus());
+          await waitFor(() =>
+            expect(getCellWithISOString(isoString)).toHaveFocus(),
+          );
         });
         test('down arrow does nothing', async () => {
-          const { todayCell } = renderDatePickerMenu(null, singleCtx, {
-            max: addDays(testToday, 6),
-          });
+          const { getCellWithISOString } = renderDatePickerMenu(
+            null,
+            singleCtx,
+            {
+              max: addDays(testValue, 6),
+            },
+          );
           userEvent.tab();
           userEvent.keyboard('{arrowdown}');
-          await waitFor(() => expect(todayCell).toHaveFocus());
+          await waitFor(() =>
+            expect(getCellWithISOString(isoString)).toHaveFocus(),
+          );
         });
       });
 

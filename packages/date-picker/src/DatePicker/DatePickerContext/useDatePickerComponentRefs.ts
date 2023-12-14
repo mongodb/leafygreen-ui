@@ -17,9 +17,17 @@ export const useDateRangeComponentRefs = (): DatePickerComponentRefs => {
 
   const calendarButtonRef = useRef<HTMLButtonElement>(null);
 
+  const leftChevronRef = useRef<HTMLButtonElement>(null);
+  const rightChevronRef = useRef<HTMLButtonElement>(null);
+  const chevronButtonRefs = {
+    left: leftChevronRef,
+    right: rightChevronRef,
+  };
+
   return {
     segmentRefs,
     calendarCellRefs,
     calendarButtonRef,
+    chevronButtonRefs,
   };
 };

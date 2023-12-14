@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useState } from 'react';
+import React, { createRef, PropsWithChildren, useState } from 'react';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -19,6 +19,12 @@ import { DatePickerMenuHeader } from '.';
 
 const MockSharedDatePickerProvider = SharedDatePickerContext.Provider;
 const MockDatePickerProvider = DatePickerContext.Provider;
+const mockRefs = {
+  chevronButtonRefs: {
+    left: createRef<HTMLButtonElement>(),
+    right: createRef<HTMLButtonElement>(),
+  },
+};
 
 describe('packages/date-picker/menu/header', () => {
   describe('Rendering', () => {
@@ -34,6 +40,7 @@ describe('packages/date-picker/menu/header', () => {
             <MockDatePickerProvider
               value={
                 {
+                  refs: mockRefs,
                   month: newUTC(2022, Month.July, 1),
                 } as DatePickerContextProps
               }
@@ -70,6 +77,7 @@ describe('packages/date-picker/menu/header', () => {
             <MockDatePickerProvider
               value={
                 {
+                  refs: mockRefs,
                   month: newUTC(2024, Month.July, 1),
                 } as DatePickerContextProps
               }
@@ -107,6 +115,7 @@ describe('packages/date-picker/menu/header', () => {
             <MockDatePickerProvider
               value={
                 {
+                  refs: mockRefs,
                   month: newUTC(2023, Month.July, 5),
                 } as DatePickerContextProps
               }
@@ -142,6 +151,7 @@ describe('packages/date-picker/menu/header', () => {
               <MockDatePickerProvider
                 value={
                   {
+                    refs: mockRefs,
                     month: newUTC(2025, Month.July, 5),
                   } as DatePickerContextProps
                 }
@@ -176,6 +186,7 @@ describe('packages/date-picker/menu/header', () => {
               <MockDatePickerProvider
                 value={
                   {
+                    refs: mockRefs,
                     month: newUTC(2025, Month.July, 5),
                   } as DatePickerContextProps
                 }
@@ -206,6 +217,7 @@ describe('packages/date-picker/menu/header', () => {
               <MockDatePickerProvider
                 value={
                   {
+                    refs: mockRefs,
                     month: newUTC(2021, Month.July, 5),
                   } as DatePickerContextProps
                 }
@@ -240,6 +252,7 @@ describe('packages/date-picker/menu/header', () => {
               <MockDatePickerProvider
                 value={
                   {
+                    refs: mockRefs,
                     month: newUTC(2021, Month.July, 5),
                   } as DatePickerContextProps
                 }
@@ -286,6 +299,7 @@ describe('packages/date-picker/menu/header', () => {
           <MockDatePickerProvider
             value={
               {
+                refs: mockRefs,
                 month: newUTC(2022, Month.July, 1),
               } as DatePickerContextProps
             }
