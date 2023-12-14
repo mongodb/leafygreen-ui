@@ -12,6 +12,7 @@ export { getLocaleWeekdays } from './getLocaleWeekdays';
 export { getMonthIndex } from './getMonthIndex';
 export { getMonthName } from './getMonthName';
 export { getSimulatedTZDate } from './getSimulatedTZDate';
+export { getSimulatedUTCDate } from './getSimulatedUTCDate';
 export { getUTCDateString } from './getUTCDateString';
 export { getWeekdayName } from './getWeekdayName';
 export { getWeeksArray } from './getWeeksArray';

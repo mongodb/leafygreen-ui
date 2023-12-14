@@ -163,16 +163,6 @@ describe('packages/date-picker/date-picker-menu', () => {
       );
     });
 
-    describe('rendered cells', () => {
-      test('have correct `aria-label`', () => {
-        const { getCellWithISOString } = renderDatePickerMenu();
-        expect(getCellWithISOString('2023-09-10')).toHaveAttribute(
-          'aria-label',
-          'Sun Sep 10 2023',
-        );
-      });
-    });
-
     describe('when value is updated', () => {
       test('grid is labelled as the current month', () => {
         const { getByRole, rerenderDatePickerMenu } = renderDatePickerMenu();
@@ -224,6 +214,23 @@ describe('packages/date-picker/date-picker-menu', () => {
       });
     });
 
+    // TODO: Test in multiple time zones with a properly mocked Date object
+    describe('rendered cells', () => {
+      test('have correct text content and `aria-label`', () => {
+        const { calendarCells } = renderDatePickerMenu();
+
+        calendarCells.forEach((cell, i) => {
+          const date = String(i + 1);
+          expect(cell).toHaveTextContent(date);
+
+          expect(cell).toHaveAttribute(
+            'aria-label',
+            expect.stringContaining(`September ${date}, 2023`),
+          );
+        });
+      });
+    });
+
     describe.each(testTimeZones)(
       'when system time is in $tz',
       ({ tz, UTCOffset }) => {
@@ -231,20 +238,10 @@ describe('packages/date-picker/date-picker-menu', () => {
           { tz: undefined, UTCOffset: undefined },
           ...testTimeZones,
         ])('and timeZone prop is $tz', prop => {
-          const dec24Local = newUTC(
-            2023,
-            Month.December,
-            24,
-            23 - (prop.UTCOffset ?? UTCOffset),
-            59,
-          );
-          const dec25Local = newUTC(
-            2023,
-            Month.December,
-            25,
-            0 - (prop.UTCOffset ?? UTCOffset),
-            0,
-          );
+          const elevenLocal = 23 - (prop.UTCOffset ?? UTCOffset);
+          const midnightLocal = 0 - (prop.UTCOffset ?? UTCOffset);
+          const dec24Local = newUTC(2023, Month.December, 24, elevenLocal, 59);
+          const dec25Local = newUTC(2023, Month.December, 25, midnightLocal, 0);
           const dec24ISO = '2023-12-24';
           const dec25ISO = '2023-12-25';
           const ctx = {

@@ -8,7 +8,7 @@ import { getSimulatedTZDate } from './getSimulatedTZDate';
 
 describe('packages/date-utils/getSimulatedTZDate', () => {
   test.each(testTimeZones)('Simulates a date in $tz', ({ tz, UTCOffset }) => {
-    // 2023-07-04
+    // 2023-12-25
     const testDate = newUTC(2023, Month.December, 25, 0, 0);
 
     const sim = getSimulatedTZDate(testDate, tz);

@@ -1244,7 +1244,9 @@ describe('packages/date-picker', () => {
       /**
        * Arrow Keys:
        * Since arrow key behavior changes based on whether the input or menu is focused,
-       * many tests exist in the "DatePickerInput" and "DatePickerMenu" components
+       * more detailed tests suites are located in
+       * - DatePickerInput: (./DatePickerInput/DatePickerInput.spec.tsx) and
+       * - DatePickerMenu: (./DatePickerMenu/DatePickerMenu.spec.tsx)
        */
       describe('Arrow key', () => {
         describe('Input', () => {

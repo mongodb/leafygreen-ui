@@ -1,12 +1,39 @@
-import { addMinutes } from 'date-fns';
+import { getSimulatedUTCDate } from '../getSimulatedUTCDate';
+import { isValidLocale } from '../isValidLocale';
 
-export const getUTCDateString = (date: Date): string => {
-  const utcOffsetMins = date.getTimezoneOffset();
+interface GetUTCDateStringOptions {
+  locale?: string;
+}
 
-  // Create a timestamp that, when printed in local time,
-  // appears as the UTC equivalent of the provided date
-  const fakeUTCDate = addMinutes(date, utcOffsetMins);
+/**
+ * Returns a localized date string for the UTC representation of a date, regardless of system time zone
+ *
+ * e.g.
+ * ```
+ * getUTCDateString(
+ *  Date("2023-12-25T01:00:00Z"),
+ *  { locale: 'en-US' }
+ * ) // "Monday, December 25, 2023"
+ * ```
+ */
+export const getUTCDateString = (
+  date: Date,
+  options?: GetUTCDateStringOptions,
+): string => {
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-  const utcDateString = fakeUTCDate.toDateString();
+  const dateInTZ = getSimulatedUTCDate(date, timeZone);
+
+  const locale = isValidLocale(options?.locale)
+    ? options?.locale
+    : Intl.DateTimeFormat().resolvedOptions().locale;
+
+  const utcDateString = dateInTZ.toLocaleDateString(locale, {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  });
+
   return utcDateString;
 };
