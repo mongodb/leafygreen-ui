@@ -90,8 +90,14 @@ const renderDatePickerMenu = (
   const getCurrentCell = () =>
     calendarGrid.querySelector('[aria-current="true"]');
 
-  const leftChevron = result?.queryByLabelText('Previous month');
-  const rightChevron = result?.queryByLabelText('Next month');
+  const leftChevron =
+    result.queryByLabelText('Previous month') ||
+    result.queryByLabelText('Previous valid month');
+  const rightChevron =
+    result.queryByLabelText('Next month') ||
+    result.queryByLabelText('Next valid month');
+  const monthSelect = result.queryByLabelText('Select month');
+  const yearSelect = result.queryByLabelText('Select year');
 
   return {
     ...result,
@@ -104,6 +110,8 @@ const renderDatePickerMenu = (
     getCurrentCell,
     leftChevron,
     rightChevron,
+    monthSelect,
+    yearSelect,
   };
 };
 
@@ -214,111 +222,54 @@ describe('packages/date-picker/date-picker-menu', () => {
       });
     });
 
-    describe.only.each(testTimeZones)(
+    describe.each(testTimeZones)(
       'when system time is in $tz',
       ({ tz, UTCOffset }) => {
-        const dec24Local = newUTC(2023, Month.December, 24, 23 - UTCOffset, 59);
-        const dec25Local = newUTC(2023, Month.December, 25, 0 - UTCOffset, 0);
-        const dec24ISO = '2023-12-24';
-        const dec25ISO = '2023-12-25';
+        describe.each([
+          { tz: undefined, UTCOffset: undefined },
+          ...testTimeZones,
+        ])('and timeZone prop is $tz', prop => {
+          const dec24Local = newUTC(
+            2023,
+            Month.December,
+            24,
+            23 - (prop.UTCOffset ?? UTCOffset),
+            59,
+          );
+          const dec25Local = newUTC(
+            2023,
+            Month.December,
+            25,
+            0 - (prop.UTCOffset ?? UTCOffset),
+            0,
+          );
+          const dec24ISO = '2023-12-24';
+          const dec25ISO = '2023-12-25';
+          const ctx = {
+            timeZone: prop?.tz,
+          };
 
-        beforeEach(() => {
-          jest.setSystemTime(dec24Local);
-          mockTimeZone(tz, UTCOffset);
-        });
-        afterEach(() => {
-          jest.restoreAllMocks();
-        });
-
-        test('default focus (highlight) is on `today`', () => {
-          const { getCellWithISOString } = renderDatePickerMenu();
-          userEvent.tab();
-          expect(getCellWithISOString(dec24ISO)).toHaveFocus();
-        });
-
-        test('when `value` is set, focus (highlight) starts on current value', () => {
-          const { getCellWithValue } = renderDatePickerMenu(null, {
-            value: testValue,
+          beforeEach(() => {
+            jest.setSystemTime(dec24Local);
+            mockTimeZone(tz, UTCOffset);
           });
-          userEvent.tab();
-          const valueCell = getCellWithValue(testValue);
-          expect(valueCell).toHaveFocus();
+          afterEach(() => {
+            jest.restoreAllMocks();
+          });
+
+          test('when date changes, cell marked as `current` updates', () => {
+            const { getCellWithISOString, rerenderDatePickerMenu } =
+              renderDatePickerMenu(null, null, ctx);
+            const dec24Cell = getCellWithISOString(dec24ISO);
+            expect(dec24Cell).toHaveAttribute('aria-current', 'true');
+
+            jest.setSystemTime(dec25Local);
+
+            rerenderDatePickerMenu();
+            const dec25LocalCell = getCellWithISOString(dec25ISO);
+            expect(dec25LocalCell).toHaveAttribute('aria-current', 'true');
+          });
         });
-
-        test('when date changes, cell marked as `current` updates', () => {
-          const { getCellWithISOString, rerenderDatePickerMenu } =
-            renderDatePickerMenu();
-          const dec24Cell = getCellWithISOString(dec24ISO);
-          expect(dec24Cell).toHaveAttribute('aria-current', 'true');
-
-          jest.setSystemTime(dec25Local);
-
-          rerenderDatePickerMenu();
-          const dec25LocalCell = getCellWithISOString(dec25ISO);
-          expect(dec25LocalCell).toHaveAttribute('aria-current', 'true');
-        });
-
-        describe.each(testTimeZones)(
-          'and timeZone prop is $tz',
-          ({ tz: tzProp, UTCOffset: propOffset }) => {
-            const ctx = {
-              timeZone: tzProp,
-            };
-            const dec24Local = newUTC(
-              2023,
-              Month.December,
-              24,
-              23 - propOffset,
-              59,
-            );
-
-            const dec25Local = newUTC(
-              2023,
-              Month.December,
-              25,
-              0 - propOffset,
-              0,
-            );
-
-            beforeEach(() => {
-              jest.setSystemTime(dec24Local);
-            });
-
-            test('default focus (highlight) is on `today`', () => {
-              const { getCellWithISOString } = renderDatePickerMenu(
-                null,
-                null,
-                ctx,
-              );
-              userEvent.tab();
-              expect(getCellWithISOString(dec24ISO)).toHaveFocus();
-            });
-
-            test('when `value` is set, focus (highlight) starts on current value', () => {
-              const { getCellWithValue } = renderDatePickerMenu(
-                null,
-                {
-                  value: testValue,
-                },
-                ctx,
-              );
-              userEvent.tab();
-              const valueCell = getCellWithValue(testValue);
-              expect(valueCell).toHaveFocus();
-            });
-
-            test('when time changes cell marked as `current` updates', () => {
-              const { getCellWithISOString, rerenderDatePickerMenu } =
-                renderDatePickerMenu(null, null, ctx);
-              const dec24Cell = getCellWithISOString(dec24ISO);
-              expect(dec24Cell).toHaveAttribute('aria-current', 'true');
-              jest.setSystemTime(dec25Local);
-              rerenderDatePickerMenu();
-              const dec25Cell = getCellWithISOString(dec25ISO);
-              expect(dec25Cell).toHaveAttribute('aria-current', 'true');
-            });
-          },
-        );
       },
     );
   });
