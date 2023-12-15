@@ -4,10 +4,7 @@ import { truncateStart } from '@leafygreen-ui/lib';
 
 import { charsPerSegment } from '../../../../../constants';
 import { DateSegment, DateSegmentValue } from '../../../../../types';
-import {
-  getValueFormatter,
-  isValidValueForSegment,
-} from '../../../../../utils';
+import { isValidValueForSegment } from '../../../../../utils';
 
 /**
  * Calculates the new value for the segment given an incoming change.
@@ -32,11 +29,6 @@ export const getNewSegmentValueFromInputValue = (
     currentValue.length === charsPerSegment[segmentName] &&
     incomingValue.length > charsPerSegment[segmentName];
 
-  const isIncomingValueValid = isValidValueForSegment(
-    segmentName,
-    incomingValue,
-  );
-
   if (
     !isIncomingValueNumber ||
     doesIncomingValueContainPeriod ||
@@ -44,6 +36,11 @@ export const getNewSegmentValueFromInputValue = (
   ) {
     return currentValue;
   }
+
+  const isIncomingValueValid = isValidValueForSegment(
+    segmentName,
+    incomingValue,
+  );
 
   if (isIncomingValueValid || segmentName === 'year') {
     const newValue = truncateStart(incomingValue, {
@@ -53,8 +50,7 @@ export const getNewSegmentValueFromInputValue = (
     return newValue;
   }
 
-  const formatter = getValueFormatter(segmentName);
   const typedChar = last(incomingValue.split(''));
-  const newValue = typedChar === '0' ? '0' : formatter(typedChar);
+  const newValue = typedChar === '0' ? '0' : typedChar ?? '';
   return newValue;
 };
