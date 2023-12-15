@@ -20,6 +20,7 @@ import {
   getMinSegmentValue,
   getRelativeSegment,
   getValueFormatter,
+  isEverySegmentValueExplicit,
   isExplicitSegmentValue,
   newDateFromSegments,
 } from '../../../utils';
@@ -86,15 +87,16 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       const hasAnySegmentChanged = !isEqual(newSegments, prevSegments);
 
       if (hasAnySegmentChanged) {
-        const utcDate = newDateFromSegments(newSegments);
         const areAllSegmentsEmpty = !doesSomeSegmentExist(newSegments);
+        const areAllExplicit = isEverySegmentValueExplicit(newSegments);
+        const utcDate = newDateFromSegments(newSegments);
 
-        if (utcDate) {
-          // Update the value iff all segments create a valid date.
-          setValue?.(utcDate);
-        } else if (areAllSegmentsEmpty) {
+        if (areAllSegmentsEmpty) {
           // otherwise, if no segment exists, set the external value to null
           setValue?.(null);
+        } else if (areAllExplicit && !!utcDate) {
+          // Update the value iff all segments create a valid date.
+          setValue?.(utcDate);
         }
       }
     };

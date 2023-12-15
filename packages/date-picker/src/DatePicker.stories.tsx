@@ -97,7 +97,11 @@ export const LiveExample: StoryFn<typeof DatePicker> = props => {
     <DatePicker
       {...props}
       value={value}
-      onDateChange={setValue}
+      onDateChange={v => {
+        // eslint-disable-next-line no-console
+        console.log('Storybook: onDateChange', { v });
+        setValue(v);
+      }}
       handleValidation={date =>
         // eslint-disable-next-line no-console
         console.log('Storybook: handleValidation', { date })

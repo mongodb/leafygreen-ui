@@ -1954,6 +1954,15 @@ describe('packages/date-picker', () => {
               expect(dayInput).toHaveFocus();
               await waitFor(() => expect(dayInput).toHaveValue('2'));
             });
+
+            test('when day value is explicit, segment is formatted', async () => {
+              const { dayInput } = renderDatePicker({
+                locale,
+              });
+              userEvent.type(dayInput, '26');
+              expect(dayInput).toHaveFocus();
+              await waitFor(() => expect(dayInput).toHaveValue('26'));
+            });
           });
 
           describe('for en-US format', () => {
@@ -2005,7 +2014,7 @@ describe('packages/date-picker', () => {
       });
 
       describe('typing a full date value', () => {
-        test('fires value change handler', async () => {
+        test('fires value change handler for explicit values', async () => {
           const onDateChange = jest.fn();
           const { yearInput, monthInput, dayInput } = renderDatePicker({
             onDateChange,
@@ -2019,6 +2028,18 @@ describe('packages/date-picker', () => {
               expect.objectContaining(newUTC(2003, Month.December, 26)),
             ),
           );
+        });
+
+        test('does not fire value change handler for ambiguous values', async () => {
+          const onDateChange = jest.fn();
+          const { yearInput, monthInput, dayInput } = renderDatePicker({
+            onDateChange,
+          });
+          userEvent.type(yearInput, '2003');
+          userEvent.type(monthInput, '12');
+          userEvent.type(dayInput, '2');
+
+          await waitFor(() => expect(onDateChange).not.toHaveBeenCalled());
         });
 
         test('properly renders the input', async () => {
