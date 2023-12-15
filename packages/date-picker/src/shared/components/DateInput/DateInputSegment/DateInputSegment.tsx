@@ -162,6 +162,7 @@ export const DateInputSegment = React.forwardRef<
         ref={inputRef}
         type="text"
         pattern={pattern}
+        maxLength={charsPerSegment[segment]}
         role="spinbutton"
         value={value}
         min={min}
