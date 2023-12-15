@@ -15,12 +15,12 @@ export interface ProviderPropsObject<T> {
 }
 
 export const getProviderPropsFromStoryContext = <P = DatePickerProps>(
-  ctx: Partial<P & SharedDatePickerProviderProps>,
+  storyContextProps: Partial<P & SharedDatePickerProviderProps>,
 ): ProviderPropsObject<Partial<Omit<P, ContextPropKeys>>> => {
   const [
     { darkMode, baseFontSize, ...datePickerProviderProps },
     { ...storyProps },
-  ] = pickAndOmit(ctx, [...contextPropNames]);
+  ] = pickAndOmit(storyContextProps, [...contextPropNames]);
 
   return {
     leafyGreenProviderProps: {
