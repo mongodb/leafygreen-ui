@@ -1,5 +1,3 @@
-import { StoryContext } from '@storybook/react';
-
 import { LeafyGreenProviderProps } from '@leafygreen-ui/leafygreen-provider';
 import { pickAndOmit } from '@leafygreen-ui/lib';
 
@@ -17,9 +15,8 @@ export interface ProviderPropsObject<T> {
 }
 
 export const getProviderPropsFromStoryContext = <P = DatePickerProps>(
-  ctx: StoryContext<Partial<P & SharedDatePickerProviderProps>>,
-  // ): ProviderPropsObject<Partial<Omit<P, ContextPropKeys>>>
-): ProviderPropsObject<Partial<Omit<DatePickerProps, ContextPropKeys>>> => {
+  ctx: Partial<P & SharedDatePickerProviderProps>,
+): ProviderPropsObject<Partial<Omit<P, ContextPropKeys>>> => {
   const [
     { darkMode, baseFontSize, ...datePickerProviderProps },
     { ...storyProps },
