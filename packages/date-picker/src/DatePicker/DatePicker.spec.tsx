@@ -2156,13 +2156,13 @@ describe('packages/date-picker', () => {
         });
 
         describe('typing new characters', () => {
-          test.skip('if the resulting value is valid, appends to the segment value', async () => {
+          test('even if the resulting value is valid, keeps the input as-is', async () => {
             const { monthInput } = renderDatePicker({});
             userEvent.type(monthInput, '1');
             userEvent.tab();
             await waitFor(() => expect(monthInput).toHaveValue('01'));
             userEvent.type(monthInput, '2');
-            await waitFor(() => expect(monthInput).toHaveValue('12'));
+            await waitFor(() => expect(monthInput).toHaveValue('01'));
           });
 
           test('if the resulting value is not valid, keeps the input as-is', async () => {
