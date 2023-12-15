@@ -86,10 +86,12 @@ export const Basic: DatePickerMenuStoryType = {
     const refEl = useRef<HTMLDivElement>(null);
     return (
       <DatePickerProvider value={value} setValue={setValue}>
-        <InlineCode ref={refEl}>
-          Today: {new Date(Date.now()).toUTCString()}
-        </InlineCode>
-        <DatePickerMenu {...props} refEl={refEl} />
+        <div style={{ minHeight: '50vh' }}>
+          <InlineCode ref={refEl}>
+            Today: {new Date(Date.now()).toUTCString()}
+          </InlineCode>
+          <DatePickerMenu {...props} refEl={refEl} />
+        </div>
       </DatePickerProvider>
     );
   },

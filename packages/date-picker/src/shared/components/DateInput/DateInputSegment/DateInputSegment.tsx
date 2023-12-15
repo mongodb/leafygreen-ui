@@ -55,6 +55,7 @@ export const DateInputSegment = React.forwardRef<
     const inputRef = useForwardedRef(fwdRef, null);
 
     const { theme } = useDarkMode();
+
     const baseFontSize = useUpdatedBaseFontSize();
     const {
       size,

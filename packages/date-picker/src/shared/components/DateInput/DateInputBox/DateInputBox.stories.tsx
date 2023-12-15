@@ -5,29 +5,29 @@ import { isValid } from 'date-fns';
 
 import { Month, newUTC, testLocales } from '@leafygreen-ui/date-utils';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { pickAndOmit, StoryMetaType, StoryType } from '@leafygreen-ui/lib';
+import { StoryMetaType, StoryType } from '@leafygreen-ui/lib';
 
 import {
-  contextPropNames,
   SharedDatePickerContextProps,
   SharedDatePickerProvider,
 } from '../../../context';
-import { segmentRefsMock } from '../../../testutils';
+import {
+  getProviderPropsFromStoryContext,
+  segmentRefsMock,
+} from '../../../testutils';
 
 import { DateInputBox } from './DateInputBox';
 
 const testDate = newUTC(1993, Month.December, 26);
 
 const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => {
-  const [{ darkMode, ...contextProps }, componentProps] = pickAndOmit(
-    ctx?.args,
-    contextPropNames,
-  );
+  const { leafyGreenProviderProps, datePickerProviderProps, storyProps } =
+    getProviderPropsFromStoryContext(ctx?.args);
 
   return (
-    <LeafyGreenProvider darkMode={darkMode}>
-      <SharedDatePickerProvider {...contextProps}>
-        <Story {...componentProps} segmentRefs={segmentRefsMock} />
+    <LeafyGreenProvider {...leafyGreenProviderProps}>
+      <SharedDatePickerProvider {...datePickerProviderProps}>
+        <Story {...storyProps} segmentRefs={segmentRefsMock} />
       </SharedDatePickerProvider>
     </LeafyGreenProvider>
   );

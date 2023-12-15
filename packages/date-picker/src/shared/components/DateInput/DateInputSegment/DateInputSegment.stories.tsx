@@ -13,6 +13,14 @@ import { DateSegmentValue } from '../../../types';
 
 import { DateInputSegment } from './DateInputSegment';
 
+const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => (
+  <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
+    <SharedDatePickerProvider {...ctx?.args}>
+      <Story />
+    </SharedDatePickerProvider>
+  </LeafyGreenProvider>
+);
+
 const meta: StoryMetaType<
   typeof DateInputSegment,
   SharedDatePickerContextProps
@@ -28,12 +36,7 @@ const meta: StoryMetaType<
         segment: ['day', 'month', 'year'],
         size: Object.values(Size),
       },
-      decorator: (Instance, ctx) => (
-        // @ts-expect-error - incomplete context value
-        <SharedDatePickerProvider value={{ size: ctx?.args.size }}>
-          <Instance />
-        </SharedDatePickerProvider>
-      ),
+      decorator: ProviderWrapper,
       excludeCombinations: [
         {
           value: '6',
