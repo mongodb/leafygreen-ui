@@ -17,6 +17,7 @@ export {
 } from './getSegmentsFromDate';
 export { getValueFormatter } from './getValueFormatter';
 export { isElementInputSegment } from './isElementInputSegment';
+export { isEverySegmentValueExplicit } from './isEverySegmentValueExplicit';
 export { isExplicitSegmentValue } from './isExplicitSegmentValue';
 export { isValidSegmentName, isValidSegmentValue } from './isValidSegment';
 export { isValidValueForSegment } from './isValidValueForSegment';

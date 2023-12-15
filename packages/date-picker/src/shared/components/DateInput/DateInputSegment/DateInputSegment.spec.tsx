@@ -5,7 +5,6 @@ import userEvent from '@testing-library/user-event';
 
 import { defaultMax, defaultMin } from '../../../constants';
 import {
-  defaultSharedDatePickerContext,
   SharedDatePickerProvider,
   SharedDatePickerProviderProps,
 } from '../../../context';
@@ -26,14 +25,16 @@ const renderSegment = (
   };
 
   const result = render(
-    <SharedDatePickerProvider {...defaultSharedDatePickerContext} {...ctx}>
+    <SharedDatePickerProvider label="label" {...ctx}>
       <DateInputSegment {...defaultProps} {...props} />
     </SharedDatePickerProvider>,
   );
 
   const rerenderSegment = (newProps: Partial<DateInputSegmentProps>) =>
     result.rerender(
-      <DateInputSegment {...defaultProps} {...props} {...newProps} />,
+      <SharedDatePickerProvider label="label" {...ctx}>
+        <DateInputSegment {...defaultProps} {...props} {...newProps} />,
+      </SharedDatePickerProvider>,
     );
 
   const getInput = () =>
@@ -141,75 +142,77 @@ describe('packages/date-picker/shared/date-input-segment', () => {
   });
 
   describe('Typing', () => {
-    test('calls the change handler', () => {
-      const { input } = renderSegment({
-        onChange: onChangeHandler,
-      });
+    describe('into an empty segment', () => {
+      test('calls the change handler', () => {
+        const { input } = renderSegment({
+          onChange: onChangeHandler,
+        });
 
-      userEvent.type(input, '8');
-      expect(onChangeHandler).toHaveBeenCalledWith(
-        expect.objectContaining({ value: '8' }),
-      );
-    });
-
-    test('allows typing additional characters to create a valid value', () => {
-      const { input } = renderSegment({
-        value: '02',
-        onChange: onChangeHandler,
-      });
-
-      userEvent.type(input, '6');
-      expect(onChangeHandler).toHaveBeenCalled();
-      expect(onChangeHandler).toHaveBeenCalledWith(
-        expect.objectContaining({ value: '26' }),
-      );
-    });
-
-    test('does not allow additional characters that create an invalid value', () => {
-      const { input } = renderSegment({
-        value: '26',
-        onChange: onChangeHandler,
-      });
-
-      userEvent.type(input, '6');
-      expect(onChangeHandler).toHaveBeenCalled();
-      expect(onChangeHandler).toHaveBeenCalledWith(
-        expect.objectContaining({ value: '06' }),
-      );
-    });
-
-    test('allows zero character', () => {
-      const { input } = renderSegment({
-        onChange: onChangeHandler,
-      });
-
-      userEvent.type(input, '0');
-      expect(onChangeHandler).toHaveBeenCalledWith(
-        expect.objectContaining({ value: '0' }),
-      );
-    });
-
-    test('allows leading zeroes', async () => {
-      const { input } = renderSegment({
-        value: '0',
-        onChange: onChangeHandler,
-      });
-
-      userEvent.type(input, '2');
-      await waitFor(() =>
+        userEvent.type(input, '8');
         expect(onChangeHandler).toHaveBeenCalledWith(
-          expect.objectContaining({ value: '02' }),
-        ),
-      );
-    });
-
-    test('does not allow non-number characters', () => {
-      const { input } = renderSegment({
-        onChange: onChangeHandler,
+          expect.objectContaining({ value: '8' }),
+        );
       });
 
-      userEvent.type(input, 'aB$/');
-      expect(onChangeHandler).not.toHaveBeenCalled();
+      test('allows zero character', () => {
+        const { input } = renderSegment({
+          onChange: onChangeHandler,
+        });
+
+        userEvent.type(input, '0');
+        expect(onChangeHandler).toHaveBeenCalledWith(
+          expect.objectContaining({ value: '0' }),
+        );
+      });
+
+      test('allows typing leading zeroes', async () => {
+        const { input, rerenderSegment } = renderSegment({
+          onChange: onChangeHandler,
+        });
+
+        userEvent.type(input, '0');
+        rerenderSegment({ value: '0' });
+
+        userEvent.type(input, '2');
+        await waitFor(() => {
+          expect(onChangeHandler).toHaveBeenCalledWith(
+            expect.objectContaining({ value: '02' }),
+          );
+        });
+      });
+
+      test('does not allow non-number characters', () => {
+        const { input } = renderSegment({
+          onChange: onChangeHandler,
+        });
+
+        userEvent.type(input, 'aB$/');
+        expect(onChangeHandler).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('into a segment with a value', () => {
+      test('allows typing additional characters if the current value is incomplete', () => {
+        const { input } = renderSegment({
+          value: '2',
+          onChange: onChangeHandler,
+        });
+
+        userEvent.type(input, '6');
+        expect(onChangeHandler).toHaveBeenCalledWith(
+          expect.objectContaining({ value: '26' }),
+        );
+      });
+
+      test('does not allow additional characters that create an invalid value', () => {
+        const { input } = renderSegment({
+          value: '26',
+          onChange: onChangeHandler,
+        });
+
+        userEvent.type(input, '6');
+        expect(onChangeHandler).not.toHaveBeenCalled();
+      });
     });
   });
 

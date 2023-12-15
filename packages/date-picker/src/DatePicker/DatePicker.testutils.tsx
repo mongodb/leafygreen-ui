@@ -72,7 +72,7 @@ export interface RenderMenuResult {
 export const renderDatePicker = (
   props?: Partial<DatePickerProps>,
 ): RenderDatePickerResult => {
-  const defaultProps = { label: '' };
+  const defaultProps = { label: 'label' };
   const result = render(
     <DatePicker data-testid="lg-date-picker" {...defaultProps} {...props} />,
   );
