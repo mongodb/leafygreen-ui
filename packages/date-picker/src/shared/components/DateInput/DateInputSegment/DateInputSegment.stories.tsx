@@ -80,4 +80,8 @@ const Template: StoryFn<typeof DateInputSegment> = props => {
 
 export const Basic = Template.bind({});
 
+Basic.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+
 export const Generated = () => {};

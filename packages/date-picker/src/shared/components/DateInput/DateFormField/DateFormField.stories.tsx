@@ -41,7 +41,7 @@ const meta: StoryMetaType<
         darkMode: [false, true],
         label: ['Label', undefined],
         description: [undefined, 'Description'],
-        // state: Object.values(DatePickerState),
+        state: Object.values(DatePickerState),
         disabled: [false, true],
         size: Object.values(Size),
       },
@@ -108,5 +108,9 @@ const Template: StoryFn<typeof DateFormField> = () => {
 };
 
 export const Basic = Template.bind({});
+
+Basic.parameters = {
+  chromatic: { disableSnapshot: true },
+};
 
 export const Generated = () => {};

@@ -63,7 +63,7 @@ const meta: StoryMetaType<typeof CalendarGrid, SharedDatePickerContextProps> = {
 
 export default meta;
 
-export const Demo: StoryFn<typeof CalendarGrid> = ({ ...props }) => {
+export const Basic: StoryFn<typeof CalendarGrid> = ({ ...props }) => {
   const { timeZone } = useSharedDatePickerContext();
   const [month] = useState(newUTC(2023, Month.August, 1));
 
@@ -93,6 +93,10 @@ export const Demo: StoryFn<typeof CalendarGrid> = ({ ...props }) => {
       )}
     </CalendarGrid>
   );
+};
+
+Basic.parameters = {
+  chromatic: { disableSnapshot: true },
 };
 
 export const Generated: StoryFn<typeof CalendarGrid> = () => <></>;

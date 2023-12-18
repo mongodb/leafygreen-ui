@@ -86,8 +86,16 @@ export const Basic: StoryFn<typeof DateInputBox> = props => {
   );
 };
 
+Basic.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+
 export const Static: StoryFn<typeof DateInputBox> = () => {
   return <DateInputBox value={testDate} segmentRefs={segmentRefsMock} />;
+};
+
+Static.parameters = {
+  chromatic: { disableSnapshot: true },
 };
 
 export const Formats: StoryType<

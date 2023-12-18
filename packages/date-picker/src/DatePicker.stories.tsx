@@ -66,6 +66,7 @@ const meta: StoryMetaType<typeof DatePicker, SharedDatePickerContextProps> = {
   args: {
     locale: 'iso8601',
     label: 'Pick a date',
+    description: 'description',
     size: Size.Default,
     autoComplete: AutoComplete.Off,
     min: MIN_DATE,
@@ -108,6 +109,11 @@ export const LiveExample: StoryFn<typeof DatePicker> = props => {
 
 export const Uncontrolled: StoryFn<typeof DatePicker> = props => {
   return <DatePicker {...props} />;
+};
+Uncontrolled.parameters = {
+  chromatic: {
+    disableSnapshots: true,
+  },
 };
 
 export const InModal: StoryFn<typeof DatePicker> = props => {

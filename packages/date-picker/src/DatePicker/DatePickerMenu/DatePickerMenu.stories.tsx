@@ -119,6 +119,14 @@ export const WithValue: DatePickerMenuStoryType = {
   },
 };
 
+export const WithValueDarkMode: DatePickerMenuStoryType = {
+  ...WithValue,
+  args: {
+    // @ts-expect-error - DatePickerMenuStoryType does not include Context props
+    darkMode: true,
+  },
+};
+
 export const MockedToday: DatePickerMenuStoryType = {
   render: args => {
     // Force `new Date()` to return `mockToday`
@@ -129,17 +137,19 @@ export const MockedToday: DatePickerMenuStoryType = {
     const refEl = useRef<HTMLDivElement>(null);
     return (
       <DatePickerProvider value={value} setValue={setValue}>
-        <InlineCode ref={refEl}>
-          Today: {new Date(Date.now()).toUTCString()}
-        </InlineCode>
-        <DatePickerMenu {...props} refEl={refEl} />
+        <div style={{ minHeight: '50vh' }}>
+          <InlineCode ref={refEl}>
+            Today: {new Date(Date.now()).toUTCString()}
+          </InlineCode>
+          <DatePickerMenu {...props} refEl={refEl} />
+        </div>
       </DatePickerProvider>
     );
   },
 };
 
-export const DarkMode: DatePickerMenuStoryType = {
-  ...WithValue,
+export const MockedTodayDarkMode: DatePickerMenuStoryType = {
+  ...MockedToday,
   args: {
     // @ts-expect-error - DatePickerMenuStoryType does not include Context props
     darkMode: true,
