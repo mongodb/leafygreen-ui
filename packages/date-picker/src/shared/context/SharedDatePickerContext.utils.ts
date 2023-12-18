@@ -37,6 +37,7 @@ export const contextPropNames: Array<ContextPropKeys> = [
   'initialOpen',
   'state',
   'autoComplete',
+  'darkMode',
 ];
 
 /** The default context value */

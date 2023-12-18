@@ -62,7 +62,10 @@ const Template: StoryFn<typeof CalendarCell> = props => (
 
 export const Basic = Template.bind({});
 
-// export const Generated = () => {};
+Basic.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+
 export const DefaultCells: StoryFn<typeof CalendarCell> = () => <></>;
 DefaultCells.parameters = {
   generate: {
