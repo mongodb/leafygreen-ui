@@ -1279,7 +1279,7 @@ describe('packages/date-picker', () => {
        * Arrow Keys behavior changes based on whether the input or menu is focused
        */
       describe('Arrow key', () => {
-        describe('In Input', () => {
+        describe('Input', () => {
           describe('Left Arrow', () => {
             test('focuses the previous segment when the segment is empty', () => {
               const { yearInput, monthInput } = renderDatePicker();
@@ -1470,13 +1470,93 @@ describe('packages/date-picker', () => {
                   });
                 });
 
-                // describe('if the new value would be invalid', () => {
-                //   // E.g. Feb 30 2020 or Feb 29 2021
-                //   // TODO:
-                //   test.todo('changing year: sets error state');
-                //   test.todo('changing month: sets error state');
-                //   test.todo('changing date: rolls over sooner');
-                // });
+                describe.only('if the new value would be invalid', () => {
+                  // E.g. Feb 30 2020 or Feb 29 2021
+                  switch (segment) {
+                    case 'year': {
+                      test('changing year sets error state', async () => {
+                        const result = renderDatePicker({
+                          value: newUTC(2020, Month.February, 29),
+                        });
+                        const input = getRelevantInput(result);
+                        userEvent.click(input);
+                        userEvent.keyboard('{arrowup}');
+
+                        await waitFor(() => {
+                          expect(result.yearInput).toHaveValue('2021');
+                          expect(result.monthInput).toHaveValue('02');
+                          expect(result.dayInput).toHaveValue('29');
+                          expect(result.inputContainer).toHaveAttribute(
+                            'aria-invalid',
+                            'true',
+                          );
+                          const errorElement = result.queryByTestId(
+                            'lg-form_field-error_message',
+                          );
+                          expect(errorElement).toBeInTheDocument();
+                        });
+                      });
+
+                      break;
+                    }
+
+                    case 'month': {
+                      test('changing month sets error state', async () => {
+                        const result = renderDatePicker({
+                          value: newUTC(2020, Month.January, 31),
+                        });
+                        const input = getRelevantInput(result);
+                        userEvent.click(input);
+                        userEvent.keyboard('{arrowup}');
+
+                        await waitFor(() => {
+                          expect(result.yearInput).toHaveValue('2020');
+                          expect(result.monthInput).toHaveValue('02');
+                          expect(result.dayInput).toHaveValue('31');
+                          expect(result.inputContainer).toHaveAttribute(
+                            'aria-invalid',
+                            'true',
+                          );
+                          const errorElement = result.queryByTestId(
+                            'lg-form_field-error_message',
+                          );
+                          expect(errorElement).toBeInTheDocument();
+                        });
+                      });
+
+                      break;
+                    }
+
+                    case 'day': {
+                      test('changing date rolls value over sooner', async () => {
+                        const result = renderDatePicker({
+                          value: newUTC(2020, Month.February, 29),
+                        });
+                        const input = getRelevantInput(result);
+                        userEvent.click(input);
+                        userEvent.keyboard('{arrowup}');
+
+                        await waitFor(() => {
+                          expect(result.yearInput).toHaveValue('2020');
+                          expect(result.monthInput).toHaveValue('02');
+                          expect(result.dayInput).toHaveValue('01');
+                          expect(result.inputContainer).toHaveAttribute(
+                            'aria-invalid',
+                            'false',
+                          );
+                          const errorElement = result.queryByTestId(
+                            'lg-form_field-error_message',
+                          );
+                          expect(errorElement).not.toBeInTheDocument();
+                        });
+                      });
+                      break;
+                    }
+
+                    default:
+                      break;
+                  }
+                });
 
                 describe('if new value would be out of range', () => {
                   const onDateChange = jest.fn();
@@ -1688,13 +1768,72 @@ describe('packages/date-picker', () => {
                   });
                 });
 
-                // describe('if the new value would be invalid', () => {
-                //   // E.g. Feb 30 2020 or Feb 29 2021
-                //   // TODO:
-                //   test.todo('changing year: sets error state');
-                //   test.todo('changing month: sets error state');
-                //   test.todo('changing date: rolls over sooner');
-                // });
+                describe.only('if the new value would be invalid', () => {
+                  // E.g. Feb 30 2020 or Feb 29 2021
+                  switch (segment) {
+                    case 'year': {
+                      test('changing year sets error state', async () => {
+                        const result = renderDatePicker({
+                          value: newUTC(2020, Month.February, 29),
+                        });
+                        const input = getRelevantInput(result);
+                        userEvent.click(input);
+                        userEvent.keyboard('{arrowdown}');
+
+                        await waitFor(() => {
+                          expect(result.yearInput).toHaveValue('2019');
+                          expect(result.monthInput).toHaveValue('02');
+                          expect(result.dayInput).toHaveValue('29');
+                          expect(result.inputContainer).toHaveAttribute(
+                            'aria-invalid',
+                            'true',
+                          );
+                          const errorElement = result.queryByTestId(
+                            'lg-form_field-error_message',
+                          );
+                          expect(errorElement).toBeInTheDocument();
+                        });
+                      });
+
+                      break;
+                    }
+
+                    case 'month': {
+                      test('changing month sets error state', async () => {
+                        const result = renderDatePicker({
+                          value: newUTC(2020, Month.March, 31),
+                        });
+                        const input = getRelevantInput(result);
+                        userEvent.click(input);
+                        userEvent.keyboard('{arrowdown}');
+
+                        await waitFor(() => {
+                          expect(result.yearInput).toHaveValue('2020');
+                          expect(result.monthInput).toHaveValue('02');
+                          expect(result.dayInput).toHaveValue('31');
+                          expect(result.inputContainer).toHaveAttribute(
+                            'aria-invalid',
+                            'true',
+                          );
+                          const errorElement = result.queryByTestId(
+                            'lg-form_field-error_message',
+                          );
+                          expect(errorElement).toBeInTheDocument();
+                        });
+                      });
+
+                      break;
+                    }
+
+                    case 'day': {
+                      // There is no case where decrementing a day results in an invalid date value
+                      break;
+                    }
+
+                    default:
+                      break;
+                  }
+                });
 
                 describe('if new value would be out of range', () => {
                   const onDateChange = jest.fn();
@@ -2490,50 +2629,52 @@ describe('packages/date-picker', () => {
       });
 
       describe('typing a full date value', () => {
-        test('fires value change handler for explicit values', async () => {
-          const onDateChange = jest.fn();
-          const { yearInput, monthInput, dayInput } = renderDatePicker({
-            onDateChange,
-          });
-          userEvent.type(yearInput, '2003');
-          userEvent.type(monthInput, '12');
-          userEvent.type(dayInput, '26');
+        describe('if the date is valid', () => {
+          test('fires value change handler for explicit values', async () => {
+            const onDateChange = jest.fn();
+            const { yearInput, monthInput, dayInput } = renderDatePicker({
+              onDateChange,
+            });
+            userEvent.type(yearInput, '2003');
+            userEvent.type(monthInput, '12');
+            userEvent.type(dayInput, '26');
 
-          await waitFor(() =>
-            expect(onDateChange).toHaveBeenCalledWith(
-              expect.objectContaining(newUTC(2003, Month.December, 26)),
-            ),
-          );
+            await waitFor(() =>
+              expect(onDateChange).toHaveBeenCalledWith(
+                expect.objectContaining(newUTC(2003, Month.December, 26)),
+              ),
+            );
+          });
+
+          test('does not fire value change handler for ambiguous values', async () => {
+            const onDateChange = jest.fn();
+            const { yearInput, monthInput, dayInput } = renderDatePicker({
+              onDateChange,
+            });
+            userEvent.type(yearInput, '2003');
+            userEvent.type(monthInput, '12');
+            userEvent.type(dayInput, '2');
+
+            await waitFor(() => expect(onDateChange).not.toHaveBeenCalled());
+          });
+
+          test('properly renders the input', async () => {
+            const onDateChange = jest.fn();
+            const { yearInput, monthInput, dayInput } = renderDatePicker({
+              onDateChange,
+            });
+            userEvent.type(yearInput, '2003');
+            userEvent.type(monthInput, '12');
+            userEvent.type(dayInput, '26');
+            await waitFor(() => {
+              expect(yearInput).toHaveValue('2003');
+              expect(monthInput).toHaveValue('12');
+              expect(dayInput).toHaveValue('26');
+            });
+          });
         });
 
-        test('does not fire value change handler for ambiguous values', async () => {
-          const onDateChange = jest.fn();
-          const { yearInput, monthInput, dayInput } = renderDatePicker({
-            onDateChange,
-          });
-          userEvent.type(yearInput, '2003');
-          userEvent.type(monthInput, '12');
-          userEvent.type(dayInput, '2');
-
-          await waitFor(() => expect(onDateChange).not.toHaveBeenCalled());
-        });
-
-        test('properly renders the input', async () => {
-          const onDateChange = jest.fn();
-          const { yearInput, monthInput, dayInput } = renderDatePicker({
-            onDateChange,
-          });
-          userEvent.type(yearInput, '2003');
-          userEvent.type(monthInput, '12');
-          userEvent.type(dayInput, '26');
-          await waitFor(() => {
-            expect(yearInput).toHaveValue('2003');
-            expect(monthInput).toHaveValue('12');
-            expect(dayInput).toHaveValue('26');
-          });
-        });
-
-        describe('if the value is not a valid date', () => {
+        describe.only('if the value is not a valid date', () => {
           // E.g. Feb 31 2020
           test('the input is rendered with the typed date', async () => {
             const { yearInput, monthInput, dayInput } = renderDatePicker({});
