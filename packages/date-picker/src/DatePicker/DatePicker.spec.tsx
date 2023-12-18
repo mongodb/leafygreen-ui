@@ -1250,6 +1250,26 @@ describe('packages/date-picker', () => {
        */
       describe('Arrow key', () => {
         describe('Input', () => {
+          describe('Left Arrow', () => {
+            test('moves the cursor when the value starts with 0', () => {
+              const { monthInput } = renderDatePicker({});
+              userEvent.type(monthInput, '04{arrowleft}{arrowleft}');
+              expect(monthInput).toHaveFocus();
+            });
+
+            test('moves the cursor when the value is 0', () => {
+              const { monthInput } = renderDatePicker({});
+              userEvent.type(monthInput, '0{arrowleft}');
+              expect(monthInput).toHaveFocus();
+            });
+
+            test('moves the cursor to the next segment when the value is 0', () => {
+              const { yearInput, monthInput } = renderDatePicker({});
+              userEvent.type(monthInput, '0{arrowleft}{arrowleft}');
+              expect(yearInput).toHaveFocus();
+            });
+          });
+
           test('right arrow moves focus through segments', () => {
             const { yearInput, monthInput, dayInput } = renderDatePicker();
             userEvent.click(yearInput);
