@@ -7,7 +7,6 @@ import React, {
 } from 'react';
 
 import { isSameUTCDay } from '@leafygreen-ui/date-utils';
-import { isZeroLike } from '@leafygreen-ui/lib';
 import { createSyntheticEvent, keyMap } from '@leafygreen-ui/lib';
 
 import { DateFormField, DateInputBox } from '../../shared/components/DateInput';
@@ -88,7 +87,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       // if target is not a segment, do nothing
       if (!isSegment) return;
 
-      const isSegmentEmpty = isZeroLike(target.value);
+      const isSegmentEmpty = !target.value;
 
       const { selectionStart, selectionEnd } = target;
 
@@ -97,7 +96,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           // if input is empty,
           // or the cursor is at the beginning of the input
           // set focus to prev. input (if it exists)
-          if (isSegmentEmpty || selectionStart === 0) {
+          if (selectionStart === 0) {
             const segmentToFocus = getRelativeSegmentRef('prev', {
               segment: target,
               formatParts,
@@ -115,7 +114,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           // if input is empty,
           // or the cursor is at the end of the input
           // set focus to next. input (if it exists)
-          if (isSegmentEmpty || selectionEnd === target.value.length) {
+          if (selectionEnd === target.value.length) {
             const segmentToFocus = getRelativeSegmentRef('next', {
               segment: target,
               formatParts,
@@ -137,6 +136,8 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
 
         case keyMap.Backspace: {
           if (isSegmentEmpty) {
+            // prevent the backspace in the previous segment
+            e.preventDefault();
             const segmentToFocus = getRelativeSegmentRef('prev', {
               segment: target,
               formatParts,
