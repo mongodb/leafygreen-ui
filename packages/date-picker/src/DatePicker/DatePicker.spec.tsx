@@ -1297,6 +1297,24 @@ describe('packages/date-picker', () => {
               expect(monthInput).toHaveFocus();
             });
 
+            test('moves the cursor when the value starts with 0', () => {
+              const { monthInput } = renderDatePicker({});
+              userEvent.type(monthInput, '04{arrowleft}{arrowleft}');
+              expect(monthInput).toHaveFocus();
+            });
+
+            test('moves the cursor when the value is 0', () => {
+              const { monthInput } = renderDatePicker({});
+              userEvent.type(monthInput, '0{arrowleft}');
+              expect(monthInput).toHaveFocus();
+            });
+
+            test('moves the cursor to the previous segment when the value is 0', () => {
+              const { yearInput, monthInput } = renderDatePicker({});
+              userEvent.type(monthInput, '0{arrowleft}{arrowleft}');
+              expect(yearInput).toHaveFocus();
+            });
+
             test('focuses the previous segment if the cursor is at the start of the input text', () => {
               const { yearInput, monthInput } = renderDatePicker({
                 value: testToday,
@@ -2770,37 +2788,59 @@ describe('packages/date-picker', () => {
       });
 
       describe('updating a segment', () => {
-        test('clearing the segment updates the input', () => {
-          const { yearInput, monthInput, dayInput } = renderDatePicker({});
-          userEvent.type(yearInput, '2020');
-          userEvent.type(monthInput, '7');
-          userEvent.type(dayInput, '4');
+        describe('backspace', () => {
+          test('clearing the segment updates the input', () => {
+            const { yearInput, monthInput, dayInput } = renderDatePicker({});
+            userEvent.type(yearInput, '2020');
+            userEvent.type(monthInput, '7');
+            userEvent.type(dayInput, '4');
 
-          yearInput.setSelectionRange(0, 4);
-          userEvent.type(yearInput, '{backspace}');
-          expect(yearInput).toHaveValue('');
-        });
+            yearInput.setSelectionRange(0, 4);
+            userEvent.type(yearInput, '{backspace}');
+            expect(yearInput).toHaveValue('');
+          });
 
-        test('clearing and typing a new value does not format the input', () => {
-          const { yearInput, monthInput, dayInput } = renderDatePicker({});
-          userEvent.type(yearInput, '2020');
-          userEvent.type(monthInput, '7');
-          userEvent.type(dayInput, '4');
+          test('keeps the focus inside the segment if it is not empty', () => {
+            const { monthInput } = renderDatePicker({});
 
-          yearInput.setSelectionRange(0, 4);
-          userEvent.type(yearInput, '{backspace}');
-          userEvent.type(yearInput, '2');
-          expect(yearInput).toHaveValue('2');
-        });
+            userEvent.type(monthInput, '0');
+            userEvent.type(monthInput, '{backspace}');
 
-        test('deleting characters does not format the segment', () => {
-          const { yearInput, monthInput, dayInput } = renderDatePicker({});
-          userEvent.type(yearInput, '2020');
-          userEvent.type(monthInput, '7');
-          userEvent.type(dayInput, '4');
+            expect(monthInput).toHaveValue('');
+            expect(monthInput).toHaveFocus();
+          });
 
-          userEvent.type(yearInput, '{backspace}{backspace}');
-          expect(yearInput).toHaveValue('20');
+          test('moves the focus to the next segment', () => {
+            const { yearInput, monthInput } = renderDatePicker({});
+
+            userEvent.type(monthInput, '0');
+            userEvent.type(monthInput, '{backspace}{backspace}');
+
+            expect(monthInput).toHaveValue('');
+            expect(yearInput).toHaveFocus();
+          });
+
+          test('clearing and typing a new value does not format the input', () => {
+            const { yearInput, monthInput, dayInput } = renderDatePicker({});
+            userEvent.type(yearInput, '2020');
+            userEvent.type(monthInput, '7');
+            userEvent.type(dayInput, '4');
+
+            yearInput.setSelectionRange(0, 4);
+            userEvent.type(yearInput, '{backspace}');
+            userEvent.type(yearInput, '2');
+            expect(yearInput).toHaveValue('2');
+          });
+
+          test('deleting characters does not format the segment', () => {
+            const { yearInput, monthInput, dayInput } = renderDatePicker({});
+            userEvent.type(yearInput, '2020');
+            userEvent.type(monthInput, '7');
+            userEvent.type(dayInput, '4');
+
+            userEvent.type(yearInput, '{backspace}{backspace}');
+            expect(yearInput).toHaveValue('20');
+          });
         });
 
         describe('typing new characters', () => {
