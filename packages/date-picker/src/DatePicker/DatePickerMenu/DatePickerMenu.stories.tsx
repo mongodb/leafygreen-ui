@@ -82,17 +82,27 @@ export const Basic: DatePickerMenuStoryType = {
     MockDate.reset();
     const [value, setValue] = useState<Date | null>(null);
 
+    const date = new Date(Date.now());
     const props = omit(args, [...contextPropNames, 'isOpen']);
     const refEl = useRef<HTMLDivElement>(null);
     return (
       <DatePickerProvider value={value} setValue={setValue}>
-        <InlineCode ref={refEl}>
-          Today: {new Date(Date.now()).toUTCString()}
-        </InlineCode>
-        <DatePickerMenu {...props} refEl={refEl} />
+        <div style={{ minHeight: '50vh' }}>
+          <InlineCode ref={refEl}>
+            Today:{' '}
+            {new Intl.DateTimeFormat('en-GB', {
+              dateStyle: 'full',
+            }).format(date)}
+          </InlineCode>
+          <DatePickerMenu {...props} refEl={refEl} />
+        </div>
       </DatePickerProvider>
     );
   },
+};
+
+Basic.parameters = {
+  chromatic: { disableSnapshot: true },
 };
 
 export const WithValue: DatePickerMenuStoryType = {
@@ -101,6 +111,8 @@ export const WithValue: DatePickerMenuStoryType = {
 
     const props = omit(args, [...contextPropNames, 'isOpen']);
     const refEl = useRef<HTMLDivElement>(null);
+    const date = new Date(Date.now());
+    const withValueDate = new Date(2023, Month.September, 10);
     return (
       <DatePickerProvider
         value={newUTC(2023, Month.September, 10)}
@@ -108,12 +120,30 @@ export const WithValue: DatePickerMenuStoryType = {
       >
         <div style={{ minHeight: '50vh' }}>
           <InlineCode ref={refEl}>
-            Today: {new Date(Date.now()).toUTCString()}
+            Today:{' '}
+            {new Intl.DateTimeFormat('en-GB', {
+              dateStyle: 'full',
+            }).format(date)}
+          </InlineCode>
+          <br></br>
+          <InlineCode ref={refEl}>
+            Value:{' '}
+            {new Intl.DateTimeFormat('en-GB', {
+              dateStyle: 'full',
+            }).format(withValueDate)}
           </InlineCode>
           <DatePickerMenu {...props} refEl={refEl} />
         </div>
       </DatePickerProvider>
     );
+  },
+};
+
+export const WithValueDarkMode: DatePickerMenuStoryType = {
+  ...WithValue,
+  args: {
+    // @ts-expect-error - DatePickerMenuStoryType does not include Context props
+    darkMode: true,
   },
 };
 
@@ -125,19 +155,25 @@ export const MockedToday: DatePickerMenuStoryType = {
 
     const props = omit(args, [...contextPropNames, 'isOpen']);
     const refEl = useRef<HTMLDivElement>(null);
+    const date = new Date(Date.now());
     return (
       <DatePickerProvider value={value} setValue={setValue}>
-        <InlineCode ref={refEl}>
-          Today: {new Date(Date.now()).toUTCString()}
-        </InlineCode>
-        <DatePickerMenu {...props} refEl={refEl} />
+        <div style={{ minHeight: '50vh' }}>
+          <InlineCode ref={refEl}>
+            Today:{' '}
+            {new Intl.DateTimeFormat('en-GB', {
+              dateStyle: 'full',
+            }).format(date)}
+          </InlineCode>
+          <DatePickerMenu {...props} refEl={refEl} />
+        </div>
       </DatePickerProvider>
     );
   },
 };
 
-export const DarkMode: DatePickerMenuStoryType = {
-  ...WithValue,
+export const MockedTodayDarkMode: DatePickerMenuStoryType = {
+  ...MockedToday,
   args: {
     // @ts-expect-error - DatePickerMenuStoryType does not include Context props
     darkMode: true,
@@ -169,7 +205,7 @@ export const InitialFocusValue: DatePickerMenuInteractionTestType = {
 };
 
 export const LeftArrowKey: DatePickerMenuInteractionTestType = {
-  ...Basic,
+  ...WithValue,
   play: async ctx => {
     await InitialFocusToday.play(ctx);
     userEvent.keyboard('{arrowleft}');
@@ -177,7 +213,7 @@ export const LeftArrowKey: DatePickerMenuInteractionTestType = {
 };
 
 export const RightArrowKey: DatePickerMenuInteractionTestType = {
-  ...Basic,
+  ...WithValue,
   play: async ctx => {
     await InitialFocusToday.play(ctx);
     userEvent.keyboard('{arrowright}');
@@ -185,7 +221,7 @@ export const RightArrowKey: DatePickerMenuInteractionTestType = {
 };
 
 export const UpArrowKey: DatePickerMenuInteractionTestType = {
-  ...Basic,
+  ...WithValue,
   play: async ctx => {
     await InitialFocusToday.play(ctx);
     userEvent.keyboard('{arrowup}');
@@ -193,7 +229,7 @@ export const UpArrowKey: DatePickerMenuInteractionTestType = {
 };
 
 export const DownArrowKey: DatePickerMenuInteractionTestType = {
-  ...Basic,
+  ...WithValue,
   play: async ctx => {
     await InitialFocusToday.play(ctx);
     userEvent.keyboard('{arrowdown}');
@@ -201,7 +237,7 @@ export const DownArrowKey: DatePickerMenuInteractionTestType = {
 };
 
 export const UpToPrevMonth: DatePickerMenuInteractionTestType = {
-  ...Basic,
+  ...WithValue,
   play: async ctx => {
     await InitialFocusToday.play(ctx);
     userEvent.keyboard('{arrowup}{arrowup}');
@@ -209,7 +245,7 @@ export const UpToPrevMonth: DatePickerMenuInteractionTestType = {
 };
 
 export const DownToNextMonth: DatePickerMenuInteractionTestType = {
-  ...Basic,
+  ...WithValue,
   play: async ctx => {
     await InitialFocusToday.play(ctx);
     userEvent.keyboard('{arrowdown}{arrowdown}{arrowdown}');
@@ -217,7 +253,7 @@ export const DownToNextMonth: DatePickerMenuInteractionTestType = {
 };
 
 export const OpenMonthMenu: DatePickerMenuInteractionTestType = {
-  ...Basic,
+  ...WithValue,
   play: async ctx => {
     const canvas = within(ctx.canvasElement.parentElement!);
     await canvas.findByRole('listbox');
@@ -227,7 +263,7 @@ export const OpenMonthMenu: DatePickerMenuInteractionTestType = {
 };
 
 export const SelectJanuary: DatePickerMenuInteractionTestType = {
-  ...Basic,
+  ...WithValue,
   play: async ctx => {
     await OpenMonthMenu.play(ctx);
     const { findAllByRole } = within(ctx.canvasElement.parentElement!);
@@ -238,7 +274,7 @@ export const SelectJanuary: DatePickerMenuInteractionTestType = {
 };
 
 export const OpenYearMenu: DatePickerMenuInteractionTestType = {
-  ...Basic,
+  ...WithValue,
   play: async ctx => {
     const canvas = within(ctx.canvasElement.parentElement!);
     await canvas.findByRole('listbox');
@@ -248,7 +284,7 @@ export const OpenYearMenu: DatePickerMenuInteractionTestType = {
 };
 
 export const Select2026: DatePickerMenuInteractionTestType = {
-  ...Basic,
+  ...WithValue,
   play: async ctx => {
     await OpenYearMenu.play(ctx);
     const { findAllByRole } = within(ctx.canvasElement.parentElement!);

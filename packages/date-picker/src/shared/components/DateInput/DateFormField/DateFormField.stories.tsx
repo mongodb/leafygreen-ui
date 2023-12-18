@@ -5,6 +5,7 @@ import { StoryFn } from '@storybook/react';
 import { css } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
+import { Size } from '@leafygreen-ui/tokens';
 
 import {
   SharedDatePickerContextProps,
@@ -13,6 +14,16 @@ import {
 import { DatePickerState } from '../../../types';
 
 import { DateFormField } from './DateFormField';
+
+const ProviderWrapper = (Story: StoryFn, ctx?: { args: any }) => {
+  return (
+    <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
+      <SharedDatePickerProvider {...ctx?.args}>
+        <Story />
+      </SharedDatePickerProvider>
+    </LeafyGreenProvider>
+  );
+};
 
 const meta: StoryMetaType<
   typeof DateFormField,
@@ -30,8 +41,9 @@ const meta: StoryMetaType<
         darkMode: [false, true],
         label: ['Label', undefined],
         description: [undefined, 'Description'],
-        // state: Object.values(DatePickerState),
+        state: Object.values(DatePickerState),
         disabled: [false, true],
+        size: Object.values(Size),
       },
       excludeCombinations: [
         {
@@ -39,19 +51,7 @@ const meta: StoryMetaType<
           description: 'Description',
         },
       ],
-      decorator: (Instance, ctx) => (
-        <LeafyGreenProvider
-          darkMode={ctx?.args.darkMode}
-          baseFontSize={ctx?.args.baseFontSize}
-        >
-          <SharedDatePickerProvider
-            // @ts-expect-error - incomplete context value
-            value={{ ...ctx?.args }}
-          >
-            <Instance />
-          </SharedDatePickerProvider>
-        </LeafyGreenProvider>
-      ),
+      decorator: ProviderWrapper,
       args: {
         children: (
           <input
@@ -108,5 +108,9 @@ const Template: StoryFn<typeof DateFormField> = () => {
 };
 
 export const Basic = Template.bind({});
+
+Basic.parameters = {
+  chromatic: { disableSnapshot: true },
+};
 
 export const Generated = () => {};

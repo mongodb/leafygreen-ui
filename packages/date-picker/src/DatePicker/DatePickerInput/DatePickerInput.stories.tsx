@@ -70,4 +70,8 @@ export default meta;
 
 export const Basic: StoryFn<DatePickerProps> = () => <DatePickerInput />;
 
+Basic.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+
 export const Generated: StoryFn<DatePickerProps> = () => <></>;
