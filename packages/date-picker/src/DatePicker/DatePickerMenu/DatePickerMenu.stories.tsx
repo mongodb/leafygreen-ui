@@ -112,6 +112,7 @@ export const WithValue: DatePickerMenuStoryType = {
     const props = omit(args, [...contextPropNames, 'isOpen']);
     const refEl = useRef<HTMLDivElement>(null);
     const date = new Date(Date.now());
+    const withValueDate = new Date(2023, Month.September, 10);
     return (
       <DatePickerProvider
         value={newUTC(2023, Month.September, 10)}
@@ -123,6 +124,13 @@ export const WithValue: DatePickerMenuStoryType = {
             {new Intl.DateTimeFormat('en-GB', {
               dateStyle: 'full',
             }).format(date)}
+          </InlineCode>
+          <br></br>
+          <InlineCode ref={refEl}>
+            Value:{' '}
+            {new Intl.DateTimeFormat('en-GB', {
+              dateStyle: 'full',
+            }).format(withValueDate)}
           </InlineCode>
           <DatePickerMenu {...props} refEl={refEl} />
         </div>
