@@ -97,6 +97,10 @@ export const Basic: DatePickerMenuStoryType = {
   },
 };
 
+Basic.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+
 export const WithValue: DatePickerMenuStoryType = {
   render: args => {
     MockDate.reset();
@@ -181,7 +185,7 @@ export const InitialFocusValue: DatePickerMenuInteractionTestType = {
 };
 
 export const LeftArrowKey: DatePickerMenuInteractionTestType = {
-  ...Basic,
+  ...WithValue,
   play: async ctx => {
     await InitialFocusToday.play(ctx);
     userEvent.keyboard('{arrowleft}');
@@ -189,7 +193,7 @@ export const LeftArrowKey: DatePickerMenuInteractionTestType = {
 };
 
 export const RightArrowKey: DatePickerMenuInteractionTestType = {
-  ...Basic,
+  ...WithValue,
   play: async ctx => {
     await InitialFocusToday.play(ctx);
     userEvent.keyboard('{arrowright}');
@@ -197,7 +201,7 @@ export const RightArrowKey: DatePickerMenuInteractionTestType = {
 };
 
 export const UpArrowKey: DatePickerMenuInteractionTestType = {
-  ...Basic,
+  ...WithValue,
   play: async ctx => {
     await InitialFocusToday.play(ctx);
     userEvent.keyboard('{arrowup}');
@@ -205,7 +209,7 @@ export const UpArrowKey: DatePickerMenuInteractionTestType = {
 };
 
 export const DownArrowKey: DatePickerMenuInteractionTestType = {
-  ...Basic,
+  ...WithValue,
   play: async ctx => {
     await InitialFocusToday.play(ctx);
     userEvent.keyboard('{arrowdown}');
@@ -213,7 +217,7 @@ export const DownArrowKey: DatePickerMenuInteractionTestType = {
 };
 
 export const UpToPrevMonth: DatePickerMenuInteractionTestType = {
-  ...Basic,
+  ...WithValue,
   play: async ctx => {
     await InitialFocusToday.play(ctx);
     userEvent.keyboard('{arrowup}{arrowup}');
@@ -221,7 +225,7 @@ export const UpToPrevMonth: DatePickerMenuInteractionTestType = {
 };
 
 export const DownToNextMonth: DatePickerMenuInteractionTestType = {
-  ...Basic,
+  ...WithValue,
   play: async ctx => {
     await InitialFocusToday.play(ctx);
     userEvent.keyboard('{arrowdown}{arrowdown}{arrowdown}');
@@ -229,7 +233,7 @@ export const DownToNextMonth: DatePickerMenuInteractionTestType = {
 };
 
 export const OpenMonthMenu: DatePickerMenuInteractionTestType = {
-  ...Basic,
+  ...WithValue,
   play: async ctx => {
     const canvas = within(ctx.canvasElement.parentElement!);
     await canvas.findByRole('listbox');
@@ -239,7 +243,7 @@ export const OpenMonthMenu: DatePickerMenuInteractionTestType = {
 };
 
 export const SelectJanuary: DatePickerMenuInteractionTestType = {
-  ...Basic,
+  ...WithValue,
   play: async ctx => {
     await OpenMonthMenu.play(ctx);
     const { findAllByRole } = within(ctx.canvasElement.parentElement!);
@@ -250,7 +254,7 @@ export const SelectJanuary: DatePickerMenuInteractionTestType = {
 };
 
 export const OpenYearMenu: DatePickerMenuInteractionTestType = {
-  ...Basic,
+  ...WithValue,
   play: async ctx => {
     const canvas = within(ctx.canvasElement.parentElement!);
     await canvas.findByRole('listbox');
@@ -260,7 +264,7 @@ export const OpenYearMenu: DatePickerMenuInteractionTestType = {
 };
 
 export const Select2026: DatePickerMenuInteractionTestType = {
-  ...Basic,
+  ...WithValue,
   play: async ctx => {
     await OpenYearMenu.play(ctx);
     const { findAllByRole } = within(ctx.canvasElement.parentElement!);
