@@ -39,6 +39,20 @@ import {
 } from './DatePicker.testutils';
 import { DatePicker } from '.';
 
+/**
+ * There are hundreds of tests for this component.
+ * To keep things organized we've attempted to adopt the following testing philosophy.
+ *
+ * Rendering Tests:
+ * Tests that assert that certain elements are rendered to the DOM.
+ * These tests should not have any user interaction (except when absolutely necessary to arrive in a certain state)
+ * These tests should exist on each sub-component to simplify test suites
+ *
+ * Interaction tests:
+ * Tests that assert some behavior following user interaction.
+ * Generally, this type of tests should _only_ exist in a test file for user-facing components.
+ */
+
 // Set the current time to noon UTC on 2023-12-25
 const testToday = newUTC(2023, Month.December, 25, 12);
 
