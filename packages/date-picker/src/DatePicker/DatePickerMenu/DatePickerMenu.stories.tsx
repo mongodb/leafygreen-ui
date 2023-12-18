@@ -82,13 +82,17 @@ export const Basic: DatePickerMenuStoryType = {
     MockDate.reset();
     const [value, setValue] = useState<Date | null>(null);
 
+    const date = new Date(Date.now());
     const props = omit(args, [...contextPropNames, 'isOpen']);
     const refEl = useRef<HTMLDivElement>(null);
     return (
       <DatePickerProvider value={value} setValue={setValue}>
         <div style={{ minHeight: '50vh' }}>
           <InlineCode ref={refEl}>
-            Today: {new Date(Date.now()).toUTCString()}
+            Today:{' '}
+            {new Intl.DateTimeFormat('en-GB', {
+              dateStyle: 'full',
+            }).format(date)}
           </InlineCode>
           <DatePickerMenu {...props} refEl={refEl} />
         </div>
@@ -107,6 +111,7 @@ export const WithValue: DatePickerMenuStoryType = {
 
     const props = omit(args, [...contextPropNames, 'isOpen']);
     const refEl = useRef<HTMLDivElement>(null);
+    const date = new Date(Date.now());
     return (
       <DatePickerProvider
         value={newUTC(2023, Month.September, 10)}
@@ -114,7 +119,10 @@ export const WithValue: DatePickerMenuStoryType = {
       >
         <div style={{ minHeight: '50vh' }}>
           <InlineCode ref={refEl}>
-            Today: {new Date(Date.now()).toUTCString()}
+            Today:{' '}
+            {new Intl.DateTimeFormat('en-GB', {
+              dateStyle: 'full',
+            }).format(date)}
           </InlineCode>
           <DatePickerMenu {...props} refEl={refEl} />
         </div>
@@ -139,11 +147,15 @@ export const MockedToday: DatePickerMenuStoryType = {
 
     const props = omit(args, [...contextPropNames, 'isOpen']);
     const refEl = useRef<HTMLDivElement>(null);
+    const date = new Date(Date.now());
     return (
       <DatePickerProvider value={value} setValue={setValue}>
         <div style={{ minHeight: '50vh' }}>
           <InlineCode ref={refEl}>
-            Today: {new Date(Date.now()).toUTCString()}
+            Today:{' '}
+            {new Intl.DateTimeFormat('en-GB', {
+              dateStyle: 'full',
+            }).format(date)}
           </InlineCode>
           <DatePickerMenu {...props} refEl={refEl} />
         </div>
