@@ -9,12 +9,7 @@ import {
 import userEvent from '@testing-library/user-event';
 import { addDays, subDays } from 'date-fns';
 
-import {
-  getISODate,
-  Month,
-  newUTC,
-  setUTCYear,
-} from '@leafygreen-ui/date-utils';
+import { getISODate, Month, newUTC } from '@leafygreen-ui/date-utils';
 import {
   mockTimeZone,
   testTimeZones,
@@ -26,8 +21,13 @@ import {
 } from '@leafygreen-ui/testing-lib';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
+import { DateSegment } from '../shared';
 import { defaultMax, defaultMin } from '../shared/constants';
-import { getFormattedDateString, getValueFormatter } from '../shared/utils';
+import {
+  getFormattedDateString,
+  getFormattedSegmentsFromDate,
+  getValueFormatter,
+} from '../shared/utils';
 
 import {
   expectedTabStopLabels,
@@ -1279,7 +1279,7 @@ describe('packages/date-picker', () => {
        * Arrow Keys behavior changes based on whether the input or menu is focused
        */
       describe('Arrow key', () => {
-        describe('Input', () => {
+        describe('In Input', () => {
           describe('Left Arrow', () => {
             test('focuses the previous segment when the segment is empty', () => {
               const { yearInput, monthInput } = renderDatePicker();
@@ -1334,430 +1334,449 @@ describe('packages/date-picker', () => {
             });
           });
 
-          describe('Up Arrow', () => {
-            describe('for a single segment', () => {
-              describe('month input', () => {
-                const formatter = getValueFormatter('month');
+          const segmentCases = ['year', 'month', 'day'] as Array<DateSegment>;
+          describe.each(segmentCases)('%p segment', segment => {
+            const formatter = getValueFormatter(segment);
+            /** Utility only for this suite. Returns the day|month|year element from the render result */
+            const getRelevantInput = (renderResult: RenderDatePickerResult) =>
+              segment === 'year'
+                ? renderResult.yearInput
+                : segment === 'month'
+                ? renderResult.monthInput
+                : renderResult.dayInput;
 
+            describe('Up Arrow', () => {
+              describe('when no value has been set', () => {
                 test('keeps the focus in the current segment', () => {
-                  const { monthInput } = renderDatePicker();
-                  userEvent.click(monthInput);
+                  const result = renderDatePicker();
+                  const input = getRelevantInput(result);
+                  userEvent.click(input);
                   userEvent.keyboard('{arrowup}');
-                  expect(monthInput).toHaveFocus();
+                  expect(input).toHaveFocus();
+                });
+
+                test('updates segment value to the default min', () => {
+                  const result = renderDatePicker();
+                  const input = getRelevantInput(result);
+                  userEvent.click(input);
+                  userEvent.keyboard(`{arrowup}`);
+                  const expectedValue = formatter(defaultMin[segment]);
+                  expect(input).toHaveValue(expectedValue);
+                });
+
+                test('updates segment value to the provided min year', () => {
+                  const result = renderDatePicker({
+                    min: newUTC(1967, Month.March, 10),
+                  });
+                  const input = getRelevantInput(result);
+                  userEvent.click(input);
+                  userEvent.keyboard(`{arrowup}`);
+                  const expectedValue = formatter(
+                    segment === 'year' ? 1967 : defaultMin[segment],
+                  );
+                  expect(input).toHaveValue(expectedValue);
                 });
 
                 test('keeps the focus in the current segment even if the value is valid', () => {
-                  const { monthInput } = renderDatePicker();
-                  userEvent.click(monthInput);
+                  const result = renderDatePicker();
+                  const input = getRelevantInput(result);
+                  userEvent.click(input);
                   userEvent.keyboard('{arrowup}{arrowup}{arrowup}');
-                  expect(monthInput).toHaveValue('03');
-                  expect(monthInput).toHaveFocus();
-                });
-
-                test('updates segment value to the default min', () => {
-                  const { monthInput } = renderDatePicker();
-                  userEvent.click(monthInput);
-                  userEvent.keyboard(`{arrowup}`);
-
-                  expect(monthInput).toHaveValue(formatter(defaultMin.month));
+                  expect(input).toHaveFocus();
+                  const expectedValue = formatter(defaultMin[segment] + 2);
+                  expect(input).toHaveValue(expectedValue);
                 });
 
                 test(`fires segment change handler`, () => {
                   const onChange = jest.fn();
-                  const { monthInput } = renderDatePicker({ onChange });
-                  userEvent.click(monthInput);
+                  const result = renderDatePicker({ onChange });
+                  const input = getRelevantInput(result);
+                  userEvent.click(input);
                   userEvent.keyboard(`{arrowup}`);
+                  const expectedValue = formatter(defaultMin[segment]);
                   expect(onChange).toHaveBeenCalledWith(
-                    eventContainingTargetValue(formatter(defaultMin.month)),
+                    eventContainingTargetValue(expectedValue),
                   );
                 });
 
                 test(`does not fire value change handler`, () => {
                   const onDateChange = jest.fn();
-                  const { monthInput } = renderDatePicker({ onDateChange });
-                  userEvent.click(monthInput);
+                  const result = renderDatePicker({ onDateChange });
+                  const input = getRelevantInput(result);
+                  userEvent.click(input);
                   userEvent.keyboard(`{arrowup}`);
                   expect(onDateChange).not.toHaveBeenCalled();
                 });
 
-                test('Rolls over to the min value', () => {
-                  const { monthInput } = renderDatePicker();
-                  userEvent.click(monthInput);
-                  userEvent.keyboard('{arrowup}');
-                  expect(monthInput).toHaveValue('01');
-                  userEvent.keyboard(
-                    '{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}',
-                  );
-                  expect(monthInput).toHaveValue('01');
+                describe('when segment value is max', () => {
+                  if (segment === 'year') {
+                    test.skip('does not roll over to the min value', () => {
+                      const result = renderDatePicker();
+                      const input = getRelevantInput(result);
+                      const initialValue = formatter(defaultMax[segment]);
+                      const expectedValue = formatter(defaultMax[segment] + 1);
+                      input.value = initialValue;
+                      expect(input).toHaveValue(initialValue);
+                      userEvent.click(input);
+                      userEvent.keyboard('{arrowup}');
+                      expect(input).toHaveValue(expectedValue);
+                    });
+                  } else {
+                    test('rolls over to the min value', () => {
+                      const result = renderDatePicker();
+                      const input = getRelevantInput(result);
+                      const initialValue = formatter(defaultMax[segment]);
+                      const expectedValue = formatter(defaultMin[segment]);
+                      input.value = initialValue;
+                      expect(input).toHaveValue(initialValue);
+                      userEvent.click(input);
+                      userEvent.keyboard('{arrowup}');
+                      expect(input).toHaveValue(expectedValue);
+                    });
+                  }
                 });
               });
 
-              describe('year input', () => {
-                const formatter = getValueFormatter('year');
-
-                test('updates segment value to the default min', () => {
-                  const { yearInput } = renderDatePicker();
-                  userEvent.click(yearInput);
-                  userEvent.keyboard(`{arrowup}`);
-
-                  expect(yearInput).toHaveValue(formatter(defaultMin.year));
-                });
-
-                test('updates segment value to the provided min year', () => {
-                  const { yearInput } = renderDatePicker({
-                    min: newUTC(1969, Month.June, 20),
-                  });
-                  userEvent.click(yearInput);
-                  userEvent.keyboard(`{arrowup}`);
-
-                  expect(yearInput).toHaveValue(formatter(1969));
-                });
-
-                test(`fires segment change handler`, () => {
-                  const onChange = jest.fn();
-                  const { yearInput } = renderDatePicker({ onChange });
-                  userEvent.click(yearInput);
-                  userEvent.keyboard(`{arrowup}`);
-                  expect(onChange).toHaveBeenCalledWith(
-                    eventContainingTargetValue(formatter(defaultMin.year)),
-                  );
-                });
-
-                test(`does not fire value change handler`, () => {
+              describe('when a value is set', () => {
+                describe('when the value is valid', () => {
                   const onDateChange = jest.fn();
-                  const { yearInput } = renderDatePicker({ onDateChange });
-                  userEvent.click(yearInput);
-                  userEvent.keyboard(`{arrowup}`);
-                  expect(onDateChange).not.toHaveBeenCalled();
-                });
+                  const handleValidation = jest.fn();
+                  const initialValue = newUTC(2023, Month.September, 10);
+                  const expectedValue = {
+                    year: newUTC(2024, Month.September, 10),
+                    month: newUTC(2023, Month.October, 10),
+                    day: newUTC(2023, Month.September, 11),
+                  }[segment];
 
-                test('does not roll over year', () => {
-                  const onDateChange = jest.fn();
-                  const { yearInput } = renderDatePicker({
-                    onDateChange,
-                    value: newUTC(2020, Month.July, 5),
-                    min: newUTC(1969, Month.June, 20),
-                    max: newUTC(2020, Month.September, 10),
+                  beforeEach(() => {
+                    const result = renderDatePicker({
+                      onDateChange,
+                      handleValidation,
+                      value: initialValue,
+                    });
+                    const input = getRelevantInput(result);
+                    userEvent.click(input);
+                    userEvent.keyboard(`{arrowup}`);
                   });
-                  userEvent.click(yearInput);
-                  userEvent.keyboard(`{arrowup}`);
-                  expect(onDateChange).toHaveBeenCalledWith(
-                    newUTC(2021, Month.July, 5),
-                  );
+
+                  test('fires value change handler', () => {
+                    expect(onDateChange).toHaveBeenCalledWith(expectedValue);
+                  });
+
+                  test('fires validation handler', () => {
+                    expect(handleValidation).toHaveBeenCalledWith(
+                      expectedValue,
+                    );
+                  });
                 });
-              });
-            });
 
-            describe('when a value is set', () => {
-              test('fires value change handler', () => {
-                const onDateChange = jest.fn();
-                const { monthInput } = renderDatePicker({
-                  onDateChange,
-                  value: newUTC(2023, Month.September, 10),
-                });
-                userEvent.click(monthInput);
-                userEvent.keyboard(`{arrowup}`);
-                expect(onDateChange).toHaveBeenCalledWith(
-                  newUTC(2023, Month.October, 10),
-                );
-              });
+                // describe('if the new value would be invalid', () => {
+                //   // E.g. Feb 30 2020 or Feb 29 2021
+                //   // TODO:
+                //   test.todo('changing year: sets error state');
+                //   test.todo('changing month: sets error state');
+                //   test.todo('changing date: rolls over sooner');
+                // });
 
-              test('fires validation handler', () => {
-                const handleValidation = jest.fn();
-                const { monthInput } = renderDatePicker({
-                  handleValidation,
-                  value: newUTC(2023, Month.September, 10),
-                });
-                userEvent.click(monthInput);
-                userEvent.keyboard(`{arrowup}`);
-                expect(handleValidation).toHaveBeenCalledWith(
-                  newUTC(2023, Month.October, 10),
-                );
-              });
-
-              describe('if the new value would be invalid', () => {
-                // E.g. Feb 30 2020 or Feb 29 2021
-                // TODO:
-                test.todo('changing year: sets error state');
-                test.todo('changing month: sets error state');
-                test.todo('changing date: rolls over sooner');
-              });
-
-              describe('if new value would be out of range', () => {
-                const onDateChange = jest.fn();
-                const onSegmentChange = jest.fn();
-                const handleValidation = jest.fn();
-                const max = newUTC(2020, Month.July, 4);
-                const startValue = newUTC(2019, Month.August, 1);
-                const newYearVal = '2020';
-                const expectedMessage = `Date must be before ${getFormattedDateString(
-                  max,
-                  'iso8601',
-                )}`;
-
-                let renderResult: RenderDatePickerResult;
-
-                beforeEach(() => {
-                  onDateChange.mockReset();
-                  onSegmentChange.mockReset();
-                  handleValidation.mockReset();
-
-                  renderResult = renderDatePicker({
+                describe('if new value would be out of range', () => {
+                  const onDateChange = jest.fn();
+                  const onSegmentChange = jest.fn();
+                  const handleValidation = jest.fn();
+                  const max = newUTC(2020, Month.August, 1);
+                  const startValue = newUTC(2020, Month.August, 1);
+                  const incrementedValues = {
+                    year: newUTC(2021, Month.August, 1),
+                    month: newUTC(2020, Month.September, 1),
+                    day: newUTC(2020, Month.August, 2),
+                  };
+                  const expectedMessage = `Date must be before ${getFormattedDateString(
                     max,
-                    value: startValue,
-                    onDateChange,
-                    onChange: onSegmentChange,
-                    handleValidation,
+                    'iso8601',
+                  )}`;
+
+                  let renderResult: RenderDatePickerResult;
+                  let input: HTMLInputElement;
+
+                  beforeEach(() => {
+                    onDateChange.mockReset();
+                    onSegmentChange.mockReset();
+                    handleValidation.mockReset();
+
+                    renderResult = renderDatePicker({
+                      max,
+                      value: startValue,
+                      onDateChange,
+                      onChange: onSegmentChange,
+                      handleValidation,
+                    });
+
+                    input = getRelevantInput(renderResult);
+
+                    userEvent.click(input);
+                    userEvent.keyboard(`{arrowup}`);
                   });
-                  userEvent.click(renderResult.yearInput);
-                  userEvent.keyboard(`{arrowup}`);
-                });
 
-                test('updates the input', () => {
-                  expect(renderResult.yearInput).toHaveValue(newYearVal);
-                });
+                  test('fires the segment change handler', () => {
+                    const expectedInputValue = getFormattedSegmentsFromDate(
+                      incrementedValues[segment],
+                    )[segment];
 
-                test('fires the change handler', () => {
-                  expect(onDateChange).toHaveBeenCalledWith(
-                    setUTCYear(startValue, Number(newYearVal)),
-                  );
-                });
+                    expect(onSegmentChange).toHaveBeenCalledWith(
+                      eventContainingTargetValue(expectedInputValue),
+                    );
+                  });
 
-                test('fires the segment change handler', () => {
-                  expect(onSegmentChange).toHaveBeenCalledWith(
-                    eventContainingTargetValue(newYearVal),
-                  );
-                });
+                  test('updates the input', () => {
+                    const expectedInputValue = getFormattedSegmentsFromDate(
+                      incrementedValues[segment],
+                    )[segment];
 
-                test('fires the validation handler', () => {
-                  expect(handleValidation).toHaveBeenCalledWith(
-                    setUTCYear(startValue, Number(newYearVal)),
-                  );
-                });
+                    expect(input).toHaveValue(expectedInputValue);
+                  });
 
-                test('sets aria-invalid', () => {
-                  expect(renderResult.inputContainer).toHaveAttribute(
-                    'aria-invalid',
-                    'true',
-                  );
-                });
+                  test('fires the change handler', () => {
+                    expect(onDateChange).toHaveBeenCalledWith(
+                      incrementedValues[segment],
+                    );
+                  });
 
-                test('sets error message', () => {
-                  const errorMessageElement = within(
-                    renderResult.formField,
-                  ).queryByText(expectedMessage);
-                  expect(errorMessageElement).toBeInTheDocument();
+                  test('fires the validation handler', () => {
+                    expect(handleValidation).toHaveBeenCalledWith(
+                      incrementedValues[segment],
+                    );
+                  });
+
+                  test('sets aria-invalid', () => {
+                    expect(renderResult.inputContainer).toHaveAttribute(
+                      'aria-invalid',
+                      'true',
+                    );
+                  });
+
+                  test('sets error message', () => {
+                    const errorMessageElement = within(
+                      renderResult.formField,
+                    ).queryByText(expectedMessage);
+                    expect(errorMessageElement).toBeInTheDocument();
+                  });
                 });
               });
             });
-          });
 
-          describe('Down Arrow', () => {
-            describe('for a single segment', () => {
-              describe('month input', () => {
-                const formatter = getValueFormatter('month');
-
+            describe('Down Arrow', () => {
+              describe('when no value has been set', () => {
                 test('keeps the focus in the current segment', () => {
-                  const { monthInput } = renderDatePicker();
-                  userEvent.click(monthInput);
+                  const result = renderDatePicker();
+                  const input = getRelevantInput(result);
+                  userEvent.click(input);
                   userEvent.keyboard('{arrowdown}');
-                  expect(monthInput).toHaveFocus();
+                  expect(input).toHaveFocus();
+                });
+
+                test('updates segment value to the default max', () => {
+                  const result = renderDatePicker();
+                  const input = getRelevantInput(result);
+                  userEvent.click(input);
+                  userEvent.keyboard(`{arrowdown}`);
+                  const expectedValue = formatter(defaultMax[segment]);
+                  expect(input).toHaveValue(expectedValue);
+                });
+
+                test('updates segment value to the provided max year', () => {
+                  const result = renderDatePicker({
+                    max: newUTC(2067, Month.March, 10),
+                  });
+                  const input = getRelevantInput(result);
+                  userEvent.click(input);
+                  userEvent.keyboard(`{arrowdown}`);
+                  const expectedValue = formatter(
+                    segment === 'year' ? 2067 : defaultMax[segment],
+                  );
+                  expect(input).toHaveValue(expectedValue);
                 });
 
                 test('keeps the focus in the current segment even if the value is valid', () => {
-                  const { monthInput } = renderDatePicker();
-                  userEvent.click(monthInput);
+                  const result = renderDatePicker();
+                  const input = getRelevantInput(result);
+                  userEvent.click(input);
                   userEvent.keyboard('{arrowdown}{arrowdown}{arrowdown}');
-                  expect(monthInput).toHaveValue('10');
-                  expect(monthInput).toHaveFocus();
-                });
-
-                test('updates segment value to the default max', () => {
-                  const { monthInput } = renderDatePicker();
-                  userEvent.click(monthInput);
-                  userEvent.keyboard(`{arrowdown}`);
-
-                  expect(monthInput).toHaveValue(formatter(defaultMax.month));
+                  expect(input).toHaveFocus();
+                  const expectedValue = formatter(defaultMax[segment] - 2);
+                  expect(input).toHaveValue(expectedValue);
                 });
 
                 test(`fires segment change handler`, () => {
                   const onChange = jest.fn();
-                  const { monthInput } = renderDatePicker({ onChange });
-                  userEvent.click(monthInput);
+                  const result = renderDatePicker({ onChange });
+                  const input = getRelevantInput(result);
+                  userEvent.click(input);
                   userEvent.keyboard(`{arrowdown}`);
+                  const expectedValue = formatter(defaultMax[segment]);
                   expect(onChange).toHaveBeenCalledWith(
-                    eventContainingTargetValue(formatter(defaultMax.month)),
+                    eventContainingTargetValue(expectedValue),
                   );
                 });
 
                 test(`does not fire value change handler`, () => {
                   const onDateChange = jest.fn();
-                  const { monthInput } = renderDatePicker({ onDateChange });
-                  userEvent.click(monthInput);
+                  const result = renderDatePicker({ onDateChange });
+                  const input = getRelevantInput(result);
+                  userEvent.click(input);
                   userEvent.keyboard(`{arrowdown}`);
                   expect(onDateChange).not.toHaveBeenCalled();
                 });
 
-                test('Rolls over to max value', () => {
-                  const { monthInput } = renderDatePicker();
-                  userEvent.click(monthInput);
-                  userEvent.keyboard('{arrowdown}');
-                  expect(monthInput).toHaveValue('12');
+                describe('when segment value is min', () => {
+                  if (segment === 'year') {
+                    test.skip('does not roll over to the max value', () => {
+                      const result = renderDatePicker();
+                      const input = getRelevantInput(result);
+                      const initialValue = formatter(defaultMin[segment]);
+                      const expectedValue = formatter(defaultMin[segment] - 1);
+                      input.value = initialValue;
+                      expect(input).toHaveValue(initialValue);
+                      userEvent.click(input);
+                      userEvent.keyboard('{arrowdown}');
+                      expect(input).toHaveValue(expectedValue);
+                    });
+                  } else {
+                    test('rolls over to the max value', () => {
+                      const result = renderDatePicker();
+                      const input = getRelevantInput(result);
+                      const initialValue = formatter(defaultMin[segment]);
+                      const expectedValue = formatter(defaultMax[segment]);
+                      input.value = initialValue;
+                      expect(input).toHaveValue(initialValue);
+                      userEvent.click(input);
+                      userEvent.keyboard('{arrowdown}');
+                      expect(input).toHaveValue(expectedValue);
+                    });
+                  }
                 });
               });
 
-              describe('year input', () => {
-                const formatter = getValueFormatter('year');
-
-                test('updates segment value to the default max', () => {
-                  const { yearInput } = renderDatePicker();
-                  userEvent.click(yearInput);
-                  userEvent.keyboard(`{arrowdown}`);
-
-                  expect(yearInput).toHaveValue(formatter(defaultMax.year));
-                });
-
-                test('updates segment value to the provided min year', () => {
-                  const { yearInput } = renderDatePicker({
-                    max: newUTC(2020, Month.March, 13),
-                  });
-                  userEvent.click(yearInput);
-                  userEvent.keyboard(`{arrowdown}`);
-
-                  expect(yearInput).toHaveValue(formatter(2020));
-                });
-
-                test(`fires segment change handler`, () => {
-                  const onChange = jest.fn();
-                  const { yearInput } = renderDatePicker({ onChange });
-                  userEvent.click(yearInput);
-                  userEvent.keyboard(`{arrowdown}`);
-                  expect(onChange).toHaveBeenCalledWith(
-                    eventContainingTargetValue(formatter(defaultMax.year)),
-                  );
-                });
-
-                test(`does not fire value change handler`, () => {
+              describe('when a value is set', () => {
+                describe('when the value is valid', () => {
                   const onDateChange = jest.fn();
-                  const { yearInput } = renderDatePicker({ onDateChange });
-                  userEvent.click(yearInput);
-                  userEvent.keyboard(`{arrowdown}`);
-                  expect(onDateChange).not.toHaveBeenCalled();
+                  const handleValidation = jest.fn();
+                  const initialValue = newUTC(2023, Month.September, 10);
+                  const expectedValue = {
+                    year: newUTC(2022, Month.September, 10),
+                    month: newUTC(2023, Month.August, 10),
+                    day: newUTC(2023, Month.September, 9),
+                  }[segment];
+
+                  beforeEach(() => {
+                    const result = renderDatePicker({
+                      onDateChange,
+                      handleValidation,
+                      value: initialValue,
+                    });
+                    const input = getRelevantInput(result);
+                    userEvent.click(input);
+                    userEvent.keyboard(`{arrowdown}`);
+                  });
+
+                  test('fires value change handler', () => {
+                    expect(onDateChange).toHaveBeenCalledWith(expectedValue);
+                  });
+
+                  test('fires validation handler', () => {
+                    expect(handleValidation).toHaveBeenCalledWith(
+                      expectedValue,
+                    );
+                  });
                 });
 
-                test('does not roll over year', () => {
+                // describe('if the new value would be invalid', () => {
+                //   // E.g. Feb 30 2020 or Feb 29 2021
+                //   // TODO:
+                //   test.todo('changing year: sets error state');
+                //   test.todo('changing month: sets error state');
+                //   test.todo('changing date: rolls over sooner');
+                // });
+
+                describe('if new value would be out of range', () => {
                   const onDateChange = jest.fn();
-                  const { yearInput } = renderDatePicker({
-                    onDateChange,
-                    value: newUTC(1969, Month.July, 5),
-                    min: newUTC(1969, Month.June, 20),
-                    max: newUTC(2020, Month.September, 10),
+                  const onSegmentChange = jest.fn();
+                  const handleValidation = jest.fn();
+                  const max = newUTC(2020, Month.August, 1);
+                  const startValue = newUTC(2020, Month.August, 1);
+                  const incrementedValues = {
+                    year: newUTC(2021, Month.August, 1),
+                    month: newUTC(2020, Month.September, 1),
+                    day: newUTC(2020, Month.August, 2),
+                  };
+                  const expectedMessage = `Date must be before ${getFormattedDateString(
+                    max,
+                    'iso8601',
+                  )}`;
+
+                  let renderResult: RenderDatePickerResult;
+                  let input: HTMLInputElement;
+
+                  beforeEach(() => {
+                    onDateChange.mockReset();
+                    onSegmentChange.mockReset();
+                    handleValidation.mockReset();
+
+                    renderResult = renderDatePicker({
+                      max,
+                      value: startValue,
+                      onDateChange,
+                      onChange: onSegmentChange,
+                      handleValidation,
+                    });
+
+                    input = getRelevantInput(renderResult);
+
+                    userEvent.click(input);
+                    userEvent.keyboard(`{arrowup}`);
                   });
-                  userEvent.click(yearInput);
-                  userEvent.keyboard(`{arrowdown}`);
-                  expect(onDateChange).toHaveBeenCalledWith(
-                    newUTC(1968, Month.July, 5),
-                  );
-                });
-              });
-            });
 
-            describe('when a value is set', () => {
-              test('fires value change handler', () => {
-                const onDateChange = jest.fn();
-                const { monthInput } = renderDatePicker({
-                  onDateChange,
-                  value: newUTC(2023, Month.September, 10),
-                });
-                userEvent.click(monthInput);
-                userEvent.keyboard(`{arrowdown}`);
-                expect(onDateChange).toHaveBeenCalledWith(
-                  newUTC(2023, Month.August, 10),
-                );
-              });
+                  test('fires the segment change handler', () => {
+                    const expectedInputValue = getFormattedSegmentsFromDate(
+                      incrementedValues[segment],
+                    )[segment];
 
-              test('fires validation handler', () => {
-                const handleValidation = jest.fn();
-                const { monthInput } = renderDatePicker({
-                  handleValidation,
-                  value: newUTC(2023, Month.September, 10),
-                });
-                userEvent.click(monthInput);
-                userEvent.keyboard(`{arrowdown}`);
-                expect(handleValidation).toHaveBeenCalledWith(
-                  newUTC(2023, Month.August, 10),
-                );
-              });
-
-              describe('if the new value would be invalid', () => {
-                // TODO:
-              });
-
-              describe('if new value would be out of range', () => {
-                const onDateChange = jest.fn();
-                const onSegmentChange = jest.fn();
-                const handleValidation = jest.fn();
-                const min = newUTC(1999, Month.November, 11);
-                const startValue = newUTC(2000, Month.August, 1);
-                const newYearVal = '1999';
-
-                const expectedMessage = `Date must be after ${getFormattedDateString(
-                  min,
-                  'iso8601',
-                )}`;
-
-                let renderResult: RenderDatePickerResult;
-
-                beforeEach(() => {
-                  onDateChange.mockReset();
-                  onSegmentChange.mockReset();
-                  handleValidation.mockReset();
-
-                  renderResult = renderDatePicker({
-                    min,
-                    value: startValue,
-                    onDateChange,
-                    onChange: onSegmentChange,
-                    handleValidation,
+                    expect(onSegmentChange).toHaveBeenCalledWith(
+                      eventContainingTargetValue(expectedInputValue),
+                    );
                   });
-                  userEvent.click(renderResult.yearInput);
-                  userEvent.keyboard(`{arrowdown}`);
-                });
 
-                test('updates the input', () => {
-                  expect(renderResult.yearInput).toHaveValue(newYearVal);
-                });
+                  test('updates the input', () => {
+                    const expectedInputValue = getFormattedSegmentsFromDate(
+                      incrementedValues[segment],
+                    )[segment];
 
-                test('fires the change handler', () => {
-                  expect(onDateChange).toHaveBeenCalledWith(
-                    setUTCYear(startValue, Number(newYearVal)),
-                  );
-                });
+                    expect(input).toHaveValue(expectedInputValue);
+                  });
 
-                test('fires the segment change handler', () => {
-                  expect(onSegmentChange).toHaveBeenCalledWith(
-                    eventContainingTargetValue(newYearVal),
-                  );
-                });
+                  test('fires the change handler', () => {
+                    expect(onDateChange).toHaveBeenCalledWith(
+                      incrementedValues[segment],
+                    );
+                  });
 
-                test('fires the validation handler', () => {
-                  expect(handleValidation).toHaveBeenCalledWith(
-                    setUTCYear(startValue, Number(newYearVal)),
-                  );
-                });
+                  test('fires the validation handler', () => {
+                    expect(handleValidation).toHaveBeenCalledWith(
+                      incrementedValues[segment],
+                    );
+                  });
 
-                test('sets aria-invalid', () => {
-                  expect(renderResult.inputContainer).toHaveAttribute(
-                    'aria-invalid',
-                    'true',
-                  );
-                });
+                  test('sets aria-invalid', () => {
+                    expect(renderResult.inputContainer).toHaveAttribute(
+                      'aria-invalid',
+                      'true',
+                    );
+                  });
 
-                test('sets error message', () => {
-                  const errorMessageElement = within(
-                    renderResult.formField,
-                  ).queryByText(expectedMessage);
-                  expect(errorMessageElement).toBeInTheDocument();
+                  test('sets error message', () => {
+                    const errorMessageElement = within(
+                      renderResult.formField,
+                    ).queryByText(expectedMessage);
+                    expect(errorMessageElement).toBeInTheDocument();
+                  });
                 });
               });
             });
