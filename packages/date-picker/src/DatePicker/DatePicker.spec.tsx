@@ -1431,7 +1431,20 @@ describe('packages/date-picker', () => {
                   expect(onDateChange).not.toHaveBeenCalled();
                 });
 
-                test.todo('does not roll over');
+                test('does not roll over year', () => {
+                  const onDateChange = jest.fn();
+                  const { yearInput } = renderDatePicker({
+                    onDateChange,
+                    value: newUTC(2020, Month.July, 5),
+                    min: newUTC(1969, Month.June, 20),
+                    max: newUTC(2020, Month.September, 10),
+                  });
+                  userEvent.click(yearInput);
+                  userEvent.keyboard(`{arrowup}`);
+                  expect(onDateChange).toHaveBeenCalledWith(
+                    newUTC(2021, Month.July, 5),
+                  );
+                });
               });
             });
 
@@ -1462,23 +1475,12 @@ describe('packages/date-picker', () => {
                 );
               });
 
-              test('does not roll over year', () => {
-                const onDateChange = jest.fn();
-                const { yearInput } = renderDatePicker({
-                  onDateChange,
-                  value: newUTC(2020, Month.July, 5),
-                  min: newUTC(1969, Month.June, 20),
-                  max: newUTC(2020, Month.September, 10),
-                });
-                userEvent.click(yearInput);
-                userEvent.keyboard(`{arrowup}`);
-                expect(onDateChange).toHaveBeenCalledWith(
-                  newUTC(2021, Month.July, 5),
-                );
-              });
-
               describe('if the new value would be invalid', () => {
+                // E.g. Feb 30 2020 or Feb 29 2021
                 // TODO:
+                test.todo('changing year: sets error state');
+                test.todo('changing month: sets error state');
+                test.todo('changing date: rolls over sooner');
               });
 
               describe('if new value would be out of range', () => {
@@ -1643,7 +1645,20 @@ describe('packages/date-picker', () => {
                   expect(onDateChange).not.toHaveBeenCalled();
                 });
 
-                test.todo('Does not rollover to max');
+                test('does not roll over year', () => {
+                  const onDateChange = jest.fn();
+                  const { yearInput } = renderDatePicker({
+                    onDateChange,
+                    value: newUTC(1969, Month.July, 5),
+                    min: newUTC(1969, Month.June, 20),
+                    max: newUTC(2020, Month.September, 10),
+                  });
+                  userEvent.click(yearInput);
+                  userEvent.keyboard(`{arrowdown}`);
+                  expect(onDateChange).toHaveBeenCalledWith(
+                    newUTC(1968, Month.July, 5),
+                  );
+                });
               });
             });
 
@@ -1674,19 +1689,8 @@ describe('packages/date-picker', () => {
                 );
               });
 
-              test('does not roll over year', () => {
-                const onDateChange = jest.fn();
-                const { yearInput } = renderDatePicker({
-                  onDateChange,
-                  value: newUTC(1969, Month.July, 5),
-                  min: newUTC(1969, Month.June, 20),
-                  max: newUTC(2020, Month.September, 10),
-                });
-                userEvent.click(yearInput);
-                userEvent.keyboard(`{arrowdown}`);
-                expect(onDateChange).toHaveBeenCalledWith(
-                  newUTC(1968, Month.July, 5),
-                );
+              describe('if the new value would be invalid', () => {
+                // TODO:
               });
 
               describe('if new value would be out of range', () => {
