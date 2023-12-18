@@ -1410,12 +1410,12 @@ describe('packages/date-picker', () => {
 
                 describe('when segment value is max', () => {
                   if (segment === 'year') {
-                    test.skip('does not roll over to the min value', () => {
+                    test('does not roll over to the min value', () => {
                       const result = renderDatePicker();
                       const input = getRelevantInput(result);
                       const initialValue = formatter(defaultMax[segment]);
                       const expectedValue = formatter(defaultMax[segment] + 1);
-                      input.value = initialValue;
+                      userEvent.type(input, initialValue);
                       expect(input).toHaveValue(initialValue);
                       userEvent.click(input);
                       userEvent.keyboard('{arrowup}');
@@ -1427,7 +1427,7 @@ describe('packages/date-picker', () => {
                       const input = getRelevantInput(result);
                       const initialValue = formatter(defaultMax[segment]);
                       const expectedValue = formatter(defaultMin[segment]);
-                      input.value = initialValue;
+                      userEvent.type(input, initialValue);
                       expect(input).toHaveValue(initialValue);
                       userEvent.click(input);
                       userEvent.keyboard('{arrowup}');
@@ -1628,12 +1628,12 @@ describe('packages/date-picker', () => {
 
                 describe('when segment value is min', () => {
                   if (segment === 'year') {
-                    test.skip('does not roll over to the max value', () => {
+                    test('does not roll over to the max value', () => {
                       const result = renderDatePicker();
                       const input = getRelevantInput(result);
                       const initialValue = formatter(defaultMin[segment]);
                       const expectedValue = formatter(defaultMin[segment] - 1);
-                      input.value = initialValue;
+                      userEvent.type(input, initialValue);
                       expect(input).toHaveValue(initialValue);
                       userEvent.click(input);
                       userEvent.keyboard('{arrowdown}');
@@ -1645,7 +1645,7 @@ describe('packages/date-picker', () => {
                       const input = getRelevantInput(result);
                       const initialValue = formatter(defaultMin[segment]);
                       const expectedValue = formatter(defaultMax[segment]);
-                      input.value = initialValue;
+                      userEvent.type(input, initialValue);
                       expect(input).toHaveValue(initialValue);
                       userEvent.click(input);
                       userEvent.keyboard('{arrowdown}');
