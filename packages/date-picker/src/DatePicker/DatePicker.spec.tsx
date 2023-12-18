@@ -1241,38 +1241,107 @@ describe('packages/date-picker', () => {
         });
       });
 
+      describe('Backspace key', () => {
+        test('deletes any value in the input', () => {
+          const { dayInput } = renderDatePicker();
+          userEvent.type(dayInput, '26{backspace}');
+          expect(dayInput.value).toBe('2');
+          userEvent.tab();
+          expect(dayInput.value).toBe('02');
+        });
+
+        test('deletes the whole value on multiple presses', () => {
+          const { monthInput } = renderDatePicker();
+          userEvent.type(monthInput, '11');
+          userEvent.type(monthInput, '{backspace}{backspace}');
+          expect(monthInput.value).toBe('');
+        });
+
+        test('focuses the previous segment if current segment is empty', () => {
+          const { yearInput, monthInput } = renderDatePicker();
+          userEvent.type(monthInput, '{backspace}');
+          expect(yearInput).toHaveFocus();
+        });
+      });
+
       /**
-       * Arrow Keys:
-       * Since arrow key behavior changes based on whether the input or menu is focused,
-       * more detailed tests suites are located in
-       * - DatePickerInput: (./DatePickerInput/DatePickerInput.spec.tsx) and
-       * - DatePickerMenu: (./DatePickerMenu/DatePickerMenu.spec.tsx)
+       * Arrow Keys behavior changes based on whether the input or menu is focused
        */
       describe('Arrow key', () => {
         describe('Input', () => {
-          test('right arrow moves focus through segments', () => {
-            const { yearInput, monthInput, dayInput } = renderDatePicker();
-            userEvent.click(yearInput);
-            userEvent.keyboard('{arrowright}');
-            expect(monthInput).toHaveFocus();
+          describe('Left Arrow', () => {
+            test('focuses the previous segment when the segment is empty', () => {
+              const { yearInput, monthInput } = renderDatePicker();
+              userEvent.click(monthInput);
+              userEvent.keyboard('{arrowleft}');
+              expect(yearInput).toHaveFocus();
+            });
 
-            userEvent.keyboard('{arrowright}');
-            expect(dayInput).toHaveFocus();
+            test('moves the cursor when the segment has a value', () => {
+              const { monthInput } = renderDatePicker({
+                value: testToday,
+              });
+              userEvent.click(monthInput);
+              userEvent.keyboard('{arrowleft}');
+              expect(monthInput).toHaveFocus();
+            });
+
+            test('focuses the previous segment if the cursor is at the start of the input text', () => {
+              const { yearInput, monthInput } = renderDatePicker({
+                value: testToday,
+              });
+              userEvent.click(monthInput);
+              userEvent.keyboard('{arrowleft}{arrowleft}{arrowleft}');
+              expect(yearInput).toHaveFocus();
+            });
           });
 
-          test('left arrow moves focus back through segments', () => {
-            const { yearInput, monthInput, dayInput } = renderDatePicker();
-            userEvent.click(dayInput);
-            userEvent.keyboard('{arrowleft}');
-            expect(monthInput).toHaveFocus();
+          describe('Right Arrow', () => {
+            test('focuses the next segment when the segment is empty', () => {
+              const { yearInput, monthInput } = renderDatePicker();
+              userEvent.click(yearInput);
+              userEvent.keyboard('{arrowright}');
+              expect(monthInput).toHaveFocus();
+            });
 
-            userEvent.keyboard('{arrowleft}');
-            expect(yearInput).toHaveFocus();
+            test('focuses the next segment if the cursor is at the start of the input text', () => {
+              const { yearInput, monthInput } = renderDatePicker({
+                value: testToday,
+              });
+              userEvent.click(yearInput);
+              userEvent.keyboard('{arrowright}');
+              expect(monthInput).toHaveFocus();
+            });
+
+            test('moves the cursor when the segment has a value', () => {
+              const { yearInput } = renderDatePicker({
+                value: testToday,
+              });
+              userEvent.click(yearInput);
+              userEvent.keyboard('{arrowleft}{arrowright}');
+              expect(yearInput).toHaveFocus();
+            });
           });
 
           describe('Up Arrow', () => {
             describe('month input', () => {
               const formatter = getValueFormatter('month');
+
+              test('keeps the focus in the current segment', () => {
+                const { monthInput } = renderDatePicker();
+                userEvent.click(monthInput);
+                userEvent.keyboard('{arrowup}');
+                expect(monthInput).toHaveFocus();
+              });
+
+              test('keeps the focus in the current segment even if the value is valid', () => {
+                const { monthInput } = renderDatePicker();
+                userEvent.click(monthInput);
+                userEvent.keyboard('{arrowup}{arrowup}{arrowup}');
+                expect(monthInput).toHaveValue('03');
+                expect(monthInput).toHaveFocus();
+              });
+
               test('updates segment value to the default min', () => {
                 const { monthInput } = renderDatePicker();
                 userEvent.click(monthInput);
@@ -1297,6 +1366,17 @@ describe('packages/date-picker', () => {
                 userEvent.click(monthInput);
                 userEvent.keyboard(`{arrowup}`);
                 expect(onDateChange).not.toHaveBeenCalled();
+              });
+
+              test('Rolls over to the min value', () => {
+                const { monthInput } = renderDatePicker();
+                userEvent.click(monthInput);
+                userEvent.keyboard('{arrowup}');
+                expect(monthInput).toHaveValue('01');
+                userEvent.keyboard(
+                  '{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}',
+                );
+                expect(monthInput).toHaveValue('01');
               });
             });
 
@@ -1338,6 +1418,8 @@ describe('packages/date-picker', () => {
                 userEvent.keyboard(`{arrowup}`);
                 expect(onDateChange).not.toHaveBeenCalled();
               });
+
+              test.todo('does not roll over');
             });
 
             describe('when a value is set', () => {
@@ -1440,6 +1522,21 @@ describe('packages/date-picker', () => {
             describe('month input', () => {
               const formatter = getValueFormatter('month');
 
+              test('keeps the focus in the current segment', () => {
+                const { monthInput } = renderDatePicker();
+                userEvent.click(monthInput);
+                userEvent.keyboard('{arrowdown}');
+                expect(monthInput).toHaveFocus();
+              });
+
+              test('keeps the focus in the current segment even if the value is valid', () => {
+                const { monthInput } = renderDatePicker();
+                userEvent.click(monthInput);
+                userEvent.keyboard('{arrowdown}{arrowdown}{arrowdown}');
+                expect(monthInput).toHaveValue('10');
+                expect(monthInput).toHaveFocus();
+              });
+
               test('updates segment value to the default max', () => {
                 const { monthInput } = renderDatePicker();
                 userEvent.click(monthInput);
@@ -1464,6 +1561,13 @@ describe('packages/date-picker', () => {
                 userEvent.click(monthInput);
                 userEvent.keyboard(`{arrowdown}`);
                 expect(onDateChange).not.toHaveBeenCalled();
+              });
+
+              test('Rolls over to max value', () => {
+                const { monthInput } = renderDatePicker();
+                userEvent.click(monthInput);
+                userEvent.keyboard('{arrowdown}');
+                expect(monthInput).toHaveValue('12');
               });
             });
 
@@ -1505,6 +1609,8 @@ describe('packages/date-picker', () => {
                 userEvent.keyboard(`{arrowdown}`);
                 expect(onDateChange).not.toHaveBeenCalled();
               });
+
+              test.todo('Does not rollover to max');
             });
 
             describe('when a value is set', () => {

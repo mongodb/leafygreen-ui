@@ -74,161 +74,24 @@ describe('packages/date-picker/date-picker-input', () => {
       userEvent.tab();
       expect(dayInput.value).toBe('02');
     });
-  });
-
-  describe('Keyboard interaction', () => {
-    // yyyy-mm-dd
-    describe('Left Arrow', () => {
-      test('focuses the previous segment when the segment is empty', () => {
-        const { yearInput, monthInput } = renderDatePickerInput();
-        userEvent.click(monthInput);
-        userEvent.keyboard('{arrowleft}');
-        expect(yearInput).toHaveFocus();
-      });
-
-      test('moves the cursor when the segment has a value', () => {
-        const { monthInput } = renderDatePickerInput(null, {
-          value: testDate,
-        });
-        userEvent.click(monthInput);
-        userEvent.keyboard('{arrowleft}');
-        expect(monthInput).toHaveFocus();
-      });
-
-      test('focuses the previous segment if the cursor is at the start of the input text', () => {
-        const { yearInput, monthInput } = renderDatePickerInput(null, {
-          value: testDate,
-        });
-        userEvent.click(monthInput);
-        userEvent.keyboard('{arrowleft}{arrowleft}{arrowleft}');
-        expect(yearInput).toHaveFocus();
-      });
-    });
-
-    describe('Right Arrow', () => {
-      test('focuses the next segment when the segment is empty', () => {
-        const { yearInput, monthInput } = renderDatePickerInput();
-        userEvent.click(yearInput);
-        userEvent.keyboard('{arrowright}');
-        expect(monthInput).toHaveFocus();
-      });
-
-      test('focuses the next segment if the cursor is at the start of the input text', () => {
-        const { yearInput, monthInput } = renderDatePickerInput(null, {
-          value: testDate,
-        });
-        userEvent.click(yearInput);
-        userEvent.keyboard('{arrowright}');
-        expect(monthInput).toHaveFocus();
-      });
-
-      test('moves the cursor when the segment has a value', () => {
-        const { yearInput } = renderDatePickerInput(null, {
-          value: new Date(),
-        });
-        userEvent.click(yearInput);
-        userEvent.keyboard('{arrowleft}{arrowright}');
-        expect(yearInput).toHaveFocus();
-      });
-    });
-
-    describe('Backspace key', () => {
-      test('deletes any value in the input', () => {
+    describe('allows only 2 characters', () => {
+      test('in day input', () => {
         const { dayInput } = renderDatePickerInput();
-        userEvent.type(dayInput, '26{backspace}');
-        expect(dayInput.value).toBe('2');
-        userEvent.tab();
-        expect(dayInput.value).toBe('02');
+        userEvent.type(dayInput, '22222222');
+        expect(dayInput.value.length).toBe(2);
       });
 
-      test('deletes the whole value on multiple presses', () => {
+      test('in month input', () => {
         const { monthInput } = renderDatePickerInput();
-        userEvent.type(monthInput, '11');
-        userEvent.type(monthInput, '{backspace}{backspace}');
-        expect(monthInput.value).toBe('');
-      });
-
-      test('focuses the previous segment if current segment is empty', () => {
-        const { yearInput, monthInput } = renderDatePickerInput();
-        userEvent.type(monthInput, '{backspace}');
-        expect(yearInput).toHaveFocus();
+        userEvent.type(monthInput, '22222222');
+        expect(monthInput.value.length).toBe(2);
       });
     });
 
-    describe('Up Arrow', () => {
-      test('keeps the focus in the current segment', () => {
-        const { monthInput } = renderDatePickerInput();
-        userEvent.click(monthInput);
-        userEvent.keyboard('{arrowup}');
-        expect(monthInput).toHaveFocus();
-      });
-
-      test('keeps the focus in the current segment even if the value is valid', () => {
-        const { monthInput } = renderDatePickerInput();
-        userEvent.click(monthInput);
-        userEvent.keyboard('{arrowup}{arrowup}{arrowup}');
-        expect(monthInput).toHaveValue('03');
-        expect(monthInput).toHaveFocus();
-      });
-
-      test('Resets the value to the min value when the new value is greater than the max value', () => {
-        const { monthInput } = renderDatePickerInput();
-        userEvent.click(monthInput);
-        userEvent.keyboard('{arrowup}');
-        expect(monthInput).toHaveValue('01');
-        userEvent.keyboard(
-          '{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}{arrowup}',
-        );
-        expect(monthInput).toHaveValue('01');
-      });
-    });
-
-    describe('Down Arrow', () => {
-      test('keeps the focus in the current segment', () => {
-        const { monthInput } = renderDatePickerInput();
-        userEvent.click(monthInput);
-        userEvent.keyboard('{arrowdown}');
-        expect(monthInput).toHaveFocus();
-      });
-
-      test('keeps the focus in the current segment even if the value is valid', () => {
-        const { monthInput } = renderDatePickerInput();
-        userEvent.click(monthInput);
-        userEvent.keyboard('{arrowdown}{arrowdown}{arrowdown}');
-        expect(monthInput).toHaveValue('10');
-        expect(monthInput).toHaveFocus();
-      });
-
-      test('Resets the value to the max value when the new value is less than the min value', () => {
-        const { monthInput } = renderDatePickerInput();
-        userEvent.click(monthInput);
-        userEvent.keyboard('{arrowdown}');
-        expect(monthInput).toHaveValue('12');
-      });
-    });
-
-    describe('typing', () => {
-      describe('allows only 2 characters', () => {
-        test('in day input', () => {
-          const { dayInput } = renderDatePickerInput();
-          userEvent.type(dayInput, '22222222');
-          expect(dayInput.value.length).toBe(2);
-        });
-
-        test('in month input', () => {
-          const { monthInput } = renderDatePickerInput();
-          userEvent.type(monthInput, '22222222');
-          expect(monthInput.value.length).toBe(2);
-        });
-      });
-
-      describe('allows only 4 characters', () => {
-        test('in year input', () => {
-          const { yearInput } = renderDatePickerInput();
-          userEvent.type(yearInput, '22222222');
-          expect(yearInput.value.length).toBe(4);
-        });
-      });
+    test('allows only 4 characters in year input', () => {
+      const { yearInput } = renderDatePickerInput();
+      userEvent.type(yearInput, '22222222');
+      expect(yearInput.value.length).toBe(4);
     });
   });
 });
