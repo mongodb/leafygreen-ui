@@ -73,7 +73,6 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       locale,
       setIsDirty,
       setInternalErrorMessage,
-      clearInternalErrorMessage,
     } = useSharedDatePickerContext();
     const { theme } = useDarkMode();
 
