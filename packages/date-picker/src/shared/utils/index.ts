@@ -19,6 +19,7 @@ export {
   getFormattedSegmentsFromDate,
   getSegmentsFromDate,
 } from './getSegmentsFromDate';
+export { getSegmentStateFromRefs } from './getSegmentStateFromRefs';
 export { getValueFormatter } from './getValueFormatter';
 export { isElementInputSegment } from './isElementInputSegment';
 export { isEverySegmentFilled } from './isEverySegmentFilled';
