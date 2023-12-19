@@ -1880,7 +1880,7 @@ describe('packages/date-picker', () => {
                     }
 
                     case 'day': {
-                      test('changing date rolls down to days-in-month', async () => {
+                      test('changing date rolls over to number of days-in-month', async () => {
                         const result = renderDatePicker({
                           value: newUTC(2020, Month.February, 1),
                         });
