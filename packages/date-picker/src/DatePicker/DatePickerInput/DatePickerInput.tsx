@@ -197,10 +197,10 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
         /**
          * Fire a simulated `change` event
          */
-        const changeEvent = new Event('change');
         const target = segmentRefs[segment].current;
 
         if (target) {
+          const changeEvent = new Event('change');
           const reactEvent = createSyntheticEvent<
             ChangeEvent<HTMLInputElement>
           >(changeEvent, target);

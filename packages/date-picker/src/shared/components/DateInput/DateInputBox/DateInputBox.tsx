@@ -16,10 +16,13 @@ import {
 } from '../../../types';
 import {
   doesSomeSegmentExist,
+  doSegmentsFormValidDate,
+  getFormattedDateStringFromSegments,
   getMaxSegmentValue,
   getMinSegmentValue,
   getRelativeSegment,
   getValueFormatter,
+  isEverySegmentFilled,
   isEverySegmentValueExplicit,
   isExplicitSegmentValue,
   newDateFromSegments,
@@ -60,7 +63,8 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
     }: DateInputBoxProps,
     fwdRef,
   ) => {
-    const { formatParts, disabled, min, max } = useSharedDatePickerContext();
+    const { formatParts, disabled, min, max, locale, setInternalErrorMessage } =
+      useSharedDatePickerContext();
     const { theme } = useDarkMode();
 
     const containerRef = useForwardedRef(fwdRef, null);
@@ -88,15 +92,26 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
 
       if (hasAnySegmentChanged) {
         const areAllSegmentsEmpty = !doesSomeSegmentExist(newSegments);
-        const areAllExplicit = isEverySegmentValueExplicit(newSegments);
+        const areAllSegmentsExplicit = isEverySegmentValueExplicit(newSegments);
+        const areAllSegmentsFilled = isEverySegmentFilled(newSegments);
         const utcDate = newDateFromSegments(newSegments);
+        const areSegmentsValidDate = doSegmentsFormValidDate(newSegments);
 
         if (areAllSegmentsEmpty) {
-          // otherwise, if no segment exists, set the external value to null
+          // if no segment exists, set the external value to null
           setValue?.(null);
-        } else if (areAllExplicit && !!utcDate) {
-          // Update the value iff all segments create a valid date.
-          setValue?.(utcDate);
+        } else if (areAllSegmentsFilled) {
+          if (areAllSegmentsExplicit && !!utcDate) {
+            // Update the value iff all segments create a valid date.
+            setValue?.(utcDate);
+          } else if (!areSegmentsValidDate) {
+            const dateString = getFormattedDateStringFromSegments(
+              newSegments,
+              locale,
+            );
+            // This error state will be removed by `handleValidation` once a value is set
+            setInternalErrorMessage(`${dateString} is not a valid date`);
+          }
         }
       }
     };

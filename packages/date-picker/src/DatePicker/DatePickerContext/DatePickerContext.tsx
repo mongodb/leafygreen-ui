@@ -19,7 +19,12 @@ import {
 import { usePrevious } from '@leafygreen-ui/hooks';
 
 import { useSharedDatePickerContext } from '../../shared/context';
-import { getFormattedDateString } from '../../shared/utils';
+import {
+  doSegmentsFormValidDate,
+  getFormattedDateString,
+  getFormattedDateStringFromSegments,
+  getSegmentStateFromRefs,
+} from '../../shared/utils';
 import { getInitialHighlight } from '../utils/getInitialHighlight';
 
 import {
@@ -120,7 +125,23 @@ export const DatePickerProvider = ({
         );
       }
     } else {
-      clearInternalErrorMessage();
+      // Wait for the inputs to update, then check they're valid
+      setTimeout(() => {
+        const segments = getSegmentStateFromRefs(refs.segmentRefs);
+        const areSegmentsValidDate = doSegmentsFormValidDate(segments);
+
+        // If the segments are valid, clear any error messages
+        if (areSegmentsValidDate) {
+          clearInternalErrorMessage();
+        } else {
+          const dateString = getFormattedDateStringFromSegments(
+            segments,
+            locale,
+          );
+          // Setting the error message here is likely redundant (handled by DateInputBox)
+          setInternalErrorMessage(`${dateString} is not a valid date`);
+        }
+      });
     }
 
     _handleValidation?.(val);
