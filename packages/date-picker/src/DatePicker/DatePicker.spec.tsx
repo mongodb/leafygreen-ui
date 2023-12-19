@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   fireEvent,
+  prettyDOM,
   render,
   waitFor,
   waitForElementToBeRemoved,
@@ -1052,6 +1053,13 @@ describe('packages/date-picker', () => {
                   ).toBeFalsy();
                 }
 
+                const errorElement = renderResult.queryByTestId(
+                  'lg-form_field-error_message',
+                );
+
+                await waitFor(() =>
+                  expect(errorElement).not.toBeInTheDocument(),
+                );
                 userEvent.tab();
               }
             });
@@ -1078,6 +1086,14 @@ describe('packages/date-picker', () => {
                     ),
                   ).toBeFalsy();
                 }
+
+                const errorElement = renderResult.queryByTestId(
+                  'lg-form_field-error_message',
+                );
+
+                await waitFor(() =>
+                  expect(errorElement).not.toBeInTheDocument(),
+                );
 
                 userEvent.tab();
                 // There are side-effects triggered on CSS transition-end events.
