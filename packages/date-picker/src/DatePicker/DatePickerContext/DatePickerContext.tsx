@@ -24,6 +24,7 @@ import {
   getFormattedDateString,
   getFormattedDateStringFromSegments,
   getSegmentStateFromRefs,
+  isEverySegmentFilled,
 } from '../../shared/utils';
 import { getInitialHighlight } from '../utils/getInitialHighlight';
 
@@ -112,7 +113,7 @@ export const DatePickerProvider = ({
    * Handles internal validation,
    * and calls the provided `handleValidation` callback
    */
-  const handleValidation = (val?: DateType) => {
+  const handleValidation = (val?: DateType): void => {
     // Set an internal error state if necessary
     if (val && !isInRange(val)) {
       if (isOnOrBefore(val, min)) {
@@ -128,12 +129,14 @@ export const DatePickerProvider = ({
       // Wait for the inputs to update, then check they're valid
       setTimeout(() => {
         const segments = getSegmentStateFromRefs(refs.segmentRefs);
+        const areAllFilled = isEverySegmentFilled(segments);
         const areSegmentsValidDate = doSegmentsFormValidDate(segments);
 
         // If the segments are valid, clear any error messages
         if (areSegmentsValidDate) {
           clearInternalErrorMessage();
-        } else {
+        } else if (areAllFilled) {
+          // Show an error iff areAllFilled
           const dateString = getFormattedDateStringFromSegments(
             segments,
             locale,

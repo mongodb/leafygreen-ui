@@ -4,6 +4,8 @@ import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import {
+  DateType,
+  isValidDate,
   Month,
   newUTC,
   testLocales,
@@ -92,7 +94,7 @@ const meta: StoryMetaType<typeof DatePicker, SharedDatePickerContextProps> = {
 export default meta;
 
 export const LiveExample: StoryFn<typeof DatePicker> = props => {
-  const [value, setValue] = useState<Date | null | undefined>();
+  const [value, setValue] = useState<DateType>();
 
   return (
     <DatePicker
@@ -101,7 +103,9 @@ export const LiveExample: StoryFn<typeof DatePicker> = props => {
       onDateChange={v => {
         // eslint-disable-next-line no-console
         console.log('Storybook: onDateChange', { v });
-        setValue(v);
+        if (isValidDate(v)) {
+          setValue(v);
+        }
       }}
       handleValidation={date =>
         // eslint-disable-next-line no-console

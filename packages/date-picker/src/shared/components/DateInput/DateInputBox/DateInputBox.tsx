@@ -65,8 +65,16 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
     }: DateInputBoxProps,
     fwdRef,
   ) => {
-    const { formatParts, disabled, min, max, locale, setInternalErrorMessage } =
-      useSharedDatePickerContext();
+    const {
+      formatParts,
+      disabled,
+      min,
+      max,
+      locale,
+      setIsDirty,
+      setInternalErrorMessage,
+      clearInternalErrorMessage,
+    } = useSharedDatePickerContext();
     const { theme } = useDarkMode();
 
     const containerRef = useForwardedRef(fwdRef, null);
@@ -115,6 +123,8 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
             // This error state will be removed by `handleValidation` once a value is set
             setInternalErrorMessage(`${dateString} is not a valid date`);
           }
+          // If all values are filled, set the input as dirty
+          setIsDirty(true);
         }
       }
     };
