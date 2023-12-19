@@ -77,6 +77,18 @@ describe('packages/date-picker', () => {
         expect(label).toBeInTheDocument();
       });
 
+      test('warn when no labels are passed in', () => {
+        const consoleSpy = jest
+          .spyOn(console, 'warn')
+          .mockImplementation(() => {});
+
+        /* @ts-expect-error - needs label/aria-label/aria-labelledby */
+        render(<DatePicker />);
+        expect(consoleSpy).toHaveBeenCalledWith(
+          'For screen-reader accessibility, label, aria-labelledby, or aria-label must be provided to DatePicker component',
+        );
+      });
+
       test('renders description', () => {
         const { getByText } = render(
           <DatePicker label="Label" description="Description" />,
@@ -148,34 +160,42 @@ describe('packages/date-picker', () => {
         expect(yearInput).toBeInTheDocument();
       });
 
-      test('renders `value` prop', () => {
-        const { dayInput, monthInput, yearInput } = renderDatePicker({
-          value: newUTC(2023, Month.December, 25),
+      describe('rendering values', () => {
+        test('renders `value` prop', () => {
+          const { dayInput, monthInput, yearInput } = renderDatePicker({
+            value: newUTC(2023, Month.December, 25),
+          });
+          expect(dayInput.value).toEqual('25');
+          expect(monthInput.value).toEqual('12');
+          expect(yearInput.value).toEqual('2023');
         });
-        expect(dayInput.value).toEqual('25');
-        expect(monthInput.value).toEqual('12');
-        expect(yearInput.value).toEqual('2023');
-      });
 
-      test('renders `initialValue` prop', () => {
-        const { dayInput, monthInput, yearInput } = renderDatePicker({
-          initialValue: newUTC(2023, Month.December, 25),
+        test('renders `initialValue` prop', () => {
+          const { dayInput, monthInput, yearInput } = renderDatePicker({
+            initialValue: newUTC(2023, Month.December, 25),
+          });
+          expect(dayInput.value).toEqual('25');
+          expect(monthInput.value).toEqual('12');
+          expect(yearInput.value).toEqual('2023');
         });
-        expect(dayInput.value).toEqual('25');
-        expect(monthInput.value).toEqual('12');
-        expect(yearInput.value).toEqual('2023');
-      });
 
-      test('console warning when no labels are passed in', () => {
-        const consoleSpy = jest
-          .spyOn(console, 'warn')
-          .mockImplementation(() => {});
+        test('renders nothing when  `value` is an invalid date', () => {
+          const { dayInput, monthInput, yearInput } = renderDatePicker({
+            value: new Date('invalid'),
+          });
+          expect(dayInput.value).toEqual('');
+          expect(monthInput.value).toEqual('');
+          expect(yearInput.value).toEqual('');
+        });
 
-        /* @ts-expect-error - needs label/aria-label/aria-labelledby */
-        render(<DatePicker />);
-        expect(consoleSpy).toHaveBeenCalledWith(
-          'For screen-reader accessibility, label, aria-labelledby, or aria-label must be provided to DatePicker component',
-        );
+        test('renders nothing when `initialValue` is an invalid date', () => {
+          const { dayInput, monthInput, yearInput } = renderDatePicker({
+            initialValue: new Date('invalid'),
+          });
+          expect(dayInput.value).toEqual('');
+          expect(monthInput.value).toEqual('');
+          expect(yearInput.value).toEqual('');
+        });
       });
 
       describe('Error states', () => {
