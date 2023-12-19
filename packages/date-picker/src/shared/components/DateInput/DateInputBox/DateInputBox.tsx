@@ -1,6 +1,8 @@
 import React, { FocusEventHandler } from 'react';
+import { getDaysInMonth } from 'date-fns';
 import isEqual from 'lodash/isEqual';
 
+import { newUTC } from '@leafygreen-ui/date-utils';
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -91,20 +93,21 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       const hasAnySegmentChanged = !isEqual(newSegments, prevSegments);
 
       if (hasAnySegmentChanged) {
-        const areAllSegmentsEmpty = !doesSomeSegmentExist(newSegments);
-        const areAllSegmentsExplicit = isEverySegmentValueExplicit(newSegments);
-        const areAllSegmentsFilled = isEverySegmentFilled(newSegments);
-        const utcDate = newDateFromSegments(newSegments);
-        const areSegmentsValidDate = doSegmentsFormValidDate(newSegments);
+        const areAllEmpty = !doesSomeSegmentExist(newSegments);
+        const areAllFilled = isEverySegmentFilled(newSegments);
 
-        if (areAllSegmentsEmpty) {
+        if (areAllEmpty) {
           // if no segment exists, set the external value to null
           setValue?.(null);
-        } else if (areAllSegmentsFilled) {
-          if (areAllSegmentsExplicit && !!utcDate) {
+        } else if (areAllFilled) {
+          const areAllExplicit = isEverySegmentValueExplicit(newSegments);
+          const utcDate = newDateFromSegments(newSegments);
+          const isValidDate = doSegmentsFormValidDate(newSegments);
+
+          if (areAllExplicit && !!utcDate) {
             // Update the value iff all segments create a valid date.
             setValue?.(utcDate);
-          } else if (!areSegmentsValidDate) {
+          } else if (!isValidDate) {
             const dateString = getFormattedDateStringFromSegments(
               newSegments,
               locale,
@@ -129,14 +132,30 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
         const changedViaArrowKeys =
           meta?.key === keyMap.ArrowDown || meta?.key === keyMap.ArrowUp;
 
-        // Auto-format the segment
+        // If we've updated the "day" segment via arrow keys,
+        // we can update it's rollover behavior based on the month
+        if (changedViaArrowKeys && segmentName === 'day') {
+          const year = Number(segments['year']);
+          const month = Number(segments['month']);
+          const daysInMonth = getDaysInMonth(newUTC(year, month, 1));
+
+          if (Number(segmentValue) > daysInMonth) {
+            if (meta?.key === keyMap.ArrowDown) {
+              segmentValue = String(daysInMonth);
+            } else if (meta?.key === keyMap.ArrowUp) {
+              segmentValue = '01';
+            }
+          }
+        }
+
+        // Auto-format the segment if it is explicit and was not changed via arrow-keys
         if (
           !changedViaArrowKeys &&
           isExplicitSegmentValue(segmentName, segmentValue)
         ) {
           segmentValue = getFormattedSegmentValue(segmentName, segmentValue);
 
-          // Auto-advance focus
+          // Auto-advance focus (if possible)
           const nextSegmentName = getRelativeSegment('next', {
             segment: segmentName,
             formatParts,

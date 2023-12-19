@@ -1544,18 +1544,20 @@ describe('packages/date-picker', () => {
 
                       test('error state stays after menu is closed', async () => {
                         const result = renderDatePicker({
-                          value: newUTC(2020, Month.February, 29),
+                          value: newUTC(2020, Month.January, 31),
                         });
                         const input = getRelevantInput(result);
                         userEvent.click(input);
                         userEvent.keyboard('{arrowup}');
+                        const { menuContainerEl } =
+                          await result.findMenuElements();
                         userEvent.click(result.container.parentElement!);
-                        await waitFor(() => {
-                          const errorElement = result.queryByTestId(
-                            'lg-form_field-error_message',
-                          );
-                          expect(errorElement).toBeInTheDocument();
-                        });
+
+                        await waitForElementToBeRemoved(menuContainerEl);
+                        const errorElement = result.queryByTestId(
+                          'lg-form_field-error_message',
+                        );
+                        expect(errorElement).toBeInTheDocument();
                       });
 
                       break;
@@ -1802,7 +1804,6 @@ describe('packages/date-picker', () => {
                   });
                 });
 
-                // TODO:
                 describe('if the new value would be invalid', () => {
                   // E.g. Feb 30 2020 or Feb 29 2021
                   switch (segment) {
@@ -1859,25 +1860,48 @@ describe('packages/date-picker', () => {
 
                       test('error state stays after menu is closed', async () => {
                         const result = renderDatePicker({
-                          value: newUTC(2020, Month.February, 29),
+                          value: newUTC(2020, Month.March, 31),
                         });
                         const input = getRelevantInput(result);
                         userEvent.click(input);
                         userEvent.keyboard('{arrowdown}');
+                        const { menuContainerEl } =
+                          await result.findMenuElements();
                         userEvent.click(result.container.parentElement!);
-                        await waitFor(() => {
-                          const errorElement = result.queryByTestId(
-                            'lg-form_field-error_message',
-                          );
-                          expect(errorElement).toBeInTheDocument();
-                        });
+
+                        await waitForElementToBeRemoved(menuContainerEl);
+                        const errorElement = result.queryByTestId(
+                          'lg-form_field-error_message',
+                        );
+                        expect(errorElement).toBeInTheDocument();
                       });
 
                       break;
                     }
 
                     case 'day': {
-                      // There is no case where decrementing a day results in an invalid date value
+                      test('changing date rolls down to days-in-month', async () => {
+                        const result = renderDatePicker({
+                          value: newUTC(2020, Month.February, 1),
+                        });
+                        const input = getRelevantInput(result);
+                        userEvent.click(input);
+                        userEvent.keyboard('{arrowdown}');
+
+                        await waitFor(() => {
+                          expect(result.yearInput).toHaveValue('2020');
+                          expect(result.monthInput).toHaveValue('02');
+                          expect(result.dayInput).toHaveValue('29');
+                          expect(result.inputContainer).toHaveAttribute(
+                            'aria-invalid',
+                            'false',
+                          );
+                          const errorElement = result.queryByTestId(
+                            'lg-form_field-error_message',
+                          );
+                          expect(errorElement).not.toBeInTheDocument();
+                        });
+                      });
                       break;
                     }
 
