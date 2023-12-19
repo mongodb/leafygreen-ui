@@ -1,8 +1,12 @@
 export { doesSomeSegmentExist } from './doesSomeSegmentExist';
+export { doSegmentsFormValidDate } from './doSegmentsFormValidDate';
 export { getAutoComplete } from './getAutoComplete';
 export { getFirstEmptySegment } from './getFirstEmptySegment';
 export { getFormatParts, getFormatter } from './getFormatParts';
-export { getFormattedDateString } from './getFormattedDateString';
+export {
+  getFormattedDateString,
+  getFormattedDateStringFromSegments,
+} from './getFormattedDateString';
 export { getMaxSegmentValue } from './getMaxSegmentValue';
 export { getMinSegmentValue } from './getMinSegmentValue';
 export {
@@ -17,6 +21,8 @@ export {
 } from './getSegmentsFromDate';
 export { getValueFormatter } from './getValueFormatter';
 export { isElementInputSegment } from './isElementInputSegment';
+export { isEverySegmentFilled } from './isEverySegmentFilled';
+export { isEverySegmentValid } from './isEverySegmentValid';
 export { isEverySegmentValueExplicit } from './isEverySegmentValueExplicit';
 export { isExplicitSegmentValue } from './isExplicitSegmentValue';
 export { isValidSegmentName, isValidSegmentValue } from './isValidSegment';
