@@ -1488,7 +1488,7 @@ describe('packages/date-picker', () => {
                   });
                 });
 
-                describe.only('if the new value would be invalid', () => {
+                describe('if the new value would be invalid', () => {
                   // E.g. Feb 30 2020 or Feb 29 2021
                   switch (segment) {
                     case 'year': {
@@ -1535,6 +1535,22 @@ describe('packages/date-picker', () => {
                             'aria-invalid',
                             'true',
                           );
+                          const errorElement = result.queryByTestId(
+                            'lg-form_field-error_message',
+                          );
+                          expect(errorElement).toBeInTheDocument();
+                        });
+                      });
+
+                      test('error state stays after menu is closed', async () => {
+                        const result = renderDatePicker({
+                          value: newUTC(2020, Month.February, 29),
+                        });
+                        const input = getRelevantInput(result);
+                        userEvent.click(input);
+                        userEvent.keyboard('{arrowup}');
+                        userEvent.click(result.container.parentElement!);
+                        await waitFor(() => {
                           const errorElement = result.queryByTestId(
                             'lg-form_field-error_message',
                           );
@@ -1786,7 +1802,8 @@ describe('packages/date-picker', () => {
                   });
                 });
 
-                describe.only('if the new value would be invalid', () => {
+                // TODO:
+                describe('if the new value would be invalid', () => {
                   // E.g. Feb 30 2020 or Feb 29 2021
                   switch (segment) {
                     case 'year': {
@@ -1833,6 +1850,22 @@ describe('packages/date-picker', () => {
                             'aria-invalid',
                             'true',
                           );
+                          const errorElement = result.queryByTestId(
+                            'lg-form_field-error_message',
+                          );
+                          expect(errorElement).toBeInTheDocument();
+                        });
+                      });
+
+                      test('error state stays after menu is closed', async () => {
+                        const result = renderDatePicker({
+                          value: newUTC(2020, Month.February, 29),
+                        });
+                        const input = getRelevantInput(result);
+                        userEvent.click(input);
+                        userEvent.keyboard('{arrowdown}');
+                        userEvent.click(result.container.parentElement!);
+                        await waitFor(() => {
                           const errorElement = result.queryByTestId(
                             'lg-form_field-error_message',
                           );
@@ -2692,7 +2725,8 @@ describe('packages/date-picker', () => {
           });
         });
 
-        describe.only('if the value is not a valid date', () => {
+        // TODO:
+        describe('if the value is not a valid date', () => {
           // E.g. Feb 31 2020
           test('the input is rendered with the typed date', async () => {
             const { yearInput, monthInput, dayInput } = renderDatePicker({});
@@ -2956,7 +2990,7 @@ describe('packages/date-picker', () => {
         );
       });
 
-      describe('setting the date to an invalid value', () => {
+      describe('setting the date to an out-of-range value', () => {
         describe('with initial value', () => {
           let menuElements: RenderMenuResult;
 
