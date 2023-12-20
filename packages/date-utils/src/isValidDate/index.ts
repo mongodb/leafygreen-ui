@@ -1,1 +1,6 @@
-export { isValidDate, isValidDateString } from './isValidDate';
+export {
+  isDateObject,
+  isInvalidDateObject,
+  isValidDate,
+  isValidDateString,
+} from './isValidDate';
