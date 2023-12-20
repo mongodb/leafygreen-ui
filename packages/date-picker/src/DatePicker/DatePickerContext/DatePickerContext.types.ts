@@ -56,13 +56,13 @@ export interface DatePickerContextProps {
   /**
    * The Date value for the calendar cell in the menu that has, or should have focus.
    */
-  highlight: DateType;
+  highlight: Date;
 
   /**
    * Sets the value of the calendar cell that should have focus,
    * and performs any side-effects
    */
-  setHighlight: (newHighlight: DateType) => void;
+  setHighlight: (newHighlight: Date) => void;
 
   /**
    * Opens the menu and handles side effects

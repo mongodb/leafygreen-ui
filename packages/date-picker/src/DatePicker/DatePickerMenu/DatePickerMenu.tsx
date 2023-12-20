@@ -16,6 +16,7 @@ import {
   isSameTZDay,
   isSameUTCDay,
   isSameUTCMonth,
+  isValidDate,
 } from '@leafygreen-ui/date-utils';
 import { useForwardedRef, usePrevious } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
@@ -119,7 +120,11 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
 
     /** Set the highlighted cell when the value changes in the input */
     useEffect(() => {
-      if (value && !isSameUTCDay(value, prevValue) && isInRange(value)) {
+      if (
+        isValidDate(value) &&
+        !isSameUTCDay(value, prevValue) &&
+        isInRange(value)
+      ) {
         setHighlight(value);
       }
     }, [value, isInRange, setHighlight, prevValue]);
@@ -129,7 +134,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
      */
     useEffect(() => {
       if (
-        value &&
+        isValidDate(value) &&
         !isSameUTCDay(value, prevValue) &&
         !isSameUTCMonth(value, month)
       ) {
@@ -243,7 +248,8 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
     const handleCalendarKeyDown: KeyboardEventHandler<HTMLTableElement> = e => {
       const { key } = e;
 
-      const currentHighlight = highlight || value || today;
+      const currentHighlight =
+        highlight || (isValidDate(value) ? value : today);
       let nextHighlight = currentHighlight;
 
       switch (key) {

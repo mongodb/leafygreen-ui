@@ -86,7 +86,7 @@ export const DatePickerProvider = ({
   /**
    * Keep track of the element the user is highlighting with the keyboard
    */
-  const [highlight, _setHighlight] = useState<DateType>(
+  const [highlight, _setHighlight] = useState<Date>(
     getInitialHighlight(value, today, timeZone),
   );
 
@@ -112,7 +112,7 @@ export const DatePickerProvider = ({
   /**
    * Set the `highlight` value & handle side effects
    */
-  const setHighlight = useCallback((newHighlight: DateType) => {
+  const setHighlight = useCallback((newHighlight: Date) => {
     _setHighlight(newHighlight);
   }, []);
 
