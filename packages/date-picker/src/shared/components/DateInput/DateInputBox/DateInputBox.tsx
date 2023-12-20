@@ -27,6 +27,7 @@ import {
   getMinSegmentValue,
   getRelativeSegment,
   getValueFormatter,
+  isEverySegmentFilled,
   isEverySegmentValueExplicit,
   isExplicitSegmentValue,
   newDateFromSegments,
@@ -107,7 +108,8 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
         const shouldSetValue =
           isNull(newDate) ||
           (isValidDate(newDate) && isEverySegmentValueExplicit(newSegments)) ||
-          (isInvalidDateObject(newDate) && isDirty);
+          (isInvalidDateObject(newDate) &&
+            (isDirty || isEverySegmentFilled(newSegments)));
 
         if (shouldSetValue) {
           setValue?.(newDate);

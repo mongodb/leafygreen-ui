@@ -20,13 +20,7 @@ import {
 import { usePrevious } from '@leafygreen-ui/hooks';
 
 import { useSharedDatePickerContext } from '../../shared/context';
-import {
-  doSegmentsFormValidDate,
-  getFormattedDateString,
-  getFormattedDateStringFromSegments,
-  getSegmentStateFromRefs,
-  isEverySegmentFilled,
-} from '../../shared/utils';
+import { getFormattedDateString } from '../../shared/utils';
 import { getInitialHighlight } from '../utils/getInitialHighlight';
 
 import {
@@ -122,36 +116,20 @@ export const DatePickerProvider = ({
    */
   const handleValidation = (val?: DateType): void => {
     // Set an internal error state if necessary
-    if (isValidDate(val) && !isInRange(val)) {
-      if (isOnOrBefore(val, min)) {
-        setInternalErrorMessage(
-          `Date must be after ${getFormattedDateString(min, locale)}`,
-        );
+    if (isValidDate(val)) {
+      if (isInRange(val)) {
+        clearInternalErrorMessage();
       } else {
-        setInternalErrorMessage(
-          `Date must be before ${getFormattedDateString(max, locale)}`,
-        );
-      }
-    } else {
-      // Wait for the inputs to update, then check they're valid
-      setTimeout(() => {
-        const segments = getSegmentStateFromRefs(refs.segmentRefs);
-        const areAllFilled = isEverySegmentFilled(segments);
-        const areSegmentsValidDate = doSegmentsFormValidDate(segments);
-
-        // If the segments are valid, clear any error messages
-        if (areSegmentsValidDate) {
-          clearInternalErrorMessage();
-        } else if (areAllFilled) {
-          // Show an error iff areAllFilled
-          const dateString = getFormattedDateStringFromSegments(
-            segments,
-            locale,
+        if (isOnOrBefore(val, min)) {
+          setInternalErrorMessage(
+            `Date must be after ${getFormattedDateString(min, locale)}`,
           );
-          // Setting the error message here is likely redundant (handled by DateInputBox)
-          setInternalErrorMessage(`${dateString} is not a valid date`);
+        } else {
+          setInternalErrorMessage(
+            `Date must be before ${getFormattedDateString(max, locale)}`,
+          );
         }
-      });
+      }
     }
 
     _handleValidation?.(val);
