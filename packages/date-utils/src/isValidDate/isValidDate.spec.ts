@@ -1,9 +1,17 @@
+import { mockTimeZone } from '../testing/mockTimeZone';
+
 import { isValidDate, isValidDateString } from '.';
 
 describe('packages/date-utils/isValidDate', () => {
   test('accepts Date objects', () => {
     expect(isValidDate(new Date())).toBe(true);
     expect(isValidDate(new Date(Date.UTC(2023, 1, 1)))).toBe(true);
+  });
+
+  test('accepts Date objects when the time zone is mocked', () => {
+    mockTimeZone('America/Los_Angeles', -8);
+    expect(isValidDate(new Date())).toBe(true);
+    jest.resetAllMocks();
   });
 
   test('rejects invalid date objects', () => {
