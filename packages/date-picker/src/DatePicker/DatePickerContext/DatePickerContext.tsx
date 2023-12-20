@@ -8,6 +8,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
+import { isNull } from 'lodash';
 
 import {
   DateType,
@@ -130,6 +131,9 @@ export const DatePickerProvider = ({
           );
         }
       }
+    } else if (isNull(val)) {
+      // This could still be an error, but it's not defined internally
+      clearInternalErrorMessage();
     }
 
     _handleValidation?.(val);
