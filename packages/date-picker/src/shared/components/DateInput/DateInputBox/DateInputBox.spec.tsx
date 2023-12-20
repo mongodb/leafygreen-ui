@@ -211,7 +211,7 @@ describe('packages/date-picker/shared/date-input-box', () => {
       expect(dayInput.value).toBe('02');
     });
 
-    test('deleting characters works as expected', () => {
+    test('backspace deletes characters', () => {
       const { dayInput, yearInput } = renderDateInputBox(
         { value: newUTC(1993, Month.December, 26) },
         testContext,
@@ -222,21 +222,7 @@ describe('packages/date-picker/shared/date-input-box', () => {
       expect(yearInput.value).toBe('199');
     });
 
-    test('typing into a segment does not immediately fire the value setter', () => {
-      const setValue = jest.fn();
-      const { dayInput } = renderDateInputBox(
-        {
-          value: null,
-          setValue,
-        },
-        testContext,
-      );
-
-      userEvent.type(dayInput, '26');
-      expect(setValue).not.toHaveBeenCalled();
-    });
-
-    test('typing into a segment fires the segment change handler', () => {
+    test('segment change handler is called when typing into a segment', () => {
       const { yearInput } = renderDateInputBox(
         {
           value: null,
@@ -251,7 +237,36 @@ describe('packages/date-picker/shared/date-input-box', () => {
       );
     });
 
-    test('value setter is called when a complete date is entered', () => {
+    test('value setter is not called when typing into a segment', () => {
+      const setValue = jest.fn();
+      const { dayInput } = renderDateInputBox(
+        {
+          value: null,
+          setValue,
+        },
+        testContext,
+      );
+
+      userEvent.type(dayInput, '26');
+      expect(setValue).not.toHaveBeenCalled();
+    });
+
+    test('value setter is not called when an ambiguous date is entered', () => {
+      const setValue = jest.fn();
+      const { dayInput, monthInput, yearInput } = renderDateInputBox(
+        {
+          value: null,
+          setValue,
+        },
+        testContext,
+      );
+      userEvent.type(yearInput, '1993');
+      userEvent.type(monthInput, '12');
+      userEvent.type(dayInput, '2');
+      expect(setValue).not.toHaveBeenCalled();
+    });
+
+    test('value setter is only called when an explicit date is entered', () => {
       const setValue = jest.fn();
       const { dayInput, monthInput, yearInput } = renderDateInputBox(
         {
