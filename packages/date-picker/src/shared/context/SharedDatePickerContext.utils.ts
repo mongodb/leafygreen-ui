@@ -2,7 +2,12 @@ import { isBefore, isWithinInterval } from 'date-fns';
 import defaults from 'lodash/defaults';
 import defaultTo from 'lodash/defaultTo';
 
-import { getISODate, toDate } from '@leafygreen-ui/date-utils';
+import {
+  DateType,
+  getISODate,
+  isValidDate,
+  toDate,
+} from '@leafygreen-ui/date-utils';
 import { consoleOnce } from '@leafygreen-ui/lib';
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
@@ -79,9 +84,9 @@ export const defaultSharedDatePickerContext: SharedDatePickerContextProps = {
  */
 export const getIsInRange =
   (min: Date, max: Date) =>
-  (d?: Date | null): boolean =>
+  (d?: DateType): boolean =>
     !!(
-      d &&
+      isValidDate(d) &&
       isWithinInterval(d, {
         start: min,
         end: max,

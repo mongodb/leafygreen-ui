@@ -15,6 +15,7 @@ import {
   getISODate,
   isOnOrBefore,
   isSameUTCDay,
+  isValidDate,
 } from '@leafygreen-ui/date-utils';
 import { usePrevious } from '@leafygreen-ui/hooks';
 
@@ -71,10 +72,16 @@ export const DatePickerProvider = ({
     [hour],
   );
 
+  /** Internal callback to get a valid `month` from a given date value */
+  const getMonthFromValue = useCallback(
+    (val?: DateType) => getFirstOfUTCMonth(isValidDate(val) ? val : today),
+    [today],
+  );
+
   /**
    * Keep track of the displayed month
    */
-  const [month, _setMonth] = useState<Date>(getFirstOfUTCMonth(value ?? today));
+  const [month, _setMonth] = useState<Date>(getMonthFromValue(value));
 
   /**
    * Keep track of the element the user is highlighting with the keyboard
@@ -92,7 +99,7 @@ export const DatePickerProvider = ({
    */
   const setValue = (newVal?: DateType) => {
     _setValue(newVal ?? null);
-    setMonth(getFirstOfUTCMonth(newVal ?? today));
+    setMonth(getMonthFromValue(newVal));
   };
 
   /**
@@ -175,7 +182,7 @@ export const DatePickerProvider = ({
         refs.calendarButtonRef.current?.focus();
       }
       // update month to something valid
-      setMonth(getFirstOfUTCMonth(value ?? today));
+      setMonth(getMonthFromValue(value));
       // update highlight to something valid
       setHighlight(getInitialHighlight(value, today, timeZone));
     });
@@ -225,9 +232,9 @@ export const DatePickerProvider = ({
    */
   useEffect(() => {
     if (!isSameUTCDay(value, prevValue)) {
-      setMonth(getFirstOfUTCMonth(value ?? today));
+      setMonth(getMonthFromValue(value));
     }
-  }, [prevValue, setMonth, today, value]);
+  }, [getMonthFromValue, prevValue, setMonth, today, value]);
 
   return (
     <DatePickerContext.Provider
