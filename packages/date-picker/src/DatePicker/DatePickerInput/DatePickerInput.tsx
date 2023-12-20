@@ -44,6 +44,8 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
 
     /** Called when the input's Date value has changed */
     const handleInputValueChange = (inputVal?: DateType) => {
+      // TODO: render error message if date value is dirty && invalid
+
       if (!isSameUTCDay(inputVal, value)) {
         handleValidation?.(inputVal);
         setValue(inputVal || null);

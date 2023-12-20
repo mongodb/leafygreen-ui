@@ -25,7 +25,7 @@ export { isSameUTCDay } from './isSameUTCDay';
 export { isSameUTCMonth } from './isSameUTCMonth';
 export { isSameUTCRange } from './isSameUTCRange';
 export { isTodayTZ } from './isTodayTZ';
-export { isInvalidDateObject, isValidDate } from './isValidDate';
+export { isDateObject, isInvalidDateObject, isValidDate } from './isValidDate';
 export { isValidLocale } from './isValidLocale';
 export { maxDate } from './maxDate';
 export { minDate } from './minDate';
