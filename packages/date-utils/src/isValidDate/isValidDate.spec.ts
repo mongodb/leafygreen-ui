@@ -6,31 +6,29 @@ describe('packages/date-utils/isValidDate', () => {
     expect(isValidDate(new Date(Date.UTC(2023, 1, 1)))).toBe(true);
   });
 
-  test('accepts numbers', () => {
-    expect(isValidDate(Date.now())).toBe(true);
-    expect(isValidDate(0)).toBe(true);
+  test('rejects invalid date objects', () => {
+    expect(isValidDate(new Date('invalid'))).toBe(false);
+    expect(isValidDate({} as Date)).toBe(false);
   });
 
-  test('accepts strings', () => {
-    expect(isValidDate('1993-12-26')).toBe(true);
-    expect(isValidDate('not a date')).toBe(false);
+  test('rejects undefined', () => {
+    expect(isValidDate(undefined)).toBe(false);
   });
-
-  test('accepts null', () => {
+  test('rejects null', () => {
     expect(isValidDate(null)).toBe(false);
   });
+});
 
-  describe('isValidDateString', () => {
-    test('us format is valid', () => {
-      expect(isValidDateString('12/26/1993')).toBeTruthy();
-    });
+describe('packages/date-utils/isValidDateString', () => {
+  test('us format is valid', () => {
+    expect(isValidDateString('12/26/1993')).toBeTruthy();
+  });
 
-    test('iso format is valid', () => {
-      expect(isValidDateString('1993-12-26')).toBeTruthy();
-    });
+  test('iso format is valid', () => {
+    expect(isValidDateString('1993-12-26')).toBeTruthy();
+  });
 
-    test('undefined format is not valid', () => {
-      expect(isValidDateString(undefined)).toBeFalsy();
-    });
+  test('undefined format is not valid', () => {
+    expect(isValidDateString(undefined)).toBeFalsy();
   });
 });
