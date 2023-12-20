@@ -125,7 +125,7 @@ Uncontrolled.parameters = {
 };
 
 export const InModal: StoryFn<typeof DatePicker> = props => {
-  const [value, setValue] = useState<Date | null | undefined>();
+  const [value, setValue] = useState<DateType>();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
