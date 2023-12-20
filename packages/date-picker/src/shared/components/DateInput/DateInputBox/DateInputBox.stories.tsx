@@ -83,11 +83,20 @@ export const Basic: StoryFn<typeof DateInputBox> = props => {
   };
 
   return (
-    <DateInputBox
-      value={date}
-      setValue={updateDate}
-      segmentRefs={segmentRefsMock}
-    />
+    <div>
+      <DateInputBox
+        value={date}
+        setValue={updateDate}
+        segmentRefs={segmentRefsMock}
+      />
+      <code>
+        {isValidDate(date)
+          ? date.toISOString()
+          : date
+          ? 'Invalid'
+          : 'undefined'}
+      </code>
+    </div>
   );
 };
 

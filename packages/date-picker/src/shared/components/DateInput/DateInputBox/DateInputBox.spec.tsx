@@ -192,95 +192,244 @@ describe('packages/date-picker/shared/date-input-box', () => {
   });
 
   describe('Typing', () => {
-    test('updates the rendered segment value', () => {
-      const { dayInput } = renderDateInputBox(undefined, testContext);
-      userEvent.type(dayInput, '26');
-      expect(dayInput.value).toBe('26');
+    describe('single segment', () => {
+      test('updates the rendered segment value', () => {
+        const { dayInput } = renderDateInputBox(undefined, testContext);
+        userEvent.type(dayInput, '26');
+        expect(dayInput.value).toBe('26');
+      });
+
+      test('segment value is not immediately formatted', () => {
+        const { dayInput } = renderDateInputBox(undefined, testContext);
+        userEvent.type(dayInput, '2');
+        expect(dayInput.value).toBe('2');
+      });
+
+      test('value is formatted on segment blur', () => {
+        const { dayInput } = renderDateInputBox(undefined, testContext);
+        userEvent.type(dayInput, '2');
+        userEvent.tab();
+        expect(dayInput.value).toBe('02');
+      });
+
+      test('backspace deletes characters', () => {
+        const { dayInput, yearInput } = renderDateInputBox(
+          { value: null },
+          testContext,
+        );
+        userEvent.type(dayInput, '21');
+        userEvent.type(dayInput, '{backspace}');
+        expect(dayInput.value).toBe('2');
+
+        userEvent.type(yearInput, '1993');
+        userEvent.type(yearInput, '{backspace}');
+        expect(yearInput.value).toBe('199');
+      });
+
+      test('segment change handler is called when typing into a segment', () => {
+        const { yearInput } = renderDateInputBox(
+          { onSegmentChange },
+          testContext,
+        );
+        userEvent.type(yearInput, '1993');
+
+        expect(onSegmentChange).toHaveBeenCalledWith(
+          expect.objectContaining({ value: '1993' }),
+        );
+      });
+
+      test('value setter is not called when typing into a segment', () => {
+        const setValue = jest.fn();
+        const { dayInput } = renderDateInputBox({ setValue }, testContext);
+
+        userEvent.type(dayInput, '26');
+      });
+
+      test('segment change handler is called when deleting from a single segment', () => {
+        const { dayInput } = renderDateInputBox(
+          { onSegmentChange },
+          testContext,
+        );
+        userEvent.type(dayInput, '21');
+        userEvent.type(dayInput, '{backspace}');
+        expect(onSegmentChange).toHaveBeenCalledWith(
+          expect.objectContaining({ value: '2' }),
+        );
+      });
+
+      test('value setter is not called when deleting from a single segment', () => {
+        const setValue = jest.fn();
+
+        const { dayInput } = renderDateInputBox({ setValue }, testContext);
+        userEvent.type(dayInput, '21');
+        userEvent.type(dayInput, '{backspace}');
+        expect(setValue).not.toHaveBeenCalled();
+      });
     });
 
-    test('segment value is not immediately formatted', () => {
-      const { dayInput } = renderDateInputBox(undefined, testContext);
-      userEvent.type(dayInput, '2');
-      expect(dayInput.value).toBe('2');
+    describe('with no initial value', () => {
+      test('value setter is not called when an ambiguous date is entered', () => {
+        const setValue = jest.fn();
+        const { dayInput, monthInput, yearInput } = renderDateInputBox(
+          {
+            value: null,
+            setValue,
+          },
+          testContext,
+        );
+        userEvent.type(yearInput, '1993');
+        userEvent.type(monthInput, '12');
+        userEvent.type(dayInput, '2');
+        expect(setValue).not.toHaveBeenCalled();
+      });
+
+      test('value setter is called when an explicit date is entered', () => {
+        const setValue = jest.fn();
+        const { dayInput, monthInput, yearInput } = renderDateInputBox(
+          {
+            value: null,
+            setValue,
+          },
+          testContext,
+        );
+        userEvent.type(yearInput, '1993');
+        userEvent.type(monthInput, '12');
+        userEvent.type(dayInput, '26');
+        expect(setValue).toHaveBeenCalledWith(
+          expect.objectContaining(newUTC(1993, Month.December, 26)),
+        );
+      });
     });
 
-    test('value is formatted on segment blur', () => {
-      const { dayInput } = renderDateInputBox(undefined, testContext);
-      userEvent.type(dayInput, '2');
-      userEvent.tab();
-      expect(dayInput.value).toBe('02');
-    });
+    describe('with an initial value', () => {
+      describe('when a new date is typed', () => {
+        test('value setter is called with new date', () => {
+          const setValue = jest.fn();
+          const { dayInput } = renderDateInputBox(
+            {
+              value: newUTC(1993, Month.December, 26),
+              setValue,
+            },
+            testContext,
+          );
+          userEvent.type(dayInput, '{backspace}5');
+          expect(setValue).toHaveBeenCalledWith(
+            expect.objectContaining(newUTC(1993, Month.December, 25)),
+          );
+        });
 
-    test('backspace deletes characters', () => {
-      const { dayInput, yearInput } = renderDateInputBox(
-        { value: newUTC(1993, Month.December, 26) },
-        testContext,
-      );
-      userEvent.type(dayInput, '{backspace}');
-      expect(dayInput.value).toBe('2');
-      userEvent.type(yearInput, '{backspace}');
-      expect(yearInput.value).toBe('199');
-    });
+        test('inputs are rendered correctly', () => {
+          const setValue = jest.fn();
+          const { dayInput } = renderDateInputBox(
+            {
+              value: newUTC(1993, Month.December, 26),
+              setValue,
+            },
+            testContext,
+          );
+          userEvent.type(dayInput, '{backspace}5');
+          expect(dayInput).toHaveValue('25');
+        });
+      });
 
-    test('segment change handler is called when typing into a segment', () => {
-      const { yearInput } = renderDateInputBox(
-        {
-          value: null,
-          onSegmentChange,
-        },
-        testContext,
-      );
-      userEvent.type(yearInput, '1993');
+      describe('when new input is ambiguous', () => {
+        test('value setter is not called', () => {
+          const setValue = jest.fn();
+          const { dayInput } = renderDateInputBox(
+            {
+              value: newUTC(1993, Month.December, 26),
+              setValue,
+            },
+            testContext,
+          );
+          userEvent.type(dayInput, '{backspace}');
+          expect(setValue).not.toHaveBeenCalled();
+        });
 
-      expect(onSegmentChange).toHaveBeenCalledWith(
-        expect.objectContaining({ value: '1993' }),
-      );
-    });
+        test('inputs are rendered correctly', () => {
+          const setValue = jest.fn();
+          const { dayInput } = renderDateInputBox(
+            {
+              value: newUTC(1993, Month.December, 26),
+              setValue,
+            },
+            testContext,
+          );
+          userEvent.type(dayInput, '{backspace}');
+          expect(dayInput).toHaveValue('2');
+        });
+      });
 
-    test('value setter is not called when typing into a segment', () => {
-      const setValue = jest.fn();
-      const { dayInput } = renderDateInputBox(
-        {
-          value: null,
-          setValue,
-        },
-        testContext,
-      );
+      describe('when the input is cleared', () => {
+        test('value setter is called with `null`', () => {
+          const setValue = jest.fn();
+          const { dayInput, monthInput, yearInput } = renderDateInputBox(
+            {
+              value: newUTC(1993, Month.December, 26),
+              setValue,
+            },
+            testContext,
+          );
+          userEvent.type(
+            yearInput,
+            '{backspace}{backspace}{backspace}{backspace}',
+          );
+          userEvent.type(monthInput, '{backspace}{backspace}');
+          userEvent.type(dayInput, '{backspace}{backspace}');
+          expect(setValue).toHaveBeenCalledWith(null);
+        });
+        test('inputs are rendered correctly', () => {
+          const setValue = jest.fn();
+          const { yearInput, monthInput, dayInput } = renderDateInputBox(
+            {
+              value: newUTC(1993, Month.December, 26),
+              setValue,
+            },
+            testContext,
+          );
+          userEvent.type(
+            yearInput,
+            '{backspace}{backspace}{backspace}{backspace}',
+          );
+          userEvent.type(monthInput, '{backspace}{backspace}');
+          userEvent.type(dayInput, '{backspace}{backspace}');
+          expect(dayInput).toHaveValue('');
+          expect(monthInput).toHaveValue('');
+          expect(yearInput).toHaveValue('');
+        });
+      });
 
-      userEvent.type(dayInput, '26');
-      expect(setValue).not.toHaveBeenCalled();
-    });
+      describe('when a single segment is modified to create an invalid date', () => {
+        test('value setter is called with invalid Date object', () => {
+          const setValue = jest.fn();
+          const { monthInput } = renderDateInputBox(
+            {
+              value: newUTC(1993, Month.December, 26),
+              setValue,
+            },
+            testContext,
+          );
 
-    test('value setter is not called when an ambiguous date is entered', () => {
-      const setValue = jest.fn();
-      const { dayInput, monthInput, yearInput } = renderDateInputBox(
-        {
-          value: null,
-          setValue,
-        },
-        testContext,
-      );
-      userEvent.type(yearInput, '1993');
-      userEvent.type(monthInput, '12');
-      userEvent.type(dayInput, '2');
-      expect(setValue).not.toHaveBeenCalled();
-    });
+          userEvent.type(monthInput, '{backspace}{backspace}');
+          expect(setValue).toHaveBeenCalled();
+          // TODO: with InvalidDate
+        });
 
-    test('value setter is only called when an explicit date is entered', () => {
-      const setValue = jest.fn();
-      const { dayInput, monthInput, yearInput } = renderDateInputBox(
-        {
-          value: null,
-          setValue,
-        },
-        testContext,
-      );
-      userEvent.type(yearInput, '1993');
-      userEvent.type(monthInput, '12');
-      userEvent.type(dayInput, '26');
-      expect(setValue).toHaveBeenCalledWith(
-        expect.objectContaining(newUTC(1993, Month.December, 26)),
-      );
+        test('inputs are rendered correctly', () => {
+          const setValue = jest.fn();
+          const { yearInput, monthInput, dayInput } = renderDateInputBox(
+            {
+              value: newUTC(1993, Month.December, 26),
+              setValue,
+            },
+            testContext,
+          );
+          userEvent.type(monthInput, '{backspace}{backspace}');
+          expect(dayInput).toHaveValue('26');
+          expect(monthInput).toHaveValue('');
+          expect(yearInput).toHaveValue('1993');
+        });
+      });
     });
   });
 
