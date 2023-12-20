@@ -6,7 +6,7 @@ import React, {
   MouseEventHandler,
 } from 'react';
 
-import { isSameUTCDay } from '@leafygreen-ui/date-utils';
+import { DateType, isSameUTCDay } from '@leafygreen-ui/date-utils';
 import { createSyntheticEvent, keyMap } from '@leafygreen-ui/lib';
 
 import { DateFormField, DateInputBox } from '../../shared/components/DateInput';
@@ -43,7 +43,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
     } = useDatePickerContext();
 
     /** Called when the input's Date value has changed */
-    const handleInputValueChange = (inputVal?: Date | null) => {
+    const handleInputValueChange = (inputVal?: DateType) => {
       if (!isSameUTCDay(inputVal, value)) {
         handleValidation?.(inputVal);
         setValue(inputVal || null);

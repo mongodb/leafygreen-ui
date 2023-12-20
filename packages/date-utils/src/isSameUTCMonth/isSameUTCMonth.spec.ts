@@ -1,12 +1,14 @@
-import tzMock from 'timezone-mock';
-
 import { Month } from '../constants';
+import { mockTimeZone } from '../testing/mockTimeZone';
 
 import { isSameUTCMonth } from '.';
 
 describe('packages/date-utils/isSameUTCMonth', () => {
   beforeEach(() => {
-    tzMock.register('US/Eastern');
+    mockTimeZone('America/New_York', -5);
+  });
+  afterEach(() => {
+    jest.resetAllMocks();
   });
 
   describe('when both dates are defined in UTC', () => {
@@ -61,5 +63,13 @@ describe('packages/date-utils/isSameUTCMonth', () => {
     const utc1 = new Date(Date.UTC(2023, Month.September, 1));
     const utc2 = new Date(Date.UTC(2024, Month.September, 10));
     expect(isSameUTCMonth(utc1, utc2)).toBe(false);
+  });
+
+  test('returns false when one or both dates is invalid', () => {
+    expect(isSameUTCMonth(new Date(), new Date('invalid'))).toBe(false);
+    expect(isSameUTCMonth(new Date('invalid'), new Date())).toBe(false);
+    expect(isSameUTCMonth(new Date('invalid'), new Date('invalid'))).toBe(
+      false,
+    );
   });
 });

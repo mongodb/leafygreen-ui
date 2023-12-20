@@ -1,4 +1,5 @@
-export type DateType = Date | null;
+import { InvalidDate } from './InvalidDate';
+export type DateType = Date | InvalidDate | null;
 export type DateRangeType = [DateType, DateType];
 
 export type LocaleString = 'iso8601' | string;

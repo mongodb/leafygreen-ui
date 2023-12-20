@@ -1,9 +1,14 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import { StoryFn } from '@storybook/react';
-import { isValid } from 'date-fns';
 
-import { Month, newUTC, testLocales } from '@leafygreen-ui/date-utils';
+import {
+  DateType,
+  isValidDate,
+  Month,
+  newUTC,
+  testLocales,
+} from '@leafygreen-ui/date-utils';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType, StoryType } from '@leafygreen-ui/lib';
 
@@ -65,15 +70,15 @@ const meta: StoryMetaType<typeof DateInputBox, SharedDatePickerContextProps> = {
 export default meta;
 
 export const Basic: StoryFn<typeof DateInputBox> = props => {
-  const [date, setDate] = useState<Date | null>(null);
+  const [date, setDate] = useState<DateType>(null);
 
   useEffect(() => {
-    if (props.value && isValid(new Date(props.value))) {
-      setDate(new Date(props.value));
+    if (props.value && isValidDate(props.value)) {
+      setDate(props.value);
     }
   }, [props.value]);
 
-  const updateDate = (date: Date | null) => {
+  const updateDate = (date: DateType) => {
     setDate(date);
   };
 

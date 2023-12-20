@@ -19,4 +19,10 @@ describe('packages/date-utils/isOnOrAfter', () => {
   test('d1 is before d2', () => {
     expect(isOnOrAfter(jan, jul)).toBe(false);
   });
+
+  test('returns false when one or both dates is invalid', () => {
+    expect(isOnOrAfter(new Date(), new Date('invalid'))).toBe(false);
+    expect(isOnOrAfter(new Date('invalid'), new Date())).toBe(false);
+    expect(isOnOrAfter(new Date('invalid'), new Date('invalid'))).toBe(false);
+  });
 });

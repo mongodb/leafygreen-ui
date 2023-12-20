@@ -1,7 +1,7 @@
 import { useEffect, useReducer } from 'react';
-import { isSameDay } from 'date-fns';
+import { isNull, isUndefined } from 'lodash';
 
-import { DateType } from '@leafygreen-ui/date-utils';
+import { DateType, isSameUTCDay, isValidDate } from '@leafygreen-ui/date-utils';
 import { usePrevious } from '@leafygreen-ui/hooks';
 
 import { DateSegment, DateSegmentsState, DateSegmentValue } from '../../types';
@@ -44,7 +44,15 @@ export const useDateSegments = (
 
   // If `date` prop changes, update the segments
   useEffect(() => {
-    if (date && !(prevDate && isSameDay(date, prevDate))) {
+    // If the date has changed to a valid value
+    const hasDateValueChanged =
+      isValidDate(date) && !isSameUTCDay(date, prevDate);
+
+    // If the date has been set to null from a previously valid date
+    const hasDateBeenCleared =
+      (isNull(date) || isUndefined(date)) && isValidDate(prevDate);
+
+    if (hasDateValueChanged || hasDateBeenCleared) {
       const newSegments = getFormattedSegmentsFromDate(date);
       onUpdate?.(newSegments, { ...segments });
       dispatch(newSegments);

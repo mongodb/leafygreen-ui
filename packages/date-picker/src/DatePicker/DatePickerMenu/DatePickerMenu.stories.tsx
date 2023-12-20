@@ -6,6 +6,7 @@ import { last, omit } from 'lodash';
 import MockDate from 'mockdate';
 
 import {
+  DateType,
   Month,
   newUTC,
   testLocales,
@@ -80,7 +81,7 @@ type DatePickerMenuStoryType = StoryObj<typeof DatePickerMenu>;
 export const Basic: DatePickerMenuStoryType = {
   render: args => {
     MockDate.reset();
-    const [value, setValue] = useState<Date | null>(null);
+    const [value, setValue] = useState<DateType>(null);
 
     const date = new Date(Date.now());
     const props = omit(args, [...contextPropNames, 'isOpen']);
@@ -151,7 +152,7 @@ export const MockedToday: DatePickerMenuStoryType = {
   render: args => {
     // Force `new Date()` to return `mockToday`
     MockDate.set(mockToday);
-    const [value, setValue] = useState<Date | null>(null);
+    const [value, setValue] = useState<DateType>(null);
 
     const props = omit(args, [...contextPropNames, 'isOpen']);
     const refEl = useRef<HTMLDivElement>(null);

@@ -2,12 +2,13 @@ import { addMilliseconds } from 'date-fns';
 import { getTimezoneOffset } from 'date-fns-tz';
 
 import { getISODate } from '../getISODate';
+import { isValidDate } from '../isValidDate';
 import { DateType } from '../types';
 
 export const getISODateTZ = (date: DateType, timeZone: string) => {
   const offsetMs = getTimezoneOffset(timeZone);
 
-  if (!date || isNaN(offsetMs)) return getISODate(date);
+  if (!isValidDate(date) || isNaN(offsetMs)) return getISODate(date);
 
   // a date object that, when printed in ISO format,
   // _looks like_ the local time for the given time zone.

@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 
 import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
+import { DateType } from '@leafygreen-ui/date-utils';
 
 import { BaseDatePickerProps, DatePickerState } from '../types';
 
@@ -10,19 +11,19 @@ export interface StateNotification {
   state: DatePickerState;
   message: string;
 }
-type AriaLabelkeys = keyof AriaLabelPropsWithLabel;
+type AriaLabelKeys = keyof AriaLabelPropsWithLabel;
 
 /** The props expected to pass int the provider */
 export type SharedDatePickerProviderProps = Omit<
   BaseDatePickerProps,
-  AriaLabelkeys
+  AriaLabelKeys
 > & {
   label?: ReactNode;
   'aria-label'?: string;
   'aria-labelledby'?: string;
 };
 
-type AriaLabelkeysWithoutLabel = Exclude<AriaLabelkeys, 'label'>;
+type AriaLabelKeysWithoutLabel = Exclude<AriaLabelKeys, 'label'>;
 
 /**
  * The values in context
@@ -30,7 +31,7 @@ type AriaLabelkeysWithoutLabel = Exclude<AriaLabelkeys, 'label'>;
 export interface SharedDatePickerContextProps
   extends Omit<
       Required<SharedDatePickerProviderProps>,
-      'state' | AriaLabelkeysWithoutLabel
+      'state' | AriaLabelKeysWithoutLabel
     >,
     UseDatePickerErrorNotificationsReturnObject {
   /** The earliest date accepted */
@@ -42,7 +43,7 @@ export interface SharedDatePickerContextProps
   /**
    * Returns whether the given date is within the component's min/max dates
    */
-  isInRange: (d?: Date | null) => boolean;
+  isInRange: (d?: DateType) => boolean;
 
   /**
    * An array of {@link Intl.DateTimeFormatPart},
