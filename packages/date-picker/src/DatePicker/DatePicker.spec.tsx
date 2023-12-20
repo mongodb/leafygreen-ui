@@ -1448,7 +1448,7 @@ describe('packages/date-picker', () => {
           });
 
           const segmentCases = ['year', 'month', 'day'] as Array<DateSegment>;
-          describe.only.each(segmentCases)('%p segment', segment => {
+          describe.each(segmentCases)('%p segment', segment => {
             const formatter = getValueFormatter(segment);
             /** Utility only for this suite. Returns the day|month|year element from the render result */
             const getRelevantInput = (renderResult: RenderDatePickerResult) =>
@@ -1607,6 +1607,9 @@ describe('packages/date-picker', () => {
                             'lg-form_field-error_message',
                           );
                           expect(errorElement).toBeInTheDocument();
+                          expect(errorElement).toHaveTextContent(
+                            '2021-02-29 is not a valid date',
+                          );
                         });
                       });
 
@@ -1634,6 +1637,9 @@ describe('packages/date-picker', () => {
                             'lg-form_field-error_message',
                           );
                           expect(errorElement).toBeInTheDocument();
+                          expect(errorElement).toHaveTextContent(
+                            '2020-02-31 is not a valid date',
+                          );
                         });
                       });
 
@@ -1923,6 +1929,9 @@ describe('packages/date-picker', () => {
                             'lg-form_field-error_message',
                           );
                           expect(errorElement).toBeInTheDocument();
+                          expect(errorElement).toHaveTextContent(
+                            '2019-02-29 is not a valid date',
+                          );
                         });
                       });
 
@@ -1950,6 +1959,9 @@ describe('packages/date-picker', () => {
                             'lg-form_field-error_message',
                           );
                           expect(errorElement).toBeInTheDocument();
+                          expect(errorElement).toHaveTextContent(
+                            '2020-02-31 is not a valid date',
+                          );
                         });
                       });
 
@@ -2844,7 +2856,6 @@ describe('packages/date-picker', () => {
           });
         });
 
-        // TODO:
         describe('if the value is not a valid date', () => {
           // E.g. Feb 31 2020
           test('the input is rendered with the typed date', async () => {
@@ -2873,6 +2884,9 @@ describe('packages/date-picker', () => {
             expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
             const errorElement = queryByTestId('lg-form_field-error_message');
             expect(errorElement).toBeInTheDocument();
+            expect(errorElement).toHaveTextContent(
+              '2020-01-31 is not a valid date',
+            );
           });
         });
 
@@ -3481,6 +3495,56 @@ describe('packages/date-picker', () => {
               expect(yearInput.value).toEqual('1997');
             });
           });
+        });
+      });
+
+      describe('Error messages', () => {
+        test('Updating the input to a still-invalid date updates the error message', () => {
+          const { yearInput, monthInput, dayInput, queryByTestId } =
+            renderDatePicker({});
+          userEvent.type(yearInput, '2020');
+          userEvent.type(monthInput, '02');
+          userEvent.type(dayInput, '31');
+          userEvent.tab();
+          let errorElement = queryByTestId('lg-form_field-error_message');
+          expect(errorElement).toHaveTextContent(
+            '2020-02-31 is not a valid date',
+          );
+
+          userEvent.type(dayInput, '{backspace}0');
+          userEvent.tab();
+          errorElement = queryByTestId('lg-form_field-error_message');
+          expect(errorElement).toHaveTextContent(
+            '2020-02-30 is not a valid date',
+          );
+
+          userEvent.type(dayInput, '{backspace}{backspace}');
+          userEvent.tab();
+          errorElement = queryByTestId('lg-form_field-error_message');
+          expect(errorElement).toHaveTextContent(
+            '2020-02- is not a valid date',
+          );
+        });
+
+        test('Clearing the input after an invalid date error message is displayed removes the message', () => {
+          const { yearInput, monthInput, dayInput, queryByTestId } =
+            renderDatePicker({});
+          userEvent.type(yearInput, '2020');
+          userEvent.type(monthInput, '02');
+          userEvent.type(dayInput, '31');
+          const errorElement = queryByTestId('lg-form_field-error_message');
+          expect(errorElement).toHaveTextContent(
+            '2020-02-31 is not a valid date',
+          );
+
+          userEvent.type(dayInput, '{backspace}{backspace}');
+          userEvent.type(monthInput, '{backspace}{backspace}');
+          userEvent.type(
+            yearInput,
+            '{backspace}{backspace}{backspace}{backspace}',
+          );
+          const errorElement2 = queryByTestId('lg-form_field-error_message');
+          expect(errorElement2).not.toBeInTheDocument();
         });
       });
 
