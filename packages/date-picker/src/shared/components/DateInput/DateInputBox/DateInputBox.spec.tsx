@@ -20,14 +20,23 @@ const renderDateInputBox = (
   context?: Partial<SharedDatePickerProviderProps>,
 ) => {
   const result = render(
-    <SharedDatePickerProvider {...defaultSharedDatePickerContext} {...context}>
-      <DateInputBox
-        {...props}
-        value={props?.value ?? null}
-        segmentRefs={segmentRefsMock}
-      />
+    <SharedDatePickerProvider label="label" {...context}>
+      <DateInputBox {...props} segmentRefs={segmentRefsMock} />
     </SharedDatePickerProvider>,
   );
+
+  const rerenderDateInputBox = (
+    newProps?: Omit<DateInputBoxProps, 'segmentRefs'>,
+  ) => {
+    result.rerender(
+      <SharedDatePickerProvider
+        {...defaultSharedDatePickerContext}
+        {...context}
+      >
+        <DateInputBox {...props} {...newProps} segmentRefs={segmentRefsMock} />
+      </SharedDatePickerProvider>,
+    );
+  };
 
   const dayInput = result.container.querySelector(
     'input[aria-label="day"]',
@@ -43,7 +52,7 @@ const renderDateInputBox = (
     throw new Error('Some or all input segments are missing');
   }
 
-  return { ...result, dayInput, monthInput, yearInput };
+  return { ...result, rerenderDateInputBox, dayInput, monthInput, yearInput };
 };
 
 describe('packages/date-picker/shared/date-input-box', () => {
@@ -95,7 +104,7 @@ describe('packages/date-picker/shared/date-input-box', () => {
       });
     });
 
-    test('renders an empty text box when no value is passed', () => {
+    test('renders empty segments when no props are passed', () => {
       const { dayInput, monthInput, yearInput } = renderDateInputBox(
         undefined,
         testContext,
@@ -105,7 +114,17 @@ describe('packages/date-picker/shared/date-input-box', () => {
       expect(yearInput).toHaveValue('');
     });
 
-    test('renders a filled text box when value is passed', () => {
+    test('renders empty segments when value is null', () => {
+      const { dayInput, monthInput, yearInput } = renderDateInputBox(
+        { value: null },
+        testContext,
+      );
+      expect(dayInput).toHaveValue('');
+      expect(monthInput).toHaveValue('');
+      expect(yearInput).toHaveValue('');
+    });
+
+    test('renders filled segments when a value is passed', () => {
       const { dayInput, monthInput, yearInput } = renderDateInputBox(
         { value: newUTC(1993, Month.December, 26) },
         testContext,
@@ -114,6 +133,61 @@ describe('packages/date-picker/shared/date-input-box', () => {
       expect(dayInput.value).toBe('26');
       expect(monthInput.value).toBe('12');
       expect(yearInput.value).toBe('1993');
+    });
+
+    test('renders empty segments when an invalid value is passed', () => {
+      const { dayInput, monthInput, yearInput } = renderDateInputBox(
+        { value: new Date('invalid') },
+        testContext,
+      );
+
+      expect(dayInput.value).toBe('');
+      expect(monthInput.value).toBe('');
+      expect(yearInput.value).toBe('');
+    });
+
+    describe('re-rendering', () => {
+      test('with new value updates the segments', () => {
+        const { rerenderDateInputBox, dayInput, monthInput, yearInput } =
+          renderDateInputBox(
+            { value: newUTC(1993, Month.December, 26) },
+            testContext,
+          );
+
+        rerenderDateInputBox({ value: newUTC(1994, Month.September, 10) });
+
+        expect(dayInput.value).toBe('10');
+        expect(monthInput.value).toBe('09');
+        expect(yearInput.value).toBe('1994');
+      });
+
+      test('with null clears the segments', () => {
+        const { rerenderDateInputBox, dayInput, monthInput, yearInput } =
+          renderDateInputBox(
+            { value: newUTC(1993, Month.December, 26) },
+            testContext,
+          );
+
+        rerenderDateInputBox({ value: null });
+
+        expect(dayInput.value).toBe('');
+        expect(monthInput.value).toBe('');
+        expect(yearInput.value).toBe('');
+      });
+
+      test('with invalid value does not update the segments', () => {
+        const { rerenderDateInputBox, dayInput, monthInput, yearInput } =
+          renderDateInputBox(
+            { value: newUTC(1993, Month.December, 26) },
+            testContext,
+          );
+
+        rerenderDateInputBox({ value: new Date('invalid') });
+
+        expect(dayInput.value).toBe('26');
+        expect(monthInput.value).toBe('12');
+        expect(yearInput.value).toBe('1993');
+      });
     });
   });
 
