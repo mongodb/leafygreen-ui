@@ -1,7 +1,8 @@
 import { isValid } from 'date-fns';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import { DateType } from 'src/types';
+
+import { DateType } from '../types';
 
 /**
  * An extension of `date-fns` {@link isValid}
