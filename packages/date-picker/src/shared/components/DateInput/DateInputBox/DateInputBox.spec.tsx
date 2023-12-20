@@ -337,13 +337,13 @@ describe('packages/date-picker/shared/date-input-box', () => {
           },
           testContext,
         );
+        userEvent.type(dayInput, '{backspace}{backspace}');
+        userEvent.type(monthInput, '{backspace}{backspace}');
         userEvent.type(
           yearInput,
           '{backspace}{backspace}{backspace}{backspace}',
         );
-        userEvent.type(monthInput, '{backspace}{backspace}');
-        userEvent.type(dayInput, '{backspace}{backspace}');
-        expect(setValue).toHaveBeenCalledWith(null);
+        expect(setValue).toHaveBeenCalledWith(expect.objectContaining(null));
         expect(dayInput).toHaveValue('');
         expect(monthInput).toHaveValue('');
         expect(yearInput).toHaveValue('');

@@ -112,7 +112,10 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
             (isDirty || isEverySegmentFilled(newSegments)));
 
         if (shouldSetValue) {
-          setValue?.(newDate);
+          setValue?.({
+            value: newDate,
+            segments: newSegments,
+          });
         }
       }
     };
