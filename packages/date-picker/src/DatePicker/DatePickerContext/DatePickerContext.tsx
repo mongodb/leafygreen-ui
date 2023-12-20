@@ -122,7 +122,7 @@ export const DatePickerProvider = ({
    */
   const handleValidation = (val?: DateType): void => {
     // Set an internal error state if necessary
-    if (val && !isInRange(val)) {
+    if (isValidDate(val) && !isInRange(val)) {
       if (isOnOrBefore(val, min)) {
         setInternalErrorMessage(
           `Date must be after ${getFormattedDateString(min, locale)}`,
