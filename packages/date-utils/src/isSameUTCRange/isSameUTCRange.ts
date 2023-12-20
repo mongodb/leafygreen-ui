@@ -1,10 +1,11 @@
 import isUndefined from 'lodash/isUndefined';
 
 import { isSameUTCDay } from '../isSameUTCDay';
+import { DateType } from '../types';
 
 export const isSameUTCRange = (
-  range1?: [Date | null, Date | null],
-  range2?: [Date | null, Date | null],
+  range1?: [DateType, DateType],
+  range2?: [DateType, DateType],
 ): boolean => {
   if (isUndefined(range1) || isUndefined(range2)) return false;
 

@@ -1,10 +1,13 @@
-import tzMock from 'timezone-mock';
+import { mockTimeZone } from '../testing/mockTimeZone';
 
 import { isSameUTCDay } from '.';
 
 describe('packages/date-utils/isSameUTCDay', () => {
   beforeEach(() => {
-    tzMock.register('US/Eastern');
+    mockTimeZone('America/New_York', -5);
+  });
+  afterEach(() => {
+    jest.resetAllMocks();
   });
 
   describe(' when both dates are defined in UTC', () => {
@@ -53,5 +56,11 @@ describe('packages/date-utils/isSameUTCDay', () => {
     expect(isSameUTCDay(new Date(), null)).toBe(false);
     expect(isSameUTCDay(null, new Date())).toBe(false);
     expect(isSameUTCDay(null, null)).toBe(false);
+  });
+
+  test('returns false when one or both dates is invalid', () => {
+    expect(isSameUTCDay(new Date(), new Date('invalid'))).toBe(false);
+    expect(isSameUTCDay(new Date('invalid'), new Date())).toBe(false);
+    expect(isSameUTCDay(new Date('invalid'), new Date('invalid'))).toBe(false);
   });
 });
