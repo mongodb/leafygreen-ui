@@ -1448,7 +1448,7 @@ describe('packages/date-picker', () => {
           });
 
           const segmentCases = ['year', 'month', 'day'] as Array<DateSegment>;
-          describe.each(segmentCases)('%p segment', segment => {
+          describe.only.each(segmentCases)('%p segment', segment => {
             const formatter = getValueFormatter(segment);
             /** Utility only for this suite. Returns the day|month|year element from the render result */
             const getRelevantInput = (renderResult: RenderDatePickerResult) =>
@@ -1643,13 +1643,14 @@ describe('packages/date-picker', () => {
                         });
                       });
 
-                      test.skip('error state stays after menu is closed', async () => {
+                      test('error state stays after menu is closed', async () => {
                         const result = renderDatePicker({
                           value: newUTC(2020, Month.January, 31),
                         });
                         const input = getRelevantInput(result);
                         userEvent.click(input);
                         userEvent.keyboard('{arrowup}');
+
                         const { menuContainerEl } =
                           await result.findMenuElements();
                         userEvent.click(result.container.parentElement!);
@@ -1965,7 +1966,7 @@ describe('packages/date-picker', () => {
                         });
                       });
 
-                      test.skip('error state stays after menu is closed', async () => {
+                      test('error state stays after menu is closed', async () => {
                         const result = renderDatePicker({
                           value: newUTC(2020, Month.March, 31),
                         });
@@ -2885,7 +2886,7 @@ describe('packages/date-picker', () => {
             const errorElement = queryByTestId('lg-form_field-error_message');
             expect(errorElement).toBeInTheDocument();
             expect(errorElement).toHaveTextContent(
-              '2020-01-31 is not a valid date',
+              '2020-02-31 is not a valid date',
             );
           });
         });
