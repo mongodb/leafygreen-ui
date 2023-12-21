@@ -72,7 +72,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
      */
     const handleInputClick: MouseEventHandler<HTMLElement> = e => {
       if (!disabled) {
-        // openMenu(e);
+        openMenu(e);
         const { target } = e;
         const segmentToFocus = getSegmentToFocus({
           target,
