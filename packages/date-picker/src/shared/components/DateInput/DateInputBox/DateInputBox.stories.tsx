@@ -22,6 +22,7 @@ import {
 } from '../../../testutils';
 
 import { DateInputBox } from './DateInputBox';
+import { DateInputChangeEventHandler } from './DateInputBox.types';
 
 const testDate = newUTC(1993, Month.December, 26);
 
@@ -78,7 +79,7 @@ export const Basic: StoryFn<typeof DateInputBox> = props => {
     }
   }, [props.value]);
 
-  const updateDate = (date: DateType) => {
+  const updateDate: DateInputChangeEventHandler = ({ date }) => {
     setDate(date);
   };
 
