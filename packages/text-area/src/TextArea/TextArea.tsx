@@ -129,6 +129,7 @@ export const TextArea: TextArea = forwardRef<
         )}
         <textarea
           {...rest}
+          aria-labelledby={ariaLabelledby}
           ref={forwardedRef}
           title={label != null ? label : undefined}
           id={id}
