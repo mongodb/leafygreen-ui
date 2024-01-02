@@ -199,7 +199,9 @@ export const getMenuElementStyle = ({
 
       &,
       & .${leftGlyphClassName} {
-        color: ${menuThemeStyles[theme].hover.leftGlyph};
+        color: ${state === State.Default
+          ? menuThemeStyles[theme].hover.leftGlyph
+          : menuThemeStyles[theme][state].leftGlyph};
       }
     }
   `;
