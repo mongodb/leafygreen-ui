@@ -144,7 +144,7 @@ export const getFormElementStyle = ({
     `,
     {
       [wedgeStyles]: shouldShowWedge,
-      [hoverStyles]: !disabled && isInteractive,
+      [hoverStyles]: !disabled && isInteractive && state !== State.Focus,
     },
   );
 };
@@ -170,12 +170,12 @@ export const getMenuElementStyle = ({
 
   if (disabled) {
     state = State.Disabled;
+  } else if (actionType === ActionType.Destructive) {
+    state = State.Destructive;
   } else if (highlighted) {
     state = State.Focus;
   } else if (checked) {
     state = State.Checked;
-  } else if (actionType === ActionType.Destructive) {
-    state = State.Destructive;
   }
 
   const wedge = css`
@@ -221,7 +221,7 @@ export const getMenuElementStyle = ({
 
       .${titleClassName} {
         color: ${menuThemeStyles[theme][state].title};
-        font-weight: ${checked && !disabled ? 'bold' : 'normal'};
+        font-weight: bold;
       }
 
       &,
@@ -236,7 +236,7 @@ export const getMenuElementStyle = ({
     `,
     {
       [wedge]: showWedge && (state === 'focus' || state === 'checked'),
-      [hover]: !disabled && isInteractive,
+      [hover]: !disabled && isInteractive && state !== State.Focus,
       [titleHoverOverride]:
         shouldOverride && !disabled && theme === Theme.Dark && isInteractive,
     },

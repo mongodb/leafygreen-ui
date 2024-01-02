@@ -29,7 +29,7 @@ export const formThemeStyles: FormShape = {
       backgroundColor: palette.white,
     },
     hover: {
-      leftGlyph: palette.gray.dark3,
+      leftGlyph: palette.gray.dark1,
       backgroundColor: palette.gray.light2,
     },
     focus: {
