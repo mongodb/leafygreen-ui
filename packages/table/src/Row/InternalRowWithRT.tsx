@@ -86,7 +86,8 @@ const InternalRowWithRT = <T extends LGRowData>({
       <InternalRowBase
         className={cx(
           {
-            [grayZebraRowStyles[theme]]: isOddVSRow && shouldAlternateRowColor,
+            [grayZebraRowStyles[theme]]:
+              isOddVSRow && shouldAlternateRowColor && !isSelected,
             [zebraStyles[theme]]:
               !virtualRow && shouldAlternateRowColor && !isSelected,
             [selectedRowStyles[theme]]: isSelected && !disabled,
