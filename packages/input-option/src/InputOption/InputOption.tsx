@@ -3,8 +3,9 @@ import React from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
-  InferredPolymorphic,
-  useInferredPolymorphic,
+  Polymorphic,
+  PolymorphicAs,
+  usePolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
 import {
@@ -19,10 +20,10 @@ import {
   RenderedContext,
 } from './InputOption.types';
 
-export const InputOption = InferredPolymorphic<InputOptionProps, 'div'>(
+export const InputOption = Polymorphic<InputOptionProps, 'div'>(
   (
     {
-      as,
+      as = 'div' as PolymorphicAs,
       children,
       disabled,
       highlighted,
@@ -37,7 +38,7 @@ export const InputOption = InferredPolymorphic<InputOptionProps, 'div'>(
     },
     ref,
   ) => {
-    const { Component } = useInferredPolymorphic(as, rest, 'div');
+    const { Component } = usePolymorphic(as);
     const { theme } = useDarkMode(darkModeProp);
 
     const themedStatefulStyles = getThemeStyles({

@@ -27,7 +27,7 @@ export const SearchResultGroup = ({
     <div>
       {/* @ts-expect-error Polymorphic-type mismatch */}
       <InputOption
-        aria-label={label}
+        aria-labelledby={label}
         isInteractive={false}
         className={searchResultLabelWrapperStyle}
         as="li"

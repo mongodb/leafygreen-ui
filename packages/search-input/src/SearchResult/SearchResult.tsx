@@ -21,14 +21,10 @@ import { SearchResultProps } from './SearchResult.types';
 
 export const SearchResult = InferredPolymorphic<SearchResultProps, 'li'>(
   (
-    { children, description, disabled, className, darkMode, as, href, ...rest },
+    { children, description, disabled, className, darkMode, as, ...rest },
     ref,
   ) => {
-    const { Component: renderedAs } = useInferredPolymorphic(
-      as,
-      { href, ...rest },
-      'li',
-    );
+    const { Component: renderedAs } = useInferredPolymorphic(as, rest, 'li');
     const { theme } = useDarkMode(darkMode);
     const textContent = getNodeTextContent(children);
     /**
@@ -40,7 +36,6 @@ export const SearchResult = InferredPolymorphic<SearchResultProps, 'li'>(
       rest['aria-label'] ?? (rest['aria-labelledby'] ? '' : textContent);
 
     return (
-      // @ts-expect-error Polymorphic-type mismatch
       <InputOption
         {...rest}
         as={renderedAs}
@@ -56,7 +51,6 @@ export const SearchResult = InferredPolymorphic<SearchResultProps, 'li'>(
         disabled={disabled}
         aria-labelledby={rest['aria-labelledby']}
         aria-label={ariaLabel}
-        href={href}
       >
         <div className={titleClassName}>{children}</div>
         {description && (
