@@ -4,6 +4,7 @@ import fetch from 'node-fetch';
 import { ComponentUpdateObject } from '../release-bot.types';
 
 import { generateOutputStrings } from './generateOutputStrings';
+import { TEST_CHANGELOG } from './test.data';
 
 /**
  * Given a component update object
@@ -25,6 +26,11 @@ export async function parseChangeLog(component: ComponentUpdateObject) {
 async function fetchChangelogText(
   component: ComponentUpdateObject,
 ): Promise<string> {
+  // // Avoid fetching multiple change logs during tests
+  if (process.env.JEST_ENV) {
+    return TEST_CHANGELOG;
+  }
+
   const { shortName } = generateOutputStrings(component);
   const rawChangelogUrl = `https://raw.githubusercontent.com/mongodb/leafygreen-ui/main/packages/${shortName}/CHANGELOG.md`;
   const response = await fetch(rawChangelogUrl);
