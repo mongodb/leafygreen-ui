@@ -1,10 +1,8 @@
 import { uniq } from 'lodash';
-import fetch from 'node-fetch';
 
 import { ComponentUpdateObject } from '../release-bot.types';
 
-import { generateOutputStrings } from './generateOutputStrings';
-import { TEST_CHANGELOG } from './test.data';
+import { fetchLatestChangelogText } from './fetchChangelog';
 
 /**
  * Given a component update object
@@ -21,34 +19,6 @@ export async function parseChangeLog(component: ComponentUpdateObject) {
     minorUpdates,
     patchUpdates,
   };
-}
-
-async function fetchChangelogText(
-  component: ComponentUpdateObject,
-): Promise<string> {
-  // // Avoid fetching multiple change logs during tests
-  if (process.env.JEST_ENV) {
-    return TEST_CHANGELOG;
-  }
-
-  const { shortName } = generateOutputStrings(component);
-  const rawChangelogUrl = `https://raw.githubusercontent.com/mongodb/leafygreen-ui/main/packages/${shortName}/CHANGELOG.md`;
-  const response = await fetch(rawChangelogUrl);
-  return await response.text();
-}
-
-async function fetchLatestChangelogText(
-  component: ComponentUpdateObject,
-): Promise<string> {
-  const fullChangelogText = await fetchChangelogText(component);
-  const { version } = component;
-  const startIndex = fullChangelogText.indexOf(`## ${version}`);
-  const endIndex = fullChangelogText.indexOf(
-    `\n## `,
-    startIndex + version.length,
-  );
-  const latestChangelog = fullChangelogText.substring(startIndex, endIndex);
-  return latestChangelog;
 }
 
 const majorChangeIndex = (changelog: string) =>

@@ -8,11 +8,10 @@ export const TEST_DATA = [
 ];
 
 export const TEST_CHANGELOG = `
-  # Example Component
+  # example-major
 
-  ## 1.0.0
+  ## 2.0.0
 
   ### Major Changes
-
-  - Updated the component
+  - Major update
 `;
