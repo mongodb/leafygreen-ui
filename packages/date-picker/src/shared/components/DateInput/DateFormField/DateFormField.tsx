@@ -41,7 +41,6 @@ export const DateFormField = React.forwardRef<
 
     return (
       <FormField
-        ref={fwdRef}
         label={label}
         description={description}
         disabled={disabled}
@@ -51,6 +50,7 @@ export const DateFormField = React.forwardRef<
         {...rest}
       >
         <FormFieldInputContainer
+          ref={fwdRef}
           role="combobox"
           tabIndex={-1}
           aria-label={!label && ariaLabelProp ? ariaLabelProp : undefined}
