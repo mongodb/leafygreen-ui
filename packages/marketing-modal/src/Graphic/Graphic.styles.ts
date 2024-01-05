@@ -3,7 +3,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
-import { GraphicStyle } from '../MarketingModal/types';
+import { GraphicStyle } from '../MarketingModal/MarketingModal.types';
 
 const centeredContainerStyle = css`
   padding-top: 48px;
