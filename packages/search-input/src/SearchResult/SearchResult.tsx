@@ -40,7 +40,7 @@ export const SearchResult = InferredPolymorphic<SearchResultProps, 'li'>(
       rest['aria-label'] ?? (rest['aria-labelledby'] ? '' : textContent);
 
     return (
-      // @ts-expect-error
+      // @ts-expect-error Polymorphic-type mismatch
       <InputOption
         {...rest}
         as={renderedAs}

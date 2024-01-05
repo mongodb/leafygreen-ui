@@ -25,7 +25,7 @@ export const SearchResultGroup = ({
 
   return (
     <div>
-      {/* @ts-expect-error li/div incongruency */}
+      {/* @ts-expect-error Polymorphic-type mismatch */}
       <InputOption
         aria-label={label}
         isInteractive={false}

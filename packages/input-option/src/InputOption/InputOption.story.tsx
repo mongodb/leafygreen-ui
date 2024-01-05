@@ -114,7 +114,7 @@ export const FormElement = () => <></>;
 FormElement.parameters = {
   generate: {
     args: {
-      renderedContext: RenderedContext.FormElement,
+      renderedContext: RenderedContext.Form,
     },
   },
 };

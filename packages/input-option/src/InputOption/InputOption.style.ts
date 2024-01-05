@@ -8,7 +8,7 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { ActionType } from './InputOption.types';
+import { ActionType, RenderedContext } from './InputOption.types';
 import { FormState, formThemeStyles, menuThemeStyles, State } from './themes';
 
 export const titleClassName = createUniqueClassName('input-option-title');
@@ -97,12 +97,12 @@ export const getFormElementStyle = ({
   if (disabled) {
     state = State.Disabled;
   } else if (highlighted) {
-    state = State.Focus;
+    state = State.Highlight;
   } else if (checked) {
     state = State.Checked;
   }
 
-  const shouldShowWedge = state === State.Focus && showWedge;
+  const shouldShowWedge = state === State.Highlight && showWedge;
 
   const wedgeStyles = css`
     &:before {
@@ -144,7 +144,7 @@ export const getFormElementStyle = ({
     `,
     {
       [wedgeStyles]: shouldShowWedge,
-      [hoverStyles]: !disabled && isInteractive && state !== State.Focus,
+      [hoverStyles]: !disabled && isInteractive && state !== State.Highlight,
     },
   );
 };
@@ -173,7 +173,7 @@ export const getMenuElementStyle = ({
   } else if (actionType === ActionType.Destructive) {
     state = State.Destructive;
   } else if (highlighted) {
-    state = State.Focus;
+    state = State.Highlight;
   } else if (checked) {
     state = State.Checked;
   }
@@ -237,10 +237,50 @@ export const getMenuElementStyle = ({
       }
     `,
     {
-      [wedge]: showWedge && (state === 'focus' || state === 'checked'),
-      [hover]: !disabled && isInteractive && state !== State.Focus,
+      [wedge]:
+        showWedge && (state === State.Highlight || state === State.Checked),
+      [hover]: !disabled && isInteractive && state !== State.Highlight,
       [titleHoverOverride]:
         shouldOverride && !disabled && theme === Theme.Dark && isInteractive,
     },
   );
+};
+
+export const getThemeStyles = ({
+  renderedContext,
+  theme,
+  checked,
+  highlighted,
+  disabled,
+  showWedge,
+  isInteractive,
+  actionType,
+}: {
+  renderedContext: RenderedContext;
+  theme: Theme;
+  checked?: boolean;
+  highlighted?: boolean;
+  disabled?: boolean;
+  showWedge: boolean;
+  isInteractive: boolean;
+  actionType: ActionType;
+}) => {
+  return renderedContext === RenderedContext.Form
+    ? getFormElementStyle({
+        theme,
+        checked,
+        highlighted,
+        disabled,
+        showWedge,
+        isInteractive,
+      })
+    : getMenuElementStyle({
+        theme,
+        checked,
+        highlighted,
+        disabled,
+        showWedge,
+        actionType,
+        isInteractive,
+      });
 };

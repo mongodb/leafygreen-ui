@@ -12,8 +12,10 @@ type ActionType = (typeof ActionType)[keyof typeof ActionType];
 
 export { ActionType };
 
+// InputOption components receive different styling and have different variants available to them
+// Therefore, we need to care about where the component is rendered to determine how to render the component appropriately.
 const RenderedContext = {
-  FormElement: 'formElement',
+  Form: 'form',
   Menu: 'menu',
 } as const;
 
@@ -24,10 +26,10 @@ export { RenderedContext };
 /**
  * TERMINOLOGY
  *
- * `focused`: The element is "focused" via keyboard navigation
- * (Does not mean `:focus`, since input options are not focused in this sense)
+ * `highlighted`: The element is aria-selected or "focused" via keyboard navigation
+ * (Does not mean `:focus`, since input options may not be focused in this sense)
  *
- * `active`: The element is selected, or otherwise active (including `:active`)
+ * `checked`: The element is selected, or otherwise active (including `:active`)
  */
 export interface BaseInputOptionProps {
   /**

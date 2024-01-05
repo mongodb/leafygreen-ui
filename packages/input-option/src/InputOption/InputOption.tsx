@@ -9,8 +9,7 @@ import {
 
 import {
   disabledStyles,
-  getFormElementStyle,
-  getMenuElementStyle,
+  getThemeStyles,
   inputOptionStyles,
   inputOptionWedge,
 } from './InputOption.style';
@@ -33,7 +32,7 @@ export const InputOption = InferredPolymorphic<InputOptionProps, 'div'>(
       isInteractive = true,
       className,
       actionType = ActionType.Default,
-      renderedContext = RenderedContext.FormElement,
+      renderedContext = RenderedContext.Form,
       ...rest
     },
     ref,
@@ -41,25 +40,16 @@ export const InputOption = InferredPolymorphic<InputOptionProps, 'div'>(
     const { Component } = useInferredPolymorphic(as, rest, 'div');
     const { theme } = useDarkMode(darkModeProp);
 
-    const themedStatefulStyles =
-      renderedContext === RenderedContext.FormElement
-        ? getFormElementStyle({
-            theme,
-            checked,
-            highlighted,
-            disabled,
-            showWedge,
-            isInteractive,
-          })
-        : getMenuElementStyle({
-            theme,
-            checked,
-            highlighted,
-            disabled,
-            showWedge,
-            actionType,
-            isInteractive,
-          });
+    const themedStatefulStyles = getThemeStyles({
+      renderedContext,
+      theme,
+      checked,
+      highlighted,
+      disabled,
+      showWedge,
+      isInteractive,
+      actionType,
+    });
 
     return (
       <Component

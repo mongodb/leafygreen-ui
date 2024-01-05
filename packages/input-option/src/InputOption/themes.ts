@@ -4,7 +4,7 @@ import { palette } from '@leafygreen-ui/palette';
 const State = {
   Default: 'default',
   Hover: 'hover',
-  Focus: 'focus',
+  Highlight: 'highlight',
   Disabled: 'disabled',
   Checked: 'checked',
   Destructive: 'destructive',
@@ -32,7 +32,7 @@ export const formThemeStyles: FormShape = {
       leftGlyph: palette.gray.dark1,
       backgroundColor: palette.gray.light2,
     },
-    focus: {
+    highlight: {
       title: palette.blue.dark2,
       description: palette.gray.dark1,
       leftGlyph: palette.blue.dark1,
@@ -65,7 +65,7 @@ export const formThemeStyles: FormShape = {
       backgroundColor: palette.gray.dark4,
     },
 
-    focus: {
+    highlight: {
       title: palette.gray.light2,
       description: palette.gray.light1,
       leftGlyph: palette.blue.light3,
@@ -101,7 +101,7 @@ export const menuThemeStyles: MenuShape = {
       leftGlyph: palette.gray.base,
       backgroundColor: palette.gray.dark3,
     },
-    focus: {
+    highlight: {
       title: palette.blue.light3,
       description: palette.gray.light3,
       leftGlyph: palette.blue.light3,
@@ -139,7 +139,7 @@ export const menuThemeStyles: MenuShape = {
       leftGlyph: palette.gray.light1,
       backgroundColor: palette.gray.dark2,
     },
-    focus: {
+    highlight: {
       title: palette.blue.light3,
       description: palette.blue.light3,
       leftGlyph: palette.blue.light3,
