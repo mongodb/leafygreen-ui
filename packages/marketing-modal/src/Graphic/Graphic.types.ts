@@ -1,6 +1,9 @@
 import { Theme } from '@leafygreen-ui/lib';
 
-import { BlobPosition, GraphicStyle } from '../MarketingModal/types';
+import {
+  BlobPosition,
+  GraphicStyle,
+} from '../MarketingModal/MarketingModal.types';
 
 export interface GraphicProps {
   graphic: React.ReactElement;
