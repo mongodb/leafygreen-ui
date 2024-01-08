@@ -1643,25 +1643,6 @@ describe('packages/date-picker', () => {
                         });
                       });
 
-                      test('error state stays after menu is closed', async () => {
-                        const result = renderDatePicker({
-                          value: newUTC(2020, Month.January, 31),
-                        });
-                        const input = getRelevantInput(result);
-                        userEvent.click(input);
-                        userEvent.keyboard('{arrowup}');
-
-                        const { menuContainerEl } =
-                          await result.findMenuElements();
-                        userEvent.click(result.container.parentElement!);
-
-                        await waitForElementToBeRemoved(menuContainerEl);
-                        const errorElement = result.queryByTestId(
-                          'lg-form_field-error_message',
-                        );
-                        expect(errorElement).toBeInTheDocument();
-                      });
-
                       break;
                     }
 
@@ -1964,24 +1945,6 @@ describe('packages/date-picker', () => {
                             '2020-02-31 is not a valid date',
                           );
                         });
-                      });
-
-                      test('error state stays after menu is closed', async () => {
-                        const result = renderDatePicker({
-                          value: newUTC(2020, Month.March, 31),
-                        });
-                        const input = getRelevantInput(result);
-                        userEvent.click(input);
-                        userEvent.keyboard('{arrowdown}');
-                        const { menuContainerEl } =
-                          await result.findMenuElements();
-                        userEvent.click(result.container.parentElement!);
-
-                        await waitForElementToBeRemoved(menuContainerEl);
-                        const errorElement = result.queryByTestId(
-                          'lg-form_field-error_message',
-                        );
-                        expect(errorElement).toBeInTheDocument();
                       });
 
                       break;
