@@ -1448,7 +1448,7 @@ describe('packages/date-picker', () => {
           });
 
           const segmentCases = ['year', 'month', 'day'] as Array<DateSegment>;
-          describe.only.each(segmentCases)('%p segment', segment => {
+          describe.each(segmentCases)('%p segment', segment => {
             const formatter = getValueFormatter(segment);
             /** Utility only for this suite. Returns the day|month|year element from the render result */
             const getRelevantInput = (renderResult: RenderDatePickerResult) =>

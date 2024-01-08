@@ -79,8 +79,8 @@ export const Basic: StoryFn<typeof DateInputBox> = props => {
     }
   }, [props.value]);
 
-  const updateDate: DateInputChangeEventHandler = ({ date }) => {
-    setDate(date);
+  const updateDate: DateInputChangeEventHandler = ({ value }) => {
+    setDate(value);
   };
 
   return (
