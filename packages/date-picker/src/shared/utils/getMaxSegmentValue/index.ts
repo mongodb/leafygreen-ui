@@ -1,4 +1,8 @@
-import { DateType } from '@leafygreen-ui/date-utils';
+import {
+  DateType,
+  getDaysInUTCMonth,
+  isValidDate,
+} from '@leafygreen-ui/date-utils';
 
 import { defaultMax } from '../../constants';
 import { DateSegment } from '../../types';
@@ -12,11 +16,17 @@ export const getMaxSegmentValue = (
     max?: Date;
   },
 ): number => {
-  if (segment === 'year') {
-    return context?.max
-      ? Number(getSegmentsFromDate(context.max)['year'])
-      : defaultMax['year'];
-  }
+  switch (segment) {
+    case 'year':
+      return context?.max
+        ? Number(getSegmentsFromDate(context.max)['year'])
+        : defaultMax['year'];
+    case 'month':
+      return defaultMax['month'];
 
-  return defaultMax[segment];
+    case 'day':
+      return context && isValidDate(context?.date)
+        ? getDaysInUTCMonth(context.date)
+        : defaultMax['day'];
+  }
 };

@@ -102,8 +102,6 @@ export const DateInputSegment = React.forwardRef<
       switch (key) {
         case keyMap.ArrowUp:
         case keyMap.ArrowDown: {
-          /** Fire a custom change event when the up/down arrow keys are pressed */
-
           e.preventDefault();
 
           const newValue = getNewSegmentValueFromArrowKeyPress({
@@ -115,6 +113,7 @@ export const DateInputSegment = React.forwardRef<
           });
           const valueString = formatter(newValue);
 
+          /** Fire a custom change event when the up/down arrow keys are pressed */
           onChange({
             segment,
             value: valueString,

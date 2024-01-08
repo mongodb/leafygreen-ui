@@ -1,8 +1,6 @@
 import React, { FocusEventHandler } from 'react';
-import { getDaysInMonth } from 'date-fns';
 import isEqual from 'lodash/isEqual';
 
-import { newUTC } from '@leafygreen-ui/date-utils';
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -140,22 +138,6 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
         const { segment: segmentName, meta } = segmentChangeEvent;
         const changedViaArrowKeys =
           meta?.key === keyMap.ArrowDown || meta?.key === keyMap.ArrowUp;
-
-        // If we've updated the "day" segment via arrow keys,
-        // we can update it's rollover behavior based on the month
-        if (changedViaArrowKeys && segmentName === 'day') {
-          const year = Number(segments['year']);
-          const month = Number(segments['month']);
-          const daysInMonth = getDaysInMonth(newUTC(year, month, 1));
-
-          if (Number(segmentValue) > daysInMonth) {
-            if (meta?.key === keyMap.ArrowDown) {
-              segmentValue = String(daysInMonth);
-            } else if (meta?.key === keyMap.ArrowUp) {
-              segmentValue = '01';
-            }
-          }
-        }
 
         // Auto-format the segment if it is explicit and was not changed via arrow-keys
         if (

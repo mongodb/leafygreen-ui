@@ -2,16 +2,20 @@ import { Month, newUTC } from '@leafygreen-ui/date-utils';
 
 import { getMaxSegmentValue } from '.';
 
-describe('packages/date-picker/utils/getMinSegmentValue', () => {
+describe('packages/date-picker/utils/getMaxSegmentValue', () => {
   describe('day', () => {
-    test('returns 1 by default', () => {
+    test('returns 31 by default', () => {
       expect(getMaxSegmentValue('day')).toBe(31);
     });
-    test.todo('returns max day in provided month');
+    test('returns max day in provided month', () => {
+      expect(
+        getMaxSegmentValue('day', { date: newUTC(2023, Month.February, 14) }),
+      ).toBe(28);
+    });
   });
 
   describe('month', () => {
-    test('returns 1 by default', () => {
+    test('returns 12 by default', () => {
       expect(getMaxSegmentValue('month')).toBe(12);
     });
   });
