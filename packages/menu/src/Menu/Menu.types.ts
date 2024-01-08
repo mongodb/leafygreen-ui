@@ -12,7 +12,8 @@ export type SubMenuType = ReactElement<
   InferredPolymorphicPropsWithRef<PolymorphicAs, SubMenuProps>
 >;
 
-export interface MenuProps extends Omit<PopoverProps, 'active'> {
+// Partial<PopoverProps> makes all lifecycle functions optional
+export interface MenuProps extends Partial<Omit<PopoverProps, 'active'>> {
   /**
    * The menu items, or submenus
    * @type `<MenuItem />` | `<SubMenu />` | `<MenuGroup />` | `<MenuSeparator />`
