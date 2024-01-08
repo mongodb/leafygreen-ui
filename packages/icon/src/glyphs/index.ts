@@ -66,6 +66,7 @@ import FullScreenExit from './FullScreenExit.svg';
 import Gauge from './Gauge.svg';
 import GlobeAmericas from './GlobeAmericas.svg';
 import GovernmentBuilding from './GovernmentBuilding.svg';
+import Hash from './Hash.svg';
 import Highlight from './Highlight.svg';
 import Home from './Home.svg';
 import Import from './Import.svg';
@@ -212,6 +213,7 @@ const _glyphs = {
   Gauge,
   GlobeAmericas,
   GovernmentBuilding,
+  Hash,
   Highlight,
   Home,
   Import,
