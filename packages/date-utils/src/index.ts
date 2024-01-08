@@ -29,6 +29,7 @@ export { isValidDate } from './isValidDate';
 export { isValidLocale } from './isValidLocale';
 export { maxDate } from './maxDate';
 export { minDate } from './minDate';
+export { newTZDate } from './newTZDate';
 export { newUTC } from './newUTC';
 export { setToUTCMidnight } from './setToUTCMidnight';
 export { setUTCDate } from './setUTCDate';
