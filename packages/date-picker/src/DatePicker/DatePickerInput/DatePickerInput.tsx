@@ -5,13 +5,10 @@ import React, {
   KeyboardEventHandler,
   MouseEventHandler,
 } from 'react';
+import { isNull } from 'lodash';
 import { DateInputChangeEventHandler } from 'src/shared/components/DateInput/DateInputBox/DateInputBox.types';
 
-import {
-  isInvalidDateObject,
-  isSameUTCDay,
-  isValidDate,
-} from '@leafygreen-ui/date-utils';
+import { isInvalidDateObject, isSameUTCDay } from '@leafygreen-ui/date-utils';
 import { createSyntheticEvent, keyMap } from '@leafygreen-ui/lib';
 
 import { DateFormField, DateInputBox } from '../../shared/components/DateInput';
@@ -26,7 +23,6 @@ import { useDatePickerContext } from '../DatePickerContext';
 import { getSegmentToFocus } from '../utils/getSegmentToFocus';
 
 import { DatePickerInputProps } from './DatePickerInput.types';
-import { isNull } from 'lodash';
 
 export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
   (
