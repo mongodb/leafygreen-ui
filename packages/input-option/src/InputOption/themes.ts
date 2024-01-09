@@ -16,7 +16,7 @@ type State = (typeof State)[keyof typeof State];
 
 export { State };
 
-export type FormState = Exclude<State, 'destructive' | 'overrides'>;
+export type FormState = Exclude<State, 'destructive'>;
 
 // export const formThemeStyles: Record<
 //   Theme,

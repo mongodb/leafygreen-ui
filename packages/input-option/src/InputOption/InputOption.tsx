@@ -9,10 +9,11 @@ import {
 } from '@leafygreen-ui/polymorphic';
 
 import {
+  boldTitleStyles,
   disabledStyles,
+  getContextStyles,
   getHoverStyles,
   getTextStyles,
-  getThemeStyles,
   getWedgeStyles,
   inputOptionStyles,
   inputOptionWedge,
@@ -66,6 +67,10 @@ export const InputOption = Polymorphic<InputOptionProps, 'div'>(
         state === State.Highlight &&
         showWedgeProp);
 
+    const shouldBoldTitle: boolean =
+      (renderedContext === RenderedContext.Form && checked && !disabled) ||
+      renderedContext === RenderedContext.Menu;
+
     return (
       <Component
         ref={ref}
@@ -74,12 +79,14 @@ export const InputOption = Polymorphic<InputOptionProps, 'div'>(
         aria-checked={checked}
         tabIndex={-1}
         className={cx(
+          getContextStyles(renderedContext, state, theme),
           getTextStyles(renderedContext, state, theme),
           {
             [getWedgeStyles(renderedContext, state, theme)]: shouldRenderWedge,
             [getHoverStyles(renderedContext, theme)]:
               !disabled && isInteractive && state !== State.Highlight,
             [menuTitleStyles(state)]: renderedContext === RenderedContext.Menu,
+            [boldTitleStyles]: shouldBoldTitle,
             [inputOptionWedge]: showWedgeProp,
             [disabledStyles]: disabled,
           },

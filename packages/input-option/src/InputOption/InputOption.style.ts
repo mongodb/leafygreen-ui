@@ -1,4 +1,4 @@
-import { css, cx } from '@leafygreen-ui/emotion';
+import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
@@ -8,14 +8,8 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { ActionType, RenderedContext } from './InputOption.types';
-import {
-  contextStyles,
-  FormState,
-  formThemeStyles,
-  menuThemeStyles,
-  State,
-} from './themes';
+import { RenderedContext } from './InputOption.types';
+import { contextStyles, State } from './themes';
 
 export const titleClassName = createUniqueClassName('input-option-title');
 export const descriptionClassName = createUniqueClassName(
@@ -88,7 +82,6 @@ export const getContextStyles = (
   state: State,
   theme: Theme,
 ) => {
-  console.log(contextStyles[renderedContext][theme][state].backgroundColor);
   return css`
     background-color: ${contextStyles[renderedContext][theme][state]
       .backgroundColor};
@@ -148,10 +141,14 @@ export const getHoverStyles = (
 `;
 
 export const menuTitleStyles = (state: State) => css`
-  font-weight: bold;
-
   &,
   & .${titleClassName} {
     color: ${state === State.Destructive ? palette.red.light2 : palette.white};
+  }
+`;
+
+export const boldTitleStyles = css`
+  .${titleClassName} {
+    font-weight: bold;
   }
 `;
