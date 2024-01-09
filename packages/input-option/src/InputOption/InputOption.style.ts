@@ -9,7 +9,13 @@ import {
 } from '@leafygreen-ui/tokens';
 
 import { ActionType, RenderedContext } from './InputOption.types';
-import { FormState, formThemeStyles, menuThemeStyles, State } from './themes';
+import {
+  contextStyles,
+  FormState,
+  formThemeStyles,
+  menuThemeStyles,
+  State,
+} from './themes';
 
 export const titleClassName = createUniqueClassName('input-option-title');
 export const descriptionClassName = createUniqueClassName(
@@ -77,210 +83,75 @@ export const disabledStyles = css`
   }
 `;
 
-export const getFormElementStyle = ({
-  theme,
-  checked,
-  highlighted,
-  disabled,
-  showWedge = true,
-  isInteractive,
-}: {
-  theme: Theme;
-  checked?: boolean;
-  highlighted?: boolean;
-  disabled?: boolean;
-  showWedge?: boolean;
-  isInteractive?: boolean;
-}) => {
-  let state: FormState = 'default';
+export const getContextStyles = (
+  renderedContext: RenderedContext,
+  state: State,
+  theme: Theme,
+) => {
+  console.log(contextStyles[renderedContext][theme][state].backgroundColor);
+  return css`
+    background-color: ${contextStyles[renderedContext][theme][state]
+      .backgroundColor};
 
-  if (disabled) {
-    state = State.Disabled;
-  } else if (highlighted) {
-    state = State.Highlight;
-  } else if (checked) {
-    state = State.Checked;
+    &,
+    & .${leftGlyphClassName} {
+      color: ${contextStyles[renderedContext][theme][state].leftGlyph};
+    }
+  `;
+};
+
+export const getWedgeStyles = (
+  renderedContext: RenderedContext,
+  state: State,
+  theme: Theme,
+) => css`
+  transform: scaleY(1) translateY(-50%);
+  &:before {
+    background-color: ${contextStyles[renderedContext][theme][state]
+      .wedgeBgColor};
   }
+`;
 
-  const shouldShowWedge = state === State.Highlight && showWedge;
+export const getTextStyles = (
+  renderedContext: RenderedContext,
+  state: State,
+  theme: Theme,
+) => {
+  console.log(contextStyles[renderedContext][theme][state]);
+  return css`
+    .${titleClassName} {
+      color: ${contextStyles[renderedContext][theme][state].title};
+      font-weight: normal;
+    }
 
-  const wedgeStyles = css`
-    &:before {
-      transform: scaleY(1) translateY(-50%);
-      background-color: ${formThemeStyles[theme][state].wedge};
+    &,
+    & .${descriptionClassName} {
+      color: ${contextStyles[renderedContext][theme][state].description};
     }
   `;
-
-  const hoverStyles = css`
-    ${hoverSelector} {
-      outline: none;
-      background-color: ${formThemeStyles[theme].hover.backgroundColor};
-
-      &,
-      & .${leftGlyphClassName} {
-        color: ${formThemeStyles[theme].hover.leftGlyph};
-      }
-    }
-  `;
-
-  return cx(
-    css`
-      background-color: ${formThemeStyles[theme][state].backgroundColor};
-
-      .${titleClassName} {
-        color: ${formThemeStyles[theme][state].title};
-        font-weight: ${checked && !disabled ? 'bold' : 'normal'};
-      }
-
-      &,
-      & .${descriptionClassName} {
-        color: ${formThemeStyles[theme][state].description};
-      }
-
-      &,
-      & .${leftGlyphClassName} {
-        color: ${formThemeStyles[theme][state].leftGlyph};
-      }
-    `,
-    {
-      [wedgeStyles]: shouldShowWedge,
-      [hoverStyles]: !disabled && isInteractive && state !== State.Highlight,
-    },
-  );
 };
 
-export const getMenuElementStyle = ({
-  theme,
-  checked,
-  highlighted,
-  disabled,
-  actionType,
-  showWedge,
-  isInteractive,
-}: {
-  theme: Theme;
-  checked?: boolean;
-  highlighted?: boolean;
-  disabled?: boolean;
-  actionType: ActionType;
-  showWedge?: boolean;
-  isInteractive?: boolean;
-}) => {
-  let state: State = 'default';
+export const getHoverStyles = (
+  renderedContext: RenderedContext,
+  theme: Theme,
+) => css`
+  ${hoverSelector} {
+    outline: none;
+    background-color: ${contextStyles[renderedContext][theme].hover
+      .backgroundColor};
 
-  if (disabled) {
-    state = State.Disabled;
-  } else if (actionType === ActionType.Destructive) {
-    state = State.Destructive;
-  } else if (highlighted) {
-    state = State.Highlight;
-  } else if (checked) {
-    state = State.Checked;
+    &,
+    & .${leftGlyphClassName} {
+      color: ${contextStyles[renderedContext][theme].leftGlyphHover};
+    }
   }
+`;
 
-  const wedge = css`
-    &:before {
-      transform: scaleY(1) translateY(-50%);
-      background-color: ${menuThemeStyles[theme][state].wedge};
-    }
-  `;
+export const menuTitleStyles = (state: State) => css`
+  font-weight: bold;
 
-  const shouldOverride = state === State.Checked || state === State.Destructive;
-
-  const overrideHoverBgColor =
-    theme === Theme.Light ? palette.gray.dark3 : palette.gray.dark2;
-
-  const hover = css`
-    ${hoverSelector} {
-      outline: none;
-      background-color: ${shouldOverride
-        ? overrideHoverBgColor
-        : menuThemeStyles[theme].hover.backgroundColor};
-
-      &,
-      & .${leftGlyphClassName} {
-        color: ${state === State.Default
-          ? menuThemeStyles[theme].hover.leftGlyph
-          : menuThemeStyles[theme][state].leftGlyph};
-      }
-    }
-  `;
-
-  const titleHoverOverride = css`
-    ${hoverSelector} {
-      &,
-      & .${titleClassName} {
-        color: ${state === State.Destructive
-          ? palette.red.light2
-          : palette.white};
-      }
-    }
-  `;
-
-  return cx(
-    css`
-      background-color: ${menuThemeStyles[theme][state].backgroundColor};
-
-      .${titleClassName} {
-        color: ${menuThemeStyles[theme][state].title};
-        font-weight: bold;
-      }
-
-      &,
-      & .${descriptionClassName} {
-        color: ${menuThemeStyles[theme][state].description};
-      }
-
-      &,
-      & .${leftGlyphClassName} {
-        color: ${menuThemeStyles[theme][state].leftGlyph};
-      }
-    `,
-    {
-      [wedge]:
-        showWedge && (state === State.Highlight || state === State.Checked),
-      [hover]: !disabled && isInteractive && state !== State.Highlight,
-      [titleHoverOverride]:
-        shouldOverride && !disabled && theme === Theme.Dark && isInteractive,
-    },
-  );
-};
-
-export const getThemeStyles = ({
-  renderedContext,
-  theme,
-  checked,
-  highlighted,
-  disabled,
-  showWedge,
-  isInteractive,
-  actionType,
-}: {
-  renderedContext: RenderedContext;
-  theme: Theme;
-  checked?: boolean;
-  highlighted?: boolean;
-  disabled?: boolean;
-  showWedge: boolean;
-  isInteractive: boolean;
-  actionType: ActionType;
-}) => {
-  return renderedContext === RenderedContext.Form
-    ? getFormElementStyle({
-        theme,
-        checked,
-        highlighted,
-        disabled,
-        showWedge,
-        isInteractive,
-      })
-    : getMenuElementStyle({
-        theme,
-        checked,
-        highlighted,
-        disabled,
-        showWedge,
-        actionType,
-        isInteractive,
-      });
-};
+  &,
+  & .${titleClassName} {
+    color: ${state === State.Destructive ? palette.red.light2 : palette.white};
+  }
+`;

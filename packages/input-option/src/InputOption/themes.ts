@@ -1,6 +1,8 @@
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
+import { RenderedContext } from '.';
+
 const State = {
   Default: 'default',
   Hover: 'hover',
@@ -16,28 +18,30 @@ export { State };
 
 export type FormState = Exclude<State, 'destructive' | 'overrides'>;
 
-type FormShape = Record<Theme, { [k in FormState]: Record<string, string> }>;
-
-type MenuShape = Record<Theme, { [k in State]: Record<string, string> }>;
-
-export const formThemeStyles: FormShape = {
+// export const formThemeStyles: Record<
+//   Theme,
+//   Record<FormState, Record<string, string>>
+// > = {
+export const formThemeStyles: any = {
   [Theme.Light]: {
     default: {
       title: palette.black,
       description: palette.gray.dark1,
       leftGlyph: palette.gray.dark1,
+      leftGlyphHover: palette.gray.dark1,
       backgroundColor: palette.white,
     },
     hover: {
-      leftGlyph: palette.gray.dark1,
-      backgroundColor: palette.gray.light2,
+      backgroundColor: {
+        default: palette.gray.light2,
+      },
     },
     highlight: {
       title: palette.blue.dark2,
       description: palette.gray.dark1,
       leftGlyph: palette.blue.dark1,
       backgroundColor: palette.blue.light3,
-      wedge: palette.blue.base,
+      wedgeBgColor: palette.blue.base,
     },
     disabled: {
       title: palette.gray.light1,
@@ -57,12 +61,14 @@ export const formThemeStyles: FormShape = {
       title: palette.gray.light2,
       description: palette.gray.light1,
       leftGlyph: palette.gray.base,
+      leftGlyphHover: palette.gray.base,
       backgroundColor: palette.gray.dark3,
     },
 
     hover: {
-      leftGlyph: palette.gray.base,
-      backgroundColor: palette.gray.dark4,
+      backgroundColor: {
+        default: palette.gray.dark4,
+      },
     },
 
     highlight: {
@@ -70,7 +76,7 @@ export const formThemeStyles: FormShape = {
       description: palette.gray.light1,
       leftGlyph: palette.blue.light3,
       backgroundColor: palette.blue.dark3,
-      wedge: palette.blue.light1,
+      wedgeBgColor: palette.blue.light1,
     },
 
     disabled: {
@@ -89,24 +95,32 @@ export const formThemeStyles: FormShape = {
   },
 };
 
-export const menuThemeStyles: MenuShape = {
+// export const menuThemeStyles: Record<
+//   Theme,
+//   Record<State, Record<string, string>>
+// > = {
+export const menuThemeStyles: any = {
   [Theme.Light]: {
     default: {
       title: palette.white,
       description: palette.gray.light1,
       leftGlyph: palette.gray.dark1,
+      leftGlyphHover: palette.gray.base,
       backgroundColor: palette.black,
     },
     hover: {
-      leftGlyph: palette.gray.base,
-      backgroundColor: palette.gray.dark3,
+      backgroundColor: {
+        default: palette.gray.dark3,
+        checked: palette.gray.dark3,
+        destructive: palette.gray.dark3,
+      },
     },
     highlight: {
       title: palette.blue.light3,
       description: palette.gray.light3,
       leftGlyph: palette.blue.light3,
       backgroundColor: palette.blue.dark3,
-      wedge: palette.blue.light1,
+      wedgeBgColor: palette.blue.light1,
     },
     disabled: {
       title: palette.gray.dark2,
@@ -119,7 +133,7 @@ export const menuThemeStyles: MenuShape = {
       description: palette.gray.light1,
       leftGlyph: palette.green.base,
       backgroundColor: palette.black,
-      wedge: palette.green.base,
+      wedgeBgColor: palette.green.base,
     },
     destructive: {
       title: palette.red.light1,
@@ -133,18 +147,22 @@ export const menuThemeStyles: MenuShape = {
       title: palette.gray.light2,
       description: palette.gray.light1,
       leftGlyph: palette.gray.light1,
+      leftGlyphHover: palette.gray.light1,
       backgroundColor: palette.gray.dark3,
     },
     hover: {
-      leftGlyph: palette.gray.light1,
-      backgroundColor: palette.gray.dark2,
+      backgroundColor: {
+        default: palette.gray.dark2,
+        checked: palette.gray.dark2,
+        destructive: palette.gray.dark2,
+      },
     },
     highlight: {
       title: palette.blue.light3,
       description: palette.blue.light3,
       leftGlyph: palette.blue.light3,
       backgroundColor: palette.blue.dark3,
-      wedge: palette.blue.light1,
+      wedgeBgColor: palette.blue.light1,
     },
     disabled: {
       title: palette.gray.dark1,
@@ -157,7 +175,7 @@ export const menuThemeStyles: MenuShape = {
       description: palette.gray.light1,
       leftGlyph: palette.green.base,
       backgroundColor: palette.gray.dark3,
-      wedge: palette.green.base,
+      wedgeBgColor: palette.green.base,
     },
     destructive: {
       title: palette.red.light1,
@@ -166,4 +184,9 @@ export const menuThemeStyles: MenuShape = {
       backgroundColor: palette.gray.dark3,
     },
   },
+};
+
+export const contextStyles: Record<RenderedContext, any> = {
+  [RenderedContext.Form]: formThemeStyles,
+  [RenderedContext.Menu]: menuThemeStyles,
 };

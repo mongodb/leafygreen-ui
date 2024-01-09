@@ -91,19 +91,41 @@ export default meta;
 export const LiveExample: StoryFn<
   InputOptionProps & InputOptionContentProps
 > = (props: InputOptionProps & InputOptionContentProps) => {
-  const { leftGlyph, rightGlyph, description, ...rest } = props;
+  const { leftGlyph, rightGlyph, description, renderedContext, ...rest } =
+    props;
   return (
-    <InputOption {...rest}>
-      <InputOptionContent
-        leftGlyph={leftGlyph ? <Icon glyph={leftGlyph as string} /> : undefined}
-        rightGlyph={
-          rightGlyph ? <Icon glyph={rightGlyph as string} /> : undefined
-        }
-        description={description}
+    <div>
+      <InputOption
+        {...rest}
+        renderedContext={RenderedContext.Form}
+        actionType="default" // input options in forms can only be default
       >
-        Some text
-      </InputOptionContent>
-    </InputOption>
+        <InputOptionContent
+          leftGlyph={
+            leftGlyph ? <Icon glyph={leftGlyph as string} /> : undefined
+          }
+          rightGlyph={
+            rightGlyph ? <Icon glyph={rightGlyph as string} /> : undefined
+          }
+          description={description}
+        >
+          Some text
+        </InputOptionContent>
+      </InputOption>
+      <InputOption {...rest} renderedContext={RenderedContext.Menu}>
+        <InputOptionContent
+          leftGlyph={
+            leftGlyph ? <Icon glyph={leftGlyph as string} /> : undefined
+          }
+          rightGlyph={
+            rightGlyph ? <Icon glyph={rightGlyph as string} /> : undefined
+          }
+          description={description}
+        >
+          Some text
+        </InputOptionContent>
+      </InputOption>
+    </div>
   );
 };
 LiveExample.parameters = {
@@ -112,6 +134,9 @@ LiveExample.parameters = {
 
 export const FormElement = () => <></>;
 FormElement.parameters = {
+  argTypes: {
+    actionType: 'default',
+  },
   generate: {
     args: {
       renderedContext: RenderedContext.Form,
