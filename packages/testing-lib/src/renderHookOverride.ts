@@ -1,8 +1,8 @@
-const rtl = require('@testing-library/react');
+import * as RTL from '@testing-library/react';
 
 export const renderHook =
-  rtl.renderHook ??
+  RTL.renderHook ??
   (() => {
-    const rtlh = require('@testing-library/react-hooks');
-    return rtlh.renderHook;
+    const RTLH = require('@testing-library/react-hooks');
+    return RTLH.renderHook;
   })();
