@@ -90,27 +90,27 @@ describe('packages/table/Row/ExpandableContent', () => {
     expect(collapseIconButton).toBeInTheDocument();
     expect(queryByText('Expandable content test')).toBeInTheDocument();
   });
-});
 
-describe('packages/table/Row/ExpandableContent/Disabled Animations', () => {
-  test('renders the correct number of cell children with disabled animations', () => {
-    const { getAllByRole: getAllByRoleLocal } = render(
-      <RowWithExpandableContent disableAnimations />,
-    );
-    const firstRow = getAllByRoleLocal('row')[1];
-    expect(getAllByRole(firstRow, 'cell').length).toBe(6);
-  });
-  test('rows with expandable content render expand icon button with disabled animations', async () => {
-    const { getByLabelText } = render(
-      <RowWithExpandableContent disableAnimations />,
-    );
-    const expandIconButton = getByLabelText('Expand row');
-    expect(expandIconButton).toBeInTheDocument();
-  });
-  test('rows with expandable content render rows as tbody elements with disabled animations', async () => {
-    const { getAllByRole } = render(
-      <RowWithExpandableContent disableAnimations />,
-    );
-    expect(getAllByRole('rowgroup').length).toBe(4); // 1 for thead, 3 for tbody
+  describe('packages/table/Row/ExpandableContent/Disabled Animations', () => {
+    test('renders the correct number of cell children with disabled animations', () => {
+      const { getAllByRole: getAllByRoleLocal } = render(
+        <RowWithExpandableContent disableAnimations />,
+      );
+      const firstRow = getAllByRoleLocal('row')[1];
+      expect(getAllByRole(firstRow, 'cell').length).toBe(6);
+    });
+    test('rows with expandable content render expand icon button with disabled animations', async () => {
+      const { getByLabelText } = render(
+        <RowWithExpandableContent disableAnimations />,
+      );
+      const expandIconButton = getByLabelText('Expand row');
+      expect(expandIconButton).toBeInTheDocument();
+    });
+    test('rows with expandable content render rows as tbody elements with disabled animations', async () => {
+      const { getAllByRole } = render(
+        <RowWithExpandableContent disableAnimations />,
+      );
+      expect(getAllByRole('rowgroup').length).toBe(4); // 1 for thead, 3 for tbody
+    });
   });
 });

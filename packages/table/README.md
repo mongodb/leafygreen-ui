@@ -286,7 +286,7 @@ All HTML `tr` element props
 
 `Cell` accepts HTML `td` element props.
 
-> All nested row animations are set at the Cell level, with a `max-height` set to 40vh, which should cover most cases with a relatively smooth animation. For taller content, set `disableAnimation={true}` or override the max-height with a `& > div { max-height: ... }` CSS selector.
+> All nested row animations are set at the Cell level, with a `max-height` set to 40vh, which should cover most cases with a relatively smooth animation. For taller content, set `disableAnimation={true}` or override the max-height with a `& > div { max-height: ... }` CSS selector on the `Cell` component.
 
 ## Feature Examples
 

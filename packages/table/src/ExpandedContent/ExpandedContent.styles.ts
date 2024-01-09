@@ -8,7 +8,7 @@ import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 export const baseStyles = css`
   padding: 0;
   overflow: hidden;
-  transition: ${transitionDuration.faster}ms ease-in-out;
+  transition: ${transitionDuration.slowest}ms ease;
 `;
 
 export const expandedContentStyles: Record<Theme, string> = {
