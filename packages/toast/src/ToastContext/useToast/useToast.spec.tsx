@@ -2,7 +2,7 @@ import React, { PropsWithChildren, useEffect } from 'react';
 import { render } from '@testing-library/react';
 import { cleanup } from '@testing-library/react-hooks';
 
-import { renderHook } from '@leafygreen-ui/testing-lib';
+import { act, renderHook } from '@leafygreen-ui/testing-lib';
 
 import { ToastProps, Variant } from '../../Toast.types';
 import { ToastContext } from '../ToastContext';
@@ -75,19 +75,23 @@ describe('packages/toast/useToast', () => {
         );
       });
 
-      test.skip('updateToast => ToastProps', () => {
+      test('updateToast => ToastProps', async () => {
         const { result, rerender } = renderHook(useToast, {
           wrapper: ToastProviderMock,
         });
-        const { pushToast, updateToast } = result.current;
-        const toastId = pushToast({
-          title: 'test',
-          variant: Variant.Progress,
-          progress: 0,
+        const toastId = await act(() =>
+          result.current.pushToast({
+            title: 'test',
+            variant: Variant.Progress,
+            progress: 0,
+          }),
+        );
+        const updatedToast = await act(() => {
+          rerender();
+          return result.current.updateToast(toastId, {
+            progress: 0.5,
+          });
         });
-        rerender();
-        const updatedToast = updateToast(toastId, { progress: 0.5 });
-        rerender();
 
         expect(updatedToast).toEqual(
           expect.objectContaining({ progress: 0.5 }),
