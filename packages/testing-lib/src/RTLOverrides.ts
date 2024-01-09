@@ -1,16 +1,31 @@
-import { act as ReactDOMAct } from 'react-dom/test-utils';
 import * as RTL from '@testing-library/react';
 
-export const renderHook =
-  RTL.renderHook ??
+type Exists<X, Y extends keyof X | string, Fallback = any> = Y extends keyof X
+  ? X[Y]
+  : Fallback;
+
+/**
+ * Re-exports `renderHook` from `"@testing-library/react"` if it exists,
+ * or from `"@testing-library/react-hooks"`
+ *
+ * (used when running in a React 17 test environment)
+ */
+export const renderHook: Exists<typeof RTL, 'renderHook'> =
+  (RTL as any).renderHook ??
   (() => {
-    const RTLH = require('@testing-library/react-hooks');
-    return RTLH.renderHook;
+    const RHTL = require('@testing-library/react-hooks');
+    return RHTL.renderHook;
   })();
 
-export const act: typeof ReactDOMAct =
+/**
+ * Re-exports `act` from `"@testing-library/react"` if it exists,
+ * or from `"@testing-library/react-hooks"`
+ *
+ * (used when running in a React 17 test environment)
+ */
+export const act: Exists<typeof RTL, 'act'> =
   RTL.act ??
   (() => {
-    const RTLH = require('@testing-library/react-hooks');
-    return RTLH.act;
+    const RHTL = require('@testing-library/react-hooks');
+    return RHTL.act;
   })();
