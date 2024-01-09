@@ -9,7 +9,7 @@ import {
 } from '@leafygreen-ui/tokens';
 
 import { RenderedContext } from './InputOption.types';
-import { contextStyles, State } from './themes';
+import { contextColors, State } from './themes';
 
 export const titleClassName = createUniqueClassName('input-option-title');
 export const descriptionClassName = createUniqueClassName(
@@ -81,26 +81,23 @@ export const getContextStyles = (
   renderedContext: RenderedContext,
   state: State,
   theme: Theme,
-) => {
-  return css`
-    background-color: ${contextStyles[renderedContext][theme][state]
-      .backgroundColor};
+) => css`
+  background-color: ${contextColors[renderedContext][theme][state].bgColor};
 
-    &,
-    & .${leftGlyphClassName} {
-      color: ${contextStyles[renderedContext][theme][state].leftGlyph};
-    }
-  `;
-};
+  &,
+  & .${leftGlyphClassName} {
+    color: ${contextColors[renderedContext][theme][state].leftGlyph};
+  }
+`;
 
 export const getWedgeStyles = (
   renderedContext: RenderedContext,
   state: State,
   theme: Theme,
 ) => css`
-  transform: scaleY(1) translateY(-50%);
   &:before {
-    background-color: ${contextStyles[renderedContext][theme][state]
+    transform: scaleY(1) translateY(-50%);
+    background-color: ${contextColors[renderedContext][theme][state]
       .wedgeBgColor};
   }
 `;
@@ -109,20 +106,17 @@ export const getTextStyles = (
   renderedContext: RenderedContext,
   state: State,
   theme: Theme,
-) => {
-  console.log(contextStyles[renderedContext][theme][state]);
-  return css`
-    .${titleClassName} {
-      color: ${contextStyles[renderedContext][theme][state].title};
-      font-weight: normal;
-    }
+) => css`
+  .${titleClassName} {
+    color: ${contextColors[renderedContext][theme][state].title};
+    font-weight: normal;
+  }
 
-    &,
-    & .${descriptionClassName} {
-      color: ${contextStyles[renderedContext][theme][state].description};
-    }
-  `;
-};
+  &,
+  & .${descriptionClassName} {
+    color: ${contextColors[renderedContext][theme][state].description};
+  }
+`;
 
 export const getHoverStyles = (
   renderedContext: RenderedContext,
@@ -130,12 +124,11 @@ export const getHoverStyles = (
 ) => css`
   ${hoverSelector} {
     outline: none;
-    background-color: ${contextStyles[renderedContext][theme].hover
-      .backgroundColor};
+    background-color: ${contextColors[renderedContext][theme].hover.bgColor};
 
     &,
     & .${leftGlyphClassName} {
-      color: ${contextStyles[renderedContext][theme].leftGlyphHover};
+      color: ${contextColors[renderedContext][theme].leftGlyphHover};
     }
   }
 `;

@@ -22,17 +22,17 @@ export type FormState = Exclude<State, 'destructive'>;
 //   Theme,
 //   Record<FormState, Record<string, string>>
 // > = {
-export const formThemeStyles: any = {
+export const formContextColors: any = {
   [Theme.Light]: {
     default: {
       title: palette.black,
       description: palette.gray.dark1,
       leftGlyph: palette.gray.dark1,
       leftGlyphHover: palette.gray.dark1,
-      backgroundColor: palette.white,
+      bgColor: palette.white,
     },
     hover: {
-      backgroundColor: {
+      bgColor: {
         default: palette.gray.light2,
       },
     },
@@ -40,20 +40,20 @@ export const formThemeStyles: any = {
       title: palette.blue.dark2,
       description: palette.gray.dark1,
       leftGlyph: palette.blue.dark1,
-      backgroundColor: palette.blue.light3,
+      bgColor: palette.blue.light3,
       wedgeBgColor: palette.blue.base,
     },
     disabled: {
       title: palette.gray.light1,
       description: palette.gray.light1,
       leftGlyph: palette.gray.light1,
-      backgroundColor: palette.white,
+      bgColor: palette.white,
     },
     checked: {
       title: palette.black,
       description: palette.gray.dark1,
       leftGlyph: palette.gray.dark1,
-      backgroundColor: palette.white,
+      bgColor: palette.white,
     },
   },
   [Theme.Dark]: {
@@ -62,20 +62,18 @@ export const formThemeStyles: any = {
       description: palette.gray.light1,
       leftGlyph: palette.gray.base,
       leftGlyphHover: palette.gray.base,
-      backgroundColor: palette.gray.dark3,
+      bgColor: palette.gray.dark3,
     },
-
     hover: {
-      backgroundColor: {
+      bgColor: {
         default: palette.gray.dark4,
       },
     },
-
     highlight: {
       title: palette.gray.light2,
       description: palette.gray.light1,
       leftGlyph: palette.blue.light3,
-      backgroundColor: palette.blue.dark3,
+      bgColor: palette.blue.dark3,
       wedgeBgColor: palette.blue.light1,
     },
 
@@ -83,14 +81,14 @@ export const formThemeStyles: any = {
       title: palette.gray.dark1,
       description: palette.gray.dark1,
       leftGlyph: palette.gray.dark1,
-      backgroundColor: palette.gray.dark3,
+      bgColor: palette.gray.dark3,
     },
 
     checked: {
       title: palette.gray.light2,
       description: palette.gray.light1,
       leftGlyph: palette.gray.base,
-      backgroundColor: palette.gray.dark3,
+      bgColor: palette.gray.dark3,
     },
   },
 };
@@ -99,17 +97,17 @@ export const formThemeStyles: any = {
 //   Theme,
 //   Record<State, Record<string, string>>
 // > = {
-export const menuThemeStyles: any = {
+export const menuContextColors: any = {
   [Theme.Light]: {
     default: {
       title: palette.white,
       description: palette.gray.light1,
       leftGlyph: palette.gray.dark1,
       leftGlyphHover: palette.gray.base,
-      backgroundColor: palette.black,
+      bgColor: palette.black,
     },
     hover: {
-      backgroundColor: {
+      bgColor: {
         default: palette.gray.dark3,
         checked: palette.gray.dark3,
         destructive: palette.gray.dark3,
@@ -119,27 +117,27 @@ export const menuThemeStyles: any = {
       title: palette.blue.light3,
       description: palette.gray.light3,
       leftGlyph: palette.blue.light3,
-      backgroundColor: palette.blue.dark3,
+      bgColor: palette.blue.dark3,
       wedgeBgColor: palette.blue.light1,
     },
     disabled: {
       title: palette.gray.dark2,
       description: palette.gray.dark2,
       leftGlyph: palette.gray.dark2,
-      backgroundColor: palette.black,
+      bgColor: palette.black,
     },
     checked: {
       title: palette.green.base,
       description: palette.gray.light1,
       leftGlyph: palette.green.base,
-      backgroundColor: palette.black,
+      bgColor: palette.black,
       wedgeBgColor: palette.green.base,
     },
     destructive: {
       title: palette.red.light1,
       description: palette.gray.light1,
       leftGlyph: palette.red.light1,
-      backgroundColor: palette.black,
+      bgColor: palette.black,
     },
   },
   [Theme.Dark]: {
@@ -148,10 +146,10 @@ export const menuThemeStyles: any = {
       description: palette.gray.light1,
       leftGlyph: palette.gray.light1,
       leftGlyphHover: palette.gray.light1,
-      backgroundColor: palette.gray.dark3,
+      bgColor: palette.gray.dark3,
     },
     hover: {
-      backgroundColor: {
+      bgColor: {
         default: palette.gray.dark2,
         checked: palette.gray.dark2,
         destructive: palette.gray.dark2,
@@ -161,32 +159,32 @@ export const menuThemeStyles: any = {
       title: palette.blue.light3,
       description: palette.blue.light3,
       leftGlyph: palette.blue.light3,
-      backgroundColor: palette.blue.dark3,
+      bgColor: palette.blue.dark3,
       wedgeBgColor: palette.blue.light1,
     },
     disabled: {
       title: palette.gray.dark1,
       description: palette.gray.dark1,
       leftGlyph: palette.gray.dark1,
-      backgroundColor: palette.gray.dark3,
+      bgColor: palette.gray.dark3,
     },
     checked: {
       title: palette.gray.light2,
       description: palette.gray.light1,
       leftGlyph: palette.green.base,
-      backgroundColor: palette.gray.dark3,
+      bgColor: palette.gray.dark3,
       wedgeBgColor: palette.green.base,
     },
     destructive: {
       title: palette.red.light1,
       description: palette.gray.light1,
       leftGlyph: palette.red.light1,
-      backgroundColor: palette.gray.dark3,
+      bgColor: palette.gray.dark3,
     },
   },
 };
 
-export const contextStyles: Record<RenderedContext, any> = {
-  [RenderedContext.Form]: formThemeStyles,
-  [RenderedContext.Menu]: menuThemeStyles,
+export const contextColors: Record<RenderedContext, any> = {
+  [RenderedContext.Form]: formContextColors,
+  [RenderedContext.Menu]: menuContextColors,
 };

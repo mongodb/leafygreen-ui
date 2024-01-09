@@ -51,8 +51,14 @@ export const InputOption = Polymorphic<InputOptionProps, 'div'>(
 
     if (disabled) {
       state = State.Disabled;
-    } else if (actionType === ActionType.Destructive) {
+    } else if (
+      actionType === ActionType.Destructive &&
+      renderedContext === RenderedContext.Menu
+    ) {
       state = State.Destructive;
+      console.warn(
+        'The `InputOption` was rendered in its default state as `destructive` InputOptions are not supported in forms.',
+      );
     } else if (highlighted) {
       state = State.Highlight;
     } else if (checked) {
@@ -60,12 +66,11 @@ export const InputOption = Polymorphic<InputOptionProps, 'div'>(
     }
 
     const shouldRenderWedge =
-      (renderedContext === RenderedContext.Menu &&
-        showWedgeProp &&
+      showWedgeProp &&
+      ((renderedContext === RenderedContext.Menu &&
         (state === State.Highlight || state === State.Checked)) ||
-      (renderedContext === RenderedContext.Form &&
-        state === State.Highlight &&
-        showWedgeProp);
+        (renderedContext === RenderedContext.Form &&
+          state === State.Highlight));
 
     const shouldBoldTitle: boolean =
       (renderedContext === RenderedContext.Form && checked && !disabled) ||
@@ -82,12 +87,12 @@ export const InputOption = Polymorphic<InputOptionProps, 'div'>(
           getContextStyles(renderedContext, state, theme),
           getTextStyles(renderedContext, state, theme),
           {
+            [inputOptionWedge]: showWedgeProp,
             [getWedgeStyles(renderedContext, state, theme)]: shouldRenderWedge,
             [getHoverStyles(renderedContext, theme)]:
               !disabled && isInteractive && state !== State.Highlight,
             [menuTitleStyles(state)]: renderedContext === RenderedContext.Menu,
             [boldTitleStyles]: shouldBoldTitle,
-            [inputOptionWedge]: showWedgeProp,
             [disabledStyles]: disabled,
           },
           inputOptionStyles,
