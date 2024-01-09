@@ -1,5 +1,13 @@
 # @leafygreen-ui/text-area
 
+## 8.0.21
+
+### Patch Changes
+
+- 305e3cdf: aria-labelledby is now correctly passed to the textarea
+- Updated dependencies [75b8d963]
+  - @leafygreen-ui/icon@11.27.0
+
 ## 8.0.20
 
 ### Patch Changes

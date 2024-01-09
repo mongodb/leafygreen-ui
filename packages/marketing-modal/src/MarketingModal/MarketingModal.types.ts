@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { ModalProps } from '@leafygreen-ui/modal';
 
 export const BlobPosition = {
@@ -15,11 +17,12 @@ export const GraphicStyle = {
 
 export type GraphicStyle = (typeof GraphicStyle)[keyof typeof GraphicStyle];
 
-export interface MarketingModalProps extends Omit<ModalProps, 'size'> {
+export interface MarketingModalProps
+  extends Omit<ModalProps, 'size' | 'title'> {
   /**
    * Text of header element
    */
-  title: string;
+  title: ReactNode;
 
   /**
    * React Element to be rendered as the modal's hero image
