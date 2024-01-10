@@ -5,7 +5,7 @@ import path from 'path';
 
 import { ValidateCommandOptions } from '../validate.types';
 
-import { DepCheckFunctionProps, ignoreDependencies } from './config';
+import { DepCheckFunctionProps, externalDependencies } from './config';
 import {
   isDependencyOnlyUsedInTestFile,
   sortDependenciesByUsage,
@@ -38,16 +38,19 @@ export function validateListedDependencies(
     const listedButOnlyUsedAsDev = listedDependencies.filter(
       listedDepName =>
         !importedPackagesInSourceFile.includes(listedDepName) &&
-        !ignoreDependencies.includes(listedDepName),
+        !externalDependencies.some(glob => {
+          const regexPattern = glob.replace('*', '.+'); // a super rough conversion of glob pattern to regexp
+          const regEx = new RegExp(regexPattern);
+          return regEx.test(listedDepName);
+        }),
     );
 
-    verbose &&
+    if (listedButOnlyUsedAsDev.length && verbose) {
       console.log(
         `${chalk.blue(
           pkgName,
         )}: lists packages as dependency, but only uses them in test files`,
       );
-    verbose &&
       console.log(
         listedButOnlyUsedAsDev
           .map(
@@ -60,6 +63,7 @@ export function validateListedDependencies(
           )
           .join('\n'),
       );
+    }
 
     return listedButOnlyUsedAsDev;
   }

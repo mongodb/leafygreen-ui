@@ -16,13 +16,18 @@
     "@testing-library/user-event": "13.5.0",
     "lodash": "^4.17.21"
   },
+  "devDependencies": {
+    "@lg-tools/build": "0.3.1"
+  },
   "peerDependencies": {
-    "@lg-tools/test": "0.3.2"
+    "@testing-library/react": "^12.0.0 || ^13.1.0 || ^14.0.0"
+  },
+  "optionalDependencies": {
+    "@testing-library/react-hooks": ">=3.7.0"
   },
   "scripts": {
-    "build": "lg build-package",
-    "tsc": "lg build-ts",
-    "docs": "lg build-tsdoc"
+    "build": "lg-internal-build-package",
+    "tsc": "tsc --build tsconfig.json"
   },
   "license": "Apache-2.0",
   "publishConfig": {
