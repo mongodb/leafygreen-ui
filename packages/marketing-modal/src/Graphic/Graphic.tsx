@@ -3,7 +3,7 @@ import React from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 
 import { BlobSVG } from '../BlobSVG/BlobSVG';
-import { GraphicStyle } from '../MarketingModal/types';
+import { GraphicStyle } from '../MarketingModal/MarketingModal.types';
 
 import {
   baseStyle,
@@ -12,8 +12,8 @@ import {
   curvedSVGBaseStyles,
   curvedSVGThemeStyles,
   filledStyle,
-} from './styles';
-import { GraphicProps } from './types';
+} from './Graphic.styles';
+import { GraphicProps } from './Graphic.types';
 
 /**
  *
