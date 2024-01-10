@@ -1,27 +1,8 @@
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
-import { RenderedContext } from '.';
+import { RenderedContext } from './InputOption.types';
 
-const State = {
-  Default: 'default',
-  Hover: 'hover',
-  Highlight: 'highlight',
-  Disabled: 'disabled',
-  Checked: 'checked',
-  Destructive: 'destructive',
-} as const;
-
-type State = (typeof State)[keyof typeof State];
-
-export { State };
-
-export type FormState = Exclude<State, 'destructive'>;
-
-// export const formThemeStyles: Record<
-//   Theme,
-//   Record<FormState, Record<string, string>>
-// > = {
 export const formContextColors: any = {
   [Theme.Light]: {
     default: {
@@ -32,9 +13,7 @@ export const formContextColors: any = {
       bgColor: palette.white,
     },
     hover: {
-      bgColor: {
-        default: palette.gray.light2,
-      },
+      bgColor: palette.gray.light2,
     },
     highlight: {
       title: palette.blue.dark2,
@@ -65,9 +44,7 @@ export const formContextColors: any = {
       bgColor: palette.gray.dark3,
     },
     hover: {
-      bgColor: {
-        default: palette.gray.dark4,
-      },
+      bgColor: palette.gray.dark4,
     },
     highlight: {
       title: palette.gray.light2,
@@ -93,10 +70,6 @@ export const formContextColors: any = {
   },
 };
 
-// export const menuThemeStyles: Record<
-//   Theme,
-//   Record<State, Record<string, string>>
-// > = {
 export const menuContextColors: any = {
   [Theme.Light]: {
     default: {
@@ -107,11 +80,7 @@ export const menuContextColors: any = {
       bgColor: palette.black,
     },
     hover: {
-      bgColor: {
-        default: palette.gray.dark3,
-        checked: palette.gray.dark3,
-        destructive: palette.gray.dark3,
-      },
+      bgColor: palette.gray.dark3,
     },
     highlight: {
       title: palette.blue.light3,
@@ -149,11 +118,7 @@ export const menuContextColors: any = {
       bgColor: palette.gray.dark3,
     },
     hover: {
-      bgColor: {
-        default: palette.gray.dark2,
-        checked: palette.gray.dark2,
-        destructive: palette.gray.dark2,
-      },
+      bgColor: palette.gray.dark2,
     },
     highlight: {
       title: palette.blue.light3,

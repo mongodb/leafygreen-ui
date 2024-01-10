@@ -8,8 +8,8 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { RenderedContext } from './InputOption.types';
-import { contextColors, State } from './themes';
+import { RenderedContext, State } from './InputOption.types';
+import { contextColors } from './themes';
 
 export const titleClassName = createUniqueClassName('input-option-title');
 export const descriptionClassName = createUniqueClassName(
