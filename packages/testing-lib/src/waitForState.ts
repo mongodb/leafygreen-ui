@@ -14,6 +14,6 @@ export const waitForState = async <T extends any>(
     val = callback();
   });
 
-  // @ts-expect-error
+  // @ts-expect-error - val is returned before TS sees it as being defined
   return val;
 };
