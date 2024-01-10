@@ -23,7 +23,7 @@ import {
   ActionType,
   InputOptionProps,
   RenderedContext,
-  State
+  State,
 } from './InputOption.types';
 
 export const InputOption = Polymorphic<InputOptionProps, 'div'>(
