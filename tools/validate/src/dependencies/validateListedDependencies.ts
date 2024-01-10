@@ -5,6 +5,7 @@ import path from 'path';
 
 import { ValidateCommandOptions } from '../validate.types';
 
+import { globToRegex } from './utils/globToRegex';
 import { DepCheckFunctionProps, externalDependencies } from './config';
 import {
   isDependencyOnlyUsedInTestFile,
@@ -39,8 +40,7 @@ export function validateListedDependencies(
       listedDepName =>
         !importedPackagesInSourceFile.includes(listedDepName) &&
         !externalDependencies.some(glob => {
-          const regexPattern = glob.replace('*', '.+'); // a super rough conversion of glob pattern to regexp
-          const regEx = new RegExp(regexPattern);
+          const regEx = globToRegex(glob);
           return regEx.test(listedDepName);
         }),
     );
