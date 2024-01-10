@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/menu': minor
+'@leafygreen-ui/popover': minor
 ---
 
-All Popover props are now optional in Menu
+All props in TransitionLifecycleCallbacks are now optional
