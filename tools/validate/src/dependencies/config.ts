@@ -54,7 +54,7 @@ export const externalDependencies = [
   '@svgr/*',
   '@testing-library/*',
   '@types/*',
-  '@typescript-eslint/&',
+  '@typescript-eslint/*',
   'buffer',
   'eslint*',
   'jest',
