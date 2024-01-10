@@ -1,9 +1,9 @@
 import React, { PropsWithChildren } from 'react';
 import { act, waitFor } from '@testing-library/react';
-import { renderHook } from '@testing-library/react-hooks';
 
 import { Month, newUTC } from '@leafygreen-ui/date-utils';
 import { consoleOnce } from '@leafygreen-ui/lib';
+import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { MAX_DATE, MIN_DATE } from '../constants';
 

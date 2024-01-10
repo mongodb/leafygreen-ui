@@ -1,8 +1,10 @@
 import React from 'react';
 import { ChangeEventHandler } from 'react';
 import { render } from '@testing-library/react';
-import { renderHook, RenderHookResult } from '@testing-library/react-hooks';
+import { RenderHookResult } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+
+import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { useControlledValue } from './useControlledValue';
 
@@ -10,7 +12,7 @@ const errorSpy = jest.spyOn(console, 'error');
 
 const renderUseControlledValueHook = <T extends any>(
   ...[valueProp, callback, initial]: Parameters<typeof useControlledValue<T>>
-): RenderHookResult<T, ReturnType<typeof useControlledValue<T>>> => {
+): RenderHookResult<ReturnType<typeof useControlledValue<T>>, T> => {
   const result = renderHook(v => useControlledValue(v, callback, initial), {
     initialProps: valueProp,
   });
@@ -109,7 +111,7 @@ describe('packages/hooks/useControlledValue', () => {
     test('setting value to undefined should keep the component controlled', () => {
       const { rerender, result } = renderUseControlledValueHook('apple');
       expect(result.current.isControlled).toBe(true);
-      rerender(undefined);
+      rerender();
       expect(result.current.isControlled).toBe(true);
     });
 
@@ -144,8 +146,10 @@ describe('packages/hooks/useControlledValue', () => {
     });
 
     test('setValue updates the value', () => {
-      const { result } = renderUseControlledValueHook<string>(undefined);
+      const { result, rerender } =
+        renderUseControlledValueHook<string>(undefined);
       result.current.setValue('banana');
+      rerender();
       expect(result.current.value).toBe('banana');
     });
   });
