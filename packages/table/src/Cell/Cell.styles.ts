@@ -82,7 +82,6 @@ export const cellContentContainerStyles = css`
   min-height: ${standardCellHeight}px;
   transition-property: min-height, max-height, opacity, transform, padding;
   transition-duration: ${transitionDuration.slowest}ms;
-  transition-timing-function: ease;
 `;
 
 export const disableAnimationStyles = css`
