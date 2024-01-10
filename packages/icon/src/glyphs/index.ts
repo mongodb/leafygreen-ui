@@ -18,6 +18,8 @@ import Boolean from './Boolean.svg';
 import Building from './Building.svg';
 import Bulb from './Bulb.svg';
 import Calendar from './Calendar.svg';
+import Camera from './Camera.svg';
+import Cap from './Cap.svg';
 import CaretDown from './CaretDown.svg';
 import CaretLeft from './CaretLeft.svg';
 import CaretRight from './CaretRight.svg';
@@ -64,6 +66,7 @@ import FullScreenExit from './FullScreenExit.svg';
 import Gauge from './Gauge.svg';
 import GlobeAmericas from './GlobeAmericas.svg';
 import GovernmentBuilding from './GovernmentBuilding.svg';
+import Hash from './Hash.svg';
 import Highlight from './Highlight.svg';
 import Home from './Home.svg';
 import Import from './Import.svg';
@@ -162,6 +165,8 @@ const _glyphs = {
   Building,
   Bulb,
   Calendar,
+  Camera,
+  Cap,
   CaretDown,
   CaretLeft,
   CaretRight,
@@ -208,6 +213,7 @@ const _glyphs = {
   Gauge,
   GlobeAmericas,
   GovernmentBuilding,
+  Hash,
   Highlight,
   Home,
   Import,
