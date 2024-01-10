@@ -1,8 +1,13 @@
 import * as RTL from '@testing-library/react';
 
-type Exists<X, Y extends keyof X | string, Fallback = any> = Y extends keyof X
-  ? X[Y]
-  : Fallback;
+/**
+ * Utility type that returns `X.Y` if it exists, otherwise defaults to fallback type `Z`, or `any`
+ */
+export type Exists<
+  X,
+  Y extends keyof X | string,
+  Z = unknown,
+> = Y extends keyof X ? X[Y] : Z;
 
 /**
  * Re-exports `renderHook` from `"@testing-library/react"` if it exists,
