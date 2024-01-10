@@ -1,22 +1,30 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import { cx } from '@leafygreen-ui/emotion';
+import { CellWithRTProps } from './Cell.types';
+import CellWithoutRT from './CellWithoutRT';
+import CellWithRT from './CellWithRT';
 
-import {
-  alignmentStyles,
-  baseCellStyles,
-  basicCellStyles,
-  cellContentContainerStyles,
-} from './Cell.styles';
-import { CellProps } from '.';
+/**
+ * Renders the provided cells
+ */
+const Cell = (props: CellWithRTProps) => {
+  const isUsedWithRT =
+    props?.cellIndex || props?.depth || props?.isVisible || props?.isExpandable;
 
-const Cell = ({ className, align, children, ...rest }: CellProps) => (
-  <td className={cx(baseCellStyles, basicCellStyles, className)} {...rest}>
-    <div className={cx(cellContentContainerStyles, alignmentStyles(align))}>
-      {children}
-    </div>
-  </td>
-);
+  return (
+    <>
+      {isUsedWithRT ? <CellWithRT {...props} /> : <CellWithoutRT {...props} />}
+    </>
+  );
+};
+
+Cell.propTypes = {
+  cellIndex: PropTypes.number,
+  depth: PropTypes.number,
+  isVisible: PropTypes.bool,
+  isExpandable: PropTypes.bool,
+};
 
 Cell.displayName = 'Cell';
 

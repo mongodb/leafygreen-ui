@@ -10,11 +10,11 @@ import InternalRowBase from '../Row/InternalRowBase';
 import Table from '../Table';
 import TableBody from '../TableBody';
 
-import InternalCell from './InternalCell';
+import CellWithRT from './CellWithRT';
 
-const meta: StoryMetaType<typeof InternalCell> = {
+const meta: StoryMetaType<typeof CellWithRT> = {
   title: 'Components/Table/Cell',
-  component: InternalCell,
+  component: CellWithRT,
   parameters: {
     default: null,
     generate: {

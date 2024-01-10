@@ -16,7 +16,7 @@ interface AlignProp {
 
 export type CellProps = HTMLElementProps<'td'> & AlignProp;
 
-export type InternalCellProps = CellProps &
+export type CellWithRTProps = CellProps &
   AlignProp & {
     /**
      * Index of the cell in its parent row.

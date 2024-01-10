@@ -1,6 +1,5 @@
 import React, { ReactElement, ReactNode } from 'react';
 
-import InternalCell from '../Cell/InternalCell';
 import { useTableContext } from '../TableContext/TableContext';
 import ToggleExpandedIcon from '../ToggleExpandedIcon';
 import { LGRowData } from '../useLeafyGreenTable';
@@ -44,29 +43,31 @@ const RowCellChildren = <T extends LGRowData>({
           const { children, ...props } = (child as ReactElement)?.props;
           const isFirstCell = colIndex === 0;
           const cell = row.getVisibleCells()[colIndex];
-          return (
-            <InternalCell
-              {...props}
-              cellIndex={colIndex}
-              isVisible={isRowVisible}
-              isExpandable={isExpandable}
-              disabled={disabled}
-              depth={row.depth}
-              // @ts-expect-error Cell is not deeply extended
-              align={cell.column.columnDef.align}
-            >
-              {isFirstCell && isExpandable && (
-                <ToggleExpandedIcon
-                  isExpanded={isExpanded}
-                  toggleExpanded={toggleExpanded}
-                  aria-hidden={!isRowVisible}
-                  disabled={disabled}
-                  tabIndex={isRowVisible ? 0 : -1}
-                />
-              )}
-              {children}
-            </InternalCell>
-          );
+          // Utilize cloneElement to pass through any Emotion data from the user's child
+          return React.cloneElement(child as ReactElement, {
+            ...props,
+            cellIndex: colIndex,
+            isVisible: isRowVisible,
+            isExpandable: isExpandable,
+            disabled,
+            depth: row.depth,
+            // @ts-expect-error Cell is not deeply extended to define the align prop
+            align: cell.column.columnDef.align,
+            children: (
+              <>
+                {isFirstCell && isExpandable && (
+                  <ToggleExpandedIcon
+                    isExpanded={isExpanded}
+                    toggleExpanded={toggleExpanded}
+                    aria-hidden={!isRowVisible}
+                    disabled={disabled}
+                    tabIndex={isRowVisible ? 0 : -1}
+                  />
+                )}
+                {children}
+              </>
+            ),
+          });
         },
       )}
     </>

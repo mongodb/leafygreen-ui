@@ -13,9 +13,9 @@ import {
   cellContentTransitionStyles,
   getCellPadding,
 } from './Cell.styles';
-import { InternalCellProps } from './Cell.types';
+import { CellWithRTProps } from './Cell.types';
 
-const InternalCell = ({
+const CellWithRT = ({
   children,
   className,
   cellIndex,
@@ -24,7 +24,7 @@ const InternalCell = ({
   isExpandable = false,
   align,
   ...rest
-}: InternalCellProps) => {
+}: CellWithRTProps) => {
   const isFirstCell = cellIndex === 0;
   const { table } = useTableContext();
   const isSelectable = !!table && !!table.hasSelectableRows;
@@ -59,12 +59,12 @@ const InternalCell = ({
   );
 };
 
-InternalCell.displayName = 'Cell';
-InternalCell.propTypes = {
+CellWithRT.displayName = 'Cell';
+CellWithRT.propTypes = {
   cellIndex: PropTypes.number,
   depth: PropTypes.number,
   isVisible: PropTypes.bool,
   isExpandable: PropTypes.bool,
 };
 
-export default InternalCell;
+export default CellWithRT;
