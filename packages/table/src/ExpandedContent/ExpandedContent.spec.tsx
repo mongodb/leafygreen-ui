@@ -91,7 +91,7 @@ describe('packages/table/Row/ExpandableContent', () => {
     expect(queryByText('Expandable content test')).toBeInTheDocument();
   });
 
-  describe('packages/table/Row/ExpandableContent/Disabled Animations', () => {
+  describe('disabled animations', () => {
     test('renders the correct number of cell children with disabled animations', () => {
       const { getAllByRole: getAllByRoleLocal } = render(
         <RowWithExpandableContent disableAnimations />,

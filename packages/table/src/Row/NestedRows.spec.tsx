@@ -109,7 +109,7 @@ describe('packages/table/Row/NestedRows', () => {
     expect(queryByText('nested row name')).toBeVisible();
   });
 
-  describe('packages/table/Row/NestedRows/Disabled Animations', () => {
+  describe('disabled animations', () => {
     test('renders the correct number of children', () => {
       const { getAllByRole: getAllByRoleLocal } = render(
         <RowWithNestedRows disableAnimations />,
