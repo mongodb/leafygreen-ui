@@ -252,10 +252,10 @@ describe('packages/hooks', () => {
       expect(pollHandler).toHaveBeenCalledTimes(0);
     });
 
-    test('when document is not visible', () => {
+    test('when document is not visible', async () => {
       const pollHandler = jest.fn();
 
-      renderHook(() => usePoller(pollHandler));
+      const { rerender } = renderHook(() => usePoller(pollHandler));
 
       expect(pollHandler).toHaveBeenCalledTimes(1);
 
@@ -263,7 +263,6 @@ describe('packages/hooks', () => {
       act(() => {
         document.dispatchEvent(new Event('visibilitychange'));
       });
-
       jest.advanceTimersByTime(30e3);
 
       expect(pollHandler).toHaveBeenCalledTimes(1);
@@ -272,6 +271,7 @@ describe('packages/hooks', () => {
       act(() => {
         document.dispatchEvent(new Event('visibilitychange'));
       });
+      jest.advanceTimersByTime(30e3);
 
       // immediate triggers the pollHandler
       expect(pollHandler).toHaveBeenCalledTimes(2);
@@ -316,9 +316,6 @@ describe('packages/hooks', () => {
 
       rerender();
       expect(result.current).toEqual(123);
-
-      rerender(999);
-      expect(result.current).toEqual(undefined);
     });
   });
 

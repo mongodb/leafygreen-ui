@@ -2,7 +2,7 @@ import React, { PropsWithChildren, useEffect } from 'react';
 import { render } from '@testing-library/react';
 import { cleanup } from '@testing-library/react-hooks';
 
-import { act, renderHook } from '@leafygreen-ui/testing-lib';
+import { renderHook, waitForState } from '@leafygreen-ui/testing-lib';
 
 import { ToastProps, Variant } from '../../Toast.types';
 import { ToastContext } from '../ToastContext';
@@ -58,7 +58,7 @@ describe('packages/toast/useToast', () => {
           wrapper: ToastProviderMock,
         });
         const { pushToast } = result.current;
-        const toastId = await act(() => pushToast({ title: 'test' }));
+        const toastId = await waitForState(() => pushToast({ title: 'test' }));
         expect(toastId).toEqual(expect.stringContaining('toast-'));
       });
 
@@ -68,7 +68,7 @@ describe('packages/toast/useToast', () => {
         });
         const { pushToast, getToast } = result.current;
 
-        const toastId = await act(() => pushToast({ title: 'test' }));
+        const toastId = await waitForState(() => pushToast({ title: 'test' }));
         rerender();
         expect(getToast(toastId)).toEqual(
           expect.objectContaining({ title: 'test' }),
@@ -80,14 +80,14 @@ describe('packages/toast/useToast', () => {
           wrapper: ToastProviderMock,
         });
         const { pushToast, updateToast } = result.current;
-        const toastId = await act(() =>
+        const toastId = await waitForState(() =>
           pushToast({
             title: 'test',
             variant: Variant.Progress,
             progress: 0,
           }),
         );
-        const updatedToast = await act(() => {
+        const updatedToast = await waitForState(() => {
           rerender();
           return updateToast(toastId, {
             progress: 0.5,
@@ -104,9 +104,9 @@ describe('packages/toast/useToast', () => {
           wrapper: ToastProviderMock,
         });
         const { pushToast, popToast } = result.current;
-        const toastId = await act(() => pushToast({ title: 'test' }));
+        const toastId = await waitForState(() => pushToast({ title: 'test' }));
         rerender();
-        const poppedToast = await act(() => popToast(toastId));
+        const poppedToast = await waitForState(() => popToast(toastId));
         expect(poppedToast).toEqual(expect.objectContaining({ title: 'test' }));
       });
 
@@ -115,7 +115,7 @@ describe('packages/toast/useToast', () => {
           wrapper: ToastProviderMock,
         });
         const { pushToast, getStack } = result.current;
-        await act(() => pushToast({ title: 'test' }));
+        await waitForState(() => pushToast({ title: 'test' }));
         rerender();
 
         expect(getStack()).toBeDefined();
@@ -127,8 +127,8 @@ describe('packages/toast/useToast', () => {
           wrapper: ToastProviderMock,
         });
         const { pushToast, clearStack, getStack } = result.current;
-        await act(() => pushToast({ title: 'test' }));
-        const clearedStack = await act(() => clearStack());
+        await waitForState(() => pushToast({ title: 'test' }));
+        const clearedStack = await waitForState(() => clearStack());
         expect(clearedStack).toBeUndefined();
         expect(getStack()?.size).toEqual(0);
       });
