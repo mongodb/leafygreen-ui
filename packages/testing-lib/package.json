@@ -12,7 +12,9 @@
       ]
     }
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@lg-tools/build": "0.3.1"
+  },
   "peerDependencies": {
     "@testing-library/react": "^12.0.0 || ^13.1.0 || ^14.0.0"
   },
@@ -20,9 +22,8 @@
     "@testing-library/react-hooks": ">=3.7.0"
   },
   "scripts": {
-    "build": "lg build-package",
-    "tsc": "lg build-ts",
-    "docs": "lg build-tsdoc"
+    "build": "lg-internal-build-package",
+    "tsc": "tsc --build tsconfig.json"
   },
   "license": "Apache-2.0",
   "publishConfig": {
