@@ -12,6 +12,10 @@
       ]
     }
   },
+  "dependencies": {
+    "@testing-library/user-event": "13.5.0",
+    "lodash": "^4.17.21"
+  },
   "devDependencies": {
     "@lg-tools/build": "0.3.1"
   },

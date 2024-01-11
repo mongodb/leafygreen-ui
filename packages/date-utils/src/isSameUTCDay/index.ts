@@ -1,0 +1,1 @@
+export { isSameUTCDay } from './isSameUTCDay';

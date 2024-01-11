@@ -5,3 +5,6 @@ export { act, renderHook } from './RTLOverrides';
 export { waitForState } from './waitForState';
 
 export { Context, jest, JestDOM };
+
+export { eventContainingTargetValue } from './eventContainingTargetValue';
+export { tabNTimes } from './tabNTimes';
