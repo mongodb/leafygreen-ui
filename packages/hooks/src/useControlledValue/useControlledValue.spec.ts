@@ -1,6 +1,7 @@
 import { ChangeEvent } from 'react';
 import { act } from 'react-test-renderer';
-import { renderHook } from '@testing-library/react-hooks';
+
+import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { useControlledValue } from './useControlledValue';
 
