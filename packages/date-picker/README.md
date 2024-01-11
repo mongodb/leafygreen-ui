@@ -22,12 +22,14 @@ npm install @leafygreen-ui/date-picker
 
 ```js
 import { DatePicker } from '@leafygreen-ui/date-picker';
-import { setToUTCMidnight } from '@leafygreen-ui/date-utils';
+
+const [date, setDate] = useState<Date>();
 
 <DatePicker
   label="Pick a date"
-  value={setToUTCMidnight(new Date(Date.now()))}
-  onDateChange={() => {}}
+  value={date}
+  max={new Date("2026-12-26")}
+  onDateChange={setDate}
   locale="iso8601"
   timeZone="utc"
 />;
@@ -56,6 +58,40 @@ import { setToUTCMidnight } from '@leafygreen-ui/date-utils';
 | `initialOpen`      | `boolean`                                           | Whether the calendar menu is initially open. _Note_: The calendar menu will not open if disabled is set to `true`.                                                                                                                                                                                                                                                                                                                                                                                                          | `false`   |
 | `autoComplete`     | `'off'` \| `'on'` \| `'bday'`                       | Whether the input should autofill                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | `off`     |
 | `darkMode`         | `boolean`                                           | Render the component in dark mode.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | `false`   |
+
+## 🔎 Glossary
+
+### Date format
+
+The pattern in which a string stores date (& time) information. E.g. `“YYYY-DD-MM”`, `“MM/DD/YYYY”`, `“YYYY-MM-DDTHH:mm:ss.sssZ”`
+
+### Wire format (or Data format)
+
+The format of the date string passed into the component. This will typically be [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html), but could be any format accepted by the [Date constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/Date).
+
+### Presentation format
+
+The format in which the date is presented to the user. By default, the HTML date input element presents this in the format of the user’s Locale (as defined in browser or OS settings).
+
+### Locale
+
+Language, script, & region information. Can also include [other data](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale).
+
+### Time Zone
+
+A string representing a user’s local time zone (e.g. “America/New_York”) or UTC offset. Valid time zones are defined by IANA, and [listed on Wikipedia](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List). A UTC offset can be [provided in a DateTime string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date#date_time_string_format).
+
+### UTC offset
+
+The offset of a time zone vs UTC. E.g. The UTC offset for `“America/New_York”` is -5:00, (or -4:00 depending on daylight savings).
+
+### Wire time zone (or Data time zone)
+
+The time zone information contained in the date string/object passed into the component.
+
+### Presentation time zone
+
+The time zone relative to which we present date information to the user. Can result in a different day than the wire time zone. E.g. `“2023-08-08T00:00:00Z”` (Aug. 8/2023 at midnight UTC) => `“2023-08-07T20:00:00-04:00”` (Aug. 7 at 8pm EDT)
 
 ## Special Case
 
