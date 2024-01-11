@@ -1,6 +1,12 @@
-import React, { FocusEventHandler } from 'react';
+import React, { FocusEventHandler, useEffect } from 'react';
+import { isNull } from 'lodash';
 import isEqual from 'lodash/isEqual';
 
+import {
+  isDateObject,
+  isInvalidDateObject,
+  isValidDate,
+} from '@leafygreen-ui/date-utils';
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -15,9 +21,6 @@ import {
   isDateSegment,
 } from '../../../types';
 import {
-  doesSomeSegmentExist,
-  doSegmentsFormValidDate,
-  getFormattedDateStringFromSegments,
   getMaxSegmentValue,
   getMinSegmentValue,
   getRelativeSegment,
@@ -63,15 +66,8 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
     }: DateInputBoxProps,
     fwdRef,
   ) => {
-    const {
-      formatParts,
-      disabled,
-      min,
-      max,
-      locale,
-      setIsDirty,
-      setInternalErrorMessage,
-    } = useSharedDatePickerContext();
+    const { isDirty, formatParts, disabled, min, max, setIsDirty } =
+      useSharedDatePickerContext();
     const { theme } = useDarkMode();
 
     const containerRef = useForwardedRef(fwdRef, null);
@@ -86,6 +82,13 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       return formattedValue;
     };
 
+    /** if the value is a `Date` the component is dirty */
+    useEffect(() => {
+      if (isDateObject(value) && !isDirty) {
+        setIsDirty(true);
+      }
+    }, [isDirty, setIsDirty, value]);
+
     /**
      * When a segment is updated,
      * trigger a `change` event for the segment, and
@@ -98,30 +101,19 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
       const hasAnySegmentChanged = !isEqual(newSegments, prevSegments);
 
       if (hasAnySegmentChanged) {
-        const areAllEmpty = !doesSomeSegmentExist(newSegments);
-        const areAllFilled = isEverySegmentFilled(newSegments);
+        const newDate = newDateFromSegments(newSegments);
 
-        if (areAllEmpty) {
-          // if no segment exists, set the external value to null
-          setValue?.(null);
-        } else if (areAllFilled) {
-          const areAllExplicit = isEverySegmentValueExplicit(newSegments);
-          const utcDate = newDateFromSegments(newSegments);
-          const isValidDate = doSegmentsFormValidDate(newSegments);
+        const shouldSetValue =
+          isNull(newDate) ||
+          (isValidDate(newDate) && isEverySegmentValueExplicit(newSegments)) ||
+          (isInvalidDateObject(newDate) &&
+            (isDirty || isEverySegmentFilled(newSegments)));
 
-          if (areAllExplicit && !!utcDate) {
-            // Update the value iff all segments create a valid date.
-            setValue?.(utcDate);
-          } else if (!isValidDate) {
-            const dateString = getFormattedDateStringFromSegments(
-              newSegments,
-              locale,
-            );
-            // This error state will be removed by `handleValidation` once a value is set
-            setInternalErrorMessage(`${dateString} is not a valid date`);
-          }
-          // If all values are filled, set the input as dirty
-          setIsDirty(true);
+        if (shouldSetValue) {
+          setValue?.({
+            value: newDate,
+            segments: newSegments,
+          });
         }
       }
     };

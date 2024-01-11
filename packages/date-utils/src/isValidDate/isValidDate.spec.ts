@@ -1,6 +1,12 @@
+import { DateType } from '../../dist';
 import { mockTimeZone } from '../testing/mockTimeZone';
 
-import { isValidDate, isValidDateString } from '.';
+import {
+  isDateObject,
+  isInvalidDateObject,
+  isValidDate,
+  isValidDateString,
+} from '.';
 
 describe('packages/date-utils/isValidDate', () => {
   test('accepts Date objects', () => {
@@ -27,6 +33,30 @@ describe('packages/date-utils/isValidDate', () => {
   });
 });
 
+describe('packages/date-utils/isDateObject', () => {
+  test('valid date', () => {
+    expect(isDateObject(new Date())).toBe(true);
+  });
+  test('invalid date object', () => {
+    expect(isDateObject(new Date('invalid'))).toBe(true);
+  });
+  test('null', () => {
+    expect(isDateObject(null)).toBe(false);
+  });
+  test('undefined', () => {
+    expect(isDateObject(undefined)).toBe(false);
+  });
+  test('string', () => {
+    expect(isDateObject('string')).toBe(false);
+  });
+  test('number', () => {
+    expect(isDateObject(5)).toBe(false);
+  });
+  test('empty object', () => {
+    expect(isDateObject({})).toBe(false);
+  });
+});
+
 describe('packages/date-utils/isValidDateString', () => {
   test('us format is valid', () => {
     expect(isValidDateString('12/26/1993')).toBeTruthy();
@@ -38,5 +68,20 @@ describe('packages/date-utils/isValidDateString', () => {
 
   test('undefined format is not valid', () => {
     expect(isValidDateString(undefined)).toBeFalsy();
+  });
+});
+
+describe('packages/date-utils/isInvalidDateObject', () => {
+  test('valid date', () => {
+    expect(isInvalidDateObject(new Date())).toBe(false);
+  });
+  test('null', () => {
+    expect(isInvalidDateObject(null)).toBe(false);
+  });
+  test('empty object', () => {
+    expect(isInvalidDateObject({} as DateType)).toBe(false);
+  });
+  test('invalid Date', () => {
+    expect(isInvalidDateObject(new Date('invalid'))).toBe(true);
   });
 });

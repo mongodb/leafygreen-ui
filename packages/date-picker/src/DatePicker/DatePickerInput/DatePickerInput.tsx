@@ -5,14 +5,17 @@ import React, {
   KeyboardEventHandler,
   MouseEventHandler,
 } from 'react';
+import { isNull } from 'lodash';
+import { DateInputChangeEventHandler } from 'src/shared/components/DateInput/DateInputBox/DateInputBox.types';
 
-import { DateType, isSameUTCDay } from '@leafygreen-ui/date-utils';
+import { isInvalidDateObject, isSameUTCDay } from '@leafygreen-ui/date-utils';
 import { createSyntheticEvent, keyMap } from '@leafygreen-ui/lib';
 
 import { DateFormField, DateInputBox } from '../../shared/components/DateInput';
 import { DateInputSegmentChangeEventHandler } from '../../shared/components/DateInput/DateInputSegment';
 import { useSharedDatePickerContext } from '../../shared/context';
 import {
+  getFormattedDateStringFromSegments,
   getRelativeSegmentRef,
   isElementInputSegment,
 } from '../../shared/utils';
@@ -31,8 +34,13 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
     }: DatePickerInputProps,
     fwdRef,
   ) => {
-    const { formatParts, disabled, isDirty, setIsDirty } =
-      useSharedDatePickerContext();
+    const {
+      formatParts,
+      disabled,
+      locale,
+      setIsDirty,
+      setInternalErrorMessage,
+    } = useSharedDatePickerContext();
     const {
       refs: { segmentRefs, calendarButtonRef },
       value,
@@ -43,10 +51,18 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
     } = useDatePickerContext();
 
     /** Called when the input's Date value has changed */
-    const handleInputValueChange = (inputVal?: DateType) => {
-      if (!isSameUTCDay(inputVal, value)) {
-        handleValidation?.(inputVal);
-        setValue(inputVal || null);
+    const handleInputValueChange: DateInputChangeEventHandler = ({
+      value: newVal,
+      segments,
+    }) => {
+      if (!isSameUTCDay(newVal, value)) {
+        handleValidation?.(newVal);
+        setValue(newVal);
+      }
+
+      if (!isNull(newVal) && isInvalidDateObject(newVal)) {
+        const dateString = getFormattedDateStringFromSegments(segments, locale);
+        setInternalErrorMessage(`${dateString} is not a valid date`);
       }
     };
 
@@ -170,13 +186,11 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
      */
     const handleInputBlur: FocusEventHandler = e => {
       const nextFocus = e.relatedTarget as HTMLInputElement;
+      const isNextFocusElementASegment = Object.values(segmentRefs)
+        .map(ref => ref.current)
+        .includes(nextFocus);
 
-      // If the next focus is _not_ on a segment
-      if (
-        !Object.values(segmentRefs)
-          .map(ref => ref.current)
-          .includes(nextFocus)
-      ) {
+      if (!isNextFocusElementASegment) {
         setIsDirty(true);
         handleValidation?.(value);
       }
@@ -189,10 +203,6 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
     const handleSegmentChange: DateInputSegmentChangeEventHandler =
       segmentChangeEvent => {
         const { segment } = segmentChangeEvent;
-
-        if (isDirty) {
-          handleValidation?.(value);
-        }
 
         /**
          * Fire a simulated `change` event

@@ -3,6 +3,7 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 
 import { DateType } from '../types';
+import { InvalidDate } from '../types/InvalidDate';
 
 /**
  * An extension of `date-fns` {@link isValid}
@@ -12,14 +13,10 @@ export const isValidDate = (date?: DateType): date is Date => {
   // Enumerating all cases to ensure test coverage
   if (isUndefined(date)) return false;
   if (isNull(date)) return false;
-  if (date.constructor.name !== 'Date') return false;
+  if (!isDateObject(date)) return false;
+  if (isInvalidDateObject(date)) return false;
 
-  try {
-    date?.toISOString();
-    return isValid(date);
-  } catch (error) {
-    return false;
-  }
+  return isValid(date);
 };
 
 /**
@@ -31,4 +28,30 @@ export const isValidDateString = (str?: any): str is string => {
   return (
     !isUndefined(str) && typeof str === 'string' && !isNaN(Date.parse(str))
   );
+};
+
+/** Whether the given object is a `Date` object */
+export const isDateObject = (date: any): date is Date | InvalidDate => {
+  return (
+    !isNull(date) &&
+    !isUndefined(date) &&
+    typeof date === 'object' &&
+    date.constructor.name == 'Date' &&
+    typeof date.toISOString === 'function'
+  );
+};
+
+/**
+ * Returns whether a given object is a Date object that will print `"Invalid Date"`
+ */
+export const isInvalidDateObject = (date: DateType): date is InvalidDate => {
+  if (isNull(date)) return false;
+  if (!isDateObject(date)) return false;
+
+  try {
+    date.toISOString();
+    return false;
+  } catch {
+    return true;
+  }
 };

@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { StoryFn } from '@storybook/react';
+import { isNull, isUndefined } from 'lodash';
 
 import Button from '@leafygreen-ui/button';
 import {
@@ -11,10 +12,12 @@ import {
   testLocales,
   testTimeZoneLabels,
 } from '@leafygreen-ui/date-utils';
+import { css } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType } from '@leafygreen-ui/lib';
 import Modal from '@leafygreen-ui/modal';
 import { Size } from '@leafygreen-ui/tokens';
+import { Overline } from '@leafygreen-ui/typography';
 
 import { MAX_DATE, MIN_DATE } from './shared/constants';
 import {
@@ -97,21 +100,34 @@ export const LiveExample: StoryFn<typeof DatePicker> = props => {
   const [value, setValue] = useState<DateType>();
 
   return (
-    <DatePicker
-      {...props}
-      value={value}
-      onDateChange={v => {
-        // eslint-disable-next-line no-console
-        console.log('Storybook: onDateChange', { v });
-        if (isValidDate(v)) {
+    <div
+      className={css`
+        width: 200px;
+      `}
+    >
+      <DatePicker
+        {...props}
+        value={value}
+        onDateChange={v => {
+          // eslint-disable-next-line no-console
+          console.log('Storybook: onDateChange', { v });
           setValue(v);
+        }}
+        handleValidation={date =>
+          // eslint-disable-next-line no-console
+          console.log('Storybook: handleValidation', { date })
         }
-      }}
-      handleValidation={date =>
-        // eslint-disable-next-line no-console
-        console.log('Storybook: handleValidation', { date })
-      }
-    />
+      />
+      <br />
+      <Overline>Current value</Overline>
+      <code>
+        {isValidDate(value)
+          ? value.toISOString()
+          : isNull(value) || isUndefined(value)
+          ? String(value)
+          : value.toDateString()}
+      </code>
+    </div>
   );
 };
 

@@ -22,6 +22,7 @@ import {
 } from '../../../testutils';
 
 import { DateInputBox } from './DateInputBox';
+import { DateInputChangeEventHandler } from './DateInputBox.types';
 
 const testDate = newUTC(1993, Month.December, 26);
 
@@ -78,16 +79,25 @@ export const Basic: StoryFn<typeof DateInputBox> = props => {
     }
   }, [props.value]);
 
-  const updateDate = (date: DateType) => {
-    setDate(date);
+  const updateDate: DateInputChangeEventHandler = ({ value }) => {
+    setDate(value);
   };
 
   return (
-    <DateInputBox
-      value={date}
-      setValue={updateDate}
-      segmentRefs={segmentRefsMock}
-    />
+    <div>
+      <DateInputBox
+        value={date}
+        setValue={updateDate}
+        segmentRefs={segmentRefsMock}
+      />
+      <code>
+        {isValidDate(date)
+          ? date.toISOString()
+          : date
+          ? 'Invalid'
+          : 'undefined'}
+      </code>
+    </div>
   );
 };
 
