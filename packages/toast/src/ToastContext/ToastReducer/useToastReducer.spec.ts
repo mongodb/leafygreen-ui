@@ -1,6 +1,7 @@
 import { act } from 'react-dom/test-utils';
 import { cleanup } from '@testing-library/react';
-import { renderHook } from '@testing-library/react-hooks';
+
+import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { Variant } from '../../Toast.types';
 import { ToastId, ToastStack } from '../ToastContext.types';

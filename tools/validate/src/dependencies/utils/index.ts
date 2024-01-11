@@ -7,7 +7,7 @@ import path from 'path';
 
 import {
   devFilePatterns,
-  ignoreDependencies,
+  externalDependencies,
   ignoreFilePatterns,
 } from '../config';
 
@@ -106,7 +106,7 @@ export const isDependencyUsedInSourceFile = (
   importedPackages: depcheck.Results['using'],
 ): boolean => {
   // consider a dependency used in a package file if its in `ignoreMatches`
-  const isIgnored = ignoreDependencies.includes(depName);
+  const isIgnored = externalDependencies.includes(depName);
   const usedInPackageFile = importedPackages?.[depName]?.some(
     // is used in at least one...
     // file that is not ignored
