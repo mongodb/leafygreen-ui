@@ -37,9 +37,11 @@ export const useControlledValue = <T extends any>(
   // If the value prop changes from undefined to something defined,
   // then isControlled is set to true,
   // and will remain true for the life of the component
-  const isControlled: boolean = useMemo(() => {
-    return isControlled || !isUndefined(valueProp);
-  }, [valueProp]);
+  const [isControlled, setControlled] = useState(!isUndefined(valueProp));
+  useEffect(() => {
+    setControlled(isControlled || !isUndefined(valueProp));
+  }, [isControlled, valueProp]);
+
   const wasControlled = usePrevious(isControlled);
 
   useEffect(() => {

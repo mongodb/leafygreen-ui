@@ -1,6 +1,5 @@
-import { renderHook } from '@testing-library/react';
-
 import { DateType, Month, newUTC } from '@leafygreen-ui/date-utils';
+import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { useDateSegments } from './useDateSegments';
 import { OnUpdateCallback } from './useDateSegments.types';
