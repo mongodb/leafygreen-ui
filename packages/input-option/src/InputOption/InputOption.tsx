@@ -9,15 +9,16 @@ import {
 } from '@leafygreen-ui/polymorphic';
 
 import {
+  baseStyles,
   boldTitleStyles,
   disabledStyles,
+  formWedgeStyles,
   getContextStyles,
   getHoverStyles,
-  getTextStyles,
-  getWedgeStyles,
-  inputOptionStyles,
   inputOptionWedge,
   menuTitleStyles,
+  menuWedgeStyles,
+  wedgeActiveStyles,
 } from './InputOption.style';
 import {
   ActionType,
@@ -45,7 +46,7 @@ export const InputOption = Polymorphic<InputOptionProps, 'div'>(
     ref,
   ) => {
     const { Component } = usePolymorphic(as);
-    const { theme } = useDarkMode(darkModeProp);
+    const { theme, darkMode } = useDarkMode(darkModeProp);
 
     let state: State = 'default';
 
@@ -76,6 +77,9 @@ export const InputOption = Polymorphic<InputOptionProps, 'div'>(
       (renderedContext === RenderedContext.Form && checked && !disabled) ||
       renderedContext === RenderedContext.Menu;
 
+    const shouldShowHoverStyles: boolean =
+      !disabled && isInteractive && state !== State.Highlight;
+
     return (
       <Component
         ref={ref}
@@ -84,18 +88,21 @@ export const InputOption = Polymorphic<InputOptionProps, 'div'>(
         aria-checked={checked}
         tabIndex={-1}
         className={cx(
+          baseStyles,
           getContextStyles(renderedContext, state, theme),
-          getTextStyles(renderedContext, state, theme),
           {
             [inputOptionWedge]: showWedgeProp,
-            [getWedgeStyles(renderedContext, state, theme)]: shouldRenderWedge,
-            [getHoverStyles(renderedContext, theme)]:
-              !disabled && isInteractive && state !== State.Highlight,
-            [menuTitleStyles(state)]: renderedContext === RenderedContext.Menu,
+            [formWedgeStyles(darkMode)]:
+              renderedContext === RenderedContext.Form,
+            [menuWedgeStyles(checked)]:
+              renderedContext === RenderedContext.Menu,
+            [wedgeActiveStyles]: shouldRenderWedge,
+            [getHoverStyles(renderedContext, theme)]: shouldShowHoverStyles,
+            [menuTitleStyles(actionType)]:
+              renderedContext === RenderedContext.Menu,
             [boldTitleStyles]: shouldBoldTitle,
             [disabledStyles]: disabled,
           },
-          inputOptionStyles,
           className,
         )}
         {...rest}

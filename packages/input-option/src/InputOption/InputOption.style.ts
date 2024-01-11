@@ -9,7 +9,8 @@ import {
 } from '@leafygreen-ui/tokens';
 
 import { RenderedContext, State } from './InputOption.types';
-import { contextColors } from './themes';
+import { contextColors, hoverColors } from './themes';
+import { ActionType } from '.';
 
 export const titleClassName = createUniqueClassName('input-option-title');
 export const descriptionClassName = createUniqueClassName(
@@ -22,7 +23,7 @@ export const leftGlyphClassName = createUniqueClassName(
 const hoverSelector = '&:hover, &[data-hover="true"]';
 const focusSelector = '&:focus, &:focus-visible, &[data-focus="true"]';
 
-export const inputOptionStyles = css`
+export const baseStyles = css`
   position: relative;
   list-style: none;
   outline: none;
@@ -77,6 +78,24 @@ export const disabledStyles = css`
   }
 `;
 
+export const wedgeActiveStyles = css`
+  &:before {
+    transform: scaleY(1) translateY(-50%);
+  }
+`;
+
+export const menuWedgeStyles = (checked?: boolean) => css`
+  &:before {
+    background-color: ${checked ? palette.green.base : palette.blue.light1};
+  }
+`;
+
+export const formWedgeStyles = (darkMode?: boolean) => css`
+  &:before {
+    background-color: ${darkMode ? palette.blue.light1 : palette.blue.base};
+  }
+`;
+
 export const getContextStyles = (
   renderedContext: RenderedContext,
   state: State,
@@ -88,25 +107,7 @@ export const getContextStyles = (
   & .${leftGlyphClassName} {
     color: ${contextColors[renderedContext][theme][state].leftGlyph};
   }
-`;
 
-export const getWedgeStyles = (
-  renderedContext: RenderedContext,
-  state: State,
-  theme: Theme,
-) => css`
-  &:before {
-    transform: scaleY(1) translateY(-50%);
-    background-color: ${contextColors[renderedContext][theme][state]
-      .wedgeBgColor};
-  }
-`;
-
-export const getTextStyles = (
-  renderedContext: RenderedContext,
-  state: State,
-  theme: Theme,
-) => css`
   .${titleClassName} {
     color: ${contextColors[renderedContext][theme][state].title};
     font-weight: normal;
@@ -124,19 +125,21 @@ export const getHoverStyles = (
 ) => css`
   ${hoverSelector} {
     outline: none;
-    background-color: ${contextColors[renderedContext][theme].hover.bgColor};
+    background-color: ${hoverColors[renderedContext][theme].bgColor};
 
     &,
     & .${leftGlyphClassName} {
-      color: ${contextColors[renderedContext][theme].leftGlyphHover};
+      color: ${hoverColors[renderedContext][theme].leftGlyph};
     }
   }
 `;
 
-export const menuTitleStyles = (state: State) => css`
+export const menuTitleStyles = (actionType: ActionType) => css`
   &,
   & .${titleClassName} {
-    color: ${state === State.Destructive ? palette.red.light2 : palette.white};
+    color: ${actionType === ActionType.Destructive
+      ? palette.red.light2
+      : palette.white};
   }
 `;
 
