@@ -56,16 +56,20 @@ export type BaseDatePickerProps = {
 
   /**
    * The size of the input
+   *
+   * @default 'default'
    */
   size?: Size;
 
   /**
    * Whether to show an error message
+   *
+   * @default 'none'
    */
   state?: DatePickerState;
 
   /**
-   * A message to show in red underneath the input when state is Error
+   * A message to show in red underneath the input when state is `Error`
    */
   errorMessage?: string;
 
