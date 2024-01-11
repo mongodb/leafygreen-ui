@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/date-utils': major
+'@leafygreen-ui/date-utils': minor
 ---
 
-Initial release of `date-utils`. DateUtils contains utility functions for managing and manipulating JS Date objects
+Initial pre-release of `date-utils`. DateUtils contains utility functions for managing and manipulating JS Date objects

@@ -1,7 +1,7 @@
   
 {
   "name": "@leafygreen-ui/date-utils",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "LeafyGreen UI Kit Date Utils",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

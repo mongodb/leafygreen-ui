@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/date-picker': major
+'@leafygreen-ui/date-picker': minor
 ---
 
-Inital release of `date-picker`. Use DatePicker to allow users to input a date
+Initial pre-release of `date-picker`. Use DatePicker to allow users to input a date
