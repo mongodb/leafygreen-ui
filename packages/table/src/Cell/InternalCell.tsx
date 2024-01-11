@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
@@ -30,6 +30,14 @@ const InternalCell = ({
   const { table, disableAnimations } = useTableContext();
   const isSelectable = !!table && !!table.hasSelectableRows;
   const transitionRef = useRef<HTMLElement | null>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  const contentHeight = useMemo(
+    () => (contentRef.current ? contentRef.current.clientHeight : 0),
+    // Lint flags `content` as an unnecessary dependency, but we want to update `contentHeight` when the value of `children` changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [children],
+  );
 
   return (
     <td
@@ -48,10 +56,11 @@ const InternalCell = ({
             data-state={state}
             className={cx(
               cellContentContainerStyles,
-              cellContentTransitionStyles[state],
+              cellContentTransitionStyles(contentHeight)[state],
               { [disableAnimationStyles]: disableAnimations },
               alignmentStyles(align),
             )}
+            ref={contentRef}
           >
             {children}
           </div>

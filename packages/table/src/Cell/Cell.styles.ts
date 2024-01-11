@@ -80,7 +80,7 @@ export const cellContentContainerStyles = css`
   align-items: center;
   text-overflow: ellipsis;
   min-height: ${standardCellHeight}px;
-  transition-property: min-height, max-height, opacity, transform, padding;
+  transition-property: max-height, opacity, transform, padding;
   transition-duration: ${transitionDuration.slowest}ms;
 `;
 
@@ -93,19 +93,21 @@ const _hiddenStyles = css`
   min-height: 0;
   max-height: 0;
   padding: 0;
+  overflow: hidden;
 `;
 
-export const cellContentTransitionStyles: Record<TransitionStatus, string> = {
-  entered: css`
-    opacity: 1;
-    min-height: ${standardCellHeight}px;
-    max-height: 30vh;
-  `,
-  entering: _hiddenStyles,
-  exiting: css`
-    ${_hiddenStyles}
-    max-height: ${standardCellHeight}px;
-  `,
-  exited: _hiddenStyles,
-  unmounted: _hiddenStyles,
+export const cellContentTransitionStyles: (
+  height: number,
+) => Record<TransitionStatus, string> = height => {
+  return {
+    entered: css`
+      opacity: 1;
+      min-height: ${standardCellHeight}px;
+      max-height: ${height};
+    `,
+    entering: _hiddenStyles,
+    exiting: _hiddenStyles,
+    exited: _hiddenStyles,
+    unmounted: _hiddenStyles,
+  };
 };
