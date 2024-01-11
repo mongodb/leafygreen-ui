@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import { RenderHookResult } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { renderHook } from '@leafygreen-ui/testing-lib';
+import { act, renderHook } from '@leafygreen-ui/testing-lib';
 
 import { useControlledValue } from './useControlledValue';
 
@@ -23,7 +23,7 @@ const renderUseControlledValueHook = <T extends any>(
   return { ...result };
 };
 
-describe('packages/hooks/useControlledValue', () => {
+describe('packages/date-picker/hooks/useControlledValue', () => {
   beforeEach(() => {
     errorSpy.mockImplementation(() => {});
   });
@@ -114,7 +114,7 @@ describe('packages/hooks/useControlledValue', () => {
     test('setting value to undefined should keep the component controlled', () => {
       const { rerender, result } = renderUseControlledValueHook('apple');
       expect(result.current.isControlled).toBe(true);
-      rerender(undefined);
+      act(() => rerender(undefined));
       expect(result.current.isControlled).toBe(true);
     });
 
@@ -149,8 +149,10 @@ describe('packages/hooks/useControlledValue', () => {
     });
 
     test('setValue updates the value', () => {
-      const { result } = renderUseControlledValueHook<string>(undefined);
+      const { result, rerender } =
+        renderUseControlledValueHook<string>(undefined);
       result.current.setValue('banana');
+      rerender();
       expect(result.current.value).toBe('banana');
     });
   });
