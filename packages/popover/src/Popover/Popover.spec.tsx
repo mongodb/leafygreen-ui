@@ -218,6 +218,15 @@ describe('packages/popover', () => {
       <Popover></Popover>;
     });
 
+    test('accepts transition lifecycle props', () => {
+      <Popover onEnter={() => {}}>test</Popover>;
+      <Popover onEntering={() => {}}>test</Popover>;
+      <Popover onEntered={() => {}}>test</Popover>;
+      <Popover onExit={() => {}}>test</Popover>;
+      <Popover onExiting={() => {}}>test</Popover>;
+      <Popover onExited={() => {}}>test</Popover>;
+    });
+
     test('does not allow specifying "portalClassName", when "usePortal" is false', () => {
       // @ts-expect-error
       <Popover active usePortal={false} portalClassName="test-classname">
