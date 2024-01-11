@@ -268,6 +268,8 @@ describe('packages/hooks', () => {
       expect(pollHandler).toHaveBeenCalledTimes(1);
 
       mutableDocument.visibilityState = 'visible';
+      rerender(pollHandler);
+
       act(() => {
         document.dispatchEvent(new Event('visibilitychange'));
       });
