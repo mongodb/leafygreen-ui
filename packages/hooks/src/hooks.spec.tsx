@@ -268,12 +268,13 @@ describe('packages/hooks', () => {
       expect(pollHandler).toHaveBeenCalledTimes(1);
 
       mutableDocument.visibilityState = 'visible';
-      rerender(pollHandler);
 
       act(() => {
         document.dispatchEvent(new Event('visibilitychange'));
       });
       jest.advanceTimersByTime(30e3);
+
+      rerender(pollHandler);
 
       // immediate triggers the pollHandler
       expect(pollHandler).toHaveBeenCalledTimes(2);
