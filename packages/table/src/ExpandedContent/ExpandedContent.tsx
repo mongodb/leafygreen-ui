@@ -7,17 +7,14 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import {
   cellContentContainerStyles,
+  cellContentTransitionStyles,
   disableAnimationStyles,
 } from '../Cell/Cell.styles';
 import InternalRowBase from '../Row/InternalRowBase';
 import { useTableContext } from '../TableContext';
 import { getAreAncestorsExpanded } from '../utils/areAncestorsExpanded';
 
-import {
-  baseStyles,
-  expandedContentStyles,
-  expandedContentTransitionStyles,
-} from './ExpandedContent.styles';
+import { baseStyles, expandedContentStyles } from './ExpandedContent.styles';
 import { ExpandedContentProps } from './ExpandedContent.types';
 
 const ExpandedContent = <T extends RowData>({
@@ -55,7 +52,7 @@ const ExpandedContent = <T extends RowData>({
                 cellContentContainerStyles,
                 { [disableAnimationStyles]: disableAnimations },
                 expandedContentStyles[theme],
-                expandedContentTransitionStyles(contentHeight)[state],
+                cellContentTransitionStyles(contentHeight)[state],
               )}
             >
               <div ref={contentRef}>{content}</div>
