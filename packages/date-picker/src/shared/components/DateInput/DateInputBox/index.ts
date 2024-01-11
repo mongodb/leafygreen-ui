@@ -1,2 +1,5 @@
 export { DateInputBox } from './DateInputBox';
-export type { DateInputBoxProps } from './DateInputBox.types';
+export type {
+  DateInputBoxProps,
+  DateInputChangeEventHandler,
+} from './DateInputBox.types';

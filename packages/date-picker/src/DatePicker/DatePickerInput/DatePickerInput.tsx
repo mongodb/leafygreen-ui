@@ -6,12 +6,15 @@ import React, {
   MouseEventHandler,
 } from 'react';
 import { isNull } from 'lodash';
-import { DateInputChangeEventHandler } from 'src/shared/components/DateInput/DateInputBox/DateInputBox.types';
 
 import { isInvalidDateObject, isSameUTCDay } from '@leafygreen-ui/date-utils';
 import { createSyntheticEvent, keyMap } from '@leafygreen-ui/lib';
 
-import { DateFormField, DateInputBox } from '../../shared/components/DateInput';
+import {
+  DateFormField,
+  DateInputBox,
+  DateInputChangeEventHandler,
+} from '../../shared/components/DateInput';
 import { DateInputSegmentChangeEventHandler } from '../../shared/components/DateInput/DateInputSegment';
 import { useSharedDatePickerContext } from '../../shared/context';
 import {
