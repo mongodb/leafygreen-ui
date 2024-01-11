@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@leafygreen-ui/a11y": "^1.4.11",
-    "@leafygreen-ui/date-utils": "^0.1.0",
+    "@leafygreen-ui/date-utils": "^0.0.1",
     "@leafygreen-ui/emotion": "^4.0.7",
     "@leafygreen-ui/form-field": "^0.2.0",
     "@leafygreen-ui/hooks": "^8.0.0",
