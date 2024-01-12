@@ -38,7 +38,9 @@ export async function installPackages(
         .on('error', err => {
           throw new Error(`Error installing packages\n` + err);
         });
+    } else {
+      console.error(`Path ${path} does not exist`);
+      reject();
     }
-    reject();
   });
 }
