@@ -21,9 +21,7 @@ export function getPackageJson(
   return findPackageJson(dir);
 }
 
-function findPackageJson(dir: string) {
-  const pkgJsonPath = path.resolve(dir, 'package.json');
-
+function findPackageJson(dir: string): Record<string, any> | undefined {
   if (dir === '/') {
     console.log(
       chalk.red(`Could not find a package.json file in any parent directory`),
@@ -32,7 +30,9 @@ function findPackageJson(dir: string) {
     return;
   }
 
-  if (fse.existsSync(dir)) {
+  const pkgJsonPath = path.resolve(dir, 'package.json');
+
+  if (fse.existsSync(pkgJsonPath)) {
     const pkgJsonStr = fse.readFileSync(pkgJsonPath, 'utf-8');
 
     if (isValidJSON(pkgJsonStr)) {
@@ -41,6 +41,6 @@ function findPackageJson(dir: string) {
       console.log(chalk.red(`Invalid JSON found in file ${pkgJsonPath}`));
     }
   } else {
-    findPackageJson(path.resolve(dir, '..'));
+    return findPackageJson(path.resolve(dir, '..'));
   }
 }

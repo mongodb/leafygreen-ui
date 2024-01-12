@@ -42,6 +42,7 @@ export const InputOption = Polymorphic<InputOptionProps>(
         ref={ref}
         role="option"
         aria-selected={highlighted}
+        aria-disabled={disabled}
         tabIndex={-1}
         className={cx(
           inputOptionStyles,
