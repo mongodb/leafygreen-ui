@@ -1,5 +1,27 @@
 # @leafygreen-ui/form-field
 
+## 0.3.0
+
+### Minor Changes
+
+- ffd11f24: Adds `data-testid` to Label, Description & Error elements
+
+### Patch Changes
+
+- ffd11f24: Updates disabled icon colors
+- Updated dependencies [9b7a8236]
+- Updated dependencies [7f38e78a]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+  - @leafygreen-ui/icon@11.27.1
+  - @leafygreen-ui/leafygreen-provider@3.1.11
+  - @leafygreen-ui/hooks@8.1.0
+  - @leafygreen-ui/lib@13.2.0
+  - @leafygreen-ui/typography@18.1.0
+
 ## 0.2.0
 
 ### Minor Changes
