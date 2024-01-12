@@ -17,7 +17,7 @@ interface CreateLinkOptions extends PackageDetails {
  * @returns Promise that resolves when the yarn link command has finished
  */
 export function createLinkFrom(
-  source: string,
+  source: string = process.cwd(),
   {
     scopeName,
     scopePath,
@@ -28,8 +28,8 @@ export function createLinkFrom(
 ): Promise<void> {
   const scopeSrc = scopePath;
   return new Promise<void>(resolve => {
-    const packagesDirectory = findDirectory(process.cwd(), scopeSrc);
-    packageManager = packageManager ?? getPackageManager(process.cwd());
+    const packagesDirectory = findDirectory(source, scopeSrc);
+    packageManager = packageManager ?? getPackageManager(source);
 
     if (packagesDirectory) {
       verbose &&
