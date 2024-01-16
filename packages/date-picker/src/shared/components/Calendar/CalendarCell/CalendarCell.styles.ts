@@ -5,6 +5,7 @@ import {
   fontFamilies,
   fontWeights,
   spacing,
+  transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
 
@@ -308,6 +309,8 @@ export const indicatorBaseStyles = css`
   z-index: 1;
   border-radius: 100%;
   outline-offset: -1px;
+  transition: background-color ${transitionDuration.default}ms ease-in-out,
+    box-shadow ${transitionDuration.faster}ms ease-in-out;
 `;
 
 export const cellTextStyles = css`
