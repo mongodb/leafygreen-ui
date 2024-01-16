@@ -310,7 +310,8 @@ export const indicatorBaseStyles = css`
   z-index: 1;
   border-radius: 100%;
   outline-offset: -1px;
-  transition: all ${transitionDuration.faster}ms ease-in-out;
+  transition: box-shadow ${transitionDuration.faster}ms ease-in-out,
+    background-color ${transitionDuration.faster}ms ease-in-out;
 `;
 
 export const cellTextStyles = css`
