@@ -1,9 +1,10 @@
 import { ChildProcess } from 'child_process';
 import xSpawn from 'cross-spawn';
 import fsx from 'fs-extra';
+import path from 'path';
+
 import { createLinkFrom } from './createLinkFrom';
 import { MockChildProcess } from './mocks.testutils';
-import path from 'path';
 
 describe('tools/link/createLinkFrom', () => {
   let spawnSpy: jest.SpyInstance<ChildProcess>;
