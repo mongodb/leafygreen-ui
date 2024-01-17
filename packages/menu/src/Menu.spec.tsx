@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import {
   getAllByRole as globalGetAllByRole,
+  prettyDOM,
   render,
   waitFor,
   waitForElementToBeRemoved,
-  prettyDOM,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+
 import Popover from '@leafygreen-ui/popover';
 import { expectElementToNotBeRemoved } from '@leafygreen-ui/testing-lib';
 
@@ -280,7 +281,7 @@ describe('packages/menu', () => {
     });
 
     test('clicking Popover rendered by `MenuItem` does not close the menu', async () => {
-      const SomeMenuItem = React.forwardRef(({ popoverRef }: any, fwdRef) => {
+      const SomeMenuItem = ({ popoverRef }: any) => {
         const [popoverOpen, setPopoverOpen] = useState(false);
 
         const handleClick = () => {
@@ -301,7 +302,7 @@ describe('packages/menu', () => {
             </Popover>
           </>
         );
-      });
+      };
 
       const popoverRef = React.createRef<HTMLElement>();
       const { getByTestId, findByTestId } = render(
