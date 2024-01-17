@@ -1,5 +1,17 @@
 # @lg-tools/storybook-decorators
 
+## 0.2.3
+
+### Patch Changes
+
+- ffd11f24: Adds Null check for args
+- Updated dependencies [7f38e78a]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+  - @leafygreen-ui/leafygreen-provider@3.1.11
+  - @leafygreen-ui/lib@13.2.0
+
 ## 0.2.2
 
 ### Patch Changes

@@ -1,5 +1,19 @@
 # @leafygreen-ui/a11y
 
+## 1.4.12
+
+### Patch Changes
+
+- 7f38e78a: Updates test to import `renderHook` from `@leafygreen-ui/testing-lib`
+- ffd11f24: Update `AriaLabelProps` `label` type from `string` to `ReactNode`
+- Updated dependencies [7f38e78a]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+  - @leafygreen-ui/hooks@8.1.0
+  - @leafygreen-ui/lib@13.2.0
+
 ## 1.4.11
 
 ### Patch Changes
