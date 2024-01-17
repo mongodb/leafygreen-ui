@@ -280,7 +280,7 @@ describe('packages/menu', () => {
     });
 
     test('clicking Popover rendered by `MenuItem` does not close the menu', async () => {
-      const SomeMenuItem = () => {
+      const SomeMenuItem = React.forwardRef(({ popoverRef }: any, fwdRef) => {
         const [popoverOpen, setPopoverOpen] = useState(false);
 
         const handleClick = () => {
@@ -292,16 +292,25 @@ describe('packages/menu', () => {
             <MenuItem data-testid="menu-item" onClick={handleClick}>
               Open modal
             </MenuItem>
-            <Popover data-testid={'popover'} active={popoverOpen}>
+            <Popover
+              ref={popoverRef}
+              data-testid="popover"
+              active={popoverOpen}
+            >
               Popover content
             </Popover>
           </>
         );
-      };
+      });
 
+      const popoverRef = React.createRef<HTMLElement>();
       const { getByTestId, findByTestId } = render(
-        <Menu trigger={trigger} data-testid={menuTestId}>
-          <SomeMenuItem />
+        <Menu
+          trigger={trigger}
+          data-testid={menuTestId}
+          foreground={popoverRef}
+        >
+          <SomeMenuItem popoverRef={popoverRef} />
         </Menu>,
       );
       const button = getByTestId('menu-trigger');
