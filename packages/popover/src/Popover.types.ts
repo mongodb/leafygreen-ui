@@ -4,9 +4,12 @@ import { Transition } from 'react-transition-group';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 type TransitionProps = React.ComponentProps<typeof Transition<HTMLElement>>;
-type TransitionLifecycleCallbacks = Pick<
-  TransitionProps,
-  'onEnter' | 'onEntering' | 'onEntered' | 'onExit' | 'onExiting' | 'onExited'
+
+type TransitionLifecycleCallbacks = Partial<
+  Pick<
+    TransitionProps,
+    'onEnter' | 'onEntering' | 'onEntered' | 'onExit' | 'onExiting' | 'onExited'
+  >
 >;
 
 /**
