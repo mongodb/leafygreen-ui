@@ -67,4 +67,13 @@ export interface MenuProps extends Omit<PopoverProps, 'active'> {
    * id passed to the menu dropdown.
    */
   id?: string;
+
+  /**
+   * Element(s) (in addition to the trigger & menu) that are excluded from backdrop click
+   *
+   * (i.e. when these elements are clicked, the menu will not close)
+   */
+  foreground?:
+    | React.RefObject<HTMLElement>
+    | Array<React.RefObject<HTMLElement>>;
 }

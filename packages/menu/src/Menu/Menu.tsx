@@ -92,6 +92,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     portalContainer,
     scrollContainer,
     popoverZIndex,
+    foreground,
     ...rest
   }: MenuProps,
   forwardRef,
@@ -282,7 +283,19 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     }
   }, [open]);
 
-  useBackdropClick(handleClose, [popoverRef, triggerRef], open);
+  useBackdropClick(
+    handleClose,
+    [
+      popoverRef,
+      triggerRef,
+      ...(foreground
+        ? Array.isArray(foreground)
+          ? foreground
+          : [foreground]
+        : []),
+    ],
+    open,
+  );
 
   function handleKeyDown(e: KeyboardEvent) {
     let refToFocus: HTMLElement;
