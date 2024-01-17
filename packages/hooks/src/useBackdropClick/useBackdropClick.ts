@@ -1,4 +1,4 @@
-import useEventListener from './useEventListener';
+import useEventListener from '../useEventListener';
 
 /**
  * Fires a callback when any element(s)
