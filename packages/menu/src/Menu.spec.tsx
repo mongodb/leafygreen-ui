@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   getAllByRole as globalGetAllByRole,
   render,
   waitFor,
   waitForElementToBeRemoved,
+  prettyDOM,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import Popover from '@leafygreen-ui/popover';
+import { expectElementToNotBeRemoved } from '@leafygreen-ui/testing-lib';
 
 import { MenuProps } from './Menu';
 import { Menu, MenuItem, MenuSeparator } from '.';
@@ -274,6 +277,47 @@ describe('packages/menu', () => {
 
       await waitForElementToBeRemoved(menu);
       expect(menu).not.toBeInTheDocument();
+    });
+
+    test('clicking Popover rendered by `MenuItem` does not close the menu', async () => {
+      const SomeMenuItem = () => {
+        const [popoverOpen, setPopoverOpen] = useState(false);
+
+        const handleClick = () => {
+          setPopoverOpen(o => !o);
+        };
+
+        return (
+          <>
+            <MenuItem data-testid="menu-item" onClick={handleClick}>
+              Open modal
+            </MenuItem>
+            <Popover data-testid={'popover'} active={popoverOpen}>
+              Popover content
+            </Popover>
+          </>
+        );
+      };
+
+      const { getByTestId, findByTestId } = render(
+        <Menu trigger={trigger} data-testid={menuTestId}>
+          <SomeMenuItem />
+        </Menu>,
+      );
+      const button = getByTestId('menu-trigger');
+      userEvent.click(button);
+
+      const menu = getByTestId(menuTestId);
+      expect(menu).toBeInTheDocument();
+
+      const menuItem = getByTestId('menu-item');
+      userEvent.click(menuItem);
+
+      const popover = await findByTestId('popover');
+      expect(popover).toBeInTheDocument();
+      userEvent.click(popover);
+
+      await expectElementToNotBeRemoved(menu);
     });
   });
 
