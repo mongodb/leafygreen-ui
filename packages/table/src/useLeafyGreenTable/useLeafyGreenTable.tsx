@@ -83,6 +83,7 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
     ...(useVirtualScrolling && {
       virtualRows: _rowVirtualizer.virtualItems,
       totalSize: _rowVirtualizer.totalSize,
+      scrollToIndex: _rowVirtualizer.scrollToIndex,
     }),
     hasSelectableRows,
   } as LeafyGreenTable<T>;

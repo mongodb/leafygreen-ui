@@ -54,7 +54,7 @@ export interface LeafyGreenTableOptions<
 /** LeafyGreen extension of `useReactTable` {@link Table}*/
 export interface LeafyGreenTable<T extends LGRowData>
   extends Table<LGTableDataType<T>>,
-    Pick<VirtualizerValues, 'totalSize'> {
+    Pick<VirtualizerValues, 'totalSize' | 'scrollToIndex'> {
   virtualRows?: Array<VirtualItem>;
   hasSelectableRows: boolean;
 }
