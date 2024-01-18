@@ -1082,6 +1082,46 @@ describe('packages/date-picker', () => {
     });
 
     describe('Keyboard navigation', () => {
+      describe('chaning the month back to current value month focuses the current value', () => {
+        test('after pressing the right chevron', async () => {
+          const { openMenu } = renderDatePicker({
+            value: testToday,
+          });
+
+          const { rightChevron, queryCellByDate } = await openMenu();
+
+          expect(queryCellByDate(testToday)).toHaveFocus();
+
+          rightChevron?.focus();
+          userEvent.keyboard(`[Enter]`);
+          // cell, leftChevron
+          tabNTimes(2);
+          userEvent.keyboard(`[Enter]`);
+          // select, select, rightChevron, cell
+          tabNTimes(4);
+          expect(queryCellByDate(testToday)).toHaveFocus();
+        });
+
+        test('after pressing the left chevron', async () => {
+          const { openMenu } = renderDatePicker({
+            value: testToday,
+          });
+
+          const { leftChevron, queryCellByDate } = await openMenu();
+
+          expect(queryCellByDate(testToday)).toHaveFocus();
+
+          leftChevron?.focus();
+          userEvent.keyboard(`[Enter]`);
+          // select, select, rightChevron
+          tabNTimes(3);
+          userEvent.keyboard(`[Enter]`);
+          // cell
+          userEvent.tab();
+          expect(queryCellByDate(testToday)).toHaveFocus();
+        });
+      });
+
       describe('Tab', () => {
         test('menu does not open on keyboard focus', async () => {
           const { findMenuElements } = renderDatePicker();

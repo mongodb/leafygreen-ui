@@ -61,6 +61,8 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       menuTriggerEvent,
     } = useDatePickerContext();
 
+    // console.log({ highlight });
+
     const ref = useForwardedRef(fwdRef, null);
     const cellRefs = refs.calendarCellRefs;
     const headerRef = useRef<HTMLDivElement>(null);
@@ -92,8 +94,13 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       if (isSameUTCMonth(newMonth, month)) {
         return;
       }
+
+      const isSameUTCMonthAsCurrentValue = isSameUTCMonth(newMonth, value);
+
       setDisplayMonth(newMonth);
-      const newHighlight = getNewHighlight(highlight, month, newMonth);
+      const newHighlight = isSameUTCMonthAsCurrentValue
+        ? (value as Date)
+        : getNewHighlight(highlight, month, newMonth);
       const shouldUpdateHighlight = !isSameUTCDay(highlight, newHighlight);
 
       if (newHighlight && shouldUpdateHighlight) {
