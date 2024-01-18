@@ -13,15 +13,22 @@ import {
 } from './Cell.styles';
 import { CellProps } from '.';
 
-const Cell = ({ className, align, children, ...rest }: CellProps) => {
+const Cell = ({
+  className,
+  contentClassName,
+  align,
+  children,
+  ...rest
+}: CellProps) => {
   const { disableAnimations } = useTableContext();
   return (
     <td className={cx(baseCellStyles, basicCellStyles, className)} {...rest}>
       <div
         className={cx(
           cellTransitionContainerStyles,
-          { [disableAnimationStyles]: disableAnimations },
           alignmentStyles(align),
+          { [disableAnimationStyles]: disableAnimations },
+          contentClassName,
         )}
       >
         {children}

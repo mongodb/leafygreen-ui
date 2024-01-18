@@ -21,6 +21,7 @@ import { CellOverflowBehavior, InternalCellProps } from './Cell.types';
 const InternalCell = ({
   children,
   className,
+  contentClassName,
   cellIndex,
   depth,
   isVisible = true,
@@ -68,6 +69,7 @@ const InternalCell = ({
                 [disableAnimationStyles]: disableAnimations,
                 [truncatedContentStyles]: shouldTruncate,
               },
+              contentClassName,
             )}
           >
             {children}

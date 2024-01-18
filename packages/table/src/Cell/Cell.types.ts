@@ -22,6 +22,9 @@ interface BaseCellProps extends HTMLElementProps<'td'> {
    */
   align?: Align;
 
+  /** A `className` applied to the inner `div` of the Cell  */
+  contentClassName?: string;
+
   /**
    * Defines how a cell should behave when its content is larger than the standard cell height.
    *
