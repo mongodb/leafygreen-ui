@@ -2,4 +2,4 @@
 '@leafygreen-ui/date-picker': patch
 ---
 
-Adds cell transitions
+Applies a CSS transition duration of 100ms to enhance the hover and focus styles on calendar cells.
