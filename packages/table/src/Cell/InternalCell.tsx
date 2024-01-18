@@ -18,9 +18,6 @@ import {
 } from './Cell.styles';
 import { CellOverflowBehavior, InternalCellProps } from './Cell.types';
 
-// const heightProperty = 'clientHeight';
-// const calcHeight = (el: HTMLElement | null) => el?.[heightProperty];
-
 const InternalCell = ({
   children,
   className,
