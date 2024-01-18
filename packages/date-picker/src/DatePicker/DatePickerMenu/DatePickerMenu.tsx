@@ -61,8 +61,6 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       menuTriggerEvent,
     } = useDatePickerContext();
 
-    // console.log({ highlight });
-
     const ref = useForwardedRef(fwdRef, null);
     const cellRefs = refs.calendarCellRefs;
     const headerRef = useRef<HTMLDivElement>(null);
