@@ -110,7 +110,7 @@ export const cellContentTransitionStateStyles = (
     entered: css`
       opacity: 1;
       min-height: ${standardCellHeight}px;
-      max-height: ${height + 'px' ?? 'unset'};
+      max-height: ${height ? height + 'px' : 'unset'};
     `,
     entering: _hiddenStyles,
     exiting: _hiddenStyles,
