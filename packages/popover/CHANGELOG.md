@@ -1,5 +1,11 @@
 # @leafygreen-ui/popover
 
+## 11.2.2
+
+### Patch Changes
+
+- 0e49ec9c: Adds `@types/react-transition-group` as a dependency of `Popover`. This ensures that any components extending `PopoverProps` are typed correctly.
+
 ## 11.2.1
 
 ### Patch Changes
