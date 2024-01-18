@@ -1,5 +1,27 @@
 # @leafygreen-ui/table
 
+## 12.2.0
+
+### Minor Changes
+
+- c080ec01: Table now exposes an optional second generic type for useLeafyGreenTable that controls the type of the value
+
+### Patch Changes
+
+- 9a35ec36: Fixes style bug where zebra row colors override selected row colors
+- Updated dependencies [9b7a8236]
+- Updated dependencies [7f38e78a]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+  - @leafygreen-ui/icon@11.27.1
+  - @leafygreen-ui/leafygreen-provider@3.1.11
+  - @leafygreen-ui/hooks@8.1.0
+  - @leafygreen-ui/lib@13.2.0
+  - @leafygreen-ui/typography@18.1.0
+
 ## 12.1.4
 
 ### Patch Changes

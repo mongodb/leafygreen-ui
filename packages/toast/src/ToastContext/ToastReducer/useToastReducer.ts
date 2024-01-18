@@ -113,16 +113,25 @@ export const useToastReducer = (initialValue?: ToastStack) => {
 
   const updateToast: ToastContextProps['updateToast'] = useCallback(
     (id: ToastId, props: Partial<ToastProps>) => {
-      dispatch({
+      const action: ToastReducerAction = {
         type: ToastReducerActionType.Update,
         payload: {
           id,
           props,
         },
-      });
-      return getToast(id);
+      };
+
+      dispatch(action);
+
+      // `getToast` will return the previous toast value,
+      // so we need to apply the state change manually
+      // in order to return the updated value
+      const { stack: newStack } = toastReducer({ stack }, action);
+      const updatedToast = newStack.get(id);
+
+      return updatedToast;
     },
-    [getToast],
+    [stack],
   );
 
   const clearStack: ToastContextProps['clearStack'] = useCallback(() => {

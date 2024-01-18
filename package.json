@@ -43,7 +43,6 @@
     "@types/lodash": "^4.14.170",
     "@types/react": "18.2.23",
     "@types/react-dom": "18.2.8",
-    "@types/react-transition-group": "4.4.8",
     "chromatic": "^6.17.2",
     "dotenv": "^10.0.0",
     "gh-pages": "^3.1.0",

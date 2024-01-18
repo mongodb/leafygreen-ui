@@ -4,6 +4,7 @@ import { Transition } from 'react-transition-group';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 type TransitionProps = React.ComponentProps<typeof Transition<HTMLElement>>;
+
 type TransitionLifecycleCallbacks = Pick<
   TransitionProps,
   'onEnter' | 'onEntering' | 'onEntered' | 'onExit' | 'onExiting' | 'onExited'
@@ -137,6 +138,11 @@ export type PopoverProps = {
    * Class name applied to popover container.
    */
   className?: string;
+
+  /**
+   * Class name applied to the popover content container
+   */
+  contentClassName?: string;
 
   /**
    * Determines the alignment of the popover content relative to the trigger element
