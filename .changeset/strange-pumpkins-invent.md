@@ -2,4 +2,4 @@
 '@leafygreen-ui/marketing-modal': patch
 ---
 
-Fixes a bug and sets the default `closeIconColor` to 'default'
+Sets the default `closeIconColor` to correctly be 'default' (`CloseIconColor.Default`)
