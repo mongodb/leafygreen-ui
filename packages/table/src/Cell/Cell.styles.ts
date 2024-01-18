@@ -1,7 +1,7 @@
 import { TransitionStatus } from 'react-transition-group';
 
 import { css } from '@leafygreen-ui/emotion';
-import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
+import { spacing, transitionDuration, typeScales } from '@leafygreen-ui/tokens';
 
 import { Align } from './Cell.types';
 
@@ -17,7 +17,6 @@ export const standardCellHeight = spacing[5] + spacing[2];
 export const baseCellStyles = css`
   padding: 0 8px;
   overflow: hidden;
-  text-overflow: ellipsis;
 
   &:focus-visible {
     box-shadow: inset;
@@ -75,35 +74,43 @@ export const basicCellStyles = css`
   }
 `;
 
-export const cellContentContainerStyles = css`
+export const cellTransitionContainerStyles = css`
   display: flex;
   align-items: center;
-  text-overflow: ellipsis;
   min-height: ${standardCellHeight}px;
-  transition-property: min-height, max-height, opacity, transform, padding;
+  transition-property: min-height, max-height, opacity, padding, transform;
   transition-duration: ${transitionDuration.default}ms;
   transition-timing-function: ease;
 `;
 
+export const truncatedContentStyles = css`
+  /* See https://css-tricks.com/line-clampin/#aa-the-standardized-way */
+  display: -webkit-box;
+  -webkit-line-clamp: ${standardCellHeight / typeScales.body1.lineHeight};
+  -webkit-box-orient: vertical;
+  -webkit-box-align: start;
+`;
+
 export const disableAnimationStyles = css`
+  transition-duration: 0;
   transition: none;
 `;
 
-const _hiddenStyles = css`
-  opacity: 0;
-  min-height: 0;
-  max-height: 0;
-  overflow: hidden;
-`;
-
-export const cellContentTransitionStyles = (
-  height: number,
+export const cellContentTransitionStateStyles = (
+  height?: number,
 ): Record<TransitionStatus, string> => {
+  const _hiddenStyles = css`
+    opacity: 0;
+    min-height: 0;
+    max-height: 0;
+    overflow: hidden;
+  `;
+
   return {
     entered: css`
       opacity: 1;
       min-height: ${standardCellHeight}px;
-      max-height: ${height}px;
+      max-height: ${height + 'px' ?? 'unset'};
     `,
     entering: _hiddenStyles,
     exiting: _hiddenStyles,

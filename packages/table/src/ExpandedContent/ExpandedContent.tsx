@@ -6,8 +6,8 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import {
-  cellContentContainerStyles,
-  cellContentTransitionStyles,
+  cellContentStyles,
+  cellContentTransitionStateStyles,
   disableAnimationStyles,
 } from '../Cell/Cell.styles';
 import InternalRowBase from '../Row/InternalRowBase';
@@ -49,10 +49,10 @@ const ExpandedContent = <T extends RowData>({
             <div
               data-state={state}
               className={cx(
-                cellContentContainerStyles,
+                cellContentStyles,
                 { [disableAnimationStyles]: disableAnimations },
                 expandedContentStyles[theme],
-                cellContentTransitionStyles(contentHeight)[state],
+                cellContentTransitionStateStyles(contentHeight)[state],
               )}
             >
               <div ref={contentRef}>{content}</div>

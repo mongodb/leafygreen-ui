@@ -8,7 +8,7 @@ import {
   alignmentStyles,
   baseCellStyles,
   basicCellStyles,
-  cellContentContainerStyles,
+  cellTransitionContainerStyles,
   disableAnimationStyles,
 } from './Cell.styles';
 import { CellProps } from '.';
@@ -19,7 +19,7 @@ const Cell = ({ className, align, children, ...rest }: CellProps) => {
     <td className={cx(baseCellStyles, basicCellStyles, className)} {...rest}>
       <div
         className={cx(
-          cellContentContainerStyles,
+          cellTransitionContainerStyles,
           { [disableAnimationStyles]: disableAnimations },
           alignmentStyles(align),
         )}
