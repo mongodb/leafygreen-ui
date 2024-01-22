@@ -1,6 +1,7 @@
 import { isAfter } from 'date-fns';
 
 import {
+  DateType,
   getFirstOfUTCMonth,
   getLastOfMonth,
   isSameUTCMonth,
@@ -10,12 +11,17 @@ export const getNewHighlight = (
   currentHighlight: Date | null,
   currentMonth: Date,
   newMonth: Date,
+  value?: DateType,
 ) => {
   if (
     isSameUTCMonth(newMonth, currentMonth) ||
     isSameUTCMonth(newMonth, currentHighlight)
   ) {
     return;
+  }
+
+  if (value && isSameUTCMonth(newMonth, value)) {
+    return value as Date;
   }
 
   let newHighlight: Date;

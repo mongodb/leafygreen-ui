@@ -1082,42 +1082,26 @@ describe('packages/date-picker', () => {
     });
 
     describe('Keyboard navigation', () => {
-      describe('chaning the month back to current value month focuses the current value', () => {
-        test('after pressing the right chevron', async () => {
-          const { openMenu } = renderDatePicker({
+      describe('focuses the current value', () => {
+        test("when month returns to value's month", async () => {
+          const { openMenu, findAllByRole } = renderDatePicker({
             value: testToday,
           });
 
-          const { rightChevron, queryCellByDate } = await openMenu();
-
+          const { queryCellByDate, monthSelect } = await openMenu();
           expect(queryCellByDate(testToday)).toHaveFocus();
 
-          rightChevron?.focus();
-          userEvent.keyboard(`[Enter]`);
-          // cell, leftChevron
-          tabNTimes(2);
-          userEvent.keyboard(`[Enter]`);
-          // select, select, rightChevron, cell
-          tabNTimes(4);
-          expect(queryCellByDate(testToday)).toHaveFocus();
-        });
+          let options: Array<HTMLElement>;
 
-        test('after pressing the left chevron', async () => {
-          const { openMenu } = renderDatePicker({
-            value: testToday,
-          });
-
-          const { leftChevron, queryCellByDate } = await openMenu();
-
-          expect(queryCellByDate(testToday)).toHaveFocus();
-
-          leftChevron?.focus();
-          userEvent.keyboard(`[Enter]`);
-          // select, select, rightChevron
+          userEvent.click(monthSelect!);
+          options = await findAllByRole('option');
+          const _jan = options[0];
+          userEvent.click(_jan);
+          userEvent.click(monthSelect!);
+          options = await findAllByRole('option');
+          const _dec = options[11];
+          userEvent.click(_dec);
           tabNTimes(3);
-          userEvent.keyboard(`[Enter]`);
-          // cell
-          userEvent.tab();
           expect(queryCellByDate(testToday)).toHaveFocus();
         });
       });
