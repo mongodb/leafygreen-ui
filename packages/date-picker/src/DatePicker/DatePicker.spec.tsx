@@ -1144,12 +1144,52 @@ describe('packages/date-picker', () => {
             });
           });
 
-          describe('when menu is open', () => {
-            const tabStops = expectedTabStopLabels['open'];
+          describe('when menu is open with en-US format', () => {
+            const tabStops = expectedTabStopLabels['openENUSFormat'];
 
             test(`Tab order proceeds as expected`, async () => {
               const renderResult = renderDatePicker({
                 initialOpen: true,
+                locale: 'en-US',
+              });
+
+              for (const label of tabStops) {
+                const elementMap = await findTabStopElementMap(renderResult);
+                const element = elementMap[label];
+
+                if (element !== null) {
+                  expect(element).toHaveFocus();
+                } else {
+                  expect(
+                    renderResult.inputContainer.contains(
+                      document.activeElement,
+                    ),
+                  ).toBeFalsy();
+                }
+
+                const errorElement = renderResult.queryByTestId(
+                  'lg-form_field-error_message',
+                );
+
+                await waitFor(() =>
+                  expect(errorElement).not.toBeInTheDocument(),
+                );
+
+                userEvent.tab();
+                // There are side-effects triggered on CSS transition-end events.
+                // Fire this event here to ensure these side-effects don't impact Tab order
+                if (element) fireEvent.transitionEnd(element);
+              }
+            });
+          });
+
+          describe('when menu is open with iso8601 format', () => {
+            const tabStops = expectedTabStopLabels['openISOFormat'];
+
+            test(`Tab order proceeds as expected`, async () => {
+              const renderResult = renderDatePicker({
+                initialOpen: true,
+                locale: 'iso8601',
               });
 
               for (const label of tabStops) {
@@ -1196,7 +1236,7 @@ describe('packages/date-picker', () => {
         test('if month select is focused, opens the select menu', async () => {
           const { openMenu, findAllByRole } = renderDatePicker();
           const { monthSelect } = await openMenu();
-          tabNTimes(2);
+          tabNTimes(3);
           expect(monthSelect).toHaveFocus();
           userEvent.keyboard(`[${key}]`);
           const options = await findAllByRole('option');
@@ -1323,7 +1363,7 @@ describe('packages/date-picker', () => {
             renderDatePicker();
           const { monthSelect, menuContainerEl } = await openMenu();
 
-          tabNTimes(2);
+          tabNTimes(3);
           expect(monthSelect).toHaveFocus();
 
           userEvent.keyboard('[Enter]');
@@ -3280,7 +3320,7 @@ describe('packages/date-picker', () => {
             const options = await findAllByRole('option');
             const Jan = options[0];
             userEvent.click(Jan);
-            tabNTimes(3);
+            tabNTimes(2);
             const jan31Cell = queryCellByDate(newUTC(2023, Month.January, 31));
             await waitFor(() => expect(jan31Cell).toHaveFocus());
           });
@@ -3293,7 +3333,7 @@ describe('packages/date-picker', () => {
             const options = await findAllByRole('option');
             const Dec = options[11];
             userEvent.click(Dec);
-            tabNTimes(3);
+            tabNTimes(2);
             const dec1Cell = queryCellByDate(newUTC(2023, Month.December, 1));
             await waitFor(() => expect(dec1Cell).toHaveFocus());
           });

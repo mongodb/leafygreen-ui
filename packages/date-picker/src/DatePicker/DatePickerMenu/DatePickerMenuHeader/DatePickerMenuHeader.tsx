@@ -21,6 +21,10 @@ import {
   selectInputWidthStyles,
   selectTruncateStyles,
 } from '../DatePickerMenu.styles';
+import {
+  DatePickerMenuSelectMonth,
+  DatePickerMenuSelectYear,
+} from '../DatePickerMenuSelect';
 
 import { shouldChevronBeDisabled, shouldMonthBeEnabled } from './utils';
 
@@ -37,12 +41,8 @@ export const DatePickerMenuHeader = forwardRef<
   HTMLDivElement,
   DatePickerMenuHeaderProps
 >(({ setMonth, ...rest }: DatePickerMenuHeaderProps, fwdRef) => {
-  const { min, max, setIsSelectOpen, locale, isInRange } =
-    useSharedDatePickerContext();
+  const { min, max, locale, isInRange } = useSharedDatePickerContext();
   const { refs, month } = useDatePickerContext();
-
-  const monthOptions = getLocaleMonths(locale);
-  const yearOptions = range(min.getUTCFullYear(), max.getUTCFullYear() + 1);
 
   const updateMonth = (newMonth: Date) => {
     // We don't do any checks here.
@@ -101,12 +101,19 @@ export const DatePickerMenuHeader = forwardRef<
       }
     };
 
-  /** Returns whether the provided month should be enabled */
-  const isMonthEnabled = useCallback(
-    (monthName: string) =>
-      shouldMonthBeEnabled(monthName, { month, min, max, locale }),
-    [locale, max, min, month],
-  );
+  //TODO: move to utils
+  const yearFirstFormats = ['iso8601'];
+  const isYearFirstFormat = yearFirstFormats.includes(locale);
+
+  const handleMonthOnChange = (value: string) => {
+    const newMonth = setUTCMonth(month, Number(value));
+    updateMonth(newMonth);
+  };
+
+  const handleYearOnChange = (value: string) => {
+    const newMonth = setUTCYear(month, Number(value));
+    updateMonth(newMonth);
+  };
 
   return (
     <div ref={fwdRef} className={menuHeaderStyles} {...rest}>
@@ -121,49 +128,17 @@ export const DatePickerMenuHeader = forwardRef<
         <Icon glyph="ChevronLeft" />
       </IconButton>
       <div className={menuHeaderSelectContainerStyles}>
-        <Select
-          {...selectElementProps}
-          aria-label="Select month"
-          value={month.getUTCMonth().toString()}
-          onChange={m => {
-            const newMonth = setUTCMonth(month, Number(m));
-            updateMonth(newMonth);
-          }}
-          className={cx(selectTruncateStyles, selectInputWidthStyles)}
-          onEntered={() => setIsSelectOpen(true)}
-          onExited={() => setIsSelectOpen(false)}
-          placeholder={monthOptions[month.getUTCMonth()].short}
-        >
-          {monthOptions.map((m, i) => (
-            <Option
-              disabled={!isMonthEnabled(m.long)}
-              value={i.toString()}
-              key={m.short}
-              aria-label={m.long}
-            >
-              {m.short}
-            </Option>
-          ))}
-        </Select>
-        <Select
-          {...selectElementProps}
-          aria-label="Select year"
-          value={month.getUTCFullYear().toString()}
-          onChange={y => {
-            const newMonth = setUTCYear(month, Number(y));
-            updateMonth(newMonth);
-          }}
-          className={cx(selectTruncateStyles, selectInputWidthStyles)}
-          onEntered={() => setIsSelectOpen(true)}
-          onExited={() => setIsSelectOpen(false)}
-          placeholder={month.getUTCFullYear().toString()}
-        >
-          {yearOptions.map(y => (
-            <Option value={y.toString()} key={y} aria-label={y.toString()}>
-              {y}
-            </Option>
-          ))}
-        </Select>
+        {isYearFirstFormat ? (
+          <>
+            <DatePickerMenuSelectYear onChange={handleYearOnChange} />
+            <DatePickerMenuSelectMonth onChange={handleMonthOnChange} />
+          </>
+        ) : (
+          <>
+            <DatePickerMenuSelectMonth onChange={handleMonthOnChange} />
+            <DatePickerMenuSelectYear onChange={handleYearOnChange} />
+          </>
+        )}
       </div>
       <IconButton
         ref={refs.chevronButtonRefs.right}
