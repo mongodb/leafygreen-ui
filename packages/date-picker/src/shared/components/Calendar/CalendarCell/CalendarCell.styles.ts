@@ -5,6 +5,7 @@ import {
   fontFamilies,
   fontWeights,
   spacing,
+  transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
 
@@ -32,6 +33,7 @@ export const calendarCellStyles = css`
   text-align: center;
   padding: 0;
   z-index: 0;
+  transition: color ${transitionDuration.faster}ms ease-in-out;
 `;
 
 type ThemedStateStyles = Record<Theme, Record<CalendarCellState, string>>;
@@ -308,6 +310,8 @@ export const indicatorBaseStyles = css`
   z-index: 1;
   border-radius: 100%;
   outline-offset: -1px;
+  transition: box-shadow ${transitionDuration.faster}ms ease-in-out,
+    background-color ${transitionDuration.faster}ms ease-in-out;
 `;
 
 export const cellTextStyles = css`
