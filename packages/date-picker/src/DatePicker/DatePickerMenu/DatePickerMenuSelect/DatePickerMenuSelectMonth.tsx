@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 
-import { getLocaleMonths } from '@leafygreen-ui/date-utils';
+import { getLocaleMonths, setUTCMonth } from '@leafygreen-ui/date-utils';
 import { cx } from '@leafygreen-ui/emotion';
 import { Option, Select } from '@leafygreen-ui/select';
 
@@ -14,7 +14,7 @@ import {
 import { shouldMonthBeEnabled } from '../DatePickerMenuHeader/utils';
 
 interface DatePickerMenuSelectMonthProps {
-  onChange: (v: string) => void;
+  updateMonth: (newMonth: Date) => void;
 }
 
 /**
@@ -22,7 +22,7 @@ interface DatePickerMenuSelectMonthProps {
  * @internal
  */
 export const DatePickerMenuSelectMonth = ({
-  onChange,
+  updateMonth,
 }: DatePickerMenuSelectMonthProps) => {
   const { setIsSelectOpen, locale, min, max } = useSharedDatePickerContext();
   const { month } = useDatePickerContext();
@@ -35,12 +35,17 @@ export const DatePickerMenuSelectMonth = ({
     [locale, max, min, month],
   );
 
+  const handleMonthOnChange = (value: string) => {
+    const newMonth = setUTCMonth(month, Number(value));
+    updateMonth(newMonth);
+  };
+
   return (
     <Select
       {...selectElementProps}
       aria-label="Select month"
       value={month.getUTCMonth().toString()}
-      onChange={onChange}
+      onChange={handleMonthOnChange}
       className={cx(selectTruncateStyles, selectInputWidthStyles)}
       onEntered={() => setIsSelectOpen(true)}
       onExited={() => setIsSelectOpen(false)}

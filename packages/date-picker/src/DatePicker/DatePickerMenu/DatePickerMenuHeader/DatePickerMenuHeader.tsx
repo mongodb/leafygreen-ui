@@ -1,32 +1,22 @@
-import React, { forwardRef, MouseEventHandler, useCallback } from 'react';
-import range from 'lodash/range';
+import React, { forwardRef, MouseEventHandler } from 'react';
 
-import {
-  getLocaleMonths,
-  isSameUTCMonth,
-  setUTCMonth,
-  setUTCYear,
-} from '@leafygreen-ui/date-utils';
-import { cx } from '@leafygreen-ui/emotion';
+import { isSameUTCMonth, setUTCMonth } from '@leafygreen-ui/date-utils';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
-import { Option, Select } from '@leafygreen-ui/select';
 
-import { selectElementProps } from '../../../shared/constants';
+import { yearFirstFormats } from '../../../shared/constants';
 import { useSharedDatePickerContext } from '../../../shared/context';
 import { useDatePickerContext } from '../../DatePickerContext';
 import {
   menuHeaderSelectContainerStyles,
   menuHeaderStyles,
-  selectInputWidthStyles,
-  selectTruncateStyles,
 } from '../DatePickerMenu.styles';
 import {
   DatePickerMenuSelectMonth,
   DatePickerMenuSelectYear,
 } from '../DatePickerMenuSelect';
 
-import { shouldChevronBeDisabled, shouldMonthBeEnabled } from './utils';
+import { shouldChevronBeDisabled } from './utils';
 
 interface DatePickerMenuHeaderProps {
   setMonth: (newMonth: Date) => void;
@@ -101,19 +91,7 @@ export const DatePickerMenuHeader = forwardRef<
       }
     };
 
-  //TODO: move to utils
-  const yearFirstFormats = ['iso8601'];
   const isYearFirstFormat = yearFirstFormats.includes(locale);
-
-  const handleMonthOnChange = (value: string) => {
-    const newMonth = setUTCMonth(month, Number(value));
-    updateMonth(newMonth);
-  };
-
-  const handleYearOnChange = (value: string) => {
-    const newMonth = setUTCYear(month, Number(value));
-    updateMonth(newMonth);
-  };
 
   return (
     <div ref={fwdRef} className={menuHeaderStyles} {...rest}>
@@ -130,13 +108,13 @@ export const DatePickerMenuHeader = forwardRef<
       <div className={menuHeaderSelectContainerStyles}>
         {isYearFirstFormat ? (
           <>
-            <DatePickerMenuSelectYear onChange={handleYearOnChange} />
-            <DatePickerMenuSelectMonth onChange={handleMonthOnChange} />
+            <DatePickerMenuSelectYear updateMonth={updateMonth} />
+            <DatePickerMenuSelectMonth updateMonth={updateMonth} />
           </>
         ) : (
           <>
-            <DatePickerMenuSelectMonth onChange={handleMonthOnChange} />
-            <DatePickerMenuSelectYear onChange={handleYearOnChange} />
+            <DatePickerMenuSelectMonth updateMonth={updateMonth} />
+            <DatePickerMenuSelectYear updateMonth={updateMonth} />
           </>
         )}
       </div>
