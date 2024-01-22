@@ -11,7 +11,7 @@ export const getNewHighlight = (
   currentHighlight: Date | null,
   currentMonth: Date,
   newMonth: Date,
-  value?: DateType,
+  currentValue?: DateType,
 ) => {
   if (
     isSameUTCMonth(newMonth, currentMonth) ||
@@ -20,8 +20,8 @@ export const getNewHighlight = (
     return;
   }
 
-  if (value && isSameUTCMonth(newMonth, value)) {
-    return value as Date;
+  if (currentValue && isSameUTCMonth(newMonth, currentValue)) {
+    return currentValue as Date;
   }
 
   let newHighlight: Date;
