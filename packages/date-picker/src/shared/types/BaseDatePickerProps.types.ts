@@ -1,9 +1,16 @@
 import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
 import { LocaleString } from '@leafygreen-ui/date-utils';
 import { DarkModeProps } from '@leafygreen-ui/lib';
+import { PopoverProps } from '@leafygreen-ui/popover';
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
 import { AutoComplete, DatePickerState } from './types';
+
+export type ModifiedPopoverProps = Omit<
+  PopoverProps,
+  'usePortal' | 'refEl' | 'children' | 'className' | 'active'
+>;
+
 export type BaseDatePickerProps = {
   /**
    * A description for the date picker.
@@ -85,4 +92,5 @@ export type BaseDatePickerProps = {
    */
   autoComplete?: AutoComplete;
 } & DarkModeProps &
-  AriaLabelPropsWithLabel;
+  AriaLabelPropsWithLabel &
+  ModifiedPopoverProps;

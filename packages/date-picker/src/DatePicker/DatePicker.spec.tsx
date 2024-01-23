@@ -3580,6 +3580,9 @@ describe('packages/date-picker', () => {
       {/* @ts-expect-error - needs label/aria-label/aria-labelledby */}
       <DatePicker />
 
+      {/* @ts-expect-error - does not accept usePortal prop */}
+      <DatePicker usePortal />
+
       <DatePicker label="Pick a date" />
       <DatePicker aria-label="Pick a date" />
       <DatePicker aria-labelledby="Pick a date" />
@@ -3602,6 +3605,9 @@ describe('packages/date-picker', () => {
         initialOpen={false}
         autoComplete="off"
         darkMode={false}
+        portalClassName=""
+        scrollContainer={{} as HTMLElement}
+        portalContainer={{} as HTMLElement}
       />
     </>;
   });

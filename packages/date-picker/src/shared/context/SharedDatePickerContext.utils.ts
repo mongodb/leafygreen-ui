@@ -13,6 +13,7 @@ import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
 import { MAX_DATE, MIN_DATE } from '../constants';
 import { AutoComplete, BaseDatePickerProps, DatePickerState } from '../types';
+import { ModifiedPopoverProps } from '../types/BaseDatePickerProps.types';
 import { getFormatParts } from '../utils';
 
 import {
@@ -20,8 +21,32 @@ import {
   SharedDatePickerProviderProps,
 } from './SharedDatePickerContext.types';
 
+export type ModifiedPopoverPropkeys = keyof ModifiedPopoverProps;
+
 export type ContextPropKeys = keyof SharedDatePickerProviderProps &
   keyof BaseDatePickerProps;
+
+/**
+ * Prop names that are extended from popoverProps
+ * */
+export const popoverPropNames: Array<ModifiedPopoverPropkeys> = [
+  'onClick',
+  'scrollContainer',
+  'portalContainer',
+  'portalClassName',
+  'align',
+  'justify',
+  'spacing',
+  'adjustOnMutation',
+  'popoverZIndex',
+  'onEnter',
+  'onEntering',
+  'onEntered',
+  'onExit',
+  'onExiting',
+  'onExited',
+  'contentClassName',
+];
 
 /**
  * Prop names that are in both DatePickerProps and SharedDatePickerProviderProps
@@ -43,6 +68,7 @@ export const contextPropNames: Array<ContextPropKeys> = [
   'state',
   'autoComplete',
   'darkMode',
+  ...popoverPropNames,
 ];
 
 /** The default context value */
@@ -76,6 +102,22 @@ export const defaultSharedDatePickerContext: SharedDatePickerContextProps = {
   setInternalErrorMessage: () => {},
   clearInternalErrorMessage: () => {},
   autoComplete: AutoComplete.Off,
+  onClick: () => {},
+  scrollContainer: {} as HTMLElement,
+  portalContainer: {} as HTMLElement,
+  portalClassName: '',
+  align: 'bottom',
+  justify: 'start',
+  spacing: 10,
+  adjustOnMutation: true,
+  popoverZIndex: 1,
+  onEnter: () => {},
+  onEntering: () => {},
+  onEntered: () => {},
+  onExit: () => {},
+  onExiting: () => {},
+  onExited: () => {},
+  contentClassName: '',
 };
 
 /**
