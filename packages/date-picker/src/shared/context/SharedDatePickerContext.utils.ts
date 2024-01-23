@@ -30,7 +30,6 @@ export type ContextPropKeys = keyof SharedDatePickerProviderProps &
  * Prop names that are extended from popoverProps
  * */
 export const modifiedPopoverPropNames: Array<ModifiedPopoverPropkeys> = [
-  'onClick',
   'scrollContainer',
   'portalContainer',
   'portalClassName',
@@ -102,7 +101,6 @@ export const defaultSharedDatePickerContext: SharedDatePickerContextProps = {
   setInternalErrorMessage: () => {},
   clearInternalErrorMessage: () => {},
   autoComplete: AutoComplete.Off,
-  onClick: () => {},
   scrollContainer: {} as HTMLElement,
   portalContainer: {} as HTMLElement,
   portalClassName: '',

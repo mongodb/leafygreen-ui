@@ -3608,6 +3608,18 @@ describe('packages/date-picker', () => {
         portalClassName=""
         scrollContainer={{} as HTMLElement}
         portalContainer={{} as HTMLElement}
+        align="bottom"
+        justify="start"
+        spacing={10}
+        adjustOnMutation={true}
+        popoverZIndex={1}
+        onEnter={() => {}}
+        onEntering={() => {}}
+        onEntered={() => {}}
+        onExit={() => {}}
+        onExiting={() => {}}
+        onExited={() => {}}
+        contentClassName=""
       />
     </>;
   });
