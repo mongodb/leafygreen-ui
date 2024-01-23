@@ -29,7 +29,7 @@ export type ContextPropKeys = keyof SharedDatePickerProviderProps &
 /**
  * Prop names that are extended from popoverProps
  * */
-export const popoverPropNames: Array<ModifiedPopoverPropkeys> = [
+export const modifiedPopoverPropNames: Array<ModifiedPopoverPropkeys> = [
   'onClick',
   'scrollContainer',
   'portalContainer',
@@ -68,7 +68,7 @@ export const contextPropNames: Array<ContextPropKeys> = [
   'state',
   'autoComplete',
   'darkMode',
-  ...popoverPropNames,
+  ...modifiedPopoverPropNames,
 ];
 
 /** The default context value */

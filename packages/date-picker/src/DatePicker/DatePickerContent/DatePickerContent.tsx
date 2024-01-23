@@ -16,7 +16,7 @@ import { keyMap, pickAndOmit } from '@leafygreen-ui/lib';
 
 import {
   ModifiedPopoverPropkeys,
-  popoverPropNames,
+  modifiedPopoverPropNames,
   useSharedDatePickerContext,
 } from '../../shared/context';
 import { DatePickerProps } from '../DatePicker.types';
@@ -37,7 +37,7 @@ export const DatePickerContent = forwardRef<
   const [popoverProps, componentProps] = pickAndOmit<
     Partial<DatePickerProps>,
     ModifiedPopoverPropkeys
-  >({ ...rest }, popoverPropNames);
+  >({ ...rest }, modifiedPopoverPropNames);
 
   const prevValue = usePrevious(value);
   const prevMin = usePrevious(min);

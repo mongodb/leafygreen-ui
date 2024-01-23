@@ -12,5 +12,5 @@ export {
   contextPropNames,
   defaultSharedDatePickerContext,
   type ModifiedPopoverPropkeys,
-  popoverPropNames,
+  modifiedPopoverPropNames,
 } from './SharedDatePickerContext.utils';
