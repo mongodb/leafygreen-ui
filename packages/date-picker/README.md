@@ -59,6 +59,10 @@ const [date, setDate] = useState<Date>();
 | `autoComplete`     | `'off'` \| `'on'` \| `'bday'`                       | Whether the input should autofill                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | `off`     |
 | `darkMode`         | `boolean`                                           | Render the component in dark mode.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | `false`   |
 
+## Popover Props
+
+Date Picker extends [Popover Props](https://www.mongodb.design/component/popover/documentation/) but omits the following props: `usePortal`, `refEl`, `children`, `className`, and `active`.
+
 ## 🔎 Glossary
 
 ### Date format
