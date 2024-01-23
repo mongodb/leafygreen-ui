@@ -61,7 +61,7 @@ const [date, setDate] = useState<Date>();
 
 ## Popover Props
 
-Date Picker extends [Popover Props](https://www.mongodb.design/component/popover/documentation/) but omits the following props: `usePortal`, `refEl`, `children`, `className`, `onClick`, and `active`.
+Date Picker extends [Popover props](https://www.mongodb.design/component/popover/documentation/) but omits the following props: `usePortal`, `refEl`, `children`, `className`, `onClick`, and `active`.
 
 ## 🔎 Glossary
 
