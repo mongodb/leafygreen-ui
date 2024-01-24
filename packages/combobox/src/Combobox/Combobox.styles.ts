@@ -112,10 +112,10 @@ export const baseComboboxStyles = css`
   cursor: text;
   transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: background-color, box-shadow, border-color;
-  border: 1px solid;
+  /* border: 1px solid; */
   width: 100%;
   max-width: 100%;
-  border-radius: 6px;
+  /* border-radius: 6px; */
   position: relative;
   overflow: hidden;
 
