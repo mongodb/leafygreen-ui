@@ -833,6 +833,7 @@ export function Combobox<M extends boolean>({
   }, []);
 
   // When controlled value changes, update the selection
+  // TODO: use useControlledValue
   useEffect(() => {
     if (!isUndefined(value) && value !== prevValue) {
       if (isNull(value)) {
