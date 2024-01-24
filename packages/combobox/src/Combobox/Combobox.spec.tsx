@@ -541,6 +541,31 @@ describe('packages/combobox', () => {
         }
       });
 
+      test('Clicking an option fires onChange', () => {
+        const onChange = jest.fn();
+        const { openMenu } = renderCombobox(select, {
+          onChange,
+        });
+        const { optionElements } = openMenu();
+        expect(optionElements).not.toBeUndefined();
+        const option3 = (optionElements as HTMLCollectionOf<HTMLLIElement>)[2];
+        act(() => {
+          userEvent.click(option3);
+        });
+
+        if (select === 'multiple') {
+          expect(onChange).toHaveBeenCalledWith(
+            expect.arrayContaining(['carrot']),
+            expect.objectContaining({
+              diffType: 'insert',
+              value: 'carrot',
+            }),
+          );
+        } else {
+          expect(onChange).toHaveBeenCalledWith('carrot');
+        }
+      });
+
       testSingleSelect('Clicking selected option closes menu', async () => {
         const { openMenu } = renderCombobox(select, {
           initialValue: 'apple',
@@ -748,6 +773,32 @@ describe('packages/combobox', () => {
             expect(queryAllChips()).toHaveLength(2);
           });
         });
+
+        testMultiSelect(
+          'Clicking chip X button fires onChange with diff',
+          async () => {
+            const onChange = jest.fn();
+            const initialValue = ['apple', 'banana', 'carrot'];
+            const { queryChipsByName } = renderCombobox(select, {
+              onChange,
+              initialValue,
+            });
+            const appleChip = queryChipsByName('Apple');
+            expect(appleChip).not.toBeNull();
+            const appleChipButton = appleChip!.querySelector('button')!;
+            userEvent.click(appleChipButton);
+            await waitFor(() => {
+              expect(appleChip).not.toBeInTheDocument();
+              expect(onChange).toHaveBeenCalledWith(
+                expect.arrayContaining(['banana', 'carrot']),
+                expect.objectContaining({
+                  diffType: 'delete',
+                  value: 'apple',
+                }),
+              );
+            });
+          },
+        );
 
         testMultiSelect('Clicking chip text focuses the chip', () => {
           const initialValue = ['apple', 'banana', 'carrot'];
