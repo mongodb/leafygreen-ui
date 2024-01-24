@@ -101,21 +101,6 @@ export const defaultSharedDatePickerContext: SharedDatePickerContextProps = {
   setInternalErrorMessage: () => {},
   clearInternalErrorMessage: () => {},
   autoComplete: AutoComplete.Off,
-  scrollContainer: {} as HTMLElement,
-  portalContainer: {} as HTMLElement,
-  portalClassName: '',
-  align: 'bottom',
-  justify: 'start',
-  spacing: 10,
-  adjustOnMutation: true,
-  popoverZIndex: 1,
-  onEnter: () => {},
-  onEntering: () => {},
-  onEntered: () => {},
-  onExit: () => {},
-  onExiting: () => {},
-  onExited: () => {},
-  contentClassName: '',
 };
 
 /**

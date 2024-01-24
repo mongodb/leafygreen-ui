@@ -408,6 +408,14 @@ describe('packages/date-picker', () => {
         expect(menuContainerEl).toBeInTheDocument();
       });
 
+      test('appends to the end of the DOM', async () => {
+        const { findMenuElements, container } = renderDatePicker({
+          initialOpen: true,
+        });
+        const { menuContainerEl } = await findMenuElements();
+        expect(container).not.toContain(menuContainerEl);
+      });
+
       test('menu is initially closed when rendered with `initialOpen` and `disabled`', async () => {
         const { findMenuElements } = renderDatePicker({
           initialOpen: true,
@@ -3571,6 +3579,42 @@ describe('packages/date-picker', () => {
         expect(monthInput.value).toEqual('12');
         expect(yearInput.value).toEqual('2023');
       });
+    });
+  });
+
+  describe('fires Popover callbacks', () => {
+    test('opening the calendar fires the `onEnter*` callbacks', async () => {
+      const onEnter = jest.fn();
+      const onEntering = jest.fn();
+      const onEntered = jest.fn();
+
+      const { inputContainer } = renderDatePicker({
+        onEnter,
+        onEntering,
+        onEntered,
+      });
+      userEvent.click(inputContainer);
+
+      expect(onEnter).toHaveBeenCalled();
+      expect(onEntering).toHaveBeenCalled();
+      await waitFor(() => expect(onEntered).toHaveBeenCalled());
+    });
+
+    test('closing the calendar fires the `onExit*` callbacks', async () => {
+      const onExit = jest.fn();
+      const onExiting = jest.fn();
+      const onExited = jest.fn();
+      const { calendarButton } = renderDatePicker({
+        onExit,
+        onExiting,
+        onExited,
+        initialOpen: true,
+      });
+      userEvent.click(calendarButton);
+
+      expect(onExit).toHaveBeenCalled();
+      expect(onExiting).toHaveBeenCalled();
+      await waitFor(() => expect(onExited).toHaveBeenCalled());
     });
   });
 
