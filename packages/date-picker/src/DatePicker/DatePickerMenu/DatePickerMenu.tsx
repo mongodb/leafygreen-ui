@@ -303,7 +303,6 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
         onKeyDown={handleMenuKeyPress}
         onTransitionEnd={handleMenuTransitionEntered}
         onExited={handleMenuTransitionExited}
-        // onEnter={() => console.log('🎃🎃    🎃🎃')}
         {...rest}
       >
         <div className={menuContentStyles}>
