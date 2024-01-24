@@ -1,4 +1,4 @@
-import { SelectValueType } from 'src/types';
+import { SelectValueType } from '../../types';
 
 /**
  * Returns whether a given value is included in, or equal to, the current selection
