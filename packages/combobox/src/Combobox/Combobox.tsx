@@ -19,7 +19,6 @@ import isNull from 'lodash/isNull';
 import isString from 'lodash/isString';
 import isUndefined from 'lodash/isUndefined';
 import PropTypes from 'prop-types';
-import { OptionObject } from 'src/ComboboxOption/ComboboxOption.types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import {
@@ -41,6 +40,7 @@ import { ComboboxChip } from '../ComboboxChip';
 import { ComboboxContext } from '../ComboboxContext';
 import { InternalComboboxGroup } from '../ComboboxGroup';
 import { ComboboxMenu } from '../ComboboxMenu';
+import { OptionObject } from '../ComboboxOption';
 import { InternalComboboxOption } from '../ComboboxOption';
 import {
   ComboboxElement,
