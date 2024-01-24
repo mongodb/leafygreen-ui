@@ -71,6 +71,7 @@ export type SelectValueType<M extends boolean> = M extends true
   ? Array<string>
   : string | null;
 
+// TODO: onChange signature should match the native event handler signature
 export type onChangeType<M extends boolean> = M extends true
   ? (value: SelectValueType<true>) => void
   : (value: SelectValueType<false>) => void;

@@ -6,12 +6,12 @@ import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
+import { ComboboxContext } from '../ComboboxContext';
 import {
   ComboboxOptionProps,
   ComboboxSize,
   InternalComboboxOptionProps,
-} from '../Combobox.types';
-import { ComboboxContext } from '../ComboboxContext';
+} from '../types/Combobox.types';
 import { wrapJSX } from '../utils';
 
 import {

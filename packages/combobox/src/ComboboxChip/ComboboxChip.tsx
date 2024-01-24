@@ -5,12 +5,12 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
 
+import { ComboboxContext } from '../ComboboxContext';
 import {
   ComboboxChipProps,
   Overflow,
   TruncationLocation,
-} from '../Combobox.types';
-import { ComboboxContext } from '../ComboboxContext';
+} from '../types/Combobox.types';
 
 import { chipClassName, chipSizeStyles } from './ComboboxChip.styles';
 

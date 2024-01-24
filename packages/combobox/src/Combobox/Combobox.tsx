@@ -36,6 +36,11 @@ import LeafyGreenProvider, {
 import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { Description, Label } from '@leafygreen-ui/typography';
 
+import { ComboboxChip } from '../ComboboxChip';
+import { ComboboxContext } from '../ComboboxContext';
+import { InternalComboboxGroup } from '../ComboboxGroup';
+import { ComboboxMenu } from '../ComboboxMenu';
+import { InternalComboboxOption } from '../ComboboxOption';
 import {
   ComboboxElement,
   ComboboxProps,
@@ -48,12 +53,7 @@ import {
   SelectValueType,
   State,
   TruncationLocation,
-} from '../Combobox.types';
-import { ComboboxChip } from '../ComboboxChip';
-import { ComboboxContext } from '../ComboboxContext';
-import { InternalComboboxGroup } from '../ComboboxGroup';
-import { ComboboxMenu } from '../ComboboxMenu';
-import { InternalComboboxOption } from '../ComboboxOption';
+} from '../types/Combobox.types';
 import {
   checkScrollPosition,
   flattenChildren,

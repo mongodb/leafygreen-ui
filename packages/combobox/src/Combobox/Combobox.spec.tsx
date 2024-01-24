@@ -17,7 +17,7 @@ import isUndefined from 'lodash/isUndefined';
 import Button from '@leafygreen-ui/button';
 import { keyMap } from '@leafygreen-ui/lib';
 
-import { OptionObject } from '../Combobox.types';
+import { OptionObject } from '../types/Combobox.types';
 import {
   defaultOptions,
   getComboboxJSX,
@@ -733,6 +733,23 @@ describe('packages/combobox', () => {
 
       describe('Clicking chips', () => {
         testMultiSelect('Clicking chip X button removes option', async () => {
+          const initialValue = ['apple', 'banana', 'carrot'];
+          const { queryChipsByName, queryAllChips } = renderCombobox(select, {
+            initialValue,
+          });
+          const appleChip = queryChipsByName('Apple');
+          expect(appleChip).not.toBeNull();
+          const appleChipButton = appleChip!.querySelector('button')!;
+          userEvent.click(appleChipButton);
+          await waitFor(() => {
+            expect(appleChip).not.toBeInTheDocument();
+            const allChips = queryChipsByName(['Banana', 'Carrot']);
+            allChips?.forEach(chip => expect(chip).toBeInTheDocument());
+            expect(queryAllChips()).toHaveLength(2);
+          });
+        });
+
+        testMultiSelect('Clicking chip X button fires onValueCh', async () => {
           const initialValue = ['apple', 'banana', 'carrot'];
           const { queryChipsByName, queryAllChips } = renderCombobox(select, {
             initialValue,
