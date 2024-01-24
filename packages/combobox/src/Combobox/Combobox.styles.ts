@@ -120,7 +120,7 @@ export const baseComboboxStyles = css`
   overflow: hidden;
 
   // Overflow shadow
-  ::after {
+  /* ::after {
     content: '';
     position: absolute;
     width: 100%;
@@ -132,7 +132,7 @@ export const baseComboboxStyles = css`
     box-shadow: 0 0 0 0 rgb(255 255 255 / 0%);
     transition: ${transitionDuration.default}ms linear;
     transition-property: box-shadow;
-  }
+  } */
 `;
 
 export const comboboxThemeStyles: Record<Theme, string> = {

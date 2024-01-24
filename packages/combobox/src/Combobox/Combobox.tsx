@@ -35,7 +35,6 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
-import { Description, Label } from '@leafygreen-ui/typography';
 
 import {
   ComboboxElement,
@@ -70,17 +69,10 @@ import {
   caretIconDisabledStyles,
   caretIconThemeStyles,
   clearButtonStyle,
-  comboboxDisabledStyles,
-  comboboxErrorStyles,
-  comboboxFocusStyle,
+  comboboxSizeStyles,
   comboboxOverflowShadowStyles,
   comboboxParentStyle,
-  comboboxSizeStyles,
-  comboboxThemeStyles,
   endIconStyle,
-  errorIconThemeStyles,
-  errorMessageSizeStyle,
-  errorMessageThemeStyle,
   iconsWrapperBaseStyles,
   iconsWrapperSizeStyles,
   inputElementDisabledThemeStyle,
@@ -88,8 +80,6 @@ import {
   inputElementThemeStyle,
   inputElementTransitionStyles,
   inputWrapperStyle,
-  labelDescriptionContainerStyle,
-  labelDescriptionLargeStyles,
   multiselectInputElementStyle,
 } from './Combobox.styles';
 
@@ -396,8 +386,8 @@ export function Combobox<M extends boolean>({
   const [focusedElementName, trackFocusedElement] = useState<
     ComboboxElement | undefined
   >();
-  const isElementFocused = (elementName: ComboboxElement) =>
-    elementName === focusedElementName;
+  // const isElementFocused = (elementName: ComboboxElement) =>
+  //   elementName === focusedElementName;
 
   type Direction = 'next' | 'prev' | 'first' | 'last';
 
@@ -1197,11 +1187,8 @@ export function Combobox<M extends boolean>({
                 onTransitionEnd={handleTransitionEnd}
                 className={cx(
                   baseComboboxStyles,
-                  // comboboxThemeStyles[theme],
-                  // comboboxSizeStyles(size, isMultiselectWithSelections),
+                  comboboxSizeStyles(size, isMultiselectWithSelections),
                   {
-                    // [comboboxDisabledStyles[theme]]: disabled,
-                    // [comboboxErrorStyles[theme]]: state === State.error,
                     // [comboboxFocusStyle[theme]]: isElementFocused(
                     //   ComboboxElement.Input,
                     // ),
