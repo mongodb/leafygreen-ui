@@ -154,17 +154,17 @@ More specific code samples are available below pertaining to each documented fea
 
 ---
 
-## `useLeafygreenTable`
+## `useLeafyGreenTable`
 
-`useLeafygreenTable` wraps [`react-table`](https://tanstack.com/table/v8) and [`react-virtual`](https://tanstack.com/virtual/v3) to support advanced table functionalities and virtual scrolling.
+`useLeafyGreenTable` wraps [`react-table`](https://tanstack.com/table/v8) and [`react-virtual`](https://tanstack.com/virtual/v3) to support advanced table functionalities and virtual scrolling.
 
-`useLeafygreenTable` takes an `options` object and returns a table.
+`useLeafyGreenTable` takes an `options` object and returns a table.
 
 https://github.com/mongodb/leafygreen-ui/blob/63877b7ef6f40e165f691a39ca00fc5de39b690d/packages/table/src/Table.story.tsx#L660-L669
 
 ### Options
 
-`useLeafygreenTable` exposes all [options](https://tanstack.com/table/v8/docs/api/core/table#options) used in `react-table`, with the following exceptions:
+`useLeafyGreenTable` exposes all [options](https://tanstack.com/table/v8/docs/api/core/table#options) used in `react-table`, with the following exceptions:
 
 ---
 
@@ -188,7 +188,7 @@ Setting this prop will indicate that the Table component is being used with the 
 
 #### `useVirtualScrolling`
 
-`react-virtual`'s `useVirtual` hook will be called if this option is set. When this option is set, the object returned by `useLeafygreenTable` will include `virtualRows`, `totalSize` and `scrollToIndex`. Refer to our [Storybook deployment](https://mongodb.github.io/leafygreen-ui) to find examples.
+`react-virtual`'s `useVirtual` hook will be called if this option is set. When this option is set, the object returned by `useLeafyGreenTable` will include `virtualRows`, `totalSize` and `scrollToIndex`. Refer to our [Storybook deployment](https://mongodb.github.io/leafygreen-ui) to find examples.
 
 > Note that the number of virtual rows rendered depends on the height passed to the `Table` component. For a reasonably performant use of virtual scrolling, ensure that there is a height set on the component to reduce the number of virtual rows rendered.
 
@@ -196,7 +196,7 @@ Setting this prop will indicate that the Table component is being used with the 
 
 #### `data` / `renderExpandedContent`
 
-`useLeafygreenTable` extends `react-table`'s `data` [option](https://tanstack.com/table/v8/docs/api/core/table#data) to allow a `renderExpandedContent` prop to be passed to the table's data type.
+`useLeafyGreenTable` extends `react-table`'s `data` [option](https://tanstack.com/table/v8/docs/api/core/table#data) to allow a `renderExpandedContent` prop to be passed to the table's data type.
 
 https://github.com/mongodb/leafygreen-ui/blob/63877b7ef6f40e165f691a39ca00fc5de39b690d/packages/table/src/useLeafyGreenTable/useLeafyGreenTable.types.ts#L19-L22
 
@@ -206,7 +206,7 @@ This option determines how the row's expanded content will be rendered. Refer to
 
 #### `data` / `subRows`
 
-`useLeafygreenTable` extends `react-table`'s `data` [option](https://tanstack.com/table/v8/docs/api/core/table#data) to allow a `subRows` prop to be passed to the table's data type.
+`useLeafyGreenTable` extends `react-table`'s `data` [option](https://tanstack.com/table/v8/docs/api/core/table#data) to allow a `subRows` prop to be passed to the table's data type.
 
 https://github.com/mongodb/leafygreen-ui/blob/63877b7ef6f40e165f691a39ca00fc5de39b690d/packages/table/src/useLeafyGreenTable/useLeafyGreenTable.types.ts#L19-L22
 
@@ -216,7 +216,7 @@ This option defines the data displayed in nested rows and expects an array of ob
 
 #### `columns` / `align`
 
-`useLeafygreenTable` extends `react-table`'s `columns` [option](https://tanstack.com/table/v8/docs/api/core/table#columns) to allow a `align` prop to be passed to the column's data.
+`useLeafyGreenTable` extends `react-table`'s `columns` [option](https://tanstack.com/table/v8/docs/api/core/table#columns) to allow a `align` prop to be passed to the column's data.
 
 This option determines the alignment of the column. Refer to [Storybook deployment](https://mongodb.github.io/leafygreen-ui) for an example.
 
@@ -259,7 +259,7 @@ All HTML `tr` element props
 | Name      | Description                                                  | Type           | Default                     |
 | --------- | ------------------------------------------------------------ | -------------- | --------------------------- |
 | sortState | Determines the current sorting direction.                    | `SortState`    | `'asc' 'desc' 'off' 'none'` |
-| header    | `Header` object returned from the `useLeafygreenTable` hook. | Header<T, any> | -                           |
+| header    | `Header` object returned from the `useLeafyGreenTable` hook. | Header<T, any> | -                           |
 
 \+ other HTML `th` element props
 
@@ -276,8 +276,8 @@ All HTML `tr` element props
 | Name       | Description                                                   | Type                    | Default |
 | ---------- | ------------------------------------------------------------- | ----------------------- | ------- |
 | disabled   | Determines whether the row is disabled                        | `boolean`               | `false` |
-| row        | Row object passed from the `useLeafygreenTable` hook.         | `LeafygreenTableRow<T>` | -       |
-| virtualRow | Virtual row object passed from the `useLeafygreenTable` hook. | `VirtualItem`           | -       |
+| row        | Row object passed from the `useLeafyGreenTable` hook.         | `LeafygreenTableRow<T>` | -       |
+| virtualRow | Virtual row object passed from the `useLeafyGreenTable` hook. | `VirtualItem`           | -       |
 
 \+ other HTML `tr` element props
 
@@ -319,7 +319,7 @@ https://github.com/mongodb/leafygreen-ui/blob/f61df48a196c731764864d594d7d043634
 
 [Demo with virtualized scrolling](https://mongodb.github.io/leafygreen-ui/?path=/story/components-table-with-virtualized-scrolling--expandable-content)
 
-To add expandable content to your Table, ensure the `renderExpandedContent` prop is passed to the row's data through `useLeafygreenTable`'s data prop.
+To add expandable content to your Table, ensure the `renderExpandedContent` prop is passed to the row's data through `useLeafyGreenTable`'s data prop.
 
 ### React 18
 
