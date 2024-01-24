@@ -1176,6 +1176,37 @@ export function Combobox<M extends boolean>({
           onFocus={handleComboboxFocus}
           onKeyDown={handleKeyDown}
           onTransitionEnd={handleTransitionEnd}
+          contentEnd={
+            <div
+              className={cx(
+                iconsWrapperBaseStyles,
+                iconsWrapperSizeStyles[size],
+              )}
+            >
+              {clearable && doesSelectionExist && !disabled && (
+                <IconButton
+                  aria-label="Clear selection"
+                  aria-disabled={disabled}
+                  disabled={disabled}
+                  ref={clearButtonRef}
+                  onClick={handleClearButtonClick}
+                  onFocus={handleClearButtonFocus}
+                  className={cx(clearButtonStyle)}
+                  darkMode={darkMode}
+                >
+                  <Icon glyph="XWithCircle" />
+                </IconButton>
+              )}
+              <Icon
+                glyph="CaretDown"
+                className={endIconStyle}
+                fill={cx({
+                  [caretIconThemeStyles[theme]]: !disabled,
+                  [caretIconDisabledStyles[theme]]: disabled,
+                })}
+              />
+            </div>
+          }
         >
           <div
             className={cx(
@@ -1221,35 +1252,6 @@ export function Combobox<M extends boolean>({
                 onChange={handleInputChange}
                 value={inputValue}
                 autoComplete="off"
-              />
-            </div>
-            <div
-              className={cx(
-                iconsWrapperBaseStyles,
-                iconsWrapperSizeStyles[size],
-              )}
-            >
-              {clearable && doesSelectionExist && !disabled && (
-                <IconButton
-                  aria-label="Clear selection"
-                  aria-disabled={disabled}
-                  disabled={disabled}
-                  ref={clearButtonRef}
-                  onClick={handleClearButtonClick}
-                  onFocus={handleClearButtonFocus}
-                  className={cx(clearButtonStyle)}
-                  darkMode={darkMode}
-                >
-                  <Icon glyph="XWithCircle" />
-                </IconButton>
-              )}
-              <Icon
-                glyph="CaretDown"
-                className={endIconStyle}
-                fill={cx({
-                  [caretIconThemeStyles[theme]]: !disabled,
-                  [caretIconDisabledStyles[theme]]: disabled,
-                })}
               />
             </div>
           </div>
