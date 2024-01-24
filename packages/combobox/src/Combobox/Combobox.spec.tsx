@@ -893,9 +893,18 @@ describe('packages/combobox', () => {
           const { inputEl, openMenu } = renderCombobox(select, { onChange });
           openMenu();
           userEvent.type(inputEl!, '{arrowdown}{enter}');
-          expect(onChange).toHaveBeenCalledWith(
-            select === 'single' ? 'banana' : ['banana'],
-          );
+
+          if (select === 'multiple') {
+            expect(onChange).toHaveBeenCalledWith(
+              ['banana'],
+              expect.objectContaining({
+                diffType: 'insert',
+                value: 'banana',
+              }),
+            );
+          } else {
+            expect(onChange).toHaveBeenCalledWith('banana');
+          }
         });
 
         test('does not fire onClear handler', () => {
@@ -1410,7 +1419,8 @@ describe('packages/combobox', () => {
      */
     describe('onClear', () => {
       test('Clear button calls onClear callback', () => {
-        const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+        const initialValue =
+          select === 'multiple' ? ['apple', 'banana'] : 'apple';
         const onClear = jest.fn();
         const { clearButtonEl } = renderCombobox(select, {
           initialValue,
@@ -1421,7 +1431,8 @@ describe('packages/combobox', () => {
       });
 
       test('Clear button does not force the menu to reopen', () => {
-        const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+        const initialValue =
+          select === 'multiple' ? ['apple', 'banana'] : 'apple';
         const onClear = jest.fn();
         const { clearButtonEl, queryByRole } = renderCombobox(select, {
           initialValue,
@@ -1433,7 +1444,8 @@ describe('packages/combobox', () => {
       });
 
       test('Clear button clears the value of the input', () => {
-        const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+        const initialValue =
+          select === 'multiple' ? ['apple', 'banana'] : 'apple';
         const { inputEl, clearButtonEl, queryChipsByName } = renderCombobox(
           select,
           {
@@ -1447,10 +1459,32 @@ describe('packages/combobox', () => {
           expect(inputEl).toHaveValue('Apple');
         }
 
-        act(() => {
-          userEvent.click(clearButtonEl!);
-        });
+        userEvent.click(clearButtonEl!);
         expect(inputEl).toHaveValue('');
+      });
+
+      test('Clear button calls onChange callback', () => {
+        const onChange = jest.fn();
+        const initialValue =
+          select === 'multiple' ? ['apple', 'banana'] : 'apple';
+        const { clearButtonEl } = renderCombobox(select, {
+          initialValue,
+          onChange,
+        });
+
+        userEvent.click(clearButtonEl!);
+
+        if (select === 'multiple') {
+          expect(onChange).toHaveBeenCalledWith(
+            [],
+            expect.objectContaining({
+              diffType: 'delete',
+              value: ['apple', 'banana'],
+            }),
+          );
+        } else {
+          expect(onChange).toHaveBeenCalledWith(null);
+        }
       });
 
       test('Focus returns to input element after clear button is clicked', async () => {
