@@ -8,7 +8,6 @@ import {
   fontFamilies,
   spacing,
   transitionDuration,
-  typeScales,
 } from '@leafygreen-ui/tokens';
 
 import { ComboboxSize as Size, Overflow } from '../Combobox.types';
@@ -112,27 +111,10 @@ export const baseComboboxStyles = css`
   cursor: text;
   transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: background-color, box-shadow, border-color;
-  /* border: 1px solid; */
   width: 100%;
   max-width: 100%;
-  /* border-radius: 6px; */
   position: relative;
   overflow: hidden;
-
-  // Overflow shadow
-  /* ::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 20px;
-    bottom: -21px;
-    left: 50%;
-    translate: -50% 0%;
-    border-radius: 20%;
-    box-shadow: 0 0 0 0 rgb(255 255 255 / 0%);
-    transition: ${transitionDuration.default}ms linear;
-    transition-property: box-shadow;
-  } */
 `;
 
 export const comboboxThemeStyles: Record<Theme, string> = {
@@ -172,15 +154,6 @@ export const comboboxDisabledStyles: Record<Theme, string> = {
     color: ${palette.gray.dark1};
     background-color: ${palette.gray.dark3};
     border-color: ${palette.gray.dark2};
-  `,
-};
-
-export const comboboxErrorStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    border-color: ${palette.red.base};
-  `,
-  [Theme.Dark]: css`
-    border-color: ${palette.red.light1};
   `,
 };
 
@@ -367,32 +340,6 @@ export const endIconStyle = css`
   width: ${caretIconSize}px;
 `;
 
-export const errorMessageThemeStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.red.base};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.red.light1};
-  `,
-};
-
-export const errorMessageSizeStyle = (size: Size) => css`
-  font-size: ${fontSize[size]}px;
-  line-height: ${lineHeight[size]}px;
-  padding-top: ${comboboxPadding[size].y}px;
-`;
-
-export const labelDescriptionContainerStyle = css`
-  margin-bottom: ${spacing[1]}px;
-  display: flex;
-  flex-direction: column;
-`;
-
-export const labelDescriptionLargeStyles = css`
-  font-size: ${typeScales.large.fontSize}px;
-  line-height: ${typeScales.large.lineHeight}px;
-`;
-
 export const comboboxOverflowShadowStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     ::after {
@@ -405,11 +352,6 @@ export const comboboxOverflowShadowStyles: Record<Theme, string> = {
       box-shadow: 0px -7px 12px 5px rgb(0 0 0 / 50%);
     }
   `,
-};
-
-export const errorIconThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: palette.red.base,
-  [Theme.Dark]: palette.red.light1,
 };
 
 export const caretIconThemeStyles: Record<Theme, string> = {

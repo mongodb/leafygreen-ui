@@ -35,7 +35,6 @@
     "@leafygreen-ui/palette": "^4.0.7",
     "@leafygreen-ui/popover": "^11.1.1",
     "@leafygreen-ui/tokens": "^2.2.0",
-    "@leafygreen-ui/typography": "^18.0.0",
     "chalk": "^4.1.2",
     "lodash": "^4.17.21",
     "polished": "^4.2.2"
