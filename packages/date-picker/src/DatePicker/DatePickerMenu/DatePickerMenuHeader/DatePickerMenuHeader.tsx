@@ -123,7 +123,9 @@ export const DatePickerMenuHeader = forwardRef<
       <div className={menuHeaderSelectContainerStyles}>
         <Select
           {...selectElementProps}
-          aria-label="Select month"
+          aria-label={`Select month - ${
+            monthOptions[month.getUTCMonth()].short
+          } selected`}
           value={month.getUTCMonth().toString()}
           onChange={m => {
             const newMonth = setUTCMonth(month, Number(m));
@@ -147,7 +149,9 @@ export const DatePickerMenuHeader = forwardRef<
         </Select>
         <Select
           {...selectElementProps}
-          aria-label="Select year"
+          aria-label={`Select year - ${month
+            .getUTCFullYear()
+            .toString()} selected`}
           value={month.getUTCFullYear().toString()}
           onChange={y => {
             const newMonth = setUTCYear(month, Number(y));
