@@ -1,1 +1,1 @@
-export { ComboboxContext } from './ComboboxContext';
+export { ComboboxContext, defaultContext } from './ComboboxContext';

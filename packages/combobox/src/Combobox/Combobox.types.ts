@@ -1,90 +1,17 @@
-import { ComponentPropsWithoutRef, ReactElement, ReactNode } from 'react';
+import { ReactNode } from 'react';
 
-import { type ChipProps, TruncationLocation } from '@leafygreen-ui/chip';
+import { type ChipProps } from '@leafygreen-ui/chip';
 import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
 import { PortalControlProps } from '@leafygreen-ui/popover';
 
-export { TruncationLocation };
-
-/**
- * Prop Enums & Types
- */
-
-export const ComboboxElement = {
-  Input: 'Input',
-  ClearButton: 'ClearButton',
-  FirstChip: 'FirstChip',
-  LastChip: 'LastChip',
-  MiddleChip: 'MiddleChip',
-  Combobox: 'Combobox',
-  Menu: 'Menu',
-} as const;
-export type ComboboxElement =
-  (typeof ComboboxElement)[keyof typeof ComboboxElement];
-
-/**
- * Prop types
- */
-
-export const ComboboxSize = {
-  XSmall: 'xsmall',
-  Small: 'small',
-  Default: 'default',
-  Large: 'large',
-} as const;
-export type ComboboxSize = (typeof ComboboxSize)[keyof typeof ComboboxSize];
-
-export const Overflow = {
-  /**
-   * Combobox will be set to a fixed width, and will expand its height based on the number of Chips selected
-   */
-  expandY: 'expand-y',
-  /**
-   * Combobox will be set to a fixed height and width (default 100% of container). Chips will be scrollable left-right
-   */
-  scrollX: 'scroll-x',
-  /**
-   * @deprecated
-   */
-  expandX: 'expand-x',
-} as const;
-export type Overflow = (typeof Overflow)[keyof typeof Overflow];
-
-export const State = {
-  none: 'none',
-  error: 'error',
-} as const;
-export type State = (typeof State)[keyof typeof State];
-
-export const SearchState = {
-  unset: 'unset',
-  error: 'error',
-  loading: 'loading',
-} as const;
-export type SearchState = (typeof SearchState)[keyof typeof SearchState];
-
-/**
- * Generic Typing
- */
-
-export type SelectValueType<M extends boolean> = M extends true
-  ? Array<string>
-  : string | null;
-
-export type onChangeType<M extends boolean> = M extends true
-  ? (value: SelectValueType<true>) => void
-  : (value: SelectValueType<false>) => void;
-
-// Returns the correct empty state for multiselcect / single select
-export function getNullSelection<M extends boolean>(
-  multiselect: M,
-): SelectValueType<M> {
-  if (multiselect) {
-    return [] as Array<string> as SelectValueType<M>;
-  } else {
-    return null as SelectValueType<M>;
-  }
-}
+import {
+  ComboboxSize,
+  onChangeType,
+  Overflow,
+  SearchState,
+  SelectValueType,
+  State,
+} from '../types';
 
 /**
  * Combobox Props
@@ -234,112 +161,3 @@ export type ComboboxProps<M extends boolean> = Either<
   BaseComboboxProps & ComboboxMultiselectProps<M>,
   'label' | 'aria-label'
 >;
-
-/**
- * Combobox Option Props
- */
-
-type ListItemProps = Omit<ComponentPropsWithoutRef<'li'>, 'onClick' | 'value'>;
-
-interface SharedComboboxOptionProps {
-  /**
-   * The internal value of the option. Used as the identifier in Combobox `initialValue`, value and filteredOptions.
-   * When undefined, this is set to `_.kebabCase(displayName)`
-   */
-  value?: string;
-
-  /**
-   * The display value of the option. Used as the rendered string within the menu and chips.
-   * When undefined, this is set to `value`
-   */
-  displayName?: string;
-
-  /**
-   * The icon to display to the left of the option in the menu.
-   */
-  glyph?: ReactElement;
-
-  /**
-   * Defines whether the option is disabled.
-   * Node: disabled options are still rendered in the menu, but not selectable.
-   */
-  disabled?: boolean;
-
-  /**
-   * Styling Prop
-   */
-  className?: string;
-
-  /**
-   * Optional descriptive text under the displayName.
-   */
-  description?: string;
-
-  /**
-   * Callback fired when an option is clicked.
-   */
-  onClick?: (
-    event: React.SyntheticEvent<HTMLLIElement, Event>,
-    value: string,
-  ) => void;
-}
-
-type RequiredComboboxOptionProps = Required<
-  Pick<SharedComboboxOptionProps, 'value' | 'displayName'>
->;
-
-type BaseComboboxOptionProps = ListItemProps & SharedComboboxOptionProps;
-
-export type ComboboxOptionProps = Either<
-  BaseComboboxOptionProps,
-  'value' | 'displayName'
->;
-
-export interface OptionObject
-  extends Pick<SharedComboboxOptionProps, 'description' | 'onClick'>,
-    RequiredComboboxOptionProps {
-  isDisabled: boolean;
-  hasGlyph?: boolean;
-}
-
-export interface InternalComboboxOptionProps
-  extends ListItemProps,
-    Omit<SharedComboboxOptionProps, 'value' | 'displayName'>,
-    RequiredComboboxOptionProps {
-  isSelected: boolean;
-  isFocused: boolean;
-  setSelected: () => void;
-  index: number;
-}
-
-/**
- * Combobox Group Props
- */
-
-export interface ComboboxGroupProps {
-  /**
-   * Label for the group of options
-   */
-  label: string;
-
-  /**
-   * Options in the group. Must be one or more `ComboboxOption` components
-   */
-  children: React.ReactNode;
-
-  /**
-   * Styling prop
-   */
-  className?: string;
-}
-
-/**
- * Combobox Chip
- */
-
-export interface ComboboxChipProps {
-  displayName: string;
-  isFocused: boolean;
-  onRemove: () => void;
-  onFocus: () => void;
-}
