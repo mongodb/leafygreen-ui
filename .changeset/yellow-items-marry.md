@@ -1,5 +1,6 @@
 ---
-'@leafygreen-ui/combobox': patch
+'@leafygreen-ui/combobox': minor
 ---
 
-Internal refactor of `type` file organization
+Exports `ComboboxOptionProps` & `ComboboxGroupProps`.
+Internal refactor of `type` file organization.
