@@ -21,6 +21,7 @@ import isUndefined from 'lodash/isUndefined';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
+import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
 import {
   useAutoScroll,
   useBackdropClick,
@@ -1151,182 +1152,150 @@ export function Combobox<M extends boolean>({
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
-      <ComboboxContext.Provider
-        value={{
-          multiselect,
-          size,
-          withIcons,
-          disabled,
-          isOpen,
-          state,
-          searchState,
-          chipTruncationLocation,
-          chipCharacterLimit,
-          inputValue,
-          overflow,
-          popoverZIndex,
-        }}
+      <FormField
+        label={label}
+        description={description}
+        errorMessage={errorMessage}
+        state={state}
+        size={size}
+        disabled={disabled}
+        darkMode={darkMode}
+        className={className}
+        id={inputId}
       >
-        <div className={cx(comboboxParentStyle(size), className)} {...rest}>
-          {(label || description) && (
-            <div className={labelDescriptionContainerStyle}>
-              {label && (
-                <Label
-                  id={labelId}
-                  htmlFor={inputId}
-                  darkMode={darkMode}
-                  disabled={disabled}
-                  className={cx({
-                    [labelDescriptionLargeStyles]: size === ComboboxSize.Large,
-                  })}
-                >
-                  {label}
-                </Label>
-              )}
-              {description && (
-                <Description
-                  darkMode={darkMode}
-                  disabled={disabled}
-                  className={cx({
-                    [labelDescriptionLargeStyles]: size === ComboboxSize.Large,
-                  })}
-                >
-                  {description}
-                </Description>
-              )}
-            </div>
-          )}
-
-          {/* Disable eslint: onClick sets focus. Key events would already have focus */}
-          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-          <div
-            ref={comboboxRef}
-            role="combobox"
-            aria-expanded={isOpen}
-            aria-controls={menuId}
-            aria-owns={menuId}
-            tabIndex={-1}
-            onMouseDown={handleInputWrapperMousedown}
-            onClick={handleComboboxClick}
-            onFocus={handleComboboxFocus}
-            onKeyDown={handleKeyDown}
-            onTransitionEnd={handleTransitionEnd}
-            className={cx(
-              baseComboboxStyles,
-              comboboxThemeStyles[theme],
-              comboboxSizeStyles(size, isMultiselectWithSelections),
-              {
-                [comboboxDisabledStyles[theme]]: disabled,
-                [comboboxErrorStyles[theme]]: state === State.error,
-                [comboboxFocusStyle[theme]]: isElementFocused(
-                  ComboboxElement.Input,
-                ),
-                [comboboxOverflowShadowStyles[theme]]: shouldShowOverflowShadow,
-              },
-            )}
-          >
-            <div
-              onScroll={handleOnScroll}
-              ref={inputWrapperRef}
-              className={inputWrapperStyle({
-                size,
-                overflow,
-              })}
-            >
-              {renderedChips}
-              <input
-                aria-label={ariaLabel ?? label}
-                aria-autocomplete="list"
+        <ComboboxContext.Provider
+          value={{
+            multiselect,
+            size,
+            withIcons,
+            disabled,
+            isOpen,
+            state,
+            searchState,
+            chipTruncationLocation,
+            chipCharacterLimit,
+            inputValue,
+            overflow,
+            popoverZIndex,
+          }}
+        >
+          <div className={cx(comboboxParentStyle(size), className)} {...rest}>
+            {/* Disable eslint: onClick sets focus. Key events would already have focus */}
+            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
+            <FormFieldInputContainer>
+              <div
+                ref={comboboxRef}
+                role="combobox"
+                aria-expanded={isOpen}
                 aria-controls={menuId}
-                aria-labelledby={labelId}
-                ref={inputRef}
-                id={inputId}
+                aria-owns={menuId}
+                tabIndex={-1}
+                onMouseDown={handleInputWrapperMousedown}
+                onClick={handleComboboxClick}
+                onFocus={handleComboboxFocus}
+                onKeyDown={handleKeyDown}
+                onTransitionEnd={handleTransitionEnd}
                 className={cx(
-                  baseInputElementStyle,
-                  inputElementSizeStyle(size),
-                  inputElementThemeStyle[theme],
-                  inputElementTransitionStyles(isOpen),
+                  baseComboboxStyles,
+                  // comboboxThemeStyles[theme],
+                  // comboboxSizeStyles(size, isMultiselectWithSelections),
                   {
-                    [multiselectInputElementStyle(size, inputValue)]:
-                      isMultiselect(selection),
-                    [inputElementDisabledThemeStyle[theme]]: disabled,
+                    // [comboboxDisabledStyles[theme]]: disabled,
+                    // [comboboxErrorStyles[theme]]: state === State.error,
+                    // [comboboxFocusStyle[theme]]: isElementFocused(
+                    //   ComboboxElement.Input,
+                    // ),
+                    [comboboxOverflowShadowStyles[theme]]:
+                      shouldShowOverflowShadow,
                   },
                 )}
-                placeholder={placeholderValue}
-                disabled={disabled ?? undefined}
-                onChange={handleInputChange}
-                value={inputValue}
-                autoComplete="off"
-              />
-            </div>
-            <div
-              className={cx(
-                iconsWrapperBaseStyles,
-                iconsWrapperSizeStyles[size],
-              )}
-            >
-              {state === 'error' && (
-                <Icon
-                  glyph="Warning"
-                  fill={errorIconThemeStyles[theme]}
-                  className={endIconStyle}
-                />
-              )}
-              {clearable && doesSelectionExist && !disabled && (
-                <IconButton
-                  aria-label="Clear selection"
-                  aria-disabled={disabled}
-                  disabled={disabled}
-                  ref={clearButtonRef}
-                  onClick={handleClearButtonClick}
-                  onFocus={handleClearButtonFocus}
-                  className={cx(clearButtonStyle)}
-                  darkMode={darkMode}
+              >
+                <div
+                  onScroll={handleOnScroll}
+                  ref={inputWrapperRef}
+                  className={inputWrapperStyle({
+                    size,
+                    overflow,
+                  })}
                 >
-                  <Icon glyph="XWithCircle" />
-                </IconButton>
-              )}
-              <Icon
-                glyph="CaretDown"
-                className={endIconStyle}
-                fill={cx({
-                  [caretIconThemeStyles[theme]]: !disabled,
-                  [caretIconDisabledStyles[theme]]: disabled,
-                })}
-              />
-            </div>
-          </div>
+                  {renderedChips}
+                  <input
+                    aria-label={ariaLabel ?? label}
+                    aria-autocomplete="list"
+                    aria-controls={menuId}
+                    aria-labelledby={labelId}
+                    ref={inputRef}
+                    id={inputId}
+                    className={cx(
+                      baseInputElementStyle,
+                      inputElementSizeStyle(size),
+                      inputElementThemeStyle[theme],
+                      inputElementTransitionStyles(isOpen),
+                      {
+                        [multiselectInputElementStyle(size, inputValue)]:
+                          isMultiselect(selection),
+                        [inputElementDisabledThemeStyle[theme]]: disabled,
+                      },
+                    )}
+                    placeholder={placeholderValue}
+                    disabled={disabled ?? undefined}
+                    onChange={handleInputChange}
+                    value={inputValue}
+                    autoComplete="off"
+                  />
+                </div>
+                <div
+                  className={cx(
+                    iconsWrapperBaseStyles,
+                    iconsWrapperSizeStyles[size],
+                  )}
+                >
+                  {clearable && doesSelectionExist && !disabled && (
+                    <IconButton
+                      aria-label="Clear selection"
+                      aria-disabled={disabled}
+                      disabled={disabled}
+                      ref={clearButtonRef}
+                      onClick={handleClearButtonClick}
+                      onFocus={handleClearButtonFocus}
+                      className={cx(clearButtonStyle)}
+                      darkMode={darkMode}
+                    >
+                      <Icon glyph="XWithCircle" />
+                    </IconButton>
+                  )}
+                  <Icon
+                    glyph="CaretDown"
+                    className={endIconStyle}
+                    fill={cx({
+                      [caretIconThemeStyles[theme]]: !disabled,
+                      [caretIconDisabledStyles[theme]]: disabled,
+                    })}
+                  />
+                </div>
+              </div>
+            </FormFieldInputContainer>
 
-          {state === 'error' && errorMessage && (
-            <div
-              className={cx(
-                errorMessageThemeStyle[theme],
-                errorMessageSizeStyle(size),
-              )}
-            >
-              {errorMessage}
-            </div>
-          )}
-
-          {/******* /
+            {/******* /
           *  Menu  *
           / *******/}
 
-          <ComboboxMenu
-            id={menuId}
-            labelId={labelId}
-            refEl={comboboxRef}
-            ref={menuRef}
-            menuWidth={menuWidth}
-            searchLoadingMessage={searchLoadingMessage}
-            searchErrorMessage={searchErrorMessage}
-            searchEmptyMessage={searchEmptyMessage}
-            {...popoverProps}
-          >
-            {renderedOptionsJSX}
-          </ComboboxMenu>
-        </div>
-      </ComboboxContext.Provider>
+            <ComboboxMenu
+              id={menuId}
+              labelId={labelId}
+              refEl={comboboxRef}
+              ref={menuRef}
+              menuWidth={menuWidth}
+              searchLoadingMessage={searchLoadingMessage}
+              searchErrorMessage={searchErrorMessage}
+              searchEmptyMessage={searchEmptyMessage}
+              {...popoverProps}
+            >
+              {renderedOptionsJSX}
+            </ComboboxMenu>
+          </div>
+        </ComboboxContext.Provider>
+      </FormField>
     </LeafyGreenProvider>
   );
 
