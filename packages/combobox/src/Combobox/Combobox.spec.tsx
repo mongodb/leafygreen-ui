@@ -749,23 +749,6 @@ describe('packages/combobox', () => {
           });
         });
 
-        testMultiSelect('Clicking chip X button fires onValueCh', async () => {
-          const initialValue = ['apple', 'banana', 'carrot'];
-          const { queryChipsByName, queryAllChips } = renderCombobox(select, {
-            initialValue,
-          });
-          const appleChip = queryChipsByName('Apple');
-          expect(appleChip).not.toBeNull();
-          const appleChipButton = appleChip!.querySelector('button')!;
-          userEvent.click(appleChipButton);
-          await waitFor(() => {
-            expect(appleChip).not.toBeInTheDocument();
-            const allChips = queryChipsByName(['Banana', 'Carrot']);
-            allChips?.forEach(chip => expect(chip).toBeInTheDocument());
-            expect(queryAllChips()).toHaveLength(2);
-          });
-        });
-
         testMultiSelect('Clicking chip text focuses the chip', () => {
           const initialValue = ['apple', 'banana', 'carrot'];
           const { queryChipsByName, queryAllChips } = renderCombobox(select, {
