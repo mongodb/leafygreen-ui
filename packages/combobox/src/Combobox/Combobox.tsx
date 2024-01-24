@@ -31,11 +31,8 @@ import {
 } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
-import LeafyGreenProvider, {
-  useDarkMode,
-} from '@leafygreen-ui/leafygreen-provider';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
-import { Description, Label } from '@leafygreen-ui/typography';
 
 import {
   ComboboxElement,
@@ -65,22 +62,12 @@ import {
 } from '../utils';
 
 import {
-  baseComboboxStyles,
   baseInputElementStyle,
   caretIconDisabledStyles,
   caretIconThemeStyles,
   clearButtonStyle,
-  comboboxDisabledStyles,
-  comboboxErrorStyles,
-  comboboxFocusStyle,
   comboboxOverflowShadowStyles,
-  comboboxParentStyle,
-  comboboxSizeStyles,
-  comboboxThemeStyles,
   endIconStyle,
-  errorIconThemeStyles,
-  errorMessageSizeStyle,
-  errorMessageThemeStyle,
   iconsWrapperBaseStyles,
   iconsWrapperSizeStyles,
   inputElementDisabledThemeStyle,
@@ -88,8 +75,6 @@ import {
   inputElementThemeStyle,
   inputElementTransitionStyles,
   inputWrapperStyle,
-  labelDescriptionContainerStyle,
-  labelDescriptionLargeStyles,
   multiselectInputElementStyle,
 } from './Combobox.styles';
 
@@ -396,8 +381,8 @@ export function Combobox<M extends boolean>({
   const [focusedElementName, trackFocusedElement] = useState<
     ComboboxElement | undefined
   >();
-  const isElementFocused = (elementName: ComboboxElement) =>
-    elementName === focusedElementName;
+  // const isElementFocused = (elementName: ComboboxElement) =>
+  //   elementName === focusedElementName;
 
   type Direction = 'next' | 'prev' | 'first' | 'last';
 
@@ -1103,8 +1088,8 @@ export function Combobox<M extends boolean>({
   /**
    * Checks if multi-select and if there are chips selected. The left padding of the wrapper changes when there are chips selected so we use this to conditionally change the padding.
    */
-  const isMultiselectWithSelections =
-    isMultiselect(selection) && !!selection.length;
+  // const isMultiselectWithSelections =
+  //   isMultiselect(selection) && !!selection.length;
 
   /**
    * Function that calls the `checkScrollPosition` util to check the scroll position
