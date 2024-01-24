@@ -11,7 +11,7 @@ import {
   SearchState,
   SelectValueType,
   State,
-} from './Combobox.types';
+} from '../types';
 
 /**
  * Combobox Props

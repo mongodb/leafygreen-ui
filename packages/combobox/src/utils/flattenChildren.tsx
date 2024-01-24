@@ -2,7 +2,7 @@ import React from 'react';
 
 import { isComponentType } from '@leafygreen-ui/lib';
 
-import { OptionObject } from '../types';
+import { OptionObject } from '../ComboboxOption';
 
 import { getNameAndValue } from './getNameAndValue';
 

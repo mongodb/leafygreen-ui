@@ -7,11 +7,7 @@ import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { ComboboxContext } from '../ComboboxContext';
-import {
-  ComboboxOptionProps,
-  ComboboxSize,
-  InternalComboboxOptionProps,
-} from '../types';
+import { ComboboxSize } from '../types';
 import { wrapJSX } from '../utils';
 
 import {
@@ -20,6 +16,10 @@ import {
   multiselectIconLargePosition,
   multiselectIconPosition,
 } from './ComboboxOption.styles';
+import {
+  ComboboxOptionProps,
+  InternalComboboxOptionProps,
+} from './ComboboxOption.types';
 import { getGlyphs } from './getGlyphs';
 
 /**

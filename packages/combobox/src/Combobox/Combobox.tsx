@@ -19,6 +19,7 @@ import isNull from 'lodash/isNull';
 import isString from 'lodash/isString';
 import isUndefined from 'lodash/isUndefined';
 import PropTypes from 'prop-types';
+import { OptionObject } from 'src/ComboboxOption/ComboboxOption.types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import {
@@ -43,11 +44,9 @@ import { ComboboxMenu } from '../ComboboxMenu';
 import { InternalComboboxOption } from '../ComboboxOption';
 import {
   ComboboxElement,
-  ComboboxProps,
   ComboboxSize,
   getNullSelection,
   onChangeType,
-  OptionObject,
   Overflow,
   SearchState,
   SelectValueType,
@@ -91,6 +90,7 @@ import {
   labelDescriptionLargeStyles,
   multiselectInputElementStyle,
 } from './Combobox.styles';
+import { ComboboxProps } from './Combobox.types';
 
 /**
  * Combobox is a combination of a Select and TextInput,

@@ -17,7 +17,7 @@ import isUndefined from 'lodash/isUndefined';
 import Button from '@leafygreen-ui/button';
 import { keyMap } from '@leafygreen-ui/lib';
 
-import { OptionObject } from '../types';
+import { OptionObject } from '../ComboboxOption/ComboboxOption.types';
 import {
   defaultOptions,
   getComboboxJSX,

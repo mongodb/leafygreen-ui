@@ -1,4 +1,4 @@
-import { OptionObject } from '../types';
+import { OptionObject } from '../ComboboxOption';
 /**
  *
  * @param value
