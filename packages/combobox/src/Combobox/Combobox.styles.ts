@@ -17,7 +17,7 @@ import {
   fontSize,
   lineHeight,
 } from '../ComboboxChip/ComboboxChip.styles';
-import { ComboboxSize as Size, Overflow } from '../types/Combobox.types';
+import { ComboboxSize as Size, Overflow } from '../types';
 
 /**
  * Util to get the chip height

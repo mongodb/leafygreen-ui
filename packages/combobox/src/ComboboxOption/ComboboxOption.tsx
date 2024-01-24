@@ -11,7 +11,7 @@ import {
   ComboboxOptionProps,
   ComboboxSize,
   InternalComboboxOptionProps,
-} from '../types/Combobox.types';
+} from '../types';
 import { wrapJSX } from '../utils';
 
 import {

@@ -6,11 +6,7 @@ import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
 
 import { ComboboxContext } from '../ComboboxContext';
-import {
-  ComboboxChipProps,
-  Overflow,
-  TruncationLocation,
-} from '../types/Combobox.types';
+import { ComboboxChipProps, Overflow, TruncationLocation } from '../types';
 
 import { chipClassName, chipSizeStyles } from './ComboboxChip.styles';
 

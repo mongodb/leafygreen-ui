@@ -53,7 +53,7 @@ import {
   SelectValueType,
   State,
   TruncationLocation,
-} from '../types/Combobox.types';
+} from '../types';
 import {
   checkScrollPosition,
   flattenChildren,

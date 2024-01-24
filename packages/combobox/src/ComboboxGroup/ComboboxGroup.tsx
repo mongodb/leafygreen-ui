@@ -5,7 +5,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { ComboboxGroupProps } from '../types/Combobox.types';
+import { ComboboxGroupProps } from '../types';
 
 import {
   comboboxGroupLabel,

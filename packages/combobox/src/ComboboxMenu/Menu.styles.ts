@@ -6,7 +6,7 @@ import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies, spacing } from '@leafygreen-ui/tokens';
 
 import { fontSize, lineHeight } from '../ComboboxChip/ComboboxChip.styles';
-import { ComboboxSize as Size } from '../types/Combobox.types';
+import { ComboboxSize as Size } from '../types';
 
 export const menuItemPadding: Record<Size, { x: number; y: number }> = {
   [Size.XSmall]: { x: 12, y: 8 },

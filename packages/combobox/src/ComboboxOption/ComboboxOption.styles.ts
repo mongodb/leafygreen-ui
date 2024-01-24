@@ -9,7 +9,7 @@ import {
   getMenuItemHeight,
   menuItemPadding,
 } from '../ComboboxMenu/Menu.styles';
-import { ComboboxSize } from '../types/Combobox.types';
+import { ComboboxSize } from '../types';
 
 /**
  * Styles

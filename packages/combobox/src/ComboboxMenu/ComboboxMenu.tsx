@@ -10,7 +10,7 @@ import Popover, { PortalControlProps } from '@leafygreen-ui/popover';
 import { Error } from '@leafygreen-ui/typography';
 
 import { ComboboxContext } from '../ComboboxContext';
-import { ComboboxProps } from '../types/sCombobox.types';
+import { ComboboxProps } from '../types';
 
 import {
   loadingIconStyle,
