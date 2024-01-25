@@ -3,7 +3,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
-export const iconButtonStyles = css`
+export const iconButtonTransitionStyles = css`
   transition: transform ${transitionDuration.default}ms ease-in-out;
 `;
 
