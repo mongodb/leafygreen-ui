@@ -8,20 +8,27 @@ import {
   alignmentStyles,
   baseCellStyles,
   basicCellStyles,
-  cellContentContainerStyles,
+  cellTransitionContainerStyles,
   disableAnimationStyles,
 } from './Cell.styles';
 import { CellProps } from '.';
 
-const Cell = ({ className, align, children, ...rest }: CellProps) => {
+const Cell = ({
+  className,
+  contentClassName,
+  align,
+  children,
+  ...rest
+}: CellProps) => {
   const { disableAnimations } = useTableContext();
   return (
     <td className={cx(baseCellStyles, basicCellStyles, className)} {...rest}>
       <div
         className={cx(
-          cellContentContainerStyles,
-          { [disableAnimationStyles]: disableAnimations },
+          cellTransitionContainerStyles,
           alignmentStyles(align),
+          { [disableAnimationStyles]: disableAnimations },
+          contentClassName,
         )}
       >
         {children}

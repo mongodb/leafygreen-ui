@@ -9,20 +9,24 @@ import { useTableContext } from '../TableContext';
 import {
   alignmentStyles,
   baseCellStyles,
-  cellContentContainerStyles,
-  cellContentTransitionStyles,
+  cellContentTransitionStateStyles,
+  cellTransitionContainerStyles,
   disableAnimationStyles,
   getCellPadding,
+  standardCellHeight,
+  truncatedContentStyles,
 } from './Cell.styles';
-import { InternalCellProps } from './Cell.types';
+import { CellOverflowBehavior, InternalCellProps } from './Cell.types';
 
 const InternalCell = ({
   children,
   className,
+  contentClassName,
   cellIndex,
   depth,
   isVisible = true,
   isExpandable = false,
+  overflow,
   align,
   ...rest
 }: InternalCellProps) => {
@@ -32,13 +36,15 @@ const InternalCell = ({
   const transitionRef = useRef<HTMLElement | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const contentHeight = useMemo(
-    () => (contentRef.current ? contentRef.current.clientHeight : 0),
-    // Lint flags `content` as an unnecessary dependency, but we want to update `contentHeight` when the value of `children` changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [children],
-  );
-
+  const contentHeight = standardCellHeight;
+  const scrollHeight = contentRef.current
+    ? contentRef.current?.scrollHeight
+    : 0;
+  const shouldTruncate = useMemo(() => {
+    return (
+      overflow === CellOverflowBehavior.Truncate && scrollHeight > contentHeight
+    );
+  }, [contentHeight, overflow, scrollHeight]);
   return (
     <td
       className={cx(
@@ -54,13 +60,17 @@ const InternalCell = ({
         {state => (
           <div
             data-state={state}
-            className={cx(
-              cellContentContainerStyles,
-              cellContentTransitionStyles(contentHeight)[state],
-              { [disableAnimationStyles]: disableAnimations },
-              alignmentStyles(align),
-            )}
             ref={contentRef}
+            className={cx(
+              cellTransitionContainerStyles,
+              cellContentTransitionStateStyles(contentHeight)[state],
+              alignmentStyles(align),
+              {
+                [disableAnimationStyles]: disableAnimations,
+                [truncatedContentStyles]: shouldTruncate,
+              },
+              contentClassName,
+            )}
           >
             {children}
           </div>
