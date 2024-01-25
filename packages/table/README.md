@@ -188,7 +188,7 @@ Setting this prop will indicate that the Table component is being used with the 
 
 #### `useVirtualScrolling`
 
-`react-virtual`'s `useVirtual` hook will be called if this option is set. When this option is set, the object returned by `useLeafygreenTable` will include `virtualRows` and `totalSize`. Refer to our [Storybook deployment](https://mongodb.github.io/leafygreen-ui) to find examples.
+`react-virtual`'s `useVirtual` hook will be called if this option is set. When this option is set, the object returned by `useLeafygreenTable` will include `virtualRows`, `totalSize` and `scrollToIndex`. Refer to our [Storybook deployment](https://mongodb.github.io/leafygreen-ui) to find examples.
 
 > Note that the number of virtual rows rendered depends on the height passed to the `Table` component. For a reasonably performant use of virtual scrolling, ensure that there is a height set on the component to reduce the number of virtual rows rendered.
 

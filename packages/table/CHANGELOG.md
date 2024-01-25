@@ -1,5 +1,11 @@
 # @leafygreen-ui/table
 
+## 12.3.0
+
+### Minor Changes
+
+- 91372fff: useLeafygreenTable now exposes an `scrollToIndex` method for virtualized tables.
+
 ## 12.2.0
 
 ### Minor Changes

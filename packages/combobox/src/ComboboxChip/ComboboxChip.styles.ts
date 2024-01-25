@@ -3,7 +3,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { typeScales } from '@leafygreen-ui/tokens';
 
-import { ComboboxSize } from '../Combobox.types';
+import { ComboboxSize } from '../types';
 
 export const chipClassName = createUniqueClassName('combobox-chip');
 
