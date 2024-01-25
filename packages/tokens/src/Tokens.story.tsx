@@ -41,8 +41,9 @@ const colors = [
   '#a5fd8b',
 ];
 
-const spacingBlockVariants = Object.keys(spacing).reduce(
-  (acc: Partial<Record<keyof typeof spacing, string>>, index, idx) => {
+const spacingBlockVariants = Object.keys(spacing)
+  .filter(num => Number(num) === 0 || Number(num) > 25)
+  .reduce((acc: Partial<Record<keyof typeof spacing, string>>, index, idx) => {
     const key = index as PropertyKey as keyof typeof spacing;
     acc[key] = css`
       background-color: ${colors[idx]};
@@ -50,9 +51,7 @@ const spacingBlockVariants = Object.keys(spacing).reduce(
       height: ${spacing[key]}px;
     `;
     return acc;
-  },
-  {},
-);
+  }, {});
 
 function SpacingBlock({ space }: { space: keyof typeof spacing }) {
   return (
@@ -73,12 +72,14 @@ export const Spacing = () => (
         display: flex;
       `}
     >
-      {Object.keys(spacing).map(space => (
-        <SpacingBlock
-          space={space as PropertyKey as keyof typeof spacing}
-          key={space}
-        />
-      ))}
+      {Object.keys(spacing)
+        .filter(num => Number(num) === 0 || Number(num) > 25)
+        .map(space => (
+          <SpacingBlock
+            space={space as PropertyKey as keyof typeof spacing}
+            key={space}
+          />
+        ))}
     </div>
   </div>
 );
