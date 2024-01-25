@@ -82,6 +82,9 @@ const meta: StoryMetaType<typeof InputOption> = {
     description: {
       control: { type: 'text' },
     },
+    renderedContext: {
+      control: 'none',
+    },
     as: storybookArgTypes.as,
   },
 };
@@ -91,19 +94,47 @@ export default meta;
 export const LiveExample: StoryFn<
   InputOptionProps & InputOptionContentProps
 > = (props: InputOptionProps & InputOptionContentProps) => {
-  const { leftGlyph, rightGlyph, description, ...rest } = props;
+  const { leftGlyph, rightGlyph, description, renderedContext, ...rest } =
+    props;
   return (
-    <InputOption {...rest}>
-      <InputOptionContent
-        leftGlyph={leftGlyph ? <Icon glyph={leftGlyph as string} /> : undefined}
-        rightGlyph={
-          rightGlyph ? <Icon glyph={rightGlyph as string} /> : undefined
-        }
-        description={description}
-      >
-        Some text
-      </InputOptionContent>
-    </InputOption>
+    <div style={{ display: 'flex', gap: '16px' }}>
+      <div>
+        <pre>Form</pre>
+        <InputOption
+          {...rest}
+          renderedContext={RenderedContext.Form}
+          actionType="default" // input options in forms can only be default
+        >
+          <InputOptionContent
+            leftGlyph={
+              leftGlyph ? <Icon glyph={leftGlyph as string} /> : undefined
+            }
+            rightGlyph={
+              rightGlyph ? <Icon glyph={rightGlyph as string} /> : undefined
+            }
+            description={description}
+          >
+            Some text
+          </InputOptionContent>
+        </InputOption>
+      </div>
+      <div>
+        <pre>Menu</pre>
+        <InputOption {...rest} renderedContext={RenderedContext.Menu}>
+          <InputOptionContent
+            leftGlyph={
+              leftGlyph ? <Icon glyph={leftGlyph as string} /> : undefined
+            }
+            rightGlyph={
+              rightGlyph ? <Icon glyph={rightGlyph as string} /> : undefined
+            }
+            description={description}
+          >
+            Some text
+          </InputOptionContent>
+        </InputOption>
+      </div>
+    </div>
   );
 };
 LiveExample.parameters = {

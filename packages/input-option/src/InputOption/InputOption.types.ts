@@ -23,6 +23,21 @@ type RenderedContext = (typeof RenderedContext)[keyof typeof RenderedContext];
 
 export { RenderedContext };
 
+const State = {
+  Default: 'default',
+  Hover: 'hover',
+  Highlight: 'highlight',
+  Disabled: 'disabled',
+  Checked: 'checked',
+  Destructive: 'destructive',
+} as const;
+
+type State = (typeof State)[keyof typeof State];
+
+export { State };
+
+export type FormState = Exclude<State, 'destructive'>;
+
 /**
  * TERMINOLOGY
  *
