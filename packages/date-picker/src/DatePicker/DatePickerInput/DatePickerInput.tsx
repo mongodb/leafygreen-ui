@@ -77,13 +77,22 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       if (!disabled) {
         openMenu(e);
         const { target } = e;
+        e.preventDefault();
         const segmentToFocus = getSegmentToFocus({
           target,
           formatParts,
           segmentRefs,
         });
 
+        console.log('🐥 click 🐥');
+
         segmentToFocus?.focus();
+        // segmentToFocus?.select();
+        segmentToFocus?.setSelectionRange(0, 4);
+
+        // FIXME: on a second click the caret returns and the input is no longer selected
+
+        // segmentToFocus?.setSelectionRange(0, 4);
       }
     };
 

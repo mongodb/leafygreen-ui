@@ -74,6 +74,12 @@ export const DateInputSegment = React.forwardRef<
     const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
       const { target } = e;
 
+      // console.log({
+      //   value: target.value,
+      //   segment: charsPerSegment[segment],
+      //   last: target.value.slice(-1),
+      // });
+
       const newValue = getNewSegmentValueFromInputValue(
         segment,
         value,
@@ -95,9 +101,11 @@ export const DateInputSegment = React.forwardRef<
 
     /** Handle keydown presses that don't natively fire a change event */
     const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
-      const { key } = e as React.KeyboardEvent<HTMLInputElement> & {
+      const { key, target } = e as React.KeyboardEvent<HTMLInputElement> & {
         target: HTMLInputElement;
       };
+
+      console.log({ value: target.value, key });
 
       switch (key) {
         case keyMap.ArrowUp:
@@ -142,7 +150,15 @@ export const DateInputSegment = React.forwardRef<
           break;
         }
 
+        case keyMap.ArrowLeft:
+        case keyMap.ArrowRight: {
+          break;
+        }
+
         default: {
+          if (target.value.length === charsPerSegment[segment]) {
+            target.value = '';
+          }
           break;
         }
       }
@@ -161,7 +177,7 @@ export const DateInputSegment = React.forwardRef<
         ref={inputRef}
         type="text"
         pattern={pattern}
-        maxLength={charsPerSegment[segment]}
+        // maxLength={charsPerSegment[segment]}
         role="spinbutton"
         value={value}
         min={min}

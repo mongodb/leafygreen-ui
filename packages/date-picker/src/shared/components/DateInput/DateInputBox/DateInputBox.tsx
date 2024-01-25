@@ -66,6 +66,8 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
     }: DateInputBoxProps,
     fwdRef,
   ) => {
+    // console.log({ value });
+
     const { isDirty, formatParts, disabled, min, max, setIsDirty } =
       useSharedDatePickerContext();
     const { theme } = useDarkMode();
@@ -147,6 +149,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
           if (nextSegmentName) {
             const nextSegmentRef = segmentRefs[nextSegmentName];
             nextSegmentRef?.current?.focus();
+            nextSegmentRef?.current?.select();
           }
         }
 
