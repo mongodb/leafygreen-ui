@@ -135,15 +135,23 @@ describe('packages/date-picker/date-picker-menu', () => {
     });
     test('select menu triggers have aria labels', () => {
       const result = renderDatePickerMenu();
-      const monthSelect = result.getByLabelText('Select month');
-      const yearSelect = result.getByLabelText('Select year');
+      const monthSelect = result.getByLabelText('Select month', {
+        exact: false,
+      });
+      const yearSelect = result.getByLabelText('Select year', {
+        exact: false,
+      });
       expect(monthSelect).toBeInTheDocument();
       expect(yearSelect).toBeInTheDocument();
     });
     test('select menus have correct values', () => {
       const result = renderDatePickerMenu();
-      const monthSelect = result.getByLabelText('Select month');
-      const yearSelect = result.getByLabelText('Select year');
+      const monthSelect = result.getByLabelText('Select month', {
+        exact: false,
+      });
+      const yearSelect = result.getByLabelText('Select year', {
+        exact: false,
+      });
       expect(monthSelect).toHaveValue(Month.September.toString());
       expect(yearSelect).toHaveValue('2023');
     });
@@ -175,8 +183,8 @@ describe('packages/date-picker/date-picker-menu', () => {
           value: newUTC(2024, Month.March, 10),
         });
 
-        const monthSelect = getByLabelText('Select month');
-        const yearSelect = getByLabelText('Select year');
+        const monthSelect = getByLabelText('Select month', { exact: false });
+        const yearSelect = getByLabelText('Select year', { exact: false });
         expect(monthSelect).toHaveValue(Month.March.toString());
         expect(yearSelect).toHaveValue('2024');
       });
