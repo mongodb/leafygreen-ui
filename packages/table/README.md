@@ -226,11 +226,12 @@ This option determines the alignment of the column. Refer to [Storybook deployme
 
 #### Props
 
-| Name                      | Description                                                    | Type     | Default |
-| ------------------------- | -------------------------------------------------------------- | -------- | ------- |
-| `shouldAlternateRowColor` | Determines whether alternating rows will have dark backgrounds | boolean  | false   |
-| `baseFontSize`            | The base font size of the title and text rendered in children  | 13 \| 16 | 13      |
-| `darkMode`                | Render the component in dark mode.                             | boolean  | false   |
+| Name                      | Description                                                                                 | Type     | Default |
+| ------------------------- | ------------------------------------------------------------------------------------------- | -------- | ------- |
+| `shouldAlternateRowColor` | Determines whether alternating rows will have dark backgrounds                              | boolean  | false   |
+| `disableAnimations`       | Disables all transition animations for smoother rendering of tall content where appropriate | boolean  | false   |
+| `baseFontSize`            | The base font size of the title and text rendered in children                               | 13 \| 16 | 13      |
+| `darkMode`                | Render the component in dark mode.                                                          | boolean  | false   |
 
 \+ other HTML `table` element props
 
@@ -285,7 +286,7 @@ All HTML `tr` element props
 
 `Cell` accepts HTML `td` element props.
 
-> The `Cell` component does not automatically handle overflowing text content, as `text-overflow` depends on the element having `overflow: hidden` and an explicit pixel width value. Refer to the LeafyGreen [Storybook deployment](https://mongodb.github.io/leafygreen-ui/) for an example.
+> All nested row animations are set at the Cell level, with a `max-height` set to 40vh, which should cover most cases with a relatively smooth animation. For taller content, set `disableAnimation={true}` or override the max-height with a `& > div { max-height: ... }` CSS selector on the `Cell` component.
 
 ## Feature Examples
 
