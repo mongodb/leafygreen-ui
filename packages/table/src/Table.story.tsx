@@ -43,6 +43,7 @@ const meta: StoryMetaType<typeof Table> = {
   component: Table,
   argTypes: {
     shouldAlternateRowColor: { control: 'boolean' },
+    disableAnimations: { control: 'boolean' },
   },
   parameters: {
     default: 'LiveExample',
@@ -198,7 +199,7 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
             <Row key={row.id} row={row}>
               {row.getVisibleCells().map(cell => {
                 return (
-                  <Cell key={cell.id}>
+                  <Cell key={cell.id} id={cell.id} overflow="truncate">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </Cell>
                 );
@@ -208,7 +209,7 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
                   <Row key={subRow.id} row={subRow}>
                     {subRow.getVisibleCells().map(cell => {
                       return (
-                        <Cell key={cell.id}>
+                        <Cell key={cell.id} id={cell.id}>
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext(),
@@ -233,6 +234,14 @@ LiveExample.argTypes = {
   shouldAlternateRowColor: {
     control: 'none',
   },
+};
+
+export const AnimationsDisabled: StoryFn<StoryTableProps> = args => {
+  return <LiveExample {...args} />;
+};
+
+AnimationsDisabled.args = {
+  disableAnimations: true,
 };
 
 export const Basic = Template.bind({});
@@ -267,6 +276,7 @@ export const OverflowingCell: StoryFn<StoryTableProps> = args => {
                       width: '80px',
                       textOverflow: 'ellipsis',
                       overflow: 'hidden',
+                      whiteSpace: 'nowrap',
                     }}
                   >
                     {row[cellKey]}

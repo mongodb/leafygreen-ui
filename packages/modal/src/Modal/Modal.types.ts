@@ -6,7 +6,7 @@ export const CloseIconColor = {
   Default: 'default',
   Dark: 'dark',
   Light: 'light',
-};
+} as const;
 
 export type CloseIconColor =
   (typeof CloseIconColor)[keyof typeof CloseIconColor];

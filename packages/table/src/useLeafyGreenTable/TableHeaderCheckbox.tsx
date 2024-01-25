@@ -10,10 +10,10 @@ import { useRowContext } from '../Row/RowContext';
 import { disabledTableRowCheckStyles } from './useLeafyGreenTable.styles';
 import { LGRowData, LGTableDataType } from '.';
 
-export const TableHeaderCheckbox = ({
+export const TableHeaderCheckbox = <T extends LGRowData>({
   table,
 }: {
-  table: Table<LGTableDataType<LGRowData>>;
+  table: Table<LGTableDataType<T>>;
 }) => {
   const { theme } = useDarkMode();
   const { disabled: rowIsDisabled } = useRowContext();

@@ -1,0 +1,77 @@
+{
+  "extends": "@lg-tools/build/config/package.tsconfig.json",
+  "compilerOptions": {
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "rootDir": "src",
+    "baseUrl": ".",
+    "paths": {
+      "@leafygreen-ui/icon/dist/*": [
+        "../icon/src/generated/*"
+      ],
+      "@leafygreen-ui/*": [
+        "../*/src"
+      ],
+    }
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "**/*.spec.*",
+    "**/*.story.*"
+  ],
+  "references": [
+    {
+      "path": "../a11y"
+    },
+    {
+      "path": "../button"
+    },
+    {
+      "path": "../date-utils"
+    },
+    {
+      "path": "../emotion"
+    },
+    {
+      "path": "../hooks"
+    },
+    {
+      "path": "../form-field"
+    },
+    {
+      "path": "../icon"
+    },
+    {
+      "path": "../icon-button"
+    },
+    {
+      "path": "../leafygreen-provider"
+    },
+    {
+      "path": "../lib"
+    },
+    {
+      "path": "../modal"
+    },
+    {
+      "path": "../palette"
+    },
+    {
+      "path": "../popover"
+    },
+    {
+      "path": "../select"
+    },
+    {
+      "path": "../testing-lib"
+    },
+    {
+      "path": "../tokens"
+    },
+    {
+      "path": "../typography"
+    }
+  ]
+}

@@ -31,17 +31,22 @@ export type LeafyGreenTableCell<T extends LGRowData> = Cell<
 export interface LeafyGreenTableRow<T extends LGRowData>
   extends Row<LGTableDataType<T>> {}
 
-export type LGColumnDef<T extends LGRowData> = ColumnDef<LGTableDataType<T>> & {
+export type LGColumnDef<
+  T extends LGRowData,
+  V extends unknown = unknown,
+> = ColumnDef<LGTableDataType<T>, V> & {
   align?: HTMLElementProps<'td'>['align'];
 };
 
 /** LeafyGreen extension of `useReactTable` {@link TableOptions}*/
-export interface LeafyGreenTableOptions<T extends LGRowData>
-  extends Omit<TableOptions<LGTableDataType<T>>, 'getCoreRowModel'> {
+export interface LeafyGreenTableOptions<
+  T extends LGRowData,
+  V extends unknown = unknown,
+> extends Omit<TableOptions<LGTableDataType<T>>, 'getCoreRowModel'> {
   containerRef: RefObject<HTMLDivElement>;
   hasSelectableRows?: boolean;
   useVirtualScrolling?: boolean;
-  columns: Array<LGColumnDef<T>>;
+  columns: Array<LGColumnDef<T, V>>;
   withPagination?: boolean;
   allowSelectAll?: boolean;
 }
@@ -49,7 +54,7 @@ export interface LeafyGreenTableOptions<T extends LGRowData>
 /** LeafyGreen extension of `useReactTable` {@link Table}*/
 export interface LeafyGreenTable<T extends LGRowData>
   extends Table<LGTableDataType<T>>,
-    Pick<VirtualizerValues, 'totalSize'> {
+    Pick<VirtualizerValues, 'totalSize' | 'scrollToIndex'> {
   virtualRows?: Array<VirtualItem>;
   hasSelectableRows: boolean;
 }
