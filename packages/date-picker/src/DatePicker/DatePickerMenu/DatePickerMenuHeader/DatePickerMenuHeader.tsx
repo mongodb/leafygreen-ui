@@ -124,7 +124,7 @@ export const DatePickerMenuHeader = forwardRef<
         <Select
           {...selectElementProps}
           aria-label={`Select month - ${
-            monthOptions[month.getUTCMonth()].short
+            monthOptions[month.getUTCMonth()].long
           } selected`}
           value={month.getUTCMonth().toString()}
           onChange={m => {
