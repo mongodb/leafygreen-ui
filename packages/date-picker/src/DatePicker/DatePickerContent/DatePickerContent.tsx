@@ -12,9 +12,14 @@ import {
   useForwardedRef,
   usePrevious,
 } from '@leafygreen-ui/hooks';
-import { keyMap } from '@leafygreen-ui/lib';
+import { keyMap, pickAndOmit } from '@leafygreen-ui/lib';
 
-import { useSharedDatePickerContext } from '../../shared/context';
+import {
+  ModifiedPopoverPropkeys,
+  modifiedPopoverPropNames,
+  SharedDatePickerContextProps,
+  useSharedDatePickerContext,
+} from '../../shared/context';
 import { useDatePickerContext } from '../DatePickerContext';
 import { DatePickerInput } from '../DatePickerInput';
 import { DatePickerMenu } from '../DatePickerMenu';
@@ -25,9 +30,14 @@ export const DatePickerContent = forwardRef<
   HTMLDivElement,
   DatePickerContentProps
 >(({ ...rest }: DatePickerContentProps, fwdRef) => {
-  const { min, max, isOpen, menuId, disabled, isSelectOpen } =
+  const { min, max, isOpen, menuId, disabled, isSelectOpen, ...sharedProps } =
     useSharedDatePickerContext();
   const { value, closeMenu, handleValidation } = useDatePickerContext();
+
+  const [popoverProps] = pickAndOmit<
+    Partial<SharedDatePickerContextProps>,
+    ModifiedPopoverPropkeys
+  >({ ...sharedProps }, modifiedPopoverPropNames);
 
   const prevValue = usePrevious(value);
   const prevMin = usePrevious(min);
@@ -114,6 +124,7 @@ export const DatePickerContent = forwardRef<
         id={menuId}
         refEl={formFieldRef}
         onKeyDown={handleDatePickerKeyDown}
+        {...popoverProps}
       />
     </>
   );
