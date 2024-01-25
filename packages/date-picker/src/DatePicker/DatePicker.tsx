@@ -96,4 +96,15 @@ DatePicker.propTypes = {
   initialOpen: PropTypes.bool,
   autoComplete: PropTypes.oneOf(Object.values(AutoComplete)),
   darkMode: PropTypes.bool,
+  // Popover Props
+  popoverZIndex: PropTypes.number,
+  portalContainer:
+    typeof window !== 'undefined'
+      ? PropTypes.instanceOf(Element)
+      : PropTypes.any,
+  scrollContainer:
+    typeof window !== 'undefined'
+      ? PropTypes.instanceOf(Element)
+      : PropTypes.any,
+  portalClassName: PropTypes.string,
 };

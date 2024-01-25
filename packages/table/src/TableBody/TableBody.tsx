@@ -2,7 +2,7 @@ import React, { Fragment, useMemo } from 'react';
 
 import { Polymorph } from '@leafygreen-ui/polymorphic';
 
-import { useTableContext } from '../TableContext/TableContext';
+import { useTableContext } from '../TableContext';
 
 import { TableBodyProps } from './TableBody.types';
 
