@@ -107,6 +107,12 @@ export const DateInputSegment = React.forwardRef<
 
       console.log({ value: target.value, key });
 
+      if (isFinite(Number(key))) {
+        if (target.value.length === charsPerSegment[segment]) {
+          target.value = '';
+        }
+      }
+
       switch (key) {
         case keyMap.ArrowUp:
         case keyMap.ArrowDown: {
@@ -147,18 +153,6 @@ export const DateInputSegment = React.forwardRef<
 
         case keyMap.Space: {
           e.preventDefault();
-          break;
-        }
-
-        case keyMap.ArrowLeft:
-        case keyMap.ArrowRight: {
-          break;
-        }
-
-        default: {
-          if (target.value.length === charsPerSegment[segment]) {
-            target.value = '';
-          }
           break;
         }
       }
