@@ -13,7 +13,7 @@ import {
 
 import { ButtonProps, Size, Variant } from '../types';
 
-const focusSelector = `&:focus-within, &[data-focus="true"]`;
+const focusSelector = `&:focus-visible, &[data-focus="true"]`;
 const hoverSelector = `&:hover, &[data-hover="true"]`;
 const activeSelector = `&:active, &[data-active="true"]`;
 

@@ -161,7 +161,7 @@ InteractiveStates.parameters = {
       variant: 'default',
     },
     combineArgs: {
-      // @ts-expect-error - data-focus is not listed as a prop
+      // @ts-expect-error - data-hover is not listed as a prop
       'data-hover': [false, true],
       'data-active': [false, true],
       'data-focus': [false, true],
