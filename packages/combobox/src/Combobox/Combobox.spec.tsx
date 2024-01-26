@@ -1443,7 +1443,7 @@ describe('packages/combobox', () => {
         expect(queryByRole('listbox')).not.toBeInTheDocument();
       });
 
-      test('Clear button clears the value of the input', () => {
+      test('Clear button clears the value of the input', async () => {
         const initialValue =
           select === 'multiple' ? ['apple', 'banana'] : 'apple';
         const { inputEl, clearButtonEl, queryChipsByName } = renderCombobox(
@@ -1460,7 +1460,9 @@ describe('packages/combobox', () => {
         }
 
         userEvent.click(clearButtonEl!);
-        expect(inputEl).toHaveValue('');
+        await waitFor(() => {
+          expect(inputEl).toHaveValue('');
+        });
       });
 
       test('Clear button calls onChange callback', () => {
