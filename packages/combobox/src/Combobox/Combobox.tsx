@@ -36,24 +36,23 @@ import LeafyGreenProvider, {
 import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { Description, Label } from '@leafygreen-ui/typography';
 
+import { ComboboxChip } from '../ComboboxChip';
+import { ComboboxContext } from '../ComboboxContext';
+import { InternalComboboxGroup } from '../ComboboxGroup';
+import { ComboboxMenu } from '../ComboboxMenu';
+import { OptionObject } from '../ComboboxOption';
+import { InternalComboboxOption } from '../ComboboxOption';
 import {
   ComboboxElement,
-  ComboboxProps,
   ComboboxSize,
   getNullSelection,
   onChangeType,
-  OptionObject,
   Overflow,
   SearchState,
   SelectValueType,
   State,
   TruncationLocation,
-} from '../Combobox.types';
-import { ComboboxChip } from '../ComboboxChip';
-import { ComboboxContext } from '../ComboboxContext';
-import { InternalComboboxGroup } from '../ComboboxGroup';
-import { ComboboxMenu } from '../ComboboxMenu';
-import { InternalComboboxOption } from '../ComboboxOption';
+} from '../types';
 import {
   checkScrollPosition,
   flattenChildren,
@@ -91,6 +90,7 @@ import {
   labelDescriptionLargeStyles,
   multiselectInputElementStyle,
 } from './Combobox.styles';
+import { ComboboxProps } from './Combobox.types';
 
 /**
  * Combobox is a combination of a Select and TextInput,

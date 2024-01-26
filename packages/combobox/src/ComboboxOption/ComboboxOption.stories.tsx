@@ -5,8 +5,7 @@ import Icon from '@leafygreen-ui/icon';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { StoryMetaType, StoryType } from '@leafygreen-ui/lib';
 
-import { ComboboxContext } from '../ComboboxContext';
-import { defaultContext } from '../ComboboxContext/ComboboxContext';
+import { ComboboxContext, defaultContext } from '../ComboboxContext';
 
 import { InternalComboboxOption } from './ComboboxOption';
 

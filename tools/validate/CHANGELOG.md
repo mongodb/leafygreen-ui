@@ -1,5 +1,15 @@
 # @lg-tools/validate
 
+## 0.1.6
+
+### Patch Changes
+
+- 7f38e78a: - Adds `'@leafygreen-ui/testing-lib'` to list of external dependencies.
+  - Updates handling of external dependencies with glob patterns
+- ffd11f24: Updates dev file pattern to include entire `testutils/` directories
+- Updated dependencies [ffd11f24]
+  - @lg-tools/meta@0.2.0
+
 ## 0.1.5
 
 ### Patch Changes

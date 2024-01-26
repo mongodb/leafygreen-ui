@@ -1,5 +1,12 @@
 # @leafygreen-ui/combobox
 
+## 7.1.0
+
+### Minor Changes
+
+- e7d206e6: Exports `ComboboxOptionProps` & `ComboboxGroupProps`.
+  Internal refactor of `type` file organization.
+
 ## 7.0.1
 
 ### Patch Changes

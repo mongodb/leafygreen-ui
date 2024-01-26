@@ -1,35 +1,50 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 
-import { useTableContext } from '../TableContext/TableContext';
+import { useTableContext } from '../TableContext';
 
 import {
   alignmentStyles,
   baseCellStyles,
-  cellContentContainerStyles,
-  cellContentTransitionStyles,
+  cellContentTransitionStateStyles,
+  cellTransitionContainerStyles,
+  disableAnimationStyles,
   getCellPadding,
+  standardCellHeight,
+  truncatedContentStyles,
 } from './Cell.styles';
-import { InternalCellProps } from './Cell.types';
+import { CellOverflowBehavior, InternalCellProps } from './Cell.types';
 
 const InternalCell = ({
   children,
   className,
+  contentClassName,
   cellIndex,
   depth,
   isVisible = true,
   isExpandable = false,
+  overflow,
   align,
   ...rest
 }: InternalCellProps) => {
   const isFirstCell = cellIndex === 0;
-  const { table } = useTableContext();
+  const { table, disableAnimations } = useTableContext();
   const isSelectable = !!table && !!table.hasSelectableRows;
   const transitionRef = useRef<HTMLElement | null>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
+  const contentHeight = standardCellHeight;
+  const scrollHeight = contentRef.current
+    ? contentRef.current?.scrollHeight
+    : 0;
+  const shouldTruncate = useMemo(() => {
+    return (
+      overflow === CellOverflowBehavior.Truncate && scrollHeight > contentHeight
+    );
+  }, [contentHeight, overflow, scrollHeight]);
   return (
     <td
       className={cx(
@@ -45,10 +60,16 @@ const InternalCell = ({
         {state => (
           <div
             data-state={state}
+            ref={contentRef}
             className={cx(
-              cellContentContainerStyles,
-              cellContentTransitionStyles[state],
+              cellTransitionContainerStyles,
+              cellContentTransitionStateStyles(contentHeight)[state],
               alignmentStyles(align),
+              {
+                [disableAnimationStyles]: disableAnimations,
+                [truncatedContentStyles]: shouldTruncate,
+              },
+              contentClassName,
             )}
           >
             {children}

@@ -1,5 +1,29 @@
 # @leafygreen-ui/select
 
+## 11.1.2
+
+### Patch Changes
+
+- ffd11f24: - Passes `onEnter*` and `onExit*` props to internal `Popover` component
+  - Adds tests to test `onEnter*` and `onExit*` callbacks
+  - Adds tests to test `PopoverContext`
+- Updated dependencies [9b7a8236]
+- Updated dependencies [7f38e78a]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+  - @leafygreen-ui/icon@11.27.1
+  - @leafygreen-ui/leafygreen-provider@3.1.11
+  - @leafygreen-ui/hooks@8.1.0
+  - @leafygreen-ui/lib@13.2.0
+  - @leafygreen-ui/input-option@1.1.0
+  - @leafygreen-ui/popover@11.2.1
+  - @leafygreen-ui/typography@18.1.0
+
 ## 11.1.1
 
 ### Patch Changes

@@ -5,14 +5,11 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { keyMap } from '@leafygreen-ui/lib';
 
-import {
-  ComboboxChipProps,
-  Overflow,
-  TruncationLocation,
-} from '../Combobox.types';
 import { ComboboxContext } from '../ComboboxContext';
+import { Overflow, TruncationLocation } from '../types';
 
 import { chipClassName, chipSizeStyles } from './ComboboxChip.styles';
+import { ComboboxChipProps } from './ComboboxChip.types';
 
 export const ComboboxChip = React.forwardRef<
   HTMLSpanElement,

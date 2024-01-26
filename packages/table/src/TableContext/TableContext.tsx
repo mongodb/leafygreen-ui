@@ -21,6 +21,7 @@ const TableContextProvider = <T extends LGRowData>({
   darkMode,
   table,
   shouldAlternateRowColor,
+  disableAnimations,
 }: PropsWithChildren<Partial<TableContextValues<T>>>) => {
   const getRowById = (id?: string) =>
     id ? table?.getRowModel().rowsById?.[id] : undefined;
@@ -40,6 +41,7 @@ const TableContextProvider = <T extends LGRowData>({
           getRowById,
           getParentRow,
           shouldAlternateRowColor,
+          disableAnimations,
         }}
       >
         {children}

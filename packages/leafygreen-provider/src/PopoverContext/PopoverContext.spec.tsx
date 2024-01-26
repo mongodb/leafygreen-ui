@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
-import { renderHook } from '@testing-library/react-hooks';
+
+import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { PopoverProvider, type PopoverState, usePopoverContext } from '.';
 

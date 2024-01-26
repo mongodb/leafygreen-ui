@@ -1,5 +1,13 @@
 # @lg-tools/slackbot
 
+## 0.2.2
+
+### Patch Changes
+
+- 0ece4ea0: Internal. Moves fetching logic into a separate `fetchChangelog` module
+- Updated dependencies [ffd11f24]
+  - @lg-tools/meta@0.2.0
+
 ## 0.2.1
 
 ### Patch Changes

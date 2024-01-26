@@ -9,7 +9,7 @@ import { palette } from '@leafygreen-ui/palette';
 import Popover, { PortalControlProps } from '@leafygreen-ui/popover';
 import { Error } from '@leafygreen-ui/typography';
 
-import { ComboboxProps } from '../Combobox.types';
+import { ComboboxProps } from '../Combobox';
 import { ComboboxContext } from '../ComboboxContext';
 
 import {

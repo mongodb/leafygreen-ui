@@ -1,0 +1,1 @@
+export { isCurrentUTCDay } from './isCurrentUTCDay';

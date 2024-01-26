@@ -1,5 +1,11 @@
 # @leafygreen-ui/modal
 
+## 16.0.4
+
+### Patch Changes
+
+- daadacbe: Sets the `CloseIconColor` enum to be readonly (`as const`). Improves TypeScript Intellisense/autocomplete
+
 ## 16.0.3
 
 ### Patch Changes

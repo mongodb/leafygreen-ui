@@ -1,13 +1,19 @@
 // For a detailed explanation regarding each configuration property, visit:
 // https://jestjs.io/docs/en/configuration.html
 
-// When referencing files in this package,
-// note we still need to declare the path relative to `<rootDir>`
+// Note: When referencing files in this package,
+// we still need to declare the path relative to `<rootDir>` (repository root)
 
 module.exports = {
   // The directory where Jest should output its coverage files
   coverageDirectory: 'coverage',
-  coveragePathIgnorePatterns: ['/node_modules/', '/dist/', '/index.ts', '.svg'],
+  coveragePathIgnorePatterns: [
+    '/node_modules/',
+    '/dist/',
+    '.svg',
+    '/index.tsx?',
+    '.(d|json|md|spec|stories|styles|types).tsx?',
+  ],
 
   displayName: 'Client',
 

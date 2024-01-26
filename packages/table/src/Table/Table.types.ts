@@ -21,4 +21,10 @@ export interface TableProps<T extends LGRowData>
    * The `useLeafyGreenTable` return value
    */
   table?: LeafyGreenTable<T>;
+
+  /**
+   * Disables all transition animations for smoother rendering of tall content where appropriate
+   * @default false
+   */
+  disableAnimations?: boolean;
 }

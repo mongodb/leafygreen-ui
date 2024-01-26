@@ -1,7 +1,7 @@
 import React, { ReactElement, ReactNode } from 'react';
 
 import InternalCell from '../Cell/InternalCell';
-import { useTableContext } from '../TableContext/TableContext';
+import { useTableContext } from '../TableContext';
 import ToggleExpandedIcon from '../ToggleExpandedIcon';
 import { LGRowData } from '../useLeafyGreenTable';
 import { getAreAncestorsExpanded } from '../utils/areAncestorsExpanded';

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/a11y",
-  "version": "1.4.11",
+  "version": "1.4.12",
   "description": "leafyGreen UI Kit A11y",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,8 +22,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/hooks": "^8.0.0",
-    "@leafygreen-ui/lib": "^13.0.0",
+    "@leafygreen-ui/hooks": "^8.1.0",
+    "@leafygreen-ui/lib": "^13.2.0",
     "@leafygreen-ui/emotion": "^4.0.7"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/a11y",

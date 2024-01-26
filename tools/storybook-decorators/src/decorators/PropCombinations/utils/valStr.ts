@@ -1,8 +1,13 @@
+import { isNull, isUndefined } from 'lodash';
+
 /**
  * @returns the provided value as a string
  */
 export function valStr(val: any): string {
   const MAX_STR_LEN = 24;
+
+  if (isNull(val)) return 'null';
+  if (isUndefined(val)) return 'undefined';
 
   if (typeof val === 'object') {
     if (val.type) {

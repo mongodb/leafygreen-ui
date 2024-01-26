@@ -34,7 +34,7 @@ describe('tools/test', () => {
       ci: false,
     });
     expect(spawnSpy).toHaveBeenCalledWith(
-      'jest',
+      expect.stringContaining('jest'),
       expect.arrayContaining(baseArgs),
       expect.objectContaining(baseEnv),
     );
@@ -46,7 +46,7 @@ describe('tools/test', () => {
       ci: false,
     });
     expect(spawnSpy).toHaveBeenCalledWith(
-      'jest',
+      expect.stringContaining('jest'),
       expect.arrayContaining([...baseArgs, '--watch']),
       expect.objectContaining(baseEnv),
     );
@@ -58,7 +58,7 @@ describe('tools/test', () => {
       ci: true,
     });
     expect(spawnSpy).toHaveBeenCalledWith(
-      'jest',
+      expect.stringContaining('jest'),
       expect.arrayContaining([
         ...baseArgs,
         '--no-cache',
@@ -77,7 +77,7 @@ describe('tools/test', () => {
       ci: true,
     });
     expect(spawnSpy).toHaveBeenCalledWith(
-      'jest',
+      expect.stringContaining('jest'),
       expect.arrayContaining([...baseArgs, '--testNamePattern=button']),
       expect.objectContaining(baseEnv),
     );
@@ -90,7 +90,7 @@ describe('tools/test', () => {
     });
 
     expect(spawnSpy).toHaveBeenCalledWith(
-      'jest',
+      expect.stringContaining('jest'),
       expect.arrayContaining([
         './packages/button/src/Button/Button.spec.tsx',
         ...baseArgs,

@@ -1,0 +1,1 @@
+export { getLocaleWeekdays } from './getLocaleWeekdays';

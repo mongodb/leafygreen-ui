@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 11.27.1
+
+### Patch Changes
+
+- 9b7a8236: Updates `'Database'`glyph
+
 ## 11.27.0
 
 ### Minor Changes

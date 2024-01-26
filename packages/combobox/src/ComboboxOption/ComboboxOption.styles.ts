@@ -4,12 +4,12 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { fontWeights, spacing } from '@leafygreen-ui/tokens';
 
-import { ComboboxSize } from '../Combobox.types';
 import { fontSize, lineHeight } from '../ComboboxChip/ComboboxChip.styles';
 import {
   getMenuItemHeight,
   menuItemPadding,
 } from '../ComboboxMenu/Menu.styles';
+import { ComboboxSize } from '../types';
 
 /**
  * Styles

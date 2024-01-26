@@ -4,7 +4,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce, isComponentType } from '@leafygreen-ui/lib';
 
-import { useTableContext } from '../TableContext/TableContext';
+import { useTableContext } from '../TableContext';
 
 import InternalRowBase from './InternalRowBase';
 import { zebraStyles } from './Row.styles';

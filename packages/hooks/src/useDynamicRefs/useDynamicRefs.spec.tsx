@@ -1,6 +1,6 @@
-import { renderHook } from '@testing-library/react-hooks';
-
+// import { renderHook } from '@testing-library/react-hooks';
 import { consoleOnce } from '@leafygreen-ui/lib';
+import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { DynamicRefGetter, useDynamicRefs } from '.';
 
@@ -11,11 +11,13 @@ describe('packages/hooks/useDynamicRefs', () => {
   });
 
   test('returns identical getter when rerendered ', () => {
+    const props = { prefix: 'A' };
     const { result, rerender } = renderHook(v => useDynamicRefs(v), {
-      initialProps: { prefix: 'A' },
+      initialProps: props,
     });
-    rerender();
-    expect(result.all[0]).toBe(result.all[1]);
+    const initialValue = result.current;
+    rerender(props);
+    expect(result.current).toStrictEqual(initialValue);
   });
 
   test('returns unique getters when called with the same prefix', () => {
@@ -33,11 +35,14 @@ describe('packages/hooks/useDynamicRefs', () => {
 
   test('returns unique getters when re-rendered with a different prefix', () => {
     // This is an edge-case, but this is the behavior we want if it happens
+    const props = { prefix: 'A' };
     const { result, rerender } = renderHook(v => useDynamicRefs(v), {
-      initialProps: { prefix: 'A' },
+      initialProps: props,
     });
-    rerender({ prefix: 'B' });
-    expect(result.all[0]).not.toBe(result.all[1]);
+    const initialValue = result.current;
+    const newProps = { prefix: 'B' };
+    rerender(newProps);
+    expect(result.current).not.toBe(initialValue);
   });
 
   describe('ref getter function', () => {
@@ -66,18 +71,20 @@ describe('packages/hooks/useDynamicRefs', () => {
     });
 
     test('returns identical refs when called with the same key', () => {
-      const { result } = renderHook(() => useDynamicRefs({ prefix: 'A' }));
+      const props = { prefix: 'A' };
+      const { result } = renderHook(() => useDynamicRefs(props));
       const ref1 = result.current('key');
       const ref2 = result.current('key');
       expect(ref1).toBe(ref2);
     });
 
     test('returns identical refs when rerendered', () => {
+      const props = { prefix: 'A' };
       const { result, rerender } = renderHook(v => useDynamicRefs(v), {
-        initialProps: { prefix: 'A' },
+        initialProps: props,
       });
       const ref1 = result.current('key');
-      rerender();
+      rerender(props);
       const ref2 = result.current('key');
       expect(ref1).toBe(ref2);
     });
