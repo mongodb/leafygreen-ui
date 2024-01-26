@@ -82,5 +82,3 @@ export const selectElementProps = {
   // there is currently no way to pass a ref into the Select portal to use in backdrop "foreground"
   usePortal: false,
 } as const;
-
-export const yearFirstFormats = ['iso8601'];

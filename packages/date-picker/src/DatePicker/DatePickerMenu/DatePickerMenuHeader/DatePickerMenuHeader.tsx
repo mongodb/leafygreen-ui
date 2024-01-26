@@ -4,7 +4,6 @@ import { isSameUTCMonth, setUTCMonth } from '@leafygreen-ui/date-utils';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 
-import { yearFirstFormats } from '../../../shared/constants';
 import { useSharedDatePickerContext } from '../../../shared/context';
 import { useDatePickerContext } from '../../DatePickerContext';
 import {
@@ -31,7 +30,7 @@ export const DatePickerMenuHeader = forwardRef<
   HTMLDivElement,
   DatePickerMenuHeaderProps
 >(({ setMonth, ...rest }: DatePickerMenuHeaderProps, fwdRef) => {
-  const { min, max, locale, isInRange } = useSharedDatePickerContext();
+  const { min, max, isInRange, locale } = useSharedDatePickerContext();
   const { refs, month } = useDatePickerContext();
 
   const updateMonth = (newMonth: Date) => {
@@ -39,6 +38,8 @@ export const DatePickerMenuHeader = forwardRef<
     // If the month is out of range, we still display it
     setMonth(newMonth);
   };
+
+  const isIsoFormat = locale === 'iso8601';
 
   /**
    * If the month is not in range and is not the last valid month
@@ -91,8 +92,6 @@ export const DatePickerMenuHeader = forwardRef<
       }
     };
 
-  const isYearFirstFormat = yearFirstFormats.includes(locale);
-
   return (
     <div ref={fwdRef} className={menuHeaderStyles} {...rest}>
       <IconButton
@@ -106,7 +105,7 @@ export const DatePickerMenuHeader = forwardRef<
         <Icon glyph="ChevronLeft" />
       </IconButton>
       <div className={menuHeaderSelectContainerStyles}>
-        {isYearFirstFormat ? (
+        {isIsoFormat ? (
           <>
             <DatePickerMenuSelectYear updateMonth={updateMonth} />
             <DatePickerMenuSelectMonth updateMonth={updateMonth} />
