@@ -3,6 +3,7 @@
 ---
 
 Combobox `onChange` callback now receives a 2nd argument. Use this argument to determine what value was inserted or deleted from a multiselect value.
+[JIRA Ticket](https://jira.mongodb.org/browse/LG-3959)
 
 Example:
 ```tsx
