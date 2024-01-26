@@ -10,6 +10,7 @@
   },
   "scripts": {
     "init": "yarn && yarn build",
+    "init17": "yarn && yarn build:cli && npx ts-node tools/test/scripts/install-react17.ts && yarn build",
     "create-package": "lg create",
     "prebuild": "yarn build:cli",
     "build": "turbo run build tsc",
