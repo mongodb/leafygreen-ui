@@ -120,10 +120,18 @@ export const renderDatePicker = (
     const rightChevron =
       withinElement(menuContainerEl)?.queryByLabelText('Next month') ||
       withinElement(menuContainerEl)?.queryByLabelText('Next valid month');
-    const monthSelect =
-      withinElement(menuContainerEl)?.queryByLabelText('Select month');
-    const yearSelect =
-      withinElement(menuContainerEl)?.queryByLabelText('Select year');
+    const monthSelect = withinElement(menuContainerEl)?.queryByLabelText(
+      'Select month',
+      {
+        exact: false,
+      },
+    );
+    const yearSelect = withinElement(menuContainerEl)?.queryByLabelText(
+      'Select year',
+      {
+        exact: false,
+      },
+    );
 
     const queryCellByDate = (date: Date): HTMLTableCellElement | null => {
       const cell = calendarGrid?.querySelector(

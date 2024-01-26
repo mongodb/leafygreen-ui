@@ -43,7 +43,9 @@ export const DatePickerMenuSelectMonth = ({
   return (
     <Select
       {...selectElementProps}
-      aria-label="Select month"
+      aria-label={`Select month - ${
+        monthOptions[month.getUTCMonth()].long
+      } selected`}
       value={month.getUTCMonth().toString()}
       onChange={handleMonthOnChange}
       className={cx(selectTruncateStyles, selectInputWidthStyles)}

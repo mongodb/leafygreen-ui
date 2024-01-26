@@ -1,6 +1,6 @@
 import kebabCase from 'lodash/kebabCase';
 
-import { ComboboxOptionProps } from '../Combobox.types';
+import { ComboboxOptionProps } from '../ComboboxOption';
 
 /**
  *
