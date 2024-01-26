@@ -105,7 +105,7 @@ export const DateInputSegment = React.forwardRef<
         target: HTMLInputElement;
       };
 
-      console.log({ value: target.value, key });
+      // console.log({ value: target.value, key });
 
       if (isFinite(Number(key))) {
         if (target.value.length === charsPerSegment[segment]) {
