@@ -73,7 +73,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
      * Called when the input, or any of its children, is clicked.
      * Opens the menu and focuses the appropriate segment
      */
-    const handleInputClick: MouseEventHandler<HTMLElement> = e => {
+    const handleInputClick: MouseEventHandler<HTMLInputElement> = e => {
       if (!disabled) {
         openMenu(e);
         const { target } = e;
@@ -84,15 +84,10 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           segmentRefs,
         });
 
-        console.log('🐥 click 🐥');
+        // console.log('🐥 click 🐥');
 
         segmentToFocus?.focus();
-        // segmentToFocus?.select();
-        segmentToFocus?.setSelectionRange(0, 4);
-
-        // FIXME: on a second click the caret returns and the input is no longer selected
-
-        // segmentToFocus?.setSelectionRange(0, 4);
+        segmentToFocus?.select();
       }
     };
 
@@ -117,7 +112,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
 
       const isSegmentEmpty = !target.value;
 
-      const { selectionStart, selectionEnd } = target;
+      // const { selectionStart, selectionEnd } = target;
 
       switch (key) {
         case keyMap.ArrowLeft: {

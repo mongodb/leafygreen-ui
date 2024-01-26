@@ -24,7 +24,7 @@ export const getSegmentToFocus = ({
   target,
   formatParts,
   segmentRefs,
-}: GetSegmentToFocusProps): HTMLElement | undefined | null => {
+}: GetSegmentToFocusProps): HTMLInputElement | undefined | null => {
   if (
     isUndefined(target) ||
     isUndefined(formatParts) ||
