@@ -16,8 +16,6 @@ import { ButtonProps, Size, Variant } from '../types';
 const focusSelector = `&:focus-within, &[data-focus="true"]`;
 const hoverSelector = `&:hover, &[data-hover="true"]`;
 const activeSelector = `&:active, &[data-active="true"]`;
-const enabledSelector = '[aria-disabled="false"]';
-const disabledSelector = '[aria-disabled="true"]';
 
 const focusBoxShadow = (color: string) => `
     0 0 0 2px ${color}, 
