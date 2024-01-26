@@ -1,5 +1,13 @@
 # @leafygreen-ui/table
 
+## 12.4.0
+
+### Minor Changes
+
+- bb8987d6: Adds `contentClassName` prop, applied to the inner `div` of the Cell
+- bb8987d6: Adds `overflow` prop to `Cell` component. By default there is no change. When `overflow === 'truncate'`, the styling of the cell is updated (if necessary) to be aligned to the top, with an ellipsis after 2 lines of text.
+- bb8987d6: Nested rows now support animations for content taller than 40px
+
 ## 12.3.0
 
 ### Minor Changes
