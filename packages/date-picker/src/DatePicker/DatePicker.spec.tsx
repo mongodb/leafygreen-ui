@@ -1090,6 +1090,30 @@ describe('packages/date-picker', () => {
     });
 
     describe('Keyboard navigation', () => {
+      describe('focuses the current value', () => {
+        test("when month returns to value's month", async () => {
+          const { openMenu, findAllByRole } = renderDatePicker({
+            value: testToday,
+          });
+
+          const { queryCellByDate, monthSelect } = await openMenu();
+          expect(queryCellByDate(testToday)).toHaveFocus();
+
+          let options: Array<HTMLElement>;
+
+          userEvent.click(monthSelect!);
+          options = await findAllByRole('option');
+          const _jan = options[0];
+          userEvent.click(_jan);
+          userEvent.click(monthSelect!);
+          options = await findAllByRole('option');
+          const _dec = options[11];
+          userEvent.click(_dec);
+          tabNTimes(3);
+          expect(queryCellByDate(testToday)).toHaveFocus();
+        });
+      });
+
       describe('Tab', () => {
         test('menu does not open on keyboard focus', async () => {
           const { findMenuElements } = renderDatePicker();
