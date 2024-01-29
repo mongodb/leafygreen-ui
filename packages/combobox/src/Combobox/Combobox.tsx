@@ -77,6 +77,7 @@ import {
   multiselectInputElementStyle,
 } from './Combobox.styles';
 import { ComboboxProps } from './Combobox.types';
+import { Size } from '@leafygreen-ui/tokens';
 
 /**
  * Combobox is a combination of a Select and TextInput,
@@ -1176,6 +1177,11 @@ export function Combobox<M extends boolean>({
           onFocus={handleComboboxFocus}
           onKeyDown={handleKeyDown}
           onTransitionEnd={handleTransitionEnd}
+          className={cx({
+            [css`
+              padding-inline: 10px;
+            `]: size === Size.XSmall,
+          })}
           contentEnd={
             <div
               className={cx(
