@@ -571,12 +571,12 @@ describe('packages/tooltip', () => {
       });
     });
 
-    test('LeafyGreen UI Icon is passed to trigger', () => {
+    test('LeafyGreen UI Icon is passed to trigger', async () => {
       render(
         <Tooltip trigger={<Icon glyph="Cloud" />}>TooltipContent</Tooltip>,
       );
 
-      waitFor(() => {
+      await waitFor(() => {
         expect(warn).toHaveBeenCalledTimes(1);
         expect(warn).toHaveBeenCalledWith(expectedWarnMsg);
       });
