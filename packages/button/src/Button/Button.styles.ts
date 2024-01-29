@@ -357,8 +357,8 @@ const disabledStyle: Record<Theme, string> = {
     ${hoverSelector}, ${activeSelector} {
       background-color: ${palette.gray.light2};
       border-color: ${palette.gray.light1};
-      box-shadow: none;
       color: ${palette.gray.base};
+      box-shadow: none;
       cursor: not-allowed;
     }
 
@@ -374,6 +374,7 @@ const disabledStyle: Record<Theme, string> = {
       background-color: ${palette.gray.dark3};
       border-color: ${palette.gray.dark1};
       color: ${palette.gray.dark1};
+      box-shadow: none;
       cursor: not-allowed;
     }
 
