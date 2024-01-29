@@ -4,7 +4,9 @@ import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
 import { DateType } from '@leafygreen-ui/date-utils';
 
 import { BaseDatePickerProps, DatePickerState } from '../types';
+import { ModifiedPopoverProps } from '../types/BaseDatePickerProps.types';
 
+import { ModifiedPopoverPropkeys } from './SharedDatePickerContext.utils';
 import { UseDatePickerErrorNotificationsReturnObject } from './useDatePickerErrorNotifications';
 
 export interface StateNotification {
@@ -13,7 +15,7 @@ export interface StateNotification {
 }
 type AriaLabelKeys = keyof AriaLabelPropsWithLabel;
 
-/** The props expected to pass int the provider */
+/** The props expected to pass into the provider */
 export type SharedDatePickerProviderProps = Omit<
   BaseDatePickerProps,
   AriaLabelKeys
@@ -25,14 +27,17 @@ export type SharedDatePickerProviderProps = Omit<
 
 type AriaLabelKeysWithoutLabel = Exclude<AriaLabelKeys, 'label'>;
 
+type OptionalModifiedPopoverProps = Partial<ModifiedPopoverProps>;
+
 /**
  * The values in context
  */
 export interface SharedDatePickerContextProps
   extends Omit<
       Required<SharedDatePickerProviderProps>,
-      'state' | AriaLabelKeysWithoutLabel
+      'state' | AriaLabelKeysWithoutLabel | ModifiedPopoverPropkeys
     >,
+    OptionalModifiedPopoverProps,
     UseDatePickerErrorNotificationsReturnObject {
   /** The earliest date accepted */
   min: Date;

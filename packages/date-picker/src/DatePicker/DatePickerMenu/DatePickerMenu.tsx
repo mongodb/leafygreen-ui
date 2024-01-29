@@ -42,7 +42,7 @@ import { DatePickerMenuProps } from './DatePickerMenu.types';
 import { DatePickerMenuHeader } from './DatePickerMenuHeader';
 
 export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
-  ({ onKeyDown, ...rest }: DatePickerMenuProps, fwdRef) => {
+  ({ onKeyDown, onExited, ...rest }: DatePickerMenuProps, fwdRef) => {
     const { min, max, isInRange, isOpen, setIsDirty, timeZone } =
       useSharedDatePickerContext();
     const {
@@ -184,6 +184,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
      */
     const handleMenuTransitionExited: ExitHandler<HTMLDivElement> = () => {
       if (!isOpen) {
+        onExited?.();
         closeMenu();
       }
     };
