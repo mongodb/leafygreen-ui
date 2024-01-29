@@ -71,6 +71,7 @@ export const Spacing = () => (
       className={css`
         display: flex;
         flex-direction: column;
+        gap: ${spacing[100]}px;
       `}
     >
       {Object.keys(spacing)
