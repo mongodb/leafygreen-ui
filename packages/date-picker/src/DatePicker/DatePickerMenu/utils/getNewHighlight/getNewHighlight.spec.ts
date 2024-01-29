@@ -40,4 +40,15 @@ describe('packages/date-picker/date-picker-menu/utils/getNewHighlight', () => {
 
     expect(newHighlight).toBeUndefined();
   });
+
+  test('returns the current value when the new month is the same as the current value', () => {
+    const newHighlight = getNewHighlight(
+      new Date(Date.UTC(2023, 5, 5)),
+      new Date(Date.UTC(2023, 5, 1)),
+      new Date(Date.UTC(2023, 11, 5)),
+      new Date(Date.UTC(2023, 11, 12)),
+    );
+
+    expect(newHighlight).toEqual(new Date(Date.UTC(2023, 11, 12)));
+  });
 });
