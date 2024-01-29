@@ -789,31 +789,6 @@ export function Combobox<M extends boolean>({
         setInputValue(displayName);
       }
     }
-
-    // if (isMultiselect(selection)) {
-    //   //
-    // } else {
-    //   if (selection === prevSelection) {
-    //     const exactMatchedOption = visibleOptions.find(
-    //       option =>
-    //         option.displayName === inputValue || option.value === inputValue,
-    //     );
-
-    //     // check if inputValue is matches a valid option
-    //     // Set the selection to that value if the component is not controlled
-    //     if (exactMatchedOption && !value) {
-    //       setSelection(exactMatchedOption.value as SelectValueType<M>);
-    //     } else {
-    //       // Revert the value to the previous selection
-    //       const displayName =
-    //         getDisplayNameForValue(
-    //           selection as SelectValueType<false>,
-    //           allOptions,
-    //         ) ?? '';
-    //       setInputValue(displayName);
-    //     }
-    //   }
-    // }
   }, [
     allOptions,
     inputValue,

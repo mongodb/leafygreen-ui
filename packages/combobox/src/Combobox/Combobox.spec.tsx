@@ -134,6 +134,13 @@ describe('packages/combobox', () => {
         });
         expect(clearButtonEl).not.toBeInTheDocument();
       });
+
+      test('`inputValue` prop is rendered in the textbox', () => {
+        const { inputEl } = renderCombobox(select, {
+          inputValue: 'abc',
+        });
+        expect(inputEl).toHaveValue('abc');
+      });
     });
 
     /**
@@ -435,11 +442,18 @@ describe('packages/combobox', () => {
         expect(inputEl.scrollWidth).toBeGreaterThanOrEqual(inputEl.clientWidth);
       });
 
-      test('Typing does not call onChange callback', () => {
+      test('Typing does not fire onChange callback', () => {
         const onChange = jest.fn();
         const { inputEl } = renderCombobox(select, { onChange });
         userEvent.type(inputEl, 'Apple');
         expect(onChange).not.toHaveBeenCalled();
+      });
+
+      test('Typing fires onInputChange callback', () => {
+        const onInputChange = jest.fn();
+        const { inputEl } = renderCombobox(select, { onInputChange });
+        userEvent.type(inputEl, 'abc');
+        expect(onInputChange).toHaveBeenCalledWith('abc');
       });
 
       test('Blurring the input after typing a valid value fires onChange', async () => {
