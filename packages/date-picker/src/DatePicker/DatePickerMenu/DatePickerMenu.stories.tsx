@@ -78,41 +78,12 @@ export default meta;
 
 type DatePickerMenuStoryType = StoryObj<typeof DatePickerMenu>;
 
-export const Basic: DatePickerMenuStoryType = {
-  render: args => {
-    MockDate.reset();
-    const [value, setValue] = useState<DateType>(null);
-
-    const date = new Date(Date.now());
-    const props = omit(args, [...contextPropNames, 'isOpen']);
-    const refEl = useRef<HTMLDivElement>(null);
-    return (
-      <DatePickerProvider value={value} setValue={setValue}>
-        <div style={{ minHeight: '50vh' }}>
-          <InlineCode ref={refEl}>
-            Today:{' '}
-            {new Intl.DateTimeFormat('en-GB', {
-              dateStyle: 'full',
-            }).format(date)}
-          </InlineCode>
-          <DatePickerMenu {...props} refEl={refEl} />
-        </div>
-      </DatePickerProvider>
-    );
-  },
-};
-
-Basic.parameters = {
-  chromatic: { disableSnapshot: true },
-};
-
 export const WithValue: DatePickerMenuStoryType = {
   render: args => {
     MockDate.reset();
 
     const props = omit(args, [...contextPropNames, 'isOpen']);
     const refEl = useRef<HTMLDivElement>(null);
-    const date = new Date(Date.now());
     const withValueDate = new Date(2023, Month.September, 10);
     return (
       <DatePickerProvider
@@ -120,13 +91,6 @@ export const WithValue: DatePickerMenuStoryType = {
         setValue={() => {}}
       >
         <div style={{ minHeight: '50vh' }}>
-          <InlineCode ref={refEl}>
-            Today:{' '}
-            {new Intl.DateTimeFormat('en-GB', {
-              dateStyle: 'full',
-            }).format(date)}
-          </InlineCode>
-          <br></br>
           <InlineCode ref={refEl}>
             Value:{' '}
             {new Intl.DateTimeFormat('en-GB', {
@@ -156,15 +120,14 @@ export const MockedToday: DatePickerMenuStoryType = {
 
     const props = omit(args, [...contextPropNames, 'isOpen']);
     const refEl = useRef<HTMLDivElement>(null);
-    const date = new Date(Date.now());
     return (
       <DatePickerProvider value={value} setValue={setValue}>
         <div style={{ minHeight: '50vh' }}>
           <InlineCode ref={refEl}>
-            Today:{' '}
+            Mocked Today:{' '}
             {new Intl.DateTimeFormat('en-GB', {
               dateStyle: 'full',
-            }).format(date)}
+            }).format(mockToday)}
           </InlineCode>
           <DatePickerMenu {...props} refEl={refEl} />
         </div>
@@ -188,8 +151,8 @@ type DatePickerMenuInteractionTestType = Omit<DatePickerMenuStoryType, 'play'> &
  * Chromatic Interaction tests
  */
 
-export const InitialFocusToday: DatePickerMenuInteractionTestType = {
-  ...Basic,
+export const InitialFocusMockedToday: DatePickerMenuInteractionTestType = {
+  ...MockedToday,
   play: async ctx => {
     const { findByRole } = within(ctx.canvasElement.parentElement!);
     await findByRole('listbox');
@@ -208,7 +171,7 @@ export const InitialFocusValue: DatePickerMenuInteractionTestType = {
 export const LeftArrowKey: DatePickerMenuInteractionTestType = {
   ...WithValue,
   play: async ctx => {
-    await InitialFocusToday.play(ctx);
+    await InitialFocusMockedToday.play(ctx);
     userEvent.keyboard('{arrowleft}');
   },
 };
@@ -216,7 +179,7 @@ export const LeftArrowKey: DatePickerMenuInteractionTestType = {
 export const RightArrowKey: DatePickerMenuInteractionTestType = {
   ...WithValue,
   play: async ctx => {
-    await InitialFocusToday.play(ctx);
+    await InitialFocusMockedToday.play(ctx);
     userEvent.keyboard('{arrowright}');
   },
 };
@@ -224,7 +187,7 @@ export const RightArrowKey: DatePickerMenuInteractionTestType = {
 export const UpArrowKey: DatePickerMenuInteractionTestType = {
   ...WithValue,
   play: async ctx => {
-    await InitialFocusToday.play(ctx);
+    await InitialFocusMockedToday.play(ctx);
     userEvent.keyboard('{arrowup}');
   },
 };
@@ -232,7 +195,7 @@ export const UpArrowKey: DatePickerMenuInteractionTestType = {
 export const DownArrowKey: DatePickerMenuInteractionTestType = {
   ...WithValue,
   play: async ctx => {
-    await InitialFocusToday.play(ctx);
+    await InitialFocusMockedToday.play(ctx);
     userEvent.keyboard('{arrowdown}');
   },
 };
@@ -240,7 +203,7 @@ export const DownArrowKey: DatePickerMenuInteractionTestType = {
 export const UpToPrevMonth: DatePickerMenuInteractionTestType = {
   ...WithValue,
   play: async ctx => {
-    await InitialFocusToday.play(ctx);
+    await InitialFocusMockedToday.play(ctx);
     userEvent.keyboard('{arrowup}{arrowup}');
   },
 };
@@ -248,7 +211,7 @@ export const UpToPrevMonth: DatePickerMenuInteractionTestType = {
 export const DownToNextMonth: DatePickerMenuInteractionTestType = {
   ...WithValue,
   play: async ctx => {
-    await InitialFocusToday.play(ctx);
+    await InitialFocusMockedToday.play(ctx);
     userEvent.keyboard('{arrowdown}{arrowdown}{arrowdown}');
   },
 };
@@ -258,7 +221,9 @@ export const OpenMonthMenu: DatePickerMenuInteractionTestType = {
   play: async ctx => {
     const canvas = within(ctx.canvasElement.parentElement!);
     await canvas.findByRole('listbox');
-    const monthMenu = await canvas.findByLabelText('Select month');
+    const monthMenu = await canvas.findByLabelText('Select month', {
+      exact: false,
+    });
     userEvent.click(monthMenu);
   },
 };
@@ -279,7 +244,9 @@ export const OpenYearMenu: DatePickerMenuInteractionTestType = {
   play: async ctx => {
     const canvas = within(ctx.canvasElement.parentElement!);
     await canvas.findByRole('listbox');
-    const monthMenu = await canvas.findByLabelText('Select year');
+    const monthMenu = await canvas.findByLabelText('Select year', {
+      exact: false,
+    });
     userEvent.click(monthMenu);
   },
 };

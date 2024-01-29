@@ -42,7 +42,7 @@ import { DatePickerMenuProps } from './DatePickerMenu.types';
 import { DatePickerMenuHeader } from './DatePickerMenuHeader';
 
 export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
-  ({ onKeyDown, ...rest }: DatePickerMenuProps, fwdRef) => {
+  ({ onKeyDown, onExited, ...rest }: DatePickerMenuProps, fwdRef) => {
     const { min, max, isInRange, isOpen, setIsDirty, timeZone } =
       useSharedDatePickerContext();
     const {
@@ -92,8 +92,10 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       if (isSameUTCMonth(newMonth, month)) {
         return;
       }
+
       setDisplayMonth(newMonth);
-      const newHighlight = getNewHighlight(highlight, month, newMonth);
+
+      const newHighlight = getNewHighlight(highlight, month, newMonth, value);
       const shouldUpdateHighlight = !isSameUTCDay(highlight, newHighlight);
 
       if (newHighlight && shouldUpdateHighlight) {
@@ -182,6 +184,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
      */
     const handleMenuTransitionExited: ExitHandler<HTMLDivElement> = () => {
       if (!isOpen) {
+        onExited?.();
         closeMenu();
       }
     };
