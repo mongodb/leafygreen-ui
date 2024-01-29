@@ -763,33 +763,64 @@ export function Combobox<M extends boolean>({
    */
 
   const onCloseMenu = useCallback(() => {
-    // Single select, and no change to selection
-    if (!isMultiselect(selection) && selection === prevSelection) {
-      const exactMatchedOption = visibleOptions.find(
-        option =>
-          option.displayName === inputValue || option.value === inputValue,
-      );
+    // 1. Check if the input value matches a valid option
+    //   -- update the selection if it does
+    //   -- if it does not,
+    //      Single select: Set the selection to the previous value
+    //      Multi select: Clear the input
 
-      // check if inputValue is matches a valid option
-      // Set the selection to that value if the component is not controlled
-      if (exactMatchedOption && !value) {
-        setSelection(exactMatchedOption.value as SelectValueType<M>);
-      } else {
+    const exactMatchedOption = visibleOptions.find(
+      option =>
+        option.displayName === inputValue || option.value === inputValue,
+    );
+
+    // check if inputValue is matches a valid option
+    // Set the selection to that value if the component is not controlled
+    if (!value && exactMatchedOption) {
+      updateSelection(exactMatchedOption.value);
+    } else {
+      if (!isMultiselect(selection)) {
         // Revert the value to the previous selection
         const displayName =
           getDisplayNameForValue(
             selection as SelectValueType<false>,
             allOptions,
-          ) ?? '';
+          ) ?? prevSelection;
         setInputValue(displayName);
       }
     }
+
+    // if (isMultiselect(selection)) {
+    //   //
+    // } else {
+    //   if (selection === prevSelection) {
+    //     const exactMatchedOption = visibleOptions.find(
+    //       option =>
+    //         option.displayName === inputValue || option.value === inputValue,
+    //     );
+
+    //     // check if inputValue is matches a valid option
+    //     // Set the selection to that value if the component is not controlled
+    //     if (exactMatchedOption && !value) {
+    //       setSelection(exactMatchedOption.value as SelectValueType<M>);
+    //     } else {
+    //       // Revert the value to the previous selection
+    //       const displayName =
+    //         getDisplayNameForValue(
+    //           selection as SelectValueType<false>,
+    //           allOptions,
+    //         ) ?? '';
+    //       setInputValue(displayName);
+    //     }
+    //   }
+    // }
   }, [
     allOptions,
     inputValue,
     isMultiselect,
     prevSelection,
     selection,
+    updateSelection,
     value,
     visibleOptions,
   ]);
