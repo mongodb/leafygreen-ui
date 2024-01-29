@@ -1,5 +1,16 @@
 # @leafygreen-ui/date-picker
 
+## 0.2.0
+
+### Minor Changes
+
+- e0b4080c: Extends [Popover props](https://www.mongodb.design/component/popover/documentation/) but omits the following props: `usePortal`, `refEl`, `children`, `className`, `onClick`, and `active`. [LG-3930](https://jira.mongodb.org/browse/LG-3930)
+
+### Patch Changes
+
+- a8b717c7: Modify `DatePickerMenu.stories.tsx` to exclude the current date, as it caused daily chromatic changes.
+- ba76002f: Applies a CSS transition duration of 100ms to enhance the hover and focus styles on calendar cells.
+
 ## 0.1.0
 
 ### Minor Changes
