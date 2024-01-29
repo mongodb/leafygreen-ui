@@ -16,6 +16,7 @@ import isUndefined from 'lodash/isUndefined';
 
 import Button from '@leafygreen-ui/button';
 import { keyMap } from '@leafygreen-ui/lib';
+import { eventContainingTargetValue } from '@leafygreen-ui/testing-lib';
 
 import { OptionObject } from '../ComboboxOption/ComboboxOption.types';
 import {
@@ -453,7 +454,9 @@ describe('packages/combobox', () => {
         const onInputChange = jest.fn();
         const { inputEl } = renderCombobox(select, { onInputChange });
         userEvent.type(inputEl, 'abc');
-        expect(onInputChange).toHaveBeenCalledWith('abc');
+        expect(onInputChange).toHaveBeenCalledWith(
+          eventContainingTargetValue('abc'),
+        );
       });
 
       test('Blurring the input after typing a valid value fires onChange', async () => {

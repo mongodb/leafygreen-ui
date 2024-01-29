@@ -166,7 +166,6 @@ export function Combobox<M extends boolean>({
   }, [inputValueProp]);
 
   const updateInputValue = (newInputVal: string) => {
-    // console.trace('updateInputValue', newInputVal);
     setInputValue(newInputVal);
   };
 
@@ -947,12 +946,13 @@ export function Combobox<M extends boolean>({
   };
 
   // Fired onChange
-  const handleInputChange: ChangeEventHandler<HTMLInputElement> = ({
-    target: { value },
-  }: React.ChangeEvent<HTMLInputElement>) => {
-    updateInputValue(value);
+  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    updateInputValue(e.target.value);
     // fire any filter function passed in
-    onFilter?.(value);
+    onFilter?.(e.target.value);
+    onInputChange?.(e);
   };
 
   const handleClearButtonFocus: FocusEventHandler<HTMLButtonElement> = () => {

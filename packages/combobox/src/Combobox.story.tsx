@@ -83,13 +83,12 @@ const meta: StoryMetaType<typeof Combobox> = {
     label: 'Choose a fruit',
     description: 'Please pick fruit(s)',
     placeholder: 'Select fruit',
-    multiselect: true,
+    multiselect: false,
     darkMode: false,
     disabled: false,
     clearable: true,
     errorMessage: 'No Pomegranates!',
     children: getComboboxOptions(),
-    inputValue: 'abc',
   },
 
   argTypes: {
