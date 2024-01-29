@@ -2,7 +2,6 @@ import { ChildProcess } from 'child_process';
 import xSpawn from 'cross-spawn';
 import fsx from 'fs-extra';
 
-// const withLocalTmpDir = require('with-local-tmp-dir')
 import { installPackages } from './install';
 import { MockChildProcess } from './mocks.testutils';
 
