@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/date-picker",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "LeafyGreen UI Kit Date Picker",
   "license": "Apache-2.0",
   "main": "./dist/index.js",
@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@leafygreen-ui/button": "^21.0.7",
-    "@leafygreen-ui/modal": "^16.0.3",
+    "@leafygreen-ui/modal": "^16.0.4",
     "@leafygreen-ui/testing-lib": "^0.4.0",
     "mockdate": "^3.0.5",
     "storybook-mock-date-decorator": "^1.0.1",
