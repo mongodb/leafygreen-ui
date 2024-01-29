@@ -20,6 +20,7 @@
     "clean": "npm-run-all --parallel clean:*",
     "clean:builds": "rm -rf {packages,tools}/*/{dist,tsconfig.tsbuildinfo,stories.js}",
     "clean:modules": "rm -rf node_modules {packages,tools}/*/node_modules",
+    "clean:tests": "jest --clearCache",
     "fix": "lg lint --fix",
     "link": "lg link",
     "lint": "lg lint",
