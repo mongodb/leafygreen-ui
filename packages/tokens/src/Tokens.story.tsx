@@ -70,6 +70,7 @@ export const Spacing = () => (
     <div
       className={css`
         display: flex;
+        flex-direction: column;
       `}
     >
       {Object.keys(spacing)
