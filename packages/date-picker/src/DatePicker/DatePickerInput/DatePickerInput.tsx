@@ -5,7 +5,7 @@ import React, {
   KeyboardEventHandler,
   MouseEventHandler,
 } from 'react';
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 
 import { isInvalidDateObject, isSameUTCDay } from '@leafygreen-ui/date-utils';
 import { createSyntheticEvent, keyMap } from '@leafygreen-ui/lib';

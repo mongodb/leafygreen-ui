@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React, { ReactElement } from 'react';
 import { Args, StoryFn } from '@storybook/react';
-import { entries } from 'lodash';
+import entries from 'lodash/entries';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { GeneratedStoryConfig } from '@leafygreen-ui/lib';

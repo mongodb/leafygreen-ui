@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { isUndefined } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 
 import { ToastContext } from '../ToastContext';
 import { ToastContextProps } from '../ToastContext.types';

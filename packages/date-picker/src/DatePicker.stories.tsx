@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { StoryFn } from '@storybook/react';
-import { isNull, isUndefined } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 
 import Button from '@leafygreen-ui/button';
 import {
@@ -110,12 +111,17 @@ export const LiveExample: StoryFn<typeof DatePicker> = props => {
         value={value}
         onDateChange={v => {
           // eslint-disable-next-line no-console
-          console.log('Storybook: onDateChange', { v });
+          console.log('Storybook: onDateChange', {
+            value: v!.toUTCString(),
+            'value with local browser timezone': v,
+          });
           setValue(v);
         }}
         handleValidation={date =>
           // eslint-disable-next-line no-console
-          console.log('Storybook: handleValidation', { date })
+          console.log('Storybook: handleValidation', {
+            'date with local browser timezone': date,
+          })
         }
         onChange={e =>
           // eslint-disable-next-line no-console

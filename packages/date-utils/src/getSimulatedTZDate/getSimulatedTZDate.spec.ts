@@ -1,4 +1,4 @@
-import { padStart } from 'lodash';
+import padStart from 'lodash/padStart';
 
 import { Month } from '../constants';
 import { newUTC } from '../newUTC';

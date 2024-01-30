@@ -1,4 +1,4 @@
-import { truncate } from 'lodash';
+import truncate from 'lodash/truncate';
 
 import { Month } from '../constants';
 import { normalizeLocale } from '../normalizeLocale';

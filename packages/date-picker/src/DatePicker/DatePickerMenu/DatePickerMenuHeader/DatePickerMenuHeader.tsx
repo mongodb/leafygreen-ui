@@ -61,7 +61,7 @@ export const DatePickerMenuHeader = forwardRef<
    * min: new Date(Date.UTC(2038, Month.March, 19));
    * current month date: new Date(Date.UTC(2038, Month.March, 18));
    */
-  const isMonthInValid = (dir: 'left' | 'right') => {
+  const isMonthInvalid = (dir: 'left' | 'right') => {
     const isOnLastValidMonth = isSameUTCMonth(
       month,
       dir === 'left' ? max : min,
@@ -88,7 +88,7 @@ export const DatePickerMenuHeader = forwardRef<
       // min: new Date(Date.UTC(1970, Month.January, 1));
       // current month date: new Date(Date.UTC(1969, Month.November, 19));
       // right chevron will change the month back to January 1970
-      if (isMonthInValid(dir)) {
+      if (isMonthInvalid(dir)) {
         const closestValidDate = dir === 'left' ? max : min;
         const newMonthIndex = closestValidDate.getUTCMonth();
         const newMonth = setUTCMonth(closestValidDate, newMonthIndex);
@@ -113,7 +113,7 @@ export const DatePickerMenuHeader = forwardRef<
       <IconButton
         ref={refs.chevronButtonRefs.left}
         aria-label={
-          isMonthInValid('left') ? 'Previous valid month' : 'Previous month'
+          isMonthInvalid('left') ? 'Previous valid month' : 'Previous month'
         }
         disabled={shouldChevronBeDisabled('left', month, min)}
         onClick={handleChevronClick('left')}
@@ -123,7 +123,9 @@ export const DatePickerMenuHeader = forwardRef<
       <div className={menuHeaderSelectContainerStyles}>
         <Select
           {...selectElementProps}
-          aria-label="Select month"
+          aria-label={`Select month - ${
+            monthOptions[month.getUTCMonth()].long
+          } selected`}
           value={month.getUTCMonth().toString()}
           onChange={m => {
             const newMonth = setUTCMonth(month, Number(m));
@@ -147,7 +149,9 @@ export const DatePickerMenuHeader = forwardRef<
         </Select>
         <Select
           {...selectElementProps}
-          aria-label="Select year"
+          aria-label={`Select year - ${month
+            .getUTCFullYear()
+            .toString()} selected`}
           value={month.getUTCFullYear().toString()}
           onChange={y => {
             const newMonth = setUTCYear(month, Number(y));
@@ -167,7 +171,7 @@ export const DatePickerMenuHeader = forwardRef<
       </div>
       <IconButton
         ref={refs.chevronButtonRefs.right}
-        aria-label={isMonthInValid('right') ? 'Next valid month' : 'Next month'}
+        aria-label={isMonthInvalid('right') ? 'Next valid month' : 'Next month'}
         disabled={shouldChevronBeDisabled('right', month, max)}
         onClick={handleChevronClick('right')}
       >

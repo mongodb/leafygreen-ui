@@ -2,7 +2,8 @@
 import React, { useRef, useState } from 'react';
 import { Decorator, StoryFn, StoryObj } from '@storybook/react';
 import { userEvent, within } from '@storybook/testing-library';
-import { last, omit } from 'lodash';
+import last from 'lodash/last';
+import omit from 'lodash/omit';
 import MockDate from 'mockdate';
 
 import {
@@ -221,7 +222,9 @@ export const OpenMonthMenu: DatePickerMenuInteractionTestType = {
   play: async ctx => {
     const canvas = within(ctx.canvasElement.parentElement!);
     await canvas.findByRole('listbox');
-    const monthMenu = await canvas.findByLabelText('Select month');
+    const monthMenu = await canvas.findByLabelText('Select month', {
+      exact: false,
+    });
     userEvent.click(monthMenu);
   },
 };
@@ -242,7 +245,9 @@ export const OpenYearMenu: DatePickerMenuInteractionTestType = {
   play: async ctx => {
     const canvas = within(ctx.canvasElement.parentElement!);
     await canvas.findByRole('listbox');
-    const monthMenu = await canvas.findByLabelText('Select year');
+    const monthMenu = await canvas.findByLabelText('Select year', {
+      exact: false,
+    });
     userEvent.click(monthMenu);
   },
 };

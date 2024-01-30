@@ -1,5 +1,20 @@
 # @lg-tools/cli
 
+## 0.5.5
+
+### Patch Changes
+
+- Updated dependencies [2bceccb1]
+- Updated dependencies [90bba7b2]
+  - @lg-tools/slackbot@0.2.3
+  - @lg-tools/validate@0.1.7
+  - @lg-tools/create@0.2.4
+  - @lg-tools/build@0.3.2
+  - @lg-tools/link@0.2.0
+  - @lg-tools/test@0.4.1
+  - @lg-tools/install@0.1.5
+  - @lg-tools/update@0.1.5
+
 ## 0.5.4
 
 ### Patch Changes

@@ -66,8 +66,8 @@ describe('packages/date-picker/shared/date-input-box', () => {
   describe('Rendering', () => {
     describe.each(['day', 'month', 'year'])('%p', segment => {
       test('renders the correct aria attributes', () => {
-        const result = renderDateInputBox();
-        const input = result.getByLabelText(segment);
+        const { getByLabelText } = renderDateInputBox();
+        const input = getByLabelText(segment);
 
         // each segment has appropriate aria label
         expect(input).toHaveAttribute('aria-label', segment);
@@ -76,24 +76,30 @@ describe('packages/date-picker/shared/date-input-box', () => {
 
     describe('renders segments in the correct order', () => {
       test('iso8601', () => {
-        const result = renderDateInputBox(undefined, { locale: 'iso8601' });
-        const segments = result.getAllByRole('spinbutton');
+        const { getAllByRole } = renderDateInputBox(undefined, {
+          locale: 'iso8601',
+        });
+        const segments = getAllByRole('spinbutton');
         expect(segments[0]).toHaveAttribute('aria-label', 'year');
         expect(segments[1]).toHaveAttribute('aria-label', 'month');
         expect(segments[2]).toHaveAttribute('aria-label', 'day');
       });
 
       test('en-US', () => {
-        const result = renderDateInputBox(undefined, { locale: 'en-US' });
-        const segments = result.getAllByRole('spinbutton');
+        const { getAllByRole } = renderDateInputBox(undefined, {
+          locale: 'en-US',
+        });
+        const segments = getAllByRole('spinbutton');
         expect(segments[0]).toHaveAttribute('aria-label', 'month');
         expect(segments[1]).toHaveAttribute('aria-label', 'day');
         expect(segments[2]).toHaveAttribute('aria-label', 'year');
       });
 
       test('en-UK', () => {
-        const result = renderDateInputBox(undefined, { locale: 'en-UK' });
-        const segments = result.getAllByRole('spinbutton');
+        const { getAllByRole } = renderDateInputBox(undefined, {
+          locale: 'en-UK',
+        });
+        const segments = getAllByRole('spinbutton');
         expect(segments[0]).toHaveAttribute('aria-label', 'day');
         expect(segments[1]).toHaveAttribute('aria-label', 'month');
         expect(segments[2]).toHaveAttribute('aria-label', 'year');
