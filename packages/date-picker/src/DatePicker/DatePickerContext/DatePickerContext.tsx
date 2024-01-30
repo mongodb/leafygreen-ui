@@ -8,7 +8,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { isNull } from 'lodash';
+import isNull from 'lodash/isNull';
 
 import {
   DateType,
