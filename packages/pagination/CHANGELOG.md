@@ -1,5 +1,16 @@
 # @leafygreen-ui/pagination
 
+## 1.0.19
+
+### Patch Changes
+
+- 2bceccb1: Fixes `lodash` imports to use default exports of specific functions to reduce component's bundle size.
+- Updated dependencies [2bceccb1]
+- Updated dependencies [2645cd50]
+  - @leafygreen-ui/hooks@8.1.1
+  - @leafygreen-ui/lib@13.2.1
+  - @leafygreen-ui/tokens@2.3.0
+
 ## 1.0.18
 
 ### Patch Changes

@@ -1,4 +1,4 @@
-import { sample } from 'lodash';
+import sample from 'lodash/sample';
 
 export function generateGreeting(length: number) {
   const EMOJIS = [

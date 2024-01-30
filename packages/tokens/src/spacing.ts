@@ -8,11 +8,11 @@ const spacing = {
   300: 12,
   400: 16,
 
-  /**  @deprecated */
+  /**  @deprecated use 100 instead */
   1: 4,
-  /**  @deprecated */
+  /**  @deprecated use 200 instead */
   2: 8,
-  /**  @deprecated */
+  /**  @deprecated use 400 instead*/
   3: 16,
   /**  @deprecated */
   4: 24,
