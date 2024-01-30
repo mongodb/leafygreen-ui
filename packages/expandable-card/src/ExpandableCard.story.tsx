@@ -23,7 +23,7 @@ const meta: StoryMetaType<typeof ExpandableCard> = {
       combineArgs: {
         darkMode: [false, true],
         description: [undefined, loremIpsum],
-        flagText: [undefined, 'optional'],
+        flagText: [undefined, 'title'],
         isOpen: [false, true],
       },
     },
@@ -31,7 +31,7 @@ const meta: StoryMetaType<typeof ExpandableCard> = {
   args: {
     title: 'Title',
     description: loremIpsum,
-    flagText: 'optional',
+    flagText: 'title',
     children:
       'Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.',
   },
