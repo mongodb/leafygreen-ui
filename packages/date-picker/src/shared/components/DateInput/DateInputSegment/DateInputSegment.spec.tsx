@@ -204,7 +204,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
         );
       });
 
-      test('resets the value', () => {
+      test('resets the value when the value is complete', () => {
         const { input } = renderSegment({
           value: '26',
           onChange: onChangeHandler,
@@ -220,7 +220,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
   describe('Keyboard', () => {
     describe('Backspace', () => {
-      test('deletes value in the input', () => {
+      test('clears the input when there is a value', () => {
         const { input } = renderSegment({
           value: '26',
           onChange: onChangeHandler,
@@ -228,17 +228,16 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
         userEvent.type(input, '{backspace}');
         expect(onChangeHandler).toHaveBeenCalledWith(
-          expect.objectContaining({ value: '2' }),
+          expect.objectContaining({ value: '' }),
         );
       });
 
-      test('fully clears the input', () => {
+      test('clears the input when tying a value', () => {
         const { input } = renderSegment({
-          value: '2',
           onChange: onChangeHandler,
         });
 
-        userEvent.type(input, '{backspace}');
+        userEvent.type(input, '2{backspace}');
         expect(onChangeHandler).toHaveBeenCalledWith(
           expect.objectContaining({ value: '' }),
         );
