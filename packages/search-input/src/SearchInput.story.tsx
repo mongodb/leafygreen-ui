@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
 import React, { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import { StoryFn } from '@storybook/react';
-import { kebabCase, startCase } from 'lodash';
+import kebabCase from 'lodash/kebabCase';
+import startCase from 'lodash/startCase';
 
 import { css } from '@leafygreen-ui/emotion';
 import {
