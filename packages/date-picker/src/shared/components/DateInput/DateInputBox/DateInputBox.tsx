@@ -151,7 +151,6 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
           }
         }
 
-        console.log('handleSegmentInputChange🌼', segmentChangeEvent);
         setSegment(segmentName, segmentValue);
         onSegmentChange?.(segmentChangeEvent);
       };

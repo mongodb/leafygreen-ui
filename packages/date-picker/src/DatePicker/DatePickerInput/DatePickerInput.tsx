@@ -111,6 +111,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
 
       switch (key) {
         case keyMap.ArrowLeft: {
+          // Prevent the cursor on tab and initial click
           e.preventDefault();
           // if input is empty,
           // set focus to prev. input (if it exists)
@@ -128,6 +129,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
         }
 
         case keyMap.ArrowRight: {
+          // Prevent the cursor on tab and initial click
           e.preventDefault();
           // if input is empty,
           // set focus to next. input (if it exists)

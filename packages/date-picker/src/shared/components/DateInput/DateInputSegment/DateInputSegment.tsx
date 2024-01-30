@@ -83,7 +83,6 @@ export const DateInputSegment = React.forwardRef<
       const hasValueChanged = newValue !== value;
 
       if (hasValueChanged) {
-        console.log('handleChange🦞', newValue);
         onChange({
           segment,
           value: newValue,
