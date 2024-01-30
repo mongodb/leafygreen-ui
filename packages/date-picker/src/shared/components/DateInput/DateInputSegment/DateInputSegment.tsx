@@ -99,7 +99,7 @@ export const DateInputSegment = React.forwardRef<
         target: HTMLInputElement;
       };
 
-      // if a number is pressed and the value is equal to the charsPerSegment, reset the input
+      // if a number is pressed and the value length is equal to the charsPerSegment, reset the input
       if (isFinite(Number(key))) {
         if (target.value.length === charsPerSegment[segment]) {
           target.value = '';
