@@ -1408,7 +1408,6 @@ describe('packages/date-picker', () => {
             test('focuses the previous segment when the value starts with 0', () => {
               const { monthInput, yearInput } = renderDatePicker({});
               userEvent.type(monthInput, '04{arrowleft}{arrowleft}');
-              // type 04 > auto focuses to dayInput > arrowLeft(monthInput is focused) => arrowLeft(yearInput is focused)
               expect(yearInput).toHaveFocus();
             });
 
