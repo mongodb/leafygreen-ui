@@ -151,7 +151,6 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
         }
 
         case keyMap.Backspace: {
-          target.value = '';
           if (isSegmentEmpty) {
             // prevent the backspace in the previous segment
             e.preventDefault();
@@ -213,7 +212,6 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
         const target = segmentRefs[segment].current;
 
         if (target) {
-          console.log('🌽🌽🌽🌽handleSegmentChange🌽🌽🌽🌽', target.value);
           const changeEvent = new Event('change');
           const reactEvent = createSyntheticEvent<
             ChangeEvent<HTMLInputElement>

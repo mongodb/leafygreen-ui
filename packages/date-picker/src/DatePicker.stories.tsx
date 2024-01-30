@@ -99,8 +99,6 @@ export default meta;
 export const LiveExample: StoryFn<typeof DatePicker> = props => {
   const [value, setValue] = useState<DateType>();
 
-  console.log('🥶', { value });
-
   return (
     <div
       className={css`

@@ -81,7 +81,7 @@ export const DateInputSegment = React.forwardRef<
       );
 
       const hasValueChanged = newValue !== value;
-      console.log('🧤🧤🧤🧤', { value, newValue });
+
       if (hasValueChanged) {
         console.log('handleChange🦞', newValue);
         onChange({
@@ -99,8 +99,6 @@ export const DateInputSegment = React.forwardRef<
       const { key, target } = e as React.KeyboardEvent<HTMLInputElement> & {
         target: HTMLInputElement;
       };
-
-      console.log('handleKeyDown🙏🏾🙏🏾🙏🏾');
 
       // if a number is pressed and the value is equal to the charsPerSegment, reset the input
       if (isFinite(Number(key))) {
@@ -155,6 +153,10 @@ export const DateInputSegment = React.forwardRef<
 
         case keyMap.Space: {
           e.preventDefault();
+          break;
+        }
+
+        default: {
           break;
         }
       }
