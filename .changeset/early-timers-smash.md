@@ -16,4 +16,4 @@
 '@lg-tools/build': patch
 ---
 
-Fixes `lodash` imports to use default exports of specific functions toenable tree-shaking and reduce bundle size.
+Fixes `lodash` imports to use default exports of specific functions to reduce component's bundle size.
