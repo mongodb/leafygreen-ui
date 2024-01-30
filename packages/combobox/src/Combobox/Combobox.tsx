@@ -33,6 +33,7 @@ import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
+import { Size } from '@leafygreen-ui/tokens';
 
 import { ComboboxChip } from '../ComboboxChip';
 import { ComboboxContext } from '../ComboboxContext';
@@ -79,7 +80,6 @@ import {
   multiselectInputElementStyle,
 } from './Combobox.styles';
 import { ComboboxProps } from './Combobox.types';
-import { Size } from '@leafygreen-ui/tokens';
 
 /**
  * Combobox is a combination of a Select and TextInput,
