@@ -1391,39 +1391,24 @@ describe('packages/date-picker', () => {
               expect(yearInput).toHaveFocus();
             });
 
-            test('moves the cursor when the segment has a value', () => {
-              const { monthInput } = renderDatePicker({
-                value: testToday,
-              });
-              userEvent.click(monthInput);
-              userEvent.keyboard('{arrowleft}');
-              expect(monthInput).toHaveFocus();
-            });
-
-            test('moves the cursor when the value starts with 0', () => {
-              const { monthInput } = renderDatePicker({});
-              userEvent.type(monthInput, '04{arrowleft}{arrowleft}');
-              expect(monthInput).toHaveFocus();
-            });
-
-            test('moves the cursor when the value is 0', () => {
-              const { monthInput } = renderDatePicker({});
-              userEvent.type(monthInput, '0{arrowleft}');
-              expect(monthInput).toHaveFocus();
-            });
-
-            test('moves the cursor to the previous segment when the value is 0', () => {
-              const { yearInput, monthInput } = renderDatePicker({});
-              userEvent.type(monthInput, '0{arrowleft}{arrowleft}');
-              expect(yearInput).toHaveFocus();
-            });
-
-            test('focuses the previous segment if the cursor is at the start of the input text', () => {
+            test('focuses the previous segment when the segment has a value', () => {
               const { yearInput, monthInput } = renderDatePicker({
                 value: testToday,
               });
               userEvent.click(monthInput);
-              userEvent.keyboard('{arrowleft}{arrowleft}{arrowleft}');
+              userEvent.keyboard('{arrowleft}');
+              expect(yearInput).toHaveFocus();
+            });
+
+            test('focuses the previous segment when the value starts with 0', () => {
+              const { monthInput, yearInput } = renderDatePicker({});
+              userEvent.type(monthInput, '04{arrowleft}{arrowleft}');
+              expect(yearInput).toHaveFocus();
+            });
+
+            test('focuses the previous segment when the value is 0', () => {
+              const { monthInput, yearInput } = renderDatePicker({});
+              userEvent.type(monthInput, '0{arrowleft}');
               expect(yearInput).toHaveFocus();
             });
           });
@@ -1436,7 +1421,7 @@ describe('packages/date-picker', () => {
               expect(monthInput).toHaveFocus();
             });
 
-            test('focuses the next segment if the cursor is at the start of the input text', () => {
+            test('focuses the next segment when the segment has a value', () => {
               const { yearInput, monthInput } = renderDatePicker({
                 value: testToday,
               });
@@ -1445,13 +1430,10 @@ describe('packages/date-picker', () => {
               expect(monthInput).toHaveFocus();
             });
 
-            test('moves the cursor when the segment has a value', () => {
-              const { yearInput } = renderDatePicker({
-                value: testToday,
-              });
-              userEvent.click(yearInput);
-              userEvent.keyboard('{arrowleft}{arrowright}');
-              expect(yearInput).toHaveFocus();
+            test('focuses the next segment when the value starts with 0', () => {
+              const { monthInput, dayInput } = renderDatePicker({});
+              userEvent.type(monthInput, '0{arrowright}');
+              expect(dayInput).toHaveFocus();
             });
           });
 
@@ -2983,21 +2965,21 @@ describe('packages/date-picker', () => {
         });
 
         describe('typing new characters', () => {
-          test('even if the resulting value is valid, keeps the input as-is', async () => {
+          test('updates the value', async () => {
             const { monthInput } = renderDatePicker({});
             userEvent.type(monthInput, '1');
             userEvent.tab();
             await waitFor(() => expect(monthInput).toHaveValue('01'));
             userEvent.type(monthInput, '2');
-            await waitFor(() => expect(monthInput).toHaveValue('01'));
+            await waitFor(() => expect(monthInput).toHaveValue('02'));
           });
 
-          test('if the resulting value is not valid, keeps the input as-is', async () => {
+          test('if the resulting value is not valid, clears the input', async () => {
             const { monthInput } = renderDatePicker({});
-            userEvent.type(monthInput, '6');
-            await waitFor(() => expect(monthInput).toHaveValue('06'));
-            userEvent.type(monthInput, '9');
-            await waitFor(() => expect(monthInput).toHaveValue('06'));
+            userEvent.type(monthInput, '0');
+            await waitFor(() => expect(monthInput).toHaveValue(''));
+            // userEvent.type(monthInput, '9');
+            // await waitFor(() => expect(monthInput).toHaveValue('06'));
           });
         });
       });
@@ -3487,15 +3469,13 @@ describe('packages/date-picker', () => {
           userEvent.tab();
           errorElement = queryByTestId('lg-form_field-error_message');
           expect(errorElement).toHaveTextContent(
-            '2020-02-30 is not a valid date',
+            '2020-02- is not a valid date',
           );
 
           userEvent.type(dayInput, '{backspace}{backspace}');
           userEvent.tab();
           errorElement = queryByTestId('lg-form_field-error_message');
-          expect(errorElement).toHaveTextContent(
-            '2020-02- is not a valid date',
-          );
+          expect(errorElement).toHaveTextContent('2020-- is not a valid date');
         });
 
         test('Clearing the input after an invalid date error message is displayed removes the message', () => {

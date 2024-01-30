@@ -139,6 +139,8 @@ export const DateInputSegment = React.forwardRef<
         case keyMap.Backspace: {
           const numChars = value.length;
 
+          // target.value = '';
+
           // If we've cleared the input with backspace,
           // fire the custom change event
           if (numChars === 1) {

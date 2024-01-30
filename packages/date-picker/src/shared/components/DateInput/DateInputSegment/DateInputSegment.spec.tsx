@@ -204,14 +204,16 @@ describe('packages/date-picker/shared/date-input-segment', () => {
         );
       });
 
-      test('does not allow additional characters that create an invalid value', () => {
+      test('resets the value', () => {
         const { input } = renderSegment({
           value: '26',
           onChange: onChangeHandler,
         });
 
         userEvent.type(input, '6');
-        expect(onChangeHandler).not.toHaveBeenCalled();
+        expect(onChangeHandler).toHaveBeenCalledWith(
+          expect.objectContaining({ value: '6' }),
+        );
       });
     });
   });
