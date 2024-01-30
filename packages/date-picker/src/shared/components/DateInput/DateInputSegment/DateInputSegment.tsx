@@ -1,7 +1,7 @@
 import React, { ChangeEventHandler, KeyboardEventHandler } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { useForwardedRef, usePrevious } from '@leafygreen-ui/hooks';
+import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
@@ -74,12 +74,6 @@ export const DateInputSegment = React.forwardRef<
     const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
       const { target } = e;
 
-      // console.log({
-      //   value: target.value,
-      //   segment: charsPerSegment[segment],
-      //   last: target.value.slice(-1),
-      // });
-
       const newValue = getNewSegmentValueFromInputValue(
         segment,
         value,
@@ -139,25 +133,19 @@ export const DateInputSegment = React.forwardRef<
         }
 
         case keyMap.Backspace: {
-          // const numChars = value.length;
           const preVal = target.value;
 
-          console.log({ preVal });
-
-          // always reset the input on backspace
+          // reset the input on backspace
           target.value = '';
 
-          // If we've cleared the input with backspace,
-          // fire the custom change event
-          // if (numChars === 1) {
-          console.log('🔥🔥🔥🔥🔥', target.value, preVal);
+          /** Fire a custom change event when the backspace key is pressed */
           onChange({
             segment,
             value: '',
             meta: { key },
           });
-          // }
 
+          // Prevent the onKeyDown handler inside DatePickerInput from firing. Because we reset the value on backspace, that will trigger the previous segment to focus but we want the focus to remain inside the current segment.
           if (preVal) {
             e.stopPropagation();
           }
@@ -185,7 +173,6 @@ export const DateInputSegment = React.forwardRef<
         ref={inputRef}
         type="text"
         pattern={pattern}
-        // maxLength={charsPerSegment[segment]}
         role="spinbutton"
         value={value}
         min={min}

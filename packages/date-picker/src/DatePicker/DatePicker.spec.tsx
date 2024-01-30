@@ -1362,11 +1362,18 @@ describe('packages/date-picker', () => {
           expect(dayInput.value).toBe('');
         });
 
-        test('deletes the whole value on multiple presses', () => {
+        test('keeps the focus in the current input', () => {
           const { monthInput } = renderDatePicker();
           userEvent.type(monthInput, '11');
+          userEvent.type(monthInput, '{backspace}');
+          expect(monthInput).toHaveFocus();
+        });
+
+        test('focuses the previous segment after pressing backspace twice', () => {
+          const { monthInput, yearInput } = renderDatePicker();
+          userEvent.type(monthInput, '11');
           userEvent.type(monthInput, '{backspace}{backspace}');
-          expect(monthInput.value).toBe('');
+          expect(yearInput).toHaveFocus();
         });
 
         test('focuses the previous segment if current segment is empty', () => {
@@ -1401,6 +1408,7 @@ describe('packages/date-picker', () => {
             test('focuses the previous segment when the value starts with 0', () => {
               const { monthInput, yearInput } = renderDatePicker({});
               userEvent.type(monthInput, '04{arrowleft}{arrowleft}');
+              // type 04 > auto focuses to dayInput > arrowLeft(monthInput is focused) => arrowLeft(yearInput is focused)
               expect(yearInput).toHaveFocus();
             });
 
@@ -2976,8 +2984,6 @@ describe('packages/date-picker', () => {
             userEvent.type(monthInput, '0');
             userEvent.tab();
             await waitFor(() => expect(monthInput).toHaveValue(''));
-            // userEvent.type(monthInput, '9');
-            // await waitFor(() => expect(monthInput).toHaveValue('06'));
           });
         });
       });

@@ -77,7 +77,6 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       if (!disabled) {
         openMenu(e);
         const { target } = e;
-        // e.preventDefault();
         const segmentToFocus = getSegmentToFocus({
           target,
           formatParts,
