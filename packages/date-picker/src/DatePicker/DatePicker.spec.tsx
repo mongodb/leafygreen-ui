@@ -1359,9 +1359,7 @@ describe('packages/date-picker', () => {
         test('deletes any value in the input', () => {
           const { dayInput } = renderDatePicker();
           userEvent.type(dayInput, '26{backspace}');
-          expect(dayInput.value).toBe('2');
-          userEvent.tab();
-          expect(dayInput.value).toBe('02');
+          expect(dayInput.value).toBe('');
         });
 
         test('deletes the whole value on multiple presses', () => {
@@ -2947,7 +2945,6 @@ describe('packages/date-picker', () => {
             userEvent.type(monthInput, '7');
             userEvent.type(dayInput, '4');
 
-            yearInput.setSelectionRange(0, 4);
             userEvent.type(yearInput, '{backspace}');
             userEvent.type(yearInput, '2');
             expect(yearInput).toHaveValue('2');
@@ -2959,8 +2956,8 @@ describe('packages/date-picker', () => {
             userEvent.type(monthInput, '7');
             userEvent.type(dayInput, '4');
 
-            userEvent.type(yearInput, '{backspace}{backspace}');
-            expect(yearInput).toHaveValue('20');
+            userEvent.type(yearInput, '{backspace}');
+            expect(yearInput).toHaveValue('');
           });
         });
 
@@ -2977,6 +2974,7 @@ describe('packages/date-picker', () => {
           test('if the resulting value is not valid, clears the input', async () => {
             const { monthInput } = renderDatePicker({});
             userEvent.type(monthInput, '0');
+            userEvent.tab();
             await waitFor(() => expect(monthInput).toHaveValue(''));
             // userEvent.type(monthInput, '9');
             // await waitFor(() => expect(monthInput).toHaveValue('06'));

@@ -152,10 +152,11 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
         }
 
         case keyMap.Backspace: {
+          target.value = '';
           if (isSegmentEmpty) {
             // prevent the backspace in the previous segment
             e.preventDefault();
-            // target.value = '';
+
             const segmentToFocus = getRelativeSegmentRef('prev', {
               segment: target,
               formatParts,

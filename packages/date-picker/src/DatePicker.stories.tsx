@@ -99,6 +99,8 @@ export default meta;
 export const LiveExample: StoryFn<typeof DatePicker> = props => {
   const [value, setValue] = useState<DateType>();
 
+  console.log('🥶', { value });
+
   return (
     <div
       className={css`
@@ -116,6 +118,10 @@ export const LiveExample: StoryFn<typeof DatePicker> = props => {
         handleValidation={date =>
           // eslint-disable-next-line no-console
           console.log('Storybook: handleValidation', { date })
+        }
+        onChange={e =>
+          // eslint-disable-next-line no-console
+          console.log('Storybook: onChange🚨', { value: e.target.value })
         }
       />
       <br />

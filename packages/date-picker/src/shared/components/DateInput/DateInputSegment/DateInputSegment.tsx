@@ -87,8 +87,9 @@ export const DateInputSegment = React.forwardRef<
       );
 
       const hasValueChanged = newValue !== value;
-
+      console.log('🧤🧤🧤🧤', { value, newValue });
       if (hasValueChanged) {
+        console.log('handleChange🦞', newValue);
         onChange({
           segment,
           value: newValue,
@@ -105,8 +106,9 @@ export const DateInputSegment = React.forwardRef<
         target: HTMLInputElement;
       };
 
-      // console.log({ value: target.value, key });
+      console.log('handleKeyDown🙏🏾🙏🏾🙏🏾');
 
+      // if a number is pressed and the value is equal to the charsPerSegment, reset the input
       if (isFinite(Number(key))) {
         if (target.value.length === charsPerSegment[segment]) {
           target.value = '';
@@ -137,19 +139,20 @@ export const DateInputSegment = React.forwardRef<
         }
 
         case keyMap.Backspace: {
-          const numChars = value.length;
+          // const numChars = value.length;
 
           // target.value = '';
 
           // If we've cleared the input with backspace,
           // fire the custom change event
-          if (numChars === 1) {
-            onChange({
-              segment,
-              value: '',
-              meta: { key },
-            });
-          }
+          // if (numChars === 1) {
+          console.log('🔥🔥🔥🔥🔥', target.value);
+          onChange({
+            segment,
+            value: '',
+            meta: { key },
+          });
+          // }
           break;
         }
 

@@ -112,6 +112,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
             (isDirty || isEverySegmentFilled(newSegments)));
 
         if (shouldSetValue) {
+          console.log({ newDate });
           setValue?.({
             value: newDate,
             segments: newSegments,
@@ -129,6 +130,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
     const handleSegmentInputChange: DateInputSegmentChangeEventHandler =
       segmentChangeEvent => {
         let segmentValue = segmentChangeEvent.value;
+        console.log('handleSegmentInputChange🍅🍅🍅🍅🍅', { segmentValue });
         const { segment: segmentName, meta } = segmentChangeEvent;
         const changedViaArrowKeys =
           meta?.key === keyMap.ArrowDown || meta?.key === keyMap.ArrowUp;
@@ -153,6 +155,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
           }
         }
 
+        console.log('handleSegmentInputChange🌼', segmentChangeEvent);
         setSegment(segmentName, segmentValue);
         onSegmentChange?.(segmentChangeEvent);
       };
