@@ -79,7 +79,6 @@ export const logBenchmarks = () => {
       if (Object.values(TestKeys).includes(group)) {
         if (Object.values(Metrics).includes(metric)) {
           grouped[group][metric].push(m.duration);
-          console.log({ ...m, group, metric });
         }
       }
 

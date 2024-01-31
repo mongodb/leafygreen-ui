@@ -26,15 +26,14 @@ export const useDescendant = <T extends HTMLElement>(
 ): UseDescendantReturnObject<T> => {
   const ref: React.RefObject<T> = useForwardedRef(fwdRef, null);
   const { descendants, dispatch } = useContext(context);
-
-  // const index = useRef(-1);
-
   const id = useRef(genId());
 
+  // Find the element with this id in the descendants list
   const index = useMemo(() => {
     return findDescendantIndexWithId(descendants, id.current);
   }, [descendants]);
 
+  // On render, register the element as a descendant
   useIsomorphicLayoutEffect(() => {
     const _id = id.current;
 
@@ -44,6 +43,7 @@ export const useDescendant = <T extends HTMLElement>(
       ref: ref,
     });
 
+    // On un-mount/cleanup remove the element from the descendants list
     return () => {
       dispatch({
         type: 'remove',

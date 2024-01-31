@@ -4,6 +4,7 @@ import { DescendantsList } from './Descendants.types';
 import {
   descendantsReducer,
   DescendantsReducerAction,
+  DescendantsReducerType,
   DescendantsState,
 } from './DescendantsReducer';
 
@@ -20,7 +21,7 @@ export const useInitDescendants = <
 >(): InitDescendantsReturnObject<T> => {
   const [state, dispatch] = useReducer<
     React.Reducer<DescendantsState<T>, DescendantsReducerAction<T>>
-  >(descendantsReducer, {
+  >(descendantsReducer as DescendantsReducerType<T>, {
     descendants: [] as DescendantsList<T>,
   });
 

@@ -1,3 +1,5 @@
+import { Reducer } from 'react';
+
 import { findDescendantIndexWithId } from './utils/findDescendantWithId';
 import { findDOMIndex } from './utils/findDOMIndex';
 import { insertDescendantAt } from './utils/insertAt';
@@ -19,6 +21,11 @@ export type DescendantsReducerAction<T extends HTMLElement> =
       type: 'remove';
       id: string;
     };
+
+export type DescendantsReducerType<T extends HTMLElement> = Reducer<
+  DescendantsState<T>,
+  DescendantsReducerAction<T>
+>;
 
 export const descendantsReducer = <T extends HTMLElement>(
   state: DescendantsState<T>,
@@ -49,7 +56,6 @@ export const descendantsReducer = <T extends HTMLElement>(
         const thisDescendant: Descendant<T> = {
           element,
           id: action.id,
-          index,
         };
 
         // Add the new descendant at the given index
