@@ -1,3 +1,7 @@
+---
+last_updated: 2024-02-01
+---
+
 # Descendants
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/descendants.svg)
@@ -127,9 +131,18 @@ The primary architectural difference between this package and those mentioned ab
 
 At high level this hook reads `descendants` and `dispatch` from the established context, and makes a call to `dispatch` on initial render to register itself as a descendant. On un-mount it then makes a second call to `dispatch` to remove itself from the list. A descendant's internal `id` is a ref object established once on render. Its `index` is re-calculated each time `descendants` changes.
 
+The hook can also be called with 2 optional parameters in addition to `context`. If a 2nd `ref` argument is provided, this ref object will forwarded and merged into the `ref` object returned by the hook. It's advised to use the merged ref that's returned from the hook, not the original ref you provide.
+If a 3rd `props` argument is provided, these props will be made available on the `descendants` object.
+
+1. On initial render, we call `dispatch` with the `"register"` action type
+2. When the component is unmounted, we call `dispatch` with the `"remove"` action type
+3. If the `props` object changes, we call `dispatch` with the `"update"` action type
+
 ### DescendantsReducer
 
 The DescendantsReducer holds the list of `descendants` and a `dispatch` function to modify the list.
+
+#### Register
 
 When `dispatch` is called with the `"register"` action type, we do the following:
 
@@ -141,6 +154,14 @@ When `dispatch` is called with the `"register"` action type, we do the following
    b. Create a new descendant object
    c. Duplicate the list of descendants with our new descendant inserted at the given index
    d. Return the modified list
+
+#### Remove
+
+When `dispatch` is called with the `"remove"` action type, we check if a `descendant` with provided `id` exists, and remove it from the list
+
+#### Update
+
+When `dispatch` is called with the `"update"` action type, we set the provided `props` object onto the relevant `descendant`, (only if the props have changed to avoid unnecessary re-renders)
 
 ## Evaluation & Benchmarks
 
@@ -171,9 +192,9 @@ Below are the results of 100 iterations of the above listed tests:
 ┌─────────────┬──────────┬──────────┬──────────┬──────────┬──────────┐
 │   (x100)    │  render  │  nested  │  insert  │  remove  │  select  │
 ├─────────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
-│   control   │   4.9ms  │   6.1ms  │   3.0ms  │   2.9ms  │     N/A  │
-│ pacocoursey │  37.1ms  │  44.5ms  │  17.4ms  │  17.0ms  │  11.6ms  │
-│    reach    │  50.2ms  │  60.5ms  │  21.0ms  │  13.8ms  │   9.7ms  │
-│  leafygreen │  23.4ms  │  29.2ms  │  12.5ms  │  12.5ms  │   9.1ms  │
+│   control   │   4.9ms  │   8.2ms  │   5.3ms  │   2.8ms  │     N/A  │
+│ pacocoursey │  38.5ms  │  46.1ms  │  18.6ms  │  17.6ms  │  12.7ms  │
+│    reach    │  49.8ms  │  60.5ms  │  20.3ms  │  14.9ms  │   9.2ms  │
+│  leafygreen │  27.0ms  │  32.5ms  │  14.8ms  │  14.7ms  │  10.7ms  │
 └─────────────┴──────────┴──────────┴──────────┴──────────┴──────────┘
 ```

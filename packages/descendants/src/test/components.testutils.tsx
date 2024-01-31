@@ -10,7 +10,7 @@ import {
 import { TestSelectionContext } from './testSelectionContext';
 
 // 1. Create a new Context object
-const TestDescendantContext = createDescendantsContext<HTMLDivElement>(
+export const TestDescendantContext = createDescendantsContext<HTMLDivElement>(
   'TestDescendantContext',
 );
 
@@ -32,10 +32,16 @@ export const TestParent = ({ children, ...rest }: ComponentProps<'div'>) => {
   );
 };
 
-export const TestDescendant = forwardRef<HTMLDivElement, ComponentProps<'div'>>(
-  ({ children, ...rest }: ComponentProps<'div'>, fwdRef) => {
+interface TestDescendantProps extends ComponentProps<'div'> {
+  type?: string;
+}
+
+export const TestDescendant = forwardRef<HTMLDivElement, TestDescendantProps>(
+  ({ children, ...rest }: TestDescendantProps, fwdRef) => {
     // 4. Establish a child component as a descendant of the established context
-    const { index, id, ref } = useDescendant(TestDescendantContext, fwdRef);
+    const { index, id, ref } = useDescendant(TestDescendantContext, fwdRef, {
+      ...rest,
+    });
 
     const { selected, setSelected } = useContext(TestSelectionContext);
     const isSelected = index === selected;

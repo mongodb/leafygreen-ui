@@ -1,4 +1,5 @@
-import { Reducer } from 'react';
+import { ComponentProps, Reducer } from 'react';
+import { isEqual, isUndefined } from 'lodash';
 
 import { findDescendantIndexWithId } from './utils/findDescendantWithId';
 import { findDOMIndex } from './utils/findDOMIndex';
@@ -15,11 +16,16 @@ export type DescendantsReducerAction<T extends HTMLElement> =
       type: 'register';
       id: string;
       ref: React.RefObject<T>;
-      callback?: (d: Descendant<T>) => void;
+      props?: ComponentProps<any>;
     }
   | {
       type: 'remove';
       id: string;
+    }
+  | {
+      type: 'update';
+      id: string;
+      props?: ComponentProps<any>;
     };
 
 export type DescendantsReducerType<T extends HTMLElement> = Reducer<
@@ -64,6 +70,7 @@ export const descendantsReducer = <T extends HTMLElement>(
         const thisDescendant: Descendant<T> = {
           element,
           id: action.id,
+          props: action.props,
         };
 
         // Add the new descendant at the given index
@@ -73,12 +80,31 @@ export const descendantsReducer = <T extends HTMLElement>(
           index,
         );
 
-        // Run any side effects
-        action.callback?.(thisDescendant);
-
         return {
           descendants: newDescendants,
         };
+      }
+
+      return state;
+    }
+
+    case 'update': {
+      const registeredIndex = findDescendantIndexWithId(
+        state.descendants,
+        action.id,
+      );
+
+      if (registeredIndex >= 0) {
+        const descendant = state.descendants[registeredIndex];
+        const arePropsEqual = isEqual(descendant.props, action.props);
+
+        // if the props have changed, we update the descendant
+        if (!isUndefined(action.props) && !arePropsEqual) {
+          descendant.props = action.props;
+          return {
+            descendants: state.descendants,
+          };
+        }
       }
 
       return state;

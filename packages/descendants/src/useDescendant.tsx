@@ -1,4 +1,11 @@
-import { ForwardedRef, RefObject, useContext, useMemo, useRef } from 'react';
+import {
+  ComponentProps,
+  ForwardedRef,
+  RefObject,
+  useContext,
+  useMemo,
+  useRef,
+} from 'react';
 
 import {
   useForwardedRef,
@@ -11,7 +18,7 @@ import { DescendantContextType } from './DescendantsContext';
 /** @deprecated */
 const genId = () => `_${Math.random().toString(36).substr(2, 9)}`;
 
-interface UseDescendantReturnObject<T> {
+interface UseDescendantReturnObject<T extends HTMLElement> {
   ref: RefObject<T>;
   index: number;
   id: string;
@@ -22,9 +29,10 @@ interface UseDescendantReturnObject<T> {
  */
 export const useDescendant = <T extends HTMLElement>(
   context: DescendantContextType<T>,
-  fwdRef: RefObject<T> | ForwardedRef<T>,
+  fwdRef?: RefObject<T> | ForwardedRef<T>,
+  props?: ComponentProps<any>,
 ): UseDescendantReturnObject<T> => {
-  const ref: React.RefObject<T> = useForwardedRef(fwdRef, null);
+  const ref: React.RefObject<T> = useForwardedRef(fwdRef ?? null, null);
   const { descendants, dispatch } = useContext(context);
   const id = useRef(genId());
 
@@ -37,10 +45,11 @@ export const useDescendant = <T extends HTMLElement>(
   useIsomorphicLayoutEffect(() => {
     const _id = id.current;
 
+    // Register this component as a descendant
     dispatch({
       type: 'register',
       id: _id,
-      ref: ref,
+      ref,
     });
 
     // On un-mount/cleanup remove the element from the descendants list
@@ -51,6 +60,17 @@ export const useDescendant = <T extends HTMLElement>(
       });
     };
   }, [dispatch, ref]);
+
+  // When the props change, update them in the descendants list so the parent has access.
+  // We don't initially register the descendant with props,
+  // so we don't have to remove & re-register it each time the props change
+  useIsomorphicLayoutEffect(() => {
+    dispatch({
+      type: 'update',
+      id: id.current,
+      props,
+    });
+  }, [dispatch, props]);
 
   return {
     ref,

@@ -129,11 +129,6 @@ function DescendantProvider<DescendantType extends Descendant>({
             index,
           );
         }
-        // performance.mark('set-end')
-        // performance.measure('set', 'set-start', 'set-end')
-        // const durations = performance.getEntriesByName('set').map(m => m.duration)
-        // const avg = mean(durations.length ? durations : [])
-        // console.log("Average set() time", avg)
 
         return newItems;
       });

@@ -1,12 +1,17 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
+import { renderHook } from '@leafygreen-ui/testing-lib';
+
 import {
   TestDescendant,
   TestDescendant2,
+  TestDescendantContext,
   TestParent,
   TestParent2,
 } from './test/components.testutils';
+import { DescendantsProvider } from './DescendantProvider';
+import { useInitDescendants } from './useInitDescendants';
 
 describe('packages/descendants', () => {
   test('renders a basic list of descendants', () => {
@@ -186,5 +191,24 @@ describe('packages/descendants', () => {
     expect(habanero).toHaveAttribute('data-index', '1');
   });
 
-  describe('test components', () => {});
+  describe('internal', () => {
+    test('descendants object has access to child props', () => {
+      const { result } = renderHook(() => useInitDescendants<HTMLDivElement>());
+
+      render(
+        <DescendantsProvider
+          context={TestDescendantContext}
+          descendants={result.current.descendants}
+          dispatch={result.current.dispatch}
+        >
+          <TestDescendant type="fruit">Apple</TestDescendant>
+          <TestDescendant type="fruit">Banana</TestDescendant>
+          <TestDescendant type="vegetable">Carrot</TestDescendant>
+        </DescendantsProvider>,
+      );
+
+      const appleDescendant = result.current.descendants[0];
+      expect(appleDescendant.props?.type).toEqual('fruit');
+    });
+  });
 });

@@ -18,7 +18,7 @@ import {
 import { TestDescendant, TestParent } from './components.testutils';
 
 // eslint-disable-next-line jest/no-disabled-tests
-describe.skip('packages/descendants/BENCHMARK', () => {
+describe('packages/descendants/BENCHMARK', () => {
   afterEach(() => {
     cleanup();
   });
