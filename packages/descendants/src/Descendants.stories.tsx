@@ -8,7 +8,14 @@ import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
-import { TestDescendant, TestParent } from './test/components.testutils';
+import { PacoMenu, PacoMenuItem } from './pacocoursey/TestComponents';
+import { ReachMenu, ReachMenuItem } from './reach/TestComponents';
+import {
+  TestDescendant,
+  TestDescendant2,
+  TestParent,
+  TestParent2,
+} from './test/components.testutils';
 
 faker.seed(0);
 
@@ -19,6 +26,10 @@ const testItemStyle = css`
     padding-right: 4px;
     font-family: monospace;
   }
+`;
+
+const nestedItemStyle = css`
+  padding-left: 8px;
 `;
 
 export default {
@@ -70,7 +81,7 @@ export const Basic = () => {
         <br />
         <TestParent>
           {items.map((x, i) => (
-            <TestDescendant className={testItemStyle} key={x + i}>
+            <TestDescendant className={testItemStyle} key={x + i} type="person">
               {x}
             </TestDescendant>
           ))}
@@ -144,12 +155,7 @@ export const Nested = () => {
                 ? person.animals.map((animal, j) => (
                     <TestDescendant
                       key={person.name + i + animal + j}
-                      className={cx(
-                        css`
-                          padding-left: 8px;
-                        `,
-                        testItemStyle,
-                      )}
+                      className={cx(nestedItemStyle, testItemStyle)}
                     >
                       {animal}
                     </TestDescendant>
@@ -160,6 +166,26 @@ export const Nested = () => {
         </TestParent>
       </div>
     </LeafyGreenProvider>
+  );
+};
+
+export const MultipleContexts = () => {
+  return (
+    <TestParent>
+      <TestDescendant className={testItemStyle}>Apple</TestDescendant>
+      <TestDescendant className={testItemStyle}>Banana</TestDescendant>
+      <TestDescendant className={testItemStyle}>
+        Peppers
+        <TestParent2>
+          <TestDescendant2 className={cx(nestedItemStyle, testItemStyle)}>
+            Anaheim
+          </TestDescendant2>
+          <TestDescendant2 className={cx(nestedItemStyle, testItemStyle)}>
+            Habanero
+          </TestDescendant2>
+        </TestParent2>
+      </TestDescendant>
+    </TestParent>
   );
 };
 
@@ -192,19 +218,21 @@ export const Reach = () => {
 
   return (
     <LeafyGreenProvider>
-      <Button variant="primary" onClick={addItem}>
-        Add Item
-      </Button>
-      &nbsp;
-      <Button variant="danger" onClick={removeItem}>
-        Remove Item
-      </Button>
-      <br />
-      <ReachMenu id="">
-        {items.map((item, i) => {
-          return <ReachMenuItem key={item + i}>{item}</ReachMenuItem>;
-        })}
-      </ReachMenu>
+      <div>
+        <Button variant="primary" onClick={addItem}>
+          Add Item
+        </Button>
+        &nbsp;
+        <Button variant="danger" onClick={removeItem}>
+          Remove Item
+        </Button>
+        <br />
+        <ReachMenu id="">
+          {items.map((item, i) => {
+            return <ReachMenuItem key={item + i}>{item}</ReachMenuItem>;
+          })}
+        </ReachMenu>
+      </div>
     </LeafyGreenProvider>
   );
 };
@@ -248,7 +276,11 @@ export const Paco = () => {
         <br />
         <PacoMenu>
           {items.map((item, i) => {
-            return <PacoMenuItem key={item + i}>{item}</PacoMenuItem>;
+            return (
+              <PacoMenuItem key={item + i} name={item} data-name={item}>
+                {item}
+              </PacoMenuItem>
+            );
           })}
         </PacoMenu>
       </div>
