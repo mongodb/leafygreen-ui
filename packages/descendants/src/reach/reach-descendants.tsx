@@ -2,8 +2,6 @@ import * as React from 'react';
 
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 
-const __DEV__: boolean = true;
-
 const useForceUpdate = () => {
   const [_, force] = React.useState<any>();
   return () => force({});
@@ -50,7 +48,6 @@ function createDescendantContext<DescendantType extends Descendant>(
 function useDescendant<DescendantType extends Descendant>(
   descendant: Omit<DescendantType, 'index'>,
   context: React.Context<DescendantContextValue<DescendantType>>,
-  indexProp?: number,
 ) {
   const forceUpdate = useForceUpdate();
   const { registerDescendant, descendants } = React.useContext(context);
@@ -67,6 +64,7 @@ function useDescendant<DescendantType extends Descendant>(
   useIsomorphicLayoutEffect(() => {
     if (!descendant.element) forceUpdate();
     return registerDescendant({ ...descendant, index } as DescendantType);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [descendant, index, registerDescendant]);
 
   return index;
@@ -116,7 +114,7 @@ function DescendantProvider<DescendantType extends Descendant>({
           return [{ ...rest, element, index: 0 } as DescendantType];
         }
 
-        let index = findDOMIndex(items, element);
+        const index = findDOMIndex(items, element);
         let newItems: Array<DescendantType>;
 
         if (index === -1) {
@@ -148,7 +146,7 @@ function DescendantProvider<DescendantType extends Descendant>({
     // set is a state setter initialized by the useDescendantsInit hook.
     // We can safely ignore the lint warning here because it will not change
     // between renders.
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
 

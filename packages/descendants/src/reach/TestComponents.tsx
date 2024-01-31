@@ -10,7 +10,7 @@ import {
 
 const DescendantContext = createDescendantContext('DescendantContext');
 
-export function ReachMenu({ id, children }: PropsWithChildren<{ id?: any }>) {
+export function ReachMenu({ children }: PropsWithChildren<{ id?: any }>) {
   // We could be less explicit here and set this up in the DescendantProvider,
   // but you may want to do something with `descendants` in your top-level
   // component and we don't want to force creating an arbitrary child
@@ -25,16 +25,6 @@ export function ReachMenu({ id, children }: PropsWithChildren<{ id?: any }>) {
     >
       {children}
     </DescendantProvider>
-  );
-}
-
-export function ReachMenuList(props: PropsWithChildren<{}>) {
-  return (
-    <div>
-      <div role="menu" tabIndex={-1}>
-        {props.children}
-      </div>
-    </div>
   );
 }
 
