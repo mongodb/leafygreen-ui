@@ -1,5 +1,15 @@
 # @leafygreen-ui/button
 
+## 21.0.12
+
+### Patch Changes
+
+- e4767683: Fixes disabled state styling when a button is focused or active
+- Updated dependencies [2bceccb1]
+- Updated dependencies [2645cd50]
+  - @leafygreen-ui/lib@13.2.1
+  - @leafygreen-ui/tokens@2.3.0
+
 ## 21.0.11
 
 ### Patch Changes

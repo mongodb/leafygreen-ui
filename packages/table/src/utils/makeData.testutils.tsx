@@ -1,6 +1,6 @@
 import React from 'react';
 import { faker } from '@faker-js/faker';
-import { range } from 'lodash';
+import range from 'lodash/range';
 
 import Code from '@leafygreen-ui/code';
 

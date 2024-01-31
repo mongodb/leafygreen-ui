@@ -11610,10 +11610,10 @@ react-keyed-flatten-children@^1.3.0:
   dependencies:
     react-is "^16.8.6"
 
-react-lottie-player@^1.5.4:
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/react-lottie-player/-/react-lottie-player-1.5.4.tgz#8205cc334d11b923d9bac78e1d19bcc0d475d751"
-  integrity sha512-eM0g11bAc4EJJuDDfCoNloaAYphfXlIpYnriOt4nRU66PpVmvKhajvP2aif4YflGY2ArAFXhWxs418YzdebK9w==
+react-lottie-player@^1.5.6:
+  version "1.5.6"
+  resolved "https://registry.yarnpkg.com/react-lottie-player/-/react-lottie-player-1.5.6.tgz#13d43fb4b4506f25fe647ccde8cc0fcbe788bc1f"
+  integrity sha512-t0GdTYbml0Ihski8ZPx+1WjpjM/EQlTqTcuGm5yeZGJAgFXTmoqrHbSX8bcREIxrHjibWAyIWnLVUK/iHLcqAQ==
   dependencies:
     fast-deep-equal "^3.1.3"
     lottie-web "^5.7.6"
