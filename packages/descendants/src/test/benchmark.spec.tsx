@@ -18,7 +18,7 @@ import {
 import { TestDescendant, TestParent } from './components.testutils';
 
 // eslint-disable-next-line jest/no-disabled-tests
-describe('packages/descendants/BENCHMARK', () => {
+describe.skip('packages/descendants/BENCHMARK', () => {
   afterEach(() => {
     cleanup();
   });
@@ -240,8 +240,7 @@ describe('packages/descendants/BENCHMARK', () => {
         );
       });
 
-      // eslint-disable-next-line jest/no-disabled-tests
-      test.skip('Select', async () => {
+      test('Select', async () => {
         const { getAllByTestId } = render(
           <PacoMenu>
             {INITIAL_ITEMS.map((item, i) => (
@@ -380,8 +379,7 @@ describe('packages/descendants/BENCHMARK', () => {
         );
       });
 
-      // eslint-disable-next-line jest/no-disabled-tests
-      test.skip('Select', async () => {
+      test('Select', async () => {
         const { getAllByTestId } = render(
           <ReachMenu>
             {INITIAL_ITEMS.map((item, i) => (
@@ -520,8 +518,7 @@ describe('packages/descendants/BENCHMARK', () => {
         );
       });
 
-      // eslint-disable-next-line jest/no-disabled-tests
-      test.skip('Select', async () => {
+      test('Select', async () => {
         const { getAllByTestId } = render(
           <TestParent>
             {INITIAL_ITEMS.map((item, i) => (

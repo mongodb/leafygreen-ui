@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { faker } from '@faker-js/faker';
-import { random, range, shuffle } from 'lodash';
+import random from 'lodash/random';
+import range from 'lodash/range';
+import shuffle from 'lodash/shuffle';
 
 import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';

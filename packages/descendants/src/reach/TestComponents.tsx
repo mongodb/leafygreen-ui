@@ -1,4 +1,11 @@
-import React, { PropsWithChildren, useCallback, useState } from 'react';
+import React, {
+  PropsWithChildren,
+  useCallback,
+  useContext,
+  useState,
+} from 'react';
+
+import { TestSelectionContext } from '../test/testSelectionContext';
 
 import {
   createDescendantContext,
@@ -16,6 +23,7 @@ export function ReachMenu({ children }: PropsWithChildren<{ id?: any }>) {
   // component and we don't want to force creating an arbitrary child
   // component just so we can consume the context.
   const [descendants, setDescendants] = useDescendantsInit();
+  const [selected, setSelected] = useState<number | undefined>(0);
 
   return (
     <DescendantProvider
@@ -23,7 +31,9 @@ export function ReachMenu({ children }: PropsWithChildren<{ id?: any }>) {
       items={descendants}
       set={setDescendants}
     >
-      {children}
+      <TestSelectionContext.Provider value={{ selected, setSelected }}>
+        {children}
+      </TestSelectionContext.Provider>
     </DescendantProvider>
   );
 }
@@ -53,11 +63,17 @@ export function ReachMenuItem({
 
   const index = useDescendant(descendant, DescendantContext);
 
+  const { selected, setSelected } = useContext(TestSelectionContext);
+  const isSelected = index === selected;
+
   // Now we know the index, so let's use it!
 
   return (
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <div
       data-testid="reach-item"
+      data-selected={isSelected}
+      onClick={() => setSelected(index)}
       role="menuitem"
       // Don't forget to pass the callback ref to the rendered element!
       ref={handleRefSet}

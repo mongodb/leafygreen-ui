@@ -99,5 +99,6 @@ export const logBenchmarks = () => {
     }
   }
 
+  console.log(`${ITERATIONS} iterations`);
   console.table(results);
 };

@@ -1,6 +1,6 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useContext, useState } from 'react';
 
-import { css } from '@leafygreen-ui/emotion';
+import { TestSelectionContext } from '../test/testSelectionContext';
 
 import {
   createDescendants,
@@ -13,21 +13,27 @@ const DescendantContext = createDescendants();
 export const PacoMenu = ({ children }: PropsWithChildren<{}>) => {
   // Create Descendants props here
   const { ref, ...ctxProps } = useDescendants();
+  const [selected, setSelected] = useState<number | undefined>(0);
 
   return (
     <DescendantContext.Provider value={{ ...ctxProps }}>
-      {/* @ts-ignore */}
-      <div role="menu" ref={ref} data-testid="paco-menu">
-        {children}
-      </div>
+      <TestSelectionContext.Provider value={{ selected, setSelected }}>
+        {/* @ts-ignore */}
+        <div role="menu" ref={ref} data-testid="paco-menu">
+          {children}
+        </div>
+      </TestSelectionContext.Provider>
     </DescendantContext.Provider>
   );
 };
 
 export const PacoMenuItem = ({ children }: PropsWithChildren<{}>) => {
   const { index, ref, id } = useDescendant(DescendantContext, {});
+  const { selected, setSelected } = useContext(TestSelectionContext);
+  const isSelected = index === selected;
 
   return (
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/interactive-supports-focus
     <div
       // @ts-expect-error - Ref type
       ref={ref}
@@ -35,19 +41,8 @@ export const PacoMenuItem = ({ children }: PropsWithChildren<{}>) => {
       data-index={index}
       data-id={id}
       data-testid="paco-item"
-      className={css`
-        &:before {
-          content: attr(data-index);
-          padding-right: 4px;
-        }
-
-        &:after {
-          content: attr(data-id);
-          padding-left: 4px;
-          color: gray;
-          font-family: monospace;
-        }
-      `}
+      data-selected={isSelected}
+      onClick={() => setSelected(index)}
     >
       {children}
     </div>

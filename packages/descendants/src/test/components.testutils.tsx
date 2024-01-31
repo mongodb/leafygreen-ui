@@ -1,4 +1,4 @@
-import React, { ComponentProps, forwardRef } from 'react';
+import React, { ComponentProps, forwardRef, useContext, useState } from 'react';
 
 import {
   createDescendantsContext,
@@ -6,6 +6,8 @@ import {
   useDescendant,
   useInitDescendants,
 } from '..';
+
+import { TestSelectionContext } from './testSelectionContext';
 
 // 1. Create a new Context object
 const TestDescendantContext = createDescendantsContext<HTMLDivElement>(
@@ -15,7 +17,7 @@ const TestDescendantContext = createDescendantsContext<HTMLDivElement>(
 export const TestParent = ({ children, ...rest }: ComponentProps<'div'>) => {
   // 2. Initialize an empty descendants data structure
   const { descendants, dispatch } = useInitDescendants<HTMLDivElement>();
-
+  const [selected, setSelected] = useState<number | undefined>(0);
   // 3. Pass the context & descendants data structure into the provider
   return (
     <DescendantsProvider
@@ -23,7 +25,9 @@ export const TestParent = ({ children, ...rest }: ComponentProps<'div'>) => {
       descendants={descendants}
       dispatch={dispatch}
     >
-      <div {...rest}>{children}</div>
+      <TestSelectionContext.Provider value={{ selected, setSelected }}>
+        <div {...rest}>{children}</div>
+      </TestSelectionContext.Provider>
     </DescendantsProvider>
   );
 };
@@ -33,8 +37,20 @@ export const TestDescendant = forwardRef<HTMLDivElement, ComponentProps<'div'>>(
     // 4. Establish a child component as a descendant of the established context
     const { index, id, ref } = useDescendant(TestDescendantContext, fwdRef);
 
+    const { selected, setSelected } = useContext(TestSelectionContext);
+    const isSelected = index === selected;
+
     return (
-      <div ref={ref} data-index={index} data-id={id} {...rest}>
+      // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+      <div
+        ref={ref}
+        data-testid="leafygreen-item"
+        data-index={index}
+        data-id={id}
+        data-selected={isSelected}
+        onClick={() => setSelected(index)}
+        {...rest}
+      >
         {children}
       </div>
     );
