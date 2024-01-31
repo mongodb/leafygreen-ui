@@ -1,6 +1,7 @@
-import { createContext } from 'react';
+import { createContext, Dispatch } from 'react';
 
-import { DescendantsList } from '../Descendants.types';
+import { DescendantsList } from './Descendants.types';
+import { DescendantsReducerAction } from './DescendantsReducer';
 
 export type RegisterDescendantFn<T extends HTMLElement> = (
   element?: T | null,
@@ -8,7 +9,7 @@ export type RegisterDescendantFn<T extends HTMLElement> = (
 
 export interface DescendantsContextProps<T extends HTMLElement> {
   descendants: DescendantsList<T>;
-  registerDescendant: RegisterDescendantFn<T>;
+  dispatch: Dispatch<DescendantsReducerAction<T>>;
 }
 
 export type DescendantContextType<T extends HTMLElement> = React.Context<
@@ -24,7 +25,7 @@ export const createDescendantsContext = <T extends HTMLElement = HTMLElement>(
 ): DescendantContextType<T> => {
   const context = createContext<DescendantsContextProps<T>>({
     descendants: [],
-    registerDescendant: () => () => {},
+    dispatch: () => {},
   });
   context.displayName = displayName;
 

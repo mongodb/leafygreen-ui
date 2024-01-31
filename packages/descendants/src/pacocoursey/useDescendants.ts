@@ -51,8 +51,8 @@ export const useDescendants = (): UseDescendantsContext => {
     if (domListChanged) {
       // add stored props for the descendant id to the new element
       const newList = descendantDOMElements.map(element => {
-        const props =
-          map.current[element.getAttribute('data-descendant') as string];
+        const descendantId = element.getAttribute('data-descendant') as string;
+        const props = map.current[descendantId];
 
         return {
           element,

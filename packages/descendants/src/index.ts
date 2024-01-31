@@ -1,12 +1,12 @@
 export {
-  DescendantProvider,
-  type DescendantProviderProps,
-} from './context/DescendantProvider';
+  DescendantsProvider,
+  type DescendantsProviderProps,
+} from './DescendantProvider';
+export { type Descendant, type DescendantsList } from './Descendants.types';
 export {
   createDescendantsContext,
   type DescendantsContextProps,
-} from './context/DescendantsContext';
-export { type Descendant, type DescendantsList } from './Descendants.types';
-export { useDescendant } from './hooks/useDescendant';
-export { useDescendantsContext } from './hooks/useDescendantsContext';
-export { useInitDescendants } from './hooks/useInitDescendants';
+} from './DescendantsContext';
+export { useDescendant } from './useDescendant';
+export { useDescendantsContext } from './useDescendantsContext';
+export { useInitDescendants } from './useInitDescendants';

@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { DescendantContextType } from '../context/DescendantsContext';
+import { DescendantContextType } from './DescendantsContext';
 
 /**
  * Returns the Descendants data structure from the provided context object

@@ -1,14 +1,8 @@
-import React, {
-  ComponentProps,
-  forwardRef,
-  useCallback,
-  useMemo,
-  useState,
-} from 'react';
+import React, { ComponentProps, forwardRef } from 'react';
 
 import {
   createDescendantsContext,
-  DescendantProvider,
+  DescendantsProvider,
   useDescendant,
   useInitDescendants,
 } from '..';
@@ -20,43 +14,27 @@ const TestDescendantContext = createDescendantsContext<HTMLLIElement>(
 
 export const TestParent = ({ children, ...rest }: ComponentProps<'ul'>) => {
   // 2. Initialize an empty descendants data structure
-  const [descendants, setDescendants] = useInitDescendants<HTMLLIElement>();
+  const { descendants, dispatch } = useInitDescendants<HTMLLIElement>();
 
   // 3. Pass the context & descendants data structure into the provider
   return (
-    <DescendantProvider
+    <DescendantsProvider
       context={TestDescendantContext}
       descendants={descendants}
-      setDescendants={setDescendants}
+      dispatch={dispatch}
     >
       <ul {...rest}>{children}</ul>
-    </DescendantProvider>
+    </DescendantsProvider>
   );
 };
 
 export const TestDescendant = forwardRef<HTMLLIElement, ComponentProps<'li'>>(
   ({ children, ...rest }: ComponentProps<'li'>, fwdRef) => {
-    const ref = React.useRef<HTMLLIElement>(null);
-
-    const [element, setElement] = useState<HTMLLIElement>();
-    const handleRefSet = useCallback((refValue: HTMLLIElement) => {
-      // @ts-expect-error
-      ref.current = refValue;
-      setElement(refValue);
-    }, []);
-
-    const descendant = useMemo(
-      () => ({
-        element,
-      }),
-      [element],
-    );
-
-    // 4. Establish this component as a descendant element
-    const { index } = useDescendant(descendant, TestDescendantContext);
+    // 4. Establish a child component as a descendant of the established context
+    const { index, id, ref } = useDescendant(TestDescendantContext, fwdRef);
 
     return (
-      <li ref={handleRefSet} data-index={index} {...rest}>
+      <li ref={ref} data-index={index} data-id={id} {...rest}>
         {children}
       </li>
     );

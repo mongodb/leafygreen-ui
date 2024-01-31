@@ -1,5 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 
+import { css } from '@leafygreen-ui/emotion';
+
 import {
   createDescendants,
   useDescendant,
@@ -23,12 +25,31 @@ export const PacoMenu = ({ children }: PropsWithChildren<{}>) => {
 };
 
 export const PacoMenuItem = ({ children }: PropsWithChildren<{}>) => {
-  const { index, ref } = useDescendant(DescendantContext, {});
+  const { index, ref, id } = useDescendant(DescendantContext, {});
 
   return (
-    // @ts-expect-error - Ref type
-    <div ref={ref} role="menuitem" data-index={index} data-testid="paco-item">
-      {index}: {children}
+    <div
+      // @ts-expect-error - Ref type
+      ref={ref}
+      role="menuitem"
+      data-index={index}
+      data-id={id}
+      data-testid="paco-item"
+      className={css`
+        &:before {
+          content: attr(data-index);
+          padding-right: 4px;
+        }
+
+        &:after {
+          content: attr(data-id);
+          padding-left: 4px;
+          color: gray;
+          font-family: monospace;
+        }
+      `}
+    >
+      {children}
     </div>
   );
 };

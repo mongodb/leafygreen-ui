@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { faker } from '@faker-js/faker';
-import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
+import { css } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { PacoMenu, PacoMenuItem } from './pacocoursey/TestComponents';
@@ -11,9 +11,11 @@ import { TestDescendant, TestParent } from './test/testutils';
 
 faker.seed(0);
 
-const DescendantsDemo = () => {
-  // console.clear();
+export default {
+  title: 'Hooks/Descendants',
+};
 
+export const Basic = () => {
   const [items, setItems] = useState([
     'Adam',
     'Brooke',
@@ -52,24 +54,30 @@ const DescendantsDemo = () => {
         <br />
         <TestParent>
           {items.map((x, i) => (
-            <TestDescendant key={x + i}>{x}</TestDescendant>
+            <TestDescendant
+              className={css`
+                &:before {
+                  content: attr(data-index);
+                  padding-right: 4px;
+                }
+
+                &:after {
+                  content: attr(data-id);
+                  padding-left: 4px;
+                  color: gray;
+                  font-family: monospace;
+                }
+              `}
+              key={x + i}
+            >
+              {x}
+            </TestDescendant>
           ))}
         </TestParent>
       </div>
     </LeafyGreenProvider>
   );
 };
-
-export default {
-  title: 'Hooks/Descendants',
-  component: DescendantsDemo,
-};
-
-const Template: StoryFn<typeof DescendantsDemo> = (props: any) => (
-  <DescendantsDemo {...props} />
-);
-
-export const Basic = Template.bind({});
 
 export const Reach = () => {
   const [items, setItems] = useState([
@@ -144,19 +152,21 @@ export const Paco = () => {
 
   return (
     <LeafyGreenProvider>
-      <Button variant="primary" onClick={addItem}>
-        Add Item
-      </Button>
-      &nbsp;
-      <Button variant="danger" onClick={removeItem}>
-        Remove Item
-      </Button>
-      <br />
-      <PacoMenu>
-        {items.map((item, i) => {
-          return <PacoMenuItem key={item + i}>{item}</PacoMenuItem>;
-        })}
-      </PacoMenu>
+      <div>
+        <Button variant="primary" onClick={addItem}>
+          Add Item
+        </Button>
+        &nbsp;
+        <Button variant="danger" onClick={removeItem}>
+          Remove Item
+        </Button>
+        <br />
+        <PacoMenu>
+          {items.map((item, i) => {
+            return <PacoMenuItem key={item + i}>{item}</PacoMenuItem>;
+          })}
+        </PacoMenu>
+      </div>
     </LeafyGreenProvider>
   );
 };
