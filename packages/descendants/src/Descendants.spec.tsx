@@ -1,7 +1,12 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { TestDescendant, TestParent } from './test/components.testutils';
+import {
+  TestDescendant,
+  TestDescendant2,
+  TestParent,
+  TestParent2,
+} from './test/components.testutils';
 
 describe('packages/descendants', () => {
   test('renders a basic list of descendants', () => {
@@ -153,4 +158,33 @@ describe('packages/descendants', () => {
     expect(apple).toHaveAttribute('data-index', '2');
     expect(carrot).toHaveAttribute('data-index', '3');
   });
+
+  test('renders multiple nested descendants contexts', () => {
+    const { queryByText } = render(
+      <TestParent>
+        <TestDescendant>Apple</TestDescendant>
+        <TestDescendant>Banana</TestDescendant>
+        <TestDescendant>
+          Peppers
+          <TestParent2>
+            <TestDescendant2>Anaheim</TestDescendant2>
+            <TestDescendant2>Habanero</TestDescendant2>
+          </TestParent2>
+        </TestDescendant>
+      </TestParent>,
+    );
+    const apple = queryByText('Apple');
+    const banana = queryByText('Banana');
+    const peppers = queryByText('Peppers');
+    const anaheim = queryByText('Anaheim');
+    const habanero = queryByText('Habanero');
+
+    expect(apple).toHaveAttribute('data-index', '0');
+    expect(banana).toHaveAttribute('data-index', '1');
+    expect(peppers).toHaveAttribute('data-index', '2');
+    expect(anaheim).toHaveAttribute('data-index', '0');
+    expect(habanero).toHaveAttribute('data-index', '1');
+  });
+
+  describe('test components', () => {});
 });
