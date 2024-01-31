@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/date-picker",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "LeafyGreen UI Kit Date Picker",
   "license": "Apache-2.0",
   "main": "./dist/index.js",
@@ -16,17 +16,17 @@
   },
   "dependencies": {
     "@leafygreen-ui/a11y": "^1.4.12",
-    "@leafygreen-ui/date-utils": "^0.1.0",
+    "@leafygreen-ui/date-utils": "^0.1.1",
     "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/form-field": "^0.3.0",
-    "@leafygreen-ui/hooks": "^8.1.0",
+    "@leafygreen-ui/form-field": "^0.3.1",
+    "@leafygreen-ui/hooks": "^8.1.1",
     "@leafygreen-ui/icon": "^11.27.1",
     "@leafygreen-ui/icon-button": "^15.0.17",
-    "@leafygreen-ui/lib": "^13.2.0",
+    "@leafygreen-ui/lib": "^13.2.1",
     "@leafygreen-ui/palette": "^4.0.7",
     "@leafygreen-ui/popover": "^11.2.1",
     "@leafygreen-ui/select": "^11.1.2",
-    "@leafygreen-ui/tokens": "^2.2.0",
+    "@leafygreen-ui/tokens": "^2.3.0",
     "@leafygreen-ui/typography": "^18.1.0",
     "date-fns": "^2.30.0",
     "lodash": "^4.17.21",
@@ -37,9 +37,9 @@
     "@leafygreen-ui/leafygreen-provider": "^3.1.11"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "^21.0.7",
+    "@leafygreen-ui/button": "^21.0.12",
     "@leafygreen-ui/modal": "^16.0.4",
-    "@leafygreen-ui/testing-lib": "^0.4.0",
+    "@leafygreen-ui/testing-lib": "^0.4.1",
     "mockdate": "^3.0.5",
     "storybook-mock-date-decorator": "^1.0.1",
     "@jest/globals": "^29.6.2"

@@ -992,11 +992,14 @@ export function Combobox<M extends boolean>({
         }
 
         case keyMap.Enter: {
-          if (
-            // Select the highlighted option iff
+          if (!isOpen) {
+            openMenu();
+          } else if (
+            // Select the highlighted option if
             // the menu is open,
             // we're focused on input element,
             // and the highlighted option is not disabled
+            isOpen &&
             focusedElementName === ComboboxElement.Input &&
             !isNull(highlightedOption) &&
             !isOptionDisabled(highlightedOption)
