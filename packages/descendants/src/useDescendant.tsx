@@ -1,10 +1,11 @@
-import { ForwardedRef, RefObject, useContext, useRef } from 'react';
+import { ForwardedRef, RefObject, useContext, useMemo, useRef } from 'react';
 
 import {
   useForwardedRef,
   useIsomorphicLayoutEffect,
 } from '@leafygreen-ui/hooks';
 
+import { findDescendantIndexWithId } from './utils/findDescendantWithId';
 import { DescendantContextType } from './DescendantsContext';
 
 /** @deprecated */
@@ -24,22 +25,23 @@ export const useDescendant = <T extends HTMLElement>(
   fwdRef: RefObject<T> | ForwardedRef<T>,
 ): UseDescendantReturnObject<T> => {
   const ref: React.RefObject<T> = useForwardedRef(fwdRef, null);
-  const { dispatch } = useContext(context);
+  const { descendants, dispatch } = useContext(context);
 
-  const index = useRef(-1);
+  // const index = useRef(-1);
+
   const id = useRef(genId());
+
+  const index = useMemo(() => {
+    return findDescendantIndexWithId(descendants, id.current);
+  }, [descendants]);
 
   useIsomorphicLayoutEffect(() => {
     const _id = id.current;
 
     dispatch({
       type: 'register',
-      currentIndex: index.current,
       id: _id,
       ref: ref,
-      callback: (d: any) => {
-        index.current = d.index;
-      },
     });
 
     return () => {
@@ -50,13 +52,9 @@ export const useDescendant = <T extends HTMLElement>(
     };
   }, [dispatch, ref]);
 
-  // useIsomorphicLayoutEffect(() => {
-
-  // }, [dispatch]);
-
   return {
     ref,
-    index: index.current,
+    index: index,
     id: id.current,
   };
 };

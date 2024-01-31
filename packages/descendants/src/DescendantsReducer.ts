@@ -1,6 +1,6 @@
 import { findDescendantIndexWithId } from './utils/findDescendantWithId';
 import { findDOMIndex } from './utils/findDOMIndex';
-import { insertAt } from './utils/insertAt';
+import { insertDescendantAt } from './utils/insertAt';
 import { removeIndex } from './utils/removeIndex';
 import { Descendant, DescendantsList } from './Descendants.types';
 
@@ -12,7 +12,6 @@ export type DescendantsReducerAction<T extends HTMLElement> =
   | {
       type: 'register';
       id: string;
-      currentIndex: number;
       ref: React.RefObject<T>;
       callback?: (d: Descendant<T>) => void;
     }
@@ -38,27 +37,8 @@ export const descendantsReducer = <T extends HTMLElement>(
       );
 
       const isElementTracked = trackedIndex >= 0;
-      const _name = action.ref.current.innerHTML;
 
-      if (isElementTracked) {
-        if (action.currentIndex === -1) {
-          return state;
-        }
-
-        // Check that the indexes are correct
-        const doIndexesMatch = trackedIndex === action.currentIndex;
-
-        if (!doIndexesMatch) {
-          // TODO: Move element to correct index
-          // eslint-disable-next-line no-console
-          console.log(
-            `Element ${_name} is tracked at index ${trackedIndex}, and internal index ${action.currentIndex}`,
-          );
-        }
-
-        // no change
-        return state;
-      } else {
+      if (!isElementTracked) {
         // The element is not yet tracked
 
         // If there are no tracked descendants, then this element is at index 0,
@@ -73,7 +53,7 @@ export const descendantsReducer = <T extends HTMLElement>(
         };
 
         // Add the new descendant at the given index
-        const newDescendants = insertAt(
+        const newDescendants = insertDescendantAt(
           state.descendants,
           thisDescendant,
           index,
@@ -86,6 +66,8 @@ export const descendantsReducer = <T extends HTMLElement>(
           descendants: newDescendants,
         };
       }
+
+      return state;
     }
 
     case 'remove': {

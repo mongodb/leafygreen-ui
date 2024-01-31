@@ -1,46 +1,156 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { TestDescendant, TestParent } from './test/testutils';
+import { TestDescendant, TestParent } from './test/components.testutils';
 
 describe('packages/descendants', () => {
   test('renders a basic list of descendants', () => {
-    const { getAllByTestId } = render(
+    const { queryByText } = render(
       <TestParent>
-        <TestDescendant data-testid="descendant">Apple</TestDescendant>
-        <TestDescendant data-testid="descendant">Banana</TestDescendant>
-        <TestDescendant data-testid="descendant">Carrot</TestDescendant>
+        <TestDescendant>Apple</TestDescendant>
+        <TestDescendant>Banana</TestDescendant>
+        <TestDescendant>Carrot</TestDescendant>
       </TestParent>,
     );
+    const apple = queryByText('Apple');
+    const banana = queryByText('Banana');
+    const carrot = queryByText('Carrot');
 
-    const descendantElements = getAllByTestId('descendant');
+    expect(apple).toHaveAttribute('data-index', '0');
+    expect(banana).toHaveAttribute('data-index', '1');
+    expect(carrot).toHaveAttribute('data-index', '2');
+  });
 
-    // Test that each descendant knows what its index is
-    descendantElements.forEach((el, i) => {
-      const renderedIndex = el.dataset['index'];
-      expect(renderedIndex).toEqual(i);
-    });
+  test('does not track other elements', () => {
+    const { queryByText } = render(
+      <TestParent>
+        <TestDescendant>Apple</TestDescendant>
+        <TestDescendant>Banana</TestDescendant>
+        <div>Zebra</div>
+        <TestDescendant>Carrot</TestDescendant>
+      </TestParent>,
+    );
+    const apple = queryByText('Apple');
+    const banana = queryByText('Banana');
+    const carrot = queryByText('Carrot');
+    const zebra = queryByText('Zebra');
+
+    expect(apple).toHaveAttribute('data-index', '0');
+    expect(banana).toHaveAttribute('data-index', '1');
+    expect(carrot).toHaveAttribute('data-index', '2');
+    expect(zebra).not.toHaveAttribute('data-index');
   });
 
   test('renders a nested list of descendants', () => {
-    const { getAllByTestId } = render(
+    const { queryByText } = render(
       <TestParent>
-        <TestDescendant data-testid="descendant">
+        <TestDescendant>
           Peppers
-          <TestDescendant data-testid="descendant">
+          <TestDescendant>
             Bell
-            <TestDescendant data-testid="descendant">Yellow</TestDescendant>
+            <TestDescendant>Yellow</TestDescendant>
           </TestDescendant>
         </TestDescendant>
+        <TestDescendant>Watermelon</TestDescendant>
       </TestParent>,
     );
 
-    const descendantElements = getAllByTestId('descendant');
+    const peppers = queryByText('Peppers');
+    const bell = queryByText('Bell');
+    const yellow = queryByText('Yellow');
+    const watermelon = queryByText('Watermelon');
 
-    // Test that each descendant knows what its index is
-    descendantElements.forEach((el, i) => {
-      const renderedIndex = el.dataset['index'];
-      expect(renderedIndex).toEqual(i);
-    });
+    expect(peppers).toHaveAttribute('data-index', '0');
+    expect(bell).toHaveAttribute('data-index', '1');
+    expect(yellow).toHaveAttribute('data-index', '2');
+    expect(watermelon).toHaveAttribute('data-index', '3');
+  });
+
+  test('adds items to the rendered list', () => {
+    const { queryByText, rerender } = render(
+      <TestParent>
+        <TestDescendant>Apple</TestDescendant>
+        <TestDescendant>Banana</TestDescendant>
+        <TestDescendant>Carrot</TestDescendant>
+      </TestParent>,
+    );
+
+    rerender(
+      <TestParent>
+        <TestDescendant>Apple</TestDescendant>
+        <TestDescendant>Watermelon</TestDescendant>
+        <TestDescendant>Banana</TestDescendant>
+        <TestDescendant>Carrot</TestDescendant>
+      </TestParent>,
+    );
+
+    const apple = queryByText('Apple');
+    const banana = queryByText('Banana');
+    const carrot = queryByText('Carrot');
+    const watermelon = queryByText('Watermelon');
+
+    expect(apple).toHaveAttribute('data-index', '0');
+    expect(watermelon).toHaveAttribute('data-index', '1');
+    expect(banana).toHaveAttribute('data-index', '2');
+    expect(carrot).toHaveAttribute('data-index', '3');
+  });
+
+  test('removes items from the rendered list', () => {
+    const { queryByText, rerender } = render(
+      <TestParent>
+        <TestDescendant>Apple</TestDescendant>
+        <TestDescendant>Banana</TestDescendant>
+        <TestDescendant>Carrot</TestDescendant>
+        <TestDescendant>Dragonfruit</TestDescendant>
+      </TestParent>,
+    );
+
+    rerender(
+      <TestParent>
+        <TestDescendant>Apple</TestDescendant>
+        <TestDescendant>Carrot</TestDescendant>
+        <TestDescendant>Dragonfruit</TestDescendant>
+      </TestParent>,
+    );
+
+    const apple = queryByText('Apple');
+    const banana = queryByText('Banana');
+    const carrot = queryByText('Carrot');
+    const dragonfruit = queryByText('Dragonfruit');
+
+    expect(apple).toHaveAttribute('data-index', '0');
+    expect(banana).not.toBeInTheDocument();
+    expect(carrot).toHaveAttribute('data-index', '1');
+    expect(dragonfruit).toHaveAttribute('data-index', '2');
+  });
+
+  test('reorders items in the rendered list', () => {
+    const { queryByText, rerender } = render(
+      <TestParent>
+        <TestDescendant>Apple</TestDescendant>
+        <TestDescendant>Banana</TestDescendant>
+        <TestDescendant>Carrot</TestDescendant>
+        <TestDescendant>Dragonfruit</TestDescendant>
+      </TestParent>,
+    );
+
+    rerender(
+      <TestParent>
+        <TestDescendant>Banana</TestDescendant>
+        <TestDescendant>Dragonfruit</TestDescendant>
+        <TestDescendant>Apple</TestDescendant>
+        <TestDescendant>Carrot</TestDescendant>
+      </TestParent>,
+    );
+
+    const apple = queryByText('Apple');
+    const banana = queryByText('Banana');
+    const carrot = queryByText('Carrot');
+    const dragonfruit = queryByText('Dragonfruit');
+
+    expect(banana).toHaveAttribute('data-index', '0');
+    expect(dragonfruit).toHaveAttribute('data-index', '1');
+    expect(apple).toHaveAttribute('data-index', '2');
+    expect(carrot).toHaveAttribute('data-index', '3');
   });
 });

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { PropsWithChildren, useCallback, useState } from 'react';
 
 import {
@@ -10,7 +11,7 @@ import {
 
 const DescendantContext = createDescendantContext('DescendantContext');
 
-export function ReachMenu({ id, children }: PropsWithChildren<{ id?: any }>) {
+export function ReachMenu({ children }: PropsWithChildren<{ id?: any }>) {
   // We could be less explicit here and set this up in the DescendantProvider,
   // but you may want to do something with `descendants` in your top-level
   // component and we don't want to force creating an arbitrary child
@@ -25,16 +26,6 @@ export function ReachMenu({ id, children }: PropsWithChildren<{ id?: any }>) {
     >
       {children}
     </DescendantProvider>
-  );
-}
-
-export function ReachMenuList(props: PropsWithChildren<{}>) {
-  return (
-    <div>
-      <div role="menu" tabIndex={-1}>
-        {props.children}
-      </div>
-    </div>
   );
 }
 
@@ -64,13 +55,14 @@ export function ReachMenuItem({
   const index = useDescendant(descendant, DescendantContext);
 
   // Now we know the index, so let's use it!
-
   return (
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <div
       data-testid="reach-item"
       role="menuitem"
       // Don't forget to pass the callback ref to the rendered element!
       ref={handleRefSet}
+      data-index={index}
       tabIndex={-1}
       {...props}
     >

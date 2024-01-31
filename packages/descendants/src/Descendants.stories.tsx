@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import { faker } from '@faker-js/faker';
+import { random, range, shuffle } from 'lodash';
 
 import Button from '@leafygreen-ui/button';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
-import { PacoMenu, PacoMenuItem } from './pacocoursey/TestComponents';
-import { ReachMenu, ReachMenuItem } from './reach/TestComponents';
-import { TestDescendant, TestParent } from './test/testutils';
+import { TestDescendant, TestParent } from './test/components.testutils';
 
 faker.seed(0);
+
+const testItemStyle = css`
+  &:before {
+    content: attr(data-index);
+    color: gray;
+    padding-right: 4px;
+    font-family: monospace;
+  }
+`;
 
 export default {
   title: 'Hooks/Descendants',
@@ -41,6 +49,10 @@ export const Basic = () => {
     setItems(newItems);
   };
 
+  const shuffleItems = () => {
+    setItems(shuffle(items));
+  };
+
   return (
     <LeafyGreenProvider>
       <div>
@@ -51,25 +63,12 @@ export const Basic = () => {
         <Button variant="danger" onClick={removeItem}>
           Remove Item
         </Button>
+        &nbsp;
+        <Button onClick={shuffleItems}>Shuffle Items</Button>
         <br />
         <TestParent>
           {items.map((x, i) => (
-            <TestDescendant
-              className={css`
-                &:before {
-                  content: attr(data-index);
-                  padding-right: 4px;
-                }
-
-                &:after {
-                  content: attr(data-id);
-                  padding-left: 4px;
-                  color: gray;
-                  font-family: monospace;
-                }
-              `}
-              key={x + i}
-            >
+            <TestDescendant className={testItemStyle} key={x + i}>
               {x}
             </TestDescendant>
           ))}
@@ -79,6 +78,90 @@ export const Basic = () => {
   );
 };
 
+export const Nested = () => {
+  const [people, _setItems] = useState([
+    {
+      name: 'Adam',
+      animals: range(random(0, 10)).map(_ => faker.animal.type()),
+    },
+    {
+      name: 'Brooke',
+      animals: range(random(0, 10)).map(_ => faker.animal.type()),
+    },
+    {
+      name: 'Chris',
+      animals: range(random(0, 10)).map(_ => faker.animal.type()),
+    },
+    {
+      name: 'Dave',
+      animals: range(random(0, 10)).map(_ => faker.animal.type()),
+    },
+    {
+      name: 'Eliane',
+      animals: range(random(0, 10)).map(_ => faker.animal.type()),
+    },
+    {
+      name: 'Fred',
+      animals: range(random(0, 10)).map(_ => faker.animal.type()),
+    },
+    {
+      name: 'George',
+      animals: range(random(0, 10)).map(_ => faker.animal.type()),
+    },
+    {
+      name: 'Harry',
+      animals: range(random(0, 10)).map(_ => faker.animal.type()),
+    },
+    {
+      name: 'Irena',
+      animals: range(random(0, 10)).map(_ => faker.animal.type()),
+    },
+    {
+      name: 'Jeremy',
+      animals: range(random(0, 10)).map(_ => faker.animal.type()),
+    },
+  ]);
+
+  const [isExpanded, setExpanded] = useState(true);
+
+  const toggleCollapse = () => {
+    setExpanded(e => !e);
+  };
+
+  return (
+    <LeafyGreenProvider>
+      <div>
+        <Button onClick={toggleCollapse}>
+          {isExpanded ? 'Collapse' : 'Expand'} All
+        </Button>
+        <TestParent>
+          {people.map((person, i) => (
+            <TestDescendant className={testItemStyle} key={person.name + i}>
+              {person.name}
+              {person.animals?.length && isExpanded
+                ? person.animals.map((animal, j) => (
+                    <TestDescendant
+                      key={person.name + i + animal + j}
+                      className={cx(
+                        css`
+                          padding-left: 8px;
+                        `,
+                        testItemStyle,
+                      )}
+                    >
+                      {animal}
+                    </TestDescendant>
+                  ))
+                : ''}
+            </TestDescendant>
+          ))}
+        </TestParent>
+      </div>
+    </LeafyGreenProvider>
+  );
+};
+
+/*
 export const Reach = () => {
   const [items, setItems] = useState([
     'Adam',
@@ -170,3 +253,4 @@ export const Paco = () => {
     </LeafyGreenProvider>
   );
 };
+*/

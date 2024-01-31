@@ -2,8 +2,6 @@ import * as React from 'react';
 
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 
-const __DEV__: boolean = true;
-
 const useForceUpdate = () => {
   const [_, force] = React.useState<any>();
   return () => force({});
@@ -67,7 +65,7 @@ function useDescendant<DescendantType extends Descendant>(
   useIsomorphicLayoutEffect(() => {
     if (!descendant.element) forceUpdate();
     return registerDescendant({ ...descendant, index } as DescendantType);
-  }, [descendant, index, registerDescendant]);
+  }, [descendant, forceUpdate, index, registerDescendant]);
 
   return index;
 }
@@ -116,7 +114,7 @@ function DescendantProvider<DescendantType extends Descendant>({
           return [{ ...rest, element, index: 0 } as DescendantType];
         }
 
-        let index = findDOMIndex(items, element);
+        const index = findDOMIndex(items, element);
         let newItems: Array<DescendantType>;
 
         if (index === -1) {
@@ -131,11 +129,6 @@ function DescendantProvider<DescendantType extends Descendant>({
             index,
           );
         }
-        // performance.mark('set-end')
-        // performance.measure('set', 'set-start', 'set-end')
-        // const durations = performance.getEntriesByName('set').map(m => m.duration)
-        // const avg = mean(durations.length ? durations : [])
-        // console.log("Average set() time", avg)
 
         return newItems;
       });
@@ -148,7 +141,7 @@ function DescendantProvider<DescendantType extends Descendant>({
     // set is a state setter initialized by the useDescendantsInit hook.
     // We can safely ignore the lint warning here because it will not change
     // between renders.
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
+    // // eslint-disable-next-line react-hooks/exhaustive-deps, react-hooks/exhaustive-deps
     [],
   );
 
