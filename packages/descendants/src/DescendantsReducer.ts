@@ -27,6 +27,14 @@ export type DescendantsReducerType<T extends HTMLElement> = Reducer<
   DescendantsReducerAction<T>
 >;
 
+/**
+ *
+ * Establishes a state with a `descendants` list, and a `dispatch` function to modify the descendants list
+ *
+ * @param state
+ * @param action
+ * @returns
+ */
 export const descendantsReducer = <T extends HTMLElement>(
   state: DescendantsState<T>,
   action: DescendantsReducerAction<T>,
@@ -38,15 +46,15 @@ export const descendantsReducer = <T extends HTMLElement>(
       }
 
       // 1. Check if element is tracked
-      const trackedIndex = findDescendantIndexWithId(
+      const registeredIndex = findDescendantIndexWithId(
         state.descendants,
         action.id,
       );
 
-      const isElementTracked = trackedIndex >= 0;
+      const isElementRegistered = registeredIndex >= 0;
 
-      if (!isElementTracked) {
-        // The element is not yet tracked
+      if (!isElementRegistered) {
+        // The element is not yet registered
 
         // If there are no tracked descendants, then this element is at index 0,
         // Otherwise, check the array of tracked elements to find what index this element should be
@@ -78,14 +86,14 @@ export const descendantsReducer = <T extends HTMLElement>(
 
     case 'remove': {
       /** Remove an element from the tracked list */
-      const trackedIndex = findDescendantIndexWithId(
+      const registeredIndex = findDescendantIndexWithId(
         state.descendants,
         action.id,
       );
 
-      if (trackedIndex >= 0) {
+      if (registeredIndex >= 0) {
         // If an element exists with the given id, remove it
-        const newDescendants = removeIndex(state.descendants, trackedIndex);
+        const newDescendants = removeIndex(state.descendants, registeredIndex);
         return { descendants: newDescendants };
       }
 
