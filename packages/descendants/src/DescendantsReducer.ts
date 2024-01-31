@@ -1,5 +1,6 @@
 import { ComponentProps, Reducer } from 'react';
-import { isEqual, isUndefined } from 'lodash';
+import isEqual from 'lodash/isEqual';
+import isUndefined from 'lodash/isUndefined';
 
 import { findDescendantIndexWithId } from './utils/findDescendantWithId';
 import { findDOMIndex } from './utils/findDOMIndex';

@@ -6,7 +6,6 @@
     "rootDir": "src",
     "baseUrl": ".",
     "paths": {
-      "@leafygreen-ui/icon/dist/*": ["../icon/src/generated/*"],
       "@leafygreen-ui/*": ["../*/src"]
     }
   },
@@ -19,10 +18,10 @@
       "path": "../button"
     },
     {
-      "path": "../hooks"
+      "path": "../emotion"
     },
     {
-      "path": "../lib"
-    }
+      "path": "../hooks"
+    },
   ]
 }

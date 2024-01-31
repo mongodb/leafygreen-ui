@@ -1,4 +1,4 @@
-import { DescendantsList } from 'src/Descendants.types';
+import { DescendantsList } from '../Descendants.types';
 
 /**
  *
