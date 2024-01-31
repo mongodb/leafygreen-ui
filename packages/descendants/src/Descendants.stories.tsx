@@ -8,8 +8,8 @@ import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
-import { PacoMenu, PacoMenuItem } from './pacocoursey/TestComponents';
-import { ReachMenu, ReachMenuItem } from './reach/TestComponents';
+// import { PacoMenu, PacoMenuItem } from './pacocoursey/TestComponents';
+// import { ReachMenu, ReachMenuItem } from './reach/TestComponents';
 import {
   TestDescendant,
   TestDescendant2,
