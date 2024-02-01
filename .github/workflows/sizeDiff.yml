@@ -20,4 +20,4 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           build-script: 'build'
-          clean-script: 'clean:builds && clean:modules'
+          clean-script: 'clean'
