@@ -169,7 +169,7 @@ Below is a comparison between this package, `pacocoursey` and `reach-ui`, as wel
 
 Overall, this package performed about 2x faster than `reach-ui` and 60% faster than `pacocoursey` in most metrics.
 
-### Test format
+### Test Format
 
 Each package was tested using Jest with JSDOM and React Testing Library. Each package was tested 100x for each metric. The metrics tested are as follows:
 
@@ -184,17 +184,17 @@ Each package was tested using Jest with JSDOM and React Testing Library. Each pa
 5. **Select**: Select speed is a proxy for "update" speed. This was tested by adding a click handler to a descendant element that registered its index to an outer context as "selected". The element would then render the attribute `data-selected="true"` to the DOM.
    The select speed was measured by first rendering 500 elements to the DOM, clicking the 250th element and measuring the speed to update the DOM with the above data attribute.
 
+### Test Tooling
+
+Test tooling can be viewed in commit [`525bcdc223a82ee4b2963c499dd458f1bd6051d6`](https://github.com/mongodb/leafygreen-ui/commit/525bcdc223a82ee4b2963c499dd458f1bd6051d6)
+
 ### Results
 
 Below are the results of 100 iterations of the above listed tests:
 
-```
-┌─────────────┬──────────┬──────────┬──────────┬──────────┬──────────┐
-│   (x100)    │  render  │  nested  │  insert  │  remove  │  select  │
-├─────────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
-│   control   │   4.9ms  │   8.2ms  │   5.3ms  │   2.8ms  │     N/A  │
-│ pacocoursey │  38.5ms  │  46.1ms  │  18.6ms  │  17.6ms  │  12.7ms  │
-│    reach    │  49.8ms  │  60.5ms  │  20.3ms  │  14.9ms  │   9.2ms  │
-│  leafygreen │  27.0ms  │  32.5ms  │  14.8ms  │  14.7ms  │  10.7ms  │
-└─────────────┴──────────┴──────────┴──────────┴──────────┴──────────┘
-```
+| (x100)        | Render | Nested | Insert | Remove | Select |
+| ------------- | ------ | ------ | ------ | ------ | ------ |
+| `control`     | 4.9ms  | 8.2ms  | 5.3ms  | 2.8ms  | N/A    |
+| `leafygreen`  | 27.0ms | 32.5ms | 14.8ms | 14.7ms | 10.7ms |
+| `pacocoursey` | 38.5ms | 46.1ms | 18.6ms | 17.6ms | 12.7ms |
+| `reach-ui`    | 49.8ms | 60.5ms | 20.3ms | 14.9ms | 9.2ms  |
