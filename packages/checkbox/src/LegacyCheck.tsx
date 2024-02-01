@@ -10,7 +10,7 @@ import {
   indeterminateLight,
   spritesheetLight,
 } from './img';
-import { CheckProps } from './types';
+import { CheckProps } from './Checkbox/Checkbox.types';
 
 const height = 20;
 const width = 600;

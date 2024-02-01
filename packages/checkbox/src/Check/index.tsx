@@ -7,7 +7,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 import { checkAnimationDuration } from '../constants';
-import { CheckProps } from '../types';
+import { CheckProps } from '../Checkbox/Checkbox.types';
 
 import {
   checkIconStyles,
