@@ -1,4 +1,4 @@
-import { uniq } from 'lodash';
+import uniq from 'lodash/uniq';
 
 import { ComponentUpdateObject } from '../release-bot.types';
 
