@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/confirmation-modal",
-  "version": "5.0.8",
+  "version": "5.0.9",
   "description": "leafyGreen UI Kit Confirmation Modal",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -24,7 +24,7 @@
   "dependencies": {
     "@leafygreen-ui/button": "^21.0.9",
     "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/icon": "^11.22.2",
+    "@leafygreen-ui/icon": "^11.28.0",
     "@leafygreen-ui/lib": "^13.0.0",
     "@leafygreen-ui/modal": "^16.0.3",
     "@leafygreen-ui/palette": "^4.0.7",
