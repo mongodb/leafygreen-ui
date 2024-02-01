@@ -1,6 +1,6 @@
 import React from 'react';
 import { faker } from '@faker-js/faker';
-import { range } from 'lodash';
+import range from 'lodash/range';
 
 import Code from '@leafygreen-ui/code';
 
@@ -99,7 +99,11 @@ const createKitchenSinkData: (depth?: number) => object = (depth = 0) => {
   return {
     dateCreated: faker.date.past({ refDate: new Date('2023-12-26') }),
     frequency: faker.helpers.arrayElement(['Daily', 'Weekly', 'Monthly']),
-    clusterType: faker.helpers.arrayElement(['Replica set', 'Sharded cluster']),
+    clusterType: faker.helpers.weightedArrayElement([
+      { value: 'Replica set', weight: 0.45 },
+      { value: 'Sharded cluster', weight: 0.45 },
+      { value: faker.lorem.lines(2), weight: 0.1 },
+    ]),
     encryptorEnabled: faker.datatype.boolean(0.75),
     mdbVersion: faker.system.semver(),
     subRows:

@@ -1,5 +1,30 @@
 # @lg-tools/test
 
+## 0.4.1
+
+### Patch Changes
+
+- Updated dependencies [2bceccb1]
+- Updated dependencies [90bba7b2]
+  - @leafygreen-ui/testing-lib@0.4.1
+  - @lg-tools/build@0.3.2
+  - @lg-tools/meta@0.3.0
+
+## 0.4.0
+
+### Minor Changes
+
+- ffd11f24: Adds coverage reporting for untested sub-modules
+- ffd11f24: Updates to jest 29 for React 17 testing
+
+### Patch Changes
+
+- Updated dependencies [ffd11f24]
+- Updated dependencies [7f38e78a]
+- Updated dependencies [7f38e78a]
+  - @lg-tools/meta@0.2.0
+  - @leafygreen-ui/testing-lib@0.4.0
+
 ## 0.3.2
 
 ### Patch Changes

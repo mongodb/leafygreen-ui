@@ -1,5 +1,18 @@
 # @leafygreen-ui/testing-lib
 
+## 0.4.1
+
+### Patch Changes
+
+- 2bceccb1: Fixes `lodash` imports to use default exports of specific functions to reduce component's bundle size.
+
+## 0.4.0
+
+### Minor Changes
+
+- 7f38e78a: Exports `waitForState`, a wrapper around `act` that returns the result of the state update callback
+- 7f38e78a: Exports overrides for `renderHook` and `act` that will work in both a React 17 and React 18 test environment
+
 ## 0.3.4
 
 ### Patch Changes

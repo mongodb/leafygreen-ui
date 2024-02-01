@@ -15,11 +15,8 @@ import isNull from 'lodash/isNull';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
-import {
-  BaseComboboxProps,
-  ComboboxMultiselectProps,
-  OptionObject,
-} from '../Combobox.types';
+import { BaseComboboxProps, ComboboxMultiselectProps } from '../Combobox';
+import { OptionObject } from '../ComboboxOption';
 import { Combobox, ComboboxGroup, ComboboxOption } from '..';
 
 export interface NestedObject {

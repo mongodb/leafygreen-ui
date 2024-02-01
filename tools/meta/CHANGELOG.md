@@ -1,5 +1,23 @@
 # @lg-tools/meta
 
+## 0.3.0
+
+### Minor Changes
+
+- 90bba7b2: Adds `pnpm` as a possible `getPackageManager` return value.
+
+### Patch Changes
+
+- Updated dependencies [2bceccb1]
+  - @lg-tools/build@0.3.2
+
+## 0.2.0
+
+### Minor Changes
+
+- ffd11f24: - Adds `exitWithErrorMessage` util
+  - Fixes recursion in `findPackageJson`
+
 ## 0.1.5
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/form-field",
-  "version": "0.2.0",
+  "version": "0.3.1",
   "description": "LeafyGreen UI Kit Form Field",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -16,18 +16,18 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/hooks": "^8.0.0",
-    "@leafygreen-ui/icon": "^11.24.0",
-    "@leafygreen-ui/lib": "^13.0.0",
+    "@leafygreen-ui/hooks": "^8.1.1",
+    "@leafygreen-ui/icon": "^11.27.1",
+    "@leafygreen-ui/lib": "^13.2.1",
     "@leafygreen-ui/palette": "^4.0.7",
-    "@leafygreen-ui/tokens": "^2.2.0",
-    "@leafygreen-ui/typography": "^18.0.0"
+    "@leafygreen-ui/tokens": "^2.3.0",
+    "@leafygreen-ui/typography": "^18.1.0"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.10"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.11"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "^21.0.9",
+    "@leafygreen-ui/button": "^21.0.12",
     "@leafygreen-ui/icon-button": "^15.0.19",
     "lodash": "^4.17.21"
   },

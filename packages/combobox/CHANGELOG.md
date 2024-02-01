@@ -1,5 +1,48 @@
 # @leafygreen-ui/combobox
 
+## 7.2.0
+
+### Minor Changes
+
+- 0eba26c5: Combobox `onChange` callback now receives a 2nd argument. Use this argument to determine what value was inserted or deleted from a multiselect value.
+  [JIRA Ticket](https://jira.mongodb.org/browse/LG-3959)
+
+  Example:
+
+  ```tsx
+  <Combobox
+    multiselect
+    value={['apple', 'banana']}
+    onChange={(val, diff) => {
+      console.log(value); // ['apple']
+      console.log(diff); // { diffType: 'delete', value: 'banana' }
+    }}
+  />
+  ```
+
+  ```ts
+  interface DiffObject {
+    diffType: 'insert' | 'delete';
+    value: string | Array<string>;
+  }
+  ```
+
+### Patch Changes
+
+- bfda5392: Fixes bug where Combobox incorrectly makes selection on "Enter" key press.
+- Updated dependencies [2bceccb1]
+- Updated dependencies [2645cd50]
+  - @leafygreen-ui/hooks@8.1.1
+  - @leafygreen-ui/lib@13.2.1
+  - @leafygreen-ui/tokens@2.3.0
+
+## 7.1.0
+
+### Minor Changes
+
+- e7d206e6: Exports `ComboboxOptionProps` & `ComboboxGroupProps`.
+  Internal refactor of `type` file organization.
+
 ## 7.0.1
 
 ### Patch Changes

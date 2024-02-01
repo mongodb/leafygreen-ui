@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/slackbot",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "description": "Slackbot for LeafyGreen",
   "license": "Apache-2.0",
   "bin": {
@@ -16,8 +16,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@lg-tools/build": "^0.3.0",
-    "@lg-tools/meta": "^0.1.4",
+    "@lg-tools/build": "^0.3.2",
+    "@lg-tools/meta": "^0.3.0",
     "@slack/web-api": "6.7.1",
     "chalk": "4.1.2",
     "lodash": "4.17.21",

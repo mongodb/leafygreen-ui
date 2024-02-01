@@ -17,7 +17,7 @@ import isUndefined from 'lodash/isUndefined';
 import Button from '@leafygreen-ui/button';
 import { keyMap } from '@leafygreen-ui/lib';
 
-import { OptionObject } from '../Combobox.types';
+import { OptionObject } from '../ComboboxOption/ComboboxOption.types';
 import {
   defaultOptions,
   getComboboxJSX,
@@ -541,6 +541,31 @@ describe('packages/combobox', () => {
         }
       });
 
+      test('Clicking an option fires onChange', () => {
+        const onChange = jest.fn();
+        const { openMenu } = renderCombobox(select, {
+          onChange,
+        });
+        const { optionElements } = openMenu();
+        expect(optionElements).not.toBeUndefined();
+        const option3 = (optionElements as HTMLCollectionOf<HTMLLIElement>)[2];
+        act(() => {
+          userEvent.click(option3);
+        });
+
+        if (select === 'multiple') {
+          expect(onChange).toHaveBeenCalledWith(
+            expect.arrayContaining(['carrot']),
+            expect.objectContaining({
+              diffType: 'insert',
+              value: 'carrot',
+            }),
+          );
+        } else {
+          expect(onChange).toHaveBeenCalledWith('carrot');
+        }
+      });
+
       testSingleSelect('Clicking selected option closes menu', async () => {
         const { openMenu } = renderCombobox(select, {
           initialValue: 'apple',
@@ -749,6 +774,32 @@ describe('packages/combobox', () => {
           });
         });
 
+        testMultiSelect(
+          'Clicking chip X button fires onChange with diff',
+          async () => {
+            const onChange = jest.fn();
+            const initialValue = ['apple', 'banana', 'carrot'];
+            const { queryChipsByName } = renderCombobox(select, {
+              onChange,
+              initialValue,
+            });
+            const appleChip = queryChipsByName('Apple');
+            expect(appleChip).not.toBeNull();
+            const appleChipButton = appleChip!.querySelector('button')!;
+            userEvent.click(appleChipButton);
+            await waitFor(() => {
+              expect(appleChip).not.toBeInTheDocument();
+              expect(onChange).toHaveBeenCalledWith(
+                expect.arrayContaining(['banana', 'carrot']),
+                expect.objectContaining({
+                  diffType: 'delete',
+                  value: 'apple',
+                }),
+              );
+            });
+          },
+        );
+
         testMultiSelect('Clicking chip text focuses the chip', () => {
           const initialValue = ['apple', 'banana', 'carrot'];
           const { queryChipsByName, queryAllChips } = renderCombobox(select, {
@@ -825,6 +876,17 @@ describe('packages/combobox', () => {
           expect(menuContainerEl).toBeInTheDocument();
         });
 
+        test('does not make a selection when clicking enter on a closed menu', () => {
+          const { getMenuElements, inputEl } = renderCombobox(select);
+          userEvent.tab();
+          userEvent.keyboard('{enter}');
+          expect(inputEl).toHaveValue('');
+          const { menuContainerEl } = getMenuElements();
+          expect(menuContainerEl).not.toBeNull();
+          expect(menuContainerEl).toBeInTheDocument();
+          expect(inputEl).toHaveValue('');
+        });
+
         test('selects highlighted option', () => {
           const { inputEl, openMenu, queryChipsByName } =
             renderCombobox(select);
@@ -842,9 +904,18 @@ describe('packages/combobox', () => {
           const { inputEl, openMenu } = renderCombobox(select, { onChange });
           openMenu();
           userEvent.type(inputEl!, '{arrowdown}{enter}');
-          expect(onChange).toHaveBeenCalledWith(
-            select === 'single' ? 'banana' : ['banana'],
-          );
+
+          if (select === 'multiple') {
+            expect(onChange).toHaveBeenCalledWith(
+              ['banana'],
+              expect.objectContaining({
+                diffType: 'insert',
+                value: 'banana',
+              }),
+            );
+          } else {
+            expect(onChange).toHaveBeenCalledWith('banana');
+          }
         });
 
         test('does not fire onClear handler', () => {
@@ -1359,7 +1430,8 @@ describe('packages/combobox', () => {
      */
     describe('onClear', () => {
       test('Clear button calls onClear callback', () => {
-        const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+        const initialValue =
+          select === 'multiple' ? ['apple', 'banana'] : 'apple';
         const onClear = jest.fn();
         const { clearButtonEl } = renderCombobox(select, {
           initialValue,
@@ -1370,7 +1442,8 @@ describe('packages/combobox', () => {
       });
 
       test('Clear button does not force the menu to reopen', () => {
-        const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+        const initialValue =
+          select === 'multiple' ? ['apple', 'banana'] : 'apple';
         const onClear = jest.fn();
         const { clearButtonEl, queryByRole } = renderCombobox(select, {
           initialValue,
@@ -1381,8 +1454,9 @@ describe('packages/combobox', () => {
         expect(queryByRole('listbox')).not.toBeInTheDocument();
       });
 
-      test('Clear button clears the value of the input', () => {
-        const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+      test('Clear button clears the value of the input', async () => {
+        const initialValue =
+          select === 'multiple' ? ['apple', 'banana'] : 'apple';
         const { inputEl, clearButtonEl, queryChipsByName } = renderCombobox(
           select,
           {
@@ -1396,10 +1470,34 @@ describe('packages/combobox', () => {
           expect(inputEl).toHaveValue('Apple');
         }
 
-        act(() => {
-          userEvent.click(clearButtonEl!);
+        userEvent.click(clearButtonEl!);
+        await waitFor(() => {
+          expect(inputEl).toHaveValue('');
         });
-        expect(inputEl).toHaveValue('');
+      });
+
+      test('Clear button calls onChange callback', () => {
+        const onChange = jest.fn();
+        const initialValue =
+          select === 'multiple' ? ['apple', 'banana'] : 'apple';
+        const { clearButtonEl } = renderCombobox(select, {
+          initialValue,
+          onChange,
+        });
+
+        userEvent.click(clearButtonEl!);
+
+        if (select === 'multiple') {
+          expect(onChange).toHaveBeenCalledWith(
+            [],
+            expect.objectContaining({
+              diffType: 'delete',
+              value: ['apple', 'banana'],
+            }),
+          );
+        } else {
+          expect(onChange).toHaveBeenCalledWith(null);
+        }
       });
 
       test('Focus returns to input element after clear button is clicked', async () => {

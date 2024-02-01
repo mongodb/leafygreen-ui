@@ -1,5 +1,52 @@
 # @leafygreen-ui/table
 
+## 12.4.1
+
+### Patch Changes
+
+- 2bceccb1: Fixes `lodash` imports to use default exports of specific functions to reduce component's bundle size.
+- Updated dependencies [2bceccb1]
+- Updated dependencies [2645cd50]
+  - @leafygreen-ui/hooks@8.1.1
+  - @leafygreen-ui/lib@13.2.1
+  - @leafygreen-ui/tokens@2.3.0
+
+## 12.4.0
+
+### Minor Changes
+
+- bb8987d6: Adds `contentClassName` prop, applied to the inner `div` of the Cell
+- bb8987d6: Adds `overflow` prop to `Cell` component. By default there is no change. When `overflow === 'truncate'`, the styling of the cell is updated (if necessary) to be aligned to the top, with an ellipsis after 2 lines of text.
+- bb8987d6: Nested rows now support animations for content taller than 40px
+
+## 12.3.0
+
+### Minor Changes
+
+- 91372fff: useLeafygreenTable now exposes an `scrollToIndex` method for virtualized tables.
+
+## 12.2.0
+
+### Minor Changes
+
+- c080ec01: Table now exposes an optional second generic type for useLeafyGreenTable that controls the type of the value
+
+### Patch Changes
+
+- 9a35ec36: Fixes style bug where zebra row colors override selected row colors
+- Updated dependencies [9b7a8236]
+- Updated dependencies [7f38e78a]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+  - @leafygreen-ui/icon@11.27.1
+  - @leafygreen-ui/leafygreen-provider@3.1.11
+  - @leafygreen-ui/hooks@8.1.0
+  - @leafygreen-ui/lib@13.2.0
+  - @leafygreen-ui/typography@18.1.0
+
 ## 12.1.4
 
 ### Patch Changes

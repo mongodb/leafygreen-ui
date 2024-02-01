@@ -1,0 +1,1 @@
+export { isEverySegmentFilled } from './isEverySegmentFilled';

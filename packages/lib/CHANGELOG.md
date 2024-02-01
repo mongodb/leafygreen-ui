@@ -1,5 +1,27 @@
 # @leafygreen-ui/lib
 
+## 13.2.1
+
+### Patch Changes
+
+- 2bceccb1: Fixes `lodash` imports to use default exports of specific functions to reduce component's bundle size.
+
+## 13.2.0
+
+### Minor Changes
+
+- ffd11f24: Updates Typescript signature of `createSyntheticEvent`
+- ffd11f24: - Creates new utility functions
+  - `rollover`
+  - `truncateStart`
+  - `cloneReverse`
+  - `isDefined`
+  - `isZeroLike` & `isNotZeroLike`
+
+### Patch Changes
+
+- ffd11f24: Updates `target` type in `createSyntheticEvent` to extend `EventTarget`
+
 ## 13.1.0
 
 ### Minor Changes

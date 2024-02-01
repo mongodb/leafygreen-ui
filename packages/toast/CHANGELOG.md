@@ -1,5 +1,35 @@
 # @leafygreen-ui/toast
 
+## 6.1.20
+
+### Patch Changes
+
+- 2bceccb1: Fixes `lodash` imports to use default exports of specific functions to reduce component's bundle size.
+- Updated dependencies [2bceccb1]
+- Updated dependencies [2645cd50]
+  - @leafygreen-ui/hooks@8.1.1
+  - @leafygreen-ui/lib@13.2.1
+  - @leafygreen-ui/tokens@2.3.0
+
+## 6.1.19
+
+### Patch Changes
+
+- 7f38e78a: Updates `updateToast` function to consistently return the new toast object
+- 7f38e78a: Updates test to import `renderHook` from `@leafygreen-ui/testing-lib`
+- Updated dependencies [9b7a8236]
+- Updated dependencies [7f38e78a]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+  - @leafygreen-ui/icon@11.27.1
+  - @leafygreen-ui/leafygreen-provider@3.1.11
+  - @leafygreen-ui/hooks@8.1.0
+  - @leafygreen-ui/lib@13.2.0
+  - @leafygreen-ui/typography@18.1.0
+
 ## 6.1.18
 
 ### Patch Changes
