@@ -1090,7 +1090,7 @@ describe('packages/date-picker', () => {
     });
 
     describe('Keyboard navigation', () => {
-      describe.only('focuses the current value', () => {
+      describe('focuses the current value', () => {
         test("when month returns to value's month", async () => {
           const { openMenu, findAllByRole } = renderDatePicker({
             value: testToday,
