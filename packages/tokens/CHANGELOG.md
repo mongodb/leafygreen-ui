@@ -1,5 +1,11 @@
 # @leafygreen-ui/tokens
 
+## 2.3.0
+
+### Minor Changes
+
+- 2645cd50: Adds new tokens to spacing object, and warns that old tokens are deprecated. Eventually, we will enforce a migration to the new system.
+
 ## 2.2.0
 
 ### Minor Changes

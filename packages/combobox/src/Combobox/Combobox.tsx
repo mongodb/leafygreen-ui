@@ -45,6 +45,7 @@ import { InternalComboboxOption } from '../ComboboxOption';
 import {
   ComboboxElement,
   ComboboxSize,
+  DiffObject,
   getNullSelection,
   onChangeType,
   Overflow,
@@ -62,6 +63,7 @@ import {
   getValueForDisplayName,
 } from '../utils';
 
+import { isValueCurrentSelection } from './utils/isValueCurrentSelection';
 import {
   baseComboboxStyles,
   baseInputElementStyle,
@@ -224,6 +226,11 @@ export function Combobox<M extends boolean>({
       if (isMultiselect(selection)) {
         // We know M is true here
         const newSelection: SelectValueType<true> = clone(selection);
+        const multiselectOnChange = onChange as onChangeType<true>;
+        const diff: DiffObject = {
+          diffType: 'delete',
+          value: value ?? selection,
+        };
 
         if (isNull(value)) {
           newSelection.length = 0;
@@ -234,36 +241,21 @@ export function Combobox<M extends boolean>({
           } else {
             // add to array
             newSelection.push(value);
+            diff.diffType = 'insert';
             // clear text
             setInputValue('');
           }
         }
         setSelection(newSelection as SelectValueType<M>);
-        (onChange as onChangeType<true>)?.(
-          newSelection as SelectValueType<true>,
-        );
+        multiselectOnChange?.(newSelection, diff);
       } else {
-        const newSelection: SelectValueType<M> = value as SelectValueType<M>;
-        setSelection(newSelection);
-        (onChange as onChangeType<false>)?.(
-          newSelection as SelectValueType<false>,
-        );
+        const newSelection: SelectValueType<false> = value;
+        const singleSelectOnChange = onChange as onChangeType<false>;
+        setSelection(newSelection as SelectValueType<M>);
+        singleSelectOnChange?.(newSelection);
       }
     },
     [isMultiselect, onChange, selection],
-  );
-
-  /**
-   * Returns whether a given value is included in, or equal to, the current selection
-   * @param value the option value to check
-   */
-  const isValueCurrentSelection = useCallback(
-    (value: string): boolean => {
-      return isMultiselect(selection)
-        ? selection.includes(value)
-        : value === selection;
-    },
-    [isMultiselect, selection],
   );
 
   /**
@@ -274,9 +266,9 @@ export function Combobox<M extends boolean>({
   const isTextCurrentSelection = useCallback(
     (text: string): boolean => {
       const value = getValueForDisplayName(text, allOptions);
-      return isValueCurrentSelection(value);
+      return isValueCurrentSelection(value, selection);
     },
-    [allOptions, isValueCurrentSelection],
+    [allOptions, selection],
   );
 
   /**
@@ -841,6 +833,7 @@ export function Combobox<M extends boolean>({
   }, []);
 
   // When controlled value changes, update the selection
+  // TODO: use useControlledValue
   useEffect(() => {
     if (!isUndefined(value) && value !== prevValue) {
       if (isNull(value)) {
@@ -1012,11 +1005,14 @@ export function Combobox<M extends boolean>({
         }
 
         case keyMap.Enter: {
-          if (
-            // Select the highlighted option iff
+          if (!isOpen) {
+            openMenu();
+          } else if (
+            // Select the highlighted option if
             // the menu is open,
             // we're focused on input element,
             // and the highlighted option is not disabled
+            isOpen &&
             focusedElementName === ComboboxElement.Input &&
             !isNull(highlightedOption) &&
             !isOptionDisabled(highlightedOption)

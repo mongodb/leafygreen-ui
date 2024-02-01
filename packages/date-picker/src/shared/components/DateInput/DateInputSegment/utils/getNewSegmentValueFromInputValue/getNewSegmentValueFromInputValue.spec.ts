@@ -1,4 +1,4 @@
-import { range } from 'lodash';
+import range from 'lodash/range';
 
 import { defaultMax, defaultMin } from '../../../../../constants';
 import { DateSegment } from '../../../../../types';

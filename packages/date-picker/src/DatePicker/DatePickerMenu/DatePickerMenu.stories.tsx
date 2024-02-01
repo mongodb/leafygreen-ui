@@ -2,7 +2,8 @@
 import React, { useRef, useState } from 'react';
 import { Decorator, StoryFn, StoryObj } from '@storybook/react';
 import { userEvent, within } from '@storybook/testing-library';
-import { last, omit } from 'lodash';
+import last from 'lodash/last';
+import omit from 'lodash/omit';
 import MockDate from 'mockdate';
 
 import {

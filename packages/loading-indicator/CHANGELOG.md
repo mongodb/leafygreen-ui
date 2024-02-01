@@ -1,5 +1,17 @@
 # @leafygreen-ui/loading-indicator
 
+## 2.0.8
+
+### Patch Changes
+
+- 543102f4: - Resolves: [LG-3979](https://jira.mongodb.org/browse/LG-3979)
+  - Updates `react-lottie-player@^1.5.6`
+  - Adds `runExpressions: false` to Lottie config to prevent arbitrary code execution. (See https://github.com/airbnb/lottie-web/pull/2833)
+- Updated dependencies [2bceccb1]
+- Updated dependencies [2645cd50]
+  - @leafygreen-ui/lib@13.2.1
+  - @leafygreen-ui/tokens@2.3.0
+
 ## 2.0.7
 
 ### Patch Changes

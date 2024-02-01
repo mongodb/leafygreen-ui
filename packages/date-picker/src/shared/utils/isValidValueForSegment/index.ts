@@ -1,4 +1,4 @@
-import { inRange } from 'lodash';
+import inRange from 'lodash/inRange';
 
 import { defaultMax, defaultMin } from '../../constants';
 import { DateSegment, DateSegmentValue } from '../../types';

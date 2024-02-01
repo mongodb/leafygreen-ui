@@ -1,4 +1,4 @@
-import { keys } from 'lodash';
+import keys from 'lodash/keys';
 
 import { GeneratedStoryConfig } from '@leafygreen-ui/lib';
 

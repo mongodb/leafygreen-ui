@@ -1,6 +1,7 @@
 export {
   ComboboxElement,
   ComboboxSize,
+  DiffObject,
   getNullSelection,
   onChangeType,
   Overflow,
