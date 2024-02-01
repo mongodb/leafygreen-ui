@@ -1,5 +1,11 @@
 # @leafygreen-ui/form-field
 
+## 0.3.2
+
+### Patch Changes
+
+- 5249bd3d: Changes the gap between icons from 8px to 4px for all sizes.
+
 ## 0.3.1
 
 ### Patch Changes
