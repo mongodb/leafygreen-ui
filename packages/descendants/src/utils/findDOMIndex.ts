@@ -3,7 +3,9 @@ import { DescendantsList } from '../Descendants.types';
 import { isElementPreceding } from './isElementPreceding';
 
 /**
- * Returns the 1 + the index of the registered descendant immediately preceding the search element.
+ * Finds the index of the registered descendant _immediately preceding_ the search element in the DOM,
+ * and returns _one after_ that index.
+ * (The element _after_ the element _before_ our search element, is our search element)
  *
  * e.g.:
  *

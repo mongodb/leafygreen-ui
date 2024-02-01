@@ -40,14 +40,14 @@ export type DescendantsReducerType<T extends HTMLElement> = Reducer<
  *
  * Establishes a state with a `descendants` list, and a `dispatch` function to modify the descendants list
  *
- * @param state
- * @param action
- * @returns
+ * @param state {@link DescendantsState} The current reducer state
+ * @param action {@link DescendantsReducerAction} The reducer action type
+ * @returns A modified {@link DescendantsState} object
  */
 export const descendantsReducer = <T extends HTMLElement>(
   state: DescendantsState<T>,
   action: DescendantsReducerAction<T>,
-) => {
+): DescendantsState<T> => {
   switch (action.type) {
     case 'register': {
       if (!action.ref.current) {
