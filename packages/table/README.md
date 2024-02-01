@@ -194,8 +194,7 @@ Setting this prop will indicate that the Table component is being used with the 
 
 #### `enableSorting`
 
-Setting this prop will set the `enableSorting` prop on columns to match. The column-level
-prop will take precedence over this one.
+Setting this prop will set the `enableSorting` prop on columns to match. The column-level prop will take precedence over this one.
 
 ---
 
