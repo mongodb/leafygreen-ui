@@ -104,7 +104,7 @@ export const ConfirmationModal = React.forwardRef(
             disabled={!confirmEnabled || submitDisabled}
             onClick={onConfirm}
             className={buttonStyle}
-            data-testid="lg-confirmation-modal-footer-button"
+            data-testid="lg-confirmation-modal-footer-confirm-button"
           >
             {buttonText}
           </Button>
