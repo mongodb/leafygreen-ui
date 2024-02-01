@@ -2,10 +2,12 @@ import { ComponentProps, Reducer } from 'react';
 import isEqual from 'lodash/isEqual';
 import isUndefined from 'lodash/isUndefined';
 
-import { findDescendantIndexWithId } from './utils/findDescendantWithId';
-import { findDOMIndex } from './utils/findDOMIndex';
-import { insertDescendantAt } from './utils/insertAt';
-import { removeIndex } from './utils/removeIndex';
+import {
+  findDescendantIndexWithId,
+  findDOMIndex,
+  insertDescendantAt,
+  removeIndex,
+} from './utils/';
 import { Descendant, DescendantsList } from './Descendants.types';
 
 export interface DescendantsState<T extends HTMLElement> {

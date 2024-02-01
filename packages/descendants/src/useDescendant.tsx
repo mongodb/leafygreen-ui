@@ -12,8 +12,8 @@ import {
   useIsomorphicLayoutEffect,
 } from '@leafygreen-ui/hooks';
 
-import { findDescendantIndexWithId } from './utils/findDescendantWithId';
 import { DescendantContextType } from './DescendantsContext';
+import { findDescendantIndexWithId } from './utils';
 
 /** @deprecated */
 const genId = () => `_${Math.random().toString(36).substr(2, 9)}`;
