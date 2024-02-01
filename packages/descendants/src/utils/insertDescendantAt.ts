@@ -7,11 +7,11 @@ import { Descendant } from '../Descendants.types';
  * @param index The index to insert the item at
  * @returns A copy of the array with the item inserted at the specified index
  */
-export function insertDescendantAt(
-  array: Array<Descendant>,
-  item: Descendant,
+export function insertDescendantAt<T extends HTMLElement>(
+  array: Array<Descendant<T>>,
+  item: Descendant<T>,
   index?: number,
-): Array<Descendant> {
+): Array<Descendant<T>> {
   if (index == null || !(index in array)) {
     return [...array, item];
   }
