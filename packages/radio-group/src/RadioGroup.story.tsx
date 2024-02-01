@@ -27,16 +27,16 @@ const meta: StoryMetaType<typeof RadioGroup> = {
   },
   args: {
     children: [
-      <Radio checked value="1">
+      <Radio key="1" checked value="1">
         Radio Input 1
       </Radio>,
-      <Radio default value="2" description="This is a description">
+      <Radio key="2" default value="2" description="This is a description">
         Radio Input 2
       </Radio>,
-      <Radio disabled value="3" description="This is a description">
+      <Radio key="3" disabled value="3" description="This is a description">
         Disabled Option
       </Radio>,
-      <Radio disabled value="4">
+      <Radio key="4" disabled value="4">
         Disabled Option
       </Radio>,
     ],
