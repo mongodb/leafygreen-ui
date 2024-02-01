@@ -69,7 +69,7 @@ export const MyParent = ({ children, ...rest }: ComponentProps<'div'>) => {
    */
   return (
     <DescendantsProvider
-      context={TestDescendantContext}
+      context={MyDescendantsContext}
       descendants={descendants}
       dispatch={dispatch}
     >
