@@ -192,6 +192,11 @@ Setting this prop will indicate that the Table component is being used with the 
 
 > Note that the number of virtual rows rendered depends on the height passed to the `Table` component. For a reasonably performant use of virtual scrolling, ensure that there is a height set on the component to reduce the number of virtual rows rendered.
 
+#### `enableSorting`
+
+Setting this prop will set the `enableSorting` prop on columns to match. The column-level
+prop will take precedence over this one.
+
 ---
 
 #### `data` / `renderExpandedContent`
