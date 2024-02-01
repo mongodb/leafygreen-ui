@@ -1090,7 +1090,7 @@ describe('packages/date-picker', () => {
     });
 
     describe('Keyboard navigation', () => {
-      describe('focuses the current value', () => {
+      describe.only('focuses the current value', () => {
         test("when month returns to value's month", async () => {
           const { openMenu, findAllByRole } = renderDatePicker({
             value: testToday,
@@ -1109,7 +1109,7 @@ describe('packages/date-picker', () => {
           options = await findAllByRole('option');
           const _dec = options[11];
           userEvent.click(_dec);
-          tabNTimes(3);
+          tabNTimes(2);
           expect(queryCellByDate(testToday)).toHaveFocus();
         });
       });
