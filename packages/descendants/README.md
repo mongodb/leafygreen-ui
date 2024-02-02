@@ -88,7 +88,7 @@ export const TestDescendant = ({
    * Pass the context value into the hook
    * in order to establish this element
    */
-  const { index, ref } = useDescendant(TestDescendantContext);
+  const { index, ref } = useDescendant(MyDescendantsContext);
 
   // This component has access to its index within the Parent context
 
