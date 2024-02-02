@@ -259,13 +259,15 @@ describe('packages/date-picker/shared/date-input-box', () => {
         );
       });
 
-      test('value setter is called when pressing backspace in a single segment', () => {
+      test.only('value setter is called when pressing backspace in a single segment', () => {
         const setValue = jest.fn();
 
         const { dayInput } = renderDateInputBox({ setValue }, testContext);
         userEvent.type(dayInput, '21');
         userEvent.type(dayInput, '{backspace}');
-        expect(setValue).toHaveBeenCalled();
+        expect(setValue).toHaveBeenCalledWith(
+          expect.objectContaining({ value: null }),
+        );
       });
     });
 
