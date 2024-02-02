@@ -54,14 +54,14 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
           enableSorting:
             propColumn.enableSorting ??
             enableSorting ??
-            defaultColumn.enableSorting ??
+            defaultColumn?.enableSorting ??
             false,
         } as LGColumnDef<T, V>;
       }),
     ],
     [
       columnsProp,
-      defaultColumn.enableSorting,
+      defaultColumn?.enableSorting,
       enableSorting,
       hasSelectableRows,
       selectColumnConfig,
