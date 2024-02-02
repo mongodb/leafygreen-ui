@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { render } from '@testing-library/react';
 
 import { renderHook } from '@leafygreen-ui/testing-lib';
@@ -29,26 +29,6 @@ describe('packages/descendants', () => {
     expect(apple).toHaveAttribute('data-index', '0');
     expect(banana).toHaveAttribute('data-index', '1');
     expect(carrot).toHaveAttribute('data-index', '2');
-  });
-
-  test('does not track other elements', () => {
-    const { queryByText } = render(
-      <TestParent>
-        <TestDescendant>Apple</TestDescendant>
-        <TestDescendant>Banana</TestDescendant>
-        <div>Zebra</div>
-        <TestDescendant>Carrot</TestDescendant>
-      </TestParent>,
-    );
-    const apple = queryByText('Apple');
-    const banana = queryByText('Banana');
-    const carrot = queryByText('Carrot');
-    const zebra = queryByText('Zebra');
-
-    expect(apple).toHaveAttribute('data-index', '0');
-    expect(banana).toHaveAttribute('data-index', '1');
-    expect(carrot).toHaveAttribute('data-index', '2');
-    expect(zebra).not.toHaveAttribute('data-index');
   });
 
   test('renders a nested list of descendants', () => {
@@ -192,23 +172,145 @@ describe('packages/descendants', () => {
   });
 
   describe('internal', () => {
-    test('descendants object has access to child props', () => {
-      const { result } = renderHook(() => useInitDescendants<HTMLDivElement>());
+    const renderDescendantsParent = (descendants: ReactNode) => {
+      const hook = renderHook(() => useInitDescendants<HTMLDivElement>());
 
-      render(
+      const renderResult = render(
         <DescendantsProvider
           context={TestDescendantContext}
-          descendants={result.current.descendants}
-          dispatch={result.current.dispatch}
+          descendants={hook.result.current.descendants}
+          dispatch={hook.result.current.dispatch}
         >
-          <TestDescendant type="fruit">Apple</TestDescendant>
-          <TestDescendant type="fruit">Banana</TestDescendant>
-          <TestDescendant type="vegetable">Carrot</TestDescendant>
+          {descendants}
         </DescendantsProvider>,
       );
 
-      const appleDescendant = result.current.descendants[0];
+      const rerender = (descendants: ReactNode) => {
+        renderResult.rerender(
+          <DescendantsProvider
+            context={TestDescendantContext}
+            descendants={hook.result.current.descendants}
+            dispatch={hook.result.current.dispatch}
+          >
+            {descendants}
+          </DescendantsProvider>,
+        );
+      };
+
+      return {
+        hook,
+        renderResult,
+        rerender,
+      };
+    };
+
+    test('descendants register when wrapped in a fragment', () => {
+      const { hook } = renderDescendantsParent(
+        <>
+          <TestDescendant>Apple</TestDescendant>
+          <TestDescendant>Banana</TestDescendant>
+        </>,
+      );
+
+      const appleDescendant = hook.result.current.descendants[0];
+      expect(appleDescendant).toBeDefined();
+    });
+
+    test('descendants register when individually wrapped in an HTML element', () => {
+      const { hook } = renderDescendantsParent(
+        <>
+          <div>
+            <TestDescendant>Apple</TestDescendant>
+          </div>
+          <span>
+            <TestDescendant>Banana</TestDescendant>
+          </span>
+        </>,
+      );
+
+      const appleDescendant = hook.result.current.descendants[0];
+      expect(appleDescendant).toBeDefined();
+    });
+
+    test('elements not rendered with `useDescendants` are not registered', () => {
+      const { hook } = renderDescendantsParent(
+        <>
+          <div>Fruit</div>
+          <TestDescendant>Apple</TestDescendant>
+          <TestDescendant>Banana</TestDescendant>
+        </>,
+      );
+
+      const appleDescendant = hook.result.current.descendants[0];
+      expect(appleDescendant).toBeDefined();
+    });
+
+    test('descendants object has access to index', () => {
+      const { hook } = renderDescendantsParent(
+        <>
+          <TestDescendant>Apple</TestDescendant>
+          <TestDescendant>Banana</TestDescendant>
+        </>,
+      );
+
+      const appleDescendant = hook.result.current.descendants[0];
+      expect(appleDescendant.index).toEqual(0);
+    });
+
+    test('descendants object has access to child props', () => {
+      const { hook } = renderDescendantsParent(
+        <>
+          <TestDescendant type="fruit">Apple</TestDescendant>
+          <TestDescendant type="fruit">Banana</TestDescendant>
+        </>,
+      );
+
+      const appleDescendant = hook.result.current.descendants[0];
       expect(appleDescendant.props?.type).toEqual('fruit');
+    });
+
+    test('descendants object index updates after rerender', () => {
+      const { hook, rerender } = renderDescendantsParent(
+        <>
+          <TestDescendant>Apple</TestDescendant>
+          <TestDescendant>Banana</TestDescendant>
+          <TestDescendant>Carrot</TestDescendant>
+        </>,
+      );
+
+      rerender(
+        <>
+          <TestDescendant>Banana</TestDescendant>
+          <TestDescendant>Carrot</TestDescendant>
+          <TestDescendant>Apple</TestDescendant>
+        </>,
+      );
+
+      const appleDescendant = hook.result.current.descendants[2];
+      expect(appleDescendant.element).toHaveTextContent('Apple');
+      expect(appleDescendant.index).toEqual(2);
+    });
+
+    test('inserting an element updates the index of following elements', () => {
+      const { hook, rerender } = renderDescendantsParent(
+        <>
+          <TestDescendant>Apple</TestDescendant>
+          <TestDescendant>Carrot</TestDescendant>
+        </>,
+      );
+
+      rerender(
+        <>
+          <TestDescendant>Apple</TestDescendant>
+          <TestDescendant>Banana</TestDescendant>
+          <TestDescendant>Carrot</TestDescendant>
+        </>,
+      );
+
+      for (let i = 0; i < hook.result.current.descendants.length; i++) {
+        const descendant = hook.result.current.descendants[i];
+        expect(descendant.index).toEqual(i);
+      }
     });
   });
 });

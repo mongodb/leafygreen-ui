@@ -29,6 +29,7 @@ export type DescendantsReducerAction<T extends HTMLElement> =
       type: 'update';
       id: string;
       props?: ComponentProps<any>;
+      // TODO: index
     };
 
 export type DescendantsReducerType<T extends HTMLElement> = Reducer<
@@ -74,6 +75,7 @@ export const descendantsReducer = <T extends HTMLElement>(
           element,
           id: action.id,
           props: action.props,
+          index,
         };
 
         // Add the new descendant at the given index

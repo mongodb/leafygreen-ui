@@ -17,13 +17,13 @@ export type DescendantContextType<T extends HTMLElement> = React.Context<
  * The returned Context object will be used to define which context a descendant is a part of.
  */
 export const createDescendantsContext = <T extends HTMLElement = HTMLElement>(
-  displayName: string,
+  displayName?: string,
 ): DescendantContextType<T> => {
   const context = createContext<DescendantsContextProps<T>>({
     descendants: [],
     dispatch: () => {},
   });
-  context.displayName = displayName;
+  context.displayName = displayName ?? 'DescendantsContext';
 
   return context;
 };

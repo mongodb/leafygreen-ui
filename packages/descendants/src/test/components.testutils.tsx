@@ -18,6 +18,7 @@ export const TestParent = ({ children, ...rest }: ComponentProps<'div'>) => {
   // 2. Initialize an empty descendants data structure
   const { descendants, dispatch } = useInitDescendants<HTMLDivElement>();
   const [selected, setSelected] = useState<number | undefined>(0);
+
   // 3. Pass the context & descendants data structure into the provider
   return (
     <DescendantsProvider
@@ -37,11 +38,13 @@ interface TestDescendantProps extends ComponentProps<'div'> {
 }
 
 export const TestDescendant = forwardRef<HTMLDivElement, TestDescendantProps>(
-  ({ children, ...rest }: TestDescendantProps, fwdRef) => {
+  ({ children, ...props }: TestDescendantProps, fwdRef) => {
     // 4. Establish a child component as a descendant of the established context
-    const { index, id, ref } = useDescendant(TestDescendantContext, fwdRef, {
-      ...rest,
-    });
+    const { index, id, ref } = useDescendant(
+      TestDescendantContext,
+      fwdRef,
+      props,
+    );
 
     const { selected, setSelected } = useContext(TestSelectionContext);
     const isSelected = index === selected;
@@ -55,7 +58,7 @@ export const TestDescendant = forwardRef<HTMLDivElement, TestDescendantProps>(
         data-id={id}
         data-selected={isSelected}
         onClick={() => setSelected(index)}
-        {...rest}
+        {...props}
       >
         {children}
       </div>
