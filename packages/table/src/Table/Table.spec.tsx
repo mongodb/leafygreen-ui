@@ -201,94 +201,72 @@ describe('packages/table/Table', () => {
       expect(labelTexts[idx]).toBeInTheDocument();
     });
   });
-});
 
-describe('option resolution', () => {
-  test('rows are not sortable by default', async () => {
-    const { getAllByTestId, getAllByLabelText } = render(<TableWithHook />);
+  describe('option resolution', () => {
+    test('rows are not sortable by default', async () => {
+      const { queryAllByTestId, queryAllByLabelText } = render(
+        <TableWithHook />,
+      );
 
-    const columns = getDefaultTestColumns({});
-    const sortIconButtons = getAllByTestId('lg-table-sort-icon-button');
-    const labelTexts = getAllByLabelText('Unsorted Icon');
-
-    columns.forEach((_, idx) => {
-      expect(sortIconButtons[idx]).not.toBeInTheDocument();
-      expect(labelTexts[idx]).not.toBeInTheDocument();
+      expect(queryAllByTestId('lg-table-sort-icon-button')).toHaveLength(0);
+      expect(queryAllByLabelText('Unsorted Icon')).toHaveLength(0);
     });
-  });
 
-  test('column-level enableSorting option overrides top-level enableSorting option', async () => {
-    const { getAllByTestId, getAllByLabelText } = render(
-      <TableWithHook
-        hookProps={{ enableSorting: true }}
-        columnProps={{ enableSorting: false }}
-      />,
-    );
+    test('column-level enableSorting option overrides top-level enableSorting option', async () => {
+      const { queryAllByTestId, queryAllByLabelText } = render(
+        <TableWithHook
+          hookProps={{ enableSorting: true }}
+          columnProps={{ enableSorting: false }}
+        />,
+      );
 
-    const columns = getDefaultTestColumns({});
-    const sortIconButtons = getAllByTestId('lg-table-sort-icon-button');
-    const labelTexts = getAllByLabelText('Unsorted Icon');
-
-    columns.forEach((_, idx) => {
-      expect(sortIconButtons[idx]).not.toBeInTheDocument();
-      expect(labelTexts[idx]).not.toBeInTheDocument();
+      expect(queryAllByTestId('lg-table-sort-icon-button')).toHaveLength(0);
+      expect(queryAllByLabelText('Unsorted Icon')).toHaveLength(0);
     });
-  });
 
-  test('column-level enableSorting option overrides defaultColumns.enableSorting option', async () => {
-    const { getAllByTestId, getAllByLabelText } = render(
-      <TableWithHook
-        hookProps={{ defaultColumn: { enableSorting: true } }}
-        columnProps={{ enableSorting: false }}
-      />,
-    );
+    test('column-level enableSorting option overrides defaultColumns.enableSorting option', async () => {
+      const { queryAllByTestId, queryAllByLabelText } = render(
+        <TableWithHook
+          hookProps={{ defaultColumn: { enableSorting: true } }}
+          columnProps={{ enableSorting: false }}
+        />,
+      );
 
-    const columns = getDefaultTestColumns({});
-    const sortIconButtons = getAllByTestId('lg-table-sort-icon-button');
-    const labelTexts = getAllByLabelText('Unsorted Icon');
-
-    columns.forEach((_, idx) => {
-      expect(sortIconButtons[idx]).not.toBeInTheDocument();
-      expect(labelTexts[idx]).not.toBeInTheDocument();
+      expect(queryAllByTestId('lg-table-sort-icon-button')).toHaveLength(0);
+      expect(queryAllByLabelText('Unsorted Icon')).toHaveLength(0);
     });
-  });
 
-  test('top-level enableSorting option overrides defaultColumns.enableSorting', async () => {
-    const { getAllByTestId, getAllByLabelText } = render(
-      <TableWithHook
-        hookProps={{
-          enableSorting: false,
-          defaultColumn: { enableSorting: true },
-        }}
-      />,
-    );
+    test('top-level enableSorting option overrides defaultColumns.enableSorting', async () => {
+      const { queryAllByTestId, queryAllByLabelText } = render(
+        <TableWithHook
+          hookProps={{
+            enableSorting: false,
+            defaultColumn: { enableSorting: true },
+          }}
+        />,
+      );
 
-    const columns = getDefaultTestColumns({});
-    const sortIconButtons = getAllByTestId('lg-table-sort-icon-button');
-    const labelTexts = getAllByLabelText('Unsorted Icon');
-
-    columns.forEach((_, idx) => {
-      expect(sortIconButtons[idx]).not.toBeInTheDocument();
-      expect(labelTexts[idx]).not.toBeInTheDocument();
+      expect(queryAllByTestId('lg-table-sort-icon-button')).toHaveLength(0);
+      expect(queryAllByLabelText('Unsorted Icon')).toHaveLength(0);
     });
-  });
 
-  test('defaultColumns.enableSorting option applies to columns that are not specified', async () => {
-    const { getAllByTestId, getAllByLabelText } = render(
-      <TableWithHook
-        hookProps={{
-          defaultColumn: { enableSorting: true },
-        }}
-      />,
-    );
+    test('defaultColumns.enableSorting option applies to columns that are not specified', async () => {
+      const { getAllByTestId, getAllByLabelText } = render(
+        <TableWithHook
+          hookProps={{
+            defaultColumn: { enableSorting: true },
+          }}
+        />,
+      );
 
-    const columns = getDefaultTestColumns({});
-    const sortIconButtons = getAllByTestId('lg-table-sort-icon-button');
-    const labelTexts = getAllByLabelText('Unsorted Icon');
+      const columns = getDefaultTestColumns({});
+      const sortIconButtons = getAllByTestId('lg-table-sort-icon-button');
+      const labelTexts = getAllByLabelText('Unsorted Icon');
 
-    columns.forEach((_, idx) => {
-      expect(sortIconButtons[idx]).toBeInTheDocument();
-      expect(labelTexts[idx]).toBeInTheDocument();
+      columns.forEach((_, idx) => {
+        expect(sortIconButtons[idx]).toBeInTheDocument();
+        expect(labelTexts[idx]).toBeInTheDocument();
+      });
     });
   });
 });
