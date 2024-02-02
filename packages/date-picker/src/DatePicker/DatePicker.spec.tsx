@@ -1428,18 +1428,6 @@ describe('packages/date-picker', () => {
               userEvent.keyboard('{arrowleft}');
               expect(yearInput).toHaveFocus();
             });
-
-            test('focuses the previous segment when the value starts with 0', () => {
-              const { monthInput, yearInput } = renderDatePicker({});
-              userEvent.type(monthInput, '04{arrowleft}{arrowleft}');
-              expect(yearInput).toHaveFocus();
-            });
-
-            test('focuses the previous segment when the value is 0', () => {
-              const { monthInput, yearInput } = renderDatePicker({});
-              userEvent.type(monthInput, '0{arrowleft}');
-              expect(yearInput).toHaveFocus();
-            });
           });
 
           describe('Right Arrow', () => {

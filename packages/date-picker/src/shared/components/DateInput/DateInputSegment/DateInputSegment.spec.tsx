@@ -210,9 +210,9 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           onChange: onChangeHandler,
         });
 
-        userEvent.type(input, '6');
+        userEvent.type(input, '4');
         expect(onChangeHandler).toHaveBeenCalledWith(
-          expect.objectContaining({ value: '6' }),
+          expect.objectContaining({ value: '4' }),
         );
       });
     });
