@@ -259,7 +259,7 @@ describe('packages/date-picker/shared/date-input-box', () => {
         );
       });
 
-      test.only('value setter is called when pressing backspace in a single segment', () => {
+      test('value setter is called when pressing backspace in a single segment', () => {
         const setValue = jest.fn();
 
         const { dayInput } = renderDateInputBox({ setValue }, testContext);
