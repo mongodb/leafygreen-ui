@@ -27,10 +27,6 @@ export const DescendantsProvider = <T extends HTMLElement>({
 }: PropsWithChildren<DescendantsProviderProps<T>>) => {
   const Provider = context.Provider;
 
-  // We could init the descendant values here,
-  // but then the outer context doesn't have access the values
-  // const { descendants, dispatch } = useInitDescendants<HTMLLIElement>();
-
   const providerValue = useMemo(
     () => ({
       descendants,

@@ -5,7 +5,6 @@ import {
   descendantsReducer,
   DescendantsReducerAction,
   DescendantsReducerType,
-  DescendantsState,
 } from './DescendantsReducer';
 
 export interface InitDescendantsReturnObject<T extends HTMLElement> {
@@ -19,11 +18,12 @@ export interface InitDescendantsReturnObject<T extends HTMLElement> {
 export const useInitDescendants = <
   T extends HTMLElement,
 >(): InitDescendantsReturnObject<T> => {
-  const [state, dispatch] = useReducer<
-    React.Reducer<DescendantsState<T>, DescendantsReducerAction<T>>
-  >(descendantsReducer as DescendantsReducerType<T>, {
-    descendants: [] as DescendantsList<T>,
-  });
+  const [state, dispatch] = useReducer<DescendantsReducerType<T>>(
+    descendantsReducer,
+    {
+      descendants: [] as DescendantsList<T>,
+    },
+  );
 
   return {
     descendants: state.descendants,

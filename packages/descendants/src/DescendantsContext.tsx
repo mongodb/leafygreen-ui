@@ -3,10 +3,6 @@ import { createContext, Dispatch } from 'react';
 import { DescendantsList } from './Descendants.types';
 import { DescendantsReducerAction } from './DescendantsReducer';
 
-export type RegisterDescendantFn<T extends HTMLElement> = (
-  element?: T | null,
-) => () => void;
-
 export interface DescendantsContextProps<T extends HTMLElement> {
   descendants: DescendantsList<T>;
   dispatch: Dispatch<DescendantsReducerAction<T>>;

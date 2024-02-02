@@ -74,7 +74,7 @@ export const useDescendant = <T extends HTMLElement>(
 
   return {
     ref,
-    index: index,
+    index,
     id: id.current,
   };
 };
