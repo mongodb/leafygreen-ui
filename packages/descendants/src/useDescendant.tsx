@@ -4,16 +4,19 @@ import {
   RefObject,
   useContext,
   useMemo,
+  useRef,
 } from 'react';
 
 import {
   useForwardedRef,
-  useIdAllocator,
   useIsomorphicLayoutEffect,
 } from '@leafygreen-ui/hooks';
 
 import { DescendantContextType } from './DescendantsContext';
 import { findDescendantIndexWithId } from './utils';
+
+/** @deprecated */
+const genId = () => `_${Math.random().toString(36).substr(2, 9)}`;
 
 interface UseDescendantReturnObject<T extends HTMLElement> {
   ref: RefObject<T>;
@@ -31,16 +34,16 @@ export const useDescendant = <T extends HTMLElement>(
 ): UseDescendantReturnObject<T> => {
   const ref: React.RefObject<T> = useForwardedRef(fwdRef ?? null, null);
   const { descendants, dispatch } = useContext(context);
-  const id = useIdAllocator({ prefix: 'descendant' });
+  const id = useRef(genId());
 
   // Find the element with this id in the descendants list
   const index = useMemo(() => {
-    return findDescendantIndexWithId(descendants, id);
-  }, [descendants, id]);
+    return findDescendantIndexWithId(descendants, id.current);
+  }, [descendants]);
 
   // On render, register the element as a descendant
   useIsomorphicLayoutEffect(() => {
-    const _id = id;
+    const _id = id.current;
 
     // Register this component as a descendant
     dispatch({
@@ -56,7 +59,7 @@ export const useDescendant = <T extends HTMLElement>(
         id: _id,
       });
     };
-  }, [dispatch, id, ref]);
+  }, [dispatch, ref]);
 
   // When the props change, update them in the descendants list so the parent has access.
   // We don't initially register the descendant with props,
@@ -64,14 +67,14 @@ export const useDescendant = <T extends HTMLElement>(
   useIsomorphicLayoutEffect(() => {
     dispatch({
       type: 'update',
-      id: id,
+      id: id.current,
       props,
     });
-  }, [dispatch, id, props]);
+  }, [dispatch, props]);
 
   return {
     ref,
     index,
-    id: id,
+    id: id.current,
   };
 };
