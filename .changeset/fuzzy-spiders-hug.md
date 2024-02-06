@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/combobox': minor
+'@leafygreen-ui/combobox': major
 ---
 
 - Adds optional `inputValue` and `onInputChange` props to Combobox. These props are used to control the value of the inner text input (not the selected combobox value itself).
