@@ -155,6 +155,16 @@ export type BaseComboboxProps = Omit<HTMLElementProps<'div'>, 'onChange'> &
      * Do not remove options from the JSX children, as this will affect the selected options
      */
     filteredOptions?: Array<string>;
+
+    /**
+     * A callback fired when the input text changes
+     */
+    onInputChange?: React.ChangeEventHandler<HTMLInputElement>;
+
+    /**
+     * Allows for a controlled text-input value
+     */
+    inputValue?: string;
   };
 
 export type ComboboxProps<M extends boolean> = Either<
