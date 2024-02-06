@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ElementType, useState } from 'react';
 import { faker } from '@faker-js/faker';
 import random from 'lodash/random';
 import range from 'lodash/range';
@@ -7,6 +7,8 @@ import shuffle from 'lodash/shuffle';
 import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+
+import { StoryMetaType } from '../../lib/src/storybook';
 
 import {
   TestDescendant,
@@ -30,9 +32,16 @@ const nestedItemStyle = css`
   padding-left: 8px;
 `;
 
-export default {
+const meta: StoryMetaType<ElementType<unknown>> = {
   title: 'Hooks/Descendants',
+  parameters: {
+    default: null,
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
 };
+export default meta;
 
 export const Basic = () => {
   const [items, setItems] = useState([
