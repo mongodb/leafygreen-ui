@@ -1,5 +1,11 @@
 # @lg-tools/build
 
+## 0.3.2
+
+### Patch Changes
+
+- 2bceccb1: Fixes `lodash` imports to use default exports of specific functions to reduce component's bundle size.
+
 ## 0.3.1
 
 ### Patch Changes

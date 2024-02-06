@@ -323,10 +323,10 @@ export const childrenWrapperStyles = css`
   width: 100%;
 `;
 
-export const iconsWrapperStyles = (size: Size) => css`
+export const iconsWrapperStyles = css`
   display: flex;
   align-items: center;
-  gap: ${size === Size.XSmall ? spacing[1] : spacing[2]}px;
+  gap: ${spacing[1]}px;
 `;
 
 export const iconStyles: Record<Theme, string> = {

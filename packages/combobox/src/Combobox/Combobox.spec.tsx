@@ -917,6 +917,17 @@ describe('packages/combobox', () => {
           expect(menuContainerEl).toBeInTheDocument();
         });
 
+        test('does not make a selection when clicking enter on a closed menu', () => {
+          const { getMenuElements, inputEl } = renderCombobox(select);
+          userEvent.tab();
+          userEvent.keyboard('{enter}');
+          expect(inputEl).toHaveValue('');
+          const { menuContainerEl } = getMenuElements();
+          expect(menuContainerEl).not.toBeNull();
+          expect(menuContainerEl).toBeInTheDocument();
+          expect(inputEl).toHaveValue('');
+        });
+
         test('selects highlighted option', () => {
           const { inputEl, openMenu, queryChipsByName } =
             renderCombobox(select);

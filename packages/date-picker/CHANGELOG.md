@@ -1,5 +1,32 @@
 # @leafygreen-ui/date-picker
 
+## 0.2.2
+
+### Patch Changes
+
+- 5249bd3d: Reduces the width and height of the calendar icon so that the focus/hover states do not excessively overflow the input container.
+  When the `size` is `xsmall` the width and hight of the calendar icon will be `20px`. When the `size`is `small` the width and hight of the calendar icon will be 22px. The icon itself will remain the the same size.
+- 253ef4e4: Rearranges the placement of the year select to come before the month select when the `locale` is `iso8601`. [LG-3839](https://jira.mongodb.org/browse/LG-3839)
+- Updated dependencies [5249bd3d]
+  - @leafygreen-ui/form-field@0.3.2
+
+## 0.2.1
+
+### Patch Changes
+
+- 2bceccb1: Fixes `lodash` imports to use default exports of specific functions to reduce component's bundle size.
+- 49a550b3: - Changing menu month back to the month of the current value now shows the correct focus state. [LG-3857](https://jira.mongodb.org/browse/LG-3857)
+  - Rename internal function -- `isMonthInValid` to `isMonthInvalid`
+- ae0e3629: Dynamically update the `aria-label` for the year/month select to include the current selection, enabling screen readers to announce the current selection.
+- Updated dependencies [2bceccb1]
+- Updated dependencies [54eb3ce8]
+- Updated dependencies [2645cd50]
+  - @leafygreen-ui/date-utils@0.1.1
+  - @leafygreen-ui/hooks@8.1.1
+  - @leafygreen-ui/lib@13.2.1
+  - @leafygreen-ui/form-field@0.3.1
+  - @leafygreen-ui/tokens@2.3.0
+
 ## 0.2.0
 
 ### Minor Changes
