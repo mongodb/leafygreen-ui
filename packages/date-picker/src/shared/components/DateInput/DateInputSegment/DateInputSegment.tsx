@@ -74,6 +74,8 @@ export const DateInputSegment = React.forwardRef<
     const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
       const { target } = e;
 
+      console.log('handleChange🥕');
+
       const newValue = getNewSegmentValueFromInputValue(
         segment,
         value,
@@ -95,12 +97,13 @@ export const DateInputSegment = React.forwardRef<
 
     /** Handle keydown presses that don't natively fire a change event */
     const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
+      console.log('handleKeyDown🍊');
       const { key, target } = e as React.KeyboardEvent<HTMLInputElement> & {
         target: HTMLInputElement;
       };
 
       // if a number is pressed and the value length is equal to the charsPerSegment, reset the input
-      if (isFinite(Number(key))) {
+      if (Number(key) && key !== keyMap.Space) {
         if (target.value.length === charsPerSegment[segment]) {
           target.value = '';
         }
@@ -130,6 +133,8 @@ export const DateInputSegment = React.forwardRef<
         }
 
         case keyMap.Backspace: {
+          // e.preventDefault();
+
           const preVal = target.value;
 
           // reset the input on backspace
@@ -150,8 +155,20 @@ export const DateInputSegment = React.forwardRef<
           break;
         }
 
+        // TODO: test space key
         case keyMap.Space: {
           e.preventDefault();
+
+          // reset the input on space
+          target.value = '';
+
+          /** Fire a custom change event when the space key is pressed */
+          onChange({
+            segment,
+            value: '',
+            meta: { key },
+          });
+
           break;
         }
 
