@@ -5,6 +5,7 @@ import {
   BaseFontSize,
   fontFamilies,
   fontWeights,
+  spacing,
   transitionDuration,
 } from '@leafygreen-ui/tokens';
 
@@ -28,6 +29,7 @@ export const linkStyles = css`
   cursor: pointer;
   font-size: inherit;
   line-height: inherit;
+  gap: ${spacing[0]}px;
 
   &:focus {
     outline: none;
@@ -81,28 +83,6 @@ export const underlineModeStyles: Record<Theme, string> = {
     }
   `,
 };
-
-export const arrowRightIconPersist = css`
-  transform: translate3d(3px, 0, 0);
-`;
-
-export const arrowRightIconHover = css`
-  opacity: 0;
-  transform: translate3d(-3px, 0, 0);
-  transition: all 100ms ease-in;
-
-  .${anchorClassName}:hover & {
-    opacity: 1;
-    transform: translate3d(3px, 0, 0);
-  }
-`;
-
-export const openInNewTabStyles = css`
-  position: relative;
-  bottom: 4px;
-  left: -1px;
-  height: 12px;
-`;
 
 export const linkScaleStyles = (baseFontSize?: BaseFontSize) => {
   if (baseFontSize) {

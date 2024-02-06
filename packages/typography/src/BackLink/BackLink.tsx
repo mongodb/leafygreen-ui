@@ -1,8 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
-import OpenNewTabIcon from '@leafygreen-ui/icon/dist/OpenNewTab';
+import ArrowLeftIcon from '@leafygreen-ui/icon/dist/ArrowLeft';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
   InferredPolymorphic,
@@ -15,21 +14,18 @@ import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
 
 import {
   anchorClassName,
-  arrowRightIconHover,
-  arrowRightIconPersist,
   linkModeStyles,
   linkScaleStyles,
   linkStyles,
-  openInNewTabStyles,
   overwriteDefaultStyles,
   underlineModeStyles,
   underlineStyles,
-} from './Link.styles';
-import { ArrowAppearance, BaseLinkProps } from './Link.types';
+} from './BackLink.styles';
+import { BaseBackLinkProps } from './BackLink.types';
 
-type LinkRenderProps = PolymorphicPropsWithRef<'span', BaseLinkProps>;
+type LinkRenderProps = PolymorphicPropsWithRef<'span', BaseBackLinkProps>;
 
-type AnchorLikeProps = PolymorphicProps<'a', BaseLinkProps>;
+type AnchorLikeProps = PolymorphicProps<'a', BaseBackLinkProps>;
 
 const hasAnchorLikeProps = (
   props: LinkRenderProps | AnchorLikeProps,
@@ -37,13 +33,11 @@ const hasAnchorLikeProps = (
   return (props as AnchorLikeProps).href !== undefined;
 };
 
-const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
+const BackLink = InferredPolymorphic<BaseBackLinkProps, 'span'>(
   (
     {
       children,
       className,
-      arrowAppearance = ArrowAppearance.None,
-      hideExternalIcon = false,
       baseFontSize: baseFontSizeOverride,
       darkMode: darkModeProp,
       as,
@@ -69,8 +63,6 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
       }
     }, [rest, currentHostname]);
 
-    let icon;
-
     const defaultAnchorProps: Pick<
       JSX.IntrinsicElements['a'],
       'target' | 'rel'
@@ -93,24 +85,6 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
       }
     }
 
-    if (defaultAnchorProps.target === '_blank' && !hideExternalIcon) {
-      icon = (
-        <OpenNewTabIcon role="presentation" className={openInNewTabStyles} />
-      );
-    } else if (arrowAppearance !== ArrowAppearance.None) {
-      icon = (
-        <ArrowRightIcon
-          role="presentation"
-          size={12}
-          className={cx({
-            [arrowRightIconHover]: arrowAppearance === ArrowAppearance.Hover,
-            [arrowRightIconPersist]:
-              arrowAppearance === ArrowAppearance.Persist,
-          })}
-        />
-      );
-    }
-
     return (
       <Component
         className={cx(
@@ -125,13 +99,13 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
         {...defaultAnchorProps}
         {...rest}
       >
+        <ArrowLeftIcon role="presentation" className={cx()} />
         <span className={cx(underlineStyles, underlineModeStyles[theme])}>
           {children}
         </span>
-        {icon}
       </Component>
     );
   },
 );
 
-export default Link;
+export default BackLink;

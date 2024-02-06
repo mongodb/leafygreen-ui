@@ -1,3 +1,5 @@
+export { default as BackLink } from './BackLink/BackLink';
+export type { BackLinkProps } from './BackLink/BackLink.types';
 export { default as Body } from './Body/Body';
 export type { BodyProps } from './Body/Body.types';
 export { default as Description } from './Description/Description';
