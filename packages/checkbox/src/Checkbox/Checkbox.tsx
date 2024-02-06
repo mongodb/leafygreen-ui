@@ -113,7 +113,6 @@ function Checkbox({
         <Label
           id={labelId}
           htmlFor={checkboxId}
-          darkMode={darkMode}
           disabled={disabled}
           className={cx(labelStyle, labelHoverStyle[theme], {
             [disabledLabelStyle]: disabled,
@@ -163,7 +162,6 @@ function Checkbox({
             className={cx(descriptionStyle, {
               [disabledLabelDarkThemeOverrideStyle]: disabled && darkMode,
             })}
-            darkMode={darkMode}
             disabled={disabled}
           >
             {description}
