@@ -14,6 +14,7 @@ import {
 } from '@leafygreen-ui/typography';
 
 import { Check } from '../Check';
+
 import {
   checkWrapperClassName,
   containerStyle,
