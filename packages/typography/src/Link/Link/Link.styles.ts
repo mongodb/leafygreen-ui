@@ -1,6 +1,6 @@
 import { css } from '@leafygreen-ui/emotion';
 
-import { anchorClassName } from '../SharedLink/SharedLink.styles';
+import { anchorClassName } from '../shared.styles';
 
 export const arrowRightIconPersist = css`
   transform: translate3d(3px, 0, 0);

@@ -3,8 +3,7 @@ import { render } from '@testing-library/react';
 
 import { InferredPolymorphicPropsWithRef } from '@leafygreen-ui/polymorphic';
 
-import { BackLink } from '..';
-
+import BackLink from './BackLink';
 import { BaseBackLinkProps } from './BackLink.types';
 
 type SpanLikeProps = InferredPolymorphicPropsWithRef<'span', BaseBackLinkProps>;

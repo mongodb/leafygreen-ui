@@ -3,8 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 
 import { InferredPolymorphicProps } from '@leafygreen-ui/polymorphic';
 
-import { Link } from '..';
-
+import Link from './Link';
 import { BaseLinkProps } from './Link.types';
 
 type SpanLikeProps = InferredPolymorphicProps<'span', BaseLinkProps>;

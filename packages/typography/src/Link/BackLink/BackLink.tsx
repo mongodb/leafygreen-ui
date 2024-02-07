@@ -8,6 +8,7 @@ import {
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
+import { useUpdatedBaseFontSize } from '../../utils/useUpdatedBaseFontSize';
 import {
   anchorClassName,
   linkModeStyles,
@@ -16,8 +17,7 @@ import {
   overwriteDefaultStyles,
   underlineModeStyles,
   underlineStyles,
-} from '../SharedLink/SharedLink.styles';
-import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
+} from '../shared.styles';
 
 import { backLinkBaseStyles } from './BackLink.styles';
 import { BaseBackLinkProps } from './BackLink.types';

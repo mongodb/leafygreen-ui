@@ -11,6 +11,7 @@ import {
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
+import { useUpdatedBaseFontSize } from '../../utils/useUpdatedBaseFontSize';
 import {
   anchorClassName,
   linkModeStyles,
@@ -19,8 +20,7 @@ import {
   overwriteDefaultStyles,
   underlineModeStyles,
   underlineStyles,
-} from '../SharedLink/SharedLink.styles';
-import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
+} from '../shared.styles';
 
 import {
   arrowRightIconHover,

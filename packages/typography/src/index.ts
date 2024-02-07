@@ -1,5 +1,3 @@
-export { default as BackLink } from './BackLink/BackLink';
-export type { BackLinkProps } from './BackLink/BackLink.types';
 export { default as Body } from './Body/Body';
 export type { BodyProps } from './Body/Body.types';
 export { default as Description } from './Description/Description';
@@ -21,11 +19,15 @@ export type { InlineKeyCodeProps } from './InlineKeyCode/InlineKeyCode.types';
 export { default as Label } from './Label/Label';
 export { labelTypeScaleStyles } from './Label/Label.styles';
 export type { LabelProps } from './Label/Label.types';
-export { default as Link } from './Link/Link';
-export type { LinkProps } from './Link/Link.types';
+export {
+  anchorClassName,
+  BackLink,
+  type BackLinkProps,
+  Link,
+  type LinkProps,
+} from './Link';
 export { default as Overline } from './Overline/Overline';
 export type { OverlineProps } from './Overline/Overline.types';
-export { anchorClassName } from './SharedLink/SharedLink.styles';
 export { bodyTypeScaleStyles } from './styles';
 export { default as Subtitle } from './Subtitle/Subtitle';
 export type { SubtitleProps } from './Subtitle/Subtitle.types';

@@ -3,7 +3,7 @@ import {
   PolymorphicAs,
 } from '@leafygreen-ui/polymorphic';
 
-import { ResponsiveTypographyProps } from '../types';
+import { ResponsiveTypographyProps } from '../../types';
 
 export type BaseBackLinkProps = ResponsiveTypographyProps;
 
