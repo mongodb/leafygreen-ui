@@ -183,11 +183,11 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         className={cx(
           wrapperClassName,
           wrapperBaseStyles,
-          wrapperThemeStyles[theme],
-          wrapperStateStyles[theme][state],
+          // wrapperThemeStyles[theme],
+          // wrapperStateStyles[theme][state],
           {
-            [wrapperHoverStyles[theme][state]]: !disabled,
-            [wrapperDisabledStyles[theme]]: disabled,
+            // [wrapperHoverStyles[theme][state]]: !disabled,
+            // [wrapperDisabledStyles[theme]]: disabled,
             [selectBaseStyles]: hasSelectOptions,
           },
           className,

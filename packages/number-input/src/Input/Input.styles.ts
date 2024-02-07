@@ -108,8 +108,8 @@ export const inputThemeStyles: Record<Theme, string> = {
 
 export const wrapperBaseStyles = css`
   position: relative;
-  border: 1px solid;
-  border-radius: 6px;
+  /* border: 1px solid; */
+  /* border-radius: 6px; */
   transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: border-color, box-shadow;
   overflow: hidden;

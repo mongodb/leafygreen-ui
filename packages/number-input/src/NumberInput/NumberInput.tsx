@@ -1,20 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { cx } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-import LeafyGreenProvider, {
-  useDarkMode,
-} from '@leafygreen-ui/leafygreen-provider';
-import { Description, Error, Label, Overline } from '@leafygreen-ui/typography';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { Overline } from '@leafygreen-ui/typography';
 
 import { Input } from '../Input';
 import { UnitSelect } from '../UnitSelect';
 
 import {
-  errorMessageStyles,
-  errorMessageWrapperStyles,
-  labelDescriptionStyles,
   unitBaseStyles,
   unitDisabledStyles,
   unitThemeStyles,
@@ -68,7 +64,6 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
     const isUnitInOptions = unitOptions.find(u => u.displayName === unit);
     const renderUnitOnly = hasUnit && !hasSelectOptions;
     const renderSelectOnly = hasUnit && hasSelectOptions && !!isUnitInOptions;
-    const renderErrorMessage = state === State.Error && errorMessage;
 
     const popoverProps = {
       popoverZIndex,
@@ -79,22 +74,24 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
     } as const;
 
     return (
-      <LeafyGreenProvider darkMode={darkMode}>
-        <div className={className}>
-          {(label || description) && (
-            <div className={labelDescriptionStyles}>
-              {label && (
-                <Label htmlFor={inputId} disabled={disabled}>
-                  {label}
-                </Label>
-              )}
-              {description && (
-                <Description id={descriptionId} disabled={disabled}>
-                  {description}
-                </Description>
-              )}
-            </div>
-          )}
+      <FormField
+        label={label}
+        description={description}
+        errorMessage={errorMessage}
+        state={state}
+        size={size}
+        disabled={disabled}
+        darkMode={darkMode}
+        className={className}
+        id={inputId}
+      >
+        <FormFieldInputContainer
+          className={css`
+            padding-inline: 0px;
+            gap: 0px;
+            border-right: 0px;
+          `}
+        >
           <div
             className={cx(wrapperBaseStyles, wrapperSizeStyles[size], {
               [wrapperGapStyles]: renderUnitOnly,
@@ -142,18 +139,8 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
               />
             )}
           </div>
-          <div
-            className={errorMessageWrapperStyles}
-            aria-live="polite"
-            aria-relevant="all"
-            id={errorMessageId}
-          >
-            {renderErrorMessage && (
-              <Error className={errorMessageStyles}>{errorMessage}</Error>
-            )}
-          </div>
-        </div>
-      </LeafyGreenProvider>
+        </FormFieldInputContainer>
+      </FormField>
     );
   },
 );
