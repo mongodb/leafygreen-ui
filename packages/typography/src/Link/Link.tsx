@@ -11,19 +11,21 @@ import {
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
-import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
-
 import {
   anchorClassName,
-  arrowRightIconHover,
-  arrowRightIconPersist,
   linkModeStyles,
   linkScaleStyles,
   linkStyles,
-  openInNewTabStyles,
   overwriteDefaultStyles,
   underlineModeStyles,
   underlineStyles,
+} from '../SharedLink/SharedLink.styles';
+import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
+
+import {
+  arrowRightIconHover,
+  arrowRightIconPersist,
+  openInNewTabStyles,
 } from './Link.styles';
 import { ArrowAppearance, BaseLinkProps } from './Link.types';
 
