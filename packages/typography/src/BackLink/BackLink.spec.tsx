@@ -69,21 +69,24 @@ describe('packages/typography', () => {
 
       test('renders with wrapper component', () => {
         const Wrapper = (props: JSX.IntrinsicElements['a']) => {
-          return <a {...props}>test</a>;
+          return (
+            <a data-testid="link" {...props}>
+              wrapper component
+            </a>
+          );
         };
 
-        const { getByTestId } = render(
-          <BackLink
-            data-testid="link"
-            href="http://mongodb.design"
-            as={Wrapper}
-          >
+        const { getByTestId, getByText } = render(
+          <BackLink href="http://mongodb.design" as={Wrapper}>
             Link
           </BackLink>,
         );
         const link = getByTestId('link');
         expect(link.getAttribute('href')).toBe('http://mongodb.design');
         expect(link.tagName.toLowerCase()).toBe('a');
+
+        const text = getByText('wrapper component');
+        expect(text).toBeInTheDocument();
       });
     });
 
