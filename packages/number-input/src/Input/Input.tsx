@@ -27,10 +27,6 @@ import {
   selectBaseStyles,
   wrapperBaseStyles,
   wrapperClassName,
-  wrapperDisabledStyles,
-  wrapperHoverStyles,
-  wrapperStateStyles,
-  wrapperThemeStyles,
 } from './Input.styles';
 import { InputProps } from './Input.types';
 
