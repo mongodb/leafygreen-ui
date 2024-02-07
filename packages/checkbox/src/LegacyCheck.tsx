@@ -4,13 +4,13 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { BaseFontSize, transitionDuration } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
+import { CheckProps } from './Checkbox/Checkbox.types';
 import {
   disabledLight,
   disabledLightChecked,
   indeterminateLight,
   spritesheetLight,
 } from './img';
-import { CheckProps } from './types';
 
 const height = 20;
 const width = 600;
