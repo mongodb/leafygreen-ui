@@ -78,5 +78,6 @@
   },
   "bugs": {
     "url": "https://github.com/mongodb/leafygreen-ui/issues"
-  }
+  },
+  "dependencies": {}
 }
