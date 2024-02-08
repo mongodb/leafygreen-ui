@@ -103,17 +103,41 @@ describe('packages/typography', () => {
         <>
           <BackLink />
           <BackLink>some content</BackLink>
-          <BackLink href="string">some content</BackLink>
+          <BackLink href="string" target="string" rel="string">
+            some content
+          </BackLink>
+
           <BackLink as="div">some content</BackLink>
           {/* @ts-expect-error href is not allowed on explicit div */}
           <BackLink as="div" href="string">
             some content
           </BackLink>
+          {/* @ts-expect-error target is not allowed on explicit div */}
+          <BackLink as="div" target="string">
+            some content
+          </BackLink>
+
           {/* @ts-expect-error href is not allowed on a Wrapper component that does not accept anchor props */}
           <BackLink as={WrapperComponent} href="string">
             some content
           </BackLink>
-          <BackLink href="string" as={AnchorComponent} />
+          {/* @ts-expect-error target is not allowed on a Wrapper component that does not accept anchor props */}
+          <BackLink as={WrapperComponent} target="string">
+            some content
+          </BackLink>
+
+          <BackLink
+            href="string"
+            as={AnchorComponent}
+            target="string"
+            rel="string"
+          >
+            some content
+          </BackLink>
+
+          <BackLink as="a" href="string" target="string" rel="string">
+            Content
+          </BackLink>
           {/* @ts-expect-error as anchor is not allowed without an href */}
           <BackLink as="a">Content</BackLink>
         </>;
