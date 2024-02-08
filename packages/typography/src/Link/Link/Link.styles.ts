@@ -9,7 +9,8 @@ export const arrowRightIconPersist = css`
 export const arrowRightIconHover = css`
   opacity: 0;
   transform: translate3d(-3px, 0, 0);
-  transition: all 100ms ease-in;
+  transition: 100ms ease-in;
+  transition-property: opacity, transform;
 
   .${anchorClassName}:hover & {
     opacity: 1;

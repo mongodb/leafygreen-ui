@@ -52,7 +52,7 @@ const BackLink = InferredPolymorphic<BaseBackLinkProps, 'span'>(
         ref={fwdRef}
         {...rest}
       >
-        <ArrowLeftIcon role="presentation" className={cx()} />
+        <ArrowLeftIcon role="presentation" />
         <span className={cx(underlineStyles, underlineModeStyles[theme])}>
           {children}
         </span>
