@@ -1,7 +1,12 @@
 import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { BaseFontSize, fontFamilies, fontWeights } from '@leafygreen-ui/tokens';
+import {
+  BaseFontSize,
+  fontFamilies,
+  fontWeights,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
 
 import { bodyTypeScaleStyles } from '../styles';
 
@@ -50,6 +55,7 @@ export const underlineStyles = css`
     bottom: -4px;
     left: 0;
     border-radius: 2px;
+    transition: background-color ${transitionDuration.default}ms ease-in-out;
   }
 
   .${anchorClassName}:focus & {
@@ -75,28 +81,6 @@ export const underlineModeStyles: Record<Theme, string> = {
     }
   `,
 };
-
-export const arrowRightIconPersist = css`
-  transform: translate3d(3px, 0, 0);
-`;
-
-export const arrowRightIconHover = css`
-  opacity: 0;
-  transform: translate3d(-3px, 0, 0);
-  transition: all 100ms ease-in;
-
-  .${anchorClassName}:hover & {
-    opacity: 1;
-    transform: translate3d(3px, 0, 0);
-  }
-`;
-
-export const openInNewTabStyles = css`
-  position: relative;
-  bottom: 4px;
-  left: -1px;
-  height: 12px;
-`;
 
 export const linkScaleStyles = (baseFontSize?: BaseFontSize) => {
   if (baseFontSize) {
