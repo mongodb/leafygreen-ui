@@ -2,6 +2,8 @@
  * In this file we create default values for storybook `main.ts` properties
  */
 
+// @ts-ignore
+import babelConfig from '@lg-tools/build/config/babel.config.js';
 import type { StorybookConfig } from '@storybook/react-webpack5';
 import isRegExp from 'lodash/isRegExp';
 import { ProvidePlugin, RuleSetRule } from 'webpack';
@@ -42,21 +44,7 @@ export const staticDirs: StorybookConfig['staticDirs'] = [
   '../node_modules/@lg-tools/storybook/static',
 ];
 
-export const babel: StorybookConfig['babel'] = async options => {
-  return {
-    ...options,
-    presets: [
-      '@babel/preset-typescript',
-      '@babel/preset-react',
-      [
-        '@babel/preset-env',
-        {
-          modules: false,
-        },
-      ],
-    ],
-  };
-};
+export const babel: StorybookConfig['babel'] = babelConfig;
 
 export const webpackFinal: StorybookConfig['webpackFinal'] = config => {
   config.module = config.module ?? {};
