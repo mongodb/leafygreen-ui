@@ -1,5 +1,11 @@
 # @lg-tools/test
 
+## 0.4.2
+
+### Patch Changes
+
+- ee6ad399: Updates default jest config path to reference the correct file (in `node_modules`)
+
 ## 0.4.1
 
 ### Patch Changes
