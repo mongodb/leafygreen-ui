@@ -57,7 +57,7 @@
     "typescript": "~4.7.0"
   },
   "resolutions": {
-    "caniuse-lite": "^1.0.30001135"
+    "caniuse-lite": "^1.0.30001585"
   },
   "workspaces": [
     "packages/*",
