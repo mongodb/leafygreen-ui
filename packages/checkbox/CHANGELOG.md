@@ -1,5 +1,16 @@
 # @leafygreen-ui/checkbox
 
+## 12.1.0
+
+### Minor Changes
+
+- be92f17c: Checkbox component now responds to baseFontSize prop
+
+### Patch Changes
+
+- Updated dependencies [58e86c60]
+  - @leafygreen-ui/typography@18.2.0
+
 ## 12.0.20
 
 ### Patch Changes
