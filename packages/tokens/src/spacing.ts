@@ -10,7 +10,7 @@ const spacing = {
   600: 24,
   800: 32,
   1200: 48,
-  1600: 64
+  1600: 64,
 
   /**  @deprecated use 100 instead */
   1: 4,
