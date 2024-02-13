@@ -41,10 +41,10 @@ export type LGColumnDef<
   align?: HTMLElementProps<'td'>['align'];
 };
 
-type VirtualLeafyGreenTableOptions<El> =
+type VirtualLeafyGreenTableOptions<E> =
   | {
       useVirtualScrolling: true;
-      virtualizerOptions?: Partial<VirtualizerOptions<El>>;
+      virtualizerOptions?: Partial<VirtualizerOptions<E>>;
     }
   | {
       useVirtualScrolling?: false;
@@ -55,14 +55,13 @@ type VirtualLeafyGreenTableOptions<El> =
 export type LeafyGreenTableOptions<
   T extends LGRowData,
   V extends unknown = unknown,
-  El extends HTMLElement = HTMLElement,
 > = Omit<TableOptions<LGTableDataType<T>>, 'getCoreRowModel' | 'columns'> & {
-  containerRef: RefObject<El>;
+  containerRef: RefObject<HTMLElement>;
   hasSelectableRows?: boolean;
   columns: Array<LGColumnDef<T, V>>;
   withPagination?: boolean;
   allowSelectAll?: boolean;
-} & VirtualLeafyGreenTableOptions<El>;
+} & VirtualLeafyGreenTableOptions<HTMLElement>;
 
 /** LeafyGreen extension of `useReactTable` {@link Table}*/
 export interface LeafyGreenTable<T extends LGRowData>
