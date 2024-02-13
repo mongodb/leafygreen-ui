@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { faker } from '@faker-js/faker';
 import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
@@ -49,52 +50,54 @@ const meta: StoryMetaType<typeof Table> = {
 export default meta;
 
 const virtualScrollingContainerHeight = css`
-  height: 500px;
+  /* height: 500px; */
+  max-height: calc(100vh - 200px);
 `;
+
+const basicColumnDefs: Array<ColumnDef<Person>> = [
+  {
+    accessorKey: 'index',
+    header: 'index',
+    size: 10,
+  },
+  {
+    accessorKey: 'id',
+    header: 'ID',
+    size: 45,
+  },
+  {
+    accessorKey: 'firstName',
+    header: 'First Name',
+    cell: info => info.getValue(),
+  },
+  {
+    accessorFn: row => row.lastName,
+    id: 'lastName',
+    cell: info => info.getValue(),
+    header: () => <span>Last Name</span>,
+  },
+  {
+    accessorKey: 'age',
+    header: () => 'Age',
+    size: 50,
+  },
+  {
+    accessorKey: 'visits',
+    header: () => <span>Visits</span>,
+    size: 50,
+  },
+  {
+    accessorKey: 'status',
+    header: 'Status',
+    size: 90,
+  },
+];
 
 export const Basic: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const data = React.useState(() => makeData(false, 10_000))[0];
+  const data = React.useMemo(() => makeData(false, 10_000), []);
 
-  const columns = React.useMemo<Array<ColumnDef<Person>>>(
-    () => [
-      {
-        accessorKey: 'id',
-        header: 'ID',
-        size: 60,
-      },
-      {
-        accessorKey: 'firstName',
-        header: 'First Name',
-        cell: info => info.getValue(),
-      },
-      {
-        accessorFn: row => row.lastName,
-        id: 'lastName',
-        cell: info => info.getValue(),
-        // eslint-disable-next-line react/display-name
-        header: () => <span>Last Name</span>,
-      },
-      {
-        accessorKey: 'age',
-        // eslint-disable-next-line react/display-name
-        header: () => 'Age',
-        size: 50,
-      },
-      {
-        accessorKey: 'visits',
-        // eslint-disable-next-line react/display-name
-        header: () => <span>Visits</span>,
-        size: 50,
-      },
-      {
-        accessorKey: 'status',
-        header: 'Status',
-        size: 90,
-      },
-    ],
-    [],
-  );
+  const columns = useMemo(() => basicColumnDefs, []);
 
   const table = useLeafyGreenTable<Person>({
     containerRef: tableContainerRef,
@@ -118,7 +121,7 @@ export const Basic: StoryFn<StoryTableProps> = args => {
         ref={tableContainerRef}
         className={virtualScrollingContainerHeight}
       >
-        <TableHead>
+        <TableHead isSticky>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
             <HeaderRow key={headerGroup.id}>
               {headerGroup.headers.map(header => {
@@ -164,45 +167,7 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 5000, 5, 3))[0];
 
-  const columns = React.useMemo<Array<ColumnDef<Person>>>(
-    () => [
-      {
-        accessorKey: 'id',
-        header: 'ID',
-        size: 60,
-      },
-      {
-        accessorKey: 'firstName',
-        header: 'First Name',
-        cell: info => info.getValue(),
-      },
-      {
-        accessorFn: row => row.lastName,
-        id: 'lastName',
-        cell: info => info.getValue(),
-        // eslint-disable-next-line react/display-name
-        header: () => <span>Last Name</span>,
-      },
-      {
-        accessorKey: 'age',
-        // eslint-disable-next-line react/display-name
-        header: () => 'Age',
-        size: 50,
-      },
-      {
-        accessorKey: 'visits',
-        // eslint-disable-next-line react/display-name
-        header: () => <span>Visits</span>,
-        size: 50,
-      },
-      {
-        accessorKey: 'status',
-        header: 'Status',
-        size: 90,
-      },
-    ],
-    [],
-  );
+  const columns = useMemo(() => basicColumnDefs, []);
 
   const table = useLeafyGreenTable<Person>({
     containerRef: tableContainerRef,
@@ -225,7 +190,7 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
         ref={tableContainerRef}
         className={virtualScrollingContainerHeight}
       >
-        <TableHead>
+        <TableHead isSticky>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
             <HeaderRow key={headerGroup.id}>
               {headerGroup.headers.map(header => {
@@ -379,7 +344,7 @@ export const SortableRows: StoryFn<StoryTableProps> = args => {
         ref={tableContainerRef}
         className={virtualScrollingContainerHeight}
       >
-        <TableHead>
+        <TableHead isSticky>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
             <HeaderRow key={headerGroup.id}>
               {headerGroup.headers.map(header => {
@@ -427,45 +392,7 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
   const data = React.useState(() => makeData(false, 5000))[0];
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const columns = React.useMemo<Array<ColumnDef<Person>>>(
-    () => [
-      {
-        accessorKey: 'id',
-        header: 'ID',
-        size: 60,
-      },
-      {
-        accessorKey: 'firstName',
-        header: 'First Name',
-        cell: info => info.getValue(),
-      },
-      {
-        accessorFn: row => row.lastName,
-        id: 'lastName',
-        cell: info => info.getValue(),
-        // eslint-disable-next-line react/display-name
-        header: () => <span>Last Name</span>,
-      },
-      {
-        accessorKey: 'age',
-        // eslint-disable-next-line react/display-name
-        header: () => 'Age',
-        size: 50,
-      },
-      {
-        accessorKey: 'visits',
-        // eslint-disable-next-line react/display-name
-        header: () => <span>Visits</span>,
-        size: 50,
-      },
-      {
-        accessorKey: 'status',
-        header: 'Status',
-        size: 90,
-      },
-    ],
-    [],
-  );
+  const columns = useMemo(() => basicColumnDefs, []);
 
   const table = useLeafyGreenTable<Person>({
     containerRef: tableContainerRef,
@@ -493,7 +420,7 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
         ref={tableContainerRef}
         className={virtualScrollingContainerHeight}
       >
-        <TableHead>
+        <TableHead isSticky>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
             <HeaderRow key={headerGroup.id}>
               {headerGroup.headers.map(header => {
@@ -541,45 +468,7 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
   const data = React.useState(() => makeData(true, 5000))[0];
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
 
-  const columns = React.useMemo<Array<ColumnDef<Person>>>(
-    () => [
-      {
-        accessorKey: 'id',
-        header: 'ID',
-        size: 60,
-      },
-      {
-        accessorKey: 'firstName',
-        header: 'First Name',
-        cell: info => info.getValue(),
-      },
-      {
-        accessorFn: row => row.lastName,
-        id: 'lastName',
-        cell: info => info.getValue(),
-        // eslint-disable-next-line react/display-name
-        header: () => <span>Last Name</span>,
-      },
-      {
-        accessorKey: 'age',
-        // eslint-disable-next-line react/display-name
-        header: () => 'Age',
-        size: 50,
-      },
-      {
-        accessorKey: 'visits',
-        // eslint-disable-next-line react/display-name
-        header: () => <span>Visits</span>,
-        size: 50,
-      },
-      {
-        accessorKey: 'status',
-        header: 'Status',
-        size: 90,
-      },
-    ],
-    [],
-  );
+  const columns = useMemo(() => basicColumnDefs, []);
 
   const table = useLeafyGreenTable<Person>({
     containerRef: tableContainerRef,
@@ -606,7 +495,7 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
         ref={tableContainerRef}
         className={virtualScrollingContainerHeight}
       >
-        <TableHead>
+        <TableHead isSticky>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
             <HeaderRow key={headerGroup.id}>
               {headerGroup.headers.map(header => {
@@ -643,6 +532,90 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
                   {row.original.renderExpandedContent && (
                     <ExpandedContent row={row} />
                   )}
+                </Row>
+              );
+            })}
+        </TableBody>
+      </Table>
+    </>
+  );
+};
+
+export const TallRows: StoryFn<StoryTableProps> = args => {
+  const tableContainerRef = React.useRef<HTMLDivElement>(null);
+  const data = React.useMemo(() => {
+    return makeData(false, 10_000).map(d => ({
+      ...d,
+      id: faker.string.uuid() + '--' + faker.string.uuid(),
+    }));
+  }, []);
+
+  const columns = useMemo(() => basicColumnDefs, []);
+
+  const table = useLeafyGreenTable<Person>({
+    containerRef: tableContainerRef,
+    data,
+    columns,
+    useVirtualScrolling: true,
+  });
+
+  const { rows } = table.getRowModel();
+
+  return (
+    <>
+      <div>
+        <p>{table.getRowModel().rows.length} total rows</p>
+        <p>{table?.virtualRows?.length} virtual rows</p>
+      </div>
+
+      <Table
+        {...args}
+        table={table}
+        ref={tableContainerRef}
+        className={virtualScrollingContainerHeight}
+      >
+        <TableHead isSticky>
+          {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+            <HeaderRow key={headerGroup.id}>
+              {headerGroup.headers.map(header => {
+                return (
+                  <HeaderCell key={header.id} header={header}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )}
+                  </HeaderCell>
+                );
+              })}
+            </HeaderRow>
+          ))}
+        </TableHead>
+        <TableBody>
+          {table.virtualRows &&
+            table.virtualRows.map((virtualRow: VirtualItem) => {
+              const row = rows[virtualRow.index];
+              const cells = row.getVisibleCells();
+              return (
+                <Row key={row.id}>
+                  {cells.map((cell: LeafyGreenTableCell<Person>) => {
+                    return (
+                      <Cell
+                        key={cell.id}
+                        className={css`
+                          padding-block: 4px;
+
+                          & > div {
+                            max-height: unset;
+                          }
+                        `}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Cell>
+                    );
+                  })}
                 </Row>
               );
             })}
