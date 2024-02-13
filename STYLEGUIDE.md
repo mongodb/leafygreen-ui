@@ -190,7 +190,22 @@ Keeps functions pure.
 
 ---
 
-### Use “be” verbs for boolean types. (e.g. `should`/`is`/`can`/`does`/`has`)
+### Prefix boolean variables with “to be” verbs.
+
+(e.g. `shouldX`, `isY`, `canZ`, `doesX`, `hasY`, `willZ`)
+
+---
+
+### Follow BEM-ish patterns when hard-coding a `data-testid` or `data-lgid`
+
+1. Prefix with “lg”
+2. Words are separated by underscore `_`
+3. Blocks are separated by dash `-`
+4. Name hierarchy should somewhat match the directory structure
+
+e.g. `data-testid="lg-date_picker-calendar_cell"`
+
+Additionally, a hard-coded `data` attribute should _only_ be placed on a root-level, native HTML element. Components should have their own internal id.
 
 ---
 
