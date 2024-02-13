@@ -15,7 +15,11 @@ import { LeafyGreenTable, LGColumnDef, LGTableDataType } from '.';
 
 const CHECKBOX_WIDTH = 14;
 
-function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
+function useLeafyGreenTable<
+  T extends LGRowData,
+  V extends unknown = unknown,
+  E extends HTMLElement = HTMLElement,
+>({
   containerRef,
   data,
   columns: columnsProp,
@@ -23,8 +27,9 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
   withPagination = false,
   useVirtualScrolling = false,
   allowSelectAll = true,
+  virtualizerOptions,
   ...rest
-}: LeafyGreenTableOptions<T, V>): LeafyGreenTable<T> {
+}: LeafyGreenTableOptions<T, V, E>): LeafyGreenTable<T> {
   /**
    * A `ColumnDef` object injected into `useReactTable`'s `columns` option when the user is using selectable rows.
    */
@@ -76,6 +81,7 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
     parentRef: containerRef,
     size: rows.length,
     overscan: 30,
+    ...virtualizerOptions,
   });
 
   return {

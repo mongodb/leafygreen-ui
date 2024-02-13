@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { faker } from '@faker-js/faker';
 import { StoryFn } from '@storybook/react';
 
@@ -551,12 +551,16 @@ export const TallRows: StoryFn<StoryTableProps> = args => {
   }, []);
 
   const columns = useMemo(() => basicColumnDefs, []);
+  const estimateSize = useCallback(() => 150, []);
 
   const table = useLeafyGreenTable<Person>({
     containerRef: tableContainerRef,
     data,
     columns,
     useVirtualScrolling: true,
+    virtualizerOptions: {
+      estimateSize,
+    },
   });
 
   const { rows } = table.getRowModel();

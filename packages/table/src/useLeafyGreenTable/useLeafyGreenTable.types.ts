@@ -1,5 +1,8 @@
 import { RefObject } from 'react';
-import { VirtualItem } from 'react-virtual';
+import {
+  type Options as VirtualizerOptions,
+  type VirtualItem,
+} from 'react-virtual';
 import {
   Cell,
   ColumnDef,
@@ -38,18 +41,28 @@ export type LGColumnDef<
   align?: HTMLElementProps<'td'>['align'];
 };
 
+type VirtualLeafyGreenTableOptions<El> =
+  | {
+      useVirtualScrolling: true;
+      virtualizerOptions?: Partial<VirtualizerOptions<El>>;
+    }
+  | {
+      useVirtualScrolling?: false;
+      virtualizerOptions: never;
+    };
+
 /** LeafyGreen extension of `useReactTable` {@link TableOptions}*/
-export interface LeafyGreenTableOptions<
+export type LeafyGreenTableOptions<
   T extends LGRowData,
   V extends unknown = unknown,
-> extends Omit<TableOptions<LGTableDataType<T>>, 'getCoreRowModel'> {
-  containerRef: RefObject<HTMLDivElement>;
+  El extends HTMLElement = HTMLElement,
+> = Omit<TableOptions<LGTableDataType<T>>, 'getCoreRowModel' | 'columns'> & {
+  containerRef: RefObject<El>;
   hasSelectableRows?: boolean;
-  useVirtualScrolling?: boolean;
   columns: Array<LGColumnDef<T, V>>;
   withPagination?: boolean;
   allowSelectAll?: boolean;
-}
+} & VirtualLeafyGreenTableOptions<El>;
 
 /** LeafyGreen extension of `useReactTable` {@link Table}*/
 export interface LeafyGreenTable<T extends LGRowData>
