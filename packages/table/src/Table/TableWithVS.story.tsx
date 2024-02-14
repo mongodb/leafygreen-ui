@@ -50,7 +50,6 @@ const meta: StoryMetaType<typeof Table> = {
 export default meta;
 
 const virtualScrollingContainerHeight = css`
-  /* height: 500px; */
   max-height: calc(100vh - 200px);
 `;
 
