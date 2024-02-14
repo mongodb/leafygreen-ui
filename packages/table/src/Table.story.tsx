@@ -546,20 +546,17 @@ export const SortableRows: StoryFn<StoryTableProps> = args => {
         accessorFn: row => row.lastName,
         id: 'lastName',
         cell: info => info.getValue(),
-        // eslint-disable-next-line react/display-name
         header: () => <span>Last Name</span>,
         enableSorting: true,
       },
       {
         accessorKey: 'age',
-        // eslint-disable-next-line react/display-name
         header: () => 'Age',
         size: 50,
         enableSorting: true,
       },
       {
         accessorKey: 'visits',
-        // eslint-disable-next-line react/display-name
         header: () => <span>Visits</span>,
         size: 50,
         enableSorting: true,

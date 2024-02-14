@@ -41,17 +41,11 @@ export type LGColumnDef<
   align?: HTMLElementProps<'td'>['align'];
 };
 
-type VirtualLeafyGreenTableOptions<E> =
-  | {
-      useVirtualScrolling: true;
-      virtualizerOptions?: Partial<VirtualizerOptions<E>>;
-    }
-  | {
-      useVirtualScrolling?: false;
-      virtualizerOptions?: never;
-    };
-
-/** LeafyGreen extension of `useReactTable` {@link TableOptions}*/
+/**
+ * Options argument for the LeafyGreen extension of `useReactTable`
+ *
+ * See: {@link TableOptions}
+ */
 export type LeafyGreenTableOptions<
   T extends LGRowData,
   V extends unknown = unknown,
@@ -61,9 +55,14 @@ export type LeafyGreenTableOptions<
   columns: Array<LGColumnDef<T, V>>;
   withPagination?: boolean;
   allowSelectAll?: boolean;
-} & VirtualLeafyGreenTableOptions<HTMLElement>;
+} & {
+  useVirtualScrolling?: boolean;
+  virtualizerOptions?: Partial<VirtualizerOptions<HTMLElement>>;
+};
 
-/** LeafyGreen extension of `useReactTable` {@link Table}*/
+/**
+ * LeafyGreen extension of `useReactTable` {@link Table}
+ */
 export interface LeafyGreenTable<T extends LGRowData>
   extends Table<LGTableDataType<T>>,
     Omit<VirtualizerValues, 'virtualItems'> {
