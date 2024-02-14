@@ -11,6 +11,7 @@ import {
 import { palette } from '@leafygreen-ui/palette';
 
 import {
+  BackLink,
   Body,
   Description,
   Disclaimer,
@@ -100,6 +101,10 @@ const TypographyDemoComponent = ({
           >
             External
           </Link>
+        </div>
+
+        <div>
+          <BackLink href="http://localhost:9001">BackLink</BackLink>
         </div>
 
         <div className={displayBlock}>

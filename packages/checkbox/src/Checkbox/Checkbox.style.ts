@@ -3,7 +3,7 @@ import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { focusRing, hoverRing } from '@leafygreen-ui/tokens';
 
-import { checkBoxSize } from './constants';
+import { checkBoxSize } from '../constants';
 
 export const checkWrapperClassName = createUniqueClassName('check-wrapper');
 export const inputClassName = createUniqueClassName('input');

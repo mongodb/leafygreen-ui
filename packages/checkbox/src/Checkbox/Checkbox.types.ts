@@ -4,8 +4,13 @@ import {
   HTMLElementProps,
   Theme,
 } from '@leafygreen-ui/lib';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 interface InternalCheckboxProps extends HTMLElementProps<'input'> {
+  /**
+   * Base font size of the component. Only effective when `size == 'default'`
+   */
+  baseFontSize?: BaseFontSize;
   /**
    * Determines whether or not the Checkbox will appear in dark mode.
    */

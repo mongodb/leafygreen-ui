@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { ButtonProps } from '@leafygreen-ui/button';
 import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
 import { PopoverProps } from '@leafygreen-ui/popover';
@@ -41,6 +43,11 @@ export interface BaseSelectProps
    * HTML `id` property used to allow Javascript, form, or label to reference the input.
    */
   id?: string;
+
+  /**
+   * Determines whether or not the component appears in dark theme.
+   * @default false
+   */
   darkMode?: boolean;
   /**
    * Determines the size in which the component will be rendered.
@@ -55,7 +62,7 @@ export interface BaseSelectProps
   /**
    * Secondary text rendered under the label to provide additional details about the select and its options.
    */
-  description?: string;
+  description?: React.ReactNode;
   /**
    * Text rendered in the Select component before a value is set.
    */
