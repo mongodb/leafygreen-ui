@@ -95,10 +95,7 @@ const TypographyDemoComponent = ({
             Internal (Persist Arrow)
           </Link>
           <br />
-          <Link
-            href="https://mongodb.github.io/leafygreen-ui/?path=/story/*"
-            hideExternalIcon
-          >
+          <Link href="https://mongodb.github.io/leafygreen-ui/?path=/story/*">
             External
           </Link>
         </div>
