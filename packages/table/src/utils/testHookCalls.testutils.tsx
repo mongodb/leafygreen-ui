@@ -13,7 +13,7 @@ export const getDefaultTestData: (
 ) => Array<Person> = rowProps => {
   return [
     {
-      id: 1,
+      id: '1',
       firstName: 'tanner',
       lastName: 'linsley',
       age: 29,
@@ -22,7 +22,7 @@ export const getDefaultTestData: (
       ...rowProps,
     },
     {
-      id: 2,
+      id: '2',
       firstName: 'derek',
       lastName: 'perkins',
       age: 40,
@@ -30,7 +30,7 @@ export const getDefaultTestData: (
       status: 'single',
     },
     {
-      id: 3,
+      id: '3',
       firstName: 'joe',
       lastName: 'bergevin',
       age: 45,
@@ -87,7 +87,7 @@ export const getDefaultTestColumns: (
 export interface TestTableWithHookProps {
   rowProps?: object;
   columnProps?: getTestColumnsProps;
-  hookProps?: Partial<LeafyGreenTableOptions<Person>>;
+  hookProps?: LeafyGreenTableOptions<Person>;
   stateProps?: any;
 }
 
