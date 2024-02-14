@@ -203,9 +203,25 @@ Keeps functions pure.
 3. Blocks are separated by dash `-`
 4. Name hierarchy should somewhat match the directory structure
 
-e.g. `data-testid="lg-date_picker-calendar_cell"`
-
 Additionally, a hard-coded `data` attribute should _only_ be placed on a root-level, native HTML element. Components should have their own internal id.
+
+#### Prefer
+
+```jsx
+<td data-testid="lg-date_picker-calendar_cell" />
+```
+
+#### Avoid
+
+```jsx
+<Cell data-testid="lg-date-picker-calendar-cell" />
+```
+
+#### Why BEM-_ish_?
+
+BEM uses dashes (`-`) to separate words within a block/element, and a double underscore (`__`) to separate blocks/elements/modifiers.
+
+The main issue with strict BEM syntax is that it creates a poor user experience when editing. In most text editors a Double click or `Option`+`ArrowKey` presses treat underscores as one works and dashes as a separator. For example, to replace the `"calendar_cell"` part in the above example, you can double click it and paste. Or to move the cursor from the end of that string to the previous element you can press `Option` + `ArrowLeft`.
 
 ---
 
