@@ -1420,7 +1420,7 @@ describe('packages/date-picker', () => {
       });
 
       describe('Backspace key', () => {
-        test('deletes any value in the input', () => {
+        test('resets the input', () => {
           const { dayInput } = renderDatePicker();
           userEvent.type(dayInput, '26{backspace}');
           expect(dayInput.value).toBe('');
