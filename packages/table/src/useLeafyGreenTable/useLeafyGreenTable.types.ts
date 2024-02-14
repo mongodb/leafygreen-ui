@@ -48,7 +48,7 @@ type VirtualLeafyGreenTableOptions<E> =
     }
   | {
       useVirtualScrolling?: false;
-      virtualizerOptions: never;
+      virtualizerOptions?: never;
     };
 
 /** LeafyGreen extension of `useReactTable` {@link TableOptions}*/
@@ -66,7 +66,7 @@ export type LeafyGreenTableOptions<
 /** LeafyGreen extension of `useReactTable` {@link Table}*/
 export interface LeafyGreenTable<T extends LGRowData>
   extends Table<LGTableDataType<T>>,
-    Pick<VirtualizerValues, 'totalSize' | 'scrollToIndex'> {
+    Omit<VirtualizerValues, 'virtualItems'> {
   virtualRows?: Array<VirtualItem>;
   hasSelectableRows: boolean;
 }
