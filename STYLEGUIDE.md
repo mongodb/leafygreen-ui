@@ -208,14 +208,18 @@ Additionally, a hard-coded `data` attribute should _only_ be placed on a root-le
 #### Prefer
 
 ```jsx
+// CalendarCell.tsx
 <td data-testid="lg-date_picker-calendar_cell" />
 ```
 
 #### Avoid
 
 ```jsx
+// Calendar.tsx
 <Cell data-testid="lg-date-picker-calendar-cell" />
 ```
+
+(Note, this is fine to do in a _test/spec_ file. Just don't hard-code this into the component)
 
 #### Why BEM-_ish_?
 
