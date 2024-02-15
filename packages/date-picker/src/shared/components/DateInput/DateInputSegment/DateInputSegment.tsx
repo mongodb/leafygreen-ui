@@ -101,7 +101,9 @@ export const DateInputSegment = React.forwardRef<
         target: HTMLInputElement;
       };
 
-      // if a number is pressed and the value length is equal to the charsPerSegment, reset the input
+      // If the key is a number and the value length is equal to the charsPerSegment, reset the input.
+      // We also check for space because Number(' ') returns true
+      // We need this check because a key press could be arrow keys, enter, space, etc.
       if (Number(key) && key !== keyMap.Space) {
         if (target.value.length === charsPerSegment[segment]) {
           target.value = '';
@@ -132,8 +134,6 @@ export const DateInputSegment = React.forwardRef<
         }
 
         case keyMap.Backspace: {
-          // const preVal = target.value;
-
           // Don't fire change event if the input is initially empty
           if (value) {
             // Prevent the onKeyDown handler inside `DatePickerInput` from firing. Because we reset the value on backspace, that will trigger the previous segment to focus but we want the focus to remain inside the current segment.

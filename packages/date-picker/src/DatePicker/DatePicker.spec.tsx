@@ -3037,11 +3037,20 @@ describe('packages/date-picker', () => {
             await waitFor(() => expect(monthInput).toHaveValue('02'));
           });
 
-          test('if the resulting value is not valid, clears the input', async () => {
+          test('if the resulting value is incomplete and not valid, clears the input', async () => {
             const { monthInput } = renderDatePicker({});
             userEvent.type(monthInput, '0');
             userEvent.tab();
             await waitFor(() => expect(monthInput).toHaveValue(''));
+          });
+
+          test('if the resulting value is not valid, formats the value', async () => {
+            const { monthInput, dayInput } = renderDatePicker({});
+            userEvent.type(monthInput, '32');
+            await waitFor(() => {
+              expect(monthInput).toHaveValue('03');
+              expect(dayInput).toHaveValue('2');
+            });
           });
         });
       });

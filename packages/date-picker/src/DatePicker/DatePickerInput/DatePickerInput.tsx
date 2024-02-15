@@ -111,10 +111,10 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
 
       switch (key) {
         case keyMap.ArrowLeft: {
-          // Without this, the input does not select all the text
+          // Without this, the input ignores `.select()`
           e.preventDefault();
           // if input is empty,
-          // set focus to prev. input (if it exists)
+          // set focus to prev input (if it exists)
           const segmentToFocus = getRelativeSegmentRef('prev', {
             segment: target,
             formatParts,
@@ -129,7 +129,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
         }
 
         case keyMap.ArrowRight: {
-          // Without this, the input does not select all the text
+          // Without this, the input ignores `.select()`
           e.preventDefault();
           // if input is empty,
           // set focus to next. input (if it exists)
