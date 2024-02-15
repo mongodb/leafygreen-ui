@@ -132,33 +132,36 @@ export const DateInputSegment = React.forwardRef<
         }
 
         case keyMap.Backspace: {
-          const preVal = target.value;
+          // const preVal = target.value;
 
-          /** Fire a custom change event when the backspace key is pressed */
-          onChange({
-            segment,
-            value: '',
-            meta: { key },
-          });
-
-          // Prevent the onKeyDown handler inside `DatePickerInput` from firing. Because we reset the value on backspace, that will trigger the previous segment to focus but we want the focus to remain inside the current segment.
-          if (preVal) {
+          // Don't fire change event if the input is initially empty
+          if (value) {
+            // Prevent the onKeyDown handler inside `DatePickerInput` from firing. Because we reset the value on backspace, that will trigger the previous segment to focus but we want the focus to remain inside the current segment.
             e.stopPropagation();
+
+            /** Fire a custom change event when the backspace key is pressed */
+            onChange({
+              segment,
+              value: '',
+              meta: { key },
+            });
           }
 
           break;
         }
 
-        // TODO: test space key
         case keyMap.Space: {
           e.preventDefault();
 
-          /** Fire a custom change event when the space key is pressed */
-          onChange({
-            segment,
-            value: '',
-            meta: { key },
-          });
+          // Don't fire change event if the input is initially empty
+          if (value) {
+            /** Fire a custom change event when the space key is pressed */
+            onChange({
+              segment,
+              value: '',
+              meta: { key },
+            });
+          }
 
           break;
         }

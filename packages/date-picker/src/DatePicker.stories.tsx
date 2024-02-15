@@ -117,15 +117,15 @@ export const LiveExample: StoryFn<typeof DatePicker> = props => {
           });
           setValue(v);
         }}
-        // handleValidation={date =>
-        //   // eslint-disable-next-line no-console
-        //   console.log('Storybook: handleValidation', {
-        //     'date with local browser timezone': date,
-        //   })
-        // }
+        handleValidation={date =>
+          // eslint-disable-next-line no-console
+          console.log('Storybook: handleValidation', {
+            'date with local browser timezone': date,
+          })
+        }
         onChange={e =>
           // eslint-disable-next-line no-console
-          console.log('🚨🚨Storybook: onChange🚨🚨', { value: e.target.value })
+          console.log('Storybook: onChange🚨', { value: e.target.value })
         }
       />
       <br />

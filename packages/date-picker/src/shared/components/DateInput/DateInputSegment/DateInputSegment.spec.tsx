@@ -692,7 +692,8 @@ describe('packages/date-picker/shared/date-input-segment', () => {
             userEvent.type(input, '{space}');
             expect(onChangeHandler).not.toHaveBeenCalled();
           });
-
+        });
+        describe('calls the onChangeHandler', () => {
           test('when the input has a value', () => {
             const { input } = renderSegment({
               onChange: onChangeHandler,
@@ -700,7 +701,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
             });
 
             userEvent.type(input, '{space}');
-            expect(onChangeHandler).not.toHaveBeenCalled();
+            expect(onChangeHandler).toHaveBeenCalled();
           });
         });
       });
@@ -715,7 +716,9 @@ describe('packages/date-picker/shared/date-input-segment', () => {
             userEvent.type(input, '{space}{space}');
             expect(onChangeHandler).not.toHaveBeenCalled();
           });
+        });
 
+        describe('calls the onChangeHandler', () => {
           test('when the input has a value', () => {
             const { input } = renderSegment({
               onChange: onChangeHandler,
@@ -723,7 +726,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
             });
 
             userEvent.type(input, '{space}{space}');
-            expect(onChangeHandler).not.toHaveBeenCalled();
+            expect(onChangeHandler).toHaveBeenCalled();
           });
         });
       });
