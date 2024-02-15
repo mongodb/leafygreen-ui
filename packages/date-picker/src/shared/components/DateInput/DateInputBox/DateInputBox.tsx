@@ -127,7 +127,6 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
     const handleSegmentInputChange: DateInputSegmentChangeEventHandler =
       segmentChangeEvent => {
         let segmentValue = segmentChangeEvent.value;
-        console.log('🪲 DatePickerInput => 🎃 DateInputBox', { segmentValue });
         const { segment: segmentName, meta } = segmentChangeEvent;
         const changedViaArrowKeys =
           meta?.key === keyMap.ArrowDown || meta?.key === keyMap.ArrowUp;

@@ -68,14 +68,6 @@ export const DateInputSegment = React.forwardRef<
     const autoComplete = getAutoComplete(autoCompleteProp, segment);
     const pattern = `[0-9]{${charsPerSegment[segment]}}`;
 
-    console.log(
-      '🪲 DatePickerInput => 🎃 DateInputBox => 🍓 DateInputSegment',
-      {
-        segment,
-        value,
-      },
-    );
-
     /**
      * Receives native input events,
      * determines whether the input value is valid and should change,
@@ -83,10 +75,6 @@ export const DateInputSegment = React.forwardRef<
      */
     const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
       const { target } = e;
-
-      console.log(
-        '🪲 DatePickerInput => 🎃 DateInputBox => 🍓 DateInputSegment => 🥕 handleChange',
-      );
 
       const newValue = getNewSegmentValueFromInputValue(
         segment,
@@ -109,9 +97,6 @@ export const DateInputSegment = React.forwardRef<
 
     /** Handle keydown presses that don't natively fire a change event */
     const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
-      console.log(
-        '🪲 DatePickerInput => 🎃 DateInputBox => 🍓 DateInputSegment => 🥶 handleKeyDown',
-      );
       const { key, target } = e as React.KeyboardEvent<HTMLInputElement> & {
         target: HTMLInputElement;
       };
@@ -147,13 +132,7 @@ export const DateInputSegment = React.forwardRef<
         }
 
         case keyMap.Backspace: {
-          // e.preventDefault();
-
           const preVal = target.value;
-
-          console.log(
-            '🪲 DatePickerInput => 🎃 DateInputBox => 🍓 DateInputSegment => BACKSPACE BABYYYYYY 🔙',
-          );
 
           /** Fire a custom change event when the backspace key is pressed */
           onChange({

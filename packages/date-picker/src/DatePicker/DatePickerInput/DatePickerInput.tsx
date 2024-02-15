@@ -208,27 +208,10 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
       segmentChangeEvent => {
         const { segment, value } = segmentChangeEvent;
 
-        console.log(
-          '🪲 DatePickerInput => ✨ handleSegmentChange => 🪿 segmentChangeEvent',
-          {
-            segment,
-            value,
-          },
-        );
-
         /**
          * Fire a simulated `change` event
          */
         const target = segmentRefs[segment].current;
-
-        // FIXME: this value is stale
-        console.log(
-          '🪲 DatePickerInput => ✨ handleSegmentChange => 🪼 segmentRefs target(STALE)',
-          {
-            target,
-            value: target?.value,
-          },
-        );
 
         if (target) {
           // At this point, the target stored in segmentRefs has a stale value.
