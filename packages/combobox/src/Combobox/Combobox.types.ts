@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 import { type ChipProps } from '@leafygreen-ui/chip';
 import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
@@ -80,7 +80,7 @@ export type BaseComboboxProps = Omit<HTMLElementProps<'div'>, 'onChange'> &
     /**
      * A description for the input
      */
-    description?: string;
+    description?: ReactNode;
 
     /**
      * A placeholder for the input element. Uses the native `placeholder` attribute.
