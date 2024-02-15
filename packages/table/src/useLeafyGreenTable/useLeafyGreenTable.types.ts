@@ -49,6 +49,7 @@ export interface LeafyGreenTableOptions<
   columns: Array<LGColumnDef<T, V>>;
   withPagination?: boolean;
   allowSelectAll?: boolean;
+  enableSorting?: boolean;
 }
 
 /** LeafyGreen extension of `useReactTable` {@link Table}*/
