@@ -1,5 +1,63 @@
 # @leafygreen-ui/combobox
 
+## 8.0.0
+
+### Major Changes
+
+- 371aecac: - Adds optional `inputValue` and `onInputChange` props to Combobox. These props are used to control the value of the inner text input (not the selected combobox value itself).
+
+  - `onChange` callback now fires when the input is blurred and the input contains a valid selection value.
+
+### Patch Changes
+
+- Updated dependencies [58e86c60]
+- Updated dependencies [be92f17c]
+  - @leafygreen-ui/typography@18.2.0
+  - @leafygreen-ui/checkbox@12.1.0
+
+## 7.2.0
+
+### Minor Changes
+
+- 0eba26c5: Combobox `onChange` callback now receives a 2nd argument. Use this argument to determine what value was inserted or deleted from a multiselect value.
+  [JIRA Ticket](https://jira.mongodb.org/browse/LG-3959)
+
+  Example:
+
+  ```tsx
+  <Combobox
+    multiselect
+    value={['apple', 'banana']}
+    onChange={(val, diff) => {
+      console.log(value); // ['apple']
+      console.log(diff); // { diffType: 'delete', value: 'banana' }
+    }}
+  />
+  ```
+
+  ```ts
+  interface DiffObject {
+    diffType: 'insert' | 'delete';
+    value: string | Array<string>;
+  }
+  ```
+
+### Patch Changes
+
+- bfda5392: Fixes bug where Combobox incorrectly makes selection on "Enter" key press.
+- Updated dependencies [2bceccb1]
+- Updated dependencies [2645cd50]
+  - @leafygreen-ui/hooks@8.1.1
+  - @leafygreen-ui/lib@13.2.1
+  - @leafygreen-ui/tokens@2.3.0
+
+## 7.1.0
+
+### Minor Changes
+
+- e7d206e6: Exports `ComboboxOptionProps` & `ComboboxGroupProps`.
+  Internal refactor of `type` file organization.
+
 ## 7.0.1
 
 ### Patch Changes

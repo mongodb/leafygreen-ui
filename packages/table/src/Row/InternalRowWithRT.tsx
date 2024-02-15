@@ -7,7 +7,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { HTMLElementProps, isComponentType } from '@leafygreen-ui/lib';
 import { Polymorph } from '@leafygreen-ui/polymorphic';
 
-import { useTableContext } from '../TableContext/TableContext';
+import { useTableContext } from '../TableContext';
 import { LGRowData } from '../useLeafyGreenTable';
 
 import InternalRowBase from './InternalRowBase';

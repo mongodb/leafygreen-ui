@@ -1,11 +1,9 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/display-name */
 import React from 'react';
-import { userEvent, within } from '@storybook/testing-library';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import {
-  type PlayFn,
   storybookArgTypes,
   type StoryMetaType,
   type StoryType,
@@ -24,7 +22,13 @@ const meta: StoryMetaType<typeof Button> = {
   parameters: {
     default: 'LiveExample',
     generate: {
-      storyNames: ['LargeSize', 'DefaultSize', 'SmallSize', 'XSmallSize'],
+      storyNames: [
+        'LargeSize',
+        'DefaultSize',
+        'SmallSize',
+        'XSmallSize',
+        'InteractiveStates',
+      ],
       combineArgs: {
         darkMode: [false, true],
         rightGlyph: [undefined, <Icon glyph={'ArrowRight'} />],
@@ -111,13 +115,6 @@ LiveExample.parameters = {
   },
 };
 
-export const Focused: StoryType<typeof Button> = LiveExample.bind({});
-Focused.play = (async ({ canvasElement }) => {
-  const canvas = within(canvasElement);
-  const button = canvas.getByRole('button');
-  await userEvent.click(button);
-}) as PlayFn<typeof Button>;
-
 export const LargeSize: StoryType<typeof Button> = () => <></>;
 LargeSize.parameters = {
   generate: {
@@ -150,6 +147,25 @@ XSmallSize.parameters = {
   generate: {
     args: {
       size: Size.XSmall,
+    },
+  },
+};
+
+export const InteractiveStates: StoryType<typeof Button> = () => <></>;
+InteractiveStates.parameters = {
+  generate: {
+    args: {
+      rightGlyph: undefined,
+      leftGlyph: <Icon glyph={'Cloud'} />,
+      children: 'MongoDB',
+      variant: 'default',
+    },
+    combineArgs: {
+      // @ts-expect-error - data-hover is not listed as a prop
+      'data-hover': [false, true],
+      'data-active': [false, true],
+      'data-focus': [false, true],
+      disabled: [false, true],
     },
   },
 };

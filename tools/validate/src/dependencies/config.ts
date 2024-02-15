@@ -26,7 +26,7 @@ export const devFilePatterns: Array<RegExp> = [
   /.*.?stor(y|ies).(t|j)sx?/,
   /.*.stories.tsx?/,
   /.*.example.tsx?/,
-  /.*.testutils.tsx?/,
+  /.*.testutils((.tsx?)|(\/.*))/,
   /.*\/dist\/.*/,
 ];
 
@@ -38,34 +38,38 @@ export const ignoreFilePatterns: Array<RegExp> = [
 ];
 
 /**
- * These dependencies will be ignored when listed in a package.json.
  * These are globally available dev dependencies.
- * We don't want every component flagged for not having
- * these packages explicitly declared in its package.json
+ *
+ * Packages that omit these dependencies will not be flagged for missing dependencies.
+ *
+ * Packages that list these dependencies will not be flagged for unused dependencies
  */
-export const ignoreDependencies = [
-  '@leafygreen-ui/mongo-nav',
+export const externalDependencies = [
   '@babel/*',
   '@emotion/*',
+  '@leafygreen-ui/mongo-nav',
+  '@leafygreen-ui/testing-lib',
   '@rollup/*',
   '@storybook/*',
   '@svgr/*',
   '@testing-library/*',
   '@types/*',
-  '@typescript-*',
+  '@typescript-eslint/*',
   'buffer',
   'eslint*',
-  'jest*',
+  'jest',
+  'jest-*',
   'jest-axe',
   'prettier*',
   'prop-types',
   'react-*',
   'rollup*',
   'storybook-*',
+  'typescript',
   '*-loader',
   '*-lint*',
 ];
 
 export const depcheckOptions: depcheck.Options = {
-  ignoreMatches: ignoreDependencies,
+  ignoreMatches: externalDependencies,
 };

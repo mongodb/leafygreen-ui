@@ -1,5 +1,28 @@
 # @lg-tools/storybook-decorators
 
+## 0.2.4
+
+### Patch Changes
+
+- 2bceccb1: Fixes `lodash` imports to use default exports of specific functions to reduce component's bundle size.
+- Updated dependencies [2bceccb1]
+- Updated dependencies [2645cd50]
+  - @leafygreen-ui/lib@13.2.1
+  - @lg-tools/build@0.3.2
+  - @leafygreen-ui/tokens@2.3.0
+
+## 0.2.3
+
+### Patch Changes
+
+- ffd11f24: Adds Null check for args
+- Updated dependencies [7f38e78a]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+  - @leafygreen-ui/leafygreen-provider@3.1.11
+  - @leafygreen-ui/lib@13.2.0
+
 ## 0.2.2
 
 ### Patch Changes

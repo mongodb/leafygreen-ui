@@ -1,5 +1,24 @@
 # @leafygreen-ui/input-option
 
+## 1.1.0
+
+### Minor Changes
+
+- ffd11f24: Renders `aria-disabled` attribute when `disabled` is provided
+
+### Patch Changes
+
+- Updated dependencies [7f38e78a]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+  - @leafygreen-ui/leafygreen-provider@3.1.11
+  - @leafygreen-ui/a11y@1.4.12
+  - @leafygreen-ui/lib@13.2.0
+  - @leafygreen-ui/typography@18.1.0
+
 ## 1.0.13
 
 ### Patch Changes

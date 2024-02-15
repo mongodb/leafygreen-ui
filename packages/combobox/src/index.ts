@@ -1,4 +1,3 @@
-export { Combobox } from './Combobox';
-export { type ComboboxProps } from './Combobox.types';
-export { ComboboxGroup } from './ComboboxGroup';
-export { ComboboxOption } from './ComboboxOption';
+export { Combobox, type ComboboxProps } from './Combobox';
+export { ComboboxGroup, type ComboboxGroupProps } from './ComboboxGroup';
+export { ComboboxOption, type ComboboxOptionProps } from './ComboboxOption';

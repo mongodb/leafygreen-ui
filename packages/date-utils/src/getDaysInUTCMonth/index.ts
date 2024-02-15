@@ -1,0 +1,1 @@
+export { getDaysInUTCMonth } from './getDaysInUTCMonth';

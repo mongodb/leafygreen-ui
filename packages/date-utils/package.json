@@ -1,0 +1,39 @@
+{
+  "name": "@leafygreen-ui/date-utils",
+  "version": "0.1.1",
+  "description": "LeafyGreen UI Kit Date Utils",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@leafygreen-ui/lib": "^13.2.1",
+    "date-fns": "^2.30.0",
+    "date-fns-tz": "^2.0.0",
+    "lodash": "^4.17.21",
+    "timezone-mock": "^1.3.6",
+    "weekstart": "^2.0.0"
+  },
+  "devDependencies": {},
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/date-utils",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
+  },
+  "keywords": [
+    "leafygreen",
+    "date",
+    "date-fns"
+  ]
+}

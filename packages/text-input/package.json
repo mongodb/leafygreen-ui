@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/text-input",
-  "version": "12.1.24",
+  "version": "12.1.25",
   "description": "leafyGreen UI Kit Text Input",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -23,16 +23,16 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/form-field": "^0.2.0",
-    "@leafygreen-ui/hooks": "^8.0.0",
-    "@leafygreen-ui/icon": "^11.23.0",
-    "@leafygreen-ui/lib": "^13.0.0",
+    "@leafygreen-ui/form-field": "^0.3.0",
+    "@leafygreen-ui/hooks": "^8.1.0",
+    "@leafygreen-ui/icon": "^11.27.1",
+    "@leafygreen-ui/lib": "^13.2.0",
     "@leafygreen-ui/palette": "^4.0.7",
     "@leafygreen-ui/tokens": "^2.2.0",
-    "@leafygreen-ui/typography": "^18.0.0"
+    "@leafygreen-ui/typography": "^18.1.0"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.10"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.11"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/text-input",
   "repository": {

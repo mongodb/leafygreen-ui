@@ -1,4 +1,6 @@
-import { act, renderHook } from '@testing-library/react-hooks';
+import { waitFor } from '@testing-library/react';
+
+import { act, renderHook } from '@leafygreen-ui/testing-lib';
 
 import {
   useEventListener,
@@ -94,7 +96,7 @@ describe('packages/hooks', () => {
   describe.skip('useMutationObserver', () => {}); //eslint-disable-line jest/no-disabled-tests
 
   test('useViewportSize responds to updates in window size', async () => {
-    const { result, waitForNextUpdate } = renderHook(() => useViewportSize());
+    const { result, rerender } = renderHook(() => useViewportSize());
 
     const mutableWindow: { -readonly [K in keyof Window]: Window[K] } = window;
     const initialHeight = 360;
@@ -104,10 +106,11 @@ describe('packages/hooks', () => {
     mutableWindow.innerWidth = initialWidth;
 
     window.dispatchEvent(new Event('resize'));
-    await act(waitForNextUpdate);
-
-    expect(result?.current?.height).toBe(initialHeight);
-    expect(result?.current?.width).toBe(initialWidth);
+    rerender();
+    await waitFor(() => {
+      expect(result?.current?.height).toBe(initialHeight);
+      expect(result?.current?.width).toBe(initialWidth);
+    });
 
     const updateHeight = 768;
     const updateWidth = 1024;
@@ -116,10 +119,10 @@ describe('packages/hooks', () => {
     mutableWindow.innerWidth = updateWidth;
 
     window.dispatchEvent(new Event('resize'));
-    await act(waitForNextUpdate);
-
-    expect(result?.current?.height).toBe(updateHeight);
-    expect(result?.current?.width).toBe(updateWidth);
+    await waitFor(() => {
+      expect(result?.current?.height).toBe(updateHeight);
+      expect(result?.current?.width).toBe(updateWidth);
+    });
   });
 
   describe('usePoller', () => {
@@ -249,10 +252,10 @@ describe('packages/hooks', () => {
       expect(pollHandler).toHaveBeenCalledTimes(0);
     });
 
-    test('when document is not visible', () => {
+    test('when document is not visible', async () => {
       const pollHandler = jest.fn();
 
-      renderHook(() => usePoller(pollHandler));
+      const { rerender } = renderHook(() => usePoller(pollHandler));
 
       expect(pollHandler).toHaveBeenCalledTimes(1);
 
@@ -260,15 +263,18 @@ describe('packages/hooks', () => {
       act(() => {
         document.dispatchEvent(new Event('visibilitychange'));
       });
-
       jest.advanceTimersByTime(30e3);
 
       expect(pollHandler).toHaveBeenCalledTimes(1);
 
       mutableDocument.visibilityState = 'visible';
+
       act(() => {
         document.dispatchEvent(new Event('visibilitychange'));
       });
+      jest.advanceTimersByTime(30e3);
+
+      rerender(pollHandler);
 
       // immediate triggers the pollHandler
       expect(pollHandler).toHaveBeenCalledTimes(2);
@@ -308,11 +314,11 @@ describe('packages/hooks', () => {
       rerender(2020);
       expect(result.current).toEqual(42);
 
-      rerender();
+      rerender(123);
       expect(result.current).toEqual(2020);
 
       rerender();
-      expect(result.current).toEqual(2020);
+      expect(result.current).toEqual(123);
     });
   });
 

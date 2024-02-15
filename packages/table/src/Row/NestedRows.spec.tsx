@@ -12,7 +12,7 @@ import { Table } from '..';
 
 import { Row } from '.';
 
-const RowWithNestedRows = () => {
+const RowWithNestedRows = args => {
   const { containerRef, table } = useTestHookCall({
     rowProps: {
       subRows: [
@@ -32,7 +32,7 @@ const RowWithNestedRows = () => {
 
   return (
     <div ref={containerRef}>
-      <Table table={table}>
+      <Table table={table} {...args}>
         <thead>
           {table.getHeaderGroups().map(headerGroup => (
             <tr key={headerGroup.id}>
@@ -107,5 +107,26 @@ describe('packages/table/Row/NestedRows', () => {
     expect(collapseIconButton).toBeInTheDocument();
     // the line below is not reliable as the row is expanded - the height is just 0
     expect(queryByText('nested row name')).toBeVisible();
+  });
+
+  describe('disabled animations', () => {
+    test('renders the correct number of children', () => {
+      const { getAllByRole: getAllByRoleLocal } = render(
+        <RowWithNestedRows disableAnimations />,
+      );
+      const firstRow = getAllByRoleLocal('row')[1];
+      expect(getAllByRole(firstRow, 'cell').length).toBe(6);
+    });
+    test('rows with nested rows render expand icon button', async () => {
+      const { getByLabelText } = render(
+        <RowWithNestedRows disableAnimations />,
+      );
+      const expandIconButton = getByLabelText('Expand row');
+      expect(expandIconButton).toBeInTheDocument();
+    });
+    test('having a row with nested rows render all rows as tbody elements', async () => {
+      const { getAllByRole } = render(<RowWithNestedRows disableAnimations />);
+      expect(getAllByRole('rowgroup').length).toBe(4); // 1 for thead, 3 for tbody
+    });
   });
 });

@@ -1,5 +1,17 @@
 # @leafygreen-ui/icon
 
+## 11.28.0
+
+### Minor Changes
+
+- e6c70b73: Adds `'HorizontalDrag'` glyph to Icon set
+
+## 11.27.1
+
+### Patch Changes
+
+- 9b7a8236: Updates `'Database'`glyph
+
 ## 11.27.0
 
 ### Minor Changes

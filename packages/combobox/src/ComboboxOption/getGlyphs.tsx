@@ -5,7 +5,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import Icon, { isComponentGlyph } from '@leafygreen-ui/icon';
 import { Theme } from '@leafygreen-ui/lib';
 
-import { ComboboxSize } from '../Combobox.types';
+import { ComboboxSize } from '../types';
 
 import {
   checkBoxBaseStyles,

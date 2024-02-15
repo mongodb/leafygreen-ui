@@ -1,0 +1,1 @@
+export { normalizeLocale } from './normalizeLocale';

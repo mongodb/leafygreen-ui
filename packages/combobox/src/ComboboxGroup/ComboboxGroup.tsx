@@ -5,13 +5,12 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { ComboboxGroupProps } from '../Combobox.types';
-
 import {
   comboboxGroupLabel,
   comboboxGroupLabelThemeStyle,
   comboboxGroupStyle,
 } from './ComboboxGroup.styles';
+import { ComboboxGroupProps } from './ComboboxGroup.types';
 
 /**
  * @internal

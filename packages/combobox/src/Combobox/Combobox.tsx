@@ -36,24 +36,24 @@ import LeafyGreenProvider, {
 import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { Description, Label } from '@leafygreen-ui/typography';
 
+import { ComboboxChip } from '../ComboboxChip';
+import { ComboboxContext } from '../ComboboxContext';
+import { InternalComboboxGroup } from '../ComboboxGroup';
+import { ComboboxMenu } from '../ComboboxMenu';
+import { OptionObject } from '../ComboboxOption';
+import { InternalComboboxOption } from '../ComboboxOption';
 import {
   ComboboxElement,
-  ComboboxProps,
   ComboboxSize,
+  DiffObject,
   getNullSelection,
   onChangeType,
-  OptionObject,
   Overflow,
   SearchState,
   SelectValueType,
   State,
   TruncationLocation,
-} from '../Combobox.types';
-import { ComboboxChip } from '../ComboboxChip';
-import { ComboboxContext } from '../ComboboxContext';
-import { InternalComboboxGroup } from '../ComboboxGroup';
-import { ComboboxMenu } from '../ComboboxMenu';
-import { InternalComboboxOption } from '../ComboboxOption';
+} from '../types';
 import {
   checkScrollPosition,
   flattenChildren,
@@ -62,7 +62,9 @@ import {
   getOptionObjectFromValue,
   getValueForDisplayName,
 } from '../utils';
+import { doesSelectionExist } from '../utils/doesSelectionExist';
 
+import { isValueCurrentSelection } from './utils/isValueCurrentSelection';
 import {
   baseComboboxStyles,
   baseInputElementStyle,
@@ -91,6 +93,7 @@ import {
   labelDescriptionLargeStyles,
   multiselectInputElementStyle,
 } from './Combobox.styles';
+import { ComboboxProps } from './Combobox.types';
 
 /**
  * Combobox is a combination of a Select and TextInput,
@@ -119,6 +122,8 @@ export function Combobox<M extends boolean>({
   overflow = Overflow.expandY,
   multiselect = false as M,
   initialValue,
+  inputValue: inputValueProp,
+  onInputChange,
   onChange,
   value,
   chipTruncationLocation,
@@ -152,15 +157,22 @@ export function Combobox<M extends boolean>({
   );
   const [selection, setSelection] = useState<SelectValueType<M> | null>(null);
   const prevSelection = usePrevious(selection);
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>(inputValueProp ?? '');
+
+  useEffect(() => {
+    if (!isUndefined(inputValueProp)) {
+      setInputValue(inputValueProp);
+    }
+  }, [inputValueProp]);
+
+  const updateInputValue = (newInputVal: string) => {
+    setInputValue(newInputVal);
+  };
+
   const prevValue = usePrevious(inputValue);
   const [focusedChip, setFocusedChip] = useState<string | null>(null);
   const [shouldShowOverflowShadow, setShouldShowOverflowShadow] =
     useState<boolean>(false);
-
-  const doesSelectionExist =
-    !isNull(selection) &&
-    ((isArray(selection) && selection.length > 0) || isString(selection));
 
   const placeholderValue =
     multiselect && isArray(selection) && selection.length > 0
@@ -224,6 +236,11 @@ export function Combobox<M extends boolean>({
       if (isMultiselect(selection)) {
         // We know M is true here
         const newSelection: SelectValueType<true> = clone(selection);
+        const multiselectOnChange = onChange as onChangeType<true>;
+        const diff: DiffObject = {
+          diffType: 'delete',
+          value: value ?? selection,
+        };
 
         if (isNull(value)) {
           newSelection.length = 0;
@@ -234,36 +251,21 @@ export function Combobox<M extends boolean>({
           } else {
             // add to array
             newSelection.push(value);
+            diff.diffType = 'insert';
             // clear text
-            setInputValue('');
+            updateInputValue('');
           }
         }
         setSelection(newSelection as SelectValueType<M>);
-        (onChange as onChangeType<true>)?.(
-          newSelection as SelectValueType<true>,
-        );
+        multiselectOnChange?.(newSelection, diff);
       } else {
-        const newSelection: SelectValueType<M> = value as SelectValueType<M>;
-        setSelection(newSelection);
-        (onChange as onChangeType<false>)?.(
-          newSelection as SelectValueType<false>,
-        );
+        const newSelection: SelectValueType<false> = value;
+        const singleSelectOnChange = onChange as onChangeType<false>;
+        setSelection(newSelection as SelectValueType<M>);
+        singleSelectOnChange?.(newSelection);
       }
     },
     [isMultiselect, onChange, selection],
-  );
-
-  /**
-   * Returns whether a given value is included in, or equal to, the current selection
-   * @param value the option value to check
-   */
-  const isValueCurrentSelection = useCallback(
-    (value: string): boolean => {
-      return isMultiselect(selection)
-        ? selection.includes(value)
-        : value === selection;
-    },
-    [isMultiselect, selection],
   );
 
   /**
@@ -274,9 +276,9 @@ export function Combobox<M extends boolean>({
   const isTextCurrentSelection = useCallback(
     (text: string): boolean => {
       const value = getValueForDisplayName(text, allOptions);
-      return isValueCurrentSelection(value);
+      return isValueCurrentSelection(value, selection);
     },
-    [allOptions, isValueCurrentSelection],
+    [allOptions, selection],
   );
 
   /**
@@ -765,31 +767,30 @@ export function Combobox<M extends boolean>({
   );
 
   /**
-   *
+   *`
    * Selection Management
    *
    */
 
   const onCloseMenu = useCallback(() => {
-    // Single select, and no change to selection
-    if (!isMultiselect(selection) && selection === prevSelection) {
-      const exactMatchedOption = visibleOptions.find(
-        option =>
-          option.displayName === inputValue || option.value === inputValue,
-      );
+    const exactMatchedOption = visibleOptions.find(
+      option =>
+        option.displayName === inputValue || option.value === inputValue,
+    );
 
-      // check if inputValue is matches a valid option
-      // Set the selection to that value if the component is not controlled
-      if (exactMatchedOption && !value) {
-        setSelection(exactMatchedOption.value as SelectValueType<M>);
-      } else {
+    // check if inputValue is matches a valid option
+    // Set the selection to that value if the component is not controlled
+    if (!value && exactMatchedOption) {
+      updateSelection(exactMatchedOption.value);
+    } else {
+      if (!isMultiselect(selection)) {
         // Revert the value to the previous selection
         const displayName =
           getDisplayNameForValue(
             selection as SelectValueType<false>,
             allOptions,
-          ) ?? '';
-        setInputValue(displayName);
+          ) ?? prevSelection;
+        updateInputValue(displayName);
       }
     }
   }, [
@@ -798,12 +799,16 @@ export function Combobox<M extends boolean>({
     isMultiselect,
     prevSelection,
     selection,
+    updateSelection,
     value,
     visibleOptions,
   ]);
 
+  /**
+   * Side effects to run when the selection changes
+   */
   const onSelect = useCallback(() => {
-    if (doesSelectionExist) {
+    if (doesSelectionExist(selection)) {
       if (isMultiselect(selection)) {
         scrollInputToEnd(overflow);
       } else if (!isMultiselect(selection)) {
@@ -813,13 +818,13 @@ export function Combobox<M extends boolean>({
             selection as SelectValueType<false>,
             allOptions,
           ) ?? '';
-        setInputValue(displayName);
+        updateInputValue(displayName);
         closeMenu();
       }
     } else {
-      setInputValue('');
+      updateInputValue('');
     }
-  }, [doesSelectionExist, allOptions, isMultiselect, selection, overflow]);
+  }, [allOptions, isMultiselect, selection, overflow]);
 
   // Set the initialValue
   useEffect(() => {
@@ -841,6 +846,7 @@ export function Combobox<M extends boolean>({
   }, []);
 
   // When controlled value changes, update the selection
+  // TODO: use useControlledValue
   useEffect(() => {
     if (!isUndefined(value) && value !== prevValue) {
       if (isNull(value)) {
@@ -860,7 +866,14 @@ export function Combobox<M extends boolean>({
   // onSelect
   // Side effects to run when the selection changes
   useEffect(() => {
-    if (!isEqual(selection, prevSelection)) {
+    const hasSelectionChanged =
+      !isUndefined(prevSelection) &&
+      ((isArray(selection) && !isNull(prevSelection)) ||
+        isString(selection) ||
+        isNull(selection)) &&
+      !isEqual(selection, prevSelection);
+
+    if (hasSelectionChanged) {
       onSelect();
     }
   }, [onSelect, prevSelection, selection]);
@@ -933,12 +946,13 @@ export function Combobox<M extends boolean>({
   };
 
   // Fired onChange
-  const handleInputChange: ChangeEventHandler<HTMLInputElement> = ({
-    target: { value },
-  }: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(value);
+  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    updateInputValue(e.target.value);
     // fire any filter function passed in
-    onFilter?.(value);
+    onFilter?.(e.target.value);
+    onInputChange?.(e);
   };
 
   const handleClearButtonFocus: FocusEventHandler<HTMLButtonElement> = () => {
@@ -976,7 +990,7 @@ export function Combobox<M extends boolean>({
         case keyMap.Tab: {
           switch (focusedElementName) {
             case 'Input': {
-              if (!doesSelectionExist) {
+              if (!doesSelectionExist(selection)) {
                 closeMenu();
                 updateHighlightedOption('first');
                 updateFocusedChip(null);
@@ -1012,11 +1026,14 @@ export function Combobox<M extends boolean>({
         }
 
         case keyMap.Enter: {
-          if (
-            // Select the highlighted option iff
+          if (!isOpen) {
+            openMenu();
+          } else if (
+            // Select the highlighted option if
             // the menu is open,
             // we're focused on input element,
             // and the highlighted option is not disabled
+            isOpen &&
             focusedElementName === ComboboxElement.Input &&
             !isNull(highlightedOption) &&
             !isOptionDisabled(highlightedOption)
@@ -1272,7 +1289,7 @@ export function Combobox<M extends boolean>({
                   className={endIconStyle}
                 />
               )}
-              {clearable && doesSelectionExist && !disabled && (
+              {clearable && doesSelectionExist(selection) && !disabled && (
                 <IconButton
                   aria-label="Clear selection"
                   aria-disabled={disabled}

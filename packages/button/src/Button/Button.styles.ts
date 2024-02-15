@@ -13,6 +13,10 @@ import {
 
 import { ButtonProps, Size, Variant } from '../types';
 
+const focusSelector = `&:focus-visible, &[data-focus="true"]`;
+const hoverSelector = `&:hover, &[data-hover="true"]`;
+const activeSelector = `&:active, &[data-active="true"]`;
+
 const focusBoxShadow = (color: string) => `
     0 0 0 2px ${color}, 
     0 0 0 4px ${palette.blue.light1};
@@ -35,12 +39,11 @@ const baseButtonStyles = css`
   font-family: ${fontFamilies.default};
   border-radius: 6px;
 
-  &:focus,
-  &:focus-visible {
+  ${focusSelector} {
     outline: none;
   }
 
-  &:active[aria-disabled='false'],
+  ${activeSelector},
   &:focus,
   &:hover {
     text-decoration: none;
@@ -55,12 +58,12 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       color: ${palette.black};
 
       // needed to override any global button styles
-      &:focus {
+      ${focusSelector} {
         color: ${palette.black};
       }
 
-      &:hover[aria-disabled='false'],
-      &:active[aria-disabled='false'] {
+      ${hoverSelector},
+      ${activeSelector} {
         color: ${palette.black};
         background-color: ${palette.white};
         box-shadow: 0 0 0 3px ${palette.gray.light2};
@@ -72,12 +75,12 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       border-color: ${palette.green.dark2};
       color: ${palette.white};
 
-      &:focus {
+      ${focusSelector} {
         color: ${palette.white};
       }
 
-      &:hover[aria-disabled='false'],
-      &:active[aria-disabled='false'] {
+      ${hoverSelector},
+      ${activeSelector} {
         color: ${palette.white};
         background-color: #00593f; // Not quite dark3
         border-color: #00593f; // Not quite dark3
@@ -90,12 +93,12 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       border-color: ${palette.green.dark2};
       color: ${palette.green.dark2};
 
-      &:focus {
+      ${focusSelector} {
         color: ${palette.green.dark2};
       }
 
-      &:hover[aria-disabled='false'],
-      &:active[aria-disabled='false'] {
+      ${hoverSelector},
+      ${activeSelector} {
         color: ${palette.green.dark2};
         background-color: ${transparentize(0.96, palette.green.base)};
         box-shadow: 0px 0px 0px 3px ${palette.green.light2};
@@ -107,12 +110,12 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       border-color: ${palette.red.base};
       color: ${palette.white};
 
-      &:focus {
+      ${focusSelector} {
         color: ${palette.white};
       }
 
-      &:hover[aria-disabled='false'],
-      &:active[aria-disabled='false'] {
+      ${hoverSelector},
+      ${activeSelector} {
         color: ${palette.white};
         background-color: #c82222; // not quite dark1
         border-color: #c82222; // not quite dark1
@@ -125,12 +128,12 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       border-color: ${palette.red.light1};
       color: ${palette.red.base};
 
-      &:focus {
+      ${focusSelector} {
         color: ${palette.red.base};
       }
 
-      &:hover[aria-disabled='false'],
-      &:active[aria-disabled='false'] {
+      ${hoverSelector},
+      ${activeSelector} {
         color: ${palette.red.dark2};
         background-color: ${transparentize(0.96, palette.red.base)};
         border-color: ${palette.red.base};
@@ -143,12 +146,12 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       border-color: ${palette.green.dark2};
       color: ${palette.green.dark3};
 
-      &:focus {
+      ${focusSelector} {
         color: ${palette.green.dark3};
       }
 
-      &:hover[aria-disabled='false'],
-      &:active[aria-disabled='false'] {
+      ${hoverSelector},
+      ${activeSelector} {
         color: ${palette.green.dark3};
         background-color: ${mix(0.96, palette.green.base, palette.green.dark3)};
         box-shadow: 0px 0px 0px 3px ${palette.green.light2};
@@ -161,12 +164,12 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       border-color: ${palette.gray.base};
       color: ${palette.white};
 
-      &:focus {
+      ${focusSelector} {
         color: ${palette.white};
       }
 
-      &:hover[aria-disabled='false'],
-      &:active[aria-disabled='false'] {
+      ${hoverSelector},
+      ${activeSelector} {
         background-color: ${palette.gray.dark1};
         border-color: ${palette.gray.base};
         color: ${palette.white};
@@ -178,12 +181,12 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       border: 1px solid ${palette.green.base};
       color: ${palette.white};
 
-      &:focus {
+      ${focusSelector} {
         color: ${palette.white};
       }
 
-      &:hover[aria-disabled='false'],
-      &:active[aria-disabled='false'] {
+      ${hoverSelector},
+      ${activeSelector} {
         color: ${palette.white};
         background-color: #00593f; // Off palette
         box-shadow: 0 0 0 3px ${palette.green.dark3};
@@ -195,12 +198,12 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       border-color: ${palette.green.base};
       color: ${palette.green.base};
 
-      &:focus {
+      ${focusSelector} {
         color: ${palette.green.base};
       }
 
-      &:hover[aria-disabled='false'],
-      &:active[aria-disabled='false'] {
+      ${hoverSelector},
+      ${activeSelector} {
         color: ${palette.green.base};
         background-color: ${transparentize(0.96, palette.green.base)};
         border-color: ${palette.green.base};
@@ -213,12 +216,12 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       border-color: ${palette.red.light1};
       color: ${palette.white};
 
-      &:focus {
+      ${focusSelector} {
         color: ${palette.white};
       }
 
-      &:hover[aria-disabled='false'],
-      &:active[aria-disabled='false'] {
+      ${hoverSelector},
+      ${activeSelector} {
         border-color: ${palette.red.light1};
         color: ${palette.white};
         background-color: #c82222; // Off palette
@@ -230,12 +233,12 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       border-color: ${palette.red.light1};
       color: ${palette.red.light1};
 
-      &:focus {
+      ${focusSelector} {
         color: ${palette.red.light1};
       }
 
-      &:hover[aria-disabled='false'],
-      &:active[aria-disabled='false'] {
+      ${hoverSelector},
+      ${activeSelector} {
         color: ${palette.red.light1};
         background-color: ${transparentize(0.96, palette.red.base)};
         box-shadow: 0px 0px 0px 3px ${palette.yellow.dark3}; // yes, yellow
@@ -247,12 +250,12 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
       border-color: ${palette.green.dark2};
       color: ${palette.green.dark3};
 
-      &:focus {
+      ${focusSelector} {
         color: ${palette.green.dark3};
       }
 
-      &:hover[aria-disabled='false'],
-      &:active[aria-disabled='false'] {
+      ${hoverSelector},
+      ${activeSelector} {
         color: ${palette.green.dark3};
         background-color: ${mix(
           0.96,
@@ -269,78 +272,78 @@ const colorSet: Record<Theme, Record<Variant, string>> = {
 const focusStyle: Record<Theme, Record<Variant, string>> = {
   [Theme.Light]: {
     [Variant.Default]: css`
-      &:focus-visible {
+      ${focusSelector} {
         background-color: ${palette.white};
         box-shadow: ${focusBoxShadow(palette.white)};
       }
     `,
     [Variant.Primary]: css`
-      &:focus-visible {
+      ${focusSelector} {
         color: ${palette.white};
         background-color: #00593f; // Not quite dark3
         box-shadow: ${focusBoxShadow(palette.white)};
       }
     `,
     [Variant.PrimaryOutline]: css`
-      &:focus-visible {
+      ${focusSelector} {
         background-color: ${transparentize(0.96, palette.green.base)};
         box-shadow: ${focusBoxShadow(palette.white)};
       }
     `,
     [Variant.Danger]: css`
-      &:focus-visible {
+      ${focusSelector} {
         color: ${palette.white};
         background-color: #c82222; // not quite dark1
         box-shadow: ${focusBoxShadow(palette.white)};
       }
     `,
     [Variant.DangerOutline]: css`
-      &:focus-visible {
+      ${focusSelector} {
         color: ${palette.red.dark2};
         box-shadow: ${focusBoxShadow(palette.white)};
       }
     `,
     [Variant.BaseGreen]: css`
-      &:focus-visible {
+      ${focusSelector} {
         box-shadow: ${focusBoxShadow(palette.white)};
       }
     `,
   },
   [Theme.Dark]: {
     [Variant.Default]: css`
-      &:focus-visible {
+      ${focusSelector} {
         background-color: ${palette.gray.dark1};
         box-shadow: ${focusBoxShadow(palette.black)};
       }
     `,
     [Variant.Primary]: css`
-      &:focus-visible {
+      ${focusSelector} {
         background-color: #00593f; // Off palette
         box-shadow: ${focusBoxShadow(palette.black)};
       }
     `,
     [Variant.PrimaryOutline]: css`
-      &:focus-visible {
+      ${focusSelector} {
         background-color: ${transparentize(0.96, palette.green.base)};
         border-color: ${palette.green.base};
         box-shadow: ${focusBoxShadow(palette.black)};
       }
     `,
     [Variant.Danger]: css`
-      &:focus-visible {
+      ${focusSelector} {
         background-color: #c82222; // Off palette
         box-shadow: ${focusBoxShadow(palette.black)};
       }
     `,
     [Variant.DangerOutline]: css`
-      &:focus-visible {
+      ${focusSelector} {
         background-color: ${transparentize(0.96, palette.red.base)};
         border-color: ${palette.red.light1};
         box-shadow: ${focusBoxShadow(palette.black)};
       }
     `,
     [Variant.BaseGreen]: css`
-      &:focus-visible {
+      ${focusSelector} {
         background-color: ${palette.green.base};
         box-shadow: ${focusBoxShadow(palette.black)};
       }
@@ -351,14 +354,15 @@ const focusStyle: Record<Theme, Record<Variant, string>> = {
 const disabledStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     &,
-    &:hover {
+    ${hoverSelector}, ${activeSelector} {
       background-color: ${palette.gray.light2};
       border-color: ${palette.gray.light1};
       color: ${palette.gray.base};
+      box-shadow: none;
       cursor: not-allowed;
     }
 
-    &:focus-visible {
+    ${focusSelector} {
       color: ${palette.gray.base};
       box-shadow: ${focusBoxShadow(palette.white)};
     }
@@ -366,14 +370,15 @@ const disabledStyle: Record<Theme, string> = {
 
   [Theme.Dark]: css`
     &,
-    &:hover {
+    ${hoverSelector}, ${activeSelector} {
       background-color: ${palette.gray.dark3};
       border-color: ${palette.gray.dark1};
       color: ${palette.gray.dark1};
+      box-shadow: none;
       cursor: not-allowed;
     }
 
-    &:focus-visible {
+    ${focusSelector} {
       color: ${palette.gray.dark1};
       box-shadow: ${focusBoxShadow(palette.black)};
     }

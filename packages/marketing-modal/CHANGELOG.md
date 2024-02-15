@@ -1,5 +1,30 @@
 # @leafygreen-ui/marketing-modal
 
+## 4.2.1
+
+### Patch Changes
+
+- daadacbe: Sets the default `closeIconColor` to correctly be 'default' (`CloseIconColor.Default`)
+- Updated dependencies [daadacbe]
+  - @leafygreen-ui/modal@16.0.4
+
+## 4.2.0
+
+### Minor Changes
+
+- 997e9a99: `title` prop is now typed as ReactNode to allow customizations
+
+### Patch Changes
+
+- Updated dependencies [7f38e78a]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+  - @leafygreen-ui/leafygreen-provider@3.1.11
+  - @leafygreen-ui/lib@13.2.0
+  - @leafygreen-ui/typography@18.1.0
+
 ## 4.1.2
 
 ### Patch Changes

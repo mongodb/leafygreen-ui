@@ -1,0 +1,1 @@
+export { getUTCDateString } from './getUTCDateString';

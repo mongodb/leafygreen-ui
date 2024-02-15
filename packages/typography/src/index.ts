@@ -19,9 +19,13 @@ export type { InlineKeyCodeProps } from './InlineKeyCode/InlineKeyCode.types';
 export { default as Label } from './Label/Label';
 export { labelTypeScaleStyles } from './Label/Label.styles';
 export type { LabelProps } from './Label/Label.types';
-export { default as Link } from './Link/Link';
-export { anchorClassName } from './Link/Link.styles';
-export type { LinkProps } from './Link/Link.types';
+export {
+  anchorClassName,
+  BackLink,
+  type BackLinkProps,
+  Link,
+  type LinkProps,
+} from './Link';
 export { default as Overline } from './Overline/Overline';
 export type { OverlineProps } from './Overline/Overline.types';
 export { bodyTypeScaleStyles } from './styles';

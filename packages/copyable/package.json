@@ -24,18 +24,18 @@
   "dependencies": {
     "@leafygreen-ui/button": "^21.0.10",
     "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/hooks": "^8.0.1",
-    "@leafygreen-ui/icon": "^11.25.0",
-    "@leafygreen-ui/lib": "^13.0.0",
+    "@leafygreen-ui/hooks": "^8.1.0",
+    "@leafygreen-ui/icon": "^11.27.1",
+    "@leafygreen-ui/lib": "^13.2.0",
     "@leafygreen-ui/palette": "^4.0.7",
     "@leafygreen-ui/tokens": "^2.2.0",
     "@leafygreen-ui/tooltip": "^11.0.0",
-    "@leafygreen-ui/typography": "^18.0.1",
+    "@leafygreen-ui/typography": "^18.1.0",
     "clipboard": "^2.0.6",
     "polished": "^4.2.2"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.10"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.11"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/copyable",
   "repository": {
@@ -46,6 +46,6 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@leafygreen-ui/testing-lib": "^0.3.4"
+    "@leafygreen-ui/testing-lib": "^0.4.0"
   }
 }

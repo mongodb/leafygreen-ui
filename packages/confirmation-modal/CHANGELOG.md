@@ -1,5 +1,13 @@
 # @leafygreen-ui/confirmation-modal
 
+## 5.0.9
+
+### Patch Changes
+
+- ae4afdcd: Adds `data-testids` to better support end-to-end testing
+- Updated dependencies [e6c70b73]
+  - @leafygreen-ui/icon@11.28.0
+
 ## 5.0.8
 
 ### Patch Changes

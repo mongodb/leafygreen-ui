@@ -1,14 +1,11 @@
 import React, { PropsWithChildren, useEffect } from 'react';
 import { render } from '@testing-library/react';
-import {
-  cleanup,
-  renderHook,
-  RenderHookResult,
-} from '@testing-library/react-hooks';
+import { cleanup } from '@testing-library/react-hooks';
+
+import { renderHook, waitForState } from '@leafygreen-ui/testing-lib';
 
 import { ToastProps, Variant } from '../../Toast.types';
 import { ToastContext } from '../ToastContext';
-import { ToastContextProps } from '../ToastContext.types';
 import { useToastReducer } from '../ToastReducer';
 import {
   makeToast,
@@ -56,63 +53,83 @@ describe('packages/toast/useToast', () => {
     });
 
     describe('returned functions return correct values', () => {
-      let current: RenderHookResult<
-        unknown,
-        ToastContextProps
-      >['result']['current'];
-
-      beforeEach(() => {
-        const { result } = renderHook(useToast, { wrapper: ToastProviderMock });
-        current = result.current;
-      });
-
-      test('pushToast => ToastId', () => {
-        const { pushToast } = current;
-        const toastId = pushToast({ title: 'test' });
+      test('pushToast => ToastId', async () => {
+        const { result } = renderHook(useToast, {
+          wrapper: ToastProviderMock,
+        });
+        const { pushToast } = result.current;
+        const toastId = await waitForState(() => pushToast({ title: 'test' }));
         expect(toastId).toEqual(expect.stringContaining('toast-'));
       });
 
-      test('getToast => ToastProps', () => {
-        const { pushToast, getToast } = current;
-        const toastId = pushToast({ title: 'test' });
+      test('getToast => ToastProps', async () => {
+        const { result, rerender } = renderHook(useToast, {
+          wrapper: ToastProviderMock,
+        });
+        const { pushToast, getToast } = result.current;
+
+        const toastId = await waitForState(() => pushToast({ title: 'test' }));
+        rerender();
         expect(getToast(toastId)).toEqual(
           expect.objectContaining({ title: 'test' }),
         );
       });
 
-      test('updateToast => ToastProps', () => {
-        const { pushToast, updateToast } = current;
-        const toastId = pushToast({
-          title: 'test',
-          variant: Variant.Progress,
-          progress: 0,
+      test('updateToast => ToastProps', async () => {
+        const { result, rerender } = renderHook(useToast, {
+          wrapper: ToastProviderMock,
+        });
+        const { pushToast, updateToast } = result.current;
+        const toastId = await waitForState(() =>
+          pushToast({
+            title: 'test',
+            variant: Variant.Progress,
+            progress: 0,
+          }),
+        );
+        const updatedToast = await waitForState(() => {
+          rerender();
+          return updateToast(toastId, {
+            progress: 0.5,
+          });
         });
 
-        expect(updateToast(toastId, { progress: 0.5 })).toEqual(
+        expect(updatedToast).toEqual(
           expect.objectContaining({ progress: 0.5 }),
         );
       });
 
-      test('popToast => ToastProps', () => {
-        const { pushToast, popToast } = current;
-        const toastId = pushToast({ title: 'test' });
-        expect(popToast(toastId)).toEqual(
-          expect.objectContaining({ title: 'test' }),
-        );
+      test('popToast => ToastProps', async () => {
+        const { result, rerender } = renderHook(useToast, {
+          wrapper: ToastProviderMock,
+        });
+        const { pushToast, popToast } = result.current;
+        const toastId = await waitForState(() => pushToast({ title: 'test' }));
+        rerender();
+        const poppedToast = await waitForState(() => popToast(toastId));
+        expect(poppedToast).toEqual(expect.objectContaining({ title: 'test' }));
       });
 
-      test('getStack => ToastStack (Map)', () => {
-        const { pushToast, getStack } = current;
-        pushToast({ title: 'test' });
+      test('getStack => ToastStack (Map)', async () => {
+        const { result, rerender } = renderHook(useToast, {
+          wrapper: ToastProviderMock,
+        });
+        const { pushToast, getStack } = result.current;
+        await waitForState(() => pushToast({ title: 'test' }));
+        rerender();
 
         expect(getStack()).toBeDefined();
         expect(getStack()?.size).toEqual(1);
       });
 
-      test('clearStack => void', () => {
-        const { pushToast, clearStack, getStack } = current;
-        pushToast({ title: 'test' });
-        expect(clearStack()).toBeUndefined();
+      test('clearStack => void', async () => {
+        const { result } = renderHook(useToast, {
+          wrapper: ToastProviderMock,
+        });
+        const { pushToast, clearStack, getStack } = result.current;
+        await waitForState(() => pushToast({ title: 'test' }));
+        const clearedStack = await waitForState(() => clearStack());
+        expect(clearedStack).toBeUndefined();
         expect(getStack()?.size).toEqual(0);
       });
     });

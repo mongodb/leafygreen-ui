@@ -59,6 +59,7 @@ export const ConfirmationModal = React.forwardRef(
             // eslint-disable-next-line jsx-a11y/no-autofocus
             autoFocus
             darkMode={darkMode}
+            data-testid="lg-confirmation-modal-confirmation-input"
           ></TextInput>
         );
       }
@@ -87,7 +88,11 @@ export const ConfirmationModal = React.forwardRef(
               />
             </div>
           )}
-          <H3 as="h1" className={cx(titleStyle)}>
+          <H3
+            as="h1"
+            className={cx(titleStyle)}
+            data-testid="lg-confirmation-modal-title"
+          >
             {title}
           </H3>
           {children}
@@ -99,10 +104,15 @@ export const ConfirmationModal = React.forwardRef(
             disabled={!confirmEnabled || submitDisabled}
             onClick={onConfirm}
             className={buttonStyle}
+            data-testid="lg-confirmation-modal-footer-confirm-button"
           >
             {buttonText}
           </Button>
-          <Button onClick={onCancel} className={buttonStyle}>
+          <Button
+            onClick={onCancel}
+            className={buttonStyle}
+            data-testid="lg-confirmation-modal-footer-cancel-button"
+          >
             Cancel
           </Button>
         </Footer>

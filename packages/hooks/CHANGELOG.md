@@ -1,5 +1,30 @@
 # @leafygreen-ui/hooks
 
+## 8.1.1
+
+### Patch Changes
+
+- 2bceccb1: Fixes `lodash` imports to use default exports of specific functions to reduce component's bundle size.
+- Updated dependencies [2bceccb1]
+  - @leafygreen-ui/lib@13.2.1
+
+## 8.1.0
+
+### Minor Changes
+
+- ffd11f24: - Extends `useControlledValue` to accept any type.
+  - Adds `updateValue` function in return value. This method triggers a synthetic event to update the value of a controlled or uncontrolled component.
+  - Adds `initialValue` argument. Used for setting the initial value for uncontrolled components. Without this we may encounter a React error for switching between controlled/uncontrolled inputs
+  - The value of `isControlled` is now immutable after the first render
+
+### Patch Changes
+
+- 7f38e78a: Updates test to import `renderHook` from `@leafygreen-ui/testing-lib`
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+  - @leafygreen-ui/lib@13.2.0
+
 ## 8.0.1
 
 ### Patch Changes

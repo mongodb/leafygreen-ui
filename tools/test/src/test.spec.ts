@@ -5,21 +5,21 @@ import { test as lgTest } from '.';
 
 const spawnSpy = jest.spyOn(child_process, 'spawn');
 
+const defaultConfigPath = path.resolve(
+  process.cwd(),
+  'node_modules/@lg-tools/test/config/jest.config.js',
+);
+
 describe('tools/test', () => {
-  const baseArgs = [
-    '--config',
-    path.resolve(__dirname, '../config/jest.config.js'),
-    '--rootDir',
-    process.cwd(),
-  ];
+  const baseArgs = ['--config', defaultConfigPath, '--rootDir', process.cwd()];
 
   const baseEnv = { env: expect.objectContaining({ JEST_ENV: 'client' }) };
 
   beforeEach(() => {
     spawnSpy.mockImplementation(
-      (...args) =>
+      (..._args) =>
         ({
-          on: (e: string, cb: (...args: Array<any>) => void) => {},
+          on: (_e: string, _cb: (..._args: Array<any>) => void) => {},
         } as ChildProcess),
     );
   });
@@ -34,7 +34,7 @@ describe('tools/test', () => {
       ci: false,
     });
     expect(spawnSpy).toHaveBeenCalledWith(
-      'jest',
+      expect.stringContaining('jest'),
       expect.arrayContaining(baseArgs),
       expect.objectContaining(baseEnv),
     );
@@ -46,7 +46,7 @@ describe('tools/test', () => {
       ci: false,
     });
     expect(spawnSpy).toHaveBeenCalledWith(
-      'jest',
+      expect.stringContaining('jest'),
       expect.arrayContaining([...baseArgs, '--watch']),
       expect.objectContaining(baseEnv),
     );
@@ -58,7 +58,7 @@ describe('tools/test', () => {
       ci: true,
     });
     expect(spawnSpy).toHaveBeenCalledWith(
-      'jest',
+      expect.stringContaining('jest'),
       expect.arrayContaining([
         ...baseArgs,
         '--no-cache',
@@ -77,7 +77,7 @@ describe('tools/test', () => {
       ci: true,
     });
     expect(spawnSpy).toHaveBeenCalledWith(
-      'jest',
+      expect.stringContaining('jest'),
       expect.arrayContaining([...baseArgs, '--testNamePattern=button']),
       expect.objectContaining(baseEnv),
     );
@@ -90,7 +90,7 @@ describe('tools/test', () => {
     });
 
     expect(spawnSpy).toHaveBeenCalledWith(
-      'jest',
+      expect.stringContaining('jest'),
       expect.arrayContaining([
         './packages/button/src/Button/Button.spec.tsx',
         ...baseArgs,

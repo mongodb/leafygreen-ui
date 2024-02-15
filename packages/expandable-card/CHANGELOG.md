@@ -1,5 +1,13 @@
 # @leafygreen-ui/expandable-card
 
+## 3.0.23
+
+### Patch Changes
+
+- e059943f: Updates live example so that `title` does not look like an optional prop
+- Updated dependencies [e6c70b73]
+  - @leafygreen-ui/icon@11.28.0
+
 ## 3.0.22
 
 ### Patch Changes

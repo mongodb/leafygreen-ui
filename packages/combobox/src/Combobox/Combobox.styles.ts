@@ -11,13 +11,13 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { ComboboxSize as Size, Overflow } from '../Combobox.types';
 import {
   chipClassName,
   chipWrapperPaddingY,
   fontSize,
   lineHeight,
 } from '../ComboboxChip/ComboboxChip.styles';
+import { ComboboxSize as Size, Overflow } from '../types';
 
 /**
  * Util to get the chip height

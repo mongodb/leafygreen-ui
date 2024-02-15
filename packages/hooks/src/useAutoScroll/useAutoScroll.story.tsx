@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { range } from 'lodash';
+import range from 'lodash/range';
 
 import { css } from '@leafygreen-ui/emotion';
 import { StoryMetaType } from '@leafygreen-ui/lib';
