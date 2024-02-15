@@ -5,6 +5,10 @@ import { makeId, makeVarName } from './utils';
 
 buildRulesIndexFile();
 
+/**
+ * Utility function that creates or updates the Rules index file
+ * after a new Rule is created
+ */
 export function buildRulesIndexFile() {
   const rulesDir = path.resolve(__dirname, '../src/rules');
   fse.readdir(rulesDir).then(files => {
