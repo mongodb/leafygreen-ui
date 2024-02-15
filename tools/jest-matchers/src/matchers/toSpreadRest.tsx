@@ -5,7 +5,7 @@ import chalk from 'chalk';
 import { createMatcher } from '../utils/createMatcher';
 
 /**
- * Tests whether a Component
+ * Tests whether a Component spreads all unused props to the root HTML element
  */
 export const toSpreadRest = createMatcher(function _toSpreadRest(
   Component: React.ReactElement,
