@@ -13,8 +13,11 @@ import {
 const cli = new Command('');
 cli.argument('<rule-name>', 'The name of the rule');
 cli.action(createNewRule);
-cli.parse();
+cli.parse(process.argv);
 
+/**
+ * Creates a new Rule within `eslint-plugin/src/rules`
+ */
 function createNewRule(ruleName: string) {
   const rulesDir = path.resolve(__dirname, '../src/rules');
   const testsDir = path.resolve(__dirname, '../src/tests');
