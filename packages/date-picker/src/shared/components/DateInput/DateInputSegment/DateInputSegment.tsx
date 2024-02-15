@@ -28,10 +28,12 @@ import { DateInputSegmentProps } from './DateInputSegment.types';
 import { getNewSegmentValueFromInputValue } from './utils';
 
 /**
+ * Controlled component
+ *
  * Renders a single date segment with the
  * appropriate character padding/truncation.
  *
- * Only fires a change handler when the input is blurred
+ * Only fires a change handler when the input is blurred???
  */
 export const DateInputSegment = React.forwardRef<
   HTMLInputElement,
@@ -66,6 +68,14 @@ export const DateInputSegment = React.forwardRef<
     const autoComplete = getAutoComplete(autoCompleteProp, segment);
     const pattern = `[0-9]{${charsPerSegment[segment]}}`;
 
+    console.log(
+      '🪲 DatePickerInput => 🎃 DateInputBox => 🍓 DateInputSegment',
+      {
+        segment,
+        value,
+      },
+    );
+
     /**
      * Receives native input events,
      * determines whether the input value is valid and should change,
@@ -74,7 +84,9 @@ export const DateInputSegment = React.forwardRef<
     const handleChange: ChangeEventHandler<HTMLInputElement> = e => {
       const { target } = e;
 
-      console.log('handleChange🥕');
+      console.log(
+        '🪲 DatePickerInput => 🎃 DateInputBox => 🍓 DateInputSegment => 🥕 handleChange',
+      );
 
       const newValue = getNewSegmentValueFromInputValue(
         segment,
@@ -97,7 +109,9 @@ export const DateInputSegment = React.forwardRef<
 
     /** Handle keydown presses that don't natively fire a change event */
     const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
-      console.log('handleKeyDown🍊');
+      console.log(
+        '🪲 DatePickerInput => 🎃 DateInputBox => 🍓 DateInputSegment => 🥶 handleKeyDown',
+      );
       const { key, target } = e as React.KeyboardEvent<HTMLInputElement> & {
         target: HTMLInputElement;
       };
@@ -137,8 +151,9 @@ export const DateInputSegment = React.forwardRef<
 
           const preVal = target.value;
 
-          // reset the input on backspace
-          target.value = '';
+          console.log(
+            '🪲 DatePickerInput => 🎃 DateInputBox => 🍓 DateInputSegment => BACKSPACE BABYYYYYY 🔙',
+          );
 
           /** Fire a custom change event when the backspace key is pressed */
           onChange({
@@ -147,7 +162,7 @@ export const DateInputSegment = React.forwardRef<
             meta: { key },
           });
 
-          // Prevent the onKeyDown handler inside DatePickerInput from firing. Because we reset the value on backspace, that will trigger the previous segment to focus but we want the focus to remain inside the current segment.
+          // Prevent the onKeyDown handler inside `DatePickerInput` from firing. Because we reset the value on backspace, that will trigger the previous segment to focus but we want the focus to remain inside the current segment.
           if (preVal) {
             e.stopPropagation();
           }
@@ -158,9 +173,6 @@ export const DateInputSegment = React.forwardRef<
         // TODO: test space key
         case keyMap.Space: {
           e.preventDefault();
-
-          // reset the input on space
-          target.value = '';
 
           /** Fire a custom change event when the space key is pressed */
           onChange({

@@ -206,14 +206,34 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
      */
     const handleSegmentChange: DateInputSegmentChangeEventHandler =
       segmentChangeEvent => {
-        const { segment } = segmentChangeEvent;
+        const { segment, value } = segmentChangeEvent;
+
+        console.log(
+          '🪲 DatePickerInput => ✨ handleSegmentChange => 🪿 segmentChangeEvent',
+          {
+            segment,
+            value,
+          },
+        );
 
         /**
          * Fire a simulated `change` event
          */
         const target = segmentRefs[segment].current;
 
+        // FIXME: this value is stale
+        console.log(
+          '🪲 DatePickerInput => ✨ handleSegmentChange => 🪼 segmentRefs target(STALE)',
+          {
+            target,
+            value: target?.value,
+          },
+        );
+
         if (target) {
+          // At this point, the target stored in segmentRefs has a stale value.
+          // To fix this we update the value of the target with the up-to-date value from `segmentChangeEvent`.
+          target.value = value;
           const changeEvent = new Event('change');
           const reactEvent = createSyntheticEvent<
             ChangeEvent<HTMLInputElement>
