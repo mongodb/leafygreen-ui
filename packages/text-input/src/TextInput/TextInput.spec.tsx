@@ -47,10 +47,25 @@ describe('packages/text-input', () => {
       expect(results).toHaveNoViolations();
     });
   });
+
   test(`renders ${defaultProps.label} as the input label and ${defaultProps.description} as the description`, () => {
     const { label, description } = renderTextInput(defaultProps);
     expect(label?.innerHTML).toContain(defaultProps.label);
     expect(description?.innerHTML).toContain(defaultProps.description);
+  });
+
+  test('allows external label', () => {
+    const { getByTestId } = render(
+      <>
+        <label htmlFor="input" id="label">
+          Label
+        </label>
+        <TextInput data-testid="input" id="input" aria-labelledby="label" />
+      </>,
+    );
+
+    const input = getByTestId('input');
+    expect(input).toBeLabelled();
   });
 
   test(`renders ${defaultProps.placeholder} as placeholder text`, () => {
