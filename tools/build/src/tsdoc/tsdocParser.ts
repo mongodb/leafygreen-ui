@@ -7,7 +7,10 @@ import {
 } from 'react-docgen-typescript';
 import chalk from 'chalk';
 import fse from 'fs-extra';
-import { camelCase, defaults, isUndefined, uniqBy } from 'lodash';
+import camelCase from 'lodash/camelCase';
+import defaults from 'lodash/defaults';
+import isUndefined from 'lodash/isUndefined';
+import uniqBy from 'lodash/uniqBy';
 import path from 'path';
 import { CompilerOptions, JsxEmit } from 'typescript';
 

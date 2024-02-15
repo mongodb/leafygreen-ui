@@ -68,6 +68,12 @@ export type SelectValueType<M extends boolean> = M extends true
   ? Array<string>
   : string | null;
 
+/** Represents an element that was added or removed from the multiselect value array */
+export interface DiffObject {
+  diffType: 'insert' | 'delete';
+  value: string | Array<string>;
+}
+
 /**
  * Callback event fired when the value changes
  *
@@ -75,7 +81,7 @@ export type SelectValueType<M extends boolean> = M extends true
  */
 // TODO: onChange signature should match the native event handler signature
 export type onChangeType<M extends boolean> = M extends true
-  ? (value: SelectValueType<true>) => void
+  ? (value: SelectValueType<true>, diff?: DiffObject) => void
   : (value: SelectValueType<false>) => void;
 
 /**

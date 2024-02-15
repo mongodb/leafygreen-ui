@@ -2,7 +2,7 @@ import React from 'react';
 import { act, fireEvent, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import Checkbox from '.';
+import Checkbox from '..';
 
 const className = 'test-classname';
 const onChange = jest.fn();

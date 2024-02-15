@@ -33,9 +33,9 @@ export const getFontSize = ({
 export const labelTextContainerStyle = css`
   display: flex;
   flex-direction: column;
-  margin-bottom: ${spacing[1]}px;
+  margin-bottom: ${spacing[100]}px;
 `;
 
 export const errorTextContainerStyle = css`
-  margin-top: ${spacing[1]}px;
+  margin-top: ${spacing[100]}px;
 `;

@@ -1,5 +1,11 @@
 # @leafygreen-ui/testing-lib
 
+## 0.4.1
+
+### Patch Changes
+
+- 2bceccb1: Fixes `lodash` imports to use default exports of specific functions to reduce component's bundle size.
+
 ## 0.4.0
 
 ### Minor Changes

@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import { exitWithErrorMessage } from '@lg-tools/meta';
+import chalk from 'chalk';
 import fse from 'fs-extra';
 import path from 'path';
 
@@ -17,17 +18,17 @@ export function getConfigFile(options: TestCommandOptions): string {
   const localConfigFile = path.resolve(rootDir, 'jest.config.js');
   const defaultConfigFile = path.resolve(
     rootDir,
-    'tools/test/config/jest.config.js',
+    'node_modules/@lg-tools/test/config/jest.config.js',
   );
   const react17ConfigFile = path.resolve(
     rootDir,
-    'tools/test/config/react17/jest.config.js',
+    'node_modules/@lg-tools/test/config/react17/jest.config.js',
   );
 
   if (react17) {
     if (fse.existsSync(react17ConfigFile)) {
-      console.log('Using React 17 test config');
-      verbose && console.log(react17ConfigFile);
+      console.log(chalk.bold('Using React 17 test config'));
+      verbose && console.log(`\t${react17ConfigFile}`);
       return react17ConfigFile; // If react17 flag was used, use that config
     } else {
       exitWithErrorMessage(
@@ -37,8 +38,12 @@ export function getConfigFile(options: TestCommandOptions): string {
   }
 
   if (fse.existsSync(localConfigFile)) {
+    verbose && console.log(chalk.gray.bold('Using local config file'));
+    verbose && console.log(chalk.gray(`\t${localConfigFile}`));
     return localConfigFile; // otherwise look for a config at the root
   }
 
+  verbose && console.log(chalk.gray.bold('Using default config file'));
+  verbose && console.log(chalk.gray(`\t${defaultConfigFile}`));
   return defaultConfigFile; // fallback to the default config
 }

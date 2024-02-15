@@ -1,4 +1,8 @@
-import { entries, has, isEqual, isUndefined, keys } from 'lodash';
+import entries from 'lodash/entries';
+import has from 'lodash/has';
+import isEqual from 'lodash/isEqual';
+import isUndefined from 'lodash/isUndefined';
+import keys from 'lodash/keys';
 
 import {
   type ExtendedComponentProps,

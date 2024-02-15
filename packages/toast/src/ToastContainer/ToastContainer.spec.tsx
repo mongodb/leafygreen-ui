@@ -10,7 +10,8 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { defaults, range } from 'lodash';
+import defaults from 'lodash/defaults';
+import range from 'lodash/range';
 
 import { transitionDuration } from '@leafygreen-ui/tokens';
 

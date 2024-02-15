@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
@@ -31,7 +33,7 @@ export interface BaseTextAreaProps
   /**
    * Text that gives more detail about the requirements for the input.
    */
-  description?: string;
+  description?: React.ReactNode;
 
   /**
    * Whether or not the field is currently disabled.

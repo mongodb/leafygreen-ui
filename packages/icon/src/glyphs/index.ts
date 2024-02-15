@@ -69,6 +69,7 @@ import GovernmentBuilding from './GovernmentBuilding.svg';
 import Hash from './Hash.svg';
 import Highlight from './Highlight.svg';
 import Home from './Home.svg';
+import HorizontalDrag from './HorizontalDrag.svg';
 import Import from './Import.svg';
 import ImportantWithCircle from './ImportantWithCircle.svg';
 import InfoWithCircle from './InfoWithCircle.svg';
@@ -216,6 +217,7 @@ const _glyphs = {
   Hash,
   Highlight,
   Home,
+  HorizontalDrag,
   Import,
   ImportantWithCircle,
   InfoWithCircle,

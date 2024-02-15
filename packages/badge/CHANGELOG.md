@@ -1,5 +1,11 @@
 # @leafygreen-ui/badge
 
+## 8.1.0
+
+### Minor Changes
+
+- cbe92872: Badge components now have a `border-radius` of `24px`, up from `5px` previously.
+
 ## 8.0.15
 
 ### Patch Changes

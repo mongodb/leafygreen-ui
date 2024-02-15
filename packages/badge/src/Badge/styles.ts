@@ -12,7 +12,7 @@ export const baseStyle = css`
   font-weight: ${fontWeights.bold};
   font-size: 12px;
   line-height: 16px;
-  border-radius: 5px;
+  border-radius: 24px;
   height: 18px;
   padding-left: 6px;
   padding-right: 6px;

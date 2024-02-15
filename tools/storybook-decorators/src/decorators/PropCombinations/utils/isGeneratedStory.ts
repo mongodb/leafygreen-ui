@@ -1,5 +1,6 @@
 import { StoryContext } from '@storybook/react';
-import { isUndefined, startCase } from 'lodash';
+import isUndefined from 'lodash/isUndefined';
+import startCase from 'lodash/startCase';
 
 import { GeneratedStoryConfig } from '@leafygreen-ui/lib';
 

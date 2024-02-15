@@ -6,8 +6,8 @@ import { cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
+import { CheckProps } from '../Checkbox/Checkbox.types';
 import { checkAnimationDuration } from '../constants';
-import { CheckProps } from '../types';
 
 import {
   checkIconStyles,

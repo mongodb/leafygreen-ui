@@ -190,7 +190,42 @@ Keeps functions pure.
 
 ---
 
-### Use “be” verbs for boolean types. (e.g. `should`/`is`/`can`/`does`/`has`)
+### Prefix boolean variables with “to be” verbs.
+
+(e.g. `shouldX`, `isY`, `canZ`, `doesX`, `hasY`, `willZ`)
+
+---
+
+### Follow BEM-ish patterns when hard-coding a `data-testid` or `data-lgid`
+
+1. Prefix with “lg”
+2. Words are separated by underscore `_`
+3. Blocks are separated by dash `-`
+4. Name hierarchy should somewhat match the directory structure
+
+Additionally, a hard-coded `data` attribute should _only_ be placed on a root-level, native HTML element. Components should have their own internal id.
+
+#### Prefer
+
+```jsx
+// CalendarCell.tsx
+<td data-testid="lg-date_picker-calendar_cell" />
+```
+
+#### Avoid
+
+```jsx
+// Calendar.tsx
+<Cell data-testid="lg-date-picker-calendar-cell" />
+```
+
+(Note, this is fine to do in a _test/spec_ file. Just don't hard-code this into the component)
+
+#### Why BEM-_ish_?
+
+BEM uses dashes (`-`) to separate words within a block/element, and a double underscore (`__`) to separate blocks/elements/modifiers.
+
+The main issue with strict BEM syntax is that it creates a poor user experience when editing. In most text editors a Double click or `Option`+`ArrowKey` presses treat underscores as one works and dashes as a separator. For example, to replace the `"calendar_cell"` part in the above example, you can double click it and paste. Or to move the cursor from the end of that string to the previous element you can press `Option` + `ArrowLeft`.
 
 ---
 

@@ -3,8 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 
 import { InferredPolymorphicProps } from '@leafygreen-ui/polymorphic';
 
-import { Link } from '..';
-
+import Link from './Link';
 import { BaseLinkProps } from './Link.types';
 
 type SpanLikeProps = InferredPolymorphicProps<'span', BaseLinkProps>;
@@ -206,17 +205,36 @@ describe('packages/typography', () => {
         <>
           <Link />
           <Link>some content</Link>
-          <Link href="string">some content</Link>
+          <Link href="string" target="sting" rel="string">
+            some content
+          </Link>
+
           <Link as="div">some content</Link>
           {/* @ts-expect-error href is not allowed on explicit div */}
           <Link as="div" href="string">
             some content
           </Link>
+          {/* @ts-expect-error target is not allowed on explicit div */}
+          <Link as="div" target="string">
+            some content
+          </Link>
+
           {/* @ts-expect-error href is not allowed on a Wrapper component that does not accept anchor props */}
           <Link as={WrapperComponent} href="string">
             some content
           </Link>
-          <Link href="string" as={AnchorComponent} />
+          {/* @ts-expect-error target is not allowed on a Wrapper component that does not accept anchor props */}
+          <Link as={WrapperComponent} target="string">
+            some content
+          </Link>
+
+          <Link href="string" as={AnchorComponent} target="string" rel="string">
+            some content
+          </Link>
+
+          <Link as="a" href="string" target="string" rel="string">
+            Content
+          </Link>
           {/* @ts-expect-error as anchor is not allowed without an href */}
           <Link as="a">Content</Link>
         </>;

@@ -1,5 +1,15 @@
 # @lg-tools/validate
 
+## 0.1.7
+
+### Patch Changes
+
+- 2bceccb1: Fixes `lodash` imports to use default exports of specific functions to reduce component's bundle size.
+- Updated dependencies [2bceccb1]
+- Updated dependencies [90bba7b2]
+  - @lg-tools/build@0.3.2
+  - @lg-tools/meta@0.3.0
+
 ## 0.1.6
 
 ### Patch Changes

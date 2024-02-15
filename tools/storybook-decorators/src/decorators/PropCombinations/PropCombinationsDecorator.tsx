@@ -11,7 +11,8 @@
 
 import React from 'react';
 import { Decorator, StoryContext, StoryFn } from '@storybook/react';
-import { entries, isUndefined } from 'lodash';
+import entries from 'lodash/entries';
+import isUndefined from 'lodash/isUndefined';
 
 import {
   type GeneratedStoryConfig,

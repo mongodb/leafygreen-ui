@@ -62,7 +62,7 @@ return (
 | `id`          | `string`                       | id to describe the `<textarea>` element                                                                                   |          |
 | `darkMode`    | `boolean`                      | Determines whether or not the component will appear in dark mode.                                                         | `false`  |
 | `label`       | `string`                       | Label for `<textarea>`                                                                                                    |          |
-| `description` | `string`                       | Description below label                                                                                                   |          |
+| `description` | `React.ReactNode`              | Description below label                                                                                                   |          |
 | `state`       | `'none'`, `'valid'`, `'error'` | Determines the state of the `<textarea>`                                                                                  | `'none'` |
 | `className`   | `string`                       | className applied to the container element                                                                                |          |
 | `disabled`    | `boolean`                      | Determines if the component is disabled                                                                                   | `false`  |

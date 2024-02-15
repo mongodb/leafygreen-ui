@@ -92,8 +92,10 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
       if (isSameUTCMonth(newMonth, month)) {
         return;
       }
+
       setDisplayMonth(newMonth);
-      const newHighlight = getNewHighlight(highlight, month, newMonth);
+
+      const newHighlight = getNewHighlight(highlight, month, newMonth, value);
       const shouldUpdateHighlight = !isSameUTCDay(highlight, newHighlight);
 
       if (newHighlight && shouldUpdateHighlight) {

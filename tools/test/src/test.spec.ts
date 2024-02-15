@@ -5,21 +5,21 @@ import { test as lgTest } from '.';
 
 const spawnSpy = jest.spyOn(child_process, 'spawn');
 
+const defaultConfigPath = path.resolve(
+  process.cwd(),
+  'node_modules/@lg-tools/test/config/jest.config.js',
+);
+
 describe('tools/test', () => {
-  const baseArgs = [
-    '--config',
-    path.resolve(__dirname, '../config/jest.config.js'),
-    '--rootDir',
-    process.cwd(),
-  ];
+  const baseArgs = ['--config', defaultConfigPath, '--rootDir', process.cwd()];
 
   const baseEnv = { env: expect.objectContaining({ JEST_ENV: 'client' }) };
 
   beforeEach(() => {
     spawnSpy.mockImplementation(
-      (...args) =>
+      (..._args) =>
         ({
-          on: (e: string, cb: (...args: Array<any>) => void) => {},
+          on: (_e: string, _cb: (..._args: Array<any>) => void) => {},
         } as ChildProcess),
     );
   });

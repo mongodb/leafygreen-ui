@@ -3,7 +3,7 @@
  */
 
 import type { StorybookConfig } from '@storybook/react-webpack5';
-import { isRegExp } from 'lodash';
+import isRegExp from 'lodash/isRegExp';
 import { ProvidePlugin, RuleSetRule } from 'webpack';
 
 import { findStories } from './findStories';

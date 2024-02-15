@@ -1,5 +1,11 @@
 # @leafygreen-ui/radio-group
 
+## 10.2.4
+
+### Patch Changes
+
+- 0e6cb7a6: Updates the generated story in Chromatic to properly render children
+
 ## 10.2.3
 
 ### Patch Changes

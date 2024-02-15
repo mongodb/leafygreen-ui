@@ -6,6 +6,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
+import { lottieRendererSettings } from '../constants';
 import { descriptionThemeColor } from '../LoadingIndicator.styles';
 
 import animationJson from './animation';
@@ -63,6 +64,7 @@ const Spinner = ({
           height: size,
           marginBottom: description ? spinnerMarginBottom : undefined,
         }}
+        rendererSettings={lottieRendererSettings}
       />
       {description && (
         <Body

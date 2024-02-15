@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/build",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Build config for LeafyGreen repositories",
   "license": "Apache-2.0",
   "publishConfig": {

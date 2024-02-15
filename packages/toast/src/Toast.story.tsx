@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { faker } from '@faker-js/faker';
 import { StoryContext, StoryFn } from '@storybook/react';
-import { range, startCase } from 'lodash';
+import range from 'lodash/range';
+import startCase from 'lodash/startCase';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';

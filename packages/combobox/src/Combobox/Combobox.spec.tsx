@@ -16,6 +16,7 @@ import isUndefined from 'lodash/isUndefined';
 
 import Button from '@leafygreen-ui/button';
 import { keyMap } from '@leafygreen-ui/lib';
+import { eventContainingTargetValue } from '@leafygreen-ui/testing-lib';
 
 import { OptionObject } from '../ComboboxOption/ComboboxOption.types';
 import {
@@ -133,6 +134,13 @@ describe('packages/combobox', () => {
           clearable: false,
         });
         expect(clearButtonEl).not.toBeInTheDocument();
+      });
+
+      test('`inputValue` prop is rendered in the textbox', () => {
+        const { inputEl } = renderCombobox(select, {
+          inputValue: 'abc',
+        });
+        expect(inputEl).toHaveValue('abc');
       });
     });
 
@@ -420,7 +428,7 @@ describe('packages/combobox', () => {
     /**
      * Input element
      */
-    describe('Input interaction', () => {
+    describe('Typing (Input interaction)', () => {
       test('Typing any character updates the input', () => {
         const { inputEl } = renderCombobox(select);
         userEvent.type(inputEl, 'zy');
@@ -434,70 +442,103 @@ describe('packages/combobox', () => {
         expect(inputEl).toHaveValue(displayName);
         expect(inputEl.scrollWidth).toBeGreaterThanOrEqual(inputEl.clientWidth);
       });
-    });
 
-    /**
-     * Controlled
-     * (i.e. `value` prop)
-     */
-    describe('When value is controlled', () => {
-      test('Typing any character updates the input', () => {
-        const value = select === 'multiple' ? [] : '';
-        const { inputEl } = renderCombobox(select, {
-          value,
-        });
-        expect(inputEl).toHaveValue('');
-        userEvent.type(inputEl, 'z');
-        expect(inputEl).toHaveValue('z');
+      test('Typing does not fire onChange callback', () => {
+        const onChange = jest.fn();
+        const { inputEl } = renderCombobox(select, { onChange });
+        userEvent.type(inputEl, 'Apple');
+        expect(onChange).not.toHaveBeenCalled();
       });
 
-      testSingleSelect('Text input renders with value update', () => {
-        let value = 'apple';
-        const { inputEl, rerenderCombobox } = renderCombobox(select, {
-          value,
-        });
-        expect(inputEl).toHaveValue('Apple');
-        value = 'banana';
-        rerenderCombobox({ value });
-        expect(inputEl).toHaveValue('Banana');
+      test('Typing fires onInputChange callback', () => {
+        const onInputChange = jest.fn();
+        const { inputEl } = renderCombobox(select, { onInputChange });
+        userEvent.type(inputEl, 'abc');
+        expect(onInputChange).toHaveBeenCalledWith(
+          eventContainingTargetValue('abc'),
+        );
       });
 
-      testSingleSelect('Invalid option passed as value is not selected', () => {
-        const value = 'jellybean';
-        const { inputEl } = renderCombobox(select, { value });
-        expect(inputEl).toHaveValue('');
+      test('Blurring the input after typing a valid value fires onChange', async () => {
+        const onChange = jest.fn();
+        const { inputEl, openMenu } = renderCombobox(select, { onChange });
+        const { menuContainerEl } = openMenu();
+        userEvent.type(inputEl, 'Apple');
+        userEvent.tab();
+        await waitForElementToBeRemoved(menuContainerEl);
+        if (select === 'multiple') {
+          expect(onChange).toHaveBeenCalledWith(['apple'], expect.anything());
+        } else {
+          expect(onChange).toHaveBeenCalledWith('apple');
+        }
       });
 
-      testMultiSelect('Updating `value` updates the chips', () => {
-        let value = ['apple', 'banana'];
-        const { queryChipsByName, queryAllChips, rerenderCombobox } =
-          renderCombobox(select, {
+      /**
+       * Controlled
+       * (i.e. `value` prop is set)
+       */
+      describe('When value is controlled', () => {
+        test('Typing any character updates the input', () => {
+          const value = select === 'multiple' ? [] : '';
+          const { inputEl } = renderCombobox(select, {
             value,
           });
-        waitFor(() => {
-          const allChips = queryChipsByName(['Apple', 'Banana']);
-          allChips?.forEach(chip => expect(chip).toBeInTheDocument());
-          expect(queryAllChips()).toHaveLength(2);
-          value = ['banana', 'carrot'];
+          expect(inputEl).toHaveValue('');
+          userEvent.type(inputEl, 'z');
+          expect(inputEl).toHaveValue('z');
+        });
+
+        testSingleSelect('Text input renders with value update', () => {
+          let value = 'apple';
+          const { inputEl, rerenderCombobox } = renderCombobox(select, {
+            value,
+          });
+          expect(inputEl).toHaveValue('Apple');
+          value = 'banana';
           rerenderCombobox({ value });
+          expect(inputEl).toHaveValue('Banana');
+        });
+
+        testSingleSelect(
+          'Invalid option passed as value is not selected',
+          () => {
+            const value = 'jellybean';
+            const { inputEl } = renderCombobox(select, { value });
+            expect(inputEl).toHaveValue('');
+          },
+        );
+
+        testMultiSelect('Updating `value` updates the chips', () => {
+          let value = ['apple', 'banana'];
+          const { queryChipsByName, queryAllChips, rerenderCombobox } =
+            renderCombobox(select, {
+              value,
+            });
           waitFor(() => {
-            const allChips = queryChipsByName(['Carrot', 'Banana']);
+            const allChips = queryChipsByName(['Apple', 'Banana']);
             allChips?.forEach(chip => expect(chip).toBeInTheDocument());
             expect(queryAllChips()).toHaveLength(2);
+            value = ['banana', 'carrot'];
+            rerenderCombobox({ value });
+            waitFor(() => {
+              const allChips = queryChipsByName(['Carrot', 'Banana']);
+              allChips?.forEach(chip => expect(chip).toBeInTheDocument());
+              expect(queryAllChips()).toHaveLength(2);
+            });
           });
         });
-      });
 
-      testMultiSelect('Invalid options are not selected', () => {
-        const value = ['apple', 'jellybean'];
-        const { queryChipsByName, queryAllChips } = renderCombobox(select, {
-          value,
-        });
-        waitFor(() => {
-          const allChips = queryChipsByName(['Apple']);
-          allChips?.forEach(chip => expect(chip).toBeInTheDocument());
-          expect(queryChipsByName('Jellybean')).not.toBeInTheDocument();
-          expect(queryAllChips()).toHaveLength(1);
+        testMultiSelect('Invalid options are not selected', () => {
+          const value = ['apple', 'jellybean'];
+          const { queryChipsByName, queryAllChips } = renderCombobox(select, {
+            value,
+          });
+          waitFor(() => {
+            const allChips = queryChipsByName(['Apple']);
+            allChips?.forEach(chip => expect(chip).toBeInTheDocument());
+            expect(queryChipsByName('Jellybean')).not.toBeInTheDocument();
+            expect(queryAllChips()).toHaveLength(1);
+          });
         });
       });
     });
@@ -538,6 +579,31 @@ describe('packages/combobox', () => {
           expect(queryChipsByName('Carrot')).toBeInTheDocument();
         } else {
           expect(inputEl).toHaveValue('Carrot');
+        }
+      });
+
+      test('Clicking an option fires onChange', () => {
+        const onChange = jest.fn();
+        const { openMenu } = renderCombobox(select, {
+          onChange,
+        });
+        const { optionElements } = openMenu();
+        expect(optionElements).not.toBeUndefined();
+        const option3 = (optionElements as HTMLCollectionOf<HTMLLIElement>)[2];
+        act(() => {
+          userEvent.click(option3);
+        });
+
+        if (select === 'multiple') {
+          expect(onChange).toHaveBeenCalledWith(
+            expect.arrayContaining(['carrot']),
+            expect.objectContaining({
+              diffType: 'insert',
+              value: 'carrot',
+            }),
+          );
+        } else {
+          expect(onChange).toHaveBeenCalledWith('carrot');
         }
       });
 
@@ -749,6 +815,32 @@ describe('packages/combobox', () => {
           });
         });
 
+        testMultiSelect(
+          'Clicking chip X button fires onChange with diff',
+          async () => {
+            const onChange = jest.fn();
+            const initialValue = ['apple', 'banana', 'carrot'];
+            const { queryChipsByName } = renderCombobox(select, {
+              onChange,
+              initialValue,
+            });
+            const appleChip = queryChipsByName('Apple');
+            expect(appleChip).not.toBeNull();
+            const appleChipButton = appleChip!.querySelector('button')!;
+            userEvent.click(appleChipButton);
+            await waitFor(() => {
+              expect(appleChip).not.toBeInTheDocument();
+              expect(onChange).toHaveBeenCalledWith(
+                expect.arrayContaining(['banana', 'carrot']),
+                expect.objectContaining({
+                  diffType: 'delete',
+                  value: 'apple',
+                }),
+              );
+            });
+          },
+        );
+
         testMultiSelect('Clicking chip text focuses the chip', () => {
           const initialValue = ['apple', 'banana', 'carrot'];
           const { queryChipsByName, queryAllChips } = renderCombobox(select, {
@@ -825,6 +917,17 @@ describe('packages/combobox', () => {
           expect(menuContainerEl).toBeInTheDocument();
         });
 
+        test('does not make a selection when clicking enter on a closed menu', () => {
+          const { getMenuElements, inputEl } = renderCombobox(select);
+          userEvent.tab();
+          userEvent.keyboard('{enter}');
+          expect(inputEl).toHaveValue('');
+          const { menuContainerEl } = getMenuElements();
+          expect(menuContainerEl).not.toBeNull();
+          expect(menuContainerEl).toBeInTheDocument();
+          expect(inputEl).toHaveValue('');
+        });
+
         test('selects highlighted option', () => {
           const { inputEl, openMenu, queryChipsByName } =
             renderCombobox(select);
@@ -842,9 +945,18 @@ describe('packages/combobox', () => {
           const { inputEl, openMenu } = renderCombobox(select, { onChange });
           openMenu();
           userEvent.type(inputEl!, '{arrowdown}{enter}');
-          expect(onChange).toHaveBeenCalledWith(
-            select === 'single' ? 'banana' : ['banana'],
-          );
+
+          if (select === 'multiple') {
+            expect(onChange).toHaveBeenCalledWith(
+              ['banana'],
+              expect.objectContaining({
+                diffType: 'insert',
+                value: 'banana',
+              }),
+            );
+          } else {
+            expect(onChange).toHaveBeenCalledWith('banana');
+          }
         });
 
         test('does not fire onClear handler', () => {
@@ -1359,7 +1471,8 @@ describe('packages/combobox', () => {
      */
     describe('onClear', () => {
       test('Clear button calls onClear callback', () => {
-        const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+        const initialValue =
+          select === 'multiple' ? ['apple', 'banana'] : 'apple';
         const onClear = jest.fn();
         const { clearButtonEl } = renderCombobox(select, {
           initialValue,
@@ -1370,7 +1483,8 @@ describe('packages/combobox', () => {
       });
 
       test('Clear button does not force the menu to reopen', () => {
-        const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+        const initialValue =
+          select === 'multiple' ? ['apple', 'banana'] : 'apple';
         const onClear = jest.fn();
         const { clearButtonEl, queryByRole } = renderCombobox(select, {
           initialValue,
@@ -1381,8 +1495,9 @@ describe('packages/combobox', () => {
         expect(queryByRole('listbox')).not.toBeInTheDocument();
       });
 
-      test('Clear button clears the value of the input', () => {
-        const initialValue = select === 'multiple' ? ['apple'] : 'apple';
+      test('Clear button clears the value of the input', async () => {
+        const initialValue =
+          select === 'multiple' ? ['apple', 'banana'] : 'apple';
         const { inputEl, clearButtonEl, queryChipsByName } = renderCombobox(
           select,
           {
@@ -1396,10 +1511,34 @@ describe('packages/combobox', () => {
           expect(inputEl).toHaveValue('Apple');
         }
 
-        act(() => {
-          userEvent.click(clearButtonEl!);
+        userEvent.click(clearButtonEl!);
+        await waitFor(() => {
+          expect(inputEl).toHaveValue('');
         });
-        expect(inputEl).toHaveValue('');
+      });
+
+      test('Clear button calls onChange callback', () => {
+        const onChange = jest.fn();
+        const initialValue =
+          select === 'multiple' ? ['apple', 'banana'] : 'apple';
+        const { clearButtonEl } = renderCombobox(select, {
+          initialValue,
+          onChange,
+        });
+
+        userEvent.click(clearButtonEl!);
+
+        if (select === 'multiple') {
+          expect(onChange).toHaveBeenCalledWith(
+            [],
+            expect.objectContaining({
+              diffType: 'delete',
+              value: ['apple', 'banana'],
+            }),
+          );
+        } else {
+          expect(onChange).toHaveBeenCalledWith(null);
+        }
       });
 
       test('Focus returns to input element after clear button is clicked', async () => {
@@ -1438,13 +1577,6 @@ describe('packages/combobox', () => {
         });
         userEvent.click(clearButtonEl!);
         expect(onChange).toHaveBeenCalled();
-      });
-
-      test('Typing does not call onChange callback', () => {
-        const onChange = jest.fn();
-        const { inputEl } = renderCombobox(select, { onChange });
-        userEvent.type(inputEl, 'a');
-        expect(onChange).not.toHaveBeenCalled();
       });
 
       test('Closing the menu without making a selection does not call onChange callback', async () => {

@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
-import { pick } from 'lodash';
+import pick from 'lodash/pick';
 import path from 'path';
 
 import { ValidateCommandOptions } from '../validate.types';

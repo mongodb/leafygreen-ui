@@ -6,7 +6,10 @@ import { useSharedDatePickerContext } from '../../../context';
 import { DatePickerState } from '../../../types';
 import { CalendarButton } from '../CalendarButton';
 
-import { iconButtonStyles } from './DateFormField.styles';
+import {
+  calendarButtonSizeStyle,
+  iconButtonStyles,
+} from './DateFormField.styles';
 import { DateFormFieldProps } from './DateFormField.types';
 
 /**
@@ -63,12 +66,13 @@ export const DateFormField = React.forwardRef<
           aria-controls={menuId}
           aria-invalid={state === DatePickerState.Error}
           onClick={onInputClick}
-          className={iconButtonStyles}
+          className={iconButtonStyles(size)}
           contentEnd={
             <CalendarButton
               tabIndex={disabled ? -1 : 0}
               ref={buttonRef}
               onClick={onIconButtonClick}
+              className={calendarButtonSizeStyle(size)}
             />
           }
         >

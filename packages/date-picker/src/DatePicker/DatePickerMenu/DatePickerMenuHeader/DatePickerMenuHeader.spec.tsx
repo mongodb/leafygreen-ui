@@ -50,7 +50,9 @@ describe('packages/date-picker/menu/header', () => {
           </MockSharedDatePickerProvider>,
         );
 
-        const monthSelect = getByLabelText('Select month');
+        const monthSelect = getByLabelText('Select month', {
+          exact: false,
+        });
 
         userEvent.click(monthSelect);
 
@@ -87,7 +89,9 @@ describe('packages/date-picker/menu/header', () => {
           </MockSharedDatePickerProvider>,
         );
 
-        const monthSelect = getByLabelText('Select month');
+        const monthSelect = getByLabelText('Select month', {
+          exact: false,
+        });
 
         userEvent.click(monthSelect);
 
@@ -125,7 +129,9 @@ describe('packages/date-picker/menu/header', () => {
           </MockSharedDatePickerProvider>,
         );
 
-        const monthSelect = getByLabelText('Select month');
+        const monthSelect = getByLabelText('Select month', {
+          exact: false,
+        });
 
         userEvent.click(monthSelect);
 
@@ -161,7 +167,9 @@ describe('packages/date-picker/menu/header', () => {
             </MockSharedDatePickerProvider>,
           );
 
-          const monthSelect = getByLabelText('Select month');
+          const monthSelect = getByLabelText('Select month', {
+            exact: false,
+          });
 
           userEvent.click(monthSelect);
 
@@ -196,8 +204,12 @@ describe('packages/date-picker/menu/header', () => {
             </MockSharedDatePickerProvider>,
           );
 
-          const monthSelect = getByLabelText('Select month');
-          const yearSelect = getByLabelText('Select year');
+          const monthSelect = getByLabelText('Select month', {
+            exact: false,
+          });
+          const yearSelect = getByLabelText('Select year', {
+            exact: false,
+          });
 
           expect(monthSelect).toHaveTextContent('Jul');
           expect(yearSelect).toHaveTextContent('2025');
@@ -227,7 +239,9 @@ describe('packages/date-picker/menu/header', () => {
             </MockSharedDatePickerProvider>,
           );
 
-          const monthSelect = getByLabelText('Select month');
+          const monthSelect = getByLabelText('Select month', {
+            exact: false,
+          });
 
           userEvent.click(monthSelect);
 
@@ -262,8 +276,12 @@ describe('packages/date-picker/menu/header', () => {
             </MockSharedDatePickerProvider>,
           );
 
-          const monthSelect = getByLabelText('Select month');
-          const yearSelect = getByLabelText('Select year');
+          const monthSelect = getByLabelText('Select month', {
+            exact: false,
+          });
+          const yearSelect = getByLabelText('Select year', {
+            exact: false,
+          });
 
           expect(monthSelect).toHaveTextContent('Jul');
           expect(yearSelect).toHaveTextContent('2021');
@@ -317,7 +335,9 @@ describe('packages/date-picker/menu/header', () => {
         </AllMockProviders>,
       );
 
-      const monthSelect = getByLabelText('Select month');
+      const monthSelect = getByLabelText('Select month', {
+        exact: false,
+      });
       userEvent.click(monthSelect);
       await waitFor(() => {
         jest.advanceTimersByTime(transitionDuration.default);

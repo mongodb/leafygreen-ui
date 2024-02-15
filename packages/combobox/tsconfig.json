@@ -53,6 +53,9 @@
       "path": "../popover"
     },
     {
+      "path": "../testing-lib"
+    },
+    {
       "path": "../tokens"
     },
     {
