@@ -27,6 +27,9 @@ import { getSegmentToFocus } from '../utils/getSegmentToFocus';
 
 import { DatePickerInputProps } from './DatePickerInput.types';
 
+/**
+ * @internal
+ */
 export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
   (
     {

@@ -33,7 +33,8 @@ import { getNewSegmentValueFromInputValue } from './utils';
  * Renders a single date segment with the
  * appropriate character padding/truncation.
  *
- * Only fires a change handler when the input is blurred???
+ *
+ * @internal
  */
 export const DateInputSegment = React.forwardRef<
   HTMLInputElement,
@@ -133,6 +134,7 @@ export const DateInputSegment = React.forwardRef<
           break;
         }
 
+        // On backspace the value is reset
         case keyMap.Backspace: {
           // Don't fire change event if the input is initially empty
           if (value) {
@@ -150,6 +152,7 @@ export const DateInputSegment = React.forwardRef<
           break;
         }
 
+        // On space the value is reset
         case keyMap.Space: {
           e.preventDefault();
 
