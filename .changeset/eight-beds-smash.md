@@ -54,12 +54,12 @@ Changes the behavior of segments.
 - Did not change the current value
 
 ### Clicking
-- Clicking on a segment will make the cursor appear in the spot that was clicked.
-- If the segment was full typing would not change the value
-- If the segement was not full, typing would add a new character after the cursor
+- Clicking on a segment will make the cursor appear in the clicked spot.
+- If the segment is full, typing will not change the value
+- If the segment is not full, typing does not add a new character after the cursor
 
 ### Tabbing
-- Tabbing into a segment would select the value but pressing space would not reset the value
+- Tabbing into a segment would select the value, but pressing space would not reset the value
 
 ### Left/Right arrows
-- When in a segment, left/right arrow keys would move through each character but typing would not update the value
+- When in a segment, left/right arrow keys would move through each character, but typing does not update the value
