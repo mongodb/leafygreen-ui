@@ -220,6 +220,17 @@ describe('packages/date-picker/shared/date-input-segment', () => {
 
   describe('Keyboard', () => {
     describe('Backspace', () => {
+      test('does not call the onChangeHandler when the value is initially empty', () => {
+        const { input } = renderSegment({
+          onChange: onChangeHandler,
+        });
+
+        userEvent.type(input, '{backspace}');
+        expect(onChangeHandler).not.toHaveBeenCalledWith(
+          expect.objectContaining({ value: '' }),
+        );
+      });
+
       test('clears the input when there is a value', () => {
         const { input } = renderSegment({
           value: '26',
