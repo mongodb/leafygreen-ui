@@ -1421,9 +1421,11 @@ describe('packages/date-picker', () => {
 
       describe('Backspace key', () => {
         test('resets the input', () => {
-          const { dayInput } = renderDatePicker();
+          const onChange = jest.fn();
+          const { dayInput } = renderDatePicker({ onChange });
           userEvent.type(dayInput, '26{backspace}');
           expect(dayInput.value).toBe('');
+          expect(onChange).toHaveBeenCalledWith(eventContainingTargetValue(''));
         });
 
         test('keeps the focus in the current input', () => {
@@ -2980,6 +2982,7 @@ describe('packages/date-picker', () => {
             userEvent.type(monthInput, '7');
             userEvent.type(dayInput, '4');
 
+            // TODO: update this
             yearInput.setSelectionRange(0, 4);
             userEvent.type(yearInput, '{backspace}');
             expect(yearInput).toHaveValue('');

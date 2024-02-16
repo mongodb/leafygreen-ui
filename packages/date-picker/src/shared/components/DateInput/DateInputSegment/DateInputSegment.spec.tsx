@@ -231,17 +231,6 @@ describe('packages/date-picker/shared/date-input-segment', () => {
           expect.objectContaining({ value: '' }),
         );
       });
-
-      test('clears the input when tying a value', () => {
-        const { input } = renderSegment({
-          onChange: onChangeHandler,
-        });
-
-        userEvent.type(input, '2{backspace}');
-        expect(onChangeHandler).toHaveBeenCalledWith(
-          expect.objectContaining({ value: '' }),
-        );
-      });
     });
 
     describe('Arrow Keys', () => {
