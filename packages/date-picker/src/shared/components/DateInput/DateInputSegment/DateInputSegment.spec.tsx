@@ -701,7 +701,11 @@ describe('packages/date-picker/shared/date-input-segment', () => {
             });
 
             userEvent.type(input, '{space}');
-            expect(onChangeHandler).toHaveBeenCalled();
+            expect(onChangeHandler).toHaveBeenCalledWith(
+              expect.objectContaining({
+                value: '',
+              }),
+            );
           });
         });
       });
@@ -726,7 +730,11 @@ describe('packages/date-picker/shared/date-input-segment', () => {
             });
 
             userEvent.type(input, '{space}{space}');
-            expect(onChangeHandler).toHaveBeenCalled();
+            expect(onChangeHandler).toHaveBeenCalledWith(
+              expect.objectContaining({
+                value: '',
+              }),
+            );
           });
         });
       });

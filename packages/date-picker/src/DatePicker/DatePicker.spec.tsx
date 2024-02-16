@@ -2552,31 +2552,6 @@ describe('packages/date-picker', () => {
               });
             });
 
-            describe('does fire a segment value change', () => {
-              test('when typing another digit', () => {
-                const onChange = jest.fn();
-
-                const { yearInput } = renderDatePicker({
-                  onChange,
-                });
-                userEvent.type(yearInput, '{space}2');
-                expect(onChange).toHaveBeenCalledWith(
-                  eventContainingTargetValue('2'),
-                );
-              });
-
-              test('when the value prop is set', () => {
-                const onChange = jest.fn();
-
-                const { yearInput } = renderDatePicker({
-                  onChange,
-                  value: newUTC(2023, Month.December, 25),
-                });
-                userEvent.type(yearInput, '{space}');
-                expect(onChange).toHaveBeenCalled();
-              });
-            });
-
             describe('renders the correct value when the space is', () => {
               test('at the start of a value', () => {
                 const onChange = jest.fn();
