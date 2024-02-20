@@ -2616,7 +2616,7 @@ describe('packages/date-picker', () => {
               });
             });
 
-            describe('does fire a segment value change', () => {
+            describe('fires a segment value change', () => {
               test('when typing another digit', () => {
                 const onChange = jest.fn();
 
@@ -3018,14 +3018,14 @@ describe('packages/date-picker', () => {
             await waitFor(() => expect(monthInput).toHaveValue('02'));
           });
 
-          test('if the resulting value is incomplete and not valid, clears the input', async () => {
+          test('if the resulting value is incomplete and invalid, clears the input', async () => {
             const { monthInput } = renderDatePicker({});
             userEvent.type(monthInput, '0');
             userEvent.tab();
             await waitFor(() => expect(monthInput).toHaveValue(''));
           });
 
-          test('if the resulting value is not valid, formats the value', async () => {
+          test('if the resulting value is invalid, formats the first digit and the second digit is inputted into the next input', async () => {
             const { monthInput, dayInput } = renderDatePicker({});
             userEvent.type(monthInput, '32');
             await waitFor(() => {

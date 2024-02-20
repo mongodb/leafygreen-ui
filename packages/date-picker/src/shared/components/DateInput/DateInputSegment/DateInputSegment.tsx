@@ -102,10 +102,12 @@ export const DateInputSegment = React.forwardRef<
         target: HTMLInputElement;
       };
 
-      // If the key is a number and the value length is equal to the charsPerSegment, reset the input.
-      // We also check for space because Number(' ') returns true
-      // We need this check because a key press could be arrow keys, enter, space, etc.
-      if (Number(key) && key !== keyMap.Space) {
+      // A key press can be an `arrow`, `enter`, `space`, etc so we check for number presses
+      // We also check for `space` because Number(' ') returns true
+      const isNumber = Number(key) && key !== keyMap.Space;
+
+      if (isNumber) {
+        // if the value length is equal to the charsPerSegment, reset the input
         if (target.value.length === charsPerSegment[segment]) {
           target.value = '';
         }

@@ -226,9 +226,7 @@ describe('packages/date-picker/shared/date-input-segment', () => {
         });
 
         userEvent.type(input, '{backspace}');
-        expect(onChangeHandler).not.toHaveBeenCalledWith(
-          expect.objectContaining({ value: '' }),
-        );
+        expect(onChangeHandler).not.toHaveBeenCalled();
       });
 
       test('clears the input when there is a value', () => {
