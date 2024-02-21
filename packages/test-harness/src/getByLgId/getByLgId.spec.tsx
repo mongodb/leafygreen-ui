@@ -35,5 +35,5 @@ describe('getByLgId', () => {
     }).toThrow('Found multiple elements by [data-lgid="testing-id"]');
   });
 
-  test.todo('no document');
+  test.todo('no document found');
 });
