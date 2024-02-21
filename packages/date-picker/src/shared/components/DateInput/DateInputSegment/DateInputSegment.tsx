@@ -28,10 +28,13 @@ import { DateInputSegmentProps } from './DateInputSegment.types';
 import { getNewSegmentValueFromInputValue } from './utils';
 
 /**
+ * Controlled component
+ *
  * Renders a single date segment with the
  * appropriate character padding/truncation.
  *
- * Only fires a change handler when the input is blurred
+ *
+ * @internal
  */
 export const DateInputSegment = React.forwardRef<
   HTMLInputElement,
@@ -95,9 +98,20 @@ export const DateInputSegment = React.forwardRef<
 
     /** Handle keydown presses that don't natively fire a change event */
     const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
-      const { key } = e as React.KeyboardEvent<HTMLInputElement> & {
+      const { key, target } = e as React.KeyboardEvent<HTMLInputElement> & {
         target: HTMLInputElement;
       };
+
+      // A key press can be an `arrow`, `enter`, `space`, etc so we check for number presses
+      // We also check for `space` because Number(' ') returns true
+      const isNumber = Number(key) && key !== keyMap.Space;
+
+      if (isNumber) {
+        // if the value length is equal to the charsPerSegment, reset the input
+        if (target.value.length === charsPerSegment[segment]) {
+          target.value = '';
+        }
+      }
 
       switch (key) {
         case keyMap.ArrowUp:
@@ -122,23 +136,38 @@ export const DateInputSegment = React.forwardRef<
           break;
         }
 
+        // On backspace the value is reset
         case keyMap.Backspace: {
-          const numChars = value.length;
+          // Don't fire change event if the input is initially empty
+          if (value) {
+            // Prevent the onKeyDown handler inside `DatePickerInput` from firing. Because we reset the value on backspace, that will trigger the previous segment to focus but we want the focus to remain inside the current segment.
+            e.stopPropagation();
 
-          // If we've cleared the input with backspace,
-          // fire the custom change event
-          if (numChars === 1) {
+            /** Fire a custom change event when the backspace key is pressed */
             onChange({
               segment,
               value: '',
               meta: { key },
             });
           }
+
           break;
         }
 
+        // On space the value is reset
         case keyMap.Space: {
           e.preventDefault();
+
+          // Don't fire change event if the input is initially empty
+          if (value) {
+            /** Fire a custom change event when the space key is pressed */
+            onChange({
+              segment,
+              value: '',
+              meta: { key },
+            });
+          }
+
           break;
         }
 
@@ -161,7 +190,6 @@ export const DateInputSegment = React.forwardRef<
         ref={inputRef}
         type="text"
         pattern={pattern}
-        maxLength={charsPerSegment[segment]}
         role="spinbutton"
         value={value}
         min={min}
