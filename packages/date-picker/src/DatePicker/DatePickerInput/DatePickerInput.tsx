@@ -27,6 +27,9 @@ import { getSegmentToFocus } from '../utils/getSegmentToFocus';
 
 import { DatePickerInputProps } from './DatePickerInput.types';
 
+/**
+ * @internal
+ */
 export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
   (
     {
@@ -84,6 +87,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
         });
 
         segmentToFocus?.focus();
+        segmentToFocus?.select();
       }
     };
 
@@ -108,40 +112,38 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
 
       const isSegmentEmpty = !target.value;
 
-      const { selectionStart, selectionEnd } = target;
-
       switch (key) {
         case keyMap.ArrowLeft: {
+          // Without this, the input ignores `.select()`
+          e.preventDefault();
           // if input is empty,
-          // or the cursor is at the beginning of the input
-          // set focus to prev. input (if it exists)
-          if (selectionStart === 0) {
-            const segmentToFocus = getRelativeSegmentRef('prev', {
-              segment: target,
-              formatParts,
-              segmentRefs,
-            });
+          // set focus to prev input (if it exists)
+          const segmentToFocus = getRelativeSegmentRef('prev', {
+            segment: target,
+            formatParts,
+            segmentRefs,
+          });
 
-            segmentToFocus?.current?.focus();
-          }
+          segmentToFocus?.current?.focus();
+          segmentToFocus?.current?.select();
           // otherwise, use default behavior
 
           break;
         }
 
         case keyMap.ArrowRight: {
+          // Without this, the input ignores `.select()`
+          e.preventDefault();
           // if input is empty,
-          // or the cursor is at the end of the input
           // set focus to next. input (if it exists)
-          if (selectionEnd === target.value.length) {
-            const segmentToFocus = getRelativeSegmentRef('next', {
-              segment: target,
-              formatParts,
-              segmentRefs,
-            });
+          const segmentToFocus = getRelativeSegmentRef('next', {
+            segment: target,
+            formatParts,
+            segmentRefs,
+          });
 
-            segmentToFocus?.current?.focus();
-          }
+          segmentToFocus?.current?.focus();
+          segmentToFocus?.current?.select();
           // otherwise, use default behavior
 
           break;
@@ -157,12 +159,14 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
           if (isSegmentEmpty) {
             // prevent the backspace in the previous segment
             e.preventDefault();
+
             const segmentToFocus = getRelativeSegmentRef('prev', {
               segment: target,
               formatParts,
               segmentRefs,
             });
             segmentToFocus?.current?.focus();
+            segmentToFocus?.current?.select();
           }
           break;
         }
@@ -205,7 +209,7 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
      */
     const handleSegmentChange: DateInputSegmentChangeEventHandler =
       segmentChangeEvent => {
-        const { segment } = segmentChangeEvent;
+        const { segment, value } = segmentChangeEvent;
 
         /**
          * Fire a simulated `change` event
@@ -213,6 +217,9 @@ export const DatePickerInput = forwardRef<HTMLDivElement, DatePickerInputProps>(
         const target = segmentRefs[segment].current;
 
         if (target) {
+          // At this point, the target stored in segmentRefs has a stale value.
+          // To fix this we update the value of the target with the up-to-date value from `segmentChangeEvent`.
+          target.value = value;
           const changeEvent = new Event('change');
           const reactEvent = createSyntheticEvent<
             ChangeEvent<HTMLInputElement>
