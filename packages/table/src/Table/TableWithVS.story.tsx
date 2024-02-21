@@ -550,7 +550,7 @@ export const TallRows: StoryFn<StoryTableProps> = args => {
   }, []);
 
   const columns = useMemo(() => basicColumnDefs, []);
-  const estimateSize = useCallback(() => 150, []);
+  const estimateSize = useCallback(() => 100, []);
 
   const table = useLeafyGreenTable<Person>({
     containerRef: tableContainerRef,
