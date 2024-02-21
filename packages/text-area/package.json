@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/text-area",
-  "version": "8.0.21",
+  "version": "8.1.0",
   "description": "leafyGreen UI Kit Text Area",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -27,8 +27,8 @@
     "@leafygreen-ui/icon": "^11.27.0",
     "@leafygreen-ui/lib": "^13.0.0",
     "@leafygreen-ui/palette": "^4.0.7",
-    "@leafygreen-ui/tokens": "^2.2.0",
-    "@leafygreen-ui/typography": "^18.0.0"
+    "@leafygreen-ui/tokens": "^2.4.0",
+    "@leafygreen-ui/typography": "^18.2.1"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.10"
