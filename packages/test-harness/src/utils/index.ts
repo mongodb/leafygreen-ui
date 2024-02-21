@@ -1,0 +1,1 @@
+export { getDocument } from './getDocument';

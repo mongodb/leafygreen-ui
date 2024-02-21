@@ -110,7 +110,7 @@ describe('packages/split-button', () => {
 
       fireEvent.click(menuTrigger as HTMLElement);
 
-      const menu = getByTestId(menuTestId);
+      const menu = getByTestId('lkl');
       expect(menu).toBeInTheDocument();
     });
 
