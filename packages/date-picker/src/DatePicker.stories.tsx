@@ -112,7 +112,7 @@ export const LiveExample: StoryFn<typeof DatePicker> = props => {
         onDateChange={v => {
           // eslint-disable-next-line no-console
           console.log('Storybook: onDateChange', {
-            value: v!.toUTCString(),
+            value: v?.toUTCString(),
             'value with local browser timezone': v,
           });
           setValue(v);
@@ -122,6 +122,10 @@ export const LiveExample: StoryFn<typeof DatePicker> = props => {
           console.log('Storybook: handleValidation', {
             'date with local browser timezone': date,
           })
+        }
+        onChange={e =>
+          // eslint-disable-next-line no-console
+          console.log('Storybook: onChange🚨', { value: e.target.value })
         }
       />
       <br />

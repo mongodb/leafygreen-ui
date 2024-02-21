@@ -31,22 +31,12 @@ const gutter = css`
   margin-left: ${spacing[3]}px;
 `;
 
-const colors = [
-  '#fb4949',
-  '#497ffb',
-  '#62e3fd',
-  '#52c825',
-  '#fdd063',
-  '#fd7fec',
-  '#a5fd8b',
-];
-
 const spacingBlockVariants = Object.keys(spacing)
   .filter(num => Number(num) === 0 || Number(num) > 25)
   .reduce((acc: Partial<Record<keyof typeof spacing, string>>, index, idx) => {
     const key = index as PropertyKey as keyof typeof spacing;
     acc[key] = css`
-      background-color: ${colors[idx]};
+      background-color: ${palette.purple.light2};
       width: ${spacing[key]}px;
       height: ${spacing[key]}px;
     `;

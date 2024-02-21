@@ -204,35 +204,34 @@ describe('packages/date-picker/shared/date-input-segment', () => {
         );
       });
 
-      test('does not allow additional characters that create an invalid value', () => {
+      test('resets the value when the value is complete', () => {
         const { input } = renderSegment({
           value: '26',
           onChange: onChangeHandler,
         });
 
-        userEvent.type(input, '6');
-        expect(onChangeHandler).not.toHaveBeenCalled();
+        userEvent.type(input, '4');
+        expect(onChangeHandler).toHaveBeenCalledWith(
+          expect.objectContaining({ value: '4' }),
+        );
       });
     });
   });
 
   describe('Keyboard', () => {
     describe('Backspace', () => {
-      test('deletes value in the input', () => {
+      test('does not call the onChangeHandler when the value is initially empty', () => {
         const { input } = renderSegment({
-          value: '26',
           onChange: onChangeHandler,
         });
 
         userEvent.type(input, '{backspace}');
-        expect(onChangeHandler).toHaveBeenCalledWith(
-          expect.objectContaining({ value: '2' }),
-        );
+        expect(onChangeHandler).not.toHaveBeenCalled();
       });
 
-      test('fully clears the input', () => {
+      test('clears the input when there is a value', () => {
         const { input } = renderSegment({
-          value: '2',
+          value: '26',
           onChange: onChangeHandler,
         });
 
@@ -691,7 +690,8 @@ describe('packages/date-picker/shared/date-input-segment', () => {
             userEvent.type(input, '{space}');
             expect(onChangeHandler).not.toHaveBeenCalled();
           });
-
+        });
+        describe('calls the onChangeHandler', () => {
           test('when the input has a value', () => {
             const { input } = renderSegment({
               onChange: onChangeHandler,
@@ -699,7 +699,11 @@ describe('packages/date-picker/shared/date-input-segment', () => {
             });
 
             userEvent.type(input, '{space}');
-            expect(onChangeHandler).not.toHaveBeenCalled();
+            expect(onChangeHandler).toHaveBeenCalledWith(
+              expect.objectContaining({
+                value: '',
+              }),
+            );
           });
         });
       });
@@ -714,7 +718,9 @@ describe('packages/date-picker/shared/date-input-segment', () => {
             userEvent.type(input, '{space}{space}');
             expect(onChangeHandler).not.toHaveBeenCalled();
           });
+        });
 
+        describe('calls the onChangeHandler', () => {
           test('when the input has a value', () => {
             const { input } = renderSegment({
               onChange: onChangeHandler,
@@ -722,7 +728,11 @@ describe('packages/date-picker/shared/date-input-segment', () => {
             });
 
             userEvent.type(input, '{space}{space}');
-            expect(onChangeHandler).not.toHaveBeenCalled();
+            expect(onChangeHandler).toHaveBeenCalledWith(
+              expect.objectContaining({
+                value: '',
+              }),
+            );
           });
         });
       });
