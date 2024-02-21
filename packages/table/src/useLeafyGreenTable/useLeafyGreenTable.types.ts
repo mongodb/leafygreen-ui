@@ -55,7 +55,6 @@ export type LeafyGreenTableOptions<
   columns: Array<LGColumnDef<T, V>>;
   withPagination?: boolean;
   allowSelectAll?: boolean;
-} & {
   useVirtualScrolling?: boolean;
   virtualizerOptions?: Partial<VirtualizerOptions<HTMLElement>>;
 };
