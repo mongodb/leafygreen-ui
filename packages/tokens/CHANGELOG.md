@@ -1,5 +1,11 @@
 # @leafygreen-ui/tokens
 
+## 2.4.0
+
+### Minor Changes
+
+- c2854e9b: Adds additional spacing tokens
+
 ## 2.3.0
 
 ### Minor Changes
