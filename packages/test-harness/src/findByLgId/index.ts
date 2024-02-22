@@ -1,4 +1,4 @@
-import { makeSingleQuery } from '../utils';
+import { makeSingleQuery, waitFor } from '../utils';
 
 /**
  * TODO: Add description here
@@ -10,5 +10,5 @@ export const findByLgId = (testId: string) => {
 
   return waitFor(() => {
     return findBy(testId);
-  });
+  }, {});
 };

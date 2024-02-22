@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { getByLgId } from '../getByLgId';
+import { getByLgId } from '.';
 
 describe('getByLgId', () => {
   test('gets element with id', () => {
