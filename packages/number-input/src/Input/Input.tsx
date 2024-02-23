@@ -43,6 +43,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     {
       value: valueProp,
       onChange: onChangeProp,
+      onBlur,
       disabled = false,
       size = Size.Default,
       state = State.None,
@@ -162,12 +163,12 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       }
     };
 
-    const handleOnFocus = () => {
+    const handleFocusContainer = () => {
       isFocusedRef.current = true;
       handleSetErrorTransition();
     };
 
-    const handleOnBlur = () => {
+    const handleBlurContainer = () => {
       isFocusedRef.current = false;
       handleRemoveErrorTransition();
     };
@@ -175,10 +176,10 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div
         ref={containerRef}
-        onMouseEnter={() => handleSetErrorTransition()}
-        onMouseLeave={() => handleRemoveErrorTransition()}
-        onFocus={() => handleOnFocus()}
-        onBlur={() => handleOnBlur()}
+        onMouseEnter={handleSetErrorTransition}
+        onMouseLeave={handleRemoveErrorTransition}
+        onFocus={handleFocusContainer}
+        onBlur={handleBlurContainer}
         aria-disabled={disabled}
         className={cx(
           wrapperClassName,
@@ -211,6 +212,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           type="number"
           value={isControlled ? valueProp : value} // TODO: temp fix for useControlledValue hook. The hook was not returning the correct value when controlled. For example when typing 2e3 the hook would return 3 but it should return 2e3 like a native number input would.
           onChange={handleChange}
+          onBlur={onBlur}
           aria-disabled={disabled}
           readOnly={disabled}
           {...rest}
@@ -226,6 +228,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           disabled={disabled}
           onClick={handleValueChange}
           onKeyDown={handleArrowKeyDown}
+          onBlur={onBlur}
         />
       </div>
     );
