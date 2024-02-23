@@ -1,5 +1,6 @@
 import React, {
   ChangeEvent,
+  FocusEvent,
   KeyboardEvent,
   useEffect,
   useRef,
@@ -163,14 +164,17 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       }
     };
 
-    const handleFocusContainer = () => {
+    const handleFocus = () => {
       isFocusedRef.current = true;
       handleSetErrorTransition();
     };
 
-    const handleBlurContainer = () => {
+    const handleBlur = (e: FocusEvent<HTMLDivElement>) => {
       isFocusedRef.current = false;
       handleRemoveErrorTransition();
+      if (onBlur) {
+        onBlur(e);
+      }
     };
 
     return (
@@ -178,8 +182,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         ref={containerRef}
         onMouseEnter={handleSetErrorTransition}
         onMouseLeave={handleRemoveErrorTransition}
-        onFocus={handleFocusContainer}
-        onBlur={handleBlurContainer}
+        onFocus={handleFocus}
+        onBlur={e => handleBlur(e)}
         aria-disabled={disabled}
         className={cx(
           wrapperClassName,
@@ -212,7 +216,6 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           type="number"
           value={isControlled ? valueProp : value} // TODO: temp fix for useControlledValue hook. The hook was not returning the correct value when controlled. For example when typing 2e3 the hook would return 3 but it should return 2e3 like a native number input would.
           onChange={handleChange}
-          onBlur={onBlur}
           aria-disabled={disabled}
           readOnly={disabled}
           {...rest}
@@ -228,7 +231,6 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           disabled={disabled}
           onClick={handleValueChange}
           onKeyDown={handleArrowKeyDown}
-          onBlur={onBlur}
         />
       </div>
     );

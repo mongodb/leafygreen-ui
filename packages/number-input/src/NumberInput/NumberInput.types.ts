@@ -115,7 +115,7 @@ export interface BaseNumberInputProps
   /**
    * Callback fired when the input or arrows lose focus
    */
-  onBlur?: FocusEventHandler<HTMLElement>;
+  onBlur?: FocusEventHandler<HTMLDivElement>;
 
   /**
    * id associated with the PasswordInput component, referenced by `<label>` with the `for` attribute.

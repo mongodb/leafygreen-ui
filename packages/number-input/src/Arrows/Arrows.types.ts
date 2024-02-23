@@ -15,11 +15,6 @@ export interface ArrowsProps {
    * Callback called when up/down arrows are pressed
    */
   onKeyDown: (e: React.KeyboardEvent) => void;
-
-  /**
-   * Callback called when buttons lose focus
-   */
-  onBlur?: (e: React.FocusEvent<HTMLElement>) => void;
 }
 
 export interface ArrowProps extends ArrowsProps {
