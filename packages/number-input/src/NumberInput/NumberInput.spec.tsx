@@ -202,19 +202,6 @@ describe('packages/number-input', () => {
       expect((numberInput as HTMLInputElement).value).toBe('111');
     });
 
-    test('blur triggers onBlur callback', () => {
-      const { numberInput } = renderNumberInput({
-        label,
-        ...defaultProps,
-      });
-
-      userEvent.tab(); // focus
-      expect(numberInput).toHaveFocus();
-      userEvent.tab(); // blur
-
-      expect(defaultProps.onBlur).toHaveBeenCalledTimes(1);
-    });
-
     test('value changes when "up" arrow is clicked', () => {
       const { container, numberInput } = renderNumberInput({
         label,
@@ -241,6 +228,39 @@ describe('packages/number-input', () => {
 
       userEvent.click(upArrow as HTMLButtonElement);
       expect((numberInput as HTMLInputElement).value).toBe('-1');
+    });
+
+    describe('onBlur', () => {
+      test('callback triggers when focus leaves number input', () => {
+        const { numberInput } = renderNumberInput({
+          label,
+          ...defaultProps,
+        });
+
+        userEvent.tab(); // focus
+        expect(numberInput).toHaveFocus();
+        userEvent.tab(); // blur
+
+        expect(defaultProps.onBlur).toHaveBeenCalledTimes(1);
+      });
+
+      test('callback triggers when focus leaves arrow buttons', () => {
+        const { container, numberInput } = renderNumberInput({
+          label,
+          ...defaultProps,
+        });
+
+        const upArrow = container.querySelector(
+          'button[aria-label="decrement number"]',
+        );
+
+        userEvent.click(upArrow as HTMLButtonElement); // focus
+        expect(defaultProps.onBlur).toHaveBeenCalledTimes(1);
+        expect(upArrow).toHaveFocus();
+
+        userEvent.tab(); // blur
+        expect(defaultProps.onBlur).toHaveBeenCalledTimes(2);
+      });
     });
 
     test(`is disabled when disabled is passed`, () => {
