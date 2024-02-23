@@ -16,7 +16,12 @@ import { ArrowsProps } from './Arrows.types';
  * @internal
  */
 
-export const Arrows = ({ disabled, onClick, onKeyDown }: ArrowsProps) => {
+export const Arrows = ({
+  disabled,
+  onClick,
+  onKeyDown,
+  onBlur,
+}: ArrowsProps) => {
   return (
     <div
       className={cx(arrowsBaseStyles, {
@@ -29,12 +34,14 @@ export const Arrows = ({ disabled, onClick, onKeyDown }: ArrowsProps) => {
         direction={Direction.Increment}
         onClick={onClick}
         onKeyDown={onKeyDown}
+        onBlur={onBlur}
       />
       <Arrow
         disabled={disabled}
         direction={Direction.Decrement}
         onClick={onClick}
         onKeyDown={onKeyDown}
+        onBlur={onBlur}
       />
     </div>
   );

@@ -21,6 +21,7 @@ export const Arrow = ({
   disabled,
   onClick,
   onKeyDown,
+  onBlur,
   direction,
 }: ArrowProps) => {
   const { theme } = useDarkMode();
@@ -30,6 +31,7 @@ export const Arrow = ({
       aria-label={`${direction} number`}
       onClick={() => onClick(direction)}
       onKeyDown={onKeyDown}
+      onBlur={onBlur}
       className={cx(arrowBaseStyles, arrowThemeStyles[theme])}
       type="button"
       tabIndex={-1} // Mimicking native behavior; you cannot focus on an arrow.
