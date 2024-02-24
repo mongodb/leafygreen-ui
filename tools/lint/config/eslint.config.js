@@ -1,14 +1,14 @@
 module.exports = {
   parser: '@babel/eslint-parser',
-  plugins: ['@emotion', 'simple-import-sort'],
+  plugins: ['@emotion', '@lg-tools', 'simple-import-sort'],
   extends: [
     'eslint:recommended',
+    'plugin:jest/recommended',
+    'plugin:jsx-a11y/recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
-    'plugin:jest/recommended',
-    'prettier',
-    'plugin:jsx-a11y/recommended',
     'plugin:storybook/recommended',
+    'prettier',
   ],
   parserOptions: {
     sourceType: 'module',

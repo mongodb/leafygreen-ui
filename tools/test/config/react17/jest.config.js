@@ -42,7 +42,7 @@ module.exports = {
   testEnvironment: 'jsdom',
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
-  testPathIgnorePatterns: ['/node_modules/'],
+  testPathIgnorePatterns: ['/node_modules/', '/tools/eslint-plugin'],
 
   // The regexp pattern Jest uses to detect test files
   testRegex: '.spec.[jt]sx?$',
