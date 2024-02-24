@@ -29,6 +29,8 @@ import {
   testif,
 } from '../utils/ComboboxTestUtils';
 
+import { Combobox } from './Combobox';
+
 /**
  * Tests
  */
@@ -70,6 +72,8 @@ describe('packages/combobox', () => {
         : testif(select === 'multiple')(name, fn);
 
     describe('Basic rendering', () => {
+      test('spreads rest', () => expect(Combobox).toSpreadRest());
+
       // Label prop
       test('Label is rendered', () => {
         const { labelEl } = renderCombobox(select, { label: 'Some label' });

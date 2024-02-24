@@ -71,6 +71,8 @@ describe('packages/date-picker', () => {
     /// Note: Many rendering tests should be handled by Chromatic
 
     describe('Input', () => {
+      test('spreads rest', () => expect(DatePicker).toSpreadRest());
+
       test('renders label', () => {
         const { getByText } = render(<DatePicker label="Label" />);
         const label = getByText('Label');
