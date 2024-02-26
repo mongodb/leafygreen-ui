@@ -1,0 +1,61 @@
+# Canvas Header
+
+![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/canvas-header.svg)
+
+#### [View on MongoDB.design](https://www.mongodb.design/component/canvas-header/example/)
+
+## Installation
+
+### Yarn
+
+```shell
+yarn add @leafygreen-ui/canvas-header
+```
+
+### NPM
+
+```shell
+npm install @leafygreen-ui/canvas-header
+```
+
+## Example
+
+```js
+import { CanvasHeader } from `@leafygreen-ui/canvas-header`;
+import Button from '@leafygreen-ui/button';
+import Icon from '@leafygreen-ui/icon';
+import { BackLink } from '@leafygreen-ui/typography';
+
+
+  <CanvasHeader
+    pageTitle="page title"
+    resourceName='ac_iqttxwn_shard-00-01.hvcuthh.mongodbnet:27017_324892384903284902384903284903284902384903284832908_long_name'
+    resourceIcon={<Icon glyph={'ShardedCluster'} />}
+    backLink={
+      <BackLink
+        href="/home"
+      >
+        Back to Cluster
+      </BackLink>
+    }
+    actions={
+      <Button
+        variant="primary"
+        leftGlyph={<Icon glyph={'InviteUser'} />}
+      >
+        Invite user
+      </Button>
+    }
+  />
+```
+
+## Properties
+
+| Prop           | Type              | Description                                                          | Default |
+| -------------- | ----------------- | -------------------------------------------------------------------- | ------- |
+| `darkMode`     | `boolean`         | Determines if the component renders in dark mode                     | `false` |
+| `pageTitle`    | `React.ReactNode` | Required page title                                                  |         |
+| `resourceName` | `string`          | Opitional resource name that will copy to the clipboard when clicked |         |
+| `resourceIcon` | `React.ReachNode` | Optional icon that will render to the left of the resource name      |         |
+| `actions`      | `React.ReachNode` | Optional button that will render to the right of the resource name   |         |
+| `backLink`     | `React.ReactNode` | Optional link that will render above the page title.                 |         |

@@ -1,0 +1,40 @@
+ {
+  "name": "@lg-private/canvas-header",
+  "version": "0.1.0",
+  "description": "LeafyGreen UI Kit Canvas Header",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@leafygreen-ui/emotion": "^4.0.7",
+    "@leafygreen-ui/icon": "^11.28.0",
+    "@leafygreen-ui/lib": "^13.2.1",
+    "@leafygreen-ui/palette": "^4.0.8",
+    "@leafygreen-ui/tokens": "^2.3.0",
+    "@leafygreen-ui/tooltip": "^11.0.0",
+    "@leafygreen-ui/typography": "^18.2.1"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^3.1.11"
+  },
+  "devDependencies": {
+    "@leafygreen-ui/button": "^21.0.12"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/canvas-header",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
+  }
+}
