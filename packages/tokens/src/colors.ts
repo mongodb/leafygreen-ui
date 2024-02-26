@@ -1,4 +1,5 @@
 import { palette } from '@leafygreen-ui/palette';
+
 import { Mode } from './mode';
 
 const { black, blue, gray, green, red, white, yellow } = palette;
