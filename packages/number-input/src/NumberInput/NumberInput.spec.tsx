@@ -9,12 +9,14 @@ import { NumberInput } from '.';
 const label = 'This is the label text';
 const description = 'This is the description text';
 const errorMessage = 'error message';
+const arrowTestId = {
+  up: 'lg-number_input-increment-button',
+  down: 'lg-number_input-decrement-button',
+};
 
 const defaultProps = {
   className: 'number-input-class',
   placeholder: 'This is some placeholder text',
-  onChange: jest.fn(),
-  onBlur: jest.fn(),
 };
 
 const unitProps = {
@@ -133,8 +135,10 @@ describe('packages/number-input', () => {
     });
 
     test('value change triggers onChange callback', () => {
+      const onChange = jest.fn();
       const { numberInput } = renderNumberInput({
         label,
+        onChange,
         ...defaultProps,
       });
 
@@ -145,7 +149,7 @@ describe('packages/number-input', () => {
       });
 
       expect((numberInput as HTMLInputElement).value).toBe('1');
-      expect(defaultProps.onChange).toHaveBeenCalledTimes(1);
+      expect(onChange).toHaveBeenCalledTimes(1);
     });
 
     test('correct value is returned when using "e"', () => {
@@ -203,37 +207,35 @@ describe('packages/number-input', () => {
     });
 
     test('value changes when "up" arrow is clicked', () => {
-      const { container, numberInput } = renderNumberInput({
+      const { getByTestId, numberInput } = renderNumberInput({
         label,
         ...defaultProps,
       });
 
-      const upArrow = container.querySelector(
-        'button[aria-label="increment number"]',
-      );
+      const upArrow = getByTestId(arrowTestId.up);
 
       userEvent.click(upArrow as HTMLButtonElement);
       expect((numberInput as HTMLInputElement).value).toBe('1');
     });
 
     test('value changes when "down" arrow is clicked', () => {
-      const { container, numberInput } = renderNumberInput({
+      const { getByTestId, numberInput } = renderNumberInput({
         label,
         ...defaultProps,
       });
 
-      const upArrow = container.querySelector(
-        'button[aria-label="decrement number"]',
-      );
+      const downArrow = getByTestId(arrowTestId.down);
 
-      userEvent.click(upArrow as HTMLButtonElement);
+      userEvent.click(downArrow as HTMLButtonElement);
       expect((numberInput as HTMLInputElement).value).toBe('-1');
     });
 
     describe('onBlur', () => {
       test('callback triggers when focus leaves number input', () => {
+        const onBlur = jest.fn();
         const { numberInput } = renderNumberInput({
           label,
+          onBlur,
           ...defaultProps,
         });
 
@@ -241,25 +243,24 @@ describe('packages/number-input', () => {
         expect(numberInput).toHaveFocus();
         userEvent.tab(); // blur
 
-        expect(defaultProps.onBlur).toHaveBeenCalledTimes(1);
+        expect(onBlur).toHaveBeenCalledTimes(1);
       });
 
       test('callback triggers when focus leaves arrow buttons', () => {
-        const { container, numberInput } = renderNumberInput({
+        const onBlur = jest.fn();
+        const { getByTestId } = renderNumberInput({
           label,
+          onBlur,
           ...defaultProps,
         });
 
-        const upArrow = container.querySelector(
-          'button[aria-label="decrement number"]',
-        );
+        const upArrow = getByTestId(arrowTestId.up);
 
         userEvent.click(upArrow as HTMLButtonElement); // focus
-        expect(defaultProps.onBlur).toHaveBeenCalledTimes(1);
         expect(upArrow).toHaveFocus();
 
         userEvent.tab(); // blur
-        expect(defaultProps.onBlur).toHaveBeenCalledTimes(2);
+        expect(onBlur).toHaveBeenCalledTimes(1);
       });
     });
 

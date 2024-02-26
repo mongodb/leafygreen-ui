@@ -172,9 +172,11 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const handleBlur = (e: FocusEvent<HTMLDivElement>) => {
       isFocusedRef.current = false;
       handleRemoveErrorTransition();
-      if (onBlur) {
-        onBlur(e);
-      }
+
+      const inputContainer = e.currentTarget as Node;
+      const possibleChildOfInputContainer = e.relatedTarget as Node | null;
+      if (inputContainer.contains(possibleChildOfInputContainer)) return;
+      onBlur?.(e);
     };
 
     return (
@@ -183,7 +185,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         onMouseEnter={handleSetErrorTransition}
         onMouseLeave={handleRemoveErrorTransition}
         onFocus={handleFocus}
-        onBlur={e => handleBlur(e)}
+        onBlur={handleBlur}
         aria-disabled={disabled}
         className={cx(
           wrapperClassName,
