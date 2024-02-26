@@ -38,6 +38,7 @@ import Clone from './Clone.svg';
 import Cloud from './Cloud.svg';
 import Code from './Code.svg';
 import CodeBlock from './CodeBlock.svg';
+import Collections from './Collections.svg';
 import Colon from './Colon.svg';
 import Connect from './Connect.svg';
 import Copy from './Copy.svg';
@@ -73,6 +74,7 @@ import HorizontalDrag from './HorizontalDrag.svg';
 import Import from './Import.svg';
 import ImportantWithCircle from './ImportantWithCircle.svg';
 import InfoWithCircle from './InfoWithCircle.svg';
+import InternalEmployee from './InternalEmployee.svg';
 import InviteUser from './InviteUser.svg';
 import Key from './Key.svg';
 import Laptop from './Laptop.svg';
@@ -102,6 +104,7 @@ import PersonWithLock from './PersonWithLock.svg';
 import Pin from './Pin.svg';
 import Play from './Play.svg';
 import Plus from './Plus.svg';
+import Primary from './Primary.svg';
 import PlusWithCircle from './PlusWithCircle.svg';
 import QuestionMarkWithCircle from './QuestionMarkWithCircle.svg';
 import Read from './Read.svg';
@@ -112,6 +115,8 @@ import ReplicaSet from './ReplicaSet.svg';
 import Resize from './Resize.svg';
 import Return from './Return.svg';
 import Save from './Save.svg';
+import SearchIndex from './SearchIndex.svg';
+import Secondary from './Secondary.svg';
 import Serverless from './Serverless.svg';
 import Settings from './Settings.svg';
 import ShardedCluster from './ShardedCluster.svg';
@@ -186,6 +191,7 @@ const _glyphs = {
   Cloud,
   Code,
   CodeBlock,
+  Collections,
   Colon,
   Connect,
   Copy,
@@ -221,6 +227,7 @@ const _glyphs = {
   Import,
   ImportantWithCircle,
   InfoWithCircle,
+  InternalEmployee,
   InviteUser,
   Key,
   Laptop,
@@ -251,6 +258,7 @@ const _glyphs = {
   Play,
   Plus,
   PlusWithCircle,
+  Primary,
   QuestionMarkWithCircle,
   Read,
   Redo,
@@ -262,6 +270,8 @@ const _glyphs = {
   Save,
   Serverless,
   ShardedCluster,
+  SearchIndex,
+  Secondary,
   Settings,
   Shell,
   SMS,
