@@ -108,6 +108,7 @@ import Primary from './Primary.svg';
 import PlusWithCircle from './PlusWithCircle.svg';
 import QuestionMarkWithCircle from './QuestionMarkWithCircle.svg';
 import Read from './Read.svg';
+import Recommended from './Recommended.svg';
 import Redo from './Redo.svg';
 import Refresh from './Refresh.svg';
 import Relationship from './Relationship.svg';
@@ -261,6 +262,7 @@ const _glyphs = {
   Primary,
   QuestionMarkWithCircle,
   Read,
+  Recommended,
   Redo,
   Refresh,
   Relationship,
