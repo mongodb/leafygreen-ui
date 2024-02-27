@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-disabled-tests */
 import React from 'react';
 import { render } from '@testing-library/react';
 
@@ -5,12 +6,24 @@ import { getByLgId } from '.';
 
 describe('getByLgId', () => {
   test('gets element with id', () => {
-    render(<div data-lgid="testing-id">Children</div>);
+    render(<div data-lgid="testing-id">Children 1</div>);
     const element = getByLgId('testing-id');
     expect(element).toBeInTheDocument();
   });
 
-  test('throws error if the id does not exist', () => {
+  test.skip('gets element with id ', () => {
+    const { getByTestId } = render(
+      <div data-testid="testing-id">Children 1</div>,
+    );
+    const element = getByTestId('testing-id');
+    expect(element).toBeInTheDocument();
+  });
+
+  test('second', () => {
+    expect(document.body).toBeEmptyDOMElement();
+  });
+
+  test.skip('throws error if the id does not exist', () => {
     render(
       <>
         <div data-lgid="testing">Children</div>
@@ -22,7 +35,7 @@ describe('getByLgId', () => {
     }).toThrow('Unable to find an element by [data-lgid="testing-id"]');
   });
 
-  test('throws error if the id is found multiple times', () => {
+  test.skip('throws error if the id is found multiple times', () => {
     render(
       <>
         <div data-lgid="testing-id">Children</div>

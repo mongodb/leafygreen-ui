@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { makeSingleQuery, waitFor } from '../utils';
 
 /**

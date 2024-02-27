@@ -9,12 +9,12 @@ export const makeSingleQuery = () => {
 
     // TODO: console the container
     if (!element.length) {
-      throw getError(`Unable to find an element by ${dataString}`);
+      throw getError(`🔺Unable to find an element by ${dataString}`);
     }
 
     // TODO: console the elements
     if (element.length > 1) {
-      throw getError(`Found multiple elements by ${dataString}`);
+      throw getError(`✨Found multiple elements by ${dataString}`);
     }
 
     return element[0];
