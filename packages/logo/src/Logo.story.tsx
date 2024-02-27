@@ -124,7 +124,9 @@ LiveExample.parameters = {
 };
 
 const Template = (
-  LogoComponent: React.FunctionComponent<LogoProps>,
+  LogoComponent: React.ForwardRefExoticComponent<
+    Omit<LogoProps, 'ref'> & React.RefAttributes<SVGSVGElement>
+  >,
   args: LogoProps,
 ) => {
   const containerStyle = css`
@@ -152,10 +154,13 @@ export const UniversityLockup = (args: LogoProps) =>
   Template(UniversityLogoLockup, args);
 
 // Deprecated
+// @ts-ignore deprecated component
 export const AtlasMark = (args: LogoProps) => Template(AtlasLogoMark, args);
 AtlasMark.storyName = '[DEPRECATED] Atlas Mark';
+// @ts-ignore deprecated component
 export const RealmMark = (args: LogoProps) => Template(RealmLogoMark, args);
 RealmMark.storyName = '[DEPRECATED] Realm Mark';
+// @ts-ignore deprecated component
 export const ChartsMark = (args: LogoProps) => Template(ChartsLogoMark, args);
 ChartsMark.storyName = '[DEPRECATED] Charts Mark';
 
