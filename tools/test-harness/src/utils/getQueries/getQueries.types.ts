@@ -1,3 +1,6 @@
+// @ts-nocheck
+//FIXME: WIP - this file is not used anywhere
+
 import * as queries from '../../queries';
 
 export type BoundFunction<T> = T extends (
