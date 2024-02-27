@@ -41,8 +41,13 @@ const meta: StoryMetaType<typeof FormFooter> = {
     generate: {
       storyNames: ['LightMode', 'DarkMode'],
       combineArgs: {
-        backButtonText: [undefined, 'Back'],
-        cancelButtonText: ['', 'Cancel'],
+        backButtonProps: [
+          undefined,
+          { text: 'Back', leftGlyph: undefined },
+          { text: 'Back', leftGlyph: null },
+        ],
+        cancelButtonProps: [undefined, { text: 'Cancel' }],
+        cancelButtonText: [''], // remove once deprecated props are removed
         errorMessage: [undefined, 'This is an error message'],
       },
       decorator: StoryFn => (
@@ -56,8 +61,6 @@ const meta: StoryMetaType<typeof FormFooter> = {
     darkMode: false,
     primaryButtonText: 'Button',
     primaryButton: { text: 'Button' },
-    cancelButtonText: 'Cancel button text',
-    backButtonText: 'Back button text',
     errorMessage: 'Error message',
   },
   argTypes: {
@@ -96,6 +99,10 @@ LiveExample.parameters = {
     disableSnapshot: true,
   },
 };
+LiveExample.args = {
+  backButtonProps: { text: 'Back' },
+  cancelButtonProps: { text: 'Cancel' },
+};
 
 export const WithCustomPrimaryButton: StoryType<typeof FormFooter> =
   Template.bind({});
@@ -110,6 +117,8 @@ WithCustomPrimaryButton.args = {
       Save to cloud
     </Button>
   ),
+  backButtonProps: { text: 'Back' },
+  cancelButtonProps: { text: 'Cancel' },
 };
 WithCustomPrimaryButton.parameters = {
   chromatic: {
