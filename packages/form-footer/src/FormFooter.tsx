@@ -58,6 +58,16 @@ const buttonStyle = css`
 /**
  * Types
  */
+interface BaseButtonProps {
+  text?: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+}
+
+interface BackButtonProps extends BaseButtonProps {
+  leftGlyph?: React.ReactElement | null;
+}
+
+interface CancelButtonProps extends BackButtonProps {}
 
 export interface FormFooterProps extends HTMLElementProps<'footer'> {
   /**
@@ -79,25 +89,64 @@ export interface FormFooterProps extends HTMLElementProps<'footer'> {
   primaryButton: React.ReactElement | PrimaryButtonProps;
 
   /**
+   * The cancel button which will only appear if cancelButtonProps is defined.
+   * Defined as an object with the shape:
+   *
+   * ```ts
+   * interface CancelButtonProps {
+   *  text: string;
+   *  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+   *  leftGlyph?: React.ReactElement | null;
+   * }
+   * ```
+   *
+   * darkMode is handled internally so you do not have to pass the darkMode prop.
+   */
+  cancelButtonProps?: CancelButtonProps;
+
+  /**
+   * The back button which will only appear if backButtonProps is defined.
+   * Defined as an object with the shape:
+   *
+   * ```ts
+   * interface BackButtonProps {
+   *  text: string;
+   *  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+   *  leftGlyph?: React.ReactElement | null;
+   * }
+   * ```
+   *
+   * darkMode is handled internally so you do not have to pass the darkMode prop.
+   */
+  backButtonProps?: BackButtonProps;
+
+  /**
    * Text for the cancel button.
    * A cancel button will only appear if this text is defined.
    *
    * @default "Cancel"
+   * @deprecated since version 3.0.17 - use cancelButtonProps instead
    */
   cancelButtonText?: string;
 
   /**
    * onClick callback for the cancel button
+   *
+   * @deprecated since version 3.0.17 - use cancelButtonProps instead
    */
   onCancel?: React.MouseEventHandler<HTMLButtonElement>;
 
   /**
    * Text for the back button. A back button will only appear if text is defined.
+   *
+   * @deprecated since version 3.0.17 - use backButtonProps instead
    */
   backButtonText?: string;
 
   /**
    * onClick callback for the back button
+   *
+   * @deprecated since version 3.0.17 - use backButtonProps instead
    */
   onBackClick?: React.MouseEventHandler<HTMLButtonElement>;
 
@@ -130,6 +179,8 @@ export interface FormFooterProps extends HTMLElementProps<'footer'> {
  */
 export default function FormFooter({
   primaryButton,
+  cancelButtonProps,
+  backButtonProps,
   onCancel,
   cancelButtonText = 'Cancel',
   backButtonText,
@@ -141,23 +192,41 @@ export default function FormFooter({
   ...rest
 }: FormFooterProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
+
+  const backButton = {
+    text: backButtonProps?.text || backButtonText,
+    onClick: backButtonProps?.onClick || onBackClick,
+    leftGlyph:
+      backButtonProps?.leftGlyph === undefined ? (
+        <ArrowLeftIcon data-testid="lg-form_footer-back-button-icon" />
+      ) : (
+        backButtonProps.leftGlyph ?? undefined
+      ),
+  };
+
+  const cancelButton = {
+    text: cancelButtonProps?.text || cancelButtonText,
+    onClick: cancelButtonProps?.onClick || onCancel,
+    leftGlyph: cancelButtonProps?.leftGlyph ?? undefined,
+  };
+
   return (
     <footer
-      data-testid="lg-form-footer-footer"
+      data-testid="lg-form_footer-footer"
       className={cx(footerBaseStyle, footerThemeStyle[theme], className)}
       {...rest}
     >
       <div className={cx(contentStyle, contentClassName)}>
-        {backButtonText && (
+        {backButton.text && (
           <Button
             variant="default"
-            onClick={onBackClick}
+            onClick={backButton.onClick}
             className={buttonStyle}
-            leftGlyph={<ArrowLeftIcon />}
+            leftGlyph={backButton.leftGlyph}
             darkMode={darkMode}
             data-testid="lg-form_footer-back-button"
           >
-            {backButtonText}
+            {backButton.text}
           </Button>
         )}
         <div className={flexEndContent}>
@@ -170,15 +239,16 @@ export default function FormFooter({
               {errorMessage}
             </Banner>
           )}
-          {cancelButtonText && (
+          {cancelButton.text && (
             <Button
               variant="default"
-              onClick={onCancel}
+              onClick={cancelButton.onClick}
               className={buttonStyle}
+              leftGlyph={cancelButton.leftGlyph}
               darkMode={darkMode}
               data-testid="lg-form_footer-cancel-button"
             >
-              {cancelButtonText || 'Cancel'}
+              {cancelButton.text || 'Cancel'}
             </Button>
           )}
           {isComponentType(primaryButton as React.ReactElement, 'Button') ? (
