@@ -9,6 +9,7 @@ import svgr from '@svgr/rollup';
 import fs from 'fs';
 import { glob } from 'glob';
 import path from 'path';
+import filesize from 'rollup-plugin-filesize';
 import { nodeExternals } from 'rollup-plugin-node-externals';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
 
@@ -90,6 +91,7 @@ const globalsMap = {
 const globals = id => {
   if (globalsMap[id]) return globalsMap[id];
   if (/lodash/.test(id)) return id.replace(/lodash/, '');
+
   if (/highlight\.js\/lib\/languages/.test(id)) {
     return id.replace(/highlight\.js\/lib\/languages/, '');
   }
@@ -159,6 +161,8 @@ const configForFormat = format => ({
     svgr(),
 
     terser(),
+
+    filesize(),
   ],
   external,
   strictDeprecations: true,

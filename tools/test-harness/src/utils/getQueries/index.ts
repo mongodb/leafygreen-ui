@@ -5,9 +5,12 @@ import { getDocument } from '../getDocument';
 
 const baseElement = getDocument();
 
-// FIXME:
-// @ts-expect-error
-const queriesForElements = getQueriesForElement(baseElement, defaultQueries);
+const queriesForElements = getQueriesForElement(
+  baseElement.body,
+  // FIXME:
+  // @ts-expect-error
+  defaultQueries,
+);
 
 const { getByTestId: getByLgId, findByTestId: findByLgId } = queriesForElements;
 

@@ -15,7 +15,7 @@ function renderBadge() {
     </Badge>,
   );
 
-  const badge = getByTestId('badge-test');
+  const badge = getByTestId('badgee-test');
   return { badge, container };
 }
 
