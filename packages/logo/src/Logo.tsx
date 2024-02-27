@@ -59,4 +59,6 @@ const GenericLogo = React.forwardRef(
   },
 );
 
+GenericLogo.displayName = 'Logo';
+
 export default GenericLogo;

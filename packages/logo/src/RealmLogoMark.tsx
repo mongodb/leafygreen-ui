@@ -139,4 +139,6 @@ const RealmLogoMark = React.forwardRef(
   },
 );
 
+RealmLogoMark.displayName = 'RealmLogoMark';
+
 export default RealmLogoMark;

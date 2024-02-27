@@ -68,4 +68,7 @@ const AtlasNavGraphic = React.forwardRef(
     );
   },
 );
+
+AtlasNavGraphic.displayName = 'AtlasNavGraphic';
+
 export default AtlasNavGraphic;
