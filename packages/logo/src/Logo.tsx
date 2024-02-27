@@ -37,22 +37,26 @@ interface GenericLogoProps extends LogoProps {
  *
  * Note: For performance, it's recommended to import a specific logo explicitly rather than rely on this generic component
  */
-export default function GenericLogo({
-  name = 'MongoDBLogo',
-  ...rest
-}: GenericLogoProps) {
-  const LogoMap = {
-    MongoDBLogo,
-    MongoDBLogoMark,
-    AtlasNavGraphic,
-    AtlasLogoLockup,
-    AtlasForGovernmentLogoLockup,
-    EnterpriseAdvancedLogoLockup,
-    CommunityEditionLogoLockup,
-    UniversityLogoLockup,
-  };
+const GenericLogo = React.forwardRef(
+  (
+    { name = 'MongoDBLogo', ...rest }: GenericLogoProps,
+    ref: React.Ref<SVGSVGElement> | undefined,
+  ) => {
+    const LogoMap = {
+      MongoDBLogo,
+      MongoDBLogoMark,
+      AtlasNavGraphic,
+      AtlasLogoLockup,
+      AtlasForGovernmentLogoLockup,
+      EnterpriseAdvancedLogoLockup,
+      CommunityEditionLogoLockup,
+      UniversityLogoLockup,
+    };
 
-  const Logo = LogoMap[name];
+    const Logo = LogoMap[name];
 
-  return <Logo {...rest} />;
-}
+    return <Logo {...rest} ref={ref} />;
+  },
+);
+
+export default GenericLogo;
