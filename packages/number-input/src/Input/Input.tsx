@@ -1,5 +1,6 @@
 import React, {
   ChangeEvent,
+  FocusEvent,
   KeyboardEvent,
   useEffect,
   useRef,
@@ -43,6 +44,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     {
       value: valueProp,
       onChange: onChangeProp,
+      onBlur,
       disabled = false,
       size = Size.Default,
       state = State.None,
@@ -162,23 +164,28 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       }
     };
 
-    const handleOnFocus = () => {
+    const handleFocus = () => {
       isFocusedRef.current = true;
       handleSetErrorTransition();
     };
 
-    const handleOnBlur = () => {
+    const handleBlur = (e: FocusEvent<HTMLDivElement>) => {
       isFocusedRef.current = false;
       handleRemoveErrorTransition();
+      // If newly focused element is a child of the input container, we do not invoke onBlur
+      const inputContainer = e.currentTarget as Node;
+      const possibleChildOfInputContainer = e.relatedTarget as Node | null;
+      if (inputContainer.contains(possibleChildOfInputContainer)) return;
+      onBlur?.(e);
     };
 
     return (
       <div
         ref={containerRef}
-        onMouseEnter={() => handleSetErrorTransition()}
-        onMouseLeave={() => handleRemoveErrorTransition()}
-        onFocus={() => handleOnFocus()}
-        onBlur={() => handleOnBlur()}
+        onMouseEnter={handleSetErrorTransition}
+        onMouseLeave={handleRemoveErrorTransition}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         aria-disabled={disabled}
         className={cx(
           wrapperClassName,
