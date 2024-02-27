@@ -172,7 +172,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const handleBlur = (e: FocusEvent<HTMLDivElement>) => {
       isFocusedRef.current = false;
       handleRemoveErrorTransition();
-
+      // If newly focused element is a child of the input container, we do not invoke onBlur
       const inputContainer = e.currentTarget as Node;
       const possibleChildOfInputContainer = e.relatedTarget as Node | null;
       if (inputContainer.contains(possibleChildOfInputContainer)) return;
