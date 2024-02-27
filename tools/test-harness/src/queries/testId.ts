@@ -26,19 +26,19 @@ const getMissingError: GetErrorFunction<[unknown]> = (c, id) =>
 // >(queryAllByTestId, queryAllByTestId.name, 'queryAll')
 
 const [
-  // queryByTestId,
-  // getAllByTestId,
+  queryByTestId,
+  getAllByTestId,
   getByTestId,
-  // findAllByTestId,
+  findAllByTestId,
   findByTestId,
 ] = buildQueries(queryAllByTestId, getMultipleError, getMissingError);
 
 export {
-  // findAllByTestId,
+  findAllByTestId,
   findByTestId,
-  // getAllByTestId,
+  getAllByTestId,
   getByTestId,
   // queryAllByTestIdWithSuggestions as queryAllByTestId,
-  // queryAllByTestId,
-  // queryByTestId,
+  queryAllByTestId,
+  queryByTestId,
 };

@@ -13,6 +13,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@testing-library/dom": "9.3.4"
+    "@testing-library/dom": "9.3.1"
   }
 }

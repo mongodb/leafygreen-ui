@@ -1,12 +1,12 @@
 import { getQueriesForElement } from '@testing-library/dom';
 
 import * as defaultQueries from '../../queries';
-import { getDocument } from '../getDocument';
+// import { getDocument } from '../getDocument';
 
-const baseElement = getDocument();
+// const baseElement = getDocument();
 
 const queriesForElements = getQueriesForElement(
-  baseElement.body,
+  document.body,
   // FIXME:
   // @ts-expect-error
   defaultQueries,
