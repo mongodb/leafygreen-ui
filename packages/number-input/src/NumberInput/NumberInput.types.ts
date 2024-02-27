@@ -1,4 +1,8 @@
-import { ChangeEventHandler, ComponentPropsWithoutRef } from 'react';
+import {
+  ChangeEventHandler,
+  ComponentPropsWithoutRef,
+  FocusEventHandler,
+} from 'react';
 
 import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
 import { DarkModeProps } from '@leafygreen-ui/lib';
@@ -107,6 +111,11 @@ export interface BaseNumberInputProps
    * Callback fired when the input value changes
    */
   onChange?: ChangeEventHandler<HTMLInputElement>;
+
+  /**
+   * Callback fired when the input or arrows lose focus
+   */
+  onBlur?: FocusEventHandler<HTMLDivElement>;
 
   /**
    * id associated with the PasswordInput component, referenced by `<label>` with the `for` attribute.

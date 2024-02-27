@@ -9,12 +9,14 @@ import { NumberInput } from '.';
 const label = 'This is the label text';
 const description = 'This is the description text';
 const errorMessage = 'error message';
+const arrowTestId = {
+  up: 'lg-number_input-increment_button',
+  down: 'lg-number_input-decrement_button',
+};
 
 const defaultProps = {
   className: 'number-input-class',
   placeholder: 'This is some placeholder text',
-  onChange: jest.fn(),
-  onBlur: jest.fn(),
 };
 
 const unitProps = {
@@ -133,8 +135,10 @@ describe('packages/number-input', () => {
     });
 
     test('value change triggers onChange callback', () => {
+      const onChange = jest.fn();
       const { numberInput } = renderNumberInput({
         label,
+        onChange,
         ...defaultProps,
       });
 
@@ -145,7 +149,7 @@ describe('packages/number-input', () => {
       });
 
       expect((numberInput as HTMLInputElement).value).toBe('1');
-      expect(defaultProps.onChange).toHaveBeenCalledTimes(1);
+      expect(onChange).toHaveBeenCalledTimes(1);
     });
 
     test('correct value is returned when using "e"', () => {
@@ -202,45 +206,86 @@ describe('packages/number-input', () => {
       expect((numberInput as HTMLInputElement).value).toBe('111');
     });
 
-    test('blur triggers onBlur callback', () => {
-      const { numberInput } = renderNumberInput({
-        label,
-        ...defaultProps,
-      });
-
-      userEvent.tab(); // focus
-      expect(numberInput).toHaveFocus();
-      userEvent.tab(); // blur
-
-      expect(defaultProps.onBlur).toHaveBeenCalledTimes(1);
-    });
-
     test('value changes when "up" arrow is clicked', () => {
-      const { container, numberInput } = renderNumberInput({
+      const { getByTestId, numberInput } = renderNumberInput({
         label,
         ...defaultProps,
       });
 
-      const upArrow = container.querySelector(
-        'button[aria-label="increment number"]',
-      );
+      const upArrow = getByTestId(arrowTestId.up);
 
-      userEvent.click(upArrow as HTMLButtonElement);
+      userEvent.click(upArrow);
       expect((numberInput as HTMLInputElement).value).toBe('1');
     });
 
     test('value changes when "down" arrow is clicked', () => {
-      const { container, numberInput } = renderNumberInput({
+      const { getByTestId, numberInput } = renderNumberInput({
         label,
         ...defaultProps,
       });
 
-      const upArrow = container.querySelector(
-        'button[aria-label="decrement number"]',
-      );
+      const downArrow = getByTestId(arrowTestId.down);
 
-      userEvent.click(upArrow as HTMLButtonElement);
+      userEvent.click(downArrow);
       expect((numberInput as HTMLInputElement).value).toBe('-1');
+    });
+
+    describe('onBlur', () => {
+      test('callback triggers when focus leaves number input', () => {
+        const onBlur = jest.fn();
+        const { numberInput } = renderNumberInput({
+          label,
+          onBlur,
+          ...defaultProps,
+        });
+
+        userEvent.tab(); // focus
+        expect(numberInput).toHaveFocus();
+        userEvent.tab(); // blur
+
+        expect(onBlur).toHaveBeenCalledTimes(1);
+      });
+
+      test('callback triggers when focus leaves arrow buttons', () => {
+        const onBlur = jest.fn();
+        const { getByTestId } = renderNumberInput({
+          label,
+          onBlur,
+          ...defaultProps,
+        });
+
+        const upArrow = getByTestId(arrowTestId.up);
+
+        userEvent.click(upArrow); // focus
+        expect(upArrow).toHaveFocus();
+
+        userEvent.tab(); // blur
+        expect(onBlur).toHaveBeenCalledTimes(1);
+      });
+
+      test('callback does not trigger when focus changes to adjacent elements within number input', () => {
+        const onBlur = jest.fn();
+        const { getByTestId, numberInput } = renderNumberInput({
+          label,
+          onBlur,
+          ...defaultProps,
+        });
+
+        const upArrow = getByTestId(arrowTestId.up);
+        const downArrow = getByTestId(arrowTestId.down);
+
+        userEvent.tab(); // focus
+        expect(numberInput).toHaveFocus();
+
+        userEvent.click(upArrow); // focus on up arrow
+        expect(upArrow).toHaveFocus();
+
+        userEvent.click(downArrow); // focus on down arrow
+        expect(downArrow).toHaveFocus();
+
+        userEvent.tab(); //blur
+        expect(onBlur).toHaveBeenCalledTimes(1);
+      });
     });
 
     test(`is disabled when disabled is passed`, () => {
