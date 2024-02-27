@@ -10,8 +10,8 @@ const label = 'This is the label text';
 const description = 'This is the description text';
 const errorMessage = 'error message';
 const arrowTestId = {
-  up: 'lg-number_input-increment-button',
-  down: 'lg-number_input-decrement-button',
+  up: 'lg-number_input-increment_button',
+  down: 'lg-number_input-decrement_button',
 };
 
 const defaultProps = {
@@ -214,7 +214,7 @@ describe('packages/number-input', () => {
 
       const upArrow = getByTestId(arrowTestId.up);
 
-      userEvent.click(upArrow as HTMLButtonElement);
+      userEvent.click(upArrow);
       expect((numberInput as HTMLInputElement).value).toBe('1');
     });
 
@@ -226,7 +226,7 @@ describe('packages/number-input', () => {
 
       const downArrow = getByTestId(arrowTestId.down);
 
-      userEvent.click(downArrow as HTMLButtonElement);
+      userEvent.click(downArrow);
       expect((numberInput as HTMLInputElement).value).toBe('-1');
     });
 
@@ -256,10 +256,34 @@ describe('packages/number-input', () => {
 
         const upArrow = getByTestId(arrowTestId.up);
 
-        userEvent.click(upArrow as HTMLButtonElement); // focus
+        userEvent.click(upArrow); // focus
         expect(upArrow).toHaveFocus();
 
         userEvent.tab(); // blur
+        expect(onBlur).toHaveBeenCalledTimes(1);
+      });
+
+      test('callback does not trigger when focus changes to adjacent elements within number input', () => {
+        const onBlur = jest.fn();
+        const { getByTestId, numberInput } = renderNumberInput({
+          label,
+          onBlur,
+          ...defaultProps,
+        });
+
+        const upArrow = getByTestId(arrowTestId.up);
+        const downArrow = getByTestId(arrowTestId.down);
+
+        userEvent.tab(); // focus
+        expect(numberInput).toHaveFocus();
+
+        userEvent.click(upArrow); // focus on up arrow
+        expect(upArrow).toHaveFocus();
+
+        userEvent.click(downArrow); // focus on down arrow
+        expect(downArrow).toHaveFocus();
+
+        userEvent.tab(); //blur
         expect(onBlur).toHaveBeenCalledTimes(1);
       });
     });
