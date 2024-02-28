@@ -7,7 +7,7 @@ import { getAccessibleProps, getColor, ProductLogoProps } from './utils';
 /**
  * @deprecated
  */
-const AtlasLogoMark = React.forwardRef(
+export const AtlasLogoMark = React.forwardRef(
   (
     {
       size = 18,
@@ -171,5 +171,3 @@ const AtlasLogoMark = React.forwardRef(
 );
 
 AtlasLogoMark.displayName = 'AtlasLogoMark';
-
-export default AtlasLogoMark;

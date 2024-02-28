@@ -21,7 +21,7 @@ import {
  * @param props.color Determines the color of the logo.
  * @param props.height Determines height of the <Logo /> component.
  */
-const EnterpriseAdvancedLogoLockup = React.forwardRef(
+export const EnterpriseAdvancedLogoLockup = React.forwardRef(
   (
     {
       height = 40,
@@ -170,5 +170,3 @@ EnterpriseAdvancedLogoLockup.propTypes = {
   height: PropTypes.number,
   color: PropTypes.oneOf(Object.values(SupportedColors)),
 };
-
-export default EnterpriseAdvancedLogoLockup;

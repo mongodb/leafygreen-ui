@@ -7,7 +7,7 @@ import { getAccessibleProps, getColor, ProductLogoProps } from './utils';
 /**
  * @deprecated
  */
-const ChartsLogoMark = React.forwardRef(
+export const ChartsLogoMark = React.forwardRef(
   (
     {
       knockout = false,
@@ -95,5 +95,3 @@ const ChartsLogoMark = React.forwardRef(
 );
 
 ChartsLogoMark.displayName = 'ChartsLogoMark';
-
-export default ChartsLogoMark;

@@ -21,7 +21,7 @@ import {
  * @param props.color Determines the color of the logo.
  * @param props.height Determines height of the <Logo /> component.
  */
-const MongoDBLogoMark = React.forwardRef(
+export const MongoDBLogoMark = React.forwardRef(
   (
     {
       height = 40,
@@ -66,5 +66,3 @@ MongoDBLogoMark.propTypes = {
   height: PropTypes.number,
   color: PropTypes.oneOf(Object.values(SupportedColors)),
 };
-
-export default MongoDBLogoMark;

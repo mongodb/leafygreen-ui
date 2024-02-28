@@ -23,7 +23,7 @@ import {
  *
  * @deprecated
  */
-const AtlasLogoLockup = React.forwardRef(
+export const AtlasLogoLockup = React.forwardRef(
   (
     {
       height = 40,
@@ -120,5 +120,3 @@ AtlasLogoLockup.propTypes = {
   height: PropTypes.number,
   color: PropTypes.oneOf(Object.values(SupportedColors)),
 };
-
-export default AtlasLogoLockup;

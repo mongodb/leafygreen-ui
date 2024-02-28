@@ -1,15 +1,16 @@
 import React from 'react';
 
-import AtlasForGovernmentLogoLockup from './AtlasForGovernmentLogoLockup';
-// Product Family Logo Lockups
-import AtlasLogoLockup from './AtlasLogoLockup';
-import AtlasNavGraphic from './AtlasNavGraphic';
-import CommunityEditionLogoLockup from './CommunityEditionLogoLockup';
-import EnterpriseAdvancedLogoLockup from './EnterpriseAdvancedLogoLockup';
-import MongoDBLogo from './MongoDBLogo';
-import MongoDBLogoMark from './MongoDBLogoMark';
-import UniversityLogoLockup from './UniversityLogoLockup';
 import { LogoProps } from './utils';
+import {
+  AtlasForGovernmentLogoLockup,
+  AtlasLogoLockup,
+  AtlasNavGraphic,
+  CommunityEditionLogoLockup,
+  EnterpriseAdvancedLogoLockup,
+  MongoDBLogo,
+  MongoDBLogoMark,
+  UniversityLogoLockup,
+} from '.';
 
 export const LogoNames = [
   'MongoDBLogoMark',

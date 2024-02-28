@@ -9,7 +9,7 @@ import {
   SupportedColorsMap,
 } from './utils';
 
-const AtlasNavGraphic = React.forwardRef(
+export const AtlasNavGraphic = React.forwardRef(
   (
     {
       height = 40,
@@ -70,5 +70,3 @@ const AtlasNavGraphic = React.forwardRef(
 );
 
 AtlasNavGraphic.displayName = 'AtlasNavGraphic';
-
-export default AtlasNavGraphic;
