@@ -1,6 +1,6 @@
 import { palette } from '@leafygreen-ui/palette';
 
-import { MapVariantsToStates, State, Variant } from './color.types';
+import { MapVariantsToStates, State, Type, Variant } from './color.types';
 
 const { black, blue, gray, green, red, white, yellow } = palette;
 

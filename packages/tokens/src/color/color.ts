@@ -1,6 +1,6 @@
 import { Mode } from '../mode';
-import { MapVariantsToStates, Type } from './color.types';
 
+import { MapVariantsToStates, Type } from './color.types';
 import { darkModeColors } from './darkModeColors';
 import { lightModeColors } from './lightModeColors';
 
