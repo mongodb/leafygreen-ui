@@ -70,8 +70,11 @@ CanvasHeader.displayName = 'CanvasHeader';
 CanvasHeader.propTypes = {
   pageTitle: PropTypes.string.isRequired,
   resourceName: PropTypes.string,
-  resourceIcon: PropTypes.element,
-  actions: PropTypes.element,
-  backLink: PropTypes.element,
   darkMode: PropTypes.bool,
+  // @ts-expect-error - PropTypes.node does not match ReactNode
+  resourceIcon: PropTypes.node,
+  // @ts-expect-error - PropTypes.node does not match ReactNode
+  actions: PropTypes.node,
+  // @ts-expect-error - PropTypes.node does not match ReactNode
+  backLink: PropTypes.node,
 };
