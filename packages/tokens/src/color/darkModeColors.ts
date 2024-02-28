@@ -1,13 +1,10 @@
 import { palette } from '@leafygreen-ui/palette';
 
-import { State, Variant } from './color.types';
+import { MapVariantsToStates, State, Type, Variant } from './color.types';
 
 const { black, blue, gray, green, red, white, yellow } = palette;
 
-const darkModeBackgroundColors: Record<
-  Exclude<Variant, 'inversePrimary' | 'inverseSecondary'>,
-  Record<State, string>
-> = {
+const darkModeBackgroundColors: MapVariantsToStates = {
   [Variant.Primary]: {
     [State.Default]: black,
     [State.Hover]: gray.dark2,
@@ -50,13 +47,7 @@ const darkModeBackgroundColors: Record<
   },
 };
 
-const darkModeBorderColors: Record<
-  Exclude<
-    Variant,
-    'inverse' | 'inversePrimary' | 'inverseSecondary' | 'info' | 'warning'
-  >,
-  Record<State, string>
-> = {
+const darkModeBorderColors: MapVariantsToStates = {
   [Variant.Primary]: {
     [State.Default]: gray.base,
     [State.Hover]: gray.base,
@@ -84,10 +75,7 @@ const darkModeBorderColors: Record<
   },
 };
 
-const darkModeIconColors: Record<
-  Exclude<Variant, 'inversePrimary' | 'inverseSecondary'>,
-  Record<State, string>
-> = {
+const darkModeIconColors: MapVariantsToStates = {
   [Variant.Primary]: {
     [State.Default]: gray.light1,
     [State.Hover]: gray.light3,
@@ -130,10 +118,7 @@ const darkModeIconColors: Record<
   },
 };
 
-export const darkModeTextColors: Record<
-  Exclude<Variant, 'success' | 'inverse' | 'info' | 'warning'>,
-  Record<State, string>
-> = {
+export const darkModeTextColors: MapVariantsToStates = {
   [Variant.Primary]: {
     [State.Default]: gray.light2,
     [State.Hover]: gray.light2,
@@ -166,7 +151,7 @@ export const darkModeTextColors: Record<
   },
 };
 
-export const darkModeColors = {
+export const darkModeColors: Record<Type, MapVariantsToStates> = {
   background: darkModeBackgroundColors,
   border: darkModeBorderColors,
   icon: darkModeIconColors,

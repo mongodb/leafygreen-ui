@@ -31,3 +31,7 @@ const Variant = {
 type Variant = (typeof Variant)[keyof typeof Variant];
 
 export { State, Type, Variant };
+
+export type MapVariantsToStates = {
+  [k in Variant]?: { [k in State]: string };
+};
