@@ -9,11 +9,9 @@ import svgr from '@svgr/rollup';
 import fs from 'fs';
 import { glob } from 'glob';
 import path from 'path';
-// import buble from 'rollup-plugin-buble';
-import filesize from 'rollup-plugin-filesize';
 import { nodeExternals } from 'rollup-plugin-node-externals';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
-// import sizes from 'rollup-plugin-sizes';
+import sizes from 'rollup-plugin-sizes';
 
 const require = createRequire(import.meta.url);
 
@@ -164,9 +162,7 @@ const configForFormat = format => ({
 
     terser(),
 
-    filesize(),
-    // buble(),
-    // sizes(),
+    sizes(),
   ],
   external,
   strictDeprecations: true,
