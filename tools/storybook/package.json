@@ -46,13 +46,13 @@
     "lodash": "4.17.21",
     "path-browserify": "1.0.1",
     "react-docgen-typescript": "2.2.2",
+    "storybook": "^7.6.17",
     "stream-browserify": "3.0.0",
     "url-loader": "4.1.1",
     "webpack": "5.88.0"
   },
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0",
-    "react-dom": "^17.0.0 || ^18.0.0",
-    "storybook": "^7.6.0"
+    "react-dom": "^17.0.0 || ^18.0.0"
   }
 }

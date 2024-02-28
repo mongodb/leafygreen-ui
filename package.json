@@ -15,7 +15,7 @@
     "prebuild": "yarn build:cli",
     "build": "turbo run build tsc",
     "build:cli": "turbo run build tsc --filter=@lg-tools/cli",
-    "build-storybook": "storybook build",
+    "build-storybook": "npx storybook build",
     "chromatic": "npx chromatic",
     "clean": "npm-run-all --parallel clean:*",
     "clean:builds": "rm -rf {packages,tools}/*/{dist,tsconfig.tsbuildinfo,stories.js}",
@@ -26,7 +26,7 @@
     "prepublishOnly": "yarn build && turbo run docs",
     "publish": "yarn changeset publish --public",
     "slackbot": "lg slackbot release",
-    "start": "storybook dev -p 9001 --no-version-updates",
+    "start": "npx storybook dev -p 9001 --no-version-updates",
     "test": "lg test",
     "unlink": "lg unlink",
     "validate": "lg validate"
@@ -48,7 +48,6 @@
     "prop-types": "^15.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "storybook": "^7.6.17",
     "turbo": "^1.12.3",
     "typescript": "~4.7.0"
   },
