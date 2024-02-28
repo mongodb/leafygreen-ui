@@ -34,6 +34,7 @@ export const Arrow = ({
       type="button"
       tabIndex={-1} // Mimicking native behavior; you cannot focus on an arrow.
       disabled={disabled}
+      data-testid={`lg-number_input-${direction}_button`}
     >
       <Icon
         className={cx({
