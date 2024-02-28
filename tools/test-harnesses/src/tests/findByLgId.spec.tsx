@@ -65,7 +65,7 @@ describe('findByLgId', () => {
     );
   });
 
-  test('gets element that opens with a dely', async () => {
+  test('gets element that opens with a delay', async () => {
     render(<TestComponent />);
 
     const button = getByLgId('test-button');
