@@ -1,3 +1,9 @@
+/**
+ * The majority of the code is copied from [dom-testing-library](https://github.com/testing-library/dom-testing-library/blob/bd04cf95a1ed85a2238f7dfc1a77d5d16b4f59dc/src/queries/test-id.ts) in dom-testing-library.
+ *
+ * TODO: explain why we did this
+ */
+
 import {
   AllByBoundAttribute,
   buildQueries,
@@ -7,23 +13,17 @@ import {
 
 import { checkContainerType } from '../utils/checkContainerType';
 
-// TODO: move this to utils?
-const getTestIdAttribute = () => 'data-lgid';
+const testIdAttribute = 'data-lgid';
 
 const queryAllByTestId: AllByBoundAttribute = (...args) => {
   checkContainerType(args[0]);
-  return queryAllByAttribute(getTestIdAttribute(), ...args);
+  return queryAllByAttribute(testIdAttribute, ...args);
 };
 
 const getMultipleError: GetErrorFunction<[unknown]> = (c, id) =>
-  `Found multiple elements by: [${getTestIdAttribute()}="${id}"]`;
+  `Found multiple elements by: [${testIdAttribute}="${id}"]`;
 const getMissingError: GetErrorFunction<[unknown]> = (c, id) =>
-  `Unable to find an element by: [${getTestIdAttribute()}="${id}"]`;
-
-// const queryAllByTestIdWithSuggestions = wrapAllByQueryWithSuggestion<
-//   // @ts-expect-error -- See `wrapAllByQueryWithSuggestion` Argument constraint comment
-//   [testId: Matcher, options?: MatcherOptions]
-// >(queryAllByTestId, queryAllByTestId.name, 'queryAll')
+  `Unable to find an element by: [${testIdAttribute}="${id}"]`;
 
 const [
   queryByTestId,
@@ -38,7 +38,6 @@ export {
   findByTestId,
   getAllByTestId,
   getByTestId,
-  // queryAllByTestIdWithSuggestions as queryAllByTestId,
   queryAllByTestId,
   queryByTestId,
 };

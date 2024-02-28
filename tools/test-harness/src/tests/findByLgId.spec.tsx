@@ -38,6 +38,4 @@ describe('findByLgId', () => {
       'Found multiple elements by: [data-lgid="testing-id"]',
     );
   });
-
-  test.todo('no document found');
 });

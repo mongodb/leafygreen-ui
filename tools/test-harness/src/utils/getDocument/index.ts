@@ -1,5 +1,5 @@
 /**
- * Copied from https://github.com/testing-library/dom-testing-library/blob/main/src/helpers.ts#L21
+ * Copied from [dom-testing-library](https://github.com/testing-library/dom-testing-library/blob/main/src/helpers.ts#L21)
  * @returns Document
  */
 
