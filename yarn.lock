@@ -4697,7 +4697,7 @@
     "@storybook/global" "^5.0.0"
     memoizerific "^1.11.3"
 
-"@storybook/types@7.2.1", "@storybook/types@^7.0.20":
+"@storybook/types@7.2.1":
   version "7.2.1"
   resolved "https://registry.yarnpkg.com/@storybook/types/-/types-7.2.1.tgz#c10449955a1fc1ef57e270feace2bbd3bd87a1e6"
   integrity sha512-YwlIY1uyxfJjijbB5x1d1QOKaUUDJnMX8BSb8oGqU4cyT76X/Is4CbGs+vccFsJo0tZu1GfuahYXl0EDT0nnSQ==
