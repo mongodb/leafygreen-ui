@@ -3,4 +3,4 @@
 '@leafygreen-ui/toast': patch
 ---
 
-Removes unused dev dependencies
+Removes unused storybook dev dependencies (`@storybook/types` and `storybook-mock-date-decorator`)
