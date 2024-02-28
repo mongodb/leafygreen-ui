@@ -18,5 +18,8 @@ export interface ArrowsProps {
 }
 
 export interface ArrowProps extends ArrowsProps {
+  /**
+   * Direction of arrow: increment or decrement
+   */
   direction: Direction;
 }

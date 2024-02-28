@@ -4,6 +4,7 @@ import { palette } from '@leafygreen-ui/palette';
 
 export const stickyStyles = css`
   position: sticky;
+  z-index: 1;
   top: 0;
 `;
 export const themeStyles: Record<Theme, string> = {

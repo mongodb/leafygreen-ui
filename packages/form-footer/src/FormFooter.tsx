@@ -143,6 +143,7 @@ export default function FormFooter({
   const { theme, darkMode } = useDarkMode(darkModeProp);
   return (
     <footer
+      data-testid="lg-form-footer-footer"
       className={cx(footerBaseStyle, footerThemeStyle[theme], className)}
       {...rest}
     >
@@ -154,6 +155,7 @@ export default function FormFooter({
             className={buttonStyle}
             leftGlyph={<ArrowLeftIcon />}
             darkMode={darkMode}
+            data-testid="lg-form_footer-back-button"
           >
             {backButtonText}
           </Button>
@@ -174,6 +176,7 @@ export default function FormFooter({
               onClick={onCancel}
               className={buttonStyle}
               darkMode={darkMode}
+              data-testid="lg-form_footer-cancel-button"
             >
               {cancelButtonText || 'Cancel'}
             </Button>
@@ -181,10 +184,12 @@ export default function FormFooter({
           {isComponentType(primaryButton as React.ReactElement, 'Button') ? (
             React.cloneElement(primaryButton as React.ReactElement, {
               darkMode: darkMode,
+              ['data-testid']: 'lg-form_footer-primary-button',
             })
           ) : (
             <PrimaryButton
               darkMode={darkMode}
+              data-testid="lg-form_footer-primary-button"
               {...(primaryButton as PrimaryButtonProps)}
             />
           )}

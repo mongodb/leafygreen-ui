@@ -1,5 +1,11 @@
 # @leafygreen-ui/form-footer
 
+## 3.0.16
+
+### Patch Changes
+
+- 9e7d74b0: Adds `data-testids` to subcomponents of FormFooter
+
 ## 3.0.15
 
 ### Patch Changes

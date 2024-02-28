@@ -133,6 +133,13 @@ const Template: StoryFn<StoryNumberInputProps> = (
     setValue(e.target.value);
   };
 
+  const handleBlur = (e: React.FocusEvent<HTMLElement>) => {
+    // eslint-disable-next-line no-console
+    console.log('story: event: ', e.target.blur);
+    // eslint-disable-next-line no-console
+    console.log('story: ref', inputRef.current?.blur);
+  };
+
   return (
     <NumberInput
       {...rest}
@@ -142,6 +149,7 @@ const Template: StoryFn<StoryNumberInputProps> = (
       unitOptions={unitOptions}
       onSelectChange={handleSelectChange}
       onChange={handleChange}
+      onBlur={handleBlur}
       inputClassName={css`
         width: 100px;
       `}

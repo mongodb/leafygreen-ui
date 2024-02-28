@@ -23,6 +23,7 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
   withPagination = false,
   useVirtualScrolling = false,
   allowSelectAll = true,
+  virtualizerOptions,
   ...rest
 }: LeafyGreenTableOptions<T, V>): LeafyGreenTable<T> {
   /**
@@ -76,6 +77,7 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
     parentRef: containerRef,
     size: rows.length,
     overscan: 30,
+    ...virtualizerOptions,
   });
 
   return {
