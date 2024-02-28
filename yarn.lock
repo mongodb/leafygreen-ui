@@ -3871,7 +3871,7 @@
     p-queue "^6.6.1"
     p-retry "^4.0.0"
 
-"@storybook/addon-a11y@^7.6.17":
+"@storybook/addon-a11y@7.6.17":
   version "7.6.17"
   resolved "https://registry.yarnpkg.com/@storybook/addon-a11y/-/addon-a11y-7.6.17.tgz#77209c23b6908d52dc470a3318d76a0ffe9d47cb"
   integrity sha512-UYHJAKQpJMCu4X4O/325UqozYrkhPn2VyQdwPgC+uiOKZvrtni4uRbpOspeyjC0wXH1tDbY8WZvxwvwQryYkpA==
@@ -3879,7 +3879,7 @@
     "@storybook/addon-highlight" "7.6.17"
     axe-core "^4.2.0"
 
-"@storybook/addon-actions@7.6.17", "@storybook/addon-actions@^7.6.17":
+"@storybook/addon-actions@7.6.17":
   version "7.6.17"
   resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-7.6.17.tgz#b1be5ab28b22b4a50c6aa0cd0a3671ca5b6f5f71"
   integrity sha512-TBphs4v6LRfyTpFo/WINF0TkMaE3rrNog7wW5mbz6n0j8o53kDN4o9ZEcygSL5zQX43CAaghQTeDCss7ueG7ZQ==
@@ -3909,7 +3909,7 @@
     lodash "^4.17.21"
     ts-dedent "^2.0.0"
 
-"@storybook/addon-docs@7.6.17", "@storybook/addon-docs@^7.6.17":
+"@storybook/addon-docs@7.6.17":
   version "7.6.17"
   resolved "https://registry.yarnpkg.com/@storybook/addon-docs/-/addon-docs-7.6.17.tgz#ea62be2da8b31df2c80a47cac4c30f66af4d2fbf"
   integrity sha512-FKa4Mdy7nhgvEVZJHpMkHriDzpVHbohn87zv9NCL+Ctjs1iAmzGwxEm0culszyDS1HN2ToVoY0h8CSi2RSSZqA==
@@ -3934,7 +3934,7 @@
     remark-slug "^6.0.0"
     ts-dedent "^2.0.0"
 
-"@storybook/addon-essentials@^7.6.17":
+"@storybook/addon-essentials@7.6.17":
   version "7.6.17"
   resolved "https://registry.yarnpkg.com/@storybook/addon-essentials/-/addon-essentials-7.6.17.tgz#d49d9a77edc999518c6871b66032a647787c39f4"
   integrity sha512-qlSpamxuYfT2taF953nC9QijGF2pSbg1ewMNpdwLTj16PTZvR/d8NCDMTJujI1bDwM2m18u8Yc43ibh5LEmxCw==
@@ -3961,7 +3961,7 @@
   dependencies:
     "@storybook/global" "^5.0.0"
 
-"@storybook/addon-interactions@^7.6.17":
+"@storybook/addon-interactions@7.6.17":
   version "7.6.17"
   resolved "https://registry.yarnpkg.com/@storybook/addon-interactions/-/addon-interactions-7.6.17.tgz#5860cf6f2fb9999e0b83ac07a0b7f3a9988ff22a"
   integrity sha512-6zlX+RDQ1PlA6fp7C+hun8t7h2RXfCGs5dGrhEenp2lqnR/rYuUJRC0tmKpkZBb8kZVcbSChzkB/JYkBjBCzpQ==
@@ -3972,7 +3972,7 @@
     polished "^4.2.2"
     ts-dedent "^2.2.0"
 
-"@storybook/addon-links@^7.6.17":
+"@storybook/addon-links@7.6.17":
   version "7.6.17"
   resolved "https://registry.yarnpkg.com/@storybook/addon-links/-/addon-links-7.6.17.tgz#5a678ff09c1b5056b67cb345c115cfcd343ffe86"
   integrity sha512-iFUwKObRn0EKI0zMETsil2p9a/81rCuSMEWECsi+khkCAs1FUnD2cT6Ag5ydcNcBXsdtdfDJdtXQrkw+TSoStQ==
@@ -3981,7 +3981,7 @@
     "@storybook/global" "^5.0.0"
     ts-dedent "^2.0.0"
 
-"@storybook/addon-mdx-gfm@^7.6.17":
+"@storybook/addon-mdx-gfm@7.6.17":
   version "7.6.17"
   resolved "https://registry.yarnpkg.com/@storybook/addon-mdx-gfm/-/addon-mdx-gfm-7.6.17.tgz#4dcd5b32aa7b06b90521e41652c46e2b88dcdf86"
   integrity sha512-Dh1jcegykRMAhQCpAh5NZzRnJMtk+QzYrxKZlY/EbXNRmxrvhrrCDjovf9ntqFlA6vQjDtkwNu3ZVcMBKLXmiw==
@@ -4018,7 +4018,7 @@
   dependencies:
     memoizerific "^1.11.3"
 
-"@storybook/addons@^7.6.17":
+"@storybook/addons@7.6.17":
   version "7.6.17"
   resolved "https://registry.yarnpkg.com/@storybook/addons/-/addons-7.6.17.tgz#6fd78ae3a3419bd91fdacbebd40062eb94f92155"
   integrity sha512-Ok18Y698Ccyg++MoUNJNHY0cXUvo8ETFIRLJk1g9ElJ70j6kPgNnzW2pAtZkBNmswHtofZ7pT156cj96k/LgfA==
@@ -4027,7 +4027,7 @@
     "@storybook/preview-api" "7.6.17"
     "@storybook/types" "7.6.17"
 
-"@storybook/api@^7.6.17":
+"@storybook/api@7.6.17":
   version "7.6.17"
   resolved "https://registry.yarnpkg.com/@storybook/api/-/api-7.6.17.tgz#78846f1cca1758020594e9f0cf7262506e9fe613"
   integrity sha512-l92PI+5XL4zB/o4IBWFCKQWTXvPg9hR45DCJqlPHrLZStiR6Xj1mbrtOjUlgIOH+nYb/SZFZqO53hhrs7X4Nvg==
@@ -4234,7 +4234,7 @@
     prettier "^2.8.0"
     recast "^0.23.1"
 
-"@storybook/components@7.6.17", "@storybook/components@^7.6.17":
+"@storybook/components@7.6.17":
   version "7.6.17"
   resolved "https://registry.yarnpkg.com/@storybook/components/-/components-7.6.17.tgz#f02a47ad42432f8ea518321a145a074e4c11649f"
   integrity sha512-lbh7GynMidA+CZcJnstVku6Nhs+YkqjYaZ+mKPugvlVhGVWv0DaaeQFVuZ8cJtUGJ/5FFU4Y+n+gylYUHkGBMA==
@@ -4292,7 +4292,7 @@
   resolved "https://registry.yarnpkg.com/@storybook/core-events/-/core-events-7.2.1.tgz#05121c9bac6ac3989acc05b49116107331e0c398"
   integrity sha512-EUXYb3gyQ2EzpDAWkgfoDl1EPabj3OE6+zntsD/gwvzQU85BTocs10ksnRyS55bfrQpYbf+Z+gw2CZboyagLgg==
 
-"@storybook/core-events@7.6.17", "@storybook/core-events@^7.6.17":
+"@storybook/core-events@7.6.17":
   version "7.6.17"
   resolved "https://registry.yarnpkg.com/@storybook/core-events/-/core-events-7.6.17.tgz#9e1a795558193089fb227cfe2cf768c99418a640"
   integrity sha512-AriWMCm/k1cxlv10f+jZ1wavThTRpLaN3kY019kHWbYT9XgaSuLU67G7GPr3cGnJ6HuA6uhbzu8qtqVCd6OfXA==
@@ -4599,7 +4599,7 @@
   resolved "https://registry.yarnpkg.com/@storybook/react-dom-shim/-/react-dom-shim-7.6.17.tgz#5875915316f687bf658cc6686ea49f2928eae4b2"
   integrity sha512-32Sa/G+WnvaPiQ1Wvjjw5UM9rr2c4GDohwCcWVv3/LJuiFPqNS6zglAtmnsrlIBnUwRBMLMh/ekCTdqMiUmfDw==
 
-"@storybook/react-webpack5@^7.6.17":
+"@storybook/react-webpack5@7.6.17":
   version "7.6.17"
   resolved "https://registry.yarnpkg.com/@storybook/react-webpack5/-/react-webpack5-7.6.17.tgz#c1ab808bac41dde4a9bd96c3afc800b914eda9e6"
   integrity sha512-qGc2JxaSmvPXV7ndxA/8qPtPLK7lAwejL/QdrzLXhxEmVdZLMew640FBYgOV/zWnehV3BnivThln/8PsQyst/g==
@@ -4687,7 +4687,7 @@
     "@storybook/global" "^5.0.0"
     memoizerific "^1.11.3"
 
-"@storybook/theming@7.6.17", "@storybook/theming@^7.6.17":
+"@storybook/theming@7.6.17":
   version "7.6.17"
   resolved "https://registry.yarnpkg.com/@storybook/theming/-/theming-7.6.17.tgz#8170e3e72b921380c51a3970890d4cb479a65c2f"
   integrity sha512-ZbaBt3KAbmBtfjNqgMY7wPMBshhSJlhodyMNQypv+95xLD/R+Az6aBYbpVAOygLaUQaQk4ar7H/Ww6lFIoiFbA==
@@ -14633,7 +14633,6 @@ wordwrap@^1.0.0:
   integrity sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q==
 
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
-  name wrap-ansi-cjs
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
