@@ -3,4 +3,4 @@
 '@lg-tools/storybook': patch
 ---
 
-Upgragdes Storybook packages to v7.6.x
+Upgrades Storybook packages to v7.6.17
