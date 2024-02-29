@@ -58,17 +58,17 @@ const darkModeBorderColors: MapVariantsToStates = {
     [State.Hover]: gray.dark2,
     [State.Focus]: blue.light1,
   },
-  success: {
+  [Variant.Success]: {
     [State.Default]: green.dark1,
     [State.Hover]: green.dark1,
     [State.Focus]: blue.light1,
   },
-  error: {
+  [Variant.Error]: {
     [State.Default]: red.light1,
     [State.Hover]: red.light1,
     [State.Focus]: blue.light1,
   },
-  disabled: {
+  [Variant.Disabled]: {
     [State.Default]: gray.dark2,
     [State.Hover]: gray.dark2,
     [State.Focus]: gray.dark2,
@@ -86,32 +86,32 @@ const darkModeIconColors: MapVariantsToStates = {
     [State.Hover]: gray.light3,
     [State.Focus]: blue.light3,
   },
-  inverse: {
+  [Variant.Inverse]: {
     [State.Default]: white,
     [State.Hover]: black,
     [State.Focus]: blue.dark2,
   },
-  info: {
+  [Variant.Info]: {
     [State.Default]: blue.light1,
     [State.Hover]: blue.light1,
     [State.Focus]: blue.light1,
   },
-  warning: {
+  [Variant.Warning]: {
     [State.Default]: yellow.base,
     [State.Hover]: yellow.base,
     [State.Focus]: yellow.base,
   },
-  success: {
+  [Variant.Success]: {
     [State.Default]: green.base,
     [State.Hover]: green.base,
     [State.Focus]: green.base,
   },
-  error: {
+  [Variant.Error]: {
     [State.Default]: red.light1,
     [State.Hover]: red.light1,
     [State.Focus]: red.light1,
   },
-  disabled: {
+  [Variant.Disabled]: {
     [State.Default]: gray.dark1,
     [State.Hover]: gray.dark1,
     [State.Focus]: gray.dark1,
@@ -129,22 +129,22 @@ export const darkModeTextColors: MapVariantsToStates = {
     [State.Hover]: gray.light2,
     [State.Focus]: blue.light3,
   },
-  inversePrimary: {
+  [Variant.InversePrimary]: {
     [State.Default]: black,
     [State.Hover]: black,
     [State.Focus]: blue.dark2,
   },
-  inverseSecondary: {
+  [Variant.InverseSecondary]: {
     [State.Default]: gray.dark2,
     [State.Hover]: black,
     [State.Focus]: blue.dark2,
   },
-  error: {
+  [Variant.Error]: {
     [State.Default]: red.light1,
     [State.Hover]: red.light1,
     [State.Focus]: red.light1,
   },
-  disabled: {
+  [Variant.Disabled]: {
     [State.Default]: gray.dark1,
     [State.Hover]: gray.dark1,
     [State.Focus]: gray.dark1,
