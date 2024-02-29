@@ -15,7 +15,7 @@ const darkModeBackgroundColors: MapVariantsToStates = {
     [State.Hover]: gray.dark2,
     [State.Focus]: blue.dark3,
   },
-  [Variant.Inverse]: {
+  [Variant.InversePrimary]: {
     [State.Default]: gray.light2,
     [State.Hover]: gray.light3,
     [State.Focus]: blue.light2,
@@ -86,7 +86,7 @@ const darkModeIconColors: MapVariantsToStates = {
     [State.Hover]: gray.light3,
     [State.Focus]: blue.light3,
   },
-  [Variant.Inverse]: {
+  [Variant.InversePrimary]: {
     [State.Default]: white,
     [State.Hover]: black,
     [State.Focus]: blue.dark2,

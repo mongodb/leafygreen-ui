@@ -18,7 +18,6 @@ type Type = (typeof Type)[keyof typeof Type];
 const Variant = {
   Primary: 'primary',
   Secondary: 'secondary',
-  Inverse: 'inverse',
   InversePrimary: 'inversePrimary',
   InverseSecondary: 'inverseSecondary',
   Info: 'info',
