@@ -1,4 +1,6 @@
+export { default as borderRadius } from './breakpoints';
 export { default as breakpoints } from './breakpoints';
+export { color } from './color/color';
 export { default as focusRing } from './focusRing';
 export { default as fontFamilies } from './fontFamilies';
 export { default as fontWeights } from './fontWeights';
