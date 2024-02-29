@@ -68,8 +68,8 @@
 /packages/tooltip/ @shaneeza
 /packages/typography/ @thesonofthomp
 
-/scripts @thesonofthomp
-/scripts/slackbot @thesonofthomp
+/scripts/ @thesonofthomp
+/tools/ @thesonofthomp
 
-./storybook/ @thesonofthomp @spark33
-./.github/ @thesonofthomp @spark33
+./storybook/ @thesonofthomp 
+./.github/ @thesonofthomp 
