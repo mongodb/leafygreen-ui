@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/form-footer': patch
+'@leafygreen-ui/form-footer': minor
 ---
 
 Adds `cancelButtonProps` and `backButtonProps` to `FormFooter` component for customizing buttons.

@@ -2,7 +2,7 @@ import React from 'react';
 import { transparentize } from 'polished';
 
 import Banner from '@leafygreen-ui/banner';
-import Button from '@leafygreen-ui/button';
+import Button, { ButtonProps } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import ArrowLeftIcon from '@leafygreen-ui/icon/dist/ArrowLeft';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -58,16 +58,10 @@ const buttonStyle = css`
 /**
  * Types
  */
-interface BaseButtonProps {
-  text?: string;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-}
-
-interface BackButtonProps extends BaseButtonProps {
-  leftGlyph?: React.ReactElement | null;
-}
-
-interface CancelButtonProps extends BackButtonProps {}
+type CustomButtonProps = Pick<
+  ButtonProps,
+  'children' | 'leftGlyph' | 'onClick'
+>;
 
 export interface FormFooterProps extends HTMLElementProps<'footer'> {
   /**
@@ -90,63 +84,47 @@ export interface FormFooterProps extends HTMLElementProps<'footer'> {
 
   /**
    * The cancel button which will only appear if cancelButtonProps is defined.
-   * Defined as an object with the shape:
-   *
-   * ```ts
-   * interface CancelButtonProps {
-   *  text: string;
-   *  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-   *  leftGlyph?: React.ReactElement | null;
-   * }
-   * ```
+   * Customizable props include children, leftGlyph, and onClick.
    *
    * darkMode is handled internally so you do not have to pass the darkMode prop.
    */
-  cancelButtonProps?: CancelButtonProps;
+  cancelButtonProps?: CustomButtonProps;
 
   /**
    * The back button which will only appear if backButtonProps is defined.
-   * Defined as an object with the shape:
-   *
-   * ```ts
-   * interface BackButtonProps {
-   *  text: string;
-   *  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-   *  leftGlyph?: React.ReactElement | null;
-   * }
-   * ```
+   * Customizable props include children, leftGlyph, and onClick.
    *
    * darkMode is handled internally so you do not have to pass the darkMode prop.
    */
-  backButtonProps?: BackButtonProps;
+  backButtonProps?: CustomButtonProps;
 
   /**
    * Text for the cancel button.
    * A cancel button will only appear if this text is defined.
    *
    * @default "Cancel"
-   * @deprecated since version 3.0.17 - use cancelButtonProps instead
+   * @deprecated since version 3.1.0 - use cancelButtonProps instead
    */
   cancelButtonText?: string;
 
   /**
    * onClick callback for the cancel button
    *
-   * @deprecated since version 3.0.17 - use cancelButtonProps instead
+   * @deprecated since version 3.1.0 - use cancelButtonProps instead
    */
   onCancel?: React.MouseEventHandler<HTMLButtonElement>;
 
   /**
    * Text for the back button. A back button will only appear if text is defined.
    *
-   * @deprecated since version 3.0.17 - use backButtonProps instead
+   * @deprecated since version 3.1.0 - use backButtonProps instead
    */
   backButtonText?: string;
 
   /**
    * onClick callback for the back button
    *
-   * @deprecated since version 3.0.17 - use backButtonProps instead
+   * @deprecated since version 3.1.0 - use backButtonProps instead
    */
   onBackClick?: React.MouseEventHandler<HTMLButtonElement>;
 
@@ -192,20 +170,25 @@ export default function FormFooter({
   ...rest
 }: FormFooterProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
+  const showBackButton = backButtonProps || backButtonText;
+  /**
+   * versions prior to 3.1.0 will render the cancel button if cancelButtonText is undefined or
+   * a nonempty string so we need to explicitly check for an empty string
+   */
+  const showCancelButton = cancelButtonProps || cancelButtonText !== '';
 
-  const backButton = {
-    text: backButtonProps?.text || backButtonText,
+  // TODO @stephl3: remove once deprecated props are removed
+  const _backButtonProps = {
+    children: backButtonProps?.children || backButtonText,
     onClick: backButtonProps?.onClick || onBackClick,
-    leftGlyph:
-      backButtonProps?.leftGlyph === undefined ? (
-        <ArrowLeftIcon data-testid="lg-form_footer-back-button-icon" />
-      ) : (
-        backButtonProps.leftGlyph ?? undefined
-      ),
+    leftGlyph: backButtonProps ? (
+      backButtonProps.leftGlyph
+    ) : (
+      <ArrowLeftIcon data-testid="lg-form_footer-back_button-icon" />
+    ),
   };
-
-  const cancelButton = {
-    text: cancelButtonProps?.text || cancelButtonText,
+  const _cancelButtonProps = {
+    children: cancelButtonProps?.children || cancelButtonText,
     onClick: cancelButtonProps?.onClick || onCancel,
     leftGlyph: cancelButtonProps?.leftGlyph ?? undefined,
   };
@@ -217,16 +200,16 @@ export default function FormFooter({
       {...rest}
     >
       <div className={cx(contentStyle, contentClassName)}>
-        {backButton.text && (
+        {showBackButton && (
           <Button
             variant="default"
-            onClick={backButton.onClick}
+            onClick={_backButtonProps.onClick}
             className={buttonStyle}
-            leftGlyph={backButton.leftGlyph}
+            leftGlyph={_backButtonProps.leftGlyph}
             darkMode={darkMode}
-            data-testid="lg-form_footer-back-button"
+            data-testid="lg-form_footer-back_button"
           >
-            {backButton.text}
+            {_backButtonProps.children}
           </Button>
         )}
         <div className={flexEndContent}>
@@ -239,27 +222,27 @@ export default function FormFooter({
               {errorMessage}
             </Banner>
           )}
-          {cancelButton.text && (
+          {showCancelButton && (
             <Button
               variant="default"
-              onClick={cancelButton.onClick}
+              onClick={_cancelButtonProps.onClick}
               className={buttonStyle}
-              leftGlyph={cancelButton.leftGlyph}
+              leftGlyph={_cancelButtonProps.leftGlyph}
               darkMode={darkMode}
-              data-testid="lg-form_footer-cancel-button"
+              data-testid="lg-form_footer-cancel_button"
             >
-              {cancelButton.text || 'Cancel'}
+              {_cancelButtonProps.children || 'Cancel'}
             </Button>
           )}
           {isComponentType(primaryButton as React.ReactElement, 'Button') ? (
             React.cloneElement(primaryButton as React.ReactElement, {
               darkMode: darkMode,
-              ['data-testid']: 'lg-form_footer-primary-button',
+              ['data-testid']: 'lg-form_footer-primary_button',
             })
           ) : (
             <PrimaryButton
               darkMode={darkMode}
-              data-testid="lg-form_footer-primary-button"
+              data-testid="lg-form_footer-primary_button"
               {...(primaryButton as PrimaryButtonProps)}
             />
           )}

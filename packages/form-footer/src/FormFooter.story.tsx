@@ -43,11 +43,10 @@ const meta: StoryMetaType<typeof FormFooter> = {
       combineArgs: {
         backButtonProps: [
           undefined,
-          { text: 'Back', leftGlyph: undefined },
-          { text: 'Back', leftGlyph: null },
+          { children: 'Back', leftGlyph: undefined },
+          { children: 'Back', leftGlyph: <Icon glyph="ArrowLeft" /> },
         ],
-        cancelButtonProps: [undefined, { text: 'Cancel' }],
-        cancelButtonText: [''], // remove once deprecated props are removed
+        cancelButtonProps: [undefined, { children: 'Cancel' }],
         errorMessage: [undefined, 'This is an error message'],
       },
       decorator: StoryFn => (
@@ -61,6 +60,7 @@ const meta: StoryMetaType<typeof FormFooter> = {
     darkMode: false,
     primaryButtonText: 'Button',
     primaryButton: { text: 'Button' },
+    cancelButtonText: '', // TODO @stephl3: remove once deprecated props are removed
     errorMessage: 'Error message',
   },
   argTypes: {
@@ -100,8 +100,8 @@ LiveExample.parameters = {
   },
 };
 LiveExample.args = {
-  backButtonProps: { text: 'Back' },
-  cancelButtonProps: { text: 'Cancel' },
+  backButtonProps: { children: 'Back' },
+  cancelButtonProps: { children: 'Cancel' },
 };
 
 export const WithCustomPrimaryButton: StoryType<typeof FormFooter> =
@@ -117,8 +117,8 @@ WithCustomPrimaryButton.args = {
       Save to cloud
     </Button>
   ),
-  backButtonProps: { text: 'Back' },
-  cancelButtonProps: { text: 'Cancel' },
+  backButtonProps: { children: 'Back' },
+  cancelButtonProps: { children: 'Cancel' },
 };
 WithCustomPrimaryButton.parameters = {
   chromatic: {
