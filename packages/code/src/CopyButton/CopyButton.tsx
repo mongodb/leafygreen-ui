@@ -10,12 +10,17 @@ import {
   useDarkMode,
   usePopoverPortalContainer,
 } from '@leafygreen-ui/leafygreen-provider';
+import Tooltip, { Align, Justify } from '@leafygreen-ui/tooltip';
 
 import { copiedThemeStyle, copyButtonThemeStyles } from './CopyButton.styles';
 import { CopyProps } from './CopyButton.types';
 
+const COPY_TEXT = 'Copy';
+const COPIED_TEXT = 'Copied!';
+
 function CopyButton({ onCopy, contents }: CopyProps) {
   const [copied, setCopied] = useState(false);
+  const [hovered, setHovered] = useState(false);
   const [buttonNode, setButtonNode] = useState(null);
   const { theme, darkMode } = useDarkMode();
   const { portalContainer } = usePopoverPortalContainer();
@@ -51,19 +56,45 @@ function CopyButton({ onCopy, contents }: CopyProps) {
     setCopied(true);
   };
 
+  const handleMouseEnter = () => {
+    setHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setHovered(false);
+  };
+
+  const shouldClose = () => !hovered;
+
   return (
-    <IconButton
-      ref={setButtonNode}
+    <Tooltip
+      open={hovered}
+      setOpen={setHovered}
       darkMode={darkMode}
-      aria-label="Copy"
-      className={cx(copyButtonThemeStyles[theme], {
-        [copiedThemeStyle[theme]]: copied,
-      })}
-      onClick={handleClick}
+      align={Align.Top}
+      justify={Justify.Middle}
+      trigger={
+        <IconButton
+          ref={setButtonNode}
+          darkMode={darkMode}
+          aria-label={COPY_TEXT}
+          className={cx(copyButtonThemeStyles[theme], {
+            [copiedThemeStyle[theme]]: copied,
+          })}
+          onClick={handleClick}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          {copied ? <CheckmarkIcon /> : <CopyIcon />}
+          {copied && (
+            <VisuallyHidden role="alert">{COPIED_TEXT}</VisuallyHidden>
+          )}
+        </IconButton>
+      }
+      shouldClose={shouldClose}
     >
-      {copied ? <CheckmarkIcon /> : <CopyIcon />}
-      {copied && <VisuallyHidden role="alert">Copied!</VisuallyHidden>}
-    </IconButton>
+      {copied ? COPIED_TEXT : COPY_TEXT}
+    </Tooltip>
   );
 }
 
