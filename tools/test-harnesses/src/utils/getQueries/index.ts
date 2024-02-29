@@ -11,6 +11,10 @@ const queriesForElements = getQueriesForElement(
   defaultQueries,
 );
 
-const { getByTestId: getByLgId, findByTestId: findByLgId } = queriesForElements;
+const {
+  getByTestId: getByLgId,
+  findByTestId: findByLgId,
+  queryByTestId: queryByLgId,
+} = queriesForElements;
 
-export { findByLgId, getByLgId };
+export { findByLgId, getByLgId, queryByLgId };
