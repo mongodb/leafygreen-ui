@@ -5,7 +5,7 @@ import { axe } from 'jest-axe';
 import Button from '@leafygreen-ui/button';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 
-import { FormFooterProps } from './FormFooter';
+import { FormFooterProps } from './FormFooter.types';
 import FormFooter from '.';
 
 const testId = {
