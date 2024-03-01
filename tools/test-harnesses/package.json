@@ -1,5 +1,5 @@
 {
-  "name": "@lg-tools/test-harness",
+  "name": "@lg-tools/test-harnesses",
   "version": "0.1.0",
   "description": "Test harnesses for LeafyGreen repositories",
   "license": "Apache-2.0",

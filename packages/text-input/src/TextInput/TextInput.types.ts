@@ -152,6 +152,9 @@ export interface BaseTextInputProps
    */
 
   baseFontSize?: BaseFontSize;
+
+  //TODO: make this resuable
+  ['data-lgid']?: string;
 }
 
 export type TextInputProps = Either<

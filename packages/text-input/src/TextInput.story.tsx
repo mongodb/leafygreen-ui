@@ -82,7 +82,7 @@ export default meta;
 
 export const LiveExample: StoryFn<TextInputProps> = ({
   ...args
-}: TextInputProps) => <TextInput {...args} />;
+}: TextInputProps) => <TextInput data-lgid="testing-lg-id" {...args} />;
 LiveExample.parameters = {
   chromatic: {
     disableSnapshot: true,

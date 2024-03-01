@@ -62,6 +62,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       'aria-labelledby': ariaLabelledby,
       handleValidation,
       baseFontSize: baseFontSizeProp,
+      'data-lgid': dataLgId = 'lg-text_input',
       ...rest
     }: TextInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
@@ -137,6 +138,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
         className={className}
         id={id}
         optional={optional}
+        data-lgid={dataLgId}
       >
         <FormFieldInputContainer>
           <input

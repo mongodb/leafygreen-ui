@@ -66,6 +66,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
               {label && (
                 <Label
                   data-testid="lg-form_field-label"
+                  data-lgid="lg-form_field-label"
                   className={getFontSize({ baseFontSize, size })}
                   htmlFor={inputId}
                   id={labelId}
@@ -77,6 +78,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
               {description && (
                 <Description
                   data-testid="lg-form_field-description"
+                  data-lgid="lg-form_field-description"
                   className={getFontSize({ baseFontSize, size })}
                   id={descriptionId}
                   disabled={disabled}
@@ -90,6 +92,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
               {state === FormFieldState.Error && !disabled && (
                 <Error
                   data-testid="lg-form_field-error_message"
+                  data-lgid="lg-form_field-error_message"
                   className={getFontSize({ baseFontSize, size })}
                   id={errorId}
                 >
