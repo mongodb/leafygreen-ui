@@ -2,4 +2,5 @@
 '@leafygreen-ui/tokens': minor
 ---
 
-Adds `spacing[900]` token
+Adds more spacing tokens
+[JIRA Ticket](https://jira.mongodb.org/browse/LG-4065)
