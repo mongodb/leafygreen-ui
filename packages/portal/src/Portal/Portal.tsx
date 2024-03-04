@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MutableRefObject } from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 
@@ -6,7 +6,10 @@ import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 
 import { PortalProps } from './Portal.types';
 
-export function usePortalContainer(customContainer?: HTMLElement) {
+export function usePortalContainer(
+  customContainer?: HTMLElement,
+  portalRef?: MutableRefObject<HTMLElement>,
+) {
   // Make container initially undefined so that the portal is not created
   // or rendered on initial render. This allows server-side rendering since:
   //  - ReactDOMServer cannot render portals
@@ -17,7 +20,13 @@ export function usePortalContainer(customContainer?: HTMLElement) {
     if (customContainer) {
       setContainer(customContainer);
     } else {
+      // const element = React.createElement('div', {})
       const defaultContainer = document.createElement('div');
+
+      if (portalRef) {
+        portalRef.current = defaultContainer;
+      }
+
       document.body.appendChild(defaultContainer);
 
       setContainer(defaultContainer);
@@ -26,7 +35,7 @@ export function usePortalContainer(customContainer?: HTMLElement) {
         defaultContainer.remove();
       };
     }
-  }, [customContainer]);
+  }, [customContainer, portalRef]);
 
   return container;
 }
@@ -34,20 +43,25 @@ export function usePortalContainer(customContainer?: HTMLElement) {
 /**
  * Portals transport their children to a div that is appended to the end of `document.body` to or a node that can be specified with a container prop.
  */
-function Portal(props: PortalProps): React.ReactPortal | null {
-  const container = usePortalContainer(props.container ?? undefined);
+function Portal({
+  container,
+  className,
+  children,
+  _ref,
+}: PortalProps): React.ReactPortal | null {
+  const portalContainer = usePortalContainer(container ?? undefined, _ref);
 
   useIsomorphicLayoutEffect(() => {
-    if (container && !props.container) {
-      container.className = props.className ?? '';
+    if (portalContainer && !container) {
+      portalContainer.className = className ?? '';
     }
-  }, [container, props.container, props.className]);
+  }, [container, portalContainer, className]);
 
-  if (!container) {
+  if (!portalContainer) {
     return null;
   }
 
-  return createPortal(props.children, container);
+  return createPortal(children, portalContainer);
 }
 
 Portal.displayName = 'Portal';

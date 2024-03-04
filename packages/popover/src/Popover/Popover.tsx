@@ -1,4 +1,4 @@
-import React, { forwardRef, Fragment, useMemo, useState } from 'react';
+import React, { forwardRef, Fragment, useMemo, useRef, useState } from 'react';
 import { Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
@@ -234,6 +234,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
     const [shouldRender, setShouldRender] = useState(false);
 
     useIsomorphicLayoutEffect(() => setShouldRender(true), []);
+    const portalRef = useRef<any>();
 
     if (!shouldRender) {
       return null;
@@ -282,6 +283,8 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       renderedChildren = children;
     }
 
+    console.log({ portalRef });
+
     return (
       <Transition
         nodeRef={contentNodeRef}
@@ -312,7 +315,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
                 display: none;
               `}
             />
-            <Root {...rootProps}>
+            <Root {...rootProps} _ref={portalRef}>
               <div
                 {...rest}
                 ref={fwdRef}
