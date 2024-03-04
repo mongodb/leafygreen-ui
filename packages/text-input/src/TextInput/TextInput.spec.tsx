@@ -29,6 +29,7 @@ function renderTextInput(props = {}) {
   const utils = render(
     <TextInput
       data-testid="text-input"
+      data-lgid="lg-text_input"
       label={defaultProps.label}
       {...props}
     />,

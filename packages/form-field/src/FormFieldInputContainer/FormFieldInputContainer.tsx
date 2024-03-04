@@ -72,7 +72,7 @@ export const FormFieldInputContainer = forwardRef<
         <div className={iconsWrapperStyles}>
           {state === FormFieldState.Valid && !disabled && (
             <Icon
-              role="presentation"
+              aria-hidden={true}
               title="Valid"
               glyph="Checkmark"
               className={validIconStyles[theme]}
@@ -81,7 +81,7 @@ export const FormFieldInputContainer = forwardRef<
 
           {state === FormFieldState.Error && !disabled && (
             <Icon
-              role="presentation"
+              aria-hidden={true}
               title="Error"
               glyph="Warning"
               className={errorIconStyles[theme]}

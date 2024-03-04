@@ -12,7 +12,7 @@ export interface FormElements {
   /**
    * Returns the input node.
    */
-  getInput: () => HTMLElement | null;
+  getInput: () => HTMLInputElement | null;
 
   /**
    * Returns the error message node.

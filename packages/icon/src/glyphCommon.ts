@@ -41,7 +41,7 @@ export function generateAccessibleProps(
 
       return {
         ['aria-labelledby']: ariaLabelledby,
-        ['aria-label']: ariaLabel,
+        ['aria-label']: ariaLabel || getGlyphLabel(glyphName),
         title,
       };
 
