@@ -60,7 +60,7 @@ const ModalWrapper = ({
   );
 };
 
-function renderModal(
+function renderModalWithTextInput(
   props: Partial<React.ComponentProps<typeof ModalView>> = {},
 ) {
   const renderModalUtils = render(<ModalWrapper {...props} />);
@@ -275,13 +275,13 @@ describe('packages/text-input', () => {
 
     describe('LG Modal', () => {
       test('find LG TextInput inside a LG Modal', async () => {
-        const { modalButton, findByTestId } = renderModal();
+        const { modalButton, findByTestId } = renderModalWithTextInput();
 
         userEvent.click(modalButton);
         const modal = await findByTestId('lg-modal');
         expect(modal).toBeInTheDocument();
 
-        // After modal opens look for
+        // After modal opens look for text input
         const {
           elements: { getInput },
         } = getLGTextInputUtils('lg-text_input-modal');
@@ -289,13 +289,13 @@ describe('packages/text-input', () => {
       });
 
       test('Updates the value inside a LG Modal', async () => {
-        const { modalButton, findByTestId } = renderModal();
+        const { modalButton, findByTestId } = renderModalWithTextInput();
 
         userEvent.click(modalButton);
         const modal = await findByTestId('lg-modal');
         expect(modal).toBeInTheDocument();
 
-        // After modal opens look for
+        // After modal opens look for text input
         const {
           elements: { getInput },
           utils: { inputValue },

@@ -3,6 +3,13 @@ import { getByLgId } from '@lg-tools/test-harnesses';
 
 import { LGTextInputUtilsReturnType } from './types';
 
+const getByQuerySelector = <T>(
+  element: HTMLElement,
+  query: string,
+): T | null => {
+  return element.querySelector(query);
+};
+
 export const getLGTextInputUtils = (
   lgId = 'lg-text_input',
 ): LGTextInputUtilsReturnType => {
@@ -15,44 +22,38 @@ export const getLGTextInputUtils = (
   /**
    * Queries the `element` for the label element. Will return `null` if the label is not found.
    */
-  const label = element.querySelector<HTMLElement>(
+  const label = getByQuerySelector<HTMLElement>(
+    element,
     '[data-lgid="lg-form_field-label"]',
   );
 
   /**
    * Queries the `element` for the description element. Will return `null` if the desription is not found.
    */
-  const description = element.querySelector<HTMLElement>(
+  const description = getByQuerySelector<HTMLElement>(
+    element,
     '[data-lgid="lg-form_field-description"]',
   );
 
   /**
    * Queries the `element` for the input element. Will return `null` if the input is not found.
    */
-  const input = element.querySelector<HTMLInputElement>(
+  const input = getByQuerySelector<HTMLInputElement>(
+    element,
     '[data-lgid="lg-text_input-input"]',
   );
 
   /**
    * Queries the `element` for the error message element. Will return `null` if the error message is not found.
    */
-  const errorMessage = element.querySelector<HTMLElement>(
+  const errorMessage = getByQuerySelector<HTMLElement>(
+    element,
     '[data-lgid="lg-form_field-error_message"]',
   );
 
-  /**
-   * It's very unlinkly that the `input` will not be found since it's always rendered
-   */
-  const noInputThrow = () => {
-    const error = new Error(
-      `Unable to find an LG Text Input by: [data-lgid="${lgId}"]`,
-    );
-    error.name = 'LeafyGreenElementError';
-    if (!input) throw error;
-  };
-
   const isInputDisabled = () => {
-    const ariaDisabled = element.querySelector<HTMLElement>(
+    const ariaDisabled = getByQuerySelector<HTMLElement>(
+      element,
       '[aria-disabled="true"]',
     );
 
@@ -65,17 +66,32 @@ export const getLGTextInputUtils = (
   };
 
   const isValid = () => {
-    const checkmarkIcon = element.querySelector<SVGElement>(
+    const checkmarkIcon = getByQuerySelector<SVGElement>(
+      element,
       'svg[aria-label="Checkmark Icon"]',
     );
+
     return !!checkmarkIcon;
   };
 
   const isError = () => {
-    const warningIcon = element.querySelector<SVGElement>(
+    const warningIcon = getByQuerySelector<SVGElement>(
+      element,
       'svg[aria-label="Warning Icon"]',
     );
+
     return !!warningIcon;
+  };
+
+  /**
+   * It's very unlinkly that the `input` will not be found since it's always rendered
+   */
+  const noInputThrow = () => {
+    const error = new Error(
+      `Unable to find an LG Text Input by: [data-lgid="${lgId}"]`,
+    );
+    error.name = 'LeafyGreenElementError';
+    if (!input) throw error;
   };
 
   return {
