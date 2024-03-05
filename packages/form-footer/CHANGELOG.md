@@ -1,5 +1,18 @@
 # @leafygreen-ui/form-footer
 
+## 3.1.0
+
+### Minor Changes
+
+- 5a9bf08a: Adds `cancelButtonProps` and `backButtonProps` to `FormFooter` component for customizing buttons.
+  Marks `cancelButtonText`, `onCancel`, `backButtonText`, and `onBackClick` props as deprecated.
+  [LG-3685](https://jira.mongodb.org/browse/LG-3685)
+
+### Patch Changes
+
+- Updated dependencies [8142d306]
+  - @leafygreen-ui/icon@11.29.0
+
 ## 3.0.16
 
 ### Patch Changes

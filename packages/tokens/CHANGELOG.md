@@ -1,5 +1,12 @@
 # @leafygreen-ui/tokens
 
+## 2.5.0
+
+### Minor Changes
+
+- 3208b813: Adds more spacing tokens
+  [JIRA Ticket](https://jira.mongodb.org/browse/LG-4065)
+
 ## 2.4.0
 
 ### Minor Changes

@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/storybook",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "Storybook config for LeafyGreen",
   "license": "Apache-2.0",
   "main": "./dist/index.js",
@@ -17,10 +17,10 @@
   "dependencies": {
     "@leafygreen-ui/lib": "^13.2.1",
     "@leafygreen-ui/palette": "^4.0.6",
-    "@leafygreen-ui/tokens": "^2.3.0",
+    "@leafygreen-ui/tokens": "^2.5.0",
     "@leafygreen-ui/typography": "^18.0.0",
     "@lg-tools/build": "^0.3.2",
-    "@lg-tools/storybook-decorators": "^0.2.4",
+    "@lg-tools/storybook-decorators": "^0.2.5",
     "@mdx-js/react": "2.3.0",
     "@storybook/addon-a11y": "7.6.17",
     "@storybook/addon-actions": "7.6.17",

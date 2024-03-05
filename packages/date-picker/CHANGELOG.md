@@ -1,5 +1,15 @@
 # @leafygreen-ui/date-picker
 
+## 1.0.1
+
+### Patch Changes
+
+- fbc2b7c8: Removes unused storybook dev dependencies (`@storybook/types` and `storybook-mock-date-decorator`)
+- Updated dependencies [8142d306]
+- Updated dependencies [3208b813]
+  - @leafygreen-ui/icon@11.29.0
+  - @leafygreen-ui/tokens@2.5.0
+
 ## 1.0.0
 
 ### Major Changes
