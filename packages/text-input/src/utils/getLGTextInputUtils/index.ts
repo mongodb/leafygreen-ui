@@ -84,7 +84,7 @@ export const getLGTextInputUtils = (
   };
 
   /**
-   * It's very unlinkly that the `input` will not be found since it's always rendered
+   * It's very unlikely that the `input` will not be found since it's always rendered
    */
   const noInputThrow = () => {
     const error = new Error(

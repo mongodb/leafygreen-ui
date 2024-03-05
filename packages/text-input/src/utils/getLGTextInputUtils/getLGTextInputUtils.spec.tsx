@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import Modal, { ModalView } from '@leafygreen-ui/modal';
@@ -292,18 +292,33 @@ describe('packages/text-input', () => {
     });
 
     describe('LG Modal', () => {
-      test('find LG TextInput inside a LG Modal', async () => {
+      test('find LG TextInput inside a LG Modal after awaiting modal', async () => {
         const { modalButton, findByTestId } = renderModalWithTextInput();
 
         userEvent.click(modalButton);
+
         const modal = await findByTestId('lg-modal');
         expect(modal).toBeInTheDocument();
 
-        // After modal opens look for text input
+        // After awaiting modal, look for text input
         const {
           elements: { getInput },
         } = getLGTextInputUtils('lg-text_input-modal');
         expect(getInput()).toBeInTheDocument();
+      });
+
+      test('find LG TextInput inside a LG Modal awaiting getLGTextInputUtils', async () => {
+        const { modalButton } = renderModalWithTextInput();
+
+        userEvent.click(modalButton);
+
+        // awaiting getLGTextInputUtils
+        await waitFor(() => {
+          const {
+            elements: { getInput },
+          } = getLGTextInputUtils('lg-text_input-modal');
+          expect(getInput()).toBeInTheDocument();
+        });
       });
 
       test('Updates the value inside a LG Modal', async () => {
@@ -313,7 +328,7 @@ describe('packages/text-input', () => {
         const modal = await findByTestId('lg-modal');
         expect(modal).toBeInTheDocument();
 
-        // After modal opens look for text input
+        // After awaiting modal, look for text input
         const {
           elements: { getInput },
           utils: { inputValue },
@@ -334,7 +349,7 @@ describe('packages/text-input', () => {
         const modal = await findByTestId('lg-modal');
         expect(modal).toBeInTheDocument();
 
-        // After modal opens look for the input
+        // After awaiting modal, look for text input
         const { elements } = getLGTextInputUtil();
         expect(elements.getInput()).toBeInTheDocument();
       });
