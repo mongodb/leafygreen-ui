@@ -1,18 +1,21 @@
-// @ts-nocheck
-import { getByLgId } from '@lg-tools/test-harnesses';
+import { getByLgId, getByQuerySelector } from '@lg-tools/test-harnesses';
 
 import { LGTextInputUtilsReturnType } from './types';
-
-const getByQuerySelector = <T>(
-  element: HTMLElement,
-  query: string,
-): T | null => {
-  return element.querySelector(query);
-};
 
 export const getLGTextInputUtils = (
   lgId = 'lg-text_input',
 ): LGTextInputUtilsReturnType => {
+  /**
+   * It's very unlikely that the `input` will not be found since it's always rendered
+   */
+  const noInputThrow = () => {
+    const error = new Error(
+      `Unable to find an LG Text Input by: [data-lgid="${lgId}"]`,
+    );
+    error.name = 'LeafyGreenElementError';
+    if (!input) throw error;
+  };
+
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
    * Will throw if no element is found.
@@ -62,7 +65,7 @@ export const getLGTextInputUtils = (
 
   const inputValue = () => {
     noInputThrow();
-    return input.value;
+    return (input as HTMLInputElement).value;
   };
 
   const isValid = () => {
@@ -81,17 +84,6 @@ export const getLGTextInputUtils = (
     );
 
     return !!warningIcon;
-  };
-
-  /**
-   * It's very unlikely that the `input` will not be found since it's always rendered
-   */
-  const noInputThrow = () => {
-    const error = new Error(
-      `Unable to find an LG Text Input by: [data-lgid="${lgId}"]`,
-    );
-    error.name = 'LeafyGreenElementError';
-    if (!input) throw error;
   };
 
   return {
