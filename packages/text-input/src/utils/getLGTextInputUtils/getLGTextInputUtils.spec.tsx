@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import TextInput from '../../TextInput';
+import Modal, { ModalView } from '@leafygreen-ui/modal';
+
+import TextInput, { TextInputProps } from '../../TextInput';
 import { State } from '../../TextInput';
 
 import { getLGTextInputUtils } from '.';
@@ -24,8 +26,81 @@ function renderTextInput(props = {}) {
     />,
   );
 
+  const rerenderTextInput = (newProps?: Partial<TextInputProps>) => {
+    const allProps = { ...props, ...newProps };
+    renderUtils.rerender(
+      <TextInput
+        data-lgid="lg-text_input"
+        label={defaultProps.label}
+        description={defaultProps.description}
+        {...allProps}
+      />,
+    );
+  };
+
   const { elements, utils } = getLGTextInputUtils('lg-text_input');
-  return { ...renderUtils, ...elements, ...utils };
+  return { ...renderUtils, ...elements, ...utils, rerenderTextInput };
+}
+
+const ModalWrapper = ({
+  open: initialOpen = false,
+  ...props
+}: Partial<React.ComponentProps<typeof ModalView>>) => {
+  const [open, setOpen] = useState(initialOpen);
+  const toggleModal = () => setOpen(o => !o);
+
+  return (
+    <>
+      <button data-testid="lg-modal-button" onClick={toggleModal}></button>
+      <Modal data-testid="lg-modal" {...props} open={open} setOpen={setOpen}>
+        <p>Inside Modal</p>
+        <TextInput data-lgid="lg-text_input-modal" label={defaultProps.label} />
+      </Modal>
+    </>
+  );
+};
+
+function renderModal(
+  props: Partial<React.ComponentProps<typeof ModalView>> = {},
+) {
+  const renderModalUtils = render(<ModalWrapper {...props} />);
+  const modalButton = renderModalUtils.getByTestId('lg-modal-button');
+
+  return {
+    ...renderModalUtils,
+    modalButton,
+  };
+}
+
+function renderMultipleInputs() {
+  render(
+    <>
+      <TextInput
+        data-lgid="lg-text_input-1"
+        label="label 1"
+        description="description 1"
+        value="text input 1"
+      />
+      <TextInput
+        data-lgid="lg-text_input-2"
+        label="label 2"
+        description="description 2"
+        value="text input 2"
+      />
+    </>,
+  );
+
+  const { elements: elementsOne, utils: utilsOne } =
+    getLGTextInputUtils('lg-text_input-1');
+  const { elements: elementsTwo, utils: utilsTwo } =
+    getLGTextInputUtils('lg-text_input-2');
+
+  return {
+    elementsOne,
+    elementsTwo,
+    utilsOne,
+    utilsTwo,
+  };
 }
 
 describe('packages/text-input', () => {
@@ -158,12 +233,77 @@ describe('packages/text-input', () => {
       });
 
       test('returns value when controlled', () => {
-        const { inputValue } = renderTextInput({ value: '456' });
+        const { inputValue, rerenderTextInput } = renderTextInput({
+          value: '456',
+        });
 
         expect(inputValue()).toBe('456');
+        rerenderTextInput({ value: 'I was rerendered' });
+        expect(inputValue()).toBe('I was rerendered');
+      });
+    });
+
+    describe('multiple inputs', () => {
+      test('getInput', () => {
+        const { elementsOne, elementsTwo } = renderMultipleInputs();
+
+        expect(elementsOne.getInput() as HTMLInputElement).toBeInTheDocument();
+        expect(elementsTwo.getInput() as HTMLInputElement).toBeInTheDocument();
+      });
+
+      test('getLabel', () => {
+        const { elementsOne, elementsTwo } = renderMultipleInputs();
+
+        expect(elementsOne.getLabel()).toHaveTextContent('label 1');
+        expect(elementsTwo.getLabel()).toHaveTextContent('label 2');
+      });
+
+      test('getDescription', () => {
+        const { elementsOne, elementsTwo } = renderMultipleInputs();
+
+        expect(elementsOne.getDescription()).toHaveTextContent('description 1');
+        expect(elementsTwo.getDescription()).toHaveTextContent('description 2');
+      });
+
+      test('inputValue', () => {
+        const { utilsOne, utilsTwo } = renderMultipleInputs();
+
+        expect(utilsOne.inputValue()).toBe('text input 1');
+        expect(utilsTwo.inputValue()).toBe('text input 2');
+      });
+    });
+
+    describe('LG Modal', () => {
+      test('find LG TextInput inside a LG Modal', async () => {
+        const { modalButton, findByTestId } = renderModal();
+
+        userEvent.click(modalButton);
+        const modal = await findByTestId('lg-modal');
+        expect(modal).toBeInTheDocument();
+
+        // After modal opens look for
+        const {
+          elements: { getInput },
+        } = getLGTextInputUtils('lg-text_input-modal');
+        expect(getInput()).toBeInTheDocument();
+      });
+
+      test('Updates the value inside a LG Modal', async () => {
+        const { modalButton, findByTestId } = renderModal();
+
+        userEvent.click(modalButton);
+        const modal = await findByTestId('lg-modal');
+        expect(modal).toBeInTheDocument();
+
+        // After modal opens look for
+        const {
+          elements: { getInput },
+          utils: { inputValue },
+        } = getLGTextInputUtils('lg-text_input-modal');
+        const input = getInput();
+        userEvent.type(input as HTMLInputElement, 'what rhymes with modal?');
+        expect(inputValue()).toBe('what rhymes with modal?');
       });
     });
   });
 });
-
-//TODO: TEST rerender

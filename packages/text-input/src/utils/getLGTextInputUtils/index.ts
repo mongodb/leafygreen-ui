@@ -29,7 +29,9 @@ export const getLGTextInputUtils = (
   /**
    * Queries the `element` for the input element. Will return `null` if the input is not found.
    */
-  const input = element.querySelector<HTMLInputElement>('input');
+  const input = element.querySelector<HTMLInputElement>(
+    '[data-lgid="lg-text_input-input"]',
+  );
 
   /**
    * Queries the `element` for the error message element. Will return `null` if the error message is not found.
@@ -50,8 +52,11 @@ export const getLGTextInputUtils = (
   };
 
   const isInputDisabled = () => {
-    noInputThrow();
-    return input.disabled;
+    const ariaDisabled = element.querySelector<HTMLElement>(
+      '[aria-disabled="true"]',
+    );
+
+    return !!ariaDisabled;
   };
 
   const inputValue = () => {
