@@ -301,8 +301,11 @@ describe('packages/text-input', () => {
           utils: { inputValue },
         } = getLGTextInputUtils('lg-text_input-modal');
         const input = getInput();
-        userEvent.type(input as HTMLInputElement, 'what rhymes with modal?');
-        expect(inputValue()).toBe('what rhymes with modal?');
+        userEvent.type(
+          input as HTMLInputElement,
+          'what rhymes with modal? xodal',
+        );
+        expect(inputValue()).toBe('what rhymes with modal? xodal');
       });
     });
   });
