@@ -19,7 +19,6 @@
   ],
   "exclude": [
     "**/*.spec.*",
-    
     "**/*.stories.*"
   ],
   "references": [
