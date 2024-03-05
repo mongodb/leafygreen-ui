@@ -38,7 +38,7 @@ function renderTextInput(props = {}) {
     );
   };
 
-  const { elements, utils } = getLGTextInputUtils('lg-text_input');
+  const { elements, utils } = getLGTextInputUtils();
   return { ...renderUtils, ...elements, ...utils, rerenderTextInput };
 }
 
@@ -69,6 +69,24 @@ function renderModalWithTextInput(
   return {
     ...renderModalUtils,
     modalButton,
+  };
+}
+
+async function renderModalWithTextInputAndUtils(
+  props: Partial<React.ComponentProps<typeof ModalView>> = {},
+) {
+  const renderModalUtils = render(<ModalWrapper {...props} />);
+  const modalButton = renderModalUtils.getByTestId('lg-modal-button');
+
+  const getLGTextInputUtil = () => {
+    const { elements, utils } = getLGTextInputUtils('lg-text_input-modal');
+    return { elements, utils };
+  };
+
+  return {
+    ...renderModalUtils,
+    modalButton,
+    getLGTextInputUtil: () => getLGTextInputUtil(),
   };
 }
 
@@ -306,6 +324,19 @@ describe('packages/text-input', () => {
           'what rhymes with modal? xodal',
         );
         expect(inputValue()).toBe('what rhymes with modal? xodal');
+      });
+
+      test('passing utils', async () => {
+        const { modalButton, findByTestId, getLGTextInputUtil } =
+          await renderModalWithTextInputAndUtils();
+
+        userEvent.click(modalButton);
+        const modal = await findByTestId('lg-modal');
+        expect(modal).toBeInTheDocument();
+
+        // After modal opens look for the input
+        const { elements } = getLGTextInputUtil();
+        expect(elements.getInput()).toBeInTheDocument();
       });
     });
   });
