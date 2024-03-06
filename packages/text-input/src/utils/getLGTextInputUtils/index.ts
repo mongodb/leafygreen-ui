@@ -39,12 +39,12 @@ export const getLGTextInputUtils = (
   );
 
   /**
-   * Queries the `element` for the input element. Will return `null` if the input is not found.
+   * Queries the `element` for the input element.
    */
   const input = getByQuerySelector<HTMLInputElement>(
     element,
     '[data-lgid="lg-text_input-input"]',
-  );
+  ) as HTMLInputElement;
 
   /**
    * Queries the `element` for the error message element. Will return `null` if the error message is not found.

@@ -1,17 +1,14 @@
 import React from 'react';
-import {
-  fireEvent,
-  getByLabelText,
-  render,
-  screen,
-} from '@testing-library/react';
+import { fireEvent, getByLabelText, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
 import { consoleOnce } from '@leafygreen-ui/lib';
 
+import { getLGTextInputUtils } from '../utils/getLGTextInputUtils';
+
 import TextInput from './TextInput';
-import { SizeVariant, State } from './TextInput.types';
+import { State, TextInputProps } from './TextInput.types';
 
 const error = 'This is the error message';
 const validEmail = 'test.email@mongodb.com';
@@ -26,18 +23,38 @@ const defaultProps = {
 };
 
 function renderTextInput(props = {}) {
-  const utils = render(
-    <TextInput
-      data-testid="text-input"
-      data-lgid="lg-text_input"
-      label={defaultProps.label}
-      {...props}
-    />,
+  const renderUtils = render(
+    <TextInput label={defaultProps.label} {...props} />,
   );
-  const textInput = utils.getByTestId('text-input');
-  const label = utils.container.querySelector('label');
-  const description = utils.container.querySelector('p');
-  return { ...utils, textInput, label, description };
+
+  const {
+    elements: { getDescription, getErrorMessage, getInput, getLabel },
+    utils: { isDisabled, isError, isValid, inputValue },
+  } = getLGTextInputUtils();
+
+  const textInput = getInput();
+  const label = getLabel();
+  const description = getDescription();
+
+  const rerenderTextInput = (newProps?: Partial<TextInputProps>) => {
+    const allProps = { ...props, ...newProps };
+    renderUtils.rerender(
+      <TextInput label={defaultProps.label} {...allProps} />,
+    );
+  };
+
+  return {
+    ...renderUtils,
+    textInput,
+    label,
+    description,
+    getErrorMessage,
+    isDisabled,
+    isError,
+    isValid,
+    inputValue,
+    rerenderTextInput,
+  };
 }
 
 describe('packages/text-input', () => {
@@ -92,64 +109,78 @@ describe('packages/text-input', () => {
 
   describe('when the "state" is "valid"', () => {
     test('displays checkmark icon when input is valid', () => {
-      const { container, textInput } = renderTextInput({
+      const { container, inputValue, isValid } = renderTextInput({
         value: validEmail,
         state: State.Valid,
         optional: true,
         ...defaultProps,
       });
 
-      expect((textInput as HTMLInputElement).value).toBe(validEmail);
+      expect(inputValue()).toBe(validEmail);
+      expect(isValid()).toBe(true);
       expect(container.innerHTML).not.toContain('Optional');
     });
 
     test('displays checkmark icon when input is valid even when input is disabled', () => {
-      const { container, textInput } = renderTextInput({
+      const { container, inputValue } = renderTextInput({
         value: validEmail,
         state: State.Valid,
         disabled: true,
         ...defaultProps,
       });
 
-      expect((textInput as HTMLInputElement).value).toBe(validEmail);
+      expect(inputValue()).toBe(validEmail);
       expect(container.innerHTML).not.toContain('Optional');
+    });
+  });
+
+  describe('disabled', () => {
+    test('is true', () => {
+      const { isDisabled } = renderTextInput({ disabled: true });
+
+      expect(isDisabled()).toBe(true);
+    });
+
+    test('is false', () => {
+      const { isDisabled } = renderTextInput();
+
+      expect(isDisabled()).toBe(false);
     });
   });
 
   describe('when the "state" is "error"', () => {
     test('displays warning icon when input is invalid', () => {
-      const { container, textInput } = renderTextInput({
+      const { container, inputValue, isError } = renderTextInput({
         value: invalidEmail,
         state: State.Error,
         optional: true,
         ...defaultProps,
       });
 
-      expect((textInput as HTMLInputElement).value).toBe(invalidEmail);
+      expect(inputValue()).toBe(invalidEmail);
+      expect(isError()).toBe(true);
       expect(container.innerHTML).not.toContain('Optional');
     });
 
-    test('displays warning icon even when input is disabled', () => {
-      const { container, textInput } = renderTextInput({
+    test('renders empty error message container', () => {
+      const { getErrorMessage } = renderTextInput({
         value: invalidEmail,
         state: State.Error,
-        disabled: true,
+        optional: true,
         ...defaultProps,
       });
-
-      expect((textInput as HTMLInputElement).value).toBe(invalidEmail);
-      expect(container.innerHTML).not.toContain('Optional');
+      expect(getErrorMessage()).toHaveTextContent('');
     });
 
     test('displays error message when input is invalid', () => {
-      const { container } = renderTextInput({
+      const { getErrorMessage } = renderTextInput({
         value: invalidEmail,
         state: State.Error,
         optional: true,
         errorMessage: error,
         ...defaultProps,
       });
-      expect(container.innerHTML).toContain(error);
+      expect(getErrorMessage()).toHaveTextContent(error);
     });
   });
 
@@ -157,26 +188,26 @@ describe('packages/text-input', () => {
     defaultProps.onChange.mockReturnValue('none');
 
     test('valid/error icons are not present', () => {
-      const { container } = renderTextInput({
+      const { isValid, isError } = renderTextInput({
         state: State.None,
         ...defaultProps,
       });
-      expect(container.innerHTML).not.toContain('Checkmark Icon');
-      expect(container.innerHTML).not.toContain('Warning Icon');
+      expect(isValid()).toBe(false);
+      expect(isError()).toBe(false);
     });
 
     test('key presses are reflected in component and onChange function is called when value changes', () => {
-      const { textInput } = renderTextInput({
+      const { inputValue, textInput } = renderTextInput({
         state: State.None,
         ...defaultProps,
       });
-      expect((textInput as HTMLInputElement).value).toBe('');
+      expect(inputValue()).toBe('');
 
       fireEvent.change(textInput, {
         target: { value: 'a' },
       });
 
-      expect((textInput as HTMLInputElement).value).toBe('a');
+      expect(inputValue()).toBe('a');
       expect(defaultProps.onChange).toHaveBeenCalledTimes(1);
       expect(defaultProps.onChange).toHaveReturnedWith('none');
     });
@@ -193,9 +224,17 @@ describe('packages/text-input', () => {
 
   describe('when no label is supplied', () => {
     test('no label tag renders to the DOM', () => {
-      renderTextInput();
+      const { label } = renderTextInput({ label: '' });
 
-      expect(screen.queryByRole('label')).not.toBeInTheDocument();
+      expect(label).not.toBeInTheDocument();
+    });
+  });
+
+  describe('when no description is supplied', () => {
+    test('no label tag renders to the DOM', () => {
+      const { description } = renderTextInput({ description: '' });
+
+      expect(description).not.toBeInTheDocument();
     });
   });
 
@@ -239,21 +278,22 @@ describe('packages/text-input', () => {
     });
   });
 
-  describe('when the "sizeVariant" is "large"', () => {
-    // TODO: This type of check should be done with a visual regression test
-    // As written this test does not pass even if the font-size is inherited correctly
-    // eslint-disable-next-line jest/no-disabled-tests
-    test.skip('check if font-size is 18px', () => {
-      const { label } = renderTextInput({
-        value: validEmail,
-        sizeVariant: SizeVariant.Large,
-        optional: true,
-        ...defaultProps,
+  describe('inputValue', () => {
+    test('returns value when uncontrolled', () => {
+      const { textInput, inputValue } = renderTextInput();
+
+      userEvent.type(textInput, '123');
+      expect(inputValue()).toBe('123');
+    });
+
+    test('returns value when controlled', () => {
+      const { inputValue, rerenderTextInput } = renderTextInput({
+        value: '456',
       });
 
-      expect(label).toHaveStyle({
-        fontSize: '18px',
-      });
+      expect(inputValue()).toBe('456');
+      rerenderTextInput({ value: 'I was rerendered' });
+      expect(inputValue()).toBe('I was rerendered');
     });
   });
 
