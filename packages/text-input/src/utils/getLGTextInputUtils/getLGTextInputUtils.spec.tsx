@@ -1,3 +1,4 @@
+// TODO: move tests inside /TextInput.spec.tsx
 import React, { useState } from 'react';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';

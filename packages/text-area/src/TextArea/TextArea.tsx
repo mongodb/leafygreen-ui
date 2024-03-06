@@ -69,6 +69,7 @@ export const TextArea: TextArea = forwardRef<
     handleValidation,
     'aria-labelledby': ariaLabelledby,
     baseFontSize: baseFontSizeProp,
+    'data-lgid': dataLgId = 'lg-text_area',
     ...rest
   }: TextAreaProps,
   forwardedRef: React.Ref<HTMLTextAreaElement>,
@@ -118,16 +119,23 @@ export const TextArea: TextArea = forwardRef<
       // This works as-is because all of the Typography elements are using useUpdatedBaseFontSize to convert 14 to 13px.
       baseFontSize={baseFontSize === 16 ? 16 : 14}
     >
-      <div className={cx(containerStyles, className)}>
+      <div className={cx(containerStyles, className)} data-lgid={dataLgId}>
         {label && (
-          <Label htmlFor={id} disabled={disabled}>
+          <Label
+            htmlFor={id}
+            disabled={disabled}
+            data-lgid="lg-text_area-label"
+          >
             {label}
           </Label>
         )}
         {description && (
-          <Description disabled={disabled}>{description}</Description>
+          <Description disabled={disabled} data-lgid="lg-text_area-description">
+            {description}
+          </Description>
         )}
         <textarea
+          data-lgid="lg-text_area-input"
           {...rest}
           aria-labelledby={ariaLabelledby}
           ref={forwardedRef}
@@ -157,6 +165,7 @@ export const TextArea: TextArea = forwardRef<
                 bodyTypeScaleStyles[baseFontSize],
                 errorMessageLabelStyles,
               )}
+              data-lgid="lg-text_area-error_message"
             >
               {errorMessage}
             </Error>

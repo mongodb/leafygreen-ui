@@ -1,16 +1,16 @@
 import { getByLgId, getByQuerySelector } from '@lg-tools/test-harnesses';
 
-import { LGTextInputUtilsReturnType } from './getLGTextInputUtils.types';
+import { LGTextAreaUtilsReturnType } from './getLGTextAreaUtils.types';
 
-export const getLGTextInputUtils = (
-  lgId = 'lg-text_input',
-): LGTextInputUtilsReturnType => {
+export const getLGTextAreaUtils = (
+  lgId = 'lg-text_area',
+): LGTextAreaUtilsReturnType => {
   /**
    * It's very unlikely that the `input` will not be found since it's always rendered
    */
   const noInputThrow = () => {
     const error = new Error(
-      `Unable to find an LG TextInput by: [data-lgid="${lgId}"]`,
+      `Unable to find an LG TextArea by: [data-lgid="${lgId}"]`,
     );
     error.name = 'LeafyGreenElementError';
     if (!input) throw error;
@@ -27,7 +27,7 @@ export const getLGTextInputUtils = (
    */
   const label = getByQuerySelector<HTMLElement>(
     element,
-    '[data-lgid="lg-form_field-label"]',
+    '[data-lgid="lg-text_area-label"]',
   );
 
   /**
@@ -35,7 +35,7 @@ export const getLGTextInputUtils = (
    */
   const description = getByQuerySelector<HTMLElement>(
     element,
-    '[data-lgid="lg-form_field-description"]',
+    '[data-lgid="lg-text_area-description"]',
   );
 
   /**
@@ -43,7 +43,7 @@ export const getLGTextInputUtils = (
    */
   const input = getByQuerySelector<HTMLInputElement>(
     element,
-    '[data-lgid="lg-text_input-input"]',
+    '[data-lgid="lg-text_area-input"]',
   );
 
   /**
@@ -51,36 +51,20 @@ export const getLGTextInputUtils = (
    */
   const errorMessage = getByQuerySelector<HTMLElement>(
     element,
-    '[data-lgid="lg-form_field-error_message"]',
+    '[data-lgid="lg-text_area-error_message"]',
   );
 
   /**
    * Queries the `element` for aria-disabled.
    */
   const isInputDisabled = () => {
-    const ariaDisabled = getByQuerySelector<HTMLElement>(
-      element,
-      '[aria-disabled="true"]',
-    );
-
-    return !!ariaDisabled;
+    noInputThrow();
+    return (input as HTMLInputElement).disabled;
   };
 
   const inputValue = () => {
     noInputThrow();
     return (input as HTMLInputElement).value;
-  };
-
-  /**
-   * Queries the `element` for the checkmark Icon.
-   */
-  const isValid = () => {
-    const checkmarkIcon = getByQuerySelector<SVGElement>(
-      element,
-      'svg[aria-label="Checkmark Icon"]',
-    );
-
-    return !!checkmarkIcon;
   };
 
   /**
@@ -104,7 +88,6 @@ export const getLGTextInputUtils = (
     },
     utils: {
       isDisabled: () => isInputDisabled(),
-      isValid: () => isValid(),
       isError: () => isError(),
       inputValue: () => inputValue(),
     },

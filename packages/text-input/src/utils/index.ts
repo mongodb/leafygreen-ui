@@ -1,0 +1,1 @@
+export { getLGTextInputUtils } from './getLGTextInputUtils';

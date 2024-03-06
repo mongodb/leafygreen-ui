@@ -90,6 +90,9 @@ export interface BaseTextAreaProps
    * Optional if `label` is provided
    */
   ['aria-labelledby']: string;
+
+  //TODO: make this resuable
+  ['data-lgid']?: string;
 }
 
 export type AriaLabels = 'label' | 'aria-labelledby';
