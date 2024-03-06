@@ -19,6 +19,7 @@ const defaultProps = {
   description: 'This is the description',
 };
 
+// TODO: update these tests
 function renderTextArea(props = {}) {
   const utils = render(
     <TextArea data-testid="text-area" label={labelProp} {...props} />,

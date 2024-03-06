@@ -154,6 +154,7 @@ export const TextArea: TextArea = forwardRef<
           onChange={onValueChange}
           onBlur={onBlurHandler}
           value={value}
+          aria-invalid={state === State.Error}
         />
         {!disabled && state === State.Error && errorMessage && (
           <div className={errorContainerStyle}>
