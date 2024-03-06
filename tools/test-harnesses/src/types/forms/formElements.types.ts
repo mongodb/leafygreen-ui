@@ -1,4 +1,4 @@
-export interface FormElements {
+export interface FormElements<T extends HTMLElement = HTMLInputElement> {
   /**
    * Returns the label node.
    */
@@ -12,7 +12,7 @@ export interface FormElements {
   /**
    * Returns the input node.
    */
-  getInput: () => HTMLInputElement | null;
+  getInput: () => T;
 
   /**
    * Returns the error message node.

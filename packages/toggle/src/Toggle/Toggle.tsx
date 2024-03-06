@@ -28,6 +28,7 @@ function Toggle({
   onChange: onChangeProp,
   onClick: onClickProp,
   checked: controlledChecked,
+  'data-lgid': dataLgId = 'lg-toggle',
   ...rest
 }: ToggleProps) {
   validateAriaLabelProps(rest, Toggle.displayName);
@@ -69,6 +70,7 @@ function Toggle({
         buttonThemeStyles[theme],
         buttonSizeStyles[size],
       )}
+      data-lgid={dataLgId}
       {...rest}
     >
       <div

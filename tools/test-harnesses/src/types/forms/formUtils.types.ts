@@ -10,7 +10,7 @@ export interface FormUtils {
   isValid: () => boolean;
 
   /**
-   * Returns whether the input is `error`
+   * Returns whether the input state is `error`
    */
   isError: () => boolean;
 

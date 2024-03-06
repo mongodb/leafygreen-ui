@@ -47,6 +47,9 @@ interface BaseToggleProps {
    * Adds a className to the outermost element.
    */
   className?: string;
+
+  //TODO: make this resuable
+  ['data-lgid']?: string;
 }
 
 export type ToggleProps = Either<

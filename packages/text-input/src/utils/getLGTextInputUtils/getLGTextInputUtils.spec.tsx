@@ -247,7 +247,7 @@ describe('packages/text-input', () => {
         const { getInput, inputValue } = renderTextInput();
 
         const input = getInput();
-        userEvent.type(input as HTMLInputElement, '123');
+        userEvent.type(input, '123');
         expect(inputValue()).toBe('123');
       });
 
@@ -266,8 +266,8 @@ describe('packages/text-input', () => {
       test('getInput', () => {
         const { elementsOne, elementsTwo } = renderMultipleInputs();
 
-        expect(elementsOne.getInput() as HTMLInputElement).toBeInTheDocument();
-        expect(elementsTwo.getInput() as HTMLInputElement).toBeInTheDocument();
+        expect(elementsOne.getInput()).toBeInTheDocument();
+        expect(elementsTwo.getInput()).toBeInTheDocument();
       });
 
       test('getLabel', () => {
@@ -335,10 +335,7 @@ describe('packages/text-input', () => {
           utils: { inputValue },
         } = getLGTextInputUtils('lg-text_input-modal');
         const input = getInput();
-        userEvent.type(
-          input as HTMLInputElement,
-          'what rhymes with modal? xodal',
-        );
+        userEvent.type(input, 'what rhymes with modal? xodal');
         expect(inputValue()).toBe('what rhymes with modal? xodal');
       });
 
