@@ -1,12 +1,12 @@
+  
 {
-  "name": "@lg-tools/storybook",
-  "version": "0.3.5",
-  "description": "Storybook config for LeafyGreen",
-  "deprecated": "Use `@lg-tools/storybook-addon` instead",
-  "license": "Apache-2.0",
+  "name": "@lg-tools/storybook-addon",
+  "version": "0.0.1",
+  "description": "Storybook Addon for LeafyGreen UI Kit",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
+  "license": "Apache-2.0",
   "scripts": {
     "build": "lg-internal-build-package",
     "tsc": "tsc --build tsconfig.json",
@@ -14,6 +14,14 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/storybook-addon",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "dependencies": {
     "@leafygreen-ui/lib": "^13.2.1",
@@ -24,8 +32,6 @@
     "@lg-tools/storybook-decorators": "^0.2.5",
     "@mdx-js/react": "2.3.0",
     "@storybook/addon-a11y": "7.6.17",
-    "@storybook/addon-actions": "7.6.17",
-    "@storybook/addon-docs": "7.6.17",
     "@storybook/addon-essentials": "7.6.17",
     "@storybook/addon-interactions": "7.6.17",
     "@storybook/addon-links": "7.6.17",
@@ -42,18 +48,17 @@
     "@svgr/webpack": "8.0.1",
     "buffer": "6.0.3",
     "file-loader": "6.2.0",
-    "fs-extra": "11.1.1",
     "glob": "10.3.3",
     "lodash": "4.17.21",
     "path-browserify": "1.0.1",
     "react-docgen-typescript": "2.2.2",
-    "storybook": "^7.6.17",
     "stream-browserify": "3.0.0",
     "url-loader": "4.1.1",
     "webpack": "5.88.0"
   },
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0",
-    "react-dom": "^17.0.0 || ^18.0.0"
+    "react-dom": "^17.0.0 || ^18.0.0",
+    "storybook": "^7.6.17"
   }
 }
