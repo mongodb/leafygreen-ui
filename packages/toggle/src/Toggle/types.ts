@@ -2,7 +2,7 @@ import {
   DarkModeProps,
   Either,
   HTMLElementProps,
-  LGIdProps,
+  LgIdProps,
 } from '@leafygreen-ui/lib';
 
 export const Size = {
@@ -13,7 +13,7 @@ export const Size = {
 
 export type Size = (typeof Size)[keyof typeof Size];
 
-interface BaseToggleProps extends DarkModeProps, LGIdProps {
+interface BaseToggleProps extends DarkModeProps, LgIdProps {
   /**
    * Sets the size of the toggle.
    *

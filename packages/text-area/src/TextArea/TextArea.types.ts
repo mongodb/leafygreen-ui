@@ -4,7 +4,7 @@ import {
   DarkModeProps,
   Either,
   HTMLElementProps,
-  LGIdProps,
+  LgIdProps,
 } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
@@ -18,7 +18,7 @@ export type State = (typeof State)[keyof typeof State];
 export interface BaseTextAreaProps
   extends HTMLElementProps<'textarea', HTMLTextAreaElement>,
     DarkModeProps,
-    LGIdProps {
+    LgIdProps {
   /**
    * ID associated with the TextArea component.
    */

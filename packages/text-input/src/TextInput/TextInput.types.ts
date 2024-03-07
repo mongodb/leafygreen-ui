@@ -2,7 +2,7 @@ import {
   DarkModeProps,
   Either,
   HTMLElementProps,
-  LGIdProps,
+  LgIdProps,
 } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
@@ -78,7 +78,7 @@ interface TextInputTypeProp {
 export interface BaseTextInputProps
   extends Omit<HTMLElementProps<'input', HTMLInputElement>, AriaLabels>,
     DarkModeProps,
-    LGIdProps {
+    LgIdProps {
   /**
    * id associated with the TextInput component.
    */

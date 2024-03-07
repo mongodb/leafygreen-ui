@@ -3,7 +3,7 @@
  *
  * @public
  */
-export default interface LGIdProps {
+export interface LgIdProps {
   /**
    * LG test id passed to the component wrapper.
    */

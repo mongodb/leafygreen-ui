@@ -2,7 +2,7 @@ import * as typeIs from './typeIs';
 import createUniqueClassName from './createUniqueClassName';
 import getNodeTextContent from './getNodeTextContent';
 import DarkModeProps, { Theme } from './DarkModeProps';
-import LGIdProps from './LGIdProps';
+import { LgIdProps } from './LgIdProps';
 import getTheme from './getTheme';
 export * from './helpers';
 export { validateChildren, isComponentType } from './validateChildren';
@@ -24,7 +24,7 @@ export {
 } from './storybook';
 
 export { typeIs, createUniqueClassName, getNodeTextContent, getTheme, Theme };
-export type { DarkModeProps, LGIdProps };
+export type { DarkModeProps, LgIdProps };
 
 /** Helper type to extract an HTML element's valid props */
 export type HTMLElementProps<
