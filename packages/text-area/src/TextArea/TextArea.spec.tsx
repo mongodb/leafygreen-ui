@@ -8,7 +8,9 @@ import {
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { State, TextArea } from '.';
+import { getLGTextAreaUtils } from '../utils/getLGTextAreaUtils';
+
+import { State, TextArea, TextAreaProps } from '.';
 
 const onChange = jest.fn();
 
@@ -19,16 +21,34 @@ const defaultProps = {
   description: 'This is the description',
 };
 
-// TODO: update these tests
 function renderTextArea(props = {}) {
-  const utils = render(
-    <TextArea data-testid="text-area" label={labelProp} {...props} />,
-  );
+  const renderUtils = render(<TextArea label={labelProp} {...props} />);
 
-  const textArea = utils.getByTestId('text-area');
-  const label = utils.container.querySelector('label');
-  const description = utils.container.querySelector('p');
-  return { ...utils, textArea, label, description };
+  const {
+    elements: { getDescription, getErrorMessage, getInput, getLabel },
+    utils: { isDisabled, isError, inputValue },
+  } = getLGTextAreaUtils();
+
+  const textArea = getInput();
+  const label = getLabel();
+  const description = getDescription();
+
+  const rerenderTextArea = (newProps?: Partial<TextAreaProps>) => {
+    const allProps = { ...props, ...newProps };
+    renderUtils.rerender(<TextArea label={labelProp} {...allProps} />);
+  };
+
+  return {
+    ...renderUtils,
+    textArea,
+    label,
+    description,
+    getErrorMessage,
+    isDisabled,
+    isError,
+    inputValue,
+    rerenderTextArea,
+  };
 }
 
 describe('packages/text-area', () => {
@@ -52,25 +72,38 @@ describe('packages/text-area', () => {
   });
 
   test('key presses are reflected in component and onChange function is called when value changes', () => {
-    const { textArea } = renderTextArea({ onChange });
-    expect((textArea as HTMLTextAreaElement).value).toBe('');
+    const { textArea, inputValue } = renderTextArea({ onChange });
+    expect(inputValue()).toBe('');
 
     fireEvent.change(textArea, {
       target: { value: 'a' },
     });
 
-    expect((textArea as HTMLTextAreaElement).value).toBe('a');
+    expect(inputValue()).toBe('a');
     expect(onChange).toHaveBeenCalledTimes(1);
   });
 
   describe('when the "state" prop is set to error, and an "errorMessage" is set', () => {
     test('the error message appears in the DOM', () => {
-      const { container } = renderTextArea({
+      const { isError, getErrorMessage } = renderTextArea({
         state: State.Error,
         errorMessage,
       });
 
-      expect(container.innerHTML.includes(errorMessage)).toBe(true);
+      expect(isError()).toBe(true);
+      expect(getErrorMessage()).toHaveTextContent(errorMessage);
+    });
+  });
+
+  describe('when the "state" props is set to "none', () => {
+    test('valid/error icons are not present', () => {
+      const { isError } = renderTextArea();
+      expect(isError()).toBe(false);
+    });
+
+    test('error message returns null', () => {
+      const { getErrorMessage } = renderTextArea();
+      expect(getErrorMessage()).not.toBeInTheDocument();
     });
   });
 
@@ -87,9 +120,17 @@ describe('packages/text-area', () => {
 
   describe('when no label is supplied', () => {
     test('no label tag renders to the DOM', () => {
-      renderTextArea();
+      const { label } = renderTextArea({ label: '' });
 
-      expect(screen.queryByRole('label')).not.toBeInTheDocument();
+      expect(label).not.toBeInTheDocument();
+    });
+  });
+
+  describe('when no description is supplied', () => {
+    test('no description tag renders to the DOM', () => {
+      const { description } = renderTextArea();
+
+      expect(description).not.toBeInTheDocument();
     });
   });
 
@@ -130,6 +171,39 @@ describe('packages/text-area', () => {
       userEvent.tab(); // focus
       userEvent.type(inputElement, `test`);
       expect(handleValidation).toHaveBeenCalledTimes(5); // blur + keypress * 4
+    });
+  });
+
+  describe('disabled', () => {
+    test('is true', () => {
+      const { isDisabled } = renderTextArea({ disabled: true });
+
+      expect(isDisabled()).toBe(true);
+    });
+
+    test('is false', () => {
+      const { isDisabled } = renderTextArea();
+
+      expect(isDisabled()).toBe(false);
+    });
+  });
+
+  describe('returns correct value', () => {
+    test('when uncontrolled', () => {
+      const { textArea, inputValue } = renderTextArea();
+
+      userEvent.type(textArea, '123');
+      expect(inputValue()).toBe('123');
+    });
+
+    test('when controlled', () => {
+      const { inputValue, rerenderTextArea } = renderTextArea({
+        value: '456',
+      });
+
+      expect(inputValue()).toBe('456');
+      rerenderTextArea({ value: 'I was rerendered' });
+      expect(inputValue()).toBe('I was rerendered');
     });
   });
 

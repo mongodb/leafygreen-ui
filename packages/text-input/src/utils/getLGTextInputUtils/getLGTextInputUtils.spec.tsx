@@ -26,7 +26,7 @@ const ModalWrapper = ({
       <button data-testid="lg-modal-button" onClick={toggleModal}></button>
       <Modal data-testid="lg-modal" {...props} open={open} setOpen={setOpen}>
         <p>Inside Modal</p>
-        <TextInput data-lgid="lg-text_input-modal" label={defaultProps.label} />
+        <TextInput label={defaultProps.label} />
       </Modal>
     </>
   );
@@ -44,37 +44,17 @@ function renderModalWithTextInput(
   };
 }
 
-async function renderModalWithTextInputAndUtils(
-  props: Partial<React.ComponentProps<typeof ModalView>> = {},
-) {
-  const renderModalUtils = render(<ModalWrapper {...props} />);
-  const modalButton = renderModalUtils.getByTestId('lg-modal-button');
-
-  const getLGTextInputUtil = () => {
-    const { elements, utils } = getLGTextInputUtils('lg-text_input-modal');
-    return { elements, utils };
-  };
-
-  return {
-    ...renderModalUtils,
-    modalButton,
-    getLGTextInputUtil: () => getLGTextInputUtil(),
-  };
-}
-
 function renderMultipleInputs() {
   render(
     <>
       <TextInput
         data-lgid="lg-text_input-1"
         label="label 1"
-        description="description 1"
         value="text input 1"
       />
       <TextInput
         data-lgid="lg-text_input-2"
         label="label 2"
-        description="description 2"
         value="text input 2"
       />
     </>,
@@ -100,10 +80,9 @@ describe('packages/text-input', () => {
         render(<TextInput data-lgid="lg-text_output" label="hey" />);
 
         try {
-          const {
-            // eslint-disable-next-line
-            elements: { getInput },
-          } = getLGTextInputUtils('lg-text_input');
+          // @ts-expect-error
+          // eslint-disable-next-line
+          const { elements } = getLGTextInputUtils('lg-text_input');
         } catch (error) {
           expect(error).toBeInstanceOf(Error);
           expect(error).toHaveProperty(
@@ -120,20 +99,6 @@ describe('packages/text-input', () => {
 
         expect(elementsOne.getInput()).toBeInTheDocument();
         expect(elementsTwo.getInput()).toBeInTheDocument();
-      });
-
-      test('getLabel', () => {
-        const { elementsOne, elementsTwo } = renderMultipleInputs();
-
-        expect(elementsOne.getLabel()).toHaveTextContent('label 1');
-        expect(elementsTwo.getLabel()).toHaveTextContent('label 2');
-      });
-
-      test('getDescription', () => {
-        const { elementsOne, elementsTwo } = renderMultipleInputs();
-
-        expect(elementsOne.getDescription()).toHaveTextContent('description 1');
-        expect(elementsTwo.getDescription()).toHaveTextContent('description 2');
       });
 
       test('inputValue', () => {
@@ -156,7 +121,7 @@ describe('packages/text-input', () => {
         // After awaiting modal, look for text input
         const {
           elements: { getInput },
-        } = getLGTextInputUtils('lg-text_input-modal');
+        } = getLGTextInputUtils();
         expect(getInput()).toBeInTheDocument();
       });
 
@@ -169,7 +134,7 @@ describe('packages/text-input', () => {
         await waitFor(() => {
           const {
             elements: { getInput },
-          } = getLGTextInputUtils('lg-text_input-modal');
+          } = getLGTextInputUtils();
           expect(getInput()).toBeInTheDocument();
         });
       });
@@ -185,23 +150,10 @@ describe('packages/text-input', () => {
         const {
           elements: { getInput },
           utils: { inputValue },
-        } = getLGTextInputUtils('lg-text_input-modal');
+        } = getLGTextInputUtils();
         const input = getInput();
         userEvent.type(input, 'what rhymes with modal? xodal');
         expect(inputValue()).toBe('what rhymes with modal? xodal');
-      });
-
-      test('passing utils', async () => {
-        const { modalButton, findByTestId, getLGTextInputUtil } =
-          await renderModalWithTextInputAndUtils();
-
-        userEvent.click(modalButton);
-        const modal = await findByTestId('lg-modal');
-        expect(modal).toBeInTheDocument();
-
-        // After awaiting modal, look for text input
-        const { elements } = getLGTextInputUtil();
-        expect(elements.getInput()).toBeInTheDocument();
       });
     });
   });

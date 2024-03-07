@@ -1,4 +1,9 @@
-import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
+import {
+  DarkModeProps,
+  Either,
+  HTMLElementProps,
+  LGIdProps,
+} from '@leafygreen-ui/lib';
 
 export const Size = {
   Default: 'default',
@@ -8,20 +13,13 @@ export const Size = {
 
 export type Size = (typeof Size)[keyof typeof Size];
 
-interface BaseToggleProps {
+interface BaseToggleProps extends DarkModeProps, LGIdProps {
   /**
    * Sets the size of the toggle.
    *
    * @default 'default'
    */
   size?: Size;
-
-  /**
-   * Determines if the Toggle will render the dark mode styles.
-   *
-   * @default false
-   */
-  darkMode?: boolean;
 
   /**
    * Sets the checked state of the Toggle.
@@ -47,9 +45,6 @@ interface BaseToggleProps {
    * Adds a className to the outermost element.
    */
   className?: string;
-
-  //TODO: make this resuable
-  ['data-lgid']?: string;
 }
 
 export type ToggleProps = Either<

@@ -1,4 +1,9 @@
-import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
+import {
+  DarkModeProps,
+  Either,
+  HTMLElementProps,
+  LGIdProps,
+} from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export const State = {
@@ -71,7 +76,9 @@ interface TextInputTypeProp {
   type?: TextInputType;
 }
 export interface BaseTextInputProps
-  extends Omit<HTMLElementProps<'input', HTMLInputElement>, AriaLabels> {
+  extends Omit<HTMLElementProps<'input', HTMLInputElement>, AriaLabels>,
+    DarkModeProps,
+    LGIdProps {
   /**
    * id associated with the TextInput component.
    */
@@ -130,11 +137,6 @@ export interface BaseTextInputProps
   className?: string;
 
   /**
-   *  determines whether or not the component appears in dark theme.
-   */
-  darkMode?: boolean;
-
-  /**
    * Callback called whenever validation should be run.
    *
    * See [Form Validation & Error Handling](https://www.mongodb.design/foundation/forms/#form-validation--error-handling) for more
@@ -152,9 +154,6 @@ export interface BaseTextInputProps
    */
 
   baseFontSize?: BaseFontSize;
-
-  //TODO: make this resuable
-  ['data-lgid']?: string;
 }
 
 export type TextInputProps = Either<

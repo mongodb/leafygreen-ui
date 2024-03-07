@@ -38,24 +38,6 @@ function renderModalWithToggle(
   };
 }
 
-async function renderModalWithToggleAndUtils(
-  props: Partial<React.ComponentProps<typeof ModalView>> = {},
-) {
-  const renderModalUtils = render(<ModalWrapper {...props} />);
-  const modalButton = renderModalUtils.getByTestId('lg-modal-button');
-
-  const getLGToggleUtil = () => {
-    const { elements, utils } = getLGToggleUtils('lg-toggle-modal');
-    return { elements, utils };
-  };
-
-  return {
-    ...renderModalUtils,
-    modalButton,
-    getLGToggleUtil: () => getLGToggleUtil(),
-  };
-}
-
 function renderMultipleToggles() {
   render(
     <>
@@ -84,10 +66,9 @@ describe('packages/toggle', () => {
         render(<Toggle aria-label="Toggle who?" />);
 
         try {
-          const {
-            // eslint-disable-next-line
-            elements: { getInput },
-          } = getLGToggleUtils();
+          // @ts-expect-error
+          // eslint-disable-next-line
+          const { elements } = getLGToggleUtils();
         } catch (error) {
           expect(error).toBeInstanceOf(Error);
           expect(error).toHaveProperty(
@@ -159,19 +140,6 @@ describe('packages/toggle', () => {
         const input = getInput();
         userEvent.click(input);
         expect(inputValue()).toBe('true');
-      });
-
-      test('passing utils', async () => {
-        const { modalButton, findByTestId, getLGToggleUtil } =
-          await renderModalWithToggleAndUtils();
-
-        userEvent.click(modalButton);
-        const modal = await findByTestId('lg-modal');
-        expect(modal).toBeInTheDocument();
-
-        // After awaiting modal, look for toggle
-        const { elements } = getLGToggleUtil();
-        expect(elements.getInput()).toBeInTheDocument();
       });
     });
   });

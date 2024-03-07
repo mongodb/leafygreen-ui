@@ -41,10 +41,10 @@ export const getLGTextAreaUtils = (
   /**
    * Queries the `element` for the input element. Will return `null` if the input is not found.
    */
-  const input = getByQuerySelector<HTMLInputElement>(
+  const input = getByQuerySelector<HTMLTextAreaElement>(
     element,
     '[data-lgid="lg-text_area-input"]',
-  );
+  ) as HTMLTextAreaElement;
 
   /**
    * Queries the `element` for the error message element. Will return `null` if the error message is not found.
@@ -59,12 +59,12 @@ export const getLGTextAreaUtils = (
    */
   const isInputDisabled = () => {
     noInputThrow();
-    return (input as HTMLInputElement).disabled;
+    return (input as HTMLTextAreaElement).disabled;
   };
 
   const inputValue = () => {
     noInputThrow();
-    return (input as HTMLInputElement).value;
+    return (input as HTMLTextAreaElement).value;
   };
 
   /**

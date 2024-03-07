@@ -231,7 +231,7 @@ describe('packages/text-input', () => {
   });
 
   describe('when no description is supplied', () => {
-    test('no label tag renders to the DOM', () => {
+    test('no description tag renders to the DOM', () => {
       const { description } = renderTextInput({ description: '' });
 
       expect(description).not.toBeInTheDocument();
@@ -278,15 +278,15 @@ describe('packages/text-input', () => {
     });
   });
 
-  describe('inputValue', () => {
-    test('returns value when uncontrolled', () => {
+  describe('returns correct value', () => {
+    test('when uncontrolled', () => {
       const { textInput, inputValue } = renderTextInput();
 
       userEvent.type(textInput, '123');
       expect(inputValue()).toBe('123');
     });
 
-    test('returns value when controlled', () => {
+    test('when controlled', () => {
       const { inputValue, rerenderTextInput } = renderTextInput({
         value: '456',
       });
