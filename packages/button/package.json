@@ -7,9 +7,7 @@
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "<3.9": {
-      "*": [
-        "ts3.4/*"
-      ]
+      "*": ["ts3.4/*"]
     }
   },
   "scripts": {
@@ -33,7 +31,8 @@
   "devDependencies": {
     "next": "^13.0.5",
     "@leafygreen-ui/icon": "^11.25.1",
-    "@leafygreen-ui/loading-indicator": "^2.0.8"
+    "@leafygreen-ui/loading-indicator": "^2.0.8",
+    "@lg-tools/storybook-utils": "^0.0.1"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.10"

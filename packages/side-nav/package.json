@@ -7,9 +7,7 @@
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "<3.9": {
-      "*": [
-        "ts3.4/*"
-      ]
+      "*": ["ts3.4/*"]
     }
   },
   "scripts": {
@@ -40,7 +38,8 @@
     "@leafygreen-ui/leafygreen-provider": "^3.1.10"
   },
   "devDependencies": {
-    "@leafygreen-ui/select": "^11.1.0"
+    "@leafygreen-ui/select": "^11.1.0",
+    "@lg-tools/storybook-utils": "^0.0.1"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/side-nav",
   "repository": {

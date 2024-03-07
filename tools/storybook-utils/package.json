@@ -16,6 +16,7 @@
     "access": "public"
   },
   "dependencies": {
+    "lodash": "^4.17.21"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/storybook-utils",
   "repository": {

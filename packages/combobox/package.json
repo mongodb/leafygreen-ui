@@ -7,9 +7,7 @@
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "<3.9": {
-      "*": [
-        "ts3.4/*"
-      ]
+      "*": ["ts3.4/*"]
     }
   },
   "scripts": {
@@ -44,7 +42,8 @@
   },
   "devDependencies": {
     "@leafygreen-ui/button": "^21.0.12",
-    "@leafygreen-ui/testing-lib": "^0.4.0"
+    "@leafygreen-ui/testing-lib": "^0.4.0",
+    "@lg-tools/storybook-utils": "^0.0.1"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/combobox",
   "repository": {
