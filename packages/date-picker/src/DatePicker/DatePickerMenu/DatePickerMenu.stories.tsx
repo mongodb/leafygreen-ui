@@ -58,6 +58,7 @@ const meta: StoryMetaType<typeof DatePickerMenu, DecoratorArgs> = {
     default: null,
     chromatic: {
       delay: transitionDuration.slower,
+      disableSnapshot: true,
     },
   },
   args: {
