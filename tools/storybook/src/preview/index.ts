@@ -3,12 +3,12 @@ import {
   PropCombinations,
   ReactStrictMode,
 } from '@lg-tools/storybook-decorators';
-import { Preview } from '@storybook/react';
-
 import {
   storybookExcludedArgTypes,
   storybookExcludedControlParams,
-} from '@leafygreen-ui/lib';
+} from '@lg-tools/storybook-utils';
+import { Preview } from '@storybook/react';
+
 import {
   Body,
   H1,

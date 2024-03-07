@@ -1,7 +1,6 @@
 import React from 'react';
+import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
-
-import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 import { ParagraphSkeleton } from '.';
 

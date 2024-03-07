@@ -1,7 +1,7 @@
-
 # Storybook Utils
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/storybook-utils.svg)
+
 #### [View on MongoDB.design](https://www.mongodb.design/component/storybook-utils/example/)
 
 ## Installation
@@ -17,4 +17,3 @@ yarn add @leafygreen-ui/storybook-utils
 ```shell
 npm install @leafygreen-ui/storybook-utils
 ```
-
