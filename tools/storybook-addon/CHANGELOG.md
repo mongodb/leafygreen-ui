@@ -1,4 +1,4 @@
-# @lg-tools/storybook
+# @lg-tools/storybook-addon
 
 ## @lg-tools/storybook@0.3.5
 
