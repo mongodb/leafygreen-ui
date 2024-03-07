@@ -144,6 +144,7 @@ import Button from '@leafygreen-ui/button';
 | [@lg-tools/test](http://mongodb.design/component/test/example)                                    | [![version](https://img.shields.io/npm/v/@lg-tools/test)](https://www.npmjs.com/package/@lg-tools/test)                                         | ![downloads](https://img.shields.io/npm/dm/@lg-tools/test?color=white)                     |
 | [@lg-tools/update](http://mongodb.design/component/update/example)                                | [![version](https://img.shields.io/npm/v/@lg-tools/update)](https://www.npmjs.com/package/@lg-tools/update)                                     | ![downloads](https://img.shields.io/npm/dm/@lg-tools/update?color=white)                   |
 | [@lg-tools/validate](http://mongodb.design/component/validate/example)                            | [![version](https://img.shields.io/npm/v/@lg-tools/validate)](https://www.npmjs.com/package/@lg-tools/validate)                                 | ![downloads](https://img.shields.io/npm/dm/@lg-tools/validate?color=white)                 |
+
 ## Developer Setup
 
 1. Node >= 16.20.0 required.
