@@ -55,6 +55,9 @@ export const getLGTextInputUtils = (
     return !!ariaDisabled;
   };
 
+  /**
+   * Returns the input value.
+   */
   const inputValue = () => {
     return input.value;
   };

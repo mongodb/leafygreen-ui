@@ -12,7 +12,7 @@ export const getLGToggleUtils = (
   const element: HTMLButtonElement = getByLgId(lgId);
 
   /**
-   * Queries the `element` for aria-disabled.
+   * Returns the disabled attribute on the input.
    */
   const isInputDisabled = () => {
     return (
@@ -21,7 +21,7 @@ export const getLGToggleUtils = (
   };
 
   /**
-   * Queries the `element` for aria-checked. Returns 'true' or 'false'
+   * Returns the value for the aria-checked attribute on the input.
    */
   const inputValue = () => {
     return (element as HTMLButtonElement).getAttribute(

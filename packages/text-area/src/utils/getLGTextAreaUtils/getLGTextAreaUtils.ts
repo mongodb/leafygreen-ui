@@ -44,12 +44,15 @@ export const getLGTextAreaUtils = (
   );
 
   /**
-   * Queries the `element` for aria-disabled.
+   * Returns the disabled attribute on the input.
    */
   const isInputDisabled = () => {
     return input.disabled;
   };
 
+  /**
+   * Returns the input value.
+   */
   const inputValue = () => {
     return input.value;
   };

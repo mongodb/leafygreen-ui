@@ -1,5 +1,5 @@
 /**
- * Base interface used by components to support LGId test.
+ * Base interface used by components to support data-lgid.
  *
  * @public
  */
