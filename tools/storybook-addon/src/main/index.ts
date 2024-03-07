@@ -39,7 +39,7 @@ export const core: StorybookConfig['core'] = {
 
 export const staticDirs: StorybookConfig['staticDirs'] = [
   './static',
-  '../node_modules/@lg-tools/storybook/static',
+  '../node_modules/@lg-tools/storybook-addon/static',
 ];
 
 export const babel: StorybookConfig['babel'] = async options => {
