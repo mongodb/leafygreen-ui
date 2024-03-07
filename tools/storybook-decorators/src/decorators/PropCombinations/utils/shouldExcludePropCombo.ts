@@ -1,13 +1,12 @@
+import {
+  type ExtendedComponentProps,
+  type GeneratedStoryConfig,
+} from '@lg-tools/storybook-utils';
 import entries from 'lodash/entries';
 import has from 'lodash/has';
 import isEqual from 'lodash/isEqual';
 import isUndefined from 'lodash/isUndefined';
 import keys from 'lodash/keys';
-
-import {
-  type ExtendedComponentProps,
-  type GeneratedStoryConfig,
-} from '@leafygreen-ui/lib';
 
 export function shouldExcludePropCombo<T extends React.ComponentType<any>>({
   propName,
