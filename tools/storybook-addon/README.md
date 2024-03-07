@@ -1,20 +1,41 @@
+# `@lg-tools/storybook-addon`
 
-# Storybook Addon
+Storybook addon to share configuration in LeafyGreen repositories.
 
-![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/storybook-addon.svg)
-#### [View on MongoDB.design](https://www.mongodb.design/component/storybook-addon/example/)
+## Usage
 
-## Installation
+Install this package, and consume it in your `.storybook/` config files.
 
-### Yarn
-
-```shell
-yarn add @leafygreen-ui/storybook-addon
+```ts
+// .storybook/main.ts
+export default {
+  addons: ['@lg-tools/storybook-addon'],
+  framework: {
+    name: '@storybook/react-webpack5',
+    options: {
+      fastRefresh: true,
+      strictMode: true,
+    },
+  },
+};
 ```
 
-### NPM
+Most parameters `preview.ts` will be automatically populated by the addon. However you may want to customize certain things like section ordering:
 
-```shell
-npm install @leafygreen-ui/storybook-addon
+```js
+// .storybook/preview.js
+const parameters = {
+  options: {
+    storySort: {
+      method: 'alphabetical',
+      order: [
+        // ... section headers
+      ],
+    },
+  },
+};
+
+export default {
+  parameters,
+};
 ```
-
