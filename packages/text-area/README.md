@@ -68,3 +68,9 @@ return (
 | `disabled`    | `boolean`                      | Determines if the component is disabled                                                                                   | `false`  |
 | `onChange`    | `function`                     | The event handler function for the 'onchange' event. Accepts the change event object as its argument and returns nothing. |          |
 | `onBlur`      | `function`                     | The event handler function for the 'onblur' event. Accepts the focus event object as its argument and returns nothing.    |          |
+
+## getLGTextAreaUtils()
+
+`getLGTextAreaUtils()` is a a util to reliably interact with `LG TextArea` in a product test suite.
+
+### How to use

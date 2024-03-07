@@ -91,3 +91,9 @@ return (
 ### Special Case: Aria Labels
 
 Either `label` or `aria-labelledby` must be provided a string, or there will be a console error. This is to ensure that screenreaders have a description for what the Text Input does.
+
+## getLGTextInputUtils()
+
+`getLGTextInputUtils()` is a a util to reliably interact with `LG TextInput` in a product test suite.
+
+### How to use

@@ -83,3 +83,9 @@ return (
 For the Toggle to be accessible to screen readers, you **must** pass either [`aria-label`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-label_attribute) or [`aria-labelledby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_aria-labelledby_attribute) to Toggle. Please note, if this is a part of a form, this is in addition to using `htmlFor` to associate a label with the Toggle. You will see TypeScript and console errors if this isn't done.
 
 Please reach out if you would like further guidance on how to programmatically associate text with the Toggle component.
+
+## getLGToggleUtils()
+
+`getLGToggleUtils()` is a a util to reliably interact with `LG Toggle` in a product test suite.
+
+### How to use
