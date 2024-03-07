@@ -1,5 +1,18 @@
 # @leafygreen-ui/select
 
+## 11.2.0
+
+### Minor Changes
+
+- 36a8ded2: `description` prop can now be a `React.ReactNode` rather than a `string`
+
+### Patch Changes
+
+- Updated dependencies [c2854e9b]
+- Updated dependencies [11d12cc4]
+  - @leafygreen-ui/tokens@2.4.0
+  - @leafygreen-ui/typography@18.2.1
+
 ## 11.1.2
 
 ### Patch Changes

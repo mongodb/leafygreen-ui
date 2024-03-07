@@ -1,5 +1,18 @@
 # @leafygreen-ui/text-area
 
+## 8.1.0
+
+### Minor Changes
+
+- 36a8ded2: `description` prop can now be a `React.ReactNode` rather than a `string`
+
+### Patch Changes
+
+- Updated dependencies [c2854e9b]
+- Updated dependencies [11d12cc4]
+  - @leafygreen-ui/tokens@2.4.0
+  - @leafygreen-ui/typography@18.2.1
+
 ## 8.0.21
 
 ### Patch Changes

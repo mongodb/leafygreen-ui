@@ -1109,7 +1109,7 @@ describe('packages/date-picker', () => {
           options = await findAllByRole('option');
           const _dec = options[11];
           userEvent.click(_dec);
-          tabNTimes(3);
+          tabNTimes(2);
           expect(queryCellByDate(testToday)).toHaveFocus();
         });
       });
@@ -1176,12 +1176,52 @@ describe('packages/date-picker', () => {
             });
           });
 
-          describe('when menu is open', () => {
-            const tabStops = expectedTabStopLabels['open'];
+          describe('when menu is open with en-US format', () => {
+            const tabStops = expectedTabStopLabels['openENUSFormat'];
 
             test(`Tab order proceeds as expected`, async () => {
               const renderResult = renderDatePicker({
                 initialOpen: true,
+                locale: 'en-US',
+              });
+
+              for (const label of tabStops) {
+                const elementMap = await findTabStopElementMap(renderResult);
+                const element = elementMap[label];
+
+                if (element !== null) {
+                  expect(element).toHaveFocus();
+                } else {
+                  expect(
+                    renderResult.inputContainer.contains(
+                      document.activeElement,
+                    ),
+                  ).toBeFalsy();
+                }
+
+                const errorElement = renderResult.queryByTestId(
+                  'lg-form_field-error_message',
+                );
+
+                await waitFor(() =>
+                  expect(errorElement).not.toBeInTheDocument(),
+                );
+
+                userEvent.tab();
+                // There are side-effects triggered on CSS transition-end events.
+                // Fire this event here to ensure these side-effects don't impact Tab order
+                if (element) fireEvent.transitionEnd(element);
+              }
+            });
+          });
+
+          describe('when menu is open with iso8601 format', () => {
+            const tabStops = expectedTabStopLabels['openISOFormat'];
+
+            test(`Tab order proceeds as expected`, async () => {
+              const renderResult = renderDatePicker({
+                initialOpen: true,
+                locale: 'iso8601',
               });
 
               for (const label of tabStops) {
@@ -1228,7 +1268,7 @@ describe('packages/date-picker', () => {
         test('if month select is focused, opens the select menu', async () => {
           const { openMenu, findAllByRole } = renderDatePicker();
           const { monthSelect } = await openMenu();
-          tabNTimes(2);
+          tabNTimes(3);
           expect(monthSelect).toHaveFocus();
           userEvent.keyboard(`[${key}]`);
           const options = await findAllByRole('option');
@@ -1355,7 +1395,7 @@ describe('packages/date-picker', () => {
             renderDatePicker();
           const { monthSelect, menuContainerEl } = await openMenu();
 
-          tabNTimes(2);
+          tabNTimes(3);
           expect(monthSelect).toHaveFocus();
 
           userEvent.keyboard('[Enter]');
@@ -1380,19 +1420,31 @@ describe('packages/date-picker', () => {
       });
 
       describe('Backspace key', () => {
-        test('deletes any value in the input', () => {
-          const { dayInput } = renderDatePicker();
+        test('fires segment change handler after typing a value', () => {
+          const onChange = jest.fn();
+          const { dayInput } = renderDatePicker({ onChange });
           userEvent.type(dayInput, '26{backspace}');
-          expect(dayInput.value).toBe('2');
-          userEvent.tab();
-          expect(dayInput.value).toBe('02');
+          expect(onChange).toHaveBeenCalledWith(eventContainingTargetValue(''));
         });
 
-        test('deletes the whole value on multiple presses', () => {
+        test('resets the input', () => {
+          const { dayInput } = renderDatePicker();
+          userEvent.type(dayInput, '26{backspace}');
+          expect(dayInput.value).toBe('');
+        });
+
+        test('keeps the focus in the current input', () => {
           const { monthInput } = renderDatePicker();
           userEvent.type(monthInput, '11');
+          userEvent.type(monthInput, '{backspace}');
+          expect(monthInput).toHaveFocus();
+        });
+
+        test('focuses the previous segment after pressing backspace twice', () => {
+          const { monthInput, yearInput } = renderDatePicker();
+          userEvent.type(monthInput, '11');
           userEvent.type(monthInput, '{backspace}{backspace}');
-          expect(monthInput.value).toBe('');
+          expect(yearInput).toHaveFocus();
         });
 
         test('focuses the previous segment if current segment is empty', () => {
@@ -1415,39 +1467,12 @@ describe('packages/date-picker', () => {
               expect(yearInput).toHaveFocus();
             });
 
-            test('moves the cursor when the segment has a value', () => {
-              const { monthInput } = renderDatePicker({
-                value: testToday,
-              });
-              userEvent.click(monthInput);
-              userEvent.keyboard('{arrowleft}');
-              expect(monthInput).toHaveFocus();
-            });
-
-            test('moves the cursor when the value starts with 0', () => {
-              const { monthInput } = renderDatePicker({});
-              userEvent.type(monthInput, '04{arrowleft}{arrowleft}');
-              expect(monthInput).toHaveFocus();
-            });
-
-            test('moves the cursor when the value is 0', () => {
-              const { monthInput } = renderDatePicker({});
-              userEvent.type(monthInput, '0{arrowleft}');
-              expect(monthInput).toHaveFocus();
-            });
-
-            test('moves the cursor to the previous segment when the value is 0', () => {
-              const { yearInput, monthInput } = renderDatePicker({});
-              userEvent.type(monthInput, '0{arrowleft}{arrowleft}');
-              expect(yearInput).toHaveFocus();
-            });
-
-            test('focuses the previous segment if the cursor is at the start of the input text', () => {
+            test('focuses the previous segment when the segment has a value', () => {
               const { yearInput, monthInput } = renderDatePicker({
                 value: testToday,
               });
               userEvent.click(monthInput);
-              userEvent.keyboard('{arrowleft}{arrowleft}{arrowleft}');
+              userEvent.keyboard('{arrowleft}');
               expect(yearInput).toHaveFocus();
             });
           });
@@ -1460,7 +1485,7 @@ describe('packages/date-picker', () => {
               expect(monthInput).toHaveFocus();
             });
 
-            test('focuses the next segment if the cursor is at the start of the input text', () => {
+            test('focuses the next segment when the segment has a value', () => {
               const { yearInput, monthInput } = renderDatePicker({
                 value: testToday,
               });
@@ -1469,13 +1494,10 @@ describe('packages/date-picker', () => {
               expect(monthInput).toHaveFocus();
             });
 
-            test('moves the cursor when the segment has a value', () => {
-              const { yearInput } = renderDatePicker({
-                value: testToday,
-              });
-              userEvent.click(yearInput);
-              userEvent.keyboard('{arrowleft}{arrowright}');
-              expect(yearInput).toHaveFocus();
+            test('focuses the next segment when the value starts with 0', () => {
+              const { monthInput, dayInput } = renderDatePicker({});
+              userEvent.type(monthInput, '0{arrowright}');
+              expect(dayInput).toHaveFocus();
             });
           });
 
@@ -2519,29 +2541,6 @@ describe('packages/date-picker', () => {
         describe('typing space', () => {
           describe('single space', () => {
             describe('does not fire a segment value change', () => {
-              test('when the value prop is set', () => {
-                const onChange = jest.fn();
-
-                const { yearInput } = renderDatePicker({
-                  onChange,
-                  value: newUTC(2023, Month.December, 25),
-                });
-                userEvent.type(yearInput, '{space}');
-                expect(onChange).not.toHaveBeenCalled();
-              });
-
-              test('when typing another digit', () => {
-                const onChange = jest.fn();
-
-                const { yearInput } = renderDatePicker({
-                  onChange,
-                });
-                userEvent.type(yearInput, '{space}2');
-                expect(onChange).not.toHaveBeenCalledWith(
-                  expect.objectContaining({ value: ' 2' }),
-                );
-              });
-
               test('when there is no value', () => {
                 const onChange = jest.fn();
 
@@ -2567,11 +2566,12 @@ describe('packages/date-picker', () => {
               test('at the end of a value', () => {
                 const onChange = jest.fn();
 
-                const { yearInput } = renderDatePicker({
+                const { yearInput, monthInput } = renderDatePicker({
                   onChange,
                 });
                 userEvent.type(yearInput, '2023{space}');
                 expect(yearInput.value).toBe('2023');
+                expect(monthInput).toHaveFocus();
               });
 
               test('between a value', () => {
@@ -2581,7 +2581,7 @@ describe('packages/date-picker', () => {
                   onChange,
                 });
                 userEvent.type(yearInput, '202{space}3');
-                expect(yearInput.value).toBe('2023');
+                expect(yearInput.value).toBe('3');
               });
 
               test('in multiple spots', () => {
@@ -2591,7 +2591,7 @@ describe('packages/date-picker', () => {
                   onChange,
                 });
                 userEvent.type(yearInput, '2{space}0{space}2{space}3{space}');
-                expect(yearInput.value).toBe('2023');
+                expect(yearInput.value).toBe('');
               });
             });
 
@@ -2605,29 +2605,6 @@ describe('packages/date-picker', () => {
 
           describe('double space', () => {
             describe('does not fire a segment value change', () => {
-              test('when the value prop is set', () => {
-                const onChange = jest.fn();
-
-                const { yearInput } = renderDatePicker({
-                  onChange,
-                  value: newUTC(2023, Month.December, 25),
-                });
-                userEvent.type(yearInput, '{space}{space}');
-                expect(onChange).not.toHaveBeenCalled();
-              });
-
-              test('when typing another digit', () => {
-                const onChange = jest.fn();
-
-                const { yearInput } = renderDatePicker({
-                  onChange,
-                });
-                userEvent.type(yearInput, '{space}{space}2');
-                expect(onChange).not.toHaveBeenCalledWith(
-                  expect.objectContaining({ value: ' 2' }),
-                );
-              });
-
               test('when there is no value', () => {
                 const onChange = jest.fn();
 
@@ -2637,18 +2614,31 @@ describe('packages/date-picker', () => {
                 userEvent.type(yearInput, '{space}{space}');
                 expect(onChange).not.toHaveBeenCalled();
               });
+            });
 
-              test('in multiple spots', () => {
+            describe('fires a segment value change', () => {
+              test('when typing another digit', () => {
                 const onChange = jest.fn();
 
                 const { yearInput } = renderDatePicker({
                   onChange,
                 });
-                userEvent.type(
-                  yearInput,
-                  '2{space}{space}0{space}{space}2{space}{space}3{space}{space}',
+                userEvent.type(yearInput, '{space}{space}2');
+                expect(onChange).toHaveBeenCalledWith(
+                  eventContainingTargetValue('2'),
                 );
-                expect(yearInput.value).toBe('2023');
+              });
+
+              test('when the value prop is set', () => {
+                const onChange = jest.fn();
+
+                const { yearInput } = renderDatePicker({
+                  onChange,
+                  value: newUTC(2023, Month.December, 25),
+                });
+                userEvent.type(yearInput, '{space}{space}');
+                expect(yearInput.value).toBe('');
+                expect(onChange).toHaveBeenCalled();
               });
             });
 
@@ -2666,11 +2656,25 @@ describe('packages/date-picker', () => {
               test('at the end of a value', () => {
                 const onChange = jest.fn();
 
-                const { yearInput } = renderDatePicker({
+                const { yearInput, monthInput } = renderDatePicker({
                   onChange,
                 });
                 userEvent.type(yearInput, '2023{space}{space}');
                 expect(yearInput.value).toBe('2023');
+                expect(monthInput).toHaveFocus();
+              });
+
+              test('in multiple spots', () => {
+                const onChange = jest.fn();
+
+                const { yearInput } = renderDatePicker({
+                  onChange,
+                });
+                userEvent.type(
+                  yearInput,
+                  '2{space}{space}0{space}{space}2{space}{space}3{space}{space}',
+                );
+                expect(yearInput.value).toBe('');
               });
 
               test('between a value', () => {
@@ -2680,7 +2684,7 @@ describe('packages/date-picker', () => {
                   onChange,
                 });
                 userEvent.type(yearInput, '202{space}{space}3');
-                expect(yearInput.value).toBe('2023');
+                expect(yearInput.value).toBe('3');
               });
             });
           });
@@ -2958,7 +2962,6 @@ describe('packages/date-picker', () => {
             userEvent.type(monthInput, '7');
             userEvent.type(dayInput, '4');
 
-            yearInput.setSelectionRange(0, 4);
             userEvent.type(yearInput, '{backspace}');
             expect(yearInput).toHaveValue('');
           });
@@ -2989,7 +2992,6 @@ describe('packages/date-picker', () => {
             userEvent.type(monthInput, '7');
             userEvent.type(dayInput, '4');
 
-            yearInput.setSelectionRange(0, 4);
             userEvent.type(yearInput, '{backspace}');
             userEvent.type(yearInput, '2');
             expect(yearInput).toHaveValue('2');
@@ -3001,27 +3003,35 @@ describe('packages/date-picker', () => {
             userEvent.type(monthInput, '7');
             userEvent.type(dayInput, '4');
 
-            userEvent.type(yearInput, '{backspace}{backspace}');
-            expect(yearInput).toHaveValue('20');
+            userEvent.type(yearInput, '{backspace}');
+            expect(yearInput).toHaveValue('');
           });
         });
 
         describe('typing new characters', () => {
-          test('even if the resulting value is valid, keeps the input as-is', async () => {
+          test('updates the value', async () => {
             const { monthInput } = renderDatePicker({});
             userEvent.type(monthInput, '1');
             userEvent.tab();
             await waitFor(() => expect(monthInput).toHaveValue('01'));
             userEvent.type(monthInput, '2');
-            await waitFor(() => expect(monthInput).toHaveValue('01'));
+            await waitFor(() => expect(monthInput).toHaveValue('02'));
           });
 
-          test('if the resulting value is not valid, keeps the input as-is', async () => {
+          test('if the resulting value is incomplete and invalid, clears the input', async () => {
             const { monthInput } = renderDatePicker({});
-            userEvent.type(monthInput, '6');
-            await waitFor(() => expect(monthInput).toHaveValue('06'));
-            userEvent.type(monthInput, '9');
-            await waitFor(() => expect(monthInput).toHaveValue('06'));
+            userEvent.type(monthInput, '0');
+            userEvent.tab();
+            await waitFor(() => expect(monthInput).toHaveValue(''));
+          });
+
+          test('if the resulting value is invalid, formats the first digit and the second digit is inputted into the next input', async () => {
+            const { monthInput, dayInput } = renderDatePicker({});
+            userEvent.type(monthInput, '32');
+            await waitFor(() => {
+              expect(monthInput).toHaveValue('03');
+              expect(dayInput).toHaveValue('2');
+            });
           });
         });
       });
@@ -3312,7 +3322,7 @@ describe('packages/date-picker', () => {
             const options = await findAllByRole('option');
             const Jan = options[0];
             userEvent.click(Jan);
-            tabNTimes(3);
+            tabNTimes(2);
             const jan31Cell = queryCellByDate(newUTC(2023, Month.January, 31));
             await waitFor(() => expect(jan31Cell).toHaveFocus());
           });
@@ -3325,7 +3335,7 @@ describe('packages/date-picker', () => {
             const options = await findAllByRole('option');
             const Dec = options[11];
             userEvent.click(Dec);
-            tabNTimes(3);
+            tabNTimes(2);
             const dec1Cell = queryCellByDate(newUTC(2023, Month.December, 1));
             await waitFor(() => expect(dec1Cell).toHaveFocus());
           });
@@ -3511,15 +3521,13 @@ describe('packages/date-picker', () => {
           userEvent.tab();
           errorElement = queryByTestId('lg-form_field-error_message');
           expect(errorElement).toHaveTextContent(
-            '2020-02-30 is not a valid date',
+            '2020-02- is not a valid date',
           );
 
           userEvent.type(dayInput, '{backspace}{backspace}');
           userEvent.tab();
           errorElement = queryByTestId('lg-form_field-error_message');
-          expect(errorElement).toHaveTextContent(
-            '2020-02- is not a valid date',
-          );
+          expect(errorElement).toHaveTextContent('2020-- is not a valid date');
         });
 
         test('Clearing the input after an invalid date error message is displayed removes the message', () => {

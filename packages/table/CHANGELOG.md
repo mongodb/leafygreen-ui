@@ -1,5 +1,22 @@
 # @leafygreen-ui/table
 
+## 12.5.0
+
+### Minor Changes
+
+- 744092c8: Exposes `virtualizerOptions` property in `useLeafyGreenTable` options. This is used to define options for `react-virtual`.
+  As of now, we have `react-virtual@2.10.4` as out virtualizer dependency. Virtualizer options for this version can be found [on GitHub](https://github.com/TanStack/virtual/blob/v2/docs/src/pages/docs/api.md)
+  Resolves [LG-3984](https://jira.mongodb.org/browse/LG-3984)
+
+### Patch Changes
+
+- 744092c8: Fixes a bug where nested row chevrons and selectable row checkboxes would be rendered above a sticky header.
+  [Jira Ticket](https://jira.mongodb.org/browse/LG-4037)
+- Updated dependencies [c2854e9b]
+- Updated dependencies [11d12cc4]
+  - @leafygreen-ui/tokens@2.4.0
+  - @leafygreen-ui/typography@18.2.1
+
 ## 12.4.1
 
 ### Patch Changes

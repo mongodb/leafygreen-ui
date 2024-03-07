@@ -11,17 +11,21 @@ import {
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
+import { useUpdatedBaseFontSize } from '../../utils/useUpdatedBaseFontSize';
 import {
   anchorClassName,
-  arrowRightIconHover,
-  arrowRightIconPersist,
   linkModeStyles,
   linkScaleStyles,
   linkStyles,
-  openInNewTabStyles,
   overwriteDefaultStyles,
   underlineModeStyles,
   underlineStyles,
+} from '../shared.styles';
+
+import {
+  arrowRightIconHover,
+  arrowRightIconPersist,
+  openInNewTabStyles,
 } from './Link.styles';
 import { ArrowAppearance, BaseLinkProps } from './Link.types';
 
@@ -42,7 +46,7 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
       className,
       arrowAppearance = ArrowAppearance.None,
       hideExternalIcon = false,
-      baseFontSize,
+      baseFontSize: baseFontSizeOverride,
       darkMode: darkModeProp,
       as,
       ...rest
@@ -55,6 +59,7 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
     }, []);
 
     const { theme } = useDarkMode(darkModeProp);
+    const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
     const { Component } = useInferredPolymorphic(as, rest, 'span');
 
     const hrefHostname = useMemo(() => {
@@ -84,6 +89,7 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
       if (hrefHostname === currentHostname) {
         defaultAnchorProps.target = '_self';
       } else {
+        // Open in new tab
         defaultAnchorProps.target = '_blank';
         defaultAnchorProps.rel = 'noopener noreferrer';
       }

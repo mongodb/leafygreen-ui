@@ -1,5 +1,8 @@
 import { RefObject } from 'react';
-import { VirtualItem } from 'react-virtual';
+import {
+  type Options as VirtualizerOptions,
+  type VirtualItem,
+} from 'react-virtual';
 import {
   Cell,
   ColumnDef,
@@ -38,23 +41,30 @@ export type LGColumnDef<
   align?: HTMLElementProps<'td'>['align'];
 };
 
-/** LeafyGreen extension of `useReactTable` {@link TableOptions}*/
-export interface LeafyGreenTableOptions<
+/**
+ * Options argument for the LeafyGreen extension of `useReactTable`
+ *
+ * See: {@link TableOptions}
+ */
+export type LeafyGreenTableOptions<
   T extends LGRowData,
   V extends unknown = unknown,
-> extends Omit<TableOptions<LGTableDataType<T>>, 'getCoreRowModel'> {
-  containerRef: RefObject<HTMLDivElement>;
+> = Omit<TableOptions<LGTableDataType<T>>, 'getCoreRowModel' | 'columns'> & {
+  containerRef: RefObject<HTMLElement>;
   hasSelectableRows?: boolean;
-  useVirtualScrolling?: boolean;
   columns: Array<LGColumnDef<T, V>>;
   withPagination?: boolean;
   allowSelectAll?: boolean;
-}
+  useVirtualScrolling?: boolean;
+  virtualizerOptions?: Partial<VirtualizerOptions<HTMLElement>>;
+};
 
-/** LeafyGreen extension of `useReactTable` {@link Table}*/
+/**
+ * LeafyGreen extension of `useReactTable` {@link Table}
+ */
 export interface LeafyGreenTable<T extends LGRowData>
   extends Table<LGTableDataType<T>>,
-    Pick<VirtualizerValues, 'totalSize' | 'scrollToIndex'> {
+    Omit<VirtualizerValues, 'virtualItems'> {
   virtualRows?: Array<VirtualItem>;
   hasSelectableRows: boolean;
 }

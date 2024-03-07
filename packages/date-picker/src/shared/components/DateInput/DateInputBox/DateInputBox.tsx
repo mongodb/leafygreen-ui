@@ -147,6 +147,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
           if (nextSegmentName) {
             const nextSegmentRef = segmentRefs[nextSegmentName];
             nextSegmentRef?.current?.focus();
+            nextSegmentRef?.current?.select();
           }
         }
 

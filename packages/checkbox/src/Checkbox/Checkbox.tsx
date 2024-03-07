@@ -3,11 +3,18 @@ import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import { fontWeights } from '@leafygreen-ui/tokens';
-import { Description, Label } from '@leafygreen-ui/typography';
+import {
+  Description,
+  Label,
+  useUpdatedBaseFontSize,
+} from '@leafygreen-ui/typography';
 
-import { Check } from './Check';
+import { Check } from '../Check';
+
 import {
   checkWrapperClassName,
   containerStyle,
@@ -22,7 +29,7 @@ import {
   labelStyle,
   labelTextStyle,
 } from './Checkbox.style';
-import { CheckboxProps } from './types';
+import { CheckboxProps } from './Checkbox.types';
 
 /**
  * Checkboxes should be used whenever a user has an option they’d like to opt in or out of.
@@ -30,28 +37,31 @@ import { CheckboxProps } from './types';
  * Unlike toggles, checkboxes are used for actions, or features, that don’t immediately turn on or off. Checkboxes are usually found in forms as opposed to config pages.
  */
 function Checkbox({
-  darkMode: darkModeProp,
+  animate = true,
+  baseFontSize: baseFontSizeProp,
+  bold: boldProp,
   checked: checkedProp,
-  label = '',
+  className,
+  darkMode: darkModeProp,
   description,
   disabled = false,
-  bold: boldProp,
+  id: idProp,
   indeterminate: indeterminateProp,
-  animate = true,
-  className,
+  label = '',
   onClick: onClickProp,
   onChange: onChangeProp,
-  id: idProp,
-  style,
   name,
+  style,
   ...rest
 }: CheckboxProps) {
+  const { darkMode, theme } = useDarkMode(darkModeProp);
+  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
+
   const [checked, setChecked] = React.useState(false);
   const isChecked = React.useMemo(
     () => (checkedProp != null ? checkedProp : checked),
     [checkedProp, checked],
   );
-  const { darkMode, theme } = useDarkMode(darkModeProp);
 
   const checkboxId = useIdAllocator({ prefix: 'checkbox', id: idProp });
   const labelId = `${checkboxId}-label`;
@@ -86,76 +96,79 @@ function Checkbox({
   };
 
   return (
-    <div
-      className={cx(
-        containerStyle,
-        {
-          [disabledContainerStyle]: disabled,
-        },
-        className,
-      )}
-      style={style}
+    <LeafyGreenProvider
+      baseFontSize={baseFontSize === 16 ? baseFontSize : 14}
+      darkMode={darkMode}
     >
-      <Label
-        id={labelId}
-        htmlFor={checkboxId}
-        darkMode={darkMode}
-        disabled={disabled}
-        className={cx(labelStyle, labelHoverStyle[theme], {
-          [disabledLabelStyle]: disabled,
-          [disabledLabelDarkThemeOverrideStyle]: disabled && darkMode,
-        })}
-      >
-        <input
-          {...rest}
-          id={checkboxId}
-          className={cx(inputClassName, inputStyle, inputFocusStyles[theme])}
-          type="checkbox"
-          name={name}
-          disabled={disabled}
-          checked={isChecked}
-          aria-label="checkbox"
-          aria-disabled={disabled}
-          aria-checked={indeterminateProp ? 'mixed' : isChecked}
-          aria-labelledby={labelId}
-          onClick={onClick}
-          onChange={onChange}
-        />
-
-        <Check
-          theme={theme}
-          isChecked={isChecked}
-          indeterminate={indeterminateProp}
-          disabled={disabled}
-          animate={animate}
-          selector={checkWrapperClassName}
-        />
-
-        {label && (
-          <span
-            className={cx(labelTextStyle, {
-              [css`
-                font-weight: ${fontWeights.regular};
-              `]: !bold,
-            })}
-          >
-            {label}
-          </span>
+      <div
+        className={cx(
+          containerStyle,
+          {
+            [disabledContainerStyle]: disabled,
+          },
+          className,
         )}
-      </Label>
-
-      {description && (
-        <Description
-          className={cx(descriptionStyle, {
+        style={style}
+      >
+        <Label
+          id={labelId}
+          htmlFor={checkboxId}
+          disabled={disabled}
+          className={cx(labelStyle, labelHoverStyle[theme], {
+            [disabledLabelStyle]: disabled,
             [disabledLabelDarkThemeOverrideStyle]: disabled && darkMode,
           })}
-          darkMode={darkMode}
-          disabled={disabled}
         >
-          {description}
-        </Description>
-      )}
-    </div>
+          <input
+            {...rest}
+            id={checkboxId}
+            className={cx(inputClassName, inputStyle, inputFocusStyles[theme])}
+            type="checkbox"
+            name={name}
+            disabled={disabled}
+            checked={isChecked}
+            aria-label="checkbox"
+            aria-disabled={disabled}
+            aria-checked={indeterminateProp ? 'mixed' : isChecked}
+            aria-labelledby={labelId}
+            onClick={onClick}
+            onChange={onChange}
+          />
+
+          <Check
+            theme={theme}
+            isChecked={isChecked}
+            indeterminate={indeterminateProp}
+            disabled={disabled}
+            animate={animate}
+            selector={checkWrapperClassName}
+          />
+
+          {label && (
+            <span
+              className={cx(labelTextStyle, {
+                [css`
+                  font-weight: ${fontWeights.regular};
+                `]: !bold,
+              })}
+            >
+              {label}
+            </span>
+          )}
+        </Label>
+
+        {description && (
+          <Description
+            className={cx(descriptionStyle, {
+              [disabledLabelDarkThemeOverrideStyle]: disabled && darkMode,
+            })}
+            disabled={disabled}
+          >
+            {description}
+          </Description>
+        )}
+      </div>
+    </LeafyGreenProvider>
   );
 }
 

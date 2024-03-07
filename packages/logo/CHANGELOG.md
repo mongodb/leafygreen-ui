@@ -1,5 +1,13 @@
 # @leafygreen-ui/logo
 
+## 9.0.0
+
+### Major Changes
+
+- 5eb27147: Forwards `refs` to Logo components, and spreads rest after property declarations
+  [JIRA Ticket](https://jira.mongodb.org/browse/LG-4054)
+  [JIRA Ticket](https://jira.mongodb.org/browse/LG-4057)
+
 ## 8.0.12
 
 ### Patch Changes

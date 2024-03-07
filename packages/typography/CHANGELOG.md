@@ -1,5 +1,20 @@
 # @leafygreen-ui/typography
 
+## 18.2.1
+
+### Patch Changes
+
+- 11d12cc4: Updates dependency `@leafygreen-ui/tokens@2.3.0`
+- Updated dependencies [c2854e9b]
+  - @leafygreen-ui/tokens@2.4.0
+
+## 18.2.0
+
+### Minor Changes
+
+- 58e86c60: - Adds `BackLink` component. This component renders a persistent back arrow and is intended for internal linking only.
+  - Correctly responds to `baseFontSize` prop.
+
 ## 18.1.0
 
 ### Minor Changes
