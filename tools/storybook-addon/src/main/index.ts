@@ -19,8 +19,8 @@ export const stories: StorybookConfig['stories'] = findStories(
 );
 
 export const addons: StorybookConfig['addons'] = [
+  '@storybook/addon-essentials', // actions, controls & docs
   '@storybook/addon-links',
-  '@storybook/addon-essentials',
   '@storybook/addon-interactions',
   '@storybook/addon-a11y',
 ];
