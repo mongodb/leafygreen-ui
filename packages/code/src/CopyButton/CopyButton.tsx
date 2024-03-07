@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ClipboardJS from 'clipboard';
 
 import { VisuallyHidden } from '@leafygreen-ui/a11y';
 import { cx } from '@leafygreen-ui/emotion';
+import { useBackdropClick } from '@leafygreen-ui/hooks';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -10,6 +11,7 @@ import {
   useDarkMode,
   usePopoverPortalContainer,
 } from '@leafygreen-ui/leafygreen-provider';
+import { keyMap } from '@leafygreen-ui/lib';
 import Tooltip, { Align, Justify } from '@leafygreen-ui/tooltip';
 
 import { copiedThemeStyle, copyButtonThemeStyles } from './CopyButton.styles';
@@ -20,17 +22,22 @@ const COPIED_TEXT = 'Copied!';
 
 function CopyButton({ onCopy, contents }: CopyProps) {
   const [copied, setCopied] = useState(false);
-  const [hovered, setHovered] = useState(false);
-  const [buttonNode, setButtonNode] = useState(null);
-  const { theme, darkMode } = useDarkMode();
+  const [open, setOpen] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const { theme } = useDarkMode();
   const { portalContainer } = usePopoverPortalContainer();
 
+  const closeTooltip = () => setOpen(false);
+  const openTooltip = () => setOpen(true);
+
+  useBackdropClick(closeTooltip, buttonRef, open);
+
   useEffect(() => {
-    if (!buttonNode) {
+    if (!buttonRef.current) {
       return;
     }
 
-    const clipboard = new ClipboardJS(buttonNode, {
+    const clipboard = new ClipboardJS(buttonRef.current, {
       text: () => contents,
       container: portalContainer,
     });
@@ -44,44 +51,57 @@ function CopyButton({ onCopy, contents }: CopyProps) {
     }
 
     return () => clipboard.destroy();
-  }, [buttonNode, contents, copied, portalContainer]);
+  }, [buttonRef, contents, copied, portalContainer]);
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
-
-    if (onCopy) {
-      onCopy();
-    }
-
+    onCopy?.();
     setCopied(true);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    switch (e.key) {
+      case keyMap.Escape:
+      case keyMap.Tab: {
+        closeTooltip();
+        break;
+      }
+
+      case keyMap.Enter:
+      case keyMap.Space: {
+        e.preventDefault();
+        buttonRef.current?.click();
+        buttonRef.current?.focus();
+        break;
+      }
+    }
+  };
+
   const handleMouseEnter = () => {
-    setHovered(true);
+    openTooltip();
   };
 
   const handleMouseLeave = () => {
-    setHovered(false);
+    closeTooltip();
   };
 
-  const shouldClose = () => !hovered;
+  const shouldClose = () => !open;
 
   return (
     <Tooltip
-      open={hovered}
-      setOpen={setHovered}
-      darkMode={darkMode}
+      open={open}
+      setOpen={setOpen}
       align={Align.Top}
       justify={Justify.Middle}
       trigger={
         <IconButton
-          ref={setButtonNode}
-          darkMode={darkMode}
+          ref={buttonRef}
           aria-label={COPY_TEXT}
           className={cx(copyButtonThemeStyles[theme], {
             [copiedThemeStyle[theme]]: copied,
           })}
           onClick={handleClick}
+          onKeyDown={handleKeyDown}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
