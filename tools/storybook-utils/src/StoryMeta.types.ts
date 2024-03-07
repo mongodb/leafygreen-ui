@@ -1,14 +1,14 @@
+import React, { ComponentProps } from 'react';
 import { PlayFunction } from '@storybook/csf';
 import { Meta, ReactRenderer, StoryFn } from '@storybook/react';
-import React, { ComponentProps } from 'react';
-import DarkModeProps from '../DarkModeProps';
-import { GeneratedStoryConfig } from './GeneratedStoryDecorator.types';
 
+import { GeneratedStoryConfig } from './GeneratedStoryDecorator.types';
 import { StoryArgType } from './storybookArgTypes';
 
 // Re-defining LG provider prop keys here since importing from the package
 // will cause circular dependencies
-export interface LeafyGreenProviderProps extends DarkModeProps {
+export interface LeafyGreenProviderProps {
+  darkMode?: boolean;
   baseFontSize?: number;
 }
 
