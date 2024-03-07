@@ -5,7 +5,7 @@ import { axe } from 'jest-axe';
 
 import { consoleOnce } from '@leafygreen-ui/lib';
 
-import { getLGTextInputUtils } from '../utils/getLGTextInputUtils';
+import { getLGTextInputUtils } from '../utils';
 
 import TextInput from './TextInput';
 import { State, TextInputProps } from './TextInput.types';

@@ -1,1 +1,0 @@
-export { getLGTextAreaUtils } from './getLGTextAreaUtils';

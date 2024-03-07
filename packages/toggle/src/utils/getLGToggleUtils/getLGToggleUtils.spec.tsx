@@ -6,7 +6,7 @@ import Modal, { ModalView } from '@leafygreen-ui/modal';
 
 import Toggle from '../../Toggle/Toggle';
 
-import { getLGToggleUtils } from '.';
+import { getLGToggleUtils } from './getLGToggleUtils';
 
 const ModalWrapper = ({
   open: initialOpen = false,

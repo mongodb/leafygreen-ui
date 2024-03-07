@@ -6,7 +6,7 @@ import Modal, { ModalView } from '@leafygreen-ui/modal';
 
 import TextInput from '../../TextInput';
 
-import { getLGTextInputUtils } from '.';
+import { getLGTextInputUtils } from './getLGTextInputUtils';
 
 const ModalWrapper = ({
   open: initialOpen = false,

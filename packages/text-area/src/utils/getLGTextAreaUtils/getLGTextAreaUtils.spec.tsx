@@ -6,7 +6,7 @@ import Modal, { ModalView } from '@leafygreen-ui/modal';
 
 import { TextArea } from '../../TextArea';
 
-import { getLGTextAreaUtils } from '.';
+import { getLGTextAreaUtils } from './getLGTextAreaUtils';
 
 const ModalWrapper = ({
   open: initialOpen = false,
