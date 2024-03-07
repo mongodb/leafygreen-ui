@@ -8,12 +8,6 @@ import { TextArea } from '../../TextArea';
 
 import { getLGTextAreaUtils } from '.';
 
-const defaultProps = {
-  label: 'Test Area Label',
-  description: 'This is the description',
-  placeholder: 'This is some placeholder text',
-};
-
 const ModalWrapper = ({
   open: initialOpen = false,
   ...props
@@ -26,7 +20,7 @@ const ModalWrapper = ({
       <button data-testid="lg-modal-button" onClick={toggleModal}></button>
       <Modal data-testid="lg-modal" {...props} open={open} setOpen={setOpen}>
         <p>Inside Modal</p>
-        <TextArea label={defaultProps.label} />
+        <TextArea label="textarea label" />
       </Modal>
     </>
   );

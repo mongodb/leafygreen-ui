@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  fireEvent,
-  getByLabelText,
-  render,
-  screen,
-} from '@testing-library/react';
+import { fireEvent, getByLabelText, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 

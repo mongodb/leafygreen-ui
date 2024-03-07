@@ -8,12 +8,6 @@ import TextInput from '../../TextInput';
 
 import { getLGTextInputUtils } from '.';
 
-const defaultProps = {
-  label: 'Test Input Label',
-  description: 'This is the description',
-  placeholder: 'This is some placeholder text',
-};
-
 const ModalWrapper = ({
   open: initialOpen = false,
   ...props
@@ -26,7 +20,7 @@ const ModalWrapper = ({
       <button data-testid="lg-modal-button" onClick={toggleModal}></button>
       <Modal data-testid="lg-modal" {...props} open={open} setOpen={setOpen}>
         <p>Inside Modal</p>
-        <TextInput label={defaultProps.label} />
+        <TextInput label="text input label" />
       </Modal>
     </>
   );
@@ -82,7 +76,7 @@ describe('packages/text-input', () => {
         try {
           // @ts-expect-error
           // eslint-disable-next-line
-          const { elements } = getLGTextInputUtils('lg-text_input');
+          const { elements } = getLGTextInputUtils();
         } catch (error) {
           expect(error).toBeInstanceOf(Error);
           expect(error).toHaveProperty(

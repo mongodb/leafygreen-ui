@@ -56,14 +56,6 @@ describe('packages/Toggle', () => {
     expect(inputValue()).toBe('true');
   });
 
-  test('toggle is disabled when disabled prop is set', () => {
-    const {
-      utils: { isDisabled },
-    } = renderToggle({ disabled: true });
-
-    expect(isDisabled()).toBe(true);
-  });
-
   test(`renders "${className}" in the component's markup`, () => {
     const {
       elements: { getInput },
@@ -72,6 +64,24 @@ describe('packages/Toggle', () => {
     });
 
     expect(getInput().closest(`.${className}`)).toBeVisible();
+  });
+
+  describe('disabled', () => {
+    test('is true', () => {
+      const {
+        utils: { isDisabled },
+      } = renderToggle({ disabled: true });
+
+      expect(isDisabled()).toBe(true);
+    });
+
+    test('is false', () => {
+      const {
+        utils: { isDisabled },
+      } = renderToggle();
+
+      expect(isDisabled()).toBe(false);
+    });
   });
 
   describe('when controlled', () => {
