@@ -86,6 +86,52 @@ Please reach out if you would like further guidance on how to programmatically a
 
 ## getLGToggleUtils()
 
-`getLGToggleUtils()` is a a util to reliably interact with `LG Toggle` in a product test suite.
+`getLGToggleUtils()` is a a util that allows consumers to reliably interact with `LG Toggle` in a product test suite.
 
-### How to use
+### Usage
+
+```tsx
+import { render } from '@testing-library/react';
+import Toggle, { getLGToggleUtils } from '@leafygreen-ui/toggle';
+
+const { elements, utils } = getLGToggleUtils(lgId?: string); // lgId defaults to 'lg-toggle' if left empty
+```
+
+#### Individual `Toggle`
+
+```tsx
+test('toggle', () => {
+  render(<Toggle aria-labelledby="label" />);
+  const { elements, utils } = getLGToggleUtils();
+
+  expect(elements.getInput()).toBeInTheDocument();
+  expect(utils.inputValue()).toBe('false');
+});
+```
+
+#### Multiple `Toggle`'s
+
+```tsx
+test('toggle', () => {
+  render(
+    <>
+      <Toggle data-lgid="toggle-1" aria-labelledby="label 1" />
+      <Toggle data-lgid="toggle-2" aria-labelledby="label 2" checked />
+    </>,
+  );
+  const { elements: lgElementsToggle1, utils: lgUtilsToggle1 } =
+    getLGToggleUtils('toggle-1');
+  const { elements: lgElementsToggle2, utils: lgUtilsToggle2 } =
+    getLGToggleUtils('toggle-2');
+
+  // First toggle
+  expect(lgElementsToggle1.getInput()).toBeInTheDocument();
+  expect(lgUtilsToggle1.inputValue()).toBe('false');
+
+  // Second Toggle
+  expect(lgElementsToggle2.getInput()).toBeInTheDocument();
+  expect(lgUtilsToggle2.inputValue()).toBe('true');
+});
+```
+
+### Methods

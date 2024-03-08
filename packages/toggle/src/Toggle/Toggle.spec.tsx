@@ -41,6 +41,25 @@ describe('packages/Toggle', () => {
     });
   });
 
+  test('toggle', () => {
+    render(
+      <>
+        <Toggle data-lgid="toggle-1" aria-labelledby="label 1" />
+        <Toggle data-lgid="toggle-2" aria-labelledby="label 1" checked />
+      </>,
+    );
+    const { elements: lgElementsToggle1, utils: lgUtilsToggle1 } =
+      getLGToggleUtils('toggle-1');
+    const { elements: lgElementsToggle2, utils: lgUtilsToggle2 } =
+      getLGToggleUtils('toggle-2');
+
+    expect(lgElementsToggle1.getInput()).toBeInTheDocument();
+    expect(lgUtilsToggle1.inputValue()).toBe('false');
+
+    expect(lgElementsToggle2.getInput()).toBeInTheDocument();
+    expect(lgUtilsToggle2.inputValue()).toBe('true');
+  });
+
   test('toggle is not checked by default', () => {
     const {
       utils: { inputValue },
