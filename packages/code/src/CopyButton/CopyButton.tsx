@@ -22,14 +22,25 @@ const COPIED_TEXT = 'Copied!';
 
 function CopyButton({ onCopy, contents }: CopyProps) {
   const [copied, setCopied] = useState(false);
+  /**
+   * `CopyButton` controls `open` state of tooltip because when `copied` state
+   * changes, it causes the tooltip to re-render
+   */
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const { theme } = useDarkMode();
   const { portalContainer } = usePopoverPortalContainer();
 
+  /**
+   * toggles `open` state of tooltip
+   */
   const closeTooltip = () => setOpen(false);
   const openTooltip = () => setOpen(true);
 
+  /**
+   * forcibly closes tooltip if user tabs focus on tooltip and clicks
+   * outside of the trigger
+   */
   useBackdropClick(closeTooltip, buttonRef, open);
 
   useEffect(() => {
@@ -59,6 +70,9 @@ function CopyButton({ onCopy, contents }: CopyProps) {
     setCopied(true);
   };
 
+  /**
+   * `handleKeyDown` listener used to maintain UX parity with mouse events
+   */
   const handleKeyDown = (e: React.KeyboardEvent) => {
     switch (e.key) {
       case keyMap.Escape:
@@ -77,6 +91,10 @@ function CopyButton({ onCopy, contents }: CopyProps) {
     }
   };
 
+  /**
+   * `handleMouseEnter` and `handleMouseLeave` are used to control `open`
+   * state when mouse hovers over tooltip trigger
+   */
   const handleMouseEnter = () => {
     openTooltip();
   };
@@ -85,16 +103,22 @@ function CopyButton({ onCopy, contents }: CopyProps) {
     closeTooltip();
   };
 
+  /**
+   * `shouldClose` indicates to `Tooltip` component that tooltip should
+   * remain open even if trigger re-renders
+   */
   const shouldClose = () => !open;
 
   return (
     <Tooltip
+      data-testid="code_copy-button_tooltip"
       open={open}
       setOpen={setOpen}
       align={Align.Top}
       justify={Justify.Middle}
       trigger={
         <IconButton
+          data-testid="code_copy-button"
           ref={buttonRef}
           aria-label={COPY_TEXT}
           className={cx(copyButtonThemeStyles[theme], {
