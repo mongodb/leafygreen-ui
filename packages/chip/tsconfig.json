@@ -19,7 +19,7 @@
   ],
   "exclude": [
     "**/*.spec.*",
-    "**/*.story.*"
+    "**/*.stories.*"
   ],
   "references": [
     {
