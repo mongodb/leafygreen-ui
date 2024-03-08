@@ -9,11 +9,15 @@
 ### Yarn
 
 ```shell
-yarn add @leafygreen-ui/storybook-utils
+yarn add @lg-tools/storybook-utils
 ```
 
 ### NPM
 
 ```shell
-npm install @leafygreen-ui/storybook-utils
+npm install @lg-tools/storybook-utils
 ```
+
+## Usage
+
+`@lg-tools/storybook-utils` provides several utilities & types to help write Storybook files
